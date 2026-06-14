@@ -105,7 +105,6 @@ import { AnomalyTracker } from '@atlas/scene/AnomalyTracker';
 import { BatchAssetGenerator } from './BatchAssetGenerator';
 import { CameraPresetButton, TransportButton } from './controls';
 import { CommandPalette } from './CommandPalette';
-import { StudioControlDeck, type StudioDeckMode } from './StudioControlDeck';
 import { LupiAuthCallout } from './LupiAuthCallout';
 import { LupiAgentDock } from './LupiAgentDock';
 import { SavedViewButton } from './SavedViewButton';
@@ -119,8 +118,8 @@ import { detectRenderCapability, fallbackCopyFor } from './renderCapability';
 import { RendererFallback } from './RendererFallback';
 import { CanvasErrorBoundary } from './CanvasErrorBoundary';
 import { MoleculeFilterShell } from './MoleculeFilterShell';
-
-type ViewerControlMode = StudioDeckMode | 'export';
+import { PanelHost } from './PanelHost';
+import { ViewerControlsDrawer, type ViewerControlMode } from './ViewerControlsDrawer';
 
 // ─── Icons ────────────────────────────────────────────────────────────
 const IconFirst = () => (
@@ -986,9 +985,6 @@ export default function App() {
   const bg = resolveBackground(backgroundPreset, colormap);
   const bgMedia = bg.media;
   const isBatchExport = new URLSearchParams(window.location.search).get('batchExport') === 'true';
-  const panelWidth = activePanel === 'mlipLongRun'
-    ? 390
-    : (activePanel === 'studio' || activePanel === 'export' || activePanel === 'flythrough' || activePanel === 'telemetry' || activePanel === 'equilibrium' ? 380 : 320);
   const mobilePanelHeight = 'clamp(232px, 32dvh, 300px)';
   const activeMobilePanelHeight = activePanel === 'studio' ? 'clamp(420px, 68dvh, 620px)' : mobilePanelHeight;
 
@@ -1511,7 +1507,7 @@ export default function App() {
             <div style={{
               position: 'absolute',
               top: file ? 88 : 72,
-              right: activePanel && !isMobile ? panelWidth + 20 : 18,
+              right: 18,
               display: 'flex',
               justifyContent: 'flex-end',
               gap: 8,
@@ -1542,43 +1538,44 @@ export default function App() {
 
         </div>
 
-        {/* ─── Side panel ─── */}
+        {/* ─── Side panel / dockable windows ─── */}
         {/* NIST IPR potential browser — full-screen overlay, manages its own
             close via setShowPotentialBrowser(false). */}
         {showPotentialBrowser && <PotentialBrowser />}
 
-        {activePanel && file && (
+        {/* Mobile: legacy bottom sheet */}
+        {activePanel && file && isMobile && (
           <div style={{
             position: 'absolute',
-            top: isMobile ? 'auto' : 0,
+            top: 'auto',
             right: 0,
             bottom: 0,
-            left: isMobile ? 0 : 'auto',
-            width: isMobile ? '100%' : panelWidth,
-            height: isMobile ? activeMobilePanelHeight : 'auto',
-            maxHeight: isMobile ? activeMobilePanelHeight : 'none',
+            left: 0,
+            width: '100%',
+            height: activeMobilePanelHeight,
+            maxHeight: activeMobilePanelHeight,
             boxSizing: 'border-box',
-            borderLeft: isMobile ? 'none' : '1px solid var(--border-subtle)',
-            borderTop: isMobile ? '1px solid var(--border-subtle)' : 'none',
-            borderTopLeftRadius: isMobile ? 8 : 0,
-            borderTopRightRadius: isMobile ? 8 : 0,
-            background: isMobile ? 'var(--bg-glass)' : 'var(--bg-surface)',
-            backdropFilter: isMobile ? 'blur(16px)' : 'none',
-            WebkitBackdropFilter: isMobile ? 'blur(16px)' : 'none',
+            borderTop: '1px solid var(--border-subtle)',
+            borderTopLeftRadius: 8,
+            borderTopRightRadius: 8,
+            background: 'var(--bg-glass)',
+            backdropFilter: 'blur(16px)',
+            WebkitBackdropFilter: 'blur(16px)',
             display: 'flex',
             flexDirection: 'column',
             overflowY: activePanel === 'export' || activePanel === 'studio' ? 'hidden' : 'auto',
-            paddingBottom: isMobile ? 'env(safe-area-inset-bottom)' : 0,
-            boxShadow: isMobile ? '0 -18px 48px rgba(0,0,0,0.45)' : 'none',
+            paddingBottom: 'env(safe-area-inset-bottom)',
+            boxShadow: '0 -18px 48px rgba(0,0,0,0.45)',
             zIndex: 100,
-            animation: isMobile ? 'slideInUp 200ms ease-out forwards' : 'slideInRight 200ms ease-out forwards',
+            animation: 'slideInUp 200ms ease-out forwards',
           }}>
             <ErrorBoundary>
               {activePanel === 'studio' && (
                 <ViewerControlsDrawer
                   activeMode={studioDeck ?? 'look'}
                   onModeChange={openStudioDeck}
-                  onClose={() => setActivePanel('studio')}
+                  onClose={() => setActivePanel(null)}
+                  showChrome
                 />
               )}
               {activePanel === 'export' && <FigureExportPanel />}
@@ -1594,6 +1591,16 @@ export default function App() {
               {activePanel === 'mlipLongRun' && <MlipLongRunWorkbench />}
             </ErrorBoundary>
           </div>
+        )}
+
+        {/* Desktop: dockable floating panels */}
+        {!isMobile && file && (
+          <PanelHost
+            activePanel={activePanel}
+            studioDeck={studioDeck}
+            onOpenStudioDeck={openStudioDeck}
+            onClose={() => setActivePanel(null)}
+          />
         )}
 
         {/* Landing page (hero, featured, drop zone, gallery) */}
@@ -1834,7 +1841,7 @@ export default function App() {
             },
             {
               id: 'close-panel',
-              label: 'Close side panel',
+              label: 'Close tool panel',
               group: 'Scene',
               disabled: !activePanel,
               onSelect: () => setActivePanel(null),
@@ -1903,127 +1910,6 @@ function RendererWarningToast() {
     </div>
   );
 }
-
-function ViewerControlsDrawer({
-  activeMode,
-  onModeChange,
-  onClose,
-}: {
-  activeMode: ViewerControlMode;
-  onModeChange: (mode: ViewerControlMode) => void;
-  onClose: () => void;
-}) {
-  return (
-    <div
-      data-testid="viewer-controls-drawer"
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%',
-        minHeight: 0,
-      }}
-    >
-      <div style={{
-        flexShrink: 0,
-        display: 'grid',
-        gap: 8,
-        padding: '10px 10px 8px',
-        borderBottom: '1px solid var(--border-subtle)',
-        background: 'linear-gradient(180deg, rgba(15,23,42,0.72), rgba(15,23,42,0.2))',
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 0 }}>
-            <span style={{ color: '#1edce0', display: 'flex', flexShrink: 0 }}><IconControls /></span>
-            <span style={{ color: 'var(--text-primary)', fontSize: 13, fontWeight: 800, letterSpacing: 0 }}>Controls</span>
-          </div>
-          <button
-            type="button"
-            aria-label="Close controls"
-            title="Close"
-            onClick={onClose}
-            style={drawerIconButtonStyle}
-          >
-            <IconClose />
-          </button>
-        </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: 5 }}>
-          <ControlModeTab icon={<IconLook />} label="Look" active={activeMode === 'look'} onClick={() => onModeChange('look')} />
-          <ControlModeTab icon={<IconSurface />} label="Surface" active={activeMode === 'surface'} onClick={() => onModeChange('surface')} />
-          <ControlModeTab icon={<IconWorld />} label="World" active={activeMode === 'world'} onClick={() => onModeChange('world')} />
-          <ControlModeTab icon={<IconExport />} label="Export" active={activeMode === 'export'} onClick={() => onModeChange('export')} />
-        </div>
-      </div>
-      <div style={{ flex: 1, minHeight: 0, overflow: 'hidden' }}>
-        {activeMode === 'export' ? (
-          <FigureExportPanel />
-        ) : (
-          <StudioControlDeck
-            mode={activeMode}
-            onClose={onClose}
-            variant="drawer"
-          />
-        )}
-      </div>
-    </div>
-  );
-}
-
-function ControlModeTab({
-  icon,
-  label,
-  active,
-  onClick,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  active: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      aria-label={label}
-      aria-pressed={active}
-      title={label}
-      onClick={onClick}
-      style={{
-        minWidth: 0,
-        height: 48,
-        display: 'grid',
-        placeItems: 'center',
-        gap: 1,
-        padding: '4px 2px',
-        color: active ? '#f8fafc' : '#94a3b8',
-        background: active ? 'rgba(30,220,224,0.16)' : 'rgba(2,6,23,0.54)',
-        border: active ? '1px solid rgba(30,220,224,0.66)' : '1px solid rgba(148,163,184,0.18)',
-        borderRadius: 7,
-        boxShadow: active ? '0 0 16px rgba(30,220,224,0.18)' : 'inset 0 1px 0 rgba(255,255,255,0.04)',
-        cursor: 'pointer',
-        fontSize: 10,
-        fontWeight: 760,
-        lineHeight: 1,
-        letterSpacing: 0,
-      }}
-    >
-      <span style={{ display: 'flex', width: 20, height: 20 }}>{icon}</span>
-      <span style={{ whiteSpace: 'normal', maxWidth: '100%' }}>{label}</span>
-    </button>
-  );
-}
-
-const drawerIconButtonStyle: React.CSSProperties = {
-  width: 28,
-  height: 28,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexShrink: 0,
-  color: 'var(--text-secondary)',
-  background: 'rgba(15,23,42,0.72)',
-  border: '1px solid rgba(148,163,184,0.22)',
-  borderRadius: 6,
-  cursor: 'pointer',
-};
 
 /** Inline tab strip rendered at the top of a consolidated drawer. Switches
  *  the active panel without closing the drawer; currently used for the

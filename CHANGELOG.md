@@ -16,6 +16,28 @@ Newest first. Dates are absolute.
 
 ---
 
+## 2026-06-14 - LUPI controls palette rollout
+
+- **Why.** The viewer's advanced visual controls had outgrown the fixed side drawer. Users needed
+  a more deliberate inspection surface: one place to tune look, surface, world, and export settings
+  without covering the molecule or forcing repeated drawer navigation.
+- **What.**
+  - Replaced the desktop controls drawer with a dockable, resizable, collapsible tool palette.
+  - Consolidated Look, Surface, World, and Export into one tabbed Controls surface.
+  - Kept the mobile bottom sheet path intact while making desktop panel chrome consistent.
+  - Added a portless browser verification harness, `pnpm verify:controls`, that starts Vite on a
+    free local port, loads a real C60 molecule, checks all four control tabs, validates there is
+    only one close affordance per embedded panel, and exercises resize plus collapse/expand.
+- **Results.**
+  - Local production build is green: `pnpm --filter @atlas/web build`.
+  - Portless controls smoke is green on random local ports: `pnpm verify:controls -- --no-screenshot`.
+  - The rollout no longer depends on a manually running fixed-port dev server for verification.
+- **Next.**
+  - Ship through the normal push-to-main Cloud Run viewer deploy and verify `https://lupi.live`
+    against the same controls harness via `VERIFY_URL`.
+  - Add screenshot diffing once the visual-regression lane graduates from artifact capture to
+    assertions.
+
 ## 2026-06-12 — Repo consolidation and onboarding sprint
 
 - **Why.** The repo had grown three overlapping Distill roots (`distiller/`, `lupine-distill/`, `atlas-distill/`) and a maze of docs that made it hard for new developers and research scientists to find the right entry point. The one-root-one-owner rule was being violated, and stale paths were still referenced by active code.

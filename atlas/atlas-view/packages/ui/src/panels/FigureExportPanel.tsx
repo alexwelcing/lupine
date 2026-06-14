@@ -146,7 +146,7 @@ function createAutoFlythrough(
   return { loop: false, keyframes };
 }
 
-export function FigureExportPanel() {
+export function FigureExportPanel({ showCloseButton = true }: { showCloseButton?: boolean }) {
   const setActivePanel = useStore(s => s.setActivePanel);
   const file = useStore(s => s.file);
   const frame = useStore(s => s.frame);
@@ -319,25 +319,27 @@ export function FigureExportPanel() {
             </div>
           )}
         </div>
-        <button
-          type="button"
-          aria-label="Close export"
-          onClick={() => setActivePanel(null)}
-          style={{
-            display: 'grid',
-            placeItems: 'center',
-            width: compact ? 26 : 28,
-            height: compact ? 26 : 28,
-            color: 'rgba(226, 232, 240, 0.76)',
-            background: 'rgba(255,255,255,0.04)',
-            border: '1px solid rgba(148, 163, 184, 0.18)',
-            borderRadius: 8,
-            cursor: 'pointer',
-            flexShrink: 0,
-          }}
-        >
-          <IconClose />
-        </button>
+        {showCloseButton && (
+          <button
+            type="button"
+            aria-label="Close export"
+            onClick={() => setActivePanel(null)}
+            style={{
+              display: 'grid',
+              placeItems: 'center',
+              width: compact ? 26 : 28,
+              height: compact ? 26 : 28,
+              color: 'rgba(226, 232, 240, 0.76)',
+              background: 'rgba(255,255,255,0.04)',
+              border: '1px solid rgba(148, 163, 184, 0.18)',
+              borderRadius: 8,
+              cursor: 'pointer',
+              flexShrink: 0,
+            }}
+          >
+            <IconClose />
+          </button>
+        )}
       </div>
 
       <div style={{

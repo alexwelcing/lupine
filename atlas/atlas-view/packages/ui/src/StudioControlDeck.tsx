@@ -94,12 +94,14 @@ export function StudioControlDeck({
   bottomOffset = 0,
   maxHeight = 'none',
   variant = 'overlay',
+  showCloseButton = true,
 }: {
   mode: StudioDeckMode;
   onClose: () => void;
   bottomOffset?: number;
   maxHeight?: string;
   variant?: 'overlay' | 'drawer';
+  showCloseButton?: boolean;
 }) {
   const isDrawer = variant === 'drawer';
   const postprocessPreset = useStore(s => s.postprocessPreset);
@@ -394,15 +396,18 @@ export function StudioControlDeck({
               </div>
             </div>
           </div>
-          <button
-            type="button"
-            onClick={onClose}
-            title="Close"
-            className="lupine-icon-btn"
-            style={{ width: 28, height: 28 }}
-          >
-            <IconClose />
-          </button>
+          {showCloseButton && (
+            <button
+              type="button"
+              aria-label={`Close ${title} controls`}
+              onClick={onClose}
+              title="Close"
+              className="lupine-icon-btn"
+              style={{ width: 28, height: 28 }}
+            >
+              <IconClose />
+            </button>
+          )}
         </div>
 
         {mode === 'look' && (
