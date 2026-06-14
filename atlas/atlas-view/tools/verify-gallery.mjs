@@ -8,52 +8,51 @@
  *   1. Gallery section renders the curated card set.
  *   2. Search filters the grid (and the deferred value still resolves).
  *   3. A no-match search shows the empty state; reset restores the grid.
- *   4. Domain filter narrows the grid and sets aria-pressed.
- *   5. Clicking a card loads its dataset (store.activeCardId + file).
- *   6. The NIST Potentials tab renders the PotentialBrowser.
+ *   4. Functional-group filter narrows the grid and explains the molecule.
+ *   5. Domain filter narrows the grid and sets aria-pressed.
+ *   6. Clicking a card loads its dataset (store.activeCardId + file).
+ *   7. The NIST Potentials tab renders the PotentialBrowser.
  *
  * Usage:
  *   node tools/verify-gallery.mjs                 # headless, asserts
  *   node tools/verify-gallery.mjs --no-screenshot
  *
- * Requires: dev server at http://localhost:3000/, Playwright (repo devDep).
+ * By default this starts the Vite app on an OS-assigned localhost port. Set
+ * VERIFY_URL or pass --url=http://... to target an existing preview instead.
  * Exit code 0 = all checks passed, 1 = at least one failed.
  */
 
 import { chromium } from 'playwright';
 import { mkdirSync, existsSync, readFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
+import net from 'node:net';
 import { resolve, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(__dirname, '..');
+const WEB_ROOT = resolve(REPO_ROOT, 'apps/web');
 const ARTIFACTS = resolve(REPO_ROOT, '.verify-artifacts');
-const URL = process.env.VERIFY_URL ?? 'http://localhost:3000/';
 const galleryData = JSON.parse(readFileSync(resolve(REPO_ROOT, 'packages/ui/src/gallery-data.json'), 'utf-8'));
 const expectedCardCount = galleryData.length;
-const args = new Set(process.argv.slice(2));
-const skipShots = args.has('--no-screenshot');
+const requireFromWeb = createRequire(resolve(WEB_ROOT, 'package.json'));
+const { createServer } = await import(pathToFileURL(requireFromWeb.resolve('vite')).href);
+const args = parseArgs(process.argv.slice(2));
+const skipShots = Boolean(args['no-screenshot']);
+const externalUrl = process.env.VERIFY_URL || args.url;
 const timeout = 30000;
 
 if (!existsSync(ARTIFACTS)) mkdirSync(ARTIFACTS, { recursive: true });
 const stamp = new Date().toISOString().replace(/[:.]/g, '-');
 
+let server = null;
+let browser = null;
+let page = null;
 const results = [];
 function check(name, ok, detail = '') {
   results.push({ name, ok });
   console.log(`${ok ? '  ✓' : '  ✗'} ${name}${detail ? ` — ${detail}` : ''}`);
 }
-
-const browser = await chromium.launch({
-  headless: true,
-  args: ['--enable-unsafe-webgpu', '--enable-features=Vulkan,WebGPU', '--use-vulkan'],
-});
-const ctx = await browser.newContext({ viewport: { width: 1600, height: 1000 } });
-const page = await ctx.newPage();
-await page.addInitScript((count) => {
-  window.__VERIFY_EXPECTED_GALLERY_COUNT = count;
-}, expectedCardCount);
-page.on('pageerror', (err) => console.log(`[PAGE ERROR] ${err.message}`));
 
 const shot = async (label) => {
   if (skipShots) return;
@@ -63,8 +62,21 @@ const shot = async (label) => {
 };
 
 try {
-  console.log(`[verify-gallery] → ${URL}`);
-  await page.goto(URL, { waitUntil: 'domcontentloaded', timeout });
+  const targetUrl = withTrailingSlash(externalUrl || await startPortlessVite());
+  console.log(`[verify-gallery] → ${targetUrl}`);
+
+  browser = await chromium.launch({
+    headless: true,
+    args: ['--enable-unsafe-webgpu', '--enable-features=Vulkan,WebGPU', '--use-vulkan'],
+  });
+  const ctx = await browser.newContext({ viewport: { width: 1600, height: 1000 } });
+  page = await ctx.newPage();
+  await page.addInitScript((count) => {
+    window.__VERIFY_EXPECTED_GALLERY_COUNT = count;
+  }, expectedCardCount);
+  page.on('pageerror', (err) => console.log(`[PAGE ERROR] ${err.message}`));
+
+  await page.goto(targetUrl, { waitUntil: 'domcontentloaded', timeout });
 
   // Store is attached to window in dev regardless of Canvas mount.
   await page.waitForFunction(() => typeof window?.__atlas?.getState === 'function', null, { timeout });
@@ -113,7 +125,30 @@ try {
   const afterReset = await page.locator(cardSel).count();
   check('reset restores the full grid', afterReset === expectedCardCount, `${afterReset} cards`);
 
-  // ── 4. Domain filter ──
+  // ── 4. Organic functional-group filter ──
+  const acidBtn = page.locator('[data-testid="gallery-group-carboxylic-acid"]');
+  await acidBtn.click();
+  await page.waitForFunction(
+    () => document.querySelectorAll('button[data-testid^="gallery-card-"]').length === 1,
+    null,
+    { timeout },
+  );
+  const acidCount = await page.locator(cardSel).count();
+  const aspirinVisible = await page.locator('[data-testid="gallery-card-aspirin"]').count();
+  const acidPressed = await acidBtn.getAttribute('aria-pressed');
+  const functionalNote = await page.locator('.lupi-gallery-functional-note').innerText();
+  check('functional-group filter narrows to mapped molecules', acidCount === 1 && aspirinVisible === 1, `${acidCount} carboxylic-acid result`);
+  check('functional-group filter exposes aria-pressed', acidPressed === 'true');
+  check('spotlight teaches the active molecule groups', /Carboxylic Acids/.test(functionalNote) && /Esters/.test(functionalNote));
+  await shot('functional-group');
+  await page.locator('[data-testid="gallery-group-all"]').click();
+  await page.waitForFunction(
+    () => document.querySelectorAll('button[data-testid^="gallery-card-"]').length === window.__VERIFY_EXPECTED_GALLERY_COUNT,
+    null,
+    { timeout },
+  );
+
+  // ── 5. Domain filter ──
   const metalsBtn = page.locator('button[aria-pressed]', { hasText: 'Metals & Alloys' }).first();
   await metalsBtn.click();
   await page.waitForFunction(
@@ -135,7 +170,7 @@ try {
     { timeout },
   );
 
-  // ── 5. Card click loads the dataset ──
+  // ── 6. Card click loads the dataset ──
   await page.locator('[data-testid="gallery-card-c60_buckyball"]').click();
   await page.waitForFunction(
     () => window.__atlas.getState().activeCardId === 'c60_buckyball',
@@ -151,9 +186,9 @@ try {
   check('card click loads a dataset into the store', loaded, `file=${fileName}`);
   await shot('after-card-load');
 
-  // ── 6. NIST tab via ?tab= deep-link (a card load navigates to the
+  // ── 7. NIST tab via ?tab= deep-link (a card load navigates to the
   //       viewer, so re-enter the landing fresh — also tests the deep-link). ──
-  await page.goto(`${URL}?tab=potentials`, { waitUntil: 'domcontentloaded', timeout });
+  await page.goto(`${targetUrl}?tab=potentials`, { waitUntil: 'domcontentloaded', timeout });
   await page.waitForFunction(() => typeof window?.__atlas?.getState === 'function', null, { timeout });
   await page.locator('#gallery').scrollIntoViewIfNeeded();
   const nistTab = page.locator('[data-testid="tab-potentials"]');
@@ -174,9 +209,61 @@ try {
   console.log(`[verify-gallery] FATAL ${err.message}`);
   check('harness ran to completion', false, err.message);
 } finally {
-  await browser.close();
+  if (browser) await browser.close();
+  if (server) await server.close();
 }
 
 const failed = results.filter((r) => !r.ok);
 console.log(`\n[verify-gallery] ${results.length - failed.length}/${results.length} checks passed`);
 process.exit(failed.length === 0 ? 0 : 1);
+
+async function startPortlessVite() {
+  const port = await getFreePort();
+  process.env.VITE_DEV_PORT = String(port);
+  server = await createServer({
+    root: WEB_ROOT,
+    configFile: resolve(WEB_ROOT, 'vite.config.ts'),
+    server: {
+      host: '127.0.0.1',
+      port,
+      strictPort: true,
+      hmr: false,
+    },
+    logLevel: 'error',
+  });
+  await server.listen();
+  const address = server.httpServer?.address();
+  if (!address || typeof address === 'string') {
+    throw new Error('Vite did not expose a TCP address');
+  }
+  return `http://127.0.0.1:${address.port}/`;
+}
+
+function getFreePort() {
+  return new Promise((resolvePort, reject) => {
+    const probe = net.createServer();
+    probe.unref();
+    probe.on('error', reject);
+    probe.listen(0, '127.0.0.1', () => {
+      const address = probe.address();
+      probe.close(() => {
+        if (!address || typeof address === 'string') reject(new Error('No TCP port allocated'));
+        else resolvePort(address.port);
+      });
+    });
+  });
+}
+
+function parseArgs(argv) {
+  const parsed = {};
+  for (const arg of argv) {
+    if (!arg.startsWith('--')) continue;
+    const [rawKey, rawValue] = arg.slice(2).split('=');
+    parsed[rawKey] = rawValue ?? true;
+  }
+  return parsed;
+}
+
+function withTrailingSlash(url) {
+  return url.endsWith('/') ? url : `${url}/`;
+}

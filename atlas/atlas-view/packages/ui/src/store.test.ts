@@ -1,6 +1,14 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { resetStore, getStoreState } from './test-utils';
 import { createMockTrajectory } from '@atlas/core/test-utils';
+import { DEFAULT_SCENE_ID } from '@atlas/scene/materials';
+
+function encodeStateDelta(delta: Record<string, unknown>) {
+  return btoa(JSON.stringify(delta))
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=+$/, '');
+}
 
 describe('Store — Display Toggles', () => {
   beforeEach(() => {
@@ -91,6 +99,16 @@ describe('Store — Color & Visuals', () => {
     expect(getStoreState().renderStyle).toBe('toon');
   });
 
+  it('keeps atom color schemes independent from surface render style', () => {
+    getStoreState().setRenderStyle('toon');
+    getStoreState().setColorScheme('botanical');
+
+    const s = getStoreState();
+    expect(s.colorScheme).toBe('botanical');
+    expect(s.atomColorSource).toBe('botanical');
+    expect(s.renderStyle).toBe('toon');
+  });
+
   it('applies neon visual profile', () => {
     getStoreState().applyVisualProfile('neon');
     const s = getStoreState();
@@ -127,6 +145,83 @@ describe('Store — URL Serialization', () => {
     expect(restored.showBonds).toBe(true);
     expect(restored.bondCutoff).toBeCloseTo(3.2);
     expect(restored.bondTolerance).toBeCloseTo(0.7);
+  });
+
+  it('round-trips shareable look settings through URL', () => {
+    const s = getStoreState();
+    s.setColorScheme('uniform');
+    s.setUniformAtomColor('#ff8844');
+    s.setPostprocessPreset('cinematic');
+    s.setPostprocessIntensity(1.35);
+    s.setRenderStyle('botanical');
+    s.setMaterialScene('forge');
+    s.setMaterialPreset('metallic');
+    s.setMaterialIntensity(0.42);
+    s.setEnvironmentPreset('warehouse');
+    s.setBackgroundPreset('void');
+    s.setBackgroundStyle('spotlight');
+    s.setRimLightIntensity(0.75);
+    s.setFillLightColor('#223344');
+    s.setRimLightColor('#ddeeff');
+
+    const encoded = s.encodeToURL();
+    resetStore();
+    getStoreState().decodeFromURL(encoded);
+    const restored = getStoreState();
+
+    expect(restored.colorScheme).toBe('uniform');
+    expect(restored.uniformAtomColor).toBe('#ff8844');
+    expect(restored.postprocessPreset).toBe('cinematic');
+    expect(restored.postprocessIntensity).toBeCloseTo(1.35);
+    expect(restored.renderStyle).toBe('botanical');
+    expect(restored.materialScene).toBe('forge');
+    expect(restored.materialPreset).toBe('metallic');
+    expect(restored.materialIntensity).toBeCloseTo(0.42);
+    expect(restored.environmentPreset).toBe('warehouse');
+    expect(restored.backgroundPreset).toBe('void');
+    expect(restored.backgroundStyle).toBe('spotlight');
+    expect(restored.rimLightIntensity).toBeCloseTo(0.75);
+    expect(restored.fillLightColor).toBe('#223344');
+    expect(restored.rimLightColor).toBe('#ddeeff');
+  });
+
+  it('sanitizes invalid look settings from URL state', () => {
+    getStoreState().decodeFromURL(encodeStateDelta({
+      ms: 'missing-scene',
+      mp: 'mirror-metal',
+      env: 'orbital',
+    }));
+
+    const restored = getStoreState();
+    expect(restored.materialScene).toBe(DEFAULT_SCENE_ID);
+    expect(restored.materialPreset).toBe('default');
+    expect(restored.environmentPreset).toBe('studio');
+  });
+
+  it('infers color scheme for legacy URL color state', () => {
+    getStoreState().decodeFromURL(encodeStateDelta({
+      cm: 'property',
+      cp: 'energy',
+      cmap: 'turbo',
+    }));
+
+    let restored = getStoreState();
+    expect(restored.colorScheme).toBe('property');
+    expect(restored.atomColorSource).toBe('colormap');
+    expect(restored.colorMode).toBe('property');
+    expect(restored.colorProperty).toBe('energy');
+
+    resetStore();
+    getStoreState().decodeFromURL(encodeStateDelta({
+      cm: 'type',
+      cmap: 'plasma',
+    }));
+
+    restored = getStoreState();
+    expect(restored.colorScheme).toBe('family');
+    expect(restored.atomColorSource).toBe('colormap');
+    expect(restored.colorMode).toBe('type');
+    expect(restored.colormap).toBe('plasma');
   });
 });
 

@@ -127,19 +127,20 @@ function ControlModeTab({
       className={`lupine-btn ${active ? 'active' : ''}`}
       style={{
         minWidth: 0,
-        height: 48,
-        display: 'grid',
-        placeItems: 'center',
-        gap: 2,
-        padding: '4px 2px',
+        height: 40,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 6,
+        padding: '4px 6px',
         fontSize: 10,
         fontWeight: 760,
         lineHeight: 1,
         letterSpacing: 0,
       }}
     >
-      <span style={{ display: 'flex', width: 20, height: 20 }}>{icon}</span>
-      <span style={{ whiteSpace: 'normal', maxWidth: '100%' }}>{label}</span>
+      <span style={{ display: 'flex', width: 18, height: 18, flexShrink: 0 }}>{icon}</span>
+      <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{label}</span>
     </button>
   );
 }

@@ -5,7 +5,6 @@ import { getElementSpec } from '@atlas/core';
 import type { ColormapName, RenderStyle } from '@atlas/core/types';
 import { MATERIAL_SCENES, type MaterialScene } from '@atlas/scene/materials';
 import { COLOR_SCHEMES, SCHEME_ORDER, type ColorSchemeId } from './coloring';
-import { isClickSoundEnabled, playClick, setClickSoundEnabled, subscribeClickSound } from './lib/clickSound';
 import { useStore, type FilterShellPreset, type FilterShellShape } from './store';
 import {
   BG_GRADIENT_PRESETS,
@@ -40,6 +39,8 @@ const PALETTE_OPTIONS: Array<{ id: ColormapName; label: string; accent: string }
   { id: 'cyberpunk', label: 'Cyber', accent: '#e879f9' },
   { id: 'grayscale', label: 'Gray', accent: '#cbd5e1' },
 ];
+
+const ATOM_COLOR_SCHEMES = SCHEME_ORDER.filter(scheme => scheme !== 'botanical');
 
 const COLORMAP_PREVIEWS: Partial<Record<ColormapName, string>> = {
   viridis: 'linear-gradient(90deg, #440154, #21918c, #fde725)',
@@ -161,9 +162,12 @@ export function StudioControlDeck({
   const toggleAxes = useStore(s => s.toggleAxes);
   const showCell = useStore(s => s.showCell);
   const toggleCell = useStore(s => s.toggleCell);
+  const encodeToURL = useStore(s => s.encodeToURL);
   const file = useStore(s => s.file);
   const frame = useStore(s => s.frame);
   const [selectedAtomicNumber, setSelectedAtomicNumber] = useState<number | null>(null);
+  const [shareStatus, setShareStatus] = useState<'idle' | 'copied' | 'failed'>('idle');
+  const shareTimerRef = useRef<number | null>(null);
 
   const materialScenes = useMemo(
     () => MATERIAL_SCENES.filter(scene => FEATURED_SCENE_IDS.includes(scene.id)),
@@ -183,17 +187,6 @@ export function StudioControlDeck({
     { label: 'Signature', presets: signaturePresets },
     { label: 'Base', presets: gradientPresets },
   ], [gradientPresets, mathPresets, publicationPresets, signaturePresets]);
-  const selectedMaterialScene = useMemo(
-    () => materialScenes.find(scene => scene.id === materialScene) ?? materialScenes[0],
-    [materialScene, materialScenes],
-  );
-  const selectedBackground = useMemo(() => {
-    for (const group of backgroundGroups) {
-      const preset = group.presets.find(item => item.id === backgroundPreset);
-      if (preset) return preset;
-    }
-    return gradientPresets[0];
-  }, [backgroundGroups, backgroundPreset, gradientPresets]);
   const activeBackgroundIsVideo = useMemo(
     () => BG_VIDEO_PRESETS.some(preset => preset.id === backgroundPreset),
     [backgroundPreset],
@@ -218,6 +211,12 @@ export function StudioControlDeck({
   const activeElementHasOverride = activeElement
     ? Boolean(elementColorOverrides[activeElement.atomicNumber])
     : false;
+  const atomColorSchemes = useMemo(
+    () => colorScheme === 'botanical'
+      ? [...ATOM_COLOR_SCHEMES, 'botanical' as ColorSchemeId]
+      : ATOM_COLOR_SCHEMES,
+    [colorScheme],
+  );
 
   useEffect(() => {
     if (presentElements.length === 0) {
@@ -228,6 +227,10 @@ export function StudioControlDeck({
       setSelectedAtomicNumber(presentElements[0].atomicNumber);
     }
   }, [presentElements, selectedAtomicNumber]);
+
+  useEffect(() => () => {
+    if (shareTimerRef.current !== null) window.clearTimeout(shareTimerRef.current);
+  }, []);
 
   const handleRandomVideo = () => {
     if (BG_VIDEO_PRESETS.length === 0) return;
@@ -270,13 +273,18 @@ export function StudioControlDeck({
     }
   };
 
-  // Procedural-click preference (module-local, not store state — see lib/clickSound).
-  const [clickSound, setClickSound] = useState(isClickSoundEnabled());
-  useEffect(() => subscribeClickSound(setClickSound), []);
-  const toggleClickSound = () => {
-    const next = !clickSound;
-    setClickSoundEnabled(next);
-    if (next) playClick(); // preview the tick when enabling, inside this user gesture
+  const copyLookLink = async () => {
+    if (typeof window === 'undefined') return;
+    const url = new URL(window.location.href);
+    url.searchParams.set('s', encodeToURL());
+    try {
+      await navigator.clipboard.writeText(url.toString());
+      setShareStatus('copied');
+    } catch {
+      setShareStatus('failed');
+    }
+    if (shareTimerRef.current !== null) window.clearTimeout(shareTimerRef.current);
+    shareTimerRef.current = window.setTimeout(() => setShareStatus('idle'), 1800);
   };
 
   const title = mode === 'look' ? 'Look' : mode === 'surface' ? 'Surface' : 'World';
@@ -434,24 +442,30 @@ export function StudioControlDeck({
                 onChange={setPostprocessIntensity}
                 format={value => `${Math.round(value * 100)}%`}
               />
+              <SegmentButton
+                label={shareStatus === 'copied' ? 'Copied' : shareStatus === 'failed' ? 'Copy failed' : 'Copy look link'}
+                active={shareStatus === 'copied'}
+                accent="#a7f3d0"
+                onClick={copyLookLink}
+              />
             </ControlGroup>
 
             <ControlGroup title="Atoms">
               <div className="lupi-studio-segments">
-                {SCHEME_ORDER.map(schemeId => {
+                {atomColorSchemes.map(schemeId => {
                   const scheme = COLOR_SCHEMES[schemeId];
                   return (
                     <SegmentButton
                       key={scheme.id}
                       label={scheme.label}
                       active={colorScheme === scheme.id}
-                      accent={scheme.id === 'botanical' ? '#69f0ae' : '#1edce0'}
+                      accent={scheme.id === 'botanical' ? '#69f0ae' : scheme.id === 'uniform' ? '#f59e0b' : '#1edce0'}
                       onClick={() => applyColorScheme(scheme.id as ColorSchemeId)}
                     />
                   );
                 })}
               </div>
-              {availableProperties.length > 0 && (
+              {colorScheme === 'property' && availableProperties.length > 0 && (
                 <CompactSelect
                   label="Property"
                   value={colorProperty ?? ''}
@@ -465,50 +479,46 @@ export function StudioControlDeck({
               )}
             </ControlGroup>
 
-            <ControlGroup title="Color">
-              <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 0.9fr) minmax(0, 1.1fr)', gap: 5, minWidth: 0 }}>
+            <ControlGroup title={colorScheme === 'element' ? 'Elements' : colorScheme === 'uniform' ? 'Color' : 'Palette'}>
+              {colorScheme === 'uniform' && (
                 <ColorPicker
                   label="Uniform"
                   value={uniformAtomColor}
                   active={colorScheme === 'uniform'}
                   onChange={applyUniformAtomColor}
                 />
-                {activeElement && (
-                  <ElementColorPicker
-                    active={colorScheme === 'element' || activeElementHasOverride}
-                    atomicNumber={activeElement.atomicNumber}
-                    value={activeElementColor}
-                    options={presentElements.map(element => ({
-                      value: element.atomicNumber,
-                      label: `${element.spec.symbol} ${element.atomicNumber}`,
-                    }))}
-                    overridden={activeElementHasOverride}
-                    onSelect={setSelectedAtomicNumber}
-                    onChange={(color) => applyElementColor(activeElement.atomicNumber, color)}
-                    onReset={() => {
-                      resetElementColorOverride(activeElement.atomicNumber);
-                      setColorScheme('element');
-                    }}
-                  />
-                )}
-              </div>
-              <div style={paletteRailStyle}>
-                {PALETTE_OPTIONS.map(option => (
-                  <SwatchButton
-                    key={option.id}
-                    label={option.label}
-                    active={colormap === option.id && colorScheme !== 'uniform'}
-                    background={COLORMAP_PREVIEWS[option.id] ?? option.accent}
-                    onClick={() => applyColormap(option.id)}
-                  />
-                ))}
-              </div>
-              <SegmentButton
-                label={clickSound ? 'Clicks on' : 'Clicks off'}
-                active={clickSound}
-                accent="#f59e0b"
-                onClick={toggleClickSound}
-              />
+              )}
+              {colorScheme === 'element' && activeElement && (
+                <ElementColorPicker
+                  active={colorScheme === 'element' || activeElementHasOverride}
+                  atomicNumber={activeElement.atomicNumber}
+                  value={activeElementColor}
+                  options={presentElements.map(element => ({
+                    value: element.atomicNumber,
+                    label: `${element.spec.symbol} ${element.atomicNumber}`,
+                  }))}
+                  overridden={activeElementHasOverride}
+                  onSelect={setSelectedAtomicNumber}
+                  onChange={(color) => applyElementColor(activeElement.atomicNumber, color)}
+                  onReset={() => {
+                    resetElementColorOverride(activeElement.atomicNumber);
+                    setColorScheme('element');
+                  }}
+                />
+              )}
+              {(colorScheme === 'property' || colorScheme === 'family' || colorScheme === 'botanical') && (
+                <div style={paletteRailStyle}>
+                  {PALETTE_OPTIONS.map(option => (
+                    <SwatchButton
+                      key={option.id}
+                      label={option.label}
+                      active={colormap === option.id}
+                      background={COLORMAP_PREVIEWS[option.id] ?? option.accent}
+                      onClick={() => applyColormap(option.id)}
+                    />
+                  ))}
+                </div>
+              )}
             </ControlGroup>
           </div>
         )}
@@ -537,15 +547,6 @@ export function StudioControlDeck({
                 }}
                 options={materialScenes.map(scene => ({ value: scene.id, label: `${scene.label} / ${scene.materialPreset}` }))}
               />
-              {selectedMaterialScene && (
-                <div style={{
-                  height: 22,
-                  borderRadius: 5,
-                  border: `1px solid ${selectedMaterialScene.accentColor}66`,
-                  background: selectedMaterialScene.cardGradient,
-                  boxShadow: `inset 0 0 18px ${selectedMaterialScene.accentColor}18`,
-                }} />
-              )}
             </ControlGroup>
 
             <ControlGroup title="Material">
@@ -555,7 +556,6 @@ export function StudioControlDeck({
                 <CompactSlider label="Rough" value={surfaceRoughness} min={-1} max={1} step={0.02} onChange={setSurfaceRoughness} />
                 <CompactSlider label="Polish" value={surfacePolish} min={-1} max={1} step={0.02} onChange={setSurfacePolish} />
                 <CompactSlider label="Coat" value={surfaceClearcoat} min={0} max={1} step={0.02} onChange={setSurfaceClearcoat} />
-                <CompactSlider label="Bond" value={bondTolerance} min={0} max={1.2} step={0.02} onChange={setBondTolerance} format={value => value.toFixed(2)} />
               </div>
             </ControlGroup>
 
@@ -565,12 +565,7 @@ export function StudioControlDeck({
                 <SegmentButton label="Type" active={bondColorMode === 'type'} accent="#7de9ff" onClick={() => setBondColorMode('type')} />
                 <SegmentButton label="Length" active={bondColorMode === 'length'} accent="#f59e0b" onClick={() => setBondColorMode('length')} />
               </div>
-              <ColorPicker
-                label="Uniform"
-                value={uniformAtomColor}
-                active={colorScheme === 'uniform'}
-                onChange={applyUniformAtomColor}
-              />
+              <CompactSlider label="Tolerance" value={bondTolerance} min={0} max={1.2} step={0.02} onChange={setBondTolerance} format={value => value.toFixed(2)} />
             </ControlGroup>
           </div>
         )}
@@ -583,17 +578,6 @@ export function StudioControlDeck({
                 groups={backgroundGroups}
                 onChange={setBackgroundPreset}
               />
-              {selectedBackground && (
-                <div style={{
-                  height: 28,
-                  borderRadius: 6,
-                  border: '1px solid rgba(148,163,184,0.22)',
-                  background: selectedBackground.preview
-                    ? `linear-gradient(90deg, rgba(0,0,0,0.05), rgba(0,0,0,0.64)), ${selectedBackground.preview}`
-                    : `linear-gradient(135deg, ${selectedBackground.top}, ${selectedBackground.bottom})`,
-                  boxShadow: activeBackgroundIsVideo ? '0 0 18px rgba(30,220,224,0.22)' : 'inset 0 1px 0 rgba(255,255,255,0.06)',
-                }} />
-              )}
             </ControlGroup>
 
             <ControlGroup title="Shell">
@@ -651,25 +635,6 @@ export function StudioControlDeck({
               </div>
             </ControlGroup>
 
-            <ControlGroup title="Color">
-              <ColorPicker
-                label="Uniform"
-                value={uniformAtomColor}
-                active={colorScheme === 'uniform'}
-                onChange={applyUniformAtomColor}
-              />
-              <div style={paletteRailStyle}>
-                {PALETTE_OPTIONS.map(option => (
-                  <SwatchButton
-                    key={option.id}
-                    label={option.label}
-                    active={colormap === option.id && colorScheme !== 'uniform'}
-                    background={COLORMAP_PREVIEWS[option.id] ?? option.accent}
-                    onClick={() => applyColormap(option.id)}
-                  />
-                ))}
-              </div>
-            </ControlGroup>
           </div>
         )}
       </div>

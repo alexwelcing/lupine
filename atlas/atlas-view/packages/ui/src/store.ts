@@ -67,6 +67,47 @@ function sanitizeFilterShellPreset(value: unknown): FilterShellPreset {
     : 'haze';
 }
 
+function sanitizeAtomColorSource(value: unknown, fallback: AtomColorSource): AtomColorSource {
+  return value === 'colormap' || value === 'element' || value === 'botanical' ? value : fallback;
+}
+
+function sanitizeColorMode(value: unknown, fallback: ColorMode): ColorMode {
+  return value === 'type' || value === 'property' || value === 'uniform' ? value : fallback;
+}
+
+function resolveUrlColorScheme(value: unknown, delta: Record<string, unknown>): ColorSchemeId {
+  if (typeof value === 'string' && value in COLOR_SCHEMES) return value as ColorSchemeId;
+  if (delta.cm === 'property') return 'property';
+  if (delta.cm === 'uniform') return 'uniform';
+  if (delta.acs === 'botanical') return 'botanical';
+  if (delta.acs === 'colormap' || typeof delta.cmap === 'string') return 'family';
+  return 'element';
+}
+
+function sanitizePostprocessPreset(value: unknown): AppState['postprocessPreset'] {
+  return value === 'paper' || value === 'studio' || value === 'editorial' || value === 'cinematic' || value === 'diagram'
+    ? value
+    : 'studio';
+}
+
+function sanitizeMaterialPreset(value: unknown): AppState['materialPreset'] {
+  return value === 'default' || value === 'matte' || value === 'metallic' || value === 'glass' || value === 'plastic'
+    ? value
+    : 'default';
+}
+
+function sanitizeMaterialScene(value: unknown): string {
+  return typeof value === 'string' && MATERIAL_SCENES.some(scene => scene.id === value)
+    ? value
+    : DEFAULT_SCENE_ID;
+}
+
+function sanitizeEnvironmentPreset(value: unknown): AppState['environmentPreset'] {
+  return value === 'city' || value === 'studio' || value === 'dawn' || value === 'night' || value === 'warehouse' || value === 'forest' || value === 'apartment' || value === 'none'
+    ? value
+    : 'studio';
+}
+
 export interface BondDataset {
   id: string;
   source: 'webgpu' | 'cpu' | 'file';
@@ -713,14 +754,10 @@ export const useStore = create<AppState>()(
 
     setColorScheme: (colorScheme) => {
       const scheme = COLOR_SCHEMES[colorScheme];
-      const current = get();
       set({
         colorScheme,
         atomColorSource: scheme.atomColorSource,
         colorMode: scheme.atomColorMode,
-        renderStyle: scheme.botanical
-          ? 'botanical'
-          : (current.renderStyle === 'botanical' ? 'standard' : current.renderStyle),
       });
     },
     setAtomColorSource: (atomColorSource) => set({ atomColorSource }),
@@ -1077,19 +1114,24 @@ export const useStore = create<AppState>()(
         a.length === b.length && a.every((v, i) => Math.abs(v - b[i]) < 0.01);
 
       if (s.frame !== 0)                              delta.f = s.frame;
+      if (s.colorScheme !== DEFAULTS.colorScheme)      delta.cs = s.colorScheme;
+      if (s.atomColorSource !== COLOR_SCHEMES[s.colorScheme].atomColorSource) delta.acs = s.atomColorSource;
       if (s.colorMode !== 'type')                     delta.cm = s.colorMode;
       if (s.colorProperty !== null)                    delta.cp = s.colorProperty;
       if (s.colormap !== 'viridis')                    delta.cmap = s.colormap;
       if (s.uniformAtomColor !== '#1edce0')            delta.uac = s.uniformAtomColor;
       if (Object.keys(s.elementColorOverrides).length > 0) delta.eco = s.elementColorOverrides;
+      if (s.postprocessPreset !== DEFAULTS.postprocessPreset) delta.pp = s.postprocessPreset;
+      if (r(s.postprocessIntensity) !== DEFAULTS.postprocessIntensity) delta.pi = r(s.postprocessIntensity);
+      if (r(s.propertyEmissionStrength) !== DEFAULTS.propertyEmissionStrength) delta.pe = r(s.propertyEmissionStrength);
       if (!s.ssao)                                     delta.ssao = 0;
-      if (s.bloom)                                     delta.bloom = 1;
+      if (!s.bloom)                                    delta.bloom = 0;
       if (s.dof)                                       delta.dof = 1;
       if (!s.showCell)                                 delta.cell = 0;
       if (!s.showAxes)                                 delta.axes = 0;
       if (r(s.atomScale) !== 1.0)                      delta.as = r(s.atomScale);
       if (s.backgroundPreset !== 'deep')               delta.bg = s.backgroundPreset;
-      if (s.backgroundStyle !== 'linear')              delta.bgs = s.backgroundStyle;
+      if (s.backgroundStyle !== DEFAULTS.backgroundStyle) delta.bgs = s.backgroundStyle;
       if (s.filterShellShape !== 'off')                delta.fss = s.filterShellShape;
       if (s.filterShellPreset !== 'haze')              delta.fsp = s.filterShellPreset;
       if (r(s.filterShellOpacity) !== 0.24)            delta.fso = r(s.filterShellOpacity);
@@ -1098,16 +1140,21 @@ export const useStore = create<AppState>()(
       if (!arrEq(s.cameraTarget, [0, 0, 0]))          delta.ct = rArr(s.cameraTarget);
       if (s.cameraFov !== 50)                          delta.fov = s.cameraFov;
       if (r(s.playbackSpeed) !== 1.0)                  delta.spd = r(s.playbackSpeed);
-      if (r(s.ssaoIntensity) !== 0.5)                  delta.si = r(s.ssaoIntensity);
-      if (r(s.bloomIntensity) !== 0.3)                 delta.bi = r(s.bloomIntensity);
+      if (r(s.ssaoIntensity) !== DEFAULTS.ssaoIntensity) delta.si = r(s.ssaoIntensity);
+      if (r(s.bloomIntensity) !== DEFAULTS.bloomIntensity) delta.bi = r(s.bloomIntensity);
       if (s.dofFocus !== 50)                           delta.df = s.dofFocus;
       if (s.toneMapping !== 'aces')                    delta.tm = s.toneMapping;
       if (s.showBonds)                                 delta.bonds = 1;
       if (r(s.bondCutoff) !== 3.2)                     delta.bc = r(s.bondCutoff);
       if (r(s.bondTolerance) !== 0.45)                 delta.bt = r(s.bondTolerance);
       if (s.renderStyle !== 'standard')                delta.rs = s.renderStyle;
-      if (r(s.ambientLightIntensity) !== 0.35)         delta.ali = r(s.ambientLightIntensity);
-      if (r(s.dirLightIntensity) !== 1.2)              delta.dli = r(s.dirLightIntensity);
+      if (s.materialScene !== DEFAULTS.materialScene)  delta.ms = s.materialScene;
+      if (s.materialPreset !== DEFAULTS.materialPreset) delta.mp = s.materialPreset;
+      if (r(s.materialIntensity) !== DEFAULTS.materialIntensity) delta.mi = r(s.materialIntensity);
+      if (s.environmentPreset !== DEFAULTS.environmentPreset) delta.env = s.environmentPreset;
+      if (r(s.ambientLightIntensity) !== DEFAULTS.ambientLightIntensity) delta.ali = r(s.ambientLightIntensity);
+      if (r(s.dirLightIntensity) !== DEFAULTS.dirLightIntensity) delta.dli = r(s.dirLightIntensity);
+      if (r(s.rimLightIntensity) !== DEFAULTS.rimLightIntensity) delta.rli = r(s.rimLightIntensity);
       if (s.atomTexture !== 'none')                    delta.at = s.atomTexture;
       if (r(s.surfaceRoughness) !== 0.0)               delta.sr = r(s.surfaceRoughness);
       if (r(s.surfacePolish) !== 0.0)                  delta.sp = r(s.surfacePolish);
@@ -1118,8 +1165,8 @@ export const useStore = create<AppState>()(
       if (r(s.fillLightElevation) !== 10.0)            delta.fle = r(s.fillLightElevation);
       if (r(s.rimLightAzimuth) !== 160.0)              delta.rla = r(s.rimLightAzimuth);
       if (r(s.rimLightElevation) !== 30.0)             delta.rle = r(s.rimLightElevation);
-      if (s.fillLightColor !== '#5577ff')              delta.flc = s.fillLightColor;
-      if (s.rimLightColor !== '#ff7755')               delta.rlc = s.rimLightColor;
+      if (s.fillLightColor !== DEFAULTS.fillLightColor) delta.flc = s.fillLightColor;
+      if (s.rimLightColor !== DEFAULTS.rimLightColor)  delta.rlc = s.rimLightColor;
 
       const json = JSON.stringify(delta);
       // URL-safe base64: replace +/= with -_. for shorter, URL-friendly tokens
@@ -1134,22 +1181,29 @@ export const useStore = create<AppState>()(
         while (b64.length % 4) b64 += '=';
 
         const s = JSON.parse(atob(b64));
+        const colorScheme = resolveUrlColorScheme(s.cs, s);
+        const scheme = COLOR_SCHEMES[colorScheme];
         // Merge delta onto defaults — missing keys stay at their default values
         set({
           frame: s.f ?? 0,
-          colorMode: s.cm ?? 'type',
+          colorScheme,
+          atomColorSource: sanitizeAtomColorSource(s.acs, scheme.atomColorSource),
+          colorMode: sanitizeColorMode(s.cm, scheme.atomColorMode),
           colorProperty: s.cp ?? null,
           colormap: s.cmap ?? 'viridis',
           uniformAtomColor: sanitizeHexColor(s.uac ?? '#1edce0'),
           elementColorOverrides: sanitizeElementColorOverrides(s.eco),
+          postprocessPreset: sanitizePostprocessPreset(s.pp),
+          postprocessIntensity: Math.max(0, Math.min(2, s.pi ?? DEFAULTS.postprocessIntensity)),
+          propertyEmissionStrength: Math.max(0, Math.min(1, s.pe ?? DEFAULTS.propertyEmissionStrength)),
           ssao: s.ssao !== 0,
-          bloom: s.bloom === 1,
+          bloom: s.bloom !== 0,
           dof: s.dof === 1,
           showCell: s.cell !== 0,
           showAxes: s.axes !== 0,
           atomScale: s.as ?? 1.0,
           backgroundPreset: s.bg ?? 'deep',
-          backgroundStyle: s.bgs ?? 'linear',
+          backgroundStyle: s.bgs ?? DEFAULTS.backgroundStyle,
           filterShellShape: sanitizeFilterShellShape(s.fss),
           filterShellPreset: sanitizeFilterShellPreset(s.fsp),
           filterShellOpacity: Math.max(0, Math.min(0.65, s.fso ?? 0.24)),
@@ -1158,16 +1212,21 @@ export const useStore = create<AppState>()(
           cameraTarget: s.ct ?? [0, 0, 0],
           cameraFov: s.fov ?? 50,
           playbackSpeed: s.spd ?? 1.0,
-          ssaoIntensity: s.si ?? 0.5,
-          bloomIntensity: s.bi ?? 0.3,
+          ssaoIntensity: s.si ?? DEFAULTS.ssaoIntensity,
+          bloomIntensity: s.bi ?? DEFAULTS.bloomIntensity,
           dofFocus: s.df ?? 50,
           toneMapping: s.tm ?? 'aces',
           showBonds: s.bonds === 1,
           bondCutoff: s.bc ?? 3.2,
           bondTolerance: s.bt ?? 0.45,
           renderStyle: s.rs ?? 'standard',
-          ambientLightIntensity: s.ali ?? 0.35,
-          dirLightIntensity: s.dli ?? 1.2,
+          materialScene: sanitizeMaterialScene(s.ms),
+          materialPreset: sanitizeMaterialPreset(s.mp),
+          materialIntensity: Math.max(0, Math.min(1, s.mi ?? DEFAULTS.materialIntensity)),
+          environmentPreset: sanitizeEnvironmentPreset(s.env),
+          ambientLightIntensity: s.ali ?? DEFAULTS.ambientLightIntensity,
+          dirLightIntensity: s.dli ?? DEFAULTS.dirLightIntensity,
+          rimLightIntensity: Math.max(0, Math.min(2, s.rli ?? DEFAULTS.rimLightIntensity)),
           atomTexture: s.at ?? 'none',
           surfaceRoughness: s.sr ?? 0.0,
           surfacePolish: s.sp ?? 0.0,
@@ -1178,8 +1237,8 @@ export const useStore = create<AppState>()(
           fillLightElevation: s.fle ?? 10,
           rimLightAzimuth: s.rla ?? 160,
           rimLightElevation: s.rle ?? 30,
-          fillLightColor: s.flc ?? '#5577ff',
-          rimLightColor: s.rlc ?? '#ff7755',
+          fillLightColor: s.flc ?? DEFAULTS.fillLightColor,
+          rimLightColor: s.rlc ?? DEFAULTS.rimLightColor,
         });
       } catch {
         console.warn('Failed to decode URL state');

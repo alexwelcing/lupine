@@ -14,6 +14,14 @@ import {
   parseAtomCountLabel,
   formatAtomCount,
 } from './deviceCapabilities';
+import {
+  FUNCTIONAL_GROUP_BY_ID,
+  FUNCTIONAL_GROUPS,
+  type FunctionalGroupId,
+  functionalGroupsForMolecule,
+  functionalGroupSearchText,
+  moleculeMatchesFunctionalGroup,
+} from './organicFunctionalGroups';
 
 // ─── Types ──────────────────────────────────────────────────────────────
 
@@ -955,6 +963,63 @@ const GALLERY_STUDIO_CSS = `
     background: rgba(30,220,224,0.12);
     color: #eaffff;
   }
+  .lupi-gallery-organic-map {
+    display: grid;
+    gap: 7px;
+    padding: 10px;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 8px;
+    background: linear-gradient(180deg, rgba(15,23,42,0.42), rgba(2,6,23,0.18));
+  }
+  .lupi-gallery-organic-map h3 {
+    margin: 0;
+    color: rgba(248,250,252,0.9);
+    font-size: 12px;
+    font-weight: 760;
+    letter-spacing: 0;
+  }
+  .lupi-gallery-organic-map p {
+    margin: 0;
+    color: rgba(203,213,225,0.55);
+    font-size: 11px;
+    line-height: 1.35;
+  }
+  .lupi-gallery-functional-groups {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .lupi-gallery-functional-groups button {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    min-height: 28px;
+    padding: 5px 7px;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 999px;
+    background: rgba(255,255,255,0.032);
+    color: rgba(226,232,240,0.64);
+    font-size: 10px;
+    font-weight: 720;
+    cursor: pointer;
+  }
+  .lupi-gallery-functional-groups button[data-active="true"],
+  .lupi-gallery-functional-groups button:hover {
+    border-color: var(--group-color);
+    background: color-mix(in srgb, var(--group-color) 16%, transparent);
+    color: #fff;
+  }
+  .lupi-gallery-functional-groups i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--group-color);
+    box-shadow: 0 0 10px color-mix(in srgb, var(--group-color) 42%, transparent);
+  }
+  .lupi-gallery-functional-groups em {
+    color: rgba(203,213,225,0.48);
+    font-style: normal;
+  }
   .lupi-gallery-domain-menu {
     display: grid;
     gap: 5px;
@@ -1164,6 +1229,11 @@ const GALLERY_STUDIO_CSS = `
     color: #34d399;
     background: rgba(52,211,153,0.09);
   }
+  .lupi-gallery-row-facts em.is-functional {
+    border: 1px solid color-mix(in srgb, var(--group-color, #1edce0) 38%, transparent);
+    background: color-mix(in srgb, var(--group-color, #1edce0) 12%, transparent);
+    color: color-mix(in srgb, var(--group-color, #1edce0) 76%, white);
+  }
   .lupi-gallery-row-open {
     justify-self: end;
     display: inline-flex;
@@ -1296,6 +1366,44 @@ const GALLERY_STUDIO_CSS = `
     font-size: 11px;
     font-weight: 650;
   }
+  .lupi-gallery-functional-note {
+    display: grid;
+    gap: 7px;
+    padding-top: 2px;
+  }
+  .lupi-gallery-functional-note > span {
+    color: rgba(226,232,240,0.54);
+    font-size: 10px;
+    font-weight: 780;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .lupi-gallery-functional-note article {
+    display: grid;
+    gap: 3px;
+    padding: 9px 10px;
+    border: 1px solid color-mix(in srgb, var(--group-color, #1edce0) 36%, transparent);
+    border-radius: 8px;
+    background:
+      linear-gradient(135deg, color-mix(in srgb, var(--group-color, #1edce0) 13%, transparent), transparent 72%),
+      rgba(255,255,255,0.035);
+  }
+  .lupi-gallery-functional-note strong {
+    color: color-mix(in srgb, var(--group-color, #1edce0) 78%, white);
+    font-size: 12px;
+    font-weight: 760;
+    letter-spacing: 0;
+  }
+  .lupi-gallery-functional-note p {
+    font-size: 12px;
+    line-height: 1.42;
+  }
+  .lupi-gallery-functional-note em {
+    color: rgba(203,213,225,0.54);
+    font-size: 11px;
+    font-style: normal;
+    line-height: 1.35;
+  }
   .lupi-gallery-spotlight-open {
     min-height: 38px;
     border: 0;
@@ -1385,6 +1493,7 @@ export function Gallery() {
   const [loadingId, setLoadingId] = useState<string | null>(null);
   const [filter, setFilter] = useState<Domain | 'All'>('All');
   const [sourceFilter, setSourceFilter] = useState<SourceFilter>('All Sources');
+  const [functionalGroupFilter, setFunctionalGroupFilter] = useState<FunctionalGroupId | 'All'>('All');
   const [search, setSearch] = useState('');
   const [selectedId, setSelectedId] = useState<string>(() => {
     const firstPlayable = EXAMPLES.find((ex) => ex.available && parseFrameCountLabel(ex.frames) > 1);
@@ -1402,6 +1511,7 @@ export function Gallery() {
     return EXAMPLES.filter(ex => {
       if (filter !== 'All' && ex.domain !== filter) return false;
       if (!matchesSourceFilter(ex, sourceFilter)) return false;
+      if (!moleculeMatchesFunctionalGroup(ex.id, functionalGroupFilter)) return false;
       if (deferredSearch) {
         const s = deferredSearch.toLowerCase();
         return (
@@ -1409,12 +1519,13 @@ export function Gallery() {
           ex.subtitle.toLowerCase().includes(s) ||
           ex.domain.toLowerCase().includes(s) ||
           (ex.metadata?.method ?? '').toLowerCase().includes(s) ||
-          (ex.metadata?.potential ?? '').toLowerCase().includes(s)
+          (ex.metadata?.potential ?? '').toLowerCase().includes(s) ||
+          functionalGroupSearchText(ex.id).toLowerCase().includes(s)
         );
       }
       return true;
     });
-  }, [filter, sourceFilter, deferredSearch]);
+  }, [filter, sourceFilter, functionalGroupFilter, deferredSearch]);
 
   const galleryStats = useMemo(() => {
     const available = EXAMPLES.filter(ex => ex.available).length;
@@ -1424,8 +1535,21 @@ export function Gallery() {
       available,
       trajectories,
       featured: EXAMPLES.filter(ex => ex.featured).length,
+      organicMolecules: EXAMPLES.filter(ex => functionalGroupsForMolecule(ex.id).length > 0).length,
     };
   }, []);
+
+  const functionalGroupSummaries = useMemo(() => {
+    return FUNCTIONAL_GROUPS.map(group => ({
+      group,
+      count: EXAMPLES.filter(ex => group.exampleIds.includes(ex.id)).length,
+      visible: filteredExamples.filter(ex => group.exampleIds.includes(ex.id)).length,
+    })).filter(summary => summary.count > 0);
+  }, [filteredExamples]);
+
+  const activeFunctionalGroup = functionalGroupFilter === 'All'
+    ? null
+    : FUNCTIONAL_GROUP_BY_ID[functionalGroupFilter] ?? null;
 
   const domainSummaries = useMemo(() => {
     return ALL_DOMAINS
@@ -1463,6 +1587,7 @@ export function Gallery() {
     setSearch('');
     setFilter('All');
     setSourceFilter('All Sources');
+    setFunctionalGroupFilter('All');
   }, []);
 
   const handleLoad = useCallback(async (example: GalleryExample, isPopState = false) => {
@@ -1770,8 +1895,8 @@ export function Gallery() {
             </svg>
             <input
               type="search"
-              placeholder="Search molecules, methods, domains..."
-              aria-label="Search simulations by title, description, method, potential, or domain"
+              placeholder="Search molecules or groups..."
+              aria-label="Search simulations by title, description, method, potential, domain, or functional group"
               data-testid="gallery-search"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -1802,6 +1927,43 @@ export function Gallery() {
                 {option}
               </button>
             ))}
+          </div>
+
+          <div className="lupi-gallery-organic-map" aria-label="Organic chemistry functional groups">
+            <h3>Organic groups</h3>
+            <p>First-course functional groups mapped to real molecules.</p>
+            <div className="lupi-gallery-functional-groups" role="group" aria-label="Filter by organic functional group">
+              <button
+                type="button"
+                data-testid="gallery-group-all"
+                data-active={functionalGroupFilter === 'All'}
+                aria-pressed={functionalGroupFilter === 'All'}
+                onClick={() => setFunctionalGroupFilter('All')}
+                style={{ '--group-color': 'rgba(255,255,255,0.7)' } as React.CSSProperties}
+              >
+                <i aria-hidden="true" />
+                All
+                <em>{galleryStats.organicMolecules}</em>
+              </button>
+              {functionalGroupSummaries.map(({ group, count, visible }) => (
+                <button
+                  key={group.id}
+                  type="button"
+                  data-testid={`gallery-group-${group.id}`}
+                  data-active={functionalGroupFilter === group.id}
+                  aria-pressed={functionalGroupFilter === group.id}
+                  onClick={() => {
+                    setFilter('All');
+                    setFunctionalGroupFilter(group.id);
+                  }}
+                  style={{ '--group-color': group.color } as React.CSSProperties}
+                >
+                  <i aria-hidden="true" />
+                  {group.label}
+                  <em>{functionalGroupFilter === 'All' ? count : visible}</em>
+                </button>
+              ))}
+            </div>
           </div>
 
           <div className="lupi-gallery-domain-menu" role="group" aria-label="Filter simulations by domain">
@@ -1843,11 +2005,13 @@ export function Gallery() {
                 {filteredExamples.length} result{filteredExamples.length === 1 ? '' : 's'}
                 {filter !== 'All' ? ` in ${filter}` : ''}
                 {sourceFilter !== 'All Sources' ? ` / ${sourceFilter}` : ''}
+                {activeFunctionalGroup ? ` / ${activeFunctionalGroup.label}` : ''}
               </p>
             </div>
             <div className="lupi-gallery-fast-stats" aria-label="Gallery summary">
               <span><strong>{galleryStats.available}</strong> loadable</span>
               <span><strong>{galleryStats.trajectories}</strong> playable</span>
+              <span><strong>{galleryStats.organicMolecules}</strong> organic</span>
               <span><strong>{galleryStats.domains}</strong> domains</span>
             </div>
           </div>
@@ -1931,6 +2095,7 @@ function GallerySceneRow({
   const disabled = loading || !example.available || exceedsCap;
   const pct = Math.round(Math.min(1, Math.max(0, loadProgress)) * 100);
   const threadColor = DOMAIN_THREAD[example.domain];
+  const functionalGroups = functionalGroupsForMolecule(example.id);
 
   return (
     <button
@@ -1958,6 +2123,15 @@ function GallerySceneRow({
         <em>{example.atoms}</em>
         <em className={frameCount > 1 ? 'is-playable' : ''}>{frameCount > 1 ? `${example.frames} frames` : 'snapshot'}</em>
         {example.featured && <em>featured</em>}
+        {functionalGroups.slice(0, 2).map(group => (
+          <em
+            key={group.id}
+            className="is-functional"
+            style={{ '--group-color': group.color } as React.CSSProperties}
+          >
+            {group.label}
+          </em>
+        ))}
       </span>
       <span className="lupi-gallery-row-open">
         {loading ? `${pct}%` : exceedsCap ? 'Over cap' : 'Open'}
@@ -1994,6 +2168,7 @@ function GallerySpotlight({
   const frameCount = parseFrameCountLabel(example.frames);
   const pct = Math.round(Math.min(1, Math.max(0, loadProgress)) * 100);
   const method = example.metadata?.method ?? example.metadata?.potential ?? example.domain;
+  const functionalGroups = functionalGroupsForMolecule(example.id);
 
   return (
     <aside
@@ -2048,6 +2223,21 @@ function GallerySpotlight({
           <span>{method}</span>
           {isOpenDataExample(example) && <span>open data</span>}
         </div>
+        {functionalGroups.length > 0 && (
+          <div className="lupi-gallery-functional-note">
+            <span>Functional groups</span>
+            {functionalGroups.slice(0, 4).map(group => (
+              <article
+                key={group.id}
+                style={{ '--group-color': group.color } as React.CSSProperties}
+              >
+                <strong>{group.label}</strong>
+                <p>{group.short}</p>
+                <em>{group.firstCourse}</em>
+              </article>
+            ))}
+          </div>
+        )}
         <button
           type="button"
           className="lupi-gallery-spotlight-open"

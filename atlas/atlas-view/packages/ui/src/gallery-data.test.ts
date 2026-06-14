@@ -17,6 +17,7 @@ import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import galleryData from './gallery-data.json';
 import { FEATURED_IDS } from './landing/shared';
+import { FUNCTIONAL_GROUPS, functionalGroupsForMolecule } from './organicFunctionalGroups';
 
 const PUBLIC = fileURLToPath(new URL('../../../apps/web/public/', import.meta.url));
 const GALLERY_TSX = fileURLToPath(new URL('./Gallery.tsx', import.meta.url));
@@ -233,6 +234,24 @@ describe('gallery-data.json — curated launch set', () => {
   it('domains span a meaningful breadth (curation, not one bucket)', () => {
     const used = new Set(data.map((e) => e.domain));
     expect(used.size).toBeGreaterThanOrEqual(5);
+  });
+
+  it('organic functional-group curriculum maps only to shipped gallery molecules', () => {
+    const galleryIds = new Set(data.map((e) => e.id));
+    expect(FUNCTIONAL_GROUPS.length).toBeGreaterThanOrEqual(8);
+
+    for (const group of FUNCTIONAL_GROUPS) {
+      expect(group.exampleIds.length, `${group.id} needs examples`).toBeGreaterThan(0);
+      for (const id of group.exampleIds) {
+        expect(galleryIds.has(id), `${group.id} references missing gallery molecule: ${id}`).toBe(true);
+      }
+    }
+
+    const organicIds = new Set(FUNCTIONAL_GROUPS.flatMap((group) => group.exampleIds));
+    expect(organicIds.size).toBeGreaterThanOrEqual(8);
+    expect(functionalGroupsForMolecule('aspirin').map((group) => group.id)).toEqual(
+      expect.arrayContaining(['arene', 'carboxylic-acid', 'ester']),
+    );
   });
 });
 

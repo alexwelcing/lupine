@@ -30,10 +30,6 @@ const TITLES: Record<NonNullable<PanelHostProps['activePanel']>, string> = {
   mlipLongRun: 'MLIP Long Run',
 };
 
-const SUBTITLES: Partial<Record<NonNullable<PanelHostProps['activePanel']>, string>> = {
-  studio: 'Look / Surface / World / Export',
-};
-
 const INITIALS: Record<NonNullable<PanelHostProps['activePanel']>, { x?: number; y?: number; w?: number; h?: number }> = {
   studio: { x: undefined, y: undefined, w: 400, h: 720 },
   export: { x: undefined, y: undefined, w: 420, h: 680 },
@@ -55,7 +51,6 @@ export function PanelHost({ activePanel, studioDeck, onOpenStudioDeck, onClose }
     <DockableWindow
       key={activePanel}
       title={TITLES[activePanel]}
-      subtitle={SUBTITLES[activePanel]}
       onClose={onClose}
       initial={INITIALS[activePanel]}
       minW={320}
