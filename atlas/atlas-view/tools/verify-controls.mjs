@@ -82,8 +82,7 @@ try {
     console.log(`[PAGE ERROR] ${err.message}`);
   });
 
-  const viewerUrl = new URL(report.url);
-  viewerUrl.searchParams.set('load', '/gallery/curated/c60_buckyball.xyz');
+  const viewerUrl = controlsSmokeUrl(report.url, Boolean(externalUrl));
   await page.goto(viewerUrl.toString(), { waitUntil: 'domcontentloaded', timeout });
   await page.getByRole('button', { name: /^Controls$/ }).waitFor({ state: 'visible', timeout });
   await page.getByRole('button', { name: /^Controls$/ }).click();
@@ -259,6 +258,18 @@ function stamp() {
 
 function withTrailingSlash(url) {
   return url.endsWith('/') ? url : `${url}/`;
+}
+
+function controlsSmokeUrl(baseUrl, external) {
+  const viewerUrl = new URL(baseUrl);
+  if (viewerUrl.searchParams.has('load') || viewerUrl.searchParams.has('sim')) return viewerUrl;
+
+  if (external) {
+    viewerUrl.searchParams.set('sim', 'c60_buckyball');
+  } else {
+    viewerUrl.searchParams.set('load', '/gallery/curated/c60_buckyball.xyz');
+  }
+  return viewerUrl;
 }
 
 function parseArgs(argv) {
