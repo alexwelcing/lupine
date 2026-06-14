@@ -43,6 +43,7 @@ const report = {
   molecule: null,
   lensTextHead: '',
   sheetTextHead: '',
+  sheetHasSnapshot: false,
   overflow: null,
   screenshots: [],
   consoleWarnings: [],
@@ -167,11 +168,17 @@ try {
   await page.getByTestId('study-lens-toggle').click();
   const lens = page.getByTestId('study-lens-panel');
   await lens.waitFor({ state: 'visible', timeout });
-  report.lensTextHead = (await lens.innerText()).slice(0, 2000);
+  report.lensTextHead = (await lens.innerText()).slice(0, 5000);
   assertContains(report.lensTextHead, /Aspirin/i, 'study lens title');
   assertContains(report.lensTextHead, /C9H8O4/i, 'study lens formula');
+  assertContains(report.lensTextHead, /21 inferred/i, 'study lens stable bond count');
+  assertNotContains(report.lensTextHead, /calculating/i, 'study lens transient bond count');
   assertContains(report.lensTextHead, /Carboxylic Acids/i, 'study lens carboxylic-acid teaching');
   assertContains(report.lensTextHead, /Esters/i, 'study lens ester teaching');
+  assertContains(report.lensTextHead, /Course frame/i, 'study lens course frame');
+  assertContains(report.lensTextHead, /Acid-base first/i, 'study lens acid-base priority');
+  assertContains(report.lensTextHead, /Nucleophilic acyl substitution/i, 'study lens acyl substitution priority');
+  assertContains(report.lensTextHead, /Spectroscopy checks/i, 'study lens spectroscopy checks');
   assertContains(report.lensTextHead, /Self-check/i, 'study lens self-check prompt');
   await shot(page, 'lens-open');
 
@@ -192,7 +199,7 @@ try {
   assertContains(exportText, /print \/ PDF/i, 'export drawer print/PDF meta');
   await shot(page, 'export-drawer');
 
-  const popupPromise = context.waitForEvent('page', { timeout: 8000 }).catch(() => null);
+  const popupPromise = context.waitForEvent('page', { timeout }).catch(() => null);
   await studySheetButton.click();
   const popup = await popupPromise;
   const popupOpened = await page.waitForFunction(
@@ -211,9 +218,18 @@ try {
   );
   report.sheetTextHead = await page.evaluate(() => {
     const doc = new DOMParser().parseFromString(window.__lupiStudySheetHtml, 'text/html');
-    return (doc.body?.innerText ?? '').slice(0, 2600);
+    return (doc.body?.innerText ?? '').slice(0, 6000);
   });
+  report.sheetHasSnapshot = await page.evaluate(() => window.__lupiStudySheetHtml.includes('data:image/png'));
+  if (!report.sheetHasSnapshot) failures.push('study sheet did not embed a rendered view image');
   assertContains(report.sheetTextHead, /Aspirin/i, 'study sheet title');
+  assertContains(report.sheetTextHead, /21 inferred/i, 'study sheet stable bond count');
+  assertNotContains(report.sheetTextHead, /calculating/i, 'study sheet transient bond count');
+  assertContains(report.sheetTextHead, /Current View/i, 'study sheet current view section');
+  assertContains(report.sheetTextHead, /University Ochem Frame/i, 'study sheet university ochem frame');
+  assertContains(report.sheetTextHead, /Mechanism Priorities/i, 'study sheet mechanism priorities');
+  assertContains(report.sheetTextHead, /Acid-base first/i, 'study sheet acid-base priority');
+  assertContains(report.sheetTextHead, /Nucleophilic acyl substitution/i, 'study sheet acyl substitution priority');
   assertContains(report.sheetTextHead, /Carboxylic Acids/i, 'study sheet carboxylic-acid teaching');
   assertContains(report.sheetTextHead, /Esters/i, 'study sheet ester teaching');
   assertContains(report.sheetTextHead, /Self-check/i, 'study sheet self-check prompt');
@@ -331,6 +347,10 @@ async function getFreePort() {
 
 function assertContains(text, pattern, label) {
   if (!pattern.test(text)) failures.push(`${label} missing ${pattern}`);
+}
+
+function assertNotContains(text, pattern, label) {
+  if (pattern.test(text)) failures.push(`${label} unexpectedly matched ${pattern}`);
 }
 
 function studyLensUrl(baseUrl) {

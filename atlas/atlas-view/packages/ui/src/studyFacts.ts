@@ -1,8 +1,13 @@
 import { getElementSpec } from '@atlas/core';
 import type { Frame } from '@atlas/core/types';
+import { detectBondsCpu } from '@atlas/scene/bondDetectCpu';
 import type { LoadedFile } from './store';
 import { ALL_EXAMPLES, publicAssetUrl, type GalleryExample } from './landing/shared';
 import { functionalGroupsForMolecule, type FunctionalGroupConcept } from './organicFunctionalGroups';
+import { buildOchemCourseCompanion, type OchemCourseCompanion } from './ochemCourseCompanion';
+
+const STUDY_BOND_TOLERANCE = 0.45;
+const STUDY_BOND_ESTIMATE_ATOM_LIMIT = 2500;
 
 export interface ElementStudyFact {
   atomicNumber: number;
@@ -53,7 +58,13 @@ export interface MoleculeStudyFacts {
   };
   bondSummary: string;
   studyCue: string;
+  ochemCompanion: OchemCourseCompanion;
   shareUrl?: string;
+}
+
+export interface StudySheetRenderOptions {
+  visualSnapshotDataUrl?: string;
+  visualCaption?: string;
 }
 
 export function buildMoleculeStudyFacts({
@@ -76,11 +87,12 @@ export function buildMoleculeStudyFacts({
   if (!frame) return null;
 
   const galleryExample = findGalleryExample(file);
+  const title = galleryExample?.title ?? stripExtension(file.name);
   const functionalGroups = galleryExample ? functionalGroupsForMolecule(galleryExample.id) : [];
   const composition = summarizeComposition(frame);
 
   return {
-    title: galleryExample?.title ?? stripExtension(file.name),
+    title,
     fileName: file.name,
     formula: formatFormula(composition),
     atomCount: frame.natoms,
@@ -97,6 +109,7 @@ export function buildMoleculeStudyFacts({
     bounds: summarizeBounds(frame),
     bondSummary: summarizeBonds(frame, lastBondCount, showBonds),
     studyCue: buildStudyCue(composition, functionalGroups),
+    ochemCompanion: buildOchemCourseCompanion({ title, composition, functionalGroups }),
     shareUrl,
   };
 }
@@ -124,7 +137,57 @@ export function findGalleryExample(file: LoadedFile): GalleryExample | null {
   return null;
 }
 
-export function renderStudySheetHtml(facts: MoleculeStudyFacts): string {
+export function renderStudySheetHtml(facts: MoleculeStudyFacts, options: StudySheetRenderOptions = {}): string {
+  const companion = facts.ochemCompanion;
+  const visualSnapshot = options.visualSnapshotDataUrl
+    ? `
+    <section class="visual">
+      <div>
+        <h2>Current View</h2>
+        <p>${escapeHtml(options.visualCaption ?? 'This image captures the molecule with the active viewer camera, colors, material, bonds, and background at export time.')}</p>
+      </div>
+      <img src="${escapeAttr(options.visualSnapshotDataUrl)}" alt="${escapeAttr(`${facts.title} current Lupi view`)}">
+    </section>
+  `
+    : `
+    <section class="visual visual-empty">
+      <h2>Current View</h2>
+      <p class="muted">No rendered view image was captured for this sheet.</p>
+    </section>
+  `;
+
+  const reasoningRows = companion.reasoningSteps.map((step, index) => `
+    <article class="step">
+      <span>${index + 1}</span>
+      <div>
+        <h3>${escapeHtml(step.label)}</h3>
+        <p>${escapeHtml(step.prompt)}</p>
+      </div>
+    </article>
+  `).join('');
+
+  const priorityRows = companion.mechanismPriorities.length
+    ? companion.mechanismPriorities.map(priority => `
+      <article class="priority">
+        <h3>${escapeHtml(priority.label)}</h3>
+        <p>${escapeHtml(priority.why)}</p>
+        <strong>${escapeHtml(priority.typicalMove)}</strong>
+      </article>
+    `).join('')
+    : '<p class="muted">No named organic mechanism priorities are attached to this structure yet.</p>';
+
+  const spectroscopyRows = companion.spectroscopyChecks.length
+    ? companion.spectroscopyChecks.map(check => `
+      <tr>
+        <td>${escapeHtml(check.signal)}</td>
+        <td>${escapeHtml(check.reason)}</td>
+      </tr>
+    `).join('')
+    : '<tr><td colspan="2" class="muted">No first-course spectroscopy cues are attached yet.</td></tr>';
+
+  const examRows = companion.examPrompts.map(prompt => `<li>${escapeHtml(prompt)}</li>`).join('');
+  const compareRows = companion.comparePrompts.map(prompt => `<li>${escapeHtml(prompt)}</li>`).join('');
+
   const groupRows = facts.functionalGroups.length
     ? facts.functionalGroups.map(group => `
       <section class="group" style="--accent:${escapeAttr(group.color)}">
@@ -132,7 +195,8 @@ export function renderStudySheetHtml(facts: MoleculeStudyFacts): string {
         <p>${escapeHtml(group.short)}</p>
         <dl>
           <div><dt>Recognize</dt><dd>${escapeHtml(group.recognize)}</dd></div>
-          <div><dt>Reactivity</dt><dd>${escapeHtml(group.reactivity)}</dd></div>
+          <div><dt>Course unit</dt><dd>${escapeHtml(group.firstCourse)}</dd></div>
+          <div><dt>Mechanism</dt><dd>${escapeHtml(group.reactivity)}</dd></div>
           <div><dt>Watch for</dt><dd>${escapeHtml(group.commonConfusion)}</dd></div>
           <div><dt>Self-check</dt><dd>${escapeHtml(group.studyPrompt)}</dd></div>
         </dl>
@@ -214,16 +278,30 @@ export function renderStudySheetHtml(facts: MoleculeStudyFacts): string {
     .muted { color: #64748b; }
     .actions { display: flex; gap: 8px; margin-top: 4px; }
     button { border: 1px solid #0f172a; border-radius: 8px; background: #0f172a; color: white; padding: 9px 12px; font: inherit; font-size: 13px; font-weight: 750; cursor: pointer; }
+    .visual { display: grid; grid-template-columns: minmax(0, 0.72fr) minmax(280px, 1fr); gap: 18px; align-items: start; border: 1px solid #cbd5e1; border-radius: 8px; background: white; padding: 14px; }
+    .visual img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e1; background: #020617; }
+    .visual-empty { grid-template-columns: 1fr; }
+    .course { display: grid; grid-template-columns: minmax(0, 0.82fr) minmax(280px, 1fr); gap: 16px; align-items: start; }
+    .course-intro { border: 1px solid #cbd5e1; border-radius: 8px; background: white; padding: 14px; }
+    .course-intro strong { display: inline-block; color: #0369a1; font-size: 12px; margin-bottom: 6px; }
+    .steps, .priorities { display: grid; gap: 10px; }
+    .step, .priority { border: 1px solid #cbd5e1; border-radius: 8px; background: white; padding: 11px; }
+    .step { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 10px; }
+    .step span { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 999px; background: #0f172a; color: white; font-size: 12px; font-weight: 800; font-variant-numeric: tabular-nums lining-nums; }
+    .priority strong { display: block; margin-top: 6px; color: #0f766e; font-size: 12px; line-height: 1.45; }
+    .question-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    ul { margin: 0; padding-left: 18px; }
+    li { margin: 0 0 6px; font-size: 12px; }
     @media (max-width: 720px) {
       body { padding: 18px; }
-      .summary, .groups { grid-template-columns: 1fr; }
+      .summary, .groups, .visual, .course, .question-grid { grid-template-columns: 1fr; }
       table { display: block; overflow-x: auto; }
     }
     @media print {
       body { padding: 0; background: white; }
       main { max-width: none; }
       .actions { display: none; }
-      section, .group, table { break-inside: avoid; }
+      section, .group, table, .visual, .step, .priority { break-inside: avoid; }
     }
   </style>
 </head>
@@ -250,9 +328,46 @@ export function renderStudySheetHtml(facts: MoleculeStudyFacts): string {
       <div class="metric"><span>Bonds</span><strong>${escapeHtml(facts.bondSummary)}</strong></div>
     </section>
 
+    ${visualSnapshot}
+
+    <section>
+      <h2>University Ochem Frame</h2>
+      <div class="course">
+        <div class="course-intro">
+          <strong>${escapeHtml(companion.courseUnit)}</strong>
+          <p>${escapeHtml(companion.instructorFrame)}</p>
+        </div>
+        <div class="steps">${reasoningRows}</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Mechanism Priorities</h2>
+      <div class="priorities">${priorityRows}</div>
+    </section>
+
     <section>
       <h2>Functional Groups</h2>
       <div class="groups">${groupRows}</div>
+    </section>
+
+    <section>
+      <h2>Spectroscopy Checks</h2>
+      <table>
+        <thead><tr><th>Signal</th><th>Why it matters</th></tr></thead>
+        <tbody>${spectroscopyRows}</tbody>
+      </table>
+    </section>
+
+    <section class="question-grid">
+      <div>
+        <h2>Exam Prompts</h2>
+        <ul>${examRows}</ul>
+      </div>
+      <div>
+        <h2>Compare</h2>
+        <ul>${compareRows}</ul>
+      </div>
     </section>
 
     <section>
@@ -386,10 +501,47 @@ function summarizeBounds(frame: Frame) {
 }
 
 function summarizeBonds(frame: Frame, lastBondCount: number, showBonds: boolean): string {
+  if (!showBonds) return 'hidden';
   const fileBondCount = frame.bonds?.length ? Math.floor(frame.bonds.length / 2) : 0;
   const count = lastBondCount || fileBondCount;
   if (count > 0) return `${count.toLocaleString()} inferred`;
-  return showBonds ? 'calculating' : 'hidden';
+  const estimatedCount = estimateSmallMoleculeBondCount(frame);
+  if (estimatedCount !== null) return `${estimatedCount.toLocaleString()} inferred`;
+  return 'visible (count pending)';
+}
+
+function estimateSmallMoleculeBondCount(frame: Frame): number | null {
+  if (frame.natoms < 2) return 0;
+  if (frame.natoms > STUDY_BOND_ESTIMATE_ATOM_LIMIT) return null;
+  if (!frame.positions || frame.positions.length < frame.natoms * 3) return null;
+  if (!frame.types || frame.types.length < frame.natoms) return null;
+
+  const uniqueTypes = new Set<number>();
+  let maxRadius = 0;
+  for (let i = 0; i < frame.natoms; i++) {
+    const type = frame.types[i];
+    if (!Number.isFinite(type) || uniqueTypes.has(type)) continue;
+    uniqueTypes.add(type);
+    const radius = safeElementSpec(type).radius;
+    if (radius > maxRadius) maxRadius = radius;
+  }
+  if (uniqueTypes.size === 0) return null;
+
+  const maxType = Math.max(...uniqueTypes, 0);
+  const covalentRadii = new Float32Array(maxType + 1);
+  uniqueTypes.forEach(type => {
+    covalentRadii[type] = safeElementSpec(type).radius;
+  });
+
+  const maxBondLength = Math.min(6, 2 * (maxRadius || 1.4) + STUDY_BOND_TOLERANCE + 0.5);
+  return detectBondsCpu({
+    positions: frame.positions,
+    types: frame.types,
+    natoms: frame.natoms,
+    maxBondLength,
+    covalentRadii,
+    tolerance: STUDY_BOND_TOLERANCE,
+  }).count;
 }
 
 function buildStudyCue(composition: ElementStudyFact[], groups: FunctionalGroupConcept[]): string {
@@ -425,6 +577,7 @@ function safeElementSpec(atomicNumber: number) {
     return {
       symbol: `T${atomicNumber}`,
       name: `Type ${atomicNumber}`,
+      radius: 1.5,
       role: 'Atom type',
       color: '#94a3b8',
     };

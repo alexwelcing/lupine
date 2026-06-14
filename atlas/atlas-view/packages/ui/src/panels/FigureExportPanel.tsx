@@ -235,29 +235,36 @@ export function FigureExportPanel({ showCloseButton = true }: { showCloseButton?
       setStatus({ kind: 'error', label: 'Study sheet failed' });
       return;
     }
-    const html = renderStudySheetHtml(facts);
     const filename = studySheetFileName(facts);
-    setStatus({ kind: 'working', label: 'Opening study sheet' });
+    setStatus({ kind: 'working', label: 'Rendering study view' });
+    const openFallbackSheet = () => {
+      openStudySheetWindow(renderStudySheetHtml(facts), filename, setStatus);
+    };
 
-    const sheetWindow = window.open('', '_blank', 'width=920,height=1100');
-    if (!sheetWindow) {
-      handoffDownload(new Blob([html], { type: 'text/html;charset=utf-8' }), filename, 'Study sheet', setStatus);
-      return;
-    }
-
-    sheetWindow.document.open();
-    sheetWindow.document.write(html);
-    sheetWindow.document.close();
-    sheetWindow.focus();
-    window.setTimeout(() => {
-      try {
-        sheetWindow.print();
-        setStatus({ kind: 'success', label: 'Opened study sheet' });
-      } catch {
-        handoffDownload(new Blob([html], { type: 'text/html;charset=utf-8' }), filename, 'Study sheet', setStatus);
-      }
-    }, 250);
-  }, [currentFrame, file, frame, lastBondCount, selectedAtoms, showBonds]);
+    triggerExport({
+      type: 'image',
+      resolution: { width: 1280, height: 720 },
+      format: 'png',
+      transparent: false,
+      baseName: `Lupi-study-view-${safeName(file.name)}`,
+      onComplete: async (success, blob) => {
+        if (!success || !blob) {
+          openFallbackSheet();
+          return;
+        }
+        try {
+          const visualSnapshotDataUrl = await blobToDataUrl(blob);
+          const html = renderStudySheetHtml(facts, {
+            visualSnapshotDataUrl,
+            visualCaption: 'Rendered from the active Lupi camera, atom colors, materials, bonds, and background at export time.',
+          });
+          openStudySheetWindow(html, filename, setStatus);
+        } catch {
+          openFallbackSheet();
+        }
+      },
+    });
+  }, [currentFrame, file, frame, lastBondCount, selectedAtoms, showBonds, triggerExport]);
 
   const runUsdExport = useCallback(() => {
     if (!file) return;
@@ -579,6 +586,41 @@ function handoffDownload(
       setStatus({ kind: 'success', label: `Downloaded ${label}` });
     });
   }, 80);
+}
+
+function openStudySheetWindow(
+  html: string,
+  filename: string,
+  setStatus: (status: ExportStatus) => void,
+) {
+  setStatus({ kind: 'working', label: 'Opening study sheet' });
+  const sheetWindow = window.open('', '_blank', 'width=920,height=1100');
+  if (!sheetWindow) {
+    handoffDownload(new Blob([html], { type: 'text/html;charset=utf-8' }), filename, 'Study sheet', setStatus);
+    return;
+  }
+
+  sheetWindow.document.open();
+  sheetWindow.document.write(html);
+  sheetWindow.document.close();
+  sheetWindow.focus();
+  window.setTimeout(() => {
+    try {
+      sheetWindow.print();
+      setStatus({ kind: 'success', label: 'Opened study sheet' });
+    } catch {
+      handoffDownload(new Blob([html], { type: 'text/html;charset=utf-8' }), filename, 'Study sheet', setStatus);
+    }
+  }, 250);
+}
+
+function blobToDataUrl(blob: Blob): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result ?? ''));
+    reader.onerror = () => reject(reader.error ?? new Error('Could not read image blob'));
+    reader.readAsDataURL(blob);
+  });
 }
 
 function downloadBlob(blob: Blob, filename: string) {

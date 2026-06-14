@@ -1,7 +1,8 @@
 import type { CSSProperties } from 'react';
 import { useMemo } from 'react';
 import { useStore } from './store';
-import { buildMoleculeStudyFacts, type ElementStudyFact, type MoleculeStudyFacts } from './studyFacts';
+import { buildMoleculeStudyFacts, type ElementStudyFact } from './studyFacts';
+import type { OchemReactionPriority, OchemReasoningStep, OchemSpectroscopyCheck } from './ochemCourseCompanion';
 
 export function StudyLensPanel({
   compact = false,
@@ -64,14 +65,26 @@ export function StudyLensPanel({
         <Metric label="Bonds" value={facts.bondSummary} />
       </section>
 
-      <section style={sectionStyle}>
-        <SectionTitle label="Composition" detail={facts.sourceLabel} />
-        <div style={compositionStyle}>
-          {facts.composition.slice(0, 8).map(item => (
-            <CompositionRow key={item.atomicNumber} item={item} />
+      <section style={courseSectionStyle}>
+        <SectionTitle label="Course frame" detail={facts.ochemCompanion.courseUnit} />
+        <p style={courseFrameStyle}>{facts.ochemCompanion.instructorFrame}</p>
+        <div style={reasoningListStyle}>
+          {facts.ochemCompanion.reasoningSteps.map((step, index) => (
+            <ReasoningStepRow key={step.label} step={step} index={index} />
           ))}
         </div>
       </section>
+
+      {facts.ochemCompanion.mechanismPriorities.length > 0 && (
+        <section style={sectionStyle}>
+          <SectionTitle label="Mechanism priorities" detail="professor order" />
+          <div style={priorityListStyle}>
+            {facts.ochemCompanion.mechanismPriorities.slice(0, 3).map(priority => (
+              <PriorityCard key={priority.id} priority={priority} />
+            ))}
+          </div>
+        </section>
+      )}
 
       <section style={sectionStyle}>
         <SectionTitle
@@ -107,6 +120,26 @@ export function StudyLensPanel({
         ) : (
           <p style={mutedCopyStyle}>No curated ochem mapping is attached to this structure yet. Use composition and selected atoms as the first read.</p>
         )}
+      </section>
+
+      {facts.ochemCompanion.spectroscopyChecks.length > 0 && (
+        <section style={sectionStyle}>
+          <SectionTitle label="Spectroscopy checks" detail="first pass" />
+          <div style={spectroscopyListStyle}>
+            {facts.ochemCompanion.spectroscopyChecks.slice(0, 3).map(check => (
+              <SpectroscopyRow key={check.signal} check={check} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      <section style={sectionStyle}>
+        <SectionTitle label="Composition" detail={facts.sourceLabel} />
+        <div style={compositionStyle}>
+          {facts.composition.slice(0, 8).map(item => (
+            <CompositionRow key={item.atomicNumber} item={item} />
+          ))}
+        </div>
       </section>
 
       <section style={sectionStyle}>
@@ -181,6 +214,37 @@ function CompositionRow({ item }: { item: ElementStudyFact }) {
       <strong>{item.count.toLocaleString()}</strong>
       <em>{item.percent.toFixed(1)}%</em>
     </div>
+  );
+}
+
+function ReasoningStepRow({ step, index }: { step: OchemReasoningStep; index: number }) {
+  return (
+    <article style={reasoningRowStyle}>
+      <span style={reasoningIndexStyle}>{index + 1}</span>
+      <div style={{ minWidth: 0 }}>
+        <strong style={reasoningTitleStyle}>{step.label}</strong>
+        <p style={reasoningCopyStyle}>{step.prompt}</p>
+      </div>
+    </article>
+  );
+}
+
+function PriorityCard({ priority }: { priority: OchemReactionPriority }) {
+  return (
+    <article style={priorityCardStyle}>
+      <strong style={priorityTitleStyle}>{priority.label}</strong>
+      <p style={priorityCopyStyle}>{priority.why}</p>
+      <p style={priorityMoveStyle}>{priority.typicalMove}</p>
+    </article>
+  );
+}
+
+function SpectroscopyRow({ check }: { check: OchemSpectroscopyCheck }) {
+  return (
+    <article style={spectroscopyRowStyle}>
+      <strong>{check.signal}</strong>
+      <p>{check.reason}</p>
+    </article>
   );
 }
 
@@ -302,6 +366,63 @@ const sectionStyle: CSSProperties = {
   minWidth: 0,
 };
 
+const courseSectionStyle: CSSProperties = {
+  display: 'grid',
+  gap: 9,
+  padding: '10px 10px 11px',
+  border: '1px solid rgba(125,211,252,0.22)',
+  borderRadius: 8,
+  background: 'linear-gradient(180deg, rgba(12,28,42,0.54), rgba(15,23,42,0.42))',
+};
+
+const courseFrameStyle: CSSProperties = {
+  margin: 0,
+  color: 'rgba(226,232,240,0.78)',
+  fontSize: 12,
+  lineHeight: 1.54,
+  textWrap: 'pretty',
+};
+
+const reasoningListStyle: CSSProperties = {
+  display: 'grid',
+  gap: 7,
+};
+
+const reasoningRowStyle: CSSProperties = {
+  display: 'grid',
+  gridTemplateColumns: '24px minmax(0, 1fr)',
+  gap: 8,
+  alignItems: 'start',
+};
+
+const reasoningIndexStyle: CSSProperties = {
+  display: 'grid',
+  placeItems: 'center',
+  width: 22,
+  height: 22,
+  borderRadius: 999,
+  color: '#06111f',
+  background: '#7dd3fc',
+  fontSize: 11,
+  fontWeight: 850,
+  fontVariantNumeric: 'tabular-nums',
+};
+
+const reasoningTitleStyle: CSSProperties = {
+  display: 'block',
+  color: '#f8fafc',
+  fontSize: 12,
+  lineHeight: 1.25,
+};
+
+const reasoningCopyStyle: CSSProperties = {
+  margin: '2px 0 0',
+  color: 'rgba(203,213,225,0.72)',
+  fontSize: 12,
+  lineHeight: 1.44,
+  textWrap: 'pretty',
+};
+
 const sectionTitleStyle: CSSProperties = {
   display: 'flex',
   justifyContent: 'space-between',
@@ -348,6 +469,42 @@ const compositionDotStyle: CSSProperties = {
 const groupListStyle: CSSProperties = {
   display: 'grid',
   gap: 8,
+};
+
+const priorityListStyle: CSSProperties = {
+  display: 'grid',
+  gap: 8,
+};
+
+const priorityCardStyle: CSSProperties = {
+  display: 'grid',
+  gap: 5,
+  padding: '9px 10px',
+  border: '1px solid rgba(45,212,191,0.18)',
+  borderRadius: 8,
+  background: 'rgba(13,32,37,0.44)',
+};
+
+const priorityTitleStyle: CSSProperties = {
+  color: '#ccfbf1',
+  fontSize: 13,
+  lineHeight: 1.25,
+};
+
+const priorityCopyStyle: CSSProperties = {
+  margin: 0,
+  color: 'rgba(203,213,225,0.72)',
+  fontSize: 12,
+  lineHeight: 1.46,
+  textWrap: 'pretty',
+};
+
+const priorityMoveStyle: CSSProperties = {
+  margin: 0,
+  color: 'rgba(94,234,212,0.76)',
+  fontSize: 12,
+  lineHeight: 1.45,
+  textWrap: 'pretty',
 };
 
 const groupStyle: CSSProperties = {
@@ -399,6 +556,23 @@ const miniDdStyle: CSSProperties = {
 const atomListStyle: CSSProperties = {
   display: 'grid',
   gap: 7,
+};
+
+const spectroscopyListStyle: CSSProperties = {
+  display: 'grid',
+  gap: 7,
+};
+
+const spectroscopyRowStyle: CSSProperties = {
+  display: 'grid',
+  gap: 3,
+  padding: '8px 9px',
+  border: '1px solid rgba(148,163,184,0.14)',
+  borderRadius: 8,
+  background: 'rgba(255,255,255,0.032)',
+  color: 'rgba(226,232,240,0.74)',
+  fontSize: 12,
+  lineHeight: 1.42,
 };
 
 const atomStyle: CSSProperties = {

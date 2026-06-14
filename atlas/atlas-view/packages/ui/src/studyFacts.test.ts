@@ -57,14 +57,37 @@ describe('study facts', () => {
     expect(facts?.functionalGroups.map(group => group.id)).toEqual(
       expect.arrayContaining(['arene', 'carboxylic-acid', 'ester']),
     );
+    expect(facts?.ochemCompanion.courseUnit).toBe('Carboxylic acids and acyl derivatives');
+    expect(facts?.ochemCompanion.mechanismPriorities.map(priority => priority.label)).toEqual(
+      expect.arrayContaining(['Acid-base first', 'Nucleophilic acyl substitution']),
+    );
     expect(facts?.propertyStats[0]?.name).toBe('partial_charge');
     expect(facts?.selectedAtoms[0]?.symbol).toBe('C');
 
-    const html = renderStudySheetHtml(facts!);
+    const html = renderStudySheetHtml(facts!, {
+      visualSnapshotDataUrl: 'data:image/png;base64,studyview',
+    });
     expect(html).toContain('Lupi study sheet');
+    expect(html).toContain('data:image/png;base64,studyview');
+    expect(html).toContain('University Ochem Frame');
+    expect(html).toContain('Mechanism Priorities');
     expect(html).toContain('Carboxylic Acids');
+    expect(html).toContain('Acid-base first');
     expect(html).toContain('Self-check');
     expect(html).toContain('partial_charge');
+  });
+
+  it('estimates small-molecule bonds when the renderer count is not ready', () => {
+    const file = makeFile('local://pending-bonds.xyz', 'pending-bonds.xyz');
+    file.trajectory.frames[0].bonds = new Int32Array(0);
+
+    const facts = buildMoleculeStudyFacts({
+      file,
+      frameIndex: 0,
+      showBonds: true,
+    });
+
+    expect(facts?.bondSummary).toBe('4 inferred');
   });
 
   it('falls back gracefully for non-gallery structures', () => {
@@ -77,5 +100,6 @@ describe('study facts', () => {
     expect(facts?.functionalGroups).toEqual([]);
     expect(facts?.sourceLabel).toBe('Local import');
     expect(renderStudySheetHtml(facts!)).toContain('No curated organic functional-group mapping');
+    expect(renderStudySheetHtml(facts!)).toContain('No rendered view image was captured');
   });
 });
