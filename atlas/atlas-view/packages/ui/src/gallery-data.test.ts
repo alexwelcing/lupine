@@ -242,6 +242,10 @@ describe('gallery-data.json — curated launch set', () => {
 
     for (const group of FUNCTIONAL_GROUPS) {
       expect(group.exampleIds.length, `${group.id} needs examples`).toBeGreaterThan(0);
+      expect(group.recognize.length, `${group.id} needs a recognition cue`).toBeGreaterThan(18);
+      expect(group.reactivity.length, `${group.id} needs a reactivity cue`).toBeGreaterThan(18);
+      expect(group.commonConfusion.length, `${group.id} needs a confusion guard`).toBeGreaterThan(18);
+      expect(group.studyPrompt.length, `${group.id} needs a self-check prompt`).toBeGreaterThan(18);
       for (const id of group.exampleIds) {
         expect(galleryIds.has(id), `${group.id} references missing gallery molecule: ${id}`).toBe(true);
       }

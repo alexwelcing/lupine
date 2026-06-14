@@ -157,10 +157,15 @@ try {
   const acidCount = await page.locator(cardSel).count();
   const aspirinVisible = await page.locator('[data-testid="gallery-card-aspirin"]').count();
   const acidPressed = await acidBtn.getAttribute('aria-pressed');
+  const studyGuide = (await page.locator('[data-testid="gallery-group-study-guide"]').innerText()).toLowerCase();
   const functionalNote = await page.locator('.lupi-gallery-functional-note').innerText();
   check('functional-group filter narrows to mapped molecules', acidCount === 1 && aspirinVisible === 1, `${acidCount} carboxylic-acid result`);
   check('functional-group filter exposes aria-pressed', acidPressed === 'true');
   check('spotlight teaches the active molecule groups', /Carboxylic Acids/.test(functionalNote) && /Esters/.test(functionalNote));
+  check(
+    'functional-group study guide teaches recognition and reactivity',
+    studyGuide.includes('recognize') && studyGuide.includes('reactivity') && studyGuide.includes('self-check'),
+  );
   await shot('functional-group');
   await page.locator('[data-testid="gallery-group-all"]').click();
   await page.waitForFunction(

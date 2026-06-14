@@ -18,6 +18,7 @@ import {
   FUNCTIONAL_GROUP_BY_ID,
   FUNCTIONAL_GROUPS,
   type FunctionalGroupId,
+  type FunctionalGroupConcept,
   functionalGroupsForMolecule,
   functionalGroupSearchText,
   moleculeMatchesFunctionalGroup,
@@ -349,7 +350,7 @@ const GALLERY_STUDIO_CSS = `
     color: rgba(125, 211, 252, 0.82);
     font-size: 11px;
     font-weight: 800;
-    letter-spacing: 0.18em;
+    letter-spacing: 0;
     text-transform: uppercase;
   }
   .lupi-gallery-title {
@@ -709,7 +710,7 @@ const GALLERY_STUDIO_CSS = `
     color: rgba(226,232,240,0.52);
     font-size: 11px;
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: 0;
     text-transform: uppercase;
   }
   .lupi-gallery-card-dot {
@@ -1019,6 +1020,84 @@ const GALLERY_STUDIO_CSS = `
   .lupi-gallery-functional-groups em {
     color: rgba(203,213,225,0.48);
     font-style: normal;
+  }
+  .lupi-gallery-study-guide {
+    --group-color: rgba(125,211,252,0.78);
+    display: grid;
+    gap: 9px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255,255,255,0.07);
+  }
+  .lupi-gallery-study-guide-head {
+    display: grid;
+    gap: 2px;
+  }
+  .lupi-gallery-study-guide-head span {
+    color: color-mix(in srgb, var(--group-color) 72%, rgba(226,232,240,0.54));
+    font-size: 9px;
+    font-weight: 820;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+  .lupi-gallery-study-guide-head strong {
+    color: rgba(248,250,252,0.94);
+    font-size: 13px;
+    font-weight: 780;
+    letter-spacing: 0;
+    line-height: 1.25;
+    text-wrap: balance;
+  }
+  .lupi-gallery-study-guide > p {
+    max-width: 42rem;
+    color: rgba(203,213,225,0.68);
+    font-size: 12px;
+    line-height: 1.55;
+    text-wrap: pretty;
+  }
+  .lupi-gallery-study-guide dl {
+    display: grid;
+    gap: 7px;
+    margin: 0;
+  }
+  .lupi-gallery-study-guide dl div {
+    display: grid;
+    gap: 2px;
+  }
+  .lupi-gallery-study-guide dt {
+    color: color-mix(in srgb, var(--group-color) 64%, rgba(226,232,240,0.64));
+    font-size: 9px;
+    font-weight: 820;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+  .lupi-gallery-study-guide dd {
+    margin: 0;
+    color: rgba(226,232,240,0.72);
+    font-size: 12px;
+    line-height: 1.52;
+    text-wrap: pretty;
+  }
+  .lupi-gallery-study-prompt,
+  .lupi-gallery-study-examples {
+    display: grid;
+    gap: 3px;
+    padding-left: 9px;
+    border-left: 2px solid color-mix(in srgb, var(--group-color) 56%, transparent);
+  }
+  .lupi-gallery-study-prompt span,
+  .lupi-gallery-study-examples span {
+    color: rgba(226,232,240,0.52);
+    font-size: 9px;
+    font-weight: 820;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+  .lupi-gallery-study-prompt p,
+  .lupi-gallery-study-examples p {
+    color: rgba(226,232,240,0.72);
+    font-size: 12px;
+    line-height: 1.52;
+    text-wrap: pretty;
   }
   .lupi-gallery-domain-menu {
     display: grid;
@@ -1338,7 +1417,7 @@ const GALLERY_STUDIO_CSS = `
     color: color-mix(in srgb, var(--thread-color, #1edce0) 76%, white);
     font-size: 11px;
     font-weight: 780;
-    letter-spacing: 0.12em;
+    letter-spacing: 0;
     text-transform: uppercase;
   }
   .lupi-gallery-spotlight h3 {
@@ -1375,7 +1454,7 @@ const GALLERY_STUDIO_CSS = `
     color: rgba(226,232,240,0.54);
     font-size: 10px;
     font-weight: 780;
-    letter-spacing: 0.12em;
+    letter-spacing: 0;
     text-transform: uppercase;
   }
   .lupi-gallery-functional-note article {
@@ -1396,7 +1475,50 @@ const GALLERY_STUDIO_CSS = `
   }
   .lupi-gallery-functional-note p {
     font-size: 12px;
-    line-height: 1.42;
+    line-height: 1.5;
+    text-wrap: pretty;
+  }
+  .lupi-gallery-functional-note dl {
+    display: grid;
+    gap: 5px;
+    margin: 2px 0 0;
+  }
+  .lupi-gallery-functional-note dl div {
+    display: grid;
+    gap: 1px;
+  }
+  .lupi-gallery-functional-note dt {
+    color: color-mix(in srgb, var(--group-color, #1edce0) 62%, rgba(226,232,240,0.62));
+    font-size: 9px;
+    font-weight: 820;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+  .lupi-gallery-functional-note dd {
+    margin: 0;
+    color: rgba(226,232,240,0.68);
+    font-size: 12px;
+    line-height: 1.5;
+    text-wrap: pretty;
+  }
+  .lupi-gallery-functional-check {
+    display: grid;
+    gap: 3px;
+    margin-top: 2px;
+    padding-left: 8px;
+    border-left: 2px solid color-mix(in srgb, var(--group-color, #1edce0) 48%, transparent);
+  }
+  .lupi-gallery-functional-check span {
+    color: rgba(226,232,240,0.52);
+    font-size: 9px;
+    font-weight: 820;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+  .lupi-gallery-functional-check p {
+    color: rgba(226,232,240,0.7);
+    font-size: 12px;
+    line-height: 1.5;
   }
   .lupi-gallery-functional-note em {
     color: rgba(203,213,225,0.54);
@@ -1963,6 +2085,17 @@ export function Gallery() {
                 </button>
               ))}
             </div>
+            <FunctionalGroupStudyGuide
+              group={activeFunctionalGroup}
+              exampleTitles={
+                activeFunctionalGroup
+                  ? EXAMPLES
+                    .filter(ex => activeFunctionalGroup.exampleIds.includes(ex.id))
+                    .map(ex => ex.title)
+                    .slice(0, 4)
+                  : []
+              }
+            />
           </div>
 
           <div className="lupi-gallery-domain-menu" role="group" aria-label="Filter simulations by domain">
@@ -2070,6 +2203,81 @@ export function Gallery() {
         />
       </section>
     </div>
+  );
+}
+
+function FunctionalGroupStudyGuide({
+  group,
+  exampleTitles,
+}: {
+  group: FunctionalGroupConcept | null;
+  exampleTitles: string[];
+}) {
+  if (!group) {
+    return (
+      <section className="lupi-gallery-study-guide" data-testid="gallery-group-study-guide">
+        <div className="lupi-gallery-study-guide-head">
+          <span>Study lens</span>
+          <strong>Pattern first, name second</strong>
+        </div>
+        <p>
+          A functional group is useful when it helps you predict shape, polarity, acid-base behavior,
+          and the next likely reaction. Use the filters as a comparison set, then ask what changed.
+        </p>
+        <dl>
+          <div>
+            <dt>Recognize</dt>
+            <dd>Find the atom pattern before memorizing the label.</dd>
+          </div>
+          <div>
+            <dt>Compare</dt>
+            <dd>Look at the nearest carbonyl, ring, heteroatom, or leaving group.</dd>
+          </div>
+          <div>
+            <dt>Predict</dt>
+            <dd>Decide whether the group acts as acid, base, nucleophile, electrophile, or leaving group.</dd>
+          </div>
+        </dl>
+      </section>
+    );
+  }
+
+  return (
+    <section
+      className="lupi-gallery-study-guide"
+      data-testid="gallery-group-study-guide"
+      style={{ '--group-color': group.color } as React.CSSProperties}
+    >
+      <div className="lupi-gallery-study-guide-head">
+        <span>{group.family}</span>
+        <strong>{group.label}</strong>
+      </div>
+      <p>{group.short}</p>
+      <dl>
+        <div>
+          <dt>Recognize</dt>
+          <dd>{group.recognize}</dd>
+        </div>
+        <div>
+          <dt>Reactivity</dt>
+          <dd>{group.reactivity}</dd>
+        </div>
+        <div>
+          <dt>Watch for</dt>
+          <dd>{group.commonConfusion}</dd>
+        </div>
+      </dl>
+      <div className="lupi-gallery-study-prompt">
+        <span>Self-check</span>
+        <p>{group.studyPrompt}</p>
+      </div>
+      {exampleTitles.length > 0 && (
+        <div className="lupi-gallery-study-examples">
+          <span>Compare here</span>
+          <p>{exampleTitles.join(' / ')}</p>
+        </div>
+      )}
+    </section>
   );
 }
 
@@ -2232,6 +2440,20 @@ function GallerySpotlight({
               >
                 <strong>{group.label}</strong>
                 <p>{group.short}</p>
+                <dl>
+                  <div>
+                    <dt>Recognize</dt>
+                    <dd>{group.recognize}</dd>
+                  </div>
+                  <div>
+                    <dt>Reactivity</dt>
+                    <dd>{group.reactivity}</dd>
+                  </div>
+                </dl>
+                <div className="lupi-gallery-functional-check">
+                  <span>Check</span>
+                  <p>{group.studyPrompt}</p>
+                </div>
                 <em>{group.firstCourse}</em>
               </article>
             ))}
