@@ -1,7 +1,7 @@
 # Release Notes - Lupi Viewer Controls and Gallery
 ## 2026-06-14 rollout
 
-**Status:** Ship-ready locally
+**Status:** Live on `lupi.live` after main-branch deploy
 
 **Primary audience:** Lupi users tuning molecular views, sharing exact looks, and exploring small organic molecules from the gallery.
 
@@ -20,6 +20,10 @@
   - Molecule rows now surface relevant group chips.
   - The selected molecule spotlight explains first-course organic chemistry concepts through real gallery molecules such as aspirin, caffeine, dopamine, serotonin, THC, psilocybin, LSD, cholesterol, and alanine dipeptide.
 - Expanded ochem study examples for aldehydes, ketones, nitriles, alkyl halides, nitro groups, epoxides, thiols, sulfides, anhydrides, and acyl halides, including acetaldehyde, acetone, benzaldehyde, cyclohexanone, acetonitrile, benzonitrile, nitrobenzene, phenol, tert-butyl chloride, 1-bromobutane, ethylene oxide, ethanethiol, dimethyl sulfide, acetic anhydride, acetyl chloride, and ethyl acetate.
+- A new functional-group study guide in the gallery:
+  - Before a filter is selected, students get a simple pattern-first framework: recognize, compare, predict.
+  - After selecting a group, the guide teaches recognition cues, likely reactivity, common mistakes to avoid, a self-check prompt, and molecules to compare.
+  - The selected molecule spotlight now repeats those teaching cues so users can connect the abstract group to the visible structure.
 - OMol25 is ready for the same functional-group language: the offline indexer now derives group tags from real coordinates, the OMol provider can facet and filter by those tags, and the OMol collection page will show a functional-group rail as soon as the refreshed v3 index is published.
 
 ## Why It Matters
@@ -48,9 +52,10 @@ Local result on 2026-06-14:
 - UI focused tests: 48 passing.
 - UI TypeScript build: clean.
 - Web production build: clean.
-- Gallery verifier: 17/17 checks passing, including expanded functional-group examples and spotlight education.
+- Gallery verifier: 18/18 checks passing, including expanded functional-group examples, spotlight education, and the functional-group study guide.
 - Controls verifier: desktop and mobile profiles passing.
 - Manual visual screenshots checked for desktop/mobile gallery grouping and OMol25 functional-group filtering with mocked and live v3 tagged indexes.
+- Live visual browser pass checked desktop/mobile functional-group education copy with no page-level horizontal overflow.
 - OMol25 v3 index published to `gs://shed-489901-omol25/omol25_neutral_val.v3.json` and verified over public HTTPS with 27,697 tagged records.
 
 ## Live Verification After Deploy
