@@ -7,6 +7,7 @@ import type { ReactNode } from 'react';
 import { getElementSpec } from '@atlas/core';
 import { createKeyframe, type FlythroughSequence } from '../flythrough';
 import { useStore } from '../store';
+import { buildMoleculeStudyFacts, renderStudySheetHtml, studySheetFileName } from '../studyFacts';
 
 type ExportStatus =
   | { kind: 'idle'; label: string }
@@ -53,6 +54,16 @@ const IconDownload = () => (
     <path d="M12 4v10" />
     <path d="m7 10 5 5 5-5" />
     <path d="M5 20h14" />
+  </svg>
+);
+
+const IconStudySheet = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M7 4h7l3 3v13H7z" />
+    <path d="M14 4v4h4" />
+    <path d="M9 11h6" />
+    <path d="M9 14h6" />
+    <path d="M9 17h3" />
   </svg>
 );
 
@@ -154,6 +165,9 @@ export function FigureExportPanel({ showCloseButton = true }: { showCloseButton?
   const setShowScaleBar = useStore(s => s.setShowScaleBar);
   const cameraPosition = useStore(s => s.cameraPosition);
   const cameraTarget = useStore(s => s.cameraTarget);
+  const selectedAtoms = useStore(s => s.selectedAtoms);
+  const lastBondCount = useStore(s => s.lastBondCount);
+  const showBonds = useStore(s => s.showBonds);
   const [status, setStatus] = useState<ExportStatus>({ kind: 'idle', label: 'Ready' });
   // Video export now uses native MediaRecorder (works on every browser incl. iOS
   // Safari), so it no longer requires WebCodecs/desktop Chrome.
@@ -176,7 +190,7 @@ export function FigureExportPanel({ showCloseButton = true }: { showCloseButton?
       counts.set(type, (counts.get(type) ?? 0) + 1);
     }
     const formula = Array.from(counts.entries())
-      .sort(([a], [b]) => a - b)
+      .sort(([a], [b]) => sortFormulaTypes(a, b))
       .map(([type, count]) => `${getElementSpec(type).symbol}${count > 1 ? count : ''}`)
       .join('');
 
@@ -206,6 +220,44 @@ export function FigureExportPanel({ showCloseButton = true }: { showCloseButton?
       },
     });
   }, [file, setShowScaleBar, triggerExport]);
+
+  const runStudySheetExport = useCallback(() => {
+    if (!file || !currentFrame) return;
+    const facts = buildMoleculeStudyFacts({
+      file,
+      frameIndex: frame,
+      selectedAtoms,
+      lastBondCount,
+      showBonds,
+      shareUrl: typeof window === 'undefined' ? undefined : window.location.href,
+    });
+    if (!facts) {
+      setStatus({ kind: 'error', label: 'Study sheet failed' });
+      return;
+    }
+    const html = renderStudySheetHtml(facts);
+    const filename = studySheetFileName(facts);
+    setStatus({ kind: 'working', label: 'Opening study sheet' });
+
+    const sheetWindow = window.open('', '_blank', 'width=920,height=1100');
+    if (!sheetWindow) {
+      handoffDownload(new Blob([html], { type: 'text/html;charset=utf-8' }), filename, 'Study sheet', setStatus);
+      return;
+    }
+
+    sheetWindow.document.open();
+    sheetWindow.document.write(html);
+    sheetWindow.document.close();
+    sheetWindow.focus();
+    window.setTimeout(() => {
+      try {
+        sheetWindow.print();
+        setStatus({ kind: 'success', label: 'Opened study sheet' });
+      } catch {
+        handoffDownload(new Blob([html], { type: 'text/html;charset=utf-8' }), filename, 'Study sheet', setStatus);
+      }
+    }, 250);
+  }, [currentFrame, file, frame, lastBondCount, selectedAtoms, showBonds]);
 
   const runUsdExport = useCallback(() => {
     if (!file) return;
@@ -296,7 +348,7 @@ export function FigureExportPanel({ showCloseButton = true }: { showCloseButton?
           <div style={{
             fontSize: compact ? 10 : 11,
             fontWeight: 800,
-            letterSpacing: '0.13em',
+            letterSpacing: 0,
             color: '#7dd3fc',
             textTransform: 'uppercase',
           }}>
@@ -314,7 +366,7 @@ export function FigureExportPanel({ showCloseButton = true }: { showCloseButton?
               maxWidth: compact ? 'calc(100vw - 76px)' : 290,
             }}>
               {compact
-                ? `${systemInfo.natoms.toLocaleString()} atoms / frame ${frame + 1}`
+                ? `${systemInfo.formula ? `${systemInfo.formula} / ` : ''}${systemInfo.natoms.toLocaleString()} atoms / frame ${frame + 1}`
                 : `${systemInfo.formula || file?.name} / ${systemInfo.natoms.toLocaleString()} atoms / frame ${frame + 1}`}
             </div>
           )}
@@ -360,6 +412,15 @@ export function FigureExportPanel({ showCloseButton = true }: { showCloseButton?
             compact={compact}
           />
         ))}
+        <ExportAction
+          testId="export-study-sheet"
+          icon={<IconStudySheet />}
+          label="Study sheet"
+          meta="print / PDF"
+          disabled={!file || !currentFrame || busy}
+          onClick={runStudySheetExport}
+          compact={compact}
+        />
         <ExportAction
           testId="export-usdz"
           icon={<IconCube />}
@@ -409,7 +470,7 @@ export function FigureExportPanel({ showCloseButton = true }: { showCloseButton?
           background: status.kind === 'idle' ? 'rgba(15, 23, 42, 0.42)' : statusColor(status.kind, 0.08),
           fontSize: compact ? 10 : 11,
           fontWeight: 650,
-          letterSpacing: '0.02em',
+          letterSpacing: 0,
         }}
       >
         {status.label}
@@ -529,6 +590,14 @@ function downloadBlob(blob: Blob, filename: string) {
   link.click();
   document.body.removeChild(link);
   window.setTimeout(() => URL.revokeObjectURL(url), 10_000);
+}
+
+function sortFormulaTypes(a: number, b: number) {
+  if (a === 6 && b !== 6) return -1;
+  if (b === 6 && a !== 6) return 1;
+  if (a === 1 && b !== 6) return -1;
+  if (b === 1 && a !== 6) return 1;
+  return a - b;
 }
 
 function safeName(value: string) {

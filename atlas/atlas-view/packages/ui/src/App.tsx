@@ -120,6 +120,7 @@ import { CanvasErrorBoundary } from './CanvasErrorBoundary';
 import { MoleculeFilterShell } from './MoleculeFilterShell';
 import { PanelHost } from './PanelHost';
 import { ViewerControlsDrawer, type ViewerControlMode } from './ViewerControlsDrawer';
+import { StudyLensPanel } from './StudyLensPanel';
 
 // ─── Icons ────────────────────────────────────────────────────────────
 const IconFirst = () => (
@@ -229,6 +230,14 @@ const IconControls = () => (
     <circle cx="10" cy="8.2" r="1.15" fill="currentColor" stroke="none" />
     <circle cx="14.2" cy="12" r="1.15" fill="currentColor" stroke="none" />
     <circle cx="11.7" cy="15.8" r="1.15" fill="currentColor" stroke="none" />
+  </LupiGlyph>
+);
+const IconStudy = () => (
+  <LupiGlyph>
+    <path d="M7.2 7.4h4.2c1.1 0 2 .9 2 2v7.2H9.2c-1.1 0-2-.9-2-2V7.4Z" />
+    <path d="M13.4 9.4c.38-.32.88-.5 1.42-.5h2v7.2h-2c-.54 0-1.04.18-1.42.5" opacity="0.72" />
+    <path d="M9.1 10.2h2.1" opacity="0.7" />
+    <path d="M9.1 12.7h2.1" opacity="0.52" />
   </LupiGlyph>
 );
 // ─── Background presets ───────────────────────────────────────────────
@@ -526,6 +535,7 @@ export default function App() {
   const [isExportingQuickLook, setIsExportingQuickLook] = useState(false);
   const [studioDeck, setStudioDeck] = useState<ViewerControlMode | null>(null);
   const [viewMenuOpen, setViewMenuOpen] = useState(false);
+  const [studyLensOpen, setStudyLensOpen] = useState(false);
   const loadedSavedViewSlugRef = useRef<string | null>(null);
   const hashPath = hashRoute.split('?')[0] || '/';
   const isMlipFlywheelRoute = hashPath === '/system/mlip-flywheel';
@@ -732,6 +742,7 @@ export default function App() {
     if (showPotentialBrowser || !file) {
       setStudioDeck(null);
       setViewMenuOpen(false);
+      if (!file) setStudyLensOpen(false);
     } else if (activePanel && activePanel !== 'studio') {
       setViewMenuOpen(false);
     }
@@ -1036,7 +1047,7 @@ export default function App() {
           >
             <span style={{
               fontSize: 21, fontWeight: 750, color: 'var(--text-primary)',
-              letterSpacing: '-0.02em'
+              letterSpacing: 0
             }}>
               Lupi
             </span>
@@ -1445,6 +1456,13 @@ export default function App() {
             />
           )}
 
+          {file && currentFrame && studyLensOpen && (
+            <StudyLensPanel
+              compact={isMobile}
+              onClose={() => setStudyLensOpen(false)}
+            />
+          )}
+
           {/* Simple stats overlay */}
           {file && totalFrames > 1 && (
             <div style={{
@@ -1499,6 +1517,27 @@ export default function App() {
                   <CameraPresetButton label="ISO" active={cameraPreset === 'iso'} onClick={() => { setCameraPreset('iso'); setViewMenuOpen(false); }} title="Isometric view" />
                 </div>
               )}
+              <button
+                type="button"
+                data-testid="study-lens-toggle"
+                onClick={() => {
+                  setViewMenuOpen(false);
+                  setStudyLensOpen(open => !open);
+                }}
+                title="Study lens"
+                aria-label="Study lens"
+                aria-pressed={studyLensOpen}
+                className={`lupine-btn compact ${studyLensOpen ? 'active' : ''}`}
+                style={{
+                  width: isMobile ? 44 : 52,
+                  height: 36,
+                  padding: 0,
+                  display: 'grid',
+                  placeItems: 'center',
+                }}
+              >
+                <IconStudy />
+              </button>
             </div>
           )}
 
@@ -1527,7 +1566,7 @@ export default function App() {
                   padding: '0 14px',
                   fontSize: 13,
                   fontWeight: 700,
-                  letterSpacing: '0.01em',
+                  letterSpacing: 0,
                 }}
               >
                 <IconControls />
@@ -1765,6 +1804,16 @@ export default function App() {
               },
             },
             {
+              id: 'study-lens',
+              label: 'Toggle study lens',
+              group: 'Panels',
+              disabled: !file,
+              onSelect: () => {
+                setShowPotentialBrowser(false);
+                setStudyLensOpen(open => !open);
+              },
+            },
+            {
               id: 'telemetry-panel',
               label: 'Open telemetry',
               group: 'Panels',
@@ -1848,7 +1897,7 @@ export default function App() {
             },
           ];
           return list;
-        }, [file, activePanel, totalFrames])}
+        }, [file, activePanel, totalFrames, studyLensOpen])}
       />
     </div>
   );
