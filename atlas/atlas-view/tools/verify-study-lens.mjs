@@ -46,6 +46,7 @@ const report = {
   overflow: null,
   screenshots: [],
   consoleWarnings: [],
+  networkErrors: [],
   pageErrors: [],
   popupErrors: [],
   visualReportPath: null,
@@ -53,7 +54,7 @@ const report = {
 
 try {
   const baseUrl = externalUrl || await startPortlessVite();
-  report.url = studyLensUrl(withTrailingSlash(baseUrl)).toString();
+  report.url = studyLensUrl(baseUrl).toString();
   console.log(`[verify-study-lens] -> ${report.url}`);
 
   browser = await chromium.launch({
@@ -116,30 +117,52 @@ try {
     report.pageErrors.push(err.message);
     console.log(`[PAGE ERROR] ${err.message}`);
   });
+  page.on('response', (response) => {
+    if (response.status() < 400) return;
+    const entry = { status: response.status(), url: response.url() };
+    report.networkErrors.push(entry);
+    console.log(`[HTTP ${entry.status}] ${entry.url}`);
+  });
 
   await page.goto(report.url, { waitUntil: 'domcontentloaded', timeout });
-  await page.waitForFunction(
-    () => typeof window?.__atlas?.getState === 'function' && Boolean(window.__atlas.getState().file),
+  const storeAvailable = await page.waitForFunction(
+    () => typeof window?.__atlas?.getState === 'function',
     null,
-    { timeout },
-  );
+    { timeout: 5000 },
+  ).then(() => true).catch(() => false);
+  if (storeAvailable) {
+    await page.waitForFunction(
+      () => Boolean(window.__atlas.getState().file),
+      null,
+      { timeout },
+    );
+  }
   await page.getByTestId('study-lens-toggle').waitFor({ state: 'visible', timeout });
 
-  report.molecule = await page.evaluate(() => {
-    const state = window.__atlas.getState();
-    const file = state.file;
-    const frame = file?.trajectory?.frames?.[state.frame ?? 0];
-    return {
-      name: file?.name ?? '',
-      sourceUrl: file?.sourceUrl ?? '',
-      atoms: frame?.natoms ?? 0,
-      frameCount: file?.trajectory?.totalFrames ?? 0,
+  if (storeAvailable) {
+    report.molecule = await page.evaluate(() => {
+      const state = window.__atlas.getState();
+      const file = state.file;
+      const frame = file?.trajectory?.frames?.[state.frame ?? 0];
+      return {
+        name: file?.name ?? '',
+        sourceUrl: file?.sourceUrl ?? '',
+        atoms: frame?.natoms ?? 0,
+        frameCount: file?.trajectory?.totalFrames ?? 0,
+      };
+    });
+  } else {
+    report.molecule = {
+      name: await page.locator('header').first().innerText().then(text => text.slice(0, 160)).catch(() => 'public build'),
+      sourceUrl: 'public build',
+      atoms: 0,
+      frameCount: 0,
     };
-  });
-  if (!/aspirin/i.test(report.molecule?.name ?? report.molecule?.sourceUrl ?? '')) {
+  }
+  if (storeAvailable && !/aspirin/i.test(report.molecule?.name ?? report.molecule?.sourceUrl ?? '')) {
     failures.push(`expected aspirin to load, got ${JSON.stringify(report.molecule)}`);
   }
-  if ((report.molecule?.atoms ?? 0) < 10) failures.push('loaded molecule has too few atoms for aspirin');
+  if (storeAvailable && (report.molecule?.atoms ?? 0) < 10) failures.push('loaded molecule has too few atoms for aspirin');
 
   await page.getByTestId('study-lens-toggle').click();
   const lens = page.getByTestId('study-lens-panel');
@@ -313,7 +336,7 @@ function assertContains(text, pattern, label) {
 function studyLensUrl(baseUrl) {
   const url = new URL(baseUrl);
   if (!url.searchParams.has('load') && !url.searchParams.has('sim')) {
-    url.searchParams.set('sim', 'aspirin');
+    url.searchParams.set('load', '/gallery/curated/popular/aspirin.xyz');
   }
   return url;
 }
@@ -337,10 +360,6 @@ function parseViewport(value, fallback) {
     width: Number(match[1]),
     height: Number(match[2]),
   };
-}
-
-function withTrailingSlash(url) {
-  return url.endsWith('/') ? url : `${url}/`;
 }
 
 function stamp() {

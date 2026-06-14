@@ -1,5 +1,6 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { detectFormatFromContent } from './index';
+import { autoDetectLoader, isKnownLegacyMoleculeUrl } from './StreamingLoader';
 
 describe('detectFormatFromContent', () => {
   it('detects LAMMPS dump by ITEM markers', () => {
@@ -34,5 +35,25 @@ describe('detectFormatFromContent', () => {
 
   it('does not mistake a dump whose first line is numeric-looking for XYZ', () => {
     expect(detectFormatFromContent('ITEM: TIMESTEP\n1000\n')).toBe('dump');
+  });
+});
+
+describe('autoDetectLoader', () => {
+  it('does not range-probe known text molecule URLs', async () => {
+    const fetchMock = vi.fn();
+    vi.stubGlobal('fetch', fetchMock);
+    try {
+      await expect(autoDetectLoader('/gallery/curated/popular/aspirin.xyz')).resolves.toBe('legacy');
+      await expect(autoDetectLoader('https://lupi.live/demo.lammpstrj?cache=1')).resolves.toBe('legacy');
+      await expect(autoDetectLoader('data.polymer.lmp')).resolves.toBe('legacy');
+      expect(fetchMock).not.toHaveBeenCalled();
+    } finally {
+      vi.unstubAllGlobals();
+    }
+  });
+
+  it('still identifies glimbin URLs as streaming', async () => {
+    expect(isKnownLegacyMoleculeUrl('/gallery/run.glimbin')).toBe(false);
+    await expect(autoDetectLoader('/gallery/run.glimbin')).resolves.toBe('streaming');
   });
 });

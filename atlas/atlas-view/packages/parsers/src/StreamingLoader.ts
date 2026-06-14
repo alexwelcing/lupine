@@ -431,12 +431,24 @@ export function isGlimbinUrl(url: string): boolean {
   }
 }
 
+/** Check if a URL points to a known monolithic text molecule format. */
+export function isKnownLegacyMoleculeUrl(url: string): boolean {
+  const legacyExt = /\.(?:xyz|extxyz|dump|lammpstrj|lammps|data|lmp|log)(?:$|[?#])/i;
+  try {
+    const parsed = new URL(url, 'http://localhost');
+    return legacyExt.test(parsed.pathname);
+  } catch {
+    return legacyExt.test(url);
+  }
+}
+
 /**
  * Auto-detect whether a URL is a .glimbin (streaming) or a raw text file
  * (legacy monolithic parse). Returns the appropriate loader.
  */
 export async function autoDetectLoader(url: string): Promise<'streaming' | 'legacy'> {
   if (isGlimbinUrl(url)) return 'streaming';
+  if (isKnownLegacyMoleculeUrl(url)) return 'legacy';
 
   // Probe the first 4 bytes to check for GLIM magic
   try {
