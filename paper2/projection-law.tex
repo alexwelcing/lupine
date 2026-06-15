@@ -3,6 +3,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{booktabs}
+\usepackage{tabularx}
 \usepackage{graphicx}
 \usepackage[margin=2.5cm]{geometry}
 \usepackage[round]{natbib}
@@ -14,8 +15,8 @@
 \newcommand{\inn}[2]{\langle #1, #2 \rangle}
 
 \title{\bfseries The Projection Law: Model-Ensemble Errors Point at Their Binding Constraint}
-\author{Alex Welcing\\ \small Lupine Science\\ \small \texttt{alex@lupine.io}}
-\date{Draft of June 11, 2026}
+\author{Alex Welcing\\ \small Lupine Science, Union City, NJ\\ \small \texttt{alexwelcing@gmail.com}}
+\date{June 14, 2026}
 
 \begin{document}
 \maketitle
@@ -49,7 +50,7 @@ pseudopotential table, not simulation code
 $p{=}0.017$). Each registered experiment carried an explicit refutation
 condition; neither was triggered, and four of seven registered predictions
 failed and are reported as failures. The anisotropy itself persists at every
-layer --- median participation ratio $1.09$, ${\sim}1.3$, and $1.10$ out of 3
+layer --- median participation ratio $1.09$ (classical), $1.3$ (FCC foundation MLIPs), and $1.10$ (DFT) out of 3
 at the three layers --- while its direction rotates to the next constraint
 upstream: a conservation law for the geometry of ignorance, with a practical
 corollary: a correction direction fitted with the corrected model held out
@@ -200,15 +201,15 @@ hyper-ribbons of single models \citealp{transtrum2011,kurniawan2022};
 \end{theorem}
 
 All four theorems are verified in Lean~4 against a pinned Mathlib as part of
-the program's larger formal corpus --- 180 theorems and lemmas across 35
-source files in the current build, including a conditional hyper-ribbon bound
-(spectral-decay hypotheses $\Rightarrow \mathrm{PR}<2$), a context-correction
-theorem bundle whose ``correction closes the residual'' statement is the formal
-counterpart of the out-of-sample calibration result below, and a formal audit
-module that previously caught an overstatement in the program's own empirical
-work --- with zero \texttt{sorry}
-and zero new axioms; the artifact and the theorem-to-statistic contract ship
-with the replication kit (\S\ref{sec:repro}). Figure~\ref{fig:gauge}
+the program's larger formal corpus --- 181 theorem and lemma declarations
+across the current build, checked by \texttt{lake build} with zero
+\texttt{sorry} and zero new axioms --- including a conditional hyper-ribbon
+bound (spectral-decay hypotheses $\Rightarrow \mathrm{PR}<2$), a
+context-correction theorem bundle whose ``correction closes the residual''
+statement is the formal counterpart of the out-of-sample calibration result
+below, and a formal audit module that previously caught an overstatement in
+the program's own empirical work. The artifact and the theorem-to-statistic
+contract ship with the replication kit (\S\ref{sec:repro}). Figure~\ref{fig:gauge}
 visualizes the gauge with its classical inversion and the decoupling of the
 two order parameters in live data.
 
@@ -217,8 +218,8 @@ two order parameters in live data.
 \includegraphics[width=\textwidth]{figures/fig4_gauge_decoupling.pdf}
 \caption{\textbf{The gauge and the two order parameters.}
 (a)~$\mathrm{PR}(3,\rho)$ (Theorem~\ref{thm:gauge}); inverting the classical
-ensemble's median $\mathrm{PR}=1.28$ gives systematic fraction
-$\alpha = 0.93$, in agreement with two independent estimators
+ensemble's median $\mathrm{PR}=1.09$ gives systematic fraction
+$\alpha = 0.98$, in agreement with two independent estimators
 (\S\ref{sec:classical}). (b)~Per-element foundation-MLIP ensembles
 ($n=8$--$11$ models): axis concentration stays high for every element while
 sign coherence spans the full range --- the decoupling of
@@ -425,7 +426,7 @@ evidence (constraint vs.\ implementation), and the registered refutation
 condition's status.}
 \label{tab:layers}
 \small
-\begin{tabular}{@{}lllll@{}}
+\begin{tabularx}{\textwidth}{@{}l l l X l@{}}
 \toprule
 Layer & Ensemble & Binding constraint & Evidence & Kill condition \\
 \midrule
@@ -433,7 +434,7 @@ Classical IPs & 559 potentials & functional form & within-family $r{=}0.95$; PR 
 Foundation MLIPs & $4{\times}2$ MatPES $+$ anchors & training functional & $S_{\mathrm{func}}{=}{+}0.317$ vs ${-}0.093$, $p{=}0.029$ & not triggered \\
 DFT codes & 12 ACWF methods & pseudopotential table & $S_{\mathrm{table}}{=}{+}0.526$ vs ${+}0.265$, $p{=}0.017$ & not triggered \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{table}
 
 The closest antecedents are the persistence of shared biases across climate
@@ -586,7 +587,7 @@ NumPy/SciPy in seconds (classical-layer and robustness statistics are
 reproduced by accompanying scripts in the same kit), and Tier~2 re-derives
 the raw elastic constants from public checkpoints through a frozen harness
 (deterministic within 1~GPa; the Gate-0 harness regression is bit-exact).
-The complete kit, pinned datasets, and pre-registrations are publicly served at \url{https://storage.googleapis.com/shed-489901-replication/error-geometry/v1-10c18ace/index.html}. The Lean~4 artifact (180 theorems and lemmas across 35 files at the current
+The complete kit, pinned datasets, and pre-registrations are publicly served at \url{https://storage.googleapis.com/shed-489901-replication/error-geometry/v1-10c18ace/index.html}. The Lean~4 artifact (181 theorem and lemma declarations in the current
 build, including the four theorems of this paper; zero \texttt{sorry}, zero
 new axioms, pinned Mathlib) and the theorem-to-statistic contract accompany
 the kit. The harness was validated by

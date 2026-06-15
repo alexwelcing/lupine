@@ -87,3 +87,22 @@ HTML decks:
 ```
 
 Any path named in this JSON becomes protected.
+
+## Shared components
+
+Public pages share a design system and reusable partials:
+
+- `public/css/lupine.css` — shared tokens, typography, layout, and components.
+- `public/css/home.css` — page-specific styles for the homepage.
+- `public/partials/nav.html` — site navigation.
+- `public/partials/footer.html` — site footer.
+
+Pages include partials with an HTML comment marker:
+
+```html
+<!-- include:partials/nav.html -->
+```
+
+`server.mjs` resolves these markers at request time, so a single edit to a
+partial updates every page that references it. Includes are restricted to files
+inside `public/` and recursion is limited to three levels.

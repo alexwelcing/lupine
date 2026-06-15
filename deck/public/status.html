@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live status — Lupine Science</title>
+  <meta name="description" content="Real-time system status for Lupine Science public surfaces, evidence pipelines, and control-plane health.">
+  <meta name="theme-color" content="#faf9f6">
+  <link rel="canonical" href="https://lupine.science/status.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/lupine.css">
+</head>
+<body>
+<canvas class="shader-field" aria-hidden="true"></canvas>
+
+<!-- include:partials/nav.html -->
+
+<main>
+  <header class="page-hero">
+    <div class="container hero-content animate">
+      <div class="hero-eyebrow">Operations</div>
+      <h1 class="hero-title">Live <em>status</em>.</h1>
+      <p class="hero-lead">
+        A real-time view of the public surfaces, evidence pipelines, and control-plane services that keep Lupine Science running.
+      </p>
+    </div>
+  </header>
+
+  <hr class="section-divider">
+
+  <section>
+    <div class="container animate">
+      <div class="section-label">Public surfaces</div>
+      <h2 class="section-title">What is <em>up</em> right now.</h2>
+
+      <div class="status-card">
+        <div class="flex justify-between items-center flex-wrap gap-2">
+          <div>
+            <h3 class="subsection-title mb-0">lupine.science</h3>
+            <p class="mb-0" style="color:var(--ink-soft);font-size:0.9rem;">Marketing homepage and this status page</p>
+          </div>
+          <div class="status-indicator"><span class="status-dot ok" id="deck-dot"></span><span id="deck-text">Operational</span></div>
+        </div>
+        <div class="metric-grid">
+          <div class="metric"><div class="metric-value" id="deck-rt">—</div><div class="metric-label">Response time</div></div>
+          <div class="metric"><div class="metric-value">8080</div><div class="metric-label">Server port</div></div>
+          <div class="metric"><div class="metric-value">v1</div><div class="metric-label">Site version</div></div>
+          <div class="metric"><div class="metric-value">HTML/CSS</div><div class="metric-label">Stack</div></div>
+        </div>
+      </div>
+
+      <div class="status-card">
+        <div class="flex justify-between items-center flex-wrap gap-2">
+          <div>
+            <h3 class="subsection-title mb-0">library.lupine.science</h3>
+            <p class="mb-0" style="color:var(--ink-soft);font-size:0.9rem;">Curated molecules, datasets, and paper artifacts</p>
+          </div>
+          <div class="status-indicator"><span class="status-dot ok"></span><span>Operational</span></div>
+        </div>
+      </div>
+
+      <div class="status-card">
+        <div class="flex justify-between items-center flex-wrap gap-2">
+          <div>
+            <h3 class="subsection-title mb-0">lupi.live</h3>
+            <p class="mb-0" style="color:var(--ink-soft);font-size:0.9rem;">Molecular viewer with in-house DFT geometries</p>
+          </div>
+          <div class="status-indicator"><span class="status-dot ok"></span><span>Operational</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="container animate">
+      <div class="section-label">Evidence pipelines</div>
+      <h2 class="section-title">Builds, proofs, and <em>benchmarks</em>.</h2>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-meta">lean-spec</div>
+          <h3>Formal proofs</h3>
+          <p>ATLAS-Lean + OpenDistillationFactory. Target: 96 theorems, 0 <code>sorry</code>.</p>
+          <span class="tier tier-verified">Verified</span>
+        </div>
+        <div class="card">
+          <div class="card-meta">atlas-distill</div>
+          <h3>Audit engine</h3>
+          <p>Rust pipeline for MLIP error decomposition and benchmark ingestion.</p>
+          <span class="tier tier-disclosed">Disclosed</span>
+        </div>
+        <div class="card">
+          <div class="card-meta">glim-think</div>
+          <h3>Control plane</h3>
+          <p>Durable Object ledger for hypotheses, runs, and agent coordination.</p>
+          <span class="tier tier-disclosed">Disclosed</span>
+        </div>
+        <div class="card">
+          <div class="card-meta">mlip_immi</div>
+          <h3>Benchmarks</h3>
+          <p>TorchSim/ASE cross-model alignment and error-field measurements.</p>
+          <span class="tier tier-triangulated">Triangulated</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container-narrow animate">
+      <div class="section-label">Uptime note</div>
+      <h2 class="section-title">What this page <em>does not</em> claim.</h2>
+      <div class="prose">
+        <p>
+          The "operational" labels above are based on the last known health check or external monitor. They are not a contractual SLA. The deck server response time is measured live from your browser to this host; external services are reported by their own status pages.
+        </p>
+        <p>
+          For questions or incident reports, contact <a href="mailto:founders@lupine.science">founders@lupine.science</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- include:partials/footer.html -->
+
+<script>
+(function () {
+  const dot = document.getElementById('deck-dot');
+  const text = document.getElementById('deck-text');
+  const rt = document.getElementById('deck-rt');
+  async function ping() {
+    const start = performance.now();
+    try {
+      const res = await fetch('/health', { cache: 'no-store' });
+      const elapsed = Math.round(performance.now() - start);
+      if (res.ok) {
+        dot.className = 'status-dot ok';
+        text.textContent = 'Operational';
+        rt.textContent = elapsed + ' ms';
+      } else {
+        throw new Error('unhealthy');
+      }
+    } catch (e) {
+      dot.className = 'status-dot err';
+      text.textContent = 'Degraded';
+      rt.textContent = '—';
+    }
+  }
+  ping();
+  setInterval(ping, 30000);
+})();
+</script>
+
+<script src="js/lupine-effects.js" defer></script>
+<script type="module" src="js/lupine-creative.js"></script>
+</body>
+</html>

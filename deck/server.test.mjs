@@ -1,7 +1,20 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import http from 'node:http';
 
-import { hashAccessCode, hashPassword, loadAccessRules, normalizeDeckPath } from './server.mjs';
+import { hashAccessCode, hashPassword, loadAccessRules, normalizeDeckPath, createDeckServer } from './server.mjs';
+
+function request(server, path) {
+  return new Promise((resolve, reject) => {
+    const { port } = server.address();
+    http.get(`http://127.0.0.1:${port}${path}`, (res) => {
+      let body = '';
+      res.setEncoding('utf8');
+      res.on('data', (chunk) => { body += chunk; });
+      res.on('end', () => resolve({ status: res.statusCode, body }));
+    }).on('error', reject);
+  });
+}
 
 test('normalizes protected deck paths to local html paths', () => {
   assert.equal(normalizeDeckPath('deck.html'), '/deck.html');
@@ -65,4 +78,19 @@ test('keeps legacy password json keys working', () => {
 
   assert.equal(rules.length, 1);
   assert.equal(rules[0].accessCodeHash, hashAccessCode('legacy-password'));
+});
+
+test('resolves HTML include markers for public pages', async () => {
+  const server = createDeckServer();
+  await new Promise((resolve) => server.listen(0, resolve));
+
+  try {
+    const { status, body } = await request(server, '/methodology.html');
+    assert.equal(status, 200);
+    assert.match(body, /<nav class="site-nav"/);
+    assert.match(body, /<footer class="site-footer"/);
+    assert.doesNotMatch(body, /<!--\s*include:/);
+  } finally {
+    await new Promise((resolve) => server.close(resolve));
+  }
 });

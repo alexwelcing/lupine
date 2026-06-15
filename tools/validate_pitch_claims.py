@@ -39,6 +39,12 @@ SURFACES_STRICT = [
     "atlas/atlas-view/apps/web/public/llms.txt",
     "atlas/atlas-view/apps/web/public/llms-full.txt",
     "deck/public/index.html",
+    "deck/public/access.html",
+    "deck/public/one-pager.html",
+    "deck/public/methodology.html",
+    "deck/public/status.html",
+    "deck/public/partials/nav.html",
+    "deck/public/partials/footer.html",
     "raise/command-center.html",
 ]
 

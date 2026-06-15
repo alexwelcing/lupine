@@ -1,5 +1,6 @@
 import { createHmac, createHash, randomBytes, timingSafeEqual } from 'node:crypto';
 import { createReadStream, existsSync, statSync } from 'node:fs';
+import { readFile } from 'node:fs/promises';
 import { createServer } from 'node:http';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -13,6 +14,9 @@ const DEFAULT_DECK_PATH = normalizeDeckPath(process.env.INVESTOR_DECK_DEFAULT_PA
 const sessionSecret = process.env.INVESTOR_DECK_SESSION_SECRET || randomBytes(32).toString('hex');
 const accessRules = loadAccessRules(process.env);
 const recentAttempts = new Map();
+
+const INCLUDE_RE = /<!--\s*include:\s*([\w./-]+)\s*-->/g;
+const INCLUDE_MAX_DEPTH = 3;
 
 const contentTypes = new Map([
   ['.html', 'text/html; charset=utf-8'],
@@ -351,6 +355,28 @@ function escapeHtml(value) {
     .replaceAll("'", '&#39;');
 }
 
+async function loadPartial(name) {
+  if (!/^[\w./-]+$/.test(name) || name.includes('..')) {
+    throw new Error(`Invalid include name: ${name}`);
+  }
+  const partialPath = path.resolve(PUBLIC_DIR, name);
+  if (!partialPath.startsWith(PUBLIC_DIR)) {
+    throw new Error(`Include outside public dir: ${name}`);
+  }
+  return readFile(partialPath, 'utf8');
+}
+
+async function processIncludes(content, depth = 0) {
+  if (depth > INCLUDE_MAX_DEPTH) return content;
+  const matches = [...content.matchAll(INCLUDE_RE)];
+  if (matches.length === 0) return content;
+  for (const match of matches) {
+    const partial = await loadPartial(match[1]);
+    content = content.replace(match[0], () => partial);
+  }
+  return processIncludes(content, depth + 1);
+}
+
 async function serveStatic(req, res, pathname) {
   const effectivePath = pathname === '/' ? '/index.html' : pathname === '/access' ? '/access.html' : pathname;
   const normalized = path.normalize(decodeURIComponent(effectivePath)).replace(/^(\.\.[/\\])+/, '');
@@ -374,9 +400,25 @@ async function serveStatic(req, res, pathname) {
 
   const extension = path.extname(filePath).toLowerCase();
   const isHtml = extension === '.html';
+  const contentType = contentTypes.get(extension) || 'application/octet-stream';
+
+  if (isHtml) {
+    const raw = await readFile(filePath, 'utf8');
+    const html = await processIncludes(raw);
+    const body = Buffer.from(html, 'utf8');
+    const headers = securityHeaders({
+      'Content-Type': contentType,
+      'Cache-Control': 'no-store',
+      'Content-Length': body.length,
+    });
+    res.writeHead(200, headers);
+    res.end(body);
+    return;
+  }
+
   const headers = securityHeaders({
-    'Content-Type': contentTypes.get(extension) || 'application/octet-stream',
-    'Cache-Control': isHtml ? 'no-store' : 'public, max-age=2592000, immutable',
+    'Content-Type': contentType,
+    'Cache-Control': 'public, max-age=2592000, immutable',
     'Content-Length': stats.size,
   });
 

@@ -1,0 +1,15 @@
+# Python environment for regenerating Projection Law figures.
+# Create venv in this directory:
+#   python -m venv .venv-figures
+#   .\.venv-figures\Scripts\python.exe -m pip install -r requirements-figures.txt
+#
+# Note: scienceplots 2.2.1 uses private matplotlib APIs that changed in
+# matplotlib >= 3.9. After installing, patch the two files in
+# .venv-figures/Lib/site-packages/scienceplots/ to use the public
+# matplotlib.style module (see build_paper.py --patch-scienceplots).
+
+matplotlib==3.11.0
+numpy==2.4.6
+scipy==1.17.1
+scienceplots==2.2.1
+cmcrameri==1.9

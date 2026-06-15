@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Methodology — Lupine Science</title>
+  <meta name="description" content="How Lupine Science tiers atomistic prediction errors and turns them into a closed-loop audit substrate for the matter stack.">
+  <meta name="theme-color" content="#faf9f6">
+  <link rel="canonical" href="https://lupine.science/methodology.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/lupine.css">
+</head>
+<body>
+<canvas class="shader-field" aria-hidden="true"></canvas>
+
+<!-- include:partials/nav.html -->
+
+<main>
+  <header class="page-hero">
+    <div class="container hero-content animate">
+      <div class="hero-eyebrow">Methodology</div>
+      <h1 class="hero-title">Name the error. <em>Close the loop.</em></h1>
+      <p class="hero-lead">
+        Atomistic simulations are only as useful as our account of where they fail. Lupine's methodology treats prediction error as a geometric object — measurable, tiered, and reusable as a training signal.
+      </p>
+    </div>
+  </header>
+
+  <hr class="section-divider">
+
+  <section>
+    <div class="container-narrow animate">
+      <div class="section-label">The working paper</div>
+      <h2 class="section-title"><em>The Causal Geometry</em> of Prediction Errors in Interatomic Potentials</h2>
+      <p class="lead">
+        Our working paper introduces a unifying language for MLIP error: a causal/structural decomposition that maps prediction failures back to the physical configurations that caused them.
+      </p>
+      <div class="prose">
+        <p>
+          The paper is currently <strong>in preparation</strong>. We do not describe it as published, submitted, reviewed, or accepted. It is being developed in the open alongside the atlas-distill audit engine and the Lean formalization of its core accuracy commitment.
+        </p>
+        <p>
+          The companion manuscript extends the same framework to interatomic-potential benchmarks, showing how error-geometry constraints propagate from density-functional training data through to molecular-dynamics trajectories.
+        </p>
+      </div>
+      <div class="callout callout-lupine">
+        <div class="callout-title">Status</div>
+        <p class="mb-0">Working paper · internal review and benchmark verification in progress. Preprints will be released here and on the Library when ready.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="container animate">
+      <div class="section-label">The audit loop</div>
+      <h2 class="section-title">Four steps, <em>each testable</em>.</h2>
+      <p class="lead">The methodology is not a black-box score. It is a loop that produces evidence at every stage.</p>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-meta">01 — Predict</div>
+          <h3>Run the simulation</h3>
+          <p>Execute the MLIP or DFT workflow on a well-defined benchmark geometry and record the full prediction vector.</p>
+          <span class="tier tier-verified">Verified</span>
+        </div>
+        <div class="card">
+          <div class="card-meta">02 — Compare</div>
+          <h3>Compute the error field</h3>
+          <p>Measure force, stress, energy, and relaxation residuals against a trusted reference. Error is treated as a field over configuration space.</p>
+          <span class="tier tier-verified">Verified</span>
+        </div>
+        <div class="card">
+          <div class="card-meta">03 — Decompose</div>
+          <h3>Name the cause</h3>
+          <p>Cluster failures by local structure, composition, and trajectory history. The geometry of error becomes a diagnostic, not just a number.</p>
+          <span class="tier tier-triangulated">Triangulated</span>
+        </div>
+        <div class="card">
+          <div class="card-meta">04 — Correct</div>
+          <h3>Retrain or restrict</h3>
+          <p>Route the failing configurations back into training data, guardrails, or runtime fallbacks. The loop closes.</p>
+          <span class="tier tier-projection">Projection</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container animate">
+      <div class="section-label">Claim tiers</div>
+      <h2 class="section-title">Every public number carries <em>a label</em>.</h2>
+      <p class="lead">We do not let a single impressive metric stand in for rigor. Each claim on this site is tagged by how it was produced.</p>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Tier</th>
+              <th>What it means</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="tier tier-verified">Verified</span></td>
+              <td>Reproduced by an independent run or external benchmark on the same data.</td>
+              <td>CHGNet-vs-DFT force RMSE on a named test split.</td>
+            </tr>
+            <tr>
+              <td><span class="tier tier-disclosed">Disclosed</span></td>
+              <td>Our own measurement, with method and assumptions listed explicitly.</td>
+              <td>Atlas-distill runtime on a local GPU lane.</td>
+            </tr>
+            <tr>
+              <td><span class="tier tier-triangulated">Triangulated</span></td>
+              <td>Cross-checked against two or more distinct sources or models.</td>
+              <td>Agreement across CHGNet, MACE, and ORB on a failure mode.</td>
+            </tr>
+            <tr>
+              <td><span class="tier tier-projection">Projection</span></td>
+              <td>Model-based extrapolation from current evidence, with assumptions stated.</td>
+              <td>5-year DCF or scenario-weighted valuation.</td>
+            </tr>
+            <tr>
+              <td><span class="tier tier-directional">Directional</span></td>
+              <td>A qualitative thesis or conjecture, not yet quantified.</td>
+              <td>"Scarcity is an engineering problem."</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="container-narrow animate">
+      <div class="section-label">Open core</div>
+      <h2 class="section-title">Evidence in the open, <em>infrastructure for rent</em>.</h2>
+      <p class="lead">
+        The methodology and reference benchmarks are released as open research. Enterprise tooling — private data pipelines, compliance reports, and closed-loop retraining — is where the business model lives.
+      </p>
+      <div class="prose">
+        <ul>
+          <li><strong>Open:</strong> Working papers, benchmark datasets, atlas-distill engine, Lean specifications, and public status dashboards.</li>
+          <li><strong>Commercial:</strong> Hosted audit substrate, private model cards, federal/compliance reporting, and integration into self-driving lab stacks.</li>
+        </ul>
+        <blockquote>
+          The best way to make a trustworthy prediction layer is to make the failure modes public and the correction loop auditable.
+        </blockquote>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- include:partials/footer.html -->
+
+<script src="js/lupine-effects.js" defer></script>
+<script type="module" src="js/lupine-creative.js"></script>
+</body>
+</html>

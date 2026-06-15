@@ -5,726 +5,55 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lupine Science — Step 1 of a real-world Replicator</title>
   <meta name="description" content="Lupine Science builds the audit substrate for the matter stack — the methodology that names where atomistic predictions fail and compresses failure into closed-loop self-correction.">
+  <meta name="theme-color" content="#faf9f6">
+  <link rel="canonical" href="https://lupine.science/">
   <meta property="og:title" content="Lupine Science — Step 1 of a real-world Replicator">
   <meta property="og:description" content="Lupine builds the audit substrate for the matter stack — the open-core methodology that names where atomistic simulations fail and feeds those failures into closed-loop self-correction.">
+  <meta property="og:url" content="https://lupine.science/">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23faf9f6' stroke='%233d4db3' stroke-width='2'/%3E%3Ccircle cx='50' cy='50' r='6' fill='%233d4db3'/%3E%3Cellipse cx='50' cy='50' rx='32' ry='11' fill='none' stroke='%233d4db3' stroke-width='1.5'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
-  <style>
-    /* ─── TOKENS ─────────────────────────────────────── */
-    :root {
-      --paper: #faf9f6;
-      --paper-deep: #f1efe9;
-      --ink: #16181f;
-      --ink-soft: #5c5f6b;
-      --hairline: rgba(22,24,31,0.14);
-      --lupine: #3d4db3;
-      --lupine-deep: #2e3a87;
-      --tier-verified: #1f7a4d;
-      --tier-disclosed: #8a6d1f;
-      --tier-triangulated: #705a9e;
-      --tier-projection: #9a5a2e;
-      --tier-directional: #5c5f6b;
-      --font-serif: 'Newsreader', Georgia, serif;
-      --font-sans: system-ui, -apple-system, "Segoe UI", sans-serif;
-      --font-mono: ui-monospace, "Cascadia Mono", "SF Mono", monospace;
-    }
-
-    /* ─── RESET & BASE ──────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; font-size: 16px; }
-    body {
-      background: var(--paper);
-      color: var(--ink);
-      font-family: var(--font-sans);
-      font-size: 17px;
-      line-height: 1.75;
-      -webkit-font-smoothing: antialiased;
-    }
-    a { color: var(--lupine); }
-    a:hover { color: var(--lupine-deep); }
-    a:focus-visible { outline: 2px solid var(--lupine); outline-offset: 3px; }
-
-    /* ─── LAYOUT ─────────────────────────────────────── */
-    .prose {
-      max-width: 70ch;
-      margin-inline: auto;
-      padding-inline: 24px;
-    }
-    .wide {
-      max-width: 1040px;
-      margin-inline: auto;
-      padding-inline: 24px;
-    }
-    section, .band {
-      padding-block: clamp(72px, 10vw, 140px);
-    }
-    .band-alt { background: var(--paper-deep); }
-
-    /* ─── SECTION LABEL + RULE ───────────────────────── */
-    .section-label {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-      margin-bottom: 10px;
-    }
-    .section-rule {
-      border: none;
-      border-top: 1px solid var(--hairline);
-      margin-bottom: 28px;
-    }
-    h2 {
-      font-family: var(--font-serif);
-      font-size: clamp(28px, 4vw, 44px);
-      font-weight: 400;
-      line-height: 1.15;
-      color: var(--ink);
-      margin-bottom: 24px;
-    }
-    h2 em { font-style: italic; color: var(--lupine); }
-    .lead { font-size: 17px; line-height: 1.75; color: var(--ink); margin-bottom: 36px; }
-
-    /* ─── TIER TAGS ──────────────────────────────────── */
-    .tier {
-      display: inline-block;
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 1px 5px;
-      border: 1px solid currentColor;
-      border-radius: 2px;
-      background: transparent;
-      vertical-align: middle;
-      white-space: nowrap;
-    }
-    .tier-verified { color: var(--tier-verified); }
-    .tier-disclosed { color: var(--tier-disclosed); }
-    .tier-triangulated { color: var(--tier-triangulated); }
-    .tier-projection { color: var(--tier-projection); }
-    .tier-directional { color: var(--tier-directional); }
-
-    /* ─── NAVIGATION ─────────────────────────────────── */
-    nav {
-      border-bottom: 1px solid var(--hairline);
-      background: var(--paper);
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-    .nav-inner {
-      max-width: 1040px;
-      margin-inline: auto;
-      padding-inline: 24px;
-      display: flex;
-      gap: 0;
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
-    .nav-inner::-webkit-scrollbar { display: none; }
-    .nav-inner a {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-      text-decoration: none;
-      padding: 14px 16px;
-      white-space: nowrap;
-      border-bottom: 2px solid transparent;
-      transition: color 0.15s, border-color 0.15s;
-    }
-    .nav-inner a:hover { color: var(--lupine); border-bottom-color: var(--lupine); }
-
-    /* ─── HEADER / HERO ──────────────────────────────── */
-    header {
-      border-bottom: 1px solid var(--hairline);
-      padding-block: clamp(72px, 10vw, 120px);
-    }
-    .hero-mark {
-      display: block;
-      width: 56px;
-      height: 56px;
-      margin-bottom: 28px;
-    }
-    .eyebrow {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-      margin-bottom: 16px;
-    }
-    h1 {
-      font-family: var(--font-serif);
-      font-size: clamp(36px, 6vw, 60px);
-      font-weight: 400;
-      line-height: 1.1;
-      color: var(--ink);
-      margin-bottom: 28px;
-    }
-    h1 em { font-style: italic; color: var(--lupine); }
-    .hero-lead { max-width: 68ch; font-size: 18px; line-height: 1.75; }
-    .hero-lead + .hero-lead { margin-top: 16px; }
-
-    /* ─── PHASE STRIP ────────────────────────────────── */
-    .phase-strip {
-      display: flex;
-      gap: 0;
-      border-top: 1px solid var(--hairline);
-      border-bottom: 1px solid var(--hairline);
-      margin-top: 48px;
-      overflow-x: auto;
-    }
-    .phase-item {
-      flex: 1 1 0;
-      min-width: 140px;
-      padding: 16px 20px;
-      border-right: 1px solid var(--hairline);
-    }
-    .phase-item:last-child { border-right: none; }
-    .phase-years {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      color: var(--ink-soft);
-      letter-spacing: 0.06em;
-      margin-bottom: 4px;
-    }
-    .phase-name {
-      font-family: var(--font-sans);
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--ink);
-    }
-    .phase-item.here .phase-years { color: var(--lupine); }
-    .phase-item.here .phase-name { color: var(--lupine); }
-    .here-flag {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      color: var(--lupine);
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    /* ─── CREDO LIST ─────────────────────────────────── */
-    .credo-list {
-      list-style: none;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-      border-top: 1px solid var(--hairline);
-      border-left: 1px solid var(--hairline);
-    }
-    .credo-item {
-      border-right: 1px solid var(--hairline);
-      border-bottom: 1px solid var(--hairline);
-      padding: 28px 28px 24px;
-      position: relative;
-    }
-    .credo-num {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: 0.1em;
-      color: var(--ink-soft);
-      margin-bottom: 8px;
-    }
-    .credo-item h3 {
-      font-family: var(--font-sans);
-      font-size: 15px;
-      font-weight: 600;
-      margin-bottom: 10px;
-      color: var(--ink);
-    }
-    .credo-item p {
-      font-size: 14px;
-      line-height: 1.65;
-      color: var(--ink-soft);
-      margin-bottom: 12px;
-    }
-
-    /* ─── STACK TABLE ────────────────────────────────── */
-    .stack-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 14px;
-    }
-    .stack-table td {
-      padding: 18px 20px;
-      border-bottom: 1px solid var(--hairline);
-      vertical-align: top;
-    }
-    .stack-table tr:last-child td { border-bottom: none; }
-    .stack-layer-name {
-      font-weight: 600;
-      font-size: 14px;
-      margin-bottom: 2px;
-    }
-    .stack-layer-tag {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: 0.08em;
-      color: var(--ink-soft);
-    }
-    .stack-layer-desc { color: var(--ink-soft); font-size: 14px; line-height: 1.6; }
-    .stack-layer-ex {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--ink-soft);
-      margin-top: 6px;
-      line-height: 1.5;
-    }
-    .lupine-row td {
-      border-left: 3px solid var(--lupine);
-      background: rgba(61,77,179,0.04);
-    }
-    .lupine-badge {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--lupine);
-      font-weight: 600;
-    }
-    blockquote.structural-bet {
-      border-left: 2px solid var(--hairline);
-      padding-left: 24px;
-      margin-top: 40px;
-      font-size: 16px;
-      line-height: 1.75;
-      color: var(--ink-soft);
-      font-style: italic;
-    }
-    blockquote.structural-bet strong { color: var(--ink); font-style: normal; }
-
-    /* ─── WHY NOW COLUMNS ────────────────────────────── */
-    .why-now-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0;
-      border-top: 1px solid var(--hairline);
-      border-left: 1px solid var(--hairline);
-    }
-    .why-now-col {
-      border-right: 1px solid var(--hairline);
-      padding: 28px 24px;
-    }
-    .why-now-label {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--lupine);
-      margin-bottom: 10px;
-    }
-    .why-now-line {
-      font-family: var(--font-serif);
-      font-size: 15px;
-      font-style: italic;
-      color: var(--ink);
-      margin-bottom: 12px;
-      line-height: 1.4;
-    }
-    .why-now-col p { font-size: 14px; line-height: 1.65; color: var(--ink-soft); }
-
-    /* ─── TIER LEGEND ────────────────────────────────── */
-    .tier-legend {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      padding: 14px 0;
-      border-top: 1px solid var(--hairline);
-      border-bottom: 1px solid var(--hairline);
-      margin-bottom: 40px;
-      color: var(--ink-soft);
-    }
-    .tier-legend span { display: flex; align-items: center; gap: 6px; }
-
-    /* ─── TABLES ─────────────────────────────────────── */
-    .table-wrap { overflow-x: auto; margin-bottom: 32px; }
-    table.data {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 14px;
-    }
-    table.data th {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-      font-weight: 400;
-      padding: 8px 12px;
-      text-align: left;
-      border-bottom: 1px solid var(--hairline);
-    }
-    table.data th.num, table.data td.num {
-      text-align: right;
-      font-variant-numeric: tabular-nums;
-      font-family: var(--font-mono);
-    }
-    table.data td {
-      padding: 10px 12px;
-      border-bottom: 1px solid var(--hairline);
-      vertical-align: top;
-    }
-    table.data tr:last-child td { border-bottom: none; }
-    table.data tr.bench td {
-      background: var(--paper-deep);
-      font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--ink-soft);
-    }
-    table.data .small { font-size: 12px; color: var(--ink-soft); display: block; }
-
-    /* ─── SEGMENT TABLE (two-col) ─────────────────────── */
-    table.seg { width: 100%; border-collapse: collapse; font-size: 14px; }
-    table.seg td {
-      padding: 10px 12px;
-      border-bottom: 1px solid var(--hairline);
-      font-variant-numeric: tabular-nums;
-    }
-    table.seg td:last-child { text-align: right; font-family: var(--font-mono); }
-    table.seg tr:last-child td { border-bottom: none; }
-
-    /* ─── SCENARIO BARS ──────────────────────────────── */
-    .scen { margin-bottom: 32px; }
-    .scen-row {
-      display: grid;
-      grid-template-columns: 1fr 180px 80px;
-      align-items: center;
-      gap: 16px;
-      padding: 12px 0;
-      border-bottom: 1px solid var(--hairline);
-    }
-    .scen-row:first-child { border-top: 1px solid var(--hairline); }
-    .sname { font-size: 14px; font-weight: 500; margin-bottom: 2px; }
-    .smeta { font-family: var(--font-mono); font-size: 11px; color: var(--ink-soft); }
-    .prob-track {
-      height: 4px;
-      background: var(--paper-deep);
-      border-radius: 2px;
-      position: relative;
-    }
-    .prob-fill {
-      height: 4px;
-      background: var(--lupine);
-      border-radius: 2px;
-      position: absolute;
-      left: 0; top: 0;
-    }
-    .prob-fill.muted { background: var(--ink-soft); }
-    .sev {
-      font-family: var(--font-mono);
-      font-size: 14px;
-      font-variant-numeric: tabular-nums;
-      text-align: right;
-      font-weight: 500;
-    }
-
-    /* ─── DCF CARDS ──────────────────────────────────── */
-    .dcf-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-bottom: 32px;
-    }
-    .dcf-card {
-      border: 1px solid var(--hairline);
-      border-radius: 4px;
-      padding: 20px 22px;
-    }
-    .dcf-card.base { border-color: var(--lupine); }
-    .dcf-label {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-      margin-bottom: 8px;
-    }
-    .dcf-value {
-      font-family: var(--font-serif);
-      font-size: 32px;
-      font-weight: 500;
-      color: var(--ink);
-      margin-bottom: 6px;
-      font-variant-numeric: tabular-nums;
-    }
-    .dcf-note { font-size: 13px; color: var(--ink-soft); }
-
-    /* ─── STATS ROW ──────────────────────────────────── */
-    .stats-row {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0;
-      border-top: 1px solid var(--hairline);
-      border-left: 1px solid var(--hairline);
-      margin-bottom: 32px;
-    }
-    .stat-cell {
-      border-right: 1px solid var(--hairline);
-      border-bottom: 1px solid var(--hairline);
-      padding: 20px 20px;
-    }
-    .stat-cell.hl .sv { color: var(--lupine); }
-    .sv {
-      font-family: var(--font-serif);
-      font-size: 28px;
-      font-weight: 500;
-      color: var(--ink);
-      margin-bottom: 4px;
-      font-variant-numeric: tabular-nums;
-    }
-    .sl { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
-    .sd { font-size: 12px; color: var(--ink-soft); }
-
-    /* ─── ACQUIRER CARDS ─────────────────────────────── */
-    .acquirer-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-      border-top: 1px solid var(--hairline);
-      border-left: 1px solid var(--hairline);
-      margin-bottom: 32px;
-    }
-    .acquirer-card {
-      border-right: 1px solid var(--hairline);
-      border-bottom: 1px solid var(--hairline);
-      padding: 22px 22px;
-    }
-    .acq-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 12px;
-      margin-bottom: 10px;
-    }
-    .acq-name { font-size: 15px; font-weight: 600; }
-    .acq-price {
-      font-family: var(--font-mono);
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--lupine);
-      white-space: nowrap;
-      font-variant-numeric: tabular-nums;
-    }
-    .acquirer-card p { font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
-
-    /* ─── MILESTONE ROW ──────────────────────────────── */
-    .milestone-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0;
-      border-top: 1px solid var(--hairline);
-      border-left: 1px solid var(--hairline);
-      margin-bottom: 32px;
-    }
-    .ms {
-      border-right: 1px solid var(--hairline);
-      border-bottom: 1px solid var(--hairline);
-      padding: 22px 22px;
-    }
-    .mo {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--lupine);
-      margin-bottom: 8px;
-    }
-    .ms h4 { font-size: 14px; font-weight: 600; margin-bottom: 10px; }
-    .ms p { font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
-
-    /* ─── FOUNDER BLOCK ──────────────────────────────── */
-    .founder-block {
-      border: 1px solid var(--hairline);
-      border-radius: 4px;
-      padding: 28px 28px;
-      margin-bottom: 36px;
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 24px;
-      align-items: start;
-    }
-    .founder-initial {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      background: var(--lupine);
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font-serif);
-      font-size: 24px;
-      flex-shrink: 0;
-    }
-    .founder-name {
-      font-size: 16px;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-    .founder-role {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--lupine);
-      margin-left: 6px;
-    }
-    .founder-block p { font-size: 14px; color: var(--ink-soft); line-height: 1.65; }
-
-    /* ─── CTA ────────────────────────────────────────── */
-    .cta-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 40px;
-    }
-    .btn {
-      display: inline-block;
-      font-size: 14px;
-      font-weight: 500;
-      text-decoration: none;
-      padding: 12px 22px;
-      border-radius: 3px;
-      transition: background 0.15s, color 0.15s;
-    }
-    .btn-primary {
-      background: var(--lupine);
-      color: #fff;
-      border: 1px solid var(--lupine);
-    }
-    .btn-primary:hover { background: var(--lupine-deep); border-color: var(--lupine-deep); color: #fff; }
-    .btn-secondary {
-      background: transparent;
-      color: var(--lupine);
-      border: 1px solid var(--hairline);
-    }
-    .btn-secondary:hover { border-color: var(--lupine); }
-
-    /* ─── TAKEAWAY ───────────────────────────────────── */
-    .takeaway {
-      border-left: 2px solid var(--hairline);
-      padding-left: 20px;
-      margin-top: 28px;
-      margin-bottom: 40px;
-    }
-    .tk-label {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-      margin-bottom: 8px;
-    }
-    .takeaway p { font-size: 15px; line-height: 1.7; color: var(--ink-soft); }
-    .takeaway p strong { color: var(--ink); }
-
-    /* ─── FOOTER ─────────────────────────────────────── */
-    footer {
-      border-top: 1px solid var(--hairline);
-      padding-block: 40px;
-      background: var(--paper-deep);
-    }
-    .footer-inner {
-      max-width: 1040px;
-      margin-inline: auto;
-      padding-inline: 24px;
-    }
-    .footer-line {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--ink-soft);
-      margin-bottom: 8px;
-    }
-    .footer-tier {
-      font-size: 13px;
-      color: var(--ink-soft);
-      max-width: 70ch;
-      margin-bottom: 20px;
-    }
-    .footer-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-    .footer-links a {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-      text-decoration: none;
-    }
-    .footer-links a:hover { color: var(--lupine); }
-
-    /* ─── SUB-SECTION LABEL ──────────────────────────── */
-    .sub-label {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-      padding: 10px 0;
-      border-top: 1px solid var(--hairline);
-      margin-top: 48px;
-      margin-bottom: 20px;
-    }
-
-    /* ─── RESPONSIVE ─────────────────────────────────── */
-    @media (max-width: 720px) {
-      .credo-list { grid-template-columns: 1fr; }
-      .why-now-grid { grid-template-columns: 1fr; }
-      .dcf-row { grid-template-columns: 1fr; }
-      .stats-row { grid-template-columns: 1fr 1fr; }
-      .acquirer-grid { grid-template-columns: 1fr; }
-      .milestone-row { grid-template-columns: 1fr; }
-      .founder-block { grid-template-columns: 1fr; }
-      .scen-row { grid-template-columns: 1fr 100px 60px; }
-      .phase-strip { flex-direction: column; }
-      .phase-item { border-right: none; border-bottom: 1px solid var(--hairline); }
-      .phase-item:last-child { border-bottom: none; }
-      nav { display: none; }
-    }
-    @media (max-width: 900px) {
-      .credo-list { grid-template-columns: 1fr; }
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/lupine.css">
+  <link rel="stylesheet" href="css/home.css">
 </head>
 <body>
+<canvas class="shader-field" aria-hidden="true"></canvas>
 
-<!-- ══════════════════════════════════════════════════════════
+<!-- ════════════════════════════════════════════════════════════════
      HEADER
-═══════════════════════════════════════════════════════════════ -->
-<header>
-  <div class="prose">
-    <svg class="hero-mark" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <circle cx="40" cy="40" r="5" fill="var(--lupine)" opacity="0.7"/>
-      <circle cx="40" cy="40" r="4" fill="var(--lupine)"/>
-      <ellipse cx="40" cy="40" rx="30" ry="10" stroke="var(--lupine)" stroke-width="1.2" fill="none" opacity="0.5"/>
-      <ellipse cx="40" cy="40" rx="30" ry="10" stroke="var(--ink-soft)" stroke-width="1.2" fill="none" opacity="0.35" transform="rotate(60 40 40)"/>
-      <ellipse cx="40" cy="40" rx="30" ry="10" stroke="var(--lupine)" stroke-width="1" fill="none" opacity="0.25" transform="rotate(120 40 40)"/>
-      <path d="M40 8 C43 20, 46 30, 40 35 C34 30, 37 20, 40 8Z" fill="var(--lupine)" opacity="0.7"/>
-      <path d="M40 72 C37 60, 34 50, 40 45 C46 50, 43 60, 40 72Z" fill="var(--lupine)" opacity="0.4"/>
-      <path d="M8 40 C20 37, 30 34, 35 40 C30 46, 20 43, 8 40Z" fill="var(--ink-soft)" opacity="0.5"/>
-      <path d="M72 40 C60 43, 50 46, 45 40 C50 34, 60 37, 72 40Z" fill="var(--ink-soft)" opacity="0.35"/>
-    </svg>
-
-    <div class="eyebrow">Lupine Science — audit substrate for the matter stack</div>
-    <h1>Step 1 of a real-world <em>Replicator</em>.</h1>
-    <p class="hero-lead">
-      Matter is the last frontier of civilization-scale software. Foundation models for matter exist now. Self-driving labs are shipping. Atomic-precision manufacturing is on a real research roadmap. The decade ahead is the convergence — a generation that can specify any molecule and have it manifest.
-    </p>
-    <p class="hero-lead">
-      Lupine builds the <strong>audit substrate</strong> for that stack — the methodology that names where atomistic predictions fail, and compresses the failure into closed-loop self-correction. Without it, every layer above stacks hallucination on top of unmeasured error. We are step 1.
-    </p>
+     ════════════════════════════════════════════════════════════════ -->
+<header class="hero-cinematic">
+  <canvas class="hero-text-particles" aria-hidden="true"></canvas>
+  <div class="hero-grid">
+    <div>
+      <div class="hero-mark-wrap">
+        <svg class="hero-mark" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <ellipse class="orbit" cx="50" cy="50" rx="38" ry="13"/>
+          <ellipse class="orbit" cx="50" cy="50" rx="38" ry="13"/>
+          <ellipse class="orbit" cx="50" cy="50" rx="38" ry="13"/>
+          <circle class="core" cx="50" cy="50" r="5.5"/>
+          <path class="petal" d="M50 6 C54 22, 58 34, 50 40 C42 34, 46 22, 50 6Z"/>
+          <path class="petal" d="M50 94 C46 78, 42 66, 50 60 C58 66, 54 78, 50 94Z"/>
+          <path class="petal" d="M6 50 C22 46, 34 42, 40 50 C34 58, 22 54, 6 50Z"/>
+          <path class="petal" d="M94 50 C78 54, 66 58, 60 50 C66 42, 78 46, 94 50Z"/>
+        </svg>
+      </div>
+    </div>
+    <div>
+      <div class="eyebrow">Lupine Science — audit substrate for the matter stack</div>
+      <h1 class="sr-only">Step 1 of a real-world <em>Replicator</em>.</h1>
+      <p class="hero-lead">
+        Matter is the last frontier of civilization-scale software. Foundation models for matter exist now. Self-driving labs are shipping. Atomic-precision manufacturing is on a real research roadmap. The decade ahead is the convergence — a generation that can specify any molecule and have it manifest.
+      </p>
+      <p class="hero-lead">
+        Lupine builds the <strong>audit substrate</strong> for that stack — the methodology that names where atomistic predictions fail, and compresses the failure into closed-loop self-correction. Without it, every layer above stacks hallucination on top of unmeasured error. We are step 1.
+      </p>
+    </div>
   </div>
 
-  <div class="wide" style="margin-top: 48px; padding-inline: 24px;">
+  <div class="wide" style="margin-top: 56px;">
     <div class="phase-strip">
       <div class="phase-item here">
         <span class="here-flag">◉ we are here</span>
@@ -751,26 +80,14 @@
   </div>
 </header>
 
-<!-- ══════════════════════════════════════════════════════════
-     NAVIGATION
-═══════════════════════════════════════════════════════════════ -->
-<nav aria-label="Section navigation">
-  <div class="nav-inner">
-    <a href="#thesis">01 — The thesis</a>
-    <a href="#proof">02 — The proof</a>
-    <a href="#stack">03 — The stack</a>
-    <a href="#why-now">04 — Why now</a>
-    <a href="#model">05 — The model</a>
-    <a href="#ask">06 — The ask</a>
-  </div>
-</nav>
+<!-- include:partials/nav.html -->
 
 <main>
 
-<!-- ══════════════════════════════════════════════════════════
+<!-- ════════════════════════════════════════════════════════════════
      01 / THE THESIS
-═══════════════════════════════════════════════════════════════ -->
-<section id="thesis">
+     ════════════════════════════════════════════════════════════════ -->
+<section id="thesis" class="animate">
   <div class="wide">
     <div class="prose">
       <div class="section-label">01 — The thesis</div>
@@ -779,7 +96,7 @@
       <p class="lead">Before the arc, before the stack, before any math: the commitments that tell you what kind of company this is. None are negotiable. All are testable against what we actually ship.</p>
     </div>
 
-    <ol class="credo-list" style="max-width: 1040px; margin-inline: auto;">
+    <ol class="credo-list" style="max-width: 1080px; margin-inline: auto;">
       <li class="credo-item">
         <div class="credo-num">01</div>
         <h3>Scarcity is an engineering problem.</h3>
@@ -804,7 +121,7 @@
         <p>Civilization-scale problems do not fit a venture fund's LP horizon. The math an investor scores in five years is the floor. The platform a generation builds over thirty years is the ceiling. We optimize for the platform; the math just has to clear.</p>
         <span class="tier tier-directional">Directional</span>
       </li>
-      <li class="credo-item" style="grid-column: 1 / -1;">
+      <li class="credo-item full">
         <div class="credo-num">05</div>
         <h3>Step 1 is unfashionable.</h3>
         <p>Generative matter is on the cover of the magazine. Autonomous synthesis has the flagship NSF program. Atomic-precision manufacturing has the dramatic name. The audit layer underneath is invisible, slow, and load-bearing. We took it because it is load-bearing. Step 1 is the part everyone wants to skip; that is exactly why it is the seat to claim.</p>
@@ -814,10 +131,10 @@
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════════════════
+<!-- ════════════════════════════════════════════════════════════════
      02 / THE PROOF
-═══════════════════════════════════════════════════════════════ -->
-<section id="proof" class="band-alt">
+     ════════════════════════════════════════════════════════════════ -->
+<section id="proof" class="band-alt animate">
   <div class="wide">
     <div class="prose">
       <div class="section-label">02 — The proof</div>
@@ -826,7 +143,7 @@
       <p class="lead">The research program found a geometric law: models in a family share one error direction, and that direction fingerprints whatever constraint binds the family — the functional form, the training data, the reference theory. We tested it the hard way: pre-registered experiments with kill conditions committed to version control before any model ran. Neither kill condition was triggered.</p>
     </div>
 
-    <ol class="credo-list" style="max-width: 1040px; margin-inline: auto;">
+    <ol class="credo-list" style="max-width: 1080px; margin-inline: auto;">
       <li class="credo-item">
         <div class="credo-num">L1</div>
         <h3>Classical potentials — 40 years, one geometry.</h3>
@@ -845,7 +162,7 @@
         <p>12 DFT implementations, 384 crystals (public verification data). Errors cluster by the shared approximation, not by which code computed them (p&nbsp;=&nbsp;0.017): four independent codes sharing one pseudopotential align at 0.70&ndash;0.87, while the same code under a different approximation drops to 0.21.</p>
         <span class="tier tier-verified">Verified</span>
       </li>
-      <li class="credo-item" style="grid-column: 1 / -1;">
+      <li class="credo-item full">
         <div class="credo-num">&Sigma;</div>
         <h3>Why this is a business, not just a result.</h3>
         <p>Because the shared error is one direction, one correction vector repairs every model in a family at once — a rank-one calibration removes ~96% of foundation-model elastic error without retraining, and it transfers to models that don't exist yet. Cross-model agreement becomes a zero-cost trust gauge: it tells you when an ensemble can be calibrated and when it is lying to you. The theory behind both claims is machine-checked in Lean&nbsp;4 — a 180-theorem corpus, zero unproven obligations — and the entire evidence chain replays from public data in two commands.</p>
@@ -855,10 +172,10 @@
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════════════════
+<!-- ════════════════════════════════════════════════════════════════
      03 / THE STACK
-═══════════════════════════════════════════════════════════════ -->
-<section id="stack">
+     ════════════════════════════════════════════════════════════════ -->
+<section id="stack" class="animate">
   <div class="wide">
     <div class="prose">
       <div class="section-label">03 — The stack</div>
@@ -871,7 +188,7 @@
       <table class="stack-table">
         <tbody>
           <tr>
-            <td style="width:180px; padding-left: 20px;">
+            <td style="width:200px; padding-left: 26px;">
               <div class="stack-layer-name">Application surfaces</div>
               <div class="stack-layer-tag">Layer 5 · the buyers</div>
             </td>
@@ -881,7 +198,7 @@
             </td>
           </tr>
           <tr>
-            <td style="padding-left: 20px;">
+            <td style="padding-left: 26px;">
               <div class="stack-layer-name">Generative matter</div>
               <div class="stack-layer-tag">Layer 4 · ramping fast</div>
             </td>
@@ -891,7 +208,7 @@
             </td>
           </tr>
           <tr class="lupine-row">
-            <td style="padding-left: 20px;">
+            <td style="padding-left: 26px;">
               <div class="stack-layer-name">Validation &amp; error-correction</div>
               <div class="stack-layer-tag">Layer 3 · <span class="lupine-badge">this is Lupine</span></div>
             </td>
@@ -901,7 +218,7 @@
             </td>
           </tr>
           <tr>
-            <td style="padding-left: 20px;">
+            <td style="padding-left: 26px;">
               <div class="stack-layer-name">Compute substrate</div>
               <div class="stack-layer-tag">Layer 2 · mature, legacy</div>
             </td>
@@ -911,7 +228,7 @@
             </td>
           </tr>
           <tr>
-            <td style="padding-left: 20px;">
+            <td style="padding-left: 26px;">
               <div class="stack-layer-name">Physical reality</div>
               <div class="stack-layer-tag">Layer 1 · ground truth</div>
             </td>
@@ -932,10 +249,10 @@
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════════════════
-     03 / WHY NOW
-═══════════════════════════════════════════════════════════════ -->
-<section id="why-now" class="band-alt">
+<!-- ════════════════════════════════════════════════════════════════
+     04 / WHY NOW
+     ════════════════════════════════════════════════════════════════ -->
+<section id="why-now" class="band-alt animate">
   <div class="wide">
     <div class="prose">
       <div class="section-label">04 — Why now</div>
@@ -964,10 +281,10 @@
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════════════════
-     04 / THE MODEL
-═══════════════════════════════════════════════════════════════ -->
-<section id="model">
+<!-- ════════════════════════════════════════════════════════════════
+     05 / THE MODEL
+     ════════════════════════════════════════════════════════════════ -->
+<section id="model" class="animate">
   <div class="wide">
     <div class="prose">
       <div class="section-label">05 — The model</div>
@@ -987,14 +304,14 @@
     </div>
 
     <!-- ── CEILING ── -->
-    <div class="prose" style="margin-top: 40px;">
-      <h2 style="font-size: clamp(22px, 3vw, 32px);">The ceiling — <em>$7.0T</em> conditional weighted EV</h2>
+    <div class="prose" style="margin-top: 48px;">
+      <h2 style="font-size: clamp(1.6rem, 3vw, 2.2rem);">The ceiling — <em>$7.0T</em> conditional weighted EV</h2>
     </div>
 
-    <div class="sub-label" style="max-width: 1040px; margin-inline: auto; padding-inline: 24px;">
+    <div class="sub-label" style="max-width: 1080px; margin-inline: auto; padding-inline: 24px;">
       A · Phase-4 addressable — what's at stake &nbsp;·&nbsp; <span class="tier tier-triangulated">Triangulated</span>
     </div>
-    <div class="table-wrap" style="max-width: 1040px; margin-inline: auto; padding-inline: 24px;">
+    <div class="table-wrap" style="max-width: 1080px; margin-inline: auto; padding-inline: 24px;">
       <table class="seg">
         <tbody>
           <tr><td>Drug discovery + clinical materials <span class="small">Healthcare</span></td><td>$1.2T</td></tr>
@@ -1006,7 +323,7 @@
           <tr><td>Polymers, coatings, structural <span class="small">Industrial</span></td><td>$250B</td></tr>
           <tr><td>Solar + wind + nuclear materials <span class="small">Energy &amp; travel</span></td><td>$200B</td></tr>
           <tr><td>Biopolymers + implants + regen <span class="small">Healthcare</span></td><td>$180B</td></tr>
-          <tr style="border-top: 1px solid var(--hairline);"><td><strong>Total phase-4 addressable (2045)</strong></td><td><strong>~$4.1T/yr</strong></td></tr>
+          <tr style="border-top: 1px solid var(--hairline-strong);"><td><strong>Total phase-4 addressable (2045)</strong></td><td><strong>~$4.1T/yr</strong></td></tr>
         </tbody>
       </table>
     </div>
@@ -1017,10 +334,10 @@
       </div>
     </div>
 
-    <div class="sub-label" style="max-width: 1040px; margin-inline: auto; padding-inline: 24px;">
+    <div class="sub-label" style="max-width: 1080px; margin-inline: auto; padding-inline: 24px;">
       B · What audit-substrate companies actually capture &nbsp;·&nbsp; <span class="tier tier-disclosed">Disclosed</span>
     </div>
-    <div class="table-wrap" style="max-width: 1040px; margin-inline: auto; padding-inline: 24px;">
+    <div class="table-wrap" style="max-width: 1080px; margin-inline: auto; padding-inline: 24px;">
       <table class="data">
         <thead>
           <tr>
@@ -1048,45 +365,45 @@
       </table>
     </div>
 
-    <div class="sub-label" style="max-width: 1040px; margin-inline: auto; padding-inline: 24px;">
+    <div class="sub-label" style="max-width: 1080px; margin-inline: auto; padding-inline: 24px;">
       C · The conditional outcome distribution &nbsp;·&nbsp; <span class="tier tier-projection">Projection</span> / <span class="tier tier-directional">Directional</span>
     </div>
-    <div style="max-width: 1040px; margin-inline: auto; padding-inline: 24px;">
+    <div style="max-width: 1080px; margin-inline: auto; padding-inline: 24px;">
       <div class="scen">
         <div class="scen-row">
           <div><div class="sname">SaaS-of-record (the math floor)</div><div class="smeta">5-yr · $150B addressable · 2.5% capture · 15× <span class="tier tier-projection">Projection</span></div></div>
           <div class="prob-track"><div class="prob-fill" style="width:100%"></div></div>
-          <div class="sev">$0.3B <span style="font-family:var(--font-mono);font-size:10px;color:var(--ink-soft);">25%</span></div>
+          <div class="sev">$0.3B <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--ink-muted);">25%</span></div>
         </div>
         <div class="scen-row">
           <div><div class="sname">Audit substrate (mid-platform)</div><div class="smeta">10-yr · $2T addressable · 0.20% capture · 17× <span class="tier tier-projection">Projection</span></div></div>
           <div class="prob-track"><div class="prob-fill" style="width:80%"></div></div>
-          <div class="sev">$68B <span style="font-family:var(--font-mono);font-size:10px;color:var(--ink-soft);">20%</span></div>
+          <div class="sev">$68B <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--ink-muted);">20%</span></div>
         </div>
         <div class="scen-row">
           <div><div class="sname">Category leader (audit + compute)</div><div class="smeta">15-yr · $5T addressable · 0.50% capture · 18× <span class="tier tier-projection">Projection</span></div></div>
           <div class="prob-track"><div class="prob-fill" style="width:72%"></div></div>
-          <div class="sev">$450B <span style="font-family:var(--font-mono);font-size:10px;color:var(--ink-soft);">18%</span></div>
+          <div class="sev">$450B <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--ink-muted);">18%</span></div>
         </div>
         <div class="scen-row">
           <div><div class="sname">Civilizational classical-materials infra</div><div class="smeta">20-yr · $10T addressable · 1.0% capture · 20× <span class="tier tier-projection">Projection</span></div></div>
           <div class="prob-track"><div class="prob-fill" style="width:60%"></div></div>
-          <div class="sev">$2,000B <span style="font-family:var(--font-mono);font-size:10px;color:var(--ink-soft);">15%</span></div>
+          <div class="sev">$2,000B <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--ink-muted);">15%</span></div>
         </div>
         <div class="scen-row">
           <div><div class="sname">Phase-5 quantum unlocks (mid)</div><div class="smeta">25-yr · $50T addressable · 1.0% capture · 22× <span class="tier tier-directional">Directional</span></div></div>
           <div class="prob-track"><div class="prob-fill" style="width:40%"></div></div>
-          <div class="sev">$11.0T <span style="font-family:var(--font-mono);font-size:10px;color:var(--ink-soft);">10%</span></div>
+          <div class="sev">$11.0T <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--ink-muted);">10%</span></div>
         </div>
         <div class="scen-row">
           <div><div class="sname">Phase-5 quantum unlocks (deep)</div><div class="smeta">30-yr · $100T addressable · 1.5% capture · 22× <span class="tier tier-directional">Directional</span></div></div>
           <div class="prob-track"><div class="prob-fill" style="width:32%"></div></div>
-          <div class="sev">$33.0T <span style="font-family:var(--font-mono);font-size:10px;color:var(--ink-soft);">8%</span></div>
+          <div class="sev">$33.0T <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--ink-muted);">8%</span></div>
         </div>
         <div class="scen-row">
           <div><div class="sname">TCP/IP for designed matter</div><div class="smeta">35-yr · $200T addressable · 2.0% capture · 18× <span class="tier tier-directional">Directional</span></div></div>
           <div class="prob-track"><div class="prob-fill" style="width:16%"></div></div>
-          <div class="sev">$72.0T <span style="font-family:var(--font-mono);font-size:10px;color:var(--ink-soft);">4%</span></div>
+          <div class="sev">$72.0T <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--ink-muted);">4%</span></div>
         </div>
       </div>
     </div>
@@ -1098,10 +415,10 @@
       </div>
     </div>
 
-    <div class="sub-label" style="max-width: 1040px; margin-inline: auto; padding-inline: 24px;">
+    <div class="sub-label" style="max-width: 1080px; margin-inline: auto; padding-inline: 24px;">
       D · Strategic acquirers — who pays for it before it gets there &nbsp;·&nbsp; <span class="tier tier-directional">Directional</span>
     </div>
-    <div style="max-width: 1040px; margin-inline: auto; padding-inline: 24px; margin-bottom: 32px;">
+    <div style="max-width: 1080px; margin-inline: auto; padding-inline: 24px; margin-bottom: 36px;">
       <div class="acquirer-grid">
         <div class="acquirer-card">
           <div class="acq-header">
@@ -1141,15 +458,15 @@
     </div>
 
     <!-- ── FLOOR ── -->
-    <div class="prose" style="margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--hairline);">
-      <h2 style="font-size: clamp(22px, 3vw, 32px);">The floor — <em>the conservative cross-check</em></h2>
+    <div class="prose" style="margin-top: 64px; padding-top: 48px; border-top: 1px solid var(--hairline-strong);">
+      <h2 style="font-size: clamp(1.6rem, 3vw, 2.2rem);">The floor — <em>the conservative cross-check</em></h2>
       <p class="lead" style="margin-bottom: 28px;">This prices Lupine as if neither the quantum unlocks nor the platform position materialize — a respectable Synopsys/Cadence/Veeva-tier vertical software company on a 5-year horizon, classical materials only. Even under this strictly-conservative frame the DCF clears: <strong>$332M intrinsic</strong> vs the $150M proposed post (<strong>+121% margin of safety</strong>), <strong>+39% probability-weighted IRR</strong>. The math clears on the floor; the upside is in the ceiling.</p>
     </div>
 
-    <div class="sub-label" style="max-width: 1040px; margin-inline: auto; padding-inline: 24px;">
+    <div class="sub-label" style="max-width: 1080px; margin-inline: auto; padding-inline: 24px;">
       A · DCF intrinsic value &nbsp;·&nbsp; <span class="tier tier-projection">Projection</span>
     </div>
-    <div style="max-width: 1040px; margin-inline: auto; padding-inline: 24px;">
+    <div style="max-width: 1080px; margin-inline: auto; padding-inline: 24px;">
       <div class="dcf-row">
         <div class="dcf-card">
           <div class="dcf-label">Bear · 14.0% WACC</div>
@@ -1175,10 +492,10 @@
       </div>
     </div>
 
-    <div class="sub-label" style="max-width: 1040px; margin-inline: auto; padding-inline: 24px;">
+    <div class="sub-label" style="max-width: 1080px; margin-inline: auto; padding-inline: 24px;">
       B · Comp set + probability-weighted returns &nbsp;·&nbsp; <span class="tier tier-disclosed">Disclosed</span>
     </div>
-    <div style="max-width: 1040px; margin-inline: auto; padding-inline: 24px;">
+    <div style="max-width: 1080px; margin-inline: auto; padding-inline: 24px;">
       <div class="stats-row">
         <div class="stat-cell">
           <div class="sv">15.5×</div>
@@ -1203,35 +520,35 @@
       </div>
     </div>
 
-    <div class="sub-label" style="max-width: 1040px; margin-inline: auto; padding-inline: 24px;">
+    <div class="sub-label" style="max-width: 1080px; margin-inline: auto; padding-inline: 24px;">
       C · The outcome distribution (50% chance of zero, priced) &nbsp;·&nbsp; <span class="tier tier-projection">Projection</span>
     </div>
-    <div style="max-width: 1040px; margin-inline: auto; padding-inline: 24px;">
+    <div style="max-width: 1080px; margin-inline: auto; padding-inline: 24px;">
       <div class="scen">
         <div class="scen-row">
           <div><div class="sname">Zero — failure / wind-down</div><div class="smeta">Priced explicitly. The venture base rate.</div></div>
           <div class="prob-track"><div class="prob-fill muted" style="width:100%"></div></div>
-          <div class="sev">$0 <span style="font-family:var(--font-mono);font-size:10px;color:var(--ink-soft);">50%</span></div>
+          <div class="sev">$0 <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--ink-muted);">50%</span></div>
         </div>
         <div class="scen-row">
           <div><div class="sname">Modest exit</div><div class="smeta">Acqui-hire / small strategic</div></div>
           <div class="prob-track"><div class="prob-fill" style="width:40%"></div></div>
-          <div class="sev">$100M <span style="font-family:var(--font-mono);font-size:10px;color:var(--ink-soft);">20%</span></div>
+          <div class="sev">$100M <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--ink-muted);">20%</span></div>
         </div>
         <div class="scen-row">
           <div><div class="sname">Strategic exit</div><div class="smeta">Software-of-record acquisition</div></div>
           <div class="prob-track"><div class="prob-fill" style="width:40%"></div></div>
-          <div class="sev">$500M <span style="font-family:var(--font-mono);font-size:10px;color:var(--ink-soft);">20%</span></div>
+          <div class="sev">$500M <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--ink-muted);">20%</span></div>
         </div>
         <div class="scen-row">
           <div><div class="sname">Moonshot</div><div class="smeta">Platform position holds</div></div>
           <div class="prob-track"><div class="prob-fill" style="width:14%"></div></div>
-          <div class="sev">$3.0B <span style="font-family:var(--font-mono);font-size:10px;color:var(--ink-soft);">7%</span></div>
+          <div class="sev">$3.0B <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--ink-muted);">7%</span></div>
         </div>
         <div class="scen-row">
           <div><div class="sname">Asymmetric tail</div><div class="smeta">Category-defining infrastructure</div></div>
           <div class="prob-track"><div class="prob-fill" style="width:6%"></div></div>
-          <div class="sev">$15.0B <span style="font-family:var(--font-mono);font-size:10px;color:var(--ink-soft);">3%</span></div>
+          <div class="sev">$15.0B <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--ink-muted);">3%</span></div>
         </div>
       </div>
     </div>
@@ -1245,10 +562,10 @@
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════════════════
-     05 / THE ASK
-═══════════════════════════════════════════════════════════════ -->
-<section id="ask" class="band-alt">
+<!-- ════════════════════════════════════════════════════════════════
+     06 / THE ASK
+     ════════════════════════════════════════════════════════════════ -->
+<section id="ask" class="band-alt animate">
   <div class="wide">
     <div class="prose">
       <div class="section-label">06 — The ask</div>
@@ -1267,7 +584,7 @@
       </div>
     </div>
 
-    <div style="max-width: 1040px; margin-inline: auto; padding-inline: 24px; margin-bottom: 40px;">
+    <div style="max-width: 1080px; margin-inline: auto; padding-inline: 24px; margin-bottom: 44px;">
       <div class="milestone-row">
         <div class="ms">
           <div class="mo">Month 12</div>
@@ -1299,20 +616,10 @@
 
 </main>
 
-<!-- ══════════════════════════════════════════════════════════
-     FOOTER
-═══════════════════════════════════════════════════════════════ -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-line">Lupine Science · the audit substrate for matter · 2026</div>
-    <p class="footer-tier">The floor is a 5-year DCF; the ceiling is a probability-weighted 30-year scenario model. Every claim is tiered — verified, disclosed, triangulated, projection, or directional.</p>
-    <div class="footer-links">
-      <a href="#thesis">Top</a>
-      <a href="/access.html?next=%2Fdeck.html">Slide deck</a>
-      <a href="/one-pager.html">One-pager</a>
-    </div>
-  </div>
-</footer>
+<!-- include:partials/footer.html -->
 
+<script src="js/lupine-effects.js" defer></script>
+<script src="js/hero-text-particles.js" defer></script>
+<script type="module" src="js/lupine-creative.js"></script>
 </body>
 </html>
