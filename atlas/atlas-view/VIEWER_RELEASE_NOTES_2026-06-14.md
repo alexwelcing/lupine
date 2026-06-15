@@ -29,6 +29,10 @@
   - Summarizes formula, atom count, frame, bonds, element composition, selected atoms, and per-frame property means.
   - Pulls the same organic chemistry teaching language into the actual molecule view, including recognition cues, reactivity, and self-check prompts.
   - Adds a university-style ochem frame: course unit, professor-order reasoning steps, mechanism priorities, and first-pass spectroscopy checks.
+- Study features now carry into immersive AR / VR:
+  - The in-world instructor dashboard opens in Study mode by default.
+  - Shows formula, atoms, bonds, functional-group handles, course unit, mechanism priorities, spectroscopy cue, and selected atom context.
+  - Lets learners step through the same professor-order reasoning prompts while the molecule is placed in space.
 - A new **Study sheet** export:
   - Available from Controls -> Export.
   - Captures the current rendered molecule view and embeds it in the printable / save-to-PDF sheet.
