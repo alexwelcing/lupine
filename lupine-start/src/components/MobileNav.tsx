@@ -48,6 +48,7 @@ export default function MobileNav() {
         onClick={() => setOpen(!open)}
         className="w-10 h-10 flex items-center justify-center text-[var(--on-surface)]"
         aria-label="Toggle menu"
+        aria-expanded={open}
       >
         <div className="w-5 h-4 relative flex flex-col justify-between">
           <span className={`block w-full h-px bg-current transition-transform duration-300 ${open ? 'rotate-45 translate-y-[7px]' : ''}`} />
@@ -72,7 +73,11 @@ export default function MobileNav() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-              className="fixed top-0 right-0 bottom-0 w-[280px] bg-[var(--surface)] border-l border-[var(--outline-variant)] z-50 flex flex-col pt-24 px-6 gap-1 overflow-y-auto"
+              className="fixed top-0 right-0 bottom-0 w-[280px] border-l border-[var(--outline-variant)] z-50 flex flex-col pt-24 px-6 gap-1 overflow-y-auto text-[var(--on-surface)]"
+              style={{
+                backgroundColor: 'var(--surface)',
+                color: 'var(--on-surface)',
+              }}
             >
               {NAV_SECTIONS.map((section, si) => (
                 <div key={si}>
@@ -94,8 +99,9 @@ export default function MobileNav() {
                         className={`block py-3 px-1 font-mono text-sm uppercase tracking-widest no-underline transition-colors ${
                           item.live
                             ? 'text-[var(--primary)] flex items-center gap-2'
-                            : 'text-[var(--on-surface-variant)] hover:text-[var(--on-surface)]'
+                            : 'text-[var(--on-surface)] hover:text-[var(--primary)]'
                         }`}
+                        style={{ color: item.live ? 'var(--primary)' : 'var(--on-surface)' }}
                       >
                         {item.live && <span className="w-1.5 h-1.5 rounded-full bg-[var(--primary)] animate-[pulse-cyan_2s_infinite]" />}
                         {item.label}

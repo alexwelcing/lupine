@@ -90,15 +90,20 @@ export default function Header() {
 
             {moreOpen && (
               <div
-                className="absolute right-0 top-full mt-3 w-64 bg-[var(--surface)] border border-[var(--outline-variant)] shadow-lg z-50 py-2"
-                style={{ backdropFilter: 'blur(12px)' }}
+                className="absolute right-0 top-full mt-3 w-64 border border-[var(--outline-variant)] shadow-lg z-50 py-2 text-[var(--on-surface)]"
+                style={{
+                  backdropFilter: 'blur(12px)',
+                  backgroundColor: 'var(--surface)',
+                  color: 'var(--on-surface)',
+                }}
               >
                 {MORE_NAV.map((item) => (
                   <Link
                     key={item.to}
                     to={item.to}
                     onClick={() => setMoreOpen(false)}
-                    className="block px-5 py-3 no-underline hover:bg-[var(--surface-container-high)]/50 transition-colors group"
+                    className="block px-5 py-3 no-underline text-[var(--on-surface)] hover:bg-[var(--surface-container-high)]/50 transition-colors group"
+                    style={{ color: 'var(--on-surface)' }}
                   >
                     <span className="font-mono text-[11px] font-semibold text-[var(--on-surface)] uppercase tracking-widest group-hover:text-[var(--primary)] transition-colors">
                       {item.label}
