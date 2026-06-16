@@ -61,6 +61,9 @@ describe('study facts', () => {
     expect(facts?.ochemCompanion.mechanismPriorities.map(priority => priority.label)).toEqual(
       expect.arrayContaining(['Acid-base first', 'Nucleophilic acyl substitution']),
     );
+    expect(facts?.ochemCompanion.learningPath.map(step => step.phase)).toEqual(['Observe', 'Predict', 'Explain', 'Transfer']);
+    expect(facts?.ochemCompanion.practiceCards[0]?.answer).toContain('carboxylic acid');
+    expect(facts?.ochemCompanion.commonTraps[0]?.trap).toContain('carbonyl');
     expect(facts?.propertyStats[0]?.name).toBe('partial_charge');
     expect(facts?.selectedAtoms[0]?.symbol).toBe('C');
 
@@ -71,6 +74,9 @@ describe('study facts', () => {
     expect(html).toContain('data:image/png;base64,studyview');
     expect(html).toContain('University Ochem Frame');
     expect(html).toContain('Mechanism Priorities');
+    expect(html).toContain('Learning Loop');
+    expect(html).toContain('Practice Checks');
+    expect(html).toContain('Common Traps');
     expect(html).toContain('Carboxylic Acids');
     expect(html).toContain('Acid-base first');
     expect(html).toContain('Self-check');

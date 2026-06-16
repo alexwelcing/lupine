@@ -187,6 +187,26 @@ export function renderStudySheetHtml(facts: MoleculeStudyFacts, options: StudySh
 
   const examRows = companion.examPrompts.map(prompt => `<li>${escapeHtml(prompt)}</li>`).join('');
   const compareRows = companion.comparePrompts.map(prompt => `<li>${escapeHtml(prompt)}</li>`).join('');
+  const learningRows = companion.learningPath.map(step => `
+    <article class="learning-step">
+      <strong>${escapeHtml(step.phase)} / ${escapeHtml(step.label)}</strong>
+      <p>${escapeHtml(step.prompt)}</p>
+      <em>${escapeHtml(step.mentorNote)}</em>
+    </article>
+  `).join('');
+  const practiceRows = companion.practiceCards.map(card => `
+    <article class="practice-card">
+      <h3>${escapeHtml(card.prompt)}</h3>
+      <p><strong>Check:</strong> ${escapeHtml(card.answer)}</p>
+      <p><strong>Why:</strong> ${escapeHtml(card.why)}</p>
+    </article>
+  `).join('');
+  const trapRows = companion.commonTraps.map(trap => `
+    <article class="trap-card">
+      <h3>${escapeHtml(trap.trap)}</h3>
+      <p>${escapeHtml(trap.correction)}</p>
+    </article>
+  `).join('');
 
   const groupRows = facts.functionalGroups.length
     ? facts.functionalGroups.map(group => `
@@ -289,19 +309,26 @@ export function renderStudySheetHtml(facts: MoleculeStudyFacts, options: StudySh
     .step { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 10px; }
     .step span { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 999px; background: #0f172a; color: white; font-size: 12px; font-weight: 800; font-variant-numeric: tabular-nums lining-nums; }
     .priority strong { display: block; margin-top: 6px; color: #0f766e; font-size: 12px; line-height: 1.45; }
+    .learning-grid, .practice-grid, .trap-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .learning-step, .practice-card, .trap-card { border: 1px solid #cbd5e1; border-radius: 8px; background: white; padding: 11px; }
+    .learning-step strong { color: #0369a1; font-size: 12px; }
+    .learning-step em { display: block; color: #475569; font-size: 11px; font-style: normal; line-height: 1.42; }
+    .practice-card { border-color: #99f6e4; }
+    .practice-card p, .trap-card p { font-size: 12px; }
+    .trap-card { border-color: #fde68a; }
     .question-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
     ul { margin: 0; padding-left: 18px; }
     li { margin: 0 0 6px; font-size: 12px; }
     @media (max-width: 720px) {
       body { padding: 18px; }
-      .summary, .groups, .visual, .course, .question-grid { grid-template-columns: 1fr; }
+      .summary, .groups, .visual, .course, .question-grid, .learning-grid, .practice-grid, .trap-grid { grid-template-columns: 1fr; }
       table { display: block; overflow-x: auto; }
     }
     @media print {
       body { padding: 0; background: white; }
       main { max-width: none; }
       .actions { display: none; }
-      section, .group, table, .visual, .step, .priority { break-inside: avoid; }
+      section, .group, table, .visual, .step, .priority, .learning-step, .practice-card, .trap-card { break-inside: avoid; }
     }
   </style>
 </head>
@@ -344,6 +371,21 @@ export function renderStudySheetHtml(facts: MoleculeStudyFacts, options: StudySh
     <section>
       <h2>Mechanism Priorities</h2>
       <div class="priorities">${priorityRows}</div>
+    </section>
+
+    <section>
+      <h2>Learning Loop</h2>
+      <div class="learning-grid">${learningRows}</div>
+    </section>
+
+    <section>
+      <h2>Practice Checks</h2>
+      <div class="practice-grid">${practiceRows}</div>
+    </section>
+
+    <section>
+      <h2>Common Traps</h2>
+      <div class="trap-grid">${trapRows}</div>
     </section>
 
     <section>

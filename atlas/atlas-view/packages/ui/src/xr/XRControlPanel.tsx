@@ -15,6 +15,7 @@ export interface XRStudySummary {
   activeStepLabel: string;
   activeStepPrompt: string;
   priorities: string[];
+  practiceLine: string;
   spectroscopyCue: string;
   selectedAtomLine: string;
 }
@@ -387,15 +388,22 @@ function XRStudyContent({
       />
       <XRTextBlock
         position={[-0.39, -0.225, 0]}
+        text={`Practice: ${summary.practiceLine}`}
+        fontSize={0.019}
+        color="#fef3c7"
+        maxWidth={0.56}
+      />
+      <XRTextBlock
+        position={[-0.39, -0.282, 0]}
         text={`Spectroscopy: ${summary.spectroscopyCue}`}
         fontSize={0.019}
         color="#dbeafe"
         maxWidth={0.56}
       />
       <XRTextBlock
-        position={[-0.39, -0.292, 0]}
+        position={[-0.39, -0.34, 0]}
         text={summary.selectedAtomLine}
-        fontSize={0.019}
+        fontSize={0.018}
         color="#fde68a"
         maxWidth={0.76}
       />
@@ -428,6 +436,9 @@ export function buildXRStudySummary(facts: MoleculeStudyFacts, stepIndex = 0): X
     priorities: companion.mechanismPriorities.length
       ? companion.mechanismPriorities.slice(0, 3).map(priority => priority.label)
       : ['Identify electron-rich and electron-poor sites'],
+    practiceLine: companion.practiceCards[0]
+      ? `${shorten(companion.practiceCards[0].prompt, 70)} Check: ${shorten(companion.practiceCards[0].answer, 54)}`
+      : 'Make one prediction before changing the view.',
     spectroscopyCue: companion.spectroscopyChecks[0]
       ? `${companion.spectroscopyChecks[0].signal}: ${shorten(companion.spectroscopyChecks[0].reason, 90)}`
       : 'No first-pass cue attached yet.',

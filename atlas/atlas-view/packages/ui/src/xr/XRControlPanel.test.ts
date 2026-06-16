@@ -52,6 +52,7 @@ describe('XR study summary', () => {
     expect(summary.activeStepLabel).toBe('Choose the first move');
     expect(summary.activeStepPrompt).toContain('Acid-base first');
     expect(summary.priorities).toEqual(expect.arrayContaining(['Acid-base first', 'Nucleophilic acyl substitution']));
+    expect(summary.practiceLine).toContain('carboxylic acid');
     expect(summary.spectroscopyCue).toContain('aromatic');
     expect(summary.selectedAtomLine).toContain('#1 C');
   });

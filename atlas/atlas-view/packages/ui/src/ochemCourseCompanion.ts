@@ -18,12 +18,33 @@ export interface OchemSpectroscopyCheck {
   reason: string;
 }
 
+export interface OchemLearningStep {
+  phase: 'Observe' | 'Predict' | 'Explain' | 'Transfer';
+  label: string;
+  prompt: string;
+  mentorNote: string;
+}
+
+export interface OchemPracticeCard {
+  prompt: string;
+  answer: string;
+  why: string;
+}
+
+export interface OchemMisconception {
+  trap: string;
+  correction: string;
+}
+
 export interface OchemCourseCompanion {
   courseUnit: string;
   instructorFrame: string;
   reasoningSteps: OchemReasoningStep[];
   mechanismPriorities: OchemReactionPriority[];
   spectroscopyChecks: OchemSpectroscopyCheck[];
+  learningPath: OchemLearningStep[];
+  practiceCards: OchemPracticeCard[];
+  commonTraps: OchemMisconception[];
   examPrompts: string[];
   comparePrompts: string[];
 }
@@ -246,6 +267,9 @@ export function buildOchemCourseCompanion({
         .filter((item): item is OchemSpectroscopyCheck => Boolean(item)),
       item => item.signal,
     ).slice(0, 5),
+    learningPath: buildLearningPath(functionalGroups, { hasCarbonyl, hasArene, hasAcidAndEster, organicRich }),
+    practiceCards: buildPracticeCards(functionalGroups, { hasCarbonyl, hasArene, hasAcidAndEster, organicRich }),
+    commonTraps: buildCommonTraps(functionalGroups, { hasCarbonyl, hasArene, hasAcidAndEster, organicRich }),
     examPrompts: buildExamPrompts(functionalGroups, { hasCarbonyl, hasArene, hasAcidAndEster, organicRich }),
     comparePrompts: buildComparePrompts(functionalGroups),
   };
@@ -323,6 +347,159 @@ function buildReasoningSteps(
   }
 
   return steps;
+}
+
+function buildLearningPath(
+  groups: FunctionalGroupConcept[],
+  flags: { hasCarbonyl: boolean; hasArene: boolean; hasAcidAndEster: boolean; organicRich: boolean },
+): OchemLearningStep[] {
+  const groupLabels = groups.length
+    ? groups.slice(0, 4).map(group => group.label).join(', ')
+    : 'heteroatoms, pi bonds, rings, and charged sites';
+
+  return [
+    {
+      phase: 'Observe',
+      label: 'Name what is visible',
+      prompt: `Before naming the molecule, point to ${groupLabels}.`,
+      mentorNote: 'Students should make the invisible curriculum visible: handles first, full IUPAC name later.',
+    },
+    {
+      phase: 'Predict',
+      label: flags.hasAcidAndEster ? 'Set acid-base state' : 'Choose the first variable',
+      prompt: flags.hasAcidAndEster
+        ? 'Predict which group changes protonation first and how that changes solubility.'
+        : 'Predict which atom, bond, or group most changes polarity and reactivity.',
+      mentorNote: flags.hasAcidAndEster
+        ? 'Acid-base state often decides the rest of the mechanism before any arrow pushing begins.'
+        : 'A good first prediction should be testable against structure, spectroscopy, or a reagent condition.',
+    },
+    {
+      phase: 'Explain',
+      label: flags.hasCarbonyl ? 'Use electronics, not memorization' : 'Justify the pattern',
+      prompt: flags.hasCarbonyl
+        ? 'Explain why the carbonyl carbon is electrophilic and what nearby atoms change.'
+        : 'Explain the pattern using lone pairs, pi bonds, charge, sterics, and resonance.',
+      mentorNote: 'This is the recitation move: make students say why a reaction family applies.',
+    },
+    {
+      phase: 'Transfer',
+      label: flags.hasArene ? 'Change one substituent' : 'Compare a cousin molecule',
+      prompt: flags.hasArene
+        ? 'Ask what changes if one arene substituent is swapped for an activator or deactivator.'
+        : 'Find a related molecule and ask which prediction stays true and which one changes.',
+      mentorNote: 'Transfer is what turns a pretty model into exam-ready understanding.',
+    },
+  ];
+}
+
+function buildPracticeCards(
+  groups: FunctionalGroupConcept[],
+  flags: { hasCarbonyl: boolean; hasArene: boolean; hasAcidAndEster: boolean; organicRich: boolean },
+): OchemPracticeCard[] {
+  const cards: OchemPracticeCard[] = [];
+
+  if (flags.hasAcidAndEster) {
+    cards.push({
+      prompt: 'Which group should you reason about first: the carboxylic acid, the ester, or the arene?',
+      answer: 'Start with the carboxylic acid acid-base state.',
+      why: 'Protonation controls charge, solubility, and whether later carbonyl reactions make chemical sense.',
+    });
+    cards.push({
+      prompt: 'If the ester hydrolyzes, what kind of mechanism family should you expect?',
+      answer: 'Nucleophilic acyl substitution.',
+      why: 'The nucleophile adds to the acyl carbon, then the carbonyl reforms as a leaving group departs.',
+    });
+  } else if (flags.hasCarbonyl) {
+    cards.push({
+      prompt: 'Before drawing arrows, what do you classify about the carbonyl?',
+      answer: 'Decide whether it is doing addition, acyl substitution, or alpha-carbon chemistry.',
+      why: 'The same C=O visual cue can lead to different mechanisms depending on the attached group and reagent.',
+    });
+  }
+
+  if (flags.hasArene) {
+    cards.push({
+      prompt: 'What should usually stay intact when predicting first-course arene reactions?',
+      answer: 'Aromaticity should usually be preserved.',
+      why: 'Most introductory arene reactions substitute on the ring rather than destroying aromatic stabilization.',
+    });
+  }
+
+  for (const group of groups) {
+    if (cards.length >= 5) break;
+    cards.push({
+      prompt: group.studyPrompt,
+      answer: group.reactivity,
+      why: group.commonConfusion,
+    });
+  }
+
+  if (!cards.length && flags.organicRich) {
+    cards.push({
+      prompt: 'Which heteroatom would you protonate or deprotonate first?',
+      answer: 'Start with the most basic or most acidic heteroatom-adjacent site.',
+      why: 'Acid-base changes are often the first hidden step in organic mechanisms.',
+    });
+  }
+  if (!cards.length) {
+    cards.push({
+      prompt: 'What is the first structural question this model helps answer?',
+      answer: 'Decide whether composition, geometry, coordination, or property values are the main story.',
+      why: 'Not every molecular view is an ochem mechanism; good study starts by naming the right question.',
+    });
+  }
+
+  return uniqueBy(cards, card => card.prompt).slice(0, 5);
+}
+
+function buildCommonTraps(
+  groups: FunctionalGroupConcept[],
+  flags: { hasCarbonyl: boolean; hasArene: boolean; hasAcidAndEster: boolean; organicRich: boolean },
+): OchemMisconception[] {
+  const traps: OchemMisconception[] = [];
+
+  if (flags.hasAcidAndEster) {
+    traps.push({
+      trap: 'Treating every carbonyl as equally reactive.',
+      correction: 'Compare the acid and ester separately; protonation and leaving-group ability change the pathway.',
+    });
+  } else if (flags.hasCarbonyl) {
+    traps.push({
+      trap: 'Seeing C=O and immediately memorizing one reaction.',
+      correction: 'Classify the carbonyl type before choosing addition, acyl substitution, or enolate chemistry.',
+    });
+  }
+
+  if (flags.hasArene) {
+    traps.push({
+      trap: 'Forgetting that aromaticity is expensive to break.',
+      correction: 'Predict substitution and directing effects before considering any reaction that loses aromaticity.',
+    });
+  }
+
+  for (const group of groups) {
+    if (traps.length >= 4) break;
+    traps.push({
+      trap: group.commonConfusion,
+      correction: group.recognize,
+    });
+  }
+
+  if (!traps.length && flags.organicRich) {
+    traps.push({
+      trap: 'Naming the molecule before reading its reactive handles.',
+      correction: 'Mark heteroatoms, pi bonds, and charge first; the name should confirm what you already saw.',
+    });
+  }
+  if (!traps.length) {
+    traps.push({
+      trap: 'Forcing organic mechanisms onto a non-organic structure.',
+      correction: 'Use composition and geometry to decide whether this is a materials, coordination, or comparison case.',
+    });
+  }
+
+  return uniqueBy(traps, item => item.trap).slice(0, 4);
 }
 
 function buildExamPrompts(

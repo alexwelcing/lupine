@@ -29,15 +29,20 @@
   - Summarizes formula, atom count, frame, bonds, element composition, selected atoms, and per-frame property means.
   - Pulls the same organic chemistry teaching language into the actual molecule view, including recognition cues, reactivity, and self-check prompts.
   - Adds a university-style ochem frame: course unit, professor-order reasoning steps, mechanism priorities, and first-pass spectroscopy checks.
+  - Adds an active learning loop: observe, predict, explain, and transfer.
+  - Adds revealable practice checks so students make a prediction before seeing the professor-style answer and rationale.
+  - Adds common-trap coaching for mistakes like treating every carbonyl as equally reactive or using aromaticity as a decorative label instead of a stability model.
 - Study features now carry into immersive AR / VR:
   - The in-world instructor dashboard opens in Study mode by default.
   - Shows formula, atoms, bonds, functional-group handles, course unit, mechanism priorities, spectroscopy cue, and selected atom context.
   - Lets learners step through the same professor-order reasoning prompts while the molecule is placed in space.
+  - Includes the first practice prompt and answer so AR mode still feels like a study companion, not just a visualizer.
 - A new **Study sheet** export:
   - Available from Controls -> Export.
   - Captures the current rendered molecule view and embeds it in the printable / save-to-PDF sheet.
   - Uses a deterministic small-molecule bond estimate when the renderer count is still warming up, so printed sheets do not preserve a transient loading state.
   - Includes molecule summary, university ochem frame, mechanism priorities, functional groups, spectroscopy checks, composition, selected atoms, and frame properties.
+  - Now prints the same learning loop, practice checks, and common traps as the live Study Lens so the exported sheet matches the configured learning view.
 - OMol25 is ready for the same functional-group language: the offline indexer now derives group tags from real coordinates, the OMol provider can facet and filter by those tags, and the OMol collection page will show a functional-group rail as soon as the refreshed v3 index is published.
 
 ## Why It Matters
@@ -46,7 +51,7 @@
 - Shared links preserve visual state, making collaboration and support easier.
 - The gallery starts becoming a teaching and exploration system, not just a list of files.
 - The viewer itself now helps students ask better questions while inspecting a molecule, and the printed sheet gives instructors and learners a durable artifact for class notes, labs, and review sessions.
-- The Study Lens is now organized around how first-course organic chemistry is actually taught: identify handles, assign electronics, choose the first mechanism move, and check the product.
+- The Study Lens is now organized around how first-course organic chemistry is actually taught: identify handles, assign electronics, choose the first mechanism move, make a prediction, debug common mistakes, and transfer the idea to a related molecule.
 - The organic chemistry grouping model is data-backed and test-guarded, so future curated molecule sets can grow without silently pointing to unavailable assets.
 - OMol25 can graduate from element/formula browsing into ochem study workflows without fetching every structure in the browser.
 

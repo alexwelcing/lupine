@@ -1,8 +1,15 @@
 import type { CSSProperties } from 'react';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useStore } from './store';
 import { buildMoleculeStudyFacts, type ElementStudyFact } from './studyFacts';
-import type { OchemReactionPriority, OchemReasoningStep, OchemSpectroscopyCheck } from './ochemCourseCompanion';
+import type {
+  OchemLearningStep,
+  OchemMisconception,
+  OchemPracticeCard,
+  OchemReactionPriority,
+  OchemReasoningStep,
+  OchemSpectroscopyCheck,
+} from './ochemCourseCompanion';
 
 export function StudyLensPanel({
   compact = false,
@@ -16,6 +23,8 @@ export function StudyLensPanel({
   const selectedAtoms = useStore(s => s.selectedAtoms);
   const lastBondCount = useStore(s => s.lastBondCount);
   const showBonds = useStore(s => s.showBonds);
+  const [practiceIndex, setPracticeIndex] = useState(0);
+  const [practiceRevealed, setPracticeRevealed] = useState(false);
 
   const facts = useMemo(() => buildMoleculeStudyFacts({
     file,
@@ -27,6 +36,15 @@ export function StudyLensPanel({
   }), [file, frame, lastBondCount, selectedAtoms, showBonds]);
 
   if (!facts) return null;
+  const practiceCards = facts.ochemCompanion.practiceCards;
+  const activePractice = practiceCards.length
+    ? practiceCards[practiceIndex % practiceCards.length]
+    : null;
+  const advancePractice = () => {
+    if (!practiceCards.length) return;
+    setPracticeIndex(index => (index + 1) % practiceCards.length);
+    setPracticeRevealed(false);
+  };
 
   return (
     <aside
@@ -65,6 +83,18 @@ export function StudyLensPanel({
         <Metric label="Bonds" value={facts.bondSummary} />
       </section>
 
+      {activePractice && (
+        <section style={practiceSectionStyle}>
+          <SectionTitle label="Practice check" detail={`${(practiceIndex % practiceCards.length) + 1}/${practiceCards.length}`} />
+          <PracticeCheck
+            card={activePractice}
+            revealed={practiceRevealed}
+            onReveal={() => setPracticeRevealed(value => !value)}
+            onNext={advancePractice}
+          />
+        </section>
+      )}
+
       <section style={courseSectionStyle}>
         <SectionTitle label="Course frame" detail={facts.ochemCompanion.courseUnit} />
         <p style={courseFrameStyle}>{facts.ochemCompanion.instructorFrame}</p>
@@ -75,12 +105,32 @@ export function StudyLensPanel({
         </div>
       </section>
 
+      <section style={sectionStyle}>
+        <SectionTitle label="Learning loop" detail="predict -> check -> transfer" />
+        <div style={learningPathStyle}>
+          {facts.ochemCompanion.learningPath.map(step => (
+            <LearningStepCard key={step.phase} step={step} />
+          ))}
+        </div>
+      </section>
+
       {facts.ochemCompanion.mechanismPriorities.length > 0 && (
         <section style={sectionStyle}>
           <SectionTitle label="Mechanism priorities" detail="professor order" />
           <div style={priorityListStyle}>
             {facts.ochemCompanion.mechanismPriorities.slice(0, 3).map(priority => (
               <PriorityCard key={priority.id} priority={priority} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {facts.ochemCompanion.commonTraps.length > 0 && (
+        <section style={sectionStyle}>
+          <SectionTitle label="Common traps" detail="debug thinking" />
+          <div style={trapListStyle}>
+            {facts.ochemCompanion.commonTraps.slice(0, 3).map(trap => (
+              <TrapCard key={trap.trap} trap={trap} />
             ))}
           </div>
         </section>
@@ -225,6 +275,58 @@ function ReasoningStepRow({ step, index }: { step: OchemReasoningStep; index: nu
         <strong style={reasoningTitleStyle}>{step.label}</strong>
         <p style={reasoningCopyStyle}>{step.prompt}</p>
       </div>
+    </article>
+  );
+}
+
+function LearningStepCard({ step }: { step: OchemLearningStep }) {
+  return (
+    <article style={learningStepStyle}>
+      <span style={learningPhaseStyle}>{step.phase}</span>
+      <strong style={learningTitleStyle}>{step.label}</strong>
+      <p style={learningCopyStyle}>{step.prompt}</p>
+      <em style={learningNoteStyle}>{step.mentorNote}</em>
+    </article>
+  );
+}
+
+function PracticeCheck({
+  card,
+  revealed,
+  onReveal,
+  onNext,
+}: {
+  card: OchemPracticeCard;
+  revealed: boolean;
+  onReveal: () => void;
+  onNext: () => void;
+}) {
+  return (
+    <article style={practiceCardStyle}>
+      <p style={practicePromptStyle}>{card.prompt}</p>
+      {revealed ? (
+        <div style={practiceAnswerStyle}>
+          <strong>{card.answer}</strong>
+          <p>{card.why}</p>
+        </div>
+      ) : (
+        <p style={practiceHiddenStyle}>Make the prediction first, then reveal the professor check.</p>
+      )}
+      <div style={practiceActionsStyle}>
+        <button type="button" onClick={onReveal} style={practiceButtonStyle}>
+          {revealed ? 'Hide answer' : 'Reveal check'}
+        </button>
+        <button type="button" onClick={onNext} style={practiceGhostButtonStyle}>Next</button>
+      </div>
+    </article>
+  );
+}
+
+function TrapCard({ trap }: { trap: OchemMisconception }) {
+  return (
+    <article style={trapCardStyle}>
+      <strong>{trap.trap}</strong>
+      <p>{trap.correction}</p>
     </article>
   );
 }
@@ -423,6 +525,112 @@ const reasoningCopyStyle: CSSProperties = {
   textWrap: 'pretty',
 };
 
+const learningPathStyle: CSSProperties = {
+  display: 'grid',
+  gap: 8,
+};
+
+const learningStepStyle: CSSProperties = {
+  display: 'grid',
+  gap: 4,
+  padding: '9px 10px',
+  border: '1px solid rgba(125,211,252,0.15)',
+  borderRadius: 8,
+  background: 'rgba(15,23,42,0.48)',
+};
+
+const learningPhaseStyle: CSSProperties = {
+  color: '#7dd3fc',
+  fontSize: 10,
+  fontWeight: 850,
+  lineHeight: 1,
+  textTransform: 'uppercase',
+  letterSpacing: 0,
+};
+
+const learningTitleStyle: CSSProperties = {
+  color: '#f8fafc',
+  fontSize: 12,
+  lineHeight: 1.25,
+};
+
+const learningCopyStyle: CSSProperties = {
+  margin: 0,
+  color: 'rgba(203,213,225,0.75)',
+  fontSize: 12,
+  lineHeight: 1.44,
+  textWrap: 'pretty',
+};
+
+const learningNoteStyle: CSSProperties = {
+  color: 'rgba(186,230,253,0.7)',
+  fontSize: 11,
+  fontStyle: 'normal',
+  lineHeight: 1.38,
+};
+
+const practiceSectionStyle: CSSProperties = {
+  ...sectionStyle,
+  borderColor: 'rgba(94,234,212,0.2)',
+  background: 'linear-gradient(180deg, rgba(12,36,36,0.42), rgba(15,23,42,0.36))',
+};
+
+const practiceCardStyle: CSSProperties = {
+  display: 'grid',
+  gap: 8,
+};
+
+const practicePromptStyle: CSSProperties = {
+  margin: 0,
+  color: '#f8fafc',
+  fontSize: 13,
+  fontWeight: 760,
+  lineHeight: 1.42,
+  textWrap: 'pretty',
+};
+
+const practiceHiddenStyle: CSSProperties = {
+  margin: 0,
+  color: 'rgba(203,213,225,0.68)',
+  fontSize: 12,
+  lineHeight: 1.4,
+};
+
+const practiceAnswerStyle: CSSProperties = {
+  display: 'grid',
+  gap: 4,
+  padding: '8px 9px',
+  border: '1px solid rgba(45,212,191,0.22)',
+  borderRadius: 8,
+  color: 'rgba(204,251,241,0.92)',
+  background: 'rgba(13,148,136,0.12)',
+  fontSize: 12,
+  lineHeight: 1.42,
+};
+
+const practiceActionsStyle: CSSProperties = {
+  display: 'flex',
+  gap: 8,
+};
+
+const practiceButtonStyle: CSSProperties = {
+  border: '1px solid rgba(94,234,212,0.34)',
+  borderRadius: 8,
+  background: 'rgba(20,184,166,0.18)',
+  color: '#ccfbf1',
+  padding: '7px 9px',
+  fontSize: 12,
+  fontWeight: 800,
+  cursor: 'pointer',
+};
+
+const practiceGhostButtonStyle: CSSProperties = {
+  ...practiceButtonStyle,
+  borderColor: 'rgba(148,163,184,0.2)',
+  background: 'rgba(148,163,184,0.08)',
+  color: 'rgba(226,232,240,0.82)',
+};
+
 const sectionTitleStyle: CSSProperties = {
   display: 'flex',
   justifyContent: 'space-between',
@@ -505,6 +713,23 @@ const priorityMoveStyle: CSSProperties = {
   fontSize: 12,
   lineHeight: 1.45,
   textWrap: 'pretty',
+};
+
+const trapListStyle: CSSProperties = {
+  display: 'grid',
+  gap: 7,
+};
+
+const trapCardStyle: CSSProperties = {
+  display: 'grid',
+  gap: 4,
+  padding: '8px 9px',
+  border: '1px solid rgba(251,191,36,0.18)',
+  borderRadius: 8,
+  background: 'rgba(120,53,15,0.13)',
+  color: 'rgba(254,243,199,0.86)',
+  fontSize: 12,
+  lineHeight: 1.42,
 };
 
 const groupStyle: CSSProperties = {

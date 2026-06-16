@@ -178,8 +178,14 @@ try {
   assertContains(report.lensTextHead, /Course frame/i, 'study lens course frame');
   assertContains(report.lensTextHead, /Acid-base first/i, 'study lens acid-base priority');
   assertContains(report.lensTextHead, /Nucleophilic acyl substitution/i, 'study lens acyl substitution priority');
+  assertContains(report.lensTextHead, /Learning loop/i, 'study lens learning loop');
+  assertContains(report.lensTextHead, /Practice check/i, 'study lens practice check');
+  assertContains(report.lensTextHead, /Common traps/i, 'study lens common traps');
   assertContains(report.lensTextHead, /Spectroscopy checks/i, 'study lens spectroscopy checks');
   assertContains(report.lensTextHead, /Self-check/i, 'study lens self-check prompt');
+  await lens.getByRole('button', { name: /Reveal check/i }).click();
+  report.lensTextHead = (await lens.innerText()).slice(0, 5000);
+  assertContains(report.lensTextHead, /Start with the carboxylic acid/i, 'study lens revealed practice answer');
   await shot(page, 'lens-open');
 
   report.overflow = await measureOverflow(page);
@@ -218,7 +224,7 @@ try {
   );
   report.sheetTextHead = await page.evaluate(() => {
     const doc = new DOMParser().parseFromString(window.__lupiStudySheetHtml, 'text/html');
-    return (doc.body?.innerText ?? '').slice(0, 6000);
+    return (doc.body?.innerText ?? '').slice(0, 12000);
   });
   report.sheetHasSnapshot = await page.evaluate(() => window.__lupiStudySheetHtml.includes('data:image/png'));
   if (!report.sheetHasSnapshot) failures.push('study sheet did not embed a rendered view image');
@@ -228,6 +234,9 @@ try {
   assertContains(report.sheetTextHead, /Current View/i, 'study sheet current view section');
   assertContains(report.sheetTextHead, /University Ochem Frame/i, 'study sheet university ochem frame');
   assertContains(report.sheetTextHead, /Mechanism Priorities/i, 'study sheet mechanism priorities');
+  assertContains(report.sheetTextHead, /Learning Loop/i, 'study sheet learning loop');
+  assertContains(report.sheetTextHead, /Practice Checks/i, 'study sheet practice checks');
+  assertContains(report.sheetTextHead, /Common Traps/i, 'study sheet common traps');
   assertContains(report.sheetTextHead, /Acid-base first/i, 'study sheet acid-base priority');
   assertContains(report.sheetTextHead, /Nucleophilic acyl substitution/i, 'study sheet acyl substitution priority');
   assertContains(report.sheetTextHead, /Carboxylic Acids/i, 'study sheet carboxylic-acid teaching');

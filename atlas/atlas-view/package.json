@@ -13,7 +13,7 @@
     "apps/*"
   ],
   "scripts": {
-    "start": "serve -s apps/web/dist -p ${PORT:-8080}",
+    "start": "node tools/serve-web.mjs",
     "dev": "turbo run dev",
     "build": "turbo run build",
     "build:wasm": "cd packages/parsers/wasm && wasm-pack build --target web --out-dir ../pkg",
