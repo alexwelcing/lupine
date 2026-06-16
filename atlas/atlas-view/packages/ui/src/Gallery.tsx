@@ -361,10 +361,11 @@ const GALLERY_STUDIO_CSS = `
   }
   .lupi-gallery-title {
     margin: 0;
-    font-size: clamp(34px, 5vw, 58px);
+    font-size: 52px;
     font-weight: 300;
     line-height: 0.96;
     letter-spacing: 0;
+    text-wrap: balance;
   }
   .lupi-gallery-copy {
     max-width: 680px;
@@ -846,6 +847,9 @@ const GALLERY_STUDIO_CSS = `
     .lupi-gallery {
       padding: 0 16px 34px;
     }
+    .lupi-gallery-title {
+      font-size: 34px;
+    }
     .lupi-gallery-hero {
       padding-top: 18px;
       text-align: left;
@@ -859,7 +863,7 @@ const GALLERY_STUDIO_CSS = `
       min-width: calc(50% - 4px);
       padding: 10px 12px;
       border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 12px;
+      border-radius: 8px;
       background: rgba(255,255,255,0.028);
     }
     .lupi-gallery-controls {
@@ -920,10 +924,14 @@ const GALLERY_STUDIO_CSS = `
   .lupi-gallery-index,
   .lupi-gallery-spotlight {
     min-width: 0;
-    border: 1px solid rgba(255,255,255,0.07);
-    border-radius: 10px;
-    background: rgba(7, 9, 14, 0.72);
-    box-shadow: 0 18px 50px rgba(0,0,0,0.20);
+    border: 1px solid rgba(255,255,255,0.085);
+    border-radius: 8px;
+    background:
+      linear-gradient(180deg, rgba(15,23,42,0.58), rgba(3,7,18,0.42)),
+      rgba(7, 9, 14, 0.76);
+    box-shadow:
+      0 18px 50px rgba(0,0,0,0.24),
+      inset 0 1px 0 rgba(255,255,255,0.06);
   }
   .lupi-gallery-rail {
     position: sticky;
@@ -935,8 +943,9 @@ const GALLERY_STUDIO_CSS = `
   .lupi-gallery-rail-head h2 {
     margin: 5px 0 5px;
     font-size: 24px;
-    font-weight: 540;
+    font-weight: 620;
     line-height: 1.05;
+    text-wrap: balance;
   }
   .lupi-gallery-rail-head p {
     margin: 0;
@@ -948,6 +957,10 @@ const GALLERY_STUDIO_CSS = `
     padding-block: 10px;
     border-radius: 8px;
     font-size: 13px;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.062), rgba(255,255,255,0.028)),
+      rgba(2,6,23,0.58);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
   }
   .lupi-gallery-source-tabs {
     display: grid;
@@ -959,16 +972,29 @@ const GALLERY_STUDIO_CSS = `
     padding: 6px 8px;
     border: 1px solid rgba(255,255,255,0.08);
     border-radius: 8px;
-    background: rgba(255,255,255,0.032);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)),
+      rgba(2,6,23,0.42);
     color: rgba(226,232,240,0.62);
     font-size: 11px;
-    font-weight: 680;
+    font-weight: 740;
+    line-height: 1.15;
     cursor: pointer;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+  }
+  .lupi-gallery-source-tabs button:hover,
+  .lupi-gallery-source-tabs button:focus-visible {
+    border-color: rgba(30,220,224,0.34);
+    color: #f8fafc;
+    outline: none;
   }
   .lupi-gallery-source-tabs button[data-active="true"] {
     border-color: rgba(30,220,224,0.56);
-    background: rgba(30,220,224,0.12);
+    background:
+      linear-gradient(180deg, rgba(30,220,224,0.18), rgba(30,220,224,0.07)),
+      rgba(4,14,20,0.72);
     color: #eaffff;
+    box-shadow: 0 0 0 1px rgba(30,220,224,0.08), 0 10px 22px rgba(30,220,224,0.10);
   }
   .lupi-gallery-organic-map {
     display: grid;
@@ -976,7 +1002,10 @@ const GALLERY_STUDIO_CSS = `
     padding: 10px;
     border: 1px solid rgba(255,255,255,0.07);
     border-radius: 8px;
-    background: linear-gradient(180deg, rgba(15,23,42,0.42), rgba(2,6,23,0.18));
+    background:
+      linear-gradient(180deg, rgba(15,23,42,0.52), rgba(2,6,23,0.24)),
+      rgba(255,255,255,0.02);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.045);
   }
   .lupi-gallery-organic-map h3 {
     margin: 0;
@@ -1003,11 +1032,12 @@ const GALLERY_STUDIO_CSS = `
     min-height: 28px;
     padding: 5px 7px;
     border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 999px;
+    border-radius: 8px;
     background: rgba(255,255,255,0.032);
     color: rgba(226,232,240,0.64);
     font-size: 10px;
     font-weight: 720;
+    line-height: 1.1;
     cursor: pointer;
   }
   .lupi-gallery-functional-groups button[data-active="true"],
@@ -1031,8 +1061,10 @@ const GALLERY_STUDIO_CSS = `
     --group-color: rgba(125,211,252,0.78);
     display: grid;
     gap: 9px;
-    padding-top: 10px;
-    border-top: 1px solid rgba(255,255,255,0.07);
+    padding: 10px;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 8px;
+    background: rgba(2,6,23,0.26);
   }
   .lupi-gallery-study-guide-head {
     display: grid;
@@ -1125,8 +1157,10 @@ const GALLERY_STUDIO_CSS = `
   }
   .lupi-gallery-domain-row[data-active="true"],
   .lupi-gallery-domain-row:hover {
-    border-color: rgba(255,255,255,0.08);
-    background: rgba(255,255,255,0.045);
+    border-color: color-mix(in srgb, var(--domain-color, #1edce0) 38%, rgba(255,255,255,0.08));
+    background:
+      linear-gradient(90deg, color-mix(in srgb, var(--domain-color, #1edce0) 10%, transparent), transparent 78%),
+      rgba(255,255,255,0.045);
     color: #fff;
   }
   .lupi-gallery-domain-mark {
@@ -1160,7 +1194,9 @@ const GALLERY_STUDIO_CSS = `
   .lupi-gallery-index-head h3 {
     margin: 0;
     font-size: 22px;
-    font-weight: 520;
+    font-weight: 620;
+    line-height: 1.08;
+    text-wrap: balance;
   }
   .lupi-gallery-index-head p {
     margin: 4px 0 0;
@@ -1183,6 +1219,7 @@ const GALLERY_STUDIO_CSS = `
     color: rgba(226,232,240,0.55);
     font-size: 11px;
     font-weight: 620;
+    font-variant-numeric: tabular-nums;
   }
   .lupi-gallery-fast-stats strong {
     color: #fff;
@@ -1194,7 +1231,10 @@ const GALLERY_STUDIO_CSS = `
     overflow-x: auto;
     margin-bottom: 12px;
     padding-bottom: 4px;
-    scrollbar-width: thin;
+    scrollbar-width: none;
+  }
+  .lupi-gallery-playlist::-webkit-scrollbar {
+    display: none;
   }
   .lupi-gallery-playlist button {
     flex: 0 0 168px;
@@ -1204,10 +1244,13 @@ const GALLERY_STUDIO_CSS = `
     padding: 9px 10px;
     border: 1px solid rgba(255,255,255,0.08);
     border-radius: 8px;
-    background: rgba(255,255,255,0.032);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.018)),
+      rgba(2,6,23,0.34);
     color: rgba(226,232,240,0.7);
     text-align: left;
     cursor: pointer;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.035);
   }
   .lupi-gallery-playlist button[data-active="true"],
   .lupi-gallery-playlist button:hover {
@@ -1238,16 +1281,19 @@ const GALLERY_STUDIO_CSS = `
     align-items: center;
     gap: 12px;
     min-height: 68px;
-    padding: 9px 10px;
+    padding: 10px 11px;
     overflow: hidden;
     border: 1px solid rgba(255,255,255,0.065);
     border-radius: 8px;
-    background: rgba(255,255,255,0.026);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.018)),
+      rgba(2,6,23,0.34);
     color: #f8fafc;
     text-align: left;
     cursor: pointer;
     content-visibility: auto;
     contain-intrinsic-size: 68px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.035);
   }
   .lupi-gallery-scene-row:hover,
   .lupi-gallery-scene-row:focus-visible,
@@ -1279,7 +1325,7 @@ const GALLERY_STUDIO_CSS = `
     text-overflow: ellipsis;
     white-space: nowrap;
     font-size: 14px;
-    font-weight: 650;
+    font-weight: 700;
   }
   .lupi-gallery-row-main span {
     overflow: hidden;
@@ -1327,8 +1373,10 @@ const GALLERY_STUDIO_CSS = `
     min-width: 58px;
     min-height: 30px;
     padding: 0 10px;
-    border-radius: 7px;
-    background: rgba(255,255,255,0.06);
+    border-radius: 8px;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.028)),
+      rgba(2,6,23,0.42);
     color: rgba(226,232,240,0.72);
     font-size: 11px;
     font-weight: 760;
@@ -1429,8 +1477,9 @@ const GALLERY_STUDIO_CSS = `
   .lupi-gallery-spotlight h3 {
     margin: 0;
     font-size: 22px;
-    font-weight: 560;
+    font-weight: 640;
     line-height: 1.12;
+    text-wrap: balance;
   }
   .lupi-gallery-spotlight p {
     margin: 0;
@@ -1536,11 +1585,13 @@ const GALLERY_STUDIO_CSS = `
     min-height: 38px;
     border: 0;
     border-radius: 8px;
-    background: var(--thread-color, #1edce0);
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--thread-color, #1edce0) 92%, white), var(--thread-color, #1edce0));
     color: #031012;
     font-size: 13px;
     font-weight: 800;
     cursor: pointer;
+    box-shadow: 0 12px 28px color-mix(in srgb, var(--thread-color, #1edce0) 18%, transparent), inset 0 1px 0 rgba(255,255,255,0.28);
   }
   .lupi-gallery-spotlight-open:disabled {
     opacity: 0.6;
@@ -2112,6 +2163,7 @@ export function Gallery() {
               onClick={() => setFilter('All')}
               aria-pressed={filter === 'All'}
               data-testid="gallery-filter-all"
+              style={{ '--domain-color': 'rgba(255,255,255,0.58)' } as React.CSSProperties}
             >
               <span className="lupi-gallery-domain-mark" style={{ background: 'rgba(255,255,255,0.58)' }} />
               <span>All domains</span>
@@ -2125,6 +2177,7 @@ export function Gallery() {
                 data-active={filter === domain}
                 onClick={() => setFilter(domain)}
                 aria-pressed={filter === domain}
+                style={{ '--domain-color': DOMAIN_COLORS[domain] } as React.CSSProperties}
               >
                 <span className="lupi-gallery-domain-mark" style={{ background: DOMAIN_COLORS[domain] }} />
                 <span>{domain}</span>

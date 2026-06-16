@@ -334,18 +334,18 @@ export function StudioControlDeck({
         .lupi-deck-grid {
           display: grid;
           grid-template-columns: repeat(3, minmax(0, 1fr));
-          gap: 5px;
+          gap: 8px;
           align-items: stretch;
         }
         .lupi-studio-segments {
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(104px, 1fr));
-          gap: 4px;
+          gap: 6px;
         }
         .lupi-studio-slider-grid {
           display: grid;
           grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 5px;
+          gap: 7px;
         }
         .lupi-native-color::-webkit-color-swatch-wrapper {
           padding: 0;
@@ -356,15 +356,15 @@ export function StudioControlDeck({
         }
         .lupi-studio-deck-drawer .lupi-deck-grid {
           grid-template-columns: 1fr;
-          gap: 6px;
+          gap: 8px;
         }
         @media (max-width: 768px) {
           .lupi-deck-grid {
-            gap: 5px;
+            gap: 8px;
           }
           .lupi-studio-slider-grid {
             grid-template-columns: 1fr;
-            gap: 4px;
+            gap: 7px;
           }
         }
       `}</style>
@@ -384,22 +384,39 @@ export function StudioControlDeck({
           boxShadow: isDrawer ? 'none' : '0 24px 80px rgba(0,0,0,0.48), inset 0 1px 0 rgba(255,255,255,0.08)',
           backdropFilter: isDrawer ? 'none' : 'blur(18px)',
           WebkitBackdropFilter: isDrawer ? 'none' : 'blur(18px)',
-          padding: isDrawer ? 8 : 6,
+          padding: isDrawer ? 10 : 8,
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, marginBottom: 6 }}>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: 10,
+          marginBottom: 8,
+          padding: isDrawer ? '0 0 1px' : '2px 2px 0',
+        }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, minWidth: 0 }}>
             <div style={{
               width: 6,
-              height: 26,
+              height: 30,
               borderRadius: 3,
               background: 'linear-gradient(180deg, #1edce0, #f59e0b)',
               boxShadow: '0 0 16px rgba(30,220,224,0.28)',
               flexShrink: 0,
             }} />
             <div style={{ minWidth: 0 }}>
-              <div style={{ color: '#f8fafc', fontSize: 12, fontWeight: 780, lineHeight: 1.1 }}>{title}</div>
-              <div style={{ color: '#94a3b8', fontSize: 9, fontFamily: 'var(--font-mono)', textTransform: 'uppercase', lineHeight: 1.25 }}>
+              <div style={{ color: '#f8fafc', fontSize: 13, fontWeight: 820, lineHeight: 1.1 }}>{title}</div>
+              <div style={{
+                color: '#94a3b8',
+                fontSize: 10,
+                fontFamily: 'var(--font-mono)',
+                textTransform: 'uppercase',
+                lineHeight: 1.25,
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+                fontVariantNumeric: 'tabular-nums',
+              }}>
                 {subtitle}
               </div>
             </div>
@@ -644,9 +661,22 @@ export function StudioControlDeck({
 
 function ControlGroup({ title, note, children }: { title: string; note?: string; children: ReactNode }) {
   return (
-    <section title={note} style={{ display: 'grid', gap: 4, alignContent: 'start', minWidth: 0 }}>
+    <section
+      title={note}
+      style={{
+        display: 'grid',
+        gap: 7,
+        alignContent: 'start',
+        minWidth: 0,
+        padding: 8,
+        border: '1px solid rgba(255,255,255,0.08)',
+        borderRadius: 8,
+        background: 'linear-gradient(180deg, rgba(15,23,42,0.48), rgba(2,6,23,0.22))',
+        boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.05), 0 8px 22px rgba(0,0,0,0.16)',
+      }}
+    >
       <div style={{ display: 'grid', gap: 2 }}>
-        <div style={{ color: '#64748b', fontSize: 9, fontWeight: 760, textTransform: 'uppercase', letterSpacing: 0, lineHeight: 1 }}>
+        <div style={{ color: '#94a3b8', fontSize: 10, fontWeight: 820, textTransform: 'uppercase', letterSpacing: 0, lineHeight: 1 }}>
           {title}
         </div>
       </div>
@@ -705,20 +735,22 @@ function SegmentButton({
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        gap: 5,
-        padding: '6px 7px',
+        gap: 7,
+        padding: '7px 8px',
         overflow: 'hidden',
-        borderRadius: 6,
-        border: active ? `1px solid ${accent}` : '1px solid rgba(148,163,184,0.2)',
+        borderRadius: 7,
+        border: active ? `1px solid ${accent}` : '1px solid rgba(148,163,184,0.18)',
         background: active
-          ? `linear-gradient(135deg, ${accent}2b, rgba(9,14,22,0.86))`
-          : 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(3,7,18,0.78))',
+          ? `linear-gradient(135deg, ${accent}33, rgba(9,14,22,0.9))`
+          : 'linear-gradient(135deg, rgba(15,23,42,0.74), rgba(3,7,18,0.62))',
         color: active ? '#f8fafc' : '#cbd5e1',
-        boxShadow: active ? `0 0 14px ${accent}24, inset 0 0 10px ${accent}10` : 'inset 0 1px 0 rgba(255,255,255,0.04)',
+        boxShadow: active
+          ? `0 0 16px ${accent}24, inset 0 1px 0 rgba(255,255,255,0.08), inset 0 0 14px ${accent}12`
+          : 'inset 0 1px 0 rgba(255,255,255,0.05), 0 1px 0 rgba(0,0,0,0.18)',
         cursor: 'pointer',
-        fontSize: 10,
-        fontWeight: 760,
-        lineHeight: 1.05,
+        fontSize: 11,
+        fontWeight: 780,
+        lineHeight: 1.12,
         whiteSpace: 'normal',
         letterSpacing: 0,
         touchAction: 'manipulation',
@@ -736,6 +768,7 @@ function SegmentButton({
           fontFamily: 'var(--font-mono)',
           fontSize: 9,
           fontWeight: 820,
+          fontVariantNumeric: 'tabular-nums',
         }}>
           {meta}
         </span>
@@ -765,17 +798,17 @@ function CompactSlider({
   return (
     <label style={{
       display: 'grid',
-      gap: 2,
+      gap: 5,
       minWidth: 0,
-      padding: '5px 6px',
+      padding: '7px 8px',
       borderRadius: 8,
       border: '1px solid rgba(255,255,255,0.10)',
-      background: 'linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)',
+      background: 'linear-gradient(180deg, rgba(255,255,255,0.055) 0%, rgba(255,255,255,0.024) 100%)',
       boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 1px 2px rgba(0,0,0,0.2)',
     }}>
       <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 6, minWidth: 0 }}>
-        <span style={{ color: '#94a3b8', fontSize: 9, fontWeight: 760, textTransform: 'uppercase', lineHeight: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{label}</span>
-        <span style={{ color: '#e2e8f0', fontSize: 10, fontFamily: 'var(--font-mono)', fontWeight: 760, lineHeight: 1 }}>{format(value)}</span>
+        <span style={{ color: '#94a3b8', fontSize: 10, fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{label}</span>
+        <span style={{ color: '#e2e8f0', fontSize: 10, fontFamily: 'var(--font-mono)', fontWeight: 800, lineHeight: 1, fontVariantNumeric: 'tabular-nums' }}>{format(value)}</span>
       </span>
       <input
         type="range"
@@ -786,7 +819,7 @@ function CompactSlider({
         onChange={(event) => onChange(Number(event.currentTarget.value))}
         style={{
           width: '100%',
-          height: 3,
+          height: 4,
           accentColor: '#1edce0',
           background: `linear-gradient(90deg, #1edce0 0%, #1edce0 ${percent * 100}%, rgba(71,85,105,0.7) ${percent * 100}%, rgba(71,85,105,0.7) 100%)`,
         }}
@@ -860,17 +893,21 @@ function RiveKnob({
 
   return (
     <div style={{
-      minHeight: 62,
+      minHeight: 66,
       display: 'grid',
-      gridTemplateColumns: '48px minmax(0, 1fr)',
+      gridTemplateColumns: '50px minmax(0, 1fr)',
       alignItems: 'center',
-      gap: 7,
+      gap: 8,
       minWidth: 0,
-      padding: '5px 6px',
-      borderRadius: 6,
+      padding: '7px 8px',
+      borderRadius: 8,
       border: dragging ? '1px solid rgba(245,158,11,0.62)' : '1px solid rgba(148,163,184,0.2)',
-      background: dragging ? 'rgba(245,158,11,0.08)' : 'rgba(9,14,22,0.66)',
-      boxShadow: dragging ? '0 0 18px rgba(245,158,11,0.18)' : 'inset 0 1px 0 rgba(255,255,255,0.04)',
+      background: dragging
+        ? 'linear-gradient(180deg, rgba(245,158,11,0.12), rgba(9,14,22,0.72))'
+        : 'linear-gradient(180deg, rgba(15,23,42,0.58), rgba(9,14,22,0.48))',
+      boxShadow: dragging
+        ? '0 0 20px rgba(245,158,11,0.18), inset 0 1px 0 rgba(255,255,255,0.06)'
+        : 'inset 0 1px 0 rgba(255,255,255,0.05), 0 1px 0 rgba(0,0,0,0.2)',
     }}>
       <div
         role="slider"
@@ -887,8 +924,8 @@ function RiveKnob({
         onPointerCancel={handlePointerUp}
         onKeyDown={handleKeyDown}
         style={{
-          width: 44,
-          height: 44,
+          width: 46,
+          height: 46,
           borderRadius: '50%',
           position: 'relative',
           cursor: 'ns-resize',
@@ -927,8 +964,8 @@ function RiveKnob({
         </div>
       </div>
       <div style={{ minWidth: 0, display: 'grid', gap: 5 }}>
-        <span style={{ color: '#94a3b8', fontSize: 9, fontWeight: 780, textTransform: 'uppercase', lineHeight: 1 }}>{label}</span>
-        <span style={{ color: '#e2e8f0', fontSize: 12, fontFamily: 'var(--font-mono)', fontWeight: 820, lineHeight: 1 }}>
+        <span style={{ color: '#94a3b8', fontSize: 10, fontWeight: 820, textTransform: 'uppercase', lineHeight: 1 }}>{label}</span>
+        <span style={{ color: '#e2e8f0', fontSize: 12, fontFamily: 'var(--font-mono)', fontWeight: 820, lineHeight: 1, fontVariantNumeric: 'tabular-nums' }}>
           {format(value)}
         </span>
         <input
@@ -941,7 +978,7 @@ function RiveKnob({
           onChange={(event) => setValue(Number(event.currentTarget.value))}
           style={{
             width: '100%',
-            height: 3,
+            height: 4,
             accentColor: accent,
           }}
         />
@@ -1023,14 +1060,16 @@ function ColorPicker({
   return (
     <label style={{
       display: 'grid',
-      gridTemplateColumns: '42px minmax(0, 1fr)',
-      gap: 6,
+      gridTemplateColumns: '44px minmax(0, 1fr)',
+      gap: 8,
       alignItems: 'center',
       minWidth: 0,
-      padding: 4,
-      borderRadius: 6,
+      padding: 6,
+      borderRadius: 8,
       border: active ? '1px solid #1edce0' : '1px solid rgba(148,163,184,0.2)',
-      background: active ? 'rgba(30,220,224,0.12)' : 'rgba(9,14,22,0.64)',
+      background: active
+        ? 'linear-gradient(135deg, rgba(30,220,224,0.16), rgba(9,14,22,0.72))'
+        : 'linear-gradient(180deg, rgba(15,23,42,0.56), rgba(9,14,22,0.48))',
       boxShadow: active ? '0 0 16px rgba(30,220,224,0.18)' : 'inset 0 1px 0 rgba(255,255,255,0.04)',
     }}>
       <input
@@ -1041,8 +1080,8 @@ function ColorPicker({
         aria-label={label}
         onChange={(event) => onChange(event.currentTarget.value)}
         style={{
-          width: 38,
-          height: 26,
+          width: 40,
+          height: 28,
           padding: 0,
           border: '1px solid rgba(255,255,255,0.22)',
           borderRadius: 6,
@@ -1051,8 +1090,8 @@ function ColorPicker({
         }}
       />
       <span style={{ minWidth: 0, display: 'grid', gap: 2 }}>
-        <span style={{ color: '#94a3b8', fontSize: 9, fontWeight: 760, textTransform: 'uppercase', lineHeight: 1 }}>{label}</span>
-        <span style={{ color: active ? '#f8fafc' : '#cbd5e1', fontSize: 10, fontFamily: 'var(--font-mono)', fontWeight: 760, lineHeight: 1 }}>{value.toUpperCase()}</span>
+        <span style={{ color: '#94a3b8', fontSize: 10, fontWeight: 800, textTransform: 'uppercase', lineHeight: 1 }}>{label}</span>
+        <span style={{ color: active ? '#f8fafc' : '#cbd5e1', fontSize: 10, fontFamily: 'var(--font-mono)', fontWeight: 800, lineHeight: 1 }}>{value.toUpperCase()}</span>
       </span>
     </label>
   );
@@ -1080,14 +1119,16 @@ function ElementColorPicker({
   return (
     <div style={{
       display: 'grid',
-      gridTemplateColumns: '34px minmax(0, 1fr) 39px',
-      gap: 5,
+      gridTemplateColumns: '36px minmax(0, 1fr) 42px',
+      gap: 7,
       alignItems: 'center',
       minWidth: 0,
-      padding: 4,
-      borderRadius: 6,
+      padding: 6,
+      borderRadius: 8,
       border: active ? '1px solid #facc15' : '1px solid rgba(148,163,184,0.2)',
-      background: active ? 'rgba(250,204,21,0.12)' : 'rgba(9,14,22,0.64)',
+      background: active
+        ? 'linear-gradient(135deg, rgba(250,204,21,0.16), rgba(9,14,22,0.72))'
+        : 'linear-gradient(180deg, rgba(15,23,42,0.56), rgba(9,14,22,0.48))',
       boxShadow: active ? '0 0 16px rgba(250,204,21,0.16)' : 'inset 0 1px 0 rgba(255,255,255,0.04)',
     }}>
       <input
@@ -1099,7 +1140,7 @@ function ElementColorPicker({
         onChange={(event) => onChange(event.currentTarget.value)}
         style={{
           width: 30,
-          height: 26,
+          height: 28,
           padding: 0,
           border: '1px solid rgba(255,255,255,0.22)',
           borderRadius: 6,
@@ -1125,15 +1166,15 @@ function ElementColorPicker({
         onClick={onReset}
         disabled={!overridden}
         style={{
-          height: 26,
+          height: 28,
           minWidth: 0,
           borderRadius: 5,
           border: overridden ? '1px solid rgba(250,204,21,0.56)' : '1px solid rgba(148,163,184,0.16)',
           background: overridden ? 'rgba(250,204,21,0.14)' : 'rgba(15,23,42,0.6)',
           color: overridden ? '#f8fafc' : '#64748b',
           cursor: overridden ? 'pointer' : 'default',
-          fontSize: 9,
-          fontWeight: 760,
+          fontSize: 10,
+          fontWeight: 780,
           letterSpacing: 0,
         }}
       >
@@ -1170,10 +1211,12 @@ function SwatchButton({
         height: 25,
         flex: '1 1 24px',
         minWidth: 24,
-        borderRadius: 5,
+        borderRadius: 6,
         border: active ? '1px solid #f8fafc' : '1px solid rgba(148,163,184,0.22)',
         background,
-        boxShadow: active ? '0 0 14px rgba(248,250,252,0.32)' : 'inset 0 1px 0 rgba(255,255,255,0.1)',
+        boxShadow: active
+          ? '0 0 14px rgba(248,250,252,0.32), inset 0 1px 0 rgba(255,255,255,0.16)'
+          : 'inset 0 1px 0 rgba(255,255,255,0.1), 0 1px 0 rgba(0,0,0,0.22)',
         cursor: 'pointer',
       }}
     />
@@ -1204,19 +1247,19 @@ const iconButtonStyle: CSSProperties = {
 
 const compactFieldStyle: CSSProperties = {
   display: 'grid',
-  gap: 3,
+  gap: 5,
   minWidth: 0,
-  padding: '5px 6px',
+  padding: '7px 8px',
   borderRadius: 8,
   border: '1px solid rgba(255,255,255,0.10)',
-  background: 'linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)',
+  background: 'linear-gradient(180deg, rgba(255,255,255,0.055) 0%, rgba(255,255,255,0.024) 100%)',
   boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 1px 2px rgba(0,0,0,0.2)',
 };
 
 const compactFieldLabelStyle: CSSProperties = {
   color: '#94a3b8',
-  fontSize: 9,
-  fontWeight: 760,
+  fontSize: 10,
+  fontWeight: 800,
   textTransform: 'uppercase',
   lineHeight: 1,
 };
@@ -1224,13 +1267,13 @@ const compactFieldLabelStyle: CSSProperties = {
 const compactSelectStyle: CSSProperties = {
   width: '100%',
   minWidth: 0,
-  height: 28,
+  height: 30,
   borderRadius: 6,
   border: '1px solid rgba(255,255,255,0.10)',
   background: 'linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)',
   color: '#f8fafc',
   fontSize: 11,
-  fontWeight: 600,
+  fontWeight: 650,
   padding: '0 8px',
   outline: 'none',
   cursor: 'pointer',

@@ -51,6 +51,9 @@
 - UI polish pass:
   - Study Lens now has a clearer first-viewport hierarchy, stronger practice-check affordances, and safer wrapping for long course labels.
   - OMol25 now reads more like a serious data browser, with steadier typography, fixed-size periodic-table labels, dashboard-like stats, and refined filter/result chips.
+  - The main viewer shell now has more intentional glass tool islands for camera, Study Lens, Controls, loaded-file status, and trajectory frame status.
+  - The Controls drawer, Studio deck, segmented buttons, sliders, knobs, selects, and swatches now share one higher-fidelity tactile language.
+  - The gallery workbench, source tabs, functional-group rail, domain rows, result table, and selected-molecule spotlight now match the same polished scientific UI standard.
 
 ## Why It Matters
 

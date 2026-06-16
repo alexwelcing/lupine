@@ -24,6 +24,14 @@ export function ViewerControlsDrawer({
   onClose,
   showChrome = true,
 }: ViewerControlsDrawerProps) {
+  const activeLabel = activeMode === 'export'
+    ? 'Export'
+    : activeMode === 'look'
+      ? 'Look'
+      : activeMode === 'surface'
+        ? 'Surface'
+        : 'World';
+
   return (
     <div
       data-testid="viewer-controls-drawer"
@@ -38,15 +46,19 @@ export function ViewerControlsDrawer({
         <div style={{
           flexShrink: 0,
           display: 'grid',
-          gap: 8,
-          padding: '10px 10px 8px',
-          borderBottom: '1px solid var(--border-subtle)',
-          background: 'linear-gradient(180deg, rgba(15,23,42,0.72), rgba(15,23,42,0.2))',
+          gap: 10,
+          padding: '12px 12px 10px',
+          borderBottom: '1px solid rgba(255,255,255,0.09)',
+          background: 'linear-gradient(180deg, rgba(15,23,42,0.84), rgba(7,12,22,0.42))',
+          boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08)',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 0 }}>
               <span style={{ color: '#1edce0', display: 'flex', flexShrink: 0 }}><IconControls /></span>
-              <span style={{ color: 'var(--text-primary)', fontSize: 13, fontWeight: 800, letterSpacing: 0 }}>Controls</span>
+              <span style={{ display: 'grid', gap: 1, minWidth: 0 }}>
+                <span style={{ color: 'var(--text-primary)', fontSize: 13, fontWeight: 820, letterSpacing: 0, lineHeight: 1.1 }}>Controls</span>
+                <span style={{ color: 'rgba(203,213,225,0.52)', fontSize: 10, fontWeight: 720, lineHeight: 1.1, textTransform: 'uppercase' }}>{activeLabel}</span>
+              </span>
             </div>
             <button
               type="button"
@@ -64,7 +76,12 @@ export function ViewerControlsDrawer({
       )}
 
       {!showChrome && (
-        <div style={{ flexShrink: 0, padding: '8px 10px 6px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+        <div style={{
+          flexShrink: 0,
+          padding: '9px 10px 7px',
+          borderBottom: '1px solid rgba(255,255,255,0.08)',
+          background: 'linear-gradient(180deg, rgba(15,23,42,0.42), rgba(3,7,18,0.08))',
+        }}>
           <ModeTabs activeMode={activeMode} onModeChange={onModeChange} />
         </div>
       )}
@@ -90,7 +107,15 @@ function ModeTabs({ activeMode, onModeChange }: { activeMode: ViewerControlMode;
     <div
       role="group"
       aria-label="Viewer control modes"
-      style={{ display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: 5 }}
+      style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
+        gap: 6,
+        padding: 4,
+        border: '1px solid rgba(255,255,255,0.07)',
+        borderRadius: 8,
+        background: 'rgba(2,6,23,0.44)',
+      }}
     >
       <ControlModeTab icon={<IconLook />} label="Look" active={activeMode === 'look'} onClick={() => onModeChange('look')} />
       <ControlModeTab icon={<IconSurface />} label="Surface" active={activeMode === 'surface'} onClick={() => onModeChange('surface')} />
@@ -127,19 +152,27 @@ function ControlModeTab({
       className={`lupine-btn ${active ? 'active' : ''}`}
       style={{
         minWidth: 0,
-        height: 40,
+        minHeight: 42,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        gap: 6,
+        gap: 7,
         padding: '4px 6px',
         fontSize: 10,
-        fontWeight: 760,
+        fontWeight: 800,
         lineHeight: 1,
         letterSpacing: 0,
+        borderRadius: 7,
+        boxShadow: active ? undefined : 'none',
       }}
     >
-      <span style={{ display: 'flex', width: 18, height: 18, flexShrink: 0 }}>{icon}</span>
+      <span style={{
+        display: 'flex',
+        width: 18,
+        height: 18,
+        flexShrink: 0,
+        color: active ? '#1edce0' : 'rgba(226,232,240,0.68)',
+      }}>{icon}</span>
       <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{label}</span>
     </button>
   );

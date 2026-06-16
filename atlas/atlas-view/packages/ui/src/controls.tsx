@@ -128,7 +128,7 @@ export function ToolButton({ icon, label, active, onClick }: ToolButtonProps) {
         minWidth: 0,
         padding: compact ? '8px 4px' : '0 16px',
         fontSize: compact ? 11 : 14,
-        letterSpacing: '0.01em',
+        letterSpacing: 0,
         lineHeight: 1.1,
         flexShrink: 1,
         touchAction: 'manipulation',
@@ -183,8 +183,10 @@ export function CameraPresetButton({ label, active, onClick, title }: CameraPres
         width: 42,
         height: 34,
         fontSize: 11,
-        fontWeight: 700,
-        letterSpacing: '0.02em',
+        fontWeight: 820,
+        letterSpacing: 0,
+        fontFamily: 'var(--font-mono)',
+        fontVariantNumeric: 'tabular-nums',
       }}
     >
       {label}

@@ -115,7 +115,7 @@ try {
     if (!report.viewerProbe?.first?.stats?.nonBlank) failures.push('viewer canvas crop looked blank');
     if (!report.viewerProbe?.motion?.motionLikely) failures.push('viewer canvas did not visibly respond to camera drag');
   }
-  await page.getByRole('button', { name: /^Controls$/ }).click();
+  await page.getByRole('button', { name: /^Controls$/ }).click({ noWaitAfter: true });
 
   const drawer = page.getByTestId('viewer-controls-drawer');
   await drawer.waitFor({ state: 'visible', timeout: 10000 });

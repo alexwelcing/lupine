@@ -37,13 +37,17 @@ export function DockableWindow({
   minH = 240,
   snapDistance = SNAP_DISTANCE,
 }: DockableWindowProps) {
+  const initialY = initial?.y ?? 88;
+  const initialH = initial?.h ?? Math.min(window.innerHeight - 140, 720);
+  const maxInitialH = Math.max(minH, window.innerHeight - initialY - 72);
+
   const [pos, setPos] = useState(() => ({
     x: initial?.x ?? Math.max(16, window.innerWidth - (initial?.w ?? 380) - 24),
-    y: initial?.y ?? 88,
+    y: initialY,
   }));
   const [size, setSize] = useState(() => ({
     w: Math.max(minW, initial?.w ?? 380),
-    h: Math.max(minH, initial?.h ?? Math.min(window.innerHeight - 140, 720)),
+    h: Math.max(minH, Math.min(initialH, maxInitialH)),
   }));
   const sizeRef = useRef(size);
   const [collapsed, setCollapsed] = useState(false);
@@ -165,7 +169,7 @@ export function DockableWindow({
           gap: 8,
           padding: '8px 14px',
           fontSize: 12,
-          letterSpacing: '0.08em',
+          letterSpacing: 0,
         }}
         title={`Expand ${title}`}
       >
@@ -217,11 +221,11 @@ export function DockableWindow({
           <div style={{ minWidth: 0, display: 'flex', flexDirection: 'column', gap: 1 }}>
             <span style={{
               fontSize: 12, fontWeight: 780,
-              textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--text-primary)',
+              textTransform: 'uppercase', letterSpacing: 0, color: 'var(--text-primary)',
               lineHeight: 1.1,
             }}>{title}</span>
             {subtitle && (
-              <span style={{ fontSize: 9, color: 'var(--text-dim)', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              <span style={{ fontSize: 9, color: 'var(--text-dim)', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: 0 }}>
                 {subtitle}
               </span>
             )}

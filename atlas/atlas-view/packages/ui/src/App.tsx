@@ -1017,10 +1017,12 @@ export default function App() {
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           padding: isMobile ? 'env(safe-area-inset-top) 12px 0' : '0 16px',
           margin: file ? (isMobile ? '10px 10px 0' : '14px 16px 0') : 0,
+          borderRadius: file ? 8 : 0,
           borderBottom: file ? 'none' : '1px solid var(--border-subtle)',
           background: file ? undefined : 'var(--bg-glass)',
           backdropFilter: file ? undefined : 'blur(12px)',
           WebkitBackdropFilter: file ? undefined : 'blur(12px)',
+          boxShadow: file ? '0 18px 48px rgba(0,0,0,0.26), inset 0 1px 0 rgba(255,255,255,0.08)' : undefined,
           zIndex: 200,
         }}
       >
@@ -1058,10 +1060,32 @@ export default function App() {
               <div className="lupine-divider" style={{ display: isMobile ? 'none' : 'block' }} />
 
               <span style={{
-                fontSize: 13, color: 'var(--text-muted)',
-                maxWidth: isMobile ? 80 : 260, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'
+                display: 'grid',
+                gap: 1,
+                minWidth: 0,
+                maxWidth: isMobile ? 92 : 300,
               }}>
-                {file.name}
+                <span style={{
+                  fontSize: 10,
+                  color: 'rgba(203,213,225,0.48)',
+                  fontWeight: 760,
+                  lineHeight: 1,
+                  textTransform: 'uppercase',
+                  letterSpacing: 0,
+                }}>
+                  Loaded
+                </span>
+                <span style={{
+                  fontSize: 13,
+                  color: 'var(--text-primary)',
+                  fontWeight: 650,
+                  lineHeight: 1.2,
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                }}>
+                  {file.name}
+                </span>
               </span>
               <button
                 onClick={() => {
@@ -1470,15 +1494,23 @@ export default function App() {
               pointerEvents: 'none',
             }}>
               <div style={{
-                background: 'rgba(0,0,0,0.4)',
-                borderRadius: 20,
-                padding: '6px 14px',
-                fontSize: 13,
-                fontWeight: 500,
-                color: 'white',
-                backdropFilter: 'blur(8px)',
+                display: 'inline-flex',
+                alignItems: 'baseline',
+                gap: 7,
+                background: 'linear-gradient(180deg, rgba(15,23,42,0.76), rgba(3,7,18,0.58))',
+                border: '1px solid rgba(255,255,255,0.10)',
+                borderRadius: 8,
+                padding: '7px 10px',
+                fontSize: 12,
+                fontWeight: 700,
+                color: '#f8fafc',
+                fontVariantNumeric: 'tabular-nums',
+                backdropFilter: 'blur(12px)',
+                WebkitBackdropFilter: 'blur(12px)',
+                boxShadow: '0 12px 32px rgba(0,0,0,0.26), inset 0 1px 0 rgba(255,255,255,0.08)',
               }}>
-                Frame {frame + 1} / {totalFrames}
+                <span style={{ color: 'rgba(203,213,225,0.56)', fontSize: 10, textTransform: 'uppercase' }}>Frame</span>
+                {frame + 1} / {totalFrames}
               </div>
             </div>
           )}
@@ -1489,11 +1521,19 @@ export default function App() {
           {file && (
             <div style={{
               position: 'absolute',
-              top: file ? 88 : 72,
-              left: 18,
-              display: 'flex',
+              top: file ? (isMobile ? 72 : 88) : 72,
+              left: isMobile ? 12 : 18,
+              display: 'grid',
               flexDirection: 'column',
-              gap: 8,
+              alignItems: 'start',
+              gap: 6,
+              padding: 5,
+              border: '1px solid rgba(255,255,255,0.10)',
+              borderRadius: 8,
+              background: 'linear-gradient(180deg, rgba(15,23,42,0.70), rgba(3,7,18,0.56))',
+              backdropFilter: 'blur(16px)',
+              WebkitBackdropFilter: 'blur(16px)',
+              boxShadow: '0 18px 48px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.08)',
               zIndex: 150,
             }}>
               <button
@@ -1505,12 +1545,26 @@ export default function App() {
                 aria-label="Camera view"
                 aria-expanded={viewMenuOpen}
                 className={`lupine-btn compact icon-only ${viewMenuOpen ? 'active' : ''}`}
-                style={{ width: 52, height: 36 }}
+                style={{
+                  width: isMobile ? 44 : 48,
+                  height: 36,
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: 11,
+                  fontWeight: 820,
+                }}
               >
                 {cameraPresetLabel}
               </button>
               {viewMenuOpen && (
-                <div className="lupine-glass lupine-glass--menu animate-menu-in">
+                <div
+                  className="lupine-glass lupine-glass--menu animate-menu-in"
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+                    minWidth: 102,
+                    gap: 5,
+                  }}
+                >
                   <CameraPresetButton label="XY" active={cameraPreset === 'top'} onClick={() => { setCameraPreset('top'); setViewMenuOpen(false); }} title="Top view (XY plane)" />
                   <CameraPresetButton label="XZ" active={cameraPreset === 'side'} onClick={() => { setCameraPreset('side'); setViewMenuOpen(false); }} title="Side view (XZ plane)" />
                   <CameraPresetButton label="YZ" active={cameraPreset === 'front'} onClick={() => { setCameraPreset('front'); setViewMenuOpen(false); }} title="Front view (YZ plane)" />
@@ -1529,7 +1583,7 @@ export default function App() {
                 aria-pressed={studyLensOpen}
                 className={`lupine-btn compact ${studyLensOpen ? 'active' : ''}`}
                 style={{
-                  width: isMobile ? 44 : 52,
+                  width: isMobile ? 44 : 48,
                   height: 36,
                   padding: 0,
                   display: 'grid',
@@ -1545,11 +1599,18 @@ export default function App() {
           {file && !showPotentialBrowser && (
             <div style={{
               position: 'absolute',
-              top: file ? 88 : 72,
-              right: 18,
+              top: file ? (isMobile ? 72 : 88) : 72,
+              right: isMobile ? 12 : 18,
               display: 'flex',
               justifyContent: 'flex-end',
               gap: 8,
+              padding: 5,
+              border: '1px solid rgba(255,255,255,0.10)',
+              borderRadius: 8,
+              background: 'linear-gradient(180deg, rgba(15,23,42,0.70), rgba(3,7,18,0.56))',
+              backdropFilter: 'blur(16px)',
+              WebkitBackdropFilter: 'blur(16px)',
+              boxShadow: '0 18px 48px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.08)',
               zIndex: 150,
             }}>
               <button
@@ -1560,17 +1621,17 @@ export default function App() {
                 onClick={toggleControlsPanel}
                 className={`lupine-btn ${activePanel === 'studio' ? 'active' : ''}`}
                 style={{
-                  minWidth: 116,
-                  height: 42,
+                  minWidth: isMobile ? 44 : 118,
+                  height: 38,
                   gap: 8,
-                  padding: '0 14px',
-                  fontSize: 13,
-                  fontWeight: 700,
+                  padding: isMobile ? '0 10px' : '0 14px',
+                  fontSize: isMobile ? 0 : 13,
+                  fontWeight: 760,
                   letterSpacing: 0,
                 }}
               >
                 <IconControls />
-                Controls
+                {!isMobile && <span>Controls</span>}
               </button>
             </div>
           )}
