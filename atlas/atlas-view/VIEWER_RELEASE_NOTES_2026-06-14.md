@@ -48,6 +48,9 @@
   - Now prints the same learning loop, practice checks, and common traps as the live Study Lens so the exported sheet matches the configured learning view.
   - Now prints Data Provenance, Materials Science Frame, characterization checks, and source-column interpretation notes.
 - OMol25 is ready for the same functional-group language with provenance intact: the offline indexer derives method-screen tags from real coordinates, the OMol provider can facet and filter by those tags, and the OMol collection page labels them as a geometry screen rather than OMol25 source bond topology.
+- UI polish pass:
+  - Study Lens now has a clearer first-viewport hierarchy, stronger practice-check affordances, and safer wrapping for long course labels.
+  - OMol25 now reads more like a serious data browser, with steadier typography, fixed-size periodic-table labels, dashboard-like stats, and refined filter/result chips.
 
 ## Why It Matters
 

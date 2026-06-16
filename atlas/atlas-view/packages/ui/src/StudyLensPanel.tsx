@@ -60,7 +60,7 @@ export function StudyLensPanel({
         top: compact ? 176 : 180,
         left: compact ? 12 : 18,
         right: compact ? 12 : 'auto',
-        width: compact ? 'auto' : 376,
+        width: compact ? 'auto' : 392,
         maxHeight: compact ? '58vh' : 'calc(100vh - 200px)',
       }}
     >
@@ -450,9 +450,9 @@ const panelStyle: CSSProperties = {
   position: 'absolute',
   zIndex: 155,
   display: 'grid',
-  gap: 13,
+  gap: 14,
   overflowY: 'auto',
-  padding: 14,
+  padding: 16,
   color: 'rgba(235,245,255,0.94)',
   background: 'linear-gradient(180deg, rgba(9,14,24,0.94), rgba(5,8,15,0.9))',
   border: '1px solid rgba(125,211,252,0.2)',
@@ -515,10 +515,11 @@ const summaryGridStyle: CSSProperties = {
 const metricStyle: CSSProperties = {
   display: 'grid',
   gap: 2,
-  padding: '8px 9px',
+  minHeight: 52,
+  padding: '9px 10px',
   border: '1px solid rgba(148,163,184,0.16)',
   borderRadius: 8,
-  background: 'rgba(15,23,42,0.58)',
+  background: 'linear-gradient(180deg, rgba(15,23,42,0.68), rgba(15,23,42,0.48))',
 };
 
 const metricLabelStyle: CSSProperties = {
@@ -534,6 +535,7 @@ const metricValueStyle: CSSProperties = {
   fontSize: 14,
   lineHeight: 1.2,
   overflowWrap: 'anywhere',
+  fontVariantNumeric: 'tabular-nums',
 };
 
 const sectionStyle: CSSProperties = {
@@ -545,7 +547,7 @@ const sectionStyle: CSSProperties = {
 const truthSectionStyle: CSSProperties = {
   display: 'grid',
   gap: 8,
-  padding: '9px 10px',
+  padding: '10px',
   border: '1px solid rgba(251,191,36,0.22)',
   borderRadius: 8,
   background: 'linear-gradient(180deg, rgba(53,38,13,0.38), rgba(15,23,42,0.32))',
@@ -559,7 +561,7 @@ const truthListStyle: CSSProperties = {
 const truthRowStyle: CSSProperties = {
   display: 'grid',
   gap: 3,
-  padding: '7px 8px',
+  padding: '8px 9px',
   border: '1px solid rgba(251,191,36,0.14)',
   borderRadius: 8,
   background: 'rgba(15,23,42,0.44)',
@@ -778,7 +780,9 @@ const learningNoteStyle: CSSProperties = {
 
 const practiceSectionStyle: CSSProperties = {
   ...sectionStyle,
-  borderColor: 'rgba(94,234,212,0.2)',
+  padding: '10px',
+  border: '1px solid rgba(94,234,212,0.18)',
+  borderRadius: 8,
   background: 'linear-gradient(180deg, rgba(12,36,36,0.42), rgba(15,23,42,0.36))',
 };
 
@@ -817,18 +821,21 @@ const practiceAnswerStyle: CSSProperties = {
 
 const practiceActionsStyle: CSSProperties = {
   display: 'flex',
+  flexWrap: 'wrap',
   gap: 8,
 };
 
 const practiceButtonStyle: CSSProperties = {
+  minHeight: 34,
   border: '1px solid rgba(94,234,212,0.34)',
   borderRadius: 8,
-  background: 'rgba(20,184,166,0.18)',
+  background: 'linear-gradient(180deg, rgba(20,184,166,0.24), rgba(15,118,110,0.16))',
   color: '#ccfbf1',
-  padding: '7px 9px',
+  padding: '7px 11px',
   fontSize: 12,
   fontWeight: 800,
   cursor: 'pointer',
+  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08)',
 };
 
 const practiceGhostButtonStyle: CSSProperties = {
@@ -857,7 +864,12 @@ const sectionDetailStyle: CSSProperties = {
   color: 'rgba(148,163,184,0.72)',
   fontSize: 11,
   lineHeight: 1.25,
-  whiteSpace: 'nowrap',
+  minWidth: 0,
+  overflow: 'hidden',
+  overflowWrap: 'anywhere',
+  textAlign: 'right',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'normal',
 };
 
 const compositionStyle: CSSProperties = {

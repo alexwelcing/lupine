@@ -314,9 +314,9 @@ function PeriodicButton({
       title={present ? `${cell.name} — ${count.toLocaleString()} structures` : `${cell.name} — not in this slice`}
       aria-pressed={active}
     >
-      <span style={{ fontSize: 'clamp(8px, 1.1vw, 13px)', fontWeight: 800, lineHeight: 1 }}>{cell.symbol}</span>
+      <span style={{ fontSize: 10, fontWeight: 820, lineHeight: 1 }}>{cell.symbol}</span>
       {present && (
-        <span style={{ fontSize: 'clamp(6px, 0.7vw, 9px)', opacity: 0.85, marginTop: 1 }}>
+        <span style={{ fontSize: 7, opacity: 0.86, marginTop: 1, fontVariantNumeric: 'tabular-nums' }}>
           {count >= 1000 ? `${Math.round(count / 1000)}k` : count}
         </span>
       )}
@@ -326,39 +326,49 @@ function PeriodicButton({
 
 function Stat({ label, value, subtle }: { label: string; value: string; subtle?: boolean }) {
   return (
-    <div style={{ minWidth: 0 }}>
-      <div style={{ fontSize: subtle ? 12 : 18, fontWeight: 800, color: subtle ? '#94a3b8' : '#f1f5f9', lineHeight: 1.2 }}>{value}</div>
-      <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.06em', marginTop: 2 }}>{label}</div>
+    <div style={statStyle}>
+      <div style={{ fontSize: subtle ? 12 : 19, fontWeight: 820, color: subtle ? '#94a3b8' : '#f1f5f9', lineHeight: 1.15, fontVariantNumeric: 'tabular-nums' }}>{value}</div>
+      <div style={statLabelStyle}>{label}</div>
     </div>
   );
 }
 
 // ─── Styles ───
-const wrapStyle: CSSProperties = { maxWidth: 1100, margin: '0 auto', padding: '0 24px', display: 'flex', flexDirection: 'column', gap: 24 };
+const wrapStyle: CSSProperties = { maxWidth: 1120, margin: '0 auto', padding: '0 24px', display: 'flex', flexDirection: 'column', gap: 26 };
 const mastheadStyle: CSSProperties = {
-  background: 'linear-gradient(135deg, rgba(52,211,153,0.08), rgba(13,17,23,0.4))',
-  border: '1px solid rgba(52,211,153,0.25)', borderRadius: 12, padding: '20px 22px',
+  background: 'linear-gradient(135deg, rgba(52,211,153,0.11), rgba(13,17,23,0.52))',
+  border: '1px solid rgba(52,211,153,0.28)', borderRadius: 12, padding: '22px 24px',
   display: 'flex', flexDirection: 'column', gap: 12,
+  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.05), 0 18px 46px rgba(0,0,0,0.22)',
 };
 const kicker: CSSProperties = { fontSize: 11, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: ACCENT };
-const titleStyle: CSSProperties = { margin: 0, fontSize: 26, fontWeight: 800, color: '#f8fafc', fontFamily: 'Space Grotesk, sans-serif' };
+const titleStyle: CSSProperties = { margin: 0, fontSize: 28, fontWeight: 820, color: '#f8fafc', fontFamily: 'Space Grotesk, sans-serif', lineHeight: 1.08, textWrap: 'balance' };
 const pill: CSSProperties = { padding: '2px 9px', borderRadius: 100, fontSize: 11, fontWeight: 800, color: ACCENT, background: 'rgba(52,211,153,0.12)', border: '1px solid rgba(52,211,153,0.4)' };
-const leadStyle: CSSProperties = { margin: 0, fontSize: 13, lineHeight: 1.55, color: '#94a3b8', maxWidth: 760 };
+const leadStyle: CSSProperties = { margin: 0, fontSize: 13, lineHeight: 1.6, color: '#a3b2c7', maxWidth: '72ch', textWrap: 'pretty' };
 const linkStyle: CSSProperties = { color: ACCENT, textDecoration: 'none', fontWeight: 600, whiteSpace: 'nowrap' };
-const statRowStyle: CSSProperties = { display: 'flex', flexWrap: 'wrap', gap: 28, marginTop: 4 };
+const statRowStyle: CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(132px, 1fr))', gap: 10, marginTop: 4 };
+const statStyle: CSSProperties = {
+  minWidth: 0,
+  padding: '10px 11px',
+  border: '1px solid rgba(148,163,184,0.12)',
+  borderRadius: 8,
+  background: 'rgba(2,6,23,0.24)',
+};
+const statLabelStyle: CSSProperties = { fontSize: 10, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.06em', marginTop: 4, lineHeight: 1.2 };
 const errorStyle: CSSProperties = { padding: '12px 14px', borderRadius: 8, background: 'rgba(248,113,113,0.08)', border: '1px solid rgba(248,113,113,0.3)', color: '#fca5a5', fontSize: 12 };
 const sectionHeadStyle: CSSProperties = { display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 12, marginBottom: 10, flexWrap: 'wrap' };
 const sectionTitleStyle: CSSProperties = { fontSize: 13, fontWeight: 700, color: '#e2e8f0', textTransform: 'uppercase', letterSpacing: '0.08em' };
-const sectionHintStyle: CSSProperties = { fontSize: 11, color: '#64748b' };
+const sectionHintStyle: CSSProperties = { fontSize: 11, color: '#718096', lineHeight: 1.35, textWrap: 'pretty' };
 const clearBtn: CSSProperties = { marginLeft: 4, padding: '1px 8px', borderRadius: 100, fontSize: 11, color: ACCENT, background: 'rgba(52,211,153,0.12)', border: '1px solid rgba(52,211,153,0.4)', cursor: 'pointer' };
 const groupRailStyle: CSSProperties = { display: 'flex', flexWrap: 'wrap', gap: 8 };
 const groupButtonStyle = (active: boolean, color: string): CSSProperties => ({
-  display: 'inline-flex', alignItems: 'center', gap: 6, minHeight: 30, maxWidth: '100%',
-  padding: '5px 9px', borderRadius: 6, cursor: 'pointer',
+  display: 'inline-flex', alignItems: 'center', gap: 7, minHeight: 32, maxWidth: '100%',
+  padding: '6px 10px', borderRadius: 8, cursor: 'pointer',
   color: active ? '#07100b' : '#cbd5e1',
-  background: active ? color : 'rgba(255,255,255,0.045)',
-  border: `1px solid ${active ? color : '#1f2937'}`,
+  background: active ? `linear-gradient(180deg, ${color}, color-mix(in srgb, ${color} 82%, #020617))` : 'rgba(255,255,255,0.045)',
+  border: `1px solid ${active ? color : 'rgba(148,163,184,0.14)'}`,
   fontSize: 11, fontWeight: 700,
+  boxShadow: active ? `0 8px 22px color-mix(in srgb, ${color} 24%, transparent)` : 'inset 0 1px 0 rgba(255,255,255,0.04)',
 });
 const groupSwatchStyle = (color: string): CSSProperties => ({
   width: 7, height: 7, borderRadius: 999, flex: '0 0 auto', background: color,
@@ -367,6 +377,7 @@ const groupButtonLabelStyle: CSSProperties = { overflow: 'hidden', textOverflow:
 const groupButtonCountStyle = (active: boolean): CSSProperties => ({
   fontFamily: 'var(--font-mono, ui-monospace), monospace',
   fontSize: 10,
+  fontVariantNumeric: 'tabular-nums',
   color: active ? 'rgba(7,16,11,0.7)' : '#64748b',
 });
 // 18-column periodic grid; cells place themselves via gridColumn/gridRow.
@@ -376,15 +387,18 @@ const tableGridStyle: CSSProperties = {
   gap: 3,
   width: '100%',
 };
-const searchRowStyle: CSSProperties = { display: 'flex', alignItems: 'center', gap: 10, background: 'rgba(255,255,255,0.05)', border: '1px solid #1f2937', borderRadius: 100, padding: '10px 18px' };
+const searchRowStyle: CSSProperties = { display: 'flex', alignItems: 'center', gap: 10, background: 'rgba(255,255,255,0.055)', border: '1px solid rgba(148,163,184,0.16)', borderRadius: 100, padding: '10px 18px', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04)' };
 const searchInputStyle: CSSProperties = { flex: 1, minWidth: 0, background: 'transparent', border: 'none', outline: 'none', color: '#f8fafc', fontSize: 14 };
 const emptyStyle: CSSProperties = { color: '#64748b', fontSize: 13, fontStyle: 'italic', textAlign: 'center', padding: '40px 16px' };
-const gridStyle: CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: 8 };
+const gridStyle: CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(170px, 1fr))', gap: 10 };
 const cardStyle = (busy: boolean): CSSProperties => ({
   position: 'relative', textAlign: 'left', display: 'flex', flexDirection: 'column', gap: 5,
-  padding: '11px 12px', borderRadius: 9, cursor: busy ? 'default' : 'pointer',
-  background: '#0d1117', border: '1px solid #1f2937', opacity: busy ? 0.6 : 1,
-  transition: 'border-color 120ms',
+  minHeight: 132,
+  padding: '12px 13px', borderRadius: 8, cursor: busy ? 'default' : 'pointer',
+  background: 'linear-gradient(180deg, rgba(15,23,42,0.78), rgba(13,17,23,0.92))',
+  border: '1px solid rgba(148,163,184,0.14)', opacity: busy ? 0.6 : 1,
+  transition: 'border-color 120ms, transform 120ms, background 120ms',
+  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.035)',
 });
 const cardTitleStyle: CSSProperties = { color: '#f1f5f9', fontSize: 13, fontWeight: 700, fontFamily: 'var(--font-mono, ui-monospace), monospace', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' };
 const cardSubtitleStyle: CSSProperties = { color: '#64748b', fontSize: 11 };
