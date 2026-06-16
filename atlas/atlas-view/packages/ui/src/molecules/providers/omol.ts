@@ -12,10 +12,14 @@ import type { MoleculeHit, MoleculeProvider, MoleculeQuery } from '../types';
  * Backed by a compact index built one-time from the public OMol25 neutral-
  * validation *structures* (colabfit/OMol25_neutral_validation: 27,697 molecules,
  * real DFT geometry) and hosted on GCS (gs://shed-489901-omol25). Each record
- * carries formula / elements / natoms / HOMO-LUMO gap / total energy / source â€”
- * enough to search and triage â€” and a per-structure `.xyz` ships alongside the
- * index at `structures/xyz/{id}.xyz`, so a hit opens with its TRUE coordinates
+ * carries formula / elements / natoms / HOMO-LUMO gap / total energy / source,
+ * enough to search and triage, plus method-derived functional-group screen tags.
+ * A per-structure `.xyz` ships alongside the index at `structures/xyz/{id}.xyz`,
+ * so a hit opens with its true coordinates
  * through the viewer's normal url -> parseXyzFile path (no resolver guess).
+ * The `.xyz` structures do not carry OMol25 source bond topology; viewer bond
+ * lines must stay labeled as display guides unless a separate provenance artifact
+ * provides source or quantum-analysis bonds.
  *
  * Scaling note: this is the neutral-validation slice (~4 MB index, fetched +
  * filtered client-side like the NIST catalog; geometry fetched on demand, one
@@ -69,7 +73,7 @@ export interface OmolFacets {
   total: number;
   /** Element symbol â†’ number of structures that contain it, descending. */
   elementCounts: Array<{ element: string; count: number }>;
-  /** Organic functional-group counts, when the index has geometry-derived tags. */
+  /** Organic functional-group counts from Lupi's method-derived geometry screen. */
   functionalGroupCounts: Array<{
     id: FunctionalGroupId;
     label: string;
@@ -209,6 +213,7 @@ export const omolProvider: MoleculeProvider = {
       tags: ['omol25', r.src, ...groupLabels, ...groupAliases],
       functionalGroups: functionalGroups.length ? functionalGroups : undefined,
       // Real OMol25 DFT geometry, served as a per-structure .xyz alongside the index.
+      // This load path supplies coordinates, not source bond topology.
       load: { kind: 'url', url: omolStructureUrl(r.id) },
       score:
         q && r.formula.toLowerCase() === q

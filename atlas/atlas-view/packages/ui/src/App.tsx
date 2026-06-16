@@ -1864,7 +1864,7 @@ export default function App() {
             },
             {
               id: 'toggle-bonds',
-              label: 'Toggle bonds',
+              label: 'Toggle bond guides',
               group: 'Scene',
               disabled: !file,
               onSelect: () => useStore.getState().toggleBonds(),

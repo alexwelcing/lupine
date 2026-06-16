@@ -10,8 +10,13 @@ carry positions + atomic_numbers + energy + gap) and emits, for each molecule:
   * a self-contained `.xyz` file (element symbols + Angstrom coordinates) that the
     viewer loads directly via its existing url -> parseXyzFile path, and
   * one row of a compact JSON index (formula/elements/natoms/gap/energy/src plus
-    geometry-derived functionalGroups) that is fetched + filtered client-side,
+    method-derived functionalGroups) that is fetched + filtered client-side,
     exactly like the NIST catalog.
+
+The parquet structures provide real coordinates and scalar metadata, not a source
+bond table. The functional-group labels below are a Lupi geometry screen built
+from covalent-radius neighbor rules; they are useful search/study aids, not
+OMol25 source bond topology or quantum bond orders.
 
 Index row order IS the parquet row order, so record `nval-{i}` always maps to
 `structures/xyz/nval-{i}.xyz` -- the index and the geometry can never drift.

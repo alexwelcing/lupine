@@ -16,6 +16,8 @@ export interface XRStudySummary {
   activeStepPrompt: string;
   priorities: string[];
   practiceLine: string;
+  materialsLine: string;
+  evidenceLine: string;
   spectroscopyCue: string;
   selectedAtomLine: string;
 }
@@ -305,7 +307,7 @@ export function XRControlPanel() {
             <group position={[0.28, 0, 0]}>
               <XRLabel position={[0, 0.18, 0]} text="Structure Tools" fontSize={0.025} color="#aaaaaa" />
 
-              <XRButton position={[0, 0.10, 0]} label="Show Bonds" onClick={toggleBonds} active={showBonds} />
+              <XRButton position={[0, 0.10, 0]} label="Bond Guides" onClick={toggleBonds} active={showBonds} />
 
               <XRLabel position={[0, 0.03, 0]} text={`Atom Scale: ${atomScale.toFixed(1)}x`} fontSize={0.025} color="#aaaaaa" />
               <group position={[0, -0.03, 0]}>
@@ -388,22 +390,29 @@ function XRStudyContent({
       />
       <XRTextBlock
         position={[-0.39, -0.225, 0]}
-        text={`Practice: ${summary.practiceLine}`}
+        text={`Materials: ${summary.materialsLine}`}
         fontSize={0.019}
+        color="#99f6e4"
+        maxWidth={0.56}
+      />
+      <XRTextBlock
+        position={[-0.39, -0.275, 0]}
+        text={`Evidence: ${summary.evidenceLine}`}
+        fontSize={0.018}
         color="#fef3c7"
         maxWidth={0.56}
       />
       <XRTextBlock
-        position={[-0.39, -0.282, 0]}
-        text={`Spectroscopy: ${summary.spectroscopyCue}`}
-        fontSize={0.019}
-        color="#dbeafe"
+        position={[-0.39, -0.325, 0]}
+        text={`Practice: ${summary.practiceLine}`}
+        fontSize={0.018}
+        color="#fef3c7"
         maxWidth={0.56}
       />
       <XRTextBlock
-        position={[-0.39, -0.34, 0]}
+        position={[-0.39, -0.368, 0]}
         text={summary.selectedAtomLine}
-        fontSize={0.018}
+        fontSize={0.017}
         color="#fde68a"
         maxWidth={0.76}
       />
@@ -439,6 +448,8 @@ export function buildXRStudySummary(facts: MoleculeStudyFacts, stepIndex = 0): X
     practiceLine: companion.practiceCards[0]
       ? `${shorten(companion.practiceCards[0].prompt, 70)} Check: ${shorten(companion.practiceCards[0].answer, 54)}`
       : 'Make one prediction before changing the view.',
+    materialsLine: `${facts.materialsCompanion.courseUnit}: ${shorten(facts.materialsCompanion.curriculumAxes[0]?.prompt ?? facts.materialsCompanion.instructorFrame, 88)}`,
+    evidenceLine: `${facts.bondInfo.summary}; ${facts.propertyStats.length ? 'source scalar columns only' : 'no source scalar columns'}`,
     spectroscopyCue: companion.spectroscopyChecks[0]
       ? `${companion.spectroscopyChecks[0].signal}: ${shorten(companion.spectroscopyChecks[0].reason, 90)}`
       : 'No first-pass cue attached yet.',

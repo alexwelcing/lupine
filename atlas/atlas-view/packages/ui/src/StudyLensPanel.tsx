@@ -10,6 +10,11 @@ import type {
   OchemReasoningStep,
   OchemSpectroscopyCheck,
 } from './ochemCourseCompanion';
+import type {
+  MaterialsCharacterizationCheck,
+  MaterialsCurriculumAxis,
+  MaterialsPracticeCard,
+} from './materialsScienceCompanion';
 
 export function StudyLensPanel({
   compact = false,
@@ -94,6 +99,36 @@ export function StudyLensPanel({
           />
         </section>
       )}
+
+      <section style={truthSectionStyle}>
+        <SectionTitle label="Data truth" detail="source vs visual" />
+        <div style={truthListStyle}>
+          <TruthRow label="Bonds" value={facts.dataProvenance.bonds} />
+          <TruthRow label="Properties" value={facts.dataProvenance.properties} />
+        </div>
+      </section>
+
+      <section style={materialsSectionStyle}>
+        <SectionTitle label="Materials lens" detail={facts.materialsCompanion.courseUnit} />
+        <p style={materialsFrameStyle}>{facts.materialsCompanion.instructorFrame}</p>
+        <div style={materialsAxisGridStyle}>
+          {facts.materialsCompanion.curriculumAxes.map(axis => (
+            <MaterialsAxisCard key={axis.axis} axis={axis} />
+          ))}
+        </div>
+      </section>
+
+      <section style={sectionStyle}>
+        <SectionTitle label="Materials checks" detail="evidence first" />
+        <div style={materialsCheckListStyle}>
+          {facts.materialsCompanion.characterizationChecks.slice(0, 3).map(check => (
+            <MaterialsCheckCard key={check.method} check={check} />
+          ))}
+          {facts.materialsCompanion.practiceCards.slice(0, 1).map(card => (
+            <MaterialsPracticeCardView key={card.prompt} card={card} />
+          ))}
+        </div>
+      </section>
 
       <section style={courseSectionStyle}>
         <SectionTitle label="Course frame" detail={facts.ochemCompanion.courseUnit} />
@@ -231,7 +266,7 @@ export function StudyLensPanel({
             ))}
           </div>
         ) : (
-          <p style={mutedCopyStyle}>No per-atom scalar properties are available in this frame.</p>
+          <p style={mutedCopyStyle}>No source per-atom scalar columns are available in this frame.</p>
         )}
       </section>
     </aside>
@@ -256,6 +291,15 @@ function SectionTitle({ label, detail }: { label: string; detail?: string }) {
   );
 }
 
+function TruthRow({ label, value }: { label: string; value: string }) {
+  return (
+    <article style={truthRowStyle}>
+      <strong>{label}</strong>
+      <p style={truthCopyStyle}>{value}</p>
+    </article>
+  );
+}
+
 function CompositionRow({ item }: { item: ElementStudyFact }) {
   return (
     <div style={compositionRowStyle}>
@@ -264,6 +308,36 @@ function CompositionRow({ item }: { item: ElementStudyFact }) {
       <strong>{item.count.toLocaleString()}</strong>
       <em>{item.percent.toFixed(1)}%</em>
     </div>
+  );
+}
+
+function MaterialsAxisCard({ axis }: { axis: MaterialsCurriculumAxis }) {
+  return (
+    <article style={materialsAxisStyle}>
+      <span style={materialsAxisEyebrowStyle}>{axis.axis}</span>
+      <strong style={materialsAxisTitleStyle}>{axis.label}</strong>
+      <p style={materialsAxisCopyStyle}>{axis.prompt}</p>
+      <em style={materialsAxisNoteStyle}>{axis.mentorNote}</em>
+    </article>
+  );
+}
+
+function MaterialsCheckCard({ check }: { check: MaterialsCharacterizationCheck }) {
+  return (
+    <article style={materialsCheckStyle}>
+      <strong>{check.method}</strong>
+      <p style={materialsCardCopyStyle}>{check.readout}</p>
+    </article>
+  );
+}
+
+function MaterialsPracticeCardView({ card }: { card: MaterialsPracticeCard }) {
+  return (
+    <article style={materialsPracticeStyle}>
+      <strong>{card.prompt}</strong>
+      <p style={materialsCardCopyStyle}>{card.answer}</p>
+      <em style={materialsPracticeWhyStyle}>{card.why}</em>
+    </article>
   );
 }
 
@@ -466,6 +540,139 @@ const sectionStyle: CSSProperties = {
   display: 'grid',
   gap: 8,
   minWidth: 0,
+};
+
+const truthSectionStyle: CSSProperties = {
+  display: 'grid',
+  gap: 8,
+  padding: '9px 10px',
+  border: '1px solid rgba(251,191,36,0.22)',
+  borderRadius: 8,
+  background: 'linear-gradient(180deg, rgba(53,38,13,0.38), rgba(15,23,42,0.32))',
+};
+
+const truthListStyle: CSSProperties = {
+  display: 'grid',
+  gap: 7,
+};
+
+const truthRowStyle: CSSProperties = {
+  display: 'grid',
+  gap: 3,
+  padding: '7px 8px',
+  border: '1px solid rgba(251,191,36,0.14)',
+  borderRadius: 8,
+  background: 'rgba(15,23,42,0.44)',
+  color: 'rgba(254,243,199,0.86)',
+  fontSize: 11,
+  lineHeight: 1.38,
+};
+
+const truthCopyStyle: CSSProperties = {
+  margin: 0,
+  textWrap: 'pretty',
+};
+
+const materialsSectionStyle: CSSProperties = {
+  display: 'grid',
+  gap: 9,
+  padding: '10px 10px 11px',
+  border: '1px solid rgba(45,212,191,0.2)',
+  borderRadius: 8,
+  background: 'linear-gradient(180deg, rgba(5,46,46,0.46), rgba(15,23,42,0.4))',
+};
+
+const materialsFrameStyle: CSSProperties = {
+  margin: 0,
+  color: 'rgba(204,251,241,0.84)',
+  fontSize: 12,
+  lineHeight: 1.52,
+  textWrap: 'pretty',
+};
+
+const materialsAxisGridStyle: CSSProperties = {
+  display: 'grid',
+  gap: 8,
+};
+
+const materialsAxisStyle: CSSProperties = {
+  display: 'grid',
+  gap: 4,
+  padding: '8px 9px',
+  border: '1px solid rgba(45,212,191,0.16)',
+  borderRadius: 8,
+  background: 'rgba(15,23,42,0.45)',
+};
+
+const materialsAxisEyebrowStyle: CSSProperties = {
+  color: '#5eead4',
+  fontSize: 10,
+  fontWeight: 850,
+  letterSpacing: 0,
+  textTransform: 'uppercase',
+};
+
+const materialsAxisTitleStyle: CSSProperties = {
+  color: '#f8fafc',
+  fontSize: 12,
+  lineHeight: 1.24,
+};
+
+const materialsAxisCopyStyle: CSSProperties = {
+  margin: 0,
+  color: 'rgba(203,213,225,0.76)',
+  fontSize: 12,
+  lineHeight: 1.42,
+  textWrap: 'pretty',
+};
+
+const materialsAxisNoteStyle: CSSProperties = {
+  color: 'rgba(153,246,228,0.72)',
+  fontSize: 11,
+  fontStyle: 'normal',
+  lineHeight: 1.36,
+};
+
+const materialsCheckListStyle: CSSProperties = {
+  display: 'grid',
+  gap: 8,
+};
+
+const materialsCheckStyle: CSSProperties = {
+  display: 'grid',
+  gap: 4,
+  padding: '8px 9px',
+  border: '1px solid rgba(94,234,212,0.16)',
+  borderRadius: 8,
+  background: 'rgba(15,23,42,0.44)',
+  color: 'rgba(204,251,241,0.9)',
+  fontSize: 12,
+  lineHeight: 1.4,
+};
+
+const materialsPracticeStyle: CSSProperties = {
+  display: 'grid',
+  gap: 4,
+  padding: '8px 9px',
+  border: '1px solid rgba(251,191,36,0.18)',
+  borderRadius: 8,
+  background: 'rgba(120,53,15,0.16)',
+  color: 'rgba(254,243,199,0.9)',
+  fontSize: 12,
+  lineHeight: 1.4,
+};
+
+const materialsCardCopyStyle: CSSProperties = {
+  margin: 0,
+  textWrap: 'pretty',
+};
+
+const materialsPracticeWhyStyle: CSSProperties = {
+  color: 'rgba(253,230,138,0.72)',
+  fontSize: 11,
+  fontStyle: 'normal',
+  lineHeight: 1.36,
+  textWrap: 'pretty',
 };
 
 const courseSectionStyle: CSSProperties = {

@@ -14,12 +14,12 @@ import { FUNCTIONAL_GROUP_BY_ID, type FunctionalGroupId } from '../organicFuncti
  *    for THIS validation slice vs the full ~83M-system dataset;
  *  - an interactive periodic table where each present element shows its count in
  *    the slice; clicking AND-filters chemical space;
- *  - a system-size band + formula search;
+ *  - a method-derived functional-group screen + formula search;
  *  - results load through the standard loadMoleculeHit() path.
  *
  * Every facet is derived from the real index (omolFacets) — no invented fields.
- * The neutral-validation slice carries no per-record gap and one internal source
- * id, so neither is surfaced.
+ * The neutral-validation slice carries no source bond topology, no per-record
+ * gap, and one internal source id, so those are not surfaced as source truth.
  */
 
 const ACCENT = '#34d399'; // OMol25 green (matches the source badge elsewhere)
@@ -163,11 +163,11 @@ export function OmolCollection() {
       {groupFacets.length > 0 && (
         <section>
           <div style={sectionHeadStyle}>
-            <span style={sectionTitleStyle}>Functional groups</span>
+            <span style={sectionTitleStyle}>Functional group screen</span>
             <span style={sectionHintStyle}>
               {selectedGroups.length > 0
                 ? <button onClick={() => setSelectedGroups([])} style={clearBtn}>clear {selectedGroups.length}</button>
-                : 'Counts come from geometry-derived OMol25 tags.'}
+                : 'Lupi geometry screen; not OMol25 source bond topology.'}
             </span>
           </div>
           <div style={groupRailStyle}>

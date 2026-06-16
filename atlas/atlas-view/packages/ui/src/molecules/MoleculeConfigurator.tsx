@@ -11,13 +11,13 @@ import { ALL_EXAMPLES, FEATURED_IDS, type GalleryExample } from '../landing/shar
  * loads the chosen catalog molecule (?sim=) and applies the request via the real
  * viewer MCP bridge once the molecule is on screen.
  *
- * Flow: Molecule  →  Color  →  Bonds  →  Size  →  Review & launch.
+ * Flow: Molecule  →  Color  →  Guides  →  Size  →  Review & launch.
  */
 
 type Step = 'molecule' | 'color' | 'bonds' | 'size' | 'review';
 const STEP_ORDER: Step[] = ['molecule', 'color', 'bonds', 'size', 'review'];
 const STEP_LABEL: Record<Step, string> = {
-  molecule: 'Molecule', color: 'Color', bonds: 'Bonds', size: 'Size', review: 'Review',
+  molecule: 'Molecule', color: 'Color', bonds: 'Guides', size: 'Size', review: 'Review',
 };
 
 type ColorChoice = 'element' | 'property' | 'botanical' | 'uniform';
@@ -229,10 +229,10 @@ export function MoleculeConfigurator() {
 
           {step === 'bonds' && (
             <ChoiceGroup
-              caption="Show bonds between atoms?"
+              caption="Show visual bond guides?"
               options={[
-                { id: 'off', label: 'No bonds', hint: 'Atoms only' },
-                { id: 'loose', label: 'Loose', hint: 'Generous cutoff (+0.8 Å) — more bonds' },
+                { id: 'off', label: 'No guides', hint: 'Atoms only' },
+                { id: 'loose', label: 'Loose', hint: 'Generous cutoff (+0.8 Å) — more visual links' },
                 { id: 'standard', label: 'Standard', hint: 'Balanced covalent cutoff (+0.45 Å)' },
                 { id: 'tight', label: 'Tight', hint: 'Strict cutoff (+0.15 Å) — only close pairs' },
               ]}

@@ -559,9 +559,9 @@ export function StudioControlDeck({
               </div>
             </ControlGroup>
 
-            <ControlGroup title="Bonds">
+            <ControlGroup title="Bond Guides">
               <div className="lupi-studio-segments">
-                <SegmentButton label={showBonds ? 'Bonds on' : 'Bonds off'} active={showBonds} accent="#1edce0" onClick={toggleBonds} />
+                <SegmentButton label={showBonds ? 'Guides on' : 'Guides off'} active={showBonds} accent="#1edce0" onClick={toggleBonds} />
                 <SegmentButton label="Type" active={bondColorMode === 'type'} accent="#7de9ff" onClick={() => setBondColorMode('type')} />
                 <SegmentButton label="Length" active={bondColorMode === 'length'} accent="#f59e0b" onClick={() => setBondColorMode('length')} />
               </div>

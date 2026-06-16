@@ -504,7 +504,7 @@ export function VisualsPanel({ availableProperties, embedded = false }: { availa
                     format={v => v.toFixed(2)}
                   />
                   <div style={{ fontSize: 10, color: '#64748b', marginTop: 4, fontStyle: 'italic' }}>
-                    Hot atoms emit light. 0 = colormap shading only · 1 = strong glow on high-property sites.
+                    High source-scalar atoms emit light. 0 = colormap shading only · 1 = strong glow on high-value sites.
                   </div>
                 </div>
               )}
@@ -514,7 +514,7 @@ export function VisualsPanel({ availableProperties, embedded = false }: { availa
               </div>
 
               <div style={{ borderTop: '1px solid #1f2937', paddingTop: 12 }}>
-                <OrbitalToggle label="Show Bonds" active={showBonds} onClick={toggleBonds} />
+                <OrbitalToggle label="Show Bond Guides" active={showBonds} onClick={toggleBonds} />
                 {showBonds && (
                   <div style={{ marginTop: 8, display: 'flex', flexDirection: 'column', gap: 8 }}>
                     <WaveformSlider label="Bond Tolerance (Å)" value={bondTolerance} min={0.0} max={1.5} step={0.05} onChange={setBondTolerance} format={v => v.toFixed(2)} />

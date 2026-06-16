@@ -256,7 +256,7 @@ export function FigureExportPanel({ showCloseButton = true }: { showCloseButton?
           const visualSnapshotDataUrl = await blobToDataUrl(blob);
           const html = renderStudySheetHtml(facts, {
             visualSnapshotDataUrl,
-            visualCaption: 'Rendered from the active Lupi camera, atom colors, materials, bonds, and background at export time.',
+            visualCaption: 'Rendered from the active Lupi camera, atom colors, material style, optional visual bond guides, and background at export time. Bond guides are not source topology unless the data provenance section says source bonds exist.',
           });
           openStudySheetWindow(html, filename, setStatus);
         } catch {

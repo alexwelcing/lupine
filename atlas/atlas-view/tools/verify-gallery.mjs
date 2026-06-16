@@ -12,6 +12,7 @@
  *   5. Domain filter narrows the grid and sets aria-pressed.
  *   6. Clicking a card loads its dataset (store.activeCardId + file).
  *   7. The NIST Potentials tab renders the PotentialBrowser.
+ *   8. The OMol25 tab labels functional-group facets as method-derived screens.
  *
  * Usage:
  *   node tools/verify-gallery.mjs                 # headless, asserts
@@ -237,6 +238,22 @@ try {
     check('NIST browser shows interactive potentials', potCards > 0, `${potCards} controls`);
   }
   await shot('nist-tab');
+
+  // ── 8. OMol25 provenance copy ──
+  await page.goto(`${targetUrl}?tab=omol25`, { waitUntil: 'domcontentloaded', timeout });
+  await page.locator('#gallery').scrollIntoViewIfNeeded();
+  const omolTab = page.locator('[data-testid="tab-omol25"]');
+  await omolTab.waitFor({ timeout });
+  const omolSelected = await omolTab.getAttribute('aria-selected');
+  check('?tab=omol25 deep-link selects the OMol25 tab', omolSelected === 'true');
+  const omolText = await page.locator('#gallery').innerText({ timeout });
+  check(
+    'OMol25 labels functional-group facets as a geometry screen',
+    omolText.includes('FUNCTIONAL GROUP SCREEN') &&
+      omolText.includes('Lupi geometry screen; not OMol25 source bond topology.') &&
+      /true DFT geometry/i.test(omolText),
+  );
+  await shot('omol25-tab');
 } catch (err) {
   console.log(`[verify-gallery] FATAL ${err.message}`);
   check('harness ran to completion', false, err.message);

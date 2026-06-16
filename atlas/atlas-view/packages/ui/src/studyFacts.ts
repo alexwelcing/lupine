@@ -1,13 +1,13 @@
 import { getElementSpec } from '@atlas/core';
 import type { Frame } from '@atlas/core/types';
-import { detectBondsCpu } from '@atlas/scene/bondDetectCpu';
 import type { LoadedFile } from './store';
 import { ALL_EXAMPLES, publicAssetUrl, type GalleryExample } from './landing/shared';
 import { functionalGroupsForMolecule, type FunctionalGroupConcept } from './organicFunctionalGroups';
 import { buildOchemCourseCompanion, type OchemCourseCompanion } from './ochemCourseCompanion';
-
-const STUDY_BOND_TOLERANCE = 0.45;
-const STUDY_BOND_ESTIMATE_ATOM_LIMIT = 2500;
+import {
+  buildMaterialsScienceCompanion,
+  type MaterialsScienceCompanion,
+} from './materialsScienceCompanion';
 
 export interface ElementStudyFact {
   atomicNumber: number;
@@ -24,6 +24,8 @@ export interface PropertyStudyFact {
   min: number;
   max: number;
   mean: number;
+  source: 'source-column';
+  interpretation: string;
 }
 
 export interface SelectedAtomStudyFact {
@@ -34,6 +36,23 @@ export interface SelectedAtomStudyFact {
   name: string;
   xyz: [number, number, number];
   properties: Array<{ name: string; value: number }>;
+}
+
+export type BondStudySource = 'source' | 'visual-guide' | 'not-shown' | 'missing';
+
+export interface BondStudyFact {
+  summary: string;
+  detail: string;
+  source: BondStudySource;
+  count: number | null;
+  isScientific: boolean;
+}
+
+export interface DataProvenanceFact {
+  coordinates: string;
+  bonds: string;
+  properties: string;
+  curriculum: string;
 }
 
 export interface MoleculeStudyFacts {
@@ -57,8 +76,11 @@ export interface MoleculeStudyFacts {
     z: number;
   };
   bondSummary: string;
+  bondInfo: BondStudyFact;
+  dataProvenance: DataProvenanceFact;
   studyCue: string;
   ochemCompanion: OchemCourseCompanion;
+  materialsCompanion: MaterialsScienceCompanion;
   shareUrl?: string;
 }
 
@@ -90,6 +112,10 @@ export function buildMoleculeStudyFacts({
   const title = galleryExample?.title ?? stripExtension(file.name);
   const functionalGroups = galleryExample ? functionalGroupsForMolecule(galleryExample.id) : [];
   const composition = summarizeComposition(frame);
+  const propertyStats = summarizeProperties(frame);
+  const bondInfo = summarizeBonds(frame, lastBondCount, showBonds);
+  const sourceLabel = inferSourceLabel(file, galleryExample);
+  const bounds = summarizeBounds(frame);
 
   return {
     title,
@@ -99,17 +125,28 @@ export function buildMoleculeStudyFacts({
     frameIndex,
     frameCount: file.trajectory.totalFrames,
     timestep: frame.timestep,
-    sourceLabel: inferSourceLabel(file, galleryExample),
+    sourceLabel,
     sourceUrl: file.sourceUrl,
     galleryExample,
     composition,
     functionalGroups,
-    propertyStats: summarizeProperties(frame),
+    propertyStats,
     selectedAtoms: summarizeSelectedAtoms(frame, selectedAtoms),
-    bounds: summarizeBounds(frame),
-    bondSummary: summarizeBonds(frame, lastBondCount, showBonds),
+    bounds,
+    bondSummary: bondInfo.summary,
+    bondInfo,
+    dataProvenance: buildDataProvenance({ file, frame, sourceLabel, bondInfo, propertyStats }),
     studyCue: buildStudyCue(composition, functionalGroups),
     ochemCompanion: buildOchemCourseCompanion({ title, composition, functionalGroups }),
+    materialsCompanion: buildMaterialsScienceCompanion({
+      title,
+      composition,
+      propertyStats,
+      galleryExample,
+      frameCount: file.trajectory.totalFrames,
+      bounds,
+      bondEvidence: bondInfo,
+    }),
     shareUrl,
   };
 }
@@ -139,12 +176,13 @@ export function findGalleryExample(file: LoadedFile): GalleryExample | null {
 
 export function renderStudySheetHtml(facts: MoleculeStudyFacts, options: StudySheetRenderOptions = {}): string {
   const companion = facts.ochemCompanion;
+  const materials = facts.materialsCompanion;
   const visualSnapshot = options.visualSnapshotDataUrl
     ? `
     <section class="visual">
       <div>
         <h2>Current View</h2>
-        <p>${escapeHtml(options.visualCaption ?? 'This image captures the molecule with the active viewer camera, colors, material, bonds, and background at export time.')}</p>
+        <p>${escapeHtml(options.visualCaption ?? 'This image captures the active viewer camera, atom colors, material style, optional visual bond guides, and background at export time. Visual bond guides are not source bond data unless the provenance section says source bonds exist.')}</p>
       </div>
       <img src="${escapeAttr(options.visualSnapshotDataUrl)}" alt="${escapeAttr(`${facts.title} current Lupi view`)}">
     </section>
@@ -207,6 +245,37 @@ export function renderStudySheetHtml(facts: MoleculeStudyFacts, options: StudySh
       <p>${escapeHtml(trap.correction)}</p>
     </article>
   `).join('');
+  const materialsRows = materials.curriculumAxes.map(axis => `
+    <article class="materials-axis">
+      <strong>${escapeHtml(axis.axis)} / ${escapeHtml(axis.label)}</strong>
+      <p>${escapeHtml(axis.prompt)}</p>
+      <em>${escapeHtml(axis.mentorNote)}</em>
+    </article>
+  `).join('');
+  const materialsCheckRows = materials.characterizationChecks.map(check => `
+    <tr>
+      <td>${escapeHtml(check.method)}</td>
+      <td>${escapeHtml(check.readout)}</td>
+    </tr>
+  `).join('');
+  const materialsPracticeRows = materials.practiceCards.map(card => `
+    <article class="practice-card">
+      <h3>${escapeHtml(card.prompt)}</h3>
+      <p><strong>Check:</strong> ${escapeHtml(card.answer)}</p>
+      <p><strong>Why:</strong> ${escapeHtml(card.why)}</p>
+    </article>
+  `).join('');
+  const provenanceRows = [
+    ['Coordinates', facts.dataProvenance.coordinates],
+    ['Bonds', facts.dataProvenance.bonds],
+    ['Properties', facts.dataProvenance.properties],
+    ['Curriculum', facts.dataProvenance.curriculum],
+  ].map(([label, copy]) => `
+    <article class="provenance-card">
+      <strong>${escapeHtml(label)}</strong>
+      <p>${escapeHtml(copy)}</p>
+    </article>
+  `).join('');
 
   const groupRows = facts.functionalGroups.length
     ? facts.functionalGroups.map(group => `
@@ -240,9 +309,10 @@ export function renderStudySheetHtml(facts: MoleculeStudyFacts, options: StudySh
         <td>${formatNumber(prop.min)}</td>
         <td>${formatNumber(prop.mean)}</td>
         <td>${formatNumber(prop.max)}</td>
+        <td>${escapeHtml(prop.interpretation)}</td>
       </tr>
     `).join('')
-    : '<tr><td colspan="4" class="muted">No per-atom scalar properties were found in this frame.</td></tr>';
+    : '<tr><td colspan="5" class="muted">No source per-atom scalar columns were found in this frame.</td></tr>';
 
   const selectedRows = facts.selectedAtoms.length
     ? facts.selectedAtoms.map(atom => `
@@ -316,19 +386,24 @@ export function renderStudySheetHtml(facts: MoleculeStudyFacts, options: StudySh
     .practice-card { border-color: #99f6e4; }
     .practice-card p, .trap-card p { font-size: 12px; }
     .trap-card { border-color: #fde68a; }
+    .materials-grid, .provenance-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .materials-axis, .provenance-card { border: 1px solid #cbd5e1; border-radius: 8px; background: white; padding: 11px; }
+    .materials-axis strong, .provenance-card strong { color: #0f766e; font-size: 12px; }
+    .materials-axis p, .provenance-card p { font-size: 12px; }
+    .materials-axis em { display: block; color: #475569; font-size: 11px; font-style: normal; line-height: 1.42; }
     .question-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
     ul { margin: 0; padding-left: 18px; }
     li { margin: 0 0 6px; font-size: 12px; }
     @media (max-width: 720px) {
       body { padding: 18px; }
-      .summary, .groups, .visual, .course, .question-grid, .learning-grid, .practice-grid, .trap-grid { grid-template-columns: 1fr; }
+      .summary, .groups, .visual, .course, .question-grid, .learning-grid, .practice-grid, .trap-grid, .materials-grid, .provenance-grid { grid-template-columns: 1fr; }
       table { display: block; overflow-x: auto; }
     }
     @media print {
       body { padding: 0; background: white; }
       main { max-width: none; }
       .actions { display: none; }
-      section, .group, table, .visual, .step, .priority, .learning-step, .practice-card, .trap-card { break-inside: avoid; }
+      section, .group, table, .visual, .step, .priority, .learning-step, .practice-card, .trap-card, .materials-axis, .provenance-card { break-inside: avoid; }
     }
   </style>
 </head>
@@ -356,6 +431,35 @@ export function renderStudySheetHtml(facts: MoleculeStudyFacts, options: StudySh
     </section>
 
     ${visualSnapshot}
+
+    <section>
+      <h2>Data Provenance</h2>
+      <div class="provenance-grid">${provenanceRows}</div>
+    </section>
+
+    <section>
+      <h2>Materials Science Frame</h2>
+      <div class="course">
+        <div class="course-intro">
+          <strong>${escapeHtml(materials.courseUnit)}</strong>
+          <p>${escapeHtml(materials.instructorFrame)}</p>
+        </div>
+        <div class="materials-grid">${materialsRows}</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Materials Characterization Checks</h2>
+      <table>
+        <thead><tr><th>Check</th><th>Evidence to look for</th></tr></thead>
+        <tbody>${materialsCheckRows}</tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Materials Practice Checks</h2>
+      <div class="practice-grid">${materialsPracticeRows}</div>
+    </section>
 
     <section>
       <h2>University Ochem Frame</h2>
@@ -431,7 +535,7 @@ export function renderStudySheetHtml(facts: MoleculeStudyFacts, options: StudySh
     <section>
       <h2>Frame Properties</h2>
       <table>
-        <thead><tr><th>Property</th><th>Min</th><th>Mean</th><th>Max</th></tr></thead>
+        <thead><tr><th>Source column</th><th>Min</th><th>Mean</th><th>Max</th><th>Interpretation</th></tr></thead>
         <tbody>${propertyRows}</tbody>
       </table>
     </section>
@@ -498,7 +602,16 @@ function summarizeProperties(frame: Frame): PropertyStudyFact[] {
       sum += value;
       count += 1;
     }
-    if (count > 0) rows.push({ name, min, max, mean: sum / count });
+    if (count > 0) {
+      rows.push({
+        name,
+        min,
+        max,
+        mean: sum / count,
+        source: 'source-column',
+        interpretation: 'Computed summary of a loaded source column; physical meaning comes from the file/workflow.',
+      });
+    }
   });
   return rows;
 }
@@ -542,48 +655,42 @@ function summarizeBounds(frame: Frame) {
   };
 }
 
-function summarizeBonds(frame: Frame, lastBondCount: number, showBonds: boolean): string {
-  if (!showBonds) return 'hidden';
+function summarizeBonds(frame: Frame, lastBondCount: number, showBonds: boolean): BondStudyFact {
   const fileBondCount = frame.bonds?.length ? Math.floor(frame.bonds.length / 2) : 0;
-  const count = lastBondCount || fileBondCount;
-  if (count > 0) return `${count.toLocaleString()} inferred`;
-  const estimatedCount = estimateSmallMoleculeBondCount(frame);
-  if (estimatedCount !== null) return `${estimatedCount.toLocaleString()} inferred`;
-  return 'visible (count pending)';
-}
-
-function estimateSmallMoleculeBondCount(frame: Frame): number | null {
-  if (frame.natoms < 2) return 0;
-  if (frame.natoms > STUDY_BOND_ESTIMATE_ATOM_LIMIT) return null;
-  if (!frame.positions || frame.positions.length < frame.natoms * 3) return null;
-  if (!frame.types || frame.types.length < frame.natoms) return null;
-
-  const uniqueTypes = new Set<number>();
-  let maxRadius = 0;
-  for (let i = 0; i < frame.natoms; i++) {
-    const type = frame.types[i];
-    if (!Number.isFinite(type) || uniqueTypes.has(type)) continue;
-    uniqueTypes.add(type);
-    const radius = safeElementSpec(type).radius;
-    if (radius > maxRadius) maxRadius = radius;
+  if (fileBondCount > 0) {
+    return {
+      summary: `${fileBondCount.toLocaleString()} source bonds`,
+      detail: 'The loaded frame provides explicit bond pairs, so this count comes from source topology.',
+      source: 'source',
+      count: fileBondCount,
+      isScientific: true,
+    };
   }
-  if (uniqueTypes.size === 0) return null;
-
-  const maxType = Math.max(...uniqueTypes, 0);
-  const covalentRadii = new Float32Array(maxType + 1);
-  uniqueTypes.forEach(type => {
-    covalentRadii[type] = safeElementSpec(type).radius;
-  });
-
-  const maxBondLength = Math.min(6, 2 * (maxRadius || 1.4) + STUDY_BOND_TOLERANCE + 0.5);
-  return detectBondsCpu({
-    positions: frame.positions,
-    types: frame.types,
-    natoms: frame.natoms,
-    maxBondLength,
-    covalentRadii,
-    tolerance: STUDY_BOND_TOLERANCE,
-  }).count;
+  if (!showBonds) {
+    return {
+      summary: 'Not shown',
+      detail: 'The source frame does not provide explicit bond pairs, and bond rendering is currently off.',
+      source: 'not-shown',
+      count: null,
+      isScientific: false,
+    };
+  }
+  if (lastBondCount > 0) {
+    return {
+      summary: 'Visual guide only',
+      detail: `The viewer is drawing ${lastBondCount.toLocaleString()} proximity links from element radii and tolerance. These are not source bonds, bond orders, or measured topology.`,
+      source: 'visual-guide',
+      count: lastBondCount,
+      isScientific: false,
+    };
+  }
+  return {
+    summary: 'No source bonds',
+    detail: 'The loaded frame has atom positions but no explicit bond table. Lupi does not invent a bond count for study facts.',
+    source: 'missing',
+    count: null,
+    isScientific: false,
+  };
 }
 
 function buildStudyCue(composition: ElementStudyFact[], groups: FunctionalGroupConcept[]): string {
@@ -610,6 +717,31 @@ function inferSourceLabel(file: LoadedFile, galleryExample: GalleryExample | nul
   if (source.startsWith('http')) return 'Remote structure';
   if (source === 'inline-firestore') return 'Shared saved view';
   return 'Loaded structure';
+}
+
+function buildDataProvenance({
+  file,
+  frame,
+  sourceLabel,
+  bondInfo,
+  propertyStats,
+}: {
+  file: LoadedFile;
+  frame: Frame;
+  sourceLabel: string;
+  bondInfo: BondStudyFact;
+  propertyStats: PropertyStudyFact[];
+}): DataProvenanceFact {
+  const coordinateColumns = frame.columns?.length ? ` Columns: ${frame.columns.slice(0, 8).join(', ')}${frame.columns.length > 8 ? ', ...' : ''}.` : '';
+  const propertyNames = propertyStats.map(prop => prop.name);
+  return {
+    coordinates: `${frame.natoms.toLocaleString()} atom positions are loaded from ${sourceLabel} (${file.name}).${coordinateColumns}`,
+    bonds: bondInfo.detail,
+    properties: propertyNames.length
+      ? `Scalar statistics are computed only from loaded source columns: ${propertyNames.join(', ')}. Lupi does not fabricate charges, forces, stress, band gaps, or energies when those columns are absent.`
+      : 'No source scalar property columns were found in this frame. Lupi does not fabricate charges, forces, stress, band gaps, or energies.',
+    curriculum: 'Organic chemistry and materials-science prompts are teaching lenses derived from composition, gallery metadata, and source columns; they are not new simulation measurements.',
+  };
 }
 
 function safeElementSpec(atomicNumber: number) {

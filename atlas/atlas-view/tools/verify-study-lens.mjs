@@ -168,11 +168,18 @@ try {
   await page.getByTestId('study-lens-toggle').click();
   const lens = page.getByTestId('study-lens-panel');
   await lens.waitFor({ state: 'visible', timeout });
-  report.lensTextHead = (await lens.innerText()).slice(0, 5000);
+  report.lensTextHead = (await lens.innerText()).slice(0, 12000);
   assertContains(report.lensTextHead, /Aspirin/i, 'study lens title');
   assertContains(report.lensTextHead, /C9H8O4/i, 'study lens formula');
-  assertContains(report.lensTextHead, /21 inferred/i, 'study lens stable bond count');
+  assertContains(report.lensTextHead, /Visual guide only|No source bonds/i, 'study lens honest bond provenance');
+  assertNotContains(report.lensTextHead, /\binferred\b/i, 'study lens avoids unqualified inferred bonds');
   assertNotContains(report.lensTextHead, /calculating/i, 'study lens transient bond count');
+  assertContains(report.lensTextHead, /Data truth/i, 'study lens data provenance');
+  assertContains(report.lensTextHead, /source vs visual/i, 'study lens source-vs-visual labeling');
+  assertContains(report.lensTextHead, /not source bonds|does not invent a bond count/i, 'study lens bond guardrail');
+  assertContains(report.lensTextHead, /Materials lens/i, 'study lens materials curriculum');
+  assertContains(report.lensTextHead, /Structure|Processing|Properties|Performance/i, 'study lens materials axes');
+  assertContains(report.lensTextHead, /Materials checks/i, 'study lens materials checks');
   assertContains(report.lensTextHead, /Carboxylic Acids/i, 'study lens carboxylic-acid teaching');
   assertContains(report.lensTextHead, /Esters/i, 'study lens ester teaching');
   assertContains(report.lensTextHead, /Course frame/i, 'study lens course frame');
@@ -184,7 +191,7 @@ try {
   assertContains(report.lensTextHead, /Spectroscopy checks/i, 'study lens spectroscopy checks');
   assertContains(report.lensTextHead, /Self-check/i, 'study lens self-check prompt');
   await lens.getByRole('button', { name: /Reveal check/i }).click();
-  report.lensTextHead = (await lens.innerText()).slice(0, 5000);
+  report.lensTextHead = (await lens.innerText()).slice(0, 12000);
   assertContains(report.lensTextHead, /Start with the carboxylic acid/i, 'study lens revealed practice answer');
   await shot(page, 'lens-open');
 
@@ -229,9 +236,15 @@ try {
   report.sheetHasSnapshot = await page.evaluate(() => window.__lupiStudySheetHtml.includes('data:image/png'));
   if (!report.sheetHasSnapshot) failures.push('study sheet did not embed a rendered view image');
   assertContains(report.sheetTextHead, /Aspirin/i, 'study sheet title');
-  assertContains(report.sheetTextHead, /21 inferred/i, 'study sheet stable bond count');
+  assertContains(report.sheetTextHead, /Visual guide only|No source bonds/i, 'study sheet honest bond provenance');
+  assertNotContains(report.sheetTextHead, /\binferred\b/i, 'study sheet avoids unqualified inferred bonds');
   assertNotContains(report.sheetTextHead, /calculating/i, 'study sheet transient bond count');
   assertContains(report.sheetTextHead, /Current View/i, 'study sheet current view section');
+  assertContains(report.sheetTextHead, /Data Provenance/i, 'study sheet data provenance');
+  assertContains(report.sheetTextHead, /Materials Science Frame/i, 'study sheet materials frame');
+  assertContains(report.sheetTextHead, /Materials Characterization Checks/i, 'study sheet materials checks');
+  assertContains(report.sheetTextHead, /Materials Practice Checks/i, 'study sheet materials practice checks');
+  assertContains(report.sheetTextHead, /not source bonds|does not invent a bond count/i, 'study sheet bond guardrail');
   assertContains(report.sheetTextHead, /University Ochem Frame/i, 'study sheet university ochem frame');
   assertContains(report.sheetTextHead, /Mechanism Priorities/i, 'study sheet mechanism priorities');
   assertContains(report.sheetTextHead, /Learning Loop/i, 'study sheet learning loop');

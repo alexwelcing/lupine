@@ -46,6 +46,7 @@ describe('XR study summary', () => {
 
     expect(summary.metrics).toContain('C2H2O');
     expect(summary.metrics).toContain('5 atoms');
+    expect(summary.metrics).toContain('2 source bonds');
     expect(summary.handles).toContain('Carboxylic Acids');
     expect(summary.handles).toContain('Esters');
     expect(summary.courseUnit).toBe('Carboxylic acids and acyl derivatives');
@@ -53,6 +54,8 @@ describe('XR study summary', () => {
     expect(summary.activeStepPrompt).toContain('Acid-base first');
     expect(summary.priorities).toEqual(expect.arrayContaining(['Acid-base first', 'Nucleophilic acyl substitution']));
     expect(summary.practiceLine).toContain('carboxylic acid');
+    expect(summary.materialsLine).toContain('Molecular materials');
+    expect(summary.evidenceLine).toContain('source bonds');
     expect(summary.spectroscopyCue).toContain('aromatic');
     expect(summary.selectedAtomLine).toContain('#1 C');
   });
