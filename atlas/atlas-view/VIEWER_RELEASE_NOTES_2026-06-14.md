@@ -49,6 +49,8 @@
   - Now prints Data Provenance, Materials Science Frame, characterization checks, and source-column interpretation notes.
 - OMol25 is ready for the same functional-group language with provenance intact: the offline indexer derives method-screen tags from real coordinates, the OMol provider can facet and filter by those tags, and the OMol collection page labels them as a geometry screen rather than OMol25 source bond topology.
 - UI polish pass:
+  - The homepage hero now opens around the 953,312-atom FCC copper scale scene, with direct controls for orbit, slicing, color, and density states before users reach the gallery.
+  - `.glimbin` loading now survives static hosts that ignore HTTP Range requests by slicing the returned full file instead of attempting to decompress the wrong byte span.
   - Study Lens now has a clearer first-viewport hierarchy, stronger practice-check affordances, and safer wrapping for long course labels.
   - OMol25 now reads more like a serious data browser, with steadier typography, fixed-size periodic-table labels, dashboard-like stats, and refined filter/result chips.
   - The main viewer shell now has more intentional glass tool islands for camera, Study Lens, Controls, loaded-file status, and trajectory frame status.
@@ -63,6 +65,7 @@
 - The viewer itself now helps students ask better questions while inspecting a molecule, and the printed sheet gives instructors and learners a durable artifact for class notes, labs, and review sessions.
 - The Study Lens is now organized around how first-course organic chemistry is actually taught: identify handles, assign electronics, choose the first mechanism move, make a prediction, debug common mistakes, and transfer the idea to a related molecule.
 - The viewer now distinguishes source bonds from viewer bond guides, and source scalar columns from unsupported property claims.
+- The first homepage moment now proves scale and control immediately: a real nearly million-atom lattice is the primary action, while gallery discovery remains a supporting path.
 - The organic chemistry grouping model is data-backed and test-guarded, so future curated molecule sets can grow without silently pointing to unavailable assets.
 - OMol25 can graduate from element/formula browsing into ochem study workflows without fetching every structure in the browser, while keeping source coordinates separate from method-derived screens and display bond guides.
 

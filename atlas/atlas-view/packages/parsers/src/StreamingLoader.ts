@@ -107,6 +107,9 @@ export class StreamingLoader {
   /** Total file size from HEAD request */
   private fileSize = 0;
 
+  /** Fallback for static hosts that ignore Range and return the full file. */
+  private fullFileBuffer: ArrayBuffer | null = null;
+
   // Telemetry stats
   private totalBytesTransferred = 0;
   private cacheHits = 0;
@@ -127,6 +130,42 @@ export class StreamingLoader {
     });
   }
 
+  private async fetchByteRange(start: number, end: number, signal?: AbortSignal): Promise<ArrayBuffer> {
+    const expectedLength = end - start + 1;
+    if (this.fullFileBuffer && this.fullFileBuffer.byteLength >= end + 1) {
+      return this.fullFileBuffer.slice(start, end + 1);
+    }
+
+    const resp = await fetch(this.url, {
+      headers: { Range: `bytes=${start}-${end}` },
+      signal,
+    });
+
+    if (!resp.ok && resp.status !== 206) {
+      throw new Error(`Failed to fetch glimbin bytes ${start}-${end}: ${resp.status} ${resp.statusText}`);
+    }
+
+    const buffer = await resp.arrayBuffer();
+    this.totalBytesTransferred += buffer.byteLength;
+
+    if (resp.status === 206 || buffer.byteLength === expectedLength) {
+      return buffer;
+    }
+
+    // Some local/static hosts ignore Range and return 200 + full file. Treat
+    // that as a non-streaming fallback instead of parsing/decompressing the
+    // wrong bytes. This preserves correctness on simple static servers while
+    // real Range-capable CDNs still use the cheap path above.
+    if (resp.status === 200 && buffer.byteLength >= end + 1) {
+      this.fullFileBuffer = buffer;
+      return buffer.slice(start, end + 1);
+    }
+
+    throw new Error(
+      `Failed to fetch glimbin bytes ${start}-${end}: received ${buffer.byteLength} bytes`,
+    );
+  }
+
   // ── Phase 1: Header ─────────────────────────────────────────────
 
   /**
@@ -145,16 +184,7 @@ export class StreamingLoader {
       // Non-fatal: we can work without knowing file size
     }
 
-    const resp = await fetch(this.url, {
-      headers: { Range: `bytes=0-${HEADER_SIZE - 1}` },
-    });
-
-    if (!resp.ok && resp.status !== 206) {
-      throw new Error(`Failed to fetch glimbin header: ${resp.status} ${resp.statusText}`);
-    }
-
-    const buffer = await resp.arrayBuffer();
-    this.totalBytesTransferred += buffer.byteLength;
+    const buffer = await this.fetchByteRange(0, HEADER_SIZE - 1);
     this.header = parseHeader(buffer);
     this.events.onProgress?.('header', 1);
     this.emitTelemetry();
@@ -180,16 +210,7 @@ export class StreamingLoader {
     const indexSize = this.header.totalFrames * FRAME_ENTRY_SIZE;
     const indexEnd = indexStart + indexSize - 1;
 
-    const resp = await fetch(this.url, {
-      headers: { Range: `bytes=${indexStart}-${indexEnd}` },
-    });
-
-    if (!resp.ok && resp.status !== 206) {
-      throw new Error(`Failed to fetch frame index: ${resp.status} ${resp.statusText}`);
-    }
-
-    const buffer = await resp.arrayBuffer();
-    this.totalBytesTransferred += buffer.byteLength;
+    const buffer = await this.fetchByteRange(indexStart, indexEnd);
     this.index = parseFrameIndex(buffer, this.header.totalFrames);
     this.events.onProgress?.('index', 1);
     this.emitTelemetry();
@@ -252,17 +273,7 @@ export class StreamingLoader {
 
     this.events.onProgress?.('frame', frameIndex / this.index!.entries.length);
 
-    const resp = await fetch(this.url, {
-      headers: { Range: `bytes=${start}-${end}` },
-      signal,
-    });
-
-    if (!resp.ok && resp.status !== 206) {
-      throw new Error(`Failed to fetch frame ${frameIndex}: ${resp.status}`);
-    }
-
-    let buffer = await resp.arrayBuffer();
-    this.totalBytesTransferred += buffer.byteLength;
+    let buffer = await this.fetchByteRange(start, end, signal);
     this.emitTelemetry();
 
     // Decompress if needed
@@ -414,6 +425,7 @@ export class StreamingLoader {
     this.prefetchController?.abort();
     this.frameCache.clear();
     this.inflight.clear();
+    this.fullFileBuffer = null;
     this.header = null;
     this.index = null;
   }
