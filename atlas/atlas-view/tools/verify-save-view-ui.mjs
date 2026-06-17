@@ -85,15 +85,17 @@ async function signInPage(page, customToken) {
     await window.__lupiFirebaseAuth.signInWithCustomToken(token);
   }, customToken);
 
-  await page.waitForFunction(
+  const state = await page.waitForFunction(
     () => {
       const s = window.__lupiFirebaseAuth?.getState?.();
-      return s?.hasToken && s?.uid;
+      if (!s?.hasToken || !s?.uid) return null;
+      return s;
     },
     null,
     { timeout: TIMEOUT },
   );
-  console.log('[verify-save-view-ui] viewer reports signed-in state');
+  console.log(`[verify-save-view-ui] viewer reports signed-in state uid=${state.uid}`);
+  return state;
 }
 
 async function loadGallerySample(page) {
@@ -136,6 +138,16 @@ async function reloadSavedView(page, slug) {
   console.log('[verify-save-view-ui] saved view reloaded successfully');
 }
 
+async function cleanupView(idToken, slug) {
+  const url = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/lupiViews/${slug}`;
+  const res = await fetch(url, { method: 'DELETE', headers: { Authorization: `Bearer ${idToken}` } });
+  if (res.ok) {
+    console.log(`[verify-save-view-ui] cleaned up lupiViews/${slug}`);
+  } else {
+    console.log(`[verify-save-view-ui] cleanup failed for lupiViews/${slug}: ${res.status}`);
+  }
+}
+
 async function screenshot(page, label) {
   const path = join(ARTIFACTS, `${stamp}-${label}.png`);
   await page.screenshot({ path, fullPage: false, timeout: 90000 });
@@ -165,7 +177,8 @@ async function main() {
   page.on('pageerror', (err) => console.log(`[PAGE ERROR] ${err.message}`));
 
   await loadGallerySample(page);
-  await signInPage(page, customToken);
+  const authState = await signInPage(page, customToken);
+  const idToken = authState.idToken;
   await screenshot(page, 'before-save');
 
   const title = `Verify Save ${Date.now()}`;
@@ -180,6 +193,9 @@ async function main() {
 
   await reloadSavedView(page, slug1);
   await screenshot(page, 'reloaded-view');
+
+  await cleanupView(idToken, slug1);
+  await cleanupView(idToken, slug2);
 
   await browser.close();
   console.log('\n[verify-save-view-ui] all UI checks passed');
