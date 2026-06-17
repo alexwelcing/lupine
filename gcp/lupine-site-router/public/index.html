@@ -17,7 +17,7 @@
     :root {
       --ink: #eaf2ff;
       --ink-dim: #9db4d6;
-      --ink-faint: #5f7699;
+      --ink-faint: #7f9ac1;
       --abyss: #060d1a;
       --navy: #0a1628;
       --prussian: #11305e;
@@ -102,12 +102,12 @@
       position: relative;
     }
     .hero-inner::before {
-      content: ""; position: absolute; inset: -8% -22%; z-index: -1;
-      background: radial-gradient(closest-side, rgba(6, 13, 26, 0.78), rgba(6, 13, 26, 0.5) 55%, transparent 100%);
+      content: ""; position: absolute; inset: -10% -24%; z-index: -1;
+      background: radial-gradient(closest-side, rgba(6, 13, 26, 0.9), rgba(6, 13, 26, 0.72) 55%, transparent 100%);
       filter: blur(2px);
     }
-    h1 { text-shadow: 0 2px 28px rgba(6, 13, 26, 0.9); }
-    .hero .lead { color: #c4d6f2; text-shadow: 0 1px 14px rgba(6, 13, 26, 0.95); }
+    h1 { text-shadow: 0 2px 28px rgba(6, 13, 26, 0.95); }
+    .hero .lead { color: #c4d6f2; text-shadow: 0 1px 18px rgba(6, 13, 26, 0.98); }
     .eyebrow {
       letter-spacing: 0.34em; text-transform: uppercase; font-size: 12.5px;
       color: var(--glow); font-weight: 700; margin: 0 0 22px;
@@ -152,7 +152,8 @@
     .btn-ghost:hover { color: var(--ink); border-color: rgba(127, 212, 255, 0.5); transform: translateY(-2px); }
     .scroll-cue {
       position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%);
-      color: var(--ink-faint); font-size: 12px; letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--ink-dim); font-size: 12px; letter-spacing: 0.28em; text-transform: uppercase;
+      text-shadow: 0 1px 10px rgba(6, 13, 26, 0.95);
       animation: bob 2.4s ease-in-out infinite;
     }
     @keyframes bob { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 8px); } }
@@ -199,7 +200,7 @@
     }
     .block .lead { margin: 0 0 44px; text-align: left; max-width: 700px; }
 
-    .reveal { opacity: 0; transform: translateY(26px); transition: opacity 700ms ease, transform 700ms ease; }
+    .reveal { opacity: 1; transform: translateY(14px); transition: opacity 700ms ease, transform 700ms ease; }
     .reveal.in { opacity: 1; transform: none; }
 
     /* ── the arc ────────────────────────────────────────────── */
@@ -300,6 +301,10 @@
       .hero-bg, .h1-sub, .pulse, .scroll-cue { animation: none; }
       .reveal { opacity: 1; transform: none; transition: none; }
       html { scroll-behavior: auto; }
+    }
+    @media (prefers-contrast: more) {
+      :root { --ink-faint: #9db4d6; }
+      .hero .lead, h1 { text-shadow: 0 1px 22px rgba(6, 13, 26, 1); }
     }
   </style>
 </head>
