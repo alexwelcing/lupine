@@ -54,28 +54,9 @@ jobs:
       - name: Test (turbo run test — all packages)
         run: pnpm test
 
-  # ── Blocking gate: committed NIST catalog must match its source ──
-  # Now reproducible from committed inputs (master_index.json +
-  # scripts/nist-demo-manifest.json), so a stale catalog fails the build.
-  nist-catalog-drift:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: atlas/atlas-view
-    steps:
-      - uses: actions/checkout@v4
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: 8
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'pnpm'
-          cache-dependency-path: atlas/atlas-view/pnpm-lock.yaml
-      - name: Install dependencies
-        run: pnpm install
+      # Blocking gate: committed NIST catalog must match its source.
+      # Now reproducible from committed inputs (master_index.json +
+      # scripts/nist-demo-manifest.json), so a stale catalog fails the build.
       - name: Rebuild catalog and fail on drift
         run: |
           npm run nist:build
