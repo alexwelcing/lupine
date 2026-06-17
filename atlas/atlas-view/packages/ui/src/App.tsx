@@ -529,6 +529,11 @@ function currentPathRoute() {
   return window.location.pathname || '/';
 }
 
+function normalizedPathRoute(route: string) {
+  if (route === '/') return route;
+  return route.replace(/\/+$/, '') || '/';
+}
+
 export default function App() {
   if (typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('testbed')) {
     return <Testbed />;
@@ -546,13 +551,14 @@ export default function App() {
   const [studyLensOpen, setStudyLensOpen] = useState(false);
   const loadedSavedViewSlugRef = useRef<string | null>(null);
   const hashPath = hashRoute.split('?')[0] || '/';
+  const normalizedPath = normalizedPathRoute(pathRoute);
   const isMlipFlywheelRoute = hashPath === '/system/mlip-flywheel';
   const isMcpViewerRoute = hashPath === '/mcp' || new URLSearchParams(window.location.search).has('mcp');
   const savedViewSlug = hashPath.startsWith('/view/') ? slugifySavedViewTitle(decodeURIComponent(hashPath.slice('/view/'.length))) : null;
   const isSavedViewRoute = Boolean(savedViewSlug);
-  const isCopperSceneRoute = pathRoute === '/scenes/1m-copper-lattice';
-  const isFunctionalGroupsRoute = pathRoute === '/study/organic-functional-groups';
-  const isOmol25Route = pathRoute === '/materials/omol25';
+  const isCopperSceneRoute = normalizedPath === '/scenes/1m-copper-lattice';
+  const isFunctionalGroupsRoute = normalizedPath === '/study/organic-functional-groups';
+  const isOmol25Route = normalizedPath === '/materials/omol25';
 
   useEffect(() => {
     const syncRoute = () => {
