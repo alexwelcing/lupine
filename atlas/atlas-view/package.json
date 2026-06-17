@@ -37,6 +37,8 @@
     "sims:phase-change": "python3 tools/sims/make_phase_trajectories.py all --size demo",
     "atomize:media": "node tools/atomize-media.mjs",
     "verify:atomize-media": "node tools/verify-atomize-media.mjs",
+    "verify:saved-views": "node tools/verify-saved-views.mjs",
+    "verify:save-view-ui": "node tools/verify-save-view-ui.mjs",
     "lint": "turbo run lint",
     "clean": "turbo run clean"
   },
