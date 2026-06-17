@@ -155,11 +155,25 @@ export async function saveCurrentMolecularView({
   const cleanSlug = slugifySavedViewTitle(slug);
   if (cleanSlug.length < 3) throw new Error('Pick a URL slug with at least 3 characters.');
 
+  // Ensure the Firebase ID token is fresh before Firestore writes. Stale or
+  // expired tokens are the most common cause of "insufficient privilege" errors
+  // when the user is otherwise signed in.
+  const token = await withTimeout(
+    user.getIdToken(true),
+    10_000,
+    'Sign-in session refresh timed out.',
+  );
+  if (!token) throw new Error('Your sign-in session could not be verified. Please sign in again.');
+
   const ref = doc(firebaseDb, VIEW_COLLECTION, cleanSlug);
   const current = await getDoc(ref);
   if (current.exists()) {
     const ownerId = current.data().ownerId;
     if (ownerId && ownerId !== user.uid) throw new Error('That Lupi URL is already taken.');
+    // A document with no owner cannot be safely claimed through the current
+    // update rule, so treat it as taken rather than letting Firestore reject it
+    // with an opaque permission-denied error.
+    if (!ownerId) throw new Error('That Lupi URL is already taken.');
   }
 
   const view: SavedMolecularView = {
@@ -176,11 +190,25 @@ export async function saveCurrentMolecularView({
     },
   };
 
-  await setDoc(ref, {
+  const write = async () => setDoc(ref, {
     ...view,
     createdAt: current.exists() ? current.data().createdAt ?? serverTimestamp() : serverTimestamp(),
     updatedAt: serverTimestamp(),
   });
+
+  try {
+    await write();
+  } catch (firstError) {
+    // Retry once on a permission-denied error after forcing another token
+    // refresh — this covers edge cases where the first refresh produced a
+    // token that was invalidated before the write reached Firestore.
+    if (isFirestorePermissionDenied(firstError)) {
+      await withTimeout(user.getIdToken(true), 10_000, 'Sign-in session refresh timed out.');
+      await write();
+    } else {
+      throw firstError;
+    }
+  }
 
   return { url: makeSavedViewUrl(cleanSlug), view };
 }
@@ -367,4 +395,20 @@ function pick<T extends object, K extends keyof T>(source: T, keys: K[]): Pick<T
 
 function cleanJson<T>(value: T): T {
   return JSON.parse(JSON.stringify(value)) as T;
+}
+
+function isFirestorePermissionDenied(error: unknown): boolean {
+  return typeof error === 'object'
+    && error !== null
+    && 'code' in error
+    && (error as { code?: unknown }).code === 'permission-denied';
+}
+
+function withTimeout<T>(promise: Promise<T>, ms: number, message: string): Promise<T> {
+  return new Promise((resolve, reject) => {
+    const timer = window.setTimeout(() => reject(new Error(message)), ms);
+    promise
+      .then(resolve, reject)
+      .finally(() => window.clearTimeout(timer));
+  });
 }

@@ -52,7 +52,7 @@ export function SavedViewButton({ compact = false }: { compact?: boolean }) {
   const loadedAtomCount = useStore((state) => state.loadedAtomCount);
   const frame = useStore((state) => state.frame);
   const showBonds = useStore((state) => state.showBonds);
-  const { loading: authLoading, signIn, user } = useFirebaseAuth();
+  const { loading: authLoading, signIn, user, idToken, refreshToken } = useFirebaseAuth();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState(() => defaultSavedViewTitle(file));
@@ -132,6 +132,10 @@ export function SavedViewButton({ compact = false }: { compact?: boolean }) {
 
   const handleSave = async () => {
     if (!user) return;
+    if (!idToken) {
+      setError('Your sign-in session is still initializing. Wait a moment, or click Refresh session below.');
+      return;
+    }
     setBusy(true);
     setError(null);
     setStatus(null);
@@ -273,9 +277,29 @@ export function SavedViewButton({ compact = false }: { compact?: boolean }) {
                 {status && <LupiNotice tone="green">{status}</LupiNotice>}
 
                 <div style={{ display: 'grid', gridTemplateColumns: savedUrl ? '1fr 1fr' : '1fr', gap: 8 }}>
-                  <LupiButton tone="primary" onClick={handleSave} disabled={busy || !cleanSlug}>
+                  <LupiButton tone="primary" onClick={handleSave} disabled={busy || !cleanSlug || !idToken}>
                     {busy ? 'Saving' : 'Save'}
                   </LupiButton>
+                  {!idToken && user && (
+                    <LupiButton
+                      onClick={async () => {
+                        setBusy(true);
+                        setError(null);
+                        try {
+                          const next = await refreshToken();
+                          if (!next) throw new Error('Could not refresh session.');
+                          setStatus('Session refreshed.');
+                        } catch (err) {
+                          setError(err instanceof Error ? err.message : 'Session refresh failed.');
+                        } finally {
+                          setBusy(false);
+                        }
+                      }}
+                      disabled={busy}
+                    >
+                      Refresh session
+                    </LupiButton>
+                  )}
                   {savedUrl && (
                     <LupiButton
                       onClick={() => {
