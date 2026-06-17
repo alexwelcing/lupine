@@ -25,6 +25,9 @@ conditions where it looked accurate.
 | --- | --- | --- |
 | Lupine Science | https://lupine.science | Research program and public start page |
 | LUPI | https://lupi.live | Browser-native WebGPU viewer for atomistic evidence |
+| LUPI 1M copper lattice | https://lupi.live/scenes/1m-copper-lattice | Public scene route for the 953,312-atom FCC copper scale test |
+| LUPI functional groups | https://lupi.live/study/organic-functional-groups | College organic chemistry study route for functional-group examples, Study Lens prompts, and printable sheets |
+| LUPI OMol25 | https://lupi.live/materials/omol25 | OMol25 geometry browser route for real DFT XYZ structures and source-aware labels |
 | Lupine Library | https://library.lupine.science | Public research corpus and human knowledge surface |
 | glim-think | https://glim-think-v1.aw-ab5.workers.dev | Agentic research control plane and ledger |
 
@@ -146,6 +149,21 @@ lab updates, and how to extend the work.
 Use this as the viewer URL. LUPI is the browser-native WebGPU viewer for
 atomistic evidence, gallery datasets, publication-quality renders, and direct
 inspection of structures or trajectories.
+
+High-intent LUPI routes:
+
+- `/scenes/1m-copper-lattice`: first-impression scale route for a 953,312-atom
+  FCC copper lattice. Describe it as a generated scale-test geometry with atom
+  positions and element identity, not as a measured property dataset.
+- `/study/organic-functional-groups`: college organic chemistry route for
+  functional-group recognition, mechanism prompts, Study Lens, AR study prompts,
+  and print-to-PDF sheets. The teaching layer is source-aware and does not
+  invent measured properties.
+- `/materials/omol25`: OMol25 neutral-validation geometry browser route. OMol25
+  hits in LUPI use real DFT geometry served as `.xyz` files from the hosted
+  index. Functional-group tags are method-derived screens; viewer bond lines are
+  display guides unless a separate provenance artifact supplies source or
+  quantum-analysis bonds.
 
 ### https://library.lupine.science
 
