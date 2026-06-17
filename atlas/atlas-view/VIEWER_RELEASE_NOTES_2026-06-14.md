@@ -50,6 +50,9 @@
 - OMol25 is ready for the same functional-group language with provenance intact: the offline indexer derives method-screen tags from real coordinates, the OMol provider can facet and filter by those tags, and the OMol collection page labels them as a geometry screen rather than OMol25 source bond topology.
 - UI polish pass:
   - The homepage hero now opens around the 953,312-atom FCC copper scale scene, with direct controls for orbit, slicing, color, and density states before users reach the gallery.
+  - The homepage now has a crawlable first-impression proof section that explains scale, organic chemistry study value, materials datasets, and data-truth boundaries before the gallery.
+  - A new public `/scenes/1m-copper-lattice` page gives the 953,312-atom copper scale test its own shareable route, social metadata, JSON-LD, and sitemap entry.
+  - Route-level SEO now updates titles, descriptions, canonical URLs, social preview images, and structured data for the homepage and 1M copper lattice scene.
   - `.glimbin` loading now survives static hosts that ignore HTTP Range requests by slicing the returned full file instead of attempting to decompress the wrong byte span.
   - Study Lens now has a clearer first-viewport hierarchy, stronger practice-check affordances, and safer wrapping for long course labels.
   - OMol25 now reads more like a serious data browser, with steadier typography, fixed-size periodic-table labels, dashboard-like stats, and refined filter/result chips.
@@ -66,6 +69,7 @@
 - The Study Lens is now organized around how first-course organic chemistry is actually taught: identify handles, assign electronics, choose the first mechanism move, make a prediction, debug common mistakes, and transfer the idea to a related molecule.
 - The viewer now distinguishes source bonds from viewer bond guides, and source scalar columns from unsupported property claims.
 - The first homepage moment now proves scale and control immediately: a real nearly million-atom lattice is the primary action, while gallery discovery remains a supporting path.
+- Public search and share surfaces now describe what Lupi can prove on first load: a controllable million-atom-class lattice, educational organic examples, OMol25-linked structures, and an explicit refusal to invent bonds or unsupported properties.
 - The organic chemistry grouping model is data-backed and test-guarded, so future curated molecule sets can grow without silently pointing to unavailable assets.
 - OMol25 can graduate from element/formula browsing into ochem study workflows without fetching every structure in the browser, while keeping source coordinates separate from method-derived screens and display bond guides.
 
@@ -82,6 +86,8 @@ pnpm verify:controls -- --no-screenshot
 pnpm verify:controls:mobile -- --no-screenshot
 pnpm verify:study-lens -- --no-screenshot
 pnpm verify:study-lens:mobile -- --no-screenshot
+# Browser-check / and /scenes/1m-copper-lattice for route metadata, layout,
+# social image wiring, and no desktop/mobile horizontal overflow.
 ```
 
 Local result on 2026-06-14:
@@ -95,6 +101,19 @@ Local result on 2026-06-14:
 - Manual visual screenshots checked for desktop/mobile gallery grouping and OMol25 functional-group filtering with mocked and live v3 tagged indexes.
 - Live visual browser pass checked desktop/mobile functional-group education copy with no page-level horizontal overflow.
 - OMol25 v3 index published to `gs://shed-489901-omol25/omol25_neutral_val.v3.json` and verified over public HTTPS with 27,697 tagged records.
+
+SEO / scene-route addendum verified on 2026-06-16 PT:
+
+- `git diff --check`: clean.
+- UI TypeScript build: clean.
+- Web production build: clean.
+- Gallery verifier: 20/20 checks passing.
+- Controls verifier: desktop and mobile profiles passing.
+- Browser pass checked `/`, `/scenes/1m-copper-lattice`, and `/?sim=massive_1m` on the production build:
+  - Homepage and scene route update title, description, canonical URL, OG/Twitter metadata, and route JSON-LD.
+  - Clean scene route loads with root-relative bundle assets.
+  - Desktop and mobile layouts have no horizontal overflow.
+  - The 1M scene CTA lands in the real viewer with the loaded-file chrome, canvas, Controls, and scale bar visible.
 
 ## Live Verification After Deploy
 

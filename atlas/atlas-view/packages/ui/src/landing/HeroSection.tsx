@@ -1,10 +1,9 @@
-import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { useMemo, useState, type ReactNode } from 'react';
 import { ParticleCanvas } from './ParticleCanvas';
 import { AnimatedCounter } from './AnimatedCounter';
 import { ALL_EXAMPLES } from './shared';
 import { useStore } from '../store';
-
-type SceneMode = 'orbit' | 'slice' | 'color' | 'density';
+import { MillionAtomPreview, type SceneMode } from './MillionAtomPreview';
 
 interface SceneModeConfig {
   id: SceneMode;
@@ -172,127 +171,6 @@ export function HeroSection() {
   );
 }
 
-function MillionAtomPreview({ mode }: { mode: SceneMode }) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas?.getContext('2d');
-    if (!canvas || !ctx) return;
-
-    let width = 0;
-    let height = 0;
-    let raf = 0;
-    let frame = 0;
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
-
-    // Homepage-only scale preview: sampled FCC lattice points, no bonds or
-    // inferred properties. The CTA loads the actual 953,312-atom scene.
-    const points = buildLatticeSample(mode === 'density' ? 23 : 19);
-
-    const resize = () => {
-      width = canvas.offsetWidth;
-      height = canvas.offsetHeight;
-      canvas.width = Math.max(1, Math.round(width * dpr));
-      canvas.height = Math.max(1, Math.round(height * dpr));
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    };
-
-    const draw = () => {
-      frame += reduceMotion ? 0 : 1;
-      ctx.clearRect(0, 0, width, height);
-      const cx = width / 2;
-      const cy = height / 2;
-      const baseScale = Math.min(width, height) * (mode === 'density' ? 0.38 : 0.42);
-      const orbit = mode === 'orbit' ? frame * 0.006 : mode === 'slice' ? -0.48 : mode === 'color' ? 0.34 : 0.18;
-      const cos = Math.cos(orbit);
-      const sin = Math.sin(orbit);
-      const tilt = mode === 'slice' ? 0.76 : 0.58;
-      const sliceLimit = mode === 'slice' ? 0.12 : 2;
-
-      ctx.fillStyle = 'rgba(2, 5, 9, 0.88)';
-      ctx.fillRect(0, 0, width, height);
-
-      for (const p of points) {
-        if (mode === 'slice' && p.x < sliceLimit) continue;
-        const rx = p.x * cos - p.z * sin;
-        const rz = p.x * sin + p.z * cos;
-        const ry = p.y * Math.cos(tilt) - rz * Math.sin(tilt);
-        const depth = p.y * Math.sin(tilt) + rz * Math.cos(tilt);
-        const perspective = 1 / (1.62 - depth * 0.2);
-        const sx = cx + rx * baseScale * perspective;
-        const sy = cy + ry * baseScale * perspective;
-        if (sx < -6 || sx > width + 6 || sy < -6 || sy > height + 6) continue;
-        const depthMix = Math.max(0, Math.min(1, (depth + 1.18) / 2.36));
-        const alpha = mode === 'density' ? 0.34 + depthMix * 0.42 : 0.42 + depthMix * 0.48;
-        const radius = mode === 'density' ? 0.9 + depthMix * 0.9 : 1.05 + depthMix * 1.1;
-        ctx.beginPath();
-        ctx.arc(sx, sy, radius, 0, Math.PI * 2);
-        if (mode === 'color') {
-          ctx.fillStyle = p.y > 0.34
-            ? `rgba(94, 234, 212, ${alpha})`
-            : p.x > 0.18
-              ? `rgba(251, 191, 36, ${alpha})`
-              : `rgba(248, 113, 113, ${alpha})`;
-        } else {
-          ctx.fillStyle = `rgba(${185 + depthMix * 40}, ${132 + depthMix * 80}, ${72 + depthMix * 42}, ${alpha})`;
-        }
-        ctx.fill();
-      }
-
-      const scan = mode === 'slice' ? 0.58 : 0.34 + Math.sin(frame * 0.018) * 0.18;
-      ctx.fillStyle = mode === 'slice' ? 'rgba(56, 189, 248, 0.16)' : 'rgba(94, 234, 212, 0.08)';
-      ctx.fillRect(width * scan, 0, 2, height);
-
-      if (!reduceMotion && mode === 'orbit') raf = requestAnimationFrame(draw);
-    };
-
-    resize();
-    draw();
-    window.addEventListener('resize', resize);
-    if (!reduceMotion && mode !== 'orbit') {
-      raf = requestAnimationFrame(function loop() {
-        draw();
-        raf = requestAnimationFrame(loop);
-      });
-    }
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener('resize', resize);
-    };
-  }, [mode]);
-
-  return <canvas ref={canvasRef} className="lupi-hero-preview-canvas" aria-hidden="true" />;
-}
-
-function buildLatticeSample(steps: number) {
-  const points: Array<{ x: number; y: number; z: number }> = [];
-  const half = (steps - 1) / 2;
-  const offsets = [
-    [0, 0, 0],
-    [0.5, 0.5, 0],
-    [0.5, 0, 0.5],
-    [0, 0.5, 0.5],
-  ];
-  for (let ix = 0; ix < steps; ix += 1) {
-    for (let iy = 0; iy < steps; iy += 1) {
-      for (let iz = 0; iz < steps; iz += 1) {
-        if ((ix + iy + iz) % 2 !== 0) continue;
-        const surfaceBias = ix < 2 || iy < 2 || iz < 2 || ix > steps - 3 || iy > steps - 3 || iz > steps - 3;
-        if (!surfaceBias && (ix * 13 + iy * 7 + iz * 3) % 5 !== 0) continue;
-        const o = offsets[(ix + iy + iz) % offsets.length];
-        points.push({
-          x: ((ix + o[0]) - half) / half,
-          y: ((iy + o[1]) - half) / half,
-          z: ((iz + o[2]) - half) / half,
-        });
-      }
-    }
-  }
-  return points;
-}
-
 function Metric({ value, label }: { value: ReactNode; label: string }) {
   return (
     <div className="lupi-hero-metric">
@@ -333,7 +211,7 @@ const HERO_CSS = `
 .lupi-hero {
   position: relative;
   width: 100%;
-  min-height: calc(100dvh - 56px);
+  min-height: calc(100dvh - 104px);
   overflow: hidden;
   background:
     linear-gradient(120deg, rgba(2, 2, 4, 0.98) 0%, rgba(6, 12, 18, 0.96) 48%, rgba(24, 15, 9, 0.94) 100%);
@@ -354,9 +232,9 @@ const HERO_CSS = `
   z-index: 2;
   box-sizing: border-box;
   width: min(1440px, 100%);
-  min-height: calc(100dvh - 56px);
+  min-height: calc(100dvh - 104px);
   margin: 0 auto;
-  padding: 62px 28px 36px;
+  padding: 50px 28px 24px;
   display: grid;
   grid-template-columns: minmax(380px, 0.82fr) minmax(520px, 1.18fr);
   gap: 40px;
@@ -684,46 +562,51 @@ const HERO_CSS = `
     min-height: auto;
   }
   .lupi-hero-shell {
-    padding: 72px 16px 42px;
-    gap: 26px;
+    padding: 50px 16px 22px;
+    gap: 16px;
   }
   .lupi-hero-product {
     font-size: 13px;
     margin-bottom: 12px;
   }
   .lupi-hero-title {
-    font-size: 40px;
+    font-size: 34px;
     line-height: 1;
   }
   .lupi-hero-lede {
-    margin-top: 16px;
-    font-size: 16px;
+    margin-top: 14px;
+    font-size: 15px;
+    line-height: 1.45;
   }
-  .lupi-hero-actions,
+  .lupi-hero-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 20px;
+  }
   .lupi-hero-primary,
   .lupi-hero-secondary {
-    width: 100%;
+    width: auto;
+    min-height: 42px;
+    padding: 0 10px;
+    gap: 6px;
+    font-size: 13px;
   }
   .lupi-hero-builder {
-    grid-template-columns: 20px minmax(0, 1fr) auto;
-    padding-right: 10px;
-  }
-  .lupi-hero-builder button {
-    min-width: 64px;
-    padding: 0 12px;
+    display: none;
   }
   .lupi-hero-stats {
+    margin-top: 14px;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 8px;
+    gap: 6px;
   }
   .lupi-hero-metric {
-    padding: 12px 0 10px;
+    padding: 9px 0 8px;
   }
   .lupi-hero-metric strong {
-    font-size: 20px;
+    font-size: 18px;
   }
   .lupi-hero-metric span {
-    font-size: 11px;
+    font-size: 10px;
   }
   .lupi-hero-stage {
     padding: 9px;
@@ -734,10 +617,23 @@ const HERO_CSS = `
     gap: 4px;
   }
   .lupi-hero-preview {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 16 / 10;
   }
   .lupi-hero-modebar {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 6px;
+  }
+  .lupi-hero-modebar button {
+    min-height: 34px;
+    gap: 4px;
+    font-size: 11px;
+  }
+  .lupi-hero-modebar button span {
+    width: 6px;
+    height: 6px;
+  }
+  .lupi-hero-caption {
+    display: none;
   }
   .lupi-hero-preview-reticle {
     width: 92px;

@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
+Allow: /scenes/
 Allow: /llms.txt
 Allow: /llms-full.txt
 Allow: /brand.json

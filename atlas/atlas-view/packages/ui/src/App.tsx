@@ -71,6 +71,7 @@ import { TelemetryHUD } from './TelemetryHUD';
 import { useStore } from './store';
 import { getMaxSafeAtomCount, getDefaultQualityTier } from './deviceCapabilities';
 import { LandingPage } from './LandingPage';
+import { SceneLandingPage } from './landing/SceneLandingPage';
 import { ThermoMinimap } from './ThermoMinimap';
 import { AtomsOptimized } from '@atlas/scene/AtomsOptimized';
 import { AtomClusters } from '@atlas/scene/AtomClusters';
@@ -522,6 +523,11 @@ function currentHashRoute() {
   return hash.startsWith('/') ? hash : '/';
 }
 
+function currentPathRoute() {
+  if (typeof window === 'undefined') return '/';
+  return window.location.pathname || '/';
+}
+
 export default function App() {
   if (typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('testbed')) {
     return <Testbed />;
@@ -532,6 +538,7 @@ export default function App() {
   }
 
   const [hashRoute, setHashRoute] = useState(currentHashRoute);
+  const [pathRoute, setPathRoute] = useState(currentPathRoute);
   const [isExportingQuickLook, setIsExportingQuickLook] = useState(false);
   const [studioDeck, setStudioDeck] = useState<ViewerControlMode | null>(null);
   const [viewMenuOpen, setViewMenuOpen] = useState(false);
@@ -542,9 +549,13 @@ export default function App() {
   const isMcpViewerRoute = hashPath === '/mcp' || new URLSearchParams(window.location.search).has('mcp');
   const savedViewSlug = hashPath.startsWith('/view/') ? slugifySavedViewTitle(decodeURIComponent(hashPath.slice('/view/'.length))) : null;
   const isSavedViewRoute = Boolean(savedViewSlug);
+  const isCopperSceneRoute = pathRoute === '/scenes/1m-copper-lattice';
 
   useEffect(() => {
-    const syncRoute = () => setHashRoute(currentHashRoute());
+    const syncRoute = () => {
+      setHashRoute(currentHashRoute());
+      setPathRoute(currentPathRoute());
+    };
     window.addEventListener('hashchange', syncRoute);
     window.addEventListener('popstate', syncRoute);
     return () => {
@@ -1706,7 +1717,13 @@ export default function App() {
         {/* Landing page (hero, featured, drop zone, gallery) */}
         {!file && (
           <div style={{ position: 'relative', width: '100%', zIndex: 10 }}>
-            {isMlipFlywheelRoute ? <MlipFlywheelPage /> : isMcpViewerRoute || isSavedViewRoute ? null : <LandingPage />}
+            {isMlipFlywheelRoute
+              ? <MlipFlywheelPage />
+              : isMcpViewerRoute || isSavedViewRoute
+                ? null
+                : isCopperSceneRoute
+                  ? <SceneLandingPage />
+                  : <LandingPage />}
           </div>
         )}
       </div>

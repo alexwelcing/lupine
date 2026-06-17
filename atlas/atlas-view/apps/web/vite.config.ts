@@ -154,7 +154,9 @@ function parseMultipart(buffer: Buffer, boundary: string): any[] {
 }
 
 export default defineConfig({
-  base: './',
+  // Clean public routes like /scenes/1m-copper-lattice need bundle assets to
+  // resolve from the site root after the server falls back to index.html.
+  base: '/',
   plugins: [
     react(),
     wasm(),
