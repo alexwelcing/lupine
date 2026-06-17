@@ -196,9 +196,70 @@ theorem jacobianRank_le_min (P N : Nat) (f : PredictionMap P N) :
     | exact le_min hP hN
     | omega
 
-/-- Real-analysis corollary (load-bearing on the Mathlib import via ATLAS):
-    a participation ratio of at least 1 is strictly positive. -/
-theorem participationRatio_pos (pr : ℝ) (h : (1 : ℝ) ≤ pr) : (0 : ℝ) < pr := by
-  linarith
+-- ═══════════════════════════════════════════════════════════════
+-- ADDITIONAL STRUCTURAL THEOREMS (submission push)
+--
+-- These theorems tighten the connection between potential functional form
+-- and the dimensionality of prediction errors. They do not yet prove the
+-- full Parameter-Bound Conjecture (that requires a real differentiable
+-- prediction map), but they make the bound operational for concrete
+-- potential families and edge cases.
+-- ═══════════════════════════════════════════════════════════════
+
+/-- If there are no parameters, the effective Jacobian rank is zero. -/
+theorem jacobianRank_zero_params (N : Nat) (f : PredictionMap 0 N) :
+    jacobianRank 0 N f = 0 := by
+  unfold jacobianRank
+  simp
+
+/-- If there are no observables, the effective Jacobian rank is zero. -/
+theorem jacobianRank_zero_observables (P : Nat) (f : PredictionMap P 0) :
+    jacobianRank P 0 f = 0 := by
+  unfold jacobianRank
+  simp
+
+/-- EAM on FCC elastic constants has at most 3 effective observables, so the
+    parameter-bound conjecture predicts PR ≤ 3 regardless of the embedding
+    complexity. -/
+theorem eamFcc_effective_parameter_bound :
+    min eamFccElasticConjecture.P eamFccElasticConjecture.N = 3 := by
+  unfold eamFccElasticConjecture
+  norm_num
+
+/-- The observed synthetic EAM FCC PR (1.26) satisfies the predicted bound
+    PR ≤ 3 with room to spare. -/
+theorem observedEamFccPR_well_below_bound :
+    observedEamFccPR ≤ (Float.ofNat eamFccBound : Float) - 1.5 := by
+  native_decide
+
+/-- A Lennard-Jones potential has 2 parameters (ε, σ). On any N observables
+    the parameter-bound conjecture predicts PR ≤ min(2, N). -/
+def ljPotentialFamily : PotentialFamily :=
+  { name := "LJ", nParameters := 2, pairStyle := "lj/cut" }
+
+theorem lj_parameter_bound (N : Nat) :
+    min ljPotentialFamily.nParameters N ≤ 2 := by
+  unfold ljPotentialFamily
+  exact Nat.min_le_left 2 N
+
+/-- A Stillinger-Weber potential has 5 parameters. On any N observables the
+    conjecture predicts PR ≤ min(5, N). -/
+def swPotentialFamily : PotentialFamily :=
+  { name := "SW", nParameters := 5, pairStyle := "sw" }
+
+theorem sw_parameter_bound (N : Nat) :
+    min swPotentialFamily.nParameters N ≤ 5 := by
+  unfold swPotentialFamily
+  exact Nat.min_le_left 5 N
+
+/-- The parameter-bound conjecture is monotone in the parameter count:
+    fewer parameters can only decrease the rank bound. -/
+theorem jacobianRank_monotone_params (P1 P2 N : Nat) (f : PredictionMap P2 N)
+    (hP : P1 ≤ P2) :
+    min P1 N ≤ min P2 N := by
+  apply Nat.le_min.mpr
+  constructor
+  · exact Nat.le_trans (Nat.min_le_left P1 N) hP
+  · exact Nat.min_le_right P1 N
 
 end OpenDistillationFactory.Materials.Theory

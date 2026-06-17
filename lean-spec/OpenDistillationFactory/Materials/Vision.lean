@@ -17,7 +17,12 @@ import OpenDistillationFactory.Materials.Analysis.Manifold
 import OpenDistillationFactory.Materials.Computation.LammpsTrace
 import OpenDistillationFactory.Materials.Theory.ParameterBound
 import OpenDistillationFactory.Materials.Theory.MetaScience
+import OpenDistillationFactory.Materials.Theory.HyperRibbon
 import OpenDistillationFactory.Materials.Theory.HyperRibbonEmpirical
+import OpenDistillationFactory.Materials.Theory.ErrorGeometry
+import OpenDistillationFactory.Materials.Theory.AccuracyCommitment
+import OpenDistillationFactory.Materials.Theory.UniversalityBridge
+import OpenDistillationFactory.Materials.Theory.WeakAcceleration
 import OpenDistillationFactory.Materials.Validation.Experiment
 import OpenDistillationFactory.Materials.Validation.Audit
 
@@ -29,6 +34,11 @@ open OpenDistillationFactory.Materials.Analysis.Manifold
 open OpenDistillationFactory.Materials.Computation
 open OpenDistillationFactory.Materials.Theory
 open OpenDistillationFactory.Materials.Theory.MetaScience
+open OpenDistillationFactory.Materials.Theory.HyperRibbon
+open OpenDistillationFactory.Materials.Theory.ErrorGeometry
+open OpenDistillationFactory.Materials.Theory.AccuracyCommitment
+open OpenDistillationFactory.Materials.Theory.UniversalityBridge
+open OpenDistillationFactory.Materials.Theory.WeakAcceleration
 open OpenDistillationFactory.Materials.Theory.HyperRibbonEmpirical
 open OpenDistillationFactory.Materials.Validation
 open OpenDistillationFactory.Materials.Validation.Audit
@@ -107,6 +117,33 @@ def nistCount := nistScaffoldAlSample.length
 #check hyperRibbonVerdictContainsConsistent
 #check auditReportNonEmpty
 
+/- T48–T62: Submission-push theorems (high-dimensional ribbon, error-geometry
+    structure, parameter-bound operationalization) -/
+#check HyperRibbon.PRfin_scale_invariant
+#check HyperRibbon.hyper_ribbon_bound_4d
+#check ErrorGeometry.systematicFraction_zero
+#check ErrorGeometry.systematicFraction_limit_one
+#check ErrorGeometry.prBiasNoise_one
+#check ErrorGeometry.prSpectrum_scale_invariant
+#check ErrorGeometry.axisSecondMoment_nonneg
+#check ErrorGeometry.pairAlignment_self
+#check jacobianRank_zero_params
+#check jacobianRank_zero_observables
+#check eamFcc_effective_parameter_bound
+#check observedEamFccPR_well_below_bound
+#check lj_parameter_bound
+#check sw_parameter_bound
+#check jacobianRank_monotone_params
+#check AccuracyCommitment.mace_mp0_ni_energy_beats_baseline
+#check AccuracyCommitment.mace_mp0_ni_energy_reduction_is_material
+#check UniversalityBridge.pRefuse_lt_one
+#check UniversalityBridge.speedup_strict
+#check UniversalityBridge.cellValue_nonneg
+#check WeakAcceleration.savedLayerFraction_le_one
+#check WeakAcceleration.uncoveredMass_le_one
+#check WeakAcceleration.catchProbability_lt_one
+#check WeakAcceleration.weakSpeedup_strict
+
 -- ═══════════════════════════════════════════════════════════════
 -- SECTION 3: HYPOTHESIS INVENTORY
 -- ═══════════════════════════════════════════════════════════════
@@ -117,8 +154,10 @@ def hypothesisCount : Nat := hypothesisBoard.length
 /-- Count of theorems proven by computation or structure. -/
 def computationallyProvenCount : Nat :=
   -- Causal: 9, Manifold: 11, LammpsTrace: 3, Benchmark: 9,
-  -- ParameterBound: 1, MetaScience: 5, Experiment: 5, Audit: 5
-  48
+  -- ParameterBound: 1, MetaScience: 5, Experiment: 5, Audit: 5,
+  -- Submission push: HyperRibbon 2, ErrorGeometry 6, ParameterBound 7,
+  -- AccuracyCommitment 2, UniversalityBridge 3, WeakAcceleration 4
+  72
 
 /-- Count of documented epistemic gaps (not sorry proofs — all
     theorems are proven — but acknowledged limitations). -/

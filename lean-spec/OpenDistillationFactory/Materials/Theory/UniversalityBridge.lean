@@ -224,6 +224,57 @@ theorem shared_ribbon_premise
   HyperRibbon.hyper_ribbon_bound_3d l1 l2 l3 hpos1 hpos2 hpos3 h_decay2 h_decay3
 
 -- ───────────────────────────────────────────────────────────────
+-- ADDITIONAL STRUCTURAL THEOREMS (submission push)
+-- ───────────────────────────────────────────────────────────────
+
+/-- Refusal mass is strictly less than 1: the policy never refuses
+    everything. -/
+theorem pRefuse_lt_one (kappa1 tau r_F : ℝ)
+    (hk1 : 0 ≤ kappa1) (htau : 0 < tau) (hr : 0 < r_F) :
+    pRefuse kappa1 tau r_F < 1 := by
+  unfold pRefuse
+  have h2a : 0 < 1 - tau / (tau + r_F) := by
+    have hpos : 0 < tau + r_F := by linarith
+    have h3 : tau / (tau + r_F) < 1 := by
+      apply (div_lt_one hpos).mpr
+      linarith
+    linarith
+  have h2b : 1 - tau / (tau + r_F) < 1 := by
+    have hpos : 0 < tau + r_F := by linarith
+    have h3 : 0 < tau / (tau + r_F) := by positivity
+    linarith
+  by_cases h1 : 1 - kappa1 ≤ 0
+  · have hprod : (1 - kappa1) * (1 - tau / (tau + r_F)) ≤ 0 := by
+      apply mul_nonpos_of_nonpos_of_nonneg
+      · exact h1
+      · linarith
+    nlinarith
+  · have h1' : 0 < 1 - kappa1 := by linarith
+    have h3 : (1 - kappa1) * (1 - tau / (tau + r_F)) < (1 - kappa1) * 1 := by
+      apply mul_lt_mul_of_pos_left h2b h1'
+    nlinarith
+
+/-- The speedup is strictly greater than 1 whenever there is positive
+    refusal mass and at least one unprotected layer. -/
+theorem speedup_strict (L kStar kappa1 tau r_F : ℝ)
+    (hL : 0 < L) (hkStarL : kStar < L)
+    (hk1 : kappa1 < 1) (htau : 0 < tau) (hr : 0 < r_F)
+    (hp : 0 < pRefuse kappa1 tau r_F) :
+    1 < speedupLowerBound L kStar kappa1 tau r_F := by
+  unfold speedupLowerBound
+  have hfrac : 0 < (L - kStar) / L := by
+    apply div_pos
+    · linarith
+    · exact hL
+  nlinarith
+
+/-- Cell value is nonnegative when speedup and accuracy gain are
+    nonnegative. -/
+theorem cellValue_nonneg (S G : ℝ) (hS : 0 ≤ S) (hG : 0 ≤ G) :
+    0 ≤ cellValue S G := by
+  unfold cellValue
+  nlinarith
+
 -- RECONCILIATION RECORD (canonical mapping, anti-divergence)
 -- ───────────────────────────────────────────────────────────────
 

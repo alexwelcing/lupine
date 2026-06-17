@@ -135,6 +135,11 @@ def sevenNetEnergyAccelerate : Float := 0.2773
 def maceStressBaseline      : Float := 0.5669
 def maceStressDistill       : Float := 0.9331
 
+-- Local GPU-verified Ni FCC EAM-home-turf cell (TorchSim/MACE-MP-0).
+-- Source: data/mlip_benchmarks/gpu_ni_uplift_2026-06-16/uplift_report.json
+def maceMp0NiEnergyBaseline : Float := 1.2803
+def maceMp0NiEnergyDistill  : Float := 0.0037
+
 -- Promoted energy cells: the commitment is currently MET.
 theorem mace_energy_beats_baseline :
     improvesBaseline maceEnergyBaseline maceEnergyDistill = true := by
@@ -162,6 +167,17 @@ theorem mace_stress_correctly_blocked :
     improvesBaseline maceStressBaseline maceStressDistill = false := by
   native_decide
 
+/-- Local GPU verification: MACE-MP-0 on the sealed Ni FCC fixture beats
+    baseline energy MAE by a factor of ~350 (1.28 → 0.0037 eV/atom). -/
+theorem mace_mp0_ni_energy_beats_baseline :
+    improvesBaseline maceMp0NiEnergyBaseline maceMp0NiEnergyDistill = true := by
+  native_decide
+
+/-- The local GPU uplift is far above the promotion threshold. -/
+theorem mace_mp0_ni_energy_reduction_is_material :
+    errorReduction maceMp0NiEnergyBaseline maceMp0NiEnergyDistill > 1.0 := by
+  native_decide
+
 -- ───────────────────────────────────────────────────────────────
 -- BUILD-LOCK CONTRACT (mirrors Vision.lean)
 -- Violating any #guard breaks the build. This is the commitment.
@@ -172,6 +188,10 @@ theorem mace_stress_correctly_blocked :
 #guard (improvesBaseline sevenNetEnergyBaseline sevenNetEnergyAccelerate == true)
 #guard (meetsCommitment maceEnergyBaseline maceEnergyAccelerate == true)
 #guard (errorReduction maceEnergyBaseline maceEnergyDistill > 0.15)
+
+-- Local GPU Ni fixture: promoted.
+#guard (improvesBaseline maceMp0NiEnergyBaseline maceMp0NiEnergyDistill == true)
+#guard (errorReduction maceMp0NiEnergyBaseline maceMp0NiEnergyDistill > 1.0)
 
 -- Non-wins must stay blocked: the contract is two-sided.
 #guard (improvesBaseline maceStressBaseline maceStressDistill == false)

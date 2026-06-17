@@ -119,4 +119,63 @@ theorem weakSpeedup_lift_nonneg
   have hOne := weakSpeedup_ge_one c h
   linarith
 
+/-- The saved-layer fraction never exceeds 1. -/
+theorem savedLayerFraction_le_one
+    (c : WeakAccelerationCertificate)
+    (hLayers : 0 < c.layers)
+    (hStop : 0 <= c.stopLayer) :
+    savedLayerFraction c <= 1 := by
+  unfold savedLayerFraction
+  apply (div_le_one hLayers).mpr
+  linarith
+
+/-- The uncovered mass never exceeds 1. -/
+theorem uncoveredMass_le_one
+    (c : WeakAccelerationCertificate)
+    (hCoverage : 0 <= c.coverage) :
+    uncoveredMass c <= 1 := by
+  unfold uncoveredMass
+  linarith
+
+/-- The catch probability is strictly less than 1. -/
+theorem catchProbability_lt_one
+    (c : WeakAccelerationCertificate)
+    (hThreshold : 0 < c.threshold)
+    (hReach : 0 < c.reach) :
+    catchProbability c < 1 := by
+  unfold catchProbability
+  have hsum : 0 < c.threshold + c.reach := by linarith
+  have hratio : 0 < c.threshold / (c.threshold + c.reach) := by positivity
+  linarith
+
+/-- Weak acceleration is strictly above baseline when all three geometric
+    factors are positive. -/
+theorem weakSpeedup_strict
+    (c : WeakAccelerationCertificate)
+    (h : weakGeometricConditions c)
+    (hStop : c.stopLayer < c.layers)
+    (hCoverage : c.coverage < 1)
+    (hThreshold : 0 < c.threshold)
+    (hReach : 0 < c.reach) :
+    1 < weakSpeedupLowerBound c := by
+  rcases h with ⟨hLayers, _, _, _, _⟩
+  unfold weakSpeedupLowerBound
+  have hs : 0 < savedLayerFraction c := by
+    unfold savedLayerFraction
+    apply div_pos
+    · linarith
+    · exact hLayers
+  have hu : 0 < uncoveredMass c := by
+    unfold uncoveredMass
+    linarith
+  have hc : 0 < catchProbability c := by
+    unfold catchProbability
+    have hsum : 0 < c.threshold + c.reach := by linarith
+    have h1 : c.threshold / (c.threshold + c.reach) < 1 := by
+      apply (div_lt_one hsum).mpr
+      linarith
+    have h2 : 0 < c.threshold / (c.threshold + c.reach) := by positivity
+    linarith
+  nlinarith [mul_pos (mul_pos hs hu) hc]
+
 end OpenDistillationFactory.Materials.Theory.WeakAcceleration

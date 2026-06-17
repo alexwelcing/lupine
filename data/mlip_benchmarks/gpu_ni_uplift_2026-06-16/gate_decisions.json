@@ -1,0 +1,40 @@
+{
+  "in_support_certified": {
+    "model_id": "mace-mp-0",
+    "distill_version": 1,
+    "decision": "promote",
+    "uplift_pct": 76.03592745093987,
+    "uplift_band": "promote",
+    "formal_fields_present": true,
+    "reasons": [
+      "Uplift 76.04% > +5% \u2014 clears the promote gate.",
+      "Formal check PASSED: 2 theorem ref(s), 2 formal property(ies)."
+    ]
+  },
+  "out_of_support_uncertified": {
+    "model_id": "mace-mp-0",
+    "distill_version": 1,
+    "decision": "review",
+    "uplift_pct": 76.03592745093987,
+    "uplift_band": "promote",
+    "formal_fields_present": false,
+    "reasons": [
+      "Uplift 76.04% > +5% \u2014 clears the promote gate.",
+      "Formal check FAILED: formal_properties is empty.",
+      "Downgraded promote -> review: formal spec incomplete (human-in-the-loop)."
+    ]
+  },
+  "marginal_uncertified": {
+    "model_id": "mace-mp-0",
+    "distill_version": 1,
+    "decision": "reject",
+    "uplift_pct": 0.0,
+    "uplift_band": "review",
+    "formal_fields_present": false,
+    "reasons": [
+      "Uplift 0.00% in [0%, +5%] \u2014 marginal, needs review.",
+      "Formal check FAILED: formal_properties is empty.",
+      "Downgraded review -> reject: marginal uplift AND incomplete formal spec."
+    ]
+  }
+}

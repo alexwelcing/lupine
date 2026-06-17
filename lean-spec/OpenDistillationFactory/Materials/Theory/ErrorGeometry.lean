@@ -200,4 +200,65 @@ theorem ribbon_consensus_decoupled :
       pairAlignment_opposite_sign one_pos (by norm_num : (-1 : Real) < 0)]
     norm_num
 
+-- ═══════════════════════════════════════════════════════════════
+-- ADDITIONAL STRUCTURAL THEOREMS (submission push)
+-- ═══════════════════════════════════════════════════════════════
+
+/-- At zero bias the systematic fraction vanishes: pure noise carries no
+    shared systematic component. -/
+theorem systematicFraction_zero : systematicFraction 0 = 0 := by
+  unfold systematicFraction
+  norm_num
+
+/-- As bias dominates, the systematic fraction approaches 1: the ensemble
+    becomes entirely systematic. -/
+theorem systematicFraction_limit_one (eps : ℝ) (heps : 0 < eps) :
+    ∃ ρ : ℝ, 0 < ρ ∧ 1 - systematicFraction ρ < eps := by
+  use 1 / eps
+  constructor
+  · positivity
+  · unfold systematicFraction
+    have hpos : 0 < 1 / eps + 1 := by positivity
+    have h1 : 1 - (1 / eps) / (1 / eps + 1) = 1 / (1 / eps + 1) := by
+      field_simp
+      ring
+    rw [h1]
+    have h2 : 1 / (1 / eps + 1) < eps := by
+      have h3 : 1 / (1 / eps + 1) = eps / (1 + eps) := by
+        field_simp
+      rw [h3]
+      have h4 : 0 < 1 + eps := by linarith
+      apply (div_lt_iff₀ h4).mpr
+      nlinarith
+    exact h2
+
+/-- The participation-ratio gauge at ρ = 1: equal systematic and noise
+    contributions give a PR that depends only on dimension. -/
+theorem prBiasNoise_one {d : ℝ} (_hd : 1 ≤ d) : prBiasNoise d 1 = (d + 1) ^ 2 / (d + 3) := by
+  unfold prBiasNoise
+  ring_nf
+
+/-- The 3D participation ratio is scale-invariant. -/
+theorem prSpectrum_scale_invariant (a b c : ℝ) {s : ℝ} (hs : 0 < s) :
+    prSpectrum (s * a) (s * b) (s * c) = prSpectrum a b c := by
+  unfold prSpectrum
+  have h1 : s * a + s * b + s * c = s * (a + b + c) := by ring
+  have h2 : (s * a) ^ 2 + (s * b) ^ 2 + (s * c) ^ 2 = s ^ 2 * (a ^ 2 + b ^ 2 + c ^ 2) := by ring
+  rw [h1, h2]
+  rw [mul_pow]
+  rcases eq_or_ne (a ^ 2 + b ^ 2 + c ^ 2) 0 with h0 | h0
+  · rw [h0, mul_zero, div_zero, div_zero]
+  · field_simp
+
+/-- The shared-axis second moment is nonnegative. -/
+theorem axisSecondMoment_nonneg (c₁ c₂ c₃ : ℝ) : 0 ≤ axisSecondMoment c₁ c₂ c₃ := by
+  unfold axisSecondMoment
+  positivity
+
+/-- Pairwise alignment of a positive value with itself is 1. -/
+theorem pairAlignment_self (x : ℝ) (hx : 0 < x) : pairAlignment x x = 1 := by
+  unfold pairAlignment
+  rw [abs_of_pos hx]
+  field_simp
+
 end OpenDistillationFactory.Materials.Theory.ErrorGeometry

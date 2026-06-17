@@ -1,0 +1,14 @@
+{
+  "schema": "lupine.distill.uplift_report.v1",
+  "model_id": "mace-mp-0",
+  "distill_version": 1,
+  "baseline_version": 0,
+  "per_benchmark": {
+    "elastic_constants": 95.39359236681616,
+    "static_energy": 56.678262535063574
+  },
+  "overall_uplift_pct": 76.03592745093987,
+  "promotion_recommendation": "promote",
+  "min_uplift_threshold": 5.0,
+  "benchmarks_compared": 2
+}

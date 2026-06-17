@@ -1,0 +1,38 @@
+{
+  "model_id": "mace-mp-0",
+  "distill_version": 0,
+  "backend": "torchsim",
+  "timestamp": "2026-06-17T02:37:36.504372Z",
+  "torchsim_version": "0.6.0",
+  "benchmark_suite_version": "ni-fcc-eam-home-turf-v1",
+  "results": {
+    "static_energy": {
+      "mae_energy": 1.2803092329541796,
+      "mae_forces": 0.06221448177873097,
+      "mae_stress": 0.8610960277212826,
+      "rmse_energy": null,
+      "energy_drift": null,
+      "temperature_stability": null,
+      "dft_reference": {
+        "C11_gpa": 246.5,
+        "C12_gpa": 147.3,
+        "C44_gpa": 124.7
+      },
+      "wall_time_seconds": 4.983206272125244,
+      "gpu_utilization_pct": null
+    },
+    "elastic_constants": {
+      "mae_energy": 1.2803092329541796,
+      "mae_forces": null,
+      "mae_stress": 1.1954078467719296,
+      "rmse_energy": null,
+      "energy_drift": null,
+      "temperature_stability": null,
+      "dft_reference": null,
+      "wall_time_seconds": 4.983206272125244,
+      "gpu_utilization_pct": null
+    }
+  },
+  "overall_uplift_pct": null,
+  "promotion_recommendation": null
+}
