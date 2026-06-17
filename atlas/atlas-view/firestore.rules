@@ -11,7 +11,10 @@ service cloud.firestore {
     }
 
     match /lupiViews/{slug} {
-      allow get, list: if resource.data.visibility == 'public' || isOwner(resource.data);
+      // Allow existence checks on missing documents (the save flow reads before
+      // writing), but otherwise restrict reads to public views or the owner.
+      allow get: if resource.data == null || resource.data.visibility == 'public' || isOwner(resource.data);
+      allow list: if resource.data.visibility == 'public' || isOwner(resource.data);
 
       allow create: if signedIn()
         && request.resource.data.schemaVersion == 1
