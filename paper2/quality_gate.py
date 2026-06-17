@@ -69,7 +69,9 @@ def check_figures(tex: str) -> list[str]:
 
 def check_placeholders(tex: str) -> list[str]:
     issues: list[str] = []
-    for pat in [r"TODO", r"FIXME", r"XXXXXX", r"\[fill\]", r"placeholder", r"Draft of"]:
+    for pat in [r"TODO", r"FIXME", r"XXXXXX", r"\[fill\]", r"placeholder",
+                r"\(to be completed\)", r"\[to be added before submission\]",
+                r"0000-0000-0000-0000", r"0009-0000-0000-0000"]:
         if re.search(pat, tex, re.IGNORECASE):
             # Be specific: line numbers
             for i, line in enumerate(tex.splitlines(), 1):

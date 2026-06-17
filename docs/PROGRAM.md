@@ -1,6 +1,6 @@
 # The Lupine Research Program — Unified State
 
-*Single-page map of the error-geometry research program. Updated 2026-06-11.
+*Single-page map of the error-geometry research program. Updated 2026-06-16.
 Paper status source of truth: `library-site/src/brand.json` → `publication.status`
 ("in preparation" — never describe any paper as submitted/accepted/published
 until that field changes; enforced by `tools/validate_pitch_claims.py`).*
@@ -36,9 +36,13 @@ All registered misses are reported as failures (4 of 7 registered predictions; 2
   `replication/error-geometry/NOVELTY.md` (3 adversarial prior-art sweeps);
   venue strategy in `paper2/TARGETING.md`.
 - **Formal core**: `lean-spec/.../Theory/{ProjectionLaw, ConvexProjection,
-  SpectrumBridge, ErrorGeometry}.lean` — normal-cone consensus theorem,
+  SpectrumBridge, ErrorGeometry, AffineDecomposition, SmoothProjection,
+  FiniteSampleConcentration}.lean` — normal-cone consensus theorem,
   PR gauge derived as theorem, ribbon collapse ≤ 3(d−1)/ρ, ribbon/consensus
-  decoupling. 27 theorems, 0 sorry, 0 new axioms; full lib builds.
+  decoupling, affine decomposition, local normal-cone theorem for smooth
+  non-convex immersions, and Hoeffding entrywise concentration of the empirical
+  second-moment matrix. 77 build-locked theorems in `Vision.lean`, ~225
+  declarations, 0 `sorry`, 0 new axioms; 2891-job `lake build` green.
 - **Replication**: `replication/error-geometry/` — Tier 1 (NumPy-only,
   seconds, verifies every headline statistic) and Tier 2 (recompute from
   public checkpoints, bit-exact) both verified; THEORY.md is the
@@ -69,6 +73,6 @@ All registered misses are reported as failures (4 of 7 registered predictions; 2
    ledger; not in this checkout). Settles the ledger's re-audit entry and
    the Fe conjecture.
 2. DONE 2026-06-11: round-2 prereg registered (prereg_round2.md: single primary endpoints, axis statistics, symmetric equivalence-bound kills, DFT-PBE anchor test, harness hardening gate). Execution = round 2.
-3. DONE 2026-06-11 (except user steps): PR range settled by pinned dataset (median 1.09, max 2.29; Fig 2 regenerated 600 dpi); companion titles set. USER: Zenodo DOI (eplication/error-geometry/ZENODO_DEPOSIT.md is paste-ready), ORCID.
+3. 2026-06-16: PR range settled by pinned dataset (median 1.09, max 2.29; Fig 2 regenerated 600 dpi); companion titles set; academic review surfaced on library.lupine.science; versioned PDF assets deployed at `/assets/papers/projection-law-v2026-06-16.pdf`. USER: Zenodo DOI (see `replication/error-geometry/ZENODO_DEPOSIT.md` and `.zenodo.json`), ORCID, adversarial multi-agent review pass from `TARGETING.md`.
 4. DONE 2026-06-11: 3-referee adversarial review run; revision R2 incorporates all findings (commit f9e1da40). USER: arXiv + PRX submission clicks; IMMI copy of P2 must be regenerated from R2 master first.
 5. READY: merge dry-run clean (0 conflicts; 28 ahead / 44 behind). USER: git merge codex/science on main + push → CI deploys corrected deck/library/llms. Eyeball the deck render first (new proof section).

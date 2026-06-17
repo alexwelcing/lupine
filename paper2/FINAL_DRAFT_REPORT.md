@@ -3,7 +3,7 @@
 **Date:** 2026-06-16
 **PRX master:** `paper2/projection-law.tex`  
 **IMMI companion:** `paper2/immi/projection-law-immi.tex`  
-**PDFs:** `paper2/projection-law.pdf` (14 pp), `paper2/immi/projection-law-immi.pdf` (14 pp)
+**PDFs:** `paper2/projection-law.pdf` (15 pp), `paper2/immi/projection-law-immi.pdf` (15 pp)
 
 ## What was delivered
 
@@ -34,11 +34,14 @@
    - `paper2/projection-law-submission-bundle.zip` contains source, bibliography, final PDF, and figure PDFs plus a replication-kit pointer.
 
    - Rebuilt `projection-law.pdf` and `immi/projection-law-immi.pdf` from updated sources; refreshed submission bundles.
+   - Addressed academic-review MUST FIX items: tightened affine/gauge and smooth-local/global bridges; downplayed finite-sample PR sample-complexity claim; added MLIP permutation-floor nuance to abstract, Table 1, and the IMMI abstract; added versioned PDF assets to `library-site` and updated `working-papers.html` links.
 
 ## Known remaining manual steps
 
 - **Zenodo DOI**: mint the deposit per `replication/error-geometry/ZENODO_DEPOSIT.md` and replace placeholder DOIs in both papers.
 - **ORCID**: fill the author ORCID in both P2 and the IMMI companion.
+- **Adversarial multi-agent review pass**: run the pass described in `TARGETING.md` before submission.
+- **External marketing page**: `lupine.science` marketing source is outside this repo and still points to the old GCS PDF; update it to the new `/assets/papers/projection-law-v2026-06-16.pdf` link.
 - **Final reference audit**: re-verify `boe2018` page range and `gao2015` entry at format-conversion time (flagged in `TARGETING.md`).
 - **PRX / arXiv submission**: the manuscript is now technically submission-ready; venue-specific formatting and cover letter are the next human steps.
 

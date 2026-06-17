@@ -263,3 +263,16 @@ risk is overclaiming how far the new affine/smooth/finite-sample theorems
 extend the core law. Fix those conceptual framing issues, clean up the public
 surfaces and placeholders, and run the planned adversarial review before
 pressing submit.
+
+---
+
+## 9. Fix log (2026-06-16)
+
+The first pass of fixes was applied in the same cycle:
+
+- **§2.1 / §2.2 (overclaim):** `paper2/projection-law.tex` and `immi/projection-law-immi.tex` already state that Theorem 5 gives the bias/within-family split, not the isotropic-noise gauge; that Theorem 6 is pointwise and does not imply global consensus; and that the finite-sample bound is entrywise, with PR continuity only preventing discontinuous jumps. Table 1 and the MLIP abstract now note the permutation-floor nuance.
+- **§2.4 (MLIP nuance):** Added "exact permutation $p=0.029$, i.e. 2 of all 70 labelings at the resolution floor" to the PRX abstract; added "2 of 70 labelings at the resolution floor" and the failed effect-size component to the IMMI abstract; updated Table 1 in both formats.
+- **§3 (stable PDF URL):** Rebuilt PDFs are now shipped as versioned assets under `library-site/src/assets/papers/projection-law-v2026-06-16.pdf` and `projection-law-immi-v2026-06-16.pdf`; `working-papers.html` and the catalog article point to those URLs.
+- **§6 (public surface):** Added this review as a first-class article in the library catalog (`library-site/scripts/catalog.js`) and linked it from the Working Papers page.
+
+Remaining open gates: fill ORCID and Zenodo DOI placeholders; run the adversarial multi-agent review pass in `TARGETING.md`; update the external `lupine.science` marketing page (source not in this repo).

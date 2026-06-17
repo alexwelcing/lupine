@@ -16,7 +16,7 @@
 
 \title{\bfseries The Projection Law: Model-Ensemble Errors Point at Their Binding Constraint}
 \author{Alex Welcing\\ \small Lupine Science, Union City, NJ\\ \small \texttt{alexwelcing@gmail.com}}
-\date{June 14, 2026}
+\date{June 16, 2026}
 
 \begin{document}
 \maketitle
@@ -35,16 +35,17 @@ $\mathrm{PR}(d,\rho) = (\rho+d)^2/((\rho+1)^2+(d-1))$, collapsing to 1 at
 explicit rate $3(d-1)/\rho$; the participation ratio is provably blind to
 sign structure that pairwise alignment detects; and the chain is extended to
 closed affine reachable sets (bias--within-family decomposition), $C^1$ smooth
-non-convex immersions (local normal cone), and finite-sample concentration of
-the empirical second-moment matrix used by the gauge. We then test the law's sharpest
+non-convex immersions (local normal cone), and Hoeffding entrywise concentration of
+the empirical second-moment matrix. We then test the law's sharpest
 consequence --- \emph{errors organize by constraint, not by implementation} ---
 with pre-registered factorial experiments at three layers of one epistemic
 stack. Classical interatomic potentials (559 models): within-family
-reference--prediction correlation $0.95$, error dimensionality invariant over
-forty years. Foundation machine-learned potentials (8 MatPES models: 4
+reference--prediction correlation $0.95$, error dimensionality --- the
+hyper-ribbon geometry of ensemble error vectors, not parameter-space
+sloppy-model ribbons --- invariant over forty years. Foundation machine-learned potentials (8 MatPES models: 4
 architectures $\times$ 2 training functionals): errors cluster by training
 functional, not architecture ($S_{\mathrm{func}}{=}{+}0.317$ vs.\
-$S_{\mathrm{arch}}{=}{-}0.093$, permutation $p{=}0.029$; the registered
+$S_{\mathrm{arch}}{=}{-}0.093$, exact permutation $p{=}0.029$, i.e.\ 2 of all 70 labelings at the resolution floor; the registered
 effect-size component of this test failed and is reported as a failure), with
 the registered rotation prediction confirmed on Au and Pt but not Ag. DFT
 implementations (12 ACWF methods, 384 systems): errors cluster by
@@ -214,9 +215,13 @@ T - p \;=\; b \, +\, \xi(p),
 with $b \perp \xi(p)$.
 \end{theorem}
 
-Theorem~\ref{thm:affine} turns the bias-plus-noise spectrum of
+Theorem~\ref{thm:affine} turns the bias-plus-within-family \emph{split} of
 Theorem~\ref{thm:gauge} from a modeling assumption into a derivable
-consequence for affine families.
+consequence for affine families. The isotropic-noise gauge itself remains an
+empirical regularity: the theorem gives the shared bias direction and the
+orthogonal within-family subspace, but the additional assumptions of isotropic
+scatter and a common bias for every ensemble member are justified by the data
+in \S\ref{sec:classical}--\ref{sec:dft}, not derived here.
 
 \begin{theorem}[Local normal cone, smooth non-convex families]\label{thm:smooth}
 Let $f: \mathbb{R}^k \to E$ be a $C^1$ immersion and $x^*$ a local minimizer
@@ -224,10 +229,12 @@ of $\|T - f(x)\|$. Then the residual $T - f(x^*)$ is orthogonal to the tangent
 space $\operatorname{range} Df(x^*)$.
 \end{theorem}
 
-Theorem~\ref{thm:smooth} licenses the neural-network reachable sets used
-below: the conclusion is pointwise (one normal space per local minimizer), not
-the global consensus theorem, and empirical clustering tests that normal-space
-membership.
+Theorem~\ref{thm:smooth} licenses testing tangent-space orthogonality for
+neural-network reachable sets: the conclusion is pointwise (one normal space
+per local minimizer), not the global consensus theorem. The empirical
+clustering in \S\ref{sec:mlip} is interpreted as nearby local minimizers
+landing in a common normal direction; it does not follow from
+Theorem~\ref{thm:smooth} that every local minimizer shares the same residual.
 
 \begin{theorem}[Finite-sample concentration]\label{thm:concentration}
 Let $X_1, \dots, X_n$ be i.i.d.\ bounded random vectors in $\mathbb{R}^d$
@@ -242,6 +249,14 @@ Moreover, the participation ratio
 $\mathrm{PR}(M) = (\operatorname{tr} M)^2 / \operatorname{tr}(M^2)$ is
 continuous wherever the denominator is non-zero.
 \end{theorem}
+
+Theorem~\ref{thm:concentration} bounds each entry of the empirical
+second-moment matrix; continuity of the participation ratio ensures that small
+entrywise perturbations cannot produce a discontinuous jump. It does not, by
+itself, give a closed-form sample-complexity bound for $|\widehat{\rm PR} - {\rm PR}|$
+because the denominator $\operatorname{tr}(M^2)$ can be arbitrarily small. In
+practice, PR uncertainty is quantified by the bootstrap intervals reported in
+\S\ref{sec:classical}.
 
 All seven theorems are verified in Lean~4 against a pinned Mathlib as part of
 the program's larger formal corpus --- 225 theorem and lemma declarations
@@ -474,7 +489,7 @@ condition's status.}
 Layer & Ensemble & Binding constraint & Evidence & Kill condition \\
 \midrule
 Classical IPs & 559 potentials & functional form & within-family $r{=}0.95$; PR invariant 40 yr & (observational) \\
-Foundation MLIPs & $4{\times}2$ MatPES $+$ anchors & training functional & $S_{\mathrm{func}}{=}{+}0.317$ vs ${-}0.093$, $p{=}0.029$ & not triggered \\
+Foundation MLIPs & $4{\times}2$ MatPES $+$ anchors & training functional & $S_{\mathrm{func}}{=}{+}0.317$ vs ${-}0.093$, exact perm.\ $p{=}0.029$ (2/70, floor) & not triggered \\
 DFT codes & 12 ACWF methods & pseudopotential table & $S_{\mathrm{table}}{=}{+}0.526$ vs ${+}0.265$, $p{=}0.017$ & not triggered \\
 \bottomrule
 \end{tabularx}
@@ -596,8 +611,10 @@ standard but unformalized. The MLIP layer uses one validated harness
 (energy-based, $\varepsilon_{\max}=0.5\%$, float32, non-spin-initialized
 inference) on fifteen cubic elemental metals and elastic observables --- the
 lowest-dimensional, most symmetric corner of materials space --- and compares
-to \emph{experimental} references, so the measured residual mixes fitting
-error, exchange--correlation bias, and thermal/zero-point offsets; a
+FCC metals to \emph{experimental} references and BCC/non-FCC metals to
+Materials Project (DFT-PBE) references, so the measured residual mixes fitting
+error, exchange--correlation bias, reference-standard differences, and
+thermal/zero-point offsets; a
 per-element 0~K DFT-PBE elastic anchor (registered for round 2) is the
 decisive test that would separate them, and for the magnetic elements (Fe,
 Cr, Ni, V) the spin protocol is a live confound. The DFT layer inherits
@@ -605,7 +622,10 @@ ACWF's protocol choices, and the SIESTA nested-constraint reading is
 post-hoc until an independent localized-basis code is tested. Statistically:
 the permutation lattices are small (minimum attainable $p = 1/70$), seven
 registered predictions across two experiments invite multiplicity concerns
-that round 2's single-primary-endpoint design addresses, and the registered
+that round 2's single-primary-endpoint design addresses; in the present
+manuscript the two kill conditions were primary (cluster-by-architecture for
+MLIPs, cluster-by-code for DFT), while the other five predictions were
+auxiliary robustness checks with no formal hierarchical correction applied, and the registered
 kill conditions were asymmetric (refutation required a sign reversal;
 round 2 registers a symmetric equivalence bound). Four of the seven
 registered predictions failed and are reported as failures (2/4 and 1/3

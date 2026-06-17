@@ -1,0 +1,37 @@
+{
+  "title": "Replication kit and formal artifact: The Projection Law — error geometry of model ensembles (classical potentials, foundation MLIPs, DFT implementations)",
+  "upload_type": "software",
+  "description": "Two-tier replication kit for the Projection Law manuscript: Tier 1 reproduces every factorial statistic from committed raw data using NumPy alone; Tier 2 re-derives raw elastic constants from public model checkpoints with a bit-exact-regression harness. Includes pinned datasets for 559 classical interatomic potentials, 8 MatPES-trained foundation MLIPs, and 12 ACWF DFT method configurations; three pre-registrations with commit hashes; referee-driven robustness analyses; and pointers to the machine-checked Lean 4 theory core (77 build-locked theorems, ~225 declarations, zero sorry, zero new axioms).",
+  "creators": [
+    {
+      "name": "Welcing, Alex",
+      "affiliation": "Lupine Science",
+      "orcid": "0000-0000-0000-0000"
+    }
+  ],
+  "keywords": [
+    "model ensembles",
+    "error geometry",
+    "interatomic potentials",
+    "foundation models",
+    "density functional theory",
+    "pre-registration",
+    "Lean 4",
+    "machine-checked proofs"
+  ],
+  "license": "MIT",
+  "related_identifiers": [
+    {
+      "relation": "isSupplementTo",
+      "identifier": "https://github.com/alexwelcing/lupine/tree/main/paper2",
+      "resource_type": "publication-article"
+    },
+    {
+      "relation": "isIdenticalTo",
+      "identifier": "https://storage.googleapis.com/shed-489901-replication/error-geometry/v1-10c18ace/",
+      "resource_type": "other"
+    }
+  ],
+  "communities": [],
+  "notes": "Before minting: replace the placeholder ORCID with the author's real ORCID, add arXiv/preprint DOIs for Papers 1 and 2 under related_identifiers, and confirm the MaterialsCloud DOI for the ACWF source data if required by the journal."
+}

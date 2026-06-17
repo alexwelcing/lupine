@@ -16,6 +16,25 @@ Newest first. Dates are absolute.
 
 ---
 
+## 2026-06-16 — Academic review of the Projection Law / IMMI suite, first fix pass
+
+- **Why.** An independent adversarial review flagged six MUST-FIX gates before any journal submission: the affine/smooth/finite-sample theorems were being oversold as deriving global claims; the MLIP factorial result needed permutation-floor nuance; theorem counts and PDF URLs were inconsistent across surfaces; and ORCID/DOI placeholders were still open.
+- **What.**
+  - Confirmed the formal core is unchanged and green: `lean-spec lake build` (2891 jobs, 77 build-locked theorems in `Vision.lean`, 0 `sorry`, 0 new axioms).
+  - Tightened the PRX and IMMI manuscripts: qualified the affine/gauge and smooth-local/global bridges, downplayed the finite-sample PR sample-complexity claim, and added permutation-floor wording to the abstract, Table 1, and the IMMI abstract.
+  - Rebuilt both PDFs (`paper2/projection-law.pdf`, `paper2/immi/projection-law-immi.pdf`) and submission bundles.
+  - Published the academic review at `docs/reviews/academic-review-projection-law-2026-06-16.md` and surfaced it as a first-class article on `library.lupine.science` via `library-site/scripts/catalog.js`.
+  - Added versioned PDF assets under `library-site/src/assets/papers/` and updated `working-papers.html` to serve them from the site instead of a stale GCS URL.
+  - Prepared submission collateral: `paper2/cover-letter.md`, `replication/error-geometry/.zenodo.json`, and updated `ZENODO_DEPOSIT.md`.
+- **Results.**
+  - `paper2/python quality_gate.py --lean` passes.
+  - `git diff --check` clean.
+  - Library site builds 54 articles; the review renders at `/#/read/academic-review-projection-law`.
+- **Next.**
+  - Fill the author ORCID and mint the Zenodo DOI (user action).
+  - Run the adversarial multi-agent review pass described in `TARGETING.md` and incorporate any findings.
+  - Update the external `lupine.science` marketing page (source not in this repo) to point to the new versioned PDF.
+
 ## 2026-06-14 - LUPI controls palette rollout
 
 - **Why.** The viewer's advanced visual controls had outgrown the fixed side drawer. Users needed

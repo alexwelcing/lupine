@@ -18,8 +18,9 @@ Paper 2's Reproducibility section.
   JSONs), `recompute_born_filtered.py`, `make_fig2_classical.py`
 - Pre-registrations: `prereg_functional_vs_architecture_2x2.md` (@dffbe595),
   `prereg_acwf_delta_gauge.md` (@ebf39e33), `prereg_round2.md`
-- Lean artifact: tag `lean-spec` at the current commit; include the four
-  Theory files or the repo tarball (27 theorems, 0 sorry)
+- Lean artifact: tag `lean-spec` at the current commit; include the five
+  core theory files or the repo tarball (77 build-locked theorems in
+  `Vision.lean`, ~225 declarations, 0 `sorry`, 0 new axioms)
 
 **Live GCS mirror (already public):** https://storage.googleapis.com/shed-489901-replication/error-geometry/v1-10c18ace/ — add as a related identifier ("is identical to") in the Zenodo form.
 
@@ -28,7 +29,7 @@ Paper 2's Reproducibility section.
 - **Title:** Replication kit and formal artifact: The Projection Law —
   error geometry of model ensembles (classical potentials, foundation MLIPs,
   DFT implementations)
-- **Authors:** Welcing, Alex (Lupine Science) — ORCID: [fill]
+- **Authors:** Welcing, Alex (Lupine Science) — ORCID: [fill before minting]
 - **License:** MIT (code) / CC-BY-4.0 (data+docs)
 - **Keywords:** model ensembles; error geometry; interatomic potentials;
   foundation models; DFT verification; pre-registration; Lean 4

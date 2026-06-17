@@ -75,6 +75,11 @@ export const CATALOG = {
       label: { en: 'Meta', zh: '元数据' },
       blurb: { en: 'Navigation, extraction logs, and how this library was built.', zh: '导航、提取日志以及该图书馆是如何构建的。' },
     },
+    {
+      id: 'reviews',
+      label: { en: 'Reviews', zh: '评议' },
+      blurb: { en: 'Independent, adversarial, and self-reviews of claims before submission.', zh: '提交前对声明的独立、对抗性和自我评议。' },
+    },
   ],
 
   entries: [
@@ -87,6 +92,24 @@ export const CATALOG = {
       category: 'changelog',
       tags: ['papers', 'projection-law', 'replication', 'featured'],
       featured: true,
+    },
+    {
+      id: 'academic-review-projection-law',
+      source: 'docs/reviews/academic-review-projection-law-2026-06-16.md',
+      title: 'Academic Review — Projection Law / IMMI Paper Suite',
+      subtitle: 'Independent adversarial review: strengths, six MUST-FIX items, and recommended gates before submission.',
+      category: 'reviews',
+      tags: ['review', 'projection-law', 'submission-gate'],
+      status: 'open',
+    },
+    {
+      id: 'adversarial-review-projection-law',
+      source: 'docs/reviews/adversarial-review-projection-law-2026-06-16.md',
+      title: 'Adversarial Review — Projection Law / IMMI Paper Suite',
+      subtitle: 'Second-pass review of the first-pass fixes: checklist, new issues, and consistency verification.',
+      category: 'reviews',
+      tags: ['review', 'projection-law', 'submission-gate'],
+      status: 'open',
     },
     // ── Changelog & Progress ────────────────────────────────────────
     {
