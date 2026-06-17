@@ -55,8 +55,9 @@
   - Route-level SEO now updates titles, descriptions, canonical URLs, social preview images, and structured data for the homepage and 1M copper lattice scene.
   - SEO now has a shared route manifest and build-time static HTML generation for crawler-ready route metadata before React loads.
   - New public study/materials routes explain `/study/organic-functional-groups` and `/materials/omol25` with dedicated titles, descriptions, canonical URLs, social images, JSON-LD, sitemap entries, footer links, and agent-readable guidance.
+  - A broader search-intent cluster now covers `/study/functional-group-examples`, `/study/organic-chemistry-3d-molecule-viewer`, `/materials/omol25-molecule-geometry`, and `/materials/million-atom-viewer` with visible education copy, route-specific metadata, JSON-LD, sitemap entries, footer links, and agent-readable guidance.
   - OMol25 SEO copy explicitly preserves the data boundary: real DFT XYZ geometry and method-derived functional-group screens, without claiming source bond topology when the source does not provide it.
-  - Cloud Run now serves canonical extensionless SEO routes directly, avoiding nginx directory redirects to internal `:8080` URLs.
+  - Cloud Run now serves generated SEO route `index.html` files generically for extensionless canonical URLs, avoiding nginx directory redirects to internal `:8080` URLs as the cluster grows.
   - `.glimbin` loading now survives static hosts that ignore HTTP Range requests by slicing the returned full file instead of attempting to decompress the wrong byte span.
   - Study Lens now has a clearer first-viewport hierarchy, stronger practice-check affordances, and safer wrapping for long course labels.
   - OMol25 now reads more like a serious data browser, with steadier typography, fixed-size periodic-table labels, dashboard-like stats, and refined filter/result chips.

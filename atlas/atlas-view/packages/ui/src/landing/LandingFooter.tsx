@@ -119,8 +119,11 @@ export function LandingFooter() {
               <span style={headerStyle}>Study routes</span>
               <a href="/scenes/1m-copper-lattice" style={linkStyle} onMouseEnter={(e) => e.currentTarget.style.color = '#1edce0'} onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)'}>1M Atom Scene</a>
               <a href="/study/organic-functional-groups" style={linkStyle} onMouseEnter={(e) => e.currentTarget.style.color = '#1edce0'} onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)'}>Functional Groups</a>
+              <a href="/study/functional-group-examples" style={linkStyle} onMouseEnter={(e) => e.currentTarget.style.color = '#1edce0'} onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)'}>Group Examples</a>
+              <a href="/study/organic-chemistry-3d-molecule-viewer" style={linkStyle} onMouseEnter={(e) => e.currentTarget.style.color = '#1edce0'} onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)'}>3D Ochem Viewer</a>
               <a href="/materials/omol25" style={linkStyle} onMouseEnter={(e) => e.currentTarget.style.color = '#1edce0'} onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)'}>OMol25 Geometry</a>
-              <a href="/?tab=omol25#gallery" style={linkStyle} onMouseEnter={(e) => e.currentTarget.style.color = '#1edce0'} onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)'}>Dataset Browser</a>
+              <a href="/materials/omol25-molecule-geometry" style={linkStyle} onMouseEnter={(e) => e.currentTarget.style.color = '#1edce0'} onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)'}>OMol25 XYZ</a>
+              <a href="/materials/million-atom-viewer" style={linkStyle} onMouseEnter={(e) => e.currentTarget.style.color = '#1edce0'} onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)'}>Million-Atom Viewer</a>
             </div>
             <div style={columnStyle}>
               <span style={headerStyle}>Engagement</span>

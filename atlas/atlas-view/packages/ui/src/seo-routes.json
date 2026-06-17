@@ -143,6 +143,129 @@
         ]
       }
     },
+    "functionalGroupExamples": {
+      "title": "Functional Group Examples in 3D - Lupi",
+      "description": "Explore organic chemistry functional group examples in a 3D molecule viewer with aspirin, carbonyls, phenols, nitriles, esters, and printable study prompts.",
+      "canonicalPath": "/study/functional-group-examples",
+      "image": "https://lupi.live/gallery/snapshots/aspirin.jpg",
+      "imageAlt": "Aspirin rendered in Lupi as a multi-functional organic chemistry example.",
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://lupine.science/#organization",
+            "name": "Lupine Science",
+            "url": "https://lupine.science",
+            "description": "Lupine Science builds scientific tools for molecular and materials visualization."
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://lupi.live/study/functional-group-examples#webpage",
+            "name": "Functional Group Examples in 3D",
+            "url": "https://lupi.live/study/functional-group-examples",
+            "isPartOf": { "@id": "https://lupi.live/#website" },
+            "publisher": { "@id": "https://lupine.science/#organization" },
+            "description": "A Lupi search-intent page for comparing college organic chemistry functional group examples in a 3D molecule viewer.",
+            "dateModified": "2026-06-17",
+            "primaryImageOfPage": {
+              "@type": "ImageObject",
+              "url": "https://lupi.live/gallery/snapshots/aspirin.jpg",
+              "caption": "Aspirin rendered as a multi-functional organic chemistry example in Lupi."
+            },
+            "breadcrumb": { "@id": "https://lupi.live/study/functional-group-examples#breadcrumb" }
+          },
+          {
+            "@type": "LearningResource",
+            "@id": "https://lupi.live/study/functional-group-examples#learning-resource",
+            "name": "Functional group examples in 3D",
+            "url": "https://lupi.live/study/functional-group-examples",
+            "inLanguage": "en",
+            "educationalLevel": "College",
+            "learningResourceType": "Interactive visualization",
+            "about": ["functional group examples", "organic chemistry", "carbonyls", "phenols", "esters", "nitriles", "3D molecule viewer"],
+            "teaches": ["functional-group recognition", "molecule comparison", "mechanism reasoning", "spectroscopy cue transfer"],
+            "publisher": { "@id": "https://lupine.science/#organization" },
+            "description": "Real 3D molecule examples for comparing organic functional groups and exporting study sheets."
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://lupi.live/study/functional-group-examples#breadcrumb",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Lupi", "item": "https://lupi.live/" },
+              { "@type": "ListItem", "position": 2, "name": "Study", "item": "https://lupi.live/study/organic-functional-groups" },
+              { "@type": "ListItem", "position": 3, "name": "Functional Group Examples", "item": "https://lupi.live/study/functional-group-examples" }
+            ]
+          }
+        ]
+      }
+    },
+    "ochemViewer": {
+      "title": "3D Molecule Viewer for Organic Chemistry - Lupi",
+      "description": "Use Lupi as a 3D molecule viewer for organic chemistry study with functional group cues, mechanism prompts, real coordinates, and printable viewer sheets.",
+      "canonicalPath": "/study/organic-chemistry-3d-molecule-viewer",
+      "image": "https://lupi.live/gallery/snapshots/alanine_dipeptide.jpg",
+      "imageAlt": "Alanine dipeptide rendered in Lupi as a 3D organic chemistry study example.",
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://lupine.science/#organization",
+            "name": "Lupine Science",
+            "url": "https://lupine.science",
+            "description": "Lupine Science builds scientific tools for molecular and materials visualization."
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://lupi.live/study/organic-chemistry-3d-molecule-viewer#webpage",
+            "name": "3D Molecule Viewer for Organic Chemistry",
+            "url": "https://lupi.live/study/organic-chemistry-3d-molecule-viewer",
+            "isPartOf": { "@id": "https://lupi.live/#website" },
+            "publisher": { "@id": "https://lupine.science/#organization" },
+            "description": "A Lupi route explaining how a 3D molecule viewer supports college organic chemistry study.",
+            "dateModified": "2026-06-17",
+            "primaryImageOfPage": {
+              "@type": "ImageObject",
+              "url": "https://lupi.live/gallery/snapshots/alanine_dipeptide.jpg",
+              "caption": "Alanine dipeptide rendered as a 3D molecule study example in Lupi."
+            },
+            "breadcrumb": { "@id": "https://lupi.live/study/organic-chemistry-3d-molecule-viewer#breadcrumb" }
+          },
+          {
+            "@type": "SoftwareApplication",
+            "@id": "https://lupi.live/study/organic-chemistry-3d-molecule-viewer#software",
+            "name": "Lupi organic chemistry molecule viewer",
+            "url": "https://lupi.live/study/organic-chemistry-3d-molecule-viewer",
+            "applicationCategory": "EducationalApplication",
+            "operatingSystem": "Web",
+            "publisher": { "@id": "https://lupine.science/#organization" },
+            "description": "Browser-native 3D molecule viewer with Study Lens prompts, functional-group examples, and printable organic chemistry sheets."
+          },
+          {
+            "@type": "LearningResource",
+            "@id": "https://lupi.live/study/organic-chemistry-3d-molecule-viewer#learning-resource",
+            "name": "3D molecule viewer for organic chemistry",
+            "url": "https://lupi.live/study/organic-chemistry-3d-molecule-viewer",
+            "inLanguage": "en",
+            "educationalLevel": "College",
+            "learningResourceType": "Interactive visualization",
+            "about": ["organic chemistry", "3D molecule viewer", "functional groups", "mechanism reasoning"],
+            "publisher": { "@id": "https://lupine.science/#organization" },
+            "description": "A viewer-backed study route for rotating molecules, recognizing functional groups, and exporting study sheets."
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://lupi.live/study/organic-chemistry-3d-molecule-viewer#breadcrumb",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Lupi", "item": "https://lupi.live/" },
+              { "@type": "ListItem", "position": 2, "name": "Study", "item": "https://lupi.live/study/organic-functional-groups" },
+              { "@type": "ListItem", "position": 3, "name": "3D Molecule Viewer", "item": "https://lupi.live/study/organic-chemistry-3d-molecule-viewer" }
+            ]
+          }
+        ]
+      }
+    },
     "omol25": {
       "title": "OMol25 Geometry Browser - Lupi",
       "description": "Search and inspect OMol25 molecules in Lupi using real DFT geometry, source-aware labels, and method-derived functional-group screens.",
@@ -183,6 +306,124 @@
             "description": "A searchable Lupi index over OMol25 neutral-validation structures with real DFT coordinates served as XYZ geometry files and method-derived functional-group screens.",
             "variableMeasured": ["atom positions", "element identity", "molecular formula", "record source"],
             "isAccessibleForFree": true
+          }
+        ]
+      }
+    },
+    "omol25Geometry": {
+      "title": "OMol25 Molecule Geometry Dataset Viewer - Lupi",
+      "description": "Open OMol25 molecule geometry as real XYZ structures in Lupi while keeping coordinates, method-derived screens, and source topology claims separate.",
+      "canonicalPath": "/materials/omol25-molecule-geometry",
+      "image": "https://lupi.live/gallery/snapshots/water_cluster_64.jpg",
+      "imageAlt": "A molecular cluster rendered in Lupi for geometry-first dataset inspection.",
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://lupine.science/#organization",
+            "name": "Lupine Science",
+            "url": "https://lupine.science",
+            "description": "Lupine Science builds scientific tools for molecular and materials visualization."
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://lupi.live/materials/omol25-molecule-geometry#webpage",
+            "name": "OMol25 Molecule Geometry Dataset Viewer",
+            "url": "https://lupi.live/materials/omol25-molecule-geometry",
+            "isPartOf": { "@id": "https://lupi.live/#website" },
+            "publisher": { "@id": "https://lupine.science/#organization" },
+            "description": "A Lupi route for OMol25 molecule geometry search, real XYZ loading, and source-aware data boundaries.",
+            "dateModified": "2026-06-17",
+            "primaryImageOfPage": {
+              "@type": "ImageObject",
+              "url": "https://lupi.live/gallery/snapshots/water_cluster_64.jpg",
+              "caption": "Molecular cluster rendered in Lupi for geometry-first inspection."
+            },
+            "breadcrumb": { "@id": "https://lupi.live/materials/omol25-molecule-geometry#breadcrumb" }
+          },
+          {
+            "@type": "Dataset",
+            "@id": "https://lupi.live/materials/omol25-molecule-geometry#dataset",
+            "name": "OMol25 molecule geometry records in Lupi",
+            "url": "https://lupi.live/materials/omol25-molecule-geometry",
+            "creator": { "@id": "https://lupine.science/#organization" },
+            "description": "A searchable Lupi route over OMol25 neutral-validation geometry records with real DFT XYZ coordinates and source-aware display labeling.",
+            "variableMeasured": ["atom positions", "element identity", "molecular formula", "record source", "method-derived screen tags"],
+            "isAccessibleForFree": true
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://lupi.live/materials/omol25-molecule-geometry#breadcrumb",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Lupi", "item": "https://lupi.live/" },
+              { "@type": "ListItem", "position": 2, "name": "Materials", "item": "https://lupi.live/materials/omol25" },
+              { "@type": "ListItem", "position": 3, "name": "OMol25 Molecule Geometry", "item": "https://lupi.live/materials/omol25-molecule-geometry" }
+            ]
+          }
+        ]
+      }
+    },
+    "millionAtomViewer": {
+      "title": "Million-Atom Materials Viewer - Lupi",
+      "description": "Open a 953,312-atom FCC copper lattice in Lupi and see million-atom materials visualization controlled directly in the browser.",
+      "canonicalPath": "/materials/million-atom-viewer",
+      "image": "https://lupi.live/gallery/snapshots/massive_1m.jpg",
+      "imageAlt": "A nearly million-atom FCC copper lattice rendered in the Lupi materials viewer.",
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://lupine.science/#organization",
+            "name": "Lupine Science",
+            "url": "https://lupine.science",
+            "description": "Lupine Science builds scientific tools for molecular and materials visualization."
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://lupi.live/materials/million-atom-viewer#webpage",
+            "name": "Million-Atom Materials Viewer",
+            "url": "https://lupi.live/materials/million-atom-viewer",
+            "isPartOf": { "@id": "https://lupi.live/#website" },
+            "publisher": { "@id": "https://lupine.science/#organization" },
+            "description": "A Lupi route for opening and understanding browser-controlled million-atom materials visualization.",
+            "dateModified": "2026-06-17",
+            "primaryImageOfPage": {
+              "@type": "ImageObject",
+              "url": "https://lupi.live/gallery/snapshots/massive_1m.jpg",
+              "caption": "953,312-atom FCC copper lattice rendered in Lupi."
+            },
+            "breadcrumb": { "@id": "https://lupi.live/materials/million-atom-viewer#breadcrumb" }
+          },
+          {
+            "@type": "Dataset",
+            "@id": "https://lupi.live/materials/million-atom-viewer#dataset",
+            "name": "953,312-atom FCC copper lattice",
+            "url": "https://lupi.live/?sim=massive_1m",
+            "creator": { "@id": "https://lupine.science/#organization" },
+            "description": "Generated FCC copper scale-test geometry packaged for browser-native Lupi visualization.",
+            "variableMeasured": ["atom positions", "element identity"],
+            "isAccessibleForFree": true
+          },
+          {
+            "@type": "SoftwareApplication",
+            "@id": "https://lupi.live/materials/million-atom-viewer#software",
+            "name": "Lupi million-atom materials viewer",
+            "url": "https://lupi.live/materials/million-atom-viewer",
+            "applicationCategory": "Scientific visualization",
+            "operatingSystem": "Web",
+            "publisher": { "@id": "https://lupine.science/#organization" },
+            "description": "Browser-native molecular and materials viewer for large atomistic scenes."
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://lupi.live/materials/million-atom-viewer#breadcrumb",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Lupi", "item": "https://lupi.live/" },
+              { "@type": "ListItem", "position": 2, "name": "Materials", "item": "https://lupi.live/materials/omol25" },
+              { "@type": "ListItem", "position": 3, "name": "Million-Atom Viewer", "item": "https://lupi.live/materials/million-atom-viewer" }
+            ]
           }
         ]
       }

@@ -72,7 +72,7 @@ import { useStore } from './store';
 import { getMaxSafeAtomCount, getDefaultQualityTier } from './deviceCapabilities';
 import { LandingPage } from './LandingPage';
 import { SceneLandingPage } from './landing/SceneLandingPage';
-import { SeoEducationPage } from './landing/SeoEducationPage';
+import { SeoEducationPage, type SeoEducationKind } from './landing/SeoEducationPage';
 import { ThermoMinimap } from './ThermoMinimap';
 import { AtomsOptimized } from '@atlas/scene/AtomsOptimized';
 import { AtomClusters } from '@atlas/scene/AtomClusters';
@@ -534,6 +534,15 @@ function normalizedPathRoute(route: string) {
   return route.replace(/\/+$/, '') || '/';
 }
 
+const SEO_EDUCATION_ROUTES: Record<string, SeoEducationKind> = {
+  '/study/organic-functional-groups': 'functional-groups',
+  '/study/functional-group-examples': 'functional-group-examples',
+  '/study/organic-chemistry-3d-molecule-viewer': 'ochem-viewer',
+  '/materials/omol25': 'omol25',
+  '/materials/omol25-molecule-geometry': 'omol25-geometry',
+  '/materials/million-atom-viewer': 'million-atom-viewer',
+};
+
 export default function App() {
   if (typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('testbed')) {
     return <Testbed />;
@@ -557,8 +566,7 @@ export default function App() {
   const savedViewSlug = hashPath.startsWith('/view/') ? slugifySavedViewTitle(decodeURIComponent(hashPath.slice('/view/'.length))) : null;
   const isSavedViewRoute = Boolean(savedViewSlug);
   const isCopperSceneRoute = normalizedPath === '/scenes/1m-copper-lattice';
-  const isFunctionalGroupsRoute = normalizedPath === '/study/organic-functional-groups';
-  const isOmol25Route = normalizedPath === '/materials/omol25';
+  const seoEducationKind = SEO_EDUCATION_ROUTES[normalizedPath] ?? null;
 
   useEffect(() => {
     const syncRoute = () => {
@@ -1732,11 +1740,9 @@ export default function App() {
                 ? null
                 : isCopperSceneRoute
                   ? <SceneLandingPage />
-                  : isFunctionalGroupsRoute
-                    ? <SeoEducationPage kind="functional-groups" />
-                    : isOmol25Route
-                      ? <SeoEducationPage kind="omol25" />
-                  : <LandingPage />}
+                  : seoEducationKind
+                    ? <SeoEducationPage kind={seoEducationKind} />
+                    : <LandingPage />}
           </div>
         )}
       </div>

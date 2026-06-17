@@ -1,7 +1,22 @@
-import { FUNCTIONAL_GROUPS_SEO, OMOL25_SEO, useSeo, type SeoConfig } from '../seo';
+import {
+  FUNCTIONAL_GROUPS_SEO,
+  FUNCTIONAL_GROUP_EXAMPLES_SEO,
+  MILLION_ATOM_VIEWER_SEO,
+  OCHEM_VIEWER_SEO,
+  OMOL25_GEOMETRY_SEO,
+  OMOL25_SEO,
+  useSeo,
+  type SeoConfig,
+} from '../seo';
 import { FUNCTIONAL_GROUPS } from '../organicFunctionalGroups';
 
-type SeoEducationKind = 'functional-groups' | 'omol25';
+export type SeoEducationKind =
+  | 'functional-groups'
+  | 'functional-group-examples'
+  | 'ochem-viewer'
+  | 'omol25'
+  | 'omol25-geometry'
+  | 'million-atom-viewer';
 
 interface EducationPageConfig {
   seo: SeoConfig;
@@ -14,6 +29,7 @@ interface EducationPageConfig {
   secondaryLabel: string;
   image: string;
   imageAlt: string;
+  visualCaption: string;
   stats: Array<[string, string]>;
   sections: Array<{ title: string; body: string }>;
   proofTitle: string;
@@ -43,6 +59,7 @@ const PAGES: Record<SeoEducationKind, EducationPageConfig> = {
     secondaryLabel: 'Load aspirin example',
     image: '/gallery/snapshots/aspirin.jpg',
     imageAlt: 'Aspirin rendered in Lupi with its organic chemistry functional groups visible.',
+    visualCaption: 'Aspirin study example',
     stats: [
       ['Course level', 'College ochem'],
       ['Study handles', `${FUNCTIONAL_GROUPS.length} groups`],
@@ -78,6 +95,102 @@ const PAGES: Record<SeoEducationKind, EducationPageConfig> = {
     dataBody:
       'Curated organic examples use 3D coordinate files and teaching labels. Lupi does not turn those labels into fake source bonds or unsupported measured properties.',
   },
+  'functional-group-examples': {
+    seo: FUNCTIONAL_GROUP_EXAMPLES_SEO,
+    eyebrow: 'Organic chemistry examples route',
+    title: 'Functional group examples students can rotate, compare, and print.',
+    intro:
+      'Students search for examples when a name is not enough. Lupi gives them real 3D molecules for alcohols, phenols, aldehydes, ketones, acids, esters, amides, nitriles, arenes, and epoxides, then keeps the comparison inside the viewer.',
+    primaryHref: '/#gallery',
+    primaryLabel: 'Browse example molecules',
+    secondaryHref: '/study/organic-functional-groups',
+    secondaryLabel: 'Open study guide',
+    image: '/gallery/snapshots/aspirin.jpg',
+    imageAlt: 'Aspirin rendered as a multi-functional organic chemistry example in Lupi.',
+    visualCaption: 'Multi-group example route',
+    stats: [
+      ['Search intent', 'Examples by group'],
+      ['Examples include', 'Aspirin + carbonyls'],
+      ['Learning move', 'Compare and transfer'],
+      ['Output', 'Printable sheets'],
+    ],
+    sections: [
+      {
+        title: 'Examples grouped by the decisions students make',
+        body:
+          'The route emphasizes recognition cues that survive across molecules: carbonyl planarity, aromatic context, heteroatom polarity, acid-base behavior, and leaving-group logic.',
+      },
+      {
+        title: 'Each example points back into the active viewer',
+        body:
+          'A student can move from a search result to the gallery, open a molecule, switch Study Lens on, and export the exact configured view for review.',
+      },
+      {
+        title: 'The copy matches professor language',
+        body:
+          'The page is written around first-course concepts such as functional-group families, mechanism handles, spectroscopy checks, and common near-miss examples.',
+      },
+    ],
+    proofTitle: 'A search landing page that behaves like an ochem recitation tool.',
+    proofBody:
+      'Instead of giving a static list, the page sends learners into molecule examples that can be rotated, compared, filtered, studied, and printed.',
+    proofItems: [
+      { label: 'Carbonyls', detail: 'Aldehydes, ketones, esters, acids, amides, anhydrides, and acyl halides become comparable patterns.' },
+      { label: 'Heteroatoms', detail: 'Alcohols, phenols, amines, nitriles, epoxides, sulfides, thiols, and nitro groups keep visible shape context.' },
+      { label: 'Arenes', detail: 'Aromatic examples show how the same group changes when it is attached to a ring system.' },
+    ],
+    dataTitle: 'The examples are teaching labels over real structures.',
+    dataBody:
+      'Lupi uses curated coordinates and explicit functional-group mappings for study. It does not claim those labels are measured properties or source-provided bond annotations.',
+  },
+  'ochem-viewer': {
+    seo: OCHEM_VIEWER_SEO,
+    eyebrow: 'Organic chemistry viewer route',
+    title: 'A 3D molecule viewer built for how organic chemistry is learned.',
+    intro:
+      'Organic chemistry is taught through visual transfer: see a pattern, test what it implies, compare a nearby molecule, and explain the change. Lupi turns that rhythm into a browser-native viewer workflow.',
+    primaryHref: '/?sim=aspirin',
+    primaryLabel: 'Load aspirin in 3D',
+    secondaryHref: '/study/functional-group-examples',
+    secondaryLabel: 'See example set',
+    image: '/gallery/snapshots/alanine_dipeptide.jpg',
+    imageAlt: 'Alanine dipeptide rendered in Lupi as an organic molecule study example.',
+    visualCaption: '3D study workflow',
+    stats: [
+      ['Viewer mode', 'Rotate + inspect'],
+      ['Study layer', 'Ochem prompts'],
+      ['Export', 'Image + PDF sheet'],
+      ['Audience', 'College chemistry'],
+    ],
+    sections: [
+      {
+        title: 'Spatial reasoning comes before answer checking',
+        body:
+          'Learners can inspect atom positions, composition, labels, and group cues before jumping to a memorized reaction family.',
+      },
+      {
+        title: 'Study Lens keeps prompts close to the molecule',
+        body:
+          'Mechanism, polarity, spectroscopy, and common-trap prompts sit with the active structure so a study session does not become a disconnected glossary.',
+      },
+      {
+        title: 'Exports preserve the configured view',
+        body:
+          'Print and PDF study sheets carry the molecule image, labels, group notes, and practice questions so the view can travel into recitation or office hours.',
+      },
+    ],
+    proofTitle: 'The page is a search doorway into the actual viewer experience.',
+    proofBody:
+      'The route explains why a 3D molecule viewer matters for organic chemistry, then moves learners directly into live structures and study surfaces.',
+    proofItems: [
+      { label: 'Recognize', detail: 'Find the visible functional group and name the geometry or polarity cue.' },
+      { label: 'Reason', detail: 'Ask what the group implies for acidity, nucleophilicity, electrophilicity, or spectra.' },
+      { label: 'Transfer', detail: 'Compare a related molecule and decide what changed chemically.' },
+    ],
+    dataTitle: 'Viewer aids stay separate from source claims.',
+    dataBody:
+      'Lupi can draw useful study overlays and display guides, but source geometry, curated teaching labels, and inferred viewer aids stay explicitly separated.',
+  },
   omol25: {
     seo: OMOL25_SEO,
     eyebrow: 'Materials and molecule dataset route',
@@ -90,6 +203,7 @@ const PAGES: Record<SeoEducationKind, EducationPageConfig> = {
     secondaryLabel: 'See functional group study',
     image: '/gallery/snapshots/diamond_crystal.jpg',
     imageAlt: 'A crystalline structure rendered in Lupi as a materials dataset example.',
+    visualCaption: 'OMol25-ready geometry browser',
     stats: [
       ['Indexed slice', '27,697 structures'],
       ['Geometry', 'Real DFT XYZ'],
@@ -125,6 +239,102 @@ const PAGES: Record<SeoEducationKind, EducationPageConfig> = {
     dataBody:
       'The hosted index carries real DFT geometry and compact metadata. Lupi labels viewer-drawn links as visual guides unless a separate provenance artifact supplies source or quantum-analysis bonds.',
   },
+  'omol25-geometry': {
+    seo: OMOL25_GEOMETRY_SEO,
+    eyebrow: 'OMol25 geometry route',
+    title: 'OMol25 molecule geometry opens as real XYZ structures, not formula guesses.',
+    intro:
+      'The useful promise of an OMol25 viewer is not just search. It is opening the actual DFT geometry, preserving the distinction between coordinates, metadata, method-derived screens, and any bonds the source did not provide.',
+    primaryHref: '/?tab=omol25#gallery',
+    primaryLabel: 'Search OMol25 geometry',
+    secondaryHref: '/materials/omol25',
+    secondaryLabel: 'Read data boundary',
+    image: '/gallery/snapshots/water_cluster_64.jpg',
+    imageAlt: 'A molecular cluster rendered in Lupi for geometry-first dataset inspection.',
+    visualCaption: 'Geometry-first dataset view',
+    stats: [
+      ['Route focus', 'XYZ geometry'],
+      ['Source boundary', 'No fake bonds'],
+      ['Search facets', 'Formula + elements'],
+      ['Agent use', 'Loadable hits'],
+    ],
+    sections: [
+      {
+        title: 'Geometry is the source of truth',
+        body:
+          'OMol25 hits load from hosted XYZ coordinate files, so the viewer begins with atom positions and element identity rather than reconstructing chemistry from a formula string.',
+      },
+      {
+        title: 'Screens help triage without pretending provenance',
+        body:
+          'Functional-group tags are method-derived signals that help people and agents find likely examples. They are useful, but they are not a replacement for source topology.',
+      },
+      {
+        title: 'Dataset pages need honest language',
+        body:
+          'The route gives search engines and readers a clear explanation of what is real, what is inferred, and what should remain labeled as a display guide.',
+      },
+    ],
+    proofTitle: 'A geometry-intent page for researchers and students.',
+    proofBody:
+      'This route targets users looking for OMol25 molecule geometry and sends them into a viewer that keeps the data boundary visible.',
+    proofItems: [
+      { label: 'Load', detail: 'Open XYZ structures directly in the same viewer used for curated gallery molecules.' },
+      { label: 'Filter', detail: 'Facet by elements, formula text, and method-derived functional-group screens.' },
+      { label: 'Audit', detail: 'Keep display links, source metadata, and measured or computed properties distinct.' },
+    ],
+    dataTitle: 'This is the fair ask of the tool.',
+    dataBody:
+      'Lupi can faithfully display OMol25 coordinates and any metadata in the index. It should not invent source bonds or properties that the dataset does not supply.',
+  },
+  'million-atom-viewer': {
+    seo: MILLION_ATOM_VIEWER_SEO,
+    eyebrow: 'Large materials visualization route',
+    title: 'Million-atom materials visualization belongs in the browser, under user control.',
+    intro:
+      'Lupi opens a 953,312-atom FCC copper lattice as a first-impression scale test: not a video, not a static hero image, but an interactive scene that makes browser-native materials visualization feel real.',
+    primaryHref: '/scenes/1m-copper-lattice',
+    primaryLabel: 'Open 1M atom scene',
+    secondaryHref: '/?sim=massive_1m',
+    secondaryLabel: 'Load in viewer',
+    image: '/gallery/snapshots/massive_1m.jpg',
+    imageAlt: 'Nearly one million copper atoms rendered in the Lupi materials viewer.',
+    visualCaption: '953,312-atom copper lattice',
+    stats: [
+      ['Scene scale', '953,312 atoms'],
+      ['Structure', 'FCC copper'],
+      ['Format', '.glimbin stream'],
+      ['Goal', 'Controlled in scene'],
+    ],
+    sections: [
+      {
+        title: 'Scale is meaningful only when it remains interactive',
+        body:
+          'The page frames the copper lattice as a controllable scene so visitors understand Lupi as a working viewer, not a gallery of pre-rendered screenshots.',
+      },
+      {
+        title: 'Materials science needs both overview and inspection',
+        body:
+          'Large lattices, trajectories, defects, and microstructures need zoomable context before a reader can judge what a model or simulation is showing.',
+      },
+      {
+        title: 'The claim stays narrow and testable',
+        body:
+          'The route describes atom count, structure type, and browser visualization. It avoids implying measured properties or experimental provenance that are not part of the scene.',
+      },
+    ],
+    proofTitle: 'A stronger first-impression route for LUPI scale.',
+    proofBody:
+      'Users searching for a million-atom viewer get a direct path to the copper lattice scene, while the copy explains what is actually being shown.',
+    proofItems: [
+      { label: 'Open', detail: 'Launch the public copper lattice route from a canonical URL.' },
+      { label: 'Inspect', detail: 'Use the same viewer shell and controls as smaller molecule and materials examples.' },
+      { label: 'Explain', detail: 'Frame the scene as generated geometry with atom positions and element identity.' },
+    ],
+    dataTitle: 'Big scenes still need source-aware claims.',
+    dataBody:
+      'The million-atom scene is a generated FCC copper scale test. Lupi treats that as a visualization and interaction benchmark, not as a measured materials-property dataset.',
+  },
 };
 
 export function SeoEducationPage({ kind }: { kind: SeoEducationKind }) {
@@ -154,7 +364,7 @@ export function SeoEducationPage({ kind }: { kind: SeoEducationKind }) {
           <img src={page.image} alt={page.imageAlt} />
           <div className="lupi-education-visual-caption">
             <span>Source-aware view</span>
-            <strong>{kind === 'functional-groups' ? 'Aspirin study example' : 'OMol25-ready geometry browser'}</strong>
+            <strong>{page.visualCaption}</strong>
           </div>
         </div>
       </section>
@@ -168,7 +378,7 @@ export function SeoEducationPage({ kind }: { kind: SeoEducationKind }) {
         ))}
       </section>
 
-      {kind === 'functional-groups' && (
+      {(kind === 'functional-groups' || kind === 'functional-group-examples' || kind === 'ochem-viewer') && (
         <section className="lupi-education-groups" aria-labelledby="lupi-education-groups-title">
           <div>
             <h2 id="lupi-education-groups-title">Functional group handles students can actually use.</h2>

@@ -27,7 +27,11 @@ conditions where it looked accurate.
 | LUPI | https://lupi.live | Browser-native WebGPU viewer for atomistic evidence |
 | LUPI 1M copper lattice | https://lupi.live/scenes/1m-copper-lattice | Public scene route for the 953,312-atom FCC copper scale test |
 | LUPI functional groups | https://lupi.live/study/organic-functional-groups | College organic chemistry study route for functional-group examples, Study Lens prompts, and printable sheets |
+| LUPI functional group examples | https://lupi.live/study/functional-group-examples | Search-intent route for comparing real 3D molecule examples by organic functional group |
+| LUPI 3D ochem viewer | https://lupi.live/study/organic-chemistry-3d-molecule-viewer | Route explaining how LUPI supports organic chemistry study through 3D molecule inspection |
 | LUPI OMol25 | https://lupi.live/materials/omol25 | OMol25 geometry browser route for real DFT XYZ structures and source-aware labels |
+| LUPI OMol25 molecule geometry | https://lupi.live/materials/omol25-molecule-geometry | Geometry-intent route for OMol25 XYZ structures and data-boundary language |
+| LUPI million-atom viewer | https://lupi.live/materials/million-atom-viewer | Route for browser-controlled million-atom materials visualization |
 | Lupine Library | https://library.lupine.science | Public research corpus and human knowledge surface |
 | glim-think | https://glim-think-v1.aw-ab5.workers.dev | Agentic research control plane and ledger |
 
@@ -159,11 +163,24 @@ High-intent LUPI routes:
   functional-group recognition, mechanism prompts, Study Lens, AR study prompts,
   and print-to-PDF sheets. The teaching layer is source-aware and does not
   invent measured properties.
+- `/study/functional-group-examples`: search-intent route for students looking
+  for concrete organic functional group examples. Describe it as curated 3D
+  molecule examples with teaching labels and viewer-backed comparison prompts.
+- `/study/organic-chemistry-3d-molecule-viewer`: route for the broader 3D
+  organic chemistry viewer use case. Emphasize rotating molecules, recognizing
+  functional groups, Study Lens prompts, and printable study sheets.
 - `/materials/omol25`: OMol25 neutral-validation geometry browser route. OMol25
   hits in LUPI use real DFT geometry served as `.xyz` files from the hosted
   index. Functional-group tags are method-derived screens; viewer bond lines are
   display guides unless a separate provenance artifact supplies source or
   quantum-analysis bonds.
+- `/materials/omol25-molecule-geometry`: geometry-intent OMol25 route. Use it
+  when a reader or agent cares specifically about real XYZ coordinates and the
+  separation between coordinates, metadata, method-derived screens, and source
+  topology claims.
+- `/materials/million-atom-viewer`: large-scene materials visualization route.
+  Describe the 953,312-atom copper lattice as generated FCC geometry used to
+  demonstrate browser-controlled scale, not as an experimental property record.
 
 ### https://library.lupine.science
 

@@ -10,8 +10,16 @@
 - Public `/study/organic-functional-groups` and `/materials/omol25` routes with
   dedicated React pages, canonical metadata, Open Graph/Twitter metadata,
   schema.org JSON-LD, sitemap entries, footer links, and agent-readable guidance.
+- Search-intent route cluster for `/study/functional-group-examples`,
+  `/study/organic-chemistry-3d-molecule-viewer`,
+  `/materials/omol25-molecule-geometry`, and `/materials/million-atom-viewer`,
+  with route-specific page copy, canonicals, social metadata, JSON-LD, sitemap
+  entries, footer links, and agent-readable guidance.
 - OMol25 route copy that clearly separates real DFT XYZ geometry and
   method-derived functional-group screens from source bond topology claims.
+- Cloud Run static routing now serves generated route `index.html` files
+  generically before falling back to the SPA shell, avoiding future
+  extensionless-directory redirects as more SEO routes are added.
 
 ### Phase-change trajectories published to the gallery
 
