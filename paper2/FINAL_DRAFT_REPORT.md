@@ -1,6 +1,6 @@
 # Projection Law — Final Draft Report
 
-**Date:** 2026-06-16  
+**Date:** 2026-06-16
 **PRX master:** `paper2/projection-law.tex`  
 **IMMI companion:** `paper2/immi/projection-law-immi.tex`  
 **PDFs:** `paper2/projection-law.pdf` (14 pp), `paper2/immi/projection-law-immi.pdf` (14 pp)

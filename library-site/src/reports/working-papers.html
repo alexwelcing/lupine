@@ -79,7 +79,7 @@
   <div class="byline">
     <span><b>Alex Welcing</b> · Lupine Science</span>
     <span>status: working papers, in preparation</span>
-    <span>180-theorem Lean 4 corpus · 0 sorry</span>
+    <span>~225-theorem Lean 4 corpus · 77 build-locked · 0 sorry · 2891-job build green</span>
   </div>
   <p class="printnote">This page is the web edition; use your browser's Print for a clean paper copy, or download the typeset PDFs below.</p>
 </header>
@@ -91,12 +91,12 @@
   <p class="sub">Working paper · June 2026 · theory, two pre-registered factorial experiments, replication kit</p>
 
   <div class="actions">
-    <a class="btn btn-primary" href="https://storage.googleapis.com/shed-489901-replication/papers/projection-law-working-paper-v2026-06-11b.pdf">Typeset PDF ↓</a>
+    <a class="btn btn-primary" href="https://github.com/alexwelcing/lupine/raw/main/paper2/projection-law.pdf">Typeset PDF ↓</a>
     <a class="btn" href="https://storage.googleapis.com/shed-489901-replication/error-geometry/v1-10c18ace/index.html">Replication kit →</a>
   </div>
 
   <h3>Abstract</h3>
-  <p class="abstract">When many independently constructed models agree, the agreement is routinely read as confidence. We formalize and test the opposite reading: a model family is a projection operator, fitting drives every member toward the point of the family's reachable set nearest the truth, and the shared residual — one direction in observable space — is a fingerprint of whatever constraint binds the family. The theory core is machine-checked (Lean&nbsp;4, zero unproven obligations). We then test the law's sharpest consequence — <i>errors organize by constraint, not by implementation</i> — with pre-registered factorial experiments at three layers of one epistemic stack: classical interatomic potentials, foundation machine-learned potentials (4 architectures × 2 training functionals), and DFT implementations (12 methods, 384 crystals). Each experiment carried an explicit refutation condition; neither was triggered, and four of seven registered predictions failed and are reported as failures. The anisotropy persists at every layer — median participation ratio 1.09, ~1.3, and 1.10 out of 3 — while its direction rotates to the next constraint upstream.</p>
+  <p class="abstract">When many independently constructed models agree, the agreement is routinely read as confidence. We formalize and test the opposite reading: a model family is a projection operator, fitting drives every member toward the point of the family's reachable set nearest the truth, and the shared residual — one direction in observable space — is a fingerprint of whatever constraint binds the family. The theory core is machine-checked (Lean&nbsp;4, zero unproven obligations): normal-cone consensus theorem; participation-ratio gauge; ribbon/consensus decoupling; affine decomposition of closed affine reachable sets; local normal-cone theorem for $C^1$ smooth non-convex immersions; and Hoeffding concentration of the empirical second-moment matrix used by the gauge. We then test the law's sharpest consequence — <i>errors organize by constraint, not by implementation</i> — with pre-registered factorial experiments at three layers of one epistemic stack: classical interatomic potentials, foundation machine-learned potentials (4 architectures × 2 training functionals), and DFT implementations (12 methods, 384 crystals). Each experiment carried an explicit refutation condition; neither was triggered, and four of seven registered predictions failed and are reported as failures. The anisotropy persists at every layer — median participation ratio 1.09, ~1.3, and 1.10 out of 3 — while its direction rotates to the next constraint upstream.</p>
 
   <h3>Key results</h3>
   <div class="kr">
@@ -163,7 +163,7 @@
 <!-- ════════════════ COLOPHON ════════════════ -->
 <section class="colophon" id="provenance">
   <h3>Provenance &amp; verification</h3>
-  <p>Both papers are <b>working papers, in preparation</b> — not yet submitted to any venue. Every headline statistic is verifiable from committed raw data: the <a href="https://storage.googleapis.com/shed-489901-replication/error-geometry/v1-10c18ace/index.html">replication kit</a> (commit-versioned, public) runs Tier&nbsp;1 verification with NumPy alone in seconds (<code>python tier1_analyze.py</code>) and re-derives the raw elastic constants from public model checkpoints in Tier&nbsp;2. Pre-registrations were committed before execution (<code>dffbe595</code>, <code>ebf39e33</code>); the round-2 registration with symmetric kill conditions is included. The theory core — normal-cone consensus theorem, participation-ratio gauge, ribbon/consensus decoupling — is machine-checked within the program's 180-theorem Lean&nbsp;4 corpus (zero <code>sorry</code>, zero new axioms) and builds with <code>lake build</code> from the <a href="https://github.com/alexwelcing/lupine">open repository</a>.</p>
+  <p>Both papers are <b>working papers, in preparation</b> — not yet submitted to any venue. Every headline statistic is verifiable from committed raw data: the <a href="https://storage.googleapis.com/shed-489901-replication/error-geometry/v1-10c18ace/index.html">replication kit</a> (commit-versioned, public) runs Tier&nbsp;1 verification with NumPy alone in seconds (<code>python tier1_analyze.py</code>) and re-derives the raw elastic constants from public model checkpoints in Tier&nbsp;2. Pre-registrations were committed before execution (<code>dffbe595</code>, <code>ebf39e33</code>); the round-2 registration with symmetric kill conditions is included. The theory core — normal-cone consensus theorem, participation-ratio gauge, ribbon/consensus decoupling, affine decomposition, smooth non-convex local normal cone, and finite-sample concentration — is machine-checked within the program's ~225-theorem Lean&nbsp;4 corpus (77 build-locked in <code>Vision.lean</code>, zero <code>sorry</code>, zero new axioms, 2891-job <code>lake build</code> green) and builds from the <a href="https://github.com/alexwelcing/lupine">open repository</a>.</p>
 </section>
 
 </div>
