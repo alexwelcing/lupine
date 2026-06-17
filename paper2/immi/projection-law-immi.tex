@@ -38,8 +38,10 @@ space --- and that direction fingerprints whatever constraint binds the
 family.
 \textbf{Methods:} The theoretical core (normal-cone consensus theorem;
 participation-ratio gauge $\mathrm{PR}(d,\rho)=(\rho+d)^2/((\rho+1)^2+(d-1))$
-with explicit ribbon-collapse rate; ribbon/consensus decoupling) is
-machine-checked in Lean~4 with zero unproven obligations. Two factorial
+with explicit ribbon-collapse rate; ribbon/consensus decoupling; affine
+decomposition of closed affine reachable sets; local normal-cone theorem for
+$C^1$ smooth non-convex immersions; and Hoeffding concentration of the empirical
+second-moment matrix) is machine-checked in Lean~4 with zero unproven obligations. Two factorial
 experiments were pre-registered with refutation conditions committed before
 execution: a $4{\times}2$ architecture-by-functional crossing of MatPES-trained
 foundation interatomic potentials evaluated on elastic constants of 15 cubic
@@ -215,8 +217,48 @@ hyper-ribbons of single models \citep{transtrum2011,kurniawan2022};
 \S\ref{sec:classical} details the distinction.)
 \end{theorem}
 
-All four theorems are verified in Lean~4 against a pinned Mathlib as part of
-the program's larger formal corpus --- 181 theorem and lemma declarations
+\begin{theorem}[Affine decomposition]\label{thm:affine}
+Let $K = a + L$ be a closed affine reachable set and $p^*$ the best
+approximation of $T$ in $K$. For any fitted $p \in K$, the residual decomposes
+as
+\[
+T - p \;=\; b \, +\, \xi(p),
+\qquad b = T - p^* \in L^\perp, \quad \xi(p) = p^* - p \in L,
+\]
+with $b \perp \xi(p)$.
+\end{theorem}
+
+Theorem~\ref{thm:affine} turns the bias-plus-noise spectrum of
+Theorem~\ref{thm:gauge} from a modeling assumption into a derivable
+consequence for affine families.
+
+\begin{theorem}[Local normal cone, smooth non-convex families]\label{thm:smooth}
+Let $f: \mathbb{R}^k \to E$ be a $C^1$ immersion and $x^*$ a local minimizer
+of $\|T - f(x)\|$. Then the residual $T - f(x^*)$ is orthogonal to the tangent
+space $\operatorname{range} Df(x^*)$.
+\end{theorem}
+
+Theorem~\ref{thm:smooth} licenses the neural-network reachable sets used
+below: the conclusion is pointwise (one normal space per local minimizer), not
+the global consensus theorem, and empirical clustering tests that normal-space
+membership.
+
+\begin{theorem}[Finite-sample concentration]\label{thm:concentration}
+Let $X_1, \dots, X_n$ be i.i.d.\ bounded random vectors in $\mathbb{R}^d$
+($\|X_k\|_\infty \le B$) and let $M$ and $\widehat M_n$ be the population and
+empirical entrywise second-moment matrices. For every entry $(i,j)$ and
+$\varepsilon > 0$,
+\[
+\mathbb{P}\bigl(|\widehat M_{n,ij} - M_{ij}| \ge \varepsilon\bigr)
+\;\le\; 2 \exp\!\bigl(-n\varepsilon^2 / (2B^4)\bigr).
+\]
+Moreover, the participation ratio
+$\mathrm{PR}(M) = (\operatorname{tr} M)^2 / \operatorname{tr}(M^2)$ is
+continuous wherever the denominator is non-zero.
+\end{theorem}
+
+All seven theorems are verified in Lean~4 against a pinned Mathlib as part of
+the program's larger formal corpus --- 225 theorem and lemma declarations
 across the current build, checked by \texttt{lake build} with zero
 \texttt{sorry} and zero new axioms --- including a conditional hyper-ribbon
 bound (spectral-decay hypotheses $\Rightarrow \mathrm{PR}<2$), a
