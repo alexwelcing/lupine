@@ -64,6 +64,31 @@ jobs:
           region: '${{ secrets.GCP_REGION }}'
           project_id: '${{ secrets.GCP_PROJECT_ID }}'
           flags: '--allow-unauthenticated'
+          no_traffic: false
+
+      - name: Route traffic to the new revision
+        run: |
+          gcloud run services update-traffic ${{ secrets.GCP_SERVICE_NAME_SITE }} \
+            --region=${{ secrets.GCP_REGION }} \
+            --project=${{ secrets.GCP_PROJECT_ID }} \
+            --to-latest \
+            --quiet
+
+      - name: Smoke test
+        run: |
+          url="${{ steps.deploy.outputs.url }}"
+          echo "Smoke-testing $url"
+          for i in 1 2 3 4 5; do
+            body=$(curl -s --fail "$url" -m 10)
+            if echo "$body" | grep -q "Evidence before claim"; then
+              echo "Smoke test passed"
+              exit 0
+            fi
+            echo "Attempt $i: content not ready, retrying..."
+            sleep 10
+          done
+          echo "::error::Smoke test failed: expected content not found"
+          exit 1
 
       - name: Show output
         run: echo ${{ steps.deploy.outputs.url }}
