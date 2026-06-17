@@ -29,6 +29,7 @@ const PROJECT_ID = process.env.LUPI_FIREBASE_PROJECT_ID ?? 'shed-489901';
 const EXCHANGE_URL = process.env.LUPI_EXCHANGE_URL
   ?? 'https://us-central1-shed-489901.cloudfunctions.net/exchangeApiKey';
 
+
 const COLLECTION = 'lupiViews';
 const BASE_SLUG = `verify-${Date.now().toString(36)}`;
 
@@ -75,6 +76,8 @@ async function signInWithCustomToken(customToken) {
   console.log(`[verify-saved-views] signed in as uid=${body.localId}`);
   return { idToken: body.idToken, refreshToken: body.refreshToken, uid: body.localId };
 }
+
+
 
 function firestoreUrl(slug = null, suffix = '') {
   const base = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/${COLLECTION}`;
