@@ -23,6 +23,9 @@ import OpenDistillationFactory.Materials.Theory.ErrorGeometry
 import OpenDistillationFactory.Materials.Theory.AccuracyCommitment
 import OpenDistillationFactory.Materials.Theory.UniversalityBridge
 import OpenDistillationFactory.Materials.Theory.WeakAcceleration
+import OpenDistillationFactory.Materials.Theory.AffineDecomposition
+import OpenDistillationFactory.Materials.Theory.SmoothProjection
+import OpenDistillationFactory.Materials.Theory.FiniteSampleConcentration
 import OpenDistillationFactory.Materials.Validation.Experiment
 import OpenDistillationFactory.Materials.Validation.Audit
 
@@ -39,6 +42,9 @@ open OpenDistillationFactory.Materials.Theory.ErrorGeometry
 open OpenDistillationFactory.Materials.Theory.AccuracyCommitment
 open OpenDistillationFactory.Materials.Theory.UniversalityBridge
 open OpenDistillationFactory.Materials.Theory.WeakAcceleration
+open OpenDistillationFactory.Materials.Theory.AffineDecomposition
+open OpenDistillationFactory.Materials.Theory.SmoothProjection
+open OpenDistillationFactory.Materials.Theory.FiniteSampleConcentration
 open OpenDistillationFactory.Materials.Theory.HyperRibbonEmpirical
 open OpenDistillationFactory.Materials.Validation
 open OpenDistillationFactory.Materials.Validation.Audit
@@ -144,6 +150,14 @@ def nistCount := nistScaffoldAlSample.length
 #check WeakAcceleration.catchProbability_lt_one
 #check WeakAcceleration.weakSpeedup_strict
 
+/- T63–T67: Affine decomposition, smooth non-convex projection, and
+    finite-sample concentration of the empirical second-moment matrix. -/
+#check AffineFamily.decomposition
+#check SmoothFamily.residual_orthogonal_to_tangent
+#check SmoothFamily.local_consensus_weak
+#check empiricalSecondMoment_entrywise_concentration
+#check participationRatioMatrix_continuous
+
 -- ═══════════════════════════════════════════════════════════════
 -- SECTION 3: HYPOTHESIS INVENTORY
 -- ═══════════════════════════════════════════════════════════════
@@ -156,8 +170,9 @@ def computationallyProvenCount : Nat :=
   -- Causal: 9, Manifold: 11, LammpsTrace: 3, Benchmark: 9,
   -- ParameterBound: 1, MetaScience: 5, Experiment: 5, Audit: 5,
   -- Submission push: HyperRibbon 2, ErrorGeometry 6, ParameterBound 7,
-  -- AccuracyCommitment 2, UniversalityBridge 3, WeakAcceleration 4
-  72
+  -- AccuracyCommitment 2, UniversalityBridge 3, WeakAcceleration 4,
+  -- AffineDecomposition 1, SmoothProjection 2, FiniteSampleConcentration 2
+  77
 
 /-- Count of documented epistemic gaps (not sorry proofs — all
     theorems are proven — but acknowledged limitations). -/

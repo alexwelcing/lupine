@@ -66,7 +66,7 @@ deps or config degrade to a logged no-op.
 ATLAS's toolchain) is the evidence layer: it holds the proven theorems behind
 the materials-science claims. Treat a green `lake build` with zero `sorry`
 proofs as the gate — a broken or `sorry`-bearing proof is a regression, not
-noise. Current state: **72 build-locked theorems, ~180 theorem declarations, 0 `sorry`, 1933-job build green**.
+noise. Current state: **77 build-locked theorems, ~225 theorem declarations, 0 `sorry`, 2891-job build green**.
 
 - Verify proofs with `lake build` in `lean-spec/`. Never introduce a `sorry`
   into a proof; the only acceptable `sorry` text is inside doc comments that

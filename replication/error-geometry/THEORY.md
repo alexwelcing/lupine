@@ -55,6 +55,36 @@ The law beyond linear families: convexity of the reachable set suffices.
 | `IsBestApproxOn.unique` | best approximations onto a convex family are unique (two variational inequalities sum to `‖p₁−p₂‖² ≤ 0`) | one residual per (family, target) |
 | `IsBestApproxOn.residual_eq` | consensus theorem on convex families | within-family agreement generalizes past linearization |
 
+## The affine decomposition (`AffineDecomposition.lean`)
+
+For a closed affine reachable set `K = a + L`, the projection-law residual
+`T - p` decomposes as a shared bias `b = T - p*` in `direction(K)ᗮ` plus a
+within-family component `ξ(p) = p* - p` in `direction(K)`.
+
+| Theorem | Statement | Empirical face |
+|---|---|---|
+| `AffineDecomposition.AffineFamily.decomposition` | `T - p = b + ξ(p)`, with `b ⟂ ξ(p)`, `b ∈ direction(K)ᗮ`, `ξ(p) ∈ direction(K)` | the shared bias / within-family split behind the bias+noise gauge |
+
+## The smooth non-convex projection law (`SmoothProjection.lean`)
+
+Local normal-cone theorem for `C¹` immersions `ℝᵏ → E`. Curvature is not
+assumed away; the result is a first-order normal-cone statement at a local
+minimizer.
+
+| Theorem | Statement | Empirical face |
+|---|---|---|
+| `SmoothProjection.SmoothFamily.residual_orthogonal_to_tangent` | the residual at a local minimizer is orthogonal to the tangent space | local fitting minima still point at the binding constraint |
+| `SmoothProjection.SmoothFamily.local_consensus_weak` | nearby local minimizers that land on the same fitted point share the same residual | finite sampling of a non-convex family still clusters around one residual direction |
+
+## Finite-sample concentration (`FiniteSampleConcentration.lean`)
+
+Binds noisy finite ensembles to the second-moment operator used by the gauge.
+
+| Theorem | Statement | Empirical face |
+|---|---|---|
+| `empiricalSecondMoment_entrywise_concentration` | Hoeffding: entrywise deviation of `M̂ₙ` from `M` is `≤ 2 exp(-n ε² / (2 B⁴))` | the sample covariance/PR used in experiments converges to the population operator |
+| `participationRatioMatrix_continuous` | `PR(M) = (tr M)² / tr(M²)` is continuous when the denominator is non-zero | small matrix perturbations do not jump the PR gauge |
+
 ## The spectrum bridge (`SpectrumBridge.lean`)
 
 Closes the chain from vectors to the gauge.
@@ -70,6 +100,9 @@ Closes the chain from vectors to the gauge.
 
     convex family + fitting            (ConvexProjection: normal cone, uniqueness)
       ⇒ one shared residual            (ConvexProjection/ProjectionLaw: consensus)
+      ⇒ affine decomposition           (AffineDecomposition: bias + within-family)
+      ⇒ smooth non-convex local law    (SmoothProjection: tangent-space orthogonality)
+      ⇒ finite-sample concentration    (FiniteSampleConcentration: M̂ₙ → M entrywise)
       ⇒ bias-plus-noise second moment  (SpectrumBridge: eigen-structure)
       ⇒ PR equals the gauge            (SpectrumBridge: prSpectrumFin_biasNoise)
       ⇒ ribbon collapse at rate 3(d−1)/ρ   (SpectrumBridge: prBiasNoise_sub_one_le)
@@ -77,11 +110,7 @@ Closes the chain from vectors to the gauge.
 
 ## What remains OUTSIDE the formal layer (by design)
 
-- Smooth non-convex reachable sets (local normal-cone version): the convex
-  theorem covers the global law; curvature corrections are second-order.
-- The probabilistic step from finite noisy ensembles to the exact
-  second-moment operator (a law-of-large-numbers statement; standard).
-- Any claim about *which* constraint binds — that is empirical content by
+- Claims about *which* constraint binds — that is empirical content by
   construction: the theorems say a shared residual implies a shared
   constraint, and the experiments identify it (functional form, XC
   functional, or harness).
