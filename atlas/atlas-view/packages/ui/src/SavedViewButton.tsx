@@ -237,13 +237,13 @@ export function SavedViewButton({ compact = false }: { compact?: boolean }) {
                     placeholder="Ice Block Publish"
                   />
                   <LupiField
-                    label="Slug"
+                    label="Slug (auto-generated if blank)"
                     value={slug}
                     onChange={(value) => {
                       setSlugTouched(true);
                       setSlug(slugifySavedViewTitle(value));
                     }}
-                    placeholder="ice-block-publish"
+                    placeholder={slugifySavedViewTitle(title || defaultTitle)}
                   />
                 </div>
 
@@ -277,7 +277,7 @@ export function SavedViewButton({ compact = false }: { compact?: boolean }) {
                 {status && <LupiNotice tone="green">{status}</LupiNotice>}
 
                 <div style={{ display: 'grid', gridTemplateColumns: savedUrl ? '1fr 1fr' : '1fr', gap: 8 }}>
-                  <LupiButton tone="primary" onClick={handleSave} disabled={busy || !cleanSlug || !idToken}>
+                  <LupiButton tone="primary" onClick={handleSave} disabled={busy || !idToken}>
                     {busy ? 'Saving' : 'Save'}
                   </LupiButton>
                   {!idToken && user && (

@@ -147,13 +147,11 @@ export async function saveCurrentMolecularView({
   title,
   user,
 }: {
-  slug: string;
+  slug?: string;
   title: string;
   user: User;
 }): Promise<{ url: string; view: SavedMolecularView }> {
   if (!firebaseDb) throw new Error('Firebase database is not configured.');
-  const cleanSlug = slugifySavedViewTitle(slug);
-  if (cleanSlug.length < 3) throw new Error('Pick a URL slug with at least 3 characters.');
 
   // Ensure the Firebase ID token is fresh before Firestore writes. Stale or
   // expired tokens are the most common cause of "insufficient privilege" errors
@@ -165,16 +163,15 @@ export async function saveCurrentMolecularView({
   );
   if (!token) throw new Error('Your sign-in session could not be verified. Please sign in again.');
 
+  const baseSlug = slugifySavedViewTitle(slug || title || defaultSavedViewTitle(useStore.getState().file));
+  if (baseSlug.length < 3) throw new Error('Pick a title or slug with at least 3 URL-safe characters.');
+
+  // Default to a unique slug. If the user explicitly chose a slug that they
+  // already own, reuse it (update). If it belongs to someone else or is
+  // orphaned, append a short random suffix so the save always succeeds.
+  const cleanSlug = await findUniqueSlug(baseSlug, user.uid);
   const ref = doc(firebaseDb, VIEW_COLLECTION, cleanSlug);
   const current = await getDoc(ref);
-  if (current.exists()) {
-    const ownerId = current.data().ownerId;
-    if (ownerId && ownerId !== user.uid) throw new Error('That Lupi URL is already taken.');
-    // A document with no owner cannot be safely claimed through the current
-    // update rule, so treat it as taken rather than letting Firestore reject it
-    // with an opaque permission-denied error.
-    if (!ownerId) throw new Error('That Lupi URL is already taken.');
-  }
 
   const view: SavedMolecularView = {
     schemaVersion: SAVED_VIEW_SCHEMA_VERSION,
@@ -402,6 +399,36 @@ function isFirestorePermissionDenied(error: unknown): boolean {
     && error !== null
     && 'code' in error
     && (error as { code?: unknown }).code === 'permission-denied';
+}
+
+async function findUniqueSlug(baseSlug: string, uid: string): Promise<string> {
+  if (!firebaseDb) return baseSlug;
+  const baseRef = doc(firebaseDb, VIEW_COLLECTION, baseSlug);
+  const baseSnap = await getDoc(baseRef);
+  if (!baseSnap.exists()) return baseSlug;
+
+  const ownerId = baseSnap.data().ownerId;
+  // The user explicitly re-used their own slug — update in place.
+  if (ownerId === uid) return baseSlug;
+
+  // Otherwise generate a short random suffix until we find a free slug.
+  for (let attempt = 0; attempt < 10; attempt += 1) {
+    const suffix = generateRandomSlugSuffix();
+    const candidate = `${baseSlug}-${suffix}`;
+    const candidateRef = doc(firebaseDb, VIEW_COLLECTION, candidate);
+    const candidateSnap = await getDoc(candidateRef);
+    if (!candidateSnap.exists()) return candidate;
+
+    const candidateOwner = candidateSnap.data().ownerId;
+    if (candidateOwner === uid) return candidate;
+  }
+
+  // Last resort: append a millisecond timestamp.
+  return `${baseSlug}-${Date.now().toString(36)}`;
+}
+
+function generateRandomSlugSuffix(): string {
+  return Math.random().toString(36).slice(2, 6);
 }
 
 function withTimeout<T>(promise: Promise<T>, ms: number, message: string): Promise<T> {
