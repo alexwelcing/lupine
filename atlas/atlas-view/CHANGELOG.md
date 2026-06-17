@@ -2,6 +2,17 @@
 
 ## [Unreleased]
 
+### SEO route expansion for LUPI study and materials surfaces
+
+### Added
+- Static, crawler-ready HTML generation for route-specific metadata after the
+  Vite build, driven by the shared `seo-routes.json` manifest.
+- Public `/study/organic-functional-groups` and `/materials/omol25` routes with
+  dedicated React pages, canonical metadata, Open Graph/Twitter metadata,
+  schema.org JSON-LD, sitemap entries, footer links, and agent-readable guidance.
+- OMol25 route copy that clearly separates real DFT XYZ geometry and
+  method-derived functional-group screens from source bond topology claims.
+
 ### Phase-change trajectories published to the gallery
 
 ### Added

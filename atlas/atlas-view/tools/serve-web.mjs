@@ -32,13 +32,17 @@ if (!Number.isFinite(port) || port <= 0 || port > 65535) {
   process.exit(1);
 }
 
-async function existingFile(filePath) {
+async function existingPath(filePath) {
   try {
-    const fileStat = await stat(filePath);
-    return fileStat.isFile() ? fileStat : null;
+    return await stat(filePath);
   } catch {
     return null;
   }
+}
+
+async function existingFile(filePath) {
+  const fileStat = await existingPath(filePath);
+  return fileStat?.isFile() ? fileStat : null;
 }
 
 function resolveCandidate(requestUrl) {
@@ -59,8 +63,14 @@ async function resolveFile(requestUrl) {
   const candidate = resolveCandidate(requestUrl);
   if (!candidate) return null;
 
-  const directStat = await existingFile(candidate);
-  if (directStat) return { filePath: candidate, fileStat: directStat };
+  const candidateStat = await existingPath(candidate);
+  if (candidateStat?.isFile()) return { filePath: candidate, fileStat: candidateStat };
+
+  if (candidateStat?.isDirectory()) {
+    const directoryIndexPath = path.join(candidate, 'index.html');
+    const directoryIndexStat = await existingFile(directoryIndexPath);
+    if (directoryIndexStat) return { filePath: directoryIndexPath, fileStat: directoryIndexStat };
+  }
 
   const indexPath = path.join(distRoot, 'index.html');
   const indexStat = await existingFile(indexPath);

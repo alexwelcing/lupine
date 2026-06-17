@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import seoRoutes from './seo-routes.json';
 
 export interface SeoConfig {
   title: string;
@@ -10,96 +11,25 @@ export interface SeoConfig {
   jsonLd?: unknown;
 }
 
-export const SITE_ORIGIN = 'https://lupi.live';
-export const DEFAULT_SOCIAL_IMAGE = `${SITE_ORIGIN}/og-lupi.png`;
-export const MASSIVE_LATTICE_IMAGE = `${SITE_ORIGIN}/gallery/snapshots/massive_1m.jpg`;
+interface SeoRouteManifest {
+  siteOrigin: string;
+  defaultSocialImage: string;
+  routes: {
+    home: SeoConfig;
+    massiveLattice: SeoConfig;
+    functionalGroups: SeoConfig;
+    omol25: SeoConfig;
+  };
+}
 
-const ORGANIZATION_JSON_LD = {
-  '@type': 'Organization',
-  '@id': 'https://lupine.science/#organization',
-  name: 'Lupine Science',
-  url: 'https://lupine.science',
-  description: 'Lupine Science builds scientific tools for molecular and materials visualization.',
-};
+const SEO_ROUTE_MANIFEST = seoRoutes as SeoRouteManifest;
 
-export const HOME_SEO: SeoConfig = {
-  title: 'Lupi - 1M Atom Molecular Viewer',
-  description:
-    'Visualize million-atom molecular scenes, organic chemistry functional groups, OMol25 geometries, and materials science structures in the browser.',
-  canonicalPath: '/',
-  image: DEFAULT_SOCIAL_IMAGE,
-  imageAlt: 'Lupi molecular viewer title card from Lupine Science.',
-  jsonLd: {
-    '@context': 'https://schema.org',
-    '@graph': [
-      ORGANIZATION_JSON_LD,
-      {
-        '@type': 'WebSite',
-        '@id': `${SITE_ORIGIN}/#website`,
-        name: 'Lupi',
-        url: SITE_ORIGIN,
-        publisher: { '@id': 'https://lupine.science/#organization' },
-        description:
-          'Interactive molecular and materials science viewer with large atomistic scenes, functional group study examples, and OMol25 search.',
-      },
-      {
-        '@type': 'SoftwareApplication',
-        '@id': `${SITE_ORIGIN}/#software`,
-        name: 'Lupi',
-        url: SITE_ORIGIN,
-        applicationCategory: 'Scientific visualization',
-        operatingSystem: 'Web',
-        publisher: { '@id': 'https://lupine.science/#organization' },
-        description:
-          'Browser-native molecular viewer for atomistic structures, organic chemistry examples, materials datasets, and publication exports.',
-      },
-      {
-        '@type': 'Dataset',
-        '@id': `${SITE_ORIGIN}/#structure-gallery`,
-        name: 'Lupi molecular structure gallery',
-        url: `${SITE_ORIGIN}/#gallery`,
-        creator: { '@id': 'https://lupine.science/#organization' },
-        description:
-          'A curated gallery of molecules, materials structures, trajectories, and OMol25-linked examples for browser visualization.',
-      },
-    ],
-  },
-};
-
-export const MASSIVE_LATTICE_SEO: SeoConfig = {
-  title: '1M Copper Lattice Scene - Lupi Molecular Viewer',
-  description:
-    'Open a 953,312-atom FCC copper lattice in Lupi and inspect a browser-controlled materials science scale-test scene.',
-  canonicalPath: '/scenes/1m-copper-lattice',
-  image: MASSIVE_LATTICE_IMAGE,
-  imageAlt: 'A nearly million-atom FCC copper lattice rendered in the Lupi molecular viewer.',
-  jsonLd: {
-    '@context': 'https://schema.org',
-    '@graph': [
-      ORGANIZATION_JSON_LD,
-      {
-        '@type': 'WebPage',
-        '@id': `${SITE_ORIGIN}/scenes/1m-copper-lattice#webpage`,
-        name: '1M Copper Lattice Scene',
-        url: `${SITE_ORIGIN}/scenes/1m-copper-lattice`,
-        isPartOf: { '@id': `${SITE_ORIGIN}/#website` },
-        publisher: { '@id': 'https://lupine.science/#organization' },
-        description:
-          'A public Lupi scene page for opening and understanding a 953,312-atom FCC copper lattice scale test.',
-      },
-      {
-        '@type': 'Dataset',
-        '@id': `${SITE_ORIGIN}/scenes/1m-copper-lattice#dataset`,
-        name: '953,312-atom FCC copper lattice',
-        url: `${SITE_ORIGIN}/?sim=massive_1m`,
-        creator: { '@id': 'https://lupine.science/#organization' },
-        description:
-          'Generated FCC copper scale-test geometry packaged as a Lupi loadable scene for browser molecular visualization.',
-        variableMeasured: ['atom positions', 'element identity'],
-      },
-    ],
-  },
-};
+export const SITE_ORIGIN = SEO_ROUTE_MANIFEST.siteOrigin;
+export const DEFAULT_SOCIAL_IMAGE = SEO_ROUTE_MANIFEST.defaultSocialImage;
+export const HOME_SEO = SEO_ROUTE_MANIFEST.routes.home;
+export const MASSIVE_LATTICE_SEO = SEO_ROUTE_MANIFEST.routes.massiveLattice;
+export const FUNCTIONAL_GROUPS_SEO = SEO_ROUTE_MANIFEST.routes.functionalGroups;
+export const OMOL25_SEO = SEO_ROUTE_MANIFEST.routes.omol25;
 
 export function useSeo(config: SeoConfig) {
   useEffect(() => {
@@ -115,6 +45,7 @@ function applySeo(config: SeoConfig) {
   document.title = config.title;
   upsertMeta('name', 'description', config.description);
   upsertMeta('property', 'og:site_name', 'Lupine Science');
+  upsertMeta('property', 'og:locale', 'en_US');
   upsertMeta('property', 'og:type', config.type ?? 'website');
   upsertMeta('property', 'og:title', config.title);
   upsertMeta('property', 'og:description', config.description);
@@ -125,6 +56,8 @@ function applySeo(config: SeoConfig) {
   upsertMeta('name', 'twitter:title', config.title);
   upsertMeta('name', 'twitter:description', config.description);
   upsertMeta('name', 'twitter:image', image);
+  upsertMeta('name', 'twitter:image:alt', imageAlt);
+  upsertMeta('name', 'robots', 'index,follow,max-image-preview:large');
   upsertCanonical(canonical);
   upsertRouteJsonLd(config.jsonLd);
 }

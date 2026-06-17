@@ -72,6 +72,7 @@ import { useStore } from './store';
 import { getMaxSafeAtomCount, getDefaultQualityTier } from './deviceCapabilities';
 import { LandingPage } from './LandingPage';
 import { SceneLandingPage } from './landing/SceneLandingPage';
+import { SeoEducationPage } from './landing/SeoEducationPage';
 import { ThermoMinimap } from './ThermoMinimap';
 import { AtomsOptimized } from '@atlas/scene/AtomsOptimized';
 import { AtomClusters } from '@atlas/scene/AtomClusters';
@@ -550,6 +551,8 @@ export default function App() {
   const savedViewSlug = hashPath.startsWith('/view/') ? slugifySavedViewTitle(decodeURIComponent(hashPath.slice('/view/'.length))) : null;
   const isSavedViewRoute = Boolean(savedViewSlug);
   const isCopperSceneRoute = pathRoute === '/scenes/1m-copper-lattice';
+  const isFunctionalGroupsRoute = pathRoute === '/study/organic-functional-groups';
+  const isOmol25Route = pathRoute === '/materials/omol25';
 
   useEffect(() => {
     const syncRoute = () => {
@@ -1723,6 +1726,10 @@ export default function App() {
                 ? null
                 : isCopperSceneRoute
                   ? <SceneLandingPage />
+                  : isFunctionalGroupsRoute
+                    ? <SeoEducationPage kind="functional-groups" />
+                    : isOmol25Route
+                      ? <SeoEducationPage kind="omol25" />
                   : <LandingPage />}
           </div>
         )}
