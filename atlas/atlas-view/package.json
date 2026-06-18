@@ -28,6 +28,7 @@
     "verify:mcp-bridge": "node tools/verify-mcp-bridge.mjs",
     "verify:gallery": "node tools/verify-gallery.mjs",
     "verify:streaming": "npx -y tsx tools/verify-streaming.mjs",
+    "verify:analytics-live": "node tools/verify-analytics-live.mjs",
     "verify:exports": "node tools/verify-exports.mjs",
     "verify:export-colors": "node tools/verify-export-colors.mjs",
     "verify:local-trajectory": "npx -y tsx tools/verify-local-trajectory.mjs",
@@ -40,6 +41,7 @@
     "verify:save-view-admin-smoke": "node tools/verify-save-view-admin-smoke.mjs",
     "verify:saved-views": "node tools/verify-saved-views.mjs",
     "verify:save-view-ui": "node tools/verify-save-view-ui.mjs",
+    "analytics:report": "node tools/analytics-report.mjs",
     "lint": "turbo run lint",
     "clean": "turbo run clean"
   },
