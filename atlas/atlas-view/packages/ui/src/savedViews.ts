@@ -138,8 +138,9 @@ export function defaultSavedViewTitle(file: LoadedFile | null): string {
 }
 
 export function makeSavedViewUrl(slug: string): string {
-  if (typeof window === 'undefined') return `#/view/${slug}`;
-  return `${window.location.origin}${window.location.pathname}#/view/${slug}`;
+  const encodedSlug = encodeURIComponent(slug);
+  if (typeof window === 'undefined') return `/view/${encodedSlug}`;
+  return `${window.location.origin}/view/${encodedSlug}`;
 }
 
 export async function saveCurrentMolecularView({

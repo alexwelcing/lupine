@@ -41,16 +41,16 @@ describe('makeSavedViewUrl', () => {
     const originalLocation = window.location;
     // @ts-expect-error readonly override for test
     window.location = { origin: 'https://lupi.live', pathname: '/' } as Location;
-    expect(makeSavedViewUrl('my-view')).toBe('https://lupi.live/#/view/my-view');
+    expect(makeSavedViewUrl('my-view')).toBe('https://lupi.live/view/my-view');
     // @ts-expect-error readonly override for test
     window.location = originalLocation;
   });
 
-  it('falls back to a hash URL when window is undefined', () => {
+  it('falls back to a path URL when window is undefined', () => {
     const savedWindow = globalThis.window;
     // @ts-expect-error deleting window for SSR test
     delete globalThis.window;
-    expect(makeSavedViewUrl('my-view')).toBe('#/view/my-view');
+    expect(makeSavedViewUrl('my-view')).toBe('/view/my-view');
     globalThis.window = savedWindow;
   });
 });

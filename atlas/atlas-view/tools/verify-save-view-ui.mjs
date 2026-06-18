@@ -135,15 +135,15 @@ async function saveView(page, title) {
   await page.waitForSelector('text=Saved.', { timeout: TIMEOUT });
 
   // The app updates the URL to the shareable slug.
-  const currentHash = await page.evaluate(() => window.location.hash);
-  assert(currentHash.startsWith('#/view/'), `expected URL hash to be #/view/..., got ${currentHash}`);
-  const slug = currentHash.replace('#/view/', '');
+  const currentPath = await page.evaluate(() => window.location.pathname);
+  assert(currentPath.startsWith('/view/'), `expected URL path to be /view/..., got ${currentPath}`);
+  const slug = decodeURIComponent(currentPath.replace(/^\/view\//, ''));
   console.log(`[verify-save-view-ui] saved to slug: ${slug}`);
   return slug;
 }
 
 async function reloadSavedView(page, slug) {
-  const url = `${VERIFY_URL}#/view/${slug}`;
+  const url = new URL(`/view/${encodeURIComponent(slug)}`, VERIFY_URL).toString();
   console.log(`[verify-save-view-ui] reloading saved view: ${url}`);
   await page.goto(url, { waitUntil: 'domcontentloaded', timeout: TIMEOUT });
   await page.waitForSelector('[data-testid="lupi-save-view-button"]', { timeout: TIMEOUT });

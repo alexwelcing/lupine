@@ -534,6 +534,16 @@ function normalizedPathRoute(route: string) {
   return route.replace(/\/+$/, '') || '/';
 }
 
+function savedViewSlugFromRoute(route: string): string | null {
+  const routePath = route.split('?')[0] || '/';
+  if (!routePath.startsWith('/view/')) return null;
+  try {
+    return slugifySavedViewTitle(decodeURIComponent(routePath.slice('/view/'.length)));
+  } catch {
+    return null;
+  }
+}
+
 const SEO_EDUCATION_ROUTES: Record<string, SeoEducationKind> = {
   '/study/organic-functional-groups': 'functional-groups',
   '/study/functional-group-examples': 'functional-group-examples',
@@ -563,7 +573,7 @@ export default function App() {
   const normalizedPath = normalizedPathRoute(pathRoute);
   const isMlipFlywheelRoute = hashPath === '/system/mlip-flywheel';
   const isMcpViewerRoute = hashPath === '/mcp' || new URLSearchParams(window.location.search).has('mcp');
-  const savedViewSlug = hashPath.startsWith('/view/') ? slugifySavedViewTitle(decodeURIComponent(hashPath.slice('/view/'.length))) : null;
+  const savedViewSlug = savedViewSlugFromRoute(hashPath) ?? savedViewSlugFromRoute(normalizedPath);
   const isSavedViewRoute = Boolean(savedViewSlug);
   const isCopperSceneRoute = normalizedPath === '/scenes/1m-copper-lattice';
   const seoEducationKind = SEO_EDUCATION_ROUTES[normalizedPath] ?? null;

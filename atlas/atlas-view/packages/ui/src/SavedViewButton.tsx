@@ -47,6 +47,26 @@ function slugTail(slug: string) {
   return slug || 'new-link';
 }
 
+function socialPostText(title: string) {
+  return `Explore this molecular view in Lupi: ${title}`.slice(0, 190);
+}
+
+function linkedInShareUrl(url: string) {
+  return `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+}
+
+function xShareUrl(url: string, title: string) {
+  const params = new URLSearchParams({
+    text: socialPostText(title),
+    url,
+  });
+  return `https://twitter.com/intent/tweet?${params.toString()}`;
+}
+
+function openSharePopup(url: string) {
+  window.open(url, '_blank', 'noopener,noreferrer,width=760,height=760');
+}
+
 export function SavedViewButton({ compact = false }: { compact?: boolean }) {
   const file = useStore((state) => state.file);
   const loadedAtomCount = useStore((state) => state.loadedAtomCount);
@@ -67,6 +87,7 @@ export function SavedViewButton({ compact = false }: { compact?: boolean }) {
   const defaultTitle = useMemo(() => defaultSavedViewTitle(file), [file?.name]);
   const cleanSlug = slugifySavedViewTitle(slug || title || defaultTitle);
   const urlPreview = makeSavedViewUrl(cleanSlug);
+  const canNativeShare = typeof navigator !== 'undefined' && typeof navigator.share === 'function';
 
   useEffect(() => {
     if (slugTouched) return;
@@ -164,6 +185,29 @@ export function SavedViewButton({ compact = false }: { compact?: boolean }) {
     } finally {
       setBusy(false);
     }
+  };
+
+  const handleNativeShare = async () => {
+    if (!savedUrl || !canNativeShare) return;
+    track(ANALYTICS_EVENTS.VIEW_SHARED, { method: 'native_share' });
+    try {
+      await navigator.share({
+        title,
+        text: socialPostText(title),
+        url: savedUrl,
+      });
+      setStatus('Share sheet opened.');
+    } catch (err) {
+      const name = err instanceof DOMException ? err.name : '';
+      if (name !== 'AbortError') setError(err instanceof Error ? err.message : 'Share failed.');
+    }
+  };
+
+  const handleExternalShare = (method: 'linkedin' | 'x') => {
+    if (!savedUrl) return;
+    track(ANALYTICS_EVENTS.VIEW_SHARED, { method });
+    openSharePopup(method === 'linkedin' ? linkedInShareUrl(savedUrl) : xShareUrl(savedUrl, title));
+    setStatus(method === 'linkedin' ? 'Opened LinkedIn share.' : 'Opened X share.');
   };
 
   if (!file) return null;
@@ -305,12 +349,29 @@ export function SavedViewButton({ compact = false }: { compact?: boolean }) {
                       onClick={() => {
                         track(ANALYTICS_EVENTS.VIEW_SHARED, { method: 'copy_button' });
                         void navigator.clipboard.writeText(savedUrl);
+                        setStatus('Copied social link.');
                       }}
                     >
                       Copy
                     </LupiButton>
                   )}
                 </div>
+
+                {savedUrl && (
+                  <div style={{ display: 'grid', gridTemplateColumns: canNativeShare ? '1fr 1fr 1fr' : '1fr 1fr', gap: 8 }}>
+                    {canNativeShare && (
+                      <LupiButton onClick={handleNativeShare}>
+                        Share
+                      </LupiButton>
+                    )}
+                    <LupiButton onClick={() => handleExternalShare('linkedin')}>
+                      LinkedIn
+                    </LupiButton>
+                    <LupiButton onClick={() => handleExternalShare('x')}>
+                      X
+                    </LupiButton>
+                  </div>
+                )}
 
                 {recentViews.length > 0 && (
                   <div style={{ display: 'grid', gap: 7 }}>
