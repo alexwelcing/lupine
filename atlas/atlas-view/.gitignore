@@ -7,11 +7,14 @@ tools/lupi-environment-candidates/
 tools/lupi-motion-cache/
 tools/lupi-panorama-runs.jsonl
 
-# Local Firebase/GCP and Vite runtime config.
-.env.local
-.env.*.local
-apps/*/.env.local
-apps/*/.env.*.local
+# Local Firebase/GCP and Vite runtime config. Keep examples tracked, never
+# commit real Vite mode files such as apps/web/.env.production.
+.env
+.env.*
+!.env.example
+apps/*/.env
+apps/*/.env.*
+!apps/*/.env.example
 
 # Generated MD trajectories (regenerate via tools/sims/make_phase_trajectories.py)
 tools/sims/output/

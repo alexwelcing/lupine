@@ -17,7 +17,7 @@ SHA-256 hash is stored. Revoke any key from the same panel.
 
 ```bash
 KEY="lupi_pk_…"                       # the key the user gave you
-WEB_API_KEY="<VITE_FIREBASE_API_KEY>" # public Firebase web key (apps/web/.env.production)
+WEB_API_KEY="<VITE_FIREBASE_API_KEY>" # public Firebase web key from .env.local or deploy env
 EXCHANGE="https://us-central1-shed-489901.cloudfunctions.net/exchangeApiKey"
 
 # 1) key -> Firebase custom token

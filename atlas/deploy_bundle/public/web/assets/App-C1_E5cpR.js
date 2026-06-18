@@ -15577,7 +15577,7 @@ This typically indicates that your device does not have a healthy Internet conne
         MODE: "production",
         PROD: !0,
         SSR: !1,
-        VITE_FIREBASE_API_KEY: "AIzaSyAPESEK0sgMh6NOq_3zQ83ndWQk4SxU954",
+        VITE_FIREBASE_API_KEY: "${VITE_FIREBASE_API_KEY}",
         VITE_FIREBASE_APP_ID: "1:350452481649:web:c12dea9ce6f6ae045065d0",
         VITE_FIREBASE_AUTH_DOMAIN: "lupi.live",
         VITE_FIREBASE_MEASUREMENT_ID: "G-BDBRM73QVJ",

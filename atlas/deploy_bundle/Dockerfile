@@ -3,8 +3,9 @@ FROM nginx:alpine
 # Remove default nginx config
 RUN rm /etc/nginx/conf.d/default.conf
 
-# Add custom config
-COPY default.conf /etc/nginx/conf.d/
+# Add custom config. The nginx image envsubst entrypoint renders this to
+# /etc/nginx/conf.d/default.conf at container start.
+COPY default.conf /etc/nginx/templates/default.conf.template
 
 # Copy static files
 COPY public /usr/share/nginx/html

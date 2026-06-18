@@ -43,9 +43,27 @@ jobs:
         working-directory: atlas/atlas-view
         run: pnpm install
 
+      - name: Validate Viewer Firebase Config
+        env:
+          VITE_FIREBASE_API_KEY: ${{ secrets.LUPI_FIREBASE_WEB_API_KEY }}
+        run: |
+          if [ -z "$VITE_FIREBASE_API_KEY" ]; then
+            echo "::error::MISSING SECRET: LUPI_FIREBASE_WEB_API_KEY is not defined in GitHub Repo Secrets."
+            exit 1
+          fi
+
       - name: Build Bundle (Research Site + Web Viewer)
         working-directory: atlas
         env:
+          VITE_FIREBASE_API_KEY: ${{ secrets.LUPI_FIREBASE_WEB_API_KEY }}
+          VITE_FIREBASE_AUTH_DOMAIN: lupi.live
+          VITE_FIREBASE_PROJECT_ID: shed-489901
+          VITE_FIREBASE_APP_ID: 1:350452481649:web:c12dea9ce6f6ae045065d0
+          VITE_FIREBASE_STORAGE_BUCKET: shed-489901.firebasestorage.app
+          VITE_FIREBASE_MESSAGING_SENDER_ID: '350452481649'
+          VITE_FIREBASE_MEASUREMENT_ID: G-BDBRM73QVJ
+          VITE_LUPI_MCP_ENDPOINT: https://lupi.live/mcp
+          VITE_LUPI_AUTH_FLOW: popup
           # NIST catalog + demo trajectories are served from a public GCS
           # bucket (shed-489901), not bundled. Vite inlines VITE_* at build.
           VITE_NIST_BASE_URL: https://storage.googleapis.com/shed-489901-nist-demos/nist
@@ -86,6 +104,14 @@ jobs:
           service: '${{ secrets.GCP_SERVICE_NAME_VIEWER }}'
           region: '${{ secrets.GCP_REGION }}'
           project_id: '${{ secrets.GCP_PROJECT_ID }}'
+          env_vars: |-
+            VITE_FIREBASE_API_KEY=${{ secrets.LUPI_FIREBASE_WEB_API_KEY }}
+            VITE_FIREBASE_AUTH_DOMAIN=lupi.live
+            VITE_FIREBASE_PROJECT_ID=shed-489901
+            VITE_FIREBASE_APP_ID=1:350452481649:web:c12dea9ce6f6ae045065d0
+            VITE_FIREBASE_STORAGE_BUCKET=shed-489901.firebasestorage.app
+            VITE_FIREBASE_MESSAGING_SENDER_ID=350452481649
+            VITE_FIREBASE_MEASUREMENT_ID=G-BDBRM73QVJ
           flags: '--allow-unauthenticated'
 
       - name: Show output
