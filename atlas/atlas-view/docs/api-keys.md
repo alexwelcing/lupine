@@ -27,6 +27,7 @@ CUSTOM=$(curl -s -X POST "$EXCHANGE" -H "Authorization: Bearer $KEY" | jq -r .cu
 ID_TOKEN=$(curl -s -X POST \
   "https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=$WEB_API_KEY" \
   -H 'Content-Type: application/json' \
+  -H 'Referer: https://lupi.live/' \
   -d "{\"token\":\"$CUSTOM\",\"returnSecureToken\":true}" | jq -r .idToken)
 
 # 3) use $ID_TOKEN as the Firebase identity to drive the viewer / MCP
@@ -42,6 +43,18 @@ returned `refreshToken`) when it expires. Treat the API key like a password.
 | `createApiKey` | callable | signed-in user | `{ keyId, rawKey, prefix, name }` (rawKey once) |
 | `revokeApiKey` | callable | signed-in user | `{ keyId, revoked: true }` |
 | `exchangeApiKey` | HTTPS POST | the key itself | `{ customToken }` |
+
+## Operational requirements
+
+- The Firebase web API key is public but must stay browser-restricted to
+  production, preview, Cloud Run, and local development origins. REST smoke tests
+  should send a matching `Referer` header when exchanging custom tokens through
+  Identity Toolkit.
+- The deployed `exchangeApiKey` runtime service account must be able to sign
+  Firebase custom tokens. In `shed-489901`, grant
+  `roles/iam.serviceAccountTokenCreator` to the runtime service account on
+  itself; otherwise the Function returns HTTP 500 with `iam.serviceAccounts.signBlob`
+  denied.
 
 ## Security model
 

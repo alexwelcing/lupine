@@ -23,19 +23,21 @@
  * API keys → Create. Treat the key like a password.
  */
 
-const API_KEY = process.env.LUPI_API_KEY;
-const WEB_API_KEY = process.env.LUPI_FIREBASE_WEB_API_KEY;
+import { resolveSaveViewVerifierCredentials } from './firebase-save-view-test-auth.mjs';
+
+let API_KEY = process.env.LUPI_API_KEY;
+let WEB_API_KEY = process.env.LUPI_FIREBASE_WEB_API_KEY;
 const PROJECT_ID = process.env.LUPI_FIREBASE_PROJECT_ID ?? 'shed-489901';
 const EXCHANGE_URL = process.env.LUPI_EXCHANGE_URL
   ?? 'https://us-central1-shed-489901.cloudfunctions.net/exchangeApiKey';
+const REFERRER = process.env.LUPI_SAVE_VIEW_REFERRER ?? 'https://lupi.live/';
 
 
 const COLLECTION = 'lupiViews';
 const BASE_SLUG = `verify-${Date.now().toString(36)}`;
 
 function fail(message) {
-  console.error(`[verify-saved-views] FAIL: ${message}`);
-  process.exit(1);
+  throw new Error(message);
 }
 
 function assert(condition, message) {
@@ -69,12 +71,23 @@ async function signInWithCustomToken(customToken) {
   const url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=${WEB_API_KEY}`;
   const { ok, body } = await request(url, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', Referer: REFERRER },
     body: JSON.stringify({ token: customToken, returnSecureToken: true }),
   });
   assert(ok && body?.idToken, `signInWithCustomToken failed: ${JSON.stringify(body)}`);
-  console.log(`[verify-saved-views] signed in as uid=${body.localId}`);
-  return { idToken: body.idToken, refreshToken: body.refreshToken, uid: body.localId };
+  const uid = body.localId ?? uidFromIdToken(body.idToken);
+  assert(uid, 'signInWithCustomToken returned an ID token without a UID');
+  console.log(`[verify-saved-views] signed in as uid=${uid}`);
+  return { idToken: body.idToken, refreshToken: body.refreshToken, uid };
+}
+
+function uidFromIdToken(idToken) {
+  try {
+    const payload = JSON.parse(Buffer.from(idToken.split('.')[1] ?? '', 'base64url').toString('utf8'));
+    return payload.user_id ?? payload.sub ?? null;
+  } catch {
+    return null;
+  }
 }
 
 
@@ -230,29 +243,41 @@ async function assertCrossUserCreateRejected(idToken) {
 }
 
 async function main() {
-  assert(API_KEY, 'LUPI_API_KEY is required');
-  assert(WEB_API_KEY, 'LUPI_FIREBASE_WEB_API_KEY is required');
+  const credentials = await resolveSaveViewVerifierCredentials({
+    apiKey: API_KEY,
+    webApiKey: WEB_API_KEY,
+    projectId: PROJECT_ID,
+  });
+  API_KEY = credentials.apiKey;
+  WEB_API_KEY = credentials.webApiKey;
+  if (credentials.seededKeyId) {
+    console.log(`[verify-saved-views] seeded temporary apiKeys/${credentials.seededKeyId}`);
+  }
 
-  const customToken = await exchangeApiKey();
-  const { idToken, uid } = await signInWithCustomToken(customToken);
-  const slug = `${BASE_SLUG}-${uid.slice(0, 6)}`;
+  try {
+    const customToken = await exchangeApiKey();
+    const { idToken, uid } = await signInWithCustomToken(customToken);
+    const slug = `${BASE_SLUG}-${uid.slice(0, 6)}`;
 
-  const created = await createView(idToken, slug, uid);
-  assert(created.fields?.ownerId?.stringValue === uid, 'ownerId mismatch on created doc');
+    const created = await createView(idToken, slug, uid);
+    assert(created.fields?.ownerId?.stringValue === uid, 'ownerId mismatch on created doc');
 
-  const readBack = await getView(idToken, slug);
-  assert(readBack.fields?.slug?.stringValue === slug, 'slug mismatch on read');
+    const readBack = await getView(idToken, slug);
+    assert(readBack.fields?.slug?.stringValue === slug, 'slug mismatch on read');
 
-  const listed = await listMyViews(idToken, uid);
-  assert(listed.some((d) => d.name.endsWith(`/${slug}`)), 'created view not found in owner list');
+    const listed = await listMyViews(idToken, uid);
+    assert(listed.some((d) => d.name.endsWith(`/${slug}`)), 'created view not found in owner list');
 
-  await getView(idToken, `${BASE_SLUG}-definitely-missing`, true);
-  await assertCrossUserCreateRejected(idToken);
+    await getView(idToken, `${BASE_SLUG}-definitely-missing`, true);
+    await assertCrossUserCreateRejected(idToken);
 
-  await deleteView(idToken, slug);
-  await getView(idToken, slug, true);
+    await deleteView(idToken, slug);
+    await getView(idToken, slug, true);
 
-  console.log('\n[verify-saved-views] all checks passed');
+    console.log('\n[verify-saved-views] all checks passed');
+  } finally {
+    await credentials.cleanup();
+  }
 }
 
 main().catch((err) => {
