@@ -67,31 +67,57 @@ function inspectSceneGraph(scene: any) {
   };
 }
 
+function summarizeGeometryAttributes(attrs: THREE.BufferGeometry['attributes']) {
+  return Object.fromEntries(
+    Object.entries(attrs).map(([key, attr]) => [
+      key,
+      {
+        itemSize: (attr as THREE.BufferAttribute).itemSize,
+        count: (attr as THREE.BufferAttribute).count,
+        usage: (attr as THREE.BufferAttribute).usage,
+      },
+    ]),
+  );
+}
+
+function countNonzeroAttribute(attr: THREE.BufferAttribute | undefined) {
+  const array = attr?.array;
+  if (!array) return null;
+  let count = 0;
+  for (let i = 0; i < attr.count; i += 1) {
+    if (Number(array[i]) > 1e-6) count += 1;
+  }
+  return count;
+}
+
 function inspectInstancedMeshes(scene: any) {
   const meshes: Array<Record<string, unknown>> = [];
   scene.traverse?.((object: any) => {
-    if (!object.isInstancedMesh) return;
     const geometry = object.geometry as THREE.BufferGeometry | undefined;
     const attrs = geometry?.attributes ?? {};
+    const hasAtomImpostorAttrs = Boolean(attrs.instancePosition && attrs.instanceRadius && attrs.instanceTypeId);
+    const hasClusterAttrs = Boolean(attrs.instancePosition && attrs.instanceRadius && !attrs.instanceTypeId);
+    const isInstancedBufferGeometry = Boolean((geometry as any)?.isInstancedBufferGeometry);
+    if (!object.isInstancedMesh && !isInstancedBufferGeometry && !hasAtomImpostorAttrs && !hasClusterAttrs) return;
     meshes.push({
       name: object.name || object.type,
       type: object.type,
+      kind: object.isInstancedMesh
+        ? 'instanced-mesh'
+        : hasAtomImpostorAttrs
+          ? 'atom-impostor'
+          : hasClusterAttrs
+            ? 'atom-cluster'
+            : 'instanced-buffer-geometry',
       visible: object.visible,
-      count: object.count,
+      count: object.count ?? (geometry as any)?.instanceCount ?? null,
+      activeInstances: (geometry as any)?.instanceCount ?? object.count ?? null,
       frustumCulled: object.frustumCulled,
       geometry: geometry?.type,
       material: object.material?.type,
-      capacity: object.instanceMatrix?.count ?? null,
-      attributes: Object.fromEntries(
-        Object.entries(attrs).map(([key, attr]) => [
-          key,
-          {
-            itemSize: (attr as THREE.BufferAttribute).itemSize,
-            count: (attr as THREE.BufferAttribute).count,
-            usage: (attr as THREE.BufferAttribute).usage,
-          },
-        ]),
-      ),
+      capacity: object.instanceMatrix?.count ?? attrs.instancePosition?.count ?? null,
+      nonzeroRadii: countNonzeroAttribute(attrs.instanceRadius as THREE.BufferAttribute | undefined),
+      attributes: summarizeGeometryAttributes(attrs),
     });
   });
   return meshes;
