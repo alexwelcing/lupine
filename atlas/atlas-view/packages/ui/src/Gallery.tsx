@@ -5,179 +5,29 @@
  * light; only the focused scene renders a large preview.
  */
 
-import { useCallback, useRef, useEffect, useState, useMemo, useDeferredValue } from 'react';
+import { useCallback, useRef, useEffect, useState, useMemo } from 'react';
 import { useStore } from './store';
-import { artifactToLoadedFile } from './MlipArtifactLoader';
-import galleryData from './gallery-data.json';
+import { parseAtomCountLabel } from './deviceCapabilities';
 import {
-  getDeviceProfile,
-  parseAtomCountLabel,
-  formatAtomCount,
-} from './deviceCapabilities';
+  ALL_DOMAINS,
+  DOMAIN_COLORS,
+  DOMAIN_THREAD,
+  EXAMPLES,
+  SOURCE_FILTERS,
+  gallerySnapshotUrl,
+  isOpenDataExample,
+  parseFrameCountLabel,
+  resolveExampleUrl,
+  type GalleryExample,
+} from './gallery/catalog';
 import {
-  FUNCTIONAL_GROUP_BY_ID,
-  FUNCTIONAL_GROUPS,
-  type FunctionalGroupId,
   type FunctionalGroupConcept,
   functionalGroupsForMolecule,
-  functionalGroupSearchText,
-  moleculeMatchesFunctionalGroup,
 } from './organicFunctionalGroups';
-import { galleryNomenclatureTags } from './galleryNomenclature';
+import { openMolecule } from './viewer/openMolecule';
+import { useGalleryFilters } from './gallery/useGalleryFilters';
 
 // ─── Types ──────────────────────────────────────────────────────────────
-
-type Domain =
-  | 'Metals & Alloys'
-  | 'Ceramics & Oxides'
-  | 'Polymers & Soft Matter'
-  | 'Nanomaterials'
-  | 'Biomolecules'
-  | 'Energy Materials'
-  | 'Defects & Mechanics'
-  | 'Methods'
-  | 'Fluids & Solvents'
-  | 'Atomized Media'
-  | 'Advanced Theory & Validation';
-
-interface GalleryExample {
-  id: string;
-  title: string;
-  subtitle: string;
-  domain: Domain;
-  atoms: string;
-  frames: string;
-  isTrajectory?: boolean;
-  autoPlay?: boolean;
-  /**
-   * Per-atom property this scene is curated to be read through (e.g. 'error'
-   * for the NIST potential benchmarks). Element identity is the global
-   * first-read default; this opts a curated scene into its intended view so
-   * the subtitle's "color by error" promise is what you actually see.
-   */
-  colorBy?: string;
-  file: string;
-  sourceUrl?: string;
-  available: boolean;
-  colors: [string, string, string];
-  metadata?: {
-    method?: string;
-    potential?: string;
-    temperature?: string;
-    ensemble?: string;
-    reference?: string;
-    doi?: string;
-    density?: string;
-  };
-  featured?: boolean;
-}
-
-const EXAMPLES: GalleryExample[] = galleryData as GalleryExample[];
-
-const DOMAIN_COLORS: Record<Domain, string> = {
-  'Metals & Alloys': '#e8b4b8',
-  'Ceramics & Oxides': '#a8d5ba',
-  'Polymers & Soft Matter': '#f5e6a3',
-  'Nanomaterials': '#b8d4e3',
-  'Biomolecules': '#e8c4d9',
-  'Energy Materials': '#c4e0c4',
-  'Defects & Mechanics': '#f0d9a8',
-  'Methods': '#d4d4e8',
-  'Fluids & Solvents': '#a8c8e8',
-  'Atomized Media': '#e7edf3',
-  'Advanced Theory & Validation': '#d9c4e8',
-};
-
-const DOMAIN_THREAD: Record<Domain, string> = {
-  'Metals & Alloys': '#c9a0a4',
-  'Ceramics & Oxides': '#8ab89a',
-  'Polymers & Soft Matter': '#d4c984',
-  'Nanomaterials': '#98b8c8',
-  'Biomolecules': '#c8a4b8',
-  'Energy Materials': '#a4c4a4',
-  'Defects & Mechanics': '#d0b888',
-  'Methods': '#b8b8d0',
-  'Fluids & Solvents': '#88a8c8',
-  'Atomized Media': '#c7d0da',
-  'Advanced Theory & Validation': '#b8a4c8',
-};
-
-const ALL_DOMAINS = Object.keys(DOMAIN_COLORS) as Domain[];
-
-type SourceFilter = 'All Sources' | 'Featured' | 'Trajectories' | 'Snapshots' | 'Open Data';
-
-const SOURCE_FILTERS: SourceFilter[] = ['All Sources', 'Featured', 'Trajectories', 'Snapshots', 'Open Data'];
-
-const GENERATED_SNAPSHOT_URLS: Record<string, string> = {
-  lupi_live_qr_atomized: 'generated/atomized/lupi-live-qr-atomized.png',
-  pulse_grid_atomized: 'generated/atomized/pulse-grid-atomized.png',
-};
-
-function publicAssetUrl(path: string): string {
-  if (path.startsWith('http://') || path.startsWith('https://')) return path;
-  const base = (import.meta as any).env?.BASE_URL || '/';
-  const cleanBase = base.endsWith('/') ? base : `${base}/`;
-  const cleanPath = path.replace(/^\/+/, '');
-  return `${cleanBase}${cleanPath}`.replace(/([^:]\/)\/+/g, '$1');
-}
-
-function gallerySnapshotUrl(id: string): string {
-  if (GENERATED_SNAPSHOT_URLS[id]) return publicAssetUrl(GENERATED_SNAPSHOT_URLS[id]);
-  return publicAssetUrl(`gallery/snapshots/${id}.jpg`);
-}
-
-function parseFrameCountLabel(label: string | undefined): number {
-  if (!label) return 0;
-  const digits = label.replace(/[^\d]/g, '');
-  if (!digits) return 0;
-  const n = parseInt(digits, 10);
-  return Number.isFinite(n) ? n : 0;
-}
-
-function resolveExampleUrl(example: GalleryExample): string {
-  if (example.file.startsWith('http://') || example.file.startsWith('https://')) {
-    return maybeDevStorageProxy(example.file);
-  }
-  const localUrl = publicAssetUrl(example.file);
-  const isDev = (import.meta as any).env?.DEV;
-  return (isDev || !example.sourceUrl) ? localUrl : example.sourceUrl;
-}
-
-function maybeDevStorageProxy(url: string): string {
-  const isDev = (import.meta as any).env?.DEV;
-  if (!isDev) return url;
-  try {
-    const parsed = new URL(url);
-    if (parsed.hostname !== 'storage.googleapis.com') return url;
-    return `/__lupi_gcs${parsed.pathname}${parsed.search}`;
-  } catch {
-    return url;
-  }
-}
-
-function isOpenDataExample(example: GalleryExample): boolean {
-  return Boolean(
-    example.sourceUrl
-    || example.file.startsWith('http://')
-    || example.metadata?.doi
-    || /NIST|Nature|OpenKIM|Materials Project|Zenodo|GCS|benchmark/i.test(
-      [
-        example.metadata?.method,
-        example.metadata?.potential,
-        example.metadata?.reference,
-        example.subtitle,
-      ].filter(Boolean).join(' '),
-    ),
-  );
-}
-
-function matchesSourceFilter(example: GalleryExample, sourceFilter: SourceFilter): boolean {
-  if (sourceFilter === 'All Sources') return true;
-  if (sourceFilter === 'Featured') return Boolean(example.featured);
-  if (sourceFilter === 'Trajectories') return parseFrameCountLabel(example.frames) > 1;
-  if (sourceFilter === 'Snapshots') return parseFrameCountLabel(example.frames) <= 1;
-  return isOpenDataExample(example);
-}
 
 type PreviewAtom = {
   element: string;
@@ -1671,79 +1521,28 @@ const sVisuallyHidden: React.CSSProperties = {
 
 export function Gallery() {
   const [loadingId, setLoadingId] = useState<string | null>(null);
-  const [filter, setFilter] = useState<Domain | 'All'>('All');
-  const [sourceFilter, setSourceFilter] = useState<SourceFilter>('All Sources');
-  const [functionalGroupFilter, setFunctionalGroupFilter] = useState<FunctionalGroupId | 'All'>('All');
-  const [search, setSearch] = useState('');
   const [selectedId, setSelectedId] = useState<string>(() => {
     const firstPlayable = EXAMPLES.find((ex) => ex.available && parseFrameCountLabel(ex.frames) > 1);
     return firstPlayable?.id ?? EXAMPLES[0]?.id ?? '';
   });
-  // Keep the input responsive while the (potentially large) filtered grid
-  // re-renders off the deferred value — avoids per-keystroke jank.
-  const deferredSearch = useDeferredValue(search);
-
-  // The ceiling is computed once at mount. It is a global browser-buffer
-  // ceiling now; mobile keeps adaptive quality, not reduced access.
-  const atomCeiling = useMemo(() => getDeviceProfile().maxAtoms, []);
-
-  const filteredExamples = useMemo(() => {
-    return EXAMPLES.filter(ex => {
-      if (filter !== 'All' && ex.domain !== filter) return false;
-      if (!matchesSourceFilter(ex, sourceFilter)) return false;
-      if (!moleculeMatchesFunctionalGroup(ex.id, functionalGroupFilter)) return false;
-      if (deferredSearch) {
-        const s = deferredSearch.toLowerCase();
-        const nomenclatureText = galleryNomenclatureTags(ex.id).join(' ').toLowerCase();
-        return (
-          ex.title.toLowerCase().includes(s) ||
-          ex.subtitle.toLowerCase().includes(s) ||
-          ex.domain.toLowerCase().includes(s) ||
-          Object.values(ex.metadata ?? {}).join(' ').toLowerCase().includes(s) ||
-          functionalGroupSearchText(ex.id).toLowerCase().includes(s) ||
-          nomenclatureText.includes(s)
-        );
-      }
-      return true;
-    });
-  }, [filter, sourceFilter, functionalGroupFilter, deferredSearch]);
-
-  const galleryStats = useMemo(() => {
-    const available = EXAMPLES.filter(ex => ex.available).length;
-    const trajectories = EXAMPLES.filter(ex => parseFrameCountLabel(ex.frames) > 1).length;
-    return {
-      domains: ALL_DOMAINS.filter(domain => EXAMPLES.some(ex => ex.domain === domain)).length,
-      available,
-      trajectories,
-      featured: EXAMPLES.filter(ex => ex.featured).length,
-      organicMolecules: EXAMPLES.filter(ex => functionalGroupsForMolecule(ex.id).length > 0).length,
-    };
-  }, []);
-
-  const functionalGroupSummaries = useMemo(() => {
-    return FUNCTIONAL_GROUPS.map(group => ({
-      group,
-      count: EXAMPLES.filter(ex => group.exampleIds.includes(ex.id)).length,
-    })).filter(summary => summary.count > 0);
-  }, []);
-
-  const activeFunctionalGroup = functionalGroupFilter === 'All'
-    ? null
-    : FUNCTIONAL_GROUP_BY_ID[functionalGroupFilter] ?? null;
-
-  const domainSummaries = useMemo(() => {
-    return ALL_DOMAINS
-      .map(domain => {
-        const examples = EXAMPLES.filter(ex => ex.domain === domain);
-        return {
-          domain,
-          count: examples.length,
-          trajectories: examples.filter(ex => parseFrameCountLabel(ex.frames) > 1).length,
-          atoms: examples.reduce((total, ex) => total + parseAtomCountLabel(ex.atoms), 0),
-        };
-      })
-      .filter(summary => summary.count > 0);
-  }, []);
+  const {
+    activeFunctionalGroup,
+    atomCeiling,
+    clearFilters,
+    domainSummaries,
+    filter,
+    filteredExamples,
+    functionalGroupFilter,
+    functionalGroupSummaries,
+    galleryStats,
+    playableExamples,
+    search,
+    setFilter,
+    setFunctionalGroupFilter,
+    setSearch,
+    setSourceFilter,
+    sourceFilter,
+  } = useGalleryFilters();
 
   const selectedExample = useMemo(() => {
     return filteredExamples.find((ex) => ex.id === selectedId)
@@ -1751,285 +1550,20 @@ export function Gallery() {
       ?? null;
   }, [filteredExamples, selectedId]);
 
-  const playableExamples = useMemo(() => {
-    return EXAMPLES
-      .filter((ex) => ex.available && parseFrameCountLabel(ex.frames) > 1)
-      .slice(0, 8);
-  }, []);
-
   useEffect(() => {
     if (selectedExample && selectedExample.id !== selectedId) {
       setSelectedId(selectedExample.id);
     }
   }, [selectedExample, selectedId]);
 
-  const clearFilters = useCallback(() => {
-    setSearch('');
-    setFilter('All');
-    setSourceFilter('All Sources');
-    setFunctionalGroupFilter('All');
-  }, []);
-
   const handleLoad = useCallback(async (example: GalleryExample, isPopState = false) => {
-    if (!example.available) return;
-
-    // Global memory-ceiling gate. Device tier now only chooses quality;
-    // it does not block access to larger molecules on small screens.
-    const profile = getDeviceProfile();
-    const estimatedAtoms = parseAtomCountLabel(example.atoms);
-    if (estimatedAtoms > profile.maxAtoms) {
-      useStore.getState().setError(
-        `"${example.title}" has ~${formatAtomCount(estimatedAtoms)} atoms, ` +
-        `over Lupi's current ${formatAtomCount(profile.maxAtoms)}-atom ` +
-        `single-scene ceiling (${profile.reason}). ` +
-        `Try a smaller frame or a chunked trajectory.`,
-      );
-      // Keep the URL in sync — if we were navigated here via ?sim=, drop
-      // it so reloads don't re-trigger the same OOM-prone load.
-      if (typeof window !== 'undefined') {
-        const url = new URL(window.location.href);
-        if (url.searchParams.get('sim') === example.id) {
-          url.searchParams.delete('sim');
-          window.history.replaceState({}, '', url);
-        }
-      }
-      return;
-    }
-
-    if (!isPopState) {
-      const url = new URL(window.location.href);
-      url.searchParams.set('sim', example.id);
-      window.history.pushState({}, '', url);
-    }
-
     setLoadingId(example.id);
-    useStore.getState().setLoading(true, 0);
-    useStore.getState().setActiveCardId(example.id);
-
-    // Clean up any existing streaming loader from a previous load
-    if ((window as any).__atlasStreamingCleanup) {
-      (window as any).__atlasStreamingCleanup();
-      delete (window as any).__atlasStreamingCleanup;
-    }
-
     try {
-      // URL resolution: handles three cases
-      // 1. Absolute URLs in file field (GCS, CDN) — use directly
-      // 2. sourceUrl override (open-data repos) — prefer in production
-      // 3. Relative local paths — prepend base URL
-      const url = resolveExampleUrl(example);
-
-      if (/\.json(?:$|\?)/i.test(url) || /\.json$/i.test(example.file)) {
-        const resp = await fetch(url, { cache: 'reload' });
-        if (!resp.ok) throw new Error(`Failed to fetch: ${resp.status}`);
-        const payload = await resp.json();
-        const loaded = artifactToLoadedFile(payload, url);
-        const store = useStore.getState();
-        store.setFile({
-          ...loaded,
-          name: example.title,
-        });
-        store.setFrame(0);
-        store.setColorScheme('element');
-        store.setColorProperty(null);
-        store.setCameraPreset('iso');
-        store.setPlaybackSpeed(1);
-        useStore.setState({
-          atomScale: 1.35,
-          showBonds: false,
-          playing: Boolean(example.autoPlay),
-        });
-        setLoadingId(null);
-        return;
-      }
-
-      // ── Streaming path for .glimbin files (GCS CDN) ──
-      const { isGlimbinUrl } = await import('@atlas/parsers/StreamingLoader');
-      if (isGlimbinUrl(url)) {
-        const { StreamingLoader } = await import('@atlas/parsers/StreamingLoader');
-        const loader = new StreamingLoader(url, {
-          onProgress: (_phase, progress) => {
-            useStore.getState().setLoading(true, progress * 0.6);
-          },
-          onTelemetry: (stats) => {
-            useStore.getState().setStreamingTelemetry(stats);
-          },
-        });
-
-        const header = await loader.fetchHeader();
-        await loader.fetchIndex();
-        const frame0 = await loader.fetchFrame(0);
-        const meta = loader.getMetadata()!;
-
-        // Build trajectory with frame 0 loaded; rest fetched on-demand
-        const placeholderFrames = new Array(meta.totalFrames);
-        placeholderFrames[0] = frame0;
-
-        useStore.getState().setFile({
-          name: example.title,
-          size: meta.fileSize,
-          trajectory: {
-            frames: placeholderFrames,
-            totalFrames: meta.totalFrames,
-            atomTypes: meta.atomTypes,
-            globalBounds: meta.globalBounds,
-          },
-          thermo: null,
-          sourceUrl: url,
-        });
-
-        // On-demand frame fetching: subscribe to timeline scrubs
-        const unsubFrameWatch = useStore.subscribe(
-          (s) => s.frame,
-          async (frameIndex) => {
-            const currentFile = useStore.getState().file;
-            if (!currentFile) return;
-            if (currentFile.trajectory.frames[frameIndex]) return;
-            try {
-              const frame = await loader.fetchFrame(frameIndex);
-              const file = useStore.getState().file;
-              if (file) {
-                file.trajectory.frames[frameIndex] = frame;
-                useStore.setState({ file: { ...file } });
-              }
-              const isPlaying = useStore.getState().playing;
-              loader.prefetch(frameIndex, isPlaying ? 1 : 0, isPlaying ? 8 : 3);
-            } catch (err: any) {
-              console.warn(`[streaming] Frame ${frameIndex} fetch failed:`, err.message);
-            }
-          }
-        );
-
-        // Stash cleanup for navigation
-        (window as any).__atlasStreamingCleanup = () => {
-          unsubFrameWatch();
-          loader.dispose();
-        };
-
-        setLoadingId(null);
-        return;
-      }
-
-      // ── Streaming dump parser for large .lammpstrj/.dump files ──
-      const STREAMING_BYTES_THRESHOLD = 5 * 1024 * 1024;  // 5 MB
-      const STREAMING_ATOM_THRESHOLD = 100_000;
-      const looksDumpExt = /\.(lammpstrj|dump)$/i.test(example.file);
-      let usedStreaming = false;
-
-      if (looksDumpExt) {
-        // Probe head with a Range request — much cheaper than pulling
-        // the full file. Servers that ignore Range return the whole
-        // file; we still only read the first 4 KB from the response.
-        const probe = await fetch(url, { headers: { Range: 'bytes=0-4095' } });
-        if (!probe.ok && probe.status !== 206) {
-          throw new Error(`Failed to fetch: ${probe.status}`);
-        }
-        const probeBlob = await probe.blob();
-        const head = await probeBlob.slice(0, 4096).text();
-        // Total size: prefer Content-Range from the partial response,
-        // fall back to Content-Length on the original probe (servers
-        // that returned the full body), or to the blob size itself.
-        const contentRange = probe.headers.get('content-range') ?? '';
-        const totalMatch = contentRange.match(/\/(\d+)$/);
-        const totalSize = totalMatch
-          ? parseInt(totalMatch[1], 10)
-          : (parseInt(probe.headers.get('content-length') ?? '0', 10) || probeBlob.size);
-
-        const { canStreamDump } = await import('@atlas/parsers');
-        const natomsMatch = head.match(/ITEM:\s*NUMBER OF ATOMS\s*\n\s*(\d+)/);
-        const headerAtoms = natomsMatch ? parseInt(natomsMatch[1], 10) : 0;
-
-        if (
-          canStreamDump(head)
-          && totalSize > STREAMING_BYTES_THRESHOLD
-          && headerAtoms >= STREAMING_ATOM_THRESHOLD
-        ) {
-          if (headerAtoms > profile.maxAtoms) {
-            useStore.getState().setError(
-              `"${example.title}" has ${formatAtomCount(headerAtoms)} atoms, ` +
-              `over Lupi's current ${formatAtomCount(profile.maxAtoms)}-atom ` +
-              `single-scene ceiling. Try a smaller frame or a chunked trajectory.`,
-            );
-            return;
-          }
-          // Real streaming: full fetch, response.body consumed as a
-          // ReadableStream. Atoms render while bytes are still arriving.
-          const streamResp = await fetch(url);
-          if (!streamResp.ok) throw new Error(`Failed to fetch: ${streamResp.status}`);
-          const { parseDumpResponseStreaming } = await import('@atlas/parsers');
-          const store = useStore.getState();
-          for await (const event of parseDumpResponseStreaming(streamResp)) {
-            if (event.type === 'header') {
-              store.setFile({
-                name: example.title,
-                size: totalSize,
-                trajectory: event.trajectory,
-                thermo: null,
-                sourceUrl: url,
-              });
-              // setFile defaulted loadedAtomCount to natoms (the
-              // pre-allocated TypedArray length); reset to 0 so the
-              // renderer doesn't flash uninitialized memory before
-              // the first chunk lands. Both updates batch into one
-              // render.
-              store.setLoadedAtomCount(0);
-            } else if (event.type === 'progress') {
-              store.setLoadedAtomCount(event.loadedAtoms);
-              // Yield to the renderer between chunks so atoms paint
-              // and the page stays interactive.
-              await new Promise<void>((r) => requestAnimationFrame(() => r()));
-            } else if (event.type === 'complete') {
-              store.setLoadedAtomCount(event.loadedAtoms);
-            }
-          }
-          usedStreaming = true;
-          return;
-        }
-      }
-
-      if (!usedStreaming) {
-        // WASM path. Same flow as before — used for small files,
-        // non-dump formats, multi-frame, triclinic, or any dialect the
-        // streaming parser declined.
-        const resp = await fetch(url);
-        if (!resp.ok) throw new Error(`Failed to fetch: ${resp.status}`);
-        const blob = await resp.blob();
-        const fileObj = new File([blob], example.file.split('/').pop() ?? 'file.dump');
-        const { parseFile } = await import('@atlas/parsers');
-        const result = await parseFile(fileObj);
-
-        if (result.trajectory) {
-          const actualAtoms = result.trajectory.frames[0]?.natoms ?? 0;
-          if (actualAtoms > profile.maxAtoms) {
-            useStore.getState().setError(
-              `"${example.title}" parsed to ${formatAtomCount(actualAtoms)} atoms, ` +
-              `over Lupi's current ${formatAtomCount(profile.maxAtoms)}-atom ` +
-              `single-scene ceiling. Try a smaller frame or a chunked trajectory.`,
-            );
-            return;
-          }
-          const store = useStore.getState();
-          store.setFile({
-            name: example.title,
-            size: blob.size,
-            trajectory: result.trajectory,
-            thermo: result.thermo ?? null,
-            sourceUrl: url,
-          });
-          // setFile defaults curated scenes to element identity. Scenes whose
-          // whole point is a per-atom field (the NIST benchmarks' error column)
-          // declare `colorBy` and open in that read instead.
-          if (example.colorBy && result.trajectory.frames[0]?.properties?.has(example.colorBy)) {
-            store.setColorScheme('property');
-            store.setColorProperty(example.colorBy);
-          }
-        }
-      }
-    } catch (err: any) {
-      console.warn(`Gallery load failed for ${example.id}:`, err.message);
-      useStore.getState().setError(
-        `Could not load "${example.title}" — try dragging the file directly.`
-      );
+      await openMolecule({
+        kind: 'gallery',
+        id: example.id,
+        history: isPopState ? 'replace' : 'push',
+      });
     } finally {
       setLoadingId(null);
     }
@@ -2228,8 +1762,8 @@ export function Gallery() {
             <div className="lupi-gallery-empty" data-testid="gallery-empty">
               <div className="lupi-gallery-empty-title">No molecules found</div>
               <p>
-                {deferredSearch
-                  ? <>Nothing matches "{deferredSearch}"{filter !== 'All' ? <> in {filter}</> : null}.</>
+                {search
+                  ? <>Nothing matches "{search}"{filter !== 'All' ? <> in {filter}</> : null}.</>
                   : <>No simulations match the active filters.</>}
               </p>
               <button

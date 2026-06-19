@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ALL_EXAMPLES, FEATURED_IDS, type GalleryExample } from './shared';
 import { FeaturedCard } from './FeaturedCard';
+import { openMolecule } from '../viewer/openMolecule';
 
 /**
  * FeaturedShowcase — the landing "Featured Molecules" grid.
@@ -30,10 +31,7 @@ export function FeaturedShowcase() {
   );
 
   const handleOpen = useCallback((example: GalleryExample) => {
-    const url = new URL(window.location.href);
-    url.searchParams.set('sim', example.id);
-    window.history.pushState({}, '', url);
-    window.dispatchEvent(new PopStateEvent('popstate'));
+    void openMolecule({ kind: 'gallery', id: example.id, history: 'push' });
   }, []);
 
   return (

@@ -1,10 +1,10 @@
 import { useMemo, useState, type ReactNode } from 'react';
 import { ParticleCanvas } from './ParticleCanvas';
 import { AnimatedCounter } from './AnimatedCounter';
-import { ALL_EXAMPLES, publicAssetUrl } from './shared';
+import { ALL_EXAMPLES } from './shared';
 import { useStore } from '../store';
-import { loadMoleculeSource } from '../loadMoleculeSource';
 import { MillionAtomPreview, type SceneMode } from './MillionAtomPreview';
+import { openMolecule } from '../viewer/openMolecule';
 
 interface SceneModeConfig {
   id: SceneMode;
@@ -71,28 +71,7 @@ export function HeroSection() {
 
   const openMassiveScene = async () => {
     if (!massiveScene?.available) return;
-
-    const url = new URL(window.location.href);
-    url.searchParams.set('sim', MASSIVE_SCENE_ID);
-    window.history.pushState({}, '', url);
-    useStore.getState().setActiveCardId(MASSIVE_SCENE_ID);
-
-    try {
-      await loadMoleculeSource(publicAssetUrl(massiveScene.file));
-      const loadedFile = useStore.getState().file;
-      if (loadedFile) {
-        useStore.setState({
-          file: { ...loadedFile, name: massiveScene.title },
-          activeCardId: MASSIVE_SCENE_ID,
-        });
-      }
-    } catch {
-      const cleanUrl = new URL(window.location.href);
-      if (cleanUrl.searchParams.get('sim') === MASSIVE_SCENE_ID) {
-        cleanUrl.searchParams.delete('sim');
-        window.history.replaceState({}, '', cleanUrl);
-      }
-    }
+    await openMolecule({ kind: 'gallery', id: MASSIVE_SCENE_ID, history: 'push' });
   };
 
   return (

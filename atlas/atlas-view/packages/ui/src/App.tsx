@@ -7,62 +7,19 @@
 
 import { useEffect, useCallback, useRef, useState, Component, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Canvas, useThree, useFrame } from '@react-three/fiber';
+import { useThree, useFrame } from '@react-three/fiber';
 import { OrbitControls, GizmoHelper, GizmoViewport, ContactShadows } from '@react-three/drei';
 import { Perf } from 'r3f-perf';
 import { ScenePostprocessing } from './postprocess/ScenePostprocessing';
-import { POSTPROCESS_PRESETS } from './postprocess/presets';
 import { DevProbe } from './DevProbe';
 import { McpViewerBridge, McpViewerHarness } from './mcpViewerBridge';
 import { StateInspector } from './StateInspector';
 import * as THREE from 'three';
-import { XR, createXRStore, useXR } from '@react-three/xr';
+import { useXR } from '@react-three/xr';
 import { USDZExportHelper } from './export/USDZExportPipeline';
 import { XREnvironmentDome } from './xr/XREnvironmentDome';
 import { XRLightEstimation } from './xr/XRLightEstimation';
 import { SceneLighting } from './SceneLighting';
-
-// XR store — tuned for the Meta Quest browser (Quest 2/3/Pro) while staying
-// graceful on non-Meta runtimes. All advanced features are requested as
-// *optional* (XRSessionFeatureRequest = true) so a session still starts on
-// devices that lack them.
-export const xrStore = createXRStore({
-  offerSession: false,
-  emulate: false,
-  // Quest 3 reliably hits 90 Hz; default of 72 leaves frames on the table.
-  frameRate: 'high',
-  // Foveated rendering — Quest GPU loves this; 0 disables, 1 is max.
-  foveation: 0.5,
-  // We hand-build the session init (rather than use the named feature options)
-  // so we can request 'light-estimation' alongside the usual Quest 3 features —
-  // @react-three/xr has no first-class option for it, and customSessionInit
-  // takes over feature negotiation entirely (see @pmndrs/xr buildXRSessionInit).
-  // 'light-estimation' lets XRLightEstimation mirror the real surroundings onto
-  // the molecule (campfire reflections in low light). Everything stays optional,
-  // so a session still starts on devices that lack any given feature; this list
-  // mirrors the previous defaults (hand-tracking, layers, hit-test, anchors,
-  // plane/mesh detection, dom-overlay) plus light-estimation.
-  customSessionInit: {
-    requiredFeatures: ['local-floor'],
-    optionalFeatures: [
-      'hand-tracking',
-      'layers',
-      'hit-test',
-      'anchors',
-      'plane-detection',
-      'mesh-detection',
-      'dom-overlay',
-      'light-estimation',
-    ],
-  },
-  // Direct manipulation lives in XRMoleculeInteraction (reads joint poses
-  // every frame). The short hand ray remains as a fallback for menu / UI.
-  hand: {
-    rayPointer: { rayModel: { maxLength: 1.5 } },
-    teleportPointer: false,
-    grabPointer: false,
-  },
-});
 
 import { MobileHUD } from './MobileHUD';
 import { ChronosHUD } from './ChronosHUD';
@@ -73,7 +30,7 @@ import { useStore } from './store';
 import { getMaxSafeAtomCount, getDefaultQualityTier } from './deviceCapabilities';
 import { LandingPage } from './LandingPage';
 import { SceneLandingPage } from './landing/SceneLandingPage';
-import { SeoEducationPage, type SeoEducationKind } from './landing/SeoEducationPage';
+import { SeoEducationPage } from './landing/SeoEducationPage';
 import { ThermoMinimap } from './ThermoMinimap';
 import { AtomsOptimized } from '@atlas/scene/AtomsOptimized';
 import { AtomClusters } from '@atlas/scene/AtomClusters';
@@ -113,16 +70,36 @@ import { LupiAgentDock } from './LupiAgentDock';
 import { SavedViewButton } from './SavedViewButton';
 import { MoleculeConfigurator } from './molecules/MoleculeConfigurator';
 import { openRandomOmol25Molecule } from './molecules/randomOmol';
-import { loadSavedMolecularView, slugifySavedViewTitle } from './savedViews';
-import { loadMoleculeSource } from './loadMoleculeSource';
+import { loadSavedMolecularView } from './savedViews';
 import { recognizeLupiUrlPayload } from './lupiUrlRecognition';
 import { track, ANALYTICS_EVENTS, ensureAnalyticsSession } from './analytics';
 import { detectRenderCapability } from './renderCapability';
-import { CanvasErrorBoundary } from './CanvasErrorBoundary';
 import { MoleculeFilterShell } from './MoleculeFilterShell';
 import { PanelHost } from './PanelHost';
 import { ViewerControlsDrawer, type ViewerControlMode } from './ViewerControlsDrawer';
 import { StudyLensPanel } from './StudyLensPanel';
+import {
+  useViewerBackgroundState,
+  useViewerFileState,
+  useViewerPanelState,
+  useViewerPlaybackState,
+} from './storeSelectors';
+import {
+  SEO_EDUCATION_ROUTES,
+  currentHashRoute,
+  currentPathRoute,
+  isEmojiRoute,
+  isMcpViewerRoute as isMcpViewerRouteMatch,
+  isTestbedRoute,
+  normalizedPathRoute,
+  savedViewSlugFromRoute,
+} from './viewer/viewerRoutes';
+import { openMolecule } from './viewer/openMolecule';
+import { PresetLegacyBridge } from './viewer/PresetLegacyBridge';
+import { ViewerCanvas } from './viewer/ViewerCanvas';
+import { useViewerSceneModel } from './viewer/useViewerSceneModel';
+
+export { xrStore } from './viewer/xrStore';
 
 // ─── Icons ────────────────────────────────────────────────────────────
 const IconFirst = () => (
@@ -589,68 +566,15 @@ function CameraManager({
   return null;
 }
 
-/** Sync legacy postprocess fields so older surfaces remain coherent while the
- *  renderer reads the authored preset as the source of truth. */
-function PresetLegacyBridge() {
-  const presetId = useStore(s => s.postprocessPreset);
-  useEffect(() => {
-    const preset = POSTPROCESS_PRESETS[presetId];
-    if (!preset) return;
-    useStore.setState({
-      ssao: preset.ssao.enabled,
-      bloom: preset.bloom.enabled,
-      dof: preset.dof.enabled,
-      autoDepthOfField: preset.dof.auto,
-      toneMapping: preset.toneMapping,
-    });
-  }, [presetId]);
-  return null;
-}
-
 import { Testbed } from './Testbed';
 import EmojiPlayground from './EmojiPlayground';
 
-function currentHashRoute() {
-  if (typeof window === 'undefined') return '/';
-  const hash = window.location.hash.replace(/^#/, '').trim();
-  return hash.startsWith('/') ? hash : '/';
-}
-
-function currentPathRoute() {
-  if (typeof window === 'undefined') return '/';
-  return window.location.pathname || '/';
-}
-
-function normalizedPathRoute(route: string) {
-  if (route === '/') return route;
-  return route.replace(/\/+$/, '') || '/';
-}
-
-function savedViewSlugFromRoute(route: string): string | null {
-  const routePath = route.split('?')[0] || '/';
-  if (!routePath.startsWith('/view/')) return null;
-  try {
-    return slugifySavedViewTitle(decodeURIComponent(routePath.slice('/view/'.length)));
-  } catch {
-    return null;
-  }
-}
-
-const SEO_EDUCATION_ROUTES: Record<string, SeoEducationKind> = {
-  '/study/organic-functional-groups': 'functional-groups',
-  '/study/functional-group-examples': 'functional-group-examples',
-  '/study/organic-chemistry-3d-molecule-viewer': 'ochem-viewer',
-  '/materials/omol25': 'omol25',
-  '/materials/omol25-molecule-geometry': 'omol25-geometry',
-  '/materials/million-atom-viewer': 'million-atom-viewer',
-};
-
 export default function App() {
-  if (typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('testbed')) {
+  if (typeof window !== 'undefined' && isTestbedRoute()) {
     return <Testbed />;
   }
 
-  if (typeof window !== 'undefined' && (new URLSearchParams(window.location.search).has('emoji') || currentHashRoute().split('?')[0] === '/system/emoji')) {
+  if (typeof window !== 'undefined' && isEmojiRoute()) {
     return <EmojiPlayground />;
   }
 
@@ -664,7 +588,7 @@ export default function App() {
   const hashPath = hashRoute.split('?')[0] || '/';
   const normalizedPath = normalizedPathRoute(pathRoute);
   const isMlipFlywheelRoute = hashPath === '/system/mlip-flywheel';
-  const isMcpViewerRoute = hashPath === '/mcp' || new URLSearchParams(window.location.search).has('mcp');
+  const isMcpViewerRoute = isMcpViewerRouteMatch(hashPath);
   const savedViewSlug = savedViewSlugFromRoute(hashPath) ?? savedViewSlugFromRoute(normalizedPath);
   const isSavedViewRoute = Boolean(savedViewSlug);
   const isCopperSceneRoute = normalizedPath === '/scenes/1m-copper-lattice';
@@ -719,12 +643,8 @@ export default function App() {
     }
   }, [savedViewSlug, savedViewQuery.isPending, savedViewQuery.data, savedViewQuery.error]);
 
-  const file = useStore(s => s.file);
-  const ghostFile = useStore(s => s.ghostFile);
-  const loading = useStore(s => s.loading);
-  const frame = useStore(s => s.frame);
-  const playing = useStore(s => s.playing);
-  const playbackSpeed = useStore(s => s.playbackSpeed);
+  const { file, ghostFile, loading, frame, loadedAtomCount } = useViewerFileState();
+  const { playing, playbackSpeed, setFrame, nextFrame, togglePlay } = useViewerPlaybackState();
   const colorMode = useStore(s => s.colorMode);
   const colorProperty = useStore(s => s.colorProperty);
   const materialPreset = useStore(s => s.materialPreset);
@@ -811,17 +731,19 @@ export default function App() {
   const bondColorMode = useStore(s => s.bondColorMode);
   const renderStyle = useStore(s => s.renderStyle);
   const atomScale = useStore(s => s.atomScale);
-  const activePanel = useStore(s => s.activePanel);
-  const backgroundPreset = useStore(s => s.backgroundPreset);
-  const backgroundStyle = useStore(s => s.backgroundStyle);
-  const backgroundMotionPaused = useStore(s => s.backgroundMotionPaused);
-  const backgroundMotionSpeed = useStore(s => s.backgroundMotionSpeed);
-  const backgroundOpacity = useStore(s => s.backgroundOpacity);
-  const backgroundBrightness = useStore(s => s.backgroundBrightness);
-  const backgroundSaturation = useStore(s => s.backgroundSaturation);
-  const backgroundContrast = useStore(s => s.backgroundContrast);
-  const backgroundYawDegrees = useStore(s => s.backgroundYawDegrees);
-  const backgroundPitchDegrees = useStore(s => s.backgroundPitchDegrees);
+  const { activePanel, setActivePanel, showPotentialBrowser, setShowPotentialBrowser } = useViewerPanelState();
+  const {
+    backgroundPreset,
+    backgroundStyle,
+    backgroundMotionPaused,
+    backgroundMotionSpeed,
+    backgroundOpacity,
+    backgroundBrightness,
+    backgroundSaturation,
+    backgroundContrast,
+    backgroundYawDegrees,
+    backgroundPitchDegrees,
+  } = useViewerBackgroundState();
   const filterShellShape = useStore(s => s.filterShellShape);
   const filterShellPreset = useStore(s => s.filterShellPreset);
   const filterShellOpacity = useStore(s => s.filterShellOpacity);
@@ -832,17 +754,10 @@ export default function App() {
   const setCameraPreset = useStore(s => s.setCameraPreset);
   const bloomIntensity = useStore(s => s.bloomIntensity);
   const propRange = useStore(s => s.propRange);
-  const setFrame = useStore(s => s.setFrame);
-  const nextFrame = useStore(s => s.nextFrame);
-  const togglePlay = useStore(s => s.togglePlay);
-  const setActivePanel = useStore(s => s.setActivePanel);
-  const showPotentialBrowser = useStore(s => s.showPotentialBrowser);
-  const setShowPotentialBrowser = useStore(s => s.setShowPotentialBrowser);
   const hiddenAtomTypes = useStore(s => s.hiddenAtomTypes);
   const atomTypeScales = useStore(s => s.atomTypeScales);
   const anomalyTracking = useStore(s => s.anomalyTracking);
   const atomTexture = useStore(s => s.atomTexture);
-  const loadedAtomCount = useStore(s => s.loadedAtomCount);
   // Cluster splats for huge-scene LOD (Phase 4). Built once per frame
   // identity, AFTER streaming completes — running on a partial frame
   // would aggregate uninitialized zero-positions into a giant fake
@@ -1030,11 +945,7 @@ export default function App() {
     const loadUrl = intent?.kind === 'loadUrl' ? intent.url : params.get('load');
     if (loadUrl && !file) {
       (async () => {
-        try {
-          await loadMoleculeSource(loadUrl);
-        } catch (err: any) {
-          useStore.getState().setError(err.message);
-        }
+        await openMolecule({ kind: 'url', url: loadUrl, history: 'none' });
       })();
     }
   }, []);
@@ -1110,41 +1021,13 @@ export default function App() {
   }, [file?.name]);
   const clusterFadeFar = useMemo(() => clusterFadeNear * 3.3, [clusterFadeNear]);
 
-  const cameraDistance = useMemo(() => file
-    ? (() => {
-        const { min, max } = file.trajectory.globalBounds;
-        const dx = max[0] - min[0], dy = max[1] - min[1], dz = max[2] - min[2];
-        const diagonal = Math.hypot(dx, dy, dz);
-        // Field of view is 50 deg. To fit bounding sphere with radius (diagonal/2):
-        // D = (diagonal / 2) / Math.sin(25 * Math.PI / 180) ≈ diagonal * 1.18
-        // Multiply by an extra margin to give breathing room.
-        return diagonal * 1.4;
-      })()
-    : 50, [file?.name]);
-  const cameraNear = useMemo(
-    () => Math.max(0.01, Math.min(0.1, cameraDistance * 0.002)),
-    [cameraDistance],
-  );
-  const cameraMinDistance = useMemo(() => {
-    const atomCount = file?.trajectory.frames[0]?.natoms ?? 0;
-    if (atomCount > 0 && atomCount < 300) {
-      return Math.max(1.8, cameraDistance * 0.28);
-    }
-    return Math.max(0.5, cameraDistance * 0.04);
-  }, [cameraDistance, file?.name]);
-
-  const center = useMemo(() => file
-    ? file.trajectory.globalBounds.min.map(
-        (v, i) => (v + file.trajectory.globalBounds.max[i]) / 2
-      ) as [number, number, number]
-    : [0, 0, 0] as [number, number, number], [file?.name]);
-
-  const filterShellBaseRadius = useMemo(() => {
-    if (!file) return 4;
-    const { min, max } = file.trajectory.globalBounds;
-    const diagonal = Math.hypot(max[0] - min[0], max[1] - min[1], max[2] - min[2]);
-    return Math.max(4, diagonal * 0.58);
-  }, [file?.name]);
+  const {
+    cameraDistance,
+    cameraMinDistance,
+    cameraNear,
+    center,
+    filterShellBaseRadius,
+  } = useViewerSceneModel(file);
 
   const bg = resolveBackground(backgroundPreset, colormap);
   const bgMedia = bg.media;
@@ -1178,6 +1061,7 @@ export default function App() {
     useStore.getState().clearFile();
     const url = new URL(window.location.href);
     url.searchParams.delete('sim');
+    url.searchParams.delete('load');
     window.history.pushState({}, '', url);
   }, []);
 
@@ -1443,33 +1327,14 @@ export default function App() {
               height: 100% !important;
             }
           `}</style>
-          <CanvasErrorBoundary capability={renderCapability}>
-          <Canvas
-            camera={{
-              position: [center[0], center[1], center[2] + cameraDistance],
-              fov: 50,
-              near: cameraNear,
-              far: Math.max(10000, cameraDistance * 100),
-            }}
-            gl={{
-              antialias: false,
-              preserveDrawingBuffer: true,
-              powerPreference: 'high-performance',
-            }}
-            onCreated={({ gl }) => {
-              // r182 deprecates PCFSoftShadowMap; PCFShadowMap is now soft.
-              gl.shadowMap.type = THREE.PCFShadowMap;
-            }}
-            style={{
-              background: 'transparent',
-              display: 'block',
-              width: '100%',
-              height: '100%',
-            }}
+          <ViewerCanvas
+            capability={renderCapability}
+            center={center}
+            cameraDistance={cameraDistance}
+            cameraNear={cameraNear}
           >
             {import.meta.env.DEV && showDebugHud && <Perf position="top-left" logsPerSecond={4} matrixUpdate />}
             {(import.meta.env.DEV || showDebugHud) && <DevProbe enabled={showDebugHud} />}
-            <XR store={xrStore}>
               <USDZExportHelper trigger={isExportingQuickLook} onComplete={() => setIsExportingQuickLook(false)} />
             <ExportManager />
             <SceneBackground
@@ -1728,9 +1593,7 @@ export default function App() {
 
 
             <ScenePostprocessing />
-            </XR>
-          </Canvas>
-          </CanvasErrorBoundary>
+          </ViewerCanvas>
 
           {import.meta.env.DEV && showDebugHud && <StateInspector />}
 
@@ -2285,12 +2148,7 @@ export default function App() {
               label: 'Close current molecule',
               group: 'Scene',
               disabled: !file,
-              onSelect: () => {
-                useStore.getState().clearFile();
-                const url = new URL(window.location.href);
-                url.searchParams.delete('sim');
-                window.history.pushState({}, '', url);
-              },
+              onSelect: clearLoadedFile,
             },
             {
               id: 'close-panel',
@@ -2301,7 +2159,7 @@ export default function App() {
             },
           ];
           return list;
-        }, [file, activePanel, totalFrames, studyLensOpen])}
+        }, [file, activePanel, totalFrames, studyLensOpen, clearLoadedFile])}
       />
     </div>
   );

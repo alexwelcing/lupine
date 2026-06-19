@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react'
 import { useStore } from '../store';
 import { ALL_EXAMPLES, FEATURED_IDS, type GalleryExample } from '../landing/shared';
 import { galleryNomenclatureTags } from '../galleryNomenclature';
+import { openMolecule } from '../viewer/openMolecule';
 
 /**
  * MoleculeConfigurator — a deterministic "if this, then that" guided builder
@@ -148,10 +149,7 @@ export function MoleculeConfigurator() {
     );
     setTimeout(() => unsub(), 12_000); // safety: drop if no load fires
 
-    const url = new URL(window.location.href);
-    url.searchParams.set('sim', picked.id);
-    window.history.pushState({}, '', url);
-    window.dispatchEvent(new PopStateEvent('popstate'));
+    void openMolecule({ kind: 'gallery', id: picked.id, history: 'push' });
     close();
   };
 

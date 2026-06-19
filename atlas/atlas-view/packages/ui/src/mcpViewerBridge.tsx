@@ -5,11 +5,18 @@ import type { NistCatalogEntry, NistSummary } from '@atlas/nist';
 import { filterCatalog, loadNistCatalog, summarize } from '@atlas/nist';
 import { useStore, type LoadedFile } from './store';
 import { COLOR_SCHEMES, type ColorSchemeId } from './coloring';
-import { loadMoleculeSource } from './loadMoleculeSource';
 import { useFirebaseAuth } from './auth/useFirebaseAuth';
 import { MOLECULE_PROVIDERS, searchMolecules, type MoleculeHit, type MoleculeQuery, type MoleculeSourceId } from './molecules';
 import { MoleculeSearch } from './molecules/MoleculeSearch';
 import { recognizeLupiUrlPayload } from './lupiUrlRecognition';
+import { openMolecule } from './viewer/openMolecule';
+import {
+  LUPI_VIEWER_MCP_VERSION,
+  MAX_PERSISTED_EXPORT_CHARS,
+  MAX_PERSISTED_RESPONSE_LOG,
+  MCP_RESPONSE_EVENT,
+  MCP_RESPONSE_STORAGE_KEY,
+} from './mcp/protocol';
 
 type LupiMcpToolName =
   | 'lupi.generate_molecule'
@@ -138,11 +145,7 @@ declare global {
   }
 }
 
-const LUPI_VIEWER_MCP_VERSION = '2026-05-30.catalog-controls';
 const NIST_BASE = String(import.meta.env.VITE_NIST_BASE_URL ?? '/nist').replace(/\/$/, '');
-const MCP_RESPONSE_STORAGE_KEY = 'lupi.viewer.mcp.responses.v1';
-const MAX_PERSISTED_RESPONSE_LOG = 24;
-const MAX_PERSISTED_EXPORT_CHARS = 20_000;
 
 const TEMPLATE_MOLECULES: Array<{
   name: string;
@@ -649,8 +652,8 @@ export function McpViewerHarness() {
       setResponse(responses[responses.length - 1] ?? null);
       setResponseLog((window.__lupiViewerMcpResponses ?? readStoredMcpResponses()).slice(-MAX_VISIBLE_RESPONSE_LOG));
     };
-    window.addEventListener('lupi:mcp:response', onResponse);
-    return () => window.removeEventListener('lupi:mcp:response', onResponse);
+    window.addEventListener(MCP_RESPONSE_EVENT, onResponse);
+    return () => window.removeEventListener(MCP_RESPONSE_EVENT, onResponse);
   }, []);
 
   useEffect(() => {
@@ -849,7 +852,8 @@ export function McpViewerHarness() {
     setBusy(true);
     setActivePotentialId(entry.id);
     try {
-      await loadMoleculeSource(`${NIST_BASE}/${entry.demo_path}`);
+      const result = await openMolecule({ kind: 'url', url: `${NIST_BASE}/${entry.demo_path}`, history: 'none' });
+      if (!result.ok) throw new Error(result.message);
       publishResponses([okResponse(
         {
           id: `catalog-demo-${entry.id}`,
@@ -1129,7 +1133,8 @@ async function executeLupiViewerMcpRequest(request: LupiMcpRequest): Promise<Lup
     if (request.tool === 'lupi.load_molecule_url') {
       const url = readString(request.arguments.url);
       if (!url) throw new Error('lupi.load_molecule_url requires a URL.');
-      await loadMoleculeSource(url);
+      const result = await openMolecule({ kind: 'url', url, history: 'none' });
+      if (!result.ok) throw new Error(result.message);
       transcript.push(`loaded molecule URL: ${url}`);
       return okResponse(request, transcript, { viewer: readViewerState() });
     }
@@ -1444,7 +1449,7 @@ function emitLupiMcpResponse(
   window.__lupiViewerMcpResponses.push(payload);
   window.__lupiViewerMcpResponses = window.__lupiViewerMcpResponses.slice(-MAX_PERSISTED_RESPONSE_LOG);
   writeStoredMcpResponses(window.__lupiViewerMcpResponses);
-  window.dispatchEvent(new CustomEvent('lupi:mcp:response', { detail: payload }));
+  window.dispatchEvent(new CustomEvent(MCP_RESPONSE_EVENT, { detail: payload }));
   return payload;
 }
 
