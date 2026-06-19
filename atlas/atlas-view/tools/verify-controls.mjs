@@ -49,6 +49,8 @@ const report = {
   collapseExpand: null,
   shareLink: null,
   viewerProbe: null,
+  closeAffordance: null,
+  layout: { modes: [] },
   visualArtifacts: [],
   visualReportPath: null,
   consoleWarnings: [],
@@ -123,6 +125,8 @@ try {
   await panel.waitFor({ state: 'visible', timeout: 10000 });
 
   assertEqual(await drawer.locator('[role="group"][aria-label="Viewer control modes"]').count(), 1, 'control mode group');
+  report.closeAffordance = await captureCloseAffordance(page, panel, drawer);
+  assertCloseAffordance(report.closeAffordance);
   await captureMode(page, panel, drawer, 'look', 'Look', [/GRADE/i, /ATOMS/i], [/Botanical/i]);
   report.shareLink = await copyLookLink(page);
   if (!report.shareLink.hasState) failures.push('copy look link did not include encoded view state');
@@ -211,16 +215,16 @@ async function captureMode(page, panel, drawer, id, label, requiredPatterns, for
     await page.waitForTimeout(120);
   }
   const text = await drawer.innerText();
-  const closeLabels = await panel.locator('button').evaluateAll((buttons) => buttons
-    .map((button) => button.getAttribute('aria-label') || button.getAttribute('title') || button.textContent?.trim() || '')
-    .filter((value) => /Close/i.test(value)));
+  const drawerCloseLabels = await closeButtonLabels(drawer);
   const activeModes = await drawer.locator('button[aria-pressed="true"]').evaluateAll((buttons) => buttons
     .map((button) => button.getAttribute('aria-label') || button.textContent?.trim() || ''));
+  const layout = await captureLayoutMetrics(page, panel);
 
   const state = {
     id,
-    closeLabels,
+    drawerCloseLabels,
     activeModes,
+    layout,
     textHead: text.slice(0, 360),
     screenshotPath: null,
   };
@@ -239,15 +243,125 @@ async function captureMode(page, panel, drawer, id, label, requiredPatterns, for
   }
 
   report.states.push(state);
+  report.layout.modes.push({ id, label, ...layout });
 
-  assertEqual(closeLabels.length, 1, `${label} close affordance count`);
+  if (drawerCloseLabels.length) failures.push(`${label} drawer should not render nested close affordances: ${drawerCloseLabels.join(', ')}`);
   if (!activeModes.includes(label)) failures.push(`${label} tab is not marked active`);
+  assertLayoutMetrics(id, label, layout);
   for (const pattern of requiredPatterns) {
     if (!pattern.test(text)) failures.push(`${label} drawer missing ${pattern}`);
   }
   for (const pattern of forbiddenPatterns) {
     if (pattern.test(text)) failures.push(`${label} drawer contains duplicate/conflicting ${pattern}`);
   }
+}
+
+async function captureCloseAffordance(page, panel, drawer) {
+  const panelCloseLabels = await closeButtonLabels(panel);
+  const drawerCloseLabels = await closeButtonLabels(drawer);
+  const mobileSheetCloseCount = await page.getByRole('button', { name: /^Close panel$/ }).count();
+  const desktopPanelCloseCount = await panel.getByRole('button', { name: /^Close$/ }).count();
+
+  return {
+    expectation: mobileProfile
+      ? 'mobile sheet owns one Close panel button; drawer modes do not render nested close buttons'
+      : 'desktop dock owns one Close button; drawer modes do not render nested close buttons',
+    panelCloseLabels,
+    drawerCloseLabels,
+    mobileSheetCloseCount,
+    desktopPanelCloseCount,
+  };
+}
+
+function assertCloseAffordance(closeAffordance) {
+  if (mobileProfile) {
+    if (closeAffordance.mobileSheetCloseCount !== 1) {
+      failures.push(`mobile sheet close affordance count: expected 1 Close panel button, got ${closeAffordance.mobileSheetCloseCount}`);
+    }
+    if (closeAffordance.drawerCloseLabels.length) {
+      failures.push(`mobile drawer should not render nested close buttons: ${closeAffordance.drawerCloseLabels.join(', ')}`);
+    }
+    return;
+  }
+
+  if (closeAffordance.desktopPanelCloseCount !== 1) {
+    failures.push(`desktop panel close affordance count: expected 1 Close button, got ${closeAffordance.desktopPanelCloseCount}`);
+  }
+  if (closeAffordance.drawerCloseLabels.length) {
+    failures.push(`desktop drawer should not render nested close buttons: ${closeAffordance.drawerCloseLabels.join(', ')}`);
+  }
+}
+
+async function closeButtonLabels(scope) {
+  const labels = await scope.locator('button').evaluateAll((buttons) => buttons
+    .map((button) => {
+      const style = window.getComputedStyle(button);
+      const rect = button.getBoundingClientRect();
+      if (style.display === 'none' || style.visibility === 'hidden' || rect.width <= 0 || rect.height <= 0) return '';
+      return button.getAttribute('aria-label') || button.getAttribute('title') || button.textContent?.trim() || '';
+    })
+    .map((value) => value.trim())
+    .filter((value) => /Close/i.test(value)));
+  return labels;
+}
+
+function assertLayoutMetrics(id, label, layout) {
+  if (layout.page.horizontalOverflow) {
+    failures.push(`${label} page has horizontal overflow: ${layout.page.scrollWidth}px > ${layout.page.clientWidth}px`);
+  }
+  if (mobileProfile && layout.panel.heightRatio > 0.76) {
+    failures.push(`${label} mobile controls panel is too tall: ${(layout.panel.heightRatio * 100).toFixed(1)}% of viewport`);
+  }
+  if (id === 'world' && layout.worldRails.length === 0) {
+    failures.push('World drawer rendered no world rails to verify');
+  }
+  for (const rail of layout.worldRails) {
+    if (rail.verticalOverflow) failures.push(`${label} world rail ${rail.index} has vertical overflow`);
+    if (rail.visibleScrollbar) failures.push(`${label} world rail ${rail.index} exposes a visible scrollbar`);
+  }
+}
+
+async function captureLayoutMetrics(page, panel) {
+  const panelBox = await panel.boundingBox();
+  return await page.evaluate((box) => {
+    const doc = document.documentElement;
+    const pageMetrics = {
+      clientWidth: doc.clientWidth,
+      scrollWidth: doc.scrollWidth,
+      horizontalOverflow: doc.scrollWidth > doc.clientWidth + 1,
+    };
+    const viewport = {
+      width: window.innerWidth,
+      height: window.innerHeight,
+    };
+    const worldRails = Array.from(document.querySelectorAll('.lupi-world-rail')).map((rail, index) => {
+      const el = rail;
+      const style = window.getComputedStyle(el);
+      const gutter = Math.max(0, el.offsetHeight - el.clientHeight);
+      return {
+        index,
+        clientWidth: el.clientWidth,
+        scrollWidth: el.scrollWidth,
+        clientHeight: el.clientHeight,
+        scrollHeight: el.scrollHeight,
+        overflowX: style.overflowX,
+        overflowY: style.overflowY,
+        scrollbarWidth: style.scrollbarWidth,
+        verticalOverflow: el.scrollHeight > el.clientHeight + 2,
+        visibleScrollbar: gutter > 4 || style.scrollbarWidth !== 'none',
+      };
+    });
+    return {
+      page: pageMetrics,
+      viewport,
+      panel: {
+        width: box?.width ?? 0,
+        height: box?.height ?? 0,
+        heightRatio: viewport.height ? Number(((box?.height ?? 0) / viewport.height).toFixed(4)) : 0,
+      },
+      worldRails,
+    };
+  }, panelBox);
 }
 
 async function captureViewerProbe(page, label) {

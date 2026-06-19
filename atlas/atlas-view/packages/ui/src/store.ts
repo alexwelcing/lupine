@@ -114,6 +114,37 @@ function sanitizeNumberRange(value: unknown, fallback: number, min: number, max:
   return Math.max(min, Math.min(max, numeric));
 }
 
+const CARBON_ATOMIC_NUMBER = 6;
+const CARBON_CONTRAST_COLOR = '#9be8ff';
+const SMALL_MOLECULE_CONTRAST_BACKGROUND = 'deep';
+
+function isCarbonDominantFrame(frame: Frame | undefined, atomCount: number): boolean {
+  if (!frame?.types || atomCount <= 0) return false;
+
+  const typeCount = Math.min(atomCount, frame.types.length);
+  let knownAtoms = 0;
+  let carbonAtoms = 0;
+
+  for (let i = 0; i < typeCount; i++) {
+    const atomicNumber = frame.types[i];
+    if (atomicNumber <= 0) continue;
+    knownAtoms++;
+    if (atomicNumber === CARBON_ATOMIC_NUMBER) carbonAtoms++;
+  }
+
+  return knownAtoms > 0 && carbonAtoms / knownAtoms >= 0.75;
+}
+
+function hasCarbonFrame(frame: Frame | undefined, atomCount: number): boolean {
+  if (!frame?.types || atomCount <= 0) return false;
+
+  const typeCount = Math.min(atomCount, frame.types.length);
+  for (let i = 0; i < typeCount; i++) {
+    if (frame.types[i] === CARBON_ATOMIC_NUMBER) return true;
+  }
+  return false;
+}
+
 export interface BondDataset {
   id: string;
   source: 'webgpu' | 'cpu' | 'file';
@@ -680,7 +711,7 @@ export const useStore = create<AppState>()(
       // Drive a sensible first-frame look based on system content. The user
       // can change anything after, but they should never see "should I enable
       // bonds?" or "what's a good color scheme?" — we decide.
-      const sceneDirective = pickSceneDirective(atomCount);
+      const sceneDirective = pickSceneDirective(atomCount, firstFrame);
       const materialScene = getScene(sceneDirective.materialScene) ?? getScene(DEFAULT_SCENE_ID);
 
       // Pick a coloring scheme for the first read. Element identity is the
@@ -725,6 +756,7 @@ export const useStore = create<AppState>()(
         atomColorSource: scheme.atomColorSource,
         colorMode: scheme.atomColorMode,
         colorProperty: scheme.atomColorMode === 'property' ? get().colorProperty : null,
+        elementColorOverrides: sceneDirective.elementColorOverrides,
         // Legacy mirrors of preset (PresetLegacyBridge re-syncs but writing
         // them here avoids a one-frame flash before the bridge catches up).
         // SSAO follows the same threshold as bond detection / preset
@@ -1346,7 +1378,7 @@ export const useStore = create<AppState>()(
  * ones step down to paper, and very-large systems drop to diagram.
  * bonds off — performance over polish). The user can override in the panels.
  */
-function pickSceneDirective(atomCount: number): {
+function pickSceneDirective(atomCount: number, firstFrame?: Frame): {
   showBonds: boolean;
   showCell: boolean;
   showAxes: boolean;
@@ -1360,6 +1392,7 @@ function pickSceneDirective(atomCount: number): {
   rimLightIntensity: number;
   fillLightColor: string;
   rimLightColor: string;
+  elementColorOverrides: Record<number, string>;
 } {
   if (atomCount === 0) {
     return {
@@ -1376,9 +1409,12 @@ function pickSceneDirective(atomCount: number): {
       rimLightIntensity: 0.3,
       fillLightColor: '#8888ff',
       rimLightColor: '#ffffff',
+      elementColorOverrides: {},
     };
   }
   if (atomCount < 300) {
+    const carbonDominant = isCarbonDominantFrame(firstFrame, atomCount);
+    const carbonPresent = hasCarbonFrame(firstFrame, atomCount);
     return {
       showBonds: true,
       showCell: false,
@@ -1386,13 +1422,14 @@ function pickSceneDirective(atomCount: number): {
       preset: 'editorial',
       intensity: 0.92,
       materialScene: DEFAULT_SCENE_ID,
-      backgroundPreset: DEFAULTS.backgroundPreset,
-      surfaceRoughness: -0.08,
-      surfacePolish: 0.22,
-      surfaceClearcoat: 0.18,
-      rimLightIntensity: 0.48,
-      fillLightColor: '#90b4ff',
-      rimLightColor: '#7de9ff',
+      backgroundPreset: SMALL_MOLECULE_CONTRAST_BACKGROUND,
+      surfaceRoughness: carbonDominant ? -0.12 : -0.08,
+      surfacePolish: carbonDominant ? 0.28 : 0.22,
+      surfaceClearcoat: carbonDominant ? 0.22 : 0.18,
+      rimLightIntensity: carbonDominant ? 0.72 : 0.48,
+      fillLightColor: carbonDominant ? '#d7ecff' : '#90b4ff',
+      rimLightColor: carbonDominant ? '#f8fbff' : '#7de9ff',
+      elementColorOverrides: carbonPresent ? { [CARBON_ATOMIC_NUMBER]: CARBON_CONTRAST_COLOR } : {},
     };
   }
   if (atomCount < 25_000) {
@@ -1410,6 +1447,7 @@ function pickSceneDirective(atomCount: number): {
       rimLightIntensity: 0.36,
       fillLightColor: '#8888ff',
       rimLightColor: '#c7f9ff',
+      elementColorOverrides: {},
     };
   }
   if (atomCount < 200_000) {
@@ -1429,6 +1467,7 @@ function pickSceneDirective(atomCount: number): {
       rimLightIntensity: 0,
       fillLightColor: '#8888ff',
       rimLightColor: '#ffffff',
+      elementColorOverrides: {},
     };
   }
   // Very-large systems — performance over polish on the first frame. User
@@ -1447,6 +1486,7 @@ function pickSceneDirective(atomCount: number): {
     rimLightIntensity: 0,
     fillLightColor: '#8888ff',
     rimLightColor: '#ffffff',
+    elementColorOverrides: {},
   };
 }
 

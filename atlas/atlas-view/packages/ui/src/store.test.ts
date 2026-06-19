@@ -297,7 +297,7 @@ describe('Store — File Loading', () => {
     expect(s.colorProperty).toBeNull();
   });
 
-  it('opens small molecules with the polished visual default', () => {
+  it('opens small molecules with a readable polished visual default', () => {
     const traj = createMockTrajectory(1, 61);
     const file = { name: 'showcase.xyz', size: 4096, trajectory: traj, thermo: null };
 
@@ -308,10 +308,45 @@ describe('Store — File Loading', () => {
     expect(s.showCell).toBe(false);
     expect(s.showAxes).toBe(false);
     expect(s.postprocessPreset).toBe('editorial');
-    expect(s.backgroundPreset).toBe('pub-figure-neutral');
+    expect(s.backgroundPreset).toBe('deep');
     expect(s.rimLightColor).toBe('#7de9ff');
     expect(s.surfacePolish).toBeGreaterThan(0);
     expect(s.surfaceClearcoat).toBeGreaterThan(0);
+  });
+
+  it('brightens carbon in mixed small organic molecules', () => {
+    const traj = createMockTrajectory(1, 21);
+    traj.frames[0].types = new Int32Array([
+      6, 6, 6, 6, 6, 6, 6, 6, 6,
+      8, 8, 8, 8,
+      1, 1, 1, 1, 1, 1, 1, 1,
+    ]);
+    traj.atomTypes = [1, 6, 8];
+    const file = { name: 'aspirin.xyz', size: 551, trajectory: traj, thermo: null };
+
+    getStoreState().setFile(file);
+    const s = getStoreState();
+
+    expect(s.backgroundPreset).toBe('deep');
+    expect(s.elementColorOverrides[6]).toBe('#9be8ff');
+  });
+
+  it('opens carbon-rich small molecules on a higher-contrast stage', () => {
+    const traj = createMockTrajectory(1, 60);
+    traj.frames[0].types = new Int32Array(60).fill(6);
+    traj.atomTypes = [6];
+    const file = { name: 'c60_buckyball.xyz', size: 4096, trajectory: traj, thermo: null };
+
+    getStoreState().setFile(file);
+    const s = getStoreState();
+
+    expect(s.showBonds).toBe(true);
+    expect(s.colorScheme).toBe('element');
+    expect(s.materialPreset).toBe('default');
+    expect(s.backgroundPreset).toBe('deep');
+    expect(s.rimLightIntensity).toBeGreaterThan(0.6);
+    expect(s.rimLightColor).toBe('#f8fbff');
+    expect(s.elementColorOverrides[6]).toBe('#9be8ff');
   });
 
   it('disables effects for massive systems', () => {

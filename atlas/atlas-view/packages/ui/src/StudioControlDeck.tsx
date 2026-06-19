@@ -377,21 +377,70 @@ export function StudioControlDeck({
           grid-template-columns: repeat(2, minmax(0, 1fr));
           gap: 7px;
         }
+        .lupi-world-carousel {
+          position: relative;
+          min-width: 0;
+          overflow: hidden;
+          border-radius: 8px;
+          isolation: isolate;
+        }
+        .lupi-world-carousel::before,
+        .lupi-world-carousel::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          width: 30px;
+          pointer-events: none;
+          z-index: 2;
+          transition: opacity 160ms ease;
+        }
+        .lupi-world-carousel::before {
+          left: 0;
+          background: linear-gradient(90deg, rgba(2, 6, 23, 0.72), rgba(2, 6, 23, 0));
+          opacity: 0.58;
+        }
+        .lupi-world-carousel::after {
+          right: 0;
+          background: linear-gradient(270deg, rgba(2, 6, 23, 0.78), rgba(2, 6, 23, 0));
+          opacity: 0.74;
+        }
+        .lupi-world-carousel[data-at-start="true"]::before,
+        .lupi-world-carousel[data-at-end="true"]::after {
+          opacity: 0.12;
+        }
         .lupi-world-rail {
-          display: flex;
-          gap: 7px;
+          --lupi-world-tile-width: clamp(132px, 22vw, 156px);
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: var(--lupi-world-tile-width);
+          grid-template-rows: 78px;
+          gap: 8px;
           overflow-x: auto;
           overflow-y: hidden;
-          padding: 1px 1px 5px;
-          scroll-snap-type: x proximity;
-          scrollbar-width: thin;
+          overscroll-behavior-x: contain;
+          padding: 1px 30px 1px 1px;
+          scroll-padding-inline: 1px 30px;
+          scroll-snap-type: x mandatory;
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+          -webkit-overflow-scrolling: touch;
         }
         .lupi-world-rail::-webkit-scrollbar {
-          height: 6px;
+          display: none;
+          width: 0;
+          height: 0;
         }
-        .lupi-world-rail::-webkit-scrollbar-thumb {
-          background: rgba(148, 163, 184, 0.32);
-          border-radius: 999px;
+        .lupi-world-rail:focus-visible {
+          outline: 2px solid rgba(30, 220, 224, 0.62);
+          outline-offset: 2px;
+        }
+        .lupi-world-tile {
+          width: 100%;
+          height: 78px;
+          box-sizing: border-box;
+          scroll-snap-align: start;
+          scroll-snap-stop: always;
         }
         .lupi-native-color::-webkit-color-swatch-wrapper {
           padding: 0;
@@ -411,6 +460,15 @@ export function StudioControlDeck({
           .lupi-studio-slider-grid {
             grid-template-columns: 1fr;
             gap: 7px;
+          }
+          .lupi-world-rail {
+            --lupi-world-tile-width: clamp(126px, 44vw, 152px);
+            grid-template-rows: 76px;
+            padding-right: 24px;
+            scroll-padding-right: 24px;
+          }
+          .lupi-world-tile {
+            height: 76px;
           }
         }
       `}</style>
@@ -1326,26 +1384,136 @@ function BackdropRail({
   value: string;
   onChange: (value: string) => void;
 }) {
+  const railRef = useRef<HTMLDivElement | null>(null);
+  const [scrollState, setScrollState] = useState({ atStart: true, atEnd: true });
+
+  useEffect(() => {
+    const rail = railRef.current;
+    if (!rail) return;
+
+    const updateScrollState = () => {
+      const maxScroll = rail.scrollWidth - rail.clientWidth;
+      setScrollState({
+        atStart: rail.scrollLeft <= 1,
+        atEnd: maxScroll <= 1 || rail.scrollLeft >= maxScroll - 1,
+      });
+    };
+
+    updateScrollState();
+    rail.addEventListener('scroll', updateScrollState, { passive: true });
+    window.addEventListener('resize', updateScrollState);
+    return () => {
+      rail.removeEventListener('scroll', updateScrollState);
+      window.removeEventListener('resize', updateScrollState);
+    };
+  }, [presets.length]);
+
+  const scrollRail = (direction: -1 | 1) => {
+    const rail = railRef.current;
+    if (!rail) return;
+    const behavior: ScrollBehavior = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+    rail.scrollBy({
+      left: direction * Math.max(rail.clientWidth * 0.76, 148),
+      behavior,
+    });
+  };
+
+  const handleRailKeyDown = (event: ReactKeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      scrollRail(1);
+    } else if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      scrollRail(-1);
+    }
+  };
+
   if (presets.length === 0) return null;
   return (
     <div style={{ display: 'grid', gap: 5, minWidth: 0 }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
         <div style={{ color: '#94a3b8', fontSize: 10, fontWeight: 820, textTransform: 'uppercase', lineHeight: 1 }}>{title}</div>
-        <div style={{ color: '#64748b', fontSize: 9, fontFamily: 'var(--font-mono)', fontWeight: 820, lineHeight: 1 }}>
-          {presets.length}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+          <div style={{ color: '#64748b', fontSize: 9, fontFamily: 'var(--font-mono)', fontWeight: 820, lineHeight: 1 }}>
+            {presets.length}
+          </div>
+          <RailNudgeButton
+            label={`Previous ${title}`}
+            direction="left"
+            disabled={scrollState.atStart}
+            onClick={() => scrollRail(-1)}
+          />
+          <RailNudgeButton
+            label={`Next ${title}`}
+            direction="right"
+            disabled={scrollState.atEnd}
+            onClick={() => scrollRail(1)}
+          />
         </div>
       </div>
-      <div className="lupi-world-rail">
-        {presets.map(preset => (
-          <BackdropTile
-            key={preset.id}
-            preset={preset}
-            active={preset.id === value}
-            onClick={() => onChange(preset.id)}
-          />
-        ))}
+      <div
+        className="lupi-world-carousel"
+        data-at-start={scrollState.atStart ? 'true' : 'false'}
+        data-at-end={scrollState.atEnd ? 'true' : 'false'}
+      >
+        <div
+          ref={railRef}
+          className="lupi-world-rail"
+          role="group"
+          aria-label={`${title} backgrounds`}
+          tabIndex={0}
+          onKeyDown={handleRailKeyDown}
+        >
+          {presets.map(preset => (
+            <BackdropTile
+              key={preset.id}
+              preset={preset}
+              active={preset.id === value}
+              onClick={() => onChange(preset.id)}
+            />
+          ))}
+        </div>
       </div>
     </div>
+  );
+}
+
+function RailNudgeButton({
+  label,
+  direction,
+  disabled,
+  onClick,
+}: {
+  label: string;
+  direction: 'left' | 'right';
+  disabled: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      aria-label={label}
+      title={label}
+      disabled={disabled}
+      onClick={onClick}
+      style={{
+        width: 22,
+        height: 22,
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexShrink: 0,
+        borderRadius: 6,
+        border: disabled ? '1px solid rgba(148,163,184,0.12)' : '1px solid rgba(148,163,184,0.28)',
+        background: disabled ? 'rgba(15,23,42,0.3)' : 'rgba(15,23,42,0.74)',
+        color: disabled ? '#475569' : '#cbd5e1',
+        cursor: disabled ? 'default' : 'pointer',
+        boxShadow: disabled ? 'none' : 'inset 0 1px 0 rgba(255,255,255,0.06)',
+        padding: 0,
+      }}
+    >
+      <IconChevron direction={direction} />
+    </button>
   );
 }
 
@@ -1366,13 +1534,11 @@ function BackdropTile({
       aria-label={`Use ${preset.label} background`}
       aria-pressed={active}
       onClick={onClick}
+      className="lupi-world-tile"
       style={{
         position: 'relative',
-        flex: '0 0 136px',
-        width: 136,
-        height: 76,
+        minWidth: 0,
         overflow: 'hidden',
-        scrollSnapAlign: 'start',
         borderRadius: 8,
         border: active ? '1px solid #1edce0' : '1px solid rgba(148,163,184,0.18)',
         ...backgroundPreviewStyle(preset),
@@ -1639,6 +1805,15 @@ function IconClose() {
   return (
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
       <path d="M18 6 6 18M6 6l12 12" />
+    </svg>
+  );
+}
+
+function IconChevron({ direction }: { direction: 'left' | 'right' }) {
+  const path = direction === 'left' ? 'M15 18 9 12l6-6' : 'm9 18 6-6-6-6';
+  return (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+      <path d={path} />
     </svg>
   );
 }
