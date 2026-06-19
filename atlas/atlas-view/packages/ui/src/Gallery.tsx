@@ -23,6 +23,7 @@ import {
   functionalGroupSearchText,
   moleculeMatchesFunctionalGroup,
 } from './organicFunctionalGroups';
+import { galleryNomenclatureTags } from './galleryNomenclature';
 
 // ─── Types ──────────────────────────────────────────────────────────────
 
@@ -1693,13 +1694,14 @@ export function Gallery() {
       if (!moleculeMatchesFunctionalGroup(ex.id, functionalGroupFilter)) return false;
       if (deferredSearch) {
         const s = deferredSearch.toLowerCase();
+        const nomenclatureText = galleryNomenclatureTags(ex.id).join(' ').toLowerCase();
         return (
           ex.title.toLowerCase().includes(s) ||
           ex.subtitle.toLowerCase().includes(s) ||
           ex.domain.toLowerCase().includes(s) ||
-          (ex.metadata?.method ?? '').toLowerCase().includes(s) ||
-          (ex.metadata?.potential ?? '').toLowerCase().includes(s) ||
-          functionalGroupSearchText(ex.id).toLowerCase().includes(s)
+          Object.values(ex.metadata ?? {}).join(' ').toLowerCase().includes(s) ||
+          functionalGroupSearchText(ex.id).toLowerCase().includes(s) ||
+          nomenclatureText.includes(s)
         );
       }
       return true;

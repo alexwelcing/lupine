@@ -1,0 +1,1284 @@
+{
+  "schemaVersion": "library-content.v1",
+  "generatedAt": "2026-06-19T16:01:16.591Z",
+  "source": {
+    "repo": "lupine-science-control-plane",
+    "commit": "25482ab2dcb43286815c6a00a0a8f6e85a9ebbb1",
+    "dirty": true,
+    "generator": "scripts/export_library_content.mjs"
+  },
+  "catalog": {
+    "statuses": {
+      "proposed": {
+        "label": {
+          "en": "Proposed",
+          "zh": "提出"
+        },
+        "color": "#a855f7"
+      },
+      "supported": {
+        "label": {
+          "en": "Supported",
+          "zh": "支持"
+        },
+        "color": "#22c55e"
+      },
+      "open": {
+        "label": {
+          "en": "Open",
+          "zh": "待定"
+        },
+        "color": "#3b82f6"
+      },
+      "refuted": {
+        "label": {
+          "en": "Refuted by us",
+          "zh": "被我们否证"
+        },
+        "color": "#ef4444"
+      },
+      "self-corrected": {
+        "label": {
+          "en": "Self-corrected",
+          "zh": "自我纠正"
+        },
+        "color": "#f59e0b"
+      },
+      "proven": {
+        "label": {
+          "en": "Proven (Lean)",
+          "zh": "已证明"
+        },
+        "color": "#14b8a6"
+      }
+    },
+    "categories": [
+      {
+        "id": "changelog",
+        "label": {
+          "en": "Changelog & Progress",
+          "zh": "进展日志"
+        },
+        "blurb": {
+          "en": "The narrative spine — what changed, why, results, and next steps.",
+          "zh": "叙事主线 — 改变了什么、为什么、结果以及下一步。"
+        }
+      },
+      {
+        "id": "conjectures",
+        "label": {
+          "en": "Conjectures & Proofs",
+          "zh": "猜想与证明"
+        },
+        "blurb": {
+          "en": "The hypothesis ledger — every conjecture, where it stands, and the confounder or proof behind it.",
+          "zh": "假设台账 — 每个猜想的状态，以及背后的混杂因素或证明。"
+        }
+      },
+      {
+        "id": "partnerships",
+        "label": {
+          "en": "Partnerships",
+          "zh": "合作"
+        },
+        "blurb": {
+          "en": "Pilots and alignment — public thesis and methodology; commercial terms gated.",
+          "zh": "试点与对齐 — 公开论点与方法；商业条款受限。"
+        }
+      },
+      {
+        "id": "foundations",
+        "label": {
+          "en": "Foundations",
+          "zh": "基础与愿景"
+        },
+        "blurb": {
+          "en": "Start here — orientation, vision, and shared vocabulary.",
+          "zh": "从这里开始 — 方向、愿景和共有词汇。"
+        }
+      },
+      {
+        "id": "decisions",
+        "label": {
+          "en": "Decisions",
+          "zh": "决策记录"
+        },
+        "blurb": {
+          "en": "Architecture decision records — what we chose, the alternatives, and why.",
+          "zh": "架构决策记录 — 我们的选择、备选方案以及理由。"
+        }
+      },
+      {
+        "id": "uq",
+        "label": {
+          "en": "Uncertainty & Error",
+          "zh": "不确定性与误差"
+        },
+        "blurb": {
+          "en": "How we measure, predict, and correct potential error at scale.",
+          "zh": "我们如何在大规模下测量、预测和纠正势函数误差。"
+        }
+      },
+      {
+        "id": "validation",
+        "label": {
+          "en": "Validation & Benchmarking",
+          "zh": "验证与基准测试"
+        },
+        "blurb": {
+          "en": "Phonons, force fields, and what \"good enough\" really means.",
+          "zh": "声子、力场以及“足够好”的真正含义。"
+        }
+      },
+      {
+        "id": "theory",
+        "label": {
+          "en": "Theory",
+          "zh": "理论"
+        },
+        "blurb": {
+          "en": "Coarse-graining, sloppy models, information-theoretic bounds.",
+          "zh": "粗粒化、sloppy模型、信息论边界。"
+        }
+      },
+      {
+        "id": "references",
+        "label": {
+          "en": "References & Lineage",
+          "zh": "参考文献与谱系"
+        },
+        "blurb": {
+          "en": "The external literature we build on — what each work is and why we cite it.",
+          "zh": "我们所依据的外部文献 — 每项工作是什么以及我们为何引用它。"
+        }
+      },
+      {
+        "id": "ecosystem",
+        "label": {
+          "en": "Ecosystem & Funding",
+          "zh": "生态与资金"
+        },
+        "blurb": {
+          "en": "The people, labs, and programs behind computational materials.",
+          "zh": "计算材料科学背后的研究人员、实验室和项目。"
+        }
+      },
+      {
+        "id": "formalization",
+        "label": {
+          "en": "Formalization",
+          "zh": "形式化"
+        },
+        "blurb": {
+          "en": "Theorem-driven validation, build-locking contracts, and the epistemic gap.",
+          "zh": "定理驱动验证、构建锁定契约和认知差距。"
+        }
+      },
+      {
+        "id": "meta",
+        "label": {
+          "en": "Meta",
+          "zh": "元数据"
+        },
+        "blurb": {
+          "en": "Navigation, extraction logs, and how this library was built.",
+          "zh": "导航、提取日志以及该图书馆是如何构建的。"
+        }
+      },
+      {
+        "id": "reviews",
+        "label": {
+          "en": "Reviews",
+          "zh": "评议"
+        },
+        "blurb": {
+          "en": "Independent, adversarial, and self-reviews of claims before submission.",
+          "zh": "提交前对声明的独立、对抗性和自我评议。"
+        }
+      }
+    ],
+    "entries": [
+      {
+        "id": "working-papers",
+        "source": "articles/docs/papers-working.md",
+        "title": "Working Papers: The Projection Law & The Causal Geometry of Prediction Errors",
+        "subtitle": "Web + print editions: abstracts, figures, key results, typeset PDFs, and the public replication kit.",
+        "category": "changelog",
+        "tags": [
+          "papers",
+          "projection-law",
+          "replication",
+          "featured"
+        ],
+        "featured": true,
+        "originalSource": "docs/papers-working.md"
+      },
+      {
+        "id": "academic-review-projection-law",
+        "source": "articles/docs/reviews/academic-review-projection-law-2026-06-16.md",
+        "title": "Academic Review — Projection Law / IMMI Paper Suite",
+        "subtitle": "Independent adversarial review: strengths, six MUST-FIX items, and recommended gates before submission.",
+        "category": "reviews",
+        "tags": [
+          "review",
+          "projection-law",
+          "submission-gate"
+        ],
+        "status": "open",
+        "originalSource": "docs/reviews/academic-review-projection-law-2026-06-16.md"
+      },
+      {
+        "id": "adversarial-review-projection-law",
+        "source": "articles/docs/reviews/adversarial-review-projection-law-2026-06-16.md",
+        "title": "Adversarial Review — Projection Law / IMMI Paper Suite",
+        "subtitle": "Second-pass review of the first-pass fixes: checklist, new issues, and consistency verification.",
+        "category": "reviews",
+        "tags": [
+          "review",
+          "projection-law",
+          "submission-gate"
+        ],
+        "status": "open",
+        "originalSource": "docs/reviews/adversarial-review-projection-law-2026-06-16.md"
+      },
+      {
+        "id": "changelog",
+        "source": "articles/CHANGELOG.md",
+        "title": "Changelog & Progress",
+        "subtitle": "What changed, why, results, and suggested next steps. Read this first.",
+        "category": "changelog",
+        "tags": [
+          "changelog",
+          "progress",
+          "narrative"
+        ],
+        "originalSource": "CHANGELOG.md"
+      },
+      {
+        "id": "public-approach",
+        "source": "articles/docs/PUBLIC.md",
+        "title": "Public Corpus & Documentation Approach",
+        "subtitle": "How the corpus stays public — organization model, shelves, and roadmap.",
+        "category": "changelog",
+        "tags": [
+          "meta",
+          "strategy",
+          "roadmap"
+        ],
+        "originalSource": "docs/PUBLIC.md"
+      },
+      {
+        "id": "phoenix-observability",
+        "source": "articles/docs/phoenix-observability.md",
+        "title": "Phoenix: Making the Research Loop Observable",
+        "subtitle": "Why we wired Phoenix, the Cloudflare edge limit we proved, and how to get more value from it.",
+        "category": "changelog",
+        "tags": [
+          "phoenix",
+          "observability",
+          "evals",
+          "featured"
+        ],
+        "featured": true,
+        "originalSource": "docs/phoenix-observability.md"
+      },
+      {
+        "id": "mlip-flywheel-readiness",
+        "source": "articles/docs/mlip-flywheel-readiness.md",
+        "title": "MLIP Flywheel Readiness",
+        "subtitle": "Cloudflare is deployed, gated, and ready for scientist review before the next expensive Distill campaign.",
+        "category": "changelog",
+        "tags": [
+          "mlip",
+          "flywheel",
+          "cloudflare",
+          "phoenix"
+        ],
+        "status": "open",
+        "originalSource": "docs/mlip-flywheel-readiness.md"
+      },
+      {
+        "id": "research-evolution",
+        "source": "articles/docs/research_evolution_2026_05_05.md",
+        "title": "The Loop That Caught Itself",
+        "subtitle": "Research evolution report — how the corpus refuted its own exciting findings.",
+        "category": "changelog",
+        "tags": [
+          "self-correction",
+          "research-evolution",
+          "narrative"
+        ],
+        "originalSource": "docs/research_evolution_2026_05_05.md"
+      },
+      {
+        "id": "conjecture-ledger",
+        "source": "articles/docs/conjectures/ledger.md",
+        "title": "The Hypothesis Ledger",
+        "subtitle": "Every claim we have tested, its lifecycle status, and why it moved.",
+        "category": "conjectures",
+        "tags": [
+          "ledger",
+          "index",
+          "overview"
+        ],
+        "group": "hypotheses",
+        "originalSource": "docs/conjectures/ledger.md"
+      },
+      {
+        "id": "hyp-hyper-ribbon-universality",
+        "source": "articles/docs/conjectures/hyper-ribbon-universality.md",
+        "title": "Hyper-Ribbon Universality",
+        "subtitle": "Error vectors occupy a low-dimensional manifold (PR 1.05–1.86). Lean-grounded.",
+        "category": "conjectures",
+        "tags": [
+          "hyper-ribbon",
+          "sloppy-models"
+        ],
+        "group": "hypotheses",
+        "status": "supported",
+        "originalSource": "docs/conjectures/hyper-ribbon-universality.md"
+      },
+      {
+        "id": "hyp-hyper-ribbon-mlip-transfer",
+        "source": "articles/docs/conjectures/hyper-ribbon-mlip-transfer.md",
+        "title": "Hyper-Ribbon Transfers Classical → MLIP",
+        "subtitle": "Cross-paradigm ribbon transfer — per-element counts under re-audit after Born screening (2026-06); directional structure confirmed at 8–11 models.",
+        "category": "conjectures",
+        "tags": [
+          "hyper-ribbon",
+          "mlip",
+          "de-myopization"
+        ],
+        "group": "hypotheses",
+        "status": "open",
+        "originalSource": "docs/conjectures/hyper-ribbon-mlip-transfer.md"
+      },
+      {
+        "id": "hyp-cross-mlip-orthogonal-errors",
+        "source": "articles/docs/conjectures/cross-mlip-orthogonal-errors.md",
+        "title": "Cross-MLIP Orthogonal Error Modes",
+        "subtitle": "MACE and CHGNet fail in orthogonal directions — the precondition for ensembling.",
+        "category": "conjectures",
+        "tags": [
+          "mlip",
+          "ensemble",
+          "error-geometry"
+        ],
+        "group": "hypotheses",
+        "status": "supported",
+        "originalSource": "docs/conjectures/cross-mlip-orthogonal-errors.md"
+      },
+      {
+        "id": "hyp-au-mlip-escape",
+        "source": "articles/docs/conjectures/au-mlip-escape.md",
+        "title": "Au Escapes the Ribbon Under MLIPs",
+        "subtitle": "Confirmed for MACE + CHGNet; Ag escape refuted. Mechanism open.",
+        "category": "conjectures",
+        "tags": [
+          "au",
+          "mlip",
+          "escape"
+        ],
+        "group": "hypotheses",
+        "status": "open",
+        "originalSource": "docs/conjectures/au-mlip-escape.md"
+      },
+      {
+        "id": "hyp-fe-persistent-outlier",
+        "source": "articles/docs/conjectures/fe-persistent-outlier.md",
+        "title": "Fe Is a Persistent Outlier",
+        "subtitle": "PR > 2 invariant to LAM addition across the trio. Cause (magnetism?) open.",
+        "category": "conjectures",
+        "tags": [
+          "fe",
+          "outlier",
+          "mlip"
+        ],
+        "group": "hypotheses",
+        "status": "open",
+        "originalSource": "docs/conjectures/fe-persistent-outlier.md"
+      },
+      {
+        "id": "hyp-dband-correlation",
+        "source": "articles/docs/conjectures/dband-correlation.md",
+        "title": "D-Band Controls Error Correlation",
+        "subtitle": "Refuted — full-sample ρ = −0.02; the signal was a sample-size confounder.",
+        "category": "conjectures",
+        "tags": [
+          "d-band",
+          "confounder",
+          "matched-n"
+        ],
+        "group": "hypotheses",
+        "status": "refuted",
+        "originalSource": "docs/conjectures/dband-correlation.md"
+      },
+      {
+        "id": "hyp-meam-intrinsic-2d",
+        "source": "articles/docs/conjectures/meam-intrinsic-2d.md",
+        "title": "MEAM Is Intrinsically 2-D",
+        "subtitle": "Refuted by matched-n bootstrap; a narrower bounded claim survives.",
+        "category": "conjectures",
+        "tags": [
+          "meam",
+          "confounder",
+          "matched-n"
+        ],
+        "group": "hypotheses",
+        "status": "refuted",
+        "originalSource": "docs/conjectures/meam-intrinsic-2d.md"
+      },
+      {
+        "id": "hyp-bccfcc-causal-shield",
+        "source": "articles/docs/conjectures/bccfcc-causal-shield.md",
+        "title": "The BCC/FCC \"Causal Shield\"",
+        "subtitle": "Self-corrected — the dramatic r 0.90 vs 0.04 was 1.5% data contamination.",
+        "category": "conjectures",
+        "tags": [
+          "bcc",
+          "fcc",
+          "self-correction",
+          "contamination"
+        ],
+        "group": "hypotheses",
+        "status": "self-corrected",
+        "originalSource": "docs/conjectures/bccfcc-causal-shield.md"
+      },
+      {
+        "id": "partnerships",
+        "source": "articles/docs/partnerships.md",
+        "title": "Partnerships",
+        "subtitle": "MIIT-67 pilot mapping and the Lupine thesis — public layer.",
+        "category": "partnerships",
+        "tags": [
+          "partnerships",
+          "miit-67",
+          "pilots"
+        ],
+        "originalSource": "docs/partnerships.md"
+      },
+      {
+        "id": "research-index",
+        "source": "articles/docs/research-index.md",
+        "title": "Research Index",
+        "subtitle": "Annotated catalog of every research, planning, and presentation document.",
+        "category": "foundations",
+        "tags": [
+          "index",
+          "overview"
+        ],
+        "originalSource": "docs/research-index.md"
+      },
+      {
+        "id": "navigation",
+        "source": "articles/docs/navigation.md",
+        "title": "Repo Navigation Guide",
+        "subtitle": "Quick-search codemap for finding things fast across the workspace.",
+        "category": "foundations",
+        "tags": [
+          "navigation",
+          "reference"
+        ],
+        "originalSource": "docs/navigation.md"
+      },
+      {
+        "id": "internal-science-program",
+        "source": "articles/docs/internal-science-program.md",
+        "title": "Internal Science Program",
+        "subtitle": "The research agenda: what we are trying to learn and how the loop pursues it.",
+        "category": "foundations",
+        "tags": [
+          "program",
+          "agenda",
+          "vision"
+        ],
+        "originalSource": "docs/internal-science-program.md"
+      },
+      {
+        "id": "methodology",
+        "source": "articles/docs/methodology.md",
+        "title": "Methodology — How We Know, and How We Catch Ourselves",
+        "subtitle": "Matched-n, contamination gating, ecological-fallacy stratification — the reusable discipline.",
+        "category": "foundations",
+        "tags": [
+          "methodology",
+          "matched-n",
+          "self-correction"
+        ],
+        "originalSource": "docs/methodology.md"
+      },
+      {
+        "id": "data-provenance",
+        "source": "articles/docs/data-provenance.md",
+        "title": "Data & Provenance",
+        "subtitle": "Where every number comes from: OpenKIM, NIST IPR, 559 potentials, the integrity gates.",
+        "category": "foundations",
+        "tags": [
+          "provenance",
+          "data",
+          "trust"
+        ],
+        "originalSource": "docs/data-provenance.md"
+      },
+      {
+        "id": "glossary",
+        "source": "articles/GLOSSARY.md",
+        "title": "Glossary",
+        "subtitle": "Terminology index for materials science, MD, DFT, and MLIPs.",
+        "category": "foundations",
+        "tags": [
+          "glossary",
+          "reference"
+        ],
+        "originalSource": "GLOSSARY.md"
+      },
+      {
+        "id": "readme",
+        "source": "articles/README.md",
+        "title": "Lupine — Project README",
+        "subtitle": "The error-geometry program: what is established vs. conjectured, and where to start.",
+        "category": "foundations",
+        "tags": [
+          "overview"
+        ],
+        "originalSource": "README.md"
+      },
+      {
+        "id": "glimmer-multifidelity-uq",
+        "source": "articles/docs/multi_fidelity_uq_glimMER_report.md",
+        "title": "Multi-Fidelity UQ & the glimMER Paradigm",
+        "subtitle": "Cross-potential meta-analysis and PCA-based error correction operators.",
+        "category": "uq",
+        "tags": [
+          "uq",
+          "multi-fidelity",
+          "glimMER"
+        ],
+        "originalSource": "docs/multi_fidelity_uq_glimMER_report.md"
+      },
+      {
+        "id": "bayesian-active-learning",
+        "source": "articles/docs/bayesian_active_learning_report.md",
+        "title": "Bayesian Active Learning for Potential Selection",
+        "subtitle": "Gaussian Process surrogates across 23 potentials × 12,000 materials.",
+        "category": "uq",
+        "tags": [
+          "bayesian",
+          "active-learning"
+        ],
+        "originalSource": "docs/bayesian_active_learning_report.md"
+      },
+      {
+        "id": "weather-climate-ensembles",
+        "source": "articles/docs/weather_climate_ensembles_report.md",
+        "title": "Ensemble Methods from Climate Science",
+        "subtitle": "Transferring weighting strategies from weather to atomistic simulation.",
+        "category": "uq",
+        "tags": [
+          "ensembles",
+          "climate"
+        ],
+        "originalSource": "docs/weather_climate_ensembles_report.md"
+      },
+      {
+        "id": "gnn-error-prediction",
+        "source": "articles/docs/gnn_error_prediction_report.md",
+        "title": "GNNs for Predicting Potential Errors",
+        "subtitle": "Predicting where a potential will fail from crystal-structure topology.",
+        "category": "uq",
+        "tags": [
+          "gnn",
+          "error-prediction"
+        ],
+        "originalSource": "docs/gnn_error_prediction_report.md"
+      },
+      {
+        "id": "tda-error-landscapes",
+        "source": "articles/docs/tda_error_landscapes_report.md",
+        "title": "Topological Data Analysis of Error Landscapes",
+        "subtitle": "Persistent homology for high-dimensional error surfaces.",
+        "category": "uq",
+        "tags": [
+          "tda",
+          "topology"
+        ],
+        "originalSource": "docs/tda_error_landscapes_report.md"
+      },
+      {
+        "id": "phonon-benchmarking",
+        "source": "articles/docs/phonon_benchmarking_report.md",
+        "title": "Phonon Frequency Benchmarking",
+        "subtitle": "Second-derivative tests as the gold standard for potential validation.",
+        "category": "validation",
+        "tags": [
+          "phonon",
+          "benchmark"
+        ],
+        "originalSource": "docs/phonon_benchmarking_report.md"
+      },
+      {
+        "id": "key-findings",
+        "source": "articles/docs/KEY_FINDINGS_SUMMARY.md",
+        "title": "Phonon Benchmarking — Key Findings",
+        "subtitle": "Executive summary of the most consequential phonon findings for GLIM.",
+        "category": "validation",
+        "tags": [
+          "summary",
+          "phonon"
+        ],
+        "originalSource": "docs/KEY_FINDINGS_SUMMARY.md"
+      },
+      {
+        "id": "mlip-cloud-baseline-distill",
+        "source": "articles/docs/mlip-cloud-baseline-distill-report.md",
+        "title": "MLIP Cloud Baseline and Distill: First Real 5x5 Results",
+        "subtitle": "Cloud Run completed the 25-cell MLIP baseline and produced the first backend-diverse Distill energy wins.",
+        "category": "validation",
+        "tags": [
+          "mlip",
+          "cloud-run",
+          "distill",
+          "baseline",
+          "featured"
+        ],
+        "featured": true,
+        "status": "supported",
+        "originalSource": "docs/mlip-cloud-baseline-distill-report.md"
+      },
+      {
+        "id": "mlip-ni-paired-accuracy-live",
+        "source": "articles/docs/mlip-ni-paired-accuracy-live-report.md",
+        "title": "Ni Paired Accuracy Live Report",
+        "subtitle": "Live baseline-versus-Distill Accuracy evidence for the Ni fcc EAM-home-turf campaign.",
+        "category": "validation",
+        "tags": [
+          "mlip",
+          "distill",
+          "ni",
+          "cloud-run",
+          "live-lab"
+        ],
+        "featured": true,
+        "status": "live",
+        "originalSource": "docs/mlip-ni-paired-accuracy-live-report.md"
+      },
+      {
+        "id": "mlip-ni-zero-point-policy-replay",
+        "source": "articles/docs/mlip-ni-zero-point-policy-replay.md",
+        "title": "Ni Zero-Point Policy Replay",
+        "subtitle": "Local Rust replay turns the Ni promotion canary green before a Cloud Run image rebuild.",
+        "category": "validation",
+        "tags": [
+          "mlip",
+          "distill",
+          "ni",
+          "hyperribbon",
+          "live-lab"
+        ],
+        "featured": true,
+        "status": "supported",
+        "originalSource": "docs/mlip-ni-zero-point-policy-replay.md"
+      },
+      {
+        "id": "mlip-mptrj-broad-dft-canary",
+        "source": "articles/docs/mlip-mptrj-broad-dft-canary.md",
+        "title": "MPtrj Broad-DFT MLIP Canary",
+        "subtitle": "The broadened Cloud Run canary improves MACE, ORB, and SevenNet while CHGNet negative transfer blocks promotion.",
+        "category": "validation",
+        "tags": [
+          "mlip",
+          "distill",
+          "mptrj",
+          "dft",
+          "cloud-run",
+          "live-lab"
+        ],
+        "featured": true,
+        "status": "supported",
+        "originalSource": "docs/mlip-mptrj-broad-dft-canary.md"
+      },
+      {
+        "id": "rg-coarsegraining",
+        "source": "articles/docs/rg_coarsegraining_report.md",
+        "title": "Renormalization Group Coarse-Graining",
+        "subtitle": "Systematically deriving effective potentials via partition-function matching.",
+        "category": "theory",
+        "tags": [
+          "rg",
+          "coarse-graining"
+        ],
+        "originalSource": "docs/rg_coarsegraining_report.md"
+      },
+      {
+        "id": "sloppy-models",
+        "source": "articles/docs/sloppy_models_report.md",
+        "title": "Sloppy Models & Potential Transferability",
+        "subtitle": "Fisher Information eigenvalue analysis — stiff vs. sloppy directions.",
+        "category": "theory",
+        "tags": [
+          "sloppy",
+          "fim"
+        ],
+        "originalSource": "docs/sloppy_models_report.md"
+      },
+      {
+        "id": "error-geometry-objects",
+        "source": "articles/docs/science/objects.md",
+        "title": "The Three Error-Geometry Objects",
+        "subtitle": "Model manifold vs. participation-ratio measure vs. configuration-space core — kept straight.",
+        "category": "theory",
+        "tags": [
+          "hyper-ribbon",
+          "sloppy-models",
+          "disambiguation"
+        ],
+        "originalSource": "docs/science/objects.md"
+      },
+      {
+        "id": "info-theoretic",
+        "source": "articles/docs/info_theoretic_report.md",
+        "title": "Information-Theoretic Bounds on Model Error",
+        "subtitle": "Kolmogorov complexity, rate-distortion, and Shannon entropy for model selection.",
+        "category": "theory",
+        "tags": [
+          "information-theory"
+        ],
+        "originalSource": "docs/info_theoretic_report.md"
+      },
+      {
+        "id": "references",
+        "source": "articles/docs/references.md",
+        "title": "References & Intellectual Lineage",
+        "subtitle": "The 35 external works we build on — each with what it is and why we cite it.",
+        "category": "references",
+        "tags": [
+          "references",
+          "bibliography",
+          "lineage"
+        ],
+        "originalSource": "docs/references.md"
+      },
+      {
+        "id": "lit-review-error-structure",
+        "source": "articles/lit-review.md",
+        "title": "Error Structure in Interatomic Potentials — Literature Review",
+        "subtitle": "Sloppy models, Simpson’s paradox, and FCC error manifolds: a 30-reference synthesis.",
+        "category": "references",
+        "tags": [
+          "literature-review",
+          "sloppy",
+          "simpson",
+          "fcc"
+        ],
+        "originalSource": "lit-review.md"
+      },
+      {
+        "id": "funding-landscape",
+        "source": "articles/docs/funding_landscape_report.md",
+        "title": "Federal Funding Landscape (2025–2026)",
+        "subtitle": "NSF DMREF, DOE BES, DARPA SURGE/PRIME, and MGI strategic priorities.",
+        "category": "ecosystem",
+        "tags": [
+          "funding",
+          "policy"
+        ],
+        "originalSource": "docs/funding_landscape_report.md"
+      },
+      {
+        "id": "formal-vision",
+        "source": "articles/docs/formal-vision.md",
+        "title": "The Open Distillation Factory — Executable Vision",
+        "subtitle": "47 theorems, 1,499 build targets, and a build-locking epistemic contract.",
+        "category": "formalization",
+        "tags": [
+          "lean",
+          "formal-spec",
+          "vision"
+        ],
+        "originalSource": "docs/formal-vision.md"
+      },
+      {
+        "id": "formal-methodology",
+        "source": "articles/docs/formal-methodology.md",
+        "title": "In the In Between",
+        "subtitle": "Why we formalize before we simulate. A methodology for theorem-driven validation.",
+        "category": "formalization",
+        "tags": [
+          "lean",
+          "methodology",
+          "epistemology"
+        ],
+        "originalSource": "docs/formal-methodology.md"
+      },
+      {
+        "id": "formal-audit",
+        "source": "articles/docs/formal-audit.md",
+        "title": "Formal Audit Report",
+        "subtitle": "Split verdict: Simpson's paradox fabricated, hyper-ribbon consistent but ungrounded.",
+        "category": "formalization",
+        "tags": [
+          "lean",
+          "audit",
+          "verification"
+        ],
+        "originalSource": "docs/formal-audit.md"
+      },
+      {
+        "id": "formal-hypotheses",
+        "source": "articles/docs/formal-hypotheses.md",
+        "title": "Six Meta-Scientific Hypotheses",
+        "subtitle": "From validation incompleteness to bootstrap collapse — the new research agenda.",
+        "category": "formalization",
+        "tags": [
+          "lean",
+          "hypotheses",
+          "meta-science"
+        ],
+        "originalSource": "docs/formal-hypotheses.md"
+      },
+      {
+        "id": "formal-proof-ledger",
+        "source": "articles/docs/formal-proof-ledger.md",
+        "title": "Formal Proof Ledger",
+        "subtitle": "Which claims a Lean theorem backs — proven, fabricated, or deliberately not formalized.",
+        "category": "formalization",
+        "tags": [
+          "lean",
+          "proof-ledger",
+          "audit"
+        ],
+        "group": "hypotheses",
+        "status": "proven",
+        "originalSource": "docs/formal-proof-ledger.md"
+      },
+      {
+        "id": "adr-0001-storage",
+        "source": "articles/docs/decisions/0001-r2-over-bandwidth-alliance.md",
+        "title": "ADR-0001 — Hybrid GCS + R2 Storage",
+        "subtitle": "Why hybrid object storage, and why we deferred Cloudflare-fronted GCS.",
+        "category": "decisions",
+        "tags": [
+          "adr",
+          "infrastructure",
+          "storage"
+        ],
+        "originalSource": "docs/decisions/0001-r2-over-bandwidth-alliance.md"
+      },
+      {
+        "id": "operating-system",
+        "source": "articles/docs/operating-system.md",
+        "title": "GLIM Operating System",
+        "subtitle": "How the pieces fit: the loop, the corpus, and the surfaces around them.",
+        "category": "meta",
+        "tags": [
+          "meta",
+          "system"
+        ],
+        "originalSource": "docs/operating-system.md"
+      },
+      {
+        "id": "resource-fabric",
+        "source": "articles/docs/resource-fabric.md",
+        "title": "GLIM Resource Fabric",
+        "subtitle": "The infrastructure fabric — compute, storage, and deploy surfaces.",
+        "category": "meta",
+        "tags": [
+          "meta",
+          "infrastructure"
+        ],
+        "originalSource": "docs/resource-fabric.md"
+      },
+      {
+        "id": "reproduce",
+        "source": "articles/docs/reproduce.md",
+        "title": "Reproduce Our Results",
+        "subtitle": "The atlas-distill + Lean commands that regenerate every ledger claim and verdict.",
+        "category": "meta",
+        "tags": [
+          "reproducibility",
+          "atlas-distill",
+          "lean"
+        ],
+        "originalSource": "docs/reproduce.md"
+      },
+      {
+        "id": "extraction-complete",
+        "source": "articles/docs/EXTRACTION_COMPLETE.md",
+        "title": "Extraction — Complete",
+        "subtitle": "How the PDFs/DOCX were turned into this library.",
+        "category": "meta",
+        "tags": [
+          "meta",
+          "build"
+        ],
+        "originalSource": "docs/EXTRACTION_COMPLETE.md"
+      },
+      {
+        "id": "extraction-report",
+        "source": "articles/docs/EXTRACTION_REPORT.md",
+        "title": "Extraction — Report",
+        "subtitle": "Conversion statistics and fidelity notes.",
+        "category": "meta",
+        "tags": [
+          "meta",
+          "build"
+        ],
+        "originalSource": "docs/EXTRACTION_REPORT.md"
+      },
+      {
+        "id": "extraction-notes",
+        "source": "articles/docs/EXTRACTION_NOTES.md",
+        "title": "Extraction — Notes",
+        "subtitle": "Edge cases encountered and how they were handled.",
+        "category": "meta",
+        "tags": [
+          "meta",
+          "build"
+        ],
+        "originalSource": "docs/EXTRACTION_NOTES.md"
+      }
+    ],
+    "languages": {
+      "en": {
+        "label": "English",
+        "native": "English"
+      },
+      "zh": {
+        "label": "Chinese",
+        "native": "中文"
+      }
+    }
+  },
+  "files": [
+    {
+      "source": "docs/papers-working.md",
+      "bundleSource": "articles/docs/papers-working.md",
+      "bytes": 841,
+      "sha256": "2d25eb3e7ee6f4654af33fd79c82f9cfe81bf180ca8df8817103c69d6455326d"
+    },
+    {
+      "source": "docs/reviews/academic-review-projection-law-2026-06-16.md",
+      "bundleSource": "articles/docs/reviews/academic-review-projection-law-2026-06-16.md",
+      "bytes": 15157,
+      "sha256": "5a6290cddfee8325f8c361b927105e5c572791bff0b12c005be830b866643cfa"
+    },
+    {
+      "source": "docs/reviews/adversarial-review-projection-law-2026-06-16.md",
+      "bundleSource": "articles/docs/reviews/adversarial-review-projection-law-2026-06-16.md",
+      "bytes": 11459,
+      "sha256": "aa41609643483c83f8f5156ad21c31615f97b7b9960777f18fc1c517dcfcedf7"
+    },
+    {
+      "source": "CHANGELOG.md",
+      "bundleSource": "articles/CHANGELOG.md",
+      "bytes": 46211,
+      "sha256": "b00b28cf40174376ae3980808743eea7db03842b8ea59e3f14e910b30e22f0b2"
+    },
+    {
+      "source": "docs/PUBLIC.md",
+      "bundleSource": "articles/docs/PUBLIC.md",
+      "bytes": 3810,
+      "sha256": "3427b6afc72baa54d87d24f0d56cbb4820eb7603c457e37d4462b234e3550f6d"
+    },
+    {
+      "source": "docs/phoenix-observability.md",
+      "bundleSource": "articles/docs/phoenix-observability.md",
+      "bytes": 3936,
+      "sha256": "075881b3d123aa00f16e31fc0a672883994c31f0ba8c3f4e284c5959a2ec8891"
+    },
+    {
+      "source": "docs/mlip-flywheel-readiness.md",
+      "bundleSource": "articles/docs/mlip-flywheel-readiness.md",
+      "bytes": 5027,
+      "sha256": "bb0578b95fd07e5e0a580f04e819de6e8b29645fee8069262f15d31444f691c0"
+    },
+    {
+      "source": "docs/research_evolution_2026_05_05.md",
+      "bundleSource": "articles/docs/research_evolution_2026_05_05.md",
+      "bytes": 14435,
+      "sha256": "1a4004dc757822d31bc84bac05542d72707a655e5bc904adda514243574c921b"
+    },
+    {
+      "source": "docs/conjectures/ledger.md",
+      "bundleSource": "articles/docs/conjectures/ledger.md",
+      "bytes": 4189,
+      "sha256": "ef1b6826ba3f5e813dfbcbf994088f7714671f6970ed63da28ce7a4dc73b22ec"
+    },
+    {
+      "source": "docs/conjectures/hyper-ribbon-universality.md",
+      "bundleSource": "articles/docs/conjectures/hyper-ribbon-universality.md",
+      "bytes": 1610,
+      "sha256": "e1cfb795ec05098c1c46f5ab2747133f55bc19321789dc707d029eb395839359"
+    },
+    {
+      "source": "docs/conjectures/hyper-ribbon-mlip-transfer.md",
+      "bundleSource": "articles/docs/conjectures/hyper-ribbon-mlip-transfer.md",
+      "bytes": 2323,
+      "sha256": "d3803bb578563120fe281782ac3f41f47333fff996d71a445221213017ba29fa"
+    },
+    {
+      "source": "docs/conjectures/cross-mlip-orthogonal-errors.md",
+      "bundleSource": "articles/docs/conjectures/cross-mlip-orthogonal-errors.md",
+      "bytes": 1318,
+      "sha256": "bb196383f3cadbf7851f5b12caaddf268f607a8db31ee2d56574042b3d53efe8"
+    },
+    {
+      "source": "docs/conjectures/au-mlip-escape.md",
+      "bundleSource": "articles/docs/conjectures/au-mlip-escape.md",
+      "bytes": 1307,
+      "sha256": "efebaa95ea899cc6630413ba1b45f3f03a19391e38efc36a2737f9c0c0007b6c"
+    },
+    {
+      "source": "docs/conjectures/fe-persistent-outlier.md",
+      "bundleSource": "articles/docs/conjectures/fe-persistent-outlier.md",
+      "bytes": 2017,
+      "sha256": "7d9216cff06b216233a7a8a9e38049f484a7ddee665ca84f8a01068cc98b3069"
+    },
+    {
+      "source": "docs/conjectures/dband-correlation.md",
+      "bundleSource": "articles/docs/conjectures/dband-correlation.md",
+      "bytes": 1362,
+      "sha256": "24ee7674939cd04714edd8d531c53b3c1f7e6c2f97c5753f1f0a97ff2ff3bafd"
+    },
+    {
+      "source": "docs/conjectures/meam-intrinsic-2d.md",
+      "bundleSource": "articles/docs/conjectures/meam-intrinsic-2d.md",
+      "bytes": 1386,
+      "sha256": "e71fd02392687139dd5e503be23bcdd5b3edcada228ac246b5150ac674e1fb9a"
+    },
+    {
+      "source": "docs/conjectures/bccfcc-causal-shield.md",
+      "bundleSource": "articles/docs/conjectures/bccfcc-causal-shield.md",
+      "bytes": 1384,
+      "sha256": "fde7e25e923aeee604421a74aa7d15b673f5831604ad2c95598176ebbc2e7ee0"
+    },
+    {
+      "source": "docs/partnerships.md",
+      "bundleSource": "articles/docs/partnerships.md",
+      "bytes": 2127,
+      "sha256": "a457a53f372ced4f5638f8bfa7b1aeb290c369c2beeb782ad4924c29f6670595"
+    },
+    {
+      "source": "docs/research-index.md",
+      "bundleSource": "articles/docs/research-index.md",
+      "bytes": 3038,
+      "sha256": "4b3e5298d732b38e274d35f8f4ae69ce9c0d34ce3c4ab75a49ef0e791a0761e4"
+    },
+    {
+      "source": "docs/navigation.md",
+      "bundleSource": "articles/docs/navigation.md",
+      "bytes": 9835,
+      "sha256": "f5a461b3d66358a86dd855fb848a537e2aa39b1aae203b6991e1c75b8be9ee75"
+    },
+    {
+      "source": "docs/internal-science-program.md",
+      "bundleSource": "articles/docs/internal-science-program.md",
+      "bytes": 5975,
+      "sha256": "f867cf143fc5abbb522515846f15d550b330bdf0acb3c7a3b8c813ffcc5da1bf"
+    },
+    {
+      "source": "docs/methodology.md",
+      "bundleSource": "articles/docs/methodology.md",
+      "bytes": 2351,
+      "sha256": "99f53d2314489626dfbaedeff9e96cebc33bbb5375285050af9c1bdd66862613"
+    },
+    {
+      "source": "docs/data-provenance.md",
+      "bundleSource": "articles/docs/data-provenance.md",
+      "bytes": 2765,
+      "sha256": "b9ceacddb7fbd6284c68cf26fe1bd520ffa1d31f31f1418820623f6b15c17ba7"
+    },
+    {
+      "source": "GLOSSARY.md",
+      "bundleSource": "articles/GLOSSARY.md",
+      "bytes": 6092,
+      "sha256": "83b1204309b111ed2fd7149cc1d17fb7c95168b2b777f45f9af6b2f3e560a068"
+    },
+    {
+      "source": "README.md",
+      "bundleSource": "articles/README.md",
+      "bytes": 12414,
+      "sha256": "f39c963734a3300ba585579430900ba7e0f0d2e0a76830e9ea7c983d9c32585a"
+    },
+    {
+      "source": "docs/multi_fidelity_uq_glimMER_report.md",
+      "bundleSource": "articles/docs/multi_fidelity_uq_glimMER_report.md",
+      "bytes": 33446,
+      "sha256": "c174ee3ca98995576c22f1bc8b9dc7aeab9df3cb1ff96a567adf0c56e8adfbb9"
+    },
+    {
+      "source": "docs/bayesian_active_learning_report.md",
+      "bundleSource": "articles/docs/bayesian_active_learning_report.md",
+      "bytes": 8459,
+      "sha256": "cdedf3e63bcf874b6a22189198ee302731280af0a4c8da0353489af5310f6683"
+    },
+    {
+      "source": "docs/weather_climate_ensembles_report.md",
+      "bundleSource": "articles/docs/weather_climate_ensembles_report.md",
+      "bytes": 12354,
+      "sha256": "75897910f9cfa5e495f5999286e950d4a6b62eae4a1222c99f1e4aab1725e239"
+    },
+    {
+      "source": "docs/gnn_error_prediction_report.md",
+      "bundleSource": "articles/docs/gnn_error_prediction_report.md",
+      "bytes": 11495,
+      "sha256": "3744b8b0e59601c7b3810a3f9a47dede9b712b7a984e9a9f245952c92f8c1c94"
+    },
+    {
+      "source": "docs/tda_error_landscapes_report.md",
+      "bundleSource": "articles/docs/tda_error_landscapes_report.md",
+      "bytes": 50755,
+      "sha256": "dbddf48a4b8b4b5ee561156a02a9f8ced47048a0b24a1db5c844254de0dc47d8"
+    },
+    {
+      "source": "docs/phonon_benchmarking_report.md",
+      "bundleSource": "articles/docs/phonon_benchmarking_report.md",
+      "bytes": 19431,
+      "sha256": "3fa3d511140425704d548594c2198bc5656234bbfc01e6499da27441eda5986c"
+    },
+    {
+      "source": "docs/KEY_FINDINGS_SUMMARY.md",
+      "bundleSource": "articles/docs/KEY_FINDINGS_SUMMARY.md",
+      "bytes": 8700,
+      "sha256": "d0c603a181f70094496c865d24397a41a5d91024e9343e8871f4728b6de6410a"
+    },
+    {
+      "source": "docs/mlip-cloud-baseline-distill-report.md",
+      "bundleSource": "articles/docs/mlip-cloud-baseline-distill-report.md",
+      "bytes": 6669,
+      "sha256": "b231aa8fe37907fdbe60790a90a410a96f69559e15d5b899603c719395096fb9"
+    },
+    {
+      "source": "docs/mlip-ni-paired-accuracy-live-report.md",
+      "bundleSource": "articles/docs/mlip-ni-paired-accuracy-live-report.md",
+      "bytes": 4729,
+      "sha256": "4457908a4c6c6b6746cf430e1ba773a4e11772719a4761209a02581fea1d0536"
+    },
+    {
+      "source": "docs/mlip-ni-zero-point-policy-replay.md",
+      "bundleSource": "articles/docs/mlip-ni-zero-point-policy-replay.md",
+      "bytes": 3004,
+      "sha256": "ad8fdf263aac60124016c8a296b4da32b5eb902b08575a8a4110dac9e63149e0"
+    },
+    {
+      "source": "docs/mlip-mptrj-broad-dft-canary.md",
+      "bundleSource": "articles/docs/mlip-mptrj-broad-dft-canary.md",
+      "bytes": 4031,
+      "sha256": "27ecd26a785941d63e16551a5e9eabac58a1a015a034459c432c9b1760e8cab6"
+    },
+    {
+      "source": "docs/rg_coarsegraining_report.md",
+      "bundleSource": "articles/docs/rg_coarsegraining_report.md",
+      "bytes": 14712,
+      "sha256": "1520384ea32806b2467913cd79a08bdbd049894fe255ce1e6361d1a0655ca0d0"
+    },
+    {
+      "source": "docs/sloppy_models_report.md",
+      "bundleSource": "articles/docs/sloppy_models_report.md",
+      "bytes": 12467,
+      "sha256": "9ef3c681344edb4eb283b21b910f3bf4ccfaaba84d0c10f7cea7dba097760ed5"
+    },
+    {
+      "source": "docs/science/objects.md",
+      "bundleSource": "articles/docs/science/objects.md",
+      "bytes": 6893,
+      "sha256": "393ff53b40c35a599febe934dea1f41cd568d4ba74693ca6a39b4fc9b66d4bf6"
+    },
+    {
+      "source": "docs/info_theoretic_report.md",
+      "bundleSource": "articles/docs/info_theoretic_report.md",
+      "bytes": 16099,
+      "sha256": "85f21523bcf42d31c5749f92c385622cdc163ed04384134c3a1e91984b0491cd"
+    },
+    {
+      "source": "docs/references.md",
+      "bundleSource": "articles/docs/references.md",
+      "bytes": 8148,
+      "sha256": "dd9d3f6481c2b10585b2b5bd1b4189f8f0d850beecdb0f9ff392a316523fe1d6"
+    },
+    {
+      "source": "lit-review.md",
+      "bundleSource": "articles/lit-review.md",
+      "bytes": 17081,
+      "sha256": "cfb491217fd6fb7b47fa3c63cfb76696c4af0891baaf59e7fb9235159e41cd9b"
+    },
+    {
+      "source": "docs/funding_landscape_report.md",
+      "bundleSource": "articles/docs/funding_landscape_report.md",
+      "bytes": 31737,
+      "sha256": "b19cafa0f4df3cc514f1c9fbd23f030d3fc31977598e6354babe3e81b0492168"
+    },
+    {
+      "source": "docs/formal-vision.md",
+      "bundleSource": "articles/docs/formal-vision.md",
+      "bytes": 6386,
+      "sha256": "7b1137ac37081ad2d099e2311499b5b828f2b85e5826675169a9de09ab6136da"
+    },
+    {
+      "source": "docs/formal-methodology.md",
+      "bundleSource": "articles/docs/formal-methodology.md",
+      "bytes": 6171,
+      "sha256": "88f798581f9bbe36e52541d4a9365b663096522d44ebc3740727e423e629cc80"
+    },
+    {
+      "source": "docs/formal-audit.md",
+      "bundleSource": "articles/docs/formal-audit.md",
+      "bytes": 4348,
+      "sha256": "1fdd298bd31c5b8fe6614bdd03756414b45df2b2e00ab7a01f316d8d4067b0cf"
+    },
+    {
+      "source": "docs/formal-hypotheses.md",
+      "bundleSource": "articles/docs/formal-hypotheses.md",
+      "bytes": 6562,
+      "sha256": "9d8808ffebcdcadf2267cd2dcca52c1d235c04e601a56d5ce4b73dc80ed027f6"
+    },
+    {
+      "source": "docs/formal-proof-ledger.md",
+      "bundleSource": "articles/docs/formal-proof-ledger.md",
+      "bytes": 2841,
+      "sha256": "e84263fe8706cc3cebd81bc7fd13b77a58e7028c2224653077907bb0a2ed3d2b"
+    },
+    {
+      "source": "docs/decisions/0001-r2-over-bandwidth-alliance.md",
+      "bundleSource": "articles/docs/decisions/0001-r2-over-bandwidth-alliance.md",
+      "bytes": 7474,
+      "sha256": "bb7ac3149da7d3bfe4ca94fcb00bb9eb5b2e73e592cb8c41059b1886a5c971b7"
+    },
+    {
+      "source": "docs/operating-system.md",
+      "bundleSource": "articles/docs/operating-system.md",
+      "bytes": 1382,
+      "sha256": "ff6ea2d5c8922fc51d5377f361464f66a897f33a025cef21450186ecf8291ac9"
+    },
+    {
+      "source": "docs/resource-fabric.md",
+      "bundleSource": "articles/docs/resource-fabric.md",
+      "bytes": 3091,
+      "sha256": "714eea390b08bf1fac1adfe1fa278874c271df384fcaf5d35d0efff71937a978"
+    },
+    {
+      "source": "docs/reproduce.md",
+      "bundleSource": "articles/docs/reproduce.md",
+      "bytes": 2263,
+      "sha256": "38efe4f407131d0fe956784e0007bdcdd20e013c3f3c332222ba4b50d0ba7d14"
+    },
+    {
+      "source": "docs/EXTRACTION_COMPLETE.md",
+      "bundleSource": "articles/docs/EXTRACTION_COMPLETE.md",
+      "bytes": 3475,
+      "sha256": "9317ac0bf7d51cee9571b718a6e860317ec0c7ba31ae07768beb9e344215548e"
+    },
+    {
+      "source": "docs/EXTRACTION_REPORT.md",
+      "bundleSource": "articles/docs/EXTRACTION_REPORT.md",
+      "bytes": 7195,
+      "sha256": "235652d0a26d6245bf22cd6435edd48ab33511c893105886cdd149085d61a6ef"
+    },
+    {
+      "source": "docs/EXTRACTION_NOTES.md",
+      "bundleSource": "articles/docs/EXTRACTION_NOTES.md",
+      "bytes": 4245,
+      "sha256": "4611f11f4e5622238809fb07bafed7485882207a435423babb7d5d9a682e71a9"
+    }
+  ]
+}

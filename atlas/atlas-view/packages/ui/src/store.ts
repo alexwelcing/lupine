@@ -103,9 +103,15 @@ function sanitizeMaterialScene(value: unknown): string {
 }
 
 function sanitizeEnvironmentPreset(value: unknown): AppState['environmentPreset'] {
-  return value === 'city' || value === 'studio' || value === 'dawn' || value === 'night' || value === 'warehouse' || value === 'forest' || value === 'apartment' || value === 'none'
+  return value === 'city' || value === 'studio' || value === 'dawn' || value === 'night' || value === 'warehouse' || value === 'forest' || value === 'apartment' || value === 'park' || value === 'none'
     ? value
     : 'studio';
+}
+
+function sanitizeNumberRange(value: unknown, fallback: number, min: number, max: number): number {
+  const numeric = typeof value === 'number' ? value : Number(value);
+  if (!Number.isFinite(numeric)) return fallback;
+  return Math.max(min, Math.min(max, numeric));
 }
 
 export interface BondDataset {
@@ -247,11 +253,19 @@ export interface AppState {
   atomScale: number;
   backgroundPreset: string;
   backgroundStyle: 'linear' | 'radial' | 'spotlight';
+  backgroundMotionPaused: boolean;
+  backgroundMotionSpeed: number;
+  backgroundOpacity: number;
+  backgroundBrightness: number;
+  backgroundSaturation: number;
+  backgroundContrast: number;
+  backgroundYawDegrees: number;
+  backgroundPitchDegrees: number;
   filterShellShape: FilterShellShape;
   filterShellPreset: FilterShellPreset;
   filterShellOpacity: number;
   filterShellRadius: number;
-  environmentPreset: 'city' | 'studio' | 'dawn' | 'night' | 'warehouse' | 'forest' | 'apartment' | 'none';
+  environmentPreset: 'city' | 'studio' | 'dawn' | 'night' | 'warehouse' | 'forest' | 'apartment' | 'park' | 'none';
   materialPreset: 'default' | 'matte' | 'metallic' | 'glass' | 'plastic';
   /** Active material scene ID. Scenes coordinate material + lighting + env
    *  + post into a holistic authored look. */
@@ -458,11 +472,20 @@ export interface AppState {
   setAtomScale: (scale: number) => void;
   setBackgroundPreset: (preset: string) => void;
   setBackgroundStyle: (style: AppState['backgroundStyle']) => void;
+  setBackgroundMotionPaused: (paused: boolean) => void;
+  setBackgroundMotionSpeed: (speed: number) => void;
+  setBackgroundOpacity: (opacity: number) => void;
+  setBackgroundBrightness: (brightness: number) => void;
+  setBackgroundSaturation: (saturation: number) => void;
+  setBackgroundContrast: (contrast: number) => void;
+  setBackgroundYawDegrees: (degrees: number) => void;
+  setBackgroundPitchDegrees: (degrees: number) => void;
+  resetBackgroundAdjustments: () => void;
   setFilterShellShape: (shape: FilterShellShape) => void;
   setFilterShellPreset: (preset: FilterShellPreset) => void;
   setFilterShellOpacity: (opacity: number) => void;
   setFilterShellRadius: (radius: number) => void;
-  setEnvironmentPreset: (preset: 'city' | 'studio' | 'dawn' | 'night' | 'warehouse' | 'forest' | 'apartment' | 'none') => void;
+  setEnvironmentPreset: (preset: 'city' | 'studio' | 'dawn' | 'night' | 'warehouse' | 'forest' | 'apartment' | 'park' | 'none') => void;
   setArLightEstimationActive: (active: boolean) => void;
   setMaterialPreset: (preset: 'default' | 'matte' | 'metallic' | 'glass' | 'plastic') => void;
   setMaterialScene: (sceneId: string) => void;
@@ -558,8 +581,16 @@ const DEFAULTS = {
   activeBondDataset: null as string | null,
   renderStyle: 'standard' as RenderStyle,
   atomScale: 1.0,
-  backgroundPreset: 'deep',
+  backgroundPreset: 'pub-figure-neutral',
   backgroundStyle: 'radial' as const,
+  backgroundMotionPaused: false,
+  backgroundMotionSpeed: 1.0,
+  backgroundOpacity: 1.0,
+  backgroundBrightness: 1.0,
+  backgroundSaturation: 1.0,
+  backgroundContrast: 1.0,
+  backgroundYawDegrees: 0,
+  backgroundPitchDegrees: 0,
   filterShellShape: 'off' as FilterShellShape,
   filterShellPreset: 'haze' as FilterShellPreset,
   filterShellOpacity: 0.24,
@@ -833,6 +864,31 @@ export const useStore = create<AppState>()(
     setAtomScale: (atomScale) => set({ atomScale }),
     setBackgroundPreset: (backgroundPreset) => set({ backgroundPreset }),
     setBackgroundStyle: (backgroundStyle) => set({ backgroundStyle }),
+    setBackgroundMotionPaused: (backgroundMotionPaused) => set({ backgroundMotionPaused }),
+    setBackgroundMotionSpeed: (backgroundMotionSpeed) =>
+      set({ backgroundMotionSpeed: sanitizeNumberRange(backgroundMotionSpeed, DEFAULTS.backgroundMotionSpeed, 0.05, 2) }),
+    setBackgroundOpacity: (backgroundOpacity) =>
+      set({ backgroundOpacity: sanitizeNumberRange(backgroundOpacity, DEFAULTS.backgroundOpacity, 0.15, 1) }),
+    setBackgroundBrightness: (backgroundBrightness) =>
+      set({ backgroundBrightness: sanitizeNumberRange(backgroundBrightness, DEFAULTS.backgroundBrightness, 0.35, 1.8) }),
+    setBackgroundSaturation: (backgroundSaturation) =>
+      set({ backgroundSaturation: sanitizeNumberRange(backgroundSaturation, DEFAULTS.backgroundSaturation, 0, 2) }),
+    setBackgroundContrast: (backgroundContrast) =>
+      set({ backgroundContrast: sanitizeNumberRange(backgroundContrast, DEFAULTS.backgroundContrast, 0.5, 1.8) }),
+    setBackgroundYawDegrees: (backgroundYawDegrees) =>
+      set({ backgroundYawDegrees: sanitizeNumberRange(backgroundYawDegrees, DEFAULTS.backgroundYawDegrees, -180, 180) }),
+    setBackgroundPitchDegrees: (backgroundPitchDegrees) =>
+      set({ backgroundPitchDegrees: sanitizeNumberRange(backgroundPitchDegrees, DEFAULTS.backgroundPitchDegrees, -45, 45) }),
+    resetBackgroundAdjustments: () => set({
+      backgroundMotionPaused: DEFAULTS.backgroundMotionPaused,
+      backgroundMotionSpeed: DEFAULTS.backgroundMotionSpeed,
+      backgroundOpacity: DEFAULTS.backgroundOpacity,
+      backgroundBrightness: DEFAULTS.backgroundBrightness,
+      backgroundSaturation: DEFAULTS.backgroundSaturation,
+      backgroundContrast: DEFAULTS.backgroundContrast,
+      backgroundYawDegrees: DEFAULTS.backgroundYawDegrees,
+      backgroundPitchDegrees: DEFAULTS.backgroundPitchDegrees,
+    }),
     setFilterShellShape: (filterShellShape) => set({ filterShellShape }),
     setFilterShellPreset: (filterShellPreset) => set({ filterShellPreset }),
     setFilterShellOpacity: (filterShellOpacity) => set({ filterShellOpacity: Math.max(0, Math.min(0.65, filterShellOpacity)) }),
@@ -1130,8 +1186,16 @@ export const useStore = create<AppState>()(
       if (!s.showCell)                                 delta.cell = 0;
       if (!s.showAxes)                                 delta.axes = 0;
       if (r(s.atomScale) !== 1.0)                      delta.as = r(s.atomScale);
-      if (s.backgroundPreset !== 'deep')               delta.bg = s.backgroundPreset;
+      if (s.backgroundPreset !== DEFAULTS.backgroundPreset) delta.bg = s.backgroundPreset;
       if (s.backgroundStyle !== DEFAULTS.backgroundStyle) delta.bgs = s.backgroundStyle;
+      if (s.backgroundMotionPaused)                    delta.bmp = 1;
+      if (r(s.backgroundMotionSpeed) !== DEFAULTS.backgroundMotionSpeed) delta.bms = r(s.backgroundMotionSpeed);
+      if (r(s.backgroundOpacity) !== DEFAULTS.backgroundOpacity) delta.bo = r(s.backgroundOpacity);
+      if (r(s.backgroundBrightness) !== DEFAULTS.backgroundBrightness) delta.bb = r(s.backgroundBrightness);
+      if (r(s.backgroundSaturation) !== DEFAULTS.backgroundSaturation) delta.bs = r(s.backgroundSaturation);
+      if (r(s.backgroundContrast) !== DEFAULTS.backgroundContrast) delta.bct = r(s.backgroundContrast);
+      if (r(s.backgroundYawDegrees) !== DEFAULTS.backgroundYawDegrees) delta.by = r(s.backgroundYawDegrees);
+      if (r(s.backgroundPitchDegrees) !== DEFAULTS.backgroundPitchDegrees) delta.bp = r(s.backgroundPitchDegrees);
       if (s.filterShellShape !== 'off')                delta.fss = s.filterShellShape;
       if (s.filterShellPreset !== 'haze')              delta.fsp = s.filterShellPreset;
       if (r(s.filterShellOpacity) !== 0.24)            delta.fso = r(s.filterShellOpacity);
@@ -1202,8 +1266,16 @@ export const useStore = create<AppState>()(
           showCell: s.cell !== 0,
           showAxes: s.axes !== 0,
           atomScale: s.as ?? 1.0,
-          backgroundPreset: s.bg ?? 'deep',
+          backgroundPreset: s.bg ?? DEFAULTS.backgroundPreset,
           backgroundStyle: s.bgs ?? DEFAULTS.backgroundStyle,
+          backgroundMotionPaused: s.bmp === 1,
+          backgroundMotionSpeed: sanitizeNumberRange(s.bms, DEFAULTS.backgroundMotionSpeed, 0.05, 2),
+          backgroundOpacity: sanitizeNumberRange(s.bo, DEFAULTS.backgroundOpacity, 0.15, 1),
+          backgroundBrightness: sanitizeNumberRange(s.bb, DEFAULTS.backgroundBrightness, 0.35, 1.8),
+          backgroundSaturation: sanitizeNumberRange(s.bs, DEFAULTS.backgroundSaturation, 0, 2),
+          backgroundContrast: sanitizeNumberRange(s.bct, DEFAULTS.backgroundContrast, 0.5, 1.8),
+          backgroundYawDegrees: sanitizeNumberRange(s.by, DEFAULTS.backgroundYawDegrees, -180, 180),
+          backgroundPitchDegrees: sanitizeNumberRange(s.bp, DEFAULTS.backgroundPitchDegrees, -45, 45),
           filterShellShape: sanitizeFilterShellShape(s.fss),
           filterShellPreset: sanitizeFilterShellPreset(s.fsp),
           filterShellOpacity: Math.max(0, Math.min(0.65, s.fso ?? 0.24)),
@@ -1297,7 +1369,7 @@ function pickSceneDirective(atomCount: number): {
       preset: 'studio',
       intensity: 1.0,
       materialScene: DEFAULT_SCENE_ID,
-      backgroundPreset: 'deep',
+      backgroundPreset: DEFAULTS.backgroundPreset,
       surfaceRoughness: 0,
       surfacePolish: 0,
       surfaceClearcoat: 0,
@@ -1314,7 +1386,7 @@ function pickSceneDirective(atomCount: number): {
       preset: 'editorial',
       intensity: 0.92,
       materialScene: DEFAULT_SCENE_ID,
-      backgroundPreset: 'xray-lagoon',
+      backgroundPreset: DEFAULTS.backgroundPreset,
       surfaceRoughness: -0.08,
       surfacePolish: 0.22,
       surfaceClearcoat: 0.18,
@@ -1331,7 +1403,7 @@ function pickSceneDirective(atomCount: number): {
       preset: 'studio',
       intensity: 1.0,
       materialScene: DEFAULT_SCENE_ID,
-      backgroundPreset: 'deep',
+      backgroundPreset: DEFAULTS.backgroundPreset,
       surfaceRoughness: -0.04,
       surfacePolish: 0.14,
       surfaceClearcoat: 0.12,

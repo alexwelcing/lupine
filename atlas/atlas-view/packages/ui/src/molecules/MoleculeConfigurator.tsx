@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { useStore } from '../store';
 import { ALL_EXAMPLES, FEATURED_IDS, type GalleryExample } from '../landing/shared';
+import { galleryNomenclatureTags } from '../galleryNomenclature';
 
 /**
  * MoleculeConfigurator — a deterministic "if this, then that" guided builder
@@ -95,7 +96,13 @@ export function MoleculeConfigurator() {
     return ALL_EXAMPLES
       .filter((e) => e.available !== false)
       .map((e) => {
-        const hay = `${e.title} ${e.subtitle} ${e.domain} ${Object.values(e.metadata ?? {}).join(' ')}`.toLowerCase();
+        const hay = [
+          e.title,
+          e.subtitle,
+          e.domain,
+          ...Object.values(e.metadata ?? {}),
+          ...galleryNomenclatureTags(e.id),
+        ].join(' ').toLowerCase();
         let score = 0;
         if (e.title.toLowerCase().includes(q)) score += 10;
         if (e.title.toLowerCase().startsWith(q)) score += 5;

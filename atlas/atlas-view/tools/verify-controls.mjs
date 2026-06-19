@@ -127,7 +127,7 @@ try {
   report.shareLink = await copyLookLink(page);
   if (!report.shareLink.hasState) failures.push('copy look link did not include encoded view state');
   await captureMode(page, panel, drawer, 'surface', 'Surface', [/SHAPE/i, /MATERIAL/i], [/\bCOLOR\b/i, /\bUNIFORM\b/i]);
-  await captureMode(page, panel, drawer, 'world', 'World', [/BACKDROP/i, /SCENE/i], [/\bCOLOR\b/i, /\bUNIFORM\b/i]);
+  await captureMode(page, panel, drawer, 'world', 'World', [/WORLD LIBRARY/i, /ACTIVE ASSET/i], [/\bCOLOR\b/i, /\bUNIFORM\b/i]);
   await captureMode(page, panel, drawer, 'export', 'Export', [/PNG/i, /GLB/i, /MP4/i]);
 
   if (!mobileProfile) {

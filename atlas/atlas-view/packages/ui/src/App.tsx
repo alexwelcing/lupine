@@ -6,6 +6,7 @@
  */
 
 import { useEffect, useCallback, useRef, useState, Component, useMemo } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { Canvas, useThree, useFrame } from '@react-three/fiber';
 import { OrbitControls, GizmoHelper, GizmoViewport, ContactShadows } from '@react-three/drei';
 import { Perf } from 'r3f-perf';
@@ -260,11 +261,34 @@ function resolveBackground(backgroundPreset: string, colormap: ColormapName): { 
 }
 
 // ─── Scene Background component ──────────────────────────────────────
-function SceneBackground({ top, bottom, style = 'linear', media, procedural, center = [0, 0, 0], distance = 1 }: {
+type BackgroundAssetAdjustments = {
+  yawDegrees: number;
+  pitchDegrees: number;
+  opacity: number;
+  brightness: number;
+  saturation: number;
+  contrast: number;
+  motionPaused: boolean;
+  motionSpeed: number;
+};
+
+const DEFAULT_BACKGROUND_ADJUSTMENTS: BackgroundAssetAdjustments = {
+  yawDegrees: 0,
+  pitchDegrees: 0,
+  opacity: 1,
+  brightness: 1,
+  saturation: 1,
+  contrast: 1,
+  motionPaused: false,
+  motionSpeed: 1,
+};
+
+function SceneBackground({ top, bottom, style = 'linear', media, procedural, adjustments = DEFAULT_BACKGROUND_ADJUSTMENTS, center = [0, 0, 0], distance = 1 }: {
   top: string; bottom: string;
   style?: BackgroundGradientStyle;
   media: BgMedia;
   procedural?: BgPreset['procedural'];
+  adjustments?: BackgroundAssetAdjustments;
   center?: [number, number, number];
   distance?: number;
 }) {
@@ -281,7 +305,9 @@ function SceneBackground({ top, bottom, style = 'linear', media, procedural, cen
     bottom,
     style,
     enabled: !isImmersiveAR && !procedural,
-    projection: media.kind === 'video' ? 'dome' : 'scene-background',
+    projection: media.kind === 'gradient' ? 'scene-background' : 'dome',
+    paused: adjustments.motionPaused,
+    playbackRate: adjustments.motionSpeed,
     logPrefix: 'bg',
   });
 
@@ -295,20 +321,23 @@ function SceneBackground({ top, bottom, style = 'linear', media, procedural, cen
       };
     }
 
-    if (!texture || media.kind === 'video') {
+    if (!texture) {
       scene.background = null;
       scene.fog = null;
       return;
     }
 
-    scene.background = texture;
-    if (media.kind === 'image') {
-      scene.fog = new THREE.FogExp2(bottom, 0.0008);
-    } else if (media.kind === 'gradient') {
-      scene.fog = new THREE.FogExp2(bottom, 0.0015);
-    } else {
-      scene.fog = null;
+    if (media.kind !== 'gradient') {
+      scene.background = null;
+      scene.fog = new THREE.FogExp2(bottom, media.kind === 'image' ? 0.0008 : 0.00055);
+      return () => {
+        scene.background = null;
+        scene.fog = null;
+      };
     }
+
+    scene.background = texture;
+    scene.fog = new THREE.FogExp2(bottom, 0.0015);
 
     return () => {
       if (scene.background === texture) scene.background = null;
@@ -326,8 +355,8 @@ function SceneBackground({ top, bottom, style = 'linear', media, procedural, cen
     );
   }
 
-  if (media.kind === 'video' && texture && !isImmersiveAR && !isImmersiveVR) {
-    return <PanoramaBackgroundDome texture={texture} />;
+  if ((media.kind === 'image' || media.kind === 'video') && texture && !isImmersiveAR && !isImmersiveVR) {
+    return <PanoramaBackgroundDome texture={texture} adjustments={adjustments} />;
   }
 
   return null;
@@ -335,7 +364,34 @@ function SceneBackground({ top, bottom, style = 'linear', media, procedural, cen
 
 const PANORAMA_DOME_RADIUS = 5000;
 
-function PanoramaBackgroundDome({ texture }: { texture: THREE.Texture }) {
+const PANORAMA_VERTEX_SHADER = `
+  varying vec2 vUv;
+  void main() {
+    vUv = uv;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  }
+`;
+
+const PANORAMA_FRAGMENT_SHADER = `
+  uniform sampler2D map;
+  uniform float opacity;
+  uniform float brightness;
+  uniform float saturation;
+  uniform float contrast;
+  varying vec2 vUv;
+
+  void main() {
+    vec4 texel = texture2D(map, vUv);
+    vec3 color = texel.rgb;
+    float luma = dot(color, vec3(0.2126, 0.7152, 0.0722));
+    color = mix(vec3(luma), color, saturation);
+    color = (color - 0.5) * contrast + 0.5;
+    color *= brightness;
+    gl_FragColor = vec4(clamp(color, 0.0, 1.0), texel.a * opacity);
+  }
+`;
+
+function PanoramaBackgroundDome({ texture, adjustments }: { texture: THREE.Texture; adjustments: BackgroundAssetAdjustments }) {
   const meshRef = useRef<THREE.Mesh>(null);
   const { camera } = useThree();
   const geometry = useMemo(() => {
@@ -343,21 +399,50 @@ function PanoramaBackgroundDome({ texture }: { texture: THREE.Texture }) {
     geo.scale(-1, 1, 1);
     return geo;
   }, []);
+  const material = useMemo(() => new THREE.ShaderMaterial({
+    uniforms: {
+      map: { value: texture },
+      opacity: { value: adjustments.opacity },
+      brightness: { value: adjustments.brightness },
+      saturation: { value: adjustments.saturation },
+      contrast: { value: adjustments.contrast },
+    },
+    vertexShader: PANORAMA_VERTEX_SHADER,
+    fragmentShader: PANORAMA_FRAGMENT_SHADER,
+    side: THREE.FrontSide,
+    transparent: true,
+    depthWrite: false,
+    depthTest: false,
+    toneMapped: false,
+    fog: false,
+  }), []);
+
+  useEffect(() => {
+    material.uniforms.map.value = texture;
+    material.uniforms.opacity.value = adjustments.opacity;
+    material.uniforms.brightness.value = adjustments.brightness;
+    material.uniforms.saturation.value = adjustments.saturation;
+    material.uniforms.contrast.value = adjustments.contrast;
+    material.needsUpdate = true;
+  }, [adjustments.brightness, adjustments.contrast, adjustments.opacity, adjustments.saturation, material, texture]);
+
+  useEffect(() => () => {
+    material.dispose();
+  }, [material]);
 
   useFrame(() => {
-    meshRef.current?.position.copy(camera.position);
+    if (!meshRef.current) return;
+    meshRef.current.position.copy(camera.position);
+    meshRef.current.rotation.set(
+      THREE.MathUtils.degToRad(adjustments.pitchDegrees),
+      THREE.MathUtils.degToRad(adjustments.yawDegrees),
+      0,
+    );
   });
 
   return (
     <mesh ref={meshRef} geometry={geometry} frustumCulled={false} renderOrder={-1000}>
-      <meshBasicMaterial
-        map={texture}
-        side={THREE.FrontSide}
-        depthWrite={false}
-        depthTest={false}
-        toneMapped={false}
-        fog={false}
-      />
+      <primitive object={material} attach="material" />
     </mesh>
   );
 }
@@ -428,7 +513,7 @@ function CameraManager({
       const state = useStore.getState();
       camera.position.set(...state.cameraPosition);
       camera.lookAt(...state.cameraTarget);
-      
+
       if (camera instanceof THREE.PerspectiveCamera) {
         camera.fov = state.cameraFov;
         camera.updateProjectionMatrix();
@@ -598,30 +683,34 @@ export default function App() {
     track(ANALYTICS_EVENTS.APP_LANDED);
   }, []);
 
+  // Use TanStack Query for saved view data (viral sharing, caching, proper loading states)
+  const savedViewQuery = useQuery({
+    queryKey: ['savedView', savedViewSlug],
+    queryFn: () => loadSavedMolecularView(savedViewSlug!),
+    enabled: !!savedViewSlug,
+    staleTime: 1000 * 60 * 10, // shared views don't change often
+  });
+
   useEffect(() => {
-    if (!savedViewSlug || loadedSavedViewSlugRef.current === savedViewSlug) return undefined;
-    let cancelled = false;
+    if (!savedViewSlug) return;
+    if (loadedSavedViewSlugRef.current === savedViewSlug) return;
+
     loadedSavedViewSlugRef.current = savedViewSlug;
-    useStore.getState().setLoading(true, 0);
-    loadSavedMolecularView(savedViewSlug)
-      .then((saved) => {
-        if (!cancelled) document.title = `${saved.title} - Lupi`;
-      })
-      .catch((err) => {
-        const message = err instanceof Error ? err.message : String(err);
-        if (!cancelled) {
-          // Clear the loading flag explicitly so a 404 / permission error can
-          // never leave the viewer stuck on a permanent "Parsing..." spinner,
-          // independent of setError's own loading side effect. The error is
-          // surfaced in the existing dismissible FileDropZone error card.
-          useStore.getState().setLoading(false);
-          useStore.getState().setError(message);
-        }
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [savedViewSlug]);
+
+    if (savedViewQuery.isPending) {
+      useStore.getState().setLoading(true, 0);
+    }
+
+    if (savedViewQuery.data) {
+      document.title = `${savedViewQuery.data.title} - Lupi`;
+    }
+
+    if (savedViewQuery.error) {
+      const message = savedViewQuery.error instanceof Error ? savedViewQuery.error.message : String(savedViewQuery.error);
+      useStore.getState().setLoading(false);
+      useStore.getState().setError(message);
+    }
+  }, [savedViewSlug, savedViewQuery.isPending, savedViewQuery.data, savedViewQuery.error]);
 
   const file = useStore(s => s.file);
   const ghostFile = useStore(s => s.ghostFile);
@@ -718,6 +807,14 @@ export default function App() {
   const activePanel = useStore(s => s.activePanel);
   const backgroundPreset = useStore(s => s.backgroundPreset);
   const backgroundStyle = useStore(s => s.backgroundStyle);
+  const backgroundMotionPaused = useStore(s => s.backgroundMotionPaused);
+  const backgroundMotionSpeed = useStore(s => s.backgroundMotionSpeed);
+  const backgroundOpacity = useStore(s => s.backgroundOpacity);
+  const backgroundBrightness = useStore(s => s.backgroundBrightness);
+  const backgroundSaturation = useStore(s => s.backgroundSaturation);
+  const backgroundContrast = useStore(s => s.backgroundContrast);
+  const backgroundYawDegrees = useStore(s => s.backgroundYawDegrees);
+  const backgroundPitchDegrees = useStore(s => s.backgroundPitchDegrees);
   const filterShellShape = useStore(s => s.filterShellShape);
   const filterShellPreset = useStore(s => s.filterShellPreset);
   const filterShellOpacity = useStore(s => s.filterShellOpacity);
@@ -1033,9 +1130,28 @@ export default function App() {
 
   const bg = resolveBackground(backgroundPreset, colormap);
   const bgMedia = bg.media;
+  const bgAdjustments = useMemo<BackgroundAssetAdjustments>(() => ({
+    yawDegrees: backgroundYawDegrees,
+    pitchDegrees: backgroundPitchDegrees,
+    opacity: backgroundOpacity,
+    brightness: backgroundBrightness,
+    saturation: backgroundSaturation,
+    contrast: backgroundContrast,
+    motionPaused: backgroundMotionPaused,
+    motionSpeed: backgroundMotionSpeed,
+  }), [
+    backgroundBrightness,
+    backgroundContrast,
+    backgroundMotionPaused,
+    backgroundMotionSpeed,
+    backgroundOpacity,
+    backgroundPitchDegrees,
+    backgroundSaturation,
+    backgroundYawDegrees,
+  ]);
   const isBatchExport = new URLSearchParams(window.location.search).get('batchExport') === 'true';
-  const mobilePanelHeight = 'clamp(232px, 32dvh, 300px)';
-  const activeMobilePanelHeight = activePanel === 'studio' ? 'clamp(420px, 68dvh, 620px)' : mobilePanelHeight;
+  const mobilePanelHeight = 'clamp(260px, 38dvh, 340px)';
+  const activeMobilePanelHeight = activePanel === 'studio' ? 'clamp(460px, 72dvh, 680px)' : mobilePanelHeight;
 
   return (
     <div style={{
@@ -1053,8 +1169,8 @@ export default function App() {
           minHeight: isMobile ? 'calc(48px + env(safe-area-inset-top))' : 56,
           flexShrink: 0,
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          padding: isMobile ? 'env(safe-area-inset-top) 12px 0' : '0 16px',
-          margin: file ? (isMobile ? '10px 10px 0' : '14px 16px 0') : 0,
+          padding: isMobile ? 'env(safe-area-inset-top) 8px 0' : '0 16px',
+          margin: file ? (isMobile ? '6px 6px 0' : '14px 16px 0') : 0,
           borderRadius: file ? 8 : 0,
           borderBottom: file ? 'none' : '1px solid var(--border-subtle)',
           background: file ? undefined : 'var(--bg-glass)',
@@ -1181,6 +1297,21 @@ export default function App() {
               Anonymous → prompts sign-in (pending draft) → resumes save → share link. */}
           {file && <SavedViewButton compact={isMobile} />}
           <LupiAgentDock compact={isMobile} />
+          <a
+            href="?view=compare"
+            aria-label="Open Comparison Theater for cinema-style movie watching of relaxations"
+            title="Comparison Theater — cinema movie watching"
+            style={{
+              display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+              height: isMobile ? 42 : 38, minWidth: isMobile ? 42 : 80,
+              padding: isMobile ? '0 8px' : '0 10px',
+              borderRadius: 999, border: '1px solid rgba(255,255,255,0.15)',
+              background: 'rgba(123,92,255,0.12)', color: '#c4b5fd', fontSize: isMobile ? 10 : 11,
+              textDecoration: 'none', touchAction: 'manipulation',
+            }}
+          >
+            {isMobile ? '🎥' : 'CINEMA'}
+          </a>
         </div>
       </header>
       <LupiAuthCallout compact={isMobile} />
@@ -1192,7 +1323,7 @@ export default function App() {
         {isMcpViewerRoute && <McpViewerHarness />}
         {/* 3D viewport */}
         <div className="lupi-main-viewport" style={{
-          position: file ? 'absolute' : 'fixed', 
+          position: file ? 'absolute' : 'fixed',
           top: file ? 0 : 56, // below header when fixed
           right: 0,
           bottom: 0,
@@ -1245,10 +1376,11 @@ export default function App() {
               style={backgroundStyle}
               media={bgMedia}
               procedural={bg.procedural}
+              adjustments={bgAdjustments}
               center={center}
               distance={cameraDistance}
             />
-            <XREnvironmentDome media={bgMedia} top={bg.top} bottom={bg.bottom} style={backgroundStyle} disabled={!!bg.procedural} />
+            <XREnvironmentDome media={bgMedia} top={bg.top} bottom={bg.bottom} style={backgroundStyle} adjustments={bgAdjustments} disabled={!!bg.procedural} />
             {/* Real-world light estimation: in AR this takes over scene.environment
                 with a live reflection map so the molecule mirrors the surroundings
                 (e.g. campfire) and adds a directional light tracking the real key
@@ -1659,13 +1791,14 @@ export default function App() {
                 onClick={toggleControlsPanel}
                 className={`lupine-btn ${activePanel === 'studio' ? 'active' : ''}`}
                 style={{
-                  minWidth: isMobile ? 44 : 118,
-                  height: 38,
+                  minWidth: isMobile ? 48 : 118,
+                  height: isMobile ? 44 : 38,
                   gap: 8,
                   padding: isMobile ? '0 10px' : '0 14px',
                   fontSize: isMobile ? 0 : 13,
                   fontWeight: 760,
                   letterSpacing: 0,
+                  touchAction: 'manipulation',
                 }}
               >
                 <IconControls />
@@ -1681,6 +1814,51 @@ export default function App() {
             close via setShowPotentialBrowser(false). */}
         {showPotentialBrowser && <PotentialBrowser />}
 
+        {/* Mobile quick actions bar (thumb friendly, always reachable on phones) */}
+        {isMobile && file && !activePanel && (
+          <div
+            role="toolbar"
+            aria-label="Mobile quick actions"
+            style={{
+              position: 'fixed',
+              bottom: 'calc(env(safe-area-inset-bottom) + 4px)',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              zIndex: 95,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 6,
+              background: 'rgba(15,16,22,0.92)',
+              border: '1px solid rgba(255,255,255,0.1)',
+              borderRadius: 999,
+              padding: '4px 6px',
+              backdropFilter: 'blur(12px)',
+              boxShadow: '0 8px 24px rgba(0,0,0,0.35)',
+            }}>
+            <button
+              onClick={() => useStore.getState().togglePlay()}
+              aria-label={playing ? 'Pause playback' : 'Play animation'}
+              style={{ minHeight: 36, minWidth: 46, borderRadius: 999, border: '1px solid rgba(255,255,255,0.14)', background: 'transparent', color: '#e6e6e6', fontSize: 11, padding: '0 10px', touchAction: 'manipulation' }}
+            >
+              {playing ? '⏸' : '▶'}
+            </button>
+            <button
+              onClick={() => { setStudioDeck('look'); setActivePanel('studio'); }}
+              aria-label="Open controls panel"
+              style={{ minHeight: 36, borderRadius: 999, border: '1px solid rgba(255,255,255,0.14)', background: 'transparent', color: '#e6e6e6', fontSize: 10, padding: '0 10px', touchAction: 'manipulation' }}
+            >
+              CONTROLS
+            </button>
+            <button
+              onClick={() => setShowPotentialBrowser(true)}
+              aria-label="Browse gallery and atoms"
+              style={{ minHeight: 36, borderRadius: 999, border: '1px solid rgba(255,255,255,0.14)', background: 'transparent', color: '#e6e6e6', fontSize: 10, padding: '0 10px', touchAction: 'manipulation' }}
+            >
+              ATOMS
+            </button>
+          </div>
+        )}
+
         {/* Mobile: legacy bottom sheet */}
         {activePanel && file && isMobile && (
           <div style={{
@@ -1694,19 +1872,37 @@ export default function App() {
             maxHeight: activeMobilePanelHeight,
             boxSizing: 'border-box',
             borderTop: '1px solid var(--border-subtle)',
-            borderTopLeftRadius: 8,
-            borderTopRightRadius: 8,
+            borderTopLeftRadius: 14,
+            borderTopRightRadius: 14,
             background: 'var(--bg-glass)',
-            backdropFilter: 'blur(16px)',
-            WebkitBackdropFilter: 'blur(16px)',
+            backdropFilter: 'blur(18px)',
+            WebkitBackdropFilter: 'blur(18px)',
             display: 'flex',
             flexDirection: 'column',
             overflowY: activePanel === 'export' || activePanel === 'studio' ? 'hidden' : 'auto',
-            paddingBottom: 'env(safe-area-inset-bottom)',
+            paddingBottom: 'calc(env(safe-area-inset-bottom) + 8px)',
+            paddingTop: 4,
             boxShadow: '0 -18px 48px rgba(0,0,0,0.45)',
             zIndex: 100,
-            animation: 'slideInUp 200ms ease-out forwards',
+            WebkitOverflowScrolling: 'touch',
           }}>
+            {/* Drag handle + close */}
+            <div
+              role="presentation"
+              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4px 12px 6px', position: 'relative' }}
+            >
+              <div
+                aria-hidden="true"
+                style={{ width: 42, height: 4, borderRadius: 999, background: 'rgba(255,255,255,0.2)' }}
+              />
+              <button
+                onClick={() => setActivePanel(null)}
+                style={{ position: 'absolute', right: 12, background: 'transparent', border: 'none', color: '#aaa', fontSize: 16, lineHeight: 1, padding: 8, minWidth: 36, minHeight: 36 }}
+                aria-label="Close panel"
+              >
+                ✕
+              </button>
+            </div>
             <ErrorBoundary>
               {activePanel === 'studio' && (
                 <ViewerControlsDrawer
@@ -1765,7 +1961,7 @@ export default function App() {
         <div style={{
           height: 60, flexShrink: 0,
           display: 'flex', alignItems: 'center', gap: 16,
-          padding: '0 20px',
+          padding: isMobile ? '0 12px 48px' : '0 20px',
           borderTop: '1px solid #1f2937',
           background: '#0a0a0c',
           overflowX: 'auto',

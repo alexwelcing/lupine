@@ -36,6 +36,7 @@
     "mp4-muxer": "^5.2.2",
     "postprocessing": "^6.36.0",
     "r3f-perf": "^7.2.3",
+    "@tanstack/react-query": "^5.62.0",
     "react": "^19.0.0",
     "three": "^0.184.0",
     "zustand": "^5.0.0"

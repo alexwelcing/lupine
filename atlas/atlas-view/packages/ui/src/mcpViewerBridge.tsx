@@ -940,9 +940,12 @@ export function McpViewerHarness() {
 
       {panel === 'agent' ? (
         <div style={mcpPanelBodyStyle}>
+          <div style={mcpLabelStyle}>Agent command</div>
           <div style={agentComposerStyle}>
             <textarea
               data-testid="lupine-mcp-agent-command"
+              aria-label="Agent command or natural language instruction for the viewer"
+              placeholder="e.g. load caffeine or set bonds on"
               value={agentCommand}
               onChange={(event) => setAgentCommand(event.target.value)}
               style={agentTextAreaStyle}

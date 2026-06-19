@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useFirebaseAuth, type LupiAuthProviderId } from './auth/useFirebaseAuth';
 import { firebaseConfigured } from './auth/firebase';
 import {
@@ -88,6 +89,7 @@ export function SavedViewButton({ compact = false }: { compact?: boolean }) {
   const cleanSlug = slugifySavedViewTitle(slug || title || defaultTitle);
   const urlPreview = makeSavedViewUrl(cleanSlug);
   const canNativeShare = typeof navigator !== 'undefined' && typeof navigator.share === 'function';
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     if (slugTouched) return;
@@ -122,20 +124,21 @@ export function SavedViewButton({ compact = false }: { compact?: boolean }) {
     localStorage.removeItem(PENDING_SAVE_KEY);
   }, [user?.uid, file?.name]);
 
+  // TanStack Query for recent saved views (caching, loading states, refetch on save)
+  const recentViewsQuery = useQuery({
+    queryKey: ['recentSavedViews', user?.uid],
+    queryFn: () => listUserSavedViews(user!.uid),
+    enabled: !!user && open,
+    staleTime: 1000 * 30,
+  });
+
   useEffect(() => {
-    if (!user || !open) return;
-    let cancelled = false;
-    listUserSavedViews(user.uid)
-      .then((views) => {
-        if (!cancelled) setRecentViews(views);
-      })
-      .catch(() => {
-        if (!cancelled) setRecentViews([]);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [user?.uid, open, savedUrl]);
+    if (recentViewsQuery.data) {
+      setRecentViews(recentViewsQuery.data);
+    } else if (recentViewsQuery.isError) {
+      setRecentViews([]);
+    }
+  }, [recentViewsQuery.data, recentViewsQuery.isError]);
 
   // Activation auto-nudge REMOVED: the app no longer auto-opens the Save panel for
   // anonymous visitors after a delay. There is no unprompted sign-up push — the
@@ -169,6 +172,8 @@ export function SavedViewButton({ compact = false }: { compact?: boolean }) {
       setSavedUrl(result.url);
       setSlug(result.view.slug);
       setStatus('Saved.');
+      // Invalidate recent views query so list updates immediately
+      queryClient.invalidateQueries({ queryKey: ['recentSavedViews', user?.uid] });
       // North Star: a molecule view was persisted. No PII — counts + flags only.
       track(ANALYTICS_EVENTS.VIEW_SAVED, {
         atoms: loadedAtomCount || file?.trajectory.frames[0]?.natoms || 0,

@@ -18,6 +18,8 @@ type UseEquirectMediaTextureArgs = {
   enabled?: boolean;
   logPrefix?: string;
   projection?: 'scene-background' | 'dome';
+  paused?: boolean;
+  playbackRate?: number;
 };
 
 type VideoFrameCallback = (now: number, metadata: unknown) => void;
@@ -53,6 +55,8 @@ export function useEquirectMediaTexture({
   enabled = true,
   logPrefix = 'bg',
   projection = 'scene-background',
+  paused = false,
+  playbackRate = 1,
 }: UseEquirectMediaTextureArgs): THREE.Texture | null {
   const { gl, invalidate } = useThree();
   const [texture, setTexture] = useState<THREE.Texture | null>(null);
@@ -60,6 +64,29 @@ export function useEquirectMediaTexture({
   const activeVideoRef = useRef<HTMLVideoElement | null>(null);
   const mediaKey = useMemo(() => getEquirectMediaKey(media), [media]);
   const mediaForEffect = useMemo(() => media, [mediaKey]);
+  const playbackControlRef = useRef({ paused, playbackRate });
+
+  useEffect(() => {
+    playbackControlRef.current = { paused, playbackRate };
+    const video = activeVideoRef.current;
+    const videoTexture = activeVideoTextureRef.current;
+    if (!video || !videoTexture) return;
+    video.playbackRate = Math.max(0.05, Math.min(2, playbackControlRef.current.playbackRate));
+    if (paused) {
+      video.pause();
+      videoTexture.needsUpdate = true;
+      invalidate();
+      return;
+    }
+    video.play()
+      .then(() => {
+        videoTexture.needsUpdate = true;
+        invalidate();
+      })
+      .catch(error => {
+        console.warn(`[${logPrefix}] Video background playback prevented:`, error);
+      });
+  }, [invalidate, logPrefix, paused, playbackRate]);
 
   useFrame(() => {
     const videoTexture = activeVideoTextureRef.current;
@@ -210,6 +237,7 @@ export function useEquirectMediaTexture({
         video.crossOrigin = 'anonymous';
         video.preload = mediaForEffect.preload ?? 'auto';
         video.poster = mediaForEffect.poster ?? '';
+        video.playbackRate = Math.max(0.05, Math.min(2, playbackControlRef.current.playbackRate));
 
         const promoteVideoTexture = () => {
           if (!active || !video) return;
@@ -218,6 +246,13 @@ export function useEquirectMediaTexture({
           activeVideoTextureRef.current = pendingVideoTexture;
           activeVideoRef.current = video;
           setOwnedTexture(pendingVideoTexture);
+          video.playbackRate = Math.max(0.05, Math.min(2, playbackControlRef.current.playbackRate));
+          if (playbackControlRef.current.paused) {
+            video.pause();
+            pendingVideoTexture.needsUpdate = true;
+            invalidate();
+            return;
+          }
           video.play()
             .then(() => {
               if (active && pendingVideoTexture && video) scheduleVideoInvalidation(pendingVideoTexture, video);

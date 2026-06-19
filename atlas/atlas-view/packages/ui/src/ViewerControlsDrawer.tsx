@@ -66,7 +66,7 @@ export function ViewerControlsDrawer({
               title="Close"
               onClick={onClose}
               className="lupine-icon-btn"
-              style={{ width: 28, height: 28 }}
+              style={{ width: 44, height: 44, minWidth: 44, minHeight: 44, padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
             >
               <IconClose />
             </button>
@@ -152,18 +152,19 @@ function ControlModeTab({
       className={`lupine-btn ${active ? 'active' : ''}`}
       style={{
         minWidth: 0,
-        minHeight: 42,
+        minHeight: 44,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        gap: 7,
-        padding: '4px 6px',
-        fontSize: 10,
+        gap: 6,
+        padding: '6px 4px',
+        fontSize: 9,
         fontWeight: 800,
         lineHeight: 1,
         letterSpacing: 0,
         borderRadius: 7,
         boxShadow: active ? undefined : 'none',
+        touchAction: 'manipulation',
       }}
     >
       <span style={{

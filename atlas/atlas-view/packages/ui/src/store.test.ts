@@ -160,6 +160,14 @@ describe('Store — URL Serialization', () => {
     s.setEnvironmentPreset('warehouse');
     s.setBackgroundPreset('void');
     s.setBackgroundStyle('spotlight');
+    s.setBackgroundMotionPaused(true);
+    s.setBackgroundMotionSpeed(0.45);
+    s.setBackgroundOpacity(0.72);
+    s.setBackgroundBrightness(1.24);
+    s.setBackgroundSaturation(1.38);
+    s.setBackgroundContrast(0.86);
+    s.setBackgroundYawDegrees(74);
+    s.setBackgroundPitchDegrees(-12);
     s.setRimLightIntensity(0.75);
     s.setFillLightColor('#223344');
     s.setRimLightColor('#ddeeff');
@@ -180,6 +188,14 @@ describe('Store — URL Serialization', () => {
     expect(restored.environmentPreset).toBe('warehouse');
     expect(restored.backgroundPreset).toBe('void');
     expect(restored.backgroundStyle).toBe('spotlight');
+    expect(restored.backgroundMotionPaused).toBe(true);
+    expect(restored.backgroundMotionSpeed).toBeCloseTo(0.45);
+    expect(restored.backgroundOpacity).toBeCloseTo(0.72);
+    expect(restored.backgroundBrightness).toBeCloseTo(1.24);
+    expect(restored.backgroundSaturation).toBeCloseTo(1.38);
+    expect(restored.backgroundContrast).toBeCloseTo(0.86);
+    expect(restored.backgroundYawDegrees).toBeCloseTo(74);
+    expect(restored.backgroundPitchDegrees).toBeCloseTo(-12);
     expect(restored.rimLightIntensity).toBeCloseTo(0.75);
     expect(restored.fillLightColor).toBe('#223344');
     expect(restored.rimLightColor).toBe('#ddeeff');
@@ -292,7 +308,7 @@ describe('Store — File Loading', () => {
     expect(s.showCell).toBe(false);
     expect(s.showAxes).toBe(false);
     expect(s.postprocessPreset).toBe('editorial');
-    expect(s.backgroundPreset).toBe('xray-lagoon');
+    expect(s.backgroundPreset).toBe('pub-figure-neutral');
     expect(s.rimLightColor).toBe('#7de9ff');
     expect(s.surfacePolish).toBeGreaterThan(0);
     expect(s.surfaceClearcoat).toBeGreaterThan(0);

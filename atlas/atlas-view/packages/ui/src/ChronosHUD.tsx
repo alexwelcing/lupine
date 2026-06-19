@@ -32,8 +32,8 @@ export function ChronosHUD({ onExit }: { onExit: () => void }) {
         <h1 className="font-serif font-black tracking-widest uppercase text-xl sm:text-2xl text-[#D4AF37] truncate px-4" style={{ textShadow: '0 0 10px rgba(212,175,55,0.4)' }}>
           LUPINE FIELD STUDIES
         </h1>
-        <div className="w-8 h-8 overflow-hidden rounded-sm border border-[#544519]">
-           <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUvom5G51LDIMAl5wa-F34THQ7zWhkIjn-NNPevkJE4GuHKBxzqpVCb21QCqPLHqUDQCFI7FFS9zMc9ZPBQoBgUFAbTj6ctFBcawwAPDN1vFhVxMqqc73bJPQ6jSUdVXpSE_gagEP8UIQNUSSi8HXk_Ysa_WNgwWD2Slt_iNLRppMz9oBtjGN7LMj8xYxWgjAVW2hgrD7kJ7ticdSIOrWc6LleDpE66GcwFswDwkGycmodyLz1A3-O6ybbH8mMNQj6u28F2n2To4g" alt="Profile" className="w-full h-full object-cover grayscale brightness-75" />
+        <div className="w-8 h-8 overflow-hidden rounded-sm border border-[#544519] bg-[#2a2926] flex items-center justify-center" aria-hidden>
+          <span className="text-[#D4AF37] text-[10px] font-mono tracking-widest">L</span>
         </div>
       </header>
 
