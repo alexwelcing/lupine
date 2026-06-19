@@ -6,6 +6,7 @@ export type SceneEnvironmentPreset =
   | 'warehouse'
   | 'forest'
   | 'apartment'
+  | 'park'
   | 'none';
 
 export type DreiEnvironmentPreset = Exclude<SceneEnvironmentPreset, 'none'>;

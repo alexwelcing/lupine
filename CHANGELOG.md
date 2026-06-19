@@ -16,6 +16,52 @@ Newest first. Dates are absolute.
 
 ---
 
+## 2026-06-19 - LUPI 0.3 Studio, molecule trust, and public-surface split prep
+
+- **Why.** The checkout had a full LUPI release pass, public-surface split plan,
+  Library export bundle, and molecule reliability work sitting locally. For a
+  major release, that work needed to become one reviewable checkpoint instead of
+  untracked/in-progress workspace state.
+- **What.**
+  - Consolidated the LUPI viewer as `atlas-view@0.3.0`: mobile-first controls,
+    larger touch targets, TanStack Query saved-view caching, improved social
+    share metadata, picnic/cinematic sharing, first-class Lupi Studio 360 world
+    backgrounds, background grading controls, and optimized environment media.
+  - Kept MCP commands text/agent driven for this release; experimental voice
+    control is not part of the LUPI 0.3 surface.
+  - Added source-backed gallery nomenclature for PubChem-derived molecules,
+    including PubChem CIDs, formulas, systematic names, aliases, and a local
+    reliability/backup audit tool.
+  - Added the public-surface repo-split map and extraction packets for
+    `lupine.science`, `lupi.live`, `library.lupine.site`, and the remaining
+    science/control-plane repo.
+  - Added `scripts/export_library_content.mjs` and generated the first
+    `exports/library-content/latest` bundle for the Library extraction path.
+  - Recorded `exports/` in the root ownership ledger so generated public
+    artifacts have an explicit owner.
+- **Results.**
+  - `pnpm audit:nomenclature`: 55 gallery entries, 24 nomenclature records, 0
+    errors, 8 non-blocking provenance warnings for older procedural/synthetic
+    examples.
+  - `pnpm --filter @atlas/ui test -- src/backgroundPresets.test.ts
+    src/store.test.ts src/gallery-data.test.ts`: 44 tests passed.
+  - `pnpm --filter @atlas/ui build`: passed.
+  - `pnpm --filter @atlas/web build`: passed and generated 8 static SEO routes.
+  - `pnpm verify:gallery --no-screenshot`: 20/20 checks passed, including real
+    dataset load.
+  - `pnpm verify:controls --no-screenshot`: desktop controls smoke passed.
+  - `pnpm verify:controls:mobile --no-screenshot`: mobile controls smoke
+    passed.
+  - `VERIFY_URL=http://127.0.0.1:5174/#/mcp pnpm verify:mcp-bridge`: passed
+    against the built web output served locally.
+  - `npm --prefix library-site run build`: built 55 articles.
+- **Next.**
+  - Open the release PR and keep local/CI/deploy/live truth separate.
+  - Resolve the eight older gallery provenance warnings before treating the
+    entire curated gallery as source-backed.
+  - Promote the public-surface split only after each extracted repo has its own
+    CI, deploy, secrets, and live health proof.
+
 ## 2026-06-16 — Academic review of the Projection Law / IMMI suite, first fix pass
 
 - **Why.** An independent adversarial review flagged six MUST-FIX gates before any journal submission: the affine/smooth/finite-sample theorems were being oversold as deriving global claims; the MLIP factorial result needed permutation-floor nuance; theorem counts and PDF URLs were inconsistent across surfaces; and ORCID/DOI placeholders were still open.

@@ -262,7 +262,12 @@ const IMPOSTOR_FRAGMENT = /* glsl */ `
       discard;
     }
 
-    float t = -b - sqrt(discriminant);
+    float hitNear = -b - sqrt(discriminant);
+    float hitFar = -b + sqrt(discriminant);
+    float t = hitNear > 0.0 ? hitNear : hitFar;
+    if (t <= 0.0) {
+      discard;
+    }
     vec3 hitPoint = rayDir * t;
     vec3 normal = normalize(hitPoint - vViewCenter);
 

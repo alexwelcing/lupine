@@ -73,6 +73,14 @@ export interface CanonicalMolecularView {
     | 'atomScale'
     | 'backgroundPreset'
     | 'backgroundStyle'
+    | 'backgroundMotionPaused'
+    | 'backgroundMotionSpeed'
+    | 'backgroundOpacity'
+    | 'backgroundBrightness'
+    | 'backgroundSaturation'
+    | 'backgroundContrast'
+    | 'backgroundYawDegrees'
+    | 'backgroundPitchDegrees'
   >;
   material: Pick<AppState,
     | 'environmentPreset'
@@ -284,6 +292,14 @@ function captureCanonicalView(): CanonicalMolecularView {
       'atomScale',
       'backgroundPreset',
       'backgroundStyle',
+      'backgroundMotionPaused',
+      'backgroundMotionSpeed',
+      'backgroundOpacity',
+      'backgroundBrightness',
+      'backgroundSaturation',
+      'backgroundContrast',
+      'backgroundYawDegrees',
+      'backgroundPitchDegrees',
     ]),
     material: pick(s, [
       'environmentPreset',

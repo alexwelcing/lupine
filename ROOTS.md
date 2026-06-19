@@ -4,6 +4,10 @@ This repo is organized around `glim-think` as the durable research control
 plane. A root directory should exist only when it has a clear owner, is actively
 used, or is waiting on a named migration out of the root.
 
+The planned public-surface extraction is documented in
+[`docs/repo-split-map.md`](docs/repo-split-map.md). Until those repos are live,
+the roots below remain the current source/deploy truth.
+
 ## Current Roots
 
 | Root | Purpose | Status | Next action |
@@ -14,6 +18,7 @@ used, or is waiting on a named migration out of the root.
 | `cloudflare/` | Edge helpers and Cloudflare infrastructure around the control plane. | Keep | Elevate reusable Workers into `glim-think` when they become first-class control-plane routes. |
 | `data/` | Shared benchmark fixtures and evidence payloads. | Keep | Keep data small and cited; large artifacts should live in GCS/R2 with manifests. |
 | `docs/` | Research corpus, plans, runbooks, templates, hypotheses, and decisions. | Keep | Prefer moving archival prose here instead of creating new root folders. |
+| `exports/` | Generated, versioned public-surface bundles published by the science/control-plane repo. | Keep | Keep export manifests reproducible and regenerate from source docs/scripts before public-surface extraction. |
 | `gcp/` | Cloud Run jobs/services used for burst compute and task consumption. | Keep | Keep GCP cold unless the resource ledger justifies burst work. |
 | `glim-think/` | Durable intelligence control plane: agenda, ledger, feed, evals, traces, agents. | Primary | New research workflows should connect here first. |
 | `archive/KIMI_MLIP_UNIVERSAL/` | Legacy theorem/proof bundle and synthetic universality artifacts referenced by Lean comments in `lean-spec/`. | Keep, port incrementally | Archived root; port proof text into `lean-spec/` or `docs/` before removing. |

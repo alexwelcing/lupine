@@ -1,4 +1,4 @@
-import { loadMoleculeSource } from '../loadMoleculeSource';
+import { openMolecule } from '../viewer/openMolecule';
 import { useStore } from '../store';
 import { omolRecords, omolStructureUrl, type OmolRecord } from './providers/omol';
 
@@ -29,12 +29,8 @@ export async function openRandomOmol25Molecule(): Promise<void> {
     if (!picked) throw new Error('No OMol25 structures are available right now.');
 
     const loadUrl = omolStructureUrl(picked.id);
-    const url = new URL(window.location.href);
-    url.searchParams.delete('sim');
-    url.searchParams.set('load', loadUrl);
-    window.history.pushState({}, '', url);
-
-    await loadMoleculeSource(loadUrl);
+    const result = await openMolecule({ kind: 'url', url: loadUrl, history: 'push' });
+    if (!result.ok) throw new Error(result.message);
 
     const file = useStore.getState().file;
     if (file?.sourceUrl === loadUrl) {

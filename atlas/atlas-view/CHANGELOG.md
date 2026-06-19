@@ -1,5 +1,34 @@
 # Changelog
 
+## [0.3.0] - Lupi Studio, Mobile UX, Data Layer, and Viral Sharing
+
+### Added
+- First-class Lupi Studio world controls: 360 panorama/image/video backgrounds, world preset browsing, yaw/pitch framing, motion pause/speed, opacity, brightness, contrast, saturation, and mobile-sized Studio panels.
+- 'Picnic' material scene + 'Picnic Park' environment preset (park HDRI lighting + cinematic postprocess + lavender background) for natural outdoor cinematic viewing and sharing of assets/molecules.
+- Expanded TanStack React Query integration for saved views loading, recent lists (with invalidation on save), better caching, loading states, and refetch – foundational for reliable viral sharing and data-driven UIs.
+- Mobile-specific quick actions bar (play, controls, gallery) with toolbar role, aria-labels, 44px+ targets.
+- Enhanced a11y across screenshot-tested features: aria labels/pressed/expanded on controls tabs, close buttons (now 44px), quick bar, cinema link, bottom sheets, study lens, mcp textarea, ModeTabs.
+- Improved social share previews for special views (cinematic + picnic descriptions in OG/Twitter meta and interstitial HTML).
+- Mobile-friendly interstitial HTML for shared view crawlers (responsive styles, touch targets).
+
+### Changed
+- ViewerControlsDrawer/ModeTabs: larger touch targets (44px+), better mobile padding/gaps, a11y preserved and enhanced for controls on small viewports.
+- Lupi Studio is promoted from a background picker into a first-class creative control surface for presentation worlds and molecule staging.
+- Saved view and share flows: useQuery for data, auto-invalidation, state (including picnic, cinematic, park env) fully preserved in shares/look links.
+- ComparisonTheater (cinema): mobile stacked layout, a11y roles/labels on playback controls/timeline/speeds for stacked "movie watching" experience.
+- Bottom sheets, auth callouts, quick bars, headers: responsive tweaks, larger hit areas, semantic roles/labels for mobile UX and screen reader support.
+- TanStack Query provider at app root; migrated key data paths (saved views) from manual useEffect + direct Firestore.
+
+### Removed
+- Experimental voice control is out of the 0.3 release; MCP remains available through text/agent commands and the bridge verifier.
+
+### Fixed
+- Mobile usability and accessibility issues in controls drawer, study lens/export, mcp/agent, gallery interactions, saved view panels, cinema controls – all verified via repeated --profile=mobile Playwright screenshot tests.
+- MCP bridge verification now follows the current dock identity flow and passes in production-like builds where the local Codex auth override is unavailable.
+- Touch targets, text overflow, layout on 390x844 mobile viewport for screenshot-covered features.
+- Sharing for viral growth: public saved views load correctly with full state/assets visible (no login wall), social meta now highlights cinematic/picnic for engaging previews, copy/native/X/LinkedIn shares polished.
+- Assets/images (gallery snapshots, backgrounds, molecule previews) reliably viewable in shared views, mobile, picnic/cinema modes.
+
 ## [Unreleased]
 
 ### SEO route expansion for LUPI study and materials surfaces

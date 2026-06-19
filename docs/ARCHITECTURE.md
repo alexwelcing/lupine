@@ -9,6 +9,11 @@ This is the canonical map of how the repository's moving parts fit together. It 
 
 Every top-level directory should represent one deployable or working unit with a single clear owner. If two roots do the same thing, we consolidate. Retired roots move to `archive/`. The authoritative ledger is [`ROOTS.md`](../ROOTS.md).
 
+The next ownership step is to split public surfaces into dedicated repos while
+keeping the science/control-plane loop together. See
+[`docs/repo-split-map.md`](./repo-split-map.md) and
+[`ADR 0004`](./decisions/0004-public-surface-repo-split.md).
+
 ## The three planes
 
 ```mermaid
@@ -92,6 +97,7 @@ flowchart TB
 ## See also
 
 - [`ROOTS.md`](../ROOTS.md) — root ownership ledger and cleanup log
+- [`docs/repo-split-map.md`](./repo-split-map.md) — planned public-surface repo split
 - [`docs/ONBOARDING.md`](./ONBOARDING.md) — new-contributor tracks
 - [`docs/decisions/`](./decisions/) — architectural decision records
 - [`docs/navigation.md`](./navigation.md) — map of the research corpus

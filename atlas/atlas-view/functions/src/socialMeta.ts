@@ -134,11 +134,15 @@ ${indent(jsonLd, 4)}
   </script>
   <style>
     html, body { margin: 0; min-height: 100%; background: #06080d; color: #f4efe5; font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
-    main { min-height: 100vh; display: grid; place-items: center; padding: 32px; box-sizing: border-box; }
-    section { width: min(620px, 100%); border: 1px solid rgba(244,239,229,.22); border-radius: 8px; padding: 28px; background: linear-gradient(145deg, rgba(6,8,8,.96), rgba(18,22,22,.94)); box-shadow: 0 28px 88px rgba(0,0,0,.42); }
-    h1 { margin: 0 0 10px; font-size: clamp(30px, 5vw, 54px); line-height: 1; letter-spacing: 0; }
-    p { margin: 0 0 22px; color: rgba(244,239,229,.72); font-size: 16px; line-height: 1.55; }
-    a { display: inline-grid; place-items: center; min-height: 42px; padding: 0 16px; border-radius: 6px; color: #120c05; background: #f2aa45; font-weight: 800; text-decoration: none; }
+    main { min-height: 100vh; display: grid; place-items: center; padding: 16px; box-sizing: border-box; }
+    section { width: min(620px, 100%); border: 1px solid rgba(244,239,229,.22); border-radius: 8px; padding: 20px; background: linear-gradient(145deg, rgba(6,8,8,.96), rgba(18,22,22,.94)); box-shadow: 0 28px 88px rgba(0,0,0,.42); }
+    h1 { margin: 0 0 8px; font-size: clamp(24px, 6vw, 42px); line-height: 1.05; letter-spacing: 0; }
+    p { margin: 0 0 16px; color: rgba(244,239,229,.72); font-size: 14px; line-height: 1.5; }
+    a { display: inline-grid; place-items: center; min-height: 44px; padding: 0 16px; border-radius: 8px; color: #120c05; background: #f2aa45; font-weight: 800; text-decoration: none; font-size: 14px; }
+    @media (max-width: 480px) {
+      main { padding: 12px; }
+      section { padding: 16px; }
+    }
   </style>${redirectScript}
 </head>
 <body>
@@ -155,6 +159,10 @@ ${indent(jsonLd, 4)}
 
 function describeSavedView(doc: SavedViewShareDoc): string {
   const molecule = asRecord(doc.molecule);
+  const view = asRecord(doc.view);
+  const effects = asRecord(view?.effects);
+  const material = asRecord(view?.material);
+
   const name = clip(cleanText(stringField(molecule?.name)), 72);
   const atoms = numberField(molecule?.atomCount);
   const frames = numberField(molecule?.totalFrames);
@@ -165,8 +173,21 @@ function describeSavedView(doc: SavedViewShareDoc): string {
 
   const prefix = name ? `${name}: ` : '';
   const stats = details.length ? `${details.join(', ')} in ` : '';
+
+  const isCinematic = effects?.postprocessPreset === 'cinematic';
+  const isPicnic = material?.materialScene === 'picnic' || material?.environmentPreset === 'park';
+
+  let suffix = 'a browser-shareable Lupi molecular view with a live 3D scene.';
+  if (isCinematic && isPicnic) {
+    suffix = 'a cinematic outdoor picnic scene in Lupi — perfect for sharing immersive molecular visuals.';
+  } else if (isCinematic) {
+    suffix = 'a cinematic Lupi view with depth-of-field and rich lighting for dramatic sharing.';
+  } else if (isPicnic) {
+    suffix = 'an outdoor park-style Lupi scene under natural lighting.';
+  }
+
   return clip(
-    `${prefix}${stats}a browser-shareable Lupi molecular view with a live 3D scene.`,
+    `${prefix}${stats}${suffix}`,
     MAX_DESCRIPTION_LENGTH,
   );
 }

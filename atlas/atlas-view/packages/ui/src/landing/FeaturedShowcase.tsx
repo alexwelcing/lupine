@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ALL_EXAMPLES, FEATURED_IDS, type GalleryExample } from './shared';
 import { FeaturedCard } from './FeaturedCard';
+import { openMolecule } from '../viewer/openMolecule';
 
 /**
  * FeaturedShowcase — the landing "Featured Molecules" grid.
@@ -30,16 +31,13 @@ export function FeaturedShowcase() {
   );
 
   const handleOpen = useCallback((example: GalleryExample) => {
-    const url = new URL(window.location.href);
-    url.searchParams.set('sim', example.id);
-    window.history.pushState({}, '', url);
-    window.dispatchEvent(new PopStateEvent('popstate'));
+    void openMolecule({ kind: 'gallery', id: example.id, history: 'push' });
   }, []);
 
   return (
     <section
       ref={sectionRef}
-      style={{ padding: '80px 24px', background: 'linear-gradient(180deg, #020204 0%, #0a0e18 100%)' }}
+      style={{ padding: 'clamp(40px, 6vw, 80px) 16px', background: 'linear-gradient(180deg, #020204 0%, #0a0e18 100%)' }}
     >
       <div style={{ maxWidth: 1400, margin: '0 auto' }}>
         {/* Section header */}
@@ -70,7 +68,7 @@ export function FeaturedShowcase() {
         </div>
 
         {/* Featured grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 20 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16 }}>
           {featured.map((ex, i) => (
             <FeaturedCard key={ex.id} example={ex} index={i} visible={visible} onOpen={handleOpen} />
           ))}

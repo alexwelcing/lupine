@@ -153,6 +153,7 @@ const ENVIRONMENT_OPTIONS = [
   { value: 'dawn', label: 'Dawn' },
   { value: 'night', label: 'Night' },
   { value: 'forest', label: 'Forest' },
+  { value: 'park', label: 'Picnic Park' },
   { value: 'none', label: 'Direct Only' },
 ] as const;
 

@@ -1,5 +1,5 @@
-import { loadMoleculeSource } from '../loadMoleculeSource';
 import { useStore } from '../store';
+import { openMolecule } from '../viewer/openMolecule';
 import type { MoleculeHit } from './types';
 
 interface ViewerMcp {
@@ -11,7 +11,10 @@ export async function loadMoleculeHit(hit: MoleculeHit): Promise<void> {
   const spec = hit.load;
   switch (spec.kind) {
     case 'url':
-      await loadMoleculeSource(spec.url);
+      {
+        const result = await openMolecule({ kind: 'url', url: spec.url, history: 'push' });
+        if (!result.ok) throw new Error(result.message);
+      }
       if (hit.source === 'social') {
         const store = useStore.getState();
         store.setCameraPreset('top');

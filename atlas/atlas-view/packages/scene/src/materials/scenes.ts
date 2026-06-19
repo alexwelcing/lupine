@@ -24,7 +24,7 @@ export interface MaterialScene {
   /** 0 = per-element identity, 1 = full preset override. */
   materialIntensity: number;
   /** HDRI environment map. */
-  environmentPreset: 'city' | 'studio' | 'dawn' | 'night' | 'warehouse' | 'forest' | 'apartment' | 'none';
+  environmentPreset: 'city' | 'studio' | 'dawn' | 'night' | 'warehouse' | 'forest' | 'apartment' | 'park' | 'none';
   /** Environment map contribution multiplier. */
   envIntensity: number;
   /** Fill / ambient light. */
@@ -208,6 +208,27 @@ export const MATERIAL_SCENES: MaterialScene[] = [
     atomTexture: 'none',
     cardGradient: 'linear-gradient(135deg, #0a1f0a, #1a3a1a)',
     accentColor: '#69f0ae',
+  },
+
+  // ─── Picnic / Outdoor Cinema ─────────────────────────────────────────
+  {
+    id: 'picnic',
+    label: 'Picnic',
+    description: 'Outdoor park setting for natural asset viewing. Ideal for cinematic movie watching and image inspection under realistic daylight.',
+    code: 'PIC',
+    materialPreset: 'default',
+    materialIntensity: 0.2,
+    environmentPreset: 'park',
+    envIntensity: 1.1,
+    ambientIntensity: 0.7,
+    dirLightIntensity: 1.2,
+    rimLightIntensity: 0.15,
+    postprocessPreset: 'cinematic',
+    toneMapping: 'aces',
+    backgroundPreset: 'lavender',
+    atomTexture: 'none',
+    cardGradient: 'linear-gradient(135deg, #1a2f1a, #2a4a2a)',
+    accentColor: '#a5d6a7',
   },
 ];
 

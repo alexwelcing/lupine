@@ -7,9 +7,12 @@ import { MATERIAL_SCENES, type MaterialScene } from '@atlas/scene/materials';
 import { COLOR_SCHEMES, SCHEME_ORDER, type ColorSchemeId } from './coloring';
 import { useStore, type FilterShellPreset, type FilterShellShape } from './store';
 import {
+  BG_PRESETS,
   BG_GRADIENT_PRESETS,
   BG_TEXTURE_CATEGORIES,
   BG_VIDEO_PRESETS,
+  getBgBadge,
+  getBgPoster,
   type BgPresetWithId,
 } from './backgroundPresets';
 
@@ -150,6 +153,23 @@ export function StudioControlDeck({
 
   const backgroundPreset = useStore(s => s.backgroundPreset);
   const setBackgroundPreset = useStore(s => s.setBackgroundPreset);
+  const backgroundMotionPaused = useStore(s => s.backgroundMotionPaused);
+  const setBackgroundMotionPaused = useStore(s => s.setBackgroundMotionPaused);
+  const backgroundMotionSpeed = useStore(s => s.backgroundMotionSpeed);
+  const setBackgroundMotionSpeed = useStore(s => s.setBackgroundMotionSpeed);
+  const backgroundOpacity = useStore(s => s.backgroundOpacity);
+  const setBackgroundOpacity = useStore(s => s.setBackgroundOpacity);
+  const backgroundBrightness = useStore(s => s.backgroundBrightness);
+  const setBackgroundBrightness = useStore(s => s.setBackgroundBrightness);
+  const backgroundSaturation = useStore(s => s.backgroundSaturation);
+  const setBackgroundSaturation = useStore(s => s.setBackgroundSaturation);
+  const backgroundContrast = useStore(s => s.backgroundContrast);
+  const setBackgroundContrast = useStore(s => s.setBackgroundContrast);
+  const backgroundYawDegrees = useStore(s => s.backgroundYawDegrees);
+  const setBackgroundYawDegrees = useStore(s => s.setBackgroundYawDegrees);
+  const backgroundPitchDegrees = useStore(s => s.backgroundPitchDegrees);
+  const setBackgroundPitchDegrees = useStore(s => s.setBackgroundPitchDegrees);
+  const resetBackgroundAdjustments = useStore(s => s.resetBackgroundAdjustments);
   const filterShellShape = useStore(s => s.filterShellShape);
   const setFilterShellShape = useStore(s => s.setFilterShellShape);
   const filterShellPreset = useStore(s => s.filterShellPreset);
@@ -174,19 +194,23 @@ export function StudioControlDeck({
     [],
   );
   const mathPresets = useMemo(() => categoryPresets('Mathematical Fields'), []);
-  const publicationPresets = useMemo(() => categoryPresets('Publication Contexts').slice(0, 8), []);
-  const signaturePresets = useMemo(() => categoryPresets('Signature Stills').slice(0, 8), []);
+  const worldPresets = useMemo(() => categoryPresets('360 Worlds'), []);
+  const publicationPresets = useMemo(() => categoryPresets('Publication Contexts'), []);
+  const signaturePresets = useMemo(() => categoryPresets('Signature Stills'), []);
   const gradientPresets = useMemo(
     () => BG_GRADIENT_PRESETS.filter(preset => ['white', 'deep', 'void', 'fog', 'blueprint', 'warm'].includes(preset.id)),
     [],
   );
-  const backgroundGroups = useMemo(() => [
-    { label: 'Math', presets: mathPresets },
-    { label: 'Motion', presets: BG_VIDEO_PRESETS.slice(0, 8) },
+  const worldLibraryGroups = useMemo(() => [
+    { label: '360 Worlds', presets: worldPresets },
+    { label: 'Motion Loops', presets: BG_VIDEO_PRESETS },
     { label: 'Publication', presets: publicationPresets },
+    { label: 'Math Fields', presets: mathPresets },
     { label: 'Signature', presets: signaturePresets },
     { label: 'Base', presets: gradientPresets },
-  ], [gradientPresets, mathPresets, publicationPresets, signaturePresets]);
+  ], [gradientPresets, mathPresets, publicationPresets, signaturePresets, worldPresets]);
+  const activeBackgroundPreset = BG_PRESETS[backgroundPreset];
+  const activeBackgroundPresetWithId = activeBackgroundPreset ? { id: backgroundPreset, ...activeBackgroundPreset } : undefined;
   const activeBackgroundIsVideo = useMemo(
     () => BG_VIDEO_PRESETS.some(preset => preset.id === backgroundPreset),
     [backgroundPreset],
@@ -235,6 +259,12 @@ export function StudioControlDeck({
   const handleRandomVideo = () => {
     if (BG_VIDEO_PRESETS.length === 0) return;
     const next = BG_VIDEO_PRESETS[Math.floor(Math.random() * BG_VIDEO_PRESETS.length)];
+    setBackgroundPreset(next.id);
+  };
+
+  const handleRandomWorld = () => {
+    if (worldPresets.length === 0) return;
+    const next = worldPresets[Math.floor(Math.random() * worldPresets.length)];
     setBackgroundPreset(next.id);
   };
 
@@ -347,6 +377,71 @@ export function StudioControlDeck({
           grid-template-columns: repeat(2, minmax(0, 1fr));
           gap: 7px;
         }
+        .lupi-world-carousel {
+          position: relative;
+          min-width: 0;
+          overflow: hidden;
+          border-radius: 8px;
+          isolation: isolate;
+        }
+        .lupi-world-carousel::before,
+        .lupi-world-carousel::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          width: 30px;
+          pointer-events: none;
+          z-index: 2;
+          transition: opacity 160ms ease;
+        }
+        .lupi-world-carousel::before {
+          left: 0;
+          background: linear-gradient(90deg, rgba(2, 6, 23, 0.72), rgba(2, 6, 23, 0));
+          opacity: 0.58;
+        }
+        .lupi-world-carousel::after {
+          right: 0;
+          background: linear-gradient(270deg, rgba(2, 6, 23, 0.78), rgba(2, 6, 23, 0));
+          opacity: 0.74;
+        }
+        .lupi-world-carousel[data-at-start="true"]::before,
+        .lupi-world-carousel[data-at-end="true"]::after {
+          opacity: 0.12;
+        }
+        .lupi-world-rail {
+          --lupi-world-tile-width: clamp(132px, 22vw, 156px);
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: var(--lupi-world-tile-width);
+          grid-template-rows: 78px;
+          gap: 8px;
+          overflow-x: auto;
+          overflow-y: hidden;
+          overscroll-behavior-x: contain;
+          padding: 1px 30px 1px 1px;
+          scroll-padding-inline: 1px 30px;
+          scroll-snap-type: x mandatory;
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+          -webkit-overflow-scrolling: touch;
+        }
+        .lupi-world-rail::-webkit-scrollbar {
+          display: none;
+          width: 0;
+          height: 0;
+        }
+        .lupi-world-rail:focus-visible {
+          outline: 2px solid rgba(30, 220, 224, 0.62);
+          outline-offset: 2px;
+        }
+        .lupi-world-tile {
+          width: 100%;
+          height: 78px;
+          box-sizing: border-box;
+          scroll-snap-align: start;
+          scroll-snap-stop: always;
+        }
         .lupi-native-color::-webkit-color-swatch-wrapper {
           padding: 0;
         }
@@ -365,6 +460,15 @@ export function StudioControlDeck({
           .lupi-studio-slider-grid {
             grid-template-columns: 1fr;
             gap: 7px;
+          }
+          .lupi-world-rail {
+            --lupi-world-tile-width: clamp(126px, 44vw, 152px);
+            grid-template-rows: 76px;
+            padding-right: 24px;
+            scroll-padding-right: 24px;
+          }
+          .lupi-world-tile {
+            height: 76px;
           }
         }
       `}</style>
@@ -589,11 +693,75 @@ export function StudioControlDeck({
 
         {mode === 'world' && (
           <div className="lupi-deck-grid">
-            <ControlGroup title="Backdrop">
-              <BackgroundSelect
+            <ControlGroup title="World Library" wide>
+              <WorldBackdropBrowser
                 value={backgroundPreset}
-                groups={backgroundGroups}
+                activePreset={activeBackgroundPresetWithId}
+                groups={worldLibraryGroups}
                 onChange={setBackgroundPreset}
+                onRandomWorld={handleRandomWorld}
+                onRandomLoop={handleRandomVideo}
+              />
+            </ControlGroup>
+
+            <ControlGroup title="Asset">
+              <CompactSlider
+                label="Yaw"
+                value={backgroundYawDegrees}
+                min={-180}
+                max={180}
+                step={1}
+                onChange={setBackgroundYawDegrees}
+                format={value => `${Math.round(value)} deg`}
+              />
+              <CompactSlider
+                label="Pitch"
+                value={backgroundPitchDegrees}
+                min={-45}
+                max={45}
+                step={1}
+                onChange={setBackgroundPitchDegrees}
+                format={value => `${Math.round(value)} deg`}
+              />
+              <CompactSlider
+                label="Opacity"
+                value={backgroundOpacity}
+                min={0.15}
+                max={1}
+                step={0.01}
+                onChange={setBackgroundOpacity}
+                format={value => `${Math.round(value * 100)}%`}
+              />
+              <SegmentButton label="Reset asset" active={false} accent="#94a3b8" onClick={resetBackgroundAdjustments} />
+            </ControlGroup>
+
+            <ControlGroup title="Grade">
+              <CompactSlider
+                label="Bright"
+                value={backgroundBrightness}
+                min={0.35}
+                max={1.8}
+                step={0.01}
+                onChange={setBackgroundBrightness}
+                format={value => value.toFixed(2)}
+              />
+              <CompactSlider
+                label="Saturate"
+                value={backgroundSaturation}
+                min={0}
+                max={2}
+                step={0.01}
+                onChange={setBackgroundSaturation}
+                format={value => value.toFixed(2)}
+              />
+              <CompactSlider
+                label="Contrast"
+                value={backgroundContrast}
+                min={0.5}
+                max={1.8}
+                step={0.01}
+                onChange={setBackgroundContrast}
+                format={value => value.toFixed(2)}
               />
             </ControlGroup>
 
@@ -644,9 +812,33 @@ export function StudioControlDeck({
               </div>
             </ControlGroup>
 
-            <ControlGroup title="Motion">
+            <ControlGroup title="Loop">
               <div className="lupi-studio-segments">
                 <SegmentButton label="Random loop" active={activeBackgroundIsVideo} accent="#f59e0b" onClick={handleRandomVideo} />
+                {activeBackgroundIsVideo && (
+                  <SegmentButton
+                    label={backgroundMotionPaused ? 'Play loop' : 'Pause loop'}
+                    active={!backgroundMotionPaused}
+                    accent="#1edce0"
+                    onClick={() => setBackgroundMotionPaused(!backgroundMotionPaused)}
+                  />
+                )}
+              </div>
+              {activeBackgroundIsVideo && (
+                <CompactSlider
+                  label="Speed"
+                  value={backgroundMotionSpeed}
+                  min={0.05}
+                  max={2}
+                  step={0.05}
+                  onChange={setBackgroundMotionSpeed}
+                  format={value => `${value.toFixed(2)}x`}
+                />
+              )}
+            </ControlGroup>
+
+            <ControlGroup title="Guides">
+              <div className="lupi-studio-segments">
                 <SegmentButton label={showCell ? 'Cell on' : 'Cell off'} active={showCell} accent="#7de9ff" onClick={toggleCell} />
                 <SegmentButton label={showAxes ? 'Axes on' : 'Axes off'} active={showAxes} accent="#a7f3d0" onClick={toggleAxes} />
               </div>
@@ -659,11 +851,12 @@ export function StudioControlDeck({
   );
 }
 
-function ControlGroup({ title, note, children }: { title: string; note?: string; children: ReactNode }) {
+function ControlGroup({ title, note, children, wide = false }: { title: string; note?: string; children: ReactNode; wide?: boolean }) {
   return (
     <section
       title={note}
       style={{
+        gridColumn: wide ? '1 / -1' : undefined,
         display: 'grid',
         gap: 7,
         alignContent: 'start',
@@ -1017,33 +1210,418 @@ function CompactSelect({
   );
 }
 
-function BackgroundSelect({
+function WorldBackdropBrowser({
   value,
+  activePreset,
   groups,
   onChange,
+  onRandomWorld,
+  onRandomLoop,
 }: {
   value: string;
+  activePreset?: BgPresetWithId;
   groups: Array<{ label: string; presets: BgPresetWithId[] }>;
   onChange: (value: string) => void;
+  onRandomWorld: () => void;
+  onRandomLoop: () => void;
+}) {
+  const badge = activePreset ? getBgBadge(activePreset) : undefined;
+  return (
+    <div style={{ display: 'grid', gap: 9, minWidth: 0 }}>
+      <div style={{
+        minHeight: 118,
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+        gap: 9,
+        alignItems: 'stretch',
+      }}>
+        <div style={{
+          position: 'relative',
+          minHeight: 118,
+          overflow: 'hidden',
+          borderRadius: 8,
+          border: '1px solid rgba(255,255,255,0.12)',
+          ...backgroundPreviewStyle(activePreset),
+          boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08), 0 10px 26px rgba(0,0,0,0.22)',
+        }}>
+          <div style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'linear-gradient(90deg, rgba(2,6,23,0.72), rgba(2,6,23,0.18) 56%, rgba(2,6,23,0.5))',
+          }} />
+          <div style={{
+            position: 'relative',
+            minHeight: 118,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            gap: 12,
+            padding: 12,
+          }}>
+            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 10, minWidth: 0 }}>
+              <div style={{ minWidth: 0, display: 'grid', gap: 4 }}>
+                <div style={{
+                  color: '#f8fafc',
+                  fontSize: 18,
+                  fontWeight: 860,
+                  lineHeight: 1.05,
+                  textShadow: '0 2px 12px rgba(0,0,0,0.45)',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                }}>
+                  {activePreset?.label ?? 'Select World'}
+                </div>
+                <div style={{
+                  maxWidth: 520,
+                  color: '#cbd5e1',
+                  fontSize: 11,
+                  fontWeight: 650,
+                  lineHeight: 1.35,
+                  textShadow: '0 1px 8px rgba(0,0,0,0.5)',
+                }}>
+                  {activePreset?.context ?? 'Choose a 360 environment for the molecular scene.'}
+                </div>
+              </div>
+              {badge && (
+                <span style={{
+                  flexShrink: 0,
+                  padding: '4px 6px',
+                  borderRadius: 6,
+                  border: '1px solid rgba(30,220,224,0.45)',
+                  background: 'rgba(2,6,23,0.54)',
+                  color: '#7de9ff',
+                  fontSize: 10,
+                  fontWeight: 860,
+                  fontFamily: 'var(--font-mono)',
+                  lineHeight: 1,
+                }}>
+                  {badge}
+                </span>
+              )}
+            </div>
+            <div className="lupi-studio-segments" style={{ maxWidth: 360 }}>
+              <SegmentButton label="Surprise world" active={false} accent="#7de9ff" onClick={onRandomWorld} />
+              <SegmentButton label="Surprise loop" active={false} accent="#f59e0b" onClick={onRandomLoop} />
+            </div>
+          </div>
+        </div>
+        <div style={{
+          minWidth: 0,
+          display: 'grid',
+          gap: 7,
+          alignContent: 'start',
+          padding: 8,
+          borderRadius: 8,
+          border: '1px solid rgba(255,255,255,0.09)',
+          background: 'linear-gradient(180deg, rgba(15,23,42,0.54), rgba(3,7,18,0.34))',
+        }}>
+          <div style={{ color: '#94a3b8', fontSize: 10, fontWeight: 820, textTransform: 'uppercase', lineHeight: 1 }}>
+            Active Asset
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
+            <MetricPill label="Preset" value={value.replace(/^world-/, '')} />
+            <MetricPill label="Type" value={badge ?? 'BASE'} />
+            <MetricPill label="Tone" value={activePreset?.intensity ?? 'balanced'} />
+            <MetricPill label="Mode" value={getBgPoster(activePreset ?? BG_PRESETS.deep) ? 'ERP' : 'SKY'} />
+          </div>
+        </div>
+      </div>
+
+      <div style={{ display: 'grid', gap: 8, minWidth: 0 }}>
+        {groups.map(group => (
+          <BackdropRail
+            key={group.label}
+            title={group.label}
+            presets={group.presets}
+            value={value}
+            onChange={onChange}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function MetricPill({ label, value }: { label: string; value: string }) {
+  return (
+    <div style={{
+      minWidth: 0,
+      display: 'grid',
+      gap: 4,
+      padding: '7px 8px',
+      borderRadius: 7,
+      border: '1px solid rgba(148,163,184,0.16)',
+      background: 'rgba(2,6,23,0.38)',
+    }}>
+      <span style={{ color: '#64748b', fontSize: 9, fontWeight: 820, textTransform: 'uppercase', lineHeight: 1 }}>{label}</span>
+      <span style={{
+        minWidth: 0,
+        color: '#e2e8f0',
+        fontFamily: 'var(--font-mono)',
+        fontSize: 10,
+        fontWeight: 820,
+        lineHeight: 1.15,
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
+        textTransform: 'uppercase',
+      }}>
+        {value}
+      </span>
+    </div>
+  );
+}
+
+function BackdropRail({
+  title,
+  presets,
+  value,
+  onChange,
+}: {
+  title: string;
+  presets: BgPresetWithId[];
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  const railRef = useRef<HTMLDivElement | null>(null);
+  const [scrollState, setScrollState] = useState({ atStart: true, atEnd: true });
+
+  useEffect(() => {
+    const rail = railRef.current;
+    if (!rail) return;
+
+    const updateScrollState = () => {
+      const maxScroll = rail.scrollWidth - rail.clientWidth;
+      setScrollState({
+        atStart: rail.scrollLeft <= 1,
+        atEnd: maxScroll <= 1 || rail.scrollLeft >= maxScroll - 1,
+      });
+    };
+
+    updateScrollState();
+    rail.addEventListener('scroll', updateScrollState, { passive: true });
+    window.addEventListener('resize', updateScrollState);
+    return () => {
+      rail.removeEventListener('scroll', updateScrollState);
+      window.removeEventListener('resize', updateScrollState);
+    };
+  }, [presets.length]);
+
+  const scrollRail = (direction: -1 | 1) => {
+    const rail = railRef.current;
+    if (!rail) return;
+    const behavior: ScrollBehavior = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+    rail.scrollBy({
+      left: direction * Math.max(rail.clientWidth * 0.76, 148),
+      behavior,
+    });
+  };
+
+  const handleRailKeyDown = (event: ReactKeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      scrollRail(1);
+    } else if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      scrollRail(-1);
+    }
+  };
+
+  if (presets.length === 0) return null;
+  return (
+    <div style={{ display: 'grid', gap: 5, minWidth: 0 }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
+        <div style={{ color: '#94a3b8', fontSize: 10, fontWeight: 820, textTransform: 'uppercase', lineHeight: 1 }}>{title}</div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+          <div style={{ color: '#64748b', fontSize: 9, fontFamily: 'var(--font-mono)', fontWeight: 820, lineHeight: 1 }}>
+            {presets.length}
+          </div>
+          <RailNudgeButton
+            label={`Previous ${title}`}
+            direction="left"
+            disabled={scrollState.atStart}
+            onClick={() => scrollRail(-1)}
+          />
+          <RailNudgeButton
+            label={`Next ${title}`}
+            direction="right"
+            disabled={scrollState.atEnd}
+            onClick={() => scrollRail(1)}
+          />
+        </div>
+      </div>
+      <div
+        className="lupi-world-carousel"
+        data-at-start={scrollState.atStart ? 'true' : 'false'}
+        data-at-end={scrollState.atEnd ? 'true' : 'false'}
+      >
+        <div
+          ref={railRef}
+          className="lupi-world-rail"
+          role="group"
+          aria-label={`${title} backgrounds`}
+          tabIndex={0}
+          onKeyDown={handleRailKeyDown}
+        >
+          {presets.map(preset => (
+            <BackdropTile
+              key={preset.id}
+              preset={preset}
+              active={preset.id === value}
+              onClick={() => onChange(preset.id)}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function RailNudgeButton({
+  label,
+  direction,
+  disabled,
+  onClick,
+}: {
+  label: string;
+  direction: 'left' | 'right';
+  disabled: boolean;
+  onClick: () => void;
 }) {
   return (
-    <label style={compactFieldStyle}>
-      <span style={compactFieldLabelStyle}>Scene</span>
-      <select
-        value={value}
-        onChange={(event) => onChange(event.currentTarget.value)}
-        style={compactSelectStyle}
-      >
-        {groups.map(group => (
-          <optgroup key={group.label} label={group.label}>
-            {group.presets.map(preset => (
-              <option key={preset.id} value={preset.id}>{preset.label}</option>
-            ))}
-          </optgroup>
-        ))}
-      </select>
-    </label>
+    <button
+      type="button"
+      aria-label={label}
+      title={label}
+      disabled={disabled}
+      onClick={onClick}
+      style={{
+        width: 22,
+        height: 22,
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexShrink: 0,
+        borderRadius: 6,
+        border: disabled ? '1px solid rgba(148,163,184,0.12)' : '1px solid rgba(148,163,184,0.28)',
+        background: disabled ? 'rgba(15,23,42,0.3)' : 'rgba(15,23,42,0.74)',
+        color: disabled ? '#475569' : '#cbd5e1',
+        cursor: disabled ? 'default' : 'pointer',
+        boxShadow: disabled ? 'none' : 'inset 0 1px 0 rgba(255,255,255,0.06)',
+        padding: 0,
+      }}
+    >
+      <IconChevron direction={direction} />
+    </button>
   );
+}
+
+function BackdropTile({
+  preset,
+  active,
+  onClick,
+}: {
+  preset: BgPresetWithId;
+  active: boolean;
+  onClick: () => void;
+}) {
+  const badge = getBgBadge(preset);
+  return (
+    <button
+      type="button"
+      title={preset.context ? `${preset.label}: ${preset.context}` : preset.label}
+      aria-label={`Use ${preset.label} background`}
+      aria-pressed={active}
+      onClick={onClick}
+      className="lupi-world-tile"
+      style={{
+        position: 'relative',
+        minWidth: 0,
+        overflow: 'hidden',
+        borderRadius: 8,
+        border: active ? '1px solid #1edce0' : '1px solid rgba(148,163,184,0.18)',
+        ...backgroundPreviewStyle(preset),
+        boxShadow: active
+          ? '0 0 18px rgba(30,220,224,0.28), inset 0 1px 0 rgba(255,255,255,0.12)'
+          : 'inset 0 1px 0 rgba(255,255,255,0.08), 0 5px 14px rgba(0,0,0,0.18)',
+        cursor: 'pointer',
+        padding: 0,
+        touchAction: 'manipulation',
+      }}
+    >
+      <span style={{
+        position: 'absolute',
+        inset: 0,
+        background: active
+          ? 'linear-gradient(180deg, rgba(2,6,23,0.12), rgba(2,6,23,0.72))'
+          : 'linear-gradient(180deg, rgba(2,6,23,0.04), rgba(2,6,23,0.78))',
+      }} />
+      {badge && (
+        <span style={{
+          position: 'absolute',
+          top: 5,
+          right: 5,
+          maxWidth: 54,
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
+          padding: '3px 4px',
+          borderRadius: 5,
+          background: active ? 'rgba(30,220,224,0.22)' : 'rgba(2,6,23,0.62)',
+          border: active ? '1px solid rgba(125,233,255,0.45)' : '1px solid rgba(255,255,255,0.12)',
+          color: active ? '#baf8ff' : '#cbd5e1',
+          fontSize: 8,
+          fontWeight: 860,
+          fontFamily: 'var(--font-mono)',
+          lineHeight: 1,
+        }}>
+          {badge}
+        </span>
+      )}
+      <span style={{
+        position: 'absolute',
+        left: 7,
+        right: 7,
+        bottom: 7,
+        minWidth: 0,
+        color: active ? '#f8fafc' : '#e2e8f0',
+        fontSize: 10,
+        fontWeight: 820,
+        lineHeight: 1.12,
+        textAlign: 'left',
+        textShadow: '0 1px 7px rgba(0,0,0,0.65)',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
+      }}>
+        {preset.label}
+      </span>
+    </button>
+  );
+}
+
+function backgroundPreviewStyle(preset?: BgPresetWithId): CSSProperties {
+  if (!preset) {
+    return {
+      background: 'linear-gradient(135deg, #111827, #020617)',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+    };
+  }
+  const poster = getBgPoster(preset);
+  if (poster) {
+    return {
+      backgroundImage: `url("${poster}")`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+    };
+  }
+  return {
+    background: preset.preview ?? `linear-gradient(135deg, ${preset.top}, ${preset.bottom})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  };
 }
 
 function ColorPicker({
@@ -1227,6 +1805,15 @@ function IconClose() {
   return (
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
       <path d="M18 6 6 18M6 6l12 12" />
+    </svg>
+  );
+}
+
+function IconChevron({ direction }: { direction: 'left' | 'right' }) {
+  const path = direction === 'left' ? 'M15 18 9 12l6-6' : 'm9 18 6-6-6-6';
+  return (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+      <path d={path} />
     </svg>
   );
 }

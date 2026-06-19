@@ -1,6 +1,6 @@
 {
   "name": "atlas-view",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "private": true,
   "description": "WebGPU-powered LAMMPS molecular dynamics visualization platform",
   "license": "Apache-2.0",
@@ -27,6 +27,8 @@
     "verify:study-lens:mobile": "node tools/verify-study-lens.mjs --profile=mobile",
     "verify:mcp-bridge": "node tools/verify-mcp-bridge.mjs",
     "verify:gallery": "node tools/verify-gallery.mjs",
+    "audit:nomenclature": "node tools/audit-gallery-nomenclature.mjs",
+    "backup:gallery": "node tools/audit-gallery-nomenclature.mjs --write --backup",
     "verify:streaming": "npx -y tsx tools/verify-streaming.mjs",
     "verify:analytics-live": "node tools/verify-analytics-live.mjs",
     "verify:exports": "node tools/verify-exports.mjs",

@@ -1,4 +1,5 @@
 import { ALL_EXAMPLES, publicAssetUrl } from '../../landing/shared';
+import { galleryNomenclatureTags, nomenclatureForGalleryId } from '../../galleryNomenclature';
 import type { MoleculeHit, MoleculeProvider, MoleculeQuery } from '../types';
 
 function fileUrl(file: string): string {
@@ -15,9 +16,10 @@ export const galleryProvider: MoleculeProvider = {
     return ALL_EXAMPLES.filter((ex) => ex.available !== false && Boolean(ex.file))
       .filter((ex) => {
         if (!q) return true;
+        const nomenclatureTags = galleryNomenclatureTags(ex.id).join(' ');
         const hay =
           `${ex.title} ${ex.subtitle ?? ''} ${ex.domain ?? ''} ` +
-          `${ex.metadata?.method ?? ''} ${ex.metadata?.potential ?? ''}`;
+          `${Object.values(ex.metadata ?? {}).join(' ')} ${nomenclatureTags}`;
         return hay.toLowerCase().includes(q);
       })
       .map((ex) => ({
@@ -25,9 +27,12 @@ export const galleryProvider: MoleculeProvider = {
         source: 'gallery',
         title: ex.title,
         subtitle: ex.subtitle,
-        tags: [ex.domain, ex.metadata?.method, ex.metadata?.potential].filter(
-          (t): t is string => Boolean(t),
-        ),
+        formula: nomenclatureForGalleryId(ex.id)?.molecularFormula,
+        tags: [
+          ex.domain,
+          ...Object.values(ex.metadata ?? {}),
+          ...galleryNomenclatureTags(ex.id),
+        ].filter((t): t is string => Boolean(t)),
         colors: ex.colors,
         load: { kind: 'url', url: fileUrl(ex.file) },
         // Featured examples get a small boost so they surface when browsing.

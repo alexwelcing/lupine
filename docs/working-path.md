@@ -10,6 +10,7 @@ branches, worktrees, or generated experiment folders.
 | --- | --- |
 | New? Pick a track | [`docs/ONBOARDING.md`](./ONBOARDING.md) |
 | System architecture map | [`docs/ARCHITECTURE.md`](./ARCHITECTURE.md) |
+| Public repo split and migration map | [`docs/repo-split-map.md`](./repo-split-map.md) |
 | Research control plane, agenda, claims, evals, traces | `glim-think/` |
 | Formal evidence and Lean proof obligations | `lean-spec/` |
 | Distill policy/runtime scoring | `atlas-distill/` |
@@ -105,4 +106,3 @@ Safe cleanup rules:
   are reviewed or intentionally archived.
 - Preserve dirty files and untracked experiment output unless the owner has
   explicitly asked to remove them.
-

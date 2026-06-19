@@ -46,32 +46,35 @@ export function ViewerControlsDrawer({
         <div style={{
           flexShrink: 0,
           display: 'grid',
-          gap: 10,
-          padding: '12px 12px 10px',
-          borderBottom: '1px solid rgba(255,255,255,0.09)',
-          background: 'linear-gradient(180deg, rgba(15,23,42,0.84), rgba(7,12,22,0.42))',
-          boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08)',
+          gap: 6,
+          padding: '4px 10px 8px',
+          borderBottom: '1px solid rgba(255,255,255,0.06)',
+          background: 'linear-gradient(180deg, rgba(15,23,42,0.32), rgba(7,12,22,0.08))',
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, minHeight: 22 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 0 }}>
-              <span style={{ color: '#1edce0', display: 'flex', flexShrink: 0 }}><IconControls /></span>
+              <span style={{ color: 'rgba(30,220,224,0.82)', display: 'flex', flexShrink: 0, transform: 'scale(0.88)' }}><IconControls /></span>
               <span style={{ display: 'grid', gap: 1, minWidth: 0 }}>
-                <span style={{ color: 'var(--text-primary)', fontSize: 13, fontWeight: 820, letterSpacing: 0, lineHeight: 1.1 }}>Controls</span>
-                <span style={{ color: 'rgba(203,213,225,0.52)', fontSize: 10, fontWeight: 720, lineHeight: 1.1, textTransform: 'uppercase' }}>{activeLabel}</span>
+                <span style={{ color: 'rgba(248,250,252,0.9)', fontSize: 12, fontWeight: 820, letterSpacing: 0, lineHeight: 1 }}>Controls</span>
               </span>
             </div>
-            <button
-              type="button"
-              aria-label="Close controls"
-              title="Close"
-              onClick={onClose}
-              className="lupine-icon-btn"
-              style={{ width: 28, height: 28 }}
-            >
-              <IconClose />
-            </button>
+            <span style={{
+              minWidth: 0,
+              border: '1px solid rgba(255,255,255,0.07)',
+              borderRadius: 999,
+              padding: '3px 7px',
+              background: 'rgba(2,6,23,0.24)',
+              color: 'rgba(203,213,225,0.62)',
+              fontSize: 9,
+              fontWeight: 760,
+              lineHeight: 1,
+              textTransform: 'uppercase',
+              whiteSpace: 'nowrap',
+            }}>
+              {activeLabel}
+            </span>
           </div>
-          <ModeTabs activeMode={activeMode} onModeChange={onModeChange} />
+          <ModeTabs activeMode={activeMode} onModeChange={onModeChange} compact />
         </div>
       )}
 
@@ -102,7 +105,15 @@ export function ViewerControlsDrawer({
   );
 }
 
-function ModeTabs({ activeMode, onModeChange }: { activeMode: ViewerControlMode; onModeChange: (mode: ViewerControlMode) => void }) {
+function ModeTabs({
+  activeMode,
+  onModeChange,
+  compact = false,
+}: {
+  activeMode: ViewerControlMode;
+  onModeChange: (mode: ViewerControlMode) => void;
+  compact?: boolean;
+}) {
   return (
     <div
       role="group"
@@ -110,17 +121,17 @@ function ModeTabs({ activeMode, onModeChange }: { activeMode: ViewerControlMode;
       style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
-        gap: 6,
-        padding: 4,
+        gap: compact ? 4 : 6,
+        padding: compact ? 3 : 4,
         border: '1px solid rgba(255,255,255,0.07)',
-        borderRadius: 8,
-        background: 'rgba(2,6,23,0.44)',
+        borderRadius: compact ? 7 : 8,
+        background: compact ? 'rgba(2,6,23,0.3)' : 'rgba(2,6,23,0.44)',
       }}
     >
-      <ControlModeTab icon={<IconLook />} label="Look" active={activeMode === 'look'} onClick={() => onModeChange('look')} />
-      <ControlModeTab icon={<IconSurface />} label="Surface" active={activeMode === 'surface'} onClick={() => onModeChange('surface')} />
-      <ControlModeTab icon={<IconWorld />} label="World" active={activeMode === 'world'} onClick={() => onModeChange('world')} />
-      <ControlModeTab icon={<IconExport />} label="Export" active={activeMode === 'export'} onClick={() => onModeChange('export')} />
+      <ControlModeTab icon={<IconLook />} label="Look" active={activeMode === 'look'} onClick={() => onModeChange('look')} compact={compact} />
+      <ControlModeTab icon={<IconSurface />} label="Surface" active={activeMode === 'surface'} onClick={() => onModeChange('surface')} compact={compact} />
+      <ControlModeTab icon={<IconWorld />} label="World" active={activeMode === 'world'} onClick={() => onModeChange('world')} compact={compact} />
+      <ControlModeTab icon={<IconExport />} label="Export" active={activeMode === 'export'} onClick={() => onModeChange('export')} compact={compact} />
     </div>
   );
 }
@@ -130,11 +141,13 @@ function ControlModeTab({
   label,
   active,
   onClick,
+  compact = false,
 }: {
   icon: ReactNode;
   label: string;
   active: boolean;
   onClick: () => void;
+  compact?: boolean;
 }) {
   const press = usePressSpring({ pressedScale: 0.96, sound: false });
   return (
@@ -152,24 +165,25 @@ function ControlModeTab({
       className={`lupine-btn ${active ? 'active' : ''}`}
       style={{
         minWidth: 0,
-        minHeight: 42,
+        minHeight: compact ? 38 : 44,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        gap: 7,
-        padding: '4px 6px',
-        fontSize: 10,
+        gap: compact ? 4 : 6,
+        padding: compact ? '5px 3px' : '6px 4px',
+        fontSize: 9,
         fontWeight: 800,
         lineHeight: 1,
         letterSpacing: 0,
         borderRadius: 7,
         boxShadow: active ? undefined : 'none',
+        touchAction: 'manipulation',
       }}
     >
       <span style={{
         display: 'flex',
-        width: 18,
-        height: 18,
+        width: compact ? 16 : 18,
+        height: compact ? 16 : 18,
         flexShrink: 0,
         color: active ? '#1edce0' : 'rgba(226,232,240,0.68)',
       }}>{icon}</span>
@@ -239,10 +253,4 @@ const IconExport = () => (
     <path d="M15.4 6.6h2.5v2.5" />
     <path d="m17.9 6.6-4.2 4.2" />
   </LupiGlyph>
-);
-
-const IconClose = () => (
-  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-    <path d="M18 6 6 18M6 6l12 12" />
-  </svg>
 );

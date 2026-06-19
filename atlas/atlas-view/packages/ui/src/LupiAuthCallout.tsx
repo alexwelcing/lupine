@@ -107,14 +107,15 @@ const calloutStyle = (compact: boolean): CSSProperties => ({
   position: 'fixed',
   top: compact ? 'calc(58px + env(safe-area-inset-top))' : 68,
   right: compact ? 10 : 18,
+  left: compact ? 10 : 'auto',
   zIndex: 520,
-  width: compact ? 'min(360px, calc(100vw - 20px))' : 386,
+  width: compact ? 'min(92vw, 360px)' : 386,
   display: 'grid',
   gridTemplateColumns: '38px minmax(0, 1fr)',
   gap: compact ? 10 : 12,
   alignItems: 'center',
-  padding: compact ? '10px 12px' : '12px 14px',
-  borderRadius: 8,
+  padding: compact ? '12px' : '12px 14px',
+  borderRadius: 10,
   color: '#f4efe5',
   background: `
     linear-gradient(90deg, rgba(244,239,229,0.08) 1px, transparent 1px) 0 0 / 20px 20px,
@@ -186,16 +187,17 @@ const buttonRowStyle = (compact: boolean): CSSProperties => ({
 });
 
 const baseButtonStyle = (disabled: boolean): CSSProperties => ({
-  height: 34,
-  minWidth: 74,
-  padding: '0 12px',
-  borderRadius: 6,
+  height: 42,
+  minWidth: 80,
+  padding: '0 14px',
+  borderRadius: 8,
   fontFamily: 'var(--font-mono), ui-monospace, monospace',
-  fontSize: 11,
+  fontSize: 12,
   fontWeight: 850,
   letterSpacing: 0,
   opacity: disabled ? 0.5 : 1,
   cursor: disabled ? 'not-allowed' : 'pointer',
+  touchAction: 'manipulation',
 });
 
 const primaryButtonStyle = (disabled: boolean): CSSProperties => ({

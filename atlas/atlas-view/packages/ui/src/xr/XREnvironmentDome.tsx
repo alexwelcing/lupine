@@ -33,10 +33,36 @@ interface XREnvironmentDomeProps {
   top: string;
   bottom: string;
   style?: BackgroundGradientStyle;
+  adjustments?: {
+    yawDegrees: number;
+    pitchDegrees: number;
+    opacity: number;
+    brightness: number;
+    saturation: number;
+    contrast: number;
+    motionPaused: boolean;
+    motionSpeed: number;
+  };
   disabled?: boolean;
 }
 
-export function XREnvironmentDome({ media, top, bottom, style = 'linear', disabled = false }: XREnvironmentDomeProps) {
+export function XREnvironmentDome({
+  media,
+  top,
+  bottom,
+  style = 'linear',
+  adjustments = {
+    yawDegrees: 0,
+    pitchDegrees: 0,
+    opacity: 1,
+    brightness: 1,
+    saturation: 1,
+    contrast: 1,
+    motionPaused: false,
+    motionSpeed: 1,
+  },
+  disabled = false,
+}: XREnvironmentDomeProps) {
   const mode = useXR(state => state.mode);
   const isAR = mode === 'immersive-ar';
   const isVR = mode === 'immersive-vr';
@@ -53,6 +79,8 @@ export function XREnvironmentDome({ media, top, bottom, style = 'linear', disabl
     enabled: isImmersive,
     logPrefix: 'xr-bg',
     projection: 'dome',
+    paused: adjustments.motionPaused,
+    playbackRate: adjustments.motionSpeed,
   });
 
   // Current animated opacity (ref to avoid re-renders)
@@ -74,13 +102,13 @@ export function XREnvironmentDome({ media, top, bottom, style = 'linear', disabl
     if (disabled) {
       targetOpacity.current = 0;
     } else if (isVR) {
-      targetOpacity.current = VR_DOME_OPACITY;
+      targetOpacity.current = VR_DOME_OPACITY * adjustments.opacity;
     } else if (isAR) {
-      targetOpacity.current = AR_DOME_OPACITY;
+      targetOpacity.current = AR_DOME_OPACITY * adjustments.opacity;
     } else {
       targetOpacity.current = 0;
     }
-  }, [disabled, isAR, isVR]);
+  }, [adjustments.opacity, disabled, isAR, isVR]);
 
   // Per-frame: smooth fade + follow camera
   useFrame((_state, dt) => {
@@ -100,6 +128,12 @@ export function XREnvironmentDome({ media, top, bottom, style = 'linear', disabl
 
     // Keep the dome centred on camera so it always surrounds the user
     meshRef.current.position.copy(camera.position);
+    meshRef.current.rotation.set(
+      THREE.MathUtils.degToRad(adjustments.pitchDegrees),
+      THREE.MathUtils.degToRad(adjustments.yawDegrees),
+      0,
+    );
+    matRef.current.color.setScalar(adjustments.brightness);
   });
 
   return (

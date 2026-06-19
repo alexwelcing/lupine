@@ -4,6 +4,7 @@ import { AnimatedCounter } from './AnimatedCounter';
 import { ALL_EXAMPLES } from './shared';
 import { useStore } from '../store';
 import { MillionAtomPreview, type SceneMode } from './MillionAtomPreview';
+import { openMolecule } from '../viewer/openMolecule';
 
 interface SceneModeConfig {
   id: SceneMode;
@@ -68,27 +69,27 @@ export function HeroSection() {
     openConfigurator(heroQuery.trim() || 'large copper lattice');
   };
 
-  const openMassiveScene = () => {
-    const url = new URL(window.location.href);
-    url.searchParams.set('sim', MASSIVE_SCENE_ID);
-    window.history.pushState({}, '', url);
-    window.dispatchEvent(new PopStateEvent('popstate'));
+  const openMassiveScene = async () => {
+    if (!massiveScene?.available) return;
+    await openMolecule({ kind: 'gallery', id: MASSIVE_SCENE_ID, history: 'push' });
   };
 
   return (
     <section className="lupi-hero" aria-labelledby="lupi-hero-title">
       <style>{HERO_CSS}</style>
-      <ParticleCanvas />
+      <div className="lupi-hero-particles" aria-hidden="true">
+        <ParticleCanvas />
+      </div>
 
       <div className="lupi-hero-shell">
         <div className="lupi-hero-copy">
           <div className="lupi-hero-product">Lupi molecular viewer</div>
           <h1 id="lupi-hero-title" className="lupi-hero-title">
-            1M atoms, fully controllable.
+            Inspect 1M atoms directly.
           </h1>
           <p className="lupi-hero-lede">
-            Open a nearly million-atom FCC copper lattice and control the scene directly:
-            orbit, inspect, color, share, and keep the structure responsive.
+            Open the FCC copper lattice, change the read mode, then move straight into
+            the same controllable viewer used for loaded structures.
           </p>
 
           <div className="lupi-hero-actions" aria-label="Primary actions">
@@ -116,12 +117,6 @@ export function HeroSection() {
             <button type="button" onClick={submitHeroQuery}>
               Build
             </button>
-          </div>
-
-          <div className="lupi-hero-stats" aria-label="Viewer scale">
-            <Metric value={<AnimatedCounter target={953312} duration={1800} />} label="Atoms in the hero scene" />
-            <Metric value={`${stats.totalSims}+`} label="Loadable structures" />
-            <Metric value={stats.domains} label="Scientific domains" />
           </div>
         </div>
 
@@ -165,6 +160,12 @@ export function HeroSection() {
             <strong>{currentMode.label}</strong>
             <span>{currentMode.caption}</span>
           </div>
+        </div>
+
+        <div className="lupi-hero-stats" aria-label="Viewer scale">
+          <Metric value={<AnimatedCounter target={953312} duration={1800} />} label="Atoms in the hero scene" />
+          <Metric value={`${stats.totalSims}+`} label="Loadable structures" />
+          <Metric value={stats.domains} label="Scientific domains" />
         </div>
       </div>
     </section>
@@ -211,10 +212,10 @@ const HERO_CSS = `
 .lupi-hero {
   position: relative;
   width: 100%;
-  min-height: calc(100dvh - 104px);
+  min-height: auto;
   overflow: hidden;
   background:
-    linear-gradient(120deg, rgba(2, 2, 4, 0.98) 0%, rgba(6, 12, 18, 0.96) 48%, rgba(24, 15, 9, 0.94) 100%);
+    linear-gradient(118deg, rgba(2, 2, 4, 0.99) 0%, rgba(6, 12, 18, 0.97) 52%, rgba(18, 13, 9, 0.95) 100%);
   color: #f8fafc;
   isolation: isolate;
 }
@@ -222,48 +223,60 @@ const HERO_CSS = `
   content: "";
   position: absolute;
   inset: auto 0 0;
-  height: 140px;
+  height: 96px;
   pointer-events: none;
   background: linear-gradient(180deg, rgba(2, 2, 4, 0), #020204);
   z-index: 1;
+}
+.lupi-hero-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.28;
+  pointer-events: none;
 }
 .lupi-hero-shell {
   position: relative;
   z-index: 2;
   box-sizing: border-box;
   width: min(1440px, 100%);
-  min-height: calc(100dvh - 104px);
+  min-height: min(700px, calc(100dvh - 96px));
   margin: 0 auto;
-  padding: 50px 28px 24px;
+  padding: 38px 28px 30px;
   display: grid;
-  grid-template-columns: minmax(380px, 0.82fr) minmax(520px, 1.18fr);
-  gap: 40px;
-  align-items: center;
+  grid-template-columns: minmax(320px, 0.72fr) minmax(540px, 1.28fr);
+  grid-template-areas:
+    "copy stage"
+    "stats stage";
+  gap: 18px 32px;
+  align-items: start;
 }
 .lupi-hero-copy {
-  max-width: 640px;
+  grid-area: copy;
+  max-width: 560px;
+  padding-top: 10px;
 }
 .lupi-hero-product {
-  margin-bottom: 18px;
-  font-size: 14px;
+  margin-bottom: 12px;
+  font-size: 13px;
   font-weight: 760;
   letter-spacing: 0;
   color: #7dd3fc;
 }
 .lupi-hero-title {
   margin: 0;
-  font-size: 64px;
-  line-height: 0.98;
+  font-size: 52px;
+  line-height: 1;
   letter-spacing: 0;
   font-weight: 850;
   text-wrap: balance;
 }
 .lupi-hero-lede {
-  max-width: 590px;
-  margin: 20px 0 0;
+  max-width: 520px;
+  margin: 16px 0 0;
   color: rgba(226, 232, 240, 0.74);
-  font-size: 19px;
-  line-height: 1.55;
+  font-size: 16px;
+  line-height: 1.5;
   letter-spacing: 0;
   text-wrap: pretty;
 }
@@ -271,7 +284,7 @@ const HERO_CSS = `
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 26px;
+  margin-top: 20px;
 }
 .lupi-hero-primary,
 .lupi-hero-secondary,
@@ -295,7 +308,7 @@ const HERO_CSS = `
   color: #08111a;
   border: 1px solid rgba(94, 234, 212, 0.55);
   background: linear-gradient(135deg, #5eead4, #fbbf24);
-  box-shadow: 0 18px 48px rgba(20, 184, 166, 0.22);
+  box-shadow: 0 14px 32px rgba(20, 184, 166, 0.18);
 }
 .lupi-hero-secondary {
   padding: 0 16px;
@@ -312,8 +325,8 @@ const HERO_CSS = `
 }
 .lupi-hero-builder {
   box-sizing: border-box;
-  width: min(590px, 100%);
-  margin-top: 16px;
+  width: min(520px, 100%);
+  margin-top: 14px;
   display: grid;
   grid-template-columns: 22px minmax(0, 1fr) auto;
   align-items: center;
@@ -351,8 +364,10 @@ const HERO_CSS = `
   background: rgba(14, 165, 233, 0.12);
 }
 .lupi-hero-stats {
-  width: min(590px, 100%);
-  margin-top: 20px;
+  grid-area: stats;
+  width: min(560px, 100%);
+  align-self: end;
+  margin-top: 4px;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
@@ -380,22 +395,23 @@ const HERO_CSS = `
   letter-spacing: 0;
 }
 .lupi-hero-stage {
+  grid-area: stage;
   justify-self: stretch;
   min-width: 0;
-  padding: 12px;
+  padding: 9px;
   border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: linear-gradient(180deg, rgba(15, 23, 42, 0.62), rgba(5, 8, 13, 0.9));
-  box-shadow: 0 34px 90px rgba(0, 0, 0, 0.44), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(5, 8, 13, 0.58);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(14px);
 }
 .lupi-hero-stage-topline {
-  min-height: 34px;
+  min-height: 30px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 14px;
-  padding: 0 4px 10px;
+  padding: 0 2px 8px;
   color: rgba(226, 232, 240, 0.68);
   font-size: 13px;
   font-weight: 720;
@@ -544,17 +560,27 @@ const HERO_CSS = `
 @media (max-width: 1080px) {
   .lupi-hero-shell {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      "copy"
+      "stage"
+      "stats";
     min-height: auto;
-    padding-top: 82px;
+    padding-top: 38px;
+    gap: 16px;
   }
   .lupi-hero-copy {
     max-width: 760px;
+    padding-top: 0;
   }
   .lupi-hero-title {
-    font-size: 58px;
+    font-size: 44px;
   }
   .lupi-hero-stage {
     max-width: 860px;
+  }
+  .lupi-hero-stats {
+    align-self: start;
+    margin-top: 0;
   }
 }
 @media (max-width: 640px) {
@@ -562,26 +588,28 @@ const HERO_CSS = `
     min-height: auto;
   }
   .lupi-hero-shell {
-    padding: 50px 16px 22px;
-    gap: 16px;
+    padding: 24px 14px 18px;
+    gap: 12px;
   }
   .lupi-hero-product {
-    font-size: 13px;
-    margin-bottom: 12px;
+    font-size: 12px;
+    margin-bottom: 8px;
   }
   .lupi-hero-title {
-    font-size: 34px;
-    line-height: 1;
+    font-size: 30px;
+    line-height: 1.04;
   }
   .lupi-hero-lede {
-    margin-top: 14px;
-    font-size: 15px;
+    max-width: 34rem;
+    margin-top: 10px;
+    font-size: 14px;
     line-height: 1.45;
   }
   .lupi-hero-actions {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    margin-top: 20px;
+    margin-top: 14px;
+    gap: 8px;
   }
   .lupi-hero-primary,
   .lupi-hero-secondary {
@@ -595,7 +623,6 @@ const HERO_CSS = `
     display: none;
   }
   .lupi-hero-stats {
-    margin-top: 14px;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 6px;
   }
@@ -609,7 +636,8 @@ const HERO_CSS = `
     font-size: 10px;
   }
   .lupi-hero-stage {
-    padding: 9px;
+    padding: 6px;
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.28);
   }
   .lupi-hero-stage-topline {
     align-items: flex-start;
