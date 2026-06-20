@@ -1,7 +1,14 @@
-# Lupine Science
+# Lupine Science — unlocking the materials that build the future
 
-Lupine Science is the public entry point for the Lupine Library research corpus,
-LUPI evidence viewer, and open repository.
+Lupine Science is accelerating materials discovery. AI is learning to design
+matter — the batteries, catalysts, alloys and chips a civilization runs on —
+but on simulations that are wrong in structured ways. We make those predictions
+trustworthy so discovery accelerates instead of stalling on guesswork. The
+mathematics (the error geometry of interatomic potentials) is how; the materials
+are why.
+
+Public entry point for the Lupine Library research corpus, LUPI evidence viewer,
+and open repository.
 
 Canonical surfaces:
 

@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Lupine Science bluebonnet mark</title>
+  <desc id="desc">Botanical bluebonnet science mark with raceme florets, palmate leaves, and field-note registration ticks.</desc>
+  <defs>
+    <linearGradient id="bluebonnet" x1="190" y1="74" x2="324" y2="356" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#88a7d8"/>
+      <stop offset="0.35" stop-color="#475b9c"/>
+      <stop offset="0.78" stop-color="#102f47"/>
+      <stop offset="1" stop-color="#071a2a"/>
+    </linearGradient>
+    <linearGradient id="leaf" x1="150" y1="330" x2="360" y2="470" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7f907c"/>
+      <stop offset="1" stop-color="#4c653d"/>
+    </linearGradient>
+    <radialGradient id="cap" cx="48%" cy="30%" r="68%">
+      <stop offset="0" stop-color="#fffdf3"/>
+      <stop offset="0.7" stop-color="#f1e8c9"/>
+      <stop offset="1" stop-color="#d4c58f"/>
+    </radialGradient>
+  </defs>
+  <g fill="none" stroke="#102f47" stroke-linecap="round" opacity="0.28">
+    <path d="M96 126 H126"/>
+    <path d="M96 386 H126"/>
+    <path d="M386 126 H416"/>
+    <path d="M386 386 H416"/>
+    <path d="M111 141 V111"/>
+    <path d="M401 141 V111"/>
+    <path d="M111 401 V371"/>
+    <path d="M401 401 V371"/>
+  </g>
+  <g fill="none" stroke="#4c653d" stroke-width="16" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M256 148 C252 224 258 312 254 448"/>
+    <path d="M252 402 C222 372 178 354 124 348"/>
+    <path d="M260 402 C290 372 334 354 388 348"/>
+  </g>
+  <g fill="url(#leaf)" opacity="0.96">
+    <ellipse cx="139" cy="348" rx="18" ry="62" transform="rotate(-78 139 348)"/>
+    <ellipse cx="167" cy="384" rx="18" ry="62" transform="rotate(-48 167 384)"/>
+    <ellipse cx="214" cy="410" rx="17" ry="58" transform="rotate(-20 214 410)"/>
+    <ellipse cx="373" cy="348" rx="18" ry="62" transform="rotate(78 373 348)"/>
+    <ellipse cx="345" cy="384" rx="18" ry="62" transform="rotate(48 345 384)"/>
+    <ellipse cx="298" cy="410" rx="17" ry="58" transform="rotate(20 298 410)"/>
+  </g>
+  <g fill="none" stroke="#fef8f5" stroke-width="5" stroke-linecap="round" opacity="0.66">
+    <path d="M132 348 C170 356 205 373 236 405"/>
+    <path d="M380 348 C342 356 307 373 276 405"/>
+  </g>
+  <g fill="url(#bluebonnet)" stroke="#fef8f5" stroke-width="5" stroke-linejoin="round">
+    <ellipse cx="256" cy="86" rx="22" ry="34"/>
+    <ellipse cx="232" cy="122" rx="23" ry="35" transform="rotate(-24 232 122)"/>
+    <ellipse cx="280" cy="122" rx="23" ry="35" transform="rotate(24 280 122)"/>
+    <ellipse cx="256" cy="150" rx="30" ry="40"/>
+    <ellipse cx="211" cy="182" rx="26" ry="38" transform="rotate(-34 211 182)"/>
+    <ellipse cx="301" cy="182" rx="26" ry="38" transform="rotate(34 301 182)"/>
+    <ellipse cx="256" cy="216" rx="37" ry="48"/>
+    <ellipse cx="204" cy="256" rx="30" ry="43" transform="rotate(-42 204 256)"/>
+    <ellipse cx="308" cy="256" rx="30" ry="43" transform="rotate(42 308 256)"/>
+    <ellipse cx="256" cy="306" rx="40" ry="52"/>
+  </g>
+  <g fill="url(#cap)">
+    <path d="M244 142 C251 124 261 124 268 142 C262 136 250 136 244 142Z"/>
+    <path d="M244 207 C252 186 263 186 271 207 C263 199 252 199 244 207Z"/>
+    <path d="M242 296 C252 272 265 272 274 296 C264 286 252 286 242 296Z"/>
+  </g>
+</svg>
