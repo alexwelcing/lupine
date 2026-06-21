@@ -66,6 +66,8 @@ import { handleFeedRoute } from "./feed/split";
 import { handleBeatsPost, handleBeatsOptions, handleBeatsGet } from "./feed/beats";
 import { getHealthSnapshot, runSmoketest } from "./ops/observability";
 import { testMiniMaxCall, listMiniMaxModels, sweepMiniMaxEndpoints, exerciseDeepTier } from "./agents/models";
+import { coordinate, loadStrategyRegistry, setStrategyRegistry } from "./agents/coordinator";
+import { getCoordinationKpis, getRecentCoordinationTraces } from "./agents/coordinatorTraces";
 import { runDiag, probeDOSynthesize, probeDOKV } from "./admin/diag";
 import { generateAndStoreImage } from "./agents/image";
 import { generateAndStoreAudio } from "./agents/tts";
@@ -565,6 +567,176 @@ const baseHandler = {
           return Response.json(
             { error: e instanceof Error ? e.message : String(e) },
             { status: 502, headers: JSON_CORS_HEADERS },
+          );
+        }
+      }
+
+      // ─── Omnigents: multi-model coordination surface ───
+      // POST /coordinate — fan out across the model pool and reconcile per a
+      //   strategy (RFC §7). Gated by INTERNAL_TASK_TOKEN like
+      //   /ops/experiment-generate because it drives real model spend.
+      if (url.pathname === "/coordinate" && request.method === "POST") {
+        const provided = request.headers.get("X-Internal-Token") ?? "";
+        const expected = env.INTERNAL_TASK_TOKEN ?? "";
+        const ok =
+          expected.length > 0 &&
+          provided.length === expected.length &&
+          (() => {
+            let diff = 0;
+            for (let i = 0; i < expected.length; i++)
+              diff |= provided.charCodeAt(i) ^ expected.charCodeAt(i);
+            return diff === 0;
+          })();
+        if (!ok) {
+          return Response.json({ error: "unauthorized" }, { status: 401, headers: JSON_CORS_HEADERS });
+        }
+        try {
+          const body = JSON.parse(bodyText || "{}") as Record<string, unknown>;
+          const prompt = typeof body.prompt === "string" ? body.prompt : "";
+          if (!prompt) {
+            return Response.json(
+              { error: "prompt is required" },
+              { status: 400, headers: JSON_CORS_HEADERS },
+            );
+          }
+          const result = await coordinate(env, {
+            prompt,
+            system: typeof body.system === "string" ? body.system : undefined,
+            agentClass: typeof body.agentClass === "string" ? body.agentClass : "Omnigents",
+            intent: body.intent as never,
+            priority: body.priority as never,
+            strategy: body.strategy as never,
+            confidenceThreshold:
+              typeof body.confidenceThreshold === "number" ? body.confidenceThreshold : undefined,
+            maxOutputTokens: typeof body.maxOutputTokens === "number" ? body.maxOutputTokens : undefined,
+          });
+          return Response.json(result, { headers: JSON_CORS_HEADERS });
+        } catch (e) {
+          return Response.json(
+            { error: e instanceof Error ? e.message : String(e) },
+            { status: 502, headers: JSON_CORS_HEADERS },
+          );
+        }
+      }
+
+      // GET /coordination/kpis — coordination-effectiveness KPIs (RFC §7.6).
+      if (url.pathname === "/coordination/kpis" && request.method === "GET") {
+        try {
+          const days = Number(new URL(request.url).searchParams.get("days") ?? 7) || 7;
+          const kpis = await getCoordinationKpis(env, days);
+          return Response.json(kpis, { headers: JSON_CORS_HEADERS });
+        } catch (e) {
+          return Response.json(
+            { error: e instanceof Error ? e.message : String(e) },
+            { status: 500, headers: JSON_CORS_HEADERS },
+          );
+        }
+      }
+
+      // GET /coordination/traces — recent coordination traces (forensics +
+      // cocoindex back-fill source).
+      if (url.pathname === "/coordination/traces" && request.method === "GET") {
+        try {
+          const limit = Number(new URL(request.url).searchParams.get("limit") ?? 50) || 50;
+          const traces = await getRecentCoordinationTraces(env, { limit });
+          return Response.json({ traces }, { headers: JSON_CORS_HEADERS });
+        } catch (e) {
+          return Response.json(
+            { error: e instanceof Error ? e.message : String(e) },
+            { status: 500, headers: JSON_CORS_HEADERS },
+          );
+        }
+      }
+
+      // GET/PUT /coordination/strategy — hot-reloadable Strategy Registry
+      // (RFC §7.4). GET is read-only; PUT mutates routing so it's gated.
+      if (url.pathname === "/coordination/strategy" && request.method === "GET") {
+        try {
+          const rules = await loadStrategyRegistry(env);
+          return Response.json({ rules }, { headers: JSON_CORS_HEADERS });
+        } catch (e) {
+          return Response.json(
+            { error: e instanceof Error ? e.message : String(e) },
+            { status: 500, headers: JSON_CORS_HEADERS },
+          );
+        }
+      }
+      if (url.pathname === "/coordination/strategy" && request.method === "PUT") {
+        const provided = request.headers.get("X-Internal-Token") ?? "";
+        const expected = env.INTERNAL_TASK_TOKEN ?? "";
+        const ok =
+          expected.length > 0 &&
+          provided.length === expected.length &&
+          (() => {
+            let diff = 0;
+            for (let i = 0; i < expected.length; i++)
+              diff |= provided.charCodeAt(i) ^ expected.charCodeAt(i);
+            return diff === 0;
+          })();
+        if (!ok) {
+          return Response.json({ error: "unauthorized" }, { status: 401, headers: JSON_CORS_HEADERS });
+        }
+        try {
+          const body = JSON.parse(bodyText || "[]");
+          if (!Array.isArray(body)) {
+            return Response.json(
+              { error: "body must be an array of strategy rules" },
+              { status: 400, headers: JSON_CORS_HEADERS },
+            );
+          }
+          await setStrategyRegistry(env, body as never);
+          return Response.json({ ok: true, count: body.length }, { headers: JSON_CORS_HEADERS });
+        } catch (e) {
+          return Response.json(
+            { error: e instanceof Error ? e.message : String(e) },
+            { status: 500, headers: JSON_CORS_HEADERS },
+          );
+        }
+      }
+
+      // ─── Evidence: live ledger view ───
+      // GET /evidence/recent — recent coordination traces + hypotheses from D1.
+      // This is the worker-side evidence surface: live, non-vector. The rich
+      // semantic/vector search lives in the cocoindex layer (local/scheduled,
+      // see cocoindex/query.py) because Workers can't run the Python embedder.
+      // Query params: ?limit=50  ?kind=coordination_trace|hypothesis
+      if (url.pathname === "/evidence/recent" && request.method === "GET") {
+        try {
+          const sp = new URL(request.url).searchParams;
+          const limit = Math.min(Number(sp.get("limit") ?? 50) || 50, 200);
+          const kind = sp.get("kind"); // undefined → union both tables
+          const out: Record<string, unknown[]> = {};
+          if (!kind || kind === "coordination_trace") {
+            const r = await env.LEDGER.prepare(
+              `SELECT trace_id, agent_class, intent, strategy, coordination_outcome,
+                      winner_provider, baseline_provider, coordination_hit,
+                      cost_tokens, latency_ms, created_at
+               FROM coordination_traces
+               ORDER BY created_at DESC LIMIT ?`,
+            ).bind(limit).all();
+            out.coordination_traces = r.results ?? [];
+          }
+          if (!kind || kind === "hypothesis") {
+            const r = await env.LEDGER.prepare(
+              `SELECT id, title, status, confidence, agent_id, updated_at
+               FROM hypotheses
+               ORDER BY updated_at DESC LIMIT ?`,
+            ).bind(limit).all();
+            out.hypotheses = r.results ?? [];
+          }
+          return Response.json(
+            { count: (out.coordination_traces?.length ?? 0) + (out.hypotheses?.length ?? 0), ...out },
+            { headers: JSON_CORS_HEADERS },
+          );
+        } catch (e) {
+          // coordination_traces is created lazily (coordinatorTraces.ts) and
+          // may not exist on a fresh ledger — surface that distinctly.
+          const msg = e instanceof Error ? e.message : String(e);
+          const fresh = /no such table/i.test(msg);
+          return Response.json(
+            { error: fresh ? "coordination_traces table not created yet (no coordination calls have run)" : msg,
+              fresh_ledger: fresh },
+            { status: fresh ? 404 : 500, headers: JSON_CORS_HEADERS },
           );
         }
       }

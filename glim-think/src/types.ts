@@ -207,6 +207,15 @@ export interface Env {
   /** Public URL this Worker is reachable at. Used as the expected `aud` claim
    * when verifying OIDC tokens on /feed/beats. Defaults to the request origin. */
   WORKER_URL?: string;
+  /**
+   * GCP evidence-index service URL (Cloud Run). When set, the Omnigents
+   * coordinator consults it before choosing a strategy (the memory flywheel)
+   * and POSTs coordination traces to it for future search. See
+   * agents/memoryClient.ts + gcp/evidence-index/.
+   */
+  EVIDENCE_INDEX_URL?: string;
+  /** Bearer token for write access to the evidence-index service (/ingest). */
+  EVIDENCE_INGEST_TOKEN?: string;
   /** Default GCS manifest used by the MLIP baseline grid Lab runner. */
   MLIP_BASELINE_MANIFEST_URL?: string;
   /** Default GCS output prefix used by the MLIP baseline grid Lab runner. */

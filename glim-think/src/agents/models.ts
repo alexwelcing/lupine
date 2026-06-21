@@ -180,6 +180,7 @@ export function extractMiniMaxTokens(usage: unknown): number {
 
 function spendMiddleware(env: Env): LanguageModelMiddleware {
   return {
+    specificationVersion: "v3",
     wrapGenerate: async ({ doGenerate }) => {
       const result = await doGenerate();
       const tokens = extractMiniMaxTokens(result.usage);
@@ -442,7 +443,7 @@ export async function exerciseDeepTier(env: Env): Promise<{
     }
     return {
       ok: true,
-      model_route: cfg,
+      model_route: { base_url: cfg.baseURL, model: cfg.model },
       prompt_tokens: result.usage?.inputTokens,
       completion_tokens: result.usage?.outputTokens,
       total_tokens: totalTokens,
@@ -452,7 +453,7 @@ export async function exerciseDeepTier(env: Env): Promise<{
   } catch (e) {
     return {
       ok: false,
-      model_route: cfg,
+      model_route: { base_url: cfg.baseURL, model: cfg.model },
       latency_ms: Date.now() - start,
       error: e instanceof Error ? e.message : String(e),
     };
@@ -578,7 +579,7 @@ function openaiModel(env: Env) {
 }
 
 /** Deep providers whose credentials are present, in safe-default order. */
-function availableDeepProviders(env: Env): DeepProvider[] {
+export function availableDeepProviders(env: Env): DeepProvider[] {
   const out: DeepProvider[] = [];
   if (env.MINIMAX_API_KEY) out.push("minimax");
   if (env.ZAI_API_KEY) out.push("zai");
@@ -680,6 +681,16 @@ export interface ResearchTextOpts {
    * "MiniMax-M3"). Implies the minimax provider; bypasses scorecard/budget so
    * the M2.7→M3 quality delta is measured on exactly the requested id. */
   modelOverride?: string;
+  /** Opt into multi-model coordination (Omnigents) instead of single-model
+   * selection. When set, the call fans out across the provider pool and
+   * reconciles per the resolved strategy (see src/agents/coordinator.ts).
+   * Costs more tokens; reserve for high-stakes reasoning. */
+  coordination?: {
+    intent?: "trivial" | "reasoning" | "expert" | "classified" | "unknown";
+    priority?: "low" | "normal" | "high";
+    strategy?: "race" | "fan_out_merge" | "ensemble_of_experts" | "waterfall" | "specialist";
+    confidenceThreshold?: number;
+  };
 }
 
 /**
@@ -694,6 +705,28 @@ export async function generateResearchText(
   opts: ResearchTextOpts,
 ): Promise<{ text: string; provider: string; model: string }> {
   const tier = opts.tier ?? "deep";
+
+  // Opt-in multi-model coordination (Omnigents). Loaded lazily via dynamic
+  // import to avoid a static models↔coordinator cycle. When requested, the
+  // call fans out across the provider pool and reconciles per the resolved
+  // strategy, then returns in the same {text, provider, model} shape so call
+  // sites need no change. The coordination trace is persisted by coordinate().
+  if (opts.coordination) {
+    const { coordinate } = await import("./coordinator");
+    const result = await coordinate(env, {
+      prompt: opts.prompt,
+      system: opts.system,
+      agentClass: opts.agentClass,
+      maxOutputTokens: opts.maxOutputTokens,
+      temperature: opts.temperature,
+      intent: opts.coordination.intent,
+      priority: opts.coordination.priority,
+      strategy: opts.coordination.strategy,
+      confidenceThreshold: opts.coordination.confidenceThreshold,
+    });
+    return { text: result.text, provider: result.provider, model: result.model };
+  }
+
   const route: DeepRoute =
     tier === "deep"
       ? await selectDeepRoute(env, { force: opts.forceProvider, modelOverride: opts.modelOverride })
@@ -736,4 +769,146 @@ export async function generateResearchText(
     }
     throw e;
   }
+}
+
+// ---------------------------------------------------------------------------
+// Per-provider primitive for the Omnigents coordinator
+// (src/agents/coordinator.ts).
+//
+// Pins a SINGLE provider, calls it through the AI SDK with telemetry + spend
+// recording, and returns the raw result WITHOUT generateResearchText's
+// minimax fallback. The coordinator needs clean per-provider outcomes
+// (succeeded / failed / timed_out) to score coordination effectiveness — a
+// masked failure would corrupt that signal.
+// ---------------------------------------------------------------------------
+
+export interface ProviderCallOpts {
+  prompt: string;
+  system?: string;
+  /** OpenInference functionId — the model×agent scorecard buckets on this. */
+  agentClass: string;
+  maxOutputTokens?: number;
+  temperature?: number;
+  /** Hard wall-clock budget per provider call (ms). */
+  timeoutMs?: number;
+}
+
+export interface ProviderCallResult {
+  text: string;
+  provider: DeepProvider | "workers-ai";
+  model: string;
+  tokens: number;
+  latencyMs: number;
+}
+
+/** The credentialed deep providers plus the always-on Workers AI fast tier. */
+export function coordinatorPool(env: Env): Array<DeepProvider | "workers-ai"> {
+  const pool: Array<DeepProvider | "workers-ai"> = ["workers-ai"];
+  for (const p of availableDeepProviders(env)) {
+    if (!pool.includes(p)) pool.push(p);
+  }
+  return pool;
+}
+
+/**
+ * Call exactly one provider through the AI SDK. Used by the Omnigents
+ * coordinator to fan out across the pool and reconcile. Throws on failure
+ * (coordinator records the outcome); never silently falls back to another
+ * provider.
+ */
+export async function generateForProvider(
+  env: Env,
+  provider: DeepProvider | "workers-ai",
+  opts: ProviderCallOpts,
+): Promise<ProviderCallResult> {
+  const start = Date.now();
+  const route: DeepRoute =
+    provider === "workers-ai"
+      ? { model: fastModel(env), provider: "workers-ai", modelId: FAST_MODEL }
+      : buildDeepRoute(env, provider);
+  const result = await generateText({
+    model: route.model,
+    system: opts.system,
+    prompt: opts.prompt,
+    maxOutputTokens: opts.maxOutputTokens ?? 768,
+    ...(route.provider === "openai" || opts.temperature === undefined
+      ? {}
+      : { temperature: opts.temperature }),
+    experimental_telemetry: { isEnabled: true, functionId: opts.agentClass },
+    ...(opts.timeoutMs ? { abortSignal: AbortSignal.timeout(opts.timeoutMs) } : {}),
+  });
+  const usage = result.usage as {
+    inputTokens?: number;
+    outputTokens?: number;
+    reasoningTokens?: number;
+  } | undefined;
+  const tokens =
+    (usage?.inputTokens ?? 0) + (usage?.outputTokens ?? 0) + (usage?.reasoningTokens ?? 0);
+  // Record spend directly (the DO-context middleware write is unreliable;
+  // mirror the belt-and-braces approach in base.ts synthesize()).
+  if (tokens > 0) {
+    try {
+      await recordMiniMaxSpend(env, tokens);
+    } catch {
+      /* spend recording must never break a coordination call */
+    }
+  }
+  return {
+    text: (result.text ?? "").trim(),
+    provider: route.provider,
+    model: route.modelId,
+    tokens,
+    latencyMs: Date.now() - start,
+  };
+}
+
+/** Resolve the single "strongest" provider for judge/critic roles. */
+export function pickStrongProvider(env: Env): DeepProvider | "workers-ai" {
+  const pool = availableDeepProviders(env);
+  // Prefer the strength-first last decider (OpenAI), then MiniMax, then GLM.
+  if (pool.includes("openai")) return "openai";
+  if (pool.includes("minimax")) return "minimax";
+  if (pool.includes("zai")) return "zai";
+  return "workers-ai";
+}
+
+/**
+ * The scorecard-aware routing DECISION without the (eager) model construction
+ * that selectDeepRoute performs. Used by the coordinator's specialist strategy
+ * so it can pick a provider identity and then call it through the injected
+ * callProvider (which builds the model once) instead of building it twice.
+ * Mirrors selectDeepRoute's branch order; if the two ever drift, update both.
+ */
+export async function selectDeepProviderId(
+  env: Env,
+  opts?: { force?: DeepProvider; modelOverride?: string },
+): Promise<DeepProvider | "workers-ai"> {
+  const candidates = availableDeepProviders(env);
+  if (candidates.length === 0) return "workers-ai";
+  const modelOverride = opts?.modelOverride?.trim();
+  if (
+    modelOverride &&
+    candidates.includes("minimax") &&
+    (!opts?.force || opts.force === "minimax")
+  ) {
+    return "minimax";
+  }
+  if (opts?.force && candidates.includes(opts.force)) return opts.force;
+  let pool = candidates;
+  if (pool.includes("minimax") && !(await hasMiniMaxBudget(env))) {
+    pool = pool.filter((p) => p !== "minimax");
+    if (pool.length === 0) return "workers-ai";
+  }
+  const trend = await getModelQualityTrend(env);
+  const scored = pool
+    .map((p) => ({ p, s: trend[p] }))
+    .filter(
+      (x): x is { p: DeepProvider; s: { score: number; n: number } } =>
+        !!x.s && x.s.n >= MODEL_SCORE_MIN_N,
+    )
+    .sort((a, b) => b.s.score - a.s.score);
+  if (scored.length > 0) return scored[0].p;
+  const balance = pool.filter((p) => p !== "openai");
+  const ring = balance.length > 0 ? balance : pool;
+  return ring[await nextRoundRobin(env, ring.length)];
 }
