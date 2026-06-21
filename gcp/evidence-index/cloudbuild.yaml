@@ -50,10 +50,11 @@ steps:
       - --memory=4Gi
       - --min-instances=1
       - --max-instances=4
-      - --no-allow-unauthenticated
+      - --allow-unauthenticated
       - --set-secrets=EVIDENCE_DB_URL=evidence-db-url:latest
       - --set-secrets=EVIDENCE_INGEST_TOKEN=evidence-ingest-token:latest
       - --set-env-vars=EMBED_MODEL=sentence-transformers/all-MiniLM-L6-v2
+      - --add-cloudsql-instances=shed-489901:us-central1:glim-evidence
 
 images:
   - ${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/evidence-index:${_IMAGE_TAG}

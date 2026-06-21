@@ -114,10 +114,17 @@ app = FastAPI(
 
 # ─── Auth ────────────────────────────────────────────────────────────────────
 
-def _check_write_auth(authorization: str | None) -> None:
+def _check_auth(authorization: str | None) -> None:
+    """App-level bearer auth for data endpoints.
+
+    Cloud Run is deployed with --allow-unauthenticated because Cloudflare
+    Workers cannot mint Google identity tokens. The evidence surface is still
+    protected: /ingest, /search, and /count require EVIDENCE_INGEST_TOKEN.
+    /health is intentionally open for uptime checks.
+    """
     token = os.environ.get("EVIDENCE_INGEST_TOKEN", "")
     if not token:
-        return  # dev mode — no auth configured
+        return  # dev/test mode — no auth configured
     provided = ""
     if authorization and authorization.startswith("Bearer "):
         provided = authorization[7:]
@@ -159,7 +166,7 @@ async def ingest(
     req: IngestRequest,
     authorization: str | None = Header(default=None),
 ) -> dict[str, Any]:
-    _check_write_auth(authorization)
+    _check_auth(authorization)
     if not store:
         raise HTTPException(status_code=503, detail="store not ready")
     t0 = time.monotonic()
@@ -183,12 +190,18 @@ async def search_get(
     limit: int = Query(default=5, ge=1, le=50),
     kind: str | None = Query(default=None),
     mode: str = Query(default="semantic"),
+    authorization: str | None = Header(default=None),
 ) -> dict[str, Any]:
+    _check_auth(authorization)
     return await _do_search(q, limit, kind, mode)
 
 
 @app.post("/search")
-async def search_post(req: SearchRequest) -> dict[str, Any]:
+async def search_post(
+    req: SearchRequest,
+    authorization: str | None = Header(default=None),
+) -> dict[str, Any]:
+    _check_auth(authorization)
     return await _do_search(req.query, req.limit, req.kind, req.mode)
 
 
@@ -213,7 +226,8 @@ async def _do_search(query: str, limit: int, kind: str | None, mode: str) -> dic
 
 
 @app.get("/count")
-async def count() -> dict[str, int]:
+async def count(authorization: str | None = Header(default=None)) -> dict[str, int]:
+    _check_auth(authorization)
     return {"count": await store.count() if store else 0}
 
 
