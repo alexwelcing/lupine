@@ -159,24 +159,29 @@ evidence-index:
     #!/usr/bin/env bash
     set -euo pipefail
     cd cocoindex
-    export COCOINDEX_DB="$$(pwd)/.cocoindex/db"
-    PY=$$( [ -x .venv/Scripts/python.exe ] && echo .venv/Scripts/python.exe || echo .venv/bin/python )
-    CLI=$$( [ -x .venv/Scripts/cocoindex.exe ] && echo .venv/Scripts/cocoindex.exe || echo .venv/bin/cocoindex )
-    "$$PY" seed_data.py
-    "$$CLI" update main.py
+    export COCOINDEX_DB="$PWD/.cocoindex/db"
+    PY=".venv/bin/python"
+    CLI=".venv/bin/cocoindex"
+    if [ -x .venv/Scripts/python.exe ]; then PY=".venv/Scripts/python.exe"; fi
+    if [ -x .venv/Scripts/cocoindex.exe ]; then CLI=".venv/Scripts/cocoindex.exe"; fi
+    "$PY" seed_data.py
+    "$CLI" update main.py
 
 # Semantic (default) or keyword search over the evidence index.
-#   just evidence-search q="which coordination strategies beat the baseline"
-#   just evidence-search q="aluminium" mode=keyword kind=hypothesis
+#   just evidence-index-search "which coordination strategies beat the baseline"
+#   just evidence-index-search "aluminium" keyword hypothesis
 evidence-index-search q mode='semantic' kind='' limit='5':
     #!/usr/bin/env bash
     set -euo pipefail
     cd cocoindex
-    PY=$$( [ -x .venv/Scripts/python.exe ] && echo .venv/Scripts/python.exe || echo .venv/bin/python )
-    flag="$$mode"
-    args=(--$$flag "$q" --limit "$limit")
+    PY=".venv/bin/python"
+    if [ -x .venv/Scripts/python.exe ]; then PY=".venv/Scripts/python.exe"; fi
+    flag={{quote(mode)}}
+    case "$flag" in semantic|keyword) ;; *) echo "mode must be semantic or keyword" >&2; exit 2 ;; esac
+    args=(--$flag {{quote(q)}} --limit {{quote(limit)}})
+    kind={{quote(kind)}}
     [ -n "$kind" ] && args+=(--kind "$kind")
-    "$$PY" query.py "$${args[@]}"
+    "$PY" query.py "${args[@]}"
 
 # Drain the live glim-ledger D1 into ./cocoindex/data and re-index.
 # Requires `wrangler` logged in (npx wrangler login).
@@ -184,11 +189,13 @@ evidence-index-refresh:
     #!/usr/bin/env bash
     set -euo pipefail
     cd cocoindex
-    PY=$$( [ -x .venv/Scripts/python.exe ] && echo .venv/Scripts/python.exe || echo .venv/bin/python )
-    CLI=$$( [ -x .venv/Scripts/cocoindex.exe ] && echo .venv/Scripts/cocoindex.exe || echo .venv/bin/cocoindex )
-    "$$PY" export_evidence.py --from-d1
-    export COCOINDEX_DB="$$(pwd)/.cocoindex/db"
-    "$$CLI" update main.py
+    PY=".venv/bin/python"
+    CLI=".venv/bin/cocoindex"
+    if [ -x .venv/Scripts/python.exe ]; then PY=".venv/Scripts/python.exe"; fi
+    if [ -x .venv/Scripts/cocoindex.exe ]; then CLI=".venv/Scripts/cocoindex.exe"; fi
+    "$PY" export_evidence.py --from-d1
+    export COCOINDEX_DB="$PWD/.cocoindex/db"
+    "$CLI" update main.py
 
 # --- MLIP FLYWHEEL TELEMETRY ---
 

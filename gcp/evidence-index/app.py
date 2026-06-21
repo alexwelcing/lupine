@@ -21,6 +21,7 @@ from __future__ import annotations
 import hashlib
 import hmac
 import os
+import re
 import time
 from contextlib import asynccontextmanager
 from dataclasses import asdict
@@ -69,17 +70,25 @@ def embed(text: str) -> list[float]:
 
 
 def _fallback_embed(text: str) -> list[float]:
-    h = hashlib.sha256(text.encode("utf-8")).digest()
-    buf = bytearray()
-    while len(buf) < EMBED_DIM * 4:
-        buf.extend(h)
-        h = hashlib.sha256(h).digest()
-    arr = np.frombuffer(bytes(buf[: EMBED_DIM * 4]), dtype=np.float32).copy()
-    arr = np.nan_to_num(arr, nan=0.0, posinf=0.0, neginf=0.0)
-    mx = float(np.max(np.abs(arr))) or 1.0
-    arr = (arr / mx) * 0.1
+    """Deterministic lexical embedding used when the real model is unavailable.
+
+    The previous SHA-byte fallback produced stable vectors but no relationship
+    between overlapping texts, so offline/dev semantic search could rank an
+    unrelated record above one sharing the query terms. Hash tokens into a
+    signed bag-of-words vector instead: still cheap and deterministic, but
+    lexical overlap now creates cosine overlap while CI remains HF-independent.
+    """
+    tokens = re.findall(r"[a-z0-9][a-z0-9_-]*", text.lower())
+    arr = np.zeros(EMBED_DIM, dtype=np.float32)
+    for token in tokens:
+        h = hashlib.sha256(token.encode("utf-8")).digest()
+        idx = int.from_bytes(h[:4], "big") % EMBED_DIM
+        sign = 1.0 if h[4] & 1 else -1.0
+        arr[idx] += sign
     n = float(np.linalg.norm(arr))
-    return ((arr / n) if n > 0 else arr).astype(np.float32).tolist()
+    if n == 0.0:
+        return arr.tolist()
+    return (arr / n).astype(np.float32).tolist()
 
 
 # ─── Store lifecycle ─────────────────────────────────────────────────────────
