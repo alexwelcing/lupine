@@ -143,7 +143,33 @@ class PostgresStore:
     @classmethod
     async def create(cls, database_url: str) -> "PostgresStore":
         import asyncpg
-        pool = await asyncpg.create_pool(database_url, min_size=1, max_size=8)
+        # asyncpg's DSN parser doesn't handle ?host=/cloudsql/... reliably.
+        # Parse it ourselves and pass host as a kwarg.
+        import urllib.parse
+        parsed = urllib.parse.urlparse(database_url)
+        query = urllib.parse.parse_qs(parsed.query)
+        connect_kwargs: dict[str, Any] = {}
+        if "host" in query:
+            connect_kwargs["host"] = query["host"][0]
+            # Rebuild a clean DSN without the host query param.
+            clean_url = database_url.split("?")[0]
+        else:
+            clean_url = database_url
+        # Retry — the Cloud SQL socket may not be ready on the very first
+        # boot of a cold Cloud Run instance.
+        pool = None
+        for attempt in range(5):
+            try:
+                pool = await asyncpg.create_pool(
+                    clean_url, min_size=1, max_size=8, **connect_kwargs,
+                )
+                break
+            except (ConnectionRefusedError, OSError) as e:
+                if attempt == 4:
+                    raise
+                import asyncio
+                print(f"[evidence] Postgres connect retry {attempt+1}/5: {e}")
+                await asyncio.sleep(2 ** attempt)
         store = cls(pool)
         await store._init_schema()
         return store
