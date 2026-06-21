@@ -137,6 +137,59 @@ mono-check-full:
 smoke-atlas-distill:
     gcloud builds submit --config cloudbuild.atlas-distill-smoke.yaml .
 
+# --- EVIDENCE INDEX (GCP CLOUD RUN) ---
+
+# Deploy the evidence-index service to Cloud Run (CPU, min-instances=1).
+# Prerequisites: Cloud SQL Postgres+pgvector + secrets — see
+# gcp/evidence-index/cloudbuild.yaml header.
+evidence-deploy:
+    gcloud builds submit --config gcp/evidence-index/cloudbuild.yaml .
+
+# Health check the deployed evidence-index service.
+evidence-health url='':
+    @if [ -z "$(url)" ]; then echo "Usage: just evidence-health url=https://evidence-index-<hash>-uc.a.run.app"; exit 1; fi
+    curl -sf "$(url)/health" | python -m json.tool
+
+# --- COCOINDEX EVIDENCE INDEX ---
+
+# Seed ./cocoindex/data with sample evidence and build the embedded index.
+# Idempotent: cocoindex only re-embeds changed files. Use COCOINDEX_DB (set
+# below) — it's the engine's own state path, separate from evidence.db.
+evidence-index:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    cd cocoindex
+    export COCOINDEX_DB="$$(pwd)/.cocoindex/db"
+    PY=$$( [ -x .venv/Scripts/python.exe ] && echo .venv/Scripts/python.exe || echo .venv/bin/python )
+    CLI=$$( [ -x .venv/Scripts/cocoindex.exe ] && echo .venv/Scripts/cocoindex.exe || echo .venv/bin/cocoindex )
+    "$$PY" seed_data.py
+    "$$CLI" update main.py
+
+# Semantic (default) or keyword search over the evidence index.
+#   just evidence-search q="which coordination strategies beat the baseline"
+#   just evidence-search q="aluminium" mode=keyword kind=hypothesis
+evidence-index-search q mode='semantic' kind='' limit='5':
+    #!/usr/bin/env bash
+    set -euo pipefail
+    cd cocoindex
+    PY=$$( [ -x .venv/Scripts/python.exe ] && echo .venv/Scripts/python.exe || echo .venv/bin/python )
+    flag="$$mode"
+    args=(--$$flag "$q" --limit "$limit")
+    [ -n "$kind" ] && args+=(--kind "$kind")
+    "$$PY" query.py "$${args[@]}"
+
+# Drain the live glim-ledger D1 into ./cocoindex/data and re-index.
+# Requires `wrangler` logged in (npx wrangler login).
+evidence-index-refresh:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    cd cocoindex
+    PY=$$( [ -x .venv/Scripts/python.exe ] && echo .venv/Scripts/python.exe || echo .venv/bin/python )
+    CLI=$$( [ -x .venv/Scripts/cocoindex.exe ] && echo .venv/Scripts/cocoindex.exe || echo .venv/bin/cocoindex )
+    "$$PY" export_evidence.py --from-d1
+    export COCOINDEX_DB="$$(pwd)/.cocoindex/db"
+    "$$CLI" update main.py
+
 # --- MLIP FLYWHEEL TELEMETRY ---
 
 # Validate the real-material MLIP benchmark source packet and print Ni evidence.

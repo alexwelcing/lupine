@@ -32,6 +32,7 @@ the roots below remain the current source/deploy truth.
 | `scripts/` | Repo-level utility scripts. | Keep, prune | Scripts must target active roots only. |
 | `archive/swarm_preprint_review/` | Early critique seed corpus referenced by migrations and tools. | Keep, archive | Archived root; cited material can be elevated to `docs/evidence/` incrementally. |
 | `tools/` | Local CLIs, promotion loops, telemetry checks, and research helpers. | Keep | Keep small, runnable, and connected to `glim-think` or evidence ledgers. |
+| `cocoindex/` | CocoIndex v1 evidence pipeline: incremental D1-ledger → embedded SQLite index over coordination traces, hypotheses, and claims. | Keep | The evidence tier closing the loop with `glim-think`'s Omnigents coordination layer. See `docs/rfc-omnigents-cocoindex.md`. |
 
 ## Removed In This Cleanup
 
