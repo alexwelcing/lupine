@@ -153,9 +153,9 @@ time, so treat `CHANGELOG.md` and the Library as the live record.
 
 | Status | Examples |
 | --- | --- |
-| Supported | Hyper-ribbon error geometry survives the classical-to-MLIP transition for most IMMI elements; de-myopization beyond elastic constants preserves structure in early tests |
+| Supported | Classical hyper-ribbon error geometry; de-myopization beyond elastic constants preserves structure in early tests |
 | Refuted by us | The d-band hypothesis was confounded by sample size; the MEAM anomaly weakened under matched-sample bootstrap; the BCC/FCC causal shield was traced to data contamination |
-| Open | Au escape under foundation MLIPs; Fe as a persistent outlier; prediction of cohesive energy and bulk modulus from the learned geometry |
+| Open / under re-audit | Per-element classical-to-MLIP transfer counts after Born screening; Au escape under foundation MLIPs; Fe magnetic failure mode; prediction of cohesive energy and bulk modulus from the learned geometry |
 
 ## Repository Map
 

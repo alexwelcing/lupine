@@ -63,9 +63,11 @@ B→C is *not* automatic — it needs A6, which had never been tested.
 
 The honest record is [`docs/conjectures/ledger.md`](./conjectures/ledger.md) and
 [`CHANGELOG.md`](../CHANGELOG.md). Snapshot from the README: **supported** —
-hyper-ribbon survives classical→MLIP for most IMMI elements; **refuted by us** —
-d-band (sample size), MEAM anomaly (matched-n bootstrap), BCC/FCC shield (data
-contamination); **open** — Au escape, Fe outlier, predicting `E_coh`/`B0`.
+classical hyper-ribbon universality and early de-myopization beyond elastic
+constants; **open / under re-audit** — per-element classical→MLIP transfer counts
+after Born screening, Au escape, Fe magnetic failure mode, predicting `E_coh`/`B0`;
+**refuted by us** — d-band (sample size), MEAM anomaly (matched-n bootstrap),
+BCC/FCC shield (data contamination).
 Per-conjecture detail: [`docs/conjectures/`](./conjectures/).
 
 ## This session's additions (MiniMax-M3 upgrade + the live campaign) — and their status

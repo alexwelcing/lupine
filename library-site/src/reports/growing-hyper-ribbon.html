@@ -52,7 +52,8 @@
 
 <section id="s0">
   <div class="tldr">
-    <p>The Lupine hyper-ribbon is a low-dimensional error manifold (participation ratio <strong>PR ≈ 1.05–1.86</strong> in 3D property space) discovered across <strong>559 classical interatomic potentials</strong> and <strong>15 benchmark metals</strong>. When foundation MLIPs (MACE-MP-0, CHGNet, Orb-v3) are added, <strong>14/15 elements stay on the ribbon</strong> <em>(pre-screening count; see re-audit note)</em> — but <strong>gold (Au) escapes</strong>, its PR jumping from <strong>1.02 → 1.67</strong> under MACE. This document develops the machinery to (1) <strong>grow the manifold to arbitrary N+ properties</strong> while keeping PR bounded via conditional activation, (2) <strong>detect escape events</strong> in real time using a Participation-Ratio statistic, (3) <strong>build a regulator</strong> acting as a configurable mid-run filter (an audio-EQ analogy), and (4) <strong>propagate escape discoveries</strong> through a catalog that automatically improves all future MLIP runs. Gold nanostructure generation is the validation target — each Au structure feeds back into the catalog, tightening the ribbon for everyone downstream.</p>
+    <p><strong>Re-audit note (2026-06):</strong> this is a historical/pre-screening framework article. Born stability screening later excluded 7 of 45 foundation-model elastic tensors, so the old per-element MLIP counts below are not current citable evidence. Use <a href="/#/read/born-screening-re-audit">What Survived the Born-Screening Re-Audit?</a> and <a href="/#/read/conjecture-ledger">the hypothesis ledger</a> for live claim status.</p>
+    <p>The Lupine hyper-ribbon is a low-dimensional error manifold (participation ratio <strong>PR ≈ 1.05–1.86</strong> in 3D property space) discovered across <strong>559 classical interatomic potentials</strong> and <strong>15 benchmark metals</strong>. Early foundation-MLIP additions motivated a conditional-manifold and escape-detection framework, but their exact per-element counts are now under Born-screened recomputation. This document develops the machinery to (1) <strong>grow the manifold to arbitrary N+ properties</strong> while keeping PR bounded via conditional activation, (2) <strong>detect escape events</strong> in real time using a Participation-Ratio statistic, (3) <strong>build a regulator</strong> acting as a configurable mid-run filter (an audio-EQ analogy), and (4) <strong>propagate escape hypotheses</strong> through a catalog that improves future MLIP runs once evidence is screened.</p>
   </div>
 </section>
 
@@ -82,12 +83,12 @@
     </div>
     <canvas id="ribbonCv"></canvas>
     <div class="legend">
-      <span><i style="background:#7da6ff"></i>14 ribbon-bound metals</span>
-      <span><i style="background:#e9b949"></i>Au (escape-prone)</span>
-      <span><i style="background:#e15a5a"></i>Fe (persistent outlier)</span>
+      <span><i style="background:#7da6ff"></i>pre-screening ribbon-bound metals</span>
+      <span><i style="background:#e9b949"></i>Au (escape hypothesis)</span>
+      <span><i style="background:#e15a5a"></i>Fe (magnetic failure-mode suspect)</span>
       <span style="margin-left:auto">live PR&nbsp; <b class="readout" id="prLive">1.42</b> / 3 · escape ρ <b class="readout" id="rhoLive">0.04</b></span>
     </div>
-    <figcaption>Each point is a potential's prediction-error vector projected to the two leading principal axes; the cloud hugs a near-1D ridge — the hyper-ribbon. Toggle <b>+ MACE-MP-0</b>: 14/15 metals stay bound, but Au is flung orthogonal to the ribbon (PR 1.02 → 1.67) while Fe remains the off-axis outlier. Pre-screening figures, under re-audit (2026-06: Born stability screening excludes 7 of 45 foundation-model elastic tensors). PR and escape ratio are computed live from the displayed covariance.</figcaption>
+    <figcaption>Each point is a potential's prediction-error vector projected to the two leading principal axes; the cloud hugs a near-1D ridge — the hyper-ribbon. The displayed MACE/CHGNet examples are pre-screening figures now under re-audit (2026-06: Born stability screening excludes 7 of 45 foundation-model elastic tensors). Treat the visual as a method demo, not current evidence for a settled 14/15 count, Fe PR exception, or Au mechanism.</figcaption>
   </figure>
 
   <div class="tw">
@@ -96,13 +97,13 @@
       <tbody>
         <tr><td><strong>Global PR</strong></td><td>1.05–1.86</td><td>1.10–1.92</td><td>1.08–1.88</td><td>Effective dimensionality stays low</td></tr>
         <tr><td><strong>Ribbon dim (90%)</strong></td><td>1–2</td><td>1–2</td><td>1–2</td><td>Dominant error modes are 1–2</td></tr>
-        <tr class="au-row"><td><strong>Au PR</strong></td><td>1.02</td><td><strong>1.67</strong></td><td><strong>1.58</strong></td><td><strong>Au escapes</strong> — unique behavior</td></tr>
-        <tr><td><strong>Ag PR</strong></td><td>1.15</td><td>1.12</td><td>1.09</td><td>Ag stays on ribbon (refuted escape)</td></tr>
-        <tr><td><strong>Fe PR</strong></td><td>2.1</td><td>2.3</td><td>2.2</td><td>Fe is persistent outlier (magnetism)</td></tr>
+        <tr class="au-row"><td><strong>Au PR</strong></td><td>1.02</td><td><strong>1.67</strong></td><td><strong>1.58</strong></td><td>Pre-screening escape hypothesis; screened robustness open</td></tr>
+        <tr><td><strong>Ag PR</strong></td><td>1.15</td><td>1.12</td><td>1.09</td><td>Pre-screening Ag escape refutation; keep as historical control</td></tr>
+        <tr><td><strong>Fe PR</strong></td><td>2.1</td><td>2.3</td><td>2.2</td><td>Pre-screening only; old PR-outlier claim frozen after Born screening</td></tr>
       </tbody>
     </table>
   </div>
-  <p>The Au escape is <strong>reproduced across two independent MLIPs</strong> (MACE and CHGNet), establishing it as a real effect rather than a model artifact. The refutation of Ag escape — CHGNet pulls Ag back onto the ribbon — proves the effect is <strong>Au-specific</strong>, not a noble-metal class effect. This specificity is what makes the escape catalogable and correctable.</p>
+  <p>The pre-screening Au escape was observed across MACE and CHGNet, while Ag did not reproduce the same behavior. After Born screening, the right status is narrower: Au remains an escape <strong>hypothesis</strong> and a strong catalyst/surface target, but mechanism and screened robustness are still open. This specificity is useful because it makes the next experiment falsifiable rather than merely suggestive.</p>
 </section>
 
 <section id="s2">

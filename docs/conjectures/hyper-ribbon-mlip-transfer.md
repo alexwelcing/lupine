@@ -1,14 +1,30 @@
 # Hyper-Ribbon Transfers Classical → MLIP
 
-**Status: Supported**
+**Status: Open — under Born-screened re-audit**
+
+## Current status after Born screening
+
+The pre-screening “14/15 elements stay on the ribbon” count is no longer citable
+as a settled MLIP-transfer result. Born stability screening (see
+`replication/error-geometry/`, prereg commits `dffbe595`/`ebf39e33`) excludes 7
+of 45 foundation-model elastic tensors — including **CHGNet-Fe** (C11 < |C12|),
+MACE-V, and Orb-v3 Al/Nb/Pb/Pt — so any per-element participation-ratio or
+on-ribbon count computed from the unscreened trio inputs must be recomputed.
+
+What survives is narrower but still important: at n = 8–11 Born-stable models per
+element, the error axis remains strongly one-dimensional for all 15 elements
+(rank-1 share 0.56–0.94). The current claim is therefore directional
+low-dimensional structure in screened inputs, not a restored 14/15 per-element
+count.
 
 ## Claim
 
-The hyper-ribbon is not a quirk of classical force fields. When modern foundation
-machine-learning interatomic potentials (MLIPs) are added to the corpus, the same
-low-dimensional error geometry holds.
+The hyper-ribbon is not a quirk of classical force fields. The live question is
+which parts of that low-dimensional error geometry survive when modern foundation
+machine-learning interatomic potentials (MLIPs) are added to the corpus after
+mechanical-stability screening.
 
-## Evidence
+## Historical evidence (pre-screening; do not cite as current counts)
 
 Ingested one foundation MLIP at a time on the 15 IMMI elements:
 
@@ -25,26 +41,14 @@ ratio 1.05–2.05). So it is not an artifact of one property family.
 
 ## Why it matters
 
-This is the genuinely surprising result. The prior — stated explicitly before the
-test — was that the ribbon/dichotomy would *not* transfer from classical to MLIP. It
-did. Cross-paradigm survival is the strong evidence; we do not oversell the
-sub-findings that did not transfer.
+This remains the genuinely important target: the prior — stated explicitly before
+the test — was that the ribbon/dichotomy would *not* transfer from classical to
+MLIP. The screened directional signal suggests the geometry may still transfer,
+but the old element count cannot be promoted until it is recomputed on valid
+tensors.
 
 ## Next
 
-Add $E_\text{coh}$ and $B_0$ from the Phase-D compute pipeline so the manifold spans
-four property families, then re-test ribbon stability across the wider basis.
-
-## Re-audit note (2026-06-11)
-
-Born stability screening (see `replication/error-geometry/`, prereg commits
-`dffbe595`/`ebf39e33`) excludes 7 of 45 foundation-model elastic tensors —
-including **CHGNet-Fe** (C11 < |C12|), MACE-V, and Orb-v3 Al/Nb/Pb/Pt — so any
-per-element PR or on-ribbon count computed from unscreened trio inputs is
-contaminated and must be recomputed. Independently, at n = 8–11 Born-stable
-models per element, Fe's cross-model alignment is **+0.80** (not an alignment
-outlier), and the error AXIS is one-dimensional for all 15 elements (rank-1
-share 0.56–0.94). What survives for Fe specifically: one foundation model's
-elastic tensor for Fe fails mechanical stability outright — a failure MODE
-consistent with the magnetism hypothesis, but a different claim than
-"PR > 2 on the ribbon". Recompute before citing this conjecture's evidence.
+First recompute the classical-to-MLIP transfer count on Born-stable inputs. Then
+add $E_\text{coh}$ and $B_0$ from the Phase-D compute pipeline so the manifold
+spans four property families, and re-test ribbon stability across the wider basis.

@@ -23,7 +23,7 @@ Each hypothesis is its own entry with a lifecycle **status**. The status legend:
 | Projected hyper-ribbon release | Open | New Lean-first release lane: prove projected-ribbon gates, then require replay plus cloud evidence before promotion. |
 | Cross-MLIP orthogonal error modes | Supported | MACE and CHGNet have orthogonal error directions on Ag/Nb/Pd. |
 | Au escapes the ribbon under foundation MLIPs | Open | Confirmed for MACE+CHGNet; Ag escape refuted. |
-| Fe is a persistent outlier | Open | PR > 2 invariant to LAM addition across the trio. |
+| Fe magnetic MLIP failure mode | Open · under re-audit | The old PR > 2 trio claim is frozen after Born screening excluded CHGNet-Fe; Fe remains a magnetic/mechanical-stability failure-mode target. |
 | D-band controls error correlation | **Refuted by us** | Sample-size confounder (full-sample ρ = −0.02). |
 | MEAM is intrinsically 2-D | **Refuted by us** | Matched-n bootstrap: MEAM overlaps Tersoff. |
 | BCC/FCC "causal shield" | **Self-corrected** | The dramatic r 0.90 vs 0.04 was 1.5 % data contamination. |

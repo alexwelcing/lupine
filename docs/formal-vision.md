@@ -8,22 +8,28 @@ This project is the first attempt to treat interatomic potential validation as a
 
 ## Build Status
 
+> **Current status (2026-06):** the Projection Law proof chain now reports 77
+> build-locked theorems, ~225 theorem/lemma declarations, seven paper theorems,
+> zero `sorry`, and a 2,891-job `lake build` green. This page began as the
+> earlier executable-vision snapshot; the inventory below is retained as lineage,
+> while the counters have been updated to the current public proof surface.
+
 <div class="stat-row">
   <div class="stat-card">
-    <div class="stat-number">1,499</div>
+    <div class="stat-number">2,891</div>
     <div class="stat-label">Build targets passed</div>
   </div>
   <div class="stat-card">
-    <div class="stat-number">47</div>
-    <div class="stat-label">Theorems proven</div>
+    <div class="stat-number">77</div>
+    <div class="stat-label">Build-locked theorems</div>
   </div>
   <div class="stat-card">
-    <div class="stat-number">6</div>
-    <div class="stat-label">Meta-scientific hypotheses</div>
+    <div class="stat-number">~225</div>
+    <div class="stat-label">Theorem / lemma declarations</div>
   </div>
   <div class="stat-card">
-    <div class="stat-number">5</div>
-    <div class="stat-label">Documented epistemic gaps</div>
+    <div class="stat-number">7</div>
+    <div class="stat-label">Projection Law paper theorems</div>
   </div>
 </div>
 
