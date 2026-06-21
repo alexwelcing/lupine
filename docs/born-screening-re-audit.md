@@ -1,7 +1,7 @@
 # What Survived the Born-Screening Re-Audit?
 
-**Status:** self-corrected / open gates  
-**Publication date:** 2026-06-20  
+**Status:** self-corrected / open gates
+**Publication date:** 2026-06-20
 **Scope:** foundation-MLIP elastic tensors, the classical-to-MLIP transfer conjecture, Fe outlier language, and Au escape language.
 
 ## Human summary

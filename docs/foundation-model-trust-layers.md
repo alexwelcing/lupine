@@ -1,7 +1,7 @@
 # Foundation Materials Models Need Trust Layers, Not Just Bigger Benchmarks
 
-**Status:** proposed / publication-ready library memo  
-**Publication date:** 2026-06-20  
+**Status:** proposed / publication-ready library memo
+**Publication date:** 2026-06-20
 **Audience:** materials labs, MLIP builders, and observers evaluating the Lupine evidence trail.
 
 ## Human summary
