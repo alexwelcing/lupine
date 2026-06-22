@@ -2,19 +2,16 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{amsmath,amssymb,amsthm}
-\usepackage{mathtools}
 \usepackage{graphicx}
 \usepackage{booktabs}
-\usepackage{siunitx}
 \usepackage{hyperref}
-\usepackage{cleveref}
-\usepackage{algorithm}
-\usepackage{algpseudocode}
 \usepackage{xcolor}
-\usepackage{microtype}
-\usepackage{natbib}
-\usepackage{multirow}
-\usepackage{enumitem}
+\usepackage[numbers]{natbib}
+\makeatletter
+\newcommand{\cref}[1]{\begingroup\def\crefsep{}\@for\crefitem:=#1\do{\crefsep\ref{\crefitem}\def\crefsep{, }}\endgroup}
+\newcommand{\Cref}[1]{\cref{#1}}
+\makeatother
+\providecommand{\coloneqq}{\mathrel{:=}}
 
 % Theorem environments
 \newtheorem{theorem}{Theorem}[section]
@@ -54,7 +51,7 @@ At the same time, the ``accuracy wall'' of extrapolation failure remains the cen
 In the companion Refusal-Mode framework (Paper III of the Lupine trilogy) we showed how to build such abstention policies with calibrated false-refusal rates. The present paper asks a different question: \emph{Can refusal itself be turned into an acceleration mechanism?} The intuition is simple. If an OOD configuration would trigger refusal at the final layer $L$, and if we can \emph{prove} that the distance-to-manifold grows monotonically across layers, then refusal can be checked at an intermediate ``stop layer'' $k^* < L$. When refusal fires, the remaining $L-k^*$ layers---and the final readout---are skipped entirely. For OOD-heavy workloads (e.g., high-throughput screening, where $40\%$ of candidates may be chemically exotic) the savings are substantial.
 
 This paper makes four contributions:
-\begin{enumerate}[leftmargin=*]
+\begin{enumerate}
     \item \textbf{A causal acceleration theorem} (\cref{thm:main}) that lower-bounds the expected speedup of a layerwise refusal policy by a closed-form expression involving only model-class constants.
     \item \textbf{Two geometric lemmas} (monotonicity and contraction) that justify early abortion and bound false refusals, respectively.
     \item \textbf{Two operational corollaries}: a chi-squared threshold-calibration protocol, and a multiplicative-stacking result for composition with existing accelerations.
@@ -209,7 +206,7 @@ Our theorem rests on three architectural assumptions (F1--F3) inherited from the
 The acceleration mechanism is not active learning, adaptive sampling, or model compression. It is \emph{compute-aware abstention} that exploits the geometric structure of the error manifold established in Paper II.
 
 \paragraph{Layerwise descriptor-distance monotonicity.} For OOD configurations, the descriptor trajectory in $\mathcal{D}_1\to\mathcal{D}_2\to\cdots\to\mathcal{D}_L$ moves monotonically away from the training manifold (\cref{lem:monotonicity}). This means:
-\begin{itemize}[leftmargin=*]
+\begin{itemize}
     \item A configuration that would trigger refusal at layer $L$ would also have triggered refusal at some earlier layer $k\le k^*$.
     \item Early refusal is \emph{safe}: you never miss a late-stage refusal by stopping early.
     \item There are no pathological cases where the distance stays small through $k^*$ and then jumps discontinuously at $k^*+1$.
@@ -224,7 +221,7 @@ The acceleration mechanism is not active learning, adaptive sampling, or model c
 
 \subsection{Architectural Assumptions (F1--F3)}
 
-\begin{itemize}[leftmargin=*]
+\begin{itemize}
     \item \textbf{F1 (Coverage).} The theorem requires $\kappa_1\in(0,1)$. Current foundation models quote $\kappa_1\approx 0.80$ (MPtrj) and $\kappa_1\approx 0.92$ (OMat24), but these numbers are asserted, not measured. We propose a measurement protocol in \cref{sec:empirical:kappa}.
     \item \textbf{F2 (Message-passing).} The theorem assumes well-defined layerwise descriptors. MACE, NequIP, and Allegro satisfy this, but some architectures (e.g., transformer-based potentials with residual mixing) may blur layer boundaries.
     \item \textbf{F3 (Lipschitz).} Finiteness of $L_m^{(k)}$ and $L_u^{(k)}$ is guaranteed for any continuous function on a compact domain, but \emph{sharp} bounds are unknown. The document cites this as Open Problem~1 from Paper II. Without sharp bounds, the monotonicity lemma is qualitative; the quantitative speedup bound relies on the reach condition instead.
@@ -232,14 +229,14 @@ The acceleration mechanism is not active learning, adaptive sampling, or model c
 
 \subsection{Geometric Assumptions}
 
-\begin{itemize}[leftmargin=*]
+\begin{itemize}
     \item \textbf{Reach bound $r(\mathcal{F})$.} The class-uniform reach appears in the bound but no numerical value has been published. Without $r(\mathcal{F})$, threshold selection $\tau=r(\mathcal{F})/2$ is purely illustrative. We propose an estimation protocol in \cref{sec:empirical:reach}.
     \item \textbf{Smooth error manifold.} Federer's tubular neighborhood theorem requires $\mathcal{M}_k$ to be a $C^2$ submanifold. Real descriptor manifolds may have self-intersections or singularities at phase boundaries.
 \end{itemize}
 
 \subsection{Operational Assumptions and Their Violations}
 
-\begin{itemize}[leftmargin=*]
+\begin{itemize}
     \item \textbf{Uniform per-layer cost (Assumption~\ref{ass:cost}).} Real MACE architectures use different cutoff radii and neighbor counts across layers; layer costs vary by up to $2\times$. The theorem's $T_{\text{full}}\propto L$ approximation must be validated by wall-clock profiling (\cref{sec:empirical:wallclock}).
     \item \textbf{Gaussian approximation (Assumption~\ref{ass:gaussian}).} Descriptor distributions on training data are likely heavy-tailed or multimodal (different chemistries, different temperatures). No goodness-of-fit test has been performed. We propose a Kolmogorov-Smirnov protocol in \cref{sec:empirical:false}.
     \item \textbf{Independence of accelerations (Corollary~\ref{cor:stacking}).} FP16 quantization and graph compilation may alter numerical values of intermediate descriptors, potentially changing $D_k(x)$. The independence assumption is plausible but unverified.
@@ -254,7 +251,7 @@ For a 4-layer MACE with $k^*=2$, $\kappa_1=0.80$, and $\tau=r(\mathcal{F})/2$, \
     \;\approx\; 1.033.
 \end{equation}
 This is a \emph{universal, distribution-independent} lower bound. It is small because it must hold even for test distributions that are entirely in-distribution ($\kappa_1\to 1$). The practical value of the theorem is not the worst-case guarantee but the \emph{calibrated} speedup on real workloads:
-\begin{itemize}[leftmargin=*]
+\begin{itemize}
     \item Production MD with $8$--$20\%$ OOD: expected speedup $1.2\times$--$1.5\times$.
     \item High-throughput screening with $40\%$ OOD: expected speedup $2\times$--$5\times$.
     \item With multiplicative stacking: $3.2\times$--$5.4\times$ combined.
@@ -275,7 +272,7 @@ This section is the critical addition to the prior theory sketch. Because no exp
 \textbf{Software stack.} PyTorch 2.2+, CUDA 12.1, \texttt{mace} package compiled with \texttt{torch.compile} (default mode). Use \texttt{CUDA\_VISIBLE\_DEVICES} isolation. Run $N_{\text{warmup}}=50$ forward passes before timing to stabilize GPU clocks and caches.
 
 \textbf{Test datasets.}
-\begin{enumerate}[leftmargin=*]
+\begin{enumerate}
     \item \textbf{ID benchmark:} A random $10^4$-config subset of the MPtrj validation split (held out from training, but same distribution).
     \item \textbf{OOD benchmark 1 (structural):} The MS25 zeolite benchmark\cite{ms25benchmark}---configs from the MFI framework, which MACE-MP-0 was not explicitly trained on. $N\approx 2\times 10^3$.
     \item \textbf{OOD benchmark 2 (compositional):} A synthetic high-entropy alloy (HEA) dataset (Cr-Mn-Fe-Co-Ni) with random SQS supercells not present in MPtrj. $N\approx 5\times 10^3$.
@@ -293,7 +290,7 @@ This section is the critical addition to the prior theory sketch. Because no exp
 with $\lambda=10^{-4}\,\text{tr}(\Sigma_k)/d_k$ to ensure invertibility. Store $\Sigma_k^{-1}$ (pre-computed Cholesky factor).
 
 \textbf{Step 3: Distance evaluation.} For each test config, compute $D_k(x)$ via \cref{eq:mahal} using exact nearest-neighbor search over the $10^5$ training descriptors. Report:
-\begin{itemize}[leftmargin=*]
+\begin{itemize}
     \item Mean and max $D_k(x)$ per dataset and per layer.
     \item Histograms of $D_k(x)^2$ vs. the $\chi^2_{d_k}$ PDF (goodness-of-fit test).
     \item Monotonicity check: fraction of OOD configs violating $D_{k+1}(x)\ge D_k(x)$.
@@ -302,7 +299,7 @@ with $\lambda=10^{-4}\,\text{tr}(\Sigma_k)/d_k$ to ensure invertibility. Store $
 \subsection{Wall-Clock Benchmark Protocol}\label{sec:empirical:wallclock}
 
 \textbf{Step 1: Baseline timing.} Measure $T_{\text{full}}(x)$ for full 4-layer inference plus readout. Use \texttt{torch.cuda.synchronize()} before and after each forward pass. Report:
-\begin{itemize}[leftmargin=*]
+\begin{itemize}
     \item Per-config latency (mean, std, min, max) over $N_{\text{eval}}=500$ repetitions.
     \item Layerwise breakdown: time per interaction block, time for readout, time for neighbor-list rebuild.
     \item Batch scaling: latencies for batch sizes $B\in\{1,4,16,64\}$.
@@ -323,7 +320,7 @@ Report 95\% confidence intervals via bootstrap resampling ($10^4$ resamples).
 \textbf{Definition.} A \emph{false refusal} occurs when $D_k(x)>\tau_k$ for some $k\le k^*$ but the true prediction error (energy MAE or force MAE against DFT) is below the model's certified accuracy on the ID validation set.
 
 \textbf{Protocol.}
-\begin{enumerate}[leftmargin=*]
+\begin{enumerate}
     \item For each layer $k$, compute $D_k(x)$ on the ID validation set ($N=10^4$ MPtrj held-out configs).
     \item Calibrate $\tau_k$ via \cref{cor:chi2} at target false-refusal rates $\alpha\in\{0.001,0.01,0.05\}$.
     \item Run the refusal policy on the ID set and count the fraction of configs that trigger refusal. This is the \emph{empirical false-refusal rate} $\hat\alpha$.
@@ -338,7 +335,7 @@ Report 95\% confidence intervals via bootstrap resampling ($10^4$ resamples).
 The coverage constant $\kappa_1$ is the fraction of the test distribution that lies inside the training support. Because ``support'' is not directly observable, we operationalize it via descriptor-space density.
 
 \textbf{Protocol.}
-\begin{enumerate}[leftmargin=*]
+\begin{enumerate}
     \item Fit a kernel density estimator (KDE) with bandwidth selected by Silverman's rule on the layer-$L$ training descriptors $\{\phi^{(L)}(x):x\in\mathcal{T}\}$.
     \item Define the training support as the super-level set $\{z: \hat p(z) > \epsilon\}$ for $\epsilon = 10^{-3}\,\max\hat p$.
     \item For each test config $x$, evaluate $\hat p(\phi^{(L)}(x))$. If $\hat p > \epsilon$, label $x$ as ID; else OOD.
@@ -353,7 +350,7 @@ The coverage constant $\kappa_1$ is the fraction of the test distribution that l
 The reach bound $r(\mathcal{F})$ is the largest radius for which the nearest-point projection onto $\mathcal{M}_k$ is unique. It is a geometric property of the model class, not of a single model instance.
 
 \textbf{Protocol (empirical surrogate).}
-\begin{enumerate}[leftmargin=*]
+\begin{enumerate}
     \item Compute the $k$-nearest-neighbor distance $\delta_k(x)$ from each training descriptor to its $k$-th nearest neighbor in descriptor space, for $k\in\{5,10,50\}$.
     \item Define the empirical reach as the $q$-th quantile of $\{\delta_k(x)\}$. We recommend $q=0.01$ (conservative) and $q=0.05$ (typical).
     \item Report $\hat r(\mathcal{F}) = \text{Quantile}_{0.01}(\delta_{10})$.
@@ -367,7 +364,7 @@ The reach bound $r(\mathcal{F})$ is the largest radius for which the nearest-poi
 The theorem assumes that computing $D_k(x)$ is free. It is not. We must measure and, if necessary, amortize this overhead.
 
 \textbf{Protocol.}
-\begin{enumerate}[leftmargin=*]
+\begin{enumerate}
     \item Measure the wall-clock time of the exact Mahalanobis distance computation (covariance lookup + nearest-neighbor search over $10^5$ training descriptors) for a single config.
     \item Measure the time with approximate nearest neighbors (FAISS IVF-Flat, $nlist=100$; HNSW, $M=16$).
     \item Compare to $T_{\text{full}}$. If $T_{\text{distance}} > 0.1\,T_{\text{full}}$, the overhead is non-negligible and must be subtracted from the speedup.
@@ -437,7 +434,7 @@ Practical MLIP acceleration includes \textbf{neighbor pruning}\cite{fastchgnet20
 
 The Causal Acceleration Theorem is a \emph{certificate}, not a product. To deploy it in production MD engines (LAMMPS, OpenMM, ASE), several engineering problems remain:
 
-\begin{enumerate}[leftmargin=*]
+\begin{enumerate}
     \item \textbf{Memory cost.} Storing training descriptors for $10^5$ configs across 4 layers requires $\sim 4\times 10^5 \times 256 \times 4\,\text{B} \approx 400$~MB in FP32. This is acceptable for a single GPU but must be managed carefully in multi-GPU domain decomposition.
     \item \textbf{Nearest-neighbor latency.} Exact NN over $10^5$ points in $\mathbb{R}^{256}$ costs $\sim 10$~ms per config on a CPU. FAISS GPU indexing reduces this to $<1$~ms, but index building adds startup cost. For MD with $B=64$ batching, the amortized cost is $<0.02$~ms per config.
     \item \textbf{Dynamic neighbor lists.} MACE-MP-0 rebuilds neighbor lists every step. If refusal fires, the neighbor list for the aborted layers is wasted compute. The net savings depend on whether neighbor-list cost is counted in $T_{\text{full}}$; in LAMMPS it is significant ($\sim 20\%$ of total time).
@@ -447,7 +444,7 @@ The Causal Acceleration Theorem is a \emph{certificate}, not a product. To deplo
 \subsection{Multiplicative Stacking: Hope vs. Reality}
 
 \Cref{cor:stacking} predicts $3.2\times$--$5.4\times$ combined speedups by multiplying refusal, pruning, quantization, and compilation factors. This is optimistic for three reasons:
-\begin{itemize}[leftmargin=*]
+\begin{itemize}
     \item \textbf{Sub-additivity.} GPU kernels often become memory-bandwidth-bound after arithmetic reduction; combining two $1.5\times$ arithmetic reductions may yield $<2.25\times$ total.
     \item \textbf{Descriptor drift under quantization.} FP16 rounding may perturb $\phi^{(k)}(x)$ by $\sim 10^{-3}$ relative error. For configs near the threshold, this can flip the refusal decision, altering the speedup distribution.
     \item \textbf{Compilation fragility.} \texttt{torch.compile} struggles with dynamic shapes (changing neighbor counts). Refusal introduces a dynamic control flow (abort or continue) that may break graph capture.
@@ -456,7 +453,7 @@ We recommend measuring the combined speedup directly rather than multiplying ind
 
 \subsection{Open Problems}
 
-\begin{enumerate}[leftmargin=*]
+\begin{enumerate}
     \item \textbf{Sharp Lipschitz bounds.} The monotonicity lemma is qualitative without sharp $L_m^{(k)}$ and $L_u^{(k)}$. Computing these bounds for MACE-MP-0 is a nontrivial optimization problem (Lipschitz constant estimation for GNNs).
     \item \textbf{Adaptive stop layers.} The theorem fixes $k^*$ globally. An adaptive policy that chooses $k^*(x)$ per config could achieve higher speedups, but the expectation bound becomes more complex.
     \item \textbf{Descriptor-space coverage vs. configuration-space coverage.} $\kappa_1$ is defined on configurations, but we measure it via descriptor density. The relationship between these two measures is unknown.
@@ -467,7 +464,7 @@ We recommend measuring the combined speedup directly rather than multiplying ind
 \subsection{Honest Contextualization of the 1.03$\times$ Bound}
 
 We reiterate the point of \cref{sec:103}. The $1.033\times$ lower bound is mathematically correct but practically meaningless for a single simulation. It is useful in two specific contexts:
-\begin{enumerate}[leftmargin=*]
+\begin{enumerate}
     \item \textbf{Theoretical completeness.} It proves that refusal-mode inference is \emph{never slower} in expectation, regardless of the test distribution. This is a nontrivial guarantee: many acceleration heuristics (e.g., dynamic batching) can slow down worst-case inputs.
     \item \textbf{Regulatory justification.} For safety-critical deployments (nuclear materials certification under DOE QMU\cite{asc2008}), a provable lower bound is more valuable than an empirical average. The theorem provides a certificate that can be audited.
 \end{enumerate}
@@ -486,6 +483,10 @@ The broader conceptual contribution is reframing refusal from a safety feature i
 \section*{Acknowledgments}
 
 This work was prepared as part of the Lupine Research Program. The author thanks the research analysts who compiled the HPC performance, acceleration methods, and VVUQ background reports.
+AI assistance (Kimi, with OpenAI Codex for build preparation) was used to
+structure this advanced review draft. All scientific claims and acceleration
+claims require author review and reconciliation against the current source
+before public or journal use.
 
 %=============================================================================
 \begin{thebibliography}{99}

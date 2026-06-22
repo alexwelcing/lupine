@@ -1,11 +1,20 @@
-# Zenodo Deposit — ready-to-upload checklist
+# Zenodo Deposit — published checklist
 
-**One user action required:** create the deposit at zenodo.org (needs Alex's
-account), upload the bundle below, mint the DOI, then replace
-`10.5281/zenodo.XXXXXX` in Paper 1's Data Availability and add the DOI to
-Paper 2's Reproducibility section.
+**Published record:** https://zenodo.org/records/20787874  
+**DOI:** https://doi.org/10.5281/zenodo.20787874
 
-## Bundle contents (all committed in-repo; zip `replication/error-geometry/` wholesale)
+The two bundles below were uploaded to Zenodo and the DOI has been propagated
+to Paper 1's Data Availability and Paper 2's Reproducibility/Data availability
+sections.
+
+## Upload files
+
+1. `replication/error-geometry-zenodo-v2026-06-21.zip` — empirical
+   replication kit.
+2. `replication/lean-spec-formal-core-v2026-06-21.zip` — tracked Lean source,
+   Lake manifest, pinned toolchain, and no `.lake` build cache.
+
+## Bundle contents (all committed in-repo)
 
 - Tier-1/Tier-2 replication kit: `tier1_analyze.py`, `tier2_recompute.py`,
   `harness.py`, `references.py`, `patch_matgl.py`, `requirements.txt`,
@@ -15,12 +24,13 @@ Paper 2's Reproducibility section.
   `data/classical/manifold_revalidation_42potentials.json` +
   `canonical_numbers.json` (pinned classical PR dataset)
 - Analyses: `analyze_acwf_delta_gauge.py`, `robustness_checks.py` (+ results
-  JSONs), `recompute_born_filtered.py`, `make_fig2_classical.py`
+  JSONs), `tier1_pr_gauge.py` (+ `data/pr_gauge_results.json`),
+  `make_fig2_classical.py`
 - Pre-registrations: `prereg_functional_vs_architecture_2x2.md` (@dffbe595),
   `prereg_acwf_delta_gauge.md` (@ebf39e33), `prereg_round2.md`
-- Lean artifact: tag `lean-spec` at the current commit; include the five
-  core theory files or the repo tarball (77 build-locked theorems in
-  `Vision.lean`, ~225 declarations, 0 `sorry`, 0 new axioms)
+- Lean artifact: `lean-spec-formal-core-v2026-06-21.zip` includes the tracked
+  source tree, Lake manifest, and pinned toolchain (77 build-locked theorems
+  in `Vision.lean`, ~225 declarations, 0 `sorry`, 0 new axioms)
 
 **Live GCS mirror (already public):** https://storage.googleapis.com/shed-489901-replication/error-geometry/v1-10c18ace/ — add as a related identifier ("is identical to") in the Zenodo form.
 
@@ -29,7 +39,8 @@ Paper 2's Reproducibility section.
 - **Title:** Replication kit and formal artifact: The Projection Law —
   error geometry of model ensembles (classical potentials, foundation MLIPs,
   DFT implementations)
-- **Authors:** Welcing, Alex (Lupine Science) — ORCID: [fill before minting]
+- **Authors:** Welcing, Alex (Lupine Science) — ORCID:
+  `0009-0002-1602-8545`
 - **License:** MIT (code) / CC-BY-4.0 (data+docs)
 - **Keywords:** model ensembles; error geometry; interatomic potentials;
   foundation models; DFT verification; pre-registration; Lean 4

@@ -35,17 +35,19 @@ adjacent audiences live in all three). Lean artifact: tagged release +
 Zenodo DOI bundled with the replication kit, cited from the paper.
 
 **Required before submission (any venue):**
-1. Figures — the manuscript currently has none. Minimum four: (F1) schematic
-   of the projection law and the three-layer stack; (F2) 4×2 cosine matrix
-   (architecture × functional) with the anchors; (F3) ACWF pair matrix
-   showing table-vs-code clustering, SIESTA visibly apart; (F4) the
-   three-estimator consilience against the PR(ρ) curve.
-2. Final DOI pass on references.bib (all entries verified against live
-   sources 2026-06-11 except boe2018 page range and gao2015 — re-verify on
-   format conversion).
-3. The adversarial multi-agent review pass (ask #5) on the assembled
-   manuscript.
-4. Suggested reviewers: one from sloppy-models (Transtrum — framework
+1. DONE: four paper figures now build from the replication kit: (F1)
+   projection law and three-layer stack; (F2) architecture × functional MLIP
+   matrix; (F3) ACWF table-vs-code matrix with SIESTA separated; (F4)
+   PR-gauge/decoupling figure.
+2. DONE: first-pass academic review plus follow-up adversarial review are
+   linked from the working-papers page and incorporated into the current PDFs.
+3. DONE 2026-06-21: final DOI/reference pass complete. `boe2018` page range
+   and DOI, and `gao2015` page range and DOI, were re-verified against live
+   publisher/index metadata before submission package printout.
+4. DONE 2026-06-21: Zenodo DOI minted
+   (`https://doi.org/10.5281/zenodo.20787874`) and real ORCID filled
+   (`https://orcid.org/0009-0002-1602-8545`).
+5. Suggested reviewers: one from sloppy-models (Transtrum — framework
    lineage, not a collaborator), one from MLIP UQ (Ceriotti group), one from
    climate dependence (Abramowitz or Annan — the cross-domain claim should be
    reviewed by the community whose practices it touches), one from ACWF
@@ -61,10 +63,12 @@ matching Paper 1's house style), keywords, numbered Springer citations
 interests, data/code availability, author contributions, AI-use disclosure),
 Discussion section retitled toward benchmarking/VVUQ, Huang 2025
 transfer-learning tie-in added to the MLIP section. Keeps the option of
-submitting Papers 1+2 as companions to the same journal. SYNC STATUS 2026-06-11: IMMI copy is OUT OF SYNC with the R2 (post-review) master — regenerate before any IMMI submission. CONTENT SYNC RULE:
-the PRX master (`projection-law.tex`) is canonical; propagate edits to the
-IMMI copy before either submission. ORCID placeholder in the author block
-needs Alex's real ORCID.
+submitting Papers 1+2 as companions to the same journal. SYNC STATUS
+2026-06-21: IMMI copy has been regenerated from the R2/post-review master and
+the local quality gate passes. CONTENT SYNC RULE: the PRX master
+(`projection-law.tex`) remains canonical; propagate edits to the IMMI copy
+before either submission. Alex's ORCID is
+`https://orcid.org/0009-0002-1602-8545`.
 
 ## Paper 1 — IMMI (locked; no change)
 
@@ -83,6 +87,6 @@ citable statement.
 
 ## Sequencing
 
-1. Figures for P2 → adversarial review → arXiv (P2 + P1 together).
+1. ArXiv P2 + P1 together.
 2. PRX submission; IMMI submission per its own checklist.
 3. P3 drafted against the public P2.

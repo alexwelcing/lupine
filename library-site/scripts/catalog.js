@@ -83,6 +83,17 @@ export const CATALOG = {
   ],
 
   entries: [
+    // ── Featured Paper ─────────────────────────────────────────────
+    {
+      id: 'lupine-correction-operator',
+      source: 'paper/PAPER_DRAFT.md',
+      title: 'Lupine: The Universal Correction Operator for Atomistic Simulation',
+      subtitle: 'A 1D geometric law reduces ensemble compute overhead by 80% with zero loss in predictive fidelity. 1 model + Lupine beats 5-model ensemble by 2.83× MSE.',
+      category: 'changelog',
+      tags: ['papers', 'lupine', 'correction-operator', 'projection-law', 'ensemble', 'featured', 'nature'],
+      featured: true,
+      status: 'supported',
+    },
     // ── Working Papers ──────────────────────────────────────────────
     {
       id: 'working-papers',

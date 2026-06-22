@@ -196,6 +196,20 @@ async function renderHome() {
     hero.append(stats);
     VIEW.append(hero);
 
+    // LUPINE CORRECTION OPERATOR — HEADLINE BANNER
+    const headlineBanner = el('section', { class: 'callout' });
+    const headlineLink = el('a', { class: 'callout-box callout-preprint', href: '#/read/lupine-correction-operator', style: 'border-color:var(--lupine-300);background:linear-gradient(135deg,rgba(99,102,241,0.08) 0%,rgba(168,85,247,0.08) 100%);' });
+    headlineLink.append(el('span', { style: 'font-size:0.75rem;text-transform:uppercase;color:var(--lupine-300);font-weight:700;letter-spacing:0.05em;' }, 'NATURE COMPUTATIONAL SCIENCE / NPJ'));
+    headlineLink.append(el('strong', { style: 'font-size:1.25rem;color:var(--lupine-200);' }, 'Lupine: The Universal Correction Operator'));
+    headlineLink.append(el('span', { style: 'font-size:0.95rem;opacity:0.85;font-weight:500;' }, '1 model + 1D geometric law beats 5-model ensemble by 2.83× MSE. 80% compute reduction. 93% valid coverage.'));
+    const headlineStats = el('div', { style: 'display:flex;gap:16px;margin-top:10px;font-size:0.8rem;' });
+    headlineStats.append(el('span', { style: 'color:var(--lupine-300);font-weight:700;' }, '2.83× better MSE'));
+    headlineStats.append(el('span', { style: 'color:var(--green-400);font-weight:700;' }, '80% less compute'));
+    headlineStats.append(el('span', { style: 'color:var(--accent);font-weight:700;' }, '93% valid UQ'));
+    headlineLink.append(headlineStats);
+    headlineBanner.append(headlineLink);
+    VIEW.append(headlineBanner);
+
     // Preprint Banner — aligned to the 720px content column via .callout.
     const paperBanner = el('section', { class: 'callout' });
     const bannerLink = el('a', { class: 'callout-box callout-preprint', href: '/immi_paper.pdf', target: '_blank' });

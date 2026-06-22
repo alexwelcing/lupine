@@ -1,0 +1,56 @@
+{
+  "construction": "Delta_a(e) = y_PBE(a,e) - y_r2SCAN(a,e); architecture fixed, reference cancels",
+  "B1_xc_bias_direction_consistency": {
+    "median_cross_arch_cosine_FCC": 0.6405365536083054,
+    "median_cross_arch_cosine_all": 0.023083180331559736,
+    "per_element_median_cosine": {
+      "Al": 0.8398018048207696,
+      "Au": 0.7861698195119279,
+      "Cu": 0.9464647008662139,
+      "Fe": 0.023083180331559736,
+      "Mo": -0.27916231472325626,
+      "Nb": -0.5917327457245362,
+      "Pb": -0.8572606075825949,
+      "Pd": -0.6706032858210806,
+      "Pt": 0.4949032877046829,
+      "Ta": 0.5103568125284932,
+      "W": -0.7730570728716942
+    },
+    "n_arch": 4,
+    "interpretation": "high => the XC-functional bias is one shared direction across architectures"
+  },
+  "B2_noble_metal_C44_stiffening": {
+    "Au": {
+      "mean_delta_C44": -8.46324930163973,
+      "PBE_softer": true,
+      "n_arch": 3,
+      "per_arch": {
+        "chgnet": -32.66473802252564,
+        "qet": 5.739673257735205,
+        "tensornet": 1.5353168598712479
+      }
+    },
+    "Pt": {
+      "mean_delta_C44": -27.35998863970555,
+      "PBE_softer": true,
+      "n_arch": 2,
+      "per_arch": {
+        "chgnet": -31.167690189654216,
+        "tensornet": -23.55228708975688
+      }
+    },
+    "Ag": {
+      "mean_delta_C44": 11.998130442637446,
+      "PBE_softer": false,
+      "n_arch": 1,
+      "per_arch": {
+        "chgnet": 11.998130442637446
+      }
+    }
+  },
+  "B3_reference_cancellation_check": {
+    "min_cosine_raw_vs_relscaled": 0.9999999999999998,
+    "expected": 1.0
+  },
+  "prereg": "prereg_round2.md R2-B (XC-bias vector; full 0K-anchor version staged)"
+}

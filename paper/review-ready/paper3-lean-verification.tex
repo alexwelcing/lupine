@@ -2,16 +2,16 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{amsmath,amssymb,amsthm}
-\usepackage{mathtools}
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{hyperref}
-\usepackage{cleveref}
-\usepackage{listings}
+\usepackage{verbatim}
 \usepackage{xcolor}
-\usepackage{tikz}
-\usetikzlibrary{shapes.geometric, arrows.meta, positioning, fit, backgrounds}
+\makeatletter
+\newcommand{\cref}[1]{\begingroup\def\crefsep{}\@for\crefitem:=#1\do{\crefsep\ref{\crefitem}\def\crefsep{, }}\endgroup}
+\newcommand{\Cref}[1]{\cref{#1}}
+\makeatother
 
 \theoremstyle{definition}
 \newtheorem{theorem}{Theorem}[section]
@@ -23,25 +23,6 @@
 
 \theoremstyle{plain}
 \newtheorem{hypothesis}{Meta-Scientific Hypothesis}[section]
-
-\lstdefinelanguage{lean4}{
-  morekeywords={theorem, lemma, def, structure, inductive, where, by, have, let, rfl, native_decide, linarith, nlinarith, ring, simp, omega, decide, guard, sorry, axiom},
-  sensitive=true,
-  morecomment=[l]{--},
-  morecomment=[s]{/-}{-/},
-  morestring=[b]"
-}
-\lstset{
-  language=lean4,
-  basicstyle=\ttfamily\small,
-  keywordstyle=\color{blue}\bfseries,
-  commentstyle=\color{gray},
-  stringstyle=\color{red},
-  numbers=left,
-  numberstyle=\tiny\color{gray},
-  frame=single,
-  breaklines=true
-}
 
 \title{\textbf{Formal Verification of the Hyper-Ribbon Theorem in Lean~4}\\[0.5em]
 \large Machine-Checked Proofs for the Geometry of Interatomic-Potential Error Manifolds}
@@ -527,13 +508,13 @@ MACE-MP-0 stress error \emph{increases} from $0.5669$ to $0.9331$; the cell is c
 \label{subsec:guards}
 
 Six \texttt{\#guard} statements in \texttt{Theory/AccuracyCommitment.lean} enforce the contract at build time:
-\begin{lstlisting}
+\begin{verbatim}
 #guard mace_energy_beats_baseline
 #guard sevennet_energy_beats_baseline
 #guard sevennet_accelerate_beats_baseline
 #guard mace_energy_reduction_is_material
 #guard mace_stress_correctly_blocked
-\end{lstlisting}
+\end{verbatim}
 If a promoted cell ever stops beating baseline, or a blocked cell ever stops being blocked, the build fails. This makes falsifiability \emph{machine-enforced}, not merely asserted in prose.
 
 %==============================================================================
@@ -748,68 +729,12 @@ Formal verification in science is nascent. The Liquid Tensor Experiment \cite{sc
 
 \begin{figure}[htbp]
 \centering
-\begin{tikzpicture}[
-  node distance=1.2cm and 1.5cm,
-  box/.style={rectangle, draw, rounded corners, minimum width=3.2cm, minimum height=0.7cm, align=center, font=\small},
-  mathlib/.style={box, fill=blue!10},
-  data/.style={box, fill=green!10},
-  analysis/.style={box, fill=yellow!20},
-  theory/.style={box, fill=orange!20},
-  neural/.style={box, fill=purple!15},
-  distill/.style={box, fill=red!15},
-  regime/.style={box, fill=teal!15},
-  validation/.style={box, fill=gray!20},
-  arrow/.style={-{Stealth[length=2mm]}, thick}
-]
-
-\node[mathlib] (mathlib) {Mathlib Foundation\\(Real analysis, linear arithmetic)};
-
-\node[analysis, below left=of mathlib, xshift=-1cm] (stats) {Analysis.Stats\\(mean, variance, PR)};
-\node[data, below=of stats] (benchmark) {Data.Benchmark\\(synthetic FCC/BCC)};
-\node[analysis, below left=of benchmark] (causal) {Analysis.Causal\\(paradox detection)};
-\node[analysis, below right=of benchmark] (manifold) {Analysis.Manifold\\(PR computation)};
-\node[analysis, right=of stats, xshift=1.5cm] (lammps) {Computation.LammpsTrace\\(trace spec)};
-\node[data, right=of lammps, xshift=0.5cm] (elasticity) {Elasticity.FCC\\(bulk modulus)};
-
-\node[theory, below=of benchmark, yshift=-0.8cm] (hyper) {Theory.HyperRibbon\\(\textbf{T30}: PR $<$ 2)};
-\node[theory, below left=of hyper] (hyperemp) {Theory.HyperRibbonEmpirical\\(T31)};
-\node[theory, below=of hyper] (context) {Theory.ContextSpecificProof\\(T41--T51, \textbf{T50})};
-\node[theory, below right=of hyper] (bridge) {Theory.UniversalityBridge\\(T60--T71)};
-\node[theory, right=of hyper, xshift=1cm] (param) {Theory.ParameterBound\\(T32--T35)};
-\node[theory, right=of param, xshift=0.5cm] (meta) {Theory.MetaScience\\(T36--T40, H1--H6)};
-\node[theory, below=of param] (accuracy) {Theory.AccuracyCommitment\\(T52--T59)};
-
-\node[neural, below left=of context, xshift=-1cm] (chgnet) {NeuralSymbolic.*\\(T72--T75)};
-\node[distill, below=of context] (distill) {DistillAtlas.*\\(T76--T97)};
-\node[regime, below right=of context, xshift=1cm] (regime) {RegimeGate.*\\(T98--\textbf{T102})};
-
-\node[validation, below=of distill, yshift=-0.5cm] (experiment) {Validation.Experiment\\(T103--T107)};
-\node[validation, right=of experiment] (audit) {Validation.Audit\\(T108--\textbf{T112})};
-\node[validation, left=of experiment] (vision) {Vision\\(\#guard locks)};
-
-\draw[arrow] (mathlib) -- (stats);
-\draw[arrow] (mathlib) -- (elasticity);
-\draw[arrow] (stats) -- (benchmark);
-\draw[arrow] (benchmark) -- (causal);
-\draw[arrow] (benchmark) -- (manifold);
-\draw[arrow] (mathlib) -- (lammps);
-\draw[arrow] (mathlib) -- (hyper);
-\draw[arrow] (hyper) -- (hyperemp);
-\draw[arrow] (hyper) -- (context);
-\draw[arrow] (hyper) -- (bridge);
-\draw[arrow] (mathlib) -- (param);
-\draw[arrow] (mathlib) -- (meta);
-\draw[arrow] (param) -- (accuracy);
-\draw[arrow] (context) -- (chgnet);
-\draw[arrow] (context) -- (distill);
-\draw[arrow] (context) -- (regime);
-\draw[arrow] (distill) -- (experiment);
-\draw[arrow] (distill) -- (audit);
-\draw[arrow] (regime) -- (audit);
-\draw[arrow] (experiment) -- (vision);
-\draw[arrow] (audit) -- (vision);
-
-\end{tikzpicture}
+\fbox{\parbox{0.92\linewidth}{\small
+Mathlib foundation feeds the Analysis and Data modules; those feed
+\texttt{Theory.HyperRibbon}, \texttt{Theory.ContextSpecificProof},
+\texttt{Theory.UniversalityBridge}, \texttt{NeuralSymbolic.*},
+\texttt{DistillAtlas.*}, \texttt{RegimeGate.*}, and finally the
+\texttt{Validation.*} and \texttt{Vision} guard modules.}}
 \caption{Complete proof architecture of the Lupine Lean-Spec formalization. Nodes are \texttt{.lean} modules; edges are import dependencies. Theorems cited in this paper are bolded.}
 \label{fig:architecture}
 \end{figure}
@@ -827,11 +752,11 @@ The complete formalization is available at \url{https://github.com/alexwelcing/l
 \end{itemize}
 
 \textbf{Build instructions:}
-\begin{lstlisting}[language=bash]
+\begin{verbatim}
 git clone https://github.com/alexwelcing/lupine.git
 cd lupine/lean-spec
 lake build
-\end{lstlisting}
+\end{verbatim}
 
 The build takes approximately 45 minutes on a 16-core workstation (most time is spent compiling Mathlib). The \texttt{lake build} command compiles all theorems, executes all \texttt{\#guard} regression checks, and prints the \texttt{visionReport} status board.
 
@@ -850,6 +775,15 @@ The build takes approximately 45 minutes on a 16-core workstation (most time is 
 We have presented a complete formal verification of the Hyper-Ribbon Theorem and its corollaries in Lean~4. The formalization comprises 27 source files, 112+ theorem statements, and 48+ hand-proven lemmas, with zero \texttt{sorry} placeholders and zero axioms beyond Mathlib. We verified the Context-Specific Operative Value Theorem (T50), the Universality Bridge reconciliation (T60--T71), and a machine-enforced 5$\times$5$\times$3 accuracy commitment (T52--T59). A formal audit module caught an overstatement in our prior empirical work and downgraded the Simpson's-paradox claim to \emph{fabricated} (T111)---demonstrating that formal verification can correct published science.
 
 All proofs execute on synthetic data. We frame this not as a limitation but as a methodological feature: the formalization separates ``what is mathematically true'' from ``what is empirically instantiated,'' making epistemic gaps explicit and machine-auditable. The open conjectures (H1--H6) and documented gaps (Gap~1--Gap~5) provide a research roadmap for extending the formalization to real NIST-backed data, differential-geometric manifold structure, and statistical confidence bounds.
+
+%==============================================================================
+\section*{Acknowledgments}
+
+This work was prepared as part of the Lupine Research Program. AI assistance
+(Kimi, with OpenAI Codex for build preparation) was used to structure this
+advanced review draft. All scientific claims, theorem counts, and Lean build
+claims require author review and reconciliation against the current source
+before public or journal use.
 
 %==============================================================================
 \section*{References}
