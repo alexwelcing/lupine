@@ -3,7 +3,7 @@
 **Manuscript:** The Projection Law: Model-Ensemble Errors Point at Their Binding Constraint  
 **Authors:** Alex Welcing (Lupine Science, Union City, NJ)  
 **Corresponding author:** alexwelcing@gmail.com  
-**ORCID:** [fill before submission]  
+**ORCID:** https://orcid.org/0009-0002-1602-8545  
 
 ---
 
@@ -17,7 +17,7 @@ We submit for your consideration the manuscript *The Projection Law: Model-Ensem
 
 **Empirical design.** The law's sharpest consequence — *errors organize by constraint, not by implementation* — is tested with pre-registered factorial experiments: MatPES foundation MLIPs (4 architectures × 2 training functionals) and ACWF DFT implementations (12 methods, 384 unary crystals). Both refutation conditions were registered before computation; neither was triggered. The paper reports the failures alongside the successes, including an effect-size prediction that missed by ~3.5×.
 
-**Reproducibility.** A two-tier replication kit (Tier 1: NumPy-only statistics from committed raw data; Tier 2: bit-exact harness re-deriving elastic constants from public checkpoints) ships with the paper. A Zenodo deposit with a minted DOI is in preparation; the current placeholder will be replaced before production.
+**Reproducibility.** A two-tier replication kit (Tier 1: NumPy-only statistics from committed raw data; Tier 2: bit-exact harness re-deriving elastic constants from public checkpoints) ships with the paper and is archived on Zenodo at https://doi.org/10.5281/zenodo.20787874.
 
 **Suggested reviewers.**
 - Mark K. Transtrum (Brigham Young University) — sloppy-model universality and information geometry lineage.
@@ -25,7 +25,7 @@ We submit for your consideration the manuscript *The Projection Law: Model-Ensem
 - James D. Annan or a colleague from climate model dependence — cross-domain ensemble dependence.
 - A reviewer familiar with the ACWF/verification literature — DFT pseudopotential/code reuse; data authorship is not authorship.
 
-We declare no conflicts of interest. The manuscript is not under consideration elsewhere. An independent academic review of the package is published alongside our public research library and will be updated with an adversarial multi-agent review pass before final submission.
+We declare no conflicts of interest. The manuscript is not under consideration elsewhere. Independent academic and adversarial reviews of the package are published alongside our public research library; the review findings have been incorporated into the submitted version.
 
 Thank you for your consideration.
 

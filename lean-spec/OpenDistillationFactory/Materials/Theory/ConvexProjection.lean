@@ -139,4 +139,38 @@ theorem residual_eq {s : Set E} (hs : Convex Real s) {T p₁ p₂ : E}
 
 end IsBestApproxOn
 
+/-! ## Scoping: convexity is necessary for consensus
+
+The consensus theorem (`IsBestApproxOn.residual_eq`) assumes the family is
+convex. The foundation-MLIP layer of the paper applies the *language* of the
+law to neural-network reachable sets, which are **non-convex**. The following
+theorem is the formal scoping statement promised in the manuscript
+(`Remark: empirical extension`): without convexity, consensus genuinely fails —
+a two-point (hence non-convex) family admits two distinct best approximations of
+one target whose residuals differ. So the cross-architecture MLIP error
+alignment observed empirically is an *extension* of the convex theory, not a
+corollary of it; the corpus proves the convex statement and this necessity
+witness, and asserts nothing more about the non-convex case. -/
+theorem consensus_needs_convexity :
+    ∃ (T p₁ p₂ : Real) (s : Set Real),
+      IsBestApproxOn s T p₁ ∧ IsBestApproxOn s T p₂ ∧
+      ¬ Convex Real s ∧ T - p₁ ≠ T - p₂ := by
+  refine ⟨0, -1, 1, ({-1, 1} : Set Real), ?_, ?_, ?_, ?_⟩
+  · refine ⟨by simp, ?_⟩
+    intro q hq
+    simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hq
+    rcases hq with hq | hq <;> subst hq <;> norm_num
+  · refine ⟨by simp, ?_⟩
+    intro q hq
+    simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hq
+    rcases hq with hq | hq <;> subst hq <;> norm_num
+  · intro hconv
+    have hmem : (1/2 : Real) • (-1 : Real) + (1/2 : Real) • (1 : Real) ∈ ({-1, 1} : Set Real) :=
+      hconv (by simp) (by simp) (by norm_num) (by norm_num) (by norm_num)
+    have h0 : (1/2 : Real) • (-1 : Real) + (1/2 : Real) • (1 : Real) = 0 := by norm_num
+    rw [h0] at hmem
+    simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hmem
+    rcases hmem with h | h <;> norm_num at h
+  · norm_num
+
 end OpenDistillationFactory.Materials.Theory.ConvexProjection

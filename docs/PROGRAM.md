@@ -1,6 +1,6 @@
 # The Lupine Research Program — Unified State
 
-*Single-page map of the error-geometry research program. Updated 2026-06-16.
+*Single-page map of the error-geometry research program. Updated 2026-06-21.
 Paper status source of truth: `library-site/src/brand.json` → `publication.status`
 ("in preparation" — never describe any paper as submitted/accepted/published
 until that field changes; enforced by `tools/validate_pitch_claims.py`).*
@@ -19,7 +19,7 @@ measures the constraint, not the truth.
 | Layer | Ensemble | Binding constraint | Result | Status |
 |---|---|---|---|---|
 | Classical interatomic potentials | 559 potentials, 15 metals | functional form | within-family r=0.95; PR invariant 40 yr (median 1.09, pinned dataset); coupled-diagnostic consistency α≈0.98 | observational (Paper 1) |
-| Foundation MLIPs | 4 architectures × 2 functionals (MatPES) + 3 anchors | training functional | S_func=+0.317 vs S_arch=−0.093, p=0.029; r²SCAN rotation confirmed | pre-registered @ `dffbe595`, kill condition not triggered |
+| Foundation MLIPs | 4 architectures × 2 functionals (MatPES) + 3 anchors | training functional | S_func=+0.317 vs S_arch=−0.093, p=0.029; screened per-element PR median 1.592, max 1.910 | pre-registered @ `dffbe595`, kill condition not triggered |
 | DFT implementations | 12 ACWF methods, 384 crystals | pseudopotential table | S_table=+0.526 vs S_code=+0.265, p=0.017; SIESTA = nested basis-set constraint | pre-registered @ `ebf39e33`, kill condition not triggered |
 
 All registered misses are reported as failures (4 of 7 registered predictions; 2/4 and 1/3 passing per experiment; nested-constraint attributions are registered round-2 hypotheses). Referee-driven robustness: ordering survives unscreened; ACWF separation grows without B1/whitened; LOMO out-of-sample correction = 69% median.
@@ -44,8 +44,9 @@ All registered misses are reported as failures (4 of 7 registered predictions; 2
   second-moment matrix. 77 build-locked theorems in `Vision.lean`, ~225
   declarations, 0 `sorry`, 0 new axioms; 2891-job `lake build` green.
 - **Replication**: `replication/error-geometry/` — Tier 1 (NumPy-only,
-  seconds, verifies every headline statistic) and Tier 2 (recompute from
-  public checkpoints, bit-exact) both verified; THEORY.md is the
+  seconds, verifies every headline statistic), screened PR/rank-one-share
+  recomputation (`tier1_pr_gauge.py`), and Tier 2 (recompute from public
+  checkpoints, bit-exact) are the verification spine; THEORY.md is the
   theorem↔statistic contract.
 - **Methodology propagation**: glim-think Causal agent
   (`Causal.v1.md`) enforces Kievit-threshold aggregation-bias classification
@@ -68,11 +69,17 @@ All registered misses are reported as failures (4 of 7 registered predictions; 2
 
 ## Open items (the live queue)
 
-1. **Born-screened recomputation** of per-element on-ribbon/PR counts —
-   requires the per-element classical error-vector buckets (worker D1
-   ledger; not in this checkout). Settles the ledger's re-audit entry and
-   the Fe conjecture.
+1. DONE 2026-06-21: **Born-screened recomputation** for the committed
+   replication-kit foundation-MLIP corpus. `python tier1_pr_gauge.py`
+   recomputes all 15 per-element screened PR buckets from raw tensors:
+   median PR 1.592, max 1.910, median rank-1 share 0.774. The old
+   "14/15 on-ribbon" shorthand remains retired; the citable replacement is
+   the screened PR/rank-one-share table in
+   `replication/error-geometry/data/pr_gauge_results.json`. Live-ledger
+   expansion continues via `mlip-discovery-loop` campaign `github:27618187135`
+   (12 agenda tasks queued; Fe/CHGNet stability verdict =
+   `inspect_before_promotion`).
 2. DONE 2026-06-11: round-2 prereg registered (prereg_round2.md: single primary endpoints, axis statistics, symmetric equivalence-bound kills, DFT-PBE anchor test, harness hardening gate). Execution = round 2.
-3. 2026-06-16: PR range settled by pinned dataset (median 1.09, max 2.29; Fig 2 regenerated 600 dpi); companion titles set; academic review surfaced on library.lupine.science; versioned PDF assets deployed at `/assets/papers/projection-law-v2026-06-16.pdf`. USER: Zenodo DOI (see `replication/error-geometry/ZENODO_DEPOSIT.md` and `.zenodo.json`), ORCID, adversarial multi-agent review pass from `TARGETING.md`.
-4. DONE 2026-06-11: 3-referee adversarial review run; revision R2 incorporates all findings (commit f9e1da40). USER: arXiv + PRX submission clicks; IMMI copy of P2 must be regenerated from R2 master first.
-5. READY: merge dry-run clean (0 conflicts; 28 ahead / 44 behind). USER: git merge codex/science on main + push → CI deploys corrected deck/library/llms. Eyeball the deck render first (new proof section).
+3. DONE 2026-06-21: PR range settled by pinned dataset (median 1.09, max 2.29; Fig 2 regenerated 600 dpi); companion titles set; academic and adversarial reviews surfaced on library.lupine.science; versioned PDF assets deployed at `/assets/papers/projection-law-v2026-06-16.pdf`; Zenodo DOI minted at `https://doi.org/10.5281/zenodo.20787874`; ORCID filled as `https://orcid.org/0009-0002-1602-8545`.
+4. DONE 2026-06-16: 3-referee/adversarial review cycle incorporated; IMMI copy regenerated from the R2 master and local quality gate passes. USER: arXiv + PRX submission clicks after DOI/ORCID and final human read-through.
+5. LIVE 2026-06-21: `glim-think` workflow registry, `mlip-discovery-loop` progress, `/ops/smoketest`, and gated `/maintain` all verified against production. Keep local, CI/deploy, live Worker, and public-library truth reported separately on future release passes.

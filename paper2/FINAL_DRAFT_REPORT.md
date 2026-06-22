@@ -1,6 +1,7 @@
 # Projection Law — Final Draft Report
 
-**Date:** 2026-06-16
+**Date:** 2026-06-16  
+**Evidence update:** 2026-06-21
 **PRX master:** `paper2/projection-law.tex`  
 **IMMI companion:** `paper2/immi/projection-law-immi.tex`  
 **PDFs:** `paper2/projection-law.pdf` (15 pp), `paper2/immi/projection-law-immi.pdf` (15 pp)
@@ -36,13 +37,24 @@
    - Rebuilt `projection-law.pdf` and `immi/projection-law-immi.pdf` from updated sources; refreshed submission bundles.
    - Addressed academic-review MUST FIX items: tightened affine/gauge and smooth-local/global bridges; downplayed finite-sample PR sample-complexity claim; added MLIP permutation-floor nuance to abstract, Table 1, and the IMMI abstract; added versioned PDF assets to `library-site` and updated `working-papers.html` links.
 
+6. **2026-06-21 evidence closure**
+   - Re-ran `replication/error-geometry/tier1_analyze.py`: **PASS** (S_func = +0.317, S_arch = -0.093, p = 0.0286).
+   - Re-ran `replication/error-geometry/tier1_pr_gauge.py`: screened foundation-MLIP per-element PR table reproduced for all 15 elements (median PR 1.592, max 1.910, median rank-1 share 0.774).
+   - Re-ran `paper2/quality_gate.py`: **PASS** (42 citations, 42 bibliography entries, 4 figures).
+   - Verified live `glim-think` workflow surfaces and queued 12 `mlip-discovery-loop` agenda actions for campaign `github:27618187135`; Fe/CHGNet stability evaluation returned verdict `inspect_before_promotion`.
+
 ## Known remaining manual steps
 
-- **Zenodo DOI**: mint the deposit per `replication/error-geometry/ZENODO_DEPOSIT.md` and replace placeholder DOIs in both papers.
-- **ORCID**: fill the author ORCID in both P2 and the IMMI companion.
-- **Adversarial multi-agent review pass**: run the pass described in `TARGETING.md` before submission.
+- DONE 2026-06-21: **Zenodo DOI** minted and propagated:
+  `https://doi.org/10.5281/zenodo.20787874`.
+- DONE 2026-06-21: **ORCID** filled:
+  `https://orcid.org/0009-0002-1602-8545`.
+- **Review cycle**: academic and adversarial review issues are incorporated; do one final human read-through before submission.
 - **External marketing page**: `lupine.science` marketing source is outside this repo and still points to the old GCS PDF; update it to the new `/assets/papers/projection-law-v2026-06-16.pdf` link.
-- **Final reference audit**: re-verify `boe2018` page range and `gao2015` entry at format-conversion time (flagged in `TARGETING.md`).
+- DONE 2026-06-21: **Final reference audit**: re-verified `boe2018`
+  (`Geophysical Research Letters` 45, 2771--2779,
+  doi:10.1002/2017GL076829) and `gao2015` (`Current Opinion in
+  Neurobiology` 32, 148--155, doi:10.1016/j.conb.2015.04.003).
 - **PRX / arXiv submission**: the manuscript is now technically submission-ready; venue-specific formatting and cover letter are the next human steps.
 
 ## Verification commands

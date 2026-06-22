@@ -1,0 +1,39 @@
+{
+  "R4a_bootstrap_over_elements": {
+    "observed_separation_Sfunc_minus_Sarch": 0.585643123284004,
+    "S_func": 0.3614573925180158,
+    "S_arch": -0.2241857307659882,
+    "ci95": [
+      -0.05117985268549181,
+      1.3004026784509317
+    ],
+    "bootstrap_p_separation_le_0": 0.037,
+    "n_fcc_elements": 8,
+    "n_boot": 4000,
+    "note": "continuous resolution; not capped at the 1/70 label-lattice floor"
+  },
+  "R4b_expanded_model_set": {
+    "n_models": 11,
+    "models": [
+      "chgnet_matpes_pbe",
+      "chgnet_matpes_r2scan",
+      "m3gnet_pbe",
+      "m3gnet_r2scan",
+      "qet_pbe",
+      "qet_r2scan",
+      "tensornet_pbe",
+      "tensornet_r2scan",
+      "anchor_mace",
+      "anchor_chgnet",
+      "anchor_orb_v3"
+    ],
+    "S_func": 0.3253257356532544,
+    "S_arch": -0.06771889505539597,
+    "permutation_p": 0.007,
+    "permutation_lattice_size": 330,
+    "resolution_floor": 0.0030303030303030303,
+    "note": "11-model PBE-lineage + r2SCAN set; lattice >> 70 so floor << 1/70"
+  },
+  "scope": "raises resolution and quantifies direction uncertainty; does NOT rescue the registered 0.30 effect-size threshold (still a reported failure)",
+  "prereg": "prereg_round2.md R2-A / R2-E"
+}

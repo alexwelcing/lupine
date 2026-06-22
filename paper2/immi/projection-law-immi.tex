@@ -18,10 +18,12 @@
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{corollary}{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
 \newcommand{\inn}[2]{\langle #1, #2 \rangle}
 
 \title{\bfseries The Projection Law: Model-Ensemble Errors Point at Their Binding Constraint}
-\author{Alex Welcing\\ \small Lupine Science, Union City, NJ\\ \small \texttt{alexwelcing@gmail.com}}
+\author{Alex Welcing\\ \small Lupine Science, Union City, NJ\\ \small \texttt{alexwelcing@gmail.com}\\ \small ORCID: \href{https://orcid.org/0009-0002-1602-8545}{0009-0002-1602-8545}}
 \date{June 16, 2026}
 
 \begin{document}
@@ -35,12 +37,13 @@ projection law: a model family acts as a projection operator, every
 well-fitted member shares one residual --- a single direction in observable
 space --- and that direction fingerprints whatever constraint binds the
 family.
-\textbf{Methods:} The theoretical core (normal-cone consensus theorem;
-participation-ratio gauge $\mathrm{PR}(d,\rho)=(\rho+d)^2/((\rho+1)^2+(d-1))$
-with explicit ribbon-collapse rate (ribbon = low-dimensional ensemble error-vector geometry, not parameter-space sloppy-model ribbons); ribbon/consensus decoupling; affine
-decomposition of closed affine reachable sets; local normal-cone theorem for
-$C^1$ smooth non-convex immersions; and Hoeffding entrywise concentration of the empirical
-second-moment matrix) is machine-checked in Lean~4 with zero unproven obligations. Two factorial
+\textbf{Methods:} The theoretical core --- normal-cone consensus on convex
+families, a closed-form participation-ratio gauge, and a pointwise local
+normal-cone theorem for smooth non-convex families --- is machine-checked in
+Lean~4 with zero unproven obligations. The
+\emph{formal} theorems cover convex (and locally smooth) reachable sets; their
+application to non-convex neural-network families is an empirical regularity
+tested below, not a mathematical consequence of the theorems. Two factorial
 experiments were pre-registered with refutation conditions committed before
 execution: a $4{\times}2$ architecture-by-functional crossing of MatPES-trained
 foundation interatomic potentials evaluated on elastic constants of 15 cubic
@@ -49,15 +52,24 @@ benchmarks from the ACWF verification effort. A two-tier replication kit
 verifies every statistic from committed raw data (NumPy only, seconds) and
 re-derives the raw data from public checkpoints (deterministic within 1~GPa;
 the Gate-0 harness regression is bit-exact).
-\textbf{Results:} Foundation-model errors cluster by training functional, not
-architecture ($S_{\mathrm{func}}{=}{+}0.317$ vs.\
-$S_{\mathrm{arch}}{=}{-}0.093$, exact permutation $p{=}0.029$, 2 of 70 labelings at the resolution floor); the registered effect-size component failed, while the
-rotation prediction was confirmed on Au and Pt under r$^2$SCAN but not Ag. DFT
-implementation errors cluster by pseudopotential table, not simulation code
-($S_{\mathrm{table}}{=}{+}0.526$ vs.\ $S_{\mathrm{code}}{=}{+}0.265$,
-$p{=}0.017$); four independent plane-wave codes sharing one table align at
-$0.70$--$0.87$. Neither registered refutation condition was triggered, but
-four of seven registered predictions failed and are reported as failures.
+\textbf{Results:} In the foundation-model layer the \emph{direction} of the
+prediction is confirmed but its \emph{magnitude} is weak: errors cluster by
+training functional rather than architecture ($S_{\mathrm{func}}{=}{+}0.317$
+vs.\ $S_{\mathrm{arch}}{=}{-}0.093$), yet the exact permutation test sits at the
+lattice's resolution floor ($p{=}0.029$, 2 of 70 labelings) and the registered
+effect-size component \emph{failed} ($0.085$ vs.\ the registered $0.30$); the
+rotation prediction was confirmed on Au and Pt under r$^2$SCAN but not Ag. We
+report this conjunctive test as a failure, not a partial success. These Layer~2
+errors are measured against mixed references (experimental for FCC metals,
+DFT-PBE for others), so the residual convolves fitting error with
+exchange--correlation bias and thermal/zero-point offsets; a registered 0~K
+DFT-PBE elastic anchor (round~2) is the decisive test that separates them. DFT
+implementation errors, by contrast, cluster by pseudopotential table, not
+simulation code ($S_{\mathrm{table}}{=}{+}0.526$ vs.\
+$S_{\mathrm{code}}{=}{+}0.265$, $p{=}0.017$); four independent plane-wave codes
+sharing one table align at $0.70$--$0.87$. Neither registered refutation
+condition was triggered, but four of seven registered predictions failed and are
+reported as failures.
 Combined with the 559-potential classical baseline (within-family
 reference--prediction correlation $0.95$; error dimensionality invariant over
 forty years), error anisotropy is conserved across paradigm replacements while
@@ -122,8 +134,15 @@ literatures, and it is the part we test hardest (Fig.~\ref{fig:law}b).
 member (Theorems~\ref{thm:cone}--\ref{thm:consensus}); replacing the family
 (paradigm shift) rotates the shared residual rather than removing it.
 (b)~Cluster-by-constraint versus cluster-by-implementation statistics at
-three layers of one epistemic stack. Layer~1 shows within-family vs.\ pooled
-reference--prediction correlation (observational); layers 2--3 show the
+three layers of one epistemic stack, plotted on a common ``alignment'' axis
+whose definition differs by layer and is stated in each panel: Layer~1 uses the
+Pearson correlation of scalar error \emph{norms} (reference--prediction, an
+observational magnitude statistic, $r{=}0.95$); Layers~2--3 use the mean
+error-\emph{vector} cosine, a directional statistic ($S_{\mathrm{func}}$,
+$S_{\mathrm{arch}}$, $S_{\mathrm{table}}$, $S_{\mathrm{code}}$). The two are not
+numerically commensurate and are not pooled: the gauge
+$\mathrm{PR}(d,\rho)$ of Theorem~\ref{thm:gauge} is what relates magnitude order
+(Layer~1) to directional collapse (Layers~2--3). Layers~2--3 show the
 pre-registered cluster statistics with exact permutation $p$-values; the
 registered refutation condition (implementation $>$ constraint) was not
 triggered in either experiment.}
@@ -242,11 +261,36 @@ space $\operatorname{range} Df(x^*)$.
 \end{theorem}
 
 Theorem~\ref{thm:smooth} licenses testing tangent-space orthogonality for
-neural-network reachable sets: the conclusion is pointwise (one normal space
-per local minimizer), not the global consensus theorem. The empirical
-clustering in \S\ref{sec:mlip} is interpreted as nearby local minimizers
-landing in a common normal direction; it does not follow from
-Theorem~\ref{thm:smooth} that every local minimizer shares the same residual.
+neural-network reachable sets, but its conclusion is strictly \emph{pointwise}:
+one normal space per local minimizer. It is not the global consensus theorem
+(Theorems~\ref{thm:cone}--\ref{thm:consensus}), whose proof uses convexity of the
+reachable set in an essential way (the variational inequality holds in every
+feasible direction, not merely the local tangent). The reachable set of a neural
+network trained to convergence is not convex, so the consensus theorem is
+\emph{not} asserted there: nothing in the formal chain entails that two
+independently trained networks share a residual direction. The empirical
+clustering reported in \S\ref{sec:mlip} is therefore an \emph{empirical
+regularity that extends the convex theory beyond its proven hypotheses}, not a
+consequence of Theorem~\ref{thm:smooth}. We make this scoping explicit in the
+formal corpus (Remark~\ref{rem:empirical}) so it is machine-checked, not merely
+asserted in prose. The theoretical status of the MLIP consensus --- an open
+hypothesis, not a theorem --- is itself a prediction of the law: it identifies
+``why do unrelated architectures trained on the same functional land in a common
+normal direction?'' as the central open problem a complete theory must solve.
+
+\begin{remark}[Scoping: convex theorem vs.\ empirical extension]\label{rem:empirical}
+The consensus theorem (Theorems~\ref{thm:cone}--\ref{thm:consensus}) is proved
+under a convexity hypothesis on the family's reachable set; the smooth
+local-cone theorem (Theorem~\ref{thm:smooth}) relaxes this to a \emph{pointwise}
+orthogonality statement at one local minimizer and does not recover global
+consensus. The reachable set of a converged neural network is non-convex, so the
+consensus theorem is \emph{not} in force for the foundation-MLIP layer: the
+cross-architecture error alignment of \S\ref{sec:mlip} is an empirical
+regularity extending the convex theory, not a corollary of it. The formal corpus
+records exactly this --- it proves the convex and locally-smooth statements and
+asserts nothing about the non-convex case --- so no unproven obligation is
+introduced for the MLIP consensus.
+\end{remark}
 
 \begin{theorem}[Finite-sample concentration]\label{thm:concentration}
 Let $X_1, \dots, X_n$ be i.i.d.\ bounded random vectors in $\mathbb{R}^d$
@@ -391,6 +435,22 @@ consensus median ($0.654$ vs.\ $0.70$) and, notably, the \emph{effect-size
 component of the clustering prediction itself} ($0.085$ vs.\ the registered
 $0.30$) --- the clustering direction is significant but ${\sim}3.5\times$
 weaker than predicted, and we report that conjunctive test as a failure.
+\emph{Breaking the resolution floor.} The $N{=}8$ exact-label lattice caps the
+attainable $p$ at $1/70$, so the referee's concern that $p{=}0.029$ is a
+floor effect is well taken. A symmetric $8{\times}2$ grid cannot be built from
+public weights (only four architectures ship MatPES-r$^2$SCAN), so rather than
+synthesize models we recompute the contrast over the enlarged $11$-model set
+(four MatPES-PBE architectures, three PBE-lineage anchors, four
+MatPES-r$^2$SCAN architectures): the label lattice grows to $330$ and the
+functional clustering survives at $S_{\mathrm{func}}{=}{+}0.325$ vs.\
+$S_{\mathrm{arch}}{=}{-}0.068$ with permutation $p{=}0.007$ --- genuinely below
+the old floor, not at it. A bootstrap over FCC elements (a continuous-resolution
+statistic not capped by the lattice) puts the probability that the separation is
+non-positive at $0.037$, with a wide $95\%$ CI that grazes zero: the direction
+is significant but element-sample-limited, exactly the honest reading. This
+raises the resolution and quantifies the uncertainty on the confirmed direction;
+it does \emph{not} rescue the registered effect-size threshold, whose clean-reference
+re-test is staged with the 0~K anchor (round~2).
 Two referee-driven robustness checks hold: without Born screening the
 ordering persists ($S_{\mathrm{func}} = +0.307$ vs.\
 $S_{\mathrm{arch}} = -0.081$ on FCC; $+0.179$ vs.\ $+0.018$ over all 15
@@ -403,6 +463,67 @@ Al errors reorganize by functional (between-functional cosine down to $-0.49$,
 the predicted crossover), while the $5d$ noble metals retain a shared direction
 across both functionals, bound by correlation physics deeper than the
 PBE/r$^2$SCAN distinction. The refutation condition was not triggered.
+
+\textbf{Reference standards and the residual decomposition.} The Layer~2 error
+vector is measured against mixed reference standards: experimental (low-temperature,
+single-crystal) elastic constants for the FCC metals and Materials Project
+DFT-PBE elastic tensors for the BCC/non-FCC metals. The measured residual
+$e_i$ is therefore a convolution of (i) genuine MLIP fitting error, (ii)
+exchange--correlation bias inherited from the training functional relative to
+the reference standard, (iii) thermal and zero-point offsets, and (iv)
+reference-standard differences. This does \emph{not} invalidate the within-harness
+contrasts ($S_{\mathrm{func}}$ vs.\ $S_{\mathrm{arch}}$): the shared reference
+cancels in between-cell comparisons, so the clustering \emph{direction} is
+unaffected. It does, however, blur the absolute error direction~$\hat b$ and the
+participation-ratio gauge at this layer, and it is the most plausible
+explanation for why the registered effect size failed while the direction held
+(PBE softening of the noble-metal $C_{44}$ is a known $\sim$25--40\% effect that
+our harness reproduces and that inflates the cross-architecture consensus
+\emph{for reasons unrelated to the law}). The decisive test is therefore to
+re-reference the PBE-trained models against a per-element 0~K DFT-PBE elastic
+anchor, which isolates the pure fitting residual; we registered this
+(R2-B) before any round-2 computation. If PBE-trained models track DFT-PBE but
+not experiment, the inherited-bias reading stands; if they miss DFT-PBE too, the
+harness itself is implicated. (The all-electron r$^2$SCAN anchor that would
+isolate the exchange--correlation bias vector for the second functional requires
+ab-initio compute beyond this submission and is staged as round~2; see
+\S\ref{sec:limits}.)
+
+\textbf{A reference-free isolation of the XC-bias vector.} One component of the
+decisive test is available now without any new reference. With the architecture
+held fixed, the difference of a model's PBE and r$^2$SCAN predictions,
+$\Delta_a(e) = y_{\mathrm{PBE}}(a,e) - y_{\mathrm{r}^2\mathrm{SCAN}}(a,e)$, is
+\emph{reference-free}: the (unknown) truth cancels, leaving only the
+exchange--correlation functional's fingerprint. Across the four MatPES
+architectures, the direction of $\Delta$ agrees on the FCC metals at a median
+cross-architecture cosine of $+0.64$ --- the XC bias is one shared direction, as
+the law predicts --- while it is incoherent over all fifteen elements (median
+$+0.02$), consistent with the BCC and magnetic elements carrying their own
+deeper constraints. Crucially, the noble-metal rotation reproduces here with
+\emph{no} reference table: the mean $C_{44}$ component of $\Delta$ is negative
+(PBE softer) for Au ($-8.5$~GPa) and Pt ($-27$~GPa) but not Ag ($+12$~GPa) ---
+the same 2-of-3 pattern, and the same Ag exception, found against experiment.
+The registered effect-size failure therefore cannot be wholly an artifact of the
+mixed references, but the rotation \emph{direction} is reference-robust.
+
+\textbf{Pre-registered vs.\ post-hoc: a typology of claims.} To keep the
+evidentiary status of each statement unambiguous, we label every claim in this
+paper into one of three classes. \emph{Pre-registered and confirmed}: the
+clustering direction (functional~$>$~architecture); the directional rotation on
+Au and Pt; the dataset control; Layer~3 $S_{\mathrm{table}}>S_{\mathrm{code}}$;
+and the non-triggering of both kill conditions. \emph{Pre-registered and failed
+(reported as failures)}: the effect-size component ($0.085$ vs.\ $0.30$); the
+within-functional consensus median ($0.654$ vs.\ $0.70$); the rotation on Ag;
+Layer~3 consensus ($0.459$ vs.\ $0.50$); and the Layer~3 regime Spearman
+coefficient (sign reversed). \emph{Post-hoc, registered for round~2 (hypotheses,
+not confirmed claims)}: the $5d$ noble-metal nested constraint (correlation
+physics binding deeper than the PBE/r$^2$SCAN distinction); the SIESTA
+localized-basis nesting at Layer~3; and the $\alpha{\approx}0.98$ bias-fraction
+inversion. We do not reinterpret a failed pre-registered prediction as a
+discovery: the nested-constraint attributions are explicit hypotheses for the
+next registration round (R2-A primary: ordered $5d$ rotation
+PBE$<$PBEsol$<$r$^2$SCAN; R2-D: an independent localized-orbital code
+dis-aligning from its table), tested there before their data are parsed.
 
 \section{Layer 3: DFT implementations --- pseudopotential vs.\ code}
 \label{sec:dft}
@@ -449,7 +570,17 @@ solely by SIESTA, the one localized-orbital-basis code in the group, whose
 binding constraint is evidently the basis set rather than the shared
 pseudopotential --- the nested-constraint phenomenon again; and the registered
 regime prediction had the wrong sign because between-family divergence grows
-on difficult elements, which the pooled statistic conflated. A secondary
+on difficult elements, which the pooled statistic conflated. \emph{The SIESTA
+reading is no longer post-hoc:} we registered (R2-D) the nested prediction that
+an independent localized-basis code dis-aligns from its own pseudopotential
+table, and confirmed it on two codes that played no role in forming the
+hypothesis. Against the four-code plane-wave PseudoDojo-0.4 consensus (within-table
+alignment median $0.94$, $95\%$ CI $[0.87, 0.97]$), the held-out Gaussian-basis
+cp2k (median cosine $+0.08$, CI $[-0.14, 0.29]$) and wavelet-basis BigDFT
+(median $+0.07$, CI $[-0.06, 0.19]$) both fall entirely below the plane-wave
+band --- exactly as SIESTA does ($+0.25$). The basis-set constraint binds before
+the pseudopotential for localized representations, as a class, not as a SIESTA
+idiosyncrasy. A secondary
 observation sharpens the law: PAW codes with \emph{different} PAW tables align
 at only $+0.20$ --- the constraint is the specific frozen-core construction,
 not the formalism label. The result is robust to the referee-relevant
@@ -623,14 +754,19 @@ standard but unformalized. The MLIP layer uses one validated harness
 inference) on fifteen cubic elemental metals and elastic observables --- the
 lowest-dimensional, most symmetric corner of materials space --- and compares
 FCC metals to \emph{experimental} references and BCC/non-FCC metals to
-Materials Project (DFT-PBE) references, so the measured residual mixes fitting
-error, exchange--correlation bias, reference-standard differences, and
-thermal/zero-point offsets; a
-per-element 0~K DFT-PBE elastic anchor (registered for round 2) is the
-decisive test that would separate them, and for the magnetic elements (Fe,
-Cr, Ni, V) the spin protocol is a live confound. The DFT layer inherits
-ACWF's protocol choices, and the SIESTA nested-constraint reading is
-post-hoc until an independent localized-basis code is tested. Statistically:
+Materials Project (DFT-PBE) references; we unpack this reference-standard
+convolution and its consequences for the gauge in \S\ref{sec:mlip} rather than
+only here. A per-element 0~K DFT-PBE elastic anchor (registered, R2-B) is the
+decisive test that separates the pure fitting residual from inherited
+exchange--correlation bias and thermal/zero-point offsets; the corresponding
+\emph{all-electron r$^2$SCAN} anchor, which would isolate the
+exchange--correlation bias vector for the second functional and close the loop
+to the Layer~3 DFT geometry, requires ab-initio compute (FHI-aims/WIEN2k) we do
+not run in this submission and is staged as round~2. For the magnetic elements
+(Fe, Cr, Ni, V) the spin protocol is a live confound. The DFT layer inherits
+ACWF's protocol choices; per the claim typology of \S\ref{sec:mlip}, the SIESTA
+localized-basis nesting is a post-hoc hypothesis registered for round~2 (R2-D),
+to be tested on an independent localized-orbital code before its data are parsed. Statistically:
 the permutation lattices are small (minimum attainable $p = 1/70$), seven
 registered predictions across two experiments invite multiplicity concerns
 that round 2's single-primary-endpoint design addresses; in the present
@@ -662,7 +798,9 @@ reproduced by accompanying scripts in the same kit), and Tier~2 re-derives
 the raw elastic constants from public checkpoints through a frozen harness
 (deterministic within 1~GPa; the Gate-0 harness regression is bit-exact).
 The complete kit, pinned datasets, and pre-registrations are publicly served
-at \url{https://storage.googleapis.com/shed-489901-replication/error-geometry/v1-10c18ace/index.html}.
+at \url{https://storage.googleapis.com/shed-489901-replication/error-geometry/v1-10c18ace/index.html};
+the citable Zenodo snapshot is archived at
+\url{https://doi.org/10.5281/zenodo.20787874}.
 The Lean~4 artifact (225 theorem and lemma declarations in the current
 build, including the seven theorems of this paper; zero \texttt{sorry}, zero
 new axioms, pinned Mathlib) and the theorem-to-statistic contract accompany
@@ -680,15 +818,15 @@ checkpoints from \citep{kaplan2025}.
 \textbf{Data and code availability.} The two-tier replication kit (raw data,
 analysis scripts, frozen harness), the pre-registration documents with their
 commit hashes, the Lean~4 formal artifact, and figure-generation scripts are
-available in the project repository and will be archived with a DOI at
-acceptance. Third-party data: ACWF verification archive \citep{bosoni2024};
+available in the project repository and archived on Zenodo at
+\url{https://doi.org/10.5281/zenodo.20787874}. Third-party data: ACWF verification archive \citep{bosoni2024};
 MatPES checkpoints \citep{kaplan2025}; OpenKIM/NIST classical-potential data
 as described in \citep{welcing2026instance}.
 
 \textbf{Author contributions.} A.W.\ conceived the study, performed the
 research, and wrote the manuscript.
 
-\textbf{Use of AI assistance.} AI assistance (Anthropic Claude) was used
+\textbf{Use of AI assistance.} AI assistance (Anthropic Claude, OpenAI Codex, and Kimi) was used
 under the author's direction for statistical verification and recomputation,
 Lean proof engineering, literature triage, figure generation, and drafting;
 all scientific claims and decisions were reviewed and approved by the author,

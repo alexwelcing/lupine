@@ -1,0 +1,45 @@
+{
+  "planewave_within_table_band": {
+    "median_cos": 0.9387726334110901,
+    "ci95": [
+      0.8744964482094034,
+      0.972131471689699
+    ],
+    "n_systems": 101,
+    "note": "PD0.4 four plane-wave codes; the within-table alignment reference band"
+  },
+  "localized_codes": {
+    "siesta_pd04": {
+      "role": "hypothesis-forming",
+      "median_cos_to_PW_consensus": 0.253213234598814,
+      "ci95": [
+        -0.12812957319120483,
+        0.5256133392325225
+      ],
+      "n_systems": 96,
+      "below_PW_band": true
+    },
+    "cp2k_tzv2p": {
+      "role": "held-out",
+      "median_cos_to_PW_consensus": 0.0801257875790172,
+      "ci95": [
+        -0.1349737890151085,
+        0.28916428846767
+      ],
+      "n_systems": 95,
+      "below_PW_band": true
+    },
+    "bigdft": {
+      "role": "held-out",
+      "median_cos_to_PW_consensus": 0.06991478012351751,
+      "ci95": [
+        -0.06077379685508641,
+        0.18561588559389083
+      ],
+      "n_systems": 85,
+      "below_PW_band": true
+    }
+  },
+  "prereg": "prereg_round2.md R2-D (registered nested prediction)",
+  "verdict": "2/2 HELD-OUT localized codes dis-align (SIESTA mechanism reproduced on independent codes)"
+}
