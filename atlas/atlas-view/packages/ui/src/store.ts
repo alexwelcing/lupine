@@ -25,6 +25,23 @@ export interface Annotation {
   createdAt: number;
 }
 
+/** A knowledge label anchored to a 3D position rather than an atom index.
+ *  These are auto-generated from gallery metadata (e.g. Lupine Wiki sphere
+ *  centroids) so the viewer can display exact semantic names on top of the
+ *  molecular view. Unlike user annotations, they belong to the loaded asset
+ *  and are cleared/replaced on every file load. */
+export interface KnowledgeLabel {
+  id: string;
+  kind: 'sphere' | 'node' | string;
+  text: string;
+  detail?: string;
+  sphereId?: string;
+  sphereIndex?: number;
+  atomIndex?: number;
+  nodeKind?: string;
+  position: [number, number, number];
+}
+
 /** Visual presentation modes for annotations. Each is a distinct R3F/drei
  *  technique applied to the same underlying data so the user can compare
  *  styles without re-authoring the labels themselves.
@@ -402,6 +419,17 @@ export interface AppState {
   clearAnnotations: () => void;
   setLabelStyle: (style: LabelStyle) => void;
 
+  // ─── Knowledge labels ───
+  // Auto-generated semantic labels tied to the loaded molecule (e.g. sphere
+  // names and key node names from the Lupine Wiki sphere-grid export).
+  knowledgeLabels: KnowledgeLabel[];
+  knowledgeLabelKinds: Set<string>;
+  showKnowledgeLabels: boolean;
+  setKnowledgeLabels: (labels: KnowledgeLabel[]) => void;
+  clearKnowledgeLabels: () => void;
+  setShowKnowledgeLabels: (show: boolean) => void;
+  toggleKnowledgeLabelKind: (kind: string) => void;
+
   // ─── Atom visibility ───
   hiddenAtomTypes: Set<number>;
   atomTypeScales: Record<number, number>; // per-type scale overrides
@@ -686,6 +714,9 @@ const DEFAULTS = {
   selectedAtoms: [] as number[],
   annotations: [] as Annotation[],
   labelStyle: 'tag' as LabelStyle,
+  knowledgeLabels: [] as KnowledgeLabel[],
+  knowledgeLabelKinds: new Set<string>(['sphere', 'node']),
+  showKnowledgeLabels: true,
   hiddenAtomTypes: new Set<number>(),
   atomTypeScales: {} as Record<number, number>,
   anomalyTracking: false,
@@ -1089,6 +1120,22 @@ export const useStore = create<AppState>()(
     })),
     clearAnnotations: () => set({ annotations: [] }),
     setLabelStyle: (labelStyle) => set({ labelStyle }),
+
+    setKnowledgeLabels: (knowledgeLabels) => set((s) => {
+      const kinds = new Set<string>(s.knowledgeLabelKinds);
+      for (const label of knowledgeLabels) {
+        kinds.add(label.kind);
+      }
+      return { knowledgeLabels, knowledgeLabelKinds: kinds };
+    }),
+    clearKnowledgeLabels: () => set({ knowledgeLabels: [], knowledgeLabelKinds: new Set(['sphere', 'node']) }),
+    setShowKnowledgeLabels: (showKnowledgeLabels) => set({ showKnowledgeLabels }),
+    toggleKnowledgeLabelKind: (kind) => set((s) => {
+      const next = new Set(s.knowledgeLabelKinds);
+      if (next.has(kind)) next.delete(kind);
+      else next.add(kind);
+      return { knowledgeLabelKinds: next };
+    }),
 
     toggleAtomType: (type) => set((s) => {
       const next = new Set(s.hiddenAtomTypes);

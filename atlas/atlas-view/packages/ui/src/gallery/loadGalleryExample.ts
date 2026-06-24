@@ -1,12 +1,12 @@
 import { artifactToLoadedFile } from '../MlipArtifactLoader';
-import { useStore } from '../store';
+import { useStore, type KnowledgeLabel } from '../store';
 import {
   formatAtomCount,
   getDeviceProfile,
   parseAtomCountLabel,
 } from '../deviceCapabilities';
 import type { ViewerOpenResult } from '../viewer/openTypes';
-import { resolveExampleUrl, type GalleryExample } from './catalog';
+import { resolveExampleUrl, type GalleryExample, publicAssetUrl } from './catalog';
 
 function clearPreviousStreaming(): void {
   const previousCleanup = (window as { __atlasStreamingCleanup?: () => void }).__atlasStreamingCleanup;
@@ -30,6 +30,49 @@ function resultFromCurrentFile(): ViewerOpenResult {
   };
 }
 
+async function loadKnowledgeLabels(example: GalleryExample): Promise<void> {
+  if (!example.labelsUrl) {
+    useStore.getState().clearKnowledgeLabels();
+    return;
+  }
+  const url = example.labelsUrl.startsWith('http://') || example.labelsUrl.startsWith('https://')
+    ? example.labelsUrl
+    : publicAssetUrl(example.labelsUrl);
+  try {
+    const resp = await fetch(url, { cache: 'reload' });
+    if (!resp.ok) {
+      console.warn(`[knowledge-labels] Failed to fetch ${url}: ${resp.status}`);
+      useStore.getState().clearKnowledgeLabels();
+      return;
+    }
+    const payload = await resp.json();
+    const raw = Array.isArray(payload) ? payload : payload?.labels;
+    if (!Array.isArray(raw)) {
+      console.warn('[knowledge-labels] Expected array or { labels: [...] }');
+      useStore.getState().clearKnowledgeLabels();
+      return;
+    }
+    const labels: KnowledgeLabel[] = raw
+      .filter((l: any) => l && typeof l.text === 'string' && Array.isArray(l.position) && l.position.length === 3)
+      .map((l: any) => ({
+        id: String(l.id ?? `kl_${Math.random().toString(36).slice(2, 8)}`),
+        kind: String(l.kind ?? 'unknown'),
+        text: String(l.text),
+        detail: l.detail ? String(l.detail) : undefined,
+        sphereId: l.sphere_id ? String(l.sphere_id) : undefined,
+        sphereIndex: typeof l.sphere_index === 'number' ? l.sphere_index : undefined,
+        atomIndex: typeof l.atom_index === 'number' ? l.atom_index : undefined,
+        nodeKind: l.node_kind ? String(l.node_kind) : undefined,
+        position: [Number(l.position[0]), Number(l.position[1]), Number(l.position[2])] as [number, number, number],
+      }));
+    useStore.getState().setKnowledgeLabels(labels);
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.warn('[knowledge-labels] Load failed:', message);
+    useStore.getState().clearKnowledgeLabels();
+  }
+}
+
 export async function loadGalleryExample(example: GalleryExample): Promise<ViewerOpenResult> {
   if (!example.available) {
     return { ok: false, message: `"${example.title}" is not available.` };
@@ -50,6 +93,7 @@ export async function loadGalleryExample(example: GalleryExample): Promise<Viewe
   store.setLoading(true, 0);
   store.setActiveCardId(example.id);
   clearPreviousStreaming();
+  store.clearKnowledgeLabels();
 
   try {
     const url = resolveExampleUrl(example);
@@ -74,6 +118,7 @@ export async function loadGalleryExample(example: GalleryExample): Promise<Viewe
         showBonds: false,
         playing: Boolean(example.autoPlay),
       });
+      await loadKnowledgeLabels(example);
       return resultFromCurrentFile();
     }
 
@@ -136,6 +181,7 @@ export async function loadGalleryExample(example: GalleryExample): Promise<Viewe
         loader.dispose();
       };
 
+      await loadKnowledgeLabels(example);
       return resultFromCurrentFile();
     }
 
@@ -191,6 +237,7 @@ export async function loadGalleryExample(example: GalleryExample): Promise<Viewe
             streamingStore.setLoadedAtomCount(event.loadedAtoms);
           }
         }
+        await loadKnowledgeLabels(example);
         return resultFromCurrentFile();
       }
     }
@@ -231,6 +278,7 @@ export async function loadGalleryExample(example: GalleryExample): Promise<Viewe
     if (example.initialBackgroundPreset) {
       useStore.setState({ backgroundPreset: example.initialBackgroundPreset });
     }
+    await loadKnowledgeLabels(example);
     return resultFromCurrentFile();
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : String(err);

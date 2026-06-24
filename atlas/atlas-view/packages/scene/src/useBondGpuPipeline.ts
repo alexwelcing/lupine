@@ -91,18 +91,24 @@ export function useBondGpuPipeline(enabled: boolean): UseBondGpuPipelineResult {
     });
   }, [enabled]);
 
-  // Tear down when the pipeline is no longer wanted.
+  // Reset state when the GPU pipeline is disabled so that re-enabling later
+  // retries initialization (e.g. user toggled it off/on, or the device came
+  // back online). Without this, a single init failure pins `unsupported`
+  // forever even though the next attempt might succeed.
   useEffect(() => {
-    return () => {
-      if (stateRef.current.pipeline) {
-        stateRef.current.pipeline.destroy();
-        stateRef.current.pipeline = null;
-      }
-      stateRef.current.device = null;
-      stateRef.current.maxAtoms = 0;
-      stateRef.current.maxBonds = 0;
-    };
-  }, []);
+    if (enabled) return;
+    setReady(false);
+    setUnsupported(false);
+    if (stateRef.current.pipeline) {
+      stateRef.current.pipeline.destroy();
+      stateRef.current.pipeline = null;
+    }
+    stateRef.current.device = null;
+    stateRef.current.maxAtoms = 0;
+    stateRef.current.maxBonds = 0;
+    stateRef.current.initFailed = false;
+    initPromiseRef.current = null;
+  }, [enabled]);
 
   const compute = useCallback(async (input: BondGpuComputeInput): Promise<BondReadback | null> => {
     const target = Math.max(input.natoms, INITIAL_MAX_ATOMS);

@@ -38,6 +38,7 @@ import { buildClusters, type Clusters } from '@atlas/scene/ClusterBuilder';
 import { SpatialAnchor } from './SpatialAnchor';
 import { Bonds } from '@atlas/scene/Bonds';
 import { AnnotationsLayer } from './AnnotationsLayer';
+import { KnowledgeLabelsLayer } from './KnowledgeLabelsLayer';
 import { SelectionMarkers } from './SelectionMarkers';
 import { AtomInfoHUD } from './AtomInfoHUD';
 import { CameraFocus } from './CameraFocus';
@@ -669,6 +670,9 @@ export default function App() {
   const propertyEmissionStrength = useStore(s => s.propertyEmissionStrength);
   const annotations = useStore(s => s.annotations);
   const labelStyle = useStore(s => s.labelStyle);
+  const knowledgeLabels = useStore(s => s.knowledgeLabels);
+  const knowledgeLabelKinds = useStore(s => s.knowledgeLabelKinds);
+  const showKnowledgeLabels = useStore(s => s.showKnowledgeLabels);
   const hoveredAtom = useStore(s => s.hoveredAtom);
   const selectedAtoms = useStore(s => s.selectedAtoms);
 
@@ -1523,6 +1527,16 @@ export default function App() {
                   annotations={annotations}
                   style={labelStyle}
                   onDismiss={(id) => useStore.getState().removeAnnotation(id)}
+                />
+
+                {/* Auto-generated semantic labels from the loaded asset metadata
+                    (e.g. Lupine Wiki sphere names and key node names). Rendered
+                    independently of user annotations so gallery curation can
+                    surface exact knowledge-graph semantics on top of the view. */}
+                <KnowledgeLabelsLayer
+                  labels={knowledgeLabels}
+                  visibleKinds={knowledgeLabelKinds}
+                  visible={showKnowledgeLabels}
                 />
 
                 {/* Click an atom to inspect it, mark it, and focus the camera.

@@ -264,7 +264,12 @@ export function StudioControlDeck({
 
   const handleRandomWorld = () => {
     if (worldPresets.length === 0) return;
-    const next = worldPresets[Math.floor(Math.random() * worldPresets.length)];
+    // Avoid re-picking the current world so the user always sees a different
+    // background load. Fall back to the current one only if there's a single world.
+    const candidates = worldPresets.length > 1
+      ? worldPresets.filter(p => p.id !== backgroundPreset)
+      : worldPresets;
+    const next = candidates[Math.floor(Math.random() * candidates.length)];
     setBackgroundPreset(next.id);
   };
 

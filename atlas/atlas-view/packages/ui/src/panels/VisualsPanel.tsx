@@ -183,6 +183,8 @@ export function VisualsPanel({ availableProperties, embedded = false }: { availa
     propertyEmissionStrength, setPropertyEmissionStrength,
     annotations, addAnnotation, removeAnnotation, clearAnnotations,
     labelStyle, setLabelStyle,
+    knowledgeLabels, knowledgeLabelKinds, showKnowledgeLabels,
+    setShowKnowledgeLabels, toggleKnowledgeLabelKind,
     hiddenAtomTypes, toggleAtomType, showAllAtomTypes, soloAtomType,
     atomTypeScales, setAtomTypeScale, resetAtomTypeScales,
     // Materials & Lighting
@@ -792,6 +794,31 @@ export function VisualsPanel({ availableProperties, embedded = false }: { availa
                   {labelStyle === 'etched' && 'Subtle inline pin — pairs with shader-side surface engraving.'}
                 </div>
               </div>
+
+              {knowledgeLabels.length > 0 && (
+                <div>
+                  <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', marginBottom: 8 }}>
+                    Knowledge Labels
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                    <OrbitalToggle
+                      label={`Show knowledge labels (${knowledgeLabels.length})`}
+                      active={showKnowledgeLabels}
+                      onClick={() => setShowKnowledgeLabels(!showKnowledgeLabels)}
+                    />
+                    <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                      {Array.from(new Set(knowledgeLabels.map(l => l.kind))).map(kind => (
+                        <IsotopeChip
+                          key={kind}
+                          label={kind}
+                          selected={knowledgeLabelKinds.has(kind)}
+                          onClick={() => toggleKnowledgeLabelKind(kind)}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {annotations.length > 0 ? (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>

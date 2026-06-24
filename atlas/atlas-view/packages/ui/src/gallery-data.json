@@ -90,7 +90,8 @@
     },
     "featured": true,
     "initialAtomScale": 5,
-    "initialBackgroundPreset": "deep"
+    "initialBackgroundPreset": "deep",
+    "labelsUrl": "generated/lupine-wiki/sphere-grid.labels.json"
   },
   {
     "id": "research_cu",

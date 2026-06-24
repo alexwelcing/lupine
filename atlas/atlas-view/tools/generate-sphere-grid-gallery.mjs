@@ -63,6 +63,7 @@ async function exportMolecule(tempDir) {
     data: path.join(tempDir, 'sphere-grid.data'),
     dump: path.join(tempDir, 'sphere-grid.lammpstrj'),
     meta: path.join(tempDir, 'sphere-grid.molecule.json'),
+    labels: path.join(tempDir, 'sphere-grid.labels.json'),
   };
 }
 
@@ -73,6 +74,7 @@ async function useExistingAssets() {
     data: path.join(PUBLIC_OUT, 'sphere-grid.data'),
     dump: path.join(PUBLIC_OUT, 'sphere-grid.lammpstrj'),
     meta: path.join(PUBLIC_OUT, 'sphere-grid.molecule.json'),
+    labels: path.join(PUBLIC_OUT, 'sphere-grid.labels.json'),
   };
 }
 
@@ -175,6 +177,7 @@ async function updateGalleryData(trajectoryFile, metaFile) {
     featured: true,
     initialAtomScale: 5,
     initialBackgroundPreset: 'deep',
+    labelsUrl: 'generated/lupine-wiki/sphere-grid.labels.json',
   };
 
   if (existingIndex >= 0) {
@@ -229,6 +232,13 @@ async function main() {
     console.log('[sphere-grid] Copied trajectory:', destTrajectory);
   } else {
     console.log('[sphere-grid] Using committed trajectory:', destTrajectory);
+  }
+
+  // Copy the knowledge labels into the public assets tree.
+  const destLabels = path.join(PUBLIC_OUT, 'sphere-grid.labels.json');
+  if (path.resolve(files.labels) !== path.resolve(destLabels)) {
+    await fs.copyFile(files.labels, destLabels);
+    console.log('[sphere-grid] Copied labels:', destLabels);
   }
 
   // Update the catalog first so the ?sim= load path can read initialAtomScale

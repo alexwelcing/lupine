@@ -429,19 +429,22 @@ fn main() -> Result<()> {
             let data_path = output_dir.join("sphere-grid.data");
             let dump_path = output_dir.join("sphere-grid.lammpstrj");
             let meta_path = output_dir.join("sphere-grid.molecule.json");
+            let labels_path = output_dir.join("sphere-grid.labels.json");
 
             export_xyz::write_xyz(&export, &xyz_path)?;
             export_xyz::write_data(&export, &data_path)?;
             export_xyz::write_dump(&export, &dump_path)?;
             export_xyz::write_metadata(&export, &meta_path)?;
+            export_xyz::write_labels(&export, &labels_path)?;
 
             if !quiet {
                 println!(
-                    "Exported molecule to:\n  {}\n  {}\n  {}\n  {}",
+                    "Exported molecule to:\n  {}\n  {}\n  {}\n  {}\n  {}",
                     xyz_path.display(),
                     data_path.display(),
                     dump_path.display(),
-                    meta_path.display()
+                    meta_path.display(),
+                    labels_path.display()
                 );
                 println!(
                     "Atoms: {}  Bonds: {}",

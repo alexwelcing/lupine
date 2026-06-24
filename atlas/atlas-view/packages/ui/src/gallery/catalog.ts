@@ -47,6 +47,8 @@ export interface GalleryExample {
   initialAtomScale?: number;
   /** Optional initial background preset for this gallery entry. */
   initialBackgroundPreset?: string;
+  /** Optional URL to a knowledge-labels JSON file (e.g. sphere-grid labels). */
+  labelsUrl?: string;
 }
 
 export const EXAMPLES: GalleryExample[] = galleryData as GalleryExample[];
