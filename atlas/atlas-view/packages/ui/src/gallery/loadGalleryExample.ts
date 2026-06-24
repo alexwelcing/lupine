@@ -225,6 +225,12 @@ export async function loadGalleryExample(example: GalleryExample): Promise<Viewe
       parsedStore.setColorScheme('property');
       parsedStore.setColorProperty(example.colorBy);
     }
+    if (example.initialAtomScale != null && Number.isFinite(example.initialAtomScale)) {
+      useStore.setState({ atomScale: example.initialAtomScale });
+    }
+    if (example.initialBackgroundPreset) {
+      useStore.setState({ backgroundPreset: example.initialBackgroundPreset });
+    }
     return resultFromCurrentFile();
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : String(err);

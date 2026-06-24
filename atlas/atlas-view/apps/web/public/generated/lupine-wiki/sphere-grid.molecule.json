@@ -1,0 +1,142 @@
+{
+  "columns": [
+    "id",
+    "type",
+    "x",
+    "y",
+    "z",
+    "sphere_id",
+    "kind",
+    "radius"
+  ],
+  "edge_count": 1254,
+  "kinds": {
+    "config": {
+      "index": 0,
+      "radius": 0.65
+    },
+    "directory": {
+      "index": 1,
+      "radius": 0.5
+    },
+    "doc": {
+      "index": 8,
+      "radius": 0.85
+    },
+    "file": {
+      "index": 2,
+      "radius": 0.45
+    },
+    "mcp_server": {
+      "index": 5,
+      "radius": 0.75
+    },
+    "plugin": {
+      "index": 6,
+      "radius": 0.75
+    },
+    "project": {
+      "index": 9,
+      "radius": 1.25
+    },
+    "repo": {
+      "index": 3,
+      "radius": 1.0
+    },
+    "skill": {
+      "index": 7,
+      "radius": 0.8
+    },
+    "sphere": {
+      "index": 4,
+      "radius": 1.2
+    }
+  },
+  "node_count": 643,
+  "spheres": [
+    {
+      "atomic_number": 27,
+      "element": "Co",
+      "id": "hermes-core",
+      "index": 0,
+      "kinds": [
+        "file",
+        "directory",
+        "config",
+        "sphere",
+        "repo"
+      ],
+      "name": "Hermes Core"
+    },
+    {
+      "atomic_number": 24,
+      "element": "Cr",
+      "id": "hermes-local-extensions",
+      "index": 1,
+      "kinds": [
+        "mcp_server",
+        "sphere",
+        "plugin",
+        "config",
+        "directory",
+        "file",
+        "skill"
+      ],
+      "name": "Hermes Local Extensions"
+    },
+    {
+      "atomic_number": 26,
+      "element": "Fe",
+      "id": "lupine-science",
+      "index": 5,
+      "kinds": [
+        "file",
+        "repo",
+        "directory",
+        "sphere"
+      ],
+      "name": "Lupine Science"
+    },
+    {
+      "atomic_number": 29,
+      "element": "Cu",
+      "id": "lupine-ledger",
+      "index": 2,
+      "kinds": [
+        "file",
+        "sphere",
+        "directory",
+        "repo"
+      ],
+      "name": "Lupine Ledger"
+    },
+    {
+      "atomic_number": 28,
+      "element": "Ni",
+      "id": "lupine-media",
+      "index": 3,
+      "kinds": [
+        "directory",
+        "file",
+        "sphere",
+        "repo",
+        "doc",
+        "project"
+      ],
+      "name": "Lupine Media"
+    },
+    {
+      "atomic_number": 30,
+      "element": "Zn",
+      "id": "lupine-public",
+      "index": 4,
+      "kinds": [
+        "directory",
+        "file",
+        "sphere",
+        "repo"
+      ],
+      "name": "Lupine Public"
+    }
+  ]
+}

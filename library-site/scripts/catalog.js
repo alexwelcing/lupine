@@ -563,6 +563,15 @@ export const CATALOG = {
 
     // ── Meta ────────────────────────────────────────────────────────
     {
+      id: 'lupine-wiki',
+      source: 'docs/lupine-wiki.md',
+      title: 'Lupine Wiki — Knowledge Graph for Materials Research',
+      subtitle: 'The living sphere-grid map of the Lupine ecosystem: scan, query, render, and export to LUPI.',
+      category: 'meta',
+      tags: ['wiki', 'knowledge-graph', 'lupine', 'hermes', 'lupi'],
+      featured: true,
+    },
+    {
       id: 'operating-system',
       source: 'docs/operating-system.md',
       title: 'GLIM Operating System',

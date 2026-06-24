@@ -12,6 +12,7 @@ import type { NistCatalogEntry } from '@atlas/nist';
 import type { FlythroughSequence, FlythroughKeyframe } from './flythrough';
 import { COLOR_SCHEMES, pickInitialScheme, type ColorSchemeId, type AtomColorSource } from './coloring';
 import { MATERIAL_SCENES, getScene, DEFAULT_SCENE_ID } from '@atlas/scene/materials';
+import { getElementSpec } from '@atlas/core';
 
 /** A pinned text annotation tied to a specific atom by index in the
  *  current frame. Persists across frame changes; if the atom moves, the
@@ -714,6 +715,32 @@ export const useStore = create<AppState>()(
       const sceneDirective = pickSceneDirective(atomCount, firstFrame);
       const materialScene = getScene(sceneDirective.materialScene) ?? getScene(DEFAULT_SCENE_ID);
 
+      // Sparse "knowledge graph" molecules (large bounding box, few atoms) need
+      // larger spheres and a dark background so the clusters read immediately.
+      // Dense molecular systems keep the default scale.
+      const bounds = file?.trajectory?.globalBounds;
+      let sparseAtomScale = DEFAULTS.atomScale;
+      let sparseBackgroundPreset = sceneDirective.backgroundPreset;
+      if (bounds && atomCount > 0) {
+        const dx = bounds.max[0] - bounds.min[0];
+        const dy = bounds.max[1] - bounds.min[1];
+        const dz = bounds.max[2] - bounds.min[2];
+        const diagonal = Math.hypot(dx, dy, dz);
+        const seenTypes = new Set<number>();
+        let totalRadius = 0;
+        for (let i = 0; i < atomCount; i++) {
+          const t = firstFrame?.types?.[i] ?? 0;
+          if (t <= 0 || seenTypes.has(t)) continue;
+          seenTypes.add(t);
+          totalRadius += getElementSpec(t).radius;
+        }
+        const avgRadius = seenTypes.size > 0 ? totalRadius / seenTypes.size : 1.4;
+        if (diagonal / avgRadius > 150) {
+          sparseAtomScale = Math.min(5, Math.max(2, diagonal / 200));
+          sparseBackgroundPreset = 'deep';
+        }
+      }
+
       // Pick a coloring scheme for the first read. Element identity is the
       // default; property coloring remains an explicit Molecule Color choice.
       const hasProperty = !!firstFrame?.properties && firstFrame.properties.size > 0;
@@ -744,7 +771,8 @@ export const useStore = create<AppState>()(
         dirLightIntensity: materialScene?.dirLightIntensity ?? DEFAULTS.dirLightIntensity,
         rimLightIntensity: sceneDirective.rimLightIntensity,
         toneMapping: materialScene?.toneMapping ?? DEFAULTS.toneMapping,
-        backgroundPreset: sceneDirective.backgroundPreset,
+        backgroundPreset: sparseBackgroundPreset,
+        atomScale: sparseAtomScale,
         atomTexture: materialScene?.atomTexture ?? DEFAULTS.atomTexture,
         surfaceRoughness: sceneDirective.surfaceRoughness,
         surfacePolish: sceneDirective.surfacePolish,
