@@ -43,6 +43,10 @@ export interface GalleryExample {
     density?: string;
   };
   featured?: boolean;
+  /** Optional initial atom scale for this gallery entry. Overrides setFile defaults. */
+  initialAtomScale?: number;
+  /** Optional initial background preset for this gallery entry. */
+  initialBackgroundPreset?: string;
 }
 
 export const EXAMPLES: GalleryExample[] = galleryData as GalleryExample[];

@@ -66,6 +66,33 @@
     "featured": true
   },
   {
+    "id": "lupine_sphere_grid",
+    "title": "Lupine Sphere Grid",
+    "subtitle": "Live knowledge graph of the Lupine ecosystem — 6 spheres, 643 nodes, 1254 edges — rendered as a molecule. Sphere colors the cluster; node kind scales the atom.",
+    "domain": "Atomized Media",
+    "atoms": "643",
+    "frames": "1",
+    "file": "generated/lupine-wiki/sphere-grid.lammpstrj",
+    "available": true,
+    "colors": [
+      "#ff9f43",
+      "#5f27cd",
+      "#10ac84"
+    ],
+    "metadata": {
+      "method": "Lupine Wiki Knowledge Graph → Molecular Structure",
+      "source": "lupine-wiki export-molecule",
+      "spheres": "6",
+      "nodes": "643",
+      "edges": "1254",
+      "color_by": "sphere (element type)",
+      "size_by": "kind (radius property)"
+    },
+    "featured": true,
+    "initialAtomScale": 5,
+    "initialBackgroundPreset": "deep"
+  },
+  {
     "id": "research_cu",
     "title": "Cu Potential Benchmark",
     "subtitle": "NIST evaluation of 9 interatomic potentials. Max error: 83.1%. Color by error to see where potentials fail.",
@@ -580,7 +607,11 @@
     "frames": "1",
     "file": "gallery/curated/organic/acetaldehyde.xyz",
     "available": true,
-    "colors": ["#fb7185", "#f8fafc", "#94a3b8"],
+    "colors": [
+      "#fb7185",
+      "#f8fafc",
+      "#94a3b8"
+    ],
     "metadata": {
       "method": "PubChem 3D geometry",
       "potential": "XYZ coordinates",
@@ -596,7 +627,11 @@
     "frames": "1",
     "file": "gallery/curated/organic/acetone.xyz",
     "available": true,
-    "colors": ["#f472b6", "#f8fafc", "#94a3b8"],
+    "colors": [
+      "#f472b6",
+      "#f8fafc",
+      "#94a3b8"
+    ],
     "metadata": {
       "method": "PubChem 3D geometry",
       "potential": "XYZ coordinates",
@@ -612,7 +647,11 @@
     "frames": "1",
     "file": "gallery/curated/organic/benzaldehyde.xyz",
     "available": true,
-    "colors": ["#38bdf8", "#fb7185", "#f8fafc"],
+    "colors": [
+      "#38bdf8",
+      "#fb7185",
+      "#f8fafc"
+    ],
     "metadata": {
       "method": "PubChem 3D geometry",
       "potential": "XYZ coordinates",
@@ -628,7 +667,11 @@
     "frames": "1",
     "file": "gallery/curated/organic/cyclohexanone.xyz",
     "available": true,
-    "colors": ["#f472b6", "#a3e635", "#f8fafc"],
+    "colors": [
+      "#f472b6",
+      "#a3e635",
+      "#f8fafc"
+    ],
     "metadata": {
       "method": "PubChem 3D geometry",
       "potential": "XYZ coordinates",
@@ -644,7 +687,11 @@
     "frames": "1",
     "file": "gallery/curated/organic/acetonitrile.xyz",
     "available": true,
-    "colors": ["#60a5fa", "#f8fafc", "#94a3b8"],
+    "colors": [
+      "#60a5fa",
+      "#f8fafc",
+      "#94a3b8"
+    ],
     "metadata": {
       "method": "PubChem 3D geometry",
       "potential": "XYZ coordinates",
@@ -660,7 +707,11 @@
     "frames": "1",
     "file": "gallery/curated/organic/benzonitrile.xyz",
     "available": true,
-    "colors": ["#38bdf8", "#60a5fa", "#f8fafc"],
+    "colors": [
+      "#38bdf8",
+      "#60a5fa",
+      "#f8fafc"
+    ],
     "metadata": {
       "method": "PubChem 3D geometry",
       "potential": "XYZ coordinates",
@@ -676,7 +727,11 @@
     "frames": "1",
     "file": "gallery/curated/organic/nitrobenzene.xyz",
     "available": true,
-    "colors": ["#38bdf8", "#f97316", "#f8fafc"],
+    "colors": [
+      "#38bdf8",
+      "#f97316",
+      "#f8fafc"
+    ],
     "metadata": {
       "method": "PubChem 3D geometry",
       "potential": "XYZ coordinates",
@@ -692,7 +747,11 @@
     "frames": "1",
     "file": "gallery/curated/organic/phenol.xyz",
     "available": true,
-    "colors": ["#34d399", "#38bdf8", "#f8fafc"],
+    "colors": [
+      "#34d399",
+      "#38bdf8",
+      "#f8fafc"
+    ],
     "metadata": {
       "method": "PubChem 3D geometry",
       "potential": "XYZ coordinates",
@@ -708,7 +767,11 @@
     "frames": "1",
     "file": "gallery/curated/organic/tert_butyl_chloride.xyz",
     "available": true,
-    "colors": ["#c084fc", "#f8fafc", "#94a3b8"],
+    "colors": [
+      "#c084fc",
+      "#f8fafc",
+      "#94a3b8"
+    ],
     "metadata": {
       "method": "PubChem 3D geometry",
       "potential": "XYZ coordinates",
@@ -724,7 +787,11 @@
     "frames": "1",
     "file": "gallery/curated/organic/bromobutane_1.xyz",
     "available": true,
-    "colors": ["#c084fc", "#f97316", "#f8fafc"],
+    "colors": [
+      "#c084fc",
+      "#f97316",
+      "#f8fafc"
+    ],
     "metadata": {
       "method": "PubChem 3D geometry",
       "potential": "XYZ coordinates",
@@ -740,7 +807,11 @@
     "frames": "1",
     "file": "gallery/curated/organic/ethylene_oxide.xyz",
     "available": true,
-    "colors": ["#a7f3d0", "#f8fafc", "#94a3b8"],
+    "colors": [
+      "#a7f3d0",
+      "#f8fafc",
+      "#94a3b8"
+    ],
     "metadata": {
       "method": "PubChem 3D geometry",
       "potential": "XYZ coordinates",
@@ -756,7 +827,11 @@
     "frames": "1",
     "file": "gallery/curated/organic/ethanethiol.xyz",
     "available": true,
-    "colors": ["#facc15", "#f8fafc", "#94a3b8"],
+    "colors": [
+      "#facc15",
+      "#f8fafc",
+      "#94a3b8"
+    ],
     "metadata": {
       "method": "PubChem 3D geometry",
       "potential": "XYZ coordinates",
@@ -772,7 +847,11 @@
     "frames": "1",
     "file": "gallery/curated/organic/dimethyl_sulfide.xyz",
     "available": true,
-    "colors": ["#facc15", "#a7f3d0", "#f8fafc"],
+    "colors": [
+      "#facc15",
+      "#a7f3d0",
+      "#f8fafc"
+    ],
     "metadata": {
       "method": "PubChem 3D geometry",
       "potential": "XYZ coordinates",
@@ -788,7 +867,11 @@
     "frames": "1",
     "file": "gallery/curated/organic/acetic_anhydride.xyz",
     "available": true,
-    "colors": ["#fb923c", "#fb7185", "#f8fafc"],
+    "colors": [
+      "#fb923c",
+      "#fb7185",
+      "#f8fafc"
+    ],
     "metadata": {
       "method": "PubChem 3D geometry",
       "potential": "XYZ coordinates",
@@ -804,7 +887,11 @@
     "frames": "1",
     "file": "gallery/curated/organic/acetyl_chloride.xyz",
     "available": true,
-    "colors": ["#fb923c", "#c084fc", "#f8fafc"],
+    "colors": [
+      "#fb923c",
+      "#c084fc",
+      "#f8fafc"
+    ],
     "metadata": {
       "method": "PubChem 3D geometry",
       "potential": "XYZ coordinates",
@@ -820,7 +907,11 @@
     "frames": "1",
     "file": "gallery/curated/organic/ethyl_acetate.xyz",
     "available": true,
-    "colors": ["#fb923c", "#34d399", "#f8fafc"],
+    "colors": [
+      "#fb923c",
+      "#34d399",
+      "#f8fafc"
+    ],
     "metadata": {
       "method": "PubChem 3D geometry",
       "potential": "XYZ coordinates",
@@ -836,7 +927,11 @@
     "frames": "1",
     "file": "gallery/curated/popular/aspirin.xyz",
     "available": true,
-    "colors": ["#f43f5e", "#f97316", "#f8fafc"],
+    "colors": [
+      "#f43f5e",
+      "#f97316",
+      "#f8fafc"
+    ],
     "metadata": {
       "method": "PubChem 3D geometry",
       "potential": "XYZ coordinates",
@@ -853,7 +948,11 @@
     "frames": "1",
     "file": "gallery/curated/popular/caffeine.xyz",
     "available": true,
-    "colors": ["#f8fafc", "#38bdf8", "#f97316"],
+    "colors": [
+      "#f8fafc",
+      "#38bdf8",
+      "#f97316"
+    ],
     "metadata": {
       "method": "PubChem 3D geometry",
       "potential": "XYZ coordinates",
@@ -869,7 +968,11 @@
     "frames": "1",
     "file": "gallery/curated/popular/cholesterol.xyz",
     "available": true,
-    "colors": ["#22c55e", "#facc15", "#f8fafc"],
+    "colors": [
+      "#22c55e",
+      "#facc15",
+      "#f8fafc"
+    ],
     "metadata": {
       "method": "PubChem 3D geometry",
       "potential": "XYZ coordinates",
@@ -885,7 +988,11 @@
     "frames": "1",
     "file": "gallery/curated/popular/diamond_crystal.xyz",
     "available": true,
-    "colors": ["#e0f2fe", "#94a3b8", "#f8fafc"],
+    "colors": [
+      "#e0f2fe",
+      "#94a3b8",
+      "#f8fafc"
+    ],
     "metadata": {
       "method": "Procedural crystal builder",
       "potential": "XYZ coordinates",
@@ -902,7 +1009,11 @@
     "frames": "1",
     "file": "gallery/curated/popular/dopamine.xyz",
     "available": true,
-    "colors": ["#a78bfa", "#f8fafc", "#f59e0b"],
+    "colors": [
+      "#a78bfa",
+      "#f8fafc",
+      "#f59e0b"
+    ],
     "metadata": {
       "method": "PubChem 3D geometry",
       "potential": "XYZ coordinates",
@@ -918,7 +1029,11 @@
     "frames": "1",
     "file": "gallery/curated/popular/lsd.xyz",
     "available": true,
-    "colors": ["#7c3aed", "#22d3ee", "#f8fafc"],
+    "colors": [
+      "#7c3aed",
+      "#22d3ee",
+      "#f8fafc"
+    ],
     "metadata": {
       "method": "PubChem 3D geometry",
       "potential": "XYZ coordinates",
@@ -934,7 +1049,11 @@
     "frames": "1",
     "file": "gallery/curated/popular/psilocybin.xyz",
     "available": true,
-    "colors": ["#0ea5e9", "#a855f7", "#f8fafc"],
+    "colors": [
+      "#0ea5e9",
+      "#a855f7",
+      "#f8fafc"
+    ],
     "metadata": {
       "method": "PubChem 3D geometry",
       "potential": "XYZ coordinates",
@@ -950,7 +1069,11 @@
     "frames": "1",
     "file": "gallery/curated/popular/serotonin.xyz",
     "available": true,
-    "colors": ["#14b8a6", "#f59e0b", "#f8fafc"],
+    "colors": [
+      "#14b8a6",
+      "#f59e0b",
+      "#f8fafc"
+    ],
     "metadata": {
       "method": "PubChem 3D geometry",
       "potential": "XYZ coordinates",
@@ -966,7 +1089,11 @@
     "frames": "1",
     "file": "gallery/curated/popular/thc.xyz",
     "available": true,
-    "colors": ["#16a34a", "#f97316", "#f8fafc"],
+    "colors": [
+      "#16a34a",
+      "#f97316",
+      "#f8fafc"
+    ],
     "metadata": {
       "method": "PubChem 3D geometry",
       "potential": "XYZ coordinates",
@@ -982,7 +1109,11 @@
     "frames": "1",
     "file": "gallery/curated/popular/brilliant_diamond_macro.xyz",
     "available": true,
-    "colors": ["#bae6fd", "#e0f2fe", "#f8fafc"],
+    "colors": [
+      "#bae6fd",
+      "#e0f2fe",
+      "#f8fafc"
+    ],
     "metadata": {
       "method": "Procedural faceted lattice",
       "potential": "XYZ coordinates",
@@ -999,7 +1130,11 @@
     "frames": "1",
     "file": "gallery/curated/popular/rough_octahedron_diamond.xyz",
     "available": true,
-    "colors": ["#c4b5fd", "#93c5fd", "#f8fafc"],
+    "colors": [
+      "#c4b5fd",
+      "#93c5fd",
+      "#f8fafc"
+    ],
     "metadata": {
       "method": "Procedural faceted lattice",
       "potential": "XYZ coordinates",
@@ -1015,7 +1150,11 @@
     "frames": "1",
     "file": "social-qr/lupi_live.xyz",
     "available": true,
-    "colors": ["#111827", "#1edce0", "#ffffff"],
+    "colors": [
+      "#111827",
+      "#1edce0",
+      "#ffffff"
+    ],
     "metadata": {
       "method": "Atom QR (ECC-M, byte mode)",
       "potential": "Visual adjacency grid (1.55 A)",
@@ -1031,7 +1170,11 @@
     "frames": "1",
     "file": "social-qr/lupine_science.xyz",
     "available": true,
-    "colors": ["#111827", "#1edce0", "#ffffff"],
+    "colors": [
+      "#111827",
+      "#1edce0",
+      "#ffffff"
+    ],
     "metadata": {
       "method": "Atom QR (ECC-M, byte mode)",
       "potential": "Visual adjacency grid (1.55 A)",
@@ -1047,7 +1190,11 @@
     "frames": "1",
     "file": "social-qr/lupine_linkedin.xyz",
     "available": true,
-    "colors": ["#111827", "#1edce0", "#ffffff"],
+    "colors": [
+      "#111827",
+      "#1edce0",
+      "#ffffff"
+    ],
     "metadata": {
       "method": "Atom QR (ECC-M, byte mode)",
       "potential": "Visual adjacency grid (1.55 A)",

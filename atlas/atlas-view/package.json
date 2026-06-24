@@ -39,6 +39,8 @@
     "bake:glimbin": "npx -y tsx tools/bake-glimbin.mjs",
     "sims:phase-change": "python3 tools/sims/make_phase_trajectories.py all --size demo",
     "atomize:media": "node tools/atomize-media.mjs",
+    "generate:sphere-grid": "node tools/generate-sphere-grid-gallery.mjs",
+    "generate:sphere-grid:assets": "node tools/generate-sphere-grid-gallery.mjs --no-snapshot",
     "verify:atomize-media": "node tools/verify-atomize-media.mjs",
     "verify:save-view-admin-smoke": "node tools/verify-save-view-admin-smoke.mjs",
     "verify:saved-views": "node tools/verify-saved-views.mjs",

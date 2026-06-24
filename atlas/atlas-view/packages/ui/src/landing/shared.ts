@@ -25,6 +25,7 @@ export interface GalleryExample {
 export const ALL_EXAMPLES: GalleryExample[] = galleryData as any[];
 
 export const FEATURED_IDS = [
+  'lupine_sphere_grid',
   'c60_buckyball',
   'cnt_6_6',
   'graphene_ribbon',
