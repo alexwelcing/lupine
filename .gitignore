@@ -13,6 +13,8 @@ wasm-out/
 .DS_Store
 *.data
 *.dump
+!atlas/atlas-view/apps/web/public/generated/lupine-wiki/*.data
+!atlas/atlas-view/apps/web/public/generated/lupine-wiki/*.lammpstrj
 .wrangler/
 **/.wrangler/
 
@@ -87,6 +89,7 @@ tools/hermes-hive/data/
 
 # Large binary files & media
 *.lammpstrj
+!atlas/atlas-view/apps/web/public/generated/lupine-wiki/*.lammpstrj
 *.mp4
 *.z64
 *.tar.zst

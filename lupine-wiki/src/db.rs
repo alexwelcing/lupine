@@ -75,26 +75,26 @@ impl WikiDb {
                     trigger TEXT,
                     sphere_hashes TEXT
                 );
-                
+
                 CREATE TABLE IF NOT EXISTS meta (
                     key TEXT PRIMARY KEY,
                     value TEXT
                 );
-                
+
                 INSERT OR IGNORE INTO meta (key, value) VALUES ('schema_version', '1');
-                
+
                 PRAGMA journal_mode = WAL;
                 PRAGMA foreign_keys = ON;
-                
+
                 -- Migration: ensure schema_version exists even if tables predate meta
                 UPDATE OR IGNORE meta SET value = '1' WHERE key = 'schema_version';
-                
+
                 -- View for full node summary
                 CREATE VIEW IF NOT EXISTS v_nodes AS
                 SELECT n.*, s.name AS sphere_name, s.color AS sphere_color
                 FROM nodes n
                 JOIN spheres s ON n.sphere_id = s.id;
-                
+
                 -- View for full edge summary
                 CREATE VIEW IF NOT EXISTS v_edges AS
                 SELECT e.*, src.name AS src_name, dst.name AS dst_name,
