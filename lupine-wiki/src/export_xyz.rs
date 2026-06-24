@@ -337,9 +337,10 @@ pub fn write_metadata(export: &MoleculeExport, path: &Path) -> Result<()> {
 
 /// Generate 3D knowledge labels for the sphere-grid view.
 ///
-/// Returns one label per sphere at its centroid, plus labels for the
-/// highest-salience individual nodes (projects and repos) so the viewer can
-/// surface exact knowledge-graph semantics instead of atomic symbols.
+/// Returns one label per sphere at its centroid, plus a label for every node.
+/// Each label carries a `salience` score (sphere=2, project/repo/skill=1,
+/// other=0) so the viewer can render a readable default set while still having
+/// full metadata available for hover/inspect interactions.
 pub fn write_labels(export: &MoleculeExport, path: &Path) -> Result<()> {
     let mut sphere_index: HashMap<String, i32> = HashMap::new();
     let mut next_sphere = 0i32;
@@ -364,6 +365,13 @@ pub fn write_labels(export: &MoleculeExport, path: &Path) -> Result<()> {
             .or_default()
             .entry(node.kind.as_str().to_string())
             .or_insert(0) += 1;
+    }
+
+    // Degree (edge count) per node so the viewer can reveal how connected a node is.
+    let mut node_degrees: HashMap<usize, usize> = HashMap::new();
+    for (a, b) in &export.edge_pairs {
+        *node_degrees.entry(*a).or_insert(0) += 1;
+        *node_degrees.entry(*b).or_insert(0) += 1;
     }
     for (sphere_id, entry) in &mut sphere_positions {
         let count = export.nodes.iter().filter(|n| n.sphere_id == *sphere_id).count() as f64;
@@ -390,36 +398,41 @@ pub fn write_labels(export: &MoleculeExport, path: &Path) -> Result<()> {
             "detail": format!("{} nodes · {}", export.nodes.iter().filter(|n| n.sphere_id == sphere.id).count(), count_summary.join(", ")),
             "sphere_id": sphere.id,
             "sphere_index": idx,
+            "salience": 2,
             "position": centroid,
         }));
     }
 
-    // Labels for key nodes: every Project and Repo, plus the first Skill per sphere.
-    let mut seen_sphere_skill: HashMap<String, bool> = HashMap::new();
+    // Labels for every node, with a salience score the viewer can use to decide
+    // which labels to render by default (avoiding 600+ overlapping cards).
+    // The dedicated sphere-centroid labels above already cover sphere nodes.
     for (i, node) in export.nodes.iter().enumerate() {
-        let label_kind = match node.kind {
-            crate::graph::NodeKind::Project => Some("project"),
-            crate::graph::NodeKind::Repo => Some("repo"),
-            crate::graph::NodeKind::Skill if !seen_sphere_skill.get(&node.sphere_id).copied().unwrap_or(false) => {
-                seen_sphere_skill.insert(node.sphere_id.clone(), true);
-                Some("skill")
-            }
-            _ => None,
-        };
-        if let Some(_kind) = label_kind {
-            let pos = export.positions[i];
-            labels.push(serde_json::json!({
-                "id": format!("node-{}", node.id),
-                "kind": "node",
-                "node_kind": node.kind.as_str(),
-                "text": node.name,
-                "detail": format!("{} · {}", node.kind.as_str(), node.sphere_id),
-                "sphere_id": node.sphere_id,
-                "sphere_index": sphere_index.get(&node.sphere_id).copied().unwrap_or(-1),
-                "atom_index": i,
-                "position": pos,
-            }));
+        if matches!(node.kind, crate::graph::NodeKind::Sphere) {
+            continue;
         }
+        let salience: i32 = match node.kind {
+            crate::graph::NodeKind::Sphere => 2,
+            crate::graph::NodeKind::Project
+            | crate::graph::NodeKind::Repo
+            | crate::graph::NodeKind::Skill => 1,
+            _ => 0,
+        };
+        let pos = export.positions[i];
+        let degree = node_degrees.get(&i).copied().unwrap_or(0);
+        labels.push(serde_json::json!({
+            "id": format!("node-{}", node.id),
+            "kind": "node",
+            "node_kind": node.kind.as_str(),
+            "node_id": node.id,
+            "text": node.name,
+            "detail": format!("{} · {} · {} connection{}", node.kind.as_str(), node.sphere_id, degree, if degree == 1 { "" } else { "s" }),
+            "sphere_id": node.sphere_id,
+            "sphere_index": sphere_index.get(&node.sphere_id).copied().unwrap_or(-1),
+            "atom_index": i,
+            "degree": degree,
+            "salience": salience,
+            "position": pos,
+        }));
     }
 
     fs::write(path, serde_json::to_string_pretty(&serde_json::json!({ "labels": labels }))?)

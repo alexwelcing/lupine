@@ -30,6 +30,31 @@ function resultFromCurrentFile(): ViewerOpenResult {
   };
 }
 
+/** Pure parser for knowledge-labels JSON. Exported for unit testing. */
+export function parseKnowledgeLabelsPayload(payload: unknown): KnowledgeLabel[] {
+  const raw = Array.isArray(payload) ? payload : (payload as any)?.labels;
+  if (!Array.isArray(raw)) {
+    console.warn('[knowledge-labels] Expected array or { labels: [...] }');
+    return [];
+  }
+  return raw
+    .filter((l: any) => l && typeof l.text === 'string' && Array.isArray(l.position) && l.position.length === 3)
+    .map((l: any) => ({
+      id: String(l.id ?? `kl_${Math.random().toString(36).slice(2, 8)}`),
+      kind: String(l.kind ?? 'unknown'),
+      text: String(l.text),
+      detail: l.detail ? String(l.detail) : undefined,
+      sphereId: l.sphere_id ? String(l.sphere_id) : undefined,
+      sphereIndex: typeof l.sphere_index === 'number' ? l.sphere_index : undefined,
+      atomIndex: typeof l.atom_index === 'number' ? l.atom_index : undefined,
+      nodeKind: l.node_kind ? String(l.node_kind) : undefined,
+      nodeId: l.node_id ? String(l.node_id) : undefined,
+      degree: typeof l.degree === 'number' ? l.degree : undefined,
+      salience: typeof l.salience === 'number' ? l.salience : undefined,
+      position: [Number(l.position[0]), Number(l.position[1]), Number(l.position[2])] as [number, number, number],
+    }));
+}
+
 async function loadKnowledgeLabels(example: GalleryExample): Promise<void> {
   if (!example.labelsUrl) {
     useStore.getState().clearKnowledgeLabels();
@@ -45,26 +70,7 @@ async function loadKnowledgeLabels(example: GalleryExample): Promise<void> {
       useStore.getState().clearKnowledgeLabels();
       return;
     }
-    const payload = await resp.json();
-    const raw = Array.isArray(payload) ? payload : payload?.labels;
-    if (!Array.isArray(raw)) {
-      console.warn('[knowledge-labels] Expected array or { labels: [...] }');
-      useStore.getState().clearKnowledgeLabels();
-      return;
-    }
-    const labels: KnowledgeLabel[] = raw
-      .filter((l: any) => l && typeof l.text === 'string' && Array.isArray(l.position) && l.position.length === 3)
-      .map((l: any) => ({
-        id: String(l.id ?? `kl_${Math.random().toString(36).slice(2, 8)}`),
-        kind: String(l.kind ?? 'unknown'),
-        text: String(l.text),
-        detail: l.detail ? String(l.detail) : undefined,
-        sphereId: l.sphere_id ? String(l.sphere_id) : undefined,
-        sphereIndex: typeof l.sphere_index === 'number' ? l.sphere_index : undefined,
-        atomIndex: typeof l.atom_index === 'number' ? l.atom_index : undefined,
-        nodeKind: l.node_kind ? String(l.node_kind) : undefined,
-        position: [Number(l.position[0]), Number(l.position[1]), Number(l.position[2])] as [number, number, number],
-      }));
+    const labels = parseKnowledgeLabelsPayload(await resp.json());
     useStore.getState().setKnowledgeLabels(labels);
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : String(err);

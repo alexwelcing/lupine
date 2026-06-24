@@ -185,6 +185,7 @@ export function VisualsPanel({ availableProperties, embedded = false }: { availa
     labelStyle, setLabelStyle,
     knowledgeLabels, knowledgeLabelKinds, showKnowledgeLabels,
     setShowKnowledgeLabels, toggleKnowledgeLabelKind,
+    knowledgeLabelThreshold, setKnowledgeLabelThreshold,
     hiddenAtomTypes, toggleAtomType, showAllAtomTypes, soloAtomType,
     atomTypeScales, setAtomTypeScale, resetAtomTypeScales,
     // Materials & Lighting
@@ -816,6 +817,20 @@ export function VisualsPanel({ availableProperties, embedded = false }: { availa
                         />
                       ))}
                     </div>
+                    {knowledgeLabels.some(l => l.kind === 'node') && (
+                      <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                        <IsotopeChip
+                          label="Key nodes"
+                          selected={knowledgeLabelThreshold >= 1}
+                          onClick={() => setKnowledgeLabelThreshold(1)}
+                        />
+                        <IsotopeChip
+                          label="All nodes"
+                          selected={knowledgeLabelThreshold <= 0}
+                          onClick={() => setKnowledgeLabelThreshold(0)}
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
               )}

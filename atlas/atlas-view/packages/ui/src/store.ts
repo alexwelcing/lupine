@@ -39,6 +39,13 @@ export interface KnowledgeLabel {
   sphereIndex?: number;
   atomIndex?: number;
   nodeKind?: string;
+  /** Original knowledge-graph node id (path) when available. */
+  nodeId?: string;
+  /** Number of edges connected to this node. */
+  degree?: number;
+  /** Salience score used to throttle default label density.
+   *  sphere=2, project/repo/skill=1, everything else=0. */
+  salience?: number;
   position: [number, number, number];
 }
 
@@ -425,9 +432,13 @@ export interface AppState {
   knowledgeLabels: KnowledgeLabel[];
   knowledgeLabelKinds: Set<string>;
   showKnowledgeLabels: boolean;
+  /** Minimum salience required for a node label to render by default.
+   *  Sphere labels always render. Hover always reveals the hovered node. */
+  knowledgeLabelThreshold: number;
   setKnowledgeLabels: (labels: KnowledgeLabel[]) => void;
   clearKnowledgeLabels: () => void;
   setShowKnowledgeLabels: (show: boolean) => void;
+  setKnowledgeLabelThreshold: (threshold: number) => void;
   toggleKnowledgeLabelKind: (kind: string) => void;
 
   // ─── Atom visibility ───
@@ -717,6 +728,7 @@ const DEFAULTS = {
   knowledgeLabels: [] as KnowledgeLabel[],
   knowledgeLabelKinds: new Set<string>(['sphere', 'node']),
   showKnowledgeLabels: true,
+  knowledgeLabelThreshold: 1,
   hiddenAtomTypes: new Set<number>(),
   atomTypeScales: {} as Record<number, number>,
   anomalyTracking: false,
@@ -1130,6 +1142,7 @@ export const useStore = create<AppState>()(
     }),
     clearKnowledgeLabels: () => set({ knowledgeLabels: [], knowledgeLabelKinds: new Set(['sphere', 'node']) }),
     setShowKnowledgeLabels: (showKnowledgeLabels) => set({ showKnowledgeLabels }),
+    setKnowledgeLabelThreshold: (knowledgeLabelThreshold) => set({ knowledgeLabelThreshold }),
     toggleKnowledgeLabelKind: (kind) => set((s) => {
       const next = new Set(s.knowledgeLabelKinds);
       if (next.has(kind)) next.delete(kind);

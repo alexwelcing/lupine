@@ -68,9 +68,9 @@
   {
     "id": "lupine_sphere_grid",
     "title": "Lupine Sphere Grid",
-    "subtitle": "Live knowledge graph of the Lupine ecosystem — 6 spheres, 643 nodes, 1254 edges — rendered as a molecule. Sphere colors the cluster; node kind scales the atom.",
+    "subtitle": "Live knowledge graph of the Lupine ecosystem — 6 spheres, 635 nodes, 1238 edges — rendered as a molecule. Sphere colors the cluster; node kind scales the atom.",
     "domain": "Atomized Media",
-    "atoms": "643",
+    "atoms": "635",
     "frames": "1",
     "file": "generated/lupine-wiki/sphere-grid.lammpstrj",
     "available": true,
@@ -83,8 +83,8 @@
       "method": "Lupine Wiki Knowledge Graph → Molecular Structure",
       "source": "lupine-wiki export-molecule",
       "spheres": "6",
-      "nodes": "643",
-      "edges": "1254",
+      "nodes": "635",
+      "edges": "1238",
       "color_by": "sphere (element type)",
       "size_by": "kind (radius property)"
     },

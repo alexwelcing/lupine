@@ -8,7 +8,7 @@ import { getElementSpec } from '@atlas/core';
 import { useStore, type KnowledgeLabel } from './store';
 
 const MAX_PROPERTY_ROWS = 4;
-const MAX_KNOWLEDGE_ROWS = 3;
+const MAX_KNOWLEDGE_ROWS = 4;
 
 interface AtomInfoHUDProps {
   frame: Frame;
@@ -35,6 +35,10 @@ export function AtomInfoHUD({
   const spec = getElementSpec(type);
   const properties = getPropertyRows(frame, atomIndex, activeProperty);
   const knowledge = getKnowledgeRows(knowledgeLabels, frame, atomIndex);
+  const nodeLabel = knowledgeLabels.find((l) => l.kind === 'node' && l.atomIndex === atomIndex);
+  const subtitle = nodeLabel?.nodeId
+    ? formatNodePath(nodeLabel.nodeId)
+    : `atom #${atomIndex} / id ${id} / type ${type}`;
 
   return (
     <Html
@@ -106,8 +110,17 @@ export function AtomInfoHUD({
                 </button>
               )}
             </div>
-            <div style={{ color: 'rgba(165, 192, 219, 0.72)', fontSize: 10 }}>
-              atom #{atomIndex} / id {id} / type {type}
+            <div
+              title={nodeLabel?.nodeId}
+              style={{
+                color: 'rgba(165, 192, 219, 0.72)',
+                fontSize: 10,
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {subtitle}
             </div>
           </div>
         </div>
@@ -183,6 +196,17 @@ function getKnowledgeRows(labels: KnowledgeLabel[], frame: Frame, atomIndex: num
   const kind = frame.properties.get('kind')?.[atomIndex];
   const radius = frame.properties.get('radius')?.[atomIndex];
 
+  const nodeLabel = labels.find((l) => l.kind === 'node' && l.atomIndex === atomIndex);
+  if (nodeLabel) {
+    // Named key node: show its type, name, and connection count first.
+    rows.push({ label: nodeLabel.nodeKind ?? 'node', value: nodeLabel.text });
+    if (typeof nodeLabel.degree === 'number') {
+      rows.push({ label: 'connections', value: String(nodeLabel.degree) });
+    }
+  } else if (typeof kind === 'number' || typeof kind === 'string') {
+    rows.push({ label: 'kind', value: String(kind) });
+  }
+
   if (typeof sphereId === 'number' || typeof sphereId === 'string') {
     const sphereLabel = labels.find(
       (l) =>
@@ -194,19 +218,25 @@ function getKnowledgeRows(labels: KnowledgeLabel[], frame: Frame, atomIndex: num
     }
   }
 
-  const nodeLabel = labels.find((l) => l.kind === 'node' && l.atomIndex === atomIndex);
-  if (nodeLabel) {
-    rows.push({ label: nodeLabel.nodeKind ?? 'node', value: nodeLabel.text });
-  } else if (typeof kind === 'number' || typeof kind === 'string') {
-    // Fall back to the raw kind column if we don't have a named node label.
-    rows.push({ label: 'kind', value: String(kind) });
-  }
-
   if (typeof radius === 'number') {
     rows.push({ label: 'radius', value: radius.toFixed(3) });
   }
 
   return rows.slice(0, MAX_KNOWLEDGE_ROWS);
+}
+
+/** Format a node id/path for display: keep the last meaningful segment and
+ *  truncate very long paths so the HUD stays compact. */
+function formatNodePath(path: string | undefined): string | undefined {
+  if (!path) return undefined;
+  const cleaned = path.replace(/^[a-z]+:\/\//i, '').replace(/^\//, '');
+  if (cleaned.length <= 42) return cleaned;
+  const parts = cleaned.split('/');
+  const file = parts.pop() ?? '';
+  const dir = parts.join('/');
+  if (file.length > 38) return `…/${file.slice(0, 36)}…`;
+  const prefix = dir.slice(0, 40 - file.length - 4);
+  return `${prefix}…/${file}`;
 }
 
 function formatPropertyValue(value: number): string {
