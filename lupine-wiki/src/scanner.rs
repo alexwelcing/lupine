@@ -2,9 +2,9 @@ use crate::config::{RootConfig, ScannerConfig, SphereConfig};
 use crate::graph::{Edge, EdgeKind, Node, NodeKind, Provenance, Sphere, Status};
 use anyhow::{Context, Result};
 use sha2::{Digest, Sha256};
-use std::str::FromStr;
 use std::collections::{HashMap, HashSet};
 use std::path::{Path, PathBuf};
+use std::str::FromStr;
 use walkdir::WalkDir;
 
 pub struct ScanResult {
@@ -133,7 +133,9 @@ impl Scanner {
         for (_sphere_id, sphere_cfg) in &self.config.spheres {
             for rule in &sphere_cfg.edges {
                 // For now, only support node:// refs in declared rules.
-                if let (Some(src), Some(dst)) = (parse_node_ref(&rule.from_pattern), parse_node_ref(&rule.to)) {
+                if let (Some(src), Some(dst)) =
+                    (parse_node_ref(&rule.from_pattern), parse_node_ref(&rule.to))
+                {
                     let kind = EdgeKind::from_str(&rule.kind).unwrap_or(EdgeKind::DependsOn);
                     let provenance = rule
                         .provenance
@@ -153,7 +155,11 @@ impl Scanner {
             }
         }
 
-        Ok(ScanResult { spheres, nodes, edges })
+        Ok(ScanResult {
+            spheres,
+            nodes,
+            edges,
+        })
     }
 
     fn scan_root(&self, sphere_id: &str, root: &RootConfig) -> Result<(Vec<Node>, Vec<Edge>)> {
@@ -177,10 +183,12 @@ impl Scanner {
         // Add the root itself as a node
         let root_uri = root_path.to_string_lossy().to_string();
         let root_id = Node::stable_id(sphere_id, root_kind, &root_uri);
-        let root_name = root
-            .name
-            .clone()
-            .unwrap_or_else(|| root_path.file_name().map(|s| s.to_string_lossy().to_string()).unwrap_or_else(|| root.path.clone()));
+        let root_name = root.name.clone().unwrap_or_else(|| {
+            root_path
+                .file_name()
+                .map(|s| s.to_string_lossy().to_string())
+                .unwrap_or_else(|| root.path.clone())
+        });
         let root_hash = if root_path.is_file() {
             Some(hash_file(&root_path)?)
         } else {
@@ -211,7 +219,12 @@ impl Scanner {
                 if path.is_file() && root.include_files {
                     nodes.push(self.path_to_node(sphere_id, &path, NodeKind::File, &root_id)?);
                 } else if path.is_dir() && root.include_dirs {
-                    nodes.push(self.path_to_node(sphere_id, &path, NodeKind::Directory, &root_id)?);
+                    nodes.push(self.path_to_node(
+                        sphere_id,
+                        &path,
+                        NodeKind::Directory,
+                        &root_id,
+                    )?);
                 }
             }
         } else if root.recursive && root_path.is_dir() {
@@ -273,7 +286,13 @@ impl Scanner {
         Ok((nodes, edges))
     }
 
-    fn path_to_node(&self, sphere_id: &str, path: &Path, kind: NodeKind, _root_id: &str) -> Result<Node> {
+    fn path_to_node(
+        &self,
+        sphere_id: &str,
+        path: &Path,
+        kind: NodeKind,
+        _root_id: &str,
+    ) -> Result<Node> {
         let uri = path.to_string_lossy().to_string();
         let name = path
             .file_name()
@@ -303,7 +322,8 @@ impl Scanner {
 const MAX_HASH_BYTES: u64 = 5 * 1024 * 1024; // 5 MiB
 
 fn hash_file(path: &Path) -> Result<String> {
-    let metadata = std::fs::metadata(path).with_context(|| format!("read metadata for hashing: {}", path.display()))?;
+    let metadata = std::fs::metadata(path)
+        .with_context(|| format!("read metadata for hashing: {}", path.display()))?;
     if metadata.len() > MAX_HASH_BYTES {
         // For large files, hash size + mtime so drift detection still works for changes
         // without reading the whole file.
@@ -317,7 +337,8 @@ fn hash_file(path: &Path) -> Result<String> {
         let digest = Sha256::digest(input.as_bytes());
         return Ok(format!("meta:{}", hex::encode(digest)));
     }
-    let bytes = std::fs::read(path).with_context(|| format!("read file for hashing: {}", path.display()))?;
+    let bytes = std::fs::read(path)
+        .with_context(|| format!("read file for hashing: {}", path.display()))?;
     let digest = Sha256::digest(&bytes);
     Ok(hex::encode(digest))
 }
@@ -333,17 +354,28 @@ fn expand_tilde(path: &str) -> PathBuf {
 }
 
 const SKIP_EXTENSIONS: &[&str] = &[
-    "pyc", "pyo", "pyd", "so", "dylib", "dll", "exe", "bin", "o", "a",
-    "png", "jpg", "jpeg", "gif", "webp", "bmp", "ico", "svg",
-    "mp4", "mov", "avi", "mkv", "webm", "mp3", "wav", "ogg", "flac",
-    "zip", "tar", "gz", "bz2", "xz", "7z", "rar",
-    "ttf", "otf", "woff", "woff2", "eot",
-    "db-shm", "db-wal",
+    "pyc", "pyo", "pyd", "so", "dylib", "dll", "exe", "bin", "o", "a", "png", "jpg", "jpeg", "gif",
+    "webp", "bmp", "ico", "svg", "mp4", "mov", "avi", "mkv", "webm", "mp3", "wav", "ogg", "flac",
+    "zip", "tar", "gz", "bz2", "xz", "7z", "rar", "ttf", "otf", "woff", "woff2", "eot", "db-shm",
+    "db-wal",
 ];
 
 fn should_ignore(path: &Path, patterns: &[String]) -> bool {
-    let default_ignores = [".git", "node_modules", "target", "__pycache__", ".venv", "venv", ".idea", ".vscode"];
-    let all_patterns: Vec<_> = default_ignores.iter().map(|s| s.to_string()).chain(patterns.iter().cloned()).collect();
+    let default_ignores = [
+        ".git",
+        "node_modules",
+        "target",
+        "__pycache__",
+        ".venv",
+        "venv",
+        ".idea",
+        ".vscode",
+    ];
+    let all_patterns: Vec<_> = default_ignores
+        .iter()
+        .map(|s| s.to_string())
+        .chain(patterns.iter().cloned())
+        .collect();
 
     for component in path.components() {
         let name = component.as_os_str().to_string_lossy().to_string();

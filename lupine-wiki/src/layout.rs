@@ -1,11 +1,11 @@
 use crate::graph::{Edge, Node, Sphere};
-use rand::rngs::StdRng;
-use rand::SeedableRng;
 use rand::Rng;
+use rand::SeedableRng;
+use rand::rngs::StdRng;
 use std::collections::HashMap;
 
 const CLUSTER_RADIUS: f64 = 40.0; // radius on which sphere centers sit
-const NODE_RADIUS: f64 = 8.0;     // radius of each sphere-cluster cloud
+const NODE_RADIUS: f64 = 8.0; // radius of each sphere-cluster cloud
 const REPULSIVE_STRENGTH: f64 = 500.0;
 const ATTRACTIVE_STRENGTH: f64 = 0.05;
 const CENTERING_STRENGTH: f64 = 0.02;
@@ -24,13 +24,15 @@ pub struct LayoutResult {
     pub positions: Vec<[f64; 3]>,
 }
 
-pub fn layout_graph(nodes: &[Node], edges: &[Edge], spheres: &[Sphere]) -> LayoutResult {
+pub fn layout_graph(nodes: &[Node], edges: &[Edge], spheres: &[Sphere], seed: u64) -> LayoutResult {
     let n = nodes.len();
     if n == 0 {
-        return LayoutResult { positions: Vec::new() };
+        return LayoutResult {
+            positions: Vec::new(),
+        };
     }
 
-    let mut rng = StdRng::seed_from_u64(42);
+    let mut rng = StdRng::seed_from_u64(seed);
 
     // Map sphere_id -> center position
     let sphere_centers: HashMap<String, [f64; 3]> = spheres
@@ -53,7 +55,10 @@ pub fn layout_graph(nodes: &[Node], edges: &[Edge], spheres: &[Sphere]) -> Layou
     let mut pos: Vec<[f64; 3]> = nodes
         .iter()
         .map(|node| {
-            let center = sphere_centers.get(&node.sphere_id).copied().unwrap_or([0.0, 0.0, 0.0]);
+            let center = sphere_centers
+                .get(&node.sphere_id)
+                .copied()
+                .unwrap_or([0.0, 0.0, 0.0]);
             let u: f64 = rng.random();
             let v: f64 = rng.random();
             let theta = 2.0 * std::f64::consts::PI * u;
@@ -134,7 +139,10 @@ pub fn layout_graph(nodes: &[Node], edges: &[Edge], spheres: &[Sphere]) -> Layou
 
         // Centering force toward sphere center
         for (i, node) in nodes.iter().enumerate() {
-            let center = sphere_centers.get(&node.sphere_id).copied().unwrap_or([0.0, 0.0, 0.0]);
+            let center = sphere_centers
+                .get(&node.sphere_id)
+                .copied()
+                .unwrap_or([0.0, 0.0, 0.0]);
             let dx = center[0] - pos[i][0];
             let dy = center[1] - pos[i][1];
             let dz = center[2] - pos[i][2];
