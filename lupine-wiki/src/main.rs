@@ -1,9 +1,6 @@
 use anyhow::{Context, Result};
 use clap::{Parser, Subcommand};
-use lupine_wiki::{
-    config, db, export_xyz, graph, render, scanner,
-    layout::layout_graph,
-};
+use lupine_wiki::{config, db, export_xyz, graph, layout::layout_graph, render, scanner};
 use std::fs;
 use std::path::PathBuf;
 use std::str::FromStr;
@@ -67,10 +64,7 @@ enum Command {
         quiet: bool,
     },
     /// Compare two snapshots
-    Diff {
-        from: i64,
-        to: i64,
-    },
+    Diff { from: i64, to: i64 },
     /// Tag a node with a sphere, status, or owner profile
     Tag {
         node_id: String,
@@ -96,6 +90,9 @@ enum Command {
         /// Export only the named sphere
         #[arg(long)]
         sphere: Option<String>,
+        /// Random seed for deterministic layout (default: 42)
+        #[arg(long, default_value = "42")]
+        seed: u64,
         /// Suppress non-error output
         #[arg(short, long)]
         quiet: bool,
@@ -150,8 +147,9 @@ fn main() -> Result<()> {
                 .with_context(|| format!("open wiki database at {}", db_path.display()))?;
 
             let config = if config_path.exists() {
-                config::ScannerConfig::from_file(&config_path)
-                    .with_context(|| format!("load scanner config from {}", config_path.display()))?
+                config::ScannerConfig::from_file(&config_path).with_context(|| {
+                    format!("load scanner config from {}", config_path.display())
+                })?
             } else {
                 warn!(
                     "scanner config not found at {}; using default spheres only",
@@ -166,7 +164,11 @@ fn main() -> Result<()> {
             // Apply optional sphere filter by keeping only matching nodes/edges/spheres
             let (spheres, nodes, edges) = if let Some(sid) = sphere_filter {
                 let spheres: Vec<_> = result.spheres.into_iter().filter(|s| s.id == sid).collect();
-                let nodes: Vec<_> = result.nodes.into_iter().filter(|n| n.sphere_id == sid).collect();
+                let nodes: Vec<_> = result
+                    .nodes
+                    .into_iter()
+                    .filter(|n| n.sphere_id == sid)
+                    .collect();
                 let node_ids: std::collections::HashSet<_> = nodes.iter().map(|n| &n.id).collect();
                 let edges: Vec<_> = result
                     .edges
@@ -243,7 +245,10 @@ fn main() -> Result<()> {
                 let removed_nodes = db.delete_nodes_not_in(sid, &sphere_node_ids)?;
                 let removed_edges = db.delete_edges_not_in(sid, &sphere_edge_ids)?;
                 if !quiet {
-                    info!("sphere {}: removed {} stale nodes, {} stale edges", sid, removed_nodes, removed_edges);
+                    info!(
+                        "sphere {}: removed {} stale nodes, {} stale edges",
+                        sid, removed_nodes, removed_edges
+                    );
                 }
             }
 
@@ -277,8 +282,12 @@ fn main() -> Result<()> {
             limit,
         } => {
             let db = db::WikiDb::open(&db_path)?;
-            let node_kind = kind.as_deref().and_then(|k| graph::NodeKind::from_str(k).ok());
-            let node_status = status.as_deref().and_then(|s| graph::Status::from_str(s).ok());
+            let node_kind = kind
+                .as_deref()
+                .and_then(|k| graph::NodeKind::from_str(k).ok());
+            let node_status = status
+                .as_deref()
+                .and_then(|s| graph::Status::from_str(s).ok());
             let nodes = db.get_nodes(sphere.as_deref(), node_kind, node_status)?;
             let edges = db.get_edges(None, None, None)?;
             let to_show: Vec<_> = nodes.iter().take(limit.unwrap_or(100)).collect();
@@ -373,12 +382,21 @@ fn main() -> Result<()> {
             }
         }
 
-        Command::ExportMolecule { output, sphere, quiet } => {
+        Command::ExportMolecule {
+            output,
+            sphere,
+            seed,
+            quiet,
+        } => {
             let output_dir = resolve_path(&output);
             fs::create_dir_all(&output_dir)?;
 
             let db = db::WikiDb::open(&db_path)?;
-            let export = export_xyz::export_from_db(&db)?;
+            let mut export = export_xyz::export_from_db(&db)?;
+
+            // Recompute layout with the requested seed for deterministic output
+            let layout = layout_graph(&export.nodes, &export.edges, &export.spheres, seed);
+            export.positions = layout.positions;
 
             let export = if let Some(sid) = sphere {
                 let filtered_nodes: Vec<_> = export
@@ -395,7 +413,8 @@ fn main() -> Result<()> {
                     .collect();
                 let filtered_spheres: Vec<_> =
                     export.spheres.into_iter().filter(|s| s.id == sid).collect();
-                let layout = layout_graph(&filtered_nodes, &filtered_edges, &filtered_spheres);
+                let layout =
+                    layout_graph(&filtered_nodes, &filtered_edges, &filtered_spheres, seed);
                 let mut type_map = export.atom_type_map;
                 type_map.retain(|(s, _), _| s == &sid);
 

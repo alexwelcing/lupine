@@ -42,6 +42,35 @@ impl Node {
     pub fn stable_id(sphere_id: &str, kind: NodeKind, uri: &str) -> String {
         format!("{}://{}/{}", sphere_id, kind.as_str(), uri)
     }
+
+    /// Derive a short description from node content or uri when available.
+    /// Used by the export pipeline to populate label descriptions.
+    pub fn description(&self) -> Option<String> {
+        self.content
+            .as_ref()
+            .and_then(|c| {
+                if c.starts_with('{') {
+                    let parsed = serde_json::from_str::<serde_json::Value>(c).ok();
+                    parsed
+                        .as_ref()
+                        .and_then(|v| {
+                            v.get("description")
+                                .and_then(|d| d.as_str())
+                                .map(String::from)
+                        })
+                        .or_else(|| {
+                            parsed.as_ref().and_then(|v| {
+                                v.get("name").and_then(|d| d.as_str()).map(String::from)
+                            })
+                        })
+                } else if c.len() > 200 {
+                    Some(format!("{}…", &c[..200]))
+                } else {
+                    Some(c.clone())
+                }
+            })
+            .or_else(|| self.uri.clone())
+    }
 }
 
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq)]

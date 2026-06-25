@@ -1,6 +1,6 @@
 use crate::graph::{Edge, EdgeKind, Node, NodeKind, Provenance, Snapshot, Sphere, Status};
 use anyhow::{Context, Result};
-use rusqlite::{params, Connection, OptionalExtension};
+use rusqlite::{Connection, OptionalExtension, params};
 use std::path::Path;
 use std::str::FromStr;
 
@@ -104,7 +104,8 @@ impl WikiDb {
                 JOIN nodes dst ON e.dst_id = dst.id
                 JOIN spheres src_sphere ON src.sphere_id = src_sphere.id
                 JOIN spheres dst_sphere ON dst.sphere_id = dst_sphere.id;
-                ")
+                ",
+            )
             .context("run migrations")?;
         Ok(())
     }
@@ -212,7 +213,12 @@ impl WikiDb {
         Ok(spheres)
     }
 
-    pub fn get_nodes(&self, sphere: Option<&str>, kind: Option<NodeKind>, status: Option<Status>) -> Result<Vec<Node>> {
+    pub fn get_nodes(
+        &self,
+        sphere: Option<&str>,
+        kind: Option<NodeKind>,
+        status: Option<Status>,
+    ) -> Result<Vec<Node>> {
         let mut sql = String::from(
             "SELECT id, sphere_id, kind, name, uri, config_hash, content, status, provenance, owner_profile, updated_at FROM nodes WHERE 1=1",
         );
@@ -245,13 +251,15 @@ impl WikiDb {
                 Ok(Node {
                     id: row.get(0)?,
                     sphere_id: row.get(1)?,
-                    kind: NodeKind::from_str(&row.get::<_, String>(2)?).unwrap_or(NodeKind::Unknown),
+                    kind: NodeKind::from_str(&row.get::<_, String>(2)?)
+                        .unwrap_or(NodeKind::Unknown),
                     name: row.get(3)?,
                     uri: row.get(4)?,
                     config_hash: row.get(5)?,
                     content: row.get(6)?,
                     status: Status::from_str(&row.get::<_, String>(7)?).unwrap_or(Status::Active),
-                    provenance: Provenance::from_str(&row.get::<_, String>(8)?).unwrap_or(Provenance::Scanned),
+                    provenance: Provenance::from_str(&row.get::<_, String>(8)?)
+                        .unwrap_or(Provenance::Scanned),
                     owner_profile: row.get(9)?,
                     updated_at: row.get(10)?,
                 })
@@ -260,8 +268,15 @@ impl WikiDb {
         Ok(nodes)
     }
 
-    pub fn get_edges(&self, src: Option<&str>, dst: Option<&str>, kind: Option<EdgeKind>) -> Result<Vec<Edge>> {
-        let mut sql = String::from("SELECT id, src_id, dst_id, kind, provenance, metadata, updated_at FROM edges WHERE 1=1");
+    pub fn get_edges(
+        &self,
+        src: Option<&str>,
+        dst: Option<&str>,
+        kind: Option<EdgeKind>,
+    ) -> Result<Vec<Edge>> {
+        let mut sql = String::from(
+            "SELECT id, src_id, dst_id, kind, provenance, metadata, updated_at FROM edges WHERE 1=1",
+        );
         if src.is_some() {
             sql.push_str(" AND src_id = ?");
         }
@@ -292,8 +307,10 @@ impl WikiDb {
                     id: row.get(0)?,
                     src_id: row.get(1)?,
                     dst_id: row.get(2)?,
-                    kind: EdgeKind::from_str(&row.get::<_, String>(3)?).unwrap_or(EdgeKind::BelongsTo),
-                    provenance: Provenance::from_str(&row.get::<_, String>(4)?).unwrap_or(Provenance::Scanned),
+                    kind: EdgeKind::from_str(&row.get::<_, String>(3)?)
+                        .unwrap_or(EdgeKind::BelongsTo),
+                    provenance: Provenance::from_str(&row.get::<_, String>(4)?)
+                        .unwrap_or(Provenance::Scanned),
                     metadata: row.get(5)?,
                     updated_at: row.get(6)?,
                 })
@@ -332,7 +349,8 @@ impl WikiDb {
                     id: row.get(0)?,
                     captured_at: row.get(1)?,
                     trigger: row.get(2)?,
-                    sphere_hashes: serde_json::from_str(&row.get::<_, String>(3)?).unwrap_or_default(),
+                    sphere_hashes: serde_json::from_str(&row.get::<_, String>(3)?)
+                        .unwrap_or_default(),
                 })
             })?
             .collect::<Result<Vec<_>, _>>()?;
@@ -340,23 +358,28 @@ impl WikiDb {
     }
 
     pub fn get_snapshot_by_id(&self, id: i64) -> Result<Option<Snapshot>> {
-        let mut stmt = self
-            .conn
-            .prepare("SELECT id, captured_at, trigger, sphere_hashes FROM snapshots WHERE id = ?1")?;
+        let mut stmt = self.conn.prepare(
+            "SELECT id, captured_at, trigger, sphere_hashes FROM snapshots WHERE id = ?1",
+        )?;
         let snapshot = stmt
             .query_row([id], |row| {
                 Ok(Snapshot {
                     id: row.get(0)?,
                     captured_at: row.get(1)?,
                     trigger: row.get(2)?,
-                    sphere_hashes: serde_json::from_str(&row.get::<_, String>(3)?).unwrap_or_default(),
+                    sphere_hashes: serde_json::from_str(&row.get::<_, String>(3)?)
+                        .unwrap_or_default(),
                 })
             })
             .optional()?;
         Ok(snapshot)
     }
 
-    pub fn delete_nodes_not_in(&mut self, sphere_id: &str, retained_ids: &[String]) -> Result<usize> {
+    pub fn delete_nodes_not_in(
+        &mut self,
+        sphere_id: &str,
+        retained_ids: &[String],
+    ) -> Result<usize> {
         if retained_ids.is_empty() {
             let n = self
                 .conn
@@ -378,14 +401,16 @@ impl WikiDb {
         Ok(n)
     }
 
-    pub fn delete_edges_not_in(&mut self, sphere_id: &str, retained_ids: &[String]) -> Result<usize> {
+    pub fn delete_edges_not_in(
+        &mut self,
+        sphere_id: &str,
+        retained_ids: &[String],
+    ) -> Result<usize> {
         if retained_ids.is_empty() {
-            let n = self
-                .conn
-                .execute(
-                    "DELETE FROM edges WHERE src_id IN (SELECT id FROM nodes WHERE sphere_id = ?1)",
-                    [sphere_id],
-                )?;
+            let n = self.conn.execute(
+                "DELETE FROM edges WHERE src_id IN (SELECT id FROM nodes WHERE sphere_id = ?1)",
+                [sphere_id],
+            )?;
             return Ok(n);
         }
         let placeholders: Vec<String> = retained_ids.iter().map(|_| "?".to_string()).collect();

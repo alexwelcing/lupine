@@ -23,13 +23,13 @@ fn sphere_to_element(sphere_id: &str) -> &'static str {
 /// atomic numbers, so using real values gives correct colors and radii.
 fn sphere_to_atomic_number(sphere_id: &str) -> i32 {
     match sphere_id {
-        "hermes-core" => 27,              // Co
-        "hermes-local-extensions" => 24,  // Cr
-        "lupine-science" => 26,           // Fe
-        "lupine-ledger" => 29,            // Cu
-        "lupine-media" => 28,             // Ni
-        "lupine-public" => 30,            // Zn
-        _ => 6,                           // C
+        "hermes-core" => 27,             // Co
+        "hermes-local-extensions" => 24, // Cr
+        "lupine-science" => 26,          // Fe
+        "lupine-ledger" => 29,           // Cu
+        "lupine-media" => 28,            // Ni
+        "lupine-public" => 30,           // Zn
+        _ => 6,                          // C
     }
 }
 
@@ -106,7 +106,7 @@ pub fn export_from_db(db: &WikiDb) -> Result<MoleculeExport> {
         })
         .collect();
 
-    let layout = layout_graph(&nodes, &edges, &spheres);
+    let layout = layout_graph(&nodes, &edges, &spheres, 42);
 
     Ok(MoleculeExport {
         nodes,
@@ -129,7 +129,8 @@ pub fn write_xyz(export: &MoleculeExport, path: &Path) -> Result<()> {
         lines.push(format!("{:<3} {:>12.6} {:>12.6} {:>12.6}", el, x, y, z));
     }
 
-    fs::write(path, lines.join("\n") + "\n").with_context(|| format!("write XYZ file: {}", path.display()))?;
+    fs::write(path, lines.join("\n") + "\n")
+        .with_context(|| format!("write XYZ file: {}", path.display()))?;
     Ok(())
 }
 
@@ -143,7 +144,8 @@ pub fn write_data(export: &MoleculeExport, path: &Path) -> Result<()> {
     for sphere in &export.spheres {
         sphere_type_ids.insert(sphere.id.clone(), sphere_to_atomic_number(&sphere.id));
     }
-    let unique_type_ids: std::collections::HashSet<i32> = sphere_type_ids.values().copied().collect();
+    let unique_type_ids: std::collections::HashSet<i32> =
+        sphere_type_ids.values().copied().collect();
 
     // Compute bounding box with padding
     let (min, max) = bounds(export);
@@ -192,19 +194,20 @@ pub fn write_data(export: &MoleculeExport, path: &Path) -> Result<()> {
         }
     }
 
-    fs::write(path, lines.join("\n") + "\n").with_context(|| format!("write LAMMPS data file: {}", path.display()))?;
+    fs::write(path, lines.join("\n") + "\n")
+        .with_context(|| format!("write LAMMPS data file: {}", path.display()))?;
     Ok(())
 }
 
 fn atomic_mass_for_type(atomic_number: i32) -> f64 {
     match atomic_number {
-        6 => 12.011,   // C
-        24 => 51.996,  // Cr
-        26 => 55.845,  // Fe
-        27 => 58.933,  // Co
-        28 => 58.693,  // Ni
-        29 => 63.546,  // Cu
-        30 => 65.380,  // Zn
+        6 => 12.011,  // C
+        24 => 51.996, // Cr
+        26 => 55.845, // Fe
+        27 => 58.933, // Co
+        28 => 58.693, // Ni
+        29 => 63.546, // Cu
+        30 => 65.380, // Zn
         _ => 12.011,
     }
 }
@@ -257,7 +260,10 @@ pub fn write_dump(export: &MoleculeExport, path: &Path) -> Result<()> {
         let type_id = sphere_to_atomic_number(&node.sphere_id);
         let [x, y, z] = export.positions[i];
         let sph = sphere_index.get(&node.sphere_id).copied().unwrap_or(-1);
-        let knd = kind_index.get(&node.kind.as_str().to_string()).copied().unwrap_or(-1);
+        let knd = kind_index
+            .get(&node.kind.as_str().to_string())
+            .copied()
+            .unwrap_or(-1);
         let radius = kind_radius(&node.kind);
         lines.push(format!(
             "{} {} {:.6} {:.6} {:.6} {} {} {:.3}",
@@ -302,11 +308,16 @@ pub fn write_metadata(export: &MoleculeExport, path: &Path) -> Result<()> {
     let kind_mapping: serde_json::Map<String, serde_json::Value> = kind_index
         .iter()
         .map(|(kind, idx)| {
-            let nk = kind.parse::<crate::graph::NodeKind>().unwrap_or(crate::graph::NodeKind::Unknown);
-            (kind.clone(), serde_json::json!({
-                "index": idx,
-                "radius": kind_radius(&nk),
-            }))
+            let nk = kind
+                .parse::<crate::graph::NodeKind>()
+                .unwrap_or(crate::graph::NodeKind::Unknown);
+            (
+                kind.clone(),
+                serde_json::json!({
+                    "index": idx,
+                    "radius": kind_radius(&nk),
+                }),
+            )
         })
         .collect();
 
@@ -351,12 +362,22 @@ pub fn write_labels(export: &MoleculeExport, path: &Path) -> Result<()> {
         }
     }
 
+    // Map node id -> atom index for edge label resolution
+    let node_index: HashMap<String, usize> = export
+        .nodes
+        .iter()
+        .enumerate()
+        .map(|(i, n)| (n.id.clone(), i))
+        .collect();
+
     // Sphere centroids and kind counts.
     let mut sphere_positions: HashMap<String, [f64; 3]> = HashMap::new();
     let mut sphere_counts: HashMap<String, HashMap<String, usize>> = HashMap::new();
     for (i, node) in export.nodes.iter().enumerate() {
         let pos = export.positions[i];
-        let entry = sphere_positions.entry(node.sphere_id.clone()).or_insert([0.0; 3]);
+        let entry = sphere_positions
+            .entry(node.sphere_id.clone())
+            .or_insert([0.0; 3]);
         entry[0] += pos[0];
         entry[1] += pos[1];
         entry[2] += pos[2];
@@ -374,7 +395,11 @@ pub fn write_labels(export: &MoleculeExport, path: &Path) -> Result<()> {
         *node_degrees.entry(*b).or_insert(0) += 1;
     }
     for (sphere_id, entry) in &mut sphere_positions {
-        let count = export.nodes.iter().filter(|n| n.sphere_id == *sphere_id).count() as f64;
+        let count = export
+            .nodes
+            .iter()
+            .filter(|n| n.sphere_id == *sphere_id)
+            .count() as f64;
         entry[0] /= count;
         entry[1] /= count;
         entry[2] /= count;
@@ -385,9 +410,14 @@ pub fn write_labels(export: &MoleculeExport, path: &Path) -> Result<()> {
     // One label per sphere at its centroid.
     for sphere in &export.spheres {
         let idx = sphere_index.get(&sphere.id).copied().unwrap_or(-1);
-        let centroid = sphere_positions.get(&sphere.id).copied().unwrap_or([0.0; 3]);
+        let centroid = sphere_positions
+            .get(&sphere.id)
+            .copied()
+            .unwrap_or([0.0; 3]);
         let counts = sphere_counts.get(&sphere.id).cloned().unwrap_or_default();
-        let count_summary: Vec<String> = counts
+        let mut count_pairs: Vec<(&String, &usize)> = counts.iter().collect();
+        count_pairs.sort_by_key(|(k, _)| k.as_str());
+        let count_summary: Vec<String> = count_pairs
             .iter()
             .map(|(k, c)| format!("{} {}", c, k))
             .collect();
@@ -419,12 +449,14 @@ pub fn write_labels(export: &MoleculeExport, path: &Path) -> Result<()> {
         };
         let pos = export.positions[i];
         let degree = node_degrees.get(&i).copied().unwrap_or(0);
+        let description = node.description();
         labels.push(serde_json::json!({
             "id": format!("node-{}", node.id),
             "kind": "node",
             "node_kind": node.kind.as_str(),
             "node_id": node.id,
             "text": node.name,
+            "description": description,
             "detail": format!("{} · {} · {} connection{}", node.kind.as_str(), node.sphere_id, degree, if degree == 1 { "" } else { "s" }),
             "sphere_id": node.sphere_id,
             "sphere_index": sphere_index.get(&node.sphere_id).copied().unwrap_or(-1),
@@ -435,7 +467,35 @@ pub fn write_labels(export: &MoleculeExport, path: &Path) -> Result<()> {
         }));
     }
 
-    fs::write(path, serde_json::to_string_pretty(&serde_json::json!({ "labels": labels }))?)
+    // Build edge labels with relationship kinds for viewer bond tooltips
+    let edge_labels: Vec<serde_json::Value> = export
+        .edges
+        .iter()
+        .filter_map(|e| {
+            let src = node_index.get(&e.src_id)?;
+            let dst = node_index.get(&e.dst_id)?;
+            Some(serde_json::json!({
+                "src_atom_index": src,
+                "dst_atom_index": dst,
+                "kind": e.kind.as_str(),
+                "provenance": e.provenance.as_str(),
+            }))
+        })
+        .collect();
+
+    let payload = serde_json::json!({
+        "labels": labels,
+        "edges": edge_labels,
+        "meta": {
+            "seed": 42,
+            "generated_at": chrono::Utc::now().to_rfc3339(),
+            "node_count": export.nodes.len(),
+            "edge_count": export.edge_pairs.len(),
+            "sphere_count": export.spheres.len(),
+        }
+    });
+
+    fs::write(path, serde_json::to_string_pretty(&payload)?)
         .with_context(|| format!("write labels file: {}", path.display()))?;
     Ok(())
 }
