@@ -495,7 +495,7 @@
     "domain": "Metals & Alloys",
     "atoms": "26,400",
     "frames": "101",
-    "file": "https://storage.googleapis.com/shed-489901-nist-demos/sims/cu-melt-showcase.glimbin",
+    "file": "https://glim-think-v1.aw-ab5.workers.dev/artifacts/atlas-view/sims/cu-melt-showcase.glimbin",
     "available": true,
     "colors": [
       "#b87333",
@@ -517,7 +517,7 @@
     "domain": "Metals & Alloys",
     "atoms": "19,652",
     "frames": "101",
-    "file": "https://storage.googleapis.com/shed-489901-nist-demos/sims/cu-solidify-showcase.glimbin",
+    "file": "https://glim-think-v1.aw-ab5.workers.dev/artifacts/atlas-view/sims/cu-solidify-showcase.glimbin",
     "available": true,
     "colors": [
       "#b87333",
@@ -539,7 +539,7 @@
     "domain": "Metals & Alloys",
     "atoms": "33,524",
     "frames": "101",
-    "file": "https://storage.googleapis.com/shed-489901-nist-demos/sims/cu-sinter-showcase.glimbin",
+    "file": "https://glim-think-v1.aw-ab5.workers.dev/artifacts/atlas-view/sims/cu-sinter-showcase.glimbin",
     "available": true,
     "colors": [
       "#b87333",
