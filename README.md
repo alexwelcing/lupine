@@ -75,7 +75,7 @@ Useful local entry points:
 | --- | --- |
 | `docs/ONBOARDING.md` | **Start here if you are new** — research-scientist and software-engineer tracks |
 | `docs/ARCHITECTURE.md` | System map: how the roots connect into a closed scientific loop |
-| `docs/repo-split-map.md` | Planned split into `lupine.science`, `lupi.live`, `library.lupine.site`, and the science/control-plane repo |
+| `docs/repo-split-map.md` | Planned split into `lupine.science`, `lupi.live`, `library.lupine.science`, and the science/control-plane repo |
 | `docs/navigation.md` | The 60-second path to the real science, error-geometry objects disambiguated, and honest status of recent additions |
 | `docs/GLOSSARY.md` | Shared vocabulary for the science and the system |
 | `docs/FAQ.md` | Common questions for scientists and engineers |
@@ -166,7 +166,7 @@ decisions, see `ROOTS.md`.
 | --- | --- |
 | `docs/ONBOARDING.md` | **New contributors start here** — research-scientist and software-engineer tracks |
 | `docs/ARCHITECTURE.md` | System map: control plane, compute plane, evidence plane, and data flow |
-| `docs/repo-split-map.md` | Planned split into `lupine.science`, `lupi.live`, `library.lupine.site`, and the science/control-plane repo |
+| `docs/repo-split-map.md` | Planned split into `lupine.science`, `lupi.live`, `library.lupine.science`, and the science/control-plane repo |
 | `docs/working-path.md` | Practical checkout, branch, worktree, and verification path |
 | `archive/` | Retired surfaces and historical exports |
 | `library-site/` | Static-site generator for the Lupine Library |
