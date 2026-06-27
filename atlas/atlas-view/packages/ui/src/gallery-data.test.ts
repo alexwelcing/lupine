@@ -70,6 +70,15 @@ const nomenclature = (nomenclatureCatalog as {
 }).entries;
 const HEX = /^#[0-9a-fA-F]{6}$/;
 
+const TRUSTED_REMOTE_GLIBIN_ORIGINS = [
+  /^https:\/\/storage\.googleapis\.com\/shed-489901-nist-demos\//,
+  /^https:\/\/glim-think-v1\.aw-ab5\.workers\.dev\/artifacts\/atlas-view\//,
+];
+
+function isTrustedRemoteGlimbin(url: string): boolean {
+  return TRUSTED_REMOTE_GLIBIN_ORIGINS.some(pattern => pattern.test(url));
+}
+
 function parseFrameLabel(label: string): number {
   const n = parseInt(label.replace(/[^\d]/g, ''), 10);
   return Number.isFinite(n) ? n : 0;
@@ -176,16 +185,16 @@ describe('gallery-data.json — curated launch set', () => {
         throw new Error(`multi-frame gallery entry must be bundled: ${e.id}`);
       }
       if (e.file.startsWith('http')) {
-        // Remote multi-frame assets are allowed ONLY as a streamable .glimbin from
-        // the trusted CORS-enabled bucket: StreamingLoader pulls frames via HTTP
-        // Range requests, so the trajectory plays without bundling a huge file in
-        // git. The frame count lives in the binary payload (not line-countable), so
-        // we assert format + trusted host instead of an on-disk frame recount.
+        // Remote multi-frame assets are allowed ONLY as streamable .glimbin files
+        // from trusted range/CORS-capable origins. StreamingLoader pulls frames via
+        // HTTP Range requests, so the trajectory plays without bundling a huge file
+        // in git. The frame count lives in the binary payload (not line-countable),
+        // so we assert format + trusted host instead of an on-disk frame recount.
         // Remote TEXT trajectories (.lammpstrj/.xyz) stay rejected — they'd force a
         // full multi-MB download and can't be verified here.
-        const trusted = /^https:\/\/storage\.googleapis\.com\/shed-489901-nist-demos\//.test(e.file);
+        const trusted = isTrustedRemoteGlimbin(e.file);
         expect(e.file.endsWith('.glimbin'), `remote multi-frame ${e.id} must be a streamable .glimbin`).toBe(true);
-        expect(trusted, `remote multi-frame ${e.id} must stream from the trusted CORS bucket`).toBe(true);
+        expect(trusted, `remote multi-frame ${e.id} must stream from a trusted range/CORS origin`).toBe(true);
         continue;
       }
 
