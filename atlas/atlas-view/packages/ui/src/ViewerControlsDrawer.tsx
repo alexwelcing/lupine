@@ -46,16 +46,16 @@ export function ViewerControlsDrawer({
         <div style={{
           flexShrink: 0,
           display: 'grid',
-          gap: 6,
-          padding: '4px 10px 8px',
+          gap: 5,
+          padding: '3px 10px 7px',
           borderBottom: '1px solid rgba(255,255,255,0.06)',
           background: 'linear-gradient(180deg, rgba(15,23,42,0.32), rgba(7,12,22,0.08))',
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, minHeight: 22 }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, minHeight: 20 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 0 }}>
               <span style={{ color: 'rgba(30,220,224,0.82)', display: 'flex', flexShrink: 0, transform: 'scale(0.88)' }}><IconControls /></span>
               <span style={{ display: 'grid', gap: 1, minWidth: 0 }}>
-                <span style={{ color: 'rgba(248,250,252,0.9)', fontSize: 12, fontWeight: 820, letterSpacing: 0, lineHeight: 1 }}>Controls</span>
+                <span style={{ color: 'rgba(248,250,252,0.9)', fontSize: 11, fontWeight: 820, letterSpacing: 0, lineHeight: 1 }}>Controls</span>
               </span>
             </div>
             <span style={{
@@ -121,7 +121,7 @@ function ModeTabs({
       style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
-        gap: compact ? 4 : 6,
+        gap: compact ? 5 : 6,
         padding: compact ? 3 : 4,
         border: '1px solid rgba(255,255,255,0.07)',
         borderRadius: compact ? 7 : 8,
@@ -165,18 +165,18 @@ function ControlModeTab({
       className={`lupine-btn ${active ? 'active' : ''}`}
       style={{
         minWidth: 0,
-        minHeight: compact ? 38 : 44,
+        minHeight: compact ? 36 : 44,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        gap: compact ? 4 : 6,
-        padding: compact ? '5px 3px' : '6px 4px',
+        gap: compact ? 3 : 6,
+        padding: compact ? '5px 2px' : '6px 4px',
         fontSize: 9,
         fontWeight: 800,
         lineHeight: 1,
         letterSpacing: 0,
         borderRadius: 7,
-        boxShadow: active ? undefined : 'none',
+        boxShadow: active ? '0 0 0 1px rgba(30,220,224,0.28), 0 0 14px rgba(30,220,224,0.16)' : 'none',
         touchAction: 'manipulation',
       }}
     >
@@ -185,7 +185,7 @@ function ControlModeTab({
         width: compact ? 16 : 18,
         height: compact ? 16 : 18,
         flexShrink: 0,
-        color: active ? '#1edce0' : 'rgba(226,232,240,0.68)',
+        color: active ? '#1edce0' : 'rgba(226,232,240,0.78)',
       }}>{icon}</span>
       <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{label}</span>
     </button>
