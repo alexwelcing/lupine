@@ -456,7 +456,10 @@ export function StudioControlDeck({
         }
         .lupi-studio-deck-drawer .lupi-deck-grid {
           grid-template-columns: 1fr;
-          gap: 8px;
+          gap: 7px;
+        }
+        .lupi-studio-deck-drawer .lupi-studio-segments {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
         }
         @media (max-width: 768px) {
           .lupi-deck-grid {
@@ -493,7 +496,7 @@ export function StudioControlDeck({
           boxShadow: isDrawer ? 'none' : '0 24px 80px rgba(0,0,0,0.48), inset 0 1px 0 rgba(255,255,255,0.08)',
           backdropFilter: isDrawer ? 'none' : 'blur(18px)',
           WebkitBackdropFilter: isDrawer ? 'none' : 'blur(18px)',
-          padding: isDrawer ? 10 : 8,
+          padding: isDrawer ? '8px 10px 10px' : 8,
         }}
       >
         <div style={{
@@ -501,23 +504,23 @@ export function StudioControlDeck({
           alignItems: 'center',
           justifyContent: 'space-between',
           gap: 10,
-          marginBottom: 8,
+          marginBottom: isDrawer ? 6 : 8,
           padding: isDrawer ? '0 0 1px' : '2px 2px 0',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, minWidth: 0 }}>
             <div style={{
-              width: 6,
-              height: 30,
+              width: isDrawer ? 5 : 6,
+              height: isDrawer ? 26 : 30,
               borderRadius: 3,
               background: 'linear-gradient(180deg, #1edce0, #f59e0b)',
               boxShadow: '0 0 16px rgba(30,220,224,0.28)',
               flexShrink: 0,
             }} />
             <div style={{ minWidth: 0 }}>
-              <div style={{ color: '#f8fafc', fontSize: 13, fontWeight: 820, lineHeight: 1.1 }}>{title}</div>
+              <div style={{ color: '#f8fafc', fontSize: isDrawer ? 12 : 13, fontWeight: 820, lineHeight: 1.1 }}>{title}</div>
               <div style={{
                 color: '#94a3b8',
-                fontSize: 10,
+                fontSize: isDrawer ? 9 : 10,
                 fontFamily: 'var(--font-mono)',
                 textTransform: 'uppercase',
                 lineHeight: 1.25,
@@ -568,12 +571,25 @@ export function StudioControlDeck({
                 onChange={setPostprocessIntensity}
                 format={value => `${Math.round(value * 100)}%`}
               />
-              <SegmentButton
-                label={shareStatus === 'copied' ? 'Copied' : shareStatus === 'failed' ? 'Copy failed' : 'Copy look link'}
-                active={shareStatus === 'copied'}
-                accent="#a7f3d0"
+              <button
+                type="button"
                 onClick={copyLookLink}
-              />
+                style={{
+                  minHeight: 40,
+                  borderRadius: 8,
+                  border: '1px solid rgba(167,243,208,0.34)',
+                  background: shareStatus === 'copied' ? 'rgba(16,185,129,0.16)' : 'rgba(15,23,42,0.28)',
+                  color: shareStatus === 'failed' ? '#fecaca' : '#cbd5e1',
+                  fontSize: 11,
+                  fontWeight: 760,
+                  textAlign: 'left',
+                  padding: '0 12px',
+                  cursor: 'pointer',
+                  touchAction: 'manipulation',
+                }}
+              >
+                {shareStatus === 'copied' ? 'Copied look link' : shareStatus === 'failed' ? 'Copy failed' : 'Copy look link'}
+              </button>
             </ControlGroup>
 
             <ControlGroup title="Atoms">
