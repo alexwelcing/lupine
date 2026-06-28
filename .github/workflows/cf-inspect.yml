@@ -1,0 +1,25 @@
+name: Cloudflare Inspect
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: List accounts and zones
+        env:
+          CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          echo "=== Accounts ==="
+          curl -s -X GET https://api.cloudflare.com/client/v4/accounts \
+            -H "Authorization: Bearer $CF_TOKEN" \
+            -H "Content-Type: application/json" | jq -r '.result[] | "\(.id) \(.name)"'
+          echo "=== Zones ==="
+          curl -s -X GET https://api.cloudflare.com/client/v4/zones \
+            -H "Authorization: Bearer $CF_TOKEN" \
+            -H "Content-Type: application/json" | jq -r '.result[] | "\(.id) \(.name) \(.account.id)"'
+          echo "=== Pages projects ==="
+          curl -s -X GET https://api.cloudflare.com/client/v4/pages/projects \
+            -H "Authorization: Bearer $CF_TOKEN" \
+            -H "Content-Type: application/json" | jq -r '.result[] | "\(.name)"'
