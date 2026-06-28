@@ -1,15 +1,15 @@
 #![allow(dead_code, clippy::needless_range_loop)]
 
+mod active_sampling;
 mod alloy;
 mod benchmark;
-mod active_sampling;
 mod causal;
 mod commands;
+mod diagnostics;
 mod discovery;
 mod feedback_loop;
 mod fitting;
 mod ingest;
-mod diagnostics;
 mod literature;
 mod manifold;
 mod mof_adapter;
@@ -276,11 +276,15 @@ fn main() -> Result<()> {
 }
 
 fn cmd_alloy_campaign(threshold: f64) -> Result<()> {
-    use crate::alloy::{alloy_transferability_report, run_alloy_global_transfer_campaign, run_alloy_surrogate_campaign, AlloyClassStrategy};
+    use crate::alloy::{
+        alloy_transferability_report, run_alloy_global_transfer_campaign,
+        run_alloy_surrogate_campaign, AlloyClassStrategy,
+    };
 
     eprintln!("  ✦ Running binary-alloy surrogate campaign (Mg-Li focused)");
 
-    let per_class = run_alloy_surrogate_campaign(AlloyClassStrategy::ByCompositionStructure, threshold);
+    let per_class =
+        run_alloy_surrogate_campaign(AlloyClassStrategy::ByCompositionStructure, threshold);
     let per_class_total: usize = per_class.iter().map(|r| r.outlier_count).sum();
     eprintln!("\n  ═══ Per-class correction scorecard ═══");
     eprintln!(
@@ -322,8 +326,12 @@ fn cmd_alloy_campaign(threshold: f64) -> Result<()> {
 
     eprintln!("\n  ═══ Pairwise transferability matrix (train rows → test columns) ═══");
     let matrix = alloy_transferability_report(threshold);
-    let _classes: Vec<_> = matrix.iter().map(|e| e.train_class.as_str()).collect::<std::collections::HashSet<_>>()
-        .into_iter().collect();
+    let _classes: Vec<_> = matrix
+        .iter()
+        .map(|e| e.train_class.as_str())
+        .collect::<std::collections::HashSet<_>>()
+        .into_iter()
+        .collect();
     for entry in &matrix {
         if entry.train_class == entry.test_class {
             continue;
@@ -337,7 +345,15 @@ fn cmd_alloy_campaign(threshold: f64) -> Result<()> {
             entry.baseline_outliers
         );
     }
-    if let Some(worst) = matrix.iter().filter(|e| e.train_class != e.test_class).min_by(|a, b| a.outlier_reduction_percent.partial_cmp(&b.outlier_reduction_percent).unwrap()) {
+    if let Some(worst) = matrix
+        .iter()
+        .filter(|e| e.train_class != e.test_class)
+        .min_by(|a, b| {
+            a.outlier_reduction_percent
+                .partial_cmp(&b.outlier_reduction_percent)
+                .unwrap()
+        })
+    {
         eprintln!(
             "\n  Worst cross-class pair: {} → {} ({:.1}% reduction)",
             worst.train_class, worst.test_class, worst.outlier_reduction_percent
@@ -355,8 +371,8 @@ fn cmd_periodic_table(
 ) -> Result<()> {
     use crate::diagnostics::run_diagnostics;
     use crate::multi_element::{
-        ClassStrategy, compare_class_strategies, run_surrogate_campaign_adaptive,
-        run_surrogate_campaign_hierarchical_by_family,
+        compare_class_strategies, run_surrogate_campaign_adaptive,
+        run_surrogate_campaign_hierarchical_by_family, ClassStrategy,
     };
 
     eprintln!("  ✦ Running periodic-table correction campaign");
@@ -371,7 +387,8 @@ fn cmd_periodic_table(
     print_scorecard(&by_element_structure);
 
     let fixed_outliers: usize = by_element_structure.iter().map(|r| r.outlier_count).sum();
-    let adaptive = run_surrogate_campaign_adaptive(ClassStrategy::ByElementStructure, threshold, max_rank);
+    let adaptive =
+        run_surrogate_campaign_adaptive(ClassStrategy::ByElementStructure, threshold, max_rank);
     let adaptive_outliers: usize = adaptive.iter().map(|r| r.outlier_count).sum();
 
     eprintln!("\n  ═══ Adaptive rank fix ═══");
@@ -426,8 +443,13 @@ fn print_scorecard(rows: &[crate::multi_element::ScorecardRow]) {
     for row in rows.iter().take(10) {
         eprintln!(
             "    {:12}  {:4}  {:4}  max={:6.2}  mean={:6.2}  outliers={}/{}",
-            row.class, row.element, row.structure, row.max_residual, row.mean_residual,
-            row.outlier_count, row.n_potentials
+            row.class,
+            row.element,
+            row.structure,
+            row.max_residual,
+            row.mean_residual,
+            row.outlier_count,
+            row.n_potentials
         );
     }
     if rows.len() > 10 {

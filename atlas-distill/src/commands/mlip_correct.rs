@@ -17,7 +17,7 @@ use std::path::PathBuf;
 
 use anyhow::{bail, Context, Result};
 use clap::Args;
-use nalgebra::{DMatrix, SVD, Vector3};
+use nalgebra::{DMatrix, Vector3, SVD};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Args)]
@@ -92,7 +92,9 @@ fn first_principal_component(matrix: &DMatrix<f64>) -> Result<Vector3<f64>> {
         bail!("need at least two observations to extract a bias vector");
     }
     let svd = SVD::new(matrix.clone(), true, true);
-    let v_t = svd.v_t.context("SVD failed to produce right singular vectors")?;
+    let v_t = svd
+        .v_t
+        .context("SVD failed to produce right singular vectors")?;
     // Rows of V^T are principal components; row 0 is the first PC.
     let pc = v_t.row(0).into_owned();
     Ok(Vector3::new(pc[0], pc[1], pc[2]))
@@ -184,7 +186,11 @@ pub fn run(args: &MlipCorrectArgs) -> Result<()> {
                     r.model, r.element
                 )
             })?;
-        let target = Vector3::new(target_row.target_c11, target_row.target_c12, target_row.target_c44);
+        let target = Vector3::new(
+            target_row.target_c11,
+            target_row.target_c12,
+            target_row.target_c44,
+        );
 
         let residual_train = pred - train_target;
         let raw_residual = pred - target;

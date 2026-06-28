@@ -207,7 +207,7 @@ pub fn build_alloy_results(families: &[AlloySurrogateFamily]) -> Vec<Computation
     let mut results = Vec::new();
 
     for family in families {
-        for (key, _ref_vals) in &refs {
+        for key in refs.keys() {
             if let Some(pred) = family.predictions.get(*key) {
                 let id = format!("{}-{}", key, family.name);
                 results.push(ComputationResult {
@@ -452,11 +452,13 @@ pub fn alloy_transferability_report(threshold: f64) -> Vec<TransferabilityEntry>
                 }
             }
 
-            let (baseline_outliers, _) = baseline_by_class.get(test_class).copied().unwrap_or((0, n));
+            let (baseline_outliers, _) =
+                baseline_by_class.get(test_class).copied().unwrap_or((0, n));
             let reduction = if baseline_outliers == 0 {
                 100.0
             } else {
-                (baseline_outliers.saturating_sub(outlier_count)) as f64 / baseline_outliers as f64 * 100.0
+                (baseline_outliers.saturating_sub(outlier_count)) as f64 / baseline_outliers as f64
+                    * 100.0
             };
 
             entries.push(TransferabilityEntry {
@@ -521,9 +523,7 @@ fn evaluate_operator_on_class(
 }
 
 /// Fit a single global operator across all alloy classes and evaluate per class.
-pub fn run_alloy_global_transfer_campaign(
-    threshold: f64,
-) -> Vec<AlloyScorecardRow> {
+pub fn run_alloy_global_transfer_campaign(threshold: f64) -> Vec<AlloyScorecardRow> {
     let families = alloy_surrogate_families();
     let results = build_alloy_results(&families);
 
@@ -554,10 +554,8 @@ pub fn run_alloy_global_transfer_campaign(
         })
         .collect();
 
-    let operator = UniversalFeedbackLoop::fit(
-        &train_rows,
-        DirectionPolicy::LearnedPcaAffine { rank: 3 },
-    );
+    let operator =
+        UniversalFeedbackLoop::fit(&train_rows, DirectionPolicy::LearnedPcaAffine { rank: 3 });
 
     let mut rows = Vec::new();
     for (class, results) in by_class {
@@ -623,7 +621,8 @@ mod tests {
     #[test]
     fn test_global_transfer_reduces_outliers() {
         let threshold = 1.0;
-        let per_class = run_alloy_surrogate_campaign(AlloyClassStrategy::ByCompositionStructure, threshold);
+        let per_class =
+            run_alloy_surrogate_campaign(AlloyClassStrategy::ByCompositionStructure, threshold);
         let global = run_alloy_global_transfer_campaign(threshold);
 
         let per_class_total: usize = per_class.iter().map(|r| r.outlier_count).sum();
@@ -640,7 +639,11 @@ mod tests {
     #[test]
     fn test_transferability_report_is_square() {
         let entries = alloy_transferability_report(1.0);
-        let n_classes = entries.iter().map(|e| &e.train_class).collect::<std::collections::HashSet<_>>().len();
+        let n_classes = entries
+            .iter()
+            .map(|e| &e.train_class)
+            .collect::<std::collections::HashSet<_>>()
+            .len();
         assert_eq!(entries.len(), n_classes * n_classes);
     }
 }

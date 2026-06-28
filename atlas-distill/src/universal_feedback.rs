@@ -47,7 +47,9 @@ impl UniversalFeedbackLoop {
     /// Fit the operator on training rows.
     pub fn fit(rows: &[TrainingRow], policy: DirectionPolicy) -> Self {
         match policy {
-            DirectionPolicy::Provided(dirs) => Self { class_directions: dirs },
+            DirectionPolicy::Provided(dirs) => Self {
+                class_directions: dirs,
+            },
             DirectionPolicy::LearnedPca { rank } => {
                 let mut by_class: HashMap<String, Vec<DVector<f64>>> = HashMap::new();
                 for row in rows {
@@ -99,8 +101,7 @@ impl UniversalFeedbackLoop {
 
                     // Mean residual as the affine offset direction.
                     let mean: DVector<f64> =
-                        residuals.iter().fold(DVector::zeros(dim), |acc, r| acc + r)
-                            / n as f64;
+                        residuals.iter().fold(DVector::zeros(dim), |acc, r| acc + r) / n as f64;
 
                     // Centered principal directions.
                     let mat = DMatrix::from_fn(n, dim, |i, j| residuals[i][j]);
@@ -176,7 +177,10 @@ impl UniversalFeedbackLoop {
         let mut max_residual: f64 = 0.0;
 
         for (idx, row) in rows.iter().enumerate() {
-            let tau = thresholds.get(&row.class).copied().unwrap_or(global_threshold);
+            let tau = thresholds
+                .get(&row.class)
+                .copied()
+                .unwrap_or(global_threshold);
             let rnorm = self.residual_norm(&row.class, &row.raw, &row.shift, &row.target);
             max_residual = max_residual.max(rnorm);
             if rnorm > tau {
@@ -274,7 +278,9 @@ mod tests {
             d2[(class_idx + 1) % dim] = 1.0;
 
             // Systematic functional shift shared by all samples of this class.
-            let shift = DVector::from_fn(dim, |i, _| 0.5 * (class_idx as f64 + 1.0) * (i as f64).sin());
+            let shift = DVector::from_fn(dim, |i, _| {
+                0.5 * (class_idx as f64 + 1.0) * (i as f64).sin()
+            });
 
             let mut make_rows = |n: usize| {
                 (0..n)
@@ -302,10 +308,8 @@ mod tests {
             thresholds.insert(class, 1e-2);
         }
 
-        let operator = UniversalFeedbackLoop::fit(
-            &train_rows,
-            DirectionPolicy::LearnedPca { rank: 2 },
-        );
+        let operator =
+            UniversalFeedbackLoop::fit(&train_rows, DirectionPolicy::LearnedPca { rank: 2 });
 
         let eval = operator.evaluate(&test_rows, &thresholds, 1e-2);
         assert_eq!(
@@ -373,10 +377,8 @@ mod tests {
             },
         ];
 
-        let affine = UniversalFeedbackLoop::fit(
-            &rows,
-            DirectionPolicy::LearnedPcaAffine { rank: 1 },
-        );
+        let affine =
+            UniversalFeedbackLoop::fit(&rows, DirectionPolicy::LearnedPcaAffine { rank: 1 });
 
         let r1 = affine.residual_norm(&class, &raw1, &zero, &target);
         let r2 = affine.residual_norm(&class, &raw2, &zero, &target);
@@ -391,6 +393,9 @@ mod tests {
         let plain = UniversalFeedbackLoop::fit(&rows, DirectionPolicy::LearnedPca { rank: 1 });
         let p1 = plain.residual_norm(&class, &raw1, &zero, &target);
         let p2 = plain.residual_norm(&class, &raw2, &zero, &target);
-        assert!(p1 > 1e-3 || p2 > 1e-3, "plain PCA should not fit exactly here");
+        assert!(
+            p1 > 1e-3 || p2 > 1e-3,
+            "plain PCA should not fit exactly here"
+        );
     }
 }

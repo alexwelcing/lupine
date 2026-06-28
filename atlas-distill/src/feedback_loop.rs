@@ -90,9 +90,12 @@ impl ElasticFeedbackRun {
         threshold: f64,
     ) -> Self {
         for rank in 1..=max_rank {
-            let run =
-                Self::fit_with_policy(results, target.clone(), class.clone(),
-                    DirectionPolicy::LearnedPca { rank });
+            let run = Self::fit_with_policy(
+                results,
+                target.clone(),
+                class.clone(),
+                DirectionPolicy::LearnedPca { rank },
+            );
             let batch = run.correct_batch(results, threshold);
             if batch.is_zero_outliers() {
                 return run;
@@ -166,9 +169,9 @@ impl ElasticFeedbackRun {
             Some(global) => global.correct("global", &raw, &zero_shift, &self.target),
             None => raw.clone(),
         };
-        let corrected = self
-            .operator
-            .correct(&self.class, &intermediate, &zero_shift, &self.target);
+        let corrected =
+            self.operator
+                .correct(&self.class, &intermediate, &zero_shift, &self.target);
         let residual_norm = (&self.target - &corrected).norm();
 
         Some(CorrectedResult {
@@ -182,11 +185,7 @@ impl ElasticFeedbackRun {
     }
 
     /// Correct a batch of results and report outliers.
-    pub fn correct_batch(
-        &self,
-        results: &[ComputationResult],
-        threshold: f64,
-    ) -> BatchCorrection {
+    pub fn correct_batch(&self, results: &[ComputationResult], threshold: f64) -> BatchCorrection {
         let mut corrected = Vec::with_capacity(results.len());
         let mut outliers = Vec::new();
 
@@ -261,7 +260,11 @@ fn elastic_vector(result: &ComputationResult) -> Option<DVector<f64>> {
     }
 }
 
-fn elastic_row(result: &ComputationResult, target: &DVector<f64>, class: &str) -> Option<TrainingRow> {
+fn elastic_row(
+    result: &ComputationResult,
+    target: &DVector<f64>,
+    class: &str,
+) -> Option<TrainingRow> {
     let raw = elastic_vector(result)?;
     Some(TrainingRow {
         class: class.to_string(),

@@ -368,6 +368,10 @@ mod tests {
 
     #[test]
     fn test_bulk_modulus_property() {
-        assert!((OptimizeProperty::BulkModulus.compute(100.0, 60.0, 30.0) - (100.0 + 120.0) / 3.0).abs() < 1e-9);
+        assert!(
+            (OptimizeProperty::BulkModulus.compute(100.0, 60.0, 30.0) - (100.0 + 120.0) / 3.0)
+                .abs()
+                < 1e-9
+        );
     }
 }

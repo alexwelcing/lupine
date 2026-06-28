@@ -108,7 +108,9 @@ impl MofFeatureExtractor {
         let dr = self.r_max / self.n_radial_bins as f64;
         for i in 0..structure.atoms.len() {
             for j in (i + 1)..structure.atoms.len() {
-                let r = structure.atoms[i].distance_sq(&structure.atoms[j], &structure.cell).sqrt();
+                let r = structure.atoms[i]
+                    .distance_sq(&structure.atoms[j], &structure.cell)
+                    .sqrt();
                 if r < self.r_max {
                     let bin = (r / dr) as usize;
                     if bin < self.n_radial_bins {
@@ -204,10 +206,8 @@ mod tests {
             }
         }
 
-        let operator = UniversalFeedbackLoop::fit(
-            &train_rows,
-            DirectionPolicy::LearnedPca { rank: 2 },
-        );
+        let operator =
+            UniversalFeedbackLoop::fit(&train_rows, DirectionPolicy::LearnedPca { rank: 2 });
 
         let mut outliers = 0;
         let mut max_residual: f64 = 0.0;
@@ -220,9 +220,12 @@ mod tests {
         }
 
         assert_eq!(
-            outliers, 0,
+            outliers,
+            0,
             "expected 0/{} MOF outliers, got {}. max residual = {}",
-            test_rows.len(), outliers, max_residual
+            test_rows.len(),
+            outliers,
+            max_residual
         );
     }
 

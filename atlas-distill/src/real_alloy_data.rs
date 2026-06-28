@@ -18,7 +18,7 @@
 
 use std::collections::HashMap;
 
-use nalgebra::{DVector, Matrix3xX, SVD, Vector3};
+use nalgebra::{DVector, Matrix3xX, Vector3, SVD};
 
 use crate::nist::{NistArtifact, NistPotential};
 use crate::runner::{ComputationResult, LammpsTrace};
@@ -115,11 +115,15 @@ pub fn sin_principal_angle(u: &Vector3<f64>, v: &Vector3<f64>) -> f64 {
 /// Relative cross-class transfer error when the source-class correction
 /// (projection onto the source residual direction) is applied to the target
 /// residual.  This equals `sin θ` up to numerical round-off.
-pub fn cross_class_transfer_error(source_residual: &Vector3<f64>, target_residual: &Vector3<f64>) -> f64 {
+pub fn cross_class_transfer_error(
+    source_residual: &Vector3<f64>,
+    target_residual: &Vector3<f64>,
+) -> f64 {
     if source_residual.norm() == 0.0 || target_residual.norm() == 0.0 {
         return 0.0;
     }
-    let proj = target_residual.dot(source_residual) / source_residual.norm_squared() * source_residual;
+    let proj =
+        target_residual.dot(source_residual) / source_residual.norm_squared() * source_residual;
     (target_residual - proj).norm() / target_residual.norm()
 }
 
@@ -131,11 +135,7 @@ pub fn subspace_transfer_error(sources: &[Vector3<f64>], target_residual: &Vecto
     if target_residual.norm() == 0.0 {
         return 0.0;
     }
-    let nonzero: Vec<Vector3<f64>> = sources
-        .iter()
-        .filter(|u| u.norm() > 0.0)
-        .copied()
-        .collect();
+    let nonzero: Vec<Vector3<f64>> = sources.iter().filter(|u| u.norm() > 0.0).copied().collect();
     if nonzero.is_empty() {
         return 1.0;
     }
@@ -175,7 +175,9 @@ pub fn transferability_matrix(
 ) -> TransferMatrix {
     let mut out = HashMap::new();
     for (s_label, s_ref) in references {
-        let Some(s_comp) = computed.get(s_label) else { continue };
+        let Some(s_comp) = computed.get(s_label) else {
+            continue;
+        };
         let u = residual_vector(
             Vector3::new(s_comp[0], s_comp[1], s_comp[2]),
             Vector3::new(s_ref[0], s_ref[1], s_ref[2]),
@@ -184,7 +186,9 @@ pub fn transferability_matrix(
             continue;
         }
         for (t_label, t_ref) in references {
-            let Some(t_comp) = computed.get(t_label) else { continue };
+            let Some(t_comp) = computed.get(t_label) else {
+                continue;
+            };
             let v = residual_vector(
                 Vector3::new(t_comp[0], t_comp[1], t_comp[2]),
                 Vector3::new(t_ref[0], t_ref[1], t_ref[2]),
@@ -363,11 +367,23 @@ mod tests {
     fn test_parse_fixture_log() {
         let log = include_str!("../tests/fixtures/mgli_kim2012_bcc_50mg.txt");
         let [c11, c12, c44] = parse_elastic_example_log(log).expect("fixture log should parse");
-        assert!(c11 > 0.0 && c12 > 0.0 && c44 > 0.0, "elastic constants must be positive");
+        assert!(
+            c11 > 0.0 && c12 > 0.0 && c44 > 0.0,
+            "elastic constants must be positive"
+        );
         // Cubic averages from the actual run (loose bounds to avoid brittle tests).
-        assert!((c11 - 28.85).abs() < 2.0, "C11 cubic average unexpected: {c11}");
-        assert!((c12 - 15.29).abs() < 2.0, "C12 cubic average unexpected: {c12}");
-        assert!((c44 - 24.01).abs() < 2.0, "C44 cubic average unexpected: {c44}");
+        assert!(
+            (c11 - 28.85).abs() < 2.0,
+            "C11 cubic average unexpected: {c11}"
+        );
+        assert!(
+            (c12 - 15.29).abs() < 2.0,
+            "C12 cubic average unexpected: {c12}"
+        );
+        assert!(
+            (c44 - 24.01).abs() < 2.0,
+            "C44 cubic average unexpected: {c44}"
+        );
     }
 
     #[test]
@@ -387,18 +403,36 @@ mod tests {
     #[test]
     fn test_alcu_cloud_logs_parse_and_positive() {
         let names_and_logs = [
-            ("Al", include_str!("../tests/fixtures/alcu_cloud/alcu_liu1999_fcc_Al.txt")),
-            ("Cu", include_str!("../tests/fixtures/alcu_cloud/alcu_liu1999_fcc_Cu.txt")),
-            ("25Al", include_str!("../tests/fixtures/alcu_cloud/alcu_liu1999_fcc_25Al.txt")),
-            ("50Al", include_str!("../tests/fixtures/alcu_cloud/alcu_liu1999_fcc_50Al.txt")),
-            ("75Al", include_str!("../tests/fixtures/alcu_cloud/alcu_liu1999_fcc_75Al.txt")),
+            (
+                "Al",
+                include_str!("../tests/fixtures/alcu_cloud/alcu_liu1999_fcc_Al.txt"),
+            ),
+            (
+                "Cu",
+                include_str!("../tests/fixtures/alcu_cloud/alcu_liu1999_fcc_Cu.txt"),
+            ),
+            (
+                "25Al",
+                include_str!("../tests/fixtures/alcu_cloud/alcu_liu1999_fcc_25Al.txt"),
+            ),
+            (
+                "50Al",
+                include_str!("../tests/fixtures/alcu_cloud/alcu_liu1999_fcc_50Al.txt"),
+            ),
+            (
+                "75Al",
+                include_str!("../tests/fixtures/alcu_cloud/alcu_liu1999_fcc_75Al.txt"),
+            ),
         ];
 
         let pot = alcu_liu1999_potential();
         for (name, log) in names_and_logs {
             let [c11, c12, c44] = parse_elastic_example_log(log)
                 .unwrap_or_else(|| panic!("{name} cloud log should parse"));
-            assert!(c11 > 0.0 && c12 > 0.0 && c44 > 0.0, "{name} constants must be positive");
+            assert!(
+                c11 > 0.0 && c12 > 0.0 && c44 > 0.0,
+                "{name} constants must be positive"
+            );
             let result = computation_from_elastic_log(&pot, name, "fcc", log, "cloud")
                 .unwrap_or_else(|| panic!("{name} cloud log should produce a result"));
             assert_eq!(result.trace.crystal_structure, "fcc");
@@ -412,18 +446,18 @@ mod tests {
         let mut computed: HashMap<String, [f64; 3]> = HashMap::new();
 
         let log50 = include_str!("../tests/fixtures/mgli_kim2012_bcc_50mg.txt");
-        let [c11_50, c12_50, c44_50] = parse_elastic_example_log(log50)
-            .expect("50Mg fixture should parse");
+        let [c11_50, c12_50, c44_50] =
+            parse_elastic_example_log(log50).expect("50Mg fixture should parse");
         computed.insert("50Mg-bcc".to_string(), [c11_50, c12_50, c44_50]);
 
         let log75 = include_str!("../tests/fixtures/mgli_cloud/mgli_kim2012_bcc_75mg.txt");
-        let [c11_75, c12_75, c44_75] = parse_elastic_example_log(log75)
-            .expect("75Mg fixture should parse");
+        let [c11_75, c12_75, c44_75] =
+            parse_elastic_example_log(log75).expect("75Mg fixture should parse");
         computed.insert("75Mg-bcc".to_string(), [c11_75, c12_75, c44_75]);
 
         let log100 = include_str!("../tests/fixtures/mgli_cloud/mgli_kim2012_bcc_100mg.txt");
-        let [c11_100, c12_100, c44_100] = parse_elastic_example_log(log100)
-            .expect("100Mg fixture should parse");
+        let [c11_100, c12_100, c44_100] =
+            parse_elastic_example_log(log100).expect("100Mg fixture should parse");
         computed.insert("100Mg-bcc".to_string(), [c11_100, c12_100, c44_100]);
 
         let matrix = transferability_matrix(&computed, &refs);
@@ -443,17 +477,20 @@ mod tests {
         let mut computed: HashMap<String, [f64; 3]> = HashMap::new();
 
         let log_al = include_str!("../tests/fixtures/alcu_cloud/alcu_liu1999_fcc_Al.txt");
-        let [c11_al, c12_al, c44_al] = parse_elastic_example_log(log_al)
-            .expect("Al cloud log should parse");
+        let [c11_al, c12_al, c44_al] =
+            parse_elastic_example_log(log_al).expect("Al cloud log should parse");
         computed.insert("Al-fcc".to_string(), [c11_al, c12_al, c44_al]);
 
         let log_cu = include_str!("../tests/fixtures/alcu_cloud/alcu_liu1999_fcc_Cu.txt");
-        let [c11_cu, c12_cu, c44_cu] = parse_elastic_example_log(log_cu)
-            .expect("Cu cloud log should parse");
+        let [c11_cu, c12_cu, c44_cu] =
+            parse_elastic_example_log(log_cu).expect("Cu cloud log should parse");
         computed.insert("Cu-fcc".to_string(), [c11_cu, c12_cu, c44_cu]);
 
         let matrix = transferability_matrix(&computed, &refs);
-        assert!(!matrix.is_empty(), "Al-Cu transferability matrix should not be empty");
+        assert!(
+            !matrix.is_empty(),
+            "Al-Cu transferability matrix should not be empty"
+        );
 
         for ((source, target), (err, bound)) in &matrix {
             assert!(
@@ -462,7 +499,6 @@ mod tests {
             );
         }
     }
-
 
     #[test]
     fn test_mgli_loocv_subspace_beat_single_source() {
@@ -487,7 +523,10 @@ mod tests {
             .map(|lab| {
                 let c = computed.get(*lab).unwrap();
                 let r = refs.get(*lab).unwrap();
-                residual_vector(Vector3::new(c[0], c[1], c[2]), Vector3::new(r[0], r[1], r[2]))
+                residual_vector(
+                    Vector3::new(c[0], c[1], c[2]),
+                    Vector3::new(r[0], r[1], r[2]),
+                )
             })
             .collect();
 
@@ -517,11 +556,26 @@ mod tests {
         let mut computed: HashMap<String, [f64; 3]> = HashMap::new();
 
         let inputs: Vec<(&str, &str)> = vec![
-            ("Al-fcc", include_str!("../tests/fixtures/alcu_cloud/alcu_liu1999_fcc_Al.txt")),
-            ("Cu-fcc", include_str!("../tests/fixtures/alcu_cloud/alcu_liu1999_fcc_Cu.txt")),
-            ("25Al-fcc", include_str!("../tests/fixtures/alcu_cloud/alcu_liu1999_fcc_25Al.txt")),
-            ("50Al-fcc", include_str!("../tests/fixtures/alcu_cloud/alcu_liu1999_fcc_50Al.txt")),
-            ("75Al-fcc", include_str!("../tests/fixtures/alcu_cloud/alcu_liu1999_fcc_75Al.txt")),
+            (
+                "Al-fcc",
+                include_str!("../tests/fixtures/alcu_cloud/alcu_liu1999_fcc_Al.txt"),
+            ),
+            (
+                "Cu-fcc",
+                include_str!("../tests/fixtures/alcu_cloud/alcu_liu1999_fcc_Cu.txt"),
+            ),
+            (
+                "25Al-fcc",
+                include_str!("../tests/fixtures/alcu_cloud/alcu_liu1999_fcc_25Al.txt"),
+            ),
+            (
+                "50Al-fcc",
+                include_str!("../tests/fixtures/alcu_cloud/alcu_liu1999_fcc_50Al.txt"),
+            ),
+            (
+                "75Al-fcc",
+                include_str!("../tests/fixtures/alcu_cloud/alcu_liu1999_fcc_75Al.txt"),
+            ),
         ];
         for (lab, log) in &inputs {
             let [c11, c12, c44] = parse_elastic_example_log(log).unwrap();
@@ -534,7 +588,10 @@ mod tests {
             .map(|lab| {
                 let c = computed.get(lab).unwrap();
                 let r = refs.get(lab).unwrap();
-                residual_vector(Vector3::new(c[0], c[1], c[2]), Vector3::new(r[0], r[1], r[2]))
+                residual_vector(
+                    Vector3::new(c[0], c[1], c[2]),
+                    Vector3::new(r[0], r[1], r[2]),
+                )
             })
             .collect();
 

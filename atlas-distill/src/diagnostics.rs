@@ -8,7 +8,7 @@ use nalgebra::DMatrix;
 use std::collections::HashMap;
 
 use crate::feedback_loop::CorrectedResult;
-use crate::multi_element::{ClassStrategy, ScorecardRow, run_surrogate_campaign};
+use crate::multi_element::{run_surrogate_campaign, ClassStrategy, ScorecardRow};
 use crate::stats;
 
 /// A single residual vector and its metadata.
@@ -90,7 +90,13 @@ pub fn extract_residual_points(corrected: &[CorrectedResult]) -> Vec<ResidualPoi
             let parts: Vec<&str> = c.potential.id.split('-').collect();
             let family = parts.get(2).copied().unwrap_or("unknown").to_string();
             ResidualPoint {
-                element: c.potential.id.split('-').next().unwrap_or("unknown").to_string(),
+                element: c
+                    .potential
+                    .id
+                    .split('-')
+                    .next()
+                    .unwrap_or("unknown")
+                    .to_string(),
                 structure: parts.get(1).copied().unwrap_or("unknown").to_string(),
                 potential_family: family,
                 residual: [residual_vec[0], residual_vec[1], residual_vec[2]],
@@ -113,7 +119,11 @@ pub fn run_diagnostics(threshold: f64) -> DiagnosticReport {
         *per_structure.entry(row.structure.clone()).or_default() += row.outlier_count;
         // Parse family names from outlier ids.
         for outlier_id in &row.outliers {
-            let family = outlier_id.split('-').nth(2).unwrap_or("unknown").to_string();
+            let family = outlier_id
+                .split('-')
+                .nth(2)
+                .unwrap_or("unknown")
+                .to_string();
             *per_family.entry(family).or_default() += 1;
         }
     }
@@ -145,7 +155,9 @@ pub fn run_diagnostics(threshold: f64) -> DiagnosticReport {
 /// Recompute corrected results for every surrogate sample and return residual points.
 fn collect_all_residual_points(_threshold: f64) -> Vec<ResidualPoint> {
     use crate::feedback_loop::ElasticFeedbackRun;
-    use crate::multi_element::{bcc_surrogate_families, build_structure_results, element_target, fcc_surrogate_families};
+    use crate::multi_element::{
+        bcc_surrogate_families, build_structure_results, element_target, fcc_surrogate_families,
+    };
     use crate::validation;
 
     let fcc_ref = validation::fcc_reference_data();
@@ -156,8 +168,14 @@ fn collect_all_residual_points(_threshold: f64) -> Vec<ResidualPoint> {
     // Group by element-structure and correct.
     let mut by_class: HashMap<String, (String, String, Vec<crate::runner::ComputationResult>)> =
         HashMap::new();
-    for r in fcc_results.into_iter().chain(bcc_results.into_iter()) {
-        let element = r.potential.id.split('-').next().unwrap_or("unknown").to_string();
+    for r in fcc_results.into_iter().chain(bcc_results) {
+        let element = r
+            .potential
+            .id
+            .split('-')
+            .next()
+            .unwrap_or("unknown")
+            .to_string();
         let structure = if r.potential.id.contains("-fcc-") {
             "fcc"
         } else {

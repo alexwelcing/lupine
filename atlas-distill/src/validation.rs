@@ -605,14 +605,8 @@ pub fn run_validation() -> ValidationResults {
             Box::new(|c11, c12, _c44| bulk_modulus_k(c11, c12))
                 as Box<dyn Fn(f64, f64, f64) -> f64>,
         ),
-        (
-            "shear_modulus",
-            Box::new(shear_modulus_g),
-        ),
-        (
-            "anisotropy",
-            Box::new(anisotropy_a),
-        ),
+        ("shear_modulus", Box::new(shear_modulus_g)),
+        ("anisotropy", Box::new(anisotropy_a)),
         (
             "zener_ratio",
             Box::new(|c11, c12, c44| {

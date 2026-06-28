@@ -139,7 +139,7 @@ pub fn build_structure_results(
 ) -> Vec<ComputationResult> {
     let mut results = Vec::new();
     for family in families {
-        for (element, _ref_vals) in reference {
+        for element in reference.keys() {
             if let Some(pred_vals) = family.predictions.get(*element) {
                 let id = format!("{}-{}-{}", element, structure, family.name);
                 results.push(ComputationResult {
@@ -166,7 +166,8 @@ pub fn element_target(element: &str, structure: &str) -> Option<DVector<f64>> {
         "bcc" => validation::bcc_reference_data(),
         _ => return None,
     };
-    map.get(element).map(|v| DVector::from_vec(vec![v[0], v[1], v[2]]))
+    map.get(element)
+        .map(|v| DVector::from_vec(vec![v[0], v[1], v[2]]))
 }
 
 /// Class key for a sample.
@@ -180,10 +181,7 @@ fn class_key(element: &str, structure: &str, strategy: ClassStrategy) -> String 
 /// Run a surrogate multi-element campaign and produce a failure scorecard.
 ///
 /// The scorecard is sorted from worst (largest max residual) to best.
-pub fn run_surrogate_campaign(
-    strategy: ClassStrategy,
-    threshold: f64,
-) -> Vec<ScorecardRow> {
+pub fn run_surrogate_campaign(strategy: ClassStrategy, threshold: f64) -> Vec<ScorecardRow> {
     let fcc_ref = validation::fcc_reference_data();
     let bcc_ref = validation::bcc_reference_data();
     let fcc_families = fcc_surrogate_families();
@@ -194,8 +192,14 @@ pub fn run_surrogate_campaign(
 
     // Group all results by class.
     let mut by_class: HashMap<String, (String, String, Vec<ComputationResult>)> = HashMap::new();
-    for r in fcc_results.into_iter().chain(bcc_results.into_iter()) {
-        let element = r.potential.id.split('-').next().unwrap_or("unknown").to_string();
+    for r in fcc_results.into_iter().chain(bcc_results) {
+        let element = r
+            .potential
+            .id
+            .split('-')
+            .next()
+            .unwrap_or("unknown")
+            .to_string();
         let structure = if r.potential.id.contains("-fcc-") {
             "fcc".to_string()
         } else {
@@ -310,8 +314,14 @@ fn run_surrogate_campaign_with_fit_fn(
     let bcc_results = build_structure_results("bcc", &bcc_ref, &bcc_families);
 
     let mut by_class: HashMap<String, (String, String, Vec<ComputationResult>)> = HashMap::new();
-    for r in fcc_results.into_iter().chain(bcc_results.into_iter()) {
-        let element = r.potential.id.split('-').next().unwrap_or("unknown").to_string();
+    for r in fcc_results.into_iter().chain(bcc_results) {
+        let element = r
+            .potential
+            .id
+            .split('-')
+            .next()
+            .unwrap_or("unknown")
+            .to_string();
         let structure = if r.potential.id.contains("-fcc-") {
             "fcc".to_string()
         } else {
@@ -416,10 +426,8 @@ fn fit_family_operators(
 
     let mut operators = HashMap::new();
     for (family, rows) in by_family {
-        let op = UniversalFeedbackLoop::fit(
-            &rows,
-            DirectionPolicy::LearnedPca { rank: family_rank },
-        );
+        let op =
+            UniversalFeedbackLoop::fit(&rows, DirectionPolicy::LearnedPca { rank: family_rank });
         operators.insert(family, op);
     }
     operators
@@ -478,16 +486,25 @@ pub fn run_surrogate_campaign_hierarchical_by_family(
 
     let fcc_results = build_structure_results("fcc", &fcc_ref, &fcc_families);
     let bcc_results = build_structure_results("bcc", &bcc_ref, &bcc_families);
-    let all_results: Vec<ComputationResult> =
-        fcc_results.iter().chain(bcc_results.iter()).cloned().collect();
+    let all_results: Vec<ComputationResult> = fcc_results
+        .iter()
+        .chain(bcc_results.iter())
+        .cloned()
+        .collect();
 
     let family_ops = fit_family_operators(&all_results, family_rank);
     let fcc_corrected = apply_family_corrections(&fcc_results, &family_ops);
     let bcc_corrected = apply_family_corrections(&bcc_results, &family_ops);
 
     let mut by_class: HashMap<String, (String, String, Vec<ComputationResult>)> = HashMap::new();
-    for r in fcc_corrected.into_iter().chain(bcc_corrected.into_iter()) {
-        let element = r.potential.id.split('-').next().unwrap_or("unknown").to_string();
+    for r in fcc_corrected.into_iter().chain(bcc_corrected) {
+        let element = r
+            .potential
+            .id
+            .split('-')
+            .next()
+            .unwrap_or("unknown")
+            .to_string();
         let structure = if r.potential.id.contains("-fcc-") {
             "fcc".to_string()
         } else {
@@ -595,11 +612,8 @@ mod tests {
     fn test_adaptive_rank_reduces_outliers() {
         let threshold = 1.0;
         let fixed = run_surrogate_campaign(ClassStrategy::ByElementStructure, threshold);
-        let adaptive = run_surrogate_campaign_adaptive(
-            ClassStrategy::ByElementStructure,
-            threshold,
-            3,
-        );
+        let adaptive =
+            run_surrogate_campaign_adaptive(ClassStrategy::ByElementStructure, threshold, 3);
 
         let fixed_total: usize = fixed.iter().map(|r| r.outlier_count).sum();
         let adaptive_total: usize = adaptive.iter().map(|r| r.outlier_count).sum();

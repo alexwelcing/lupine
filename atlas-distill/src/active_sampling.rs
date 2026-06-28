@@ -73,8 +73,12 @@ impl ActiveSampler {
     /// Predict the corrected residual norm for a candidate.
     pub fn score(&self, candidate: &Candidate) -> f64 {
         let zero_shift = DVector::zeros(self.dim);
-        self.operator
-            .residual_norm(&candidate.class, &candidate.raw, &zero_shift, &candidate.target)
+        self.operator.residual_norm(
+            &candidate.class,
+            &candidate.raw,
+            &zero_shift,
+            &candidate.target,
+        )
     }
 
     /// Select the index of the candidate with the largest predicted residual.
@@ -314,10 +318,7 @@ mod tests {
         let dim = 5;
         let mut rng = rand::thread_rng();
         let mut pool = make_pool(2, 10, dim, &mut rng);
-        let seed: Vec<TrainingRow> = pool
-            .drain(..6)
-            .map(|c| c.into_training_row())
-            .collect();
+        let seed: Vec<TrainingRow> = pool.drain(..6).map(|c| c.into_training_row()).collect();
 
         let sampler = ActiveSampler::new(seed, DirectionPolicy::LearnedPca { rank: 2 }, dim);
         let scores: Vec<f64> = pool.iter().map(|c| sampler.score(c)).collect();
