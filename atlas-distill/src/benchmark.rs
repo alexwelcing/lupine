@@ -205,7 +205,6 @@ pub fn print_summary(summary: &BenchmarkSummary) {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::io::Write;
 
     #[test]
     fn test_load_csv_roundtrip() {

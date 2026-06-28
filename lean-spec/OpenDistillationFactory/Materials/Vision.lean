@@ -11,6 +11,8 @@
 
 import OpenDistillationFactory.Materials.Data.Provenance
 import OpenDistillationFactory.Materials.Data.Benchmark
+import OpenDistillationFactory.Materials.Data.MgLiCloudRun
+import OpenDistillationFactory.Materials.Data.AlCuCloudRun
 import OpenDistillationFactory.Materials.Analysis.Stats
 import OpenDistillationFactory.Materials.Analysis.Causal
 import OpenDistillationFactory.Materials.Analysis.Manifold
@@ -26,12 +28,14 @@ import OpenDistillationFactory.Materials.Theory.WeakAcceleration
 import OpenDistillationFactory.Materials.Theory.AffineDecomposition
 import OpenDistillationFactory.Materials.Theory.SmoothProjection
 import OpenDistillationFactory.Materials.Theory.FiniteSampleConcentration
+import OpenDistillationFactory.Materials.Theory.AlloyResidualTransfer
 import OpenDistillationFactory.Materials.Validation.Experiment
 import OpenDistillationFactory.Materials.Validation.Audit
 
 namespace OpenDistillationFactory.Materials.Vision
 
 open OpenDistillationFactory.Materials.Data
+open OpenDistillationFactory.Materials.Data.MgLiCloudRun
 open OpenDistillationFactory.Materials.Analysis.Causal
 open OpenDistillationFactory.Materials.Analysis.Manifold
 open OpenDistillationFactory.Materials.Computation
@@ -45,6 +49,7 @@ open OpenDistillationFactory.Materials.Theory.WeakAcceleration
 open OpenDistillationFactory.Materials.Theory.AffineDecomposition
 open OpenDistillationFactory.Materials.Theory.SmoothProjection
 open OpenDistillationFactory.Materials.Theory.FiniteSampleConcentration
+open OpenDistillationFactory.Materials.Theory.AlloyResidualTransfer
 open OpenDistillationFactory.Materials.Theory.HyperRibbonEmpirical
 open OpenDistillationFactory.Materials.Validation
 open OpenDistillationFactory.Materials.Validation.Audit
@@ -158,6 +163,12 @@ def nistCount := nistScaffoldAlSample.length
 #check empiricalSecondMoment_entrywise_concentration
 #check participationRatioMatrix_continuous
 
+/- T68–T69: Alloy residual-subspace transferability bound and its Mg-Li
+    Cloud Run empirical instantiation. -/
+#check AlloyResidualTransfer.crossClassTransferError_le
+#check MgLiCloudRun.transferMatrixSatisfiesBound
+#check AlCuCloudRun.transferMatrixSatisfiesBound
+
 -- ═══════════════════════════════════════════════════════════════
 -- SECTION 3: HYPOTHESIS INVENTORY
 -- ═══════════════════════════════════════════════════════════════
@@ -171,8 +182,9 @@ def computationallyProvenCount : Nat :=
   -- ParameterBound: 1, MetaScience: 5, Experiment: 5, Audit: 5,
   -- Submission push: HyperRibbon 2, ErrorGeometry 6, ParameterBound 7,
   -- AccuracyCommitment 2, UniversalityBridge 3, WeakAcceleration 4,
-  -- AffineDecomposition 1, SmoothProjection 2, FiniteSampleConcentration 2
-  77
+  -- AffineDecomposition 1, SmoothProjection 2, FiniteSampleConcentration 2,
+  -- AlloyResidualTransfer 1
+  78
 
 /-- Count of documented epistemic gaps (not sorry proofs — all
     theorems are proven — but acknowledged limitations). -/
@@ -205,6 +217,12 @@ def epistemicGapCount : Nat :=
 #guard (satisfiesHyperRibbonClaim fccAllPR 3 == true)
 
 #guard (observedSatisfiesBound == true)
+
+#guard (MgLiCloudRun.cloudRunCompositionCount >= 3)
+#guard (MgLiCloudRun.transferMatrixSatisfiesBound == true)
+
+#guard (AlCuCloudRun.cloudRunCompositionCount >= 2)
+#guard (AlCuCloudRun.transferMatrixSatisfiesBound == true)
 
 /-- The complete status board as a computed string. -/
 def visionReport : String :=

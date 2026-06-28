@@ -1,0 +1,362 @@
+{
+  "citation": "de Jong et al. 2015 (PBE); Pandit & Bongiorno 2023 (Ag PBE); Wang & Li 2008 (Au PW91); Liu et al. 2024 (r2SCAN bulk shift)",
+  "description": "0K PBE/published-DFT elastic constants for 15 cubic metals. Ag from Pandit & Bongiorno 2023 (PBE); Au from Wang & Li 2008 (PW91-GGA fallback). r2SCAN values approximated by scalar bulk-modulus shift from Liu et al. 2024 where available.",
+  "elements": {
+    "Ag": {
+      "C11": 107.0,
+      "C12": 79.0,
+      "C44": 42.0,
+      "TPBE_0K": [
+        107.0,
+        79.0,
+        42.0
+      ],
+      "Tr2SCAN_0K": [
+        126.46188679245283,
+        93.36905660377359,
+        49.63924528301887
+      ],
+      "material_id": "Pandit-Bongiorno-2023",
+      "r2scan_shift_ratio": 1.1818867924528302,
+      "r2scan_source": "Liu et al. 2024 bulk-modulus scaling (B_r2SCAN=104.4 GPa / B_PBE=88.33 GPa)",
+      "source": "Pandit, A. & Bongiorno, A. \"A first-principles method to calculate fourth-order elastic constants of solid materials.\" arXiv:2302.01965 (2023); PBE, Quantum ESPRESSO, 25x25x25 k-points.",
+      "space_group": 225,
+      "stable": true,
+      "url": "https://arxiv.org/abs/2302.01965"
+    },
+    "Al": {
+      "C11": 103.92815375936048,
+      "C12": 72.95142365352959,
+      "C44": 31.856343596666665,
+      "TPBE_0K": [
+        103.92815375936048,
+        72.95142365352959,
+        31.856343596666665
+      ],
+      "Tr2SCAN_0K": [
+        103.92815375936048,
+        72.95142365352959,
+        31.856343596666665
+      ],
+      "material_id": "mp-134",
+      "r2scan_shift_ratio": 1.0,
+      "r2scan_source": "No r2SCAN bulk modulus in Liu et al. 2024; unshifted PBE baseline retained.",
+      "source": "de Jong et al., Scientific Data 2, 150009 (2015); PBE/GGA, VASP, stress-strain method (Le Page & Saxe 2002), 0 K",
+      "space_group": 225,
+      "stable": true,
+      "url": "https://doi.org/10.1038/sdata.2015.9"
+    },
+    "Au": {
+      "C11": 165.9,
+      "C12": 142.2,
+      "C44": 26.7,
+      "TPBE_0K": [
+        165.9,
+        142.2,
+        26.7
+      ],
+      "Tr2SCAN_0K": [
+        169.6578947368421,
+        145.42105263157893,
+        27.30479680213191
+      ],
+      "functional_note": "PW91-GGA, not PBE. Used because no stable published PBE tensor for fcc Au was found.",
+      "material_id": "Wang-Li-2008",
+      "r2scan_shift_ratio": 1.022651565622918,
+      "r2scan_source": "Liu et al. 2024 bulk-modulus scaling (B_r2SCAN=153.5 GPa / B_PBE=150.10 GPa)",
+      "source": "Wang, G. & Li, X. \"Predicting the Young's modulus of nanowires from first-principles calculations on their surface and bulk materials.\" J. Appl. Phys. 104, 113511 (2008); VASP/PW91-GGA.",
+      "space_group": 225,
+      "stable": true,
+      "url": "https://doi.org/10.1063/1.3026739"
+    },
+    "Ca": {
+      "C11": 20.8291134500119,
+      "C12": 15.094252979464525,
+      "C44": 14.093793950000004,
+      "TPBE_0K": [
+        20.8291134500119,
+        15.094252979464525,
+        14.093793950000004
+      ],
+      "Tr2SCAN_0K": [
+        20.8291134500119,
+        15.094252979464525,
+        14.093793950000004
+      ],
+      "material_id": "mp-45",
+      "r2scan_shift_ratio": 1.0,
+      "r2scan_source": "No r2SCAN bulk modulus in Liu et al. 2024; unshifted PBE baseline retained.",
+      "source": "de Jong et al., Scientific Data 2, 150009 (2015); PBE/GGA, VASP, stress-strain method (Le Page & Saxe 2002), 0 K",
+      "space_group": 225,
+      "stable": true,
+      "url": "https://doi.org/10.1038/sdata.2015.9"
+    },
+    "Cr": {
+      "C11": 499.4655063792027,
+      "C12": 139.17377265656663,
+      "C44": 102.31280351000002,
+      "TPBE_0K": [
+        499.4655063792027,
+        139.17377265656663,
+        102.31280351000002
+      ],
+      "Tr2SCAN_0K": [
+        531.3073097436484,
+        148.04634512817583,
+        108.83542445062851
+      ],
+      "material_id": "mp-90",
+      "r2scan_shift_ratio": 1.0637517565432655,
+      "r2scan_source": "Liu et al. 2024 bulk-modulus scaling (B_r2SCAN=275.8 GPa / B_PBE=259.27 GPa)",
+      "source": "de Jong et al., Scientific Data 2, 150009 (2015); PBE/GGA, VASP, stress-strain method (Le Page & Saxe 2002), 0 K",
+      "space_group": 229,
+      "stable": true,
+      "url": "https://doi.org/10.1038/sdata.2015.9"
+    },
+    "Cu": {
+      "C11": 146.4321,
+      "C12": 131.0959,
+      "C44": 71.1847,
+      "TPBE_0K": [
+        146.4321,
+        131.0959,
+        71.1847
+      ],
+      "Tr2SCAN_0K": [
+        175.02020229360053,
+        156.68989885319974,
+        85.08216841941943
+      ],
+      "material_id": "mp-30",
+      "r2scan_shift_ratio": 1.1952311159479414,
+      "r2scan_source": "Liu et al. 2024 bulk-modulus scaling (B_r2SCAN=162.8 GPa / B_PBE=136.21 GPa)",
+      "source": "de Jong et al., Scientific Data 2, 150009 (2015); PBE/GGA, VASP, stress-strain method (Le Page & Saxe 2002), 0 K",
+      "space_group": 225,
+      "stable": true,
+      "url": "https://doi.org/10.1038/sdata.2015.9"
+    },
+    "Fe": {
+      "C11": 247.06437303120248,
+      "C12": 150.15692194748945,
+      "C44": 97.42553009666669,
+      "TPBE_0K": [
+        247.06437303120248,
+        150.15692194748945,
+        97.42553009666669
+      ],
+      "Tr2SCAN_0K": [
+        272.71142615743463,
+        165.74428692128268,
+        107.53899856476093
+      ],
+      "material_id": "mp-13",
+      "r2scan_shift_ratio": 1.1038071690044646,
+      "r2scan_source": "Liu et al. 2024 bulk-modulus scaling (B_r2SCAN=201.4 GPa / B_PBE=182.46 GPa)",
+      "source": "de Jong et al., Scientific Data 2, 150009 (2015); PBE/GGA, VASP, stress-strain method (Le Page & Saxe 2002), 0 K",
+      "space_group": 229,
+      "stable": true,
+      "url": "https://doi.org/10.1038/sdata.2015.9"
+    },
+    "Mo": {
+      "C11": 471.8564381355368,
+      "C12": 157.65718117619383,
+      "C44": 106.38756431999998,
+      "TPBE_0K": [
+        471.8564381355368,
+        157.65718117619383,
+        106.38756431999998
+      ],
+      "Tr2SCAN_0K": [
+        494.5325223198363,
+        165.23373884008188,
+        111.50024938627843
+      ],
+      "material_id": "mp-129",
+      "r2scan_shift_ratio": 1.0480571681376232,
+      "r2scan_source": "Liu et al. 2024 bulk-modulus scaling (B_r2SCAN=275.0 GPa / B_PBE=262.39 GPa)",
+      "source": "de Jong et al., Scientific Data 2, 150009 (2015); PBE/GGA, VASP, stress-strain method (Le Page & Saxe 2002), 0 K",
+      "space_group": 229,
+      "stable": true,
+      "url": "https://doi.org/10.1038/sdata.2015.9"
+    },
+    "Nb": {
+      "C11": 233.02929838957203,
+      "C12": 145.19528200632655,
+      "C44": 10.954196786666667,
+      "TPBE_0K": [
+        233.02929838957203,
+        145.19528200632655,
+        10.954196786666667
+      ],
+      "Tr2SCAN_0K": [
+        231.99648334608128,
+        144.55175832695934,
+        10.905646414207864
+      ],
+      "material_id": "mp-75",
+      "r2scan_shift_ratio": 0.9955678747237864,
+      "r2scan_source": "Liu et al. 2024 bulk-modulus scaling (B_r2SCAN=173.7 GPa / B_PBE=174.47 GPa)",
+      "source": "de Jong et al., Scientific Data 2, 150009 (2015); PBE/GGA, VASP, stress-strain method (Le Page & Saxe 2002), 0 K",
+      "space_group": 229,
+      "stable": true,
+      "url": "https://doi.org/10.1038/sdata.2015.9"
+    },
+    "Ni": {
+      "C11": 275.7720237378921,
+      "C12": 159.21983136014904,
+      "C44": 131.71160454666668,
+      "TPBE_0K": [
+        275.7720237378921,
+        159.21983136014904,
+        131.71160454666668
+      ],
+      "Tr2SCAN_0K": [
+        315.2148683564395,
+        181.9925658217803,
+        150.54991991375195
+      ],
+      "material_id": "mp-23",
+      "r2scan_shift_ratio": 1.1430269977495466,
+      "r2scan_source": "Liu et al. 2024 bulk-modulus scaling (B_r2SCAN=226.4 GPa / B_PBE=198.07 GPa)",
+      "source": "de Jong et al., Scientific Data 2, 150009 (2015); PBE/GGA, VASP, stress-strain method (Le Page & Saxe 2002), 0 K",
+      "space_group": 225,
+      "stable": true,
+      "url": "https://doi.org/10.1038/sdata.2015.9"
+    },
+    "Pd": {
+      "C11": 187.33040702906092,
+      "C12": 147.04577009210607,
+      "C44": 70.71376999666666,
+      "TPBE_0K": [
+        187.33040702906092,
+        147.04577009210607,
+        70.71376999666666
+      ],
+      "Tr2SCAN_0K": [
+        215.49407959736172,
+        169.15296020131913,
+        81.34503640899713
+      ],
+      "material_id": "mp-2",
+      "r2scan_shift_ratio": 1.150342237626867,
+      "r2scan_source": "Liu et al. 2024 bulk-modulus scaling (B_r2SCAN=184.6 GPa / B_PBE=160.47 GPa)",
+      "source": "de Jong et al., Scientific Data 2, 150009 (2015); PBE/GGA, VASP, stress-strain method (Le Page & Saxe 2002), 0 K",
+      "space_group": 225,
+      "stable": true,
+      "url": "https://doi.org/10.1038/sdata.2015.9"
+    },
+    "Pt": {
+      "C11": 286.7556044651757,
+      "C12": 222.2070569509928,
+      "C44": 64.55121056000002,
+      "TPBE_0K": [
+        286.7556044651757,
+        222.2070569509928,
+        64.55121056000002
+      ],
+      "Tr2SCAN_0K": [
+        320.37794701171094,
+        248.26102649414452,
+        72.11989580780802
+      ],
+      "material_id": "mp-126",
+      "r2scan_shift_ratio": 1.1172508645794172,
+      "r2scan_source": "Liu et al. 2024 bulk-modulus scaling (B_r2SCAN=272.3 GPa / B_PBE=243.72 GPa)",
+      "source": "de Jong et al., Scientific Data 2, 150009 (2015); PBE/GGA, VASP, stress-strain method (Le Page & Saxe 2002), 0 K",
+      "space_group": 225,
+      "stable": true,
+      "url": "https://doi.org/10.1038/sdata.2015.9"
+    },
+    "Sr": {
+      "C11": 15.198195618699675,
+      "C12": 10.49058553634388,
+      "C44": 12.492019030000002,
+      "TPBE_0K": [
+        15.198195618699675,
+        10.49058553634388,
+        12.492019030000002
+      ],
+      "Tr2SCAN_0K": [
+        15.198195618699675,
+        10.49058553634388,
+        12.492019030000002
+      ],
+      "material_id": "mp-76",
+      "r2scan_shift_ratio": 1.0,
+      "r2scan_source": "No r2SCAN bulk modulus in Liu et al. 2024; unshifted PBE baseline retained.",
+      "source": "de Jong et al., Scientific Data 2, 150009 (2015); PBE/GGA, VASP, stress-strain method (Le Page & Saxe 2002), 0 K",
+      "space_group": 225,
+      "stable": true,
+      "url": "https://doi.org/10.1038/sdata.2015.9"
+    },
+    "Ta": {
+      "C11": 265.483772891278,
+      "C12": 157.81600176276544,
+      "C44": 68.55321091666667,
+      "TPBE_0K": [
+        265.483772891278,
+        157.81600176276544,
+        68.55321091666667
+      ],
+      "Tr2SCAN_0K": [
+        281.9232292425314,
+        167.58838537873424,
+        72.79820678337953
+      ],
+      "material_id": "mp-50",
+      "r2scan_shift_ratio": 1.0619226409667823,
+      "r2scan_source": "Liu et al. 2024 bulk-modulus scaling (B_r2SCAN=205.7 GPa / B_PBE=193.71 GPa)",
+      "source": "de Jong et al., Scientific Data 2, 150009 (2015); PBE/GGA, VASP, stress-strain method (Le Page & Saxe 2002), 0 K",
+      "space_group": 229,
+      "stable": true,
+      "url": "https://doi.org/10.1038/sdata.2015.9"
+    },
+    "V": {
+      "C11": 275.84812081474604,
+      "C12": 131.2699569814423,
+      "C44": 15.596900933333337,
+      "TPBE_0K": [
+        275.84812081474604,
+        131.2699569814423,
+        15.596900933333337
+      ],
+      "Tr2SCAN_0K": [
+        297.88570154226034,
+        141.75714922886985,
+        16.84294155308514
+      ],
+      "material_id": "mp-146",
+      "r2scan_shift_ratio": 1.079890269552767,
+      "r2scan_source": "Liu et al. 2024 bulk-modulus scaling (B_r2SCAN=193.8 GPa / B_PBE=179.46 GPa)",
+      "source": "de Jong et al., Scientific Data 2, 150009 (2015); PBE/GGA, VASP, stress-strain method (Le Page & Saxe 2002), 0 K",
+      "space_group": 229,
+      "stable": true,
+      "url": "https://doi.org/10.1038/sdata.2015.9"
+    },
+    "W": {
+      "C11": 509.8151400392387,
+      "C12": 200.9992449435353,
+      "C44": 142.69066302000007,
+      "TPBE_0K": [
+        509.8151400392387,
+        200.9992449435353,
+        142.69066302000007
+      ],
+      "Tr2SCAN_0K": [
+        555.5437059916794,
+        219.02814700416027,
+        155.4894971115207
+      ],
+      "material_id": "mp-91",
+      "r2scan_shift_ratio": 1.0896963670967503,
+      "r2scan_source": "Liu et al. 2024 bulk-modulus scaling (B_r2SCAN=331.2 GPa / B_PBE=303.94 GPa)",
+      "source": "de Jong et al., Scientific Data 2, 150009 (2015); PBE/GGA, VASP, stress-strain method (Le Page & Saxe 2002), 0 K",
+      "space_group": 229,
+      "stable": true,
+      "url": "https://doi.org/10.1038/sdata.2015.9"
+    }
+  },
+  "methodology": "PBE tensors from de Jong 2015 matminer elastic_tensor_2015. Ag tensor from Pandit & Bongiorno 2023 PBE. Au tensor from Wang & Li 2008 PW91 because MP-API PBE tensor is unphysical. r2SCAN tensors approximated by Cij_r2SCAN = Cij_PBE * (B_r2SCAN/B_PBE) using Liu et al. 2024 bulk moduli.",
+  "schema_version": "lupine.targets_0K.v3",
+  "units": "GPa"
+}
