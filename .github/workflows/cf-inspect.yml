@@ -14,12 +14,15 @@ jobs:
           echo "=== Accounts ==="
           curl -s -X GET https://api.cloudflare.com/client/v4/accounts \
             -H "Authorization: Bearer $CF_TOKEN" \
-            -H "Content-Type: application/json" | jq -r '.result[] | "\(.id) \(.name)"'
+            -H "Content-Type: application/json"
+          echo
           echo "=== Zones ==="
           curl -s -X GET https://api.cloudflare.com/client/v4/zones \
             -H "Authorization: Bearer $CF_TOKEN" \
-            -H "Content-Type: application/json" | jq -r '.result[] | "\(.id) \(.name) \(.account.id)"'
+            -H "Content-Type: application/json"
+          echo
           echo "=== Pages projects ==="
           curl -s -X GET https://api.cloudflare.com/client/v4/pages/projects \
             -H "Authorization: Bearer $CF_TOKEN" \
-            -H "Content-Type: application/json" | jq -r '.result[] | "\(.name)"'
+            -H "Content-Type: application/json"
+          echo
