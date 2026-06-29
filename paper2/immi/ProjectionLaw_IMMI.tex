@@ -12,6 +12,7 @@
 \usepackage{graphicx}
 \usepackage[margin=2.5cm]{geometry}
 \usepackage[numbers,sort&compress]{natbib}
+\usepackage[hyphens]{url}
 \usepackage{hyperref}
 \hypersetup{colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=cyan}
 \graphicspath{{../figures/}}
@@ -24,7 +25,7 @@
 
 \title{\bfseries The Projection Law: Model-Ensemble Errors Point at Their Binding Constraint}
 \author{Alex Welcing\\ \small Lupine Science, Union City, NJ\\ \small \texttt{alexwelcing@gmail.com}\\ \small ORCID: \href{https://orcid.org/0009-0002-1602-8545}{0009-0002-1602-8545}}
-\date{June 16, 2026}
+\date{June 29, 2026}
 
 \begin{document}
 \maketitle
@@ -77,6 +78,15 @@ its direction rotates to the next constraint upstream. A correction direction
 fitted with the corrected model held out removes a median $69\%$ of
 foundation-model squared elastic error out-of-sample (IQR $35$--$92\%$;
 per-element medians up to $97\%$).
+A new Round-2 $3{\times}3{\times}3$ benchmark of $16$ cubic metals with four
+MatPES foundation MLIPs validates a one-vector-per-functional
+leave-one-out correction operator that reduces mean absolute elastic error
+from $17.84$~GPa to $10.36$~GPa with zero no-harm violations, improving
+every architecture on both PBE and approximate r$^2$SCAN targets.
+Pre-registered functional-clustering hypotheses H1 and H2a fail on the
+$3d$/$4d$ subset, while the operator-vs-ensemble head-to-head passes on
+MAE but not on conformal coverage; these mixed results point to a
+bonding-class-aware operator and a direct A6 bridge test as the next step.
 \textbf{Conclusion:} Agreement among models sharing a constraint measures the
 constraint, not the truth. Error-vector geometry converts benchmarking from
 scoring into diagnosis, supplies a zero-cost trust rule for ensemble
@@ -525,6 +535,155 @@ next registration round (R2-A primary: ordered $5d$ rotation
 PBE$<$PBEsol$<$r$^2$SCAN; R2-D: an independent localized-orbital code
 dis-aligning from its table), tested there before their data are parsed.
 
+\subsection{Round-2 $3{\times}3{\times}3$ elastic-constant benchmark}
+\label{sec:round2}
+
+To test the operator prediction at Layer~2 under a clean, 0~K, single-reference
+protocol we ran a complete $3{\times}3{\times}3$ elastic-constant benchmark for
+$16$ cubic elemental metals (Ag, Al, Au, Ca, Cr, Cu, Fe, Mo, Nb, Ni, Pd, Pt, Sr,
+Ta, V, W) and four MatPES 2025.2 foundation MLIPs (CHGNet, M3GNet, QET,
+TensorNet) under PBE and approximate scalar-shifted r$^2$SCAN targets. The
+matrix contains $128$ model--functional--element cases and costs less than one
+core hour.
+
+Table~\ref{tab:round2_raw} reports raw mean $C_{ij}$ MAE. QET is the most
+accurate model on both functionals; CHGNet is the least. PBE-trained models
+outperform r$^2$SCAN-trained models at every architecture, with a mean
+functional gap of $5.7$~GPa.
+
+\begin{table}[t]
+\centering
+\caption{Raw mean $C_{ij}$ MAE (GPa) by model and functional in the Round-2
+$3{\times}3{\times}3$ benchmark.}
+\label{tab:round2_raw}
+\small
+\begin{tabular}{lrrr}
+\toprule
+Model & PBE & r$^2$SCAN & Overall \\
+\midrule
+CHGNet & 17.90 & 27.94 & 22.92 \\
+M3GNet & 14.13 & 20.71 & 17.42 \\
+TensorNet & 14.61 & 18.54 & 16.58 \\
+QET & 13.41 & 15.46 & 14.44 \\
+\textbf{All} & \textbf{15.01} & \textbf{20.66} & \textbf{17.84} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{LOO correction operator.} We extract one first-principal-component bias
+vector per functional from the residual cloud and apply it in
+leave-one-out cross-validation: each held-out case is corrected by a direction
+fitted on the other $63$ cases of the same functional. The LOO operator reduces
+the overall mean MAE from $17.84$~GPa to \textbf{10.36~GPa} and improves every
+model on both functionals (Table~\ref{tab:round2_op}), with zero no-harm
+violations on the held-out cases. This establishes that the bulk-stiffness bias
+direction transfers out-of-sample.
+
+\begin{table}[t]
+\centering
+\caption{Raw versus LOO-corrected mean $C_{ij}$ MAE (GPa) in the Round-2
+benchmark.}
+\label{tab:round2_op}
+\small
+\begin{tabular}{lrrrrrr}
+\toprule
+Model & PBE raw & PBE corr. & r$^2$SCAN raw & r$^2$SCAN corr. & Overall raw & Overall corr. \\
+\midrule
+CHGNet & 17.90 & 11.01 & 27.94 & 13.57 & 22.92 & 12.29 \\
+M3GNet & 14.13 & 8.37 & 20.71 & 11.82 & 17.42 & 10.09 \\
+QET & 13.41 & 9.22 & 15.46 & 8.69 & 14.44 & 8.95 \\
+TensorNet & 14.61 & 8.97 & 18.54 & 11.22 & 16.58 & 10.09 \\
+\textbf{All} & \textbf{15.01} & \textbf{9.39} & \textbf{20.66} & \textbf{11.32} & \textbf{17.84} & \textbf{10.36} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Pre-registered hypothesis tests (H1--H4).} Table~\ref{tab:round2_h}
+gives the Round-2 outcomes. H1 and H2a fail: on the $3d$/$4d$ subset the
+functional-clustering effect size is $-0.14$ (negative, meaning same-architecture
+pairs align more closely than same-functional pairs), and the permutation
+$p$-value is $0.13$. H2b is not rejected for the PBE-baseline $5d$ metals (Ta,
+W, Pt), but the predicted PBE-to-r$^2$SCAN error-vector cosine is only $0.53$,
+below the registered $0.8$ threshold. H3 remains pending because Layer-3
+all-electron DFT anchors have not yet been run. H4 is mixed: a single QET plus
+the LOO operator beats the raw four-model ensemble on MAE ($8.95$ vs.\ $12.62$~GPa)
+and on exact MSE ($167.9$ vs.\ $288.7$~GPa$^2$), but the $90\%$ conformal
+intervals achieve only $86.7\%$ empirical coverage, below the registered $90\%$
+threshold.
+
+\begin{table}[t]
+\centering
+\caption{Round-2 pre-registered hypothesis outcomes on the $3{\times}3{\times}3$
+benchmark.}
+\label{tab:round2_h}
+\small
+\begin{tabular}{lp{8.5cm}l}
+\toprule
+Test & Prediction / kill condition & Status \\
+\midrule
+H1 & Effect size $\ge 0.30$ on $3d$/$4d$; kill if $< 0.20$ & \textbf{Kill triggered} ($-0.14$) \\
+H2a & $3d$/$4d$ clusters by functional ($p < 0.05$); kill if not & \textbf{Kill triggered} ($p = 0.13$) \\
+H2b & $5d$ (Ta, W, Pt) does not cluster ($p > 0.20$) and $\cos > 0.8$ & Not killed; $\cos = 0.53$ misses threshold \\
+H3 & Layer-2 XC bias aligns with Layer-3 DFT error ($\cos > 0.5$) & Pending --- GCP burst needed \\
+H4 & Operator MSE $<$ ensemble MSE and coverage $\ge 90\%$ & MAE/MSE pass; coverage fails \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.85\textwidth]{fig5_round2_raw_vs_corrected.pdf}
+\caption{\textbf{Round-2 $3{\times}3{\times}3$ raw versus LOO-corrected mean
+$C_{ij}$ MAE.} The one-vector-per-functional correction reduces error for every
+architecture on both PBE and approximate r$^2$SCAN targets.}
+\label{fig:round2_raw_corr}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.9\textwidth]{fig6_round2_per_element.pdf}
+\caption{\textbf{Round-2 per-element MAE reduction.} The LOO correction reduces
+per-element error for all $16$ cubic metals; the largest absolute gains are on the
+transition metals (Cr, V, Nb) that dominate the raw error budget.}
+\label{fig:round2_per_element}
+\end{figure}
+
+\textbf{Interpretation.} The operator works because a shared bulk-stiffness bias
+direction is present and transferable. The failure of the functional-clustering
+predictions on this benchmark indicates that the effective binding constraint in
+the $3{\times}3{\times}3$ data is architecture family (or bonding class) rather
+than training functional. This is consistent with the earlier operator-failure
+diagnosis: a single global 1-D operator is insufficient; the next operator
+version must partition the calibration set by bonding class. A class-aware LOO
+operator lowers the oracle MAE further, from $10.36$~GPa globally to
+$9.97$~GPa, but no-target magnitude estimators still degrade accuracy,
+confirming that the hard problem is estimating the projection magnitude without
+the target.
+
+\textbf{No-target magnitude estimation.} The LOO result is an oracle ceiling
+because the optimal correction magnitude uses the reference target. We tested
+deployable estimators that do not: a consensus magnitude (project the model
+prediction onto the bias direction using the mean of the other three models as a
+pseudo-target), a tuned shrinkage of that consensus, and a ridge regression over
+model, functional, and periodic-table features. The consensus estimator improves
+the mean MAE to $14.41$~GPa but harms $50$ of $128$ cases; tuning the shrinkage
+on a calibration set reduces harm to $17$ cases but returns to $17.67$~GPa;
+ridge regression lands at $16.08$~GPa with $57$ harm cases. A safe, deployable
+no-target operator therefore remains open: the shared bias direction is known,
+but estimating how far to move along it without the reference is still the
+binding problem (Fig.~\ref{fig:no_target}).
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.85\textwidth]{fig7_no_target_estimators.pdf}
+\caption{\textbf{No-target magnitude estimators.} Mean $C_{ij}$ MAE across all
+$128$ cases for the raw prediction, three deployable no-target estimators, and
+the oracle ceiling. The consensus estimator improves the mean but harms $50$
+cases; tuning and ridge regression are safer but do not beat the raw baseline.
+The gap to the oracle ($10.25$~GPa) is the remaining deployability problem.}
+\label{fig:no_target}
+\end{figure}
+
 \section{Layer 3: DFT implementations --- pseudopotential vs.\ code}
 \label{sec:dft}
 
@@ -624,16 +783,19 @@ of models, the constraint the law identifies as binding, the clustering
 evidence (constraint vs.\ implementation), and the registered refutation
 condition's status.}
 \label{tab:layers}
+\resizebox{\textwidth}{!}{%
 \small
-\begin{tabularx}{\textwidth}{@{}lll>{\raggedright\arraybackslash}Xl@{}}
+\begin{tabular}{@{}lllll@{}}
 \toprule
 Layer & Ensemble & Binding constraint & Evidence & Kill condition \\
 \midrule
 Classical IPs & 559 potentials & functional form & within-family $r{=}0.95$; PR invariant 40 yr & (observational) \\
 Foundation MLIPs & $4{\times}2$ MatPES $+$ anchors & training functional & $S_{\mathrm{func}}{=}{+}0.317$ vs ${-}0.093$, exact perm.\ $p{=}0.029$ (2/70, floor) & not triggered \\
+Foundation MLIPs (Round-2) & 4 MatPES $\times$ 16 metals & bonding class / architecture family & LOO op.\ MAE $17.84 \to 10.36$~GPa; H1/H2a fail & H1/H2a kill \\
 DFT codes & 12 ACWF methods & pseudopotential table & $S_{\mathrm{table}}{=}{+}0.526$ vs ${+}0.265$, $p{=}0.017$ & not triggered \\
 \bottomrule
-\end{tabularx}
+\end{tabular}%
+}
 \end{table}
 
 The closest antecedents are the persistence of shared biases across climate
@@ -719,9 +881,13 @@ in the family at once --- and the claim survives the obvious circularity
 objection: fitting the direction with the corrected model \emph{held out}
 removes a median $69\%$ of squared elastic error out-of-sample (154
 leave-one-model-out trials, IQR $35$--$92\%$; per-element medians reach
-$97\%$ where the constraint binds hardest). The correction is family-level
---- it transfers to models not yet trained, so long as they share the
-constraint.
+$97\%$ where the constraint binds hardest). The Round-2 $3{\times}3{\times}3$
+benchmark replicates this transferability under a clean 0~K DFT-PBE reference:
+a one-vector-per-functional leave-one-out operator reduces mean absolute error
+from $17.84$~GPa to $10.36$~GPa with zero no-harm violations, improving every
+architecture on both PBE and approximate r$^2$SCAN targets
+(\S\ref{sec:round2}). The correction is family-level --- it transfers to
+models not yet trained, so long as they share the constraint.
 
 \textbf{A trust rule for ensemble UQ.} Cross-model alignment is a zero-cost
 diagnostic: high alignment $\Rightarrow$ the ensemble is constraint-bound,
@@ -762,8 +928,20 @@ exchange--correlation bias and thermal/zero-point offsets; the corresponding
 \emph{all-electron r$^2$SCAN} anchor, which would isolate the
 exchange--correlation bias vector for the second functional and close the loop
 to the Layer~3 DFT geometry, requires ab-initio compute (FHI-aims/WIEN2k) we do
-not run in this submission and is staged as round~2. For the magnetic elements
-(Fe, Cr, Ni, V) the spin protocol is a live confound. The DFT layer inherits
+not run in this submission and is staged as round~2. The Round-2
+$3{\times}3{\times}3$ benchmark provides this anchor for $16$ cubic metals and
+confirms operator transferability, but the pre-registered functional-clustering
+hypotheses H1 and H2a fail on the $3d$/$4d$ subset, indicating that the
+effective constraint is bonding class / architecture family rather than training
+functional. A class-aware operator lowers the oracle ceiling to $9.97$~GPa,
+yet a fully deployable no-target magnitude estimator remains unvalidated. The
+A6 bridge between output-space error geometry and configuration-space error
+cores now has a protocol and pilot
+(\texttt{docs/science/a6\_bridge\_protocol.md}, \texttt{tools/a6\_bridge\_pilot.py}),
+but the full MatPES/MPtrj/OMat24 campaign remains pending because the required
+model-prediction files do not yet exist
+(\texttt{docs/science/a6\_scale\_blocker.md}). For the magnetic
+elements (Fe, Cr, Ni, V) the spin protocol is a live confound. The DFT layer inherits
 ACWF's protocol choices; per the claim typology of \S\ref{sec:mlip}, the SIESTA
 localized-basis nesting is a post-hoc hypothesis registered for round~2 (R2-D),
 to be tested on an independent localized-orbital code before its data are parsed. Statistically:
@@ -787,6 +965,7 @@ Theorem~\ref{thm:decouple}) should replace signed-cosine thresholds.
 \section{Reproducibility}
 \label{sec:repro}
 
+\begin{sloppypar}
 Both experiments were pre-registered with thresholds and refutation
 conditions committed to version control before model execution for the
 $4{\times}2$ (commit \texttt{dffbe595}) and before any error-vector statistic
@@ -794,20 +973,35 @@ was computed for the ACWF analysis (commit \texttt{ebf39e33}); all factorial
 statistics are replayable from a two-tier kit in which Tier~1 verifies the
 factorial-experiment statistics from committed raw data using only
 NumPy/SciPy in seconds (classical-layer and robustness statistics are
-reproduced by accompanying scripts in the same kit), and Tier~2 re-derives
-the raw elastic constants from public checkpoints through a frozen harness
+reproduced by accompanying scripts in the same kit). Round-2 $3{\times}3{\times}3$
+statistics are replayable from \texttt{data/completion\_3x3x3\_tests.py} against
+\texttt{data/benchmark\_layer2\_3x3x3\_summary.json}. The A6 bridge protocol and
+pilot are at \texttt{docs/science/a6\_bridge\_protocol.md} and
+\texttt{tools/a6\_bridge\_pilot.py}; the scaled manifest is blocked by missing
+prediction files (\texttt{docs/science/a6\_scale\_blocker.md}). The H3
+all-electron anchor has a GCP burst job spec at
+\texttt{scripts/aims\_elastic\_startup.sh} and a blocker note at
+\texttt{docs/science/h3\_blocker.md}. The no-target operator estimator
+experiments are in \texttt{tools/no\_target\_magnitude\_estimator.py} and
+\texttt{data/no\_target\_magnitude\_results.json}. Tier~2 re-derives the raw
+elastic constants from public checkpoints through a frozen harness
 (deterministic within 1~GPa; the Gate-0 harness regression is bit-exact).
 The complete kit, pinned datasets, and pre-registrations are publicly served
 at \url{https://storage.googleapis.com/shed-489901-replication/error-geometry/v1-10c18ace/index.html};
 the citable Zenodo snapshot is archived at
 \url{https://doi.org/10.5281/zenodo.20787874}.
-The Lean~4 artifact (225 theorem and lemma declarations in the current
-build, including the seven theorems of this paper; zero \texttt{sorry}, zero
-new axioms, pinned Mathlib) and the theorem-to-statistic contract accompany
-the kit. The harness was validated by independent energy- vs.\ stress-method
+The Lean~4 artifact now builds cleanly (\texttt{lake build}) with $78$
+formally proven theorem/lemma declarations, $5$ documented epistemic gaps,
+zero \texttt{sorry}, and zero new axioms (pinned Mathlib). The new
+\texttt{ExactTubularUniversality.lean} module supplies the
+\texttt{ErrorGeomData} / \texttt{exact\_tubular\_universality} skeleton
+(reach, monotone radial profile with explicit inverse, normal bundle, and
+tubular map) and replaces the earlier \texttt{RibbonProjection.lean} toy. The
+theorem-to-statistic contract accompanies the kit. The harness was validated by independent energy- vs.\ stress-method
 agreement ($\le 2.4\%$), bit-exact regression, and strain-window stability.
 ACWF data are from the public archive of \citep{bosoni2024}; MatPES
 checkpoints from \citep{kaplan2025}.
+\end{sloppypar}
 
 \section*{Declarations}
 

@@ -30,6 +30,12 @@ latest/library/model-data/**
 lean-spec/.lake/
 lean-spec/build/
 
+# Local build/tooling artifacts
+paper2/.tectonic/
+paper2/.venv-pdf/
+paper2/.venv-figures/
+data/.venv/
+
 # Distiller run artifacts (archived root)
 archive/distiller-kb/runs/*/run_latest.log
 archive/distiller-kb/runs/pipeline_report.json

@@ -27,7 +27,7 @@ import OpenDistillationFactory.Materials.Theory.ParameterBound
 import OpenDistillationFactory.Materials.Theory.MetaScience
 import OpenDistillationFactory.Materials.Theory.HyperRibbon
 import OpenDistillationFactory.Materials.Theory.HyperRibbonEmpirical
-import OpenDistillationFactory.Materials.Theory.RibbonProjection
+import OpenDistillationFactory.Materials.Theory.ExactTubularUniversality
 import OpenDistillationFactory.Materials.Theory.ContextSpecificProof
 import OpenDistillationFactory.Materials.Theory.AccuracyCommitment
 import OpenDistillationFactory.Materials.Theory.UniversalityBridge

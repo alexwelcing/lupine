@@ -23,7 +23,11 @@ density-functional-theory implementations. The strongest prediction is that
 errors should group by the constraint that models share, such as training
 functional or pseudopotential table, rather than by superficial implementation
 details. Two pre-registered tests support that prediction, while four other
-predictions failed and are reported as failures.
+predictions failed and are reported as failures. A new Round-2 3×3×3
+elastic-constant benchmark of 16 cubic metals with four MatPES foundation MLIPs
+shows that a one-vector-per-functional correction operator reduces the mean
+absolute error from 17.84 GPa to 10.36 GPa, and the paper quantifies why a fully
+deployable no-target magnitude estimator remains open.
 
 The result matters beyond materials science because model ensembles are used
 across physics and neighboring fields to estimate uncertainty. The projection
