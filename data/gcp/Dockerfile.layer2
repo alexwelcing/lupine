@@ -2,15 +2,14 @@
 # Builds a self-contained image that can run one (element, model) pair of the
 # 3x3x3 cubic-metal elastic-constant grid.
 
-FROM gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+FROM python:3.11-slim
 
 WORKDIR /app
 
-# Install Python and pip; the cloud-sdk base image may not have a current pip.
+# Install system dependencies. Git is needed only if the task script ever clones
+# model assets; ca-certificates for HTTPS downloads.
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-        python3-venv \
-        python3-pip \
         git \
         ca-certificates \
     && rm -rf /var/lib/apt/lists/*
