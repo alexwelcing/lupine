@@ -1,0 +1,34 @@
+# Layer 2 MLIP benchmark runner for Cloud Run jobs.
+# Builds a self-contained image that can run one (element, model) pair of the
+# 3x3x3 cubic-metal elastic-constant grid.
+
+FROM gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+
+WORKDIR /app
+
+# Install Python and pip; the cloud-sdk base image may not have a current pip.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        python3-venv \
+        python3-pip \
+        git \
+        ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+# Heavy dependency layer: torch (CPU), matgl, matcalc, pymatgen, gsutil.
+# This layer changes only when requirements-layer2.txt changes.
+COPY data/gcp/requirements-layer2.txt /app/
+RUN python3 -m pip install --no-cache-dir --upgrade pip \
+    && python3 -m pip install --no-cache-dir -r /app/requirements-layer2.txt
+
+# Application layer: the benchmark task and the array-job entrypoint.
+COPY data/layer2_benchmark_task.py /app/data/
+COPY data/gcp/entrypoint.sh /app/
+RUN chmod +x /app/entrypoint.sh
+
+ENV PYTHONUNBUFFERED=1
+ENV HF_TOKEN=${HF_TOKEN:-}
+ENV SUPERCELL=3
+ENV OUTPUT_BUCKET=lupine-benchmark-witching-606c6
+
+ENTRYPOINT ["/app/entrypoint.sh"]
