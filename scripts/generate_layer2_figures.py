@@ -2,6 +2,7 @@
 """Generate publication figures for the Layer-2 3x3x3 final paper."""
 from __future__ import annotations
 
+import csv
 import json
 from pathlib import Path
 
@@ -12,7 +13,7 @@ plt.style.use("seaborn-v0_8-whitegrid")
 
 SUMMARY = Path(__file__).resolve().parents[1] / "data" / "benchmark_layer2_3x3x3_summary.json"
 RAW_DIR = Path("/tmp/layer2_3x3x3_full")
-OUT_DIR = Path(__file__).resolve().parents[2].parents[0] / "lupine-rhizo" / "paper" / "figures"
+OUT_DIR = Path("/home/alex/Dev/lupine/lupine-rhizo/paper/figures")
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 
@@ -156,6 +157,106 @@ def fig_qet_tensornet(rows):
     save(fig, "fig4_qet_tensornet.png")
 
 
+def load_classical_best():
+    """Best classical potential per element from atlas-distill NIST benchmark."""
+    nist_csv = Path("/home/alex/Dev/lupine/lupine/atlas-distill/benchmarks/nist_populated_all.csv")
+    data = {}
+    with open(nist_csv) as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            elem = row["material"]
+            pot = row["potential"]
+            prop = row["property"]
+            try:
+                pred = float(row["predicted"])
+                ref = float(row["reference"])
+            except ValueError:
+                continue
+            data.setdefault((elem, pot), {})[prop] = (pred, ref)
+
+    best = {}
+    for (elem, pot), vals in data.items():
+        if "C11" in vals and "C12" in vals and "C44" in vals:
+            pred = [vals["C11"][0], vals["C12"][0], vals["C44"][0]]
+            target = [vals["C11"][1], vals["C12"][1], vals["C44"][1]]
+            err = np.mean(np.abs(np.array(pred) - np.array(target)))
+            if elem not in best or err < best[elem][1]:
+                best[elem] = (pot, err)
+    return best
+
+
+def load_mlip_vs_nist():
+    """Best MatPES MLIP per element against NIST references."""
+    nist_csv = Path("/home/alex/Dev/lupine/lupine/atlas-distill/benchmarks/nist_populated_all.csv")
+    refs = {}
+    with open(nist_csv) as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            elem = row["material"]
+            prop = row["property"]
+            try:
+                refs.setdefault(elem, {})[prop] = float(row["reference"])
+            except ValueError:
+                continue
+
+    mlip_models = ["M3GNet", "CHGNet", "TensorNet", "QET"]
+    best = {}
+    for elem, vals in refs.items():
+        if "C11" not in vals:
+            continue
+        target = [vals["C11"], vals["C12"], vals["C44"]]
+        for model in mlip_models:
+            path = RAW_DIR / f"{elem}_{model}_PBE.json"
+            if not path.exists():
+                continue
+            raw = json.loads(path.read_text())
+            pred = [raw["c11"], raw["c12"], raw["c44"]]
+            err = np.mean(np.abs(np.array(pred) - np.array(target)))
+            if elem not in best or err < best[elem][1]:
+                best[elem] = (model, err)
+    return best
+
+
+def fig_mlip_correction(rows, summary):
+    """Raw vs 1-D Lupine-corrected mean MAE for each model and functional."""
+    models = sorted({r["model"] for r in rows})
+    funcs = ["PBE", "r2SCAN"]
+    corr_key = "correction"
+
+    raw = {
+        (m, f): summary[f]["model_mean_mae_cij"][m]
+        for m in models
+        for f in funcs
+    }
+    corrected = {
+        (m, f): summary[f"{f}_corrected"]["model_mean_mae_cij"][m]
+        for m in models
+        for f in funcs
+    }
+
+    x = np.arange(len(models))
+    width = 0.35
+    colors = {"raw": "#64748b", "corrected": "#10b981"}
+
+    fig, axes = plt.subplots(1, 2, figsize=(10, 5), sharey=True)
+    for ax, func in zip(axes, funcs):
+        raw_vals = [raw[(m, func)] for m in models]
+        corr_vals = [corrected[(m, func)] for m in models]
+        ax.bar(x - width / 2, raw_vals, width, label="Raw MLIP", color=colors["raw"], edgecolor="black", linewidth=0.5)
+        ax.bar(x + width / 2, corr_vals, width, label="+ Lupine correction", color=colors["corrected"], edgecolor="black", linewidth=0.5)
+        ax.set_ylabel("Mean C$_{ij}$ MAE (GPa)")
+        ax.set_title(f"{func} target")
+        ax.set_xticks(x)
+        ax.set_xticklabels(models)
+        ax.legend()
+        ax.set_ylim(0, max(max(raw_vals), max(corr_vals)) * 1.2)
+        for i, (r, c) in enumerate(zip(raw_vals, corr_vals)):
+            ax.text(i - width / 2, r + 0.3, f"{r:.1f}", ha="center", va="bottom", fontsize=7)
+            ax.text(i + width / 2, c + 0.3, f"{c:.1f}", ha="center", va="bottom", fontsize=7)
+    fig.suptitle("Raw MatPES MLIP predictions vs 1-D Lupine-corrected predictions", fontsize=12, fontweight="bold", y=1.02)
+    save(fig, "fig5_mlip_correction.png")
+
+
 def main():
     rows, summary = load_summary()
     runtimes = load_raw_runtimes()
@@ -163,6 +264,7 @@ def main():
     fig_per_element(rows)
     fig_functional_gap(rows)
     fig_qet_tensornet(rows)
+    fig_mlip_correction(rows, summary)
     print("all figures generated")
 
 

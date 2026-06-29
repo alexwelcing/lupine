@@ -14,7 +14,12 @@
       "target_c11": 107.0,
       "target_c12": 79.0,
       "target_c44": 42.0,
-      "mae_cij": 8.32
+      "mae_cij": 8.32,
+      "raw_mae_cij": 8.32,
+      "corrected_c11": 107.05,
+      "corrected_c12": 78.76,
+      "corrected_c44": 47.57,
+      "corrected_mae_cij": 1.96
     },
     {
       "element": "Ag",
@@ -28,7 +33,12 @@
       "target_c11": 126.46188679245283,
       "target_c12": 93.36905660377359,
       "target_c44": 49.63924528301887,
-      "mae_cij": 18.22
+      "mae_cij": 18.22,
+      "raw_mae_cij": 18.22,
+      "corrected_c11": 130.45,
+      "corrected_c12": 77.54,
+      "corrected_c44": 52.53,
+      "corrected_mae_cij": 7.57
     },
     {
       "element": "Ag",
@@ -42,7 +52,12 @@
       "target_c11": 107.0,
       "target_c12": 79.0,
       "target_c44": 42.0,
-      "mae_cij": 3.58
+      "mae_cij": 3.58,
+      "raw_mae_cij": 3.58,
+      "corrected_c11": 107.36,
+      "corrected_c12": 77.89,
+      "corrected_c44": 46.18,
+      "corrected_mae_cij": 1.88
     },
     {
       "element": "Ag",
@@ -56,7 +71,12 @@
       "target_c11": 126.46188679245283,
       "target_c12": 93.36905660377359,
       "target_c44": 49.63924528301887,
-      "mae_cij": 4.9
+      "mae_cij": 4.9,
+      "raw_mae_cij": 4.9,
+      "corrected_c11": 127.28,
+      "corrected_c12": 89.67,
+      "corrected_c44": 52.23,
+      "corrected_mae_cij": 2.37
     },
     {
       "element": "Ag",
@@ -70,7 +90,12 @@
       "target_c11": 107.0,
       "target_c12": 79.0,
       "target_c44": 42.0,
-      "mae_cij": 4.29
+      "mae_cij": 4.29,
+      "raw_mae_cij": 4.29,
+      "corrected_c11": 108.04,
+      "corrected_c12": 75.89,
+      "corrected_c44": 48.0,
+      "corrected_mae_cij": 3.38
     },
     {
       "element": "Ag",
@@ -84,7 +109,12 @@
       "target_c11": 126.46188679245283,
       "target_c12": 93.36905660377359,
       "target_c44": 49.63924528301887,
-      "mae_cij": 8.23
+      "mae_cij": 8.23,
+      "raw_mae_cij": 8.23,
+      "corrected_c11": 127.87,
+      "corrected_c12": 86.68,
+      "corrected_c44": 55.56,
+      "corrected_mae_cij": 4.67
     },
     {
       "element": "Ag",
@@ -98,7 +128,12 @@
       "target_c11": 107.0,
       "target_c12": 79.0,
       "target_c44": 42.0,
-      "mae_cij": 3.63
+      "mae_cij": 3.63,
+      "raw_mae_cij": 3.63,
+      "corrected_c11": 107.54,
+      "corrected_c12": 77.29,
+      "corrected_c44": 50.4,
+      "corrected_mae_cij": 3.55
     },
     {
       "element": "Ag",
@@ -112,7 +147,12 @@
       "target_c11": 126.46188679245283,
       "target_c12": 93.36905660377359,
       "target_c44": 49.63924528301887,
-      "mae_cij": 7.2
+      "mae_cij": 7.2,
+      "raw_mae_cij": 7.2,
+      "corrected_c11": 127.86,
+      "corrected_c12": 87.27,
+      "corrected_c44": 53.0,
+      "corrected_mae_cij": 3.62
     },
     {
       "element": "Al",
@@ -126,7 +166,12 @@
       "target_c11": 103.92815375936048,
       "target_c12": 72.95142365352959,
       "target_c44": 31.856343596666665,
-      "mae_cij": 24.4
+      "mae_cij": 24.4,
+      "raw_mae_cij": 24.4,
+      "corrected_c11": 113.53,
+      "corrected_c12": 45.18,
+      "corrected_c44": 31.49,
+      "corrected_mae_cij": 12.58
     },
     {
       "element": "Al",
@@ -140,7 +185,12 @@
       "target_c11": 103.92815375936048,
       "target_c12": 72.95142365352959,
       "target_c44": 31.856343596666665,
-      "mae_cij": 19.29
+      "mae_cij": 19.29,
+      "raw_mae_cij": 19.29,
+      "corrected_c11": 108.61,
+      "corrected_c12": 51.97,
+      "corrected_c44": 45.83,
+      "corrected_mae_cij": 13.21
     },
     {
       "element": "Al",
@@ -154,7 +204,12 @@
       "target_c11": 103.92815375936048,
       "target_c12": 72.95142365352959,
       "target_c44": 31.856343596666665,
-      "mae_cij": 7.35
+      "mae_cij": 7.35,
+      "raw_mae_cij": 7.35,
+      "corrected_c11": 105.74,
+      "corrected_c12": 67.52,
+      "corrected_c44": 42.48,
+      "corrected_mae_cij": 5.96
     },
     {
       "element": "Al",
@@ -168,7 +223,12 @@
       "target_c11": 103.92815375936048,
       "target_c12": 72.95142365352959,
       "target_c44": 31.856343596666665,
-      "mae_cij": 16.61
+      "mae_cij": 16.61,
+      "raw_mae_cij": 16.61,
+      "corrected_c11": 108.42,
+      "corrected_c12": 54.73,
+      "corrected_c44": 36.95,
+      "corrected_mae_cij": 9.27
     },
     {
       "element": "Al",
@@ -182,7 +242,12 @@
       "target_c11": 103.92815375936048,
       "target_c12": 72.95142365352959,
       "target_c44": 31.856343596666665,
-      "mae_cij": 8.84
+      "mae_cij": 8.84,
+      "raw_mae_cij": 8.84,
+      "corrected_c11": 111.64,
+      "corrected_c12": 50.64,
+      "corrected_c44": 31.05,
+      "corrected_mae_cij": 10.28
     },
     {
       "element": "Al",
@@ -196,7 +261,12 @@
       "target_c11": 103.92815375936048,
       "target_c12": 72.95142365352959,
       "target_c44": 31.856343596666665,
-      "mae_cij": 21.68
+      "mae_cij": 21.68,
+      "raw_mae_cij": 21.68,
+      "corrected_c11": 109.55,
+      "corrected_c12": 47.83,
+      "corrected_c44": 48.32,
+      "corrected_mae_cij": 15.73
     },
     {
       "element": "Al",
@@ -210,7 +280,12 @@
       "target_c11": 103.92815375936048,
       "target_c12": 72.95142365352959,
       "target_c44": 31.856343596666665,
-      "mae_cij": 10.59
+      "mae_cij": 10.59,
+      "raw_mae_cij": 10.59,
+      "corrected_c11": 109.3,
+      "corrected_c12": 57.34,
+      "corrected_c44": 35.7,
+      "corrected_mae_cij": 8.27
     },
     {
       "element": "Al",
@@ -224,7 +299,12 @@
       "target_c11": 103.92815375936048,
       "target_c12": 72.95142365352959,
       "target_c44": 31.856343596666665,
-      "mae_cij": 15.33
+      "mae_cij": 15.33,
+      "raw_mae_cij": 15.33,
+      "corrected_c11": 105.78,
+      "corrected_c12": 62.27,
+      "corrected_c44": 47.72,
+      "corrected_mae_cij": 9.46
     },
     {
       "element": "Au",
@@ -238,7 +318,12 @@
       "target_c11": 165.9,
       "target_c12": 142.2,
       "target_c44": 26.7,
-      "mae_cij": 27.48
+      "mae_cij": 27.48,
+      "raw_mae_cij": 27.48,
+      "corrected_c11": 171.16,
+      "corrected_c12": 126.93,
+      "corrected_c44": 29.38,
+      "corrected_mae_cij": 7.74
     },
     {
       "element": "Au",
@@ -252,7 +337,12 @@
       "target_c11": 169.6578947368421,
       "target_c12": 145.42105263157893,
       "target_c44": 27.30479680213191,
-      "mae_cij": 9.81
+      "mae_cij": 9.81,
+      "raw_mae_cij": 9.81,
+      "corrected_c11": 171.01,
+      "corrected_c12": 138.65,
+      "corrected_c44": 34.47,
+      "corrected_mae_cij": 5.1
     },
     {
       "element": "Au",
@@ -266,7 +356,12 @@
       "target_c11": 165.9,
       "target_c12": 142.2,
       "target_c44": 26.7,
-      "mae_cij": 19.69
+      "mae_cij": 19.69,
+      "raw_mae_cij": 19.69,
+      "corrected_c11": 171.3,
+      "corrected_c12": 126.42,
+      "corrected_c44": 35.99,
+      "corrected_mae_cij": 10.15
     },
     {
       "element": "Au",
@@ -280,7 +375,12 @@
       "target_c11": 169.6578947368421,
       "target_c12": 145.42105263157893,
       "target_c44": 27.30479680213191,
-      "mae_cij": 21.33
+      "mae_cij": 21.33,
+      "raw_mae_cij": 21.33,
+      "corrected_c11": 174.61,
+      "corrected_c12": 123.05,
+      "corrected_c44": 42.83,
+      "corrected_mae_cij": 14.28
     },
     {
       "element": "Au",
@@ -294,7 +394,12 @@
       "target_c11": 165.9,
       "target_c12": 142.2,
       "target_c44": 26.7,
-      "mae_cij": 13.87
+      "mae_cij": 13.87,
+      "raw_mae_cij": 13.87,
+      "corrected_c11": 170.44,
+      "corrected_c12": 128.82,
+      "corrected_c44": 40.07,
+      "corrected_mae_cij": 10.43
     },
     {
       "element": "Au",
@@ -308,7 +413,12 @@
       "target_c11": 169.6578947368421,
       "target_c12": 145.42105263157893,
       "target_c44": 27.30479680213191,
-      "mae_cij": 4.71
+      "mae_cij": 4.71,
+      "raw_mae_cij": 4.71,
+      "corrected_c11": 170.7,
+      "corrected_c12": 139.79,
+      "corrected_c44": 34.52,
+      "corrected_mae_cij": 4.63
     },
     {
       "element": "Au",
@@ -322,7 +432,12 @@
       "target_c11": 165.9,
       "target_c12": 142.2,
       "target_c44": 26.7,
-      "mae_cij": 21.41
+      "mae_cij": 21.41,
+      "raw_mae_cij": 21.41,
+      "corrected_c11": 173.15,
+      "corrected_c12": 121.01,
+      "corrected_c44": 38.87,
+      "corrected_mae_cij": 13.53
     },
     {
       "element": "Au",
@@ -336,7 +451,12 @@
       "target_c11": 169.6578947368421,
       "target_c12": 145.42105263157893,
       "target_c44": 27.30479680213191,
-      "mae_cij": 10.66
+      "mae_cij": 10.66,
+      "raw_mae_cij": 10.66,
+      "corrected_c11": 173.15,
+      "corrected_c12": 129.26,
+      "corrected_c44": 40.0,
+      "corrected_mae_cij": 10.78
     },
     {
       "element": "Ca",
@@ -350,7 +470,12 @@
       "target_c11": 20.8291134500119,
       "target_c12": 15.094252979464525,
       "target_c44": 14.093793950000004,
-      "mae_cij": 2.37
+      "mae_cij": 2.37,
+      "raw_mae_cij": 2.37,
+      "corrected_c11": 21.48,
+      "corrected_c12": 13.19,
+      "corrected_c44": 15.06,
+      "corrected_mae_cij": 1.17
     },
     {
       "element": "Ca",
@@ -364,7 +489,12 @@
       "target_c11": 20.8291134500119,
       "target_c12": 15.094252979464525,
       "target_c44": 14.093793950000004,
-      "mae_cij": 1.47
+      "mae_cij": 1.47,
+      "raw_mae_cij": 1.47,
+      "corrected_c11": 20.59,
+      "corrected_c12": 15.45,
+      "corrected_c44": 16.56,
+      "corrected_mae_cij": 1.02
     },
     {
       "element": "Ca",
@@ -378,7 +508,12 @@
       "target_c11": 20.8291134500119,
       "target_c12": 15.094252979464525,
       "target_c44": 14.093793950000004,
-      "mae_cij": 2.83
+      "mae_cij": 2.83,
+      "raw_mae_cij": 2.83,
+      "corrected_c11": 22.29,
+      "corrected_c12": 10.87,
+      "corrected_c44": 14.5,
+      "corrected_mae_cij": 2.03
     },
     {
       "element": "Ca",
@@ -392,7 +527,12 @@
       "target_c11": 20.8291134500119,
       "target_c12": 15.094252979464525,
       "target_c44": 14.093793950000004,
-      "mae_cij": 2.67
+      "mae_cij": 2.67,
+      "raw_mae_cij": 2.67,
+      "corrected_c11": 22.06,
+      "corrected_c12": 10.48,
+      "corrected_c44": 13.76,
+      "corrected_mae_cij": 2.06
     },
     {
       "element": "Ca",
@@ -406,7 +546,12 @@
       "target_c11": 20.8291134500119,
       "target_c12": 15.094252979464525,
       "target_c44": 14.093793950000004,
-      "mae_cij": 3.75
+      "mae_cij": 3.75,
+      "raw_mae_cij": 3.75,
+      "corrected_c11": 22.49,
+      "corrected_c12": 10.25,
+      "corrected_c44": 15.72,
+      "corrected_mae_cij": 2.71
     },
     {
       "element": "Ca",
@@ -420,7 +565,12 @@
       "target_c11": 20.8291134500119,
       "target_c12": 15.094252979464525,
       "target_c44": 14.093793950000004,
-      "mae_cij": 3.81
+      "mae_cij": 3.81,
+      "raw_mae_cij": 3.81,
+      "corrected_c11": 22.15,
+      "corrected_c12": 9.55,
+      "corrected_c44": 16.34,
+      "corrected_mae_cij": 3.04
     },
     {
       "element": "Ca",
@@ -434,7 +584,12 @@
       "target_c11": 20.8291134500119,
       "target_c12": 15.094252979464525,
       "target_c44": 14.093793950000004,
-      "mae_cij": 2.53
+      "mae_cij": 2.53,
+      "raw_mae_cij": 2.53,
+      "corrected_c11": 22.46,
+      "corrected_c12": 10.33,
+      "corrected_c44": 15.78,
+      "corrected_mae_cij": 2.69
     },
     {
       "element": "Ca",
@@ -448,7 +603,12 @@
       "target_c11": 20.8291134500119,
       "target_c12": 15.094252979464525,
       "target_c44": 14.093793950000004,
-      "mae_cij": 3.5
+      "mae_cij": 3.5,
+      "raw_mae_cij": 3.5,
+      "corrected_c11": 22.04,
+      "corrected_c12": 9.61,
+      "corrected_c44": 18.04,
+      "corrected_mae_cij": 3.55
     },
     {
       "element": "Cr",
@@ -462,7 +622,12 @@
       "target_c11": 499.4655063792027,
       "target_c12": 139.17377265656663,
       "target_c44": 102.31280351000002,
-      "mae_cij": 45.02
+      "mae_cij": 45.02,
+      "raw_mae_cij": 45.02,
+      "corrected_c11": 474.58,
+      "corrected_c12": 211.43,
+      "corrected_c44": 87.89,
+      "corrected_mae_cij": 37.19
     },
     {
       "element": "Cr",
@@ -476,7 +641,12 @@
       "target_c11": 531.3073097436484,
       "target_c12": 148.04634512817583,
       "target_c44": 108.83542445062851,
-      "mae_cij": 66.55
+      "mae_cij": 66.55,
+      "raw_mae_cij": 66.55,
+      "corrected_c11": 508.31,
+      "corrected_c12": 239.12,
+      "corrected_c44": 92.68,
+      "corrected_mae_cij": 43.41
     },
     {
       "element": "Cr",
@@ -490,7 +660,12 @@
       "target_c11": 499.4655063792027,
       "target_c12": 139.17377265656663,
       "target_c44": 102.31280351000002,
-      "mae_cij": 9.97
+      "mae_cij": 9.97,
+      "raw_mae_cij": 9.97,
+      "corrected_c11": 505.01,
+      "corrected_c12": 123.12,
+      "corrected_c44": 102.6,
+      "corrected_mae_cij": 7.29
     },
     {
       "element": "Cr",
@@ -504,7 +679,12 @@
       "target_c11": 531.3073097436484,
       "target_c12": 148.04634512817583,
       "target_c44": 108.83542445062851,
-      "mae_cij": 86.31
+      "mae_cij": 86.31,
+      "raw_mae_cij": 86.31,
+      "corrected_c11": 526.57,
+      "corrected_c12": 164.4,
+      "corrected_c44": 116.04,
+      "corrected_mae_cij": 9.43
     },
     {
       "element": "Cr",
@@ -518,7 +698,12 @@
       "target_c11": 499.4655063792027,
       "target_c12": 139.17377265656663,
       "target_c44": 102.31280351000002,
-      "mae_cij": 5.72
+      "mae_cij": 5.72,
+      "raw_mae_cij": 5.72,
+      "corrected_c11": 501.7,
+      "corrected_c12": 132.77,
+      "corrected_c44": 98.67,
+      "corrected_mae_cij": 4.1
     },
     {
       "element": "Cr",
@@ -532,7 +717,12 @@
       "target_c11": 531.3073097436484,
       "target_c12": 148.04634512817583,
       "target_c44": 108.83542445062851,
-      "mae_cij": 43.88
+      "mae_cij": 43.88,
+      "raw_mae_cij": 43.88,
+      "corrected_c11": 524.55,
+      "corrected_c12": 180.61,
+      "corrected_c44": 78.71,
+      "corrected_mae_cij": 23.15
     },
     {
       "element": "Cr",
@@ -546,7 +736,12 @@
       "target_c11": 499.4655063792027,
       "target_c12": 139.17377265656663,
       "target_c44": 102.31280351000002,
-      "mae_cij": 46.08
+      "mae_cij": 46.08,
+      "raw_mae_cij": 46.08,
+      "corrected_c11": 479.55,
+      "corrected_c12": 197.0,
+      "corrected_c44": 91.47,
+      "corrected_mae_cij": 29.53
     },
     {
       "element": "Cr",
@@ -560,7 +755,12 @@
       "target_c11": 531.3073097436484,
       "target_c12": 148.04634512817583,
       "target_c44": 108.83542445062851,
-      "mae_cij": 44.26
+      "mae_cij": 44.26,
+      "raw_mae_cij": 44.26,
+      "corrected_c11": 517.43,
+      "corrected_c12": 210.53,
+      "corrected_c44": 66.34,
+      "corrected_mae_cij": 39.62
     },
     {
       "element": "Cu",
@@ -574,7 +774,12 @@
       "target_c11": 146.4321,
       "target_c12": 131.0959,
       "target_c44": 71.1847,
-      "mae_cij": 12.79
+      "mae_cij": 12.79,
+      "raw_mae_cij": 12.79,
+      "corrected_c11": 152.99,
+      "corrected_c12": 111.97,
+      "corrected_c44": 80.82,
+      "corrected_mae_cij": 11.77
     },
     {
       "element": "Cu",
@@ -588,7 +793,12 @@
       "target_c11": 175.02020229360053,
       "target_c12": 156.68989885319974,
       "target_c44": 85.08216841941943,
-      "mae_cij": 23.05
+      "mae_cij": 23.05,
+      "raw_mae_cij": 23.05,
+      "corrected_c11": 181.86,
+      "corrected_c12": 129.38,
+      "corrected_c44": 90.9,
+      "corrected_mae_cij": 13.32
     },
     {
       "element": "Cu",
@@ -602,7 +812,12 @@
       "target_c11": 146.4321,
       "target_c12": 131.0959,
       "target_c44": 71.1847,
-      "mae_cij": 13.3
+      "mae_cij": 13.3,
+      "raw_mae_cij": 13.3,
+      "corrected_c11": 152.13,
+      "corrected_c12": 114.49,
+      "corrected_c44": 77.57,
+      "corrected_mae_cij": 9.56
     },
     {
       "element": "Cu",
@@ -616,7 +831,12 @@
       "target_c11": 175.02020229360053,
       "target_c12": 156.68989885319974,
       "target_c44": 85.08216841941943,
-      "mae_cij": 12.14
+      "mae_cij": 12.14,
+      "raw_mae_cij": 12.14,
+      "corrected_c11": 180.72,
+      "corrected_c12": 134.36,
+      "corrected_c44": 88.08,
+      "corrected_mae_cij": 10.34
     },
     {
       "element": "Cu",
@@ -630,7 +850,12 @@
       "target_c11": 146.4321,
       "target_c12": 131.0959,
       "target_c44": 71.1847,
-      "mae_cij": 16.89
+      "mae_cij": 16.89,
+      "raw_mae_cij": 16.89,
+      "corrected_c11": 152.73,
+      "corrected_c12": 112.67,
+      "corrected_c44": 83.62,
+      "corrected_mae_cij": 12.39
     },
     {
       "element": "Cu",
@@ -644,7 +869,12 @@
       "target_c11": 175.02020229360053,
       "target_c12": 156.68989885319974,
       "target_c44": 85.08216841941943,
-      "mae_cij": 14.21
+      "mae_cij": 14.21,
+      "raw_mae_cij": 14.21,
+      "corrected_c11": 180.53,
+      "corrected_c12": 133.84,
+      "corrected_c44": 93.52,
+      "corrected_mae_cij": 12.26
     },
     {
       "element": "Cu",
@@ -658,7 +888,12 @@
       "target_c11": 146.4321,
       "target_c12": 131.0959,
       "target_c44": 71.1847,
-      "mae_cij": 9.73
+      "mae_cij": 9.73,
+      "raw_mae_cij": 9.73,
+      "corrected_c11": 152.18,
+      "corrected_c12": 114.45,
+      "corrected_c44": 71.54,
+      "corrected_mae_cij": 7.58
     },
     {
       "element": "Cu",
@@ -672,7 +907,12 @@
       "target_c11": 175.02020229360053,
       "target_c12": 156.68989885319974,
       "target_c44": 85.08216841941943,
-      "mae_cij": 12.65
+      "mae_cij": 12.65,
+      "raw_mae_cij": 12.65,
+      "corrected_c11": 180.69,
+      "corrected_c12": 133.14,
+      "corrected_c44": 93.77,
+      "corrected_mae_cij": 12.63
     },
     {
       "element": "Fe",
@@ -686,7 +926,12 @@
       "target_c11": 247.06437303120248,
       "target_c12": 150.15692194748945,
       "target_c44": 97.42553009666669,
-      "mae_cij": 8.87
+      "mae_cij": 8.87,
+      "raw_mae_cij": 8.87,
+      "corrected_c11": 244.06,
+      "corrected_c12": 158.75,
+      "corrected_c44": 103.27,
+      "corrected_mae_cij": 5.81
     },
     {
       "element": "Fe",
@@ -700,7 +945,12 @@
       "target_c11": 272.71142615743463,
       "target_c12": 165.74428692128268,
       "target_c44": 107.53899856476093,
-      "mae_cij": 49.96
+      "mae_cij": 49.96,
+      "raw_mae_cij": 49.96,
+      "corrected_c11": 274.59,
+      "corrected_c12": 161.05,
+      "corrected_c44": 96.92,
+      "corrected_mae_cij": 5.73
     },
     {
       "element": "Fe",
@@ -714,7 +964,12 @@
       "target_c11": 247.06437303120248,
       "target_c12": 150.15692194748945,
       "target_c44": 97.42553009666669,
-      "mae_cij": 22.37
+      "mae_cij": 22.37,
+      "raw_mae_cij": 22.37,
+      "corrected_c11": 255.68,
+      "corrected_c12": 124.89,
+      "corrected_c44": 116.24,
+      "corrected_mae_cij": 17.57
     },
     {
       "element": "Fe",
@@ -728,7 +983,12 @@
       "target_c11": 272.71142615743463,
       "target_c12": 165.74428692128268,
       "target_c44": 107.53899856476093,
-      "mae_cij": 34.91
+      "mae_cij": 34.91,
+      "raw_mae_cij": 34.91,
+      "corrected_c11": 283.39,
+      "corrected_c12": 122.39,
+      "corrected_c44": 119.62,
+      "corrected_mae_cij": 22.04
     },
     {
       "element": "Fe",
@@ -742,7 +1002,12 @@
       "target_c11": 247.06437303120248,
       "target_c12": 150.15692194748945,
       "target_c44": 97.42553009666669,
-      "mae_cij": 8.86
+      "mae_cij": 8.86,
+      "raw_mae_cij": 8.86,
+      "corrected_c11": 251.81,
+      "corrected_c12": 136.35,
+      "corrected_c44": 102.22,
+      "corrected_mae_cij": 7.78
     },
     {
       "element": "Fe",
@@ -756,7 +1021,12 @@
       "target_c11": 272.71142615743463,
       "target_c12": 165.74428692128268,
       "target_c44": 107.53899856476093,
-      "mae_cij": 13.48
+      "mae_cij": 13.48,
+      "raw_mae_cij": 13.48,
+      "corrected_c11": 277.32,
+      "corrected_c12": 148.24,
+      "corrected_c44": 107.56,
+      "corrected_mae_cij": 7.38
     },
     {
       "element": "Fe",
@@ -770,7 +1040,12 @@
       "target_c11": 247.06437303120248,
       "target_c12": 150.15692194748945,
       "target_c44": 97.42553009666669,
-      "mae_cij": 20.41
+      "mae_cij": 20.41,
+      "raw_mae_cij": 20.41,
+      "corrected_c11": 254.27,
+      "corrected_c12": 129.34,
+      "corrected_c44": 95.61,
+      "corrected_mae_cij": 9.95
     },
     {
       "element": "Fe",
@@ -784,7 +1059,12 @@
       "target_c11": 272.71142615743463,
       "target_c12": 165.74428692128268,
       "target_c44": 107.53899856476093,
-      "mae_cij": 27.44
+      "mae_cij": 27.44,
+      "raw_mae_cij": 27.44,
+      "corrected_c11": 276.23,
+      "corrected_c12": 148.83,
+      "corrected_c44": 122.99,
+      "corrected_mae_cij": 11.96
     },
     {
       "element": "Mo",
@@ -798,7 +1078,12 @@
       "target_c11": 471.8564381355368,
       "target_c12": 157.65718117619383,
       "target_c44": 106.38756431999998,
-      "mae_cij": 28.13
+      "mae_cij": 28.13,
+      "raw_mae_cij": 28.13,
+      "corrected_c11": 457.69,
+      "corrected_c12": 198.67,
+      "corrected_c44": 105.03,
+      "corrected_mae_cij": 18.84
     },
     {
       "element": "Mo",
@@ -812,7 +1097,12 @@
       "target_c11": 494.5325223198363,
       "target_c12": 165.23373884008188,
       "target_c44": 111.50024938627843,
-      "mae_cij": 51.78
+      "mae_cij": 51.78,
+      "raw_mae_cij": 51.78,
+      "corrected_c11": 482.34,
+      "corrected_c12": 213.89,
+      "corrected_c44": 101.36,
+      "corrected_mae_cij": 23.66
     },
     {
       "element": "Mo",
@@ -826,7 +1116,12 @@
       "target_c11": 471.8564381355368,
       "target_c12": 157.65718117619383,
       "target_c44": 106.38756431999998,
-      "mae_cij": 19.4
+      "mae_cij": 19.4,
+      "raw_mae_cij": 19.4,
+      "corrected_c11": 462.57,
+      "corrected_c12": 184.56,
+      "corrected_c44": 104.76,
+      "corrected_mae_cij": 12.61
     },
     {
       "element": "Mo",
@@ -840,7 +1135,12 @@
       "target_c11": 494.5325223198363,
       "target_c12": 165.23373884008188,
       "target_c44": 111.50024938627843,
-      "mae_cij": 8.82
+      "mae_cij": 8.82,
+      "raw_mae_cij": 8.82,
+      "corrected_c11": 494.59,
+      "corrected_c12": 163.39,
+      "corrected_c44": 118.63,
+      "corrected_mae_cij": 3.01
     },
     {
       "element": "Mo",
@@ -854,7 +1154,12 @@
       "target_c11": 471.8564381355368,
       "target_c12": 157.65718117619383,
       "target_c44": 106.38756431999998,
-      "mae_cij": 13.78
+      "mae_cij": 13.78,
+      "raw_mae_cij": 13.78,
+      "corrected_c11": 474.28,
+      "corrected_c12": 150.75,
+      "corrected_c44": 99.14,
+      "corrected_mae_cij": 5.53
     },
     {
       "element": "Mo",
@@ -868,7 +1173,12 @@
       "target_c11": 494.5325223198363,
       "target_c12": 165.23373884008188,
       "target_c44": 111.50024938627843,
-      "mae_cij": 10.56
+      "mae_cij": 10.56,
+      "raw_mae_cij": 10.56,
+      "corrected_c11": 493.27,
+      "corrected_c12": 170.22,
+      "corrected_c44": 110.7,
+      "corrected_mae_cij": 2.35
     },
     {
       "element": "Mo",
@@ -882,7 +1192,12 @@
       "target_c11": 471.8564381355368,
       "target_c12": 157.65718117619383,
       "target_c44": 106.38756431999998,
-      "mae_cij": 13.16
+      "mae_cij": 13.16,
+      "raw_mae_cij": 13.16,
+      "corrected_c11": 472.31,
+      "corrected_c12": 156.28,
+      "corrected_c44": 110.33,
+      "corrected_mae_cij": 1.93
     },
     {
       "element": "Mo",
@@ -896,7 +1211,12 @@
       "target_c11": 494.5325223198363,
       "target_c12": 165.23373884008188,
       "target_c44": 111.50024938627843,
-      "mae_cij": 13.88
+      "mae_cij": 13.88,
+      "raw_mae_cij": 13.88,
+      "corrected_c11": 490.79,
+      "corrected_c12": 181.78,
+      "corrected_c44": 101.38,
+      "corrected_mae_cij": 10.14
     },
     {
       "element": "Nb",
@@ -910,7 +1230,12 @@
       "target_c11": 233.02929838957203,
       "target_c12": 145.19528200632655,
       "target_c44": 10.954196786666667,
-      "mae_cij": 26.64
+      "mae_cij": 26.64,
+      "raw_mae_cij": 26.64,
+      "corrected_c11": 236.67,
+      "corrected_c12": 134.14,
+      "corrected_c44": 40.84,
+      "corrected_mae_cij": 14.86
     },
     {
       "element": "Nb",
@@ -924,7 +1249,12 @@
       "target_c11": 231.99648334608128,
       "target_c12": 144.55175832695934,
       "target_c44": 10.905646414207864,
-      "mae_cij": 22.46
+      "mae_cij": 22.46,
+      "raw_mae_cij": 22.46,
+      "corrected_c11": 235.69,
+      "corrected_c12": 126.77,
+      "corrected_c44": 27.18,
+      "corrected_mae_cij": 12.58
     },
     {
       "element": "Nb",
@@ -938,7 +1268,12 @@
       "target_c11": 233.02929838957203,
       "target_c12": 145.19528200632655,
       "target_c44": 10.954196786666667,
-      "mae_cij": 25.87
+      "mae_cij": 25.87,
+      "raw_mae_cij": 25.87,
+      "corrected_c11": 241.21,
+      "corrected_c12": 121.12,
+      "corrected_c44": 34.86,
+      "corrected_mae_cij": 18.72
     },
     {
       "element": "Nb",
@@ -952,7 +1287,12 @@
       "target_c11": 231.99648334608128,
       "target_c12": 144.55175832695934,
       "target_c44": 10.905646414207864,
-      "mae_cij": 39.38
+      "mae_cij": 39.38,
+      "raw_mae_cij": 39.38,
+      "corrected_c11": 244.83,
+      "corrected_c12": 88.55,
+      "corrected_c44": 42.43,
+      "corrected_mae_cij": 33.45
     },
     {
       "element": "Nb",
@@ -966,7 +1306,12 @@
       "target_c11": 233.02929838957203,
       "target_c12": 145.19528200632655,
       "target_c44": 10.954196786666667,
-      "mae_cij": 31.94
+      "mae_cij": 31.94,
+      "raw_mae_cij": 31.94,
+      "corrected_c11": 239.51,
+      "corrected_c12": 126.01,
+      "corrected_c44": 37.04,
+      "corrected_mae_cij": 17.25
     },
     {
       "element": "Nb",
@@ -980,7 +1325,12 @@
       "target_c11": 231.99648334608128,
       "target_c12": 144.55175832695934,
       "target_c44": 10.905646414207864,
-      "mae_cij": 23.91
+      "mae_cij": 23.91,
+      "raw_mae_cij": 23.91,
+      "corrected_c11": 236.84,
+      "corrected_c12": 122.48,
+      "corrected_c44": 26.87,
+      "corrected_mae_cij": 14.29
     },
     {
       "element": "Nb",
@@ -994,7 +1344,12 @@
       "target_c11": 233.02929838957203,
       "target_c12": 145.19528200632655,
       "target_c44": 10.954196786666667,
-      "mae_cij": 21.92
+      "mae_cij": 21.92,
+      "raw_mae_cij": 21.92,
+      "corrected_c11": 244.01,
+      "corrected_c12": 113.32,
+      "corrected_c44": 17.15,
+      "corrected_mae_cij": 16.35
     },
     {
       "element": "Nb",
@@ -1008,7 +1363,12 @@
       "target_c11": 231.99648334608128,
       "target_c12": 144.55175832695934,
       "target_c44": 10.905646414207864,
-      "mae_cij": 23.21
+      "mae_cij": 23.21,
+      "raw_mae_cij": 23.21,
+      "corrected_c11": 240.65,
+      "corrected_c12": 106.23,
+      "corrected_c44": 34.68,
+      "corrected_mae_cij": 23.58
     },
     {
       "element": "Ni",
@@ -1022,7 +1382,12 @@
       "target_c11": 275.7720237378921,
       "target_c12": 159.21983136014904,
       "target_c44": 131.71160454666668,
-      "mae_cij": 16.64
+      "mae_cij": 16.64,
+      "raw_mae_cij": 16.64,
+      "corrected_c11": 273.92,
+      "corrected_c12": 164.78,
+      "corrected_c44": 120.82,
+      "corrected_mae_cij": 6.1
     },
     {
       "element": "Ni",
@@ -1036,7 +1401,12 @@
       "target_c11": 315.2148683564395,
       "target_c12": 181.9925658217803,
       "target_c44": 150.54991991375195,
-      "mae_cij": 20.22
+      "mae_cij": 20.22,
+      "raw_mae_cij": 20.22,
+      "corrected_c11": 311.75,
+      "corrected_c12": 197.32,
+      "corrected_c44": 141.16,
+      "corrected_mae_cij": 9.4
     },
     {
       "element": "Ni",
@@ -1050,7 +1420,12 @@
       "target_c11": 275.7720237378921,
       "target_c12": 159.21983136014904,
       "target_c44": 131.71160454666668,
-      "mae_cij": 3.43
+      "mae_cij": 3.43,
+      "raw_mae_cij": 3.43,
+      "corrected_c11": 275.71,
+      "corrected_c12": 159.29,
+      "corrected_c44": 137.17,
+      "corrected_mae_cij": 1.86
     },
     {
       "element": "Ni",
@@ -1064,7 +1439,12 @@
       "target_c11": 315.2148683564395,
       "target_c12": 181.9925658217803,
       "target_c44": 150.54991991375195,
-      "mae_cij": 9.99
+      "mae_cij": 9.99,
+      "raw_mae_cij": 9.99,
+      "corrected_c11": 312.25,
+      "corrected_c12": 194.01,
+      "corrected_c44": 147.29,
+      "corrected_mae_cij": 6.08
     },
     {
       "element": "Ni",
@@ -1078,7 +1458,12 @@
       "target_c11": 275.7720237378921,
       "target_c12": 159.21983136014904,
       "target_c44": 131.71160454666668,
-      "mae_cij": 5.19
+      "mae_cij": 5.19,
+      "raw_mae_cij": 5.19,
+      "corrected_c11": 274.98,
+      "corrected_c12": 161.48,
+      "corrected_c44": 133.98,
+      "corrected_mae_cij": 1.77
     },
     {
       "element": "Ni",
@@ -1092,7 +1477,12 @@
       "target_c11": 315.2148683564395,
       "target_c12": 181.9925658217803,
       "target_c44": 150.54991991375195,
-      "mae_cij": 6.21
+      "mae_cij": 6.21,
+      "raw_mae_cij": 6.21,
+      "corrected_c11": 315.93,
+      "corrected_c12": 179.41,
+      "corrected_c44": 150.02,
+      "corrected_mae_cij": 1.28
     },
     {
       "element": "Ni",
@@ -1106,7 +1496,12 @@
       "target_c11": 275.7720237378921,
       "target_c12": 159.21983136014904,
       "target_c44": 131.71160454666668,
-      "mae_cij": 9.68
+      "mae_cij": 9.68,
+      "raw_mae_cij": 9.68,
+      "corrected_c11": 274.83,
+      "corrected_c12": 161.98,
+      "corrected_c44": 130.08,
+      "corrected_mae_cij": 1.78
     },
     {
       "element": "Ni",
@@ -1120,7 +1515,12 @@
       "target_c11": 315.2148683564395,
       "target_c12": 181.9925658217803,
       "target_c44": 150.54991991375195,
-      "mae_cij": 18.46
+      "mae_cij": 18.46,
+      "raw_mae_cij": 18.46,
+      "corrected_c11": 316.12,
+      "corrected_c12": 178.8,
+      "corrected_c44": 149.49,
+      "corrected_mae_cij": 1.72
     },
     {
       "element": "Pd",
@@ -1134,7 +1534,12 @@
       "target_c11": 187.33040702906092,
       "target_c12": 147.04577009210607,
       "target_c44": 70.71376999666666,
-      "mae_cij": 9.57
+      "mae_cij": 9.57,
+      "raw_mae_cij": 9.57,
+      "corrected_c11": 189.1,
+      "corrected_c12": 141.8,
+      "corrected_c44": 77.63,
+      "corrected_mae_cij": 4.64
     },
     {
       "element": "Pd",
@@ -1148,7 +1553,12 @@
       "target_c11": 215.49407959736172,
       "target_c12": 169.15296020131913,
       "target_c44": 81.34503640899713,
-      "mae_cij": 10.86
+      "mae_cij": 10.86,
+      "raw_mae_cij": 10.86,
+      "corrected_c11": 217.45,
+      "corrected_c12": 161.28,
+      "corrected_c44": 83.23,
+      "corrected_mae_cij": 3.9
     },
     {
       "element": "Pd",
@@ -1162,7 +1572,12 @@
       "target_c11": 187.33040702906092,
       "target_c12": 147.04577009210607,
       "target_c44": 70.71376999666666,
-      "mae_cij": 16.51
+      "mae_cij": 16.51,
+      "raw_mae_cij": 16.51,
+      "corrected_c11": 187.06,
+      "corrected_c12": 147.66,
+      "corrected_c44": 80.51,
+      "corrected_mae_cij": 3.56
     },
     {
       "element": "Pd",
@@ -1176,7 +1591,12 @@
       "target_c11": 215.49407959736172,
       "target_c12": 169.15296020131913,
       "target_c44": 81.34503640899713,
-      "mae_cij": 13.57
+      "mae_cij": 13.57,
+      "raw_mae_cij": 13.57,
+      "corrected_c11": 214.09,
+      "corrected_c12": 172.51,
+      "corrected_c44": 89.92,
+      "corrected_mae_cij": 4.44
     },
     {
       "element": "Pd",
@@ -1190,7 +1610,12 @@
       "target_c11": 187.33040702906092,
       "target_c12": 147.04577009210607,
       "target_c44": 70.71376999666666,
-      "mae_cij": 10.67
+      "mae_cij": 10.67,
+      "raw_mae_cij": 10.67,
+      "corrected_c11": 191.41,
+      "corrected_c12": 135.06,
+      "corrected_c44": 81.02,
+      "corrected_mae_cij": 8.79
     },
     {
       "element": "Pd",
@@ -1204,7 +1629,12 @@
       "target_c11": 215.49407959736172,
       "target_c12": 169.15296020131913,
       "target_c44": 81.34503640899713,
-      "mae_cij": 7.17
+      "mae_cij": 7.17,
+      "raw_mae_cij": 7.17,
+      "corrected_c11": 218.23,
+      "corrected_c12": 158.02,
+      "corrected_c44": 84.6,
+      "corrected_mae_cij": 5.7
     },
     {
       "element": "Pd",
@@ -1218,7 +1648,12 @@
       "target_c11": 187.33040702906092,
       "target_c12": 147.04577009210607,
       "target_c44": 70.71376999666666,
-      "mae_cij": 6.55
+      "mae_cij": 6.55,
+      "raw_mae_cij": 6.55,
+      "corrected_c11": 191.23,
+      "corrected_c12": 135.67,
+      "corrected_c44": 76.49,
+      "corrected_mae_cij": 7.01
     },
     {
       "element": "Pd",
@@ -1232,7 +1667,12 @@
       "target_c11": 215.49407959736172,
       "target_c12": 169.15296020131913,
       "target_c44": 81.34503640899713,
-      "mae_cij": 22.67
+      "mae_cij": 22.67,
+      "raw_mae_cij": 22.67,
+      "corrected_c11": 222.61,
+      "corrected_c12": 141.79,
+      "corrected_c44": 82.8,
+      "corrected_mae_cij": 11.98
     },
     {
       "element": "Pt",
@@ -1246,7 +1686,12 @@
       "target_c11": 286.7556044651757,
       "target_c12": 222.2070569509928,
       "target_c44": 64.55121056000002,
-      "mae_cij": 14.91
+      "mae_cij": 14.91,
+      "raw_mae_cij": 14.91,
+      "corrected_c11": 294.31,
+      "corrected_c12": 200.12,
+      "corrected_c44": 78.58,
+      "corrected_mae_cij": 14.56
     },
     {
       "element": "Pt",
@@ -1260,7 +1705,12 @@
       "target_c11": 320.37794701171094,
       "target_c12": 248.26102649414452,
       "target_c44": 72.11989580780802,
-      "mae_cij": 57.75
+      "mae_cij": 57.75,
+      "raw_mae_cij": 57.75,
+      "corrected_c11": 333.48,
+      "corrected_c12": 195.54,
+      "corrected_c44": 84.88,
+      "corrected_mae_cij": 26.2
     },
     {
       "element": "Pt",
@@ -1274,7 +1724,12 @@
       "target_c11": 286.7556044651757,
       "target_c12": 222.2070569509928,
       "target_c44": 64.55121056000002,
-      "mae_cij": 23.53
+      "mae_cij": 23.53,
+      "raw_mae_cij": 23.53,
+      "corrected_c11": 291.06,
+      "corrected_c12": 209.53,
+      "corrected_c44": 76.86,
+      "corrected_mae_cij": 9.77
     },
     {
       "element": "Pt",
@@ -1288,7 +1743,12 @@
       "target_c11": 320.37794701171094,
       "target_c12": 248.26102649414452,
       "target_c44": 72.11989580780802,
-      "mae_cij": 6.27
+      "mae_cij": 6.27,
+      "raw_mae_cij": 6.27,
+      "corrected_c11": 321.81,
+      "corrected_c12": 240.51,
+      "corrected_c44": 82.26,
+      "corrected_mae_cij": 6.44
     },
     {
       "element": "Pt",
@@ -1302,7 +1762,12 @@
       "target_c11": 286.7556044651757,
       "target_c12": 222.2070569509928,
       "target_c44": 64.55121056000002,
-      "mae_cij": 16.31
+      "mae_cij": 16.31,
+      "raw_mae_cij": 16.31,
+      "corrected_c11": 295.91,
+      "corrected_c12": 195.49,
+      "corrected_c44": 78.02,
+      "corrected_mae_cij": 16.45
     },
     {
       "element": "Pt",
@@ -1316,7 +1781,12 @@
       "target_c11": 320.37794701171094,
       "target_c12": 248.26102649414452,
       "target_c44": 72.11989580780802,
-      "mae_cij": 7.01
+      "mae_cij": 7.01,
+      "raw_mae_cij": 7.01,
+      "corrected_c11": 321.78,
+      "corrected_c12": 241.61,
+      "corrected_c44": 77.84,
+      "corrected_mae_cij": 4.59
     },
     {
       "element": "Pt",
@@ -1330,7 +1800,12 @@
       "target_c11": 286.7556044651757,
       "target_c12": 222.2070569509928,
       "target_c44": 64.55121056000002,
-      "mae_cij": 18.8
+      "mae_cij": 18.8,
+      "raw_mae_cij": 18.8,
+      "corrected_c11": 294.55,
+      "corrected_c12": 199.42,
+      "corrected_c44": 77.63,
+      "corrected_mae_cij": 14.56
     },
     {
       "element": "Pt",
@@ -1344,7 +1819,12 @@
       "target_c11": 320.37794701171094,
       "target_c12": 248.26102649414452,
       "target_c44": 72.11989580780802,
-      "mae_cij": 40.01
+      "mae_cij": 40.01,
+      "raw_mae_cij": 40.01,
+      "corrected_c11": 332.05,
+      "corrected_c12": 201.4,
+      "corrected_c44": 83.09,
+      "corrected_mae_cij": 23.17
     },
     {
       "element": "Sr",
@@ -1358,7 +1838,12 @@
       "target_c11": 15.198195618699675,
       "target_c12": 10.49058553634388,
       "target_c44": 12.492019030000002,
-      "mae_cij": 1.93
+      "mae_cij": 1.93,
+      "raw_mae_cij": 1.93,
+      "corrected_c11": 16.4,
+      "corrected_c12": 7.03,
+      "corrected_c44": 12.07,
+      "corrected_mae_cij": 1.69
     },
     {
       "element": "Sr",
@@ -1372,7 +1857,12 @@
       "target_c11": 15.198195618699675,
       "target_c12": 10.49058553634388,
       "target_c44": 12.492019030000002,
-      "mae_cij": 3.23
+      "mae_cij": 3.23,
+      "raw_mae_cij": 3.23,
+      "corrected_c11": 15.67,
+      "corrected_c12": 8.94,
+      "corrected_c44": 11.47,
+      "corrected_mae_cij": 1.01
     },
     {
       "element": "Sr",
@@ -1386,7 +1876,12 @@
       "target_c11": 15.198195618699675,
       "target_c12": 10.49058553634388,
       "target_c44": 12.492019030000002,
-      "mae_cij": 2.49
+      "mae_cij": 2.49,
+      "raw_mae_cij": 2.49,
+      "corrected_c11": 15.94,
+      "corrected_c12": 8.38,
+      "corrected_c44": 10.44,
+      "corrected_mae_cij": 1.64
     },
     {
       "element": "Sr",
@@ -1400,7 +1895,12 @@
       "target_c11": 15.198195618699675,
       "target_c12": 10.49058553634388,
       "target_c44": 12.492019030000002,
-      "mae_cij": 2.42
+      "mae_cij": 2.42,
+      "raw_mae_cij": 2.42,
+      "corrected_c11": 15.99,
+      "corrected_c12": 7.89,
+      "corrected_c44": 10.8,
+      "corrected_mae_cij": 1.7
     },
     {
       "element": "Sr",
@@ -1414,7 +1914,12 @@
       "target_c11": 15.198195618699675,
       "target_c12": 10.49058553634388,
       "target_c44": 12.492019030000002,
-      "mae_cij": 3.3
+      "mae_cij": 3.3,
+      "raw_mae_cij": 3.3,
+      "corrected_c11": 15.35,
+      "corrected_c12": 10.05,
+      "corrected_c44": 12.29,
+      "corrected_mae_cij": 0.27
     },
     {
       "element": "Sr",
@@ -1428,7 +1933,12 @@
       "target_c11": 15.198195618699675,
       "target_c12": 10.49058553634388,
       "target_c44": 12.492019030000002,
-      "mae_cij": 14.09
+      "mae_cij": 14.09,
+      "raw_mae_cij": 14.09,
+      "corrected_c11": 12.75,
+      "corrected_c12": 19.59,
+      "corrected_c44": 13.38,
+      "corrected_mae_cij": 4.14
     },
     {
       "element": "Sr",
@@ -1442,7 +1952,12 @@
       "target_c11": 15.198195618699675,
       "target_c12": 10.49058553634388,
       "target_c44": 12.492019030000002,
-      "mae_cij": 2.26
+      "mae_cij": 2.26,
+      "raw_mae_cij": 2.26,
+      "corrected_c11": 15.89,
+      "corrected_c12": 8.49,
+      "corrected_c44": 11.89,
+      "corrected_mae_cij": 1.1
     },
     {
       "element": "Sr",
@@ -1456,7 +1971,12 @@
       "target_c11": 15.198195618699675,
       "target_c12": 10.49058553634388,
       "target_c44": 12.492019030000002,
-      "mae_cij": 2.15
+      "mae_cij": 2.15,
+      "raw_mae_cij": 2.15,
+      "corrected_c11": 15.81,
+      "corrected_c12": 8.46,
+      "corrected_c44": 11.28,
+      "corrected_mae_cij": 1.29
     },
     {
       "element": "Ta",
@@ -1470,7 +1990,12 @@
       "target_c11": 265.483772891278,
       "target_c12": 157.81600176276544,
       "target_c44": 68.55321091666667,
-      "mae_cij": 14.14
+      "mae_cij": 14.14,
+      "raw_mae_cij": 14.14,
+      "corrected_c11": 264.83,
+      "corrected_c12": 159.74,
+      "corrected_c44": 67.17,
+      "corrected_mae_cij": 1.32
     },
     {
       "element": "Ta",
@@ -1484,7 +2009,12 @@
       "target_c11": 281.9232292425314,
       "target_c12": 167.58838537873424,
       "target_c44": 72.79820678337953,
-      "mae_cij": 19.36
+      "mae_cij": 19.36,
+      "raw_mae_cij": 19.36,
+      "corrected_c11": 280.76,
+      "corrected_c12": 170.73,
+      "corrected_c44": 78.39,
+      "corrected_mae_cij": 3.3
     },
     {
       "element": "Ta",
@@ -1498,7 +2028,12 @@
       "target_c11": 265.483772891278,
       "target_c12": 157.81600176276544,
       "target_c44": 68.55321091666667,
-      "mae_cij": 17.49
+      "mae_cij": 17.49,
+      "raw_mae_cij": 17.49,
+      "corrected_c11": 262.61,
+      "corrected_c12": 165.99,
+      "corrected_c44": 77.61,
+      "corrected_mae_cij": 6.71
     },
     {
       "element": "Ta",
@@ -1512,7 +2047,12 @@
       "target_c11": 281.9232292425314,
       "target_c12": 167.58838537873424,
       "target_c44": 72.79820678337953,
-      "mae_cij": 33.04
+      "mae_cij": 33.04,
+      "raw_mae_cij": 33.04,
+      "corrected_c11": 290.9,
+      "corrected_c12": 131.48,
+      "corrected_c44": 81.55,
+      "corrected_mae_cij": 17.95
     },
     {
       "element": "Ta",
@@ -1526,7 +2066,12 @@
       "target_c11": 265.483772891278,
       "target_c12": 157.81600176276544,
       "target_c44": 68.55321091666667,
-      "mae_cij": 8.64
+      "mae_cij": 8.64,
+      "raw_mae_cij": 8.64,
+      "corrected_c11": 259.51,
+      "corrected_c12": 175.22,
+      "corrected_c44": 62.1,
+      "corrected_mae_cij": 9.95
     },
     {
       "element": "Ta",
@@ -1540,7 +2085,12 @@
       "target_c11": 281.9232292425314,
       "target_c12": 167.58838537873424,
       "target_c44": 72.79820678337953,
-      "mae_cij": 9.24
+      "mae_cij": 9.24,
+      "raw_mae_cij": 9.24,
+      "corrected_c11": 279.15,
+      "corrected_c12": 179.44,
+      "corrected_c44": 67.14,
+      "corrected_mae_cij": 6.76
     },
     {
       "element": "Ta",
@@ -1554,7 +2104,12 @@
       "target_c11": 265.483772891278,
       "target_c12": 157.81600176276544,
       "target_c44": 68.55321091666667,
-      "mae_cij": 18.63
+      "mae_cij": 18.63,
+      "raw_mae_cij": 18.63,
+      "corrected_c11": 264.27,
+      "corrected_c12": 161.67,
+      "corrected_c44": 47.84,
+      "corrected_mae_cij": 8.59
     },
     {
       "element": "Ta",
@@ -1568,7 +2123,12 @@
       "target_c11": 281.9232292425314,
       "target_c12": 167.58838537873424,
       "target_c44": 72.79820678337953,
-      "mae_cij": 15.44
+      "mae_cij": 15.44,
+      "raw_mae_cij": 15.44,
+      "corrected_c11": 282.29,
+      "corrected_c12": 165.77,
+      "corrected_c44": 74.59,
+      "corrected_mae_cij": 1.33
     },
     {
       "element": "V",
@@ -1582,7 +2142,12 @@
       "target_c11": 275.84812081474604,
       "target_c12": 131.2699569814423,
       "target_c44": 15.596900933333337,
-      "mae_cij": 18.72
+      "mae_cij": 18.72,
+      "raw_mae_cij": 18.72,
+      "corrected_c11": 268.55,
+      "corrected_c12": 152.39,
+      "corrected_c44": 16.22,
+      "corrected_mae_cij": 9.68
     },
     {
       "element": "V",
@@ -1596,7 +2161,12 @@
       "target_c11": 297.88570154226034,
       "target_c12": 141.75714922886985,
       "target_c44": 16.84294155308514,
-      "mae_cij": 35.72
+      "mae_cij": 35.72,
+      "raw_mae_cij": 35.72,
+      "corrected_c11": 288.44,
+      "corrected_c12": 176.86,
+      "corrected_c44": 20.25,
+      "corrected_mae_cij": 15.98
     },
     {
       "element": "V",
@@ -1610,7 +2180,12 @@
       "target_c11": 275.84812081474604,
       "target_c12": 131.2699569814423,
       "target_c44": 15.596900933333337,
-      "mae_cij": 25.55
+      "mae_cij": 25.55,
+      "raw_mae_cij": 25.55,
+      "corrected_c11": 283.87,
+      "corrected_c12": 107.62,
+      "corrected_c44": 41.18,
+      "corrected_mae_cij": 19.08
     },
     {
       "element": "V",
@@ -1624,7 +2199,12 @@
       "target_c11": 297.88570154226034,
       "target_c12": 141.75714922886985,
       "target_c44": 16.84294155308514,
-      "mae_cij": 24.16
+      "mae_cij": 24.16,
+      "raw_mae_cij": 24.16,
+      "corrected_c11": 304.15,
+      "corrected_c12": 109.58,
+      "corrected_c44": 53.38,
+      "corrected_mae_cij": 25.0
     },
     {
       "element": "V",
@@ -1638,7 +2218,12 @@
       "target_c11": 275.84812081474604,
       "target_c12": 131.2699569814423,
       "target_c44": 15.596900933333337,
-      "mae_cij": 34.47
+      "mae_cij": 34.47,
+      "raw_mae_cij": 34.47,
+      "corrected_c11": 288.47,
+      "corrected_c12": 94.55,
+      "corrected_c44": 26.04,
+      "corrected_mae_cij": 19.93
     },
     {
       "element": "V",
@@ -1652,7 +2237,12 @@
       "target_c11": 297.88570154226034,
       "target_c12": 141.75714922886985,
       "target_c44": 16.84294155308514,
-      "mae_cij": 34.48
+      "mae_cij": 34.48,
+      "raw_mae_cij": 34.48,
+      "corrected_c11": 309.53,
+      "corrected_c12": 95.06,
+      "corrected_c44": 27.64,
+      "corrected_mae_cij": 23.04
     },
     {
       "element": "V",
@@ -1666,7 +2256,12 @@
       "target_c11": 275.84812081474604,
       "target_c12": 131.2699569814423,
       "target_c44": 15.596900933333337,
-      "mae_cij": 13.97
+      "mae_cij": 13.97,
+      "raw_mae_cij": 13.97,
+      "corrected_c11": 282.45,
+      "corrected_c12": 112.17,
+      "corrected_c44": 15.09,
+      "corrected_mae_cij": 8.74
     },
     {
       "element": "V",
@@ -1680,7 +2275,12 @@
       "target_c11": 297.88570154226034,
       "target_c12": 141.75714922886985,
       "target_c44": 16.84294155308514,
-      "mae_cij": 31.98
+      "mae_cij": 31.98,
+      "raw_mae_cij": 31.98,
+      "corrected_c11": 302.51,
+      "corrected_c12": 124.03,
+      "corrected_c44": 17.44,
+      "corrected_mae_cij": 7.65
     },
     {
       "element": "W",
@@ -1694,7 +2294,12 @@
       "target_c11": 509.8151400392387,
       "target_c12": 200.9992449435353,
       "target_c44": 142.69066302000007,
-      "mae_cij": 26.43
+      "mae_cij": 26.43,
+      "raw_mae_cij": 26.43,
+      "corrected_c11": 501.2,
+      "corrected_c12": 225.71,
+      "corrected_c44": 155.39,
+      "corrected_mae_cij": 15.34
     },
     {
       "element": "W",
@@ -1708,7 +2313,12 @@
       "target_c11": 555.5437059916794,
       "target_c12": 219.02814700416027,
       "target_c44": 155.4894971115207,
-      "mae_cij": 37.33
+      "mae_cij": 37.33,
+      "raw_mae_cij": 37.33,
+      "corrected_c11": 546.72,
+      "corrected_c12": 252.54,
+      "corrected_c44": 155.51,
+      "corrected_mae_cij": 14.12
     },
     {
       "element": "W",
@@ -1722,7 +2332,12 @@
       "target_c11": 509.8151400392387,
       "target_c12": 200.9992449435353,
       "target_c44": 142.69066302000007,
-      "mae_cij": 12.66
+      "mae_cij": 12.66,
+      "raw_mae_cij": 12.66,
+      "corrected_c11": 511.12,
+      "corrected_c12": 197.19,
+      "corrected_c44": 144.95,
+      "corrected_mae_cij": 2.45
     },
     {
       "element": "W",
@@ -1736,7 +2351,12 @@
       "target_c11": 555.5437059916794,
       "target_c12": 219.02814700416027,
       "target_c44": 155.4894971115207,
-      "mae_cij": 14.84
+      "mae_cij": 14.84,
+      "raw_mae_cij": 14.84,
+      "corrected_c11": 550.09,
+      "corrected_c12": 243.77,
+      "corrected_c44": 138.01,
+      "corrected_mae_cij": 15.89
     },
     {
       "element": "W",
@@ -1750,7 +2370,12 @@
       "target_c11": 509.8151400392387,
       "target_c12": 200.9992449435353,
       "target_c44": 142.69066302000007,
-      "mae_cij": 28.09
+      "mae_cij": 28.09,
+      "raw_mae_cij": 28.09,
+      "corrected_c11": 509.37,
+      "corrected_c12": 202.0,
+      "corrected_c44": 159.24,
+      "corrected_mae_cij": 6.0
     },
     {
       "element": "W",
@@ -1764,7 +2389,12 @@
       "target_c11": 555.5437059916794,
       "target_c12": 219.02814700416027,
       "target_c44": 155.4894971115207,
-      "mae_cij": 24.74
+      "mae_cij": 24.74,
+      "raw_mae_cij": 24.74,
+      "corrected_c11": 554.09,
+      "corrected_c12": 225.36,
+      "corrected_c44": 152.01,
+      "corrected_mae_cij": 3.76
     },
     {
       "element": "W",
@@ -1778,7 +2408,12 @@
       "target_c11": 509.8151400392387,
       "target_c12": 200.9992449435353,
       "target_c44": 142.69066302000007,
-      "mae_cij": 14.41
+      "mae_cij": 14.41,
+      "raw_mae_cij": 14.41,
+      "corrected_c11": 512.09,
+      "corrected_c12": 194.37,
+      "corrected_c44": 145.18,
+      "corrected_mae_cij": 3.8
     },
     {
       "element": "W",
@@ -1792,7 +2427,12 @@
       "target_c11": 555.5437059916794,
       "target_c12": 219.02814700416027,
       "target_c44": 155.4894971115207,
-      "mae_cij": 7.84
+      "mae_cij": 7.84,
+      "raw_mae_cij": 7.84,
+      "corrected_c11": 552.38,
+      "corrected_c12": 230.47,
+      "corrected_c44": 158.04,
+      "corrected_mae_cij": 5.72
     }
   ],
   "summary": {
@@ -1806,6 +2446,16 @@
       },
       "best_model": "QET"
     },
+    "PBE_corrected": {
+      "mean_mae_cij": 8.94,
+      "model_mean_mae_cij": {
+        "CHGNet": 10.33,
+        "M3GNet": 8.18,
+        "QET": 8.56,
+        "TensorNet": 8.69
+      },
+      "best_model": "M3GNet"
+    },
     "r2SCAN": {
       "mean_mae_cij": 20.66,
       "model_mean_mae_cij": {
@@ -1816,6 +2466,16 @@
       },
       "best_model": "QET"
     },
+    "r2SCAN_corrected": {
+      "mean_mae_cij": 10.91,
+      "model_mean_mae_cij": {
+        "CHGNet": 12.47,
+        "M3GNet": 11.48,
+        "QET": 8.55,
+        "TensorNet": 11.14
+      },
+      "best_model": "QET"
+    },
     "overall_mean_mae_cij": 17.84,
     "overall_model_mean_mae_cij": {
       "CHGNet": 22.92,
@@ -1823,6 +2483,90 @@
       "QET": 14.44,
       "TensorNet": 16.58
     },
-    "overall_best_model": "QET"
+    "overall_best_model": "QET",
+    "overall_corrected": {
+      "mean_mae_cij": 9.92,
+      "model_mean_mae_cij": {
+        "CHGNet": 11.4,
+        "M3GNet": 9.83,
+        "QET": 8.56,
+        "TensorNet": 9.91
+      },
+      "best_model": "QET"
+    }
+  },
+  "correction": {
+    "schema_version": "lupine.benchmark.correction.v1",
+    "method": "1-D Lupine projection correction (atlas-distill mlip-correct)",
+    "description": "A single first-principal-component bias vector is fit to all model residuals on each functional and projected onto each residual. Corrected = raw + alpha * bias; no-harm holds.",
+    "command": "atlas-distill mlip-correct --catalog data/benchmark_layer2_3x3x3_summary.json --training {functional} --target {functional}",
+    "per_functional": [
+      {
+        "functional": "PBE",
+        "bias_vector": [
+          0.9451493334992989,
+          0.3265911510281812,
+          0.005563942479840586
+        ],
+        "participation_ratio": 0.842222,
+        "first_pc_variance_fraction": 0.604182,
+        "no_harm_violations": 0,
+        "mean_mae_cij": 15.01,
+        "corrected_mean_mae_cij": 8.94,
+        "model_mean_mae_cij": {
+          "CHGNet": 17.9,
+          "M3GNet": 14.13,
+          "QET": 13.41,
+          "TensorNet": 14.61
+        },
+        "model_corrected_mean_mae_cij": {
+          "CHGNet": 10.33,
+          "M3GNet": 8.18,
+          "QET": 8.56,
+          "TensorNet": 8.69
+        }
+      },
+      {
+        "functional": "r2SCAN",
+        "bias_vector": [
+          -0.965430082964199,
+          -0.2540786742491741,
+          -0.05821324762905879
+        ],
+        "participation_ratio": 0.747738,
+        "first_pc_variance_fraction": 0.715203,
+        "no_harm_violations": 0,
+        "mean_mae_cij": 20.66,
+        "corrected_mean_mae_cij": 10.91,
+        "model_mean_mae_cij": {
+          "CHGNet": 27.94,
+          "M3GNet": 20.71,
+          "QET": 15.46,
+          "TensorNet": 18.54
+        },
+        "model_corrected_mean_mae_cij": {
+          "CHGNet": 12.47,
+          "M3GNet": 11.48,
+          "QET": 8.55,
+          "TensorNet": 11.14
+        }
+      }
+    ],
+    "overall": {
+      "mean_mae_cij": 17.84,
+      "corrected_mean_mae_cij": 9.92,
+      "model_mean_mae_cij": {
+        "CHGNet": 22.92,
+        "M3GNet": 17.42,
+        "QET": 14.44,
+        "TensorNet": 16.58
+      },
+      "model_corrected_mean_mae_cij": {
+        "CHGNet": 11.4,
+        "M3GNet": 9.83,
+        "QET": 8.56,
+        "TensorNet": 9.91
+      }
+    }
   }
 }
