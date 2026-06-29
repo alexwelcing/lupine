@@ -165,4 +165,3 @@ Signed mean error by model × functional (positive = over-prediction).
 - **Hardest element:** Cr (mean MAE 43.47 GPa).
 - **Best model on PBE:** QET (mean MAE 13.41 GPa).
 - **Best model on r2SCAN:** QET (mean MAE 15.46 GPa).
-
