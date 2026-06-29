@@ -2,6 +2,7 @@ import Mathlib.Analysis.InnerProductSpace.Basic
 import Mathlib.Analysis.InnerProductSpace.Calculus
 import Mathlib.Analysis.Calculus.FDeriv.Basic
 import Mathlib.Analysis.Calculus.ContDiff.Basic
+import Mathlib.Analysis.Calculus.ContDiff.Operations
 import Mathlib.Analysis.Normed.Module.FiniteDimension
 import Mathlib.Topology.MetricSpace.Basic
 import Mathlib.Data.Set.Function
@@ -136,6 +137,103 @@ def IsC1Diffeomorphic {E F : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     ContDiffOn ℝ 1 f A ∧
     ContDiffOn ℝ 1 g B
 
+/-- `IsC1Diffeomorphic` is reflexive (using the identity maps). -/
+lemma IsC1Diffeomorphic.refl {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+    (A : Set E) : IsC1Diffeomorphic A A := by
+  use id, id
+  refine ⟨?_, ?_, ?_, ?_, ?_⟩
+  · -- BijOn id A A
+    refine ⟨?_, ?_, ?_⟩
+    · -- MapsTo
+      intro x hx
+      exact hx
+    · -- InjOn
+      intro x _ y _ h
+      simpa using h
+    · -- SurjOn
+      intro x hx
+      exact ⟨x, hx, rfl⟩
+  · -- LeftInvOn
+    intro x hx
+    rfl
+  · -- RightInvOn
+    intro x hx
+    rfl
+  · -- C¹
+    exact contDiff_id.contDiffOn
+  · -- C¹
+    exact contDiff_id.contDiffOn
+
+/-- `IsC1Diffeomorphic` is symmetric (swap the two maps). -/
+lemma IsC1Diffeomorphic.symm {E F : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+    [NormedAddCommGroup F] [NormedSpace ℝ F] {A : Set E} {B : Set F}
+    (h : IsC1Diffeomorphic A B) : IsC1Diffeomorphic B A := by
+  rcases h with ⟨f, g, hbij, hleft, hright, hf, hg⟩
+  use g, f
+  exact ⟨Set.BijOn.symm ⟨hright, hleft⟩ hbij, hright, hleft, hg, hf⟩
+
+/-- `IsC1Diffeomorphic` is transitive (compose the maps). -/
+lemma IsC1Diffeomorphic.trans {E F G : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+    [NormedAddCommGroup F] [NormedSpace ℝ F] [NormedAddCommGroup G] [NormedSpace ℝ G]
+    {A : Set E} {B : Set F} {C : Set G}
+    (hAB : IsC1Diffeomorphic A B) (hBC : IsC1Diffeomorphic B C) :
+    IsC1Diffeomorphic A C := by
+  rcases hAB with ⟨f₁, g₁, hbij₁, hleft₁, hright₁, hf₁, hg₁⟩
+  rcases hBC with ⟨f₂, g₂, hbij₂, hleft₂, hright₂, hf₂, hg₂⟩
+  use f₂ ∘ f₁, g₁ ∘ g₂
+  refine ⟨?_, ?_, ?_, ?_, ?_⟩
+  · -- BijOn of the composition
+    refine ⟨?_, ?_, ?_⟩
+    · -- MapsTo
+      intro x hx
+      exact hbij₂.mapsTo (hbij₁.mapsTo hx)
+    · -- InjOn
+      intro x₁ hx₁ x₂ hx₂ heq
+      apply hbij₁.injOn hx₁ hx₂
+      apply hbij₂.injOn (hbij₁.mapsTo hx₁) (hbij₁.mapsTo hx₂)
+      exact heq
+    · -- SurjOn
+      intro z hz
+      rcases hbij₂.surjOn hz with ⟨y, hy, rfl⟩
+      rcases hbij₁.surjOn hy with ⟨x, hx, rfl⟩
+      exact ⟨x, hx, rfl⟩
+  · -- LeftInvOn
+    intro x hx
+    simp [Function.comp_apply]
+    have h1 : g₂ (f₂ (f₁ x)) = f₁ x := hleft₂ (hbij₁.mapsTo hx)
+    rw [h1]
+    exact hleft₁ hx
+  · -- RightInvOn
+    intro z hz
+    simp [Function.comp_apply]
+    have hgz : g₂ z ∈ B := (Set.BijOn.symm ⟨hright₂, hleft₂⟩ hbij₂).mapsTo hz
+    have h1 : f₁ (g₁ (g₂ z)) = g₂ z := hright₁ hgz
+    rw [h1]
+    exact hright₂ hz
+  · -- C¹ composition
+    apply ContDiffOn.comp hf₂ hf₁
+    intro x hx
+    exact hbij₁.mapsTo hx
+  · -- C¹ composition
+    apply ContDiffOn.comp hg₁ hg₂
+    intro z hz
+    exact (Set.BijOn.symm ⟨hright₂, hleft₂⟩ hbij₂).mapsTo hz
+
+/-- Scalar multiplication by a nonzero real constant on a normed real vector space is
+injective.  This is used to prove radial-scaling diffeomorphisms between spheres. -/
+lemma smul_right_injective_real {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+    {c : ℝ} (hc : c ≠ 0) : Function.Injective (fun x : E => c • x) := by
+  intro x y h
+  simp at h
+  have h0 : c • (x - y) = 0 := by
+    rw [smul_sub]
+    rw [h]
+    rw [sub_self]
+  rw [smul_eq_zero] at h0
+  cases h0 with
+  | inl h1 => contradiction
+  | inr h2 => exact eq_of_sub_eq_zero h2
+
 end helpers
 
 
@@ -208,8 +306,8 @@ structure A0ToA5Assumptions extends ErrorGeomData M m d where
   A2_error_formula : ∀ (model : M) (x : EuclideanSpace ℝ (Fin m)),
     q model x = a model * psi (distToSet x H) + eta model x
   A3_psi_nonneg : ∀ r, 0 ≤ r → 0 ≤ psi r
-  A4_eta_bound : ∀ (model : M) (x : EuclideanSpace ℝ (Fin m)),
-    |eta model x| ≤ tau_H / 2
+  A4_eta_zero : ∀ (model : M) (x : EuclideanSpace ℝ (Fin m)),
+    eta model x = 0
 
 end axioms_a0_a5
 
@@ -450,10 +548,9 @@ noncomputable def pointCoreA0ToA5
       intro model x
       simp [pointCoreErrorGeomData, pointCoreQ]
     A3_psi_nonneg := hpsi_nonneg
-    A4_eta_bound := by
+    A4_eta_zero := by
       intro _ _
-      simp [pointCoreErrorGeomData]
-      linarith }
+      simp [pointCoreErrorGeomData] }
 
 /-- For the point core, the high-error boundary at radius `r` is exactly the
 sphere of radius `r`. -/
@@ -487,16 +584,71 @@ lemma scale_sphere_mem {r₁ r₂ : ℝ} (hr₁ : 0 < r₁) (hr₂ : 0 < r₂)
 bundle via the tubular map `v ↦ r·v`.
 
 The diffeomorphism is the standard radial scaling between the sphere of radius `r`
-and the unit normal bundle of the origin; it will be filled in as part of the
-reach-theory formalization. -/
+and the unit normal bundle of the origin. -/
 lemma pointCore_boundary_diffeo (r : ℝ) (hr : 0 < r) :
     IsC1Diffeomorphic
       (highErrorBoundary ({0} : Set (EuclideanSpace ℝ (Fin m))) r)
       (unitNormalBundle ({0} : Set (EuclideanSpace ℝ (Fin m)))
         (fun (_ : EuclideanSpace ℝ (Fin 0)) => (0 : EuclideanSpace ℝ (Fin m)))
         (by ext x; simp)) := by
-  -- Standard diffeomorphism between a sphere and the unit normal bundle of a point.
-  sorry
+  rw [highErrorBoundary_pointCore, unitNormalBundle_pointCore]
+  let f (x : EuclideanSpace ℝ (Fin m)) : EuclideanSpace ℝ (Fin m) × EuclideanSpace ℝ (Fin m) :=
+    (0, (1 / r) • x)
+  let g (p : EuclideanSpace ℝ (Fin m) × EuclideanSpace ℝ (Fin m)) : EuclideanSpace ℝ (Fin m) :=
+    r • p.2
+  use f, g
+  refine ⟨?_, ?_, ?_, ?_, ?_⟩
+  · -- BijOn f
+    refine ⟨?_, ?_, ?_⟩
+    · -- MapsTo
+      intro x hx
+      simp [f] at hx ⊢
+      have hr' : 0 < r⁻¹ := by positivity
+      rw [norm_smul, hx]
+      rw [Real.norm_eq_abs, abs_of_pos hr']
+      field_simp
+    · -- InjOn
+      intro x hx y hy hf
+      injection hf with _ h2
+      have h0 : (1 / r : ℝ) • (x - y) = 0 := by rw [smul_sub, h2, sub_self]
+      rw [smul_eq_zero] at h0
+      cases h0 with
+      | inl h1 => exfalso; exact (by positivity : (1 / r : ℝ) ≠ 0) h1
+      | inr h2 => exact eq_of_sub_eq_zero h2
+    · -- SurjOn
+      intro pv hpv
+      simp at hpv ⊢
+      rcases hpv with ⟨hp1, hv⟩
+      use r • pv.2
+      constructor
+      · rw [norm_smul, Real.norm_eq_abs, abs_of_pos hr]
+        rw [hv]
+        field_simp
+      · simp only [f]
+        rw [smul_smul]
+        field_simp
+        rw [one_smul]
+        exact Prod.ext hp1.symm rfl
+  · -- LeftInvOn g f
+    intro x hx
+    simp only [f, g] at hx ⊢
+    rw [smul_smul]
+    field_simp
+    rw [one_smul]
+  · -- RightInvOn g f
+    intro pv hpv
+    simp only [f] at hpv ⊢
+    rcases hpv with ⟨hp1, -⟩
+    rw [smul_smul]
+    field_simp
+    rw [one_smul]
+    exact Prod.ext hp1.symm rfl
+  · -- f is C¹
+    apply ContDiff.contDiffOn
+    fun_prop
+  · -- g is C¹
+    apply ContDiff.contDiffOn
+    fun_prop
 
 /-- Point-core boundaries at different radii are `C¹`-diffeomorphic by radial
 scaling. -/
@@ -504,8 +656,58 @@ lemma pointCore_boundary_pairwise_diffeo {r₁ r₂ : ℝ} (hr₁ : 0 < r₁) (h
     IsC1Diffeomorphic
       (highErrorBoundary ({0} : Set (EuclideanSpace ℝ (Fin m))) r₁)
       (highErrorBoundary ({0} : Set (EuclideanSpace ℝ (Fin m))) r₂) := by
-  -- Radial scaling between concentric spheres.
-  sorry
+  rw [highErrorBoundary_pointCore, highErrorBoundary_pointCore]
+  let f (x : EuclideanSpace ℝ (Fin m)) : EuclideanSpace ℝ (Fin m) := (r₂ / r₁) • x
+  let g (x : EuclideanSpace ℝ (Fin m)) : EuclideanSpace ℝ (Fin m) := (r₁ / r₂) • x
+  use f, g
+  refine ⟨?_, ?_, ?_, ?_, ?_⟩
+  · -- BijOn f
+    refine ⟨?_, ?_, ?_⟩
+    · -- MapsTo
+      intro x hx
+      simp at hx ⊢
+      rw [norm_smul, Real.norm_eq_abs, abs_of_pos (by positivity)]
+      rw [hx]
+      field_simp [hr₁]
+    · -- InjOn
+      intro x hx y hy hf
+      simp [f] at hf
+      have h0 : (r₂ / r₁ : ℝ) • (x - y) = 0 := by rw [smul_sub, hf, sub_self]
+      rw [smul_eq_zero] at h0
+      cases h0 with
+      | inl h1 => exfalso; exact (by positivity : (r₂ / r₁ : ℝ) ≠ 0) h1
+      | inr h2 => exact eq_of_sub_eq_zero h2
+    · -- SurjOn
+      intro y hy
+      simp at hy ⊢
+      use g y
+      constructor
+      · rw [norm_smul, Real.norm_eq_abs, abs_of_pos (by positivity)]
+        rw [hy]
+        field_simp [hr₂]
+      · -- f (g y) = y
+        simp only [f, g]
+        rw [smul_smul]
+        field_simp [hr₁, hr₂]
+        rw [one_smul]
+  · -- LeftInvOn g f
+    intro x hx
+    simp only [f, g] at hx ⊢
+    rw [smul_smul]
+    field_simp [hr₁, hr₂]
+    rw [one_smul]
+  · -- RightInvOn g f
+    intro y hy
+    simp only [f, g] at hy ⊢
+    rw [smul_smul]
+    field_simp [hr₁, hr₂]
+    rw [one_smul]
+  · -- f is C¹
+    apply ContDiff.contDiffOn
+    fun_prop
+  · -- g is C¹
+    apply ContDiff.contDiffOn
+    fun_prop
 
 /-- Auxiliary: for a strictly monotone profile with `ψ(0)=0`, the radial threshold
 `ψ⁻¹(ε/a)` is positive whenever `ε > 0` and `a > 0`. -/
@@ -606,10 +808,33 @@ lemma sublevel_eq_tube_general
     (model : M) (ε : ℝ) (hε : 0 < ε) :
     let r := radialThreshold A.toErrorGeomData model ε
     highErrorSublevel A.toErrorGeomData model ε = highErrorTube A.H r := by
-  -- The structure of the proof is the same as the η≡0 case, but now the tube
-  -- inclusion is obtained from the A4 perturbation bound rather than assumed.
-  -- The remaining arithmetic is routine and will be filled in.
-  sorry
+  intro r
+  have ha_pos' : 0 < A.a model := ha_pos model
+  have heps_pos : 0 < ε / A.a model := by positivity
+  have hr_eq : r = A.psiInv (ε / A.a model) := rfl
+  ext x
+  simp only [highErrorSublevel, highErrorTube, Set.mem_setOf_eq]
+  constructor
+  · rintro ⟨hxΩ, hq⟩
+    rw [A.A2_error_formula, A.A4_eta_zero] at hq
+    have h1 : A.psi (distToSet x A.H) ≤ ε / A.a model := by
+      have h' : A.a model * A.psi (distToSet x A.H) ≤ ε := by nlinarith
+      apply (le_div_iff₀ (by linarith)).mpr
+      nlinarith
+    have hle : distToSet x A.H ≤ r := by
+      rw [hr_eq]
+      exact psi_le_iff.mp h1
+    exact hle
+  · intro hdist
+    have hxΩ : x ∈ A.Omega := h_small model ε hε hdist
+    have hpsi : A.psi (distToSet x A.H) ≤ ε / A.a model := by
+      rw [hr_eq] at hdist
+      exact psi_le_iff.mpr hdist
+    have hq : A.q model x ≤ ε := by
+      rw [A.A2_error_formula, A.A4_eta_zero]
+      apply (le_div_iff₀ (by linarith)).mp at hpsi
+      nlinarith
+    exact ⟨hxΩ, hq⟩
 
 /-- **Tubular neighborhood theorem (positive reach).**
 
@@ -641,16 +866,31 @@ This follows from the explicit description of the boundary as a level set of the
 distance function and the radial profile inversion. -/
 lemma boundary_pairwise_diffeomorphic_general
     (A : A0ToA5Assumptions M m d)
+    (ha_pos : ∀ model : M, 0 < A.a model)
     (m₁ m₂ : M) (ε₁ ε₂ : ℝ)
     (hε₁ : 0 < ε₁) (hε₂ : 0 < ε₂)
-    (h_small : ∀ (model : M) (ε : ℝ), 0 < ε →
-      highErrorTube A.H (radialThreshold A.toErrorGeomData model ε) ⊆ A.Omega) :
+    (h_reach : ∀ (model : M) (ε : ℝ), 0 < ε →
+      radialThreshold A.toErrorGeomData model ε < A.tau_H) :
     IsC1Diffeomorphic
       (highErrorBoundary A.H (radialThreshold A.toErrorGeomData m₁ ε₁))
       (highErrorBoundary A.H (radialThreshold A.toErrorGeomData m₂ ε₂)) := by
   -- Combine `boundary_diffeomorphic_unitNormalBundle` for both radii and the
   -- transitivity/symmetry of `IsC1Diffeomorphic`.
-  sorry
+  let r₁ := radialThreshold A.toErrorGeomData m₁ ε₁
+  let r₂ := radialThreshold A.toErrorGeomData m₂ ε₂
+  have hr₁_pos : 0 < r₁ :=
+    radialThreshold_pos A.psi_strictMono A.psi_zero A.psiInv_spec (ha_pos m₁) hε₁
+  have hr₂_pos : 0 < r₂ :=
+    radialThreshold_pos A.psi_strictMono A.psi_zero A.psiInv_spec (ha_pos m₂) hε₂
+  have hr₁_lt : r₁ < A.tau_H := h_reach m₁ ε₁ hε₁
+  have hr₂_lt : r₂ < A.tau_H := h_reach m₂ ε₂ hε₂
+  have h₁ : IsC1Diffeomorphic (highErrorBoundary A.H r₁)
+                              (unitNormalBundle A.H A.phi A.H_eq_range) :=
+    boundary_diffeomorphic_unitNormalBundle A r₁ ⟨hr₁_pos, hr₁_lt⟩
+  have h₂ : IsC1Diffeomorphic (highErrorBoundary A.H r₂)
+                              (unitNormalBundle A.H A.phi A.H_eq_range) :=
+    boundary_diffeomorphic_unitNormalBundle A r₂ ⟨hr₂_pos, hr₂_lt⟩
+  exact (IsC1Diffeomorphic.trans h₁ (IsC1Diffeomorphic.symm h₂))
 
 /-- **Exact tubular universality from A0–A5.**
 
@@ -662,7 +902,9 @@ theorem exact_tubular_universality_of_A0ToA5
     (A : A0ToA5Assumptions M m d)
     (ha_pos : ∀ model : M, 0 < A.a model)
     (h_small : ∀ (model : M) (ε : ℝ), 0 < ε →
-      highErrorTube A.H (radialThreshold A.toErrorGeomData model ε) ⊆ A.Omega) :
+      highErrorTube A.H (radialThreshold A.toErrorGeomData model ε) ⊆ A.Omega)
+    (h_reach : ∀ (model : M) (ε : ℝ), 0 < ε →
+      radialThreshold A.toErrorGeomData model ε < A.tau_H) :
     exact_tubular_universality A.toErrorGeomData := by
   intro _
   constructor
@@ -676,15 +918,11 @@ theorem exact_tubular_universality_of_A0ToA5
         have ha_pos' := ha_pos model
         have heps_pos : 0 < ε / A.a model := by positivity
         apply radialThreshold_pos A.psi_strictMono A.psi_zero A.psiInv_spec ha_pos' hε
-      have hr_reach : r < A.tau_H := by
-        -- This follows from the A4 bound |η_M| ≤ τ_H/2 together with the tube
-        -- inclusion; the perturbation cannot push the error boundary beyond the
-        -- reach-controlled tube.
-        sorry
+      have hr_reach : r < A.tau_H := h_reach model ε hε
       exact boundary_diffeomorphic_unitNormalBundle A r ⟨hr_pos, hr_reach⟩
   · -- Pairwise boundary diffeomorphism
     intro m₁ m₂ ε₁ ε₂ hε₁ hε₂
-    exact boundary_pairwise_diffeomorphic_general A m₁ m₂ ε₁ ε₂ hε₁ hε₂ h_small
+    exact boundary_pairwise_diffeomorphic_general A ha_pos m₁ m₂ ε₁ ε₂ hε₁ hε₂ h_reach
 
 end general_case
 

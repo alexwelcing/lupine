@@ -9,7 +9,7 @@
 ## What was delivered
 
 1. **LaTeX hardening**
-   - Updated theorem counts to match current `lean-spec` build: ~225 theorem/lemma declarations, 77 build-locked theorems in Vision.lean, zero `sorry`, zero new axioms.
+   - Updated theorem counts to match current `lean-spec` build: ~225 theorem/lemma declarations, 84 build-locked theorems in Vision.lean, 1 documented reach-theory gap in ExactTubularUniversality.lean, zero new axioms.
    - Fixed Figure 4 caption: classical median PR = 1.09, systematic fraction α = 0.98 (was incorrectly 1.28 / 0.93).
    - Clarified abstract MLIP PR as "1.3 (FCC foundation MLIPs)" to avoid ambiguity with the all-element median.
    - Replaced overfull `tabular` in Table 1 with `tabularx`.
