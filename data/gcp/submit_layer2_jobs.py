@@ -68,7 +68,7 @@ def execute_job() -> None:
             "gcloud", "run", "jobs", "execute", JOB_NAME,
             "--region", REGION,
             "--project", PROJECT,
-            "--wait", "false",
+            "--async",
         ]
     )
 
