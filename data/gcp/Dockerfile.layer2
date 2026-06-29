@@ -18,8 +18,9 @@ RUN apt-get update \
 # Heavy dependency layer: torch (CPU), matgl, matcalc, pymatgen, gsutil.
 # This layer changes only when requirements-layer2.txt changes.
 COPY data/gcp/requirements-layer2.txt /app/
-RUN python3 -m pip install --no-cache-dir --upgrade pip \
-    && python3 -m pip install --no-cache-dir -r /app/requirements-layer2.txt
+RUN python3 -m venv /app/.venv \
+    && /app/.venv/bin/python -m pip install --no-cache-dir --upgrade pip \
+    && /app/.venv/bin/python -m pip install --no-cache-dir -r /app/requirements-layer2.txt
 
 # Application layer: the benchmark task and the array-job entrypoint.
 COPY data/layer2_benchmark_task.py /app/data/
@@ -30,5 +31,6 @@ ENV PYTHONUNBUFFERED=1
 ENV HF_TOKEN=${HF_TOKEN:-}
 ENV SUPERCELL=3
 ENV OUTPUT_BUCKET=lupine-benchmark-witching-606c6
+ENV PATH="/app/.venv/bin:${PATH}"
 
 ENTRYPOINT ["/app/entrypoint.sh"]

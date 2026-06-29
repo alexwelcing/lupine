@@ -31,7 +31,7 @@ echo "[layer2-job] Task ${INDEX}/${TOTAL_ELEMENT_MODEL}: ${ELEMENT} ${MODEL} ${S
 for FUNCTIONAL in PBE r2SCAN; do
   OUT_FILE="${OUT_DIR}/${ELEMENT}_${MODEL}_${FUNCTIONAL}.json"
   echo "[layer2-job] Running ${ELEMENT} ${MODEL} ${FUNCTIONAL}"
-  python3 /app/data/layer2_benchmark_task.py \
+  /app/.venv/bin/python /app/data/layer2_benchmark_task.py \
     --element "$ELEMENT" \
     --model "$MODEL" \
     --functional "$FUNCTIONAL" \
