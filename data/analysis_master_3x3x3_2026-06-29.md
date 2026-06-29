@@ -1,10 +1,10 @@
 # Layer-2 3×3×3 MLIP Elastic-Constant Benchmark — Master Analysis
 
-**Date:** 2026-06-29  
-**Execution:** `layer2-3x3x3-grid-zb76j` (Cloud Run, `witching-606c6`, us-central1)  
-**Container:** `us-central1-docker.pkg.dev/witching-606c6/lupine-layer2/runner:v1`  
-**Data:** `gs://lupine-benchmark-witching-606c6/layer2_3x3x3/` (128 raw JSON files)  
-**Summary:** `lupine/data/benchmark_layer2_3x3x3_summary.json`  
+**Date:** 2026-06-29
+**Execution:** `layer2-3x3x3-grid-zb76j` (Cloud Run, `witching-606c6`, us-central1)
+**Container:** `us-central1-docker.pkg.dev/witching-606c6/lupine-layer2/runner:v1`
+**Data:** `gs://lupine-benchmark-witching-606c6/layer2_3x3x3/` (128 raw JSON files)
+**Summary:** `lupine/data/benchmark_layer2_3x3x3_summary.json`
 **Team reports:**
 - Statistical deep-dive: `analysis_statistical.md`
 - Materials-science interpretation: `analysis_materials.md`
@@ -173,10 +173,10 @@ Mean signed error = predicted − target (positive = over-stiffen):
 
 ## 8. Communications strategy
 
-**Recommended headline:**  
+**Recommended headline:**
 *Foundation MLIPs deliver a 16-element, 3×3×3 elastic-constant reference for under one core-hour — QET leads at 13.4 GPa mean MAE.*
 
-**One-sentence bottom line:**  
+**One-sentence bottom line:**
 The Layer-2 3×3×3 benchmark shows that supercell-based cubic-metal elastic references are now sub-core-hour cheap, with QET the accuracy leader; the remaining error is concentrated in transition metals and r2SCAN targets, giving the field a clear, honest roadmap.
 
 **Recommended public artifacts:**
