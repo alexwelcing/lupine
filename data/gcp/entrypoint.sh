@@ -39,7 +39,15 @@ for FUNCTIONAL in PBE r2SCAN; do
     --output "$OUT_FILE"
 
   echo "[layer2-job] Uploading ${OUT_FILE} to gs://${OUTPUT_BUCKET}/layer2_${SUPERCELL}x${SUPERCELL}x${SUPERCELL}/"
-  gsutil -q cp "$OUT_FILE" "gs://${OUTPUT_BUCKET}/layer2_${SUPERCELL}x${SUPERCELL}x${SUPERCELL}/${ELEMENT}_${MODEL}_${FUNCTIONAL}.json"
+  /app/.venv/bin/python - <<PY
+from google.cloud import storage
+import os
+bucket = os.environ["OUTPUT_BUCKET"]
+blob = f"layer2_${SUPERCELL}x${SUPERCELL}x${SUPERCELL}/${ELEMENT}_${MODEL}_${FUNCTIONAL}.json"
+client = storage.Client()
+client.bucket(bucket).blob(blob).upload_from_filename("${OUT_FILE}")
+print(f"uploaded gs://{bucket}/{blob}")
+PY
 done
 
 echo "[layer2-job] Task ${INDEX} complete"

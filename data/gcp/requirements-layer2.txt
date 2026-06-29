@@ -7,4 +7,4 @@ matgl==4.0.2
 matcalc==0.5.1
 pymatgen==2026.5.4
 numpy==2.4.6
-gsutil==5.34
+google-cloud-storage==2.18.0
