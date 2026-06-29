@@ -38,6 +38,7 @@ import OpenDistillationFactory.Materials.Theory.SpectrumBridge
 import OpenDistillationFactory.Materials.Theory.ConvexProjection
 import OpenDistillationFactory.Materials.Theory.WeakAcceleration
 import OpenDistillationFactory.Materials.Theory.AlloyResidualTransfer
+import OpenDistillationFactory.Materials.Theory.ActiveSampling
 
 -- Validation layer: experiment design, integrity checks, and audit
 import OpenDistillationFactory.Materials.Validation.Experiment

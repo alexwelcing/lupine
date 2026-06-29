@@ -4,11 +4,11 @@
 //! Detects hyper-ribbon structures and tests the Parameter-Bound Conjecture.
 
 use super::{Action, ActionResult, Capability, DiscoveryAgent};
-use crate::manifold::{self, BenchmarkEntry, ManifoldAnalysis};
+use crate::manifold::{self, BenchmarkEntry, DataSource, ManifoldAnalysis};
 use anyhow::Result;
 use lupine_ops::ledger::{
     generate_record_id, now_iso8601, AgentClaim, BenchmarkRecord, ClaimStatus, ClaimType,
-    DiscoveryLedger,
+    DiscoveryLedger, Provenance,
 };
 
 pub struct ManifoldAgent {
@@ -36,6 +36,19 @@ impl ManifoldAgent {
                 reference: r.reference,
                 predicted: r.predicted,
                 unit: r.unit.clone(),
+                provenance: match &r.provenance {
+                    Provenance::SyntheticBenchmark { source, .. } => {
+                        DataSource::Synthetic(source.clone())
+                    }
+                    Provenance::LammpsRun { .. }
+                    | Provenance::OpenKimTest { .. }
+                    | Provenance::LiteratureCitation { .. } => DataSource::Experiment {
+                        citation: "ledger record".to_string(),
+                    },
+                    Provenance::AgentInference { method, .. } => {
+                        DataSource::Synthetic(format!("agent inference: {method}"))
+                    }
+                },
             })
             .collect()
     }

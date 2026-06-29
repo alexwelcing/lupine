@@ -128,6 +128,24 @@ theorem correct_minimizes (scheme : DirectionalCorrectionScheme E ι) (c : ι)
   rw [h1, h2]
   apply scheme.alpha_minimizes c (residual raw shift target) a
 
+/-- **No-harm theorem for 1-D shared error.**
+When the shared error is one-dimensional (i.e. the correction direction spans
+the entire error subspace), projecting the residual onto that direction and
+subtracting the projection never increases the residual norm compared to leaving
+the prediction uncorrected.
+
+This is the special case of `correct_minimizes` with `a = 0` (no correction
+applied).  It formalizes the guarantee checked by the Rust `mlip_correct`
+operator: `‖corrected_residual‖ ≤ ‖raw_residual‖` for every sample.
+
+Alignment note: the Lean `alpha` coefficient (`inner ℝ v d / inner ℝ d d`)
+corresponds to the Rust `coeff` (`residual.dot(bias) / bias.norm_squared()`). -/
+theorem no_harm (scheme : DirectionalCorrectionScheme E ι) (c : ι)
+    (raw shift target : E) :
+    ‖scheme.correctedResidual c raw shift target‖ ≤ ‖residual raw shift target‖ := by
+  have h := scheme.correct_minimizes c raw shift target 0
+  simpa [residual] using h
+
 /-- A sample is an outlier for class `c` when its corrected residual norm
 exceeds a class-specific threshold `τ`. -/
 def isOutlier (scheme : DirectionalCorrectionScheme E ι) (c : ι)

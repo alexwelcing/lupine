@@ -136,6 +136,15 @@ theorem correct_minimizes (scheme : SubspaceCorrectionScheme E ι) (c : ι)
     linarith
   exact hle''
 
+/-- **No-harm guarantee**: the corrected prediction is never farther from the
+ target than the shifted (uncorrected) prediction.  This is the special case
+ of `correct_minimizes` with `y = 0`. -/
+theorem no_harm (scheme : SubspaceCorrectionScheme E ι) (c : ι)
+    (raw shift target : E) :
+    ‖scheme.correctedResidual c raw shift target‖ ≤ ‖residual raw shift target‖ := by
+  have h := scheme.correct_minimizes c raw shift target (Submodule.zero_mem (scheme.subspace c))
+  simpa [residual] using h
+
 /-- A sample is an outlier for class `c` when the norm of its corrected residual
 exceeds a threshold `τ`. -/
 def isOutlier (scheme : SubspaceCorrectionScheme E ι) (c : ι)

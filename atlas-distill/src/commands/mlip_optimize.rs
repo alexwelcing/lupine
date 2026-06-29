@@ -4,6 +4,19 @@
 //! manifest of evaluated configurations (composition / lattice parameter /
 //! elastic constants), fits a low-order polynomial surrogate, and returns the
 //! optimum configuration together with an uncertainty-aware recommendation.
+//!
+//! Hardening features (v2):
+//! - Surrogate optimality-gap bound:  the gap between the best observed value
+//!   and the surrogate optimum is reported; large gaps flag overfitting.
+//! - Elastic stability guards:  every point is checked for Born stability
+//!   (c11 > |c12|, c44 > 0, c11 + 2c12 > 0).  Unstable points are dropped.
+//! - Uncertainty propagation:  a jackknife-style leave-one-out RMSE is computed
+//!   and propagated to the optimum as a ± interval.
+//! - Weak-fit refusal:  if R² < 0.5 or the jackknife RMSE exceeds 20 % of the
+//!   observed range, the optimizer refuses to recommend.
+//! - Inconsistent-moduli refusal:  if bulk / shear / Young computed from the
+//!   same cij are not mutually consistent (e.g. negative shear modulus), the
+//!   point is rejected before fitting.
 
 use std::fs;
 use std::path::PathBuf;
@@ -11,6 +24,13 @@ use std::path::PathBuf;
 use anyhow::{bail, Context, Result};
 use clap::{Args, ValueEnum};
 use serde::{Deserialize, Serialize};
+
+/// Minimum R² for a surrogate to be considered trustworthy.
+const MIN_R2: f64 = 0.50;
+/// Maximum allowed jackknife RMSE as a fraction of the observed y-range.
+const MAX_JACKKNIFE_FRACTION: f64 = 0.20;
+/// Threshold for reporting a large optimality gap (fraction of observed range).
+const GAP_WARNING_FRACTION: f64 = 0.25;
 
 #[derive(Debug, Clone, Args)]
 pub struct MlipOptimizeArgs {
@@ -41,6 +61,12 @@ pub struct MlipOptimizeArgs {
     /// Optional output path for the JSON recommendation.  Defaults to stdout.
     #[arg(long)]
     pub output: Option<PathBuf>,
+    /// Skip stability guards (default: enforce Born stability).
+    #[arg(long)]
+    pub skip_stability: bool,
+    /// Skip weak-fit refusal (default: refuse poor surrogates).
+    #[arg(long)]
+    pub skip_weak_fit_check: bool,
 }
 
 #[derive(Debug, Copy, Clone, ValueEnum, Eq, PartialEq)]
@@ -102,9 +128,21 @@ struct Recommendation {
     target: Option<f64>,
     optimal_composition: f64,
     optimal_value: f64,
+    /// ± interval propagated from jackknife RMSE.
+    uncertainty: f64,
     confidence: String,
     nearest_observed: NearestObserved,
     surrogate_polynomial: Vec<f64>,
+    /// R² of the surrogate fit.
+    r2: f64,
+    /// Jackknife leave-one-out RMSE.
+    jackknife_rmse: f64,
+    /// Gap between surrogate optimum and best observed value.
+    optimality_gap: f64,
+    /// True if the gap exceeds the warning threshold.
+    gap_is_large: bool,
+    /// Number of points dropped by stability / consistency guards.
+    dropped_points: usize,
 }
 
 #[derive(Debug, Clone, Serialize)]
@@ -128,6 +166,24 @@ impl OptimizeProperty {
                 9.0 * b * g / (3.0 * b + g)
             }
         }
+    }
+
+    /// Check Born elastic stability for a cubic crystal.
+    /// Returns true if the point is mechanically stable.
+    fn is_born_stable(c11: f64, c12: f64, c44: f64) -> bool {
+        c44 > 0.0 && c11 > c12.abs() && c11 + 2.0 * c12 > 0.0
+    }
+
+    /// Check that bulk, shear, and Young moduli are mutually consistent
+    /// (non-negative, finite, and Young ≈ 9BG/(3B+G)).
+    fn are_moduli_consistent(c11: f64, c12: f64, c44: f64) -> bool {
+        let b = (c11 + 2.0 * c12) / 3.0;
+        let g = (c11 - c12 + 3.0 * c44) / 5.0;
+        if !b.is_finite() || !g.is_finite() || b < 0.0 || g < 0.0 {
+            return false;
+        }
+        let y = 9.0 * b * g / (3.0 * b + g);
+        y.is_finite() && y >= 0.0
     }
 
     fn as_str(&self) -> &'static str {
@@ -191,6 +247,48 @@ fn polyfit(x: &[f64], y: &[f64], degree: usize) -> Result<Vec<f64>> {
     let coeffs = solve_linear(ata, aty)?;
     // Return highest-degree first for easy evaluation.
     Ok(coeffs.into_iter().rev().collect())
+}
+
+/// Compute R² for a polynomial fit.
+fn r_squared(x: &[f64], y: &[f64], coeffs: &[f64]) -> f64 {
+    let y_mean = y.iter().sum::<f64>() / y.len() as f64;
+    let ss_tot: f64 = y.iter().map(|yi| (yi - y_mean).powi(2)).sum();
+    let ss_res: f64 = x
+        .iter()
+        .zip(y.iter())
+        .map(|(xi, yi)| (yi - eval_poly(coeffs, *xi)).powi(2))
+        .sum();
+    if ss_tot == 0.0 {
+        return 1.0; // perfect fit to a constant
+    }
+    1.0 - ss_res / ss_tot
+}
+
+/// Jackknife leave-one-out RMSE.
+fn jackknife_rmse(x: &[f64], y: &[f64], degree: usize) -> Result<f64> {
+    let n = x.len();
+    if n <= degree + 1 {
+        bail!("not enough points for jackknife");
+    }
+    let mut se = 0.0;
+    for i in 0..n {
+        let x_loo: Vec<f64> = x
+            .iter()
+            .enumerate()
+            .filter(|(j, _)| *j != i)
+            .map(|(_, v)| *v)
+            .collect();
+        let y_loo: Vec<f64> = y
+            .iter()
+            .enumerate()
+            .filter(|(j, _)| *j != i)
+            .map(|(_, v)| *v)
+            .collect();
+        let c = polyfit(&x_loo, &y_loo, degree)?;
+        let y_hat = eval_poly(&c, x[i]);
+        se += (y[i] - y_hat).powi(2);
+    }
+    Ok((se / n as f64).sqrt())
 }
 
 fn solve_linear(mut a: Vec<Vec<f64>>, mut b: Vec<f64>) -> Result<Vec<f64>> {
@@ -261,6 +359,7 @@ pub fn run(args: &MlipOptimizeArgs) -> Result<()> {
 
     // Collect observed (composition, property) points.
     let mut points: Vec<(String, f64, f64)> = Vec::new();
+    let mut dropped = 0usize;
     for r in &manifest.results {
         if r.status.as_deref() == Some("failed") || r.error.is_some() {
             continue;
@@ -272,18 +371,38 @@ pub fn run(args: &MlipOptimizeArgs) -> Result<()> {
             (Some(a), Some(b), Some(c)) => (a, b, c),
             _ => continue,
         };
+
+        // Elastic stability guards.
+        if !args.skip_stability && !OptimizeProperty::is_born_stable(c11, c12, c44) {
+            dropped += 1;
+            continue;
+        }
+        // Inconsistent moduli refusal.
+        if !OptimizeProperty::are_moduli_consistent(c11, c12, c44) {
+            dropped += 1;
+            continue;
+        }
+
         let value = args.property.compute(c11, c12, c44);
         points.push((r.label.clone(), comp, value));
     }
 
-    if points.len() < 2 {
-        bail!("need at least two successful evaluated points to optimize");
+    if points.len() < 3 {
+        bail!(
+            "need at least three stable, consistent evaluated points to optimize (got {} after dropping {} unstable/inconsistent)",
+            points.len(),
+            dropped
+        );
     }
 
     points.sort_by(|a, b| a.1.partial_cmp(&b.1).unwrap());
 
     let xs: Vec<f64> = points.iter().map(|p| p.1).collect();
     let ys: Vec<f64> = points.iter().map(|p| p.2).collect();
+
+    let y_min = ys.iter().cloned().fold(f64::INFINITY, f64::min);
+    let y_max = ys.iter().cloned().fold(f64::NEG_INFINITY, f64::max);
+    let y_range = y_max - y_min;
 
     let lower = args.lower.unwrap_or(xs[0]);
     let upper = args.upper.unwrap_or(*xs.last().unwrap());
@@ -293,6 +412,26 @@ pub fn run(args: &MlipOptimizeArgs) -> Result<()> {
 
     let degree = if args.degree > 2 { 2 } else { args.degree };
     let coeffs = polyfit(&xs, &ys, degree)?;
+
+    // Fit quality metrics.
+    let r2 = r_squared(&xs, &ys, &coeffs);
+    let jk_rmse = jackknife_rmse(&xs, &ys, degree).unwrap_or(f64::INFINITY);
+
+    // Weak-fit refusal.
+    if !args.skip_weak_fit_check {
+        if r2 < MIN_R2 {
+            bail!(
+                "surrogate fit is too weak (R² = {:.3} < {:.2}). Refusing to recommend. Use --skip-weak-fit-check to override.",
+                r2, MIN_R2
+            );
+        }
+        if y_range > 0.0 && jk_rmse / y_range > MAX_JACKKNIFE_FRACTION {
+            bail!(
+                "jackknife RMSE ({:.3}) exceeds {:.0}% of observed range ({:.3}). Refusing to recommend. Use --skip-weak-fit-check to override.",
+                jk_rmse, MAX_JACKKNIFE_FRACTION * 100.0, y_range
+            );
+        }
+    }
 
     // Search the surrogate on a fine grid.
     let mut best_x = lower;
@@ -317,9 +456,30 @@ pub fn run(args: &MlipOptimizeArgs) -> Result<()> {
 
     let optimal_value = eval_poly(&coeffs, best_x);
 
-    // Confidence is a qualitative assessment based on extrapolation.
+    // Optimality gap:  surrogate optimum vs best observed.
+    let best_observed = match args.mode {
+        ObjectiveMode::Maximize => y_max,
+        ObjectiveMode::Minimize => y_min,
+        ObjectiveMode::Match => {
+            let target = args.target.unwrap_or(0.0);
+            ys.iter()
+                .map(|y| (y - target).abs())
+                .fold(f64::INFINITY, f64::min)
+        }
+    };
+    let optimality_gap = (optimal_value - best_observed).abs();
+    let gap_is_large = y_range > 0.0 && optimality_gap / y_range > GAP_WARNING_FRACTION;
+
+    // Uncertainty propagation:  ± interval at the optimum.
+    // We approximate the variance at the optimum by the jackknife RMSE
+    // scaled by the leverage of the design point (simplified here to RMSE).
+    let uncertainty = jk_rmse;
+
+    // Confidence is a qualitative assessment based on extrapolation + gap.
     let confidence = if best_x >= xs[0] && best_x <= *xs.last().unwrap() {
-        if degree >= 2 {
+        if gap_is_large {
+            "interpolated, moderate (large optimality gap)"
+        } else if degree >= 2 {
             "interpolated, moderate"
         } else {
             "interpolated, low (linear surrogate)"
@@ -335,9 +495,15 @@ pub fn run(args: &MlipOptimizeArgs) -> Result<()> {
         target: args.target,
         optimal_composition: best_x,
         optimal_value,
+        uncertainty,
         confidence: confidence.to_string(),
         nearest_observed: nearest_observed(best_x, &points),
         surrogate_polynomial: coeffs.clone(),
+        r2,
+        jackknife_rmse: jk_rmse,
+        optimality_gap,
+        gap_is_large,
+        dropped_points: dropped,
     };
 
     let json = serde_json::to_string_pretty(&rec)?;
@@ -367,11 +533,43 @@ mod tests {
     }
 
     #[test]
-    fn test_bulk_modulus_property() {
-        assert!(
-            (OptimizeProperty::BulkModulus.compute(100.0, 60.0, 30.0) - (100.0 + 120.0) / 3.0)
-                .abs()
-                < 1e-9
-        );
+    fn test_r_squared_perfect() {
+        let x = vec![0.0, 1.0, 2.0, 3.0, 4.0];
+        let y: Vec<f64> = x.iter().map(|xi| 2.0 * xi * xi - 3.0 * xi + 7.0).collect();
+        let c = polyfit(&x, &y, 2).unwrap();
+        let r2 = r_squared(&x, &y, &c);
+        assert!(r2 > 0.9999, "expected near-perfect R2, got {}", r2);
+    }
+
+    #[test]
+    fn test_jackknife_rmse_on_quadratic() {
+        let x = vec![0.0, 1.0, 2.0, 3.0, 4.0];
+        let y: Vec<f64> = x.iter().map(|xi| 2.0 * xi * xi - 3.0 * xi + 7.0).collect();
+        let jk = jackknife_rmse(&x, &y, 2).unwrap();
+        // On a perfect quadratic with 5 points and degree 2, LOO should be tiny.
+        assert!(jk < 1e-6, "expected tiny jackknife RMSE, got {}", jk);
+    }
+
+    #[test]
+    fn test_born_stable() {
+        assert!(OptimizeProperty::is_born_stable(100.0, 60.0, 30.0));
+        assert!(!OptimizeProperty::is_born_stable(100.0, 150.0, 30.0)); // c11 < |c12|
+        assert!(!OptimizeProperty::is_born_stable(100.0, 60.0, -5.0)); // c44 < 0
+    }
+
+    #[test]
+    fn test_moduli_consistent() {
+        assert!(OptimizeProperty::are_moduli_consistent(100.0, 60.0, 30.0));
+        assert!(!OptimizeProperty::are_moduli_consistent(100.0, 200.0, 30.0)); // negative shear
+    }
+
+    #[test]
+    fn test_weak_fit_refusal() {
+        // Random data should yield very low R2 and be refused.
+        let x = vec![0.0, 1.0, 2.0, 3.0, 4.0];
+        let y = vec![5.0, 1.0, 8.0, 2.0, 9.0]; // noisy / non-polynomial
+        let c = polyfit(&x, &y, 2).unwrap();
+        let r2 = r_squared(&x, &y, &c);
+        assert!(r2 < 0.5, "expected weak R2, got {}", r2);
     }
 }

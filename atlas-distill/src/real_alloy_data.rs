@@ -517,7 +517,7 @@ mod tests {
         let [c11_100, c12_100, c44_100] = parse_elastic_example_log(log100).unwrap();
         computed.insert("100Mg-bcc".to_string(), [c11_100, c12_100, c44_100]);
 
-        let labels = vec!["50Mg-bcc", "75Mg-bcc", "100Mg-bcc"];
+        let labels = ["50Mg-bcc", "75Mg-bcc", "100Mg-bcc"];
         let residuals: Vec<Vector3<f64>> = labels
             .iter()
             .map(|lab| {

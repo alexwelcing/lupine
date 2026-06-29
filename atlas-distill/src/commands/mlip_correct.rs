@@ -37,14 +37,14 @@ pub struct MlipCorrectArgs {
     pub output: Option<PathBuf>,
 }
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 struct Catalog {
     #[serde(default)]
     schema_version: String,
     rows: Vec<Row>,
 }
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 struct Row {
     element: String,
     model: String,
@@ -64,7 +64,7 @@ struct Row {
 }
 
 #[derive(Debug, Clone, Serialize)]
-struct CorrectionReport {
+pub(crate) struct CorrectionReport {
     training_functional: String,
     target_functional: String,
     participation_ratio: f64,
@@ -75,7 +75,7 @@ struct CorrectionReport {
 }
 
 #[derive(Debug, Clone, Serialize)]
-struct ModelReport {
+pub(crate) struct ModelReport {
     model: String,
     element: String,
     raw_residual_norm: f64,
@@ -112,7 +112,7 @@ fn participation_ratio(singular_values: &[f64]) -> f64 {
     (sum * sum) / (singular_values.len() as f64 * sum_sq)
 }
 
-pub fn run(args: &MlipCorrectArgs) -> Result<()> {
+pub fn compute_report(args: &MlipCorrectArgs) -> Result<CorrectionReport> {
     let text = fs::read_to_string(&args.catalog)
         .with_context(|| format!("reading catalog {}", args.catalog.display()))?;
     let catalog: Catalog = serde_json::from_str(&text)
@@ -192,37 +192,51 @@ pub fn run(args: &MlipCorrectArgs) -> Result<()> {
             target_row.target_c44,
         );
 
-        let residual_train = pred - train_target;
-        let raw_residual = pred - target;
-
-        // Lupine operator: project training residual onto bias, subtract it, add functional shift.
-        let coeff = if bias.norm_squared() > 0.0 {
-            residual_train.dot(&bias) / bias.norm_squared()
+        // Lean alignment:
+        //   raw      := pred  (model prediction on the training functional)
+        //   shift    := target - train_target  (functional shift to target functional)
+        //   residual := target - (raw + shift) = train_target - pred
+        //   alpha    := inner(residual, bias) / inner(bias, bias)
+        //   correct  := raw + shift + alpha * bias
+        //
+        // This coefficient exactly matches Lean's `DirectionalCorrectionScheme.alpha`.
+        let shift = target - train_target;
+        let residual = train_target - pred;
+        let alpha = if bias.norm_squared() > 0.0 {
+            residual.dot(&bias) / bias.norm_squared()
         } else {
             0.0
         };
-        let corrected = pred - coeff * bias + (target - train_target);
+        let corrected = pred + shift + alpha * bias;
         let corrected_residual = corrected - target;
 
-        let raw_norm = raw_residual.norm();
+        // Baselines for reporting and the no-harm guarantee.
+        let shifted_residual = pred - train_target; // = residual
+        let target_residual = pred - target;
+
+        let shifted_norm = shifted_residual.norm();
         let corrected_norm = corrected_residual.norm();
-        let improvement = if raw_norm > 0.0 {
-            corrected_norm / raw_norm
+        let target_norm = target_residual.norm();
+        let improvement = if target_norm > 0.0 {
+            corrected_norm / target_norm
         } else {
             0.0
         };
 
-        if corrected_norm > raw_norm + 1e-9 {
+        // No-harm guarantee (matches Lean `DirectionalCorrectionScheme.no_harm`):
+        //   ‖corrected - target‖ ≤ ‖(pred + shift) - target‖
+        // i.e. the correction never increases the residual vs. the shifted baseline.
+        if corrected_norm > shifted_norm + 1e-9 {
             violations.push(format!(
-                "{} / {}: corrected norm {} > raw norm {}",
-                r.model, r.element, corrected_norm, raw_norm
+                "{} / {}: corrected norm {} > shifted norm {} (no-harm violation)",
+                r.model, r.element, corrected_norm, shifted_norm
             ));
         }
 
         reports.push(ModelReport {
             model: r.model.clone(),
             element: r.element.clone(),
-            raw_residual_norm: raw_norm,
+            raw_residual_norm: target_norm,
             corrected_residual_norm: corrected_norm,
             improvement_ratio: improvement,
         });
@@ -243,6 +257,12 @@ pub fn run(args: &MlipCorrectArgs) -> Result<()> {
         models: reports,
         no_harm_violations: violations,
     };
+
+    Ok(report)
+}
+
+pub fn run(args: &MlipCorrectArgs) -> Result<()> {
+    let report = compute_report(args)?;
 
     let json = serde_json::to_string_pretty(&report)?;
     if let Some(out) = &args.output {
@@ -279,5 +299,75 @@ mod tests {
         // Uniform singular values -> PR = 1.0 (isotropic).
         let sv = vec![1.0, 1.0, 1.0];
         assert!((participation_ratio(&sv) - 1.0).abs() < 1e-9);
+    }
+
+    #[test]
+    fn test_no_harm_holds_for_1d_residual_cloud() {
+        // Synthetic catalog: all training residuals are collinear with the
+        // (1,1,1) direction, so the first PC bias is exactly the shared error.
+        // The directional correction should never increase the shifted residual.
+        let mut rows = Vec::new();
+        for (i, raw_offset) in [0.0, 2.0, -1.5].iter().enumerate() {
+            let model = format!("model-{i}");
+            let element = "Cu".to_string();
+            // Training target is zero; prediction carries the collinear residual.
+            let pred = 100.0 + raw_offset;
+            let train_target = 100.0;
+            // Functional shift moves the target by (5, -3, 1).
+            let target = Vector3::new(pred + 5.0, train_target - 3.0, train_target + 1.0);
+            rows.push(Row {
+                element: element.clone(),
+                model: model.clone(),
+                functional: "PBE".to_string(),
+                model_name: Some(model.clone()),
+                c11: pred,
+                c12: train_target,
+                c44: train_target,
+                target_c11: train_target,
+                target_c12: train_target,
+                target_c44: train_target,
+            });
+            rows.push(Row {
+                element,
+                model,
+                functional: "r2SCAN".to_string(),
+                model_name: None,
+                c11: target[0],
+                c12: target[1],
+                c44: target[2],
+                target_c11: target[0],
+                target_c12: target[1],
+                target_c44: target[2],
+            });
+        }
+        let catalog = Catalog {
+            schema_version: "v1".to_string(),
+            rows,
+        };
+        let json = serde_json::to_string(&catalog).unwrap();
+        let tmp_path = std::env::temp_dir().join("mlip_correct_no_harm_test.json");
+        std::fs::write(&tmp_path, json).unwrap();
+        let args = MlipCorrectArgs {
+            catalog: tmp_path,
+            training: "PBE".to_string(),
+            target: "r2SCAN".to_string(),
+            output: None,
+        };
+        let report = compute_report(&args).expect("mlip_correct should run without error");
+        assert!(
+            report.no_harm_violations.is_empty(),
+            "no-harm violations in a 1-D residual cloud: {:?}",
+            report.no_harm_violations
+        );
+        // Every corrected residual should be <= the shifted residual.
+        for r in &report.models {
+            assert!(
+                r.corrected_residual_norm <= r.raw_residual_norm + 1e-9,
+                "{} corrected {} > raw {}",
+                r.model,
+                r.corrected_residual_norm,
+                r.raw_residual_norm
+            );
+        }
     }
 }

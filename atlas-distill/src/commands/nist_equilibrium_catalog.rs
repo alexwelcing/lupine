@@ -249,7 +249,7 @@ mod tests {
 
     #[test]
     fn builds_catalog_from_rows() {
-        let rows = vec![
+        let rows = [
             "material,potential,property,reference,predicted,unit,nist_id,doi,pair_style",
             "Al,Mishin-1999,a0,4.05,4.050004,A,1999--Mishin-Y--Al--LAMMPS--ipr1,10.1,eam/alloy",
             "Al,Mishin-1999,Ecoh,-3.39,-3.36,eV/atom,1999--Mishin-Y--Al--LAMMPS--ipr1,10.1,eam/alloy",

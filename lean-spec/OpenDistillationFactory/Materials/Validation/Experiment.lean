@@ -60,6 +60,15 @@ theorem actualExperimentNotPreRegistered :
     actualExperimentRun.preRegistered = false := by
   rfl
 
+/-- Formal statement: the NIST-backed experiment design declares NIST IPR
+provenance, matching the Rust `DataSource::NistIpr` tag. -/
+theorem nistBackedExperimentUsesNistData :
+    match nistBackedCausalGeometryExperiment.dataSource with
+    | Data.DataSource.nistIpr _ _ => true
+    | _ => false
+    = true := by
+  rfl
+
 /-- Experiment integrity check: a NIST-backed experiment must have
     NIST IPR provenance on ALL data points. -/
 def experimentIntegrityCheck (exp : ExperimentDesign) (data : List Data.BenchmarkEntry) : Bool :=

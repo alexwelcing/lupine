@@ -12,7 +12,7 @@
 //!
 //! Expected JSON format: array of BenchmarkEntry objects.
 
-use crate::manifold::BenchmarkEntry;
+use crate::manifold::{BenchmarkEntry, DataSource};
 use anyhow::{Context, Result};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
@@ -57,6 +57,7 @@ pub fn load_csv(path: &Path) -> Result<Vec<BenchmarkEntry>> {
             reference: row.reference,
             predicted: row.predicted,
             unit: row.unit,
+            provenance: DataSource::Synthetic("CSV ingestion: no source column".to_string()),
         });
     }
 
@@ -216,6 +217,7 @@ mod tests {
                 reference: 108.2,
                 predicted: 102.1,
                 unit: "GPa".to_string(),
+                provenance: DataSource::Synthetic("test fixture".to_string()),
             },
             BenchmarkEntry {
                 material: "Cu".to_string(),
@@ -224,6 +226,7 @@ mod tests {
                 reference: 168.4,
                 predicted: 175.8,
                 unit: "GPa".to_string(),
+                provenance: DataSource::Synthetic("test fixture".to_string()),
             },
         ];
 
@@ -246,6 +249,7 @@ mod tests {
                 reference: 108.2,
                 predicted: 102.1,
                 unit: "GPa".to_string(),
+                provenance: DataSource::Synthetic("test fixture".to_string()),
             },
             BenchmarkEntry {
                 material: "Al".to_string(),
@@ -254,6 +258,7 @@ mod tests {
                 reference: 61.3,
                 predicted: 57.8,
                 unit: "GPa".to_string(),
+                provenance: DataSource::Synthetic("test fixture".to_string()),
             },
             BenchmarkEntry {
                 material: "Cu".to_string(),
@@ -262,6 +267,7 @@ mod tests {
                 reference: 168.4,
                 predicted: 175.8,
                 unit: "GPa".to_string(),
+                provenance: DataSource::Synthetic("test fixture".to_string()),
             },
         ];
 

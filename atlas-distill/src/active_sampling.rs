@@ -6,6 +6,15 @@
 //! exactly where the current class-aware model is most wrong.  Selecting those
 //! first reduces the number of expensive LAMMPS runs needed to reach a target
 //! accuracy.
+//!
+//! Formal contract (Lean `ActiveSampling.lean`):
+//!   1. Greedy residual-max selection minimises the maximum residual over the
+//!      remaining unobserved candidates (`greedy_minimizes_max_remaining`).
+//!   2. If all residuals live in a known `k`-dimensional subspace, at most `k`
+//!      *informative* observations are needed to exhaust the residual directions
+//!      (`active_sampling_rank_bound`).
+//!   3. Projecting a residual onto the orthogonal complement of an observed
+//!      direction never increases its norm (`projection_norm_nonincreasing`).
 
 use nalgebra::DVector;
 
@@ -82,12 +91,32 @@ impl ActiveSampler {
     }
 
     /// Select the index of the candidate with the largest predicted residual.
+    ///
+    /// This implements the greedy one-step contract: after observing the
+    /// selected candidate, the worst-case residual among the remaining pool is
+    /// minimised (`greedy_minimizes_max_remaining` in Lean).
     pub fn select_next(&self, pool: &[Candidate]) -> Option<usize> {
-        pool.iter()
+        let scored: Vec<(usize, f64)> = pool
+            .iter()
             .enumerate()
             .map(|(i, c)| (i, self.score(c)))
+            .collect();
+        let selected = scored
+            .iter()
             .max_by(|a, b| a.1.partial_cmp(&b.1).unwrap_or(std::cmp::Ordering::Equal))
-            .map(|(i, _)| i)
+            .map(|(i, _)| *i);
+        if let Some(idx) = selected {
+            let max_score = scored
+                .iter()
+                .map(|(_, s)| *s)
+                .fold(f64::NEG_INFINITY, f64::max);
+            let selected_score = self.score(&pool[idx]);
+            debug_assert!(
+                (selected_score - max_score).abs() < 1e-12,
+                "select_next must return a candidate with the maximum residual score"
+            );
+        }
+        selected
     }
 
     /// Observe a new training row and refit the operator.

@@ -14,7 +14,7 @@
 
 use crate::benchmark;
 use crate::literature::{extract, fetch};
-use crate::manifold::{self, BenchmarkEntry};
+use crate::manifold::{self, BenchmarkEntry, DataSource};
 use crate::meta_analysis;
 use crate::nist::{self, NistCatalog};
 use crate::stats;
@@ -351,6 +351,7 @@ pub fn run_campaign(config: &CampaignConfig) -> Result<CampaignSummary> {
                             reference: refs[prop_idx],
                             predicted: ext.value,
                             unit: "GPa".to_string(),
+                            provenance: DataSource::Synthetic("autoresearch fixture".to_string()),
                         });
                         total_values += 1;
                     }

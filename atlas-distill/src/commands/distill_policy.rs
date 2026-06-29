@@ -4,6 +4,8 @@
 //! canonical Distill decision surface lives here: a stable ribbon version,
 //! deterministic guard/correction rules, and an auditable decision packet.
 
+#![allow(clippy::field_reassign_with_default)]
+
 use std::collections::BTreeMap;
 use std::fs;
 use std::path::{Path, PathBuf};
