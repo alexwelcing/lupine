@@ -27,7 +27,7 @@ is proved in full, and the general case is modularized against the reach-theory 
 
 namespace OpenDistillationFactory.Materials.Theory.ExactTubularUniversality
 
-open scoped RealInnerProductSpace
+open scoped RealInnerProductSpace InnerProduct
 
 open Classical
 
@@ -126,8 +126,9 @@ noncomputable def tangentProjection {m d : ℕ}
   have h_bij : Function.Bijective ATA_lin :=
     ⟨h_inj, LinearMap.injective_iff_surjective.mp h_inj⟩
   let ATA_equiv := LinearEquiv.ofBijective ATA_lin h_bij
-  let ATA_inv := (ATA_equiv.toContinuousLinearEquiv : EuclideanSpace ℝ (Fin d) →L[ℝ] EuclideanSpace ℝ (Fin d))
-  (A.comp ATA_inv).comp Aad
+  have h_inv : ContinuousLinearMap.IsInvertible ATA :=
+    ⟨ATA_equiv.toContinuousLinearEquiv, rfl⟩
+  (A.comp ATA.inverse).comp Aad
 
 /-- Orthogonal projection onto the normal space at `φ(p)`. -/
 noncomputable def normalProjection {m d : ℕ}
@@ -141,16 +142,77 @@ noncomputable def normalProjection {m d : ℕ}
 
 This is the first analytic stepping stone for the tubular-neighborhood theorem: the
 orthogonal projection onto the tangent (and hence normal) space must vary `C¹`ly with
-the parameter.  The proof is a straightforward but lengthy composition of the facts
-that `Dφ(p)`, adjunction, multiplication, and inversion of invertible maps are all
-smooth operations. -/
+the parameter.  The proof is a composition of the facts that `Dφ(p)`, adjunction,
+multiplication, and inversion of invertible maps are all smooth operations. -/
 lemma tangentProjection_C1 {m d : ℕ}
     (φ : EuclideanSpace ℝ (Fin d) → EuclideanSpace ℝ (Fin m))
     (hφ : ∀ p, Function.Injective (fderiv ℝ φ p))
     (hφ2 : ContDiff ℝ 2 φ) :
     ContDiff ℝ 1 (fun p => tangentProjection φ hφ p) := by
-  -- TODO: implement the composition argument sketched above.
-  sorry
+  -- `A(p) = Dφ(p)` is C¹ because φ is C².
+  have hA : ContDiff ℝ 1 (fun p => fderiv ℝ φ p) :=
+    ContDiff.fderiv_right hφ2 (by norm_num)
+  -- Adjoint is a linear isometry, hence smooth.
+  have hAd : ContDiff ℝ 1 (fun p => (fderiv ℝ φ p)†) := by
+    let E := EuclideanSpace ℝ (Fin d)
+    let F := EuclideanSpace ℝ (Fin m)
+    have hadj : ContDiff ℝ ⊤ (ContinuousLinearMap.adjoint : (E →L[ℝ] F) → F →L[ℝ] E) := by
+      apply LinearIsometryEquiv.contDiff
+    exact hadj.of_le le_top |>.comp hA
+  -- `A† A` is C¹ (bilinear composition).
+  have hATA : ContDiff ℝ 1 (fun p => (fderiv ℝ φ p)† ∘L (fderiv ℝ φ p)) := by
+    apply ContDiff.clm_comp hAd hA
+  -- Inversion is smooth on invertible maps; `A† A` is invertible because `A` is injective.
+  have hATA_inv : ContDiff ℝ 1 (fun p => ((fderiv ℝ φ p)† ∘L (fderiv ℝ φ p)).inverse) := by
+    apply contDiff_iff_contDiffAt.mpr
+    intro p
+    let A := fderiv ℝ φ p
+    let ATA := A† ∘L A
+    have hinv : ContinuousLinearMap.IsInvertible ATA := by
+      -- `A† A` is injective, hence invertible on a finite-dimensional space.
+      let ATA_lin := ATA.toLinearMap
+      have h_inj : Function.Injective ATA_lin := by
+        intro x y h
+        have h' : ATA x = ATA y := by simpa using h
+        have hATA : ATA (x - y) = 0 := by
+          rw [map_sub]
+          rw [h']
+          simp
+        have hA : A (x - y) = 0 := by
+          have hinner : ⟪ATA (x - y), x - y⟫ = 0 := by
+            rw [hATA]
+            simp
+          have hnorm : ‖A (x - y)‖ ^ 2 = 0 := by
+            rw [← real_inner_self_eq_norm_sq]
+            rw [← ContinuousLinearMap.adjoint_inner_left A (x - y) (A (x - y))]
+            simp at hinner ⊢
+            exact hinner
+          have : ‖A (x - y)‖ = 0 := by
+            rw [sq_eq_zero_iff] at hnorm
+            exact hnorm
+          exact norm_eq_zero.mp this
+        have hA0 : A (x - y) = A 0 := by
+          rw [hA]
+          simp
+        have h0 : x - y = 0 := (hφ p) (a₁ := x - y) (a₂ := 0) hA0
+        exact eq_of_sub_eq_zero h0
+      have h_bij : Function.Bijective ATA_lin :=
+        ⟨h_inj, LinearMap.injective_iff_surjective.mp h_inj⟩
+      let ATA_equiv := LinearEquiv.ofBijective ATA_lin h_bij
+      exact ⟨ATA_equiv.toContinuousLinearEquiv, rfl⟩
+    have h1 : ContDiffAt ℝ 1 ContinuousLinearMap.inverse ATA :=
+      ContinuousLinearMap.IsInvertible.contDiffAt_map_inverse hinv
+    have h2 : ContDiffAt ℝ 1 (fun p => (fderiv ℝ φ p)† ∘L (fderiv ℝ φ p)) p :=
+      hATA.contDiffAt
+    exact h1.comp p h2
+  -- Compose A ∘ (A† A)^{-1} ∘ A†.
+  have hmid : ContDiff ℝ 1 (fun p =>
+      ((fderiv ℝ φ p)† ∘L (fderiv ℝ φ p)).inverse ∘L (fderiv ℝ φ p)†) := by
+    apply ContDiff.clm_comp hATA_inv hAd
+  have hproj : ContDiff ℝ 1 (fun p =>
+      (fderiv ℝ φ p) ∘L (((fderiv ℝ φ p)† ∘L (fderiv ℝ φ p)).inverse ∘L (fderiv ℝ φ p)†)) := by
+    apply ContDiff.clm_comp hA hmid
+  exact hproj
 
 /-- The normal-projection family is `C¹` in the parameter `p`. -/
 lemma normalProjection_C1 {m d : ℕ}

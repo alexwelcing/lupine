@@ -188,12 +188,11 @@ def computationallyProvenCount : Nat :=
   -- point-core boundary diffeomorphisms (2), general pairwise bridge (1)
   84
 
-/-- Count of documented epistemic gaps.  This now includes the two named
-    reach-theory lemmas (`tangentProjection_C1` and
-    `boundary_diffeomorphic_unitNormalBundle`) that remain as `sorry`s in
-    `ExactTubularUniversality.lean`. -/
+/-- Count of documented epistemic gaps.  This now includes the single
+    named reach-theory lemma (`boundary_diffeomorphic_unitNormalBundle`) that
+    remains as a `sorry` in `ExactTubularUniversality.lean`. -/
 def epistemicGapCount : Nat :=
-  2
+  1
 
 -- ═══════════════════════════════════════════════════════════════
 -- SECTION 4: BUILD LOCKS
