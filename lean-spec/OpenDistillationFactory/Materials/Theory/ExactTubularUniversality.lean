@@ -3,6 +3,10 @@ import Mathlib.Analysis.InnerProductSpace.Calculus
 import Mathlib.Analysis.Calculus.FDeriv.Basic
 import Mathlib.Analysis.Calculus.ContDiff.Basic
 import Mathlib.Analysis.Calculus.ContDiff.Operations
+import Mathlib.Analysis.Calculus.InverseFunctionTheorem.ContDiff
+import Mathlib.Analysis.InnerProductSpace.Projection.Basic
+import Mathlib.Analysis.InnerProductSpace.Projection.FiniteDimensional
+import Mathlib.Analysis.InnerProductSpace.Adjoint
 import Mathlib.Analysis.Normed.Module.FiniteDimension
 import Mathlib.Topology.MetricSpace.Basic
 import Mathlib.Data.Set.Function
@@ -79,6 +83,83 @@ def unitNormalBundle {m d : ℕ} (H : Set (EuclideanSpace ℝ (Fin m)))
     (φ : EuclideanSpace ℝ (Fin d) → EuclideanSpace ℝ (Fin m))
     (hH : H = Set.range φ) : Set (EuclideanSpace ℝ (Fin m) × EuclideanSpace ℝ (Fin m)) :=
   { pv ∈ normalBundle H φ hH | ‖pv.2‖ = 1 }
+
+/-- Orthogonal projection onto the tangent space at `φ(p)`.
+
+Because `φ` is an immersion, `Dφ(p)^* Dφ(p)` is invertible, and the standard formula
+`Dφ (Dφ^* Dφ)^{-1} Dφ^*` gives the orthogonal projection onto the tangent space. -/
+noncomputable def tangentProjection {m d : ℕ}
+    (φ : EuclideanSpace ℝ (Fin d) → EuclideanSpace ℝ (Fin m))
+    (hφ : ∀ p, Function.Injective (fderiv ℝ φ p))
+    (p : EuclideanSpace ℝ (Fin d)) :
+    EuclideanSpace ℝ (Fin m) →L[ℝ] EuclideanSpace ℝ (Fin m) :=
+  let A := fderiv ℝ φ p
+  let Aad := ContinuousLinearMap.adjoint A
+  let ATA := Aad.comp A
+  let ATA_lin := ATA.toLinearMap
+  have h_inj : Function.Injective ATA_lin := by
+    intro x y h
+    have h' : ATA x = ATA y := by simpa using h
+    have hATA : ATA (x - y) = 0 := by
+      rw [map_sub]
+      rw [h']
+      simp
+    have hA : A (x - y) = 0 := by
+      have hinner : ⟪ATA (x - y), x - y⟫ = 0 := by
+        rw [hATA]
+        simp
+      have hnorm : ‖A (x - y)‖ ^ 2 = 0 := by
+        rw [← real_inner_self_eq_norm_sq]
+        rw [← ContinuousLinearMap.adjoint_inner_left A (x - y) (A (x - y))]
+        simp [ATA] at hinner ⊢
+        exact hinner
+      have : ‖A (x - y)‖ = 0 := by
+        rw [sq_eq_zero_iff] at hnorm
+        exact hnorm
+      exact norm_eq_zero.mp this
+    have hA0 : A (x - y) = A 0 := by
+      rw [hA]
+      simp
+    have h0 : x - y = 0 := by
+      exact (hφ p) hA0
+    exact eq_of_sub_eq_zero h0
+  have h_bij : Function.Bijective ATA_lin :=
+    ⟨h_inj, LinearMap.injective_iff_surjective.mp h_inj⟩
+  let ATA_equiv := LinearEquiv.ofBijective ATA_lin h_bij
+  let ATA_inv := (ATA_equiv.toContinuousLinearEquiv : EuclideanSpace ℝ (Fin d) →L[ℝ] EuclideanSpace ℝ (Fin d))
+  (A.comp ATA_inv).comp Aad
+
+/-- Orthogonal projection onto the normal space at `φ(p)`. -/
+noncomputable def normalProjection {m d : ℕ}
+    (φ : EuclideanSpace ℝ (Fin d) → EuclideanSpace ℝ (Fin m))
+    (hφ : ∀ p, Function.Injective (fderiv ℝ φ p))
+    (p : EuclideanSpace ℝ (Fin d)) :
+    EuclideanSpace ℝ (Fin m) →L[ℝ] EuclideanSpace ℝ (Fin m) :=
+  ContinuousLinearMap.id ℝ _ - tangentProjection φ hφ p
+
+/-- The tangent-projection family is `C¹` in the parameter `p` as soon as `φ` is `C²`.
+
+This is the first analytic stepping stone for the tubular-neighborhood theorem: the
+orthogonal projection onto the tangent (and hence normal) space must vary `C¹`ly with
+the parameter.  The proof is a straightforward but lengthy composition of the facts
+that `Dφ(p)`, adjunction, multiplication, and inversion of invertible maps are all
+smooth operations. -/
+lemma tangentProjection_C1 {m d : ℕ}
+    (φ : EuclideanSpace ℝ (Fin d) → EuclideanSpace ℝ (Fin m))
+    (hφ : ∀ p, Function.Injective (fderiv ℝ φ p))
+    (hφ2 : ContDiff ℝ 2 φ) :
+    ContDiff ℝ 1 (fun p => tangentProjection φ hφ p) := by
+  -- TODO: implement the composition argument sketched above.
+  sorry
+
+/-- The normal-projection family is `C¹` in the parameter `p`. -/
+lemma normalProjection_C1 {m d : ℕ}
+    (φ : EuclideanSpace ℝ (Fin d) → EuclideanSpace ℝ (Fin m))
+    (hφ : ∀ p, Function.Injective (fderiv ℝ φ p))
+    (hφ2 : ContDiff ℝ 2 φ) :
+    ContDiff ℝ 1 (fun p => normalProjection φ hφ p) := by
+  simp only [normalProjection]
+  exact ContDiff.sub contDiff_const (tangentProjection_C1 φ hφ hφ2)
 
 /-- The tubular map sends a core point and a normal vector to the ambient point `h + v`. -/
 noncomputable def tubularMap {n : ℕ} : EuclideanSpace ℝ (Fin n) × EuclideanSpace ℝ (Fin n) →
@@ -263,7 +344,7 @@ structure ErrorGeomData where
   phi : EuclideanSpace ℝ (Fin d) → EuclideanSpace ℝ (Fin m)
   H_eq_range : H = Set.range phi
   phi_injective : Function.Injective phi
-  phi_contDiff : ContDiff ℝ 1 phi
+  phi_contDiff : ContDiff ℝ 2 phi
   phi_immersion : ∀ p, Function.Injective (fderiv ℝ phi p)
   q : M → EuclideanSpace ℝ (Fin m) → ℝ
   a : M → ℝ
