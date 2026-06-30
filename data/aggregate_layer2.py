@@ -134,7 +134,7 @@ def main() -> None:
         "correction": {
             "schema_version": "lupine.benchmark.correction.v1",
             "method": "1-D Lupine projection correction (atlas-distill mlip-correct)",
-            "description": "A single first-principal-component bias vector is fit to all model residuals on each functional and projected onto each residual. Corrected = raw + alpha * bias; no-harm holds.",
+            "description": "In-sample upper bound: a single first-principal-component bias vector is fit to all model residuals on each functional and projected onto each residual. Corrected = raw + alpha * bias; no-harm holds on the calibration set. Not a validated out-of-sample operator.",
             "command": "atlas-distill mlip-correct --catalog data/benchmark_layer2_3x3x3_summary.json --training {functional} --target {functional}",
             "per_functional": correction["per_functional"],
         },

@@ -1,14 +1,19 @@
 import Mathlib.Analysis.InnerProductSpace.Basic
 import Mathlib.Analysis.InnerProductSpace.Calculus
+import Mathlib.Analysis.InnerProductSpace.EuclideanDist
 import Mathlib.Analysis.Calculus.FDeriv.Basic
 import Mathlib.Analysis.Calculus.ContDiff.Basic
 import Mathlib.Analysis.Calculus.ContDiff.Operations
+import Mathlib.Analysis.Calculus.ContDiff.Comp
+import Mathlib.Analysis.Calculus.Deriv.Comp
+import Mathlib.Analysis.Calculus.LocalExtr.Basic
 import Mathlib.Analysis.Calculus.InverseFunctionTheorem.ContDiff
 import Mathlib.Analysis.InnerProductSpace.Projection.Basic
 import Mathlib.Analysis.InnerProductSpace.Projection.FiniteDimensional
 import Mathlib.Analysis.InnerProductSpace.Adjoint
 import Mathlib.Analysis.Normed.Module.FiniteDimension
 import Mathlib.Topology.MetricSpace.Basic
+import Mathlib.Topology.MetricSpace.Bounded
 import Mathlib.Data.Set.Function
 import Mathlib.Tactic
 
@@ -29,7 +34,7 @@ namespace OpenDistillationFactory.Materials.Theory.ExactTubularUniversality
 
 open scoped RealInnerProductSpace InnerProduct
 
-open Classical
+open Classical Bornology
 
 section helpers
 
@@ -228,18 +233,42 @@ noncomputable def tubularMap {n : ℕ} : EuclideanSpace ℝ (Fin n) × Euclidean
     EuclideanSpace ℝ (Fin n) :=
   fun ⟨h, v⟩ => h + v
 
-/-- `H` has reach at least `τ` if the tubular map is injective on normal vectors of length `< τ`. -/
-def HasReach {m d : ℕ} (H : Set (EuclideanSpace ℝ (Fin m)))
+/-- Open tubular neighborhood of radius `τ` around `H` (points whose distance to `H` is `< τ`). -/
+def openErrorTube {m : ℕ} (H : Set (EuclideanSpace ℝ (Fin m))) (τ : ℝ) :
+    Set (EuclideanSpace ℝ (Fin m)) :=
+  { x | distToSet x H < τ }
+
+/-- Normal disk bundle of radius `τ`: pairs `(h, v)` with `h ∈ H`, `v` normal at `h`,
+and `‖v‖ < τ`. -/
+def normalDiskBundle {m d : ℕ} (H : Set (EuclideanSpace ℝ (Fin m)))
+    (φ : EuclideanSpace ℝ (Fin d) → EuclideanSpace ℝ (Fin m))
+    (hH : H = Set.range φ) (τ : ℝ) :
+    Set (EuclideanSpace ℝ (Fin m) × EuclideanSpace ℝ (Fin m)) :=
+  { pv ∈ normalBundle H φ hH | ‖pv.2‖ < τ }
+
+/-- A `C¹` tubular diffeomorphism of radius `τ` for the embedded core `H`.
+
+This is the geometric content of Federer's tubular-neighborhood theorem: the normal disk
+bundle of radius `τ` is mapped diffeomorphically onto an open neighborhood of `H` by the
+tubular map `⟨h, v⟩ ↦ h + v`, and the inverse is `C¹`.  In particular every point of the
+open `τ`-tube has a unique nearest point on `H` and the nearest-point projection is `C¹`. -/
+def HasTubularDiffeomorphism {m d : ℕ} (H : Set (EuclideanSpace ℝ (Fin m)))
     (φ : EuclideanSpace ℝ (Fin d) → EuclideanSpace ℝ (Fin m))
     (hH : H = Set.range φ) (τ : ℝ) : Prop :=
-  0 < τ ∧ ∀ {p q}, p ∈ normalBundle H φ hH → q ∈ normalBundle H φ hH →
-    ‖p.2‖ < τ → ‖q.2‖ < τ → tubularMap p = tubularMap q → p = q
+  ∃ (U : Set (EuclideanSpace ℝ (Fin m)))
+    (G : EuclideanSpace ℝ (Fin m) → EuclideanSpace ℝ (Fin m) × EuclideanSpace ℝ (Fin m)),
+    0 < τ ∧
+    IsOpen U ∧
+    openErrorTube H τ ⊆ U ∧
+    Set.BijOn tubularMap (normalDiskBundle H φ hH τ) U ∧
+    Set.LeftInvOn G tubularMap (normalDiskBundle H φ hH τ) ∧
+    Set.RightInvOn G tubularMap U ∧
+    ContDiffOn ℝ 1 G U
 
-/-- Positive reach is positive by definition. -/
-lemma hasReach_pos {m d : ℕ} {H : Set (EuclideanSpace ℝ (Fin m))}
-    {φ : EuclideanSpace ℝ (Fin d) → EuclideanSpace ℝ (Fin m)}
-    {hH : H = Set.range φ} {τ : ℝ} (hτ : HasReach H φ hH τ) : 0 < τ :=
-  hτ.1
+/-- The tubular map is smooth (in fact linear). -/
+lemma tubularMap_contDiff {n : ℕ} : ContDiff ℝ ⊤ (@tubularMap n) := by
+  unfold tubularMap
+  fun_prop
 
 /-- The normal bundle fibers are orthogonal to the corresponding tangent spaces. -/
 lemma normalBundle_fiber_orthogonal {m d : ℕ} {H : Set (EuclideanSpace ℝ (Fin m))}
@@ -262,6 +291,133 @@ lemma unitNormalBundle_subset_normalBundle {m d : ℕ}
     unitNormalBundle H φ hH ⊆ normalBundle H φ hH := by
   intro pv hpv
   exact hpv.1
+
+/-- The chosen core parameter really does map back to the core point. -/
+lemma coreParam_spec {m d : ℕ} {H : Set (EuclideanSpace ℝ (Fin m))}
+    {φ : EuclideanSpace ℝ (Fin d) → EuclideanSpace ℝ (Fin m)}
+    {hH : H = Set.range φ} (h : H) :
+    φ (coreParam H φ hH h) = h.val := by
+  exact Classical.choose_spec (show ∃ p, φ p = h.val by
+    let x := h.val
+    have hmem : x ∈ H := h.2
+    rw [hH] at hmem
+    exact hmem)
+
+/-- Distance to a nonempty set is bounded by the distance to any of its points. -/
+lemma distToSet_le_mem {n : ℕ} (x : EuclideanSpace ℝ (Fin n))
+    {H : Set (EuclideanSpace ℝ (Fin n))} (hH : H.Nonempty)
+    {h : EuclideanSpace ℝ (Fin n)} (hh : h ∈ H) :
+    distToSet x H ≤ ‖x - h‖ := by
+  unfold distToSet
+  rw [dif_pos hH]
+  apply csInf_le
+  · use 0
+    rintro r ⟨y, -, rfl⟩
+    exact norm_nonneg _
+  · use h, hh
+
+/-- Distance to a nonempty set is the infimum of distances to its points. -/
+lemma distToSet_eq_sInf {n : ℕ} (x : EuclideanSpace ℝ (Fin n))
+    {H : Set (EuclideanSpace ℝ (Fin n))} (hH : H.Nonempty) :
+    distToSet x H = sInf ((fun y => ‖x - y‖) '' H) := by
+  unfold distToSet
+  rw [dif_pos hH]
+
+/-- A closed nonempty set in Euclidean space has a nearest point to any `x`. -/
+lemma exists_nearestPoint {n : ℕ} {H : Set (EuclideanSpace ℝ (Fin n))}
+    (hH : H.Nonempty) (hclosed : IsClosed H) (x : EuclideanSpace ℝ (Fin n)) :
+    ∃ h ∈ H, distToSet x H = ‖x - h‖ := by
+  rcases hH with ⟨h0, h0H⟩
+  let R := ‖x - h0‖ + 1
+  have hR_pos : 0 < R := by positivity
+  let K := H ∩ Metric.closedBall x R
+  have hK_closed : IsClosed K := IsClosed.inter hclosed Metric.isClosed_closedBall
+  have hK_bdd : IsBounded K := by
+    apply IsBounded.subset Metric.isBounded_closedBall
+    exact Set.inter_subset_right
+  have hK_compact : IsCompact K := by
+    apply Metric.isCompact_of_isClosed_isBounded hK_closed hK_bdd
+  have hK_ne : K.Nonempty := ⟨h0, h0H, by
+    rw [Metric.mem_closedBall, dist_comm, dist_eq_norm', norm_sub_rev]
+    linarith [show 0 < 1 by norm_num]⟩
+  have hcont : ContinuousOn (fun y => ‖x - y‖) K := by
+    apply Continuous.continuousOn
+    fun_prop
+  obtain ⟨h, ⟨hH', hhball⟩, hmin⟩ := IsCompact.exists_isMinOn hK_compact hK_ne hcont
+  use h, hH'
+  have hle : distToSet x H ≤ ‖x - h‖ := distToSet_le_mem x ⟨h0, h0H⟩ hH'
+  have hge : distToSet x H ≥ ‖x - h‖ := by
+    rw [distToSet_eq_sInf x ⟨h0, h0H⟩]
+    apply le_csInf
+    · use ‖x - h‖
+      use h, hH'
+    · intro r ⟨y, hy, heq⟩
+      rw [← heq]
+      by_cases hyR : y ∈ Metric.closedBall x R
+      · exact hmin ⟨hy, hyR⟩
+      · have h1 : R ≤ ‖x - y‖ := by
+          rw [Metric.mem_closedBall, dist_comm, dist_eq_norm', norm_sub_rev] at hyR
+          linarith [show 0 < 1 by norm_num]
+        have h2 : ‖x - h‖ ≤ ‖x - h0‖ := by
+          apply hmin
+          constructor
+          · exact h0H
+          · rw [Metric.mem_closedBall, dist_comm, dist_eq_norm', norm_sub_rev]
+            linarith
+        linarith
+  linarith
+
+/-- The vector from a nearest point back to `x` is normal to `H` at that point. -/
+lemma nearestPoint_mem_normalSpace {m d : ℕ} {H : Set (EuclideanSpace ℝ (Fin m))}
+    {φ : EuclideanSpace ℝ (Fin d) → EuclideanSpace ℝ (Fin m)}
+    {hH : H = Set.range φ} {x hstar : EuclideanSpace ℝ (Fin m)}
+    (hstarH : hstar ∈ H)
+    (hstar_min : ∀ y ∈ H, ‖x - y‖ ≥ ‖x - hstar‖)
+    (hφ : ContDiff ℝ 1 φ) :
+    x - hstar ∈ normalSpace H φ hH ⟨hstar, hstarH⟩ := by
+  intro w hw
+  let p0 := coreParam H φ hH ⟨hstar, hstarH⟩
+  have hp0 : φ p0 = hstar := coreParam_spec ⟨hstar, hstarH⟩
+  simp [tangentSpace] at hw
+  rcases hw with ⟨δp, hδ⟩
+  let c (t : ℝ) := φ (p0 + t • δp)
+  have hc0 : c 0 = hstar := by simp [c, hp0]
+  have hderiv_c : HasDerivAt c w 0 := by
+    have hφdiff : HasFDerivAt φ (fderiv ℝ φ p0) p0 := by
+      have hdiff : DifferentiableAt ℝ φ p0 := hφ.differentiable (by norm_num) p0
+      exact hdiff.hasFDerivAt
+    have hline : HasDerivAt (fun (t : ℝ) => p0 + t • δp) δp 0 := by
+      have hlin : HasDerivAt (fun (t : ℝ) => t • δp) δp 0 := by
+        have hid : HasDerivAt (fun (t : ℝ) => t) 1 (0 : ℝ) := hasDerivAt_id 0
+        simpa [one_smul] using hid.smul_const δp
+      exact hlin.const_add p0
+    have hcomp : HasDerivAt (fun (t : ℝ) => φ (p0 + t • δp)) (fderiv ℝ φ p0 δp) 0 := by
+      have heq : p0 = (fun (t : ℝ) => p0 + t • δp) 0 := by simp
+      exact HasFDerivAt.comp_hasDerivAt_of_eq (0 : ℝ) hφdiff hline heq
+    rwa [hδ] at hcomp
+  have hderiv_s : HasDerivAt (fun t => ‖x - c t‖ ^ 2) (-2 * inner (𝕜 := ℝ) (x - hstar) w) 0 := by
+    have h1 : HasDerivAt (fun t => x - c t) (-w) 0 :=
+      hderiv_c.const_sub x
+    have h2 := h1.norm_sq
+    simp only [hc0, inner_neg_right] at h2
+    ring_nf at h2 ⊢
+    exact h2
+  have hmin_local : IsLocalMin (fun t => ‖x - c t‖ ^ 2) 0 := by
+    apply Filter.Eventually.of_forall
+    intro t
+    have ht : c t ∈ H := by
+      simp [c]
+      rw [hH]
+      exact ⟨p0 + t • δp, rfl⟩
+    specialize hstar_min (c t) ht
+    simp [hc0]
+    nlinarith [hstar_min, norm_nonneg (x - hstar), norm_nonneg (x - c t)]
+  have heq0 : inner (𝕜 := ℝ) (x - hstar) w = 0 := by
+    have h : -2 * inner (𝕜 := ℝ) (x - hstar) w = 0 :=
+      hmin_local.hasDerivAt_eq_zero hderiv_s
+    linarith
+  rw [real_inner_comm (x - hstar) w]
+  linarith
 
 /-- The tubular map projects the zero normal vector back to the core point. -/
 lemma tubularMap_zero {n : ℕ} (h : EuclideanSpace ℝ (Fin n)) :
@@ -396,7 +552,7 @@ Components:
 - `eta model`: model-specific perturbation of the error geometry.
 - `L model`: Lipschitz constant of `eta model`.
 - `tau_H`: a positive reach for `H`.
-- `reach_condition`: the tubular map is injective on normal disks of radius `< tau_H`.
+- `tubular_condition`: a `C¹` tubular diffeomorphism of radius `tau_H` for `H`.
 
 The fields are intentionally stated as hypotheses rather than derived facts, so this is a
 skeleton that future proofs can discharge from the paper's assumptions A0–A5. -/
@@ -421,7 +577,7 @@ structure ErrorGeomData where
     ‖eta model x - eta model y‖ ≤ L model * ‖x - y‖
   tau_H : ℝ
   tau_H_pos : 0 < tau_H
-  reach_condition : HasReach H phi H_eq_range tau_H
+  tubular_condition : HasTubularDiffeomorphism H phi H_eq_range tau_H
 
 end error_geom_data
 
@@ -437,7 +593,7 @@ A1: shared core `H` is closed in `ℝᵐ`.
 A2: scalarized error field decomposes as `q_M(x) = a_M · ψ(dist(x,H)) + η_M(x)`.
 A3: common radial profile `ψ` is strictly monotone, `ψ(0)=0`, and nonnegative on `[0,∞)`.
 A4: model perturbation `η_M` is bounded by half the reach.
-A5: positive reach is encoded by `tau_H_pos` and `reach_condition` inherited from
+A5: positive reach is encoded by `tau_H_pos` and `tubular_condition` inherited from
     `ErrorGeomData`.
 
 This structure extends `ErrorGeomData` so all the geometric objects (tube, boundary,
@@ -665,15 +821,61 @@ noncomputable def pointCoreErrorGeomData
     simp
   tau_H := tau
   tau_H_pos := htau
-  reach_condition := by
-    constructor
-    · exact htau
-    · intro p q hp hq _hvp _hvq heq
-      simp [normalBundle, normalSpace, tangentSpace, coreParam] at hp hq
-      have hp0 : p.1 = 0 := by simpa using hp
-      have hq0 : q.1 = 0 := by simpa using hq
-      simp [tubularMap, hp0, hq0] at heq ⊢
-      exact Prod.ext (by simp [hp0, hq0]) heq
+  tubular_condition := by
+    use {x | ‖x‖ < tau}, fun x => (0, x)
+    have hD : ∀ pv, pv ∈ normalDiskBundle ({0} : Set (EuclideanSpace ℝ (Fin m)))
+        (fun (_ : EuclideanSpace ℝ (Fin 0)) => (0 : EuclideanSpace ℝ (Fin m)))
+        (by ext x; simp) tau ↔ pv.1 = 0 ∧ ‖pv.2‖ < tau := by
+      intro pv
+      simp [normalDiskBundle, normalBundle, normalSpace, tangentSpace, coreParam]
+    refine ⟨htau, ?_, ?_, ?_, ?_, ?_, ?_⟩
+    · -- `U` is open
+      exact isOpen_lt continuous_norm continuous_const
+    · -- the open `τ`-tube is the open ball of radius `τ` for the point core
+      intro x hx
+      simp [openErrorTube, distToSet_singleton_zero] at hx ⊢
+      exact hx
+    · -- `tubularMap` is bijective from the normal disk bundle onto `U`
+      refine ⟨?_, ?_, ?_⟩
+      · -- mapsTo
+        intro pv hpv
+        rw [hD] at hpv
+        simp [tubularMap, hpv.1]
+        exact hpv.2
+      · -- injOn
+        intro pv1 hpv1 pv2 hpv2 heq
+        rw [hD] at *
+        rcases hpv1 with ⟨hp1, _⟩
+        rcases hpv2 with ⟨hp2, _⟩
+        simp [tubularMap, hp1, hp2] at heq
+        have heq2 : pv1.2 = pv2.2 := by simpa using heq
+        ext
+        · simp [hp1, hp2]
+        · simp [heq2]
+      · -- surjOn
+        intro z hz
+        have hmem : ((0 : EuclideanSpace ℝ (Fin m)), z) ∈ normalDiskBundle ({0} : Set (EuclideanSpace ℝ (Fin m)))
+            (fun (_ : EuclideanSpace ℝ (Fin 0)) => (0 : EuclideanSpace ℝ (Fin m)))
+            (by ext x; simp) tau := by
+          simp [hD]
+          exact hz
+        have heq : tubularMap ((0 : EuclideanSpace ℝ (Fin m)), z) = z := by simp [tubularMap]
+        rw [← heq]
+        exact Set.mem_image_of_mem tubularMap hmem
+    · -- left inverse on the normal disk bundle
+      intro pv hpv
+      rw [hD] at hpv
+      have hp1 : pv.1 = 0 := hpv.1
+      simp [tubularMap, hp1]
+      ext
+      · simp [hp1]
+      · simp
+    · -- right inverse on `U`
+      intro x hx
+      simp [tubularMap]
+    · -- `G` is smooth
+      apply ContDiff.contDiffOn
+      fun_prop
 
 /-- A0–A5 assumptions for the point-core instance, with vanishing perturbation. -/
 noncomputable def pointCoreA0ToA5
@@ -993,10 +1195,203 @@ lemma boundary_diffeomorphic_unitNormalBundle
     IsC1Diffeomorphic
       (highErrorBoundary A.H r)
       (unitNormalBundle A.H A.phi A.H_eq_range) := by
-  -- Formalization of Federer's tubular neighborhood theorem for sets of positive
-  -- reach.  The proof constructs the tubular map and its inverse using the
-  -- nearest-point projection onto `H`.
-  sorry
+  rcases A.tubular_condition with ⟨U, G, hτ_pos, hU_open, hU_tube, hbij, hleft, hright, hG⟩
+  let D := normalDiskBundle A.H A.phi A.H_eq_range A.tau_H
+  have hG_mapsTo : Set.MapsTo G U D := by
+    intro x hxU
+    rcases hbij.surjOn hxU with ⟨y, hyD, hy_eq⟩
+    have : G x = y := by
+      rw [← hy_eq]
+      apply hleft
+      exact hyD
+    rwa [this]
+  have hG_injOn : Set.InjOn G U := by
+    intro x1 hx1 x2 hx2 heq
+    have h1 : x1 = tubularMap (G x1) := (hright hx1).symm
+    rw [heq] at h1
+    rw [hright hx2] at h1
+    exact h1
+  have hG_surjOn : Set.SurjOn G U D := by
+    intro y hyD
+    use tubularMap y
+    constructor
+    · exact hbij.mapsTo hyD
+    · apply hleft hyD
+  have hHne : A.H.Nonempty := by
+    use A.phi 0
+    simp [A.H_eq_range]
+  -- For points in the tubular image the distance to `H` equals the length of the
+  -- normal component returned by `G`.
+  have h_dist_eq_norm : ∀ x ∈ U, distToSet x A.H = ‖(G x).2‖ := by
+    intro x hxU
+    let y := G x
+    have hyD : y ∈ D := hG_mapsTo hxU
+    have hy1H : y.1 ∈ A.H := by
+      simp [D, normalDiskBundle, normalBundle] at hyD
+      exact hyD.1.1
+    have hynorm : ‖y.2‖ < A.tau_H := by
+      simp [D, normalDiskBundle] at hyD
+      exact hyD.2
+    have hxy : tubularMap y = x := hright hxU
+    have hxy_eq : x = y.1 + y.2 := by
+      rw [tubularMap] at hxy
+      exact hxy.symm
+    have hle : distToSet x A.H ≤ ‖y.2‖ := by
+      rw [hxy_eq]
+      have h := distToSet_le_mem (y.1 + y.2) hHne hy1H
+      rw [show (y.1 + y.2) - y.1 = y.2 by abel] at h
+      exact h
+    have hge : distToSet x A.H ≥ ‖y.2‖ := by
+      obtain ⟨hstar, hstarH, hstar_eq⟩ := exists_nearestPoint hHne A.A1_H_closed x
+      have hstar_normal : x - hstar ∈ normalSpace A.H A.phi A.H_eq_range ⟨hstar, hstarH⟩ := by
+        apply nearestPoint_mem_normalSpace hstarH ?_ (A.phi_contDiff.of_le (by norm_num))
+        intro z hz
+        have h : distToSet x A.H ≤ ‖x - z‖ := distToSet_le_mem x hHne hz
+        rw [hstar_eq] at h
+        linarith
+      have hstar_disk : (hstar, x - hstar) ∈ D := by
+        refine ⟨⟨hstarH, hstar_normal⟩, ?_⟩
+        have h1 : ‖x - hstar‖ ≤ ‖y.2‖ := by linarith [hstar_eq, hle]
+        nlinarith [hynorm]
+      have heq2 : tubularMap ⟨hstar, x - hstar⟩ = tubularMap y := by
+        simp [tubularMap, hxy_eq]
+      have heq3 : (hstar, x - hstar) = y := hbij.injOn hstar_disk hyD heq2
+      have h_eq : x - hstar = y.2 := by
+        have h : (hstar, x - hstar).2 = y.2 := by rw [heq3]
+        simpa using h
+      rw [h_eq] at hstar_eq
+      linarith [hstar_eq]
+    linarith
+  let fwd (x : EuclideanSpace ℝ (Fin m)) : EuclideanSpace ℝ (Fin m) × EuclideanSpace ℝ (Fin m) :=
+    let y := G x
+    (y.1, r⁻¹ • y.2)
+  let bwd (pv : EuclideanSpace ℝ (Fin m) × EuclideanSpace ℝ (Fin m)) : EuclideanSpace ℝ (Fin m) :=
+    tubularMap ⟨pv.1, r • pv.2⟩
+  use fwd, bwd
+  refine ⟨?_, ?_, ?_, ?_, ?_⟩
+  · -- `fwd` is bijective from the boundary onto the unit normal bundle
+    refine ⟨?_, ?_, ?_⟩
+    · -- mapsTo
+      intro x hx
+      have hxU : x ∈ U := by
+        apply hU_tube
+        simp [openErrorTube, highErrorBoundary] at hx ⊢
+        linarith [hr.2]
+      let y := G x
+      have hyD : y ∈ D := hG_mapsTo hxU
+      have hynorm : ‖y.2‖ = r := by
+        rw [← h_dist_eq_norm x hxU]
+        exact hx
+      have hy1H : y.1 ∈ A.H := by
+        simp [D, normalDiskBundle, normalBundle] at hyD
+        exact hyD.1.1
+      have hynormal : y.2 ∈ normalSpace A.H A.phi A.H_eq_range ⟨y.1, hy1H⟩ := by
+        simp [D, normalDiskBundle, normalBundle] at hyD
+        exact hyD.1.2
+      simp only [unitNormalBundle, fwd, normalBundle]
+      refine ⟨⟨hy1H, Submodule.smul_mem _ r⁻¹ hynormal⟩, ?_⟩
+      rw [norm_smul_of_nonneg (inv_nonneg.mpr hr.1.le), hynorm]
+      field_simp [show r ≠ 0 by linarith [hr.1]]
+    · -- injOn
+      intro x1 hx1 x2 hx2 heq
+      have hx1U : x1 ∈ U := by
+        apply hU_tube
+        simp [openErrorTube, highErrorBoundary] at hx1 ⊢
+        linarith [hr.2]
+      have hx2U : x2 ∈ U := by
+        apply hU_tube
+        simp [openErrorTube, highErrorBoundary] at hx2 ⊢
+        linarith [hr.2]
+      let y1 := G x1
+      let y2 := G x2
+      have hy1D : y1 ∈ D := hG_mapsTo hx1U
+      have hy2D : y2 ∈ D := hG_mapsTo hx2U
+      simp only [fwd] at heq
+      rw [Prod.ext_iff] at heq
+      have heq1 : y1.1 = y2.1 := heq.1
+      have heq2 : r⁻¹ • y1.2 = r⁻¹ • y2.2 := heq.2
+      have heq3 : y1.2 = y2.2 := by
+        exact smul_right_injective (EuclideanSpace ℝ (Fin m)) (inv_pos.mpr hr.1).ne' heq2
+      have heq_y : y1 = y2 := Prod.ext heq1 heq3
+      have hx1_eq : tubularMap y1 = x1 := hright hx1U
+      have hx2_eq : tubularMap y2 = x2 := hright hx2U
+      rw [← hx1_eq, ← hx2_eq, heq_y]
+    · -- surjOn
+      intro pv hpv
+      rcases hpv with ⟨hpv_nb, hunit⟩
+      have hpair_nb : (pv.1, r • pv.2) ∈ normalBundle A.H A.phi A.H_eq_range := by
+        rcases hpv_nb with ⟨hh, hnormal⟩
+        exact ⟨hh, Submodule.smul_mem _ r hnormal⟩
+      have hmemD : (pv.1, r • pv.2) ∈ D := by
+        refine ⟨hpair_nb, ?_⟩
+        rw [norm_smul_of_nonneg hr.1.le, hunit]
+        nlinarith
+      let x := tubularMap ⟨pv.1, r • pv.2⟩
+      have hxU : x ∈ U := hbij.mapsTo hmemD
+      have hxG : G x = (pv.1, r • pv.2) := hleft hmemD
+      have hx_boundary : distToSet x A.H = r := by
+        rw [h_dist_eq_norm x hxU, hxG]
+        rw [norm_smul_of_nonneg hr.1.le, hunit]
+        field_simp [show r ≠ 0 by linarith [hr.1]]
+      use x
+      constructor
+      · exact hx_boundary
+      · -- fwd x = pv
+        have h_smul : r⁻¹ • r • pv.2 = pv.2 := by
+          rw [smul_smul]
+          field_simp [show r ≠ 0 by linarith [hr.1]]
+          simp
+        simp only [fwd, hxG]
+        rw [h_smul]
+  · -- left inverse: `bwd ∘ fwd = id` on the boundary
+    intro x hx
+    have hxU : x ∈ U := by
+      apply hU_tube
+      simp [openErrorTube, highErrorBoundary] at hx ⊢
+      linarith [hr.2]
+    let y := G x
+    have hxy : tubularMap y = x := hright hxU
+    have h_smul : r • r⁻¹ • y.2 = y.2 := by
+      rw [smul_smul]
+      field_simp [show r ≠ 0 by linarith [hr.1]]
+      simp
+    simp only [fwd, bwd]
+    rw [h_smul]
+    simp only [tubularMap]
+    exact hxy
+  · -- right inverse: `fwd ∘ bwd = id` on the unit normal bundle
+    intro pv hpv
+    rcases hpv with ⟨hpv_nb, hunit⟩
+    have hpair_nb : (pv.1, r • pv.2) ∈ normalBundle A.H A.phi A.H_eq_range := by
+      rcases hpv_nb with ⟨hh, hnormal⟩
+      exact ⟨hh, Submodule.smul_mem _ r hnormal⟩
+    have hmemD : (pv.1, r • pv.2) ∈ D := by
+      refine ⟨hpair_nb, ?_⟩
+      rw [norm_smul_of_nonneg hr.1.le, hunit]
+      nlinarith
+    have hxG : G (tubularMap ⟨pv.1, r • pv.2⟩) = (pv.1, r • pv.2) := hleft hmemD
+    have h_smul : r⁻¹ • r • pv.2 = pv.2 := by
+      rw [smul_smul]
+      field_simp [show r ≠ 0 by linarith [hr.1]]
+      simp
+    simp only [fwd, bwd, hxG]
+    rw [h_smul]
+  · -- `fwd` is `C¹` on the boundary
+    have hboundary_U : highErrorBoundary A.H r ⊆ U := by
+      intro x hx
+      apply hU_tube
+      simp [openErrorTube, highErrorBoundary] at hx ⊢
+      linarith [hr.2]
+    have hG_bound : ContDiffOn ℝ 1 G (highErrorBoundary A.H r) := hG.mono hboundary_U
+    apply ContDiffOn.prodMk
+    · exact ContDiffOn.fst hG_bound
+    · apply ContDiffOn.const_smul
+      exact ContDiffOn.snd hG_bound
+  · -- `bwd` is `C¹` on the unit normal bundle
+    apply ContDiff.contDiffOn
+    apply ContDiff.add
+    · exact contDiff_fst
+    · exact ContDiff.smul (𝕜' := ℝ) contDiff_const contDiff_snd
 
 /-- **Pairwise diffeomorphism of model boundaries.**
 

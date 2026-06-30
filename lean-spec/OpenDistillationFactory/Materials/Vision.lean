@@ -185,14 +185,15 @@ def computationallyProvenCount : Nat :=
   -- AffineDecomposition 1, SmoothProjection 2, FiniteSampleConcentration 2,
   -- AlloyResidualTransfer 1
   -- ExactTubularUniversality: IsC1Diffeomorphic closure (3), scalar-injectivity (1),
-  -- point-core boundary diffeomorphisms (2), general pairwise bridge (1)
-  84
+  -- point-core boundary diffeomorphisms (2), general pairwise bridge (1),
+  -- boundary↔unit-normal-bundle diffeomorphism under HasTubularDiffeomorphism (1)
+  85
 
-/-- Count of documented epistemic gaps.  This now includes the single
-    named reach-theory lemma (`boundary_diffeomorphic_unitNormalBundle`) that
-    remains as a `sorry` in `ExactTubularUniversality.lean`. -/
+/-- Count of documented epistemic gaps.  The previous single gap,
+    `boundary_diffeomorphic_unitNormalBundle` in `ExactTubularUniversality.lean`,
+    has now been closed under the `HasTubularDiffeomorphism` hypothesis. -/
 def epistemicGapCount : Nat :=
-  1
+  0
 
 -- ═══════════════════════════════════════════════════════════════
 -- SECTION 4: BUILD LOCKS
@@ -208,7 +209,7 @@ def epistemicGapCount : Nat :=
 
 #guard (hypothesisCount >= 6)
 #guard (computationallyProvenCount >= 10)
-#guard (epistemicGapCount >= 1)
+#guard (epistemicGapCount == 0)
 
 #guard (empiricalParadox.simpsonsDetected == false)
 #guard (empiricalParadox.ecologicalFallacy == false)
