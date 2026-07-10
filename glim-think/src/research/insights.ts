@@ -690,7 +690,7 @@ export async function promoteInsight(
   };
 }
 
-interface LeanStatusEntry {
+export interface LeanStatusEntry {
   hypothesis_id: string;
   hypothesis_title: string;
   status: string;

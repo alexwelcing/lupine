@@ -15,6 +15,7 @@ import type { Env } from "./types";
 import { traceEnv } from "./telemetry/storage";
 import { recordCronRun, runSmoketest } from "./ops/observability";
 import { runOrchestratorTick } from "./research/orchestrator";
+import { runAutoIterate } from "./research/autoIterate";
 import { submitDailyVignette, pollPendingVignettes } from "./research/vignette";
 
 const FLEET_ELEMENTS = [
@@ -331,6 +332,24 @@ export async function scheduled(
         const result = await runOrchestratorTick(env);
         console.log(
           `[research-orchestrator] enqueued=${result.enqueued.length} notes=${result.notes.join("; ")}`,
+        );
+      }),
+    );
+    return;
+  }
+
+  if (event.cron === "15 */6 * * *") {
+    // Lean-gate-directed deepening: pick the hypothesis closest to the
+    // lean-readiness gate and run a bounded iterate cycle on it. Runs
+    // in-worker (was an external agent routine) via ctx.waitUntil —
+    // iterate is subrequest-bound (~5-10 min wall, low CPU) and fits
+    // the scheduled-handler wall budget. Offset :15 avoids the hourly
+    // orchestrator tick at :00.
+    ctx.waitUntil(
+      recordCronRun(env, "auto-iterate", event.cron, async () => {
+        const r = await runAutoIterate(env);
+        console.log(
+          `[auto-iterate] picked=${r.picked?.hypothesis_id ?? "none"} lean_ready=${r.lean_ready} report=${r.report_key ?? "—"}`,
         );
       }),
     );

@@ -74,6 +74,7 @@ import { generateAndStoreAudio } from "./agents/tts";
 import { submitDailyVignette, pollPendingVignettes, submitCustomVignette } from "./research/vignette";
 import { explainFigure } from "./agents/vlm";
 import { comprehendPaper, reasonOnHypothesis, topInsightsForHypothesis, iterateOnHypothesis, promoteInsight, leanStatusOverview } from "./research/insights";
+import { runAutoIterate } from "./research/autoIterate";
 import { listHits, updateHitStatus, type HitKind, type HitStatus } from "./research/hits";
 import { searchLiterature as searchLit } from "./literature";
 import { buildGraphSnapshot } from "./graph/snapshot";
@@ -2752,6 +2753,24 @@ ${narrative}
           sources: body.sources,
         });
         return Response.json(result, { headers: JSON_CORS_HEADERS });
+        });
+      }
+
+      // Cron-equivalent manual trigger: pick the lean-gate-closest
+      // hypothesis and iterate on it (same path as the 6-hourly cron).
+      if (url.pathname === "/admin/auto-iterate" && request.method === "POST") {
+        return await withPipelineSpan("research.pipeline.auto-iterate", { "http.route": "/admin/auto-iterate", "pipeline.trigger": "http" }, async () => {
+        const body = JSON.parse(bodyText || "{}") as {
+          max_rounds?: number;
+          papers_per_query?: number;
+          sources?: string[];
+        };
+        const report = await runAutoIterate(env, {
+          max_rounds: body.max_rounds,
+          papers_per_query: body.papers_per_query,
+          sources: body.sources,
+        });
+        return Response.json(report, { headers: JSON_CORS_HEADERS });
         });
       }
 
