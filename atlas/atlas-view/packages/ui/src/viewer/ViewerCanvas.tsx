@@ -14,6 +14,20 @@ interface ViewerCanvasProps {
   children: ReactNode;
 }
 
+const MAX_DESKTOP_DPR = 1.75;
+const MAX_CONSTRAINED_DPR = 1.25;
+
+function resolveMaxDpr(capability: RenderCapability): number {
+  if (typeof window === 'undefined') return MAX_DESKTOP_DPR;
+
+  const memoryGb = (navigator as Navigator & { deviceMemory?: number }).deviceMemory ?? 4;
+  const cores = navigator.hardwareConcurrency ?? 4;
+  const constrainedBrowser = capability.browser === 'ios-safari' || capability.browser === 'android-firefox';
+  const constrainedHardware = memoryGb <= 4 || cores <= 4;
+
+  return constrainedBrowser || constrainedHardware ? MAX_CONSTRAINED_DPR : MAX_DESKTOP_DPR;
+}
+
 export function ViewerCanvas({
   capability,
   cameraDistance,
@@ -21,6 +35,8 @@ export function ViewerCanvas({
   center,
   children,
 }: ViewerCanvasProps) {
+  const maxDpr = resolveMaxDpr(capability);
+
   return (
     <CanvasErrorBoundary capability={capability}>
       <Canvas
@@ -35,7 +51,11 @@ export function ViewerCanvas({
           preserveDrawingBuffer: true,
           powerPreference: 'high-performance',
         }}
+        dpr={[1, maxDpr]}
         onCreated={({ gl }) => {
+          gl.outputColorSpace = THREE.SRGBColorSpace;
+          gl.toneMapping = THREE.ACESFilmicToneMapping;
+          gl.toneMappingExposure = 1.05;
           // r182 deprecates PCFSoftShadowMap; PCFShadowMap is now soft.
           gl.shadowMap.type = THREE.PCFShadowMap;
         }}
