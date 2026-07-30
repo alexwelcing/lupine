@@ -12,6 +12,7 @@ fn sphere_to_element(sphere_id: &str) -> &'static str {
         "hermes-core" => "Co",
         "hermes-local-extensions" => "Cr",
         "lupine-science" => "Fe",
+        "lupine-research" => "Sc",
         "lupine-ledger" => "Cu",
         "lupine-media" => "Ni",
         "lupine-public" => "Zn",
@@ -26,6 +27,7 @@ fn sphere_to_atomic_number(sphere_id: &str) -> i32 {
         "hermes-core" => 27,             // Co
         "hermes-local-extensions" => 24, // Cr
         "lupine-science" => 26,          // Fe
+        "lupine-research" => 21,         // Sc
         "lupine-ledger" => 29,           // Cu
         "lupine-media" => 28,            // Ni
         "lupine-public" => 30,           // Zn
@@ -41,8 +43,13 @@ fn kind_radius(kind: &crate::graph::NodeKind) -> f64 {
         crate::graph::NodeKind::Project => 3.0,
         crate::graph::NodeKind::Sphere => 2.8,
         crate::graph::NodeKind::Repo => 2.4,
+        crate::graph::NodeKind::MaterialClass => 2.4,
         crate::graph::NodeKind::Claim => 2.2,
+        crate::graph::NodeKind::ErrorType => 2.2,
+        crate::graph::NodeKind::DiscoveryChain => 2.2,
+        crate::graph::NodeKind::Emblem => 2.0,
         crate::graph::NodeKind::Doc => 2.0,
+        crate::graph::NodeKind::AcceptanceTest => 1.8,
         crate::graph::NodeKind::Skill => 1.8,
         crate::graph::NodeKind::Plugin => 1.7,
         crate::graph::NodeKind::McpServer => 1.7,
@@ -51,6 +58,7 @@ fn kind_radius(kind: &crate::graph::NodeKind) -> f64 {
         crate::graph::NodeKind::CronJob => 1.4,
         crate::graph::NodeKind::ApiCredential => 1.4,
         crate::graph::NodeKind::KanbanTask => 1.3,
+        crate::graph::NodeKind::TimeGate => 1.3,
         crate::graph::NodeKind::Task => 1.3,
         crate::graph::NodeKind::Beat => 1.3,
         crate::graph::NodeKind::Binary => 1.2,
@@ -202,6 +210,7 @@ pub fn write_data(export: &MoleculeExport, path: &Path) -> Result<()> {
 fn atomic_mass_for_type(atomic_number: i32) -> f64 {
     match atomic_number {
         6 => 12.011,  // C
+        21 => 44.956, // Sc
         24 => 51.996, // Cr
         26 => 55.845, // Fe
         27 => 58.933, // Co
@@ -305,8 +314,10 @@ pub fn write_metadata(export: &MoleculeExport, path: &Path) -> Result<()> {
             .insert(kind_str);
     }
 
-    let kind_mapping: serde_json::Map<String, serde_json::Value> = kind_index
-        .iter()
+    let mut sorted_kinds: Vec<_> = kind_index.iter().collect();
+    sorted_kinds.sort_by_key(|(kind, _)| kind.as_str());
+    let kind_mapping: serde_json::Map<String, serde_json::Value> = sorted_kinds
+        .into_iter()
         .map(|(kind, idx)| {
             let nk = kind
                 .parse::<crate::graph::NodeKind>()
@@ -326,7 +337,8 @@ pub fn write_metadata(export: &MoleculeExport, path: &Path) -> Result<()> {
             let element = sphere_to_element(&s.id);
             let atomic_number = sphere_to_atomic_number(&s.id);
             let idx = sphere_index.get(&s.id).copied().unwrap_or(-1);
-            let kinds: Vec<String> = sphere_kinds.get(&s.id).map(|k| k.iter().cloned().collect()).unwrap_or_default();
+            let mut kinds: Vec<String> = sphere_kinds.get(&s.id).map(|k| k.iter().cloned().collect()).unwrap_or_default();
+            kinds.sort();
             serde_json::json!({
                 "id": s.id,
                 "name": s.name,
@@ -488,7 +500,6 @@ pub fn write_labels(export: &MoleculeExport, path: &Path) -> Result<()> {
         "edges": edge_labels,
         "meta": {
             "seed": 42,
-            "generated_at": chrono::Utc::now().to_rfc3339(),
             "node_count": export.nodes.len(),
             "edge_count": export.edge_pairs.len(),
             "sphere_count": export.spheres.len(),

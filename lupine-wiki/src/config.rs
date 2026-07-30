@@ -94,6 +94,13 @@ impl ScannerConfig {
                 80,
             ),
             crate::graph::Sphere::new(
+                "lupine-research",
+                "Lupine Research",
+                "Ontologies, research claims, acceptance tests, discovery chains, and time gates.",
+                "#84cc16",
+                75,
+            ),
+            crate::graph::Sphere::new(
                 "lupine-ledger",
                 "Lupine Ledger",
                 "Evidence, claims, D1 tables, knowledge graph, bibliography.",

@@ -158,6 +158,11 @@ fn main() -> Result<()> {
                 config::ScannerConfig::default()
             };
 
+            // Only configured spheres are scanner-managed. Default spheres with no
+            // scanner roots may be populated by library consumers and must not be
+            // pruned down to their generated sphere node during an unrelated scan.
+            let managed_sphere_ids: std::collections::HashSet<String> =
+                config.spheres.keys().cloned().collect();
             let scanner = scanner::Scanner::new(config, &project_root);
             let result = scanner.scan().context("scan project")?;
 
@@ -214,6 +219,9 @@ fn main() -> Result<()> {
             // Remove stale nodes/edges that were not seen this scan, per sphere
             let sphere_ids: std::collections::HashSet<_> = spheres.iter().map(|s| &s.id).collect();
             for sid in sphere_ids {
+                if !managed_sphere_ids.contains(sid) {
+                    continue;
+                }
                 let sphere_node_ids: Vec<String> = retained_node_ids
                     .iter()
                     .filter(|id| {

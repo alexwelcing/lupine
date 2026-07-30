@@ -437,4 +437,9 @@ impl WikiDb {
         self.conn.execute("COMMIT", [])?;
         Ok(())
     }
+
+    pub fn rollback_transaction(&mut self) -> Result<()> {
+        self.conn.execute("ROLLBACK", [])?;
+        Ok(())
+    }
 }
