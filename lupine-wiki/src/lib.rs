@@ -10,6 +10,7 @@ pub mod db;
 pub mod export_xyz;
 pub mod graph;
 pub mod layout;
+pub mod ontology_ingest;
 pub mod render;
 pub mod scanner;
 
@@ -18,5 +19,6 @@ pub use db::WikiDb;
 pub use export_xyz::{MoleculeExport, export_from_db};
 pub use graph::{Edge, EdgeKind, Node, NodeKind, Provenance, Snapshot, Sphere, Status};
 pub use layout::{LayoutResult, layout_graph};
+pub use ontology_ingest::{OntologyIngestReport, ingest_ontology};
 pub use render::Renderer;
 pub use scanner::{ScanResult, Scanner};

@@ -13,6 +13,7 @@ const DAMPING: f64 = 0.85;
 const ITERATIONS: usize = 400;
 const TIME_STEP: f64 = 0.5;
 const MIN_DIST: f64 = 2.5; // Angstroms, keeps atoms from collapsing
+const MAX_SPEED: f64 = 5.0; // bounds each integration step for high-degree graphs
 
 /// Target maximum extent (Å) for the exported molecule. The force-directed
 /// layout produces graph coordinates that are much larger than atomic length
@@ -156,6 +157,13 @@ pub fn layout_graph(nodes: &[Node], edges: &[Edge], spheres: &[Sphere], seed: u6
             vel[i][0] = (vel[i][0] + forces[i][0] * TIME_STEP) * DAMPING;
             vel[i][1] = (vel[i][1] + forces[i][1] * TIME_STEP) * DAMPING;
             vel[i][2] = (vel[i][2] + forces[i][2] * TIME_STEP) * DAMPING;
+            let speed = vel[i][0].hypot(vel[i][1]).hypot(vel[i][2]);
+            if speed > MAX_SPEED {
+                let scale = MAX_SPEED / speed;
+                vel[i][0] *= scale;
+                vel[i][1] *= scale;
+                vel[i][2] *= scale;
+            }
             pos[i][0] += vel[i][0] * TIME_STEP;
             pos[i][1] += vel[i][1] * TIME_STEP;
             pos[i][2] += vel[i][2] * TIME_STEP;
@@ -209,4 +217,68 @@ fn bounds(positions: &[[f64; 3]]) -> ([f64; 3], [f64; 3]) {
         max[2] = max[2].max(*z);
     }
     (min, max)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::graph::{EdgeKind, NodeKind, Provenance, Status};
+    use std::collections::HashSet;
+
+    #[test]
+    fn large_hub_graph_preserves_distinct_positions_and_three_dimensional_bounds() {
+        let sphere = Sphere::new("large", "Large", "", "#000000", 1);
+        let nodes: Vec<_> = (0..1_115)
+            .map(|i| Node {
+                id: format!("node-{i}"),
+                sphere_id: sphere.id.clone(),
+                kind: NodeKind::File,
+                name: format!("Node {i}"),
+                uri: None,
+                config_hash: None,
+                content: None,
+                status: Status::Active,
+                provenance: Provenance::Declared,
+                owner_profile: None,
+                updated_at: None,
+            })
+            .collect();
+        let edges: Vec<_> = (1..nodes.len())
+            .map(|i| Edge {
+                id: Edge::stable_id(&nodes[0].id, &nodes[i].id, EdgeKind::BelongsTo),
+                src_id: nodes[0].id.clone(),
+                dst_id: nodes[i].id.clone(),
+                kind: EdgeKind::BelongsTo,
+                provenance: Provenance::Declared,
+                metadata: None,
+                updated_at: None,
+            })
+            .collect();
+
+        let positions = layout_graph(&nodes, &edges, &[sphere], 42).positions;
+        let unique_at_export_precision: HashSet<_> = positions
+            .iter()
+            .map(|p| {
+                (
+                    (p[0] * 1_000_000.0).round() as i64,
+                    (p[1] * 1_000_000.0).round() as i64,
+                    (p[2] * 1_000_000.0).round() as i64,
+                )
+            })
+            .collect();
+        let (min, max) = bounds(&positions);
+        let extents = [max[0] - min[0], max[1] - min[1], max[2] - min[2]];
+
+        assert_eq!(
+            unique_at_export_precision.len(),
+            nodes.len(),
+            "large layout collapsed to {} exported positions for {} nodes",
+            unique_at_export_precision.len(),
+            nodes.len()
+        );
+        assert!(
+            extents.iter().all(|extent| *extent >= 10.0),
+            "large layout lost useful 3D bounds: {extents:?}"
+        );
+    }
 }
