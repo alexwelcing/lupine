@@ -5,12 +5,12 @@ use std::process::Command;
 
 fn ontology_path() -> PathBuf {
     PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-        .join("../../lupine-ledger/content/ontology/lupine-ontology.json")
+        .join("tests/fixtures/lupine-ontology.json")
 }
 
 fn provenance_path() -> PathBuf {
     PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-        .join("../../lupine-ledger/content/ontology/PROVENANCE.sha256")
+        .join("tests/fixtures/PROVENANCE.sha256")
 }
 
 fn content(node: &lupine_wiki::Node) -> Value {
