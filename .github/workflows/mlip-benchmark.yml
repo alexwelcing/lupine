@@ -35,11 +35,7 @@ on:
         description: 'POST results to glim-think /ingest/batch'
         required: false
         type: boolean
-        default: true
-  schedule:
-    # Tuesday 11:00 UTC — runs after the unit-7 weekly critique drain
-    # (Monday 09:00) so the manifold analysis has fresh MLIP rows.
-    - cron: '0 11 * * TUE'
+        default: false
 
 jobs:
   benchmark:
@@ -49,7 +45,10 @@ jobs:
       USE_SPACE: ${{ github.event.inputs.use_space != 'false' }}
       MLIP_SET: ${{ github.event.inputs.mlips || 'chgnet' }}
       ELEMENT_SET: ${{ github.event.inputs.elements || 'Al,Cu,Ni,Ag,Au,Pt,Pd,Pb,Fe,Cr,Mo,W,V,Nb,Ta' }}
-      DO_INGEST: ${{ github.event.inputs.ingest != 'false' }}
+      # Ingestion is opt-in until the worker and repository token are rotated
+      # together. A missing/mismatched token must fail a manual ingest rather
+      # than making a scheduled benchmark red every week.
+      DO_INGEST: ${{ github.event_name == 'workflow_dispatch' && inputs.ingest }}
       GLIM_API_URL: ${{ secrets.GLIM_API_URL || 'https://glim-think-v1.aw-ab5.workers.dev' }}
       GLIM_HF_SPACE: ${{ secrets.GLIM_HF_SPACE || 'https://huggingface.co/spaces/AlexWelcing/glim-mlip-bench' }}
     steps:

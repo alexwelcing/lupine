@@ -230,10 +230,29 @@ def test_batch_attaches_github_run_provenance(runner: CliRunner, monkeypatch: py
 
 def test_batch_without_refs_prints_to_stdout(runner: CliRunner, monkeypatch: pytest.MonkeyPatch) -> None:
     rec: list[dict[str, Any]] = []
-    _patch_gradio_flow(monkeypatch, rec, [[{"element": "Al", "c11": 108.0}]])
+    _patch_gradio_flow(monkeypatch, rec, [[{
+        "element": "Al", "predicted": 108.0, "error": -0.01,
+    }]])
     result = runner.invoke(glim_mlip.mlip, ["batch", "--elements", "Al"])
     assert result.exit_code == 0, result.output
     assert '"element": "Al"' in result.output
+
+
+def test_batch_rejects_space_error_records(runner: CliRunner, monkeypatch: pytest.MonkeyPatch,
+                                           tmp_path: Path) -> None:
+    rec: list[dict[str, Any]] = []
+    _patch_gradio_flow(monkeypatch, rec, [[
+        {"error": "calculator init failed", "element": "Al", "mlip": "chgnet"},
+        {"error": "calculator init failed", "element": "Cu", "mlip": "chgnet"},
+    ]])
+    out = tmp_path / "records.jsonl"
+    result = runner.invoke(
+        glim_mlip.mlip,
+        ["batch", "--elements", "Al,Cu", "--out", str(out)],
+    )
+    assert result.exit_code != 0
+    assert "2 prediction error record(s)" in result.output
+    assert not out.exists()
 
 
 def test_ingest_posts_to_worker(runner: CliRunner, monkeypatch: pytest.MonkeyPatch,
