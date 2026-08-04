@@ -230,7 +230,9 @@ def test_batch_attaches_github_run_provenance(runner: CliRunner, monkeypatch: py
 
 def test_batch_without_refs_prints_to_stdout(runner: CliRunner, monkeypatch: pytest.MonkeyPatch) -> None:
     rec: list[dict[str, Any]] = []
-    _patch_gradio_flow(monkeypatch, rec, [[{"element": "Al", "c11": 108.0}]])
+    _patch_gradio_flow(monkeypatch, rec, [[{
+        "element": "Al", "predicted": 108.0, "error": -0.01,
+    }]])
     result = runner.invoke(glim_mlip.mlip, ["batch", "--elements", "Al"])
     assert result.exit_code == 0, result.output
     assert '"element": "Al"' in result.output

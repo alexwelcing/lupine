@@ -244,7 +244,12 @@ def batch(ctx: click.Context, elements: str, mlips: str,
                        [elements, mlips, refs_json])
     if not isinstance(out, list):
         raise click.ClickException(f"unexpected response shape: {type(out).__name__}")
-    prediction_errors = [row for row in out if isinstance(row, dict) and row.get("error")]
+    # Valid BenchmarkRecords carry a numeric relative-error field. The Space's
+    # fail-closed sentinel rows instead carry a human-readable error string.
+    prediction_errors = [
+        row for row in out
+        if isinstance(row, dict) and isinstance(row.get("error"), str)
+    ]
     if prediction_errors:
         first_error = str(prediction_errors[0]["error"])
         raise click.ClickException(
