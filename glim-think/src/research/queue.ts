@@ -516,6 +516,7 @@ export function buildMlipCellRunPayload(
   env: Env,
   task: MlipCellRunTask,
   beatEmitUrl: string,
+  traceContext?: { traceId: string; spanId: string },
 ): AtlasTaskPayload {
   const targetJob = MLIP_CELL_TARGET_JOBS[task.mlip_id];
   if (!targetJob) throw new Error(`unsupported MLIP runner target for ${task.mlip_id}`);
@@ -544,6 +545,8 @@ export function buildMlipCellRunPayload(
     "--artifact-prefix",
     task.artifact_prefix ?? defaultMlipArtifactPrefix(env, task, { row_id: rowId, variant_id: variantId }),
   ];
+  if (traceContext?.traceId) args.push("--phoenix-trace-id", traceContext.traceId);
+  if (traceContext?.spanId) args.push("--phoenix-span-id", traceContext.spanId);
   if (task.campaign_id) args.push("--campaign-id", task.campaign_id);
   if (distillProfile !== "off" && task.support_manifest_url) {
     args.push("--support-manifest-url", task.support_manifest_url);
@@ -760,11 +763,16 @@ async function runTaskInner(env: Env, task: ResearchTask & { job_id?: string }):
       },
       async (span) => {
         try {
-          const result = await dispatchAtlasJob(env, payload);
+          const ctx = span.spanContext();
+          const tracedPayload = buildMlipCellRunPayload(env, task, beatEmitUrl, {
+            traceId: ctx.traceId,
+            spanId: ctx.spanId,
+          });
+          const result = await dispatchAtlasJob(env, tracedPayload);
           span.setAttribute("compute.dispatch.task_name", result.task_name);
           span.setAttribute("compute.dispatch.dev_mode", result.dev_mode);
-          span.setAttribute("compute.dispatch.command", payload.command);
-          span.setAttribute("compute.dispatch.target_job", payload.target_job ?? "");
+          span.setAttribute("compute.dispatch.command", tracedPayload.command);
+          span.setAttribute("compute.dispatch.target_job", tracedPayload.target_job ?? "");
           await recordMlipCellDispatchEval(
             env,
             span,

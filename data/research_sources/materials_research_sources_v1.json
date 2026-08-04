@@ -1,0 +1,1067 @@
+{
+  "schema": "lupine.research.source_registry.v1",
+  "registry_id": "materials-research-source-registry-v1",
+  "created_at": "2026-05-31T00:00:00Z",
+  "owner": "lupine-science",
+  "purpose": "Reusable, claim-bounded registry of external materials-science datasets, papers, repositories, and model resources for MLIP, molecular dynamics, crystal-structure, high-pressure, finite-temperature, and phase-change research.",
+  "claim_guardrail": "A source may support only the claims listed in its claim_support entries. State-condition evidence, phase labels, model capability, and accuracy-improvement claims must not be collapsed into one another.",
+  "domains": [
+    "mlip_accuracy",
+    "molecular_dynamics",
+    "crystal_structures",
+    "finite_temperature",
+    "high_pressure",
+    "phase_change",
+    "model_validation",
+    "benchmark_design"
+  ],
+  "ingestion_families": [
+    {
+      "adapter_id": "hf-dataset-viewer-parquet",
+      "description": "Read Hugging Face Dataset Viewer split/size/parquet metadata, then sample parquet rows into Lupine fixture manifests without downloading full corpora."
+    },
+    {
+      "adapter_id": "repository-metadata",
+      "description": "Track repository, model, and validation-test metadata as benchmark context or backend candidates."
+    },
+    {
+      "adapter_id": "article-metadata",
+      "description": "Track paper/preprint claims and citation metadata. This adapter does not assert reusable data availability by itself."
+    },
+    {
+      "adapter_id": "archive-trajectory-import",
+      "description": "Import trajectory archives or downloadable files after license and format checks pass."
+    }
+  ],
+  "claim_levels": {
+    "ground_truth_reference": "Can provide energy/force/stress/structure labels for direct evaluator rows, subject to method limitations.",
+    "state_condition_reference": "Can provide finite-temperature, pressure, stress, ensemble, or trajectory-state context, but not necessarily phase labels.",
+    "phase_label_reference": "Can provide phase labels or phase-resolved trajectories with provenance.",
+    "benchmark_context": "Can guide benchmark design, leakage avoidance, or comparison framing but does not directly provide fixture labels.",
+    "model_comparison": "Can be run as or compared against a model/backend, but is not treated as truth data.",
+    "metadata_only": "Useful as an index or stewardship resource; requires downstream source-specific resolution before claims."
+  },
+  "sources": [
+    {
+      "source_id": "omat24-aimd-pbe-1000-npt",
+      "title": "OMat24 train AIMD from PBE 1000 NPT",
+      "source_kind": "dataset",
+      "domains": [
+        "mlip_accuracy",
+        "molecular_dynamics",
+        "finite_temperature",
+        "crystal_structures"
+      ],
+      "urls": [
+        {
+          "label": "Hugging Face dataset",
+          "url": "https://huggingface.co/datasets/colabfit/OMat24_train_aimd_from_PBE_1000_npt"
+        },
+        {
+          "label": "Dataset Viewer size API",
+          "url": "https://datasets-server.huggingface.co/size?dataset=colabfit/OMat24_train_aimd_from_PBE_1000_npt"
+        },
+        {
+          "label": "ColabFit record",
+          "url": "https://materials.colabfit.org/id/DS_jqrkc9e7cgmh_0"
+        },
+        {
+          "label": "OMat24 paper",
+          "url": "https://arxiv.org/abs/2410.12771"
+        }
+      ],
+      "citation": {
+        "citation_key": "barroso_luque_omat24_aimd_pbe_1000_npt_2025",
+        "doi": "10.60732/25f16f85",
+        "paper_arxiv": "2410.12771"
+      },
+      "license": "cc-by-4.0",
+      "stewardship": "Use the Hugging Face Dataset Viewer/parquet path first. Preserve ColabFit dataset DOI, OMat24 paper citation, DFT method, split/config, configuration_id, property_id, and metadata paths in every derived fixture row.",
+      "capabilities": {
+        "structures": true,
+        "energy": true,
+        "forces": true,
+        "stress": true,
+        "trajectory": true,
+        "temperature": "dataset split encodes 1000 K AIMD/NPT intent; verify row-level metadata before scalar temperature claims",
+        "pressure": "NPT and cauchy_stress available; scalar pressure labels require metadata extraction or stress-derived convention",
+        "phase_label": false,
+        "models": false,
+        "benchmark_context": true
+      },
+      "claim_support": [
+        {
+          "claim_id": "finite_temperature_snapshot_accuracy",
+          "level": "ground_truth_reference",
+          "evidence_fields": [
+            "energy",
+            "atomic_forces",
+            "cauchy_stress",
+            "cell",
+            "positions",
+            "atomic_numbers",
+            "configuration_id",
+            "property_id"
+          ],
+          "guardrail": "Supports finite-temperature AIMD/NPT energy-force-stress snapshots. Does not by itself support phase-change labels."
+        },
+        {
+          "claim_id": "state_condition_coverage",
+          "level": "state_condition_reference",
+          "evidence_fields": [
+            "dataset_id",
+            "configuration_metadata",
+            "property_metadata",
+            "cauchy_stress"
+          ],
+          "guardrail": "Treat 1000 K/NPT as source-level state context until row-level metadata is parsed."
+        }
+      ],
+      "verification": {
+        "status": "verified_live",
+        "checked_at": "2026-05-31T00:00:00Z",
+        "methods": [
+          "Hugging Face Dataset Viewer /is-valid",
+          "Hugging Face Dataset Viewer /splits",
+          "Hugging Face Dataset Viewer /size",
+          "Hugging Face raw README"
+        ],
+        "evidence": {
+          "viewer": true,
+          "search": true,
+          "filter": true,
+          "configs": [
+            "default/train",
+            "info/train"
+          ],
+          "observed_rows": 2262480,
+          "estimated_rows": 18761998,
+          "num_columns_default": 42,
+          "partial": true,
+          "license_seen": "cc-by-4.0"
+        }
+      },
+      "ingestion": {
+        "priority": 1,
+        "status": "ready_for_sampler",
+        "adapters": [
+          "hf-dataset-viewer-parquet"
+        ],
+        "target_artifacts": [
+          "state-phase-seed-v1",
+          "finite-temperature-mlip-heldout-v1"
+        ],
+        "next_action": "Sample a small element-balanced set from default/train, parse metadata for ensemble/temperature/pressure conventions, and preserve original configuration/property ids."
+      }
+    },
+    {
+      "source_id": "omat24-aimd-pbe-3000-npt",
+      "title": "OMat24 train AIMD from PBE 3000 NPT",
+      "source_kind": "dataset",
+      "domains": [
+        "mlip_accuracy",
+        "molecular_dynamics",
+        "finite_temperature",
+        "high_temperature",
+        "crystal_structures"
+      ],
+      "urls": [
+        {
+          "label": "Hugging Face dataset",
+          "url": "https://huggingface.co/datasets/colabfit/OMat24_train_aimd_from_PBE_3000_npt"
+        },
+        {
+          "label": "Dataset Viewer size API",
+          "url": "https://datasets-server.huggingface.co/size?dataset=colabfit/OMat24_train_aimd_from_PBE_3000_npt"
+        },
+        {
+          "label": "ColabFit record",
+          "url": "https://materials.colabfit.org/id/DS_6xvvh8yl7rfd_0"
+        },
+        {
+          "label": "OMat24 paper",
+          "url": "https://arxiv.org/abs/2410.12771"
+        }
+      ],
+      "citation": {
+        "citation_key": "barroso_luque_omat24_aimd_pbe_3000_npt_2025",
+        "doi": "10.60732/edd12490",
+        "paper_arxiv": "2410.12771"
+      },
+      "license": "cc-by-4.0",
+      "stewardship": "Use as the high-temperature counterpart to the 1000 K NPT source. Keep it separated from low-temperature and relaxation trajectories so phase-boundary claims do not become temperature-only claims.",
+      "capabilities": {
+        "structures": true,
+        "energy": true,
+        "forces": true,
+        "stress": true,
+        "trajectory": true,
+        "temperature": "dataset split encodes 3000 K AIMD/NPT intent; verify row-level metadata before scalar temperature claims",
+        "pressure": "NPT and cauchy_stress available; scalar pressure labels require metadata extraction or stress-derived convention",
+        "phase_label": false,
+        "models": false,
+        "benchmark_context": true
+      },
+      "claim_support": [
+        {
+          "claim_id": "finite_temperature_snapshot_accuracy",
+          "level": "ground_truth_reference",
+          "evidence_fields": [
+            "energy",
+            "atomic_forces",
+            "cauchy_stress",
+            "cell",
+            "positions",
+            "atomic_numbers",
+            "configuration_id",
+            "property_id"
+          ],
+          "guardrail": "Supports hot AIMD/NPT energy-force-stress snapshots. Does not by itself say whether a row is liquid, amorphous, or crystalline."
+        },
+        {
+          "claim_id": "state_condition_coverage",
+          "level": "state_condition_reference",
+          "evidence_fields": [
+            "dataset_id",
+            "configuration_metadata",
+            "property_metadata",
+            "cauchy_stress"
+          ],
+          "guardrail": "Treat 3000 K/NPT as source-level state context until row-level metadata is parsed."
+        }
+      ],
+      "verification": {
+        "status": "verified_live",
+        "checked_at": "2026-05-31T00:00:00Z",
+        "methods": [
+          "Hugging Face Dataset Viewer /is-valid",
+          "Hugging Face Dataset Viewer /splits",
+          "Hugging Face Dataset Viewer /size",
+          "Hugging Face raw README"
+        ],
+        "evidence": {
+          "viewer": true,
+          "search": true,
+          "filter": true,
+          "configs": [
+            "default/train",
+            "info/train"
+          ],
+          "observed_rows": 856109,
+          "estimated_rows": 5751561,
+          "num_columns_default": 42,
+          "partial": true,
+          "license_seen": "cc-by-4.0"
+        }
+      },
+      "ingestion": {
+        "priority": 1,
+        "status": "ready_for_sampler",
+        "adapters": [
+          "hf-dataset-viewer-parquet"
+        ],
+        "target_artifacts": [
+          "state-phase-seed-v1",
+          "high-temperature-mlip-heldout-v1"
+        ],
+        "next_action": "Sample a small high-temperature counter-slice and compare order metrics against the 1000 K source before any phase label is assigned."
+      }
+    },
+    {
+      "source_id": "lemat-traj",
+      "title": "LeMat-Traj: scalable unified materials trajectories",
+      "source_kind": "dataset",
+      "domains": [
+        "mlip_accuracy",
+        "molecular_dynamics",
+        "crystal_structures",
+        "benchmark_design"
+      ],
+      "urls": [
+        {
+          "label": "Hugging Face dataset",
+          "url": "https://huggingface.co/datasets/LeMaterial/LeMat-Traj"
+        },
+        {
+          "label": "Dataset Viewer size API",
+          "url": "https://datasets-server.huggingface.co/size?dataset=LeMaterial/LeMat-Traj"
+        },
+        {
+          "label": "LeMat-Traj paper",
+          "url": "https://arxiv.org/abs/2504.05565"
+        }
+      ],
+      "citation": {
+        "citation_key": "lematerial_lemat_traj_2025",
+        "paper_arxiv": "2504.05565"
+      },
+      "license": "cc-by-4.0",
+      "stewardship": "Use for broad trajectory coverage and support-distribution mapping. Preserve immutable_id, id, relaxation_step, relaxation_number, functional, and compatibility split.",
+      "capabilities": {
+        "structures": true,
+        "energy": true,
+        "forces": true,
+        "stress": true,
+        "trajectory": true,
+        "temperature": false,
+        "pressure": "stress_tensor present; pressure requires derived convention",
+        "phase_label": false,
+        "models": false,
+        "benchmark_context": true
+      },
+      "claim_support": [
+        {
+          "claim_id": "broad_crystal_support_distribution",
+          "level": "ground_truth_reference",
+          "evidence_fields": [
+            "energy",
+            "energy_corrected",
+            "forces",
+            "stress_tensor",
+            "lattice_vectors",
+            "cartesian_site_positions",
+            "functional",
+            "space_group_it_number"
+          ],
+          "guardrail": "Excellent for broad energy/force/stress coverage. Do not infer finite-temperature phase labels."
+        },
+        {
+          "claim_id": "support_gap_discovery",
+          "level": "benchmark_context",
+          "evidence_fields": [
+            "elements",
+            "nsites",
+            "space_group_it_number",
+            "relaxation_step",
+            "stress_tensor"
+          ],
+          "guardrail": "Use as a source distribution map and negative-example reservoir, not as the sole state/phase truth source."
+        }
+      ],
+      "verification": {
+        "status": "verified_live",
+        "checked_at": "2026-05-31T00:00:00Z",
+        "methods": [
+          "Hugging Face Dataset Viewer /is-valid",
+          "Hugging Face Dataset Viewer /splits",
+          "Hugging Face Dataset Viewer /size",
+          "Hugging Face raw README"
+        ],
+        "evidence": {
+          "viewer": true,
+          "search": true,
+          "filter": true,
+          "statistics": true,
+          "configs": [
+            "compatible_pbe/train",
+            "compatible_pbesol/train",
+            "compatible_r2scan/train",
+            "compatible_scan/train",
+            "non_compatible/train"
+          ],
+          "num_rows": 121274458,
+          "num_bytes_parquet_files": 85107479136,
+          "num_columns_compatible_pbe": 25,
+          "license_seen": "cc-by-4.0"
+        }
+      },
+      "ingestion": {
+        "priority": 2,
+        "status": "ready_for_sampler",
+        "adapters": [
+          "hf-dataset-viewer-parquet"
+        ],
+        "target_artifacts": [
+          "broad-crystal-support-v1",
+          "support-gap-map-v1"
+        ],
+        "next_action": "Build a tiny stratified sample across compatibility configs, chemistry size, stress magnitude, and relaxation step."
+      }
+    },
+    {
+      "source_id": "mptrj-materials-project",
+      "title": "Materials Project trajectory data used by CHGNet/MPtrj",
+      "source_kind": "dataset",
+      "domains": [
+        "mlip_accuracy",
+        "crystal_structures",
+        "benchmark_design"
+      ],
+      "urls": [
+        {
+          "label": "Materials Project MPtrj documentation",
+          "url": "https://docs.materialsproject.org/services/ml-and-ai-applications/mptrj"
+        },
+        {
+          "label": "MPtrj Figshare record",
+          "url": "https://figshare.com/articles/dataset/Materials_Project_Trjectory_MPtrj_Dataset/23713842"
+        }
+      ],
+      "citation": {
+        "citation_key": "deng_chgnet_mptrj_2023"
+      },
+      "license": "Materials Project and Figshare terms apply; verify before redistributing subsets.",
+      "stewardship": "Continue using as the canonical relaxation-trajectory source for current heldout/support fixtures. Keep clear that it is not a controlled finite-temperature phase-change source.",
+      "capabilities": {
+        "structures": true,
+        "energy": true,
+        "forces": true,
+        "stress": true,
+        "trajectory": true,
+        "temperature": false,
+        "pressure": "stress tensors present; scalar pressure requires derived convention",
+        "phase_label": false,
+        "models": false,
+        "benchmark_context": true
+      },
+      "claim_support": [
+        {
+          "claim_id": "relaxation_trajectory_accuracy",
+          "level": "ground_truth_reference",
+          "evidence_fields": [
+            "energy",
+            "forces",
+            "stress",
+            "structure",
+            "ionic_step"
+          ],
+          "guardrail": "Supports DFT relaxation accuracy and broad MLIP heldout rows, not finite-temperature or phase-change labels."
+        }
+      ],
+      "verification": {
+        "status": "verified_live",
+        "checked_at": "2026-05-31T00:00:00Z",
+        "methods": [
+          "Materials Project documentation page fetched",
+          "Existing canonical fixture provenance"
+        ],
+        "evidence": {
+          "docs_state": "Materials Project docs describe energies, forces, stresses, structures, and magnetic moments from ionic step data.",
+          "local_fixture": "gcp/mlip-cell-runner/fixtures/canonical_structures_v2_mptrj.json"
+        }
+      },
+      "ingestion": {
+        "priority": 2,
+        "status": "already_in_use",
+        "adapters": [
+          "hf-dataset-viewer-parquet"
+        ],
+        "target_artifacts": [
+          "canonical-structures-v2",
+          "canonical-distill-support-mptrj-train-plus-elastic-v1"
+        ],
+        "next_action": "Retain as the relaxation-control source while using OMat24/GST/HPCSD to fill state and phase gaps."
+      }
+    },
+    {
+      "source_id": "gst225-cambridge-gap-trajectories",
+      "title": "Data for modeling Ge2Sb2Te5 phase-change memory material with a machine-learned interatomic potential",
+      "source_kind": "dataset_archive",
+      "domains": [
+        "phase_change",
+        "molecular_dynamics",
+        "crystal_structures"
+      ],
+      "urls": [
+        {
+          "label": "Cambridge repository item",
+          "url": "https://www.repository.cam.ac.uk/items/4c68a564-d620-4c14-ac05-56289d0bc5b9"
+        }
+      ],
+      "citation": {
+        "citation_key": "sosso_gst225_gap_data"
+      },
+      "license": "Repository-specific; verify file license before redistribution.",
+      "stewardship": "Use as the first narrow phase-change data source only after archive file formats and reuse terms are inspected. Preserve trajectory origin, phase state, temperature, and potential/model provenance.",
+      "capabilities": {
+        "structures": true,
+        "energy": "archive-dependent",
+        "forces": "archive-dependent",
+        "stress": "archive-dependent",
+        "trajectory": true,
+        "temperature": "trajectory metadata expected; verify per file",
+        "pressure": false,
+        "phase_label": true,
+        "models": true,
+        "benchmark_context": true
+      },
+      "claim_support": [
+        {
+          "claim_id": "phase_change_labels",
+          "level": "phase_label_reference",
+          "evidence_fields": [
+            "phase_state",
+            "trajectory_file",
+            "temperature",
+            "composition",
+            "model_or_potential"
+          ],
+          "guardrail": "Use for GST phase-change behavior only. Do not generalize to all crystals or pressure regimes."
+        }
+      ],
+      "verification": {
+        "status": "verified_live",
+        "checked_at": "2026-05-31T00:00:00Z",
+        "methods": [
+          "Repository URL fetched"
+        ],
+        "evidence": {
+          "http_status": 200,
+          "page_type": "repository item",
+          "known_content": "Trajectories of glass and liquid Ge2Sb2Te5 models generated with GAP."
+        }
+      },
+      "ingestion": {
+        "priority": 1,
+        "status": "needs_archive_inspection",
+        "adapters": [
+          "archive-trajectory-import"
+        ],
+        "target_artifacts": [
+          "phase-change-seed-gst-v1",
+          "state-phase-seed-v1"
+        ],
+        "next_action": "Inspect downloadable files, license, phase labels, and trajectory schema; import only a tiny provenance-preserving sample."
+      }
+    },
+    {
+      "source_id": "gst225-crystallization-mlip-2024",
+      "title": "Unraveling crystallization kinetics of Ge2Sb2Te5 with a machine-learned interatomic potential",
+      "source_kind": "paper",
+      "domains": [
+        "phase_change",
+        "molecular_dynamics",
+        "model_validation"
+      ],
+      "urls": [
+        {
+          "label": "npj Computational Materials paper",
+          "url": "https://www.nature.com/articles/s41524-024-01217-6"
+        }
+      ],
+      "citation": {
+        "citation_key": "bonati_gst225_crystallization_2024",
+        "doi": "10.1038/s41524-024-01217-6"
+      },
+      "license": "Nature article license; verify supplementary data terms before reuse.",
+      "stewardship": "Use for phase-label taxonomy, order-parameter design, and GST-focused claims. Do not treat paper text as reusable fixture data unless supplementary data are explicitly ingested.",
+      "capabilities": {
+        "structures": "paper reports phase-resolved configuration database; data access must be verified",
+        "energy": "reported training database",
+        "forces": "reported training database",
+        "stress": "reported training database",
+        "trajectory": true,
+        "temperature": true,
+        "pressure": false,
+        "phase_label": true,
+        "models": true,
+        "benchmark_context": true
+      },
+      "claim_support": [
+        {
+          "claim_id": "phase_label_taxonomy",
+          "level": "benchmark_context",
+          "evidence_fields": [
+            "liquid",
+            "amorphous",
+            "cubic",
+            "hexagonal",
+            "coordination_number",
+            "pair_correlation"
+          ],
+          "guardrail": "Use as taxonomy and methodology until data files are resolved."
+        }
+      ],
+      "verification": {
+        "status": "verified_live",
+        "checked_at": "2026-05-31T00:00:00Z",
+        "methods": [
+          "Publisher page fetched",
+          "Paper metadata inspected"
+        ],
+        "evidence": {
+          "http_status": 200,
+          "reported_database_size": "about 180000 configurations",
+          "reported_phases": [
+            "liquid",
+            "amorphous",
+            "cubic",
+            "hexagonal"
+          ]
+        }
+      },
+      "ingestion": {
+        "priority": 2,
+        "status": "metadata_ready_data_needs_resolution",
+        "adapters": [
+          "article-metadata"
+        ],
+        "target_artifacts": [
+          "phase-label-taxonomy-v1"
+        ],
+        "next_action": "Resolve supplementary data and convert methods into measurable phase-label fields."
+      }
+    },
+    {
+      "source_id": "hpcsd-high-pressure-crystal-structures",
+      "title": "High-Pressure Crystal Structure Database",
+      "source_kind": "paper",
+      "domains": [
+        "high_pressure",
+        "crystal_structures",
+        "phase_change",
+        "benchmark_design"
+      ],
+      "urls": [
+        {
+          "label": "arXiv paper",
+          "url": "https://arxiv.org/abs/2605.14471"
+        }
+      ],
+      "citation": {
+        "citation_key": "hpcsd_2026",
+        "paper_arxiv": "2605.14471"
+      },
+      "license": "arXiv/preprint and database terms must be checked before importing data.",
+      "stewardship": "Use as a pressure-resolved structure registry candidate. Only ingest entries with traceable pressure, structure, source, and license metadata.",
+      "capabilities": {
+        "structures": true,
+        "energy": false,
+        "forces": false,
+        "stress": false,
+        "trajectory": false,
+        "temperature": "source-dependent",
+        "pressure": true,
+        "phase_label": "pressure-resolved structural phase labels possible; verify database schema",
+        "models": false,
+        "benchmark_context": true
+      },
+      "claim_support": [
+        {
+          "claim_id": "pressure_resolved_structure",
+          "level": "state_condition_reference",
+          "evidence_fields": [
+            "pressure",
+            "crystal_structure",
+            "source_trace",
+            "composition"
+          ],
+          "guardrail": "Pressure-structure provenance only. Does not provide energy/force/stress evaluator labels unless linked back to calculations."
+        }
+      ],
+      "verification": {
+        "status": "verified_live",
+        "checked_at": "2026-05-31T00:00:00Z",
+        "methods": [
+          "arXiv page fetched"
+        ],
+        "evidence": {
+          "http_status": 200,
+          "publication_state": "preprint",
+          "reported_role": "pressure-resolved experimental and theoretical high-pressure structures"
+        }
+      },
+      "ingestion": {
+        "priority": 2,
+        "status": "needs_database_access_resolution",
+        "adapters": [
+          "article-metadata"
+        ],
+        "target_artifacts": [
+          "pressure-structure-seed-v1"
+        ],
+        "next_action": "Locate database files/API and verify license before treating HPCSD as an ingestable source."
+      }
+    },
+    {
+      "source_id": "mattersim-v1",
+      "title": "MatterSim v1 atomistic model across elements, temperatures, and pressures",
+      "source_kind": "model_repository",
+      "domains": [
+        "molecular_dynamics",
+        "finite_temperature",
+        "high_pressure",
+        "model_validation"
+      ],
+      "urls": [
+        {
+          "label": "GitHub repository",
+          "url": "https://github.com/microsoft/mattersim"
+        },
+        {
+          "label": "MatterSim paper",
+          "url": "https://arxiv.org/abs/2405.04967"
+        }
+      ],
+      "citation": {
+        "citation_key": "yang_mattersim_2024",
+        "paper_arxiv": "2405.04967"
+      },
+      "license": "Repository/model license applies; verify exact checkpoint terms before production use.",
+      "stewardship": "Use as a backend/comparison lens and source of temperature-pressure task framing. Report exact checkpoint, e.g. MatterSim-v1.0.0-1M or 5M.",
+      "capabilities": {
+        "structures": false,
+        "energy": "model prediction",
+        "forces": "model prediction",
+        "stress": "model prediction",
+        "trajectory": "can generate simulations but not source truth",
+        "temperature": true,
+        "pressure": true,
+        "phase_label": false,
+        "models": true,
+        "benchmark_context": true
+      },
+      "claim_support": [
+        {
+          "claim_id": "backend_comparison",
+          "level": "model_comparison",
+          "evidence_fields": [
+            "checkpoint",
+            "predicted_energy",
+            "predicted_forces",
+            "predicted_stress",
+            "simulation_protocol"
+          ],
+          "guardrail": "MatterSim predictions are model outputs, not ground-truth labels for Distill accuracy claims."
+        },
+        {
+          "claim_id": "temperature_pressure_protocol",
+          "level": "benchmark_context",
+          "evidence_fields": [
+            "temperature_range",
+            "pressure_range",
+            "bulk_material_scope"
+          ],
+          "guardrail": "Use for protocol design and comparison, not as a replacement for source-labeled fixtures."
+        }
+      ],
+      "verification": {
+        "status": "verified_live",
+        "checked_at": "2026-05-31T00:00:00Z",
+        "methods": [
+          "GitHub repository page fetched",
+          "arXiv metadata located"
+        ],
+        "evidence": {
+          "http_status": 200,
+          "reported_checkpoints": [
+            "MatterSim-v1.0.0-1M",
+            "MatterSim-v1.0.0-5M"
+          ],
+          "reported_scope": "bulk materials; temperatures and pressures"
+        }
+      },
+      "ingestion": {
+        "priority": 3,
+        "status": "backend_candidate",
+        "adapters": [
+          "repository-metadata"
+        ],
+        "target_artifacts": [
+          "backend-catalog-extension-v1"
+        ],
+        "next_action": "Add as a candidate runner backend only after local/cloud environment and checkpoint license checks pass."
+      }
+    },
+    {
+      "source_id": "openkim",
+      "title": "OpenKIM repository of interatomic models, tests, verification checks, and reference data",
+      "source_kind": "repository",
+      "domains": [
+        "model_validation",
+        "benchmark_design",
+        "crystal_structures"
+      ],
+      "urls": [
+        {
+          "label": "OpenKIM",
+          "url": "https://openkim.org/"
+        },
+        {
+          "label": "OpenKIM getting started",
+          "url": "https://openkim.org/doc/overview/getting-started/"
+        },
+        {
+          "label": "OpenKIM properties",
+          "url": "https://openkim.org/properties"
+        }
+      ],
+      "citation": {
+        "citation_key": "openkim"
+      },
+      "license": "model/test/result specific; OpenKIM DOI and object license must be preserved per item.",
+      "stewardship": "Use for model IDs, validation tests, reference data, and computed-property result provenance. Do not mix predictions from classical potentials with DFT reference labels unless the role is explicit.",
+      "capabilities": {
+        "structures": true,
+        "energy": "test result dependent",
+        "forces": "test result dependent",
+        "stress": "test result dependent",
+        "trajectory": false,
+        "temperature": "property/test dependent",
+        "pressure": "property/test dependent",
+        "phase_label": "property/test dependent",
+        "models": true,
+        "benchmark_context": true
+      },
+      "claim_support": [
+        {
+          "claim_id": "classical_model_validation",
+          "level": "metadata_only",
+          "evidence_fields": [
+            "kim_model_id",
+            "kim_test_id",
+            "property_id",
+            "test_result"
+          ],
+          "guardrail": "OpenKIM test results are excellent validation/comparison records, but model predictions are not DFT truth labels."
+        },
+        {
+          "claim_id": "property_test_catalog",
+          "level": "benchmark_context",
+          "evidence_fields": [
+            "property_definition",
+            "temperature",
+            "stress_state",
+            "phase_equilibria"
+          ],
+          "guardrail": "Use as a reusable benchmark design source and adapter target."
+        }
+      ],
+      "verification": {
+        "status": "verified_live",
+        "checked_at": "2026-05-31T00:00:00Z",
+        "methods": [
+          "OpenKIM documentation URL fetched"
+        ],
+        "evidence": {
+          "http_status": 200,
+          "reported_contents": [
+            "interatomic models",
+            "verification checks",
+            "tests",
+            "reference data",
+            "model predictions"
+          ]
+        }
+      },
+      "ingestion": {
+        "priority": 3,
+        "status": "metadata_adapter_needed",
+        "adapters": [
+          "repository-metadata"
+        ],
+        "target_artifacts": [
+          "openkim-model-test-index-v1"
+        ],
+        "next_action": "Build an OpenKIM query adapter for model/test/property metadata after the first state-phase seed lands."
+      }
+    },
+    {
+      "source_id": "colabfit-exchange",
+      "title": "ColabFit Exchange",
+      "source_kind": "repository",
+      "domains": [
+        "mlip_accuracy",
+        "molecular_dynamics",
+        "benchmark_design"
+      ],
+      "urls": [
+        {
+          "label": "ColabFit Exchange",
+          "url": "https://www.colabfit.org/"
+        },
+        {
+          "label": "ColabFit tools documentation",
+          "url": "https://colabfit.github.io/colabfit-tools/html/index.html"
+        },
+        {
+          "label": "ColabFit Exchange paper",
+          "url": "https://arxiv.org/abs/2306.11071"
+        }
+      ],
+      "citation": {
+        "citation_key": "tadmor_colabfit_exchange_2023",
+        "paper_arxiv": "2306.11071",
+        "doi": "10.1063/5.0163882"
+      },
+      "license": "dataset-specific; ColabFit records include per-dataset terms.",
+      "stewardship": "Use as the general discovery index for additional MLIP datasets. Promote only individual dataset records after their own license/citation/field verification passes.",
+      "capabilities": {
+        "structures": "dataset-dependent",
+        "energy": "dataset-dependent",
+        "forces": "dataset-dependent",
+        "stress": "dataset-dependent",
+        "trajectory": "dataset-dependent",
+        "temperature": "dataset-dependent",
+        "pressure": "dataset-dependent",
+        "phase_label": "dataset-dependent",
+        "models": false,
+        "benchmark_context": true
+      },
+      "claim_support": [
+        {
+          "claim_id": "source_discovery",
+          "level": "metadata_only",
+          "evidence_fields": [
+            "dataset_id",
+            "license",
+            "authors",
+            "format",
+            "properties"
+          ],
+          "guardrail": "Repository-level metadata does not authorize fixture use; each dataset needs a source entry."
+        }
+      ],
+      "verification": {
+        "status": "verified_live",
+        "checked_at": "2026-05-31T00:00:00Z",
+        "methods": [
+          "ColabFit home page fetched",
+          "ColabFit tools docs located"
+        ],
+        "evidence": {
+          "home_http_status": 200,
+          "role": "MLIP dataset discovery and curation hub"
+        }
+      },
+      "ingestion": {
+        "priority": 4,
+        "status": "discovery_index",
+        "adapters": [
+          "repository-metadata"
+        ],
+        "target_artifacts": [
+          "future-source-candidates"
+        ],
+        "next_action": "Use as a discovery catalog after the first OMat24/GST/HPCSD source adapters are operational."
+      }
+    },
+    {
+      "source_id": "nist-ipr",
+      "title": "NIST Interatomic Potentials Repository",
+      "source_kind": "repository",
+      "domains": [
+        "model_validation",
+        "benchmark_design"
+      ],
+      "urls": [
+        {
+          "label": "NIST IPR",
+          "url": "https://www.ctcms.nist.gov/potentials/"
+        }
+      ],
+      "citation": {
+        "citation_key": "nist_ipr"
+      },
+      "license": "potential-specific; cite NIST IPR and original potential papers.",
+      "stewardship": "Use as classical-potential provenance and baseline index. Keep each implementation id and original paper attached to any local LAMMPS result.",
+      "capabilities": {
+        "structures": false,
+        "energy": "model prediction",
+        "forces": "model prediction",
+        "stress": "model prediction",
+        "trajectory": false,
+        "temperature": false,
+        "pressure": false,
+        "phase_label": false,
+        "models": true,
+        "benchmark_context": true
+      },
+      "claim_support": [
+        {
+          "claim_id": "classical_baseline_provenance",
+          "level": "metadata_only",
+          "evidence_fields": [
+            "implementation_id",
+            "potential_file",
+            "original_paper",
+            "pair_style"
+          ],
+          "guardrail": "Provides provenance for classical baselines, not MLIP or DFT ground truth."
+        }
+      ],
+      "verification": {
+        "status": "verified_live",
+        "checked_at": "2026-05-31T00:00:00Z",
+        "methods": [
+          "Repository URL previously used in source packet and checked in current source search"
+        ],
+        "evidence": {
+          "role": "classical interatomic potential repository"
+        }
+      },
+      "ingestion": {
+        "priority": 4,
+        "status": "already_in_use",
+        "adapters": [
+          "repository-metadata"
+        ],
+        "target_artifacts": [
+          "classical-baseline-index-v1",
+          "real-material-publication-v1"
+        ],
+        "next_action": "Keep synchronized with existing Ni source packet; add system pages only when a benchmark lane selects that chemistry."
+      }
+    }
+  ],
+  "acceptance_gates": {
+    "registry": [
+      "Every source has source_id, title, source_kind, URL records, citation metadata, license, stewardship, capabilities, claim_support, verification, and ingestion fields.",
+      "Every claim_support entry has a claim_id, known claim level, evidence fields, and guardrail.",
+      "A source cannot support phase_label_reference unless its capabilities.phase_label is truthy.",
+      "A ready_for_sampler source must have at least one verified live or verified local check."
+    ],
+    "state_phase_seed_v1": [
+      "At least one source supports state_condition_coverage.",
+      "At least one distinct source supports phase_change_labels or phase_label_reference.",
+      "Every imported row preserves source_id, citation_key, license note, original id, and source-specific provenance fields.",
+      "State-condition labels and phase labels remain separate fields until an evaluator explicitly joins them."
+    ],
+    "general_reuse": [
+      "Campaigns cite this registry by path and source_ids rather than retyping source claims.",
+      "Adapters consume source capability/claim metadata before downloading or sampling large datasets.",
+      "Phoenix/Lupine Science reports show claim level and guardrail next to any sourced evidence."
+    ]
+  },
+  "next_actions": [
+    {
+      "id": "rs0-validate-registry",
+      "status": "ready",
+      "command": "python tools/research_source_registry.py validate"
+    },
+    {
+      "id": "rs1-state-phase-ingest-plan",
+      "status": "ready",
+      "command": "python tools/research_source_registry.py ingest-plan --claim state_condition_coverage --claim phase_change_labels"
+    },
+    {
+      "id": "rs2-team-source-intake-queue",
+      "status": "ready",
+      "command": "python tools/research_source_registry.py team-queue --max-priority 2",
+      "purpose": "Fan out registry work across source inspection, sampler building, claim review, fixture assembly, and Phoenix/Lupine.Science reporting."
+    },
+    {
+      "id": "rs3-refresh-lupine-source-ribbon",
+      "status": "ready",
+      "command": "python tools/research_source_registry.py surface-payload --max-priority 2 --output atlas/atlas-view/apps/lupine-site/public/research/materials-research-source-ribbon-v1.json",
+      "purpose": "Publish the compact source status and team queue payload consumed by Lupine.Science."
+    },
+    {
+      "id": "rs4-build-omat24-sampler",
+      "status": "next",
+      "source_ids": [
+        "omat24-aimd-pbe-1000-npt",
+        "omat24-aimd-pbe-3000-npt"
+      ],
+      "artifact": "tools/omat24_state_sampler.py"
+    },
+    {
+      "id": "rs5-inspect-gst-archive",
+      "status": "next",
+      "source_ids": [
+        "gst225-cambridge-gap-trajectories"
+      ],
+      "artifact": "data/research_sources/inspections/gst225_cambridge_gap_trajectories_v1.json"
+    }
+  ]
+}

@@ -1,0 +1,180 @@
+{
+  "schema": "lupine.mlip.evidence_campaign.v1",
+  "campaign_id": "mptrj-state-phase-ribbon-v1",
+  "reference_family": "mptrj_dft",
+  "title": "MPtrj state/phase shadow ribbon: pressure-temperature coverage and phase-label canary",
+  "objective": "Prepare the first shadow canary for a state/phase-aware MPtrj hyperribbon. This campaign must prove that Phoenix receives pressure/temperature coverage and phase labels before any accuracy-improvement claim is credited.",
+  "profile": "lab-gcp-gpu-state-phase-canary",
+  "project": "shed-489901",
+  "region": "us-central1",
+  "source_packet_path": "data/mlip_benchmarks/manifest_sources.json",
+  "research_source_registry_path": "data/research_sources/materials_research_sources_v1.json",
+  "research_source_strategy": {
+    "purpose": "Use the generalized registry as the source-of-truth for state, phase, pressure, trajectory, benchmark-context, and backend-comparison claims instead of embedding ad hoc source assumptions in this campaign.",
+    "state_condition_source_ids": [
+      "omat24-aimd-pbe-1000-npt",
+      "omat24-aimd-pbe-3000-npt",
+      "hpcsd-high-pressure-crystal-structures"
+    ],
+    "phase_label_source_ids": [
+      "gst225-cambridge-gap-trajectories",
+      "gst225-crystallization-mlip-2024"
+    ],
+    "broad_support_source_ids": [
+      "lemat-traj",
+      "mptrj-materials-project"
+    ],
+    "comparison_context_source_ids": [
+      "mattersim-v1",
+      "openkim",
+      "colabfit-exchange",
+      "nist-ipr"
+    ],
+    "required_command": "python tools/research_source_registry.py ingest-plan --claim state_condition_coverage --claim phase_change_labels"
+  },
+  "fixture_id": "canonical-structures-v2",
+  "fixture_path": "gcp/mlip-cell-runner/fixtures/canonical_structures_v2_mptrj.json",
+  "fixture_gcs_url": "gs://shed-489901-atlas-inputs/mlip-baseline/canonical-structures-v2/manifest.json",
+  "support_manifest_path": "gcp/mlip-cell-runner/fixtures/canonical_distill_support_mptrj_train_plus_elastic_v1.json",
+  "support_manifest_gcs_url": "gs://shed-489901-atlas-inputs/mlip-baseline/canonical-distill-support-mptrj-train-plus-elastic-v1/manifest.json",
+  "backend_catalog_path": "gcp/mlip-cell-runner/backend_catalog.json",
+  "policy_registry_path": "gcp/mlip-cell-runner/policies/accuracy_policy_registry.mptrj-state-phase-v5.json",
+  "policy_gcs_prefix": "gs://shed-489901-atlas-inputs/mlip-policies/evidence/mptrj-state-phase-ribbon-v1",
+  "batch_gcs_prefix": "gs://shed-489901-atlas-inputs/mlip-evidence/mptrj-state-phase-ribbon-v1/batches",
+  "artifact_gcs_prefix": "gs://shed-489901-atlas-outputs/mlip-evidence/mptrj-state-phase-ribbon-v1",
+  "worker_url": "https://glim-think-v1.aw-ab5.workers.dev",
+  "beat_emit_url": "https://glim-think-v1.aw-ab5.workers.dev/feed/beats",
+  "distill_policy_engine": "rust",
+  "ribbon_version": "hyperribbon-mptrj-state-phase-v5",
+  "checkpoint_contract": {
+    "scope": "raw_predictions",
+    "baseline_mode": "read-write",
+    "distill_accuracy_mode": "read-only",
+    "pairing_rule": "baseline and Distill Accuracy for the same row and MLIP must share one checkpoint URL"
+  },
+  "local_first_diagnostics": {
+    "probe_script": "tools/mlip_state_phase_local_probe.py",
+    "command": "python tools/mlip_state_phase_local_probe.py --run-runner",
+    "purpose": "Before spending a cloud canary, build the diagnostic state/phase fixture locally and replay read-only reference checkpoints through the runner so pressure/temperature/phase evaluator surfacing, artifacts, and JSONL beats can fail fast.",
+    "label_contract": "Diagnostic plumbing labels only; do not treat this probe as a physical phase-change or MLIP accuracy-improvement claim."
+  },
+  "budget": {
+    "max_dollars_per_hour": 10.0,
+    "max_active_gpu_jobs": 2,
+    "l4_lab_hourly_estimate_usd": 1.05
+  },
+  "promotion_canary": {
+    "required_before_full_launch": true,
+    "rows": [
+      "energy_volume",
+      "forces",
+      "relaxation_stability"
+    ],
+    "mlips": [
+      "mace-mp-0",
+      "chgnet",
+      "orb-v3",
+      "sevennet"
+    ],
+    "gate": {
+      "max_regressed_pairs": 0,
+      "min_improved_pairs": 1,
+      "require_state_condition_coverage_score": 1.0,
+      "require_phase_label_count_at_least": 1,
+      "required_evaluators": [
+        "mlip.state_condition.coverage",
+        "mlip.phase_change.phase_labels"
+      ],
+      "required_zero_regression_rows": [
+        "energy_volume",
+        "forces",
+        "relaxation_stability"
+      ]
+    },
+    "reason": "The canary is deliberately small but includes the forces row because the live 2026-05-31 CHGNet check proved the code path and exposed the fixture-label gap there."
+  },
+  "rows": [
+    "energy_volume",
+    "forces",
+    "stress",
+    "elastic_constants",
+    "relaxation_stability"
+  ],
+  "variants": [
+    {
+      "variant_id": "baseline",
+      "distill_profile": "off",
+      "checkpoint_mode": "read-write"
+    },
+    {
+      "variant_id": "distill_accuracy",
+      "distill_profile": "accuracy",
+      "checkpoint_mode": "read-only"
+    }
+  ],
+  "mlips": [
+    {
+      "mlip_id": "mace-mp-0",
+      "enabled": true
+    },
+    {
+      "mlip_id": "chgnet",
+      "enabled": true
+    },
+    {
+      "mlip_id": "m3gnet",
+      "enabled": false,
+      "blocked_reason": "Hold until the GCP MatGL/DGL image passes a fresh import canary on this runner tag."
+    },
+    {
+      "mlip_id": "orb-v3",
+      "enabled": true
+    },
+    {
+      "mlip_id": "sevennet",
+      "enabled": true
+    },
+    {
+      "mlip_id": "uma-s-1p1",
+      "enabled": false,
+      "blocked_reason": "FAIR Chemistry UMA access is gated until the account is authorized for the model repository."
+    }
+  ],
+  "evidence_fields": [
+    "source_packet_hash",
+    "fixture_manifest_hash",
+    "support_manifest_hash",
+    "backend_catalog_hash",
+    "policy_registry_hash",
+    "distill_policy_hash",
+    "shared_checkpoint_url",
+    "baseline_cell_id",
+    "distill_accuracy_cell_id",
+    "artifact_uri",
+    "cloud_run_operation_name",
+    "phoenix_trace_id",
+    "thermodynamic_condition_coverage",
+    "state_condition_coverage_score",
+    "phase_labels"
+  ],
+  "acceptance_gate": {
+    "ready_to_launch": [
+      "source packet validates",
+      "sealed fixture validates",
+      "support manifest is present locally and has a GCS target",
+      "every enabled MLIP maps to an allowlisted Cloud Run target job",
+      "every Distill lane resolves hyperribbon-mptrj-state-phase-v5-accuracy.json",
+      "all Distill cells depend on the paired baseline checkpoint",
+      "glim-think /research/workflows lists mlip.state_condition.coverage and mlip.phase_change.phase_labels"
+    ],
+    "ready_to_claim_state_phase_gain": [
+      "Phoenix evaluator mlip.state_condition.coverage reports score 1 for each canary row",
+      "Phoenix evaluator mlip.phase_change.phase_labels reports score 1 for each canary row",
+      "runner artifacts preserve pressure_count, temperature_count, phase_count, and phases",
+      "paired Distill Accuracy cells show zero regressions against the shared baseline checkpoints"
+    ],
+    "known_blocker": [
+      "canonical-structures-v2 currently has no pressure/temperature/phase labels, so the first run is expected to surface missing_state_condition and missing_phase_labels until a labeled fixture replaces it"
+    ]
+  }
+}

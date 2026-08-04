@@ -9,8 +9,8 @@ instead of fabricating accuracy.
 from __future__ import annotations
 
 import argparse
-import copy
 import contextlib
+import copy
 import hashlib
 import importlib.metadata
 import json
@@ -26,7 +26,7 @@ from typing import Any
 
 import numpy as np
 import requests
-from lupine_distill.fixture_contract import run_row, validate_manifest
+from lupine_distill.fixture_contract import run_row, select_row, validate_manifest
 
 try:
     from lupine_distill_runtime import DistillSession, LeakageGuard
@@ -196,6 +196,16 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     )
     parser.add_argument("--beat-emit-url", default=None)
     parser.add_argument("--operation-name", default=None)
+    parser.add_argument(
+        "--phoenix-trace-id",
+        default=None,
+        help="Cloudflare compute-dispatch trace id to preserve on the result beat.",
+    )
+    parser.add_argument(
+        "--phoenix-span-id",
+        default=None,
+        help="Cloudflare compute-dispatch span id to preserve on the result beat.",
+    )
     parser.add_argument("--dev-mode-bypass", action="store_true")
     parser.add_argument("--local-jsonl", default=None)
     parser.add_argument(
@@ -209,8 +219,11 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         default=None,
         help="Optional local or gs:// JSON checkpoint path. Defaults to artifact-prefix/cell_checkpoint.json.",
     )
-    parser.add_argument("--phoenix-trace-id", default=None)
-    parser.add_argument("--phoenix-span-id", default=None)
+    parser.add_argument(
+        "--checkpoint-only-replay",
+        action="store_true",
+        help="Replay a completed read-only raw-prediction checkpoint without importing the MLIP backend.",
+    )
     return parser.parse_args(argv)
 
 
@@ -402,20 +415,34 @@ class CellCheckpoint:
         if self.mode == "write-only":
             self.cache_misses += 1
             return None
-        key = case_cache_key(row_id, case_index, case)
-        entry = self.payload.get("predictions", {}).get(key)
-        if not isinstance(entry, dict):
-            self.cache_misses += 1
-            return None
-        if entry.get("case_hash") != sha256_hex(case):
-            self.cache_misses += 1
-            return None
-        prediction = entry.get("prediction")
-        if not isinstance(prediction, dict):
+        prediction = self.peek_prediction(row_id, case_index, case)
+        if prediction is None:
             self.cache_misses += 1
             return None
         self.loaded_predictions += 1
         return prediction
+
+    def peek_prediction(self, row_id: str, case_index: int, case: dict[str, Any]) -> dict[str, Any] | None:
+        key = case_cache_key(row_id, case_index, case)
+        entry = self.payload.get("predictions", {}).get(key)
+        if not isinstance(entry, dict):
+            return None
+        if entry.get("case_hash") != sha256_hex(case):
+            return None
+        prediction = entry.get("prediction")
+        return prediction if isinstance(prediction, dict) else None
+
+    def missing_predictions(self, row_id: str, cases: list[dict[str, Any]]) -> list[dict[str, Any]]:
+        missing = []
+        for case_index, case in enumerate(cases):
+            if self.peek_prediction(row_id, case_index, case) is not None:
+                continue
+            missing.append({
+                "case_index": case_index,
+                "structure_id": case.get("structure_id"),
+                "case_hash": sha256_hex(case),
+            })
+        return missing
 
     def record_prediction(
         self,
@@ -705,7 +732,28 @@ def run_cell(
     policy_limits_tmp = None
     if args.distill_profile != "off" and args.distill_policy_url:
         policy_limits_path, policy_limits_hash, policy_limits_tmp = materialize_distill_policy_url(args.distill_policy_url)
-    if preloaded_calc is None:
+    checkpoint_only_replay = False
+    if args.checkpoint_only_replay:
+        if checkpoint is None or args.checkpoint_mode != "read-only":
+            raise ValueError("--checkpoint-only-replay requires --checkpoint-mode read-only and --checkpoint-url")
+        if args.distill_profile != "off":
+            raise ValueError("--checkpoint-only-replay currently supports baseline cells only")
+        selection = select_row(manifest, args.row_id)
+        missing = checkpoint.missing_predictions(args.row_id, selection.cases)
+        if missing:
+            sample = ", ".join(
+                f"{item.get('case_index')}:{item.get('structure_id')}"
+                for item in missing[:5]
+            )
+            suffix = f"; checkpoint ignored_reason={checkpoint.ignored_reason}" if checkpoint.ignored_reason else ""
+            raise ValueError(
+                f"read-only checkpoint is missing {len(missing)} prediction(s) for {args.row_id}: {sample}{suffix}"
+            )
+        calc = None
+        model_load_s = 0.0
+        model_preloaded = False
+        checkpoint_only_replay = True
+    elif preloaded_calc is None:
         load_started = time.perf_counter()
         calc = load_calculator(args.mlip_id)
         model_load_s = max(time.perf_counter() - load_started, 0.0)
@@ -768,6 +816,7 @@ def run_cell(
         "cloud_run_revision": os.environ.get("K_REVISION"),
         "runner_image_digest": os.environ.get("RUNNER_IMAGE_DIGEST"),
         "model_preloaded": model_preloaded,
+        "checkpoint_only_replay": checkpoint_only_replay,
     }
     distill_events_uri = None
     distill_summary = None
@@ -842,6 +891,8 @@ def run_cell(
         "distill_policy_hash": policy_limits_hash,
         "artifact_uri": artifact_uri,
         "operation_name": args.operation_name,
+        "trace_id": args.phoenix_trace_id,
+        "span_id": args.phoenix_span_id,
         "versions": versions,
         "fixture_contract": row_result["fixture_contract"],
         "row_metrics": accuracy_metrics,
@@ -1122,6 +1173,8 @@ def failure_metrics(args: argparse.Namespace, exc: BaseException) -> dict[str, A
         "fixture_id": getattr(args, "fixture_id", None),
         "manifest_url": getattr(args, "manifest_url", None) or getattr(args, "fixture_url", None),
         "operation_name": getattr(args, "operation_name", None),
+        "trace_id": getattr(args, "phoenix_trace_id", None),
+        "span_id": getattr(args, "phoenix_span_id", None),
         "versions": runtime_versions(),
         "checkpoint": {
             "mode": checkpoint_mode,
@@ -1130,8 +1183,6 @@ def failure_metrics(args: argparse.Namespace, exc: BaseException) -> dict[str, A
         "error": str(exc),
         "error_class": exc.__class__.__name__,
         "traceback": traceback.format_exc(limit=8),
-        "trace_id": getattr(args, "phoenix_trace_id", None),
-        "span_id": getattr(args, "phoenix_span_id", None),
         "accuracy": {"score": 0, "unit": "failed"},
         "speed": {"score": 0, "unit": "failed"},
     }

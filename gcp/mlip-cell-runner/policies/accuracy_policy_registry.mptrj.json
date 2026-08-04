@@ -4,6 +4,7 @@
   "policies": {
     "default_accuracy": "gcp/mlip-cell-runner/policies/hyperribbon-mptrj-support-floor-v2-accuracy.json",
     "candidate_row_hybrid_v3": "gcp/mlip-cell-runner/policies/hyperribbon-mptrj-row-hybrid-v3-accuracy.json",
-    "candidate_spectral_v4": "gcp/mlip-cell-runner/policies/hyperribbon-mptrj-spectral-v4-accuracy.json"
+    "candidate_spectral_v4": "gcp/mlip-cell-runner/policies/hyperribbon-mptrj-spectral-v4-accuracy.json",
+    "candidate_state_phase_v5": "gcp/mlip-cell-runner/policies/hyperribbon-mptrj-state-phase-v5-accuracy.json"
   }
 }

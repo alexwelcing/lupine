@@ -207,6 +207,15 @@ describe("mlip baseline grid workflow", () => {
               n_structures: 1,
               speed: { duration_ms: 80 },
               versions: { torch: "2.4.0+cu121", cuda_available: true, cuda_device: "NVIDIA L4" },
+              row_metrics: {
+                thermodynamic_condition_coverage: {
+                  coverage_score: 1,
+                  pressure_count: 2,
+                  temperature_count: 2,
+                  phase_count: 2,
+                  phases: ["bcc", "liquid"],
+                },
+              },
             }),
           }),
         ],
@@ -228,12 +237,16 @@ describe("mlip baseline grid workflow", () => {
     expect(body.phoenix.project.name).toBe("glim-think");
     expect(body.phoenix.dataset.name).toBe("mlip-canonical-v2-heldout");
     expect(body.phoenix.evaluator_specs.some((spec) => spec.name === "mlip.gate.accelerate_accuracy_speed_win")).toBe(true);
+    expect(body.phoenix.evaluator_specs.some((spec) => spec.name === "mlip.state_condition.coverage")).toBe(true);
     expect(body.examples).toHaveLength(25);
     expect(body.examples[0].example_id).toContain("canonical-structures-v2:");
     expect(body.examples[0].metadata.example_granularity).toBe("row_mlip_cell");
     expect(body.experiments[0].experiment_name).toBe("baseline/baseline-run");
     expect(body.experiments[0].runs[0].evaluations.some((evaluation) =>
       evaluation.evaluator_name === "mlip.contract.v2_fixture_readiness"
+    )).toBe(true);
+    expect(body.experiments[0].runs[0].evaluations.some((evaluation) =>
+      evaluation.evaluator_name === "mlip.phase_change.phase_labels"
     )).toBe(true);
     expect(body.release_gate.ready_for_research_release).toBe(false);
     expect(body.release_gate.blockers[0]).toContain("missing V2 fixture");
@@ -452,9 +465,12 @@ describe("mlip baseline grid workflow", () => {
       accuracy: { score: 0.82, unit: "reference_relative_error_score" },
       speed: { score: 12.5, unit: "structures_per_second" },
       artifact_uri: "gs://outputs/cell_result.json",
+      trace_id: "dispatch-trace",
+      span_id: "dispatch-span",
     });
 
     expect(prepared.some((entry) => entry.sql.includes("UPDATE mlip_baseline_cells"))).toBe(true);
+    expect(prepared.some((entry) => entry.bindings.includes("dispatch-trace"))).toBe(true);
     expect(prepared.some((entry) => entry.sql.includes("INSERT INTO evaluations"))).toBe(true);
     expect(prepared.some((entry) => entry.sql.includes("execution_resources"))).toBe(true);
   });

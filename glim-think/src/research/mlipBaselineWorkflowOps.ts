@@ -87,6 +87,8 @@ export const MLIP_BASELINE_DESCRIPTOR: ResearchWorkflowDescriptor = {
       "mlip.evidence.artifact_present",
       "mlip.evidence.trace_present",
       "mlip.contract.v2_fixture_readiness",
+      "mlip.state_condition.coverage",
+      "mlip.phase_change.phase_labels",
     ],
   },
   extension_contract: {

@@ -124,6 +124,67 @@ def test_kart_race_campaign_expands_to_three_lanes() -> None:
         assert distill["checkpoint_mode"] == "read-only"
 
 
+def test_state_phase_shadow_ribbon_campaign_targets_v5_policy() -> None:
+    campaign = evidence.load_campaign(
+        evidence.ROOT
+        / "data"
+        / "mlip_benchmarks"
+        / "evidence_campaigns"
+        / "mptrj_state_phase_ribbon_v1.json"
+    )
+
+    assert evidence.validate_campaign(campaign) == []
+    assert campaign["ribbon_version"] == "hyperribbon-mptrj-state-phase-v5"
+    assert campaign["research_source_registry_path"] == "data/research_sources/materials_research_sources_v1.json"
+    assert "omat24-aimd-pbe-1000-npt" in campaign["research_source_strategy"]["state_condition_source_ids"]
+    assert "gst225-cambridge-gap-trajectories" in campaign["research_source_strategy"]["phase_label_source_ids"]
+    assert campaign["local_first_diagnostics"]["probe_script"] == "tools/mlip_state_phase_local_probe.py"
+    assert "Diagnostic plumbing labels only" in campaign["local_first_diagnostics"]["label_contract"]
+
+    policy = evidence.load_json(
+        evidence.ROOT
+        / "gcp"
+        / "mlip-cell-runner"
+        / "policies"
+        / "hyperribbon-mptrj-state-phase-v5-accuracy.json"
+    )
+    assert policy["force_correction_scale"] == 0.0
+    assert policy["stress_correction_scale"] == 0.0
+
+    summary = evidence.evidence_summary(campaign)
+    assert summary["cells_total"] == 40
+    assert summary["distill_accuracy_cells"] == 20
+    assert summary["distill_accuracy_accelerate_cells"] == 0
+    assert summary["policy_urls"] == [
+        "gs://shed-489901-atlas-inputs/mlip-policies/evidence/mptrj-state-phase-ribbon-v1/hyperribbon-mptrj-state-phase-v5-accuracy.json"
+    ]
+
+    canary_cells = evidence.expand_cells(campaign, scope="promotion-canary")
+    canary_batches = evidence.expand_batches(campaign, scope="promotion-canary")
+    assert len(canary_cells) == 24
+    assert {cell["row_id"] for cell in canary_cells} == {
+        "energy_volume",
+        "forces",
+        "relaxation_stability",
+    }
+    assert {cell["mlip_id"] for cell in canary_cells} == {
+        "mace-mp-0",
+        "chgnet",
+        "orb-v3",
+        "sevennet",
+    }
+    assert all("/promotion-canary/" in cell["artifact_prefix"] for cell in canary_cells)
+    assert all("/promotion-canary/checkpoints/" in cell["checkpoint_url"] for cell in canary_cells)
+    assert len(canary_batches) == 4
+
+    gate = campaign["promotion_canary"]["gate"]
+    assert gate["required_evaluators"] == [
+        "mlip.state_condition.coverage",
+        "mlip.phase_change.phase_labels",
+    ]
+    assert campaign["acceptance_gate"]["known_blocker"]
+
+
 def test_write_batches_materializes_runner_compatible_specs(tmp_path: Path) -> None:
     campaign = load_default_campaign()
 

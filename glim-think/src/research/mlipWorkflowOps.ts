@@ -86,7 +86,11 @@ export const MLIP_WORKFLOW_DESCRIPTOR: ResearchWorkflowDescriptor = {
       "mlip_triplet.delta_verdict",
       ...MLIP_PHOENIX_EVALUATOR_SPECS.map((spec) => spec.name),
     ],
-    annotations: ["mlip_triplet.delta_verdict"],
+    annotations: [
+      "mlip_triplet.delta_verdict",
+      "mlip.state_condition.coverage",
+      "mlip.phase_change.phase_labels",
+    ],
   },
   extension_contract: {
     adapter_methods: [
