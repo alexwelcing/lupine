@@ -29,6 +29,9 @@ urlencoding = "2"
 base64 = "0.22"
 rsa = { version = "0.9", features = ["sha2"] }
 sha2 = "0.10"
+csv = "1"
+
+lupine-ops = { path = "../lupine-ops" }
 
 # Optional GPU discovery binary. Keep the core engine free of wgpu/bytemuck
 # so that CI and headless builds stay lightweight.

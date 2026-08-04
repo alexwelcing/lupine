@@ -33,7 +33,7 @@ Newest first. Dates are absolute.
     including PubChem CIDs, formulas, systematic names, aliases, and a local
     reliability/backup audit tool.
   - Added the public-surface repo-split map and extraction packets for
-    `lupine.science`, `lupi.live`, `library.lupine.site`, and the remaining
+    `lupine.science`, `lupi.live`, `library.lupine.science`, and the remaining
     science/control-plane repo.
   - Added `scripts/export_library_content.mjs` and generated the first
     `exports/library-content/latest` bundle for the Library extraction path.

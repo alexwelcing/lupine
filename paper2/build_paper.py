@@ -124,11 +124,11 @@ def compile_tex(stem: str, cwd: Path) -> Path:
 
 
 def build_latex() -> None:
-    compile_tex("projection-law", ROOT)
+    compile_tex("ProjectionLaw_PRX", ROOT)
 
 
 def build_immi_latex() -> None:
-    compile_tex("projection-law-immi", ROOT / "immi")
+    compile_tex("ProjectionLaw_IMMI", ROOT / "immi")
 
 
 def verify_pdf(pdf: Path) -> None:

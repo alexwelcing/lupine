@@ -38,6 +38,7 @@ import { buildClusters, type Clusters } from '@atlas/scene/ClusterBuilder';
 import { SpatialAnchor } from './SpatialAnchor';
 import { Bonds } from '@atlas/scene/Bonds';
 import { AnnotationsLayer } from './AnnotationsLayer';
+import { KnowledgeLabelsLayer } from './KnowledgeLabelsLayer';
 import { SelectionMarkers } from './SelectionMarkers';
 import { AtomInfoHUD } from './AtomInfoHUD';
 import { CameraFocus } from './CameraFocus';
@@ -669,6 +670,9 @@ export default function App() {
   const propertyEmissionStrength = useStore(s => s.propertyEmissionStrength);
   const annotations = useStore(s => s.annotations);
   const labelStyle = useStore(s => s.labelStyle);
+  const knowledgeLabels = useStore(s => s.knowledgeLabels);
+  const knowledgeLabelKinds = useStore(s => s.knowledgeLabelKinds);
+  const showKnowledgeLabels = useStore(s => s.showKnowledgeLabels);
   const hoveredAtom = useStore(s => s.hoveredAtom);
   const selectedAtoms = useStore(s => s.selectedAtoms);
 
@@ -1051,11 +1055,11 @@ export default function App() {
     backgroundYawDegrees,
   ]);
   const isBatchExport = new URLSearchParams(window.location.search).get('batchExport') === 'true';
-  const mobilePanelHeight = 'clamp(260px, 38dvh, 340px)';
-  const activeMobilePanelHeight = activePanel === 'studio' ? 'clamp(460px, 72dvh, 680px)' : mobilePanelHeight;
+  const mobilePanelHeight = 'clamp(240px, 34dvh, 320px)';
+  const activeMobilePanelHeight = activePanel === 'studio' ? 'clamp(340px, 52dvh, 480px)' : mobilePanelHeight;
   const mobileLoadedHeader = isMobile && !!file;
   const headerHeight = isMobile
-    ? `calc(${mobileLoadedHeader ? '76px' : '48px'} + env(safe-area-inset-top))`
+    ? `calc(${mobileLoadedHeader ? '64px' : '48px'} + env(safe-area-inset-top))`
     : 56;
   const clearLoadedFile = useCallback(() => {
     useStore.getState().clearFile();
@@ -1087,8 +1091,8 @@ export default function App() {
           gridTemplateRows: mobileLoadedHeader ? '38px 28px' : undefined,
           columnGap: mobileLoadedHeader ? 8 : undefined,
           rowGap: mobileLoadedHeader ? 2 : undefined,
-          padding: mobileLoadedHeader ? 'calc(env(safe-area-inset-top) + 4px) 8px 4px' : (isMobile ? 'env(safe-area-inset-top) 8px 0' : '0 16px'),
-          margin: file ? (isMobile ? '6px 6px 0' : '14px 16px 0') : 0,
+          padding: mobileLoadedHeader ? 'calc(env(safe-area-inset-top) + 10px) 10px 6px' : (isMobile ? 'env(safe-area-inset-top) 8px 0' : '0 16px'),
+          margin: file ? (isMobile ? '0 8px 0' : '14px 16px 0') : 0,
           borderRadius: file ? 8 : 0,
           borderBottom: file ? 'none' : '1px solid var(--border-subtle)',
           background: file ? undefined : 'var(--bg-glass)',
@@ -1525,6 +1529,16 @@ export default function App() {
                   onDismiss={(id) => useStore.getState().removeAnnotation(id)}
                 />
 
+                {/* Auto-generated semantic labels from the loaded asset metadata
+                    (e.g. Lupine Wiki sphere names and key node names). Rendered
+                    independently of user annotations so gallery curation can
+                    surface exact knowledge-graph semantics on top of the view. */}
+                <KnowledgeLabelsLayer
+                  labels={knowledgeLabels}
+                  visibleKinds={knowledgeLabelKinds}
+                  visible={showKnowledgeLabels}
+                />
+
                 {/* Click an atom to inspect it, mark it, and focus the camera.
                     Shift-click keeps the lightweight annotation workflow. */}
                 <SelectionMarkers
@@ -1668,7 +1682,8 @@ export default function App() {
               backdropFilter: 'blur(16px)',
               WebkitBackdropFilter: 'blur(16px)',
               boxShadow: '0 18px 48px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.08)',
-              zIndex: 150,
+              zIndex: activePanel === 'studio' && isMobile ? 80 : 150,
+              opacity: activePanel === 'studio' && isMobile ? 0.58 : 1,
             }}>
               <button
                 onClick={() => {
@@ -1733,8 +1748,8 @@ export default function App() {
           {file && !showPotentialBrowser && (
             <div style={{
               position: 'absolute',
-              top: file ? (isMobile ? 72 : 88) : 72,
-              right: isMobile ? 12 : 18,
+              top: file ? (isMobile ? 'calc(env(safe-area-inset-top) + 116px)' : 88) : 72,
+              right: isMobile ? 10 : 18,
               display: 'flex',
               justifyContent: 'flex-end',
               gap: 8,
@@ -1745,7 +1760,8 @@ export default function App() {
               backdropFilter: 'blur(16px)',
               WebkitBackdropFilter: 'blur(16px)',
               boxShadow: '0 18px 48px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.08)',
-              zIndex: 150,
+              zIndex: activePanel === 'studio' && isMobile ? 80 : 150,
+              opacity: activePanel === 'studio' && isMobile ? 0.58 : 1,
             }}>
               <button
                 type="button"
@@ -1829,7 +1845,7 @@ export default function App() {
             position: 'absolute',
             top: 'auto',
             right: 0,
-            bottom: 0,
+            bottom: 'calc(env(safe-area-inset-bottom) + 66px)',
             left: 0,
             width: '100%',
             height: activeMobilePanelHeight,
@@ -1844,8 +1860,8 @@ export default function App() {
             display: 'flex',
             flexDirection: 'column',
             overflowY: activePanel === 'export' || activePanel === 'studio' ? 'hidden' : 'auto',
-            paddingBottom: 'calc(env(safe-area-inset-bottom) + 8px)',
-            paddingTop: 4,
+            paddingBottom: 8,
+            paddingTop: 8,
             boxShadow: '0 -18px 48px rgba(0,0,0,0.45)',
             zIndex: 100,
             WebkitOverflowScrolling: 'touch',
@@ -1853,15 +1869,15 @@ export default function App() {
             {/* Drag handle + close */}
             <div
               role="presentation"
-              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4px 12px 6px', position: 'relative' }}
+              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '8px 12px 7px', position: 'relative' }}
             >
               <div
                 aria-hidden="true"
-                style={{ width: 42, height: 4, borderRadius: 999, background: 'rgba(255,255,255,0.2)' }}
+                style={{ width: 44, height: 5, borderRadius: 999, background: 'rgba(255,255,255,0.28)' }}
               />
               <button
                 onClick={() => setActivePanel(null)}
-                style={{ position: 'absolute', right: 12, background: 'transparent', border: 'none', color: '#aaa', fontSize: 16, lineHeight: 1, padding: 8, minWidth: 36, minHeight: 36 }}
+                style={{ position: 'absolute', right: 12, top: 2, background: 'transparent', border: 'none', color: '#cbd5e1', fontSize: 16, lineHeight: 1, padding: 8, minWidth: 40, minHeight: 40, touchAction: 'manipulation' }}
                 aria-label="Close panel"
               >
                 ✕
@@ -1923,16 +1939,18 @@ export default function App() {
       {/* ─── Timeline ─── */}
       {file && totalFrames > 1 && (
         <div style={{
-          height: 60, flexShrink: 0,
-          display: 'flex', alignItems: 'center', gap: 16,
-          padding: isMobile ? '0 12px 48px' : '0 20px',
+          height: isMobile ? 'calc(64px + env(safe-area-inset-bottom))' : 60, flexShrink: 0,
+          display: 'flex', alignItems: 'center', gap: isMobile ? 8 : 16,
+          padding: isMobile ? '8px 12px calc(env(safe-area-inset-bottom) + 8px)' : '0 20px',
           borderTop: '1px solid #1f2937',
-          background: '#0a0a0c',
+          background: 'rgba(10,10,12,0.96)',
           overflowX: 'auto',
+          position: 'relative',
+          zIndex: 120,
           scrollbarWidth: 'none',
         }}>
           {/* Transport controls */}
-          <div style={{ display: 'flex', gap: 4 }}>
+          <div style={{ display: 'flex', gap: isMobile ? 3 : 4, flexShrink: 0 }}>
             <TransportButton
               onClick={() => useStore.getState().setFrame(0)}
               title="First frame"
@@ -1978,7 +1996,7 @@ export default function App() {
             fontSize: '11px',
             fontFamily: 'var(--font-mono)',
             color: '#64748b',
-            minWidth: 90,
+            minWidth: isMobile ? 58 : 90,
             textAlign: 'right',
             fontVariantNumeric: 'tabular-nums',
           }}>
@@ -1987,20 +2005,20 @@ export default function App() {
           </div>
 
           {/* Speed selector */}
-          <div style={{ display: 'flex', gap: 4 }}>
+          <div style={{ display: 'flex', gap: isMobile ? 3 : 4, flexShrink: 0 }}>
             {[0.25, 0.5, 1, 2, 4].map(speed => (
               <button
                 key={speed}
                 onClick={() => useStore.getState().setPlaybackSpeed(speed)}
                 style={{
-                  padding: '6px 8px',
-                  minWidth: 36,
+                  padding: isMobile ? '7px 7px' : '6px 8px',
+                  minWidth: isMobile ? 34 : 36,
                   fontSize: '10px',
                   fontFamily: 'var(--font-mono)',
                   fontWeight: playbackSpeed === speed ? 600 : 400,
-                  color: playbackSpeed === speed ? '#0a0a0c' : '#64748b',
-                  background: playbackSpeed === speed ? '#f59e0b' : '#121418',
-                  border: `1px solid ${playbackSpeed === speed ? '#f59e0b' : '#334155'}`,
+                  color: playbackSpeed === speed ? '#031314' : '#94a3b8',
+                  background: playbackSpeed === speed ? '#1edce0' : '#121418',
+                  border: `1px solid ${playbackSpeed === speed ? '#1edce0' : '#334155'}`,
                   borderRadius: 0,
                   cursor: 'pointer',
                   transition: 'all 100ms ease-out',

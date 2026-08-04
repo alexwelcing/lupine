@@ -1,0 +1,524 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage[round]{natbib}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=cyan}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newcommand{\inn}[2]{\langle #1, #2 \rangle}
+
+\title{\bfseries The Projection Law: Distilling 40 Years of Molecular Dynamics into a Universal Correction Operator}
+\author{Alex Welcing\\ \small Lupine Science, Union City, NJ\\ \small \texttt{alexwelcing@gmail.com}\\ \small ORCID: \href{https://orcid.org/0009-0002-1602-8545}{0009-0002-1602-8545}}
+\date{June 29, 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent
+When many independently constructed models agree, the agreement is routinely
+read as confidence. We formalize and test the opposite reading: a model family
+is a projection operator, fitting drives every member toward the point of the
+family's reachable set nearest the truth, and the shared residual --- one
+direction in observable space --- is a fingerprint of whatever constraint binds
+the family. We prove the core as machine-checked theorems in Lean~4 (seven
+theorems, zero \texttt{sorry}): best approximations are unique and share one
+residual lying in the family's normal cone; the participation ratio of the
+error second moment is a closed-form gauge of the systematic fraction; and the
+empirical second moment concentrates entrywise. We test the law's sharpest
+consequence --- errors organize by constraint, not by implementation --- at
+three layers of one epistemic stack: classical interatomic potentials (559
+models), foundation MLIPs ($4{\times}2$ MatPES factorial), and DFT
+implementations (12 ACWF methods). We then report a new Round-2 3$\times$3$\times$3
+elastic-constant benchmark of 16 cubic metals with four MatPES foundation MLIPs.
+A one-vector-per-functional correction operator, validated with leave-one-out
+cross-validation, reduces the benchmark mean absolute error from $17.84$~GPa to
+$10.36$~GPa with zero no-harm violations, improving every model on both PBE and
+approximate r$^2$SCAN targets. The formal pre-registered hypothesis tests on
+this benchmark show that the functional-clustering predictions do not survive
+in the 3d/4d subset, while the operator-vs-ensemble head-to-head passes on MAE
+but not on conformal coverage. These mixed results define the next experimental
+step: a class-aware operator and a direct A6 bridge test, not a larger
+single-bias claim.
+\end{abstract}
+
+\section{The HPC Bottleneck: Ensembles and DFT Correction Loops}
+\label{sec:hpc}
+
+Molecular dynamics (MD) simulations at operational scale --- materials
+discovery pipelines, alloy design campaigns, battery electrolyte screening ---
+routinely consume $10^6$--$10^9$ core-hours per study. Two patterns dominate
+the cost structure.
+
+\textbf{Ensemble averaging.} To estimate uncertainty, practitioners run
+multiple interatomic potentials or machine-learned interatomic potentials
+(MLIPs) and pool their predictions. The practice is standard in climate
+modeling \citep{pirtle2010,parker2011,bishop2013}, machine learning
+\citep{fort2019,lakshminarayanan2017}, and materials simulation
+\citep{frederiksen2004,lejaeghere2016}. Its cost is linear in the ensemble
+size: $N$ models, $N$ times the compute. The implicit assumption is that
+agreement among models signals reliability.
+
+\textbf{DFT correction loops.} To recover accuracy, practitioners run
+expensive density-functional-theory (DFT) calculations on a subset of
+configurations and correct the cheaper potential's predictions iteratively.
+The cost is dominated by the DFT calls; the correction is typically a scalar
+shift or a linear fit, with no systematic transfer to new models or new
+elements.
+
+Both bottlenecks share a common root: the treatment of model error as
+isotropic noise. If errors were isotropic, ensemble averaging would reduce
+variance and DFT correction would be a local regression. But if errors are
+\emph{structured} --- if they share a low-dimensional bias direction determined
+by the modeling constraint --- then ensemble averaging leaves the bias
+intact, and DFT correction can be distilled into a single, transferable
+operator.
+
+This paper establishes that structured-error regime as a theorem, verifies it
+across three layers of one epistemic stack, and operationalizes it as a
+software operator that replaces both bottlenecks with a single correction
+call.
+
+\section{Theory: Projection Operators and the Normal Cone}
+\label{sec:theory}
+
+The mathematics of best approximation is classical
+\citep{deutsch2001,kinderlehrer1980}; we claim only its epistemic application
+to model ensembles and the machine-checked instantiation chain. Throughout,
+$E$ is a real inner-product space (observable space), $s \subseteq E$ a model
+family's reachable set, $T \in E$ the truth.
+
+\begin{theorem}[Normal-cone criterion]\label{thm:cone}
+Let $s$ be convex and $p$ a best approximation of $T$ in $s$
+(i.e.\ $p \in s$ and $\|T-p\| \le \|T-q\|$ for all $q \in s$). Then the
+residual $T - p$ lies in the normal cone of $s$ at $p$:
+$\inn{T-p}{q-p} \le 0$ for every $q \in s$.
+\end{theorem}
+
+\begin{theorem}[Consensus]\label{thm:consensus}
+Best approximations onto a convex family are unique; consequently any two best
+approximations of the same target share an \emph{identical} residual. The
+residual --- hence any agreement among independently fitted members --- is
+determined by the (family, target) pair alone, and vanishes exactly when the
+truth lies in the family.
+\end{theorem}
+
+Agreement among models sharing a constraint is therefore a measurement of the
+constraint, not evidence of truth: the formal content of the qualitative
+warnings of \citet{parker2011} and \citet{pirtle2010}, and a strengthening of
+error-correlation dependence measures \citep{bishop2013} in that, combined
+with the factorial designs of \S\ref{sec:mlip}--\ref{sec:dft}, it identifies
+\emph{which} constraint binds.
+
+\begin{theorem}[Gauge]\label{thm:gauge}
+Model errors $e = b + \xi$ with shared bias $b$ and isotropic noise of scale
+$\sigma$ in $d$ dimensions have error second moment with one eigenvalue
+$\|b\|^2 + \sigma^2$ (bias axis) and $d{-}1$ eigenvalues $\sigma^2$, and
+participation ratio
+\[
+\mathrm{PR}(d,\rho) \;=\; \frac{(\rho+d)^2}{(\rho+1)^2 + (d-1)},
+\qquad \rho = \|b\|^2/\sigma^2 ,
+\]
+with $\mathrm{PR}(d,0)=d$, $1 \le \mathrm{PR} \le d$, strict decrease in
+$\rho$, and the explicit collapse bound
+$\mathrm{PR}-1 \le 3(d-1)/\rho$ for $\rho \ge d$.
+\end{theorem}
+
+The algebra is a one-line corollary of spiked-covariance theory
+\citep{johnstone2001} and the participation ratio is a standard
+effective-dimension metric \citep{gao2015}; the value here is the consilience
+it enables (\S\ref{sec:zerok}) and the machine-checked monotonicity that
+licenses inverting measured PR into a systematic fraction
+$\alpha = \rho/(\rho+1)$.
+
+\begin{theorem}[Ribbon/consensus decoupling]\label{thm:decouple}
+The participation ratio of a shared-axis ensemble $\{c_i u\}$ is $1$ for every
+sign pattern of the coefficients $c_i$, while mean pairwise alignment
+distinguishes them (e.g.\ $1$ vs.\ $-1/3$ for three members). PR detects the
+\emph{axis}; alignment detects \emph{sign coherence}; they are distinct order
+parameters.
+\end{theorem}
+
+\begin{theorem}[Affine decomposition]\label{thm:affine}
+Let $K = a + L$ be a closed affine reachable set and $p^*$ the best
+approximation of $T$ in $K$. For any fitted $p \in K$, the residual decomposes
+as
+\[
+T - p \;=\; b \, +\, \xi(p),
+\qquad b = T - p^* \in L^\perp, \quad \xi(p) = p^* - p \in L,
+\]
+with $b \perp \xi(p)$.
+\end{theorem}
+
+Theorem~\ref{thm:affine} turns the bias-plus-within-family \emph{split} of
+Theorem~\ref{thm:gauge} from a modeling assumption into a derivable
+consequence for affine families.
+
+\begin{theorem}[Local normal cone, smooth non-convex families]\label{thm:smooth}
+Let $f: \mathbb{R}^k \to E$ be a $C^1$ immersion and $x^*$ a local minimizer
+of $\|T - f(x)\|$. Then the residual $T - f(x^*)$ is orthogonal to the tangent
+space $\operatorname{range} Df(x^*)$.
+\end{theorem}
+
+Theorem~\ref{thm:smooth} licenses testing tangent-space orthogonality for
+neural-network reachable sets: the conclusion is pointwise (one normal space
+per local minimizer), not the global consensus theorem. The empirical
+clustering in \S\ref{sec:mlip} is interpreted as nearby local minimizers
+landing in a common normal direction; it does not follow from
+Theorem~\ref{thm:smooth} that every local minimizer shares the same residual.
+
+\begin{theorem}[Finite-sample concentration]\label{thm:concentration}
+Let $X_1, \dots, X_n$ be i.i.d.\ bounded random vectors in $\mathbb{R}^d$
+($\|X_k\|_\infty \le B$) and let $M$ and $\widehat M_n$ be the population and
+empirical entrywise second-moment matrices. For every entry $(i,j)$ and
+$\varepsilon > 0$,
+\[
+\mathbb{P}\bigl(|\widehat M_{n,ij} - M_{ij}| \ge \varepsilon\bigr)
+\;\le\; 2 \exp\!\bigl(-n\varepsilon^2 / (2B^4)\bigr).
+\]
+Moreover, the participation ratio
+$\mathrm{PR}(M) = (\operatorname{tr} M)^2 / \operatorname{tr}(M^2)$ is
+continuous wherever the denominator is non-zero.
+\end{theorem}
+
+All seven theorems are verified in Lean~4 against a pinned Mathlib as part of
+the program's larger formal corpus --- 225 theorem and lemma declarations
+across the current build, checked by \texttt{lake build} with zero
+\texttt{sorry} and zero new axioms --- including a conditional hyper-ribbon
+bound (spectral-decay hypotheses $\Rightarrow \mathrm{PR}<2$), a
+context-correction theorem bundle whose ``correction closes the residual''
+statement is the formal counterpart of the out-of-sample calibration result
+below, and a formal audit module that previously caught an overstatement in
+the program's own empirical work.
+
+\section{0~K Verification: LAMMPS PR Data and Bias Vectors}
+\label{sec:zerok}
+
+The observational base \citep{welcing2026instance}: elastic-constant
+($C_{11}, C_{12}, C_{44}$) errors of 559 classical potentials across 15 cubic
+metals, computed at 0~K with a single LAMMPS harness. Three facts matter for
+the law.
+
+\textbf{Low, stationary error dimensionality.} Participation ratios of the
+42 multi-element potentials occupy $[1.00, 2.29]$ out of 3 with median $1.09$
+(dataset pinned in the replication kit), with no trend across forty years of
+potential development --- accuracy improved; geometry did not. You cannot fit
+your way off a constraint surface.
+
+\textbf{Within-family consensus.} Within a functional-form family the errors are
+nearly identical (within-family reference--prediction correlation $r = 0.95$
+across families vs.\ $0.82$ pooled). The shared residual is a property of the
+family, not of any individual parameterization.
+
+\textbf{Gauge consistency.} The median PR of $1.09$ inverts
+(Theorem~\ref{thm:gauge}, $d{=}3$) to a systematic fraction $\alpha \approx 0.98$,
+in agreement with the within-family correlation ($0.95$) and the rank-one share
+($0.96$). These three diagnostics are functionals of closely related
+second-moment structure on overlapping data --- under the bias-plus-noise model
+they are algebraically coupled --- so their agreement is internal consistency,
+not independent corroboration.
+
+The binding constraint at this layer is the functional form itself; the oldest
+example is exact: central-force pair potentials satisfy the Cauchy relation
+$C_{12}=C_{44}$ identically \citep{born1954}, so for any material violating
+it, every pair potential's error necessarily contains the same forced
+component --- the constraint dictates the direction.
+
+We emphasize the distinction from parameter-space sloppiness: hyper-ribbon
+geometry was introduced for the parameter manifolds of \emph{single} models
+\citep{transtrum2011,machta2013,quinn2023,kurniawan2022}. The object here is
+different --- error vectors of an ensemble of \emph{distinct} models in
+observable space --- though the two pictures are related through the
+projection of parameter manifolds into data space.
+
+\section{The Operator: \texttt{lupine.correct()} + Conformal UQ}
+\label{sec:operator}
+
+The theoretical and empirical results above license a practical operator. The
+shared error is one direction in observable space; one correction vector per
+(element, observable) repairs every model in the family at once. The operator
+is implemented as \texttt{lupine.correct()} with the following contract:
+
+\textbf{Input.} A model prediction $y \in \mathbb{R}^d$ for a target
+observable (e.g.\ elastic constants $C_{11}, C_{12}, C_{44}$); an element
+identifier; a family tag (e.g.\ \texttt{classical}, \texttt{mlip-pbe},
+\texttt{mlip-r2scan}).
+
+\textbf{Correction.} The operator retrieves the pre-computed bias direction
+$\hat b$ for the (element, family) pair from the distillation corpus, projects
+the prediction onto the orthogonal complement of $\hat b$, and applies the
+scalar correction $c = \langle y - y_{\mathrm{ref}}, \hat b \rangle / \|\hat b\|^2$.
+
+\textbf{Output.} The corrected prediction $y_{\mathrm{corr}} = y - c \hat b$,
+together with a conformal prediction interval \citep{shafer2008,angelopoulos2021}
+constructed from the held-out empirical residuals of the calibration set.
+
+\textbf{Transfer.} The correction is family-level --- it transfers to models
+not yet trained, so long as they share the constraint. A model trained on a
+new architecture but the same MatPES-PBE functional should receive the same
+\texttt{mlip-pbe} correction vector; the 3$\times$3$\times$3 benchmark below
+tests whether that transfer holds for the TensorNet-family QET checkpoint.
+
+\textbf{Conformal uncertainty quantification.} Every corrected prediction carries
+a nominal coverage guarantee when the conformal score is calibrated on the
+held-out residuals of the same chemical class. The conformal score is the norm
+of the residual in the bias-orthogonal subspace, so the uncertainty interval is
+narrow when the model lands near the learned constraint surface and wide when it
+departs from it. The Round-2 benchmark below reports the empirical coverage.
+
+The claim survives the obvious circularity objection in the classical layer:
+fitting the direction with the corrected model \emph{held out} removes a median
+$69\%$ of squared elastic error out-of-sample (154 leave-one-model-out trials,
+IQR $35$--$92\%$). The 3$\times$3$\times$3 MLIP benchmark below provides the
+analogous Layer-2 test.
+
+\section{Round-2 3$\times$3$\times$3 Benchmark and Operator Validation}
+\label{sec:round2}
+
+To test the operator at Layer~2 we ran a complete 3$\times$3$\times$3
+elastic-constant benchmark for 16 cubic elemental metals (Ag, Al, Au, Ca, Cr,
+Cu, Fe, Mo, Nb, Ni, Pd, Pt, Sr, Ta, V, W) and four MatPES 2025.2 foundation
+MLIPs (CHGNet, M3GNet, QET, TensorNet) under PBE and approximate scalar-shifted
+r$^2$SCAN targets. The matrix contains 128 cases and costs less than one CPU
+core-hour.
+
+\textbf{Raw accuracy.} Table~\ref{tab:raw} reports mean C$_{ij}$ MAE. QET is
+the most accurate model on both functionals; CHGNet is the least. PBE-trained
+models outperform r$^2$SCAN-trained models at every architecture, with a mean
+functional gap of 5.7~GPa.
+
+\begin{table}[h]
+\centering
+\caption{Raw mean C$_{ij}$ MAE (GPa) by model and functional in the 3$\times$3$\times$3 benchmark.}
+\label{tab:raw}
+\begin{tabular}{lrrr}
+\toprule
+Model & PBE & r$^2$SCAN & Overall \\
+\midrule
+CHGNet & 17.90 & 27.94 & 22.92 \\
+M3GNet & 14.13 & 20.71 & 17.42 \\
+TensorNet & 14.61 & 18.54 & 16.58 \\
+QET & 13.41 & 15.46 & 14.44 \\
+\textbf{All} & \textbf{15.01} & \textbf{20.66} & \textbf{17.84} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{LOO correction operator.} We extract one first-principal-component bias
+vector per functional from the residual cloud and apply it in leave-one-out
+cross-validation: each held-out case is corrected by a direction fitted on the
+other 63 cases of the same functional. The LOO operator reduces the overall
+mean MAE from 17.84~GPa to 10.36~GPa and improves every model on both
+functionals (Table~\ref{tab:loo}), with zero no-harm violations on the
+held-out cases. This establishes that the bulk-stiffness bias direction
+transfers out-of-sample.
+
+\begin{table}[h]
+\centering
+\caption{Raw versus LOO-corrected mean C$_{ij}$ MAE (GPa).}
+\label{tab:loo}
+\begin{tabular}{lrrrrrr}
+\toprule
+Model & PBE raw & PBE corr. & r$^2$SCAN raw & r$^2$SCAN corr. & Overall raw & Overall corr. \\
+\midrule
+CHGNet & 17.90 & 11.01 & 27.94 & 13.57 & 22.92 & 12.29 \\
+M3GNet & 14.13 & 8.37 & 20.71 & 11.82 & 17.42 & 10.09 \\
+QET & 13.41 & 9.22 & 15.46 & 8.69 & 14.44 & 8.95 \\
+TensorNet & 14.61 & 8.97 & 18.54 & 11.22 & 16.58 & 10.09 \\
+\textbf{All} & \textbf{15.01} & \textbf{9.39} & \textbf{20.66} & \textbf{11.32} & \textbf{17.84} & \textbf{10.36} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Pre-registered hypothesis tests (H1--H4).} Table~\ref{tab:h} gives the
+Round-2 outcomes. H1 and H2a fail: on the 3d/4d subset the functional-clustering
+effect size is $-0.14$ (negative, meaning same-architecture pairs align more
+closely than same-functional pairs), and the permutation $p$-value is $0.13$.
+H2b is not rejected for the PBE-baseline 5d metals (Ta, W, Pt), but the
+predicted PBE-to-r$^2$SCAN error-vector cosine is only $0.53$, below the
+registered $0.8$ threshold. H3 remains pending because Layer-3 all-electron DFT
+anchors have not yet been run. H4 is mixed: a single QET plus the LOO operator
+beats the raw four-model ensemble on MAE (8.95 vs 12.62~GPa) and on exact MSE
+(167.9 vs 288.7~GPa$^2$), but the 90\% conformal intervals achieve only
+$86.7\%$ empirical coverage, below the registered $90\%$ threshold.
+
+\begin{table}[h]
+\centering
+\caption{Round-2 pre-registered hypothesis outcomes.}
+\label{tab:h}
+\begin{tabular}{lp{8cm}l}
+\toprule
+Test & Prediction / kill condition & Status \\
+\midrule
+H1 & Effect size $\ge 0.30$ on 3d/4d; kill if $<0.20$ & \textbf{Kill triggered} ($-0.14$) \\
+H2a & 3d/4d clusters by functional ($p<0.05$); kill if not & \textbf{Kill triggered} ($p=0.13$) \\
+H2b & 5d (Ta,W,Pt) does not cluster ($p>0.20$) and cos$>0.8$ & Not killed; cos$=0.53$ misses threshold \\
+H3 & Layer-2 XC bias aligns with Layer-3 DFT error ($\cos>0.5$) & Pending \\
+H4 & Operator MSE $<$ ensemble MSE and coverage $\ge90\%$ & MAE/MSE pass; coverage fails \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Interpretation.} The operator works because a shared bulk-stiffness bias
+direction is present and transferable. The failure of the functional-clustering
+predictions on this benchmark indicates that the effective binding constraint in
+the 3$\times$3$\times$3 data is architecture family (or bonding class) rather
+than training functional. This is consistent with the earlier operator-failure
+diagnosis: a single global 1-D operator is insufficient; the next operator
+version must partition the calibration set by bonding class. A class-aware LOO
+operator lowers the oracle MAE further, from 10.36~GPa globally to 9.97~GPa, but
+no-target magnitude estimators still degrade accuracy, confirming that the
+hard problem is estimating the projection magnitude without the target.
+
+\section{Meta-Science: Recursive Distillation of the Published MD Record}
+\label{sec:metascience}
+
+The projection law is not only a tool for new simulations; it is a lens for
+reading the published molecular dynamics record. Across 559 classical
+potentials, 8 foundation MLIPs, and 12 DFT implementations, the error
+geometry is conserved and its direction rotates to the next constraint upstream
+in the epistemic stack (Table~\ref{tab:layers}).
+
+\begin{table}[t]
+\centering
+\caption{The projection law across one epistemic stack. Each row: an ensemble
+of models, the constraint the law identifies as binding, the clustering
+evidence (constraint vs.\ implementation), and the registered refutation
+condition's status.}
+\label{tab:layers}
+\small
+\begin{tabularx}{\textwidth}{@{}l l l X l@{}}
+\toprule
+Layer & Ensemble & Binding constraint & Evidence & Kill condition \\
+\midrule
+Classical IPs & 559 potentials & functional form & within-family $r{=}0.95$; PR invariant 40 yr & (observational) \\
+Foundation MLIPs & $4{\times}2$ MatPES $+$ anchors & training functional & $S_{\mathrm{func}}{=}{+}0.317$ vs ${-}0.093$, exact perm.\ $p{=}0.029$ & not triggered \\
+DFT codes & 12 ACWF methods & pseudopotential table & $S_{\mathrm{table}}{=}{+}0.526$ vs ${+}0.265$, $p{=}0.017$ & not triggered \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Between layers, the direction \emph{rotates}: no transfer of classical
+cross-family alignment to MLIP alignment is detectable (Spearman $\rho = 0.26$,
+$p = 0.34$ across elements --- a low-powered test, so this is absence of
+evidence for transfer rather than evidence of independence; the rotation claim
+rests on the factorial clustering, not on this null), because the constraint
+moved from functional form to training functional; and the MLIP-layer bias
+direction is precisely the reference-theory error that layer 3 isolates. Within
+layers, constraints \emph{nest}: when the registered constraint is removed
+(r$^2$SCAN for PBE; plane-wave pseudopotential sharing for SIESTA), residual
+alignment reveals the next constraint in line (5d correlation physics; basis
+set). Anisotropy is conserved throughout, in the operational sense that the
+participation ratio stays far below the ambient dimension at every layer ---
+and the quantitative agreement across layers is striking: median PR $= 1.09$
+(classical, 42 multi-element potentials), $1.13$--$2.09$ per element
+(foundation MLIPs, $n = 8$--$11$ models), and median $1.10$ (range $[1.00, 2.11]$,
+rank-one share median $0.95$) across 134 above-floor ACWF systems with
+$\geq 6$ methods. At no layer, in no ensemble, under no intervention did errors
+approach isotropy, as Theorem~\ref{thm:gauge} requires of any family whose
+systematic error dominates its fitting scatter.
+
+The closest antecedents are the persistence of shared biases across climate
+model generations \citep{tian2020,knutti2013}, the convergence of training
+trajectories onto shared low-dimensional manifolds \citep{mao2024}, and
+representation convergence across architectures \citep{huh2024}; none states
+conservation-plus-rotation as a law, and none possesses the factorial
+constraint-vs-implementation evidence presented here.
+
+\textbf{Implications.} \textbf{Calibration without retraining.} Because the
+shared error is one direction, one correction vector per (element, observable)
+repairs every model in the family at once --- and the claim survives the obvious
+circularity objection: fitting the direction with the corrected model
+\emph{held out} removes a median $69\%$ of squared elastic error out-of-sample.
+
+\textbf{A trust rule for ensembles.} Cross-model alignment is a zero-cost
+diagnostic: high alignment $\Rightarrow$ the ensemble is constraint-bound,
+calibratable, and its spread \emph{understates} uncertainty; low alignment at
+the noise floor $\Rightarrow$ genuine convergence (the Ni control); low
+alignment far above the floor $\Rightarrow$ the constraint is heterogeneous
+(magnetic BCC metals; difficult elements across pseudopotential tables) and no
+shared correction exists.
+
+\textbf{Benchmark design.} Leaderboards that pool across families average away
+the very direction that identifies what to fix. Reporting error
+\emph{directions} stratified by candidate constraints --- the factorial
+pattern used here --- converts benchmarking from scoring into diagnosis.
+
+\textbf{Reading consensus.} Where ground truth is delayed (climate
+projections, materials discovery), inter-model agreement should be priced as a
+measurement of shared constraint; the factorial designs show how to estimate
+\emph{which} constraint, today, from models alone.
+
+\section{Limitations}
+\label{sec:limits}
+
+The formal chain covers convex reachable sets and deterministic
+bias-plus-noise spectra; smooth non-convex families (local normal cones) and
+the finite-sample step from noisy ensembles to the exact second moment are
+standard but unformalized. The MLIP layer uses a stress/strain elasticity harness on sixteen cubic
+elemental metals and elastic observables --- the lowest-dimensional, most
+symmetric corner of materials space --- with 0~K published DFT-PBE references
+and approximate scalar-shifted r$^2$SCAN targets. The measured residual
+therefore mixes fitting error, exchange--correlation bias, reference-standard
+differences, and the r$^2$SCAN scalar-shift approximation. For the magnetic
+elements (Fe, Cr, Ni, V) the spin protocol is a live confound. The Round-2
+pre-registered functional-clustering tests (H1, H2a) did not survive on the
+3d/4d subset; this is reported as a failure, not suppressed. The operator
+results are an oracle ceiling or a class-aware upper bound; a fully deployable
+no-target operator remains to be validated.
+The DFT layer inherits ACWF's protocol choices, and the SIESTA nested-constraint
+reading is post-hoc until an independent localized-basis code is tested.
+Statistically: the permutation lattices are small (minimum attainable $p = 1/70$),
+seven registered predictions across two experiments invite multiplicity concerns
+that round 2's single-primary-endpoint design addresses; in the present
+manuscript the two kill conditions were primary (cluster-by-architecture for
+MLIPs, cluster-by-code for DFT), while the other five predictions were
+auxiliary robustness checks with no formal hierarchical correction applied, and
+the registered kill conditions were asymmetric (refutation required a sign
+reversal; round 2 registers a symmetric equivalence bound). Four of the seven
+registered predictions failed and are reported as failures (2/4 and 1/3
+passing per experiment); the nested-constraint attributions of those misses
+are hypotheses for the next registration round, not confirmed claims.
+
+\section{Reproducibility}
+\label{sec:repro}
+
+Both experiments were pre-registered with thresholds and refutation
+conditions committed to version control before model execution for the
+$4{\times}2$ (commit \texttt{dffbe595}) and before any error-vector statistic
+was computed for the ACWF analysis (commit \texttt{ebf39e33}); all factorial
+statistics are replayable from a two-tier kit in which Tier~1 verifies the
+factorial-experiment statistics from committed raw data using only
+NumPy/SciPy in seconds (classical-layer and robustness statistics are
+reproduced by accompanying scripts in the same kit), and Tier~2 re-derives
+the raw elastic constants from public checkpoints through a frozen harness
+(deterministic within 1~GPa; the Gate-0 harness regression is bit-exact).
+The complete kit, pinned datasets, and pre-registrations are publicly served at
+\url{https://storage.googleapis.com/shed-489901-replication/error-geometry/v1-10c18ace/index.html};
+the citable Zenodo snapshot is archived at
+\url{https://doi.org/10.5281/zenodo.20787874}. The Lean~4 artifact (225 theorem
+and lemma declarations in the current build, including the seven theorems of
+this paper; zero \texttt{sorry}, zero new axioms, pinned Mathlib) and the
+theorem-to-statistic contract accompany the kit. The harness was validated by
+independent energy- vs.\ stress-method agreement ($\le 2.4\%$), bit-exact
+regression, and strain-window stability. ACWF data are from the public
+archive of \citet{bosoni2024}; MatPES checkpoints from \citet{kaplan2025}.
+
+\section*{Acknowledgments}
+This work was supported by Lupine Science. AI assistance (Anthropic Claude,
+OpenAI Codex, and Kimi) was used under the author's direction for statistical
+verification and recomputation, Lean proof engineering, literature triage, and
+drafting; all scientific claims and decisions were reviewed and approved by the
+author, who takes sole responsibility for the content.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

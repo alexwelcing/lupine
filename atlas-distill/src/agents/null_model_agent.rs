@@ -9,11 +9,11 @@
 //! the hyper-ribbon claim has no evidential value.
 
 use super::{Action, ActionResult, Capability, DiscoveryAgent};
-use crate::manifold::{self, BenchmarkEntry, MaterialErrorVector};
+use crate::manifold::{self, BenchmarkEntry, DataSource, MaterialErrorVector};
 use anyhow::Result;
 use lupine_ops::ledger::{
     generate_record_id, now_iso8601, AgentClaim, BenchmarkRecord, ClaimStatus, ClaimType,
-    DiscoveryLedger,
+    DiscoveryLedger, Provenance,
 };
 use rand::Rng;
 
@@ -95,6 +95,19 @@ impl DiscoveryAgent for NullModelAgent {
                         reference: r.reference,
                         predicted: r.predicted,
                         unit: r.unit.clone(),
+                        provenance: match &r.provenance {
+                            Provenance::SyntheticBenchmark { source, .. } => {
+                                DataSource::Synthetic(source.clone())
+                            }
+                            Provenance::LammpsRun { .. }
+                            | Provenance::OpenKimTest { .. }
+                            | Provenance::LiteratureCitation { .. } => DataSource::Experiment {
+                                citation: "ledger record".to_string(),
+                            },
+                            Provenance::AgentInference { method, .. } => {
+                                DataSource::Synthetic(format!("agent inference: {method}"))
+                            }
+                        },
                     })
                     .collect();
 

@@ -265,14 +265,14 @@ impl NistCatalog {
             .iter()
             .map(|(k, v)| (k.clone(), v.len()))
             .collect();
-        ps_counts.sort_by(|a, b| b.1.cmp(&a.1));
+        ps_counts.sort_by_key(|b| std::cmp::Reverse(b.1));
 
         let mut el_counts: Vec<(String, usize)> = self
             .by_element
             .iter()
             .map(|(k, v)| (k.clone(), v.len()))
             .collect();
-        el_counts.sort_by(|a, b| b.1.cmp(&a.1));
+        el_counts.sort_by_key(|b| std::cmp::Reverse(b.1));
 
         NistSummary {
             total_potentials: self.potentials.len(),
@@ -455,10 +455,7 @@ pub fn print_potentials(potentials: &[&NistPotential]) {
     );
     eprintln!(
         "  {:40} {:15} {:>6} {:>5} ────────────────────────────────",
-        "────────────────────────────────────────",
-        "───────────────",
-        "──────",
-        "─────"
+        "────────────────────────────────────────", "───────────────", "──────", "─────"
     );
     for pot in potentials {
         let els = pot.elements.join(",");

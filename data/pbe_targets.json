@@ -1,0 +1,128 @@
+{
+  "Al": {
+    "material_id": "mp-134",
+    "space_group": 225,
+    "structure": "FCC",
+    "C11_GPa": 103.9282,
+    "C12_GPa": 72.9514,
+    "C44_GPa": 31.8563,
+    "provenance": "matminer elastic_tensor_2015 dataset, mp-134, PBE"
+  },
+  "Cu": {
+    "material_id": "mp-30",
+    "space_group": 225,
+    "structure": "FCC",
+    "C11_GPa": 146.4321,
+    "C12_GPa": 131.0959,
+    "C44_GPa": 71.1847,
+    "provenance": "matminer elastic_tensor_2015 dataset, mp-30, PBE"
+  },
+  "Ni": {
+    "material_id": "mp-23",
+    "space_group": 225,
+    "structure": "FCC",
+    "C11_GPa": 275.772,
+    "C12_GPa": 159.2198,
+    "C44_GPa": 131.7116,
+    "provenance": "matminer elastic_tensor_2015 dataset, mp-23, PBE"
+  },
+  "Pd": {
+    "material_id": "mp-2",
+    "space_group": 225,
+    "structure": "FCC",
+    "C11_GPa": 187.3304,
+    "C12_GPa": 147.0458,
+    "C44_GPa": 70.7138,
+    "provenance": "matminer elastic_tensor_2015 dataset, mp-2, PBE"
+  },
+  "Pt": {
+    "material_id": "mp-126",
+    "space_group": 225,
+    "structure": "FCC",
+    "C11_GPa": 286.7556,
+    "C12_GPa": 222.2071,
+    "C44_GPa": 64.5512,
+    "provenance": "matminer elastic_tensor_2015 dataset, mp-126, PBE"
+  },
+  "Ca": {
+    "material_id": "mp-45",
+    "space_group": 225,
+    "structure": "FCC",
+    "C11_GPa": 20.8291,
+    "C12_GPa": 15.0943,
+    "C44_GPa": 14.0938,
+    "provenance": "matminer elastic_tensor_2015 dataset, mp-45, PBE"
+  },
+  "Sr": {
+    "material_id": "mp-76",
+    "space_group": 225,
+    "structure": "FCC",
+    "C11_GPa": 15.1982,
+    "C12_GPa": 10.4906,
+    "C44_GPa": 12.492,
+    "provenance": "matminer elastic_tensor_2015 dataset, mp-76, PBE"
+  },
+  "V": {
+    "material_id": "mp-146",
+    "space_group": 229,
+    "structure": "BCC",
+    "C11_GPa": 275.8481,
+    "C12_GPa": 131.27,
+    "C44_GPa": 15.5969,
+    "provenance": "matminer elastic_tensor_2015 dataset, mp-146, PBE"
+  },
+  "Nb": {
+    "material_id": "mp-75",
+    "space_group": 229,
+    "structure": "BCC",
+    "C11_GPa": 233.0293,
+    "C12_GPa": 145.1953,
+    "C44_GPa": 10.9542,
+    "provenance": "matminer elastic_tensor_2015 dataset, mp-75, PBE"
+  },
+  "Ta": {
+    "material_id": "mp-50",
+    "space_group": 229,
+    "structure": "BCC",
+    "C11_GPa": 265.4838,
+    "C12_GPa": 157.816,
+    "C44_GPa": 68.5532,
+    "provenance": "matminer elastic_tensor_2015 dataset, mp-50, PBE"
+  },
+  "Cr": {
+    "material_id": "mp-90",
+    "space_group": 229,
+    "structure": "BCC",
+    "C11_GPa": 499.4655,
+    "C12_GPa": 139.1738,
+    "C44_GPa": 102.3128,
+    "provenance": "matminer elastic_tensor_2015 dataset, mp-90, PBE"
+  },
+  "Mo": {
+    "material_id": "mp-129",
+    "space_group": 229,
+    "structure": "BCC",
+    "C11_GPa": 471.8564,
+    "C12_GPa": 157.6572,
+    "C44_GPa": 106.3876,
+    "provenance": "matminer elastic_tensor_2015 dataset, mp-129, PBE"
+  },
+  "W": {
+    "material_id": "mp-91",
+    "space_group": 229,
+    "structure": "BCC",
+    "C11_GPa": 509.8151,
+    "C12_GPa": 200.9992,
+    "C44_GPa": 142.6907,
+    "provenance": "matminer elastic_tensor_2015 dataset, mp-91, PBE"
+  },
+  "Fe": {
+    "material_id": "mp-13",
+    "space_group": 229,
+    "structure": "BCC",
+    "C11_GPa": 247.0644,
+    "C12_GPa": 150.1569,
+    "C44_GPa": 97.4255,
+    "provenance": "matminer elastic_tensor_2015 dataset, mp-13, PBE"
+  }
+}

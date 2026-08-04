@@ -1,14 +1,27 @@
 #![allow(dead_code, clippy::needless_range_loop)]
 
+mod active_sampling;
+mod alloy;
+mod benchmark;
 mod causal;
 mod commands;
+mod diagnostics;
 mod discovery;
+mod feedback_loop;
 mod fitting;
 mod ingest;
 mod literature;
+mod manifold;
+mod mof_adapter;
+mod multi_element;
+mod nist;
 mod observables;
+mod real_alloy_data;
 mod report;
+mod runner;
 mod stats;
+mod universal_feedback;
+mod validation;
 
 use anyhow::Result;
 use clap::{Parser, Subcommand};
@@ -140,6 +153,31 @@ enum Commands {
     EquilibriumSolve(commands::equilibrium_solve::EquilibriumSolveArgs),
     /// Build viewer-ready NIST equilibrium targets from benchmark rows.
     NistEquilibriumCatalog(commands::nist_equilibrium_catalog::NistEquilibriumCatalogArgs),
+    /// Run the multi-element periodic-table correction campaign and diagnostics.
+    PeriodicTable {
+        /// Residual threshold (GPa) for outlier counting.
+        #[arg(long, default_value_t = 1.0)]
+        threshold: f64,
+        /// Maximum PCA rank for adaptive correction.
+        #[arg(long, default_value_t = 3)]
+        max_rank: usize,
+        /// Family rank for hierarchical correction.
+        #[arg(long, default_value_t = 2)]
+        family_rank: usize,
+        /// Per-class rank for hierarchical correction.
+        #[arg(long, default_value_t = 2)]
+        class_rank: usize,
+    },
+    /// Run the binary-alloy surrogate campaign and transferability report.
+    AlloyCampaign {
+        /// Residual threshold (GPa) for outlier counting.
+        #[arg(long, default_value_t = 1.0)]
+        threshold: f64,
+    },
+    /// Optimize a material property from an MLIP evaluation manifest.
+    MlipOptimize(commands::mlip_optimize::MlipOptimizeArgs),
+    /// Apply the 1-D Lupine correction to every MLIP in a catalog and verify no harm.
+    MlipCorrect(commands::mlip_correct::MlipCorrectArgs),
 }
 
 #[derive(Subcommand)]
@@ -225,6 +263,197 @@ fn main() -> Result<()> {
         Commands::DistillHillClimb(args) => commands::distill_hill_climb::run(args),
         Commands::EquilibriumSolve(args) => commands::equilibrium_solve::run(args),
         Commands::NistEquilibriumCatalog(args) => commands::nist_equilibrium_catalog::run(args),
+        Commands::PeriodicTable {
+            threshold,
+            max_rank,
+            family_rank,
+            class_rank,
+        } => cmd_periodic_table(threshold, max_rank, family_rank, class_rank),
+        Commands::AlloyCampaign { threshold } => cmd_alloy_campaign(threshold),
+        Commands::MlipOptimize(args) => commands::mlip_optimize::run(&args),
+        Commands::MlipCorrect(args) => commands::mlip_correct::run(&args),
+    }
+}
+
+fn cmd_alloy_campaign(threshold: f64) -> Result<()> {
+    use crate::alloy::{
+        alloy_transferability_report, run_alloy_global_transfer_campaign,
+        run_alloy_surrogate_campaign, AlloyClassStrategy,
+    };
+
+    eprintln!("  ✦ Running binary-alloy surrogate campaign (Mg-Li focused)");
+
+    let per_class =
+        run_alloy_surrogate_campaign(AlloyClassStrategy::ByCompositionStructure, threshold);
+    let per_class_total: usize = per_class.iter().map(|r| r.outlier_count).sum();
+    eprintln!("\n  ═══ Per-class correction scorecard ═══");
+    eprintln!(
+        "    Classes: {} | Total outliers: {} | Clean classes: {}",
+        per_class.len(),
+        per_class_total,
+        per_class.iter().filter(|r| r.outlier_count == 0).count()
+    );
+    for row in &per_class {
+        eprintln!(
+            "    {:20}  max={:6.2}  mean={:6.2}  outliers={}/{}",
+            row.class, row.max_residual, row.mean_residual, row.outlier_count, row.n_potentials
+        );
+    }
+
+    let global = run_alloy_global_transfer_campaign(threshold);
+    let global_total: usize = global.iter().map(|r| r.outlier_count).sum();
+    eprintln!("\n  ═══ Global cross-alloy transfer scorecard ═══");
+    eprintln!(
+        "    Classes: {} | Total outliers: {} | Clean classes: {}",
+        global.len(),
+        global_total,
+        global.iter().filter(|r| r.outlier_count == 0).count()
+    );
+    for row in &global {
+        eprintln!(
+            "    {:20}  max={:6.2}  mean={:6.2}  outliers={}/{}",
+            row.class, row.max_residual, row.mean_residual, row.outlier_count, row.n_potentials
+        );
+    }
+    eprintln!(
+        "\n  Global transfer is {} naive per-class correction.",
+        if global_total <= per_class_total {
+            "no worse than"
+        } else {
+            "worse than"
+        }
+    );
+
+    eprintln!("\n  ═══ Pairwise transferability matrix (train rows → test columns) ═══");
+    let matrix = alloy_transferability_report(threshold);
+    let _classes: Vec<_> = matrix
+        .iter()
+        .map(|e| e.train_class.as_str())
+        .collect::<std::collections::HashSet<_>>()
+        .into_iter()
+        .collect();
+    for entry in &matrix {
+        if entry.train_class == entry.test_class {
+            continue;
+        }
+        eprintln!(
+            "    {:18} → {:18}: outlier reduction = {:6.1}%  (corrected {} / baseline {} outliers)",
+            entry.train_class,
+            entry.test_class,
+            entry.outlier_reduction_percent,
+            entry.outlier_count,
+            entry.baseline_outliers
+        );
+    }
+    if let Some(worst) = matrix
+        .iter()
+        .filter(|e| e.train_class != e.test_class)
+        .min_by(|a, b| {
+            a.outlier_reduction_percent
+                .partial_cmp(&b.outlier_reduction_percent)
+                .unwrap()
+        })
+    {
+        eprintln!(
+            "\n  Worst cross-class pair: {} → {} ({:.1}% reduction)",
+            worst.train_class, worst.test_class, worst.outlier_reduction_percent
+        );
+    }
+
+    Ok(())
+}
+
+fn cmd_periodic_table(
+    threshold: f64,
+    max_rank: usize,
+    family_rank: usize,
+    class_rank: usize,
+) -> Result<()> {
+    use crate::diagnostics::run_diagnostics;
+    use crate::multi_element::{
+        compare_class_strategies, run_surrogate_campaign_adaptive,
+        run_surrogate_campaign_hierarchical_by_family, ClassStrategy,
+    };
+
+    eprintln!("  ✦ Running periodic-table correction campaign");
+    eprintln!("    threshold = {} GPa, max_rank = {}", threshold, max_rank);
+
+    let (by_element, by_element_structure) = compare_class_strategies(threshold);
+
+    eprintln!("\n  ═══ Scorecard: by element only ═══");
+    print_scorecard(&by_element);
+
+    eprintln!("\n  ═══ Scorecard: by element + structure ═══");
+    print_scorecard(&by_element_structure);
+
+    let fixed_outliers: usize = by_element_structure.iter().map(|r| r.outlier_count).sum();
+    let adaptive =
+        run_surrogate_campaign_adaptive(ClassStrategy::ByElementStructure, threshold, max_rank);
+    let adaptive_outliers: usize = adaptive.iter().map(|r| r.outlier_count).sum();
+
+    eprintln!("\n  ═══ Adaptive rank fix ═══");
+    eprintln!(
+        "    Fixed-rank outliers: {}  →  Adaptive-rank outliers: {} ({:+.0}%)",
+        fixed_outliers,
+        adaptive_outliers,
+        if fixed_outliers == 0 {
+            0.0
+        } else {
+            (adaptive_outliers as f64 - fixed_outliers as f64) / fixed_outliers as f64 * 100.0
+        }
+    );
+    print_scorecard(&adaptive);
+
+    let hierarchical = run_surrogate_campaign_hierarchical_by_family(
+        ClassStrategy::ByElementStructure,
+        threshold,
+        family_rank,
+        class_rank,
+    );
+    let hierarchical_outliers: usize = hierarchical.iter().map(|r| r.outlier_count).sum();
+
+    eprintln!("\n  ═══ Hierarchical correction fix ═══");
+    eprintln!(
+        "    Fixed-rank outliers: {}  →  Hierarchical outliers: {} ({:+.0}%)",
+        fixed_outliers,
+        hierarchical_outliers,
+        if fixed_outliers == 0 {
+            0.0
+        } else {
+            (hierarchical_outliers as f64 - fixed_outliers as f64) / fixed_outliers as f64 * 100.0
+        }
+    );
+    print_scorecard(&hierarchical);
+
+    eprintln!("\n  ═══ Residual diagnostics ═══");
+    let report = run_diagnostics(threshold);
+    eprintln!("{}", report.summary());
+
+    Ok(())
+}
+
+fn print_scorecard(rows: &[crate::multi_element::ScorecardRow]) {
+    let total_outliers: usize = rows.iter().map(|r| r.outlier_count).sum();
+    eprintln!(
+        "    Classes: {} | Total outliers: {} | Clean classes: {}",
+        rows.len(),
+        total_outliers,
+        rows.iter().filter(|r| r.is_clean()).count()
+    );
+    for row in rows.iter().take(10) {
+        eprintln!(
+            "    {:12}  {:4}  {:4}  max={:6.2}  mean={:6.2}  outliers={}/{}",
+            row.class,
+            row.element,
+            row.structure,
+            row.max_residual,
+            row.mean_residual,
+            row.outlier_count,
+            row.n_potentials
+        );
+    }
+    if rows.len() > 10 {
+        eprintln!("    ... and {} more classes", rows.len() - 10);
     }
 }
 

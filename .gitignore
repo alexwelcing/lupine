@@ -13,6 +13,8 @@ wasm-out/
 .DS_Store
 *.data
 *.dump
+!atlas/atlas-view/apps/web/public/generated/lupine-wiki/*.data
+!atlas/atlas-view/apps/web/public/generated/lupine-wiki/*.lammpstrj
 .wrangler/
 **/.wrangler/
 
@@ -27,6 +29,12 @@ latest/library/model-data/**
 # Lean 4 build artifacts
 lean-spec/.lake/
 lean-spec/build/
+
+# Local build/tooling artifacts
+paper2/.tectonic/
+paper2/.venv-pdf/
+paper2/.venv-figures/
+data/.venv/
 
 # Distiller run artifacts (archived root)
 archive/distiller-kb/runs/*/run_latest.log
@@ -87,6 +95,7 @@ tools/hermes-hive/data/
 
 # Large binary files & media
 *.lammpstrj
+!atlas/atlas-view/apps/web/public/generated/lupine-wiki/*.lammpstrj
 *.mp4
 *.z64
 *.tar.zst

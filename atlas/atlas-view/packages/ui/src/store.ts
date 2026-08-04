@@ -12,6 +12,7 @@ import type { NistCatalogEntry } from '@atlas/nist';
 import type { FlythroughSequence, FlythroughKeyframe } from './flythrough';
 import { COLOR_SCHEMES, pickInitialScheme, type ColorSchemeId, type AtomColorSource } from './coloring';
 import { MATERIAL_SCENES, getScene, DEFAULT_SCENE_ID } from '@atlas/scene/materials';
+import { getElementSpec } from '@atlas/core';
 
 /** A pinned text annotation tied to a specific atom by index in the
  *  current frame. Persists across frame changes; if the atom moves, the
@@ -22,6 +23,30 @@ export interface Annotation {
   text: string;
   /** ISO timestamp — used for stable ordering and "newest" hero treatment. */
   createdAt: number;
+}
+
+/** A knowledge label anchored to a 3D position rather than an atom index.
+ *  These are auto-generated from gallery metadata (e.g. Lupine Wiki sphere
+ *  centroids) so the viewer can display exact semantic names on top of the
+ *  molecular view. Unlike user annotations, they belong to the loaded asset
+ *  and are cleared/replaced on every file load. */
+export interface KnowledgeLabel {
+  id: string;
+  kind: 'sphere' | 'node' | string;
+  text: string;
+  detail?: string;
+  sphereId?: string;
+  sphereIndex?: number;
+  atomIndex?: number;
+  nodeKind?: string;
+  /** Original knowledge-graph node id (path) when available. */
+  nodeId?: string;
+  /** Number of edges connected to this node. */
+  degree?: number;
+  /** Salience score used to throttle default label density.
+   *  sphere=2, project/repo/skill=1, everything else=0. */
+  salience?: number;
+  position: [number, number, number];
 }
 
 /** Visual presentation modes for annotations. Each is a distinct R3F/drei
@@ -401,6 +426,21 @@ export interface AppState {
   clearAnnotations: () => void;
   setLabelStyle: (style: LabelStyle) => void;
 
+  // ─── Knowledge labels ───
+  // Auto-generated semantic labels tied to the loaded molecule (e.g. sphere
+  // names and key node names from the Lupine Wiki sphere-grid export).
+  knowledgeLabels: KnowledgeLabel[];
+  knowledgeLabelKinds: Set<string>;
+  showKnowledgeLabels: boolean;
+  /** Minimum salience required for a node label to render by default.
+   *  Sphere labels always render. Hover always reveals the hovered node. */
+  knowledgeLabelThreshold: number;
+  setKnowledgeLabels: (labels: KnowledgeLabel[]) => void;
+  clearKnowledgeLabels: () => void;
+  setShowKnowledgeLabels: (show: boolean) => void;
+  setKnowledgeLabelThreshold: (threshold: number) => void;
+  toggleKnowledgeLabelKind: (kind: string) => void;
+
   // ─── Atom visibility ───
   hiddenAtomTypes: Set<number>;
   atomTypeScales: Record<number, number>; // per-type scale overrides
@@ -685,6 +725,10 @@ const DEFAULTS = {
   selectedAtoms: [] as number[],
   annotations: [] as Annotation[],
   labelStyle: 'tag' as LabelStyle,
+  knowledgeLabels: [] as KnowledgeLabel[],
+  knowledgeLabelKinds: new Set<string>(['sphere', 'node']),
+  showKnowledgeLabels: true,
+  knowledgeLabelThreshold: 1,
   hiddenAtomTypes: new Set<number>(),
   atomTypeScales: {} as Record<number, number>,
   anomalyTracking: false,
@@ -713,6 +757,32 @@ export const useStore = create<AppState>()(
       // bonds?" or "what's a good color scheme?" — we decide.
       const sceneDirective = pickSceneDirective(atomCount, firstFrame);
       const materialScene = getScene(sceneDirective.materialScene) ?? getScene(DEFAULT_SCENE_ID);
+
+      // Sparse "knowledge graph" molecules (large bounding box, few atoms) need
+      // larger spheres and a dark background so the clusters read immediately.
+      // Dense molecular systems keep the default scale.
+      const bounds = file?.trajectory?.globalBounds;
+      let sparseAtomScale = DEFAULTS.atomScale;
+      let sparseBackgroundPreset = sceneDirective.backgroundPreset;
+      if (bounds && atomCount > 0) {
+        const dx = bounds.max[0] - bounds.min[0];
+        const dy = bounds.max[1] - bounds.min[1];
+        const dz = bounds.max[2] - bounds.min[2];
+        const diagonal = Math.hypot(dx, dy, dz);
+        const seenTypes = new Set<number>();
+        let totalRadius = 0;
+        for (let i = 0; i < atomCount; i++) {
+          const t = firstFrame?.types?.[i] ?? 0;
+          if (t <= 0 || seenTypes.has(t)) continue;
+          seenTypes.add(t);
+          totalRadius += getElementSpec(t).radius;
+        }
+        const avgRadius = seenTypes.size > 0 ? totalRadius / seenTypes.size : 1.4;
+        if (diagonal / avgRadius > 150) {
+          sparseAtomScale = Math.min(5, Math.max(2, diagonal / 200));
+          sparseBackgroundPreset = 'deep';
+        }
+      }
 
       // Pick a coloring scheme for the first read. Element identity is the
       // default; property coloring remains an explicit Molecule Color choice.
@@ -744,7 +814,8 @@ export const useStore = create<AppState>()(
         dirLightIntensity: materialScene?.dirLightIntensity ?? DEFAULTS.dirLightIntensity,
         rimLightIntensity: sceneDirective.rimLightIntensity,
         toneMapping: materialScene?.toneMapping ?? DEFAULTS.toneMapping,
-        backgroundPreset: sceneDirective.backgroundPreset,
+        backgroundPreset: sparseBackgroundPreset,
+        atomScale: sparseAtomScale,
         atomTexture: materialScene?.atomTexture ?? DEFAULTS.atomTexture,
         surfaceRoughness: sceneDirective.surfaceRoughness,
         surfacePolish: sceneDirective.surfacePolish,
@@ -1061,6 +1132,23 @@ export const useStore = create<AppState>()(
     })),
     clearAnnotations: () => set({ annotations: [] }),
     setLabelStyle: (labelStyle) => set({ labelStyle }),
+
+    setKnowledgeLabels: (knowledgeLabels) => set((s) => {
+      const kinds = new Set<string>(s.knowledgeLabelKinds);
+      for (const label of knowledgeLabels) {
+        kinds.add(label.kind);
+      }
+      return { knowledgeLabels, knowledgeLabelKinds: kinds };
+    }),
+    clearKnowledgeLabels: () => set({ knowledgeLabels: [], knowledgeLabelKinds: new Set(['sphere', 'node']) }),
+    setShowKnowledgeLabels: (showKnowledgeLabels) => set({ showKnowledgeLabels }),
+    setKnowledgeLabelThreshold: (knowledgeLabelThreshold) => set({ knowledgeLabelThreshold }),
+    toggleKnowledgeLabelKind: (kind) => set((s) => {
+      const next = new Set(s.knowledgeLabelKinds);
+      if (next.has(kind)) next.delete(kind);
+      else next.add(kind);
+      return { knowledgeLabelKinds: next };
+    }),
 
     toggleAtomType: (type) => set((s) => {
       const next = new Set(s.hiddenAtomTypes);

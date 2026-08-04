@@ -13,6 +13,23 @@ use crate::stats;
 use nalgebra::DMatrix;
 use serde::{Deserialize, Serialize};
 
+/// Source of a benchmark data point, aligned with the Lean `DataSource` type.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+pub enum DataSource {
+    /// Hand-typed or generated fixture; must NOT be reported as empirical.
+    Synthetic(String),
+    /// NIST Interatomic Potentials Repository entry.
+    NistIpr { id: String, doi: String },
+    /// Real experimental or computed value with a citation.
+    Experiment { citation: String },
+}
+
+impl Default for DataSource {
+    fn default() -> Self {
+        DataSource::Synthetic("unspecified".to_string())
+    }
+}
+
 /// A single benchmark entry: predicted vs reference values for one material.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct BenchmarkEntry {
@@ -22,6 +39,8 @@ pub struct BenchmarkEntry {
     pub reference: f64,
     pub predicted: f64,
     pub unit: String,
+    #[serde(default)]
+    pub provenance: DataSource,
 }
 
 /// Error vector for a single material across multiple properties.
@@ -398,6 +417,7 @@ mod tests {
                 reference: ref_val,
                 predicted: pred_a,
                 unit: unit.to_string(),
+                provenance: DataSource::Synthetic("manifold test fixture".to_string()),
             });
 
             // Potential B: larger errors
@@ -409,6 +429,7 @@ mod tests {
                 reference: ref_val,
                 predicted: pred_b,
                 unit: unit.to_string(),
+                provenance: DataSource::Synthetic("manifold test fixture".to_string()),
             });
         }
         entries
@@ -468,6 +489,7 @@ mod tests {
             reference: r,
             predicted: pred,
             unit: "GPa".to_string(),
+            provenance: DataSource::Synthetic("manifold test fixture".to_string()),
         })
         .collect();
 
