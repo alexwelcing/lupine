@@ -154,7 +154,9 @@ function parseMultipart(buffer: Buffer, boundary: string): any[] {
 }
 
 export default defineConfig({
-  base: './',
+  // Clean public routes like /scenes/1m-copper-lattice need bundle assets to
+  // resolve from the site root after the server falls back to index.html.
+  base: '/',
   plugins: [
     react(),
     wasm(),
@@ -200,8 +202,12 @@ export default defineConfig({
     },
   },
   server: {
-    port: 3000,
-    strictPort: false,
+    // Port is overridable via VITE_DEV_PORT so parallel checkouts / preview
+    // tools can each pin a distinct port. strictPort makes a conflict FAIL LOUDLY
+    // instead of silently hopping to the next free port — silent hopping desyncs
+    // any tool that expects the requested port (preview harness, screenshots).
+    port: Number(process.env.VITE_DEV_PORT) || 3000,
+    strictPort: true,
     proxy: {
       '/__lupi_gcs': {
         target: 'https://storage.googleapis.com',

@@ -1,0 +1,23 @@
+# Lupine Science — unlocking the materials that build the future
+
+Lupine Science is accelerating materials discovery. AI is learning to design
+matter — the batteries, catalysts, alloys and chips a civilization runs on —
+but on simulations that are wrong in structured ways. We make those predictions
+trustworthy so discovery accelerates instead of stalling on guesswork. The
+mathematics (the error geometry of interatomic potentials) is how; the materials
+are why.
+
+Public entry point for the Lupine Library research corpus, LUPI evidence viewer,
+and open repository.
+
+Canonical surfaces:
+
+- Library: https://library.lupine.science
+- LUPI: https://lupi.live
+- Repository: https://github.com/alexwelcing/lupine
+- Hyper-Ribbon theorem demo: https://library.lupine.science/reports/hyper-ribbon-theorem.html
+
+Public paper status: working draft in preparation; no peer review, no
+acceptance, and no journal or venue assignment. Prefer Library and repository
+pages for current claim labels, Lean status, and evidence details.
+

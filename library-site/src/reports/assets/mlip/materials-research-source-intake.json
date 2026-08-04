@@ -1,0 +1,106 @@
+{
+  "schema": "lupine.library.materials_research_source_intake.v1",
+  "intake_id": "materials-research-source-intake-v1",
+  "updated_at": "2026-05-31T00:00:00Z",
+  "title": "Research source intake for state, pressure, temperature, and phase-change MLIP work",
+  "policy": "This is an intake and surfacing artifact, not a new accuracy claim. Source roles, state-condition evidence, phase labels, model comparison, and benchmark context remain separate until a fixture or evaluator joins them explicitly.",
+  "live_feed": {
+    "label": "glim-think live research feed",
+    "url": "https://glim-think-v1.aw-ab5.workers.dev/feed",
+    "beat_ingest_route": "/feed/beats",
+    "surface_policy": "The live feed is operational context. Claim-grade evidence still comes from the artifact rows rendered below."
+  },
+  "summary": {
+    "active_sources": 5,
+    "priority_one_sources": 3,
+    "ready_inspections": 4,
+    "queued_units": 5,
+    "state_phase_seed_sources": 3,
+    "claim_status": "source intake active; state/phase seed not yet a fixture claim"
+  },
+  "active_sources": [
+    {
+      "source_id": "gst225-cambridge-gap-trajectories",
+      "title": "Ge2Sb2Te5 phase-change trajectories from the Cambridge repository",
+      "role": "phase labels and trajectory schema inspection",
+      "status": "ready_for_archive_inspection",
+      "claim_ids": ["phase_change_labels"],
+      "next_action": "Inspect downloadable files, license, phase labels, and trajectory schema before importing a tiny provenance-preserving sample.",
+      "guardrail": "Use for GST phase-change behavior only; do not generalize to all crystals or pressure regimes."
+    },
+    {
+      "source_id": "omat24-aimd-pbe-1000-npt",
+      "title": "OMat24 AIMD PBE 1000 K NPT",
+      "role": "finite-temperature state-condition sampler",
+      "status": "ready_for_sampler",
+      "claim_ids": ["finite_temperature_snapshot_accuracy", "state_condition_coverage"],
+      "next_action": "Sample a small element-balanced slice and parse metadata for ensemble, temperature, pressure, configuration id, and property id.",
+      "guardrail": "Treat 1000 K/NPT as state context; it does not supply phase-change labels by itself."
+    },
+    {
+      "source_id": "omat24-aimd-pbe-3000-npt",
+      "title": "OMat24 AIMD PBE 3000 K NPT",
+      "role": "high-temperature state-condition sampler",
+      "status": "ready_for_sampler",
+      "claim_ids": ["finite_temperature_snapshot_accuracy", "state_condition_coverage"],
+      "next_action": "Build the hot counter-slice and compare order metrics against the 1000 K source before assigning any phase language.",
+      "guardrail": "Hot NPT snapshots are not automatically liquid, amorphous, or crystalline labels."
+    },
+    {
+      "source_id": "hpcsd-high-pressure-crystal-structures",
+      "title": "High-Pressure Crystal Structure Database",
+      "role": "pressure-resolved structure access resolver",
+      "status": "needs_database_access_resolution",
+      "claim_ids": ["pressure_resolved_structure"],
+      "next_action": "Locate database files or API and verify license before treating it as ingestable source data.",
+      "guardrail": "Pressure-structure provenance only; not energy, force, or stress evaluator labels by itself."
+    },
+    {
+      "source_id": "lemat-traj",
+      "title": "LeMat-Traj unified materials trajectories",
+      "role": "broad crystal support distribution sampler",
+      "status": "ready_for_sampler",
+      "claim_ids": ["broad_crystal_support_distribution", "support_gap_discovery"],
+      "next_action": "Build a tiny stratified sample across compatibility configs, chemistry size, stress magnitude, and relaxation step.",
+      "guardrail": "Use as support-distribution evidence, not finite-temperature phase truth."
+    }
+  ],
+  "work_units": [
+    {
+      "unit_id": "source-intake:gst225-cambridge-gap-trajectories:inspect",
+      "role": "source_inspector",
+      "status": "ready",
+      "summary": "Resolve license, files, phase labels, and trajectory schema for the GST archive."
+    },
+    {
+      "unit_id": "source-intake:omat24-aimd-pbe-1000-npt:inspect",
+      "role": "source_inspector",
+      "status": "ready",
+      "summary": "Inspect row metadata and parquet sampling path for 1000 K NPT source context."
+    },
+    {
+      "unit_id": "source-intake:omat24-aimd-pbe-3000-npt:inspect",
+      "role": "source_inspector",
+      "status": "ready",
+      "summary": "Inspect row metadata and parquet sampling path for 3000 K NPT source context."
+    },
+    {
+      "unit_id": "source-intake:state-phase-seed-v1:assemble",
+      "role": "fixture_builder",
+      "status": "queued",
+      "summary": "Assemble the first state/phase seed only after source inspection and claim review complete."
+    },
+    {
+      "unit_id": "source-intake:lupine-start:publish-live-lab",
+      "role": "phoenix_reporter",
+      "status": "queued",
+      "summary": "Keep this Live Lab section synchronized with Phoenix/glim-think evidence and registry guardrails."
+    }
+  ],
+  "acceptance_gates": [
+    "Every imported row preserves source id, citation key, license note, original id, and source-specific provenance.",
+    "State-condition labels and phase labels remain separate fields in the fixture schema.",
+    "Finite-temperature and pressure-state evidence is not used as a phase-change label.",
+    "Live feed events are operational telemetry, not claim-grade evidence unless they point to a measured artifact."
+  ]
+}

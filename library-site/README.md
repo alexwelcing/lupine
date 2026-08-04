@@ -108,3 +108,21 @@ should rebuild the library because those files *are* the library's content.
 ## Health check
 
 Cloud Run probes `GET /health` → `200 ok` (set in `nginx.conf`).
+
+## How it connects to the rest of the repo
+
+- Content comes from `docs/` and selected root `.md` files; see `scripts/catalog.js`.
+- The LUPI viewer in `atlas/atlas-view/apps/web/` renders interactive structures
+  linked from Library articles.
+- `paper/` and `lean-spec/` are the primary scientific sources for articles.
+- The system map is in [`docs/ARCHITECTURE.md`](../docs/ARCHITECTURE.md).
+
+## Windows notes
+
+- Do **not** use PowerShell for `npm`, `pnpm`, or Node builds. Use Git Bash or
+  the root `justfile` wrappers.
+
+## Related
+
+- [`docs/ONBOARDING.md`](../docs/ONBOARDING.md) — new-contributor tracks
+- [`docs/ARCHITECTURE.md`](../docs/ARCHITECTURE.md) — system map

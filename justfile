@@ -1,8 +1,10 @@
 # GLIM Project Justfile
 # Accelerating research, benchmarking, and development.
 
-set shell := ["C:\\Program Files\\Git\\bin\\bash.exe", "-c"]
-set windows-shell := ["powershell.exe", "-NoProfile", "-Command"]
+# Use Git Bash on Windows to avoid PowerShell Node/build process-tree hangs.
+# On Unix, fall back to a standard POSIX shell.
+set shell := ["bash", "-c"]
+set windows-shell := ["C:\\Program Files\\Git\\bin\\bash.exe", "-c"]
 
 default:
     @just --list
@@ -39,7 +41,7 @@ bench-tests:
 
 # Build all Rust components
 build-rust:
-    cargo build --workspace
+    cargo build --workspace --manifest-path atlas-distill/Cargo.toml
 
 # --- DEPLOYMENT ---
 
@@ -102,12 +104,22 @@ think-lint-profile:
 
 # Rust engine regression check used by the current atlas-distill path
 engine-test:
-    cargo test --manifest-path atlas-distill/Cargo.toml --bin atlas-distill
-    cargo clippy --manifest-path atlas-distill/Cargo.toml --bin atlas-distill -- -D warnings
+    cargo test --workspace --manifest-path atlas-distill/Cargo.toml
+    cargo clippy --workspace --manifest-path atlas-distill/Cargo.toml -- -D warnings
 
 # Build the local live/worker-facing TypeScript surface without a deploy
 live-build:
     npm --prefix glim-think run lint:fast
+
+# Initialize the local glim-think D1 ledger used by wrangler dev
+think-d1-init:
+    cd glim-think && npx wrangler d1 execute LEDGER --local --file schema.sql
+    cd glim-think && npx wrangler d1 migrations apply LEDGER --local
+
+# Run the glim-think Worker locally from the root checkout.
+# DEV_MODE only applies to this local command and bypasses Access for write-route smoke tests.
+think-dev port='8787':
+    cd glim-think && npx wrangler dev --local --port {{port}} --var DEV_MODE:true --show-interactive-dev-session=false
 
 # Show checks, workflows, deploys, and observation commands for this diff
 mono-plan:
@@ -124,6 +136,66 @@ mono-check-full:
 # Run the atlas-distill Docker build in Cloud Build
 smoke-atlas-distill:
     gcloud builds submit --config cloudbuild.atlas-distill-smoke.yaml .
+
+# --- EVIDENCE INDEX (GCP CLOUD RUN) ---
+
+# Deploy the evidence-index service to Cloud Run (CPU, min-instances=1).
+# Prerequisites: Cloud SQL Postgres+pgvector + secrets — see
+# gcp/evidence-index/cloudbuild.yaml header.
+evidence-deploy:
+    gcloud builds submit --config gcp/evidence-index/cloudbuild.yaml .
+
+# Health check the deployed evidence-index service.
+evidence-health url='':
+    @if [ -z "$(url)" ]; then echo "Usage: just evidence-health url=https://evidence-index-<hash>-uc.a.run.app"; exit 1; fi
+    curl -sf "$(url)/health" | python -m json.tool
+
+# --- COCOINDEX EVIDENCE INDEX ---
+
+# Seed ./cocoindex/data with sample evidence and build the embedded index.
+# Idempotent: cocoindex only re-embeds changed files. Use COCOINDEX_DB (set
+# below) — it's the engine's own state path, separate from evidence.db.
+evidence-index:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    cd cocoindex
+    export COCOINDEX_DB="$PWD/.cocoindex/db"
+    PY=".venv/bin/python"
+    CLI=".venv/bin/cocoindex"
+    if [ -x .venv/Scripts/python.exe ]; then PY=".venv/Scripts/python.exe"; fi
+    if [ -x .venv/Scripts/cocoindex.exe ]; then CLI=".venv/Scripts/cocoindex.exe"; fi
+    "$PY" seed_data.py
+    "$CLI" update main.py
+
+# Semantic (default) or keyword search over the evidence index.
+#   just evidence-index-search "which coordination strategies beat the baseline"
+#   just evidence-index-search "aluminium" keyword hypothesis
+evidence-index-search q mode='semantic' kind='' limit='5':
+    #!/usr/bin/env bash
+    set -euo pipefail
+    cd cocoindex
+    PY=".venv/bin/python"
+    if [ -x .venv/Scripts/python.exe ]; then PY=".venv/Scripts/python.exe"; fi
+    flag={{quote(mode)}}
+    case "$flag" in semantic|keyword) ;; *) echo "mode must be semantic or keyword" >&2; exit 2 ;; esac
+    args=(--$flag {{quote(q)}} --limit {{quote(limit)}})
+    kind={{quote(kind)}}
+    [ -n "$kind" ] && args+=(--kind "$kind")
+    "$PY" query.py "${args[@]}"
+
+# Drain the live glim-ledger D1 into ./cocoindex/data and re-index.
+# Requires `wrangler` logged in (npx wrangler login).
+evidence-index-refresh:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    cd cocoindex
+    PY=".venv/bin/python"
+    CLI=".venv/bin/cocoindex"
+    if [ -x .venv/Scripts/python.exe ]; then PY=".venv/Scripts/python.exe"; fi
+    if [ -x .venv/Scripts/cocoindex.exe ]; then CLI=".venv/Scripts/cocoindex.exe"; fi
+    "$PY" export_evidence.py --from-d1
+    export COCOINDEX_DB="$PWD/.cocoindex/db"
+    "$CLI" update main.py
 
 # --- MLIP FLYWHEEL TELEMETRY ---
 
@@ -163,6 +235,79 @@ mlip-evidence-campaign-check:
 flywheel-telemetry-check:
     python tools/mlip_phoenix_trace.py --smoke-test --dry-run
     python tools/test_mlip_phoenix_trace.py
+
+# --- LOCAL VERIFICATION & BOOTSTRAP ---
+
+# Fastest gate: no optional deps, no GPU, no cloud. Use for quick pre-commit checks.
+verify-light:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    echo "==> Python unit tests"
+    cd python && python -m pytest -m unit -q
+    cd ..
+    echo "==> Rust check"
+    cargo check --workspace --manifest-path atlas-distill/Cargo.toml
+    echo "==> Diff hygiene"
+    git diff --check
+
+# Run all focused local gates: Python unit tests, Rust check/test, tools smoke, diff hygiene.
+verify:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    echo "==> Python unit tests"
+    cd python && python -m pytest -m unit -q
+    cd ..
+    echo "==> Rust engine"
+    cargo test --workspace --manifest-path atlas-distill/Cargo.toml
+    echo "==> Tools smoke tests"
+    python -m pytest tools/test_mlip_regime_filter.py gcp/mlip-cell-runner/test_distill_runtime.py gcp/mlip-cell-runner/test_openinference_patcher.py gcp/mlip-cell-runner/test_runner_observability.py -q
+    echo "==> Diff hygiene"
+    git diff --check
+
+# Heavy gate: optional deps, Lean build, and (when configured) backend smoke matrix.
+# This is intentionally not run in CI; use it before cloud bursts or releases.
+verify-heavy:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    echo "==> Python unit + integration tests"
+    cd python && python -m pytest -q
+    cd ..
+    echo "==> Neural-symbolic tests"
+    cd python && python -m pytest tests/neural_symbolic -q
+    cd ..
+    echo "==> Rust engine (check/test/clippy)"
+    cargo test --workspace --manifest-path atlas-distill/Cargo.toml
+    cargo clippy --workspace --manifest-path atlas-distill/Cargo.toml -- -D warnings
+    echo "==> Tools smoke tests"
+    python -m pytest tools/test_mlip_regime_filter.py gcp/mlip-cell-runner/test_distill_runtime.py gcp/mlip-cell-runner/test_openinference_patcher.py gcp/mlip-cell-runner/test_runner_observability.py -q
+    echo "==> glim-think tests"
+    npm --prefix glim-think test
+    echo "==> Lean build"
+    cd lean-spec && lake build && cd ..
+    echo "==> Diff hygiene"
+    git diff --check
+
+# Bootstrap the dev environment using the platform-appropriate script.
+bootstrap:
+    @if [ "{{ os_family() }}" = "windows" ]; then \
+        powershell.exe -ExecutionPolicy Bypass -File scripts/bootstrap.ps1; \
+    else \
+        bash scripts/bootstrap.sh; \
+    fi
+
+# Bootstrap with heavy MLIP dependencies (torch_sim, MACE, CHGNet).
+bootstrap-heavy:
+    @if [ "{{ os_family() }}" = "windows" ]; then \
+        powershell.exe -ExecutionPolicy Bypass -File scripts/bootstrap.ps1 -InstallHeavyMLIP; \
+    else \
+        bash scripts/bootstrap.sh --heavy-mlip; \
+    fi
+
+# Serve the research library site locally.
+docs-serve:
+    @echo "Installing dependencies if needed, then serving library-site..."
+    npm --prefix library-site install
+    npm --prefix library-site run dev
 
 # --- UTILS ---
 

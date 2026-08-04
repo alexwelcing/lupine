@@ -1,16 +1,17 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { CSSProperties, KeyboardEvent as ReactKeyboardEvent, PointerEvent as ReactPointerEvent, ReactNode } from 'react';
-import type { RenderStyle } from '@atlas/core/types';
+import { usePressSpring } from './hooks/usePressSpring';
+import { getElementSpec } from '@atlas/core';
+import type { ColormapName, RenderStyle } from '@atlas/core/types';
 import { MATERIAL_SCENES, type MaterialScene } from '@atlas/scene/materials';
 import { COLOR_SCHEMES, SCHEME_ORDER, type ColorSchemeId } from './coloring';
-import { isClickSoundEnabled, playClick, setClickSoundEnabled, subscribeClickSound } from './lib/clickSound';
-import { useStore } from './store';
+import { useStore, type FilterShellPreset, type FilterShellShape } from './store';
 import {
+  BG_PRESETS,
   BG_GRADIENT_PRESETS,
   BG_TEXTURE_CATEGORIES,
   BG_VIDEO_PRESETS,
   getBgBadge,
-  getBgMedia,
   getBgPoster,
   type BgPresetWithId,
 } from './backgroundPresets';
@@ -29,6 +30,43 @@ const RENDER_OPTIONS: Array<{ id: RenderStyle; label: string; code: string; acce
   { id: 'standard', label: 'Standard', code: 'STD', accent: '#1edce0' },
   { id: 'toon', label: 'Toon', code: 'INK', accent: '#facc15' },
   { id: 'botanical', label: 'Botanical', code: 'BOT', accent: '#69f0ae' },
+];
+
+const PALETTE_OPTIONS: Array<{ id: ColormapName; label: string; accent: string }> = [
+  { id: 'viridis', label: 'Viridis', accent: '#35d07f' },
+  { id: 'plasma', label: 'Plasma', accent: '#f97316' },
+  { id: 'inferno', label: 'Inferno', accent: '#fb7185' },
+  { id: 'coolwarm', label: 'Coolwarm', accent: '#60a5fa' },
+  { id: 'turbo', label: 'Turbo', accent: '#facc15' },
+  { id: 'neon', label: 'Neon', accent: '#22d3ee' },
+  { id: 'cyberpunk', label: 'Cyber', accent: '#e879f9' },
+  { id: 'grayscale', label: 'Gray', accent: '#cbd5e1' },
+];
+
+const ATOM_COLOR_SCHEMES = SCHEME_ORDER.filter(scheme => scheme !== 'botanical');
+
+const COLORMAP_PREVIEWS: Partial<Record<ColormapName, string>> = {
+  viridis: 'linear-gradient(90deg, #440154, #21918c, #fde725)',
+  plasma: 'linear-gradient(90deg, #0d0887, #cc4778, #f0f921)',
+  inferno: 'linear-gradient(90deg, #000004, #bc3754, #fcffa4)',
+  coolwarm: 'linear-gradient(90deg, #3b4cc0, #f7f7f7, #b40426)',
+  turbo: 'linear-gradient(90deg, #30123b, #1ae4b6, #faba39, #7a0403)',
+  neon: 'linear-gradient(90deg, #00f5ff, #ff00f5, #faff00)',
+  cyberpunk: 'linear-gradient(90deg, #00e5ff, #7c3aed, #ff3b8d)',
+  grayscale: 'linear-gradient(90deg, #111827, #94a3b8, #f8fafc)',
+};
+
+const FILTER_SHELL_SHAPES: Array<{ id: FilterShellShape; label: string; code: string; accent: string }> = [
+  { id: 'off', label: 'Off', code: 'OFF', accent: '#64748b' },
+  { id: 'sphere', label: 'Sphere', code: 'SPH', accent: '#7de9ff' },
+  { id: 'cube', label: 'Cube', code: 'CUB', accent: '#f59e0b' },
+];
+
+const FILTER_SHELL_PRESETS: Array<{ id: FilterShellPreset; label: string; code: string; accent: string }> = [
+  { id: 'haze', label: 'Haze', code: 'HAZ', accent: '#d9f7ff' },
+  { id: 'cryo', label: 'Cryo', code: 'CRY', accent: '#84c9ff' },
+  { id: 'prism', label: 'Prism', code: 'PRI', accent: '#ff7ab6' },
+  { id: 'graphite', label: 'Graphite', code: 'GRF', accent: '#d1d5db' },
 ];
 
 const FEATURED_SCENE_IDS = [
@@ -57,18 +95,34 @@ function categoryPresets(label: string): BgPresetWithId[] {
 export function StudioControlDeck({
   mode,
   onClose,
-  bottomOffset,
+  bottomOffset = 0,
+  maxHeight = 'none',
+  variant = 'overlay',
+  showCloseButton = true,
 }: {
   mode: StudioDeckMode;
   onClose: () => void;
-  bottomOffset: number;
+  bottomOffset?: number;
+  maxHeight?: string;
+  variant?: 'overlay' | 'drawer';
+  showCloseButton?: boolean;
 }) {
+  const isDrawer = variant === 'drawer';
   const postprocessPreset = useStore(s => s.postprocessPreset);
   const setPostprocessPreset = useStore(s => s.setPostprocessPreset);
   const postprocessIntensity = useStore(s => s.postprocessIntensity);
   const setPostprocessIntensity = useStore(s => s.setPostprocessIntensity);
   const colorScheme = useStore(s => s.colorScheme);
   const setColorScheme = useStore(s => s.setColorScheme);
+  const colorProperty = useStore(s => s.colorProperty);
+  const setColorProperty = useStore(s => s.setColorProperty);
+  const colormap = useStore(s => s.colormap);
+  const setColormap = useStore(s => s.setColormap);
+  const uniformAtomColor = useStore(s => s.uniformAtomColor);
+  const setUniformAtomColor = useStore(s => s.setUniformAtomColor);
+  const elementColorOverrides = useStore(s => s.elementColorOverrides);
+  const setElementColorOverride = useStore(s => s.setElementColorOverride);
+  const resetElementColorOverride = useStore(s => s.resetElementColorOverride);
   const renderStyle = useStore(s => s.renderStyle);
   const setRenderStyle = useStore(s => s.setRenderStyle);
 
@@ -99,30 +153,123 @@ export function StudioControlDeck({
 
   const backgroundPreset = useStore(s => s.backgroundPreset);
   const setBackgroundPreset = useStore(s => s.setBackgroundPreset);
+  const backgroundMotionPaused = useStore(s => s.backgroundMotionPaused);
+  const setBackgroundMotionPaused = useStore(s => s.setBackgroundMotionPaused);
+  const backgroundMotionSpeed = useStore(s => s.backgroundMotionSpeed);
+  const setBackgroundMotionSpeed = useStore(s => s.setBackgroundMotionSpeed);
+  const backgroundOpacity = useStore(s => s.backgroundOpacity);
+  const setBackgroundOpacity = useStore(s => s.setBackgroundOpacity);
+  const backgroundBrightness = useStore(s => s.backgroundBrightness);
+  const setBackgroundBrightness = useStore(s => s.setBackgroundBrightness);
+  const backgroundSaturation = useStore(s => s.backgroundSaturation);
+  const setBackgroundSaturation = useStore(s => s.setBackgroundSaturation);
+  const backgroundContrast = useStore(s => s.backgroundContrast);
+  const setBackgroundContrast = useStore(s => s.setBackgroundContrast);
+  const backgroundYawDegrees = useStore(s => s.backgroundYawDegrees);
+  const setBackgroundYawDegrees = useStore(s => s.setBackgroundYawDegrees);
+  const backgroundPitchDegrees = useStore(s => s.backgroundPitchDegrees);
+  const setBackgroundPitchDegrees = useStore(s => s.setBackgroundPitchDegrees);
+  const resetBackgroundAdjustments = useStore(s => s.resetBackgroundAdjustments);
+  const filterShellShape = useStore(s => s.filterShellShape);
+  const setFilterShellShape = useStore(s => s.setFilterShellShape);
+  const filterShellPreset = useStore(s => s.filterShellPreset);
+  const setFilterShellPreset = useStore(s => s.setFilterShellPreset);
+  const filterShellOpacity = useStore(s => s.filterShellOpacity);
+  const setFilterShellOpacity = useStore(s => s.setFilterShellOpacity);
+  const filterShellRadius = useStore(s => s.filterShellRadius);
+  const setFilterShellRadius = useStore(s => s.setFilterShellRadius);
   const showAxes = useStore(s => s.showAxes);
   const toggleAxes = useStore(s => s.toggleAxes);
   const showCell = useStore(s => s.showCell);
   const toggleCell = useStore(s => s.toggleCell);
+  const encodeToURL = useStore(s => s.encodeToURL);
+  const file = useStore(s => s.file);
+  const frame = useStore(s => s.frame);
+  const [selectedAtomicNumber, setSelectedAtomicNumber] = useState<number | null>(null);
+  const [shareStatus, setShareStatus] = useState<'idle' | 'copied' | 'failed'>('idle');
+  const shareTimerRef = useRef<number | null>(null);
 
   const materialScenes = useMemo(
     () => MATERIAL_SCENES.filter(scene => FEATURED_SCENE_IDS.includes(scene.id)),
     [],
   );
   const mathPresets = useMemo(() => categoryPresets('Mathematical Fields'), []);
-  const publicationPresets = useMemo(() => categoryPresets('Publication Contexts').slice(0, 8), []);
-  const signaturePresets = useMemo(() => categoryPresets('Signature Stills').slice(0, 8), []);
+  const worldPresets = useMemo(() => categoryPresets('360 Worlds'), []);
+  const publicationPresets = useMemo(() => categoryPresets('Publication Contexts'), []);
+  const signaturePresets = useMemo(() => categoryPresets('Signature Stills'), []);
   const gradientPresets = useMemo(
     () => BG_GRADIENT_PRESETS.filter(preset => ['white', 'deep', 'void', 'fog', 'blueprint', 'warm'].includes(preset.id)),
     [],
   );
+  const worldLibraryGroups = useMemo(() => [
+    { label: '360 Worlds', presets: worldPresets },
+    { label: 'Motion Loops', presets: BG_VIDEO_PRESETS },
+    { label: 'Publication', presets: publicationPresets },
+    { label: 'Math Fields', presets: mathPresets },
+    { label: 'Signature', presets: signaturePresets },
+    { label: 'Base', presets: gradientPresets },
+  ], [gradientPresets, mathPresets, publicationPresets, signaturePresets, worldPresets]);
+  const activeBackgroundPreset = BG_PRESETS[backgroundPreset];
+  const activeBackgroundPresetWithId = activeBackgroundPreset ? { id: backgroundPreset, ...activeBackgroundPreset } : undefined;
   const activeBackgroundIsVideo = useMemo(
     () => BG_VIDEO_PRESETS.some(preset => preset.id === backgroundPreset),
     [backgroundPreset],
   );
+  const availableProperties = useMemo(() => {
+    const props = file?.trajectory.frames[frame]?.properties;
+    return props ? Array.from(props.keys()) : [];
+  }, [file, frame]);
+  const presentElements = useMemo(() => {
+    const types = file?.trajectory.frames[frame]?.types;
+    if (!types) return [];
+    const atomicNumbers = new Set<number>();
+    for (let i = 0; i < types.length; i++) atomicNumbers.add(types[i]);
+    return Array.from(atomicNumbers)
+      .sort((a, b) => a - b)
+      .map(atomicNumber => ({ atomicNumber, spec: getElementSpec(atomicNumber) }));
+  }, [file, frame]);
+  const activeElement = presentElements.find(element => element.atomicNumber === selectedAtomicNumber) ?? presentElements[0] ?? null;
+  const activeElementColor = activeElement
+    ? elementColorOverrides[activeElement.atomicNumber] ?? activeElement.spec.color
+    : uniformAtomColor;
+  const activeElementHasOverride = activeElement
+    ? Boolean(elementColorOverrides[activeElement.atomicNumber])
+    : false;
+  const atomColorSchemes = useMemo(
+    () => colorScheme === 'botanical'
+      ? [...ATOM_COLOR_SCHEMES, 'botanical' as ColorSchemeId]
+      : ATOM_COLOR_SCHEMES,
+    [colorScheme],
+  );
+
+  useEffect(() => {
+    if (presentElements.length === 0) {
+      if (selectedAtomicNumber !== null) setSelectedAtomicNumber(null);
+      return;
+    }
+    if (!presentElements.some(element => element.atomicNumber === selectedAtomicNumber)) {
+      setSelectedAtomicNumber(presentElements[0].atomicNumber);
+    }
+  }, [presentElements, selectedAtomicNumber]);
+
+  useEffect(() => () => {
+    if (shareTimerRef.current !== null) window.clearTimeout(shareTimerRef.current);
+  }, []);
 
   const handleRandomVideo = () => {
     if (BG_VIDEO_PRESETS.length === 0) return;
     const next = BG_VIDEO_PRESETS[Math.floor(Math.random() * BG_VIDEO_PRESETS.length)];
+    setBackgroundPreset(next.id);
+  };
+
+  const handleRandomWorld = () => {
+    if (worldPresets.length === 0) return;
+    // Avoid re-picking the current world so the user always sees a different
+    // background load. Fall back to the current one only if there's a single world.
+    const candidates = worldPresets.length > 1
+      ? worldPresets.filter(p => p.id !== backgroundPreset)
+      : worldPresets;
+    const next = candidates[Math.floor(Math.random() * candidates.length)];
     setBackgroundPreset(next.id);
   };
 
@@ -137,18 +284,47 @@ export function StudioControlDeck({
     setAtomTexture(scene.atomTexture);
   };
 
-  // Procedural-click preference (module-local, not store state — see lib/clickSound).
-  const [clickSound, setClickSound] = useState(isClickSoundEnabled());
-  useEffect(() => subscribeClickSound(setClickSound), []);
-  const toggleClickSound = () => {
-    const next = !clickSound;
-    setClickSoundEnabled(next);
-    if (next) playClick(); // preview the tick when enabling, inside this user gesture
+  const applyColorScheme = (scheme: ColorSchemeId) => {
+    setColorScheme(scheme);
+    if (scheme === 'property' && !colorProperty && availableProperties.length > 0) {
+      setColorProperty(availableProperties[0]);
+    }
+  };
+
+  const applyUniformAtomColor = (color: string) => {
+    setUniformAtomColor(color);
+    setColorScheme('uniform');
+  };
+
+  const applyElementColor = (atomicNumber: number, color: string) => {
+    setElementColorOverride(atomicNumber, color);
+    setColorScheme('element');
+  };
+
+  const applyColormap = (map: ColormapName) => {
+    setColormap(map);
+    if (colorScheme !== 'property') {
+      setColorScheme('family');
+    }
+  };
+
+  const copyLookLink = async () => {
+    if (typeof window === 'undefined') return;
+    const url = new URL(window.location.href);
+    url.searchParams.set('s', encodeToURL());
+    try {
+      await navigator.clipboard.writeText(url.toString());
+      setShareStatus('copied');
+    } catch {
+      setShareStatus('failed');
+    }
+    if (shareTimerRef.current !== null) window.clearTimeout(shareTimerRef.current);
+    shareTimerRef.current = window.setTimeout(() => setShareStatus('idle'), 1800);
   };
 
   const title = mode === 'look' ? 'Look' : mode === 'surface' ? 'Surface' : 'World';
   const subtitle = mode === 'look'
-    ? `R3F ${postprocessPreset} / molecule ${colorScheme}`
+    ? `${postprocessPreset} grade / ${colorScheme} color`
     : mode === 'surface'
       ? `${renderStyle} / ${materialScene}`
       : backgroundPreset;
@@ -157,26 +333,28 @@ export function StudioControlDeck({
     <div
       data-testid="studio-control-deck"
       style={{
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        bottom: bottomOffset,
+        position: isDrawer ? 'relative' : 'absolute',
+        left: isDrawer ? undefined : 0,
+        right: isDrawer ? undefined : 0,
+        bottom: isDrawer ? undefined : bottomOffset,
         display: 'flex',
-        justifyContent: 'center',
-        pointerEvents: 'none',
-        zIndex: 148,
-        padding: '0 12px',
+        justifyContent: isDrawer ? 'stretch' : 'center',
+        pointerEvents: isDrawer ? 'auto' : 'none',
+        zIndex: isDrawer ? undefined : 148,
+        padding: isDrawer ? 0 : '0 12px',
+        minHeight: 0,
+        height: isDrawer ? '100%' : undefined,
       }}
     >
       <style>{`
         @keyframes lupi-rive-snap {
-          0% { transform: scale(1); box-shadow: 0 0 16px rgba(30, 220, 224, 0.45); }
-          38% { transform: scale(0.96); }
+          0% { transform: scale(1); box-shadow: 0 0 16px rgba(30, 220, 224, 0.42); }
+          38% { transform: scale(0.97); }
           100% { transform: scale(1); }
         }
         @keyframes lupi-rive-flash {
-          0% { opacity: 0.9; transform: scale(0.96); }
-          100% { opacity: 0; transform: scale(1.05); }
+          0% { opacity: 0.78; transform: scale(0.96); }
+          100% { opacity: 0; transform: scale(1.06); }
         }
         .lupi-rive-snap {
           animation: lupi-rive-snap 240ms cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -184,71 +362,197 @@ export function StudioControlDeck({
         .lupi-rive-flash {
           animation: lupi-rive-flash 150ms ease-out forwards;
         }
-        .lupi-studio-deck {
-          --lupi-studio-deck-max-height: min(38vh, 330px);
+        .lupi-rive-dial:focus-visible {
+          outline: 2px solid rgba(30, 220, 224, 0.85);
+          outline-offset: 2px;
+        }
+        .lupi-deck-grid {
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 8px;
+          align-items: stretch;
+        }
+        .lupi-studio-segments {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(104px, 1fr));
+          gap: 6px;
+        }
+        .lupi-studio-slider-grid {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 7px;
+        }
+        .lupi-world-carousel {
+          position: relative;
+          min-width: 0;
+          overflow: hidden;
+          border-radius: 8px;
+          isolation: isolate;
+        }
+        .lupi-world-carousel::before,
+        .lupi-world-carousel::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          width: 30px;
+          pointer-events: none;
+          z-index: 2;
+          transition: opacity 160ms ease;
+        }
+        .lupi-world-carousel::before {
+          left: 0;
+          background: linear-gradient(90deg, rgba(2, 6, 23, 0.72), rgba(2, 6, 23, 0));
+          opacity: 0.58;
+        }
+        .lupi-world-carousel::after {
+          right: 0;
+          background: linear-gradient(270deg, rgba(2, 6, 23, 0.78), rgba(2, 6, 23, 0));
+          opacity: 0.74;
+        }
+        .lupi-world-carousel[data-at-start="true"]::before,
+        .lupi-world-carousel[data-at-end="true"]::after {
+          opacity: 0.12;
+        }
+        .lupi-world-rail {
+          --lupi-world-tile-width: clamp(132px, 22vw, 156px);
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: var(--lupi-world-tile-width);
+          grid-template-rows: 78px;
+          gap: 8px;
+          overflow-x: auto;
+          overflow-y: hidden;
+          overscroll-behavior-x: contain;
+          padding: 1px 30px 1px 1px;
+          scroll-padding-inline: 1px 30px;
+          scroll-snap-type: x mandatory;
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+          -webkit-overflow-scrolling: touch;
+        }
+        .lupi-world-rail::-webkit-scrollbar {
+          display: none;
+          width: 0;
+          height: 0;
+        }
+        .lupi-world-rail:focus-visible {
+          outline: 2px solid rgba(30, 220, 224, 0.62);
+          outline-offset: 2px;
+        }
+        .lupi-world-tile {
+          width: 100%;
+          height: 78px;
+          box-sizing: border-box;
+          scroll-snap-align: start;
+          scroll-snap-stop: always;
+        }
+        .lupi-native-color::-webkit-color-swatch-wrapper {
+          padding: 0;
+        }
+        .lupi-native-color::-webkit-color-swatch {
+          border: 0;
+          border-radius: 5px;
+        }
+        .lupi-studio-deck-drawer .lupi-deck-grid {
+          grid-template-columns: 1fr;
+          gap: 7px;
+        }
+        .lupi-studio-deck-drawer .lupi-studio-segments {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
         }
         @media (max-width: 768px) {
-          .lupi-studio-deck {
-            --lupi-studio-deck-max-height: clamp(220px, 31dvh, 288px);
+          .lupi-deck-grid {
+            gap: 8px;
           }
-          .lupi-studio-knobs {
-            grid-template-columns: repeat(3, minmax(82px, 1fr));
+          .lupi-studio-slider-grid {
+            grid-template-columns: 1fr;
+            gap: 7px;
+          }
+          .lupi-world-rail {
+            --lupi-world-tile-width: clamp(126px, 44vw, 152px);
+            grid-template-rows: 76px;
+            padding-right: 24px;
+            scroll-padding-right: 24px;
+          }
+          .lupi-world-tile {
+            height: 76px;
           }
         }
       `}</style>
       <div
-        className="lupi-studio-deck"
+        className={isDrawer ? 'lupi-studio-deck lupi-studio-deck-drawer' : 'lupi-studio-deck'}
         style={{
           pointerEvents: 'auto',
-          width: 'min(940px, calc(100vw - 24px))',
-          maxHeight: 'var(--lupi-studio-deck-max-height)',
-          overflowY: 'auto',
+          width: isDrawer ? '100%' : 'min(940px, calc(100vw - 24px))',
+          height: isDrawer ? '100%' : undefined,
+          maxHeight: isDrawer ? 'none' : maxHeight,
+          overflowY: isDrawer ? 'auto' : 'hidden',
+          overflowX: 'hidden',
           scrollbarWidth: 'none',
-          border: '1px solid rgba(255,255,255,0.12)',
-          borderRadius: 8,
-          background: 'linear-gradient(180deg, rgba(4,9,17,0.88), rgba(0,0,0,0.78))',
-          boxShadow: '0 24px 80px rgba(0,0,0,0.48), inset 0 1px 0 rgba(255,255,255,0.08)',
-          backdropFilter: 'blur(18px)',
-          WebkitBackdropFilter: 'blur(18px)',
-          padding: 10,
+          border: isDrawer ? 'none' : '1px solid rgba(255,255,255,0.12)',
+          borderRadius: isDrawer ? 0 : 8,
+          background: isDrawer ? 'transparent' : 'linear-gradient(180deg, rgba(4,9,17,0.88), rgba(0,0,0,0.78))',
+          boxShadow: isDrawer ? 'none' : '0 24px 80px rgba(0,0,0,0.48), inset 0 1px 0 rgba(255,255,255,0.08)',
+          backdropFilter: isDrawer ? 'none' : 'blur(18px)',
+          WebkitBackdropFilter: isDrawer ? 'none' : 'blur(18px)',
+          padding: isDrawer ? '8px 10px 10px' : 8,
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, marginBottom: 10 }}>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: 10,
+          marginBottom: isDrawer ? 6 : 8,
+          padding: isDrawer ? '0 0 1px' : '2px 2px 0',
+        }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, minWidth: 0 }}>
             <div style={{
-              width: 8,
-              height: 32,
-              borderRadius: 4,
+              width: isDrawer ? 5 : 6,
+              height: isDrawer ? 26 : 30,
+              borderRadius: 3,
               background: 'linear-gradient(180deg, #1edce0, #f59e0b)',
               boxShadow: '0 0 16px rgba(30,220,224,0.28)',
               flexShrink: 0,
             }} />
             <div style={{ minWidth: 0 }}>
-              <div style={{ color: '#f8fafc', fontSize: 13, fontWeight: 780, lineHeight: 1.2 }}>{title}</div>
-              <div style={{ color: '#94a3b8', fontSize: 10, fontFamily: 'var(--font-mono)', textTransform: 'uppercase', lineHeight: 1.4 }}>
+              <div style={{ color: '#f8fafc', fontSize: isDrawer ? 12 : 13, fontWeight: 820, lineHeight: 1.1 }}>{title}</div>
+              <div style={{
+                color: '#94a3b8',
+                fontSize: isDrawer ? 9 : 10,
+                fontFamily: 'var(--font-mono)',
+                textTransform: 'uppercase',
+                lineHeight: 1.25,
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+                fontVariantNumeric: 'tabular-nums',
+              }}>
                 {subtitle}
               </div>
             </div>
           </div>
-          <button
-            type="button"
-            onClick={onClose}
-            title="Close"
-            style={iconButtonStyle}
-          >
-            <IconClose />
-          </button>
+          {showCloseButton && (
+            <button
+              type="button"
+              aria-label={`Close ${title} controls`}
+              onClick={onClose}
+              title="Close"
+              className="lupine-icon-btn"
+              style={{ width: 28, height: 28 }}
+            >
+              <IconClose />
+            </button>
+          )}
         </div>
 
         {mode === 'look' && (
-          <div style={stackStyle}>
-            <ControlGroup
-              title="R3F Quality"
-              note="Post effects, tone, depth cues, and composer cost."
-            >
-              <div style={buttonGridStyle}>
+          <div className="lupi-deck-grid">
+            <ControlGroup title="Grade">
+              <div className="lupi-studio-segments">
                 {LOOK_OPTIONS.map(option => (
-                  <RiveButton
+                  <SegmentButton
                     key={option.id}
                     label={option.label}
                     meta={option.code}
@@ -258,10 +562,7 @@ export function StudioControlDeck({
                   />
                 ))}
               </div>
-            </ControlGroup>
-
-            <div className="lupi-studio-knobs" style={singleKnobRowStyle}>
-              <RiveKnob
+              <CompactSlider
                 label="Effect"
                 value={postprocessIntensity}
                 min={0}
@@ -270,59 +571,106 @@ export function StudioControlDeck({
                 onChange={setPostprocessIntensity}
                 format={value => `${Math.round(value * 100)}%`}
               />
-              <InfoTile
-                title="Renderer layer"
-                body="This changes the R3F postprocessing stack only. Molecule geometry, material, and environment stay in Surface."
-              />
-            </div>
+              <button
+                type="button"
+                onClick={copyLookLink}
+                style={{
+                  minHeight: 40,
+                  borderRadius: 8,
+                  border: '1px solid rgba(167,243,208,0.34)',
+                  background: shareStatus === 'copied' ? 'rgba(16,185,129,0.16)' : 'rgba(15,23,42,0.28)',
+                  color: shareStatus === 'failed' ? '#fecaca' : '#cbd5e1',
+                  fontSize: 11,
+                  fontWeight: 760,
+                  textAlign: 'left',
+                  padding: '0 12px',
+                  cursor: 'pointer',
+                  touchAction: 'manipulation',
+                }}
+              >
+                {shareStatus === 'copied' ? 'Copied look link' : shareStatus === 'failed' ? 'Copy failed' : 'Copy look link'}
+              </button>
+            </ControlGroup>
 
-            <ControlGroup
-              title="Molecule Color"
-              note="Color language for atoms and properties; not lighting or material."
-            >
-              <div style={buttonGridStyle}>
-                {SCHEME_ORDER.map(schemeId => {
+            <ControlGroup title="Atoms">
+              <div className="lupi-studio-segments">
+                {atomColorSchemes.map(schemeId => {
                   const scheme = COLOR_SCHEMES[schemeId];
                   return (
-                    <RiveButton
+                    <SegmentButton
                       key={scheme.id}
                       label={scheme.label}
-                      meta={scheme.id.slice(0, 3).toUpperCase()}
                       active={colorScheme === scheme.id}
-                      accent={scheme.id === 'botanical' ? '#69f0ae' : '#1edce0'}
-                      onClick={() => setColorScheme(scheme.id as ColorSchemeId)}
+                      accent={scheme.id === 'botanical' ? '#69f0ae' : scheme.id === 'uniform' ? '#f59e0b' : '#1edce0'}
+                      onClick={() => applyColorScheme(scheme.id as ColorSchemeId)}
                     />
                   );
                 })}
               </div>
+              {colorScheme === 'property' && availableProperties.length > 0 && (
+                <CompactSelect
+                  label="Property"
+                  value={colorProperty ?? ''}
+                  onChange={(value) => {
+                    setColorProperty(value || null);
+                    if (value) setColorScheme('property');
+                  }}
+                  options={availableProperties.slice(0, 12).map(property => ({ value: property, label: property }))}
+                  placeholder="Property"
+                />
+              )}
             </ControlGroup>
 
-            <ControlGroup
-              title="Feel"
-              note="Procedural click on button presses (off by default). The spring-press animation follows your system 'reduce motion' setting automatically."
-            >
-              <div style={buttonGridStyle}>
-                <RiveButton
-                  label="Click sound"
-                  meta={clickSound ? 'ON' : 'OFF'}
-                  active={clickSound}
-                  onClick={toggleClickSound}
-                  tall
+            <ControlGroup title={colorScheme === 'element' ? 'Elements' : colorScheme === 'uniform' ? 'Color' : 'Palette'}>
+              {colorScheme === 'uniform' && (
+                <ColorPicker
+                  label="Uniform"
+                  value={uniformAtomColor}
+                  active={colorScheme === 'uniform'}
+                  onChange={applyUniformAtomColor}
                 />
-              </div>
+              )}
+              {colorScheme === 'element' && activeElement && (
+                <ElementColorPicker
+                  active={colorScheme === 'element' || activeElementHasOverride}
+                  atomicNumber={activeElement.atomicNumber}
+                  value={activeElementColor}
+                  options={presentElements.map(element => ({
+                    value: element.atomicNumber,
+                    label: `${element.spec.symbol} ${element.atomicNumber}`,
+                  }))}
+                  overridden={activeElementHasOverride}
+                  onSelect={setSelectedAtomicNumber}
+                  onChange={(color) => applyElementColor(activeElement.atomicNumber, color)}
+                  onReset={() => {
+                    resetElementColorOverride(activeElement.atomicNumber);
+                    setColorScheme('element');
+                  }}
+                />
+              )}
+              {(colorScheme === 'property' || colorScheme === 'family' || colorScheme === 'botanical') && (
+                <div style={paletteRailStyle}>
+                  {PALETTE_OPTIONS.map(option => (
+                    <SwatchButton
+                      key={option.id}
+                      label={option.label}
+                      active={colormap === option.id}
+                      background={COLORMAP_PREVIEWS[option.id] ?? option.accent}
+                      onClick={() => applyColormap(option.id)}
+                    />
+                  ))}
+                </div>
+              )}
             </ControlGroup>
           </div>
         )}
 
         {mode === 'surface' && (
-          <div style={stackStyle}>
-            <ControlGroup
-              title="Molecule Primitives"
-              note="Geometry/render style and atom material identity."
-            >
-              <div style={buttonGridStyle}>
+          <div className="lupi-deck-grid">
+            <ControlGroup title="Shape">
+              <div className="lupi-studio-segments">
                 {RENDER_OPTIONS.map(option => (
-                  <RiveButton
+                  <SegmentButton
                     key={option.id}
                     label={option.label}
                     meta={option.code}
@@ -332,87 +680,191 @@ export function StudioControlDeck({
                   />
                 ))}
               </div>
+              <CompactSelect
+                label="Recipe"
+                value={materialScene}
+                onChange={(value) => {
+                  const scene = materialScenes.find(item => item.id === value);
+                  if (scene) applyMoleculeRecipe(scene);
+                }}
+                options={materialScenes.map(scene => ({ value: scene.id, label: `${scene.label} / ${scene.materialPreset}` }))}
+              />
             </ControlGroup>
 
-            <ControlGroup
-              title="Material Recipes"
-              note="Molecule material, environment, and light rig. Look grade and background stay untouched."
-            >
-              <div style={sceneGridStyle}>
-                {materialScenes.map(scene => (
-                  <SceneButton
-                    key={scene.id}
-                    scene={scene}
-                    active={materialScene === scene.id}
-                    onClick={() => applyMoleculeRecipe(scene)}
-                  />
-                ))}
+            <ControlGroup title="Material">
+              <div className="lupi-studio-slider-grid">
+                <CompactSlider label="Atom" value={atomScale} min={0.1} max={2} step={0.05} onChange={setAtomScale} format={value => value.toFixed(2)} />
+                <CompactSlider label="Mix" value={materialIntensity} min={0} max={1} step={0.02} onChange={setMaterialIntensity} />
+                <CompactSlider label="Rough" value={surfaceRoughness} min={-1} max={1} step={0.02} onChange={setSurfaceRoughness} />
+                <CompactSlider label="Polish" value={surfacePolish} min={-1} max={1} step={0.02} onChange={setSurfacePolish} />
+                <CompactSlider label="Coat" value={surfaceClearcoat} min={0} max={1} step={0.02} onChange={setSurfaceClearcoat} />
               </div>
             </ControlGroup>
 
-            <ControlGroup
-              title="Surface x Quality"
-              note="Intersection controls: how the molecule surface reads under the chosen R3F quality."
-            >
-            <div className="lupi-studio-knobs" style={knobGridStyle}>
-              <RiveKnob label="Atom" value={atomScale} min={0.1} max={2} step={0.05} onChange={setAtomScale} format={value => value.toFixed(2)} />
-              <RiveKnob label="Material" value={materialIntensity} min={0} max={1} step={0.02} onChange={setMaterialIntensity} />
-              <RiveKnob label="Rough" value={surfaceRoughness} min={-1} max={1} step={0.02} onChange={setSurfaceRoughness} />
-              <RiveKnob label="Polish" value={surfacePolish} min={-1} max={1} step={0.02} onChange={setSurfacePolish} />
-              <RiveKnob label="Coat" value={surfaceClearcoat} min={0} max={1} step={0.02} onChange={setSurfaceClearcoat} />
-              <RiveKnob label="Bond tol" value={bondTolerance} min={0} max={1.2} step={0.02} onChange={setBondTolerance} />
-              <RiveButton label="Bonds" meta={showBonds ? 'ON' : 'OFF'} active={showBonds} onClick={toggleBonds} tall />
-              <RiveButton label="Type color" meta="BOND" active={bondColorMode === 'type'} onClick={() => setBondColorMode('type')} tall />
-              <RiveButton label="Length color" meta="BOND" active={bondColorMode === 'length'} onClick={() => setBondColorMode('length')} tall />
-            </div>
+            <ControlGroup title="Bond Guides">
+              <div className="lupi-studio-segments">
+                <SegmentButton label={showBonds ? 'Guides on' : 'Guides off'} active={showBonds} accent="#1edce0" onClick={toggleBonds} />
+                <SegmentButton label="Type" active={bondColorMode === 'type'} accent="#7de9ff" onClick={() => setBondColorMode('type')} />
+                <SegmentButton label="Length" active={bondColorMode === 'length'} accent="#f59e0b" onClick={() => setBondColorMode('length')} />
+              </div>
+              <CompactSlider label="Tolerance" value={bondTolerance} min={0} max={1.2} step={0.02} onChange={setBondTolerance} format={value => value.toFixed(2)} />
             </ControlGroup>
           </div>
         )}
 
         {mode === 'world' && (
-          <div style={stackStyle}>
-            <ControlGroup title="Mathematical Fields">
-              <div style={worldGridStyle}>
-                {mathPresets.map(preset => (
-                  <BackgroundTile key={preset.id} preset={preset} active={backgroundPreset === preset.id} onClick={() => setBackgroundPreset(preset.id)} />
+          <div className="lupi-deck-grid">
+            <ControlGroup title="World Library" wide>
+              <WorldBackdropBrowser
+                value={backgroundPreset}
+                activePreset={activeBackgroundPresetWithId}
+                groups={worldLibraryGroups}
+                onChange={setBackgroundPreset}
+                onRandomWorld={handleRandomWorld}
+                onRandomLoop={handleRandomVideo}
+              />
+            </ControlGroup>
+
+            <ControlGroup title="Asset">
+              <CompactSlider
+                label="Yaw"
+                value={backgroundYawDegrees}
+                min={-180}
+                max={180}
+                step={1}
+                onChange={setBackgroundYawDegrees}
+                format={value => `${Math.round(value)} deg`}
+              />
+              <CompactSlider
+                label="Pitch"
+                value={backgroundPitchDegrees}
+                min={-45}
+                max={45}
+                step={1}
+                onChange={setBackgroundPitchDegrees}
+                format={value => `${Math.round(value)} deg`}
+              />
+              <CompactSlider
+                label="Opacity"
+                value={backgroundOpacity}
+                min={0.15}
+                max={1}
+                step={0.01}
+                onChange={setBackgroundOpacity}
+                format={value => `${Math.round(value * 100)}%`}
+              />
+              <SegmentButton label="Reset asset" active={false} accent="#94a3b8" onClick={resetBackgroundAdjustments} />
+            </ControlGroup>
+
+            <ControlGroup title="Grade">
+              <CompactSlider
+                label="Bright"
+                value={backgroundBrightness}
+                min={0.35}
+                max={1.8}
+                step={0.01}
+                onChange={setBackgroundBrightness}
+                format={value => value.toFixed(2)}
+              />
+              <CompactSlider
+                label="Saturate"
+                value={backgroundSaturation}
+                min={0}
+                max={2}
+                step={0.01}
+                onChange={setBackgroundSaturation}
+                format={value => value.toFixed(2)}
+              />
+              <CompactSlider
+                label="Contrast"
+                value={backgroundContrast}
+                min={0.5}
+                max={1.8}
+                step={0.01}
+                onChange={setBackgroundContrast}
+                format={value => value.toFixed(2)}
+              />
+            </ControlGroup>
+
+            <ControlGroup title="Shell">
+              <div className="lupi-studio-segments">
+                {FILTER_SHELL_SHAPES.map(option => (
+                  <SegmentButton
+                    key={option.id}
+                    label={option.label}
+                    meta={option.code}
+                    active={filterShellShape === option.id}
+                    accent={option.accent}
+                    onClick={() => setFilterShellShape(option.id)}
+                  />
                 ))}
+              </div>
+              <div className="lupi-studio-segments">
+                {FILTER_SHELL_PRESETS.map(option => (
+                  <SegmentButton
+                    key={option.id}
+                    label={option.label}
+                    meta={option.code}
+                    active={filterShellPreset === option.id}
+                    accent={option.accent}
+                    onClick={() => setFilterShellPreset(option.id)}
+                  />
+                ))}
+              </div>
+              <div className="lupi-studio-slider-grid">
+                <RiveKnob
+                  label="Tint"
+                  value={filterShellOpacity}
+                  min={0}
+                  max={0.65}
+                  step={0.01}
+                  onChange={setFilterShellOpacity}
+                  format={value => `${Math.round(value * 100)}%`}
+                />
+                <RiveKnob
+                  label="Radius"
+                  value={filterShellRadius}
+                  min={0.75}
+                  max={1.6}
+                  step={0.01}
+                  onChange={setFilterShellRadius}
+                  format={value => value.toFixed(2)}
+                />
               </div>
             </ControlGroup>
 
-            <ControlGroup title="Motion">
-              <div style={worldGridStyle}>
-                <RiveButton label="Random video" meta={`${BG_VIDEO_PRESETS.length} loops`} active={activeBackgroundIsVideo} onClick={handleRandomVideo} tall />
-                {BG_VIDEO_PRESETS.slice(0, 7).map(preset => (
-                  <BackgroundTile key={preset.id} preset={preset} active={backgroundPreset === preset.id} onClick={() => setBackgroundPreset(preset.id)} />
-                ))}
+            <ControlGroup title="Loop">
+              <div className="lupi-studio-segments">
+                <SegmentButton label="Random loop" active={activeBackgroundIsVideo} accent="#f59e0b" onClick={handleRandomVideo} />
+                {activeBackgroundIsVideo && (
+                  <SegmentButton
+                    label={backgroundMotionPaused ? 'Play loop' : 'Pause loop'}
+                    active={!backgroundMotionPaused}
+                    accent="#1edce0"
+                    onClick={() => setBackgroundMotionPaused(!backgroundMotionPaused)}
+                  />
+                )}
+              </div>
+              {activeBackgroundIsVideo && (
+                <CompactSlider
+                  label="Speed"
+                  value={backgroundMotionSpeed}
+                  min={0.05}
+                  max={2}
+                  step={0.05}
+                  onChange={setBackgroundMotionSpeed}
+                  format={value => `${value.toFixed(2)}x`}
+                />
+              )}
+            </ControlGroup>
+
+            <ControlGroup title="Guides">
+              <div className="lupi-studio-segments">
+                <SegmentButton label={showCell ? 'Cell on' : 'Cell off'} active={showCell} accent="#7de9ff" onClick={toggleCell} />
+                <SegmentButton label={showAxes ? 'Axes on' : 'Axes off'} active={showAxes} accent="#a7f3d0" onClick={toggleAxes} />
               </div>
             </ControlGroup>
 
-            <ControlGroup title="Publication">
-              <div style={worldGridStyle}>
-                {publicationPresets.map(preset => (
-                  <BackgroundTile key={preset.id} preset={preset} active={backgroundPreset === preset.id} onClick={() => setBackgroundPreset(preset.id)} />
-                ))}
-              </div>
-            </ControlGroup>
-
-            <ControlGroup title="Signature">
-              <div style={worldGridStyle}>
-                {signaturePresets.map(preset => (
-                  <BackgroundTile key={preset.id} preset={preset} active={backgroundPreset === preset.id} onClick={() => setBackgroundPreset(preset.id)} />
-                ))}
-              </div>
-            </ControlGroup>
-
-            <ControlGroup title="Base">
-              <div style={worldGridStyle}>
-                {gradientPresets.map(preset => (
-                  <BackgroundTile key={preset.id} preset={preset} active={backgroundPreset === preset.id} onClick={() => setBackgroundPreset(preset.id)} />
-                ))}
-                <RiveButton label="Cell" meta={showCell ? 'ON' : 'OFF'} active={showCell} onClick={toggleCell} tall />
-                <RiveButton label="Axes" meta={showAxes ? 'ON' : 'OFF'} active={showAxes} onClick={toggleAxes} tall />
-              </div>
-            </ControlGroup>
           </div>
         )}
       </div>
@@ -420,60 +872,49 @@ export function StudioControlDeck({
   );
 }
 
-function ControlGroup({ title, note, children }: { title: string; note?: string; children: ReactNode }) {
+function ControlGroup({ title, note, children, wide = false }: { title: string; note?: string; children: ReactNode; wide?: boolean }) {
   return (
-    <section style={{ display: 'grid', gap: 6 }}>
+    <section
+      title={note}
+      style={{
+        gridColumn: wide ? '1 / -1' : undefined,
+        display: 'grid',
+        gap: 7,
+        alignContent: 'start',
+        minWidth: 0,
+        padding: 8,
+        border: '1px solid rgba(255,255,255,0.08)',
+        borderRadius: 8,
+        background: 'linear-gradient(180deg, rgba(15,23,42,0.48), rgba(2,6,23,0.22))',
+        boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.05), 0 8px 22px rgba(0,0,0,0.16)',
+      }}
+    >
       <div style={{ display: 'grid', gap: 2 }}>
-        <div style={{ color: '#64748b', fontSize: 10, fontWeight: 760, textTransform: 'uppercase', letterSpacing: 0 }}>
+        <div style={{ color: '#94a3b8', fontSize: 10, fontWeight: 820, textTransform: 'uppercase', letterSpacing: 0, lineHeight: 1 }}>
           {title}
         </div>
-        {note && (
-          <div style={{ color: '#94a3b8', fontSize: 11, lineHeight: 1.35 }}>
-            {note}
-          </div>
-        )}
       </div>
       {children}
     </section>
   );
 }
 
-function InfoTile({ title, body }: { title: string; body: string }) {
-  return (
-    <div style={{
-      minHeight: 88,
-      display: 'grid',
-      alignContent: 'center',
-      gap: 6,
-      padding: '10px 12px',
-      border: '1px solid rgba(30,220,224,0.18)',
-      borderRadius: 6,
-      background: 'linear-gradient(135deg, rgba(30,220,224,0.08), rgba(9,14,22,0.84))',
-      color: '#cbd5e1',
-    }}>
-      <div style={{ color: '#f8fafc', fontSize: 12, fontWeight: 780 }}>{title}</div>
-      <div style={{ color: '#94a3b8', fontSize: 11, lineHeight: 1.35 }}>{body}</div>
-    </div>
-  );
-}
-
-function RiveButton({
+function SegmentButton({
   active,
   label,
   meta,
   onClick,
   accent = '#1edce0',
-  tall = false,
 }: {
   active?: boolean;
   label: string;
   meta?: string;
   onClick: () => void;
   accent?: string;
-  tall?: boolean;
 }) {
   const [pulse, setPulse] = useState(false);
   const timerRef = useRef<number | null>(null);
+  const press = usePressSpring({ pressedScale: 0.96, sound: false });
 
   useEffect(() => () => {
     if (timerRef.current !== null) window.clearTimeout(timerRef.current);
@@ -489,49 +930,59 @@ function RiveButton({
 
   return (
     <button
+      ref={press.ref}
       type="button"
       onClick={handleClick}
+      onPointerDown={press.onPointerDown}
+      onPointerUp={press.onPointerUp}
+      onPointerLeave={press.onPointerLeave}
+      onPointerCancel={press.onPointerCancel}
       title={label}
+      aria-label={meta ? `${label} ${meta}` : label}
+      aria-pressed={active}
       className={pulse ? 'lupi-rive-snap' : undefined}
       style={{
         position: 'relative',
-        minHeight: tall ? 58 : 44,
-        display: 'flex',
+        minWidth: 0,
+        width: '100%',
+        minHeight: 34,
+        display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        gap: 8,
-        padding: tall ? '10px 12px' : '8px 10px',
+        gap: 7,
+        padding: '7px 8px',
         overflow: 'hidden',
-        borderRadius: 6,
-        border: active ? `1px solid ${accent}` : '1px solid rgba(148,163,184,0.22)',
-        background: active ? `${accent}24` : 'rgba(9,14,22,0.82)',
+        borderRadius: 7,
+        border: active ? `1px solid ${accent}` : '1px solid rgba(148,163,184,0.18)',
+        background: active
+          ? `linear-gradient(135deg, ${accent}33, rgba(9,14,22,0.9))`
+          : 'linear-gradient(135deg, rgba(15,23,42,0.74), rgba(3,7,18,0.62))',
         color: active ? '#f8fafc' : '#cbd5e1',
-        boxShadow: active ? `0 0 18px ${accent}30, inset 0 0 12px ${accent}12` : 'inset 0 1px 0 rgba(255,255,255,0.05)',
+        boxShadow: active
+          ? `0 0 16px ${accent}24, inset 0 1px 0 rgba(255,255,255,0.08), inset 0 0 14px ${accent}12`
+          : 'inset 0 1px 0 rgba(255,255,255,0.05), 0 1px 0 rgba(0,0,0,0.18)',
         cursor: 'pointer',
-        textAlign: 'left',
-        transition: 'border-color 120ms ease, background 120ms ease, color 120ms ease, transform 120ms ease',
+        fontSize: 11,
+        fontWeight: 780,
+        lineHeight: 1.12,
+        whiteSpace: 'normal',
+        letterSpacing: 0,
         touchAction: 'manipulation',
       }}
     >
       {pulse && <span className="lupi-rive-flash" style={{ position: 'absolute', inset: 0, background: accent, mixBlendMode: 'screen', pointerEvents: 'none' }} />}
-      <span style={{
-        minWidth: 0,
-        overflow: 'hidden',
-        textOverflow: tall ? 'clip' : 'ellipsis',
-        whiteSpace: tall ? 'normal' : 'nowrap',
-        lineHeight: 1.12,
-        fontSize: 12,
-        fontWeight: 760,
-      }}>
+      <span style={{ minWidth: 0, overflow: 'visible', textOverflow: 'clip', whiteSpace: 'normal', position: 'relative' }}>
         {label}
       </span>
       {meta && (
         <span style={{
+          position: 'relative',
           flexShrink: 0,
           color: active ? accent : '#64748b',
           fontFamily: 'var(--font-mono)',
-          fontSize: 10,
-          fontWeight: 760,
+          fontSize: 9,
+          fontWeight: 820,
+          fontVariantNumeric: 'tabular-nums',
         }}>
           {meta}
         </span>
@@ -540,157 +991,56 @@ function RiveButton({
   );
 }
 
-// ─── Studio-Quality Spring Physics Hook ───────────────────────────────
-function useStudioSpring(targetValue: number, tension = 220, friction = 14) {
-  const [value, setValue] = useState(targetValue);
-  const velocityRef = useRef(0);
-  const positionRef = useRef(targetValue);
-
-  useEffect(() => {
-    let frameId: number;
-    let lastTime = performance.now();
-
-    const update = () => {
-      const now = performance.now();
-      const dt = Math.min((now - lastTime) / 1000, 0.032);
-      lastTime = now;
-
-      const position = positionRef.current;
-      const velocity = velocityRef.current;
-
-      const force = tension * (targetValue - position);
-      const damping = friction * velocity;
-      const acceleration = force - damping;
-
-      const newVelocity = velocity + acceleration * dt;
-      const newPosition = position + newVelocity * dt;
-
-      positionRef.current = newPosition;
-      velocityRef.current = newVelocity;
-      setValue(newPosition);
-
-      if (Math.abs(targetValue - newPosition) > 0.0005 || Math.abs(newVelocity) > 0.0005) {
-        frameId = requestAnimationFrame(update);
-      }
-    };
-
-    frameId = requestAnimationFrame(update);
-    return () => cancelAnimationFrame(frameId);
-  }, [targetValue, tension, friction]);
-
-  return { value, velocity: velocityRef.current };
+function CompactSlider({
+  label,
+  value,
+  min,
+  max,
+  step,
+  onChange,
+  format = value => value.toFixed(2),
+}: {
+  label: string;
+  value: number;
+  min: number;
+  max: number;
+  step: number;
+  onChange: (value: number) => void;
+  format?: (value: number) => string;
+}) {
+  const percent = clamp((value - min) / (max - min), 0, 1);
+  return (
+    <label style={{
+      display: 'grid',
+      gap: 5,
+      minWidth: 0,
+      padding: '7px 8px',
+      borderRadius: 8,
+      border: '1px solid rgba(255,255,255,0.10)',
+      background: 'linear-gradient(180deg, rgba(255,255,255,0.055) 0%, rgba(255,255,255,0.024) 100%)',
+      boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 1px 2px rgba(0,0,0,0.2)',
+    }}>
+      <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 6, minWidth: 0 }}>
+        <span style={{ color: '#94a3b8', fontSize: 10, fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{label}</span>
+        <span style={{ color: '#e2e8f0', fontSize: 10, fontFamily: 'var(--font-mono)', fontWeight: 800, lineHeight: 1, fontVariantNumeric: 'tabular-nums' }}>{format(value)}</span>
+      </span>
+      <input
+        type="range"
+        min={min}
+        max={max}
+        step={step}
+        value={value}
+        onChange={(event) => onChange(Number(event.currentTarget.value))}
+        style={{
+          width: '100%',
+          height: 4,
+          accentColor: '#1edce0',
+          background: `linear-gradient(90deg, #1edce0 0%, #1edce0 ${percent * 100}%, rgba(71,85,105,0.7) ${percent * 100}%, rgba(71,85,105,0.7) 100%)`,
+        }}
+      />
+    </label>
+  );
 }
-
-// ─── Advanced Physical Modeling Audio Synthesizer ─────────────────────
-const playPhysicalSound = (type: 'leica_click' | 'relay_clank' | 'plasma_crackle' | 'needle_scrape') => {
-  if (typeof window === 'undefined') return;
-  const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
-  if (!AudioContext) return;
-
-  try {
-    const ctx = new AudioContext();
-    const now = ctx.currentTime;
-
-    if (type === 'leica_click') {
-      const osc = ctx.createOscillator();
-      const filter = ctx.createBiquadFilter();
-      const gain = ctx.createGain();
-
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(3200, now);
-      osc.frequency.exponentialRampToValueAtTime(1200, now + 0.015);
-
-      filter.type = 'bandpass';
-      filter.frequency.setValueAtTime(2800, now);
-      filter.Q.setValueAtTime(8, now);
-
-      gain.gain.setValueAtTime(0.08, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.018);
-
-      osc.connect(filter);
-      filter.connect(gain);
-      gain.connect(ctx.destination);
-
-      osc.start(now);
-      osc.stop(now + 0.02);
-    }
-    else if (type === 'relay_clank') {
-      const carrier = ctx.createOscillator();
-      const modulator = ctx.createOscillator();
-      const modGain = ctx.createGain();
-      const gain = ctx.createGain();
-
-      carrier.type = 'sine';
-      carrier.frequency.setValueAtTime(95, now);
-      carrier.frequency.exponentialRampToValueAtTime(32, now + 0.18);
-
-      modulator.type = 'sawtooth';
-      modulator.frequency.setValueAtTime(265, now);
-
-      modGain.gain.setValueAtTime(300, now);
-      modGain.gain.exponentialRampToValueAtTime(1, now + 0.12);
-
-      gain.gain.setValueAtTime(0.24, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
-
-      modulator.connect(modGain);
-      modGain.connect(carrier.frequency);
-      carrier.connect(gain);
-      gain.connect(ctx.destination);
-
-      modulator.start(now);
-      carrier.start(now);
-      modulator.stop(now + 0.22);
-      carrier.stop(now + 0.22);
-    }
-    else if (type === 'plasma_crackle') {
-      const bufferSize = ctx.sampleRate * 0.08;
-      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-      const data = buffer.getChannelData(0);
-
-      for (let i = 0; i < bufferSize; i++) {
-        data[i] = Math.random() * 2 - 1;
-      }
-
-      const noiseNode = ctx.createBufferSource();
-      noiseNode.buffer = buffer;
-
-      const filter = ctx.createBiquadFilter();
-      filter.type = 'bandpass';
-      filter.frequency.setValueAtTime(3500, now);
-      filter.Q.value = 12;
-
-      const gain = ctx.createGain();
-      gain.gain.setValueAtTime(0.08, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
-
-      noiseNode.connect(filter);
-      filter.connect(gain);
-      gain.connect(ctx.destination);
-
-      noiseNode.start(now);
-      noiseNode.stop(now + 0.08);
-    }
-    else if (type === 'needle_scrape') {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(450, now);
-      osc.frequency.linearRampToValueAtTime(220, now + 0.1);
-
-      gain.gain.setValueAtTime(0.04, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
-
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-
-      osc.start(now);
-      osc.stop(now + 0.12);
-    }
-  } catch (e) {
-    // sound synthesis failed
-  }
-};
 
 function RiveKnob({
   label,
@@ -712,27 +1062,8 @@ function RiveKnob({
   const [dragging, setDragging] = useState(false);
   const dragRef = useRef({ y: 0, value });
   const percent = clamp((value - min) / (max - min), 0, 1);
-  const targetAngle = -135 + percent * 270;
+  const angle = -135 + percent * 270;
   const accent = dragging ? '#f59e0b' : '#1edce0';
-
-  // 1. Physical Spring Wobble on Dial Rotation
-  const springAngle = useStudioSpring(targetAngle, 240, 16);
-  const speed = Math.abs(springAngle.velocity);
-
-  // 2. Leica mechanical ticks on notch crossings
-  const lastStepPlayed = useRef(Math.round(value / step));
-  useEffect(() => {
-    const currentStep = Math.round(value / step);
-    if (currentStep !== lastStepPlayed.current) {
-      lastStepPlayed.current = currentStep;
-      playPhysicalSound('leica_click');
-    }
-  }, [value, step]);
-
-  // 3. Disney-quality Squash & Stretch along momentum vector
-  const stretchAmount = Math.min(0.2, speed * 0.0002);
-  const scaleX = 1 + stretchAmount;
-  const scaleY = 1 - stretchAmount;
 
   const setValue = (nextValue: number) => {
     onChange(clamp(snap(nextValue, step), min, max));
@@ -743,15 +1074,12 @@ function RiveKnob({
     dragRef.current = { y: event.clientY, value };
     setDragging(true);
     event.currentTarget.setPointerCapture(event.pointerId);
-    playPhysicalSound('leica_click');
   };
 
   const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (!dragging) return;
     const dy = dragRef.current.y - event.clientY;
-    const range = max - min;
-    const sensitivity = 132;
-    setValue(dragRef.current.value + (dy / sensitivity) * range);
+    setValue(dragRef.current.value + (dy / 118) * (max - min));
   };
 
   const handlePointerUp = (event: ReactPointerEvent<HTMLDivElement>) => {
@@ -759,8 +1087,6 @@ function RiveKnob({
     if (event.currentTarget.hasPointerCapture(event.pointerId)) {
       event.currentTarget.releasePointerCapture(event.pointerId);
     }
-    // Snap haptic ring on release
-    playPhysicalSound('leica_click');
   };
 
   const handleKeyDown = (event: ReactKeyboardEvent<HTMLDivElement>) => {
@@ -781,17 +1107,21 @@ function RiveKnob({
 
   return (
     <div style={{
-      minHeight: 88,
-      display: 'flex',
+      minHeight: 66,
+      display: 'grid',
+      gridTemplateColumns: '50px minmax(0, 1fr)',
       alignItems: 'center',
-      justifyContent: 'center',
-      flexDirection: 'column',
-      gap: 7,
-      border: `1px solid ${dragging ? 'rgba(245,158,11,0.64)' : 'rgba(148,163,184,0.2)'}`,
-      borderRadius: 6,
-      background: dragging ? 'rgba(245,158,11,0.08)' : 'rgba(9,14,22,0.7)',
-      boxShadow: dragging ? '0 0 18px rgba(245,158,11,0.2)' : 'inset 0 1px 0 rgba(255,255,255,0.04)',
-      padding: 8,
+      gap: 8,
+      minWidth: 0,
+      padding: '7px 8px',
+      borderRadius: 8,
+      border: dragging ? '1px solid rgba(245,158,11,0.62)' : '1px solid rgba(148,163,184,0.2)',
+      background: dragging
+        ? 'linear-gradient(180deg, rgba(245,158,11,0.12), rgba(9,14,22,0.72))'
+        : 'linear-gradient(180deg, rgba(15,23,42,0.58), rgba(9,14,22,0.48))',
+      boxShadow: dragging
+        ? '0 0 20px rgba(245,158,11,0.18), inset 0 1px 0 rgba(255,255,255,0.06)'
+        : 'inset 0 1px 0 rgba(255,255,255,0.05), 0 1px 0 rgba(0,0,0,0.2)',
     }}>
       <div
         role="slider"
@@ -801,166 +1131,694 @@ function RiveKnob({
         aria-valuemax={max}
         aria-valuenow={value}
         aria-valuetext={format(value)}
+        className="lupi-rive-dial"
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerUp}
         onKeyDown={handleKeyDown}
         style={{
-          width: 52,
-          height: 52,
+          width: 46,
+          height: 46,
           borderRadius: '50%',
           position: 'relative',
           cursor: 'ns-resize',
           outline: 'none',
           touchAction: 'none',
           background: `conic-gradient(from 225deg, ${accent} 0deg, ${accent} ${percent * 270}deg, #1f2937 ${percent * 270}deg, #1f2937 270deg, transparent 270deg)`,
-          boxShadow: dragging ? `0 0 18px ${accent}50` : '0 6px 18px rgba(0,0,0,0.35)',
+          boxShadow: dragging ? `0 0 18px ${accent}52` : '0 6px 18px rgba(0,0,0,0.34)',
         }}
       >
         <div style={{
           position: 'absolute',
           inset: 4,
           borderRadius: '50%',
-          transform: `rotate(${springAngle.value}deg) scale(${scaleX}, ${scaleY})`,
-          boxShadow: speed > 10 ? `0 0 12px ${accent}40` : 'none',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          transition: 'box-shadow 0.15s ease',
+          background: 'radial-gradient(circle at 35% 30%, #334155, #0f172a 72%)',
+          border: '1px solid rgba(255,255,255,0.08)',
+          boxShadow: 'inset 0 1px 4px rgba(255,255,255,0.08)',
+        }} />
+        <div style={{
+          position: 'absolute',
+          inset: 4,
+          borderRadius: '50%',
+          transform: `rotate(${angle}deg)`,
+          transition: dragging ? 'none' : 'transform 140ms cubic-bezier(0.34, 1.56, 0.64, 1)',
         }}>
           <div style={{
             position: 'absolute',
-            inset: 1,
-            borderRadius: '50%',
-            background: 'radial-gradient(circle at 35% 30%, #334155, #0f172a 72%)',
-            border: '1px solid rgba(255,255,255,0.08)',
-          }} />
-          <div style={{
-            position: 'absolute',
             top: 2,
+            left: '50%',
             width: 3,
             height: 9,
+            transform: 'translateX(-50%)',
             borderRadius: 3,
             background: accent,
-            boxShadow: `0 0 8px ${accent}`,
+            boxShadow: `0 0 10px ${accent}78`,
           }} />
         </div>
       </div>
-      <div style={{ display: 'grid', gap: 1, justifyItems: 'center', minWidth: 0 }}>
-        <span style={{ color: '#94a3b8', fontSize: 10, fontWeight: 760, textTransform: 'uppercase', letterSpacing: 0 }}>{label}</span>
-        <span style={{ color: dragging ? accent : '#e2e8f0', fontSize: 12, fontFamily: 'var(--font-mono)', fontWeight: 760 }}>{format(value)}</span>
+      <div style={{ minWidth: 0, display: 'grid', gap: 5 }}>
+        <span style={{ color: '#94a3b8', fontSize: 10, fontWeight: 820, textTransform: 'uppercase', lineHeight: 1 }}>{label}</span>
+        <span style={{ color: '#e2e8f0', fontSize: 12, fontFamily: 'var(--font-mono)', fontWeight: 820, lineHeight: 1, fontVariantNumeric: 'tabular-nums' }}>
+          {format(value)}
+        </span>
+        <input
+          type="range"
+          min={min}
+          max={max}
+          step={step}
+          value={value}
+          aria-label={`${label} fine control`}
+          onChange={(event) => setValue(Number(event.currentTarget.value))}
+          style={{
+            width: '100%',
+            height: 4,
+            accentColor: accent,
+          }}
+        />
       </div>
     </div>
   );
 }
 
-function SceneButton({ scene, active, onClick }: { scene: MaterialScene; active: boolean; onClick: () => void }) {
-  const [pulse, setPulse] = useState(false);
-  const accent = scene.accentColor;
-  const timerRef = useRef<number | null>(null);
+function CompactSelect({
+  label,
+  value,
+  options,
+  onChange,
+  placeholder,
+}: {
+  label: string;
+  value: string;
+  options: Array<{ value: string; label: string }>;
+  onChange: (value: string) => void;
+  placeholder?: string;
+}) {
+  return (
+    <label style={compactFieldStyle}>
+      <span style={compactFieldLabelStyle}>{label}</span>
+      <select
+        value={value}
+        onChange={(event) => onChange(event.currentTarget.value)}
+        style={compactSelectStyle}
+      >
+        {placeholder && <option value="">{placeholder}</option>}
+        {options.map(option => (
+          <option key={option.value} value={option.value}>{option.label}</option>
+        ))}
+      </select>
+    </label>
+  );
+}
 
-  useEffect(() => () => {
-    if (timerRef.current !== null) window.clearTimeout(timerRef.current);
-  }, []);
+function WorldBackdropBrowser({
+  value,
+  activePreset,
+  groups,
+  onChange,
+  onRandomWorld,
+  onRandomLoop,
+}: {
+  value: string;
+  activePreset?: BgPresetWithId;
+  groups: Array<{ label: string; presets: BgPresetWithId[] }>;
+  onChange: (value: string) => void;
+  onRandomWorld: () => void;
+  onRandomLoop: () => void;
+}) {
+  const badge = activePreset ? getBgBadge(activePreset) : undefined;
+  return (
+    <div style={{ display: 'grid', gap: 9, minWidth: 0 }}>
+      <div style={{
+        minHeight: 118,
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+        gap: 9,
+        alignItems: 'stretch',
+      }}>
+        <div style={{
+          position: 'relative',
+          minHeight: 118,
+          overflow: 'hidden',
+          borderRadius: 8,
+          border: '1px solid rgba(255,255,255,0.12)',
+          ...backgroundPreviewStyle(activePreset),
+          boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08), 0 10px 26px rgba(0,0,0,0.22)',
+        }}>
+          <div style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'linear-gradient(90deg, rgba(2,6,23,0.72), rgba(2,6,23,0.18) 56%, rgba(2,6,23,0.5))',
+          }} />
+          <div style={{
+            position: 'relative',
+            minHeight: 118,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            gap: 12,
+            padding: 12,
+          }}>
+            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 10, minWidth: 0 }}>
+              <div style={{ minWidth: 0, display: 'grid', gap: 4 }}>
+                <div style={{
+                  color: '#f8fafc',
+                  fontSize: 18,
+                  fontWeight: 860,
+                  lineHeight: 1.05,
+                  textShadow: '0 2px 12px rgba(0,0,0,0.45)',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                }}>
+                  {activePreset?.label ?? 'Select World'}
+                </div>
+                <div style={{
+                  maxWidth: 520,
+                  color: '#cbd5e1',
+                  fontSize: 11,
+                  fontWeight: 650,
+                  lineHeight: 1.35,
+                  textShadow: '0 1px 8px rgba(0,0,0,0.5)',
+                }}>
+                  {activePreset?.context ?? 'Choose a 360 environment for the molecular scene.'}
+                </div>
+              </div>
+              {badge && (
+                <span style={{
+                  flexShrink: 0,
+                  padding: '4px 6px',
+                  borderRadius: 6,
+                  border: '1px solid rgba(30,220,224,0.45)',
+                  background: 'rgba(2,6,23,0.54)',
+                  color: '#7de9ff',
+                  fontSize: 10,
+                  fontWeight: 860,
+                  fontFamily: 'var(--font-mono)',
+                  lineHeight: 1,
+                }}>
+                  {badge}
+                </span>
+              )}
+            </div>
+            <div className="lupi-studio-segments" style={{ maxWidth: 360 }}>
+              <SegmentButton label="Surprise world" active={false} accent="#7de9ff" onClick={onRandomWorld} />
+              <SegmentButton label="Surprise loop" active={false} accent="#f59e0b" onClick={onRandomLoop} />
+            </div>
+          </div>
+        </div>
+        <div style={{
+          minWidth: 0,
+          display: 'grid',
+          gap: 7,
+          alignContent: 'start',
+          padding: 8,
+          borderRadius: 8,
+          border: '1px solid rgba(255,255,255,0.09)',
+          background: 'linear-gradient(180deg, rgba(15,23,42,0.54), rgba(3,7,18,0.34))',
+        }}>
+          <div style={{ color: '#94a3b8', fontSize: 10, fontWeight: 820, textTransform: 'uppercase', lineHeight: 1 }}>
+            Active Asset
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
+            <MetricPill label="Preset" value={value.replace(/^world-/, '')} />
+            <MetricPill label="Type" value={badge ?? 'BASE'} />
+            <MetricPill label="Tone" value={activePreset?.intensity ?? 'balanced'} />
+            <MetricPill label="Mode" value={getBgPoster(activePreset ?? BG_PRESETS.deep) ? 'ERP' : 'SKY'} />
+          </div>
+        </div>
+      </div>
 
-  const handleClick = () => {
-    setPulse(false);
-    window.requestAnimationFrame(() => setPulse(true));
-    if (timerRef.current !== null) window.clearTimeout(timerRef.current);
-    timerRef.current = window.setTimeout(() => setPulse(false), 260);
-    onClick();
+      <div style={{ display: 'grid', gap: 8, minWidth: 0 }}>
+        {groups.map(group => (
+          <BackdropRail
+            key={group.label}
+            title={group.label}
+            presets={group.presets}
+            value={value}
+            onChange={onChange}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function MetricPill({ label, value }: { label: string; value: string }) {
+  return (
+    <div style={{
+      minWidth: 0,
+      display: 'grid',
+      gap: 4,
+      padding: '7px 8px',
+      borderRadius: 7,
+      border: '1px solid rgba(148,163,184,0.16)',
+      background: 'rgba(2,6,23,0.38)',
+    }}>
+      <span style={{ color: '#64748b', fontSize: 9, fontWeight: 820, textTransform: 'uppercase', lineHeight: 1 }}>{label}</span>
+      <span style={{
+        minWidth: 0,
+        color: '#e2e8f0',
+        fontFamily: 'var(--font-mono)',
+        fontSize: 10,
+        fontWeight: 820,
+        lineHeight: 1.15,
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
+        textTransform: 'uppercase',
+      }}>
+        {value}
+      </span>
+    </div>
+  );
+}
+
+function BackdropRail({
+  title,
+  presets,
+  value,
+  onChange,
+}: {
+  title: string;
+  presets: BgPresetWithId[];
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  const railRef = useRef<HTMLDivElement | null>(null);
+  const [scrollState, setScrollState] = useState({ atStart: true, atEnd: true });
+
+  useEffect(() => {
+    const rail = railRef.current;
+    if (!rail) return;
+
+    const updateScrollState = () => {
+      const maxScroll = rail.scrollWidth - rail.clientWidth;
+      setScrollState({
+        atStart: rail.scrollLeft <= 1,
+        atEnd: maxScroll <= 1 || rail.scrollLeft >= maxScroll - 1,
+      });
+    };
+
+    updateScrollState();
+    rail.addEventListener('scroll', updateScrollState, { passive: true });
+    window.addEventListener('resize', updateScrollState);
+    return () => {
+      rail.removeEventListener('scroll', updateScrollState);
+      window.removeEventListener('resize', updateScrollState);
+    };
+  }, [presets.length]);
+
+  const scrollRail = (direction: -1 | 1) => {
+    const rail = railRef.current;
+    if (!rail) return;
+    const behavior: ScrollBehavior = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+    rail.scrollBy({
+      left: direction * Math.max(rail.clientWidth * 0.76, 148),
+      behavior,
+    });
   };
 
+  const handleRailKeyDown = (event: ReactKeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      scrollRail(1);
+    } else if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      scrollRail(-1);
+    }
+  };
+
+  if (presets.length === 0) return null;
+  return (
+    <div style={{ display: 'grid', gap: 5, minWidth: 0 }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
+        <div style={{ color: '#94a3b8', fontSize: 10, fontWeight: 820, textTransform: 'uppercase', lineHeight: 1 }}>{title}</div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+          <div style={{ color: '#64748b', fontSize: 9, fontFamily: 'var(--font-mono)', fontWeight: 820, lineHeight: 1 }}>
+            {presets.length}
+          </div>
+          <RailNudgeButton
+            label={`Previous ${title}`}
+            direction="left"
+            disabled={scrollState.atStart}
+            onClick={() => scrollRail(-1)}
+          />
+          <RailNudgeButton
+            label={`Next ${title}`}
+            direction="right"
+            disabled={scrollState.atEnd}
+            onClick={() => scrollRail(1)}
+          />
+        </div>
+      </div>
+      <div
+        className="lupi-world-carousel"
+        data-at-start={scrollState.atStart ? 'true' : 'false'}
+        data-at-end={scrollState.atEnd ? 'true' : 'false'}
+      >
+        <div
+          ref={railRef}
+          className="lupi-world-rail"
+          role="group"
+          aria-label={`${title} backgrounds`}
+          tabIndex={0}
+          onKeyDown={handleRailKeyDown}
+        >
+          {presets.map(preset => (
+            <BackdropTile
+              key={preset.id}
+              preset={preset}
+              active={preset.id === value}
+              onClick={() => onChange(preset.id)}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function RailNudgeButton({
+  label,
+  direction,
+  disabled,
+  onClick,
+}: {
+  label: string;
+  direction: 'left' | 'right';
+  disabled: boolean;
+  onClick: () => void;
+}) {
   return (
     <button
       type="button"
-      onClick={handleClick}
-      title={scene.description}
-      className={pulse ? 'lupi-rive-snap' : undefined}
+      aria-label={label}
+      title={label}
+      disabled={disabled}
+      onClick={onClick}
       style={{
-        position: 'relative',
-        minHeight: 68,
-        padding: 10,
-        overflow: 'hidden',
-        display: 'grid',
-        alignContent: 'space-between',
+        width: 22,
+        height: 22,
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexShrink: 0,
         borderRadius: 6,
-        border: active ? `1px solid ${accent}` : '1px solid rgba(148,163,184,0.24)',
-        background: scene.cardGradient,
-        boxShadow: active ? `0 0 18px ${accent}30, inset 0 0 16px ${accent}14` : 'inset 0 1px 0 rgba(255,255,255,0.05)',
-        color: '#f8fafc',
-        cursor: 'pointer',
-        textAlign: 'left',
-        touchAction: 'manipulation',
+        border: disabled ? '1px solid rgba(148,163,184,0.12)' : '1px solid rgba(148,163,184,0.28)',
+        background: disabled ? 'rgba(15,23,42,0.3)' : 'rgba(15,23,42,0.74)',
+        color: disabled ? '#475569' : '#cbd5e1',
+        cursor: disabled ? 'default' : 'pointer',
+        boxShadow: disabled ? 'none' : 'inset 0 1px 0 rgba(255,255,255,0.06)',
+        padding: 0,
       }}
     >
-      {pulse && <span className="lupi-rive-flash" style={{ position: 'absolute', inset: 0, background: accent, mixBlendMode: 'screen', pointerEvents: 'none' }} />}
-      <div style={{ display: 'flex', alignItems: 'start', justifyContent: 'space-between', gap: 8, position: 'relative' }}>
-        <span style={{ fontSize: 12, fontWeight: 800, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{scene.label}</span>
-        <span style={{ color: active ? accent : '#cbd5e1', fontSize: 10, fontFamily: 'var(--font-mono)', fontWeight: 800 }}>{scene.code}</span>
-      </div>
-      <div style={{ position: 'relative', display: 'flex', justifyContent: 'space-between', gap: 8, color: '#cbd5e1', fontSize: 10, fontFamily: 'var(--font-mono)' }}>
-        <span>{scene.materialPreset === 'default' ? 'element' : scene.materialPreset}</span>
-        <span>{scene.environmentPreset}</span>
-      </div>
+      <IconChevron direction={direction} />
     </button>
   );
 }
 
-function BackgroundTile({ preset, active, onClick }: { preset: BgPresetWithId; active: boolean; onClick: () => void }) {
-  const [pulse, setPulse] = useState(false);
-  const timerRef = useRef<number | null>(null);
-  const poster = getBgPoster(preset);
-  const media = getBgMedia(preset);
-  const badge = getBgBadge(preset) ?? (media.kind === 'video' ? 'LOOP' : undefined);
-
-  useEffect(() => () => {
-    if (timerRef.current !== null) window.clearTimeout(timerRef.current);
-  }, []);
-
-  const handleClick = () => {
-    setPulse(false);
-    window.requestAnimationFrame(() => setPulse(true));
-    if (timerRef.current !== null) window.clearTimeout(timerRef.current);
-    timerRef.current = window.setTimeout(() => setPulse(false), 260);
-    onClick();
-  };
-
+function BackdropTile({
+  preset,
+  active,
+  onClick,
+}: {
+  preset: BgPresetWithId;
+  active: boolean;
+  onClick: () => void;
+}) {
+  const badge = getBgBadge(preset);
   return (
     <button
       type="button"
-      onClick={handleClick}
-      className={pulse ? 'lupi-rive-snap' : undefined}
+      title={preset.context ? `${preset.label}: ${preset.context}` : preset.label}
+      aria-label={`Use ${preset.label} background`}
+      aria-pressed={active}
+      onClick={onClick}
+      className="lupi-world-tile"
       style={{
         position: 'relative',
-        minHeight: 72,
-        display: 'grid',
-        alignContent: 'end',
-        gap: 4,
-        padding: 9,
+        minWidth: 0,
         overflow: 'hidden',
-        borderRadius: 6,
-        border: active ? '1px solid #1edce0' : '1px solid rgba(148,163,184,0.22)',
-        background: preset.preview
-          ? `linear-gradient(180deg, rgba(0,0,0,0.06), rgba(0,0,0,0.72)), ${preset.preview}`
-          : poster
-          ? `linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.74)), url("${poster}") center / cover`
-          : `linear-gradient(135deg, ${preset.top}, ${preset.bottom})`,
-        color: '#f8fafc',
-        boxShadow: active ? '0 0 18px rgba(30,220,224,0.28), inset 0 0 12px rgba(30,220,224,0.12)' : 'inset 0 1px 0 rgba(255,255,255,0.04)',
+        borderRadius: 8,
+        border: active ? '1px solid #1edce0' : '1px solid rgba(148,163,184,0.18)',
+        ...backgroundPreviewStyle(preset),
+        boxShadow: active
+          ? '0 0 18px rgba(30,220,224,0.28), inset 0 1px 0 rgba(255,255,255,0.12)'
+          : 'inset 0 1px 0 rgba(255,255,255,0.08), 0 5px 14px rgba(0,0,0,0.18)',
         cursor: 'pointer',
-        textAlign: 'left',
+        padding: 0,
         touchAction: 'manipulation',
       }}
     >
-      {pulse && <span className="lupi-rive-flash" style={{ position: 'absolute', inset: 0, background: '#1edce0', mixBlendMode: 'screen', pointerEvents: 'none' }} />}
-      <span style={{ position: 'relative', fontSize: 12, fontWeight: 800, textShadow: '0 1px 4px rgba(0,0,0,0.8)' }}>{preset.label}</span>
-      <span style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
-        <span style={{ color: '#cbd5e1', fontSize: 10, fontFamily: 'var(--font-mono)', textTransform: 'uppercase' }}>{preset.id}</span>
-        {badge && <span style={{ color: active ? '#1edce0' : '#f8fafc', fontSize: 10, fontFamily: 'var(--font-mono)', fontWeight: 800 }}>{badge}</span>}
+      <span style={{
+        position: 'absolute',
+        inset: 0,
+        background: active
+          ? 'linear-gradient(180deg, rgba(2,6,23,0.12), rgba(2,6,23,0.72))'
+          : 'linear-gradient(180deg, rgba(2,6,23,0.04), rgba(2,6,23,0.78))',
+      }} />
+      {badge && (
+        <span style={{
+          position: 'absolute',
+          top: 5,
+          right: 5,
+          maxWidth: 54,
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
+          padding: '3px 4px',
+          borderRadius: 5,
+          background: active ? 'rgba(30,220,224,0.22)' : 'rgba(2,6,23,0.62)',
+          border: active ? '1px solid rgba(125,233,255,0.45)' : '1px solid rgba(255,255,255,0.12)',
+          color: active ? '#baf8ff' : '#cbd5e1',
+          fontSize: 8,
+          fontWeight: 860,
+          fontFamily: 'var(--font-mono)',
+          lineHeight: 1,
+        }}>
+          {badge}
+        </span>
+      )}
+      <span style={{
+        position: 'absolute',
+        left: 7,
+        right: 7,
+        bottom: 7,
+        minWidth: 0,
+        color: active ? '#f8fafc' : '#e2e8f0',
+        fontSize: 10,
+        fontWeight: 820,
+        lineHeight: 1.12,
+        textAlign: 'left',
+        textShadow: '0 1px 7px rgba(0,0,0,0.65)',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
+      }}>
+        {preset.label}
       </span>
     </button>
+  );
+}
+
+function backgroundPreviewStyle(preset?: BgPresetWithId): CSSProperties {
+  if (!preset) {
+    return {
+      background: 'linear-gradient(135deg, #111827, #020617)',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+    };
+  }
+  const poster = getBgPoster(preset);
+  if (poster) {
+    return {
+      backgroundImage: `url("${poster}")`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+    };
+  }
+  return {
+    background: preset.preview ?? `linear-gradient(135deg, ${preset.top}, ${preset.bottom})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  };
+}
+
+function ColorPicker({
+  active,
+  label,
+  value,
+  onChange,
+}: {
+  active?: boolean;
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <label style={{
+      display: 'grid',
+      gridTemplateColumns: '44px minmax(0, 1fr)',
+      gap: 8,
+      alignItems: 'center',
+      minWidth: 0,
+      padding: 6,
+      borderRadius: 8,
+      border: active ? '1px solid #1edce0' : '1px solid rgba(148,163,184,0.2)',
+      background: active
+        ? 'linear-gradient(135deg, rgba(30,220,224,0.16), rgba(9,14,22,0.72))'
+        : 'linear-gradient(180deg, rgba(15,23,42,0.56), rgba(9,14,22,0.48))',
+      boxShadow: active ? '0 0 16px rgba(30,220,224,0.18)' : 'inset 0 1px 0 rgba(255,255,255,0.04)',
+    }}>
+      <input
+        className="lupi-native-color"
+        type="color"
+        value={value}
+        title={label}
+        aria-label={label}
+        onChange={(event) => onChange(event.currentTarget.value)}
+        style={{
+          width: 40,
+          height: 28,
+          padding: 0,
+          border: '1px solid rgba(255,255,255,0.22)',
+          borderRadius: 6,
+          background: 'transparent',
+          cursor: 'pointer',
+        }}
+      />
+      <span style={{ minWidth: 0, display: 'grid', gap: 2 }}>
+        <span style={{ color: '#94a3b8', fontSize: 10, fontWeight: 800, textTransform: 'uppercase', lineHeight: 1 }}>{label}</span>
+        <span style={{ color: active ? '#f8fafc' : '#cbd5e1', fontSize: 10, fontFamily: 'var(--font-mono)', fontWeight: 800, lineHeight: 1 }}>{value.toUpperCase()}</span>
+      </span>
+    </label>
+  );
+}
+
+function ElementColorPicker({
+  active,
+  atomicNumber,
+  value,
+  options,
+  overridden,
+  onSelect,
+  onChange,
+  onReset,
+}: {
+  active?: boolean;
+  atomicNumber: number;
+  value: string;
+  options: Array<{ value: number; label: string }>;
+  overridden?: boolean;
+  onSelect: (atomicNumber: number) => void;
+  onChange: (value: string) => void;
+  onReset: () => void;
+}) {
+  return (
+    <div style={{
+      display: 'grid',
+      gridTemplateColumns: '36px minmax(0, 1fr) 42px',
+      gap: 7,
+      alignItems: 'center',
+      minWidth: 0,
+      padding: 6,
+      borderRadius: 8,
+      border: active ? '1px solid #facc15' : '1px solid rgba(148,163,184,0.2)',
+      background: active
+        ? 'linear-gradient(135deg, rgba(250,204,21,0.16), rgba(9,14,22,0.72))'
+        : 'linear-gradient(180deg, rgba(15,23,42,0.56), rgba(9,14,22,0.48))',
+      boxShadow: active ? '0 0 16px rgba(250,204,21,0.16)' : 'inset 0 1px 0 rgba(255,255,255,0.04)',
+    }}>
+      <input
+        className="lupi-native-color"
+        type="color"
+        value={value}
+        title={`Atomic number ${atomicNumber}`}
+        aria-label={`Atomic number ${atomicNumber} color`}
+        onChange={(event) => onChange(event.currentTarget.value)}
+        style={{
+          width: 30,
+          height: 28,
+          padding: 0,
+          border: '1px solid rgba(255,255,255,0.22)',
+          borderRadius: 6,
+          background: 'transparent',
+          cursor: 'pointer',
+        }}
+      />
+      <label style={{ display: 'grid', gap: 2, minWidth: 0 }}>
+        <span style={compactFieldLabelStyle}>Element</span>
+        <select
+          value={atomicNumber}
+          onChange={(event) => onSelect(Number(event.currentTarget.value))}
+          style={{ ...compactSelectStyle, height: 20, padding: '0 4px' }}
+        >
+          {options.map(option => (
+            <option key={option.value} value={option.value}>{option.label}</option>
+          ))}
+        </select>
+      </label>
+      <button
+        type="button"
+        title="Reset element color"
+        onClick={onReset}
+        disabled={!overridden}
+        style={{
+          height: 28,
+          minWidth: 0,
+          borderRadius: 5,
+          border: overridden ? '1px solid rgba(250,204,21,0.56)' : '1px solid rgba(148,163,184,0.16)',
+          background: overridden ? 'rgba(250,204,21,0.14)' : 'rgba(15,23,42,0.6)',
+          color: overridden ? '#f8fafc' : '#64748b',
+          cursor: overridden ? 'pointer' : 'default',
+          fontSize: 10,
+          fontWeight: 780,
+          letterSpacing: 0,
+        }}
+      >
+        Base
+      </button>
+    </div>
+  );
+}
+
+function SwatchButton({
+  active,
+  label,
+  background,
+  onClick,
+}: {
+  active?: boolean;
+  label: string;
+  background: string;
+  onClick: () => void;
+}) {
+  const press = usePressSpring({ pressedScale: 0.92, sound: false });
+  return (
+    <button
+      ref={press.ref}
+      type="button"
+      aria-label={label}
+      title={label}
+      onClick={onClick}
+      onPointerDown={press.onPointerDown}
+      onPointerUp={press.onPointerUp}
+      onPointerLeave={press.onPointerLeave}
+      onPointerCancel={press.onPointerCancel}
+      style={{
+        height: 25,
+        flex: '1 1 24px',
+        minWidth: 24,
+        borderRadius: 6,
+        border: active ? '1px solid #f8fafc' : '1px solid rgba(148,163,184,0.22)',
+        background,
+        boxShadow: active
+          ? '0 0 14px rgba(248,250,252,0.32), inset 0 1px 0 rgba(255,255,255,0.16)'
+          : 'inset 0 1px 0 rgba(255,255,255,0.1), 0 1px 0 rgba(0,0,0,0.22)',
+        cursor: 'pointer',
+      }}
+    />
   );
 }
 
@@ -972,9 +1830,18 @@ function IconClose() {
   );
 }
 
+function IconChevron({ direction }: { direction: 'left' | 'right' }) {
+  const path = direction === 'left' ? 'M15 18 9 12l6-6' : 'm9 18 6-6-6-6';
+  return (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+      <path d={path} />
+    </svg>
+  );
+}
+
 const iconButtonStyle: CSSProperties = {
-  width: 32,
-  height: 32,
+  width: 28,
+  height: 28,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -986,37 +1853,44 @@ const iconButtonStyle: CSSProperties = {
   cursor: 'pointer',
 };
 
-const stackStyle: CSSProperties = {
+const compactFieldStyle: CSSProperties = {
   display: 'grid',
-  gap: 10,
+  gap: 5,
+  minWidth: 0,
+  padding: '7px 8px',
+  borderRadius: 8,
+  border: '1px solid rgba(255,255,255,0.10)',
+  background: 'linear-gradient(180deg, rgba(255,255,255,0.055) 0%, rgba(255,255,255,0.024) 100%)',
+  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 1px 2px rgba(0,0,0,0.2)',
 };
 
-const buttonGridStyle: CSSProperties = {
-  display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fit, minmax(116px, 1fr))',
-  gap: 6,
+const compactFieldLabelStyle: CSSProperties = {
+  color: '#94a3b8',
+  fontSize: 10,
+  fontWeight: 800,
+  textTransform: 'uppercase',
+  lineHeight: 1,
 };
 
-const sceneGridStyle: CSSProperties = {
-  display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fit, minmax(132px, 1fr))',
-  gap: 6,
+const compactSelectStyle: CSSProperties = {
+  width: '100%',
+  minWidth: 0,
+  height: 30,
+  borderRadius: 6,
+  border: '1px solid rgba(255,255,255,0.10)',
+  background: 'linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)',
+  color: '#f8fafc',
+  fontSize: 11,
+  fontWeight: 650,
+  padding: '0 8px',
+  outline: 'none',
+  cursor: 'pointer',
+  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 1px 0 rgba(0,0,0,0.2)',
 };
 
-const knobGridStyle: CSSProperties = {
-  display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fit, minmax(92px, 1fr))',
-  gap: 6,
-};
-
-const singleKnobRowStyle: CSSProperties = {
-  display: 'grid',
-  gridTemplateColumns: 'minmax(96px, 120px) minmax(180px, 1fr)',
-  gap: 6,
-};
-
-const worldGridStyle: CSSProperties = {
-  display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fit, minmax(142px, 1fr))',
-  gap: 6,
+const paletteRailStyle: CSSProperties = {
+  display: 'flex',
+  flexWrap: 'wrap',
+  gap: 4,
+  minWidth: 0,
 };

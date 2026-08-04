@@ -12,6 +12,7 @@ import type { NistCatalogEntry } from '@atlas/nist';
 import type { FlythroughSequence, FlythroughKeyframe } from './flythrough';
 import { COLOR_SCHEMES, pickInitialScheme, type ColorSchemeId, type AtomColorSource } from './coloring';
 import { MATERIAL_SCENES, getScene, DEFAULT_SCENE_ID } from '@atlas/scene/materials';
+import { getElementSpec } from '@atlas/core';
 
 /** A pinned text annotation tied to a specific atom by index in the
  *  current frame. Persists across frame changes; if the atom moves, the
@@ -24,6 +25,30 @@ export interface Annotation {
   createdAt: number;
 }
 
+/** A knowledge label anchored to a 3D position rather than an atom index.
+ *  These are auto-generated from gallery metadata (e.g. Lupine Wiki sphere
+ *  centroids) so the viewer can display exact semantic names on top of the
+ *  molecular view. Unlike user annotations, they belong to the loaded asset
+ *  and are cleared/replaced on every file load. */
+export interface KnowledgeLabel {
+  id: string;
+  kind: 'sphere' | 'node' | string;
+  text: string;
+  detail?: string;
+  sphereId?: string;
+  sphereIndex?: number;
+  atomIndex?: number;
+  nodeKind?: string;
+  /** Original knowledge-graph node id (path) when available. */
+  nodeId?: string;
+  /** Number of edges connected to this node. */
+  degree?: number;
+  /** Salience score used to throttle default label density.
+   *  sphere=2, project/repo/skill=1, everything else=0. */
+  salience?: number;
+  position: [number, number, number];
+}
+
 /** Visual presentation modes for annotations. Each is a distinct R3F/drei
  *  technique applied to the same underlying data so the user can compare
  *  styles without re-authoring the labels themselves.
@@ -34,6 +59,116 @@ export interface Annotation {
  *  - `etched`  : text rasterized to a texture, sampled inside the atom impostor
  *                shader, modulating albedo so it reads as engraved into the surface. */
 export type LabelStyle = 'tag' | 'glyph' | 'halo' | 'etched';
+export type FilterShellShape = 'off' | 'sphere' | 'cube';
+export type FilterShellPreset = 'haze' | 'cryo' | 'prism' | 'graphite';
+
+function isHexColor(value: unknown): value is string {
+  return typeof value === 'string' && /^#[0-9a-fA-F]{6}$/.test(value);
+}
+
+function sanitizeHexColor(value: string, fallback = '#1edce0') {
+  return isHexColor(value) ? value : fallback;
+}
+
+function sanitizeElementColorOverrides(value: unknown): Record<number, string> {
+  if (!value || typeof value !== 'object') return {};
+  const next: Record<number, string> = {};
+  for (const [key, color] of Object.entries(value as Record<string, unknown>)) {
+    const atomicNumber = Number(key);
+    if (!Number.isInteger(atomicNumber) || atomicNumber < 1 || atomicNumber > 255 || !isHexColor(color)) continue;
+    next[atomicNumber] = color;
+  }
+  return next;
+}
+
+function sanitizeFilterShellShape(value: unknown): FilterShellShape {
+  if (value === 'sphere' || value === 'cube' || value === 'off') return value;
+  return value === 'box' ? 'cube' : 'off';
+}
+
+function sanitizeFilterShellPreset(value: unknown): FilterShellPreset {
+  return value === 'haze' || value === 'cryo' || value === 'prism' || value === 'graphite'
+    ? value
+    : 'haze';
+}
+
+function sanitizeAtomColorSource(value: unknown, fallback: AtomColorSource): AtomColorSource {
+  return value === 'colormap' || value === 'element' || value === 'botanical' ? value : fallback;
+}
+
+function sanitizeColorMode(value: unknown, fallback: ColorMode): ColorMode {
+  return value === 'type' || value === 'property' || value === 'uniform' ? value : fallback;
+}
+
+function resolveUrlColorScheme(value: unknown, delta: Record<string, unknown>): ColorSchemeId {
+  if (typeof value === 'string' && value in COLOR_SCHEMES) return value as ColorSchemeId;
+  if (delta.cm === 'property') return 'property';
+  if (delta.cm === 'uniform') return 'uniform';
+  if (delta.acs === 'botanical') return 'botanical';
+  if (delta.acs === 'colormap' || typeof delta.cmap === 'string') return 'family';
+  return 'element';
+}
+
+function sanitizePostprocessPreset(value: unknown): AppState['postprocessPreset'] {
+  return value === 'paper' || value === 'studio' || value === 'editorial' || value === 'cinematic' || value === 'diagram'
+    ? value
+    : 'studio';
+}
+
+function sanitizeMaterialPreset(value: unknown): AppState['materialPreset'] {
+  return value === 'default' || value === 'matte' || value === 'metallic' || value === 'glass' || value === 'plastic'
+    ? value
+    : 'default';
+}
+
+function sanitizeMaterialScene(value: unknown): string {
+  return typeof value === 'string' && MATERIAL_SCENES.some(scene => scene.id === value)
+    ? value
+    : DEFAULT_SCENE_ID;
+}
+
+function sanitizeEnvironmentPreset(value: unknown): AppState['environmentPreset'] {
+  return value === 'city' || value === 'studio' || value === 'dawn' || value === 'night' || value === 'warehouse' || value === 'forest' || value === 'apartment' || value === 'park' || value === 'none'
+    ? value
+    : 'studio';
+}
+
+function sanitizeNumberRange(value: unknown, fallback: number, min: number, max: number): number {
+  const numeric = typeof value === 'number' ? value : Number(value);
+  if (!Number.isFinite(numeric)) return fallback;
+  return Math.max(min, Math.min(max, numeric));
+}
+
+const CARBON_ATOMIC_NUMBER = 6;
+const CARBON_CONTRAST_COLOR = '#9be8ff';
+const SMALL_MOLECULE_CONTRAST_BACKGROUND = 'deep';
+
+function isCarbonDominantFrame(frame: Frame | undefined, atomCount: number): boolean {
+  if (!frame?.types || atomCount <= 0) return false;
+
+  const typeCount = Math.min(atomCount, frame.types.length);
+  let knownAtoms = 0;
+  let carbonAtoms = 0;
+
+  for (let i = 0; i < typeCount; i++) {
+    const atomicNumber = frame.types[i];
+    if (atomicNumber <= 0) continue;
+    knownAtoms++;
+    if (atomicNumber === CARBON_ATOMIC_NUMBER) carbonAtoms++;
+  }
+
+  return knownAtoms > 0 && carbonAtoms / knownAtoms >= 0.75;
+}
+
+function hasCarbonFrame(frame: Frame | undefined, atomCount: number): boolean {
+  if (!frame?.types || atomCount <= 0) return false;
+
+  const typeCount = Math.min(atomCount, frame.types.length);
+  for (let i = 0; i < typeCount; i++) {
+    if (frame.types[i] === CARBON_ATOMIC_NUMBER) return true;
+  }
+  return false;
+}
 
 export interface BondDataset {
   id: string;
@@ -119,6 +254,8 @@ export interface AppState {
   colorMode: ColorMode;
   colorProperty: string | null;
   colormap: ColormapName;
+  uniformAtomColor: string;
+  elementColorOverrides: Record<number, string>;
   propRange: [number, number];
 
   // ─── Display ───
@@ -172,7 +309,19 @@ export interface AppState {
   atomScale: number;
   backgroundPreset: string;
   backgroundStyle: 'linear' | 'radial' | 'spotlight';
-  environmentPreset: 'city' | 'studio' | 'dawn' | 'night' | 'warehouse' | 'forest' | 'apartment' | 'none';
+  backgroundMotionPaused: boolean;
+  backgroundMotionSpeed: number;
+  backgroundOpacity: number;
+  backgroundBrightness: number;
+  backgroundSaturation: number;
+  backgroundContrast: number;
+  backgroundYawDegrees: number;
+  backgroundPitchDegrees: number;
+  filterShellShape: FilterShellShape;
+  filterShellPreset: FilterShellPreset;
+  filterShellOpacity: number;
+  filterShellRadius: number;
+  environmentPreset: 'city' | 'studio' | 'dawn' | 'night' | 'warehouse' | 'forest' | 'apartment' | 'park' | 'none';
   materialPreset: 'default' | 'matte' | 'metallic' | 'glass' | 'plastic';
   /** Active material scene ID. Scenes coordinate material + lighting + env
    *  + post into a holistic authored look. */
@@ -244,7 +393,13 @@ export interface AppState {
   colorblindMode: boolean;
 
   // ─── UI ───
-  activePanel: 'export' | 'flythrough' | 'telemetry' | 'equilibrium' | 'mlipLongRun' | null;
+  activePanel: 'studio' | 'export' | 'flythrough' | 'telemetry' | 'equilibrium' | 'mlipLongRun' | null;
+  /** Sign-in callout visibility. Defaults CLOSED — the app never auto-prompts
+   *  anonymous visitors to sign up; opened only by an explicit user action. */
+  authPromptOpen: boolean;
+  /** Landing-page molecule configurator state for the on-page MCP demo. */
+  configuratorOpen: boolean;
+  configuratorSeed: string | null;
   activeProfile: 'publication' | 'neon' | 'cinematic' | 'raw' | null;
   equilibriumSolve: EquilibriumSolveState | null;
 
@@ -270,6 +425,21 @@ export interface AppState {
   removeAnnotation: (id: string) => void;
   clearAnnotations: () => void;
   setLabelStyle: (style: LabelStyle) => void;
+
+  // ─── Knowledge labels ───
+  // Auto-generated semantic labels tied to the loaded molecule (e.g. sphere
+  // names and key node names from the Lupine Wiki sphere-grid export).
+  knowledgeLabels: KnowledgeLabel[];
+  knowledgeLabelKinds: Set<string>;
+  showKnowledgeLabels: boolean;
+  /** Minimum salience required for a node label to render by default.
+   *  Sphere labels always render. Hover always reveals the hovered node. */
+  knowledgeLabelThreshold: number;
+  setKnowledgeLabels: (labels: KnowledgeLabel[]) => void;
+  clearKnowledgeLabels: () => void;
+  setShowKnowledgeLabels: (show: boolean) => void;
+  setKnowledgeLabelThreshold: (threshold: number) => void;
+  toggleKnowledgeLabelKind: (kind: string) => void;
 
   // ─── Atom visibility ───
   hiddenAtomTypes: Set<number>;
@@ -335,6 +505,10 @@ export interface AppState {
   setColorMode: (mode: ColorMode) => void;
   setColorProperty: (prop: string | null) => void;
   setColormap: (map: ColormapName) => void;
+  setUniformAtomColor: (color: string) => void;
+  setElementColorOverride: (atomicNumber: number, color: string) => void;
+  resetElementColorOverride: (atomicNumber: number) => void;
+  resetElementColorOverrides: () => void;
   setAnomalyTracking: (tracking: boolean) => void;
   setPostprocessPreset: (id: AppState['postprocessPreset']) => void;
   setPostprocessIntensity: (v: number) => void;
@@ -369,7 +543,20 @@ export interface AppState {
   setAtomScale: (scale: number) => void;
   setBackgroundPreset: (preset: string) => void;
   setBackgroundStyle: (style: AppState['backgroundStyle']) => void;
-  setEnvironmentPreset: (preset: 'city' | 'studio' | 'dawn' | 'night' | 'warehouse' | 'forest' | 'apartment' | 'none') => void;
+  setBackgroundMotionPaused: (paused: boolean) => void;
+  setBackgroundMotionSpeed: (speed: number) => void;
+  setBackgroundOpacity: (opacity: number) => void;
+  setBackgroundBrightness: (brightness: number) => void;
+  setBackgroundSaturation: (saturation: number) => void;
+  setBackgroundContrast: (contrast: number) => void;
+  setBackgroundYawDegrees: (degrees: number) => void;
+  setBackgroundPitchDegrees: (degrees: number) => void;
+  resetBackgroundAdjustments: () => void;
+  setFilterShellShape: (shape: FilterShellShape) => void;
+  setFilterShellPreset: (preset: FilterShellPreset) => void;
+  setFilterShellOpacity: (opacity: number) => void;
+  setFilterShellRadius: (radius: number) => void;
+  setEnvironmentPreset: (preset: 'city' | 'studio' | 'dawn' | 'night' | 'warehouse' | 'forest' | 'apartment' | 'park' | 'none') => void;
   setArLightEstimationActive: (active: boolean) => void;
   setMaterialPreset: (preset: 'default' | 'matte' | 'metallic' | 'glass' | 'plastic') => void;
   setMaterialScene: (sceneId: string) => void;
@@ -391,6 +578,9 @@ export interface AppState {
   setFillLightColor: (val: string) => void;
   setRimLightColor: (val: string) => void;
   setActivePanel: (panel: AppState['activePanel']) => void;
+  setAuthPromptOpen: (open: boolean) => void;
+  openConfigurator: (seed?: string) => void;
+  closeConfigurator: () => void;
   setEquilibriumSolve: (state: EquilibriumSolveState | null) => void;
   setNistCatalog: (catalog: NistCatalogEntry[] | null) => void;
   setActivePotentialId: (id: string | null) => void;
@@ -434,6 +624,8 @@ const DEFAULTS = {
   colorMode: 'type' as ColorMode,
   colorProperty: null,
   colormap: 'viridis' as ColormapName,
+  uniformAtomColor: '#1edce0',
+  elementColorOverrides: {},
   propRange: [0, 1] as [number, number],
   showCell: true,
   showAxes: true,
@@ -460,8 +652,20 @@ const DEFAULTS = {
   activeBondDataset: null as string | null,
   renderStyle: 'standard' as RenderStyle,
   atomScale: 1.0,
-  backgroundPreset: 'deep',
+  backgroundPreset: 'pub-figure-neutral',
   backgroundStyle: 'radial' as const,
+  backgroundMotionPaused: false,
+  backgroundMotionSpeed: 1.0,
+  backgroundOpacity: 1.0,
+  backgroundBrightness: 1.0,
+  backgroundSaturation: 1.0,
+  backgroundContrast: 1.0,
+  backgroundYawDegrees: 0,
+  backgroundPitchDegrees: 0,
+  filterShellShape: 'off' as FilterShellShape,
+  filterShellPreset: 'haze' as FilterShellPreset,
+  filterShellOpacity: 0.24,
+  filterShellRadius: 1.08,
   environmentPreset: 'studio' as const,
   materialPreset: 'default' as const,
   materialScene: DEFAULT_SCENE_ID,
@@ -507,6 +711,9 @@ const DEFAULTS = {
   showScaleBar: true,
   colorblindMode: false,
   activePanel: null,
+  authPromptOpen: false,
+  configuratorOpen: false,
+  configuratorSeed: null,
   activeProfile: null,
   equilibriumSolve: null,
   nistCatalog: null,
@@ -518,6 +725,10 @@ const DEFAULTS = {
   selectedAtoms: [] as number[],
   annotations: [] as Annotation[],
   labelStyle: 'tag' as LabelStyle,
+  knowledgeLabels: [] as KnowledgeLabel[],
+  knowledgeLabelKinds: new Set<string>(['sphere', 'node']),
+  showKnowledgeLabels: true,
+  knowledgeLabelThreshold: 1,
   hiddenAtomTypes: new Set<number>(),
   atomTypeScales: {} as Record<number, number>,
   anomalyTracking: false,
@@ -544,7 +755,34 @@ export const useStore = create<AppState>()(
       // Drive a sensible first-frame look based on system content. The user
       // can change anything after, but they should never see "should I enable
       // bonds?" or "what's a good color scheme?" — we decide.
-      const sceneDirective = pickSceneDirective(atomCount);
+      const sceneDirective = pickSceneDirective(atomCount, firstFrame);
+      const materialScene = getScene(sceneDirective.materialScene) ?? getScene(DEFAULT_SCENE_ID);
+
+      // Sparse "knowledge graph" molecules (large bounding box, few atoms) need
+      // larger spheres and a dark background so the clusters read immediately.
+      // Dense molecular systems keep the default scale.
+      const bounds = file?.trajectory?.globalBounds;
+      let sparseAtomScale = DEFAULTS.atomScale;
+      let sparseBackgroundPreset = sceneDirective.backgroundPreset;
+      if (bounds && atomCount > 0) {
+        const dx = bounds.max[0] - bounds.min[0];
+        const dy = bounds.max[1] - bounds.min[1];
+        const dz = bounds.max[2] - bounds.min[2];
+        const diagonal = Math.hypot(dx, dy, dz);
+        const seenTypes = new Set<number>();
+        let totalRadius = 0;
+        for (let i = 0; i < atomCount; i++) {
+          const t = firstFrame?.types?.[i] ?? 0;
+          if (t <= 0 || seenTypes.has(t)) continue;
+          seenTypes.add(t);
+          totalRadius += getElementSpec(t).radius;
+        }
+        const avgRadius = seenTypes.size > 0 ? totalRadius / seenTypes.size : 1.4;
+        if (diagonal / avgRadius > 150) {
+          sparseAtomScale = Math.min(5, Math.max(2, diagonal / 200));
+          sparseBackgroundPreset = 'deep';
+        }
+      }
 
       // Pick a coloring scheme for the first read. Element identity is the
       // default; property coloring remains an explicit Molecule Color choice.
@@ -564,13 +802,32 @@ export const useStore = create<AppState>()(
         loading: false,
         loadProgress: 1,
         showBonds: sceneDirective.showBonds,
+        showCell: sceneDirective.showCell,
+        showAxes: sceneDirective.showAxes,
         postprocessPreset: sceneDirective.preset,
         postprocessIntensity: sceneDirective.intensity,
+        materialScene: materialScene?.id ?? DEFAULT_SCENE_ID,
+        materialPreset: materialScene?.materialPreset ?? DEFAULTS.materialPreset,
+        materialIntensity: materialScene?.materialIntensity ?? DEFAULTS.materialIntensity,
+        environmentPreset: materialScene?.environmentPreset ?? DEFAULTS.environmentPreset,
+        ambientLightIntensity: materialScene?.ambientIntensity ?? DEFAULTS.ambientLightIntensity,
+        dirLightIntensity: materialScene?.dirLightIntensity ?? DEFAULTS.dirLightIntensity,
+        rimLightIntensity: sceneDirective.rimLightIntensity,
+        toneMapping: materialScene?.toneMapping ?? DEFAULTS.toneMapping,
+        backgroundPreset: sparseBackgroundPreset,
+        atomScale: sparseAtomScale,
+        atomTexture: materialScene?.atomTexture ?? DEFAULTS.atomTexture,
+        surfaceRoughness: sceneDirective.surfaceRoughness,
+        surfacePolish: sceneDirective.surfacePolish,
+        surfaceClearcoat: sceneDirective.surfaceClearcoat,
+        fillLightColor: sceneDirective.fillLightColor,
+        rimLightColor: sceneDirective.rimLightColor,
         // Coloring directive — visible default, easy to override in UI.
         colorScheme: schemeId,
         atomColorSource: scheme.atomColorSource,
         colorMode: scheme.atomColorMode,
         colorProperty: scheme.atomColorMode === 'property' ? get().colorProperty : null,
+        elementColorOverrides: sceneDirective.elementColorOverrides,
         // Legacy mirrors of preset (PresetLegacyBridge re-syncs but writing
         // them here avoids a one-frame flash before the bridge catches up).
         // SSAO follows the same threshold as bond detection / preset
@@ -631,20 +888,33 @@ export const useStore = create<AppState>()(
 
     setColorScheme: (colorScheme) => {
       const scheme = COLOR_SCHEMES[colorScheme];
-      const current = get();
       set({
         colorScheme,
         atomColorSource: scheme.atomColorSource,
         colorMode: scheme.atomColorMode,
-        renderStyle: scheme.botanical
-          ? 'botanical'
-          : (current.renderStyle === 'botanical' ? 'standard' : current.renderStyle),
       });
     },
     setAtomColorSource: (atomColorSource) => set({ atomColorSource }),
     setColorMode: (colorMode) => set({ colorMode }),
     setColorProperty: (colorProperty) => set({ colorProperty }),
     setColormap: (colormap) => set({ colormap, activeProfile: null }),
+    setUniformAtomColor: (uniformAtomColor) => set({ uniformAtomColor: sanitizeHexColor(uniformAtomColor) }),
+    setElementColorOverride: (atomicNumber, color) => set((state) => {
+      const key = Math.round(atomicNumber);
+      if (!Number.isInteger(key) || key < 1 || key > 255) return {};
+      return {
+        elementColorOverrides: {
+          ...state.elementColorOverrides,
+          [key]: sanitizeHexColor(color, state.elementColorOverrides[key] ?? '#1edce0'),
+        },
+      };
+    }),
+    resetElementColorOverride: (atomicNumber) => set((state) => {
+      const key = Math.round(atomicNumber);
+      const { [key]: _removed, ...elementColorOverrides } = state.elementColorOverrides;
+      return { elementColorOverrides };
+    }),
+    resetElementColorOverrides: () => set({ elementColorOverrides: {} }),
     setAnomalyTracking: (anomalyTracking) => set({ anomalyTracking }),
 
     setPostprocessPreset: (postprocessPreset) => set({ postprocessPreset }),
@@ -697,6 +967,35 @@ export const useStore = create<AppState>()(
     setAtomScale: (atomScale) => set({ atomScale }),
     setBackgroundPreset: (backgroundPreset) => set({ backgroundPreset }),
     setBackgroundStyle: (backgroundStyle) => set({ backgroundStyle }),
+    setBackgroundMotionPaused: (backgroundMotionPaused) => set({ backgroundMotionPaused }),
+    setBackgroundMotionSpeed: (backgroundMotionSpeed) =>
+      set({ backgroundMotionSpeed: sanitizeNumberRange(backgroundMotionSpeed, DEFAULTS.backgroundMotionSpeed, 0.05, 2) }),
+    setBackgroundOpacity: (backgroundOpacity) =>
+      set({ backgroundOpacity: sanitizeNumberRange(backgroundOpacity, DEFAULTS.backgroundOpacity, 0.15, 1) }),
+    setBackgroundBrightness: (backgroundBrightness) =>
+      set({ backgroundBrightness: sanitizeNumberRange(backgroundBrightness, DEFAULTS.backgroundBrightness, 0.35, 1.8) }),
+    setBackgroundSaturation: (backgroundSaturation) =>
+      set({ backgroundSaturation: sanitizeNumberRange(backgroundSaturation, DEFAULTS.backgroundSaturation, 0, 2) }),
+    setBackgroundContrast: (backgroundContrast) =>
+      set({ backgroundContrast: sanitizeNumberRange(backgroundContrast, DEFAULTS.backgroundContrast, 0.5, 1.8) }),
+    setBackgroundYawDegrees: (backgroundYawDegrees) =>
+      set({ backgroundYawDegrees: sanitizeNumberRange(backgroundYawDegrees, DEFAULTS.backgroundYawDegrees, -180, 180) }),
+    setBackgroundPitchDegrees: (backgroundPitchDegrees) =>
+      set({ backgroundPitchDegrees: sanitizeNumberRange(backgroundPitchDegrees, DEFAULTS.backgroundPitchDegrees, -45, 45) }),
+    resetBackgroundAdjustments: () => set({
+      backgroundMotionPaused: DEFAULTS.backgroundMotionPaused,
+      backgroundMotionSpeed: DEFAULTS.backgroundMotionSpeed,
+      backgroundOpacity: DEFAULTS.backgroundOpacity,
+      backgroundBrightness: DEFAULTS.backgroundBrightness,
+      backgroundSaturation: DEFAULTS.backgroundSaturation,
+      backgroundContrast: DEFAULTS.backgroundContrast,
+      backgroundYawDegrees: DEFAULTS.backgroundYawDegrees,
+      backgroundPitchDegrees: DEFAULTS.backgroundPitchDegrees,
+    }),
+    setFilterShellShape: (filterShellShape) => set({ filterShellShape }),
+    setFilterShellPreset: (filterShellPreset) => set({ filterShellPreset }),
+    setFilterShellOpacity: (filterShellOpacity) => set({ filterShellOpacity: Math.max(0, Math.min(0.65, filterShellOpacity)) }),
+    setFilterShellRadius: (filterShellRadius) => set({ filterShellRadius: Math.max(0.75, Math.min(1.6, filterShellRadius)) }),
     setEnvironmentPreset: (environmentPreset) => set({ environmentPreset }),
     setMaterialPreset: (materialPreset) => set({ materialPreset }),
     setMaterialScene: (materialScene) => set({ materialScene }),
@@ -740,6 +1039,9 @@ export const useStore = create<AppState>()(
     setActivePanel: (activePanel) => set(s => ({
       activePanel: s.activePanel === activePanel ? null : activePanel,
     })),
+    setAuthPromptOpen: (authPromptOpen) => set({ authPromptOpen }),
+    openConfigurator: (seed) => set({ configuratorOpen: true, configuratorSeed: seed ?? null }),
+    closeConfigurator: () => set({ configuratorOpen: false }),
     setEquilibriumSolve: (equilibriumSolve) => set({ equilibriumSolve }),
     setNistCatalog: (nistCatalog) => set({ nistCatalog }),
     setActivePotentialId: (activePotentialId) => set({ activePotentialId }),
@@ -830,6 +1132,23 @@ export const useStore = create<AppState>()(
     })),
     clearAnnotations: () => set({ annotations: [] }),
     setLabelStyle: (labelStyle) => set({ labelStyle }),
+
+    setKnowledgeLabels: (knowledgeLabels) => set((s) => {
+      const kinds = new Set<string>(s.knowledgeLabelKinds);
+      for (const label of knowledgeLabels) {
+        kinds.add(label.kind);
+      }
+      return { knowledgeLabels, knowledgeLabelKinds: kinds };
+    }),
+    clearKnowledgeLabels: () => set({ knowledgeLabels: [], knowledgeLabelKinds: new Set(['sphere', 'node']) }),
+    setShowKnowledgeLabels: (showKnowledgeLabels) => set({ showKnowledgeLabels }),
+    setKnowledgeLabelThreshold: (knowledgeLabelThreshold) => set({ knowledgeLabelThreshold }),
+    toggleKnowledgeLabelKind: (kind) => set((s) => {
+      const next = new Set(s.knowledgeLabelKinds);
+      if (next.has(kind)) next.delete(kind);
+      else next.add(kind);
+      return { knowledgeLabelKinds: next };
+    }),
 
     toggleAtomType: (type) => set((s) => {
       const next = new Set(s.hiddenAtomTypes);
@@ -971,31 +1290,55 @@ export const useStore = create<AppState>()(
         a.length === b.length && a.every((v, i) => Math.abs(v - b[i]) < 0.01);
 
       if (s.frame !== 0)                              delta.f = s.frame;
+      if (s.colorScheme !== DEFAULTS.colorScheme)      delta.cs = s.colorScheme;
+      if (s.atomColorSource !== COLOR_SCHEMES[s.colorScheme].atomColorSource) delta.acs = s.atomColorSource;
       if (s.colorMode !== 'type')                     delta.cm = s.colorMode;
       if (s.colorProperty !== null)                    delta.cp = s.colorProperty;
       if (s.colormap !== 'viridis')                    delta.cmap = s.colormap;
+      if (s.uniformAtomColor !== '#1edce0')            delta.uac = s.uniformAtomColor;
+      if (Object.keys(s.elementColorOverrides).length > 0) delta.eco = s.elementColorOverrides;
+      if (s.postprocessPreset !== DEFAULTS.postprocessPreset) delta.pp = s.postprocessPreset;
+      if (r(s.postprocessIntensity) !== DEFAULTS.postprocessIntensity) delta.pi = r(s.postprocessIntensity);
+      if (r(s.propertyEmissionStrength) !== DEFAULTS.propertyEmissionStrength) delta.pe = r(s.propertyEmissionStrength);
       if (!s.ssao)                                     delta.ssao = 0;
-      if (s.bloom)                                     delta.bloom = 1;
+      if (!s.bloom)                                    delta.bloom = 0;
       if (s.dof)                                       delta.dof = 1;
       if (!s.showCell)                                 delta.cell = 0;
       if (!s.showAxes)                                 delta.axes = 0;
       if (r(s.atomScale) !== 1.0)                      delta.as = r(s.atomScale);
-      if (s.backgroundPreset !== 'deep')               delta.bg = s.backgroundPreset;
-      if (s.backgroundStyle !== 'linear')              delta.bgs = s.backgroundStyle;
+      if (s.backgroundPreset !== DEFAULTS.backgroundPreset) delta.bg = s.backgroundPreset;
+      if (s.backgroundStyle !== DEFAULTS.backgroundStyle) delta.bgs = s.backgroundStyle;
+      if (s.backgroundMotionPaused)                    delta.bmp = 1;
+      if (r(s.backgroundMotionSpeed) !== DEFAULTS.backgroundMotionSpeed) delta.bms = r(s.backgroundMotionSpeed);
+      if (r(s.backgroundOpacity) !== DEFAULTS.backgroundOpacity) delta.bo = r(s.backgroundOpacity);
+      if (r(s.backgroundBrightness) !== DEFAULTS.backgroundBrightness) delta.bb = r(s.backgroundBrightness);
+      if (r(s.backgroundSaturation) !== DEFAULTS.backgroundSaturation) delta.bs = r(s.backgroundSaturation);
+      if (r(s.backgroundContrast) !== DEFAULTS.backgroundContrast) delta.bct = r(s.backgroundContrast);
+      if (r(s.backgroundYawDegrees) !== DEFAULTS.backgroundYawDegrees) delta.by = r(s.backgroundYawDegrees);
+      if (r(s.backgroundPitchDegrees) !== DEFAULTS.backgroundPitchDegrees) delta.bp = r(s.backgroundPitchDegrees);
+      if (s.filterShellShape !== 'off')                delta.fss = s.filterShellShape;
+      if (s.filterShellPreset !== 'haze')              delta.fsp = s.filterShellPreset;
+      if (r(s.filterShellOpacity) !== 0.24)            delta.fso = r(s.filterShellOpacity);
+      if (r(s.filterShellRadius) !== 1.08)             delta.fsr = r(s.filterShellRadius);
       if (!arrEq(s.cameraPosition, [0, 0, 50]))       delta.cp3 = rArr(s.cameraPosition);
       if (!arrEq(s.cameraTarget, [0, 0, 0]))          delta.ct = rArr(s.cameraTarget);
       if (s.cameraFov !== 50)                          delta.fov = s.cameraFov;
       if (r(s.playbackSpeed) !== 1.0)                  delta.spd = r(s.playbackSpeed);
-      if (r(s.ssaoIntensity) !== 0.5)                  delta.si = r(s.ssaoIntensity);
-      if (r(s.bloomIntensity) !== 0.3)                 delta.bi = r(s.bloomIntensity);
+      if (r(s.ssaoIntensity) !== DEFAULTS.ssaoIntensity) delta.si = r(s.ssaoIntensity);
+      if (r(s.bloomIntensity) !== DEFAULTS.bloomIntensity) delta.bi = r(s.bloomIntensity);
       if (s.dofFocus !== 50)                           delta.df = s.dofFocus;
       if (s.toneMapping !== 'aces')                    delta.tm = s.toneMapping;
       if (s.showBonds)                                 delta.bonds = 1;
       if (r(s.bondCutoff) !== 3.2)                     delta.bc = r(s.bondCutoff);
       if (r(s.bondTolerance) !== 0.45)                 delta.bt = r(s.bondTolerance);
       if (s.renderStyle !== 'standard')                delta.rs = s.renderStyle;
-      if (r(s.ambientLightIntensity) !== 0.35)         delta.ali = r(s.ambientLightIntensity);
-      if (r(s.dirLightIntensity) !== 1.2)              delta.dli = r(s.dirLightIntensity);
+      if (s.materialScene !== DEFAULTS.materialScene)  delta.ms = s.materialScene;
+      if (s.materialPreset !== DEFAULTS.materialPreset) delta.mp = s.materialPreset;
+      if (r(s.materialIntensity) !== DEFAULTS.materialIntensity) delta.mi = r(s.materialIntensity);
+      if (s.environmentPreset !== DEFAULTS.environmentPreset) delta.env = s.environmentPreset;
+      if (r(s.ambientLightIntensity) !== DEFAULTS.ambientLightIntensity) delta.ali = r(s.ambientLightIntensity);
+      if (r(s.dirLightIntensity) !== DEFAULTS.dirLightIntensity) delta.dli = r(s.dirLightIntensity);
+      if (r(s.rimLightIntensity) !== DEFAULTS.rimLightIntensity) delta.rli = r(s.rimLightIntensity);
       if (s.atomTexture !== 'none')                    delta.at = s.atomTexture;
       if (r(s.surfaceRoughness) !== 0.0)               delta.sr = r(s.surfaceRoughness);
       if (r(s.surfacePolish) !== 0.0)                  delta.sp = r(s.surfacePolish);
@@ -1006,8 +1349,8 @@ export const useStore = create<AppState>()(
       if (r(s.fillLightElevation) !== 10.0)            delta.fle = r(s.fillLightElevation);
       if (r(s.rimLightAzimuth) !== 160.0)              delta.rla = r(s.rimLightAzimuth);
       if (r(s.rimLightElevation) !== 30.0)             delta.rle = r(s.rimLightElevation);
-      if (s.fillLightColor !== '#5577ff')              delta.flc = s.fillLightColor;
-      if (s.rimLightColor !== '#ff7755')               delta.rlc = s.rimLightColor;
+      if (s.fillLightColor !== DEFAULTS.fillLightColor) delta.flc = s.fillLightColor;
+      if (s.rimLightColor !== DEFAULTS.rimLightColor)  delta.rlc = s.rimLightColor;
 
       const json = JSON.stringify(delta);
       // URL-safe base64: replace +/= with -_. for shorter, URL-friendly tokens
@@ -1022,34 +1365,60 @@ export const useStore = create<AppState>()(
         while (b64.length % 4) b64 += '=';
 
         const s = JSON.parse(atob(b64));
+        const colorScheme = resolveUrlColorScheme(s.cs, s);
+        const scheme = COLOR_SCHEMES[colorScheme];
         // Merge delta onto defaults — missing keys stay at their default values
         set({
           frame: s.f ?? 0,
-          colorMode: s.cm ?? 'type',
+          colorScheme,
+          atomColorSource: sanitizeAtomColorSource(s.acs, scheme.atomColorSource),
+          colorMode: sanitizeColorMode(s.cm, scheme.atomColorMode),
           colorProperty: s.cp ?? null,
           colormap: s.cmap ?? 'viridis',
+          uniformAtomColor: sanitizeHexColor(s.uac ?? '#1edce0'),
+          elementColorOverrides: sanitizeElementColorOverrides(s.eco),
+          postprocessPreset: sanitizePostprocessPreset(s.pp),
+          postprocessIntensity: Math.max(0, Math.min(2, s.pi ?? DEFAULTS.postprocessIntensity)),
+          propertyEmissionStrength: Math.max(0, Math.min(1, s.pe ?? DEFAULTS.propertyEmissionStrength)),
           ssao: s.ssao !== 0,
-          bloom: s.bloom === 1,
+          bloom: s.bloom !== 0,
           dof: s.dof === 1,
           showCell: s.cell !== 0,
           showAxes: s.axes !== 0,
           atomScale: s.as ?? 1.0,
-          backgroundPreset: s.bg ?? 'deep',
-          backgroundStyle: s.bgs ?? 'linear',
+          backgroundPreset: s.bg ?? DEFAULTS.backgroundPreset,
+          backgroundStyle: s.bgs ?? DEFAULTS.backgroundStyle,
+          backgroundMotionPaused: s.bmp === 1,
+          backgroundMotionSpeed: sanitizeNumberRange(s.bms, DEFAULTS.backgroundMotionSpeed, 0.05, 2),
+          backgroundOpacity: sanitizeNumberRange(s.bo, DEFAULTS.backgroundOpacity, 0.15, 1),
+          backgroundBrightness: sanitizeNumberRange(s.bb, DEFAULTS.backgroundBrightness, 0.35, 1.8),
+          backgroundSaturation: sanitizeNumberRange(s.bs, DEFAULTS.backgroundSaturation, 0, 2),
+          backgroundContrast: sanitizeNumberRange(s.bct, DEFAULTS.backgroundContrast, 0.5, 1.8),
+          backgroundYawDegrees: sanitizeNumberRange(s.by, DEFAULTS.backgroundYawDegrees, -180, 180),
+          backgroundPitchDegrees: sanitizeNumberRange(s.bp, DEFAULTS.backgroundPitchDegrees, -45, 45),
+          filterShellShape: sanitizeFilterShellShape(s.fss),
+          filterShellPreset: sanitizeFilterShellPreset(s.fsp),
+          filterShellOpacity: Math.max(0, Math.min(0.65, s.fso ?? 0.24)),
+          filterShellRadius: Math.max(0.75, Math.min(1.6, s.fsr ?? 1.08)),
           cameraPosition: s.cp3 ?? [0, 0, 50],
           cameraTarget: s.ct ?? [0, 0, 0],
           cameraFov: s.fov ?? 50,
           playbackSpeed: s.spd ?? 1.0,
-          ssaoIntensity: s.si ?? 0.5,
-          bloomIntensity: s.bi ?? 0.3,
+          ssaoIntensity: s.si ?? DEFAULTS.ssaoIntensity,
+          bloomIntensity: s.bi ?? DEFAULTS.bloomIntensity,
           dofFocus: s.df ?? 50,
           toneMapping: s.tm ?? 'aces',
           showBonds: s.bonds === 1,
           bondCutoff: s.bc ?? 3.2,
           bondTolerance: s.bt ?? 0.45,
           renderStyle: s.rs ?? 'standard',
-          ambientLightIntensity: s.ali ?? 0.35,
-          dirLightIntensity: s.dli ?? 1.2,
+          materialScene: sanitizeMaterialScene(s.ms),
+          materialPreset: sanitizeMaterialPreset(s.mp),
+          materialIntensity: Math.max(0, Math.min(1, s.mi ?? DEFAULTS.materialIntensity)),
+          environmentPreset: sanitizeEnvironmentPreset(s.env),
+          ambientLightIntensity: s.ali ?? DEFAULTS.ambientLightIntensity,
+          dirLightIntensity: s.dli ?? DEFAULTS.dirLightIntensity,
+          rimLightIntensity: Math.max(0, Math.min(2, s.rli ?? DEFAULTS.rimLightIntensity)),
           atomTexture: s.at ?? 'none',
           surfaceRoughness: s.sr ?? 0.0,
           surfacePolish: s.sp ?? 0.0,
@@ -1060,8 +1429,8 @@ export const useStore = create<AppState>()(
           fillLightElevation: s.fle ?? 10,
           rimLightAzimuth: s.rla ?? 160,
           rimLightElevation: s.rle ?? 30,
-          fillLightColor: s.flc ?? '#5577ff',
-          rimLightColor: s.rlc ?? '#ff7755',
+          fillLightColor: s.flc ?? DEFAULTS.fillLightColor,
+          rimLightColor: s.rlc ?? DEFAULTS.rimLightColor,
         });
       } catch {
         console.warn('Failed to decode URL state');
@@ -1092,30 +1461,121 @@ export const useStore = create<AppState>()(
 
 /**
  * Pick the opening-frame visual directive for a freshly-loaded file. This
- * is the place to encode editorial defaults: small systems get the polished
- * "studio" look, medium ones stay there with bonds, large ones step down to
- * "paper" (cheaper effects), and very-large drop to "diagram" (no postprocess,
+ * is the place to encode editorial defaults: small molecules open as a
+ * polished showcase, medium systems keep the studio read with bonds, large
+ * ones step down to paper, and very-large systems drop to diagram.
  * bonds off — performance over polish). The user can override in the panels.
  */
-function pickSceneDirective(atomCount: number): {
+function pickSceneDirective(atomCount: number, firstFrame?: Frame): {
   showBonds: boolean;
+  showCell: boolean;
+  showAxes: boolean;
   preset: AppState['postprocessPreset'];
   intensity: number;
+  materialScene: string;
+  backgroundPreset: string;
+  surfaceRoughness: number;
+  surfacePolish: number;
+  surfaceClearcoat: number;
+  rimLightIntensity: number;
+  fillLightColor: string;
+  rimLightColor: string;
+  elementColorOverrides: Record<number, string>;
 } {
   if (atomCount === 0) {
-    return { showBonds: false, preset: 'studio', intensity: 1.0 };
+    return {
+      showBonds: false,
+      showCell: false,
+      showAxes: false,
+      preset: 'studio',
+      intensity: 1.0,
+      materialScene: DEFAULT_SCENE_ID,
+      backgroundPreset: DEFAULTS.backgroundPreset,
+      surfaceRoughness: 0,
+      surfacePolish: 0,
+      surfaceClearcoat: 0,
+      rimLightIntensity: 0.3,
+      fillLightColor: '#8888ff',
+      rimLightColor: '#ffffff',
+      elementColorOverrides: {},
+    };
+  }
+  if (atomCount < 300) {
+    const carbonDominant = isCarbonDominantFrame(firstFrame, atomCount);
+    const carbonPresent = hasCarbonFrame(firstFrame, atomCount);
+    return {
+      showBonds: true,
+      showCell: false,
+      showAxes: false,
+      preset: 'editorial',
+      intensity: 0.92,
+      materialScene: DEFAULT_SCENE_ID,
+      backgroundPreset: SMALL_MOLECULE_CONTRAST_BACKGROUND,
+      surfaceRoughness: carbonDominant ? -0.12 : -0.08,
+      surfacePolish: carbonDominant ? 0.28 : 0.22,
+      surfaceClearcoat: carbonDominant ? 0.22 : 0.18,
+      rimLightIntensity: carbonDominant ? 0.72 : 0.48,
+      fillLightColor: carbonDominant ? '#d7ecff' : '#90b4ff',
+      rimLightColor: carbonDominant ? '#f8fbff' : '#7de9ff',
+      elementColorOverrides: carbonPresent ? { [CARBON_ATOMIC_NUMBER]: CARBON_CONTRAST_COLOR } : {},
+    };
   }
   if (atomCount < 25_000) {
-    return { showBonds: true, preset: 'studio', intensity: 1.0 };
+    return {
+      showBonds: true,
+      showCell: true,
+      showAxes: false,
+      preset: 'studio',
+      intensity: 1.0,
+      materialScene: DEFAULT_SCENE_ID,
+      backgroundPreset: DEFAULTS.backgroundPreset,
+      surfaceRoughness: -0.04,
+      surfacePolish: 0.14,
+      surfaceClearcoat: 0.12,
+      rimLightIntensity: 0.36,
+      fillLightColor: '#8888ff',
+      rimLightColor: '#c7f9ff',
+      elementColorOverrides: {},
+    };
   }
   if (atomCount < 200_000) {
     // 30k-class gallery pieces can infer 60k-180k bonds. Start atoms-first
     // and let the user opt into bonds once oriented.
-    return { showBonds: false, preset: 'paper', intensity: 0.85 };
+    return {
+      showBonds: false,
+      showCell: true,
+      showAxes: false,
+      preset: 'paper',
+      intensity: 0.85,
+      materialScene: 'laboratory',
+      backgroundPreset: 'white',
+      surfaceRoughness: 0,
+      surfacePolish: 0,
+      surfaceClearcoat: 0,
+      rimLightIntensity: 0,
+      fillLightColor: '#8888ff',
+      rimLightColor: '#ffffff',
+      elementColorOverrides: {},
+    };
   }
   // Very-large systems — performance over polish on the first frame. User
   // can flip back into 'studio' if their machine handles it.
-  return { showBonds: false, preset: 'diagram', intensity: 1.0 };
+  return {
+    showBonds: false,
+    showCell: true,
+    showAxes: false,
+    preset: 'diagram',
+    intensity: 1.0,
+    materialScene: 'blueprint',
+    backgroundPreset: 'slate',
+    surfaceRoughness: 0,
+    surfacePolish: 0,
+    surfaceClearcoat: 0,
+    rimLightIntensity: 0,
+    fillLightColor: '#8888ff',
+    rimLightColor: '#ffffff',
+    elementColorOverrides: {},
+  };
 }
 
 // Dev-only window probe. Lets Needle Tools / Three.js DevTools / a paste-and-

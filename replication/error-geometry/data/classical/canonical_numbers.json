@@ -1,0 +1,9 @@
+{
+  "n_potentials": 42,
+  "pr_min": 1.0,
+  "pr_max": 2.289,
+  "pr_median": 1.086,
+  "n_above_2": 1,
+  "rho_hat_from_median": 45.8,
+  "alpha_from_median": 0.979
+}

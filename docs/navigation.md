@@ -1,351 +1,125 @@
-# glim Repo Navigation Guide
+# Start Here — navigating Lupine Science
 
-Quick-search codemap for finding things fast. All paths are relative to the repo root
-(`C:\Users\alexw\Downloads\shed\glim`).
+The fastest path from "what is this?" to the real science. Paths are relative to
+the repo root (this checkout — there is **no** `glim/` superfolder; an earlier
+version of this file claimed one, that was stale).
 
-> **Note:** TypeScript LSP (go-to-definition, find-references, hover types) is not available
-> in this environment. Use `grep` for symbol search and `glob` for file discovery — those
-> are the reliable tools here.
-
----
-
-## Top-Level Layout
-
-```
-glim/
-├── atlas/                         # All glim content
-│   ├── atlas-view/                # Production monorepo (TypeScript + Rust WASM)
-│   ├── glim-architecture.jsx      # Presentation artifact
-│   ├── glim-presentation.jsx      # Presentation artifact
-│   ├── glimPSE-*.jsx              # Prototype/demo artifacts (NOT production app)
-│   ├── glim-project-plan.md       # Full-stack glim platform plan
-│   ├── openDFT-project-plan.md    # OpenDFT (VASP-compatible DFT) plan
-│   ├── glimPSE-product-plan.md    # Python library product strategy (superseded)
-│   ├── glimPSE-web-product-plan.md # Web app product strategy (current)
-│   └── glimPSE-example-gallery.md  # Curated LAMMPS example datasets
-├── docs/                          # This directory
-├── deep-research-report.md        # LAMMPS ecosystem research (see research-index.md)
-├── ancillary-research-opps.md     # 2025–2026 people/labs/methods landscape
-├── foundational-research.md       # Original brief + advisory council prospectus
-└── example-research-papers.md     # Curated downloadable LAMMPS simulation files
-```
+For the narrative front door, read [`README.md`](../README.md). This file is the
+**map**: where the real information lives and the order to read it in.
 
 ---
 
-## atlas/atlas-view — Monorepo Structure
+## The claim, in one sentence
 
-Package manager: **pnpm 9** · Build orchestration: **turbo 2**
+Interatomic potentials are necessary and wrong in *structured* ways: across
+hundreds of potentials their prediction errors collapse onto a low-dimensional
+("hyper-ribbon") structure, and that structure — if it is real and stable — tells
+you where a model fails and what correction would matter.
 
-```
-atlas/atlas-view/
-├── apps/
-│   └── web/                       # @glim/web — Vite app (browser entry point)
-│       ├── src/main.tsx           # React root; dynamic imports @glim/ui/App
-│       ├── src/styles/global.css
-│       ├── index.html
-│       ├── vite.config.ts
-│       └── package.json
-├── packages/
-│   ├── core/                      # @glim/core — shared types only
-│   │   └── src/
-│   │       ├── types.ts           # Frame, Trajectory, ThermoData, VisualizationState, ColormapName, UnitStyle
-│   │       └── index.ts
-│   ├── parsers/                   # @glim/parsers — file parsing (JS + WASM)
-│   │   └── src/
-│   │       ├── index.ts           # Public API: parseDumpFile, parseLogFile, parseFile, detectFileType
-│   │       └── workers/
-│   │           └── parse.worker.ts  # Web worker: receives text, calls WASM, posts typed arrays
-│   │   └── wasm/src/              # Rust WASM (wasm-bindgen)
-│   │       ├── lib.rs             # Entry: init, re-exports dump/log/data/types
-│   │       ├── dump.rs            # LAMMPS dump parser (parse_dump, count_dump_frames)
-│   │       ├── log.rs             # LAMMPS log/thermo parser (parse_log)
-│   │       ├── data.rs            # LAMMPS data file parser
-│   │       └── types.rs           # Rust Frame struct, serde
-│   ├── renderer/                  # @glim/renderer — WebGPU pipeline (low-level, optional)
-│   │   └── src/
-│   │       ├── pipeline/
-│   │       │   └── AtomPipeline.ts  # GPU buffers, compute culling, indirect draw
-│   │       └── shaders/
-│   │           ├── atom.wgsl      # Vertex/fragment: impostor sphere rendering
-│   │           └── culling.wgsl   # Compute: frustum culling + color mapping
-│   ├── scene/                     # @glim/scene — React Three Fiber components
-│   │   └── src/
-│   │       ├── Atoms.tsx          # <Atoms /> InstancedMesh renderer; colormaps; CPK colors
-│   │       ├── SimulationCell.tsx # <SimulationCell /> box wireframe
-│   │       └── index.ts
-│   └── ui/                        # @glim/ui — app shell + state
-│       └── src/
-│           ├── App.tsx            # Root component: Canvas, panels, timeline, keyboard shortcuts
-│           ├── store.ts           # Zustand store (useStore): all app state + actions
-│           ├── FileDropZone.tsx   # Drag-and-drop overlay
-│           └── panels/
-│               ├── StylePanel.tsx   # Color mode, colormap, atom scale, background
-│               ├── EffectsPanel.tsx # SSAO, bloom, DOF, tone mapping, antialiasing
-│               └── ExportPanel.tsx  # PNG/video export
-├── package.json                   # Root workspace scripts (pnpm + turbo)
-├── pnpm-workspace.yaml
-├── turbo.json
-└── tsconfig.json
-```
+## The 60-second path to the real info
 
----
+Read in this order. Each row is the canonical source for that layer.
 
-## Important Files by Concern
+| # | Read | For |
+|---|---|---|
+| 0 | [`docs/ONBOARDING.md`](./ONBOARDING.md) | **New contributor? Start here.** Research-scientist vs software-engineer tracks, install steps, and common pitfalls. |
+| 0.5 | [`docs/ARCHITECTURE.md`](./ARCHITECTURE.md) | how the repo's roots connect into a closed scientific loop |
+| 1 | [`README.md`](../README.md) → "Science Spine" | the 7-layer program and why it matters |
+| 2 | [`archive/swarm_preprint_review/research/immi_dim01_sloppy_theory.md`](../archive/swarm_preprint_review/research/immi_dim01_sloppy_theory.md) | **the literature foundation** — sloppy models, the hyper-ribbon, 25+ primary sources (Transtrum, Waterfall, Frederiksen, Kurniawan…). Start here for the theory. |
+| 3 | [`lit-review.md`](../lit-review.md) | the assembled review: sloppy theory + Simpson's-paradox/permutation methodology + benchmarking |
+| 4 | [`docs/data-provenance.md`](./data-provenance.md) | **where every number comes from** — OpenKIM elastic constants vs NIST, 559 potentials × 15 metals, LAMMPS for Phase-D |
+| 5 | [`docs/methodology.md`](./methodology.md) · [`docs/conjectures/ledger.md`](./conjectures/ledger.md) | how claims are tested; the live **claim ledger** (supported / refuted / open) |
+| 6 | [`paper/immi-paper.tex`](../paper/immi-paper.tex) | the IMMI manuscript (the actual paper) |
+| 7 | [`CHANGELOG.md`](../CHANGELOG.md) | what changed and what was learned/corrected, newest first |
+| 8 | [`lean-spec/`](../lean-spec/) · [`docs/formal-proof-ledger.md`](./formal-proof-ledger.md) | the formal-specification layer |
 
-### File Parsing
-| File | What it does |
-|------|-------------|
-| `packages/parsers/src/index.ts` | JS orchestration: reads File → sends to worker → hydrates typed arrays. Exports `parseDumpFile`, `parseLogFile`, `parseFile`, `detectFileType`. Handles `.gz` decompression. |
-| `packages/parsers/src/workers/parse.worker.ts` | Web worker; loads WASM, dispatches `parse-dump` / `parse-log` messages, emits progress events via `glim:parse-progress` CustomEvent |
-| `packages/parsers/wasm/src/dump.rs` | Rust: parses LAMMPS dump (atom/custom format), supports Cartesian and scaled coords, triclinic boxes |
-| `packages/parsers/wasm/src/log.rs` | Rust: parses LAMMPS log thermo data (multi-run) |
-| `packages/parsers/wasm/src/lib.rs` | WASM entry; sets panic hook; re-exports `dump`, `log`, `data`, `types` |
+Deeper theory reports: [`docs/sloppy_models_report.md`](./sloppy_models_report.md),
+[`docs/tda_error_landscapes_report.md`](./tda_error_landscapes_report.md),
+[`docs/phonon_benchmarking_report.md`](./phonon_benchmarking_report.md).
 
-### App State
-| File | What it does |
-|------|-------------|
-| `packages/ui/src/store.ts` | Single Zustand store (`useStore`). Holds: file, frame, colorMode, colormap, propRange, display flags (showCell, showAxes, showBonds), effects (ssao, bloom, dof, toneMapping, antialiasing), playback (playing, playbackSpeed, loopMode), camera, activePanel. Actions: `setFrame`, `nextFrame`, `prevFrame`, `togglePlay`, `encodeToURL`, `decodeFromURL`, `reset`, plus per-field setters/toggles. URL state serialized as base64 JSON into `?s=` query param. |
-| `packages/core/src/types.ts` | `VisualizationState` and `DEFAULT_STATE` (the canonical type; `store.ts` has its own flat `AppState` but mirrors these fields) |
+## The error-geometry objects — disambiguated (read this before "ribbon" anything)
 
-### Shared Types
-| File | Key exports |
-|------|------------|
-| `packages/core/src/types.ts` | `Frame` (timestep, natoms, boxBounds, positions Float32Array, types Int32Array, properties Map), `Trajectory` (frames[], totalFrames, atomTypes[], globalBounds), `ThermoData`, `ThermoRun`, `VisualizationState`, `ColorMode`, `ColormapName`, `UnitStyle`, `UNIT_LABELS`, `THERMO_QUANTITIES`, `encodeState`, `decodeState` |
+> **Canonical version: [`docs/science/objects.md`](./science/objects.md).** Read that
+> before writing "ribbon" anything — it has the full definitions, sources, the
+> claim→object mapping, and the mathematical-coupling caveat. The table below is the
+> one-screen summary.
 
-### 3D Scene (React Three Fiber)
-| File | What it does |
-|------|-------------|
-| `packages/scene/src/Atoms.tsx` | `<Atoms frame colorMode colorProperty colormap propRange scale />` — THREE.InstancedMesh, CPK-inspired type colors (8 types), per-type radii, colormaps: viridis/inferno/coolwarm/plasma/magma/cividis |
-| `packages/scene/src/SimulationCell.tsx` | `<SimulationCell bounds color opacity />` — draws simulation box wireframe |
+Three *different* objects travel under "low-dimensional error." Conflating them is
+the single biggest source of confusion in this corpus (the author of this file
+included). Keep them straight:
 
-### WebGPU Renderer (low-level pipeline)
-| File | What it does |
-|------|-------------|
-| `packages/renderer/src/pipeline/AtomPipeline.ts` | `AtomPipeline` class: allocates GPU storage buffers (positions, types, properties, visible-*, indirect draw), creates compute pipelines (reset + culling), creates render pipeline (impostor spheres, triangle-strip). Methods: `uploadFrame`, `updateCamera`, `updateCullUniforms`, `encode`. Also exports `initWebGPU`. |
-| `packages/renderer/src/shaders/culling.wgsl` | Compute shader: frustum cull atoms, map colors, write to visiblePosition/Radii/Color buffers, atomic-increment indirect draw count |
-| `packages/renderer/src/shaders/atom.wgsl` | Vertex/fragment: renders each visible atom as an impostor sphere quad (triangle-strip, 4 vertices per instance) |
+| Object | Where it lives | What it is | Canonical source |
+|---|---|---|---|
+| **A. The sloppy model manifold** (the actual *hyper-ribbon*) | data / prediction space | image `y(θ)` of the prediction map as parameters vary; a bounded manifold with a geometric hierarchy of widths `Wₙ ~ W₀·Δⁿ` | Transtrum–Machta–Sethna 2010/2011 — see `immi_dim01` §2 |
+| **B. The empirical effective-dimensionality** | observable space (e.g. C11/C12/C44) | participation ratio `PR = (Σλ)²/Σλ²` of the **error covariance** across potentials (PR ≈ 1.05–1.86 of 3 → near-1D ribbon). This is how you *measure* A from data — **not** a separate manifold. | `immi_dim01` §4; `archive/lupine-distill-rust/src/hypothesis/manifold.rs` |
+| **C. The configuration-space error core** | configuration space `Ω ⊂ ℝᵐ` | a low-dim core `H` with the error boundary a codim-1 tube around it; a *distinct, more demanding* object with a **conditional** universality theorem | the root PDF *"A Conditional Universality Theorem for Error Geometry in MLIPs"* |
 
-### UI Shell & Panels
-| File | What it does |
-|------|-------------|
-| `packages/ui/src/App.tsx` | Full app: top bar (logo, file info, panel buttons, GitHub link), Canvas with OrbitControls + EffectComposer (SSAO, Bloom, ToneMapping, Vignette), stats overlay, timeline with transport controls + scrubber + speed selector. Keyboard: Space=play, ←/→=frames, S/E/X=panels |
-| `packages/ui/src/FileDropZone.tsx` | Drag-and-drop overlay; calls `parseFile` from `@glim/parsers`, dispatches to store |
-| `packages/ui/src/panels/StylePanel.tsx` | Color mode (type/property/uniform), colormap selector, property selector, atom scale, background preset |
-| `packages/ui/src/panels/EffectsPanel.tsx" | SSAO intensity, bloom intensity, DOF focus, tone mapping, antialiasing |
-| `packages/ui/src/panels/ExportPanel.tsx` | Image/video export controls |
+A and B are the established program (B measures A; standard sloppy-model usage). C
+is a separate, rigor-first reframing whose theorem is **conditional** on nonstandard
+assumptions (notably "A6", that different models share spatial error modes). Bridging
+B→C is *not* automatic — it needs A6, which had never been tested.
 
-### App Entry
-| File | What it does |
-|------|-------------|
-| `apps/web/src/main.tsx` | `createRoot` → dynamic `import('@glim/ui/App')` → `<Suspense><App/></Suspense>`. Has graceful error rendering if import fails. |
-| `apps/web/vite.config.ts` | Vite config; includes `vite-plugin-wasm` and `vite-plugin-top-level-await` for WASM support |
+## Claim status (live)
 
-### Plans & Presentations (atlas/ root)
-| File | What it is |
-|------|-----------|
-| `atlas/glim-project-plan.md` | Full-stack platform charter: DFT + MD + ML unified pipeline |
-| `atlas/openDFT-project-plan.md` | VASP-compatible DFT engine plan with Delta Codes benchmark strategy |
-| `atlas/glimPSE-product-plan.md` | Earlier Python library strategy (superseded by web app approach) |
-| `atlas/glimPSE-web-product-plan.md` | Current web app product strategy; competitive analysis vs OVITO |
-| `atlas/glimPSE-example-gallery.md` | 12 curated LAMMPS example datasets (crack, indent, LJ melt, granular, etc.) |
-| `atlas/glim-*.jsx` + `atlas/glimPSE-*.jsx` | Presentation and prototype artifacts — see below |
+The honest record is [`docs/conjectures/ledger.md`](./conjectures/ledger.md) and
+[`CHANGELOG.md`](../CHANGELOG.md). Snapshot from the README: **supported** —
+classical hyper-ribbon universality and early de-myopization beyond elastic
+constants; **open / under re-audit** — per-element classical→MLIP transfer counts
+after Born screening, Au escape, Fe magnetic failure mode, predicting `E_coh`/`B0`;
+**refuted by us** — d-band (sample size), MEAM anomaly (matched-n bootstrap),
+BCC/FCC shield (data contamination).
+Per-conjecture detail: [`docs/conjectures/`](./conjectures/).
 
-### JSX Presentation Files (atlas/ root)
-These are **standalone presentation/prototype artifacts**, not part of the production app.
-They are self-contained React components (no build step needed for viewing in tools like
-Claude artifacts or CodeSandbox) used for design exploration and stakeholder communication.
+## This session's additions (MiniMax-M3 upgrade + the live campaign) — and their status
 
-| File | Purpose |
-|------|---------|
-| `atlas/glim-architecture.jsx` | System architecture diagram / slide |
-| `atlas/glim-presentation.jsx` | Full slide deck presentation |
-| `atlas/glimPSE-app.jsx` | App UI prototype mockup |
-| `atlas/glimPSE-demo.jsx` | Interactive demo concept |
-| `atlas/glimPSE-preview.jsx` | Preview/landing concept |
-| `atlas/glimPSE-gallery.jsx` | Gallery UI prototype |
-| `atlas/glimPSE-mobile.jsx` | Mobile layout prototype (v1) |
-| `atlas/glimPSE-mobile-v2.jsx` | Mobile layout prototype (v2) |
-| `atlas/glimPSE-publication.jsx` | Publication-quality output prototype |
-| `atlas/glimPSE-real-data.jsx" | Real data visualization concept |
-| `atlas/glimPSE-timeseries.jsx` | Timeseries/thermo plot concept |
-| `atlas/glimPSE-3d-melt.jsx` | 3D melt simulation visualization concept |
-| `atlas/glimPSE-3d-smooth.jsx` | 3D smooth rendering concept |
+Engineering and exploration added 2026-06-02. **Read the status column before
+trusting any of it.**
 
----
+| Artifact | What | Status |
+|---|---|---|
+| [`docs/glim-m3-upgrade/`](./glim-m3-upgrade/README.md) | MiniMax M2.7→M3 model-axis upgrade for the Theorist agent + process docs | **Solid engineering.** The model axis is typechecked, tested. Live M2.7-vs-M3 numbers still need a key. |
+| [`docs/glim-m3-upgrade/runs/live-campaign-results.md`](./glim-m3-upgrade/runs/live-campaign-results.md) | live Cloud-Run distill campaign (energy/forces/stress/elastic) | **Provisional.** Real measurements, but it's MLIP **energy MAE on MPtrj DFT rows** — a *different lane* from the OpenKIM/NIST elastic-constant corpus the ribbon is built on. The distill "win" is an energy-block recalibration that does **not** move forces; do **not** read it as a model improvement. |
+| `lean-spec/.../Theory/RibbonProjection.lean` | a kernel-checked parallel/orthogonal correction parabola | **Toy — mislocated object.** It formalizes a scalar decomposition, not the model manifold (A) or the keystone core (C). Keep as a concentration lemma; do not cite as "the ribbon, formalized." |
+| [`docs/glim-m3-upgrade/runs/a6-alignment-results.md`](./glim-m3-upgrade/runs/a6-alignment-results.md) | first test of the keystone "A6" shared-mode assumption | **Provisional — confound not controlled.** Signal is real (same atoms hard across MLIPs) but the test does **not** yet control for elastic-constant **mathematical coupling** (Cauchy relation / stability) that Jackson–Somers 1991 and Archie 1981 warn produces a non-zero baseline correlation. Treat as method + first signal only. |
+| [`docs/science/keystone-reconciliation.md`](./science/keystone-reconciliation.md) | reconciling the repo with the keystone paper | **Read with its own correction banner** — its original "category error" framing overstated the case (see banner at top of that file). |
 
-## Common Commands
+## Repo structure and support
 
-Run from `atlas/atlas-view/` (the monorepo root):
+- [`docs/ONBOARDING.md`](./ONBOARDING.md) — contributor tracks, install, and verification
+- [`docs/ARCHITECTURE.md`](./ARCHITECTURE.md) — system architecture and data flow
+- [`docs/GLOSSARY.md`](./GLOSSARY.md) — shared vocabulary
+- [`docs/FAQ.md`](./FAQ.md) — common questions
+- [`ROOTS.md`](../ROOTS.md) — authoritative root-ownership ledger
+[`archive/`](../archive/) holds retired surfaces (currently `lupine-start/`).
+`glim-think/` is the control plane; `atlas-distill/` the Rust engine; `python/`
+the active Python Distill packages; `mlip_immi/` the real-data lane; `lean-spec/`
+the formal layer; `paper/` the manuscript; `library-site/` the public site;
+`atlas/atlas-view/` the LUPI viewer app. Retired roots live in `archive/`.
 
-```bash
-pnpm dev              # turbo run dev — start Vite dev server (hot reload)
-pnpm build            # turbo run build — tsc + vite build all packages
-pnpm build:wasm       # wasm-pack build Rust parser → packages/parsers/pkg/
-pnpm test             # turbo run test
-pnpm test:rust        # cargo test (in packages/parsers/wasm/)
-pnpm lint             # turbo run lint
-pnpm clean            # turbo run clean
-```
+For the machinery (control plane, distill engine, MLIP campaigns, cloud compute,
+the M3 upgrade), see the **engineering index**:
+[`docs/engineering/README.md`](./engineering/README.md). The decision behind this
+arrangement: [`docs/decisions/0002-documentation-architecture.md`](./decisions/0002-documentation-architecture.md).
 
-Run from `atlas/atlas-view/apps/web/` (app only):
+## Stale-doc notes
 
-```bash
-pnpm dev              # vite (dev server only)
-pnpm build            # tsc && vite build
-pnpm preview          # vite preview (serve built dist/)
-```
-
-The built output lands in `apps/web/dist/`. The compiled WASM asset is
-`apps/web/dist/assets/glim_parsers_bg-*.wasm`.
-
----
-
-## Quick Grep / Glob Recipes
-
-### "Where is file parsing?"
-```bash
-# JS orchestration layer
-grep -r "parseDumpFile\|parseLogFile\|detectFileType" atlas/atlas-view/packages/parsers/src/index.ts
-
-# Web worker (WASM bridge)
-grep -r "parse-dump\|parse-log\|parseDump\|parseLog" atlas/atlas-view/packages/parsers/src/workers/
-
-# Rust WASM implementations
-grep -rn "pub fn\|#\[wasm_bindgen\]" atlas/atlas-view/packages/parsers/wasm/src/
-```
-
-### "Where is app state?"
-```bash
-# All state fields and actions in one file
-grep -n "^\s\+\(set\|toggle\|next\|prev\|encode\|decode\|reset\|file\|frame\|playing\|colorMode\|ssao\|bloom\)" \
-  atlas/atlas-view/packages/ui/src/store.ts
-
-# Find every useStore call in the app
-grep -rn "useStore" atlas/atlas-view/packages/
-```
-
-### "Where is rendering?"
-```bash
-# WebGPU pipeline class
-grep -n "class AtomPipeline\|uploadFrame\|encode\|createBuffers\|createPipelines" \
-  atlas/atlas-view/packages/renderer/src/pipeline/AtomPipeline.ts
-
-# WGSL shaders
-glob "**/*.wgsl" atlas/atlas-view
-
-# R3F scene components (Three.js)
-grep -rn "InstancedMesh\|<Atoms\|<SimulationCell\|useRef.*Mesh" atlas/atlas-view/packages/scene/
-```
-
-### "Where is the 3D canvas set up?"
-```bash
-grep -n "<Canvas\|OrbitControls\|EffectComposer\|<SSAO\|<Bloom" \
-  atlas/atlas-view/packages/ui/src/App.tsx
-```
-
-### "What fields does Frame have?"
-```bash
-grep -A 15 "interface Frame" atlas/atlas-view/packages/core/src/types.ts
-```
-
-### "What are all exported types from core?"
-```bash
-grep "^export" atlas/atlas-view/packages/core/src/types.ts
-```
-
-### "Where does URL state serialize?"
-```bash
-grep -n "encodeToURL\|decodeFromURL\|btoa\|atob" atlas/atlas-view/packages/ui/src/store.ts
-```
-
-### "What colormaps are available?"
-```bash
-grep -n "ColormapName\|COLORMAPS\|viridis\|inferno\|coolwarm\|plasma\|magma\|cividis" \
-  atlas/atlas-view/packages/core/src/types.ts \
-  atlas/atlas-view/packages/scene/src/Atoms.tsx
-```
-
-### "Where does drag-and-drop file loading happen?"
-```bash
-grep -rn "FileDropZone\|drop\|glim:parse-progress\|parseFile" atlas/atlas-view/packages/ui/src/
-```
-
-### "What WASM functions are exported to JS?"
-```bash
-grep -n "wasm_bindgen\|js_name" atlas/atlas-view/packages/parsers/wasm/src/dump.rs
-grep -n "wasm_bindgen\|js_name" atlas/atlas-view/packages/parsers/wasm/src/log.rs
-```
-
-### "What research doc covers X?"
-```bash
-# Full-text search across all root research docs
-grep -rn "keyword" deep-research-report.md ancillary-research-opps.md \
-  foundational-research.md example-research-papers.md
-
-# Search planning docs
-grep -rn "keyword" atlas/glim-project-plan.md atlas/openDFT-project-plan.md \
-  atlas/glimPSE-product-plan.md atlas/glimPSE-web-product-plan.md
-```
-
-### Find all source files by type
-```bash
-# All TypeScript/TSX in atlas-view
-glob "**/*.ts" atlas/atlas-view/packages
-glob "**/*.tsx" atlas/atlas-view/packages
-
-# All Rust source
-glob "**/*.rs" atlas/atlas-view/packages/parsers/wasm/src
-
-# All WGSL shaders
-glob "**/*.wgsl" atlas/atlas-view
-
-# All JSX presentation artifacts
-glob "*.jsx" atlas
-```
-
----
-
-## Package Dependency Graph
-
-```
-@glim/web (apps/web)
-  └── @glim/ui        → App.tsx, store.ts, panels
-       ├── @glim/scene → Atoms.tsx, SimulationCell.tsx
-       │    └── @glim/core  → types.ts
-       ├── @glim/parsers → index.ts + parse.worker.ts + WASM
-       │    └── @glim/core
-       └── @glim/renderer → AtomPipeline.ts + WGSL
-            └── (no internal deps)
-```
-
-`@glim/core` is the only package with no internal dependencies.
-`@glim/renderer` is the WebGPU low-level path; the current production app uses
-`@glim/scene" (React Three Fiber / Three.js) for actual rendering.
-
----
-
-## Key Runtime Data Flow
-
-```
-User drops .lammpstrj
-       ↓
-FileDropZone (packages/ui/src/FileDropZone.tsx)
-       ↓
-parseDumpFile (packages/parsers/src/index.ts)
-  → readFileAsText (handles .gz decompression)
-  → Worker.postMessage('parse-dump', text)
-       ↓
-parse.worker.ts (web worker)
-  → ensureWasm() → init() [loads glim_parsers_bg.wasm]
-  → parseDump(text) [Rust: dump.rs]
-  → postProgress events → window 'glim:parse-progress'
-  → postMessage('frames', result)
-       ↓
-parseDumpFile resolves → Trajectory (typed arrays)
-       ↓
-useStore.getState().setFile({ name, size, trajectory, thermo })
-       ↓
-App.tsx re-renders → currentFrame → <Atoms frame=... />
-       ↓
-Atoms.tsx → InstancedMesh matrices + colors updated
-```
+- This file **replaces** the previous `navigation.md`, which was a viewer codemap
+  mislabeled as the repo guide and described a non-existent `glim/` root.
+- [`docs/research-index.md`](./research-index.md) is **partly stale**: it references
+  four root research docs (`deep-research-report.md`, `ancillary-research-opps.md`,
+  `foundational-research.md`, `example-research-papers.md`) that **no longer exist**,
+  and uses the old `glim/` path convention. Its glimPSE/LAMMPS-ecosystem product
+  summaries are a different facet from the science; use this file for the science.
+- [`docs/distill_kart_race_live_win.md`](./distill_kart_race_live_win.md) is **stale /
+  superseded** by the corrected 2026-06-02 MPtrj live campaign; the "5–7× faster"
+  headline overstates the accelerate tier.
+- [`docs/distill_improvement_atlas.md`](./distill_improvement_atlas.md) is a **stale
+  campaign snapshot**: its "6 accelerate-wins" claim was nullified and its Ni-EAM
+  regressions are the v0 ungated harms now caught by the regime gate.
+- The three `docs/EXTRACTION_*.md` files and [`docs/KEY_FINDINGS_SUMMARY.md`](./KEY_FINDINGS_SUMMARY.md)
+  are one-time extraction process logs with dead `/sessions/...` paths; read the
+  corresponding full reports instead.
+- [`docs/research_evolution_2026_05_05.md`](./research_evolution_2026_05_05.md) is a
+  **historical snapshot**; its "14/15 on-ribbon" claim was later re-audited.
+- [`docs/mlip-distill-local-theory-growth-lane.md`](./mlip-distill-local-theory-growth-lane.md)
+  is **provisional** (replay-only candidate, pending a fresh Cloud Run canary).

@@ -14,7 +14,12 @@
  *
  * Usage:
  *   npx tsx evals/ab-oracle.ts --agent <Class> --baseline <v> --candidate <v> \
- *     --dataset <name> --limit N [--axis provider|prompt] [--json] [--dry-run]
+ *     --dataset <name> --limit N [--axis provider|prompt|model] [--json] [--dry-run]
+ *
+ *   # M2.7 → M3 deep-tier model comparison (Theorist hypothesis generation):
+ *   npx tsx evals/ab-oracle.ts --agent Theorist --axis model \
+ *     --baseline MiniMax-M2.7 --candidate MiniMax-M3 \
+ *     --dataset glim-ribbon-theorems --limit 20 --json
  *
  * Env (loaded from ../.env and ./.dev.vars, like run-evals.ts):
  *   PHOENIX_API_KEY, PHOENIX_COLLECTOR_ENDPOINT, PHOENIX_PROJECT_NAME
@@ -81,7 +86,9 @@ function numEnv(name: string, fallback: number): number {
 }
 
 // ─── CLI parsing ───
-type Axis = "provider" | "prompt";
+// "model" pins a specific MiniMax id per call (baseline=MiniMax-M2.7,
+// candidate=MiniMax-M3) via /ops/experiment-generate's `model` field.
+type Axis = "provider" | "prompt" | "model";
 
 interface Args {
   agent: string;
@@ -112,14 +119,14 @@ function parseArgs(argv: string[]): Args {
     throw new Error(
       "ab-oracle: --agent, --baseline and --candidate are required.\n" +
         "Usage: npx tsx evals/ab-oracle.ts --agent <Class> --baseline <v> " +
-        "--candidate <v> --dataset <name> --limit N [--axis provider|prompt] " +
+        "--candidate <v> --dataset <name> --limit N [--axis provider|prompt|model] " +
         "[--json] [--dry-run]",
     );
   }
 
   const axisRaw = (get("--axis") ?? "prompt").toLowerCase();
-  if (axisRaw !== "provider" && axisRaw !== "prompt") {
-    throw new Error(`ab-oracle: --axis must be "provider" or "prompt", got "${axisRaw}"`);
+  if (axisRaw !== "provider" && axisRaw !== "prompt" && axisRaw !== "model") {
+    throw new Error(`ab-oracle: --axis must be "provider", "prompt" or "model", got "${axisRaw}"`);
   }
 
   const limitRaw = get("--limit");
@@ -255,6 +262,7 @@ async function generate(
     dataset: args.dataset,
   };
   if (args.axis === "provider") body.provider = variant;
+  else if (args.axis === "model") body.model = variant;
   else body.promptVariant = variant;
 
   try {

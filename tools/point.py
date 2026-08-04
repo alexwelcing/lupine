@@ -60,8 +60,7 @@ def cmd_status() -> int:
     # Rust
     _header("RUST WORKSPACES")
     rust_projects = [
-        "atlas-distill", "lupine-distill", "distill-cli",
-        "lupine-ops", "atlas-view-native", "atlas-tui", "axiom"
+        "atlas-distill", "lupine-ops"
     ]
     for proj in rust_projects:
         manifest = REPO_ROOT / proj / "Cargo.toml"
@@ -116,24 +115,18 @@ def cmd_status() -> int:
 def cmd_build(subsystem: Optional[str]) -> int:
     if not subsystem or subsystem == "all":
         _header("BUILD ALL")
-        for s in ["atlas-distill", "lupine-distill", "distill-cli", "lupine-ops", "atlas-view-native", "atlas-tui", "lean-spec"]:
+        for s in ["atlas-distill", "lupine-ops", "lean-spec"]:
             cmd_build(s)
         return 0
 
     _header(f"BUILD {subsystem}")
     mapping = {
         "atlas-distill": (REPO_ROOT / "atlas-distill", ["cargo", "build", "--release"]),
-        "lupine-distill": (REPO_ROOT / "lupine-distill", ["cargo", "build", "--release"]),
-        "distill-cli": (REPO_ROOT / "distill-cli", ["cargo", "build", "--release"]),
         "lupine-ops": (REPO_ROOT / "lupine-ops", ["cargo", "build", "--release"]),
-        "atlas-view-native": (REPO_ROOT / "atlas-view-native", ["cargo", "build", "--release"]),
-        "atlas-tui": (REPO_ROOT / "atlas-tui", ["cargo", "build", "--release"]),
-        "axiom": (REPO_ROOT / "axiom", ["cargo", "build", "--release"]),
         "atlas-view": (REPO_ROOT / "atlas" / "atlas-view", ["pnpm", "install"]),
-        "lupine-start": (REPO_ROOT / "lupine-start", ["pnpm", "install"]),
         "library-site": (REPO_ROOT / "library-site", ["npm", "install"]),
         "lean-spec": (REPO_ROOT / "lean-spec", ["lake", "build"]),
-        "distiller": (REPO_ROOT / "distiller", [sys.executable, "-m", "pip", "install", "-r", "requirements.txt"]),
+        "python": (REPO_ROOT / "python", [sys.executable, "-m", "pip", "install", "-e", "."]),
     }
     if subsystem not in mapping:
         _fail(f"Unknown subsystem: {subsystem}")
@@ -152,18 +145,14 @@ def cmd_build(subsystem: Optional[str]) -> int:
 def cmd_test(subsystem: Optional[str]) -> int:
     if not subsystem or subsystem == "all":
         _header("TEST ALL")
-        for s in ["atlas-distill", "lupine-distill", "distill-cli", "lupine-ops", "atlas-view-native", "atlas-tui", "tools"]:
+        for s in ["atlas-distill", "lupine-ops", "tools"]:
             cmd_test(s)
         return 0
 
     _header(f"TEST {subsystem}")
     mapping = {
         "atlas-distill": (REPO_ROOT / "atlas-distill", ["cargo", "test"]),
-        "lupine-distill": (REPO_ROOT / "lupine-distill", ["cargo", "test"]),
-        "distill-cli": (REPO_ROOT / "distill-cli", ["cargo", "test"]),
         "lupine-ops": (REPO_ROOT / "lupine-ops", ["cargo", "test"]),
-        "atlas-view-native": (REPO_ROOT / "atlas-view-native", ["cargo", "test"]),
-        "atlas-tui": (REPO_ROOT / "atlas-tui", ["cargo", "test"]),
         "lean-spec": (REPO_ROOT / "lean-spec", ["lake", "build"]),
         "tools": (REPO_ROOT / "tools", [sys.executable, "-m", "pytest", "test_glim.py", "-v"]),
     }
@@ -240,11 +229,6 @@ def cmd_deploy(target: str) -> int:
         return res.returncode
     elif target == "atlas-view":
         res = _run(["npx.cmd", "wrangler", "pages", "deploy", "apps/web/dist", "--project-name", "atlas-view", "--commit-dirty=true"], cwd=REPO_ROOT / "atlas" / "atlas-view")
-        print(res.stdout.encode('cp1252', 'replace').decode('cp1252'))
-        return res.returncode
-    elif target == "lupine-start":
-        short_sha = _run(["git", "rev-parse", "--short", "HEAD"]).stdout.strip()
-        res = _run(["gcloud.cmd", "builds", "submit", "--config", "cloudbuild.yaml", f"--substitutions=SHORT_SHA={short_sha}", "."], cwd=REPO_ROOT / "lupine-start")
         print(res.stdout.encode('cp1252', 'replace').decode('cp1252'))
         return res.returncode
     else:

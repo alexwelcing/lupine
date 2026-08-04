@@ -20,6 +20,12 @@ Configuration (all optional, read from the environment):
 * ``LUPINE_OTEL_ENABLED``      "1"/"true" to arm telemetry (default off).
 * ``OTEL_EXPORTER_OTLP_ENDPOINT`` OTLP/HTTP collector base, e.g. the Phoenix
   Cloud ingest URL. Required for spans to actually export.
+* ``PHOENIX_OTLP_RELAY_URL``   glim-think OTLP relay base URL. When set together
+  with ``PHOENIX_RELAY_TOKEN`` this takes precedence over the direct endpoint
+  and forwards through the GCP relay so cloud cells avoid the Cloudflare WAF
+  black-hole path.
+* ``PHOENIX_RELAY_TOKEN``      Shared secret for the relay (sent as
+  ``x-relay-token``).
 * ``LUPINE_OTEL_PROJECT``      Phoenix project name (resource attribute
   ``openinference.project.name``; Phoenix routes by THIS, not service.name).
 """
@@ -69,6 +75,8 @@ class PatcherConfig:
 
     enabled: bool = False
     endpoint: str | None = None
+    relay_url: str | None = None
+    relay_token: str | None = None
     project_name: str = "lupine-mlip"
     runner: str = "gcp-cloud-run"
     tracer_name: str = _DEFAULT_TRACER_NAME
@@ -82,14 +90,20 @@ class PatcherConfig:
             else str(source.get("LUPINE_OTEL_ENABLED", "")).strip().lower()
             in {"1", "true", "yes", "on"},
             endpoint=source.get("OTEL_EXPORTER_OTLP_ENDPOINT") or None,
+            relay_url=source.get("PHOENIX_OTLP_RELAY_URL") or None,
+            relay_token=source.get("PHOENIX_RELAY_TOKEN") or None,
             project_name=source.get("LUPINE_OTEL_PROJECT", "lupine-mlip"),
             runner=source.get("LUPINE_GCP_RUNNER", "gcp-cloud-run"),
         )
 
     @property
     def active(self) -> bool:
-        """Telemetry only emits when explicitly enabled AND given an endpoint."""
-        return bool(self.enabled and self.endpoint)
+        """Telemetry emits when enabled AND a direct endpoint or relay is set."""
+        if not self.enabled:
+            return False
+        if self.relay_url and self.relay_token:
+            return True
+        return bool(self.endpoint)
 
 
 @dataclass
@@ -136,7 +150,17 @@ class MLIPRunPatcher:
                 }
             )
             provider = TracerProvider(resource=resource)
-            exporter = OTLPSpanExporter(endpoint=self.config.endpoint)
+
+            if self.config.relay_url and self.config.relay_token:
+                endpoint = self.config.relay_url.rstrip("/")
+                if not endpoint.endswith("/v1/traces"):
+                    endpoint = f"{endpoint}/v1/traces"
+                exporter = OTLPSpanExporter(
+                    endpoint=endpoint,
+                    headers={"x-relay-token": self.config.relay_token},
+                )
+            else:
+                exporter = OTLPSpanExporter(endpoint=self.config.endpoint)
             provider.add_span_processor(BatchSpanProcessor(exporter))
             self._tracer = provider.get_tracer(self.config.tracer_name)
             return self._tracer

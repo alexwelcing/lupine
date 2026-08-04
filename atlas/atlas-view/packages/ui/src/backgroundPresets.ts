@@ -6,6 +6,7 @@
 
 import motionLoopManifestJson from '../../../tools/lupi-motion-loops.json';
 import publicationBackgroundManifestJson from '../../../tools/lupi-publication-backgrounds.json';
+import worldBackgroundManifestJson from '../../../tools/lupi-world-backgrounds.json';
 
 export const MATH_BACKGROUND_IDS = [
   'manifold-field',
@@ -217,6 +218,7 @@ type PublicationBackgroundManifest = {
 };
 
 const PUBLICATION_BACKGROUND_MANIFEST = publicationBackgroundManifestJson as PublicationBackgroundManifest;
+const WORLD_BACKGROUND_MANIFEST = worldBackgroundManifestJson as PublicationBackgroundManifest;
 
 const PUBLICATION_PRESETS: Record<string, BgPreset> = Object.fromEntries(
   PUBLICATION_BACKGROUND_MANIFEST.assets.map(recipe => [
@@ -228,6 +230,22 @@ const PUBLICATION_PRESETS: Record<string, BgPreset> = Object.fromEntries(
       image: `/backgrounds/${recipe.file}`,
       category: 'publication',
       badge: recipe.badge ?? 'PUB',
+      intensity: recipe.intensity,
+      context: recipe.context,
+    },
+  ]),
+);
+
+const WORLD_PRESETS: Record<string, BgPreset> = Object.fromEntries(
+  WORLD_BACKGROUND_MANIFEST.assets.map(recipe => [
+    recipe.viewer_preset_id,
+    {
+      top: recipe.top,
+      bottom: recipe.bottom,
+      label: recipe.label,
+      image: `/backgrounds/${recipe.file}`,
+      category: 'world',
+      badge: recipe.badge ?? '360',
       intensity: recipe.intensity,
       context: recipe.context,
     },
@@ -297,6 +315,7 @@ export const BG_PRESETS: Record<string, BgPreset> = {
     intensity: 'active',
   },
   ...PUBLICATION_PRESETS,
+  ...WORLD_PRESETS,
   // ── Image textures (AI-generated) ──
   nebula:          { top: '#080a14', bottom: '#000000', label: 'Nebula',           image: '/backgrounds/bg_nebula_indigo.jpg',    category: 'cosmic' },
   aurora:          { top: '#061210', bottom: '#000000', label: 'Aurora',           image: '/backgrounds/bg_aurora_teal.jpg',      category: 'cosmic' },
@@ -343,6 +362,7 @@ export const BG_VIDEO_PRESETS: BgPresetWithId[] = Object.entries(BG_PRESETS)
 
 const TEXTURE_CATEGORY_ORDER = [
   { label: 'Mathematical Fields', categories: ['math'] },
+  { label: '360 Worlds', categories: ['world'] },
   { label: 'Publication Contexts', categories: ['publication'] },
   { label: 'Motion Loops', categories: ['motion'] },
   { label: 'Signature Stills', categories: ['signature'] },

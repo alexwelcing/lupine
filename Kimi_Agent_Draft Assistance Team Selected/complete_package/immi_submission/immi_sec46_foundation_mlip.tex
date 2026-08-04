@@ -1,0 +1,47 @@
+% Section 4.6: Foundation MLIP extension (standalone source; also inlined in immi-paper-final.tex)
+% Revised 2026-06-11: Born stability screening applied to MLIP predictions (matching the
+% classical pipeline), Table 2 recomputed from cross_mlip_alignment_born_filtered.json,
+% citations corrected (MACE-MP-0 = Batatia et al.; Orb-v3 = Rhodes et al.), and the
+% unsupported Fe-outlier / participation-ratio claims replaced with supported statements.
+
+\subsection{Foundation MLIP extension and cross-paradigm structure}
+\label{subsec:foundation_mlip}
+
+The preceding sections establish that classical interatomic potentials exhibit structured, low-dimensional error manifolds (hyper-ribbons) and that cross-style alignment patterns are dominated by sample-size confounders rather than electronic-structure determinants. A critical question remains: are these geometric properties intrinsic to the classical potential form, or do they reflect deeper constraints of the materials themselves? To probe this question, this study extends the analysis to three foundation machine-learning interatomic potentials (MLIPs)---pre-trained neural network potentials trained on large-scale density functional theory (DFT) datasets. Specifically, MACE-MP-0 (small)~\cite{batatia2024}, an equivariant message-passing architecture trained on the MPtrj dataset; CHGNet~\cite{deng2023}, a crystal Hamiltonian graph neural network; and Orb-v3~\cite{rhodes2025}, a scalable graph-network potential that forgoes built-in equivariance, were evaluated on the same 15 elemental metals.
+
+Elastic constants ($C_{11}$, $C_{12}$, $C_{44}$) were computed via the strain-energy method with a maximum strain of $\varepsilon_{\max} = 0.5\%$, using Simmons \& Wang~\cite{simmons1971} reference data for FCC metals and Materials Project data supplemented by Simmons \& Wang for BCC metals. Relative-error vectors $\vec{\delta} = (\delta_{11}, \delta_{12}, \delta_{44})$ were constructed with $\delta_{ij} = (C_{ij}^{\text{pred}} / C_{ij}^{\text{ref}}) - 1$, and all pairwise cosine similarities between MLIP error vectors were computed per element. The same Born stability screen applied to the classical dataset ($C_{11}>0$, $C_{44}>0$, $C_{11}>|C_{12}|$) was applied to the MLIP predictions: 7 of the 45 element--model elastic tensors failed (Orb-v3: Al and Nb with $C_{44}<0$, Pb and Pt with $C_{11}<|C_{12}|$; CHGNet: Cr with $C_{44}<0$, Fe with $C_{11}<|C_{12}|$; MACE-MP-0: V with $C_{44}<0$) and were excluded before alignment was computed. The failures themselves are a finding: every foundation model evaluated produced at least one Born-unstable elastic tensor out of the box, concentrated in the BCC refractory metals.
+
+The cross-MLIP alignment varies dramatically by element, as shown in Table~\ref{tab:foundation_classical_comparison}. Several elements exhibit near-perfect agreement among foundation models: Au ($0.984$), Pt ($0.990$), Ta ($0.969$), and Ag ($0.950$) all display high pairwise cosine similarities, indicating that distinct neural network architectures commit nearly identical directional errors in elastic constant space. Conversely, certain transition metals show strongly negative alignment: for V ($-0.877$), Cr ($-0.751$), and Nb ($-0.398$), the surviving Born-stable model pairs produce error vectors that point in divergent or opposing directions. These are the same BCC refractory metals where Born-stability failures concentrate, suggesting that elements with complex magnetic and electronic structure challenge foundation models in two compounding ways: occasional outright instability of the predicted elastic tensor, and architecture-dependent disagreement even among stable predictions. We caution that for the seven elements with an excluded model, alignment rests on a single surviving model pair---the same fitting-depth limitation discussed in \S\ref{sec:dband}.
+
+\begin{table}[htbp]
+\centering
+\caption{Per-element comparison of classical cross-style mean cosine similarity and foundation MLIP mean cosine similarity after Born stability screening. Elements are ordered by decreasing classical mean cosine. Pairs gives the number of Born-stable MLIP model pairs entering the mean; for elements with a single surviving pair the range is not applicable. Bold values highlight the higher of the two means per element.}
+\label{tab:foundation_classical_comparison}
+\begin{tabular}{lccccc}
+\toprule
+Element & Structure & Classical Mean & MLIP Mean & Pairs & MLIP Range \\
+\midrule
+Ta & BCC & \textbf{0.990} & 0.969 & 3 & $[0.938,\,0.988]$ \\
+Nb & BCC & \textbf{0.976} & $-0.398$ & 1 & --- \\
+Au & FCC & 0.948 & \textbf{0.984} & 3 & $[0.971,\,0.992]$ \\
+Ag & FCC & 0.906 & \textbf{0.950} & 3 & $[0.922,\,0.999]$ \\
+Cr & BCC & \textbf{0.904} & $-0.751$ & 1 & --- \\
+Pb & FCC & \textbf{0.885} & 0.861 & 1 & --- \\
+Pt & FCC & 0.853 & \textbf{0.990} & 1 & --- \\
+Cu & FCC & \textbf{0.796} & 0.671 & 3 & $[0.426,\,0.964]$ \\
+Mo & BCC & \textbf{0.775} & 0.346 & 3 & $[-0.131,\,0.913]$ \\
+V & BCC & \textbf{0.744} & $-0.877$ & 1 & --- \\
+Ni & FCC & \textbf{0.689} & 0.377 & 3 & $[0.189,\,0.578]$ \\
+Fe & BCC & 0.618 & \textbf{0.804} & 1 & --- \\
+W & BCC & \textbf{0.587} & 0.498 & 3 & $[0.167,\,0.946]$ \\
+Al & FCC & 0.454 & \textbf{0.653} & 1 & --- \\
+Pd & FCC & 0.184 & \textbf{0.748} & 3 & $[0.540,\,0.920]$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Crucially, the classical cross-style alignment pattern does not transfer to foundation MLIPs. The Spearman rank correlation between the classical mean cosine and the Born-screened MLIP mean cosine across all 15 elements is $\rho = 0.264$ ($p = 0.341$), indicating no statistically significant relationship between the two paradigms. The group-level analysis reinforces this decoupling: elements classified as ``strong alignment'' under the classical regime (Ta, Nb, Au, Ag, Cr, Pb, Pt) exhibit a mean MLIP cosine of $0.515$, while elements classified as ``weak alignment'' (Pd, Al, W, Fe) show a mean of $0.676$---if anything, the ordering inverts. The classical grouping thus possesses no predictive power for MLIP behavior. Paradigm-specific factors---the functional form of classical potentials versus the neural network architecture and training data of foundation MLIPs---overwhelm any element-specific determinism in the error geometry.
+
+Iron illustrates this paradigm-specificity in a different way. Under classical potentials, Fe displays relatively weak cross-style alignment ($0.618$); under foundation MLIPs, CHGNet's Fe elastic tensor fails Born screening outright ($C_{11}<|C_{12}|$), while the surviving MACE--Orb pair agrees well ($0.804$). Fe's well-known difficulty---its complex magnetic ground state and the sensitivity of elastic properties to spin ordering---thus manifests differently in each paradigm rather than producing a consistent cross-paradigm signature.
+
+Although the alignment pattern does not transfer at the element level, the qualitative observation that errors are directionally structured does hold in both paradigms: for the majority of elements, independently trained architectures commit errors that concentrate along a shared direction in elastic constant space rather than scattering isotropically. We emphasize that with only three foundation models per element, a quantitative participation-ratio test of hyper-ribbon confinement is not meaningful---any three mean-centered vectors span at most two dimensions---so cross-paradigm hyper-ribbon universality remains a proof-of-concept observation here. A rigorous test requires a substantially larger MLIP ensemble with pre-registered thresholds, which is developed in the companion theoretical work\cite{welcing2026universality}. If confirmed there, the practical implication is that ensemble and calibration strategies designed to exploit error-geometry structure may transfer across modeling paradigms.

@@ -45,7 +45,7 @@ describe('BondAnalysisModule', () => {
 
     render(<BondAnalysisModule />);
     // Bond count is in a <strong> inside a span; assert both parts exist
-    expect(screen.getByText(/bonds detected/)).toBeDefined();
+    expect(screen.getByText(/proximity links detected/)).toBeDefined();
     expect(document.querySelector('strong')?.textContent).toBe('500');
   });
 

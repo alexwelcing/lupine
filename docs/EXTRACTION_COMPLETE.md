@@ -1,3 +1,7 @@
+> ⚠️ **Stale process artifact.** This file is a one-time extraction log with dead
+> `/sessions/...` paths. For the actual report, see
+> [`docs/info_theoretic_report.md`](./info_theoretic_report.md).
+
 # Information-Theoretic Model Compression Report - Extraction Complete
 
 ## File Details

@@ -5,160 +5,29 @@
  * light; only the focused scene renders a large preview.
  */
 
-import { useCallback, useRef, useEffect, useState, useMemo, useDeferredValue } from 'react';
+import { useCallback, useRef, useEffect, useState, useMemo } from 'react';
 import { useStore } from './store';
-import { artifactToLoadedFile } from './MlipArtifactLoader';
-import galleryData from './gallery-data.json';
+import { parseAtomCountLabel } from './deviceCapabilities';
 import {
-  getDeviceProfile,
-  parseAtomCountLabel,
-  formatAtomCount,
-} from './deviceCapabilities';
+  ALL_DOMAINS,
+  DOMAIN_COLORS,
+  DOMAIN_THREAD,
+  EXAMPLES,
+  SOURCE_FILTERS,
+  gallerySnapshotUrl,
+  isOpenDataExample,
+  parseFrameCountLabel,
+  resolveExampleUrl,
+  type GalleryExample,
+} from './gallery/catalog';
+import {
+  type FunctionalGroupConcept,
+  functionalGroupsForMolecule,
+} from './organicFunctionalGroups';
+import { openMolecule } from './viewer/openMolecule';
+import { useGalleryFilters } from './gallery/useGalleryFilters';
 
 // ─── Types ──────────────────────────────────────────────────────────────
-
-type Domain =
-  | 'Metals & Alloys'
-  | 'Ceramics & Oxides'
-  | 'Polymers & Soft Matter'
-  | 'Nanomaterials'
-  | 'Biomolecules'
-  | 'Energy Materials'
-  | 'Defects & Mechanics'
-  | 'Methods'
-  | 'Fluids & Solvents'
-  | 'Advanced Theory & Validation';
-
-interface GalleryExample {
-  id: string;
-  title: string;
-  subtitle: string;
-  domain: Domain;
-  atoms: string;
-  frames: string;
-  isTrajectory?: boolean;
-  autoPlay?: boolean;
-  /**
-   * Per-atom property this scene is curated to be read through (e.g. 'error'
-   * for the NIST potential benchmarks). Element identity is the global
-   * first-read default; this opts a curated scene into its intended view so
-   * the subtitle's "color by error" promise is what you actually see.
-   */
-  colorBy?: string;
-  file: string;
-  sourceUrl?: string;
-  available: boolean;
-  colors: [string, string, string];
-  metadata?: {
-    method?: string;
-    potential?: string;
-    temperature?: string;
-    ensemble?: string;
-    reference?: string;
-    doi?: string;
-    density?: string;
-  };
-  featured?: boolean;
-}
-
-const EXAMPLES: GalleryExample[] = galleryData as GalleryExample[];
-
-const DOMAIN_COLORS: Record<Domain, string> = {
-  'Metals & Alloys': '#e8b4b8',
-  'Ceramics & Oxides': '#a8d5ba',
-  'Polymers & Soft Matter': '#f5e6a3',
-  'Nanomaterials': '#b8d4e3',
-  'Biomolecules': '#e8c4d9',
-  'Energy Materials': '#c4e0c4',
-  'Defects & Mechanics': '#f0d9a8',
-  'Methods': '#d4d4e8',
-  'Fluids & Solvents': '#a8c8e8',
-  'Advanced Theory & Validation': '#d9c4e8',
-};
-
-const DOMAIN_THREAD: Record<Domain, string> = {
-  'Metals & Alloys': '#c9a0a4',
-  'Ceramics & Oxides': '#8ab89a',
-  'Polymers & Soft Matter': '#d4c984',
-  'Nanomaterials': '#98b8c8',
-  'Biomolecules': '#c8a4b8',
-  'Energy Materials': '#a4c4a4',
-  'Defects & Mechanics': '#d0b888',
-  'Methods': '#b8b8d0',
-  'Fluids & Solvents': '#88a8c8',
-  'Advanced Theory & Validation': '#b8a4c8',
-};
-
-const ALL_DOMAINS = Object.keys(DOMAIN_COLORS) as Domain[];
-
-type SourceFilter = 'All Sources' | 'Featured' | 'Trajectories' | 'Snapshots' | 'Open Data';
-
-const SOURCE_FILTERS: SourceFilter[] = ['All Sources', 'Featured', 'Trajectories', 'Snapshots', 'Open Data'];
-
-function publicAssetUrl(path: string): string {
-  if (path.startsWith('http://') || path.startsWith('https://')) return path;
-  const base = (import.meta as any).env?.BASE_URL || '/';
-  const cleanBase = base.endsWith('/') ? base : `${base}/`;
-  const cleanPath = path.replace(/^\/+/, '');
-  return `${cleanBase}${cleanPath}`.replace(/([^:]\/)\/+/g, '$1');
-}
-
-function gallerySnapshotUrl(id: string): string {
-  return publicAssetUrl(`gallery/snapshots/${id}.jpg`);
-}
-
-function parseFrameCountLabel(label: string | undefined): number {
-  if (!label) return 0;
-  const digits = label.replace(/[^\d]/g, '');
-  if (!digits) return 0;
-  const n = parseInt(digits, 10);
-  return Number.isFinite(n) ? n : 0;
-}
-
-function resolveExampleUrl(example: GalleryExample): string {
-  if (example.file.startsWith('http://') || example.file.startsWith('https://')) {
-    return maybeDevStorageProxy(example.file);
-  }
-  const localUrl = publicAssetUrl(example.file);
-  const isDev = (import.meta as any).env?.DEV;
-  return (isDev || !example.sourceUrl) ? localUrl : example.sourceUrl;
-}
-
-function maybeDevStorageProxy(url: string): string {
-  const isDev = (import.meta as any).env?.DEV;
-  if (!isDev) return url;
-  try {
-    const parsed = new URL(url);
-    if (parsed.hostname !== 'storage.googleapis.com') return url;
-    return `/__lupi_gcs${parsed.pathname}${parsed.search}`;
-  } catch {
-    return url;
-  }
-}
-
-function isOpenDataExample(example: GalleryExample): boolean {
-  return Boolean(
-    example.sourceUrl
-    || example.file.startsWith('http://')
-    || example.metadata?.doi
-    || /NIST|Nature|OpenKIM|Materials Project|Zenodo|GCS|benchmark/i.test(
-      [
-        example.metadata?.method,
-        example.metadata?.potential,
-        example.metadata?.reference,
-        example.subtitle,
-      ].filter(Boolean).join(' '),
-    ),
-  );
-}
-
-function matchesSourceFilter(example: GalleryExample, sourceFilter: SourceFilter): boolean {
-  if (sourceFilter === 'All Sources') return true;
-  if (sourceFilter === 'Featured') return Boolean(example.featured);
-  if (sourceFilter === 'Trajectories') return parseFrameCountLabel(example.frames) > 1;
-  if (sourceFilter === 'Snapshots') return parseFrameCountLabel(example.frames) <= 1;
-  return isOpenDataExample(example);
-}
 
 type PreviewAtom = {
   element: string;
@@ -338,15 +207,16 @@ const GALLERY_STUDIO_CSS = `
     color: rgba(125, 211, 252, 0.82);
     font-size: 11px;
     font-weight: 800;
-    letter-spacing: 0.18em;
+    letter-spacing: 0;
     text-transform: uppercase;
   }
   .lupi-gallery-title {
     margin: 0;
-    font-size: clamp(34px, 5vw, 58px);
+    font-size: 52px;
     font-weight: 300;
     line-height: 0.96;
     letter-spacing: 0;
+    text-wrap: balance;
   }
   .lupi-gallery-copy {
     max-width: 680px;
@@ -698,7 +568,7 @@ const GALLERY_STUDIO_CSS = `
     color: rgba(226,232,240,0.52);
     font-size: 11px;
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: 0;
     text-transform: uppercase;
   }
   .lupi-gallery-card-dot {
@@ -828,6 +698,9 @@ const GALLERY_STUDIO_CSS = `
     .lupi-gallery {
       padding: 0 16px 34px;
     }
+    .lupi-gallery-title {
+      font-size: 34px;
+    }
     .lupi-gallery-hero {
       padding-top: 18px;
       text-align: left;
@@ -841,7 +714,7 @@ const GALLERY_STUDIO_CSS = `
       min-width: calc(50% - 4px);
       padding: 10px 12px;
       border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 12px;
+      border-radius: 8px;
       background: rgba(255,255,255,0.028);
     }
     .lupi-gallery-controls {
@@ -902,10 +775,14 @@ const GALLERY_STUDIO_CSS = `
   .lupi-gallery-index,
   .lupi-gallery-spotlight {
     min-width: 0;
-    border: 1px solid rgba(255,255,255,0.07);
-    border-radius: 10px;
-    background: rgba(7, 9, 14, 0.72);
-    box-shadow: 0 18px 50px rgba(0,0,0,0.20);
+    border: 1px solid rgba(255,255,255,0.085);
+    border-radius: 8px;
+    background:
+      linear-gradient(180deg, rgba(15,23,42,0.58), rgba(3,7,18,0.42)),
+      rgba(7, 9, 14, 0.76);
+    box-shadow:
+      0 18px 50px rgba(0,0,0,0.24),
+      inset 0 1px 0 rgba(255,255,255,0.06);
   }
   .lupi-gallery-rail {
     position: sticky;
@@ -917,8 +794,9 @@ const GALLERY_STUDIO_CSS = `
   .lupi-gallery-rail-head h2 {
     margin: 5px 0 5px;
     font-size: 24px;
-    font-weight: 540;
+    font-weight: 620;
     line-height: 1.05;
+    text-wrap: balance;
   }
   .lupi-gallery-rail-head p {
     margin: 0;
@@ -930,6 +808,10 @@ const GALLERY_STUDIO_CSS = `
     padding-block: 10px;
     border-radius: 8px;
     font-size: 13px;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.062), rgba(255,255,255,0.028)),
+      rgba(2,6,23,0.58);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
   }
   .lupi-gallery-source-tabs {
     display: grid;
@@ -941,16 +823,170 @@ const GALLERY_STUDIO_CSS = `
     padding: 6px 8px;
     border: 1px solid rgba(255,255,255,0.08);
     border-radius: 8px;
-    background: rgba(255,255,255,0.032);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)),
+      rgba(2,6,23,0.42);
     color: rgba(226,232,240,0.62);
     font-size: 11px;
-    font-weight: 680;
+    font-weight: 740;
+    line-height: 1.15;
     cursor: pointer;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+  }
+  .lupi-gallery-source-tabs button:hover,
+  .lupi-gallery-source-tabs button:focus-visible {
+    border-color: rgba(30,220,224,0.34);
+    color: #f8fafc;
+    outline: none;
   }
   .lupi-gallery-source-tabs button[data-active="true"] {
     border-color: rgba(30,220,224,0.56);
-    background: rgba(30,220,224,0.12);
+    background:
+      linear-gradient(180deg, rgba(30,220,224,0.18), rgba(30,220,224,0.07)),
+      rgba(4,14,20,0.72);
     color: #eaffff;
+    box-shadow: 0 0 0 1px rgba(30,220,224,0.08), 0 10px 22px rgba(30,220,224,0.10);
+  }
+  .lupi-gallery-organic-map {
+    display: grid;
+    gap: 7px;
+    padding: 10px;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 8px;
+    background:
+      linear-gradient(180deg, rgba(15,23,42,0.52), rgba(2,6,23,0.24)),
+      rgba(255,255,255,0.02);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.045);
+  }
+  .lupi-gallery-organic-map h3 {
+    margin: 0;
+    color: rgba(248,250,252,0.9);
+    font-size: 12px;
+    font-weight: 760;
+    letter-spacing: 0;
+  }
+  .lupi-gallery-organic-map p {
+    margin: 0;
+    color: rgba(203,213,225,0.55);
+    font-size: 11px;
+    line-height: 1.35;
+  }
+  .lupi-gallery-functional-groups {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .lupi-gallery-functional-groups button {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    min-height: 28px;
+    padding: 5px 7px;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    background: rgba(255,255,255,0.032);
+    color: rgba(226,232,240,0.64);
+    font-size: 10px;
+    font-weight: 720;
+    line-height: 1.1;
+    cursor: pointer;
+  }
+  .lupi-gallery-functional-groups button[data-active="true"],
+  .lupi-gallery-functional-groups button:hover {
+    border-color: var(--group-color);
+    background: color-mix(in srgb, var(--group-color) 16%, transparent);
+    color: #fff;
+  }
+  .lupi-gallery-functional-groups i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--group-color);
+    box-shadow: 0 0 10px color-mix(in srgb, var(--group-color) 42%, transparent);
+  }
+  .lupi-gallery-functional-groups em {
+    color: rgba(203,213,225,0.48);
+    font-style: normal;
+  }
+  .lupi-gallery-study-guide {
+    --group-color: rgba(125,211,252,0.78);
+    display: grid;
+    gap: 9px;
+    padding: 10px;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 8px;
+    background: rgba(2,6,23,0.26);
+  }
+  .lupi-gallery-study-guide-head {
+    display: grid;
+    gap: 2px;
+  }
+  .lupi-gallery-study-guide-head span {
+    color: color-mix(in srgb, var(--group-color) 72%, rgba(226,232,240,0.54));
+    font-size: 9px;
+    font-weight: 820;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+  .lupi-gallery-study-guide-head strong {
+    color: rgba(248,250,252,0.94);
+    font-size: 13px;
+    font-weight: 780;
+    letter-spacing: 0;
+    line-height: 1.25;
+    text-wrap: balance;
+  }
+  .lupi-gallery-study-guide > p {
+    max-width: 42rem;
+    color: rgba(203,213,225,0.68);
+    font-size: 12px;
+    line-height: 1.55;
+    text-wrap: pretty;
+  }
+  .lupi-gallery-study-guide dl {
+    display: grid;
+    gap: 7px;
+    margin: 0;
+  }
+  .lupi-gallery-study-guide dl div {
+    display: grid;
+    gap: 2px;
+  }
+  .lupi-gallery-study-guide dt {
+    color: color-mix(in srgb, var(--group-color) 64%, rgba(226,232,240,0.64));
+    font-size: 9px;
+    font-weight: 820;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+  .lupi-gallery-study-guide dd {
+    margin: 0;
+    color: rgba(226,232,240,0.72);
+    font-size: 12px;
+    line-height: 1.52;
+    text-wrap: pretty;
+  }
+  .lupi-gallery-study-prompt,
+  .lupi-gallery-study-examples {
+    display: grid;
+    gap: 3px;
+    padding-left: 9px;
+    border-left: 2px solid color-mix(in srgb, var(--group-color) 56%, transparent);
+  }
+  .lupi-gallery-study-prompt span,
+  .lupi-gallery-study-examples span {
+    color: rgba(226,232,240,0.52);
+    font-size: 9px;
+    font-weight: 820;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+  .lupi-gallery-study-prompt p,
+  .lupi-gallery-study-examples p {
+    color: rgba(226,232,240,0.72);
+    font-size: 12px;
+    line-height: 1.52;
+    text-wrap: pretty;
   }
   .lupi-gallery-domain-menu {
     display: grid;
@@ -972,8 +1008,10 @@ const GALLERY_STUDIO_CSS = `
   }
   .lupi-gallery-domain-row[data-active="true"],
   .lupi-gallery-domain-row:hover {
-    border-color: rgba(255,255,255,0.08);
-    background: rgba(255,255,255,0.045);
+    border-color: color-mix(in srgb, var(--domain-color, #1edce0) 38%, rgba(255,255,255,0.08));
+    background:
+      linear-gradient(90deg, color-mix(in srgb, var(--domain-color, #1edce0) 10%, transparent), transparent 78%),
+      rgba(255,255,255,0.045);
     color: #fff;
   }
   .lupi-gallery-domain-mark {
@@ -1007,7 +1045,9 @@ const GALLERY_STUDIO_CSS = `
   .lupi-gallery-index-head h3 {
     margin: 0;
     font-size: 22px;
-    font-weight: 520;
+    font-weight: 620;
+    line-height: 1.08;
+    text-wrap: balance;
   }
   .lupi-gallery-index-head p {
     margin: 4px 0 0;
@@ -1030,6 +1070,7 @@ const GALLERY_STUDIO_CSS = `
     color: rgba(226,232,240,0.55);
     font-size: 11px;
     font-weight: 620;
+    font-variant-numeric: tabular-nums;
   }
   .lupi-gallery-fast-stats strong {
     color: #fff;
@@ -1041,7 +1082,10 @@ const GALLERY_STUDIO_CSS = `
     overflow-x: auto;
     margin-bottom: 12px;
     padding-bottom: 4px;
-    scrollbar-width: thin;
+    scrollbar-width: none;
+  }
+  .lupi-gallery-playlist::-webkit-scrollbar {
+    display: none;
   }
   .lupi-gallery-playlist button {
     flex: 0 0 168px;
@@ -1051,10 +1095,13 @@ const GALLERY_STUDIO_CSS = `
     padding: 9px 10px;
     border: 1px solid rgba(255,255,255,0.08);
     border-radius: 8px;
-    background: rgba(255,255,255,0.032);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.018)),
+      rgba(2,6,23,0.34);
     color: rgba(226,232,240,0.7);
     text-align: left;
     cursor: pointer;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.035);
   }
   .lupi-gallery-playlist button[data-active="true"],
   .lupi-gallery-playlist button:hover {
@@ -1085,16 +1132,19 @@ const GALLERY_STUDIO_CSS = `
     align-items: center;
     gap: 12px;
     min-height: 68px;
-    padding: 9px 10px;
+    padding: 10px 11px;
     overflow: hidden;
     border: 1px solid rgba(255,255,255,0.065);
     border-radius: 8px;
-    background: rgba(255,255,255,0.026);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.018)),
+      rgba(2,6,23,0.34);
     color: #f8fafc;
     text-align: left;
     cursor: pointer;
     content-visibility: auto;
     contain-intrinsic-size: 68px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.035);
   }
   .lupi-gallery-scene-row:hover,
   .lupi-gallery-scene-row:focus-visible,
@@ -1126,7 +1176,7 @@ const GALLERY_STUDIO_CSS = `
     text-overflow: ellipsis;
     white-space: nowrap;
     font-size: 14px;
-    font-weight: 650;
+    font-weight: 700;
   }
   .lupi-gallery-row-main span {
     overflow: hidden;
@@ -1161,6 +1211,11 @@ const GALLERY_STUDIO_CSS = `
     color: #34d399;
     background: rgba(52,211,153,0.09);
   }
+  .lupi-gallery-row-facts em.is-functional {
+    border: 1px solid color-mix(in srgb, var(--group-color, #1edce0) 38%, transparent);
+    background: color-mix(in srgb, var(--group-color, #1edce0) 12%, transparent);
+    color: color-mix(in srgb, var(--group-color, #1edce0) 76%, white);
+  }
   .lupi-gallery-row-open {
     justify-self: end;
     display: inline-flex;
@@ -1169,8 +1224,10 @@ const GALLERY_STUDIO_CSS = `
     min-width: 58px;
     min-height: 30px;
     padding: 0 10px;
-    border-radius: 7px;
-    background: rgba(255,255,255,0.06);
+    border-radius: 8px;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.028)),
+      rgba(2,6,23,0.42);
     color: rgba(226,232,240,0.72);
     font-size: 11px;
     font-weight: 760;
@@ -1265,14 +1322,15 @@ const GALLERY_STUDIO_CSS = `
     color: color-mix(in srgb, var(--thread-color, #1edce0) 76%, white);
     font-size: 11px;
     font-weight: 780;
-    letter-spacing: 0.12em;
+    letter-spacing: 0;
     text-transform: uppercase;
   }
   .lupi-gallery-spotlight h3 {
     margin: 0;
     font-size: 22px;
-    font-weight: 560;
+    font-weight: 640;
     line-height: 1.12;
+    text-wrap: balance;
   }
   .lupi-gallery-spotlight p {
     margin: 0;
@@ -1293,15 +1351,98 @@ const GALLERY_STUDIO_CSS = `
     font-size: 11px;
     font-weight: 650;
   }
+  .lupi-gallery-functional-note {
+    display: grid;
+    gap: 7px;
+    padding-top: 2px;
+  }
+  .lupi-gallery-functional-note > span {
+    color: rgba(226,232,240,0.54);
+    font-size: 10px;
+    font-weight: 780;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+  .lupi-gallery-functional-note article {
+    display: grid;
+    gap: 3px;
+    padding: 9px 10px;
+    border: 1px solid color-mix(in srgb, var(--group-color, #1edce0) 36%, transparent);
+    border-radius: 8px;
+    background:
+      linear-gradient(135deg, color-mix(in srgb, var(--group-color, #1edce0) 13%, transparent), transparent 72%),
+      rgba(255,255,255,0.035);
+  }
+  .lupi-gallery-functional-note strong {
+    color: color-mix(in srgb, var(--group-color, #1edce0) 78%, white);
+    font-size: 12px;
+    font-weight: 760;
+    letter-spacing: 0;
+  }
+  .lupi-gallery-functional-note p {
+    font-size: 12px;
+    line-height: 1.5;
+    text-wrap: pretty;
+  }
+  .lupi-gallery-functional-note dl {
+    display: grid;
+    gap: 5px;
+    margin: 2px 0 0;
+  }
+  .lupi-gallery-functional-note dl div {
+    display: grid;
+    gap: 1px;
+  }
+  .lupi-gallery-functional-note dt {
+    color: color-mix(in srgb, var(--group-color, #1edce0) 62%, rgba(226,232,240,0.62));
+    font-size: 9px;
+    font-weight: 820;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+  .lupi-gallery-functional-note dd {
+    margin: 0;
+    color: rgba(226,232,240,0.68);
+    font-size: 12px;
+    line-height: 1.5;
+    text-wrap: pretty;
+  }
+  .lupi-gallery-functional-check {
+    display: grid;
+    gap: 3px;
+    margin-top: 2px;
+    padding-left: 8px;
+    border-left: 2px solid color-mix(in srgb, var(--group-color, #1edce0) 48%, transparent);
+  }
+  .lupi-gallery-functional-check span {
+    color: rgba(226,232,240,0.52);
+    font-size: 9px;
+    font-weight: 820;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+  .lupi-gallery-functional-check p {
+    color: rgba(226,232,240,0.7);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .lupi-gallery-functional-note em {
+    color: rgba(203,213,225,0.54);
+    font-size: 11px;
+    font-style: normal;
+    line-height: 1.35;
+  }
   .lupi-gallery-spotlight-open {
     min-height: 38px;
     border: 0;
     border-radius: 8px;
-    background: var(--thread-color, #1edce0);
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--thread-color, #1edce0) 92%, white), var(--thread-color, #1edce0));
     color: #031012;
     font-size: 13px;
     font-weight: 800;
     cursor: pointer;
+    box-shadow: 0 12px 28px color-mix(in srgb, var(--thread-color, #1edce0) 18%, transparent), inset 0 1px 0 rgba(255,255,255,0.28);
   }
   .lupi-gallery-spotlight-open:disabled {
     opacity: 0.6;
@@ -1380,63 +1521,28 @@ const sVisuallyHidden: React.CSSProperties = {
 
 export function Gallery() {
   const [loadingId, setLoadingId] = useState<string | null>(null);
-  const [filter, setFilter] = useState<Domain | 'All'>('All');
-  const [sourceFilter, setSourceFilter] = useState<SourceFilter>('All Sources');
-  const [search, setSearch] = useState('');
   const [selectedId, setSelectedId] = useState<string>(() => {
     const firstPlayable = EXAMPLES.find((ex) => ex.available && parseFrameCountLabel(ex.frames) > 1);
     return firstPlayable?.id ?? EXAMPLES[0]?.id ?? '';
   });
-  // Keep the input responsive while the (potentially large) filtered grid
-  // re-renders off the deferred value — avoids per-keystroke jank.
-  const deferredSearch = useDeferredValue(search);
-
-  // The ceiling is computed once at mount. It is a global browser-buffer
-  // ceiling now; mobile keeps adaptive quality, not reduced access.
-  const atomCeiling = useMemo(() => getDeviceProfile().maxAtoms, []);
-
-  const filteredExamples = useMemo(() => {
-    return EXAMPLES.filter(ex => {
-      if (filter !== 'All' && ex.domain !== filter) return false;
-      if (!matchesSourceFilter(ex, sourceFilter)) return false;
-      if (deferredSearch) {
-        const s = deferredSearch.toLowerCase();
-        return (
-          ex.title.toLowerCase().includes(s) ||
-          ex.subtitle.toLowerCase().includes(s) ||
-          ex.domain.toLowerCase().includes(s) ||
-          (ex.metadata?.method ?? '').toLowerCase().includes(s) ||
-          (ex.metadata?.potential ?? '').toLowerCase().includes(s)
-        );
-      }
-      return true;
-    });
-  }, [filter, sourceFilter, deferredSearch]);
-
-  const galleryStats = useMemo(() => {
-    const available = EXAMPLES.filter(ex => ex.available).length;
-    const trajectories = EXAMPLES.filter(ex => parseFrameCountLabel(ex.frames) > 1).length;
-    return {
-      domains: ALL_DOMAINS.filter(domain => EXAMPLES.some(ex => ex.domain === domain)).length,
-      available,
-      trajectories,
-      featured: EXAMPLES.filter(ex => ex.featured).length,
-    };
-  }, []);
-
-  const domainSummaries = useMemo(() => {
-    return ALL_DOMAINS
-      .map(domain => {
-        const examples = EXAMPLES.filter(ex => ex.domain === domain);
-        return {
-          domain,
-          count: examples.length,
-          trajectories: examples.filter(ex => parseFrameCountLabel(ex.frames) > 1).length,
-          atoms: examples.reduce((total, ex) => total + parseAtomCountLabel(ex.atoms), 0),
-        };
-      })
-      .filter(summary => summary.count > 0);
-  }, []);
+  const {
+    activeFunctionalGroup,
+    atomCeiling,
+    clearFilters,
+    domainSummaries,
+    filter,
+    filteredExamples,
+    functionalGroupFilter,
+    functionalGroupSummaries,
+    galleryStats,
+    playableExamples,
+    search,
+    setFilter,
+    setFunctionalGroupFilter,
+    setSearch,
+    setSourceFilter,
+    sourceFilter,
+  } = useGalleryFilters();
 
   const selectedExample = useMemo(() => {
     return filteredExamples.find((ex) => ex.id === selectedId)
@@ -1444,317 +1550,20 @@ export function Gallery() {
       ?? null;
   }, [filteredExamples, selectedId]);
 
-  const playableExamples = useMemo(() => {
-    return EXAMPLES
-      .filter((ex) => ex.available && parseFrameCountLabel(ex.frames) > 1)
-      .slice(0, 8);
-  }, []);
-
   useEffect(() => {
     if (selectedExample && selectedExample.id !== selectedId) {
       setSelectedId(selectedExample.id);
     }
   }, [selectedExample, selectedId]);
 
-  const clearFilters = useCallback(() => {
-    setSearch('');
-    setFilter('All');
-    setSourceFilter('All Sources');
-  }, []);
-
   const handleLoad = useCallback(async (example: GalleryExample, isPopState = false) => {
-    if (!example.available) return;
-
-    // Global memory-ceiling gate. Device tier now only chooses quality;
-    // it does not block access to larger molecules on small screens.
-    const profile = getDeviceProfile();
-    const estimatedAtoms = parseAtomCountLabel(example.atoms);
-    if (estimatedAtoms > profile.maxAtoms) {
-      useStore.getState().setError(
-        `"${example.title}" has ~${formatAtomCount(estimatedAtoms)} atoms, ` +
-        `over Lupi's current ${formatAtomCount(profile.maxAtoms)}-atom ` +
-        `single-scene ceiling (${profile.reason}). ` +
-        `Try a smaller frame or a chunked trajectory.`,
-      );
-      // Keep the URL in sync — if we were navigated here via ?sim=, drop
-      // it so reloads don't re-trigger the same OOM-prone load.
-      if (typeof window !== 'undefined') {
-        const url = new URL(window.location.href);
-        if (url.searchParams.get('sim') === example.id) {
-          url.searchParams.delete('sim');
-          window.history.replaceState({}, '', url);
-        }
-      }
-      return;
-    }
-
-    if (!isPopState) {
-      const url = new URL(window.location.href);
-      url.searchParams.set('sim', example.id);
-      window.history.pushState({}, '', url);
-    }
-
     setLoadingId(example.id);
-    useStore.getState().setLoading(true, 0);
-    useStore.getState().setActiveCardId(example.id);
-
-    // Clean up any existing streaming loader from a previous load
-    if ((window as any).__atlasStreamingCleanup) {
-      (window as any).__atlasStreamingCleanup();
-      delete (window as any).__atlasStreamingCleanup;
-    }
-
     try {
-      // URL resolution: handles three cases
-      // 1. Absolute URLs in file field (GCS, CDN) — use directly
-      // 2. sourceUrl override (open-data repos) — prefer in production
-      // 3. Relative local paths — prepend base URL
-      const url = resolveExampleUrl(example);
-
-      if (/\.json(?:$|\?)/i.test(url) || /\.json$/i.test(example.file)) {
-        const resp = await fetch(url, { cache: 'reload' });
-        if (!resp.ok) throw new Error(`Failed to fetch: ${resp.status}`);
-        const payload = await resp.json();
-        const loaded = artifactToLoadedFile(payload, url);
-        const store = useStore.getState();
-        store.setFile({
-          ...loaded,
-          name: example.title,
-        });
-        store.setFrame(0);
-        store.setColorScheme('element');
-        store.setColorProperty(null);
-        store.setCameraPreset('iso');
-        store.setPlaybackSpeed(1);
-        useStore.setState({
-          atomScale: 1.35,
-          showBonds: false,
-          playing: Boolean(example.autoPlay),
-        });
-        setLoadingId(null);
-        return;
-      }
-
-      if (example.id === 'lupine_brand_asset') {
-        const scientificUrl = publicAssetUrl('gallery/curated/lupine_bluebonnet.xyz');
-        const resp = await fetch(scientificUrl);
-        const blob = await resp.blob();
-        const fileObj = new File([blob], 'lupine_bluebonnet.xyz');
-        const { parseFile } = await import('@atlas/parsers');
-        const parseResult = await parseFile(fileObj);
-        if (!parseResult.trajectory) throw new Error('No trajectory found in scientific prefab');
-        const scientificFrame = parseResult.trajectory.frames[0];
-        const { generateLupineFrame } = await import('@atlas/core');
-        const frame = generateLupineFrame(scientificFrame);
-
-        useStore.getState().setFile({
-          name: example.title,
-          size: 1024,
-          trajectory: {
-            frames: [frame],
-            totalFrames: 1,
-            atomTypes: parseResult.trajectory.atomTypes,
-            globalBounds: {
-              min: [frame.boxBounds[0], frame.boxBounds[2], frame.boxBounds[4]] as any,
-              max: [frame.boxBounds[1], frame.boxBounds[3], frame.boxBounds[5]] as any,
-            },
-          },
-          thermo: null,
-          sourceUrl: 'procedural',
-        });
-        useStore.getState().setRenderStyle('botanical');
-        useStore.getState().setAtomScale(1.4);
-        setLoadingId(null);
-        return;
-      }
-
-      // ── Streaming path for .glimbin files (GCS CDN) ──
-      const { isGlimbinUrl } = await import('@atlas/parsers/StreamingLoader');
-      if (isGlimbinUrl(url)) {
-        const { StreamingLoader } = await import('@atlas/parsers/StreamingLoader');
-        const loader = new StreamingLoader(url, {
-          onProgress: (_phase, progress) => {
-            useStore.getState().setLoading(true, progress * 0.6);
-          },
-          onTelemetry: (stats) => {
-            useStore.getState().setStreamingTelemetry(stats);
-          },
-        });
-
-        const header = await loader.fetchHeader();
-        await loader.fetchIndex();
-        const frame0 = await loader.fetchFrame(0);
-        const meta = loader.getMetadata()!;
-
-        // Build trajectory with frame 0 loaded; rest fetched on-demand
-        const placeholderFrames = new Array(meta.totalFrames);
-        placeholderFrames[0] = frame0;
-
-        useStore.getState().setFile({
-          name: example.title,
-          size: meta.fileSize,
-          trajectory: {
-            frames: placeholderFrames,
-            totalFrames: meta.totalFrames,
-            atomTypes: meta.atomTypes,
-            globalBounds: meta.globalBounds,
-          },
-          thermo: null,
-          sourceUrl: url,
-        });
-
-        // On-demand frame fetching: subscribe to timeline scrubs
-        const unsubFrameWatch = useStore.subscribe(
-          (s) => s.frame,
-          async (frameIndex) => {
-            const currentFile = useStore.getState().file;
-            if (!currentFile) return;
-            if (currentFile.trajectory.frames[frameIndex]) return;
-            try {
-              const frame = await loader.fetchFrame(frameIndex);
-              const file = useStore.getState().file;
-              if (file) {
-                file.trajectory.frames[frameIndex] = frame;
-                useStore.setState({ file: { ...file } });
-              }
-              const isPlaying = useStore.getState().playing;
-              loader.prefetch(frameIndex, isPlaying ? 1 : 0, isPlaying ? 8 : 3);
-            } catch (err: any) {
-              console.warn(`[streaming] Frame ${frameIndex} fetch failed:`, err.message);
-            }
-          }
-        );
-
-        // Stash cleanup for navigation
-        (window as any).__atlasStreamingCleanup = () => {
-          unsubFrameWatch();
-          loader.dispose();
-        };
-
-        setLoadingId(null);
-        return;
-      }
-
-      // ── Streaming dump parser for large .lammpstrj/.dump files ──
-      const STREAMING_BYTES_THRESHOLD = 5 * 1024 * 1024;  // 5 MB
-      const STREAMING_ATOM_THRESHOLD = 100_000;
-      const looksDumpExt = /\.(lammpstrj|dump)$/i.test(example.file);
-      let usedStreaming = false;
-
-      if (looksDumpExt) {
-        // Probe head with a Range request — much cheaper than pulling
-        // the full file. Servers that ignore Range return the whole
-        // file; we still only read the first 4 KB from the response.
-        const probe = await fetch(url, { headers: { Range: 'bytes=0-4095' } });
-        if (!probe.ok && probe.status !== 206) {
-          throw new Error(`Failed to fetch: ${probe.status}`);
-        }
-        const probeBlob = await probe.blob();
-        const head = await probeBlob.slice(0, 4096).text();
-        // Total size: prefer Content-Range from the partial response,
-        // fall back to Content-Length on the original probe (servers
-        // that returned the full body), or to the blob size itself.
-        const contentRange = probe.headers.get('content-range') ?? '';
-        const totalMatch = contentRange.match(/\/(\d+)$/);
-        const totalSize = totalMatch
-          ? parseInt(totalMatch[1], 10)
-          : (parseInt(probe.headers.get('content-length') ?? '0', 10) || probeBlob.size);
-
-        const { canStreamDump } = await import('@atlas/parsers');
-        const natomsMatch = head.match(/ITEM:\s*NUMBER OF ATOMS\s*\n\s*(\d+)/);
-        const headerAtoms = natomsMatch ? parseInt(natomsMatch[1], 10) : 0;
-
-        if (
-          canStreamDump(head)
-          && totalSize > STREAMING_BYTES_THRESHOLD
-          && headerAtoms >= STREAMING_ATOM_THRESHOLD
-        ) {
-          if (headerAtoms > profile.maxAtoms) {
-            useStore.getState().setError(
-              `"${example.title}" has ${formatAtomCount(headerAtoms)} atoms, ` +
-              `over Lupi's current ${formatAtomCount(profile.maxAtoms)}-atom ` +
-              `single-scene ceiling. Try a smaller frame or a chunked trajectory.`,
-            );
-            return;
-          }
-          // Real streaming: full fetch, response.body consumed as a
-          // ReadableStream. Atoms render while bytes are still arriving.
-          const streamResp = await fetch(url);
-          if (!streamResp.ok) throw new Error(`Failed to fetch: ${streamResp.status}`);
-          const { parseDumpResponseStreaming } = await import('@atlas/parsers');
-          const store = useStore.getState();
-          for await (const event of parseDumpResponseStreaming(streamResp)) {
-            if (event.type === 'header') {
-              store.setFile({
-                name: example.title,
-                size: totalSize,
-                trajectory: event.trajectory,
-                thermo: null,
-                sourceUrl: url,
-              });
-              // setFile defaulted loadedAtomCount to natoms (the
-              // pre-allocated TypedArray length); reset to 0 so the
-              // renderer doesn't flash uninitialized memory before
-              // the first chunk lands. Both updates batch into one
-              // render.
-              store.setLoadedAtomCount(0);
-            } else if (event.type === 'progress') {
-              store.setLoadedAtomCount(event.loadedAtoms);
-              // Yield to the renderer between chunks so atoms paint
-              // and the page stays interactive.
-              await new Promise<void>((r) => requestAnimationFrame(() => r()));
-            } else if (event.type === 'complete') {
-              store.setLoadedAtomCount(event.loadedAtoms);
-            }
-          }
-          usedStreaming = true;
-          return;
-        }
-      }
-
-      if (!usedStreaming) {
-        // WASM path. Same flow as before — used for small files,
-        // non-dump formats, multi-frame, triclinic, or any dialect the
-        // streaming parser declined.
-        const resp = await fetch(url);
-        if (!resp.ok) throw new Error(`Failed to fetch: ${resp.status}`);
-        const blob = await resp.blob();
-        const fileObj = new File([blob], example.file.split('/').pop() ?? 'file.dump');
-        const { parseFile } = await import('@atlas/parsers');
-        const result = await parseFile(fileObj);
-
-        if (result.trajectory) {
-          const actualAtoms = result.trajectory.frames[0]?.natoms ?? 0;
-          if (actualAtoms > profile.maxAtoms) {
-            useStore.getState().setError(
-              `"${example.title}" parsed to ${formatAtomCount(actualAtoms)} atoms, ` +
-              `over Lupi's current ${formatAtomCount(profile.maxAtoms)}-atom ` +
-              `single-scene ceiling. Try a smaller frame or a chunked trajectory.`,
-            );
-            return;
-          }
-          const store = useStore.getState();
-          store.setFile({
-            name: example.title,
-            size: blob.size,
-            trajectory: result.trajectory,
-            thermo: result.thermo ?? null,
-            sourceUrl: url,
-          });
-          // setFile defaults curated scenes to element identity. Scenes whose
-          // whole point is a per-atom field (the NIST benchmarks' error column)
-          // declare `colorBy` and open in that read instead.
-          if (example.colorBy && result.trajectory.frames[0]?.properties?.has(example.colorBy)) {
-            store.setColorScheme('property');
-            store.setColorProperty(example.colorBy);
-          }
-        }
-      }
-    } catch (err: any) {
-      console.warn(`Gallery load failed for ${example.id}:`, err.message);
-      useStore.getState().setError(
-        `Could not load "${example.title}" — try dragging the file directly.`
-      );
+      await openMolecule({
+        kind: 'gallery',
+        id: example.id,
+        history: isPopState ? 'replace' : 'push',
+      });
     } finally {
       setLoadingId(null);
     }
@@ -1800,8 +1609,8 @@ export function Gallery() {
             </svg>
             <input
               type="search"
-              placeholder="Search molecules, methods, domains..."
-              aria-label="Search simulations by title, description, method, potential, or domain"
+              placeholder="Search molecules or groups..."
+              aria-label="Search simulations by title, description, method, potential, domain, or functional group"
               data-testid="gallery-search"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -1834,6 +1643,54 @@ export function Gallery() {
             ))}
           </div>
 
+          <div className="lupi-gallery-organic-map" aria-label="Organic chemistry functional groups">
+            <h3>Organic groups</h3>
+            <p>First-course functional groups mapped to real molecules.</p>
+            <div className="lupi-gallery-functional-groups" role="group" aria-label="Filter by organic functional group">
+              <button
+                type="button"
+                data-testid="gallery-group-all"
+                data-active={functionalGroupFilter === 'All'}
+                aria-pressed={functionalGroupFilter === 'All'}
+                onClick={() => setFunctionalGroupFilter('All')}
+                style={{ '--group-color': 'rgba(255,255,255,0.7)' } as React.CSSProperties}
+              >
+                <i aria-hidden="true" />
+                All
+                <em>{galleryStats.organicMolecules}</em>
+              </button>
+              {functionalGroupSummaries.map(({ group, count }) => (
+                <button
+                  key={group.id}
+                  type="button"
+                  data-testid={`gallery-group-${group.id}`}
+                  data-active={functionalGroupFilter === group.id}
+                  aria-pressed={functionalGroupFilter === group.id}
+                  onClick={() => {
+                    setFilter('All');
+                    setFunctionalGroupFilter(group.id);
+                  }}
+                  style={{ '--group-color': group.color } as React.CSSProperties}
+                >
+                  <i aria-hidden="true" />
+                  {group.label}
+                  <em>{count}</em>
+                </button>
+              ))}
+            </div>
+            <FunctionalGroupStudyGuide
+              group={activeFunctionalGroup}
+              exampleTitles={
+                activeFunctionalGroup
+                  ? EXAMPLES
+                    .filter(ex => activeFunctionalGroup.exampleIds.includes(ex.id))
+                    .map(ex => ex.title)
+                    .slice(0, 4)
+                  : []
+              }
+            />
+          </div>
+
           <div className="lupi-gallery-domain-menu" role="group" aria-label="Filter simulations by domain">
             <button
               type="button"
@@ -1842,6 +1699,7 @@ export function Gallery() {
               onClick={() => setFilter('All')}
               aria-pressed={filter === 'All'}
               data-testid="gallery-filter-all"
+              style={{ '--domain-color': 'rgba(255,255,255,0.58)' } as React.CSSProperties}
             >
               <span className="lupi-gallery-domain-mark" style={{ background: 'rgba(255,255,255,0.58)' }} />
               <span>All domains</span>
@@ -1855,6 +1713,7 @@ export function Gallery() {
                 data-active={filter === domain}
                 onClick={() => setFilter(domain)}
                 aria-pressed={filter === domain}
+                style={{ '--domain-color': DOMAIN_COLORS[domain] } as React.CSSProperties}
               >
                 <span className="lupi-gallery-domain-mark" style={{ background: DOMAIN_COLORS[domain] }} />
                 <span>{domain}</span>
@@ -1873,11 +1732,13 @@ export function Gallery() {
                 {filteredExamples.length} result{filteredExamples.length === 1 ? '' : 's'}
                 {filter !== 'All' ? ` in ${filter}` : ''}
                 {sourceFilter !== 'All Sources' ? ` / ${sourceFilter}` : ''}
+                {activeFunctionalGroup ? ` / ${activeFunctionalGroup.label}` : ''}
               </p>
             </div>
             <div className="lupi-gallery-fast-stats" aria-label="Gallery summary">
               <span><strong>{galleryStats.available}</strong> loadable</span>
               <span><strong>{galleryStats.trajectories}</strong> playable</span>
+              <span><strong>{galleryStats.organicMolecules}</strong> organic</span>
               <span><strong>{galleryStats.domains}</strong> domains</span>
             </div>
           </div>
@@ -1901,8 +1762,8 @@ export function Gallery() {
             <div className="lupi-gallery-empty" data-testid="gallery-empty">
               <div className="lupi-gallery-empty-title">No molecules found</div>
               <p>
-                {deferredSearch
-                  ? <>Nothing matches "{deferredSearch}"{filter !== 'All' ? <> in {filter}</> : null}.</>
+                {search
+                  ? <>Nothing matches "{search}"{filter !== 'All' ? <> in {filter}</> : null}.</>
                   : <>No simulations match the active filters.</>}
               </p>
               <button
@@ -1940,6 +1801,81 @@ export function Gallery() {
   );
 }
 
+function FunctionalGroupStudyGuide({
+  group,
+  exampleTitles,
+}: {
+  group: FunctionalGroupConcept | null;
+  exampleTitles: string[];
+}) {
+  if (!group) {
+    return (
+      <section className="lupi-gallery-study-guide" data-testid="gallery-group-study-guide">
+        <div className="lupi-gallery-study-guide-head">
+          <span>Study lens</span>
+          <strong>Pattern first, name second</strong>
+        </div>
+        <p>
+          A functional group is useful when it helps you predict shape, polarity, acid-base behavior,
+          and the next likely reaction. Use the filters as a comparison set, then ask what changed.
+        </p>
+        <dl>
+          <div>
+            <dt>Recognize</dt>
+            <dd>Find the atom pattern before memorizing the label.</dd>
+          </div>
+          <div>
+            <dt>Compare</dt>
+            <dd>Look at the nearest carbonyl, ring, heteroatom, or leaving group.</dd>
+          </div>
+          <div>
+            <dt>Predict</dt>
+            <dd>Decide whether the group acts as acid, base, nucleophile, electrophile, or leaving group.</dd>
+          </div>
+        </dl>
+      </section>
+    );
+  }
+
+  return (
+    <section
+      className="lupi-gallery-study-guide"
+      data-testid="gallery-group-study-guide"
+      style={{ '--group-color': group.color } as React.CSSProperties}
+    >
+      <div className="lupi-gallery-study-guide-head">
+        <span>{group.family}</span>
+        <strong>{group.label}</strong>
+      </div>
+      <p>{group.short}</p>
+      <dl>
+        <div>
+          <dt>Recognize</dt>
+          <dd>{group.recognize}</dd>
+        </div>
+        <div>
+          <dt>Reactivity</dt>
+          <dd>{group.reactivity}</dd>
+        </div>
+        <div>
+          <dt>Watch for</dt>
+          <dd>{group.commonConfusion}</dd>
+        </div>
+      </dl>
+      <div className="lupi-gallery-study-prompt">
+        <span>Self-check</span>
+        <p>{group.studyPrompt}</p>
+      </div>
+      {exampleTitles.length > 0 && (
+        <div className="lupi-gallery-study-examples">
+          <span>Compare here</span>
+          <p>{exampleTitles.join(' / ')}</p>
+        </div>
+      )}
+    </section>
+  );
+}
+
 function GallerySceneRow({
   example,
   selected,
@@ -1961,6 +1897,7 @@ function GallerySceneRow({
   const disabled = loading || !example.available || exceedsCap;
   const pct = Math.round(Math.min(1, Math.max(0, loadProgress)) * 100);
   const threadColor = DOMAIN_THREAD[example.domain];
+  const functionalGroups = functionalGroupsForMolecule(example.id);
 
   return (
     <button
@@ -1977,7 +1914,7 @@ function GallerySceneRow({
       aria-label={`${example.title} - ${example.domain}, ${example.atoms} atoms, ${frameCount > 1 ? `${example.frames} frames` : 'snapshot'}`}
     >
       <span className="lupi-gallery-row-swatch" aria-hidden="true">
-        {example.colors.map((color) => <i key={color} style={{ background: color }} />)}
+        {example.colors.map((color, index) => <i key={`${color}-${index}`} style={{ background: color }} />)}
       </span>
       <span className="lupi-gallery-row-main">
         <strong>{example.title}</strong>
@@ -1988,6 +1925,15 @@ function GallerySceneRow({
         <em>{example.atoms}</em>
         <em className={frameCount > 1 ? 'is-playable' : ''}>{frameCount > 1 ? `${example.frames} frames` : 'snapshot'}</em>
         {example.featured && <em>featured</em>}
+        {functionalGroups.slice(0, 2).map(group => (
+          <em
+            key={group.id}
+            className="is-functional"
+            style={{ '--group-color': group.color } as React.CSSProperties}
+          >
+            {group.label}
+          </em>
+        ))}
       </span>
       <span className="lupi-gallery-row-open">
         {loading ? `${pct}%` : exceedsCap ? 'Over cap' : 'Open'}
@@ -2024,6 +1970,7 @@ function GallerySpotlight({
   const frameCount = parseFrameCountLabel(example.frames);
   const pct = Math.round(Math.min(1, Math.max(0, loadProgress)) * 100);
   const method = example.metadata?.method ?? example.metadata?.potential ?? example.domain;
+  const functionalGroups = functionalGroupsForMolecule(example.id);
 
   return (
     <aside
@@ -2078,6 +2025,35 @@ function GallerySpotlight({
           <span>{method}</span>
           {isOpenDataExample(example) && <span>open data</span>}
         </div>
+        {functionalGroups.length > 0 && (
+          <div className="lupi-gallery-functional-note">
+            <span>Functional groups</span>
+            {functionalGroups.slice(0, 4).map(group => (
+              <article
+                key={group.id}
+                style={{ '--group-color': group.color } as React.CSSProperties}
+              >
+                <strong>{group.label}</strong>
+                <p>{group.short}</p>
+                <dl>
+                  <div>
+                    <dt>Recognize</dt>
+                    <dd>{group.recognize}</dd>
+                  </div>
+                  <div>
+                    <dt>Reactivity</dt>
+                    <dd>{group.reactivity}</dd>
+                  </div>
+                </dl>
+                <div className="lupi-gallery-functional-check">
+                  <span>Check</span>
+                  <p>{group.studyPrompt}</p>
+                </div>
+                <em>{group.firstCourse}</em>
+              </article>
+            ))}
+          </div>
+        )}
         <button
           type="button"
           className="lupi-gallery-spotlight-open"

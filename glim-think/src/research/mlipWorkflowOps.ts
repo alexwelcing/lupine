@@ -47,7 +47,7 @@ export const MLIP_WORKFLOW_DESCRIPTOR: ResearchWorkflowDescriptor = {
       "glim-think/src/research/queue.ts",
       "glim-think/src/feed/beats.ts",
       "gcp/mlip-cell-runner/mlip_cell_runner.py",
-      "lupine-distill/runtime/python/lupine_distill_runtime",
+      "python/lupine_distill_runtime",
       "atlas-distill/src/commands/model_geometry.rs",
     ],
     checks: [

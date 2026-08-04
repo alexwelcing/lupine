@@ -24,12 +24,13 @@ function CameraRig() {
   return null;
 }
 
-function Pane({ variant, frameIndex, nextIndex, interp, tUI }: {
+function Pane({ variant, frameIndex, nextIndex, interp, tUI, isMobileLayout }: {
   variant: Variant;
   frameIndex: number;
   nextIndex: number;
   interp: number;
   tUI: number;
+  isMobileLayout: boolean;
 }) {
   const frames = variant.trajectory.frames;
   const residualPct = variant.decay(tUI) * 100;
@@ -37,8 +38,9 @@ function Pane({ variant, frameIndex, nextIndex, interp, tUI }: {
 
   return (
     <div style={{
-      position: 'relative', flex: 1, minWidth: 0, borderRadius: 16, overflow: 'hidden',
+      position: 'relative', flex: isMobileLayout ? '0 0 auto' : 1, minWidth: 0, borderRadius: 16, overflow: 'hidden',
       border: `1px solid ${variant.accent}40`, boxShadow: `0 0 60px -30px ${variant.accent}`,
+      height: isMobileLayout ? 260 : undefined,
     }}>
       <Canvas
         camera={{ position: [0, 0, 22], fov: 42 }}
@@ -100,7 +102,14 @@ export default function ComparisonTheater() {
   const [playing, setPlaying] = useState(true);
   const [speed, setSpeed] = useState(1);
   const [autoRotate, setAutoRotate] = useState(true);
+  const [isMobileLayout, setIsMobileLayout] = useState(typeof window !== 'undefined' ? window.innerWidth < 700 : false);
   const drag = useRef({ active: false, x: 0, y: 0 });
+
+  useEffect(() => {
+    const onResize = () => setIsMobileLayout(window.innerWidth < 700);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
 
   useEffect(() => {
     let raf = 0;
@@ -160,7 +169,16 @@ export default function ComparisonTheater() {
         </header>
 
         <div
-          style={{ display: 'flex', gap: 16, height: '62vh', minHeight: 420, touchAction: 'none', userSelect: 'none' }}
+          style={{
+            display: 'flex',
+            flexDirection: isMobileLayout ? 'column' : 'row',
+            gap: 12,
+            height: isMobileLayout ? 'auto' : '62vh',
+            minHeight: isMobileLayout ? 520 : 420,
+            touchAction: 'none',
+            userSelect: 'none',
+            overflow: isMobileLayout ? 'visible' : 'hidden',
+          }}
           onPointerDown={onDown}
           onPointerMove={onMove}
           onPointerUp={onUp}
@@ -168,31 +186,73 @@ export default function ComparisonTheater() {
           onWheel={(e) => zoomOrbit(e.deltaY)}
         >
           {variants.map((v) => (
-            <Pane key={v.id} variant={v} frameIndex={frameIndex} nextIndex={nextIndex} interp={interp} tUI={tUI} />
+            <Pane key={v.id} variant={v} frameIndex={frameIndex} nextIndex={nextIndex} interp={interp} tUI={tUI} isMobileLayout={isMobileLayout} />
           ))}
         </div>
 
-        <div style={{ marginTop: 16, borderRadius: 16, border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.03)', padding: 16, display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 16 }}>
-          <button type="button" style={btn} onClick={() => setPlaying((p) => !p)}>{playing ? '⏸ Pause' : '▶ Play'}</button>
-          <button type="button" style={ghost} onClick={() => { clock.t = 0; setTUI(0); }}>↻ Restart</button>
+        <div
+          role="group"
+          aria-label="Cinema playback controls"
+          style={{ marginTop: 16, borderRadius: 16, border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.03)', padding: 16, display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 16 }}
+        >
+          <button
+            type="button"
+            aria-label={playing ? 'Pause the comparison animation' : 'Play the comparison animation'}
+            style={btn}
+            onClick={() => setPlaying((p) => !p)}
+          >
+            {playing ? '⏸ Pause' : '▶ Play'}
+          </button>
+          <button
+            type="button"
+            aria-label="Restart comparison from beginning"
+            style={ghost}
+            onClick={() => { clock.t = 0; setTUI(0); }}
+          >
+            ↻ Restart
+          </button>
           <input
-            type="range" min={0} max={1} step={0.001} value={tUI}
+            type="range"
+            min={0}
+            max={1}
+            step={0.001}
+            value={tUI}
             onChange={(e) => { const v = parseFloat(e.target.value); clock.t = v; setTUI(v); }}
             style={{ flex: 1, minWidth: 160, accentColor: '#7B5CFF' }}
-            aria-label="Timeline"
+            aria-label="Timeline scrubber for relaxation progress"
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={Math.round(tUI * 100)}
           />
           <span style={{ fontFamily: 'ui-monospace, monospace', fontSize: 12, color: 'rgba(255,255,255,0.5)', width: 44, textAlign: 'right' }}>{(tUI * 100).toFixed(0)}%</span>
-          <div style={{ display: 'flex', gap: 4, padding: 4, borderRadius: 999, background: 'rgba(255,255,255,0.05)' }}>
+          <div role="group" aria-label="Playback speed" style={{ display: 'flex', gap: 4, padding: 4, borderRadius: 999, background: 'rgba(255,255,255,0.05)' }}>
             {SPEEDS.map((s) => (
-              <button key={s} type="button" onClick={() => setSpeed(s)} style={{
-                ...ghost, padding: '4px 10px', fontFamily: 'ui-monospace, monospace',
-                background: speed === s ? '#7B5CFF' : 'transparent', color: speed === s ? '#fff' : 'rgba(255,255,255,0.55)',
-              }}>{s}×</button>
+              <button
+                key={s}
+                type="button"
+                aria-pressed={speed === s}
+                aria-label={`Playback speed ${s} times`}
+                onClick={() => setSpeed(s)}
+                style={{
+                  ...ghost, padding: '4px 10px', fontFamily: 'ui-monospace, monospace',
+                  background: speed === s ? '#7B5CFF' : 'transparent', color: speed === s ? '#fff' : 'rgba(255,255,255,0.55)',
+                }}
+              >
+                {s}×
+              </button>
             ))}
           </div>
-          <button type="button" onClick={() => setAutoRotate((a) => !a)} style={{
-            ...ghost, background: autoRotate ? 'rgba(0,229,255,0.15)' : 'rgba(255,255,255,0.05)', color: autoRotate ? '#00E5FF' : 'rgba(255,255,255,0.6)',
-          }}>⟳ Auto-orbit</button>
+          <button
+            type="button"
+            aria-pressed={autoRotate}
+            aria-label={autoRotate ? 'Disable auto orbit' : 'Enable auto orbit'}
+            onClick={() => setAutoRotate((a) => !a)}
+            style={{
+              ...ghost, background: autoRotate ? 'rgba(0,229,255,0.15)' : 'rgba(255,255,255,0.05)', color: autoRotate ? '#00E5FF' : 'rgba(255,255,255,0.6)',
+            }}
+          >
+            ⟳ Auto-orbit
+          </button>
           <p style={{ margin: 0, fontSize: 12, color: 'rgba(255,255,255,0.4)' }}>
             residual settles to <span style={{ color: '#8A8AA0' }}>20%</span> / <span style={{ color: '#7B5CFF' }}>6%</span> / <span style={{ color: '#00E5FF' }}>5%</span> — accelerate gets there in a quarter of the steps
           </p>

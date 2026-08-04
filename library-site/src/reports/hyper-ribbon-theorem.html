@@ -1,0 +1,1230 @@
+<!doctype html>
+<html lang="en" data-theme="observatory">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Hyper-Ribbon Theorem Demo - Lupine Science</title>
+<meta name="description" content="A tablet-first demonstration page for the projected hyper-ribbon theorem gate: scalar Lean obligations, projection-tube geometry, and empirical evidence boundaries." />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous" />
+<link rel="stylesheet" href="/reports/assets/report.css" />
+<style>
+  body.theorem-demo{
+    font-family:"Inter",system-ui,sans-serif;
+    font-size:1rem;
+    line-height:1.6;
+    letter-spacing:0;
+    background-image:
+      linear-gradient(var(--grid) 1px,transparent 1px),
+      linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+    background-size:42px 42px,42px 42px;
+  }
+  body.theorem-demo p{
+    font-family:"Newsreader",Georgia,serif;
+    font-size:1.11rem;
+    line-height:1.66;
+    letter-spacing:0;
+    text-wrap:pretty;
+  }
+  body.theorem-demo h1,
+  body.theorem-demo h2,
+  body.theorem-demo h3,
+  body.theorem-demo h4{
+    letter-spacing:0;
+    text-wrap:balance;
+  }
+  body.theorem-demo #chrome{
+    position:sticky;
+    top:0;
+    bottom:auto;
+    left:auto;
+    right:auto;
+    transform:none;
+    z-index:70;
+    width:100%;
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+    padding:10px 14px;
+    background:color-mix(in srgb,var(--bg) 88%,transparent);
+    border-bottom:1px solid var(--rule-soft);
+    backdrop-filter:blur(14px);
+  }
+  body.theorem-demo #chrome > *{
+    min-width:0;
+  }
+  body.theorem-demo .series{
+    flex:0 1 auto;
+    max-width:100%;
+    overflow:hidden;
+    border-radius:12px;
+  }
+  body.theorem-demo .seg{
+    min-width:0;
+  }
+  body.theorem-demo .series a,
+  body.theorem-demo .seg button{
+    min-height:44px;
+    display:flex;
+    align-items:center;
+    white-space:nowrap;
+    letter-spacing:0;
+  }
+  main.theorem-shell{
+    max-width:1080px;
+    width:100%;
+    min-width:0;
+    margin:0 auto;
+    padding:24px 22px 88px;
+  }
+  .theorem-hero{
+    display:grid;
+    grid-template-columns:minmax(0,1fr);
+    gap:18px;
+    padding:28px 0 18px;
+  }
+  .theorem-hero > *,
+  .demo-board,
+  .demo-grid,
+  .visual-pane,
+  .control-pane,
+  .theorem-section{
+    min-width:0;
+  }
+  .theorem-kicker{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:var(--accent);
+    font-size:.78rem;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:.12em;
+  }
+  .theorem-kicker::before{
+    content:"";
+    width:34px;
+    height:1px;
+    background:var(--accent);
+  }
+  .theorem-hero h1{
+    max-width:13ch;
+    margin:0;
+    font-family:"Newsreader",Georgia,serif;
+    font-size:3rem;
+    line-height:1.05;
+    font-weight:600;
+  }
+  .theorem-hero .deck{
+    max-width:58ch;
+    width:100%;
+    margin:0;
+    font-size:1.22rem;
+    line-height:1.58;
+    color:var(--ink-soft);
+    overflow-wrap:normal;
+  }
+  .status-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:4px;
+  }
+  .status-chip{
+    display:inline-flex;
+    align-items:center;
+    min-height:36px;
+    padding:6px 12px;
+    border:1px solid var(--rule);
+    border-radius:999px;
+    background:var(--panel-solid);
+    color:var(--ink-soft);
+    font-size:.78rem;
+    font-weight:700;
+  }
+  .status-chip strong{
+    color:var(--ink);
+    font-weight:800;
+  }
+  .demo-board{
+    margin-top:16px;
+    border:1px solid var(--rule);
+    border-radius:16px;
+    overflow:hidden;
+    background:linear-gradient(180deg,color-mix(in srgb,var(--panel-solid) 92%,transparent),var(--code-bg));
+    box-shadow:0 24px 90px rgba(0,0,0,.24);
+  }
+  .demo-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:14px;
+    padding:14px 16px;
+    border-bottom:1px solid var(--rule-soft);
+    background:color-mix(in srgb,var(--bg2) 74%,transparent);
+  }
+  .demo-title{
+    display:grid;
+    gap:2px;
+  }
+  .demo-title b{
+    color:var(--ink);
+    font-size:.96rem;
+  }
+  .demo-title span{
+    color:var(--ink-soft);
+    font-size:.78rem;
+  }
+  .claim-state{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    min-height:38px;
+    padding:7px 12px;
+    border:1px solid var(--rule);
+    border-radius:999px;
+    background:var(--code-bg);
+    color:var(--ink);
+    font-size:.78rem;
+    font-weight:800;
+  }
+  .claim-state i{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:var(--accent);
+    box-shadow:0 0 14px var(--accent);
+  }
+  .claim-state.refused i{background:#f08080;box-shadow:0 0 14px rgba(240,128,128,.7)}
+  .claim-state.incomplete i{background:#8fb3ff;box-shadow:0 0 14px rgba(143,179,255,.7)}
+  .demo-grid{
+    display:grid;
+    grid-template-columns:minmax(0,1fr);
+  }
+  .visual-pane{
+    min-width:0;
+    border-bottom:1px solid var(--rule-soft);
+  }
+  #tubeCanvas{
+    display:block;
+    width:100%;
+    height:410px;
+    touch-action:none;
+    background:
+      linear-gradient(180deg,rgba(104,213,200,.04),transparent 55%),
+      repeating-linear-gradient(90deg,transparent,transparent 41px,rgba(255,255,255,.025) 42px);
+  }
+  .canvas-legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px 18px;
+    padding:12px 16px;
+    border-top:1px solid var(--rule-soft);
+    color:var(--ink-soft);
+    font-size:.76rem;
+  }
+  .canvas-legend span{
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .canvas-legend i{
+    display:inline-block;
+    width:12px;
+    height:12px;
+    border-radius:50%;
+  }
+  .i-ribbon{background:#e9b949}
+  .i-projected{background:#68d5c8}
+  .i-refused{background:#f08080}
+  .i-sample{background:#8fb3ff}
+  .control-pane{
+    display:grid;
+    gap:16px;
+    padding:16px;
+    background:rgba(7,10,18,.18);
+  }
+  .mode-tabs{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:8px;
+  }
+  .mode-tabs button,
+  .touch-button{
+    all:unset;
+    cursor:pointer;
+    min-height:44px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:8px 10px;
+    border:1px solid var(--rule);
+    border-radius:10px;
+    background:var(--code-bg);
+    color:var(--ink-soft);
+    font-size:.82rem;
+    font-weight:800;
+    line-height:1.2;
+    transition:border-color .18s var(--ease), color .18s var(--ease), background .18s var(--ease);
+  }
+  .mode-tabs button[aria-pressed="true"]{
+    background:var(--accent);
+    color:var(--accent-ink);
+    border-color:var(--accent);
+  }
+  .touch-button.active{
+    border-color:#68d5c8;
+    color:#68d5c8;
+  }
+  .control-group{
+    display:grid;
+    gap:10px;
+  }
+  .control-label{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    color:var(--ink-soft);
+    font-size:.78rem;
+    font-weight:800;
+  }
+  .control-label output,
+  .mono{
+    font-family:"JetBrains Mono",monospace;
+    font-variant-numeric:tabular-nums lining-nums;
+  }
+  body.theorem-demo input[type=range]{
+    width:100%;
+    min-height:36px;
+    accent-color:var(--accent);
+  }
+  .readout-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:8px;
+  }
+  .readout-cell{
+    min-height:72px;
+    display:grid;
+    align-content:center;
+    gap:4px;
+    padding:10px 12px;
+    border:1px solid var(--rule-soft);
+    border-radius:10px;
+    background:color-mix(in srgb,var(--code-bg) 72%,transparent);
+  }
+  .readout-cell span{
+    color:var(--ink-soft);
+    font-size:.72rem;
+    font-weight:800;
+  }
+  .readout-cell b{
+    color:var(--ink);
+    font-family:"JetBrains Mono",monospace;
+    font-size:1.06rem;
+    font-variant-numeric:tabular-nums lining-nums;
+  }
+  .verdict{
+    padding:13px 14px;
+    border:1px solid var(--rule);
+    border-radius:12px;
+    background:var(--quote);
+  }
+  .verdict b{
+    display:block;
+    margin-bottom:4px;
+    color:var(--ink);
+    font-size:.88rem;
+  }
+  .verdict p{
+    margin:0;
+    max-width:none;
+    font-family:"Inter",system-ui,sans-serif;
+    font-size:.86rem;
+    line-height:1.5;
+    color:var(--ink-soft);
+  }
+  .obligation-band{
+    display:grid;
+    gap:0;
+    border-top:1px solid var(--rule-soft);
+  }
+  .obligation-row{
+    display:grid;
+    grid-template-columns:48px minmax(0,1fr) auto;
+    gap:12px;
+    align-items:center;
+    padding:14px 16px;
+    border-bottom:1px solid var(--rule-soft);
+  }
+  .obligation-row:last-child{border-bottom:0}
+  .obligation-row .index{
+    display:grid;
+    place-items:center;
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    background:var(--code-bg);
+    border:1px solid var(--rule);
+    color:var(--accent);
+    font-weight:800;
+    font-variant-numeric:tabular-nums lining-nums;
+  }
+  .obligation-copy{
+    display:grid;
+    gap:2px;
+    min-width:0;
+  }
+  .obligation-copy b{
+    color:var(--ink);
+    font-size:.9rem;
+  }
+  .obligation-copy span{
+    color:var(--ink-soft);
+    font-size:.78rem;
+  }
+  .gate-light{
+    min-width:86px;
+    min-height:32px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:999px;
+    border:1px solid var(--rule);
+    color:var(--ink-soft);
+    background:var(--code-bg);
+    font-size:.72rem;
+    font-weight:800;
+  }
+  .gate-light.pass{
+    color:#07120f;
+    background:#68d5c8;
+    border-color:#68d5c8;
+  }
+  .gate-light.fail{
+    color:#1b0808;
+    background:#f08080;
+    border-color:#f08080;
+  }
+  .gate-light.watch{
+    color:#08101f;
+    background:#8fb3ff;
+    border-color:#8fb3ff;
+  }
+  .theorem-section{
+    margin-top:52px;
+  }
+  .section-label{
+    color:var(--accent);
+    font-size:.76rem;
+    font-weight:800;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+  }
+  .theorem-section h2{
+    margin:8px 0 12px;
+    padding:0;
+    font-family:"Newsreader",Georgia,serif;
+    font-size:2.1rem;
+    line-height:1.14;
+  }
+  .wide-object{
+    width:100%;
+    margin:18px 0 0;
+    border:1px solid var(--rule);
+    border-radius:14px;
+    overflow:hidden;
+    background:var(--panel-solid);
+  }
+  .math-object{
+    padding:18px;
+    overflow-x:auto;
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+  }
+  .math-object::-webkit-scrollbar{display:none}
+  .math-object .katex-display{
+    margin:0;
+    padding:0;
+  }
+  .claim-ladder{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:12px;
+    margin-top:18px;
+  }
+  .claim-ladder article{
+    min-height:178px;
+    padding:16px;
+    border:1px solid var(--rule);
+    border-radius:14px;
+    background:var(--panel-solid);
+  }
+  .claim-ladder h3{
+    margin:0 0 8px;
+    padding:0;
+    font-family:"Inter",system-ui,sans-serif;
+    font-size:.94rem;
+  }
+  .claim-ladder p{
+    margin:0;
+    max-width:none;
+    font-family:"Inter",system-ui,sans-serif;
+    font-size:.86rem;
+    line-height:1.52;
+    color:var(--ink-soft);
+  }
+  .mini-table{
+    width:100%;
+    overflow-x:auto;
+    margin-top:18px;
+    border:1px solid var(--rule);
+    border-radius:14px;
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+  }
+  .mini-table::-webkit-scrollbar{display:none}
+  .mini-table table{
+    min-width:680px;
+  }
+  .mini-table th,
+  .mini-table td{
+    letter-spacing:0;
+  }
+  .proof-code{
+    margin:18px 0 0;
+    border-radius:14px;
+    border:1px solid var(--rule);
+    background:var(--code-bg);
+    overflow-x:auto;
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+  }
+  .proof-code::-webkit-scrollbar{display:none}
+  .proof-code pre{
+    margin:0;
+    border:0;
+    border-radius:0;
+    background:transparent;
+    font-size:.82rem;
+    line-height:1.62;
+  }
+  .proof-code pre::before{display:none}
+  .footer-note{
+    margin-top:52px;
+    padding-top:20px;
+    border-top:1px solid var(--rule);
+    color:var(--ink-soft);
+    font-size:.86rem;
+  }
+  .footer-note p{
+    margin:0;
+    max-width:68ch;
+    font-family:"Inter",system-ui,sans-serif;
+    font-size:.86rem;
+  }
+  @media(min-width:760px){
+    main.theorem-shell{padding:30px 28px 96px}
+    .theorem-hero{padding-top:36px}
+    .theorem-hero h1{font-size:3.45rem}
+    #tubeCanvas{height:460px}
+    .obligation-row{grid-template-columns:54px minmax(0,1fr) 98px}
+  }
+  @media(min-width:940px){
+    .theorem-hero{
+      grid-template-columns:minmax(0,.82fr) minmax(340px,1fr);
+      align-items:end;
+    }
+    .theorem-hero .hero-copy{
+      display:grid;
+      gap:14px;
+    }
+    .demo-grid{
+      grid-template-columns:minmax(0,1.32fr) minmax(310px,.68fr);
+    }
+    .visual-pane{
+      border-bottom:0;
+      border-right:1px solid var(--rule-soft);
+    }
+    .control-pane{
+      align-content:start;
+    }
+  }
+  @media(max-width:760px){
+    body.theorem-demo #chrome{
+      display:grid;
+      grid-template-columns:minmax(0,1fr);
+      justify-items:stretch;
+      gap:8px;
+      padding:8px;
+      overflow:hidden;
+    }
+    body.theorem-demo .series,
+    body.theorem-demo .seg{
+      width:100%;
+      max-width:100%;
+      overflow:hidden;
+    }
+    body.theorem-demo .series{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+    body.theorem-demo .seg{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+    }
+    body.theorem-demo .series a,
+    body.theorem-demo .seg button{
+      flex:none;
+      justify-content:center;
+      min-width:0;
+      padding-left:8px;
+      padding-right:8px;
+      white-space:normal;
+    }
+    body.theorem-demo p{font-size:1.04rem}
+    main.theorem-shell{padding-left:16px;padding-right:16px}
+    .theorem-hero h1{font-size:2.45rem;max-width:12ch}
+    .theorem-hero .deck{font-size:1.08rem}
+    .theorem-hero .deck{
+      max-width:100%;
+      overflow-wrap:break-word;
+    }
+    .demo-top{align-items:flex-start;flex-direction:column}
+    #tubeCanvas{height:350px}
+    .claim-ladder{grid-template-columns:1fr}
+    .seriesnav{
+      flex-direction:column;
+    }
+    .seriesnav a.next{
+      text-align:left;
+    }
+    .obligation-row{
+      grid-template-columns:42px minmax(0,1fr);
+    }
+    .gate-light{
+      grid-column:2;
+      justify-self:start;
+    }
+  }
+  @media(max-width:520px){
+    body.theorem-demo .seg{
+      grid-template-columns:1fr;
+      width:min(100%,220px);
+      justify-self:center;
+    }
+    .mode-tabs,
+    .readout-grid{
+      grid-template-columns:1fr;
+    }
+    .status-chip{
+      width:100%;
+      justify-content:center;
+      text-align:center;
+    }
+  }
+</style>
+</head>
+<body class="theorem-demo">
+<div id="bar"></div>
+<div id="chrome">
+  <nav class="series" aria-label="Hyper-ribbon series">
+    <a href="/reports/hyper-ribbon-theorem.html" aria-current="true">Theorem Demo</a>
+    <a href="/reports/growing-hyper-ribbon.html">Part 1</a>
+    <a href="/reports/growing-hyper-ribbon-part-2.html">Part 2</a>
+    <a href="/reports/growing-hyper-ribbon-experiments.html">Compute Log</a>
+    <a href="/reports/growing-hyper-ribbon-observatory.html">Observatory</a>
+  </nav>
+  <div class="seg" role="group" aria-label="Theme">
+    <button data-theme="observatory" aria-pressed="true">Observatory</button>
+    <button data-theme="sepia" aria-pressed="false">Sepia</button>
+    <button data-theme="paper" aria-pressed="false">Paper</button>
+  </div>
+</div>
+
+<main class="theorem-shell">
+  <header class="theorem-hero">
+    <div class="hero-copy">
+      <div class="theorem-kicker">Projected hyper-ribbon</div>
+      <h1>Hyper-Ribbon Theorem Demo</h1>
+    </div>
+    <div>
+      <p class="deck">A tablet-first proof surface for the claim we can stand behind: a projected correction is accepted only when the scalar certificate clears the tube, support, rank, and measured-improvement obligations.</p>
+      <div class="status-row" aria-label="Claim status">
+        <span class="status-chip"><strong>Formal:</strong>&nbsp; conditional scalar gate</span>
+        <span class="status-chip"><strong>Rank:</strong>&nbsp; low PR is not proof</span>
+        <span class="status-chip"><strong>Evidence:</strong>&nbsp; runtime packet required</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="demo-board" aria-labelledby="console-title">
+    <div class="demo-top">
+      <div class="demo-title">
+        <b id="console-title">Projection-Tube Console</b>
+        <span>Drag inside the visual or adjust the escape slider to stress the theorem gate.</span>
+      </div>
+      <div class="claim-state incomplete" id="claimState" aria-live="polite"><i></i><span>compression evidence</span></div>
+    </div>
+
+    <div class="demo-grid">
+      <div class="visual-pane">
+        <canvas id="tubeCanvas" role="img" aria-label="Interactive visual of a hyper-ribbon projection tube with sample points, projected correction, and refused escape region."></canvas>
+        <div class="canvas-legend" aria-label="Visual legend">
+          <span><i class="i-ribbon"></i> ribbon tube</span>
+          <span><i class="i-projected"></i> projected lane</span>
+          <span><i class="i-sample"></i> evidence packet</span>
+          <span><i class="i-refused"></i> refused drift</span>
+        </div>
+      </div>
+
+      <aside class="control-pane" aria-label="Theorem demo controls">
+        <div class="mode-tabs" role="group" aria-label="Evidence mode">
+          <button type="button" data-mode="classical" aria-pressed="true">Classical</button>
+          <button type="button" data-mode="mlip" aria-pressed="false">+ MLIP</button>
+          <button type="button" data-mode="projected" aria-pressed="false">Projected</button>
+          <button type="button" data-mode="refused" aria-pressed="false">Refused</button>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label" for="escapeRange">
+            <span>orthogonal escape energy</span>
+            <output id="escapeOut" for="escapeRange">0.42</output>
+          </label>
+          <input id="escapeRange" type="range" min="0" max="1" step="0.01" value="0.42" />
+        </div>
+
+        <button type="button" class="touch-button active" id="rankToggle" aria-pressed="true">Rank adequate</button>
+
+        <div class="readout-grid" aria-live="polite">
+          <div class="readout-cell"><span>PR / observables</span><b id="prRead">0.32</b></div>
+          <div class="readout-cell"><span>projection dist.</span><b id="distRead">0.12</b></div>
+          <div class="readout-cell"><span>stiff drift</span><b id="driftRead">0.08</b></div>
+          <div class="readout-cell"><span>support lift</span><b id="liftRead">0.04</b></div>
+        </div>
+
+        <div class="verdict">
+          <b id="verdictTitle">Compression evidence only</b>
+          <p id="verdictText">Low participation ratio is useful evidence of compression, but it does not by itself license the strict geometric theorem claim.</p>
+        </div>
+      </aside>
+    </div>
+
+    <div class="obligation-band" aria-label="Projected-ribbon obligations">
+      <div class="obligation-row">
+        <span class="index">1</span>
+        <span class="obligation-copy"><b>Complement dominance</b><span>useful correction mass must dominate stiff-axis mass</span></span>
+        <span class="gate-light watch" id="gateComplement">watch</span>
+      </div>
+      <div class="obligation-row">
+        <span class="index">2</span>
+        <span class="obligation-copy"><b>Projection tube</b><span>distance and stiff drift must stay below selected maxima</span></span>
+        <span class="gate-light watch" id="gateTube">watch</span>
+      </div>
+      <div class="obligation-row">
+        <span class="index">3</span>
+        <span class="obligation-copy"><b>Support floor</b><span>support lift must clear a nontrivial baseline-error floor</span></span>
+        <span class="gate-light watch" id="gateSupport">watch</span>
+      </div>
+      <div class="obligation-row">
+        <span class="index">4</span>
+        <span class="obligation-copy"><b>Accuracy commitment</b><span>a measured distillation win supplies the scientific gain</span></span>
+        <span class="gate-light watch" id="gateAccuracy">watch</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="theorem-section" aria-labelledby="theorem-shape">
+    <span class="section-label">Theorem shape</span>
+    <h2 id="theorem-shape">The page proves less, and therefore says more clearly what matters.</h2>
+    <p>The formal layer is a gate over a scalar certificate. It does not claim that every low-dimensional error cloud is a full hyper-ribbon. It says that when a runtime packet supplies the right bounds, an accepted projected correction remains inside the projection tube, keeps stiff-axis drift bounded, clears support obligations, and inherits the existing accuracy commitment when the measured error improves.</p>
+
+    <div class="wide-object">
+      <div class="math-object">
+        <div data-math="display">
+          \operatorname{acceptsProjectedRibbon}(c)
+          \Rightarrow
+          d_{\mathrm{proj}}(c)\le d_{\max}(c)\;\land\;
+          s_{\mathrm{drift}}(c)\le s_{\max}(c)
+        </div>
+      </div>
+    </div>
+
+    <div class="proof-code">
+      <pre><code>acceptsProjectedRibbon(c) =
+  complementDominant(c)
+  and insideProjectionTube(c)
+  and supportLiftOk(c)
+  and supportFloorSatisfied(c)
+
+measuredImproves(baselineErr, distillErr)
+  => positive accuracy gain</code></pre>
+    </div>
+  </section>
+
+  <section class="theorem-section" aria-labelledby="claim-layers">
+    <span class="section-label">Claim ladder</span>
+    <h2 id="claim-layers">A skeptical reader gets the boundary first.</h2>
+    <div class="claim-ladder">
+      <article>
+        <h3>Compression</h3>
+        <p>Low participation ratio says the observed error vectors are compressed. This is a real signal, but it is not yet the strict geometric claim.</p>
+      </article>
+      <article>
+        <h3>Projected gate</h3>
+        <p>The scalar certificate checks complement dominance, projection distance, stiff drift, support lift, and support floor before a projected correction can be accepted.</p>
+      </article>
+      <article>
+        <h3>Scientific win</h3>
+        <p>The theorem remains conditional on measured improvement. The site should report wins only when the benchmark packet beats its baseline.</p>
+      </article>
+    </div>
+
+    <div class="mini-table" role="region" aria-label="Evidence boundary table" tabindex="0">
+      <table>
+        <thead>
+          <tr>
+            <th>Layer</th>
+            <th>What the page may say</th>
+            <th>What it must not imply</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Low PR</strong></td>
+            <td>Compression evidence across measured observables</td>
+            <td>Strict hyper-ribbon geometry by itself</td>
+          </tr>
+          <tr>
+            <td><strong>Projection tube</strong></td>
+            <td>Accepted packets stay within selected scalar bounds</td>
+            <td>All runtime corrections are automatically accepted</td>
+          </tr>
+          <tr>
+            <td><strong>Accuracy</strong></td>
+            <td>Measured distillation improvement gives positive gain</td>
+            <td>A publication-status claim beyond the configured draft-state record</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="theorem-section" aria-labelledby="series-path">
+    <span class="section-label">Reader path</span>
+    <h2 id="series-path">Then let the deeper pages carry the evidence.</h2>
+    <p>This demonstration is the first-touch theorem surface. The long-form pages still hold the framework, validation narrative, compute log, and visual observatory. The important change is order: a visitor can now see the standard of proof before reading the story of the ribbon.</p>
+    <nav class="seriesnav" aria-label="Continue reading">
+      <a href="/reports/growing-hyper-ribbon.html"><div class="lbl">Part 1</div><div class="ttl">Framework</div></a>
+      <a href="/reports/growing-hyper-ribbon-part-2.html"><div class="lbl">Part 2</div><div class="ttl">Validation</div></a>
+      <a class="next" href="/reports/growing-hyper-ribbon-observatory.html"><div class="lbl">Visual</div><div class="ttl">Observatory</div></a>
+    </nav>
+  </section>
+
+  <footer class="footer-note">
+    <p>Lupine Science - Hyper-Ribbon Theorem Demo. Formal content is framed as a conditional projected-ribbon gate. Empirical claims remain benchmark-dependent, and publication status stays governed by the configured draft-state record.</p>
+  </footer>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+<script>
+(function(){
+  var root = document.documentElement;
+  var body = document.body;
+  var bar = document.getElementById('bar');
+  var savedTheme = null;
+  try { savedTheme = localStorage.getItem('hr.theme'); } catch(e) {}
+  if (savedTheme) root.dataset.theme = savedTheme;
+
+  function syncThemeButtons(){
+    document.querySelectorAll('[data-theme]').forEach(function(btn){
+      btn.setAttribute('aria-pressed', String(btn.dataset.theme === root.dataset.theme));
+    });
+  }
+  syncThemeButtons();
+  document.querySelectorAll('[data-theme]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      root.dataset.theme = btn.dataset.theme;
+      try { localStorage.setItem('hr.theme', root.dataset.theme); } catch(e) {}
+      syncThemeButtons();
+      draw();
+    });
+  });
+
+  window.addEventListener('scroll', function(){
+    var max = Math.max(1, body.scrollHeight - innerHeight);
+    bar.style.width = Math.min(100, Math.max(0, scrollY / max * 100)) + '%';
+  }, {passive:true});
+
+  document.querySelectorAll('[data-math]').forEach(function(node){
+    try {
+      katex.render(node.textContent.trim(), node, {displayMode:true, throwOnError:false});
+    } catch(e) {}
+  });
+
+  var canvas = document.getElementById('tubeCanvas');
+  var ctx = canvas.getContext('2d');
+  var escapeRange = document.getElementById('escapeRange');
+  var escapeOut = document.getElementById('escapeOut');
+  var rankToggle = document.getElementById('rankToggle');
+  var claimState = document.getElementById('claimState');
+  var verdictTitle = document.getElementById('verdictTitle');
+  var verdictText = document.getElementById('verdictText');
+  var prRead = document.getElementById('prRead');
+  var distRead = document.getElementById('distRead');
+  var driftRead = document.getElementById('driftRead');
+  var liftRead = document.getElementById('liftRead');
+  var gates = {
+    complement: document.getElementById('gateComplement'),
+    tube: document.getElementById('gateTube'),
+    support: document.getElementById('gateSupport'),
+    accuracy: document.getElementById('gateAccuracy')
+  };
+  var state = { mode:'classical', escape:0.42, rank:true, drag:false };
+
+  var palette = {
+    gold:'#e9b949',
+    goldSoft:'#f6d27a',
+    cyan:'#68d5c8',
+    blue:'#8fb3ff',
+    red:'#f08080',
+    ink:'#e9edf7',
+    soft:'#aeb8cf',
+    bg:'#070a12',
+    rule:'#1e2740'
+  };
+
+  var points = Array.from({length:34}, function(_, i){
+    var t = -0.94 + i * (1.88 / 33);
+    var y = Math.sin(t * 2.7) * 0.18 + Math.sin(t * 5.8) * 0.035;
+    var jitter = ((i * 37) % 17 - 8) / 260;
+    return {x:t, y:y + jitter, kind:i % 9 === 0 ? 'support' : 'sample'};
+  });
+
+  function metrics(){
+    var e = state.escape;
+    var base = {
+      pr:0.29 + e * 0.05,
+      complement:0.42,
+      dist:0.20 + e * 0.05,
+      drift:0.16 + e * 0.03,
+      lift:0.00,
+      baseline:0.42,
+      distill:0.42,
+      supportFloor:0.10
+    };
+    if (state.mode === 'mlip') {
+      base.pr = 0.32 + e * 0.06;
+      base.complement = 0.56;
+      base.dist = 0.15 + e * 0.05;
+      base.drift = 0.10 + e * 0.03;
+      base.lift = 0.03 + e * 0.015;
+      base.baseline = 0.43;
+      base.distill = 0.42 - e * 0.02;
+      base.supportFloor = 0.18;
+    }
+    if (state.mode === 'projected') {
+      base.pr = 0.27 + e * 0.04;
+      base.complement = 0.67;
+      base.dist = 0.07 + e * 0.045;
+      base.drift = 0.05 + e * 0.035;
+      base.lift = 0.07 + e * 0.055;
+      base.baseline = 0.43;
+      base.distill = 0.34 - e * 0.025;
+      base.supportFloor = 0.31;
+    }
+    if (state.mode === 'refused') {
+      base.pr = 0.25 + e * 0.05;
+      base.complement = 0.72;
+      base.dist = 0.22 + e * 0.12;
+      base.drift = 0.17 + e * 0.08;
+      base.lift = 0.08 + e * 0.04;
+      base.baseline = 0.43;
+      base.distill = 0.36 - e * 0.01;
+      base.supportFloor = 0.30;
+    }
+    base.maxDist = 0.18;
+    base.maxDrift = 0.14;
+    base.minLift = 0.05;
+    base.minFloor = 0.20;
+    base.complementOk = base.complement >= 0.5;
+    base.tubeOk = base.dist <= base.maxDist && base.drift <= base.maxDrift;
+    base.supportOk = base.lift >= base.minLift && base.supportFloor >= base.minFloor;
+    base.accuracyOk = base.distill < base.baseline;
+    base.accepted = state.rank && base.complementOk && base.tubeOk && base.supportOk && base.accuracyOk;
+    return base;
+  }
+
+  function setGate(el, ok, watch){
+    el.classList.remove('pass','fail','watch');
+    if (watch) {
+      el.classList.add('watch');
+      el.textContent = 'watch';
+    } else if (ok) {
+      el.classList.add('pass');
+      el.textContent = 'pass';
+    } else {
+      el.classList.add('fail');
+      el.textContent = 'fail';
+    }
+  }
+
+  function updateUI(){
+    var m = metrics();
+    escapeOut.textContent = state.escape.toFixed(2);
+    prRead.textContent = m.pr.toFixed(2);
+    distRead.textContent = m.dist.toFixed(2);
+    driftRead.textContent = m.drift.toFixed(2);
+    liftRead.textContent = m.lift.toFixed(2);
+    rankToggle.classList.toggle('active', state.rank);
+    rankToggle.setAttribute('aria-pressed', String(state.rank));
+    rankToggle.textContent = state.rank ? 'Rank adequate' : 'Rank not adequate';
+
+    setGate(gates.complement, m.complementOk, state.mode === 'classical');
+    setGate(gates.tube, m.tubeOk, false);
+    setGate(gates.support, m.supportOk, state.mode === 'classical');
+    setGate(gates.accuracy, m.accuracyOk, state.mode === 'classical');
+
+    claimState.classList.remove('refused','incomplete');
+    if (m.accepted) {
+      claimState.querySelector('span').textContent = 'accepted packet';
+      verdictTitle.textContent = 'Accepted as a conditional packet';
+      verdictText.textContent = 'The scalar obligations clear the gate. The mathematical claim is bounded; the scientific claim still depends on the measured benchmark packet.';
+    } else if (!state.rank) {
+      claimState.classList.add('incomplete');
+      claimState.querySelector('span').textContent = 'compression only';
+      verdictTitle.textContent = 'Rank gate blocks strict geometry';
+      verdictText.textContent = 'The page may report compression evidence, but low PR plus failed rank adequacy cannot be described as a strict hyper-ribbon theorem result.';
+    } else if (!m.tubeOk || state.mode === 'refused') {
+      claimState.classList.add('refused');
+      claimState.querySelector('span').textContent = 'refused';
+      verdictTitle.textContent = 'Projection tube refuses the packet';
+      verdictText.textContent = 'Complement mass may look useful, but excessive projection distance or stiff-axis drift keeps the correction outside the accepted theorem lane.';
+    } else {
+      claimState.classList.add('incomplete');
+      claimState.querySelector('span').textContent = 'incomplete';
+      verdictTitle.textContent = 'Evidence packet incomplete';
+      verdictText.textContent = 'The runtime packet has some useful structure, but support lift, support floor, or measured improvement is not strong enough for the release claim.';
+    }
+  }
+
+  function themeColor(name, fallback){
+    return getComputedStyle(root).getPropertyValue(name).trim() || fallback;
+  }
+
+  function draw(){
+    var rect = canvas.getBoundingClientRect();
+    var dpr = Math.min(2, window.devicePixelRatio || 1);
+    canvas.width = Math.max(1, Math.floor(rect.width * dpr));
+    canvas.height = Math.max(1, Math.floor(rect.height * dpr));
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    var w = rect.width;
+    var h = rect.height;
+    var m = metrics();
+    var bg = themeColor('--bg', palette.bg);
+    var rule = themeColor('--rule', palette.rule);
+    var ink = themeColor('--ink', palette.ink);
+    var soft = themeColor('--ink-soft', palette.soft);
+    var accent = themeColor('--accent', palette.gold);
+
+    ctx.clearRect(0,0,w,h);
+    ctx.fillStyle = bg;
+    ctx.fillRect(0,0,w,h);
+
+    ctx.save();
+    ctx.globalAlpha = .55;
+    ctx.strokeStyle = rule;
+    ctx.lineWidth = 1;
+    for (var gx = 36; gx < w; gx += 48) {
+      ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, h); ctx.stroke();
+    }
+    for (var gy = 32; gy < h; gy += 48) {
+      ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(w, gy); ctx.stroke();
+    }
+    ctx.restore();
+
+    function map(p){
+      return {
+        x:w * (.5 + p.x * .38),
+        y:h * (.52 - p.y * .58)
+      };
+    }
+    function ribbonY(x){
+      return Math.sin(x * 2.7) * .18 + Math.sin(x * 5.8) * .035;
+    }
+    function path(offset){
+      ctx.beginPath();
+      for (var i = 0; i <= 160; i++) {
+        var x = -1 + i / 80;
+        var p = map({x:x, y:ribbonY(x) + offset});
+        if (i === 0) ctx.moveTo(p.x, p.y);
+        else ctx.lineTo(p.x, p.y);
+      }
+    }
+
+    ctx.save();
+    path(.16);
+    ctx.strokeStyle = 'rgba(233,185,73,.16)';
+    ctx.lineWidth = 28;
+    ctx.lineCap = 'round';
+    ctx.stroke();
+    path(-.16);
+    ctx.strokeStyle = 'rgba(233,185,73,.10)';
+    ctx.lineWidth = 28;
+    ctx.stroke();
+    path(0);
+    ctx.strokeStyle = accent;
+    ctx.lineWidth = 3;
+    ctx.shadowColor = accent;
+    ctx.shadowBlur = 16;
+    ctx.stroke();
+    ctx.restore();
+
+    points.forEach(function(p, i){
+      var px = p.x;
+      var py = p.y;
+      if (state.mode === 'mlip' && i % 7 === 0) py += state.escape * .22;
+      if (state.mode === 'projected' && i % 7 === 0) py += state.escape * .06;
+      if (state.mode === 'refused' && i % 7 === 0) py += state.escape * .36;
+      var q = map({x:px, y:py});
+      ctx.beginPath();
+      ctx.fillStyle = p.kind === 'support' ? palette.cyan : palette.blue;
+      ctx.globalAlpha = p.kind === 'support' ? .9 : .72;
+      ctx.arc(q.x, q.y, p.kind === 'support' ? 4.8 : 3.4, 0, Math.PI * 2);
+      ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+
+    var packet = {x:.46, y:ribbonY(.46) + .28 + state.escape * .34};
+    if (state.mode === 'classical') packet = {x:.30, y:ribbonY(.30) + .08};
+    if (state.mode === 'projected') packet = {x:.52, y:ribbonY(.52) + .10 + state.escape * .04};
+    if (state.mode === 'refused') packet = {x:.56, y:ribbonY(.56) + .34 + state.escape * .36};
+    var target = {x:packet.x, y:ribbonY(packet.x)};
+    var a = map(packet);
+    var b = map(target);
+
+    ctx.save();
+    ctx.strokeStyle = m.tubeOk ? palette.cyan : palette.red;
+    ctx.fillStyle = m.tubeOk ? palette.cyan : palette.red;
+    ctx.lineWidth = 2;
+    ctx.setLineDash([8,6]);
+    ctx.beginPath();
+    ctx.moveTo(a.x, a.y);
+    ctx.lineTo(b.x, b.y);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    var angle = Math.atan2(b.y - a.y, b.x - a.x);
+    ctx.translate(b.x, b.y);
+    ctx.rotate(angle);
+    ctx.beginPath();
+    ctx.moveTo(0,0);
+    ctx.lineTo(-10,-5);
+    ctx.lineTo(-10,5);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.fillStyle = m.tubeOk ? palette.cyan : palette.red;
+    ctx.shadowColor = m.tubeOk ? palette.cyan : palette.red;
+    ctx.shadowBlur = 18;
+    ctx.arc(a.x, a.y, 11, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = bg;
+    ctx.beginPath();
+    ctx.arc(a.x, a.y, 4.5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    var panelX = 18;
+    var panelY = 18;
+    ctx.save();
+    ctx.fillStyle = 'rgba(7,10,18,.72)';
+    ctx.strokeStyle = rule;
+    ctx.lineWidth = 1;
+    roundRect(ctx, panelX, panelY, Math.min(330, w - 36), 96, 12);
+    ctx.fill();
+    ctx.stroke();
+    ctx.fillStyle = accent;
+    ctx.font = '700 12px Inter, sans-serif';
+    ctx.fillText('SCALAR CERTIFICATE', panelX + 14, panelY + 24);
+    ctx.fillStyle = soft;
+    ctx.font = '500 12px JetBrains Mono, monospace';
+    ctx.fillText('complement=' + m.complement.toFixed(2) + '  tube=' + (m.tubeOk ? 'in' : 'out'), panelX + 14, panelY + 52);
+    ctx.fillText('rank=' + (state.rank ? 'adequate' : 'blocked') + '  gain=' + (m.accuracyOk ? 'measured' : 'none'), panelX + 14, panelY + 74);
+    ctx.restore();
+
+    ctx.save();
+    ctx.fillStyle = ink;
+    ctx.font = '700 12px Inter, sans-serif';
+    ctx.fillText('projected lane', Math.max(18, b.x - 45), Math.max(32, b.y - 18));
+    ctx.fillStyle = m.tubeOk ? palette.cyan : palette.red;
+    ctx.fillText(m.tubeOk ? 'inside tube' : 'outside tube', Math.min(w - 110, a.x + 14), Math.min(h - 24, a.y + 20));
+    ctx.restore();
+  }
+
+  function roundRect(context, x, y, width, height, radius){
+    var r = Math.min(radius, width / 2, height / 2);
+    context.beginPath();
+    context.moveTo(x + r, y);
+    context.arcTo(x + width, y, x + width, y + height, r);
+    context.arcTo(x + width, y + height, x, y + height, r);
+    context.arcTo(x, y + height, x, y, r);
+    context.arcTo(x, y, x + width, y, r);
+    context.closePath();
+  }
+
+  document.querySelectorAll('[data-mode]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      state.mode = btn.dataset.mode;
+      document.querySelectorAll('[data-mode]').forEach(function(other){
+        other.setAttribute('aria-pressed', String(other === btn));
+      });
+      updateUI();
+      draw();
+    });
+  });
+
+  escapeRange.addEventListener('input', function(){
+    state.escape = Number(escapeRange.value);
+    updateUI();
+    draw();
+  });
+
+  rankToggle.addEventListener('click', function(){
+    state.rank = !state.rank;
+    updateUI();
+    draw();
+  });
+
+  function setEscapeFromPointer(ev){
+    var rect = canvas.getBoundingClientRect();
+    var y = Math.min(rect.height, Math.max(0, ev.clientY - rect.top));
+    state.escape = Math.max(0, Math.min(1, 1 - y / rect.height));
+    escapeRange.value = state.escape.toFixed(2);
+    updateUI();
+    draw();
+  }
+  canvas.addEventListener('pointerdown', function(ev){
+    state.drag = true;
+    canvas.setPointerCapture(ev.pointerId);
+    setEscapeFromPointer(ev);
+  });
+  canvas.addEventListener('pointermove', function(ev){
+    if (state.drag) setEscapeFromPointer(ev);
+  });
+  canvas.addEventListener('pointerup', function(){ state.drag = false; });
+  canvas.addEventListener('pointercancel', function(){ state.drag = false; });
+
+  window.addEventListener('resize', function(){ draw(); });
+  updateUI();
+  draw();
+})();
+</script>
+</body>
+</html>

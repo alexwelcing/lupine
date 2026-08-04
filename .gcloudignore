@@ -23,17 +23,13 @@ paper/
 paper-engine/
 paper-engine-node/
 tools/
-distiller/
 asylum/
 mix/
-lupine-dspy/
 minimax-mcp/
 glim-think/
 
 library-site/
 
-atlas-distill/
-lupine-distill/
 distill-cli/
 lupine-ops/
 atlas-view-native/
@@ -48,16 +44,19 @@ spectra/
 td-hermes/
 Kimi_Agent_MLIP Universality Theorem/
 Kimi_Agent_MLIP Universality Theorem.zip
-KIMI_MLIP_UNIVERSAL/
-swarm_preprint_review/
+archive/KIMI_MLIP_UNIVERSAL/
+archive/swarm_preprint_review/
+archive/distiller-kb/
+archive/lupine-distill-rust/
+archive/lupine-dspy/
 *.zip
 *.pdf
 *.db
 *_changes.patch
 my_changes*.patch
 live_changes.patch
-!lupine-start/
-lupine-start/.output/
+# Retired lupine-start app now lives in archive/; nothing to upload.
+archive/lupine-start/
 
 # MLIP runner images need the canonical Rust Distill policy binary and the
 # Python runtime package at Cloud Build time. Keep the rest of the ignored
@@ -68,12 +67,12 @@ atlas-distill/**
 !atlas-distill/Cargo.lock
 !atlas-distill/src/
 !atlas-distill/src/**
-lupine-distill/**
-!lupine-distill/
-!lupine-distill/runtime/
-!lupine-distill/runtime/python/
-!lupine-distill/runtime/python/lupine_distill_runtime/
-!lupine-distill/runtime/python/lupine_distill_runtime/**
+python/**
+!python/
+!python/lupine_distill/
+!python/lupine_distill/**
+!python/lupine_distill_runtime/
+!python/lupine_distill_runtime/**
 
 # AI Agent Workspaces
 .claude/

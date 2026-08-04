@@ -16,7 +16,7 @@
         "status": "ready",
         "manifest": "tools/lupi-motion-loops.json",
         "preferred_formats": ["mp4", "webm"],
-        "target_widths": [1024, 2048, 3072],
+        "target_widths": [1024, 2048, 4096],
         "duration_seconds": [8, 15],
         "fps": 24,
         "current_generated": [
@@ -35,16 +35,28 @@
         ]
       }
     },
+    "qa": {
+      "seam_px": 128,
+      "pole_px": 96,
+      "yaw_offsets_degrees": [0, 45, 90, 135, 180, 225, 270, 315],
+      "cube_face_size": 128,
+      "max_seam_delta": 8.0,
+      "max_yaw_seam_delta": 10.0,
+      "max_cube_edge_gradient": 10.0,
+      "max_pole_std": 3.0
+    },
     "notes": [
       "All prompts target true 2:1 panoramic backgrounds for THREE.EquirectangularReflectionMapping.",
       "Keep the center calm enough for molecular geometry and HUD text.",
       "Avoid text, logos, people, foreground objects, hard vignettes, and visible left/right seams.",
       "Generated files are candidates until an operator promotes the run into viewer assets.",
+      "Use --production-quality for final Comfy candidates: it raises the base 2:1 latent, enables tiled decode, and widens seam/pole repair before promotion.",
+      "Use --sota-seam-profile for SHERPA-inspired panorama runs: it adds circular/yaw/cubemap prompt constraints, production defaults, wider repair, and stricter yaw/cubemap QA.",
       "Panoramic video variants should use the still image as poster/source master and pass temporal seam and loop QA."
     ]
   },
-  "global_positive": "wide full-bleed rectangular background texture, true 2:1 aspect ratio, seamless horizontal wrap, continuous left and right edges, centered horizon line, premium scientific visualization background for a molecular dynamics viewer, elegant material science atmosphere, cinematic but quiet, high frequency detail at the edges, low visual noise behind the central molecule, physically plausible soft lighting, crisp texture, no foreground subject",
-  "global_negative": "text, letters, watermark, logo, signature, people, face, body, animal, object in foreground, planet, moon, orb, sphere, ring, bullseye, black hole, repeated tile, mirrored quadrant, duplicate circles, fisheye circle, oval mask, circular mask, white background, white margin, page, cutout, frame, border, square crop, portrait crop, vertical crop, split image, visible seam, hard left edge, hard right edge, distorted horizon, overexposed center, blurry, low resolution, jpeg artifacts",
+  "global_positive": "wide full-bleed rectangular background texture, true 2:1 cylindrical equirectangular panorama, seamless horizontal wrap, continuous left and right edges, centered gravity-aligned horizon line, smooth low-frequency zenith and nadir caps, premium scientific visualization background for a molecular dynamics viewer, elegant material science atmosphere, cinematic but quiet, high frequency detail at the edges, low visual noise behind the central molecule, physically plausible soft lighting, crisp texture, no foreground subject",
+  "global_negative": "text, letters, watermark, logo, signature, people, face, body, animal, object in foreground, planet, moon, orb, sphere, ring, bullseye, black hole, repeated tile, mirrored quadrant, duplicate circles, fisheye circle, oval mask, circular mask, white background, white margin, page, cutout, frame, border, square crop, portrait crop, vertical crop, split image, visible seam, hard left edge, hard right edge, distorted horizon, busy zenith, busy nadir, pole starburst, radial spike at top, radial spike at bottom, overexposed center, blurry, low resolution, jpeg artifacts",
   "assets": [
     {
       "id": "nebula",

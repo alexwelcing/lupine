@@ -1,3 +1,7 @@
+> ⚠️ **Stale process artifact.** This file is a one-time extraction log with dead
+> `/sessions/...` paths. For the actual report, see
+> [`docs/rg_coarsegraining_report.md`](./rg_coarsegraining_report.md).
+
 # RG Coarse-Graining Report Extraction Notes
 
 ## Source Information

@@ -10,6 +10,7 @@ import OpenDistillationFactory.Materials.Analysis.Stats
 import Mathlib.Data.Real.Basic
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.NormNum
+import Mathlib.Algebra.Order.BigOperators.Ring.Finset
 
 namespace OpenDistillationFactory.Materials.Theory
 
@@ -196,9 +197,189 @@ theorem jacobianRank_le_min (P N : Nat) (f : PredictionMap P N) :
     | exact le_min hP hN
     | omega
 
-/-- Real-analysis corollary (load-bearing on the Mathlib import via ATLAS):
-    a participation ratio of at least 1 is strictly positive. -/
-theorem participationRatio_pos (pr : ℝ) (h : (1 : ℝ) ≤ pr) : (0 : ℝ) < pr := by
-  linarith
+-- ═══════════════════════════════════════════════════════════════
+-- ADDITIONAL STRUCTURAL THEOREMS (submission push)
+--
+-- These theorems tighten the connection between potential functional form
+-- and the dimensionality of prediction errors. They do not yet prove the
+-- full Parameter-Bound Conjecture (that requires a real differentiable
+-- prediction map), but they make the bound operational for concrete
+-- potential families and edge cases.
+-- ═══════════════════════════════════════════════════════════════
+
+/-- If there are no parameters, the effective Jacobian rank is zero. -/
+theorem jacobianRank_zero_params (N : Nat) (f : PredictionMap 0 N) :
+    jacobianRank 0 N f = 0 := by
+  unfold jacobianRank
+  simp
+
+/-- If there are no observables, the effective Jacobian rank is zero. -/
+theorem jacobianRank_zero_observables (P : Nat) (f : PredictionMap P 0) :
+    jacobianRank P 0 f = 0 := by
+  unfold jacobianRank
+  simp
+
+/-- EAM on FCC elastic constants has at most 3 effective observables, so the
+    parameter-bound conjecture predicts PR ≤ 3 regardless of the embedding
+    complexity. -/
+theorem eamFcc_effective_parameter_bound :
+    min eamFccElasticConjecture.P eamFccElasticConjecture.N = 3 := by
+  unfold eamFccElasticConjecture
+  norm_num
+
+/-- The observed synthetic EAM FCC PR (1.26) satisfies the predicted bound
+    PR ≤ 3 with room to spare. -/
+theorem observedEamFccPR_well_below_bound :
+    observedEamFccPR ≤ (Float.ofNat eamFccBound : Float) - 1.5 := by
+  native_decide
+
+/-- A Lennard-Jones potential has 2 parameters (ε, σ). On any N observables
+    the parameter-bound conjecture predicts PR ≤ min(2, N). -/
+def ljPotentialFamily : PotentialFamily :=
+  { name := "LJ", nParameters := 2, pairStyle := "lj/cut" }
+
+theorem lj_parameter_bound (N : Nat) :
+    min ljPotentialFamily.nParameters N ≤ 2 := by
+  unfold ljPotentialFamily
+  exact Nat.min_le_left 2 N
+
+/-- A Stillinger-Weber potential has 5 parameters. On any N observables the
+    conjecture predicts PR ≤ min(5, N). -/
+def swPotentialFamily : PotentialFamily :=
+  { name := "SW", nParameters := 5, pairStyle := "sw" }
+
+theorem sw_parameter_bound (N : Nat) :
+    min swPotentialFamily.nParameters N ≤ 5 := by
+  unfold swPotentialFamily
+  exact Nat.min_le_left 5 N
+
+/-- The parameter-bound conjecture is monotone in the parameter count:
+    fewer parameters can only decrease the rank bound. -/
+theorem jacobianRank_monotone_params (P1 P2 N : Nat) (f : PredictionMap P2 N)
+    (hP : P1 ≤ P2) :
+    min P1 N ≤ min P2 N := by
+  apply Nat.le_min.mpr
+  constructor
+  · exact Nat.le_trans (Nat.min_le_left P1 N) hP
+  · exact Nat.min_le_right P1 N
+
+-- ═══════════════════════════════════════════════════════════════
+-- Participation ratio formalization (new)
+-- ═══════════════════════════════════════════════════════════════
+
+section ParticipationRatio
+
+/-- Participation ratio of a finite set of eigenvalues.
+
+PR = (Σ λᵢ)² / Σ λᵢ²  (with the convention PR = 0 when the denominator is 0).
+For a covariance matrix eigenvalue spectrum, PR measures the effective
+dimensionality of the error distribution. -/
+noncomputable def participationRatio (eigenvalues : Fin N → ℝ) : ℝ :=
+  if ∑ i : Fin N, (eigenvalues i) ^ 2 = 0 then 0
+  else (∑ i : Fin N, eigenvalues i) ^ 2 / ∑ i : Fin N, (eigenvalues i) ^ 2
+
+/-- The participation ratio is nonnegative when eigenvalues are nonnegative. -/
+theorem participationRatio_nonneg (eigenvalues : Fin N → ℝ) (_h : ∀ i, 0 ≤ eigenvalues i) :
+    0 ≤ participationRatio eigenvalues := by
+  unfold participationRatio
+  split_ifs with hs2
+  · norm_num
+  · apply div_nonneg
+    · apply pow_two_nonneg
+    · apply Finset.sum_nonneg
+      intro i _
+      exact sq_nonneg _
+
+/-- Cauchy-Schwarz bound: PR is never larger than the number of eigenvalues. -/
+theorem participationRatio_le_N (eigenvalues : Fin N → ℝ) :
+    participationRatio eigenvalues ≤ (N : ℝ) := by
+  unfold participationRatio
+  split_ifs with hs2
+  · norm_num
+  · have hcs : (∑ i : Fin N, eigenvalues i) ^ 2 ≤ (N : ℝ) * ∑ i : Fin N, (eigenvalues i) ^ 2 := by
+      have h1 := Finset.sum_mul_sq_le_sq_mul_sq (Finset.univ : Finset (Fin N)) (fun _ => 1) eigenvalues
+      simp at h1 ⊢
+      exact h1
+    have hs2_pos : 0 < ∑ i : Fin N, (eigenvalues i) ^ 2 := by
+      by_contra h'
+      push Not at h'
+      have hzero : ∑ i : Fin N, (eigenvalues i) ^ 2 = 0 := by
+        have hnn : 0 ≤ ∑ i : Fin N, (eigenvalues i) ^ 2 :=
+          Finset.sum_nonneg (s := Finset.univ) (fun i _ => sq_nonneg _)
+        linarith
+      contradiction
+    apply (div_le_iff₀ hs2_pos).mpr
+    linarith
+
+/-- Stronger bound: PR is never larger than the number of nonzero eigenvalues.
+This is the key step toward the parameter-bound conjecture. -/
+theorem participationRatio_le_rank_bound
+    (eigenvalues : Fin N → ℝ)
+    (r : ℕ) (hr : ∀ s : Finset (Fin N),
+      (∀ i ∈ s, eigenvalues i ≠ 0) → s.card ≤ r) :
+    participationRatio eigenvalues ≤ (r : ℝ) := by
+  unfold participationRatio
+  split_ifs with hs2
+  · norm_num
+  · set nz := Finset.filter (fun i => eigenvalues i ≠ 0) Finset.univ with hnz
+    have hcard : nz.card ≤ r := by
+      apply hr nz
+      simp [hnz]
+    have hzero_outside : ∀ i ∈ Finset.univ \ nz, eigenvalues i = 0 := by
+      intro i hi
+      simp [hnz] at hi
+      exact hi
+    have hsum_eq : ∑ i : Fin N, eigenvalues i = ∑ i ∈ nz, eigenvalues i := by
+      rw [Finset.sum_subset (Finset.subset_univ nz)]
+      intro i _ hni
+      simp [hnz] at hni
+      simp [hni]
+    have hsq_eq : ∑ i : Fin N, (eigenvalues i) ^ 2 = ∑ i ∈ nz, (eigenvalues i) ^ 2 := by
+      rw [Finset.sum_subset (Finset.subset_univ nz)]
+      intro i _ hni
+      simp [hnz] at hni
+      rw [hni]
+      norm_num
+    have hcs : (∑ i ∈ nz, eigenvalues i) ^ 2 ≤ (nz.card : ℝ) * ∑ i ∈ nz, (eigenvalues i) ^ 2 := by
+      have h1 := Finset.sum_mul_sq_le_sq_mul_sq nz (fun _ => 1) eigenvalues
+      simp at h1 ⊢
+      exact h1
+    have hs2_pos : 0 < ∑ i : Fin N, (eigenvalues i) ^ 2 := by
+      by_contra h'
+      push Not at h'
+      have hzero : ∑ i : Fin N, (eigenvalues i) ^ 2 = 0 := by
+        have hnn : 0 ≤ ∑ i : Fin N, (eigenvalues i) ^ 2 :=
+          Finset.sum_nonneg (s := Finset.univ) (fun i _ => sq_nonneg _)
+        linarith
+      contradiction
+    rw [hsum_eq, hsq_eq]
+    have hs2_nz_pos : 0 < ∑ i ∈ nz, (eigenvalues i) ^ 2 := by linarith [hs2_pos, hsq_eq]
+    have hnn_nz : 0 ≤ ∑ i ∈ nz, (eigenvalues i) ^ 2 := by
+      apply Finset.sum_nonneg
+      intro i _
+      exact sq_nonneg (eigenvalues i)
+    have hle : (∑ i ∈ nz, eigenvalues i) ^ 2 ≤ (r : ℝ) * ∑ i ∈ nz, (eigenvalues i) ^ 2 := by
+      have h2 : (nz.card : ℝ) ≤ (r : ℝ) := by exact_mod_cast hcard
+      nlinarith [hcs, h2, hnn_nz]
+    apply (div_le_iff₀ hs2_nz_pos).mpr
+    linarith
+
+/-- Conditional form of the Parameter-Bound Conjecture.
+
+If the prediction-error covariance has at most `jacobianRank P N f` nonzero
+eigenvalues, then its participation ratio is bounded by `min P N`.  The still
+open step is to prove that error covariance rank is bounded by the Jacobian
+rank — i.e., that prediction errors lie in the tangent space of the prediction
+manifold. -/
+theorem parameterBound_conditional
+    (P N : Nat) (f : PredictionMap P N)
+    (eigenvalues : Fin N → ℝ)
+    (h_rank : ∀ s : Finset (Fin N),
+      (∀ i ∈ s, eigenvalues i ≠ 0) → s.card ≤ jacobianRank P N f) :
+    participationRatio eigenvalues ≤ (min P N : ℝ) := by
+  apply le_trans (participationRatio_le_rank_bound eigenvalues (jacobianRank P N f) h_rank)
+  exact_mod_cast jacobianRank_le_min P N f
+
+end ParticipationRatio
 
 end OpenDistillationFactory.Materials.Theory

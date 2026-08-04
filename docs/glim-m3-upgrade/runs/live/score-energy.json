@@ -1,0 +1,109 @@
+{
+  "schema": "glim.mlip.sim_matrix_score.v1",
+  "speed_metric": "speed_score",
+  "baselines": {
+    "chgnet": {
+      "error": 0.1035,
+      "row": "energy_volume"
+    },
+    "mace-mp-0": {
+      "error": 0.4116,
+      "row": "energy_volume"
+    },
+    "sevennet": {
+      "error": 0.3997,
+      "row": "energy_volume"
+    }
+  },
+  "tiers": [
+    {
+      "tier": "distill_accuracy",
+      "row": "energy_volume",
+      "mlip": "chgnet",
+      "baseline_error": 0.1035,
+      "tier_error": 0.1429,
+      "error_unit": "ev_per_atom_mae",
+      "accuracy_gain": -0.0394,
+      "accuracy_gain_pct": -38.1,
+      "speedup": 0.8875,
+      "cell_value": 0.8526,
+      "meets_commitment": false,
+      "improves_baseline": false
+    },
+    {
+      "tier": "distill_accuracy_accelerate",
+      "row": "energy_volume",
+      "mlip": "chgnet",
+      "baseline_error": 0.1035,
+      "tier_error": 0.1429,
+      "error_unit": "ev_per_atom_mae",
+      "accuracy_gain": -0.0394,
+      "accuracy_gain_pct": -38.1,
+      "speedup": 0.7222,
+      "cell_value": 0.6937,
+      "meets_commitment": false,
+      "improves_baseline": false
+    },
+    {
+      "tier": "distill_accuracy",
+      "row": "energy_volume",
+      "mlip": "mace-mp-0",
+      "baseline_error": 0.4116,
+      "tier_error": 0.3627,
+      "error_unit": "ev_per_atom_mae",
+      "accuracy_gain": 0.0489,
+      "accuracy_gain_pct": 11.9,
+      "speedup": 1.0596,
+      "cell_value": 1.1115,
+      "meets_commitment": true,
+      "improves_baseline": true
+    },
+    {
+      "tier": "distill_accuracy_accelerate",
+      "row": "energy_volume",
+      "mlip": "mace-mp-0",
+      "baseline_error": 0.4116,
+      "tier_error": 0.3627,
+      "error_unit": "ev_per_atom_mae",
+      "accuracy_gain": 0.0489,
+      "accuracy_gain_pct": 11.9,
+      "speedup": 1.0432,
+      "cell_value": 1.0942,
+      "meets_commitment": true,
+      "improves_baseline": true
+    },
+    {
+      "tier": "distill_accuracy",
+      "row": "energy_volume",
+      "mlip": "sevennet",
+      "baseline_error": 0.3997,
+      "tier_error": 0.3558,
+      "error_unit": "ev_per_atom_mae",
+      "accuracy_gain": 0.0439,
+      "accuracy_gain_pct": 11.0,
+      "speedup": 0.7365,
+      "cell_value": 0.7689,
+      "meets_commitment": true,
+      "improves_baseline": true
+    },
+    {
+      "tier": "distill_accuracy_accelerate",
+      "row": "energy_volume",
+      "mlip": "sevennet",
+      "baseline_error": 0.3997,
+      "tier_error": 0.3558,
+      "error_unit": "ev_per_atom_mae",
+      "accuracy_gain": 0.0439,
+      "accuracy_gain_pct": 11.0,
+      "speedup": 0.7213,
+      "cell_value": 0.753,
+      "meets_commitment": true,
+      "improves_baseline": true
+    }
+  ],
+  "best_tier": {
+    "mlip": "mace-mp-0",
+    "tier": "distill_accuracy",
+    "cell_value": 1.1115
+  }
+}

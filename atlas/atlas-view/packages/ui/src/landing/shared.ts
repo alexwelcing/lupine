@@ -16,15 +16,20 @@ export interface GalleryExample {
   colors: [string, string, string];
   featured?: boolean;
   metadata?: Record<string, string>;
+  /** Multi-frame trajectory marker + per-atom property to color by, when present. */
+  isTrajectory?: boolean;
+  autoPlay?: boolean;
+  colorBy?: string;
 }
 
 export const ALL_EXAMPLES: GalleryExample[] = galleryData as any[];
 
 export const FEATURED_IDS = [
+  'lupine_sphere_grid',
   'c60_buckyball',
-  'lupine_bluebonnet',
   'cnt_6_6',
   'graphene_ribbon',
+  'elliott_gst_crystallization',
   'diamond_crystal',
   'aspirin',
   'brilliant_diamond_macro',

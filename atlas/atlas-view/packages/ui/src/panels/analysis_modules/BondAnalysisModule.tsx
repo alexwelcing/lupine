@@ -70,7 +70,7 @@ export function BondAnalysisModule() {
           <div style={{ fontSize: 11, color: 'var(--slate-400)' }}>
             {bondStats ? (
               <span>
-                <strong style={{ color: 'var(--slate-200)' }}>{bondStats.count.toLocaleString()}</strong> bonds detected
+                <strong style={{ color: 'var(--slate-200)' }}>{bondStats.count.toLocaleString()}</strong> proximity links detected
               </span>
             ) : (
               'No bond data yet'
@@ -183,7 +183,7 @@ export function BondAnalysisModule() {
                 zIndex: 10,
               }}>
                 {formatNumber(histogram.binEdges[hoveredBin], 2)}–{formatNumber(histogram.binEdges[hoveredBin + 1], 2)} Å:
-                {' '}<strong>{histogram.bins[hoveredBin].toLocaleString()}</strong> bonds
+                {' '}<strong>{histogram.bins[hoveredBin].toLocaleString()}</strong> links
               </div>
             )}
             {/* Axis labels */}

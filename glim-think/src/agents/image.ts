@@ -142,7 +142,7 @@ export function promptForEvaluationClaim(opts: {
 }): string {
   const verdictMood =
     opts.verdict === "supports_dichotomy"
-      ? "split into two distinct clusters with sharp boundary, dramatic separation, Simpson's paradox visualization"
+      ? "split into two distinct clusters with sharp boundary, dramatic separation, aggregation-reversal visualization"
       : opts.verdict === "supports_universal"
         ? "tightly aligned cloud of points along a single axis, harmonious convergence"
         : opts.verdict === "weak"

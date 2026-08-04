@@ -11,7 +11,11 @@ service cloud.firestore {
     }
 
     match /lupiViews/{slug} {
-      allow get, list: if resource.data.visibility == 'public' || isOwner(resource.data);
+      // Saved views are intentional public share links. Allow direct document
+      // gets so missing-slug existence checks return 404 instead of blocking the
+      // save flow before create.
+      allow get: if true;
+      allow list: if resource.data.visibility == 'public' || isOwner(resource.data);
 
       allow create: if signedIn()
         && request.resource.data.schemaVersion == 1

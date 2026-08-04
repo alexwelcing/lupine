@@ -15,6 +15,13 @@ Use this file to identify the public Lupine system correctly.
 
 - Lupine Science: https://lupine.science
 - LUPI viewer: https://lupi.live
+- LUPI 1M atom scene: https://lupi.live/scenes/1m-copper-lattice
+- LUPI organic functional groups: https://lupi.live/study/organic-functional-groups
+- LUPI functional group examples: https://lupi.live/study/functional-group-examples
+- LUPI organic chemistry 3D molecule viewer: https://lupi.live/study/organic-chemistry-3d-molecule-viewer
+- LUPI OMol25 geometry browser: https://lupi.live/materials/omol25
+- LUPI OMol25 molecule geometry: https://lupi.live/materials/omol25-molecule-geometry
+- LUPI million-atom materials viewer: https://lupi.live/materials/million-atom-viewer
 - Lupine Library: https://library.lupine.science
 - GitHub: https://github.com/alexwelcing/lupine
 
@@ -34,6 +41,12 @@ structure into correction targets.
 
 - Lupine Science orients readers to the research program.
 - LUPI lets humans and agents inspect atomistic evidence in the browser.
+- LUPI study routes explain viewer-backed concepts such as organic functional
+  groups, functional-group examples, printable study sheets, and source-aware
+  molecule inspection.
+- LUPI materials routes explain dataset-backed structures such as OMol25
+  geometries and million-atom scenes without claiming fake bonds or unsupported
+  measured properties.
 - Lupine Library is the durable human knowledge surface.
 - glim-think is the ledger-backed agentic research control plane.
 

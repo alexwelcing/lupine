@@ -13,10 +13,11 @@ const DEFAULT_PER_SOURCE = 25;
 const SOURCE_PRIORITY: Record<MoleculeSourceId, number> = {
   gallery: 0,
   library: 1,
-  saved: 2,
-  nist: 3,
-  omol: 4,
-  pubchem: 5,
+  saved: 3,
+  nist: 4,
+  omol: 5,
+  social: 2,
+  pubchem: 6,
 };
 
 function norm(s: string): string {

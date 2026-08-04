@@ -1,0 +1,20 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-f'
+      - 'data/gcp/Dockerfile.layer2'
+      - '-t'
+      - 'us-central1-docker.pkg.dev/witching-606c6/lupine-layer2/runner:v1'
+      - '.'
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'us-central1-docker.pkg.dev/witching-606c6/lupine-layer2/runner:v1'
+
+images:
+  - 'us-central1-docker.pkg.dev/witching-606c6/lupine-layer2/runner:v1'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+  machineType: E2_HIGHCPU_8

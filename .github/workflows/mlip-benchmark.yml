@@ -13,7 +13,7 @@ name: MLIP elastic-constant benchmark
 #
 # The Space URL is read from the GLIM_HF_SPACE secret; defaults to
 # https://huggingface.co/spaces/AlexWelcing/glim-mlip-bench. Worker URL from
-# GLIM_API_URL secret.
+# GLIM_API_URL secret. Gated Worker writes use INTERNAL_TASK_TOKEN.
 
 on:
   workflow_dispatch:
@@ -66,7 +66,7 @@ jobs:
 
       - name: Install heavy MLIP deps (only when use_space=false)
         if: env.USE_SPACE != 'true'
-        working-directory: swarm_preprint_review/scripts/mlip_benchmark
+        working-directory: archive/swarm_preprint_review/scripts/mlip_benchmark
         run: |
           pip install ase numpy
           for mlip in $(echo "$MLIP_SET" | tr ',' ' '); do
@@ -82,26 +82,29 @@ jobs:
       - name: Run unit tests (extract_references + glim_mlip)
         run: |
           pip install pytest
-          python -m pytest swarm_preprint_review/scripts/mlip_benchmark/test_extract_references.py -v
+          python -m pytest archive/swarm_preprint_review/scripts/mlip_benchmark/test_extract_references.py -v
           python -m pytest tools/test_glim_mlip.py -v
 
       - name: Extract DFT references (CSV + extras)
-        working-directory: swarm_preprint_review/scripts/mlip_benchmark
+        working-directory: archive/swarm_preprint_review/scripts/mlip_benchmark
         run: python extract_references.py --out references.json
 
       - name: Predict via HF Space
         if: env.USE_SPACE == 'true'
         working-directory: tools
+        env:
+          GLIM_BENCHMARK_RUN_ID: ${{ github.run_id }}
+          GLIM_BENCHMARK_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           python glim_mlip.py batch \
             --elements "$ELEMENT_SET" \
             --mlips "$MLIP_SET" \
-            --references-from ../swarm_preprint_review/scripts/mlip_benchmark/references.json \
-            --out ../swarm_preprint_review/scripts/mlip_benchmark/mlip_records.jsonl
+            --references-from ../archive/swarm_preprint_review/scripts/mlip_benchmark/references.json \
+            --out ../archive/swarm_preprint_review/scripts/mlip_benchmark/mlip_records.jsonl
 
       - name: Predict via local install
         if: env.USE_SPACE != 'true'
-        working-directory: swarm_preprint_review/scripts/mlip_benchmark
+        working-directory: archive/swarm_preprint_review/scripts/mlip_benchmark
         run: |
           python run_predictions.py \
             --references references.json \
@@ -111,7 +114,7 @@ jobs:
             --continue-on-error
 
       - name: Show summary
-        working-directory: swarm_preprint_review/scripts/mlip_benchmark
+        working-directory: archive/swarm_preprint_review/scripts/mlip_benchmark
         run: |
           echo "=== records ==="
           wc -l mlip_records.jsonl
@@ -122,34 +125,60 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: mlip-records-${{ github.run_id }}
-          path: swarm_preprint_review/scripts/mlip_benchmark/mlip_records.jsonl
+          path: archive/swarm_preprint_review/scripts/mlip_benchmark/mlip_records.jsonl
           retention-days: 90
 
       - name: Push to glim-think /ingest/batch
         if: env.DO_INGEST == 'true'
         working-directory: tools
-        run: python glim_mlip.py ingest ../swarm_preprint_review/scripts/mlip_benchmark/mlip_records.jsonl
+        env:
+          INTERNAL_TASK_TOKEN: ${{ secrets.INTERNAL_TASK_TOKEN }}
+          GLIM_BENCHMARK_RUN_ID: ${{ github.run_id }}
+          GLIM_BENCHMARK_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: python glim_mlip.py ingest ../archive/swarm_preprint_review/scripts/mlip_benchmark/mlip_records.jsonl
+
+      - name: Open glim-think MLIP discovery loop
+        if: env.DO_INGEST == 'true'
+        working-directory: tools
+        env:
+          INTERNAL_TASK_TOKEN: ${{ secrets.INTERNAL_TASK_TOKEN }}
+          GLIM_BENCHMARK_RUN_ID: ${{ github.run_id }}
+          GLIM_BENCHMARK_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          python glim_mlip.py discovery-loop \
+            ../archive/swarm_preprint_review/scripts/mlip_benchmark/mlip_records.jsonl \
+            --campaign-id "github:${GITHUB_RUN_ID}" \
+            --github-run-id "$GITHUB_RUN_ID" \
+            --run-url "$GLIM_BENCHMARK_RUN_URL" \
+            --artifact-name "mlip-records-${GITHUB_RUN_ID}"
 
       - name: Trigger /run analysis (per element)
         if: env.DO_INGEST == 'true'
-        working-directory: swarm_preprint_review/scripts/mlip_benchmark
+        working-directory: archive/swarm_preprint_review/scripts/mlip_benchmark
+        env:
+          INTERNAL_TASK_TOKEN: ${{ secrets.INTERNAL_TASK_TOKEN }}
         run: |
           python - <<'PY'
-          import json, os, urllib.request
+          import json, os
+          import httpx
+
           api = os.environ["GLIM_API_URL"].rstrip("/")
+          token = os.environ.get("INTERNAL_TASK_TOKEN", "").strip()
           elements = sorted({json.loads(line)["element"]
                              for line in open("mlip_records.jsonl") if line.strip()})
+          failures = 0
           for el in elements:
-              body = json.dumps({"element": el, "analysis_types": ["manifold", "causal"],
-                                 "only_styles": ["mlip"]}).encode()
-              req = urllib.request.Request(
-                  f"{api}/run", data=body,
-                  headers={"Content-Type": "application/json"},
-                  method="POST",
-              )
-              try:
-                  with urllib.request.urlopen(req, timeout=120) as resp:
-                      print(f"  {el}: HTTP {resp.status}")
-              except Exception as e:
-                  print(f"  {el}: FAIL {e}")
+              body = {"element": el, "analysis_types": ["manifold", "causal"],
+                      "only_styles": ["mlip"]}
+              headers = {"Content-Type": "application/json"}
+              if token:
+                  headers["X-Internal-Token"] = token
+              r = httpx.post(f"{api}/run", json=body, headers=headers, timeout=120.0)
+              if r.status_code >= 400:
+                  failures += 1
+                  print(f"  {el}: FAIL HTTP {r.status_code}: {r.text[:300]}")
+              else:
+                  print(f"  {el}: HTTP {r.status_code}")
+          if failures:
+              raise SystemExit(f"{failures} /run analysis trigger(s) failed")
           PY

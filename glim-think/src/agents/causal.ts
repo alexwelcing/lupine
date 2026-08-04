@@ -1,5 +1,5 @@
 /**
- * CausalAgent (δ): Simpson's Paradox detection & causal screening.
+ * CausalAgent (δ): aggregation-bias detection (strict Simpson reversal, ecological fallacy, suppression) & causal screening.
  *
  * Upgraded to Think — the model reasons through stratified analysis
  * using tools, detects ecological fallacies, and persists findings.
@@ -17,7 +17,7 @@ const GROUPINGS = ["element", "pair_style", "potential_label", "structure"] as c
 // IMMI ground-state crystal structures. Each element is benchmarked in its
 // natural structure, so structure is deterministic from element (no schema
 // change). 7 BCC + 8 FCC. Enables the h2_bccfcc causal-shield screen:
-// whether crystal structure is a Simpson confounder for ref↔pred error.
+// whether crystal structure is an aggregation confounder for ref↔pred error.
 const BCC_IMMI = ["Fe", "Cr", "Mo", "W", "V", "Nb", "Ta"];
 
 /** SQL key expression for a grouping. `structure` is synthesised from
@@ -77,7 +77,7 @@ export class Causal extends GlimThinkAgent {
       }),
 
       compute_correlations: tool({
-        description: "Compute pooled and within-group Pearson correlations for a grouping variable. Detects Simpson's Paradox.",
+        description: "Compute pooled and within-group Pearson correlations for a grouping variable. Classifies aggregation structure: strict Simpson reversal (Kievit |dr|>0.3), ecological fallacy, or suppression.",
         inputSchema: z.object({
           grouping: z.enum(["element", "pair_style", "potential_label", "structure"]),
         }),

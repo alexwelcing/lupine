@@ -57,8 +57,8 @@ export interface Critique {
 
 /**
  * Row in the `claims` D1 table — adjudicated discovery claims produced by
- * lupine-distill (Rust) and ingested via POST /claims/ingest. Schema mirrors
- * lupine-distill/src/db/schema.rs so rows round-trip without transform.
+ * the archived lupine-distill Rust crate and ingested via POST /claims/ingest. Schema mirrors
+ * archive/lupine-distill-rust/src/db/schema.rs so rows round-trip without transform.
  * See migrations/0004_claims.sql AND docs/contracts/lupine_distill_to_vectorize.md
  * (the contract doc is the canonical source; this interface and the matching
  * Rust `WorkerSyncClaim` are asserted against it).
@@ -172,13 +172,18 @@ export interface Env {
   /** Z.ai model. Default glm-5.1. */
   ZAI_MODEL?: string;
   MINIMAX_API_KEY?: string;
-  /** Override the MiniMax model used by deep-tier agents. Default: MiniMax-M2.
-   * Set via `wrangler secret put MINIMAX_MODEL` to e.g. "MiniMax-M2-Pro"
-   * when the Max plan exposes a higher-tier model. */
+  /** Override the MiniMax model used by deep-tier agents. Default: MiniMax-M3
+   * (MINIMAX_DEFAULT_MODEL in agents/models.ts). Set via
+   * `wrangler secret put MINIMAX_MODEL` to pin a specific id — e.g. the
+   * "MiniMax-M2.7" A/B baseline, which is also the documented rollback target. */
   MINIMAX_MODEL?: string;
-  /** Override the MiniMax OpenAI-compatible base URL (e.g. swap to
-   * api.minimaxi.com for the international plan). Default: api.minimax.chat/v1. */
+  /** Override the MiniMax OpenAI-compatible base URL. Default: api.minimax.io/v1
+   * (used by the /admin diagnostics + model-list probes). */
   MINIMAX_BASE_URL?: string;
+  /** Override the MiniMax Anthropic-compatible base URL (Messages API). Default:
+   * api.minimax.io/anthropic/v1 — MUST include /v1 (@ai-sdk/anthropic POSTs to
+   * `${baseURL}/messages`). The endpoint the deep-tier agents call M3 through. */
+  MINIMAX_ANTHROPIC_BASE_URL?: string;
   HF_API_KEY?: string;
   /** HF Inference Providers model id (router.huggingface.co). Default:
    * meta-llama/Llama-3.1-8B-Instruct. The legacy api-inference endpoint is
@@ -202,6 +207,15 @@ export interface Env {
   /** Public URL this Worker is reachable at. Used as the expected `aud` claim
    * when verifying OIDC tokens on /feed/beats. Defaults to the request origin. */
   WORKER_URL?: string;
+  /**
+   * GCP evidence-index service URL (Cloud Run). When set, the Omnigents
+   * coordinator consults it before choosing a strategy (the memory flywheel)
+   * and POSTs coordination traces to it for future search. See
+   * agents/memoryClient.ts + gcp/evidence-index/.
+   */
+  EVIDENCE_INDEX_URL?: string;
+  /** Bearer token for write access to the evidence-index service (/ingest). */
+  EVIDENCE_INGEST_TOKEN?: string;
   /** Default GCS manifest used by the MLIP baseline grid Lab runner. */
   MLIP_BASELINE_MANIFEST_URL?: string;
   /** Default GCS output prefix used by the MLIP baseline grid Lab runner. */

@@ -1,0 +1,38 @@
+\documentclass[11pt]{letter}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{parskip}
+\usepackage[hyphens]{url}
+
+\geometry{letterpaper, margin=1in}
+
+\signature{Alex Welcing}
+\address{Lupine Science\\alex@lupine.io}
+
+\begin{document}
+
+\begin{letter}{Editor\\\textit{Integrating Materials and Manufacturing Innovation}}
+
+\opening{Dear Editor,}
+
+I am pleased to submit our manuscript entitled ``Forty Years of Interatomic Potentials, One Error Geometry: Hyper-Ribbon Universality and Why Pooled Benchmarks Mislead'' for consideration as a Technical Article in \textit{Integrating Materials and Manufacturing Innovation} (IMMI). This is a solo-authored work by Alex Welcing (Lupine Science).
+
+\textbf{What is new.} This paper presents the first demonstration that elastic constant prediction errors for 559 interatomic potentials universally occupy hyper-ribbon manifolds with effective dimensionality 1.0--2.3 out of 3 (median 1.09)---the signature of sloppy model universality applied to materials simulation. We discover a striking BCC/FCC crystal-structure dichotomy in prediction accuracy, and present the first application of random-effects meta-analysis and formal aggregation-bias detection to interatomic potential benchmarking, revealing extreme between-element heterogeneity ($I^2 = 98.6\%$) that standard pooled benchmarks obscure. We further extend the error-geometry analysis to three foundation MLIPs (MACE-MP-0, CHGNet, Orb-v3), showing that foundation-model errors are directionally structured as well, that Born-stability failures concentrate in BCC refractory metals, and that classical alignment patterns do not transfer across modeling paradigms.
+
+\textbf{Why IMMI.} IMMI is an ideal venue for this work because it uniquely publishes at the intersection of materials informatics, computational methodology, and manufacturing-relevant property prediction---the precise nexus of our contributions. The journal's emphasis on integrative approaches aligns with our goal of bridging statistical methodology with actionable insights for materials simulation.
+
+This manuscript has not been submitted to any other journal for simultaneous consideration. No preprint version has been published. All code and data are available open-source at \url{https://github.com/alexwelcing/lupine}. The standalone analysis engine, \texttt{atlas-distill}, is released under the MIT License.
+
+\textbf{Suggested Reviewers:}
+\begin{itemize}
+    \item \textbf{Prof.\ G{\'a}bor Cs{\'a}nyi} (University of Cambridge, \texttt{@cam.ac.uk})---Leading developer of machine-learning interatomic potentials (GAP, MACE); expertise in MLIP benchmarking and uncertainty quantification.
+    \item \textbf{Prof.\ James P.\ Sethna} (Cornell University, \texttt{@cornell.edu})---Pioneer of sloppy model theory and information geometry; author of the seminal work on model manifold dimensionality reduction in complex systems.
+    \item \textbf{Prof.\ Dallas R.\ Trinkle} (University of Illinois Urbana-Champaign, \texttt{@illinois.edu})---Expert in interatomic potential development, atomistic simulation of mechanical properties, and computational materials science methodology.
+\end{itemize}
+
+\closing{Sincerely,}
+
+\end{letter}
+
+\end{document}

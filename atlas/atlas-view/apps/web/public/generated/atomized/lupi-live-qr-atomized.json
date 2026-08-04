@@ -1,0 +1,24 @@
+{
+  "name": "lupi-live-qr-atomized",
+  "mode": "qr",
+  "source": "https://lupi.live",
+  "width": 37,
+  "height": 37,
+  "darkModules": 436,
+  "atoms": 21364,
+  "bonds": 36624,
+  "moduleAtoms": 7,
+  "atomSpacing": 0.22,
+  "moduleSpacing": 1.6,
+  "quietZone": 4,
+  "darkElement": "C",
+  "lightElement": "H",
+  "lightMode": "none",
+  "recommendedViewerParams": {
+    "camera": "top",
+    "bonds": "off",
+    "background": "pub-figure-neutral",
+    "renderStyle": "standard",
+    "colorScheme": "element"
+  }
+}

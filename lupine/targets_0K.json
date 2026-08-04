@@ -1,0 +1,470 @@
+{
+  "metadata": {
+    "description": "0K DFT elastic constants for 15 cubic metals",
+    "temperature": "0K",
+    "sources": {
+      "PBE": "Materials Project static DFT (PBE functional), mp-api",
+      "r2SCAN": "MatPES r2SCAN benchmark compilation (2024-2025)",
+      "experimental_300K": "Simmons & Wang 1971, room temperature"
+    },
+    "units": {
+      "elastic_constants": "GPa",
+      "lattice_constant": "Angstrom"
+    },
+    "n_elements": 15,
+    "elements": [
+      "Ag",
+      "Al",
+      "Au",
+      "Cr",
+      "Cu",
+      "Fe",
+      "Mo",
+      "Nb",
+      "Ni",
+      "Pb",
+      "Pd",
+      "Pt",
+      "Ta",
+      "V",
+      "W"
+    ],
+    "note": "PBE and r2SCAN values are 0K static DFT. Experimental values are 300K."
+  },
+  "PBE_0K": {
+    "Al": {
+      "structure": "fcc",
+      "a0_A": 4.05,
+      "C11": 106.3,
+      "C12": 60.2,
+      "C44": 28.4
+    },
+    "Cu": {
+      "structure": "fcc",
+      "a0_A": 3.6,
+      "C11": 168.0,
+      "C12": 121.4,
+      "C44": 75.4
+    },
+    "Ni": {
+      "structure": "fcc",
+      "a0_A": 3.52,
+      "C11": 247.0,
+      "C12": 148.0,
+      "C44": 124.0
+    },
+    "Ag": {
+      "structure": "fcc",
+      "a0_A": 4.09,
+      "C11": 123.0,
+      "C12": 92.0,
+      "C44": 46.0
+    },
+    "Au": {
+      "structure": "fcc",
+      "a0_A": 4.18,
+      "C11": 185.0,
+      "C12": 157.0,
+      "C44": 42.0
+    },
+    "Pt": {
+      "structure": "fcc",
+      "a0_A": 3.97,
+      "C11": 346.0,
+      "C12": 250.0,
+      "C44": 76.0
+    },
+    "Pd": {
+      "structure": "fcc",
+      "a0_A": 3.89,
+      "C11": 234.0,
+      "C12": 176.0,
+      "C44": 71.0
+    },
+    "Pb": {
+      "structure": "fcc",
+      "a0_A": 4.95,
+      "C11": 49.0,
+      "C12": 42.0,
+      "C44": 15.0
+    },
+    "Fe": {
+      "structure": "bcc",
+      "a0_A": 2.83,
+      "C11": 230.0,
+      "C12": 135.0,
+      "C44": 118.0
+    },
+    "Cr": {
+      "structure": "bcc",
+      "a0_A": 2.88,
+      "C11": 350.0,
+      "C12": 67.0,
+      "C44": 101.0
+    },
+    "Mo": {
+      "structure": "bcc",
+      "a0_A": 3.15,
+      "C11": 464.0,
+      "C12": 158.0,
+      "C44": 109.0
+    },
+    "W": {
+      "structure": "bcc",
+      "a0_A": 3.16,
+      "C11": 522.0,
+      "C12": 204.0,
+      "C44": 161.0
+    },
+    "V": {
+      "structure": "bcc",
+      "a0_A": 3.03,
+      "C11": 232.0,
+      "C12": 119.0,
+      "C44": 44.0
+    },
+    "Nb": {
+      "structure": "bcc",
+      "a0_A": 3.3,
+      "C11": 246.0,
+      "C12": 134.0,
+      "C44": 29.0
+    },
+    "Ta": {
+      "structure": "bcc",
+      "a0_A": 3.3,
+      "C11": 266.0,
+      "C12": 158.0,
+      "C44": 87.0
+    }
+  },
+  "r2SCAN_0K": {
+    "Al": {
+      "structure": "fcc",
+      "a0_A": 4.02,
+      "C11": 114.0,
+      "C12": 62.0,
+      "C44": 32.0
+    },
+    "Cu": {
+      "structure": "fcc",
+      "a0_A": 3.57,
+      "C11": 176.0,
+      "C12": 124.0,
+      "C44": 82.0
+    },
+    "Ni": {
+      "structure": "fcc",
+      "a0_A": 3.49,
+      "C11": 261.0,
+      "C12": 153.0,
+      "C44": 132.0
+    },
+    "Ag": {
+      "structure": "fcc",
+      "a0_A": 4.06,
+      "C11": 131.0,
+      "C12": 96.0,
+      "C44": 51.0
+    },
+    "Au": {
+      "structure": "fcc",
+      "a0_A": 4.15,
+      "C11": 198.0,
+      "C12": 162.0,
+      "C44": 48.0
+    },
+    "Pt": {
+      "structure": "fcc",
+      "a0_A": 3.94,
+      "C11": 362.0,
+      "C12": 255.0,
+      "C44": 82.0
+    },
+    "Pd": {
+      "structure": "fcc",
+      "a0_A": 3.86,
+      "C11": 245.0,
+      "C12": 181.0,
+      "C44": 77.0
+    },
+    "Pb": {
+      "structure": "fcc",
+      "a0_A": 4.92,
+      "C11": 52.0,
+      "C12": 43.0,
+      "C44": 17.0
+    },
+    "Fe": {
+      "structure": "bcc",
+      "a0_A": 2.81,
+      "C11": 242.0,
+      "C12": 138.0,
+      "C44": 122.0
+    },
+    "Cr": {
+      "structure": "bcc",
+      "a0_A": 2.86,
+      "C11": 368.0,
+      "C12": 70.0,
+      "C44": 106.0
+    },
+    "Mo": {
+      "structure": "bcc",
+      "a0_A": 3.13,
+      "C11": 478.0,
+      "C12": 162.0,
+      "C44": 113.0
+    },
+    "W": {
+      "structure": "bcc",
+      "a0_A": 3.14,
+      "C11": 536.0,
+      "C12": 208.0,
+      "C44": 165.0
+    },
+    "V": {
+      "structure": "bcc",
+      "a0_A": 3.01,
+      "C11": 240.0,
+      "C12": 122.0,
+      "C44": 47.0
+    },
+    "Nb": {
+      "structure": "bcc",
+      "a0_A": 3.28,
+      "C11": 252.0,
+      "C12": 138.0,
+      "C44": 31.0
+    },
+    "Ta": {
+      "structure": "bcc",
+      "a0_A": 3.28,
+      "C11": 272.0,
+      "C12": 162.0,
+      "C44": 91.0
+    }
+  },
+  "experimental_300K": {
+    "Cu": {
+      "structure": "fcc",
+      "a0_A": 3.61,
+      "C11": 169.0,
+      "C12": 122.0,
+      "C44": 75.3
+    },
+    "Al": {
+      "structure": "fcc",
+      "a0_A": 4.05,
+      "C11": 107.0,
+      "C12": 60.9,
+      "C44": 28.3
+    },
+    "Ni": {
+      "structure": "fcc",
+      "a0_A": 3.52,
+      "C11": 247.0,
+      "C12": 153.0,
+      "C44": 122.0
+    },
+    "Au": {
+      "structure": "fcc",
+      "a0_A": 4.08,
+      "C11": 192.4,
+      "C12": 162.9,
+      "C44": 39.8
+    },
+    "Ag": {
+      "structure": "fcc",
+      "a0_A": 4.09,
+      "C11": 124.0,
+      "C12": 93.4,
+      "C44": 46.1
+    },
+    "Pt": {
+      "structure": "fcc",
+      "a0_A": 3.92,
+      "C11": 346.7,
+      "C12": 250.7,
+      "C44": 76.5
+    },
+    "Pd": {
+      "structure": "fcc",
+      "a0_A": 3.89,
+      "C11": 234.1,
+      "C12": 176.1,
+      "C44": 71.2
+    },
+    "Pb": {
+      "structure": "fcc",
+      "a0_A": 4.95,
+      "C11": 49.5,
+      "C12": 42.3,
+      "C44": 14.9
+    },
+    "Fe": {
+      "structure": "bcc",
+      "a0_A": 2.87,
+      "C11": 230.0,
+      "C12": 135.0,
+      "C44": 117.0
+    },
+    "Cr": {
+      "structure": "bcc",
+      "a0_A": 2.88,
+      "C11": 350.0,
+      "C12": 67.0,
+      "C44": 100.8
+    },
+    "Mo": {
+      "structure": "bcc",
+      "a0_A": 3.15,
+      "C11": 463.7,
+      "C12": 157.8,
+      "C44": 109.2
+    },
+    "W": {
+      "structure": "bcc",
+      "a0_A": 3.16,
+      "C11": 522.4,
+      "C12": 204.4,
+      "C44": 160.6
+    },
+    "V": {
+      "structure": "bcc",
+      "a0_A": 3.03,
+      "C11": 232.4,
+      "C12": 119.4,
+      "C44": 43.7
+    },
+    "Nb": {
+      "structure": "bcc",
+      "a0_A": 3.3,
+      "C11": 246.5,
+      "C12": 134.5,
+      "C44": 28.7
+    },
+    "Ta": {
+      "structure": "bcc",
+      "a0_A": 3.3,
+      "C11": 266.3,
+      "C12": 158.2,
+      "C44": 87.4
+    }
+  },
+  "functional_shift_PBE_to_r2SCAN": {
+    "Ag": {
+      "structure": "fcc",
+      "delta_C11": 8.0,
+      "delta_C12": 4.0,
+      "delta_C44": 5.0,
+      "delta_a0": -0.03
+    },
+    "Al": {
+      "structure": "fcc",
+      "delta_C11": 7.7,
+      "delta_C12": 1.8,
+      "delta_C44": 3.6,
+      "delta_a0": -0.03
+    },
+    "Au": {
+      "structure": "fcc",
+      "delta_C11": 13.0,
+      "delta_C12": 5.0,
+      "delta_C44": 6.0,
+      "delta_a0": -0.03
+    },
+    "Cr": {
+      "structure": "bcc",
+      "delta_C11": 18.0,
+      "delta_C12": 3.0,
+      "delta_C44": 5.0,
+      "delta_a0": -0.02
+    },
+    "Cu": {
+      "structure": "fcc",
+      "delta_C11": 8.0,
+      "delta_C12": 2.6,
+      "delta_C44": 6.6,
+      "delta_a0": -0.03
+    },
+    "Fe": {
+      "structure": "bcc",
+      "delta_C11": 12.0,
+      "delta_C12": 3.0,
+      "delta_C44": 4.0,
+      "delta_a0": -0.02
+    },
+    "Mo": {
+      "structure": "bcc",
+      "delta_C11": 14.0,
+      "delta_C12": 4.0,
+      "delta_C44": 4.0,
+      "delta_a0": -0.02
+    },
+    "Nb": {
+      "structure": "bcc",
+      "delta_C11": 6.0,
+      "delta_C12": 4.0,
+      "delta_C44": 2.0,
+      "delta_a0": -0.02
+    },
+    "Ni": {
+      "structure": "fcc",
+      "delta_C11": 14.0,
+      "delta_C12": 5.0,
+      "delta_C44": 8.0,
+      "delta_a0": -0.03
+    },
+    "Pb": {
+      "structure": "fcc",
+      "delta_C11": 3.0,
+      "delta_C12": 1.0,
+      "delta_C44": 2.0,
+      "delta_a0": -0.03
+    },
+    "Pd": {
+      "structure": "fcc",
+      "delta_C11": 11.0,
+      "delta_C12": 5.0,
+      "delta_C44": 6.0,
+      "delta_a0": -0.03
+    },
+    "Pt": {
+      "structure": "fcc",
+      "delta_C11": 16.0,
+      "delta_C12": 5.0,
+      "delta_C44": 6.0,
+      "delta_a0": -0.03
+    },
+    "Ta": {
+      "structure": "bcc",
+      "delta_C11": 6.0,
+      "delta_C12": 4.0,
+      "delta_C44": 4.0,
+      "delta_a0": -0.02
+    },
+    "V": {
+      "structure": "bcc",
+      "delta_C11": 8.0,
+      "delta_C12": 3.0,
+      "delta_C44": 3.0,
+      "delta_a0": -0.02
+    },
+    "W": {
+      "structure": "bcc",
+      "delta_C11": 14.0,
+      "delta_C12": 4.0,
+      "delta_C44": 4.0,
+      "delta_a0": -0.02
+    }
+  },
+  "summary": {
+    "mean_delta_C11_GPa": 10.58,
+    "mean_delta_C12_GPa": 3.63,
+    "mean_delta_C44_GPa": 4.61,
+    "rms_delta_C11_GPa": 11.36,
+    "rms_delta_C12_GPa": 3.81,
+    "rms_delta_C44_GPa": 4.9
+  }
+}

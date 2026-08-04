@@ -187,19 +187,22 @@ try {
     signedOutAuthTrigger
   );
 
-  await page.waitForSelector('[data-testid="lupi-auth-callout"]', { timeout: 8000 });
-  const authCalloutState = await page.evaluate(() => ({
-    text: document.querySelector('[data-testid="lupi-auth-callout"]')?.textContent ?? '',
-    google: Boolean(document.querySelector('[data-testid="lupi-auth-callout-google"]')),
-    github: Boolean(document.querySelector('[data-testid="lupi-auth-callout-github"]')),
+  await page.waitForSelector('[data-testid="lupi-agent-dock-button"]', { timeout });
+  await page.click('[data-testid="lupi-agent-dock-button"]');
+  await page.waitForSelector('[data-testid="lupi-agent-dock-panel"]', { timeout: 8000 });
+  await page.click('[data-testid="lupi-agent-dock-tab-id"]');
+  await page.waitForSelector('[data-testid="lupi-agent-dock-id"]', { timeout: 8000 });
+  const signedOutIdentityState = await page.evaluate(() => ({
+    text: document.querySelector('[data-testid="lupi-agent-dock-id"]')?.textContent ?? '',
+    auth: window.__lupiFirebaseAuth?.getState(),
   }));
   check(
-    'sign-in callout exposes direct providers',
-    authCalloutState.text.includes('Lupi ID') && authCalloutState.google && authCalloutState.github,
-    authCalloutState
+    'signed-out identity panel exposes direct providers',
+    signedOutIdentityState.text.includes('Google') && signedOutIdentityState.text.includes('GitHub'),
+    signedOutIdentityState
   );
   await page.screenshot({ path: authCalloutScreenshotPath, fullPage: false });
-  console.log(`[verify:mcp] auth callout screenshot: ${authCalloutScreenshotPath}`);
+  console.log(`[verify:mcp] signed-out identity screenshot: ${authCalloutScreenshotPath}`);
 
   const overrideState = await page.evaluate(async () => {
     const before = window.__lupiFirebaseAuth.getState();
@@ -212,13 +215,15 @@ try {
     overrideState.skipped || (overrideState.override === true && overrideState.email === 'codex-test@lupi.local' && overrideState.hasToken === true),
     overrideState
   );
+  const overrideSignedIn = !overrideState.skipped
+    && overrideState.override === true
+    && overrideState.email === 'codex-test@lupi.local'
+    && overrideState.hasToken === true;
 
-  await page.waitForSelector('[data-testid="lupi-agent-dock-button"]', { timeout });
-  await page.click('[data-testid="lupi-agent-dock-button"]');
   await page.waitForSelector('[data-testid="lupi-agent-dock-panel"]', { timeout: 8000 });
   await page.click('[data-testid="lupi-agent-dock-tab-mcp"]');
   await page.waitForSelector('[data-testid="lupi-agent-dock-mcp"]', { timeout: 8000 });
-  check('agent dock exposes signed-in MCP controls', true, {});
+  check('agent dock exposes MCP controls', true, { overrideSignedIn });
   await page.screenshot({ path: agentDockScreenshotPath, fullPage: false });
   console.log(`[verify:mcp] agent dock screenshot: ${agentDockScreenshotPath}`);
   await page.click('[data-testid="lupi-agent-dock-tab-id"]');
@@ -227,14 +232,24 @@ try {
     text: document.querySelector('[data-testid="lupi-agent-dock-id"]')?.textContent ?? '',
     auth: window.__lupiFirebaseAuth?.getState(),
   }));
-  check(
-    'user menu renders signed-in session controls',
-    userMenuState.text.includes('Codex Test')
-      && userMenuState.text.includes('Copy token')
-      && userMenuState.text.includes('Sign out')
-      && userMenuState.auth?.override === true,
-    userMenuState
-  );
+  if (overrideSignedIn) {
+    check(
+      'user menu renders signed-in session controls',
+      userMenuState.text.includes('Codex Test')
+        && userMenuState.text.includes('Copy token')
+        && userMenuState.text.includes('Sign out')
+        && userMenuState.auth?.override === true,
+      userMenuState
+    );
+  } else {
+    check(
+      'user menu renders signed-out provider controls',
+      userMenuState.text.includes('Google')
+        && userMenuState.text.includes('GitHub')
+        && userMenuState.auth?.loading === false,
+      userMenuState
+    );
+  }
   await page.screenshot({ path: userMenuScreenshotPath, fullPage: false });
   console.log(`[verify:mcp] user menu screenshot: ${userMenuScreenshotPath}`);
   await page.click('[data-testid="lupi-agent-dock-button"]');

@@ -103,6 +103,12 @@ A **cold visitor rotates a molecule and clicks Save within ~60s.**
 - Fully reversible: a vendor (PostHog, Mixpanel, BigQuery, Cloud Function) drops
   in **behind the same `track()` call** with **zero call-site changes**, by
   setting `VITE_LUPI_ANALYTICS_URL`.
+- Firebase/GA4 is wired as an optional sink, but it is dark by default. Keep
+  `VITE_FIREBASE_ANALYTICS_ENABLED=false` and
+  `VITE_FIREBASE_ANALYTICS_CONSENT=denied` to avoid Google Analytics storage and
+  a consent banner. Only set both `VITE_FIREBASE_ANALYTICS_ENABLED=true` and
+  `VITE_FIREBASE_ANALYTICS_CONSENT=granted` when the deployment has an explicit
+  consent/legal basis.
 
 Implementation lives in `packages/ui/src/analytics/`:
 
@@ -116,6 +122,9 @@ Implementation lives in `packages/ui/src/analytics/`:
   any PII key/value defensively, and sends via a **pluggable sink**
   (`navigator.sendBeacon` → `fetch` keepalive when `VITE_LUPI_ANALYTICS_URL` is
   set; no-op + `console.debug` in dev when unset). **Never throws into the app.**
+- `firebaseSink.ts` — optional Firebase Analytics forwarding for the same
+  sanitized event names. It does not import or initialize `firebase/analytics`
+  unless the explicit Firebase Analytics env flags above are enabled.
 
 #### Event taxonomy (implemented, ~11 names)
 
@@ -194,6 +203,15 @@ Each item is tagged `[finding-id → play]`.
    like PostHog) that accepts a JSON POST of the `AnalyticsPayload`.
 2. Set `VITE_LUPI_ANALYTICS_URL` in the deploy env.
 3. Done. Every existing `track()` call now ships to the sink — **no code edits**.
+
+For Firebase Analytics specifically, the Firebase web app already carries
+measurement ID `G-BDBRM73QVJ`. Set the two explicit opt-in env vars only after
+consent is handled:
+
+```bash
+VITE_FIREBASE_ANALYTICS_ENABLED=true
+VITE_FIREBASE_ANALYTICS_CONSENT=granted
+```
 
 Payload shape (`packages/ui/src/analytics/track.ts`):
 

@@ -32,8 +32,8 @@ from pathlib import Path
 
 _HERE = Path(__file__).resolve()
 _REPO = _HERE.parents[1]
-# The gate library lives in the lupine-distill runtime; make it importable.
-sys.path.insert(0, str(_REPO / "lupine-distill" / "runtime" / "python"))
+# The gate library lives in the python/ Distill package root; make it importable.
+sys.path.insert(0, str(_REPO / "python"))
 
 from lupine_distill.constants import HOME_REFERENCE_FAMILY  # noqa: E402
 from lupine_distill.regime import (  # noqa: E402

@@ -58,7 +58,7 @@ export const COLOR_SCHEMES: Record<ColorSchemeId, SchemeProfile> = {
   property: {
     id: 'property',
     label: 'Property',
-    tagline: 'Colormap of a per-atom scalar (energy, charge, …).',
+    tagline: 'Colormap of a loaded per-atom source scalar.',
     atomColorMode: 'property',
     atomColorSource: 'colormap', // property mode reads from uColormap, not uPalette
     botanical: false,

@@ -5,13 +5,23 @@ import type { NistCatalogEntry, NistSummary } from '@atlas/nist';
 import { filterCatalog, loadNistCatalog, summarize } from '@atlas/nist';
 import { useStore, type LoadedFile } from './store';
 import { COLOR_SCHEMES, type ColorSchemeId } from './coloring';
-import { loadMoleculeSource } from './loadMoleculeSource';
 import { useFirebaseAuth } from './auth/useFirebaseAuth';
 import { MOLECULE_PROVIDERS, searchMolecules, type MoleculeHit, type MoleculeQuery, type MoleculeSourceId } from './molecules';
 import { MoleculeSearch } from './molecules/MoleculeSearch';
+import { recognizeLupiUrlPayload } from './lupiUrlRecognition';
+import { openMolecule } from './viewer/openMolecule';
+import {
+  LUPI_VIEWER_MCP_VERSION,
+  MAX_PERSISTED_EXPORT_CHARS,
+  MAX_PERSISTED_RESPONSE_LOG,
+  MCP_RESPONSE_EVENT,
+  MCP_RESPONSE_STORAGE_KEY,
+} from './mcp/protocol';
 
 type LupiMcpToolName =
   | 'lupi.generate_molecule'
+  | 'lupi.load_molecule_url'
+  | 'lupi.open_saved_view'
   | 'lupi.search_molecules'
   | 'lupi.set_viewer'
   | 'lupi.export_xyz'
@@ -27,6 +37,8 @@ interface LupiMcpRequest {
   arguments: Record<string, unknown>;
 }
 
+type BondColorMode = ReturnType<typeof useStore.getState>['bondColorMode'];
+
 interface ViewerPatch extends Record<string, unknown> {
   showBonds?: boolean;
   atomScale?: number;
@@ -40,6 +52,8 @@ interface ViewerPatch extends Record<string, unknown> {
   colorProperty?: string;
   colormap?: ColormapName;
   cameraPreset?: CameraPreset;
+  bondTolerance?: number;
+  bondColorMode?: BondColorMode;
 }
 
 interface MoleculeAtom {
@@ -131,11 +145,7 @@ declare global {
   }
 }
 
-const LUPI_VIEWER_MCP_VERSION = '2026-05-30.catalog-controls';
 const NIST_BASE = String(import.meta.env.VITE_NIST_BASE_URL ?? '/nist').replace(/\/$/, '');
-const MCP_RESPONSE_STORAGE_KEY = 'lupi.viewer.mcp.responses.v1';
-const MAX_PERSISTED_RESPONSE_LOG = 24;
-const MAX_PERSISTED_EXPORT_CHARS = 20_000;
 
 const TEMPLATE_MOLECULES: Array<{
   name: string;
@@ -642,8 +652,8 @@ export function McpViewerHarness() {
       setResponse(responses[responses.length - 1] ?? null);
       setResponseLog((window.__lupiViewerMcpResponses ?? readStoredMcpResponses()).slice(-MAX_VISIBLE_RESPONSE_LOG));
     };
-    window.addEventListener('lupi:mcp:response', onResponse);
-    return () => window.removeEventListener('lupi:mcp:response', onResponse);
+    window.addEventListener(MCP_RESPONSE_EVENT, onResponse);
+    return () => window.removeEventListener(MCP_RESPONSE_EVENT, onResponse);
   }, []);
 
   useEffect(() => {
@@ -842,7 +852,8 @@ export function McpViewerHarness() {
     setBusy(true);
     setActivePotentialId(entry.id);
     try {
-      await loadMoleculeSource(`${NIST_BASE}/${entry.demo_path}`);
+      const result = await openMolecule({ kind: 'url', url: `${NIST_BASE}/${entry.demo_path}`, history: 'none' });
+      if (!result.ok) throw new Error(result.message);
       publishResponses([okResponse(
         {
           id: `catalog-demo-${entry.id}`,
@@ -933,9 +944,12 @@ export function McpViewerHarness() {
 
       {panel === 'agent' ? (
         <div style={mcpPanelBodyStyle}>
+          <div style={mcpLabelStyle}>Agent command</div>
           <div style={agentComposerStyle}>
             <textarea
               data-testid="lupine-mcp-agent-command"
+              aria-label="Agent command or natural language instruction for the viewer"
+              placeholder="e.g. load caffeine or set bonds on"
               value={agentCommand}
               onChange={(event) => setAgentCommand(event.target.value)}
               style={agentTextAreaStyle}
@@ -1116,6 +1130,23 @@ async function executeLupiViewerMcpRequest(request: LupiMcpRequest): Promise<Lup
       return okResponse(request, transcript, { viewer: readViewerState() });
     }
 
+    if (request.tool === 'lupi.load_molecule_url') {
+      const url = readString(request.arguments.url);
+      if (!url) throw new Error('lupi.load_molecule_url requires a URL.');
+      const result = await openMolecule({ kind: 'url', url, history: 'none' });
+      if (!result.ok) throw new Error(result.message);
+      transcript.push(`loaded molecule URL: ${url}`);
+      return okResponse(request, transcript, { viewer: readViewerState() });
+    }
+
+    if (request.tool === 'lupi.open_saved_view') {
+      const slug = readString(request.arguments.slug);
+      if (!slug) throw new Error('lupi.open_saved_view requires a saved-view slug.');
+      window.location.hash = `#/view/${encodeURIComponent(slug)}`;
+      transcript.push(`opened saved Lupi view: ${slug}`);
+      return okResponse(request, transcript, { viewer: readViewerState() });
+    }
+
     if (request.tool === 'lupi.set_viewer') {
       const patch = readViewerPatch(request.arguments);
       applyViewerPatch(patch, transcript);
@@ -1202,6 +1233,14 @@ async function executeLupiViewerMcpRequest(request: LupiMcpRequest): Promise<Lup
 function parseViewerAgentCommand(command: string): LupiMcpRequest[] {
   const trimmed = command.trim();
   if (!trimmed) return [];
+
+  const recognizedUrl = recognizeLupiUrlPayload(trimmed, typeof window !== 'undefined' ? window.location.href : undefined);
+  if (recognizedUrl?.kind === 'loadUrl') {
+    return [makeRequest('lupi.load_molecule_url', { url: recognizedUrl.url })];
+  }
+  if (recognizedUrl?.kind === 'savedView') {
+    return [makeRequest('lupi.open_saved_view', { slug: recognizedUrl.slug })];
+  }
 
   if (/^https?:\/\//i.test(trimmed)) {
     try {
@@ -1410,7 +1449,7 @@ function emitLupiMcpResponse(
   window.__lupiViewerMcpResponses.push(payload);
   window.__lupiViewerMcpResponses = window.__lupiViewerMcpResponses.slice(-MAX_PERSISTED_RESPONSE_LOG);
   writeStoredMcpResponses(window.__lupiViewerMcpResponses);
-  window.dispatchEvent(new CustomEvent('lupi:mcp:response', { detail: payload }));
+  window.dispatchEvent(new CustomEvent(MCP_RESPONSE_EVENT, { detail: payload }));
   return payload;
 }
 
@@ -1709,6 +1748,15 @@ function applyViewerPatch(patch: ViewerPatch, transcript: string[]) {
     applied.cameraPreset = patch.cameraPreset;
   }
 
+  if (patch.bondTolerance !== undefined) {
+    state.setBondTolerance(clamp(patch.bondTolerance, 0, 1.5));
+    applied.bondTolerance = clamp(patch.bondTolerance, 0, 1.5);
+  }
+  if (patch.bondColorMode !== undefined) {
+    state.setBondColorMode(patch.bondColorMode);
+    applied.bondColorMode = patch.bondColorMode;
+  }
+
   if (patch.showBonds !== undefined) next.showBonds = patch.showBonds;
   if (patch.atomScale !== undefined) next.atomScale = clamp(patch.atomScale, 0.2, 3);
   if (patch.showCell !== undefined) next.showCell = patch.showCell;
@@ -1727,6 +1775,14 @@ function applyViewerPatch(patch: ViewerPatch, transcript: string[]) {
   }
 }
 
+function readBondColorMode(value: unknown): BondColorMode | undefined {
+  const raw = String(value ?? '').toLowerCase();
+  if (raw === 'type' || raw === 'length' || raw === 'energy' || raw === 'screening') {
+    return raw as BondColorMode;
+  }
+  return undefined;
+}
+
 function readViewerPatch(args: Record<string, unknown>): ViewerPatch {
   const patch: ViewerPatch = {};
   const showBonds = readBoolean(args.showBonds);
@@ -1741,9 +1797,13 @@ function readViewerPatch(args: Record<string, unknown>): ViewerPatch {
   const colorProperty = readString(args.colorProperty);
   const colormap = readColormap(args.colormap);
   const cameraPreset = readCameraPreset(args.cameraPreset ?? args.camera);
+  const bondTolerance = readNumber(args.bondTolerance);
+  const bondColorMode = readBondColorMode(args.bondColorMode);
 
   if (showBonds !== undefined) patch.showBonds = showBonds;
   if (atomScale !== undefined) patch.atomScale = atomScale;
+  if (bondTolerance !== undefined) patch.bondTolerance = bondTolerance;
+  if (bondColorMode !== undefined) patch.bondColorMode = bondColorMode;
   if (showCell !== undefined) patch.showCell = showCell;
   if (showAxes !== undefined) patch.showAxes = showAxes;
   if (renderStyle !== undefined) patch.renderStyle = renderStyle;

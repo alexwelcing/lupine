@@ -13,10 +13,8 @@ SOURCE_DIR = ROOT / "docs" / "brand" / "agent"
 BRAND_CONFIG = ROOT / "brand.config.json"
 
 SITE_ROOTS = [
-    ROOT / "lupine-start" / "public",
     ROOT / "library-site" / "src",
     ROOT / "atlas" / "atlas-view" / "apps" / "web" / "public",
-    ROOT / "atlas" / "atlas-view" / "apps" / "lupine-site" / "public",
 ]
 
 

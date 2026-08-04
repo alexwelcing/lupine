@@ -1,0 +1,37 @@
+[package]
+name = "lupine-wiki"
+version = "0.1.0"
+edition = "2024"
+description = "Sphere-grid knowledge base for the Lupine + Hermes ecosystem"
+license = "MIT"
+repository = "https://github.com/alexwelcing/lupine"
+keywords = ["knowledge-graph", "wiki", "materials-science", "lupine", "hermes"]
+categories = ["science", "data-structures", "command-line-utilities"]
+readme = "README.md"
+
+[lib]
+name = "lupine_wiki"
+path = "src/lib.rs"
+
+[[bin]]
+name = "lupine-wiki"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = "1.0"
+chrono = { version = "0.4", features = ["serde"] }
+clap = { version = "4.5", features = ["derive", "env"] }
+dirs = "5.0"
+rand = "0.9"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+serde_yaml = "0.9"
+sha2 = "0.10"
+hex = "0.4"
+walkdir = "2"
+rusqlite = { version = "0.32", features = ["bundled", "chrono", "serde_json"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+[dev-dependencies]
+tempfile = "3.14"

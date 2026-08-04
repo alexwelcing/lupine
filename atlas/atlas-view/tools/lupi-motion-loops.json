@@ -25,6 +25,16 @@
       "public": true
     },
     {
+      "id": "production",
+      "label": "Production 4K",
+      "width": 4096,
+      "height": 2048,
+      "file_suffix": "_4k",
+      "crf": 20,
+      "ffmpeg_preset": "slow",
+      "public": false
+    },
+    {
       "id": "preview",
       "label": "Preview",
       "width": 1024,
@@ -35,6 +45,174 @@
     }
   ],
   "loops": [
+    {
+      "id": "world-quantum-horizon",
+      "viewer_preset_id": "world-quantum-horizon-loop",
+      "label": "Quantum Horizon Loop",
+      "source": "bg_world_quantum_horizon.jpg",
+      "poster": "bg_world_quantum_horizon.jpg",
+      "output_base": "bg_world_quantum_horizon_loop",
+      "top": "#06111f",
+      "bottom": "#010205",
+      "badge": "360",
+      "intensity": "quiet",
+      "motion": {
+        "drift_px": 18,
+        "layer_drift_px": -42,
+        "layer_opacity": 0.08,
+        "contrast": 1.04,
+        "color": 1.02,
+        "exposure_pulse": 0.014,
+        "band_strength": 0.05
+      }
+    },
+    {
+      "id": "world-graphene-dawn",
+      "viewer_preset_id": "world-graphene-dawn-loop",
+      "label": "Graphene Dawn Loop",
+      "source": "bg_world_graphene_dawn.jpg",
+      "poster": "bg_world_graphene_dawn.jpg",
+      "output_base": "bg_world_graphene_dawn_loop",
+      "top": "#0a1420",
+      "bottom": "#020305",
+      "badge": "360",
+      "intensity": "balanced",
+      "motion": {
+        "drift_px": 24,
+        "layer_drift_px": 56,
+        "layer_opacity": 0.1,
+        "contrast": 1.06,
+        "color": 1.01,
+        "exposure_pulse": 0.014,
+        "band_strength": 0.04
+      }
+    },
+    {
+      "id": "world-alloy-foundry",
+      "viewer_preset_id": "world-alloy-foundry-loop",
+      "label": "Alloy Foundry Loop",
+      "source": "bg_world_alloy_foundry.jpg",
+      "poster": "bg_world_alloy_foundry.jpg",
+      "output_base": "bg_world_alloy_foundry_loop",
+      "top": "#100d12",
+      "bottom": "#030100",
+      "badge": "360",
+      "intensity": "active",
+      "motion": {
+        "drift_px": 20,
+        "layer_drift_px": -50,
+        "layer_opacity": 0.12,
+        "contrast": 1.08,
+        "color": 1.04,
+        "exposure_pulse": 0.02,
+        "band_strength": 0.04
+      }
+    },
+    {
+      "id": "world-bioelectric-cavern",
+      "viewer_preset_id": "world-bioelectric-cavern-loop",
+      "label": "Bioelectric Cavern Loop",
+      "source": "bg_world_bioelectric_cavern.jpg",
+      "poster": "bg_world_bioelectric_cavern.jpg",
+      "output_base": "bg_world_bioelectric_cavern_loop",
+      "top": "#061817",
+      "bottom": "#010605",
+      "badge": "360",
+      "intensity": "balanced",
+      "motion": {
+        "drift_px": 22,
+        "layer_drift_px": 62,
+        "layer_opacity": 0.13,
+        "contrast": 1.05,
+        "color": 1.04,
+        "exposure_pulse": 0.018,
+        "band_strength": 0.06
+      }
+    },
+    {
+      "id": "world-catalyst-rain",
+      "viewer_preset_id": "world-catalyst-rain-loop",
+      "label": "Catalyst Rain Loop",
+      "source": "bg_world_catalyst_rain.jpg",
+      "poster": "bg_world_catalyst_rain.jpg",
+      "output_base": "bg_world_catalyst_rain_loop",
+      "top": "#07121a",
+      "bottom": "#020506",
+      "badge": "360",
+      "intensity": "balanced",
+      "motion": {
+        "drift_px": 14,
+        "layer_drift_px": 44,
+        "layer_opacity": 0.12,
+        "contrast": 1.05,
+        "color": 1.03,
+        "exposure_pulse": 0.014,
+        "band_strength": 0.04
+      }
+    },
+    {
+      "id": "world-ion-storm",
+      "viewer_preset_id": "world-ion-storm-loop",
+      "label": "Ion Storm Loop",
+      "source": "bg_world_ion_storm.jpg",
+      "poster": "bg_world_ion_storm.jpg",
+      "output_base": "bg_world_ion_storm_loop",
+      "top": "#080b18",
+      "bottom": "#01020a",
+      "badge": "360",
+      "intensity": "active",
+      "motion": {
+        "drift_px": 18,
+        "layer_drift_px": -58,
+        "layer_opacity": 0.14,
+        "contrast": 1.07,
+        "color": 1.04,
+        "exposure_pulse": 0.02,
+        "band_strength": 0.07
+      }
+    },
+    {
+      "id": "world-solvent-blue",
+      "viewer_preset_id": "world-solvent-blue-loop",
+      "label": "Solvent Blue Loop",
+      "source": "bg_world_solvent_blue.jpg",
+      "poster": "bg_world_solvent_blue.jpg",
+      "output_base": "bg_world_solvent_blue_loop",
+      "top": "#06151f",
+      "bottom": "#02070a",
+      "badge": "360",
+      "intensity": "quiet",
+      "motion": {
+        "drift_px": 12,
+        "layer_drift_px": 34,
+        "layer_opacity": 0.08,
+        "contrast": 1.02,
+        "color": 1.02,
+        "exposure_pulse": 0.01,
+        "band_strength": 0.03
+      }
+    },
+    {
+      "id": "world-laser-sheet",
+      "viewer_preset_id": "world-laser-sheet-loop",
+      "label": "Laser Sheet Loop",
+      "source": "bg_world_laser_sheet.jpg",
+      "poster": "bg_world_laser_sheet.jpg",
+      "output_base": "bg_world_laser_sheet_loop",
+      "top": "#0b1018",
+      "bottom": "#020305",
+      "badge": "360",
+      "intensity": "balanced",
+      "motion": {
+        "drift_px": 10,
+        "layer_drift_px": -38,
+        "layer_opacity": 0.1,
+        "contrast": 1.04,
+        "color": 1.01,
+        "exposure_pulse": 0.016,
+        "band_strength": 0.05
+      }
+    },
     {
       "id": "quantum-fog",
       "viewer_preset_id": "quantum-fog-loop",

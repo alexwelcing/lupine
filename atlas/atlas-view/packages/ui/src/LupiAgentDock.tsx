@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import {
   firebaseAuthDomain,
   firebaseConfigured,
@@ -170,20 +171,20 @@ export function LupiAgentDock({ compact = false }: { compact?: boolean }) {
     };
   }, []);
 
+  const recentViewsQuery = useQuery({
+    queryKey: ['recentSavedViews', user?.uid],
+    queryFn: () => listUserSavedViews(user!.uid),
+    enabled: !!user && open,
+    staleTime: 1000 * 30,
+  });
+
   useEffect(() => {
-    if (!user || !open) return;
-    let cancelled = false;
-    listUserSavedViews(user.uid)
-      .then((views) => {
-        if (!cancelled) setRecentViews(views);
-      })
-      .catch(() => {
-        if (!cancelled) setRecentViews([]);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [open, user?.uid, status]);
+    if (recentViewsQuery.data) {
+      setRecentViews(recentViewsQuery.data);
+    } else if (recentViewsQuery.isError) {
+      setRecentViews([]);
+    }
+  }, [recentViewsQuery.data, recentViewsQuery.isError, open, user?.uid, status]);
 
   const handleSignIn = async (provider: LupiAuthProviderId) => {
     setBusy(true);

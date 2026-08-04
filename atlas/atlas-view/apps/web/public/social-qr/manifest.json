@@ -1,0 +1,44 @@
+{
+  "links": [
+    {
+      "id": "lupi_live",
+      "title": "LUPI Live Viewer",
+      "url": "https://lupi.live",
+      "file": "lupi_live.xyz",
+      "atoms": 319,
+      "qrModules": 25,
+      "tags": [
+        "viewer",
+        "lupinlive",
+        "lupi.live",
+        "qr"
+      ]
+    },
+    {
+      "id": "lupine_science",
+      "title": "Lupine Science",
+      "url": "https://lupine.science",
+      "file": "lupine_science.xyz",
+      "atoms": 331,
+      "qrModules": 25,
+      "tags": [
+        "research",
+        "lupine.science",
+        "qr"
+      ]
+    },
+    {
+      "id": "lupine_linkedin",
+      "title": "Lupine LinkedIn",
+      "url": "https://www.linkedin.com/company/lupine-science",
+      "file": "lupine_linkedin.xyz",
+      "atoms": 547,
+      "qrModules": 33,
+      "tags": [
+        "linkedin",
+        "social",
+        "qr"
+      ]
+    }
+  ]
+}

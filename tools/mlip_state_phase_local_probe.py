@@ -29,7 +29,7 @@ REPLAY_ROWS = ("energy_volume", "forces", "stress", "relaxation_stability")
 
 sys.path.insert(0, str(RUNNER_DIR))
 
-from fixture_contract import (  # noqa: E402
+from lupine_distill.fixture_contract import (  # noqa: E402
     evaluate_row,
     select_row,
     thermodynamic_condition,

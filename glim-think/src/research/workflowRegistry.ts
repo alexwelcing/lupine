@@ -1,5 +1,6 @@
 import { mlipWorkflowAdapter } from "./mlipWorkflow";
 import { mlipBaselineWorkflowAdapter } from "./mlipBaselineWorkflow";
+import { mlipDiscoveryWorkflowAdapter } from "./mlipDiscoveryWorkflow";
 import type {
   ResearchWorkflowAdapter,
   ResearchWorkflowDescriptor,
@@ -7,6 +8,7 @@ import type {
 
 const adapters: ResearchWorkflowAdapter[] = [
   mlipBaselineWorkflowAdapter,
+  mlipDiscoveryWorkflowAdapter,
   mlipWorkflowAdapter,
 ];
 

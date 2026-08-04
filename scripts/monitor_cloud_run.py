@@ -86,7 +86,7 @@ def monitor_deployment(service_name, region, project=None, timeout_sec=600, poll
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Monitor Cloud Run deployment outcome.")
-    parser.add_argument("--service", "-s", default="lupine-site", help="Cloud Run service name")
+    parser.add_argument("--service", "-s", default="library-site", help="Cloud Run service name")
     parser.add_argument("--region", "-r", default="us-central1", help="GCP Region")
     parser.add_argument("--project", "-p", default="shed-489901", help="GCP Project ID (optional)")
     parser.add_argument("--timeout", "-t", type=int, default=300, help="Timeout in seconds")

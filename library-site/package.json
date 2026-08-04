@@ -7,10 +7,12 @@
   "scripts": {
     "build": "node scripts/build.js",
     "dev": "node scripts/build.js && node scripts/serve.js",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "content:export": "node ../scripts/export_library_content.mjs"
   },
   "dependencies": {
     "force-graph": "^1.51.4",
+    "katex": "^0.17.0",
     "marked": "^12.0.2"
   }
 }

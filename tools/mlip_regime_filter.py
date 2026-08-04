@@ -18,16 +18,12 @@ from __future__ import annotations
 import argparse
 import json
 import pathlib
-import sys
 from dataclasses import asdict, dataclass
 from typing import Any
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-for _p in (ROOT / "lupine-distill" / "runtime" / "python", ROOT / "gcp" / "mlip-cell-runner", ROOT / "tools"):
-    if str(_p) not in sys.path:
-        sys.path.insert(0, str(_p))
 
-import fixture_contract  # noqa: E402
+from lupine_distill import fixture_contract
 from lupine_distill.regime import (  # noqa: E402
     CellFingerprint,
     RibbonProvenance,

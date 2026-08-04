@@ -22,7 +22,7 @@ Lupine Implementer Team | May 2026
 12. [GCP Managed Infrastructure](#12-gcp-managed-infrastructure)
 13. [distiller/ODF & atlas-distill Integration](#13-distillerodf--atlas-distill-integration)
 14. [lupine-dspy Integration](#14-lupine-dspy-integration)
-15. [KIMI_MLIP_UNIVERSAL Research Bundle](#15-kimi_mlip_universal-research-bundle)
+15. [archive/KIMI_MLIP_UNIVERSAL Research Bundle](#15-kimi_mlip_universal-research-bundle)
 16. [Cost & Resource Estimates](#16-cost--resource-estimates)
 17. [Acceptance Criteria](#17-acceptance-criteria)
 18. [Appendix: Reference Links](#18-appendix-reference-links)
@@ -1475,11 +1475,11 @@ The dspy research persistence layer tracks not just claims and evidence, but the
 
 ---
 
-## 15. KIMI_MLIP_UNIVERSAL Research Bundle
+## 15. archive/KIMI_MLIP_UNIVERSAL Research Bundle
 
 ### 15.1 What It Is
 
-The `KIMI_MLIP_UNIVERSAL` directory in Lupine contains the **Conditional Universality Theorem for Error Geometry in Machine-Learning Interatomic Potentials** — a research bundle formalizing the universal properties that all well-behaved MLIPs must satisfy regardless of architecture. This is Lupine's most ambitious formalization effort.
+The `archive/KIMI_MLIP_UNIVERSAL` directory in Lupine contains the **Conditional Universality Theorem for Error Geometry in Machine-Learning Interatomic Potentials** — a research bundle formalizing the universal properties that all well-behaved MLIPs must satisfy regardless of architecture. This is Lupine's most ambitious formalization effort.
 
 ### 15.2 ATLAS Strengthening
 

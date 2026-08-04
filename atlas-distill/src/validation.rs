@@ -4,7 +4,7 @@
 //! computes error statistics, and prepares data for manifold analysis,
 //! meta-analysis, and causal detection.
 
-use crate::manifold::{analyze_manifold, build_error_vectors, BenchmarkEntry};
+use crate::manifold::{analyze_manifold, build_error_vectors, BenchmarkEntry, DataSource};
 use crate::stats;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
@@ -144,6 +144,7 @@ pub fn bcc_lj_data() -> HashMap<&'static str, [f64; 3]> {
 pub fn build_benchmark_entries(
     reference: &HashMap<&str, [f64; 3]>,
     predictions: &[(&str, HashMap<&str, [f64; 3]>)],
+    provenance: DataSource,
 ) -> Vec<BenchmarkEntry> {
     let props = ["C11", "C12", "C44"];
     let mut entries = Vec::new();
@@ -159,6 +160,7 @@ pub fn build_benchmark_entries(
                         reference: ref_vals[i],
                         predicted: pred_vals[i],
                         unit: "GPa".to_string(),
+                        provenance: provenance.clone(),
                     });
                 }
             }
@@ -172,6 +174,7 @@ pub fn build_benchmark_entries(
 pub fn build_statics_benchmark_entries(
     reference: &HashMap<&str, [f64; 2]>,
     predictions: &[(&str, HashMap<&str, [f64; 2]>)],
+    provenance: DataSource,
 ) -> Vec<BenchmarkEntry> {
     let props = ["a0", "Ecoh"];
     let units = ["A", "eV/atom"];
@@ -188,6 +191,7 @@ pub fn build_statics_benchmark_entries(
                         reference: ref_vals[i],
                         predicted: pred_vals[i],
                         unit: units[i].to_string(),
+                        provenance: provenance.clone(),
                     });
                 }
             }
@@ -370,6 +374,10 @@ pub struct ValidationReport {
     pub error_correlations: Vec<((String, String), f64, usize)>,
     pub manifold_json: String,
     pub ranking_by_mae: Vec<(String, f64)>,
+    /// Count of entries by provenance type.
+    pub provenance_summary: HashMap<String, usize>,
+    /// True if every entry is backed by a real experiment or NIST IPR computation.
+    pub is_empirical: bool,
 }
 
 /// Build grouped points for Simpson's paradox detection on BCC data.
@@ -400,7 +408,7 @@ pub fn build_bcc_paradox_points() -> Vec<crate::causal::GroupedPoint> {
 }
 
 /// Build BCC benchmark entries for manifold/meta analysis.
-pub fn build_bcc_benchmark_entries() -> Vec<crate::manifold::BenchmarkEntry> {
+pub fn build_bcc_benchmark_entries(provenance: DataSource) -> Vec<crate::manifold::BenchmarkEntry> {
     let refs = bcc_reference_data();
     let eam = bcc_eam_data();
     let lj = bcc_lj_data();
@@ -418,6 +426,7 @@ pub fn build_bcc_benchmark_entries() -> Vec<crate::manifold::BenchmarkEntry> {
                         reference: ref_vals[i],
                         predicted: pred_vals[i],
                         unit: "GPa".to_string(),
+                        provenance: provenance.clone(),
                     });
                 }
             }
@@ -426,8 +435,35 @@ pub fn build_bcc_benchmark_entries() -> Vec<crate::manifold::BenchmarkEntry> {
     entries
 }
 
+fn provenance_label(source: &DataSource) -> String {
+    match source {
+        DataSource::Synthetic(_) => "synthetic".to_string(),
+        DataSource::NistIpr { .. } => "nistIpr".to_string(),
+        DataSource::Experiment { .. } => "experiment".to_string(),
+    }
+}
+
+/// Summarise the provenance mix of a set of entries.
+fn provenance_summary(entries: &[BenchmarkEntry]) -> HashMap<String, usize> {
+    let mut summary = HashMap::new();
+    for e in entries {
+        *summary.entry(provenance_label(&e.provenance)).or_insert(0) += 1;
+    }
+    summary
+}
+
+/// True if no entry is synthetic.
+fn is_empirical(entries: &[BenchmarkEntry]) -> bool {
+    entries
+        .iter()
+        .all(|e| !matches!(e.provenance, DataSource::Synthetic(_)))
+}
+
 /// Run the full validation and analysis pipeline.
 pub fn run_full_validation() -> ValidationReport {
+    let fixture_provenance =
+        DataSource::Synthetic("Hand-typed fixture in atlas-distill/src/validation.rs".to_string());
+
     let ref_data = fcc_reference_data();
     let eam = eam_prediction_data();
     let lj = lj_prediction_data();
@@ -435,13 +471,17 @@ pub fn run_full_validation() -> ValidationReport {
 
     let predictions = vec![("EAM", eam), ("LJ", lj), ("SW", sw)];
 
-    let mut entries = build_benchmark_entries(&ref_data, &predictions);
+    let mut entries = build_benchmark_entries(&ref_data, &predictions, fixture_provenance.clone());
 
     // Stitch statics data
     let statics_ref = fcc_statics_reference_data();
     let statics_pred = vec![("EAM", fcc_statics_eam_data())];
-    let statics_entries = build_statics_benchmark_entries(&statics_ref, &statics_pred);
+    let statics_entries =
+        build_statics_benchmark_entries(&statics_ref, &statics_pred, fixture_provenance.clone());
     entries.extend(statics_entries);
+
+    let summary = provenance_summary(&entries);
+    let empirical = is_empirical(&entries);
 
     let metrics = compute_potential_metrics(&entries);
     let correlations = error_correlations(&entries);
@@ -468,6 +508,8 @@ pub fn run_full_validation() -> ValidationReport {
         error_correlations: correlations,
         manifold_json,
         ranking_by_mae: ranking,
+        provenance_summary: summary,
+        is_empirical: empirical,
     }
 }
 
@@ -482,6 +524,21 @@ pub fn print_validation_report(report: &ValidationReport) {
         "  Benchmark: {} materials × {} properties × {} potentials = {} entries",
         report.n_materials, report.n_properties, report.n_potentials, report.n_entries
     );
+    eprintln!();
+
+    if report.is_empirical {
+        eprintln!("  Provenance: all entries are empirical (NIST IPR / experiment).");
+    } else {
+        eprintln!("  ⚠️  Provenance warning: this report contains synthetic fixtures.");
+        eprintln!("     It MUST NOT be cited as empirical evidence.");
+    }
+    eprintln!();
+    eprintln!("  Provenance summary:");
+    let mut summary: Vec<_> = report.provenance_summary.iter().collect();
+    summary.sort_by(|a, b| a.0.cmp(b.0));
+    for (source, count) in summary {
+        eprintln!("    {:12} : {}", source, count);
+    }
     eprintln!();
 
     eprintln!("  Potential Rankings (by MAE):");
@@ -605,14 +662,8 @@ pub fn run_validation() -> ValidationResults {
             Box::new(|c11, c12, _c44| bulk_modulus_k(c11, c12))
                 as Box<dyn Fn(f64, f64, f64) -> f64>,
         ),
-        (
-            "shear_modulus",
-            Box::new(shear_modulus_g),
-        ),
-        (
-            "anisotropy",
-            Box::new(anisotropy_a),
-        ),
+        ("shear_modulus", Box::new(shear_modulus_g)),
+        ("anisotropy", Box::new(anisotropy_a)),
         (
             "zener_ratio",
             Box::new(|c11, c12, c44| {
@@ -690,7 +741,8 @@ mod tests {
         let eam = eam_prediction_data();
         let lj = lj_prediction_data();
 
-        let entries = build_benchmark_entries(&ref_data, &[("EAM", eam), ("LJ", lj)]);
+        let provenance = DataSource::Synthetic("test fixture".to_string());
+        let entries = build_benchmark_entries(&ref_data, &[("EAM", eam), ("LJ", lj)], provenance);
 
         // 8 metals × 3 properties × 2 potentials = 48 entries
         assert_eq!(entries.len(), 48);
@@ -706,7 +758,8 @@ mod tests {
     fn test_compute_metrics() {
         let ref_data = fcc_reference_data();
         let eam = eam_prediction_data();
-        let entries = build_benchmark_entries(&ref_data, &[("EAM", eam)]);
+        let provenance = DataSource::Synthetic("test fixture".to_string());
+        let entries = build_benchmark_entries(&ref_data, &[("EAM", eam)], provenance);
         let metrics = compute_potential_metrics(&entries);
 
         assert_eq!(metrics.len(), 1);
@@ -719,7 +772,8 @@ mod tests {
         let ref_data = fcc_reference_data();
         let eam = eam_prediction_data();
         let lj = lj_prediction_data();
-        let entries = build_benchmark_entries(&ref_data, &[("EAM", eam), ("LJ", lj)]);
+        let provenance = DataSource::Synthetic("test fixture".to_string());
+        let entries = build_benchmark_entries(&ref_data, &[("EAM", eam), ("LJ", lj)], provenance);
         let cors = error_correlations(&entries);
 
         assert_eq!(cors.len(), 1);
@@ -733,6 +787,9 @@ mod tests {
         assert_eq!(report.n_materials, 8);
         assert!(!report.metrics.is_empty());
         assert!(!report.ranking_by_mae.is_empty());
+        assert!(!report.is_empirical);
+        assert!(report.provenance_summary.contains_key("synthetic"));
+        assert!(report.provenance_summary["synthetic"] > 0);
     }
 
     #[test]
@@ -752,7 +809,8 @@ mod tests {
 
     #[test]
     fn test_bcc_benchmark_entries() {
-        let entries = build_bcc_benchmark_entries();
+        let entries =
+            build_bcc_benchmark_entries(DataSource::Synthetic("test fixture".to_string()));
         // 7 metals × 3 properties × 2 potentials = 42 entries
         assert_eq!(entries.len(), 42);
         let fe_c11 = entries

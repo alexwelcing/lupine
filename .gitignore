@@ -3,13 +3,18 @@ target/
 .env
 dist/
 build/
+.output/
+.nuxt/
 .pytest_cache/
 __pycache__/
+*.egg-info/
 wasm-out/
 *.log
 .DS_Store
 *.data
 *.dump
+!atlas/atlas-view/apps/web/public/generated/lupine-wiki/*.data
+!atlas/atlas-view/apps/web/public/generated/lupine-wiki/*.lammpstrj
 .wrangler/
 **/.wrangler/
 
@@ -25,9 +30,15 @@ latest/library/model-data/**
 lean-spec/.lake/
 lean-spec/build/
 
-# Distiller run artifacts
-distiller/runs/*/run_latest.log
-distiller/runs/pipeline_report.json
+# Local build/tooling artifacts
+paper2/.tectonic/
+paper2/.venv-pdf/
+paper2/.venv-figures/
+data/.venv/
+
+# Distiller run artifacts (archived root)
+archive/distiller-kb/runs/*/run_latest.log
+archive/distiller-kb/runs/pipeline_report.json
 
 # NIST IPR local mirror (large binary parameter files)
 atlas/nist_ipr/files/
@@ -59,10 +70,10 @@ tmp/
 *.err
 *lighthouse-report.json
 
-# Font archives
-lupine-start/*.zip
-lupine-start/cs-claire-mono-monospaced-typeface-*/
-lupine-start/rumelaz-gekinsa-serif-family-classic-elegant-*/
+# Font archives (retired lupine-start app, now in archive/)
+archive/lupine-start/*.zip
+archive/lupine-start/cs-claire-mono-monospaced-typeface-*/
+archive/lupine-start/rumelaz-gekinsa-serif-family-classic-elegant-*/
 
 # ML virtual envs & working directories
 mlip_immi/.venv-upet/
@@ -74,7 +85,7 @@ mlip_immi/phonon_sentinel_pet_mad_1.5.json
 # Additional directories and files (2026-05-15)
 lupine-media/
 atlas/atlas-view/archive/
-distiller/agents/profiles/.archive/
+archive/distiller-kb/agents/profiles/.archive/
 *.glimbin
 atlas-distill/*.json
 .vscode/
@@ -84,6 +95,7 @@ tools/hermes-hive/data/
 
 # Large binary files & media
 *.lammpstrj
+!atlas/atlas-view/apps/web/public/generated/lupine-wiki/*.lammpstrj
 *.mp4
 *.z64
 *.tar.zst
@@ -96,3 +108,5 @@ tools/hermes-hive/data/
 .claude/
 .kimi/
 .sisyphus/
+lupi-studio-pr/
+archive/kimi-workspace-export/

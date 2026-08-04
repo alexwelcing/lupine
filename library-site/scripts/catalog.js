@@ -75,9 +75,53 @@ export const CATALOG = {
       label: { en: 'Meta', zh: '元数据' },
       blurb: { en: 'Navigation, extraction logs, and how this library was built.', zh: '导航、提取日志以及该图书馆是如何构建的。' },
     },
+    {
+      id: 'reviews',
+      label: { en: 'Reviews', zh: '评议' },
+      blurb: { en: 'Independent, adversarial, and self-reviews of claims before submission.', zh: '提交前对声明的独立、对抗性和自我评议。' },
+    },
   ],
 
   entries: [
+    // ── Featured Paper ─────────────────────────────────────────────
+    {
+      id: 'lupine-correction-operator',
+      source: 'paper/PAPER_DRAFT.md',
+      title: 'Lupine: The Universal Correction Operator for Atomistic Simulation',
+      subtitle: 'A 1D geometric law reduces ensemble compute overhead by 80% with zero loss in predictive fidelity. 1 model + Lupine beats 5-model ensemble by 2.83× MSE.',
+      category: 'changelog',
+      tags: ['papers', 'lupine', 'correction-operator', 'projection-law', 'ensemble', 'featured', 'nature'],
+      featured: true,
+      status: 'supported',
+    },
+    // ── Working Papers ──────────────────────────────────────────────
+    {
+      id: 'working-papers',
+      source: 'docs/papers-working.md',
+      title: 'Working Papers: The Projection Law & The Causal Geometry of Prediction Errors',
+      subtitle: 'Web + print editions: abstracts, figures, key results, typeset PDFs, and the public replication kit.',
+      category: 'changelog',
+      tags: ['papers', 'projection-law', 'replication', 'featured'],
+      featured: true,
+    },
+    {
+      id: 'academic-review-projection-law',
+      source: 'docs/reviews/academic-review-projection-law-2026-06-16.md',
+      title: 'Academic Review — Projection Law / IMMI Paper Suite',
+      subtitle: 'Independent adversarial review: strengths, six MUST-FIX items, and recommended gates before submission.',
+      category: 'reviews',
+      tags: ['review', 'projection-law', 'submission-gate'],
+      status: 'open',
+    },
+    {
+      id: 'adversarial-review-projection-law',
+      source: 'docs/reviews/adversarial-review-projection-law-2026-06-16.md',
+      title: 'Adversarial Review — Projection Law / IMMI Paper Suite',
+      subtitle: 'Second-pass review of the first-pass fixes: checklist, new issues, and consistency verification.',
+      category: 'reviews',
+      tags: ['review', 'projection-law', 'submission-gate'],
+      status: 'open',
+    },
     // ── Changelog & Progress ────────────────────────────────────────
     {
       id: 'changelog',
@@ -114,6 +158,26 @@ export const CATALOG = {
       status: 'open',
     },
     {
+      id: 'born-screening-re-audit',
+      source: 'docs/born-screening-re-audit.md',
+      title: 'What Survived the Born-Screening Re-Audit?',
+      subtitle: 'A public correction: the old MLIP 14/15 count is frozen; screened directional structure survives as the live claim.',
+      category: 'changelog',
+      tags: ['mlip', 'born-stability', 'self-correction', 'hyper-ribbon', 'featured'],
+      featured: true,
+      status: 'self-corrected',
+    },
+    {
+      id: 'foundation-model-trust-layers',
+      source: 'docs/foundation-model-trust-layers.md',
+      title: 'Foundation Materials Models Need Trust Layers',
+      subtitle: 'A ranked next-round target memo: batteries, MPtrj, Ni defects, Fe magnetism, Au surfaces, and phonons as evidence-carrying canaries.',
+      category: 'changelog',
+      tags: ['mlip', 'materials-discovery', 'trust-layer', 'batteries', 'featured'],
+      featured: true,
+      status: 'proposed',
+    },
+    {
       id: 'research-evolution',
       source: 'docs/research_evolution_2026_05_05.md',
       title: 'The Loop That Caught Itself',
@@ -146,11 +210,11 @@ export const CATALOG = {
       id: 'hyp-hyper-ribbon-mlip-transfer',
       source: 'docs/conjectures/hyper-ribbon-mlip-transfer.md',
       title: 'Hyper-Ribbon Transfers Classical → MLIP',
-      subtitle: '14/15 IMMI elements stay on the ribbon under MACE / CHGNet / Orb-v3.',
+      subtitle: 'Cross-paradigm ribbon transfer — per-element counts under re-audit after Born screening (2026-06); directional structure confirmed at 8–11 models.',
       category: 'conjectures',
       tags: ['hyper-ribbon', 'mlip', 'de-myopization'],
       group: 'hypotheses',
-      status: 'supported',
+      status: 'open',
     },
     {
       id: 'hyp-cross-mlip-orthogonal-errors',
@@ -175,8 +239,8 @@ export const CATALOG = {
     {
       id: 'hyp-fe-persistent-outlier',
       source: 'docs/conjectures/fe-persistent-outlier.md',
-      title: 'Fe Is a Persistent Outlier',
-      subtitle: 'PR > 2 invariant to LAM addition across the trio. Cause (magnetism?) open.',
+      title: 'Fe Magnetic MLIP Failure Mode',
+      subtitle: 'The old PR > 2 trio claim is frozen after Born screening; Fe remains a spin/mechanical-stability target.',
       category: 'conjectures',
       tags: ['fe', 'outlier', 'mlip'],
       group: 'hypotheses',
@@ -280,14 +344,6 @@ export const CATALOG = {
       category: 'foundations',
       tags: ['overview'],
     },
-    {
-      id: 'design-guide',
-      source: 'lupine-start/DESIGN.md',
-      title: 'Atomic Understanding — Design Guide',
-      subtitle: 'Visual identity, tokens, and component architecture for all Lupine UIs.',
-      category: 'foundations',
-      tags: ['design', 'ui'],
-    },
 
     // ── Uncertainty & Error ─────────────────────────────────────────
     {
@@ -382,7 +438,7 @@ export const CATALOG = {
       id: 'mlip-mptrj-broad-dft-canary',
       source: 'docs/mlip-mptrj-broad-dft-canary.md',
       title: 'MPtrj Broad-DFT MLIP Canary',
-      subtitle: 'The broadened Cloud Run canary improves MACE, ORB, and SevenNet while CHGNet negative transfer blocks promotion.',
+      subtitle: 'Support-floor v2 improves MACE, ORB, and SevenNet while CHGNet safely holds: six wins, two holds, zero regressions.',
       category: 'validation',
       tags: ['mlip', 'distill', 'mptrj', 'dft', 'cloud-run', 'live-lab'],
       featured: true,
@@ -405,6 +461,14 @@ export const CATALOG = {
       subtitle: 'Fisher Information eigenvalue analysis — stiff vs. sloppy directions.',
       category: 'theory',
       tags: ['sloppy', 'fim'],
+    },
+    {
+      id: 'error-geometry-objects',
+      source: 'docs/science/objects.md',
+      title: 'The Three Error-Geometry Objects',
+      subtitle: 'Model manifold vs. participation-ratio measure vs. configuration-space core — kept straight.',
+      category: 'theory',
+      tags: ['hyper-ribbon', 'sloppy-models', 'disambiguation'],
     },
     {
       id: 'info-theoretic',
@@ -448,7 +512,7 @@ export const CATALOG = {
       id: 'formal-vision',
       source: 'docs/formal-vision.md',
       title: 'The Open Distillation Factory — Executable Vision',
-      subtitle: '47 theorems, 1,499 build targets, and a build-locking epistemic contract.',
+      subtitle: 'Current status: 77 build-locked theorems, ~225 declarations, 2,891-job build green, and a build-locking epistemic contract.',
       category: 'formalization',
       tags: ['lean', 'formal-spec', 'vision'],
     },
@@ -498,6 +562,15 @@ export const CATALOG = {
     },
 
     // ── Meta ────────────────────────────────────────────────────────
+    {
+      id: 'lupine-wiki',
+      source: 'docs/lupine-wiki.md',
+      title: 'Lupine Wiki — Knowledge Graph for Materials Research',
+      subtitle: 'The living sphere-grid map of the Lupine ecosystem: scan, query, render, and export to LUPI.',
+      category: 'meta',
+      tags: ['wiki', 'knowledge-graph', 'lupine', 'hermes', 'lupi'],
+      featured: true,
+    },
     {
       id: 'operating-system',
       source: 'docs/operating-system.md',

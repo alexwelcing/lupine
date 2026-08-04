@@ -116,10 +116,15 @@ export function Atoms({
     const range = Math.max(pMax - pMin, 1e-6);
     const color = new THREE.Color();
 
+    // Optional per-atom radius multiplier (e.g. from lupine-wiki kind semantics).
+    const radiusProp = frame.properties?.get('radius') ?? null;
+
     for (let i = 0; i < frame.natoms; i++) {
       // Position + scale
       const atomType = frame.types[i];
-      const radius = (TYPE_RADII[atomType] ?? 1.2) * scale;
+      const baseRadius = (TYPE_RADII[atomType] ?? 1.2) * scale;
+      const radiusMult = radiusProp ? radiusProp[i] : 1.0;
+      const radius = baseRadius * Math.max(0.1, radiusMult);
       dummy.position.set(
         frame.positions[i * 3],
         frame.positions[i * 3 + 1],

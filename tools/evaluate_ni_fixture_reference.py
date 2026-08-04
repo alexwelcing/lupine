@@ -13,12 +13,9 @@ from typing import Any
 
 from ase.calculators.eam import EAM
 
-ROOT = pathlib.Path(__file__).resolve().parents[1]
-RUNNER_DIR = ROOT / "gcp" / "mlip-cell-runner"
-if str(RUNNER_DIR) not in sys.path:
-    sys.path.insert(0, str(RUNNER_DIR))
+from lupine_distill.fixture_contract import ROW_IDS, run_row, validate_manifest
 
-from fixture_contract import ROW_IDS, run_row, validate_manifest  # noqa: E402
+ROOT = pathlib.Path(__file__).resolve().parents[1]
 
 DEFAULT_FIXTURE = ROOT / "data" / "mlip_benchmarks" / "fixtures" / "ni_fcc_eam_home_turf_v1.json"
 DEFAULT_OUTPUT = ROOT / "tmp" / "mlip-benchmarks" / "ni_fcc_eam_home_turf_v1" / "mishin_reference_scores.json"

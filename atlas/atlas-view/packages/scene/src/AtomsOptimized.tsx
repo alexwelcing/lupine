@@ -35,6 +35,8 @@ interface AtomsOptimizedProps {
   colorMode?: 'type' | 'uniform' | 'property';
   colorProperty?: string;
   colormap?: ColormapName;
+  uniformColor?: string;
+  elementColorOverrides?: Record<number, string>;
   propRange?: [number, number];
   scale?: number;
   renderStyle?: RenderStyle;
@@ -260,7 +262,12 @@ const IMPOSTOR_FRAGMENT = /* glsl */ `
       discard;
     }
 
-    float t = -b - sqrt(discriminant);
+    float hitNear = -b - sqrt(discriminant);
+    float hitFar = -b + sqrt(discriminant);
+    float t = hitNear > 0.0 ? hitNear : hitFar;
+    if (t <= 0.0) {
+      discard;
+    }
     vec3 hitPoint = rayDir * t;
     vec3 normal = normalize(hitPoint - vViewCenter);
 
@@ -604,6 +611,8 @@ export function AtomsOptimized({
   colorMode = 'type',
   colorProperty,
   colormap = 'viridis',
+  uniformColor = '#1edce0',
+  elementColorOverrides = {},
   propRange,
   scale = 1.0,
   renderStyle = 'standard',
@@ -794,6 +803,7 @@ export function AtomsOptimized({
     uniforms.uRimLight.value = rimLightIntensity ?? 0.0;
     uniforms.uSurfaceRoughness.value = surfaceRoughness ?? 0.0;
     uniforms.uSurfacePolish.value = surfacePolish ?? 0.0;
+    uniforms.uSurfaceClearcoat.value = surfaceClearcoat ?? 0.0;
 
     uniforms.uPropEmission.value = propertyEmissionStrength;
 
@@ -810,8 +820,8 @@ export function AtomsOptimized({
     uniforms.uHasEtch.value = (etchTexture && etchAtomId != null && etchAtomId >= 0) ? 1 : 0;
 
     if (colorMode === 'uniform') {
-      const [r, g, b] = mapFn(0.0);
-      uniforms.uUniformColor.value.set(r, g, b);
+      const color = new THREE.Color(uniformColor);
+      uniforms.uUniformColor.value.set(color.r, color.g, color.b);
     }
 
     // Rebuild the 256×1 type palette (768 bytes, instant)
@@ -832,7 +842,7 @@ export function AtomsOptimized({
       // material identity for a chemically-honest read.
       uniforms.uPalette.value = buildPaletteTexture((typeId) => {
         const spec = getElementSpec(typeId);
-        return hexToRgb(spec.color);
+        return hexToRgb(elementColorOverrides[typeId] ?? spec.color);
       });
     } else {
       // 'colormap' — types mapped through the active colormap by rank.
@@ -858,7 +868,7 @@ export function AtomsOptimized({
     oldColormap.dispose();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [colorMode, colormap, mapFn, botanicalMode, atomColorSource, material, frame.types, frame.natoms, atomTexture, materialPreset, propertyEmissionStrength, etchTexture, etchAtomId, materialIntensity, rimLightIntensity, surfaceRoughness, surfacePolish, surfaceClearcoat, fillLightColor, rimLightColor]);
+  }, [colorMode, colormap, mapFn, uniformColor, elementColorOverrides, botanicalMode, atomColorSource, material, frame.types, frame.natoms, atomTexture, materialPreset, propertyEmissionStrength, etchTexture, etchAtomId, materialIntensity, rimLightIntensity, surfaceRoughness, surfacePolish, surfaceClearcoat, fillLightColor, rimLightColor]);
 
   // ─── PMREM env sync and dynamic lighting ───────────────────────────────────────────────
   // scene.environment is set by drei's <Environment> in App.tsx; it can
@@ -965,6 +975,9 @@ export function AtomsOptimized({
     const atomIdArr = (geometry.attributes.instanceAtomId as THREE.InstancedBufferAttribute).array as Float32Array;
 
     let visibleCount = 0;
+    let minX = Infinity, minY = Infinity, minZ = Infinity;
+    let maxX = -Infinity, maxY = -Infinity, maxZ = -Infinity;
+    let maxRadius = 0;
 
     // When streaming, only render atoms that have been received
     const effectiveAtomCount = loadedAtomCount ?? frame.natoms;
@@ -1006,6 +1019,14 @@ export function AtomsOptimized({
       radArr[visibleCount] = radius;
       typeArr[visibleCount] = typeId;
 
+      if (x < minX) minX = x;
+      if (y < minY) minY = y;
+      if (z < minZ) minZ = z;
+      if (x > maxX) maxX = x;
+      if (y > maxY) maxY = y;
+      if (z > maxZ) maxZ = z;
+      if (radius > maxRadius) maxRadius = radius;
+
       // Normalized property value (current frame). Temporal color interpolation
       // was dropped with the CPU position lerp — a negligible visual effect that
       // coupled this loop to the live interpolation factor.
@@ -1026,6 +1047,24 @@ export function AtomsOptimized({
 
     atomCountRef.current = visibleCount;
     geometry.instanceCount = visibleCount;
+
+    if (visibleCount > 0) {
+      const cx = (minX + maxX) * 0.5;
+      const cy = (minY + maxY) * 0.5;
+      const cz = (minZ + maxZ) * 0.5;
+      const dx = maxX - cx;
+      const dy = maxY - cy;
+      const dz = maxZ - cz;
+      const radius = Math.sqrt(dx * dx + dy * dy + dz * dz) + maxRadius * 1.3;
+      geometry.boundingSphere = new THREE.Sphere(new THREE.Vector3(cx, cy, cz), radius);
+      geometry.boundingBox = new THREE.Box3(
+        new THREE.Vector3(minX - maxRadius, minY - maxRadius, minZ - maxRadius),
+        new THREE.Vector3(maxX + maxRadius, maxY + maxRadius, maxZ + maxRadius),
+      );
+    } else {
+      geometry.boundingSphere = new THREE.Sphere(new THREE.Vector3(0, 0, 0), 0);
+      geometry.boundingBox = new THREE.Box3(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, 0));
+    }
 
     // Mark attributes for GPU upload
     const posAttr = geometry.attributes.instancePosition as THREE.InstancedBufferAttribute;
@@ -1067,6 +1106,7 @@ export function AtomsOptimized({
       material.dispose();
       if (material.uniforms.uPalette.value) material.uniforms.uPalette.value.dispose();
       if (material.uniforms.uColormap.value) material.uniforms.uColormap.value.dispose();
+      if (material.uniforms.uMaterialPalette.value) material.uniforms.uMaterialPalette.value.dispose();
       spatialHashRef.current.clear();
     };
   }, [geometry, material]);
@@ -1076,7 +1116,7 @@ export function AtomsOptimized({
       ref={meshRef}
       geometry={geometry}
       material={material}
-      frustumCulled={false}
+      frustumCulled
     />
   );
 }

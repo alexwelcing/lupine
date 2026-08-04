@@ -7,13 +7,16 @@
  * Both the UI picker and the MCP `lupi.search_molecules` tool consume this.
  */
 
+import type { FunctionalGroupId } from '../organicFunctionalGroups';
+
 export type MoleculeSourceId =
   | 'gallery' // curated featured examples (gallery-data.json)
   | 'nist' // NIST interatomic-potential catalog
   | 'saved' // user-owned saved views (Firestore lupiViews)
   | 'pubchem' // external PubChem name/SMILES lookup
   | 'omol' // Meta / FAIR Open Molecules dataset (scaffolded)
-  | 'library'; // curated Lupi molecule library (scaffolded)
+  | 'library' // curated Lupi molecule library (scaffolded)
+  | 'social'; // limited social-link QR archive authored as atoms + bonds
 
 /** How to load a hit into the viewer. The UI and agent map this to a loader. */
 export type MoleculeLoadSpec =
@@ -42,6 +45,8 @@ export interface MoleculeHit {
   elements?: string[];
   /** free-text tags for matching/display (domain, pair_style, method…) */
   tags?: string[];
+  /** Organic chemistry functional groups, when a source can derive them. */
+  functionalGroups?: FunctionalGroupId[];
   /** accent colors for the card, if the source has them */
   colors?: string[];
   /** how to load it into the viewer */
@@ -55,6 +60,8 @@ export interface MoleculeQuery {
   text: string;
   /** require these element symbols (AND) */
   elements?: string[];
+  /** require these functional groups (AND) */
+  functionalGroups?: FunctionalGroupId[];
   /** restrict to specific sources; omit = all enabled */
   sources?: MoleculeSourceId[];
   /** max hits PER source (default 25) */

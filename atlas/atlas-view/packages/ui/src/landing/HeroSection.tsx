@@ -1,228 +1,671 @@
-import { useMemo } from 'react';
+import { useMemo, useState, type ReactNode } from 'react';
 import { ParticleCanvas } from './ParticleCanvas';
 import { AnimatedCounter } from './AnimatedCounter';
 import { ALL_EXAMPLES } from './shared';
+import { useStore } from '../store';
+import { MillionAtomPreview, type SceneMode } from './MillionAtomPreview';
+import { openMolecule } from '../viewer/openMolecule';
+
+interface SceneModeConfig {
+  id: SceneMode;
+  label: string;
+  value: string;
+  caption: string;
+  accent: string;
+}
+
+const MASSIVE_SCENE_ID = 'massive_1m';
+
+const SCENE_MODES: SceneModeConfig[] = [
+  {
+    id: 'orbit',
+    label: 'Orbit',
+    value: 'free camera',
+    caption: 'Drag the lattice, inspect the cell, and stay in control of the frame.',
+    accent: '#5eead4',
+  },
+  {
+    id: 'slice',
+    label: 'Slice',
+    value: 'inside view',
+    caption: 'Cut through the field visually without losing the larger structure.',
+    accent: '#38bdf8',
+  },
+  {
+    id: 'color',
+    label: 'Color',
+    value: 'element read',
+    caption: 'Keep atoms legible as the scene moves from overview to inspection.',
+    accent: '#fbbf24',
+  },
+  {
+    id: 'density',
+    label: 'Density',
+    value: '953,312 atoms',
+    caption: 'A nearly million-atom FCC copper lattice opens as one controlled scene.',
+    accent: '#fb7185',
+  },
+];
 
 export function HeroSection() {
+  const openConfigurator = useStore((s) => s.openConfigurator);
+  const [heroQuery, setHeroQuery] = useState('');
+  const [sceneMode, setSceneMode] = useState<SceneMode>('orbit');
+
+  const massiveScene = useMemo(
+    () => ALL_EXAMPLES.find((example) => example.id === MASSIVE_SCENE_ID),
+    [],
+  );
+
   const stats = useMemo(() => {
-    const totalAtoms = ALL_EXAMPLES.reduce((sum, e) => {
-      const n = parseInt(e.atoms.replace(/[^0-9]/g, ''));
-      return sum + (isNaN(n) ? 0 : n);
-    }, 0);
-    const totalSims = ALL_EXAMPLES.filter(e => e.available).length;
-    const domains = new Set(ALL_EXAMPLES.map(e => e.domain)).size;
-    return { totalAtoms, totalSims, domains };
+    const totalSims = ALL_EXAMPLES.filter((example) => example.available).length;
+    const domains = new Set(ALL_EXAMPLES.map((example) => example.domain)).size;
+    return { totalSims, domains };
   }, []);
 
-  // Primary activation: render a real molecule instantly — no file, no wall.
-  // (Same demo the top-nav CTA loads; the viewer fires molecule_loaded on render.)
-  const viewAMolecule = () => {
-    const url = new URL(window.location.href);
-    url.searchParams.set('sim', 'lupine_bluebonnet');
-    window.history.pushState({}, '', url);
-    window.dispatchEvent(new PopStateEvent('popstate'));
+  const currentMode = SCENE_MODES.find((mode) => mode.id === sceneMode) ?? SCENE_MODES[0];
+
+  const submitHeroQuery = () => {
+    openConfigurator(heroQuery.trim() || 'large copper lattice');
+  };
+
+  const openMassiveScene = async () => {
+    if (!massiveScene?.available) return;
+    await openMolecule({ kind: 'gallery', id: MASSIVE_SCENE_ID, history: 'push' });
   };
 
   return (
-    <section
-      style={{
-        position: 'relative',
-        width: '100%',
-        minHeight: 'calc(100vh - 56px)',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        overflow: 'hidden',
-        background: 'radial-gradient(ellipse at center, #0a0e1a 0%, #020204 70%)',
-      }}
-    >
-      <ParticleCanvas />
-
-      {/* Content */}
-      <div style={{ position: 'relative', zIndex: 1, textAlign: 'center', padding: '0 24px' }}>
-        {/* Title */}
-        <h1
-          style={{
-            fontSize: 'clamp(48px, 8vw, 96px)',
-            fontWeight: 800,
-            letterSpacing: '-0.04em',
-            lineHeight: 1.05,
-            margin: '0 0 16px',
-            background: 'linear-gradient(135deg, #ffffff 0%, #a8b8d8 50%, #6b8cce 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            animation: 'heroFadeIn 1s ease-out 0.2s forwards',
-            opacity: 0,
-            filter: 'drop-shadow(0 0 40px rgba(15,98,254,0.15))',
-          }}
-        >
-          LUPI
-        </h1>
-
-        {/* Tagline */}
-        <p
-          style={{
-            fontSize: 'clamp(16px, 2.5vw, 22px)',
-            color: 'rgba(255,255,255,0.55)',
-            fontWeight: 400,
-            maxWidth: 520,
-            margin: '0 auto 40px',
-            lineHeight: 1.5,
-            animation: 'heroFadeIn 1s ease-out 0.4s forwards',
-            opacity: 0,
-          }}
-        >
-          Click any molecule and explore it in 3D — then save and share your view. No install, and no signup just to look.
-        </p>
-
-        {/* CTA Buttons */}
-        <div
-          style={{
-            display: 'flex',
-            gap: 12,
-            justifyContent: 'center',
-            flexWrap: 'wrap',
-            marginBottom: 56,
-            animation: 'heroFadeIn 1s ease-out 0.6s forwards',
-            opacity: 0,
-          }}
-        >
-          <button
-            type="button"
-            onClick={viewAMolecule}
-            style={{
-              padding: '14px 32px',
-              fontSize: 15,
-              fontWeight: 600,
-              color: 'white',
-              background: 'linear-gradient(135deg, #0f62fe, #7c3aed)',
-              border: 'none',
-              borderRadius: 100,
-              cursor: 'pointer',
-              boxShadow: '0 8px 24px rgba(15,98,254,0.35)',
-              transition: 'transform 0.2s, box-shadow 0.2s',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-2px)';
-              e.currentTarget.style.boxShadow = '0 12px 32px rgba(15,98,254,0.45)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 8px 24px rgba(15,98,254,0.35)';
-            }}
-          >
-            View a molecule →
-          </button>
-          <a
-            href="#gallery"
-            style={{
-              padding: '14px 32px',
-              fontSize: 15,
-              fontWeight: 600,
-              color: 'rgba(255,255,255,0.8)',
-              background: 'rgba(255,255,255,0.05)',
-              border: '1px solid rgba(255,255,255,0.15)',
-              borderRadius: 100,
-              textDecoration: 'none',
-              cursor: 'pointer',
-              transition: 'all 0.2s',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
-              e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
-              e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)';
-            }}
-          >
-            Browse Gallery
-          </a>
-        </div>
-
-        {/* Tertiary: power-users with their own data */}
-        <div
-          style={{
-            marginTop: -36,
-            marginBottom: 56,
-            animation: 'heroFadeIn 1s ease-out 0.7s forwards',
-            opacity: 0,
-          }}
-        >
-          <a
-            href="#dropzone"
-            style={{
-              fontSize: 13,
-              color: 'rgba(255,255,255,0.5)',
-              textDecoration: 'none',
-              borderBottom: '1px dashed rgba(255,255,255,0.25)',
-              paddingBottom: 1,
-            }}
-          >
-            or drop your own LAMMPS / XYZ file →
-          </a>
-        </div>
-
-        {/* Stats */}
-        <div
-          style={{
-            display: 'flex',
-            gap: 40,
-            justifyContent: 'center',
-            flexWrap: 'wrap',
-            animation: 'heroFadeIn 1s ease-out 0.8s forwards',
-            opacity: 0,
-          }}
-        >
-          {[
-            { value: stats.totalSims, label: 'Simulations', suffix: '+' },
-            { value: Math.floor(stats.totalAtoms / 1000), label: 'Thousand Atoms', suffix: 'K+' },
-            { value: stats.domains, label: 'Scientific Domains', suffix: '' },
-          ].map((stat, i) => (
-            <div key={i} style={{ textAlign: 'center' }}>
-              <div
-                style={{
-                  fontSize: 'clamp(28px, 4vw, 40px)',
-                  fontWeight: 700,
-                  color: '#f8fafc',
-                  lineHeight: 1,
-                  marginBottom: 6,
-                }}
-              >
-                <AnimatedCounter target={stat.value} suffix={stat.suffix} duration={2500 + i * 400} />
-              </div>
-              <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
-                {stat.label}
-              </div>
-            </div>
-          ))}
-        </div>
+    <section className="lupi-hero" aria-labelledby="lupi-hero-title">
+      <style>{HERO_CSS}</style>
+      <div className="lupi-hero-particles" aria-hidden="true">
+        <ParticleCanvas />
       </div>
 
-      {/* Scroll indicator */}
-      <div
-        style={{
-          position: 'absolute',
-          bottom: 32,
-          left: '50%',
-          transform: 'translateX(-50%)',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: 8,
-          animation: 'heroFadeIn 1s ease-out 1.2s forwards',
-          opacity: 0,
-          zIndex: 1,
-        }}
-      >
-        <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', letterSpacing: '0.15em' }}>
-          Scroll
-        </span>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="2" strokeLinecap="round" style={{ animation: 'scrollBounce 2s ease-in-out infinite' }}>
-          <polyline points="6 9 12 15 18 9" />
-        </svg>
+      <div className="lupi-hero-shell">
+        <div className="lupi-hero-copy">
+          <div className="lupi-hero-product">Lupi molecular viewer</div>
+          <h1 id="lupi-hero-title" className="lupi-hero-title">
+            Inspect 1M atoms directly.
+          </h1>
+          <p className="lupi-hero-lede">
+            Open the FCC copper lattice, change the read mode, then move straight into
+            the same controllable viewer used for loaded structures.
+          </p>
+
+          <div className="lupi-hero-actions" aria-label="Primary actions">
+            <button type="button" className="lupi-hero-primary" onClick={openMassiveScene}>
+              <IconPlay />
+              <span>Open 1M lattice</span>
+            </button>
+            <a className="lupi-hero-secondary" href="#dropzone">
+              <IconUpload />
+              <span>Load your data</span>
+            </a>
+          </div>
+
+          <div className="lupi-hero-builder" role="search">
+            <div className="lupi-hero-builder-icon" aria-hidden="true">
+              <IconSearch />
+            </div>
+            <input
+              value={heroQuery}
+              onChange={(event) => setHeroQuery(event.target.value)}
+              onKeyDown={(event) => { if (event.key === 'Enter') submitHeroQuery(); }}
+              placeholder="Build another scene: graphene, MOF, LiFePO4..."
+              aria-label="Build another molecular scene"
+            />
+            <button type="button" onClick={submitHeroQuery}>
+              Build
+            </button>
+          </div>
+        </div>
+
+        <div className="lupi-hero-stage" aria-label="1M atom lattice scene preview">
+          <div className="lupi-hero-stage-topline">
+            <span>{massiveScene?.title ?? '1M Atom Scale Test'}</span>
+            <span>{massiveScene?.atoms ?? '953,312'} atoms</span>
+          </div>
+
+          <button
+            type="button"
+            className="lupi-hero-preview"
+            onClick={openMassiveScene}
+            aria-label="Open the 1M atom FCC copper lattice in the viewer"
+          >
+            <MillionAtomPreview mode={sceneMode} />
+            <div className="lupi-hero-preview-grid" />
+            <div className="lupi-hero-preview-reticle" />
+            <div className="lupi-hero-preview-readout">
+              <span>Controlled scene</span>
+              <strong>{currentMode.value}</strong>
+            </div>
+          </button>
+
+          <div className="lupi-hero-modebar" aria-label="Preview controls">
+            {SCENE_MODES.map((mode) => (
+              <button
+                key={mode.id}
+                type="button"
+                className={mode.id === sceneMode ? 'active' : ''}
+                onClick={() => setSceneMode(mode.id)}
+                style={mode.id === sceneMode ? { borderColor: mode.accent, color: '#f8fafc' } : undefined}
+              >
+                <span style={{ background: mode.accent }} />
+                {mode.label}
+              </button>
+            ))}
+          </div>
+
+          <div className="lupi-hero-caption">
+            <strong>{currentMode.label}</strong>
+            <span>{currentMode.caption}</span>
+          </div>
+        </div>
+
+        <div className="lupi-hero-stats" aria-label="Viewer scale">
+          <Metric value={<AnimatedCounter target={953312} duration={1800} />} label="Atoms in the hero scene" />
+          <Metric value={`${stats.totalSims}+`} label="Loadable structures" />
+          <Metric value={stats.domains} label="Scientific domains" />
+        </div>
       </div>
     </section>
   );
 }
+
+function Metric({ value, label }: { value: ReactNode; label: string }) {
+  return (
+    <div className="lupi-hero-metric">
+      <strong>{value}</strong>
+      <span>{label}</span>
+    </div>
+  );
+}
+
+function IconPlay() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M8 5v14l11-7L8 5z" />
+    </svg>
+  );
+}
+
+function IconUpload() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M12 16V4" />
+      <path d="m7 9 5-5 5 5" />
+      <path d="M5 20h14" />
+    </svg>
+  );
+}
+
+function IconSearch() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+      <circle cx="11" cy="11" r="8" />
+      <path d="m21 21-4.35-4.35" />
+    </svg>
+  );
+}
+
+const HERO_CSS = `
+.lupi-hero {
+  position: relative;
+  width: 100%;
+  min-height: auto;
+  overflow: hidden;
+  background:
+    linear-gradient(118deg, rgba(2, 2, 4, 0.99) 0%, rgba(6, 12, 18, 0.97) 52%, rgba(18, 13, 9, 0.95) 100%);
+  color: #f8fafc;
+  isolation: isolate;
+}
+.lupi-hero::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 96px;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(2, 2, 4, 0), #020204);
+  z-index: 1;
+}
+.lupi-hero-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.28;
+  pointer-events: none;
+}
+.lupi-hero-shell {
+  position: relative;
+  z-index: 2;
+  box-sizing: border-box;
+  width: min(1440px, 100%);
+  min-height: min(700px, calc(100dvh - 96px));
+  margin: 0 auto;
+  padding: 38px 28px 30px;
+  display: grid;
+  grid-template-columns: minmax(320px, 0.72fr) minmax(540px, 1.28fr);
+  grid-template-areas:
+    "copy stage"
+    "stats stage";
+  gap: 18px 32px;
+  align-items: start;
+}
+.lupi-hero-copy {
+  grid-area: copy;
+  max-width: 560px;
+  padding-top: 10px;
+}
+.lupi-hero-product {
+  margin-bottom: 12px;
+  font-size: 13px;
+  font-weight: 760;
+  letter-spacing: 0;
+  color: #7dd3fc;
+}
+.lupi-hero-title {
+  margin: 0;
+  font-size: 52px;
+  line-height: 1;
+  letter-spacing: 0;
+  font-weight: 850;
+  text-wrap: balance;
+}
+.lupi-hero-lede {
+  max-width: 520px;
+  margin: 16px 0 0;
+  color: rgba(226, 232, 240, 0.74);
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0;
+  text-wrap: pretty;
+}
+.lupi-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+.lupi-hero-primary,
+.lupi-hero-secondary,
+.lupi-hero-builder button {
+  appearance: none;
+  border-radius: 8px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 780;
+  letter-spacing: 0;
+  cursor: pointer;
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
+}
+.lupi-hero-primary {
+  padding: 0 18px;
+  color: #08111a;
+  border: 1px solid rgba(94, 234, 212, 0.55);
+  background: linear-gradient(135deg, #5eead4, #fbbf24);
+  box-shadow: 0 14px 32px rgba(20, 184, 166, 0.18);
+}
+.lupi-hero-secondary {
+  padding: 0 16px;
+  color: rgba(248, 250, 252, 0.88);
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.06);
+}
+.lupi-hero-primary:hover,
+.lupi-hero-secondary:hover,
+.lupi-hero-builder button:hover,
+.lupi-hero-modebar button:hover {
+  transform: translateY(-1px);
+}
+.lupi-hero-builder {
+  box-sizing: border-box;
+  width: min(520px, 100%);
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 7px;
+  padding-left: 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(8, 13, 20, 0.72);
+  backdrop-filter: blur(12px);
+}
+.lupi-hero-builder-icon {
+  color: rgba(226, 232, 240, 0.48);
+  display: grid;
+  place-items: center;
+}
+.lupi-hero-builder input {
+  min-width: 0;
+  height: 34px;
+  color: #f8fafc;
+  background: transparent;
+  border: 0;
+  outline: none;
+  font-size: 14px;
+  letter-spacing: 0;
+}
+.lupi-hero-builder input::placeholder {
+  color: rgba(226, 232, 240, 0.42);
+}
+.lupi-hero-builder button {
+  min-height: 34px;
+  padding: 0 14px;
+  color: #dff7ff;
+  border: 1px solid rgba(56, 189, 248, 0.34);
+  background: rgba(14, 165, 233, 0.12);
+}
+.lupi-hero-stats {
+  grid-area: stats;
+  width: min(560px, 100%);
+  align-self: end;
+  margin-top: 4px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+.lupi-hero-metric {
+  min-width: 0;
+  padding: 14px 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+.lupi-hero-metric strong {
+  display: block;
+  font-size: 24px;
+  line-height: 1;
+  font-weight: 820;
+  letter-spacing: 0;
+  color: #f8fafc;
+  white-space: nowrap;
+}
+.lupi-hero-metric span {
+  display: block;
+  margin-top: 8px;
+  color: rgba(226, 232, 240, 0.52);
+  font-size: 12px;
+  line-height: 1.25;
+  letter-spacing: 0;
+}
+.lupi-hero-stage {
+  grid-area: stage;
+  justify-self: stretch;
+  min-width: 0;
+  padding: 9px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(5, 8, 13, 0.58);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(14px);
+}
+.lupi-hero-stage-topline {
+  min-height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 0 2px 8px;
+  color: rgba(226, 232, 240, 0.68);
+  font-size: 13px;
+  font-weight: 720;
+  letter-spacing: 0;
+}
+.lupi-hero-preview {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  background: #05070d;
+  cursor: pointer;
+}
+.lupi-hero-preview-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.lupi-hero-preview-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.4;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+.lupi-hero-preview-reticle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 128px;
+  height: 128px;
+  border: 1px solid rgba(125, 211, 252, 0.38);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: inset 0 0 0 1px rgba(251, 191, 36, 0.14), 0 0 42px rgba(56, 189, 248, 0.12);
+  pointer-events: none;
+}
+.lupi-hero-preview-reticle::before,
+.lupi-hero-preview-reticle::after {
+  content: "";
+  position: absolute;
+  background: rgba(125, 211, 252, 0.36);
+}
+.lupi-hero-preview-reticle::before {
+  left: 50%;
+  top: -18px;
+  bottom: -18px;
+  width: 1px;
+}
+.lupi-hero-preview-reticle::after {
+  top: 50%;
+  left: -18px;
+  right: -18px;
+  height: 1px;
+}
+.lupi-hero-preview-readout {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  padding: 9px 10px;
+  border-radius: 8px;
+  text-align: left;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(2, 6, 12, 0.68);
+  backdrop-filter: blur(10px);
+}
+.lupi-hero-preview-readout span,
+.lupi-hero-preview-readout strong {
+  display: block;
+  letter-spacing: 0;
+}
+.lupi-hero-preview-readout span {
+  color: rgba(226, 232, 240, 0.58);
+  font-size: 11px;
+  line-height: 1.2;
+}
+.lupi-hero-preview-readout strong {
+  margin-top: 4px;
+  color: #f8fafc;
+  font-size: 14px;
+  line-height: 1.15;
+}
+.lupi-hero-modebar {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+.lupi-hero-modebar button {
+  min-width: 0;
+  min-height: 40px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(226, 232, 240, 0.66);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 760;
+  letter-spacing: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  transition: transform 180ms ease, border-color 180ms ease, color 180ms ease, background 180ms ease;
+}
+.lupi-hero-modebar button.active {
+  background: rgba(255, 255, 255, 0.09);
+}
+.lupi-hero-modebar button span {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  flex: 0 0 auto;
+}
+.lupi-hero-caption {
+  min-height: 58px;
+  margin-top: 10px;
+  padding: 12px 2px 2px;
+  display: grid;
+  gap: 5px;
+}
+.lupi-hero-caption strong {
+  color: #f8fafc;
+  font-size: 14px;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+.lupi-hero-caption span {
+  color: rgba(226, 232, 240, 0.6);
+  font-size: 13px;
+  line-height: 1.35;
+  letter-spacing: 0;
+  text-wrap: pretty;
+}
+@media (max-width: 1080px) {
+  .lupi-hero-shell {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "copy"
+      "stage"
+      "stats";
+    min-height: auto;
+    padding-top: 38px;
+    gap: 16px;
+  }
+  .lupi-hero-copy {
+    max-width: 760px;
+    padding-top: 0;
+  }
+  .lupi-hero-title {
+    font-size: 44px;
+  }
+  .lupi-hero-stage {
+    max-width: 860px;
+  }
+  .lupi-hero-stats {
+    align-self: start;
+    margin-top: 0;
+  }
+}
+@media (max-width: 640px) {
+  .lupi-hero {
+    min-height: auto;
+  }
+  .lupi-hero-shell {
+    padding: 24px 14px 18px;
+    gap: 12px;
+  }
+  .lupi-hero-product {
+    font-size: 12px;
+    margin-bottom: 8px;
+  }
+  .lupi-hero-title {
+    font-size: 30px;
+    line-height: 1.04;
+  }
+  .lupi-hero-lede {
+    max-width: 34rem;
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  .lupi-hero-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 14px;
+    gap: 8px;
+  }
+  .lupi-hero-primary,
+  .lupi-hero-secondary {
+    width: auto;
+    min-height: 42px;
+    padding: 0 10px;
+    gap: 6px;
+    font-size: 13px;
+  }
+  .lupi-hero-builder {
+    display: none;
+  }
+  .lupi-hero-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+  }
+  .lupi-hero-metric {
+    padding: 9px 0 8px;
+  }
+  .lupi-hero-metric strong {
+    font-size: 18px;
+  }
+  .lupi-hero-metric span {
+    font-size: 10px;
+  }
+  .lupi-hero-stage {
+    padding: 6px;
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.28);
+  }
+  .lupi-hero-stage-topline {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .lupi-hero-preview {
+    aspect-ratio: 16 / 10;
+  }
+  .lupi-hero-modebar {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 6px;
+  }
+  .lupi-hero-modebar button {
+    min-height: 34px;
+    gap: 4px;
+    font-size: 11px;
+  }
+  .lupi-hero-modebar button span {
+    width: 6px;
+    height: 6px;
+  }
+  .lupi-hero-caption {
+    display: none;
+  }
+  .lupi-hero-preview-reticle {
+    width: 92px;
+    height: 92px;
+  }
+}
+`;

@@ -18,6 +18,10 @@ interface ImportMetaEnv {
   readonly VITE_FIREBASE_STORAGE_BUCKET?: string;
   readonly VITE_FIREBASE_MESSAGING_SENDER_ID?: string;
   readonly VITE_FIREBASE_MEASUREMENT_ID?: string;
+  /** Optional Firebase/GA4 sink. Leave disabled to avoid analytics storage
+   *  and consent banner requirements. */
+  readonly VITE_FIREBASE_ANALYTICS_ENABLED?: string;
+  readonly VITE_FIREBASE_ANALYTICS_CONSENT?: 'granted' | 'denied' | string;
   readonly VITE_LUPI_MCP_ENDPOINT?: string;
   readonly VITE_LUPI_MCP_ALLOWED_ORIGINS?: string;
   /** Vendor-neutral analytics sink. When set, track() POSTs funnel events

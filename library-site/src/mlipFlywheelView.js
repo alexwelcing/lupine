@@ -6,7 +6,7 @@ export function renderMlipFlywheelView(mount) {
 
   mount.replaceChildren(
     h('section', { class: 'flywheel-lab fly-loading' },
-      h('p', { class: 'fly-kicker' }, 'Lupine Start Live Lab'),
+      h('p', { class: 'fly-kicker' }, 'Library Live Lab'),
       h('h1', {}, 'Loading measured evidence')
     )
   );

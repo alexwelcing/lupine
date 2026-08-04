@@ -1,0 +1,55 @@
+name: lean-spec
+
+# Formal verification gate. Heavy and cache-dependent, so it is path-filtered to
+# lean-spec changes and manually triggered rather than running on every PR.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'lean-spec/**'
+      - '.github/workflows/lean-spec.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'lean-spec/**'
+      - '.github/workflows/lean-spec.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: lean-spec-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: lake build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install elan
+        run: |
+          curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Cache Lake build
+        uses: actions/cache@v4
+        with:
+          path: |
+            lean-spec/.lake
+            ~/.cache/lake
+          key: ${{ runner.os }}-lean-${{ hashFiles('lean-spec/lean-toolchain', 'lean-spec/lake-manifest.json') }}
+
+      - name: lake build
+        working-directory: lean-spec
+        run: |
+          lake exe cache get
+          lake build
+
+      - name: Check for sorries
+        working-directory: lean-spec
+        run: sh scripts/check_no_sorry.sh OpenDistillationFactory

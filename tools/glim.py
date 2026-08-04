@@ -7,7 +7,7 @@ GLIM_API_URL (default: the deployed production URL).
 
 Usage:
     glim ask "Why does Cu LJ overestimate C44?"
-    glim critique queue swarm_preprint_review/critique11.md
+    glim critique queue archive/swarm_preprint_review/critique11.md
     glim critique pending
     glim hypothesis list
     glim run --element Al --analysis manifold,causal
@@ -147,10 +147,10 @@ def _excerpt(text: str, max_len: int = 80) -> str:
 
 
 def _find_critique11(start: Optional[Path] = None) -> Optional[Path]:
-    """Walk up from start (or cwd) looking for swarm_preprint_review/critique11.md."""
+    """Walk up from start (or cwd) looking for archive/swarm_preprint_review/critique11.md."""
     cur = (start or Path.cwd()).resolve()
     for _ in range(8):
-        candidate = cur / "swarm_preprint_review" / "critique11.md"
+        candidate = cur / "archive" / "swarm_preprint_review" / "critique11.md"
         if candidate.is_file():
             return candidate
         if cur.parent == cur:

@@ -56,7 +56,7 @@ export type SavedMoleculeSource =
 
 export interface CanonicalMolecularView {
   frame: number;
-  color: Pick<AppState, 'colorScheme' | 'atomColorSource' | 'colorMode' | 'colorProperty' | 'colormap' | 'propRange'>;
+  color: Pick<AppState, 'colorScheme' | 'atomColorSource' | 'colorMode' | 'colorProperty' | 'colormap' | 'uniformAtomColor' | 'elementColorOverrides' | 'propRange'>;
   display: Pick<AppState,
     | 'showCell'
     | 'showAxes'
@@ -73,6 +73,14 @@ export interface CanonicalMolecularView {
     | 'atomScale'
     | 'backgroundPreset'
     | 'backgroundStyle'
+    | 'backgroundMotionPaused'
+    | 'backgroundMotionSpeed'
+    | 'backgroundOpacity'
+    | 'backgroundBrightness'
+    | 'backgroundSaturation'
+    | 'backgroundContrast'
+    | 'backgroundYawDegrees'
+    | 'backgroundPitchDegrees'
   >;
   material: Pick<AppState,
     | 'environmentPreset'
@@ -138,8 +146,9 @@ export function defaultSavedViewTitle(file: LoadedFile | null): string {
 }
 
 export function makeSavedViewUrl(slug: string): string {
-  if (typeof window === 'undefined') return `#/view/${slug}`;
-  return `${window.location.origin}${window.location.pathname}#/view/${slug}`;
+  const encodedSlug = encodeURIComponent(slug);
+  if (typeof window === 'undefined') return `/view/${encodedSlug}`;
+  return `${window.location.origin}/view/${encodedSlug}`;
 }
 
 export async function saveCurrentMolecularView({
@@ -147,20 +156,31 @@ export async function saveCurrentMolecularView({
   title,
   user,
 }: {
-  slug: string;
+  slug?: string;
   title: string;
   user: User;
 }): Promise<{ url: string; view: SavedMolecularView }> {
   if (!firebaseDb) throw new Error('Firebase database is not configured.');
-  const cleanSlug = slugifySavedViewTitle(slug);
-  if (cleanSlug.length < 3) throw new Error('Pick a URL slug with at least 3 characters.');
 
+  // Ensure the Firebase ID token is fresh before Firestore writes. Stale or
+  // expired tokens are the most common cause of "insufficient privilege" errors
+  // when the user is otherwise signed in.
+  const token = await withTimeout(
+    user.getIdToken(true),
+    10_000,
+    'Sign-in session refresh timed out.',
+  );
+  if (!token) throw new Error('Your sign-in session could not be verified. Please sign in again.');
+
+  const baseSlug = slugifySavedViewTitle(slug || title || defaultSavedViewTitle(useStore.getState().file));
+  if (baseSlug.length < 3) throw new Error('Pick a title or slug with at least 3 URL-safe characters.');
+
+  // Default to a unique slug. If the user explicitly chose a slug that they
+  // already own, reuse it (update). If it belongs to someone else or is
+  // orphaned, append a short random suffix so the save always succeeds.
+  const cleanSlug = await findUniqueSlug(baseSlug, user.uid);
   const ref = doc(firebaseDb, VIEW_COLLECTION, cleanSlug);
   const current = await getDoc(ref);
-  if (current.exists()) {
-    const ownerId = current.data().ownerId;
-    if (ownerId && ownerId !== user.uid) throw new Error('That Lupi URL is already taken.');
-  }
 
   const view: SavedMolecularView = {
     schemaVersion: SAVED_VIEW_SCHEMA_VERSION,
@@ -176,11 +196,25 @@ export async function saveCurrentMolecularView({
     },
   };
 
-  await setDoc(ref, {
+  const write = async () => setDoc(ref, {
     ...view,
     createdAt: current.exists() ? current.data().createdAt ?? serverTimestamp() : serverTimestamp(),
     updatedAt: serverTimestamp(),
   });
+
+  try {
+    await write();
+  } catch (firstError) {
+    // Retry once on a permission-denied error after forcing another token
+    // refresh — this covers edge cases where the first refresh produced a
+    // token that was invalidated before the write reached Firestore.
+    if (isFirestorePermissionDenied(firstError)) {
+      await withTimeout(user.getIdToken(true), 10_000, 'Sign-in session refresh timed out.');
+      await write();
+    } else {
+      throw firstError;
+    }
+  }
 
   return { url: makeSavedViewUrl(cleanSlug), view };
 }
@@ -241,7 +275,7 @@ function captureCanonicalView(): CanonicalMolecularView {
   const s = useStore.getState();
   return cleanJson({
     frame: s.frame,
-    color: pick(s, ['colorScheme', 'atomColorSource', 'colorMode', 'colorProperty', 'colormap', 'propRange']),
+    color: pick(s, ['colorScheme', 'atomColorSource', 'colorMode', 'colorProperty', 'colormap', 'uniformAtomColor', 'elementColorOverrides', 'propRange']),
     display: pick(s, [
       'showCell',
       'showAxes',
@@ -258,6 +292,14 @@ function captureCanonicalView(): CanonicalMolecularView {
       'atomScale',
       'backgroundPreset',
       'backgroundStyle',
+      'backgroundMotionPaused',
+      'backgroundMotionSpeed',
+      'backgroundOpacity',
+      'backgroundBrightness',
+      'backgroundSaturation',
+      'backgroundContrast',
+      'backgroundYawDegrees',
+      'backgroundPitchDegrees',
     ]),
     material: pick(s, [
       'environmentPreset',
@@ -367,4 +409,50 @@ function pick<T extends object, K extends keyof T>(source: T, keys: K[]): Pick<T
 
 function cleanJson<T>(value: T): T {
   return JSON.parse(JSON.stringify(value)) as T;
+}
+
+function isFirestorePermissionDenied(error: unknown): boolean {
+  return typeof error === 'object'
+    && error !== null
+    && 'code' in error
+    && (error as { code?: unknown }).code === 'permission-denied';
+}
+
+async function findUniqueSlug(baseSlug: string, uid: string): Promise<string> {
+  if (!firebaseDb) return baseSlug;
+  const baseRef = doc(firebaseDb, VIEW_COLLECTION, baseSlug);
+  const baseSnap = await getDoc(baseRef);
+  if (!baseSnap.exists()) return baseSlug;
+
+  const ownerId = baseSnap.data().ownerId;
+  // The user explicitly re-used their own slug — update in place.
+  if (ownerId === uid) return baseSlug;
+
+  // Otherwise generate a short random suffix until we find a free slug.
+  for (let attempt = 0; attempt < 10; attempt += 1) {
+    const suffix = generateRandomSlugSuffix();
+    const candidate = `${baseSlug}-${suffix}`;
+    const candidateRef = doc(firebaseDb, VIEW_COLLECTION, candidate);
+    const candidateSnap = await getDoc(candidateRef);
+    if (!candidateSnap.exists()) return candidate;
+
+    const candidateOwner = candidateSnap.data().ownerId;
+    if (candidateOwner === uid) return candidate;
+  }
+
+  // Last resort: append a millisecond timestamp.
+  return `${baseSlug}-${Date.now().toString(36)}`;
+}
+
+function generateRandomSlugSuffix(): string {
+  return Math.random().toString(36).slice(2, 6);
+}
+
+function withTimeout<T>(promise: Promise<T>, ms: number, message: string): Promise<T> {
+  return new Promise((resolve, reject) => {
+    const timer = window.setTimeout(() => reject(new Error(message)), ms);
+    promise
+      .then(resolve, reject)
+      .finally(() => window.clearTimeout(timer));
+  });
 }

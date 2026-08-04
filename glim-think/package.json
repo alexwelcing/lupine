@@ -10,13 +10,14 @@
     "types": "wrangler types",
     "lint": "npm run lint:fast",
     "lint:fast": "node scripts/typecheck-core.mjs && node scripts/syntax-check.mjs src/server.ts",
-    "lint:app": "tsc -p tsconfig.app.json --noEmit --pretty false",
-    "lint:full": "tsc --noEmit --pretty false --extendedDiagnostics",
+    "lint:app": "node --max-old-space-size=8192 node_modules/typescript/bin/tsc -p tsconfig.app.json --noEmit --pretty false",
+    "lint:full": "node --max-old-space-size=8192 node_modules/typescript/bin/tsc --noEmit --pretty false --extendedDiagnostics",
     "lint:profile": "node scripts/lint-profile.mjs",
     "test": "vitest run",
     "test:watch": "vitest"
   },
   "dependencies": {
+    "@ai-sdk/anthropic": "^3.0.81",
     "@ai-sdk/openai": "^3.0.64",
     "@ai-sdk/openai-compatible": "^2.0.45",
     "@arizeai/openinference-semantic-conventions": "^2.3.0",
