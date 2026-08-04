@@ -244,6 +244,13 @@ def batch(ctx: click.Context, elements: str, mlips: str,
                        [elements, mlips, refs_json])
     if not isinstance(out, list):
         raise click.ClickException(f"unexpected response shape: {type(out).__name__}")
+    prediction_errors = [row for row in out if isinstance(row, dict) and row.get("error")]
+    if prediction_errors:
+        first_error = str(prediction_errors[0]["error"])
+        raise click.ClickException(
+            f"Space returned {len(prediction_errors)} prediction error record(s); "
+            f"first error: {first_error[:300]}"
+        )
     out = [_with_run_provenance(row, _run_provenance_from_env()) for row in out]
     if out_path is None:
         for row in out:
