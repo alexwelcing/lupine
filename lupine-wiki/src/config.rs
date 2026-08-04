@@ -29,6 +29,8 @@ fn default_color() -> String {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct RootConfig {
     pub path: String,
+    #[serde(default)]
+    pub required: bool,
     #[serde(default = "default_root_kind")]
     pub kind: String,
     #[serde(default)]
@@ -139,6 +141,7 @@ mod tests {
             .map(|root| root.path.as_str())
             .collect();
         assert_eq!(science_roots, ["../lupine-rhizo"]);
+        assert!(config.spheres["lupine-science"].roots[0].required);
 
         let ledger_roots: Vec<_> = config.spheres["lupine-ledger"]
             .roots
@@ -146,5 +149,6 @@ mod tests {
             .map(|root| root.path.as_str())
             .collect();
         assert_eq!(ledger_roots, ["../lupine-ledger"]);
+        assert!(config.spheres["lupine-ledger"].roots[0].required);
     }
 }

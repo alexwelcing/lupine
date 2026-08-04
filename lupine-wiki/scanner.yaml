@@ -76,6 +76,7 @@ spheres:
     priority: 80
     roots:
       - path: ../lupine-rhizo
+        required: true
         kind: repo
         recursive: true
         max_depth: 4
@@ -98,6 +99,7 @@ spheres:
     priority: 70
     roots:
       - path: ../lupine-ledger
+        required: true
         kind: repo
         recursive: true
         max_depth: 2
