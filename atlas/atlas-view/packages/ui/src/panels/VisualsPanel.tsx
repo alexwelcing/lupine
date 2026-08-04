@@ -153,6 +153,7 @@ const ENVIRONMENT_OPTIONS = [
   { value: 'dawn', label: 'Dawn' },
   { value: 'night', label: 'Night' },
   { value: 'forest', label: 'Forest' },
+  { value: 'park', label: 'Picnic Park' },
   { value: 'none', label: 'Direct Only' },
 ] as const;
 
@@ -182,6 +183,9 @@ export function VisualsPanel({ availableProperties, embedded = false }: { availa
     propertyEmissionStrength, setPropertyEmissionStrength,
     annotations, addAnnotation, removeAnnotation, clearAnnotations,
     labelStyle, setLabelStyle,
+    knowledgeLabels, knowledgeLabelKinds, showKnowledgeLabels,
+    setShowKnowledgeLabels, toggleKnowledgeLabelKind,
+    knowledgeLabelThreshold, setKnowledgeLabelThreshold,
     hiddenAtomTypes, toggleAtomType, showAllAtomTypes, soloAtomType,
     atomTypeScales, setAtomTypeScale, resetAtomTypeScales,
     // Materials & Lighting
@@ -504,7 +508,7 @@ export function VisualsPanel({ availableProperties, embedded = false }: { availa
                     format={v => v.toFixed(2)}
                   />
                   <div style={{ fontSize: 10, color: '#64748b', marginTop: 4, fontStyle: 'italic' }}>
-                    Hot atoms emit light. 0 = colormap shading only · 1 = strong glow on high-property sites.
+                    High source-scalar atoms emit light. 0 = colormap shading only · 1 = strong glow on high-value sites.
                   </div>
                 </div>
               )}
@@ -514,7 +518,7 @@ export function VisualsPanel({ availableProperties, embedded = false }: { availa
               </div>
 
               <div style={{ borderTop: '1px solid #1f2937', paddingTop: 12 }}>
-                <OrbitalToggle label="Show Bonds" active={showBonds} onClick={toggleBonds} />
+                <OrbitalToggle label="Show Bond Guides" active={showBonds} onClick={toggleBonds} />
                 {showBonds && (
                   <div style={{ marginTop: 8, display: 'flex', flexDirection: 'column', gap: 8 }}>
                     <WaveformSlider label="Bond Tolerance (Å)" value={bondTolerance} min={0.0} max={1.5} step={0.05} onChange={setBondTolerance} format={v => v.toFixed(2)} />
@@ -791,6 +795,45 @@ export function VisualsPanel({ availableProperties, embedded = false }: { availa
                   {labelStyle === 'etched' && 'Subtle inline pin — pairs with shader-side surface engraving.'}
                 </div>
               </div>
+
+              {knowledgeLabels.length > 0 && (
+                <div>
+                  <div style={{ fontSize: 10, color: '#64748b', textTransform: 'uppercase', marginBottom: 8 }}>
+                    Knowledge Labels
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                    <OrbitalToggle
+                      label={`Show knowledge labels (${knowledgeLabels.length})`}
+                      active={showKnowledgeLabels}
+                      onClick={() => setShowKnowledgeLabels(!showKnowledgeLabels)}
+                    />
+                    <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                      {Array.from(new Set(knowledgeLabels.map(l => l.kind))).map(kind => (
+                        <IsotopeChip
+                          key={kind}
+                          label={kind}
+                          selected={knowledgeLabelKinds.has(kind)}
+                          onClick={() => toggleKnowledgeLabelKind(kind)}
+                        />
+                      ))}
+                    </div>
+                    {knowledgeLabels.some(l => l.kind === 'node') && (
+                      <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                        <IsotopeChip
+                          label="Key nodes"
+                          selected={knowledgeLabelThreshold >= 1}
+                          onClick={() => setKnowledgeLabelThreshold(1)}
+                        />
+                        <IsotopeChip
+                          label="All nodes"
+                          selected={knowledgeLabelThreshold <= 0}
+                          onClick={() => setKnowledgeLabelThreshold(0)}
+                        />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
 
               {annotations.length > 0 ? (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>

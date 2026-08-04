@@ -1,0 +1,1955 @@
+[
+  {
+    "n_materials": 5,
+    "n_properties": 3,
+    "potential": "Ackland-1987",
+    "eigenvalues": [
+      124.29136126251888,
+      25.558828282173046,
+      1.624898455308018
+    ],
+    "eigenvectors": [
+      [
+        -0.9762524078808336,
+        0.17326080910957964,
+        -0.13004586934450657
+      ],
+      [
+        0.12283803884021703,
+        0.9371887518059288,
+        0.3264782683462021
+      ],
+      [
+        0.1784434148988524,
+        0.3027506160441945,
+        -0.9362157935882602
+      ]
+    ],
+    "effective_dimensionality": 1.4247618823372932,
+    "fractional_dimensionality": 0.4749206274457644,
+    "cumulative_variance": [
+      0.8205399508499966,
+      0.9892728337262426,
+      1.0
+    ],
+    "log_slope": -2.168591586109376,
+    "log_intercept": 5.018277122241949,
+    "log_r_squared": 0.9761635323000419,
+    "decay_monotonicity": -0.9432532188429201,
+    "width_ratios": [
+      4.862952240624055,
+      15.72949263302
+    ],
+    "mean_width_ratio": 10.296222436822028,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.0526170432497362,
+    "pr_ci_upper": 3.0000000000000004,
+    "log_r2_ci_lower": 0.7499999999999998,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 3,
+    "n_properties": 3,
+    "potential": "Asadi-2015",
+    "eigenvalues": [
+      40.89657771856609,
+      3.93348894810045
+    ],
+    "eigenvectors": [
+      [
+        -0.7931098280830102,
+        -0.3261805153789271,
+        -0.5143763913568314
+      ],
+      [
+        -0.5624274347892297,
+        0.7163471918274669,
+        0.41294319386243666
+      ],
+      [
+        -0.23377805969454224,
+        -0.6168086997992495,
+        0.7515948687008278
+      ]
+    ],
+    "effective_dimensionality": 1.1905995347544722,
+    "fractional_dimensionality": 0.39686651158482406,
+    "cumulative_variance": [
+      0.9122577939188032,
+      1.0
+    ],
+    "log_slope": -2.341519580087877,
+    "log_intercept": 3.711046385185174,
+    "log_r_squared": 1.0,
+    "decay_monotonicity": -1.0,
+    "width_ratios": [
+      10.397023674952935
+    ],
+    "mean_width_ratio": 10.397023674952935,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.1905995347544722,
+    "pr_ci_upper": 2.0,
+    "log_r2_ci_lower": 1.0,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 3,
+    "n_properties": 3,
+    "potential": "Bonny-2009",
+    "eigenvalues": [
+      62.27486417821103,
+      0.6465802662334449
+    ],
+    "eigenvectors": [
+      [
+        -0.8464541190179682,
+        -0.5215699099299576,
+        0.10714594464174412
+      ],
+      [
+        -0.5323235176089747,
+        0.8335079193781887,
+        -0.14797371703870704
+      ],
+      [
+        0.012128355120271267,
+        0.1822892684430425,
+        0.9831701407246749
+      ]
+    ],
+    "effective_dimensionality": 1.0207631307056717,
+    "fractional_dimensionality": 0.3402543769018906,
+    "cumulative_variance": [
+      0.9897240078967937,
+      1.0
+    ],
+    "log_slope": -4.567615813582334,
+    "log_intercept": 4.131557880145642,
+    "log_r_squared": 1.0,
+    "decay_monotonicity": -1.0,
+    "width_ratios": [
+      96.31420479468666
+    ],
+    "mean_width_ratio": 96.31420479468666,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.0207631307056717,
+    "pr_ci_upper": 2.0,
+    "log_r2_ci_lower": 1.0,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 3,
+    "n_properties": 3,
+    "potential": "Bonny-2011",
+    "eigenvalues": [
+      2215.502415201261,
+      42.61071813207401
+    ],
+    "eigenvectors": [
+      [
+        -0.37041293289103777,
+        0.925584851392463,
+        0.07801885682225619
+      ],
+      [
+        0.9205320507732395,
+        0.377018879418698,
+        -0.1023596993991453
+      ],
+      [
+        0.12415716912958998,
+        -0.03390350180529283,
+        0.9916831902977206
+      ]
+    ],
+    "effective_dimensionality": 1.038451740462819,
+    "fractional_dimensionality": 0.346150580154273,
+    "cumulative_variance": [
+      0.9811299453942001,
+      1.0
+    ],
+    "log_slope": -3.9511286598032074,
+    "log_intercept": 7.703234480777185,
+    "log_r_squared": 1.0,
+    "decay_monotonicity": -1.0,
+    "width_ratios": [
+      51.99401728772096
+    ],
+    "mean_width_ratio": 51.99401728772096,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.038451740462819,
+    "pr_ci_upper": 2.0,
+    "log_r2_ci_lower": 1.0,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 5,
+    "n_properties": 3,
+    "potential": "Bonny-2013",
+    "eigenvalues": [
+      1663.9227349518533,
+      50.78314547733603,
+      24.760223570812084
+    ],
+    "eigenvectors": [
+      [
+        -0.33159715988657895,
+        0.9349402232997917,
+        0.1262145095117443
+      ],
+      [
+        0.632754694421255,
+        0.12117264695691568,
+        0.7648128439803549
+      ],
+      [
+        0.6997605449316351,
+        0.33347259030629517,
+        -0.6317683208830518
+      ]
+    ],
+    "effective_dimensionality": 1.0916042410084301,
+    "fractional_dimensionality": 0.3638680803361434,
+    "cumulative_variance": [
+      0.9565709450305286,
+      0.9857656188218474,
+      1.0
+    ],
+    "log_slope": -2.1038473548447127,
+    "log_intercept": 6.9550927487989735,
+    "log_r_squared": 0.8736909287399268,
+    "decay_monotonicity": -0.8728709860249096,
+    "width_ratios": [
+      32.76525546639178,
+      2.0509970490412033
+    ],
+    "mean_width_ratio": 17.40812625771649,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.0599388535964027,
+    "pr_ci_upper": 3.0000000000000004,
+    "log_r2_ci_lower": 0.0,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 3,
+    "n_properties": 3,
+    "potential": "Chen-2020",
+    "eigenvalues": [
+      336.1400513884817,
+      1.2459041670734294
+    ],
+    "eigenvectors": [
+      [
+        -0.9623826717987904,
+        0.22236231587529287,
+        -0.15612364811263627
+      ],
+      [
+        0.2536146928633034,
+        0.9413400621078527,
+        -0.22261732869351492
+      ],
+      [
+        -0.09746373984859226,
+        0.2538383106415591,
+        0.9623237144876796
+      ]
+    ],
+    "effective_dimensionality": 1.0074129045064653,
+    "fractional_dimensionality": 0.33580430150215507,
+    "cumulative_variance": [
+      0.9963071842601692,
+      1.0
+    ],
+    "log_slope": -5.5976663877804045,
+    "log_intercept": 5.817527892726619,
+    "log_r_squared": 1.0,
+    "decay_monotonicity": -1.0,
+    "width_ratios": [
+      269.7960728216031
+    ],
+    "mean_width_ratio": 269.7960728216031,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.0074129045064653,
+    "pr_ci_upper": 2.0,
+    "log_r2_ci_lower": 1.0,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 3,
+    "n_properties": 3,
+    "potential": "Choi-2017",
+    "eigenvalues": [
+      615.150513946086,
+      1.2031082761365082
+    ],
+    "eigenvectors": [
+      [
+        -0.3677109030498999,
+        0.8120898865739499,
+        0.4530990045260935
+      ],
+      [
+        0.7457837711341411,
+        -0.03353526152604286,
+        0.6653434849364045
+      ],
+      [
+        -0.5555135088286932,
+        -0.5825679379769277,
+        0.5933121768092612
+      ]
+    ],
+    "effective_dimensionality": 1.0039115749619913,
+    "fractional_dimensionality": 0.33463719165399713,
+    "cumulative_variance": [
+      0.9980480227052146,
+      1.0
+    ],
+    "log_slope": -6.236958537943416,
+    "log_intercept": 6.421866975986745,
+    "log_r_squared": 1.0,
+    "decay_monotonicity": -1.0,
+    "width_ratios": [
+      511.30104093498
+    ],
+    "mean_width_ratio": 511.30104093498,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.0039115749619913,
+    "pr_ci_upper": 2.0,
+    "log_r2_ci_lower": 1.0,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 3,
+    "n_properties": 3,
+    "potential": "Choi-2018",
+    "eigenvalues": [
+      609.9463648000492,
+      2.1629463110621403
+    ],
+    "eigenvectors": [
+      [
+        -0.3618855713502151,
+        0.8113069670550094,
+        0.4591512152401757
+      ],
+      [
+        0.7392619512276932,
+        -0.0502999586464975,
+        0.671536805861886
+      ],
+      [
+        -0.5679177763686855,
+        -0.582452503959046,
+        0.5815655422360282
+      ]
+    ],
+    "effective_dimensionality": 1.0070921616626125,
+    "fractional_dimensionality": 0.33569738722087084,
+    "cumulative_variance": [
+      0.9964664051472507,
+      1.0
+    ],
+    "log_slope": -5.641899701596854,
+    "log_intercept": 6.413371026744294,
+    "log_r_squared": 1.0,
+    "decay_monotonicity": -1.0,
+    "width_ratios": [
+      281.99792185342216
+    ],
+    "mean_width_ratio": 281.99792185342216,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.0070921616626125,
+    "pr_ci_upper": 2.0,
+    "log_r2_ci_lower": 1.0,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 3,
+    "n_properties": 3,
+    "potential": "Deluigi-2021",
+    "eigenvalues": [
+      9836.020680776011,
+      0.1464081128809568
+    ],
+    "eigenvectors": [
+      [
+        0.8512252680755189,
+        -0.4975838498775552,
+        -0.16681083697047874
+      ],
+      [
+        -0.5074162398086417,
+        -0.6992117918454134,
+        -0.5036185359205771
+      ],
+      [
+        -0.13395634575569695,
+        -0.5133353509016864,
+        0.8476688710495525
+      ]
+    ],
+    "effective_dimensionality": 1.0000297697854856,
+    "fractional_dimensionality": 0.3333432565951619,
+    "cumulative_variance": [
+      0.9999851153288106,
+      1.0
+    ],
+    "log_slope": -11.115163769030246,
+    "log_intercept": 9.193806505893448,
+    "log_r_squared": 1.0,
+    "decay_monotonicity": -1.0,
+    "width_ratios": [
+      67182.21065231267
+    ],
+    "mean_width_ratio": 67182.21065231267,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.0000297697854856,
+    "pr_ci_upper": 2.0,
+    "log_r2_ci_lower": 1.0,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 5,
+    "n_properties": 3,
+    "potential": "Derlet-2007",
+    "eigenvalues": [
+      110.12851281175058,
+      5.774218376890054,
+      2.122492811359471
+    ],
+    "eigenvectors": [
+      [
+        -0.8939210251326376,
+        0.41275162496299983,
+        -0.1747606846982969
+      ],
+      [
+        0.4252194677716502,
+        0.6576208110713103,
+        -0.6218707848692577
+      ],
+      [
+        0.14175191375713073,
+        0.6302150148451837,
+        0.7633710958700729
+      ]
+    ],
+    "effective_dimensionality": 1.1449776334821207,
+    "fractional_dimensionality": 0.3816592111607069,
+    "cumulative_variance": [
+      0.9330930209609303,
+      0.9820166169618161,
+      1.0
+    ],
+    "log_slope": -1.9745283649141403,
+    "log_intercept": 4.377075743490741,
+    "log_r_squared": 0.9250163380172629,
+    "decay_monotonicity": -0.8805270156922381,
+    "width_ratios": [
+      19.072453728545142,
+      2.720489014609019
+    ],
+    "mean_width_ratio": 10.89647137157708,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.0777765989229087,
+    "pr_ci_upper": 3.0000000000000004,
+    "log_r2_ci_lower": 0.0,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 5,
+    "n_properties": 3,
+    "potential": "EAM_Dynamo_AdamsFoilesWolfer_1989Univers",
+    "eigenvalues": [
+      363.6458855773948,
+      11.715890129728505,
+      0.31371229287688657
+    ],
+    "eigenvectors": [
+      [
+        -0.8738933118700432,
+        0.42475830875178966,
+        -0.2364124755911291
+      ],
+      [
+        0.3438656641331415,
+        0.196382809185771,
+        -0.9182538849831118
+      ],
+      [
+        0.3436086211070387,
+        0.8837500616139293,
+        0.3176774214487002
+      ]
+    ],
+    "effective_dimensionality": 1.0661479585143174,
+    "fractional_dimensionality": 0.35538265283810583,
+    "cumulative_variance": [
+      0.9679787401444584,
+      0.9991649380838046,
+      1.0
+    ],
+    "log_slope": -3.527729765061475,
+    "log_intercept": 5.92701230692772,
+    "log_r_squared": 0.9997708986706987,
+    "decay_monotonicity": -0.8794957498986335,
+    "width_ratios": [
+      31.038690321502838,
+      37.34597080110691
+    ],
+    "mean_width_ratio": 34.19233056130487,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.003452228179253,
+    "pr_ci_upper": 3.0000000000000004,
+    "log_r2_ci_lower": 0.75,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 6,
+    "n_properties": 3,
+    "potential": "EAM_Dynamo_FoilesBaskesDaw_1986Universal",
+    "eigenvalues": [
+      328.03052981319934,
+      19.2502913744931,
+      9.112298256751851
+    ],
+    "eigenvectors": [
+      [
+        -0.8438274427379087,
+        0.4547644824833964,
+        -0.2848587586050501
+      ],
+      [
+        0.4921054787456213,
+        0.44412397838896533,
+        -0.748722972539577
+      ],
+      [
+        0.21398000997977404,
+        0.7719735470154182,
+        0.5985560943115436
+      ]
+    ],
+    "effective_dimensionality": 1.1754472896989268,
+    "fractional_dimensionality": 0.39181576323297557,
+    "cumulative_variance": [
+      0.9204176846190034,
+      0.9744318906297732,
+      1.0
+    ],
+    "log_slope": -1.7917408624192097,
+    "log_intercept": 5.445160141626164,
+    "log_r_squared": 0.8983638568421077,
+    "decay_monotonicity": -0.8796684948510481,
+    "width_ratios": [
+      17.040289075719876,
+      2.1125615988512445
+    ],
+    "mean_width_ratio": 9.57642533728556,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.1124849699354042,
+    "pr_ci_upper": 3.0000000000000004,
+    "log_r2_ci_lower": 0.35625000000000107,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 12,
+    "n_properties": 3,
+    "potential": "EAM_Dynamo_ZhouJohnsonWadley_2004NISTret",
+    "eigenvalues": [
+      831.6595081031242,
+      4.749754426939179,
+      2.8929527477148334
+    ],
+    "eigenvectors": [
+      [
+        -0.8413164805665019,
+        -0.00928871052668978,
+        -0.5404630416447974
+      ],
+      [
+        -0.1833167900346198,
+        -0.9356960092242348,
+        0.3014430838703134
+      ],
+      [
+        -0.5085091287465718,
+        0.3526849843395564,
+        0.7855136967633408
+      ]
+    ],
+    "effective_dimensionality": 1.0184183233078827,
+    "fractional_dimensionality": 0.3394727744359609,
+    "cumulative_variance": [
+      0.9908939747381406,
+      0.9965531453449609,
+      1.0
+    ],
+    "log_slope": -2.8305727097226536,
+    "log_intercept": 5.945170616939816,
+    "log_r_squared": 0.8151389854443871,
+    "decay_monotonicity": -0.8669949950780624,
+    "width_ratios": [
+      175.09526458593342,
+      1.641836158814225
+    ],
+    "mean_width_ratio": 88.36855037237382,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.0139379839983143,
+    "pr_ci_upper": 3.0,
+    "log_r2_ci_lower": 0.7499999999999998,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 8,
+    "n_properties": 3,
+    "potential": "Elliott-2015",
+    "eigenvalues": [
+      2043311.702063592,
+      1367.5120066929885,
+      32.157364090022035
+    ],
+    "eigenvectors": [
+      [
+        -0.7745101646754162,
+        -0.44464516963491196,
+        -0.44991630103253594
+      ],
+      [
+        -0.1379479416654615,
+        -0.5754145898515861,
+        0.8061441652559382
+      ],
+      [
+        -0.617336512936601,
+        0.6864318778336791,
+        0.3843265628199629
+      ]
+    ],
+    "effective_dimensionality": 1.001370021288288,
+    "fractional_dimensionality": 0.33379000709609596,
+    "cumulative_variance": [
+      0.999315468485999,
+      0.9999842729078836,
+      1.0
+    ],
+    "log_slope": -5.529720477172871,
+    "log_intercept": 13.936877885768947,
+    "log_r_squared": 0.9666279274735199,
+    "decay_monotonicity": -0.8663083463873927,
+    "width_ratios": [
+      1494.1819099671882,
+      42.52562501281962
+    ],
+    "mean_width_ratio": 768.3537674900039,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.0000629519560538,
+    "pr_ci_upper": 3.0,
+    "log_r2_ci_lower": 0.0,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 4,
+    "n_properties": 3,
+    "potential": "Etesami-2018",
+    "eigenvalues": [
+      185.63317273935687,
+      5.170626855962509,
+      0.5623691546803907
+    ],
+    "eigenvectors": [
+      [
+        -0.89380408169013,
+        0.4279937566034692,
+        -0.1339238883191272
+      ],
+      [
+        0.36136135159639354,
+        0.8642026488329857,
+        0.3501024925967818
+      ],
+      [
+        -0.2655790600301373,
+        -0.2645281195988476,
+        0.9270882572953918
+      ]
+    ],
+    "effective_dimensionality": 1.061887117118781,
+    "fractional_dimensionality": 0.353962372372927,
+    "cumulative_variance": [
+      0.9700417474619955,
+      0.9970612927125323,
+      1.0
+    ],
+    "log_slope": -2.8996846613385707,
+    "log_intercept": 4.996741221623618,
+    "log_r_squared": 0.9819416966442773,
+    "decay_monotonicity": -0.8767343450087374,
+    "width_ratios": [
+      35.90148311036871,
+      9.1943642586534
+    ],
+    "mean_width_ratio": 22.547923684511055,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.0121359915844468,
+    "pr_ci_upper": 3.0000000000000004,
+    "log_r2_ci_lower": 0.7499999999999999,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 3,
+    "n_properties": 3,
+    "potential": "Farkas-2018",
+    "eigenvalues": [
+      9836.020680776011,
+      0.1464081128809568
+    ],
+    "eigenvectors": [
+      [
+        0.8512252680755189,
+        -0.4975838498775552,
+        -0.16681083697047874
+      ],
+      [
+        -0.5074162398086417,
+        -0.6992117918454134,
+        -0.5036185359205771
+      ],
+      [
+        -0.13395634575569695,
+        -0.5133353509016864,
+        0.8476688710495525
+      ]
+    ],
+    "effective_dimensionality": 1.0000297697854856,
+    "fractional_dimensionality": 0.3333432565951619,
+    "cumulative_variance": [
+      0.9999851153288106,
+      1.0
+    ],
+    "log_slope": -11.115163769030246,
+    "log_intercept": 9.193806505893448,
+    "log_r_squared": 1.0,
+    "decay_monotonicity": -1.0,
+    "width_ratios": [
+      67182.21065231267
+    ],
+    "mean_width_ratio": 67182.21065231267,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.0000297697854856,
+    "pr_ci_upper": 2.0,
+    "log_r2_ci_lower": 1.0,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 3,
+    "n_properties": 3,
+    "potential": "Farkas-2020",
+    "eigenvalues": [
+      9976.101239257323,
+      0.9918718537882357
+    ],
+    "eigenvectors": [
+      [
+        -0.8539685904434443,
+        0.49508431731598646,
+        0.16009111556798084
+      ],
+      [
+        0.27145230420154665,
+        0.16141521476314974,
+        0.9488196746414129
+      ],
+      [
+        0.4439045990747425,
+        0.8537193023416594,
+        -0.2722353021368873
+      ]
+    ],
+    "effective_dimensionality": 1.0001988495946854,
+    "fractional_dimensionality": 0.3333996165315618,
+    "cumulative_variance": [
+      0.9999005850859822,
+      1.0
+    ],
+    "log_slope": -9.216108995280617,
+    "log_intercept": 9.207947635589987,
+    "log_r_squared": 1.0,
+    "decay_monotonicity": -1.0,
+    "width_ratios": [
+      10057.85293851802
+    ],
+    "mean_width_ratio": 10057.85293851802,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.0001988495946854,
+    "pr_ci_upper": 2.0,
+    "log_r2_ci_lower": 1.0,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 7,
+    "n_properties": 3,
+    "potential": "Jacobsen-1996",
+    "eigenvalues": [
+      431.6349661007397,
+      82.87566080639272,
+      43.37107921531641
+    ],
+    "eigenvectors": [
+      [
+        -0.9476538688376386,
+        -0.3168229405693392,
+        -0.039690920952434816
+      ],
+      [
+        -0.31927475522276055,
+        0.9417772939913817,
+        0.10544742386477492
+      ],
+      [
+        -0.003971845226310387,
+        -0.11259996825607088,
+        0.993632463033606
+      ]
+    ],
+    "effective_dimensionality": 1.5955855559444336,
+    "fractional_dimensionality": 0.5318618519814778,
+    "cumulative_variance": [
+      0.7737033879472661,
+      0.9222575704861042,
+      1.0
+    ],
+    "log_slope": -1.1488937018567473,
+    "log_intercept": 5.900465204730301,
+    "log_r_squared": 0.9403148966224766,
+    "decay_monotonicity": -0.9085376126827992,
+    "width_ratios": [
+      5.208223523056905,
+      1.910850785957047
+    ],
+    "mean_width_ratio": 3.559537154506976,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.4137615017077987,
+    "pr_ci_upper": 3.0000000000000004,
+    "log_r2_ci_lower": 0.7499999999999998,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 3,
+    "n_properties": 3,
+    "potential": "Jelinek-2012",
+    "eigenvalues": [
+      33.172869408054964,
+      0.6914861475006564
+    ],
+    "eigenvectors": [
+      [
+        -0.7166201782186881,
+        0.17770750323416018,
+        0.6744446333570289
+      ],
+      [
+        0.6592450845781846,
+        0.48828975336905,
+        0.5718120628443364
+      ],
+      [
+        0.22770910967574123,
+        -0.8543963717438606,
+        0.4670710880814697
+      ]
+    ],
+    "effective_dimensionality": 1.0416717535692899,
+    "fractional_dimensionality": 0.34722391785643,
+    "cumulative_variance": [
+      0.9795807085014139,
+      1.0
+    ],
+    "log_slope": -3.870644515954157,
+    "log_intercept": 3.5017323553391675,
+    "log_r_squared": 1.0,
+    "decay_monotonicity": -1.0,
+    "width_ratios": [
+      47.97329567332146
+    ],
+    "mean_width_ratio": 47.97329567332146,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.0416717535692899,
+    "pr_ci_upper": 2.0,
+    "log_r2_ci_lower": 1.0,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 6,
+    "n_properties": 3,
+    "potential": "Jeong-2018",
+    "eigenvalues": [
+      123.84052655348185,
+      9.4022480608413,
+      1.5927198301210546
+    ],
+    "eigenvectors": [
+      [
+        -0.8832773116483835,
+        0.42678239503815746,
+        -0.1941081606030479
+      ],
+      [
+        0.2090156543830068,
+        0.7290284519974395,
+        0.6517898222594923
+      ],
+      [
+        0.4196827932499113,
+        0.5351395177556145,
+        -0.7331384927735285
+      ]
+    ],
+    "effective_dimensionality": 1.178461233619909,
+    "fractional_dimensionality": 0.3928204112066363,
+    "cumulative_variance": [
+      0.9184564276916525,
+      0.9881876813172715,
+      1.0
+    ],
+    "log_slope": -2.176775760943986,
+    "log_intercept": 4.685237966823651,
+    "log_r_squared": 0.9887996082613951,
+    "decay_monotonicity": -0.893142826993407,
+    "width_ratios": [
+      13.171374096079823,
+      5.9032655229304725
+    ],
+    "mean_width_ratio": 9.537319809505147,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.05175791148224,
+    "pr_ci_upper": 3.0000000000000004,
+    "log_r2_ci_lower": 0.7499999999999999,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 7,
+    "n_properties": 3,
+    "potential": "Kim-2017",
+    "eigenvalues": [
+      532.735944271713,
+      89.92405030689353,
+      2.312299298944053
+    ],
+    "eigenvectors": [
+      [
+        -0.761648660520839,
+        -0.5213502006992371,
+        -0.38481851067441786
+      ],
+      [
+        -0.5744647801499037,
+        0.8180242669538614,
+        0.028749174630247065
+      ],
+      [
+        -0.29980249214130067,
+        -0.2429614514804002,
+        0.9225444156247452
+      ]
+    ],
+    "effective_dimensionality": 1.3380998553499601,
+    "fractional_dimensionality": 0.44603328511665336,
+    "cumulative_variance": [
+      0.8524152982309497,
+      0.9963001571084092,
+      1.0
+    ],
+    "log_slope": -2.719891745145583,
+    "log_intercept": 6.591636316097267,
+    "log_r_squared": 0.9616456963895524,
+    "decay_monotonicity": -0.9327162419493082,
+    "width_ratios": [
+      5.9242876900405115,
+      38.88945101006549
+    ],
+    "mean_width_ratio": 22.406869350053,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.0173987146347818,
+    "pr_ci_upper": 3.0,
+    "log_r2_ci_lower": 0.75,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 7,
+    "n_properties": 3,
+    "potential": "Lee-2001",
+    "eigenvalues": [
+      218.97287698912004,
+      33.03734990976184,
+      1.4264833051995423
+    ],
+    "eigenvectors": [
+      [
+        -0.8809486965541752,
+        -0.47297483456081163,
+        -0.014973306637904377
+      ],
+      [
+        -0.4719955074777214,
+        0.880511627832977,
+        -0.04381226051882238
+      ],
+      [
+        -0.03390626727240869,
+        0.03152902033197133,
+        0.9989275679029775
+      ]
+    ],
+    "effective_dimensionality": 1.3096805023267692,
+    "fractional_dimensionality": 0.4365601674422564,
+    "cumulative_variance": [
+      0.864014044424704,
+      0.9943714416745275,
+      1.0
+    ],
+    "log_slope": -2.516867842254501,
+    "log_intercept": 5.5974674415705525,
+    "log_r_squared": 0.9798236781273203,
+    "decay_monotonicity": -0.9253931402696215,
+    "width_ratios": [
+      6.628040008875474,
+      23.159997589414793
+    ],
+    "mean_width_ratio": 14.894018799145133,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.0261403737208532,
+    "pr_ci_upper": 3.0000000000000004,
+    "log_r2_ci_lower": 0.0,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 8,
+    "n_properties": 3,
+    "potential": "Lee-2003",
+    "eigenvalues": [
+      9.891376637560391,
+      5.039917700609197,
+      2.188935349330432
+    ],
+    "eigenvectors": [
+      [
+        -0.7580122718197524,
+        -0.3800432155933171,
+        -0.530079758198848
+      ],
+      [
+        -0.6461924733974929,
+        0.32716163220515104,
+        0.6894929685916256
+      ],
+      [
+        0.0886153660212965,
+        -0.8651776815743415,
+        0.49357359756226704
+      ]
+    ],
+    "effective_dimensionality": 2.2892973414522007,
+    "fractional_dimensionality": 0.7630991138174003,
+    "cumulative_variance": [
+      0.5777595755495251,
+      0.8721433421580415,
+      1.0
+    ],
+    "log_slope": -0.7541240235414766,
+    "log_intercept": 2.3182801459809728,
+    "log_r_squared": 0.996276701516876,
+    "decay_monotonicity": -0.9889437067753138,
+    "width_ratios": [
+      1.9626067775600338,
+      2.302451601483271
+    ],
+    "mean_width_ratio": 2.1325291895216525,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.895431344009609,
+    "pr_ci_upper": 3.0,
+    "log_r2_ci_lower": 0.75,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 3,
+    "n_properties": 3,
+    "potential": "Li-2018",
+    "eigenvalues": [
+      238.80772208381424,
+      3.0611223606299047
+    ],
+    "eigenvectors": [
+      [
+        -0.8192026312551244,
+        0.5486774571816384,
+        0.16691344141611994
+      ],
+      [
+        0.522994372264832,
+        0.5952849354838241,
+        0.6100104361118209
+      ],
+      [
+        -0.2353379177353181,
+        -0.5870169448718761,
+        0.7746142077894604
+      ]
+    ],
+    "effective_dimensionality": 1.025632500011167,
+    "fractional_dimensionality": 0.34187750000372236,
+    "cumulative_variance": [
+      0.9873438748687906,
+      1.0
+    ],
+    "log_slope": -4.356877084795146,
+    "log_intercept": 5.475658718030013,
+    "log_r_squared": 1.0,
+    "decay_monotonicity": -0.9999999999999999,
+    "width_ratios": [
+      78.01312523641603
+    ],
+    "mean_width_ratio": 78.01312523641603,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.025632500011167,
+    "pr_ci_upper": 2.0,
+    "log_r2_ci_lower": 1.0,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 4,
+    "n_properties": 3,
+    "potential": "Li-2019",
+    "eigenvalues": [
+      1021.3259360452453,
+      23.968448340490898,
+      5.869953114263873
+    ],
+    "eigenvectors": [
+      [
+        -0.8966326450111619,
+        -0.3314715147217517,
+        -0.2935584010522526
+      ],
+      [
+        -0.18086761241982818,
+        -0.3309674869123994,
+        0.9261465485464175
+      ],
+      [
+        -0.40414948555928953,
+        0.8835084365952361,
+        0.23680379175005462
+      ]
+    ],
+    "effective_dimensionality": 1.058666224124145,
+    "fractional_dimensionality": 0.352888741374715,
+    "cumulative_variance": [
+      0.9716139518909862,
+      0.9944157607855834,
+      1.0
+    ],
+    "log_slope": -2.579505176465534,
+    "log_intercept": 6.53798582940048,
+    "log_r_squared": 0.935555580165977,
+    "decay_monotonicity": -0.8737064411242368,
+    "width_ratios": [
+      42.61126634217188,
+      4.083243575191092
+    ],
+    "mean_width_ratio": 23.347254958681486,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.023054080816585,
+    "pr_ci_upper": 3.000000000000001,
+    "log_r2_ci_lower": 0.0,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 3,
+    "n_properties": 3,
+    "potential": "Mahata-2022",
+    "eigenvalues": [
+      2828.1021413444755,
+      22.55596976663431
+    ],
+    "eigenvectors": [
+      [
+        -0.9785598439965025,
+        0.20500408699329475,
+        0.01984832571240764
+      ],
+      [
+        0.11111606788780817,
+        0.44433090530745567,
+        0.8889450298223222
+      ],
+      [
+        0.17341813969332098,
+        0.8720913776117172,
+        -0.45758362942811354
+      ]
+    ],
+    "effective_dimensionality": 1.015950297351983,
+    "fractional_dimensionality": 0.33865009911732763,
+    "cumulative_variance": [
+      0.9920874517786903,
+      1.0
+    ],
+    "log_slope": -4.831361378662173,
+    "log_intercept": 7.947361144237099,
+    "log_r_squared": 1.0,
+    "decay_monotonicity": -0.9999999999999999,
+    "width_ratios": [
+      125.38153626752582
+    ],
+    "mean_width_ratio": 125.38153626752582,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.015950297351983,
+    "pr_ci_upper": 2.0,
+    "log_r2_ci_lower": 1.0,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 3,
+    "n_properties": 3,
+    "potential": "Maresca-2020",
+    "eigenvalues": [
+      227.70790957210977,
+      60.291112650112574
+    ],
+    "eigenvectors": [
+      [
+        -0.9988048671696342,
+        -0.026704585680759806,
+        0.04093534440881008
+      ],
+      [
+        -0.048565508113333725,
+        0.6364757576461478,
+        -0.7697661991478035
+      ],
+      [
+        0.005498066927808061,
+        0.7708342720925045,
+        0.6370120063449951
+      ]
+    ],
+    "effective_dimensionality": 1.494855834270438,
+    "fractional_dimensionality": 0.49828527809014606,
+    "cumulative_variance": [
+      0.7906551481150813,
+      1.0
+    ],
+    "log_slope": -1.3288790019779135,
+    "log_intercept": 5.428063709278461,
+    "log_r_squared": 1.0,
+    "decay_monotonicity": -1.0,
+    "width_ratios": [
+      3.776807220221115
+    ],
+    "mean_width_ratio": 3.776807220221115,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.494855834270438,
+    "pr_ci_upper": 2.0,
+    "log_r2_ci_lower": 1.0,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 3,
+    "n_properties": 3,
+    "potential": "Mendelev-2007",
+    "eigenvalues": [
+      58.2914999717114,
+      22.627477806066477
+    ],
+    "eigenvectors": [
+      [
+        -0.8386683980004767,
+        -0.5268797959335298,
+        -0.13796013493888776
+      ],
+      [
+        -0.1532305754333705,
+        -0.014815382571751731,
+        0.9880793972103713
+      ],
+      [
+        -0.5226430033470958,
+        0.8498106760192494,
+        -0.06830890114789644
+      ]
+    ],
+    "effective_dimensionality": 1.6746919570228636,
+    "fractional_dimensionality": 0.5582306523409545,
+    "cumulative_variance": [
+      0.7203687141450706,
+      1.0
+    ],
+    "log_slope": -0.9462912847632707,
+    "log_intercept": 4.0654562846430204,
+    "log_r_squared": 1.0,
+    "decay_monotonicity": -0.9999999999999998,
+    "width_ratios": [
+      2.576137759201926
+    ],
+    "mean_width_ratio": 2.576137759201926,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.6746919570228636,
+    "pr_ci_upper": 2.0,
+    "log_r2_ci_lower": 1.0,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 9,
+    "n_properties": 3,
+    "potential": "Morse_Shifted_GirifalcoWeizer_1959HighCu",
+    "eigenvalues": [
+      11169.346073114772,
+      440.34056579188575,
+      67.22975615507183
+    ],
+    "eigenvectors": [
+      [
+        -0.6790784457434695,
+        0.5272302951667106,
+        0.5107647994772713
+      ],
+      [
+        0.35077635563411963,
+        -0.378153256352431,
+        0.856712357234386
+      ],
+      [
+        0.6448320811301803,
+        0.7609391109467801,
+        0.07185580405816078
+      ]
+    ],
+    "effective_dimensionality": 1.0912158289217184,
+    "fractional_dimensionality": 0.3637386096405728,
+    "cumulative_variance": [
+      0.9565321609940092,
+      0.9942425077066148,
+      1.0
+    ],
+    "log_slope": -2.556406198879847,
+    "log_intercept": 9.095270444659612,
+    "log_r_squared": 0.9771583448637535,
+    "decay_monotonicity": -0.8804407762918367,
+    "width_ratios": [
+      25.365244405834826,
+      6.549786745859949
+    ],
+    "mean_width_ratio": 15.957515575847388,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.0241472337945845,
+    "pr_ci_upper": 3.0000000000000004,
+    "log_r2_ci_lower": 0.7499999999999998,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 9,
+    "n_properties": 3,
+    "potential": "Morse_Shifted_GirifalcoWeizer_1959LowCut",
+    "eigenvalues": [
+      10548.558782778748,
+      427.70430476122704,
+      37.06064332422246
+    ],
+    "eigenvectors": [
+      [
+        -0.7064365747592031,
+        0.5088762797245583,
+        0.4919271264894607
+      ],
+      [
+        0.3076964254762298,
+        -0.40510773495009966,
+        0.8609359051826977
+      ],
+      [
+        0.6373933444833229,
+        0.7595608303600792,
+        0.12960350840571871
+      ]
+    ],
+    "effective_dimensionality": 1.0882578570709978,
+    "fractional_dimensionality": 0.3627526190236659,
+    "cumulative_variance": [
+      0.9577997560552066,
+      0.9966349265462557,
+      1.0
+    ],
+    "log_slope": -2.825594470803528,
+    "log_intercept": 9.137171864501328,
+    "log_r_squared": 0.9940162304602407,
+    "decay_monotonicity": -0.8819482254791626,
+    "width_ratios": [
+      24.66320461438342,
+      11.540660560570567
+    ],
+    "mean_width_ratio": 18.101932587476995,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.014077688090857,
+    "pr_ci_upper": 3.000000000000001,
+    "log_r2_ci_lower": 0.0,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 9,
+    "n_properties": 3,
+    "potential": "Morse_Shifted_GirifalcoWeizer_1959MedCut",
+    "eigenvalues": [
+      11114.38304689284,
+      435.14299305773545,
+      33.368550172876944
+    ],
+    "eigenvectors": [
+      [
+        -0.6873022096750002,
+        0.5216050815061233,
+        0.5055134137912194
+      ],
+      [
+        0.326459529433647,
+        -0.3998736231879756,
+        0.8564608929311847
+      ],
+      [
+        0.6488758342069948,
+        0.7536771354005051,
+        0.10455107534915614
+      ]
+    ],
+    "effective_dimensionality": 1.0844121882789406,
+    "fractional_dimensionality": 0.36147072942631353,
+    "cumulative_variance": [
+      0.9595514282215686,
+      0.9971191527374055,
+      1.0
+    ],
+    "log_slope": -2.904190736853938,
+    "log_intercept": 9.203952023536596,
+    "log_r_squared": 0.99555463092446,
+    "decay_monotonicity": -0.881564739377803,
+    "width_ratios": [
+      25.541909726714056,
+      13.040512422725337
+    ],
+    "mean_width_ratio": 19.291211074719698,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.012026952299981,
+    "pr_ci_upper": 3.0,
+    "log_r2_ci_lower": 0.0,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 3,
+    "n_properties": 3,
+    "potential": "Olsson-2009",
+    "eigenvalues": [
+      13.138595742622222,
+      0.4669153684888587
+    ],
+    "eigenvectors": [
+      [
+        -0.9968584627392449,
+        -0.06697813782545793,
+        -0.04227451145291858
+      ],
+      [
+        -0.03659719740540822,
+        -0.08383404102846703,
+        0.9958074606603962
+      ],
+      [
+        -0.07024137247533367,
+        0.9942262230590531,
+        0.08111946113301122
+      ]
+    ],
+    "effective_dimensionality": 1.0709857341112015,
+    "fractional_dimensionality": 0.35699524470373384,
+    "cumulative_variance": [
+      0.965681894294471,
+      1.0
+    ],
+    "log_slope": -3.3371613999720076,
+    "log_intercept": 2.575554138443158,
+    "log_r_squared": 1.0,
+    "decay_monotonicity": -0.9999999999999999,
+    "width_ratios": [
+      28.139137473980426
+    ],
+    "mean_width_ratio": 28.139137473980426,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.0709857341112015,
+    "pr_ci_upper": 2.0,
+    "log_r2_ci_lower": 1.0,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 3,
+    "n_properties": 3,
+    "potential": "Park-2012",
+    "eigenvalues": [
+      594.607502495961,
+      7.967675281816911
+    ],
+    "eigenvectors": [
+      [
+        -0.6216090052547238,
+        -0.7279533121916313,
+        -0.28928570627576133
+      ],
+      [
+        -0.7684812703560133,
+        0.6382781256701848,
+        0.04513946613512593
+      ],
+      [
+        -0.1517853145012417,
+        -0.2503697456966185,
+        0.9561779168865856
+      ]
+    ],
+    "effective_dimensionality": 1.0267949692961298,
+    "fractional_dimensionality": 0.3422649897653766,
+    "cumulative_variance": [
+      0.986777292567542,
+      1.0
+    ],
+    "log_slope": -4.3125087615359465,
+    "log_intercept": 6.3879015282038045,
+    "log_r_squared": 1.0,
+    "decay_monotonicity": -1.0,
+    "width_ratios": [
+      74.6274768316574
+    ],
+    "mean_width_ratio": 74.6274768316574,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.0267949692961298,
+    "pr_ci_upper": 2.0,
+    "log_r2_ci_lower": 1.0,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 3,
+    "n_properties": 3,
+    "potential": "Pun-2015",
+    "eigenvalues": [
+      14.800587865828966,
+      1.364256578615465
+    ],
+    "eigenvectors": [
+      [
+        -0.9124555890549313,
+        0.40907700347587106,
+        0.008989061665150105
+      ],
+      [
+        -0.13083515688161204,
+        -0.31250532712046925,
+        0.9408626798024738
+      ],
+      [
+        0.38769441539204796,
+        0.8573193254257889,
+        0.33866888626693714
+      ]
+    ],
+    "effective_dimensionality": 1.1827985477048342,
+    "fractional_dimensionality": 0.39426618256827806,
+    "cumulative_variance": [
+      0.9156034824025582,
+      1.0
+    ],
+    "log_slope": -2.384057251424725,
+    "log_intercept": 2.694666900645344,
+    "log_r_squared": 1.0,
+    "decay_monotonicity": -1.0000000000000002,
+    "width_ratios": [
+      10.848830123179285
+    ],
+    "mean_width_ratio": 10.848830123179285,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.1827985477048342,
+    "pr_ci_upper": 2.0,
+    "log_r2_ci_lower": 1.0,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 5,
+    "n_properties": 3,
+    "potential": "Sharifi-2025",
+    "eigenvalues": [
+      420.73269833901986,
+      39.098001248422094,
+      15.795284412558392
+    ],
+    "eigenvectors": [
+      [
+        -0.7688400781409224,
+        0.4257456208767272,
+        -0.4771012476912535
+      ],
+      [
+        -0.30838602077688987,
+        0.4067416997617461,
+        0.8599181657950491
+      ],
+      [
+        0.5601633658439799,
+        0.8082709050678595,
+        -0.18142532234263248
+      ]
+    ],
+    "effective_dimensionality": 1.2652543664338685,
+    "fractional_dimensionality": 0.42175145547795617,
+    "cumulative_variance": [
+      0.8845872860029018,
+      0.9667905351181184,
+      1.0
+    ],
+    "log_slope": -1.6411431353199255,
+    "log_intercept": 5.797069968162731,
+    "log_r_squared": 0.9373655479605126,
+    "decay_monotonicity": -0.8905103732132529,
+    "width_ratios": [
+      10.760977157521568,
+      2.475295805204771
+    ],
+    "mean_width_ratio": 6.61813648136317,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.1525581205170212,
+    "pr_ci_upper": 3.0000000000000004,
+    "log_r2_ci_lower": 0.7499999999999998,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 3,
+    "n_properties": 3,
+    "potential": "Shim-2013",
+    "eigenvalues": [
+      32.80086237978729,
+      0.20649317576827933
+    ],
+    "eigenvectors": [
+      [
+        -0.9069164239039273,
+        -0.2400112269105832,
+        -0.34626176660178354
+      ],
+      [
+        -0.41894506645124713,
+        0.6007188853113375,
+        0.6808978279642729
+      ],
+      [
+        -0.044582859368501565,
+        -0.7625820819998207,
+        0.6453533426452114
+      ]
+    ],
+    "effective_dimensionality": 1.012590217297367,
+    "fractional_dimensionality": 0.3375300724324557,
+    "cumulative_variance": [
+      0.9937440254666653,
+      1.0
+    ],
+    "log_slope": -5.067942721365248,
+    "log_intercept": 3.490454807111153,
+    "log_r_squared": 1.0,
+    "decay_monotonicity": -1.0,
+    "width_ratios": [
+      158.84719801392114
+    ],
+    "mean_width_ratio": 158.84719801392114,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.012590217297367,
+    "pr_ci_upper": 2.0,
+    "log_r2_ci_lower": 1.0,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 6,
+    "n_properties": 3,
+    "potential": "Voter-1993",
+    "eigenvalues": [
+      31.23711968156879,
+      14.887334710758042,
+      2.333840052117629
+    ],
+    "eigenvectors": [
+      [
+        -0.9014194808852831,
+        -0.3700918074287278,
+        -0.22466636053188724
+      ],
+      [
+        -0.4072423453031091,
+        0.9009450027122575,
+        0.14983916136922792
+      ],
+      [
+        -0.14695778874401186,
+        -0.2265615946314552,
+        0.9628464322858148
+      ]
+    ],
+    "effective_dimensionality": 1.9522228940341768,
+    "fractional_dimensionality": 0.650740964678059,
+    "cumulative_variance": [
+      0.6446186362869399,
+      0.9518381717954748,
+      1.0
+    ],
+    "log_slope": -1.2970460595118027,
+    "log_intercept": 3.6269237112113046,
+    "log_r_squared": 0.9422934349384938,
+    "decay_monotonicity": -0.997137106421087,
+    "width_ratios": [
+      2.098234525418166,
+      6.378901029335707
+    ],
+    "mean_width_ratio": 4.238567777376937,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.3065960524038147,
+    "pr_ci_upper": 3.0000000000000004,
+    "log_r2_ci_lower": 0.0,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 3,
+    "n_properties": 3,
+    "potential": "Wu-2017",
+    "eigenvalues": [
+      615.150513946086,
+      1.2031082761365082
+    ],
+    "eigenvectors": [
+      [
+        -0.3677109030498999,
+        0.8120898865739499,
+        0.4530990045260935
+      ],
+      [
+        0.7457837711341411,
+        -0.03353526152604286,
+        0.6653434849364045
+      ],
+      [
+        -0.5555135088286932,
+        -0.5825679379769277,
+        0.5933121768092612
+      ]
+    ],
+    "effective_dimensionality": 1.0039115749619913,
+    "fractional_dimensionality": 0.33463719165399713,
+    "cumulative_variance": [
+      0.9980480227052146,
+      1.0
+    ],
+    "log_slope": -6.236958537943416,
+    "log_intercept": 6.421866975986745,
+    "log_r_squared": 1.0,
+    "decay_monotonicity": -1.0,
+    "width_ratios": [
+      511.30104093498
+    ],
+    "mean_width_ratio": 511.30104093498,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.0039115749619913,
+    "pr_ci_upper": 2.0,
+    "log_r2_ci_lower": 1.0,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 4,
+    "n_properties": 3,
+    "potential": "Zhou-2001",
+    "eigenvalues": [
+      918.2429505307582,
+      87.38593966282059,
+      12.297328556421652
+    ],
+    "eigenvectors": [
+      [
+        -0.8149722817944983,
+        -0.013108009701684464,
+        -0.5793516721200769
+      ],
+      [
+        0.08750753724905572,
+        -0.9910637128307529,
+        -0.10067347234861956
+      ],
+      [
+        -0.5728547903537805,
+        -0.13274372750448016,
+        0.8088365050966375
+      ]
+    ],
+    "effective_dimensionality": 1.2176561259136176,
+    "fractional_dimensionality": 0.4058853753045392,
+    "cumulative_variance": [
+      0.9020722068229542,
+      0.9879192338993659,
+      1.0
+    ],
+    "log_slope": -2.156539979673176,
+    "log_intercept": 6.757266130390427,
+    "log_r_squared": 0.9972656295957814,
+    "decay_monotonicity": -0.9009445024561319,
+    "width_ratios": [
+      10.507902690911223,
+      7.106091315840118
+    ],
+    "mean_width_ratio": 8.80699700337567,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.0539083208004032,
+    "pr_ci_upper": 3.0,
+    "log_r2_ci_lower": 0.0,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 12,
+    "n_properties": 3,
+    "potential": "Zhou-2004",
+    "eigenvalues": [
+      118.60401708579428,
+      7.688849482454764,
+      1.7024792650843528
+    ],
+    "eigenvectors": [
+      [
+        -0.9827381683911366,
+        0.014697538441044294,
+        -0.18441712163193477
+      ],
+      [
+        0.14479023935758126,
+        0.6816085358243203,
+        -0.7172486252884702
+      ],
+      [
+        -0.1151584950145152,
+        0.7315693994797758,
+        0.6719707841646032
+      ]
+    ],
+    "effective_dimensionality": 1.159522263201343,
+    "fractional_dimensionality": 0.3865074210671144,
+    "cumulative_variance": [
+      0.9266275762888453,
+      0.9866988971044213,
+      1.0
+    ],
+    "log_slope": -2.1218523884982914,
+    "log_intercept": 4.571068087462887,
+    "log_r_squared": 0.9728319225683626,
+    "decay_monotonicity": -0.8878629577498516,
+    "width_ratios": [
+      15.425457001913948,
+      4.516266153804701
+    ],
+    "mean_width_ratio": 9.970861577859324,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.0578055261347683,
+    "pr_ci_upper": 3.0000000000000004,
+    "log_r2_ci_lower": 0.75,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 3,
+    "n_properties": 3,
+    "potential": "Zhou-2018",
+    "eigenvalues": [
+      2914.0686348573063,
+      1080.0375429204717
+    ],
+    "eigenvectors": [
+      [
+        -0.5708569192981805,
+        -0.784180816807656,
+        -0.24327520268261627
+      ],
+      [
+        -0.6832892506435384,
+        0.6180258758549035,
+        -0.3887927683596638
+      ],
+      [
+        -0.455234200872894,
+        0.05571771105004897,
+        0.8886266702226313
+      ]
+    ],
+    "effective_dimensionality": 1.6517318761517057,
+    "fractional_dimensionality": 0.5505772920505686,
+    "cumulative_variance": [
+      0.7295921803657764,
+      1.0
+    ],
+    "log_slope": -0.9925544584859809,
+    "log_intercept": 7.977305539963462,
+    "log_r_squared": 1.0,
+    "decay_monotonicity": -1.0,
+    "width_ratios": [
+      2.698117907066017
+    ],
+    "mean_width_ratio": 2.698117907066017,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.6517318761517057,
+    "pr_ci_upper": 2.0,
+    "log_r2_ci_lower": 1.0,
+    "log_r2_ci_upper": 1.0
+  },
+  {
+    "n_materials": 3,
+    "n_properties": 3,
+    "potential": "Zuo-2019",
+    "eigenvalues": [
+      281.81589772832035,
+      55.962480049457554
+    ],
+    "eigenvectors": [
+      [
+        -0.5888108264160663,
+        -0.8080930398970106,
+        0.016954337652594603
+      ],
+      [
+        -0.7224397710842272,
+        0.5355752814886633,
+        0.4373098386888973
+      ],
+      [
+        0.36246736108372424,
+        -0.24524427970566104,
+        0.8991510748593103
+      ]
+    ],
+    "effective_dimensionality": 1.3820892691055056,
+    "fractional_dimensionality": 0.4606964230351685,
+    "cumulative_variance": [
+      0.8343218994133637,
+      1.0
+    ],
+    "log_slope": -1.616572545738423,
+    "log_intercept": 5.64125401280703,
+    "log_r_squared": 1.0,
+    "decay_monotonicity": -1.0,
+    "width_ratios": [
+      5.035800727188323
+    ],
+    "mean_width_ratio": 5.035800727188323,
+    "is_hyper_ribbon": true,
+    "pr_ci_lower": 1.3820892691055056,
+    "pr_ci_upper": 2.0,
+    "log_r2_ci_lower": 1.0,
+    "log_r2_ci_upper": 1.0
+  }
+]

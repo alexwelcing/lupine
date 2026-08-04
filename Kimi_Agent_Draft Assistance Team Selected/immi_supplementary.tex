@@ -1,0 +1,107 @@
+\documentclass[10pt]{article}
+
+%----------------------------------------------------------
+% Geometry and layout
+%----------------------------------------------------------
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+\usepackage[labelfont=bf]{caption}
+
+%----------------------------------------------------------
+% Page style: Supplementary Material header + bottom-center page numbers
+%----------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\textsc{Supplementary Material}}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyfoot[C]{\thepage}
+\renewcommand{\footrulewidth}{0pt}
+
+% Plain style for the title page
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyhead[C]{\textsc{Supplementary Material}}
+  \renewcommand{\headrulewidth}{0.4pt}
+  \fancyfoot[C]{\thepage}
+}
+
+%----------------------------------------------------------
+% Caption setup: prefix all figure/table labels with "Supplementary"
+%----------------------------------------------------------
+\makeatletter
+\renewcommand{\fnum@figure}{Supplementary Figure~\thefigure}
+\renewcommand{\fnum@table}{Supplementary Table~\thetable}
+\makeatother
+
+%----------------------------------------------------------
+% Metadata
+%----------------------------------------------------------
+\title{\textbf{Supplementary Material for:}\\[0.5em]
+\Large Forty Years of Interatomic Potentials, One Error Geometry:
+Hyper-Ribbon Universality and Why Pooled Benchmarks Mislead}
+\author{Alex Welcing}
+\date{}
+
+%----------------------------------------------------------
+\begin{document}
+\maketitle
+\thispagestyle{plain}
+
+\noindent
+This document contains supplementary figures referenced in the main article. 
+The main manuscript presents six figures (the journal limit); the material below 
+provides additional analyses that support the central claims without overloading 
+the primary narrative.
+
+\vspace{1em}
+
+%----------------------------------------------------------
+% Supplementary Figure 1
+%----------------------------------------------------------
+\clearpage
+\begin{figure}[p]
+    \centering
+    \includegraphics[width=0.85\textwidth]{figures/year_stratified_dim.png}
+    \caption{Effective dimensionality (Participation Ratio) of prediction errors
+    stratified by potential publication year (1980--2025). The hyper-ribbon
+    structure remains stable across all decades, with PR bounded well below the
+    ambient dimension 3 (median $\approx 1.1$) regardless of model complexity or
+    publication era.}
+    \label{fig:supp1}
+\end{figure}
+
+%----------------------------------------------------------
+% Supplementary Figure 2
+%----------------------------------------------------------
+\clearpage
+\begin{figure}[p]
+    \centering
+    \includegraphics[width=0.85\textwidth]{figures/year_stratified_r2.png}
+    \caption{Log-eigenvalue linearity ($R^2$) stratified by publication year. 
+    The Vandermonde universality class signature ($R^2 > 0.80$) persists across 
+    all decades of interatomic potential development.}
+    \label{fig:supp2}
+\end{figure}
+
+%----------------------------------------------------------
+% Supplementary Figure 3
+%----------------------------------------------------------
+\clearpage
+\begin{figure}[p]
+    \centering
+    \includegraphics[width=0.85\textwidth]{figures/observables_5d_pr.png}
+    \caption{Hyper-ribbon dimensionality distribution comparing the standard 3D 
+    elastic constant space ($C_{11}$, $C_{12}$, $C_{44}$) to an expanded 5D space 
+    incorporating lattice constant ($a$) and cohesive energy ($E_{\text{coh}}$). 
+    The median effective dimensionality remains highly compressed despite a 66\% 
+    increase in the number of target observables, confirming that the low-dimensional 
+    error structure is fundamental to the observable space rather than an artifact 
+    of dimensionality restriction.}
+    \label{fig:supp3}
+\end{figure}
+
+\end{document}

@@ -16,6 +16,9 @@ import { readFileSync } from 'node:fs';
 import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import galleryData from './gallery-data.json';
+import nomenclatureCatalog from './gallery-nomenclature.json';
+import { FEATURED_IDS } from './landing/shared';
+import { FUNCTIONAL_GROUPS, functionalGroupsForMolecule } from './organicFunctionalGroups';
 
 const PUBLIC = fileURLToPath(new URL('../../../apps/web/public/', import.meta.url));
 const GALLERY_TSX = fileURLToPath(new URL('./Gallery.tsx', import.meta.url));
@@ -31,6 +34,7 @@ const DOMAINS = [
   'Defects & Mechanics',
   'Methods',
   'Fluids & Solvents',
+  'Atomized Media',
   'Advanced Theory & Validation',
 ];
 
@@ -49,8 +53,31 @@ interface Entry {
   featured?: boolean;
 }
 
+interface NomenclatureEntry {
+  preferredName: string;
+  systematicName?: string;
+  molecularFormula?: string;
+  pubchemCid?: number;
+  sourceUrl?: string;
+  geometrySource: string;
+  confidence: 'source-backed' | 'computed' | 'procedural' | 'illustrative';
+  aliases?: string[];
+}
+
 const data = galleryData as Entry[];
+const nomenclature = (nomenclatureCatalog as {
+  entries: Record<string, NomenclatureEntry>;
+}).entries;
 const HEX = /^#[0-9a-fA-F]{6}$/;
+
+const TRUSTED_REMOTE_GLIBIN_ORIGINS = [
+  /^https:\/\/storage\.googleapis\.com\/shed-489901-nist-demos\//,
+  /^https:\/\/glim-think-v1\.aw-ab5\.workers\.dev\/artifacts\/atlas-view\//,
+];
+
+function isTrustedRemoteGlimbin(url: string): boolean {
+  return TRUSTED_REMOTE_GLIBIN_ORIGINS.some(pattern => pattern.test(url));
+}
 
 function parseFrameLabel(label: string): number {
   const n = parseInt(label.replace(/[^\d]/g, ''), 10);
@@ -72,6 +99,30 @@ function countXyzFrames(text: string): number {
     count += 1;
   }
   return count;
+}
+
+function hillFormula(counts: Record<string, number>): string {
+  const ordered: string[] = [];
+  if (counts.C) ordered.push('C');
+  if (counts.H) ordered.push('H');
+  for (const symbol of Object.keys(counts).sort()) {
+    if (symbol !== 'C' && symbol !== 'H') ordered.push(symbol);
+  }
+  return ordered.map((symbol) => `${symbol}${counts[symbol] === 1 ? '' : counts[symbol]}`).join('');
+}
+
+function formulaFromXyz(text: string): string | null {
+  const lines = text.split(/\r?\n/).filter((line) => line.trim());
+  const natoms = parseInt(lines[0], 10);
+  if (!Number.isFinite(natoms) || natoms <= 0 || lines.length < natoms + 2) return null;
+
+  const counts: Record<string, number> = {};
+  for (const line of lines.slice(2, natoms + 2)) {
+    const symbol = line.trim().split(/\s+/)[0];
+    if (!/^[A-Z][a-z]?$/.test(symbol)) return null;
+    counts[symbol] = (counts[symbol] ?? 0) + 1;
+  }
+  return hillFormula(counts);
 }
 
 describe('gallery-data.json — curated launch set', () => {
@@ -134,16 +185,16 @@ describe('gallery-data.json — curated launch set', () => {
         throw new Error(`multi-frame gallery entry must be bundled: ${e.id}`);
       }
       if (e.file.startsWith('http')) {
-        // Remote multi-frame assets are allowed ONLY as a streamable .glimbin from
-        // the trusted CORS-enabled bucket: StreamingLoader pulls frames via HTTP
-        // Range requests, so the trajectory plays without bundling a huge file in
-        // git. The frame count lives in the binary payload (not line-countable), so
-        // we assert format + trusted host instead of an on-disk frame recount.
+        // Remote multi-frame assets are allowed ONLY as streamable .glimbin files
+        // from trusted range/CORS-capable origins. StreamingLoader pulls frames via
+        // HTTP Range requests, so the trajectory plays without bundling a huge file
+        // in git. The frame count lives in the binary payload (not line-countable),
+        // so we assert format + trusted host instead of an on-disk frame recount.
         // Remote TEXT trajectories (.lammpstrj/.xyz) stay rejected — they'd force a
         // full multi-MB download and can't be verified here.
-        const trusted = /^https:\/\/storage\.googleapis\.com\/shed-489901-nist-demos\//.test(e.file);
+        const trusted = isTrustedRemoteGlimbin(e.file);
         expect(e.file.endsWith('.glimbin'), `remote multi-frame ${e.id} must be a streamable .glimbin`).toBe(true);
-        expect(trusted, `remote multi-frame ${e.id} must stream from the trusted CORS bucket`).toBe(true);
+        expect(trusted, `remote multi-frame ${e.id} must stream from a trusted range/CORS origin`).toBe(true);
         continue;
       }
 
@@ -173,6 +224,52 @@ describe('gallery-data.json — curated launch set', () => {
         existsSync(snap) || (Array.isArray(e.colors) && e.colors.length === 3),
         `missing thumbnail path and fallback colors for ${e.id}`,
       ).toBe(true);
+    }
+  });
+
+  it('PubChem-backed molecule entries have source-backed nomenclature and matching formulas', () => {
+    const pubchemEntries = data.filter((e) => e.metadata?.method === 'PubChem 3D geometry');
+    expect(pubchemEntries.length).toBeGreaterThan(0);
+
+    for (const e of pubchemEntries) {
+      const identity = nomenclature[e.id];
+      expect(identity, `missing nomenclature for ${e.id}`).toBeTruthy();
+      if (!identity) continue;
+
+      expect(identity.preferredName, e.id).toBeTruthy();
+      expect(identity.systematicName, e.id).toBeTruthy();
+      expect(identity.molecularFormula, e.id).toBeTruthy();
+      expect(identity.pubchemCid, e.id).toBeGreaterThan(0);
+      expect(identity.sourceUrl, e.id).toBe(`https://pubchem.ncbi.nlm.nih.gov/compound/${identity.pubchemCid}`);
+      expect(identity.geometrySource, e.id).toMatch(/PubChem 3D/);
+      expect(identity.confidence, e.id).toBe('source-backed');
+
+      const coordinateFormula = formulaFromXyz(readFileSync(PUBLIC + e.file, 'utf8'));
+      expect(coordinateFormula, `${e.id}: coordinate formula`).toBe(identity.molecularFormula);
+    }
+  });
+
+  it('nomenclature catalog records point at shipped gallery entries', () => {
+    const galleryIds = new Set(data.map((e) => e.id));
+    for (const id of Object.keys(nomenclature)) {
+      expect(galleryIds.has(id), `orphan nomenclature record: ${id}`).toBe(true);
+    }
+  });
+
+  it('landing featured entries ship concrete thumbnails and loadable assets', () => {
+    for (const id of FEATURED_IDS) {
+      const e = data.find((entry) => entry.id === id);
+      expect(e, `featured entry missing from gallery-data.json: ${id}`).toBeTruthy();
+      if (!e) continue;
+
+      expect(
+        existsSync(`${PUBLIC}gallery/snapshots/${id}.jpg`),
+        `missing landing featured snapshot for ${id}`,
+      ).toBe(true);
+
+      if (!e.file.startsWith('http') && e.file !== 'procedural') {
+        expect(existsSync(PUBLIC + e.file), `missing landing featured file for ${id}: ${e.file}`).toBe(true);
+      }
     }
   });
 
@@ -214,6 +311,40 @@ describe('gallery-data.json — curated launch set', () => {
   it('domains span a meaningful breadth (curation, not one bucket)', () => {
     const used = new Set(data.map((e) => e.domain));
     expect(used.size).toBeGreaterThanOrEqual(5);
+  });
+
+  it('organic functional-group curriculum maps only to shipped gallery molecules', () => {
+    const galleryIds = new Set(data.map((e) => e.id));
+    expect(FUNCTIONAL_GROUPS.length).toBeGreaterThanOrEqual(18);
+
+    for (const group of FUNCTIONAL_GROUPS) {
+      expect(group.exampleIds.length, `${group.id} needs examples`).toBeGreaterThan(0);
+      expect(group.recognize.length, `${group.id} needs a recognition cue`).toBeGreaterThan(18);
+      expect(group.reactivity.length, `${group.id} needs a reactivity cue`).toBeGreaterThan(18);
+      expect(group.commonConfusion.length, `${group.id} needs a confusion guard`).toBeGreaterThan(18);
+      expect(group.studyPrompt.length, `${group.id} needs a self-check prompt`).toBeGreaterThan(18);
+      for (const id of group.exampleIds) {
+        expect(galleryIds.has(id), `${group.id} references missing gallery molecule: ${id}`).toBe(true);
+      }
+    }
+
+    const organicIds = new Set(FUNCTIONAL_GROUPS.flatMap((group) => group.exampleIds));
+    expect(organicIds.size).toBeGreaterThanOrEqual(20);
+    expect(functionalGroupsForMolecule('aspirin').map((group) => group.id)).toEqual(
+      expect.arrayContaining(['arene', 'carboxylic-acid', 'ester']),
+    );
+    expect(functionalGroupsForMolecule('benzaldehyde').map((group) => group.id)).toEqual(
+      expect.arrayContaining(['arene', 'aldehyde']),
+    );
+    expect(functionalGroupsForMolecule('acetone').map((group) => group.id)).toEqual(
+      expect.arrayContaining(['ketone']),
+    );
+    expect(functionalGroupsForMolecule('ethylene_oxide').map((group) => group.id)).toEqual(
+      expect.arrayContaining(['ether', 'epoxide']),
+    );
+    expect(functionalGroupsForMolecule('tert_butyl_chloride').map((group) => group.id)).toEqual(
+      expect.arrayContaining(['alkyl-halide']),
+    );
   });
 });
 

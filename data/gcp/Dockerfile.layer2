@@ -1,0 +1,35 @@
+# Layer 2 MLIP benchmark runner for Cloud Run jobs.
+# Builds a self-contained image that can run one (element, model) pair of the
+# 3x3x3 cubic-metal elastic-constant grid.
+
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install system dependencies. Git is needed only if the task script ever clones
+# model assets; ca-certificates for HTTPS downloads.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        git \
+        ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+# Heavy dependency layer: torch (CPU), matgl, matcalc, pymatgen, gsutil.
+# This layer changes only when requirements-layer2.txt changes.
+COPY data/gcp/requirements-layer2.txt /app/
+RUN python3 -m venv /app/.venv \
+    && /app/.venv/bin/python -m pip install --no-cache-dir --upgrade pip \
+    && /app/.venv/bin/python -m pip install --no-cache-dir -r /app/requirements-layer2.txt
+
+# Application layer: the benchmark task and the array-job entrypoint.
+COPY data/layer2_benchmark_task.py /app/data/
+COPY data/gcp/entrypoint.sh /app/
+RUN chmod +x /app/entrypoint.sh
+
+ENV PYTHONUNBUFFERED=1
+ENV HF_TOKEN=${HF_TOKEN:-}
+ENV SUPERCELL=3
+ENV OUTPUT_BUCKET=lupine-benchmark-witching-606c6
+ENV PATH="/app/.venv/bin:${PATH}"
+
+ENTRYPOINT ["/app/entrypoint.sh"]

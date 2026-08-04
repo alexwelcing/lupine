@@ -1,0 +1,9 @@
+# Tier 1 (analysis only): numpy, scipy
+numpy>=1.26
+scipy>=1.11
+
+# Tier 2 (recompute elastic constants from public checkpoints)
+ase>=3.22
+torch>=2.1
+matgl==4.0.2
+# After install, run: python patch_matgl.py  (torch>=2.11 annotation shim)

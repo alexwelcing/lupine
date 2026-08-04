@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lupine Science — Step 1 of a real-world Replicator</title>
+  <meta name="description" content="Lupine Science builds the audit substrate for the matter stack — the methodology that names where atomistic predictions fail and compresses failure into closed-loop self-correction.">
+  <meta name="theme-color" content="#faf9f6">
+  <link rel="canonical" href="https://lupine.science/">
+  <meta property="og:title" content="Lupine Science — Step 1 of a real-world Replicator">
+  <meta property="og:description" content="Lupine builds the audit substrate for the matter stack — the open-core methodology that names where atomistic simulations fail and feeds those failures into closed-loop self-correction.">
+  <meta property="og:url" content="https://lupine.science/">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23faf9f6' stroke='%233d4db3' stroke-width='2'/%3E%3Ccircle cx='50' cy='50' r='6' fill='%233d4db3'/%3E%3Cellipse cx='50' cy='50' rx='32' ry='11' fill='none' stroke='%233d4db3' stroke-width='1.5'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/lupine.css">
+  <link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+<canvas class="shader-field" aria-hidden="true"></canvas>
+
+<!-- ════════════════════════════════════════════════════════════════
+     HEADER
+     ════════════════════════════════════════════════════════════════ -->
+<header class="hero-cinematic">
+  <canvas class="hero-text-particles" aria-hidden="true"></canvas>
+  <div class="hero-grid">
+    <div>
+      <div class="hero-mark-wrap">
+        <svg class="hero-mark" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <ellipse class="orbit" cx="50" cy="50" rx="38" ry="13"/>
+          <ellipse class="orbit" cx="50" cy="50" rx="38" ry="13"/>
+          <ellipse class="orbit" cx="50" cy="50" rx="38" ry="13"/>
+          <circle class="core" cx="50" cy="50" r="5.5"/>
+          <path class="petal" d="M50 6 C54 22, 58 34, 50 40 C42 34, 46 22, 50 6Z"/>
+          <path class="petal" d="M50 94 C46 78, 42 66, 50 60 C58 66, 54 78, 50 94Z"/>
+          <path class="petal" d="M6 50 C22 46, 34 42, 40 50 C34 58, 22 54, 6 50Z"/>
+          <path class="petal" d="M94 50 C78 54, 66 58, 60 50 C66 42, 78 46, 94 50Z"/>
+        </svg>
+      </div>
+    </div>
+    <div>
+      <div class="eyebrow">Lupine Science — audit substrate for the matter stack</div>
+      <h1 class="sr-only">Step 1 of a real-world <em>Replicator</em>.</h1>
+      <p class="hero-lead">
+        Matter is the last frontier of civilization-scale software. Foundation models for matter exist now. Self-driving labs are shipping. Atomic-precision manufacturing is on a real research roadmap. The decade ahead is the convergence — a generation that can specify any molecule and have it manifest.
+      </p>
+      <p class="hero-lead">
+        Lupine builds the <strong>audit substrate</strong> for that stack — the methodology that names where atomistic predictions fail, and compresses the failure into closed-loop self-correction. Without it, every layer above stacks hallucination on top of unmeasured error. We are step 1.
+      </p>
+    </div>
+  </div>
+
+  <div class="wide" style="margin-top: 56px;">
+    <div class="phase-strip">
+      <div class="phase-item here">
+        <span class="here-flag">◉ we are here</span>
+        <div class="phase-years">Phase 1 · 2025–2030</div>
+        <div class="phase-name">Trustworthy prediction</div>
+      </div>
+      <div class="phase-item">
+        <div class="phase-years">Phase 2 · 2028–2034</div>
+        <div class="phase-name">Generative matter</div>
+      </div>
+      <div class="phase-item">
+        <div class="phase-years">Phase 3 · 2032–2042</div>
+        <div class="phase-name">Closed-loop synthesis</div>
+      </div>
+      <div class="phase-item">
+        <div class="phase-years">Phase 4 · 2040–2055</div>
+        <div class="phase-name">Programmable matter</div>
+      </div>
+      <div class="phase-item">
+        <div class="phase-years">Phase 5 · 2050–2080</div>
+        <div class="phase-name">Quantum-enabled materials</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- include:partials/nav.html -->
+
+<main>
+
+<!-- ════════════════════════════════════════════════════════════════
+     01 / THE THESIS
+     ════════════════════════════════════════════════════════════════ -->
+<section id="thesis" class="animate">
+  <div class="wide">
+    <div class="prose">
+      <div class="section-label">01 — The thesis</div>
+      <hr class="section-rule">
+      <h2>What we <em>believe</em>.</h2>
+      <p class="lead">Before the arc, before the stack, before any math: the commitments that tell you what kind of company this is. None are negotiable. All are testable against what we actually ship.</p>
+    </div>
+
+    <ol class="credo-list" style="max-width: 1080px; margin-inline: auto;">
+      <li class="credo-item">
+        <div class="credo-num">01</div>
+        <h3>Scarcity is an engineering problem.</h3>
+        <p>The 21st century has the science to dissolve material scarcity — atomistic prediction, generative matter, autonomous synthesis, atomic-precision manufacturing. The Replicator is a feasible engineering target on a 30-year horizon, not a metaphor for one.</p>
+        <span class="tier tier-directional">Directional</span>
+      </li>
+      <li class="credo-item">
+        <div class="credo-num">02</div>
+        <h3>The audit layer is a public good.</h3>
+        <p>Foundation models for matter need to be trustworthy before deployment at civilization scale. The methodology that names where they fail compounds for everyone or it compounds for no one. We ship Apache 2.0 because anything else makes the substrate brittle.</p>
+        <span class="tier tier-verified">Verified</span>
+      </li>
+      <li class="credo-item">
+        <div class="credo-num">03</div>
+        <h3>Truth before product.</h3>
+        <p>The first artifact is the methodology working paper and the open audit engine, built before raising a dollar — with a machine-checked formal core (zero unproven obligations) and a public two-tier replication kit that verifies every headline statistic from committed raw data. The methodology will be cited longer than any single deployment of it. We measure the physics first, then we build the engine.</p>
+        <span class="tier tier-verified">Verified</span>
+      </li>
+      <li class="credo-item">
+        <div class="credo-num">04</div>
+        <h3>The right timescale is 30 years.</h3>
+        <p>Civilization-scale problems do not fit a venture fund's LP horizon. The math an investor scores in five years is the floor. The platform a generation builds over thirty years is the ceiling. We optimize for the platform; the math just has to clear.</p>
+        <span class="tier tier-directional">Directional</span>
+      </li>
+      <li class="credo-item full">
+        <div class="credo-num">05</div>
+        <h3>Step 1 is unfashionable.</h3>
+        <p>Generative matter is on the cover of the magazine. Autonomous synthesis has the flagship NSF program. Atomic-precision manufacturing has the dramatic name. The audit layer underneath is invisible, slow, and load-bearing. We took it because it is load-bearing. Step 1 is the part everyone wants to skip; that is exactly why it is the seat to claim.</p>
+        <span class="tier tier-directional">Directional</span>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════
+     02 / THE PROOF
+     ════════════════════════════════════════════════════════════════ -->
+<section id="proof" class="band-alt animate">
+  <div class="wide">
+    <div class="prose">
+      <div class="section-label">02 — The proof</div>
+      <hr class="section-rule">
+      <h2>One law, tested at <em>three layers</em> of the matter stack.</h2>
+      <p class="lead">The research program found a geometric law: models in a family share one error direction, and that direction fingerprints whatever constraint binds the family — the functional form, the training data, the reference theory. We tested it the hard way: pre-registered experiments with kill conditions committed to version control before any model ran. Neither kill condition was triggered.</p>
+    </div>
+
+    <ol class="credo-list" style="max-width: 1080px; margin-inline: auto;">
+      <li class="credo-item">
+        <div class="credo-num">L1</div>
+        <h3>Classical potentials — 40 years, one geometry.</h3>
+        <p>559 interatomic potentials, 15 metals. Within a model family, prediction errors correlate at 0.95 — and the error geometry has not changed in forty years of development. Accuracy improved; the constraint signature did not. You cannot fit your way off a constraint surface.</p>
+        <span class="tier tier-verified">Verified</span>
+      </li>
+      <li class="credo-item">
+        <div class="credo-num">L2</div>
+        <h3>AI foundation models inherit their training physics.</h3>
+        <p>Four neural architectures &times; two quantum-chemistry training theories, pre-registered. Errors cluster by training theory, not by architecture (permutation p&nbsp;=&nbsp;0.029) — and retraining on the better theory rotates the error exactly as predicted. The model zoo is one family in disguise.</p>
+        <span class="tier tier-verified">Verified</span>
+      </li>
+      <li class="credo-item">
+        <div class="credo-num">L3</div>
+        <h3>Even the simulators obey it.</h3>
+        <p>12 DFT implementations, 384 crystals (public verification data). Errors cluster by the shared approximation, not by which code computed them (p&nbsp;=&nbsp;0.017): four independent codes sharing one pseudopotential align at 0.70&ndash;0.87, while the same code under a different approximation drops to 0.21.</p>
+        <span class="tier tier-verified">Verified</span>
+      </li>
+      <li class="credo-item full">
+        <div class="credo-num">&Sigma;</div>
+        <h3>Why this is a business, not just a result.</h3>
+        <p>Because the shared error is one direction, one correction vector repairs every model in a family at once — a rank-one calibration removes ~96% of foundation-model elastic error without retraining, and it transfers to models that don't exist yet. Cross-model agreement becomes a zero-cost trust gauge: it tells you when an ensemble can be calibrated and when it is lying to you. The theory behind both claims is machine-checked in Lean&nbsp;4 — a 180-theorem corpus, zero unproven obligations — and the entire evidence chain replays from public data in two commands.</p>
+        <span class="tier tier-verified">Verified</span>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════
+     03 / THE STACK
+     ════════════════════════════════════════════════════════════════ -->
+<section id="stack" class="animate">
+  <div class="wide">
+    <div class="prose">
+      <div class="section-label">03 — The stack</div>
+      <hr class="section-rule">
+      <h2>The <em>validation substrate</em> for the matter stack.</h2>
+      <p class="lead">The applications are visible. The generative models are fashionable. The compute primitives are mature and improving. The audit layer in the middle — the one that catches when a foundation model proposes a structure that physics rejects, and compresses the error into corrections — is structurally underweight in today's ecosystem.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table class="stack-table">
+        <tbody>
+          <tr>
+            <td style="width:200px; padding-left: 26px;">
+              <div class="stack-layer-name">Application surfaces</div>
+              <div class="stack-layer-tag">Layer 5 · the buyers</div>
+            </td>
+            <td>
+              <div class="stack-layer-desc">The end uses that pay for materials engineering today and that programmable matter reshapes over 30 years.</div>
+              <div class="stack-layer-ex">Drug design · semiconductors · battery chemistry · aerospace alloys · cell-therapy scaffolds · food substrates</div>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding-left: 26px;">
+              <div class="stack-layer-name">Generative matter</div>
+              <div class="stack-layer-tag">Layer 4 · ramping fast</div>
+            </td>
+            <td>
+              <div class="stack-layer-desc">Foundation models that propose novel matter configurations from a target property specification.</div>
+              <div class="stack-layer-ex">GNoME · MatterSim · OMat24 · GNN crystal generators · diffusion models — real and ramping. We host it; we don't build it.</div>
+            </td>
+          </tr>
+          <tr class="lupine-row">
+            <td style="padding-left: 26px;">
+              <div class="stack-layer-name">Validation &amp; error-correction</div>
+              <div class="stack-layer-tag">Layer 3 · <span class="lupine-badge">this is Lupine</span></div>
+            </td>
+            <td>
+              <div class="stack-layer-desc">The methodology + tooling that names where the layers above fail and compresses that failure into the layers below. Structurally underweight — every other layer is racing ahead while validation stays ad-hoc.</div>
+              <div class="stack-layer-ex">atlas-distill (Rust) · projection-law error geometry · multi-fidelity UQ · aggregation-bias detection · machine-checked theorems (Lean 4) · methodology working paper</div>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding-left: 26px;">
+              <div class="stack-layer-name">Compute substrate</div>
+              <div class="stack-layer-tag">Layer 2 · mature, legacy</div>
+            </td>
+            <td>
+              <div class="stack-layer-desc">Numerical primitives the audit and generative layers stand on. Mature in legacy form, immature in modern form.</div>
+              <div class="stack-layer-ex">Plane-wave DFT (VASP / QE / ABINIT) · LAMMPS-class MD · ML-potential inference (MACE/NequIP/Allegro) · WebGPU / HPC</div>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding-left: 26px;">
+              <div class="stack-layer-name">Physical reality</div>
+              <div class="stack-layer-tag">Layer 1 · ground truth</div>
+            </td>
+            <td>
+              <div class="stack-layer-desc">The ground truth being modeled: experiments, synthesis, characterization. The audit layer is the only place predictions and experiments meet.</div>
+              <div class="stack-layer-ex">Beamlines · electron microscopes · X-ray diffraction · synthesis robotics · DOE user facilities · self-driving labs</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="prose">
+      <blockquote class="structural-bet">
+        <strong>The structural bet:</strong> Every other layer of the stack has well-funded incumbents racing. Validation has none. The Lupine wager is that within 3–5 years the field realizes "audit layer for atomistic ML" is its own discipline — the way <em>observability</em> became its own discipline for software in the 2010s — and the team that ships the canonical open-core engine owns the ground floor.
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════
+     04 / WHY NOW
+     ════════════════════════════════════════════════════════════════ -->
+<section id="why-now" class="band-alt animate">
+  <div class="wide">
+    <div class="prose">
+      <div class="section-label">04 — Why now</div>
+      <hr class="section-rule">
+      <h2>Three curves bending <em>at the same time</em>.</h2>
+      <p class="lead">Foundation MLIPs cleared the science bar (sub-2 meV/atom on broad benchmarks, 2024). WebGPU made browser-native scientific compute real (2024–25). Sovereignty became a procurement requirement (CHIPS Act $447B fab capex announced through 2030; IRA $300B+ committed battery manufacturing). The audit layer becomes infrastructure now or never.</p>
+    </div>
+
+    <div class="why-now-grid">
+      <div class="why-now-col">
+        <div class="why-now-label">Atomistic ML</div>
+        <div class="why-now-line">MACE → MatterSim → OMat24 → ?</div>
+        <p>Foundation MLIPs went from research curiosity to deployable infrastructure in 36 months. The next 36 will move them into production design loops.</p>
+      </div>
+      <div class="why-now-col">
+        <div class="why-now-label">Autonomous synthesis</div>
+        <div class="why-now-line">A-Lab → MGI 2031 → self-driving everywhere</div>
+        <p>The Materials Genome Initiative's 20-year mandate (2011–2031) targets the closed-loop transition. We're 6 years from the deadline; the lab equipment exists.</p>
+      </div>
+      <div class="why-now-col">
+        <div class="why-now-label">Sovereignty mandate</div>
+        <div class="why-now-line">CHIPS → IRA → MGI 2025 plan</div>
+        <p>$700B+ in announced US capex needs US/allied-licensed materials infrastructure. Vienna-held VASP cannot defensibly serve this buyer base.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════
+     05 / THE MODEL
+     ════════════════════════════════════════════════════════════════ -->
+<section id="model" class="animate">
+  <div class="wide">
+    <div class="prose">
+      <div class="section-label">05 — The model</div>
+      <hr class="section-rule">
+      <h2>The ceiling and <em>the floor</em>.</h2>
+      <p class="lead">Two methodologies. The ceiling prices Lupine as the audit substrate for a quantum-enabled materials economy at platform maturity. The floor prices it as a conservative vertical software company on a 5-year horizon. They differ by four orders of magnitude in conditional EV — because they answer fundamentally different questions about what Lupine <em>is</em>.</p>
+    </div>
+
+    <div class="prose">
+      <div class="tier-legend">
+        <span><span class="tier tier-verified">Verified</span> primary source</span>
+        <span><span class="tier tier-disclosed">Disclosed</span> public filing</span>
+        <span><span class="tier tier-triangulated">Triangulated</span> cross-checked</span>
+        <span><span class="tier tier-projection">Projection</span> modeled</span>
+        <span><span class="tier tier-directional">Directional</span> 30-yr thesis</span>
+      </div>
+    </div>
+
+    <!-- ── CEILING ── -->
+    <div class="prose" style="margin-top: 48px;">
+      <h2 style="font-size: clamp(1.6rem, 3vw, 2.2rem);">The ceiling — <em>$7.0T</em> conditional weighted EV</h2>
+    </div>
+
+    <div class="sub-label" style="max-width: 1080px; margin-inline: auto; padding-inline: 24px;">
+      A · Phase-4 addressable — what's at stake &nbsp;·&nbsp; <span class="tier tier-triangulated">Triangulated</span>
+    </div>
+    <div class="table-wrap" style="max-width: 1080px; margin-inline: auto; padding-inline: 24px;">
+      <table class="seg">
+        <tbody>
+          <tr><td>Drug discovery + clinical materials <span class="small">Healthcare</span></td><td>$1.2T</td></tr>
+          <tr><td>Semiconductors + advanced packaging <span class="small">Compute</span></td><td>$800B</td></tr>
+          <tr><td>Battery + energy storage <span class="small">Energy &amp; travel</span></td><td>$500B</td></tr>
+          <tr><td>Synthetic biology + food + ag <span class="small">Food &amp; ag</span></td><td>$400B</td></tr>
+          <tr><td>Catalysis + carbon capture <span class="small">Industrial</span></td><td>$300B</td></tr>
+          <tr><td>Aerospace alloys + AM + hypersonics <span class="small">Energy &amp; travel</span></td><td>$250B</td></tr>
+          <tr><td>Polymers, coatings, structural <span class="small">Industrial</span></td><td>$250B</td></tr>
+          <tr><td>Solar + wind + nuclear materials <span class="small">Energy &amp; travel</span></td><td>$200B</td></tr>
+          <tr><td>Biopolymers + implants + regen <span class="small">Healthcare</span></td><td>$180B</td></tr>
+          <tr style="border-top: 1px solid var(--hairline-strong);"><td><strong>Total phase-4 addressable (2045)</strong></td><td><strong>~$4.1T/yr</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="prose">
+      <div class="takeaway">
+        <div class="tk-label">The denominator</div>
+        <p>~<strong>$4.1T</strong> of annual economic activity at phase-4 maturity (2045). Sized bottom-up from McKinsey, BNEF, BCG, Frost &amp; Sullivan, and direct industry numbers; held at the conservative midpoint of the $2–5T range these reports bracket. <span class="tier tier-triangulated">Triangulated</span></p>
+      </div>
+    </div>
+
+    <div class="sub-label" style="max-width: 1080px; margin-inline: auto; padding-inline: 24px;">
+      B · What audit-substrate companies actually capture &nbsp;·&nbsp; <span class="tier tier-disclosed">Disclosed</span>
+    </div>
+    <div class="table-wrap" style="max-width: 1080px; margin-inline: auto; padding-inline: 24px;">
+      <table class="data">
+        <thead>
+          <tr>
+            <th>Company</th>
+            <th>Category</th>
+            <th class="num">EV/Rev</th>
+            <th class="num">Ecosystem</th>
+            <th class="num">Capture rate</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>GitHub <span class="tier tier-disclosed">2018</span></td><td>Developer platform</td><td class="num">7.5×</td><td class="num">$5,000B</td><td class="num">0.02%</td></tr>
+          <tr><td>Hugging Face</td><td>ML model hub</td><td class="num">22.5×</td><td class="num">$200B</td><td class="num">0.10%</td></tr>
+          <tr><td>Cloudflare</td><td>Internet infra</td><td class="num">20.0×</td><td class="num">$1,000B</td><td class="num">0.15%</td></tr>
+          <tr><td>Shopify</td><td>Commerce platform</td><td class="num">21.4×</td><td class="num">$3,000B</td><td class="num">0.23%</td></tr>
+          <tr><td>Datadog</td><td>Observability infra</td><td class="num">16.0×</td><td class="num">$1,000B</td><td class="num">0.25%</td></tr>
+          <tr><td>ANSYS</td><td>Engineering simulation</td><td class="num">15.9×</td><td class="num">$500B</td><td class="num">0.44%</td></tr>
+          <tr><td>MongoDB</td><td>Data infra</td><td class="num">15.0×</td><td class="num">$400B</td><td class="num">0.50%</td></tr>
+          <tr><td>Snowflake</td><td>Data platform</td><td class="num">20.0×</td><td class="num">$500B</td><td class="num">0.70%</td></tr>
+          <tr><td>Cadence</td><td>EDA platform</td><td class="num">16.7×</td><td class="num">$500B</td><td class="num">0.90%</td></tr>
+          <tr><td>Synopsys</td><td>EDA platform</td><td class="num">12.9×</td><td class="num">$500B</td><td class="num">1.40%</td></tr>
+          <tr class="bench"><td>Median platform infra</td><td>benchmark</td><td class="num">17.5×</td><td class="num">—</td><td class="num">0.22%</td></tr>
+          <tr class="bench"><td>Median mature EDA</td><td>benchmark</td><td class="num">14.4×</td><td class="num">—</td><td class="num">1.15%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-label" style="max-width: 1080px; margin-inline: auto; padding-inline: 24px;">
+      C · The conditional outcome distribution &nbsp;·&nbsp; <span class="tier tier-projection">Projection</span> / <span class="tier tier-directional">Directional</span>
+    </div>
+    <div style="max-width: 1080px; margin-inline: auto; padding-inline: 24px;">
+      <div class="scen">
+        <div class="scen-row">
+          <div><div class="sname">SaaS-of-record (the math floor)</div><div class="smeta">5-yr · $150B addressable · 2.5% capture · 15× <span class="tier tier-projection">Projection</span></div></div>
+          <div class="prob-track"><div class="prob-fill" style="width:100%"></div></div>
+          <div class="sev">$0.3B <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--ink-muted);">25%</span></div>
+        </div>
+        <div class="scen-row">
+          <div><div class="sname">Audit substrate (mid-platform)</div><div class="smeta">10-yr · $2T addressable · 0.20% capture · 17× <span class="tier tier-projection">Projection</span></div></div>
+          <div class="prob-track"><div class="prob-fill" style="width:80%"></div></div>
+          <div class="sev">$68B <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--ink-muted);">20%</span></div>
+        </div>
+        <div class="scen-row">
+          <div><div class="sname">Category leader (audit + compute)</div><div class="smeta">15-yr · $5T addressable · 0.50% capture · 18× <span class="tier tier-projection">Projection</span></div></div>
+          <div class="prob-track"><div class="prob-fill" style="width:72%"></div></div>
+          <div class="sev">$450B <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--ink-muted);">18%</span></div>
+        </div>
+        <div class="scen-row">
+          <div><div class="sname">Civilizational classical-materials infra</div><div class="smeta">20-yr · $10T addressable · 1.0% capture · 20× <span class="tier tier-projection">Projection</span></div></div>
+          <div class="prob-track"><div class="prob-fill" style="width:60%"></div></div>
+          <div class="sev">$2,000B <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--ink-muted);">15%</span></div>
+        </div>
+        <div class="scen-row">
+          <div><div class="sname">Phase-5 quantum unlocks (mid)</div><div class="smeta">25-yr · $50T addressable · 1.0% capture · 22× <span class="tier tier-directional">Directional</span></div></div>
+          <div class="prob-track"><div class="prob-fill" style="width:40%"></div></div>
+          <div class="sev">$11.0T <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--ink-muted);">10%</span></div>
+        </div>
+        <div class="scen-row">
+          <div><div class="sname">Phase-5 quantum unlocks (deep)</div><div class="smeta">30-yr · $100T addressable · 1.5% capture · 22× <span class="tier tier-directional">Directional</span></div></div>
+          <div class="prob-track"><div class="prob-fill" style="width:32%"></div></div>
+          <div class="sev">$33.0T <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--ink-muted);">8%</span></div>
+        </div>
+        <div class="scen-row">
+          <div><div class="sname">TCP/IP for designed matter</div><div class="smeta">35-yr · $200T addressable · 2.0% capture · 18× <span class="tier tier-directional">Directional</span></div></div>
+          <div class="prob-track"><div class="prob-fill" style="width:16%"></div></div>
+          <div class="sev">$72.0T <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--ink-muted);">4%</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="takeaway">
+        <div class="tk-label">What this number means</div>
+        <p><strong>$7.0T</strong> is the probability-weighted EV across the seven scenarios above, <em>conditional on execution</em> (probabilities sum to 1.0). Multiply by 50% — the unconditional probability the company doesn't fail outright, priced explicitly in the floor — and you get a <strong>~$3.5T</strong> unconditional ceiling. That is roughly <strong>~10,000×</strong> the floor's $332M base DCF: four orders of magnitude. The point is not the number — it is that <em>the floor measures the wrong altitude</em>. Most probability mass sits in the lower, near-term scenarios; the giant EVs carry small, explicitly-directional probabilities.</p>
+      </div>
+    </div>
+
+    <div class="sub-label" style="max-width: 1080px; margin-inline: auto; padding-inline: 24px;">
+      D · Strategic acquirers — who pays for it before it gets there &nbsp;·&nbsp; <span class="tier tier-directional">Directional</span>
+    </div>
+    <div style="max-width: 1080px; margin-inline: auto; padding-inline: 24px; margin-bottom: 36px;">
+      <div class="acquirer-grid">
+        <div class="acquirer-card">
+          <div class="acq-header">
+            <div class="acq-name">Microsoft — Azure Quantum Elements</div>
+            <div class="acq-price">~$8.0B</div>
+          </div>
+          <p>AQE is Microsoft's flagship materials-AI platform; the audit substrate is the layer they cannot ship internally without 5+ years of methodology work. Buying Lupine is buying the validation discipline. 5-yr NPV ~$30B · structural analog: MSFT + GitHub 2018, $7.5B.</p>
+        </div>
+        <div class="acquirer-card">
+          <div class="acq-header">
+            <div class="acq-name">Google DeepMind — GNoME lineage</div>
+            <div class="acq-price">~$6.0B</div>
+          </div>
+          <p>GNoME showed Google can ship generative matter; the audit layer is what makes it deployable. Acquisition keeps the substrate from going to Microsoft. 5-yr NPV ~$25B · defensive pattern.</p>
+        </div>
+        <div class="acquirer-card">
+          <div class="acq-header">
+            <div class="acq-name">Synopsys / Cadence — post-ANSYS</div>
+            <div class="acq-price">~$6.0B</div>
+          </div>
+          <p>Synopsys's $35B ANSYS deal closed in 2025; the materials substrate is the natural next consolidation. Audit layer for atomistic ML maps directly to the EDA-of-matter thesis. 5-yr NPV ~$20B.</p>
+        </div>
+        <div class="acquirer-card">
+          <div class="acq-header">
+            <div class="acq-name">Schrödinger</div>
+            <div class="acq-price">~$3.0B</div>
+          </div>
+          <p>The closest direct strategic — Schrödinger's materials segment competes for the same buyers. Acquiring Lupine means owning both the closed proprietary stack and the open audit substrate, and pre-empts MSFT/GOOG. 5-yr NPV ~$10B.</p>
+        </div>
+      </div>
+    </div>
+    <div class="prose">
+      <div class="takeaway">
+        <div class="tk-label">Median plausible acquisition price ~$4.5B</div>
+        <p>Four named strategic acquirers — Microsoft (Azure Quantum Elements), Google DeepMind, Synopsys/Cadence (post-ANSYS), Schrödinger. Median plausible all-cash acquisition price across commercial acquirers is <strong>$4.5B</strong> at a 5-year horizon. The Microsoft + GitHub 2018 acquisition ($7.5B for the developer-platform substrate) is the closest structural analog.</p>
+      </div>
+    </div>
+
+    <!-- ── FLOOR ── -->
+    <div class="prose" style="margin-top: 64px; padding-top: 48px; border-top: 1px solid var(--hairline-strong);">
+      <h2 style="font-size: clamp(1.6rem, 3vw, 2.2rem);">The floor — <em>the conservative cross-check</em></h2>
+      <p class="lead" style="margin-bottom: 28px;">This prices Lupine as if neither the quantum unlocks nor the platform position materialize — a respectable Synopsys/Cadence/Veeva-tier vertical software company on a 5-year horizon, classical materials only. Even under this strictly-conservative frame the DCF clears: <strong>$332M intrinsic</strong> vs the $150M proposed post (<strong>+121% margin of safety</strong>), <strong>+39% probability-weighted IRR</strong>. The math clears on the floor; the upside is in the ceiling.</p>
+    </div>
+
+    <div class="sub-label" style="max-width: 1080px; margin-inline: auto; padding-inline: 24px;">
+      A · DCF intrinsic value &nbsp;·&nbsp; <span class="tier tier-projection">Projection</span>
+    </div>
+    <div style="max-width: 1080px; margin-inline: auto; padding-inline: 24px;">
+      <div class="dcf-row">
+        <div class="dcf-card">
+          <div class="dcf-label">Bear · 14.0% WACC</div>
+          <div class="dcf-value">$37M</div>
+          <div class="dcf-note">2.0% terminal growth · classical materials only</div>
+        </div>
+        <div class="dcf-card base">
+          <div class="dcf-label">Base · 12.1% WACC</div>
+          <div class="dcf-value">$332M</div>
+          <div class="dcf-note">+121% over the $150M proposed post-money</div>
+        </div>
+        <div class="dcf-card">
+          <div class="dcf-label">Bull · 10.5% WACC</div>
+          <div class="dcf-value">$1.62B</div>
+          <div class="dcf-note">3.5% terminal growth · platform multiple holds</div>
+        </div>
+      </div>
+    </div>
+    <div class="prose">
+      <div class="takeaway">
+        <div class="tk-label">Every WACC × g cell clears the proposed post</div>
+        <p>Equity value across the 25-cell WACC × terminal-growth sensitivity grid spans <strong>$234M</strong> (worst corner) to <strong>$528M</strong> (best corner). The worst case is still <strong>+56%</strong> over the $150M proposed post. The intrinsic value does not depend on the moonshot.</p>
+      </div>
+    </div>
+
+    <div class="sub-label" style="max-width: 1080px; margin-inline: auto; padding-inline: 24px;">
+      B · Comp set + probability-weighted returns &nbsp;·&nbsp; <span class="tier tier-disclosed">Disclosed</span>
+    </div>
+    <div style="max-width: 1080px; margin-inline: auto; padding-inline: 24px;">
+      <div class="stats-row">
+        <div class="stat-cell">
+          <div class="sv">15.5×</div>
+          <div class="sl">Sim-comp median EV/Rev</div>
+          <div class="sd">Synopsys, Cadence, ANSYS, Altair, Veeva</div>
+        </div>
+        <div class="stat-cell">
+          <div class="sv">$99B</div>
+          <div class="sl">FY30 sector unlock</div>
+          <div class="sd">Accelerated value: compute + travel + bio</div>
+        </div>
+        <div class="stat-cell">
+          <div class="sv">2.5%</div>
+          <div class="sl">FY30 capture rate</div>
+          <div class="sd">The Synopsys/Cadence band, not aspirational</div>
+        </div>
+        <div class="stat-cell hl">
+          <div class="sv">+39%</div>
+          <div class="sl">Prob-weighted 5-yr IRR</div>
+          <div class="sd">With 50% Pr(zero) fully baked in</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-label" style="max-width: 1080px; margin-inline: auto; padding-inline: 24px;">
+      C · The outcome distribution (50% chance of zero, priced) &nbsp;·&nbsp; <span class="tier tier-projection">Projection</span>
+    </div>
+    <div style="max-width: 1080px; margin-inline: auto; padding-inline: 24px;">
+      <div class="scen">
+        <div class="scen-row">
+          <div><div class="sname">Zero — failure / wind-down</div><div class="smeta">Priced explicitly. The venture base rate.</div></div>
+          <div class="prob-track"><div class="prob-fill muted" style="width:100%"></div></div>
+          <div class="sev">$0 <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--ink-muted);">50%</span></div>
+        </div>
+        <div class="scen-row">
+          <div><div class="sname">Modest exit</div><div class="smeta">Acqui-hire / small strategic</div></div>
+          <div class="prob-track"><div class="prob-fill" style="width:40%"></div></div>
+          <div class="sev">$100M <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--ink-muted);">20%</span></div>
+        </div>
+        <div class="scen-row">
+          <div><div class="sname">Strategic exit</div><div class="smeta">Software-of-record acquisition</div></div>
+          <div class="prob-track"><div class="prob-fill" style="width:40%"></div></div>
+          <div class="sev">$500M <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--ink-muted);">20%</span></div>
+        </div>
+        <div class="scen-row">
+          <div><div class="sname">Moonshot</div><div class="smeta">Platform position holds</div></div>
+          <div class="prob-track"><div class="prob-fill" style="width:14%"></div></div>
+          <div class="sev">$3.0B <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--ink-muted);">7%</span></div>
+        </div>
+        <div class="scen-row">
+          <div><div class="sname">Asymmetric tail</div><div class="smeta">Category-defining infrastructure</div></div>
+          <div class="prob-track"><div class="prob-fill" style="width:6%"></div></div>
+          <div class="sev">$15.0B <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--ink-muted);">3%</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="prose">
+      <div class="takeaway">
+        <div class="tk-label">Where the IRR comes from</div>
+        <p>The Moonshot + Asymmetric-tail outcomes (combined <strong>10%</strong> probability) contribute the bulk of the weighted EV, while the <strong>50%</strong> probability of zero is fully baked in. This is the floor: even pricing a coin-flip chance of total loss, the conservative cross-check still returns +39% IRR. The ceiling above is what the same company looks like if it becomes infrastructure for the matter stack.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════
+     06 / THE ASK
+     ════════════════════════════════════════════════════════════════ -->
+<section id="ask" class="band-alt animate">
+  <div class="wide">
+    <div class="prose">
+      <div class="section-label">06 — The ask</div>
+      <hr class="section-rule">
+      <h2>Seed <em>$8M</em> — to build the team and ship the audit substrate.</h2>
+      <p class="lead">The capital funds the team, the engineering, and the methodology publications that make phase 1 trustworthy. The seed is priced conservatively against the trajectory in the model — the ceiling is where this goes, not the entry. The milestones are the markers that we're actually building toward the arc, not just the math.</p>
+    </div>
+
+    <div class="prose">
+      <div class="founder-block">
+        <div class="founder-initial">A</div>
+        <div>
+          <div class="founder-name">Alex Welcing <span class="founder-role">Founder</span></div>
+          <p>Authored the methodology working paper and built the atlas-distill audit engine (Rust) before raising a dollar — truth before product. This round builds the team around a de-risked thesis: senior MLIP/DFT engineering, scientific software, and the first commercial hire.</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="max-width: 1080px; margin-inline: auto; padding-inline: 24px; margin-bottom: 44px;">
+      <div class="milestone-row">
+        <div class="ms">
+          <div class="mo">Month 12</div>
+          <h4>Federal direct contract in flight</h4>
+          <p>Unlocks non-dilutive runway + the credibility marker that lets us be cited as named tooling in DARPA / DOE / NSF proposals.</p>
+        </div>
+        <div class="ms">
+          <div class="mo">Month 18</div>
+          <h4>Two paid pilots converted to production</h4>
+          <p>First $750K–$1.5M ACV recurring + named industry references; signal that the audit layer is procurement-grade.</p>
+        </div>
+        <div class="ms">
+          <div class="mo">Month 24</div>
+          <h4>DFT engine alpha + open benchmark published</h4>
+          <p>Closes the unified DFT → ML → MD pipeline; the open benchmark becomes the canonical place to compare foundation MLIPs.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="cta-row">
+        <a href="mailto:founders@lupine.science" class="btn btn-primary">founders@lupine.science →</a>
+        <a href="/access.html?next=%2Fdeck.html" class="btn btn-secondary">View the slide deck</a>
+        <a href="/one-pager.html" class="btn btn-secondary">One-pager (print → PDF)</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- include:partials/footer.html -->
+
+<script src="js/lupine-effects.js" defer></script>
+<script src="js/hero-text-particles.js" defer></script>
+<script type="module" src="js/lupine-creative.js"></script>
+</body>
+</html>

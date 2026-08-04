@@ -18,11 +18,12 @@ import sys
 from typing import Any
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-RUNNER_DIR = ROOT / "gcp" / "mlip-cell-runner"
-if str(RUNNER_DIR) not in sys.path:
-    sys.path.insert(0, str(RUNNER_DIR))
+# TODO: retire once mlip_benchmark_sources moves into lupine_distill.
+_TOOLS_DIR = ROOT / "tools"
+if str(_TOOLS_DIR) not in sys.path:
+    sys.path.insert(0, str(_TOOLS_DIR))
 
-import fixture_contract  # noqa: E402
+from lupine_distill import fixture_contract
 import mlip_benchmark_sources  # noqa: E402
 
 

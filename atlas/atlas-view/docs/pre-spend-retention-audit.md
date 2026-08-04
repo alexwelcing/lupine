@@ -34,7 +34,7 @@ Ranked by **severity × funnel impact × confidence ÷ effort**. "Impact at 10k"
 | 6 | **No re-engagement (email/push)** (`RETAIN-001`) | return | No return hook at all; day-2+ retention near floor; erodes LTV on every paid user | Cloud Function on signup/save → event log; transactional email (welcome + "your view was seen N times"). Larger build — at minimum capture email consent now | M |
 | 7 | **Saved-view 404 locks UI in permanent spinner** (`E001`) | share | 2–5% bad share URLs → forever "Parsing…" spinner, no recovery without reload; breaks viral chain | Add `setLoading(false)` in catch (App.tsx:535, savedViews.ts:201); show dismissible error card with "Back to Gallery" | S |
 | 8 | **No WebGPU init timeout — frozen app on poor network** (`no-offline-fallback-webgpu-init`) | activate | Weak-network users freeze 20s+ with no feedback; "page unresponsive" prompt | Wrap `initWebGPU`/`compute()` in `Promise.race` with 5s timeout; online/offline banner; surface timeout error | S |
-| 9 | **Saved-view route has no OpenGraph meta** (`F4`, `RETAIN-004`) | share | Shared `#/view/{slug}` links render blank previews on Twitter/Discord/Slack; viral CTR collapses | Inject per-view og:title/og:image/og:description (Cloud Function thumbnail + meta injection, or SSR shell) | M |
+| 9 | **Saved-view route has no OpenGraph meta** (`F4`, `RETAIN-004`) | share | Shared saved-view links render blank previews on Twitter/Discord/Slack; viral CTR collapses | Status: mitigated by canonical `/view/{slug}` links, `lupiViewShare` OpenGraph/Twitter HTML, and a Cloud Run proxy in front of the SPA route | M |
 | 10 | **Popup-blocked → silent redirect, no message** (`AUTH-002`) | signup | ~15–25% aggressive-blocker/mobile browsers see nothing after clicking sign-in, bounce | On `auth/popup-blocked`, show "Popup blocked — tap to retry"; only redirect on explicit retry | M |
 | 11 | **Android Firefox / WebGL fail with no message** (`android-firefox-no-webgpu-message`, `no-canvas-webgl-fallback`) | activate | ~800–1200 Android FF + low-end users silently degrade or blank | Emit a non-blocking store warning on GPU/WebGL init failure; pre-warn by UA | M |
 | 12 | **Auth callout dismissal in sessionStorage only** (`AUTH-001`, `F2`, `RETAIN-006`) | land/activate | Returners re-see the callout every visit; +friction on the most valuable cohort | Persist dismissal in localStorage (30d) instead of sessionStorage | S |
@@ -68,7 +68,7 @@ The full LUPI cold→viral user loop, as mapped from the code.
 - **Rules:** `firestore.rules` lupiViews — public get/list, signed-in self-owned create/update/delete.
 
 ### Loop 3 — PUBLISH → SHARE/VIRAL → RETURN
-- **Share:** `#/view/{slug}` (case-insensitive, URL-decoded) → `App.tsx` detects slug → `loadSavedMolecularView()` → Firestore fetch → load molecule + apply canonical view → set document title.
+- **Share:** `/view/{slug}` (canonical social URL) or `#/view/{slug}` (SPA/internal route) → `App.tsx` detects slug → `loadSavedMolecularView()` → Firestore fetch → load molecule + apply canonical view → set document title.
 - **Returner recognition:** `lupi_viewer_auth` hint cookie (read only for a debug chip), Firebase persisted session, recent-views list (`listUserSavedViews(uid)`, `limit(8)`, 4 shown).
 
 ### Loop 4 — API KEY → AGENT INTEGRATION

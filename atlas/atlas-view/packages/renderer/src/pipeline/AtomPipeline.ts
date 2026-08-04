@@ -379,26 +379,42 @@ export async function initWebGPU(
 
   const handshake = (async (): Promise<{ device: GPUDevice; format: GPUTextureFormat } | null> => {
     try {
-      const adapter = await (navigator as any).gpu.requestAdapter({
+      // Try high-performance first; fall back to any available adapter.
+      let adapter = await (navigator as any).gpu.requestAdapter({
         powerPreference: 'high-performance',
       });
       if (!adapter) {
-        console.warn('No WebGPU adapter found');
+        console.warn('[WebGPU] No high-performance adapter; trying default');
+        adapter = await (navigator as any).gpu.requestAdapter();
+      }
+      if (!adapter) {
+        console.warn('[WebGPU] No adapter found');
         return null;
       }
-      const device = await adapter.requestDevice({
-        requiredLimits: {
-          maxStorageBufferBindingSize: 512 * 1024 * 1024, // 512MB for large systems
-          maxBufferSize: 512 * 1024 * 1024,
-        },
-      });
+
+      // Try generous limits first, then fall back to adapter defaults.
+      // Some GPUs (integrated, older discrete) reject 512MB buffers.
+      let device: GPUDevice;
+      try {
+        device = await adapter.requestDevice({
+          requiredLimits: {
+            maxStorageBufferBindingSize: 512 * 1024 * 1024, // 512MB for large systems
+            maxBufferSize: 512 * 1024 * 1024,
+          },
+        });
+      } catch (limitErr: any) {
+        console.warn('[WebGPU] Large limits rejected, trying defaults:', limitErr?.message ?? limitErr);
+        device = await adapter.requestDevice();
+      }
+
       device.lost.then((info: any) => {
-        console.error('WebGPU device lost:', info.message);
+        console.error('[WebGPU] device lost:', info.message);
       });
       const format = (navigator as any).gpu.getPreferredCanvasFormat();
+      console.log('[WebGPU] device acquired');
       return { device, format };
     } catch (err: any) {
-      console.warn('WebGPU init threw — falling back:', err?.message ?? err);
+      console.warn('[WebGPU] init threw — falling back:', err?.message ?? err);
       return null;
     }
   })();

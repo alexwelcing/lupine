@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Supplementary Material</title>
+<style>
+body { margin: 0; padding: 0; font-family: 'Georgia', 'Times New Roman', serif; color: #333; line-height: 1.6; font-size: 11pt; }
+* { box-sizing: border-box; }
+@page { size: A4; margin: 2.5cm 2cm; @top-center { content: "Supplementary Material"; font-size: 9pt; color: #666; font-variant: small-caps; } @bottom-center { content: counter(page); font-size: 9pt; } }
+@page :first { margin: 0; @top-center { content: none; } @bottom-center { content: none; } }
+
+.cover { width: 210mm; height: 297mm; margin: 0; position: relative; overflow: hidden; page-break-after: always; background: #f8f9fa; }
+.cover-content { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; width: 80%; }
+.cover-title { font-size: 22pt; font-weight: 700; color: #1a252f; margin-bottom: 0.5cm; }
+.cover-paper { font-size: 13pt; color: #495057; font-style: italic; margin-bottom: 1.5cm; line-height: 1.4; }
+.cover-author { font-size: 12pt; color: #333; }
+
+h1 { font-size: 16pt; font-weight: 700; color: #1a252f; margin-top: 1cm; margin-bottom: 0.5cm; page-break-after: avoid; }
+figure { margin: 1cm 0; text-align: center; page-break-inside: avoid; page-break-before: always; }
+figure:first-of-type { page-break-before: auto; }
+figure img { max-width: 85%; max-height: 55vh; height: auto; }
+figcaption { font-size: 10pt; color: #555; margin-top: 0.3cm; font-style: italic; }
+figcaption::before { content: attr(data-label) ". "; font-weight: 700; font-style: normal; }
+p { font-size: 11pt; margin: 0.4cm 0; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-content">
+    <div class="cover-title">Supplementary Material</div>
+    <div class="cover-paper">The Causal Geometry of Prediction Errors in Interatomic Potentials:<br>A Hyper-Ribbon Manifold Analysis with Simpson's Paradox Detection</div>
+    <div class="cover-author">Alex Welcing<br><span style="font-size:10pt;color:#666;">Lupine Science</span></div>
+  </div>
+</div>
+
+<p>This document contains supplementary figures referenced in the main article. The main manuscript presents six figures (the journal limit); the material below provides additional analyses that support the central claims.</p>
+
+<figure id="supp-fig-1">
+  <img src="figures/year_stratified_dim.png" alt="Temporal PR">
+  <figcaption data-label="Supplementary Figure 1">Effective dimensionality (Participation Ratio) of prediction errors stratified by potential publication year (1980–2025). The hyper-ribbon structure remains stable across all decades, with PR rigidly bounded below 2.0 regardless of model complexity or publication era.</figcaption>
+</figure>
+
+<figure id="supp-fig-2">
+  <img src="figures/year_stratified_r2.png" alt="Temporal R2">
+  <figcaption data-label="Supplementary Figure 2">Log-eigenvalue linearity ($R^2$) stratified by publication year. The Vandermonde universality class signature ($R^2 > 0.80$) persists across all decades of interatomic potential development.</figcaption>
+</figure>
+
+<figure id="supp-fig-3">
+  <img src="figures/observables_5d_pr.png" alt="5D observables">
+  <figcaption data-label="Supplementary Figure 3">Hyper-ribbon dimensionality distribution comparing the standard 3D elastic constant space ($C_{11}$, $C_{12}$, $C_{44}$) to an expanded 5D space incorporating lattice constant ($a$) and cohesive energy ($E_{\text{coh}}$). The median effective dimensionality remains highly compressed despite a 66% increase in the number of target observables, confirming that the low-dimensional error structure is fundamental to the observable space rather than an artifact of dimensionality restriction.</figcaption>
+</figure>
+
+</body>
+</html>

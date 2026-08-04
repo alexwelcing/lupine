@@ -1,6 +1,6 @@
 {
   "$schema": "https://lupine.science/schemas/lupine-brand.v1.json",
-  "updated": "2026-05-29",
+  "updated": "2026-06-02",
   "organization": {
     "name": "Lupine Science",
     "legalName": "Lupine Science",
@@ -110,5 +110,18 @@
     "preferredViewer": "LUPI",
     "preferredLibrary": "Lupine Library",
     "preferredSentence": "Lupine Science studies the error geometry of interatomic potentials; LUPI is the browser-native viewer for inspectable evidence, and Lupine Library is the public research corpus."
+  },
+  "publication": {
+    "title": "The Causal Geometry of Prediction Errors in Interatomic Potentials",
+    "status": "in preparation",
+    "statusLabel": "Working paper",
+    "venue": null,
+    "note": "Single source of truth for the paper's public status. The paper is an unpublished work-in-progress draft; do not describe it as published, submitted, reviewed, accepted, or assigned to any journal or venue. Public surfaces must derive status from this field."
+  },
+  "founder": {
+    "name": "Alex Welcing",
+    "soleFounder": true,
+    "contact": "founders@lupine.science",
+    "note": "Single source of truth for team facts. There is ONE founder and no other team to mention. Do not present multiple people, a team, or advisors in public materials."
   }
 }

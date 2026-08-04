@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Working Papers — Lupine Science</title>
+<meta name="description" content="The Projection Law and The Causal Geometry of Prediction Errors — working papers with figures, replication kit, and machine-checked theory. Web and print editions." />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+<style>
+  :root {
+    --bg: #0c0e14; --panel: #12151e; --ink: #e8eaf2; --ink-soft: #9aa1b5;
+    --hair: rgba(232,234,242,0.12); --accent: #7b8ae0; --accent-2: #4ecdc4;
+    --serif: 'Newsreader', Georgia, serif; --sans: 'Inter', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 16.5px; line-height: 1.72; -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: var(--accent-2); }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 22px; }
+
+  header.hero { padding: 76px 0 44px; border-bottom: 1px solid var(--hair); }
+  .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 14px; }
+  .eyebrow .badge { color: var(--accent-2); border: 1px solid rgba(78,205,196,0.35); border-radius: 4px; padding: 2px 7px; margin-right: 10px; }
+  h1 { font-family: var(--serif); font-weight: 500; font-size: clamp(34px, 6vw, 54px); line-height: 1.08; margin-bottom: 16px; }
+  .deck { font-family: var(--serif); font-style: italic; font-size: 20px; color: var(--ink-soft); max-width: 64ch; }
+  .byline { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 22px; font-family: var(--mono); font-size: 12px; color: var(--ink-soft); }
+
+  section.paper { padding: 56px 0 30px; border-bottom: 1px solid var(--hair); }
+  .papertag { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-2); margin-bottom: 10px; }
+  h2 { font-family: var(--serif); font-weight: 500; font-size: clamp(26px, 4vw, 36px); line-height: 1.15; margin-bottom: 6px; }
+  .sub { font-family: var(--serif); font-style: italic; color: var(--ink-soft); font-size: 17px; margin-bottom: 22px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 22px 0 30px; }
+  .btn { font-family: var(--mono); font-size: 13px; padding: 10px 18px; border-radius: 8px; border: 1px solid var(--hair); }
+  .btn-primary { background: var(--accent); color: #0c0e14 !important; border-color: var(--accent); font-weight: 500; }
+  .btn:hover { border-color: var(--accent-2); }
+
+  h3 { font-family: var(--sans); font-weight: 600; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft); margin: 30px 0 12px; }
+  .abstract { font-family: var(--serif); font-size: 18px; line-height: 1.75; border-left: 2px solid var(--accent); padding-left: 22px; }
+  .abstract b { color: var(--accent-2); font-family: var(--sans); font-size: 14px; }
+
+  .kr { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-top: 14px; }
+  .kr div { background: var(--panel); border: 1px solid var(--hair); border-radius: 10px; padding: 16px 18px; font-size: 14.5px; }
+  .kr b { display: block; font-family: var(--mono); font-size: 18px; color: var(--accent-2); margin-bottom: 4px; font-weight: 500; }
+
+  figure { margin: 30px 0; background: #fff; border-radius: 12px; padding: 18px 18px 8px; }
+  figure img { width: 100%; height: auto; display: block; }
+  figcaption { font-size: 13.5px; color: #3a3e52; padding: 10px 4px 10px; line-height: 1.55; font-family: var(--sans); }
+  figcaption b { color: #16181f; }
+
+  .colophon { padding: 48px 0 80px; font-size: 14.5px; color: var(--ink-soft); }
+  .colophon code { font-family: var(--mono); font-size: 12.5px; background: var(--panel); border: 1px solid var(--hair); border-radius: 4px; padding: 1px 6px; }
+  .printnote { font-family: var(--mono); font-size: 12px; color: var(--ink-soft); margin-top: 10px; }
+
+  @media print {
+    :root { --bg: #ffffff; --panel: #f6f5f1; --ink: #16181f; --ink-soft: #555a6b; --hair: rgba(20,22,30,0.18); --accent: #2e3a87; --accent-2: #0b7285; }
+    body { font-size: 11.5pt; }
+    .actions, .printnote, .no-print { display: none !important; }
+    header.hero { padding: 0 0 18pt; }
+    section.paper { padding: 22pt 0 10pt; page-break-inside: avoid; }
+    section.paper + section.paper { page-break-before: always; }
+    figure { border: 1px solid var(--hair); page-break-inside: avoid; }
+    a { color: var(--accent); }
+    .colophon a::after { content: " (" attr(href) ")"; font-family: var(--mono); font-size: 8.5pt; color: var(--ink-soft); }
+    .btn-primary { color: var(--accent) !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow"><span class="badge">Working papers</span> Lupine Science · Error-Geometry Program · June 2026</div>
+  <h1>Two papers, one law, every number traceable.</h1>
+  <p class="deck">The empirical discovery and the law it revealed — distributed as working papers with a public replication kit, three pre-registrations, and a machine-checked theory core. Failures reported as failures.</p>
+  <div class="byline">
+    <span><b>Alex Welcing</b> · Lupine Science</span>
+    <span>status: working papers, in preparation</span>
+    <span>~225-theorem Lean 4 corpus · 77 build-locked · 0 sorry · 2891-job build green</span>
+  </div>
+  <p class="printnote">This page is the web edition; use your browser's Print for a clean paper copy, or download the typeset PDFs below.</p>
+</header>
+
+<!-- ════════════════ PAPER 2 — THE LAW ════════════════ -->
+<section class="paper" id="projection-law">
+  <div class="papertag">Paper · The law</div>
+  <h2>The Projection Law: Model-Ensemble Errors Point at Their Binding Constraint</h2>
+  <p class="sub">Working paper · June 2026 · theory, two pre-registered factorial experiments, replication kit</p>
+
+  <div class="actions">
+    <a class="btn btn-primary" href="/assets/papers/projection-law-v2026-06-16.pdf">Typeset PDF (PRX) ↓</a>
+    <a class="btn" href="/assets/papers/projection-law-immi-v2026-06-16.pdf">IMMI format PDF ↓</a>
+    <a class="btn" href="https://storage.googleapis.com/shed-489901-replication/error-geometry/v1-10c18ace/index.html">Replication kit →</a>
+    <a class="btn" href="/#/read/academic-review-projection-law">Academic review →</a>
+    <a class="btn" href="/#/read/adversarial-review-projection-law">Adversarial review →</a>
+  </div>
+
+  <h3>Abstract</h3>
+  <p class="abstract">When many independently constructed models agree, the agreement is routinely read as confidence. We formalize and test the opposite reading: a model family is a projection operator, fitting drives every member toward the point of the family's reachable set nearest the truth, and the shared residual — one direction in observable space — is a fingerprint of whatever constraint binds the family. The theory core is machine-checked (Lean&nbsp;4, zero unproven obligations): normal-cone consensus theorem; participation-ratio gauge; ribbon/consensus decoupling; affine decomposition of closed affine reachable sets; local normal-cone theorem for $C^1$ smooth non-convex immersions; and Hoeffding concentration of the empirical second-moment matrix used by the gauge. We then test the law's sharpest consequence — <i>errors organize by constraint, not by implementation</i> — with pre-registered factorial experiments at three layers of one epistemic stack: classical interatomic potentials, foundation machine-learned potentials (4 architectures × 2 training functionals), and DFT implementations (12 methods, 384 crystals). Each experiment carried an explicit refutation condition; neither was triggered, and four of seven registered predictions failed and are reported as failures. The anisotropy persists at every layer — median participation ratio 1.09, ~1.3, and 1.10 out of 3 — while its direction rotates to the next constraint upstream.</p>
+
+  <h3>Key results</h3>
+  <div class="kr">
+    <div><b>p = 0.029</b>Foundation-model errors cluster by training functional, not architecture (S = +0.317 vs −0.093; exact permutation over all 70 labelings).</div>
+    <div><b>p = 0.017</b>DFT-implementation errors cluster by pseudopotential table, not simulation code (S = +0.526 vs +0.265); four independent codes sharing one table align at 0.70–0.87.</div>
+    <div><b>69% out-of-sample</b>A correction direction fitted with the corrected model held out removes a median 69% of squared elastic error (154 leave-one-model-out trials).</div>
+    <div><b>4 of 7 failed</b>Registered predictions that missed their thresholds, reported as failures — including the clustering effect-size component itself.</div>
+  </div>
+
+  <figure>
+    <img src="assets/papers/fig1_law_and_stack.png" alt="The projection law schematic and the three-layer constraint-vs-implementation bars" />
+    <figcaption><b>Fig. 1 — The law and its three-layer test.</b> (a) A family's reachable set fixes the residual of every well-fitted member; replacing the family rotates the shared residual rather than removing it. (b) Cluster-by-constraint vs cluster-by-implementation at three layers of one stack; neither registered refutation condition was triggered.</figcaption>
+  </figure>
+  <figure>
+    <img src="assets/papers/fig2_mlip_matrix.png" alt="11-model cosine matrix showing clustering by training functional" />
+    <figcaption><b>Fig. 2 — Functional, not architecture.</b> Mean error-vector cosines over Born-stable FCC metals: the PBE block coheres across four architectures and two training corpora; cross-functional quadrants fade; r²SCAN pairs re-cohere.</figcaption>
+  </figure>
+  <figure>
+    <img src="assets/papers/fig3_acwf_matrix.png" alt="ACWF 12-method cosine matrix showing clustering by pseudopotential table" />
+    <figcaption><b>Fig. 3 — Even the simulators obey it.</b> Four plane-wave codes sharing the PseudoDojo table burn dark (0.70–0.87); the same code under a different family drops to +0.21. SIESTA (red frame), the lone localized-basis method, dis-aligns from its own pseudopotential group — a different constraint binds first.</figcaption>
+  </figure>
+  <figure>
+    <img src="assets/papers/fig4_gauge_decoupling.png" alt="Participation-ratio gauge and the ribbon/consensus decoupling scatter" />
+    <figcaption><b>Fig. 4 — The gauge and the two order parameters.</b> (a) The machine-checked PR(ρ) curve with the classical inversion: median PR 1.09 → systematic fraction α ≈ 0.98. (b) Axis concentration stays high for every element while sign coherence spans the full range — the decoupling theorem in live data.</figcaption>
+  </figure>
+</section>
+
+<!-- ════════════════ PAPER 1 — THE INSTANCE ════════════════ -->
+<section class="paper" id="causal-geometry">
+  <div class="papertag">Paper · The discovery substrate</div>
+  <h2>Forty Years of Interatomic Potentials, One Error Geometry</h2>
+  <p class="sub">Hyper-Ribbon Universality and Why Pooled Benchmarks Mislead · Working paper · June 2026</p>
+
+  <div class="actions">
+    <a class="btn btn-primary" href="https://storage.googleapis.com/shed-489901-replication/papers/forty-years-one-geometry-working-paper-v2026-06-11b.pdf">Typeset PDF ↓</a>
+    <a class="btn" href="https://storage.googleapis.com/shed-489901-replication/error-geometry/v1-10c18ace/index.html">Replication kit →</a>
+  </div>
+
+  <h3>Abstract</h3>
+  <p class="abstract">Prediction errors are not noise. Across 559 interatomic potentials and forty years of development — pair potentials through embedded-atom methods to modern functional forms — elastic-constant errors universally occupy low-dimensional hyper-ribbon manifolds (effective dimensionality 1.0–2.3 out of 3, median 1.09), and the geometry has not moved while accuracy improved: the sloppy-model universality class, observed for the first time in <i>cross-model error space</i> rather than single-model parameter space. The methodological consequence is sharp: between-element heterogeneity is extreme (<i>I</i>² = 98.6%), pooled benchmarks misstate model accuracy (within-family correlation 0.95 vs 0.82 pooled), and the paper demonstrates the repair — stratified evaluation with random-effects meta-analysis. The paper also audits itself: an apparent element-level electronic-structure signal is traced to a fitting-depth confounder, and a Born-screened extension to three foundation MLIPs (with mechanical-stability failures reported, not hidden) provides the proof-of-concept the companion law paper develops. Crystal-structure-dependent correlation patterns are reported among the empirical findings.</p>
+
+  <h3>Key results</h3>
+  <div class="kr">
+    <div><b>40 years, one geometry</b>559 potentials spanning four decades of functional-form evolution; accuracy improved, the error geometry never moved. You cannot fit your way off a constraint surface.</div>
+    <div><b>I² = 98.6%</b>Between-element heterogeneity that makes pooled leaderboards statistically meaningless; random-effects meta-analysis is mandatory.</div>
+    <div><b>r = 0.95 vs 0.82</b>Within-family vs pooled correlation — pooled scores hide real family-level accuracy; stratified evaluation recovers it.</div>
+    <div><b>Self-auditing</b>The paper's own apparent d-band signal is dissolved into a sample-size confounder; 7 of 45 foundation-model tensors fail Born screening and are excluded, not ignored.</div>
+  </div>
+
+  <figure>
+    <img src="assets/papers/fig1_eigenvalue_spectra.png" alt="Eigenvalue spectra showing the sloppy log-linear hierarchy" />
+    <figcaption><b>Fig. — The sloppiness signature.</b> Eigenvalue spectra of per-potential error covariance: the log-linear hierarchy of the sloppy-model universality class, appearing in ensemble error space across unrelated functional forms.</figcaption>
+  </figure>
+  <figure>
+    <img src="assets/papers/fig2_dimensionality.png" alt="Participation-ratio distribution across 42 multi-element potentials" />
+    <figcaption><b>Fig. — Hyper-ribbon dimensionality.</b> The participation-ratio distribution across 42 multi-element potentials (pinned dataset): median 1.09, maximum 2.29 — no potential approaches the full 3-dimensional error space.</figcaption>
+  </figure>
+  <figure>
+    <img src="assets/papers/fig5_pairstyle.png" alt="Pair-style stratification revealing ecological fallacy" />
+    <figcaption><b>Fig. — Pooled benchmarks mislead, shown.</b> Stratifying by potential family: tight within-family agreement (mean r = 0.95) that pooled benchmarking (r = 0.82) systematically obscures — the statistical case for stratified evaluation.</figcaption>
+  </figure>
+</section>
+
+<!-- ════════════════ COLOPHON ════════════════ -->
+<section class="colophon" id="provenance">
+  <h3>Provenance &amp; verification</h3>
+  <p>Both papers are <b>working papers, in preparation</b> — not yet submitted to any venue. Every headline statistic is verifiable from committed raw data: the <a href="https://storage.googleapis.com/shed-489901-replication/error-geometry/v1-10c18ace/index.html">replication kit</a> (commit-versioned, public; archived on Zenodo at <a href="https://doi.org/10.5281/zenodo.20787874">10.5281/zenodo.20787874</a>) runs Tier&nbsp;1 verification with NumPy alone in seconds (<code>python tier1_analyze.py</code>) and re-derives the raw elastic constants from public model checkpoints in Tier&nbsp;2. Pre-registrations were committed before execution (<code>dffbe595</code>, <code>ebf39e33</code>); the round-2 registration with symmetric kill conditions is included. The theory core — normal-cone consensus theorem, participation-ratio gauge, ribbon/consensus decoupling, affine decomposition, smooth non-convex local normal cone, and finite-sample concentration — is machine-checked within the program's ~225-theorem Lean&nbsp;4 corpus (77 build-locked in <code>Vision.lean</code>, zero <code>sorry</code>, zero new axioms, 2891-job <code>lake build</code> green) and builds from the <a href="https://github.com/alexwelcing/lupine">open repository</a>. An <a href="/#/read/academic-review-projection-law">academic review</a> (2026-06-16) lists strengths and six MUST-FIX gates, and a follow-up <a href="/#/read/adversarial-review-projection-law">adversarial review</a> verified the first-pass fixes and caught additional wording/placeholder issues; both are addressed in the current PDFs.</p>
+</section>
+
+</div>
+</body>
+</html>

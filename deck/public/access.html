@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Lupine Science - Investor Deck Access</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --lupine-700:#2e3a87; --lupine-500:#5565d4; --lupine-300:#9ba6ea;
+            --violet-500:#8b6bc4; --slate-950:#0a0b12; --slate-900:#0f1119;
+            --slate-800:#181b28; --slate-700:#252838; --slate-500:#646880;
+            --slate-400:#9096ab; --slate-300:#b4b9cc; --slate-200:#d4d7e3;
+            --slate-100:#eceef4; --cyan:#4ecdc4; --warm:#e8834a;
+            --font-sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            --font-serif:'Playfair Display',Georgia,serif;
+            --font-mono:'JetBrains Mono',ui-monospace,monospace;
+        }
+        * { box-sizing:border-box; }
+        body {
+            margin:0;
+            min-height:100vh;
+            font-family:var(--font-sans);
+            color:var(--slate-200);
+            background:
+                radial-gradient(ellipse 80% 60% at 50% 0%, rgba(46,58,135,0.24), transparent 62%),
+                radial-gradient(ellipse 42% 42% at 80% 70%, rgba(78,205,196,0.08), transparent 64%),
+                var(--slate-950);
+            display:grid;
+            place-items:center;
+            padding:32px 18px;
+            -webkit-font-smoothing:antialiased;
+        }
+        main {
+            width:min(460px,100%);
+            border:1px solid rgba(255,255,255,0.09);
+            border-radius:14px;
+            background:rgba(15,17,25,0.86);
+            box-shadow:0 24px 80px rgba(0,0,0,0.28);
+            padding:30px;
+        }
+        .eyebrow {
+            font-family:var(--font-mono);
+            font-size:11px;
+            font-weight:600;
+            letter-spacing:0.18em;
+            text-transform:uppercase;
+            color:var(--cyan);
+            margin-bottom:16px;
+        }
+        h1 {
+            margin:0 0 12px;
+            font-family:var(--font-serif);
+            font-weight:400;
+            font-size:clamp(30px,7vw,42px);
+            line-height:1.05;
+            color:var(--slate-100);
+        }
+        h1 em {
+            font-style:italic;
+            color:var(--lupine-300);
+        }
+        p {
+            margin:0 0 22px;
+            color:var(--slate-400);
+            line-height:1.65;
+            font-weight:300;
+        }
+        label {
+            display:block;
+            font-family:var(--font-mono);
+            font-size:11px;
+            letter-spacing:0.12em;
+            text-transform:uppercase;
+            color:var(--slate-300);
+            margin-bottom:9px;
+        }
+        input[type="password"] {
+            width:100%;
+            border:1px solid var(--slate-700);
+            border-radius:8px;
+            background:var(--slate-950);
+            color:var(--slate-100);
+            font:500 17px var(--font-sans);
+            padding:14px 15px;
+            outline:none;
+        }
+        input[type="password"]:focus {
+            border-color:var(--cyan);
+            box-shadow:0 0 0 3px rgba(78,205,196,0.12);
+        }
+        button {
+            width:100%;
+            margin-top:14px;
+            border:1px solid rgba(78,205,196,0.38);
+            border-radius:8px;
+            background:linear-gradient(135deg,var(--lupine-500),var(--violet-500));
+            color:white;
+            font:700 13px var(--font-mono);
+            letter-spacing:0.12em;
+            text-transform:uppercase;
+            padding:14px 16px;
+            cursor:pointer;
+        }
+        button:hover { filter:brightness(1.08); }
+        .meta {
+            display:flex;
+            justify-content:space-between;
+            gap:12px;
+            flex-wrap:wrap;
+            margin-top:18px;
+            color:var(--slate-500);
+            font:500 11px var(--font-mono);
+        }
+        .meta a { color:var(--cyan); text-decoration:none; }
+        .status {
+            min-height:20px;
+            margin-top:14px;
+            font-size:13px;
+            color:var(--warm);
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="eyebrow">Confidential investor access</div>
+        <h1>Enter your access code for the <em>seed deck</em>.</h1>
+        <p>Use the investor-specific code from Lupine. The full slide deck is served only after this check; please do not forward access.</p>
+        <form id="access-form" method="post" action="/api/deck-access">
+            <input id="next" type="hidden" name="next" value="/deck.html">
+            <label for="code">Access code</label>
+            <input id="code" name="code" type="password" autocomplete="one-time-code" required autofocus>
+            <button type="submit">Open deck</button>
+            <div id="status" class="status" role="status" aria-live="polite"></div>
+        </form>
+        <div class="meta">
+            <a href="/one-pager.html">One-pager</a>
+            <a href="mailto:founders@lupine.science">founders@lupine.science</a>
+        </div>
+    </main>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const next = params.get('next');
+        if (next && next.startsWith('/') && next.endsWith('.html')) {
+            document.getElementById('next').value = next;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,246 @@
+{
+  "contract": {
+    "target_width": 4096,
+    "target_height": 2048,
+    "projection": "cylindrical_equirectangular",
+    "viewer_path": "apps/web/public/backgrounds",
+    "candidate_path": "tools/lupi-environment-candidates/<run-id>/<asset-id>",
+    "promotion": "Generate candidates with tools/lupi_comfy_panorama.py --manifest tools/lupi-comfy-world-prompts.json --sota-seam-profile, then promote explicitly with --promote-run.",
+    "qa": {
+      "seam_px": 128,
+      "pole_px": 96,
+      "yaw_offsets_degrees": [0, 45, 90, 135, 180, 225, 270, 315],
+      "cube_face_size": 128,
+      "max_seam_delta": 8.0,
+      "max_yaw_seam_delta": 10.0,
+      "max_cube_edge_gradient": 10.0,
+      "max_pole_std": 6.0
+    },
+    "notes": [
+      "This manifest is the high-end Comfy candidate pack for 360 World backgrounds.",
+      "Keep the center readable for molecule geometry; put dense texture and storytelling detail near peripheral longitudes.",
+      "Use --sota-seam-profile by default so runs include circular/yaw/cubemap prompt language, production defaults, wider repair, and QA gating.",
+      "Promoted files intentionally share the same names as the procedural world pack so the UI can upgrade assets without runtime rewiring."
+    ]
+  },
+  "global_positive": "premium scientific visualization environment, true 2:1 cylindrical equirectangular panorama, seamless horizontal wrap, circular latent continuity, yaw-invariant composition, cubemap-safe zenith and nadir, smooth pole caps, no discontinuity at any longitude cut, coherent lighting around the full 360 degrees, quiet readable central region for a molecular viewer, high-end SIGGRAPH-quality material science background, rich edge detail, crisp but elegant, physically plausible volumetric light, full-bleed rectangular panorama",
+  "global_negative": "text, letters, watermark, logo, signature, people, face, body, animal, foreground object, centered planet, moon, orb, sphere, ring, bullseye, black hole, fisheye circle, circular mask, oval mask, square crop, portrait crop, frame, border, white margin, page, visible seam, hard left edge, hard right edge, unmatched left and right edges, discontinuous panorama, mirrored quadrant, repeated tile, cube face edge artifact, polar swirl, polar spike, polar pinch, stretched pole texture, overexposed center, noisy center, blurry, low resolution, jpeg artifacts",
+  "assets": [
+    {
+      "id": "quantum-horizon",
+      "file": "bg_world_quantum_horizon.jpg",
+      "seed": 73018001,
+      "prompt": "dark quantum probability horizon, faint wavefunction interference bands flowing continuously around the viewer, cyan and violet measurement traces at the periphery, calm black-blue center"
+    },
+    {
+      "id": "graphene-dawn",
+      "file": "bg_world_graphene_dawn.jpg",
+      "seed": 73018002,
+      "prompt": "twisted bilayer graphene dawn, moire lattice bands across a quiet instrument horizon, teal amber interference, crisp nanoscale carbon linework away from center"
+    },
+    {
+      "id": "cryo-vault",
+      "file": "bg_world_cryo_vault.jpg",
+      "seed": 73018003,
+      "prompt": "cold cryo microscopy vault, frosted detector arcs and soft cyan vapor, dark graphite instrument walls, clean low-noise central field"
+    },
+    {
+      "id": "alloy-foundry",
+      "file": "bg_world_alloy_foundry.jpg",
+      "seed": 73018004,
+      "prompt": "molten alloy foundry atmosphere, orange metal heat shimmer and cyan spectrometer reflections, dark refractory chamber, panoramic industrial material science mood"
+    },
+    {
+      "id": "bioelectric-cavern",
+      "file": "bg_world_bioelectric_cavern.jpg",
+      "seed": 73018005,
+      "prompt": "bioelectric cavern for molecular biology, translucent teal filaments and amber enzyme glows, organic but abstract, soft field depth, calm viewer center"
+    },
+    {
+      "id": "beamline-mist",
+      "file": "bg_world_beamline_mist.jpg",
+      "seed": 73018006,
+      "prompt": "synchrotron beamline mist, long detector hall with diffuse silver cyan beams, subtle amber calibration lights, no hard vanishing object in the center"
+    },
+    {
+      "id": "catalyst-rain",
+      "file": "bg_world_catalyst_rain.jpg",
+      "seed": 73018007,
+      "prompt": "catalyst rain chamber, falling reaction-coordinate streaks, teal and gold surface chemistry traces, elegant kinetics atmosphere, seamless around the full horizon"
+    },
+    {
+      "id": "perovskite-twilight",
+      "file": "bg_world_perovskite_twilight.jpg",
+      "seed": 73018008,
+      "prompt": "perovskite twilight lattice, violet-blue crystalline grid and soft photovoltaic glow, crisp defect-line details near the sides, quiet central molecule space"
+    },
+    {
+      "id": "ion-storm",
+      "file": "bg_world_ion_storm.jpg",
+      "seed": 73018009,
+      "prompt": "ion storm field, charged cyan magenta plasma filaments, high-energy but controlled, smooth spherical environment, low visual noise at molecule center"
+    },
+    {
+      "id": "solvent-blue",
+      "file": "bg_world_solvent_blue.jpg",
+      "seed": 73018010,
+      "prompt": "deep solvent blue environment, soft aqueous currents and molecular diffusion haze, cyan water caustics, understated and publication-safe"
+    },
+    {
+      "id": "laser-sheet",
+      "file": "bg_world_laser_sheet.jpg",
+      "seed": 73018011,
+      "prompt": "optical laser sheet laboratory, thin cyan light planes crossing smoky graphite air, gentle spectroscopy glow, no harsh central flare"
+    },
+    {
+      "id": "folding-grove",
+      "file": "bg_world_folding_grove.jpg",
+      "seed": 73018012,
+      "prompt": "protein folding grove, abstract ribbon-like biological fields and soft enzyme-pocket illumination, teal amber life-science atmosphere, elegant not literal"
+    },
+    {
+      "id": "neutron-bloom",
+      "file": "bg_world_neutron_bloom.jpg",
+      "seed": 73018013,
+      "prompt": "neutron diffraction bloom, cold detector arcs and pale blue scattering halos arranged around a dark instrument horizon, no circular target in center"
+    },
+    {
+      "id": "nanotube-harbor",
+      "file": "bg_world_nanotube_harbor.jpg",
+      "seed": 73018014,
+      "prompt": "nanotube harbor, carbon lattice ribbons and cylindrical nanoscale structures receding into teal laboratory fog, continuous around the panorama"
+    },
+    {
+      "id": "moire-observatory",
+      "file": "bg_world_moire_observatory.jpg",
+      "seed": 73018015,
+      "prompt": "moire observatory, high-end interference lattice panorama with teal amber violet bands, twisted-layer physics, controlled center and detailed outer longitudes"
+    },
+    {
+      "id": "plasma-terrace",
+      "file": "bg_world_plasma_terrace.jpg",
+      "seed": 73018016,
+      "prompt": "plasma terrace, layered ionized atmosphere with cyan and magenta field lines, dark experimental chamber, cinematic edge energy and smooth poles"
+    },
+    {
+      "id": "crystal-aquifer",
+      "file": "bg_world_crystal_aquifer.jpg",
+      "seed": 73018017,
+      "prompt": "crystal aquifer, cool mineral-water currents flowing through a translucent lattice, aqueous teal highlights, calm scientific inspection background"
+    },
+    {
+      "id": "phonon-cathedral",
+      "file": "bg_world_phonon_cathedral.jpg",
+      "seed": 73018018,
+      "prompt": "phonon cathedral, tall acoustic mode bands and soft resonance lines in a dark material chamber, cyan gold spectral atmosphere, no foreground object"
+    },
+    {
+      "id": "spin-glass",
+      "file": "bg_world_spin_glass.jpg",
+      "seed": 73018019,
+      "prompt": "spin glass environment, sparse quantum spin lattice and faint blue-violet magnetic disorder, quiet dark center, elegant low-temperature physics mood"
+    },
+    {
+      "id": "vacuum-labyrinth",
+      "file": "bg_world_vacuum_labyrinth.jpg",
+      "seed": 73018020,
+      "prompt": "vacuum labyrinth, neutral dark instrument geometry and subtle silver-blue guide rails, publication-safe sparse world, precise and low contrast"
+    },
+    {
+      "id": "synapse-mist",
+      "file": "bg_world_synapse_mist.jpg",
+      "seed": 73018021,
+      "prompt": "synapse mist, soft branched biological signal field in teal gold haze, abstract molecular communication, edge detail without cluttering the center"
+    },
+    {
+      "id": "spectral-forge",
+      "file": "bg_world_spectral_forge.jpg",
+      "seed": 73018022,
+      "prompt": "spectral forge, warm synthesis chamber with gold heat bands and cyan spectrograph reflections, high-end material discovery atmosphere"
+    },
+    {
+      "id": "aerogel-drift",
+      "file": "bg_world_aerogel_drift.jpg",
+      "seed": 73018023,
+      "prompt": "aerogel drift, pale porous nanoscale haze, featherweight material structure in cool blue-green lighting, calm broad negative space"
+    },
+    {
+      "id": "reaction-orchard",
+      "file": "bg_world_reaction_orchard.jpg",
+      "seed": 73018024,
+      "prompt": "reaction orchard, branching catalytic pathways like abstract luminous chemistry vines, teal green and gold, no literal trees, smooth panoramic wrap"
+    },
+    {
+      "id": "topology-hall",
+      "file": "bg_world_topology_hall.jpg",
+      "seed": 73018025,
+      "prompt": "topology hall, curved manifold grid lines and subtle quantum phase bands, blue violet material-science theater, cubemap-safe and center-readable"
+    },
+    {
+      "id": "isotope-night",
+      "file": "bg_world_isotope_night.jpg",
+      "seed": 73018026,
+      "prompt": "isotope night detector volume, sparse pale particle rain and soft blue black radiation chamber, elegant minimal panorama"
+    },
+    {
+      "id": "diamond-weather",
+      "file": "bg_world_diamond_weather.jpg",
+      "seed": 73018027,
+      "prompt": "diamond weather, hard-material lattice precipitation and crystalline blue-white facets around the edges, pressure-science mood, no central object"
+    },
+    {
+      "id": "softmatter-tide",
+      "file": "bg_world_softmatter_tide.jpg",
+      "seed": 73018028,
+      "prompt": "soft matter tide, slow polymer and colloid ribbon currents, teal blue fluid dynamics haze, quiet and approachable for teaching views"
+    },
+    {
+      "id": "fermi-cloud",
+      "file": "bg_world_fermi_cloud.jpg",
+      "seed": 73018029,
+      "prompt": "fermi cloud, delicate electronic density distribution and energy bands in blue violet mist, clean scientific visualization background"
+    },
+    {
+      "id": "oxide-garden",
+      "file": "bg_world_oxide_garden.jpg",
+      "seed": 73018030,
+      "prompt": "oxide garden, ceramic defect filaments and mineral lattice glow, green amber oxide chemistry, abstract nonliteral material growth"
+    },
+    {
+      "id": "lattice-sunrise",
+      "file": "bg_world_lattice_sunrise.jpg",
+      "seed": 73018031,
+      "prompt": "lattice sunrise, warm crystalline grid emerging from a graphite-blue horizon, gold cyan material structure, refined gallery-friendly atmosphere"
+    },
+    {
+      "id": "qubit-rain",
+      "file": "bg_world_qubit_rain.jpg",
+      "seed": 73018032,
+      "prompt": "qubit rain, quantum measurement streaks in cyan violet dark chamber, device physics ambience, edge detail and calm center"
+    },
+    {
+      "id": "neutrino-catwalk",
+      "file": "bg_world_neutrino_catwalk.jpg",
+      "seed": 73018033,
+      "prompt": "neutrino catwalk, long dark detector passage with pale blue instrumentation rails and sparse particle traces, neutral and immersive"
+    },
+    {
+      "id": "electrolyte-drift",
+      "file": "bg_world_electrolyte_drift.jpg",
+      "seed": 73018034,
+      "prompt": "electrolyte drift, charged solvent currents and battery-interface diffusion bands, teal cyan gold, quiet central inspection zone"
+    },
+    {
+      "id": "zeolite-canyon",
+      "file": "bg_world_zeolite_canyon.jpg",
+      "seed": 73018035,
+      "prompt": "zeolite canyon, porous framework channels and mineral lattice terraces, cool blue-gold adsorption-science atmosphere, no hard foreground geometry"
+    },
+    {
+      "id": "magnetic-arcade",
+      "file": "bg_world_magnetic_arcade.jpg",
+      "seed": 73018036,
+      "prompt": "magnetic arcade, curved field lines and spin texture filaments in cyan magenta gold, energetic but clean panoramic vector-field world"
+    }
+  ]
+}

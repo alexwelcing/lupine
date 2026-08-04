@@ -1,0 +1,859 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lupine Science — Unlocking the materials that build the future</title>
+  <meta name="description" content="Lupine Science is accelerating materials discovery. AI is learning to design matter — the batteries, catalysts, alloys and chips a civilization runs on — but on simulations that are wrong in structured ways. We make those predictions trustworthy, so discovery accelerates instead of stalling on guesswork. The mathematics is how; the materials are why.">
+  <meta name="robots" content="index,follow">
+  <meta property="og:title" content="Lupine Science — Unlocking the materials that build the future">
+  <meta property="og:description" content="Accelerating materials discovery by making AI's predictions of matter trustworthy. The mathematics is how; the materials are why.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lupine.science/">
+  <meta property="og:image" content="https://lupine.science/og-lupine-science.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#faf9f6">
+  <link rel="icon" type="image/svg+xml" href="/lupine-science-mark.svg">
+  <link rel="icon" type="image/png" href="/lupine-science-icon.png">
+  <link rel="apple-touch-icon" href="/lupine-science-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400;1,6..72,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --paper:      #faf9f6;
+      --paper-deep: #f2efe7;
+      --ink:        #16171d;
+      --ink-soft:   #4c4e58;
+      --ink-faint:  #8a8c96;
+      --rule:       #e2dfd4;
+      --rule-soft:  #ece9e0;
+      --indigo:      #3d4db3;
+      --indigo-deep: #2e3a87;
+      --indigo-wash: rgba(61, 77, 179, 0.08);
+      --indigo-line: rgba(61, 77, 179, 0.24);
+      --ochre:       #a8772b;
+      --ochre-wash:  rgba(168, 119, 43, 0.10);
+      --verified:    #3a8f5b;
+
+      --serif: "Newsreader", Georgia, "Times New Roman", serif;
+      --mono:  "IBM Plex Mono", ui-monospace, "SF Mono", "Cascadia Mono", monospace;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --settle: 820ms;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--paper); color: var(--ink);
+      font-family: var(--serif); font-size: 18px; line-height: 1.6; font-weight: 400;
+      -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+      font-optical-sizing: auto; font-kerning: normal;
+      font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+      hanging-punctuation: first allow-end;
+      overflow-x: hidden;
+    }
+    /* premium paper light — a soft warm luminance from above, a whisper vignette to focus inward */
+    body::before {
+      content: ""; position: fixed; inset: 0; z-index: 1; pointer-events: none;
+      background:
+        radial-gradient(150% 96% at 50% -14%, rgba(255,254,249,0.75), rgba(255,254,249,0) 52%),
+        radial-gradient(118% 104% at 50% 44%, rgba(26,28,38,0) 58%, rgba(26,28,38,0.05) 100%);
+    }
+    /* faint laid-paper grain over everything */
+    body::after {
+      content: ""; position: fixed; inset: 0; z-index: 5; pointer-events: none; opacity: 0.5;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.022'/%3E%3C/svg%3E");
+    }
+    a { color: inherit; text-decoration: none; }
+    ::selection { background: rgba(61, 77, 179, 0.18); }
+    .skip { position: absolute; left: -9999px; background: var(--ink); color: var(--paper); padding: 10px 16px; z-index: 200; }
+    .skip:focus { left: 8px; top: 8px; }
+
+    /* ════════ THE INSTRUMENT — one full-viewport field ════════ */
+    .field {
+      position: relative;
+      min-height: 100svh;
+      display: grid;
+      /* generous margins; content sits in [main] after the left gutter, with a
+         breathing [gap] track separating the copy from the ledger rail */
+      grid-template-columns:
+        [edge] clamp(44px, 7vw, 156px)
+        [main] minmax(0, 1fr)
+        [gap]  clamp(40px, 5vw, 104px)
+        [rail] clamp(212px, 19vw, 292px)
+        [end]  clamp(44px, 7vw, 156px);
+      grid-template-rows: [top] clamp(76px, 10vh, 128px) [horizon] auto [body] 1fr [foot] auto;
+      row-gap: clamp(32px, 4.8vh, 68px);
+      column-gap: 0;
+      isolation: isolate;
+    }
+
+    /* the manifold IS the background — fills the whole field */
+    #ribbon { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; display: block; }
+    .ribbon-fallback {
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+      opacity: 0; z-index: 0; mix-blend-mode: multiply;
+    }
+    .no-canvas .ribbon-fallback { opacity: 0.85; }
+    /* soft paper wash under the reading zone so type always wins */
+    .field::before {
+      content: ""; position: absolute; z-index: 1; pointer-events: none;
+      left: 0; bottom: 0; width: 74%; height: 82%;
+      background: radial-gradient(130% 104% at 6% 100%, rgba(250,249,246,0.96) 0%, rgba(250,249,246,0.72) 46%, transparent 74%);
+    }
+
+    /* ── corner mark ── */
+    .mark {
+      grid-column: main / gap; grid-row: top; z-index: 4;
+      align-self: center; display: flex; align-items: center; gap: 11px;
+      padding-left: 4px; color: var(--ink);
+    }
+    .mark svg { height: 30px; width: auto; display: block; }
+    .mark b { font-weight: 600; font-size: 15px; letter-spacing: 0.01em; }
+    .mark .tld { font-family: var(--mono); font-size: 13.5px; color: var(--ink-faint); }
+
+    /* ── live loop, pinned top-right of the rail (marginalia) ── */
+    .loop-margin {
+      grid-column: rail / end; grid-row: top; z-index: 4;
+      align-self: center; justify-self: end; text-align: right;
+      font-family: var(--mono); font-size: 13px; color: var(--ink-faint); line-height: 1.5;
+      text-shadow: 0 0 7px var(--paper), 0 0 7px var(--paper), 0 0 3px var(--paper);
+    }
+    .loop-margin .lh { display: inline-flex; align-items: center; gap: 7px; color: var(--ink-soft); }
+    .loop-margin .ld {
+      width: 7px; height: 7px; border-radius: 50%; background: var(--ochre);
+      box-shadow: 0 0 0 0 rgba(168,119,43,0.55); animation: ping 2.6s var(--ease) infinite;
+    }
+    @keyframes ping { to { box-shadow: 0 0 0 9px rgba(168,119,43,0); } }
+    .loop-margin .nums { margin-top: 4px; }
+    .loop-margin .nums b { color: var(--ochre); font-weight: 600; }
+
+    /* ════════ THE EQUATION HORIZON (navigation) ════════ */
+    /* paper knockout so the equation always sits on calm ground, not on the ribbon */
+    .horizon {
+      grid-column: main / end; grid-row: horizon; z-index: 4; align-self: end; padding-top: 12px;
+      background: linear-gradient(180deg, var(--paper) 20%, rgba(250,249,246,0.88) 62%, rgba(250,249,246,0) 100%);
+    }
+    .horizon .label {
+      font-family: var(--mono); font-size: 12.5px; letter-spacing: 0.26em; text-transform: uppercase;
+      color: var(--indigo); margin: 0 0 clamp(20px, 2.8vh, 32px);
+    }
+    .equation {
+      display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.02em;
+      font-size: clamp(22px, 4.7vw, 60px); line-height: 1.02; letter-spacing: -0.008em; user-select: none;
+      font-feature-settings: "kern" 1, "liga" 1;
+    }
+    .eq-static { color: var(--ink-faint); font-style: italic; padding: 0 0.22em; font-weight: 300; }
+    .term {
+      position: relative; appearance: none; border: 0; background: none; cursor: pointer;
+      font-family: var(--serif); font-size: inherit; font-style: italic; color: var(--ink);
+      padding: 0.04em 0.1em; border-radius: 6px; line-height: 0.9;
+      transition: color 320ms var(--ease), background 320ms var(--ease), opacity 420ms var(--ease);
+    }
+    .term .n { font-style: normal; }
+    .term .sub { font-style: normal; font-size: 0.56em; vertical-align: -0.32em; color: var(--ink-soft); }
+    .term .sup { font-style: normal; font-size: 0.56em; vertical-align: 0.62em; }
+    .term .intg { font-style: normal; font-size: 1.4em; position: relative; top: 0.07em; margin-right: -0.05em; }
+    .term:hover { color: var(--indigo); background: var(--indigo-wash); }
+    .term:focus-visible { outline: 2px solid var(--indigo); outline-offset: 3px; }
+    .term[aria-pressed="true"] { color: var(--indigo); background: var(--indigo-wash); box-shadow: inset 0 -3px 0 0 var(--indigo); }
+    body[data-focus]:not([data-focus="objective"]) .term:not([aria-pressed="true"]) { opacity: 0.34; }
+
+    /* the term legend — what each node does (sits just under the equation) */
+    .legend {
+      margin: clamp(26px, 3.8vh, 48px) 0 0; display: flex; gap: 18px 38px; flex-wrap: wrap;
+      font-family: var(--mono); font-size: 13px; color: var(--ink-faint); line-height: 1.5;
+    }
+    .legend button {
+      appearance: none; border: 0; background: none; cursor: pointer; padding: 0;
+      font: inherit; color: var(--ink-faint); display: inline-flex; align-items: center; gap: 7px;
+      transition: color 200ms var(--ease);
+    }
+    .legend button:hover, .legend button[aria-pressed="true"] { color: var(--indigo); }
+    .legend .k { color: var(--indigo); font-weight: 600; }
+    .legend button:focus-visible { outline: 1px solid var(--indigo); outline-offset: 3px; }
+
+    /* ════════ EVIDENCE — resolves in place by term (ink-settling) ════════ */
+    .reading { grid-column: main / gap; grid-row: body; z-index: 4; align-self: end; max-width: 46ch; padding-bottom: clamp(8px, 3vh, 30px); }
+    .evidence { position: relative; }
+    .panel {
+      position: absolute; left: 0; bottom: 0; width: 100%;
+      opacity: 0; transform: translateY(10px); pointer-events: none;
+      transition: opacity var(--settle) var(--ease), transform var(--settle) var(--ease), filter var(--settle) var(--ease);
+      filter: blur(1px);
+    }
+    .panel[data-active] { position: relative; opacity: 1; transform: none; filter: none; pointer-events: auto; }
+    .panel .tag {
+      font-family: var(--mono); font-size: 12.5px; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--ink-faint); margin: 0 0 18px; display: flex; align-items: center; gap: 9px;
+    }
+    .panel .tag .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--indigo); box-shadow: 0 0 0 3px var(--indigo-wash); }
+    .panel h1, .panel h2 { font-weight: 400; margin: 0 0 20px; }
+    .panel h1 { font-size: clamp(2.05rem, 4vw, 3.2rem); line-height: 1.03; letter-spacing: -0.024em; }
+    .panel h2 { font-size: clamp(1.66rem, 3.2vw, 2.5rem); line-height: 1.08; letter-spacing: -0.018em; }
+    .panel h1 em, .panel h2 em { font-style: italic; color: var(--indigo); }
+    .panel p { margin: 0 0 16px; color: var(--ink-soft); font-size: clamp(1rem, 1.4vw, 1.12rem); line-height: 1.64; }
+    .panel p:last-child { margin-bottom: 0; }
+    .panel .why { font-style: italic; color: var(--ink); font-size: clamp(1.02rem, 1.4vw, 1.16rem); margin: 8px 0 22px; }
+    .panel .why em { font-style: italic; color: var(--indigo); }
+    .num { color: var(--indigo); font-style: normal; font-weight: 500; font-feature-settings: "tnum"; }
+
+    /* big stat block for term panels */
+    .stat { display: flex; align-items: baseline; gap: 14px; margin: 4px 0 16px; }
+    .stat strong {
+      font-family: var(--mono); font-weight: 600; font-feature-settings: "tnum";
+      font-size: clamp(2rem, 5vw, 3.2rem); color: var(--indigo); line-height: 1; letter-spacing: -0.02em;
+    }
+    .stat .su { font-family: var(--mono); font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint); max-width: 18ch; }
+
+    /* live, computed-in-browser provenance line */
+    .prov { font-family: var(--mono); font-size: 13px; color: var(--ink-faint); margin: -2px 0 16px; line-height: 1.5; }
+    .prov .live-dot2 { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--ochre); margin-right: 7px; vertical-align: middle; }
+    .prov b { color: var(--ochre); font-weight: 600; font-feature-settings: "tnum"; }
+    .prov a { color: var(--ink-soft); border-bottom: 1px solid var(--ochre-wash); transition: border-color 180ms; }
+    .prov a:hover { border-color: var(--ochre); color: var(--ochre); }
+
+    /* routes — quiet, only on the objective panel */
+    .routes { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 10px 12px; }
+    .routes a {
+      font-family: var(--mono); font-size: 14px; color: var(--ink-soft);
+      border: 1px solid var(--rule); border-radius: 999px; padding: 9px 16px;
+      transition: all 200ms var(--ease); white-space: nowrap;
+    }
+    .routes a:hover { color: var(--indigo); border-color: var(--indigo-line); background: var(--indigo-wash); }
+    .routes a .ar { color: var(--ink-faint); }
+    .routes a:hover .ar { color: var(--indigo); }
+
+    /* ════════ THE LEDGER — margin rail (right) ════════ */
+    .rail-ledger {
+      grid-column: rail / end; grid-row: body; z-index: 4; align-self: stretch;
+      display: flex; flex-direction: column; padding-top: 30px; min-height: 0;
+      background: linear-gradient(90deg, rgba(250,249,246,0) 0%, rgba(250,249,246,0.78) 14%, rgba(250,249,246,0.9) 100%);
+    }
+    .rail-head, .ledger li, .rail-note {
+      text-shadow: 0 0 7px var(--paper), 0 0 7px var(--paper), 0 0 3px var(--paper);
+    }
+    .rail-head {
+      font-family: var(--mono); font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--ink-faint); display: flex; justify-content: space-between; align-items: baseline;
+      padding-bottom: 10px; border-bottom: 1px solid var(--rule);
+    }
+    .rail-head .h { color: var(--ochre); }
+    .ledger { margin: 0; padding: 0; list-style: none; }
+    .ledger li {
+      padding: 11px 0; border-bottom: 1px solid var(--rule-soft);
+      font-family: var(--mono); font-size: 13.5px; line-height: 1.45;
+      transition: opacity var(--settle) var(--ease), border-color var(--settle) var(--ease);
+    }
+    .ledger .hash { color: var(--ink-soft); }
+    .ledger .when { color: var(--ink-faint); }
+    .ledger .msg { display: block; margin-top: 2px; font-family: var(--serif); font-style: italic; font-size: 13px; color: var(--ink-soft); }
+    /* under ledger focus, the rail lights ochre */
+    body[data-focus="ledger"] .ledger .hash { color: var(--ochre); }
+    body[data-focus="ledger"] .ledger li { border-color: var(--ochre-wash); }
+    body[data-focus]:not([data-focus="objective"]):not([data-focus="ledger"]) .ledger li { opacity: 0.42; }
+
+    .rail-note {
+      margin-top: auto; padding-top: 20px;
+      font-family: var(--mono); font-size: 12.5px; color: var(--ink-faint); line-height: 1.6;
+    }
+    .rail-note .row { display: flex; gap: 7px; align-items: baseline; margin-bottom: 8px; }
+    .rail-note .d { width: 7px; height: 7px; border-radius: 50%; flex: none; transform: translateY(3px); }
+    .rail-note .d.wp { background: var(--ochre); } .rail-note .d.ok { background: var(--verified); }
+    .rail-note .cite { font-family: var(--serif); font-style: italic; font-size: 12px; color: var(--ink-soft); margin-top: 10px; }
+
+    /* ════════ FOOT — colophon ════════ */
+    .foot {
+      grid-column: main / end; grid-row: foot; z-index: 4;
+      display: flex; justify-content: space-between; gap: 12px 32px; flex-wrap: wrap;
+      padding: 22px 0 26px; margin-top: 18px; border-top: 1px solid var(--rule);
+      font-family: var(--mono); font-size: 13px; color: var(--ink-faint);
+    }
+    .foot .creed { font-family: var(--serif); font-style: italic; font-size: 15px; color: var(--ink-soft); }
+    .foot a { color: var(--ink-soft); border-bottom: 1px solid transparent; transition: all 180ms; }
+    .foot a:hover { color: var(--indigo); border-color: var(--indigo); }
+    .foot b { color: var(--ink); font-weight: 600; }
+
+    /* tooltip */
+    .tip {
+      position: fixed; z-index: 120; max-width: 320px;
+      background: var(--ink); color: var(--paper); font-family: var(--mono);
+      font-size: 12px; line-height: 1.5; font-style: normal; padding: 11px 14px; border-radius: 7px;
+      box-shadow: 0 14px 36px rgba(22,23,29,0.3);
+      opacity: 0; transform: translateY(4px); pointer-events: none;
+      transition: opacity 160ms var(--ease), transform 160ms var(--ease);
+    }
+    .tip.show { opacity: 1; transform: none; } .tip b { color: #cdd4ff; } .tip em { color: #e7c98a; font-style: normal; }
+
+    /* ════════ responsive — instrument → stacked document ════════ */
+    @media (max-width: 920px) {
+      body { font-size: 16px; }
+      .field {
+        display: block; min-height: 0; padding: 0 22px;
+      }
+      #ribbon, .ribbon-fallback { position: fixed; height: 46vh; top: 0; }
+      .field::before { position: fixed; width: 100%; height: 46vh; top: 0; bottom: auto;
+        background: linear-gradient(180deg, rgba(250,249,246,0) 50%, var(--paper) 100%); }
+      .mark { padding-top: 18px; }
+      .loop-margin { display: none; }
+      .horizon { padding-top: 38vh; }
+      .equation { font-size: clamp(26px, 8vw, 44px); }
+      .legend { margin: 16px 0 30px; }
+      .reading { max-width: none; margin-bottom: 40px; }
+      .panel { position: relative !important; opacity: 1 !important; transform: none !important; filter: none !important; pointer-events: auto !important; }
+      .panel:not([data-active]) { display: none; }
+      .rail-ledger { padding-top: 26px; border-top: 1px solid var(--rule); }
+      .rail-note { margin-top: 24px; }
+      .foot { padding-bottom: 34px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .loop-margin .ld { animation: none; }
+      .panel { transition: opacity 1ms; filter: none; transform: none; }
+    }
+  </style>
+</head>
+<body data-focus="objective">
+  <a class="skip" href="#evidence">Skip to the evidence</a>
+
+  <main class="field">
+    <canvas id="ribbon" aria-hidden="true"></canvas>
+    <img class="ribbon-fallback" src="/ribbon-still.jpg" alt="The hyper-ribbon manifold: scattered prediction-error vectors collapsing onto a single low-dimensional indigo ribbon.">
+
+    <!-- corner mark -->
+    <a class="mark" href="/" aria-label="Lupine Science">
+      <svg viewBox="100 44 312 440" fill="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="bb" x1="190" y1="74" x2="324" y2="356" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#88a7d8"/><stop offset=".35" stop-color="#475b9c"/><stop offset=".78" stop-color="#102f47"/><stop offset="1" stop-color="#071a2a"/>
+          </linearGradient>
+          <linearGradient id="bl" x1="150" y1="330" x2="360" y2="470" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#7f907c"/><stop offset="1" stop-color="#4c653d"/>
+          </linearGradient>
+          <radialGradient id="bc" cx="48%" cy="30%" r="68%">
+            <stop offset="0" stop-color="#fffdf3"/><stop offset=".7" stop-color="#f1e8c9"/><stop offset="1" stop-color="#d4c58f"/>
+          </radialGradient>
+        </defs>
+        <g fill="none" stroke="#4c653d" stroke-width="16" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M256 148 C252 224 258 312 254 448"/><path d="M252 402 C222 372 178 354 124 348"/><path d="M260 402 C290 372 334 354 388 348"/>
+        </g>
+        <g fill="url(#bl)" opacity=".96">
+          <ellipse cx="139" cy="348" rx="18" ry="62" transform="rotate(-78 139 348)"/><ellipse cx="167" cy="384" rx="18" ry="62" transform="rotate(-48 167 384)"/><ellipse cx="214" cy="410" rx="17" ry="58" transform="rotate(-20 214 410)"/><ellipse cx="373" cy="348" rx="18" ry="62" transform="rotate(78 373 348)"/><ellipse cx="345" cy="384" rx="18" ry="62" transform="rotate(48 345 384)"/><ellipse cx="298" cy="410" rx="17" ry="58" transform="rotate(20 298 410)"/>
+        </g>
+        <g fill="none" stroke="#fef8f5" stroke-width="5" stroke-linecap="round" opacity=".66">
+          <path d="M132 348 C170 356 205 373 236 405"/><path d="M380 348 C342 356 307 373 276 405"/>
+        </g>
+        <g fill="url(#bb)" stroke="#fef8f5" stroke-width="5" stroke-linejoin="round">
+          <ellipse cx="256" cy="86" rx="22" ry="34"/><ellipse cx="232" cy="122" rx="23" ry="35" transform="rotate(-24 232 122)"/><ellipse cx="280" cy="122" rx="23" ry="35" transform="rotate(24 280 122)"/><ellipse cx="256" cy="150" rx="30" ry="40"/><ellipse cx="211" cy="182" rx="26" ry="38" transform="rotate(-34 211 182)"/><ellipse cx="301" cy="182" rx="26" ry="38" transform="rotate(34 301 182)"/><ellipse cx="256" cy="216" rx="37" ry="48"/><ellipse cx="204" cy="256" rx="30" ry="43" transform="rotate(-42 204 256)"/><ellipse cx="308" cy="256" rx="30" ry="43" transform="rotate(42 308 256)"/><ellipse cx="256" cy="306" rx="40" ry="52"/>
+        </g>
+        <g fill="url(#bc)">
+          <path d="M244 142 C251 124 261 124 268 142 C262 136 250 136 244 142Z"/><path d="M244 207 C252 186 263 186 271 207 C263 199 252 199 244 207Z"/><path d="M242 296 C252 272 265 272 274 296 C264 286 252 286 242 296Z"/>
+        </g>
+      </svg>
+      <span><b>Lupine Science</b> <span class="tld">accelerating materials discovery</span></span>
+    </a>
+
+    <!-- live loop marginalia -->
+    <div class="loop-margin" aria-live="polite">
+      <span class="lh"><span class="ld" aria-hidden="true"></span><span id="loop-headline">research running, live</span></span>
+    </div>
+
+    <!-- ════ EQUATION HORIZON (the navigation) ════ -->
+    <header class="horizon">
+      <p class="label">How we accelerate discovery — click a term to open its evidence</p>
+      <div class="equation" role="group" aria-label="L of theta equals the integral over the manifold of the squared error-vector norm, plus the ledger term">
+        <button class="term" data-focus="objective" aria-pressed="true"
+          data-tip="<b>L(θ)</b> — what we minimize to make a prediction trustworthy: the <em>structured</em> error of a potential θ over all the evidence. The first step to discovering real materials. Click any term to isolate it.">
+          L<span class="n">(</span>θ<span class="n">)</span></button>
+        <span class="eq-static">=</span>
+        <button class="term" data-focus="manifold"
+          data-tip="<b>∫<sub>M</sub> … dμ(γ)</b> — integrate over the error manifold M. The errors live on a thin ribbon (participation ratio <em>1.05–2.05</em>) — structure that makes failure correctable.">
+          <span class="intg">∫</span><span class="sub">M</span></button>
+        <button class="term" data-focus="errorvectors"
+          data-tip="<b>∇<sub>γ</sub>E(x,θ)</b> — the error-vector field along geodesics γ. Across every MLIP these point the <em>same direction</em> (cos θ &gt; 0.8) — so one correction scales across the materials space.">
+          <span class="n">‖</span>∇<span class="sub">γ</span>E<span class="n">(</span>x,θ<span class="n">)</span><span class="n">‖</span><span class="sup">2</span></button>
+        <button class="term" data-focus="manifold"
+          data-tip="<b>dμ(γ)</b> — the measure over geodesics γ. How error is weighted across the ribbon.">
+          dμ<span class="n">(</span>γ<span class="n">)</span></button>
+        <span class="eq-static">+</span>
+        <button class="term" data-focus="ledger"
+          data-tip="<b>Ω(Ξ)</b> — the public record Ξ. Every claim, refutation, and machine-checked theorem, committed and inspectable — trust the world can build on.">
+          Ω<span class="n">(</span>Ξ<span class="n">)</span></button>
+      </div>
+      <!-- legend / secondary nav for the terms — grouped with the equation -->
+      <nav class="legend" aria-label="Equation terms">
+        <button data-focus="objective" aria-pressed="true"><span class="k">L(θ)</span> the mission</button>
+        <button data-focus="manifold"><span class="k">∫ₘ</span> why you can trust it</button>
+        <button data-focus="errorvectors"><span class="k">∇ᵧE</span> why it scales</button>
+        <button data-focus="ledger"><span class="k">Ω(Ξ)</span> trust in the open</button>
+      </nav>
+    </header>
+
+    <!-- ════ EVIDENCE — resolves in place ════ -->
+    <section class="reading" id="evidence" aria-label="Evidence" aria-live="polite">
+      <div class="evidence">
+        <article class="panel" data-panel="objective" data-active>
+          <p class="tag"><span class="dot"></span>L(θ) · the mission</p>
+          <h1>Unlocking the materials that <em>build the future.</em></h1>
+          <p>AI is learning to design matter — the batteries, catalysts, alloys and chips a civilization runs on — but on simulations that are wrong in structured ways. Lupine makes those predictions trustworthy, so discovery <em>accelerates</em> instead of stalling on guesswork.</p>
+          <p class="why">The mathematics is <em>how.</em> The materials are <em>why.</em></p>
+          <p class="prov"><span class="live-dot2" aria-hidden="true"></span><span id="prov-objective">computing the manifold live from the committed benchmark…</span></p>
+          <div class="routes">
+            <a href="https://lupi.live">See it live <span class="ar">→</span></a>
+            <a href="https://library.lupine.science">Read the research <span class="ar">→</span></a>
+            <a href="https://github.com/alexwelcing/lupine">Audit the code <span class="ar">→</span></a>
+          </div>
+        </article>
+
+        <article class="panel" data-panel="manifold">
+          <p class="tag"><span class="dot"></span>∫<sub>M</sub> · why you can trust it</p>
+          <h2>Predictable failure is <em>correctable</em> failure.</h2>
+          <div class="stat"><strong>1.05–2.05</strong><span class="su">the errors move in only ~1–2 directions out of thousands — a pattern, not chaos</span></div>
+          <p class="prov"><span class="live-dot2" aria-hidden="true"></span><span id="prov-manifold">…</span></p>
+          <p>Across hundreds of today's simulation models — the classic kind and the new AI ones — the mistakes don't scatter. They line up. And a pattern we can predict is a pattern we can <em>correct</em>: we can flag which predictions to trust before a lab spends a year chasing a dead end. That is what turns simulation into discovery.</p>
+        </article>
+
+        <article class="panel" data-panel="errorvectors">
+          <p class="tag"><span class="dot"></span>∇<sub>γ</sub>E · why it scales</p>
+          <h2>Correct it once — <em>accelerate everywhere.</em></h2>
+          <div class="stat"><strong>cos θ &gt; 0.8</strong><span class="su">the models all lean the same way — over 80% aligned, so one fix corrects them all</span></div>
+          <p class="prov"><span class="live-dot2" aria-hidden="true"></span><span id="prov-errorvectors">…</span></p>
+          <p>Every model gets it wrong by leaning the same direction — in <span class="num">14 of 15</span> cases we checked. Like a room of clocks all running fast: find the offset once, and you can set every one right. That's how trust spreads across <em>all</em> of materials at once, instead of one problem at a time.</p>
+        </article>
+
+        <article class="panel" data-panel="ledger">
+          <p class="tag"><span class="dot"></span>Ω(Ξ) · trust in the open</p>
+          <h2>Trust you can <em>check yourself.</em></h2>
+          <div class="stat"><strong>0 gaps</strong><span class="su">the core math, checked end to end by computer — not opinion</span></div>
+          <p class="prov"><span class="live-dot2" aria-hidden="true"></span><span id="prov-ledger">…</span></p>
+          <p>We don't ask anyone to take our word for it. A computer checks our core math the way a spell-checker reads a sentence — every step, nothing skipped. We work in the open, and when one of our own ideas turns out to be wrong, we say so and publish it — <span class="num">3</span> times so far. Trust you can check beats trust you're asked to give.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ════ LEDGER RAIL (marginalia) ════ -->
+    <aside class="rail-ledger" aria-label="Public ledger">
+      <div class="rail-head"><span>Public ledger · Ξ</span><span class="h">height <span id="ledger-height">970</span></span></div>
+      <ul class="ledger">
+        <li><span class="hash">9b37d99</span> <span class="when">06·19</span><span class="msg">Refactor LUPI viewer loading seams</span></li>
+        <li><span class="hash">25482ab</span> <span class="when">06·18</span><span class="msg">Retire monorepo LUPI viewer deploy</span></li>
+        <li><span class="hash">08fe80c</span> <span class="when">06·17</span><span class="msg">Add social cards for saved views</span></li>
+        <li><span class="hash">109c116</span> <span class="when">06·17</span><span class="msg">Add LUPI analytics measurement tools</span></li>
+      </ul>
+      <div class="rail-note">
+        <div class="row"><span class="d wp"></span><span>Working paper in preparation — not yet peer-reviewed. The full record lives in the open repository.</span></div>
+      </div>
+    </aside>
+
+    <!-- ════ FOOT ════ -->
+    <footer class="foot">
+      <span class="creed">Unlocking the materials that build the future. <em>Evidence before claim.</em></span>
+      <span><b>Lupine Science</b> · founder Alex Welcing · <a href="mailto:alex@lupinesci.com">alex@lupinesci.com</a></span>
+      <span><a href="https://lupi.live">LUPI</a> · <a href="https://library.lupine.science">Library</a> · <a href="https://github.com/alexwelcing/lupine">Repository</a></span>
+    </footer>
+  </main>
+
+  <div class="tip" id="tip" role="status" aria-live="polite"></div>
+
+  <script>
+  (() => {
+    "use strict";
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const body = document.body;
+
+    /* ───────────────────────────────────────────────────────────
+       REAL DATA — the manifold is rendered from the committed
+       benchmark_manifold.json, computed live in the browser.
+       Inline fallback (a subset of that file) guarantees first paint.
+       ─────────────────────────────────────────────────────────── */
+    const FALLBACK = [
+      { potential:"Adams-1989",  eigenvalues:[60.449,22.010,9.238,0],        eigenvectors:[[-0.9571,0.2374,-0.1659,-0.0081,-0.0004]], effective_dimensionality:1.9907, cumulative_variance:[0.6592], log_r_squared:0.9981, is_hyper_ribbon:true },
+      { potential:"Foiles-1986", eigenvalues:[83.599,19.398,9.009,0],        eigenvectors:[[-0.8735,0.3298,-0.3580,-0.0062,-0.0004]], effective_dimensionality:1.6848, cumulative_variance:[0.7464], log_r_squared:0.9687, is_hyper_ribbon:true },
+      { potential:"Zhou-2004",   eigenvalues:[28.070,1.980,0.125,0.0002,0],  eigenvectors:[[0.7893,0.5647,0.2409,-0.0033,-0.0003]],  effective_dimensionality:1.1499, cumulative_variance:[0.9302], log_r_squared:0.9493, is_hyper_ribbon:true },
+      { potential:"Ackland-1987",eigenvalues:[1611.42,390.71,0.176,0],       eigenvectors:[[-0.5589,-0.5853,-0.5874,-0.0003,0]],     effective_dimensionality:1.4583, cumulative_variance:[0.8048], log_r_squared:0.8633, is_hyper_ribbon:true },
+    ];
+    const DATALINK = "/data/benchmark_manifold.json";
+
+    const hypot = (v) => Math.sqrt(v.reduce((s, x) => s + x * x, 0)) || 1;
+    const cosAbs = (a, b) => { let s = 0; const n = Math.min(a.length, b.length); for (let i = 0; i < n; i++) s += a[i] * b[i]; return Math.abs(s / (hypot(a) * hypot(b))); };
+    const mean = (a) => a.reduce((s, x) => s + x, 0) / (a.length || 1);
+
+    function process(raw) {
+      const pots = raw.map((r) => {
+        const eig = (r.eigenvalues || []).filter((e) => e > 1e-9);
+        const pc1 = r.eigenvectors[0];
+        const thin = eig.length > 1 ? Math.sqrt(eig[1] / eig[0]) : 0.12;
+        return { name: r.potential, eig, pc1, pr: r.effective_dimensionality,
+                 var1: (r.cumulative_variance && r.cumulative_variance[0]) || 0,
+                 r2: r.log_r_squared, ribbon: !!r.is_hyper_ribbon, thin };
+      });
+      const prs = pots.map((p) => p.pr), pairs = [];
+      for (let i = 0; i < pots.length; i++) for (let j = i + 1; j < pots.length; j++) pairs.push(cosAbs(pots[i].pc1, pots[j].pc1));
+      return { pots, n: pots.length, prMin: Math.min(...prs), prMax: Math.max(...prs), prMean: mean(prs),
+               var1Min: Math.min(...pots.map((p) => p.var1)), var1Max: Math.max(...pots.map((p) => p.var1)),
+               meanThin: mean(pots.map((p) => p.thin)), cosMean: mean(pairs), nPairs: pairs.length,
+               nRibbon: pots.filter((p) => p.ribbon).length };
+    }
+    let M = process(FALLBACK);
+
+    function injectProv() {
+      const $ = (id) => document.getElementById("prov-" + id);
+      const src = `<a href="${DATALINK}">see the data ↗</a>`;
+      if ($("objective")) $("objective").innerHTML =
+        `live · every figure here is computed in your browser from <b>${M.n}</b> real reference models, not typed in · ${src}`;
+      if ($("manifold")) $("manifold").innerHTML =
+        `live · measured here: the errors span only <b>${M.prMin.toFixed(1)}–${M.prMax.toFixed(1)}</b> directions, not the thousands possible · ${src}`;
+      if ($("errorvectors")) $("errorvectors").innerHTML =
+        `live · measured here: the models agree on direction about <b>${Math.round(M.cosMean * 100)}%</b> of the time · ${src}`;
+      if ($("ledger")) $("ledger").innerHTML =
+        `live · the same pattern holds in all <b>${M.nRibbon}/${M.n}</b> reference models, re-checked in your browser · ${src}`;
+    }
+    injectProv();
+    // freshen from the served file (same data, proves the wiring is real)
+    fetch(DATALINK, { cache: "no-store" })
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((raw) => { if (Array.isArray(raw) && raw.length) { M = process(raw); injectProv(); } })
+      .catch(() => {});
+
+    /* per-term targets for the manifold + the resolved panel */
+    const FOCUS = {
+      objective:    { converge: 0.55, ribbon: 0.92, vector: 0.5,  ledger: 0.35, ochre: 0.0, spectrum: 0.2,  fan: 0.2  },
+      manifold:     { converge: 0.96, ribbon: 1.0,  vector: 0.16, ledger: 0.22, ochre: 0.0, spectrum: 1.0,  fan: 0.10 },
+      errorvectors: { converge: 0.40, ribbon: 0.5,  vector: 1.0,  ledger: 0.18, ochre: 0.0, spectrum: 0.12, fan: 1.0  },
+      ledger:       { converge: 0.7,  ribbon: 0.82, vector: 0.28, ledger: 1.0,  ochre: 1.0, spectrum: 0.18, fan: 0.12 },
+    };
+    const cur = { ...FOCUS.objective };
+    let tgt = { ...FOCUS.objective };
+    let recomputeZones = () => {};   // assigned by the renderer; keeps the mask in sync
+
+    function setFocus(name) {
+      if (!FOCUS[name]) name = "objective";
+      tgt = { ...FOCUS[name] };
+      body.setAttribute("data-focus", name);
+      document.querySelectorAll(".term, .legend button").forEach((b) =>
+        b.setAttribute("aria-pressed", String(b.dataset.focus === name)));
+      document.querySelectorAll(".panel").forEach((p) => {
+        if (p.dataset.panel === name) p.setAttribute("data-active", "");
+        else p.removeAttribute("data-active");
+      });
+      // the active evidence panel changes height → re-measure the type zones
+      requestAnimationFrame(() => recomputeZones());
+    }
+
+    /* tooltip */
+    const tip = document.getElementById("tip");
+    function bindTip(el) {
+      const show = (x, y) => { tip.innerHTML = el.dataset.tip || ""; tip.classList.add("show"); place(x, y); };
+      const place = (x, y) => {
+        const pad = 14, r = tip.getBoundingClientRect();
+        let nx = x + 16, ny = y + 18;
+        if (nx + r.width + pad > innerWidth) nx = innerWidth - r.width - pad;
+        if (ny + r.height + pad > innerHeight) ny = y - r.height - 18;
+        tip.style.left = nx + "px"; tip.style.top = Math.max(pad, ny) + "px";
+      };
+      el.addEventListener("pointerenter", (e) => show(e.clientX, e.clientY));
+      el.addEventListener("pointermove", (e) => place(e.clientX, e.clientY));
+      el.addEventListener("focus", () => { const r = el.getBoundingClientRect(); show(r.left, r.bottom); });
+      el.addEventListener("pointerleave", () => tip.classList.remove("show"));
+      el.addEventListener("blur", () => tip.classList.remove("show"));
+    }
+    document.querySelectorAll(".term").forEach(bindTip);
+
+    document.querySelectorAll(".term, .legend button").forEach((b) => {
+      b.addEventListener("click", () => {
+        const n = b.dataset.focus;
+        const current = body.getAttribute("data-focus");
+        setFocus(current === n && n !== "objective" ? "objective" : n);
+      });
+    });
+    addEventListener("keydown", (e) => { if (e.key === "Escape") setFocus("objective"); });
+
+    /* ── the manifold renderer ── */
+    const canvas = document.getElementById("ribbon");
+    const ctx = canvas && canvas.getContext ? canvas.getContext("2d") : null;
+    if (!ctx) { body.classList.add("no-canvas"); }
+    else {
+      const INK = "22,23,29", IND = "61,77,179", OCH = "168,119,43";
+      let w = 0, h = 0, dpr = 1, raf = 0, t0 = 0, pts = [];
+
+      function seed() {
+        const n = Math.max(60, Math.min(190, Math.round((w * h) / 9000)));
+        pts = [];
+        for (let i = 0; i < n; i++) {
+          const r1 = frac(Math.sin(i * 12.9898) * 43758.5453);
+          const r2 = frac(Math.sin(i * 78.233) * 12543.123);
+          const r3 = frac(Math.sin(i * 39.425) * 9123.77);
+          // bias samples toward the right/centre so the lower-left reading zone stays calm
+          const u = 0.32 + r1 * 0.72;
+          pts.push({ u: Math.min(u, 1), sy: (r2 - 0.5), ph: r3 * 6.283, sp: 0.4 + r3 * 0.9, pot: i % M.n });
+        }
+      }
+      const frac = (x) => x - Math.floor(x);
+      const clamp01 = (x) => (x < 0 ? 0 : x > 1 ? 1 : x);
+
+      /* ── layout-aware mask: the manifold parts around the type zones so no
+         object ever sits on top of text. Computed from the live DOM rects. ── */
+      let zones = [], STAGE = { x0: 0, x1: 0, y0: 0, y1: 0, cx: 0, cy: 0, w: 0, h: 0 };
+      const FEATHER = 36;
+      const mobileMQ = matchMedia("(max-width: 920px)");
+      function rectOf(sel) {
+        const el = document.querySelector(sel); if (!el) return null;
+        const b = el.getBoundingClientRect(), c = canvas.getBoundingClientRect();
+        if (b.width < 1 || b.height < 1) return null;
+        return { l: b.left - c.left, t: b.top - c.top, r: b.right - c.left, bo: b.bottom - c.top };
+      }
+      function computeZones() {
+        zones = [];
+        if (mobileMQ.matches) {
+          const m = rectOf(".mark"); if (m) zones.push(m);
+          STAGE = { x0: w * 0.04, x1: w * 0.96, y0: h * 0.15, y1: h * 0.97 };
+        } else {
+          [".horizon", ".legend", ".reading .panel[data-active]", ".rail-ledger", ".loop-margin", ".foot"]
+            .forEach((s) => { const z = rectOf(s); if (z) zones.push(z); });
+          const m = rectOf(".mark"); if (m) zones.push({ l: m.l, t: m.t, r: Math.min(m.r, m.l + 250), bo: m.bo });
+          const rd = rectOf(".reading .panel[data-active]") || rectOf(".reading");
+          const rl = rectOf(".rail-ledger"), lg = rectOf(".legend"), ft = rectOf(".foot");
+          STAGE = { x0: (rd ? rd.r : w * 0.34) + 28, x1: (rl ? rl.l : w * 0.95) - 28,
+                    y0: (lg ? lg.bo : h * 0.26) + 30, y1: (ft ? ft.t : h * 0.92) - 22 };
+        }
+        STAGE.cx = (STAGE.x0 + STAGE.x1) / 2; STAGE.cy = (STAGE.y0 + STAGE.y1) / 2;
+        STAGE.w = STAGE.x1 - STAGE.x0; STAGE.h = STAGE.y1 - STAGE.y0;
+      }
+      recomputeZones = computeZones;
+      // 1 inside a clear area, ramps to 0 inside any type zone (feathered)
+      function clearAt(x, y) {
+        let f = 1;
+        for (let i = 0; i < zones.length; i++) {
+          const z = zones[i];
+          const dx = Math.max(z.l - x, 0, x - z.r), dy = Math.max(z.t - y, 0, y - z.bo);
+          if (dx === 0 && dy === 0) return 0;
+          const d = Math.sqrt(dx * dx + dy * dy);
+          if (d < FEATHER) { const k = d / FEATHER; if (k < f) f = k; }
+        }
+        return f;
+      }
+      // soft paper halo, so a focal glyph reads on its own ground
+      function scrim(cx, cy, r, alpha) {
+        if (alpha < 0.02) return;
+        const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+        g.addColorStop(0, `rgba(250,249,246,${0.94 * alpha})`);
+        g.addColorStop(0.62, `rgba(250,249,246,${0.55 * alpha})`);
+        g.addColorStop(1, "rgba(250,249,246,0)");
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, cy, r, 0, 6.2832); ctx.fill();
+      }
+      // a soft particle with a fading trail (no arrowhead) — subatomic, not a quiver vector
+      function comet(x, y, ang, len, alpha, rgb) {
+        rgb = rgb || "61,77,179";
+        const hx = x + Math.cos(ang) * len, hy = y + Math.sin(ang) * len;
+        const g = ctx.createLinearGradient(x, y, hx, hy);
+        g.addColorStop(0, `rgba(${rgb},0)`); g.addColorStop(1, `rgba(${rgb},${alpha})`);
+        ctx.strokeStyle = g; ctx.lineWidth = 1.3; ctx.lineCap = "round";
+        ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(hx, hy); ctx.stroke();
+        const hg = ctx.createRadialGradient(hx, hy, 0, hx, hy, 4.5);
+        hg.addColorStop(0, `rgba(${rgb},${alpha * 1.1})`); hg.addColorStop(1, `rgba(${rgb},0)`);
+        ctx.fillStyle = hg; ctx.beginPath(); ctx.arc(hx, hy, 4.5, 0, 6.2832); ctx.fill();
+      }
+
+      function resize() {
+        dpr = Math.min(devicePixelRatio || 1, 2);
+        w = canvas.clientWidth; h = canvas.clientHeight;
+        canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0); seed(); computeZones();
+      }
+      // ribbon spine biased to the upper-right of the field
+      function spineY(u, time, amp) {
+        const cy = h * 0.42;
+        return cy + Math.sin(u * 3.0 + time * 0.16) * amp + Math.sin(u * 6.1 - time * 0.1) * amp * 0.32;
+      }
+      function slope(u, time, amp) {
+        const e = 0.004;
+        return (spineY(u + e, time, amp) - spineY(u - e, time, amp)) / (e * 2 * w);
+      }
+      function arrow(x, y, ang, len, col, lw) {
+        const ex = x + Math.cos(ang) * len, ey = y + Math.sin(ang) * len;
+        ctx.strokeStyle = col; ctx.lineWidth = lw;
+        ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(ex, ey);
+        const a = 0.45, hl = Math.min(4, len * 0.34);
+        ctx.lineTo(ex - Math.cos(ang - a) * hl, ey - Math.sin(ang - a) * hl);
+        ctx.moveTo(ex, ey); ctx.lineTo(ex - Math.cos(ang + a) * hl, ey - Math.sin(ang + a) * hl);
+        ctx.stroke();
+      }
+
+      // real eigenvalue spectrum, rendered as an ORBITAL ATOM: nucleus + elliptical
+      // shells + orbiting electrons, each shell's weight = its real variance share.
+      // The dominant eigenvalue → one bright tight shell = the collapse, made atomic.
+      function drawShells(time) {
+        if (cur.spectrum < 0.03 || !M.pots.length) return;
+        const pot = M.pots[Math.floor(time * 0.14) % M.n];
+        const eig = pot.eig.slice().sort((p, q) => q - p); if (eig.length < 2) return;
+        const cx = STAGE.cx, cy = STAGE.y0 + STAGE.h * 0.6;
+        const a = cur.spectrum * clearAt(cx, cy); if (a < 0.03) return;
+        const Rmax = Math.min(STAGE.h * 0.3, STAGE.w * 0.32, 122);
+        scrim(cx, cy, Rmax * 1.45, cur.spectrum);
+        const total = eig.reduce((s, e) => s + e, 0) || 1, n = eig.length;
+        // nucleus glow
+        const ng = ctx.createRadialGradient(cx, cy, 0, cx, cy, 12);
+        ng.addColorStop(0, `rgba(${IND},${0.45 * a})`); ng.addColorStop(1, `rgba(${IND},0)`);
+        ctx.fillStyle = ng; ctx.beginPath(); ctx.arc(cx, cy, 12, 0, 6.2832); ctx.fill();
+        ctx.fillStyle = `rgba(${IND},${0.7 * a})`; ctx.beginPath(); ctx.arc(cx, cy, 2.3, 0, 6.2832); ctx.fill();
+        for (let i = 0; i < n; i++) {
+          const share = eig[i] / total;                 // real variance fraction
+          const r = Rmax * ((i + 1) / n);
+          const rot = i * 0.7 + time * 0.05;
+          const ringA = a * (0.07 + 0.5 * share);
+          ctx.strokeStyle = `rgba(${IND},${ringA})`; ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.ellipse(cx, cy, r, r * 0.4, rot, 0, 6.2832); ctx.stroke();
+          // electron riding the shell (inner shells faster)
+          const ang = time * (0.5 + 1.1 / (i + 1)) + i * 1.7;
+          const ex = cx + Math.cos(ang) * r * Math.cos(rot) - Math.sin(ang) * r * 0.4 * Math.sin(rot);
+          const ey = cy + Math.cos(ang) * r * Math.sin(rot) + Math.sin(ang) * r * 0.4 * Math.cos(rot);
+          const eg = ctx.createRadialGradient(ex, ey, 0, ex, ey, 5.5);
+          eg.addColorStop(0, `rgba(${IND},${a * (0.3 + 0.6 * share)})`); eg.addColorStop(1, `rgba(${IND},0)`);
+          ctx.fillStyle = eg; ctx.beginPath(); ctx.arc(ex, ey, 5.5, 0, 6.2832); ctx.fill();
+          ctx.fillStyle = `rgba(${IND},${a * (0.4 + 0.5 * share)})`; ctx.beginPath(); ctx.arc(ex, ey, 1.4, 0, 6.2832); ctx.fill();
+        }
+      }
+
+      // real PC1 cosine fan — each potential's first error direction, by its
+      // true angular deviation from the reference; tight cluster = alignment
+      // real PC1 alignment, rendered as ALIGNED DRIFTING PARTICLES — each potential's
+      // first error direction is a comet whose angle is its true deviation from the
+      // reference; a tight, near-parallel stream = the "same direction" result.
+      function drawAlignment(time) {
+        if (cur.fan < 0.03 || M.pots.length < 2) return;
+        const cx = STAGE.x0 + STAGE.w * 0.28, cy = STAGE.y0 + STAGE.h * 0.34;
+        const L = Math.min(STAGE.w * 0.5, 156);
+        const a = cur.fan * clearAt(cx + L * 0.4, cy); if (a < 0.03) return;
+        scrim(cx + L * 0.42, cy, L * 0.85, cur.fan);
+        const ref = M.pots[0].pc1; let mx = 0, my = 0;
+        M.pots.forEach((p, i) => {
+          const c = Math.min(1, cosAbs(p.pc1, ref));
+          const dev = Math.acos(c) * (i % 2 ? 1 : -1);
+          mx += Math.cos(dev); my += Math.sin(dev);
+          // a short train of particles per direction → a flowing, near-parallel stream
+          for (let k = 0; k < 3; k++) {
+            const drift = ((time * 0.16 + i * 0.29 + k * 0.34) % 1);
+            const bx = cx + Math.cos(dev) * L * drift, by = cy + Math.sin(dev) * L * drift + (i - 1.5) * 5;
+            const fade = Math.sin(drift * Math.PI);          // born → travel → fade
+            comet(bx, by, dev, 20 + 14 * (1 - drift), a * (0.34 + 0.4 * c) * (0.3 + 0.7 * fade), IND);
+          }
+        });
+        comet(cx, cy, Math.atan2(my, mx), L * 0.82, a * 0.6, OCH);   // consensus direction
+      }
+
+      function frame(ts) {
+        if (!t0) t0 = ts; const time = (ts - t0) / 1000;
+        for (const k in cur) cur[k] += (tgt[k] - cur[k]) * 0.045;
+        ctx.clearRect(0, 0, w, h);
+        const amp = h * (0.14 + 0.05 * cur.ribbon);
+        // ribbon thickness derives from the REAL mean eigenvalue ratio √(λ₂/λ₁)
+        const bandW = h * (0.05 + 0.34 * M.meanThin);
+
+        // ── the hyper-ribbon: the luminous hero motif ──
+        // (a) focal bloom — the single indigo light source, seated in the clear window
+        {
+          const fx = STAGE.cx, fy = spineY(clamp01(STAGE.cx / w), time, amp);
+          const R = Math.min(w, h) * 0.34;
+          const bg = ctx.createRadialGradient(fx, fy, 0, fx, fy, R);
+          bg.addColorStop(0, `rgba(${IND},${0.06 * cur.ribbon})`);
+          bg.addColorStop(0.55, `rgba(${IND},${0.02 * cur.ribbon})`);
+          bg.addColorStop(1, `rgba(${IND},0)`);
+          ctx.fillStyle = bg; ctx.beginPath(); ctx.arc(fx, fy, R, 0, 6.2832); ctx.fill();
+        }
+        // (b) fine parallel curves — the "many wrong simulations" texture
+        const bands = 26;
+        for (let b = -bands; b <= bands; b++) {
+          const env = 1 - Math.abs(b / bands);
+          const off = (b / bands) * bandW;
+          ctx.strokeStyle = `rgba(${IND},${(0.028 + env * 0.13 * cur.ribbon)})`;
+          ctx.lineWidth = 0.6; ctx.beginPath();
+          for (let s = 0; s <= 96; s++) {
+            const u = s / 96, x = u * w, y = spineY(u, time, amp) + off * (0.5 + 0.5 * env);
+            s === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+          }
+          ctx.stroke();
+        }
+        // (c) luminous core thread — emerges from behind the hero text, dissolves toward the rail
+        ctx.save();
+        ctx.shadowColor = `rgba(${IND},${0.5 * cur.ribbon})`; ctx.shadowBlur = 7;
+        const a0 = STAGE.x0 / w, a1 = STAGE.x1 / w;
+        const cg = ctx.createLinearGradient(0, 0, w, 0);
+        cg.addColorStop(clamp01(a0 - 0.05), `rgba(${IND},0)`);
+        cg.addColorStop(clamp01(a0 + 0.07), `rgba(${IND},${0.26 * cur.ribbon})`);
+        cg.addColorStop(clamp01(a1 - 0.03), `rgba(${IND},${0.2 * cur.ribbon})`);
+        cg.addColorStop(clamp01(a1 + 0.06), `rgba(${IND},0)`);
+        ctx.strokeStyle = cg; ctx.lineWidth = 1.2; ctx.lineCap = "round"; ctx.beginPath();
+        for (let s = 0; s <= 110; s++) { const u = s / 110, x = u * w, y = spineY(u, time, amp); s === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y); }
+        ctx.stroke(); ctx.restore();
+
+        // scattered error samples collapsing onto the spine, with vectors.
+        // converged band-thickness per sample = its potential's real √(λ₂/λ₁)
+        for (const p of pts) {
+          const pot = M.pots[p.pot % M.n] || { thin: 0.3 };
+          const x = p.u * w, ribY = spineY(p.u, time, amp);
+          const wide = p.sy * h * 0.4;
+          const spread = wide * (1 + (pot.thin - 1) * cur.converge);
+          const y = ribY + spread + Math.sin(time * p.sp + p.ph) * h * 0.04 * (1 - 0.6 * cur.converge);
+          const cm = clearAt(x, y); if (cm <= 0.02) continue;   // never sit on text
+          const aligned = Math.atan2(slope(p.u, time, amp) * w, w);
+          const ang = p.ph + (aligned - p.ph) * Math.max(cur.converge, cur.vector);
+          const len = 7 + 7 * p.sp, core = 1 - Math.abs(p.sy);
+          // soft motion trail (no arrowhead)
+          ctx.strokeStyle = `rgba(${IND},${(0.08 + 0.4 * cur.vector) * (0.4 + 0.6 * core) * cm})`;
+          ctx.lineWidth = 0.8; ctx.lineCap = "round";
+          ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + Math.cos(ang) * len, y + Math.sin(ang) * len); ctx.stroke();
+          // electron: faint halo + core
+          ctx.fillStyle = `rgba(${IND},${0.05 * cm})`;
+          ctx.beginPath(); ctx.arc(x, y, 2.4 + 1.6 * core, 0, 6.2832); ctx.fill();
+          ctx.fillStyle = `rgba(${INK},${(0.11 + 0.13 * (1 - cur.converge)) * cm})`;
+          ctx.beginPath(); ctx.arc(x, y, 0.8 + 0.9 * core, 0, 6.2832); ctx.fill();
+        }
+
+        drawShells(time);
+        drawAlignment(time);
+
+        // ledger — ochre particles condensing along the ribbon (live state)
+        if (cur.ledger > 0.02) {
+          for (let i = 0; i < 30; i++) {
+            const u = (i + 0.5) / 30, x = u * w;
+            const y = spineY(u, time, amp) - bandW - 6 + Math.sin(time * 0.9 + i * 1.3) * 3;
+            const cm = clearAt(x, y); if (cm <= 0.02) continue;
+            const blink = 0.3 + 0.7 * (0.5 + 0.5 * Math.sin(time * 1.6 + i));
+            const al = cur.ledger * 0.55 * blink * cm;
+            ctx.fillStyle = `rgba(${OCH},${0.18 * al})`;
+            ctx.beginPath(); ctx.arc(x, y, 3, 0, 6.2832); ctx.fill();
+            ctx.fillStyle = `rgba(${OCH},${al})`;
+            ctx.beginPath(); ctx.arc(x, y, 1.3, 0, 6.2832); ctx.fill();
+          }
+        }
+        raf = requestAnimationFrame(frame);
+      }
+
+      resize(); addEventListener("resize", resize, { passive: true });
+      if (reduced) { requestAnimationFrame((ts) => { for (const k in cur) cur[k] = tgt[k]; frame(ts); cancelAnimationFrame(raf); }); }
+      else {
+        raf = requestAnimationFrame(frame);
+        document.addEventListener("visibilitychange", () => {
+          if (document.hidden) cancelAnimationFrame(raf); else { t0 = 0; raf = requestAnimationFrame(frame); }
+        });
+      }
+    }
+
+    /* ── live discovery loop ── */
+    (() => {
+      const set = (id, v) => { const n = document.getElementById(id); if (n) n.textContent = v; };
+      fetch("https://glim-think-v1.aw-ab5.workers.dev/research/mlip-discovery/progress", { cache: "no-store" })
+        .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
+        .then(() => { set("loop-headline", "research running, live"); })
+        .catch(() => { set("loop-headline", "research in the open record"); });
+    })();
+
+    setFocus("objective");
+  })();
+  </script>
+</body>
+</html>

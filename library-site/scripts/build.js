@@ -7,6 +7,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { marked } from 'marked';
+import katex from 'katex';
 import { CATALOG } from './catalog.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -65,6 +66,55 @@ function escapeHtml(s) {
   return String(s)
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
+}
+
+// ───────────────────────────────────────────────────────────────
+// KaTeX math rendering
+// ───────────────────────────────────────────────────────────────
+
+const MATH_TOKEN_RE = /<!--MATH(\d+)-->/g;
+
+function extractMath(md) {
+  const cells = [];
+  let n = 0;
+
+  // Display math first so inline regex doesn't slice through it.
+  // Require non-empty content and reject raw `$$$$` table-cell padding.
+  md = md.replace(/(?<!\$)\$\$([\s\S]+?)\$\$(?!\$)/g, (_, latex) => {
+    const trimmed = latex.trim();
+    if (!trimmed) return _;
+    const token = `<!--MATH${n++}-->`;
+    cells.push({ latex: trimmed, display: true });
+    return token;
+  });
+
+  // Inline math: single $ ... $, no $ inside, not preceded/followed by $.
+  md = md.replace(/(?<!\$)\$([^$\n]+?)\$(?!\$)/g, (_, latex) => {
+    const trimmed = latex.trim();
+    if (!trimmed) return _;
+    const token = `<!--MATH${n++}-->`;
+    cells.push({ latex: trimmed, display: false });
+    return token;
+  });
+
+  return { md, cells };
+}
+
+function renderMathToHtml(html, cells) {
+  return html.replace(MATH_TOKEN_RE, (_, idx) => {
+    const cell = cells[Number(idx)];
+    if (!cell) return '';
+    try {
+      return katex.renderToString(cell.latex, {
+        displayMode: cell.display,
+        throwOnError: false,
+        strict: false,
+      });
+    } catch (err) {
+      console.warn(`KaTeX render failed for "${cell.latex}": ${err.message}`);
+      return `<span style="color:var(--red)">${escapeHtml(cell.latex)}</span>`;
+    }
+  });
 }
 
 // Ensure each rendered heading has an id matching slugify(text) so TOC anchors work.
@@ -240,7 +290,8 @@ function build() {
     const id = entry.id || slugify(path.basename(sourcePath, path.extname(sourcePath)));
     const title = entry.title || extractTitle(md, id);
     const subtitle = entry.subtitle || extractSubtitle(md);
-    const html = marked.parse(md);
+    const { md: mdMath, cells } = extractMath(md);
+    const html = renderMathToHtml(marked.parse(mdMath), cells);
     const plain = stripTags(html);
     const words = wordCount(plain);
     const toc = headingsToToc(md);
@@ -330,6 +381,15 @@ function build() {
     } else {
       fs.copyFileSync(s, d);
     }
+  }
+
+  // Bundle KaTeX CSS + fonts so math renders offline and on the deployed site.
+  const KATEX_DIST = path.join(ROOT, 'node_modules', 'katex', 'dist');
+  const KATEX_OUT = path.join(DIST, 'katex');
+  if (fs.existsSync(KATEX_DIST)) {
+    copyDir(KATEX_DIST, KATEX_OUT);
+  } else {
+    console.warn('[warn] KaTeX dist not found; math CSS/fonts will be missing');
   }
 
   console.log(`Built ${articles.length} articles. version=${version}`);

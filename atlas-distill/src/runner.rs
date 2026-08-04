@@ -312,16 +312,15 @@ pub fn generate_elastic_input(
     };
 
     // Build pair_coeff command based on pair_style
-    let pair_coeff = if pair_style.contains("eam/alloy")
-        || pair_style.contains("eam/fs")
-        || pair_style == "eam"
-    {
-        format!("pair_coeff * * {} {}", potential_file, element)
-    } else if pair_style.contains("meam") {
-        format!("pair_coeff * * {} {} NULL", potential_file, element)
-    } else {
-        format!("pair_coeff * * {} {}", potential_file, element)
-    };
+    let pair_coeff =
+        if pair_style.contains("eam/alloy") || pair_style.contains("eam/fs") || pair_style == "eam"
+        {
+            format!("pair_coeff * * {} {}", potential_file, element)
+        } else if pair_style.contains("meam") {
+            format!("pair_coeff * * {} {} NULL", potential_file, element)
+        } else {
+            format!("pair_coeff * * {} {}", potential_file, element)
+        };
 
     format!(
         r#"# LAMMPS input for elastic constants
@@ -1049,7 +1048,6 @@ pub fn export_benchmark_csv(
 ) -> Result<()> {
     let file_exists = path.exists();
     let file = std::fs::OpenOptions::new()
-        
         .create(true)
         .append(true)
         .open(path)?;

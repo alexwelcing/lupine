@@ -235,3 +235,88 @@ def test_canaries_skip_numerically_neutral_downstream_rows(tmp_path: Path) -> No
 
     assert state["downstream_win_count"] == 1
     assert [canary["row_id"] for canary in canaries] == ["energy_volume", "relaxation_stability"]
+
+
+
+def test_odf_gate_downgrades_promote_to_review_without_formal_fields(tmp_path: Path) -> None:
+    run_dir = tmp_path / "run"
+    write_cell(run_dir, variant_id="baseline", accuracy=0.70, speed=10.0)
+    write_cell(run_dir, variant_id="distill_accuracy", accuracy=0.76, speed=9.0)
+
+    packet_path = tmp_path / "packet.json"
+    rc = promotion.main(
+        [
+            "--run-dir", str(run_dir),
+            "--output", str(packet_path),
+            "--model-id", "test-model",
+            "--distill-version", "1",
+            "--overall-uplift-pct", "10.0",
+            "--min-accuracy-delta", "0.01",
+        ]
+    )
+    packet = json.loads(packet_path.read_text(encoding="utf-8"))
+
+    assert packet["odf_gate"] is not None
+    assert packet["odf_gate"]["decision"] == "review"
+    assert packet["odf_gate"]["uplift_band"] == "promote"
+    assert packet["odf_gate"]["formal_fields_present"] is False
+    # The local energy-state gate would promote, but ODF downgrades to review.
+    assert packet["gate"]["status"] == "hold_local"
+    assert any("ODF formal-verification gate requests review" in w for w in packet["gate"]["warnings"])
+    assert rc == 1
+
+
+def test_odf_gate_auto_promotes_with_formal_fields_and_uplift(tmp_path: Path) -> None:
+    run_dir = tmp_path / "run"
+    write_cell(run_dir, variant_id="baseline", accuracy=0.70, speed=10.0)
+    write_cell(run_dir, variant_id="distill_accuracy", accuracy=0.76, speed=9.0)
+
+    packet_path = tmp_path / "packet.json"
+    rc = promotion.main(
+        [
+            "--run-dir", str(run_dir),
+            "--output", str(packet_path),
+            "--model-id", "test-model",
+            "--distill-version", "2",
+            "--overall-uplift-pct", "10.0",
+            "--atlas-theorem-refs", "Atlas.Materials.ErrorGeometry.RibbonBound",
+            "--formal-properties", "stability",
+            "--min-accuracy-delta", "0.01",
+        ]
+    )
+    packet = json.loads(packet_path.read_text(encoding="utf-8"))
+
+    assert packet["odf_gate"] is not None
+    assert packet["odf_gate"]["decision"] == "promote"
+    assert packet["odf_gate"]["formal_fields_present"] is True
+    # Local gate and ODF gate both promote.
+    assert packet["gate"]["status"] == "promote_to_gcp_canary"
+    assert rc == 0
+
+
+def test_odf_gate_rejects_negative_uplift(tmp_path: Path) -> None:
+    run_dir = tmp_path / "run"
+    write_cell(run_dir, variant_id="baseline", accuracy=0.70, speed=10.0)
+    write_cell(run_dir, variant_id="distill_accuracy", accuracy=0.70, speed=9.0)
+
+    packet_path = tmp_path / "packet.json"
+    rc = promotion.main(
+        [
+            "--run-dir", str(run_dir),
+            "--output", str(packet_path),
+            "--model-id", "test-model",
+            "--distill-version", "3",
+            "--overall-uplift-pct", "-2.0",
+            "--atlas-theorem-refs", "Atlas.Materials.ErrorGeometry.RibbonBound",
+            "--formal-properties", "stability",
+            "--min-accuracy-delta", "0.0",
+        ]
+    )
+    packet = json.loads(packet_path.read_text(encoding="utf-8"))
+
+    assert packet["odf_gate"] is not None
+    assert packet["odf_gate"]["decision"] == "reject"
+    # ODF reject overrides the local gate.
+    assert packet["gate"]["status"] == "hold_local"
+    assert any("ODF formal-verification gate rejected" in b for b in packet["gate"]["blockers"])
+    assert rc == 1

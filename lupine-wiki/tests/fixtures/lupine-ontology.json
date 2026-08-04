@@ -1,0 +1,1299 @@
+{
+  "metadata": {
+    "title": "The Lupine Ontological Atlas — machine-readable export",
+    "compiled": "2026-07-30",
+    "corpus": {
+      "doc:HMHE": {
+        "title": "Hard Materials, Honest Errors",
+        "authors": [
+          "Alex Welcing",
+          "Kimi 3"
+        ],
+        "publisher": "Lupine Science",
+        "edition": "first",
+        "researchDate": "2026-07-17",
+        "verificationPass": "2026-07-18",
+        "chapters": 23,
+        "ledgerEntries": 512,
+        "ledgerStyle": "GB/T 7714"
+      },
+      "doc:PP": {
+        "title": "Climate Partnerships Proof Pack",
+        "publisher": "Lupine Science",
+        "date": "2026-07-09",
+        "articles": [
+          "PP-1 The 0.2% Synthesis Problem",
+          "PP-2 A Field, Not a Neural Net",
+          "PP-3 Five Materials That Could Unlock 5–12 GtCO₂/Year",
+          "PP-4 From Predicted Crystal to Commercial Cell",
+          "PP-5 Investing in the Trust Layer"
+        ],
+        "status": "Draft"
+      }
+    },
+    "citationConventions": {
+      "corpus": "[HMHE §x.y] / [PP-n]",
+      "externalVerification": "[^N^]",
+      "ledger": "[N]"
+    },
+    "designRules": [
+      "D1 claim-source-date-confidence",
+      "D2 types are axes, not a ladder",
+      "D3 readiness governs grammar",
+      "D4 one source per entry, one stable number per source",
+      "D5 epistemic markers on load-bearing claims",
+      "D6 selection by construction, not correlation",
+      "D7 capability thresholds, never calendars"
+    ]
+  },
+  "superClasses": {
+    "MATTER": [
+      "MaterialClass",
+      "ExcludedClass",
+      "Material",
+      "ProgramFacility"
+    ],
+    "COMPUTATION": [
+      "Method",
+      "Observable",
+      "Model",
+      "BenchmarkDataset",
+      "ComputeLadder"
+    ],
+    "ERROR & PROOF": [
+      "ErrorType",
+      "ErrorEmblem",
+      "MeasuredError",
+      "EpistemicMarker",
+      "ReadinessGrade",
+      "ConfidenceGrade",
+      "EvidenceUnit"
+    ],
+    "CORRECTION": [
+      "CorrectionLever",
+      "AcceptanceTest",
+      "SolvedTarget",
+      "LupineMethod",
+      "FormalProof"
+    ],
+    "PROGRAM": [
+      "DiscoveryChain",
+      "StageGate",
+      "RoadmapPhase",
+      "KillCriterion",
+      "Risk",
+      "SkepticEpisode"
+    ],
+    "WORLD": [
+      "PolicyInstrument",
+      "FundingProgram",
+      "Agent",
+      "TimeGate",
+      "ClimateTarget",
+      "ControlMeasure"
+    ],
+    "LIBRARY": [
+      "BibliographicResource",
+      "SourceTier",
+      "ConflictRuling",
+      "Claim"
+    ]
+  },
+  "errorTypes": [
+    {
+      "id": "T1",
+      "name": "Reference-method bias",
+      "definition": "Systematic error of the DFT functional or reference theory itself",
+      "canonicalEmblem": "Adsorption MUE ≈0.25 eV, best-of-six functionals vs CE39 experiment",
+      "lever": "Fidelity escalation; experiment anchoring"
+    },
+    {
+      "id": "T2",
+      "name": "Emulator / model-form error",
+      "definition": "MLIP architecture or training-objective bias, incl. PES softening",
+      "canonicalEmblem": ">90% of 229 PhononDB materials phonon-softened (E5)",
+      "lever": "Targeted fine-tuning; data composition"
+    },
+    {
+      "id": "T3",
+      "name": "Domain shift / coverage failure",
+      "definition": "Compositions, frameworks, or configurations absent from training",
+      "canonicalEmblem": "HEA energy errors 4–5× threshold on a classical EAM target (E7)",
+      "lever": "Data composition; per-family fine-tuning"
+    },
+    {
+      "id": "T4",
+      "name": "Numerical / sampling error",
+      "definition": "Convergence, grid, and statistical error in labels or evaluation",
+      "canonicalEmblem": "OC20 adsorption convergence MAE ≈0.05 eV",
+      "lever": "Convergence hygiene"
+    },
+    {
+      "id": "T5",
+      "name": "Multiscale closure gap",
+      "definition": "ps-scale MD must close to service-life evolution via surrogate models",
+      "canonicalEmblem": "240 ps cascade vs 5-year fusion service life (E8)",
+      "lever": "Closure models whose parameters inherit the underlying error"
+    },
+    {
+      "id": "T6",
+      "name": "Validation-data gap",
+      "definition": "No experiment or qualified database exists at the required condition",
+      "canonicalEmblem": "~20 dpa qualified RAFM data vs 50 dpa DEMO requirement (E9)",
+      "lever": "New facilities; operando measurement"
+    },
+    {
+      "id": "T7",
+      "name": "Observability / experimental-reference uncertainty",
+      "definition": "The target quantity is ill-posed, reconstructed, or inconsistently referenced",
+      "canonicalEmblem": "22% of OC20 relaxations reconstructed; exclusion cuts MAE ~35–39%",
+      "lever": "Referencing protocols; anomaly exclusion"
+    }
+  ],
+  "emblems": [
+    {
+      "id": "E1",
+      "name": "Strong correlation & self-interaction",
+      "types": [
+        "T1",
+        "T2"
+      ],
+      "host": "Correlated oxides / cuprates",
+      "fact": "Plain DFT (U=0) gives undoped La₂CuO₄ a metallic, non-magnetic ground state; experiment: AFM charge-transfer insulator ~2 eV gap"
+    },
+    {
+      "id": "E2",
+      "name": "Excited states & band gaps",
+      "types": [
+        "T1"
+      ],
+      "host": "WBG semiconductors / perovskites",
+      "fact": "~1 eV SOC term in Pb-halide perovskites; QSGW +15% overshoot — error cancellation masquerading as accuracy"
+    },
+    {
+      "id": "E3",
+      "name": "Magnetism",
+      "types": [
+        "T1",
+        "T2"
+      ],
+      "host": "Magnets",
+      "fact": "Fe₂B Tc overestimated ~35% (1,570 vs 1,013 K); Co₂B underestimated ×1.5; 15–35% sign-unstable band"
+    },
+    {
+      "id": "E4",
+      "name": "Barrier & transition-state error",
+      "types": [
+        "T2",
+        "T3"
+      ],
+      "host": "Batteries",
+      "fact": "0.310–0.349 eV MAE across 574 DFT-NEB paths, ~5–6× the ~60 meV floor; CHGNet 73.1% / M3GNet 78.2% underestimated"
+    },
+    {
+      "id": "E5",
+      "name": "PES softening & finite-T error",
+      "types": [
+        "T2"
+      ],
+      "host": "Universal MLIPs",
+      "fact": ">90% of 229 PhononDB materials softened; non-conservative models produce imaginary phonons"
+    },
+    {
+      "id": "E6",
+      "name": "Dispersion",
+      "types": [
+        "T1",
+        "T3"
+      ],
+      "host": "Frameworks & 2D",
+      "fact": "Semi-empirical vdW corrections 0.77–3.04× RPA interlayer energies; MoS₂ surface energy 0.07–0.32 N/m across methods"
+    },
+    {
+      "id": "E7",
+      "name": "Composition & framework coverage",
+      "types": [
+        "T3"
+      ],
+      "host": "HEAs / zeolites",
+      "fact": "Five architectures cannot learn a classical five-element EAM potential; GRACE-2L 617.9 meV/atom zero-shot; CHA→MFI ≥10×"
+    },
+    {
+      "id": "E8",
+      "name": "Multiscale closure",
+      "types": [
+        "T5"
+      ],
+      "host": "Fusion materials",
+      "fact": "NEP-ZBL 8.1M atoms / 240 ps vs five-year service life — >15 orders of magnitude"
+    },
+    {
+      "id": "E9",
+      "name": "Validation-data scarcity",
+      "types": [
+        "T6"
+      ],
+      "host": "Fusion materials",
+      "fact": "RAFM database qualified near 20 dpa vs staged 50 dpa DEMO second blanket at 11–14 appm He/dpa"
+    }
+  ],
+  "materialClasses": [
+    {
+      "id": "MC1",
+      "name": "Superconductors (cuprates, nickelates, high-pressure hydrides)",
+      "chapter": "HMHE Ch.4",
+      "dominantErrorTypes": [
+        "T1",
+        "T2"
+      ],
+      "headlineError": "Harmonic λ 2.64 vs 1.84 anharmonic on H₃S (~43% high); no generally predictive first-principles Tc method across unconventional families",
+      "ledger": [
+        "[11]",
+        "[12]",
+        "[13]"
+      ],
+      "chain": "C8",
+      "cnHook": "15FYP frontier tier; fusion-magnet manufacturing named",
+      "usHook": "DOE milestone program $46M federal, >$350M private"
+    },
+    {
+      "id": "MC2",
+      "name": "Correlated oxides & quantum materials",
+      "chapter": "HMHE Ch.5",
+      "dominantErrorTypes": [
+        "T1",
+        "T2",
+        "T4"
+      ],
+      "headlineError": "Plain DFT renders La₂CuO₄ metallic and non-magnetic; HSE vs DMC split ~1 eV on ZnO oxygen vacancy",
+      "ledger": [
+        "[14]",
+        "[15]"
+      ],
+      "chain": "C9",
+      "cnHook": "15FYP future industries: quantum technology",
+      "usHook": "NQI ~$2.7B FY2025–29"
+    },
+    {
+      "id": "MC3",
+      "name": "High-entropy alloys & disorder",
+      "chapter": "HMHE Ch.6",
+      "dominantErrorTypes": [
+        "T3",
+        "T2"
+      ],
+      "headlineError": "Five architectures 4–5× the 2.5 meV/atom threshold on MS25's five-element alloy; 617.9 meV/atom zero-shot (one suite)",
+      "ledger": [
+        "[7]",
+        "[8]"
+      ],
+      "chain": "C4",
+      "cnHook": "15FYP breakthrough: high-end special steels, superalloys",
+      "usHook": "ARPA-E ULTIMATE; Co/Cr on USGS list"
+    },
+    {
+      "id": "MC4",
+      "name": "Battery materials",
+      "chapter": "HMHE Ch.7",
+      "dominantErrorTypes": [
+        "T2",
+        "T3",
+        "T7"
+      ],
+      "headlineError": "Barrier MAE 0.310–0.349 eV over 574 DFT-NEB paths vs ~60 meV floor",
+      "ledger": [
+        "[5]",
+        "[6]"
+      ],
+      "chain": "C1",
+      "cnHook": "new-type storage 136 GW/351 GWh end-2025",
+      "usHook": "DOE $500M battery-materials NOFO"
+    },
+    {
+      "id": "MC5",
+      "name": "Catalysts",
+      "chapter": "HMHE Ch.8",
+      "dominantErrorTypes": [
+        "T1",
+        "T7"
+      ],
+      "headlineError": "GGA adsorption MUE ~0.25 eV vs experiment; OC20 ~0.2 eV plateau is dataset- and reference-consistency",
+      "ledger": [
+        "[2]",
+        "[1]"
+      ],
+      "chain": "C3",
+      "cnHook": "2 Mt/yr renewable H₂ by 2030",
+      "usHook": "Ir/Pt-group metals on USGS 60-mineral list"
+    },
+    {
+      "id": "MC6",
+      "name": "Magnets & the REE-free problem",
+      "chapter": "HMHE Ch.9",
+      "dominantErrorTypes": [
+        "T1",
+        "T2",
+        "T5"
+      ],
+      "headlineError": "Curie-temperature errors 15–35% sign non-systematic; micromagnetic coercivity ~5× high",
+      "ledger": [
+        "[16]",
+        "[17]"
+      ],
+      "chain": "C2",
+      "cnHook": "15FYP upgrade: rare-earth functional materials",
+      "usHook": "USGS list; ARPA-E MAGNITO $20M NOFO in ~$72M program"
+    },
+    {
+      "id": "MC7",
+      "name": "Fusion & nuclear materials",
+      "chapter": "HMHE Ch.10",
+      "dominantErrorTypes": [
+        "T5",
+        "T6"
+      ],
+      "headlineError": "Best cascade MLIP spans 240 ps vs five-year service life; RAFM validated ~20 dpa vs staged 20→50 dpa DEMO need",
+      "ledger": [
+        "[18]",
+        "[9]",
+        "[10]"
+      ],
+      "chain": "C7",
+      "cnHook": "15FYP future industry: fusion energy; BEST end-2027",
+      "usHook": "DOE Office of Fusion created 2025-11-20"
+    },
+    {
+      "id": "MC8",
+      "name": "Porous frameworks & 2D materials",
+      "chapter": "HMHE Ch.11",
+      "dominantErrorTypes": [
+        "T1",
+        "T2",
+        "T3",
+        "T6"
+      ],
+      "headlineError": "Semi-empirical vdW corrections 0.77–3.04× RPA interlayer energy; cross-zeolite transfer error ≥10×",
+      "ledger": [
+        "[19]",
+        "[7]"
+      ],
+      "chain": "C5",
+      "cnHook": "15FYP −17% carbon-intensity target; CCUS named",
+      "usHook": "Carbon Negative Shot <$100/t by 2032"
+    },
+    {
+      "id": "MC9",
+      "name": "WBG semiconductors, perovskites, thermoelectrics",
+      "chapter": "HMHE Ch.12",
+      "dominantErrorTypes": [
+        "T1",
+        "T2"
+      ],
+      "headlineError": "LDA gap underestimate ~50% across a 472-material benchmark; ~1 eV error cancellation inside Pb-halide perovskite gaps",
+      "ledger": [
+        "[20]",
+        "[21]"
+      ],
+      "chain": [
+        "C6",
+        "C11"
+      ],
+      "cnHook": "15FYP 'extraordinary measures' breakthroughs incl. integrated circuits",
+      "usHook": "CHIPS: Wolfspeed $750M PMT (SiC)"
+    }
+  ],
+  "excludedClasses": [
+    {
+      "name": "Conventional steels, simple metals, commodity ceramics",
+      "reason": "Fail A1 — fixed-composition MLIPs reach ~0.2 meV/atom; constraint is manufacturing, not simulation"
+    },
+    {
+      "name": "Bio/pharma, small-molecule discovery",
+      "reason": "Outside remit — different error structure"
+    },
+    {
+      "name": "Quantum-computing hype; business plan; lobbying",
+      "reason": "Not material classes; out of scope by genre"
+    }
+  ],
+  "scoreboard": [
+    {
+      "row": 1,
+      "failureMode": "Equilibrium-only pretraining bias",
+      "types": [
+        "T2",
+        "T3"
+      ],
+      "currentState": "Cleavage-energy median APE 14.7% (eSEN-MPTrj); 24.6% (EquiformerV2); 62.7% (MACE-MP)",
+      "demonstratedFix": "Non-equilibrium OMat24 pretraining, same architectures: 2.9% (eSEN); 3.7% (EquiformerV2)",
+      "solvedTarget": "≤3–5% OOD property error (author-proposed)",
+      "readiness": "H"
+    },
+    {
+      "row": 2,
+      "failureMode": "Systematic PES softening",
+      "types": [
+        "T2"
+      ],
+      "currentState": ">90% of 229 benchmark materials softened; parity slopes ~0.6; 337 meV/Å force MAE (vanilla CHGNet, WS₂)",
+      "demonstratedFix": "1-structure scalar fine-tune −11.9–16.4%; 10-structure full −34%; 1-frame WS₂ 337→178 meV/Å; ~100 frames ~100 meV/Å; PFT −55% (single study)",
+      "solvedTarget": "Parity slope ≥0.95; κSRME ≤0.3 (author-proposed, anchored to demonstrated values)",
+      "readiness": "H"
+    },
+    {
+      "row": 3,
+      "failureMode": "Wrong fidelity: PBE labels where SCAN/hybrid needed",
+      "types": [
+        "T1"
+      ],
+      "currentState": "r2SCAN reference data ~5× costlier than PBE",
+      "demonstratedFix": "80% GGA + 10% SCAN multi-fidelity M3GNet ≈ model trained on 8× as many SCAN labels (Si and water); class-transfer [TRN]",
+      "solvedTarget": "meta-GGA/hybrid fidelity at GGA data cost (engineering requirement)",
+      "readiness": "M"
+    },
+    {
+      "row": 4,
+      "failureMode": "Missing long-range physics",
+      "types": [
+        "T2"
+      ],
+      "currentState": "Unphysical water–vapor interfaces, polar dimers from short-ranged MLIPs",
+      "demonstratedFix": "Latent Ewald (LES) at ~2× cost; charges inferred from energies+forces alone",
+      "solvedTarget": "Long-range module default in foundation MLIPs (engineering requirement)",
+      "readiness": "M"
+    },
+    {
+      "row": 5,
+      "failureMode": "No in-simulation trust signal",
+      "types": [
+        "T2",
+        "T4"
+      ],
+      "currentState": "'Failures occur without clear warning indicators'",
+      "demonstratedFix": "Misspecification-aware UQ bounds MACE-MPA-0 errors across Materials Project; committee QbC; heterogeneous ensembles",
+      "solvedTarget": "Achieved-coverage-calibrated error bars per observable and domain",
+      "readiness": "M"
+    },
+    {
+      "row": 6,
+      "failureMode": "Benchmark–reality gap",
+      "types": [
+        "T6",
+        "T7"
+      ],
+      "currentState": "Density error 5.2% vs 2.5% for the models' own DFT labels; shear-modulus error 188.6% (calcite); pressures 'poorly described'",
+      "demonstratedFix": "Observable-first benchmarks exist and are adopted: MS25, Matbench Discovery (F1 0.931 SOTA), UniFFBench, Dyna-Mat",
+      "solvedTarget": "Density MAPE ≤2–3%; elastic MAPE ≤10% (physical tolerance, experiment-anchored)",
+      "readiness": "M"
+    },
+    {
+      "row": 7,
+      "failureMode": "Rare events / barriers",
+      "types": [
+        "T2",
+        "T3",
+        "T5"
+      ],
+      "currentState": "Barrier MAE 0.310–0.349 eV over 574 paths vs ~60 meV DFT-NEB reference error; MS25's 0.74 eV barrier recovered only ±0.06 eV",
+      "demonstratedFix": "Partial levers only: classification (>82%) and path-initialization (>71%) gates; per-chemistry TS-labeled fine-tuning 0.23→0.09 eV; no cross-chemistry recipe [PRP]",
+      "solvedTarget": "Barrier MAE ≤40 meV (≈0.92 kcal/mol) vs fixed DFT-NEB reference (author-proposed fidelity threshold)",
+      "readiness": "L"
+    },
+    {
+      "row": 8,
+      "failureMode": "Extreme conditions",
+      "types": [
+        "T3"
+      ],
+      "currentState": "uMLIP accuracy 'deteriorates considerably' from 0→150 GPa",
+      "demonstratedFix": "Targeted high-pressure fine-tuning restores robustness; MatterSim 0–5000 K, ≤1000 GPa with uncertainty-aware active learning",
+      "solvedTarget": "Uniform accuracy across the P–T envelope (engineering requirement)",
+      "readiness": "M"
+    },
+    {
+      "row": 9,
+      "failureMode": "Missing electronic degrees of freedom",
+      "types": [
+        "T2"
+      ],
+      "currentState": "Standard MLIPs blind to spin and charge state",
+      "demonstratedFix": "SpinGNN++ sub-meV spin-lattice accuracy; LES infers charges; UMA takes spin+charge inputs",
+      "solvedTarget": "Spin/charge-aware universal models (engineering requirement)",
+      "readiness": "L"
+    },
+    {
+      "row": 10,
+      "failureMode": "Reference-functional ceiling",
+      "types": [
+        "T1"
+      ],
+      "currentState": "Adsorption MUE ≈0.25 eV best-of-six vs experiment; voltages 0.7–1 V raw GGA; OC20 consistency plateau",
+      "demonstratedFix": "NeuralXC; DM21 (fails transition metals); Skala 2.8 kcal/mol on GMTKN55 at semi-local cost (molecules); experiment-anchored linear correction MAD 0.096 eV/atom",
+      "solvedTarget": "XC error below chemical accuracy on solids, not only molecules (literature benchmark)",
+      "readiness": "L"
+    }
+  ],
+  "dataLevers": [
+    {
+      "id": "L1",
+      "name": "Non-equilibrium pretraining",
+      "note": "OMat24 >110M structures; DeNS cheap proxy when data-poor"
+    },
+    {
+      "id": "L2",
+      "name": "Multi-fidelity Δ-learning",
+      "note": "~10% high-fidelity admixture at 10–20% added label cost; MatPES substrate"
+    },
+    {
+      "id": "L3",
+      "name": "Systematic-error surgery + experiment anchoring",
+      "note": "EXAFS-guided micro-doses; '110% PBE' linear correction MAD 0.096 eV/atom"
+    }
+  ],
+  "lupineMethod": {
+    "name": "Environment error field + runtime correction + six-step loop",
+    "functionalForm": "E_model − E_ref ≈ Σᵢ P(cᵢ); cubic spline over first-shell coordination, P(12)=0 boundary",
+    "anchors": [
+      "γ₁₀₀ (c=11)",
+      "E_vacancy (c=8)",
+      "γ₁₁₁ (c=9)"
+    ],
+    "blindTest": {
+      "observable": "γ₁₁₀ (c=7)",
+      "pearsonR": 0.906,
+      "ci95": [
+        0.82,
+        0.96
+      ],
+      "p": 0.0001,
+      "cells": 36,
+      "adjustableParameters": 0,
+      "permutationNullMeanR": 0.44,
+      "nullDraws": 10000
+    },
+    "selectiveCorrection": {
+      "Ni(110)": "9.7% → 1.5% (6.5×)",
+      "Cu(110)": "28.0% → 13.7% (2.0×)",
+      "bulkLatticeConstants": "unchanged"
+    },
+    "deployment": {
+      "overheadPython": "15.6%",
+      "overheadCompiledLAMMPS": "<1% expected",
+      "forcesVerified": "10⁻⁶ eV/Å on rattled slabs"
+    },
+    "sixStepLoop": [
+      "Simulate",
+      "Identify",
+      "Validate",
+      "Generate",
+      "Verify",
+      "Improve"
+    ]
+  },
+  "formalProof": {
+    "system": "Lean 4 + Mathlib",
+    "modules": 8,
+    "theorems": 77,
+    "declarations": "~225",
+    "sorryCount": 0,
+    "families": [
+      "ordering claims (kernel-checked inequalities)",
+      "isotonic correction bounds",
+      "impossibility proofs with counterexample witnesses"
+    ],
+    "kernelRejectedClaim": "27/36 → 26/36 at 10⁻⁴ J/m² integer precision (one cell margin exactly zero)",
+    "barrierTheorems": "Conditional: under ErrorField decomposition + coordination-ordering hypotheses, softened models provably under-read barriers; corrected barriers provably equal reference",
+    "repository": "github.com/alexwelcing/lupine-rhizo (AGPL-3.0)"
+  },
+  "acceptanceTests": [
+    {
+      "id": "Z1",
+      "chain": "C1",
+      "test": "Migration-barrier MAE ≤40 meV (0.922 kcal/mol) vs fixed DFT-NEB across chemistries, balanced signed errors + uncertainty budget vs experiment",
+      "solvedProvenance": "author-proposed fidelity threshold"
+    },
+    {
+      "id": "Z2",
+      "chain": "C2",
+      "test": "Ranking-faithful magnetocrystalline anisotropy and Tc across held-out REE-free candidate set, microstructure-aware coercivity bounds",
+      "solvedProvenance": "engineering requirement"
+    },
+    {
+      "id": "Z3",
+      "chain": "C3",
+      "test": "Adsorption energies within ~0.1 eV of experiment on held-out benchmark at screening cost, operando spot-validation",
+      "solvedProvenance": "literature benchmark"
+    },
+    {
+      "id": "Z4",
+      "chain": "C4",
+      "test": "Energy MAE ≤2.5 meV/atom on DFT-labeled, SRO-resolved multi-composition benchmark",
+      "solvedProvenance": "literature benchmark"
+    },
+    {
+      "id": "Z5",
+      "chain": "C5",
+      "test": "Scheme-consistent adsorption enthalpies within ~4 kJ/mol plus thermodynamic water-stability classification",
+      "solvedProvenance": "physical tolerance + author-proposed"
+    },
+    {
+      "id": "Z6",
+      "chain": "C6",
+      "test": "Right gaps for the right reasons at screening cost, ±0.05 eV compositional targeting",
+      "solvedProvenance": "engineering requirement (tandem current matching)"
+    },
+    {
+      "id": "Z7",
+      "chain": "C7",
+      "test": "Calibrated cascade→OKMC→rate-theory hand-off, every source term carrying a calibrated error bar, citable in a licensing case",
+      "solvedProvenance": "engineering/regulatory requirement"
+    },
+    {
+      "id": "Z8",
+      "chain": "C8",
+      "test": "Quantitative λ and ωlog with uncertainty (physical tolerance); superexchange J trends at cluster-DMFT fidelity (author-proposed)",
+      "solvedProvenance": "physical tolerance"
+    },
+    {
+      "id": "Z9",
+      "chain": "C9",
+      "test": "Screening-capable correlated energetics with J errors bounded against neutron data",
+      "solvedProvenance": "author-proposed"
+    },
+    {
+      "id": "Z10",
+      "chain": "C10",
+      "test": "Published, third-party-reproduced prospective record: majority of delivered candidates survive synthesis",
+      "solvedProvenance": "author-proposed"
+    },
+    {
+      "id": "Z11",
+      "chain": "C11",
+      "test": "Quantitative lattice thermal conductivity with four-phonon and higher channels by default on held-out set incl. anomalous crystals",
+      "solvedProvenance": "physical tolerance"
+    }
+  ],
+  "discoveryChains": [
+    {
+      "id": "C1",
+      "class": "Battery materials",
+      "capability": "Barrier-accurate MLIPs",
+      "readiness": "M",
+      "anchor": "MAE 0.310–0.349 eV vs ~60 meV floor → ≤40 meV + signed-error audit",
+      "primaryGate": "simulation accuracy",
+      "policyGate": "DOE $500M battery NOFO",
+      "horizon": "within reach of demonstration",
+      "impact": "500 Wh/kg-class solid-state batteries; EV cost, grid storage, energy access"
+    },
+    {
+      "id": "C2",
+      "class": "Magnets",
+      "capability": "Spin-aware multi-fidelity MLIPs",
+      "readiness": "M",
+      "anchor": "Tc 15–35% sign-unstable; coercivity ~5× → ranking-faithful + coercivity bounds",
+      "primaryGate": "simulation accuracy",
+      "policyGate": "MAGNITO; export-rule lapse 2026-11-10",
+      "horizon": "fidelity stack first",
+      "impact": "NdFeB-class REE-free magnets; motors and turbines immune to export controls"
+    },
+    {
+      "id": "C3",
+      "class": "Catalysts",
+      "capability": "Δ-learned hybrid-accuracy screening + operando validation",
+      "readiness": "M",
+      "anchor": "GGA 0.2–0.4 eV vs experiment → ~0.1 eV at screening cost",
+      "primaryGate": "simulation accuracy",
+      "policyGate": "China 2 Mt/yr H₂ 2030; Hydrogen Shot $1/kg",
+      "horizon": "within reach of demonstration",
+      "impact": "Ir-free electrolyzers; sub-$2/kg green hydrogen; decarbonized fertilizer and steel"
+    },
+    {
+      "id": "C4",
+      "class": "HEAs & disorder",
+      "capability": "Disorder-native MLIPs",
+      "readiness": "M (L→M boundary)",
+      "anchor": "MS25 4–5× threshold; 617.9→3.5 meV/atom (separate demonstration) → ≤2.5 meV/atom",
+      "primaryGate": "simulation accuracy (generalization)",
+      "policyGate": "ARPA-E ULTIMATE; 15FYP superalloys",
+      "horizon": "within reach of demonstration",
+      "impact": ">1,300 °C turbines; cryogenic-tough structures"
+    },
+    {
+      "id": "C5",
+      "class": "Porous frameworks",
+      "capability": "Dispersion-corrected MLIPs",
+      "readiness": "M",
+      "anchor": "vdW 0.77–3.04×; cross-framework ≥10× → ~4 kJ/mol + water stability",
+      "primaryGate": "stability/durability",
+      "policyGate": "Carbon Negative Shot <$100/t 2032",
+      "horizon": "procurement shape proven",
+      "impact": "Water-stable MOFs/COFs for DAC and separations; sub-$100/t carbon removal"
+    },
+    {
+      "id": "C6",
+      "class": "WBG/perovskites",
+      "capability": "Error-cancellation-free excited-state stack",
+      "readiness": "M",
+      "anchor": "LDA ~50%; ~1 eV SOC cancellation → right gaps at screening cost, ±0.05 eV",
+      "primaryGate": "stability/durability (lifetime)",
+      "policyGate": "SETO PRIMES $3–20M",
+      "horizon": "method proven at benchmark cost",
+      "impact": "35%+ tandem solar; Ga₂O₃/diamond-class power electronics"
+    },
+    {
+      "id": "C7",
+      "class": "Fusion materials",
+      "capability": "Rare-event-validated MLIPs + calibrated UQ",
+      "readiness": "L",
+      "anchor": "240 ps vs 5 yr; 20 of 50 dpa → calibrated cascade→rate-theory hand-off",
+      "primaryGate": "stability/durability (dpa qualification)",
+      "policyGate": "Milestone >$350M private; FIRE $220M",
+      "horizon": "gated by IFMIF-DONES ~2034",
+      "impact": "50-dpa-qualified blankets; firm clean power with tritium self-sufficiency"
+    },
+    {
+      "id": "C8",
+      "class": "Superconductors",
+      "capability": "Anharmonicity-aware MLIPs + ML-DMFT",
+      "readiness": "L",
+      "anchor": "Harmonic λ +43%; no generally predictive unconventional Tc method → λ/ωlog with uncertainty",
+      "primaryGate": "simulation accuracy",
+      "policyGate": "15FYP frontier tier; Genesis $293M",
+      "horizon": "ingredients within reach",
+      "impact": "Compact fusion magnets; lossless transmission"
+    },
+    {
+      "id": "C9",
+      "class": "Correlated oxides",
+      "capability": "Spin/electronic-DOF MLIPs anchored to experiment",
+      "readiness": "L",
+      "anchor": "Mott insulators returned as metals; DMFT O(T⁻³) → screening-capable correlated energetics",
+      "primaryGate": "simulation accuracy",
+      "policyGate": "NQI ~$2.7B; X-Labs",
+      "horizon": "longest; capability first",
+      "impact": "Mott device materials; neuromorphic and memory hardware; ~100× more efficient AI compute"
+    },
+    {
+      "id": "C10",
+      "class": "Stability (meta-chain)",
+      "capability": "Stability-first discovery loop",
+      "readiness": "M",
+      "anchor": ">100,000 MOFs → handful of products → majority-survival, third-party-reproduced funnels",
+      "primaryGate": "prospective hit-rate",
+      "policyGate": "Genesis autonomous labs; Matbench Discovery gate",
+      "horizon": "execute first",
+      "impact": "The trusted pipeline every other chain ships through"
+    },
+    {
+      "id": "C11",
+      "class": "Thermoelectrics",
+      "capability": "Anharmonicity-aware κ prediction",
+      "readiness": "M (upgraded from draft L)",
+      "anchor": "BAs 2,200→1,400→~2,100 W/m·K unexplained → quantitative κl, 4-phonon+ default",
+      "primaryGate": "simulation accuracy (anomalies)",
+      "policyGate": "none dedicated; waste heat 62.5% of TEG demand",
+      "horizon": "physics and screening together",
+      "impact": "Earth-abundant mid-temperature thermoelectrics; industrial and data-center waste-heat recovery"
+    }
+  ],
+  "stageGates": [
+    "simulation accuracy",
+    "prospective hit-rate uplift",
+    "synthesis",
+    "stability/durability",
+    "component performance",
+    "manufacturability",
+    "technoeconomics"
+  ],
+  "killCriteria": [
+    {
+      "id": "K1",
+      "name": "The 90:10 fidelity wedge",
+      "endpoint": "8×-equivalent reduction in high-fidelity labels reproduced within ±20% on two target classes by month 18",
+      "decisionRule": "Miss on either class: endpoint recorded failed; wedge narrows to pure dataset interventions"
+    },
+    {
+      "id": "K2",
+      "name": "Barrier wedge",
+      "endpoint": "Held-out barrier MAE ≤195 meV by month 24 on two solid-electrolyte families (midpoint of 349→40 meV road)",
+      "decisionRule": "Above threshold: stop selling barrier accuracy; publish the negative result as an MS25-style benchmark artifact"
+    },
+    {
+      "id": "K3",
+      "name": "Fusion long game",
+      "endpoint": "By 2030: uncertainty bounds envelop an ion-irradiation observable suite AND at least one lab-led consortium or milestone-company team adopts the chain",
+      "decisionRule": "Miss either conjunct: exit Chain 7's qualification ambition; keep data-and-UQ services line"
+    }
+  ],
+  "roadmapPhases": [
+    {
+      "phase": 1,
+      "span": "0–24 months",
+      "work": "Replicate Rows 1–3 + PFT on target classes; observable-first public validation (MS25-style benchmark, Matbench Discovery, OpenKIM); NSF SBIR pitch → 2026-11-04 window"
+    },
+    {
+      "phase": 2,
+      "span": "2–5 years",
+      "work": "Chain campaigns: barrier-targeted training → ≤40 meV; spin-aware Tc/coercivity bounds; disorder-native ≤2.5 meV/atom; Δ-learned adsorption ~0.1 eV; first industrial JDA (Kemira shape); ALCC"
+    },
+    {
+      "phase": 3,
+      "span": "5–10 years",
+      "work": "INCITE-class compute; cascade→rate-theory hand-off with calibrated UQ before ~2034; anharmonic MLIP collapsing the 93% DFPT block; correlation-capability build"
+    }
+  ],
+  "epistemicMarkers": [
+    {
+      "id": "OBS",
+      "meaning": "Directly supported by the cited study"
+    },
+    {
+      "id": "INF",
+      "meaning": "Author's interpretation of the cited evidence"
+    },
+    {
+      "id": "TRN",
+      "meaning": "Demonstrated elsewhere, not yet in this class or observable"
+    },
+    {
+      "id": "PRP",
+      "meaning": "Proposed; not yet demonstrated anywhere"
+    },
+    {
+      "id": "FRC",
+      "meaning": "Forecast; dependent on time, cost, market, or policy variables"
+    }
+  ],
+  "readinessGrades": [
+    {
+      "id": "H",
+      "meaning": "Two or more independent demonstrations on the target observable at useful scale",
+      "grammar": "'X has been demonstrated on Y; the next test is Z'"
+    },
+    {
+      "id": "M",
+      "meaning": "Demonstrated in principle (mechanism-level or adjacent-domain; matched-budget evidence lacking)",
+      "grammar": "'If X transfers under acceptance test Z…'"
+    },
+    {
+      "id": "L",
+      "meaning": "No demonstration on the target observable",
+      "grammar": "'The program seeks to develop X…'"
+    }
+  ],
+  "confidenceGrades": [
+    {
+      "id": "High",
+      "meaning": "At least two independent evidence units concur"
+    },
+    {
+      "id": "Medium",
+      "meaning": "Single authoritative source; hedged inline; never thesis-load-bearing alone"
+    }
+  ],
+  "falsifiers": [
+    {
+      "claim": "The inherited floor",
+      "killCondition": "A PBE-label-trained model matches experiment ≤0.1 eV on chemically held-out adsorption benchmark, or ≤2–3% density error on external suite",
+      "currentReadings": "0.2 eV plateau; 5.2% density; 0.310–0.349 eV barriers"
+    },
+    {
+      "claim": "The level playing field",
+      "killCondition": "Any team publicly closes a discovery-to-qualified-part loop in one of the nine classes",
+      "currentReadings": "None as of 2026-07-17; register shows audits, not loops"
+    },
+    {
+      "claim": "The validation-first wedge",
+      "killCondition": "Database-scale predictions convert into independently audited novel materials faster than small prospective funnels",
+      "currentReadings": "Strongest counter-evidence: 736 independent GNoME syntheses"
+    }
+  ],
+  "timeGates": [
+    {
+      "date": "2026-07-27",
+      "event": "NSF SBIR 26-510 first full-proposal deadline",
+      "family": "calendar",
+      "note": "passed 3 days before atlas date; verified"
+    },
+    {
+      "date": "2026-08",
+      "event": "ERCAP AY2027 window opens; closes early Oct",
+      "family": "calendar"
+    },
+    {
+      "date": "2026-09",
+      "event": "Chain Reaction Innovations cohort reopens",
+      "family": "calendar"
+    },
+    {
+      "date": "2026-11-04",
+      "event": "NSF SBIR second deadline — the venture's stated entry",
+      "family": "calendar"
+    },
+    {
+      "date": "2026-11-10",
+      "event": "Rare-earth export-rule suspension lapses; measures auto-revive absent a deal",
+      "family": "weather",
+      "note": "the book's #1 watch date"
+    },
+    {
+      "date": "~2026-11",
+      "event": "ALCC 2027–28 call expected",
+      "family": "calendar"
+    },
+    {
+      "date": "2027",
+      "event": "SPARC first plasma targeted (CFS)",
+      "family": "weather"
+    },
+    {
+      "date": "end-2027",
+      "event": "BEST device completion, Hefei",
+      "family": "weather"
+    },
+    {
+      "date": "2028",
+      "event": "Helion–Microsoft PPA power due, penalties attached",
+      "family": "weather"
+    },
+    {
+      "date": "2030",
+      "event": "15FYP window closes (2026–2030)",
+      "family": "weather"
+    },
+    {
+      "date": "~2034",
+      "event": "IFMIF-DONES fully operational — first fusion-spectrum data",
+      "family": "weather"
+    },
+    {
+      "date": "2039",
+      "event": "ITER deuterium–tritium operations (Baseline 2024)",
+      "family": "weather"
+    }
+  ],
+  "risks": [
+    {
+      "name": "Fidelity ceiling: Δ-learning asymptotes below hybrid accuracy",
+      "likelihood": "Medium",
+      "residual": "Medium"
+    },
+    {
+      "name": "Many-species data wall: composition space unlearnable to threshold",
+      "likelihood": "High (observed)",
+      "residual": "High — the wedge-killer"
+    },
+    {
+      "name": "Solo-execution/credibility: one failed prediction is existential",
+      "likelihood": "Medium",
+      "residual": "Medium"
+    },
+    {
+      "name": "REE-lapse/export-control shock: 0.1% rule auto-revives 2026-11-10",
+      "likelihood": "Medium",
+      "residual": "Medium"
+    },
+    {
+      "name": "Compute-ladder gating at top (INCITE readiness; ALCC funding prerequisite)",
+      "likelihood": "High (structural)",
+      "residual": "Medium-low"
+    },
+    {
+      "name": "Instrument disappearance (OCED zeroed; SBIR lapsed 195 days)",
+      "likelihood": "Medium (precedented)",
+      "residual": "Medium"
+    },
+    {
+      "name": "Foundation-model commoditization closing the wedge early",
+      "likelihood": "Medium-high",
+      "residual": "Medium"
+    }
+  ],
+  "skepticEpisodes": [
+    {
+      "case": "A-Lab 41 'novel' compounds (Nature 2023)",
+      "resolution": "Author Correction Nature 650:E1 (2026-01-19): 36 confirmed of 57 eligible; 4 inconclusive; Zn₂Cr₃FeO₈ removed (training-data leakage); retitled 'inorganic materials'"
+    },
+    {
+      "case": "GNoME 2.2M crystals / 381k 'stable'",
+      "resolution": "Contested: Cheetham & Seshadri 'scant evidence' for novelty–credibility–utility; DeepMind stands by claims; 736 independent syntheses factual"
+    },
+    {
+      "case": "LK-99 room-temperature superconductivity (2023)",
+      "resolution": "Closed: artifact — Cu₂S impurity transition; 15+ failed replications"
+    },
+    {
+      "case": "CSH 2020 & Lu-hydride 2023 room-Tc claims",
+      "resolution": "Both retracted; university found 'falsification, fabrication, and/or plagiarism'; senior author dismissed"
+    },
+    {
+      "case": "'AI-assisted researchers discover 44% more materials'",
+      "resolution": "MIT (2025-05-16): 'no confidence in the provenance, reliability or validity of the data and … no confidence in the veracity of the research'; withdrawn"
+    },
+    {
+      "case": "DFT-guided electrochemical N₂-reduction literature",
+      "resolution": "Collapsed under quantitative isotope protocols (Andersen et al. 2019)"
+    },
+    {
+      "case": "ML water-stability MOF classifiers (83%/71%)",
+      "resolution": "Open: accuracy collapses under grouped splits ('optimism gap'); labels record kinetic persistence, not thermodynamic stability"
+    }
+  ],
+  "conflictRulings": [
+    {
+      "id": "CZ-1",
+      "zone": "NEB barrier headline",
+      "ruling": "0.74±0.06 eV belongs to MS25 (JCIM 2025); never cite Liu et al. 2023 for this figure"
+    },
+    {
+      "id": "CZ-2",
+      "zone": "Hydride compute share",
+      "ruling": "93% = DFPT electron-phonon-coupling share of JARVIS workflow; no anharmonicity claim"
+    },
+    {
+      "id": "CZ-3",
+      "zone": "China storage projection",
+      "ruling": "'391 GW' is a transcription error, banned; verified: 136 GW/351 GWh end-2025; 236.1–291.2 GW (2025 WP); 371.2–450.7 GW (2026 WP); >180 GW by 2027"
+    },
+    {
+      "id": "CZ-4",
+      "zone": "Tritium balance",
+      "ruling": "55.8 kg per GW-thermal per full-power year (Abdou 2021), not per GW-electric; stockpile ~25 kg (20–30 range)"
+    }
+  ],
+  "climateTargets": [
+    {
+      "name": "Cobalt-free LMR cathodes",
+      "spec": ">300 Wh/kg, >1,000 cycles, <$80/kWh",
+      "blocker": "TM migration (oct→tet) barriers underestimated at under-coordinated TS",
+      "mechanism": "corrected migration barriers; ordering proofs"
+    },
+    {
+      "name": "Earth-abundant halide solid electrolytes",
+      "spec": ">10 mS/cm, Li-metal stability, moisture tolerance",
+      "blocker": "Li⁺ hop barrier underestimated 60%+ → ~3 orders in conductivity",
+      "mechanism": "field transfer across shared anion sublattice"
+    },
+    {
+      "name": "MOF sorbents for DAC",
+      "spec": ">2 mmol/g @400 ppm, 40–70% RH, <$50/kg",
+      "blocker": "metal-linker hydrolysis at under-coordinated nodes",
+      "mechanism": "corrected hydrolysis barriers; impossibility proofs"
+    },
+    {
+      "name": "Electrochemical ammonia catalysts",
+      "spec": ">60% EE, >300 mA/cm²",
+      "blocker": "N≡N activation (945 kJ/mol) at defect sites; scaling-relation propagation",
+      "mechanism": "corrected N₂ dissociation barriers; scaling-breaker flags"
+    },
+    {
+      "name": "Lead-free perovskite absorbers",
+      "spec": ">20% certified PCE, >25-yr stability",
+      "blocker": "Sn²⁺ oxidation via vacancy formation; metastable-phase blindness",
+      "mechanism": "corrected Sn-vacancy energetics; provable metastability boundaries"
+    }
+  ],
+  "climateAggregate": "5–12 GtCO₂/yr (sum of five independently sized estimates)",
+  "relations": [
+    {
+      "name": "isA",
+      "domain": "any",
+      "range": "any",
+      "inverse": "hasSubtype"
+    },
+    {
+      "name": "partOf",
+      "domain": "any",
+      "range": "any",
+      "inverse": "hasPart"
+    },
+    {
+      "name": "admittedBy",
+      "domain": "MaterialClass",
+      "range": "AdmissionRule",
+      "note": "A1 error record; A2 salience; A3 lever"
+    },
+    {
+      "name": "trainedOn",
+      "domain": "Model",
+      "range": "BenchmarkDataset",
+      "inverse": "trains"
+    },
+    {
+      "name": "labeledBy",
+      "domain": "BenchmarkDataset",
+      "range": "Method",
+      "inverse": "labels"
+    },
+    {
+      "name": "inheritsErrorFrom",
+      "domain": "Emulator",
+      "range": "BenchmarkDataset/ReferenceMethod",
+      "inverse": "passesErrorTo",
+      "note": "Label-mediated: Model → Dataset → Method, never Model → Method directly"
+    },
+    {
+      "name": "hasSystematicFloor",
+      "domain": "ReferenceMethod",
+      "range": "MeasuredError(T1)",
+      "inverse": "floorOf"
+    },
+    {
+      "name": "measuredOn",
+      "domain": "MeasuredError",
+      "range": "BenchmarkDataset/Material",
+      "inverse": "bearsError"
+    },
+    {
+      "name": "amplifiedBy",
+      "domain": "MeasuredError",
+      "range": "AmplificationLaw",
+      "note": "Arrhenius: 60 meV → 10.34× at 298 K; 0.3 eV → 1.18×10⁵"
+    },
+    {
+      "name": "evidencedBy",
+      "domain": "Claim",
+      "range": "EvidenceUnit",
+      "inverse": "supports",
+      "note": "CiTO-aligned; one claim → one ledger entry"
+    },
+    {
+      "name": "countsAsOneWith",
+      "domain": "EvidenceUnit",
+      "range": "EvidenceUnit",
+      "symmetric": true
+    },
+    {
+      "name": "markedAs",
+      "domain": "Claim",
+      "range": "EpistemicMarker"
+    },
+    {
+      "name": "falsifiedBy",
+      "domain": "Claim",
+      "range": "SkepticEpisode/KillCriterion",
+      "inverse": "falsifies"
+    },
+    {
+      "name": "correctedBy",
+      "domain": "Claim",
+      "range": "ConflictRuling",
+      "inverse": "corrects"
+    },
+    {
+      "name": "corrects",
+      "domain": "CorrectionLever",
+      "range": "ErrorType/MeasuredError",
+      "inverse": "correctedBy"
+    },
+    {
+      "name": "demonstratedBy",
+      "domain": "CorrectionLever",
+      "range": "EvidenceUnit",
+      "inverse": "demonstrates"
+    },
+    {
+      "name": "readinessJudgedBy",
+      "domain": "CorrectionLever/DiscoveryChain",
+      "range": "ReadinessGrade"
+    },
+    {
+      "name": "interventionSize",
+      "domain": "CorrectionLever",
+      "range": "quantity"
+    },
+    {
+      "name": "transfersTo",
+      "domain": "CorrectionLever",
+      "range": "MaterialClass/Observable",
+      "inverse": "receivesTransfer",
+      "note": "Mandatory status: demonstrated-in-class / TRN adjacent-domain / PRP proposed"
+    },
+    {
+      "name": "gatedBy",
+      "domain": "DiscoveryChain",
+      "range": "AcceptanceTest",
+      "inverse": "accepts"
+    },
+    {
+      "name": "clearsGate",
+      "domain": "DiscoveryChain",
+      "range": "StageGate",
+      "note": "rating ∈ {met, partial, open, untested}"
+    },
+    {
+      "name": "killedBy",
+      "domain": "Program/milestone",
+      "range": "KillCriterion",
+      "inverse": "kills"
+    },
+    {
+      "name": "sequencedIn",
+      "domain": "milestone",
+      "range": "RoadmapPhase",
+      "inverse": "schedules"
+    },
+    {
+      "name": "anchorsTo",
+      "domain": "LupineMethod",
+      "range": "Observable"
+    },
+    {
+      "name": "verifiedBy",
+      "domain": "Claim",
+      "range": "FormalProof",
+      "inverse": "proves"
+    },
+    {
+      "name": "impossibleUnder",
+      "domain": "Claim",
+      "range": "FormalProof",
+      "inverse": "refutes"
+    },
+    {
+      "name": "funds",
+      "domain": "FundingProgram",
+      "range": "Program/MaterialClass",
+      "inverse": "fundedBy"
+    },
+    {
+      "name": "gatesOn",
+      "domain": "Program/Facility",
+      "range": "MaterialClass/DiscoveryChain",
+      "inverse": "gatedBy"
+    },
+    {
+      "name": "constrainedBy",
+      "domain": "venture/class",
+      "range": "ControlMeasure/TimeGate",
+      "inverse": "constrains"
+    },
+    {
+      "name": "partnersWith",
+      "domain": "venture",
+      "range": "Agent",
+      "note": "role-typed: synthesis → characterization → integration → manufacturing"
+    },
+    {
+      "name": "abates",
+      "domain": "ClimateTarget",
+      "range": "quantity (GtCO₂/yr)"
+    },
+    {
+      "name": "deploysBeside",
+      "domain": "LupineMethod",
+      "range": "Model",
+      "inverse": "acceptsOverlay"
+    }
+  ],
+  "freshnessLayer": {
+    "atlasDate": "2026-07-30",
+    "verified": [
+      "NSF SBIR 26-510: 2026-07-27 deadline passed; remaining 2026-11-04, 2027-03-04 (Project Pitch gate reopened 2026-06-02)",
+      "Rare-earth controls: April 2025 Announcement 18 in force; October 2025 package suspended through 2026-11-10; no extension announced",
+      "NSF X-Labs Topic 2 closed 2026-07-24 as anticipated",
+      "MS25, barrier benchmark (Digital Discovery 2026-03-30), Ko & Ong 2025, Deng 2025 confirmed as cited"
+    ],
+    "nextScheduledReverification": "2026-11-10 (rare-earth suspension)"
+  }
+}

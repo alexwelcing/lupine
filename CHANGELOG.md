@@ -16,12 +16,248 @@ Newest first. Dates are absolute.
 
 ---
 
+## 2026-06-19 - LUPI 0.3 Studio, molecule trust, and public-surface split prep
+
+- **Why.** The checkout had a full LUPI release pass, public-surface split plan,
+  Library export bundle, and molecule reliability work sitting locally. For a
+  major release, that work needed to become one reviewable checkpoint instead of
+  untracked/in-progress workspace state.
+- **What.**
+  - Consolidated the LUPI viewer as `atlas-view@0.3.0`: mobile-first controls,
+    larger touch targets, TanStack Query saved-view caching, improved social
+    share metadata, picnic/cinematic sharing, first-class Lupi Studio 360 world
+    backgrounds, background grading controls, and optimized environment media.
+  - Kept MCP commands text/agent driven for this release; experimental voice
+    control is not part of the LUPI 0.3 surface.
+  - Added source-backed gallery nomenclature for PubChem-derived molecules,
+    including PubChem CIDs, formulas, systematic names, aliases, and a local
+    reliability/backup audit tool.
+  - Added the public-surface repo-split map and extraction packets for
+    `lupine.science`, `lupi.live`, `library.lupine.science`, and the remaining
+    science/control-plane repo.
+  - Added `scripts/export_library_content.mjs` and generated the first
+    `exports/library-content/latest` bundle for the Library extraction path.
+  - Recorded `exports/` in the root ownership ledger so generated public
+    artifacts have an explicit owner.
+- **Results.**
+  - `pnpm audit:nomenclature`: 55 gallery entries, 24 nomenclature records, 0
+    errors, 8 non-blocking provenance warnings for older procedural/synthetic
+    examples.
+  - `pnpm --filter @atlas/ui test -- src/backgroundPresets.test.ts
+    src/store.test.ts src/gallery-data.test.ts`: 44 tests passed.
+  - `pnpm --filter @atlas/ui build`: passed.
+  - `pnpm --filter @atlas/web build`: passed and generated 8 static SEO routes.
+  - `pnpm verify:gallery --no-screenshot`: 20/20 checks passed, including real
+    dataset load.
+  - `pnpm verify:controls --no-screenshot`: desktop controls smoke passed.
+  - `pnpm verify:controls:mobile --no-screenshot`: mobile controls smoke
+    passed.
+  - `VERIFY_URL=http://127.0.0.1:5174/#/mcp pnpm verify:mcp-bridge`: passed
+    against the built web output served locally.
+  - `npm --prefix library-site run build`: built 55 articles.
+- **Next.**
+  - Open the release PR and keep local/CI/deploy/live truth separate.
+  - Resolve the eight older gallery provenance warnings before treating the
+    entire curated gallery as source-backed.
+  - Promote the public-surface split only after each extracted repo has its own
+    CI, deploy, secrets, and live health proof.
+
+## 2026-06-16 — Academic review of the Projection Law / IMMI suite, first fix pass
+
+- **Why.** An independent adversarial review flagged six MUST-FIX gates before any journal submission: the affine/smooth/finite-sample theorems were being oversold as deriving global claims; the MLIP factorial result needed permutation-floor nuance; theorem counts and PDF URLs were inconsistent across surfaces; and ORCID/DOI placeholders were still open.
+- **What.**
+  - Confirmed the formal core is unchanged and green: `lean-spec lake build` (2891 jobs, 77 build-locked theorems in `Vision.lean`, 0 `sorry`, 0 new axioms).
+  - Tightened the PRX and IMMI manuscripts: qualified the affine/gauge and smooth-local/global bridges, downplayed the finite-sample PR sample-complexity claim, and added permutation-floor wording to the abstract, Table 1, and the IMMI abstract.
+  - Rebuilt both PDFs (`paper2/projection-law.pdf`, `paper2/immi/projection-law-immi.pdf`) and submission bundles.
+  - Published the academic review at `docs/reviews/academic-review-projection-law-2026-06-16.md` and surfaced it as a first-class article on `library.lupine.science` via `library-site/scripts/catalog.js`.
+  - Added versioned PDF assets under `library-site/src/assets/papers/` and updated `working-papers.html` to serve them from the site instead of a stale GCS URL.
+  - Prepared submission collateral: `paper2/cover-letter.md`, `replication/error-geometry/.zenodo.json`, and updated `ZENODO_DEPOSIT.md`.
+- **Results.**
+  - `paper2/python quality_gate.py --lean` passes.
+  - `git diff --check` clean.
+  - Library site builds 54 articles; the review renders at `/#/read/academic-review-projection-law`.
+- **Next.**
+  - Fill the author ORCID and mint the Zenodo DOI (user action).
+  - Run the adversarial multi-agent review pass described in `TARGETING.md` and incorporate any findings.
+  - Update the external `lupine.science` marketing page (source not in this repo) to point to the new versioned PDF.
+
+## 2026-06-14 - LUPI controls palette rollout
+
+- **Why.** The viewer's advanced visual controls had outgrown the fixed side drawer. Users needed
+  a more deliberate inspection surface: one place to tune look, surface, world, and export settings
+  without covering the molecule or forcing repeated drawer navigation.
+- **What.**
+  - Replaced the desktop controls drawer with a dockable, resizable, collapsible tool palette.
+  - Consolidated Look, Surface, World, and Export into one tabbed Controls surface.
+  - Kept the mobile bottom sheet path intact while making desktop panel chrome consistent.
+  - Added a portless browser verification harness, `pnpm verify:controls`, that starts Vite on a
+    free local port, loads a real C60 molecule, checks all four control tabs, validates there is
+    only one close affordance per embedded panel, and exercises resize plus collapse/expand.
+- **Results.**
+  - Local production build is green: `pnpm --filter @atlas/web build`.
+  - Portless controls smoke is green on random local ports: `pnpm verify:controls -- --no-screenshot`.
+  - The rollout no longer depends on a manually running fixed-port dev server for verification.
+- **Next.**
+  - Ship through the normal push-to-main Cloud Run viewer deploy and verify `https://lupi.live`
+    against the same controls harness via `VERIFY_URL`.
+  - Add screenshot diffing once the visual-regression lane graduates from artifact capture to
+    assertions.
+
+## 2026-06-12 — Repo consolidation and onboarding sprint
+
+- **Why.** The repo had grown three overlapping Distill roots (`distiller/`, `lupine-distill/`, `atlas-distill/`) and a maze of docs that made it hard for new developers and research scientists to find the right entry point. The one-root-one-owner rule was being violated, and stale paths were still referenced by active code.
+- **What.**
+  - Consolidated Distill by runtime/language: `atlas-distill/` is the single Rust engine, `python/` is the single home for active Python packages, and retired material moved to `archive/` (`distiller-kb/`, `lupine-distill-rust/`, `lupine-dspy/`, `tools-retired/`).
+  - Updated every active import path and sys.path hack from the old roots to `python/`.
+  - Added onboarding docs: `docs/ONBOARDING.md`, `docs/ARCHITECTURE.md`, `docs/GLOSSARY.md`, `docs/FAQ.md`, `CONTRIBUTING.md`, `docs/HANDBOOK.md`, and per-root READMEs for `python/`, `gcp/`, `data/`, `atlas/`, `mlip_immi/`, `lean-spec/`, `glim-think/`, `library-site/`, `paper/`, and `tools/`.
+  - Added `scripts/bootstrap.ps1` / `bootstrap.sh`, extended the `justfile` with `verify`, `bootstrap`, `bootstrap-heavy`, and `docs-serve` recipes, and created GitHub issue/PR templates.
+  - Added `.github/workflows/verify.yml` (Python unit tests, Rust check, tools smoke, diff hygiene) and hardened `python/pyproject.toml` with realistic dependency extras matching the MLIP backend images.
+  - Audited `docs/` for stale/provisional files and added honest banners with redirects to current sources.
+- **Results.**
+  - `just verify` passes locally: Python unit tests (92 passed), Rust check, tools smoke tests (18 passed, 4 skipped), and `git diff --check` clean.
+  - `cargo test --manifest-path atlas-distill/Cargo.toml --bin atlas-distill` passes (100 tests).
+  - No hardcoded secrets found in active code; env vars are used for all tokens/keys.
+- **Next.**
+  - Continue migrating any remaining active `lupine-distill` / `distiller` references in historical docs.
+  - Add a Lean-proof CI job (cached) once the `lean-spec` first-build cost is acceptable.
+  - Consider moving reusable `mlip_immi/` logic into `python/lupine_distill/` with tests.
+
+## 2026-06-02 — CORRECTION: retracting / bounding the day's ribbon overclaims
+
+- **Why.** A working session produced several confident claims that do **not** hold up.
+  Logging the retraction here because self-correction is the method, and the entries below
+  (and a now-removed framing) overstated results — mostly because the work was done against a
+  **stale CSV export and the MPtrj MLIP-energy lane, disconnected from the live D1 ledger
+  corpus** the program actually runs on (OpenKIM/NIST elastic constants). Orientation to the
+  live system is now captured in the `lupine-system-architecture` skill + `docs/science/objects.md`.
+- **Retracted / bounded:**
+  1. *"Generalised the ribbon, first-principles" (`RibbonProjection.lean`)* — **withdrawn.** That
+     module is a **generic scalar operative-value lemma** (the same parabola already in
+     `ContextSpecificProof`), **not** a formalization of the hyper-ribbon (model manifold), the
+     participation-ratio measure, or the keystone configuration-space core. Its docstring is
+     corrected to say so; it does not "generalise the ribbon."
+  2. *"`broad_commitment_is_open` is TRUE under per-backend policy selection"* — **bounded to
+     near-meaningless.** That campaign measured **energy-MAE on MPtrj DFT rows**, a different lane
+     from the OpenKIM/NIST elastic-constant corpus the ribbon is built on; the distill "win" is an
+     **energy-block recalibration that leaves forces/stress/elastic unchanged**, so it does not
+     improve the potential for any force-driven use. Not a model improvement. See the banner on
+     `docs/glim-m3-upgrade/runs/live-campaign-results.md`.
+  3. *"A6 has real but conditional support"* — **demoted to untrusted.** The A6 test was a
+     5-structure MLIP-force pilot on the wrong lane **without the mandatory coupling-aware null**
+     (Cauchy relation / mechanical stability — Jackson–Somers / Archie). Suggestive at most; must
+     be redone on the live corpus with the coupling-aware null before it is believed.
+  4. *"category error, verified in code"* — **overstated** (corrected in the banner atop
+     `docs/science/keystone-reconciliation.md`): the repo's PR-of-error-covariance is the standard
+     sloppy-model effective-dimensionality measure, not an elementary mistake.
+- **What still stands:** the MiniMax M2.7→M3 **model-axis** engineering (typechecked, tested); the
+  **documentation architecture** (`docs/navigation.md`, `docs/science/objects.md`, ADR-0002); and
+  the reusable analysis **tools** (they were just pointed at the wrong data).
+- **Next.** Redo Q1/Q2/Q3 on the **live D1 ledger + GCS lake** (not exports), per-element /
+  matched-n, with coupling-aware nulls, writing results back into the ledger.
+
+## 2026-06-02 — Back to the keystone paper: the category error, and the first test of A6
+
+- **Why.** The "promote per-backend distill" framing was disinterested box-ticking — it ignored
+  that forces never moved. Went back and actually read *A Conditional Universality Theorem for
+  Error Geometry in MLIPs* (repo-root PDF) to ground the program in its own theory.
+- **What.** A reconciliation of the repo's ribbon claims against the paper
+  (`docs/science/keystone-reconciliation.md`), plus the **first direct empirical test of the paper's
+  load-bearing assumption A6** ("common-spatial-mode separability") — `tools/a6_alignment_test.py`,
+  run on the force-error field (3 MLIPs × 5 shared structures = 107 atoms, 5000 stratified
+  permutations), with three statistics vs a within-structure permutation null.
+- **Results.** Two findings. (1) **Category error, verified in code.** The repo computes the
+  participation ratio of the error-*vector* covariance in *observable* space
+  (`manifold.rs:43-112`, 3×3 over C11/C12/C44) and calls it a low-dimensional "error manifold." The
+  paper's theorem is about a *configuration-space* core `H ⊂ ℝᵐ`; its error *boundary* is dimension
+  `m−1`, **not** low; and a measure-theoretic concentration must not be called a manifold. The
+  bridge between the two (A6) was **assumed, never stated** — including in my own
+  `RibbonProjection.lean`, which formalizes the wrong (toy) object. (2) **A6 has real but
+  conditional support.** All three MLIPs concentrate force error on the **same atoms**
+  (`mag_corr` 0.70–0.86, p≤0.0002, well above the stratified null ~0.34) and err in correlated
+  directions (`atom_cos` 0.2–0.3, sig) — first force-level evidence for shared structure. But it's
+  heterogeneous: **CHGNet is a partial outlier** (whole-field alignment with MACE n.s., p=0.09),
+  independently echoing that CHGNet is the backend distill regressed. So it's the paper's
+  *perturbative/conditional* regime, not the unrestricted ribbon claim.
+- **Next.** Scale the A6 test to MatPES/MPtrj/OMat24 with a blocked bootstrap over materials (the
+  paper's protocol); estimate per-model perturbation `δ_M` (CHGNet largest); and formalize the
+  paper's actual `exact_tubular_universality` skeleton (reach + 1-D monotonicity) instead of the
+  `RibbonProjection` toy.
+
+## 2026-06-02 — Live 3-tier sim campaign: distill is energy-only + per-backend-policy-gated
+
+- **Why.** The M3 upgrade work configured a 3-tier Cloud-Run sim matrix (baseline /
+  distill-accuracy / distill-accuracy+speed) but had not *run* it. Run it for real on
+  GPUs to test the local-Opus T4 hypotheses about where the ribbon distill correction
+  fails, and to put hard numbers on `broad_commitment_is_open`.
+- **What.** 23 cells on `shed-489901` L4 jobs (`mlip-cell-{mace,chgnet,sevennet}`),
+  3 tiers × 3 backends × {energy_volume, forces}, plus global-tuned and per-backend-tuned
+  re-runs. Scored by `tools/mlip_sim_matrix.py` (Lean `cellValue`). Surfaced + fixed a real
+  bug (runner wants catalog id `mace-mp-0`, not `mace`). Cost ≈ $2. Full table:
+  `docs/glim-m3-upgrade/runs/live-campaign-results.md`.
+- **Results.** (1) **Baselines reproduce exactly** (MACE 0.41161, SevenNet 0.3997) and the
+  tuned MACE cell returns **0.2038** — the committed `maceEnergyDistill` to 4 decimals, same
+  policy hash. The harness is faithful. (2) **Distill is energy-only:** on `forces` the
+  correction changes the error by **0.0%** for all three backends — an exact confirmation of
+  the pre-registered local-Opus hypothesis **T4-H2** (energy/mechanical orthogonality).
+  (3) **Distill is policy-gated, not automatic:** a generic policy regresses the
+  already-accurate CHGNet (0.1035 → 0.1429, −38%); the global tuned policy still regresses it
+  (−28%); but CHGNet's **own** `signed-orientation` policy flips it to **+6.1%** (0.0971).
+  Net: distill beats baseline on all three backends **iff each uses its own policy** — TRUE
+  under per-backend selection, FALSE under any single global policy.
+- **Next / done same session.** **Generalised the ribbon, first-principles** —
+  `lean-spec/.../Theory/RibbonProjection.lean`. Rather than encode the campaign as per-backend
+  cases (the exception handling we explicitly avoid), it proves all three findings as corollaries
+  of one model-independent geometry: error = ribbon-parallel `par` ⟂ orthogonal `orth`, a scalar
+  correction `κ` acts only on `par`, and `ribbonGain = κ·(2·par − κ)` (the orthogonal sector
+  cancels). Corollaries: `orthogonal_error_gain_nonpos` (energy-only / forces 0%),
+  `ribbonGain_neg_of_antialigned` (CHGNet regression = misaligned κ, same parabola — no model
+  axiom), `ribbonGain_strictly_valuable` (MACE/SevenNet), and the capstone
+  `broad_value_no_model_exception` (two backends, same `par`, aligned κ ⇒ equal positive gain).
+  All proofs are `ring`/`nlinarith` over arbitrary reals; algebraic identities independently
+  verified in sympy (all green) **and the module is kernel-verified locally** — `lake build`
+  green, 0 sorry, after fetching the Mathlib cache. A second live result sharpened "energy-only"
+  to **"support-set-only"**: a stress-targeted policy also left stress ≈ unchanged, and the
+  `elastic_constants` distill cell *refused* (`requires ≥6 cases; found 0`) — the correction can
+  only move a property the support manifold covers, exactly `RibbonProjection`'s
+  orthogonal-sector law. Open: accelerate speed axis on `elastic_constants` with the
+  elastic-covering `train-plus-elastic-v1` support (re-running).
+
+## 2026-06-02 — Theorist deep-tier model upgrade: MiniMax M2.7 → M3, gated on a measured A/B
+
+- **Why.** MiniMax-M3 (released 2026-06-01) is the new top-tier deep model behind Theorist
+  hypothesis generation — 1M context, ~1/20 cost at long context, same `api.minimax.io/v1`
+  route. But a model swap is only trustworthy if the quality lift is *measured* against a fixed
+  research target, not assumed. The worker could pin a provider but not a specific MiniMax model,
+  so M2.7-vs-M3 was not even expressible.
+- **What.** (1) Added a **model axis**: `selectDeepRoute({modelOverride})` →
+  `generateResearchText({modelOverride})` → `miniMaxModel(env, id)`; `/ops/experiment-generate`
+  accepts `body.model`; `ab-oracle.ts --axis model`. Default flips to `MiniMax-M3` with
+  `MINIMAX_BASELINE_MODEL = "MiniMax-M2.7"` kept as the canonical A/B baseline (rollback = a
+  `MINIMAX_MODEL` secret change, no redeploy). (2) Pinned the **ribbon target theorem set**
+  (T1 `hyper_ribbon_bound_3d`, T2 `empirical_hyper_ribbon_holds`, T3 `ParameterBound`, T4
+  `broad_commitment_is_open`, the `cellValue` bridge) and a per-theorem **research strategy**.
+  (3) Built the **eval harness**: `glim-ribbon-theorems` dataset + `tools/glim_model_eval.py`
+  (generate→compare→report, mirrors ab-oracle's adopt/reject) with a **local-Opus** rubric.
+  (4) Configured the **3-tier Cloud-Run sim matrix** (`policies/model-sim-matrix.yml` +
+  `tools/mlip_sim_matrix.py`) — baseline / distill-accuracy / distill-accuracy+speed, cost-bounded
+  and `cellValue`-scored. Full process in `docs/glim-m3-upgrade/`.
+- **Results.** Model-axis change typechecks with **0 new type errors** (proven against the committed
+  original) and existing tests stay green (6/6); repo `lint:fast` clean. The **local Opus agent**,
+  run for real, generated rigorous competing hypotheses for T1/T3/T4 and — judging blind — scored
+  them 10/10 against a deliberately weak fixture at 0/10 (rubric discriminates). The sim driver,
+  scored on the committed MACE-energy artifacts, returns **cellValue 1.238** for distill_accuracy
+  (50.5% MAE cut, speedup 1.025) and reproduces the `AccuracyCommitment.lean` constants from the raw
+  artifact. No M2.7/M3 generation numbers were fabricated (this checkout has no MiniMax key).
+- **Next.** (1) With `INTERNAL_TASK_TOKEN` + a live key, run the M2.7→M3 generation and let the same
+  local-Opus judge emit the real verdict. (2) Launch the canary sim matrix on `Cu_fcc`/`Si_diamond`/
+  `Fe_bcc` to test the T4 "where does distill fail?" hypotheses and bound `broad_commitment_is_open`.
+
 ## 2026-05-29 — Neural-symbolic loop: GPU MLIP curvature → machine-checked Lean (0 sorry)
 
 - **Why.** Close the proof↔physics gap at the tightest coupling — a number measured on the GPU
   becoming a theorem the Lean kernel checks the next moment — and seed `atlas_theorems` *from the
   physics*, not by hand.
-- **What.** A three-node continuous loop (`lupine-distill/runtime/python/scripts/neural_symbolic/`):
+- **What.** A three-node continuous loop (`python/scripts/neural_symbolic/`):
   **Node 1** pits MACE-MP-0 vs CHGNet on a pure-shear C44 strain sweep of FCC Ni (the curvature
   observable) on the A4500; **Node 2** relays T3-REJECT breaches as OpenInference spans (the Python
   flywheel pattern — entirely off the glim-think `tsc` path; live OTLP when `PHOENIX_OTLP_RELAY_URL`
@@ -45,7 +281,7 @@ Newest first. Dates are absolute.
   zero-point ribbon lift" was unreproduced locally. With a real GPU (RTX A4500) on hand, prove
   the whole compute loop end to end.
 - **What.** Stood up a CUDA env (torch 2.6.0+cu124, torch_sim 0.6.0, cached MACE-MP-0) and wrote
-  `lupine-distill/runtime/python/scripts/run_ni_gpu_loop.py` — the GPU runner the Track B stub
+  `python/scripts/run_ni_gpu_loop.py` — the GPU runner the Track B stub
   defers to. It benchmarks MACE-MP-0 on the sealed Ni FCC EAM fixture via TorchSim, fits the
   zero-point distill correction on the *non-overlapping* support set, computes real elastic
   constants + `distill_v_uplift`, and drives the ATLAS formal gate. Also filled
@@ -100,19 +336,19 @@ Newest first. Dates are absolute.
   (3) Wire `distill_v_uplift` into the ODF promotion gate on a real model pair. (4) Resolve the ORB
   cu118 / UMA numpy-2 stack split flagged in the GCP `DECOMMISSION.md` before deleting legacy reqs.
 
-## 2026-05-18 — Fix mislabeled home-page preprint banner
+## 2026-05-18 — Fix mislabeled home-page working-paper banner
 
-- **Why.** The Library home banner promoted the preprint as *"Immigrant Scientist — The
+- **Why.** The Library home banner promoted the paper link as *"Immigrant Scientist — The
   Invisible Foundation — a data-driven analysis of immigrant contributions to US science."*
   The author is not an immigrant and that is not the paper. The copy was a confused
-  misreading of **IMMI** (*Integrating Materials and Manufacturing Innovation*, the target
-  journal) as "immigrant."
+  misreading of an internal IMMI working label as "immigrant."
 - **What.** Verified `/immi_paper.pdf` is in fact *The Causal Geometry of Prediction Errors
   in Interatomic Potentials* (Welcing, Lupine Science). Corrected the
   `home.preprint.*` strings (EN + ZH) in `i18n.js` to the real title/abstract; the link was
   always correct.
-- **Results.** Banner now reads "IMMI Preprint — The Causal Geometry of Prediction Errors in
-  Interatomic Potentials." No "immigrant" copy remains in the build.
+- **Results.** Banner now identifies the paper as a working paper in preparation:
+  *The Causal Geometry of Prediction Errors in Interatomic Potentials*. No "immigrant" copy
+  remains in the build.
 - **Next.** Audit other recovered hardcoded copy for the same era of stale text.
 
 ## 2026-05-19 — paper-build auto-dispatches the Library deploy
@@ -130,7 +366,7 @@ Newest first. Dates are absolute.
   result; 0 raw-LaTeX leaks).
 - **Next.** None — the paper pipeline is closed-loop and opt-in.
 
-## 2026-05-18 — Opt-in CI to rebuild the preprint PDF
+## 2026-05-18 — Opt-in CI to rebuild the working-paper PDF
 
 - **Why.** The broken-PDF fix was a one-time swap; the root cause — a stale/broken
   local PDF can be the served artifact — remained. But the paper shouldn't rebuild on
@@ -148,7 +384,7 @@ Newest first. Dates are absolute.
 - **Next.** Optionally regenerate figures in the same run once the `atlas-distill`
   JSON inputs are present in CI.
 
-## 2026-05-18 — Fix the broken preprint PDF
+## 2026-05-18 — Fix the broken working-paper PDF
 
 - **Why.** The linked `/immi_paper.pdf` was the stale `immi-paper-local.pdf` build: the
   abstract contained **raw, unrendered LaTeX** (`\noindent\textbf{Purpose:}`, `$C_{11}$`,
@@ -159,7 +395,7 @@ Newest first. Dates are absolute.
   science (includes the d-band sample-size-confounder result). No LaTeX engine in this
   environment to recompile the 1-day-newer `.tex`, so swapped in the clean `-latest`
   build as `library-site/src/immi_paper.pdf`.
-- **Results.** The preprint now renders as a proper paper, ~785 KB smaller. Verified the
+- **Results.** The working paper now renders as a proper paper, ~785 KB smaller. Verified the
   built `dist/immi_paper.pdf` has 0 raw-LaTeX leaks.
 - **Next.** Rebuild from `paper/immi-paper.tex` via `make` in a LaTeX environment if the
   one-day-newer source has changes worth shipping; wire the paper build into CI so a
@@ -168,7 +404,7 @@ Newest first. Dates are absolute.
 ## 2026-05-18 — Remove Entity Graph; fix callout/filter alignment
 
 - **Why.** The Entity Graph (force-graph) was unwanted weight, and the status-filter
-  pills and the preprint/featured callouts hugged the left edge while the rest of the
+  pills and the paper/featured callouts hugged the left edge while the rest of the
   page is a centered 720px column — they used hardcoded inline `margin:0 16px` that
   overrode the column's `margin:0 auto`.
 - **What.** Deleted the Entity Graph end to end: the topbar button and `<dialog>` from

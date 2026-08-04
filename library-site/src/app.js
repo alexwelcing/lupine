@@ -196,6 +196,20 @@ async function renderHome() {
     hero.append(stats);
     VIEW.append(hero);
 
+    // LUPINE CORRECTION OPERATOR — HEADLINE BANNER
+    const headlineBanner = el('section', { class: 'callout' });
+    const headlineLink = el('a', { class: 'callout-box callout-preprint', href: '#/read/lupine-correction-operator', style: 'border-color:var(--lupine-300);background:linear-gradient(135deg,rgba(99,102,241,0.08) 0%,rgba(168,85,247,0.08) 100%);' });
+    headlineLink.append(el('span', { style: 'font-size:0.75rem;text-transform:uppercase;color:var(--lupine-300);font-weight:700;letter-spacing:0.05em;' }, 'NATURE COMPUTATIONAL SCIENCE / NPJ'));
+    headlineLink.append(el('strong', { style: 'font-size:1.25rem;color:var(--lupine-200);' }, 'Lupine: The Universal Correction Operator'));
+    headlineLink.append(el('span', { style: 'font-size:0.95rem;opacity:0.85;font-weight:500;' }, '1 model + 1D geometric law beats 5-model ensemble by 2.83× MSE. 80% compute reduction. 93% valid coverage.'));
+    const headlineStats = el('div', { style: 'display:flex;gap:16px;margin-top:10px;font-size:0.8rem;' });
+    headlineStats.append(el('span', { style: 'color:var(--lupine-300);font-weight:700;' }, '2.83× better MSE'));
+    headlineStats.append(el('span', { style: 'color:var(--green-400);font-weight:700;' }, '80% less compute'));
+    headlineStats.append(el('span', { style: 'color:var(--accent);font-weight:700;' }, '93% valid UQ'));
+    headlineLink.append(headlineStats);
+    headlineBanner.append(headlineLink);
+    VIEW.append(headlineBanner);
+
     // Preprint Banner — aligned to the 720px content column via .callout.
     const paperBanner = el('section', { class: 'callout' });
     const bannerLink = el('a', { class: 'callout-box callout-preprint', href: '/immi_paper.pdf', target: '_blank' });
@@ -206,17 +220,18 @@ async function renderHome() {
     VIEW.append(paperBanner);
 
     // Interactive theory report — a fully typeset, explorable companion to the
-    // preprint (live hyper-ribbon explorer, KaTeX math, regulator FSM).
+    // preprint (theorem gate, live hyper-ribbon explorer, regulator FSM).
     const reportBanner = el('section', { class: 'callout' });
-    const reportLink = el('a', { class: 'callout-box callout-featured', href: '/reports/growing-hyper-ribbon.html' });
-    reportLink.append(el('span', { style: 'font-size:0.75rem;text-transform:uppercase;color:var(--lupine-300);font-weight:700;letter-spacing:0.05em;' }, '◆ Interactive series · live GPU showcase'));
+    const reportLink = el('a', { class: 'callout-box callout-featured', href: '/reports/hyper-ribbon-theorem.html' });
+    reportLink.append(el('span', { style: 'font-size:0.75rem;text-transform:uppercase;color:var(--lupine-300);font-weight:700;letter-spacing:0.05em;' }, 'Interactive theorem demo + live GPU showcase'));
     reportLink.append(el('strong', { style: 'font-size:1.1rem;' }, 'Growing the Hyper-Ribbon'));
-    reportLink.append(el('span', { style: 'font-size:0.9rem;opacity:0.75;' }, 'Part 1 framework · Part 2 real-data validation · Compute Log (experiments actually run).'));
+    reportLink.append(el('span', { style: 'font-size:0.9rem;opacity:0.75;' }, 'Start with the projected-ribbon theorem gate, then continue to framework, validation, compute log, and observatory.'));
     const reportLinks = el('div', { style: 'display:flex;flex-wrap:wrap;gap:10px;margin-top:6px;' });
+    reportLinks.append(el('a', { href: '/reports/hyper-ribbon-theorem.html', style: 'font-size:0.8rem;font-weight:700;color:var(--accent-ink);background:var(--accent);text-decoration:none;border:1px solid var(--accent);padding:4px 12px;border-radius:999px;' }, 'Theorem Demo ->'));
     reportLinks.append(el('a', { href: '/reports/growing-hyper-ribbon.html', style: 'font-size:0.8rem;font-weight:700;color:var(--accent);text-decoration:none;border:1px solid var(--accent);padding:4px 12px;border-radius:999px;' }, 'Part 1 →'));
     reportLinks.append(el('a', { href: '/reports/growing-hyper-ribbon-part-2.html', style: 'font-size:0.8rem;font-weight:700;color:var(--accent);text-decoration:none;border:1px solid var(--accent);padding:4px 12px;border-radius:999px;' }, 'Part 2 →'));
     reportLinks.append(el('a', { href: '/reports/growing-hyper-ribbon-experiments.html', style: 'font-size:0.8rem;font-weight:700;color:var(--accent);text-decoration:none;border:1px solid var(--accent);padding:4px 12px;border-radius:999px;' }, 'Compute Log →'));
-    reportLinks.append(el('a', { href: '/reports/growing-hyper-ribbon-observatory.html', style: 'font-size:0.8rem;font-weight:700;color:var(--accent-ink);background:var(--accent);text-decoration:none;border:1px solid var(--accent);padding:4px 12px;border-radius:999px;' }, '◆ Observatory →'));
+    reportLinks.append(el('a', { href: '/reports/growing-hyper-ribbon-observatory.html', style: 'font-size:0.8rem;font-weight:700;color:var(--accent);text-decoration:none;border:1px solid var(--accent);padding:4px 12px;border-radius:999px;' }, 'Observatory →'));
     reportLinks.append(el('a', { href: '#/read/mlip-cloud-baseline-distill', style: 'font-size:0.8rem;font-weight:700;color:var(--accent);text-decoration:none;border:1px solid var(--accent);padding:4px 12px;border-radius:999px;' }, 'MLIP Cloud Run ->'));
     reportLink.append(reportLinks);
     reportBanner.append(reportLink);

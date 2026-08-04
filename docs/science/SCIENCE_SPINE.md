@@ -31,10 +31,11 @@ the front door should not read like a direct investor pitch.
 | --- | --- | --- |
 | Error geometry | Do prediction errors form stable low-dimensional structure across potentials, elements, properties, and structure families? | IMMI analysis, hyper-ribbon reports, LUPI evidence views |
 | Sloppy-model structure | Which stiff and sloppy directions explain model failure? | Sloppy-model reports, Distill policy, participation-ratio analysis |
-| Cross-MLIP transfer | Do foundation MLIPs inherit, rotate, or escape the classical error geometry? | `mlip_immi/`, cross-MLIP alignment payloads, conjecture ledger |
+| Cross-MLIP transfer | Do foundation MLIPs inherit, rotate, or escape the classical error geometry? | `mlip_immi/`, cross-MLIP alignment payloads, Kimi v7 Cloud Run import, conjecture ledger |
 | Causal and statistical validity | Which trends survive matched samples, bootstrap controls, stratification, and contamination checks? | Refutation notes, Simpson checks, changelog, critique responses |
 | Claim lifecycle | Which hypotheses are proposed, supported, refuted, corrected, or open? | Lupine Library, `CHANGELOG.md`, `docs/conjectures/ledger.md` |
-| Formal specification | Which claims can become proof obligations or theorem-shaped validation? | `lean-spec/`, formal proof ledger, publication templates |
+| Formal specification | Which claims can become proof obligations or theorem-shaped validation? | `lean-spec/`, formal proof ledger, Kimi weak/strong acceleration split, publication templates |
+| Review-ready manuscripts | Which advanced paper drafts are mature enough for human review but not yet submission-ready? | `paper/review-ready/`, Kimi import review ledger, formal proof ledger |
 | Agentic research loop | Can agents propose, test, broadcast, and correct claims without losing provenance? | `glim-think/`, Phoenix traces, evidence campaigns |
 
 ## Use Pattern

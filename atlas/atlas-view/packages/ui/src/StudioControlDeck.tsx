@@ -1,15 +1,18 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { CSSProperties, KeyboardEvent as ReactKeyboardEvent, PointerEvent as ReactPointerEvent, ReactNode } from 'react';
+import { usePressSpring } from './hooks/usePressSpring';
 import { getElementSpec } from '@atlas/core';
 import type { ColormapName, RenderStyle } from '@atlas/core/types';
 import { MATERIAL_SCENES, type MaterialScene } from '@atlas/scene/materials';
 import { COLOR_SCHEMES, SCHEME_ORDER, type ColorSchemeId } from './coloring';
-import { isClickSoundEnabled, playClick, setClickSoundEnabled, subscribeClickSound } from './lib/clickSound';
 import { useStore, type FilterShellPreset, type FilterShellShape } from './store';
 import {
+  BG_PRESETS,
   BG_GRADIENT_PRESETS,
   BG_TEXTURE_CATEGORIES,
   BG_VIDEO_PRESETS,
+  getBgBadge,
+  getBgPoster,
   type BgPresetWithId,
 } from './backgroundPresets';
 
@@ -39,6 +42,8 @@ const PALETTE_OPTIONS: Array<{ id: ColormapName; label: string; accent: string }
   { id: 'cyberpunk', label: 'Cyber', accent: '#e879f9' },
   { id: 'grayscale', label: 'Gray', accent: '#cbd5e1' },
 ];
+
+const ATOM_COLOR_SCHEMES = SCHEME_ORDER.filter(scheme => scheme !== 'botanical');
 
 const COLORMAP_PREVIEWS: Partial<Record<ColormapName, string>> = {
   viridis: 'linear-gradient(90deg, #440154, #21918c, #fde725)',
@@ -93,12 +98,14 @@ export function StudioControlDeck({
   bottomOffset = 0,
   maxHeight = 'none',
   variant = 'overlay',
+  showCloseButton = true,
 }: {
   mode: StudioDeckMode;
   onClose: () => void;
   bottomOffset?: number;
   maxHeight?: string;
   variant?: 'overlay' | 'drawer';
+  showCloseButton?: boolean;
 }) {
   const isDrawer = variant === 'drawer';
   const postprocessPreset = useStore(s => s.postprocessPreset);
@@ -146,6 +153,23 @@ export function StudioControlDeck({
 
   const backgroundPreset = useStore(s => s.backgroundPreset);
   const setBackgroundPreset = useStore(s => s.setBackgroundPreset);
+  const backgroundMotionPaused = useStore(s => s.backgroundMotionPaused);
+  const setBackgroundMotionPaused = useStore(s => s.setBackgroundMotionPaused);
+  const backgroundMotionSpeed = useStore(s => s.backgroundMotionSpeed);
+  const setBackgroundMotionSpeed = useStore(s => s.setBackgroundMotionSpeed);
+  const backgroundOpacity = useStore(s => s.backgroundOpacity);
+  const setBackgroundOpacity = useStore(s => s.setBackgroundOpacity);
+  const backgroundBrightness = useStore(s => s.backgroundBrightness);
+  const setBackgroundBrightness = useStore(s => s.setBackgroundBrightness);
+  const backgroundSaturation = useStore(s => s.backgroundSaturation);
+  const setBackgroundSaturation = useStore(s => s.setBackgroundSaturation);
+  const backgroundContrast = useStore(s => s.backgroundContrast);
+  const setBackgroundContrast = useStore(s => s.setBackgroundContrast);
+  const backgroundYawDegrees = useStore(s => s.backgroundYawDegrees);
+  const setBackgroundYawDegrees = useStore(s => s.setBackgroundYawDegrees);
+  const backgroundPitchDegrees = useStore(s => s.backgroundPitchDegrees);
+  const setBackgroundPitchDegrees = useStore(s => s.setBackgroundPitchDegrees);
+  const resetBackgroundAdjustments = useStore(s => s.resetBackgroundAdjustments);
   const filterShellShape = useStore(s => s.filterShellShape);
   const setFilterShellShape = useStore(s => s.setFilterShellShape);
   const filterShellPreset = useStore(s => s.filterShellPreset);
@@ -158,39 +182,35 @@ export function StudioControlDeck({
   const toggleAxes = useStore(s => s.toggleAxes);
   const showCell = useStore(s => s.showCell);
   const toggleCell = useStore(s => s.toggleCell);
+  const encodeToURL = useStore(s => s.encodeToURL);
   const file = useStore(s => s.file);
   const frame = useStore(s => s.frame);
   const [selectedAtomicNumber, setSelectedAtomicNumber] = useState<number | null>(null);
+  const [shareStatus, setShareStatus] = useState<'idle' | 'copied' | 'failed'>('idle');
+  const shareTimerRef = useRef<number | null>(null);
 
   const materialScenes = useMemo(
     () => MATERIAL_SCENES.filter(scene => FEATURED_SCENE_IDS.includes(scene.id)),
     [],
   );
   const mathPresets = useMemo(() => categoryPresets('Mathematical Fields'), []);
-  const publicationPresets = useMemo(() => categoryPresets('Publication Contexts').slice(0, 8), []);
-  const signaturePresets = useMemo(() => categoryPresets('Signature Stills').slice(0, 8), []);
+  const worldPresets = useMemo(() => categoryPresets('360 Worlds'), []);
+  const publicationPresets = useMemo(() => categoryPresets('Publication Contexts'), []);
+  const signaturePresets = useMemo(() => categoryPresets('Signature Stills'), []);
   const gradientPresets = useMemo(
     () => BG_GRADIENT_PRESETS.filter(preset => ['white', 'deep', 'void', 'fog', 'blueprint', 'warm'].includes(preset.id)),
     [],
   );
-  const backgroundGroups = useMemo(() => [
-    { label: 'Math', presets: mathPresets },
-    { label: 'Motion', presets: BG_VIDEO_PRESETS.slice(0, 8) },
+  const worldLibraryGroups = useMemo(() => [
+    { label: '360 Worlds', presets: worldPresets },
+    { label: 'Motion Loops', presets: BG_VIDEO_PRESETS },
     { label: 'Publication', presets: publicationPresets },
+    { label: 'Math Fields', presets: mathPresets },
     { label: 'Signature', presets: signaturePresets },
     { label: 'Base', presets: gradientPresets },
-  ], [gradientPresets, mathPresets, publicationPresets, signaturePresets]);
-  const selectedMaterialScene = useMemo(
-    () => materialScenes.find(scene => scene.id === materialScene) ?? materialScenes[0],
-    [materialScene, materialScenes],
-  );
-  const selectedBackground = useMemo(() => {
-    for (const group of backgroundGroups) {
-      const preset = group.presets.find(item => item.id === backgroundPreset);
-      if (preset) return preset;
-    }
-    return gradientPresets[0];
-  }, [backgroundGroups, backgroundPreset, gradientPresets]);
+  ], [gradientPresets, mathPresets, publicationPresets, signaturePresets, worldPresets]);
+  const activeBackgroundPreset = BG_PRESETS[backgroundPreset];
+  const activeBackgroundPresetWithId = activeBackgroundPreset ? { id: backgroundPreset, ...activeBackgroundPreset } : undefined;
   const activeBackgroundIsVideo = useMemo(
     () => BG_VIDEO_PRESETS.some(preset => preset.id === backgroundPreset),
     [backgroundPreset],
@@ -215,6 +235,12 @@ export function StudioControlDeck({
   const activeElementHasOverride = activeElement
     ? Boolean(elementColorOverrides[activeElement.atomicNumber])
     : false;
+  const atomColorSchemes = useMemo(
+    () => colorScheme === 'botanical'
+      ? [...ATOM_COLOR_SCHEMES, 'botanical' as ColorSchemeId]
+      : ATOM_COLOR_SCHEMES,
+    [colorScheme],
+  );
 
   useEffect(() => {
     if (presentElements.length === 0) {
@@ -226,9 +252,24 @@ export function StudioControlDeck({
     }
   }, [presentElements, selectedAtomicNumber]);
 
+  useEffect(() => () => {
+    if (shareTimerRef.current !== null) window.clearTimeout(shareTimerRef.current);
+  }, []);
+
   const handleRandomVideo = () => {
     if (BG_VIDEO_PRESETS.length === 0) return;
     const next = BG_VIDEO_PRESETS[Math.floor(Math.random() * BG_VIDEO_PRESETS.length)];
+    setBackgroundPreset(next.id);
+  };
+
+  const handleRandomWorld = () => {
+    if (worldPresets.length === 0) return;
+    // Avoid re-picking the current world so the user always sees a different
+    // background load. Fall back to the current one only if there's a single world.
+    const candidates = worldPresets.length > 1
+      ? worldPresets.filter(p => p.id !== backgroundPreset)
+      : worldPresets;
+    const next = candidates[Math.floor(Math.random() * candidates.length)];
     setBackgroundPreset(next.id);
   };
 
@@ -267,13 +308,18 @@ export function StudioControlDeck({
     }
   };
 
-  // Procedural-click preference (module-local, not store state — see lib/clickSound).
-  const [clickSound, setClickSound] = useState(isClickSoundEnabled());
-  useEffect(() => subscribeClickSound(setClickSound), []);
-  const toggleClickSound = () => {
-    const next = !clickSound;
-    setClickSoundEnabled(next);
-    if (next) playClick(); // preview the tick when enabling, inside this user gesture
+  const copyLookLink = async () => {
+    if (typeof window === 'undefined') return;
+    const url = new URL(window.location.href);
+    url.searchParams.set('s', encodeToURL());
+    try {
+      await navigator.clipboard.writeText(url.toString());
+      setShareStatus('copied');
+    } catch {
+      setShareStatus('failed');
+    }
+    if (shareTimerRef.current !== null) window.clearTimeout(shareTimerRef.current);
+    shareTimerRef.current = window.setTimeout(() => setShareStatus('idle'), 1800);
   };
 
   const title = mode === 'look' ? 'Look' : mode === 'surface' ? 'Surface' : 'World';
@@ -332,18 +378,83 @@ export function StudioControlDeck({
         .lupi-deck-grid {
           display: grid;
           grid-template-columns: repeat(3, minmax(0, 1fr));
-          gap: 5px;
+          gap: 8px;
           align-items: stretch;
         }
         .lupi-studio-segments {
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(104px, 1fr));
-          gap: 4px;
+          gap: 6px;
         }
         .lupi-studio-slider-grid {
           display: grid;
           grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 5px;
+          gap: 7px;
+        }
+        .lupi-world-carousel {
+          position: relative;
+          min-width: 0;
+          overflow: hidden;
+          border-radius: 8px;
+          isolation: isolate;
+        }
+        .lupi-world-carousel::before,
+        .lupi-world-carousel::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          width: 30px;
+          pointer-events: none;
+          z-index: 2;
+          transition: opacity 160ms ease;
+        }
+        .lupi-world-carousel::before {
+          left: 0;
+          background: linear-gradient(90deg, rgba(2, 6, 23, 0.72), rgba(2, 6, 23, 0));
+          opacity: 0.58;
+        }
+        .lupi-world-carousel::after {
+          right: 0;
+          background: linear-gradient(270deg, rgba(2, 6, 23, 0.78), rgba(2, 6, 23, 0));
+          opacity: 0.74;
+        }
+        .lupi-world-carousel[data-at-start="true"]::before,
+        .lupi-world-carousel[data-at-end="true"]::after {
+          opacity: 0.12;
+        }
+        .lupi-world-rail {
+          --lupi-world-tile-width: clamp(132px, 22vw, 156px);
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: var(--lupi-world-tile-width);
+          grid-template-rows: 78px;
+          gap: 8px;
+          overflow-x: auto;
+          overflow-y: hidden;
+          overscroll-behavior-x: contain;
+          padding: 1px 30px 1px 1px;
+          scroll-padding-inline: 1px 30px;
+          scroll-snap-type: x mandatory;
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+          -webkit-overflow-scrolling: touch;
+        }
+        .lupi-world-rail::-webkit-scrollbar {
+          display: none;
+          width: 0;
+          height: 0;
+        }
+        .lupi-world-rail:focus-visible {
+          outline: 2px solid rgba(30, 220, 224, 0.62);
+          outline-offset: 2px;
+        }
+        .lupi-world-tile {
+          width: 100%;
+          height: 78px;
+          box-sizing: border-box;
+          scroll-snap-align: start;
+          scroll-snap-stop: always;
         }
         .lupi-native-color::-webkit-color-swatch-wrapper {
           padding: 0;
@@ -354,15 +465,27 @@ export function StudioControlDeck({
         }
         .lupi-studio-deck-drawer .lupi-deck-grid {
           grid-template-columns: 1fr;
-          gap: 6px;
+          gap: 7px;
+        }
+        .lupi-studio-deck-drawer .lupi-studio-segments {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
         }
         @media (max-width: 768px) {
           .lupi-deck-grid {
-            gap: 5px;
+            gap: 8px;
           }
           .lupi-studio-slider-grid {
             grid-template-columns: 1fr;
-            gap: 4px;
+            gap: 7px;
+          }
+          .lupi-world-rail {
+            --lupi-world-tile-width: clamp(126px, 44vw, 152px);
+            grid-template-rows: 76px;
+            padding-right: 24px;
+            scroll-padding-right: 24px;
+          }
+          .lupi-world-tile {
+            height: 76px;
           }
         }
       `}</style>
@@ -382,34 +505,55 @@ export function StudioControlDeck({
           boxShadow: isDrawer ? 'none' : '0 24px 80px rgba(0,0,0,0.48), inset 0 1px 0 rgba(255,255,255,0.08)',
           backdropFilter: isDrawer ? 'none' : 'blur(18px)',
           WebkitBackdropFilter: isDrawer ? 'none' : 'blur(18px)',
-          padding: isDrawer ? 8 : 6,
+          padding: isDrawer ? '8px 10px 10px' : 8,
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, marginBottom: 6 }}>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: 10,
+          marginBottom: isDrawer ? 6 : 8,
+          padding: isDrawer ? '0 0 1px' : '2px 2px 0',
+        }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, minWidth: 0 }}>
             <div style={{
-              width: 6,
-              height: 26,
+              width: isDrawer ? 5 : 6,
+              height: isDrawer ? 26 : 30,
               borderRadius: 3,
               background: 'linear-gradient(180deg, #1edce0, #f59e0b)',
               boxShadow: '0 0 16px rgba(30,220,224,0.28)',
               flexShrink: 0,
             }} />
             <div style={{ minWidth: 0 }}>
-              <div style={{ color: '#f8fafc', fontSize: 12, fontWeight: 780, lineHeight: 1.1 }}>{title}</div>
-              <div style={{ color: '#94a3b8', fontSize: 9, fontFamily: 'var(--font-mono)', textTransform: 'uppercase', lineHeight: 1.25 }}>
+              <div style={{ color: '#f8fafc', fontSize: isDrawer ? 12 : 13, fontWeight: 820, lineHeight: 1.1 }}>{title}</div>
+              <div style={{
+                color: '#94a3b8',
+                fontSize: isDrawer ? 9 : 10,
+                fontFamily: 'var(--font-mono)',
+                textTransform: 'uppercase',
+                lineHeight: 1.25,
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+                fontVariantNumeric: 'tabular-nums',
+              }}>
                 {subtitle}
               </div>
             </div>
           </div>
-          <button
-            type="button"
-            onClick={onClose}
-            title="Close"
-            style={iconButtonStyle}
-          >
-            <IconClose />
-          </button>
+          {showCloseButton && (
+            <button
+              type="button"
+              aria-label={`Close ${title} controls`}
+              onClick={onClose}
+              title="Close"
+              className="lupine-icon-btn"
+              style={{ width: 28, height: 28 }}
+            >
+              <IconClose />
+            </button>
+          )}
         </div>
 
         {mode === 'look' && (
@@ -436,24 +580,43 @@ export function StudioControlDeck({
                 onChange={setPostprocessIntensity}
                 format={value => `${Math.round(value * 100)}%`}
               />
+              <button
+                type="button"
+                onClick={copyLookLink}
+                style={{
+                  minHeight: 40,
+                  borderRadius: 8,
+                  border: '1px solid rgba(167,243,208,0.34)',
+                  background: shareStatus === 'copied' ? 'rgba(16,185,129,0.16)' : 'rgba(15,23,42,0.28)',
+                  color: shareStatus === 'failed' ? '#fecaca' : '#cbd5e1',
+                  fontSize: 11,
+                  fontWeight: 760,
+                  textAlign: 'left',
+                  padding: '0 12px',
+                  cursor: 'pointer',
+                  touchAction: 'manipulation',
+                }}
+              >
+                {shareStatus === 'copied' ? 'Copied look link' : shareStatus === 'failed' ? 'Copy failed' : 'Copy look link'}
+              </button>
             </ControlGroup>
 
             <ControlGroup title="Atoms">
               <div className="lupi-studio-segments">
-                {SCHEME_ORDER.map(schemeId => {
+                {atomColorSchemes.map(schemeId => {
                   const scheme = COLOR_SCHEMES[schemeId];
                   return (
                     <SegmentButton
                       key={scheme.id}
                       label={scheme.label}
                       active={colorScheme === scheme.id}
-                      accent={scheme.id === 'botanical' ? '#69f0ae' : '#1edce0'}
+                      accent={scheme.id === 'botanical' ? '#69f0ae' : scheme.id === 'uniform' ? '#f59e0b' : '#1edce0'}
                       onClick={() => applyColorScheme(scheme.id as ColorSchemeId)}
                     />
                   );
                 })}
               </div>
-              {availableProperties.length > 0 && (
+              {colorScheme === 'property' && availableProperties.length > 0 && (
                 <CompactSelect
                   label="Property"
                   value={colorProperty ?? ''}
@@ -467,50 +630,46 @@ export function StudioControlDeck({
               )}
             </ControlGroup>
 
-            <ControlGroup title="Color">
-              <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 0.9fr) minmax(0, 1.1fr)', gap: 5, minWidth: 0 }}>
+            <ControlGroup title={colorScheme === 'element' ? 'Elements' : colorScheme === 'uniform' ? 'Color' : 'Palette'}>
+              {colorScheme === 'uniform' && (
                 <ColorPicker
                   label="Uniform"
                   value={uniformAtomColor}
                   active={colorScheme === 'uniform'}
                   onChange={applyUniformAtomColor}
                 />
-                {activeElement && (
-                  <ElementColorPicker
-                    active={colorScheme === 'element' || activeElementHasOverride}
-                    atomicNumber={activeElement.atomicNumber}
-                    value={activeElementColor}
-                    options={presentElements.map(element => ({
-                      value: element.atomicNumber,
-                      label: `${element.spec.symbol} ${element.atomicNumber}`,
-                    }))}
-                    overridden={activeElementHasOverride}
-                    onSelect={setSelectedAtomicNumber}
-                    onChange={(color) => applyElementColor(activeElement.atomicNumber, color)}
-                    onReset={() => {
-                      resetElementColorOverride(activeElement.atomicNumber);
-                      setColorScheme('element');
-                    }}
-                  />
-                )}
-              </div>
-              <div style={paletteRailStyle}>
-                {PALETTE_OPTIONS.map(option => (
-                  <SwatchButton
-                    key={option.id}
-                    label={option.label}
-                    active={colormap === option.id && colorScheme !== 'uniform'}
-                    background={COLORMAP_PREVIEWS[option.id] ?? option.accent}
-                    onClick={() => applyColormap(option.id)}
-                  />
-                ))}
-              </div>
-              <SegmentButton
-                label={clickSound ? 'Clicks on' : 'Clicks off'}
-                active={clickSound}
-                accent="#f59e0b"
-                onClick={toggleClickSound}
-              />
+              )}
+              {colorScheme === 'element' && activeElement && (
+                <ElementColorPicker
+                  active={colorScheme === 'element' || activeElementHasOverride}
+                  atomicNumber={activeElement.atomicNumber}
+                  value={activeElementColor}
+                  options={presentElements.map(element => ({
+                    value: element.atomicNumber,
+                    label: `${element.spec.symbol} ${element.atomicNumber}`,
+                  }))}
+                  overridden={activeElementHasOverride}
+                  onSelect={setSelectedAtomicNumber}
+                  onChange={(color) => applyElementColor(activeElement.atomicNumber, color)}
+                  onReset={() => {
+                    resetElementColorOverride(activeElement.atomicNumber);
+                    setColorScheme('element');
+                  }}
+                />
+              )}
+              {(colorScheme === 'property' || colorScheme === 'family' || colorScheme === 'botanical') && (
+                <div style={paletteRailStyle}>
+                  {PALETTE_OPTIONS.map(option => (
+                    <SwatchButton
+                      key={option.id}
+                      label={option.label}
+                      active={colormap === option.id}
+                      background={COLORMAP_PREVIEWS[option.id] ?? option.accent}
+                      onClick={() => applyColormap(option.id)}
+                    />
+                  ))}
+                </div>
+              )}
             </ControlGroup>
           </div>
         )}
@@ -539,15 +698,6 @@ export function StudioControlDeck({
                 }}
                 options={materialScenes.map(scene => ({ value: scene.id, label: `${scene.label} / ${scene.materialPreset}` }))}
               />
-              {selectedMaterialScene && (
-                <div style={{
-                  height: 22,
-                  borderRadius: 5,
-                  border: `1px solid ${selectedMaterialScene.accentColor}66`,
-                  background: selectedMaterialScene.cardGradient,
-                  boxShadow: `inset 0 0 18px ${selectedMaterialScene.accentColor}18`,
-                }} />
-              )}
             </ControlGroup>
 
             <ControlGroup title="Material">
@@ -557,45 +707,92 @@ export function StudioControlDeck({
                 <CompactSlider label="Rough" value={surfaceRoughness} min={-1} max={1} step={0.02} onChange={setSurfaceRoughness} />
                 <CompactSlider label="Polish" value={surfacePolish} min={-1} max={1} step={0.02} onChange={setSurfacePolish} />
                 <CompactSlider label="Coat" value={surfaceClearcoat} min={0} max={1} step={0.02} onChange={setSurfaceClearcoat} />
-                <CompactSlider label="Bond" value={bondTolerance} min={0} max={1.2} step={0.02} onChange={setBondTolerance} format={value => value.toFixed(2)} />
               </div>
             </ControlGroup>
 
-            <ControlGroup title="Bonds">
+            <ControlGroup title="Bond Guides">
               <div className="lupi-studio-segments">
-                <SegmentButton label={showBonds ? 'Bonds on' : 'Bonds off'} active={showBonds} accent="#1edce0" onClick={toggleBonds} />
+                <SegmentButton label={showBonds ? 'Guides on' : 'Guides off'} active={showBonds} accent="#1edce0" onClick={toggleBonds} />
                 <SegmentButton label="Type" active={bondColorMode === 'type'} accent="#7de9ff" onClick={() => setBondColorMode('type')} />
                 <SegmentButton label="Length" active={bondColorMode === 'length'} accent="#f59e0b" onClick={() => setBondColorMode('length')} />
               </div>
-              <ColorPicker
-                label="Uniform"
-                value={uniformAtomColor}
-                active={colorScheme === 'uniform'}
-                onChange={applyUniformAtomColor}
-              />
+              <CompactSlider label="Tolerance" value={bondTolerance} min={0} max={1.2} step={0.02} onChange={setBondTolerance} format={value => value.toFixed(2)} />
             </ControlGroup>
           </div>
         )}
 
         {mode === 'world' && (
           <div className="lupi-deck-grid">
-            <ControlGroup title="Backdrop">
-              <BackgroundSelect
+            <ControlGroup title="World Library" wide>
+              <WorldBackdropBrowser
                 value={backgroundPreset}
-                groups={backgroundGroups}
+                activePreset={activeBackgroundPresetWithId}
+                groups={worldLibraryGroups}
                 onChange={setBackgroundPreset}
+                onRandomWorld={handleRandomWorld}
+                onRandomLoop={handleRandomVideo}
               />
-              {selectedBackground && (
-                <div style={{
-                  height: 28,
-                  borderRadius: 6,
-                  border: '1px solid rgba(148,163,184,0.22)',
-                  background: selectedBackground.preview
-                    ? `linear-gradient(90deg, rgba(0,0,0,0.05), rgba(0,0,0,0.64)), ${selectedBackground.preview}`
-                    : `linear-gradient(135deg, ${selectedBackground.top}, ${selectedBackground.bottom})`,
-                  boxShadow: activeBackgroundIsVideo ? '0 0 18px rgba(30,220,224,0.22)' : 'inset 0 1px 0 rgba(255,255,255,0.06)',
-                }} />
-              )}
+            </ControlGroup>
+
+            <ControlGroup title="Asset">
+              <CompactSlider
+                label="Yaw"
+                value={backgroundYawDegrees}
+                min={-180}
+                max={180}
+                step={1}
+                onChange={setBackgroundYawDegrees}
+                format={value => `${Math.round(value)} deg`}
+              />
+              <CompactSlider
+                label="Pitch"
+                value={backgroundPitchDegrees}
+                min={-45}
+                max={45}
+                step={1}
+                onChange={setBackgroundPitchDegrees}
+                format={value => `${Math.round(value)} deg`}
+              />
+              <CompactSlider
+                label="Opacity"
+                value={backgroundOpacity}
+                min={0.15}
+                max={1}
+                step={0.01}
+                onChange={setBackgroundOpacity}
+                format={value => `${Math.round(value * 100)}%`}
+              />
+              <SegmentButton label="Reset asset" active={false} accent="#94a3b8" onClick={resetBackgroundAdjustments} />
+            </ControlGroup>
+
+            <ControlGroup title="Grade">
+              <CompactSlider
+                label="Bright"
+                value={backgroundBrightness}
+                min={0.35}
+                max={1.8}
+                step={0.01}
+                onChange={setBackgroundBrightness}
+                format={value => value.toFixed(2)}
+              />
+              <CompactSlider
+                label="Saturate"
+                value={backgroundSaturation}
+                min={0}
+                max={2}
+                step={0.01}
+                onChange={setBackgroundSaturation}
+                format={value => value.toFixed(2)}
+              />
+              <CompactSlider
+                label="Contrast"
+                value={backgroundContrast}
+                min={0.5}
+                max={1.8}
+                step={0.01}
+                onChange={setBackgroundContrast}
+                format={value => value.toFixed(2)}
+              />
             </ControlGroup>
 
             <ControlGroup title="Shell">
@@ -645,33 +842,38 @@ export function StudioControlDeck({
               </div>
             </ControlGroup>
 
-            <ControlGroup title="Motion">
+            <ControlGroup title="Loop">
               <div className="lupi-studio-segments">
                 <SegmentButton label="Random loop" active={activeBackgroundIsVideo} accent="#f59e0b" onClick={handleRandomVideo} />
+                {activeBackgroundIsVideo && (
+                  <SegmentButton
+                    label={backgroundMotionPaused ? 'Play loop' : 'Pause loop'}
+                    active={!backgroundMotionPaused}
+                    accent="#1edce0"
+                    onClick={() => setBackgroundMotionPaused(!backgroundMotionPaused)}
+                  />
+                )}
+              </div>
+              {activeBackgroundIsVideo && (
+                <CompactSlider
+                  label="Speed"
+                  value={backgroundMotionSpeed}
+                  min={0.05}
+                  max={2}
+                  step={0.05}
+                  onChange={setBackgroundMotionSpeed}
+                  format={value => `${value.toFixed(2)}x`}
+                />
+              )}
+            </ControlGroup>
+
+            <ControlGroup title="Guides">
+              <div className="lupi-studio-segments">
                 <SegmentButton label={showCell ? 'Cell on' : 'Cell off'} active={showCell} accent="#7de9ff" onClick={toggleCell} />
                 <SegmentButton label={showAxes ? 'Axes on' : 'Axes off'} active={showAxes} accent="#a7f3d0" onClick={toggleAxes} />
               </div>
             </ControlGroup>
 
-            <ControlGroup title="Color">
-              <ColorPicker
-                label="Uniform"
-                value={uniformAtomColor}
-                active={colorScheme === 'uniform'}
-                onChange={applyUniformAtomColor}
-              />
-              <div style={paletteRailStyle}>
-                {PALETTE_OPTIONS.map(option => (
-                  <SwatchButton
-                    key={option.id}
-                    label={option.label}
-                    active={colormap === option.id && colorScheme !== 'uniform'}
-                    background={COLORMAP_PREVIEWS[option.id] ?? option.accent}
-                    onClick={() => applyColormap(option.id)}
-                  />
-                ))}
-              </div>
-            </ControlGroup>
           </div>
         )}
       </div>
@@ -679,11 +881,25 @@ export function StudioControlDeck({
   );
 }
 
-function ControlGroup({ title, note, children }: { title: string; note?: string; children: ReactNode }) {
+function ControlGroup({ title, note, children, wide = false }: { title: string; note?: string; children: ReactNode; wide?: boolean }) {
   return (
-    <section title={note} style={{ display: 'grid', gap: 4, alignContent: 'start', minWidth: 0 }}>
+    <section
+      title={note}
+      style={{
+        gridColumn: wide ? '1 / -1' : undefined,
+        display: 'grid',
+        gap: 7,
+        alignContent: 'start',
+        minWidth: 0,
+        padding: 8,
+        border: '1px solid rgba(255,255,255,0.08)',
+        borderRadius: 8,
+        background: 'linear-gradient(180deg, rgba(15,23,42,0.48), rgba(2,6,23,0.22))',
+        boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.05), 0 8px 22px rgba(0,0,0,0.16)',
+      }}
+    >
       <div style={{ display: 'grid', gap: 2 }}>
-        <div style={{ color: '#64748b', fontSize: 9, fontWeight: 760, textTransform: 'uppercase', letterSpacing: 0, lineHeight: 1 }}>
+        <div style={{ color: '#94a3b8', fontSize: 10, fontWeight: 820, textTransform: 'uppercase', letterSpacing: 0, lineHeight: 1 }}>
           {title}
         </div>
       </div>
@@ -707,6 +923,7 @@ function SegmentButton({
 }) {
   const [pulse, setPulse] = useState(false);
   const timerRef = useRef<number | null>(null);
+  const press = usePressSpring({ pressedScale: 0.96, sound: false });
 
   useEffect(() => () => {
     if (timerRef.current !== null) window.clearTimeout(timerRef.current);
@@ -722,8 +939,13 @@ function SegmentButton({
 
   return (
     <button
+      ref={press.ref}
       type="button"
       onClick={handleClick}
+      onPointerDown={press.onPointerDown}
+      onPointerUp={press.onPointerUp}
+      onPointerLeave={press.onPointerLeave}
+      onPointerCancel={press.onPointerCancel}
       title={label}
       aria-label={meta ? `${label} ${meta}` : label}
       aria-pressed={active}
@@ -736,27 +958,29 @@ function SegmentButton({
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        gap: 5,
-        padding: '6px 7px',
+        gap: 7,
+        padding: '7px 8px',
         height: 'auto',
         overflow: 'visible',
-        borderRadius: 6,
-        border: active ? `1px solid ${accent}` : '1px solid rgba(148,163,184,0.2)',
+        borderRadius: 7,
+        border: active ? `1px solid ${accent}` : '1px solid rgba(148,163,184,0.18)',
         background: active
-          ? `linear-gradient(135deg, ${accent}2b, rgba(9,14,22,0.86))`
-          : 'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(3,7,18,0.78))',
+          ? `linear-gradient(135deg, ${accent}33, rgba(9,14,22,0.9))`
+          : 'linear-gradient(135deg, rgba(15,23,42,0.74), rgba(3,7,18,0.62))',
         color: active ? '#f8fafc' : '#cbd5e1',
-        boxShadow: active ? `0 0 14px ${accent}24, inset 0 0 10px ${accent}10` : 'inset 0 1px 0 rgba(255,255,255,0.04)',
+        boxShadow: active
+          ? `0 0 16px ${accent}24, inset 0 1px 0 rgba(255,255,255,0.08), inset 0 0 14px ${accent}12`
+          : 'inset 0 1px 0 rgba(255,255,255,0.05), 0 1px 0 rgba(0,0,0,0.18)',
         cursor: 'pointer',
-        fontSize: 10,
-        fontWeight: 760,
-        lineHeight: 1.05,
+        fontSize: 11,
+        fontWeight: 780,
+        lineHeight: 1.12,
         whiteSpace: 'normal',
         letterSpacing: 0,
         touchAction: 'manipulation',
       }}
     >
-      {pulse && <span className="lupi-press-flash" style={{ position: 'absolute', inset: 0, borderRadius: 6, background: accent, mixBlendMode: 'screen', pointerEvents: 'none' }} />}
+      {pulse && <span className="lupi-press-flash" style={{ position: 'absolute', inset: 0, borderRadius: 7, background: accent, mixBlendMode: 'screen', pointerEvents: 'none' }} />}
       <span style={{ minWidth: 0, overflow: 'visible', textOverflow: 'clip', whiteSpace: 'normal', position: 'relative' }}>
         {label}
       </span>
@@ -768,6 +992,7 @@ function SegmentButton({
           fontFamily: 'var(--font-mono)',
           fontSize: 9,
           fontWeight: 820,
+          fontVariantNumeric: 'tabular-nums',
         }}>
           {meta}
         </span>
@@ -797,16 +1022,17 @@ function CompactSlider({
   return (
     <label style={{
       display: 'grid',
-      gap: 2,
+      gap: 5,
       minWidth: 0,
-      padding: '4px 5px',
-      borderRadius: 5,
-      border: '1px solid rgba(148,163,184,0.18)',
-      background: 'rgba(9,14,22,0.64)',
+      padding: '7px 8px',
+      borderRadius: 8,
+      border: '1px solid rgba(255,255,255,0.10)',
+      background: 'linear-gradient(180deg, rgba(255,255,255,0.055) 0%, rgba(255,255,255,0.024) 100%)',
+      boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 1px 2px rgba(0,0,0,0.2)',
     }}>
       <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 6, minWidth: 0 }}>
-        <span style={{ color: '#94a3b8', fontSize: 9, fontWeight: 760, textTransform: 'uppercase', lineHeight: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{label}</span>
-        <span style={{ color: '#e2e8f0', fontSize: 10, fontFamily: 'var(--font-mono)', fontWeight: 760, lineHeight: 1 }}>{format(value)}</span>
+        <span style={{ color: '#94a3b8', fontSize: 10, fontWeight: 800, textTransform: 'uppercase', lineHeight: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{label}</span>
+        <span style={{ color: '#e2e8f0', fontSize: 10, fontFamily: 'var(--font-mono)', fontWeight: 800, lineHeight: 1, fontVariantNumeric: 'tabular-nums' }}>{format(value)}</span>
       </span>
       <input
         type="range"
@@ -817,7 +1043,7 @@ function CompactSlider({
         onChange={(event) => onChange(Number(event.currentTarget.value))}
         style={{
           width: '100%',
-          height: 3,
+          height: 4,
           accentColor: '#1edce0',
           background: `linear-gradient(90deg, #1edce0 0%, #1edce0 ${percent * 100}%, rgba(71,85,105,0.7) ${percent * 100}%, rgba(71,85,105,0.7) 100%)`,
         }}
@@ -891,17 +1117,21 @@ function RiveKnob({
 
   return (
     <div style={{
-      minHeight: 62,
+      minHeight: 66,
       display: 'grid',
-      gridTemplateColumns: '48px minmax(0, 1fr)',
+      gridTemplateColumns: '50px minmax(0, 1fr)',
       alignItems: 'center',
-      gap: 7,
+      gap: 8,
       minWidth: 0,
-      padding: '5px 6px',
-      borderRadius: 6,
+      padding: '7px 8px',
+      borderRadius: 8,
       border: dragging ? '1px solid rgba(245,158,11,0.62)' : '1px solid rgba(148,163,184,0.2)',
-      background: dragging ? 'rgba(245,158,11,0.08)' : 'rgba(9,14,22,0.66)',
-      boxShadow: dragging ? '0 0 18px rgba(245,158,11,0.18)' : 'inset 0 1px 0 rgba(255,255,255,0.04)',
+      background: dragging
+        ? 'linear-gradient(180deg, rgba(245,158,11,0.12), rgba(9,14,22,0.72))'
+        : 'linear-gradient(180deg, rgba(15,23,42,0.58), rgba(9,14,22,0.48))',
+      boxShadow: dragging
+        ? '0 0 20px rgba(245,158,11,0.18), inset 0 1px 0 rgba(255,255,255,0.06)'
+        : 'inset 0 1px 0 rgba(255,255,255,0.05), 0 1px 0 rgba(0,0,0,0.2)',
     }}>
       <div
         role="slider"
@@ -918,8 +1148,8 @@ function RiveKnob({
         onPointerCancel={handlePointerUp}
         onKeyDown={handleKeyDown}
         style={{
-          width: 44,
-          height: 44,
+          width: 46,
+          height: 46,
           aspectRatio: '1 / 1',
           flexShrink: 0,
           borderRadius: '50%',
@@ -960,8 +1190,8 @@ function RiveKnob({
         </div>
       </div>
       <div style={{ minWidth: 0, display: 'grid', gap: 5 }}>
-        <span style={{ color: '#94a3b8', fontSize: 9, fontWeight: 780, textTransform: 'uppercase', lineHeight: 1 }}>{label}</span>
-        <span style={{ color: '#e2e8f0', fontSize: 12, fontFamily: 'var(--font-mono)', fontWeight: 820, lineHeight: 1 }}>
+        <span style={{ color: '#94a3b8', fontSize: 10, fontWeight: 820, textTransform: 'uppercase', lineHeight: 1 }}>{label}</span>
+        <span style={{ color: '#e2e8f0', fontSize: 12, fontFamily: 'var(--font-mono)', fontWeight: 820, lineHeight: 1, fontVariantNumeric: 'tabular-nums' }}>
           {format(value)}
         </span>
         <input
@@ -974,7 +1204,7 @@ function RiveKnob({
           onChange={(event) => setValue(Number(event.currentTarget.value))}
           style={{
             width: '100%',
-            height: 3,
+            height: 4,
             accentColor: accent,
           }}
         />
@@ -1013,33 +1243,418 @@ function CompactSelect({
   );
 }
 
-function BackgroundSelect({
+function WorldBackdropBrowser({
   value,
+  activePreset,
   groups,
   onChange,
+  onRandomWorld,
+  onRandomLoop,
 }: {
   value: string;
+  activePreset?: BgPresetWithId;
   groups: Array<{ label: string; presets: BgPresetWithId[] }>;
   onChange: (value: string) => void;
+  onRandomWorld: () => void;
+  onRandomLoop: () => void;
+}) {
+  const badge = activePreset ? getBgBadge(activePreset) : undefined;
+  return (
+    <div style={{ display: 'grid', gap: 9, minWidth: 0 }}>
+      <div style={{
+        minHeight: 118,
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+        gap: 9,
+        alignItems: 'stretch',
+      }}>
+        <div style={{
+          position: 'relative',
+          minHeight: 118,
+          overflow: 'hidden',
+          borderRadius: 8,
+          border: '1px solid rgba(255,255,255,0.12)',
+          ...backgroundPreviewStyle(activePreset),
+          boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08), 0 10px 26px rgba(0,0,0,0.22)',
+        }}>
+          <div style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'linear-gradient(90deg, rgba(2,6,23,0.72), rgba(2,6,23,0.18) 56%, rgba(2,6,23,0.5))',
+          }} />
+          <div style={{
+            position: 'relative',
+            minHeight: 118,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            gap: 12,
+            padding: 12,
+          }}>
+            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 10, minWidth: 0 }}>
+              <div style={{ minWidth: 0, display: 'grid', gap: 4 }}>
+                <div style={{
+                  color: '#f8fafc',
+                  fontSize: 18,
+                  fontWeight: 860,
+                  lineHeight: 1.05,
+                  textShadow: '0 2px 12px rgba(0,0,0,0.45)',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                }}>
+                  {activePreset?.label ?? 'Select World'}
+                </div>
+                <div style={{
+                  maxWidth: 520,
+                  color: '#cbd5e1',
+                  fontSize: 11,
+                  fontWeight: 650,
+                  lineHeight: 1.35,
+                  textShadow: '0 1px 8px rgba(0,0,0,0.5)',
+                }}>
+                  {activePreset?.context ?? 'Choose a 360 environment for the molecular scene.'}
+                </div>
+              </div>
+              {badge && (
+                <span style={{
+                  flexShrink: 0,
+                  padding: '4px 6px',
+                  borderRadius: 6,
+                  border: '1px solid rgba(30,220,224,0.45)',
+                  background: 'rgba(2,6,23,0.54)',
+                  color: '#7de9ff',
+                  fontSize: 10,
+                  fontWeight: 860,
+                  fontFamily: 'var(--font-mono)',
+                  lineHeight: 1,
+                }}>
+                  {badge}
+                </span>
+              )}
+            </div>
+            <div className="lupi-studio-segments" style={{ maxWidth: 360 }}>
+              <SegmentButton label="Surprise world" active={false} accent="#7de9ff" onClick={onRandomWorld} />
+              <SegmentButton label="Surprise loop" active={false} accent="#f59e0b" onClick={onRandomLoop} />
+            </div>
+          </div>
+        </div>
+        <div style={{
+          minWidth: 0,
+          display: 'grid',
+          gap: 7,
+          alignContent: 'start',
+          padding: 8,
+          borderRadius: 8,
+          border: '1px solid rgba(255,255,255,0.09)',
+          background: 'linear-gradient(180deg, rgba(15,23,42,0.54), rgba(3,7,18,0.34))',
+        }}>
+          <div style={{ color: '#94a3b8', fontSize: 10, fontWeight: 820, textTransform: 'uppercase', lineHeight: 1 }}>
+            Active Asset
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
+            <MetricPill label="Preset" value={value.replace(/^world-/, '')} />
+            <MetricPill label="Type" value={badge ?? 'BASE'} />
+            <MetricPill label="Tone" value={activePreset?.intensity ?? 'balanced'} />
+            <MetricPill label="Mode" value={getBgPoster(activePreset ?? BG_PRESETS.deep) ? 'ERP' : 'SKY'} />
+          </div>
+        </div>
+      </div>
+
+      <div style={{ display: 'grid', gap: 8, minWidth: 0 }}>
+        {groups.map(group => (
+          <BackdropRail
+            key={group.label}
+            title={group.label}
+            presets={group.presets}
+            value={value}
+            onChange={onChange}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function MetricPill({ label, value }: { label: string; value: string }) {
+  return (
+    <div style={{
+      minWidth: 0,
+      display: 'grid',
+      gap: 4,
+      padding: '7px 8px',
+      borderRadius: 7,
+      border: '1px solid rgba(148,163,184,0.16)',
+      background: 'rgba(2,6,23,0.38)',
+    }}>
+      <span style={{ color: '#64748b', fontSize: 9, fontWeight: 820, textTransform: 'uppercase', lineHeight: 1 }}>{label}</span>
+      <span style={{
+        minWidth: 0,
+        color: '#e2e8f0',
+        fontFamily: 'var(--font-mono)',
+        fontSize: 10,
+        fontWeight: 820,
+        lineHeight: 1.15,
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
+        textTransform: 'uppercase',
+      }}>
+        {value}
+      </span>
+    </div>
+  );
+}
+
+function BackdropRail({
+  title,
+  presets,
+  value,
+  onChange,
+}: {
+  title: string;
+  presets: BgPresetWithId[];
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  const railRef = useRef<HTMLDivElement | null>(null);
+  const [scrollState, setScrollState] = useState({ atStart: true, atEnd: true });
+
+  useEffect(() => {
+    const rail = railRef.current;
+    if (!rail) return;
+
+    const updateScrollState = () => {
+      const maxScroll = rail.scrollWidth - rail.clientWidth;
+      setScrollState({
+        atStart: rail.scrollLeft <= 1,
+        atEnd: maxScroll <= 1 || rail.scrollLeft >= maxScroll - 1,
+      });
+    };
+
+    updateScrollState();
+    rail.addEventListener('scroll', updateScrollState, { passive: true });
+    window.addEventListener('resize', updateScrollState);
+    return () => {
+      rail.removeEventListener('scroll', updateScrollState);
+      window.removeEventListener('resize', updateScrollState);
+    };
+  }, [presets.length]);
+
+  const scrollRail = (direction: -1 | 1) => {
+    const rail = railRef.current;
+    if (!rail) return;
+    const behavior: ScrollBehavior = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+    rail.scrollBy({
+      left: direction * Math.max(rail.clientWidth * 0.76, 148),
+      behavior,
+    });
+  };
+
+  const handleRailKeyDown = (event: ReactKeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      scrollRail(1);
+    } else if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      scrollRail(-1);
+    }
+  };
+
+  if (presets.length === 0) return null;
+  return (
+    <div style={{ display: 'grid', gap: 5, minWidth: 0 }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
+        <div style={{ color: '#94a3b8', fontSize: 10, fontWeight: 820, textTransform: 'uppercase', lineHeight: 1 }}>{title}</div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+          <div style={{ color: '#64748b', fontSize: 9, fontFamily: 'var(--font-mono)', fontWeight: 820, lineHeight: 1 }}>
+            {presets.length}
+          </div>
+          <RailNudgeButton
+            label={`Previous ${title}`}
+            direction="left"
+            disabled={scrollState.atStart}
+            onClick={() => scrollRail(-1)}
+          />
+          <RailNudgeButton
+            label={`Next ${title}`}
+            direction="right"
+            disabled={scrollState.atEnd}
+            onClick={() => scrollRail(1)}
+          />
+        </div>
+      </div>
+      <div
+        className="lupi-world-carousel"
+        data-at-start={scrollState.atStart ? 'true' : 'false'}
+        data-at-end={scrollState.atEnd ? 'true' : 'false'}
+      >
+        <div
+          ref={railRef}
+          className="lupi-world-rail"
+          role="group"
+          aria-label={`${title} backgrounds`}
+          tabIndex={0}
+          onKeyDown={handleRailKeyDown}
+        >
+          {presets.map(preset => (
+            <BackdropTile
+              key={preset.id}
+              preset={preset}
+              active={preset.id === value}
+              onClick={() => onChange(preset.id)}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function RailNudgeButton({
+  label,
+  direction,
+  disabled,
+  onClick,
+}: {
+  label: string;
+  direction: 'left' | 'right';
+  disabled: boolean;
+  onClick: () => void;
 }) {
   return (
-    <label style={compactFieldStyle}>
-      <span style={compactFieldLabelStyle}>Scene</span>
-      <select
-        value={value}
-        onChange={(event) => onChange(event.currentTarget.value)}
-        style={compactSelectStyle}
-      >
-        {groups.map(group => (
-          <optgroup key={group.label} label={group.label}>
-            {group.presets.map(preset => (
-              <option key={preset.id} value={preset.id}>{preset.label}</option>
-            ))}
-          </optgroup>
-        ))}
-      </select>
-    </label>
+    <button
+      type="button"
+      aria-label={label}
+      title={label}
+      disabled={disabled}
+      onClick={onClick}
+      style={{
+        width: 22,
+        height: 22,
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexShrink: 0,
+        borderRadius: 6,
+        border: disabled ? '1px solid rgba(148,163,184,0.12)' : '1px solid rgba(148,163,184,0.28)',
+        background: disabled ? 'rgba(15,23,42,0.3)' : 'rgba(15,23,42,0.74)',
+        color: disabled ? '#475569' : '#cbd5e1',
+        cursor: disabled ? 'default' : 'pointer',
+        boxShadow: disabled ? 'none' : 'inset 0 1px 0 rgba(255,255,255,0.06)',
+        padding: 0,
+      }}
+    >
+      <IconChevron direction={direction} />
+    </button>
   );
+}
+
+function BackdropTile({
+  preset,
+  active,
+  onClick,
+}: {
+  preset: BgPresetWithId;
+  active: boolean;
+  onClick: () => void;
+}) {
+  const badge = getBgBadge(preset);
+  return (
+    <button
+      type="button"
+      title={preset.context ? `${preset.label}: ${preset.context}` : preset.label}
+      aria-label={`Use ${preset.label} background`}
+      aria-pressed={active}
+      onClick={onClick}
+      className="lupi-world-tile"
+      style={{
+        position: 'relative',
+        minWidth: 0,
+        overflow: 'hidden',
+        borderRadius: 8,
+        border: active ? '1px solid #1edce0' : '1px solid rgba(148,163,184,0.18)',
+        ...backgroundPreviewStyle(preset),
+        boxShadow: active
+          ? '0 0 18px rgba(30,220,224,0.28), inset 0 1px 0 rgba(255,255,255,0.12)'
+          : 'inset 0 1px 0 rgba(255,255,255,0.08), 0 5px 14px rgba(0,0,0,0.18)',
+        cursor: 'pointer',
+        padding: 0,
+        touchAction: 'manipulation',
+      }}
+    >
+      <span style={{
+        position: 'absolute',
+        inset: 0,
+        background: active
+          ? 'linear-gradient(180deg, rgba(2,6,23,0.12), rgba(2,6,23,0.72))'
+          : 'linear-gradient(180deg, rgba(2,6,23,0.04), rgba(2,6,23,0.78))',
+      }} />
+      {badge && (
+        <span style={{
+          position: 'absolute',
+          top: 5,
+          right: 5,
+          maxWidth: 54,
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
+          padding: '3px 4px',
+          borderRadius: 5,
+          background: active ? 'rgba(30,220,224,0.22)' : 'rgba(2,6,23,0.62)',
+          border: active ? '1px solid rgba(125,233,255,0.45)' : '1px solid rgba(255,255,255,0.12)',
+          color: active ? '#baf8ff' : '#cbd5e1',
+          fontSize: 8,
+          fontWeight: 860,
+          fontFamily: 'var(--font-mono)',
+          lineHeight: 1,
+        }}>
+          {badge}
+        </span>
+      )}
+      <span style={{
+        position: 'absolute',
+        left: 7,
+        right: 7,
+        bottom: 7,
+        minWidth: 0,
+        color: active ? '#f8fafc' : '#e2e8f0',
+        fontSize: 10,
+        fontWeight: 820,
+        lineHeight: 1.12,
+        textAlign: 'left',
+        textShadow: '0 1px 7px rgba(0,0,0,0.65)',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
+      }}>
+        {preset.label}
+      </span>
+    </button>
+  );
+}
+
+function backgroundPreviewStyle(preset?: BgPresetWithId): CSSProperties {
+  if (!preset) {
+    return {
+      background: 'linear-gradient(135deg, #111827, #020617)',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+    };
+  }
+  const poster = getBgPoster(preset);
+  if (poster) {
+    return {
+      backgroundImage: `url("${poster}")`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+    };
+  }
+  return {
+    background: preset.preview ?? `linear-gradient(135deg, ${preset.top}, ${preset.bottom})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  };
 }
 
 function ColorPicker({
@@ -1056,14 +1671,16 @@ function ColorPicker({
   return (
     <label style={{
       display: 'grid',
-      gridTemplateColumns: '42px minmax(0, 1fr)',
-      gap: 6,
+      gridTemplateColumns: '44px minmax(0, 1fr)',
+      gap: 8,
       alignItems: 'center',
       minWidth: 0,
-      padding: 4,
-      borderRadius: 6,
+      padding: 6,
+      borderRadius: 8,
       border: active ? '1px solid #1edce0' : '1px solid rgba(148,163,184,0.2)',
-      background: active ? 'rgba(30,220,224,0.12)' : 'rgba(9,14,22,0.64)',
+      background: active
+        ? 'linear-gradient(135deg, rgba(30,220,224,0.16), rgba(9,14,22,0.72))'
+        : 'linear-gradient(180deg, rgba(15,23,42,0.56), rgba(9,14,22,0.48))',
       boxShadow: active ? '0 0 16px rgba(30,220,224,0.18)' : 'inset 0 1px 0 rgba(255,255,255,0.04)',
     }}>
       <input
@@ -1074,8 +1691,8 @@ function ColorPicker({
         aria-label={label}
         onChange={(event) => onChange(event.currentTarget.value)}
         style={{
-          width: 38,
-          height: 26,
+          width: 40,
+          height: 28,
           padding: 0,
           border: '1px solid rgba(255,255,255,0.22)',
           borderRadius: 6,
@@ -1084,8 +1701,8 @@ function ColorPicker({
         }}
       />
       <span style={{ minWidth: 0, display: 'grid', gap: 2 }}>
-        <span style={{ color: '#94a3b8', fontSize: 9, fontWeight: 760, textTransform: 'uppercase', lineHeight: 1 }}>{label}</span>
-        <span style={{ color: active ? '#f8fafc' : '#cbd5e1', fontSize: 10, fontFamily: 'var(--font-mono)', fontWeight: 760, lineHeight: 1 }}>{value.toUpperCase()}</span>
+        <span style={{ color: '#94a3b8', fontSize: 10, fontWeight: 800, textTransform: 'uppercase', lineHeight: 1 }}>{label}</span>
+        <span style={{ color: active ? '#f8fafc' : '#cbd5e1', fontSize: 10, fontFamily: 'var(--font-mono)', fontWeight: 800, lineHeight: 1 }}>{value.toUpperCase()}</span>
       </span>
     </label>
   );
@@ -1113,14 +1730,16 @@ function ElementColorPicker({
   return (
     <div style={{
       display: 'grid',
-      gridTemplateColumns: '34px minmax(0, 1fr) 39px',
-      gap: 5,
+      gridTemplateColumns: '36px minmax(0, 1fr) 42px',
+      gap: 7,
       alignItems: 'center',
       minWidth: 0,
-      padding: 4,
-      borderRadius: 6,
+      padding: 6,
+      borderRadius: 8,
       border: active ? '1px solid #facc15' : '1px solid rgba(148,163,184,0.2)',
-      background: active ? 'rgba(250,204,21,0.12)' : 'rgba(9,14,22,0.64)',
+      background: active
+        ? 'linear-gradient(135deg, rgba(250,204,21,0.16), rgba(9,14,22,0.72))'
+        : 'linear-gradient(180deg, rgba(15,23,42,0.56), rgba(9,14,22,0.48))',
       boxShadow: active ? '0 0 16px rgba(250,204,21,0.16)' : 'inset 0 1px 0 rgba(255,255,255,0.04)',
     }}>
       <input
@@ -1132,7 +1751,7 @@ function ElementColorPicker({
         onChange={(event) => onChange(event.currentTarget.value)}
         style={{
           width: 30,
-          height: 26,
+          height: 28,
           padding: 0,
           border: '1px solid rgba(255,255,255,0.22)',
           borderRadius: 6,
@@ -1158,15 +1777,15 @@ function ElementColorPicker({
         onClick={onReset}
         disabled={!overridden}
         style={{
-          height: 26,
+          height: 28,
           minWidth: 0,
           borderRadius: 5,
           border: overridden ? '1px solid rgba(250,204,21,0.56)' : '1px solid rgba(148,163,184,0.16)',
           background: overridden ? 'rgba(250,204,21,0.14)' : 'rgba(15,23,42,0.6)',
           color: overridden ? '#f8fafc' : '#64748b',
           cursor: overridden ? 'pointer' : 'default',
-          fontSize: 9,
-          fontWeight: 760,
+          fontSize: 10,
+          fontWeight: 780,
           letterSpacing: 0,
         }}
       >
@@ -1187,20 +1806,28 @@ function SwatchButton({
   background: string;
   onClick: () => void;
 }) {
+  const press = usePressSpring({ pressedScale: 0.92, sound: false });
   return (
     <button
+      ref={press.ref}
       type="button"
       aria-label={label}
       title={label}
       onClick={onClick}
+      onPointerDown={press.onPointerDown}
+      onPointerUp={press.onPointerUp}
+      onPointerLeave={press.onPointerLeave}
+      onPointerCancel={press.onPointerCancel}
       style={{
         height: 25,
         flex: '1 1 24px',
         minWidth: 24,
-        borderRadius: 5,
+        borderRadius: 6,
         border: active ? '1px solid #f8fafc' : '1px solid rgba(148,163,184,0.22)',
         background,
-        boxShadow: active ? '0 0 14px rgba(248,250,252,0.32)' : 'inset 0 1px 0 rgba(255,255,255,0.1)',
+        boxShadow: active
+          ? '0 0 14px rgba(248,250,252,0.32), inset 0 1px 0 rgba(255,255,255,0.16)'
+          : 'inset 0 1px 0 rgba(255,255,255,0.1), 0 1px 0 rgba(0,0,0,0.22)',
         cursor: 'pointer',
       }}
     />
@@ -1211,6 +1838,15 @@ function IconClose() {
   return (
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
       <path d="M18 6 6 18M6 6l12 12" />
+    </svg>
+  );
+}
+
+function IconChevron({ direction }: { direction: 'left' | 'right' }) {
+  const path = direction === 'left' ? 'M15 18 9 12l6-6' : 'm9 18 6-6-6-6';
+  return (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+      <path d={path} />
     </svg>
   );
 }
@@ -1231,18 +1867,19 @@ const iconButtonStyle: CSSProperties = {
 
 const compactFieldStyle: CSSProperties = {
   display: 'grid',
-  gap: 3,
+  gap: 5,
   minWidth: 0,
-  padding: '4px 5px',
-  borderRadius: 5,
-  border: '1px solid rgba(148,163,184,0.18)',
-  background: 'rgba(9,14,22,0.64)',
+  padding: '7px 8px',
+  borderRadius: 8,
+  border: '1px solid rgba(255,255,255,0.10)',
+  background: 'linear-gradient(180deg, rgba(255,255,255,0.055) 0%, rgba(255,255,255,0.024) 100%)',
+  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 1px 2px rgba(0,0,0,0.2)',
 };
 
 const compactFieldLabelStyle: CSSProperties = {
   color: '#94a3b8',
-  fontSize: 9,
-  fontWeight: 760,
+  fontSize: 10,
+  fontWeight: 800,
   textTransform: 'uppercase',
   lineHeight: 1,
 };
@@ -1250,15 +1887,17 @@ const compactFieldLabelStyle: CSSProperties = {
 const compactSelectStyle: CSSProperties = {
   width: '100%',
   minWidth: 0,
-  height: 26,
-  borderRadius: 5,
-  border: '1px solid rgba(148,163,184,0.24)',
-  background: 'rgba(2,6,23,0.82)',
-  color: '#e2e8f0',
-  fontSize: 10,
-  fontWeight: 720,
-  padding: '0 7px',
+  height: 30,
+  borderRadius: 6,
+  border: '1px solid rgba(255,255,255,0.10)',
+  background: 'linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)',
+  color: '#f8fafc',
+  fontSize: 11,
+  fontWeight: 650,
+  padding: '0 8px',
   outline: 'none',
+  cursor: 'pointer',
+  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 1px 0 rgba(0,0,0,0.2)',
 };
 
 const paletteRailStyle: CSSProperties = {

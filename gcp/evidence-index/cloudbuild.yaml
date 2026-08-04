@@ -1,0 +1,60 @@
+# Deploy the evidence-index service to Cloud Run.
+# min-instances=1: the coordinator consults this on the hot path; cold starts
+# are unacceptable there. CPU=2/mem=4Gi is comfortable for MiniLM embed + ANN.
+#
+# Prerequisites (one-time):
+#   gcloud sql instances create glim-evidence --database-version=POSTGRES_16 \
+#     --cpu=1 --memory=4Gi --region=us-central1
+#   gcloud sql databases create evidence --instance=glim-evidence
+#   gcloud sql users create evidence --instance=glim-evidence --password=<secret>
+#   # Enable pgvector:
+#   gcloud sql instances patch glim-evidence --database-flags=cloudsql.enable_pgvector=on
+#
+# Secrets:
+#   echo -n "<cloud-sql-connection-string>" | gcloud secrets create evidence-db-url --data-file=-
+#   echo -n "<bearer-token>" | gcloud secrets create evidence-ingest-token --data-file=-
+
+substitutions:
+  _PROJECT_ID: shed-489901
+  _REGION: us-central1
+  _REPOSITORY: cloud-run-source-deploy
+  _IMAGE_TAG: latest
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - -t
+      - ${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/evidence-index:${_IMAGE_TAG}
+      - -f
+      - gcp/evidence-index/Dockerfile
+      - .
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - ${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/evidence-index:${_IMAGE_TAG}
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - evidence-index
+      - --image=${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/evidence-index:${_IMAGE_TAG}
+      - --region=${_REGION}
+      - --project=${_PROJECT_ID}
+      - --service-account=atlas-distill-runner@${_PROJECT_ID}.iam.gserviceaccount.com
+      - --cpu=2
+      - --memory=4Gi
+      - --min-instances=1
+      - --max-instances=4
+      - --allow-unauthenticated
+      - --set-secrets=EVIDENCE_DB_URL=evidence-db-url:latest
+      - --set-secrets=EVIDENCE_INGEST_TOKEN=evidence-ingest-token:latest
+      - --set-env-vars=EMBED_MODEL=sentence-transformers/all-MiniLM-L6-v2
+      - --add-cloudsql-instances=shed-489901:us-central1:glim-evidence
+
+images:
+  - ${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/evidence-index:${_IMAGE_TAG}

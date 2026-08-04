@@ -176,3 +176,9 @@ MLIP_DISTILL_SUPPORT_MANIFEST_URL = "gs://shed-489901-atlas-inputs/mlip-baseline
 MLIP_5X5X3_OUTPUT_PREFIX = "gs://shed-489901-atlas-outputs/mlip-5x5x3"
 MLIP_DISTILL_POLICY_ENGINE = "auto"
 MLIP_DISTILL_RIBBON_VERSION = "hyperribbon-v1"
+# Evidence index (GCP Cloud Run). When set, the Omnigents coordinator
+# consults this service before choosing a strategy (memory flywheel) and
+# POSTs traces to it after each coordination call. Leave empty to disable
+# (coordinator degrades gracefully to registry-only).
+# Set via: wrangler secret put EVIDENCE_INDEX_URL
+# And: wrangler secret put EVIDENCE_INGEST_TOKEN

@@ -16,11 +16,13 @@ from pathlib import Path
 from typing import Any
 
 try:
-    from PIL import Image, ImageChops, ImageStat
+    from PIL import Image
+    from lupi_equirect import inspect_image, repair_equirect_image
 except ImportError as exc:  # pragma: no cover - operator environment check
     raise SystemExit(
-        "Pillow is required for JPEG conversion and QA. Run this with the "
-        "portable ComfyUI python_embeded/python.exe, or install Pillow."
+        "Pillow and numpy are required for JPEG conversion, equirect repair, "
+        "and QA. Run this with the portable ComfyUI python_embeded/python.exe, "
+        "or install both packages."
     ) from exc
 
 
@@ -29,6 +31,16 @@ DEFAULT_MANIFEST = ATLAS_VIEW_ROOT / "tools" / "lupi-panorama-prompts.json"
 DEFAULT_BACKGROUND_DIR = ATLAS_VIEW_ROOT / "apps" / "web" / "public" / "backgrounds"
 DEFAULT_CANDIDATE_DIR = ATLAS_VIEW_ROOT / "tools" / "lupi-environment-candidates"
 DEFAULT_RUN_LEDGER = ATLAS_VIEW_ROOT / "tools" / "lupi-panorama-runs.jsonl"
+
+SOTA_SEAM_POSITIVE = (
+    "panorama-native spherical environment, circular horizontal latent continuity, "
+    "yaw-invariant composition, cubemap-safe zenith and nadir, no discontinuity at any longitude cut, "
+    "consistent lighting and texture flow across the left/right wrap"
+)
+SOTA_SEAM_NEGATIVE = (
+    "single-sided lighting, unmatched left edge, unmatched right edge, discontinuous panorama, "
+    "cube face edge artifact, polar swirl, polar pinch, stretched pole texture"
+)
 
 
 def request_json(base_url: str, path: str, payload: dict[str, Any] | None = None) -> Any:
@@ -48,6 +60,14 @@ def request_bytes(base_url: str, path: str, query: dict[str, str]) -> bytes:
     url = base_url.rstrip("/") + path + "?" + urllib.parse.urlencode(query)
     with urllib.request.urlopen(url, timeout=120) as response:
         return response.read()
+
+
+def parse_int_list(value: str) -> list[int]:
+    return [int(item.strip()) for item in value.split(",") if item.strip()]
+
+
+def append_suffix(existing: str, addition: str) -> str:
+    return ", ".join(part for part in (existing.strip(), addition.strip()) if part)
 
 
 def build_workflow(asset: dict[str, Any], manifest: dict[str, Any], args: argparse.Namespace) -> dict[str, Any]:
@@ -214,6 +234,11 @@ def write_jpeg(
     quality: int,
     postprocess: dict[str, Any],
     target_size: tuple[int, int],
+    repair: bool,
+    seam_repair_px: int,
+    pole_repair_px: int,
+    yaw_offsets: list[int],
+    cube_face_size: int,
 ) -> dict[str, Any]:
     destination.parent.mkdir(parents=True, exist_ok=True)
     temp_png = destination.with_suffix(".comfy.png")
@@ -221,27 +246,11 @@ def write_jpeg(
     with Image.open(temp_png) as image:
         image = image.convert("RGB")
         image = apply_postprocess(image, postprocess, target_size)
+        if repair:
+            image = repair_equirect_image(image, seam_px=seam_repair_px, pole_px=pole_repair_px)
         image.save(destination, "JPEG", quality=quality, optimize=True, progressive=True)
     temp_png.unlink(missing_ok=True)
-    return inspect_image(destination)
-
-
-def inspect_image(path: Path, seam_px: int = 32) -> dict[str, Any]:
-    with Image.open(path) as image:
-        width, height = image.size
-        left = image.crop((0, 0, seam_px, height)).convert("RGB")
-        right = image.crop((width - seam_px, 0, width, height)).convert("RGB")
-        diff = ImageChops.difference(left, right)
-        stat = ImageStat.Stat(diff)
-        seam_mean = round(sum(stat.mean) / len(stat.mean), 3)
-    return {
-        "path": str(path),
-        "width": width,
-        "height": height,
-        "aspect": round(width / height, 4),
-        "bytes": path.stat().st_size,
-        "seam_mean_abs_delta": seam_mean,
-    }
+    return inspect_image(destination, yaw_offsets=yaw_offsets, cube_face_size=cube_face_size)
 
 
 def append_ledger(path: Path, record: dict[str, Any]) -> None:
@@ -278,7 +287,47 @@ def normalize_requested_assets(requested: list[str]) -> set[str]:
     return {item for raw in requested for item in raw.split(",") if item}
 
 
-def promote_run(record: dict[str, Any], output_dir: Path, requested: set[str] | None = None) -> dict[str, Any]:
+def qa_settings(manifest: dict[str, Any], args: argparse.Namespace) -> dict[str, Any]:
+    qa_contract = manifest.get("contract", {}).get("qa", {})
+    yaw_offsets = parse_int_list(args.qa_yaw_offsets) if args.qa_yaw_offsets else list(qa_contract.get("yaw_offsets_degrees", [0, 90, 180, 270]))
+    cube_face_size = args.qa_cube_face_size if args.qa_cube_face_size is not None else int(qa_contract.get("cube_face_size", 96))
+    return {
+        "seam_px": int(qa_contract.get("seam_px", 32)),
+        "pole_px": int(qa_contract.get("pole_px", 48)),
+        "yaw_offsets": yaw_offsets,
+        "cube_face_size": cube_face_size,
+        "max_seam_delta": args.max_seam_delta if args.max_seam_delta is not None else qa_contract.get("max_seam_delta"),
+        "max_yaw_seam_delta": args.max_yaw_seam_delta if args.max_yaw_seam_delta is not None else qa_contract.get("max_yaw_seam_delta"),
+        "max_pole_std": args.max_pole_std if args.max_pole_std is not None else qa_contract.get("max_pole_std"),
+        "max_cube_edge_gradient": args.max_cube_edge_gradient
+        if args.max_cube_edge_gradient is not None
+        else qa_contract.get("max_cube_edge_gradient"),
+    }
+
+
+def qa_issues(qa: dict[str, Any], settings: dict[str, Any]) -> list[str]:
+    issues: list[str] = []
+    max_seam_delta = settings.get("max_seam_delta")
+    max_yaw_seam_delta = settings.get("max_yaw_seam_delta")
+    max_pole_std = settings.get("max_pole_std")
+    max_cube_edge_gradient = settings.get("max_cube_edge_gradient")
+    if max_seam_delta is not None and qa["seam_mean_abs_delta"] > float(max_seam_delta):
+        issues.append(f"seam delta above {float(max_seam_delta)}")
+    if max_yaw_seam_delta is not None and qa["yaw_seam_mean_abs_delta_max"] > float(max_yaw_seam_delta):
+        issues.append(f"yaw seam delta above {float(max_yaw_seam_delta)}")
+    if max_pole_std is not None and qa["max_pole_horizontal_std"] > float(max_pole_std):
+        issues.append(f"pole std above {float(max_pole_std)}")
+    if max_cube_edge_gradient is not None and qa["cube_edge_gradient_max"] > float(max_cube_edge_gradient):
+        issues.append(f"cube edge gradient above {float(max_cube_edge_gradient)}")
+    return issues
+
+
+def promote_run(
+    record: dict[str, Any],
+    output_dir: Path,
+    qa_options: dict[str, Any],
+    requested: set[str] | None = None,
+) -> dict[str, Any]:
     requested = requested or set()
     found: set[str] = set()
     promoted: list[dict[str, Any]] = []
@@ -295,7 +344,16 @@ def promote_run(record: dict[str, Any], output_dir: Path, requested: set[str] | 
         destination = output_dir / asset["file"]
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(source, destination)
-        qa = inspect_image(destination)
+        qa = inspect_image(
+            destination,
+            seam_px=qa_options["seam_px"],
+            pole_px=qa_options["pole_px"],
+            yaw_offsets=qa_options["yaw_offsets"],
+            cube_face_size=qa_options["cube_face_size"],
+        )
+        issues = qa_issues(qa, qa_options)
+        if issues:
+            raise SystemExit(f"Promoted asset failed equirect QA for {asset['id']}: {', '.join(issues)}")
         promoted.append({"id": asset["id"], "file": asset["file"], "source": str(source), "destination": str(destination), "qa": qa})
         print(f"promoted {asset['id']} -> {destination}")
     missing = requested - found
@@ -322,6 +380,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--skip-existing", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--workflow-out", type=Path, help="Write the first generated API workflow JSON and exit.")
+    parser.add_argument("--production-quality", action="store_true", help="Use a heavier 2:1 latent and tiled decode defaults for final 4K candidates.")
+    parser.add_argument("--sota-seam-profile", action="store_true", help="Apply SHERPA-inspired circular seam prompts, production defaults, wider repair, and yaw/cube QA.")
     parser.add_argument("--base-width", type=int, default=1024)
     parser.add_argument("--base-height", type=int, default=512)
     parser.add_argument("--target-width", type=int, default=4096)
@@ -340,6 +400,16 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--vae", default="ae.safetensors")
     parser.add_argument("--upscale-model", default="4x-UltraSharp.pth")
     parser.add_argument("--jpeg-quality", type=int, default=92)
+    parser.add_argument("--no-equirect-repair", action="store_true", help="Disable seam and pole-cap repair before writing JPEGs.")
+    parser.add_argument("--seam-repair-px", type=int, default=160)
+    parser.add_argument("--pole-repair-px", type=int, default=220)
+    parser.add_argument("--qa-yaw-offsets", default="", help="Comma-separated yaw cuts to inspect after generation. Defaults to manifest QA offsets.")
+    parser.add_argument("--qa-cube-face-size", type=int)
+    parser.add_argument("--max-seam-delta", type=float)
+    parser.add_argument("--max-yaw-seam-delta", type=float)
+    parser.add_argument("--max-pole-std", type=float)
+    parser.add_argument("--max-cube-edge-gradient", type=float)
+    parser.add_argument("--allow-qa-fail", action="store_true", help="Record failed QA candidates instead of aborting the run.")
     parser.add_argument("--timeout-s", type=int, default=900)
     parser.add_argument("--poll-s", type=float, default=2.0)
     parser.add_argument("--tiled-decode", action="store_true")
@@ -350,13 +420,54 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
+def apply_sota_seam_profile(args: argparse.Namespace) -> None:
+    if not args.sota_seam_profile:
+        return
+    args.production_quality = True
+    args.prompt_suffix = append_suffix(args.prompt_suffix, SOTA_SEAM_POSITIVE)
+    args.negative_suffix = append_suffix(args.negative_suffix, SOTA_SEAM_NEGATIVE)
+    if not args.qa_yaw_offsets:
+        args.qa_yaw_offsets = "0,45,90,135,180,225,270,315"
+    if args.qa_cube_face_size is None:
+        args.qa_cube_face_size = 128
+    if args.steps == 8:
+        args.steps = 22
+    if args.seam_repair_px == 160:
+        args.seam_repair_px = 320
+    if args.pole_repair_px == 220:
+        args.pole_repair_px = 320
+
+
+def apply_quality_profile(args: argparse.Namespace) -> None:
+    if not args.production_quality:
+        return
+    if args.base_width == 1024 and args.base_height == 512:
+        args.base_width = 2048
+        args.base_height = 1024
+    if args.steps == 8:
+        args.steps = 18
+    if not args.tiled_decode:
+        args.tiled_decode = True
+    if args.vae_tile_size == 512:
+        args.vae_tile_size = 768
+    if args.vae_overlap == 64:
+        args.vae_overlap = 96
+    if args.seam_repair_px == 160:
+        args.seam_repair_px = 256
+    if args.pole_repair_px == 220:
+        args.pole_repair_px = 256
+
+
 def main() -> None:
     args = parse_args()
+    apply_sota_seam_profile(args)
+    apply_quality_profile(args)
     manifest = json.loads(args.manifest.read_text(encoding="utf-8"))
+    qa_options = qa_settings(manifest, args)
 
     if args.promote_run:
         record = load_run_record(args.ledger, args.promote_run)
-        promotion_record = promote_run(record, args.output_dir, normalize_requested_assets(args.asset))
+        promotion_record = promote_run(record, args.output_dir, qa_options, normalize_requested_assets(args.asset))
         append_ledger(args.ledger, {"type": "promotion", **promotion_record})
         print(f"promotion ledger appended: {args.ledger}")
         return
@@ -396,6 +507,8 @@ def main() -> None:
         "clip": args.clip,
         "vae": args.vae,
         "upscale_model": args.upscale_model,
+        "sota_seam_profile": args.sota_seam_profile,
+        "qa_settings": qa_options,
         "assets": [],
     }
     if not args.dry_run:
@@ -449,11 +562,21 @@ def main() -> None:
             args.jpeg_quality,
             asset.get("postprocess", {}),
             (args.target_width, args.target_height),
+            not args.no_equirect_repair,
+            args.seam_repair_px,
+            args.pole_repair_px,
+            qa_options["yaw_offsets"],
+            qa_options["cube_face_size"],
         )
+        issues = qa_issues(qa, qa_options)
         print(
             f"saved {asset['id']}: {qa['width']}x{qa['height']} "
-            f"{qa['bytes'] / 1024:.1f} KB seam_delta={qa['seam_mean_abs_delta']}"
+            f"{qa['bytes'] / 1024:.1f} KB seam_delta={qa['seam_mean_abs_delta']} "
+            f"yaw_delta={qa['yaw_seam_mean_abs_delta_max']} "
+            f"pole_std={qa['max_pole_horizontal_std']} cube_edge={qa['cube_edge_gradient_max']}"
         )
+        if issues:
+            print(f"qa fail {asset['id']}: {', '.join(issues)}")
         run_record["assets"].append(
             {
                 "id": asset["id"],
@@ -462,8 +585,11 @@ def main() -> None:
                 "prompt_id": prompt_id,
                 "comfy_image": image_info,
                 "qa": qa,
+                "qa_issues": issues,
             }
         )
+        if issues and not args.allow_qa_fail:
+            raise SystemExit(f"Stopping after failed equirect QA for {asset['id']}: {', '.join(issues)}")
 
     if not args.dry_run:
         run_record["finished_at"] = datetime.now(timezone.utc).isoformat()

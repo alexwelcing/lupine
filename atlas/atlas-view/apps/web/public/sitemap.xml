@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://lupi.live/</loc></url>
-  <url><loc>https://lupi.live/web/</loc></url>
-  <url><loc>https://lupi.live/research/</loc></url>
-  <url><loc>https://lupi.live/native/</loc></url>
-  <url><loc>https://lupi.live/llms.txt</loc></url>
-  <url><loc>https://lupi.live/llms-full.txt</loc></url>
-  <url><loc>https://lupi.live/brand.json</loc></url>
+  <url><loc>https://lupi.live/</loc><lastmod>2026-06-17</lastmod></url>
+  <url><loc>https://lupi.live/scenes/1m-copper-lattice</loc><lastmod>2026-06-17</lastmod></url>
+  <url><loc>https://lupi.live/study/organic-functional-groups</loc><lastmod>2026-06-17</lastmod></url>
+  <url><loc>https://lupi.live/study/functional-group-examples</loc><lastmod>2026-06-17</lastmod></url>
+  <url><loc>https://lupi.live/study/organic-chemistry-3d-molecule-viewer</loc><lastmod>2026-06-17</lastmod></url>
+  <url><loc>https://lupi.live/materials/omol25</loc><lastmod>2026-06-17</lastmod></url>
+  <url><loc>https://lupi.live/materials/omol25-molecule-geometry</loc><lastmod>2026-06-17</lastmod></url>
+  <url><loc>https://lupi.live/materials/million-atom-viewer</loc><lastmod>2026-06-17</lastmod></url>
+  <url><loc>https://lupi.live/web/</loc><lastmod>2026-06-17</lastmod></url>
+  <url><loc>https://lupi.live/research/</loc><lastmod>2026-06-17</lastmod></url>
+  <url><loc>https://lupi.live/native/</loc><lastmod>2026-06-17</lastmod></url>
+  <url><loc>https://lupi.live/llms.txt</loc><lastmod>2026-06-17</lastmod></url>
+  <url><loc>https://lupi.live/llms-full.txt</loc><lastmod>2026-06-17</lastmod></url>
+  <url><loc>https://lupi.live/brand.json</loc><lastmod>2026-06-17</lastmod></url>
 </urlset>

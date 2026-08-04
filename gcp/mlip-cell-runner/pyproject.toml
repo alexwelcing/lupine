@@ -72,9 +72,10 @@ dev = [
 ]
 
 [tool.setuptools]
-# Flat layout: the runner modules live at the package root plus a src/ helper
-# package for the managed telemetry/connector seams.
-py-modules = ["mlip_cell_runner", "fixture_contract"]
+# Flat layout: the runner module lives at the package root plus a src/ helper
+# package for the managed telemetry/connector seams. fixture_contract now lives
+# in lupine_distill and is consumed from there.
+py-modules = ["mlip_cell_runner"]
 
 [tool.setuptools.packages.find]
 where = ["."]

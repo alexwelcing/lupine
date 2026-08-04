@@ -1,0 +1,10 @@
+--index-url https://download.pytorch.org/whl/cpu
+--extra-index-url https://pypi.python.org/simple
+
+ase==3.29.0
+huggingface_hub==1.21.0
+matgl==4.0.2
+matcalc==0.5.1
+pymatgen==2026.5.4
+numpy==2.4.6
+google-cloud-storage==2.18.0

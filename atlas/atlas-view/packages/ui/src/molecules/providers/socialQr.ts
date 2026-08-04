@@ -29,7 +29,7 @@ function matches(entry: SocialQrEntry, text: string): boolean {
   return haystack.toLowerCase().includes(text);
 }
 
-/** Limited social-link archive: QR codes authored as atoms and inferred bonds. */
+/** Limited social-link archive: QR codes authored as atom point art with optional visual adjacency guides. */
 export const socialQrProvider: MoleculeProvider = {
   id: 'social',
   label: 'Social QRs',
@@ -44,10 +44,10 @@ export const socialQrProvider: MoleculeProvider = {
         id: entry.id,
         source: 'social',
         title: entry.title,
-        subtitle: `Atom+bond QR → ${entry.url}`,
+        subtitle: `Atom QR point art -> ${entry.url}`,
         formula: `C${entry.atoms}`,
         elements: ['C'],
-        tags: ['limited archive', 'atom QR', 'bonds', `${entry.qrModules}×${entry.qrModules}`, ...entry.tags],
+        tags: ['limited archive', 'atom QR', 'visual adjacency', `${entry.qrModules}×${entry.qrModules}`, ...entry.tags],
         colors: ['#111827', '#1edce0', '#ffffff'],
         load: { kind: 'url', url: publicAssetUrl(`social-qr/${entry.file}`) },
         score: text ? 0.82 : 0.42,

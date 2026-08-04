@@ -1,0 +1,7 @@
+name = "library-proxy"
+main = "src/index.ts"
+compatibility_date = "2026-06-26"
+
+[[routes]]
+pattern = "library.lupine.science/*"
+zone_id = "afbe50fa2e9334f6f93dc2b1276cdd6c"

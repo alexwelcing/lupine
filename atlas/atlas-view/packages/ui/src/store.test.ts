@@ -1,6 +1,14 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { resetStore, getStoreState } from './test-utils';
 import { createMockTrajectory } from '@atlas/core/test-utils';
+import { DEFAULT_SCENE_ID } from '@atlas/scene/materials';
+
+function encodeStateDelta(delta: Record<string, unknown>) {
+  return btoa(JSON.stringify(delta))
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=+$/, '');
+}
 
 describe('Store — Display Toggles', () => {
   beforeEach(() => {
@@ -91,6 +99,16 @@ describe('Store — Color & Visuals', () => {
     expect(getStoreState().renderStyle).toBe('toon');
   });
 
+  it('keeps atom color schemes independent from surface render style', () => {
+    getStoreState().setRenderStyle('toon');
+    getStoreState().setColorScheme('botanical');
+
+    const s = getStoreState();
+    expect(s.colorScheme).toBe('botanical');
+    expect(s.atomColorSource).toBe('botanical');
+    expect(s.renderStyle).toBe('toon');
+  });
+
   it('applies neon visual profile', () => {
     getStoreState().applyVisualProfile('neon');
     const s = getStoreState();
@@ -127,6 +145,99 @@ describe('Store — URL Serialization', () => {
     expect(restored.showBonds).toBe(true);
     expect(restored.bondCutoff).toBeCloseTo(3.2);
     expect(restored.bondTolerance).toBeCloseTo(0.7);
+  });
+
+  it('round-trips shareable look settings through URL', () => {
+    const s = getStoreState();
+    s.setColorScheme('uniform');
+    s.setUniformAtomColor('#ff8844');
+    s.setPostprocessPreset('cinematic');
+    s.setPostprocessIntensity(1.35);
+    s.setRenderStyle('botanical');
+    s.setMaterialScene('forge');
+    s.setMaterialPreset('metallic');
+    s.setMaterialIntensity(0.42);
+    s.setEnvironmentPreset('warehouse');
+    s.setBackgroundPreset('void');
+    s.setBackgroundStyle('spotlight');
+    s.setBackgroundMotionPaused(true);
+    s.setBackgroundMotionSpeed(0.45);
+    s.setBackgroundOpacity(0.72);
+    s.setBackgroundBrightness(1.24);
+    s.setBackgroundSaturation(1.38);
+    s.setBackgroundContrast(0.86);
+    s.setBackgroundYawDegrees(74);
+    s.setBackgroundPitchDegrees(-12);
+    s.setRimLightIntensity(0.75);
+    s.setFillLightColor('#223344');
+    s.setRimLightColor('#ddeeff');
+
+    const encoded = s.encodeToURL();
+    resetStore();
+    getStoreState().decodeFromURL(encoded);
+    const restored = getStoreState();
+
+    expect(restored.colorScheme).toBe('uniform');
+    expect(restored.uniformAtomColor).toBe('#ff8844');
+    expect(restored.postprocessPreset).toBe('cinematic');
+    expect(restored.postprocessIntensity).toBeCloseTo(1.35);
+    expect(restored.renderStyle).toBe('botanical');
+    expect(restored.materialScene).toBe('forge');
+    expect(restored.materialPreset).toBe('metallic');
+    expect(restored.materialIntensity).toBeCloseTo(0.42);
+    expect(restored.environmentPreset).toBe('warehouse');
+    expect(restored.backgroundPreset).toBe('void');
+    expect(restored.backgroundStyle).toBe('spotlight');
+    expect(restored.backgroundMotionPaused).toBe(true);
+    expect(restored.backgroundMotionSpeed).toBeCloseTo(0.45);
+    expect(restored.backgroundOpacity).toBeCloseTo(0.72);
+    expect(restored.backgroundBrightness).toBeCloseTo(1.24);
+    expect(restored.backgroundSaturation).toBeCloseTo(1.38);
+    expect(restored.backgroundContrast).toBeCloseTo(0.86);
+    expect(restored.backgroundYawDegrees).toBeCloseTo(74);
+    expect(restored.backgroundPitchDegrees).toBeCloseTo(-12);
+    expect(restored.rimLightIntensity).toBeCloseTo(0.75);
+    expect(restored.fillLightColor).toBe('#223344');
+    expect(restored.rimLightColor).toBe('#ddeeff');
+  });
+
+  it('sanitizes invalid look settings from URL state', () => {
+    getStoreState().decodeFromURL(encodeStateDelta({
+      ms: 'missing-scene',
+      mp: 'mirror-metal',
+      env: 'orbital',
+    }));
+
+    const restored = getStoreState();
+    expect(restored.materialScene).toBe(DEFAULT_SCENE_ID);
+    expect(restored.materialPreset).toBe('default');
+    expect(restored.environmentPreset).toBe('studio');
+  });
+
+  it('infers color scheme for legacy URL color state', () => {
+    getStoreState().decodeFromURL(encodeStateDelta({
+      cm: 'property',
+      cp: 'energy',
+      cmap: 'turbo',
+    }));
+
+    let restored = getStoreState();
+    expect(restored.colorScheme).toBe('property');
+    expect(restored.atomColorSource).toBe('colormap');
+    expect(restored.colorMode).toBe('property');
+    expect(restored.colorProperty).toBe('energy');
+
+    resetStore();
+    getStoreState().decodeFromURL(encodeStateDelta({
+      cm: 'type',
+      cmap: 'plasma',
+    }));
+
+    restored = getStoreState();
+    expect(restored.colorScheme).toBe('family');
+    expect(restored.atomColorSource).toBe('colormap');
+    expect(restored.colorMode).toBe('type');
+    expect(restored.colormap).toBe('plasma');
   });
 });
 
@@ -184,6 +295,58 @@ describe('Store — File Loading', () => {
     expect(s.colorMode).toBe('type');
     expect(s.atomColorSource).toBe('element');
     expect(s.colorProperty).toBeNull();
+  });
+
+  it('opens small molecules with a readable polished visual default', () => {
+    const traj = createMockTrajectory(1, 61);
+    const file = { name: 'showcase.xyz', size: 4096, trajectory: traj, thermo: null };
+
+    getStoreState().setFile(file);
+    const s = getStoreState();
+
+    expect(s.showBonds).toBe(true);
+    expect(s.showCell).toBe(false);
+    expect(s.showAxes).toBe(false);
+    expect(s.postprocessPreset).toBe('editorial');
+    expect(s.backgroundPreset).toBe('deep');
+    expect(s.rimLightColor).toBe('#7de9ff');
+    expect(s.surfacePolish).toBeGreaterThan(0);
+    expect(s.surfaceClearcoat).toBeGreaterThan(0);
+  });
+
+  it('brightens carbon in mixed small organic molecules', () => {
+    const traj = createMockTrajectory(1, 21);
+    traj.frames[0].types = new Int32Array([
+      6, 6, 6, 6, 6, 6, 6, 6, 6,
+      8, 8, 8, 8,
+      1, 1, 1, 1, 1, 1, 1, 1,
+    ]);
+    traj.atomTypes = [1, 6, 8];
+    const file = { name: 'aspirin.xyz', size: 551, trajectory: traj, thermo: null };
+
+    getStoreState().setFile(file);
+    const s = getStoreState();
+
+    expect(s.backgroundPreset).toBe('deep');
+    expect(s.elementColorOverrides[6]).toBe('#9be8ff');
+  });
+
+  it('opens carbon-rich small molecules on a higher-contrast stage', () => {
+    const traj = createMockTrajectory(1, 60);
+    traj.frames[0].types = new Int32Array(60).fill(6);
+    traj.atomTypes = [6];
+    const file = { name: 'c60_buckyball.xyz', size: 4096, trajectory: traj, thermo: null };
+
+    getStoreState().setFile(file);
+    const s = getStoreState();
+
+    expect(s.showBonds).toBe(true);
+    expect(s.colorScheme).toBe('element');
+    expect(s.materialPreset).toBe('default');
+    expect(s.backgroundPreset).toBe('deep');
+    expect(s.rimLightIntensity).toBeGreaterThan(0.6);
+    expect(s.rimLightColor).toBe('#f8fbff');
+    expect(s.elementColorOverrides[6]).toBe('#9be8ff');
   });
 
   it('disables effects for massive systems', () => {

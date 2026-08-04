@@ -1,0 +1,152 @@
+# Lupine sphere-grid scanner configuration
+# Paths are resolved relative to LUPINE_WIKI_ROOT (/home/alex/Dev/lupine/lupine by default)
+# or as absolute paths. Use ~ for the home directory.
+
+spheres:
+  hermes-core:
+    name: Hermes Core
+    description: Hermes agent runtime, config, state, memory, and bundled plugins/skills.
+    color: "#6366f1"
+    priority: 100
+    roots:
+      - path: ~/.hermes/config.yaml
+        kind: config
+      - path: ~/.hermes/SOUL.md
+        kind: config
+      - path: ~/.hermes/hermes-agent
+        kind: repo
+        recursive: true
+        max_depth: 1
+        ignore_patterns:
+          - .git
+          - __pycache__
+          - .venv
+          - venv
+          - node_modules
+          - target
+          - .pytest_cache
+          - .mypy_cache
+
+  hermes-local-extensions:
+    name: Hermes Local Extensions
+    description: User-local plugins, skills, MCP servers, cron jobs, and kanban boards.
+    color: "#8b5cf6"
+    priority: 90
+    roots:
+      - path: ~/.hermes/skills
+        kind: skill
+        recursive: true
+        max_depth: 2
+        ignore_patterns:
+          - .git
+          - __pycache__
+          - .venv
+          - .hub
+          - .archive
+      - path: ~/.hermes/plugins
+        kind: plugin
+        recursive: true
+        max_depth: 2
+        ignore_patterns:
+          - .git
+          - __pycache__
+          - .venv
+      - path: ~/.hermes/mcp-servers
+        kind: mcp_server
+        recursive: true
+        max_depth: 2
+        ignore_patterns:
+          - .git
+          - __pycache__
+          - .venv
+      - path: ~/.hermes/cron/jobs.json
+        kind: config
+      - path: ~/.hermes/kanban/boards/lupine
+        kind: config
+        recursive: true
+        max_depth: 2
+        ignore_patterns:
+          - .db-shm
+          - .db-wal
+
+  lupine-science:
+    name: Lupine Science
+    description: Active research contracts, campaigns, Lean proofs, validation, and visualization bundles.
+    color: "#10b981"
+    priority: 80
+    roots:
+      - path: ../lupine-rhizo
+        required: true
+        kind: repo
+        recursive: true
+        max_depth: 4
+        ignore_patterns:
+          - .git
+          - __pycache__
+          - .venv
+          - node_modules
+          - dist
+          - build
+          - target
+          - .lake
+          - .wrangler
+          - .pytest_cache
+
+  lupine-ledger:
+    name: Lupine Ledger
+    description: Evidence, claims, D1 tables, knowledge graph, and bibliography.
+    color: "#f59e0b"
+    priority: 70
+    roots:
+      - path: ../lupine-ledger
+        required: true
+        kind: repo
+        recursive: true
+        max_depth: 2
+        ignore_patterns:
+          - .git
+          - node_modules
+          - dist
+          - target
+
+  lupine-media:
+    name: Lupine Media
+    description: Movie-making seed, lupine-media binary, brand docs, and sample projects.
+    color: "#ec4899"
+    priority: 60
+    roots:
+      - path: lupine-media
+        kind: repo
+        recursive: true
+        max_depth: 2
+        ignore_patterns:
+          - .git
+          - target
+      - path: docs/brand
+        kind: doc
+        recursive: true
+        max_depth: 2
+      - path: self-reliant-skunk
+        kind: project
+        recursive: true
+        max_depth: 2
+        ignore_patterns:
+          - target
+
+  lupine-public:
+    name: Lupine Public
+    description: Public-facing science site, funding reports, and publications.
+    color: "#06b6d4"
+    priority: 50
+    roots:
+      - path: ../lupine-science
+        kind: repo
+        recursive: true
+        max_depth: 2
+        ignore_patterns:
+          - .git
+          - node_modules
+          - dist
+
+# Explicit cross-sphere edges (provenance: declared)
+edges: []

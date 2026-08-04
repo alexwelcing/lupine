@@ -5,8 +5,10 @@
 import { Html } from '@react-three/drei';
 import type { Frame } from '@atlas/core/types';
 import { getElementSpec } from '@atlas/core';
+import { useStore, type KnowledgeLabel } from './store';
 
 const MAX_PROPERTY_ROWS = 4;
+const MAX_KNOWLEDGE_ROWS = 4;
 
 interface AtomInfoHUDProps {
   frame: Frame;
@@ -24,6 +26,7 @@ export function AtomInfoHUD({
   const atomIndex = selectedAtoms[0];
   if (atomIndex == null || atomIndex < 0 || atomIndex >= frame.natoms) return null;
 
+  const knowledgeLabels = useStore(s => s.knowledgeLabels);
   const x = frame.positions[atomIndex * 3];
   const y = frame.positions[atomIndex * 3 + 1];
   const z = frame.positions[atomIndex * 3 + 2];
@@ -31,6 +34,11 @@ export function AtomInfoHUD({
   const id = frame.ids[atomIndex] ?? atomIndex;
   const spec = getElementSpec(type);
   const properties = getPropertyRows(frame, atomIndex, activeProperty);
+  const knowledge = getKnowledgeRows(knowledgeLabels, frame, atomIndex);
+  const nodeLabel = knowledgeLabels.find((l) => l.kind === 'node' && l.atomIndex === atomIndex);
+  const subtitle = nodeLabel?.nodeId
+    ? formatNodePath(nodeLabel.nodeId)
+    : `atom #${atomIndex} / id ${id} / type ${type}`;
 
   return (
     <Html
@@ -102,8 +110,17 @@ export function AtomInfoHUD({
                 </button>
               )}
             </div>
-            <div style={{ color: 'rgba(165, 192, 219, 0.72)', fontSize: 10 }}>
-              atom #{atomIndex} / id {id} / type {type}
+            <div
+              title={nodeLabel?.nodeId}
+              style={{
+                color: 'rgba(165, 192, 219, 0.72)',
+                fontSize: 10,
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {subtitle}
             </div>
           </div>
         </div>
@@ -124,6 +141,14 @@ export function AtomInfoHUD({
           {properties.map(({ name, value }) => (
             <DetailRow key={name} label={name} value={formatPropertyValue(value)} strong={name === activeProperty} />
           ))}
+          {knowledge.length > 0 && (
+            <>
+              <div style={{ height: 1, background: 'rgba(122, 211, 255, 0.12)', margin: '5px 0 3px' }} />
+              {knowledge.map((row) => (
+                <DetailRow key={row.label} label={row.label} value={row.value} strong />
+              ))}
+            </>
+          )}
         </div>
       </div>
     </Html>
@@ -163,6 +188,55 @@ function getPropertyRows(frame: Frame, atomIndex: number, activeProperty?: strin
   if (activeProperty) add(activeProperty);
   frame.properties.forEach((_values, name) => add(name));
   return rows.slice(0, MAX_PROPERTY_ROWS);
+}
+
+function getKnowledgeRows(labels: KnowledgeLabel[], frame: Frame, atomIndex: number): Array<{ label: string; value: string }> {
+  const rows: Array<{ label: string; value: string }> = [];
+  const sphereId = frame.properties.get('sphere_id')?.[atomIndex];
+  const kind = frame.properties.get('kind')?.[atomIndex];
+  const radius = frame.properties.get('radius')?.[atomIndex];
+
+  const nodeLabel = labels.find((l) => l.kind === 'node' && l.atomIndex === atomIndex);
+  if (nodeLabel) {
+    // Named key node: show its type, name, and connection count first.
+    rows.push({ label: nodeLabel.nodeKind ?? 'node', value: nodeLabel.text });
+    if (typeof nodeLabel.degree === 'number') {
+      rows.push({ label: 'connections', value: String(nodeLabel.degree) });
+    }
+  } else if (typeof kind === 'number' || typeof kind === 'string') {
+    rows.push({ label: 'kind', value: String(kind) });
+  }
+
+  if (typeof sphereId === 'number' || typeof sphereId === 'string') {
+    const sphereLabel = labels.find(
+      (l) =>
+        l.kind === 'sphere' &&
+        (l.sphereIndex === Number(sphereId) || l.sphereId === String(sphereId)),
+    );
+    if (sphereLabel) {
+      rows.push({ label: 'sphere', value: sphereLabel.text });
+    }
+  }
+
+  if (typeof radius === 'number') {
+    rows.push({ label: 'radius', value: radius.toFixed(3) });
+  }
+
+  return rows.slice(0, MAX_KNOWLEDGE_ROWS);
+}
+
+/** Format a node id/path for display: keep the last meaningful segment and
+ *  truncate very long paths so the HUD stays compact. */
+function formatNodePath(path: string | undefined): string | undefined {
+  if (!path) return undefined;
+  const cleaned = path.replace(/^[a-z]+:\/\//i, '').replace(/^\//, '');
+  if (cleaned.length <= 42) return cleaned;
+  const parts = cleaned.split('/');
+  const file = parts.pop() ?? '';
+  const dir = parts.join('/');
+  if (file.length > 38) return `…/${file.slice(0, 36)}…`;
+  const prefix = dir.slice(0, 40 - file.length - 4);
+  return `${prefix}…/${file}`;
 }
 
 function formatPropertyValue(value: number): string {

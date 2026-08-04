@@ -4,6 +4,7 @@ import {
   getRedirectResult,
   onIdTokenChanged,
   setPersistence,
+  signInWithCustomToken,
   signInWithPopup,
   signInWithRedirect,
   signOut as firebaseSignOut,
@@ -35,6 +36,7 @@ export interface FirebaseAuthState {
   loading: boolean;
   refreshToken: () => Promise<string | null>;
   signIn: (provider?: LupiAuthProviderId) => Promise<void>;
+  signInWithCustomToken: (customToken: string) => Promise<void>;
   signInWithOverride: (account?: LupiAuthOverrideInput) => Promise<void>;
   signOut: () => Promise<void>;
   user: User | null;
@@ -63,6 +65,7 @@ interface LupiFirebaseAuthDebug {
   overrideSignIn: (account?: LupiAuthOverrideInput) => Promise<void>;
   refreshToken: () => Promise<string | null>;
   signIn: (provider?: LupiAuthProviderId) => Promise<void>;
+  signInWithCustomToken: (customToken: string) => Promise<void>;
   signOut: () => Promise<void>;
 }
 
@@ -346,6 +349,27 @@ async function startSignIn(providerId: LupiAuthProviderId = 'google') {
   }
 }
 
+async function startCustomTokenSignIn(customToken: string) {
+  ensureAuthObserver();
+  clearAuthStartupTimer();
+  if (!firebaseAuth) {
+    setAuthSnapshot({ error: 'Firebase is not configured for this build.', loading: false });
+    return;
+  }
+
+  setAuthSnapshot({ error: null, loading: true });
+  try {
+    await prepareAuthPersistence();
+    const credential = await signInWithCustomToken(firebaseAuth, customToken);
+    await updateSignedInUser(credential.user);
+  } catch (nextError) {
+    setAuthSnapshot({
+      error: toErrorMessage(nextError),
+      loading: false,
+    });
+  }
+}
+
 async function startOverrideSignIn(account?: LupiAuthOverrideInput) {
   clearAuthStartupTimer();
   if (!authOverrideAvailable()) {
@@ -593,6 +617,7 @@ function publishAuthDebugApi() {
     overrideSignIn: startOverrideSignIn,
     refreshToken: refreshAuthToken,
     signIn: startSignIn,
+    signInWithCustomToken: startCustomTokenSignIn,
     signOut: endSignIn,
   };
 }
@@ -613,6 +638,7 @@ export function useFirebaseAuth(): FirebaseAuthState {
     authOverrideAvailable: authOverrideAvailable(),
     refreshToken,
     signIn,
+    signInWithCustomToken: useCallback((customToken: string) => startCustomTokenSignIn(customToken), []),
     signInWithOverride,
     signOut,
   };

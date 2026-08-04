@@ -1,3 +1,7 @@
+> ⚠️ **Provisional — replay-only candidate.** The v3 row-hybrid policy described here
+> has passed local replay only. It is not a promoted cloud policy until a fresh Cloud Run
+> canary confirms the same no-regression verdict with the new policy hash.
+
 # MLIP Distill Local Theory Growth Lane
 
 ## Why

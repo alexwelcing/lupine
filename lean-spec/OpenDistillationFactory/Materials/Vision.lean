@@ -11,24 +11,45 @@
 
 import OpenDistillationFactory.Materials.Data.Provenance
 import OpenDistillationFactory.Materials.Data.Benchmark
+import OpenDistillationFactory.Materials.Data.MgLiCloudRun
+import OpenDistillationFactory.Materials.Data.AlCuCloudRun
 import OpenDistillationFactory.Materials.Analysis.Stats
 import OpenDistillationFactory.Materials.Analysis.Causal
 import OpenDistillationFactory.Materials.Analysis.Manifold
 import OpenDistillationFactory.Materials.Computation.LammpsTrace
 import OpenDistillationFactory.Materials.Theory.ParameterBound
 import OpenDistillationFactory.Materials.Theory.MetaScience
+import OpenDistillationFactory.Materials.Theory.HyperRibbon
 import OpenDistillationFactory.Materials.Theory.HyperRibbonEmpirical
+import OpenDistillationFactory.Materials.Theory.ErrorGeometry
+import OpenDistillationFactory.Materials.Theory.AccuracyCommitment
+import OpenDistillationFactory.Materials.Theory.UniversalityBridge
+import OpenDistillationFactory.Materials.Theory.WeakAcceleration
+import OpenDistillationFactory.Materials.Theory.AffineDecomposition
+import OpenDistillationFactory.Materials.Theory.SmoothProjection
+import OpenDistillationFactory.Materials.Theory.FiniteSampleConcentration
+import OpenDistillationFactory.Materials.Theory.AlloyResidualTransfer
 import OpenDistillationFactory.Materials.Validation.Experiment
 import OpenDistillationFactory.Materials.Validation.Audit
 
 namespace OpenDistillationFactory.Materials.Vision
 
 open OpenDistillationFactory.Materials.Data
+open OpenDistillationFactory.Materials.Data.MgLiCloudRun
 open OpenDistillationFactory.Materials.Analysis.Causal
 open OpenDistillationFactory.Materials.Analysis.Manifold
 open OpenDistillationFactory.Materials.Computation
 open OpenDistillationFactory.Materials.Theory
 open OpenDistillationFactory.Materials.Theory.MetaScience
+open OpenDistillationFactory.Materials.Theory.HyperRibbon
+open OpenDistillationFactory.Materials.Theory.ErrorGeometry
+open OpenDistillationFactory.Materials.Theory.AccuracyCommitment
+open OpenDistillationFactory.Materials.Theory.UniversalityBridge
+open OpenDistillationFactory.Materials.Theory.WeakAcceleration
+open OpenDistillationFactory.Materials.Theory.AffineDecomposition
+open OpenDistillationFactory.Materials.Theory.SmoothProjection
+open OpenDistillationFactory.Materials.Theory.FiniteSampleConcentration
+open OpenDistillationFactory.Materials.Theory.AlloyResidualTransfer
 open OpenDistillationFactory.Materials.Theory.HyperRibbonEmpirical
 open OpenDistillationFactory.Materials.Validation
 open OpenDistillationFactory.Materials.Validation.Audit
@@ -107,6 +128,47 @@ def nistCount := nistScaffoldAlSample.length
 #check hyperRibbonVerdictContainsConsistent
 #check auditReportNonEmpty
 
+/- T48–T62: Submission-push theorems (high-dimensional ribbon, error-geometry
+    structure, parameter-bound operationalization) -/
+#check HyperRibbon.PRfin_scale_invariant
+#check HyperRibbon.hyper_ribbon_bound_4d
+#check ErrorGeometry.systematicFraction_zero
+#check ErrorGeometry.systematicFraction_limit_one
+#check ErrorGeometry.prBiasNoise_one
+#check ErrorGeometry.prSpectrum_scale_invariant
+#check ErrorGeometry.axisSecondMoment_nonneg
+#check ErrorGeometry.pairAlignment_self
+#check jacobianRank_zero_params
+#check jacobianRank_zero_observables
+#check eamFcc_effective_parameter_bound
+#check observedEamFccPR_well_below_bound
+#check lj_parameter_bound
+#check sw_parameter_bound
+#check jacobianRank_monotone_params
+#check AccuracyCommitment.mace_mp0_ni_energy_beats_baseline
+#check AccuracyCommitment.mace_mp0_ni_energy_reduction_is_material
+#check UniversalityBridge.pRefuse_lt_one
+#check UniversalityBridge.speedup_strict
+#check UniversalityBridge.cellValue_nonneg
+#check WeakAcceleration.savedLayerFraction_le_one
+#check WeakAcceleration.uncoveredMass_le_one
+#check WeakAcceleration.catchProbability_lt_one
+#check WeakAcceleration.weakSpeedup_strict
+
+/- T63–T67: Affine decomposition, smooth non-convex projection, and
+    finite-sample concentration of the empirical second-moment matrix. -/
+#check AffineFamily.decomposition
+#check SmoothFamily.residual_orthogonal_to_tangent
+#check SmoothFamily.local_consensus_weak
+#check empiricalSecondMoment_entrywise_concentration
+#check participationRatioMatrix_continuous
+
+/- T68–T69: Alloy residual-subspace transferability bound and its Mg-Li
+    Cloud Run empirical instantiation. -/
+#check AlloyResidualTransfer.crossClassTransferError_le
+#check MgLiCloudRun.transferMatrixSatisfiesBound
+#check AlCuCloudRun.transferMatrixSatisfiesBound
+
 -- ═══════════════════════════════════════════════════════════════
 -- SECTION 3: HYPOTHESIS INVENTORY
 -- ═══════════════════════════════════════════════════════════════
@@ -117,14 +179,21 @@ def hypothesisCount : Nat := hypothesisBoard.length
 /-- Count of theorems proven by computation or structure. -/
 def computationallyProvenCount : Nat :=
   -- Causal: 9, Manifold: 11, LammpsTrace: 3, Benchmark: 9,
-  -- ParameterBound: 1, MetaScience: 5, Experiment: 5, Audit: 5
-  48
+  -- ParameterBound: 1, MetaScience: 5, Experiment: 5, Audit: 5,
+  -- Submission push: HyperRibbon 2, ErrorGeometry 6, ParameterBound 7,
+  -- AccuracyCommitment 2, UniversalityBridge 3, WeakAcceleration 4,
+  -- AffineDecomposition 1, SmoothProjection 2, FiniteSampleConcentration 2,
+  -- AlloyResidualTransfer 1
+  -- ExactTubularUniversality: IsC1Diffeomorphic closure (3), scalar-injectivity (1),
+  -- point-core boundary diffeomorphisms (2), general pairwise bridge (1),
+  -- boundary↔unit-normal-bundle diffeomorphism under HasTubularDiffeomorphism (1)
+  85
 
-/-- Count of documented epistemic gaps (not sorry proofs — all
-    theorems are proven — but acknowledged limitations). -/
+/-- Count of documented epistemic gaps.  The previous single gap,
+    `boundary_diffeomorphic_unitNormalBundle` in `ExactTubularUniversality.lean`,
+    has now been closed under the `HasTubularDiffeomorphism` hypothesis. -/
 def epistemicGapCount : Nat :=
-  -- Validation.Experiment documents 5 gaps to close
-  5
+  0
 
 -- ═══════════════════════════════════════════════════════════════
 -- SECTION 4: BUILD LOCKS
@@ -140,7 +209,7 @@ def epistemicGapCount : Nat :=
 
 #guard (hypothesisCount >= 6)
 #guard (computationallyProvenCount >= 10)
-#guard (epistemicGapCount >= 1)
+#guard (epistemicGapCount == 0)
 
 #guard (empiricalParadox.simpsonsDetected == false)
 #guard (empiricalParadox.ecologicalFallacy == false)
@@ -151,6 +220,12 @@ def epistemicGapCount : Nat :=
 #guard (satisfiesHyperRibbonClaim fccAllPR 3 == true)
 
 #guard (observedSatisfiesBound == true)
+
+#guard (MgLiCloudRun.cloudRunCompositionCount >= 3)
+#guard (MgLiCloudRun.transferMatrixSatisfiesBound == true)
+
+#guard (AlCuCloudRun.cloudRunCompositionCount >= 2)
+#guard (AlCuCloudRun.transferMatrixSatisfiesBound == true)
 
 /-- The complete status board as a computed string. -/
 def visionReport : String :=

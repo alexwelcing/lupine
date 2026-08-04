@@ -6,59 +6,17 @@
  */
 
 import { Suspense, lazy, useEffect, useCallback, useRef, useState, Component, useMemo } from 'react';
-import { Canvas, useThree, useFrame } from '@react-three/fiber';
+import { useQuery } from '@tanstack/react-query';
+import { useThree, useFrame } from '@react-three/fiber';
 import { OrbitControls, GizmoHelper, GizmoViewport, ContactShadows } from '@react-three/drei';
 import { ScenePostprocessing } from './postprocess/ScenePostprocessing';
-import { POSTPROCESS_PRESETS } from './postprocess/presets';
 import { McpViewerBridge, McpViewerHarness } from './mcpViewerBridge';
 import * as THREE from 'three';
-import { XR, createXRStore, useXR } from '@react-three/xr';
+import { useXR } from '@react-three/xr';
 import { USDZExportHelper } from './export/USDZExportPipeline';
 import { XREnvironmentDome } from './xr/XREnvironmentDome';
 import { XRLightEstimation } from './xr/XRLightEstimation';
 import { SceneLighting } from './SceneLighting';
-
-// XR store — tuned for the Meta Quest browser (Quest 2/3/Pro) while staying
-// graceful on non-Meta runtimes. All advanced features are requested as
-// *optional* (XRSessionFeatureRequest = true) so a session still starts on
-// devices that lack them.
-export const xrStore = createXRStore({
-  offerSession: false,
-  emulate: false,
-  // Quest 3 reliably hits 90 Hz; default of 72 leaves frames on the table.
-  frameRate: 'high',
-  // Foveated rendering — Quest GPU loves this; 0 disables, 1 is max.
-  foveation: 0.5,
-  // We hand-build the session init (rather than use the named feature options)
-  // so we can request 'light-estimation' alongside the usual Quest 3 features —
-  // @react-three/xr has no first-class option for it, and customSessionInit
-  // takes over feature negotiation entirely (see @pmndrs/xr buildXRSessionInit).
-  // 'light-estimation' lets XRLightEstimation mirror the real surroundings onto
-  // the molecule (campfire reflections in low light). Everything stays optional,
-  // so a session still starts on devices that lack any given feature; this list
-  // mirrors the previous defaults (hand-tracking, layers, hit-test, anchors,
-  // plane/mesh detection, dom-overlay) plus light-estimation.
-  customSessionInit: {
-    requiredFeatures: ['local-floor'],
-    optionalFeatures: [
-      'hand-tracking',
-      'layers',
-      'hit-test',
-      'anchors',
-      'plane-detection',
-      'mesh-detection',
-      'dom-overlay',
-      'light-estimation',
-    ],
-  },
-  // Direct manipulation lives in XRMoleculeInteraction (reads joint poses
-  // every frame). The short hand ray remains as a fallback for menu / UI.
-  hand: {
-    rayPointer: { rayModel: { maxLength: 1.5 } },
-    teleportPointer: false,
-    grabPointer: false,
-  },
-});
 
 import { MobileHUD } from './MobileHUD';
 import { ChronosHUD } from './ChronosHUD';
@@ -68,6 +26,8 @@ import { TelemetryHUD } from './TelemetryHUD';
 import { useStore } from './store';
 import { getMaxSafeAtomCount, getDefaultQualityTier } from './deviceCapabilities';
 import { LandingPage } from './LandingPage';
+import { SceneLandingPage } from './landing/SceneLandingPage';
+import { SeoEducationPage } from './landing/SeoEducationPage';
 import { ThermoMinimap } from './ThermoMinimap';
 import { AtomsOptimized } from '@atlas/scene/AtomsOptimized';
 import { AtomClusters } from '@atlas/scene/AtomClusters';
@@ -75,6 +35,7 @@ import { buildClusters, type Clusters } from '@atlas/scene/ClusterBuilder';
 import { SpatialAnchor } from './SpatialAnchor';
 import { Bonds } from '@atlas/scene/Bonds';
 import { AnnotationsLayer } from './AnnotationsLayer';
+import { KnowledgeLabelsLayer } from './KnowledgeLabelsLayer';
 import { SelectionMarkers } from './SelectionMarkers';
 import { AtomInfoHUD } from './AtomInfoHUD';
 import { CameraFocus } from './CameraFocus';
@@ -101,20 +62,42 @@ import { ExportManager } from './ExportManager';
 import { AnomalyTracker } from '@atlas/scene/AnomalyTracker';
 import { BatchAssetGenerator } from './BatchAssetGenerator';
 import { CameraPresetButton, TransportButton } from './controls';
-import { StudioControlDeck, type StudioDeckMode } from './StudioControlDeck';
+import { CommandPalette } from './CommandPalette';
 import { LupiAuthCallout } from './LupiAuthCallout';
 import { LupiAgentDock } from './LupiAgentDock';
 import { SavedViewButton } from './SavedViewButton';
 import { MoleculeConfigurator } from './molecules/MoleculeConfigurator';
 import { openRandomOmol25Molecule } from './molecules/randomOmol';
-import { loadSavedMolecularView, slugifySavedViewTitle } from './savedViews';
+import { loadSavedMolecularView } from './savedViews';
+import { recognizeLupiUrlPayload } from './lupiUrlRecognition';
 import { track, ANALYTICS_EVENTS, ensureAnalyticsSession } from './analytics';
-import { detectRenderCapability, fallbackCopyFor } from './renderCapability';
-import { RendererFallback } from './RendererFallback';
-import { CanvasErrorBoundary } from './CanvasErrorBoundary';
+import { detectRenderCapability } from './renderCapability';
 import { MoleculeFilterShell } from './MoleculeFilterShell';
+import { PanelHost } from './PanelHost';
+import { ViewerControlsDrawer, type ViewerControlMode } from './ViewerControlsDrawer';
+import { StudyLensPanel } from './StudyLensPanel';
+import {
+  useViewerBackgroundState,
+  useViewerFileState,
+  useViewerPanelState,
+  useViewerPlaybackState,
+} from './storeSelectors';
+import {
+  SEO_EDUCATION_ROUTES,
+  currentHashRoute,
+  currentPathRoute,
+  isEmojiRoute,
+  isMcpViewerRoute as isMcpViewerRouteMatch,
+  isTestbedRoute,
+  normalizedPathRoute,
+  savedViewSlugFromRoute,
+} from './viewer/viewerRoutes';
+import { openMolecule } from './viewer/openMolecule';
+import { PresetLegacyBridge } from './viewer/PresetLegacyBridge';
+import { ViewerCanvas } from './viewer/ViewerCanvas';
+import { useViewerSceneModel } from './viewer/useViewerSceneModel';
 
-type ViewerControlMode = StudioDeckMode | 'export';
+export { xrStore } from './viewer/xrStore';
 
 // ─── Icons ────────────────────────────────────────────────────────────
 const IconFirst = () => (
@@ -226,6 +209,14 @@ const IconControls = () => (
     <circle cx="11.7" cy="15.8" r="1.15" fill="currentColor" stroke="none" />
   </LupiGlyph>
 );
+const IconStudy = () => (
+  <LupiGlyph>
+    <path d="M7.2 7.4h4.2c1.1 0 2 .9 2 2v7.2H9.2c-1.1 0-2-.9-2-2V7.4Z" />
+    <path d="M13.4 9.4c.38-.32.88-.5 1.42-.5h2v7.2h-2c-.54 0-1.04.18-1.42.5" opacity="0.72" />
+    <path d="M9.1 10.2h2.1" opacity="0.7" />
+    <path d="M9.1 12.7h2.1" opacity="0.52" />
+  </LupiGlyph>
+);
 // ─── Background presets ───────────────────────────────────────────────
 import { BG_PRESETS, getBgMedia, type BgMedia, type BgPreset } from './backgroundPresets';
 import { useEquirectMediaTexture } from './hooks/useEquirectMediaTexture';
@@ -244,11 +235,34 @@ function resolveBackground(backgroundPreset: string, colormap: ColormapName): { 
 }
 
 // ─── Scene Background component ──────────────────────────────────────
-function SceneBackground({ top, bottom, style = 'linear', media, procedural, center = [0, 0, 0], distance = 1 }: {
+type BackgroundAssetAdjustments = {
+  yawDegrees: number;
+  pitchDegrees: number;
+  opacity: number;
+  brightness: number;
+  saturation: number;
+  contrast: number;
+  motionPaused: boolean;
+  motionSpeed: number;
+};
+
+const DEFAULT_BACKGROUND_ADJUSTMENTS: BackgroundAssetAdjustments = {
+  yawDegrees: 0,
+  pitchDegrees: 0,
+  opacity: 1,
+  brightness: 1,
+  saturation: 1,
+  contrast: 1,
+  motionPaused: false,
+  motionSpeed: 1,
+};
+
+function SceneBackground({ top, bottom, style = 'linear', media, procedural, adjustments = DEFAULT_BACKGROUND_ADJUSTMENTS, center = [0, 0, 0], distance = 1 }: {
   top: string; bottom: string;
   style?: BackgroundGradientStyle;
   media: BgMedia;
   procedural?: BgPreset['procedural'];
+  adjustments?: BackgroundAssetAdjustments;
   center?: [number, number, number];
   distance?: number;
 }) {
@@ -265,7 +279,9 @@ function SceneBackground({ top, bottom, style = 'linear', media, procedural, cen
     bottom,
     style,
     enabled: !isImmersiveAR && !procedural,
-    projection: media.kind === 'video' ? 'dome' : 'scene-background',
+    projection: media.kind === 'gradient' ? 'scene-background' : 'dome',
+    paused: adjustments.motionPaused,
+    playbackRate: adjustments.motionSpeed,
     logPrefix: 'bg',
   });
 
@@ -279,20 +295,23 @@ function SceneBackground({ top, bottom, style = 'linear', media, procedural, cen
       };
     }
 
-    if (!texture || media.kind === 'video') {
+    if (!texture) {
       scene.background = null;
       scene.fog = null;
       return;
     }
 
-    scene.background = texture;
-    if (media.kind === 'image') {
-      scene.fog = new THREE.FogExp2(bottom, 0.0008);
-    } else if (media.kind === 'gradient') {
-      scene.fog = new THREE.FogExp2(bottom, 0.0015);
-    } else {
-      scene.fog = null;
+    if (media.kind !== 'gradient') {
+      scene.background = null;
+      scene.fog = new THREE.FogExp2(bottom, media.kind === 'image' ? 0.0008 : 0.00055);
+      return () => {
+        scene.background = null;
+        scene.fog = null;
+      };
     }
+
+    scene.background = texture;
+    scene.fog = new THREE.FogExp2(bottom, 0.0015);
 
     return () => {
       if (scene.background === texture) scene.background = null;
@@ -310,8 +329,8 @@ function SceneBackground({ top, bottom, style = 'linear', media, procedural, cen
     );
   }
 
-  if (media.kind === 'video' && texture && !isImmersiveAR && !isImmersiveVR) {
-    return <PanoramaBackgroundDome texture={texture} />;
+  if ((media.kind === 'image' || media.kind === 'video') && texture && !isImmersiveAR && !isImmersiveVR) {
+    return <PanoramaBackgroundDome texture={texture} adjustments={adjustments} />;
   }
 
   return null;
@@ -319,7 +338,34 @@ function SceneBackground({ top, bottom, style = 'linear', media, procedural, cen
 
 const PANORAMA_DOME_RADIUS = 5000;
 
-function PanoramaBackgroundDome({ texture }: { texture: THREE.Texture }) {
+const PANORAMA_VERTEX_SHADER = `
+  varying vec2 vUv;
+  void main() {
+    vUv = uv;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  }
+`;
+
+const PANORAMA_FRAGMENT_SHADER = `
+  uniform sampler2D map;
+  uniform float opacity;
+  uniform float brightness;
+  uniform float saturation;
+  uniform float contrast;
+  varying vec2 vUv;
+
+  void main() {
+    vec4 texel = texture2D(map, vUv);
+    vec3 color = texel.rgb;
+    float luma = dot(color, vec3(0.2126, 0.7152, 0.0722));
+    color = mix(vec3(luma), color, saturation);
+    color = (color - 0.5) * contrast + 0.5;
+    color *= brightness;
+    gl_FragColor = vec4(clamp(color, 0.0, 1.0), texel.a * opacity);
+  }
+`;
+
+function PanoramaBackgroundDome({ texture, adjustments }: { texture: THREE.Texture; adjustments: BackgroundAssetAdjustments }) {
   const meshRef = useRef<THREE.Mesh>(null);
   const { camera } = useThree();
   const geometry = useMemo(() => {
@@ -327,21 +373,50 @@ function PanoramaBackgroundDome({ texture }: { texture: THREE.Texture }) {
     geo.scale(-1, 1, 1);
     return geo;
   }, []);
+  const material = useMemo(() => new THREE.ShaderMaterial({
+    uniforms: {
+      map: { value: texture },
+      opacity: { value: adjustments.opacity },
+      brightness: { value: adjustments.brightness },
+      saturation: { value: adjustments.saturation },
+      contrast: { value: adjustments.contrast },
+    },
+    vertexShader: PANORAMA_VERTEX_SHADER,
+    fragmentShader: PANORAMA_FRAGMENT_SHADER,
+    side: THREE.FrontSide,
+    transparent: true,
+    depthWrite: false,
+    depthTest: false,
+    toneMapped: false,
+    fog: false,
+  }), []);
+
+  useEffect(() => {
+    material.uniforms.map.value = texture;
+    material.uniforms.opacity.value = adjustments.opacity;
+    material.uniforms.brightness.value = adjustments.brightness;
+    material.uniforms.saturation.value = adjustments.saturation;
+    material.uniforms.contrast.value = adjustments.contrast;
+    material.needsUpdate = true;
+  }, [adjustments.brightness, adjustments.contrast, adjustments.opacity, adjustments.saturation, material, texture]);
+
+  useEffect(() => () => {
+    material.dispose();
+  }, [material]);
 
   useFrame(() => {
-    meshRef.current?.position.copy(camera.position);
+    if (!meshRef.current) return;
+    meshRef.current.position.copy(camera.position);
+    meshRef.current.rotation.set(
+      THREE.MathUtils.degToRad(adjustments.pitchDegrees),
+      THREE.MathUtils.degToRad(adjustments.yawDegrees),
+      0,
+    );
   });
 
   return (
     <mesh ref={meshRef} geometry={geometry} frustumCulled={false} renderOrder={-1000}>
-      <meshBasicMaterial
-        map={texture}
-        side={THREE.FrontSide}
-        depthWrite={false}
-        depthTest={false}
-        toneMapped={false}
-        fog={false}
-      />
+      <primitive object={material} attach="material" />
     </mesh>
   );
 }
@@ -388,41 +463,52 @@ function CameraManager({
   fileId,
   center,
   distance,
+  near,
 }: {
   fileId?: string;
   center: [number, number, number];
   distance: number;
+  near: number;
 }) {
   const { camera, controls } = useThree((s) => ({ camera: s.camera, controls: s.controls as any }));
   const flythroughPreview = useStore(s => s.flythroughPreview);
 
-  // Sync continuously during flythrough preview + keep clipping planes generous
-  useFrame(() => {
-    // Dynamic clipping: always keep far plane far enough to see everything
+  const applyPerspectiveProjection = useCallback((nextFov?: number) => {
     if (camera instanceof THREE.PerspectiveCamera) {
-      const camDist = camera.position.length();
+      const camDist = Math.hypot(
+        camera.position.x - center[0],
+        camera.position.y - center[1],
+        camera.position.z - center[2],
+      );
       const minFar = Math.max(10000, distance * 100, camDist * 20);
-      if (camera.far < minFar) {
+      const fovChanged = Number.isFinite(nextFov) && Math.abs(camera.fov - nextFov!) > 1e-4;
+      const nearChanged = Math.abs(camera.near - near) > 1e-4;
+      const farChanged = camera.far < minFar;
+      if (fovChanged || nearChanged || farChanged) {
+        if (fovChanged) camera.fov = nextFov!;
+        camera.near = near;
         camera.far = minFar;
         camera.updateProjectionMatrix();
       }
     }
+  }, [camera, center, distance, near]);
 
+  // Sync continuously during flythrough preview + keep clipping planes generous
+  useFrame(() => {
     if (flythroughPreview) {
       const state = useStore.getState();
       camera.position.set(...state.cameraPosition);
       camera.lookAt(...state.cameraTarget);
-      
-      if (camera instanceof THREE.PerspectiveCamera) {
-        camera.fov = state.cameraFov;
-        camera.updateProjectionMatrix();
-      }
+      applyPerspectiveProjection(state.cameraFov);
 
       if (controls && controls.target) {
         controls.target.set(...state.cameraTarget);
         controls.update();
       }
+      return;
     }
+
+    applyPerspectiveProjection();
   });
 
   // Fit on load
@@ -430,13 +516,13 @@ function CameraManager({
     if (!fileId) return;
     camera.position.set(center[0], center[1], center[2] + distance);
     camera.lookAt(center[0], center[1], center[2]);
-    camera.updateProjectionMatrix();
+    applyPerspectiveProjection();
     if (controls && controls.target) {
       controls.target.set(center[0], center[1], center[2]);
       controls.update();
     }
     useStore.getState().setCameraState(camera.position.toArray() as any, center);
-  }, [fileId, center, distance, camera, controls]);
+  }, [fileId, center, distance, camera, controls, applyPerspectiveProjection]);
 
   // Sync with presets
   useEffect(() => {
@@ -446,7 +532,7 @@ function CameraManager({
         const { cameraPosition, cameraTarget } = useStore.getState();
         camera.position.set(...cameraPosition);
         camera.lookAt(...cameraTarget);
-        camera.updateProjectionMatrix();
+        applyPerspectiveProjection();
         if (controls && controls.target) {
           controls.target.set(...cameraTarget);
           controls.update();
@@ -454,17 +540,14 @@ function CameraManager({
       }
     );
     return unsub;
-  }, [camera, controls]);
+  }, [camera, controls, applyPerspectiveProjection]);
 
   useEffect(() => {
     const applyStoredCamera = () => {
       const { cameraPosition, cameraTarget, cameraFov } = useStore.getState();
       camera.position.set(...cameraPosition);
       camera.lookAt(...cameraTarget);
-      if (camera instanceof THREE.PerspectiveCamera) {
-        camera.fov = cameraFov;
-        camera.updateProjectionMatrix();
-      }
+      applyPerspectiveProjection(cameraFov);
       if (controls && controls.target) {
         controls.target.set(...cameraTarget);
         controls.update();
@@ -476,26 +559,8 @@ function CameraManager({
       useStore.subscribe((s) => s.cameraFov, applyStoredCamera),
     ];
     return () => unsubs.forEach((unsub) => unsub());
-  }, [camera, controls]);
+  }, [camera, controls, applyPerspectiveProjection]);
 
-  return null;
-}
-
-/** Sync legacy postprocess fields so older surfaces remain coherent while the
- *  renderer reads the authored preset as the source of truth. */
-function PresetLegacyBridge() {
-  const presetId = useStore(s => s.postprocessPreset);
-  useEffect(() => {
-    const preset = POSTPROCESS_PRESETS[presetId];
-    if (!preset) return;
-    useStore.setState({
-      ssao: preset.ssao.enabled,
-      bloom: preset.bloom.enabled,
-      dof: preset.dof.enabled,
-      autoDepthOfField: preset.dof.auto,
-      toneMapping: preset.toneMapping,
-    });
-  }, [presetId]);
   return null;
 }
 
@@ -508,15 +573,8 @@ const EmojiPlaygroundRoute = import.meta.env.DEV
   ? lazy(() => import('./EmojiPlayground'))
   : null;
 
-function currentHashRoute() {
-  if (typeof window === 'undefined') return '/';
-  const hash = window.location.hash.replace(/^#/, '').trim();
-  return hash.startsWith('/') ? hash : '/';
-}
-
 export default function App() {
-  const searchParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
-  if (TestbedRoute && searchParams?.has('testbed')) {
+  if (TestbedRoute && typeof window !== 'undefined' && isTestbedRoute()) {
     return (
       <Suspense fallback={null}>
         <TestbedRoute />
@@ -524,7 +582,7 @@ export default function App() {
     );
   }
 
-  if (EmojiPlaygroundRoute && (searchParams?.has('emoji') || currentHashRoute().split('?')[0] === '/system/emoji')) {
+  if (EmojiPlaygroundRoute && typeof window !== 'undefined' && isEmojiRoute()) {
     return (
       <Suspense fallback={null}>
         <EmojiPlaygroundRoute />
@@ -533,18 +591,26 @@ export default function App() {
   }
 
   const [hashRoute, setHashRoute] = useState(currentHashRoute);
+  const [pathRoute, setPathRoute] = useState(currentPathRoute);
   const [isExportingQuickLook, setIsExportingQuickLook] = useState(false);
   const [studioDeck, setStudioDeck] = useState<ViewerControlMode | null>(null);
   const [viewMenuOpen, setViewMenuOpen] = useState(false);
+  const [studyLensOpen, setStudyLensOpen] = useState(false);
   const loadedSavedViewSlugRef = useRef<string | null>(null);
   const hashPath = hashRoute.split('?')[0] || '/';
+  const normalizedPath = normalizedPathRoute(pathRoute);
   const isMlipFlywheelRoute = hashPath === '/system/mlip-flywheel';
-  const isMcpViewerRoute = hashPath === '/mcp' || new URLSearchParams(window.location.search).has('mcp');
-  const savedViewSlug = hashPath.startsWith('/view/') ? slugifySavedViewTitle(decodeURIComponent(hashPath.slice('/view/'.length))) : null;
+  const isMcpViewerRoute = isMcpViewerRouteMatch(hashPath);
+  const savedViewSlug = savedViewSlugFromRoute(hashPath) ?? savedViewSlugFromRoute(normalizedPath);
   const isSavedViewRoute = Boolean(savedViewSlug);
+  const isCopperSceneRoute = normalizedPath === '/scenes/1m-copper-lattice';
+  const seoEducationKind = SEO_EDUCATION_ROUTES[normalizedPath] ?? null;
 
   useEffect(() => {
-    const syncRoute = () => setHashRoute(currentHashRoute());
+    const syncRoute = () => {
+      setHashRoute(currentHashRoute());
+      setPathRoute(currentPathRoute());
+    };
     window.addEventListener('hashchange', syncRoute);
     window.addEventListener('popstate', syncRoute);
     return () => {
@@ -560,37 +626,37 @@ export default function App() {
     track(ANALYTICS_EVENTS.APP_LANDED);
   }, []);
 
-  useEffect(() => {
-    if (!savedViewSlug || loadedSavedViewSlugRef.current === savedViewSlug) return undefined;
-    let cancelled = false;
-    loadedSavedViewSlugRef.current = savedViewSlug;
-    useStore.getState().setLoading(true, 0);
-    loadSavedMolecularView(savedViewSlug)
-      .then((saved) => {
-        if (!cancelled) document.title = `${saved.title} - Lupi`;
-      })
-      .catch((err) => {
-        const message = err instanceof Error ? err.message : String(err);
-        if (!cancelled) {
-          // Clear the loading flag explicitly so a 404 / permission error can
-          // never leave the viewer stuck on a permanent "Parsing..." spinner,
-          // independent of setError's own loading side effect. The error is
-          // surfaced in the existing dismissible FileDropZone error card.
-          useStore.getState().setLoading(false);
-          useStore.getState().setError(message);
-        }
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [savedViewSlug]);
+  // Use TanStack Query for saved view data (viral sharing, caching, proper loading states)
+  const savedViewQuery = useQuery({
+    queryKey: ['savedView', savedViewSlug],
+    queryFn: () => loadSavedMolecularView(savedViewSlug!),
+    enabled: !!savedViewSlug,
+    staleTime: 1000 * 60 * 10, // shared views don't change often
+  });
 
-  const file = useStore(s => s.file);
-  const ghostFile = useStore(s => s.ghostFile);
-  const loading = useStore(s => s.loading);
-  const frame = useStore(s => s.frame);
-  const playing = useStore(s => s.playing);
-  const playbackSpeed = useStore(s => s.playbackSpeed);
+  useEffect(() => {
+    if (!savedViewSlug) return;
+    if (loadedSavedViewSlugRef.current === savedViewSlug) return;
+
+    loadedSavedViewSlugRef.current = savedViewSlug;
+
+    if (savedViewQuery.isPending) {
+      useStore.getState().setLoading(true, 0);
+    }
+
+    if (savedViewQuery.data) {
+      document.title = `${savedViewQuery.data.title} - Lupi`;
+    }
+
+    if (savedViewQuery.error) {
+      const message = savedViewQuery.error instanceof Error ? savedViewQuery.error.message : String(savedViewQuery.error);
+      useStore.getState().setLoading(false);
+      useStore.getState().setError(message);
+    }
+  }, [savedViewSlug, savedViewQuery.isPending, savedViewQuery.data, savedViewQuery.error]);
+
+  const { file, ghostFile, loading, frame, loadedAtomCount } = useViewerFileState();
+  const { playing, playbackSpeed, setFrame, nextFrame, togglePlay } = useViewerPlaybackState();
   const colorMode = useStore(s => s.colorMode);
   const colorProperty = useStore(s => s.colorProperty);
   const materialPreset = useStore(s => s.materialPreset);
@@ -615,6 +681,9 @@ export default function App() {
   const propertyEmissionStrength = useStore(s => s.propertyEmissionStrength);
   const annotations = useStore(s => s.annotations);
   const labelStyle = useStore(s => s.labelStyle);
+  const knowledgeLabels = useStore(s => s.knowledgeLabels);
+  const knowledgeLabelKinds = useStore(s => s.knowledgeLabelKinds);
+  const showKnowledgeLabels = useStore(s => s.showKnowledgeLabels);
   const hoveredAtom = useStore(s => s.hoveredAtom);
   const selectedAtoms = useStore(s => s.selectedAtoms);
 
@@ -677,9 +746,19 @@ export default function App() {
   const bondColorMode = useStore(s => s.bondColorMode);
   const renderStyle = useStore(s => s.renderStyle);
   const atomScale = useStore(s => s.atomScale);
-  const activePanel = useStore(s => s.activePanel);
-  const backgroundPreset = useStore(s => s.backgroundPreset);
-  const backgroundStyle = useStore(s => s.backgroundStyle);
+  const { activePanel, setActivePanel, showPotentialBrowser, setShowPotentialBrowser } = useViewerPanelState();
+  const {
+    backgroundPreset,
+    backgroundStyle,
+    backgroundMotionPaused,
+    backgroundMotionSpeed,
+    backgroundOpacity,
+    backgroundBrightness,
+    backgroundSaturation,
+    backgroundContrast,
+    backgroundYawDegrees,
+    backgroundPitchDegrees,
+  } = useViewerBackgroundState();
   const filterShellShape = useStore(s => s.filterShellShape);
   const filterShellPreset = useStore(s => s.filterShellPreset);
   const filterShellOpacity = useStore(s => s.filterShellOpacity);
@@ -690,17 +769,10 @@ export default function App() {
   const setCameraPreset = useStore(s => s.setCameraPreset);
   const bloomIntensity = useStore(s => s.bloomIntensity);
   const propRange = useStore(s => s.propRange);
-  const setFrame = useStore(s => s.setFrame);
-  const nextFrame = useStore(s => s.nextFrame);
-  const togglePlay = useStore(s => s.togglePlay);
-  const setActivePanel = useStore(s => s.setActivePanel);
-  const showPotentialBrowser = useStore(s => s.showPotentialBrowser);
-  const setShowPotentialBrowser = useStore(s => s.setShowPotentialBrowser);
   const hiddenAtomTypes = useStore(s => s.hiddenAtomTypes);
   const atomTypeScales = useStore(s => s.atomTypeScales);
   const anomalyTracking = useStore(s => s.anomalyTracking);
   const atomTexture = useStore(s => s.atomTexture);
-  const loadedAtomCount = useStore(s => s.loadedAtomCount);
   // Cluster splats for huge-scene LOD (Phase 4). Built once per frame
   // identity, AFTER streaming completes — running on a partial frame
   // would aggregate uninitialized zero-positions into a giant fake
@@ -712,6 +784,7 @@ export default function App() {
   const [spatialHash, setSpatialHash] = useState<SpatialHash3D | null>(null);
 
   const isMobile = useMediaQuery('(max-width: 768px)');
+  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const showDebugHud = useMemo(() => {
     if (typeof window === 'undefined') return false;
     const params = new URLSearchParams(window.location.search);
@@ -746,6 +819,7 @@ export default function App() {
     if (showPotentialBrowser || !file) {
       setStudioDeck(null);
       setViewMenuOpen(false);
+      if (!file) setStudyLensOpen(false);
     } else if (activePanel && activePanel !== 'studio') {
       setViewMenuOpen(false);
     }
@@ -766,8 +840,8 @@ export default function App() {
   // rect — the single biggest cold-mobile bounce source). Audit findings:
   // ios-safari-webgpu-silent-fail, android-firefox-no-webgpu-message,
   // no-canvas-webgl-fallback.
+  // Advisory only: a false preflight must not prevent the real Canvas mount.
   const renderCapability = useMemo(() => detectRenderCapability(), []);
-  const canRenderScene = renderCapability.canRenderWebGL;
 
   // Surface a NON-BLOCKING warning when the optional WebGPU bond accelerator
   // is unavailable/timed out while the user had it enabled. The scene still
@@ -813,6 +887,15 @@ export default function App() {
   // Keyboard shortcuts
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
+      // Cmd/Ctrl+K opens the command palette from anywhere.
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setCommandPaletteOpen(open => !open);
+        return;
+      }
+
+      if (commandPaletteOpen) return; // palette owns its own keyboard nav
+
       if ((e.target as HTMLElement).tagName === 'INPUT') return;
 
       const currentFile = useStore.getState().file;
@@ -860,16 +943,17 @@ export default function App() {
       window.removeEventListener('keyup', shiftUp);
       window.removeEventListener('blur', blurReset);
     };
-  }, [togglePlay, nextFrame, setActivePanel, setShowPotentialBrowser]);
+  }, [togglePlay, nextFrame, setActivePanel, setShowPotentialBrowser, commandPaletteOpen]);
 
   // URL state restore + auto-load
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const state = params.get('s');
+    const intent = recognizeLupiUrlPayload(window.location.href);
+    const state = intent?.state ?? params.get('s');
     if (state) useStore.getState().decodeFromURL(state);
 
     // Restore flythrough from URL
-    const flyParam = params.get('fly');
+    const flyParam = intent?.fly ?? params.get('fly');
     if (flyParam) {
       const seq = decodeFlythrough(flyParam);
       if (seq) {
@@ -878,107 +962,10 @@ export default function App() {
       }
     }
 
-    const loadUrl = params.get('load');
+    const loadUrl = intent?.kind === 'loadUrl' ? intent.url : params.get('load');
     if (loadUrl && !file) {
       (async () => {
-        try {
-          useStore.getState().setLoading(true, 0);
-
-          // ── Streaming path for .glimbin files ──
-          // Fetches only a 256-byte header + frame index + frame 0,
-          // then loads additional frames on-demand via Range Requests.
-          const { isGlimbinUrl, autoDetectLoader } = await import('@atlas/parsers/StreamingLoader');
-          const loaderType = isGlimbinUrl(loadUrl) ? 'streaming' : await autoDetectLoader(loadUrl);
-
-          if (loaderType === 'streaming') {
-            const { StreamingLoader } = await import('@atlas/parsers/StreamingLoader');
-            const loader = new StreamingLoader(loadUrl, {
-              onProgress: (_phase, progress) => {
-                useStore.getState().setLoading(true, progress * 0.6);
-              },
-              onTelemetry: (stats) => {
-                useStore.getState().setStreamingTelemetry(stats);
-              },
-            });
-
-            const header = await loader.fetchHeader();
-            await loader.fetchIndex();
-            const frame0 = await loader.fetchFrame(0);
-            const meta = loader.getMetadata()!;
-
-            // Build trajectory with frame 0 loaded; rest fetched on-demand
-            const placeholderFrames = new Array(meta.totalFrames);
-            placeholderFrames[0] = frame0;
-
-            const name = loadUrl.split('/').pop() ?? 'dataset.glimbin';
-            useStore.getState().setFile({
-              name,
-              size: meta.fileSize,
-              trajectory: {
-                frames: placeholderFrames,
-                totalFrames: meta.totalFrames,
-                atomTypes: meta.atomTypes,
-                globalBounds: meta.globalBounds,
-              },
-              thermo: null,
-              sourceUrl: loadUrl,
-            });
-
-            // On-demand frame fetching: subscribe to timeline scrubs
-            // and auto-fetch frames that haven't been loaded yet.
-            const unsubFrameWatch = useStore.subscribe(
-              (s) => s.frame,
-              async (frameIndex) => {
-                const currentFile = useStore.getState().file;
-                if (!currentFile) return;
-                if (currentFile.trajectory.frames[frameIndex]) return;
-
-                try {
-                  const frame = await loader.fetchFrame(frameIndex);
-                  const file = useStore.getState().file;
-                  if (file) {
-                    file.trajectory.frames[frameIndex] = frame;
-                    useStore.setState({ file: { ...file } });
-                  }
-                  // Prefetch adjacent frames
-                  const isPlaying = useStore.getState().playing;
-                  loader.prefetch(frameIndex, isPlaying ? 1 : 0, isPlaying ? 8 : 3);
-                } catch (err: any) {
-                  console.warn(`[streaming] Frame ${frameIndex} fetch failed:`, err.message);
-                }
-              }
-            );
-
-            // Stash cleanup for potential future navigation
-            (window as any).__atlasStreamingCleanup = () => {
-              unsubFrameWatch();
-              loader.dispose();
-            };
-            return;
-          }
-
-          // ── Legacy monolithic path for text formats ──
-          const resp = await fetch(loadUrl);
-          if (!resp.ok) throw new Error(`Failed to fetch ${loadUrl}: ${resp.status}`);
-          const blob = await resp.blob();
-          const name = loadUrl.split('/').pop() ?? 'file.dump';
-          const fileObj = new File([blob], name);
-          const { parseFile } = await import('@atlas/parsers');
-          const result = await parseFile(fileObj);
-          if (result.trajectory) {
-            useStore.getState().setFile({
-              name,
-              size: blob.size,
-              trajectory: result.trajectory,
-              thermo: result.thermo ?? null,
-              sourceUrl: loadUrl,
-            });
-          } else {
-            throw new Error('No trajectory data found');
-          }
-        } catch (err: any) {
-          useStore.getState().setError(err.message);
-        }
+        await openMolecule({ kind: 'url', url: loadUrl, history: 'none' });
       })();
     }
   }, []);
@@ -1054,39 +1041,49 @@ export default function App() {
   }, [file?.name]);
   const clusterFadeFar = useMemo(() => clusterFadeNear * 3.3, [clusterFadeNear]);
 
-  const cameraDistance = useMemo(() => file
-    ? (() => {
-        const { min, max } = file.trajectory.globalBounds;
-        const dx = max[0] - min[0], dy = max[1] - min[1], dz = max[2] - min[2];
-        const diagonal = Math.hypot(dx, dy, dz);
-        // Field of view is 50 deg. To fit bounding sphere with radius (diagonal/2):
-        // D = (diagonal / 2) / Math.sin(25 * Math.PI / 180) ≈ diagonal * 1.18
-        // Multiply by an extra margin to give breathing room.
-        return diagonal * 1.4;
-      })()
-    : 50, [file?.name]);
-
-  const center = useMemo(() => file
-    ? file.trajectory.globalBounds.min.map(
-        (v, i) => (v + file.trajectory.globalBounds.max[i]) / 2
-      ) as [number, number, number]
-    : [0, 0, 0] as [number, number, number], [file?.name]);
-
-  const filterShellBaseRadius = useMemo(() => {
-    if (!file) return 4;
-    const { min, max } = file.trajectory.globalBounds;
-    const diagonal = Math.hypot(max[0] - min[0], max[1] - min[1], max[2] - min[2]);
-    return Math.max(4, diagonal * 0.58);
-  }, [file?.name]);
+  const {
+    cameraDistance,
+    cameraMinDistance,
+    cameraNear,
+    center,
+    filterShellBaseRadius,
+  } = useViewerSceneModel(file);
 
   const bg = resolveBackground(backgroundPreset, colormap);
   const bgMedia = bg.media;
+  const bgAdjustments = useMemo<BackgroundAssetAdjustments>(() => ({
+    yawDegrees: backgroundYawDegrees,
+    pitchDegrees: backgroundPitchDegrees,
+    opacity: backgroundOpacity,
+    brightness: backgroundBrightness,
+    saturation: backgroundSaturation,
+    contrast: backgroundContrast,
+    motionPaused: backgroundMotionPaused,
+    motionSpeed: backgroundMotionSpeed,
+  }), [
+    backgroundBrightness,
+    backgroundContrast,
+    backgroundMotionPaused,
+    backgroundMotionSpeed,
+    backgroundOpacity,
+    backgroundPitchDegrees,
+    backgroundSaturation,
+    backgroundYawDegrees,
+  ]);
   const isBatchExport = new URLSearchParams(window.location.search).get('batchExport') === 'true';
-  const panelWidth = activePanel === 'mlipLongRun'
-    ? 390
-    : (activePanel === 'studio' || activePanel === 'export' || activePanel === 'flythrough' || activePanel === 'telemetry' || activePanel === 'equilibrium' ? 380 : 320);
-  const mobilePanelHeight = 'clamp(232px, 32dvh, 300px)';
-  const activeMobilePanelHeight = activePanel === 'studio' ? 'clamp(420px, 68dvh, 620px)' : mobilePanelHeight;
+  const mobilePanelHeight = 'clamp(240px, 34dvh, 320px)';
+  const activeMobilePanelHeight = activePanel === 'studio' ? 'clamp(340px, 52dvh, 480px)' : mobilePanelHeight;
+  const mobileLoadedHeader = isMobile && !!file;
+  const headerHeight = isMobile
+    ? `calc(${mobileLoadedHeader ? '64px' : '48px'} + env(safe-area-inset-top))`
+    : 56;
+  const clearLoadedFile = useCallback(() => {
+    useStore.getState().clearFile();
+    const url = new URL(window.location.href);
+    url.searchParams.delete('sim');
+    url.searchParams.delete('load');
+    window.history.pushState({}, '', url);
+  }, []);
 
   return (
     <div style={{
@@ -1097,72 +1094,106 @@ export default function App() {
       display: 'flex', flexDirection: 'column',
     }}>
       {/* ─── Desktop Header ─── */}
-      <header style={{
-        height: isMobile ? 'calc(48px + env(safe-area-inset-top))' : 56,
-        minHeight: isMobile ? 'calc(48px + env(safe-area-inset-top))' : 56,
-        flexShrink: 0,
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: isMobile ? 'env(safe-area-inset-top) 12px 0' : '0 20px',
-        borderBottom: '1px solid var(--border-subtle)',
-        background: 'var(--bg-glass)',
-        backdropFilter: 'blur(12px)',
-        WebkitBackdropFilter: 'blur(12px)',
-        zIndex: 200,
-      }}>
-        {/* Logo */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+      <header
+        className={file ? 'lupine-glass' : ''}
+        style={{
+          height: headerHeight,
+          minHeight: headerHeight,
+          flexShrink: 0,
+          display: mobileLoadedHeader ? 'grid' : 'flex',
+          alignItems: 'center',
+          justifyContent: mobileLoadedHeader ? undefined : 'space-between',
+          gridTemplateColumns: mobileLoadedHeader ? 'auto minmax(0, 1fr) auto' : undefined,
+          gridTemplateRows: mobileLoadedHeader ? '38px 28px' : undefined,
+          columnGap: mobileLoadedHeader ? 8 : undefined,
+          rowGap: mobileLoadedHeader ? 2 : undefined,
+          padding: mobileLoadedHeader ? 'calc(env(safe-area-inset-top) + 10px) 10px 6px' : (isMobile ? 'env(safe-area-inset-top) 8px 0' : '0 16px'),
+          margin: file ? (isMobile ? '0 8px 0' : '14px 16px 0') : 0,
+          borderRadius: file ? 8 : 0,
+          borderBottom: file ? 'none' : '1px solid var(--border-subtle)',
+          background: file ? undefined : 'var(--bg-glass)',
+          backdropFilter: file ? undefined : 'blur(12px)',
+          WebkitBackdropFilter: file ? undefined : 'blur(12px)',
+          boxShadow: file ? '0 18px 48px rgba(0,0,0,0.26), inset 0 1px 0 rgba(255,255,255,0.08)' : undefined,
+          zIndex: 200,
+        }}
+      >
+        {/* Logo + file breadcrumb */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: isMobile ? 6 : 12,
+          minWidth: 0,
+          gridColumn: mobileLoadedHeader ? '1 / 2' : undefined,
+          gridRow: mobileLoadedHeader ? '1' : undefined,
+        }}>
           <button
-            onClick={() => { 
+            onClick={() => {
               if (file) {
-                useStore.getState().clearFile(); 
-                const url = new URL(window.location.href);
-                url.searchParams.delete('sim');
-                window.history.pushState({}, '', url);
+                clearLoadedFile();
               }
             }}
+            aria-label={file ? 'Return to Lupi home' : 'Lupi home'}
+            className="lupine-btn icon-only"
             style={{
-              display: 'flex', alignItems: 'baseline', gap: 4,
-              background: 'none', border: 'none', padding: 0,
+              background: 'transparent',
+              borderColor: 'transparent',
+              boxShadow: 'none',
+              padding: isMobile ? '0 2px' : 6,
+              gap: 4,
               cursor: file ? 'pointer' : 'default',
+              height: isMobile ? 34 : undefined,
+              minHeight: isMobile ? 34 : undefined,
+              aspectRatio: isMobile ? 'auto' : undefined,
+              flexShrink: 0,
             }}
           >
             <span style={{
-              fontSize: 21, fontWeight: 750, color: 'var(--text-primary)',
-              letterSpacing: '0'
+              fontSize: isMobile ? 19 : 21, fontWeight: 750, color: 'var(--text-primary)',
+              letterSpacing: 0
             }}>
               Lupi
             </span>
           </button>
 
-          {file && (
+          {file && !isMobile && (
             <>
-              <div style={{ width: 1, height: 18, background: 'var(--border-subtle)', display: isMobile ? 'none' : 'block' }} />
+              <div className="lupine-divider" style={{ display: isMobile ? 'none' : 'block' }} />
 
               <span style={{
-                fontSize: 14, color: 'var(--text-muted)',
-                maxWidth: isMobile ? 80 : 280, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'
+                display: 'grid',
+                gap: 1,
+                minWidth: 0,
+                maxWidth: isMobile ? 92 : 300,
               }}>
-                {file.name}
+                <span style={{
+                  fontSize: 10,
+                  color: 'rgba(203,213,225,0.48)',
+                  fontWeight: 760,
+                  lineHeight: 1,
+                  textTransform: 'uppercase',
+                  letterSpacing: 0,
+                }}>
+                  Loaded
+                </span>
+                <span style={{
+                  fontSize: 13,
+                  color: 'var(--text-primary)',
+                  fontWeight: 650,
+                  lineHeight: 1.2,
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                }} title={file.name}>
+                  {file.name}
+                </span>
               </span>
               <button
-                onClick={() => {
-                  useStore.getState().clearFile();
-                  const url = new URL(window.location.href);
-                  url.searchParams.delete('sim');
-                  window.history.pushState({}, '', url);
-                }}
+                onClick={clearLoadedFile}
                 title="Close"
                 aria-label="Close dataset"
-                style={{
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  width: 24, height: 24,
-                  background: 'transparent',
-                  border: '1px solid var(--border-subtle)',
-                  borderRadius: 'var(--radius-sm)',
-                  color: 'var(--text-dim)',
-                  cursor: 'pointer',
-                  flexShrink: 0,
-                }}
+                className="lupine-icon-btn"
+                style={{ width: 28, height: 28 }}
               >
                 <IconClose />
               </button>
@@ -1170,8 +1201,72 @@ export default function App() {
           )}
         </div>
 
-        {/* Simple top-right actions */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? 4 : 8 }}>
+        {file && isMobile && (
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 6,
+              minWidth: 0,
+              gridColumn: '1 / -1',
+              gridRow: '2',
+              padding: '0 1px',
+            }}
+          >
+            <span style={{
+              flexShrink: 0,
+              fontSize: 9,
+              color: 'rgba(203,213,225,0.48)',
+              fontWeight: 760,
+              lineHeight: 1,
+              textTransform: 'uppercase',
+              letterSpacing: 0,
+            }}>
+              Loaded
+            </span>
+            <span
+              title={file.name}
+              style={{
+                minWidth: 0,
+                flex: '1 1 auto',
+                fontSize: 12,
+                color: 'var(--text-primary)',
+                fontWeight: 650,
+                lineHeight: 1.15,
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {file.name}
+            </span>
+            <button
+              onClick={clearLoadedFile}
+              title="Close"
+              aria-label="Close dataset"
+              className="lupine-icon-btn"
+              style={{
+                width: 28,
+                height: 28,
+                flexShrink: 0,
+              }}
+            >
+              <IconClose />
+            </button>
+          </div>
+        )}
+
+        {/* Top-right actions */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'flex-end',
+          gap: isMobile ? 4 : 10,
+          minWidth: 0,
+          gridColumn: mobileLoadedHeader ? '2 / 4' : undefined,
+          gridRow: mobileLoadedHeader ? '1' : undefined,
+          justifySelf: mobileLoadedHeader ? 'end' : undefined,
+        }}>
           {!file && (
             <>
               <a
@@ -1185,16 +1280,11 @@ export default function App() {
                     el.scrollIntoView({ behavior: 'smooth', block: 'start' });
                   }
                 }}
+                className="lupine-btn"
                 style={{
-                  display: 'block',
                   padding: isMobile ? '7px 9px' : '8px 12px',
                   fontSize: isMobile ? 12 : 13,
-                  fontWeight: 600,
-                  color: isMlipFlywheelRoute ? 'var(--text-muted)' : 'var(--text-primary)',
-                  background: isMlipFlywheelRoute ? 'transparent' : 'rgba(255,255,255,0.07)',
-                  border: '1px solid var(--border-default)',
-                  borderRadius: 'var(--radius-sm)',
-                  textDecoration: 'none',
+                  minHeight: isMobile ? 34 : undefined,
                 }}
               >
                 {isMobile ? 'Atoms' : 'Gallery'}
@@ -1204,14 +1294,11 @@ export default function App() {
           {!file && (
             <button
               onClick={() => void openRandomOmol25Molecule()}
+              className="lupine-btn primary"
               style={{
-                padding: '8px 14px',
-                fontSize: 14, fontWeight: 500,
-                color: 'white',
-                background: 'var(--accent)',
-                border: 'none',
-                borderRadius: 'var(--radius-sm)',
-                cursor: 'pointer',
+                padding: isMobile ? '7px 10px' : '8px 14px',
+                fontSize: isMobile ? 12 : 14,
+                minHeight: isMobile ? 34 : undefined,
               }}
             >
               {isMobile ? 'View' : 'View a molecule'}
@@ -1221,6 +1308,21 @@ export default function App() {
               Anonymous → prompts sign-in (pending draft) → resumes save → share link. */}
           {file && <SavedViewButton compact={isMobile} />}
           <LupiAgentDock compact={isMobile} />
+          <a
+            href="?view=compare"
+            aria-label="Open Comparison Theater for cinema-style movie watching of relaxations"
+            title="Comparison Theater — cinema movie watching"
+            style={{
+              display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+              height: isMobile ? 36 : 38, minWidth: isMobile ? 36 : 80,
+              padding: isMobile ? 0 : '0 10px',
+              borderRadius: 999, border: '1px solid rgba(255,255,255,0.15)',
+              background: 'rgba(123,92,255,0.12)', color: '#c4b5fd', fontSize: isMobile ? 10 : 11,
+              textDecoration: 'none', touchAction: 'manipulation',
+            }}
+          >
+            {isMobile ? '🎥' : 'CINEMA'}
+          </a>
         </div>
       </header>
       <LupiAuthCallout compact={isMobile} />
@@ -1232,7 +1334,7 @@ export default function App() {
         {isMcpViewerRoute && <McpViewerHarness />}
         {/* 3D viewport */}
         <div className="lupi-main-viewport" style={{
-          position: file ? 'absolute' : 'fixed', 
+          position: file ? 'absolute' : 'fixed',
           top: file ? 0 : 56, // below header when fixed
           right: 0,
           bottom: 0,
@@ -1245,41 +1347,17 @@ export default function App() {
               height: 100% !important;
             }
           `}</style>
-          {!canRenderScene ? (
-            // Capability gate: device can't start a WebGL context. Render the
-            // branded recovery banner INSTEAD of a silent blank canvas.
-            <RendererFallback copy={fallbackCopyFor(renderCapability)} />
-          ) : (
-          <CanvasErrorBoundary capability={renderCapability}>
-          <Canvas
-            camera={{
-              position: [center[0], center[1], center[2] + cameraDistance],
-              fov: 50,
-              near: 0.1,
-              far: Math.max(10000, cameraDistance * 100),
-            }}
-            gl={{
-              antialias: false,
-              preserveDrawingBuffer: true,
-              powerPreference: 'high-performance',
-            }}
-            onCreated={({ gl }) => {
-              // r182 deprecates PCFSoftShadowMap; PCFShadowMap is now soft.
-              gl.shadowMap.type = THREE.PCFShadowMap;
-            }}
-            style={{
-              background: 'transparent',
-              display: 'block',
-              width: '100%',
-              height: '100%',
-            }}
+          <ViewerCanvas
+            capability={renderCapability}
+            center={center}
+            cameraDistance={cameraDistance}
+            cameraNear={cameraNear}
           >
             {showDebugHud && (
               <Suspense fallback={null}>
                 <DebugProbe enabled={showDebugHud} />
               </Suspense>
             )}
-            <XR store={xrStore}>
               <USDZExportHelper trigger={isExportingQuickLook} onComplete={() => setIsExportingQuickLook(false)} />
             <ExportManager />
             <SceneBackground
@@ -1288,10 +1366,11 @@ export default function App() {
               style={backgroundStyle}
               media={bgMedia}
               procedural={bg.procedural}
+              adjustments={bgAdjustments}
               center={center}
               distance={cameraDistance}
             />
-            <XREnvironmentDome media={bgMedia} top={bg.top} bottom={bg.bottom} style={backgroundStyle} disabled={!!bg.procedural} />
+            <XREnvironmentDome media={bgMedia} top={bg.top} bottom={bg.bottom} style={backgroundStyle} adjustments={bgAdjustments} disabled={!!bg.procedural} />
             {/* Real-world light estimation: in AR this takes over scene.environment
                 with a live reflection map so the molecule mirrors the surroundings
                 (e.g. campfire) and adds a directional light tracking the real key
@@ -1304,7 +1383,7 @@ export default function App() {
                 read scene.environment for IBL reflections. */}
             <SceneLighting />
 
-            <CameraManager fileId={file?.name} center={center} distance={cameraDistance} />
+            <CameraManager fileId={file?.name} center={center} distance={cameraDistance} near={cameraNear} />
             <PresetLegacyBridge />
             <OrbitControls
               makeDefault
@@ -1315,7 +1394,7 @@ export default function App() {
               rotateSpeed={0.5}
               panSpeed={0.4}
               zoomSpeed={0.8}
-              minDistance={Math.max(0.5, cameraDistance * 0.04)}
+              minDistance={cameraMinDistance}
               maxDistance={cameraDistance * 6}
               onEnd={(e: any) => {
                 if (e?.target?.object && e?.target?.target) {
@@ -1469,6 +1548,16 @@ export default function App() {
                   onDismiss={(id) => useStore.getState().removeAnnotation(id)}
                 />
 
+                {/* Auto-generated semantic labels from the loaded asset metadata
+                    (e.g. Lupine Wiki sphere names and key node names). Rendered
+                    independently of user annotations so gallery curation can
+                    surface exact knowledge-graph semantics on top of the view. */}
+                <KnowledgeLabelsLayer
+                  labels={knowledgeLabels}
+                  visibleKinds={knowledgeLabelKinds}
+                  visible={showKnowledgeLabels}
+                />
+
                 {/* Click an atom to inspect it, mark it, and focus the camera.
                     Shift-click keeps the lightweight annotation workflow. */}
                 <SelectionMarkers
@@ -1537,10 +1626,7 @@ export default function App() {
 
 
             <ScenePostprocessing />
-            </XR>
-          </Canvas>
-          </CanvasErrorBoundary>
-          )}
+          </ViewerCanvas>
 
           {showDebugHud && (
             <Suspense fallback={null}>
@@ -1565,6 +1651,13 @@ export default function App() {
             />
           )}
 
+          {file && currentFrame && studyLensOpen && (
+            <StudyLensPanel
+              compact={isMobile}
+              onClose={() => setStudyLensOpen(false)}
+            />
+          )}
+
           {/* Simple stats overlay */}
           {file && totalFrames > 1 && (
             <div style={{
@@ -1572,15 +1665,23 @@ export default function App() {
               pointerEvents: 'none',
             }}>
               <div style={{
-                background: 'rgba(0,0,0,0.4)',
-                borderRadius: 20,
-                padding: '6px 14px',
-                fontSize: 13,
-                fontWeight: 500,
-                color: 'white',
-                backdropFilter: 'blur(8px)',
+                display: 'inline-flex',
+                alignItems: 'baseline',
+                gap: 7,
+                background: 'linear-gradient(180deg, rgba(15,23,42,0.76), rgba(3,7,18,0.58))',
+                border: '1px solid rgba(255,255,255,0.10)',
+                borderRadius: 8,
+                padding: '7px 10px',
+                fontSize: 12,
+                fontWeight: 700,
+                color: '#f8fafc',
+                fontVariantNumeric: 'tabular-nums',
+                backdropFilter: 'blur(12px)',
+                WebkitBackdropFilter: 'blur(12px)',
+                boxShadow: '0 12px 32px rgba(0,0,0,0.26), inset 0 1px 0 rgba(255,255,255,0.08)',
               }}>
-                Frame {frame + 1} / {totalFrames}
+                <span style={{ color: 'rgba(203,213,225,0.56)', fontSize: 10, textTransform: 'uppercase' }}>Frame</span>
+                {frame + 1} / {totalFrames}
               </div>
             </div>
           )}
@@ -1591,12 +1692,21 @@ export default function App() {
           {file && (
             <div style={{
               position: 'absolute',
-              top: 72,
-              left: 16,
-              display: 'flex',
+              top: file ? (isMobile ? 72 : 88) : 72,
+              left: isMobile ? 12 : 18,
+              display: 'grid',
               flexDirection: 'column',
+              alignItems: 'start',
               gap: 6,
-              zIndex: 150,
+              padding: 5,
+              border: '1px solid rgba(255,255,255,0.10)',
+              borderRadius: 8,
+              background: 'linear-gradient(180deg, rgba(15,23,42,0.70), rgba(3,7,18,0.56))',
+              backdropFilter: 'blur(16px)',
+              WebkitBackdropFilter: 'blur(16px)',
+              boxShadow: '0 18px 48px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.08)',
+              zIndex: activePanel === 'studio' && isMobile ? 80 : 150,
+              opacity: activePanel === 'studio' && isMobile ? 0.58 : 1,
             }}>
               <button
                 onClick={() => {
@@ -1607,41 +1717,54 @@ export default function App() {
                 title="Camera view"
                 aria-label="Camera view"
                 aria-expanded={viewMenuOpen}
+                className={`lupine-btn compact icon-only ${viewMenuOpen ? 'active' : ''}`}
                 style={{
-                  width: 52,
-                  height: 34,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
+                  width: isMobile ? 44 : 48,
+                  height: 36,
+                  fontFamily: 'var(--font-mono)',
                   fontSize: 11,
-                  fontWeight: 700,
-                  letterSpacing: 0,
-                  color: '#1edce0',
-                  background: 'rgba(0,0,0,0.52)',
-                  border: '1px solid rgba(30, 220, 224, 0.45)',
-                  borderRadius: 0,
-                  cursor: 'pointer',
-                  backdropFilter: 'blur(12px)',
+                  fontWeight: 820,
                 }}
               >
                 {cameraPresetLabel}
               </button>
               {viewMenuOpen && (
-                <div style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: 6,
-                  padding: 6,
-                  background: 'rgba(0,0,0,0.62)',
-                  border: '1px solid rgba(255,255,255,0.12)',
-                  backdropFilter: 'blur(12px)',
-                }}>
+                <div
+                  className="lupine-glass lupine-glass--menu animate-menu-in"
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+                    minWidth: 102,
+                    gap: 5,
+                  }}
+                >
                   <CameraPresetButton label="XY" active={cameraPreset === 'top'} onClick={() => { setCameraPreset('top'); setViewMenuOpen(false); }} title="Top view (XY plane)" />
                   <CameraPresetButton label="XZ" active={cameraPreset === 'side'} onClick={() => { setCameraPreset('side'); setViewMenuOpen(false); }} title="Side view (XZ plane)" />
                   <CameraPresetButton label="YZ" active={cameraPreset === 'front'} onClick={() => { setCameraPreset('front'); setViewMenuOpen(false); }} title="Front view (YZ plane)" />
                   <CameraPresetButton label="ISO" active={cameraPreset === 'iso'} onClick={() => { setCameraPreset('iso'); setViewMenuOpen(false); }} title="Isometric view" />
                 </div>
               )}
+              <button
+                type="button"
+                data-testid="study-lens-toggle"
+                onClick={() => {
+                  setViewMenuOpen(false);
+                  setStudyLensOpen(open => !open);
+                }}
+                title="Study lens"
+                aria-label="Study lens"
+                aria-pressed={studyLensOpen}
+                className={`lupine-btn compact ${studyLensOpen ? 'active' : ''}`}
+                style={{
+                  width: isMobile ? 44 : 48,
+                  height: 36,
+                  padding: 0,
+                  display: 'grid',
+                  placeItems: 'center',
+                }}
+              >
+                <IconStudy />
+              </button>
             </div>
           )}
 
@@ -1649,11 +1772,20 @@ export default function App() {
           {file && !showPotentialBrowser && (
             <div style={{
               position: 'absolute',
-              top: 64,
-              right: activePanel && !isMobile ? panelWidth + 16 : 16,
+              top: file ? (isMobile ? 'calc(env(safe-area-inset-top) + 116px)' : 88) : 72,
+              right: isMobile ? 10 : 18,
               display: 'flex',
               justifyContent: 'flex-end',
-              zIndex: 150,
+              gap: 8,
+              padding: 5,
+              border: '1px solid rgba(255,255,255,0.10)',
+              borderRadius: 8,
+              background: 'linear-gradient(180deg, rgba(15,23,42,0.70), rgba(3,7,18,0.56))',
+              backdropFilter: 'blur(16px)',
+              WebkitBackdropFilter: 'blur(16px)',
+              boxShadow: '0 18px 48px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.08)',
+              zIndex: activePanel === 'studio' && isMobile ? 80 : 150,
+              opacity: activePanel === 'studio' && isMobile ? 0.58 : 1,
             }}>
               <button
                 type="button"
@@ -1661,66 +1793,120 @@ export default function App() {
                 aria-expanded={activePanel === 'studio'}
                 title="Controls"
                 onClick={toggleControlsPanel}
+                className={`lupine-btn ${activePanel === 'studio' ? 'active' : ''}`}
                 style={{
-                  minWidth: 116,
-                  height: 42,
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
+                  minWidth: isMobile ? 48 : 118,
+                  height: isMobile ? 44 : 38,
                   gap: 8,
-                  padding: '0 12px',
-                  color: activePanel === 'studio' ? '#f8fafc' : '#dbeafe',
-                  background: activePanel === 'studio' ? 'rgba(30,220,224,0.18)' : 'rgba(0,0,0,0.56)',
-                  border: activePanel === 'studio' ? '1px solid rgba(30,220,224,0.7)' : '1px solid rgba(148,163,184,0.28)',
-                  borderRadius: 8,
-                  boxShadow: activePanel === 'studio' ? '0 0 22px rgba(30,220,224,0.2)' : '0 12px 32px rgba(0,0,0,0.28)',
-                  backdropFilter: 'blur(14px)',
-                  WebkitBackdropFilter: 'blur(14px)',
-                  cursor: 'pointer',
-                  fontSize: 12,
-                  fontWeight: 800,
+                  padding: isMobile ? '0 10px' : '0 14px',
+                  fontSize: isMobile ? 0 : 13,
+                  fontWeight: 760,
                   letterSpacing: 0,
+                  touchAction: 'manipulation',
                 }}
               >
                 <IconControls />
-                Controls
+                {!isMobile && <span>Controls</span>}
               </button>
             </div>
           )}
 
         </div>
 
-        {/* ─── Side panel ─── */}
+        {/* ─── Side panel / dockable windows ─── */}
         {/* NIST IPR potential browser — full-screen overlay, manages its own
             close via setShowPotentialBrowser(false). */}
         {showPotentialBrowser && <PotentialBrowser />}
 
-        {activePanel && file && (
+        {/* Mobile quick actions bar (thumb friendly, always reachable on phones) */}
+        {isMobile && file && !activePanel && (
+          <div
+            role="toolbar"
+            aria-label="Mobile quick actions"
+            style={{
+              position: 'fixed',
+              bottom: 'calc(env(safe-area-inset-bottom) + 4px)',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              zIndex: 95,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 6,
+              background: 'rgba(15,16,22,0.92)',
+              border: '1px solid rgba(255,255,255,0.1)',
+              borderRadius: 999,
+              padding: '4px 6px',
+              backdropFilter: 'blur(12px)',
+              boxShadow: '0 8px 24px rgba(0,0,0,0.35)',
+            }}>
+            <button
+              onClick={() => useStore.getState().togglePlay()}
+              aria-label={playing ? 'Pause playback' : 'Play animation'}
+              style={{ minHeight: 36, minWidth: 46, borderRadius: 999, border: '1px solid rgba(255,255,255,0.14)', background: 'transparent', color: '#e6e6e6', fontSize: 11, padding: '0 10px', touchAction: 'manipulation' }}
+            >
+              {playing ? '⏸' : '▶'}
+            </button>
+            <button
+              onClick={() => { setStudioDeck('look'); setActivePanel('studio'); }}
+              aria-label="Open controls panel"
+              style={{ minHeight: 36, borderRadius: 999, border: '1px solid rgba(255,255,255,0.14)', background: 'transparent', color: '#e6e6e6', fontSize: 10, padding: '0 10px', touchAction: 'manipulation' }}
+            >
+              CONTROLS
+            </button>
+            <button
+              onClick={() => setShowPotentialBrowser(true)}
+              aria-label="Browse gallery and atoms"
+              style={{ minHeight: 36, borderRadius: 999, border: '1px solid rgba(255,255,255,0.14)', background: 'transparent', color: '#e6e6e6', fontSize: 10, padding: '0 10px', touchAction: 'manipulation' }}
+            >
+              ATOMS
+            </button>
+          </div>
+        )}
+
+        {/* Mobile: legacy bottom sheet */}
+        {activePanel && file && isMobile && (
           <div style={{
             position: 'absolute',
-            top: isMobile ? 'auto' : 0,
+            top: 'auto',
             right: 0,
-            bottom: 0,
-            left: isMobile ? 0 : 'auto',
-            width: isMobile ? '100%' : panelWidth,
-            height: isMobile ? activeMobilePanelHeight : 'auto',
-            maxHeight: isMobile ? activeMobilePanelHeight : 'none',
+            bottom: 'calc(env(safe-area-inset-bottom) + 66px)',
+            left: 0,
+            width: '100%',
+            height: activeMobilePanelHeight,
+            maxHeight: activeMobilePanelHeight,
             boxSizing: 'border-box',
-            borderLeft: isMobile ? 'none' : '1px solid var(--border-subtle)',
-            borderTop: isMobile ? '1px solid var(--border-subtle)' : 'none',
-            borderTopLeftRadius: isMobile ? 8 : 0,
-            borderTopRightRadius: isMobile ? 8 : 0,
-            background: isMobile ? 'var(--bg-glass)' : 'var(--bg-surface)',
-            backdropFilter: isMobile ? 'blur(16px)' : 'none',
-            WebkitBackdropFilter: isMobile ? 'blur(16px)' : 'none',
+            borderTop: '1px solid var(--border-subtle)',
+            borderTopLeftRadius: 14,
+            borderTopRightRadius: 14,
+            background: 'var(--bg-glass)',
+            backdropFilter: 'blur(18px)',
+            WebkitBackdropFilter: 'blur(18px)',
             display: 'flex',
             flexDirection: 'column',
             overflowY: activePanel === 'export' || activePanel === 'studio' ? 'hidden' : 'auto',
-            paddingBottom: isMobile ? 'env(safe-area-inset-bottom)' : 0,
-            boxShadow: isMobile ? '0 -18px 48px rgba(0,0,0,0.45)' : 'none',
+            paddingBottom: 8,
+            paddingTop: 8,
+            boxShadow: '0 -18px 48px rgba(0,0,0,0.45)',
             zIndex: 100,
-            animation: isMobile ? 'slideInUp 200ms ease-out forwards' : 'slideInRight 200ms ease-out forwards',
+            WebkitOverflowScrolling: 'touch',
           }}>
+            {/* Drag handle + close */}
+            <div
+              role="presentation"
+              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '8px 12px 7px', position: 'relative' }}
+            >
+              <div
+                aria-hidden="true"
+                style={{ width: 44, height: 5, borderRadius: 999, background: 'rgba(255,255,255,0.28)' }}
+              />
+              <button
+                onClick={() => setActivePanel(null)}
+                style={{ position: 'absolute', right: 12, top: 2, background: 'transparent', border: 'none', color: '#cbd5e1', fontSize: 16, lineHeight: 1, padding: 8, minWidth: 40, minHeight: 40, touchAction: 'manipulation' }}
+                aria-label="Close panel"
+              >
+                ✕
+              </button>
+            </div>
             <ErrorBoundary>
               {activePanel === 'studio' && (
                 <ViewerControlsDrawer
@@ -1730,6 +1916,7 @@ export default function App() {
                     setStudioDeck(null);
                     setActivePanel(null);
                   }}
+                  showChrome
                 />
               )}
               {activePanel === 'export' && <FigureExportPanel />}
@@ -1747,10 +1934,28 @@ export default function App() {
           </div>
         )}
 
+        {/* Desktop: dockable floating panels */}
+        {!isMobile && file && (
+          <PanelHost
+            activePanel={activePanel}
+            studioDeck={studioDeck}
+            onOpenStudioDeck={openStudioDeck}
+            onClose={() => setActivePanel(null)}
+          />
+        )}
+
         {/* Landing page (hero, featured, drop zone, gallery) */}
         {!file && (
           <div style={{ position: 'relative', width: '100%', zIndex: 10 }}>
-            {isMlipFlywheelRoute ? <MlipFlywheelPage /> : isMcpViewerRoute || isSavedViewRoute ? null : <LandingPage />}
+            {isMlipFlywheelRoute
+              ? <MlipFlywheelPage />
+              : isMcpViewerRoute || isSavedViewRoute
+                ? null
+                : isCopperSceneRoute
+                  ? <SceneLandingPage />
+                  : seoEducationKind
+                    ? <SeoEducationPage kind={seoEducationKind} />
+                    : <LandingPage />}
           </div>
         )}
       </div>
@@ -1761,16 +1966,18 @@ export default function App() {
       {/* ─── Timeline ─── */}
       {file && totalFrames > 1 && (
         <div style={{
-          height: 60, flexShrink: 0,
-          display: 'flex', alignItems: 'center', gap: 16,
-          padding: '0 20px',
+          height: isMobile ? 'calc(64px + env(safe-area-inset-bottom))' : 60, flexShrink: 0,
+          display: 'flex', alignItems: 'center', gap: isMobile ? 8 : 16,
+          padding: isMobile ? '8px 12px calc(env(safe-area-inset-bottom) + 8px)' : '0 20px',
           borderTop: '1px solid #1f2937',
-          background: '#0a0a0c',
+          background: 'rgba(10,10,12,0.96)',
           overflowX: 'auto',
+          position: 'relative',
+          zIndex: 120,
           scrollbarWidth: 'none',
         }}>
           {/* Transport controls */}
-          <div style={{ display: 'flex', gap: 4 }}>
+          <div style={{ display: 'flex', gap: isMobile ? 3 : 4, flexShrink: 0 }}>
             <TransportButton
               onClick={() => useStore.getState().setFrame(0)}
               title="First frame"
@@ -1816,7 +2023,7 @@ export default function App() {
             fontSize: '11px',
             fontFamily: 'var(--font-mono)',
             color: '#64748b',
-            minWidth: 90,
+            minWidth: isMobile ? 58 : 90,
             textAlign: 'right',
             fontVariantNumeric: 'tabular-nums',
           }}>
@@ -1825,20 +2032,20 @@ export default function App() {
           </div>
 
           {/* Speed selector */}
-          <div style={{ display: 'flex', gap: 4 }}>
+          <div style={{ display: 'flex', gap: isMobile ? 3 : 4, flexShrink: 0 }}>
             {[0.25, 0.5, 1, 2, 4].map(speed => (
               <button
                 key={speed}
                 onClick={() => useStore.getState().setPlaybackSpeed(speed)}
                 style={{
-                  padding: '6px 8px',
-                  minWidth: 36,
+                  padding: isMobile ? '7px 7px' : '6px 8px',
+                  minWidth: isMobile ? 34 : 36,
                   fontSize: '10px',
                   fontFamily: 'var(--font-mono)',
                   fontWeight: playbackSpeed === speed ? 600 : 400,
-                  color: playbackSpeed === speed ? '#0a0a0c' : '#64748b',
-                  background: playbackSpeed === speed ? '#f59e0b' : '#121418',
-                  border: `1px solid ${playbackSpeed === speed ? '#f59e0b' : '#334155'}`,
+                  color: playbackSpeed === speed ? '#031314' : '#94a3b8',
+                  background: playbackSpeed === speed ? '#1edce0' : '#121418',
+                  border: `1px solid ${playbackSpeed === speed ? '#1edce0' : '#334155'}`,
                   borderRadius: 0,
                   cursor: 'pointer',
                   transition: 'all 100ms ease-out',
@@ -1850,6 +2057,155 @@ export default function App() {
           </div>
         </div>
       )}
+
+      {/* Command palette — global quick navigation */}
+      <CommandPalette
+        open={commandPaletteOpen}
+        onClose={() => setCommandPaletteOpen(false)}
+        actions={useMemo(() => {
+          const list: import('./CommandPalette').CommandAction[] = [
+            {
+              id: 'random-molecule',
+              label: 'View random OMol25 molecule',
+              group: 'Discover',
+              shortcut: 'R',
+              onSelect: () => void openRandomOmol25Molecule(),
+            },
+            {
+              id: 'gallery',
+              label: 'Open gallery',
+              group: 'Discover',
+              shortcut: 'G',
+              onSelect: () => {
+                const el = document.getElementById('gallery');
+                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                else window.location.href = '/#/gallery';
+              },
+            },
+            {
+              id: 'controls-look',
+              label: 'Open Look controls',
+              group: 'Panels',
+              shortcut: 'V',
+              disabled: !file,
+              onSelect: () => openStudioDeck('look'),
+            },
+            {
+              id: 'controls-surface',
+              label: 'Open Surface controls',
+              group: 'Panels',
+              disabled: !file,
+              onSelect: () => openStudioDeck('surface'),
+            },
+            {
+              id: 'controls-world',
+              label: 'Open World controls',
+              group: 'Panels',
+              disabled: !file,
+              onSelect: () => openStudioDeck('world'),
+            },
+            {
+              id: 'export-panel',
+              label: 'Open figure export',
+              group: 'Panels',
+              shortcut: 'X',
+              disabled: !file,
+              onSelect: () => {
+                setShowPotentialBrowser(false);
+                setActivePanel('export');
+              },
+            },
+            {
+              id: 'study-lens',
+              label: 'Toggle study lens',
+              group: 'Panels',
+              disabled: !file,
+              onSelect: () => {
+                setShowPotentialBrowser(false);
+                setStudyLensOpen(open => !open);
+              },
+            },
+            {
+              id: 'telemetry-panel',
+              label: 'Open telemetry',
+              group: 'Panels',
+              shortcut: 'T',
+              disabled: !file,
+              onSelect: () => {
+                setShowPotentialBrowser(false);
+                setActivePanel('telemetry');
+              },
+            },
+            {
+              id: 'flythrough-panel',
+              label: 'Open flythrough',
+              group: 'Panels',
+              disabled: !file,
+              onSelect: () => {
+                setShowPotentialBrowser(false);
+                setActivePanel('flythrough');
+              },
+            },
+            {
+              id: 'camera-top',
+              label: 'Camera top view',
+              group: 'Camera',
+              disabled: !file,
+              onSelect: () => setCameraPreset('top'),
+            },
+            {
+              id: 'camera-side',
+              label: 'Camera side view',
+              group: 'Camera',
+              disabled: !file,
+              onSelect: () => setCameraPreset('side'),
+            },
+            {
+              id: 'camera-front',
+              label: 'Camera front view',
+              group: 'Camera',
+              disabled: !file,
+              onSelect: () => setCameraPreset('front'),
+            },
+            {
+              id: 'camera-iso',
+              label: 'Camera isometric view',
+              group: 'Camera',
+              disabled: !file,
+              onSelect: () => setCameraPreset('iso'),
+            },
+            {
+              id: 'toggle-bonds',
+              label: 'Toggle bond guides',
+              group: 'Scene',
+              disabled: !file,
+              onSelect: () => useStore.getState().toggleBonds(),
+            },
+            {
+              id: 'toggle-playback',
+              label: 'Play / pause trajectory',
+              group: 'Scene',
+              disabled: !file || totalFrames <= 1,
+              onSelect: () => togglePlay(),
+            },
+            {
+              id: 'close-file',
+              label: 'Close current molecule',
+              group: 'Scene',
+              disabled: !file,
+              onSelect: clearLoadedFile,
+            },
+            {
+              id: 'close-panel',
+              label: 'Close tool panel',
+              group: 'Scene',
+              disabled: !activePanel,
+              onSelect: () => setActivePanel(null),
+            },
+          ];
+          return list;
+        }, [file, activePanel, totalFrames, studyLensOpen, clearLoadedFile])}
+      />
     </div>
   );
 }
@@ -1861,31 +2217,85 @@ export default function App() {
  *  politely without stealing focus. The scene keeps rendering underneath. */
 function RendererWarningToast() {
   const rendererWarning = useStore(s => s.rendererWarning);
+  const isCompact = useMediaQuery('(max-width: 640px)');
+  const [detailsOpen, setDetailsOpen] = useState(false);
+
+  useEffect(() => {
+    setDetailsOpen(false);
+  }, [rendererWarning, isCompact]);
+
   if (!rendererWarning) return null;
+  const isCpuFallback = /GPU bond acceleration|CPU path/i.test(rendererWarning);
+  const severity = isCpuFallback ? 'notice' : 'warning';
+  const isNotice = severity === 'notice';
+  const isQuietNotice = isCompact && severity === 'notice';
+  const isExpanded = !isQuietNotice || detailsOpen;
+  const visibleWarning = isQuietNotice && !isExpanded ? 'CPU bond path active' : rendererWarning;
+  const announceWarning = isQuietNotice ? rendererWarning : undefined;
   return (
     <div
       role="status"
       aria-live="polite"
+      aria-label={announceWarning}
+      title={isQuietNotice ? rendererWarning : undefined}
       style={{
         position: 'absolute',
-        top: 16,
-        right: 16,
-        maxWidth: 280,
+        top: isCompact ? 10 : 16,
+        right: isCompact ? 10 : 16,
+        maxWidth: isCompact ? (isExpanded ? 'min(280px, calc(100vw - 20px))' : 'min(188px, calc(100vw - 20px))') : 280,
         display: 'flex',
-        alignItems: 'flex-start',
-        gap: 8,
-        padding: '10px 12px',
-        background: 'rgba(20,24,33,0.92)',
-        border: '1px solid rgba(255,255,255,0.14)',
-        borderRadius: 'var(--radius-sm, 8px)',
+        alignItems: isExpanded ? 'flex-start' : 'center',
+        gap: isCompact ? 6 : 8,
+        padding: isCompact ? '6px 8px' : '10px 12px',
+        background: isQuietNotice
+          ? (isExpanded ? 'rgba(12,16,24,0.86)' : 'rgba(12,16,24,0.58)')
+          : 'rgba(20,24,33,0.92)',
+        border: isNotice
+          ? '1px solid rgba(148,163,184,0.14)'
+          : '1px solid rgba(245,158,11,0.22)',
+        borderRadius: isQuietNotice && !isExpanded ? 999 : 'var(--radius-sm, 8px)',
         backdropFilter: 'blur(10px)',
-        fontSize: 12,
-        lineHeight: 1.45,
-        color: 'var(--text-muted, #9aa7bd)',
+        fontSize: isCompact ? 11 : 12,
+        lineHeight: 1.35,
+        color: isNotice && isCompact ? 'rgba(226,232,240,0.78)' : 'var(--text-muted, #9aa7bd)',
         zIndex: 160,
       }}
     >
-      <span style={{ flex: 1 }}>{rendererWarning}</span>
+      {isQuietNotice ? (
+        <button
+          type="button"
+          onClick={() => setDetailsOpen(open => !open)}
+          aria-expanded={detailsOpen}
+          aria-label={detailsOpen ? 'Collapse renderer warning details' : `Expand renderer warning details: ${rendererWarning}`}
+          style={{
+            flex: 1,
+            minWidth: 0,
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: isExpanded ? 'normal' : 'nowrap',
+            background: 'transparent',
+            border: 'none',
+            color: 'inherit',
+            cursor: 'pointer',
+            font: 'inherit',
+            lineHeight: 'inherit',
+            padding: 0,
+            textAlign: 'left',
+          }}
+        >
+          {visibleWarning}
+        </button>
+      ) : (
+        <span style={{
+          flex: 1,
+          minWidth: 0,
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: isCompact && isNotice ? 'nowrap' : 'normal',
+        }}>
+          {visibleWarning}
+        </span>
+      )}
       <button
         type="button"
         onClick={() => useStore.getState().setRendererWarning(null)}
@@ -1893,8 +2303,8 @@ function RendererWarningToast() {
         title="Dismiss"
         style={{
           flexShrink: 0,
-          width: 18,
-          height: 18,
+          width: isCompact ? 20 : 18,
+          height: isCompact ? 20 : 18,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -1910,127 +2320,6 @@ function RendererWarningToast() {
     </div>
   );
 }
-
-function ViewerControlsDrawer({
-  activeMode,
-  onModeChange,
-  onClose,
-}: {
-  activeMode: ViewerControlMode;
-  onModeChange: (mode: ViewerControlMode) => void;
-  onClose: () => void;
-}) {
-  return (
-    <div
-      data-testid="viewer-controls-drawer"
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%',
-        minHeight: 0,
-      }}
-    >
-      <div style={{
-        flexShrink: 0,
-        display: 'grid',
-        gap: 8,
-        padding: '10px 10px 8px',
-        borderBottom: '1px solid var(--border-subtle)',
-        background: 'linear-gradient(180deg, rgba(15,23,42,0.72), rgba(15,23,42,0.2))',
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 0 }}>
-            <span style={{ color: '#1edce0', display: 'flex', flexShrink: 0 }}><IconControls /></span>
-            <span style={{ color: 'var(--text-primary)', fontSize: 13, fontWeight: 800, letterSpacing: 0 }}>Controls</span>
-          </div>
-          <button
-            type="button"
-            aria-label="Close controls"
-            title="Close"
-            onClick={onClose}
-            style={drawerIconButtonStyle}
-          >
-            <IconClose />
-          </button>
-        </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: 5 }}>
-          <ControlModeTab icon={<IconLook />} label="Look" active={activeMode === 'look'} onClick={() => onModeChange('look')} />
-          <ControlModeTab icon={<IconSurface />} label="Surface" active={activeMode === 'surface'} onClick={() => onModeChange('surface')} />
-          <ControlModeTab icon={<IconWorld />} label="World" active={activeMode === 'world'} onClick={() => onModeChange('world')} />
-          <ControlModeTab icon={<IconExport />} label="Export" active={activeMode === 'export'} onClick={() => onModeChange('export')} />
-        </div>
-      </div>
-      <div style={{ flex: 1, minHeight: 0, overflow: 'hidden' }}>
-        {activeMode === 'export' ? (
-          <FigureExportPanel />
-        ) : (
-          <StudioControlDeck
-            mode={activeMode}
-            onClose={onClose}
-            variant="drawer"
-          />
-        )}
-      </div>
-    </div>
-  );
-}
-
-function ControlModeTab({
-  icon,
-  label,
-  active,
-  onClick,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  active: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      aria-label={label}
-      aria-pressed={active}
-      title={label}
-      onClick={onClick}
-      style={{
-        minWidth: 0,
-        height: 48,
-        display: 'grid',
-        placeItems: 'center',
-        gap: 1,
-        padding: '4px 2px',
-        color: active ? '#f8fafc' : '#94a3b8',
-        background: active ? 'rgba(30,220,224,0.16)' : 'rgba(2,6,23,0.54)',
-        border: active ? '1px solid rgba(30,220,224,0.66)' : '1px solid rgba(148,163,184,0.18)',
-        borderRadius: 7,
-        boxShadow: active ? '0 0 16px rgba(30,220,224,0.18)' : 'inset 0 1px 0 rgba(255,255,255,0.04)',
-        cursor: 'pointer',
-        fontSize: 10,
-        fontWeight: 760,
-        lineHeight: 1,
-        letterSpacing: 0,
-      }}
-    >
-      <span style={{ display: 'flex', width: 20, height: 20 }}>{icon}</span>
-      <span style={{ whiteSpace: 'normal', maxWidth: '100%' }}>{label}</span>
-    </button>
-  );
-}
-
-const drawerIconButtonStyle: React.CSSProperties = {
-  width: 28,
-  height: 28,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexShrink: 0,
-  color: 'var(--text-secondary)',
-  background: 'rgba(15,23,42,0.72)',
-  border: '1px solid rgba(148,163,184,0.22)',
-  borderRadius: 6,
-  cursor: 'pointer',
-};
 
 /** Inline tab strip rendered at the top of a consolidated drawer. Switches
  *  the active panel without closing the drawer; currently used for the

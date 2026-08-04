@@ -1,0 +1,15 @@
+IRREP VANDERMONDE CONJECTURE TEST -- MACE-MP-0
+==============================================
+Model:              MACE-MP-0 (medium)
+Device:             cuda
+Structures:         50 bulk crystals (FCC/BCC)
+Parameter dim:      4,688,656
+Irrep modules:      2
+Irrep dim d_c:      559,104
+Top singular val:   6.01e-03
+Decay rate rho:     0.387
+95% CI:             [0.349, 0.418]
+R^2 (fit quality):  0.981
+MK tau:             -1.000 (p=0.0000)
+Pre-reg threshold:  1.5
+PASS:               NO

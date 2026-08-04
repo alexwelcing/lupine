@@ -33,6 +33,7 @@ import { checkRateLimit, clientIp } from './rateLimit';
 
 // First-party analytics collector (Phase 0 sink → structured Cloud Logging).
 export { collectAnalytics } from './analytics';
+export { lupiViewShare } from './socialView';
 
 initializeApp();
 const db = getFirestore();

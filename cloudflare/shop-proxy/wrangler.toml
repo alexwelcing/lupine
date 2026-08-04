@@ -1,0 +1,30 @@
+name = "lupi-shop-proxy"
+main = "src/worker.ts"
+compatibility_date = "2026-05-01"
+
+# Route this Worker only for the shop subfolder on the apex domain.
+# This allows the rest of lupi.live to continue serving from its existing
+# Cloud Run origin while /shop/* is transparently proxied to Netlify.
+#
+# After deploy:
+#   1. wrangler deploy
+#   2. In Cloudflare dashboard → Workers & Pages → lupi-shop-proxy → Triggers
+#      add route:  lupi.live/shop*
+#      (zone: lupine.dev or the zone owning lupi.live)
+#
+# The worker only activates for matching paths; everything else hits the
+# Cloud Run / existing origin for the domain.
+
+# Environment variable: the production Netlify site URL (no trailing slash).
+# Example: https://lupi-shop-abc123.netlify.app
+[vars]
+NETLIFY_SHOP_URL = "https://YOUR-NETLIFY-SHOP.netlify.app"
+
+# For local dev you can override with .dev.vars or wrangler dev --var
+# NETLIFY_SHOP_URL=https://...
+
+[observability]
+enabled = true
+
+[limits]
+cpu_ms = 50

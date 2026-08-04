@@ -3,22 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>LUPI shows molecules</title>
-  <meta name="description" content="LUPI is a molecular viewer from Lupine Science: publication-quality 3D renders, video export, and real-time atomistic analysis in the browser." />
+  <title>Lupi - 1M Atom Molecular Viewer</title>
+  <meta name="description" content="Visualize million-atom molecular scenes, organic chemistry functional groups, OMol25 geometries, and materials science structures in the browser." />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
   <meta name="theme-color" content="#06080d" />
   <meta name="application-name" content="LUPI" />
   <meta name="apple-mobile-web-app-title" content="LUPI" />
   <meta property="og:site_name" content="Lupine Science" />
+  <meta property="og:locale" content="en_US" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="LUPI — Molecular Viewer" />
-  <meta property="og:description" content="Inspect molecular trajectories in the browser with WebGPU rendering from Lupine Science." />
+  <meta property="og:title" content="Lupi - 1M Atom Molecular Viewer" />
+  <meta property="og:description" content="Open million-atom materials scenes, organic functional group examples, OMol25 geometries, and molecular structures in one browser viewer." />
   <meta property="og:url" content="https://lupi.live/" />
   <meta property="og:image" content="https://lupi.live/og-lupi.png" />
-  <meta property="og:image:alt" content="LUPI bluebonnet mark and WebGPU molecular viewer title card." />
+  <meta property="og:image:alt" content="Lupi molecular viewer title card from Lupine Science." />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="LUPI — Molecular Viewer" />
-  <meta name="twitter:description" content="Molecular viewing from Lupine Science." />
+  <meta name="twitter:title" content="Lupi - 1M Atom Molecular Viewer" />
+  <meta name="twitter:description" content="A browser molecular viewer for million-atom scenes, organic chemistry study, and materials datasets." />
   <meta name="twitter:image" content="https://lupi.live/og-lupi.png" />
+  <meta name="twitter:image:alt" content="Lupi molecular viewer title card from Lupine Science." />
   <link rel="canonical" href="https://lupi.live/" />
   <link rel="manifest" href="/site.webmanifest" />
   <link rel="alternate" type="text/plain" href="/llms.txt" title="Agent guide for Lupine Science" />
@@ -31,7 +34,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./src/styles/global.css" />
-  <script type="application/ld+json">
+  <script id="lupi-route-jsonld" type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@graph": [
@@ -40,17 +43,33 @@
         "@id": "https://lupine.science/#organization",
         "name": "Lupine Science",
         "url": "https://lupine.science",
-        "description": "Lupine Science studies the error geometry of interatomic potentials."
+        "description": "Lupine Science builds scientific tools for molecular and materials visualization."
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://lupi.live/#website",
+        "name": "Lupi",
+        "url": "https://lupi.live",
+        "publisher": { "@id": "https://lupine.science/#organization" },
+        "description": "Interactive molecular and materials science viewer with large atomistic scenes, functional group study examples, and OMol25 search."
       },
       {
         "@type": "SoftwareApplication",
         "@id": "https://lupi.live/#software",
-        "name": "LUPI",
+        "name": "Lupi",
         "url": "https://lupi.live",
         "applicationCategory": "Scientific visualization",
         "operatingSystem": "Web",
         "publisher": { "@id": "https://lupine.science/#organization" },
-        "description": "Browser-native WebGPU viewer for atomistic evidence from Lupine Science."
+        "description": "Browser-native molecular viewer for atomistic structures, organic chemistry examples, materials datasets, and publication exports."
+      },
+      {
+        "@type": "Dataset",
+        "@id": "https://lupi.live/#structure-gallery",
+        "name": "Lupi molecular structure gallery",
+        "url": "https://lupi.live/#gallery",
+        "creator": { "@id": "https://lupine.science/#organization" },
+        "description": "A curated gallery of molecules, materials structures, trajectories, and OMol25-linked examples for browser visualization."
       }
     ]
   }

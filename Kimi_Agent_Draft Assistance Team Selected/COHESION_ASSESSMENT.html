@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>COHESION_ASSESSMENT</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="/dev/null" />
+</head>
+<body>
+<h1 id="cohesion-assessment-lupine-research-trilogy">Cohesion
+Assessment: Lupine Research Trilogy</h1>
+<h2 id="alex-welcing-lupine-science-june-2026">Alex Welcing — Lupine
+Science — June 2026</h2>
+<hr />
+<h2 id="executive-summary">Executive Summary</h2>
+<p>The lupine repository contains substantially more research than
+represented in any single paper draft. Across four major research
+threads (empirical discovery, universality theorem, formal verification,
+acceleration), the work ranges from 50% to 90% complete. The primary gap
+is <strong>cohesion</strong> — the papers don’t read as one research
+program, notation drifts, claims are inconsistently scoped, and critical
+audit findings (from the Lean formalization) haven’t been incorporated
+back into earlier papers.</p>
+<p><strong>Recommendation:</strong> A targeted revision pass on Papers 1
+and 2 to incorporate Lean audit findings and align notation, followed by
+writing Paper 3 as a formal-methods paper around the existing
+proofs.</p>
+<hr />
+<h2 id="inventory-of-research-assets">1. Inventory of Research
+Assets</h2>
+<h3 id="paper-1-empirical-discovery-status-90-complete">Paper 1:
+Empirical Discovery (STATUS: ~90% complete)</h3>
+<p><strong>Files:</strong> <code>paper/immi-paper.tex</code> (original),
+<code>paper_revised.html</code> (our revision),
+<code>paper_1_final.html</code> (current best) <strong>What’s
+strong:</strong> Complete dataset (559 potentials, 15 elements, 1,677
+rows), all figures generated, statistical analysis complete, ecological
+fallacy demonstrated via pair-family stratification, meta-analysis with
+Olkin-Pratt sensitivity. <strong>What’s weak:</strong> Simpson’s paradox
+language is imprecise; needs Lean audit correction.</p>
+<h3 id="paper-2-universality-theorem-status-75-complete">Paper 2:
+Universality Theorem (STATUS: ~75% complete)</h3>
+<p><strong>Files:</strong> <code>archive/KIMI_MLIP_UNIVERSAL/manuscript/</code>
+(9 sections + appendix, all LaTeX source) <strong>What’s
+strong:</strong> 6-clause theorem with formal proof sketches,
+Cross-Model Vandermonde Lemma, pre-registered predictions with
+falsification thresholds, escape analysis (3 error classes), CMET
+framework, falsification report. <strong>What’s weak:</strong> Central
+gap — Vandermonde assumption for equivariant networks unproven; voice
+inconsistent with Paper 1; notation not aligned; proofs deferred to
+appendix but appendix incomplete.</p>
+<h3 id="paper-3-formal-verification-status-60-complete">Paper 3: Formal
+Verification (STATUS: ~60% complete)</h3>
+<p><strong>Files:</strong> <code>lean-spec/</code> (27 .lean files, 48+
+theorems, 0 sorry, 0 axioms) <strong>What’s strong:</strong> T30
+(HyperRibbon PR &lt; 2), T50 (Context-Specific Operative Value), T102
+(a-priori regime gate), full audit module (T108-T112), build-locking
+epistemic contracts, neural-symbolic flywheel. <strong>What’s
+weak:</strong> ALL data is synthetic (NIST scaffold has 9 rows, all
+predictions missing); no paper has been written around the proofs; the
+audit caught a Paper 1 overstatement that hasn’t been corrected.</p>
+<h3 id="paper-4-acceleration-theorem-status-50-complete">Paper 4:
+Acceleration Theorem (STATUS: ~50% complete)</h3>
+<p><strong>Files:</strong>
+<code>archive/KIMI_MLIP_UNIVERSAL/acceleration/</code> (complete theory PDF, 0
+empirical validation) <strong>What’s strong:</strong> Full mathematical
+structure (Theorem + 2 Lemmas + 2 Corollaries), layerwise early-abortion
+mechanism, speedup bound formula. <strong>What’s weak:</strong> No
+benchmarks, no wall-clock data, no real model deployment, no related
+work section.</p>
+<hr />
+<h2 id="critical-cohesion-issues">2. Critical Cohesion Issues</h2>
+<h3
+id="issue-a-simpsons-paradox-language-critical-affects-paper-1">Issue A:
+Simpson’s Paradox Language (CRITICAL — affects Paper 1)</h3>
+<p><strong>Problem:</strong> Paper 1 claims “Simpson’s paradox detected”
+in multiple places. The Lean formal audit (T111) found this claim is
+<strong>FABRICATED</strong> — the strict reversal magnitude is &lt; 0.1,
+which doesn’t meet the Kievit et al. threshold of 0.3.</p>
+<p><strong>What IS true:</strong> The pair-family stratification
+(Section 4.4) genuinely demonstrates ecological fallacy — pooled r =
+0.82 vs. within-family mean r = 0.95, with reversal magnitude 0.13 and
+substantial between-family variance. This is ecological fallacy in the
+Robinson (1950) sense, not Simpson’s paradox in the Bickel (1975)
+sense.</p>
+<p><strong>Fix required:</strong> Replace all “Simpson’s paradox”
+language with “ecological fallacy” throughout Paper 1. Reserve
+“Simpson’s paradox” for strict sign reversals (which didn’t occur). This
+is a terminology correction, not a scientific retraction — the
+ecological fallacy finding is real and important.</p>
+<h3
+id="issue-b-synthetic-vs.-real-data-in-lean-critical-affects-paper-3">Issue
+B: Synthetic vs. Real Data in Lean (CRITICAL — affects Paper 3)</h3>
+<p><strong>Problem:</strong> All 48 Lean theorems are proven on
+synthetic data (72 FCC entries, 42 BCC entries, generated
+programmatically). The NIST scaffold exists but has all predictions
+missing. This means the formal proofs verify mathematical structure, not
+empirical accuracy.</p>
+<p><strong>Implication:</strong> Paper 3 must be framed as “formal
+verification of mathematical structure with synthetic validation” not
+“formal verification of empirical claims.” The epistemic gap is honest
+and should be highlighted as a feature — the formalization separates
+“what’s mathematically true” from “what’s empirically instantiated.”</p>
+<h3 id="issue-c-notation-drift-moderate-affects-papers-1-2">Issue C:
+Notation Drift (MODERATE — affects Papers 1-2)</h3>
+<p>Paper 2 introduces notation that Paper 1 doesn’t use: - <span
+class="math inline">ℱ</span> (architectural class) - <span
+class="math inline">ℳ(<em>M</em>)</span> (error manifold) - <span
+class="math inline"><em>ρ</em>(ℱ)</span> (Vandermonde decay rate) -
+<span class="math inline"><em>d</em>(ℱ)</span> (intrinsic dimension) -
+<span
+class="math inline"><em>κ</em><sub>1</sub>, <em>κ</em><sub>2</sub>, <em>κ</em><sub>3</sub></span>
+(class constants)</p>
+<p>Paper 1 should introduce <span
+class="math inline">ℳ(<em>M</em>)</span> descriptively so Paper 2 can
+pick it up naturally. The class constants (<span
+class="math inline"><em>κ</em></span>’s) should only appear in Paper
+2.</p>
+<h3
+id="issue-d-cross-paradigm-claim-scope-moderate-affects-papers-1-2">Issue
+D: Cross-Paradigm Claim Scope (MODERATE — affects Papers 1-2)</h3>
+<p>Paper 1’s MLIP section (4.6) should be reframed as a “proof of
+concept” that motivates Paper 2’s theorem, not as evidence for paradigm
+independence. Paper 2 then provides the theoretical framework, and the
+pre-registered predictions (clauses iv and vi) become the empirical
+test.</p>
+<h3
+id="issue-e-the-trilogy-narrative-arc-moderate-affects-all-papers">Issue
+E: The Trilogy Narrative Arc (MODERATE — affects all papers)</h3>
+<p>Currently the papers don’t explicitly reference each other as a
+sequence. Each should signal its position: - Paper 1: “The theoretical
+framework and formal proof appear in companion papers [2, 3].” - Paper
+2: “The empirical discovery motivating this theorem is reported in [1];
+the formal verification is in [3].” - Paper 3: “The empirical discovery
+is in [1]; the theoretical theorem is in [2]. This paper provides the
+machine-checked proof.”</p>
+<hr />
+<h2 id="whats-actually-done-vs.-claimed-as-future">3. What’s Actually
+Done vs. Claimed as Future</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Claimed as “Future Work” in Revised Draft</th>
+<th>Actually in Repo</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>R1: Expand to 50+ elements</td>
+<td>Partial — experiments/ has some data</td>
+<td><strong>In progress</strong></td>
+</tr>
+<tr class="even">
+<td>R2: Formal proof FIM→covariance</td>
+<td><code>lean-spec/</code> has T30 + appendix sketch</td>
+<td><strong>Partially done</strong></td>
+</tr>
+<tr class="odd">
+<td>R3: Controlled d-band experiment</td>
+<td>Not started</td>
+<td>Future</td>
+</tr>
+<tr class="even">
+<td>R4: Cross-paradigm with 10+ MLIPs</td>
+<td><code>archive/KIMI_MLIP_UNIVERSAL/manuscript/</code> has theorem +
+predictions</td>
+<td><strong>Partially done</strong></td>
+</tr>
+<tr class="odd">
+<td>R5: Geometric UQ</td>
+<td><code>archive/KIMI_MLIP_UNIVERSAL/experiments/</code> has falsification
+framework</td>
+<td><strong>Partially done</strong></td>
+</tr>
+<tr class="even">
+<td>R6: Active learning integration</td>
+<td><code>distiller/</code> has ODF framework</td>
+<td><strong>Partially done</strong></td>
+</tr>
+<tr class="odd">
+<td>R7: Production software</td>
+<td><code>distiller/</code> has agents, schemas, tests</td>
+<td><strong>Partially done</strong></td>
+</tr>
+<tr class="even">
+<td>R8: Binary/ternary alloys</td>
+<td>Not started</td>
+<td>Future</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Conclusion:</strong> The repo is 2-3x further along than the
+revised draft acknowledged. Much of the “future work” is actually
+“ongoing work” or “partially completed work.”</p>
+<hr />
+<h2 id="recommended-revision-plan">4. Recommended Revision Plan</h2>
+<h3 id="immediate-this-week">Immediate (this week)</h3>
+<ol type="1">
+<li><strong>Paper 1 hotfix:</strong> Correct Simpson’s paradox →
+ecological fallacy throughout</li>
+<li><strong>Paper 1 notation:</strong> Introduce <span
+class="math inline">ℳ(<em>M</em>)</span> descriptively, align with Paper
+2</li>
+<li><strong>Paper 1 trilogy framing:</strong> Add companion paper
+references</li>
+</ol>
+<h3 id="short-term-next-2-3-weeks">Short-term (next 2-3 weeks)</h3>
+<ol start="4" type="1">
+<li><strong>Paper 2 revision:</strong> Align voice/notation with Paper
+1, complete proof appendix, address Vandermonde gap honestly</li>
+<li><strong>Paper 2 Lean integration:</strong> Reference T30 and T50
+from the formalization as supporting evidence</li>
+</ol>
+<h3 id="medium-term-next-1-2-months">Medium-term (next 1-2 months)</h3>
+<ol start="6" type="1">
+<li><strong>Paper 3 write-up:</strong> Write the formal verification
+paper around existing Lean proofs, frame synthetic data honestly</li>
+<li><strong>Paper 4 decision:</strong> Decide whether to pursue
+empirical validation or publish as theory-only</li>
+</ol>
+<hr />
+<h2 id="the-honest-story">5. The Honest Story</h2>
+<p>The strongest narrative arc for the trilogy:</p>
+<p><strong>Paper 1:</strong> We discovered that prediction errors for
+559 interatomic potentials universally compress onto low-dimensional
+hyper-ribbon manifolds (PR 1.05-1.86). Standard benchmarking commits
+ecological fallacy — aggregation across model families obscures high
+internal consistency. We tested three foundation MLIPs and showed the
+error-geometry framework extends to neural networks (proof of concept,
+not proof of universality).</p>
+<p><strong>Paper 2:</strong> We prove a Universality Theorem: all models
+in an architectural class <span class="math inline">ℱ</span> share
+class-uniform geometric structure in their error manifolds. Six clauses
+cover intrinsic dimension, sample complexity, Vandermonde decay, active
+learning, two-mode inference, and generational stability. Two clauses
+are proved; two are pre-registered predictions with falsification
+thresholds. The central gap — Vandermonde structure for equivariant
+networks — is honestly flagged.</p>
+<p><strong>Paper 3:</strong> We formally verify the hyper-ribbon theorem
+(PR &lt; 2) and the Context-Specific Operative Value theorem in Lean 4,
+with 48 theorems, 0 sorry proofs, and 0 axioms. The formal audit caught
+an overstatement in Paper 1: strict Simpson’s reversal was not present
+in the empirical data; the genuine finding was ecological fallacy via
+pair-family stratification. All proofs are machine-checked on synthetic
+data with full provenance tracking.</p>
+<p>This is a coherent, honest, and methodologically sophisticated
+research program. The key to its success is intellectual honesty about
+what’s proved, what’s predicted, and what’s exploratory.</p>
+</body>
+</html>

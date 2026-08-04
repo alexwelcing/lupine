@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lupine Science — Deck</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root { --paper: #faf9f6; --ink: #14161d; --muted: #8a8e99; --lupine: #3d4db3; --hair: rgba(20,22,29,0.12); }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html, body { height: 100%; }
+      body {
+        background: #ecebe6;
+        color: var(--ink);
+        font-family: 'Newsreader', Georgia, serif;
+        display: flex; flex-direction: column;
+        height: 100vh; overflow: hidden;
+      }
+      #stage {
+        flex: 1; display: flex; align-items: center; justify-content: center;
+        padding: 24px;
+      }
+      #deck {
+        background: var(--paper);
+        box-shadow: 0 24px 70px rgba(20,22,29,0.22), 0 2px 8px rgba(20,22,29,0.10);
+        border-radius: 4px;
+        cursor: pointer;
+        max-width: 100%; max-height: 100%;
+      }
+      #bar {
+        display: flex; align-items: center; gap: 16px;
+        padding: 12px 24px; background: var(--paper); border-top: 1px solid var(--hair);
+        font-size: 14px; letter-spacing: 0.02em;
+      }
+      #bar .grow { flex: 1; }
+      button {
+        font-family: inherit; font-size: 14px; color: var(--ink);
+        background: transparent; border: 1px solid var(--hair); border-radius: 3px;
+        padding: 7px 14px; cursor: pointer; transition: all 0.15s ease;
+      }
+      button:hover { border-color: var(--lupine); color: var(--lupine); }
+      #counter { color: var(--muted); font-variant-numeric: tabular-nums; min-width: 64px; }
+      #title { color: var(--lupine); font-weight: 500; }
+      .hint { color: var(--muted); font-size: 12px; }
+      #loading {
+        position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+        background: #ecebe6; color: var(--muted); font-size: 16px; letter-spacing: 0.04em;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="loading">Loading Newsreader & laying out type…</div>
+    <div id="stage"><canvas id="deck"></canvas></div>
+    <div id="bar">
+      <span id="title">Lupine Science</span>
+      <span class="hint">← → to navigate · click to advance</span>
+      <span class="grow"></span>
+      <span id="counter">01 / 12</span>
+      <button id="prev">Prev</button>
+      <button id="next">Next</button>
+      <button id="png">Export PNG</button>
+      <button id="all">Export all</button>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

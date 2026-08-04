@@ -1,0 +1,17 @@
+# Build artifacts
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.synctex.gz
+
+# Python environment
+.venv-figures/
+
+# Submission bundle (generated; keep source files)
+projection-law-submission-bundle.zip
+immi/projection-law-immi-submission-bundle.zip
+
+# Reference audit backups
+*.bib.bak

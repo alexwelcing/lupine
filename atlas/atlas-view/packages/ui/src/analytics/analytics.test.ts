@@ -24,6 +24,8 @@ beforeEach(() => {
 afterEach(() => {
   vi.restoreAllMocks();
   vi.unstubAllEnvs();
+  vi.doUnmock('../auth/firebase');
+  vi.doUnmock('firebase/analytics');
 });
 
 describe('analytics session', () => {
@@ -90,5 +92,62 @@ describe('analytics track', () => {
     expect(payload.props.email).toBeUndefined();
     expect(payload.props.displayName).toBeUndefined();
     expect(payload.sid).toBeTruthy();
+  });
+
+  it('does not initialize Firebase Analytics unless explicitly consent-enabled', async () => {
+    const initializeAnalytics = vi.fn();
+    vi.doMock('../auth/firebase', () => ({ firebaseApp: { name: 'mock-app' } }));
+    vi.doMock('firebase/analytics', () => ({
+      initializeAnalytics,
+      isSupported: vi.fn().mockResolvedValue(true),
+      logEvent: vi.fn(),
+      setAnalyticsCollectionEnabled: vi.fn(),
+      setConsent: vi.fn(),
+    }));
+    vi.stubEnv('VITE_FIREBASE_MEASUREMENT_ID', 'G-TEST');
+    vi.stubEnv('VITE_FIREBASE_ANALYTICS_ENABLED', 'false');
+    vi.stubEnv('VITE_FIREBASE_ANALYTICS_CONSENT', 'denied');
+
+    const { track } = await freshModules();
+    track(ANALYTICS_EVENTS.VIEW_SAVED, { atoms: 42 });
+    await new Promise((resolve) => setTimeout(resolve, 10));
+
+    expect(initializeAnalytics).not.toHaveBeenCalled();
+  });
+
+  it('forwards sanitized events to Firebase Analytics after explicit consent opt-in', async () => {
+    const analytics = { app: 'mock-app' };
+    const initializeAnalytics = vi.fn().mockReturnValue(analytics);
+    const logEvent = vi.fn();
+    const setAnalyticsCollectionEnabled = vi.fn();
+    const setConsent = vi.fn();
+    vi.doMock('../auth/firebase', () => ({ firebaseApp: { name: 'mock-app' } }));
+    vi.doMock('firebase/analytics', () => ({
+      initializeAnalytics,
+      isSupported: vi.fn().mockResolvedValue(true),
+      logEvent,
+      setAnalyticsCollectionEnabled,
+      setConsent,
+    }));
+    vi.stubEnv('VITE_FIREBASE_MEASUREMENT_ID', 'G-TEST');
+    vi.stubEnv('VITE_FIREBASE_ANALYTICS_ENABLED', 'true');
+    vi.stubEnv('VITE_FIREBASE_ANALYTICS_CONSENT', 'granted');
+
+    const { track } = await freshModules();
+    track(ANALYTICS_EVENTS.VIEW_SAVED, { atoms: 42, email: 'drop@example.com' });
+    await new Promise((resolve) => setTimeout(resolve, 10));
+
+    expect(initializeAnalytics).toHaveBeenCalledWith(
+      { name: 'mock-app' },
+      { config: { send_page_view: false } },
+    );
+    expect(setConsent).toHaveBeenCalledWith({
+      analytics_storage: 'granted',
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+    });
+    expect(setAnalyticsCollectionEnabled).toHaveBeenCalledWith(analytics, true);
+    expect(logEvent).toHaveBeenCalledWith(analytics, 'lupi_view_saved', { atoms: 42 });
   });
 });

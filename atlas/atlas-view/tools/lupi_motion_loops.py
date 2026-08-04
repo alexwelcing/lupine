@@ -23,12 +23,15 @@ from typing import Any
 
 from PIL import Image, ImageChops, ImageDraw, ImageEnhance, ImageStat
 
+from lupi_equirect import inspect_pil_image
+
 
 ATLAS_VIEW_ROOT = Path(__file__).resolve().parents[1]
 BACKGROUND_DIR = ATLAS_VIEW_ROOT / "apps" / "web" / "public" / "backgrounds"
 MANIFEST_PATH = ATLAS_VIEW_ROOT / "tools" / "lupi-motion-loops.json"
 CACHE_DIR = ATLAS_VIEW_ROOT / "tools" / "lupi-motion-cache"
 SCRIPT_PATH = Path(__file__).resolve()
+RENDERER_VERSION = "2026-06-equirect-loop-qa-v2"
 
 
 JsonObject = dict[str, Any]
@@ -206,10 +209,29 @@ def seam_delta(image: Image.Image, seam_px: int = 16) -> float:
     return round(sum(stat.mean) / len(stat.mean), 3)
 
 
+def mean_frame_delta(a: Image.Image, b: Image.Image) -> float:
+    stat = ImageStat.Stat(ImageChops.difference(a.convert("RGB"), b.convert("RGB")))
+    return round(sum(stat.mean) / len(stat.mean), 3)
+
+
+def percentile(values: list[float], percent: float) -> float:
+    if not values:
+        return 0.0
+    ordered = sorted(values)
+    index = (len(ordered) - 1) * max(0.0, min(100.0, percent)) / 100.0
+    lower = math.floor(index)
+    upper = math.ceil(index)
+    if lower == upper:
+        return round(ordered[int(index)], 3)
+    weight = index - lower
+    return round(ordered[lower] * (1.0 - weight) + ordered[upper] * weight, 3)
+
+
 def render_hash(manifest: JsonObject, recipe: JsonObject, tier: MotionTier, source: Path) -> str:
     source_stat = source.stat()
     payload = {
         "schema_version": manifest["schema_version"],
+        "renderer_version": RENDERER_VERSION,
         "defaults": manifest.get("defaults", {}),
         "recipe": recipe,
         "tier": tier.__dict__,
@@ -282,7 +304,7 @@ def ffmpeg_command(args: argparse.Namespace, tier: MotionTier, fps: int, output:
     return cmd
 
 
-def encode_stream(args: argparse.Namespace, manifest: JsonObject, recipe: JsonObject, tier: MotionTier, base: Image.Image, output: Path) -> tuple[Image.Image, Image.Image]:
+def encode_stream(args: argparse.Namespace, manifest: JsonObject, recipe: JsonObject, tier: MotionTier, base: Image.Image, output: Path) -> tuple[Image.Image, Image.Image, JsonObject]:
     defaults = manifest.get("defaults", {})
     fps = int(defaults.get("fps", 24))
     duration = float(defaults.get("duration_seconds", 8))
@@ -298,6 +320,8 @@ def encode_stream(args: argparse.Namespace, manifest: JsonObject, recipe: JsonOb
 
     first_frame: Image.Image | None = None
     last_frame: Image.Image | None = None
+    previous_frame: Image.Image | None = None
+    adjacent_deltas: list[float] = []
     frame_dir = args.keep_frames / f"{recipe['id']}__{tier.id}" if args.keep_frames else None
     if frame_dir:
         frame_dir.mkdir(parents=True, exist_ok=True)
@@ -307,11 +331,14 @@ def encode_stream(args: argparse.Namespace, manifest: JsonObject, recipe: JsonOb
             frame = render_frame(base, recipe, defaults, tier, index, total_frames)
             if index == 0:
                 first_frame = frame.copy()
+            elif previous_frame is not None:
+                adjacent_deltas.append(mean_frame_delta(previous_frame, frame))
             if index == total_frames - 1:
                 last_frame = frame.copy()
             if frame_dir:
                 frame.save(frame_dir / f"frame_{index:04d}.png")
             process.stdin.write(frame.tobytes())
+            previous_frame = frame
     except BrokenPipeError as error:
         stderr = process.stderr.read().decode("utf-8", errors="replace") if process.stderr else ""
         raise RuntimeError(f"ffmpeg closed early for {output}:\n{stderr}") from error
@@ -323,7 +350,12 @@ def encode_stream(args: argparse.Namespace, manifest: JsonObject, recipe: JsonOb
     if return_code != 0:
         raise RuntimeError(f"ffmpeg failed for {output} with exit {return_code}:\n{stderr}")
     assert first_frame is not None and last_frame is not None
-    return first_frame, last_frame
+    adjacent_metrics: JsonObject = {
+        "mean_adjacent_frame_delta": round(sum(adjacent_deltas) / len(adjacent_deltas), 3) if adjacent_deltas else 0.0,
+        "p95_adjacent_frame_delta": percentile(adjacent_deltas, 95),
+        "max_adjacent_frame_delta": round(max(adjacent_deltas), 3) if adjacent_deltas else 0.0,
+    }
+    return first_frame, last_frame, adjacent_metrics
 
 
 def render_job(args: argparse.Namespace, manifest: JsonObject, job: RenderJob) -> JsonObject:
@@ -348,8 +380,17 @@ def render_job(args: argparse.Namespace, manifest: JsonObject, job: RenderJob) -
         }
 
     base = load_source(source, (tier.width, tier.height))
-    first_frame, last_frame = encode_stream(args, manifest, recipe, tier, base, output)
-    loop_delta = ImageStat.Stat(ImageChops.difference(first_frame, last_frame)).mean
+    source_qa = inspect_pil_image(base)
+    first_frame, last_frame, adjacent_metrics = encode_stream(args, manifest, recipe, tier, base, output)
+    first_frame_qa = inspect_pil_image(first_frame)
+    last_frame_qa = inspect_pil_image(last_frame)
+    loop_delta = mean_frame_delta(last_frame, first_frame)
+    mean_adjacent_delta = float(adjacent_metrics["mean_adjacent_frame_delta"])
+    p95_adjacent_delta = float(adjacent_metrics["p95_adjacent_frame_delta"])
+    max_adjacent_delta = float(adjacent_metrics["max_adjacent_frame_delta"])
+    loop_delta_ratio = round(loop_delta / mean_adjacent_delta, 3) if mean_adjacent_delta > 0 else 0.0
+    loop_delta_p95_ratio = round(loop_delta / p95_adjacent_delta, 3) if p95_adjacent_delta > 0 else 0.0
+    loop_delta_max_ratio = round(loop_delta / max_adjacent_delta, 3) if max_adjacent_delta > 0 else 0.0
     record: JsonObject = {
         "id": recipe["id"],
         "viewer_preset_id": recipe.get("viewer_preset_id"),
@@ -357,14 +398,22 @@ def render_job(args: argparse.Namespace, manifest: JsonObject, job: RenderJob) -
         "source": str(source),
         "output": str(output),
         "render_hash": key,
+        "renderer_version": RENDERER_VERSION,
         "width": tier.width,
         "height": tier.height,
         "fps": int(defaults.get("fps", 24)),
         "duration_seconds": float(defaults.get("duration_seconds", 8)),
         "frames": int(round(float(defaults.get("duration_seconds", 8)) * int(defaults.get("fps", 24)))),
         "bytes": output.stat().st_size,
-        "first_frame_seam_delta": seam_delta(first_frame),
-        "last_to_first_mean_delta": round(sum(loop_delta) / len(loop_delta), 3),
+        "source_qa": source_qa,
+        "first_frame_qa": first_frame_qa,
+        "last_frame_qa": last_frame_qa,
+        "first_frame_seam_delta": first_frame_qa["seam_mean_abs_delta"],
+        "last_to_first_mean_delta": loop_delta,
+        **adjacent_metrics,
+        "loop_delta_ratio": loop_delta_ratio,
+        "loop_delta_p95_ratio": loop_delta_p95_ratio,
+        "loop_delta_max_ratio": loop_delta_max_ratio,
         "status": "rendered",
     }
     write_cache_record(args.cache_dir, recipe, tier, record)

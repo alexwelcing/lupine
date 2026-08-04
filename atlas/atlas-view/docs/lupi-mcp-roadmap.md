@@ -12,7 +12,7 @@ Make Lupi MCP a secure, agent-usable molecular viewer service that Codex, Claude
 - The production Firebase auth domain is branded as `lupi.live`, with Cloud Run proxying Firebase's reserved auth helper paths.
 - The local viewer uses Firebase SDK redirect persistence and can expose a Firebase ID token that the MCP server can require on protected requests.
 - A server-issued HttpOnly session cookie is still pending; it should be created by exchanging the ID token with an MCP/auth backend, not by writing a token cookie from the browser.
-- Firestore is now the canonical saved-view store for user-owned `#/view/:slug` links. Saved views store the molecule source plus camera, display, background, material, annotation, playback, and export-base state.
+- Firestore is now the canonical saved-view store for user-owned `/view/:slug` share links. The public path is served through the saved-view social-card function and redirects human browsers into the SPA view route; saved views store the molecule source plus camera, display, background, material, annotation, playback, and export-base state.
 
 ## Milestone 1: Authenticated Local Dogfood
 

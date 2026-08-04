@@ -1,0 +1,154 @@
+{
+  "schema_version": "lupine.feedback.subspace_scorecard.v1",
+  "n_cases": 128,
+  "n_elements": 16,
+  "outlier_threshold": 56.25,
+  "bulk_outliers": 2,
+  "subspace_outliers": 0,
+  "elements": [
+    {
+      "element": "Ag",
+      "bulk_mean_norm_residual": 13.25,
+      "subspace_mean_norm_residual": 3.87,
+      "bulk_mean_mae": 7.07,
+      "subspace_mean_mae": 2.04,
+      "bulk_outlier": false,
+      "subspace_outlier": false
+    },
+    {
+      "element": "Al",
+      "bulk_mean_norm_residual": 29.13,
+      "subspace_mean_norm_residual": 4.09,
+      "bulk_mean_mae": 14.01,
+      "subspace_mean_mae": 2.05,
+      "bulk_outlier": false,
+      "subspace_outlier": false
+    },
+    {
+      "element": "Au",
+      "bulk_mean_norm_residual": 20.62,
+      "subspace_mean_norm_residual": 9.31,
+      "bulk_mean_mae": 10.42,
+      "subspace_mean_mae": 5.09,
+      "bulk_outlier": false,
+      "subspace_outlier": false
+    },
+    {
+      "element": "Ca",
+      "bulk_mean_norm_residual": 5.71,
+      "subspace_mean_norm_residual": 1.59,
+      "bulk_mean_mae": 2.7,
+      "subspace_mean_mae": 0.76,
+      "bulk_outlier": false,
+      "subspace_outlier": false
+    },
+    {
+      "element": "Cr",
+      "bulk_mean_norm_residual": 82.36,
+      "subspace_mean_norm_residual": 25.04,
+      "bulk_mean_mae": 35.56,
+      "subspace_mean_mae": 12.33,
+      "bulk_outlier": true,
+      "subspace_outlier": false
+    },
+    {
+      "element": "Cu",
+      "bulk_mean_norm_residual": 36.68,
+      "subspace_mean_norm_residual": 5.69,
+      "bulk_mean_mae": 17.5,
+      "subspace_mean_mae": 2.64,
+      "bulk_outlier": false,
+      "subspace_outlier": false
+    },
+    {
+      "element": "Fe",
+      "bulk_mean_norm_residual": 33.18,
+      "subspace_mean_norm_residual": 14.18,
+      "bulk_mean_mae": 15.24,
+      "subspace_mean_mae": 7.89,
+      "bulk_outlier": false,
+      "subspace_outlier": false
+    },
+    {
+      "element": "Mo",
+      "bulk_mean_norm_residual": 44.87,
+      "subspace_mean_norm_residual": 4.59,
+      "bulk_mean_mae": 20.43,
+      "subspace_mean_mae": 1.74,
+      "bulk_outlier": false,
+      "subspace_outlier": false
+    },
+    {
+      "element": "Nb",
+      "bulk_mean_norm_residual": 47.66,
+      "subspace_mean_norm_residual": 12.65,
+      "bulk_mean_mae": 23.97,
+      "subspace_mean_mae": 6.7,
+      "bulk_outlier": false,
+      "subspace_outlier": false
+    },
+    {
+      "element": "Ni",
+      "bulk_mean_norm_residual": 31.83,
+      "subspace_mean_norm_residual": 11.08,
+      "bulk_mean_mae": 15.7,
+      "subspace_mean_mae": 4.27,
+      "bulk_outlier": false,
+      "subspace_outlier": false
+    },
+    {
+      "element": "Pd",
+      "bulk_mean_norm_residual": 27.63,
+      "subspace_mean_norm_residual": 3.46,
+      "bulk_mean_mae": 13.79,
+      "subspace_mean_mae": 1.84,
+      "bulk_outlier": false,
+      "subspace_outlier": false
+    },
+    {
+      "element": "Pt",
+      "bulk_mean_norm_residual": 38.08,
+      "subspace_mean_norm_residual": 12.11,
+      "bulk_mean_mae": 20.49,
+      "subspace_mean_mae": 6.75,
+      "bulk_outlier": false,
+      "subspace_outlier": false
+    },
+    {
+      "element": "Sr",
+      "bulk_mean_norm_residual": 8.72,
+      "subspace_mean_norm_residual": 0.95,
+      "bulk_mean_mae": 4.12,
+      "subspace_mean_mae": 0.35,
+      "bulk_outlier": false,
+      "subspace_outlier": false
+    },
+    {
+      "element": "Ta",
+      "bulk_mean_norm_residual": 34.46,
+      "subspace_mean_norm_residual": 8.15,
+      "bulk_mean_mae": 16.35,
+      "subspace_mean_mae": 2.79,
+      "bulk_outlier": false,
+      "subspace_outlier": false
+    },
+    {
+      "element": "V",
+      "bulk_mean_norm_residual": 55.54,
+      "subspace_mean_norm_residual": 27.78,
+      "bulk_mean_mae": 24.94,
+      "subspace_mean_mae": 15.07,
+      "bulk_outlier": false,
+      "subspace_outlier": false
+    },
+    {
+      "element": "W",
+      "bulk_mean_norm_residual": 56.96,
+      "subspace_mean_norm_residual": 9.86,
+      "bulk_mean_mae": 26.12,
+      "subspace_mean_mae": 4.1,
+      "bulk_outlier": true,
+      "subspace_outlier": false
+    }
+  ]
+}

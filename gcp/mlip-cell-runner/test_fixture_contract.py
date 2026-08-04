@@ -5,7 +5,7 @@ from pathlib import Path
 
 import numpy as np
 from ase.calculators.calculator import Calculator, all_changes
-from fixture_contract import evaluate_row, run_row, validate_manifest
+from lupine_distill.fixture_contract import evaluate_row, run_row, validate_manifest
 
 
 class CountingEnergyCalculator(Calculator):

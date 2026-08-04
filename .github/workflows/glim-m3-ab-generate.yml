@@ -1,0 +1,60 @@
+name: Glim M3 A/B generation
+
+# Part-3 of docs/glim-m3-upgrade/03-eval-protocol.md: generate the M2.7
+# (baseline) and M3 (candidate) Theorist runs over the fixed
+# glim-ribbon-theorems dataset via the worker's model axis, pair them, and
+# publish the comparison scaffold as an artifact for the local Opus judge.
+# Generation runs here because INTERNAL_TASK_TOKEN lives in repo secrets.
+
+on:
+  workflow_dispatch:
+    inputs:
+      baseline:
+        description: 'Baseline model id'
+        required: false
+        default: 'MiniMax-M2.7'
+      candidate:
+        description: 'Candidate model id'
+        required: false
+        default: 'MiniMax-M3'
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Generate baseline run
+        env:
+          INTERNAL_TASK_TOKEN: ${{ secrets.INTERNAL_TASK_TOKEN }}
+          GLIM_API_URL: https://glim-think-v1.aw-ab5.workers.dev
+        run: |
+          python3 tools/glim_model_eval.py generate \
+            --model "${{ inputs.baseline }}" \
+            --out ab-runs/baseline.json
+
+      - name: Generate candidate run
+        env:
+          INTERNAL_TASK_TOKEN: ${{ secrets.INTERNAL_TASK_TOKEN }}
+          GLIM_API_URL: https://glim-think-v1.aw-ab5.workers.dev
+        run: |
+          python3 tools/glim_model_eval.py generate \
+            --model "${{ inputs.candidate }}" \
+            --out ab-runs/candidate.json
+
+      - name: Pair into comparison scaffold
+        run: |
+          python3 tools/glim_model_eval.py compare \
+            --baseline ab-runs/baseline.json \
+            --candidate ab-runs/candidate.json \
+            --out ab-runs/comparison.json
+
+      - name: Upload runs artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: glim-m3-ab-runs
+          path: ab-runs/
+          retention-days: 30

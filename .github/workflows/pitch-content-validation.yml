@@ -1,0 +1,55 @@
+name: Pitch content validation
+
+# Guard public-facing materials against recurring false paper-status and team claims.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'brand.config.json'
+      - 'docs/brand/**'
+      - 'gcp/lupine-site-router/**'
+      - 'deck/public/**'
+      - 'raise/**'
+      - 'library-site/**'
+      - 'atlas/lupine-vc/**'
+      - 'atlas/manifesto/**'
+      - 'atlas/atlas-view/apps/web/public/llms*.txt'
+      - 'atlas/atlas-view/apps/web/public/brand.json'
+      - 'README.md'
+      - 'CHANGELOG.md'
+      - 'docs/research_evolution_2026_05_05.md'
+      - 'paper/README.md'
+      - 'atlas-distill/README.md'
+      - 'tools/validate_pitch_claims.py'
+      - '.github/workflows/pitch-content-validation.yml'
+  pull_request:
+    paths:
+      - 'brand.config.json'
+      - 'docs/brand/**'
+      - 'gcp/lupine-site-router/**'
+      - 'deck/public/**'
+      - 'raise/**'
+      - 'library-site/**'
+      - 'atlas/lupine-vc/**'
+      - 'atlas/manifesto/**'
+      - 'atlas/atlas-view/apps/web/public/llms*.txt'
+      - 'atlas/atlas-view/apps/web/public/brand.json'
+      - 'README.md'
+      - 'CHANGELOG.md'
+      - 'docs/research_evolution_2026_05_05.md'
+      - 'paper/README.md'
+      - 'atlas-distill/README.md'
+      - 'tools/validate_pitch_claims.py'
+      - '.github/workflows/pitch-content-validation.yml'
+
+jobs:
+  validate-pitch-claims:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate pitch claims
+        run: python tools/validate_pitch_claims.py

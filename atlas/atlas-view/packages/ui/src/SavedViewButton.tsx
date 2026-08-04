@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useFirebaseAuth, type LupiAuthProviderId } from './auth/useFirebaseAuth';
 import { firebaseConfigured } from './auth/firebase';
 import {
@@ -47,12 +48,32 @@ function slugTail(slug: string) {
   return slug || 'new-link';
 }
 
+function socialPostText(title: string) {
+  return `Explore this molecular view in Lupi: ${title}`.slice(0, 190);
+}
+
+function linkedInShareUrl(url: string) {
+  return `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+}
+
+function xShareUrl(url: string, title: string) {
+  const params = new URLSearchParams({
+    text: socialPostText(title),
+    url,
+  });
+  return `https://twitter.com/intent/tweet?${params.toString()}`;
+}
+
+function openSharePopup(url: string) {
+  window.open(url, '_blank', 'noopener,noreferrer,width=760,height=760');
+}
+
 export function SavedViewButton({ compact = false }: { compact?: boolean }) {
   const file = useStore((state) => state.file);
   const loadedAtomCount = useStore((state) => state.loadedAtomCount);
   const frame = useStore((state) => state.frame);
   const showBonds = useStore((state) => state.showBonds);
-  const { loading: authLoading, signIn, user } = useFirebaseAuth();
+  const { loading: authLoading, signIn, user, idToken, refreshToken } = useFirebaseAuth();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState(() => defaultSavedViewTitle(file));
@@ -67,6 +88,8 @@ export function SavedViewButton({ compact = false }: { compact?: boolean }) {
   const defaultTitle = useMemo(() => defaultSavedViewTitle(file), [file?.name]);
   const cleanSlug = slugifySavedViewTitle(slug || title || defaultTitle);
   const urlPreview = makeSavedViewUrl(cleanSlug);
+  const canNativeShare = typeof navigator !== 'undefined' && typeof navigator.share === 'function';
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     if (slugTouched) return;
@@ -101,20 +124,21 @@ export function SavedViewButton({ compact = false }: { compact?: boolean }) {
     localStorage.removeItem(PENDING_SAVE_KEY);
   }, [user?.uid, file?.name]);
 
+  // TanStack Query for recent saved views (caching, loading states, refetch on save)
+  const recentViewsQuery = useQuery({
+    queryKey: ['recentSavedViews', user?.uid],
+    queryFn: () => listUserSavedViews(user!.uid),
+    enabled: !!user && open,
+    staleTime: 1000 * 30,
+  });
+
   useEffect(() => {
-    if (!user || !open) return;
-    let cancelled = false;
-    listUserSavedViews(user.uid)
-      .then((views) => {
-        if (!cancelled) setRecentViews(views);
-      })
-      .catch(() => {
-        if (!cancelled) setRecentViews([]);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [user?.uid, open, savedUrl]);
+    if (recentViewsQuery.data) {
+      setRecentViews(recentViewsQuery.data);
+    } else if (recentViewsQuery.isError) {
+      setRecentViews([]);
+    }
+  }, [recentViewsQuery.data, recentViewsQuery.isError]);
 
   // Activation auto-nudge REMOVED: the app no longer auto-opens the Save panel for
   // anonymous visitors after a delay. There is no unprompted sign-up push — the
@@ -132,6 +156,10 @@ export function SavedViewButton({ compact = false }: { compact?: boolean }) {
 
   const handleSave = async () => {
     if (!user) return;
+    if (!idToken) {
+      setError('Your sign-in session is still initializing. Wait a moment, or click Refresh session below.');
+      return;
+    }
     setBusy(true);
     setError(null);
     setStatus(null);
@@ -144,6 +172,8 @@ export function SavedViewButton({ compact = false }: { compact?: boolean }) {
       setSavedUrl(result.url);
       setSlug(result.view.slug);
       setStatus('Saved.');
+      // Invalidate recent views query so list updates immediately
+      queryClient.invalidateQueries({ queryKey: ['recentSavedViews', user?.uid] });
       // North Star: a molecule view was persisted. No PII — counts + flags only.
       track(ANALYTICS_EVENTS.VIEW_SAVED, {
         atoms: loadedAtomCount || file?.trajectory.frames[0]?.natoms || 0,
@@ -160,6 +190,29 @@ export function SavedViewButton({ compact = false }: { compact?: boolean }) {
     } finally {
       setBusy(false);
     }
+  };
+
+  const handleNativeShare = async () => {
+    if (!savedUrl || !canNativeShare) return;
+    track(ANALYTICS_EVENTS.VIEW_SHARED, { method: 'native_share' });
+    try {
+      await navigator.share({
+        title,
+        text: socialPostText(title),
+        url: savedUrl,
+      });
+      setStatus('Share sheet opened.');
+    } catch (err) {
+      const name = err instanceof DOMException ? err.name : '';
+      if (name !== 'AbortError') setError(err instanceof Error ? err.message : 'Share failed.');
+    }
+  };
+
+  const handleExternalShare = (method: 'linkedin' | 'x') => {
+    if (!savedUrl) return;
+    track(ANALYTICS_EVENTS.VIEW_SHARED, { method });
+    openSharePopup(method === 'linkedin' ? linkedInShareUrl(savedUrl) : xShareUrl(savedUrl, title));
+    setStatus(method === 'linkedin' ? 'Opened LinkedIn share.' : 'Opened X share.');
   };
 
   if (!file) return null;
@@ -233,13 +286,13 @@ export function SavedViewButton({ compact = false }: { compact?: boolean }) {
                     placeholder="Ice Block Publish"
                   />
                   <LupiField
-                    label="Slug"
+                    label="Slug (auto-generated if blank)"
                     value={slug}
                     onChange={(value) => {
                       setSlugTouched(true);
                       setSlug(slugifySavedViewTitle(value));
                     }}
-                    placeholder="ice-block-publish"
+                    placeholder={slugifySavedViewTitle(title || defaultTitle)}
                   />
                 </div>
 
@@ -273,20 +326,57 @@ export function SavedViewButton({ compact = false }: { compact?: boolean }) {
                 {status && <LupiNotice tone="green">{status}</LupiNotice>}
 
                 <div style={{ display: 'grid', gridTemplateColumns: savedUrl ? '1fr 1fr' : '1fr', gap: 8 }}>
-                  <LupiButton tone="primary" onClick={handleSave} disabled={busy || !cleanSlug}>
+                  <LupiButton tone="primary" onClick={handleSave} disabled={busy || !idToken}>
                     {busy ? 'Saving' : 'Save'}
                   </LupiButton>
+                  {!idToken && user && (
+                    <LupiButton
+                      onClick={async () => {
+                        setBusy(true);
+                        setError(null);
+                        try {
+                          const next = await refreshToken();
+                          if (!next) throw new Error('Could not refresh session.');
+                          setStatus('Session refreshed.');
+                        } catch (err) {
+                          setError(err instanceof Error ? err.message : 'Session refresh failed.');
+                        } finally {
+                          setBusy(false);
+                        }
+                      }}
+                      disabled={busy}
+                    >
+                      Refresh session
+                    </LupiButton>
+                  )}
                   {savedUrl && (
                     <LupiButton
                       onClick={() => {
                         track(ANALYTICS_EVENTS.VIEW_SHARED, { method: 'copy_button' });
                         void navigator.clipboard.writeText(savedUrl);
+                        setStatus('Copied social link.');
                       }}
                     >
                       Copy
                     </LupiButton>
                   )}
                 </div>
+
+                {savedUrl && (
+                  <div style={{ display: 'grid', gridTemplateColumns: canNativeShare ? '1fr 1fr 1fr' : '1fr 1fr', gap: 8 }}>
+                    {canNativeShare && (
+                      <LupiButton onClick={handleNativeShare}>
+                        Share
+                      </LupiButton>
+                    )}
+                    <LupiButton onClick={() => handleExternalShare('linkedin')}>
+                      LinkedIn
+                    </LupiButton>
+                    <LupiButton onClick={() => handleExternalShare('x')}>
+                      X
+                    </LupiButton>
+                  </div>
+                )}
 
                 {recentViews.length > 0 && (
                   <div style={{ display: 'grid', gap: 7 }}>

@@ -447,7 +447,7 @@ async function exportGLB(frame, typeSymbols, outputPath) {
 // ─── Main ───────────────────────────────────────────────────────────────
 
 async function main() {
-  const examples = galleryData.filter(e => e.available && e.id !== 'lupine_brand_asset');
+  const examples = galleryData.filter(e => e.available);
   console.log(`[batch] Processing ${examples.length} gallery examples...\n`);
 
   let completed = 0;

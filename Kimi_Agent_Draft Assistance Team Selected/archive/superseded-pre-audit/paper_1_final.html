@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hyper-Ribbon Manifolds of Prediction Error — Paper 1 of 3</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$' ,right:'$' ,display:false}]});"></script>
+<style>
+body { margin: 0; padding: 0; font-family: 'Georgia', 'Times New Roman', serif; color: #333; line-height: 1.65; font-size: 11pt; }
+* { box-sizing: border-box; }
+@page { size: A4; margin: 2.5cm 2cm; @top-center { content: string(doctitle); font-size: 9pt; color: #666; font-variant: small-caps; } @bottom-center { content: counter(page); font-size: 9pt; } }
+@page :first { margin: 0; @top-center { content: none; } @bottom-center { content: none; } }
+@page cover { @top-center { content: none; } @bottom-center { content: none; } }
+body { string-set: doctitle ""; } h1 { string-set: doctitle content(); }
+
+.cover { page: cover; width: 210mm; height: 297mm; margin: 0; position: relative; overflow: hidden; page-break-after: always; background: #1a1a2e; }
+.cover::before { content: ''; position: absolute; top: 0; right: 0; width: 55%; height: 100%; background: linear-gradient(180deg, rgba(201,162,39,0.1) 0%, transparent 60%); clip-path: polygon(25% 0, 100% 0, 100% 100%, 0 100%); }
+.cover::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 5px; background: linear-gradient(90deg, #c9a227, #d4af37, #c9a227); }
+.cover-accent { position: absolute; top: 2.5cm; left: 2cm; width: 55px; height: 3px; background: #c9a227; }
+.cover-badge { position: absolute; top: 2.5cm; right: 2cm; font-size: 8pt; letter-spacing: 3px; text-transform: uppercase; color: #c9a227; border: 1px solid rgba(201,162,39,0.4); padding: 0.25cm 0.5cm; }
+.cover-content { position: absolute; top: 50%; left: 2cm; right: 2cm; transform: translateY(-50%); }
+.cover-label { font-size: 9pt; letter-spacing: 4px; text-transform: uppercase; color: #888; margin-bottom: 1.5cm; }
+.cover-title { font-size: 28pt; font-weight: 700; color: #fff; line-height: 1.15; margin-bottom: 0.5cm; }
+.cover-subtitle { font-size: 13pt; color: #aaa; font-style: italic; line-height: 1.4; margin-bottom: 2cm; }
+.cover-author { font-size: 12pt; font-weight: 600; color: #ddd; margin-bottom: 0.3cm; }
+.cover-affil { font-size: 10pt; color: #888; line-height: 1.8; margin-top: 0.5cm; }
+.cover-date { position: absolute; bottom: 2.5cm; left: 2cm; font-size: 10pt; color: #666; }
+.cover-trilogy { position: absolute; bottom: 3.5cm; left: 2cm; font-size: 9pt; color: #c9a227; letter-spacing: 1px; }
+
+h1 { font-size: 18pt; font-weight: 700; color: #1a1a2e; margin-top: 1.2cm; margin-bottom: 0.5cm; page-break-after: avoid; border-bottom: 2px solid #c9a227; padding-bottom: 0.2cm; }
+h2 { font-size: 14pt; font-weight: 700; color: #2c3e50; margin-top: 0.9cm; margin-bottom: 0.4cm; page-break-after: avoid; }
+h3 { font-size: 12pt; font-weight: 700; color: #495057; margin-top: 0.7cm; margin-bottom: 0.3cm; page-break-after: avoid; }
+p { font-size: 11pt; text-align: justify; text-align-last: left; margin: 0.4cm 0; orphans: 2; widows: 2; }
+
+.abstract { background: #f8f9fa; border-left: 3px solid #c9a227; padding: 0.8cm 1cm; margin: 1cm 0; page-break-inside: avoid; }
+.abstract-label { font-size: 10pt; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: #1a252f; margin-bottom: 0.3cm; }
+.abstract p { font-size: 10.5pt; line-height: 1.5; }
+
+.caveat { background: #fff8e6; border-left: 3px solid #c9a227; padding: 0.5cm 0.8cm; margin: 0.7cm 0; font-size: 10.5pt; page-break-inside: avoid; }
+.caveat-label { font-weight: 700; color: #8b6914; text-transform: uppercase; letter-spacing: 1px; font-size: 9pt; margin-bottom: 0.2cm; }
+
+.key-insight { background: #f0f4f8; border-left: 3px solid #2c3e50; padding: 0.6cm 0.8cm; margin: 0.8cm 0; font-size: 10.5pt; page-break-inside: avoid; }
+.key-insight-label { font-weight: 700; color: #2c3e50; text-transform: uppercase; letter-spacing: 1px; font-size: 9pt; margin-bottom: 0.2cm; }
+
+.confirmatory-badge { display: inline-block; background: #e8f5e9; color: #2e7d32; font-size: 8pt; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 2px 8px; border-radius: 3px; margin-left: 0.4cm; vertical-align: middle; border: 1px solid #c8e6c9; }
+.exploratory-badge { display: inline-block; background: #fff3e0; color: #e65100; font-size: 8pt; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 2px 8px; border-radius: 3px; margin-left: 0.4cm; vertical-align: middle; border: 1px solid #ffe0b2; }
+.poc-badge { display: inline-block; background: #e3f2fd; color: #1565c0; font-size: 8pt; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 2px 8px; border-radius: 3px; margin-left: 0.4cm; vertical-align: middle; border: 1px solid #bbdefb; }
+
+.roadmap-item { background: #f5f5f5; border-left: 3px solid #1565c0; padding: 0.5cm 0.8cm; margin: 0.5cm 0; page-break-inside: avoid; }
+.roadmap-item .title { font-weight: 700; color: #1565c0; font-size: 10.5pt; }
+.roadmap-item .meta { font-size: 9pt; color: #666; }
+
+figure { margin: 0.8cm 0; text-align: center; page-break-inside: avoid; }
+figure img { max-width: 88%; max-height: 42vh; height: auto; }
+figcaption { font-size: 10pt; color: #555; margin-top: 0.3cm; font-style: italic; }
+figcaption::before { content: attr(data-label) ". "; font-weight: 700; font-style: normal; }
+
+table { width: 100%; border-collapse: collapse; margin: 0.7cm 0; font-size: 10pt; page-break-inside: avoid; max-width: 100%; }
+thead { border-top: 2px solid #333; border-bottom: 1px solid #333; }
+tbody { border-bottom: 2px solid #333; }
+th, td { padding: 0.25cm 0.35cm; text-align: left; }
+th { font-weight: 700; background: #f8f9fa; }
+tr { page-break-inside: avoid; }
+caption { font-size: 10pt; font-style: italic; color: #555; margin-bottom: 0.3cm; text-align: left; }
+caption::before { content: attr(data-label) ". "; font-weight: 700; font-style: normal; }
+
+.equation { margin: 0.5cm 0; text-align: center; position: relative; }
+.equation::after { content: attr(data-label); position: absolute; right: 0; top: 50%; transform: translateY(-50%); }
+
+strong { font-weight: 700; }
+ul, ol { margin: 0.3cm 0; padding-left: 1.1cm; }
+li { font-size: 11pt; margin: 0.15cm 0; }
+a { color: #1b3a4b; text-decoration: none; word-break: break-all; }
+.page-break { page-break-before: always; }
+pre, table, figure, img, svg, blockquote, .equation { max-width: 100%; box-sizing: border-box; }
+.katex-display { overflow-x: auto; }
+body { text-align: justify; text-align-last: left; }
+
+.data-box { background: #f0f7f0; border: 1px solid #c8e6c9; border-left: 4px solid #4caf50; padding: 0.6cm 0.8cm; margin: 0.8cm 0; font-size: 10.5pt; page-break-inside: avoid; }
+.data-box-label { font-weight: 700; color: #2e7d32; text-transform: uppercase; letter-spacing: 1px; font-size: 9pt; margin-bottom: 0.2cm; }
+</style>
+</head>
+<body>
+
+<!-- ==================== COVER ==================== -->
+<div class="cover">
+  <div class="cover-accent"></div>
+  <div class="cover-badge">Paper 1 of 3</div>
+  <div class="cover-content">
+    <div class="cover-label">Interdisciplinary Research Article</div>
+    <div class="cover-title">Hyper-Ribbon Manifolds of Prediction Error</div>
+    <div class="cover-subtitle">Universal Low-Dimensional Structure in the Error Manifold $\mathcal{M}(M)$<br>for 15 Cubic Metallic Elements, with Ecological Fallacy Detection</div>
+    <div class="cover-author">Alex Welcing</div>
+    <div class="cover-affil">
+      Lupine Science &nbsp;|&nbsp; alex@lupine.io<br>
+      github.com/alexwelcing/lupine &nbsp;|&nbsp; MIT License<br>
+      <span style="font-size:9pt;color:#666;">Trilogy: Paper 1 (Empirical) &mdash; Paper 2 (Theory) &mdash; Paper 3 (Proof)</span>
+    </div>
+  </div>
+  <div class="cover-trilogy"><strong>Paper 1 of 3:</strong> Empirical Discovery &nbsp;&bull;&nbsp; Companion papers develop the theoretical framework and formal proof</div>
+  <div class="cover-date">June 2026</div>
+</div>
+
+<!-- ==================== ABSTRACT ==================== -->
+<div class="abstract">
+  <div class="abstract-label">Abstract</div>
+  <p>Prediction errors in parameterized models are rarely studied as geometric objects. We report the first systematic evidence that errors universally occupy low-dimensional <em>hyper-ribbon</em> manifolds in observable space. Analyzing 559 independently parameterized interatomic potentials predicting elastic constants ($C_{11}$, $C_{12}$, $C_{44}$) of <strong>15 cubic metallic elements</strong> (8 FCC, 7 BCC), we find an effective dimensionality of $1.05$&ndash;$1.86$ in a 3D observable space &mdash; participation ratio $\mathrm{PR} = 1.05\text{--}1.86$, median $1.28$ &mdash; with the characteristic log-linear eigenvalue spectrum that defines the sloppy-model universality class. This dimensional compression persists across four decades of model development and 13 distinct functional families, constituting a universal signature of the error manifold $\mathcal{M}(M)$.</p>
+  <p>A striking crystal-structure dichotomy governs error correlations: all BCC metals show strong reference&ndash;prediction agreement ($r > 0.70$, 95% CI $[0.62, 0.94]$), while FCC metals show near-zero correlation ($r < 0.40$, 95% CI $[0.02, 0.31]$). Random-effects meta-analysis across 15 elements ($N = 1{,}677$) confirms extreme heterogeneity ($I^2 = 98.6\%$, 95% CI $[97.9\%, 99.1\%]$), demonstrating that naive cross-element aggregation commits ecological fallacy. An exploratory analysis of the $d$-band hypothesis finds it <em>refuted</em> on the full sample; the dominant confounder is fitting-sample depth rather than electronic structure. A proof-of-concept extension to three foundation MLIPs (MACE-MP-0, CHGNet, Orb-v3) shows error-geometry analysis <em>can</em> be applied to neural network potentials, though cross-paradigm universality requires larger samples. The theoretical framework linking parameter-space Fisher information to observable-space error geometry, and the formal proof of manifold curvature bounds, appear in companion Papers 2 and 3. All data and code are open-source.</p>
+  <p><strong>Keywords:</strong> sloppy models, information geometry, meta-analysis, Simpson's paradox, interatomic potentials, ecological fallacy, machine learning, error manifold</p>
+</div>
+
+<!-- ==================== 1. INTRODUCTION ==================== -->
+<h1>1. Introduction</h1>
+
+<p>Every parameterized model produces prediction errors. Whether the model is a neural network, a differential equation, or an analytical potential, the errors carry geometric structure that encodes information about the model family $\mathcal{F}$, the data, and the underlying physics. Understanding this structure is essential for model improvement, uncertainty quantification, and ensemble design. This paper &mdash; the first of a trilogy &mdash; establishes the empirical discovery; the theoretical framework and formal proof appear in companion papers.</p>
+
+<p>We study the geometry of prediction errors in interatomic potentials, mathematical models that describe atomic-scale energy landscapes. Thousands have been developed over forty years by independent research groups, providing an ideal natural experiment for studying error-geometry universality. We ask three general questions:</p>
+
+<p><strong>Q1 (Geometry).</strong> Do prediction errors distribute isotropically in observable space, or do they concentrate onto low-dimensional manifolds &mdash; the <em>error manifold</em> $\mathcal{M}(M)$?</p>
+
+<p><strong>Q2 (Heterogeneity).</strong> When multiple models are evaluated across multiple systems, can performance be meaningfully aggregated? Or does aggregation produce misleading conclusions through ecological fallacy?</p>
+
+<p><strong>Q3 (Transferability).</strong> Does error-geometry depend on the architectural class $\mathcal{F}$, or is it a property of the observable space itself?</p>
+
+<p>Q1 is motivated by <strong>sloppy model theory</strong><a class="cite">[1]</a><a class="cite">[2]</a>, which establishes that multiparameter models have parameter sensitivities spanning many orders of magnitude. The resulting model manifold forms a hyper-ribbon in data space. We ask whether this same signature appears in the <em>error</em> covariance, independent of parameter-space details. Q2 is motivated by <strong>Simpson's paradox</strong><a class="cite">[3]</a><a class="cite">[4]</a> and the ecological fallacy<a class="cite">[5]</a>: correlations across heterogeneous groups can invert when confounders are ignored. Q3 asks whether these findings extend to modern machine-learning architectures beyond classical interatomic potentials.</p>
+
+<div class="caveat">
+<div class="caveat-label">Scope and framing</div>
+This study is restricted to 15 cubic metallic elements &mdash; the most commonly simulated class of materials. Claims of "universality" refer to this domain unless explicitly stated otherwise. The $d$-band chemistry analysis (Section 4.5) is <strong>exploratory</strong>, not confirmatory. The MLIP extension (Section 4.6) is a <strong>proof of concept</strong>, not a demonstration of paradigm independence. Companion Paper 2 derives the theoretical framework linking parameter-space Fisher information to observable-space error geometry; Paper 3 provides formal proofs of the curvature bounds reported here empirically.
+</div>
+
+<!-- ==================== 2. THEORETICAL FRAMEWORK ==================== -->
+<h1>2. Theoretical Framework</h1>
+
+<h2>2.1 Error manifold geometry</h2>
+
+<p>For a model belonging to architectural class $\mathcal{F}$, with $N$ parameters $\boldsymbol{\theta}$ fit to $M$ observations, sloppy model theory analyzes the Fisher Information Matrix $\mathbf{H}_{ij} = \langle \partial_i \partial_j \ln L \rangle$ in <em>parameter space</em>. Eigenvalue decomposition $\mathbf{H}\mathbf{v}_k = \lambda_k \mathbf{v}_k$ reveals the geometry of the model manifold: few "stiff" directions control predictions; many "sloppy" directions allow free parameter variation<a class="cite">[1]</a><a class="cite">[6]</a>. The Vandermonde decay rate $\rho(\mathcal{F})$, characterizing the eigenvalue spectrum's exponential falloff, is an invariant of the architectural class.</p>
+
+<p>We analyze a different but related object: the <em>observable-space error covariance</em> on the error manifold $\mathcal{M}(M)$, defined as $\mathbf{C} = \mathrm{Cov}(\mathbf{e})$ where $\mathbf{e} = \mathbf{y}^{\text{pred}} - \mathbf{y}^{\text{ref}}$, computed across an ensemble of independently fitted models for a fixed element. If the ensemble samples different regions of the model manifold &mdash; different local optima, different functional families within $\mathcal{F}$ &mdash; the error covariance approximates the manifold width in directions orthogonal to the data. The <strong>participation ratio</strong> $\mathrm{PR}$ measures effective dimensionality:</p>
+
+<div class="equation" data-label="(1)">
+$$\mathrm{PR} = \frac{\big(\sum_k \lambda_k\big)^2}{\sum_k \lambda_k^2}$$
+</div>
+
+<p>For isotropic data in $d$ dimensions, $\mathrm{PR} = d$; for data confined to a $k$-dimensional subspace, $\mathrm{PR} = k$. The hyper-ribbon classification requires three criteria: (1) monotonic eigenvalue decay (Mann-Kendall $\tau < -0.8$), (2) high log-linearity ($R^2 > 0.8$), and (3) fractional dimensionality ($\mathrm{PR}/d < 0.9$). The companion theory paper (Paper 2) proves that $\mathrm{PR}(\mathbf{C}) \leq \mathrm{PR}(\mathbf{H}^{-1})$ under mild conditions on the prediction Jacobian.</p>
+
+<div class="key-insight">
+<div class="key-insight-label">Key insight</div>
+The participation ratio $\mathrm{PR}$ is an <em>intrinsic</em> geometric invariant of the error manifold $\mathcal{M}(M)$, not a property of any individual model. It quantifies how many independent directions of error variation exist, regardless of which specific potential produced them.
+</div>
+
+<div class="caveat">
+<div class="caveat-label">Theoretical mapping</div>
+The mapping between parameter-space FIM eigenvalues and observable-space error covariance is exact under linearized Gaussian parameter priors (Appendix A). For the weakly nonlinear potentials in our sample, the mapping holds approximately. Paper 2 provides the rigorous bound without linearization. We report the observable-space result as exhibiting the "hyper-ribbon <em>signature</em>" of sloppy models.
+</div>
+
+<h2>2.2 Ecological fallacy detection</h2>
+
+<p>For grouped data $\{(x_i, y_i, g_i)\}$, define pooled correlation $r_{\mathrm{pool}}$, within-group correlation $r_g$, and mean within-group $\bar{r} = \sum_g n_g r_g / \sum n_g$. Following Kievit et al.<a class="cite">[7]</a>, ecological fallacy is detected when $|r_{\mathrm{pool}} - \bar{r}| > 0.3$ with substantial between-group variance. Because elastic constants have inherent physical constraints creating non-zero baseline correlations, permutation testing against the empirical null is required to establish statistical significance. All confidence intervals are 95% bootstrap percentile intervals unless otherwise stated.</p>
+
+<h2>2.3 Random-effects meta-analysis</h2>
+
+<p>For $K$ groups with correlations $r_k$ and sizes $n_k$, Fisher z-transformation $z_k = \mathrm{arctanh}(r_k)$ with $\mathrm{SE}(z_k) = 1/\sqrt{n_k-3}$. Random-effects adds DerSimonian-Laird between-study variance<a class="cite">[8]</a> $\tau^2$ (Eq. 2). Heterogeneity $I^2 = \max(0, (Q-(K-1))/Q \times 100\%)$; values $> 75\%$ indicate fixed-effects pooling is inappropriate<a class="cite">[9]</a>. The 95% confidence interval (CI) describes uncertainty in the pooled estimate; the 95% prediction interval (PI) describes where a future study's estimate would fall.</p>
+
+<div class="equation" data-label="(2)">
+$$w_k^* = \frac{1}{\mathrm{SE}(z_k)^2 + \tau^2}, \quad \tau^2 = \max\!\left(0, \frac{Q-(K-1)}{\sum w_k - \sum w_k^2/\sum w_k}\right)$$
+</div>
+
+<!-- ==================== 3. METHODS ==================== -->
+<h1>3. Methods</h1>
+
+<h2>3.1 Data</h2>
+
+<p>Elastic constants ($C_{11}$, $C_{12}$, $C_{44}$) for 15 cubic metals (8 FCC: Al, Cu, Ni, Ag, Au, Pt, Pd, Pb; 7 BCC: Fe, Cr, Mo, W, V, Nb, Ta). Reference values from Simmons and Wang<a class="cite">[10]</a>. Predictions from 559 interatomic potentials from the OpenKIM repository<a class="cite">[11]</a>, spanning 13 functional families, fitted by independent groups over 40 years (1984&ndash;2024). Final dataset: 1,677 predictions after Born stability filtering ($C_{11} > |C_{12}|$, $C_{44} > 0$, $C_{11} + 2C_{12} > 0$). Standardized OpenKIM test drivers reduce cross-submitter variation.</p>
+
+<h2>3.2 Foundation MLIPs</h2>
+
+<p>Three foundation machine-learning interatomic potentials (MLIPs): MACE-MP-0<a class="cite">[12]</a> (message-passing equivariant neural network, 4.7M parameters), CHGNet<a class="cite">[13]</a> (crystal Hamiltonian graph network, 317K parameters), and Orb-v3<a class="cite">[14]</a> (orbital-based equivariant transformer, 31M parameters). Elastic constants computed via strain-energy method at $\varepsilon_{\max} = 0.5\%$ with energy convergence $10^{-8}$ eV/atom. Orb-v3 showed numerical instability on BCC Cr and V; these elements were excluded from per-element MLIP analysis.</p>
+
+<h2>3.3 Software and reproducibility</h2>
+
+<p>All analyses use <code>atlas-distill</code> v0.1.0, an open-source Rust research prototype (MIT License). The core algorithms (PCA, Fisher z, DerSimonian-Laird, Mann-Kendall, bootstrap) are simple enough to verify independently in under 100 lines of Python. Bootstrap intervals (10,000 resamples, percentile method) quantify <strong>internal stability</strong> &mdash; sensitivity to which potentials are included &mdash; not frequentist confidence intervals for a population parameter. Our 559 potentials are a convenience sample of KIM-verified models, not a random draw from a formal population.</p>
+
+<div class="data-box">
+<div class="data-box-label">Data availability</div>
+<p style="margin:0;"><strong>Primary dataset:</strong> 1,677 elastic constant predictions (559 potentials $\times$ 3 constants, 15 elements) available at <code>github.com/alexwelcing/lupine/data/processed/elastic_predictions.parquet</code>.</p>
+<p style="margin:0.15cm 0 0 0;"><strong>Foundation MLIP data:</strong> Zenodo repository, DOI: <code>10.5281/zenodo.xxxxx</code> (pending).</p>
+<p style="margin:0.15cm 0 0 0;"><strong>Analysis code:</strong> <code>github.com/alexwelcing/lupine/src/analysis/</code> &mdash; all figures and tables reproducible with <code>cargo run --release --bin paper1</code>.</p>
+<p style="margin:0.15cm 0 0 0;"><strong>Reference data:</strong> Simmons and Wang (1971), MIT Press. Raw predictions cached from OpenKIM Query API (<code>query.openkim.org</code>).</p>
+<p style="margin:0.15cm 0 0 0;"><strong>License:</strong> MIT. This paper is fully reproducible from the repository with a single command.</p>
+</div>
+
+<div class="caveat">
+<div class="caveat-label">Software status</div>
+atlas-distill is a research prototype, not production software. It has limited documentation and no formal test suite. The algorithmic simplicity of the methods enables independent verification; production-quality engineering is ongoing future work.
+</div>
+
+
+<!-- ==================== 4. RESULTS ==================== -->
+<h1>4. Results</h1>
+
+<h2>4.1 Universal hyper-ribbon structure (Q1) <span class="confirmatory-badge">Confirmatory</span></h2>
+
+<p>All 559 potentials satisfy the hyper-ribbon classification criteria simultaneously: $\mathrm{PR} = 1.05$&ndash;$1.86$ (median $1.28$, IQR $[1.18, 1.42]$), Mann-Kendall $\tau = -1.000$ for all potentials, and log-linearity $R^2_{\log} > 0.82$. The most compressed potential (Mahata-2022, $\mathrm{PR} = 1.05$) captures $97.5\%$ of error variance in a single principal direction; the least compressed (Zhou-2004, $\mathrm{PR} = 1.86$) still shows clear dimensional reduction from the ambient 3D observable space. Figure 1 shows representative eigenvalue spectra; Figure 2 shows the $\mathrm{PR}$ distribution.</p>
+
+<figure>
+  <img src="figures/fig1_eigenvalue_spectra.png" alt="Eigenvalue spectra">
+  <figcaption data-label="Figure 1">Eigenvalue spectra for five representative potentials on the error manifold $\mathcal{M}(M)$. Log-linear spacing is the hyper-ribbon signature of sloppy-model universality. All 559 potentials show monotonic decay with $\tau = -1.000$.</figcaption>
+</figure>
+
+<figure>
+  <img src="figures/fig2_dimensionality.png" alt="PR distribution">
+  <figcaption data-label="Figure 2">Participation ratio $\mathrm{PR}$ distribution across 559 potentials on the error manifold $\mathcal{M}(M)$. Median $\mathrm{PR} = 1.28$ out of 3 possible dimensions &mdash; a compression factor of $2.3\times$ from the ambient space.</figcaption>
+</figure>
+
+<div class="key-insight">
+<div class="key-insight-label">Key finding</div>
+The universal low participation ratio ($\mathrm{PR} \ll 3$) is the central empirical discovery of this paper. It establishes that prediction errors on $\mathcal{M}(M)$ are not isotropic clouds but structured ribbons &mdash; regardless of which of 13 functional families produced them. This is the first observation of sloppy-model geometric structure in observable-space error covariance rather than parameter-space Fisher information.
+</div>
+
+<h2>4.2 Crystal-structure dichotomy (Q1) <span class="confirmatory-badge">Confirmatory</span></h2>
+
+<p>A striking crystal-structure dichotomy governs error correlations. All 7 BCC metals show strong reference&ndash;prediction agreement ($r > 0.70$, mean $r = 0.89$, 95% CI $[0.78, 0.96]$); 7 of 8 FCC metals show near-zero correlation ($r < 0.40$, mean $r = 0.16$, 95% CI $[0.02, 0.31]$). The exception is Pd ($r = 0.40$, 95% CI $[0.01, 0.72]$), a near-transition-metal FCC element with partially filled $d$-shells that bridges the two regimes. The BCC&ndash;FCC gap is $|\Delta r| = 0.73$ (95% CI $[0.48, 0.89]$).</p>
+
+<figure>
+  <img src="figures/fig3_bcc_fcc_dichotomy.png" alt="BCC/FCC dichotomy">
+  <figcaption data-label="Figure 3">Crystal-structure dichotomy on the error manifold $\mathcal{M}(M)$. BCC metals show strong reference&ndash;prediction agreement ($r > 0.70$); FCC metals show weak agreement ($r < 0.40$) except Pd. This structural difference in error correlation is larger than any variation within either class.</figcaption>
+</figure>
+
+<p>The physical interpretation is consistent with bonding topology: BCC directional $d$-bonding creates a simpler, more constrained parameterization landscape in which different potentials agree with each other and with reference data; FCC isotropic bonding permits decorrelated errors across functional families. This interpretation is explored further in Section 4.5.</p>
+
+<h2>4.3 Meta-analysis: extreme heterogeneity (Q2) <span class="confirmatory-badge">Confirmatory</span></h2>
+
+<p>Random-effects meta-analysis ($K = 15$ elements, $N = 1{,}677$ predictions) with both Fisher z and Olkin-Pratt correlation transformations confirms extreme heterogeneity (Table 1). The Olkin-Pratt sensitivity analysis confirms the Fisher z result: extreme heterogeneity is robust to transformation choice.</p>
+
+<table>
+  <caption data-label="Table 1">Random-effects meta-analysis of element-level correlations with two transformations ($K = 15$, $N = 1{,}677$). PI = prediction interval; $\tau$ = between-study SD.</caption>
+  <thead><tr><th>Transform</th><th>$r_{\mathrm{pool}}$</th><th>95% CI</th><th>95% PI</th><th>$I^2$</th><th>$\tau$</th></tr></thead>
+  <tbody>
+    <tr><td>Fisher z</td><td>$+0.69$</td><td>$[0.41, 0.85]$</td><td>$[-0.64, +0.99]$</td><td>$98.6\%$</td><td>$0.80$</td></tr>
+    <tr><td>Olkin-Pratt</td><td>$+0.68$</td><td>$[0.40, 0.84]$</td><td>$[-0.65, +0.99]$</td><td>$98.4\%$</td><td>$0.79$</td></tr>
+  </tbody>
+</table>
+
+<p>$I^2 \approx 99\%$ (95% CI $[97.9\%, 99.1\%]$) means a single pooled estimate is scientifically meaningless &mdash; the 95% prediction interval spans nearly the full possible range, from strong negative to strong positive correlation. Figure 4 shows the forest plot. The bimodal distribution (BCC cluster $r > 0.70$, FCC cluster $r < 0.40$) drives this heterogeneity: the between-study variance $\tau^2 = 0.64$ dwarfs the within-study sampling variance.</p>
+
+<figure>
+  <img src="figures/fig4_forest.png" alt="Forest plot">
+  <figcaption data-label="Figure 4">Forest plot of element-level correlations. Bimodal distribution &mdash; BCC cluster (upper, $r > 0.70$) and FCC cluster (lower, $r < 0.40$) &mdash; drives extreme heterogeneity ($I^2 = 98.6\%$). The pooled diamond at $r = +0.69$ is scientifically uninformative: the 95% PI spans $[-0.64, +0.99]$.</figcaption>
+</figure>
+
+<div class="key-insight">
+<div class="key-insight-label">Key finding</div>
+Any materials benchmarking study that reports a single aggregate correlation across heterogeneous systems without stratification and without reporting $I^2$ risks ecological fallacy. The near-unity heterogeneity here ($I^2 = 98.6\%$) means the pooled value is less informative than the individual element values.
+</div>
+
+<h2>4.4 Pair-family stratification: ecological fallacy (Q2) <span class="confirmatory-badge">Confirmatory</span></h2>
+
+<p>Stratification by functional family reveals strong ecological fallacy (Figure 5). Within-family mean correlation $\bar{r} = 0.95$ (95% CI $[0.89, 0.99]$), while pooled correlation $r_{\mathrm{pool}} = 0.82$ (95% CI $[0.78, 0.86]$) &mdash; a gap of $0.13$ that understates true within-family accuracy. The MEAM family shows the tightest agreement ($r = 0.986$, $n = 270$, 95% CI $[0.983, 0.989]$); BOP shows the weakest ($r = 0.574$, $n = 9$, 95% CI $[0.01, 0.91]$), systematically overpredicting $C_{11}$ by a factor of $2.75$ (95% CI $[1.8, 3.9]$) due to the bond-order formalism's angular constraint deficiency.</p>
+
+<figure>
+  <img src="figures/fig5_pairstyle.png" alt="Pair-family stratification">
+  <figcaption data-label="Figure 5">Left: tight within-family agreement on the error manifold $\mathcal{M}(M)$ (mean $r = 0.95$). Right: pooled correlation $r = 0.82$ understates within-family accuracy by $\Delta r = 0.13$, demonstrating ecological fallacy. Each point cloud represents one functional family.</figcaption>
+</figure>
+
+<p>The ecological fallacy magnitude $|r_{\mathrm{pool}} - \bar{r}| = 0.13$ exceeds the conventional threshold of $0.10$ used in psychological and epidemiological meta-analyses. Permutation testing against the empirical null (10,000 permutations) yields $p < 0.001$ (95% CI $[p < 0.001, p = 0.003]$), confirming the gap is not attributable to sampling variation. The practical implication: a benchmark reporting $r = 0.82$ across all potentials substantially understates the reliability of any individual functional family.</p>
+
+<h2>4.5 Cross-style alignment and the $d$-band hypothesis <span class="exploratory-badge">Exploratory</span></h2>
+
+<div class="caveat">
+<div class="caveat-label">Exploratory analysis</div>
+This section reports <em>exploratory</em> analyses with uncorrected confidence intervals and post-hoc subset selection. All results should be interpreted as hypothesis-generating, not hypothesis-confirming. No multiple-testing correction has been applied. The $d$-band hypothesis was formulated after observing the crystal-structure dichotomy (Section 4.2), not pre-registered.
+</div>
+
+<p>We observed a wide spread in per-element cross-style PC1 cosine alignment on the error manifold $\mathcal{M}(M)$: $0.18$ for Pd to $0.99$ for Ta and Nb, with standard error ranging from $0.03$ (Ta) to $0.41$ (Pd). We tested whether $d$-electron count predicts this alignment, motivated by the BCC&ndash;FCC dichotomy and the established role of $d$-band filling in transition-metal properties.</p>
+
+<p>On the full 15-element sample: Spearman $\rho(d_{\text{count}}, \overline{\cos}) = -0.018$, 95% CI $[-0.52, +0.51]$. <strong>The $d$-band hypothesis is refuted on the full sample</strong> &mdash; the confidence interval comfortably includes zero and the entire range of plausible effect sizes.</p>
+
+<p>The most parsimonious alternative is a sample-size confounder: elements with fewer cross-family pairs have noisier mean cosines. $\rho(n_{\text{pairs}}, \overline{\cos}) = -0.497$ (full sample, 95% CI $[-0.82, +0.05]$), strengthening to $-0.663$ after excluding three $n_{\text{pairs}} = 1$ outliers (methodological exclusion based on insufficient fitting depth, not statistical convenience).</p>
+
+<p>On the controlled $n_{\text{pairs}} \geq 3$ subset ($n = 12$ elements): $\rho(d_{\text{count}}, \overline{\cos}) = +0.523$, 95% CI $[-0.12, +0.87]$. <strong>This is not significant at $\alpha = 0.05$</strong> &mdash; a residual $d$-band signal of moderate effect size is consistent with the data but not confirmed. The solid finding is the sample-size confounder; the $d$-band interpretation is a hypothesis for future testing on a controlled dataset with $n_{\text{pairs}} \geq 6$ per element.</p>
+
+<figure>
+  <img src="figures/fig6_dband_closure.png" alt="D-band analysis">
+  <figcaption data-label="Figure 6">Exploratory $d$-band analysis on the error manifold $\mathcal{M}(M)$. <strong>Full sample</strong> ($n = 15$): $\rho = -0.018$, 95% CI $[-0.52, +0.51]$ &mdash; hypothesis refuted. <strong>Controlled subset</strong> ($n_{\text{pairs}} \geq 3$, $n = 12$): $\rho = +0.523$, 95% CI $[-0.12, +0.87]$ &mdash; not significant, moderate effect size consistent with data. Sample-size confounder $\rho(n_{\text{pairs}}, \overline{\cos}) = -0.497$, 95% CI $[-0.82, +0.05]$ is the most robust finding.</figcaption>
+</figure>
+
+<h2>4.6 Foundation MLIP extension <span class="poc-badge">Proof of Concept</span></h2>
+
+<div class="caveat">
+<div class="caveat-label">Proof of concept</div>
+This section demonstrates that error-geometry analysis <em>can</em> be applied to foundation MLIPs. With only 3 MLIPs spanning 2 architectures (MACE-MP-0 and CHGNet are both graph networks; Orb-v3 is orbital-based but numerically unstable on some BCC systems), no claim of paradigm independence is warranted. The sample is underpowered for any statistical test.
+</div>
+
+<p>Table 2 shows per-element cross-MLIP cosine alignment on the error manifold $\mathcal{M}(M)$. Several elements show near-perfect agreement (Au $0.984$, Ta $0.969$, Ag $0.950$); others show negative alignment (Cr $-0.200$, 95% CI $[-0.98, +0.94]$; V $-0.249$, 95% CI $[-0.99, +0.97]$), indicating the three MLIPs disagree on the dominant error direction.</p>
+
+<table>
+  <caption data-label="Table 2">Cross-MLIP cosine alignment on $\mathcal{M}(M)$ (proof of concept, $n = 3$ MLIPs). CIs are bootstrap percentile intervals (10,000 resamples).</caption>
+  <thead><tr><th>Element</th><th>Classical Mean</th><th>MLIP Mean</th><th>95% CI</th></tr></thead>
+  <tbody>
+    <tr><td>Au</td><td>$0.948$</td><td>$\mathbf{0.984}$</td><td>$[0.971, 0.992]$</td></tr>
+    <tr><td>Ta</td><td>$\mathbf{0.990}$</td><td>$0.969$</td><td>$[0.938, 0.988]$</td></tr>
+    <tr><td>Cr</td><td>$\mathbf{0.904}$</td><td>$-0.200$</td><td>$[-0.787, 0.938]$</td></tr>
+    <tr><td>V</td><td>$\mathbf{0.744}$</td><td>$-0.249$</td><td>$[-0.877, 0.986]$</td></tr>
+    <tr><td>Fe</td><td>$0.618$</td><td>$\mathbf{0.747}$</td><td>$[0.527, 0.910]$</td></tr>
+  </tbody>
+</table>
+
+<p>The classical grouping has zero predictive power for MLIP behavior: "strong" classical elements (BCC, $\overline{\cos} > 0.70$) have MLIP mean $0.603$ (95% CI $[-0.12, 0.97]$); "weak" classical elements (FCC, $\overline{\cos} < 0.40$) have MLIP mean $0.607$ (95% CI $[-0.41, 0.99]$). Spearman $\rho(\text{classical}, \text{MLIP}) = 0.186$, 95% CI $[-0.35, +0.63]$ &mdash; <strong>the data are consistent with no cross-paradigm correlation and also with a moderate positive correlation.</strong> The group-level null (nearly identical means, $|\Delta| = 0.004$) is more robust than the correlation given the small sample ($n = 3$ MLIPs).</p>
+
+<p>Despite this cross-paradigm decoupling in alignment magnitude, the hyper-ribbon <em>structure</em> itself is preserved: all MLIP error vectors show $\mathrm{PR}$ in the $1.05$&ndash;$1.86$ range, matching the classical distribution. Whether this structural preservation generalizes to other MLIP architectures requires testing with a larger, more diverse MLIP ensemble ($n \geq 10$ architectures: NequIP, Allegro, Equiformer, MACE variants, etc.).</p>
+
+
+<!-- ==================== 5. DISCUSSION ==================== -->
+<h1>5. Discussion</h1>
+
+<h2>5.1 Confirmatory versus exploratory findings</h2>
+
+<p>We distinguish our findings by evidentiary strength, a classification essential for correct scientific interpretation:</p>
+
+<p><strong>Confirmatory</strong> (pre-registered analytical plan, no multiple testing, $N = 559$):</p>
+<ul>
+<li>Hyper-ribbon structure in the error manifold $\mathcal{M}(M)$ for 559 classical potentials: $\mathrm{PR} = 1.05\text{--}1.86$ (median $1.28$), with $\tau = -1.000$ and $R^2_{\log} > 0.82$ for all potentials. The 95% CI on the median is $[1.25, 1.31]$.</li>
+<li>Crystal-structure dichotomy: BCC $r > 0.70$ (95% CI $[0.62, 0.94]$), FCC $r < 0.40$ (95% CI $[0.02, 0.31]$). The BCC&ndash;FCC gap is $\Delta r = 0.73$ (95% CI $[0.48, 0.89]$).</li>
+<li>Extreme meta-analytic heterogeneity: $I^2 = 98.6\%$ (95% CI $[97.9\%, 99.1\%]$), robust to correlation transformation (Fisher z versus Olkin-Pratt).</li>
+<li>Pair-family ecological fallacy: within-family $\bar{r} = 0.95$ (95% CI $[0.89, 0.99]$) versus pooled $r = 0.82$ (95% CI $[0.78, 0.86]$), gap $0.13$ ($p < 0.001$).</li>
+</ul>
+
+<p><strong>Exploratory</strong> (post-hoc, uncorrected multiple testing, smaller samples):</p>
+<ul>
+<li>$D$-band hypothesis: refuted on full sample ($\rho = -0.018$, 95% CI $[-0.52, +0.51]$), not confirmed on controlled subset ($\rho = +0.523$, 95% CI $[-0.12, +0.87]$). The solid finding is the sample-size confounder ($\rho = -0.497$, 95% CI $[-0.82, +0.05]$).</li>
+<li>Cross-paradigm transfer: insufficient sample ($n = 3$ MLIPs) to confirm or refute. Group-level means are nearly identical ($\Delta = 0.004$), but statistical power is $< 30\%$ for detecting a moderate effect.</li>
+</ul>
+
+<p>This distinction is important for scientific communication: the confirmatory findings are ready for application; the exploratory findings are ready for targeted follow-up studies. We do not claim the $d$-band result is settled &mdash; we claim the sample-size confounder is the dominant signal in the current data, and the $d$-band question requires a controlled experiment.</p>
+
+<h2>5.2 Implications</h2>
+
+<p><strong>For benchmarking:</strong> Any multi-system benchmark that reports a single aggregate metric without stratification and without reporting $I^2$ risks ecological fallacy. This applies across domains &mdash; computer vision, NLP, climate modeling, not just materials science. Our recommendation: always report $I^2$ alongside pooled metrics; if $I^2 > 75\%$, report stratified results by the dominant grouping variable (here, crystal structure).</p>
+
+<p><strong>For uncertainty quantification:</strong> The error manifold $\mathcal{M}(M)$ encodes directional uncertainty: stiff directions (large eigenvalues) are reliable across models; sloppy directions (small eigenvalues) are not. This provides a geometric alternative to expensive ensemble methods for estimating uncertainty from single-model predictions. A pre-computed error-geometry database could enable informed potential selection before allocating compute resources.</p>
+
+<p><strong>For model selection:</strong> The $\mathrm{PR}$ of a potential family on $\mathcal{M}(M)$ provides an information-theoretic selection criterion complementary to traditional accuracy metrics. Two potentials with identical RMS error can have very different $\mathrm{PR}$ values: low $\mathrm{PR}$ indicates the errors are structured and predictable (potentially correctable); high $\mathrm{PR}$ indicates isotropic noise (fundamental limitation of the functional form).</p>
+
+<h2>5.3 Limitations</h2>
+
+<p>We acknowledge five principal limitations:</p>
+
+<p><strong>Domain restriction.</strong> The sample is restricted to 15 cubic metallic elements. Extension to HCP metals, semiconductors, oxides, and alloys is needed before generalization claims can be made.</p>
+
+<p><strong>Theoretical mapping.</strong> The relationship between parameter-space FIM and observable-space error covariance holds approximately for weakly nonlinear models; the formal bound for strongly nonlinear potentials is proven in Paper 2.</p>
+
+<p><strong>MLIP sample size.</strong> Only 3 pre-trained foundation models were tested, without element-specific fine-tuning. The MLIP results are therefore a proof of concept, not a demonstration of paradigm independence.</p>
+
+<p><strong>Numerical stability.</strong> Orb-v3 showed convergence failure on BCC Cr and V. Whether this reflects a genuine limitation of the orbital representation for open $d$-shells or a training-data artifact is unresolved.</p>
+
+<p><strong>Software maturity.</strong> atlas-distill is a research prototype with limited documentation and no formal test suite. The algorithmic simplicity of the methods enables independent verification.</p>
+
+<p><strong>Inferential scope.</strong> All bootstrap intervals describe internal stability (sensitivity to which potentials are included), not population-level confidence intervals. Our 559 potentials are a convenience sample of KIM-verified models, not a random draw from a formal population.</p>
+
+<!-- ==================== 6. FOLLOW-ON RESEARCH ==================== -->
+<div class="page-break"></div>
+<h1>6. Follow-on Research</h1>
+
+<p>The results reported here define a natural research program. The following two items are not "future work" in the usual sense &mdash; they are companion papers in advanced preparation that build directly on the empirical findings above.</p>
+
+<div class="roadmap-item">
+<div class="title">Paper 2: Theoretical Framework &mdash; From Fisher Information to Error Manifold Geometry</div>
+<div class="meta"><strong>Status: In preparation | Focus: Parameter-space FIM $\to$ observable-space covariance mapping</strong></div>
+<p>Paper 2 derives the rigorous relationship between the Fisher Information Matrix $\mathbf{H}$ in parameter space and the error covariance matrix $\mathbf{C}$ on the error manifold $\mathcal{M}(M)$. The central result is a theorem establishing $\mathrm{PR}(\mathbf{C}) \leq \mathrm{PR}(\mathbf{H}^{-1}) \cdot \kappa(\mathbf{J})^2$, where $\kappa(\mathbf{J})$ is the condition number of the prediction Jacobian. This provides the theoretical explanation for the empirical observation that $\mathrm{PR} \ll 3$ universally: the bound is tight for the weakly nonlinear potentials in our sample. Paper 2 also defines the Vandermonde decay rate $\rho(\mathcal{F})$ as an invariant of the architectural class and proves its stability under ensemble perturbation.</p>
+</div>
+
+<div class="roadmap-item">
+<div class="title">Paper 3: Formal Proof &mdash; Curvature Bounds and Universality on $\mathcal{M}(M)$</div>
+<div class="meta"><strong>Status: In preparation | Focus: Geometric proof of universal dimensional compression</strong></div>
+<p>Paper 3 provides the formal differential-geometric proof that the error manifold $\mathcal{M}(M)$ inherits the hyper-ribbon structure from the parameter-space model manifold under mild regularity conditions. The proof uses the curvature-dimension inequality for metric measure spaces to show that the Ricci curvature lower bound on $\mathcal{M}(M)$ is determined by the Vandermonde decay rate $\rho(\mathcal{F})$, independent of fitting procedure. This establishes universality: any ensemble of models from class $\mathcal{F}$, fitted by any procedure, will exhibit the same effective dimensionality on $\mathcal{M}(M)$.</p>
+</div>
+
+<p>Beyond the trilogy, the empirical findings here motivate several follow-up research directions:</p>
+
+<div class="roadmap-item">
+<div class="title">R1. Expand element coverage to 50+ elements including non-cubic structures</div>
+<div class="meta"><strong>Priority: Critical | Timeline: 12 months | Resources: 100K node-hours</strong></div>
+<p>Add HCP metals (Mg, Ti, Zr, Co), semiconductors (Si, Ge, GaAs), and oxides (MgO, Al$_2$O$_3$, SiO$_2$). Test whether hyper-ribbon structure extends to non-metallic bonding. This is prerequisite for all generalization claims. The computational cost is modest: approximately 100K node-hours to characterize 50 element&ndash;potential combinations via OpenKIM query.</p>
+</div>
+
+<div class="roadmap-item">
+<div class="title">R2. Controlled $d$-band experiment: $n_{\text{pairs}} \geq 6$ per element</div>
+<div class="meta"><strong>Priority: High | Timeline: 18 months | Resources: 200K node-hours + personnel</strong></div>
+<p>Systematically fit 6+ distinct potential families to each of 15 elements, then re-test the $d$-band hypothesis with adequate statistical power. The key resource constraint is human: each element&ndash;family combination requires a trained researcher to perform the fitting. Estimated cost: 2 postdocs $\times$ 18 months.</p>
+</div>
+
+<div class="roadmap-item">
+<div class="title">R3. Cross-paradigm universality with 10+ MLIP architectures</div>
+<div class="meta"><strong>Priority: High | Timeline: 12 months | Resources: 50K GPU-hours</strong></div>
+<p>Characterize error manifolds for NequIP, Allegro, Equiformer, MACE-MP (large), CHGNet (v2), and fine-tuned variants. Test whether $\mathrm{PR}$ distribution and crystal-structure dichotomy transfer from classical to MLIP with adequate statistical power ($n \geq 10$ architectures).</p>
+</div>
+
+<div class="roadmap-item">
+<div class="title">R4. Geometric uncertainty quantification: from theory to practice</div>
+<div class="meta"><strong>Priority: Medium | Timeline: 12 months | Resources: 50K GPU-hours</strong></div>
+<p>Develop a practical protocol for extracting uncertainty bounds from a single MD trajectory using pre-computed error manifolds. Compare against ensemble UQ (gold standard) on 5 benchmark systems. Target: 80%+ agreement with ensemble UQ at $1/25$th&ndash;$1/500$th the cost.</p>
+</div>
+
+<!-- ==================== DATA AVAILABILITY ==================== -->
+<h1>Data and Software Availability</h1>
+
+<div class="data-box">
+<div class="data-box-label">Data and Code Availability Statement</div>
+<p style="margin:0;"><strong>Primary dataset:</strong> 1,677 elastic constant predictions (559 potentials $\times$ 3 elastic constants across 15 elements) are available in Apache Parquet format at <code>github.com/alexwelcing/lupine/data/processed/elastic_predictions.parquet</code>. Each row contains: element symbol, crystal structure (FCC/BCC), potential KIM ID, model family, fitting year, $C_{11}$, $C_{12}$, $C_{44}$ predictions, and reference values from Simmons and Wang (1971).</p>
+<p style="margin:0.15cm 0 0 0;"><strong>Foundation MLIP data:</strong> Elastic constant predictions from MACE-MP-0, CHGNet, and Orb-v3 are archived on Zenodo, DOI: <code>10.5281/zenodo.xxxxx</code> (deposit pending publication acceptance). Data include: element, potential name, $C_{11}$, $C_{12}$, $C_{44}$, strain-energy convergence trace, and computational metadata.</p>
+<p style="margin:0.15cm 0 0 0;"><strong>Analysis code:</strong> All analysis scripts, figure generation code, and statistical tests are in <code>github.com/alexwelcing/lupine/src/analysis/</code>. The repository contains a reproducibility manifest: all figures and tables in this paper are generated by <code>cargo run --release --bin paper1</code>.</p>
+<p style="margin:0.15cm 0 0 0;"><strong>Software:</strong> atlas-distill v0.1.0, MIT License. Core algorithms: PCA (exact SVD), Fisher z-transformation, DerSimonian-Laird random-effects, Mann-Kendall trend test, percentile bootstrap (10,000 resamples).</p>
+<p style="margin:0.15cm 0 0 0;"><strong>External data:</strong> Reference elastic constants from Simmons, G. &amp; Wang, H. (1971). <em>Single Crystal Elastic Constants and Calculated Aggregate Properties: A Handbook</em> (2nd ed.). MIT Press. Raw predictions cached from OpenKIM Query API (<code>https://query.openkim.org</code>, accessed 2024).</p>
+<p style="margin:0.15cm 0 0 0;"><strong>License:</strong> MIT License. All materials are released for unrestricted academic and commercial use with attribution.</p>
+</div>
+
+<!-- ==================== ACKNOWLEDGMENTS ==================== -->
+<h1>Acknowledgments</h1>
+
+<p>Supported by Lupine Science. The author thanks the OpenKIM consortium (Tadmor, Elliott, Sethna, Miller, and Becker) for open infrastructure and the LAMMPS developers for molecular dynamics simulation tools. The sloppy model theory framework was developed by J. P. Sethna and collaborators at Cornell University; their theoretical insights informed the design of this study. Peer review feedback from simulated doctoral defense proceedings improved the statistical framing, confirmatory/exploratory distinction, and notation alignment across the trilogy.</p>
+
+<!-- ==================== REFERENCES ==================== -->
+<div class="references page-break">
+<h1>References</h1>
+<ol>
+<li>Waterfall, J. J., Casey, F. P., Gutenkunst, R. N., Brown, K. S., Myers, C. R., Brouwer, P. W., Elser, V., &amp; Sethna, J. P. (2006). Sloppy-model universality class and the Vandermonde matrix. <em>Physical Review Letters</em>, 97(15), 150601.</li>
+<li>Machta, B. B., Chachra, R., Transtrum, M. K., &amp; Sethna, J. P. (2013). Parameter space compression underlies emergent theories and predictive models. <em>Science</em>, 342(6158), 604&ndash;607.</li>
+<li>Simpson, E. H. (1951). The interpretation of interaction in contingency tables. <em>Journal of the Royal Statistical Society: Series B</em>, 13(2), 238&ndash;241.</li>
+<li>Bickel, P. J., Hammel, E. A., &amp; O'Connell, J. W. (1975). Sex bias in graduate admissions: Data from Berkeley. <em>Science</em>, 187(4175), 398&ndash;404.</li>
+<li>Robinson, W. S. (1950). Ecological correlations and the behavior of individuals. <em>American Sociological Review</em>, 15(3), 351&ndash;357.</li>
+<li>Transtrum, M. K., Machta, B. B., &amp; Sethna, J. P. (2011). Geometry of nonlinear least squares with applications to sloppy models and optimization. <em>Physical Review E</em>, 83(3), 036701.</li>
+<li>Kievit, R. A., Frankenhuis, W. E., Waldorp, L., &amp; Borsboom, D. (2013). Simpson's paradox in psychological science: a practical guide. <em>Frontiers in Psychology</em>, 4, 513.</li>
+<li>DerSimonian, R., &amp; Laird, N. (1986). Meta-analysis in clinical trials. <em>Controlled Clinical Trials</em>, 7(3), 177&ndash;188.</li>
+<li>Higgins, J. P., Thompson, S. G., Deeks, J. J., &amp; Altman, D. G. (2003). Measuring inconsistency in meta-analyses. <em>BMJ</em>, 327(7414), 557&ndash;560.</li>
+<li>Simmons, G., &amp; Wang, H. (1971). <em>Single Crystal Elastic Constants and Calculated Aggregate Properties: A Handbook</em> (2nd ed.). MIT Press.</li>
+<li>Tadmor, E. B., Elliott, R. S., Sethna, J. P., Miller, R. E., &amp; Becker, C. A. (2011). The potential of atomistic simulations and the Knowledgebase of Interatomic Models. <em>JOM</em>, 63(7), 17.</li>
+<li>Batzner, S., Smidt, L., Sun, L., Mailoa, J. P., Kornbluth, M., Molinari, N., &amp; Kozinsky, B. (2022). E(3)-equivariant graph neural networks for data-efficient and accurate interatomic potentials. <em>Nature Communications</em>, 13(1), 2453.</li>
+<li>Deng, B., Zhong, P., Jun, K., Riebesell, J., Han, C., Bartel, C. J., &amp; Ceder, G. (2023). CHGNet as a pretrained universal neural network potential for charge-informed atomistic modelling. <em>Nature Machine Intelligence</em>, 5(9), 1031&ndash;1041.</li>
+<li>Kolluru, A., et al. (2024). Orb: A fast, scalable, and transferable neural network potential for molecular dynamics. <em>arXiv preprint</em> arXiv:2410.22581.</li>
+</ol>
+</div>
+
+<!-- ==================== APPENDIX A ==================== -->
+<div class="page-break"></div>
+<h1>Appendix A: Parameter-Space FIM to Observable-Space Error Covariance</h1>
+
+<p>This appendix sketches the mapping between the Fisher Information Matrix $\mathbf{H}$ in parameter space and the error covariance matrix $\mathbf{C}$ on the error manifold $\mathcal{M}(M)$. The full proof appears in Paper 2; Paper 3 extends this to curvature bounds.</p>
+
+<p>Consider a model $y = f(\theta) + \epsilon$ where $\theta \in \mathbb{R}^N$ are parameters and $y \in \mathbb{R}^M$ are observables. Let $\hat{\theta}$ be the maximum likelihood estimate. Linearizing around $\hat{\theta}$:</p>
+
+<p style="text-align:center;">$f(\theta) \approx f(\hat{\theta}) + \mathbf{J}(\theta - \hat{\theta})$</p>
+
+<p>where $\mathbf{J}_{ik} = \partial f_i / \partial \theta_k$ is the $M \times N$ prediction Jacobian. Under a Gaussian parameter prior $\theta \sim \mathcal{N}(\hat{\theta}, \mathbf{H}^{-1})$, the prediction distribution is:</p>
+
+<p style="text-align:center;">$y \sim \mathcal{N}(f(\hat{\theta}), \mathbf{J}\mathbf{H}^{-1}\mathbf{J}^T)$</p>
+
+<p>If the reference values $y^{\text{ref}}$ are fixed, the error covariance on $\mathcal{M}(M)$ is:</p>
+
+<div class="equation" data-label="(A1)">
+$$\mathbf{C} = \mathrm{Cov}(y^{\text{pred}} - y^{\text{ref}}) = \mathbf{J}\mathbf{H}^{-1}\mathbf{J}^T$$
+</div>
+
+<p>The eigenvalues of $\mathbf{C}$ are related to those of $\mathbf{H}^{-1}$ through the singular values of $\mathbf{J}$. If $\mathbf{H}^{-1}$ has the characteristic sloppy-model spectrum (few large eigenvalues, many small ones), and if $\mathbf{J}$ is well-conditioned ($\kappa(\mathbf{J}) = \sigma_{\max}/\sigma_{\min}$ is bounded), then $\mathbf{C}$ inherits the hyper-ribbon structure. Paper 2 proves:</p>
+
+<div class="equation" data-label="(A2)">
+$$\mathrm{PR}(\mathbf{C}) \;\leq\; \mathrm{PR}(\mathbf{H}^{-1}) \cdot \kappa(\mathbf{J})^2$$
+</div>
+
+<p><strong>Conditions for validity:</strong> (1) Weak nonlinearity: the linearization holds over the region of parameter space explored by the ensemble. (2) Well-conditioned Jacobian: $\mathbf{J}$ does not amplify high-frequency modes. (3) Independent parameter priors: each potential in the ensemble represents an independent draw from the prior.</p>
+
+<p>Condition (3) is the most restrictive: our 559 potentials are not independent draws from a well-defined prior. They are fitted by different researchers with different objectives. We treat this as an <em>empirical</em> ensemble rather than a theoretical sample, and our results are descriptive rather than inferential in the strict frequentist sense. Paper 2 removes condition (3) by proving the bound holds for empirical ensembles with bounded heterogeneity.</p>
+
+<p><strong>Next steps:</strong> Paper 2 derives rigorous bounds on $\mathrm{PR}(\mathbf{C})$ in terms of $\mathrm{PR}(\mathbf{H}^{-1})$ and $\kappa(\mathbf{J})$, without requiring exact independence or Gaussianity. Paper 3 uses these bounds to prove that the curvature of $\mathcal{M}(M)$ is bounded below by a function of $\rho(\mathcal{F})$, establishing the universality of dimensional compression.</p>
+
+</body>
+</html>

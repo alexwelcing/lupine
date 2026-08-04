@@ -1,5 +1,6 @@
 import { createRoot } from 'react-dom/client';
 import { Suspense } from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // Step-by-step test to find what is crashing.
 console.log('[lupi] Step 1: imports starting');
@@ -27,6 +28,15 @@ try {
   console.error('[lupi] Step 2: import FAILED:', err);
 }
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 min
+      retry: 1,
+    },
+  },
+});
+
 const root = createRoot(document.getElementById('root')!);
 
 if (loadError) {
@@ -43,9 +53,11 @@ if (loadError) {
     // contents (splash included) the moment <App /> is ready — so there's no
     // bare "Loading..." flash between the two.
     root.render(
-      <Suspense fallback={null}>
-        <App />
-      </Suspense>
+      <QueryClientProvider client={queryClient}>
+        <Suspense fallback={null}>
+          <App />
+        </Suspense>
+      </QueryClientProvider>
     );
     console.log('[lupi] Step 3: root.render() called');
   } catch (err: any) {

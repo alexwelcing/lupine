@@ -16,6 +16,7 @@
  */
 
 import { ANALYTICS_EVENTS, type AnalyticsEvent, type AnalyticsProps } from './events';
+import { trackFirebaseAnalytics } from './firebaseSink';
 import { getAnalyticsContext, type AnalyticsContext } from './session';
 
 export { ANALYTICS_EVENTS };
@@ -144,6 +145,7 @@ export function track(event: AnalyticsEvent, props: AnalyticsProps = {}): void {
     };
 
     const url = analyticsUrl();
+    trackFirebaseAnalytics(event, payload.props);
     if (!url) {
       // No sink configured yet — the client is still complete. Surface the
       // event in dev so the funnel is observable while wiring backends.

@@ -20,50 +20,78 @@
     "featured": true
   },
   {
-    "id": "lupine_bluebonnet",
-    "title": "Lupine Bluebonnet (Scientific)",
-    "subtitle": "Lupinus texensis scientific molecular model (.xyz dataset) showing strict atomic arrangement.",
-    "domain": "Nanomaterials",
-    "atoms": "930",
+    "id": "lupi_live_qr_atomized",
+    "title": "LUPI Live QR Molecule",
+    "subtitle": "A standards-derived QR code translated into a dense carbon atom grid that scans to https://lupi.live from a clean top view.",
+    "domain": "Atomized Media",
+    "atoms": "21,364",
     "frames": "1",
-    "file": "gallery/curated/lupine_bluebonnet.xyz",
+    "file": "generated/atomized/lupi-live-qr-atomized.xyz",
     "available": true,
     "colors": [
-      "#3050f8",
-      "#1ff01f",
-      "#ffffff"
+      "#111111",
+      "#ffffff",
+      "#d8dee9"
     ],
     "metadata": {
-      "method": "Ab Initio Assembly",
-      "potential": "Lennard-Jones",
-      "temperature": "0 K",
-      "reference": "Lupine Science - lupine.science"
+      "method": "Phone-Readable QR Matrix to Atomic XYZ",
+      "payload": "https://lupi.live",
+      "matrix": "37x37",
+      "bonds": "36,624"
     },
     "featured": true
   },
   {
-    "id": "lupine_genesis",
-    "title": "Lupine Bluebonnet — From a Seed",
-    "subtitle": "A 4D botanical time-series: the Lupinus texensis architecture unfurling from a single carbon seed into a blossomed plant across 200 frames.",
-    "domain": "Nanomaterials",
-    "atoms": "9,595",
-    "frames": "200",
-    "file": "https://storage.googleapis.com/shed-489901-nist-demos/sims/lupine_genesis.glimbin",
+    "id": "pulse_grid_atomized",
+    "title": "Atomized Pulse Grid",
+    "subtitle": "A six-frame image sequence translated into a stable atom lattice for molecular point-art playback.",
+    "domain": "Atomized Media",
+    "atoms": "2,916",
+    "frames": "6",
+    "file": "generated/atomized/pulse-grid-atomized.xyz",
     "isTrajectory": true,
     "autoPlay": true,
     "available": true,
     "colors": [
-      "#1a7a3a",
-      "#3050f8",
-      "#ffffff"
+      "#111111",
+      "#f7f9fb",
+      "#7aa2c7"
     ],
     "metadata": {
-      "method": "Procedural Botanical Growth Engine",
-      "potential": "Golden Ratio (Phyllotaxis)",
-      "temperature": "Time-Series Evolution",
-      "reference": "Lupine Science - lupine.science"
+      "method": "Image Frames to Atomic XYZ",
+      "matrix": "18x18",
+      "sourceFrames": "6",
+      "lammpsDump": "generated/atomized/pulse-grid-atomized.lammpstrj"
     },
     "featured": true
+  },
+  {
+    "id": "lupine_sphere_grid",
+    "title": "Lupine Sphere Grid",
+    "subtitle": "Live knowledge graph of the Lupine ecosystem — 6 spheres, 635 nodes, 1238 edges — rendered as a molecule. Sphere colors the cluster; node kind scales the atom.",
+    "domain": "Atomized Media",
+    "atoms": "635",
+    "frames": "1",
+    "file": "generated/lupine-wiki/sphere-grid.lammpstrj",
+    "available": true,
+    "colors": [
+      "#ff9f43",
+      "#5f27cd",
+      "#10ac84"
+    ],
+    "metadata": {
+      "method": "Lupine Wiki Knowledge Graph → Molecular Structure",
+      "source": "lupine-wiki export-molecule",
+      "spheres": "6",
+      "nodes": "635",
+      "edges": "1238",
+      "color_by": "sphere (element type)",
+      "size_by": "kind (radius property)"
+    },
+    "featured": true,
+    "initialAtomScale": 5,
+    "initialBackgroundPreset": "deep",
+    "labelsUrl": "generated/lupine-wiki/sphere-grid.labels.json"
   },
   {
     "id": "research_cu",
@@ -419,9 +447,9 @@
     "title": "Cu₆₄Zr₃₆ Metallic Glass",
     "subtitle": "Melt-quench simulation showing glass transition and short-range order",
     "domain": "Metals & Alloys",
-    "atoms": "5,000",
+    "atoms": "13,500",
     "frames": "1",
-    "file": "dump.CuZr_melt.lammpstrj",
+    "file": "gallery/curated/cuzr_melt.xyz",
     "available": true,
     "colors": [
       "#4da6ff",
@@ -459,6 +487,72 @@
       "reference": "Cubic polycrystal with 8 grains"
     },
     "featured": true
+  },
+  {
+    "id": "cu_melt",
+    "title": "Cu(100) slab melting",
+    "subtitle": "Copper slab heated 300→1700 K. Melting nucleates at the free surfaces near Tm (~1340 K for Cu_u3) and the disorder front propagates inward until the crystal dissolves.",
+    "domain": "Metals & Alloys",
+    "atoms": "26,400",
+    "frames": "101",
+    "file": "https://glim-think-v1.aw-ab5.workers.dev/artifacts/atlas-view/sims/cu-melt-showcase.glimbin",
+    "available": true,
+    "colors": [
+      "#b87333",
+      "#ff6b35",
+      "#ffd28a"
+    ],
+    "metadata": {
+      "method": "LAMMPS MD, NVT (timestep 0.002 ps, dump every 700 steps)",
+      "potential": "EAM Cu_u3 (Foiles-Baskes-Daw universal-3 copper)",
+      "temperature": "300 K → 1700 K",
+      "ensemble": "NVT",
+      "reference": "tools/sims/make_phase_trajectories.py — scenario cu-melt (showcase), seed 4928459, LAMMPS 20260330"
+    }
+  },
+  {
+    "id": "cu_solidify",
+    "title": "Liquid Cu rapid quench",
+    "subtitle": "Bulk liquid copper quenched 2000→300 K at ~4×10^13 K/s — far too fast for crystallization, so the melt vitrifies into an amorphous solid.",
+    "domain": "Metals & Alloys",
+    "atoms": "19,652",
+    "frames": "101",
+    "file": "https://glim-think-v1.aw-ab5.workers.dev/artifacts/atlas-view/sims/cu-solidify-showcase.glimbin",
+    "available": true,
+    "colors": [
+      "#b87333",
+      "#5b8dd9",
+      "#9fb6cc"
+    ],
+    "metadata": {
+      "method": "LAMMPS MD, NVT (timestep 0.002 ps, dump every 600 steps)",
+      "potential": "EAM Cu_u3 (Foiles-Baskes-Daw universal-3 copper)",
+      "temperature": "2000 K → 300 K",
+      "ensemble": "NVT",
+      "reference": "tools/sims/make_phase_trajectories.py — scenario cu-solidify (showcase), seed 2384793, LAMMPS 20260330"
+    }
+  },
+  {
+    "id": "cu_sinter",
+    "title": "Cu nanoparticle sintering",
+    "subtitle": "Two misoriented copper nanoparticles at 1000 K (0.75 Tm) coalesce: a neck forms by surface diffusion and grows, with a grain boundary where the lattice orientations meet.",
+    "domain": "Metals & Alloys",
+    "atoms": "33,524",
+    "frames": "101",
+    "file": "https://glim-think-v1.aw-ab5.workers.dev/artifacts/atlas-view/sims/cu-sinter-showcase.glimbin",
+    "available": true,
+    "colors": [
+      "#b87333",
+      "#d98e48",
+      "#8a5a2b"
+    ],
+    "metadata": {
+      "method": "LAMMPS MD, NVT (timestep 0.002 ps, dump every 933 steps)",
+      "potential": "EAM Cu_u3 (Foiles-Baskes-Daw universal-3 copper)",
+      "temperature": "300 K → 1000 K",
+      "ensemble": "NVT",
+      "reference": "tools/sims/make_phase_trajectories.py — scenario cu-sinter (showcase), seed 7771234, LAMMPS 20260330"
+    }
   },
   {
     "id": "sio2_glass",
@@ -506,6 +600,326 @@
     "featured": true
   },
   {
+    "id": "acetaldehyde",
+    "title": "Acetaldehyde",
+    "subtitle": "Small aldehyde reference: the compact carbonyl-H motif students learn before aldol and oxidation chemistry.",
+    "domain": "Biomolecules",
+    "atoms": "7",
+    "frames": "1",
+    "file": "gallery/curated/organic/acetaldehyde.xyz",
+    "available": true,
+    "colors": [
+      "#fb7185",
+      "#f8fafc",
+      "#94a3b8"
+    ],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "PubChem 3D conformer curated for organic functional group study"
+    }
+  },
+  {
+    "id": "acetone",
+    "title": "Acetone",
+    "subtitle": "Canonical ketone: a symmetric carbonyl for reading trigonal geometry, polarity, and enolate formation.",
+    "domain": "Biomolecules",
+    "atoms": "10",
+    "frames": "1",
+    "file": "gallery/curated/organic/acetone.xyz",
+    "available": true,
+    "colors": [
+      "#f472b6",
+      "#f8fafc",
+      "#94a3b8"
+    ],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "PubChem 3D conformer curated for organic functional group study"
+    }
+  },
+  {
+    "id": "benzaldehyde",
+    "title": "Benzaldehyde",
+    "subtitle": "Aromatic aldehyde that ties carbonyl reactivity to conjugation and benzylic substitution patterns.",
+    "domain": "Biomolecules",
+    "atoms": "14",
+    "frames": "1",
+    "file": "gallery/curated/organic/benzaldehyde.xyz",
+    "available": true,
+    "colors": [
+      "#38bdf8",
+      "#fb7185",
+      "#f8fafc"
+    ],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "PubChem 3D conformer curated for organic functional group study"
+    }
+  },
+  {
+    "id": "cyclohexanone",
+    "title": "Cyclohexanone",
+    "subtitle": "Cyclic ketone for comparing ring conformation with carbonyl planarity and alpha-carbon chemistry.",
+    "domain": "Biomolecules",
+    "atoms": "17",
+    "frames": "1",
+    "file": "gallery/curated/organic/cyclohexanone.xyz",
+    "available": true,
+    "colors": [
+      "#f472b6",
+      "#a3e635",
+      "#f8fafc"
+    ],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "PubChem 3D conformer curated for organic functional group study"
+    }
+  },
+  {
+    "id": "acetonitrile",
+    "title": "Acetonitrile",
+    "subtitle": "Linear nitrile and common polar aprotic solvent; a clean case for the C-N triple bond.",
+    "domain": "Biomolecules",
+    "atoms": "6",
+    "frames": "1",
+    "file": "gallery/curated/organic/acetonitrile.xyz",
+    "available": true,
+    "colors": [
+      "#60a5fa",
+      "#f8fafc",
+      "#94a3b8"
+    ],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "PubChem 3D conformer curated for organic functional group study"
+    }
+  },
+  {
+    "id": "benzonitrile",
+    "title": "Benzonitrile",
+    "subtitle": "Aromatic nitrile for seeing a strongly electron-withdrawing group attached to a phenyl ring.",
+    "domain": "Biomolecules",
+    "atoms": "13",
+    "frames": "1",
+    "file": "gallery/curated/organic/benzonitrile.xyz",
+    "available": true,
+    "colors": [
+      "#38bdf8",
+      "#60a5fa",
+      "#f8fafc"
+    ],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "PubChem 3D conformer curated for organic functional group study"
+    }
+  },
+  {
+    "id": "nitrobenzene",
+    "title": "Nitrobenzene",
+    "subtitle": "Aromatic nitro group for resonance withdrawal, directing effects, and reduction-to-aniline pathways.",
+    "domain": "Biomolecules",
+    "atoms": "14",
+    "frames": "1",
+    "file": "gallery/curated/organic/nitrobenzene.xyz",
+    "available": true,
+    "colors": [
+      "#38bdf8",
+      "#f97316",
+      "#f8fafc"
+    ],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "PubChem 3D conformer curated for organic functional group study"
+    }
+  },
+  {
+    "id": "phenol",
+    "title": "Phenol",
+    "subtitle": "Clean phenol example: aromatic OH, acidity, hydrogen bonding, and ortho/para activation in one scaffold.",
+    "domain": "Biomolecules",
+    "atoms": "13",
+    "frames": "1",
+    "file": "gallery/curated/organic/phenol.xyz",
+    "available": true,
+    "colors": [
+      "#34d399",
+      "#38bdf8",
+      "#f8fafc"
+    ],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "PubChem 3D conformer curated for organic functional group study"
+    }
+  },
+  {
+    "id": "tert_butyl_chloride",
+    "title": "tert-Butyl Chloride",
+    "subtitle": "Tertiary alkyl chloride for substitution and elimination comparisons around a crowded carbon center.",
+    "domain": "Biomolecules",
+    "atoms": "14",
+    "frames": "1",
+    "file": "gallery/curated/organic/tert_butyl_chloride.xyz",
+    "available": true,
+    "colors": [
+      "#c084fc",
+      "#f8fafc",
+      "#94a3b8"
+    ],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "PubChem 3D conformer curated for organic functional group study"
+    }
+  },
+  {
+    "id": "bromobutane_1",
+    "title": "1-Bromobutane",
+    "subtitle": "Primary alkyl bromide for SN2 geometry, leaving-group trends, and anti-periplanar elimination setup.",
+    "domain": "Biomolecules",
+    "atoms": "14",
+    "frames": "1",
+    "file": "gallery/curated/organic/bromobutane_1.xyz",
+    "available": true,
+    "colors": [
+      "#c084fc",
+      "#f97316",
+      "#f8fafc"
+    ],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "PubChem 3D conformer curated for organic functional group study"
+    }
+  },
+  {
+    "id": "ethylene_oxide",
+    "title": "Ethylene Oxide",
+    "subtitle": "Strained epoxide ring for studying ring opening, regioselectivity, and oxygen lone-pair geometry.",
+    "domain": "Biomolecules",
+    "atoms": "7",
+    "frames": "1",
+    "file": "gallery/curated/organic/ethylene_oxide.xyz",
+    "available": true,
+    "colors": [
+      "#a7f3d0",
+      "#f8fafc",
+      "#94a3b8"
+    ],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "PubChem 3D conformer curated for organic functional group study"
+    }
+  },
+  {
+    "id": "ethanethiol",
+    "title": "Ethanethiol",
+    "subtitle": "Small thiol reference for comparing sulfur acidity, size, and nucleophilicity against alcohols.",
+    "domain": "Biomolecules",
+    "atoms": "9",
+    "frames": "1",
+    "file": "gallery/curated/organic/ethanethiol.xyz",
+    "available": true,
+    "colors": [
+      "#facc15",
+      "#f8fafc",
+      "#94a3b8"
+    ],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "PubChem 3D conformer curated for organic functional group study"
+    }
+  },
+  {
+    "id": "dimethyl_sulfide",
+    "title": "Dimethyl Sulfide",
+    "subtitle": "Simple sulfide for contrasting thioethers with ethers and recognizing oxidizable sulfur centers.",
+    "domain": "Biomolecules",
+    "atoms": "9",
+    "frames": "1",
+    "file": "gallery/curated/organic/dimethyl_sulfide.xyz",
+    "available": true,
+    "colors": [
+      "#facc15",
+      "#a7f3d0",
+      "#f8fafc"
+    ],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "PubChem 3D conformer curated for organic functional group study"
+    }
+  },
+  {
+    "id": "acetic_anhydride",
+    "title": "Acetic Anhydride",
+    "subtitle": "Symmetric acid anhydride for acyl transfer, hydrolysis, and aspirin-style acetylation chemistry.",
+    "domain": "Biomolecules",
+    "atoms": "13",
+    "frames": "1",
+    "file": "gallery/curated/organic/acetic_anhydride.xyz",
+    "available": true,
+    "colors": [
+      "#fb923c",
+      "#fb7185",
+      "#f8fafc"
+    ],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "PubChem 3D conformer curated for organic functional group study"
+    }
+  },
+  {
+    "id": "acetyl_chloride",
+    "title": "Acetyl Chloride",
+    "subtitle": "Acid chloride for high-reactivity acyl substitution and leaving-group comparisons.",
+    "domain": "Biomolecules",
+    "atoms": "7",
+    "frames": "1",
+    "file": "gallery/curated/organic/acetyl_chloride.xyz",
+    "available": true,
+    "colors": [
+      "#fb923c",
+      "#c084fc",
+      "#f8fafc"
+    ],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "PubChem 3D conformer curated for organic functional group study"
+    }
+  },
+  {
+    "id": "ethyl_acetate",
+    "title": "Ethyl Acetate",
+    "subtitle": "Small ester and common extraction solvent for comparing carbonyl derivatives and hydrolysis pathways.",
+    "domain": "Biomolecules",
+    "atoms": "14",
+    "frames": "1",
+    "file": "gallery/curated/organic/ethyl_acetate.xyz",
+    "available": true,
+    "colors": [
+      "#fb923c",
+      "#34d399",
+      "#f8fafc"
+    ],
+    "metadata": {
+      "method": "PubChem 3D geometry",
+      "potential": "XYZ coordinates",
+      "reference": "PubChem 3D conformer curated for organic functional group study"
+    }
+  },
+  {
     "id": "aspirin",
     "title": "Aspirin",
     "subtitle": "Small-molecule acetylsalicylic acid geometry restored from the popular molecule set.",
@@ -514,7 +928,11 @@
     "frames": "1",
     "file": "gallery/curated/popular/aspirin.xyz",
     "available": true,
-    "colors": ["#f43f5e", "#f97316", "#f8fafc"],
+    "colors": [
+      "#f43f5e",
+      "#f97316",
+      "#f8fafc"
+    ],
     "metadata": {
       "method": "PubChem 3D geometry",
       "potential": "XYZ coordinates",
@@ -531,7 +949,11 @@
     "frames": "1",
     "file": "gallery/curated/popular/caffeine.xyz",
     "available": true,
-    "colors": ["#f8fafc", "#38bdf8", "#f97316"],
+    "colors": [
+      "#f8fafc",
+      "#38bdf8",
+      "#f97316"
+    ],
     "metadata": {
       "method": "PubChem 3D geometry",
       "potential": "XYZ coordinates",
@@ -547,7 +969,11 @@
     "frames": "1",
     "file": "gallery/curated/popular/cholesterol.xyz",
     "available": true,
-    "colors": ["#22c55e", "#facc15", "#f8fafc"],
+    "colors": [
+      "#22c55e",
+      "#facc15",
+      "#f8fafc"
+    ],
     "metadata": {
       "method": "PubChem 3D geometry",
       "potential": "XYZ coordinates",
@@ -563,7 +989,11 @@
     "frames": "1",
     "file": "gallery/curated/popular/diamond_crystal.xyz",
     "available": true,
-    "colors": ["#e0f2fe", "#94a3b8", "#f8fafc"],
+    "colors": [
+      "#e0f2fe",
+      "#94a3b8",
+      "#f8fafc"
+    ],
     "metadata": {
       "method": "Procedural crystal builder",
       "potential": "XYZ coordinates",
@@ -580,7 +1010,11 @@
     "frames": "1",
     "file": "gallery/curated/popular/dopamine.xyz",
     "available": true,
-    "colors": ["#a78bfa", "#f8fafc", "#f59e0b"],
+    "colors": [
+      "#a78bfa",
+      "#f8fafc",
+      "#f59e0b"
+    ],
     "metadata": {
       "method": "PubChem 3D geometry",
       "potential": "XYZ coordinates",
@@ -596,7 +1030,11 @@
     "frames": "1",
     "file": "gallery/curated/popular/lsd.xyz",
     "available": true,
-    "colors": ["#7c3aed", "#22d3ee", "#f8fafc"],
+    "colors": [
+      "#7c3aed",
+      "#22d3ee",
+      "#f8fafc"
+    ],
     "metadata": {
       "method": "PubChem 3D geometry",
       "potential": "XYZ coordinates",
@@ -612,7 +1050,11 @@
     "frames": "1",
     "file": "gallery/curated/popular/psilocybin.xyz",
     "available": true,
-    "colors": ["#0ea5e9", "#a855f7", "#f8fafc"],
+    "colors": [
+      "#0ea5e9",
+      "#a855f7",
+      "#f8fafc"
+    ],
     "metadata": {
       "method": "PubChem 3D geometry",
       "potential": "XYZ coordinates",
@@ -628,7 +1070,11 @@
     "frames": "1",
     "file": "gallery/curated/popular/serotonin.xyz",
     "available": true,
-    "colors": ["#14b8a6", "#f59e0b", "#f8fafc"],
+    "colors": [
+      "#14b8a6",
+      "#f59e0b",
+      "#f8fafc"
+    ],
     "metadata": {
       "method": "PubChem 3D geometry",
       "potential": "XYZ coordinates",
@@ -644,7 +1090,11 @@
     "frames": "1",
     "file": "gallery/curated/popular/thc.xyz",
     "available": true,
-    "colors": ["#16a34a", "#f97316", "#f8fafc"],
+    "colors": [
+      "#16a34a",
+      "#f97316",
+      "#f8fafc"
+    ],
     "metadata": {
       "method": "PubChem 3D geometry",
       "potential": "XYZ coordinates",
@@ -660,7 +1110,11 @@
     "frames": "1",
     "file": "gallery/curated/popular/brilliant_diamond_macro.xyz",
     "available": true,
-    "colors": ["#bae6fd", "#e0f2fe", "#f8fafc"],
+    "colors": [
+      "#bae6fd",
+      "#e0f2fe",
+      "#f8fafc"
+    ],
     "metadata": {
       "method": "Procedural faceted lattice",
       "potential": "XYZ coordinates",
@@ -677,11 +1131,75 @@
     "frames": "1",
     "file": "gallery/curated/popular/rough_octahedron_diamond.xyz",
     "available": true,
-    "colors": ["#c4b5fd", "#93c5fd", "#f8fafc"],
+    "colors": [
+      "#c4b5fd",
+      "#93c5fd",
+      "#f8fafc"
+    ],
     "metadata": {
       "method": "Procedural faceted lattice",
       "potential": "XYZ coordinates",
       "reference": "Restored popular molecule gallery asset"
+    }
+  },
+  {
+    "id": "social_qr_lupi_live",
+    "title": "LUPI Live - Atom QR",
+    "subtitle": "Scannable QR for lupi.live, authored as carbon-atom point art; any connecting lines are visual adjacency guides.",
+    "domain": "Methods",
+    "atoms": "319",
+    "frames": "1",
+    "file": "social-qr/lupi_live.xyz",
+    "available": true,
+    "colors": [
+      "#111827",
+      "#1edce0",
+      "#ffffff"
+    ],
+    "metadata": {
+      "method": "Atom QR (ECC-M, byte mode)",
+      "potential": "Visual adjacency grid (1.55 A)",
+      "reference": "Lupine Science - lupi.live"
+    }
+  },
+  {
+    "id": "social_qr_lupine_science",
+    "title": "Lupine Science - Atom QR",
+    "subtitle": "Scannable QR for lupine.science, authored as carbon-atom point art; any connecting lines are visual adjacency guides.",
+    "domain": "Methods",
+    "atoms": "331",
+    "frames": "1",
+    "file": "social-qr/lupine_science.xyz",
+    "available": true,
+    "colors": [
+      "#111827",
+      "#1edce0",
+      "#ffffff"
+    ],
+    "metadata": {
+      "method": "Atom QR (ECC-M, byte mode)",
+      "potential": "Visual adjacency grid (1.55 A)",
+      "reference": "Lupine Science - lupine.science"
+    }
+  },
+  {
+    "id": "social_qr_lupine_linkedin",
+    "title": "Lupine LinkedIn - Atom QR",
+    "subtitle": "Scannable QR for the Lupine Science LinkedIn, authored as carbon-atom point art; any connecting lines are visual adjacency guides.",
+    "domain": "Methods",
+    "atoms": "547",
+    "frames": "1",
+    "file": "social-qr/lupine_linkedin.xyz",
+    "available": true,
+    "colors": [
+      "#111827",
+      "#1edce0",
+      "#ffffff"
+    ],
+    "metadata": {
+      "method": "Atom QR (ECC-M, byte mode)",
+      "potential": "Visual adjacency grid (1.55 A)",
+      "reference": "Lupine Science - linkedin.com/company/lupine-science"
     }
   }
 ]
