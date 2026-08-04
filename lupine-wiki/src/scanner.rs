@@ -174,6 +174,12 @@ impl Scanner {
         };
 
         if !root_path.exists() {
+            if root.required {
+                anyhow::bail!(
+                    "required scan root does not exist: {} (refusing a partial scan that could prune indexed nodes)",
+                    root_path.display()
+                );
+            }
             tracing::warn!("scan root does not exist: {}", root_path.display());
             return Ok((nodes, edges));
         }
@@ -232,13 +238,13 @@ impl Scanner {
             if let Some(d) = root.max_depth {
                 walker = walker.max_depth(d);
             }
-            for entry in walker {
+            for entry in walker
+                .into_iter()
+                .filter_entry(|entry| !should_ignore(entry.path(), &root.ignore_patterns))
+            {
                 let entry = entry?;
                 let path = entry.path();
                 if path == root_path {
-                    continue;
-                }
-                if should_ignore(&path, &root.ignore_patterns) {
                     continue;
                 }
                 let _depth = entry.depth();
@@ -403,5 +409,36 @@ fn parse_node_ref(s: &str) -> Option<String> {
         Some(stripped.to_string())
     } else {
         None
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn missing_required_root_fails_the_scan_before_persistence() {
+        let config: ScannerConfig = serde_yaml::from_str(
+            r##"
+spheres:
+        lupine-science:
+          name: Lupine Science
+          description: Test sphere
+          color: "#000000"
+          priority: 1
+          roots:
+          - path: definitely-not-present/pub-6-required-root
+            required: true
+            include: ["**/*.md"]
+"##,
+        )
+        .expect("test config should parse");
+
+        let error = match Scanner::new(config, env!("CARGO_MANIFEST_DIR")).scan() {
+            Err(error) => error,
+            Ok(_) => panic!("a missing required root must fail closed"),
+        };
+        let message = format!("{error:#}");
+        assert!(message.contains("required scan root"), "{message}");
     }
 }

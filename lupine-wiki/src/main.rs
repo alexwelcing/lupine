@@ -146,7 +146,7 @@ fn main() -> Result<()> {
             let mut db = db::WikiDb::open(&db_path)
                 .with_context(|| format!("open wiki database at {}", db_path.display()))?;
 
-            let config = if config_path.exists() {
+            let mut config = if config_path.exists() {
                 config::ScannerConfig::from_file(&config_path).with_context(|| {
                     format!("load scanner config from {}", config_path.display())
                 })?
@@ -157,6 +157,14 @@ fn main() -> Result<()> {
                 );
                 config::ScannerConfig::default()
             };
+
+            // Filter before scanning so required roots in unrelated spheres do not
+            // break the documented `scan --sphere ...` isolation contract.
+            if let Some(ref sid) = sphere_filter {
+                config
+                    .spheres
+                    .retain(|configured_sid, _| configured_sid == sid);
+            }
 
             // Only configured spheres are scanner-managed. Default spheres with no
             // scanner roots may be populated by library consumers and must not be

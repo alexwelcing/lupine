@@ -71,59 +71,26 @@ spheres:
 
   lupine-science:
     name: Lupine Science
-    description: MLIP flywheel, glim-think, lean-spec, atlas, python distill, cocoindex, and hermes-hive.
+    description: Active research contracts, campaigns, Lean proofs, validation, and visualization bundles.
     color: "#10b981"
     priority: 80
     roots:
-      - path: glim-think
+      - path: ../lupine-rhizo
+        required: true
         kind: repo
         recursive: true
-        max_depth: 2
+        max_depth: 4
         ignore_patterns:
           - .git
+          - __pycache__
+          - .venv
           - node_modules
           - dist
-          - .wrangler
-      - path: lean-spec
-        kind: repo
-        recursive: true
-        max_depth: 2
-        ignore_patterns:
-          - .git
           - build
-      - path: atlas
-        kind: repo
-        recursive: true
-        max_depth: 2
-        ignore_patterns:
-          - .git
           - target
-      - path: python
-        kind: repo
-        recursive: true
-        max_depth: 2
-        ignore_patterns:
-          - .git
-          - __pycache__
-          - .venv
+          - .lake
+          - .wrangler
           - .pytest_cache
-      - path: cocoindex
-        kind: repo
-        recursive: true
-        max_depth: 2
-        ignore_patterns:
-          - .git
-          - __pycache__
-          - .venv
-      - path: tools/hermes-hive
-        kind: repo
-        recursive: true
-        max_depth: 2
-        ignore_patterns:
-          - .git
-          - __pycache__
-          - .venv
-          - data
 
   lupine-ledger:
     name: Lupine Ledger
@@ -131,15 +98,8 @@ spheres:
     color: "#f59e0b"
     priority: 70
     roots:
-      - path: library-site
-        kind: repo
-        recursive: true
-        max_depth: 2
-        ignore_patterns:
-          - .git
-          - node_modules
-          - dist
       - path: ../lupine-ledger
+        required: true
         kind: repo
         recursive: true
         max_depth: 2
