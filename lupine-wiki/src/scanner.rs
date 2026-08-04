@@ -238,13 +238,13 @@ impl Scanner {
             if let Some(d) = root.max_depth {
                 walker = walker.max_depth(d);
             }
-            for entry in walker {
+            for entry in walker
+                .into_iter()
+                .filter_entry(|entry| !should_ignore(entry.path(), &root.ignore_patterns))
+            {
                 let entry = entry?;
                 let path = entry.path();
                 if path == root_path {
-                    continue;
-                }
-                if should_ignore(&path, &root.ignore_patterns) {
                     continue;
                 }
                 let _depth = entry.depth();
