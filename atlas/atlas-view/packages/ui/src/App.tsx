@@ -5,15 +5,12 @@
  * glassmorphic UI, side panels, and publication-quality rendering.
  */
 
-import { useEffect, useCallback, useRef, useState, Component, useMemo } from 'react';
+import { Suspense, lazy, useEffect, useCallback, useRef, useState, Component, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useThree, useFrame } from '@react-three/fiber';
 import { OrbitControls, GizmoHelper, GizmoViewport, ContactShadows } from '@react-three/drei';
-import { Perf } from 'r3f-perf';
 import { ScenePostprocessing } from './postprocess/ScenePostprocessing';
-import { DevProbe } from './DevProbe';
 import { McpViewerBridge, McpViewerHarness } from './mcpViewerBridge';
-import { StateInspector } from './StateInspector';
 import * as THREE from 'three';
 import { useXR } from '@react-three/xr';
 import { USDZExportHelper } from './export/USDZExportPipeline';
@@ -567,16 +564,30 @@ function CameraManager({
   return null;
 }
 
-import { Testbed } from './Testbed';
-import EmojiPlayground from './EmojiPlayground';
+const DebugProbe = lazy(() => import('./DevProbe').then(module => ({ default: module.DevProbe })));
+const DebugStateInspector = lazy(() => import('./StateInspector').then(module => ({ default: module.StateInspector })));
+const TestbedRoute = import.meta.env.DEV
+  ? lazy(() => import('./Testbed').then(module => ({ default: module.Testbed })))
+  : null;
+const EmojiPlaygroundRoute = import.meta.env.DEV
+  ? lazy(() => import('./EmojiPlayground'))
+  : null;
 
 export default function App() {
-  if (typeof window !== 'undefined' && isTestbedRoute()) {
-    return <Testbed />;
+  if (TestbedRoute && typeof window !== 'undefined' && isTestbedRoute()) {
+    return (
+      <Suspense fallback={null}>
+        <TestbedRoute />
+      </Suspense>
+    );
   }
 
-  if (typeof window !== 'undefined' && isEmojiRoute()) {
-    return <EmojiPlayground />;
+  if (EmojiPlaygroundRoute && typeof window !== 'undefined' && isEmojiRoute()) {
+    return (
+      <Suspense fallback={null}>
+        <EmojiPlaygroundRoute />
+      </Suspense>
+    );
   }
 
   const [hashRoute, setHashRoute] = useState(currentHashRoute);
@@ -795,9 +806,14 @@ export default function App() {
   const toggleControlsPanel = useCallback(() => {
     setShowPotentialBrowser(false);
     setViewMenuOpen(false);
+    if (activePanel === 'studio') {
+      setStudioDeck(null);
+      setActivePanel(null);
+      return;
+    }
     setStudioDeck(current => current ?? 'look');
     setActivePanel('studio');
-  }, [setActivePanel, setShowPotentialBrowser]);
+  }, [activePanel, setActivePanel, setShowPotentialBrowser]);
 
   useEffect(() => {
     if (showPotentialBrowser || !file) {
@@ -1337,8 +1353,11 @@ export default function App() {
             cameraDistance={cameraDistance}
             cameraNear={cameraNear}
           >
-            {import.meta.env.DEV && showDebugHud && <Perf position="top-left" logsPerSecond={4} matrixUpdate />}
-            {(import.meta.env.DEV || showDebugHud) && <DevProbe enabled={showDebugHud} />}
+            {showDebugHud && (
+              <Suspense fallback={null}>
+                <DebugProbe enabled={showDebugHud} />
+              </Suspense>
+            )}
               <USDZExportHelper trigger={isExportingQuickLook} onComplete={() => setIsExportingQuickLook(false)} />
             <ExportManager />
             <SceneBackground
@@ -1609,7 +1628,11 @@ export default function App() {
             <ScenePostprocessing />
           </ViewerCanvas>
 
-          {import.meta.env.DEV && showDebugHud && <StateInspector />}
+          {showDebugHud && (
+            <Suspense fallback={null}>
+              <DebugStateInspector />
+            </Suspense>
+          )}
 
           {/* Non-blocking renderer warning (e.g. WebGPU bond accelerator
               unavailable/timed out → CPU fallback). The scene still renders;
@@ -1689,6 +1712,7 @@ export default function App() {
                 onClick={() => {
                   setViewMenuOpen(open => !open);
                   setStudioDeck(null);
+                  setActivePanel(null);
                 }}
                 title="Camera view"
                 aria-label="Camera view"
@@ -1888,7 +1912,10 @@ export default function App() {
                 <ViewerControlsDrawer
                   activeMode={studioDeck ?? 'look'}
                   onModeChange={openStudioDeck}
-                  onClose={() => setActivePanel(null)}
+                  onClose={() => {
+                    setStudioDeck(null);
+                    setActivePanel(null);
+                  }}
                   showChrome
                 />
               )}

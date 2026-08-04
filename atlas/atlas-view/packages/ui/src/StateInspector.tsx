@@ -1,7 +1,7 @@
 /**
  * StateInspector — dev-only HUD that proves state changes propagate.
  *
- * Sits in the top-right (r3f-perf is top-left) and shows the live values of
+ * Sits in the top-right and shows the live values of
  * the parts of the store that should change pixels: postprocess preset +
  * intensity, bond settings, and which backend produced the most recent
  * bond detection. If the user picks "Cinematic" and the panel doesn't say
