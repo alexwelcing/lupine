@@ -64,7 +64,11 @@ impl Node {
                             })
                         })
                 } else if c.len() > 200 {
-                    Some(format!("{}…", &c[..200]))
+                    let mut end = 200;
+                    while !c.is_char_boundary(end) {
+                        end -= 1;
+                    }
+                    Some(format!("{}…", &c[..end]))
                 } else {
                     Some(c.clone())
                 }

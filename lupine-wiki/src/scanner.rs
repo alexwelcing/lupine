@@ -189,10 +189,10 @@ impl Scanner {
                 .map(|s| s.to_string_lossy().to_string())
                 .unwrap_or_else(|| root.path.clone())
         });
-        let root_hash = if root_path.is_file() {
-            Some(hash_file(&root_path)?)
+        let (root_hash, root_content) = if root_path.is_file() {
+            (Some(hash_file(&root_path)?), read_file_content(&root_path))
         } else {
-            None
+            (None, None)
         };
         nodes.push(Node {
             id: root_id.clone(),
@@ -201,7 +201,7 @@ impl Scanner {
             name: root_name,
             uri: Some(root_uri),
             config_hash: root_hash,
-            content: None,
+            content: root_content,
             status: Status::Active,
             provenance: Provenance::Scanned,
             owner_profile: None,
@@ -298,10 +298,10 @@ impl Scanner {
             .file_name()
             .map(|s| s.to_string_lossy().to_string())
             .unwrap_or_else(|| uri.clone());
-        let config_hash = if path.is_file() {
-            Some(hash_file(path)?)
+        let (config_hash, content) = if path.is_file() {
+            (Some(hash_file(path)?), read_file_content(path))
         } else {
-            None
+            (None, None)
         };
         Ok(Node {
             id: Node::stable_id(sphere_id, kind, &uri),
@@ -310,7 +310,7 @@ impl Scanner {
             name,
             uri: Some(uri),
             config_hash,
-            content: None,
+            content,
             status: Status::Active,
             provenance: Provenance::Scanned,
             owner_profile: None,
@@ -320,6 +320,46 @@ impl Scanner {
 }
 
 const MAX_HASH_BYTES: u64 = 5 * 1024 * 1024; // 5 MiB
+const MAX_CONTENT_BYTES: u64 = 64 * 1024; // 64 KiB stored per node; larger files are truncated
+
+/// Read a scanned file's body so it can be stored on the node.
+/// Returns None for empty, binary (NUL bytes / invalid UTF-8), or unreadable
+/// files. Bodies larger than MAX_CONTENT_BYTES are truncated at a char
+/// boundary and marked as truncated.
+fn read_file_content(path: &Path) -> Option<String> {
+    use std::io::Read;
+    let file = std::fs::File::open(path).ok()?;
+    let mut buf = Vec::new();
+    file.take(MAX_CONTENT_BYTES + 1).read_to_end(&mut buf).ok()?;
+    if buf.is_empty() || buf.contains(&0) {
+        return None;
+    }
+    let truncated = buf.len() as u64 > MAX_CONTENT_BYTES;
+    if truncated {
+        buf.truncate(MAX_CONTENT_BYTES as usize);
+    }
+    let mut text = match String::from_utf8(buf) {
+        Ok(text) => text,
+        Err(err) => {
+            // An invalid sequence mid-file means binary content; an incomplete
+            // char at the end is just our truncation point splitting a char.
+            if err.utf8_error().error_len().is_some() {
+                return None;
+            }
+            let valid = err.utf8_error().valid_up_to();
+            if valid == 0 {
+                return None;
+            }
+            let mut bytes = err.into_bytes();
+            bytes.truncate(valid);
+            String::from_utf8(bytes).ok()?
+        }
+    };
+    if truncated {
+        text.push_str("\n… [truncated by lupine-wiki scanner]");
+    }
+    Some(text)
+}
 
 fn hash_file(path: &Path) -> Result<String> {
     let metadata = std::fs::metadata(path)
