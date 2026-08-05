@@ -1011,7 +1011,7 @@
   ],
   "skepticEpisodes": [
     {
-      "case": "A-Lab 41 'novel' compounds (Nature 2023)",
+      "case": "A-Lab: 41 initially reported 'novel' compounds → 36 confirmed of 57 eligible (Nature 2023; Author Correction 2026)",
       "resolution": "Author Correction Nature 650:E1 (2026-01-19): 36 confirmed of 57 eligible; 4 inconclusive; Zn₂Cr₃FeO₈ removed (training-data leakage); retitled 'inorganic materials'"
     },
     {

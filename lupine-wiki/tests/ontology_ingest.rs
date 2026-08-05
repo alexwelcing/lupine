@@ -25,7 +25,7 @@ fn canonical_ontology_ingest_preserves_records_metadata_and_foreign_keys() {
 
     assert_eq!(
         report.source_sha256,
-        "27ba28a37749a1f7ca6495f1217dedaa2574db50dbaecc85b80cd68eda0a6ee2"
+        "cd50a3d5ac9ee2c0c2a1a9cb9e7a51ee8175971546cc17c3442467f7c5628181"
     );
     let nodes = db.get_nodes(Some("lupine-research"), None, None).unwrap();
     let edges = db.get_edges(None, None, None).unwrap();
@@ -269,7 +269,7 @@ fn ingest_binary_populates_an_isolated_database() {
     );
     let stdout = String::from_utf8(result.stdout).unwrap();
     assert!(stdout.contains("lupine-research"));
-    assert!(stdout.contains("27ba28a37749a1f7ca6495f1217dedaa2574db50dbaecc85b80cd68eda0a6ee2"));
+    assert!(stdout.contains("cd50a3d5ac9ee2c0c2a1a9cb9e7a51ee8175971546cc17c3442467f7c5628181"));
     let db = WikiDb::open(db_path).unwrap();
     assert_eq!(
         db.get_nodes(Some("lupine-research"), None, None)
