@@ -27,7 +27,7 @@ predictions failed and are reported as failures. A new Round-2 3×3×3
 elastic-constant benchmark of 16 cubic metals with four MatPES foundation MLIPs
 shows that a one-vector-per-functional correction operator reduces the mean
 absolute error from 17.84 GPa to 10.36 GPa, and the paper quantifies why a fully
-deployable no-target magnitude estimator remains open.
+deployable no-target magnitude estimator remains open. The corrected Cij MAE is an empirical oracle aggregate and is **uncertified** as a correction license: C11, C12, and C44 would each need an independent valid target license, and no derived modulus or composite inherits a license from componentwise correction.
 
 The result matters beyond materials science because model ensembles are used
 across physics and neighboring fields to estimate uncertainty. The projection

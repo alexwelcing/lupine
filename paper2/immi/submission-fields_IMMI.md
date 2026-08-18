@@ -15,7 +15,7 @@ We prove the core as machine-checked theorems in Lean 4 (seven theorems, zero so
 
 We test the law's sharpest consequence — errors organize by constraint, not by implementation — at three layers of one epistemic stack: classical interatomic potentials (559 models), foundation MLIPs (4×2 MatPES factorial), and DFT implementations (12 ACWF methods). We then report a new Round-2 3×3×3 elastic-constant benchmark of 16 cubic metals with four MatPES foundation MLIPs. A one-vector-per-functional correction operator, validated with leave-one-out cross-validation, reduces the benchmark mean absolute error from 17.84 GPa to 10.36 GPa with zero no-harm violations, improving every model on both PBE and approximate r2SCAN targets.
 
-The formal pre-registered hypothesis tests on this benchmark show that the functional-clustering predictions do not survive in the 3d/4d subset, while the operator-vs-ensemble head-to-head passes on MAE but not on conformal coverage. These mixed results define the next experimental step: a class-aware operator and a direct A6 bridge test.
+The formal pre-registered hypothesis tests on this benchmark show that the functional-clustering predictions do not survive in the 3d/4d subset, while the operator-vs-ensemble head-to-head passes on MAE but not on conformal coverage. These mixed results define the next experimental step: a class-aware operator and a direct A6 bridge test. The corrected Cij MAE is an empirical oracle aggregate and is **uncertified** as a correction license: C11, C12, and C44 would each need an independent valid target license, and no derived modulus or composite inherits a license from componentwise correction.
 
 ## Keywords
 

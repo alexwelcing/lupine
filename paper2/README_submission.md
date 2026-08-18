@@ -6,13 +6,14 @@
 ## Quick files
 
 - `ProjectionLaw_Round2.pdf` — 10-page stand-alone PDF with the Layer-2 Round-2 evidence, figures, and open items.
-- `immi/ProjectionLaw_IMMI.pdf` — 20-page IMMI-formatted submission PDF.
+- `immi/ProjectionLaw_IMMI.pdf` — **stale; do not submit** until rebuilt from the updated TeX source with a LaTeX toolchain.
 - `ProjectionLaw_submission_bundle_2026-06-29.zip` — complete package.
 
 ## What is new in this version
 
 - Round-2 3×3×3 elastic-constant benchmark of 16 cubic metals × 4 MatPES MLIPs.
-- One-vector-per-functional LOO correction operator: MAE 17.84 → 10.36 GPa, zero no-harm violations.
+- One-vector-per-functional LOO correction operator: MAE 17.84 → 10.36 GPa, zero no-harm violations (**empirical oracle aggregate; uncertified as a correction license**).
+- Aggregate/derived boundary: C11, C12, and C44 each require an independent valid target license; B, G, C′, Cauchy pressure, anisotropy, and other composites inherit no componentwise license.
 - Pre-registered H1–H4 outcomes reported honestly (H1/H2a fail on 3d/4d; H4 mixed).
 - Class-aware operator oracle ceiling (9.97 GPa) and no-target magnitude estimator experiments.
 - A6 bridge protocol + pilot + scale blocker note.
@@ -59,7 +60,7 @@ ProjectionLaw/
 
 ### For IMMI
 
-1. Use `immi/ProjectionLaw_IMMI.pdf` as the manuscript PDF.
+1. Rebuild `immi/ProjectionLaw_IMMI.pdf` from `immi/ProjectionLaw_IMMI.tex`; the tracked PDF predates the componentwise-license boundary and must not be submitted as-is.
 2. Copy the abstract, keywords, data-availability statement, funding, competing interests, author contributions, and AI-disclosure from `immi/submission-fields_IMMI.md` into the submission portal.
 3. Upload `immi/cover-letter_IMMI.md` text as the cover letter.
 4. Upload `ProjectionLaw_submission_bundle_2026-06-29.zip` as supplementary material (or provide the Zenodo DOI).

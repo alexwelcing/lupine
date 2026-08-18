@@ -26,6 +26,8 @@ machine-learned interatomic potentials (MLIPs):
   it is not an element-wise fit and does not require the target in the training
   set.
 
+**Certification boundary:** the 10.36 GPa corrected Cij MAE is an empirical oracle aggregate, not a correction license. It is **uncertified** unless C11, C12, and C44 each independently carry a valid held-out-target license. Derived moduli and composites (B, G, C′, Cauchy pressure, anisotropy, differences, and products) are also **uncertified** because componentwise licenses do not compose through those maps.
+
 This is a **working draft in preparation**. No peer review, acceptance, or venue
 assignment has occurred. Claims are provisional until independent replication.
 

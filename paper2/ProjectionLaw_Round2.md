@@ -18,6 +18,8 @@ We test the law's sharpest consequence — errors organize by constraint, not by
 
 The formal pre-registered hypothesis tests on this benchmark show that the functional-clustering predictions do not survive in the 3d/4d subset, while the operator-vs-ensemble head-to-head passes on MAE but not on conformal coverage. These mixed results define the next experimental step: a class-aware operator and a direct A6 bridge test.
 
+**Certification boundary.** The corrected C<sub>ij</sub> MAE is an empirical oracle aggregate, not a scalar correction license. It is **uncertified** unless C11, C12, and C44 each independently satisfy a valid license for the held-out target. Derived moduli and composites—including B, G, C′, Cauchy pressure, anisotropy, differences, and products—are also **uncertified**: componentwise licenses do not compose through those maps.
+
 ---
 
 ## 1. Introduction

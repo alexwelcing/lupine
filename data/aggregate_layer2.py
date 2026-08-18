@@ -129,12 +129,14 @@ def main() -> None:
     report = {
         "schema_version": "lupine.benchmark.layer2.v1",
         "n_tasks": len(rows),
+        "certification_status": "corrected Cij values and aggregates are uncertified correction diagnostics; derived elastic maps require a separate vector-valued license",
         "rows": rows,
         "summary": {},
         "correction": {
             "schema_version": "lupine.benchmark.correction.v1",
             "method": "1-D Lupine projection correction (atlas-distill mlip-correct)",
             "description": "In-sample upper bound: a single first-principal-component bias vector is fit to all model residuals on each functional and projected onto each residual. Corrected = raw + alpha * bias; no-harm holds on the calibration set. Not a validated out-of-sample operator.",
+            "certification_status": "uncertified aggregate: corrected Cij MAE is not a scalar correction license; every C11/C12/C44 target would need its own valid license, and derived elastic maps require a separate vector-valued license",
             "command": "atlas-distill mlip-correct --catalog data/benchmark_layer2_3x3x3_summary.json --training {functional} --target {functional}",
             "per_functional": correction["per_functional"],
         },
@@ -157,6 +159,7 @@ def main() -> None:
                 corr_block = next((c for c in correction["per_functional"] if c["functional"] == func), None)
                 if corr_block:
                     report["summary"][f"{func}_corrected"] = {
+                        "certification_status": "uncertified aggregate",
                         "mean_mae_cij": corr_block["corrected_mean_mae_cij"],
                         "model_mean_mae_cij": corr_block["model_corrected_mean_mae_cij"],
                         "best_model": min(corr_block["model_corrected_mean_mae_cij"], key=corr_block["model_corrected_mean_mae_cij"].get),
@@ -173,6 +176,7 @@ def main() -> None:
             for model in sorted({r["model"] for r in rows})
         }
         report["summary"]["overall_corrected"] = {
+            "certification_status": "uncertified aggregate",
             "mean_mae_cij": round(np.mean([r["corrected_mae_cij"] for r in rows]), 2),
             "model_mean_mae_cij": corrected_overall,
             "best_model": min(corrected_overall, key=corrected_overall.get),

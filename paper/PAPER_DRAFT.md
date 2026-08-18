@@ -164,6 +164,8 @@ Even MACE-MPA-0 (trained on r2SCAN) improves by 1.29×, showing the geometric co
 
 **Result**: Workflow B achieves **2.83× lower MSE** than Workflow A with **80% less compute**.
 
+**Certification status:** this corrected Cij MSE is an empirical/oracle aggregate and is **uncertified** as a correction license. Every included C11/C12/C44 target would need an independent valid license; derived moduli and composites require a separate vector-valued license for their exact map.
+
 **Pre-registered hypothesis CONFIRMED**.
 
 ### 4.4 Pareto Frontier

@@ -122,6 +122,8 @@ The mean r2SCAN MAE (20.66 GPa) remains higher than the PBE MAE (15.01 GPa), but
 
 ## 5. Opportunities for cheap post-hoc correction
 
+**Certification status:** The correction opportunities and all bulk/shear or other derived-modulus statements below are **uncertified hypotheses**, not consequences of componentwise licenses. Differences and mixed component directions can lose raw error cancellation; any future claim requires a separately proved and checked vector-valued license for the exact map.
+
 **Scalar bulk shift.** A uniform volume-stiffness correction is most promising for models with a consistent bulk bias. CHGNet (⟨ΔB⟩ ≈ -9.08 GPa overall) and TensorNet (⟨ΔB⟩ ≈ -10.57 GPa overall) under-stiffen the bulk modulus systematically; adding a ~+5 to +10% energy–volume rescaling would pull c11 and c12 in the right direction without strongly affecting the more neutral c44. It would not fix the Cr/Fe magnetic failures, because those are non-uniform tensor errors, nor would it fix Nb’s c44.
 
 **Element-specific bias correction.** When the signed error pattern is stable across functionals, an element-level offset could help. Examples:
