@@ -186,8 +186,9 @@ impl Scanner {
 
         let root_kind = NodeKind::from_str(&root.kind).unwrap_or(NodeKind::File);
 
-        // Add the root itself as a node
-        let root_uri = root_path.to_string_lossy().to_string();
+        // Persist configured, portable identities instead of checkout-specific
+        // absolute paths. The filesystem path remains the source of truth for IO.
+        let root_uri = portable_uri(&root.path, &root_path, &root_path)?;
         let root_id = Node::stable_id(sphere_id, root_kind, &root_uri);
         let root_name = root.name.clone().unwrap_or_else(|| {
             root_path
@@ -223,14 +224,11 @@ impl Scanner {
                     continue;
                 }
                 if path.is_file() && root.include_files {
-                    nodes.push(self.path_to_node(sphere_id, &path, NodeKind::File, &root_id)?);
+                    let uri = portable_uri(&root.path, &root_path, &path)?;
+                    nodes.push(self.path_to_node(sphere_id, &path, NodeKind::File, uri)?);
                 } else if path.is_dir() && root.include_dirs {
-                    nodes.push(self.path_to_node(
-                        sphere_id,
-                        &path,
-                        NodeKind::Directory,
-                        &root_id,
-                    )?);
+                    let uri = portable_uri(&root.path, &root_path, &path)?;
+                    nodes.push(self.path_to_node(sphere_id, &path, NodeKind::Directory, uri)?);
                 }
             }
         } else if root.recursive && root_path.is_dir() {
@@ -262,7 +260,8 @@ impl Scanner {
                     continue;
                 };
 
-                let node = self.path_to_node(sphere_id, path, kind, &root_id)?;
+                let uri = portable_uri(&root.path, &root_path, path)?;
+                let node = self.path_to_node(sphere_id, path, kind, uri)?;
                 // Add parent edge for directories/files to their parent directory.
                 // If the parent is the scan root, link to the root node instead of a
                 // non-existent directory node.
@@ -270,7 +269,7 @@ impl Scanner {
                     let parent_id = if parent == root_path {
                         root_id.clone()
                     } else {
-                        let parent_uri = parent.to_string_lossy().to_string();
+                        let parent_uri = portable_uri(&root.path, &root_path, parent)?;
                         Node::stable_id(sphere_id, NodeKind::Directory, &parent_uri)
                     };
                     if parent_id != node.id {
@@ -297,9 +296,8 @@ impl Scanner {
         sphere_id: &str,
         path: &Path,
         kind: NodeKind,
-        _root_id: &str,
+        uri: String,
     ) -> Result<Node> {
-        let uri = path.to_string_lossy().to_string();
         let name = path
             .file_name()
             .map(|s| s.to_string_lossy().to_string())
@@ -323,6 +321,27 @@ impl Scanner {
             updated_at: None,
         })
     }
+}
+
+fn portable_uri(configured_root: &str, root_path: &Path, path: &Path) -> Result<String> {
+    let base = configured_root.replace('\\', "/");
+    if path == root_path {
+        return Ok(base.trim_end_matches('/').to_string());
+    }
+
+    let relative = path.strip_prefix(root_path).with_context(|| {
+        format!(
+            "derive portable URI for {} relative to {}",
+            path.display(),
+            root_path.display()
+        )
+    })?;
+    let suffix = relative
+        .components()
+        .map(|component| component.as_os_str().to_string_lossy())
+        .collect::<Vec<_>>()
+        .join("/");
+    Ok(format!("{}/{}", base.trim_end_matches('/'), suffix))
 }
 
 const MAX_HASH_BYTES: u64 = 5 * 1024 * 1024; // 5 MiB
@@ -415,6 +434,53 @@ fn parse_node_ref(s: &str) -> Option<String> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    fn portable_fixture_config() -> ScannerConfig {
+        serde_yaml::from_str(
+            r##"
+spheres:
+  portable:
+    name: Portable
+    description: Portable scanner identity test
+    color: "#000000"
+    priority: 1
+    roots:
+      - path: scan-root
+        kind: repo
+        recursive: true
+        max_depth: 3
+"##,
+        )
+        .expect("test config should parse")
+    }
+
+    #[test]
+    fn scanned_node_identity_is_independent_of_checkout_path() {
+        let first = tempfile::tempdir().expect("first checkout");
+        let second = tempfile::tempdir().expect("second checkout");
+        for checkout in [first.path(), second.path()] {
+            let nested = checkout.join("scan-root/docs");
+            std::fs::create_dir_all(&nested).expect("create fixture tree");
+            std::fs::write(nested.join("evidence.md"), "portable evidence\n")
+                .expect("write fixture file");
+        }
+
+        let first_scan = Scanner::new(portable_fixture_config(), first.path())
+            .scan()
+            .expect("first scan");
+        let second_scan = Scanner::new(portable_fixture_config(), second.path())
+            .scan()
+            .expect("second scan");
+
+        assert_eq!(first_scan.nodes, second_scan.nodes);
+        assert_eq!(first_scan.edges, second_scan.edges);
+        assert!(first_scan.nodes.iter().all(|node| {
+            node.uri
+                .as_deref()
+                .is_none_or(|uri| !uri.contains(first.path().to_string_lossy().as_ref()))
+                && !node.id.contains(first.path().to_string_lossy().as_ref())
+        }));
+    }
 
     #[test]
     fn missing_required_root_fails_the_scan_before_persistence() {

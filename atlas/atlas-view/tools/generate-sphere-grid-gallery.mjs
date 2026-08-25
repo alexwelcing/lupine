@@ -78,7 +78,24 @@ function assertCurrentGraph(meta, labels) {
   if (!rhizoRoot) {
     throw new Error('lupine-science sphere does not contain the active lupine-rhizo root');
   }
+  assertPortableLabels(labels.labels ?? []);
   return rhizoRoot;
+}
+
+function assertPortableLabels(labels) {
+  const absolutePath = /^(?:\/|[A-Za-z]:[\\/])/;
+  const absoluteNodeUri = /^(?:node-)?[^:]+:\/\/[^/]+\/(?:\/|[A-Za-z]:[\\/])/;
+  for (const label of labels) {
+    for (const field of ['description', 'id', 'node_id']) {
+      const value = label[field];
+      if (
+        typeof value === 'string' &&
+        (absolutePath.test(value) || absoluteNodeUri.test(value))
+      ) {
+        throw new Error(`refusing checkout-specific absolute path in label ${field}: ${value}`);
+      }
+    }
+  }
 }
 
 async function copyArtifact(source, destination) {

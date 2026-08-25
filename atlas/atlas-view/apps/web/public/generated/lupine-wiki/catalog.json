@@ -2,9 +2,9 @@
   "schema": "lupine.sphere-grid-gallery.v1",
   "graph": {
     "spheres": 7,
-    "nodes": 3195,
-    "edges": 6365,
-    "labels": 3195
+    "nodes": 6150,
+    "edges": 12274,
+    "labels": 6150
   },
   "required_sources": [
     {
@@ -16,28 +16,28 @@
   "artifacts": {
     "xyz": {
       "path": "sphere-grid.xyz",
-      "bytes": 137425,
-      "sha256": "2f431704667d8a97ebcecf783df54c5eefb9d6394503778b8f914e1446021a91"
+      "bytes": 264490,
+      "sha256": "eba54ae8b3226a2fdcedb4a5e5d23947a2ea0cf5c7c8d3a849190b209cbce8c4"
     },
     "data": {
       "path": "sphere-grid.data",
-      "bytes": 221804,
-      "sha256": "d0a0d65c1eea9ae4205671d0874a99383beb7e0cb06c66386859c8f79c9ed6ad"
+      "bytes": 434149,
+      "sha256": "c7a23cdadefd7f8627d3d61a337d4ea370a73540597c5233a39d41c3987d8a6f"
     },
     "lammpstrj": {
       "path": "sphere-grid.lammpstrj",
-      "bytes": 150982,
-      "sha256": "46afa547aa34457c8ca7d5a45d1af1604790c711f23456c3f42ab4cbef0045ae"
+      "bytes": 290116,
+      "sha256": "dba460433aa5d1e5c14d867628c844b98c650aae67eb248787bca11b7c43775e"
     },
     "molecule": {
       "path": "sphere-grid.molecule.json",
-      "bytes": 2436,
-      "sha256": "e8b2b5f4207723d5972babfc0603641233c353d23cbd28e2abc78a9fd6d9996c"
+      "bytes": 2453,
+      "sha256": "af2b1a1d07b827634b86035a36300f2af598dc848facd092165de2feaf153087"
     },
     "labels": {
       "path": "sphere-grid.labels.json",
-      "bytes": 3534021,
-      "sha256": "551bb387dc8c8f607af7e39f6daa6363a1689226dd177889c0ee048fab9fac84"
+      "bytes": 5937545,
+      "sha256": "13215c23b60c422ebd9d45b474f23862ae597494c3eb8b888f1fac31c8c47e01"
     }
   }
 }

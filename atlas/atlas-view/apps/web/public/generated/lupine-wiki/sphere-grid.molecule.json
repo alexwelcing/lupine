@@ -9,7 +9,7 @@
     "kind",
     "radius"
   ],
-  "edge_count": 6365,
+  "edge_count": 12274,
   "kinds": {
     "config": {
       "index": 0,
@@ -48,7 +48,7 @@
       "radius": 2.8
     }
   },
-  "node_count": 3195,
+  "node_count": 6150,
   "spheres": [
     {
       "atomic_number": 27,
@@ -125,6 +125,7 @@
         "directory",
         "doc",
         "file",
+        "repo",
         "sphere"
       ],
       "name": "Lupine Media"
