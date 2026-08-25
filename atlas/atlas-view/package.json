@@ -41,6 +41,7 @@
     "atomize:media": "node tools/atomize-media.mjs",
     "generate:sphere-grid": "node tools/generate-sphere-grid-gallery.mjs",
     "generate:sphere-grid:assets": "node tools/generate-sphere-grid-gallery.mjs --no-snapshot",
+    "verify:sphere-grid": "node tools/verify-sphere-grid-gallery.mjs",
     "verify:atomize-media": "node tools/verify-atomize-media.mjs",
     "verify:save-view-admin-smoke": "node tools/verify-save-view-admin-smoke.mjs",
     "verify:saved-views": "node tools/verify-saved-views.mjs",

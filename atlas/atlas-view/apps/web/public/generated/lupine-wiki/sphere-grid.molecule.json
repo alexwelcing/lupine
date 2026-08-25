@@ -9,7 +9,7 @@
     "kind",
     "radius"
   ],
-  "edge_count": 1238,
+  "edge_count": 6365,
   "kinds": {
     "config": {
       "index": 0,
@@ -35,10 +35,6 @@
       "index": 6,
       "radius": 1.7
     },
-    "project": {
-      "index": 9,
-      "radius": 3.0
-    },
     "repo": {
       "index": 3,
       "radius": 2.4
@@ -52,7 +48,7 @@
       "radius": 2.8
     }
   },
-  "node_count": 635,
+  "node_count": 3195,
   "spheres": [
     {
       "atomic_number": 27,
@@ -60,11 +56,11 @@
       "id": "hermes-core",
       "index": 0,
       "kinds": [
-        "sphere",
-        "repo",
         "config",
+        "directory",
         "file",
-        "directory"
+        "repo",
+        "sphere"
       ],
       "name": "Hermes Core"
     },
@@ -74,13 +70,13 @@
       "id": "hermes-local-extensions",
       "index": 1,
       "kinds": [
-        "skill",
-        "plugin",
-        "sphere",
         "config",
-        "file",
         "directory",
-        "mcp_server"
+        "file",
+        "mcp_server",
+        "plugin",
+        "skill",
+        "sphere"
       ],
       "name": "Hermes Local Extensions"
     },
@@ -88,14 +84,24 @@
       "atomic_number": 26,
       "element": "Fe",
       "id": "lupine-science",
-      "index": 5,
+      "index": 6,
       "kinds": [
-        "repo",
         "directory",
         "file",
+        "repo",
         "sphere"
       ],
       "name": "Lupine Science"
+    },
+    {
+      "atomic_number": 21,
+      "element": "Sc",
+      "id": "lupine-research",
+      "index": 5,
+      "kinds": [
+        "sphere"
+      ],
+      "name": "Lupine Research"
     },
     {
       "atomic_number": 29,
@@ -103,8 +109,8 @@
       "id": "lupine-ledger",
       "index": 2,
       "kinds": [
-        "file",
         "directory",
+        "file",
         "repo",
         "sphere"
       ],
@@ -117,11 +123,9 @@
       "index": 3,
       "kinds": [
         "directory",
-        "file",
-        "sphere",
-        "project",
         "doc",
-        "repo"
+        "file",
+        "sphere"
       ],
       "name": "Lupine Media"
     },
@@ -131,8 +135,8 @@
       "id": "lupine-public",
       "index": 4,
       "kinds": [
-        "file",
         "directory",
+        "file",
         "repo",
         "sphere"
       ],

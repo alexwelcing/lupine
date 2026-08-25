@@ -12,6 +12,7 @@
 
 import { chromium } from 'playwright';
 import { createCanvas, loadImage } from 'canvas';
+import { createHash } from 'node:crypto';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { execSync } from 'node:child_process';
@@ -32,6 +33,8 @@ const DEV_SERVER = 'http://localhost:3000';
 const EXAMPLE_ID = 'lupine_sphere_grid';
 const EXAMPLE_TITLE = 'Lupine Sphere Grid';
 const EXAMPLE_SUBTITLE_BASE = 'Live knowledge graph of the Lupine ecosystem';
+const CATALOG_SCHEMA = 'lupine.sphere-grid-gallery.v1';
+const STALE_GRAPH = { nodeCount: 635, edgeCount: 1238 };
 
 function exec(cmd, opts = {}) {
   return execSync(cmd, { stdio: 'inherit', ...opts });
@@ -53,6 +56,73 @@ async function fileExists(p) {
   } catch {
     return false;
   }
+}
+
+async function readJson(filePath) {
+  return JSON.parse(await fs.readFile(filePath, 'utf8'));
+}
+
+function assertCurrentGraph(meta, labels) {
+  const nodeCount = meta.node_count ?? 0;
+  const edgeCount = meta.edge_count ?? 0;
+  if (nodeCount === STALE_GRAPH.nodeCount && edgeCount === STALE_GRAPH.edgeCount) {
+    throw new Error(`refusing stale ${nodeCount}-node/${edgeCount}-edge sphere-grid export`);
+  }
+
+  const rhizoRoot = labels.labels?.find(
+    (label) =>
+      label.sphere_id === 'lupine-science' &&
+      label.node_kind === 'repo' &&
+      label.text === 'lupine-rhizo',
+  );
+  if (!rhizoRoot) {
+    throw new Error('lupine-science sphere does not contain the active lupine-rhizo root');
+  }
+  return rhizoRoot;
+}
+
+async function copyArtifact(source, destination) {
+  if (path.resolve(source) !== path.resolve(destination)) {
+    await fs.copyFile(source, destination);
+    console.log('[sphere-grid] Copied artifact:', destination);
+  }
+}
+
+async function artifactRecord(filePath) {
+  const bytes = await fs.readFile(filePath);
+  return {
+    path: path.basename(filePath),
+    bytes: bytes.length,
+    sha256: createHash('sha256').update(bytes).digest('hex'),
+  };
+}
+
+async function writeCatalog(meta, labels, rhizoRoot, artifacts) {
+  const catalog = {
+    schema: CATALOG_SCHEMA,
+    graph: {
+      spheres: meta.spheres?.length ?? 0,
+      nodes: meta.node_count ?? 0,
+      edges: meta.edge_count ?? 0,
+      labels: labels.labels?.length ?? 0,
+    },
+    required_sources: [
+      {
+        sphere: rhizoRoot.sphere_id,
+        kind: rhizoRoot.node_kind,
+        root: rhizoRoot.text,
+      },
+    ],
+    artifacts: Object.fromEntries(
+      await Promise.all(
+        Object.entries(artifacts).map(async ([name, filePath]) => [name, await artifactRecord(filePath)]),
+      ),
+    ),
+  };
+  const catalogPath = path.join(PUBLIC_OUT, 'catalog.json');
+  await fs.writeFile(catalogPath, `${JSON.stringify(catalog, null, 2)}\n`, 'utf8');
+  console.log('[sphere-grid] Wrote integrity catalog:', catalogPath);
+  return catalogPath;
 }
 
 async function exportMolecule(tempDir) {
@@ -212,34 +282,31 @@ async function main() {
       await ensureWikiBuilt();
       files = await exportMolecule(tempDir);
     } catch (err) {
-      console.warn('[sphere-grid] Wiki export failed:', err.message);
-      if (await fileExists(path.join(PUBLIC_OUT, 'sphere-grid.lammpstrj'))) {
-        files = await useExistingAssets();
-      } else {
-        throw new Error(
-          'Wiki export failed and no committed assets exist. ' +
-            'Run a wiki scan first or pass --use-existing.',
-        );
-      }
+      throw new Error(`Wiki export failed; refusing committed-asset fallback: ${err.message}`);
     }
   }
 
-  // Use the LAMMPS dump as the canonical gallery format (fastest lupi path).
-  const trajectoryFile = files.dump;
-  const destTrajectory = path.join(PUBLIC_OUT, 'sphere-grid.lammpstrj');
-  if (path.resolve(trajectoryFile) !== path.resolve(destTrajectory)) {
-    await fs.copyFile(trajectoryFile, destTrajectory);
-    console.log('[sphere-grid] Copied trajectory:', destTrajectory);
-  } else {
-    console.log('[sphere-grid] Using committed trajectory:', destTrajectory);
-  }
+  const meta = await readJson(files.meta);
+  const labels = await readJson(files.labels);
+  const rhizoRoot = assertCurrentGraph(meta, labels);
+  const destinations = {
+    xyz: path.join(PUBLIC_OUT, 'sphere-grid.xyz'),
+    data: path.join(PUBLIC_OUT, 'sphere-grid.data'),
+    lammpstrj: path.join(PUBLIC_OUT, 'sphere-grid.lammpstrj'),
+    molecule: path.join(PUBLIC_OUT, 'sphere-grid.molecule.json'),
+    labels: path.join(PUBLIC_OUT, 'sphere-grid.labels.json'),
+  };
+  await Promise.all([
+    copyArtifact(files.xyz, destinations.xyz),
+    copyArtifact(files.data, destinations.data),
+    copyArtifact(files.dump, destinations.lammpstrj),
+    copyArtifact(files.meta, destinations.molecule),
+    copyArtifact(files.labels, destinations.labels),
+  ]);
 
-  // Copy the knowledge labels into the public assets tree.
-  const destLabels = path.join(PUBLIC_OUT, 'sphere-grid.labels.json');
-  if (path.resolve(files.labels) !== path.resolve(destLabels)) {
-    await fs.copyFile(files.labels, destLabels);
-    console.log('[sphere-grid] Copied labels:', destLabels);
-  }
+  // Use the LAMMPS dump as the canonical gallery format (fastest lupi path).
+  const destTrajectory = destinations.lammpstrj;
+  const catalogPath = await writeCatalog(meta, labels, rhizoRoot, destinations);
 
   // Update the catalog first so the ?sim= load path can read initialAtomScale
   // and other gallery-specific overrides during snapshot rendering.
@@ -260,6 +327,7 @@ async function main() {
     trajectory: destTrajectory,
     snapshot: snapshotPath,
     galleryData: GALLERY_DATA,
+    catalog: catalogPath,
   }, null, 2));
 }
 

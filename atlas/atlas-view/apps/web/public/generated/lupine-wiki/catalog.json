@@ -1,0 +1,43 @@
+{
+  "schema": "lupine.sphere-grid-gallery.v1",
+  "graph": {
+    "spheres": 7,
+    "nodes": 3195,
+    "edges": 6365,
+    "labels": 3195
+  },
+  "required_sources": [
+    {
+      "sphere": "lupine-science",
+      "kind": "repo",
+      "root": "lupine-rhizo"
+    }
+  ],
+  "artifacts": {
+    "xyz": {
+      "path": "sphere-grid.xyz",
+      "bytes": 137425,
+      "sha256": "2f431704667d8a97ebcecf783df54c5eefb9d6394503778b8f914e1446021a91"
+    },
+    "data": {
+      "path": "sphere-grid.data",
+      "bytes": 221804,
+      "sha256": "d0a0d65c1eea9ae4205671d0874a99383beb7e0cb06c66386859c8f79c9ed6ad"
+    },
+    "lammpstrj": {
+      "path": "sphere-grid.lammpstrj",
+      "bytes": 150982,
+      "sha256": "46afa547aa34457c8ca7d5a45d1af1604790c711f23456c3f42ab4cbef0045ae"
+    },
+    "molecule": {
+      "path": "sphere-grid.molecule.json",
+      "bytes": 2436,
+      "sha256": "e8b2b5f4207723d5972babfc0603641233c353d23cbd28e2abc78a9fd6d9996c"
+    },
+    "labels": {
+      "path": "sphere-grid.labels.json",
+      "bytes": 3534021,
+      "sha256": "551bb387dc8c8f607af7e39f6daa6363a1689226dd177889c0ee048fab9fac84"
+    }
+  }
+}
