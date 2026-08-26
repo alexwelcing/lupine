@@ -6,6 +6,8 @@
 
 1 model (Orb-v3) + Lupine Correction Operator beats a 3-model ensemble by **1.92x in MSE** while using **67% less compute** (3x → 1x LAMMPS runs).
 
+**Certification boundary:** the corrected Cij MSE and per-model improvement factors below are empirical/oracle aggregates and are **uncertified** as correction licenses. Componentwise correction does not certify an aggregate unless every C11/C12/C44 target is independently licensed, and it does not certify any derived modulus or composite without a separate vector-valued license.
+
 ## What We Built
 
 This directory contains the complete execution of the **Universal Correction Operator Benchmark** (Phases 1-5):

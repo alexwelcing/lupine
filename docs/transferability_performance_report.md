@@ -11,6 +11,8 @@ This report compares the Lupine Distill correction/transferability pipeline agai
 
 All real numbers below come from the Cloud Run logs embedded in the Rust and Lean test fixtures.
 
+**Certification boundary:** every corrected residual norm, MSE, percentage reduction, and rank-k aggregate in this report is an empirical/oracle diagnostic and is **uncertified** as a correction license. A componentwise license does not certify these vector aggregates unless every included C11/C12/C44 target is independently licensed; no derived elastic modulus or composite inherits a license without a separately proved and checked vector-valued rule for the exact map.
+
 ## 2. Real Mg-Li Cloud Run results
 
 | Composition | Computed [C11, C12, C44] (GPa) | Reference [C11, C12, C44] (GPa) | Uncorrected residual norm |

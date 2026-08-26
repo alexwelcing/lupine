@@ -1,5 +1,6 @@
 {
   "schema": "lupine.no_target_magnitude.v1",
+  "certification_status": "corrected Cij aggregates are uncertified correction diagnostics; derived elastic maps require a separate vector-valued license",
   "results": [
     {
       "element": "Ag",

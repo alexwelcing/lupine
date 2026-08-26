@@ -41,6 +41,8 @@ Total cases: 128
 
 ## H4 — Operator vs ensemble (LOO oracle, QET as single model)
 
+**Certification status:** Every corrected MAE/MSE in this section is an empirical oracle aggregate and is **uncertified** as a correction license. Certification would require a valid held-out-target license for each C11, C12, and C44 component; no derived elastic quantity inherits a license from componentwise correction.
+
 - Ensemble raw MAE = 12.62 GPa; MSE = 288.71 GPa²
 - QET + LOO operator MAE = 8.95 GPa; MSE = 167.89 GPa²
 - Operator beats ensemble on MAE: True; on MSE: True

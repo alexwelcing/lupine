@@ -31,6 +31,10 @@ def one_hot(value, categories):
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data" / "benchmark_layer2_3x3x3_summary.json"
+CERTIFICATION_STATUS = (
+    "corrected Cij aggregates are uncertified correction diagnostics; "
+    "derived elastic maps require a separate vector-valued license"
+)
 
 COLUMNS = ["c11", "c12", "c44"]
 TARGET_COLUMNS = ["target_c11", "target_c12", "target_c44"]
@@ -251,7 +255,11 @@ def main():
 
     # Save results.
     out = ROOT / "data" / "no_target_magnitude_results.json"
-    out.write_text(json.dumps({"schema": "lupine.no_target_magnitude.v1", "results": results}, indent=2))
+    out.write_text(json.dumps({
+        "schema": "lupine.no_target_magnitude.v1",
+        "certification_status": CERTIFICATION_STATUS,
+        "results": results,
+    }, indent=2))
     print(f"\nSaved: {out}")
 
 
