@@ -1,9 +1,9 @@
 {
   "schemaVersion": "library-content.v1",
-  "generatedAt": "2026-06-19T16:01:16.591Z",
+  "generatedAt": "2026-08-26T01:47:05.735Z",
   "source": {
     "repo": "lupine-science-control-plane",
-    "commit": "25482ab2dcb43286815c6a00a0a8f6e85a9ebbb1",
+    "commit": "f7bdad3936d9359cfcfa2504470cee236181cabe",
     "dirty": true,
     "generator": "scripts/export_library_content.mjs"
   },
@@ -788,7 +788,7 @@
         "id": "formal-vision",
         "source": "articles/docs/formal-vision.md",
         "title": "The Open Distillation Factory — Executable Vision",
-        "subtitle": "47 theorems, 1,499 build targets, and a build-locking epistemic contract.",
+        "subtitle": "Current status: 899 machine-inventoried Lean theorem/lemma declarations, zero active sorry, and a build-locking epistemic contract.",
         "category": "formalization",
         "tags": [
           "lean",
@@ -1211,8 +1211,8 @@
     {
       "source": "docs/formal-vision.md",
       "bundleSource": "articles/docs/formal-vision.md",
-      "bytes": 6386,
-      "sha256": "7b1137ac37081ad2d099e2311499b5b828f2b85e5826675169a9de09ab6136da"
+      "bytes": 6687,
+      "sha256": "d41d2ea170439b61a46c2faef0bfa92711c8c8287710cc8df2e895cabeffba76"
     },
     {
       "source": "docs/formal-methodology.md",

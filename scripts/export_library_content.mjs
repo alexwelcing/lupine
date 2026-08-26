@@ -4,6 +4,12 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+
+execFileSync(process.execPath, ['scripts/check-stale-lean-counts.mjs'], {
+  cwd: path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..'),
+  env: { ...process.env, STALE_LEAN_SCAN_SKIP_ACTIVE_EXPORT: '1' },
+  stdio: 'inherit',
+});
 import { CATALOG } from '../library-site/scripts/catalog.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -146,6 +152,11 @@ function main() {
     path.join(outRoot, 'manifest.json'),
     `${JSON.stringify(manifest, null, 2)}\n`,
   );
+
+  execFileSync(process.execPath, ['scripts/check-stale-lean-counts.mjs'], {
+    cwd: REPO_ROOT,
+    stdio: 'inherit',
+  });
 
   const relativeOut = relToPosix(REPO_ROOT, outRoot);
   console.log(`Exported ${files.length} files for ${catalog.entries.length} catalog entries.`);

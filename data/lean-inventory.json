@@ -1,0 +1,9 @@
+{
+  "count": 899,
+  "modules": 111,
+  "zero_sorry": true,
+  "counted_at": "2026-08-08",
+  "source": "lupine-rhizo/lean-spec/OpenDistillationFactory{,.lean} (vendored packages excluded)",
+  "source_sha256": "106a97a22a6c8acf12abb98210c4fa976d76d6584f261fade3f0c9f13d239f67",
+  "rule": "theorem/lemma declarations after stripping nested comments and strings; supports attributes, whitespace, and declaration modifiers; every active sorry token fails; canonical contract: lupine-rhizo/lean-spec/theorem-count.json — never hand-edit"
+}

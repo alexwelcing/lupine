@@ -7,7 +7,8 @@ touches a theorem proven here.
 
 ## Current state
 
-- **77 build-locked theorems** in the executable vision, **~225 theorem declarations**, **0 `sorry` proofs**, **2891-job build green**.
+- Current declaration and `sorry` totals are maintained in the reviewed
+  machine inventory at `../data/lean-inventory.json`; never hand-type them here.
 - The build is locked by `#guard` contracts in `Materials/Vision.lean`.
 - Epistemic gaps are documented as structures/comments, not as axioms.
 
