@@ -158,7 +158,7 @@ jobs:
         run: |
           set -euo pipefail
           npx wrangler d1 execute glim-ledger --remote --json \
-            --command "SELECT literature_hypothesis_id, json_extract(contract_json, '$.hypothesis_id') AS contract_hypothesis_id, json_extract(contract_json, '$.predicate_set.sign_pattern') AS sign_pattern, json_extract(contract_json, '$.predicate_set.skew_pattern') AS skew_pattern, json_extract(contract_json, '$.verification_state') AS verification_state, json_extract(contract_json, '$.claim_boundaries.out_of_scope[1]') AS range_exclusion FROM literature_hypotheses WHERE literature_hypothesis_id = 'lit-hypothesis.protocol-offset-sign-skew.v1';" \
+            --command "SELECT literature_hypothesis_id, json_extract(contract_json, '$.source.doi') AS source_doi, json_extract(contract_json, '$.source.asOf') AS source_as_of, json_extract(contract_json, '$.proposedExperiment.metric') AS metric, json_extract(contract_json, '$.proposedExperiment.predicate') AS predicate, json_extract(contract_json, '$.epistemicMarker') AS epistemic_marker, json_extract(contract_json, '$.readiness') AS readiness, json_extract(contract_json, '$.status') AS status FROM literature_hypotheses WHERE literature_hypothesis_id = 'lit-hypothesis.protocol-offset-sign-skew.v1';" \
             > ../production-d1-readback.json
           python - <<'PY'
           import json
@@ -169,10 +169,12 @@ jobs:
           assert len(rows) == 1, rows
           row = rows[0]
           assert row['literature_hypothesis_id'] == 'lit-hypothesis.protocol-offset-sign-skew.v1'
-          assert row['contract_hypothesis_id'] == 'lit-hypothesis.protocol-offset-sign-skew.v1'
-          assert row['sign_pattern'] == 'sign_flip'
-          assert row['skew_pattern'] == 'nonzero'
-          assert row['verification_state'] == 'needs-verification'
-          assert row['range_exclusion'] == 'quantitative threshold calibration'
+          assert row['source_doi'] == '10.1038/s41524-025-01571-z'
+          assert row['source_as_of'] == '2026-08-01'
+          assert row['metric'] == 'signed_error_positive'
+          assert row['predicate'] == 'signed_error_positive_fraction>0.5'
+          assert row['epistemic_marker'] == 'OBS'
+          assert row['readiness'].startswith('M (')
+          assert row['status'] == 'proposed'
           print('production D1 readback verified for protocol-offset sign/skew')
           PY
