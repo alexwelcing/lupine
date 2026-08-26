@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SELF = path.relative(ROOT, fileURLToPath(import.meta.url)).split(path.sep).join('/');
+const SKIP_ACTIVE_EXPORT = process.env.STALE_LEAN_SCAN_SKIP_ACTIVE_EXPORT === '1';
 const STALE_NUMBER = /(?<![\d.])(?:77|190|262)(?![\d.])/;
 const COUNT_CONTEXT = /theorems?|lemmas?|declarations?|build[- ]locked|proof layer|Lean 4 corpus|theorem[- ]inventory/i;
 const TEXT_EXTENSIONS = new Set(['.html', '.json', '.js', '.md', '.mjs', '.txt', '.vtt']);
@@ -16,7 +17,11 @@ const tracked = execFileSync('git', ['ls-files', '-z'], { cwd: ROOT })
   .toString('utf8').split('\0').filter(Boolean);
 const failures = [];
 for (const relative of tracked) {
-  if (relative === SELF || HISTORICAL_PATH.test(relative) || CODE_OR_TEST_PATH.test(relative)) continue;
+  const activeLatestExport = relative.startsWith('exports/library-content/latest/');
+  const historicalCandidate = activeLatestExport
+    ? relative.slice('exports/library-content/latest/'.length)
+    : relative;
+  if (relative === SELF || (activeLatestExport && SKIP_ACTIVE_EXPORT) || HISTORICAL_PATH.test(historicalCandidate) || CODE_OR_TEST_PATH.test(relative)) continue;
   if (!TEXT_EXTENSIONS.has(path.extname(relative).toLowerCase())) continue;
   const lines = fs.readFileSync(path.join(ROOT, relative), 'utf8').split(/\r?\n/);
   for (let index = 0; index < lines.length; index += 1) {

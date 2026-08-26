@@ -8,22 +8,27 @@ This project is the first attempt to treat interatomic potential validation as a
 
 ## Build Status
 
+> **Current status:** the reviewed machine inventory reports
+> {{LEAN_DECLARATION_COUNT}} theorem/lemma declarations and zero active `sorry`.
+> This page began as the earlier executable-vision snapshot; current totals come
+> only from `data/lean-inventory.json`.
+
 <div class="stat-row">
   <div class="stat-card">
-    <div class="stat-number">1,499</div>
-    <div class="stat-label">Build targets passed</div>
+    <div class="stat-number">green</div>
+    <div class="stat-label">Build-locked proof target</div>
   </div>
   <div class="stat-card">
-    <div class="stat-number">47</div>
-    <div class="stat-label">Theorems proven</div>
+    <div class="stat-number">{{LEAN_DECLARATION_COUNT}}</div>
+    <div class="stat-label">Machine-inventoried declarations</div>
   </div>
   <div class="stat-card">
-    <div class="stat-number">6</div>
-    <div class="stat-label">Meta-scientific hypotheses</div>
+    <div class="stat-number">0</div>
+    <div class="stat-label">Active sorry</div>
   </div>
   <div class="stat-card">
-    <div class="stat-number">5</div>
-    <div class="stat-label">Documented epistemic gaps</div>
+    <div class="stat-number">hash-locked</div>
+    <div class="stat-label">Inventory provenance</div>
   </div>
 </div>
 
