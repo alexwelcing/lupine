@@ -9,7 +9,7 @@
     "kind",
     "radius"
   ],
-  "edge_count": 12274,
+  "edge_count": 12422,
   "kinds": {
     "config": {
       "index": 0,
@@ -48,7 +48,7 @@
       "radius": 2.8
     }
   },
-  "node_count": 6150,
+  "node_count": 6224,
   "spheres": [
     {
       "atomic_number": 27,
