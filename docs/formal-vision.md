@@ -8,28 +8,27 @@ This project is the first attempt to treat interatomic potential validation as a
 
 ## Build Status
 
-> **Current status (2026-06):** the Projection Law proof chain now reports 77
-> build-locked theorems, ~225 theorem/lemma declarations, seven paper theorems,
-> zero `sorry`, and a 2,891-job `lake build` green. This page began as the
-> earlier executable-vision snapshot; the inventory below is retained as lineage,
-> while the counters have been updated to the current public proof surface.
+> **Current status:** the reviewed machine inventory reports
+> {{LEAN_DECLARATION_COUNT}} theorem/lemma declarations and zero active `sorry`.
+> This page began as the earlier executable-vision snapshot; current totals come
+> only from `data/lean-inventory.json`.
 
 <div class="stat-row">
   <div class="stat-card">
-    <div class="stat-number">2,891</div>
-    <div class="stat-label">Build targets passed</div>
+    <div class="stat-number">green</div>
+    <div class="stat-label">Build-locked proof target</div>
   </div>
   <div class="stat-card">
-    <div class="stat-number">77</div>
-    <div class="stat-label">Build-locked theorems</div>
+    <div class="stat-number">{{LEAN_DECLARATION_COUNT}}</div>
+    <div class="stat-label">Machine-inventoried declarations</div>
   </div>
   <div class="stat-card">
-    <div class="stat-number">~225</div>
-    <div class="stat-label">Theorem / lemma declarations</div>
+    <div class="stat-number">0</div>
+    <div class="stat-label">Active sorry</div>
   </div>
   <div class="stat-card">
-    <div class="stat-number">7</div>
-    <div class="stat-label">Projection Law paper theorems</div>
+    <div class="stat-number">hash-locked</div>
+    <div class="stat-label">Inventory provenance</div>
   </div>
 </div>
 

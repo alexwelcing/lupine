@@ -41,8 +41,9 @@ All registered misses are reported as failures (4 of 7 registered predictions; 2
   PR gauge derived as theorem, ribbon collapse ≤ 3(d−1)/ρ, ribbon/consensus
   decoupling, affine decomposition, local normal-cone theorem for smooth
   non-convex immersions, and Hoeffding entrywise concentration of the empirical
-  second-moment matrix. 77 build-locked theorems in `Vision.lean`, ~225
-  declarations, 0 `sorry`, 0 new axioms; 2891-job `lake build` green.
+  second-moment matrix. Current declaration and `sorry` totals are read from
+  the reviewed machine inventory at `data/lean-inventory.json`; the build adds
+  no new axioms and must remain green.
 - **Replication**: `replication/error-geometry/` — Tier 1 (NumPy-only,
   seconds, verifies every headline statistic), screened PR/rank-one-share
   recomputation (`tier1_pr_gauge.py`), and Tier 2 (recompute from public
