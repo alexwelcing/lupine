@@ -1,3 +1,5 @@
+> SUPERSEDED — This stale oral-talk abstract ("A Geometric Correction Operator...", symposium "Computational Discovery and Design of Materials") is NOT the accepted record. The accepted TMS 2027 record is the poster "From Transferability to Prediction: The Error Geometry of Interatomic Potentials"; canonical proceedings live in lupine-rhizo `paper/tms2027-proceedings/`. Do not use or cite this file.
+
 # TMS 2027 Oral Presentation Abstract
 
 **Symposium:** Computational Discovery and Design of Materials  
