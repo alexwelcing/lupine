@@ -1,7 +1,7 @@
 const ABSOLUTE_PATH = /^(?:\/|[A-Za-z]:\/)/;
 const ABSOLUTE_NODE_URI = /^(?:node-)?[^:]+:\/\/[^/]+\/(?:\/|[A-Za-z]:\/)/;
-const SENSITIVE_COMPONENT = /(?:^|\/)\.(?:worktrees(?:\/|$)|env[^/]*(?:\/|$))/;
-const HERMES_OPERATIONAL_PATH = /(?:^|\/)~\/\.hermes\/kanban\/boards\/[^/]+\/(?:logs|workspaces|attachments)(?:\/|$)/;
+const SENSITIVE_COMPONENT = /(?:^|\/)\.(?:worktrees(?:\/|$)|env[^/]*(?:\/|$))/i;
+const HERMES_OPERATIONAL_PATH = /(?:^|\/)~\/\.hermes\/kanban\/boards\/[^/]+\/(?:logs|workspaces|attachments)(?:\/|$)/i;
 
 export function privatePathReason(value) {
   if (typeof value !== 'string') return null;

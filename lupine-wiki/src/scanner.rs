@@ -406,8 +406,12 @@ fn should_ignore(path: &Path, patterns: &[String]) -> bool {
 
     for component in path.components() {
         let name = component.as_os_str().to_string_lossy().to_string();
+        let lowercase_name = name.to_ascii_lowercase();
+        if lowercase_name == ".worktrees" || lowercase_name.starts_with(".env") {
+            return true;
+        }
         for pattern in &all_patterns {
-            if name.contains(pattern) {
+            if lowercase_name.contains(&pattern.to_ascii_lowercase()) {
                 return true;
             }
         }
@@ -478,11 +482,30 @@ spheres:
             .expect("write suffixed sensitive fixture");
             std::fs::write(checkout.join("scan-root/.envrc"), "export SECRET=nope\n")
                 .expect("write envrc fixture");
+            std::fs::write(checkout.join("scan-root/.ENV"), "SECRET=uppercase-nope\n")
+                .expect("write uppercase sensitive fixture");
+            std::fs::write(
+                checkout.join("scan-root/.Env.production"),
+                "SECRET=mixed-case-nope\n",
+            )
+            .expect("write mixed-case sensitive fixture");
             let worktree = checkout.join("scan-root/.worktrees/private-card");
             std::fs::create_dir_all(&worktree).expect("create worktree fixture");
             std::fs::write(worktree.join("private.md"), "private worktree\n")
                 .expect("write worktree fixture");
-            for operational_dir in ["logs", "workspaces", "attachments"] {
+            let uppercase_worktree = checkout.join("scan-root/.WORKTREES/private-card");
+            std::fs::create_dir_all(&uppercase_worktree)
+                .expect("create uppercase worktree fixture");
+            std::fs::write(uppercase_worktree.join("private.md"), "private worktree\n")
+                .expect("write uppercase worktree fixture");
+            for operational_dir in [
+                "logs",
+                "workspaces",
+                "attachments",
+                "LOGS",
+                "WORKSPACES",
+                "ATTACHMENTS",
+            ] {
                 let directory = checkout.join("scan-root").join(operational_dir);
                 std::fs::create_dir_all(&directory).expect("create operational fixture");
                 std::fs::write(directory.join("private.md"), "private operational data\n")
@@ -507,7 +530,7 @@ spheres:
             "/attachments",
         ];
         assert!(first_scan.nodes.iter().all(|node| {
-            !node.name.starts_with(".env")
+            !node.name.to_ascii_lowercase().starts_with(".env")
                 && node.uri.as_deref().is_none_or(|uri| {
                     forbidden_components
                         .iter()
