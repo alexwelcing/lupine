@@ -388,6 +388,8 @@ const SKIP_EXTENSIONS: &[&str] = &[
 fn should_ignore(path: &Path, patterns: &[String]) -> bool {
     let default_ignores = [
         ".git",
+        ".worktrees",
+        ".env",
         "node_modules",
         "target",
         "__pycache__",
@@ -449,6 +451,10 @@ spheres:
         kind: repo
         recursive: true
         max_depth: 3
+        ignore_patterns:
+          - logs
+          - workspaces
+          - attachments
 "##,
         )
         .expect("test config should parse")
@@ -463,6 +469,25 @@ spheres:
             std::fs::create_dir_all(&nested).expect("create fixture tree");
             std::fs::write(nested.join("evidence.md"), "portable evidence\n")
                 .expect("write fixture file");
+            std::fs::write(checkout.join("scan-root/.env"), "SECRET=not-for-export\n")
+                .expect("write sensitive fixture");
+            std::fs::write(
+                checkout.join("scan-root/.env.production"),
+                "SECRET=also-not-for-export\n",
+            )
+            .expect("write suffixed sensitive fixture");
+            std::fs::write(checkout.join("scan-root/.envrc"), "export SECRET=nope\n")
+                .expect("write envrc fixture");
+            let worktree = checkout.join("scan-root/.worktrees/private-card");
+            std::fs::create_dir_all(&worktree).expect("create worktree fixture");
+            std::fs::write(worktree.join("private.md"), "private worktree\n")
+                .expect("write worktree fixture");
+            for operational_dir in ["logs", "workspaces", "attachments"] {
+                let directory = checkout.join("scan-root").join(operational_dir);
+                std::fs::create_dir_all(&directory).expect("create operational fixture");
+                std::fs::write(directory.join("private.md"), "private operational data\n")
+                    .expect("write operational fixture");
+            }
         }
 
         let first_scan = Scanner::new(portable_fixture_config(), first.path())
@@ -474,6 +499,21 @@ spheres:
 
         assert_eq!(first_scan.nodes, second_scan.nodes);
         assert_eq!(first_scan.edges, second_scan.edges);
+        let forbidden_components = [
+            "/.worktrees",
+            "/.env",
+            "/logs",
+            "/workspaces",
+            "/attachments",
+        ];
+        assert!(first_scan.nodes.iter().all(|node| {
+            !node.name.starts_with(".env")
+                && node.uri.as_deref().is_none_or(|uri| {
+                    forbidden_components
+                        .iter()
+                        .all(|component| !uri.contains(component))
+                })
+        }));
         assert!(first_scan.nodes.iter().all(|node| {
             node.uri
                 .as_deref()

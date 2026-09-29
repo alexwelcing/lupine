@@ -1,0 +1,35 @@
+name: lupine-wiki CI
+
+on:
+  pull_request:
+    paths:
+      - 'lupine-wiki/**'
+      - '.github/workflows/lupine-wiki-ci.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'lupine-wiki/**'
+      - '.github/workflows/lupine-wiki-ci.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lupine-wiki-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  scanner-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: lupine-wiki
+      - name: Check formatting
+        run: rustfmt --edition 2024 --check lupine-wiki/src/config.rs lupine-wiki/src/scanner.rs
+      - name: Run scanner tests
+        run: cargo test --manifest-path lupine-wiki/Cargo.toml
