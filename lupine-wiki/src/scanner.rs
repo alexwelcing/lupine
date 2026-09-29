@@ -411,7 +411,7 @@ fn should_ignore(path: &Path, patterns: &[String]) -> bool {
             return true;
         }
         for pattern in &all_patterns {
-            if lowercase_name.contains(&pattern.to_ascii_lowercase()) {
+            if lowercase_name == pattern.to_ascii_lowercase() {
                 return true;
             }
         }
@@ -511,6 +511,14 @@ spheres:
                 std::fs::write(directory.join("private.md"), "private operational data\n")
                     .expect("write operational fixture");
             }
+            std::fs::write(checkout.join("scan-root/sample.env.md"), "public example\n")
+                .expect("write non-sensitive env example fixture");
+            for legitimate_dir in ["catalogs", "archived-workspaces", "saved-attachments"] {
+                let directory = checkout.join("scan-root").join(legitimate_dir);
+                std::fs::create_dir_all(&directory).expect("create legitimate fixture");
+                std::fs::write(directory.join("public.md"), "public data\n")
+                    .expect("write legitimate fixture");
+            }
         }
 
         let first_scan = Scanner::new(portable_fixture_config(), first.path())
@@ -537,6 +545,21 @@ spheres:
                         .all(|component| !uri.contains(component))
                 })
         }));
+        for expected_component in [
+            "/sample.env.md",
+            "/catalogs",
+            "/archived-workspaces",
+            "/saved-attachments",
+        ] {
+            assert!(
+                first_scan.nodes.iter().any(|node| {
+                    node.uri
+                        .as_deref()
+                        .is_some_and(|uri| uri.contains(expected_component))
+                }),
+                "legitimate component was over-filtered: {expected_component}"
+            );
+        }
         assert!(first_scan.nodes.iter().all(|node| {
             node.uri
                 .as_deref()
