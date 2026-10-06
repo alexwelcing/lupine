@@ -1,25 +1,24 @@
-name: Deploy Library Site to Cloud Run
+name: Legacy Library Cloud Run rollback (manual)
 
 # Restores library.lupine.science. Replaces the frozen Cloud Run image on the
 # existing `library-site` service with a fresh build. The full build+deploy
 # recipe lives in library-site/cloudbuild.yaml (single source of deploy truth).
 
+# Legacy Cloud Run publisher retained for an explicit rollback only.
+# Current Library releases deploy from alexwelcing/lupine-ledger to Cloudflare Pages.
+# Program documentation updates must never redeploy the retired reader.
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'library-site/**'
-      - 'docs/**'
-      - 'README.md'
-      - 'CHANGELOG.md'
-      - 'GLOSSARY.md'
-      - 'lit-review.md'
-      - '.github/workflows/deploy-library-site.yml'
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      rollback_confirmed:
+        description: 'Explicitly restore the legacy Cloud Run reader; current Library is owned by lupine-ledger.'
+        type: boolean
+        required: true
+        default: false
 
 jobs:
   deploy:
+    if: inputs.rollback_confirmed == true
     runs-on: ubuntu-latest
     permissions:
       contents: 'read'

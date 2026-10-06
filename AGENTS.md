@@ -1,8 +1,6 @@
 # Agent Operating Rules
 
-This repo is organized around `glim-think` as the durable intelligence control
-plane. Treat it as the primary system unless the task explicitly points
-elsewhere.
+This repository preserves the Lupine research program and historical monorepo evidence. Active `glim-think`, engines and PI workflows live in `alexwelcing/lupine-rhizo`; the current Library reader lives in `alexwelcing/lupine-ledger`. See `docs/releases/research-live-2026-10-06.md`. For new system work, use those canonical repositories rather than updating a second runtime here. The historical component rules below still apply when modifying retained code.
 
 ## Autonomy
 
