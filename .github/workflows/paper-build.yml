@@ -75,7 +75,7 @@ jobs:
           path: paper/immi-paper.pdf
           retention-days: 30
 
-      - name: Publish to the Library (deploy=true)
+      - name: Save historical paper artifacts (deploy=true)
         if: ${{ inputs.deploy }}
         env:
           GH_TOKEN: ${{ github.token }}
@@ -91,11 +91,9 @@ jobs:
           git add library-site/src/immi_paper.pdf paper/immi-paper-latest.pdf
           git commit -m "build(paper): rebuild preprint PDF from immi-paper.tex" -m "Triggered manually via paper-build.yml; passed the quality gate (no raw-LaTeX leak, no mojibake). Publishing to the Library."
           git push origin HEAD:main
-          # A push made with GITHUB_TOKEN does NOT trigger other workflows
-          # (recursion guard), so deploy-library-site would never fire off
-          # this commit. Dispatch it explicitly so one command ships the paper.
-          gh workflow run deploy-library-site.yml --ref main
-          echo "Dispatched deploy-library-site for the new preprint PDF."
+          # The current Library is deployed from alexwelcing/lupine-ledger.
+          # Keep this historical PDF build separate from reader publication.
+          echo "Saved historical PDFs. Publish reviewed content through lupine-rhizo exports and lupine-ledger."
 
       - name: Report
         if: always()

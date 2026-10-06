@@ -1,6 +1,6 @@
-# Lupine Science — The Projection Law Research Program
+# Lupine Science — An Evidence-Driven Research Program
 
-[![GitHub Release](https://img.shields.io/badge/release-Projection%20Law%20Round%202-blue)](https://github.com/alexwelcing/lupine/releases/tag/projection-law-round2-2026-06-29)
+[![GitHub Release](https://img.shields.io/badge/release-Research%20in%20View-blue)](https://github.com/alexwelcing/lupine/releases/latest)
 [![Lupine Library](https://img.shields.io/badge/read-the%20library-3d4db3)](https://library.lupine.science/#/read/projection-law-round2-final)
 [![LUPI Viewer](https://img.shields.io/badge/view-LUPI-a8772b)](https://lupi.live)
 
@@ -13,6 +13,22 @@ noise. Across potentials, elements, properties, and structure families, errors
 can form low-dimensional geometry. If that geometry is stable, it can tell us
 what a potential gets wrong, where the next failure is likely, and what
 correction or new benchmark would actually matter.
+
+## Current direction — October 2026
+
+Lupine connects deliberate principal-investigator judgment with automated research agents. Each advance starts with a question, competing explanations and a discriminating observation; it ends with checked evidence, limitations and the next test. Running a model or importing a snapshot is not itself a discovery.
+
+| Repository | Current responsibility |
+| --- | --- |
+| [lupine](https://github.com/alexwelcing/lupine) | Research program, historical evidence and coordinated release map |
+| [lupine-rhizo](https://github.com/alexwelcing/lupine-rhizo) | Active research engines, Glim Think, Clef planning, private PI workflows and reviewed public activity contract |
+| [lupine-ledger](https://github.com/alexwelcing/lupine-ledger) | Lupine Library reader and refreshing view of reviewed research activity |
+
+[Research in View release notes](docs/releases/research-live-2026-10-06.md) explain the current system and its boundaries. [Lupine Library](https://library.lupine.science) presents questions, completed analyses, failures, limitations and planned next tests, with explicit observation times and connection state. Private model packets and raw research archives are not part of that public feed.
+
+The first broader archived-panel analysis covers 800 configurations. Model disagreement has a modest positive mean error-ranking gain over a force-magnitude control on both panels, while only about half of individual configurations improve. It is exploratory, independently checked arithmetic, not a calibrated alarm or a claim of methodological novelty. [Read the method and limitations](https://github.com/alexwelcing/lupine-rhizo/blob/f6bb6bc99df6fe42785b617361a80e699abb4d0f/docs/research-progress/2026-10-06-disagreement-panels.md).
+
+## Historical Projection Law result
 
 Round 2 delivered the first focused test of this idea against modern
 machine-learned interatomic potentials (MLIPs):
@@ -86,7 +102,10 @@ more useful, not disappear.
 
 ## How To Use Lupine
 
-### 1. Read the latest release
+### 1. Read the releases
+
+- **Current program release:** [Research in View](https://github.com/alexwelcing/lupine/releases/latest)
+- **Historical scientific package:** the Round 2 links below retain their original evidence and certification limits.
 
 - **GitHub Release:** [`projection-law-round2-2026-06-29`](https://github.com/alexwelcing/lupine/releases/tag/projection-law-round2-2026-06-29)
 - **Short paper:** [`ProjectionLaw_Round2.pdf`](https://github.com/alexwelcing/lupine/releases/download/projection-law-round2-2026-06-29/ProjectionLaw_Round2.pdf)
@@ -100,9 +119,7 @@ Start with the public Library:
 > [library.lupine.science](https://library.lupine.science)
 
 The Library is the human knowledge surface for reports, claim status, evidence
-summaries, formal notes, and the working changelog. It is generated from this
-repository, so the corpus is the source of truth and the site is a readable
-view of it.
+summaries, formal notes, and the working changelog. The reader is maintained in `lupine-ledger`, receives reviewed corpus exports from `lupine-rhizo`, and refreshes an explicit public activity feed. Historical content remains attributable to its source revision; refresh time is not evidence time.
 
 Useful local entry points:
 
@@ -131,13 +148,16 @@ Local code lives under `atlas/`.
 
 ### 4. Run or Extend the Work Locally
 
-Build the Library locally:
+Build the current Library in the dedicated repository:
 
 ```bash
-cd library-site
+git clone https://github.com/alexwelcing/lupine-ledger.git
+cd lupine-ledger
 npm install
-npm run dev
+npm run build
 ```
+
+Use `lupine-rhizo` for active engine and research-agent development. The following commands describe the historical monorepo components retained here.
 
 Run the Rust scientific engine checks:
 
@@ -198,10 +218,11 @@ decisions, see `ROOTS.md`.
 | --- | --- |
 | `docs/ONBOARDING.md` | **New contributors start here** — research-scientist and software-engineer tracks |
 | `docs/ARCHITECTURE.md` | System map: control plane, compute plane, evidence plane, and data flow |
-| `docs/repo-split-map.md` | Planned split into `lupine.science`, `lupi.live`, `library.lupine.science`, and the science/control-plane repo |
+| `docs/releases/research-live-2026-10-06.md` | Current repository ownership and coordinated release map |
+| `docs/repo-split-map.md` | Historical split plan |
 | `docs/working-path.md` | Practical checkout, branch, worktree, and verification path |
 | `archive/` | Retired surfaces and historical exports |
-| `library-site/` | Static-site generator for the Lupine Library |
+| `library-site/` | Historical Library source; current reader is `lupine-ledger` |
 | `docs/` | Research corpus, reports, plans, runbooks, templates, and hypotheses |
 | `mlip_immi/` | IMMI analysis code, benchmark data, and cross-MLIP evidence payloads |
 | `lean-spec/` | Lean 4 theorem statements, proof skeletons, and a point-core instance |
@@ -210,7 +231,7 @@ decisions, see `ROOTS.md`.
 | `atlas/` | LUPI viewer and atomistic evidence surfaces |
 | `atlas-distill/` | Rust runtime for Distill scoring, policy, and fault-line extraction |
 | `python/` | Active Python Distill packages: benchmarking, uplift, regime gate, instrumented runtime |
-| `glim-think/` | Agentic research control plane, durable agenda, and ledger-backed loop |
+| `glim-think/` | Historical control-plane source; active development is in `lupine-rhizo` |
 
 The old `lupine-start/` marketing/start site, the `distiller/` KB, the
 `lupine-distill/` Rust crate, and the `lupine-dspy/` package have been retired
