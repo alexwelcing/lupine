@@ -8,15 +8,15 @@ name: Build Preprint PDF (manual)
 #   gh workflow run paper-build.yml -f regenerate_figures=true
 #
 # It compiles paper/immi-paper.tex (with the committed figures by default),
-# refuses to ship a PDF that leaked raw LaTeX (the exact bug this guards
-# against), and — when deploy=true — commits the fresh PDF to main so the
-# existing deploy-library-site workflow publishes it.
+# rejects PDFs with leaked raw LaTeX and, when deploy=true, saves historical
+# PDF artifacts to main. Current Library publication is a separate reviewed
+# export through lupine-rhizo and lupine-ledger.
 
 on:
   workflow_dispatch:
     inputs:
       deploy:
-        description: 'Commit the rebuilt PDF to main (triggers the Library deploy). Off = build + artifact only.'
+        description: 'Save rebuilt historical PDFs to main. Does not publish the current Library.'
         type: boolean
         default: true
       regenerate_figures:
@@ -89,7 +89,7 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add library-site/src/immi_paper.pdf paper/immi-paper-latest.pdf
-          git commit -m "build(paper): rebuild preprint PDF from immi-paper.tex" -m "Triggered manually via paper-build.yml; passed the quality gate (no raw-LaTeX leak, no mojibake). Publishing to the Library."
+          git commit -m "build(paper): rebuild preprint PDF from immi-paper.tex" -m "Triggered manually via paper-build.yml; passed the quality gate (no raw-LaTeX leak, no mojibake). Current Library publication is separate."
           git push origin HEAD:main
           # The current Library is deployed from alexwelcing/lupine-ledger.
           # Keep this historical PDF build separate from reader publication.
