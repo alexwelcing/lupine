@@ -34,7 +34,7 @@ Recovery of the exact pinned MPtrj source confirms all five earlier pilot cases 
 
 [Read the tested workflow repair and limits](https://github.com/alexwelcing/lupine-rhizo/blob/a761f85b21e2398a73c38c2dd6f3da56a176dcd0/docs/research-progress/2026-10-06-predictor-provenance.md) and the [proposed study](https://github.com/alexwelcing/lupine-rhizo/blob/a761f85b21e2398a73c38c2dd6f3da56a176dcd0/docs/research-progress/2026-10-06-prospective-ranking-protocol.md).
 
-The [completed four-source audit](https://github.com/alexwelcing/lupine-rhizo/blob/29bf23d9ea1bb4b1a8e84c2c2dc301519ac9d505/docs/research-progress/2026-10-06-roster-readiness.md) applies that stop rule without claiming all candidate rows are contaminated. The next planned question concerns shared errors in the fixed archived predictions, with no new ranking score or independent-validation claim.
+The [completed four-source audit](https://github.com/alexwelcing/lupine-rhizo/blob/29bf23d9ea1bb4b1a8e84c2c2dc301519ac9d505/docs/research-progress/2026-10-06-roster-readiness.md) applies that stop rule without claiming all candidate rows are contaminated. The distinct archived diagnostic now confirms that aligned common residuals carry 71.00 percent and 76.52 percent of ensemble squared error on the average equally weighted configuration in MatPES and OMat24. Both pass the fixed half threshold, with exact arithmetic checked. The cause remains unresolved. [Read the result and final planned uniform-offset control](https://github.com/alexwelcing/lupine-rhizo/blob/28a0fb8e464b61a88aa158621850fe2366415c5e/docs/research-progress/2026-10-06-common-error.md).
 
 ## Historical Projection Law result
 
