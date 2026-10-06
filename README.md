@@ -28,6 +28,8 @@ Lupine connects deliberate principal-investigator judgment with automated resear
 
 The first broader archived-panel analysis covers 800 configurations. Model disagreement has a modest positive mean error-ranking gain over a force-magnitude control on both panels, while only about half of individual configurations improve. It is exploratory, independently checked arithmetic, not a calibrated alarm or a claim of methodological novelty. [Read the method and limitations](https://github.com/alexwelcing/lupine-rhizo/blob/f6bb6bc99df6fe42785b617361a80e699abb4d0f/docs/research-progress/2026-10-06-disagreement-panels.md).
 
+A follow-up found that combining only pairwise rankings preserves a positive mean advantage over every individual pair on those same panels (+0.55 and +0.99 ranking-area percentage points over the strongest pair). It does not consistently beat full disagreement. The next step is an outcome-blind eligibility audit for independent validation, with model and reference provenance checked before new predictions. [Read the checked result and next-test boundary](https://github.com/alexwelcing/lupine-rhizo/blob/35db95adec6b3eacc76aaa992165137760f8d84b/docs/research-progress/2026-10-06-rank-fusion.md).
+
 ## Historical Projection Law result
 
 Round 2 delivered the first focused test of this idea against modern
