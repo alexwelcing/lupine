@@ -68,6 +68,9 @@ spheres:
         ignore_patterns:
           - .db-shm
           - .db-wal
+          - logs
+          - workspaces
+          - attachments
 
   lupine-science:
     name: Lupine Science

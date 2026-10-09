@@ -48,6 +48,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      # Run before the Vite/Turbo build: build plugins may copy or rewrite
+      # public assets, so integrity drift must fail against the checked-in tree.
+      - name: Verify committed sphere-grid integrity and privacy
+        run: |
+          pnpm test:sphere-grid-policy
+          pnpm verify:sphere-grid
+
       - name: Build (tsc --noEmit per package + vite web bundle)
         run: pnpm build
 

@@ -151,4 +151,24 @@ mod tests {
         assert_eq!(ledger_roots, ["../lupine-ledger"]);
         assert!(config.spheres["lupine-ledger"].roots[0].required);
     }
+
+    #[test]
+    fn project_scanner_excludes_hermes_operational_directories() {
+        let config: ScannerConfig = serde_yaml::from_str(include_str!("../scanner.yaml")).unwrap();
+        let board_root = config.spheres["hermes-local-extensions"]
+            .roots
+            .iter()
+            .find(|root| root.path == "~/.hermes/kanban/boards/lupine")
+            .expect("configured Lupine board root");
+
+        for directory in ["logs", "workspaces", "attachments"] {
+            assert!(
+                board_root
+                    .ignore_patterns
+                    .iter()
+                    .any(|pattern| pattern == directory),
+                "missing operational ignore pattern: {directory}"
+            );
+        }
+    }
 }

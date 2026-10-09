@@ -4,6 +4,7 @@ import { createHash } from 'node:crypto';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { assertPublicLabels } from './sphere-grid-label-policy.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const OUTPUT = path.resolve(__dirname, '../apps/web/public/generated/lupine-wiki');
@@ -33,21 +34,6 @@ async function verifyArtifact(name, record) {
   assert(sha256 === record.sha256, `${name} SHA-256 mismatch`);
 }
 
-function assertPortableLabels(labels) {
-  const absolutePath = /^(?:\/|[A-Za-z]:[\\/])/;
-  const absoluteNodeUri = /^(?:node-)?[^:]+:\/\/[^/]+\/(?:\/|[A-Za-z]:[\\/])/;
-  for (const label of labels) {
-    for (const field of ['description', 'id', 'node_id']) {
-      const value = label[field];
-      assert(
-        typeof value !== 'string' ||
-          (!absolutePath.test(value) && !absoluteNodeUri.test(value)),
-        `checkout-specific absolute path in label ${field}: ${value}`,
-      );
-    }
-  }
-}
-
 async function main() {
   const catalog = await readJson(path.join(OUTPUT, 'catalog.json'));
   const meta = await readJson(path.join(OUTPUT, 'sphere-grid.molecule.json'));
@@ -61,7 +47,7 @@ async function main() {
   assert(catalog.graph.edges === meta.edge_count, 'catalog/meta edge count mismatch');
   assert(catalog.graph.spheres === meta.spheres.length, 'catalog/meta sphere count mismatch');
   assert(catalog.graph.labels === labels.labels.length, 'catalog/labels count mismatch');
-  assertPortableLabels(labels.labels);
+  assertPublicLabels(labels.labels);
   assert(Number.parseInt(xyz.split('\n', 1)[0], 10) === meta.node_count, 'XYZ atom count mismatch');
 
   const dataAtomMatch = data.match(/^(\d+) atoms$/m);
