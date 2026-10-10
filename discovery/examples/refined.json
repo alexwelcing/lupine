@@ -1,0 +1,157 @@
+{
+  "schema": "lupine.discovery.problem.v1",
+  "description": "Synthetic abstract fixture, not a materials result. All constraints use g <= 0.",
+  "scenario": {
+    "id": "abstract-fixture-v1",
+    "objective": {
+      "unit": "utility",
+      "reference": "synthetic-fixed-world-v1",
+      "direction": "minimize"
+    },
+    "constraints": {
+      "capacity": {
+        "unit": "normalized-slack",
+        "reference": "synthetic-fixed-world-v1"
+      }
+    }
+  },
+  "evidence": [
+    {
+      "id": "fixture-score",
+      "kind": "synthetic_fixture",
+      "status": "reported",
+      "scope": {
+        "scenario_id": "abstract-fixture-v1",
+        "quantity": "score",
+        "unit": "utility",
+        "reference": "synthetic-fixed-world-v1"
+      },
+      "statement": "Explicitly constructed synthetic world for demonstration.",
+      "source": {
+        "uri": "fixture://lupine-discovery/abstract-v1"
+      }
+    },
+    {
+      "id": "fixture-capacity",
+      "kind": "synthetic_fixture",
+      "status": "reported",
+      "scope": {
+        "scenario_id": "abstract-fixture-v1",
+        "quantity": "capacity",
+        "unit": "normalized-slack",
+        "reference": "synthetic-fixed-world-v1"
+      },
+      "statement": "Explicitly constructed synthetic world for demonstration.",
+      "source": {
+        "uri": "fixture://lupine-discovery/abstract-v1"
+      }
+    }
+  ],
+  "candidates": [
+    {
+      "id": "A",
+      "score": [
+        2,
+        2
+      ],
+      "constraints": {
+        "capacity": [
+          -1,
+          0
+        ]
+      },
+      "evidence": {
+        "score": [
+          "fixture-score"
+        ],
+        "capacity": [
+          "fixture-capacity"
+        ]
+      }
+    },
+    {
+      "id": "B",
+      "score": [
+        3,
+        4
+      ],
+      "constraints": {
+        "capacity": [
+          -1,
+          1
+        ]
+      },
+      "evidence": {
+        "score": [
+          "fixture-score"
+        ],
+        "capacity": [
+          "fixture-capacity"
+        ]
+      }
+    },
+    {
+      "id": "C",
+      "score": [
+        0,
+        1
+      ],
+      "constraints": {
+        "capacity": [
+          1,
+          2
+        ]
+      },
+      "evidence": {
+        "score": [
+          "fixture-score"
+        ],
+        "capacity": [
+          "fixture-capacity"
+        ]
+      }
+    },
+    {
+      "id": "D",
+      "score": [
+        0,
+        3
+      ],
+      "constraints": {
+        "capacity": [
+          1,
+          1
+        ]
+      },
+      "evidence": {
+        "score": [
+          "fixture-score"
+        ],
+        "capacity": [
+          "fixture-capacity"
+        ]
+      }
+    },
+    {
+      "id": "E",
+      "score": [
+        2,
+        2
+      ],
+      "constraints": {
+        "capacity": [
+          -1,
+          -1
+        ]
+      },
+      "evidence": {
+        "score": [
+          "fixture-score"
+        ],
+        "capacity": [
+          "fixture-capacity"
+        ]
+      }
+    }
+  ]
+}

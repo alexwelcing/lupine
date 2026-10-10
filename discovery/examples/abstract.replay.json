@@ -1,0 +1,101 @@
+{
+  "evaluation": {
+    "all_true_minimizers_retained": true,
+    "certification_state": "conditional_on_sound_interval_premises",
+    "certified_rejection_correctness": {
+      "C": true
+    },
+    "constraint_coverage": "1",
+    "constraint_coverage_count": 5,
+    "empirical_soundness": "supported_on_complete_finite_archive",
+    "excluded_optimum_correctness": {
+      "B": true,
+      "C": true
+    },
+    "incumbent_regret": "0",
+    "incumbent_true_feasible": true,
+    "missing_truth_ids": [],
+    "observed_best_feasible_score": "2",
+    "outcome_completeness": "complete",
+    "per_candidate": {
+      "A": {
+        "constraint_coverage": {
+          "capacity": true
+        },
+        "score_covered": true,
+        "true_feasible": true,
+        "truth_complete": true
+      },
+      "B": {
+        "constraint_coverage": {
+          "capacity": true
+        },
+        "score_covered": true,
+        "true_feasible": true,
+        "truth_complete": true
+      },
+      "C": {
+        "constraint_coverage": {
+          "capacity": true
+        },
+        "score_covered": true,
+        "true_feasible": false,
+        "truth_complete": true
+      },
+      "D": {
+        "constraint_coverage": {
+          "capacity": true
+        },
+        "score_covered": true,
+        "true_feasible": false,
+        "truth_complete": true
+      },
+      "E": {
+        "constraint_coverage": {
+          "capacity": true
+        },
+        "score_covered": true,
+        "true_feasible": true,
+        "truth_complete": true
+      }
+    },
+    "pool_fraction": "3/5",
+    "regret_bound_holds": true,
+    "score_coverage": "1",
+    "score_coverage_count": 5,
+    "selection": {
+      "certified_feasible": [
+        "A",
+        "E"
+      ],
+      "certified_infeasible": [
+        "C"
+      ],
+      "dominated": [
+        "B"
+      ],
+      "incumbent": "A",
+      "possible_feasible": [
+        "A",
+        "B",
+        "D",
+        "E"
+      ],
+      "regret_bound": "2",
+      "retained": [
+        "A",
+        "D",
+        "E"
+      ],
+      "threshold": "2"
+    },
+    "true_feasible_optimum": "2",
+    "true_minimizers": [
+      "A",
+      "E"
+    ]
+  },
+  "outcomes_digest": "5cd1f869db96e9ac97969c84eb6194a20d9491b08704e0c5c81bdbd5b48d47c1",
+  "problem_digest": "5678d4faf2fb6aced0eb45d8ad33cc220929e6566f6655ebf47c04444e42f125",
+  "schema": "lupine.discovery.replay.v1"
+}

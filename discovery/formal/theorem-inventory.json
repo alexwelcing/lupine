@@ -1,0 +1,388 @@
+{
+  "axiom_output_sha256": "7a888e8a69f5af1a30f070afda4635bbc123c2d0fea80a3c710726dac871fc57",
+  "module_count": 5,
+  "modules": [
+    {
+      "source": "LupineDiscovery.lean",
+      "source_sha256": "93adb82c8caceb6620285bea612b4c80e4cf11c7da6d1e04b8ba595f43c6c515",
+      "theorem_count": 18,
+      "theorems": {
+        "LupineDiscovery.best_upper_retained_shrinks": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineDiscovery.certified_expands": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineDiscovery.certified_feasible": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineDiscovery.descriptor_collision_lower_bound": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineDiscovery.empty_possible_no_feasible": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineDiscovery.feasible_possible": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineDiscovery.incumbent_regret_nonnegative": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineDiscovery.minimizer_retained": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineDiscovery.no_anchor_ambiguity": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineDiscovery.pairwise_order": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineDiscovery.pairwise_strict_order": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineDiscovery.possible_shrinks": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineDiscovery.pruned_has_better_feasible": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineDiscovery.regret_bound": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineDiscovery.regret_bound_monotone": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineDiscovery.retained_shrinks": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineDiscovery.shared_prediction_error_lower_bound": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineDiscovery.threshold_decreases": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ]
+      }
+    },
+    {
+      "source": "LupineIntervals.lean",
+      "source_sha256": "9dec04611f670efdd8deaa6e05f802199f418c9089a5c29148bf8ca4534d8fc4",
+      "theorem_count": 9,
+      "theorems": {
+        "LupineIntervals.product_enclosure": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineIntervals.quotient_enclosure": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineIntervals.reciprocal_enclosure": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineIntervals.scaled_enclosure": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineIntervals.square_enclosure": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineIntervals.square_nonnegative_enclosure": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineIntervals.square_nonpositive_enclosure": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineIntervals.square_upper_enclosure": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineIntervals.zero_excluding_nonzero": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ]
+      }
+    },
+    {
+      "source": "LupinePareto.lean",
+      "source_sha256": "077e657e5b6d77ef878c325baf9db909adff73f23408385ee464482cd6acd4c0",
+      "theorem_count": 15,
+      "theorems": {
+        "LupinePareto.certified_expands": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupinePareto.certified_feasible": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupinePareto.empty_possible_no_feasible": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupinePareto.equal_vectors_no_witness": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupinePareto.equal_vectors_not_dominated": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupinePareto.feasible_possible": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupinePareto.interval_dominance_persists": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupinePareto.interval_dominance_sound": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupinePareto.no_certified_retains_possible": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupinePareto.pareto_retained": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupinePareto.possible_shrinks": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupinePareto.pruned_has_feasible_dominator": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupinePareto.retained_shrinks": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupinePareto.witness_has_feasible_dominator": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupinePareto.witness_persists": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ]
+      }
+    },
+    {
+      "source": "LupineRisk.lean",
+      "source_sha256": "bea0e0cb18daeb41a26e7c721bef0dec6e1c361f3ccf1c9f7f7dbf2176c0fcdf",
+      "theorem_count": 15,
+      "theorems": {
+        "LupineRisk.allocated_joint_failure_bound": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineRisk.conditional_conclusion_failure_bound": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineRisk.conditional_conclusion_success_bound": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineRisk.failure_subset_bound": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineRisk.finite_rank_iff": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineRisk.finite_rank_iff_minimum_count": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineRisk.finite_union_bound": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineRisk.finite_weighted_joint_failure_bound": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineRisk.insufficient_resolution_rank": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineRisk.rank_at_most_next": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineRisk.rank_positive": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineRisk.risk_at_most_one": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineRisk.risk_nonnegative": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineRisk.uniform_allocation_sum": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineRisk.uniform_joint_failure_bound": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ]
+      }
+    },
+    {
+      "source": "LupineSharpness.lean",
+      "source_sha256": "1135d8ba14c6d2c388bc5aaa40fc4ce71d55fe09cb8c90bf7319a70a84cbb871",
+      "theorem_count": 12,
+      "theorems": {
+        "LupineSharpness.box_retained_iff_best_upper_retained": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineSharpness.box_retained_iff_realizable": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineSharpness.box_retained_minimal": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineSharpness.box_retained_realizable": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineSharpness.box_retained_universally_safe": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineSharpness.compatible_minimizer_box_retained": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineSharpness.no_certified_box_retained_iff_possible": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineSharpness.pruning_retained_has_counterexample": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineSharpness.witness_candidate_feasible": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineSharpness.witness_candidate_minimizer": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineSharpness.witness_other_feasible_iff_certified": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineSharpness.witness_world_sound": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ]
+      }
+    }
+  ],
+  "schema": "lupine-formal-theorem-inventory-v1",
+  "theorem_count": 69
+}

@@ -1,0 +1,57 @@
+{
+  "schema": "lupine.discovery.pareto_outcomes.v1",
+  "scenario_id": "pareto-partial",
+  "problem_digest": "d7a9f53dbdb6a2ccce81c0fae4f43dc7cba9f69d83084f1c12fc975a7ef05169",
+  "outcomes": [
+    {
+      "id": "a",
+      "objectives": {
+        "cost": "0",
+        "risk": "3"
+      },
+      "constraints": {
+        "limit": "-1"
+      }
+    },
+    {
+      "id": "a-twin",
+      "objectives": {
+        "cost": "0",
+        "risk": "3"
+      },
+      "constraints": {
+        "limit": "-1"
+      }
+    },
+    {
+      "id": "b",
+      "objectives": {
+        "cost": "3",
+        "risk": null
+      },
+      "constraints": {
+        "limit": "-1"
+      }
+    },
+    {
+      "id": "bad",
+      "objectives": {
+        "cost": "4",
+        "risk": "4"
+      },
+      "constraints": {
+        "limit": "-1"
+      }
+    },
+    {
+      "id": "infeasible",
+      "objectives": {
+        "cost": "-1",
+        "risk": "-1"
+      },
+      "constraints": {
+        "limit": "1"
+      }
+    }
+  ]
+}

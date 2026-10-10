@@ -1,0 +1,30 @@
+{
+  "schema": "lupine.discovery.engineering-validation.v1",
+  "status": "passed",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_constrained*.py",
+    "-v"
+  ],
+  "exit_code": 0,
+  "source_sha256": {
+    "scripts/constrained_benchmark.py": "0e9e53346a3d435ebdd6606117623df15121fa801e70a26d72433a3530235430",
+    "scripts/constrained_dashboard.py": "20301c661c0d9b0af79d4c9a272f3dc89409a2c89f5f5a0aa4214c65a4fb512d",
+    "scripts/constrained_replay.py": "48c0d950aad7a8e09aee39e0b9870188f23ac5949f897e79b8a30e4965ca8a36",
+    "src/lupine_discovery/calibration.py": "33e71fba54813336af244230261cef639a334328dbd1578d995d377ead7d8f15",
+    "src/lupine_discovery/core.py": "c7bab15c662eaa79b6e6312271d3351e79ccb97ef42fcdfc830fdbbf3118d5a0",
+    "src/lupine_discovery/serialization.py": "cfec006ed4cb51fbbb6539422a5d829cadaa7bf0ff78bebbffd58aaba6f2523c",
+    "tests/test_constrained_benchmark.py": "52bcce60339c61a7e4003167d750829d726fd1e844d8c86b084fc7a85caac05b",
+    "tests/test_constrained_dashboard.py": "a4a6bbf9c528ef75455648be320fe02b7f61d6ff05d3d9f83678ead1df22a322",
+    "tests/test_constrained_replay.py": "6b787b77d84a018f8c80973b818ad9b79550bbdcecba128dd8503864c813d571"
+  },
+  "result_log_path": ".cache/constrained/engineering-tests.txt",
+  "result_log_sha256": "b83c40c0b1c34191b0b0b355fcd23a9c852ec372ee75979e1c4f088848a729f3",
+  "test_count": 34
+}

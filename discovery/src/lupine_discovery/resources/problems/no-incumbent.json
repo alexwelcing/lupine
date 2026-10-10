@@ -1,0 +1,136 @@
+{
+  "schema": "lupine.discovery.problem.v1",
+  "description": "When all remaining feasibility intervals cross zero, screening must preserve all possibilities. Synthetic finite problem; no physical predictor validation.",
+  "scenario": {
+    "id": "no-incumbent",
+    "objective": {
+      "unit": "synthetic-score",
+      "reference": "constructed-finite-world-v1",
+      "direction": "minimize"
+    },
+    "constraints": {
+      "limit": {
+        "unit": "synthetic-slack",
+        "reference": "constructed-finite-world-v1"
+      }
+    }
+  },
+  "evidence": [
+    {
+      "id": "no-incumbent-score",
+      "kind": "synthetic_fixture",
+      "status": "reported",
+      "scope": {
+        "scenario_id": "no-incumbent",
+        "quantity": "score",
+        "unit": "synthetic-score",
+        "reference": "constructed-finite-world-v1"
+      },
+      "statement": "Synthetic fixture. Intervals constructed to contain the independently enumerated finite truth.",
+      "source": {
+        "uri": "fixture://lupine-discovery/known-answers-v1/no-incumbent"
+      }
+    },
+    {
+      "id": "no-incumbent-limit",
+      "kind": "synthetic_fixture",
+      "status": "reported",
+      "scope": {
+        "scenario_id": "no-incumbent",
+        "quantity": "limit",
+        "unit": "synthetic-slack",
+        "reference": "constructed-finite-world-v1"
+      },
+      "statement": "Synthetic fixture. Intervals constructed to contain the independently enumerated finite truth.",
+      "source": {
+        "uri": "fixture://lupine-discovery/known-answers-v1/no-incumbent"
+      }
+    }
+  ],
+  "candidates": [
+    {
+      "id": "A",
+      "score": [
+        "0",
+        "2"
+      ],
+      "constraints": {
+        "limit": [
+          "-1",
+          "1"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "no-incumbent-score"
+        ],
+        "limit": [
+          "no-incumbent-limit"
+        ]
+      }
+    },
+    {
+      "id": "B",
+      "score": [
+        "3",
+        "5"
+      ],
+      "constraints": {
+        "limit": [
+          "-2",
+          "1"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "no-incumbent-score"
+        ],
+        "limit": [
+          "no-incumbent-limit"
+        ]
+      }
+    },
+    {
+      "id": "C",
+      "score": [
+        "6",
+        "9"
+      ],
+      "constraints": {
+        "limit": [
+          "-1",
+          "2"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "no-incumbent-score"
+        ],
+        "limit": [
+          "no-incumbent-limit"
+        ]
+      }
+    },
+    {
+      "id": "D",
+      "score": [
+        "-9",
+        "-8"
+      ],
+      "constraints": {
+        "limit": [
+          "1",
+          "2"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "no-incumbent-score"
+        ],
+        "limit": [
+          "no-incumbent-limit"
+        ]
+      }
+    }
+  ]
+}

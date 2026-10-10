@@ -1,0 +1,110 @@
+{
+  "schema": "lupine.discovery.problem.v1",
+  "description": "The same six true candidates are screened with narrower intervals. Synthetic finite problem; no physical predictor validation.",
+  "scenario": {
+    "id": "interval-refinement-pair",
+    "objective": {
+      "unit": "synthetic-score",
+      "reference": "constructed-finite-world-v1",
+      "direction": "minimize"
+    },
+    "constraints": {}
+  },
+  "evidence": [
+    {
+      "id": "refined-intervals-score",
+      "kind": "synthetic_fixture",
+      "status": "reported",
+      "scope": {
+        "scenario_id": "interval-refinement-pair",
+        "quantity": "score",
+        "unit": "synthetic-score",
+        "reference": "constructed-finite-world-v1"
+      },
+      "statement": "Synthetic fixture. Intervals constructed to contain the independently enumerated finite truth.",
+      "source": {
+        "uri": "fixture://lupine-discovery/known-answers-v1/refined-intervals"
+      }
+    }
+  ],
+  "candidates": [
+    {
+      "id": "A",
+      "score": [
+        "-1/4",
+        "1/4"
+      ],
+      "constraints": {},
+      "evidence": {
+        "score": [
+          "refined-intervals-score"
+        ]
+      }
+    },
+    {
+      "id": "B",
+      "score": [
+        "7/4",
+        "9/4"
+      ],
+      "constraints": {},
+      "evidence": {
+        "score": [
+          "refined-intervals-score"
+        ]
+      }
+    },
+    {
+      "id": "C",
+      "score": [
+        "15/4",
+        "17/4"
+      ],
+      "constraints": {},
+      "evidence": {
+        "score": [
+          "refined-intervals-score"
+        ]
+      }
+    },
+    {
+      "id": "D",
+      "score": [
+        "23/4",
+        "25/4"
+      ],
+      "constraints": {},
+      "evidence": {
+        "score": [
+          "refined-intervals-score"
+        ]
+      }
+    },
+    {
+      "id": "E",
+      "score": [
+        "31/4",
+        "33/4"
+      ],
+      "constraints": {},
+      "evidence": {
+        "score": [
+          "refined-intervals-score"
+        ]
+      }
+    },
+    {
+      "id": "F",
+      "score": [
+        "39/4",
+        "41/4"
+      ],
+      "constraints": {},
+      "evidence": {
+        "score": [
+          "refined-intervals-score"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "schema": "lupine.discovery.outcomes.v1",
+  "scenario_id": "normalized-maximization",
+  "problem_digest": "d8a2eb9d22fef7a1a3d8b52959f6ab063576a11695bbd5c3d8dd4f06dc51398f",
+  "outcomes": [
+    {
+      "id": "A",
+      "score": "-5",
+      "constraints": {
+        "budget": "-2"
+      }
+    },
+    {
+      "id": "B",
+      "score": "-7",
+      "constraints": {
+        "budget": "-1"
+      }
+    },
+    {
+      "id": "C",
+      "score": "-13",
+      "constraints": {
+        "budget": "1"
+      }
+    },
+    {
+      "id": "D",
+      "score": "-11",
+      "constraints": {
+        "budget": "0"
+      }
+    },
+    {
+      "id": "E",
+      "score": "-2",
+      "constraints": {
+        "budget": "-2"
+      }
+    }
+  ]
+}

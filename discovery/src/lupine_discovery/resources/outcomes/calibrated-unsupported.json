@@ -1,0 +1,28 @@
+{
+  "schema": "lupine.discovery.outcomes.v1",
+  "scenario_id": "calibrated-unsupported",
+  "problem_digest": "ae7db6decbd1aa5380f3e9fd5215c597d212f6402f2bedf1ca0f28b715dd9d05",
+  "outcomes": [
+    {
+      "id": "A",
+      "score": "0",
+      "constraints": {
+        "limit": "-1"
+      }
+    },
+    {
+      "id": "B",
+      "score": "4",
+      "constraints": {
+        "limit": "-1"
+      }
+    },
+    {
+      "id": "C",
+      "score": "-5",
+      "constraints": {
+        "limit": "1"
+      }
+    }
+  ]
+}

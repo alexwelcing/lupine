@@ -1,0 +1,23 @@
+[
+  {
+    "id": "calibrated-finite",
+    "title": "Finite calibration, explicit assumptions",
+    "description": "Enough calibration samples permit finite bounds; their scientific premises remain unverified.",
+    "kind": "calibration_demo",
+    "has_outcomes": true
+  },
+  {
+    "id": "calibrated-insufficient",
+    "title": "Insufficient calibration",
+    "description": "The risk budget requires an unbounded threshold; every candidate remains.",
+    "kind": "calibration_demo",
+    "has_outcomes": true
+  },
+  {
+    "id": "calibrated-unsupported",
+    "title": "Unsupported sampling scope",
+    "description": "Finite arithmetic cannot justify screening when sampling premises are unsupported.",
+    "kind": "calibration_demo",
+    "has_outcomes": true
+  }
+]
