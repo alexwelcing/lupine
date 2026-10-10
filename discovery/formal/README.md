@@ -12,7 +12,9 @@ proves finite real multiplication, reciprocal, division, and square enclosures.
 resolution from explicit premises. `LupineSharpness.lean` characterizes the scalar
 retained set as the smallest universally safe set when only the supplied interval
 constraints are known. `LupineCoupled.lean` proves conservative affine-certificate
-screening under one shared latent world. Each module has its own namespace. All six
+screening under one shared latent world. `LupineProjection.lean` proves the exact
+algebra translating a declared correction field into those affine quantities and
+anchor rows. Each module has its own namespace. All seven
 modules are default build targets.
 
 The standalone package pins Lean `v4.29.0` and Mathlib
@@ -245,6 +247,60 @@ coupling, automatic certificate production, exhaustive branch reasoning,
 possible-minimizer completeness, LP duality completeness, or Python refinement
 is proved. The original interval-box sharpness theorem is unchanged; the new
 rule uses additional premises restricting compatible worlds.
+
+## Projection-field translation theorem map
+
+`LupineProjection` uses the same `Affine`, `evaluate`, and `RowSystem` definitions
+as the coupled kernel. Field coordinates `K` and normalized latent coordinates
+`D` are arbitrary finite types, including empty types. The declared map is
+`theta_k = b_k + sum_d S_kd z_d`. Its matrix can be rectangular or singular;
+no inverse, image-coverage, or surjectivity premise is inferred from finite
+marginal field bounds. A chosen common latent world is an explicit premise.
+
+For a source quantity, the declared relation is
+`truth = nominal - weights dot theta + discrepancy`. Discrepancy is represented
+by an affine expression on that same latent vector. Giving each source quantity
+its own coordinate in `[-1,1]` with nonnegative coefficient `rho` is a special
+case; this construction requires no stochastic independence assumption. The
+generated constant is `nominal - weights dot b + discrepancy.constant`, and its
+coefficient at `d` is `discrepancy.coefficient_d - sum_k weights_k S_kd`.
+
+| Theorem in `LupineProjection` | Mathematical guarantee |
+| --- | --- |
+| `normalization_dot`, `projected_evaluate` | Finite distributivity makes the generated affine expression exactly equal to the declared projection at each normalized world |
+| `projected_truth` | Given both the actual field's image equality and the quantity's truth relation, the generated expression equals that actual quantity |
+| `projected_difference`, `equal_weights_cancel` | Pairwise differences preserve the full field/discrepancy contributions, and identical weights cancel the shared field exactly |
+| `transform_evaluate` | Multiplying every coefficient and the constant by any signed scale, then adding an offset, transforms the entire quantity including its discrepancy |
+| `normalized_discrepancy_enclosure`, `scaled_discrepancy_enclosure` | A nonnegative radius times a coordinate in `[-1,1]` lies in `[-rho,rho]`; a signed conversion changes that radius to `abs(scale)*rho` |
+| `affine_upper_row_iff`, `affine_lower_row_iff` | For an affine quantity `a dot z + c`, its upper and lower bounds are exactly the rows `a dot z <= U-c` and `(-a) dot z <= c-L` |
+| `anchor_domain_iff`, `projected_anchor_domain_iff` | Satisfying every generated anchor row is equivalent to satisfying every supplied anchor interval in that same world |
+
+The anchor family need not be finite for the equivalence itself; the runtime
+and coupled multiplier certificates use finite row families. Ordered anchor
+endpoints are not needed for the equivalence: contradictory intervals give an
+empty row domain. This does not establish physical infeasibility of the material
+universe. Anchors are expressed in their source quantity units; conversions
+must be applied to the whole expression when forming objective or constraint
+quantities.
+
+To connect this algebra to an actual decision, the following conjunction is
+still supplied, not proved from metadata: one actual common latent vector lies
+within every declared coordinate bound; actual field coordinates equal its
+declared image; all candidate and anchor quantities obey their declared
+projection relations and discrepancy bounds at that same vector; and the
+independently supplied anchor intervals contain their actual values. The
+translation identities then identify actual quantities with generated affine
+values, and the anchor equivalence identifies their anchor-row membership.
+Any additional domain rows need their own valid premises. Given this domain
+membership, sound baseline retention, and checked exclusion certificates,
+`LupineCoupled.minimizer_retained` supplies the existing decision implication;
+no duplicate retention theorem is asserted here.
+
+Scope names, field-block labels, source hashes, empirical residuals, and model
+consistency points do not establish that conjunction. No physical validity,
+empirical calibration, relation transfer between materials, unit correctness
+from labels, runtime parser correctness, or Python refinement follows from these
+real-valued equalities. The finite rational adapter must be verified separately.
 
 ## Reproduction and trust
 

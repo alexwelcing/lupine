@@ -3,7 +3,7 @@
 (() => {
   'use strict';
   const $ = (id) => document.getElementById(id);
-  const state = { catalog: [], caseId: null, metadata: null, raw: '', problem: null, certificate: null, replay: null, revision: 0, busy: false, filter: 'all', benchmarksLoaded: false };
+  const state = { catalog: [], caseId: null, metadata: null, raw: '', problem: null, certificate: null, selectedRaw: null, replay: null, revision: 0, busy: false, filter: 'all', benchmarksLoaded: false };
   const node = (tag, className, text) => {
     const el = document.createElement(tag);
     if (className) el.className = className;
@@ -59,12 +59,15 @@
     $('analyze').replaceChildren(document.createTextNode(value ? 'Working…' : 'Build candidate pool '), node('span', '', value ? '' : '→'));
     $('replay-builtin').disabled = value;
     $('outcomes-upload').disabled = value;
-    $('download-certificate').disabled = value || !state.certificate;
+    const exportDisabled = value || !state.certificate || state.selectedRaw === null;
+    $('download-certificate').disabled = exportDisabled;
+    $('download-problem').disabled = exportDisabled;
     $('analyze').setAttribute('aria-busy', String(value));
   }
   function invalidate() {
     state.revision += 1;
     state.certificate = null;
+    state.selectedRaw = null;
     state.replay = null;
     state.filter = 'all';
     $('analysis-results').hidden = true;
@@ -545,23 +548,19 @@
   }
   async function analyze() {
     if (state.busy) return;
-    const revision = state.revision;
+    // A rebuild invalidates the old pair even when the draft has not changed.
+    // Bind both exports to one successful revision and its submitted raw text.
+    invalidate();
+    const revision = state.revision, submittedRaw = state.raw;
     try {
-      state.problem = parseForDisplay(state.raw);
+      state.problem = parseForDisplay(submittedRaw);
       const coupled = state.problem.schema === 'lupine.discovery.coupled_problem.v1';
-      if (coupled) {
-        state.certificate = null; state.replay = null;
-        $('analysis-results').hidden = true; $('empty-state').hidden = false;
-        $('replay-results').hidden = true; $('replay-results').replaceChildren();
-        $('replay-tag').textContent = 'NOT YET EVALUATED';
-        $('step-select').className = ''; $('step-replay').className = '';
-      }
       busy(true); notify(coupled ? 'Checking shared-model premises, consistency and exact proofs…' : state.problem.schema === 'lupine.discovery.calibrated_problem.v1' ? 'Checking the calibration budget before screening the pool…' : 'Building the pool from the declared bounds…');
       // Preserve the original JSON. The server detects duplicate keys and parses
       // exact values; JSON.stringify(JSON.parse(input)) would erase those checks.
-      const result = await api('/api/select', coupled ? JSON.stringify({ problem_raw: state.raw }) : `{"problem":${state.raw}}`);
+      const result = await api('/api/select', coupled ? JSON.stringify({ problem_raw: submittedRaw }) : `{"problem":${submittedRaw}}`);
       if (revision !== state.revision) return;
-      state.certificate = result; state.replay = null;
+      state.certificate = result; state.selectedRaw = submittedRaw; state.replay = null;
       $('replay-results').hidden = true;
       $('replay-tag').textContent = 'NOT YET EVALUATED';
       renderSelection();
@@ -726,7 +725,10 @@
     } finally { if (revision === state.revision) busy(false); }
   }
   function download(value, name) {
-    const url = URL.createObjectURL(new Blob([`${JSON.stringify(value, null, 2)}\n`], { type: 'application/json' }));
+    downloadText(`${JSON.stringify(value, null, 2)}\n`, name);
+  }
+  function downloadText(text, name) {
+    const url = URL.createObjectURL(new Blob([text], { type: 'application/json' }));
     const link = node('a'); link.href = url; link.download = name; document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
   function setView(view) {
@@ -1108,7 +1110,10 @@
   $('analyze').addEventListener('click', analyze);
   $('replay-builtin').addEventListener('click', () => replay());
   $('download-certificate').addEventListener('click', () => {
-    if (state.certificate) download(state.certificate, `lupine-certificate-${String(state.certificate.scenario_id).replace(/[^a-zA-Z0-9_-]/g, '_')}.json`);
+    if (!state.busy && state.certificate && state.selectedRaw !== null) download(state.certificate, `lupine-certificate-${String(state.certificate.scenario_id).replace(/[^a-zA-Z0-9_-]/g, '_')}.json`);
+  });
+  $('download-problem').addEventListener('click', () => {
+    if (!state.busy && state.certificate && state.selectedRaw !== null) downloadText(state.selectedRaw, `lupine-problem-${String(state.certificate.scenario_id).replace(/[^a-zA-Z0-9_-]/g, '_')}.json`);
   });
   document.querySelectorAll('[data-filter]').forEach((button) => button.addEventListener('click', () => {
     state.filter = button.dataset.filter;

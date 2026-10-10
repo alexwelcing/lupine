@@ -45,7 +45,9 @@ This extends the published `b37d8db` [kernel/training checkpoint](coupled-traini
 The formal source is unchanged from the compiled and audited **88 statements**
 at `b37d8db`; [all four remote jobs passed there](https://github.com/alexwelcing/lupine/actions/runs/38069767606).
 The current interface adds no formal runtime-refinement or physical-validity
-claim. Its subsequent remote CI result must be recorded separately after push.
+claim. All four jobs also passed at the published interface checkpoint
+[`f55f0c4`](https://github.com/alexwelcing/lupine/actions/runs/38071085852):
+Python 3.11/3.12 with manifest/package checks, Chromium and all 88 theorem audits.
 
 The original three pilot failures, constrained screening/utility failures, and
 training-model NO-GO remain unchanged and visible. The shared-model route
@@ -54,6 +56,9 @@ does not establish that premise. All guarantees remain relative to the supplied
 finite candidate universe. Research-preview readiness is separate from a
 scientifically validated material recommendation.
 
-Current source bytes are in [runtime-manifest.json](runtime-manifest.json).
+The published interface checkpoint is `f55f0c43a9546db48f1b1d69ce6be54266269c8f`.
+Its 124 source-file identities are preserved in
+[runtime-manifest-coupled-interface.json](runtime-manifest-coupled-interface.json);
+[runtime-manifest.json](runtime-manifest.json) follows subsequent work.
 The preceding 105-file inventory is preserved in
 [runtime-manifest-coupled-kernel.json](runtime-manifest-coupled-kernel.json).

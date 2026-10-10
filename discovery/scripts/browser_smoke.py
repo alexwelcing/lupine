@@ -6,6 +6,8 @@ Run: python scripts/browser_smoke.py
 """
 import json
 from pathlib import Path
+import subprocess
+import sys
 import threading
 from unittest.mock import patch
 
@@ -26,6 +28,7 @@ def run():
     url = f"http://127.0.0.1:{server.server_address[1]}"
     checks = []
     errors = []
+    paired_schemas = set()
     try:
         with sync_playwright() as playwright:
             browser = playwright.chromium.launch(headless=True)
@@ -42,6 +45,41 @@ def run():
                 expect(page.locator("#analysis-results")).to_be_visible()
                 return response.value.json()
 
+            def export_pair(label, expected_raw=None):
+                raw = page.locator("#problem-json").input_value() if expected_raw is None else expected_raw
+                with page.expect_download() as downloaded:
+                    page.locator("#download-problem").click()
+                problem_path = artifacts / f"{label}-problem.json"
+                downloaded.value.save_as(problem_path)
+                assert problem_path.read_bytes() == raw.encode("utf-8")
+                with page.expect_download() as downloaded:
+                    page.locator("#download-certificate").click()
+                certificate_path = artifacts / f"{label}-paired-certificate.json"
+                downloaded.value.save_as(certificate_path)
+                verified = subprocess.run([sys.executable, "-m", "lupine_discovery", "verify",
+                    str(problem_path.resolve()), str(certificate_path.resolve())],
+                    capture_output=True, text=True, check=True)
+                result = json.loads(verified.stdout)
+                assert result["verified"] is True
+                assert result["scope"] == "identity_and_exact_runtime_recomputation_only"
+                paired_schemas.add(json.loads(problem_path.read_text())["schema"])
+
+            def assert_no_export():
+                expect(page.locator("#download-problem")).to_be_disabled()
+                expect(page.locator("#download-certificate")).to_be_disabled()
+                # Dispatch directly as well: disabled-button styling alone must
+                # not leave a stale receipt in either download handler.
+                created = page.evaluate("""() => {
+                  const create = URL.createObjectURL; let calls = 0;
+                  URL.createObjectURL = (...args) => { calls += 1; return create(...args); };
+                  try {
+                    for (const id of ['download-problem', 'download-certificate'])
+                      document.getElementById(id).dispatchEvent(new MouseEvent('click'));
+                  } finally { URL.createObjectURL = create; }
+                  return calls;
+                }""")
+                assert created == 0
+
             certificate = select_case("integer-design-grid")
             assert certificate["selection"]["retained"] == ["x3-y5"]
             page.locator('[data-filter="retained"]').click()
@@ -53,6 +91,16 @@ def run():
             downloaded.value.save_as(target)
             verify_certificate(get_case("integer-design-grid")["problem"], json.loads(target.read_text()))
             checks.append("selection_and_download_reverification")
+            export_pair("scalar")
+            with patch("lupine_discovery.server.certificate", side_effect=ValueError("Synthetic failed scalar rebuild")):
+                with page.expect_response(lambda r: r.url.endswith("/api/select")) as response:
+                    page.locator("#analyze").click()
+                assert response.value.status == 400
+                expect(page.locator("#analysis-results")).to_be_hidden()
+                assert_no_export()
+            page.locator("#analyze").click()
+            expect(page.locator("#analysis-results")).to_be_visible()
+            checks.append("failed_scalar_rebuild_clears_both_exports")
 
             with page.expect_response(lambda r: r.url.endswith("/replay")) as response:
                 page.locator("#replay-builtin").click()
@@ -88,6 +136,7 @@ def run():
             duplicate = '{"schema":"duplicate",' + raw[1:]
             page.locator("#problem-json").fill(duplicate)
             expect(page.locator("#analysis-results")).to_be_hidden()
+            assert_no_export()
             page.locator("#analyze").click()
             expect(page.locator("#notice")).to_contain_text("duplicate JSON key")
             checks.append("edits_invalidate_and_raw_duplicate_keys_rejected")
@@ -113,6 +162,7 @@ def run():
             downloaded.value.save_as(calibrated_target)
             verify_certificate(get_case("calibrated-finite")["problem"],
                                json.loads(calibrated_target.read_text()))
+            export_pair("calibrated")
             checks.append("calibrated_finite_intervals_and_sealed_export")
 
             for case_id in ("calibrated-insufficient", "calibrated-unsupported"):
@@ -164,6 +214,7 @@ def run():
             pareto_target = artifacts / "pareto-certificate.json"
             downloaded.value.save_as(pareto_target)
             verify_certificate(get_case("pareto-tradeoffs")["problem"], json.loads(pareto_target.read_text()))
+            export_pair("pareto")
             with page.expect_response(lambda r: r.url.endswith("/replay")) as response:
                 page.locator("#replay-builtin").click()
             assert response.value.json()["evaluation"]["true_pareto_front"] == ["a", "a-twin", "b"]
@@ -203,6 +254,10 @@ def run():
             downloaded.value.save_as(coupled_target)
             assert verify_certificate(get_case("coupled-shared-trend")["problem"],
                                       json.loads(coupled_target.read_text()))["verified"]
+            export_pair("coupled")
+            assert paired_schemas == {f"lupine.discovery.{prefix}problem.v1"
+                                      for prefix in ("", "calibrated_", "pareto_", "coupled_")}
+            checks.append("four_schema_downloaded_problem_certificate_pairs_verify_with_real_cli")
             with page.expect_response(lambda r: r.url.endswith("/replay")) as response:
                 page.locator("#replay-builtin").click()
             assert response.value.json()["decision"]["certificate"] == coupled
@@ -260,7 +315,10 @@ def run():
             expect(page.locator("#provided-world-audit")).to_contain_text("unreported quantities remain unresolved")
             checks.append("partial_coupled_outcomes_leave_global_retention_unknown")
 
-            original_raw = "\n  " + json.dumps(problem, indent=3) + "\n\n"
+            custom_problem = json.loads(json.dumps(problem))
+            custom_problem["candidates"][0]["score"]["constant"] = "1.0000000000000000000001"
+            custom_problem["screening"]["proofs"] = []
+            original_raw = "\n  " + json.dumps(custom_problem, indent=3) + "\n\n"
             page.locator("#problem-upload").set_input_files({
                 "name": "original-affine-input.json", "mimeType": "application/json",
                 "buffer": original_raw.encode(),
@@ -271,6 +329,7 @@ def run():
             assert response.value.request.post_data_json == {"problem_raw": original_raw}
             expect(page.locator("#analysis-results")).to_be_visible()
             expect(page.locator("#problem-json")).to_have_value(original_raw)
+            export_pair("custom-exact-coupled", original_raw)
             with patch("lupine_discovery.server.run_coupled", side_effect=CoupledWorkerError(
                     "worker_timeout", "Synthetic guard timeout: no receipt produced.")):
                 with page.expect_response(lambda r: r.url.endswith("/api/select")) as response:
@@ -278,10 +337,31 @@ def run():
                 assert response.value.status == 503
                 expect(page.locator("#notice")).to_contain_text("Synthetic guard timeout")
                 expect(page.locator("#analysis-results")).to_be_hidden()
+                assert_no_export()
             page.locator("#analyze").click()
             expect(page.locator("#analysis-results")).to_be_visible()
             expect(page.locator("#problem-json")).to_have_value(original_raw)
             checks.append("coupled_raw_input_preserved_and_guard_failure_clears_stale_receipt")
+
+            edited_raw = original_raw + "  \n"
+            def edit_while_selection_pending(route):
+                response = route.fetch()
+                assert_no_export()
+                page.locator("#json-editor").evaluate("element => element.open = true")
+                page.locator("#problem-json").fill(edited_raw)
+                assert_no_export()
+                route.fulfill(response=response)
+            page.route("**/api/select", edit_while_selection_pending, times=1)
+            with page.expect_response(lambda r: r.url.endswith("/api/select")) as response:
+                page.locator("#analyze").click()
+            assert response.value.status == 200
+            expect(page.locator("#notice")).to_contain_text("Inputs changed")
+            expect(page.locator("#analysis-results")).to_be_hidden()
+            assert_no_export()
+            page.locator("#analyze").click()
+            expect(page.locator("#analysis-results")).to_be_visible()
+            export_pair("new-revision-coupled", edited_raw)
+            checks.append("pending_or_stale_revision_cannot_export_and_exact_raw_pair_recovers")
 
             page.locator("#nav-benchmarks").click()
             expect(page.locator("#benchmark-content")).to_be_visible()
@@ -387,7 +467,9 @@ def run():
         thread.join(timeout=2)
     report = {"status": "passed", "checks": checks, "javascript_errors": errors,
               "scope": "Chromium research-preview interaction checks; not scientific validation"}
-    (artifacts / "browser-report.json").write_text(json.dumps(report, indent=2) + "\n")
+    report_text = json.dumps(report, indent=2) + "\n"
+    (artifacts / "browser-report.json").write_text(report_text)
+    (artifacts / "browser-problem-export-report.json").write_text(report_text)
     print(json.dumps(report, indent=2))
 
 

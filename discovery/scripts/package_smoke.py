@@ -16,6 +16,7 @@ import tempfile
 
 PROBE = r'''
 import json
+from dataclasses import replace
 from importlib.resources import files
 from pathlib import Path
 import sys
@@ -30,6 +31,8 @@ from lupine_discovery.server import make_server
 from lupine_discovery.core import Interval
 from lupine_discovery.coupled import Affine, CoupledCandidate, CoupledProblem, screen_coupled
 from lupine_discovery.evidence import Scope
+from lupine_discovery.projection import (FieldBlock, FieldScope, Observation, PhysicalContext,
+    ProjectionCandidate, ProjectionProblem, QuantityUse, build_projection, screen_projection)
 
 module_path = Path(lupine_discovery.__file__).resolve()
 assert Path(sys.prefix).resolve() in module_path.parents, 'package imported outside isolated installation'
@@ -61,6 +64,27 @@ coupled_result = screen_coupled(coupled, (0,))
 assert coupled_result.box_selection_diagnostic.retained == ('A', 'B')
 assert coupled_result.retained == ('B',)
 assert screen_coupled(coupled).retained == ('A', 'B')
+projection_context = PhysicalContext('installed-projection', 'synthetic', 'fixed', 'fixed', 'fixed')
+projection_scope = FieldScope(projection_context, 'synthetic', '1', 'test', 'constructed', 'fixed')
+projection_quantity = Scope('installed-projection', 'score', 'synthetic-unit', 'minimize synthetic value')
+projection_block = FieldBlock('local', projection_scope, ('theta',), ('synthetic-unit',),
+    (1,), ((1,),), ('z',), (Interval(-1, 1),), 'theta=1+z is an explicit example premise',
+    'normalized coordinate is declared inside [-1,1]')
+projection_observations = tuple(Observation(name, 'local', projection_scope, projection_quantity,
+    nominal, (1,), '1/4', 'constructed discrepancy bound') for name, nominal in (('A', 5), ('B', 4)))
+projection_candidates = tuple(ProjectionCandidate(name, projection_context,
+    QuantityUse(name, 1, 0, projection_quantity, 'whole-expression identity map'), {}) for name in ('A', 'B'))
+projection_problem = ProjectionProblem('installed-projection', projection_quantity, {},
+    (projection_block,), projection_observations, projection_candidates, 'same constructed physical context')
+projection_build = build_projection(projection_problem)
+assert projection_build.model is not None
+projection_result = screen_projection(projection_problem, (0, 0, 0))
+assert projection_result.retained == ('B',)
+assert projection_result.selection.box_selection_diagnostic.retained == ('A', 'B')
+projection_unknown = replace(projection_problem, blocks=(replace(projection_block, latent_bounds=(None,)),))
+projection_abstention = screen_projection(projection_unknown)
+assert projection_abstention.build.model is None and projection_abstention.selection is None
+assert projection_abstention.retained == ('A', 'B')
 resources = files('lupine_discovery')
 for name in ('index.html', 'app.js', 'styles.css'):
     assert resources.joinpath('web', name).read_bytes(), 'missing web asset'
@@ -120,6 +144,7 @@ print(json.dumps({'status': 'passed', 'python': sys.version.split()[0],
                              'web_assets_and_original_archive_reports', 'constrained_negative_results_packaged_and_served',
                              'installed_http_cli_agreement', 'coupled_python_api_and_missing_point_fallback',
                              'coupled_guarded_http_replay_agrees_with_installed_cli',
+                             'scoped_projection_translation_and_missing_bound_abstention',
                              'training_only_no_go_packaged_and_served']},
                  sort_keys=True))
 '''

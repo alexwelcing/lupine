@@ -3,6 +3,54 @@
 The current goal and ordered backlog are in `../GOAL.md`. Append concise entries
 with artifacts, actual checks, scientific implications, and the next action.
 
+## 2026-10-10 — scoped projection algebra and complete input exports
+
+- G11 is implemented as a Python API with explicit physical context, separate
+  field blocks, exact normalization, whole-expression signed maps, uncertain
+  anchors and source-bound relation records. Common-image representation and
+  coordinate enclosure are separate premises. Missing or empirical-only field
+  or discrepancy bounds produce no numerical model and retain all candidates.
+- Actual checks pass: 325 Python tests with stable source snapshots, 27 browser
+  checks, 22 packaged cases plus installed projection probes, and 100 compiled/
+  audited Lean statements. The twelve new algebra statements preserve all old
+  source hashes. Independent tests compare directly against original equations;
+  no physical validation or runtime refinement is inferred.
+- Browser users can now save the exact input with its certificate. Real CLI
+  verification covers every wire mode; edits, failures and delayed responses
+  cannot export stale input/receipt pairs. Existing failure and NO-GO views stay
+  intact. See `projection-verification.md` for executed evidence.
+- A metadata/source audit identifies 36 pinned Rhizo fcc run/reference pairs
+  and a fixed observation map. It also records missing hard discrepancy bounds,
+  reconstructed-facet incompatibilities, incomplete checkpoint identity and
+  the absence of multiple held-out alternatives sharing a justified field.
+  No target JSON or new fit was opened; incidental numerical examples in a
+  mixed-content README are disclosed.
+- Next G12: preserve full projection declarations through strict inputs,
+  guarded CLI/HTTP selection, separate replay and browser inspection. The
+  reviewed contract rejects nonempty supplied proof arrays in its first wire
+  version. G13 plans a target-redacted custody manifest before any new scientific
+  protocol; no additional model or performance criterion has been selected.
+
+## 2026-10-10 17:19 UTC — published interface and active scoped adapter
+
+- Committed and pushed `f55f0c43a9546db48f1b1d69ce6be54266269c8f`.
+  The published source manifest binds 124 files. Discovery Verify run
+  [38071085852](https://github.com/alexwelcing/lupine/actions/runs/38071085852)
+  passed all four jobs, including Lean. Draft PR #263 now describes the
+  completed four-mode interface.
+- G11 is active in the existing workspace: separate agents implement the
+  Python projection adapter, its Lean algebra, and independent direct-equation
+  tests. No new scientific labels or fits are part of this increment.
+  A metadata-only upstream data-readiness audit is also in progress.
+- The adapter will bind complete physical context, independently scoped field
+  blocks, explicit normalization image assumptions, uncertain anchors and
+  bounded discrepancy. Missing bounds return the whole original candidate
+  universe, without fabricating a finite numerical model. Scope and source
+  identities travel separately from the kernel's numerical model digest.
+- This is ongoing active work, not a claim that a persistent worker was launched
+  or that an additional scheduled run has executed. A continuation must check
+  actual process/worktree activity before starting concurrent mutations.
+
 ## 2026-10-10 — coupled interface and visible training result
 
 - Published `b37d8db3acbcd98d761da451d348ac5b15df00c1`; all four jobs in

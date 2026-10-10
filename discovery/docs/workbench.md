@@ -7,14 +7,33 @@ From `discovery/` in the Lupine checkout:
 
 ```sh
 python -m pip install -e .
-lupine-discovery serve
+python -m lupine_discovery serve
 ```
+
+With the wheel already installed, run `python -m lupine_discovery serve` from
+any directory. Its 22 built-in cases and displayed reports are bundled; no
+source checkout, dataset download, or numerical package is needed to try them.
+All four interface modes are available on Linux. Coupled HTTP mode requires
+Linux process guards; the other three modes remain available on other platforms.
 
 Open `http://127.0.0.1:8765` on the machine running the command. Use
 `--port 8766` to choose another port. The server binds to loopback only, stores
 no uploaded inputs, and stops with Ctrl+C. Remote workspace loopback is not a
-publicly hosted preview. Browser state is cleared by reloading; export a
-certificate to preserve a result.
+publicly hosted preview. Browser state is cleared by reloading; download both
+the **Problem** and **Certificate** files to preserve a verifiable result.
+
+For a first run, choose **Exhaustive integer design problem**, click **Build
+candidate pool**, then **Evaluate known answers**. The 81 candidates reduce to
+`x3-y5`, and replay confirms that the known optimum survived. Download both
+files; from their download directory, run:
+
+```sh
+python -m lupine_discovery verify lupine-problem-integer-design-grid.json lupine-certificate-integer-design-grid.json
+```
+
+The JSON result should contain `"verified": true` and
+`"scope": "identity_and_exact_runtime_recomputation_only"`. This verifies the
+saved pair, not physical truth. An altered or mismatched pair exits with code 2.
 
 ## Inspect a recommendation
 
@@ -30,28 +49,51 @@ certificate to preserve a result.
    intervals sound. Coupled mode distinguishes an exact model-consistency point
    from the assumed common physical world, and shows the operational pool
    separately from marginal box diagnostics.
-3. Download the certificate. Verify it independently with
-   `lupine-discovery verify problem.json certificate.json` using the exact
-   input. Verification checks identity and deterministic computation.
+3. Download **Problem** and **Certificate** together. The problem download is
+   the exact text submitted for this successful decision, including whitespace
+   and exact numeric strings. It is not a reconstruction from displayed bounds.
+   Verify the saved pair with `python -m lupine_discovery verify problem.json certificate.json`,
+   substituting the actual filenames. Verification checks identity and
+   deterministic computation. Both exports are disabled during pending work;
+   edits and failed rebuilds clear the previous pair.
 4. Reveal the case's known answers, or upload an outcome file bound to the
-   problem digest. The replay reports coverage failures, all-optimum retention,
-   feasibility, regret, and missing outcomes. Editing a problem invalidates its
+   problem digest; coupled outcomes also bind the certificate digest. Replay
+   audits the actual pool, reported feasibility and retained optima, preserving
+   missing outcomes. Coverage, Pareto fronts, and regret appear only in the modes
+   and states where they are defined. Editing a problem invalidates its
    prior displayed result and the packaged answer binding.
 
-Inputs are finite JSON documents up to 2 MiB and 5,000 candidates in this
-preview. Decimal values should be strings, such as `"0.125"`; fractions such as
+The outer request limit is 2 MiB and nesting depth 32. Scalar, calibrated and
+Pareto inputs allow up to 5,000 candidates. Coupled input documents have stricter
+limits: 256 KiB, depth 24 and 64 candidates, plus the dimension and proof limits
+in the [coupled guide](coupled-problem.md#local-workbench-and-resource-limits).
+Decimal values should be strings, such as `"0.125"`; fractions such as
 `"1/3"` are also exact. Use quoted strings for large integers beyond the
 browser safe-integer range as well. Floating-point JSON values and duplicate keys are
 rejected by the server. The browser preserves original upload text when making
 requests so parsing cannot silently change those decisions.
 
+## Understand an open pool or failed result
+
+| Try this case or screen | What the result means |
+| --- | --- |
+| **Loose intervals**, then **Tightened intervals** | All six candidates initially remain; tighter supplied bounds reduce the pool to A. Retaining everyone can be a correct conservative decision. |
+| **Insufficient calibration** or **Unsupported sampling scope** | All three candidates remain and screening is withheld. The nominal values do not certify feasibility, exclusions, coverage, or regret. Inspect the calibration reason before changing any premise. |
+| **Tradeoffs and tied Pareto candidates** | The pool retains a, a-twin and b. Separate objectives and ties need not yield one winner. |
+| **Missing consistency point, screening withheld** or **Learned relation, screening withheld** | Both candidates remain operationally, even when the separate box diagnostic is smaller. A hypothetical point or learned correlation does not establish a common physical world. |
+| **Negative control: false score interval** | Replay exposes the lost true optimum. Detecting this deliberately false premise is expected engine behavior. |
+| **Known answers** → scientific gates and training-only development | Failed recommendation gates and `NO_GO_MODEL_IMPROVEMENT` are recorded scientific/development results, not installation errors. No replacement model or new coverage claim follows. |
+
 ## Run known-answer checks
 
-The Known answers screen reruns the deterministic finite fixture suite and
+The Known answers screen reruns the original 13-case deterministic fixture suite and
 displays separately recorded scientific archive results. Synthetic passes mean
 the implementation matched independently enumerated truth and declared
 expectations. A negative-control pass means a deliberate failure was detected;
 it is not successful physical screening.
+The selector contains those 13 cases plus nine calibrated, Pareto and coupled
+demonstrations. Open and evaluate those demonstrations from the candidate-pool
+menu; the suite counter continues to describe the original 13 cases.
 
 The scientific reports cover experimental band gaps, steel yield strength,
 and molecular hydration free energies. Those frozen archived runs expose

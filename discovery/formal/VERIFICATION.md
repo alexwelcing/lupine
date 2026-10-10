@@ -1,6 +1,55 @@
 # Actual verification record
 
-## Conservative coupled-evidence extension
+## Projection-field algebra extension
+
+Completed on `2026-10-10` in the Linux x86_64 branch workspace, after the
+published G10 checkpoint `f55f0c4`, using the same pinned Lean `4.29.0` and
+Mathlib revision documented below.
+
+- `lake env lean LupineProjection.lean`: freshly elaborated all twelve new
+  statements successfully and printed their actual axiom dependencies.
+- `lake --wfail build`: passed all seven default modules, 985 jobs, no warnings.
+- `python3 audit_axioms.py`: independently re-elaborated all seven sources,
+  checked complete declaration/output coverage, and passed all 100 audits.
+- `python3 -m unittest test_audit_axioms -v`: all eleven adversarial audit tests
+  passed.
+
+The current [theorem inventory](theorem-inventory.json) records 100 statements
+in seven modules, including twelve projection algebra statements. The fresh
+combined [axiom output](AXIOMS.txt) contains only `propext`, `Classical.choice`,
+and `Quot.sound`; no admitted proof or project-specific axiom occurs. Every
+current module source hash and the combined-output hash were independently
+checked against the generated inventory after the audit. Source SHA-256 for
+`LupineProjection.lean` is
+`600af2ee02e8f5ed7f84046d5abab253dc74be3d556414d67438e49a6f3c4f2d`;
+the current combined-output SHA-256 is
+`37cc47a7ba1e876fefd55dc9a5b327c6a46d341b1b6cd0d9331e21bd64484b19`.
+
+Before replacing the current inventory, the six-module, 88-statement G10
+receipt was copied to [history/](history/README.md). Its six source hashes and
+axiom-output hash were checked before copying and again after the new audit.
+Those six sources remain unchanged. Local command logs are in
+`.cache/formal/g11-build.log`, `.cache/formal/g11-audit.log`, and
+`.cache/formal/g11-audit-tests.log` relative to `discovery/`; these ignored
+workspace logs are supplementary, not required committed verification inputs.
+
+The new module imports only `LupineCoupled`, reusing its compiled dependency
+graph. It proves the explicit real-valued substitution `theta = b + S z`,
+projection coefficients and constants, truth transfer under both supplied
+equalities, pairwise cancellation, signed whole-expression conversions,
+discrepancy enclosures, and exact upper/lower anchor-row equivalence. An
+independent source review found no sign or claim-scope defect; that review was
+separate from actual compilation and the axiom audit.
+
+The common-image representation, coordinate and discrepancy bounds, validity
+of all candidate/anchor relations at one actual world, and anchor containment
+remain supplied scientific premises. General rectangular or singular matrices
+do not imply image coverage or invertibility. The existing coupled retention
+theorem applies only with its domain, certificate, and baseline hypotheses;
+the new algebra does not prove the Python adapter refines this construction,
+validate physical scope from metadata, or establish empirical calibration.
+
+## Historical conservative coupled-evidence extension
 
 Completed on `2026-10-10` in the Linux x86_64 branch workspace using the same
 pinned Lean `4.29.0` and Mathlib commit documented below.
@@ -13,10 +62,10 @@ pinned Lean `4.29.0` and Mathlib commit documented below.
 - `python3 -m unittest test_audit_axioms -v`: all eleven adversarial audit tests
   passed.
 
-The current [theorem inventory](theorem-inventory.json) records the source hashes
-and actual axiom dependencies of all 88 statements: 19 coupled certificates and
+The preserved [G10 theorem inventory](history/g10-theorem-inventory.json) records
+the source hashes and actual axiom dependencies of all 88 statements: 19 coupled certificates and
 screening statements, plus the 69 historical statements listed below.
-[AXIOMS.txt](AXIOMS.txt) contains their fresh combined Lean output. Every dependency
+[G10 AXIOMS.txt](history/g10-AXIOMS.txt) contains their fresh combined Lean output. Every dependency
 is among `propext`, `Classical.choice`, and `Quot.sound`; no admitted proof or
 project-specific axiom occurs. Source hashes and the combined-output hash were
 independently checked against the generated inventory after the audit.

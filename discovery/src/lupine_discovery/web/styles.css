@@ -631,6 +631,7 @@ textarea {
 }
 .result-heading {
   display:flex;
+  flex-wrap:wrap;
   justify-content:space-between;
   align-items:center;
   gap:12px;
@@ -641,6 +642,18 @@ textarea {
 }
 .result-heading h2 {
   font-size:27px
+}
+.result-exports {
+  max-width:100%
+}
+.result-export-buttons {
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px
+}
+.result-exports .field-help {
+  margin:7px 0 0;
+  font-size:10px
 }
 .claim-note {
   border-left:2px solid var(--violet);

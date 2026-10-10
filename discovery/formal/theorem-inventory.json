@@ -1,6 +1,6 @@
 {
-  "axiom_output_sha256": "2408b6f596473b3f2ebd33e4b30ff67581a72be71d681b37a0f41e9b854843be",
-  "module_count": 6,
+  "axiom_output_sha256": "37cc47a7ba1e876fefd55dc9a5b327c6a46d341b1b6cd0d9331e21bd64484b19",
+  "module_count": 7,
   "modules": [
     {
       "source": "LupineCoupled.lean",
@@ -332,6 +332,73 @@
       }
     },
     {
+      "source": "LupineProjection.lean",
+      "source_sha256": "600af2ee02e8f5ed7f84046d5abab253dc74be3d556414d67438e49a6f3c4f2d",
+      "theorem_count": 12,
+      "theorems": {
+        "LupineProjection.affine_lower_row_iff": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineProjection.affine_upper_row_iff": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineProjection.anchor_domain_iff": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineProjection.equal_weights_cancel": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineProjection.normalization_dot": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineProjection.normalized_discrepancy_enclosure": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineProjection.projected_anchor_domain_iff": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineProjection.projected_difference": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineProjection.projected_evaluate": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineProjection.projected_truth": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineProjection.scaled_discrepancy_enclosure": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineProjection.transform_evaluate": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ]
+      }
+    },
+    {
       "source": "LupineRisk.lean",
       "source_sha256": "bea0e0cb18daeb41a26e7c721bef0dec6e1c361f3ccf1c9f7f7dbf2176c0fcdf",
       "theorem_count": 15,
@@ -482,5 +549,5 @@
     }
   ],
   "schema": "lupine-formal-theorem-inventory-v1",
-  "theorem_count": 88
+  "theorem_count": 100
 }

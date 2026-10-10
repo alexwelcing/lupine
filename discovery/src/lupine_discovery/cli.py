@@ -1,4 +1,4 @@
-"""Deterministic local CLI; no model, network, or outcome access during selection."""
+"""Deterministic local CLI; selection reads no outcomes or network data."""
 import argparse
 import json
 from pathlib import Path
@@ -102,16 +102,24 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__,
         epilog="CLI JSON documents are limited to 2 MiB and nesting depth 32; coupled inputs use the stricter coupled-local-v1 profile.")
     sub = parser.add_subparsers(dest="command", required=True)
-    workbench = sub.add_parser("serve", help="Run the local research workbench")
-    workbench.add_argument("--port", type=int, default=8765)
+    workbench = sub.add_parser("serve", help="Run the local research workbench",
+        description="Open the local workbench at http://127.0.0.1:8765. Coupled HTTP mode requires Linux process guards.")
+    workbench.add_argument("--port", type=int, default=8765, help="Loopback port (default: 8765)")
+    descriptions = {
+        "select": "Create an exact conditional candidate-pool certificate from a problem; no outcomes are read.",
+        "verify": "Recompute a certificate from its original problem and check exact identity; this does not verify physical truth.",
+        "replay": "Audit a fixed candidate pool against separately bound known outcomes, preserving failures and unknown values.",
+        "coupled-domains": "Export exact common and candidate-feasible domains for a coupled problem, without screening or reading outcomes.",
+    }
     for name in ("select", "verify", "replay", "coupled-domains"):
-        command = sub.add_parser(name)
-        command.add_argument("problem", type=Path)
+        command = sub.add_parser(name, help=descriptions[name], description=descriptions[name],
+            epilog="Successful commands return JSON and exit 0; invalid input or a mismatched certificate exits 2. Scientific replay failures remain in the JSON result.")
+        command.add_argument("problem", type=Path, help="Original versioned problem JSON; use integers or quoted exact decimal/rational values")
         if name == "verify":
-            command.add_argument("certificate", type=Path)
+            command.add_argument("certificate", type=Path, help="Certificate JSON to compare with exact deterministic recomputation")
         if name == "replay":
-            command.add_argument("outcomes", type=Path)
-        command.add_argument("--output", type=Path)
+            command.add_argument("outcomes", type=Path, help="Separate outcomes JSON bound to this problem (and its certificate for coupled mode)")
+        command.add_argument("--output", type=Path, help="Write result JSON to this file (default: standard output)")
     args = parser.parse_args(argv)
     try:
         if args.command == "serve":

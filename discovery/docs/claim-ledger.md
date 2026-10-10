@@ -2,10 +2,10 @@
 
 This ledger separates mathematical implications, software execution, archived observations, and open scientific premises. A stronger claim requires stronger evidence than the row beneath it supplies.
 
-The [generated formal inventory](../formal/theorem-inventory.json) records 88
+The [generated formal inventory](../formal/theorem-inventory.json) records 100
 compiled statements: 18 scalar-selector, 15 Pareto, 9 nonlinear interval/domain,
 15 conditional finite-risk/rank, 12 interval-box sharpness, and 19 conservative
-coupled-affine statements. The [formal verification record](../formal/VERIFICATION.md)
+coupled-affine statements, plus 12 projection-algebra statements. The [formal verification record](../formal/VERIFICATION.md)
 documents actual compilation and axiom auditing. The
 [engine extension verification record](../reports/engine-extension-verification.md)
 records execution evidence for the new runtime and interface routes. These are
@@ -21,7 +21,7 @@ adds scoped wire identities, actual-pool replay and a guarded local HTTP route.
 Independent adapter/worker tests include false-common-world controls, 144 partial
 truth patterns, stale seals and process cleanup. The [coupled interface verification](../reports/coupled-interface-verification.md)
 records 298 Python tests, 24 browser checks and an isolated wheel exercising
-22 cases. Historical records remain separately identified.
+22 cases. Historical records remain separately identified. The [projection checkpoint](../reports/projection-verification.md) adds exact adapter algebra and paired input/certificate exports: 325 Python tests, 27 browser checks and 100 compiled statements.
 
 | Claim | Evidence | Status and limit |
 |---|---|---|
@@ -35,7 +35,8 @@ records 298 Python tests, 24 browser checks and an isolated wheel exercising
 | Conservative coupled exclusions preserve every tied feasible minimizer | `candidate_domain_iff`, `conditional_witness_better`, `minimizer_retained` in [LupineCoupled.lean](../formal/LupineCoupled.lean) | One actual common latent world must satisfy the original rows, and the baseline must retain the optimum. Witness feasibility and strictly negative score difference are certified over the same target-feasible domain. No complete possible-optimum search is proved |
 | Inactive coupled premises cannot authorize operational box pruning | [Coupled contract](coupled-kernel.md), [focused tests](../tests/test_coupled.py), `disabled_retains_all` | Unsupported or learned-correlation premises, missing/rejected consistency, or proved-inconsistent common models retain all IDs. Affine-derived box intervals remain diagnostic only; a consistency point establishes nonemptiness, not physical truth |
 | The experimental coupled Python kernel passes independent finite-world checks | [Independent audit](../reports/coupled-independent-audit.json), [audit script](../scripts/audit_coupled.py), [focused tests](../tests/test_coupled.py) | 18 focused tests; 10,003 independent audit checks across 11,027 synthetic worlds. Source-bound software evidence, not Python refinement, scientific validation, or end-to-end resource guarantees |
-| Lupine correction fields can supply a scoped affine adapter | [Projection-field adapter design](projection-field-adapter.md), [coupled design](coupled-evidence-design.md) | Concrete proposed interface with observation weights, anchors and discrepancy bounds. Not implemented or scientifically validated; learned correlations alone do not supply hard coupling premises |
+| Declared correction fields translate to exact affine quantities and anchor rows | [Projection API](projection-adapter.md), [LupineProjection.lean](../formal/LupineProjection.lean), [independent audit](../reports/projection-independent-audit.json) | Twelve compiled algebraic statements; 27 focused tests. Common-image representation, coordinate/discrepancy enclosures and anchor validity remain premises. No Python refinement or physical validation |
+| Projection scope, provenance and unavailable bounds remain explicit | [Projection tests](../tests/test_projection.py), [independent tests](../tests/test_projection_review.py) | Full physical context and quantity scopes checked; missing or empirical-only field/discrepancy bounds yield no numerical model and all original IDs. Identity labels are not scientific attestation |
 | Valid individual failure budgets compose into a finite joint bound | [LupineRisk.lean](../formal/LupineRisk.lean), [formal verification](../formal/VERIFICATION.md) | Explicit normalized monotone subadditive risk law, with a finite weighted probability instance. Individual event-risk bounds and deterministic implication are premises; no stochastic independence is needed for the union bound |
 | Calibration finite-rank resolution and minimum count are exact | `finite_rank_iff`, `finite_rank_iff_minimum_count`, `insufficient_resolution_rank` in [LupineRisk.lean](../formal/LupineRisk.lean) | Rational ceiling arithmetic; unavailable rank is n+1. This does not prove that empirical residual ranks have the assumed marginal coverage |
 | Runtime implements the finite equations | `tests/test_core.py`, `tests/test_envelope.py` | Exhaustive bounded worlds and randomized refinement tests; no full formal refinement proof |

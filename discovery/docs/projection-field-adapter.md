@@ -1,7 +1,7 @@
 # Connecting Lupine correction fields to candidate screening
 
-Status: concrete adapter design, not an implemented scientific adapter or a
-validated physical model. The shared-affine certificate kernel supplies the
+Status: the [exact Python adapter](projection-adapter.md) now implements this
+algebraic bridge. It is not a validated physical model. The shared-affine certificate kernel supplies the
 mathematical destination; this note identifies what a Lupine correction model
 would have to provide before that kernel can screen candidates.
 
@@ -149,23 +149,27 @@ Otherwise the certificate must bound the remaining field contribution using
 the original domain or the domain where candidate x is feasible. A fitted
 ranking correlation does not supply such a bound.
 
-## Next implementation and validation boundary
+## Implemented algebra and remaining validation boundary
 
-Implement a small deterministic adapter that generates the latent coordinates,
-anchor rows, exact candidate affine functions and source-bound relation record.
-Test its signs and unit normalizations independently before wiring it into the
-versioned problem format. In particular, preserve the whole derived map for
+The [Python API](projection-adapter.md) now generates latent coordinates,
+anchor rows, exact candidate affine functions and the complete relation record.
+Its signs and normalization were checked independently against the original
+equations. Run `python examples/projected.py` for four constructed cases;
+its report is not a workbench input. A [strict wrapper](projection-workbench-contract.md)
+is proposed to preserve these declarations through versioned inputs and replay. In particular, preserve the whole derived map for
 elastic moduli, differences or other composite quantities; independently good
 component corrections do not license their composition automatically.
 
-The first adapter test should be the synthetic anchor example above plus its
-tie and inconsistent-anchor controls. A scientific test then needs archived
+The adapter tests include the synthetic anchor example, its attained tie,
+missing bounds and inconsistent-anchor controls. A scientific test then needs archived
 joint observations, a fixed observation map, independently justified or clearly
 conditional discrepancy bounds, disjoint anchor/evaluation allocations and a
 predeclared comparison. The current composition-only JARVIS benchmark does not
 contain the required environment-resolved field information, and cannot be
 silently relabeled as a test of this adapter.
 
-No new scientific result follows from this design. It states a concrete route
+The [pinned Rhizo data audit](projection-data-readiness.md) identifies an
+archived route and unresolved scope, bound and provenance prerequisites.
+No new scientific result follows from the implemented algebra. It states a concrete route
 from Lupine's correction-field research into the universal decision engine,
 while preserving the extra premises that make the route meaningful.

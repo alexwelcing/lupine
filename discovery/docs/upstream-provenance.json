@@ -37,5 +37,5 @@
     ]
   },
   "relationship": "New selection composition above Rhizo conditional correction theory; no claim of runtime formal refinement or universal physical accuracy.",
-  "projection_field_adapter": "docs/projection-field-adapter.md is a proposed conditional mapping from shared correction coordinates and bounded discrepancies into affine certificates; no upstream simulation or statistical claim was independently reproduced."
+  "projection_field_adapter": "docs/projection-adapter.md describes the implemented conditional Python translation with exact scoped normalization, anchors and bounded discrepancies. docs/projection-data-readiness.md audits pinned upstream metadata; no upstream simulation or scientific performance claim was independently reproduced."
 }

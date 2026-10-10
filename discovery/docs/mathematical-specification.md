@@ -1,9 +1,9 @@
 # Universal candidate-pool specification
 
 Status: mathematical specification. The [formal theorem inventory](../formal/theorem-inventory.json)
-records 88 compiled statements: 18 scalar-selector, 15 Pareto, 9 nonlinear
+records 100 compiled statements: 18 scalar-selector, 15 Pareto, 9 nonlinear
 interval/domain, 15 conditional finite-risk/rank, 12 interval-box sharpness,
-and 19 conservative coupled-affine statements. See the [theorem map](../formal/README.md) and
+19 conservative coupled-affine statements, and 12 projection-algebra statements. See the [theorem map](../formal/README.md) and
 [actual verification record](../formal/VERIFICATION.md) for their precise scope.
 Python conformance tests are not a formal refinement proof of the executable
 runtime. Conditional finite-risk composition is included; exchangeability and
@@ -366,3 +366,21 @@ success. An empty Pareto universe is valid but gives null pool fraction and
 
 The first three include scientific obligations. Lean proves implications from
 their formal premises; it does not validate arbitrary physical assumptions.
+
+## Scoped correction-field translation
+
+The [projection adapter](projection-adapter.md) substitutes the explicitly
+supplied finite parameterization `theta=b+S z` into
+`truth_q=nominal_q-w_q·theta+rho_q e_q`. It generates constant
+`nominal_q-w_q·b`, field coefficients `-w_q S`, and a separate normalized
+discrepancy coordinate with coefficient `rho_q`. Signed target maps act on
+the entire expression. An anchor `L<=a·z+c<=U` is exactly equivalent to
+the two rows `a·z<=U-c` and `-a·z<=c-L`.
+
+The twelve statements in `LupineProjection.lean` prove these algebraic
+identities, cancellation and discrepancy enclosures. Together with a supplied
+actual common world satisfying every bound and anchor, they connect the
+declared quantities to the existing coupled theorem premises. General matrices
+do not imply image coverage, and metadata equality does not prove scientific
+compatibility. Missing or empirical-only field/discrepancy bounds cause the
+runtime adapter to construct no numerical model and retain all original IDs.

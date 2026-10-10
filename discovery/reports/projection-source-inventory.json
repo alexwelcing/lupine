@@ -1,0 +1,1468 @@
+{
+  "access_boundary": {
+    "bound_evidence_payloads_opened": false,
+    "documentation_numeric_reference_examples_incidentally_exposed": true,
+    "exposure_description": "Mixed-content documentation displayed several numeric examples in nonprimary material/property lanes. No value is reproduced in this inventory. Published aggregate findings in the Library paper were already visible. No fully blinded or untouched-data claim is made.",
+    "exposure_source": "alexwelcing/lupine-rhizo/data/y_matrix_targets/README.md at pinned commit",
+    "figures_or_target_tables_opened": false,
+    "fitting_or_simulation_performed": false,
+    "generated_measured_lean_literals_opened": false,
+    "new_protocol_registered": false,
+    "run_result_payloads_opened": false,
+    "target_arrays_opened": false,
+    "upstream_loaders_executed": false
+  },
+  "audit_date": "2026-10-10",
+  "metadata_only_fcc_units": [
+    {
+      "artifacts": [
+        {
+          "bytes": 7864,
+          "contents_opened": false,
+          "git_blob_sha1": "d911a8508ab58f36ae443067ad13652685fda097",
+          "path": "data/y_matrix_runs/Ag_fcc_chgnet.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 2091,
+          "contents_opened": false,
+          "git_blob_sha1": "9aee1a2ee2380d5151523599d5cc9deee9ac6e18",
+          "path": "data/y_matrix_runs/Ag_fcc_chgnet.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 3589,
+          "contents_opened": false,
+          "git_blob_sha1": "09c38f807dc3a1e04ccc5b7146f2fdcd085e2462",
+          "path": "data/y_matrix_runs/bound/Ag_fcc_chgnet.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        }
+      ],
+      "material_from_path": "Ag",
+      "model_from_path": "chgnet",
+      "structure_from_path": "fcc",
+      "unit_identity_verified_from_payload": false
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 7878,
+          "contents_opened": false,
+          "git_blob_sha1": "98251bed9228c7dd93c1a1c2b5a1a8473ce8401d",
+          "path": "data/y_matrix_runs/Ag_fcc_mace-mp-small.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 2102,
+          "contents_opened": false,
+          "git_blob_sha1": "681da5810492a30d9a95fea2cf793b13ee551a3c",
+          "path": "data/y_matrix_runs/Ag_fcc_mace-mp-small.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 3600,
+          "contents_opened": false,
+          "git_blob_sha1": "e5d8f6a3e341b74f77949a45f82570e376aec593",
+          "path": "data/y_matrix_runs/bound/Ag_fcc_mace-mp-small.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        }
+      ],
+      "material_from_path": "Ag",
+      "model_from_path": "mace-mp-small",
+      "structure_from_path": "fcc",
+      "unit_identity_verified_from_payload": false
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 7876,
+          "contents_opened": false,
+          "git_blob_sha1": "256979c771a83e445a31420169466496d3772342",
+          "path": "data/y_matrix_runs/Ag_fcc_mace-mp-medium.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 2102,
+          "contents_opened": false,
+          "git_blob_sha1": "80e188ae171110fc3ed097b14ffcaf791f301619",
+          "path": "data/y_matrix_runs/Ag_fcc_mace-mp-medium.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 3600,
+          "contents_opened": false,
+          "git_blob_sha1": "6657056a91dd7ec06c3e42d443979fa69115d00a",
+          "path": "data/y_matrix_runs/bound/Ag_fcc_mace-mp-medium.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        }
+      ],
+      "material_from_path": "Ag",
+      "model_from_path": "mace-mp-medium",
+      "structure_from_path": "fcc",
+      "unit_identity_verified_from_payload": false
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 7872,
+          "contents_opened": false,
+          "git_blob_sha1": "026628a7479eca13b510763303114f82b7e233ea",
+          "path": "data/y_matrix_runs/Ag_fcc_mace-mpa-0-medium.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 2105,
+          "contents_opened": false,
+          "git_blob_sha1": "e875f50ec476773453305f9cbc9169d9ff804c89",
+          "path": "data/y_matrix_runs/Ag_fcc_mace-mpa-0-medium.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 3603,
+          "contents_opened": false,
+          "git_blob_sha1": "3e29666f253140b451074bb05aeadc5b6384d77d",
+          "path": "data/y_matrix_runs/bound/Ag_fcc_mace-mpa-0-medium.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        }
+      ],
+      "material_from_path": "Ag",
+      "model_from_path": "mace-mpa-0-medium",
+      "structure_from_path": "fcc",
+      "unit_identity_verified_from_payload": false
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 7866,
+          "contents_opened": false,
+          "git_blob_sha1": "d19ef9236874524158605d53432254ebbd247102",
+          "path": "data/y_matrix_runs/Al_fcc_chgnet.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 2091,
+          "contents_opened": false,
+          "git_blob_sha1": "88ff4c1157626918ca6d072e8b3a66dd0a7b6eb4",
+          "path": "data/y_matrix_runs/Al_fcc_chgnet.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 3597,
+          "contents_opened": false,
+          "git_blob_sha1": "deb121459c54658e67d7ca5f82cea96086ab44a8",
+          "path": "data/y_matrix_runs/bound/Al_fcc_chgnet.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        }
+      ],
+      "material_from_path": "Al",
+      "model_from_path": "chgnet",
+      "structure_from_path": "fcc",
+      "unit_identity_verified_from_payload": false
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 7874,
+          "contents_opened": false,
+          "git_blob_sha1": "2e039bd25075a7d431565c88ac27f42bd9a348dd",
+          "path": "data/y_matrix_runs/Al_fcc_mace-mp-small.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 2102,
+          "contents_opened": false,
+          "git_blob_sha1": "b9e5f06d3437bf88893fb7b15afe61cdb60d592f",
+          "path": "data/y_matrix_runs/Al_fcc_mace-mp-small.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 3608,
+          "contents_opened": false,
+          "git_blob_sha1": "8a7a938b0300ddd4abc5dec3860ec095e38d1f06",
+          "path": "data/y_matrix_runs/bound/Al_fcc_mace-mp-small.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        }
+      ],
+      "material_from_path": "Al",
+      "model_from_path": "mace-mp-small",
+      "structure_from_path": "fcc",
+      "unit_identity_verified_from_payload": false
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 7877,
+          "contents_opened": false,
+          "git_blob_sha1": "dd7183a12c9833100bb5a05debfba5f7f4dff92a",
+          "path": "data/y_matrix_runs/Al_fcc_mace-mp-medium.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 2102,
+          "contents_opened": false,
+          "git_blob_sha1": "62d8a8efa74b8aee66aca4faef19e7dbc601646b",
+          "path": "data/y_matrix_runs/Al_fcc_mace-mp-medium.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 3608,
+          "contents_opened": false,
+          "git_blob_sha1": "2fccdd843114a0be0cc2b0f2f8bf9c845cf75fd3",
+          "path": "data/y_matrix_runs/bound/Al_fcc_mace-mp-medium.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        }
+      ],
+      "material_from_path": "Al",
+      "model_from_path": "mace-mp-medium",
+      "structure_from_path": "fcc",
+      "unit_identity_verified_from_payload": false
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 7872,
+          "contents_opened": false,
+          "git_blob_sha1": "12fbf30acf9228ab445f013eacecad6941c76463",
+          "path": "data/y_matrix_runs/Al_fcc_mace-mpa-0-medium.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 2107,
+          "contents_opened": false,
+          "git_blob_sha1": "b9e6a7b0c610ca2835e8170258cc689227cabf0f",
+          "path": "data/y_matrix_runs/Al_fcc_mace-mpa-0-medium.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 3613,
+          "contents_opened": false,
+          "git_blob_sha1": "66bbfd1af8e1b89f259a69d48e25572ea4432c9b",
+          "path": "data/y_matrix_runs/bound/Al_fcc_mace-mpa-0-medium.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        }
+      ],
+      "material_from_path": "Al",
+      "model_from_path": "mace-mpa-0-medium",
+      "structure_from_path": "fcc",
+      "unit_identity_verified_from_payload": false
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 7877,
+          "contents_opened": false,
+          "git_blob_sha1": "c1764e6f9d65034d7f5ed237c61759bf3bc808e9",
+          "path": "data/y_matrix_runs/Au_fcc_chgnet.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 2094,
+          "contents_opened": false,
+          "git_blob_sha1": "73931d966c7185819bdd7be25f64618b2bb0bebc",
+          "path": "data/y_matrix_runs/Au_fcc_chgnet.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 3545,
+          "contents_opened": false,
+          "git_blob_sha1": "b80a9685321072d02d690fa8494d9337034bc6aa",
+          "path": "data/y_matrix_runs/bound/Au_fcc_chgnet.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        }
+      ],
+      "material_from_path": "Au",
+      "model_from_path": "chgnet",
+      "structure_from_path": "fcc",
+      "unit_identity_verified_from_payload": false
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 7884,
+          "contents_opened": false,
+          "git_blob_sha1": "867d194d96e8cf9d8ede4d5eb4efbda459ab294a",
+          "path": "data/y_matrix_runs/Au_fcc_mace-mp-small.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 2104,
+          "contents_opened": false,
+          "git_blob_sha1": "3cb0317f5710b374868afc668a6f593480f198bb",
+          "path": "data/y_matrix_runs/Au_fcc_mace-mp-small.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 3555,
+          "contents_opened": false,
+          "git_blob_sha1": "8dbbdc9fdaccb6a8d032654c5a1ebb7309e59bdd",
+          "path": "data/y_matrix_runs/bound/Au_fcc_mace-mp-small.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        }
+      ],
+      "material_from_path": "Au",
+      "model_from_path": "mace-mp-small",
+      "structure_from_path": "fcc",
+      "unit_identity_verified_from_payload": false
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 7870,
+          "contents_opened": false,
+          "git_blob_sha1": "943ba244826d3c95e6010ab7a0d3ae10df83398b",
+          "path": "data/y_matrix_runs/Au_fcc_mace-mp-medium.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 2103,
+          "contents_opened": false,
+          "git_blob_sha1": "72947d3e629d6aecd3f33e1e70a02c3f120be8be",
+          "path": "data/y_matrix_runs/Au_fcc_mace-mp-medium.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 3554,
+          "contents_opened": false,
+          "git_blob_sha1": "93a57954be12f4ec4d16ad13ee58114ee95c32aa",
+          "path": "data/y_matrix_runs/bound/Au_fcc_mace-mp-medium.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        }
+      ],
+      "material_from_path": "Au",
+      "model_from_path": "mace-mp-medium",
+      "structure_from_path": "fcc",
+      "unit_identity_verified_from_payload": false
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 7872,
+          "contents_opened": false,
+          "git_blob_sha1": "292b82849ef2c2c83828a4a60e36b5fcad7bfa07",
+          "path": "data/y_matrix_runs/Au_fcc_mace-mpa-0-medium.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 2108,
+          "contents_opened": false,
+          "git_blob_sha1": "b5ca5dfc34111eb72b1cf0a8f93be879b6daeff4",
+          "path": "data/y_matrix_runs/Au_fcc_mace-mpa-0-medium.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 3559,
+          "contents_opened": false,
+          "git_blob_sha1": "bc62fccc8b425017868b8283ed5f2470049896d8",
+          "path": "data/y_matrix_runs/bound/Au_fcc_mace-mpa-0-medium.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        }
+      ],
+      "material_from_path": "Au",
+      "model_from_path": "mace-mpa-0-medium",
+      "structure_from_path": "fcc",
+      "unit_identity_verified_from_payload": false
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 7839,
+          "contents_opened": false,
+          "git_blob_sha1": "245cc1b5378ef3d179131959933883a43d49cdf3",
+          "path": "data/y_matrix_runs/Ca_fcc_chgnet.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 2079,
+          "contents_opened": false,
+          "git_blob_sha1": "2cdadecf69d931c63d8ace3c67926eb2bc0d79cc",
+          "path": "data/y_matrix_runs/Ca_fcc_chgnet.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 3280,
+          "contents_opened": false,
+          "git_blob_sha1": "18af8d5bcc7573794c976d5db55ee853dc38e863",
+          "path": "data/y_matrix_runs/bound/Ca_fcc_chgnet.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        }
+      ],
+      "material_from_path": "Ca",
+      "model_from_path": "chgnet",
+      "structure_from_path": "fcc",
+      "unit_identity_verified_from_payload": false
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 7896,
+          "contents_opened": false,
+          "git_blob_sha1": "be0fda0af0daeed4b9ee559bbaa7f2887433e46c",
+          "path": "data/y_matrix_runs/Ca_fcc_mace-mp-small.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 2104,
+          "contents_opened": false,
+          "git_blob_sha1": "3debf1646373a605b9b4c8adf603df8e95d7d9cb",
+          "path": "data/y_matrix_runs/Ca_fcc_mace-mp-small.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 3305,
+          "contents_opened": false,
+          "git_blob_sha1": "e026b1b50bf186e0dd56ecc904a4b5a4e424358e",
+          "path": "data/y_matrix_runs/bound/Ca_fcc_mace-mp-small.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        }
+      ],
+      "material_from_path": "Ca",
+      "model_from_path": "mace-mp-small",
+      "structure_from_path": "fcc",
+      "unit_identity_verified_from_payload": false
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 7894,
+          "contents_opened": false,
+          "git_blob_sha1": "13c41471577fdadc7b581a2ef861dfd82a048204",
+          "path": "data/y_matrix_runs/Ca_fcc_mace-mp-medium.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 2104,
+          "contents_opened": false,
+          "git_blob_sha1": "1b84716add045964033e8d5a62605f7bf42dc910",
+          "path": "data/y_matrix_runs/Ca_fcc_mace-mp-medium.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 3305,
+          "contents_opened": false,
+          "git_blob_sha1": "15a80afcc31523ffe7317bfd8bbe0f36264c9321",
+          "path": "data/y_matrix_runs/bound/Ca_fcc_mace-mp-medium.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        }
+      ],
+      "material_from_path": "Ca",
+      "model_from_path": "mace-mp-medium",
+      "structure_from_path": "fcc",
+      "unit_identity_verified_from_payload": false
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 7892,
+          "contents_opened": false,
+          "git_blob_sha1": "fea231b97ed3cf43e5cab9607f7576b1b8478834",
+          "path": "data/y_matrix_runs/Ca_fcc_mace-mpa-0-medium.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 2112,
+          "contents_opened": false,
+          "git_blob_sha1": "7b543a87d3694dfd0b6ae7c8772e8ed5698540bf",
+          "path": "data/y_matrix_runs/Ca_fcc_mace-mpa-0-medium.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 3313,
+          "contents_opened": false,
+          "git_blob_sha1": "18c85b3ec2ed5322131c717dc7ed143dd4575225",
+          "path": "data/y_matrix_runs/bound/Ca_fcc_mace-mpa-0-medium.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        }
+      ],
+      "material_from_path": "Ca",
+      "model_from_path": "mace-mpa-0-medium",
+      "structure_from_path": "fcc",
+      "unit_identity_verified_from_payload": false
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 7867,
+          "contents_opened": false,
+          "git_blob_sha1": "c1d1ed8c808253189fc75958d7b4c56cfac8e605",
+          "path": "data/y_matrix_runs/Cu_fcc_chgnet.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 2090,
+          "contents_opened": false,
+          "git_blob_sha1": "febb403486629784c1d3a72fdeb5cf1e144b5ae3",
+          "path": "data/y_matrix_runs/Cu_fcc_chgnet.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 3613,
+          "contents_opened": false,
+          "git_blob_sha1": "9537a34f880649372cd704783bc830a1f204d0ce",
+          "path": "data/y_matrix_runs/bound/Cu_fcc_chgnet.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        }
+      ],
+      "material_from_path": "Cu",
+      "model_from_path": "chgnet",
+      "structure_from_path": "fcc",
+      "unit_identity_verified_from_payload": false
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 7863,
+          "contents_opened": false,
+          "git_blob_sha1": "52fab155d8c6f71dfdb399effbbc07088064710e",
+          "path": "data/y_matrix_runs/Cu_fcc_mace-mp-small.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 2101,
+          "contents_opened": false,
+          "git_blob_sha1": "9799604147ecc025f37a2630863d870ab46d90d4",
+          "path": "data/y_matrix_runs/Cu_fcc_mace-mp-small.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 3624,
+          "contents_opened": false,
+          "git_blob_sha1": "970756179025ef1ecae99e11c7c5e53fcaedb0fb",
+          "path": "data/y_matrix_runs/bound/Cu_fcc_mace-mp-small.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        }
+      ],
+      "material_from_path": "Cu",
+      "model_from_path": "mace-mp-small",
+      "structure_from_path": "fcc",
+      "unit_identity_verified_from_payload": false
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 7889,
+          "contents_opened": false,
+          "git_blob_sha1": "0c79ec5f2ea1e9dcad2ae9063134fb5cacbabcfe",
+          "path": "data/y_matrix_runs/Cu_fcc_mace-mp-medium.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 2106,
+          "contents_opened": false,
+          "git_blob_sha1": "49b52f34521b551f38803ba7a8837531caacc19c",
+          "path": "data/y_matrix_runs/Cu_fcc_mace-mp-medium.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 3629,
+          "contents_opened": false,
+          "git_blob_sha1": "37637e4c9b8a857510c369a61b9b761a796bd2d6",
+          "path": "data/y_matrix_runs/bound/Cu_fcc_mace-mp-medium.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        }
+      ],
+      "material_from_path": "Cu",
+      "model_from_path": "mace-mp-medium",
+      "structure_from_path": "fcc",
+      "unit_identity_verified_from_payload": false
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 7875,
+          "contents_opened": false,
+          "git_blob_sha1": "c7ff7851393f821b7f3a6cb74099f220d80c81fd",
+          "path": "data/y_matrix_runs/Cu_fcc_mace-mpa-0-medium.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 2106,
+          "contents_opened": false,
+          "git_blob_sha1": "ee6ede141ab5819c6909dddec8b01b1bb77fe671",
+          "path": "data/y_matrix_runs/Cu_fcc_mace-mpa-0-medium.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 3629,
+          "contents_opened": false,
+          "git_blob_sha1": "911a14e0ac5cc1d5598ec54b1fcc11474bad800e",
+          "path": "data/y_matrix_runs/bound/Cu_fcc_mace-mpa-0-medium.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        }
+      ],
+      "material_from_path": "Cu",
+      "model_from_path": "mace-mpa-0-medium",
+      "structure_from_path": "fcc",
+      "unit_identity_verified_from_payload": false
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 7858,
+          "contents_opened": false,
+          "git_blob_sha1": "e86f26bf3793859339b79f3f73b25dab73ba308b",
+          "path": "data/y_matrix_runs/Ni_fcc_chgnet.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 2090,
+          "contents_opened": false,
+          "git_blob_sha1": "42fad0312effabe83763a6ce01ef36512c18f96e",
+          "path": "data/y_matrix_runs/Ni_fcc_chgnet.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 3604,
+          "contents_opened": false,
+          "git_blob_sha1": "e0ee045b8f007cc97d3a6a47042aff86441c9a20",
+          "path": "data/y_matrix_runs/bound/Ni_fcc_chgnet.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        }
+      ],
+      "material_from_path": "Ni",
+      "model_from_path": "chgnet",
+      "structure_from_path": "fcc",
+      "unit_identity_verified_from_payload": false
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 7881,
+          "contents_opened": false,
+          "git_blob_sha1": "95aceb25b60b17345487593f4302e97866f3ec48",
+          "path": "data/y_matrix_runs/Ni_fcc_mace-mp-small.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 2101,
+          "contents_opened": false,
+          "git_blob_sha1": "cb16cc9c5f3d91e4d7026c846ab06485cbf2893c",
+          "path": "data/y_matrix_runs/Ni_fcc_mace-mp-small.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 3615,
+          "contents_opened": false,
+          "git_blob_sha1": "28aee65a69ad94a39632297423213e293bab46c8",
+          "path": "data/y_matrix_runs/bound/Ni_fcc_mace-mp-small.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        }
+      ],
+      "material_from_path": "Ni",
+      "model_from_path": "mace-mp-small",
+      "structure_from_path": "fcc",
+      "unit_identity_verified_from_payload": false
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 7883,
+          "contents_opened": false,
+          "git_blob_sha1": "677a269d69edc8d9d6d6e5ce3c2ebaf41a34bb61",
+          "path": "data/y_matrix_runs/Ni_fcc_mace-mp-medium.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 2103,
+          "contents_opened": false,
+          "git_blob_sha1": "57b61114d38649edfc869f6987c7174db0011834",
+          "path": "data/y_matrix_runs/Ni_fcc_mace-mp-medium.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 3617,
+          "contents_opened": false,
+          "git_blob_sha1": "fdffd4d0801c1f6def4dad5eb4fba2be75178f9f",
+          "path": "data/y_matrix_runs/bound/Ni_fcc_mace-mp-medium.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        }
+      ],
+      "material_from_path": "Ni",
+      "model_from_path": "mace-mp-medium",
+      "structure_from_path": "fcc",
+      "unit_identity_verified_from_payload": false
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 7854,
+          "contents_opened": false,
+          "git_blob_sha1": "a7d52909eee9f26a6bc3bf3208e832ff24cc4b3e",
+          "path": "data/y_matrix_runs/Ni_fcc_mace-mpa-0-medium.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 2101,
+          "contents_opened": false,
+          "git_blob_sha1": "7a63fca22f209f7c5981f75778fac3150f7b3922",
+          "path": "data/y_matrix_runs/Ni_fcc_mace-mpa-0-medium.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 3615,
+          "contents_opened": false,
+          "git_blob_sha1": "92caf1c50580b2050543d1e7699fed9732c15c98",
+          "path": "data/y_matrix_runs/bound/Ni_fcc_mace-mpa-0-medium.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        }
+      ],
+      "material_from_path": "Ni",
+      "model_from_path": "mace-mpa-0-medium",
+      "structure_from_path": "fcc",
+      "unit_identity_verified_from_payload": false
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 7861,
+          "contents_opened": false,
+          "git_blob_sha1": "629eb226537ab4fa336de5cb0c7e2f1ca0b8d05b",
+          "path": "data/y_matrix_runs/Pd_fcc_chgnet.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 2090,
+          "contents_opened": false,
+          "git_blob_sha1": "4d3309b868bf6dbe893336295dcc0802ab0af7ab",
+          "path": "data/y_matrix_runs/Pd_fcc_chgnet.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 3418,
+          "contents_opened": false,
+          "git_blob_sha1": "5bbc98331efcd4ff62d2bdb7838e4b243444a9d2",
+          "path": "data/y_matrix_runs/bound/Pd_fcc_chgnet.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        }
+      ],
+      "material_from_path": "Pd",
+      "model_from_path": "chgnet",
+      "structure_from_path": "fcc",
+      "unit_identity_verified_from_payload": false
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 7882,
+          "contents_opened": false,
+          "git_blob_sha1": "91c460c74e32f5e0d2789c723982cf168feaced8",
+          "path": "data/y_matrix_runs/Pd_fcc_mace-mp-small.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 2100,
+          "contents_opened": false,
+          "git_blob_sha1": "fc71bdaede61f7b3c1cad68f78d954e2c6af3d02",
+          "path": "data/y_matrix_runs/Pd_fcc_mace-mp-small.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 3428,
+          "contents_opened": false,
+          "git_blob_sha1": "a62983f230f84bf3027197cc730dab9b74c367aa",
+          "path": "data/y_matrix_runs/bound/Pd_fcc_mace-mp-small.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        }
+      ],
+      "material_from_path": "Pd",
+      "model_from_path": "mace-mp-small",
+      "structure_from_path": "fcc",
+      "unit_identity_verified_from_payload": false
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 7884,
+          "contents_opened": false,
+          "git_blob_sha1": "3574c1269ab438034bb19301afd2958ba19a8dc8",
+          "path": "data/y_matrix_runs/Pd_fcc_mace-mp-medium.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 2104,
+          "contents_opened": false,
+          "git_blob_sha1": "fd6935862c880e4ba6588adba7d7437e8553e067",
+          "path": "data/y_matrix_runs/Pd_fcc_mace-mp-medium.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 3432,
+          "contents_opened": false,
+          "git_blob_sha1": "6c6ba73b3c71595d15881ef0f7583c343d7cf448",
+          "path": "data/y_matrix_runs/bound/Pd_fcc_mace-mp-medium.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        }
+      ],
+      "material_from_path": "Pd",
+      "model_from_path": "mace-mp-medium",
+      "structure_from_path": "fcc",
+      "unit_identity_verified_from_payload": false
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 7864,
+          "contents_opened": false,
+          "git_blob_sha1": "7f402371d853a346f13005bf54a98980b801768d",
+          "path": "data/y_matrix_runs/Pd_fcc_mace-mpa-0-medium.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 2107,
+          "contents_opened": false,
+          "git_blob_sha1": "636e343b50a877d4c72509bdc4c63f5c0acd5b88",
+          "path": "data/y_matrix_runs/Pd_fcc_mace-mpa-0-medium.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 3435,
+          "contents_opened": false,
+          "git_blob_sha1": "82ac094559566f89483bc11ae7f939a8407847c6",
+          "path": "data/y_matrix_runs/bound/Pd_fcc_mace-mpa-0-medium.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        }
+      ],
+      "material_from_path": "Pd",
+      "model_from_path": "mace-mpa-0-medium",
+      "structure_from_path": "fcc",
+      "unit_identity_verified_from_payload": false
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 7847,
+          "contents_opened": false,
+          "git_blob_sha1": "67bd74fda5a4b3b0b512c5863631a6e5f8cf7289",
+          "path": "data/y_matrix_runs/Pt_fcc_chgnet.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 2088,
+          "contents_opened": false,
+          "git_blob_sha1": "8f2a7c9dc9e7e3bc4920d8422f822ba488178f54",
+          "path": "data/y_matrix_runs/Pt_fcc_chgnet.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 3681,
+          "contents_opened": false,
+          "git_blob_sha1": "c33c63812be50088b28ee3bf98666a3f85ade09a",
+          "path": "data/y_matrix_runs/bound/Pt_fcc_chgnet.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        }
+      ],
+      "material_from_path": "Pt",
+      "model_from_path": "chgnet",
+      "structure_from_path": "fcc",
+      "unit_identity_verified_from_payload": false
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 7875,
+          "contents_opened": false,
+          "git_blob_sha1": "ad27963f8a1e362d7de7c2210f7cad88c29b5bb4",
+          "path": "data/y_matrix_runs/Pt_fcc_mace-mp-small.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 2102,
+          "contents_opened": false,
+          "git_blob_sha1": "708e451250169dc65e4380dfb33cdb24d86198ed",
+          "path": "data/y_matrix_runs/Pt_fcc_mace-mp-small.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 3695,
+          "contents_opened": false,
+          "git_blob_sha1": "7ddc5f416d4dd60331c9eb2845c893ea431c8da4",
+          "path": "data/y_matrix_runs/bound/Pt_fcc_mace-mp-small.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        }
+      ],
+      "material_from_path": "Pt",
+      "model_from_path": "mace-mp-small",
+      "structure_from_path": "fcc",
+      "unit_identity_verified_from_payload": false
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 7880,
+          "contents_opened": false,
+          "git_blob_sha1": "0964bd8c48e768daa2e69fa99ec1cff55ee895a9",
+          "path": "data/y_matrix_runs/Pt_fcc_mace-mp-medium.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 2105,
+          "contents_opened": false,
+          "git_blob_sha1": "7f0b243568a16a0ecda32669421ab77c35acab4b",
+          "path": "data/y_matrix_runs/Pt_fcc_mace-mp-medium.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 3698,
+          "contents_opened": false,
+          "git_blob_sha1": "c751a8818898af8a032c9a95ef47275726b835ed",
+          "path": "data/y_matrix_runs/bound/Pt_fcc_mace-mp-medium.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        }
+      ],
+      "material_from_path": "Pt",
+      "model_from_path": "mace-mp-medium",
+      "structure_from_path": "fcc",
+      "unit_identity_verified_from_payload": false
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 7870,
+          "contents_opened": false,
+          "git_blob_sha1": "10558735182e4c6462f9d075ec8968e59f5b43e9",
+          "path": "data/y_matrix_runs/Pt_fcc_mace-mpa-0-medium.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 2105,
+          "contents_opened": false,
+          "git_blob_sha1": "8ca0ec1def72c5413ec653aad403659b6f073582",
+          "path": "data/y_matrix_runs/Pt_fcc_mace-mpa-0-medium.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 3698,
+          "contents_opened": false,
+          "git_blob_sha1": "e24fb1f8602c408d1836274736916e751e3a896c",
+          "path": "data/y_matrix_runs/bound/Pt_fcc_mace-mpa-0-medium.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        }
+      ],
+      "material_from_path": "Pt",
+      "model_from_path": "mace-mpa-0-medium",
+      "structure_from_path": "fcc",
+      "unit_identity_verified_from_payload": false
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 7900,
+          "contents_opened": false,
+          "git_blob_sha1": "6803a58723ad34a5e528a097f80529f7fc7d7fc4",
+          "path": "data/y_matrix_runs/Sr_fcc_chgnet.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 2099,
+          "contents_opened": false,
+          "git_blob_sha1": "6770cfd85abdc2ba3c0081e7255a58b97df9d507",
+          "path": "data/y_matrix_runs/Sr_fcc_chgnet.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 3299,
+          "contents_opened": false,
+          "git_blob_sha1": "d584f3aa211d45201d82599fa235cba3b068e872",
+          "path": "data/y_matrix_runs/bound/Sr_fcc_chgnet.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        }
+      ],
+      "material_from_path": "Sr",
+      "model_from_path": "chgnet",
+      "structure_from_path": "fcc",
+      "unit_identity_verified_from_payload": false
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 7890,
+          "contents_opened": false,
+          "git_blob_sha1": "5d77c1268fe78cde4b32d01660bc435295a6a455",
+          "path": "data/y_matrix_runs/Sr_fcc_mace-mp-small.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 2105,
+          "contents_opened": false,
+          "git_blob_sha1": "a11a87b313a1b819c9e0a10c5efb6cd00da08c21",
+          "path": "data/y_matrix_runs/Sr_fcc_mace-mp-small.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 3305,
+          "contents_opened": false,
+          "git_blob_sha1": "48b7703ce5db9d4215a0feeb7d81f3dbd290f411",
+          "path": "data/y_matrix_runs/bound/Sr_fcc_mace-mp-small.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        }
+      ],
+      "material_from_path": "Sr",
+      "model_from_path": "mace-mp-small",
+      "structure_from_path": "fcc",
+      "unit_identity_verified_from_payload": false
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 7873,
+          "contents_opened": false,
+          "git_blob_sha1": "b277fa3d502774dcda10346f125391b6a408e65c",
+          "path": "data/y_matrix_runs/Sr_fcc_mace-mp-medium.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 2106,
+          "contents_opened": false,
+          "git_blob_sha1": "02a93d09bdd348e4088d590d575d5d2d833858a3",
+          "path": "data/y_matrix_runs/Sr_fcc_mace-mp-medium.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 3306,
+          "contents_opened": false,
+          "git_blob_sha1": "2289d3867261fb123aa174169bec49f214a799d9",
+          "path": "data/y_matrix_runs/bound/Sr_fcc_mace-mp-medium.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        }
+      ],
+      "material_from_path": "Sr",
+      "model_from_path": "mace-mp-medium",
+      "structure_from_path": "fcc",
+      "unit_identity_verified_from_payload": false
+    },
+    {
+      "artifacts": [
+        {
+          "bytes": 7881,
+          "contents_opened": false,
+          "git_blob_sha1": "431cd2e6afbbb97769e0e27c25cd0d64dc7c414b",
+          "path": "data/y_matrix_runs/Sr_fcc_mace-mpa-0-medium.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 2110,
+          "contents_opened": false,
+          "git_blob_sha1": "084842c4e76abc40813bbe11b2bf0e4db9f0d442",
+          "path": "data/y_matrix_runs/Sr_fcc_mace-mpa-0-medium.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        },
+        {
+          "bytes": 3310,
+          "contents_opened": false,
+          "git_blob_sha1": "7f66ca017a2593da707ec8cda49db6f494b65dec",
+          "path": "data/y_matrix_runs/bound/Sr_fcc_mace-mpa-0-medium.evidence.json",
+          "sha256": null,
+          "sha256_status": "not_acquired"
+        }
+      ],
+      "material_from_path": "Sr",
+      "model_from_path": "mace-mpa-0-medium",
+      "structure_from_path": "fcc",
+      "unit_identity_verified_from_payload": false
+    }
+  ],
+  "metadata_only_reference_and_report_artifacts": [
+    {
+      "bytes": 44140,
+      "contents_opened": false,
+      "git_blob_sha1": "241a220acd3420742443e26286a2c6f2e9e927f4",
+      "path": "data/y_matrix_targets/surface_energies.json",
+      "sha256": null,
+      "sha256_status": "not_acquired"
+    },
+    {
+      "bytes": 17779,
+      "contents_opened": false,
+      "git_blob_sha1": "8f98a67d89e32cecd9007b390d7629220515dd75",
+      "path": "data/y_matrix_targets/vacancy_formation.json",
+      "sha256": null,
+      "sha256_status": "not_acquired"
+    },
+    {
+      "bytes": 336724,
+      "contents_opened": false,
+      "git_blob_sha1": "b6822e5f4386a0ac84866dc188938d3347677cbc",
+      "path": "data/y_matrix_runs/bound/binding_report.json",
+      "sha256": null,
+      "sha256_status": "not_acquired"
+    },
+    {
+      "bytes": 59395,
+      "contents_opened": false,
+      "git_blob_sha1": "639d7ec5c36355eada9c9c93804b32e3337ea160",
+      "path": "data/y_matrix_runs/env_field_binding_report.json",
+      "sha256": null,
+      "sha256_status": "not_acquired"
+    },
+    {
+      "bytes": 2452,
+      "contents_opened": false,
+      "git_blob_sha1": "4f7f7ae84a0a47b8d0187fe033e02e75ce9ff5c5",
+      "path": "data/y_matrix_runs/envfield_experiment/report.json",
+      "sha256": null,
+      "sha256_status": "not_acquired"
+    }
+  ],
+  "read_source_files": [
+    {
+      "access": "source_documentation_or_license_only",
+      "bytes": 539,
+      "commit": "81079a8e1bac7ed332712cc92002bd3435e40776",
+      "git_blob_sha1": "ff318fd133ba30123bfc50fb64a4d1764343b455",
+      "path": "LICENSE-CONTENT.md",
+      "repository": "alexwelcing/lupine-rhizo",
+      "sha256": "876398266c0e06cc4fc8cbe3fd555ede9f4fe42615f68b197ab821b1d34f304d",
+      "url": "https://github.com/alexwelcing/lupine-rhizo/blob/81079a8e1bac7ed332712cc92002bd3435e40776/LICENSE-CONTENT.md"
+    },
+    {
+      "access": "source_documentation_or_license_only",
+      "bytes": 614,
+      "commit": "81079a8e1bac7ed332712cc92002bd3435e40776",
+      "git_blob_sha1": "0d1794cf18730cd05897d1d526e477ab1814f4a0",
+      "path": "LICENSE-DATA.md",
+      "repository": "alexwelcing/lupine-rhizo",
+      "sha256": "5b4108afdc9b1c058b47b3a24bfd9640c2f783d3dd76be8378fdba5538e5e46f",
+      "url": "https://github.com/alexwelcing/lupine-rhizo/blob/81079a8e1bac7ed332712cc92002bd3435e40776/LICENSE-DATA.md"
+    },
+    {
+      "access": "source_documentation_or_license_only",
+      "bytes": 12047,
+      "commit": "81079a8e1bac7ed332712cc92002bd3435e40776",
+      "git_blob_sha1": "70ab85e712afb6684fb8b1ac91dda5e2e6610447",
+      "path": "archive/2026-07-01/python/scripts/bind_y_matrix_references.py",
+      "repository": "alexwelcing/lupine-rhizo",
+      "sha256": "d80126568193ae5afd33f3f2b0856c830a7f970c4451c25e3345f2899bac684d",
+      "url": "https://github.com/alexwelcing/lupine-rhizo/blob/81079a8e1bac7ed332712cc92002bd3435e40776/archive/2026-07-01/python/scripts/bind_y_matrix_references.py"
+    },
+    {
+      "access": "source_documentation_or_license_only",
+      "bytes": 36524,
+      "commit": "81079a8e1bac7ed332712cc92002bd3435e40776",
+      "git_blob_sha1": "c5b4ae8b1f8b78ec14c39754e62d5d0a5a8edcd1",
+      "path": "archive/2026-07-01/python/scripts/run_y_matrix_pipeline.py",
+      "repository": "alexwelcing/lupine-rhizo",
+      "sha256": "560840b5e1afaff0577c8846a4c7003441c96345855e186ff9b84498146d53bb",
+      "url": "https://github.com/alexwelcing/lupine-rhizo/blob/81079a8e1bac7ed332712cc92002bd3435e40776/archive/2026-07-01/python/scripts/run_y_matrix_pipeline.py"
+    },
+    {
+      "access": "source_documentation_or_license_only",
+      "bytes": 4605,
+      "commit": "81079a8e1bac7ed332712cc92002bd3435e40776",
+      "git_blob_sha1": "03313965d95772e00b053292e3b065db47fba1bc",
+      "path": "config/y_matrix_demo.yaml",
+      "repository": "alexwelcing/lupine-rhizo",
+      "sha256": "c536ff27bf79b03d77ea1571d973c301ee2e87e575f62d9bc332b0fb0e076da7",
+      "url": "https://github.com/alexwelcing/lupine-rhizo/blob/81079a8e1bac7ed332712cc92002bd3435e40776/config/y_matrix_demo.yaml"
+    },
+    {
+      "access": "documentation_with_incidental_numeric_examples",
+      "bytes": 7322,
+      "commit": "81079a8e1bac7ed332712cc92002bd3435e40776",
+      "git_blob_sha1": "9094b5da9b09ae9964e36ea5336045e5f1b91a6e",
+      "path": "data/y_matrix_targets/README.md",
+      "repository": "alexwelcing/lupine-rhizo",
+      "sha256": "acb4334561cd8c0a487d1c9e67cd2ad9ab167f3c06c885de1d30fa23deae230a",
+      "url": "https://github.com/alexwelcing/lupine-rhizo/blob/81079a8e1bac7ed332712cc92002bd3435e40776/data/y_matrix_targets/README.md"
+    },
+    {
+      "access": "source_documentation_or_license_only",
+      "bytes": 16839,
+      "commit": "81079a8e1bac7ed332712cc92002bd3435e40776",
+      "git_blob_sha1": "257187b01b9a83891bd35718fe5b890d0737832d",
+      "path": "paper/figures/envfield/common.py",
+      "repository": "alexwelcing/lupine-rhizo",
+      "sha256": "dac91d29198050f92495337907c8a94fe24105d55d7c86763514813aab21db92",
+      "url": "https://github.com/alexwelcing/lupine-rhizo/blob/81079a8e1bac7ed332712cc92002bd3435e40776/paper/figures/envfield/common.py"
+    },
+    {
+      "access": "source_documentation_or_license_only",
+      "bytes": 17478,
+      "commit": "81079a8e1bac7ed332712cc92002bd3435e40776",
+      "git_blob_sha1": "84e0331acbb322f37ab53bf4dd2a4262084182a6",
+      "path": "python/lupine_distill/binding.py",
+      "repository": "alexwelcing/lupine-rhizo",
+      "sha256": "dcf34d3caae28d7fd31268f9217432d6c78692cad4f76dd316c434a6fb99c80e",
+      "url": "https://github.com/alexwelcing/lupine-rhizo/blob/81079a8e1bac7ed332712cc92002bd3435e40776/python/lupine_distill/binding.py"
+    },
+    {
+      "access": "source_documentation_or_license_only",
+      "bytes": 3374,
+      "commit": "81079a8e1bac7ed332712cc92002bd3435e40776",
+      "git_blob_sha1": "d7403134f9660522214df5ea5f070f4834c25ae2",
+      "path": "python/lupine_distill/calc_evidence.py",
+      "repository": "alexwelcing/lupine-rhizo",
+      "sha256": "725793cf1effc851c7bc28f820e41d9429d5483c8cb4232d3b4927dd27ef20a2",
+      "url": "https://github.com/alexwelcing/lupine-rhizo/blob/81079a8e1bac7ed332712cc92002bd3435e40776/python/lupine_distill/calc_evidence.py"
+    },
+    {
+      "access": "source_documentation_or_license_only",
+      "bytes": 9702,
+      "commit": "81079a8e1bac7ed332712cc92002bd3435e40776",
+      "git_blob_sha1": "c24f0fcc0d1c16415b04fbd0ce63230a126c5408",
+      "path": "python/lupine_distill/schemas.py",
+      "repository": "alexwelcing/lupine-rhizo",
+      "sha256": "1bf115907c27b60c29fb3bb7ab7de167d1aa723a3f6ee64c3fa9bd47ac0f5022",
+      "url": "https://github.com/alexwelcing/lupine-rhizo/blob/81079a8e1bac7ed332712cc92002bd3435e40776/python/lupine_distill/schemas.py"
+    },
+    {
+      "access": "source_documentation_or_license_only",
+      "bytes": 5365,
+      "commit": "81079a8e1bac7ed332712cc92002bd3435e40776",
+      "git_blob_sha1": "7e372606928d70cf2943a73f3aed4f6af7804276",
+      "path": "python/lupine_distill/statics/envfield.py",
+      "repository": "alexwelcing/lupine-rhizo",
+      "sha256": "cf08258ff3411bba8a85e6ec0d76726d7437504adf8ad24117853768fb734936",
+      "url": "https://github.com/alexwelcing/lupine-rhizo/blob/81079a8e1bac7ed332712cc92002bd3435e40776/python/lupine_distill/statics/envfield.py"
+    },
+    {
+      "access": "source_documentation_or_license_only",
+      "bytes": 11198,
+      "commit": "81079a8e1bac7ed332712cc92002bd3435e40776",
+      "git_blob_sha1": "33bd415177cfde186ac29f7ef472e045c6a32c0f",
+      "path": "python/lupine_distill/statics/surfaces.py",
+      "repository": "alexwelcing/lupine-rhizo",
+      "sha256": "d687290b017c61d567c691b6640f1c514071be5f2177f7583ee2db051e2a892b",
+      "url": "https://github.com/alexwelcing/lupine-rhizo/blob/81079a8e1bac7ed332712cc92002bd3435e40776/python/lupine_distill/statics/surfaces.py"
+    },
+    {
+      "access": "source_documentation_or_license_only",
+      "bytes": 23810,
+      "commit": "81079a8e1bac7ed332712cc92002bd3435e40776",
+      "git_blob_sha1": "fec60e10d1f2b3794059982e4dfc54e984faca8b",
+      "path": "python/scripts/bind_env_field_instances.py",
+      "repository": "alexwelcing/lupine-rhizo",
+      "sha256": "857d0eab65c28473c9382b71f77b8f418e6ae2dd7e4c7f355fd22718fc5a0155",
+      "url": "https://github.com/alexwelcing/lupine-rhizo/blob/81079a8e1bac7ed332712cc92002bd3435e40776/python/scripts/bind_env_field_instances.py"
+    },
+    {
+      "access": "source_documentation_or_license_only",
+      "bytes": 14128,
+      "commit": "81079a8e1bac7ed332712cc92002bd3435e40776",
+      "git_blob_sha1": "24f628c21efd14fede33bb056b284a1cabaeb17d",
+      "path": "python/scripts/run_y_matrix_statics.py",
+      "repository": "alexwelcing/lupine-rhizo",
+      "sha256": "8f87ce6de47e30ab6b7b71dbfeed2ee4860ee133e9118206ac07945c18893eb8",
+      "url": "https://github.com/alexwelcing/lupine-rhizo/blob/81079a8e1bac7ed332712cc92002bd3435e40776/python/scripts/run_y_matrix_statics.py"
+    },
+    {
+      "access": "source_documentation_or_license_only",
+      "bytes": 34523,
+      "commit": "9acdbaf9de337fccdfad419c23867378fce1aafd",
+      "git_blob_sha1": "be3f7b28e564e7dd05eaf59d64adba1a4065ac0e",
+      "path": "LICENSE",
+      "repository": "alexwelcing/lupine-ledger",
+      "sha256": "0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0",
+      "url": "https://github.com/alexwelcing/lupine-ledger/blob/9acdbaf9de337fccdfad419c23867378fce1aafd/LICENSE"
+    },
+    {
+      "access": "source_documentation_or_license_only",
+      "bytes": 522,
+      "commit": "9acdbaf9de337fccdfad419c23867378fce1aafd",
+      "git_blob_sha1": "4cec5be2b54ecd9e4f812fd40c51ff6e79c67142",
+      "path": "LICENSE-CONTENT.md",
+      "repository": "alexwelcing/lupine-ledger",
+      "sha256": "ed2aa0ccfbe0a38b3470677d7de2c36cd20f7e36b36b7c46becb43d3a6d10b84",
+      "url": "https://github.com/alexwelcing/lupine-ledger/blob/9acdbaf9de337fccdfad419c23867378fce1aafd/LICENSE-CONTENT.md"
+    },
+    {
+      "access": "source_documentation_or_license_only",
+      "bytes": 532,
+      "commit": "9acdbaf9de337fccdfad419c23867378fce1aafd",
+      "git_blob_sha1": "30a6d7e027106c30a4af878004e0ffe59c11eb82",
+      "path": "LICENSE-DATA.md",
+      "repository": "alexwelcing/lupine-ledger",
+      "sha256": "c383252378af797021273348ccf07b2da585fa12eb206b85da3cb28c0aed2e4e",
+      "url": "https://github.com/alexwelcing/lupine-ledger/blob/9acdbaf9de337fccdfad419c23867378fce1aafd/LICENSE-DATA.md"
+    },
+    {
+      "access": "previously_read_research_prose_including_published_aggregates",
+      "bytes": 3736,
+      "commit": "9acdbaf9de337fccdfad419c23867378fce1aafd",
+      "git_blob_sha1": "1895c61323169a7a13fd828ad7889eccf12b4bda",
+      "path": "content/latest/articles/docs/projection-law-in-plain-language.md",
+      "repository": "alexwelcing/lupine-ledger",
+      "sha256": "963b76fb0384decfbc4b1bef44716f62e72efda81aece84fde11f518d3e61cdb",
+      "url": "https://github.com/alexwelcing/lupine-ledger/blob/9acdbaf9de337fccdfad419c23867378fce1aafd/content/latest/articles/docs/projection-law-in-plain-language.md"
+    },
+    {
+      "access": "previously_read_research_prose_including_published_aggregates",
+      "bytes": 19690,
+      "commit": "9acdbaf9de337fccdfad419c23867378fce1aafd",
+      "git_blob_sha1": "7624f97ce44db48c1282dcf21bc3e90a965d28c4",
+      "path": "content/latest/articles/paper/environment-error-field-2026-07-02.md",
+      "repository": "alexwelcing/lupine-ledger",
+      "sha256": "f9335f6d0cb0a1e5d27c6835e64b131b5c23e37880f905f21f04490207412dea",
+      "url": "https://github.com/alexwelcing/lupine-ledger/blob/9acdbaf9de337fccdfad419c23867378fce1aafd/content/latest/articles/paper/environment-error-field-2026-07-02.md"
+    }
+  ],
+  "readiness": {
+    "exact_model_checkpoint_identity": "not required by inspected evidence schema; archive sufficiency unknown",
+    "explicit_fixed_fcc_map": "present in pinned figure source; conditional approximation",
+    "finite_hard_discrepancy_bounds": "not justified by inspected evidence",
+    "joint_observable_record_schema": "present; actual target completeness unchecked",
+    "new_disjoint_anchor_evaluation_allocation": "not made",
+    "primary_source_data_redistribution": "unresolved",
+    "reconstructed_surface_scope": "README flags mismatches requiring metadata review",
+    "reference_conditions_and_uncertainty": "partially documented; compatibility unresolved",
+    "same_block_multiple_heldout_candidates": "not supplied by three-anchor/one-facet route alone",
+    "untouched_predictive_evaluation": "not established; historical facet result already published"
+  },
+  "recommendation": "Build a reviewed target-redacted custody manifest, resolve identities/conditions/rights, then decide whether to freeze a scoped retrospective map-recovery study. Physical certified screening remains unsupported without justified finite bounds.",
+  "repositories": {
+    "library": {
+      "commit": "9acdbaf9de337fccdfad419c23867378fce1aafd",
+      "git_blob_count": 252,
+      "license_metadata": {
+        "first_party_content": "CC-BY-SA-4.0",
+        "first_party_data": "ODbL-1.0",
+        "root_code": "GNU AGPL version 3 text",
+        "third_party": "original licenses retained; per-source review unresolved"
+      },
+      "repository": "alexwelcing/lupine-ledger",
+      "tree_inventory_complete": true,
+      "tree_method": "GitHub recursive Git tree API; truncated=false"
+    },
+    "lupine": {
+      "commit": "701430be937b4ecf376c163b1de67793ed6fdaf7",
+      "git_blob_count": 3564,
+      "license_metadata": {
+        "data_rights": "third-party data rights not established by root software license",
+        "root_code": "MIT"
+      },
+      "repository": "alexwelcing/lupine",
+      "tree_inventory_complete": true,
+      "tree_method": "git ls-tree -r"
+    },
+    "rhizo": {
+      "commit": "81079a8e1bac7ed332712cc92002bd3435e40776",
+      "git_blob_count": 3625,
+      "license_metadata": {
+        "first_party_content": "CC-BY-SA-4.0",
+        "first_party_data": "ODbL-1.0",
+        "root_code": "GNU AGPL version 3 text",
+        "third_party": "original licenses retained; per-source review unresolved"
+      },
+      "repository": "alexwelcing/lupine-rhizo",
+      "tree_inventory_complete": true,
+      "tree_method": "GitHub recursive Git tree API; truncated=false"
+    }
+  },
+  "route_counts": {
+    "fcc_material_names": 9,
+    "fcc_run_paths": 36,
+    "independent_evaluation_units": null,
+    "matching_bound_evidence_paths": 36,
+    "matching_unbound_evidence_paths": 36,
+    "model_ids": 4,
+    "scientifically_valid_complete_units": null
+  },
+  "schema": "lupine.discovery.projection_source_inventory.v1",
+  "scientific_superiority_claim": false,
+  "status": "METADATA_ROUTE_IDENTIFIED_SCIENTIFIC_READINESS_UNRESOLVED"
+}
