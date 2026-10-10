@@ -1,0 +1,98 @@
+{
+  "actual_allocation": null,
+  "actual_registration": null,
+  "actual_scientific_result": null,
+  "clarifications_after_first_review": [
+    "Negative or out-of-profile target cells remain row-local unknown endpoints; documented endpoint/source/schema/operational conflicts are separate study-level stops.",
+    "Empty F and D make corresponding component metrics unavailable with closed reasons and required checks false; nonempty scientific formulas are unchanged."
+  ],
+  "documents_sha256": {
+    "mpea-t25-archival-protocol-v1.md": "c49047341d3932ddd67c67c9f2a04a6759c0d679bfeb96d811ba9541c0cc0378",
+    "mpea-t25-implementation-contract-v1.md": "be45b1d8db9586035cf37bd9bbb9046c065c3851b91f93386f8c68d155215af9"
+  },
+  "independent_reviews": {
+    "mathematical_design": {
+      "clarification_receipt": {
+        "arithmetic_rerun": false,
+        "path": ".cache/mpea-protocol-math-review/clarification-receipt.json",
+        "result": "NO_MATHEMATICAL_DESIGN_BLOCKER",
+        "sha256": "87cdc5c9797098d5c0b2ddb1db1273b577db29c18fb797e4b3daf80474b7ead7"
+      },
+      "new_lean_compile": false,
+      "receipt": ".cache/mpea-protocol-math-review/review-receipt.json",
+      "result": "NO_MATHEMATICAL_DESIGN_BLOCKER",
+      "sha256": "cd0648283e6abb7a4f1c551c68b60a46d1ed8731706b57b437cef147ab780ded",
+      "synthetic_checks": 66472
+    },
+    "stage_and_access_contract": {
+      "implementation_attestation": false,
+      "receipt": ".cache/mpea-protocol-access-review/final-review.json",
+      "sha256": "0ac63ebf7ecfe77a52485a069a2ba23cd43120c3857bd4832acc45da0ced0691",
+      "status": "NO_REMAINING_DOCUMENT_CONTRACT_BLOCKER"
+    }
+  },
+  "inputs_sha256": {
+    ".cache/mpea-feature-contract/formula-feature-adapter-contract.md": "6aec54dd66dd85a021f4a88ed65dd614d8cd19ce54f8faf6562b9b8291a9daaa",
+    "docs/decision-pool-calibration-design.md": "9025a7486f533272fc48e0e72a953d28530a4cacb4c46f6101122081495ad490",
+    "docs/decision-pool-workbench-contract.md": "2fc1ca6279655ab530947f0b0c20272ea290dd8a70bb2daad097792cdea78fb4",
+    "docs/finite-exchangeability.md": "e6d1e3617dfdf06e4001a63850fa3a78ec07e1a4c6278ac9a4a34d1c4e3c3d75",
+    "docs/mpea-column-mapping-v1.json": "812255e53cceec8c66bd2a4b11d5d1e556941a053c888a7970cf2e3ec6728f97",
+    "docs/mpea-column-mapping-v1.md": "488928f4ac88f241ae28b43527628415663d9a4df976432a36b1b7c5653dee6d",
+    "docs/mpea-evaluation-design-notes.md": "cb0d1aee0b3842f6d8ec1aa9ccd12336df0499d10558f89392602dc49b5b82d0",
+    "docs/mpea-formula-format-evidence.md": "04e5645cc3dbbd1b1d1b3b5d0fdef72ae050cd097646746e1d185f27659eb056",
+    "reports/mpea-formula-tokens-v1.json": "ce2b8d12464bac1c5e9533e136f09b3b65761188609279b40a78f31dbcc6d3a7",
+    "reports/mpea-metadata-summary-v1.json": "ddb67b50771bd12292517acd05299adcb3066ab90e0c26936639b3c2be3c8a8a",
+    "reports/mpea-row-metadata-v1.json": "36e9831f2a015b2c295ce6228dd9b7bce5ba7df0f2645c343da2134ab7898c55",
+    "scripts/mpea_row_scanner.py": "8aec58a1a48c173a0750137daf320d22abe04398108a74567c28ed7f2a093775",
+    "src/lupine_discovery/core.py": "c7bab15c662eaa79b6e6312271d3351e79ccb97ef42fcdfc830fdbbf3118d5a0",
+    "src/lupine_discovery/decision_pool.py": "76e96165102ebe8c3785f510d169b5d393838fb144f9c4275ffdb0aa6c21f1f9",
+    "src/lupine_discovery/evidence.py": "ab16a2f5f31601f95f3ec88f7fc230a07c85ebfdb175f0298a467c4425037dae",
+    "src/lupine_discovery/serialization.py": "cfec006ed4cb51fbbb6539422a5d829cadaa7bf0ff78bebbffd58aaba6f2523c"
+  },
+  "prerequisites": [
+    "Independent review of these prospective documents.",
+    "Frozen source-bound feature producer and linked private feature artifact.",
+    "Implement guarded route-aware target parser, stage runner and immutable receipt validators.",
+    "Synthetic and independent engineering tests passed against bound implementation bytes.",
+    "Publish exact study registration/source commit and all required green CI before actual allocation or target interpretation."
+  ],
+  "preserved_reviewed_option_sha256": "49a2682412aff4b764ffa2c23d9ade1f06858e12dee699897e2f04e35b9fd8b7",
+  "prior_metadata_basis_sha256": "8b1dcfd5392cb02962fc870abb659afed921c425cfc54b9bb84c7b909296d7f8",
+  "protocol_id": "mpea-t25-archival-v1",
+  "randomization_files_sha256": {
+    "README.md": "6a7a7593a63860425b77bb0ec13a72d8fdca10bac39c1703d0dae15c78c6400e",
+    "engineering-v1.json": "6118d5a8c99293cd5edd552b215d51347c26a5189336c27866ac26e86e7a93e8",
+    "permutation_allocation.py": "a7f454b4541f75603019bf73091c97190ea6f618efa52988c3065971273405e5",
+    "test_permutation_allocation.py": "ed73c8859bd283e740defca2f4ff3d6a71aa25cd4ae937934a3b9fc57a0df3d3",
+    "tests-final.txt": "3a0696232588f06aaa891c57370510967289e98b2c03790462e10f44ed07e962"
+  },
+  "schema": "lupine.discovery.mpea.protocol_draft_handoff.v1",
+  "scope": {
+    "actual_group_allocation_computed": false,
+    "entropy_draws": 0,
+    "features_computed": false,
+    "fits": 0,
+    "main_tree_edits": false,
+    "new_paper_acquisition": false,
+    "production_registration_completed": false,
+    "raw_archive_or_cache_read": false,
+    "reviewed_option_modified": false,
+    "target_access_authorized_by_this_receipt": false,
+    "target_statuses_computed": false,
+    "target_values_read": false
+  },
+  "static_checks": {
+    "calibration_n": 20,
+    "calibration_rank": 19,
+    "elongation_equality_is_feasible": true,
+    "entropy_bits_for_40_factorial": 160,
+    "future_implementation_tests_executed": false,
+    "lower_median_indices_equivalent_n_1_to_50": true,
+    "markdown_fences_balanced": true,
+    "ranking_gate_cross_product_equivalent_exhaustive_counts_D_1_to_20": true,
+    "scheduled_policy_runs": 960,
+    "single_future_loss_bound": "2/21",
+    "zero_based_column_semantics_match_public_mapping": true
+  },
+  "status": "DRAFT_NOT_REGISTERED"
+}

@@ -314,3 +314,20 @@ must precede two real processes; only their validated aggregate evidence may be
 published. The separately registered scientific task and complete staged runner
 remain prerequisites to random allocation or performance-target interpretation.
 No new scientific result or release gate is established by these software tests.
+
+## Actual feature result and reviewed prospective study
+
+The feature reader published as `5b1ed62` and passed [all four CI jobs](https://github.com/alexwelcing/lupine/actions/runs/38083897613)
+before two real executions. All 1,545 rows remain; the private feature artifacts
+and public aggregate receipts match byte-for-byte. All coefficient vectors are
+known under the declared grammar; 119 processing states remain unresolved.
+[The evidence](../reports/mpea-feature-readiness-v1/README.md) preserves commands,
+times, expected unresolved-schema exit status, source identities and safe copies.
+Targets remain opaque and all physical/usefulness gates retain their old states.
+
+[The prospective scientific protocol and stage contract](../reports/mpea-protocol-review-v1/README.md)
+passed independent mathematical and access review, including 66,472 exact
+synthetic checks and explicit marginal-law limits. Neither document publication
+nor a successful synthetic ranking case constitutes study registration. Complete
+guarded implementation, source-bound end-to-end tests and green CI must precede
+actual allocation, development targets and every subsequent custody stage.

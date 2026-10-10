@@ -112,9 +112,24 @@ all original rows, reads only formula cells, keeps exact vectors in ignored
 private storage and emits only aggregates. Source and specifications have passed
 independent review. No actual feature run has happened at this checkpoint.
 
-Current owner/checkpoint: root publishes the reader freeze, verifies remote CI,
-then runs two fresh feature-only processes and audits their aggregate receipts.
-The protocol and study engineers implement and review constructed-data stage,
-prediction and evaluation tests before registration, allocation or target access.
-The existing browser, wire modes and 130-statement proof sources are unchanged;
-all scientific negatives and unresolved physical premises remain.
+That reader freeze subsequently published as `5b1ed62` and passed all four CI
+jobs before two real processes. Both preserve all 1,545 records and produce
+identical artifacts: all coefficient vectors known, 119 processing states
+unresolved, one unknown source token. Only aggregate receipts are published;
+vectors remain in ignored private storage. [Actual evidence](reports/mpea-feature-readiness-v1/README.md).
+No performance target or presence/missingness was decoded, and no allocation or
+fit occurred. Feature construction does not establish physical composition.
+
+The [prospective task and stage contract](reports/mpea-protocol-review-v1/README.md)
+passed independent mathematics and access review. Its conditional marginal scope,
+all-40 primary completeness gate, fixed secondary population, exact baselines
+and budgets remain explicit. Two wording defects were corrected before targets.
+It is still unregistered until the complete guarded runner and tests are frozen.
+
+Current owner/checkpoint: root publishes actual aggregate evidence and reviewed
+specifications, then integrates the source-specific study components. Custody
+and backend engineers own constructed-data stage/prediction/evaluation code;
+independent reviewers own separate tests. Next complete the persistent guarded
+runner, exercise actual-shaped synthetic end-to-end reproduction, publish its
+registration and verify CI before actual allocation or performance decoding.
+Existing interface/proofs and every scientific negative remain unchanged.

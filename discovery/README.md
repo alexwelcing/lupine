@@ -14,8 +14,8 @@ The six-mode interface passes **46 Chromium checks** and **28 installed-wheel
 cases**. The integrated [feature-custody reader](reports/mpea-feature-reader-engineering-v1/README.md)
 passes **762 Python tests**. The preceding normalization checkpoint passes [all four CI
 jobs](https://github.com/alexwelcing/lupine/actions/runs/38082913494) and
-[retained/installed checks](reports/normalization-release-v1/README.md); the new
-reader requires its own publication checks before actual feature extraction.
+[retained/installed checks](reports/normalization-release-v1/README.md). The reader
+freeze `5b1ed62` also passes [all four CI jobs](https://github.com/alexwelcing/lupine/actions/runs/38083897613).
 See the [interface verification](reports/decision-pool-workbench-verification.md),
 [formal scope](formal/VERIFICATION.md), and [source-bound inventory](formal/theorem-inventory.json).
 
@@ -25,8 +25,12 @@ both historical negative scientific digests. Exact local wheel/source bytes are
 artifact storage downloads remain unverified. The [MPEA metadata result](reports/mpea-formula-readiness-v1.md)
 preserves all 1,545 rows: a separately frozen grammar recognizes 630 lexical
 formula groups while the original zero-recognition result remains intact.
-Performance targets are still opaque; no new MPEA feature model or experiment
-has run. The ordered backlog and current owners are in [GOAL.md](GOAL.md).
+Two subsequent [feature-only processes](reports/mpea-feature-readiness-v1/README.md)
+produce identical exact declared-coefficient tables and preserve every row.
+Performance targets remain opaque; no MPEA source allocation, fit or scientific
+experiment has run. The [prospective study specification](reports/mpea-protocol-review-v1/README.md)
+has passed independent review but still requires its guarded runner and complete
+registration. The ordered backlog and current owners are in [GOAL.md](GOAL.md).
 
 ## Open the interface
 

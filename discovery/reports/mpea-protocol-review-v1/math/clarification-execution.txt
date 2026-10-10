@@ -1,0 +1,1 @@
+Clarification review passed: exact historical hashes reconstructed; two final hashes bound; no mathematical blocker.

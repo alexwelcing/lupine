@@ -86,10 +86,12 @@ bounds, unit sum, positive-scale invariance, L1 bounds and zero-distance equalit
 [Executed engineering evidence](../reports/normalization-engineering-v1/README.md)
 checks the exact Python implementation independently; no runtime refinement or
 physical descriptor validity is claimed. The [source-bound feature reader](../reports/mpea-feature-reader-engineering-v1/README.md)
-passes synthetic custody tests and the 762-test full suite. At this freeze it
-has not constructed an actual archived feature table. Its public receipt is
-aggregate evidence; private vectors and checksums cannot establish useful
-ranking, physical composition or target validity.
+passes synthetic custody tests and the 762-test full suite. After its published
+freeze and green CI, [two actual processes](../reports/mpea-feature-readiness-v1/README.md)
+preserved all 1,545 rows and produced identical declared-coefficient features.
+Only aggregate receipts are published. Private vectors and checksums cannot
+establish useful ranking, physical composition or target validity; no performance
+target interpretation, allocation, fit or new scientific result is claimed.
 
 ## Why finite retrospective success cannot prove unconditional prediction
 

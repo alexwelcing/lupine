@@ -1,0 +1,16 @@
+test_all_eightbit_sources_have_equal_accepted_fibers_after_low_bit_mask (__main__.AllocationTests.test_all_eightbit_sources_have_equal_accepted_fibers_after_low_bit_mask) ... ok
+test_cap_preserves_every_draw_without_partial_allocation (__main__.AllocationTests.test_cap_preserves_every_draw_without_partial_allocation) ... ok
+test_exhaustive_lexicographic_bijections_for_two_through_eight (__main__.AllocationTests.test_exhaustive_lexicographic_bijections_for_two_through_eight) ... ok
+test_forty_and_sixtyfour_exact_boundary_indices (__main__.AllocationTests.test_forty_and_sixtyfour_exact_boundary_indices) ... ok
+test_forty_requests_twenty_bytes_masks_exactly160_bits (__main__.AllocationTests.test_forty_requests_twenty_bytes_masks_exactly160_bits) ... ok
+test_invalid_rank_inputs_never_coerce_booleans_floats_or_tokens (__main__.AllocationTests.test_invalid_rank_inputs_never_coerce_booleans_floats_or_tokens) ... ok
+test_last_permitted_draw_can_succeed (__main__.AllocationTests.test_last_permitted_draw_can_succeed) ... ok
+test_malformed_provider_type_length_and_exception_preserve_prior_draws (__main__.AllocationTests.test_malformed_provider_type_length_and_exception_preserve_prior_draws) ... ok
+test_noncallable_source_and_invalid_universes_do_not_draw (__main__.AllocationTests.test_noncallable_source_and_invalid_universes_do_not_draw) ... ok
+test_original_ids_are_exact_and_snapshot_cannot_be_changed_by_callback (__main__.AllocationTests.test_original_ids_are_exact_and_snapshot_cannot_be_changed_by_callback) ... ok
+test_rejections_never_use_modulo_and_acceptance_stops_callback (__main__.AllocationTests.test_rejections_never_use_modulo_and_acceptance_stops_callback) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.693s
+
+OK

@@ -1,0 +1,33 @@
+{
+  "alpha": "1/10",
+  "calibration_count": 20,
+  "failure_bound": "2/21",
+  "input_hashes_after": {
+    ".cache/mpea-protocol-design/mpea-t25-archival-protocol-v1.md": "989f79359af45a9bcc698400d1ddee410677933a8360c0c71a30e9bc2dba8eb4",
+    ".cache/mpea-protocol-design/mpea-t25-implementation-contract-v1.md": "2113d0e45799fb0117f22dbd80188e17d92f0e63c9857ba7a693e7f4ade99f10",
+    "formal/AXIOMS.txt": "84a9ed0c9cf6acc58ea2a9a196ec46cd8f1b69b0d1dd79fd041b0c37291065f1",
+    "formal/LupineDecisionPool.lean": "10a5962eedf30819388a835b052df91f4fff130c79258d31eb345f51071cf00a",
+    "formal/LupineExchangeability.lean": "0e326c4b51e5ca00d1deb32be61ba7b80ca0c443059d0fbf13e22f05717610ce",
+    "formal/theorem-inventory.json": "834a14198ce1f8d52d4ba33871c143d7c76246cfd81b736109a6de78798acc40"
+  },
+  "input_hashes_before": {
+    ".cache/mpea-protocol-design/mpea-t25-archival-protocol-v1.md": "989f79359af45a9bcc698400d1ddee410677933a8360c0c71a30e9bc2dba8eb4",
+    ".cache/mpea-protocol-design/mpea-t25-implementation-contract-v1.md": "2113d0e45799fb0117f22dbd80188e17d92f0e63c9857ba7a693e7f4ade99f10",
+    "formal/AXIOMS.txt": "84a9ed0c9cf6acc58ea2a9a196ec46cd8f1b69b0d1dd79fd041b0c37291065f1",
+    "formal/LupineDecisionPool.lean": "10a5962eedf30819388a835b052df91f4fff130c79258d31eb345f51071cf00a",
+    "formal/LupineExchangeability.lean": "0e326c4b51e5ca00d1deb32be61ba7b80ca0c443059d0fbf13e22f05717610ce",
+    "formal/theorem-inventory.json": "834a14198ce1f8d52d4ba33871c143d7c76246cfd81b736109a6de78798acc40"
+  },
+  "inputs_unchanged": true,
+  "order_statistic_rank": 19,
+  "protocol_hashes": {
+    "mpea-t25-archival-protocol-v1.md": "989f79359af45a9bcc698400d1ddee410677933a8360c0c71a30e9bc2dba8eb4",
+    "mpea-t25-implementation-contract-v1.md": "2113d0e45799fb0117f22dbd80188e17d92f0e63c9857ba7a693e7f4ade99f10"
+  },
+  "result": "NO_MATHEMATICAL_DESIGN_BLOCKER",
+  "review_script_sha256": "a63e54ee93cef2c64c12785b73f42f2cfe53bcb4686978a2a64096ed2b63bfe7",
+  "schema": "lupine-mpea-prospective-math-review-v1",
+  "scope": "Read-only prospective design review and synthetic exact arithmetic; no actual allocation, entropy, scientific features, targets, fit, new Lean compile, physical validation, or runtime formal refinement.",
+  "single_future_joint_dimension": 21,
+  "synthetic_checks": 66472
+}

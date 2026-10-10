@@ -1,0 +1,72 @@
+{
+  "actual_group_allocation_performed": false,
+  "actual_group_ids_read": false,
+  "additional_checks": [
+    "40/64 boundary indices",
+    "reject out-of-range rather than modulo",
+    "last-draw acceptance and no draws after acceptance",
+    "all128 rejected draw bytes preserved with no partial allocation",
+    "provider type/length/exception handling",
+    "strict universe/rank types and bounds",
+    "immutable snapshots and exact original identifiers"
+  ],
+  "exhaustive_checks": {
+    "one_byte_sizes": [
+      2,
+      3,
+      4
+    ],
+    "one_byte_total_values": 768,
+    "one_byte_values_per_size": 256,
+    "oracle": "itertools.permutations sorted finite synthetic IDs",
+    "permutations": 46232,
+    "rank_inverse_and_unrank_order": true,
+    "sizes": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ]
+  },
+  "failure_history": "No observed author test failures. Malformed providers and rejection caps are intentional blocked fixtures.",
+  "forty_id_profile": {
+    "ids": "constructed integers only, not source groups",
+    "mask_bits": 160,
+    "maximum_draws": 128,
+    "requested_bytes": 20
+  },
+  "main_tree_modified": false,
+  "os_entropy_drawn": false,
+  "physical_independence_established": false,
+  "prior_test_log_sha256": "3eb5dbe5db628eee5cc6e6476e0ccafdc4533921bd647a45269b0ada9c7f235f",
+  "schema": "lupine.permutation-allocation.synthetic-engineering.v1",
+  "scientific_sources_opened": false,
+  "scope": "Exact arithmetic and finite synthetic engineering checks. The stated uniform accepted-index law is conditional on independent uniform callback bytes and completion; no real source, entropy, physical independence, or formal refinement attestation.",
+  "source_sha256_after": {
+    "README.md": "6a7a7593a63860425b77bb0ec13a72d8fdca10bac39c1703d0dae15c78c6400e",
+    "permutation_allocation.py": "a7f454b4541f75603019bf73091c97190ea6f618efa52988c3065971273405e5",
+    "test_permutation_allocation.py": "ed73c8859bd283e740defca2f4ff3d6a71aa25cd4ae937934a3b9fc57a0df3d3"
+  },
+  "source_sha256_before": {
+    "README.md": "6a7a7593a63860425b77bb0ec13a72d8fdca10bac39c1703d0dae15c78c6400e",
+    "permutation_allocation.py": "a7f454b4541f75603019bf73091c97190ea6f618efa52988c3065971273405e5",
+    "test_permutation_allocation.py": "ed73c8859bd283e740defca2f4ff3d6a71aa25cd4ae937934a3b9fc57a0df3d3"
+  },
+  "source_unchanged": true,
+  "status": "PASS",
+  "tests": {
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "/workspace/lupine-discovery-branch/discovery/.cache/mpea-protocol-design/randomization/test_permutation_allocation.py",
+      "-v"
+    ],
+    "count": 11,
+    "elapsed_seconds": 0.981136,
+    "exit_code": 0,
+    "log_sha256": "3a0696232588f06aaa891c57370510967289e98b2c03790462e10f44ed07e962"
+  },
+  "uniform_byte_source_attested": false
+}

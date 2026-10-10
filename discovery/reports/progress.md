@@ -3,6 +3,41 @@
 The current goal and ordered backlog are in `../GOAL.md`. Append concise entries
 with artifacts, actual checks, scientific implications, and the next action.
 
+## 2026-10-10 20:34 UTC — real feature construction reproduced; study reviewed
+
+- Published `5b1ed62f1c7f0010682ce3f554e2430f103e4709`, verified the remote SHA
+  and all four CI jobs in run 38083897613. CI finished at 20:31:34 UTC, before
+  first feature execution at 20:31:42.546429 UTC. Two fresh processes completed
+  in 5.476 and 4.903 seconds with expected exit 2 and unresolved schema status.
+- Both processes preserve all 1,545 rows and produce identical 1,575,932-byte
+  private artifacts and 7,989-byte public receipts. All declared-coefficient
+  vectors normalize; 119 processing states and one source token remain unknown.
+  The executed wrapper checks both whole byte sequences, mode 0600, ignored
+  private paths and all 41 unchanged implementation/input identities. Eleven
+  exact safe artifacts are published under `mpea-feature-readiness-v1/`; vectors
+  remain ignored. Independent public-only review checks the closed schema,
+  all 41 Git bindings, CI ordering and original processing counts without private
+  vector/source access. Public receipt SHA starts `666b13ad`; reproduction `b5ca3d8b`.
+- Scientific implication: the declared representation is constructible and
+  computationally reproducible. No physical fraction, unrounded chemistry,
+  specimen pairing or useful predictor is established. Performance cells,
+  presence/missingness, eligibility, source allocation and fits remain unopened.
+- Published the prospective task/stage specifications unchanged from final
+  independent review, with 26 exact review/document copies. Math review executed
+  66,472 exact synthetic checks; sampler tests cover 46,232 permutations. Review
+  clarified cell-local unknowns versus stage stops and unavailable empty-F/D
+  metrics. The final bounded-diff signoff preserves original drafts and failures;
+  it does not claim unchanged arithmetic reran or that study registration exists.
+- Owner/checkpoint: root verifies publication and integrates completed components.
+  Backend's synthetic study passes 25 author tests; independent oracle review
+  and source binding are finishing. Target parser passes 13 author plus 15
+  independent tests without a producer change. Custody engineer owns persistent
+  stages and production adapter; adversarial reviewer owns store tests. Next
+  finish the guarded runner and actual-shaped constructed-data reproduction,
+  then freeze complete registration/source/tests/CI before allocation or targets.
+  Existing 762-test runtime, six-mode browser and 130-statement proof sources
+  are unchanged by this evidence-only publication; all scientific negatives stand.
+
 ## 2026-10-10 20:28 UTC — feature reader reviewed; normalization release verified
 
 - Published `2e4162b1953fa1762b73b81140eb9057394ff07f`, verified remote identity
