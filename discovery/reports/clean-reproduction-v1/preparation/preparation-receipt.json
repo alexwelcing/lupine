@@ -1,0 +1,49 @@
+{
+  "attempt": "local-20261010T194558Z-58801",
+  "checkout": "/workspace/lupine-release-reproduction",
+  "commands": {
+    "checkout": [
+      "git",
+      "worktree",
+      "add",
+      "--detach",
+      "/workspace/lupine-release-reproduction",
+      "2a09d36491e092e851a529e58000444f3b6479e2"
+    ],
+    "editable_install": [
+      "python",
+      "-m",
+      "pip",
+      "install",
+      "-e",
+      "."
+    ],
+    "numpy_install": [
+      "python",
+      "-m",
+      "pip",
+      "install",
+      "--only-binary=:all:",
+      "numpy==2.3.5"
+    ]
+  },
+  "documents_sha256": {
+    "AGENTS.md": "8da673fcfab35c6e8b2cbc20194423b83017574bd8d78264d48c30d4b6d74ede",
+    "docs/constrained-reproduce.md": "0cf3986a01a8f7f86a5f13a87ce9ecf68f078df2f74b3958e88d6d7801df0e75",
+    "docs/reproduction-environment.md": "60ecf3389b81ab2440d48642bd7d83723135e3e1442eb9993c995fd895951a6e",
+    "docs/training-tail-run.md": "19341333e85dd0a96cabba741330a09620980834503bf72164cd94c067f1b188",
+    "pyproject.toml": "a73eec989447b99fec48de193218a0750079eeb5973406c53d7a0dc840d9d90f"
+  },
+  "environment_path": "/workspace/lupine-release-reproduction/discovery/.cache/reproduction-envs/local-20261010T194558Z-58801",
+  "install_log_sha256": {
+    "editable-install.log": "a9fd00beb446fca26678333187605c3e007591fb7eaef548d75865026a47f71a",
+    "numpy-install.log": "65288768c2d4f272001ee87e2b1ea46b3ae1ee5b18e7dad6d054f78665354108"
+  },
+  "ordinary_ignored_editable_metadata": "authorized by parent; no install configuration or source changes",
+  "script_sha256": {
+    "run-constrained.sh": "0e38c5ecf113a4cf32f2523bbce70e66e6f359b2ce6845b2f5f795ab56c4609a",
+    "run-training-engineering.sh": "03130ff6dacf026980c9668873c854bc59a138b7ca1beb5a1703c24a98a986d6",
+    "run-training.sh": "90b8316a83d8c338815069cbaccf936d80a237cffe8aa30985895224917ae76a"
+  },
+  "source_commit": "2a09d36491e092e851a529e58000444f3b6479e2"
+}

@@ -3,34 +3,67 @@
 The current goal and ordered backlog are in `../GOAL.md`. Append concise entries
 with artifacts, actual checks, scientific implications, and the next action.
 
+## 2026-10-10 20:02 UTC — formula result and both historical negatives reproduced
+
+- Verified `a1e47024898072111f80e3ff911026306a50df2b` on the remote and all four
+  CI jobs in run 38081148087 before either actual G15C scan. Two fresh processes
+  preserve 1,545 records and produce identical 231,945-byte receipts: 630 exact
+  lexical formula groups. Both expected exit-2 statuses retain unresolved
+  scientific schema; original zero-recognition G15B remains unchanged.
+- Independent public-only audit passes five synthetic checks with 33 stable
+  source/reference/test hashes. All original IDs and order match. The declared
+  exact-25 °C/tensile cohort has 314 rows, 106 formula groups and 75 source groups;
+  12 formula groups span multiple sources, covering 131 rows. Source overlap is
+  preserved, not repaired by outcome-dependent regrouping. No numeric coefficient
+  conversion, targets/presence, eligibility, allocation, fits or new science ran.
+  See `mpea-formula-readiness-v1.md` and immutable execution/metadata receipts.
+- Separate detached `2a09d36` checkout and fresh numerical environment completed
+  all six constrained stages, 34 engineering tests, 22 training engineering tests
+  and both training processes. Both historical science digests match. Screening
+  and recommendation-value failures and all three rejected ridge alternatives
+  remain unchanged. Only raw ZIP bytes were reused; derivatives were rebuilt.
+- Root independently checked all 37 allowed safe artifacts, six successful source
+  and log bindings, actual pass comparisons and two canonical training science
+  hashes before exact-byte publication under `clean-reproduction-v1/`. The frozen
+  constrained workflow verified its full scientific digest; safe aggregate audits
+  do not reconstruct its entire policy report. Raw labels/full reveals/predictions
+  stay ignored. Same-host reproduction is not independent scientific replication.
+- Owner/checkpoint: root publishes this evidence-only increment and verifies
+  remote SHA/all four CI jobs. Production feature engineer and prospective
+  protocol engineer own separate ignored scratch lanes. Reviewed generic features
+  have 17 author plus 27 independent tests; five conditional normalization proofs
+  compile and pass peer review, but remain unpromoted. Next: integrate and test
+  source-bound feature custody, publish its freeze/CI, and complete protocol review
+  before any real feature construction, random allocation or performance parsing.
+
 ## 2026-10-10 19:45 UTC — retained artifact verified; supplemental formula freeze
 
-- Published2a09d36491e092e851a529e58000444f3b6479e2 and verified its remoteSHA
-  and allfour CIjobs38080586212. Each Pythonversion passes651tests and28installed
-  cases; browser46 and formal125 checks pass, including the new receipt diff.
+- Published `2a09d36491e092e851a529e58000444f3b6479e2` and verified its remote SHA
+  and all four CI jobs in run 38080586212. Each Python version passes 651 tests and 28 installed
+  cases; browser 46 and formal 125 checks pass, including the new receipt diff.
 - Actual clean local retention builds from the committed scoped archive and
-  passes28cases/sixschemas. The238796-byte wheel and7168000-byte tar are retained.
-  Independent audit verifies458originalGitblobs,183manifestentries,109wheelRECORD
+  passes 28 cases/six schemas. The 238,796-byte wheel and 7,168,000-byte tar are retained.
+  Independent audit verifies 458 original Git blobs, 183 manifest entries, 109 wheel RECORD
   entries; eight synthetic verifier tests pass. Exact audit source/tests/receipts
   are preserved under `release-artifact-audit-v1/`; root reproduces its report.
-- Both CIbundles uploaded. Direct API and `gh run download` attempts returned
+- Both CI bundles uploaded. Direct API and `gh run download` attempts returned
   Forbidden at signed storage; recorded redacted failures preserve the limit.
   Remote artifact bytes remain independently unverified. No bypass or invented
   verification. See `metadata-release-ci-verification-v1.json` and local receipts.
 - G15C adds a separately reviewed formula-only grammar from cited source research.
-  Only position1 is accumulated; all22othercells remain opaque. OriginalG15B
-  receipts/producer/scanner/mapping stay unchanged, including0/1545 recognition.
-  No numeric coefficient conversion, features, targets, eligibility, splits orfits.
-- Actual checks:33focused (14author+19independent) and684full Python tests pass
-  in131.923s, with200stable source hashes. Independent review challenges330opaque
-  substitutions,960grammarcases, exactrow/cap/sourcegates and atomic publication.
+  Only position 1 is accumulated; all 22 other cells remain opaque. Original G15B
+  receipts/producer/scanner/mapping stay unchanged, including 0/1545 recognition.
+  No numeric coefficient conversion, features, targets, eligibility, splits or fits.
+- Actual checks: 33 focused (14 author + 19 independent) and 684 full Python tests pass
+  in 131.923 seconds, with 200 stable source hashes. Independent review challenges 330 opaque
+  substitutions, 960 grammar cases, exact row/cap/source gates and atomic publication.
   `mpea-formula-engineering-v1.md` records exact artifacts and limits.
-- Owner/checkpoint:root publishesG15Cfreeze and verifies remoteSHA/allfourCI before
+- Owner/checkpoint: root publishes the G15C freeze and verifies remote SHA/all four CI jobs before
   two real fixed-cache invocations. Feature and archival-protocol delegates own
-  scratchdesignonly. Clean-reproduction owner preparesdetached2a09 numericenv,
+  scratch design only. Clean-reproduction owner prepares a detached 2a09 numerical environment,
   then executes original frozen constrained/training protocols against historical
-  negative digests. Mainruntime/package/browser/proof sources matchgreen2a09;
-  no sciencegate advances and no new experiment has run.
+  negative digests. Main runtime/package/browser/proof sources match green 2a09;
+  no science gate advances and no new experiment has run.
 
 ## 2026-10-10 19:37 UTC — actual metadata preserved; release integration tested
 

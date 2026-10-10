@@ -255,3 +255,30 @@ post-metadata formula grammar; original0/1545 recognition remains a preserved
 result. No actual formula scan has run at this freeze. Production must follow
 committed reviewed source and all-four-job CI. Lexical success cannot establish
 composition semantics, target completeness, independence or useful screening.
+
+## Actual formula result and fresh numerical reproduction
+
+The supplemental grammar was published as `a1e4702` and [all four CI jobs passed](https://github.com/alexwelcing/lupine/actions/runs/38081148087)
+before two real executions. They preserve all 1,545 rows and match exactly:
+630 lexical formula groups. The original G15B zero-recognition result remains
+intact. A separate public-receipt audit passes five synthetic tests and verifies
+all original row joins. [Readiness](../reports/mpea-formula-readiness-v1.md)
+distinguishes lexical success from physical semantics, source independence,
+target completeness and eligibility. No new scientific gate passes.
+
+A detached checkout of `2a09d36`, fresh virtual environment and fresh processes
+complete both original numerical workflows. Six constrained stages/34 tests
+and two training workers/22 tests reproduce the historical scientific digests.
+Both original negative decisions remain. The [safe evidence bundle](../reports/clean-reproduction-v1/README.md)
+contains exact commands, environment differences, source/log bindings, original
+allowlist and independent publication verification. Only raw JARVIS ZIP bytes
+were reused; all scientific derivatives were rebuilt. This strengthens same-host
+computational reproducibility. Independent scientific replication, useful
+screening, predictive superiority and physical qualification remain unresolved
+or failed exactly as listed above.
+
+The next prospective MPEA task is still being implemented and reviewed. Synthetic
+normalization tests and conditional finite-real proofs do not authorize interpreting
+archival coefficients as physical fractions or opening performance targets before
+protocol registration. Preserve unknown values, source/formula overlaps and the
+whole-universe fallback whenever the declared finite-score-law premise fails.

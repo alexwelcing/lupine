@@ -35,9 +35,9 @@ The active outcome, ordered backlog, and autonomous execution rules are in
 
 - The [finite exchangeability bridge](docs/finite-exchangeability.md) adds eight reviewed statements deriving equal indexed failure masses from an invariant finite joint score law. All nine modules strictly build and 125 statements pass the fresh axiom audit; eleven audit-parser tests pass. Existing runtime sources remain byte-identical to the green `d169b10` checkpoint. Arbitrary measurable laws, scientific exchangeability and Python refinement remain unproved.
 
-- The [G15B metadata reader](reports/mpea-row-metadata-engineering-v1.md) passes 37 focused and 601 full-suite Python checks with 192 stable source/resource hashes. It permits only five metadata roles, preserves every framed row and keeps targets opaque. That source was frozen in `ec32247`, with all four CI jobs passing before real execution. Two fresh processes then retained all 1,545 rows and produced identical metadata receipts. The original grammar recognized zero formulas; the separate cited formula-format amendment remains under review. All performance cells and their presence/missingness remain opaque. See [actual metadata readiness](reports/mpea-row-metadata-readiness-v1.md).
+- The [G15B metadata reader](reports/mpea-row-metadata-engineering-v1.md) passes 37 focused and 601 full-suite Python checks with 192 stable source/resource hashes. It permits only five metadata roles, preserves every framed row and keeps targets opaque. That source was frozen in `ec32247`, with all four CI jobs passing before real execution. Two fresh processes then retained all 1,545 rows and produced identical metadata receipts. The original grammar recognized zero formulas; the separately frozen G15C result below resolves lexical recognition only. All performance cells and their presence/missingness remain opaque. See [actual metadata readiness](reports/mpea-row-metadata-readiness-v1.md).
 
-- The public metadata summarizer passes 18 focused checks without opening the archive. Reviewed artifact retention passes 32 synthetic checks; exact wheel/source retention must still execute from the committed clean checkpoint. CI now rejects regenerated proof receipts that differ from committed bytes. Fresh-attempt reproduction documentation preserves original receipts and distinguishes historical science-digest matching from same-attempt agreement. See [release integration verification](reports/metadata-release-verification-v1.md).
+- The public metadata summarizer passes 18 focused checks without opening the archive. Reviewed artifact retention passes 32 synthetic checks; exact wheel/source retention subsequently passed at the clean committed checkpoint below. CI now rejects regenerated proof receipts that differ from committed bytes. Fresh-attempt reproduction documentation preserves original receipts and distinguishes historical science-digest matching from same-attempt agreement. See [release integration verification](reports/metadata-release-verification-v1.md).
 
 ## Remaining four-day gates
 
@@ -47,7 +47,7 @@ This checkpoint covers the kernel, local research interface, and initial retrosp
 - Broaden independent archived tasks, including actual operating-condition constraints and distribution shift; freeze protocols before examining evaluation outcomes.
 - Preserve the completed negative training-only comparison. Further model changes need a new development protocol; any scientific validation then needs unused calibration/evaluation targets and cannot overwrite the completed negative benchmark.
 - Preserve the coupled adapter's premise, consistency, identity and resource boundaries. Preserve the verified projection wrapper, which retains original declarations in CLI, guarded HTTP, replay and browser. The Python adapter and runnable examples remain conditional algebra, not scientific validation.
-- Preserve the completed Rhizo custody result and unresolved scientific prerequisites. Preserve the verified statistical-pool interface and its marginal claim. Preserve the reproduced header disclosure, reviewed semantic mapping and actual row-metadata result. Independently review, freeze and verify CI for the separate formula-token amendment before executing it; freeze the scientific protocol before performance-target interpretation. No hard discrepancy bounds or physically justified field sharing are established.
+- Preserve the completed Rhizo custody result and unresolved scientific prerequisites. Preserve the verified statistical-pool interface and its marginal claim. Preserve the reproduced header disclosure, reviewed semantic mapping and actual row-metadata result. Preserve the separately frozen, CI-verified formula result; review and freeze exact feature custody and the complete scientific protocol before production features, source allocation or performance-target interpretation. No hard discrepancy bounds or physically justified field sharing are established.
 - Audit runtime/formal conformance beyond examples and exhaustive small worlds; no formal refinement claim exists yet.
 - Resolve original dataset provenance and redistribution rights before bundling data.
 - Complete independent scientific reproduction and scoped release review. Branch publication is not a validated scientific release.
@@ -81,9 +81,22 @@ remote artifact bytes remain independently unverified. Local exact-byte retentio
 and CI execution are established, not deterministic builds or scientific validity.
 
 The separate formula-only G15C reader passes 33 focused and 684 full Python tests
-with 200 stable source hashes. It recognizes an explicitly documented lexical
-profile and withholds all other cells. The original 0/1545 result remains intact;
-no real formula extraction has run. Next: publish/freeze, verify CI, then execute
-twice before designing features and a scientific protocol. [Engineering evidence](reports/mpea-formula-engineering-v1.md).
-A detached clean numerical reproduction of the historical constrained/training
-protocols is being prepared; no new result is claimed from environment setup.
+with 200 stable source hashes. Published `a1e4702` passes [all four CI jobs](https://github.com/alexwelcing/lupine/actions/runs/38081148087).
+Only after that completion did two fresh processes recognize all 1,545 records
+as 630 exact lexical groups. Original 0/1545 recognition remains preserved;
+all IDs and rows match. No coefficient conversion, targets, eligibility, split
+or fit occurred. [Actual result and independent public audit](reports/mpea-formula-readiness-v1.md).
+
+A detached clean checkout and fresh numerical environment reproduced both
+historical scientific digests. Six constrained stages and 34 engineering tests
+pass; the separate training experiment passes 22 engineering tests and two
+workers agree. Screening/utility failures and all three rejected ridge models
+remain unchanged. [Exact commands, safe receipts and limits](reports/clean-reproduction-v1/README.md).
+This is same-host computational reproduction, not independent scientific evidence.
+
+Current owner/checkpoint: root publishes these actual results and verifies remote
+CI. Feature engineer owns the production reader in ignored scratch; protocol
+engineer finalizes an independently reviewed prospective task. Reviewed generic
+normalization code, 44 synthetic tests and five conditional proofs remain scratch
+work, not a published feature or scientific result. Next: integrate, test and
+freeze feature custody; independently review the complete scientific protocol.

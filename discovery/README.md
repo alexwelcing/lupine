@@ -6,7 +6,24 @@ A universal, conditional candidate-pool engine grounded in [Lupine Rhizo](https:
 
 This is the initial research implementation for a [four-day project](docs/four-day-plan.md). See [STATUS.md](STATUS.md) for completed work and open gates. No new DFT is required to run the examples or archived experiments.
 
-Verification includes exact calibration abstention, Pareto selection, nonlinear enclosures, shared-affine screening, scoped projection and direct statistical pools. The proof package contains **125 compiled and audited Lean statements**, including a [finite permutation-law bridge](docs/finite-exchangeability.md); probability results remain limited to their explicit finite-law premises. The statistical-workbench/custody integration passes **564 Python tests**, **46 Chromium checks** and a fresh isolated wheel with **28 cases across six wire schemas**. See the [current verification record](reports/decision-pool-workbench-verification.md), [formal scope](formal/VERIFICATION.md), and [source-bound inventory](formal/theorem-inventory.json). [All four CI jobs passed](https://github.com/alexwelcing/lupine/actions/runs/38076623056) at the published `c9fb192` workbench checkpoint (then 117 formal statements). The subsequent eight-statement proof extension is published as `b899fc6`, with [all four CI jobs passing](https://github.com/alexwelcing/lupine/actions/runs/38077825298) and [source-bound local build/audit evidence](formal/VERIFICATION.md). The subsequent [target-opaque MPEA custody increment](reports/mpea-row-metadata-engineering-v1.md) passed 601 Python tests and [all four CI jobs](https://github.com/alexwelcing/lupine/actions/runs/38079064532) before two real metadata scans. [Both runs preserved all 1,545 records](reports/mpea-row-metadata-readiness-v1.md); the original formula grammar recognized none, and performance targets remain opaque. [Release integration](reports/metadata-release-verification-v1.md) adds reviewed exact-artifact retention, proof-receipt freshness checks and fresh-attempt reproduction instructions; these do not change the negative scientific results. The retained-release checkpoint `2a09d36` passes [all four CI jobs](https://github.com/alexwelcing/lupine/actions/runs/38080586212); its local wheel/source bytes are independently audited. A separate [formula-only amendment](reports/mpea-formula-engineering-v1.md) passes 684 Python tests and must freeze before real execution. The ordered backlog is in [GOAL.md](GOAL.md).
+The implemented engine covers exact calibration abstention, Pareto selection,
+nonlinear enclosures, shared-affine screening, scoped projection and direct
+statistical pools. The proof package contains **125 compiled and audited Lean
+statements**; its probability results retain explicit finite-law premises.
+The six-mode interface passes **46 Chromium checks** and **28 installed-wheel
+cases**. The latest source freeze passes **684 Python tests** and [all four CI
+jobs](https://github.com/alexwelcing/lupine/actions/runs/38081148087).
+See the [interface verification](reports/decision-pool-workbench-verification.md),
+[formal scope](formal/VERIFICATION.md), and [source-bound inventory](formal/theorem-inventory.json).
+
+[Fresh same-host reproduction](reports/clean-reproduction-v1/README.md) matches
+both historical negative scientific digests. Exact local wheel/source bytes are
+[independently audited](reports/release-artifact-audit-v1/README.md); remote CI
+artifact storage downloads remain unverified. The [MPEA metadata result](reports/mpea-formula-readiness-v1.md)
+preserves all 1,545 rows: a separately frozen grammar recognizes 630 lexical
+formula groups while the original zero-recognition result remains intact.
+Performance targets are still opaque; no new MPEA feature model or experiment
+has run. The ordered backlog and current owners are in [GOAL.md](GOAL.md).
 
 ## Open the interface
 

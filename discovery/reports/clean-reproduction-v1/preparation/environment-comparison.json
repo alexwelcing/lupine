@@ -1,0 +1,11 @@
+{
+  "actual_numpy_package_sha256": "93b3e82739780cbebe54313396f3ad297c649b2770736ee61f593ef035387f42",
+  "changed_distribution_files": [
+    "../../../bin/f2py",
+    "../../../bin/numpy-config",
+    "numpy-2.3.5.dist-info/RECORD"
+  ],
+  "comparison_scope": "environment metadata only; changed paths/scripts do not relax required numerical version gates",
+  "historical_numpy_package_sha256": "e6cd5dd9c188d974efa41175516cfc21a70e68a7b126dfca4b811fbca07b80a6",
+  "loaded_blas_hashes_match": true
+}
