@@ -6,7 +6,20 @@ A universal, conditional candidate-pool engine grounded in [Lupine Rhizo](https:
 
 This is the initial research implementation for a [four-day project](docs/four-day-plan.md). See [STATUS.md](STATUS.md) for completed work and open gates. No new DFT is required to run the examples or archived experiments.
 
-Local verification: **18 Lean theorems compiled, 41 Python tests passed, and 6 axiom-audit parser tests passed**. See the [software execution record](reports/software-verification.md) and [formal verification record](formal/VERIFICATION.md). These counts record local verification; see [hosting and CI](HOSTING.md) for the current branch workflow.
+Verification: **66 Python tests and 10 desktop/mobile Chromium checks passed**, including 13 deterministic known-answer cases. The unchanged formal kernel has **18 compiled Lean theorems and 6 passing axiom-audit parser tests**. See the [workbench execution record](reports/workbench-verification.md), [formal verification record](formal/VERIFICATION.md), and [hosting and CI](HOSTING.md).
+
+## Open the interface
+
+In the Lupine checkout, first run `cd discovery`. With Python 3.11 or newer:
+
+```sh
+python -m pip install -e .
+lupine-discovery serve
+```
+
+Open `http://127.0.0.1:8765` on the machine running the command. Choose a case or upload a problem, inspect the retained pool and exclusion reasons, download its certificate, then reveal separately bound known answers. The **Known answers** screen runs the finite fixture suite and displays all three recorded scientific archive reports. See the [workbench guide](docs/workbench.md).
+
+This is a local research preview. The [release matrix](docs/release-validation.md) records remaining scientific validation gates.
 
 ## Run it
 
@@ -39,23 +52,35 @@ Every true feasible optimum is in `P`; the incumbent's regret is at most `R`. Wi
 
 See the [mathematical specification](docs/mathematical-specification.md), [Lean theorem map](formal/README.md), and actual [formal verification record](formal/VERIFICATION.md). The Lean definitions quantify over arbitrary candidate types; Python enumerates finite input sets. The Python implementation has not been formally proved to refine the Lean definitions. The [claim ledger](docs/claim-ledger.md) maps each guarantee to its evidence and identifies open premises.
 
+## Test problems with known answers
+
+The deterministic suite has **13 cases: 11 with sound intervals and 2 deliberately unsound controls**. An independent oracle enumerates complete truth; all feasible optima survive in the 10 sound cases with feasible solutions, and the two controls correctly expose lost optima. Cases cover ties, multiple constraints, infeasibility, uncertain feasibility, refinement, signed interval composition, maximization, and exact rational ordering. One constrained integer design case reduces 81 candidates to the known optimum.
+
+```sh
+python scripts/known_answer_benchmark.py
+```
+
+These are engine checks, not evidence of physical predictive accuracy. See the [known-answer protocol](docs/known-answer-benchmarks.md) and [recorded result](reports/known-answers-v1.json).
+
 ## What the archived experiments found
 
-Two published experimental-property archives were evaluated with a fixed composition-based surrogate and empirical calibration. Both violated simultaneous interval soundness:
+Three published experimental-property archives were evaluated with frozen surrogate protocols and empirical calibration. All three violated simultaneous interval soundness:
 
 | Archive | Test rows | Retained | Intervals missing truth | All optima retained |
 |---|---:|---:|---:|---|
 | Band gap | 888 | 842 | 89 | No: 5 of 471 tied optima discarded |
 | Steel yield strength | 68 | 3 | 6 | Yes, in this run |
+| Molecular hydration free energy | 138 | 8 | 22 | Yes, in this run |
 
-The steel nominal predictor already ranked the optimum first. These results establish neither superiority of this engine nor a physical discovery. The band-gap failure demonstrates why roughly 90% individual coverage is insufficient for a guarantee about the whole pool.
+Nominal top-one ranking already selected an optimum in each archive. These results establish neither superiority of this engine nor a physical discovery. The band-gap failure demonstrates why roughly 90% individual coverage is insufficient for a guarantee about the whole pool.
 
 ```sh
 python -m pip install -e '.[benchmark]'
 python scripts/archived_benchmark.py --output .cache/archived-results.json
+python scripts/additional_archived_benchmark.py --output .cache/additional-archived-results.json
 ```
 
-Read the [frozen protocol and limitations](docs/archived-benchmark.md), [aggregate result artifact](reports/archived-v1.json), and [general evaluation protocol](docs/evaluation-protocol.md). Raw datasets are downloaded with pinned hashes and are not bundled. The run used NumPy 2.3.5; install that version to reproduce the recorded numerical environment.
+Read the [Matbench protocol](docs/archived-benchmark.md), [FreeSolv protocol](docs/additional-archived-benchmark.md), their [original](reports/archived-v1.json) and [additional](reports/additional-archived-v1.json) result artifacts, and the [general evaluation protocol](docs/evaluation-protocol.md). Raw datasets are downloaded with pinned hashes and are not bundled. The runs used NumPy 2.3.5; install that version to reproduce the recorded numerical environment.
 
 The [joint-coverage design](docs/joint-coverage-design.md) derives one possible probabilistic route under explicit exchangeability assumptions. At a 5% joint failure budget, the pilot sample sizes would force unbounded intervals under that conservative construction. This route is documented, not implemented or validated by the pilots.
 

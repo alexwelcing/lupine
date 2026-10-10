@@ -1,0 +1,71 @@
+{
+  "schema": "lupine.discovery.problem.v1",
+  "description": "Exact rational scores distinguish candidates that collapse to the same binary float. Synthetic finite problem; no physical predictor validation.",
+  "scenario": {
+    "id": "exact-rational-order",
+    "objective": {
+      "unit": "synthetic-score",
+      "reference": "constructed-finite-world-v1",
+      "direction": "minimize"
+    },
+    "constraints": {}
+  },
+  "evidence": [
+    {
+      "id": "exact-rational-order-score",
+      "kind": "synthetic_fixture",
+      "status": "reported",
+      "scope": {
+        "scenario_id": "exact-rational-order",
+        "quantity": "score",
+        "unit": "synthetic-score",
+        "reference": "constructed-finite-world-v1"
+      },
+      "statement": "Synthetic fixture. Intervals constructed to contain the independently enumerated finite truth.",
+      "source": {
+        "uri": "fixture://lupine-discovery/known-answers-v1/exact-rational-order"
+      }
+    }
+  ],
+  "candidates": [
+    {
+      "id": "A",
+      "score": [
+        "1/3",
+        "1/3"
+      ],
+      "constraints": {},
+      "evidence": {
+        "score": [
+          "exact-rational-order-score"
+        ]
+      }
+    },
+    {
+      "id": "B",
+      "score": [
+        "1000000000000000000000000000001/3000000000000000000000000000000",
+        "1000000000000000000000000000001/3000000000000000000000000000000"
+      ],
+      "constraints": {},
+      "evidence": {
+        "score": [
+          "exact-rational-order-score"
+        ]
+      }
+    },
+    {
+      "id": "C",
+      "score": [
+        "4/3",
+        "4/3"
+      ],
+      "constraints": {},
+      "evidence": {
+        "score": [
+          "exact-rational-order-score"
+        ]
+      }
+    }
+  ]
+}

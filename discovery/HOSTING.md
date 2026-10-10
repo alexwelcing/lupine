@@ -27,6 +27,12 @@ The active path-filtered monorepo workflow is
 is retained for extraction; GitHub does not execute nested workflow directories.
 This branch introduces no deployment workflow.
 
+The workflow also runs the actual local interface in desktop/mobile Chromium
+and uploads its screenshots and check report. Install `.[test-ui]`, run
+`python -m playwright install chromium`, then `python scripts/browser_smoke.py`
+to reproduce those checks. The interface itself starts with
+`lupine-discovery serve`; see `docs/workbench.md`.
+
 To extract later, in a full checkout with `git subtree` installed:
 
 ```sh

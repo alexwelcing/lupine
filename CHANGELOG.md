@@ -18,6 +18,16 @@ Newest first. Dates are absolute.
 
 ## 2026-10-10 - Lupine Discovery branch incubation
 
+- **Workbench follow-up.** Added a local research interface backed by the exact
+  engine, separate outcome reveal, certificate download, and a known-answer
+  screen. Thirteen finite cases pass their independently derived expectations;
+  two are deliberate failure-detection controls. The checkpoint passes 66
+  Python tests and 10 desktop/mobile browser checks. A third pinned archive,
+  FreeSolv hydration energies, retains its optimum but misses 22 of 138 held-out
+  interval targets; nominal ranking already selects that optimum. The
+  [release matrix](discovery/docs/release-validation.md) preserves these limits
+  and the remaining scientific gates.
+
 - **Why.** House the universal candidate recommendation project in Lupine at
   Alex Welcing's direction, with a separate repository deferred.
 - **What.** Import the standalone project and its three original commits into

@@ -1,0 +1,22 @@
+{
+  "schema": "lupine.discovery.outcomes.v1",
+  "scenario_id": "tight-nonzero-regret",
+  "problem_digest": "ea08a6949bfe3b5a47b75e33de869b6a61561e6bd9a92eae7cb61789a2b6ff4b",
+  "outcomes": [
+    {
+      "id": "A",
+      "score": "2",
+      "constraints": {}
+    },
+    {
+      "id": "B",
+      "score": "0",
+      "constraints": {}
+    },
+    {
+      "id": "C",
+      "score": "5",
+      "constraints": {}
+    }
+  ]
+}

@@ -35,6 +35,13 @@ conformance and end-to-end reproducibility. Cross-review claims against theorem
 signatures and result artifacts. Publish a release with exact commands, limitations
 and claim-to-evidence links. A passing build cannot substitute for scientific data.
 
+The requested release interface must exercise the actual engine: problem input,
+candidate/exclusion inspection, certificate export, separate outcome reveal,
+and a known-answer evaluation view. Deterministic finite problems need an
+independent truth oracle; historical scientific tasks need frozen protocols
+and visible negative results. Track their distinct gates in
+`release-validation.md` and executed checks in `../reports/workbench-verification.md`.
+
 ## Completion gates
 
 - General kernel: candidate representation and material family never hardcoded.

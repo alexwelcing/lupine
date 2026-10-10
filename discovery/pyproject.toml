@@ -12,12 +12,16 @@ dependencies = []
 
 [project.optional-dependencies]
 benchmark = ["numpy>=2,<3"]
+test-ui = ["playwright>=1.50,<2"]
 
 [project.scripts]
 lupine-discovery = "lupine_discovery.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+lupine_discovery = ["web/*.html", "web/*.css", "web/*.js", "web/*.svg", "resources/*.json", "resources/**/*.json"]
 
 [tool.ruff]
 line-length = 110

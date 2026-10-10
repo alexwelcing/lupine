@@ -1,0 +1,70 @@
+{
+  "schema": "lupine.discovery.outcomes.v1",
+  "scenario_id": "signed-composition",
+  "problem_digest": "9b3930441644619e1b940355b4bee0e99cc5823121cb7150463cd68a881d1a06",
+  "outcomes": [
+    {
+      "id": "a0-b0",
+      "score": "1/2",
+      "constraints": {
+        "combined": "1"
+      }
+    },
+    {
+      "id": "a0-b2",
+      "score": "-11/2",
+      "constraints": {
+        "combined": "1"
+      }
+    },
+    {
+      "id": "a0-b4",
+      "score": "-23/2",
+      "constraints": {
+        "combined": "1"
+      }
+    },
+    {
+      "id": "a2-b0",
+      "score": "9/2",
+      "constraints": {
+        "combined": "-1"
+      }
+    },
+    {
+      "id": "a2-b2",
+      "score": "-3/2",
+      "constraints": {
+        "combined": "-1"
+      }
+    },
+    {
+      "id": "a2-b4",
+      "score": "-15/2",
+      "constraints": {
+        "combined": "0"
+      }
+    },
+    {
+      "id": "a4-b0",
+      "score": "17/2",
+      "constraints": {
+        "combined": "-2"
+      }
+    },
+    {
+      "id": "a4-b2",
+      "score": "5/2",
+      "constraints": {
+        "combined": "0"
+      }
+    },
+    {
+      "id": "a4-b4",
+      "score": "-7/2",
+      "constraints": {
+        "combined": "2"
+      }
+    }
+  ]
+}

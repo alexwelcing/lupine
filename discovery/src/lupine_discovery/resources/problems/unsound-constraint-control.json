@@ -1,0 +1,94 @@
+{
+  "schema": "lupine.discovery.problem.v1",
+  "description": "A deliberately incorrect constraint interval can falsely reject the best candidate. Synthetic finite problem; no physical predictor validation.",
+  "scenario": {
+    "id": "unsound-constraint-control",
+    "objective": {
+      "unit": "synthetic-score",
+      "reference": "constructed-finite-world-v1",
+      "direction": "minimize"
+    },
+    "constraints": {
+      "limit": {
+        "unit": "synthetic-slack",
+        "reference": "constructed-finite-world-v1"
+      }
+    }
+  },
+  "evidence": [
+    {
+      "id": "unsound-constraint-control-score",
+      "kind": "synthetic_fixture",
+      "status": "reported",
+      "scope": {
+        "scenario_id": "unsound-constraint-control",
+        "quantity": "score",
+        "unit": "synthetic-score",
+        "reference": "constructed-finite-world-v1"
+      },
+      "statement": "Synthetic fixture. Intervals deliberately fail to contain some outcomes.",
+      "source": {
+        "uri": "fixture://lupine-discovery/known-answers-v1/unsound-constraint-control"
+      }
+    },
+    {
+      "id": "unsound-constraint-control-limit",
+      "kind": "synthetic_fixture",
+      "status": "reported",
+      "scope": {
+        "scenario_id": "unsound-constraint-control",
+        "quantity": "limit",
+        "unit": "synthetic-slack",
+        "reference": "constructed-finite-world-v1"
+      },
+      "statement": "Synthetic fixture. Intervals deliberately fail to contain some outcomes.",
+      "source": {
+        "uri": "fixture://lupine-discovery/known-answers-v1/unsound-constraint-control"
+      }
+    }
+  ],
+  "candidates": [
+    {
+      "id": "A",
+      "score": [
+        "1",
+        "1"
+      ],
+      "constraints": {
+        "limit": [
+          "-1",
+          "-1"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "unsound-constraint-control-score"
+        ],
+        "limit": [
+          "unsound-constraint-control-limit"
+        ]
+      }
+    },
+    {
+      "id": "B",
+      "score": [
+        "0",
+        "0"
+      ],
+      "constraints": {
+        "limit": [
+          "1",
+          "1"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "unsound-constraint-control-score"
+        ],
+        "limit": [
+          "unsound-constraint-control-limit"
+        ]
+      }
+    }
+  ]
+}

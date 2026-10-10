@@ -27,6 +27,8 @@ sealed held-out outcomes ------------------------> replay audit
 | `serialization.py` | Strict JSON, rational decoding, outcome binding | No implicit unit conversion or floating-point rounding |
 | `cli.py` | Certificates, explanations, recomputation, replay interface | Certificate verification proves runtime consistency only |
 | `replay.py` | Audit coverage, retention, feasibility and regret | Missing truth stays unknown; finite success is not universal validation |
+| `benchmarks.py`, `resources/` | Independent finite-truth oracle, sealed cases, frozen archive reports | Synthetic cases test software; archived reports preserve failed physical premises |
+| `server.py`, `web/` | Local research interface through the CLI's certificate and replay functions | Loopback only; original exact input preserved; no model training or uploaded-data persistence |
 | `formal/` | Conditional abstract implications over real-valued functions | Does not prove Python refinement or source measurements |
 
 ## Adapter contract

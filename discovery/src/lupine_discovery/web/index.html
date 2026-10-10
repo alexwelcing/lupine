@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Lupine Discovery research workbench: traceable candidate selection and known-answer validation.">
+  <title>Lupine Discovery · Research workbench</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%232d2438'/%3E%3Cpath d='M20 6v28M20 14L13 9M20 14l7-5M20 21l-9-6M20 21l9-6M20 29l-9-7M20 29l9-7' stroke='%23c3b3d5' stroke-width='2' fill='none'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to workbench</a>
+  <aside class="sidebar" aria-label="Application navigation">
+    <a class="brand" href="#workbench" aria-label="Lupine Discovery home">
+      <svg class="brand-mark" viewBox="0 0 40 48" fill="none" aria-hidden="true"><path d="M20 5v38M20 15l-7-6M20 15l7-6M20 23l-10-8M20 23l10-8M20 32l-12-9M20 32l12-9M20 40l-11-8M20 40l11-8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <span>Lupine<span class="brand-sub">DISCOVERY</span></span>
+    </a>
+    <div class="nav-group-label">RESEARCH WORKSPACE</div>
+    <nav class="nav-links">
+      <button class="nav-link active" id="nav-workbench" data-view="workbench" aria-current="page"><span class="nav-symbol" aria-hidden="true">⊞</span> Candidate pool</button>
+      <button class="nav-link" id="nav-benchmarks" data-view="benchmarks"><span class="nav-symbol" aria-hidden="true">≋</span> Known answers</button>
+    </nav>
+    <div class="sidebar-note"><span class="small-flower" aria-hidden="true">✳</span><p>Discovery begins with<br>what we can establish.</p><div class="sidebar-rule"></div><span class="sidebar-version">LUPINE SCIENCE<br>Research preview · local workspace</span></div>
+  </aside>
+  <div class="app-shell">
+    <header class="topbar"><div><span class="breadcrumb">Lupine Science</span><span class="slash">/</span><span id="breadcrumb-current">Candidate pool</span></div><span class="research-tag"><span aria-hidden="true"></span> RESEARCH PREVIEW</span></header>
+    <main id="main" tabindex="-1">
+      <section id="view-workbench" class="view" aria-labelledby="workbench-title">
+        <div class="page-heading"><div><p class="eyebrow">THE RECOMMENDATION ENGINE</p><h1 id="workbench-title">From possibilities to a candidate pool.</h1><p class="page-description">Screen a finite universe. Keep the uncertainty. Trace every decision.</p></div><span class="page-index" aria-hidden="true">01 /</span></div>
+        <ol class="workflow" aria-label="Analysis workflow"><li class="current" id="step-prepare"><span>01</span> Define the problem</li><li id="step-select"><span>02</span> Inspect the pool</li><li id="step-replay"><span>03</span> Check known answers</li></ol>
+        <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+        <div class="workspace-grid">
+          <section class="problem-panel panel" aria-labelledby="problem-heading">
+            <div class="section-top"><p class="eyebrow">INPUT / SCENARIO</p><span class="tiny-label">01</span></div><h2 id="problem-heading">Set the question.</h2>
+            <label class="field-label" for="case-select">Start with a known-answer case</label><select id="case-select" data-testid="case-select"><option value="">Loading cases…</option></select>
+            <div class="or-divider"><span>or bring your own</span></div><label class="upload-button" for="problem-upload"><span aria-hidden="true">↑</span> Upload problem JSON<input type="file" id="problem-upload" accept=".json,application/json" data-testid="problem-upload"></label>
+            <div id="scenario-overview" class="scenario-overview" hidden><div class="case-heading"><span id="case-kind" class="tag">CASE</span><span id="candidate-count" class="tiny-label"></span></div><h3 id="case-title"></h3><p id="case-description"></p><dl class="scenario-facts"><div><dt>Objective</dt><dd id="scenario-objective"></dd></div><div><dt>Constraints</dt><dd id="scenario-constraints"></dd></div><div><dt>Reference</dt><dd id="scenario-reference"></dd></div></dl></div>
+            <details class="json-editor" id="json-editor"><summary>Edit problem JSON <span aria-hidden="true">↗</span></summary><label class="sr-only" for="problem-json">Problem JSON</label><textarea id="problem-json" spellcheck="false" autocomplete="off" data-testid="problem-json" placeholder="Load a case or paste a problem here."></textarea><p class="field-help">Use strings for decimal values and large integers. Every constraint means g ≤ 0. Editing clears the previous result.</p></details>
+            <button id="analyze" class="button button-primary" data-testid="analyze" disabled>Build candidate pool <span aria-hidden="true">→</span></button>
+            <p class="input-footnote">Known outcomes stay separate until you choose to evaluate the result.</p>
+          </section>
+          <div class="analysis-column">
+            <section id="empty-state" class="empty-state panel" aria-labelledby="empty-title"><div class="empty-chart" aria-hidden="true"><span class="empty-axis"></span><span class="empty-interval interval-one"></span><span class="empty-interval interval-two"></span><span class="empty-interval interval-three"></span><span class="empty-interval interval-four"></span><span class="empty-bound"></span><span class="chart-word">POSSIBILITY → EVIDENCE</span></div><p class="eyebrow">READY TO EXPLORE</p><h2 id="empty-title">A recommendation you can inspect.</h2><p>Choose a case and build its pool. See which candidates remain possible, which can be excluded, and what evidence the decision assumes.</p><div class="empty-principles"><span>Exact interval decisions</span><span>Ties kept with sound bounds</span><span>Uncertainty made visible</span></div></section>
+            <div id="analysis-results" hidden>
+              <div class="result-heading"><div><p class="eyebrow">SELECTION / RESULT</p><h2 id="result-title">The candidate pool</h2></div><button id="download-certificate" class="button button-small button-outline" data-testid="download-certificate">↓ Certificate</button></div>
+              <div id="selection-note" class="claim-note"></div>
+              <div class="metrics" id="selection-metrics"></div>
+              <section class="pool-panel panel" aria-labelledby="pool-heading"><div class="pool-toolbar"><h3 id="pool-heading">Candidate intervals</h3><div class="segmented" role="group" aria-label="Filter candidates"><button class="selected" data-filter="all" aria-pressed="true">All</button><button data-filter="retained" aria-pressed="false">Retained</button><button data-filter="excluded" aria-pressed="false">Excluded</button></div></div><p class="table-help">Lower scores are better. Intervals show the supplied bounds.</p><div id="pool-table" data-testid="pool-table"></div><div class="chart-legend"><span><i class="legend-line retained-line"></i> Retained</span><span><i class="legend-line excluded-line"></i> Excluded</span><span><i class="legend-threshold"></i> Incumbent upper bound</span></div></section>
+              <div class="support-grid"><section class="panel evidence-panel" aria-labelledby="evidence-heading"><p class="eyebrow">EVIDENCE / PREMISES</p><h3 id="evidence-heading">What supports this pool?</h3><div id="evidence-content"></div></section><section class="panel queue-panel" aria-labelledby="queue-heading"><p class="eyebrow">NEXT / MEASUREMENT</p><h3 id="queue-heading">Where to look next</h3><div id="measurement-queue"></div><p class="field-help">A heuristic ordering for further measurement. It does not reduce the retained pool or guarantee a discovery.</p></section></div>
+              <section class="panel replay-panel" aria-labelledby="replay-heading"><div class="replay-header"><div><p class="eyebrow">VALIDATION / KNOWN ANSWERS</p><h3 id="replay-heading">Now reveal the outcomes.</h3></div><span id="replay-tag" class="tag">NOT YET EVALUATED</span></div><p class="replay-intro">The pool has been fixed. Compare it with separate known outcomes to check coverage, retained optima, and observed regret.</p><div class="replay-actions"><button id="replay-builtin" class="button button-secondary" data-testid="replay-builtin" hidden>Evaluate known answers <span aria-hidden="true">→</span></button><label class="button button-outline upload-inline" for="outcomes-upload">Upload outcomes JSON<input type="file" id="outcomes-upload" accept=".json,application/json" data-testid="outcomes-upload"></label></div><div id="replay-results" data-testid="replay-results" hidden></div></section>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="view-benchmarks" class="view" aria-labelledby="benchmarks-title" hidden>
+        <div class="page-heading"><div><p class="eyebrow">VALIDATION / EVIDENCE</p><h1 id="benchmarks-title">Test against what we already know.</h1><p class="page-description">Known answers challenge the engine. Published results challenge its assumptions.</p></div><span class="page-index" aria-hidden="true">02 /</span></div>
+        <div class="validation-intro"><p>The mathematics is conditional: sound intervals preserve every feasible optimum in the supplied universe.</p><p>These evaluations ask separate questions: does the implementation behave correctly, and do the supplied intervals contain the observed truth?</p></div>
+        <div id="benchmark-status" class="notice" role="status" aria-live="polite">Loading validation report…</div>
+        <div id="benchmark-content" hidden><section class="benchmark-section" aria-labelledby="synthetic-heading"><div class="section-heading"><div><p class="eyebrow">01 / CONTROLLED WORLDS</p><h2 id="synthetic-heading">Known-answer cases</h2></div><span class="tag">SYNTHETIC VALIDATION</span></div><p class="section-description">Constructed problems with explicit ground truth test selection, ties, constraints, uncertainty, and failure detection. They establish software behavior, not physical accuracy.</p><div id="suite-metrics" class="metrics"></div><div id="known-case-list" class="known-case-list"></div></section><section class="benchmark-section" aria-labelledby="archive-heading"><div class="section-heading"><div><p class="eyebrow">02 / PUBLISHED MEASUREMENTS</p><h2 id="archive-heading">Archived scientific results</h2></div><span class="tag">RETROSPECTIVE REPLAY</span></div><p class="section-description">Held-out rows from public materials datasets. No new DFT was run. These tests preserve observed failures; they are not prospective discovery or a physical certificate.</p><div id="archive-cards" class="archive-cards"></div><details class="protocol-details"><summary>Evaluation protocol & limitations</summary><div id="archive-protocol"></div></details></section><section class="release-note"><span aria-hidden="true">↗</span><div><h3>Research preview, with the open questions intact.</h3><p id="release-note-text">Release requires broader independent benchmarks, an evidence policy for real scenarios, and a prospective test. Passing a constructed case does not settle those questions.</p></div></section></div>
+      </section>
+      <footer class="footer"><span>LUPINE DISCOVERY</span><span>Recommendation is a claim. Evidence makes it accountable.</span></footer>
+    </main>
+  </div>
+</body>
+</html>

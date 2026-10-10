@@ -11,7 +11,9 @@ This ledger separates mathematical implications, software execution, archived ob
 | Compatible refinement shrinks the pool | `best_upper_retained_shrinks` | Same candidate type/scope and a refined best-upper witness |
 | Runtime implements the finite equations | `tests/test_core.py`, `tests/test_envelope.py` | Exhaustive bounded worlds and randomized refinement tests; no full formal refinement proof |
 | Serialization and certificate recomputation reject tested tampering | `tests/test_io.py`, `tests/test_adversarial_integration.py` | Tested cases; certificate is not a digital signature or physical attestation |
-| Archived pilots expose interval failures | `reports/archived-v1.json`, `docs/archived-benchmark.md` | Both archives refute simultaneous soundness of their empirical intervals |
+| Local interface exercises the actual selector | `tests/test_server.py`, `scripts/browser_smoke.py`, `reports/browser-v1.json` | Desktop/mobile Chromium checks and exact API/CLI agreement; research preview, not a public hosting service |
+| Finite known-answer expectations hold | `reports/known-answers-v1.json`, `tests/test_known_answers.py` | 11 sound fixtures and 2 failure-detection controls; independent oracle, synthetic software evidence only |
+| Archived pilots expose interval failures | `reports/archived-v1.json`, `reports/additional-archived-v1.json`, corresponding protocols | All three archives refute simultaneous soundness of their empirical intervals |
 | Composition-only predictors have a 1.15 eV archive worst-error floor | `descriptor_collision_lower_bound`, `reports/descriptor-audit.json`, `docs/descriptor-audit.md` | General conditional inequality formalized; archive instantiation computed by Python from three descriptor collisions; not a claim of physical irreducibility |
 | Engine improves discovery efficiency across materials | None yet | Open; pilot does not establish superiority |
 | Real source intervals are globally sound | None in this release | Open scientific premise; evidence labels do not establish it |

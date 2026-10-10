@@ -52,9 +52,19 @@ def verify_certificate(problem_value, supplied):
             "certificate_digest": supplied["certificate_digest"]}
 
 
+def replay_report(value, outcome_value):
+    problem = parse_problem(value)
+    outcomes = parse_outcomes(outcome_value, problem.scenario_id, digest(value))
+    return {"schema": "lupine.discovery.replay.v1", "problem_digest": digest(value),
+            "outcomes_digest": digest(outcome_value),
+            "evaluation": encode(evaluate(problem.candidates, outcomes))}
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
+    workbench = sub.add_parser("serve", help="Run the local research workbench")
+    workbench.add_argument("--port", type=int, default=8765)
     for name in ("select", "verify", "replay"):
         command = sub.add_parser(name)
         command.add_argument("problem", type=Path)
@@ -65,18 +75,17 @@ def main(argv=None):
         command.add_argument("--output", type=Path)
     args = parser.parse_args(argv)
     try:
+        if args.command == "serve":
+            from .server import serve
+            return serve(args.port)
         value = loads(args.problem.read_text())
         if args.command == "select":
             result = certificate(value)
         elif args.command == "verify":
             result = verify_certificate(value, loads(args.certificate.read_text()))
         else:
-            problem = parse_problem(value)
             outcome_value = loads(args.outcomes.read_text())
-            outcomes = parse_outcomes(outcome_value, problem.scenario_id, digest(value))
-            result = {"schema": "lupine.discovery.replay.v1", "problem_digest": digest(value),
-                      "outcomes_digest": digest(outcome_value),
-                      "evaluation": encode(evaluate(problem.candidates, outcomes))}
+            result = replay_report(value, outcome_value)
         output = json.dumps(result, indent=2, sort_keys=True, allow_nan=False) + "\n"
         if args.output:
             args.output.write_text(output)

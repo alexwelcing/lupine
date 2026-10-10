@@ -1,0 +1,27 @@
+{
+  "schema": "lupine.discovery.outcomes.v1",
+  "scenario_id": "tied-optima",
+  "problem_digest": "0efdf29e95f194043e2b52923a254b99c733255225d92f2b8aa4fad6f764e2bc",
+  "outcomes": [
+    {
+      "id": "A",
+      "score": "1",
+      "constraints": {}
+    },
+    {
+      "id": "B",
+      "score": "1",
+      "constraints": {}
+    },
+    {
+      "id": "C",
+      "score": "4",
+      "constraints": {}
+    },
+    {
+      "id": "D",
+      "score": "6",
+      "constraints": {}
+    }
+  ]
+}

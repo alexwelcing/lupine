@@ -1,0 +1,58 @@
+{
+  "schema": "lupine.discovery.problem.v1",
+  "description": "A deliberately incorrect interval can screen out the true optimum. Synthetic finite problem; no physical predictor validation.",
+  "scenario": {
+    "id": "unsound-score-control",
+    "objective": {
+      "unit": "synthetic-score",
+      "reference": "constructed-finite-world-v1",
+      "direction": "minimize"
+    },
+    "constraints": {}
+  },
+  "evidence": [
+    {
+      "id": "unsound-score-control-score",
+      "kind": "synthetic_fixture",
+      "status": "reported",
+      "scope": {
+        "scenario_id": "unsound-score-control",
+        "quantity": "score",
+        "unit": "synthetic-score",
+        "reference": "constructed-finite-world-v1"
+      },
+      "statement": "Synthetic fixture. Intervals deliberately fail to contain some outcomes.",
+      "source": {
+        "uri": "fixture://lupine-discovery/known-answers-v1/unsound-score-control"
+      }
+    }
+  ],
+  "candidates": [
+    {
+      "id": "A",
+      "score": [
+        "1",
+        "1"
+      ],
+      "constraints": {},
+      "evidence": {
+        "score": [
+          "unsound-score-control-score"
+        ]
+      }
+    },
+    {
+      "id": "B",
+      "score": [
+        "2",
+        "2"
+      ],
+      "constraints": {},
+      "evidence": {
+        "score": [
+          "unsound-score-control-score"
+        ]
+      }
+    }
+  ]
+}

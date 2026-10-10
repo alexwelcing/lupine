@@ -40,3 +40,24 @@ jobs:
           lake --wfail build
           python3 -m unittest test_audit_axioms -v
           python3 audit_axioms.py
+
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: discovery
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e '.[test-ui]'
+      - run: python -m playwright install --with-deps chromium
+      - run: python scripts/browser_smoke.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: discovery-browser-checks
+          path: discovery/.cache/browser
+          retention-days: 7
