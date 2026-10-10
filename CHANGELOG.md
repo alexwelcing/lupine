@@ -18,6 +18,20 @@ Newest first. Dates are absolute.
 
 ## 2026-10-10 - Lupine Discovery branch incubation
 
+- **Constrained evaluation and information limits.** The frozen NIST JARVIS
+  experiment completed 100 panels and 103 equal-budget acquisition policies.
+  Useful screening and recommendation-value gates both fail: all 1,000 primary
+  candidates survive, and budget-four near-optimal success is 42/50 versus
+  nominal ranking's 40/50. Unsupported shift explicitly abstains. An independent
+  arithmetic audit and a complete fresh-workdir rerun confirm the result. The
+  local interface displays the failures; 186 Python tests, 17 browser checks,
+  isolated package checks and 69 compiled/audited Lean statements pass.
+  [The result and provenance](discovery/reports/constrained-result-v1.md) remain
+  separate from software verification. New proofs show that smaller universally
+  safe pools require tighter bounds or additional relationships beyond the
+  supplied interval box. Next: frozen training-only tail-error development and
+  explicit, conditionally justified coupling certificates.
+
 - **Autonomous goal.** Alex delegated the multi-day build and task selection.
   Added the [completion goal and backlog](discovery/GOAL.md), durable execution
   journal, and a bounded four-day continuation schedule. Began the uncertainty
