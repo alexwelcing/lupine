@@ -1,0 +1,20 @@
+{
+  "conclusions": [
+    "New receipt names match the frozen verifier and preserve historical files.",
+    "Fresh constrained artifacts supply exactly the four pinned training inputs.",
+    "Exact version/BLAS acceptance differs from recorded historical binary identities.",
+    "Full constrained target access remains distinct from the separate training-only runner.",
+    "Historical scientific digest comparison differs from new-attempt byte identity."
+  ],
+  "documents": {
+    "docs/constrained-reproduce.md": "0cf3986a01a8f7f86a5f13a87ce9ecf68f078df2f74b3958e88d6d7801df0e75",
+    "docs/reproduction-environment.md": "60ecf3389b81ab2440d48642bd7d83723135e3e1442eb9993c995fd895951a6e",
+    "docs/training-tail-run.md": "19341333e85dd0a96cabba741330a09620980834503bf72164cd94c067f1b188"
+  },
+  "method": "Read-only comparison of guides to actual CLI/source and historical public receipts; no recipe execution.",
+  "reviewer": "pareto_runtime",
+  "schema": "lupine.discovery.reproduction_documentation_review.v1",
+  "scientific_execution_performed": false,
+  "status": "NO_BLOCKER_FOUND",
+  "targets_read": false
+}

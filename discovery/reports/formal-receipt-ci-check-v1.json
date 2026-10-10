@@ -1,0 +1,129 @@
+{
+  "actual_lean_compilation_this_run": false,
+  "fixture_cases": [
+    {
+      "case": "matching",
+      "command": [
+        "git",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "commit.gpgsign=false",
+        "diff",
+        "--exit-code",
+        "--",
+        "AXIOMS.txt",
+        "theorem-inventory.json"
+      ],
+      "cwd_relative_to_fixture": "discovery/formal",
+      "diff": "",
+      "exit_code": 0,
+      "isolated_local_git_only": true
+    },
+    {
+      "case": "stale_axioms",
+      "command": [
+        "git",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "commit.gpgsign=false",
+        "diff",
+        "--exit-code",
+        "--",
+        "AXIOMS.txt",
+        "theorem-inventory.json"
+      ],
+      "cwd_relative_to_fixture": "discovery/formal",
+      "diff": "diff --git a/discovery/formal/AXIOMS.txt b/discovery/formal/AXIOMS.txt\nindex 0a692ad..a011f37 100644\n--- a/discovery/formal/AXIOMS.txt\n+++ b/discovery/formal/AXIOMS.txt\n@@ -123,4 +123,3 @@\n 'LupineSharpness.box_retained_universally_safe' depends on axioms: [propext, Classical.choice, Quot.sound]\n 'LupineSharpness.box_retained_minimal' depends on axioms: [propext, Classical.choice, Quot.sound]\n 'LupineSharpness.pruning_retained_has_counterexample' depends on axioms: [propext, Classical.choice, Quot.sound]\n-SYNTHETIC_STALE_RECEIPT\n",
+      "exit_code": 1,
+      "isolated_local_git_only": true
+    },
+    {
+      "case": "stale_inventory",
+      "command": [
+        "git",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "commit.gpgsign=false",
+        "diff",
+        "--exit-code",
+        "--",
+        "AXIOMS.txt",
+        "theorem-inventory.json"
+      ],
+      "cwd_relative_to_fixture": "discovery/formal",
+      "diff": "diff --git a/discovery/formal/theorem-inventory.json b/discovery/formal/theorem-inventory.json\nindex b4019c2..c88b287 100644\n--- a/discovery/formal/theorem-inventory.json\n+++ b/discovery/formal/theorem-inventory.json\n@@ -1,5 +1,5 @@\n {\n-  \"axiom_output_sha256\": \"0000000000000000000000000000000000000000000000000000000000000000\",\n+  \"axiom_output_sha256\": \"d99b1d075507166a731d2a7e2c35d20e58eeba3dfa50ad12f796c575d3ca3811\",\n   \"module_count\": 9,\n   \"modules\": [\n     {\n",
+      "exit_code": 1,
+      "isolated_local_git_only": true
+    },
+    {
+      "case": "both_stale",
+      "command": [
+        "git",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "commit.gpgsign=false",
+        "diff",
+        "--exit-code",
+        "--",
+        "AXIOMS.txt",
+        "theorem-inventory.json"
+      ],
+      "cwd_relative_to_fixture": "discovery/formal",
+      "diff": "diff --git a/discovery/formal/AXIOMS.txt b/discovery/formal/AXIOMS.txt\nindex 0a692ad..a011f37 100644\n--- a/discovery/formal/AXIOMS.txt\n+++ b/discovery/formal/AXIOMS.txt\n@@ -123,4 +123,3 @@\n 'LupineSharpness.box_retained_universally_safe' depends on axioms: [propext, Classical.choice, Quot.sound]\n 'LupineSharpness.box_retained_minimal' depends on axioms: [propext, Classical.choice, Quot.sound]\n 'LupineSharpness.pruning_retained_has_counterexample' depends on axioms: [propext, Classical.choice, Quot.sound]\n-SYNTHETIC_STALE_RECEIPT\ndiff --git a/discovery/formal/theorem-inventory.json b/discovery/formal/theorem-inventory.json\nindex b4019c2..c88b287 100644\n--- a/discovery/formal/theorem-inventory.json\n+++ b/discovery/formal/theorem-inventory.json\n@@ -1,5 +1,5 @@\n {\n-  \"axiom_output_sha256\": \"0000000000000000000000000000000000000000000000000000000000000000\",\n+  \"axiom_output_sha256\": \"d99b1d075507166a731d2a7e2c35d20e58eeba3dfa50ad12f796c575d3ca3811\",\n   \"module_count\": 9,\n   \"modules\": [\n     {\n",
+      "exit_code": 1,
+      "isolated_local_git_only": true
+    }
+  ],
+  "inputs_after": {
+    ".github/workflows/discovery-verify.yml": "4806e3bb0f8ea39fc9d4bd86ff96b30decdf8bd612860bb0d9abad8c3c88050e",
+    "discovery/formal/AXIOMS.txt": "d99b1d075507166a731d2a7e2c35d20e58eeba3dfa50ad12f796c575d3ca3811",
+    "discovery/formal/LupineCoupled.lean": "d79afad3eafbf1cfe35fb920c5864059570f2018ff15c7b1badae5de83e39d7f",
+    "discovery/formal/LupineDecisionPool.lean": "10a5962eedf30819388a835b052df91f4fff130c79258d31eb345f51071cf00a",
+    "discovery/formal/LupineDiscovery.lean": "93adb82c8caceb6620285bea612b4c80e4cf11c7da6d1e04b8ba595f43c6c515",
+    "discovery/formal/LupineExchangeability.lean": "0e326c4b51e5ca00d1deb32be61ba7b80ca0c443059d0fbf13e22f05717610ce",
+    "discovery/formal/LupineIntervals.lean": "9dec04611f670efdd8deaa6e05f802199f418c9089a5c29148bf8ca4534d8fc4",
+    "discovery/formal/LupinePareto.lean": "077e657e5b6d77ef878c325baf9db909adff73f23408385ee464482cd6acd4c0",
+    "discovery/formal/LupineProjection.lean": "600af2ee02e8f5ed7f84046d5abab253dc74be3d556414d67438e49a6f3c4f2d",
+    "discovery/formal/LupineRisk.lean": "bea0e0cb18daeb41a26e7c721bef0dec6e1c361f3ccf1c9f7f7dbf2176c0fcdf",
+    "discovery/formal/LupineSharpness.lean": "1135d8ba14c6d2c388bc5aaa40fc4ce71d55fe09cb8c90bf7319a70a84cbb871",
+    "discovery/formal/audit_axioms.py": "1a30e19f3e38d5481ac321be5ece1efc7025925a4a218e51ff5f5f0b49756386",
+    "discovery/formal/theorem-inventory.json": "bd6823b9340a1d8b8f4595f95b83677df5e19eae4ac2585f6ec7f304db2424e7",
+    "discovery/scripts/audit_formal_receipt_ci.py": "6b2c120ddc83826e117f3beb02e20757e724e73bf974df4e69baa9a11f9818c4"
+  },
+  "inputs_before": {
+    ".github/workflows/discovery-verify.yml": "4806e3bb0f8ea39fc9d4bd86ff96b30decdf8bd612860bb0d9abad8c3c88050e",
+    "discovery/formal/AXIOMS.txt": "d99b1d075507166a731d2a7e2c35d20e58eeba3dfa50ad12f796c575d3ca3811",
+    "discovery/formal/LupineCoupled.lean": "d79afad3eafbf1cfe35fb920c5864059570f2018ff15c7b1badae5de83e39d7f",
+    "discovery/formal/LupineDecisionPool.lean": "10a5962eedf30819388a835b052df91f4fff130c79258d31eb345f51071cf00a",
+    "discovery/formal/LupineDiscovery.lean": "93adb82c8caceb6620285bea612b4c80e4cf11c7da6d1e04b8ba595f43c6c515",
+    "discovery/formal/LupineExchangeability.lean": "0e326c4b51e5ca00d1deb32be61ba7b80ca0c443059d0fbf13e22f05717610ce",
+    "discovery/formal/LupineIntervals.lean": "9dec04611f670efdd8deaa6e05f802199f418c9089a5c29148bf8ca4534d8fc4",
+    "discovery/formal/LupinePareto.lean": "077e657e5b6d77ef878c325baf9db909adff73f23408385ee464482cd6acd4c0",
+    "discovery/formal/LupineProjection.lean": "600af2ee02e8f5ed7f84046d5abab253dc74be3d556414d67438e49a6f3c4f2d",
+    "discovery/formal/LupineRisk.lean": "bea0e0cb18daeb41a26e7c721bef0dec6e1c361f3ccf1c9f7f7dbf2176c0fcdf",
+    "discovery/formal/LupineSharpness.lean": "1135d8ba14c6d2c388bc5aaa40fc4ce71d55fe09cb8c90bf7319a70a84cbb871",
+    "discovery/formal/audit_axioms.py": "1a30e19f3e38d5481ac321be5ece1efc7025925a4a218e51ff5f5f0b49756386",
+    "discovery/formal/theorem-inventory.json": "bd6823b9340a1d8b8f4595f95b83677df5e19eae4ac2585f6ec7f304db2424e7",
+    "discovery/scripts/audit_formal_receipt_ci.py": "6b2c120ddc83826e117f3beb02e20757e724e73bf974df4e69baa9a11f9818c4"
+  },
+  "limits": [
+    "Offline reconstruction uses existing audited Lean output; it is not a fresh proof compile.",
+    "Synthetic Git fixtures test receipt enforcement only.",
+    "The required one-line guard compares regenerated tracked receipts to the CI checkout index.",
+    "Proof/receipt identity is conditional mathematical evidence, not physical validity."
+  ],
+  "module_count": 9,
+  "offline_regeneration_byte_identical": true,
+  "offline_source_inventory_binding": true,
+  "preview_requested": false,
+  "schema": "lupine-formal-receipt-ci-review-v1",
+  "script_sha256": "6b2c120ddc83826e117f3beb02e20757e724e73bf974df4e69baa9a11f9818c4",
+  "status": "WORKFLOW_GUARD_AND_GIT_FIXTURES_PASSED",
+  "theorem_count": 125,
+  "unchanged_published_inputs": true,
+  "workflow_guard_present": true
+}

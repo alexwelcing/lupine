@@ -212,3 +212,29 @@ incomplete declared calibration panels. They also show that a calibrated prefix
 cannot improve equal-budget discoveries over its own unchanged ranking; stopping
 cost and pool recall must be assessed separately from ranking value. No numerical
 protocol, scientific result or release gate is selected or promoted by these notes.
+
+## Actual metadata and release-artifact integration
+
+The G15B source freeze `ec32247` passed [all four CI jobs](https://github.com/alexwelcing/lupine/actions/runs/38079064532)
+before the fixed-cache reader ran twice. Both runs retained all 1,545 records
+and produced identical target-opaque metadata. The original grammar recognized
+zero formulas; 264 exact DOI-token groups do not prove independent studies.
+[The readiness report](../reports/mpea-row-metadata-readiness-v1.md) preserves this
+negative recognition result. Separate cited format research and a prospective
+amendment cannot retroactively change it. No target completeness, eligibility,
+feature construction, split, fit or new scientific benchmark has run.
+
+[The release integration](../reports/metadata-release-verification-v1.md) adds a
+public-metadata summarizer, optional retention of the exact tested wheel and
+committed source archive, and CI artifact upload. The retention tests use inert
+synthetic wheels; a real retained artifact requires a clean committed build and
+its successful receipt. CI now checks that regenerated axiom/inventory files
+match the committed receipts. A fresh audit passes all 125 statements with no
+receipt change. These changes strengthen engineering reproducibility only.
+
+The corrected [reproduction environment](reproduction-environment.md) and run
+guides use fresh receipt/output paths, state the supported historical numeric
+environment and distinguish two-process agreement from matching the original
+scientific digest. Their syntax and source-contract checks are not a new
+scientific rerun. Current scientific screening/superiority failures and all
+open physical-scope gates remain unchanged.

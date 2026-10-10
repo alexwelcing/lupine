@@ -9,8 +9,10 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import secrets
 import subprocess
 import sys
+import tarfile
 import tempfile
 
 
@@ -197,34 +199,275 @@ def checked(command, cwd):
     return result.stdout
 
 
-def run():
+def _git(root, *arguments):
+    return subprocess.run(["git", *arguments], cwd=root, check=True,
+                          stdout=subprocess.PIPE, stderr=subprocess.PIPE).stdout
+
+
+def _sha256_file(path):
+    result = hashlib.sha256()
+    with Path(path).open("rb") as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+            result.update(chunk)
+    return result.hexdigest()
+
+
+def _canonical(value):
+    return (json.dumps(value, sort_keys=True, separators=(",", ":"),
+                       ensure_ascii=True, allow_nan=False) + "\n").encode("ascii")
+
+
+def _release_state(root):
+    """Opt-in release artifacts require a clean Git checkout and checked manifest."""
+    repository = Path(_git(root, "rev-parse", "--show-toplevel").decode().strip()).resolve()
+    project = root.resolve().relative_to(repository).as_posix()
+    if _git(repository, "status", "--porcelain=v1", "--untracked-files=all"):
+        raise RuntimeError("Release retention requires a clean Git worktree, including untracked files; commit or preserve edits separately first")
+    commit = _git(repository, "rev-parse", "HEAD").decode("ascii").strip()
+    tree = _git(repository, "rev-parse", "HEAD^{tree}").decode("ascii").strip()
+    manifest_path = root / "reports/runtime-manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    check = json.loads(checked([sys.executable, str(root / "scripts/runtime_manifest.py")], root))
+    if check.get("status") != "passed" or check.get("file_count") != len(manifest["files"]):
+        raise RuntimeError("Release runtime manifest did not verify")
+    copyset = [project]
+    workflow = ".github/workflows/discovery-verify.yml"
+    if project != "." and _git(repository, "ls-tree", "--name-only", commit, "--", workflow).strip():
+        copyset.append(workflow)
+    return {"git_commit": commit, "git_tree": tree, "project_path": project,
+            "archive_copyset": copyset, "worktree_status": "clean",
+            "runtime_manifest": {"path": "reports/runtime-manifest.json",
+                "sha256": _sha256_file(manifest_path), "checkpoint": manifest["checkpoint"],
+                "file_count": len(manifest["files"])}}
+
+
+def _source_archive(root, state, work):
+    """Archive committed scoped files only, then build from that exact snapshot."""
+    repository = Path(_git(root, "rev-parse", "--show-toplevel").decode().strip()).resolve()
+    prefix = "lupine-source/"
+    archive = work / ("lupine-discovery-source-" + state["git_commit"][:12] + ".tar")
+    listing = _git(repository, "ls-tree", "-r", "-z", state["git_commit"], "--", *state["archive_copyset"])
+    object_format = _git(repository, "rev-parse", "--show-object-format").decode("ascii").strip()
+    if object_format not in {"sha1", "sha256"}:
+        raise RuntimeError("Unsupported Git object format for source archive verification")
+    expected = set()
+    expected_objects = {}
+    for record in listing.split(b"\0"):
+        if not record:
+            continue
+        metadata, raw_name = record.split(b"\t", 1)
+        mode, kind, object_id = metadata.split()
+        name = raw_name.decode("utf-8")
+        parts = Path(name).parts
+        if (mode not in {b"100644", b"100755"} or kind != b"blob"
+                or any(part in {".cache", ".git", ".venv", "__pycache__"} for part in parts)):
+            raise RuntimeError("Release source scope contains unsupported links, objects or cache files")
+        expected.add(prefix + name)
+        expected_objects[prefix + name] = object_id.decode("ascii")
+    if not expected:
+        raise RuntimeError("Release source archive scope is empty")
+    with archive.open("xb") as stream:
+        subprocess.run(["git", "archive", "--format=tar", "--prefix=" + prefix,
+                        state["git_commit"], "--", *state["archive_copyset"]],
+                       cwd=repository, stdout=stream, stderr=subprocess.PIPE, check=True)
+    archive_sha256 = _sha256_file(archive)
+    destination = work / "source-snapshot"
+    destination.mkdir()
+    # Git attributes may suppress tracked files; reject incomplete source snapshots.
+    # Never follow archive links or extract absolute/parent-relative paths.
+    source_hashes = {}
+    with tarfile.open(archive, "r:") as bundle:
+        members = bundle.getmembers()
+        files = [member for member in members if member.isfile()]
+        if len(files) != len(expected) or {member.name for member in files} != expected:
+            raise RuntimeError("Committed source archive does not contain the full declared copyset")
+        for member in members:
+            name = Path(member.name)
+            if (name.is_absolute() or ".." in name.parts
+                    or not (member.name.startswith(prefix) or (member.isdir() and member.name == prefix.rstrip("/")))
+                    or not (member.isdir() or member.isfile())):
+                raise RuntimeError("Unsafe or unsupported committed source archive entry")
+            target = destination / name
+            if member.isdir():
+                target.mkdir(parents=True, exist_ok=True)
+            else:
+                target.parent.mkdir(parents=True, exist_ok=True)
+                blob_hash = hashlib.new(object_format)
+                blob_hash.update(b"blob " + str(member.size).encode("ascii") + b"\0")
+                with bundle.extractfile(member) as source, target.open("xb") as output:
+                    for chunk in iter(lambda: source.read(1024 * 1024), b""):
+                        blob_hash.update(chunk)
+                        output.write(chunk)
+                if blob_hash.hexdigest() != expected_objects[member.name]:
+                    raise RuntimeError("Source archive member differs from its committed Git blob; export substitutions are unsupported")
+                target.chmod(member.mode & 0o777)
+                source_hashes[member.name[len(prefix):]] = _sha256_file(target)
+    _check_worktree_sources(repository, source_hashes)
+    build_root = destination / prefix / state["project_path"]
+    manifest = json.loads(checked([sys.executable, str(build_root / "scripts/runtime_manifest.py")], build_root))
+    if manifest.get("status") != "passed":
+        raise RuntimeError("Archived runtime manifest did not verify")
+    if _sha256_file(build_root / "reports/runtime-manifest.json") != state["runtime_manifest"]["sha256"]:
+        raise RuntimeError("Archived and worktree runtime manifests differ")
+    if _sha256_file(archive) != archive_sha256:
+        raise RuntimeError("Source archive bytes changed during snapshot validation")
+    return archive, build_root, source_hashes, archive_sha256
+
+
+def _check_worktree_sources(repository, source_hashes):
+    # git status can hide assume-unchanged/skip-worktree files. Compare actual
+    # scoped bytes to the committed archive before and after the smoke check.
+    for relative, expected in source_hashes.items():
+        path = repository / relative
+        if path.is_symlink() or path.resolve() != path.absolute() or _sha256_file(path) != expected:
+            raise RuntimeError("Release working source differs from the committed archive")
+
+
+def _new_destination(path):
+    path = Path(path).absolute()
+    if path.exists() or path.is_symlink() or path.resolve() != path:
+        raise RuntimeError("Release artifact directory must be new and have no symlinked ancestors")
+    return path
+
+
+def _write_new_file(path, raw):
+    """Publish complete bytes atomically without overwriting an existing path."""
+    path = _new_destination(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path = _new_destination(path)
+    directory_fd = os.open(path.parent, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+    temporary_name = None
+    try:
+        _new_destination(path)
+        captured = os.fstat(directory_fd)
+        current = os.stat(path.parent, follow_symlinks=False)
+        if (captured.st_dev, captured.st_ino) != (current.st_dev, current.st_ino):
+            raise RuntimeError("Artifact publication parent changed before writing")
+        while True:
+            name = ".lupine-artifact-" + secrets.token_hex(16)
+            try:
+                fd = os.open(name, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW,
+                             0o600, dir_fd=directory_fd)
+                temporary_name = name
+                break
+            except FileExistsError:
+                continue
+        with os.fdopen(fd, "wb") as stream:
+            stream.write(raw)
+            stream.flush()
+            os.fsync(stream.fileno())
+        _new_destination(path)
+        current = os.stat(path.parent, follow_symlinks=False)
+        if (captured.st_dev, captured.st_ino) != (current.st_dev, current.st_ino):
+            raise RuntimeError("Artifact publication parent changed during writing")
+        os.link(temporary_name, path.name, src_dir_fd=directory_fd,
+                dst_dir_fd=directory_fd, follow_symlinks=False)
+    finally:
+        try:
+            if temporary_name is not None:
+                os.unlink(temporary_name, dir_fd=directory_fd)
+        finally:
+            os.close(directory_fd)
+
+
+def _retain(directory, wheel, archive, archive_sha256, state, report):
+    """No overwrite: reserve a new directory; the complete receipt is written last."""
+    if _sha256_file(archive) != archive_sha256:
+        raise RuntimeError("Source archive bytes changed after snapshot validation")
+    directory = _new_destination(directory)
+    directory.parent.mkdir(parents=True, exist_ok=True)
+    directory = _new_destination(directory)
+    directory.mkdir()
+    artifacts = {}
+    for kind, source in (("wheel", wheel), ("source_archive", archive)):
+        target = directory / source.name
+        with source.open("rb") as incoming, target.open("xb") as outgoing:
+            for chunk in iter(lambda: incoming.read(1024 * 1024), b""):
+                outgoing.write(chunk)
+        expected = report["wheel_sha256"] if kind == "wheel" else archive_sha256
+        if _sha256_file(source) != expected or _sha256_file(target) != expected:
+            raise RuntimeError("Retained artifact differs from its tested or committed source")
+        artifacts[kind] = {"filename": target.name, "bytes": target.stat().st_size, "sha256": expected}
+    if artifacts["wheel"]["sha256"] != report["wheel_sha256"]:
+        raise RuntimeError("Retained wheel differs from the exact tested wheel")
+    payload = {"schema": "lupine.discovery.release_artifacts.v1", "source": state,
+               "source_state_rechecked_after_smoke": True,
+               "wheel_build_source": "committed_source_archive",
+               "artifacts": artifacts, "verification": report,
+               "scope": "Committed source assets and the exact tested wheel; not a bit-reproducible-build claim, Git history bundle, deployment or scientific rerun"}
+    receipt = {**payload, "content_sha256": hashlib.sha256(_canonical(payload)).hexdigest()}
+    raw = _canonical(receipt)
+    receipt_path = directory / "release-artifacts.json"
+    _write_new_file(receipt_path, raw)
+    return {"directory": str(directory), "receipt": receipt_path.name,
+            "receipt_sha256": hashlib.sha256(raw).hexdigest(),
+            "git_commit": state["git_commit"], "artifacts": artifacts}
+
+
+def run(retain_directory=None):
     root = Path(__file__).resolve().parents[1]
+    state = None
+    if retain_directory is not None:
+        retain_directory = _new_destination(retain_directory)
+        state = _release_state(root)
     with tempfile.TemporaryDirectory(prefix="lupine-distribution-") as temp:
         work = Path(temp)
+        archive, build_root, source_hashes, archive_sha256 = (
+            _source_archive(root, state, work) if state else (None, root, None, None))
         wheels = work / "wheels"
         wheels.mkdir()
-        checked([sys.executable, "-m", "pip", "wheel", str(root), "--no-deps",
+        checked([sys.executable, "-m", "pip", "wheel", str(build_root), "--no-deps",
                  "--wheel-dir", str(wheels)], work)
         found = list(wheels.glob("lupine_discovery-*.whl"))
         if len(found) != 1:
             raise RuntimeError("Expected exactly one built discovery wheel")
         wheel = found[0]
+        tested_wheel_sha256 = _sha256_file(wheel)
         env = work / "venv"
         checked([sys.executable, "-m", "venv", str(env)], work)
         executable = env / ("Scripts/python.exe" if os.name == "nt" else "bin/python")
         checked([str(executable), "-m", "pip", "install", "--no-index", "--no-deps", str(wheel)], work)
         report = json.loads(checked([str(executable), "-I", "-c", PROBE], work))
+        if state and tested_wheel_sha256 != _sha256_file(wheel):
+            raise RuntimeError("Wheel bytes changed during the installed smoke check")
         report.update({"schema": "lupine.discovery.package_verification.v1",
-                       "wheel_sha256": hashlib.sha256(wheel.read_bytes()).hexdigest(),
+                       "wheel_sha256": _sha256_file(wheel),
                        "scope": "Isolated wheel and installed HTTP checks; not independent scientific reproduction"})
+        if state:
+            if report.get("status") != "passed" or report.get("isolated_install") is not True:
+                raise RuntimeError("Release retention requires a passing isolated smoke report")
+            if _release_state(root) != state:
+                raise RuntimeError("Release source state changed during the smoke check")
+            repository = Path(_git(root, "rev-parse", "--show-toplevel").decode().strip()).resolve()
+            _check_worktree_sources(repository, source_hashes)
+            state = {**state, "archived_file_count": len(source_hashes),
+                     "archived_file_hashes_sha256": hashlib.sha256(_canonical(source_hashes)).hexdigest()}
+            report["retention"] = _retain(retain_directory, wheel, archive, archive_sha256, state, dict(report))
         return report
 
 
-if __name__ == "__main__":
+def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output", type=Path, default=Path(".cache/package-verification.json"))
-    args = parser.parse_args()
-    report = run()
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    parser.add_argument("--output", type=Path,
+                        help="Write the smoke report; defaults to .cache/package-verification.json without retention")
+    parser.add_argument("--retain-directory", type=Path,
+                        help="Preserve the exact tested wheel, committed source archive and sealed receipt in a NEW directory; requires a clean Git checkout and matching runtime manifest")
+    args = parser.parse_args(argv)
+    output = args.output
+    if args.retain_directory is None:
+        output = output or Path(".cache/package-verification.json")
+    elif output is not None:
+        output = _new_destination(output)
+    report = run(args.retain_directory)
+    if output is not None:
+        if args.retain_directory is not None:
+            _write_new_file(output, (json.dumps(report, indent=2, sort_keys=True) + "\n").encode("utf-8"))
+        else:
+            output.parent.mkdir(parents=True, exist_ok=True)
+            output.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(json.dumps({key: report[key] for key in ("status", "case_count", "problem_schemas", "checks")}, indent=2))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

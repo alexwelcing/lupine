@@ -1,0 +1,45 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    ".cache/mpea-metadata-audit/tests",
+    "-p",
+    "test_mpea_metadata_summary.py",
+    "-v"
+  ],
+  "exit_code": 0,
+  "prior_evidence_preserved": "reports/engineering-v1.json and reports/tests-v1.txt in the same scratch lane",
+  "schema": "lupine.discovery.public_metadata_summary.engineering.v1",
+  "scope": {
+    "experimental_cache_read": false,
+    "network_used": false,
+    "public_row_receipt_read": false,
+    "scientific_claim": false,
+    "synthetic_fixtures_only": true
+  },
+  "source_sha256_after": {
+    ".cache/mpea-metadata-audit/docs/mpea-metadata-summary.md": "41a84b88c14bee20fbc5740cc602f645ef4a895d4beef20cf4478e29f5889a57",
+    ".cache/mpea-metadata-audit/scripts/mpea_metadata_summary.py": "f19fc6804e6ff0a224c5127598eb20755f802b404a9eb8f5effe0f417b1e2b54",
+    ".cache/mpea-metadata-audit/tests/test_mpea_metadata_summary.py": "2a440073d86694d723eae222d017617075e1d177f0c3e5abd7a5b63f4bc8a3a5",
+    "docs/mpea-column-mapping-v1.json": "812255e53cceec8c66bd2a4b11d5d1e556941a053c888a7970cf2e3ec6728f97",
+    "reports/mpea-header-labels-v1.json": "70f50fa99db6b39b769be392ec1c64c655f8f32d7587f04f522e6a794c4accee",
+    "scripts/mpea_row_metadata.py": "d50ce1cf06761cd080ca0fcc6516c07ef71e0a4106bba73660642c846915e33b",
+    "scripts/mpea_row_scanner.py": "8aec58a1a48c173a0750137daf320d22abe04398108a74567c28ed7f2a093775"
+  },
+  "source_sha256_before": {
+    ".cache/mpea-metadata-audit/docs/mpea-metadata-summary.md": "41a84b88c14bee20fbc5740cc602f645ef4a895d4beef20cf4478e29f5889a57",
+    ".cache/mpea-metadata-audit/scripts/mpea_metadata_summary.py": "f19fc6804e6ff0a224c5127598eb20755f802b404a9eb8f5effe0f417b1e2b54",
+    ".cache/mpea-metadata-audit/tests/test_mpea_metadata_summary.py": "2a440073d86694d723eae222d017617075e1d177f0c3e5abd7a5b63f4bc8a3a5",
+    "docs/mpea-column-mapping-v1.json": "812255e53cceec8c66bd2a4b11d5d1e556941a053c888a7970cf2e3ec6728f97",
+    "reports/mpea-header-labels-v1.json": "70f50fa99db6b39b769be392ec1c64c655f8f32d7587f04f522e6a794c4accee",
+    "scripts/mpea_row_metadata.py": "d50ce1cf06761cd080ca0fcc6516c07ef71e0a4106bba73660642c846915e33b",
+    "scripts/mpea_row_scanner.py": "8aec58a1a48c173a0750137daf320d22abe04398108a74567c28ed7f2a093775"
+  },
+  "sources_unchanged": true,
+  "status": "PASS",
+  "test_count": 18,
+  "test_log_sha256": "b999f629193904cf87d885a4c3a3581a3b81e11233dcd43e72a20a8266c7c53f"
+}

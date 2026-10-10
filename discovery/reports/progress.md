@@ -3,6 +3,37 @@
 The current goal and ordered backlog are in `../GOAL.md`. Append concise entries
 with artifacts, actual checks, scientific implications, and the next action.
 
+## 2026-10-10 19:37 UTC — actual metadata preserved; release integration tested
+
+- Verified ec32247 remote SHA and all four CI jobs before two fixed-cache G15B
+  executions. Both preserved all 1,545 records and matched 603,510 metadata bytes.
+  The original formula recognizer accepts zero records; 264 exact DOI-token
+  groups do not establish independent studies. Performance values and their
+  presence/missingness remain opaque. `mpea-row-metadata-readiness-v1.md` and
+  immutable reproduction/metadata receipts preserve the actual result.
+- Published-receipt summarization passes 18 focused checks and produces identical
+  184,252-byte summaries through the promoted CLI. Separate cited source-format
+  research, independently refetched by root, explains a plausible ASCII-space
+  grammar mismatch and max-fraction rounded ratios. It does not establish v9
+  producer lineage or authorize silently changing the original grammar.
+- Integrated independently reviewed exact-wheel/source retention and CI upload,
+  preserving the original installed probe. Thirty-two synthetic checks pass;
+  archive mutation/export-subst, late output parents, incomplete receipts and
+  unsafe cleanup findings were corrected and their failures retained. This
+  evidence uses inert wheels; actual retention follows the committed snapshot.
+- Actual full suite:651 Python tests pass in94.631s, with197 unchanged source
+  hashes. Fresh actual axiom audit passes125 statements/nine modules and the
+  committed-receipt diff passes. CI now enforces that diff; four Git fixtures
+  reject stale receipts. Static and independent review correct fresh-attempt
+  reproduction instructions without rerunning or changing historical science.
+- Owner/checkpoint:root publishes this tested increment, verifies remote SHA and
+  all four jobs, runs real retained-wheel smoke and verifies CI artifact bytes.
+  G15C engineer-reviewer owns separate synthetic formula amendment review;
+  protocol delegate drafts archival recovery without targets. Next: freeze and
+  verify the reviewed supplemental grammar before actual formula processing,
+  then settle the scientific protocol. No scientific superiority or physical
+  validity claim advances. See `metadata-release-verification-v1.md`.
+
 ## 2026-10-10 19:15 UTC — reviewed target-opaque row-metadata freeze
 
 - Verified published `b899fc6995f6dab9bfbb5eade958371e1033ee11` and

@@ -26,7 +26,13 @@ jobs:
       - run: lupine-discovery verify examples/abstract.json examples/abstract.certificate.json
       - run: lupine-discovery replay examples/abstract.json examples/abstract.outcomes.json
       - run: python scripts/runtime_manifest.py
-      - run: python scripts/package_smoke.py
+      - run: python scripts/package_smoke.py --retain-directory .cache/release-artifacts
+      - uses: actions/upload-artifact@v4
+        with:
+          name: discovery-release-python-${{ matrix.python }}
+          path: discovery/.cache/release-artifacts
+          if-no-files-found: error
+          retention-days: 90
   lean:
     runs-on: ubuntu-latest
     timeout-minutes: 45
@@ -42,6 +48,7 @@ jobs:
           lake --wfail build
           python3 -m unittest test_audit_axioms -v
           python3 audit_axioms.py
+          git diff --exit-code -- AXIOMS.txt theorem-inventory.json
 
   browser:
     runs-on: ubuntu-latest

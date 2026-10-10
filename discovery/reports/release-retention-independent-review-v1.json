@@ -1,0 +1,105 @@
+{
+  "author_test_count": 17,
+  "checks": [
+    "Installed inert wheel bytes equal retained artifact bytes and receipt hash",
+    "Every archive member equals original Git blob; exact project/workflow copyset",
+    "Git SHA-1 and SHA-256 repositories; standalone project layout",
+    "Ignored cache exclusion and tracked links/cache rejection",
+    "Git export-ignore rejection and export-subst plus hidden worktree replacement rejection",
+    "Assume-unchanged/skip-worktree byte comparison",
+    "Archive and wheel mutations reject completion",
+    "Existing files/directories and symlinked ancestors preserved",
+    "Failed copy or fsync leaves no completion marker",
+    "Late optional-output parent replacement rejects publication",
+    "Directory-FD cleanup preserves unrelated same-basename outside sentinel",
+    "Default dirty development build path and original PROBE bytes preserved"
+  ],
+  "elapsed_seconds": 9.812222,
+  "executions": [
+    {
+      "count": 17,
+      "exit_code": 0,
+      "role": "author",
+      "seconds_reported": "4.841",
+      "status": "PASS",
+      "test_file": ".cache/release-artifacts/tests/test_package_retention.py"
+    },
+    {
+      "count": 15,
+      "exit_code": 0,
+      "role": "independent",
+      "seconds_reported": "4.330",
+      "status": "PASS",
+      "test_file": ".cache/release-artifacts/review/test_package_retention_review.py"
+    }
+  ],
+  "independent_test_count": 15,
+  "network_accessed": false,
+  "no_remaining_blocker_in_tested_scope": true,
+  "preserved_prior_logs": {
+    "tests-after-fd-fix.txt": "720d5bc098597188c68e2fc578b11c63045111fc9d6e9ec9f8ae959af1ac7390",
+    "tests-cleanup-regression-before-fix.txt": "84e3842ae3d3f9a760e13dc025db2e51ca8e07f9e44b70cb35ffdcfb1688f8b6",
+    "tests-first.txt": "69f33784de0f5c6f4c577bd83aca544bce4dc96dd7f50411fccefa5ce539320e"
+  },
+  "publication_state": "Scratch implementation and tests only; parent must promote/freeze and execute real smoke before any retained-release claim.",
+  "real_package_installed": false,
+  "real_wheel_built": false,
+  "resolved_findings": [
+    {
+      "id": "archive-binding",
+      "origin": "parent",
+      "resolution": "Bind tar bytes at creation and compare after validation/probe/copy."
+    },
+    {
+      "id": "export-substitution",
+      "origin": "independent",
+      "resolution": "Verify streamed Git blob identity rather than matching only hidden worktree bytes."
+    },
+    {
+      "id": "optional-output-parent",
+      "origin": "secondary independent reviewer",
+      "resolution": "Revalidate output after smoke; publish through no-overwrite sink."
+    },
+    {
+      "id": "partial-completion-marker",
+      "origin": "independent",
+      "resolution": "Flush complete temporary receipt before atomic no-overwrite publication."
+    },
+    {
+      "id": "cleanup-parent-replacement",
+      "origin": "independent",
+      "resolution": "Use captured directory FD for temp creation, link and cleanup; preserve unrelated outside sentinel."
+    },
+    {
+      "id": "overbroad-copyset-claim",
+      "origin": "independent",
+      "resolution": "Documentation limits exclusions to defined path components, ignored/untracked inputs and unrelated projects; no general secret detector claim."
+    }
+  ],
+  "schema": "lupine.discovery.package-retention-independent-review.v1",
+  "scientific_source_opened": false,
+  "scope": "Synthetic artifact custody and default-path checks only; inert wheel bytes and stubbed install/probe, not a real wheel build, installed-package check, retained release, scientific rerun, or adversarial multi-process filesystem security proof.",
+  "source_files_after": {
+    "docs/release-artifact-retention.md": "52c54e521256e13e4030cc53f3aba474364f4ed87e23fdcef6a71e3c44ffb366",
+    "scripts/package_smoke.py": "5809a810ad15c48181979c482fbd793d5eb1bd3c6c08c4f98fc2a552c9a0ac05",
+    "support/scripts/runtime_manifest.py": "84e8f76db5969c0f41d0136c5ba76d001d91319fa007a2aa6874d9888ca74231",
+    "tests/test_package_retention.py": "fbf1cfa6418ba9a75ed6d6618e8e135c44da05a63d1556b97dcbad01a68a4d87",
+    "tests/test_package_retention_review.py": "f8cbb72eef3de8c591a5340497394b63d4d513dd8253e1f1e9d55e59a1f10904",
+    "unchanged_main/scripts/package_smoke.py": "7ae3b7f1a2fcc8471c38604887e8e5bc43932155012eec9b036a395cec47fb3e"
+  },
+  "source_files_before": {
+    "docs/release-artifact-retention.md": "52c54e521256e13e4030cc53f3aba474364f4ed87e23fdcef6a71e3c44ffb366",
+    "scripts/package_smoke.py": "5809a810ad15c48181979c482fbd793d5eb1bd3c6c08c4f98fc2a552c9a0ac05",
+    "support/scripts/runtime_manifest.py": "84e8f76db5969c0f41d0136c5ba76d001d91319fa007a2aa6874d9888ca74231",
+    "tests/test_package_retention.py": "fbf1cfa6418ba9a75ed6d6618e8e135c44da05a63d1556b97dcbad01a68a4d87",
+    "tests/test_package_retention_review.py": "f8cbb72eef3de8c591a5340497394b63d4d513dd8253e1f1e9d55e59a1f10904",
+    "unchanged_main/scripts/package_smoke.py": "7ae3b7f1a2fcc8471c38604887e8e5bc43932155012eec9b036a395cec47fb3e"
+  },
+  "source_files_unchanged": true,
+  "status": "PASS",
+  "test_log": {
+    "path": ".cache/release-artifacts/review/tests-final.txt",
+    "sha256": "9d5ca424a4b6d8ca3f7bf0451d2cc573186ed69df24599f92a229e5a6ec4b82b"
+  },
+  "total_test_count": 32
+}

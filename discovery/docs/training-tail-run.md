@@ -21,12 +21,21 @@ cryptographic proof that the log was produced honestly.
 
 ## Create the source-bound engineering receipt
 
-Run this from `discovery/` after independent source review. It runs only synthetic
-tests, records source hashes before and after, and writes immutable evidence.
-Use a new suffix for a new attempt; do not overwrite previous evidence. This
-recipe requires the existing NumPy installation but reads no JARVIS input.
+First follow the [clean environment recipe](reproduction-environment.md), which
+defines `LUPINE_REPRO_ATTEMPT` and verifies the frozen numerical requirements.
+Run all commands from the same `discovery/` checkout and activated environment.
+The package must be installed from this checkout with `python -m pip install -e .`;
+a different installed copy fails the source-origin checks.
 
-```python
+After independent source review, the following command runs only synthetic tests,
+records source hashes before and after, and writes evidence with fresh names.
+It reads no JARVIS input. The verifier requires its receipt and log directly in
+`reports/`; these two engineering files contain no per-record scientific data.
+Leave the published `*-v1` evidence untouched. A failed or interrupted attempt
+keeps its artifacts: choose a new attempt token instead of overwriting them.
+
+```sh
+python - <<'PY'
 import hashlib
 import os
 from pathlib import Path
@@ -37,6 +46,14 @@ import sys
 sys.path.insert(0, "scripts")
 import training_tail as tail
 
+attempt = os.environ["LUPINE_REPRO_ATTEMPT"]
+if not re.fullmatch(r"[A-Za-z0-9_-]+", attempt):
+    raise SystemExit("Use a nonempty ASCII letter/digit/hyphen/underscore attempt token.")
+log_path = tail.ROOT / f"reports/training-tail-engineering-tests-{attempt}.txt"
+receipt_path = tail.ROOT / f"reports/training-tail-engineering-validation-{attempt}.json"
+for path in (log_path, receipt_path):
+    if path.exists() or path.is_symlink():
+        raise SystemExit("Evidence path already exists; choose a fresh attempt token.")
 identity = tail.protocol_identity()
 tests = ["tests/test_training_tail.py", "tests/test_training_tail_review.py"]
 names = list(identity["implementation_sha256"]) + tests
@@ -53,7 +70,6 @@ environment["PYTHONHASHSEED"] = "0"
 run = subprocess.run(command, cwd=tail.ROOT, env=environment,
                      stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 after = snapshot()
-log_path = tail.ROOT / "reports/training-tail-engineering-tests-v1.txt"
 log_sha = tail.immutable_bytes(log_path, run.stdout)
 summary = re.search(
     rb"(?:^|\n)Ran ([0-9]+) tests? in [0-9.]+s\n\nOK\n?\Z", run.stdout
@@ -76,11 +92,11 @@ receipt = {
         "log_sha256": log_sha,
     },
 }
-receipt_path = tail.ROOT / "reports/training-tail-engineering-validation-v1.json"
 tail.write_json(receipt_path, receipt)
 if not ok:
     raise SystemExit("Engineering checks failed; evidence preserved. No real fit.")
 print(tail.verify_engineering(receipt_path, identity))
+PY
 ```
 
 The gate binds the runner, original neighbor helper, imported serialization
@@ -90,15 +106,42 @@ passing unittest summary with the declared count; words such as “skipped” in
 legitimate test method names are harmless. An actual skipped-test summary,
 earlier nested `OK`, wrong count, incomplete run or changed source is rejected.
 
+## Obtain the pinned training inputs
+
+For an end-to-end reproduction, complete the
+[fresh constrained workflow](constrained-reproduce.md) first. It defines
+`LUPINE_CONSTRAINED_WORKDIR` and rebuilds the source custody artifacts from the
+pinned archive. Pass its **`artifacts/` subdirectory** as the training input cache:
+
+```sh
+export LUPINE_TRAINING_INPUT_CACHE="${LUPINE_CONSTRAINED_WORKDIR:?Complete the fresh constrained workflow first}/artifacts"
+```
+
+This cache must contain the original pinned `metadata.json`, `train.json`,
+`source-receipt.json` and `custody-receipt.json`. The training runner verifies their
+exact hashes; it does not accept the workflow directory itself, a ZIP-only cache,
+or `freeze.json` as a substitute. Do not populate the fresh cache by copying old
+processed labels or prediction artifacts. A hash mismatch is `BLOCKED_INPUT`,
+not permission to update the frozen input hashes.
+
+The constrained workflow acquires target-bearing source bytes, builds the
+original calibration/freeze, and replays the original evaluation. It is **not a
+training-only operation**. The restriction on original calibration/evaluation
+reads below applies to the separate training runner. A verified existing cache
+may instead supply the same four pinned inputs; disclose that custody-artifact
+reuse rather than claiming they were rebuilt in this attempt. Historical source
+reuse cannot create newly untouched calibration or evaluation labels.
+
 ## Execute the two fresh processes
 
 After review and the passing engineering receipt, run:
 
 ```sh
+export LUPINE_TRAINING_WORKDIR=".cache/training-tail/jarvis-training-tail-v1-${LUPINE_REPRO_ATTEMPT:?Set a fresh attempt token}"
 python scripts/training_tail.py run \
-  --input-cache .cache/constrained/jarvis-gap-formation-v1-format-compat \
-  --output-dir .cache/training-tail/jarvis-training-tail-v1-attempt-001 \
-  --engineering-validation reports/training-tail-engineering-validation-v1.json
+  --input-cache "${LUPINE_TRAINING_INPUT_CACHE:?Set the verified artifacts directory}" \
+  --output-dir "$LUPINE_TRAINING_WORKDIR" \
+  --engineering-validation "reports/training-tail-engineering-validation-${LUPINE_REPRO_ATTEMPT}.json"
 ```
 
 The output directory must be new and resolve beneath `discovery/.cache/training-tail/`.
@@ -147,6 +190,17 @@ metrics, gates and selection must match. Raw float64-only differences are
 reported separately; they do not silently alter the rational decision outputs.
 Machine resource costs are excluded from the scientific-result digest.
 
+The published historical run completed with `NO_GO_MODEL_IMPROVEMENT`, no selected
+model, and scientific SHA-256
+`60cbe9c1d8d4a4b6fe5810765dd9cd5f31f4fe5ac21c9e83e4e802c14fcd0656`.
+The wrapper compares the two new processes with each other; it does **not** accept
+an expected historical digest argument. Compare the completed new
+`reproduction.json` decision's `scientific_result_sha256` with that value before
+calling the result a reproduction of the historical scientific output. Preserve
+and investigate a mismatch; do not silently replace the reference. The complete
+receipt bytes need not match: attempt paths, engineering logs, installation
+identity and measured resource costs belong to the new execution.
+
 `GO_DESIGN_FRESH_PROTOCOL` means that one fixed ridge configuration passed all
 predeclared requirements for both targets, including the numerical sensitivity
 guard, in a complete reproduced development run. It permits preparing a new
@@ -164,3 +218,5 @@ neighbor tables and coefficients inside the ignored experiment cache; do not
 copy raw target tables into a public result. Pooled OOF residuals are model-selection
 evidence, **not exchangeable calibration data or an unbiased independent test**.
 Neither exact arithmetic nor a source hash removes that limitation.
+The compact historical dashboard is pinned to the published receipts. A new
+attempt does not authorize replacing those receipts or the dashboard resource.

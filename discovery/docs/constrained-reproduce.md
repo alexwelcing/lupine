@@ -1,19 +1,29 @@
 # Reproduce the constrained benchmark in one command
 
 Use a checkout containing the frozen JARVIS protocol, its committed source-format
-amendment, and the implementation. From the `discovery` directory, install the
-package into the Python environment that will run the workflow:
+amendment, and the implementation. Run from `discovery/`. For the complete
+constrained-then-training reproduction, first follow the
+[clean environment recipe](reproduction-environment.md) and keep that activated
+environment and its fresh `LUPINE_REPRO_ATTEMPT` token. The constrained workflow
+alone supports Linux and Python 3.11 or newer; the frozen training experiment has
+the narrower numerical requirements described there.
+
+Install the checkout into the active environment if not already installed, then
+choose a fresh workdir and require the historical scientific digest:
 
 ```sh
 python -m pip install -e .
+export LUPINE_CONSTRAINED_WORKDIR=".cache/reproduce-jarvis-${LUPINE_REPRO_ATTEMPT:?Set a fresh attempt token}"
 python scripts/reproduce_constrained.py \
-  --workdir .cache/reproduce-jarvis-001 \
+  --workdir "$LUPINE_CONSTRAINED_WORKDIR" \
+  --expected-scientific-digest cd6308600c90b431f8ce22b9aeee196ab747e4e8e84ca18809120043dc0ba900 \
   --project-dashboard
 ```
 
-Python 3.11 or newer and a Linux environment are supported for this workflow.
 The source adapter records Linux peak memory and uses the standard-library
 `resource` module. No new DFT, paid compute, or publication step is involved.
+This command acquires target-bearing source bytes, freezes calibration and
+predictions, and replays evaluation targets. It is not the training-only runner.
 
 `--workdir` is required and must name a **new directory beneath this checkout's
 `.cache`**. The workflow refuses existing directories, including empty ones.
@@ -22,13 +32,17 @@ and lets the engineering receipt bind its log inside the source tree as required
 by the existing replay verifier. A stopped run remains available for inspection;
 choose a new directory for another attempt.
 
-To avoid downloading the same pinned source again, reuse only its raw ZIP and,
-optionally, its extracted member:
+To avoid downloading the same pinned source again, use the following **alternative
+instead of the command above**, with a still-new workdir. Set
+`LUPINE_RAW_SOURCE_CACHE` to a local directory holding the verified pinned archive;
+this may be an earlier constrained workflow's `artifacts/` directory. Only its
+raw ZIP and, optionally, extracted member are reused:
 
 ```sh
 python scripts/reproduce_constrained.py \
-  --workdir .cache/reproduce-jarvis-002 \
-  --source-cache .cache/constrained/jarvis-gap-formation-v1-format-compat \
+  --workdir "${LUPINE_CONSTRAINED_WORKDIR:?Set a fresh workdir}" \
+  --source-cache "${LUPINE_RAW_SOURCE_CACHE:?Set the existing raw source cache}" \
+  --expected-scientific-digest cd6308600c90b431f8ce22b9aeee196ab747e4e8e84ca18809120043dc0ba900 \
   --project-dashboard
 ```
 
@@ -37,6 +51,7 @@ raw filenames; it never copies labels, metadata, predictions, calibration,
 freezes, or reports. The existing acquisition command verifies the pinned ZIP
 size/MD5 and extracted-member agreement before any target custody pass. A
 corrupt raw cache stops the run; it does not authorize a different dataset.
+Record this as reused source bytes, not a new download or new scientific sample.
 
 ## What the command does
 
@@ -67,15 +82,10 @@ acquisition and engineering verification have their own recorded stage logs.
 
 ## Compare a scientific result
 
-Provide a previously recorded **scientific** digest when exact reproduction is
-the goal:
-
-```sh
-python scripts/reproduce_constrained.py \
-  --workdir .cache/reproduce-jarvis-003 \
-  --source-cache .cache/constrained/jarvis-gap-formation-v1-format-compat \
-  --expected-scientific-digest cd6308600c90b431f8ce22b9aeee196ab747e4e8e84ca18809120043dc0ba900
-```
+The commands above request comparison with the published **scientific** digest.
+Omitting `--expected-scientific-digest` performs the workflow without making that
+comparison; a successful execution alone then does not establish a match with
+the historical result.
 
 The actual and expected digests are always preserved in
 `scientific-digest-comparison.json`. A mismatch stops with its artifacts intact;
@@ -85,19 +95,11 @@ all 100 random-seed curves, and scientific gate status/checks. Run timing, local
 paths and engineering-log byte identity are excluded from that digest. Full
 report byte hashes still identify the particular run and may differ.
 
-For an existing successfully verified freeze and a freshly generated engineering
-receipt, the direct replay command is:
-
-```sh
-python scripts/constrained_replay.py \
-  .cache/reproduce-jarvis-001/artifacts/freeze.json \
-  --output .cache/reproduce-jarvis-001/artifacts/constrained-full.json \
-  --engineering-validation .cache/reproduce-jarvis-001/engineering-validation.json
-```
-
-Use the workflow for a fresh run so the receipt actually binds the executing
-sources and test log. The complete local report includes revealed raw targets;
-publish the compact projection and provenance rather than placing it in Git.
+Use the workflow for a fresh run so its engineering receipt binds the executing
+sources and test log. Do not rerun the direct replay command into its existing
+`artifacts/constrained-full.json`; the workflow already created that immutable
+report. The complete local report includes revealed raw targets; publish the
+compact projection and provenance rather than placing it in Git.
 
 Key artifacts are:
 
@@ -105,6 +107,7 @@ Key artifacts are:
 | --- | --- |
 | `workflow-start.json` | Protocol/amendment identities, source bindings, environment and requested comparison |
 | `engineering-validation.json` | Actual successful test command, source hashes and preserved log hash |
+| `artifacts/metadata.json`, `train.json`, `source-receipt.json`, `custody-receipt.json` | Four exact pinned inputs for the subsequent training-only runner; all four files are under `artifacts/` |
 | `artifacts/freeze.json` | Frozen predictions/calibration and unopened-target seal |
 | `artifacts/constrained-full.json` | Complete policy/reveal audit and all scientific results; keep local |
 | `scientific-result.json` | Verified result identities and gate statuses without bulk reveal events |
@@ -112,6 +115,13 @@ Key artifacts are:
 | `derived/constrained-dashboard.json` | Optional compact derived view; the resource copy is also under `derived/` |
 | `artifacts/constrained-full.json.gz` | Optional deterministic compression of this run's complete report bytes |
 | `workflow-result.json` or `workflow-failed.json` | Completion or stopping reason with all preceding evidence retained |
+
+After successful completion, the [training-only recipe](training-tail-run.md)
+uses `--input-cache "$LUPINE_CONSTRAINED_WORKDIR/artifacts"`. That runner verifies
+the four fixed input hashes and reads neither the co-located calibration labels
+nor evaluation targets. It creates its own new output directory and separately
+requires a fresh training engineering receipt; the constrained engineering
+receipt is not interchangeable with it.
 
 The command explicitly selects `--source-format nonfinite-sentinels` for the
 existing acquisition CLI. This is the narrow, committed

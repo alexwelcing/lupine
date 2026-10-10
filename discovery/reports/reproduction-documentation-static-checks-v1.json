@@ -1,0 +1,66 @@
+{
+  "cached_dataset_or_targets_read": false,
+  "documents": [
+    {
+      "promotion_path": "docs/constrained-reproduce.md",
+      "python_blocks_ast_checked": 0,
+      "relative_links_checked": [
+        "reproduction-environment.md",
+        "training-tail-run.md",
+        "constrained-format-amendment.md",
+        "constrained-benchmark-protocol.md"
+      ],
+      "scratch_path": ".cache/release-reproduction-docs/docs/constrained-reproduce.md",
+      "sha256": "0cf3986a01a8f7f86a5f13a87ce9ecf68f078df2f74b3958e88d6d7801df0e75",
+      "shell_blocks_syntax_checked": 2
+    },
+    {
+      "promotion_path": "docs/reproduction-environment.md",
+      "python_blocks_ast_checked": 2,
+      "relative_links_checked": [
+        "../pyproject.toml",
+        "../reports/training-tail-pass-1-v1.json",
+        "constrained-reproduce.md",
+        "training-tail-run.md",
+        "../formal/lean-toolchain"
+      ],
+      "scratch_path": ".cache/release-reproduction-docs/docs/reproduction-environment.md",
+      "sha256": "60ecf3389b81ab2440d48642bd7d83723135e3e1442eb9993c995fd895951a6e",
+      "shell_blocks_syntax_checked": 2
+    },
+    {
+      "promotion_path": "docs/training-tail-run.md",
+      "python_blocks_ast_checked": 1,
+      "relative_links_checked": [
+        "training-tail-protocol-v1.md",
+        "../scripts/training_tail.py",
+        "../tests/test_training_tail.py",
+        "../tests/test_training_tail_review.py",
+        "reproduction-environment.md",
+        "constrained-reproduce.md"
+      ],
+      "scratch_path": ".cache/release-reproduction-docs/docs/training-tail-run.md",
+      "sha256": "19341333e85dd0a96cabba741330a09620980834503bf72164cd94c067f1b188",
+      "shell_blocks_syntax_checked": 3
+    }
+  ],
+  "downloads_performed": false,
+  "environment_installation_performed": false,
+  "existing_scientific_results_changed": false,
+  "main_tree_edits": false,
+  "schema": "lupine.discovery.reproduction_documentation_review.v1",
+  "scientific_execution_performed": false,
+  "scope": "Scratch documentation only; shell syntax and Python AST checks execute no recipe bodies.",
+  "source_sha256": {
+    "docs/constrained-reproduce.md": "8d7bd74f4763cbea278d7c0ebdf3bf90b4475f8b02b083591f6c640cbd0198f5",
+    "docs/training-tail-run.md": "9d3af7b474e8e005a03cf39c066621aab49d99941b18de5dadb1ce08b9abc8cd",
+    "formal/lean-toolchain": "651c8accb402b0c071cd336e9d3dc0a55516b1bfb434ddc4801f14936785b1d2",
+    "pyproject.toml": "a73eec989447b99fec48de193218a0750079eeb5973406c53d7a0dc840d9d90f",
+    "reports/training-tail-pass-1-v1.json": "649b54cdc6ba5de1bbac4b27f788da3e1b0a8febf9266463050b5d2f084c6348",
+    "reports/training-tail-pass-2-v1.json": "5c121c0e3b1c954b6b69e364dce3c22cf9acaf89630905c1c35d4225510c9fbd",
+    "reports/training-tail-reproduction-v1.json": "98615bde3ef4c1ad24a1693d56c2252152a8767ea52ec9b44a0d4dcde3101c93",
+    "scripts/reproduce_constrained.py": "74effa62aa70ccb9177ac859d21b17c08f709192c565cc85ce128605e3b50ea4",
+    "scripts/training_tail.py": "abb5782f3c135d54d36ac52d37edee329f9a8c3f310d15a30305fc3383276b43"
+  },
+  "status": "STATIC_CHECKS_PASSED_INDEPENDENT_REVIEW_PENDING"
+}

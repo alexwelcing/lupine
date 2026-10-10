@@ -1,0 +1,12 @@
+{
+  "status": "WORKFLOW_GUARD_AND_GIT_FIXTURES_PASSED",
+  "theorem_count": 125,
+  "module_count": 9,
+  "fixture_exit_codes": {
+    "matching": 0,
+    "stale_axioms": 1,
+    "stale_inventory": 1,
+    "both_stale": 1
+  },
+  "receipt_sha256": "b606fc535adf8e370638c2949bdb23e885684e9ac77d24024244752bd055bb53"
+}
