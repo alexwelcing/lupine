@@ -1,0 +1,19 @@
+{
+  "scope": "Only independent helper imports and temporary roots change for main layout. Production source and test assertions are unchanged. Initial path failures remain in main-layout-history.",
+  "files": [
+    {
+      "original_path": ".cache/mpea-study-custody/review_store/test_stage_store_review.py",
+      "current_path": "tests/test_mpea_stage_store_review.py",
+      "original_sha256": "d061d506cfebf72773662ea7af03c7019f68e9114a4d54cb17058fc57769cbb4",
+      "current_sha256": "98fd805edca6dd8b1351c37f5d8014c57b3ac382fead9c262ba902836135e264",
+      "unified_diff": "--- .cache/mpea-study-custody/review_store/test_stage_store_review.py\n+++ tests/test_mpea_stage_store_review.py\n@@ -28,7 +28,8 @@\n \n class StageStoreReview(unittest.TestCase):\n     def setUp(self):\n-        self.temp = tempfile.TemporaryDirectory(prefix='synthetic-', dir=REVIEW)\n+        storemod.WORKSPACE.mkdir(parents=True, exist_ok=True)\n+        self.temp = tempfile.TemporaryDirectory(prefix='synthetic-', dir=storemod.WORKSPACE)\n         self.addCleanup(self.temp.cleanup)\n         self.root = Path(self.temp.name)\n         self.attempts = self.root / 'attempts'\n"
+    },
+    {
+      "original_path": ".cache/mpea-study-custody/review_driver/test_fixture_driver_review.py",
+      "current_path": "tests/test_mpea_fixture_driver_review.py",
+      "original_sha256": "3eac07bce8fd06ab4ed0f6c33c3c7d76826050dc6d10e314af8afacf4be213bf",
+      "current_sha256": "a15d70db1369fb50a20c30398c7cb5e103fef20df5e0d3200e47a91b539ec526",
+      "unified_diff": "--- .cache/mpea-study-custody/review_driver/test_fixture_driver_review.py\n+++ tests/test_mpea_fixture_driver_review.py\n@@ -13,13 +13,14 @@\n \n HERE=Path(__file__).resolve().parent\n sys.path.insert(0,str(HERE))\n-from constructed_case import d,make_case\n+from mpea_review_constructed_case import d,make_case\n \n \n class DriverReview(unittest.TestCase):\n     @classmethod\n     def setUpClass(cls):\n-        cls.temp=tempfile.TemporaryDirectory(prefix='constructed-',dir=HERE)\n+        d.storemod.WORKSPACE.mkdir(parents=True, exist_ok=True)\n+        cls.temp=tempfile.TemporaryDirectory(prefix='constructed-',dir=d.storemod.WORKSPACE)\n         cls.root=Path(cls.temp.name)\n         cls.attempts=cls.root/'attempts'\n         cls.patcher=patch.object(d.storemod,'ATTEMPTS',cls.attempts);cls.patcher.start()\n@@ -275,7 +276,7 @@\n \n     def test_two_fresh_processes_reproduce_all_eight_stage_scientific_digests(self):\n         child=('import sys,json;from pathlib import Path;sys.path.insert(0,sys.argv[1]);'\n-               'from constructed_case import d,make_case;d.storemod.ATTEMPTS=Path(sys.argv[2]);'\n+               'from mpea_review_constructed_case import d,make_case;d.storemod.ATTEMPTS=Path(sys.argv[2]);'\n                'r=d.run_fixture(make_case(),sys.argv[3]);'\n                'print(json.dumps(r.store.scientific_digests()));r.store.close()')\n         answers=[]\n"
+    }
+  ]
+}

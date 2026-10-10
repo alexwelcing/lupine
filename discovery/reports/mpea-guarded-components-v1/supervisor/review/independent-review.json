@@ -1,0 +1,47 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    ".cache/mpea-study-supervisor/review",
+    "-p",
+    "test_supervisor_review.py",
+    "-v"
+  ],
+  "draft_findings_resolved": [
+    "drain unread terminal socket tail before accepting clean completion",
+    "clean same-session descendants in separate process groups"
+  ],
+  "duration_seconds_from_test_log": "16.911",
+  "executed_source_sha256": {
+    ".cache/mpea-study-supervisor/README.md": "1880b6d59102a02c9385023a50c516a8b18554f1c0933b92aedbb9128965d481",
+    ".cache/mpea-study-supervisor/review/review_child.py": "927ea9130d167a82e7d3bb7e76fa4d2066f495a32c8494424708f54522eb72a3",
+    ".cache/mpea-study-supervisor/review/test_supervisor_review.py": "786c58c311eeda346b46ae1e241f13ede1dd6131138969f1f6b147317962ec42",
+    ".cache/mpea-study-supervisor/supervisor.py": "b7e325655e92a4bcc1b8f222fd40482df7808db29d1a80531323ee19111fc606"
+  },
+  "execution_receipt_sha256": "5802021eb7a82a82d3317ad2d73346f2977e94c5f51915c857e80fb98cef472c",
+  "final_log_sha256": "19f850b4c23ed83c9d5b7f456d2d93fed848e04e3cc0255dc49058aa533049db",
+  "next_gate": "Source-bound driver integration and a prospective operating-limit clarification before production target access.",
+  "review_sha256": "88577edf702e5ea2103ed03db56f1678ea1b8c9adc83dbacb8687fb1e74b9628",
+  "schema": "lupine.discovery.supervisor.independent_review.v1",
+  "scope": {
+    "actual_allocation_performed": false,
+    "actual_network_namespace_tested": true,
+    "actual_scientific_inputs_accessed": false,
+    "actual_user_namespace_tested": true,
+    "detached_new_session_cleanup_established": false,
+    "hostile_worker_filesystem_isolation_established": false,
+    "instantaneous_aggregate_rss_hard_cap_established": false,
+    "main_files_edited": false,
+    "registration_verified_by_supervisor": false,
+    "scientific_artifact_seals_verified_by_supervisor": false
+  },
+  "sensitive_sentinel_absent_from_logs": true,
+  "source_unchanged_during_final_run": true,
+  "status": "PASS_SYNTHETIC_COOPERATIVE_WORKER_REVIEW",
+  "tests_passed": 18,
+  "tests_skipped": 0
+}

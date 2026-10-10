@@ -1,0 +1,30 @@
+{
+  "actual_scientific_inputs_accessed": false,
+  "findings": [],
+  "independent_supervisor_review_sha256": "e12e0a7c10c1f95b433fc20980732b9db9a1693c8d687527c74497677de1fe88",
+  "initial_identity_check_sha256": "1ff9467683e1e4d9b9e5e16094665c9dfaf37d022292d21cc088f41c61be4820",
+  "inputs": {
+    ".cache/mpea-operational-addendum/mpea-t25-operational-enforcement-v1.md": {
+      "bytes": 9892,
+      "sha256": "e36e72818f92096c316df34789a35840c1e5b1561f9467561dd8787da072cf98"
+    },
+    ".cache/mpea-study-supervisor/supervisor.py": {
+      "bytes": 12599,
+      "sha256": "1dbd4a1b0e9c3f0246d23bd7670527cfa3bd69f754279aabba06e4ae464e87ab"
+    },
+    "docs/mpea-t25-archival-protocol-v1.md": {
+      "bytes": 20971,
+      "sha256": "c49047341d3932ddd67c67c9f2a04a6759c0d679bfeb96d811ba9541c0cc0378"
+    },
+    "docs/mpea-t25-implementation-contract-v1.md": {
+      "bytes": 39271,
+      "sha256": "be45b1d8db9586035cf37bd9bbb9046c065c3851b91f93386f8c68d155215af9"
+    }
+  },
+  "inputs_unchanged_during_receipt": true,
+  "main_files_edited": false,
+  "production_registration_established": false,
+  "review_sha256": "dc3b8d3869b4f51dc04efc778e3c390395c20a8f04cbeb87862eaca41e8bbb08",
+  "schema": "lupine.discovery.mpea.operational_amendment_review.v1",
+  "status": "NO_DOCUMENT_SOURCE_BLOCKER"
+}

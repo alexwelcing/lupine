@@ -1,0 +1,12 @@
+{
+  "generator": {
+    "source_sha256": "584c702041a110f8b82cfd301bc9cd4f5b732bbdb4383e9b22c83ab7d5e4e430",
+    "destination_sha256": "c0e839b1ff2ce24cc24e3c710ed7d9ebb519f19dc0ed3c09136ddf7ce849084d",
+    "changes": "Main source/spec/test paths and explicit exclusive --output destination; unchanged fixture construction."
+  },
+  "projector_doc": {
+    "source_sha256": "8148c7a2c9f016ddf68d2c43175898d1f18730efe1626f30acc0b23c66803982",
+    "destination_sha256": "c281f8ad3199600131929392272b21f480b6526eb991993f155f801d462489ff",
+    "changes": "Reviewed-status wording and portable main test command only."
+  }
+}

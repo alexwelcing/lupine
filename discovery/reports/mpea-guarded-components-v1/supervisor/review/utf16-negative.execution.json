@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-B",
+    ".cache/mpea-study-supervisor/review/test_supervisor_review.py",
+    "SupervisorReview.test_utf16_json_marker_is_rejected_as_non_utf8",
+    "-v"
+  ],
+  "exit_code": 0,
+  "source_after_sha256": "1dbd4a1b0e9c3f0246d23bd7670527cfa3bd69f754279aabba06e4ae464e87ab",
+  "source_before_sha256": "1dbd4a1b0e9c3f0246d23bd7670527cfa3bd69f754279aabba06e4ae464e87ab",
+  "source_unchanged": true,
+  "status": "NEGATIVE_CONTROL_CAPTURED",
+  "stderr_sha256": "6dbed591aa2db8fcdd221011ab2741f36e2e7c6e42fc8590cacc947c67999c7e"
+}

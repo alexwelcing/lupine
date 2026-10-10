@@ -1,0 +1,61 @@
+{
+  "command": [
+    "python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    ".cache/mpea-study-engine/tests",
+    "-p",
+    "test_mpea_study_report.py",
+    "-v"
+  ],
+  "development_findings": [
+    "An initial privacy test incorrectly rejected the integer aggregate field rows. The test was corrected to reject row arrays, while preserving the permitted aggregate count.",
+    "Parent review required explicit failure-stage summary and access guards; these were implemented before this source-bound validation.",
+    "Independent reviewer preserved three failing early-failure metadata tests against source6bb282a6: positive complete rows with zero source groups; positive captured bytes with zero captures; consumer visibility above original role rows. New source rejects these and contradictory known interpretation counts or partial sealed summaries. The three regressions pass; earlier source/receipt are retained."
+  ],
+  "elapsed_seconds": 27.956549,
+  "exit_code": 0,
+  "log_sha256": "726f8126e1fef1b3e4d5890097d0ef616c822e544b85f544b12a3b693edeb05d",
+  "non_claims": [
+    "No empirical MPEA evaluation",
+    "No actual stage or source authentication by this pure projector",
+    "No privacy or independence guarantee from aggregate reporting",
+    "No Python-to-Lean refinement",
+    "No custody access enforcement in this module"
+  ],
+  "prior_receipt_sha256": "8257d09f8b0632c042948357bd54c62b14699d116f47e61a668eb385ad1c71f1",
+  "pythonpath": null,
+  "schema": "lupine.synthetic.mpea_study_projector.author_validation.v1",
+  "scope": "Synthetic constructed study evaluations only; no actual feature, allocation, source archive, or performance-target access. No production authorization.",
+  "source_after": {
+    ".cache/mpea-protocol-design/mpea-t25-archival-protocol-v1.md": "c49047341d3932ddd67c67c9f2a04a6759c0d679bfeb96d811ba9541c0cc0378",
+    ".cache/mpea-protocol-design/mpea-t25-implementation-contract-v1.md": "be45b1d8db9586035cf37bd9bbb9046c065c3851b91f93386f8c68d155215af9",
+    ".cache/mpea-study-engine/docs/kernel-contract.md": "72bf2a61585a06d1084c307f50344392a7bb4b55f517a29d15d9369d4bfe2ca6",
+    ".cache/mpea-study-engine/docs/public-projector-contract.md": "8148c7a2c9f016ddf68d2c43175898d1f18730efe1626f30acc0b23c66803982",
+    ".cache/mpea-study-engine/scripts/mpea_study.py": "61ddfdf9e8db9cacb3f64d3310021812a96aa66c98ae4e68febb6a794352648b",
+    ".cache/mpea-study-engine/scripts/mpea_study_report.py": "a7d4650df6405df61c18d6c017af281bc2779e6b000fc391327cb5a2e11cc1f2",
+    ".cache/mpea-study-engine/tests/test_mpea_study.py": "afffbc91445f0c3cd5625da975e0e327d64771be642450c556787d51eb112eef",
+    ".cache/mpea-study-engine/tests/test_mpea_study_report.py": "3a9fb5a5c1f41266c94d1eeb997c0fadd484b6f7deb3c9a31bcb7c06e64e52fb",
+    "scripts/mpea_features.py": "b24c0f1bb62fc56794e1232f973a6020ee42a0d3765d33cb51246f3c7a3a47d9",
+    "src/lupine_discovery/decision_pool.py": "76e96165102ebe8c3785f510d169b5d393838fb144f9c4275ffdb0aa6c21f1f9",
+    "src/lupine_discovery/representation.py": "c65c0eed659025a0e41eb325e75182ac2b980c35ac43dfddaa501f4f3ddf3b9e"
+  },
+  "source_before": {
+    ".cache/mpea-protocol-design/mpea-t25-archival-protocol-v1.md": "c49047341d3932ddd67c67c9f2a04a6759c0d679bfeb96d811ba9541c0cc0378",
+    ".cache/mpea-protocol-design/mpea-t25-implementation-contract-v1.md": "be45b1d8db9586035cf37bd9bbb9046c065c3851b91f93386f8c68d155215af9",
+    ".cache/mpea-study-engine/docs/kernel-contract.md": "72bf2a61585a06d1084c307f50344392a7bb4b55f517a29d15d9369d4bfe2ca6",
+    ".cache/mpea-study-engine/docs/public-projector-contract.md": "8148c7a2c9f016ddf68d2c43175898d1f18730efe1626f30acc0b23c66803982",
+    ".cache/mpea-study-engine/scripts/mpea_study.py": "61ddfdf9e8db9cacb3f64d3310021812a96aa66c98ae4e68febb6a794352648b",
+    ".cache/mpea-study-engine/scripts/mpea_study_report.py": "a7d4650df6405df61c18d6c017af281bc2779e6b000fc391327cb5a2e11cc1f2",
+    ".cache/mpea-study-engine/tests/test_mpea_study.py": "afffbc91445f0c3cd5625da975e0e327d64771be642450c556787d51eb112eef",
+    ".cache/mpea-study-engine/tests/test_mpea_study_report.py": "3a9fb5a5c1f41266c94d1eeb997c0fadd484b6f7deb3c9a31bcb7c06e64e52fb",
+    "scripts/mpea_features.py": "b24c0f1bb62fc56794e1232f973a6020ee42a0d3765d33cb51246f3c7a3a47d9",
+    "src/lupine_discovery/decision_pool.py": "76e96165102ebe8c3785f510d169b5d393838fb144f9c4275ffdb0aa6c21f1f9",
+    "src/lupine_discovery/representation.py": "c65c0eed659025a0e41eb325e75182ac2b980c35ac43dfddaa501f4f3ddf3b9e"
+  },
+  "status": "PASS",
+  "test_count": 14,
+  "unchanged": true
+}

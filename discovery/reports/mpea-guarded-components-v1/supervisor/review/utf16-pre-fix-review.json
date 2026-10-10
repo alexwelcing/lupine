@@ -1,0 +1,11 @@
+{
+  "child_source_sha256": "292aeb050e7db326db21c7d43a68c6feed57972557736b0a8fabc71a89aac911",
+  "constructed_input": "UTF16LE START JSON body with ASCII LF delimiter, followed by valid UTF8 stage markers",
+  "observed_reason": "COMPLETE",
+  "observed_status": "COMPLETE",
+  "operational_receipt_sha256": "e3c6bcba2253bf0db0c8fab4e7a457fd2c3a3ff1924656f26ce50cad257f9d0f",
+  "scientific_data_accessed": false,
+  "source_sha256": "4ab18164c018cc473bee1fa43589a171248f58c2962c269b576520522c0d9afd",
+  "source_unchanged": true,
+  "status": "CONFIRMED_PRE_FIX_NEGATIVE_CONTROL"
+}

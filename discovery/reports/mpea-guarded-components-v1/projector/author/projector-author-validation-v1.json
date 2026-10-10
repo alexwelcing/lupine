@@ -1,0 +1,59 @@
+{
+  "command": [
+    "python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    ".cache/mpea-study-engine/tests",
+    "-p",
+    "test_mpea_study_report.py",
+    "-v"
+  ],
+  "development_findings": [
+    "An initial privacy test incorrectly rejected the integer aggregate field rows. The test was corrected to reject row arrays, while preserving the permitted aggregate count.",
+    "Parent review required explicit failure-stage summary and access guards; these were implemented before this source-bound validation."
+  ],
+  "elapsed_seconds": 94.126199,
+  "exit_code": 0,
+  "log_sha256": "a8975118ff722055977b7a1772d72575c48ad38cc108086ecb362c6404050f12",
+  "non_claims": [
+    "No empirical MPEA evaluation",
+    "No actual stage or source authentication by this pure projector",
+    "No privacy or independence guarantee from aggregate reporting",
+    "No Python-to-Lean refinement",
+    "No custody access enforcement in this module"
+  ],
+  "pythonpath": null,
+  "schema": "lupine.synthetic.mpea_study_projector.author_validation.v1",
+  "scope": "Synthetic constructed study evaluations only; no actual feature, allocation, source archive, or performance-target access. No production authorization.",
+  "source_after": {
+    ".cache/mpea-protocol-design/mpea-t25-archival-protocol-v1.md": "c49047341d3932ddd67c67c9f2a04a6759c0d679bfeb96d811ba9541c0cc0378",
+    ".cache/mpea-protocol-design/mpea-t25-implementation-contract-v1.md": "be45b1d8db9586035cf37bd9bbb9046c065c3851b91f93386f8c68d155215af9",
+    ".cache/mpea-study-engine/docs/kernel-contract.md": "72bf2a61585a06d1084c307f50344392a7bb4b55f517a29d15d9369d4bfe2ca6",
+    ".cache/mpea-study-engine/docs/public-projector-contract.md": "2e5ce9d4996fe22d54f739d2b81a072a1763ac17d81423b2259842bbc4f47ba1",
+    ".cache/mpea-study-engine/scripts/mpea_study.py": "61ddfdf9e8db9cacb3f64d3310021812a96aa66c98ae4e68febb6a794352648b",
+    ".cache/mpea-study-engine/scripts/mpea_study_report.py": "6bb282a635a165b0519f772b4976f963e981e87ed22c618969e07db2e938bcb5",
+    ".cache/mpea-study-engine/tests/test_mpea_study.py": "afffbc91445f0c3cd5625da975e0e327d64771be642450c556787d51eb112eef",
+    ".cache/mpea-study-engine/tests/test_mpea_study_report.py": "c78d5b64d712a1f457f8dd389d0bcd78620caa93b21b5add1d88e218c4557e7f",
+    "scripts/mpea_features.py": "b24c0f1bb62fc56794e1232f973a6020ee42a0d3765d33cb51246f3c7a3a47d9",
+    "src/lupine_discovery/decision_pool.py": "76e96165102ebe8c3785f510d169b5d393838fb144f9c4275ffdb0aa6c21f1f9",
+    "src/lupine_discovery/representation.py": "c65c0eed659025a0e41eb325e75182ac2b980c35ac43dfddaa501f4f3ddf3b9e"
+  },
+  "source_before": {
+    ".cache/mpea-protocol-design/mpea-t25-archival-protocol-v1.md": "c49047341d3932ddd67c67c9f2a04a6759c0d679bfeb96d811ba9541c0cc0378",
+    ".cache/mpea-protocol-design/mpea-t25-implementation-contract-v1.md": "be45b1d8db9586035cf37bd9bbb9046c065c3851b91f93386f8c68d155215af9",
+    ".cache/mpea-study-engine/docs/kernel-contract.md": "72bf2a61585a06d1084c307f50344392a7bb4b55f517a29d15d9369d4bfe2ca6",
+    ".cache/mpea-study-engine/docs/public-projector-contract.md": "2e5ce9d4996fe22d54f739d2b81a072a1763ac17d81423b2259842bbc4f47ba1",
+    ".cache/mpea-study-engine/scripts/mpea_study.py": "61ddfdf9e8db9cacb3f64d3310021812a96aa66c98ae4e68febb6a794352648b",
+    ".cache/mpea-study-engine/scripts/mpea_study_report.py": "6bb282a635a165b0519f772b4976f963e981e87ed22c618969e07db2e938bcb5",
+    ".cache/mpea-study-engine/tests/test_mpea_study.py": "afffbc91445f0c3cd5625da975e0e327d64771be642450c556787d51eb112eef",
+    ".cache/mpea-study-engine/tests/test_mpea_study_report.py": "c78d5b64d712a1f457f8dd389d0bcd78620caa93b21b5add1d88e218c4557e7f",
+    "scripts/mpea_features.py": "b24c0f1bb62fc56794e1232f973a6020ee42a0d3765d33cb51246f3c7a3a47d9",
+    "src/lupine_discovery/decision_pool.py": "76e96165102ebe8c3785f510d169b5d393838fb144f9c4275ffdb0aa6c21f1f9",
+    "src/lupine_discovery/representation.py": "c65c0eed659025a0e41eb325e75182ac2b980c35ac43dfddaa501f4f3ddf3b9e"
+  },
+  "status": "PASS",
+  "test_count": 13,
+  "unchanged": true
+}

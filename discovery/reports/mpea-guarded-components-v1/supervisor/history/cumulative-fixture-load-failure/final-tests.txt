@@ -1,0 +1,34 @@
+test_actual_network_namespace_no_external_route (test_supervisor.SupervisorTests.test_actual_network_namespace_no_external_route) ... ok
+test_complete (test_supervisor.SupervisorTests.test_complete) ... ok
+test_complete_charge_excludes_cleanup (test_supervisor.SupervisorTests.test_complete_charge_excludes_cleanup) ... ok
+test_cumulative_clock_and_prefix (test_supervisor.SupervisorTests.test_cumulative_clock_and_prefix) ... FAIL
+test_descendant_rss (test_supervisor.SupervisorTests.test_descendant_rss) ... ok
+test_descendant_separate_group_terminated (test_supervisor.SupervisorTests.test_descendant_separate_group_terminated) ... ok
+test_early_terminals (test_supervisor.SupervisorTests.test_early_terminals) ... ok
+test_failure_no_child_output (test_supervisor.SupervisorTests.test_failure_no_child_output) ... ok
+test_fast_rss_exit_peak (test_supervisor.SupervisorTests.test_fast_rss_exit_peak) ... ok
+test_final_failed_seal_terminal (test_supervisor.SupervisorTests.test_final_failed_seal_terminal) ... ok
+test_marker_errors (test_supervisor.SupervisorTests.test_marker_errors) ... ok
+test_pending_receipt_preserved (test_supervisor.SupervisorTests.test_pending_receipt_preserved) ... ok
+test_production_constants (test_supervisor.SupervisorTests.test_production_constants) ... ok
+test_receipt_no_overwrite (test_supervisor.SupervisorTests.test_receipt_no_overwrite) ... ok
+test_rss_actual_resident_pages (test_supervisor.SupervisorTests.test_rss_actual_resident_pages) ... ok
+test_startup_timeout (test_supervisor.SupervisorTests.test_startup_timeout) ... ok
+test_supervisor_sigterm (test_supervisor.SupervisorTests.test_supervisor_sigterm) ... ok
+test_unsupported_platform (test_supervisor.SupervisorTests.test_unsupported_platform) ... ok
+test_wall (test_supervisor.SupervisorTests.test_wall) ... ok
+test_worker_signal (test_supervisor.SupervisorTests.test_worker_signal) ... ok
+
+======================================================================
+FAIL: test_cumulative_clock_and_prefix (test_supervisor.SupervisorTests.test_cumulative_clock_and_prefix)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/mpea-study-supervisor/test_supervisor.py", line 26, in test_cumulative_clock_and_prefix
+    r=self.case('checkpoint_wall',wall=.20);self.assertEqual(r['reason'],'WALL_TIME_LIMIT');self.assertGreaterEqual(len(r['sealed_stages']),4);self.assertLess(len(r['sealed_stages']),8)
+                                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 3 not greater than or equal to 4
+
+----------------------------------------------------------------------
+Ran 20 tests in 20.626s
+
+FAILED (failures=1)

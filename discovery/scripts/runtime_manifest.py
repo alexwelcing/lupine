@@ -9,18 +9,18 @@ import subprocess
 
 
 def source_files(root, staged=False):
+    extensions = {".toml", ".py", ".json", ".html", ".css", ".js", ".svg"}
     if staged:
         prefix = subprocess.check_output(["git", "rev-parse", "--show-prefix"], cwd=root, text=True).strip()
         names = subprocess.check_output(["git", "ls-files", "--", "pyproject.toml", "scripts", "tests",
                                          "src/lupine_discovery"], cwd=root, text=True).splitlines()
         return {name: hashlib.sha256(subprocess.check_output(["git", "show", ":" + prefix + name], cwd=root)).hexdigest()
-                for name in sorted(names) if Path(name).suffix in {".toml", ".py", ".json", ".html", ".css", ".js", ".svg"}}
+                for name in sorted(names) if Path(name).suffix in extensions and "__pycache__" not in Path(name).parts}
     paths = [root / "pyproject.toml"]
-    paths.extend((root / "scripts").glob("*.py"))
-    paths.extend((root / "tests").glob("*.py"))
-    paths.extend(path for path in (root / "src/lupine_discovery").rglob("*")
-                 if path.is_file() and "__pycache__" not in path.parts and path.suffix in
-                 {".py", ".json", ".html", ".css", ".js", ".svg"})
+    for directory in ("scripts", "tests", "src/lupine_discovery"):
+        paths.extend(path for path in (root / directory).rglob("*")
+                     if path.is_file() and "__pycache__" not in path.parts
+                     and path.suffix in extensions)
     return {str(path.relative_to(root)): hashlib.sha256(path.read_bytes()).hexdigest()
             for path in sorted(paths)}
 

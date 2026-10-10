@@ -1,6 +1,7 @@
 """Exercise the real HTTP boundary, including separation of hidden outcomes."""
 import copy
 import json
+from pathlib import Path
 import threading
 import unittest
 from unittest.mock import patch
@@ -111,6 +112,29 @@ class ServerTests(unittest.TestCase):
         self.assertGreater(report["known_answers"]["summary"]["total"], 1)
         self.assertEqual(report["release_status"], "research_preview_not_release_certified")
         self.assertFalse(all(t["test_simultaneous_coverage"] for t in report["archived"]["tasks"]))
+
+    def test_optional_mpea_report_preserves_synthetic_scope_and_missing_state(self):
+        from importlib.resources import files
+        package = files('lupine_discovery')
+        sample = Path(__file__).resolve().parent / 'fixtures/mpea_ui/registration-unavailable.json'
+        class Resources:
+            def __init__(self, report): self.report = report
+            def joinpath(self, *parts):
+                return self.report if '/'.join(parts) == 'resources/mpea-t25-v1.json' else package.joinpath(*parts)
+        with patch('lupine_discovery.server.files', return_value=Resources(sample)):
+            status, report, _ = self.request('/api/benchmarks')
+        self.assertEqual(status, 200)
+        self.assertEqual(report['mpea_archived'], json.loads(sample.read_bytes()))
+        self.assertEqual(report['mpea_archived']['execution_kind'], 'synthetic_fixture')
+        self.assertIsNone(report['mpea_archived']['payload']['overall_verdict'])
+        with patch('lupine_discovery.server.files', return_value=Resources(sample.with_name('does-not-exist.json'))):
+            status, report, _ = self.request('/api/benchmarks')
+        self.assertEqual(status, 200)
+        self.assertNotIn('mpea_archived', report)
+        status, asset, headers = self.request('/mpea.js')
+        self.assertEqual(status, 200)
+        self.assertIn(b'window.LupineMpea', asset)
+        self.assertIn("script-src 'self'", headers['Content-Security-Policy'])
 
     def test_foreign_origin_host_and_path_escape_rejected(self):
         self.assertEqual(self.request("/api/health", headers={"Host": "untrusted.example"})[0], 403)

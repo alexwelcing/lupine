@@ -133,12 +133,20 @@ integrated and pass 88 focused plus 850 full Python tests with 216 stable hashes
 All three producer files are unchanged from independent review. No real source
 allocation or performance-target interpretation has occurred.
 
-Current owner/checkpoint: root publishes and verifies this component increment.
-Custody engineer owns persistent stages and production entry; backend owns the
-closed public report projector; supervisor engineer owns actual network isolation
-and cumulative wall/RSS enforcement; reviewers own independent scratch tests.
-Four store publication/read defects found by review are fixed in scratch with
-21 independent passing tests; guarded-driver integration remains pending.
-Next complete guarded end-to-end constructed-data reproduction, freeze the full
-registration and verify CI before actual allocation or performance decoding.
-Existing interface/proofs and every scientific negative remain unchanged.
+The next [guarded component and workbench checkpoint](reports/mpea-guarded-components-v1/README.md)
+passes **981 Python tests** with 244 stable source/resource hashes and **56
+Chromium checks** with no JavaScript errors. Independently reviewed fixture
+stages, filesystem custody, network/resource supervision and aggregate reporting
+are integrated. The optional archive view covers all policies, budgets, costs,
+unknown denominators and explicit unavailable states. Its positive/negative
+controls are synthetic; no actual MPEA report is installed or implied.
+
+Current owner/checkpoint: root publishes this tested increment and verifies its
+remote SHA and four CI jobs. Custody and registration engineers, each with an
+independent reviewer, own separate ignored production lanes. Next complete the
+registered production adapter/worker, immutable single-attempt allocation ledger
+and original/fixed-allocation fresh-process reproduction; freeze with reviewed
+source and passing CI before actual allocation or performance-target decoding.
+The source-specific arithmetic, 130 conditional proofs and every historical
+scientific negative remain unchanged. Final clean release reproduction remains
+pending the complete committed candidate.

@@ -1,0 +1,26 @@
+{
+  "exit_code": 1,
+  "wall_seconds": 38.33396161100245,
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    ".cache/mpea-workbench/run-ui.py"
+  ],
+  "source_before": {
+    "scripts/mpea_browser_checks.py": "513454dd3d06c1324684938b9d51ffabaac161e1ecc4ba89eed46f944837ade1",
+    "src/lupine_discovery/server.py": "f58f55c5284dfe34478840dca45e897c7fd1b5d5002a423876ebf228b7c7a5cb",
+    "src/lupine_discovery/web/mpea.js": "6aa2e57051469bffa3cb016c47d88cff99ee3fc5eee8d8d3a6d1ee1565e4b4ef",
+    "src/lupine_discovery/web/app.js": "20f8d73303258d218cee5e02b052b71287b09a1405d51a336aaf2d097653546d",
+    "src/lupine_discovery/web/index.html": "459a8cde729c55bd75d82f9f80347e0970612006fb7caf71076c259a746763b3",
+    "src/lupine_discovery/web/styles.css": "06255077a221a6ca33a0e8be6604a1551d20837620873ba94f2d2ad139dc3420"
+  },
+  "source_after": {
+    "scripts/mpea_browser_checks.py": "513454dd3d06c1324684938b9d51ffabaac161e1ecc4ba89eed46f944837ade1",
+    "src/lupine_discovery/server.py": "f58f55c5284dfe34478840dca45e897c7fd1b5d5002a423876ebf228b7c7a5cb",
+    "src/lupine_discovery/web/mpea.js": "6aa2e57051469bffa3cb016c47d88cff99ee3fc5eee8d8d3a6d1ee1565e4b4ef",
+    "src/lupine_discovery/web/app.js": "20f8d73303258d218cee5e02b052b71287b09a1405d51a336aaf2d097653546d",
+    "src/lupine_discovery/web/index.html": "459a8cde729c55bd75d82f9f80347e0970612006fb7caf71076c259a746763b3",
+    "src/lupine_discovery/web/styles.css": "06255077a221a6ca33a0e8be6604a1551d20837620873ba94f2d2ad139dc3420"
+  },
+  "unchanged": true,
+  "log_sha256": "276755fd1152bfca2d40ba695fa2d4dc13149cdb2a402ca1587a2783ace5060e"
+}

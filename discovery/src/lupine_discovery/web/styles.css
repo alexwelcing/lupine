@@ -2212,6 +2212,10 @@ textarea {
 #refresh-benchmarks {
   margin:-4px 0 18px
 }
+#mpea-provenance {
+  overflow-wrap: anywhere;
+}
+
 .protocol-details h3 {
   font-size:12px;
   margin:15px 0 7px

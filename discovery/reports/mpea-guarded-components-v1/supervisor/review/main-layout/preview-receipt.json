@@ -1,0 +1,32 @@
+{
+  "after": {
+    "scripts/mpea_study_supervisor.py": "1dbd4a1b0e9c3f0246d23bd7670527cfa3bd69f754279aabba06e4ae464e87ab",
+    "tests/fixtures/mpea_supervisor_review_child.py": "89e4a9e4cb6cf03afdb4f326801491fc21f6c7332aff5e84cd57d8c8d4c820a6",
+    "tests/test_mpea_study_supervisor_review.py": "3cca098e6f5e3ab65d49dd0c311bda9069a0c033afb85fc70074ba6b73b60421"
+  },
+  "before": {
+    "scripts/mpea_study_supervisor.py": "1dbd4a1b0e9c3f0246d23bd7670527cfa3bd69f754279aabba06e4ae464e87ab",
+    "tests/fixtures/mpea_supervisor_review_child.py": "89e4a9e4cb6cf03afdb4f326801491fc21f6c7332aff5e84cd57d8c8d4c820a6",
+    "tests/test_mpea_study_supervisor_review.py": "3cca098e6f5e3ab65d49dd0c311bda9069a0c033afb85fc70074ba6b73b60421"
+  },
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "/workspace/lupine-discovery-branch/discovery/.cache/mpea-study-supervisor/review/promotion/tests",
+    "-p",
+    "test_mpea_study_supervisor_review.py",
+    "-v"
+  ],
+  "exit_code": 0,
+  "outer_timeout": false,
+  "path_adaptation_sha256": "3f790769686b7dcf640f9a7ef0d7f196c29b4595bd94a72ed6a4bb981b13190e",
+  "sensitive_sentinel_absent_from_logs": true,
+  "sources_unchanged": true,
+  "status": "PASS",
+  "stderr_sha256": "81dcbb9b25ed610e500a943fff8fac0cf753e751f9844d76a89da138700ec558",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

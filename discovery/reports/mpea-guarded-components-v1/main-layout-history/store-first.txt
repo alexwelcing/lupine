@@ -1,0 +1,315 @@
+test_ancestor_symlink_and_closed_store_are_rejected (test_mpea_stage_store_review.StageStoreReview.test_ancestor_symlink_and_closed_store_are_rejected) ... ERROR
+test_anchored_cleanup_preserves_unrelated_same_named_pending (test_mpea_stage_store_review.StageStoreReview.test_anchored_cleanup_preserves_unrelated_same_named_pending) ... ERROR
+test_canonical_exact_byte_and_node_limits_and_type_distinction (test_mpea_stage_store_review.StageStoreReview.test_canonical_exact_byte_and_node_limits_and_type_distinction) ... ok
+test_canonical_reader_rejects_duplicates_nonfinite_float_and_noncanonical (test_mpea_stage_store_review.StageStoreReview.test_canonical_reader_rejects_duplicates_nonfinite_float_and_noncanonical) ... ok
+test_created_inode_content_corruption_is_rejected_before_success (test_mpea_stage_store_review.StageStoreReview.test_created_inode_content_corruption_is_rejected_before_success) ... ERROR
+test_deterministic_across_attempts_and_identity_sensitivity (test_mpea_stage_store_review.StageStoreReview.test_deterministic_across_attempts_and_identity_sensitivity) ... ERROR
+test_directory_flush_failure_and_short_writes_leave_no_false_completion (test_mpea_stage_store_review.StageStoreReview.test_directory_flush_failure_and_short_writes_leave_no_false_completion) ... ERROR
+test_eight_stage_chain_and_independent_seals (test_mpea_stage_store_review.StageStoreReview.test_eight_stage_chain_and_independent_seals) ... ERROR
+test_exact_normalization_resource_and_type_boundaries (test_mpea_stage_store_review.StageStoreReview.test_exact_normalization_resource_and_type_boundaries) ... ok
+test_existing_stage_sentinel_not_overwritten (test_mpea_stage_store_review.StageStoreReview.test_existing_stage_sentinel_not_overwritten) ... ERROR
+test_failed_flush_cannot_leave_completion_named_receipt (test_mpea_stage_store_review.StageStoreReview.test_failed_flush_cannot_leave_completion_named_receipt) ... ERROR
+test_fifo_marker_and_replaced_named_inode_are_rejected (test_mpea_stage_store_review.StageStoreReview.test_fifo_marker_and_replaced_named_inode_are_rejected) ... ERROR
+test_no_skip_duplicate_or_continue_after_each_terminal_status (test_mpea_stage_store_review.StageStoreReview.test_no_skip_duplicate_or_continue_after_each_terminal_status) ... ERROR
+test_parent_swap_during_publication_cannot_return_complete_elsewhere (test_mpea_stage_store_review.StageStoreReview.test_parent_swap_during_publication_cannot_return_complete_elsewhere) ... ERROR
+test_pending_name_replacement_cannot_publish_foreign_bytes_as_complete (test_mpea_stage_store_review.StageStoreReview.test_pending_name_replacement_cannot_publish_foreign_bytes_as_complete) ... ERROR
+test_predecessor_missing_changed_or_symlink_never_allows_next_stage (test_mpea_stage_store_review.StageStoreReview.test_predecessor_missing_changed_or_symlink_never_allows_next_stage) ... ERROR
+test_read_replacement_symlink_is_not_followed (test_mpea_stage_store_review.StageStoreReview.test_read_replacement_symlink_is_not_followed) ... ERROR
+test_receipt_file_size_preflight_prevents_open (test_mpea_stage_store_review.StageStoreReview.test_receipt_file_size_preflight_prevents_open) ... ERROR
+test_relocated_main_and_scratch_layouts_keep_fresh_outputs_ignored (test_mpea_stage_store_review.StageStoreReview.test_relocated_main_and_scratch_layouts_keep_fresh_outputs_ignored) ... ok
+test_returned_snapshot_input_and_hashmap_mutations_are_isolated (test_mpea_stage_store_review.StageStoreReview.test_returned_snapshot_input_and_hashmap_mutations_are_isolated) ... ERROR
+test_status_reasons_and_implementation_types_rejected_without_file (test_mpea_stage_store_review.StageStoreReview.test_status_reasons_and_implementation_types_rejected_without_file) ... ERROR
+test_traversal_existing_destinations_and_symlinks (test_mpea_stage_store_review.StageStoreReview.test_traversal_existing_destinations_and_symlinks) ... ERROR
+
+======================================================================
+ERROR: test_ancestor_symlink_and_closed_store_are_rejected (test_mpea_stage_store_review.StageStoreReview.test_ancestor_symlink_and_closed_store_are_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_stage_store_review.py", line 390, in test_ancestor_symlink_and_closed_store_are_rejected
+    instance = self.new()
+               ^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_stage_store_review.py", line 44, in new
+    instance = storemod.FixtureStageStore(f'attempt-{self.serial}', self.source, self.impl)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/scripts/mpea_stage_store.py", line 226, in __init__
+    _fail("OUTPUT_PATH_INVALID")
+  File "/workspace/lupine-discovery-branch/discovery/scripts/mpea_stage_store.py", line 50, in _fail
+    raise StageError(code) from None
+mpea_stage_store.StageError: OUTPUT_PATH_INVALID
+
+======================================================================
+ERROR: test_anchored_cleanup_preserves_unrelated_same_named_pending (test_mpea_stage_store_review.StageStoreReview.test_anchored_cleanup_preserves_unrelated_same_named_pending)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_stage_store_review.py", line 325, in test_anchored_cleanup_preserves_unrelated_same_named_pending
+    instance = self.new()
+               ^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_stage_store_review.py", line 44, in new
+    instance = storemod.FixtureStageStore(f'attempt-{self.serial}', self.source, self.impl)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/scripts/mpea_stage_store.py", line 226, in __init__
+    _fail("OUTPUT_PATH_INVALID")
+  File "/workspace/lupine-discovery-branch/discovery/scripts/mpea_stage_store.py", line 50, in _fail
+    raise StageError(code) from None
+mpea_stage_store.StageError: OUTPUT_PATH_INVALID
+
+======================================================================
+ERROR: test_created_inode_content_corruption_is_rejected_before_success (test_mpea_stage_store_review.StageStoreReview.test_created_inode_content_corruption_is_rejected_before_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_stage_store_review.py", line 372, in test_created_inode_content_corruption_is_rejected_before_success
+    instance = self.new()
+               ^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_stage_store_review.py", line 44, in new
+    instance = storemod.FixtureStageStore(f'attempt-{self.serial}', self.source, self.impl)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/scripts/mpea_stage_store.py", line 226, in __init__
+    _fail("OUTPUT_PATH_INVALID")
+  File "/workspace/lupine-discovery-branch/discovery/scripts/mpea_stage_store.py", line 50, in _fail
+    raise StageError(code) from None
+mpea_stage_store.StageError: OUTPUT_PATH_INVALID
+
+======================================================================
+ERROR: test_deterministic_across_attempts_and_identity_sensitivity (test_mpea_stage_store_review.StageStoreReview.test_deterministic_across_attempts_and_identity_sensitivity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_stage_store_review.py", line 82, in test_deterministic_across_attempts_and_identity_sensitivity
+    first, second = self.new(), self.new()
+                    ^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_stage_store_review.py", line 44, in new
+    instance = storemod.FixtureStageStore(f'attempt-{self.serial}', self.source, self.impl)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/scripts/mpea_stage_store.py", line 226, in __init__
+    _fail("OUTPUT_PATH_INVALID")
+  File "/workspace/lupine-discovery-branch/discovery/scripts/mpea_stage_store.py", line 50, in _fail
+    raise StageError(code) from None
+mpea_stage_store.StageError: OUTPUT_PATH_INVALID
+
+======================================================================
+ERROR: test_directory_flush_failure_and_short_writes_leave_no_false_completion (test_mpea_stage_store_review.StageStoreReview.test_directory_flush_failure_and_short_writes_leave_no_false_completion)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_stage_store_review.py", line 276, in test_directory_flush_failure_and_short_writes_leave_no_false_completion
+    instance = self.new()
+               ^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_stage_store_review.py", line 44, in new
+    instance = storemod.FixtureStageStore(f'attempt-{self.serial}', self.source, self.impl)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/scripts/mpea_stage_store.py", line 226, in __init__
+    _fail("OUTPUT_PATH_INVALID")
+  File "/workspace/lupine-discovery-branch/discovery/scripts/mpea_stage_store.py", line 50, in _fail
+    raise StageError(code) from None
+mpea_stage_store.StageError: OUTPUT_PATH_INVALID
+
+======================================================================
+ERROR: test_eight_stage_chain_and_independent_seals (test_mpea_stage_store_review.StageStoreReview.test_eight_stage_chain_and_independent_seals)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_stage_store_review.py", line 56, in test_eight_stage_chain_and_independent_seals
+    instance = self.new()
+               ^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_stage_store_review.py", line 44, in new
+    instance = storemod.FixtureStageStore(f'attempt-{self.serial}', self.source, self.impl)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/scripts/mpea_stage_store.py", line 226, in __init__
+    _fail("OUTPUT_PATH_INVALID")
+  File "/workspace/lupine-discovery-branch/discovery/scripts/mpea_stage_store.py", line 50, in _fail
+    raise StageError(code) from None
+mpea_stage_store.StageError: OUTPUT_PATH_INVALID
+
+======================================================================
+ERROR: test_existing_stage_sentinel_not_overwritten (test_mpea_stage_store_review.StageStoreReview.test_existing_stage_sentinel_not_overwritten)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_stage_store_review.py", line 184, in test_existing_stage_sentinel_not_overwritten
+    instance = self.new()
+               ^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_stage_store_review.py", line 44, in new
+    instance = storemod.FixtureStageStore(f'attempt-{self.serial}', self.source, self.impl)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/scripts/mpea_stage_store.py", line 226, in __init__
+    _fail("OUTPUT_PATH_INVALID")
+  File "/workspace/lupine-discovery-branch/discovery/scripts/mpea_stage_store.py", line 50, in _fail
+    raise StageError(code) from None
+mpea_stage_store.StageError: OUTPUT_PATH_INVALID
+
+======================================================================
+ERROR: test_failed_flush_cannot_leave_completion_named_receipt (test_mpea_stage_store_review.StageStoreReview.test_failed_flush_cannot_leave_completion_named_receipt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_stage_store_review.py", line 269, in test_failed_flush_cannot_leave_completion_named_receipt
+    instance = self.new()
+               ^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_stage_store_review.py", line 44, in new
+    instance = storemod.FixtureStageStore(f'attempt-{self.serial}', self.source, self.impl)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/scripts/mpea_stage_store.py", line 226, in __init__
+    _fail("OUTPUT_PATH_INVALID")
+  File "/workspace/lupine-discovery-branch/discovery/scripts/mpea_stage_store.py", line 50, in _fail
+    raise StageError(code) from None
+mpea_stage_store.StageError: OUTPUT_PATH_INVALID
+
+======================================================================
+ERROR: test_fifo_marker_and_replaced_named_inode_are_rejected (test_mpea_stage_store_review.StageStoreReview.test_fifo_marker_and_replaced_named_inode_are_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_stage_store_review.py", line 349, in test_fifo_marker_and_replaced_named_inode_are_rejected
+    instance = self.new()
+               ^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_stage_store_review.py", line 44, in new
+    instance = storemod.FixtureStageStore(f'attempt-{self.serial}', self.source, self.impl)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/scripts/mpea_stage_store.py", line 226, in __init__
+    _fail("OUTPUT_PATH_INVALID")
+  File "/workspace/lupine-discovery-branch/discovery/scripts/mpea_stage_store.py", line 50, in _fail
+    raise StageError(code) from None
+mpea_stage_store.StageError: OUTPUT_PATH_INVALID
+
+======================================================================
+ERROR: test_no_skip_duplicate_or_continue_after_each_terminal_status (test_mpea_stage_store_review.StageStoreReview.test_no_skip_duplicate_or_continue_after_each_terminal_status)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_stage_store_review.py", line 122, in test_no_skip_duplicate_or_continue_after_each_terminal_status
+    instance = self.new()
+               ^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_stage_store_review.py", line 44, in new
+    instance = storemod.FixtureStageStore(f'attempt-{self.serial}', self.source, self.impl)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/scripts/mpea_stage_store.py", line 226, in __init__
+    _fail("OUTPUT_PATH_INVALID")
+  File "/workspace/lupine-discovery-branch/discovery/scripts/mpea_stage_store.py", line 50, in _fail
+    raise StageError(code) from None
+mpea_stage_store.StageError: OUTPUT_PATH_INVALID
+
+======================================================================
+ERROR: test_parent_swap_during_publication_cannot_return_complete_elsewhere (test_mpea_stage_store_review.StageStoreReview.test_parent_swap_during_publication_cannot_return_complete_elsewhere)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_stage_store_review.py", line 250, in test_parent_swap_during_publication_cannot_return_complete_elsewhere
+    instance = self.new()
+               ^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_stage_store_review.py", line 44, in new
+    instance = storemod.FixtureStageStore(f'attempt-{self.serial}', self.source, self.impl)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/scripts/mpea_stage_store.py", line 226, in __init__
+    _fail("OUTPUT_PATH_INVALID")
+  File "/workspace/lupine-discovery-branch/discovery/scripts/mpea_stage_store.py", line 50, in _fail
+    raise StageError(code) from None
+mpea_stage_store.StageError: OUTPUT_PATH_INVALID
+
+======================================================================
+ERROR: test_pending_name_replacement_cannot_publish_foreign_bytes_as_complete (test_mpea_stage_store_review.StageStoreReview.test_pending_name_replacement_cannot_publish_foreign_bytes_as_complete)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_stage_store_review.py", line 307, in test_pending_name_replacement_cannot_publish_foreign_bytes_as_complete
+    instance = self.new()
+               ^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_stage_store_review.py", line 44, in new
+    instance = storemod.FixtureStageStore(f'attempt-{self.serial}', self.source, self.impl)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/scripts/mpea_stage_store.py", line 226, in __init__
+    _fail("OUTPUT_PATH_INVALID")
+  File "/workspace/lupine-discovery-branch/discovery/scripts/mpea_stage_store.py", line 50, in _fail
+    raise StageError(code) from None
+mpea_stage_store.StageError: OUTPUT_PATH_INVALID
+
+======================================================================
+ERROR: test_predecessor_missing_changed_or_symlink_never_allows_next_stage (test_mpea_stage_store_review.StageStoreReview.test_predecessor_missing_changed_or_symlink_never_allows_next_stage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_stage_store_review.py", line 168, in test_predecessor_missing_changed_or_symlink_never_allows_next_stage
+    instance = self.new()
+               ^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_stage_store_review.py", line 44, in new
+    instance = storemod.FixtureStageStore(f'attempt-{self.serial}', self.source, self.impl)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/scripts/mpea_stage_store.py", line 226, in __init__
+    _fail("OUTPUT_PATH_INVALID")
+  File "/workspace/lupine-discovery-branch/discovery/scripts/mpea_stage_store.py", line 50, in _fail
+    raise StageError(code) from None
+mpea_stage_store.StageError: OUTPUT_PATH_INVALID
+
+======================================================================
+ERROR: test_read_replacement_symlink_is_not_followed (test_mpea_stage_store_review.StageStoreReview.test_read_replacement_symlink_is_not_followed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_stage_store_review.py", line 449, in test_read_replacement_symlink_is_not_followed
+    instance = self.new()
+               ^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_stage_store_review.py", line 44, in new
+    instance = storemod.FixtureStageStore(f'attempt-{self.serial}', self.source, self.impl)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/scripts/mpea_stage_store.py", line 226, in __init__
+    _fail("OUTPUT_PATH_INVALID")
+  File "/workspace/lupine-discovery-branch/discovery/scripts/mpea_stage_store.py", line 50, in _fail
+    raise StageError(code) from None
+mpea_stage_store.StageError: OUTPUT_PATH_INVALID
+
+======================================================================
+ERROR: test_receipt_file_size_preflight_prevents_open (test_mpea_stage_store_review.StageStoreReview.test_receipt_file_size_preflight_prevents_open)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_stage_store_review.py", line 242, in test_receipt_file_size_preflight_prevents_open
+    instance = self.new()
+               ^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_stage_store_review.py", line 44, in new
+    instance = storemod.FixtureStageStore(f'attempt-{self.serial}', self.source, self.impl)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/scripts/mpea_stage_store.py", line 226, in __init__
+    _fail("OUTPUT_PATH_INVALID")
+  File "/workspace/lupine-discovery-branch/discovery/scripts/mpea_stage_store.py", line 50, in _fail
+    raise StageError(code) from None
+mpea_stage_store.StageError: OUTPUT_PATH_INVALID
+
+======================================================================
+ERROR: test_returned_snapshot_input_and_hashmap_mutations_are_isolated (test_mpea_stage_store_review.StageStoreReview.test_returned_snapshot_input_and_hashmap_mutations_are_isolated)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_stage_store_review.py", line 101, in test_returned_snapshot_input_and_hashmap_mutations_are_isolated
+    instance = self.new()
+               ^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_stage_store_review.py", line 44, in new
+    instance = storemod.FixtureStageStore(f'attempt-{self.serial}', self.source, self.impl)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/scripts/mpea_stage_store.py", line 226, in __init__
+    _fail("OUTPUT_PATH_INVALID")
+  File "/workspace/lupine-discovery-branch/discovery/scripts/mpea_stage_store.py", line 50, in _fail
+    raise StageError(code) from None
+mpea_stage_store.StageError: OUTPUT_PATH_INVALID
+
+======================================================================
+ERROR: test_status_reasons_and_implementation_types_rejected_without_file (test_mpea_stage_store_review.StageStoreReview.test_status_reasons_and_implementation_types_rejected_without_file)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_stage_store_review.py", line 137, in test_status_reasons_and_implementation_types_rejected_without_file
+    instance = self.new()
+               ^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_stage_store_review.py", line 44, in new
+    instance = storemod.FixtureStageStore(f'attempt-{self.serial}', self.source, self.impl)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/scripts/mpea_stage_store.py", line 226, in __init__
+    _fail("OUTPUT_PATH_INVALID")
+  File "/workspace/lupine-discovery-branch/discovery/scripts/mpea_stage_store.py", line 50, in _fail
+    raise StageError(code) from None
+mpea_stage_store.StageError: OUTPUT_PATH_INVALID
+
+======================================================================
+ERROR: test_traversal_existing_destinations_and_symlinks (test_mpea_stage_store_review.StageStoreReview.test_traversal_existing_destinations_and_symlinks)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_stage_store_review.py", line 153, in test_traversal_existing_destinations_and_symlinks
+    instance = self.new()
+               ^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_stage_store_review.py", line 44, in new
+    instance = storemod.FixtureStageStore(f'attempt-{self.serial}', self.source, self.impl)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/scripts/mpea_stage_store.py", line 226, in __init__
+    _fail("OUTPUT_PATH_INVALID")
+  File "/workspace/lupine-discovery-branch/discovery/scripts/mpea_stage_store.py", line 50, in _fail
+    raise StageError(code) from None
+mpea_stage_store.StageError: OUTPUT_PATH_INVALID
+
+----------------------------------------------------------------------
+Ran 22 tests in 5.154s
+
+FAILED (errors=18)

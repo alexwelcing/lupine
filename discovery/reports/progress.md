@@ -3,6 +3,43 @@
 The current goal and ordered backlog are in `../GOAL.md`. Append concise entries
 with artifacts, actual checks, scientific implications, and the next action.
 
+## 2026-10-10 21:19 UTC — guarded components and archive workbench; 981 tests pass
+
+- Verified remote `b442e53dc1e7e0e7bf3b2576ebc4e76f69afb28c` and all four
+  successful CI jobs in run 38084821268 before writing the next increment.
+  [Guarded evidence](mpea-guarded-components-v1/README.md) retains 184 losslessly preserved
+  allowlisted historical artifacts, independent review receipts and original
+  failures. Current producer identities and test-path adaptations are explicit.
+  [Independent publication review](mpea-guarded-publication-review-v1/README.md)
+  confirms all copy identities, final sources and synthetic-only report scope.
+- Integrated reviewed store, fixture driver, network/resource supervisor and
+  public projector. The complete suite passes 981 tests in 374.132 unittest
+  seconds with 244 stable hashes. Actual namespace isolation, ordered disclosures,
+  all 960 constructed policy runs, unresolved values and terminal failures are
+  exercised. The prospective operational amendment states the observed-RSS
+  enforcement limit without claiming an instantaneous peak guarantee.
+- Added an optional archive view with exact report export, both populations,
+  all policies and budgets, same-cost comparisons, access counts, null gates
+  and unavailable states. All 56 integrated Chromium checks pass with 47 bound
+  source/resource hashes and no JS errors. Independent review compares 1,536
+  exact table cells and narrow layouts. Five synthetic report fixtures regenerate
+  byte-for-byte; no fixture is installed as an actual scientific result.
+- Preserved real store/decoder/supervisor/projector defects and test-only path,
+  expected-text and timing failures. Fixed narrow provenance overflow. No check
+  or production resource bound was weakened. Nested runtime-manifest closure
+  now agrees across staged/worktree views and has independent mutation controls.
+- Scientific implication: this is engineering evidence only. Actual MPEA study
+  remains unregistered with no allocation, performance interpretation, threshold
+  or fit. Previous constrained, training and pilot negatives are unchanged;
+  130 conditional statements are unchanged. Fresh final release packaging is
+  still pending; prior clean-package evidence is historical.
+- Owner/checkpoint: root publishes and verifies this snapshot. Custody engineer
+  and reviewer complete production access/shared flow/worker; registration
+  engineer and reviewer complete official-CI validation, durable one-attempt
+  allocation and later fixed-allocation reproduction. Next integrate and test
+  those complete paths, publish a green freeze, then run the registered study
+  once. No scientific inputs are authorized by this component checkpoint alone.
+
 ## 2026-10-10 20:41 UTC — exact study components integrated; 850 tests pass
 
 - Published `b608188663ddfe47eb61d7ee0af7eeada3888052`, verified remote identity

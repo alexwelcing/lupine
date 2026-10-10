@@ -1,0 +1,62 @@
+{
+  "checks": [
+    "real_optional_resource_absence_has_no_measurement_or_verdict",
+    "1536_independent_exact_policy_budget_and_same_cost_comparisons",
+    "real_app_optional_report_route_and_type_preserving_exact_export",
+    "early_stop_preserves_mixed_capture_and_role_specific_access_visibility",
+    "early_stop_has_no_performance_population_or_gates",
+    "missing_registration_stays_synthetic_and_without_scientific_verdict",
+    "all_details_open_at_320_390_768_1440_without_document_overflow"
+  ],
+  "fixture_sha256": {
+    "complete-negative": "4557668a055759aedefaefa886deb9ed7205d2730ca8a9672b7a8e7a3aa35209",
+    "complete-positive": "d9a22582e891cda665aa2ba4ea995a9de45a865b5899c275712ba7834cecbd76",
+    "insufficient-development": "2253f3b42314119a40b20433f602f2fbc2edfddbe19219b89a22a510fb15a4a1",
+    "registration-unavailable": "89693f17d524c9a91e6256e7e8e58e524071f0e073b425e847b4f39587d6388d",
+    "unknown-empty-null-gates": "370f1ff73c2dfef40fa97815b0c4218e50d2a1e2282ed905ae79f5aa0c511b34"
+  },
+  "javascript_errors": [],
+  "observations": {
+    "access_counters_present": true,
+    "insufficient_development_visible_text": "SYNTHETIC CONTROL \u00b7 no measured archive result\n\nno go insufficient development\n\nThe study did not complete a scientific usefulness evaluation. No overall performance verdict is available.\n\ncondition rows\n129\ncondition source groups\n55\nout of scope rows\n1416\nsource rows\n1545\nunresolved source rows\n0\ncalibration \u00b7 rows / source groups\n40 / 20\ndevelopment \u00b7 rows / source groups\n49 / 15\nevaluation \u00b7 rows / source groups\n40 / 20\nLast sealed stage\ndevelopment\nCompleted policy runs\n0\nStop reasons\ndevelopment rows below 50\nParsed endpoint states and unresolved records\ncalibration\n\nTarget summary unavailable.\n\ndevelopment\nrows\n49\ncomplete rows\n49\ncomplete source groups\n15\nyield strength\nmissing\n0\nsemantic conflict\n0\nunresolved limit\n0\nunsupported lexical\n0\nunsupported nonfinite\n0\nvalid\n49\nyield strength \u00b7 all parser reasons\ndecimal digit limit\n0\nempty token\n0\nexponent limit\n0\nfinite nonnegative recorded point\n49\nnegative elongation\n0\nnegative ys\n0\nnonfinite token\n0\nnon ascii token\n0\nnot point decimal\n0\ntarget bits limit\n0\ntoken bytes limit\n0\nelongation\nmissing\n0\nsemantic conflict\n0\nunresolved limit\n0\nunsupported lexical\n0\nunsupported nonfinite\n0\nvalid\n49\nelongation \u00b7 all parser reasons\ndecimal digit limit\n0\nempty token\n0\nexponent limit\n0\nfinite nonnegative recorded point\n49\nnegative elongation\n0\nnegative ys\n0\nnonfinite token\n0\nnon ascii token\n0\nnot point decimal\n0\ntarget bits limit\n0\ntoken bytes limit\n0\nevaluation\n\nTarget summary unavailable.\n\nSource capture and role-specific value access\n\nCapturing mixed source bytes is separate from interpreting selected target cells. Unknown counters remain unavailable; these declarations depend on the audited custody execution.\n\nmixed source captures\n1\nmixed source bytes\n1000\nmodel visible bundles\nUnavailable\ncalibrator visible bundles\nUnavailable\npolicy bundle requests\nUnavailable\nauditor unique bundles\nUnavailable\ndevelopment\naccumulated bundles\n49\ndecoded bundles\n49\ninterpreted bundles\n49\ncalibration\naccumulated bundles\nUnavailable\ndecoded bundles\nUnavailable\ninterpreted bundles\nUnavailable\nevaluation\naccumulated bundles\nUnavailable\ndecoded bundles\nUnavailable\ninterpreted bundles\nUnavailable\nRecorded costs and resource observations\ncpu seconds\nUnavailable\npeak rss bytes\nUnavailable\nwall seconds\nUnavailable\n\nResource observations describe this execution. Sampled RSS is not an instantaneous process-tree peak certificate. Logical row requests do not measure laboratory cost.\n\nScope and provenance\n\nIntended archival source, not this constructed input: Figshare 10.6084/m9.figshare.12642953.v9 \u00b7 CC BY 4.0. Scientific report identity: ab16be9d40ca8f1773ce6da5deaac23b276ce4afaf80c43826436f4615f0cd0b\n\nRegistered source commit: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n\nLogical recorded-row YS/E bundle requests; no physical experiment cost claim.\n\nCompleted ledgers are audited by the kernel; active access capabilities and external identity checks belong to upstream custody.\n\nRecorded column 11 YS in MPa and column 13 elongation in percentage points; uncertainty not interpreted and specimen pairing not verified.\n\nSupplied whole-artifact identities are bound, not independently authenticated by this projector.\n\nExact descriptive archival replay aggregates; no conditional coverage or deployment claim.\n\nnot_established_by_this_program\n\nFixed archived source-token panels; rows are recorded entries, not verified specimens.\n\nAggregate projection only; no record IDs, memberships, targets, neighbors, predictions, orders, cell hashes or local paths.\n\nLexical source-group separation does not establish chemical, specimen or study independence.\n\nConditional single-future-panel marginal retention under the frozen score law; no simultaneous evaluation-panel claim.\n\nDerived lower median of complete development-row elongation; not an independently specified engineering requirement.\n\nDownload displayed archival report",
+    "open_details_layouts": {
+      "1440": {
+        "document": 1440,
+        "viewport": 1440
+      },
+      "320": {
+        "document": 320,
+        "viewport": 320
+      },
+      "390": {
+        "document": 390,
+        "viewport": 390
+      },
+      "768": {
+        "document": 768,
+        "viewport": 768
+      }
+    }
+  },
+  "scope": "Synthetic browser controls only; no actual source, feature artifact or performance-target access.",
+  "source_after": {
+    ".cache/mpea-workbench/review/browser_review.py": "aef182f899099146a16102341aacb9e713ae640bbdfc2f1c51066389ccc25fc3",
+    "scripts/mpea_browser_checks.py": "41055986dd995f698e0c2ff95654d6105ec2efa12b3870e0be3d47b19a4c302b",
+    "src/lupine_discovery/server.py": "f58f55c5284dfe34478840dca45e897c7fd1b5d5002a423876ebf228b7c7a5cb",
+    "src/lupine_discovery/web/app.js": "20f8d73303258d218cee5e02b052b71287b09a1405d51a336aaf2d097653546d",
+    "src/lupine_discovery/web/index.html": "459a8cde729c55bd75d82f9f80347e0970612006fb7caf71076c259a746763b3",
+    "src/lupine_discovery/web/mpea.js": "f760f6225e60f08d7b4217bae7e7499fe1b4d3ea91514c5b1e429c5b4523f35e",
+    "src/lupine_discovery/web/styles.css": "6a837b57aa7540a9d00d83a6de026d6996a51563abcd7c7fd0a1dd243bb7f8d3"
+  },
+  "source_before": {
+    ".cache/mpea-workbench/review/browser_review.py": "aef182f899099146a16102341aacb9e713ae640bbdfc2f1c51066389ccc25fc3",
+    "scripts/mpea_browser_checks.py": "41055986dd995f698e0c2ff95654d6105ec2efa12b3870e0be3d47b19a4c302b",
+    "src/lupine_discovery/server.py": "f58f55c5284dfe34478840dca45e897c7fd1b5d5002a423876ebf228b7c7a5cb",
+    "src/lupine_discovery/web/app.js": "20f8d73303258d218cee5e02b052b71287b09a1405d51a336aaf2d097653546d",
+    "src/lupine_discovery/web/index.html": "459a8cde729c55bd75d82f9f80347e0970612006fb7caf71076c259a746763b3",
+    "src/lupine_discovery/web/mpea.js": "f760f6225e60f08d7b4217bae7e7499fe1b4d3ea91514c5b1e429c5b4523f35e",
+    "src/lupine_discovery/web/styles.css": "6a837b57aa7540a9d00d83a6de026d6996a51563abcd7c7fd0a1dd243bb7f8d3"
+  },
+  "status": "PASS",
+  "unchanged": true
+}

@@ -1,0 +1,23 @@
+test_actual_ack_blocks_constructed_decoder_until_parent_reply (test_supervisor_review.SupervisorReview.test_actual_ack_blocks_constructed_decoder_until_parent_reply) ... ok
+test_actual_sampled_rss_and_exit_peak_are_reported (test_supervisor_review.SupervisorReview.test_actual_sampled_rss_and_exit_peak_are_reported) ... ok
+test_actual_supervisor_interrupts_preserve_receipt_and_cleanup (test_supervisor_review.SupervisorReview.test_actual_supervisor_interrupts_preserve_receipt_and_cleanup) ... ok
+test_closed_marker_grammar_duplicate_invalid_and_oversized (test_supervisor_review.SupervisorReview.test_closed_marker_grammar_duplicate_invalid_and_oversized) ... ok
+test_cumulative_wall_does_not_restart_at_stage_seals (test_supervisor_review.SupervisorReview.test_cumulative_wall_does_not_restart_at_stage_seals) ... ok
+test_duplicate_and_skipped_stages_fail_closed (test_supervisor_review.SupervisorReview.test_duplicate_and_skipped_stages_fail_closed) ... ok
+test_fast_post_terminal_socket_tail_cannot_be_complete (test_supervisor_review.SupervisorReview.test_fast_post_terminal_socket_tail_cannot_be_complete) ... ok
+test_missing_terminal_does_not_create_complete_receipt (test_supervisor_review.SupervisorReview.test_missing_terminal_does_not_create_complete_receipt) ... ok
+test_no_go_before_development_seal_is_rejected (test_supervisor_review.SupervisorReview.test_no_go_before_development_seal_is_rejected) ... ok
+test_nonzero_exit_cannot_promote_declared_no_go (test_supervisor_review.SupervisorReview.test_nonzero_exit_cannot_promote_declared_no_go) ... ok
+test_real_user_and_network_namespace_and_no_external_route (test_supervisor_review.SupervisorReview.test_real_user_and_network_namespace_and_no_external_route) ... ok
+test_rejected_target_marker_never_reaches_constructed_decoder (test_supervisor_review.SupervisorReview.test_rejected_target_marker_never_reaches_constructed_decoder) ... ok
+test_separate_process_group_in_worker_session_is_cleaned (test_supervisor_review.SupervisorReview.test_separate_process_group_in_worker_session_is_cleaned) ... ok
+test_signal_classification_and_sensitive_child_output_suppression (test_supervisor_review.SupervisorReview.test_signal_classification_and_sensitive_child_output_suppression) ... ok
+test_startup_timeout_never_claims_target_budget_started (test_supervisor_review.SupervisorReview.test_startup_timeout_never_claims_target_budget_started) ... ok
+test_unsupported_platform_never_launches_child (test_supervisor_review.SupervisorReview.test_unsupported_platform_never_launches_child) ... ok
+test_valid_early_stop_statuses_remain_distinct (test_supervisor_review.SupervisorReview.test_valid_early_stop_statuses_remain_distinct) ... ok
+test_wait4_leader_peak_catches_deliberately_unsampled_burst (test_supervisor_review.SupervisorReview.test_wait4_leader_peak_catches_deliberately_unsampled_burst) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 16.911s
+
+OK

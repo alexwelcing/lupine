@@ -13,6 +13,7 @@ import threading
 from unittest.mock import patch
 
 from playwright.sync_api import expect, sync_playwright
+from mpea_browser_checks import check_mpea_workbench
 
 from lupine_discovery.benchmarks import case_catalog, get_case, get_case_outcomes
 from lupine_discovery.cli import verify_certificate
@@ -27,9 +28,10 @@ def run():
     project_root = Path(__file__).resolve().parents[1]
     def source_digests():
         package = project_root / "src/lupine_discovery"
-        paths = [Path(__file__).resolve(), *package.rglob("*.py"),
-                 *(package / "web" / name for name in ("app.js", "index.html", "styles.css"))]
+        paths = [Path(__file__).resolve(), Path(__file__).with_name("mpea_browser_checks.py").resolve(), *package.rglob("*.py"),
+                 *(package / "web" / name for name in ("app.js", "mpea.js", "index.html", "styles.css"))]
         paths.extend((package / "resources").rglob("decision-pool*.json"))
+        paths.extend((project_root / "tests/fixtures/mpea_ui").glob("*.json"))
         return {str(path.relative_to(project_root)): sha256(path.read_bytes()).hexdigest()
                 for path in sorted(paths)}
     sources_before = source_digests()
@@ -989,6 +991,11 @@ def run():
             downloaded.value.save_as(training_target)
             assert json.loads(training_target.read_text()) == training
             checks.append("training_only_no_go_all_models_properties_gates_costs_and_exact_export")
+            mpea_response = page.request.get(url + "/api/benchmarks")
+            assert mpea_response.ok
+            mpea_controls = check_mpea_workbench(page, artifacts / "mpea",
+                project_root / "tests/fixtures/mpea_ui", mpea_response.json().get("mpea_archived"))
+            checks.extend(mpea_controls["checks"])
             page.evaluate("window.scrollTo(0, 0)")
             page.screenshot(path=str(artifacts / "desktop-benchmarks.png"), full_page=True)
 
@@ -1084,6 +1091,7 @@ def run():
     sources_after = source_digests()
     assert sources_after == sources_before, "Browser inputs changed during the run"
     report = {"status": "passed", "checks": checks, "javascript_errors": errors,
+              "mpea_constructed_fixture_sha256": mpea_controls["fixture_sha256"],
               "source_sha256": sources_after,
               "screenshots_sha256": {path.name: sha256(path.read_bytes()).hexdigest()
                                      for path in artifacts.glob("*decision-pool*.png")},

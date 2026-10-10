@@ -1,0 +1,45 @@
+test_canonical_reader_rejects_duplicates_nonfinite_float_and_noncanonical (test_stage_store_review.StageStoreReview.test_canonical_reader_rejects_duplicates_nonfinite_float_and_noncanonical) ... ok
+test_deterministic_across_attempts_and_identity_sensitivity (test_stage_store_review.StageStoreReview.test_deterministic_across_attempts_and_identity_sensitivity) ... ok
+test_eight_stage_chain_and_independent_seals (test_stage_store_review.StageStoreReview.test_eight_stage_chain_and_independent_seals) ... ok
+test_exact_normalization_resource_and_type_boundaries (test_stage_store_review.StageStoreReview.test_exact_normalization_resource_and_type_boundaries) ... ok
+test_existing_stage_sentinel_not_overwritten (test_stage_store_review.StageStoreReview.test_existing_stage_sentinel_not_overwritten) ... ok
+test_failed_flush_cannot_leave_completion_named_receipt (test_stage_store_review.StageStoreReview.test_failed_flush_cannot_leave_completion_named_receipt) ... FAIL
+test_no_skip_duplicate_or_continue_after_each_terminal_status (test_stage_store_review.StageStoreReview.test_no_skip_duplicate_or_continue_after_each_terminal_status) ... ok
+test_parent_swap_during_publication_cannot_return_complete_elsewhere (test_stage_store_review.StageStoreReview.test_parent_swap_during_publication_cannot_return_complete_elsewhere) ... FAIL
+test_predecessor_missing_changed_or_symlink_never_allows_next_stage (test_stage_store_review.StageStoreReview.test_predecessor_missing_changed_or_symlink_never_allows_next_stage) ... ok
+test_read_replacement_symlink_is_not_followed (test_stage_store_review.StageStoreReview.test_read_replacement_symlink_is_not_followed) ... FAIL
+test_receipt_file_size_preflight_prevents_open (test_stage_store_review.StageStoreReview.test_receipt_file_size_preflight_prevents_open) ... ok
+test_returned_snapshot_input_and_hashmap_mutations_are_isolated (test_stage_store_review.StageStoreReview.test_returned_snapshot_input_and_hashmap_mutations_are_isolated) ... ok
+test_status_reasons_and_implementation_types_rejected_without_file (test_stage_store_review.StageStoreReview.test_status_reasons_and_implementation_types_rejected_without_file) ... ok
+test_traversal_existing_destinations_and_symlinks (test_stage_store_review.StageStoreReview.test_traversal_existing_destinations_and_symlinks) ... ok
+
+======================================================================
+FAIL: test_failed_flush_cannot_leave_completion_named_receipt (test_stage_store_review.StageStoreReview.test_failed_flush_cannot_leave_completion_named_receipt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/mpea-study-custody/review_store/test_stage_store_review.py", line 253, in test_failed_flush_cannot_leave_completion_named_receipt
+    self.assertFalse((instance.path / '00-allocation.json').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_parent_swap_during_publication_cannot_return_complete_elsewhere (test_stage_store_review.StageStoreReview.test_parent_swap_during_publication_cannot_return_complete_elsewhere)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/mpea-study-custody/review_store/test_stage_store_review.py", line 243, in test_parent_swap_during_publication_cannot_return_complete_elsewhere
+    with self.assertRaises(storemod.StageError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: StageError not raised
+
+======================================================================
+FAIL: test_read_replacement_symlink_is_not_followed (test_stage_store_review.StageStoreReview.test_read_replacement_symlink_is_not_followed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/mpea-study-custody/review_store/test_stage_store_review.py", line 270, in test_read_replacement_symlink_is_not_followed
+    with self.assertRaises(storemod.StageError): instance.verify()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: StageError not raised
+
+----------------------------------------------------------------------
+Ran 14 tests in 2.134s
+
+FAILED (failures=3)

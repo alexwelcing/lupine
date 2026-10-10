@@ -344,3 +344,20 @@ The source-specific entry remains unregistered: persistent custody, actual
 resource/network supervision, a closed public sink and complete end-to-end
 checks are required before any real target access. Synthetic positive controls
 are software checks and do not change the scientific release decision.
+
+## Guarded components and archived-report interface
+
+The [reviewed engineering increment](../reports/mpea-guarded-components-v1/README.md)
+passes 981 full Python tests with 244 unchanged hashes and 56 Chromium checks
+with no JavaScript errors. It implements fixture custody, network/resource
+supervision, aggregate projection and an optional MPEA archive view. Constructed
+positive/negative/unknown controls are explicitly synthetic; an absent actual
+report yields no verdict. The reviewed operational amendment defines observed
+RSS enforcement, not an instantaneous ceiling or hostile-code isolation.
+
+Actual source-specific registration and production execution remain incomplete.
+No real allocation, performance-target interpretation or new scientific result
+is claimed. Independent review, complete source-bound production tests and
+published green CI must precede them. Existing scientific negatives and the
+130 conditional formal statements retain their previous scope. Fresh complete
+release packaging/reproduction and the final claim-tier decision remain open.

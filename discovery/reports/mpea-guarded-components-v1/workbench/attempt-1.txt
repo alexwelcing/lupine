@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/mpea-workbench/run-ui.py", line 12, in <module>
+    result=check_mpea_workbench(page,'.cache/mpea-workbench/browser','.cache/mpea-study-engine/reports/ui-fixtures')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/scripts/mpea_browser_checks.py", line 104, in check_mpea_workbench
+    assert '<img src=x' in page.locator('#mpea-provenance').inner_text()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

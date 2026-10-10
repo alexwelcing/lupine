@@ -1,0 +1,22 @@
+{
+  "actual_entropy_drawn": false,
+  "binding_note": "Author-declared stable source before execution; exact source hash and snapshot captured after execution. Final execution will bind bytes both before and after.",
+  "experimental_data_opened": false,
+  "failed": 3,
+  "findings": [
+    "ancestor_symlink_swap_redirected_COMPLETE_write",
+    "failed_flush_left_COMPLETION_named_receipt",
+    "read_symlink_replacement_followed"
+  ],
+  "first_execution_bound_before_after": false,
+  "log_sha256": "1e765e14f1554c156026614148b4b71afbe3452edef4d2e02a70a7f37646d190",
+  "passed": 11,
+  "production_authorized": false,
+  "schema": "lupine.fixture_stage_store.first_review.v1",
+  "source_sha256": "371744f046269861cc9407f09fdd546a35680caaa6f01e0f1091c9d20ca67969",
+  "source_snapshot": "source-first-371744f0.py",
+  "status": "NEEDS_REPAIR",
+  "test_sha256": "b1924ab3a69d841ff30faadc656eef7cd7e5c8a7d8fb4e442a2bc458da1327c6",
+  "test_snapshot": "tests-first-source.py",
+  "tests": 14
+}

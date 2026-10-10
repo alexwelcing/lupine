@@ -1,0 +1,31 @@
+{
+  "after": {
+    ".cache/mpea-study-supervisor/README.md": "1880b6d59102a02c9385023a50c516a8b18554f1c0933b92aedbb9128965d481",
+    ".cache/mpea-study-supervisor/review/review_child.py": "927ea9130d167a82e7d3bb7e76fa4d2066f495a32c8494424708f54522eb72a3",
+    ".cache/mpea-study-supervisor/review/test_supervisor_review.py": "786c58c311eeda346b46ae1e241f13ede1dd6131138969f1f6b147317962ec42",
+    ".cache/mpea-study-supervisor/supervisor.py": "b7e325655e92a4bcc1b8f222fd40482df7808db29d1a80531323ee19111fc606"
+  },
+  "before": {
+    ".cache/mpea-study-supervisor/README.md": "1880b6d59102a02c9385023a50c516a8b18554f1c0933b92aedbb9128965d481",
+    ".cache/mpea-study-supervisor/review/review_child.py": "927ea9130d167a82e7d3bb7e76fa4d2066f495a32c8494424708f54522eb72a3",
+    ".cache/mpea-study-supervisor/review/test_supervisor_review.py": "786c58c311eeda346b46ae1e241f13ede1dd6131138969f1f6b147317962ec42",
+    ".cache/mpea-study-supervisor/supervisor.py": "b7e325655e92a4bcc1b8f222fd40482df7808db29d1a80531323ee19111fc606"
+  },
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    ".cache/mpea-study-supervisor/review",
+    "-p",
+    "test_supervisor_review.py",
+    "-v"
+  ],
+  "exit_code": 0,
+  "sensitive_sentinel_absent_from_logs": true,
+  "sources_unchanged": true,
+  "stderr_sha256": "19f850b4c23ed83c9d5b7f456d2d93fed848e04e3cc0255dc49058aa533049db",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

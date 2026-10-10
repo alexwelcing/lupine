@@ -1,0 +1,270 @@
+{
+  "regions": [
+    {
+      "label": "primary fixed budget policy comparison",
+      "left": 37,
+      "right": 283,
+      "width": 244,
+      "scroll": 1778,
+      "parent": "DIV",
+      "overflow": "auto"
+    },
+    {
+      "label": "primary fixed budget policy comparison",
+      "left": 37,
+      "right": 283,
+      "width": 244,
+      "scroll": 1719,
+      "parent": "DETAILS",
+      "overflow": "auto"
+    },
+    {
+      "label": "primary same pool cost policy comparison",
+      "left": 37,
+      "right": 283,
+      "width": 244,
+      "scroll": 640,
+      "parent": "DETAILS",
+      "overflow": "auto"
+    },
+    {
+      "label": "secondary fixed budget policy comparison",
+      "left": 37,
+      "right": 283,
+      "width": 244,
+      "scroll": 1778,
+      "parent": "DIV",
+      "overflow": "auto"
+    },
+    {
+      "label": "secondary fixed budget policy comparison",
+      "left": 37,
+      "right": 283,
+      "width": 244,
+      "scroll": 1719,
+      "parent": "DETAILS",
+      "overflow": "auto"
+    },
+    {
+      "label": "secondary same pool cost policy comparison",
+      "left": 37,
+      "right": 283,
+      "width": 244,
+      "scroll": 640,
+      "parent": "DETAILS",
+      "overflow": "auto"
+    }
+  ],
+  "offscreen": [
+    {
+      "tag": "TD",
+      "cls": "",
+      "text": "20/1",
+      "left": 438.15625,
+      "right": 560.734375
+    },
+    {
+      "tag": "TD",
+      "cls": "",
+      "text": "0/1 \u00b7 20 / 20 defined",
+      "left": 560.734375,
+      "right": 678
+    },
+    {
+      "tag": "TR",
+      "cls": "",
+      "text": "Hash control 13\t20 / 20 known; 20 assigned; 0 unavailable\t20",
+      "left": 38,
+      "right": 678
+    },
+    {
+      "tag": "TD",
+      "cls": "",
+      "text": "20 / 20 known; 20 assigned; 0 unavailable",
+      "left": 220.4375,
+      "right": 438.15625
+    },
+    {
+      "tag": "TD",
+      "cls": "",
+      "text": "20/1",
+      "left": 438.15625,
+      "right": 560.734375
+    },
+    {
+      "tag": "TD",
+      "cls": "",
+      "text": "0/1 \u00b7 20 / 20 defined",
+      "left": 560.734375,
+      "right": 678
+    },
+    {
+      "tag": "TR",
+      "cls": "",
+      "text": "Hash control 14\t20 / 20 known; 20 assigned; 0 unavailable\t20",
+      "left": 38,
+      "right": 678
+    },
+    {
+      "tag": "TD",
+      "cls": "",
+      "text": "20 / 20 known; 20 assigned; 0 unavailable",
+      "left": 220.4375,
+      "right": 438.15625
+    },
+    {
+      "tag": "TD",
+      "cls": "",
+      "text": "20/1",
+      "left": 438.15625,
+      "right": 560.734375
+    },
+    {
+      "tag": "TD",
+      "cls": "",
+      "text": "0/1 \u00b7 20 / 20 defined",
+      "left": 560.734375,
+      "right": 678
+    },
+    {
+      "tag": "TR",
+      "cls": "",
+      "text": "Hash control 15\t20 / 20 known; 20 assigned; 0 unavailable\t20",
+      "left": 38,
+      "right": 678
+    },
+    {
+      "tag": "TD",
+      "cls": "",
+      "text": "20 / 20 known; 20 assigned; 0 unavailable",
+      "left": 220.4375,
+      "right": 438.15625
+    },
+    {
+      "tag": "TD",
+      "cls": "",
+      "text": "20/1",
+      "left": 438.15625,
+      "right": 560.734375
+    },
+    {
+      "tag": "TD",
+      "cls": "",
+      "text": "0/1 \u00b7 20 / 20 defined",
+      "left": 560.734375,
+      "right": 678
+    },
+    {
+      "tag": "TR",
+      "cls": "",
+      "text": "Hash control 16\t20 / 20 known; 20 assigned; 0 unavailable\t20",
+      "left": 38,
+      "right": 678
+    },
+    {
+      "tag": "TD",
+      "cls": "",
+      "text": "20 / 20 known; 20 assigned; 0 unavailable",
+      "left": 220.4375,
+      "right": 438.15625
+    },
+    {
+      "tag": "TD",
+      "cls": "",
+      "text": "20/1",
+      "left": 438.15625,
+      "right": 560.734375
+    },
+    {
+      "tag": "TD",
+      "cls": "",
+      "text": "0/1 \u00b7 20 / 20 defined",
+      "left": 560.734375,
+      "right": 678
+    },
+    {
+      "tag": "TR",
+      "cls": "",
+      "text": "Hash control 17\t20 / 20 known; 20 assigned; 0 unavailable\t20",
+      "left": 38,
+      "right": 678
+    },
+    {
+      "tag": "TD",
+      "cls": "",
+      "text": "20 / 20 known; 20 assigned; 0 unavailable",
+      "left": 220.4375,
+      "right": 438.15625
+    },
+    {
+      "tag": "TD",
+      "cls": "",
+      "text": "20/1",
+      "left": 438.15625,
+      "right": 560.734375
+    },
+    {
+      "tag": "TD",
+      "cls": "",
+      "text": "0/1 \u00b7 20 / 20 defined",
+      "left": 560.734375,
+      "right": 678
+    },
+    {
+      "tag": "TR",
+      "cls": "",
+      "text": "Hash control 18\t20 / 20 known; 20 assigned; 0 unavailable\t20",
+      "left": 38,
+      "right": 678
+    },
+    {
+      "tag": "TD",
+      "cls": "",
+      "text": "20 / 20 known; 20 assigned; 0 unavailable",
+      "left": 220.4375,
+      "right": 438.15625
+    },
+    {
+      "tag": "TD",
+      "cls": "",
+      "text": "20/1",
+      "left": 438.15625,
+      "right": 560.734375
+    },
+    {
+      "tag": "TD",
+      "cls": "",
+      "text": "0/1 \u00b7 20 / 20 defined",
+      "left": 560.734375,
+      "right": 678
+    },
+    {
+      "tag": "TR",
+      "cls": "",
+      "text": "Hash control 19\t20 / 20 known; 20 assigned; 0 unavailable\t20",
+      "left": 38,
+      "right": 678
+    },
+    {
+      "tag": "TD",
+      "cls": "",
+      "text": "20 / 20 known; 20 assigned; 0 unavailable",
+      "left": 220.4375,
+      "right": 438.15625
+    },
+    {
+      "tag": "TD",
+      "cls": "",
+      "text": "20/1",
+      "left": 438.15625,
+      "right": 560.734375
+    },
+    {
+      "tag": "TD",
+      "cls": "",
+      "text": "0/1 \u00b7 20 / 20 defined",
+      "left": 560.734375,
+      "right": 678
+    }
+  ]
+}

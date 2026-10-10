@@ -1,0 +1,27 @@
+{
+  "before": 405,
+  "nodes": [
+    {
+      "tag": "DETAILS",
+      "id": "",
+      "width": 284,
+      "scroll": 387,
+      "text": "Scope and provenance\n\nIntended archival source, not this constructed input: Figshare 10.6084/m9.figshare.12642953.v9 \u00b7 CC BY 4.0. Scientific report id"
+    },
+    {
+      "tag": "DIV",
+      "id": "mpea-provenance",
+      "width": 284,
+      "scroll": 387,
+      "text": "Intended archival source, not this constructed input: Figshare 10.6084/m9.figshare.12642953.v9 \u00b7 CC BY 4.0. Scientific report identity: 3cae18686efd62"
+    },
+    {
+      "tag": "P",
+      "id": "",
+      "width": 284,
+      "scroll": 387,
+      "text": "Intended archival source, not this constructed input: Figshare 10.6084/m9.figshare.12642953.v9 \u00b7 CC BY 4.0. Scientific report identity: 3cae18686efd62"
+    }
+  ],
+  "after_scoped_provenance_wrap": 320
+}

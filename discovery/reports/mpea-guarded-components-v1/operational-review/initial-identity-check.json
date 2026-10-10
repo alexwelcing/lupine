@@ -1,0 +1,7 @@
+{
+  "author_confirmation": "Intentional clarification: production caller verifies frozen command/source and anchors receipt; supervisor does not authenticate supplied command origin.",
+  "effect": "Initial identity assertion stopped before any review artifact or source execution; corrected draft was reread before final signoff.",
+  "expected_initial_sha256": "46ee34da0b498a010effef1d10404676d487420eca5f090518a126cf53bb4a75",
+  "observed_final_sha256": "e36e72818f92096c316df34789a35840c1e5b1561f9467561dd8787da072cf98",
+  "status": "EXPECTED_DRAFT_HASH_CHANGED_BEFORE_REVIEW_SEAL"
+}

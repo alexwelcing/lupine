@@ -109,3 +109,15 @@ feasible minima; the supplied relations are extra premises, not consequences
 of interval-only sharpness. Retrospective evaluation can refute a
 proposed interval construction and measure its usefulness. It cannot remove
 the construction's assumptions merely by succeeding on a finite dataset.
+
+## Guarded archival engineering and workbench
+
+[981 Python tests and 56 browser checks](../reports/mpea-guarded-components-v1/README.md)
+exercise constructed custody stages, network isolation, cumulative operational
+limits, exact fixed-policy evaluation and explicit aggregate failure/unknown
+presentation. Independent reviews preserve their original failures and final
+source identities. These checks do not establish a production registration,
+archival usefulness or physical validity. Observed RSS enforcement is a sampled
+process boundary; an aggregate seal depends on authenticated upstream context.
+Actual MPEA results remain unavailable until the complete registered workflow
+executes. All previous scientific negatives and claim limits remain in force.

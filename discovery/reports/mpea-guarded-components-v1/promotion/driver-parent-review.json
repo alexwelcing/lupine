@@ -1,0 +1,9 @@
+{
+  "schema": "lupine.discovery.fixture_driver_parent_receipt_check.v1",
+  "status": "PASS",
+  "review_receipt_sha256": "6cc5fff40feabcfcde11ba724ef715451b380b9dd1daade3ea7cb7be9d390e12",
+  "bound_files": 17,
+  "review_checks": 15,
+  "test_wall_seconds": 73.626,
+  "scope": "Parent verified completed independent receipt, log and current source identities. This is not a new test execution."
+}

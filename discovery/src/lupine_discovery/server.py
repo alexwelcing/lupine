@@ -28,6 +28,7 @@ DECISION_POOL_SCHEMA = "lupine.discovery.decision_pool_problem.v1"
 ASSETS = {"/": ("index.html", "text/html; charset=utf-8"),
           "/index.html": ("index.html", "text/html; charset=utf-8"),
           "/styles.css": ("styles.css", "text/css; charset=utf-8"),
+          "/mpea.js": ("mpea.js", "text/javascript; charset=utf-8"),
           "/app.js": ("app.js", "text/javascript; charset=utf-8")}
 
 
@@ -75,6 +76,9 @@ def benchmark_report():
     training = files("lupine_discovery").joinpath("resources/training-tail-v1.json")
     if training.is_file():
         result["training_tail"] = json.loads(training.read_text(encoding="utf-8"))
+    mpea = files("lupine_discovery").joinpath("resources/mpea-t25-v1.json")
+    if mpea.is_file():
+        result["mpea_archived"] = json.loads(mpea.read_text(encoding="utf-8"))
     return result
 
 

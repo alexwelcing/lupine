@@ -1,0 +1,65 @@
+[
+  {
+    "source": ".cache/mpea-study-custody/scripts/mpea_stage_store.py",
+    "destination": "scripts/mpea_stage_store.py",
+    "source_sha256": "13c42919e79e0949f4cbcf5ce0eeeb1cb66d3a48893e6e4fdc3cd3fdf68498db",
+    "destination_sha256": "13c42919e79e0949f4cbcf5ce0eeeb1cb66d3a48893e6e4fdc3cd3fdf68498db",
+    "adaptation": null
+  },
+  {
+    "source": ".cache/mpea-study-custody/scripts/mpea_fixture_driver.py",
+    "destination": "scripts/mpea_fixture_driver.py",
+    "source_sha256": "ed1d00479ec0c74bdd15a933ce07abdb44aba09f40f974dc37b3750b78bfe66f",
+    "destination_sha256": "ed1d00479ec0c74bdd15a933ce07abdb44aba09f40f974dc37b3750b78bfe66f",
+    "adaptation": null
+  },
+  {
+    "source": ".cache/mpea-study-custody/scripts/mpea_fixture_worker.py",
+    "destination": "scripts/mpea_fixture_worker.py",
+    "source_sha256": "c829a57e066ed46ad90f07458c550f9f3e8db17702583f472b28d3d3e2a646f0",
+    "destination_sha256": "c829a57e066ed46ad90f07458c550f9f3e8db17702583f472b28d3d3e2a646f0",
+    "adaptation": null
+  },
+  {
+    "source": ".cache/mpea-study-custody/tests/test_mpea_fixture_driver.py",
+    "destination": "tests/test_mpea_fixture_driver.py",
+    "source_sha256": "51f2293eeb6196395d55e26f9960bd4d9a1a1e6031d0086b9dc981937d2ab3e8",
+    "destination_sha256": "51f2293eeb6196395d55e26f9960bd4d9a1a1e6031d0086b9dc981937d2ab3e8",
+    "adaptation": null
+  },
+  {
+    "source": ".cache/mpea-study-custody/tests/test_mpea_fixture_worker.py",
+    "destination": "tests/test_mpea_fixture_worker.py",
+    "source_sha256": "115644785c120b5b3526fe24db97cfbeeab1513be79ea03fcc5b270ff872e917",
+    "destination_sha256": "115644785c120b5b3526fe24db97cfbeeab1513be79ea03fcc5b270ff872e917",
+    "adaptation": null
+  },
+  {
+    "source": ".cache/mpea-study-custody/tests/mpea_constructed_fixture.py",
+    "destination": "tests/mpea_constructed_fixture.py",
+    "source_sha256": "009c65eaf3fb70bfa8cb8b74d4d9055c3b56f0aef71d2e0fbb07d882d38cf50b",
+    "destination_sha256": "009c65eaf3fb70bfa8cb8b74d4d9055c3b56f0aef71d2e0fbb07d882d38cf50b",
+    "adaptation": null
+  },
+  {
+    "source": ".cache/mpea-study-custody/review_store/test_stage_store_review.py",
+    "destination": "tests/test_mpea_stage_store_review.py",
+    "source_sha256": "d061d506cfebf72773662ea7af03c7019f68e9114a4d54cb17058fc57769cbb4",
+    "destination_sha256": "d061d506cfebf72773662ea7af03c7019f68e9114a4d54cb17058fc57769cbb4",
+    "adaptation": null
+  },
+  {
+    "source": ".cache/mpea-study-custody/review_driver/constructed_case.py",
+    "destination": "tests/mpea_review_constructed_case.py",
+    "source_sha256": "d1cb093b7d58fc432743e08cb5991638fa95781986cee42f4df0f3eed83861dd",
+    "destination_sha256": "d1cb093b7d58fc432743e08cb5991638fa95781986cee42f4df0f3eed83861dd",
+    "adaptation": null
+  },
+  {
+    "source": ".cache/mpea-study-custody/review_driver/test_fixture_driver_review.py",
+    "destination": "tests/test_mpea_fixture_driver_review.py",
+    "source_sha256": "3eac07bce8fd06ab4ed0f6c33c3c7d76826050dc6d10e314af8afacf4be213bf",
+    "destination_sha256": "62e4b04b3c37e8fdb4e9742afaa0fb3759c593652f4a2c7eb4ca4f36b65ed878",
+    "adaptation": "independent helper module rename, two import strings only"
+  }
+]

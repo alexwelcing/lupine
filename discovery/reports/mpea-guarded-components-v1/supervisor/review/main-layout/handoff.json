@@ -1,0 +1,18 @@
+{
+  "assertions_and_caps_unchanged": true,
+  "candidate_sha256": {
+    "scripts/mpea_study_supervisor.py": "1dbd4a1b0e9c3f0246d23bd7670527cfa3bd69f754279aabba06e4ae464e87ab",
+    "tests/fixtures/mpea_supervisor_review_child.py": "89e4a9e4cb6cf03afdb4f326801491fc21f6c7332aff5e84cd57d8c8d4c820a6",
+    "tests/test_mpea_study_supervisor_review.py": "3cca098e6f5e3ab65d49dd0c311bda9069a0c033afb85fc70074ba6b73b60421"
+  },
+  "duration_seconds": "17.844",
+  "main_files_edited": false,
+  "path_adaptation_sha256": "3f790769686b7dcf640f9a7ef0d7f196c29b4595bd94a72ed6a4bb981b13190e",
+  "preview_log_sha256": "81dcbb9b25ed610e500a943fff8fac0cf753e751f9844d76a89da138700ec558",
+  "preview_receipt_sha256": "34f119207c3c671f4408c44301883c65896c72aa652d57ae4d0065593fdee7a3",
+  "prior_review_receipt_sha256": "e12e0a7c10c1f95b433fc20980732b9db9a1693c8d687527c74497677de1fe88",
+  "runtime_byte_identical_to_reviewed_source": true,
+  "scientific_data_accessed": false,
+  "status": "READY_FOR_ROOT_PROMOTION",
+  "tests_passed": 21
+}

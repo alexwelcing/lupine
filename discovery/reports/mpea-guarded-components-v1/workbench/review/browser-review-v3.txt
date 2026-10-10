@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/mpea-workbench/review/browser_review.py", line 140, in <module>
+    if __name__=='__main__':run()
+                            ^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/mpea-workbench/review/browser_review.py", line 120, in run
+    assert sizes['document']<=width+1,sizes
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'viewport': 320, 'document': 405}
