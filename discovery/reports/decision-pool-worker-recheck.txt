@@ -1,0 +1,22 @@
+test_framed_replay_defers_outcome_read_until_adapter_requests_it (test_coupled_worker.CoupledWorkerBoundaryTests.test_framed_replay_defers_outcome_read_until_adapter_requests_it) ... ok
+test_internal_header_rejects_duplicate_operation (test_coupled_worker.CoupledWorkerBoundaryTests.test_internal_header_rejects_duplicate_operation) ... ok
+test_public_worker_rejects_schema_only_and_unsealed_success (test_coupled_worker.CoupledWorkerBoundaryTests.test_public_worker_rejects_schema_only_and_unsealed_success) ... ok
+test_public_worker_rejects_wrong_operation_receipt (test_coupled_worker.CoupledWorkerBoundaryTests.test_public_worker_rejects_wrong_operation_receipt) ... ok
+test_raw_input_caps_and_operations_reject_before_spawning (test_coupled_worker.CoupledWorkerBoundaryTests.test_raw_input_caps_and_operations_reject_before_spawning) ... ok
+test_single_slot_rejects_overlap_and_releases_after_failure (test_coupled_worker.CoupledWorkerBoundaryTests.test_single_slot_rejects_overlap_and_releases_after_failure) ... ok
+test_unsupported_guard_never_falls_back_to_parent_execution (test_coupled_worker.CoupledWorkerBoundaryTests.test_unsupported_guard_never_falls_back_to_parent_execution) ... ok
+test_worker_response_is_type_sensitive_and_never_uses_stale_success (test_coupled_worker.CoupledWorkerBoundaryTests.test_worker_response_is_type_sensitive_and_never_uses_stale_success) ... ok
+test_child_crash_after_valid_json_does_not_return_receipt (test_coupled_worker.CoupledWorkerProcessTests.test_child_crash_after_valid_json_does_not_return_receipt) ... ok
+test_closed_pipes_do_not_escape_wall_deadline (test_coupled_worker.CoupledWorkerProcessTests.test_closed_pipes_do_not_escape_wall_deadline) ... ok
+test_memory_exception_becomes_structured_failure (test_coupled_worker.CoupledWorkerProcessTests.test_memory_exception_becomes_structured_failure) ... ok
+test_real_adapter_selection_and_domains_run_in_child (test_coupled_worker.CoupledWorkerProcessTests.test_real_adapter_selection_and_domains_run_in_child) ... ok
+test_real_address_space_limit_denies_virtual_reservation_without_allocating_it (test_coupled_worker.CoupledWorkerProcessTests.test_real_address_space_limit_denies_virtual_reservation_without_allocating_it) ... ok
+test_real_cpu_limit_terminates_busy_helper (test_coupled_worker.CoupledWorkerProcessTests.test_real_cpu_limit_terminates_busy_helper) ... ok
+test_real_limits_applied_before_helper_and_environment_isolated (test_coupled_worker.CoupledWorkerProcessTests.test_real_limits_applied_before_helper_and_environment_isolated) ... ok
+test_real_wall_timeout_kills_child (test_coupled_worker.CoupledWorkerProcessTests.test_real_wall_timeout_kills_child) ... ok
+test_stdout_and_stderr_floods_are_stopped_while_reading (test_coupled_worker.CoupledWorkerProcessTests.test_stdout_and_stderr_floods_are_stopped_while_reading) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 3.514s
+
+OK

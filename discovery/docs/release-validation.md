@@ -14,7 +14,7 @@ gate. No aggregate score averages away blocking failures.
 | Gate | State | Evidence and release consequence |
 |---|---|---|
 | Exact conditional selection kernel | PASS | Exact rational runtime, exhaustive small-world and adversarial tests. Conditional guarantees require sound intervals and a fixed finite candidate universe. |
-| Conditional mathematical statements | PASS | 100 compiled Lean statements and axiom audit in `formal/VERIFICATION.md`. This does not prove Python refinement or physical premises. |
+| Conditional mathematical statements | PASS | 117 compiled Lean statements and axiom audit in `formal/VERIFICATION.md`. This does not prove Python refinement or physical premises. |
 | Published constrained checkpoint verification | PASS | [Discovery Verify run 38067639369](https://github.com/alexwelcing/lupine/actions/runs/38067639369) passed at `a8775ad` on 2026-10-10: Python 3.11/3.12, source manifest, isolated packages, 17 browser checks and 69 Lean theorem audits. Subsequent increments require their own checks. |
 | Interface through actual selector | PASS | 35 Chromium checks cover five schemas, scientific reports, desktop/mobile states, raw input preservation and paired problem/certificate downloads verified by the real CLI. Edits, failures and pending/stale responses cannot export old pairs. Projection declarations and unavailable-model states remain inspectable; see `reports/projection-workbench-verification.md`. |
 | Calibration and unsupported-scope abstention | PASS | Exact versioned inputs, original-seal replay, all-retained abstention and browser diagnostics. This software behavior does not establish exchangeability or physical coverage. |
@@ -107,7 +107,7 @@ actual execution evidence. The subsequent [projection workbench checkpoint](../r
 passes 416 Python tests, 35 browser checks and an isolated wheel with 25 cases
 across five schemas. It preserves original declarations through strict wire,
 CLI, guarded HTTP and actual-pool replay; missing bounds yield no model.
-The mathematical sources and 100-statement inventory are unchanged.
+At that checkpoint, the mathematical sources and 100-statement inventory were unchanged.
 
 The [upstream readiness audit](projection-data-readiness.md) identifies a Rhizo
 archive suitable for further metadata review. It establishes neither hard
@@ -127,3 +127,19 @@ rights, physical-bound and multiple-heldout gates. `METADATA_COMPLETE` cannot
 promote a scientific recommendation claim. The exact current interface source
 passes [all four CI jobs](https://github.com/alexwelcing/lupine/actions/runs/38073151394),
 including 416 Python tests, 35 browser checks and all 100 formal statements.
+
+## Direct statistical pool prototype checkpoint
+
+The [Python-only prototype](../reports/decision-pool-verification.md) passes
+450 Python tests and installed API checks in a fresh wheel. A first existing
+worker timeout is preserved; the unchanged focused and full reruns pass without
+relaxing limits. Seventeen new statements bring the compiled/audited inventory
+to 117. The probability proof is explicitly finite weighted with equal indexed
+failure-event masses, not a proof of arbitrary measurable exchangeability.
+
+The five-schema interface remains unchanged; this API has no wire/browser mode
+at this checkpoint. Whole-panel score exchangeability, frozen ranking and
+complete meaningful labels remain scientific premises. Marginal retention does
+not imply conditional-on-feasibility, fixed-calibration or per-material coverage.
+The exact counterexamples remain visible. No new archive result, physical-bound
+claim or scientific-superiority gate is passed by this engineering increment.

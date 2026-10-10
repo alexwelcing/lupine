@@ -1,10 +1,13 @@
-# Research draft: calibrating a candidate pool directly
+# Research design and Python prototype: calibrating a candidate pool directly
 
-**Status: design and mathematical argument only.** This document proposes a
-separate statistical pool-selection rule. It adds no runtime, wire schema,
-trained ranking, Lean theorem, or benchmark result. No scientific targets were
-opened and no model was fitted for this inquiry. The counting proof below was
-independently reviewed, but has not been formalized or tested as software.
+**Status: exact Python-only prototype; scientific premises remain unverified.**
+[decision_pool.py](../src/lupine_discovery/decision_pool.py) implements this
+separate statistical pool-selection rule. It adds no wire schema, UI mode,
+trained ranking, or scientific benchmark result. No scientific targets were
+opened and no model was fitted for this inquiry. The argument below was
+independently reviewed; focused and independent synthetic software checks are
+recorded at the end. Formal proof scope is maintained separately, and there is
+no Python-to-Lean refinement proof or verified deployment sampling law.
 
 The proposal can bound the probability of losing **any true feasible tied
 minimizer in one future finite panel**, provided complete calibration panels and
@@ -14,8 +17,8 @@ intervals. Its principal costs are complete panel labels and a defensible panel
 sampling law. It can still retain every candidate, and its marginal guarantee
 can coexist with failure on every panel that has a feasible candidate.
 
-The recommendation is to establish this narrow theorem and protocol before
-building an optional exact API. Do not replace the interval selector, reinterpret
+The prototype exposes the narrow rule; scientific use still requires the
+specified panel protocol and evidence. Do not replace the interval selector, reinterpret
 existing calibration rows as panels, or attach this guarantee to an existing
 archive retrospectively. This is a split-conformal construction for a nested
 family of pools, not a claim of a new general probability principle or superior
@@ -342,13 +345,13 @@ simple equal allocation `alpha_b=delta/B` requires at least
 sufficient composition route, not an optimality statement. Adaptive queries,
 retraining, changed families, or stopping rules need their own justification.
 
-## Smallest credible implementation and evaluation plan
+## Prototype boundary and future scientific evaluation
 
-The next implementation should be a separate exact Python API
+The implemented prototype is a separate exact Python API
 with three operations: evaluate complete calibration panels under a sealed
 ranking; compute the rank and threshold; select and seal a future prefix before
-opening its truth. It should accept exact rational scores or replayable ranking
-outputs, reject floats and unspecified ranking tie-breaking, and derive `n` and
+opening its truth. It accepts exact rational outcome labels and explicit ranking
+permutations, rejects floats and unspecified ranking tie-breaking, and derives `n` and
 `m` from validated records. True objective ties remain valid and are all included
 in the target. Any precomputed panel score needs the complete score-generation
 receipt; a number by itself does not prove label completeness or sampling.
@@ -361,10 +364,10 @@ the reason for any full-universe response. Keep `assumed_unverified` separate
 from unsupported premises. Neither a digest nor a successful replay may upgrade
 exchangeability to an established physical fact.
 
-Initial unsupported states should include incomplete calibration truth,
-unavailable rankings, incompatible scopes, and an unsupported sampling premise.
-They produce no conditional screening claim and retain every original candidate
-operationally. Invalid syntax/identity is an input error. The insufficient-rank
+Incomplete calibration truth and an unsupported sampling premise produce no
+conditional screening claim and retain every original candidate operationally.
+Unavailable or invalid rankings, incompatible scopes, and invalid syntax or
+identity are input errors; the API never infers a replacement ranking. The insufficient-rank
 branch is a valid all-universe mathematical result and needs a different reason.
 An available finite threshold may also select the entire universe. Do not merge
 these three situations into one apparently successful screening result.
@@ -391,18 +394,19 @@ Before any scientific result is claimed, the protocol needs:
    values and source disagreements preserved. Report the full panel manifest,
    label acquisition cost, all failed panels, and any population restrictions.
 4. Exact implementation tests and a formal or independently checked version of
-   the counting argument. Planned tests must cover every edge and negative
-   control below; none are represented as executed for this draft.
+   the counting argument. The synthetic checks recorded below exercise the
+   implementation; protocol-level leakage controls and application validation
+   remain requirements, not findings from those checks.
 5. A preregistered comparison at equal labeling and deployment budgets against
    whole-universe retention and simple frozen ranking prefixes. Any comparison
    with the interval engine must distinguish its different assumptions and
    claims. Report both pool reduction and failures, with feasible-panel and
    family/size diagnostics; subgroup diagnostics do not create subgroup coverage.
 
-The immediate stopping condition for this inquiry is a coherent derivation and
-failure map, not a favorable experiment. Proceed to formalization and a small
-exact API only after agreeing on the panel target. If complete exchangeable
-panels are unavailable, more code does not resolve the missing premise.
+The prototype target is general finite-panel all-minimizer retention under a
+declared frozen score law. A scientific panel population remains to be chosen
+and justified. If complete exchangeable panels are unavailable, more code does
+not resolve the missing premise.
 
 ## Required negative controls and proof checks
 
@@ -424,16 +428,18 @@ panels are unavailable, more code does not resolve the missing premise.
 | Reuse one receipt for many adaptive queries | Single-panel risk is not relabeled as a simultaneous risk bound. |
 
 The mathematical conclusion is a valid conditional route to a **statistical**
-candidate pool. Its scientific usefulness, appropriate sampling unit, complete
-label availability, resource behavior, and software correctness remain open.
+candidate pool. Scientific usefulness, an appropriate application sampling unit,
+complete label availability, and deployment resource requirements remain open.
+The synthetic checks below provide bounded software evidence, not an exhaustive
+correctness proof or a hard time/memory guarantee.
 There is no claim of improvement on JARVIS, any frozen Lupine benchmark, or a
 new material-discovery task.
 
-## Proposed Python API contract for the next prototype
+## Implemented Python API contract
 
 The target is general finite-panel all-minimizer retention under the declared
 frozen score law. No dataset or scientific jurisdiction is selected by this
-contract. The following API is a proposal, not an implemented interface. It
+contract. The following API is implemented in `decision_pool.py`. It
 stays separate from interval/coupled certificates and has no wire or UI surface.
 
 Use frozen dataclasses, copy sequences to tuples, copy mappings in sorted-key
@@ -445,7 +451,7 @@ must be nonempty; digest fields must be lowercase SHA-256 strings. Digests bind
 canonical exact records and do not attest training independence or physical
 truth. Input order of a semantic mapping does not change identity.
 
-Proposed input constructors:
+Input constructors:
 
 ```python
 PoolProtocol(
@@ -494,7 +500,7 @@ constraints never become zero. All fields are validated even when another
 label is unknown or a premise is unsupported. Empty universe plus empty rows
 is complete. No missing value is filled from another panel or nominal predictor.
 
-Proposed operations:
+Operations:
 
 ```python
 assess_panel(protocol, panel, outcomes) -> PanelScore
@@ -561,7 +567,7 @@ attestation. The minimum prototype need not provide a replay API: an independent
 test oracle can compare its sealed pool with subsequently supplied complete
 truth. A later replay interface must preserve this same information boundary.
 
-In addition to the control table above, the first executable test map is:
+In addition to the scientific control table above, the executable test map is:
 
 | Area | Independent check |
 | --- | --- |
@@ -578,3 +584,34 @@ In addition to the control table above, the first executable test map is:
 These tests establish arithmetic and implementation conformance on their tested
 cases. They cannot verify an application population's exchangeability, recover
 unobserved scientific labels, or prove the Python implementation refines Lean.
+
+## Executed synthetic verification
+
+[test_decision_pool.py](../tests/test_decision_pool.py) passed all 18 focused
+tests. An independent pairwise oracle checks the assessment of every tied
+feasible minimizer in 729 complete rational worlds. Other checks cover 64
+missing-label patterns, 155 small leave-one-out multiset/rank configurations,
+exact resolution boundaries, variable panel sizes, all ties, empty universes,
+unsupported premises, immutable inputs/results, identity propagation, invalid
+rankings/scopes, and forbidden overrides of derived fields. Both exchangeable
+counterexamples and shifted-law/budget-truncation failures are executable tests.
+
+[test_decision_pool_review.py](../tests/test_decision_pool_review.py) separately
+passed 16 independent tests against the same runtime source. Its reviewer
+reported 5,017 complete-world oracle cases plus finite-law/counting controls,
+missing-label handling, strict identity checks, and immutable exact results.
+The suites have overlapping coverage and their counts must not be added as
+independent scientific observations.
+
+```sh
+python -m unittest discover -s tests -p test_decision_pool.py -v
+python -m unittest discover -s tests -p test_decision_pool_review.py -v
+```
+
+The reviewed runtime source SHA-256 is
+`76e96165102ebe8c3785f510d169b5d393838fb144f9c4275ffdb0aa6c21f1f9`.
+These checks read only synthetic records. No archived target tables, train/test
+splits, existing selectors, or benchmark results changed. The runtime deliberately
+does not infer a missing ranking, detect an undeclared label leak, attest a
+source, or establish the declared sampling law. Its cost grows with record
+counts and rational bit lengths; no end-to-end execution or memory cap is claimed.

@@ -1,6 +1,65 @@
 # Actual verification record
 
-## Projection-field algebra extension
+## Direct candidate-pool counting and finite probability extension
+
+Completed on `2026-10-10` in the Linux x86_64 branch workspace after G13
+checkpoint `429751038af7be32b0e6bac583508a59d0aa23c1`, using the same pinned
+Lean `4.29.0` and Mathlib revision documented below.
+
+- The new module first compiled in an ignored scratch directory with
+  `lake env lean -DwarningAsError=true`; all 17 statements passed a complete
+  source-bound axiom audit before integration.
+- `lake --wfail build`: passed all eight default modules, 1,011 jobs, no warnings.
+- `python3 audit_axioms.py`: freshly re-elaborated all eight sources, checked
+  complete declaration/output coverage and passed all 117 theorem audits.
+- `python3 -m unittest test_audit_axioms -v`: all eleven adversarial parser tests
+  passed.
+
+The current [theorem inventory](theorem-inventory.json) records 117 statements
+in eight modules. The fresh [combined axiom output](AXIOMS.txt) contains only
+`propext`, `Classical.choice` and `Quot.sound`; there is no admitted proof or
+project-specific axiom. Every source hash and the combined-output hash were
+checked against the generated inventory after the audit. New-module source
+SHA-256 is `10a5962eedf30819388a835b052df91f4fff130c79258d31eb345f51071cf00a`;
+combined-output SHA-256 is
+`47973449335d90538dc233321d7087265f2ad1dfd4e51f4990dfae671fc8c468`.
+
+Before integration, the seven-module 100-statement receipt was preserved in
+[history/](history/README.md), checked against its published source checkpoints
+and verified against all seven source hashes. Those seven Lean sources remain
+byte-identical after integration. The existing audit script discovers the new
+root module automatically; its parser and tests were unchanged. Local execution
+logs are `.cache/formal/g14-build.log`, `.cache/formal/g14-audit.log` and
+`.cache/formal/g14-audit-tests.log`, relative to `discovery/`. These ignored logs
+supplement the committed source-bound inventory and actual axiom output.
+
+The new statements prove the strict-lower finite count with score ties, exact
+order-statistic characterization and existence, leave-one-out failure count,
+and retention of every tied feasible minimizer exactly when its panel score is
+at most a nonnegative threshold. Empty and infeasible finite panels have score
+zero, and the normalized-rank comparison has an exact cross-multiplied form.
+
+The probability extension is explicitly a **finite weighted outcome model**:
+nonnegative weights sum to one, and all indexed leave-one-out failure events
+have the same mass as the designated test event. A proved weighted-count
+identity and the actual deterministic count yield failure mass at most
+`(N-k)/N`; rank arithmetic then gives the alpha bound, including an exact
+rational-ceiling corollary in the finite calibration branch. No sum-of-risks
+bound is assumed. Independent read-only reviews of the deterministic and
+finite-law source found no contract defect; those reviews were separate from
+compilation and the axiom audit.
+
+This is not a formal theorem for an arbitrary measurable exchangeable law, and
+does not derive equal failure masses from exchangeability or validate a
+scientific sampling premise. A finite candidate universe does not make the
+outcome law finite. Rank permutation/upper bounds, the prefix-size formula,
+the insufficient-rank full-universe runtime branch and Python refinement are
+not proved. Neither scientific label completeness nor useful pool reduction,
+physical accuracy, calibration-conditional or feasible-panel-conditional
+coverage follows from these compiled results. The README lists the exact
+statement map and distinctions from the existing subadditive `RiskLaw` module.
+
+## Historical projection-field algebra extension
 
 Completed on `2026-10-10` in the Linux x86_64 branch workspace, after the
 published G10 checkpoint `f55f0c4`, using the same pinned Lean `4.29.0` and
@@ -14,15 +73,15 @@ Mathlib revision documented below.
 - `python3 -m unittest test_audit_axioms -v`: all eleven adversarial audit tests
   passed.
 
-The current [theorem inventory](theorem-inventory.json) records 100 statements
-in seven modules, including twelve projection algebra statements. The fresh
-combined [axiom output](AXIOMS.txt) contains only `propext`, `Classical.choice`,
+The preserved [100-statement inventory](history/g13-theorem-inventory.json)
+records seven modules, including twelve projection algebra statements. The
+checkpoint [axiom output](history/g13-AXIOMS.txt) contains only `propext`, `Classical.choice`,
 and `Quot.sound`; no admitted proof or project-specific axiom occurs. Every
-current module source hash and the combined-output hash were independently
+checkpoint module source hash and the combined-output hash were independently
 checked against the generated inventory after the audit. Source SHA-256 for
 `LupineProjection.lean` is
 `600af2ee02e8f5ed7f84046d5abab253dc74be3d556414d67438e49a6f3c4f2d`;
-the current combined-output SHA-256 is
+the checkpoint combined-output SHA-256 is
 `37cc47a7ba1e876fefd55dc9a5b327c6a46d341b1b6cd0d9331e21bd64484b19`.
 
 Before replacing the current inventory, the six-module, 88-statement G10

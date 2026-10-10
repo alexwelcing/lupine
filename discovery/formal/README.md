@@ -14,8 +14,10 @@ retained set as the smallest universally safe set when only the supplied interva
 constraints are known. `LupineCoupled.lean` proves conservative affine-certificate
 screening under one shared latent world. `LupineProjection.lean` proves the exact
 algebra translating a declared correction field into those affine quantities and
-anchor rows. Each module has its own namespace. All seven
-modules are default build targets.
+anchor rows. `LupineDecisionPool.lean` proves finite all-minimizer rank counting
+and a marginal failure bound for finite weighted outcome laws with explicitly
+equal leave-one-out failure probabilities. Each module has its own namespace.
+All eight modules are default build targets.
 
 The standalone package pins Lean `v4.29.0` and Mathlib
 `8a178386ffc0f5fef0b77738bb5449d50efeea95`, matching the Mathlib/toolchain
@@ -301,6 +303,58 @@ consistency points do not establish that conjunction. No physical validity,
 empirical calibration, relation transfer between materials, unit correctness
 from labels, runtime parser correctness, or Python refinement follows from these
 real-valued equalities. The finite rational adapter must be verified separately.
+
+## Direct candidate-pool theorem map
+
+`LupineDecisionPool` supplies a separate statistical decision kernel. For a finite
+candidate panel, its score is the maximum normalized rank among **all** true
+feasible tied minimizers, with score zero when that set is empty. For a
+nonnegative threshold, retaining every minimizer is exactly the event that this
+score is at most the threshold. The candidate type and feasibility predicate are
+arbitrary; every instantiated panel is finite and may have a different size.
+
+| Theorem in `LupineDecisionPool` | Mathematical guarantee |
+| --- | --- |
+| `exists_minimum_score`, `exists_maximum_score` | Every nonempty finite real score family attains its minimum and maximum |
+| `strict_lower_failure_count` | At most `N-k` scores have at least `k` strictly smaller companions, for every natural rank and including ties |
+| `order_statistic_lt_iff` | A threshold with the exact kth-order-statistic strict/weak counts is below a value exactly when at least k scores are strictly below that value |
+| `erase_strict_lower`, `leave_one_out_failure_count` | Removing the compared index changes no strict-lower companions; exact leave-one-out quantiles therefore have at most `N-k` strict failures |
+| `exists_order_statistic` | A real kth order statistic exists whenever `0 < k <= N` |
+| `maximum_or_zero_le_iff`, `all_minimizers_retained_iff` | A nonnegative threshold bounds the zero-or-maximum exactly when every member is bounded, yielding the all-tied-minimizer retention bridge |
+| `normalized_rank_threshold_iff` | For a nonempty panel, `rank/m <= threshold` is exactly `rank <= m*threshold` |
+| `empty_panel_score`, `no_feasible_panel_score` | Empty and infeasible panels have score zero |
+| `sum_finite_mass_eq_weighted_count` | Summing indexed event masses equals the weighted pointwise event count |
+| `finite_weighted_symmetric_event_bound` | Under nonnegative normalized finite outcome weights and equal indexed event masses, a pointwise count bound B gives target event mass at most B/N |
+| `finite_weighted_loo_failure_bound` | The proved leave-one-out count supplies failure mass at most `(N-k)/N` under that explicit finite-law symmetry premise |
+| `finite_weighted_loo_alpha_bound` | The arithmetic budget `N*(1-alpha) <= k`, with k no greater than N, bounds that failure mass by alpha |
+| `finite_weighted_loo_ceiling_bound` | The exact rational rank `ceil(N*(1-alpha))` supplies the budget in the finite calibration branch `k < N` |
+
+The probability result uses a finite outcome type, real nonnegative weights
+whose sum is one, and event mass defined by the sum of included weights. It
+proves the finite averaging identity; it does not assume a sum-of-risks bound.
+The **equality of all indexed leave-one-out failure probabilities** is a separate
+explicit symmetry hypothesis. It is not inferred from an archive, a descriptor,
+or the existing `RiskLaw` capacity abstraction. The module does not prove a
+general measurable-probability exchangeability theorem or derive the symmetry
+hypothesis from exchangeability. A finite material panel alone does not imply
+that sampling randomness has a finite outcome space.
+
+The panel bridge accepts any natural-valued rank. Rank being a bijection onto
+`1..m`, the score bound by one, the exact prefix size, and the insufficient-rank
+full-universe branch are executable contracts outside this module. The abstract
+quantile is characterized by strict/weak finite counts, without a sorting-code
+refinement. Empty candidate panels have no members whose normalized rank needs
+evaluation. The nonnegative threshold hypothesis preserves the vacuous
+retention equivalence when no feasible minimizer exists.
+
+No theorem here establishes complete labels, a frozen ranking procedure,
+scientific sampling, physical targets, Python refinement, or useful pool
+reduction. The finite-law bound is marginal; it provides neither a
+conditional-on-feasibility guarantee nor a conditional-on-realized-calibration
+guarantee. The [decision-pool design](../docs/decision-pool-calibration-design.md)
+states the broader probabilistic argument, protocol requirements and explicit
+counterexamples to those stronger interpretations. Those scientific and general
+probability premises remain separate from the compiled finite-law kernel.
 
 ## Reproduction and trust
 

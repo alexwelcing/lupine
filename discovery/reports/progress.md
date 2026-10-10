@@ -3,6 +3,36 @@
 The current goal and ordered backlog are in `../GOAL.md`. Append concise entries
 with artifacts, actual checks, scientific implications, and the next action.
 
+## 2026-10-10 18:12 UTC — exact statistical pools and finite probability proofs
+
+- Remote `429751038af7be32b0e6bac583508a59d0aa23c1` matches the local base and
+  passed all four jobs in [Discovery Verify 38073834025](https://github.com/alexwelcing/lupine/actions/runs/38073834025).
+  G13 custody findings and original scientific negatives remain unchanged.
+- G14 implements a separate exact Python API for calibrated ranking prefixes,
+  with all-tied-optimum scores, sealed protocol/panel identities, weak boundary
+  inclusion and distinct incomplete/unsupported/insufficient fallbacks. Future
+  truth is not a selection input. No feasibility or regret certificate is issued.
+- Actual checks: 450 Python tests pass with unchanged source snapshots; a fresh
+  isolated wheel exercises the API and all 25 existing cases/five schemas.
+  The first full run's old worker-isolation timeout remains in the record;
+  all 17 worker tests and the complete unchanged rerun pass without weakening
+  limits. The four browser/smoke sources match the prior 35-check checkpoint.
+- Seventeen new statements compile and audit, bringing the inventory to 117.
+  The probability theorem has finite weighted-law and explicit symmetry premises;
+  arbitrary measurable exchangeability and Python refinement remain unproved.
+  Independent runtime tests cover 5,017 constructed worlds; a separate finite
+  oracle and six runnable controls preserve stronger-claim counterexamples.
+- Scientific implication: the nested statistical-pool route is implemented,
+  not scientifically validated. Marginal retention 19/20 can coexist with zero
+  feasible-panel-conditional retention. No data, fits, changed benchmark gates
+  or superiority claim is part of this increment.
+- Owner/checkpoint: root publishes G14 and verifies remote SHA/CI. G15 producer
+  and independent tests remain in ignored scratch before the first MPEA GET.
+  G16 interface/backend/reviewer coordinate the new mode in a separate contract
+  and scratch files, preserving G14 sources during verification. Next action:
+  freeze reviewed header custody, then run it; integrate the statistical
+  workbench without hiding its failures or promoting conditional guarantees.
+
 ## 2026-10-10 17:55 UTC — published interface and actual archive custody
 
 - Pushed `7c82058672e2f9ee24b9a774d530506a7e4526eb` and verified the remote

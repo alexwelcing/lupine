@@ -31,6 +31,8 @@ from lupine_discovery.server import make_server
 from lupine_discovery.core import Interval
 from lupine_discovery.coupled import Affine, CoupledCandidate, CoupledProblem, screen_coupled
 from lupine_discovery.evidence import Scope
+from lupine_discovery.decision_pool import (PoolProtocol, RankedPanel, PanelOutcome,
+    PanelOutcomes, CalibrationPanel, assess_panel, calibrate_panels, select_pool)
 from lupine_discovery.projection import (FieldBlock, FieldScope, Observation, PhysicalContext,
     ProjectionCandidate, ProjectionProblem, QuantityUse, build_projection, screen_projection)
 
@@ -88,6 +90,34 @@ projection_unknown = replace(projection_problem, blocks=(replace(projection_bloc
 projection_abstention = screen_projection(projection_unknown)
 assert projection_abstention.build.model is None and projection_abstention.selection is None
 assert projection_abstention.retained == ('A', 'B')
+statistical_protocol = PoolProtocol('package-statistical', 'package-statistical',
+    'constructed-fixed-order', 'ordinal', 'IDs', 'constructed-panels',
+    'Synthetic declaration, no trained model', 'Constructed package probe only',
+    Scope('package-statistical', 'score', 'synthetic-unit', 'minimize'), {})
+statistical_panel = RankedPanel('calibration-draw', 'two-options', statistical_protocol.protocol_digest,
+    'a' * 64, ('A', 'B'), ('A', 'B'))
+statistical_truth = PanelOutcomes(statistical_panel.panel_digest, 'constructed exact truth',
+    (PanelOutcome('A', 0, {}), PanelOutcome('B', 1, {})))
+statistical_calibration = calibrate_panels(statistical_protocol,
+    (CalibrationPanel(statistical_panel, statistical_truth),), '1/2')
+statistical_future = RankedPanel('future-draw', 'three-options', statistical_protocol.protocol_digest,
+    'b' * 64, ('C', 'D', 'E'), ('C', 'D', 'E'))
+statistical_decision = select_pool(statistical_calibration, statistical_future)
+assert statistical_calibration.status == 'finite_conditional'
+assert statistical_decision.retained == ('C',)
+assert statistical_decision.guarantee_status == 'conditional_single_panel_marginal'
+assert statistical_decision.physical_attestation == 'not_established_by_this_program'
+assert not hasattr(statistical_decision, 'regret_bound')
+statistical_missing = PanelOutcomes(statistical_panel.panel_digest, 'constructed incomplete truth',
+    (PanelOutcome('A', None, {}), PanelOutcome('B', 1, {})))
+statistical_unknown = calibrate_panels(statistical_protocol,
+    (CalibrationPanel(statistical_panel, statistical_missing),), '1/2')
+assert statistical_unknown.n == 1 and statistical_unknown.threshold is None
+assert statistical_unknown.status == 'incomplete_calibration'
+assert select_pool(statistical_unknown, statistical_future).retained == ('C', 'D', 'E')
+statistical_unresolved = calibrate_panels(statistical_protocol, (), '1/20')
+assert statistical_unresolved.status == 'insufficient_calibration'
+assert select_pool(statistical_unresolved, statistical_future).retained == ('C', 'D', 'E')
 resources = files('lupine_discovery')
 for name in ('index.html', 'app.js', 'styles.css'):
     assert resources.joinpath('web', name).read_bytes(), 'missing web asset'
@@ -148,6 +178,7 @@ print(json.dumps({'status': 'passed', 'python': sys.version.split()[0],
                              'installed_http_cli_agreement', 'coupled_python_api_and_missing_point_fallback',
                              'coupled_and_projection_guarded_http_replay_agree_with_installed_cli',
                              'scoped_projection_translation_and_missing_bound_abstention',
+               'direct_statistical_pool_python_api_and_distinct_abstention',
                              'training_only_no_go_packaged_and_served']},
                  sort_keys=True))
 '''

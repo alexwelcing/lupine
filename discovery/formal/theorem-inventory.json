@@ -1,6 +1,6 @@
 {
-  "axiom_output_sha256": "37cc47a7ba1e876fefd55dc9a5b327c6a46d341b1b6cd0d9331e21bd64484b19",
-  "module_count": 7,
+  "axiom_output_sha256": "47973449335d90538dc233321d7087265f2ad1dfd4e51f4990dfae671fc8c468",
+  "module_count": 8,
   "modules": [
     {
       "source": "LupineCoupled.lean",
@@ -94,6 +94,98 @@
           "propext"
         ],
         "LupineCoupled.strict_witness_exclusion_sound": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ]
+      }
+    },
+    {
+      "source": "LupineDecisionPool.lean",
+      "source_sha256": "10a5962eedf30819388a835b052df91f4fff130c79258d31eb345f51071cf00a",
+      "theorem_count": 17,
+      "theorems": {
+        "LupineDecisionPool.all_minimizers_retained_iff": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineDecisionPool.empty_panel_score": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineDecisionPool.erase_strict_lower": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineDecisionPool.exists_maximum_score": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineDecisionPool.exists_minimum_score": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineDecisionPool.exists_order_statistic": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineDecisionPool.finite_weighted_loo_alpha_bound": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineDecisionPool.finite_weighted_loo_ceiling_bound": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineDecisionPool.finite_weighted_loo_failure_bound": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineDecisionPool.finite_weighted_symmetric_event_bound": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineDecisionPool.leave_one_out_failure_count": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineDecisionPool.maximum_or_zero_le_iff": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineDecisionPool.no_feasible_panel_score": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineDecisionPool.normalized_rank_threshold_iff": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineDecisionPool.order_statistic_lt_iff": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineDecisionPool.strict_lower_failure_count": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineDecisionPool.sum_finite_mass_eq_weighted_count": [
           "Classical.choice",
           "Quot.sound",
           "propext"
@@ -549,5 +641,5 @@
     }
   ],
   "schema": "lupine-formal-theorem-inventory-v1",
-  "theorem_count": 100
+  "theorem_count": 117
 }

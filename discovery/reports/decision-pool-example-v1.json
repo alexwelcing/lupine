@@ -1,0 +1,143 @@
+{
+  "cases": [
+    {
+      "complete_count": 3,
+      "decision_digest": "a641aba3d8d51f17f3cedce21b476b9e91f0bff400a44f8fdaf0f8b12e706475",
+      "guarantee_status": "conditional_single_panel_marginal",
+      "k": 2,
+      "known_answer_audit": {
+        "all_true_minimizers": [
+          "x02",
+          "x05"
+        ],
+        "interpretation": "Constructed realized failure; no population coverage experiment.",
+        "lost_minimizers": [
+          "x05"
+        ]
+      },
+      "n": 3,
+      "name": "finite-prefix",
+      "reasons": [
+        "finite_order_statistic_under_unverified_premises"
+      ],
+      "retained": [
+        "x01",
+        "x02",
+        "x03"
+      ],
+      "status": "finite_conditional",
+      "threshold": "1/2"
+    },
+    {
+      "complete_count": 2,
+      "decision_digest": "0b1def9ee896fd29f661a12b906d8dff46337b36cec56cc698af51424bc9a4c9",
+      "guarantee_status": "no_calibrated_guarantee",
+      "k": 2,
+      "n": 3,
+      "name": "missing-label",
+      "reasons": [
+        "incomplete_calibration_truth",
+        "retained_all_incomplete_calibration",
+        "no_pool_reduction"
+      ],
+      "retained": [
+        "x01",
+        "x02",
+        "x03",
+        "x04",
+        "x05",
+        "x06"
+      ],
+      "status": "incomplete_calibration",
+      "threshold": null
+    },
+    {
+      "complete_count": 0,
+      "decision_digest": "1a1dae8eb065f503de330e1fb260c34c51ebdb1f615c4f5bb71329b407f7eaec",
+      "guarantee_status": "deterministic_all_universe",
+      "k": 1,
+      "n": 0,
+      "name": "insufficient-count",
+      "reasons": [
+        "required_rank_exceeds_calibration_count",
+        "retained_all_insufficient_calibration",
+        "no_pool_reduction"
+      ],
+      "retained": [
+        "x01",
+        "x02",
+        "x03",
+        "x04",
+        "x05",
+        "x06"
+      ],
+      "status": "insufficient_calibration",
+      "threshold": "1"
+    },
+    {
+      "complete_count": 1,
+      "decision_digest": "b68494066413cd3407ec12f5dacdcb9a9ef998644461e17c878912a2dd4aefd8",
+      "guarantee_status": "conditional_single_panel_marginal",
+      "k": 1,
+      "n": 1,
+      "name": "all-optima-tied",
+      "reasons": [
+        "finite_order_statistic_under_unverified_premises",
+        "no_pool_reduction"
+      ],
+      "retained": [
+        "x01",
+        "x02",
+        "x03",
+        "x04",
+        "x05",
+        "x06"
+      ],
+      "status": "finite_conditional",
+      "threshold": "1"
+    },
+    {
+      "complete_count": 1,
+      "decision_digest": "1a217ac8c803703d2fb0e20379b664a65199809f4679c8978d80ebbf22efedaf",
+      "guarantee_status": "no_calibrated_guarantee",
+      "k": 1,
+      "n": 1,
+      "name": "unsupported-law",
+      "reasons": [
+        "unsupported_sampling_premise",
+        "retained_all_unsupported_premise",
+        "no_pool_reduction"
+      ],
+      "retained": [
+        "x01",
+        "x02",
+        "x03",
+        "x04",
+        "x05",
+        "x06"
+      ],
+      "status": "unsupported_premise",
+      "threshold": null
+    },
+    {
+      "complete_count": 1,
+      "decision_digest": "7603cc531aeb2953e5a57f4c1e56f245b5ef024ae954e29e8d897940279586c6",
+      "guarantee_status": "conditional_single_panel_marginal",
+      "interpretation": "Empty statistical prefix does not certify future infeasibility.",
+      "k": 1,
+      "n": 1,
+      "name": "statistical-empty",
+      "reasons": [
+        "finite_order_statistic_under_unverified_premises",
+        "statistical_empty_pool"
+      ],
+      "retained": [],
+      "status": "finite_conditional",
+      "threshold": "0"
+    }
+  ],
+  "controls_passed": 6,
+  "physical_attestation": "not_established_by_this_program",
+  "schema": "lupine.discovery.decision_pool.synthetic_example.v1",
+  "scope": "Exact Python API controls; not a wire schema or physical coverage validation."
+}

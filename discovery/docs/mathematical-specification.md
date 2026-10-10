@@ -1,13 +1,14 @@
 # Universal candidate-pool specification
 
 Status: mathematical specification. The [formal theorem inventory](../formal/theorem-inventory.json)
-records 100 compiled statements: 18 scalar-selector, 15 Pareto, 9 nonlinear
+records 117 compiled statements: 18 scalar-selector, 15 Pareto, 9 nonlinear
 interval/domain, 15 conditional finite-risk/rank, 12 interval-box sharpness,
-19 conservative coupled-affine statements, and 12 projection-algebra statements. See the [theorem map](../formal/README.md) and
+19 conservative coupled-affine statements, 12 projection-algebra statements, and 17 direct-pool counting/finite-law statements. See the [theorem map](../formal/README.md) and
 [actual verification record](../formal/VERIFICATION.md) for their precise scope.
 Python conformance tests are not a formal refinement proof of the executable
-runtime. Conditional finite-risk composition is included; exchangeability and
-conformal marginal coverage are not proved.
+runtime. Conditional finite-risk composition and a direct-pool finite weighted probability
+bound are included. Arbitrary measurable exchangeable laws and their scientific
+applicability are not proved.
 
 ## Objects and scope
 
@@ -317,10 +318,9 @@ rules. The [18 focused tests](../tests/test_coupled.py) and
 [independent audit](../reports/coupled-independent-audit.json), reporting
 10,003 checks across 11,027 synthetic worlds, are software evidence rather than
 a Python refinement proof. No physical coupling or scientific benchmark
-improvement follows. The [projection-field adapter design](projection-field-adapter.md)
-proposes scoped observation weights, anchors, and bounded discrepancies to
-connect Lupine correction fields to this interface; that scientific adapter
-is not yet implemented or validated.
+improvement follows. The implemented [projection-field adapter](projection-adapter.md) uses scoped
+observation weights, anchors and bounded discrepancies to connect declared
+correction fields to this interface; its physical premises remain unvalidated.
 
 ## Separate outcomes and partial truth
 
@@ -384,3 +384,36 @@ declared quantities to the existing coupled theorem premises. General matrices
 do not imply image coverage, and metadata equality does not prove scientific
 compatibility. Missing or empirical-only field/discrepancy bounds cause the
 runtime adapter to construct no numerical model and retain all original IDs.
+
+## Direct statistical candidate pools
+
+This separate Python-only mode calibrates a nested family of ranked pools,
+not an interval enclosure. For each complete finite panel, let M contain all
+true feasible tied minimizers. A frozen supplied permutation gives unique
+ranks r=1,...,m. Define R=0 if M is empty, otherwise
+`R=max(r(x)/m : x in M)`. For `0<=tau<=1`, keep every candidate satisfying
+`r(x)<=m*tau`. Then all of M survives exactly when `R<=tau`.
+
+For n complete calibration panels and exact `0<alpha<1`, use
+`k=ceil((n+1)*(1-alpha))` and the kth ordered score when k<=n. Otherwise use
+tau=1 and retain the whole future universe: the score has a proved mathematical
+upper bound, unlike an arbitrary residual. Any missing calibration label keeps
+its panel in n, withholds the threshold and retains all future candidates;
+unsupported sampling premises also abstain. A zero statistical pool is not a
+certificate of physical infeasibility.
+
+Whole-panel score exchangeability under a frozen ranking procedure yields the
+usual marginal split-conformal retention statement. The compiled probability
+result has narrower explicit scope: finite outcome weights sum to one and all
+indexed leave-one-out failure events have equal mass. It proves the count and
+weighted-sum bridge and then the alpha bound, without assuming the bound itself.
+It does not formalize arbitrary measurable exchangeability or validate a source
+population. The runtime's permutation upper bound, insufficient-rank branch
+and Python refinement are not formalized in this module.
+
+The guarantee is marginal over calibration and one future panel; it is neither
+conditional on realized calibration nor on feasibility, family or an individual
+candidate. It supplies no feasible witness, regret bound, physical enclosure or
+pool-size improvement. [The design](decision-pool-calibration-design.md) and
+[verification](../reports/decision-pool-verification.md) preserve exact
+counterexamples to stronger interpretations and all scientific limitations.
