@@ -106,3 +106,8 @@ Lean; this is not an independent scientific replication.
 Next: freeze reviewed MPEA header-only custody before its first real acquisition;
 separately integrate this API into strict wire/replay and the workbench without
 promoting the marginal claim to per-material certainty.
+
+Published as `522fb280bad7ef1794c97a0de1f64a0e90598efe`; the remote ref was
+verified and [Discovery Verify 38074899239](https://github.com/alexwelcing/lupine/actions/runs/38074899239)
+passed all four jobs at that exact SHA: both Python versions, isolated packaging,
+151-file manifest, 35 browser checks and the 117-statement proof/axiom audit.

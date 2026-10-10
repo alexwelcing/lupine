@@ -1,7 +1,7 @@
 {
   "schema": "lupine.discovery.runtime-manifest.v1",
   "python": "3.12.14",
-  "checkpoint": "direct-statistical-pool-python-api",
+  "checkpoint": "mpea-header-custody-construction",
   "files": {
     "pyproject.toml": "a73eec989447b99fec48de193218a0750079eeb5973406c53d7a0dc840d9d90f",
     "scripts/additional_archived_benchmark.py": "8f50f0fc8aaade6f895500856db91b6593e5da8f676c7bf325cdc0a938d73b9a",
@@ -19,6 +19,7 @@
     "scripts/descriptor_audit.py": "a6012caf399a955f2f96c0d1003093913161aed15cab107cf16b5f95359947d0",
     "scripts/diagnose_frozen_pool.py": "259213dfcd6ebc249a62364a36cc4e57e789b9dddcad24f964876734d07dff79",
     "scripts/known_answer_benchmark.py": "811bb416db778f23a7ed4fbc875f3820a4971b8428b07eac469fc2cceeaa8f2e",
+    "scripts/mpea_custody.py": "046aac4812802d1abf656aa93d0b832e8011e2feb59574615957c2550fe11b98",
     "scripts/package_smoke.py": "a94ec0eba01d437267a2dd99fff33788a726e3d9d16cb3e39fcfe3f73194ac3a",
     "scripts/projection_custody.py": "751bcec5123feef65bf4b459691b5ab89197dd28e599fa23a178e2f10ff36fcc",
     "scripts/reproduce_constrained.py": "74effa62aa70ccb9177ac859d21b17c08f709192c565cc85ce128605e3b50ea4",
@@ -136,6 +137,8 @@
     "tests/test_frozen_pool_diagnosis.py": "7671e18b860fbc03a52d295fb4dbceb5e503ec06d7885fbd60431e0005b109bb",
     "tests/test_io.py": "1d3e5f4f710ed371a0ca40d1faf582f841df731ef6773bf2912709cc4d22a797",
     "tests/test_known_answers.py": "79bc4627ccd1b9d903c6b246f1620015a3bf6653d9d73a93d4d84611c8d296a8",
+    "tests/test_mpea_custody.py": "cf2fc7a0bdaf9bd59589c123745aae6f353fa5837849e26d2a9438d62d090b19",
+    "tests/test_mpea_custody_review.py": "27cca2dc9ec6d96cbcbf06971fe352d6d4f5fb0572b33f8d6648a8ad4cb299bc",
     "tests/test_nonlinear.py": "822913fb9c80bbf6d2974577ce111b5a10923996c2937a8d4b225a869a295435",
     "tests/test_pareto.py": "dae95dc0d82674098a8a59577823bb83a8cbe8af9c103d837fa11532f621cb00",
     "tests/test_pareto_io.py": "f08337c7ff0eb538f0b06994942d1a3c3bfb3152e3254950fbac351820124b9d",

@@ -143,3 +143,11 @@ complete meaningful labels remain scientific premises. Marginal retention does
 not imply conditional-on-feasibility, fixed-calibration or per-material coverage.
 The exact counterexamples remain visible. No new archive result, physical-bound
 claim or scientific-superiority gate is passed by this engineering increment.
+
+## MPEA custody engineering checkpoint
+
+[Reviewed header-only custody](../reports/mpea-custody-engineering-v1.md) passes
+35 focused synthetic tests and the full 485-test Python suite. It must freeze
+before real acquisition and then preserve BLOCKED_SCHEMA until a separate
+schema amendment. No observation rows, numerical completeness, paired operating
+conditions, physical bounds or benchmark success are established by these tests.

@@ -3,6 +3,27 @@
 The current goal and ordered backlog are in `../GOAL.md`. Append concise entries
 with artifacts, actual checks, scientific implications, and the next action.
 
+## 2026-10-10 18:16 UTC — published statistical API; archive custodian ready
+
+- Pushed `522fb280bad7ef1794c97a0de1f64a0e90598efe` and verified the exact
+  remote ref. PR #263 now describes the direct-pool Python prototype and actual
+  Rhizo custody. [CI 38074899239](https://github.com/alexwelcing/lupine/actions/runs/38074899239)
+  passed all four jobs, including the 117-statement Lean build and axiom audit. The manifest binds 151 source files.
+- G15 header-only custody and independent review pass 35 synthetic checks.
+  The integrated full suite passes 485 tests with unchanged source hashes.
+  No MPEA datafile has been acquired or parsed. The producer accepts one pinned
+  source, verifies complete captured bytes before header parsing, preserves
+  cache conflicts, redacts unknown labels and cannot decode observation rows.
+- `mpea-custody-engineering-v1.md` records actual tests, hashes, limits and the
+  next commands. A valid first header returns BLOCKED_SCHEMA; there is no row
+  command or scientific protocol. The plan and inventory are being committed
+  together with source/tests before that acquisition, under existing authority.
+- Owner/checkpoint: root freezes/pushes G15, verifies CI, then runs the fixed
+  custodian and a fresh-process header reproduction. G16 backend, interface,
+  worker and independent-test owners are implementing the reviewed statistical
+  workbench contract in shared ignored scratch. Metadata-only schema research
+  runs separately; no new fit, threshold choice or exposed-test tuning occurs.
+
 ## 2026-10-10 18:12 UTC — exact statistical pools and finite probability proofs
 
 - Remote `429751038af7be32b0e6bac583508a59d0aa23c1` matches the local base and
