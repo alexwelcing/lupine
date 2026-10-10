@@ -1,0 +1,13 @@
+# Software verification: initial implementation
+
+Executed locally on 2026-10-10 with Python 3.12.14. This is a software verification record, not physical validation.
+
+- `python -m unittest discover -s tests -v`: **39 tests passed**. Includes exhaustive small integer worlds, 500 randomized compatible refinements, residual-cone checks, outcome separation, incomplete truth, identity and scope checks, certificate tampering, duplicate JSON keys, and malformed rational inputs.
+- The synthetic `select`, `verify`, and `replay` CLI commands completed successfully. The committed example certificate was recomputed after the final evidence-state wording change.
+- `python examples/anchored.py` completed: synthetic residual cones retained `query-1`, excluded `query-3`, and returned a conditional regret bound of 1.
+- `python -m pip wheel . --no-deps --no-build-isolation --wheel-dir dist` built a wheel successfully. A clean virtual environment installed that wheel with `--no-index --no-deps` and verified the example certificate from outside the source tree.
+- Two archived-data pilots ran with NumPy 2.3.5; outcomes and scientific failures are in `archived-v1.json` and `../docs/archived-benchmark.md`.
+
+`runtime-manifest.json` pins final Python source, tests, and benchmark-script bytes. The Lean package has a separate actual execution and axiom record in `../formal/VERIFICATION.md`. The Python tests are not a formal refinement proof from the executable implementation to Lean.
+
+A GitHub Actions workflow is configured for Python 3.11/3.12 and the pinned Lean toolchain. It has **not run remotely**, because repository creation is blocked by integration permissions. Local testing used Python 3.12; Python 3.11 compatibility is configured for CI but has not been executed in this environment.
