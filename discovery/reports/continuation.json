@@ -14,7 +14,7 @@
   "default_timezone": "America/New_York",
   "next_run_time_returned_at_creation": null,
   "last_run_time_returned_at_creation": null,
-  "execution_status": "continuation request observed within the active implementation session; no separate worker inferred",
+  "execution_status": "provider reports a scheduled run; matching continuation request was handled within the existing active implementation session",
   "notification_policy": "Substantive daily milestone summary, actionable blocker, or final release decision; suppress unchanged status.",
   "scope": "Resume latest GitHub goal and implement the next bounded increment with available tools, testing and recording actual outcomes.",
   "limits": "Scheduling success does not prove future tool availability, a completed build, or uninterrupted execution. Check and record each run. Do not silently extend the bounded schedule.",
@@ -28,6 +28,13 @@
     "recorded_at": "2026-10-10T17:39:28Z",
     "context": "Existing active session; tools and file-owning delegates were already executing G12/G13. Remote FETCH_HEAD and local HEAD both matched 0a8b248943fa1a65400214eebbe54377d8c3ff5e.",
     "action": "Reconciled current branch and continued implementation, review and tests without starting a competing writer.",
-    "scheduled_origin": "not independently verified from scheduler execution metadata"
+    "scheduled_origin": "Provider lookup reports last_run_time 2026-10-10T17:31:51.582589+00:00 for this automation. This is wake-up metadata, not evidence of a separate worker or completed experiment."
+  },
+  "provider_state_observed": {
+    "is_enabled": true,
+    "last_run_time": "2026-10-10T17:31:51.582589+00:00",
+    "updated_at": "2026-10-10T17:32:13.927464+00:00",
+    "schedule_unchanged": true,
+    "continuous_worker_started": false
   }
 }

@@ -113,3 +113,17 @@ The [upstream readiness audit](projection-data-readiness.md) identifies a Rhizo
 archive suitable for further metadata review. It establishes neither hard
 discrepancy bounds nor a new predictive result. Missing scientific premises
 continue to require abstention; all prior scientific NO-GO results stand.
+
+## Target-redacted Rhizo custody checkpoint
+
+Reviewed custody code and synthetic tests were frozen and pushed in `7c82058`
+before real acquisition; all four remote CI jobs passed. The fixed 110 artifacts
+then verified, all 36 units remained, and two fresh local extraction processes
+produced identical redacted metadata. The custodian acquired and decoded mixed
+target-bearing JSON; this is not blinded validation or a new experiment.
+[The readiness report](../reports/projection-custody-readiness-v1.md) preserves
+28 unit-level vacancy-reference ambiguities and unresolved checkpoint, condition,
+rights, physical-bound and multiple-heldout gates. `METADATA_COMPLETE` cannot
+promote a scientific recommendation claim. The exact current interface source
+passes [all four CI jobs](https://github.com/alexwelcing/lupine/actions/runs/38073151394),
+including 416 Python tests, 35 browser checks and all 100 formal statements.

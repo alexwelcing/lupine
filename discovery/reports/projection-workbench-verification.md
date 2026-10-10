@@ -3,6 +3,10 @@
 Executed on 2026-10-10 in the Linux x86-64 workspace with Python 3.12.14.
 This extends `0a8b248943fa1a65400214eebbe54377d8c3ff5e`, whose
 [four CI jobs passed](https://github.com/alexwelcing/lupine/actions/runs/38071896576).
+Published as `7c82058672e2f9ee24b9a774d530506a7e4526eb`, with 147 source
+files bound by `runtime-manifest.json`. [Discovery Verify 38073151394](https://github.com/alexwelcing/lupine/actions/runs/38073151394)
+completed successfully at that exact commit: Python 3.11/3.12, browser and Lean
+all pass, including the complete 100-statement build and axiom audit.
 The previous 325-test/27-browser/22-case checkpoint remains recorded in
 [projection-verification.md](projection-verification.md).
 

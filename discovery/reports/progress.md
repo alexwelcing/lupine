@@ -3,6 +3,36 @@
 The current goal and ordered backlog are in `../GOAL.md`. Append concise entries
 with artifacts, actual checks, scientific implications, and the next action.
 
+## 2026-10-10 17:55 UTC — published interface and actual archive custody
+
+- Pushed `7c82058672e2f9ee24b9a774d530506a7e4526eb` and verified the remote
+  ref. [Discovery Verify 38073151394](https://github.com/alexwelcing/lupine/actions/runs/38073151394)
+  completed successfully at that SHA: both Python versions, browser and Lean.
+  The source manifest binds 147 files; PR #263 records the current checks.
+- Only after that reviewed source freeze and CI, executed real G13 acquisition:
+  110/110 pinned Rhizo artifacts verified, all 36 units preserved. Two fresh
+  extraction processes produced identical metadata SHA-256
+  `8f987cff79add822430d47bac9cdd9fda202bb4135c078f08241ea9682be0b04`.
+  `projection-custody-reproduction-v1.json` records actual commands and scope.
+- The custodian acquired and decoded mixed target-bearing JSON; public output
+  withholds numerical targets. No numerical completeness check, reference
+  preference, eligibility decision, split, fit or simulation occurred. The
+  readiness report retains all 28 vacancy-reference ambiguities and 16 known
+  reconstructed-facet flags without excluding units. Checkpoint/conditions/
+  rights/common-field/multiple-heldout gates remain unknown; physical bounds
+  remain unsupported. Metadata completion does not make a scientific benchmark
+  ready. Original negative results remain unchanged.
+- Source reconnaissance identified MPEA v9 as a possible temperature/strength/
+  ductility archive, with joint usable counts and specimen matching unknown.
+  NIMS bulk access restrictions and ORNL's missing paired constraint remain
+  explicit. Only papers/catalogs/metadata were read; incidental numerical
+  publication content is disclosed. No MPEA observation datafile was acquired.
+- Owner/next: root publishes these evidence records. G14 owners implement and
+  independently check a separate exact statistical pool API; a scratch formal
+  module proves its deterministic counting/retention bridge. G15 prepares a
+  reviewed MPEA metadata custodian before acquisition. None of these drafts
+  creates new scientific validation or overwrites frozen test outcomes.
+
 ## 2026-10-10 17:46 UTC — projection workbench complete; custody freeze ready
 
 - G12 now preserves original projection declarations through strict JSON,
