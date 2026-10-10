@@ -25,9 +25,13 @@ This checkpoint covers the initial kernel and early retrospective work. The full
 - Resolve original dataset provenance and redistribution rights before bundling data.
 - Complete independent reproduction, release review, and remote publication.
 
-## Remote blocker
+## Repository home
 
-The local repository is `/workspace/lupine-discovery`. Creating `alexwelcing/lupine-discovery` through the current GitHub integration failed with `Resource not accessible by integration (createRepository)`. An empty repository accessible to the connection is needed before pushing. Local work continues independently of that permission.
+At Alex Welcing's direction, development now lives in `discovery/` on branch
+`research/lupine-discovery` of `alexwelcing/lupine`. Creation of a separate
+repository is deferred; the standalone source history is preserved as a merge
+parent so this directory can be split out later. See `HOSTING.md` for commands
+and the monorepo CI boundary.
 
 ## Resume
 

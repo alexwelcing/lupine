@@ -1,0 +1,42 @@
+name: Discovery Verify
+on:
+  push:
+    paths: ['discovery/**', '.github/workflows/discovery-verify.yml']
+  pull_request:
+    paths: ['discovery/**', '.github/workflows/discovery-verify.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: discovery
+    strategy:
+      matrix:
+        python: ['3.11', '3.12']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m pip install -e '.[benchmark]'
+      - run: python -m unittest discover -s tests -v
+      - run: lupine-discovery verify examples/abstract.json examples/abstract.certificate.json
+      - run: lupine-discovery replay examples/abstract.json examples/abstract.outcomes.json
+  lean:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install elan
+        run: curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+      - name: Build pinned proof package
+        working-directory: discovery/formal
+        run: |
+          export PATH="$HOME/.elan/bin:$PATH"
+          lake exe cache get || true
+          lake --wfail build
+          python3 -m unittest test_audit_axioms -v
+          python3 audit_axioms.py

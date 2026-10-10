@@ -27,3 +27,13 @@ Status values: TODO | IN PROGRESS | DONE | BLOCKED (with one-line reason) | REJE
   reviewable.
 - **Touching `deck/server.mjs`**: not needed — the serving contract (`/` →
   `index.html`, gated `/deck.html`, `/health`) is correct and tested.
+
+## Lupine Discovery research agenda
+
+The active four-day candidate-pool project is tracked in
+[`discovery/docs/four-day-plan.md`](../discovery/docs/four-day-plan.md), with
+execution state in [`discovery/STATUS.md`](../discovery/STATUS.md) and claims in
+[`discovery/docs/claim-ledger.md`](../discovery/docs/claim-ledger.md).
+It is incubating on branch `research/lupine-discovery` at Alex Welcing's direction
+and may be extracted later. Initial kernel and retrospective checkpoints are
+complete; the full research program remains IN PROGRESS.

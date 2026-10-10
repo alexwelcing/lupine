@@ -6,11 +6,11 @@ A universal, conditional candidate-pool engine grounded in [Lupine Rhizo](https:
 
 This is the initial research implementation for a [four-day project](docs/four-day-plan.md). See [STATUS.md](STATUS.md) for completed work and open gates. No new DFT is required to run the examples or archived experiments.
 
-Local verification: **18 Lean theorems compiled, 41 Python tests passed, and 6 axiom-audit parser tests passed**. See the [software execution record](reports/software-verification.md) and [formal verification record](formal/VERIFICATION.md). Remote CI has not run.
+Local verification: **18 Lean theorems compiled, 41 Python tests passed, and 6 axiom-audit parser tests passed**. See the [software execution record](reports/software-verification.md) and [formal verification record](formal/VERIFICATION.md). These counts record local verification; see [hosting and CI](HOSTING.md) for the current branch workflow.
 
 ## Run it
 
-Python 3.11 or newer:
+In the Lupine monorepo, first run `cd discovery`. Python 3.11 or newer:
 
 ```sh
 python -m pip install -e .
@@ -66,6 +66,8 @@ A separate [posthoc descriptor audit](docs/descriptor-audit.md) found three norm
 Certificates record the sealed input digest, exact selection, exclusion witnesses, evidence-link assessment, and a heuristic measurement queue. `verify` recomputes the certificate; it verifies identity and runtime consistency. It does not attest physical truth. Missing, assumed, rejected, or synthetic evidence remains visible. The measurement queue never truncates the retained pool and carries no acquisition-optimality guarantee.
 
 The residual-envelope adapter supports Lupine's anchored Lipschitz correction formulation, conditional on a global residual bound in the declared scope. A Lipschitz estimate from sampled pairs does not discharge that premise. Run `python examples/anchored.py` for a synthetic end-to-end example. See [upstream provenance](docs/upstream-provenance.json) and the [adapter architecture](docs/architecture.md).
+
+See [HOSTING.md](HOSTING.md) for the branch location and later extraction.
 
 ## License
 

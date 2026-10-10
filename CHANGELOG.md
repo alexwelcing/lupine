@@ -16,6 +16,22 @@ Newest first. Dates are absolute.
 
 ---
 
+## 2026-10-10 - Lupine Discovery branch incubation
+
+- **Why.** House the universal candidate recommendation project in Lupine at
+  Alex Welcing's direction, with a separate repository deferred.
+- **What.** Import the standalone project and its three original commits into
+  `discovery/`, with exact interval selection, evidence-aware replay, conditional
+  Lean proofs, and a [four-day agenda](discovery/docs/four-day-plan.md).
+- **Results.** The imported checkpoint records 18 compiled theorems, 41 Python
+  tests and six axiom-audit tests passing. Two archived pilots expose unsound
+  interval assumptions; a posthoc descriptor audit establishes a 1.15 eV
+  archive error floor for composition-only band-gap predictors. These are
+  conditional and finite-archive results, not physical discovery certification.
+- **Next.** Follow the [remaining gates](discovery/STATUS.md), improve justified
+  joint coverage, and retain a clean path to extraction. Existing Rhizo and
+  Library responsibilities remain as recorded in the research release map.
+
 ## 2026-06-19 - LUPI 0.3 Studio, molecule trust, and public-surface split prep
 
 - **Why.** The checkout had a full LUPI release pass, public-surface split plan,
