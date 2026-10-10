@@ -1,0 +1,42 @@
+{
+  "audit_kind": "posthoc exact normalized elemental-fraction collisions",
+  "benchmark_parameters_changed": false,
+  "tasks": [
+    {
+      "archive_rows": 4604,
+      "archive_sha256": "11d79ac6f2c25e23a136295e9bc37ea9ea4a9fa936c6bc366e777c1cb1c397b9",
+      "archive_url": "https://raw.githubusercontent.com/hackingmaterials/matbench/936176db18ca4cd7b38cbd957c017a5bac770c6b/scripts/artifacts/matbench_expt_gap.json.bz2",
+      "excluded_formula_rows": 0,
+      "inconsistent_target_descriptor_groups": 3,
+      "interpretation": "posthoc lower bound for deterministic exact-composition-only predictors on recorded labels; not a physical irreducibility claim",
+      "largest_descriptor_group_rows": 2,
+      "maximum_within_descriptor_target_range": "23/10",
+      "minimum_unavoidable_archive_max_absolute_error": "23/20",
+      "multirow_descriptor_groups": 3,
+      "rows_in_inconsistent_groups": 6,
+      "rows_in_multirow_groups": 6,
+      "target": "gap expt",
+      "task": "matbench_expt_gap",
+      "unique_exact_composition_descriptors": 4601,
+      "units": "eV"
+    },
+    {
+      "archive_rows": 312,
+      "archive_sha256": "f62ab2e43009e58bdeb3cb83637359e163e065caaf9fe309fab9bb8c7ad54aac",
+      "archive_url": "https://raw.githubusercontent.com/hackingmaterials/matbench/936176db18ca4cd7b38cbd957c017a5bac770c6b/scripts/artifacts/matbench_steels.json.bz2",
+      "excluded_formula_rows": 0,
+      "inconsistent_target_descriptor_groups": 0,
+      "interpretation": "posthoc lower bound for deterministic exact-composition-only predictors on recorded labels; not a physical irreducibility claim",
+      "largest_descriptor_group_rows": 1,
+      "maximum_within_descriptor_target_range": "0",
+      "minimum_unavoidable_archive_max_absolute_error": "0",
+      "multirow_descriptor_groups": 0,
+      "rows_in_inconsistent_groups": 0,
+      "rows_in_multirow_groups": 0,
+      "target": "yield strength",
+      "task": "matbench_steels",
+      "unique_exact_composition_descriptors": 312,
+      "units": "MPa"
+    }
+  ]
+}

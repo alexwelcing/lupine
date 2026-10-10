@@ -3,6 +3,7 @@
   "python": "3.12.14",
   "files": {
     "scripts/archived_benchmark.py": "71dde6731fd8a31950218da5d7b5770ad771937a2bdc772e0bf87eb5e91c423b",
+    "scripts/descriptor_audit.py": "a6012caf399a955f2f96c0d1003093913161aed15cab107cf16b5f95359947d0",
     "src/lupine_discovery/__init__.py": "9f3e5972643a56b1e64182152264e383eeff10fdfc4646b16e2a4422b913d061",
     "src/lupine_discovery/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
     "src/lupine_discovery/cli.py": "47c2cae22b6b94d53c721cb78e49eccddd0b458bf9896f13c4a4bedbe938e4e1",
@@ -14,6 +15,7 @@
     "tests/test_adversarial_integration.py": "109d4666d8d99536e85c6a6308e9d4426b164cb2f193a8a9f10027158c50e9b9",
     "tests/test_archived_benchmark.py": "aea239eb99f020bb076fd7466176ed3e225a886b7e29d05e338855040dc07b51",
     "tests/test_core.py": "9b528e5c3b5c5c190d56699c22f042ad11f553eeefb4a61bade7fbc9d5a2893b",
+    "tests/test_descriptor_audit.py": "9c07ffaaff1a022f2d5687e5246ff53d70717c78364dfb8807a5b09ef237abbc",
     "tests/test_envelope.py": "532a334e4a65e1e08a3a65e3c0778f840a595ad33a9caa140429241e67ba7f23",
     "tests/test_io.py": "1d3e5f4f710ed371a0ca40d1faf582f841df731ef6773bf2912709cc4d22a797",
     "tests/test_replay.py": "cd096d8632d73dda4d088875c98d4778eabb810cc745c588d35f897722ba543b"
