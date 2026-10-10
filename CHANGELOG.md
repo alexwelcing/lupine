@@ -18,6 +18,13 @@ Newest first. Dates are absolute.
 
 ## 2026-10-10 - Lupine Discovery branch incubation
 
+- **Autonomous goal.** Alex delegated the multi-day build and task selection.
+  Added the [completion goal and backlog](discovery/GOAL.md), durable execution
+  journal, and a bounded four-day continuation schedule. Began the uncertainty
+  repair with exact risk allocation and calibration ranks; insufficient samples
+  produce an explicit unbounded diagnostic. Five focused tests pass. This does
+  not establish sampling premises or add physical certification.
+
 - **Workbench follow-up.** Added a local research interface backed by the exact
   engine, separate outcome reveal, certificate download, and a known-answer
   screen. Thirteen finite cases pass their independently derived expectations;

@@ -10,6 +10,7 @@ This ledger separates mathematical implications, software execution, archived ob
 | Incumbent regret is bounded | `regret_bound`, mathematical specification | Formal statement takes an explicit lower-envelope bound; finite minimum instantiation is explained in the specification |
 | Compatible refinement shrinks the pool | `best_upper_retained_shrinks` | Same candidate type/scope and a refined best-upper witness |
 | Runtime implements the finite equations | `tests/test_core.py`, `tests/test_envelope.py` | Exhaustive bounded worlds and randomized refinement tests; no full formal refinement proof |
+| Calibration planner computes exact ranks and explicit unbounded outcomes | `tests/test_calibration.py`, `reports/calibration-verification.md` | Conditional arithmetic only; sampling assumptions unverified; selector/CLI/UI integration pending |
 | Serialization and certificate recomputation reject tested tampering | `tests/test_io.py`, `tests/test_adversarial_integration.py` | Tested cases; certificate is not a digital signature or physical attestation |
 | Local interface exercises the actual selector | `tests/test_server.py`, `scripts/browser_smoke.py`, `reports/browser-v1.json` | Desktop/mobile Chromium checks and exact API/CLI agreement; research preview, not a public hosting service |
 | Finite known-answer expectations hold | `reports/known-answers-v1.json`, `tests/test_known_answers.py` | 11 sound fixtures and 2 failure-detection controls; independent oracle, synthetic software evidence only |

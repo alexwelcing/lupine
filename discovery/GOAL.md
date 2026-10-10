@@ -59,7 +59,7 @@ can complete an experiment while leaving its scientific release gate open.
 | ID | Priority | Work and acceptance | State | Dependencies / evidence |
 |---|---|---|---|---|
 | G0 | P0 | Preserve and repair current CI before stacking changes | DONE at baseline | `fb26810`; [all four jobs passed](https://github.com/alexwelcing/lupine/actions/runs/38055093551) |
-| G1a | P0 | Exact joint-risk calibration planner; finite/unbounded distinction; adversarial rank/budget tests | ACTIVE | `docs/joint-coverage-design.md`; implementation started 2026-10-10 |
+| G1a | P0 | Exact joint-risk calibration planner; finite/unbounded distinction; adversarial rank/budget tests | DONE | `src/lupine_discovery/calibration.py`; five focused checks; `docs/calibration-planner.md`. Integration remains G1b. |
 | G1b | P0 | Integrate calibration outcomes and safe abstention through versioned inputs, replay, CLI, and browser; reject unsupported guarantee promotion | TODO | G1a; preserve existing finite-core contract |
 | G2 | P1 | Select, provenance-audit, and preregister a constrained multi-property archived task before reading evaluation targets | TODO | Investigate jointly recorded properties, including NIST JARVIS as a possible archived-calculation source; source not selected yet |
 | G3 | P1 | Run frozen constrained and shift evaluations with equal-budget baselines and complete failure reporting | TODO | G1b, G2; no tuning against the three already opened pilot test sets |
@@ -114,8 +114,9 @@ physical validity. The target remains an inspectable research release.
 
 ## Continuation and stopping
 
-Set up bounded scheduled continuation runs for the four-day window. The exact
-confirmed scheduler configuration is recorded in `reports/continuation.json`.
+Bounded scheduled continuation was configured successfully: every four hours,
+24 occurrences across the four-day window. The exact confirmed scheduler
+configuration is recorded in `reports/continuation.json`.
 Scheduled wake-ups are not a claim that a process runs uninterrupted between
 them. On each run, attempt actual progress and save the checkpoint to GitHub.
 

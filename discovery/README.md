@@ -6,7 +6,7 @@ A universal, conditional candidate-pool engine grounded in [Lupine Rhizo](https:
 
 This is the initial research implementation for a [four-day project](docs/four-day-plan.md). See [STATUS.md](STATUS.md) for completed work and open gates. No new DFT is required to run the examples or archived experiments.
 
-Verification: **66 Python tests and 10 desktop/mobile Chromium checks passed**, including 13 deterministic known-answer cases. The unchanged formal kernel has **18 compiled Lean theorems and 6 passing axiom-audit parser tests**. See the [workbench execution record](reports/workbench-verification.md), [formal verification record](formal/VERIFICATION.md), and [hosting and CI](HOSTING.md).
+Verification: **71 Python tests passed**, including the new calibration planner and 13 deterministic known-answer cases. The workbench checkpoint passed **10 desktop/mobile Chromium checks**; the unchanged formal kernel has **18 compiled Lean theorems and 6 passing axiom-audit parser tests**. See the [calibration record](reports/calibration-verification.md), [workbench record](reports/workbench-verification.md), and [formal record](formal/VERIFICATION.md). The active build goal and ordered backlog are in [GOAL.md](GOAL.md).
 
 ## Open the interface
 
@@ -82,7 +82,7 @@ python scripts/additional_archived_benchmark.py --output .cache/additional-archi
 
 Read the [Matbench protocol](docs/archived-benchmark.md), [FreeSolv protocol](docs/additional-archived-benchmark.md), their [original](reports/archived-v1.json) and [additional](reports/additional-archived-v1.json) result artifacts, and the [general evaluation protocol](docs/evaluation-protocol.md). Raw datasets are downloaded with pinned hashes and are not bundled. The runs used NumPy 2.3.5; install that version to reproduce the recorded numerical environment.
 
-The [joint-coverage design](docs/joint-coverage-design.md) derives one possible probabilistic route under explicit exchangeability assumptions. At a 5% joint failure budget, the pilot sample sizes would force unbounded intervals under that conservative construction. This route is documented, not implemented or validated by the pilots.
+The [joint-coverage design](docs/joint-coverage-design.md) derives one possible probabilistic route under explicit exchangeability assumptions. The new [exact calibration planner](docs/calibration-planner.md) implements its risk allocation and rank arithmetic, returning explicit unbounded diagnostics when calibration is insufficient. At a 5% joint failure budget, the gap and steel pilot dimensions require that result. Sampling assumptions remain unverified; the planner is not yet connected to the selection interface and has not validated the pilots.
 
 A separate [posthoc descriptor audit](docs/descriptor-audit.md) found three normalized-composition collisions with different band-gap labels. Their maximum disagreement gives a rigorous 1.15 eV worst-case error floor for deterministic predictors using only that descriptor on the recorded archive. The cause of the label disagreement remains unresolved; benchmark settings were not changed.
 

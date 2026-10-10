@@ -23,6 +23,7 @@ sealed held-out outcomes ------------------------> replay audit
 |---|---|---|
 | `core.py` | Exact interval arithmetic and finite selection | Assumes semantic scope and physical enclosure |
 | `envelope.py` | Intersect anchored residual cones | Supplied distances and global Lipschitz premise are not inferred |
+| `calibration.py` | Exact uniform joint-risk allocation and finite/unbounded order-statistic diagnostics | Sampling premises remain unverified; not yet integrated with selector/CLI/UI |
 | `evidence.py` | Validate evidence identity and scope links | A reported source is not a verified physical premise |
 | `serialization.py` | Strict JSON, rational decoding, outcome binding | No implicit unit conversion or floating-point rounding |
 | `cli.py` | Certificates, explanations, recomputation, replay interface | Certificate verification proves runtime consistency only |

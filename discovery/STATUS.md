@@ -16,7 +16,7 @@ The active outcome, ordered backlog, and autonomous execution rules are in
 - Local browser workbench using the actual selector: input upload/editing, candidate and evidence inspection, certificate export, and separately bound outcome replay. Desktop and mobile Chromium checks passed.
 - Thirteen deterministic known-answer cases with an independent exhaustive oracle: eleven sound fixtures and two deliberately unsound controls. All declared expectations pass; this is software evidence, not materials prediction validation.
 - Three pinned published-data pilots with recorded negative findings; no new DFT or synthesis. All three empirical interval constructions fail simultaneous coverage; band gap loses five tied optima.
-- Independently reviewed joint-coverage derivation and identifiability limits; probabilistic construction remains unimplemented.
+- Independently reviewed joint-coverage derivation and identifiability limits. Exact calibration planning now implements uniform scalar-event risk allocation, rational rank arithmetic, and explicit unbounded diagnostics. Assumptions remain unverified; safe selection/CLI/UI integration is the next task (G1b).
 - Posthoc exact-descriptor audit: three band-gap label collisions imply a 1.15 eV archive worst-error floor for composition-only predictors; physical causes remain unresolved.
 - Standalone conditional Lean proof package: 18 theorems compiled. Consult `formal/VERIFICATION.md` for exact execution evidence and axioms.
 - Workbench checkpoint: 66 Python tests and 10 Chromium interaction checks passed; packaged assets and fixtures verified in an isolated wheel install. See `reports/workbench-verification.md`.

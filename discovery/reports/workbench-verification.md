@@ -37,9 +37,11 @@ This record establishes software behavior, not physical predictive validity.
   remaining research-preview blockers. This is a shared-workspace code review,
   not independent scientific reproduction.
 
-`runtime-manifest.json` records the checked source, assets, packaged fixtures,
+`runtime-manifest-workbench.json` records the checked source, assets, packaged fixtures,
 scripts, and test hashes. The earlier snapshot is preserved as
 `runtime-manifest-initial.json`; `software-verification.md` records that history.
+Later source additions are recorded in the current `runtime-manifest.json` and
+their own execution records.
 
 ## Scientific evaluation
 
