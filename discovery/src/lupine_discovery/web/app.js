@@ -610,13 +610,160 @@
     }
     protocol.append(node('p', '', 'The archives were already public. Composition or exact-SMILES grouping reduces direct duplication, but it does not establish prospective blindness or simultaneous interval coverage. Reported success on a task is not evidence of superiority to the included baseline.'));
   }
+  function renderConstrained(report) {
+    const content = $('constrained-content');
+    const status = $('constrained-status');
+    content.hidden = true; status.hidden = false;
+    status.className = 'notice';
+    if (!report) {
+      status.textContent = 'No constrained calculation report is bundled yet. No measured gate outcome is available.';
+      return;
+    }
+    if (!['lupine.discovery.constrained.replay.v1', 'lupine.discovery.constrained.dashboard.v1'].includes(report.schema)
+        || report.protocol_id !== 'jarvis-gap-formation-v1') {
+      status.className = 'notice error';
+      status.textContent = 'The bundled constrained report has an unsupported schema or protocol. Its results have not been displayed.';
+      return;
+    }
+    const rateText = (rate) => {
+      if (!rate || rate.numerator === undefined || rate.denominator === undefined) return 'Unavailable';
+      const value = `${exactText(rate.numerator)} / ${exactText(rate.denominator)}`;
+      return String(rate.denominator) === '0' ? `${value} · undefined` : value;
+    };
+    const provenance = $('constrained-provenance'); provenance.replaceChildren();
+    provenance.append(node('p', '', `Protocol: ${report.protocol_id} · frozen commit: ${report.protocol_commit || 'not supplied'}`));
+    provenance.append(node('p', '', report.interpretation || 'Retrospective archived calculations; sampling premises and independent predictive superiority remain unverified.'));
+    const source = report.source || {};
+    try {
+      const url = new URL(source.url || source.source_url || source.archive_url);
+      if (url.protocol === 'https:') {
+        const link = node('a', 'archive-source', 'Pinned archive source ↗');
+        link.href = url.href; link.target = '_blank'; link.rel = 'noopener noreferrer'; provenance.append(link);
+      }
+    } catch { /* Missing or unsupported source locations stay in the receipt. */ }
+    const exportButton = node('button', 'text-button', 'Download displayed report'); exportButton.type = 'button';
+    exportButton.addEventListener('click', () => download(report, 'lupine-constrained-dashboard.json')); provenance.append(exportButton);
+    const gateNames = {
+      engineering_integrity: 'Engineering integrity', nontrivial_constrained_evidence: 'Constrained population',
+      observed_primary_screening: 'Observed primary screening', recommendation_value: 'Recommendation value at budget 4',
+      shift_behavior: 'Oxygen-family scope handling',
+    };
+    const gates = $('constrained-gates'); gates.replaceChildren();
+    for (const [key, title] of Object.entries(gateNames)) {
+      const gate = report.gates?.[key];
+      const card = node('article', 'constrained-gate'); card.dataset.gate = key;
+      const label = typeof gate?.status === 'string' ? gate.status.toUpperCase() : 'UNREPORTED';
+      const style = ['PASS', 'FAIL', 'OPEN', 'BLOCKED'].includes(label) ? label.toLowerCase() : 'unknown';
+      card.append(node('span', `gate-status ${style}`, label), node('h4', '', title));
+      if (!gate) card.append(node('p', '', 'No measured gate result was supplied.'));
+      else {
+        for (const text of [gate.reason, gate.claim, gate.scientific_interpretation]) {
+          if (typeof text === 'string') card.append(node('p', text.includes('BLOCKED') ? 'status-fail' : '', text));
+        }
+        const checks = node('ul', 'gate-checks');
+        for (const [name, value] of Object.entries(gate.checks || {})) {
+          const result = value === true ? 'PASS' : value === false ? 'FAIL' : value === null ? 'OPEN' : exactText(value);
+          const item = node('li'); item.append(node('strong', value === false ? 'status-fail' : '', `${result} · `), document.createTextNode(pretty(name))); checks.append(item);
+        }
+        if (checks.childElementCount) card.append(checks);
+        if (gate.independent_panel_premise) card.append(node('p', '', `Independent-panel premise: ${pretty(gate.independent_panel_premise)}.`));
+        if (gate.external_replication_required === true) card.append(node('p', '', 'A separate frozen replication is still required.'));
+      }
+      gates.append(card);
+    }
+    const arms = $('constrained-arms'); arms.replaceChildren();
+    const policies = [['interval', 'Interval acquisition'], ['nominal_5nn', 'Nominal 5NN'], ['nearest_1nn', 'Nearest 1NN'], ['random_0', 'Random · seed 0']];
+    const budgets = [0, 1, 2, 4, 8, 20];
+    for (const role of ['primary', 'shift']) {
+      const arm = report.arms?.[role];
+      const section = node('section', 'panel constrained-arm'); section.dataset.arm = role;
+      const heading = node('h3', '', role === 'primary' ? 'Primary · oxygen-free compositions' : 'Shift · oxygen-containing compositions');
+      heading.id = `constrained-${role}-heading`; section.setAttribute('aria-labelledby', heading.id); section.append(heading);
+      section.append(node('p', 'constrained-arm-scope', role === 'primary'
+        ? 'The frozen protocol assigns training and calibration to the oxygen-free family. Finite screening remains conditional on unverified sampling and predictor premises.'
+        : 'The frozen protocol withholds the oxygen family from fitting and calibration and requires operational abstention, with nominal acquisition order. The scope-handling gate reports whether that requirement held. Coverage below is an unsupported-transfer diagnostic, not an operational interval guarantee.'));
+      if (!arm) { section.append(node('p', 'notice', 'This arm was not reported.')); arms.append(section); continue; }
+      const facts = node('dl', 'constrained-arm-facts');
+      addFact(facts, 'Panels', exactText(arm.panel_count));
+      addFact(facts, 'Candidates', exactText(arm.candidate_count));
+      addFact(facts, 'Panels with feasible candidates', exactText(arm.feasible_panel_count));
+      addFact(facts, 'Panels without feasible candidates', exactText(arm.no_feasible_panel_count));
+      addFact(facts, 'Mixed-feasibility panels', exactText(arm.mixed_feasibility_panel_count));
+      addFact(facts, role === 'shift' ? 'Diagnostic simultaneous coverage' : 'Panel simultaneous coverage', rateText(arm.panel_simultaneous_coverage));
+      addFact(facts, 'All-optimum retention · feasible panels', rateText(arm.all_optimum_retention));
+      addFact(facts, 'Median retained fraction', exactText(arm.median_retained_fraction));
+      addFact(facts, 'Lost optimum candidates', exactText(arm.lost_optimum_count));
+      addFact(facts, 'False infeasibility exclusions', exactText(arm.false_infeasibility_exclusion_count));
+      addFact(facts, 'Actually infeasible certified incumbents', exactText(arm.actually_infeasible_certified_incumbent_count));
+      section.append(facts);
+      if (role === 'shift') section.append(node('p', 'field-help', 'Retention from abstaining preserves candidates without showing predictive accuracy. Revealed archive values can establish finite-case feasibility; unmeasured feasibility and regret remain uncertified.'));
+      section.append(node('p', 'field-help', 'Hit = panels with a revealed feasible candidate / all panels. Success = panels finding a candidate within 0.1 eV of their feasible optimum / panels with a feasible optimum. Budget 0 suggestions are unverified and do not count as hits.'));
+      const region = node('div', 'constrained-table-region'); region.tabIndex = 0;
+      region.setAttribute('role', 'region'); region.setAttribute('aria-label', `${role === 'primary' ? 'Primary' : 'Shift'} reveal-budget comparisons, scroll horizontally for all policies`);
+      const table = node('table', 'constrained-table');
+      table.append(node('caption', 'sr-only', 'Verified feasible hits and successes within 0.1 eV of optimum, by reveal budget and policy. Each count shows its reported denominator.'));
+      const head = node('thead'), headers = node('tr');
+      for (const text of ['Reveals per panel', ...policies.map(([, name]) => name)]) { const cell = node('th', '', text); cell.scope = 'col'; headers.append(cell); }
+      head.append(headers); table.append(head);
+      const body = node('tbody');
+      for (const budget of budgets) {
+        const row = node('tr', budget === 4 ? 'primary-budget' : ''); row.dataset.budget = String(budget);
+        const label = node('th', '', budget); label.scope = 'row';
+        if (budget === 4) label.append(node('span', 'budget-primary', 'Primary comparison'));
+        row.append(label);
+        for (const [policy] of policies) {
+          const metrics = arm.policy_curves?.[policy]?.[String(budget)];
+          const cell = node('td'); cell.dataset.policy = policy;
+          if (!metrics) cell.append(node('span', '', 'Unavailable'));
+          else {
+            cell.append(node('span', 'budget-measure', `Hit ${rateText(metrics.feasible_hit)}`), node('span', 'budget-measure', `Success ${rateText(metrics.within_0_1_ev_success)}`));
+            const excluded = metrics.within_0_1_ev_success?.undefined;
+            if (excluded !== null && excluded !== undefined && String(excluded) !== '0') cell.append(node('small', 'budget-undefined', `${exactText(excluded)} panel(s) have no defined optimum.`));
+          }
+          row.append(cell);
+        }
+        body.append(row);
+      }
+      table.append(body); region.append(table); section.append(region);
+      section.append(node('p', 'field-help', 'Budget 4 was fixed before outcomes. These counts do not establish superiority outside this archive. Primary comparisons use random seed 0; the other random orders are sensitivity analyses, not independent experiments.'));
+      if (arm.paired_budget4) {
+        const details = node('details', 'protocol-details'); details.append(node('summary', '', 'Budget 4 paired comparisons'));
+        for (const [key, comparison] of Object.entries(arm.paired_budget4)) {
+          const title = policies.find(([id]) => id === key)?.[1] || pretty(key);
+          details.append(node('h4', '', `Interval acquisition versus ${title}`));
+          details.append(node('p', '', `Wins ${exactText(comparison.wins)} · losses ${exactText(comparison.losses)} · ties ${exactText(comparison.ties)} · feasible-panel denominator ${exactText(comparison.feasible_panel_denominator)}.`));
+          details.append(node('p', '', `Reported success-fraction difference: ${exactText(comparison.paired_success_fraction_difference)}. One-sided paired sign-test p: ${exactText(comparison.one_sided_sign_test_p)}; provisional threshold: ${exactText(comparison.multiplicity_threshold)}.`));
+          details.append(node('p', '', comparison.interpretation || 'The independent-panel premise is unverified. Shared calibration and chemical dependence prevent independently confirmed superiority.'));
+        }
+        section.append(details);
+      }
+      const sensitivity = arm.random_sensitivity?.budgets;
+      if (sensitivity) {
+        const details = node('details', 'protocol-details'); details.append(node('summary', '', 'All-random-order sensitivity'));
+        for (const budget of budgets) {
+          const result = sensitivity[String(budget)];
+          if (result) details.append(node('p', '', `Budget ${budget}: success fraction mean ${exactText(result.within_0_1_ev_success_mean)}, range ${exactText(result.within_0_1_ev_success_minimum)} to ${exactText(result.within_0_1_ev_success_maximum)} across ${exactText(result.defined_seed_count)} / ${exactText(result.seed_count)} defined random orders.`));
+        }
+        section.append(details);
+      }
+      arms.append(section);
+    }
+    const protocol = $('constrained-protocol'); protocol.replaceChildren();
+    const shown = ['schema', 'protocol_id', 'protocol_commit', 'protocol_sha256', 'source', 'source_receipt_sha256', 'freeze_receipt_sha256', 'model_digest', 'target_seal', 'premise_status', 'calibration', 'training_calibration_cost', 'full_report_identity', 'full_report_sha256', 'full_report_path', 'reproduction', 'interpretation'];
+    for (const key of shown) {
+      if (report[key] === undefined) continue;
+      const item = node('div', 'constrained-metadata'); item.append(node('h4', '', pretty(key)));
+      item.append(node('pre', '', typeof report[key] === 'object' ? JSON.stringify(report[key], null, 2) : exactText(report[key]))); protocol.append(item);
+    }
+    status.hidden = true; content.hidden = false;
+  }
   async function loadBenchmarks() {
     $('benchmark-status').hidden = false;
     $('benchmark-status').className = 'notice';
     $('benchmark-status').textContent = 'Running the known-answer suite and loading recorded archive evaluations…';
     try {
       const report = await api('/api/benchmarks');
-      renderKnown(report.known_answers); renderArchives(report.archived, report.additional_archived);
+      renderKnown(report.known_answers); renderArchives(report.archived, report.additional_archived); renderConstrained(report.constrained_archived);
       if (!$('refresh-benchmarks')) {
         const refresh = node('button', 'button button-outline button-small', '↻ Run known-answer suite again');
         refresh.id = 'refresh-benchmarks'; refresh.addEventListener('click', loadBenchmarks);

@@ -6,7 +6,7 @@ A universal, conditional candidate-pool engine grounded in [Lupine Rhizo](https:
 
 This is the initial research implementation for a [four-day project](docs/four-day-plan.md). See [STATUS.md](STATUS.md) for completed work and open gates. No new DFT is required to run the examples or archived experiments.
 
-Verification now includes exact calibration abstention, multi-objective Pareto selection, nonlinear interval enclosures, and desktop/mobile interaction checks. The proof package contains **42 compiled and audited Lean statements**. See the [engine extension record](reports/engine-extension-verification.md), [formal record](formal/VERIFICATION.md), and machine-readable [theorem inventory](formal/theorem-inventory.json). The active goal and ordered backlog are in [GOAL.md](GOAL.md).
+Verification now includes exact calibration abstention, multi-objective Pareto selection, nonlinear interval enclosures, and desktop/mobile interaction checks. The proof package contains **69 compiled and audited Lean statements**, including conditional risk composition and the limits of safe pruning from intervals alone. **186 Python tests and 17 browser checks pass.** See the [current verification record](reports/constrained-release-verification.md), [formal record](formal/VERIFICATION.md), and machine-readable [theorem inventory](formal/theorem-inventory.json). The active goal and ordered backlog are in [GOAL.md](GOAL.md).
 
 ## Open the interface
 
@@ -17,7 +17,7 @@ python -m pip install -e .
 lupine-discovery serve
 ```
 
-Open `http://127.0.0.1:8765` on the machine running the command. Choose a case or upload a problem, inspect the retained pool and exclusion reasons, download its certificate, then reveal separately bound known answers. The **Known answers** screen runs the finite fixture suite and displays all three recorded scientific archive reports. See the [workbench guide](docs/workbench.md).
+Open `http://127.0.0.1:8765` on the machine running the command. Choose a case or upload a problem, inspect the retained pool and exclusion reasons, download its certificate, then reveal separately bound known answers. The **Known answers** screen runs the finite fixture suite and displays the three original archive pilots plus the measured constrained JARVIS comparison, including every failed release gate. See the [workbench guide](docs/workbench.md).
 
 This is a local research preview. The [release matrix](docs/release-validation.md) records remaining scientific validation gates.
 
@@ -75,6 +75,16 @@ Three published experimental-property archives were evaluated with frozen surrog
 | Molecular hydration free energy | 138 | 8 | 22 | Yes, in this run |
 
 Nominal top-one ranking already selected an optimum in each archive. These results establish neither superiority of this engine nor a physical discovery. The band-gap failure demonstrates why roughly 90% individual coverage is insufficient for a guarantee about the whole pool.
+
+The next, preregistered constrained experiment uses archived NIST JARVIS band
+gaps and formation energies. It retains all 1,000 primary candidates: 49/50
+panels have simultaneous interval coverage, but the useful-screening gate
+fails. At four reveals, interval acquisition finds a near-optimal feasible
+answer in 42/50 panels versus nominal ranking's 40/50; the predeclared
+recommendation-value gate also fails. Unsupported oxygen-family panels
+explicitly abstain. Read the [executed result](reports/constrained-result-v1.md)
+and [one-command reproduction](docs/constrained-reproduce.md). These are
+archived calculations, not operating-condition or experimental validation.
 
 ```sh
 python -m pip install -e '.[benchmark]'

@@ -192,6 +192,19 @@ def run():
             expect(page.locator("#archive-cards .archive-card")).to_have_count(3)
             expect(page.locator("#archive-cards")).to_contain_text("Molecular hydration energies")
             checks.append("synthetic_and_three_archived_reports_separate")
+            constrained = json.loads((root / "src/lupine_discovery/resources/constrained-v1.json").read_text())
+            expect(page.locator("#constrained-content")).to_be_visible()
+            for gate, result in constrained["gates"].items():
+                expect(page.locator(f'[data-gate="{gate}"] .gate-status')).to_have_text(result["status"])
+            for arm in ("primary", "shift"):
+                for budget in (0, 1, 2, 4, 8, 20):
+                    row = page.locator(f'[data-arm="{arm}"] tr[data-budget="{budget}"]')
+                    expect(row).to_have_count(1)
+                    for policy in ("interval", "nominal_5nn", "nearest_1nn", "random_0"):
+                        expect(row.locator(f'td[data-policy="{policy}"]')).to_have_count(1)
+            expect(page.locator("#constrained-protocol")).to_contain_text(constrained["scientific_result_sha256"])
+            expect(page.locator('[data-arm="shift"]')).to_contain_text("unsupported")
+            checks.append("measured_constrained_gates_scopes_budgets_and_identity")
             page.evaluate("window.scrollTo(0, 0)")
             page.screenshot(path=str(artifacts / "desktop-benchmarks.png"), full_page=True)
 
@@ -213,6 +226,10 @@ def run():
             assert mobile.evaluate("document.documentElement.scrollWidth <= window.innerWidth + 1")
             mobile.locator("#nav-benchmarks").click()
             expect(mobile.locator("#benchmark-content")).to_be_visible()
+            assert mobile.evaluate("document.documentElement.scrollWidth <= window.innerWidth + 1")
+            expect(mobile.locator("#constrained-content")).to_be_visible()
+            mobile.locator('[data-arm="primary"] .constrained-table-region').focus()
+            mobile.keyboard.press("ArrowRight")
             assert mobile.evaluate("document.documentElement.scrollWidth <= window.innerWidth + 1")
             mobile.evaluate("window.scrollTo(0, 0)")
             mobile.screenshot(path=str(artifacts / "mobile-benchmarks.png"), full_page=True)

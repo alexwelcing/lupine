@@ -1,11 +1,13 @@
 # Universal candidate-pool specification
 
 Status: mathematical specification. The [formal theorem inventory](../formal/theorem-inventory.json)
-records 42 compiled statements: 18 scalar-selector, 15 Pareto, and 9 nonlinear
-interval/domain theorems. See the [theorem map](../formal/README.md) and
+records 69 compiled statements: 18 scalar-selector, 15 Pareto, 9 nonlinear
+interval/domain, 15 conditional finite-risk/rank, and 12 interval-box sharpness
+theorems. See the [theorem map](../formal/README.md) and
 [actual verification record](../formal/VERIFICATION.md) for their precise scope.
 Python conformance tests are not a formal refinement proof of the executable
-runtime. No probability theorem is included in that Lean inventory.
+runtime. Conditional finite-risk composition is included; exchangeability and
+conformal marginal coverage are not proved.
 
 ## Objects and scope
 
@@ -195,8 +197,12 @@ independent predictor/rule freezing, and candidate generation that preserves
 each marginal premise. The union bound then needs no independence between
 candidate events. These are explicit unverified assumptions, not facts inferred
 from IDs, timestamps, residual arrays, or a receipt digest. Exact rank/allocation
-arithmetic and finite output establish no probability guarantee by themselves;
-no probability theorem or probabilistic Python refinement is compiled here.
+arithmetic and finite output establish no probability guarantee by themselves.
+`LupineRisk` proves finite risk composition and transfer to a supplied
+deterministic conclusion under explicit valid event-risk premises, with a
+concrete finite weighted probability instance. It also proves the exact rank
+and minimum-count arithmetic above. It does not derive marginal coverage from
+residual arrays or establish probabilistic Python refinement.
 
 With finite radii and `assumed_unverified` premises, the prepared scalar problem
 enters the existing exact selector, retaining its conditional sound-interval
@@ -213,6 +219,24 @@ Retaining everyone preserves every feasible optimum trivially, but provides no
 evidence of useful pool reduction. Physical evidence remains missing or
 unverified, and the three existing archived pilot failures are not repaired by
 adding this conservative route.
+
+## Sharpness of interval-only scalar screening
+
+For ordered finite intervals, retain x exactly when x is possibly feasible and
+its score lower bound is no greater than every certified feasible candidate's
+score upper bound. `LupineSharpness` proves this holds if and only if some world
+inside the full Cartesian interval box makes x a feasible global minimizer.
+Construct such a world by assigning x every lower endpoint and every other
+candidate every upper endpoint. Every other feasible candidate is then already
+certified feasible, so x's score is no larger. With no certified incumbent, the
+comparison is vacuous and every possibly feasible candidate has such a world.
+
+Consequently any rule that preserves every tied feasible minimizer in every
+compatible interval world must retain the entire scalar pool. This is a limit
+of the supplied information, not a claim that every constructed world occurs
+in physics. Sound cross-candidate relations, mechanistic restrictions or tighter
+bounds can restrict the admissible worlds and permit further pruning. See
+[the sharpness contract and constructed-world tests](sharpness.md).
 
 ## Separate outcomes and partial truth
 

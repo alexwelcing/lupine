@@ -18,10 +18,11 @@ The active outcome, ordered backlog, and autonomous execution rules are in
 - Three pinned published-data pilots with recorded negative findings; no new DFT or synthesis. All three empirical interval constructions fail simultaneous coverage; band gap loses five tied optima.
 - Independently reviewed joint-coverage derivation and identifiability limits. Exact calibration planning now implements uniform scalar-event risk allocation, rational rank arithmetic, and explicit unbounded diagnostics. Assumptions remain unverified. Versioned calibrated inputs now propagate finite conditional intervals or explicit all-retained abstention through CLI, replay, and browser.
 - Posthoc exact-descriptor audit: three band-gap label collisions imply a 1.15 eV archive worst-error floor for composition-only predictors; physical causes remain unresolved.
-- Standalone conditional Lean proof package: 42 theorems compiled across scalar, Pareto, and nonlinear interval modules. Consult `formal/VERIFICATION.md` for exact execution evidence and axioms.
+- Standalone conditional Lean proof package: 69 theorems compiled across scalar, Pareto, nonlinear interval, finite-risk and sharpness modules. Consult `formal/VERIFICATION.md` for exact execution evidence and axioms.
 - Pareto runtime and IO preserve tradeoffs, ties, feasible witnesses, and partial-truth states. Selected exact nonlinear maps reject invalid domains. See `reports/engine-extension-verification.md` for current checks; earlier checkpoints remain archived.
-- All 19 packaged cases pass selection, certificate verification and replay in a fresh wheel installation. The interface passes 16 Chromium checks across scalar, calibrated, and Pareto modes.
-- The constrained NIST JARVIS evaluation protocol was frozen and pushed before target acquisition; implementation and guarded equal-budget evaluation are active.
+- All 19 packaged cases pass selection, certificate verification and replay in a fresh wheel installation. The measured constrained report is packaged and served identically. The interface passes 17 Chromium checks across scalar, calibrated, Pareto and constrained-benchmark views.
+- The constrained NIST JARVIS protocol was frozen before target acquisition. The complete guarded evaluation passed engineering, nontriviality and shift-abstention checks, but failed useful-screening and recommendation-value gates. All 1,000 primary candidates survive; budget-four near-optimal success is 42/50 versus nominal ranking's 40/50. See `reports/constrained-result-v1.md`.
+- A fresh noneditable wheel reproduced source partitioning, predictions, calibration and freeze byte-for-byte from verified raw source bytes. The complete one-command workflow is implemented; these same-host checks are not independent scientific replication.
 
 ## Remaining four-day gates
 
@@ -29,7 +30,7 @@ This checkpoint covers the kernel, local research interface, and initial retrosp
 
 - Establish defensible simultaneous interval bounds under declared scientific scope, or explicitly abstain from physical guarantees.
 - Broaden independent archived tasks, including actual operating-condition constraints and distribution shift; freeze protocols before examining evaluation outcomes.
-- Complete constrained archived-calculation and family-shift evaluation at matched evidence-acquisition budgets. Pareto/nonlinear mathematical implementation is complete; scientific usefulness remains a separate gate.
+- Diagnose the constrained benchmark's broad intervals using permitted training/calibration evidence, and freeze a changed construction on fresh evaluation data. Preserve the completed negative result and explicit unsupported-shift abstention.
 - Audit runtime/formal conformance beyond examples and exhaustive small worlds; no formal refinement claim exists yet.
 - Resolve original dataset provenance and redistribution rights before bundling data.
 - Complete independent scientific reproduction and scoped release review. Branch publication is not a validated scientific release.

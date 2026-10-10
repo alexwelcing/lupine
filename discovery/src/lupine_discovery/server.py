@@ -37,6 +37,9 @@ def benchmark_report():
     additional = files("lupine_discovery").joinpath("resources/additional-archived-v1.json")
     if additional.is_file():
         result["additional_archived"] = json.loads(additional.read_text(encoding="utf-8"))
+    constrained = files("lupine_discovery").joinpath("resources/constrained-v1.json")
+    if constrained.is_file():
+        result["constrained_archived"] = json.loads(constrained.read_text(encoding="utf-8"))
     return result
 
 

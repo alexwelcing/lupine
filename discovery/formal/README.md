@@ -8,7 +8,11 @@ model. Soundness is an explicit theorem hypothesis, never an asserted axiom.
 `LupinePareto.lean` extends the selector to arbitrary objective types, using
 certified feasible strict componentwise dominance witnesses. `LupineIntervals.lean`
 proves finite real multiplication, reciprocal, division, and square enclosures.
-Each module has its own namespace. All three modules are default build targets.
+`LupineRisk.lean` proves finite event-risk composition and exact rational rank
+resolution from explicit premises. `LupineSharpness.lean` characterizes the scalar
+retained set as the smallest universally safe set when only the supplied interval
+constraints are known. Each module has its own namespace. All five
+modules are default build targets.
 
 The standalone package pins Lean `v4.29.0` and Mathlib
 `8a178386ffc0f5fef0b77738bb5449d50efeea95`, matching the Mathlib/toolchain
@@ -109,6 +113,83 @@ of an optimal enclosure of a whole expression. Reciprocal and division require
 the entire denominator interval to exclude zero, even when the numerator is
 zero. Square is proved directly and therefore avoids the negative lower bound
 that multiplying a sign-crossing interval by itself can introduce.
+
+## Finite joint-risk theorem map
+
+`RiskLaw Ω` records the event-risk properties used by the proof: a real-valued
+mass for every event, empty-event mass zero, total mass one, monotonicity, and
+binary subadditivity. These fields are explicit hypotheses, not asserted project
+axioms. This is a normalized monotone subadditive capacity; additivity is not
+required, so a `RiskLaw` need not itself be a probability distribution.
+Outcome type `Ω` can be arbitrary; the indexed event collection is
+finite. Every marginal bound must refer to this same event law and sampling
+mechanism. Statistical independence is not required.
+
+`finiteWeightedRisk` constructs these properties from a concrete finite outcome
+type with nonnegative weights summing to one. The proof establishes its event
+mass as the sum of included outcome weights; it does not infer weights or
+sampling validity from experimental data. No adapter to Mathlib's general
+measure/probability types is compiled in this module. The outcome space describes
+sampling randomness and is distinct from the material candidate pool; a finite
+candidate pool does not make that randomness a finite probability space.
+
+| Theorem in `LupineRisk` | Mathematical guarantee |
+| --- | --- |
+| `risk_nonnegative`, `risk_at_most_one` | The explicit event-law properties imply every event risk is between zero and one |
+| `finite_union_bound` | Risk of a finite union is at most the sum of its individual event risks |
+| `allocated_joint_failure_bound` | Valid per-event risk bounds whose allocations sum to at most delta bound joint failure risk by delta |
+| `finite_weighted_joint_failure_bound` | The allocated bound applies directly to a finite distribution with nonnegative normalized outcome weights |
+| `uniform_allocation_sum`, `uniform_joint_failure_bound` | With N nonzero indexed events, N allocations of delta/N sum exactly to delta and imply the corresponding joint bound |
+| `failure_subset_bound` | Any bad decision event contained in the bounded failure union inherits its risk bound |
+| `conditional_conclusion_failure_bound`, `conditional_conclusion_success_bound` | A conclusion that holds whenever all indexed premises hold fails with risk at most delta and succeeds with mass at least 1-delta |
+| `finite_rank_iff` | For rational epsilon, `ceil((n+1)*(1-epsilon)) <= n` exactly when `1/(n+1) <= epsilon`, including the equality boundary |
+| `finite_rank_iff_minimum_count` | For positive rational epsilon, finite rank is equivalent to `ceil(1/epsilon)-1 <= n`, matching the minimum-sample diagnostic |
+| `rank_positive`, `rank_at_most_next` | Epsilon<1 makes the rank positive; epsilon>=0 makes it no greater than n+1 |
+| `insufficient_resolution_rank` | A nonnegative allocation below `1/(n+1)` gives precisely rank n+1, which the runtime represents as an unavailable finite radius |
+
+The rational rank statements are arithmetic, not order-statistic coverage
+theorems. The natural ceiling agrees with the runtime's integer ceiling on the
+accepted `0 < epsilon < 1` domain. Its behavior on negative rank expressions
+outside that domain is not a runtime correspondence claim.
+No exchangeability theorem, conformal marginal-coverage theorem, or
+data-derived marginal failure bound is proved. The deterministic conclusion
+bridge is an explicit hypothesis; this module does not mechanically instantiate
+it with the scalar/Pareto runtime or establish Python refinement. The compiled
+results explain how valid marginal premises would compose and when the proposed
+calibration rank is unavailable. They do not make the current archived interval
+failures disappear or establish their sampling assumptions.
+
+## Interval-box sharpness theorem map
+
+The scalar selector retains exactly the candidates that can be feasible global
+minimizers in at least one world compatible with its intervals. Here a world
+assigns every candidate a score and constraint values anywhere in their supplied
+intervals. Every interval must be ordered. The construction places the selected
+candidate at its lower endpoints and all other candidates at their upper
+endpoints; candidates whose feasibility is not certified then become infeasible
+in that world.
+
+| Theorem in `LupineSharpness` | Mathematical guarantee |
+| --- | --- |
+| `witness_world_sound` | The constructed world lies within every ordered interval |
+| `witness_candidate_feasible` | A possible-feasible selected candidate is feasible in that world |
+| `witness_other_feasible_iff_certified` | Each other candidate is feasible in that world exactly when its intervals certify feasibility |
+| `witness_candidate_minimizer`, `box_retained_realizable` | Every retained candidate is a feasible global minimizer in a compatible constructed world |
+| `compatible_minimizer_box_retained`, `box_retained_iff_realizable` | Conversely every compatible-world feasible minimizer is retained, giving an exact characterization |
+| `box_retained_iff_best_upper_retained` | With an attained best-upper witness, the characterization equals the scalar threshold selector |
+| `no_certified_box_retained_iff_possible` | Without a certified feasible candidate, the characterization is exactly possible feasibility |
+| `box_retained_universally_safe` | The characterized pool retains every feasible global minimizer in every compatible world |
+| `box_retained_minimal`, `pruning_retained_has_counterexample` | Every universally safe pool contains this pool; excluding one of its candidates loses a feasible minimizer in some compatible world |
+
+These statements preserve all tied minimizers and quantify over arbitrary
+candidate and constraint types. They establish necessity only for selectors
+whose information is the Cartesian product of these intervals. A compatible
+constructed world need not be physically attainable or satisfy additional known
+correlations. Extra scientifically justified constraints can support narrower
+safe pools. A large retained pool can therefore be unavoidable under the supplied
+interval information without establishing that the predictor or evidence is
+adequate for useful material discovery. This module does not prove Python
+refinement or Pareto-selector minimality.
 
 ## Reproduction and trust
 

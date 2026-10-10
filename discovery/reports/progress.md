@@ -3,6 +3,38 @@
 The current goal and ordered backlog are in `../GOAL.md`. Append concise entries
 with artifacts, actual checks, scientific implications, and the next action.
 
+## 2026-10-10 — constrained experiment, reproduction and information limits
+
+- Completed the preregistered JARVIS constrained evaluation: 100 panels,
+  103 policies and 206,000 revealed target bundles. Engineering, nontriviality
+  and unsupported-shift handling pass; screening and recommendation value fail.
+  All 1,000 primary candidates survive. Budget-four near-optimal success is
+  42/50 vs nominal 40/50, gain 4 points and paired sign p=5/16. Failed gates,
+  all denominators and unsupported transfer diagnostics are visible in the UI.
+- Preserved the original strict-parser BLOCKED receipt and separately committed
+  format amendment. Frozen producer/core code is unchanged after evaluation.
+  Raw archives/full reveal logs remain ignored and reproducible locally.
+- A fresh noneditable wheel rebuilt six identical source/model artifacts. The
+  complete fresh-workdir workflow then reproduced the scientific digest
+  `cd6308600c90b431f8ce22b9aeee196ab747e4e8e84ca18809120043dc0ba900`.
+  A separately expressed audit reconstructed all 10,300 histories and 61,800
+  budget snapshots and confirmed the negative gates. These are same-source
+  computational checks, not independent scientific replication.
+- Current executed checks: 186 Python tests, 17 Chromium interactions,
+  isolated wheel with all 19 cases and measured report, 69 compiled/audited Lean
+  statements and 11 axiom-audit tests pass. See
+  `constrained-release-verification.md` and `../formal/VERIFICATION.md`.
+- G8 diagnoses two input bottlenecks without evaluation-target access: 46/50
+  panels lack a certified incumbent; all 50 have overlapping score bounds.
+  New sharpness proofs show the scalar pool is already minimal for preserving
+  every possible tied optimum under interval-only information. Conditional
+  joint-risk composition and exact rank boundaries are also proved.
+- Decision: local research-preview engineering is ready; predictive superiority
+  is NO-GO for the current construction. Continue G9 training-only development
+  under a frozen protocol, and G10 explicit coupled-evidence design. Changes
+  informed by opened outcomes require fresh calibration/evaluation before any
+  new scientific claim. Branch publication and remote CI are the next checks.
+
 ## 2026-10-10 — sustained active development
 
 - Alex clarified that he wants continuous work. Continued the active session

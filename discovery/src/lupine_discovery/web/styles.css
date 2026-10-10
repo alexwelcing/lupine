@@ -1369,6 +1369,20 @@ textarea {
   color:var(--muted);
   overflow-wrap:anywhere
 }
+.constrained-gate p+p {
+  margin-top:7px
+}
+.gate-checks {
+  list-style:none;
+  padding:0;
+  margin:12px 0 0
+}
+.gate-checks li+li {
+  margin-top:8px
+}
+.constrained-gate .status-fail {
+  color:var(--red)
+}
 .gate-status {
   display:inline-block;
   font-size:10px;
@@ -1421,6 +1435,10 @@ textarea {
   border:1px solid var(--line);
   border-radius:4px
 }
+.constrained-table-region:focus-visible {
+  outline:3px solid #9f86b5;
+  outline-offset:4px
+}
 .constrained-table {
   border-collapse:collapse;
   width:100%;
@@ -1445,9 +1463,16 @@ textarea {
 }
 .constrained-table th[scope="row"] {
   font-family:var(--mono);
-  white-space:nowrap
+  white-space:nowrap;
+  position:sticky;
+  left:0;
+  background:white;
+  box-shadow:1px 0 var(--line)
 }
 .constrained-table tr.primary-budget {
+  background:#f5f1f8
+}
+.constrained-table tr.primary-budget th {
   background:#f5f1f8
 }
 .constrained-table .budget-primary {
@@ -1463,9 +1488,25 @@ textarea {
 .constrained-table .budget-measure+.budget-measure {
   margin-top:4px
 }
+.budget-undefined {
+  display:block;
+  font-size:9px;
+  color:var(--muted);
+  margin-top:5px
+}
 #constrained-protocol {
   padding-top:13px;
   overflow-wrap:anywhere
+}
+.constrained-metadata h4 {
+  margin:15px 0 5px;
+  font-size:11px
+}
+.constrained-metadata pre {
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  margin:0;
+  font:10px var(--mono)
 }
 @media (max-width:600px) {
   .constrained-definitions {

@@ -52,6 +52,10 @@ for name in ('index.html', 'app.js', 'styles.css'):
     assert resources.joinpath('web', name).read_bytes(), 'missing web asset'
 for name in ('archived-v1.json', 'additional-archived-v1.json'):
     assert json.loads(resources.joinpath('resources', name).read_text())
+constrained = json.loads(resources.joinpath('resources', 'constrained-v1.json').read_text())
+assert constrained['schema'] == 'lupine.discovery.constrained.dashboard.v1'
+assert constrained['gates']['observed_primary_screening']['status'] == 'FAIL'
+assert constrained['gates']['recommendation_value']['status'] == 'FAIL'
 server = make_server(0)
 thread = threading.Thread(target=server.serve_forever, daemon=True)
 thread.start()
@@ -61,6 +65,8 @@ try:
         assert response.status == 200 and b'Lupine' in response.read()
     with urlopen(url + '/api/catalog') as response:
         assert json.load(response)['cases'] == catalog
+    with urlopen(url + '/api/benchmarks') as response:
+        assert json.load(response)['constrained_archived'] == constrained
     for schema in sorted(schemas):
         row = next(row for row in catalog if get_case(row['id'])['problem']['schema'] == schema)
         problem = get_case(row['id'])['problem']
@@ -78,7 +84,8 @@ print(json.dumps({'status': 'passed', 'python': sys.version.split()[0],
                   'certificate_digests': certificates, 'replay_digests': replays,
                   'known_answer_summary': known['summary'],
                   'checks': ['all_packaged_cases_select_verify_replay', 'known_answer_oracle_and_controls',
-                             'web_assets_and_original_archive_reports', 'installed_http_cli_agreement']},
+                             'web_assets_and_original_archive_reports', 'constrained_negative_results_packaged_and_served',
+                             'installed_http_cli_agreement']},
                  sort_keys=True))
 '''
 

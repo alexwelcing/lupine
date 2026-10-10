@@ -200,6 +200,21 @@ class ServerTests(unittest.TestCase):
         self.assertEqual(result["dominance_witness_correctness"], {"bad": False})
         self.assertEqual(result["empirical_soundness"], "refuted_on_observed_outcomes")
 
+    def test_constrained_dashboard_preserves_recorded_failures_and_identity(self):
+        from importlib.resources import files
+        recorded = json.loads(files("lupine_discovery.resources").joinpath("constrained-v1.json").read_text())
+        status, result, _ = self.request("/api/benchmarks")
+        self.assertEqual(status, 200)
+        self.assertEqual(result["constrained_archived"], recorded)
+        self.assertEqual(recorded["gates"]["observed_primary_screening"]["status"], "FAIL")
+        self.assertEqual(recorded["gates"]["recommendation_value"]["status"], "FAIL")
+        self.assertEqual(recorded["arms"]["primary"]["retained_candidate_count"], 1000)
+        self.assertEqual(recorded["arms"]["primary"]["policy_curves"]["interval"]["4"]
+                         ["within_0_1_ev_success"]["numerator"], 42)
+        self.assertNotIn("oracle_access_log", recorded)
+        self.assertEqual(recorded["full_report_identity"]["distribution"],
+                         "local_reproducible_artifact_not_bundled")
+
 
 if __name__ == "__main__":
     unittest.main()

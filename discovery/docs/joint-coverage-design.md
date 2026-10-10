@@ -1,6 +1,6 @@
 # Optional design: joint coverage for a finite candidate pool
 
-This document derives a possible probabilistic premise for the exact interval selector. Its exact allocation and order-statistic arithmetic is now implemented in the optional [calibration planner](calibration-planner.md), with explicit unverified assumptions and unbounded diagnostics. The selector and archived pilots still use finite intervals; the planner is not yet integrated into the CLI or interface. No physical or probabilistic guarantee has been established for the archived pilots, and no adaptive conformal inference is implemented.
+This document derives a possible probabilistic premise for the exact interval selector. Its exact allocation and order-statistic arithmetic is now implemented in the optional [calibration planner](calibration-planner.md), with explicit unverified assumptions and unbounded diagnostics. The calibrated schema now integrates this planner through CLI, replay and the browser. A supported finite plan supplies exact intervals to the original selector; insufficient calibration or unsupported sampling scope withholds screening and retains the entire universe. No physical or probabilistic guarantee has been established for the archived pilots, and no adaptive conformal inference is implemented.
 
 ## Deterministic implication on a soundness event
 

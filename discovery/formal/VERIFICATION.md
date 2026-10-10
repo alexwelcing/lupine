@@ -1,9 +1,56 @@
 # Actual verification record
 
-## Pareto and nonlinear extension
+## Joint-risk and interval-box sharpness extension
+
+Completed on `2026-10-10` in the Linux x86_64 branch workspace. The commands
+below were actually executed successfully against the current sources.
+
+- `lake --wfail build`: passed all five default modules, 981 jobs, no warnings.
+- `python3 audit_axioms.py`: independently re-elaborated all five proof modules,
+  verified complete per-module output coverage, and passed all 69 theorem audits.
+- `python3 -m unittest test_audit_axioms -v`: all eleven adversarial audit tests
+  passed.
+- `lake env lean --version`: Lean `4.29.0`, commit
+  `98dc76e3c0a9b856c9b98726b713fb04fab16740`, Release.
+- `git -C .lake/packages/mathlib rev-parse HEAD`: exact manifest/config pin
+  `8a178386ffc0f5fef0b77738bb5449d50efeea95`.
+
+The current [theorem inventory](theorem-inventory.json) and [axiom output](AXIOMS.txt)
+were regenerated from that fresh audit. Counts are 18 scalar-selector theorems,
+15 Pareto theorems, 9 interval-enclosure/domain theorems, 15 joint-risk/rank
+theorems, and 12 scalar interval-box sharpness theorems. Each module is bound to
+its source SHA-256 and each theorem lists its actual logical dependencies.
+All 69 depend only on `propext`, `Classical.choice`, and `Quot.sound`; none depends
+on an admitted proof or project-specific axiom.
+
+The local build reused the already compiled pinned dependencies through the
+ignored `.lake/packages` symlink and compiled the additional finite-sum and
+rational-floor dependencies from pinned Mathlib source. Both new project modules
+were compiled with warnings treated as failures. No dependency cache or local
+symlink is part of the committed proof package.
+
+`LupineRisk` proves conditional finite joint-risk allocation without independence,
+the transfer of a supplied deterministic correctness implication to an event-risk
+bound, and exact rational finite-rank resolution. Its `RiskLaw` premises describe
+a normalized monotone subadditive capacity, which need not be additive
+probability. A concrete constructor proves the required properties for finite
+nonnegative normalized outcome weights. No general Mathlib measure adapter,
+exchangeability proof, conformal marginal-coverage proof, or derivation of valid
+marginal bounds from the archived data is included. The arithmetic agrees with
+the runtime rank on its accepted positive allocation below one; no general
+Python refinement is established.
+
+`LupineSharpness` proves the scalar retained pool is the smallest pool preserving
+every feasible global minimizer, including ties, in every world compatible with
+the supplied ordered interval box. For each retained candidate it constructs
+a compatible world in which that candidate is a feasible minimizer. Those worlds
+need not be physically attainable or obey additional correlations; the theorem
+does not rule out narrower safe pools supported by extra justified information.
+
+## Historical Pareto and nonlinear extension
 
 Completed on `2026-10-10` in the Linux x86_64 branch workspace. All commands
-below were actually executed successfully against the current sources.
+below were actually executed successfully against the sources at that checkpoint.
 
 - `lake --wfail build`: passed all three default modules, 770 jobs, no warnings.
 - `python3 audit_axioms.py`: independently re-elaborated all three proof modules,
@@ -16,12 +63,13 @@ below were actually executed successfully against the current sources.
 - `git -C .lake/packages/mathlib rev-parse HEAD`: exact manifest/config pin
   `8a178386ffc0f5fef0b77738bb5449d50efeea95`.
 
-The current [theorem inventory](theorem-inventory.json) is generated from actual
-fresh Lean output, records every theorem's allowed logical dependencies, and
-binds each module to its SHA-256. Counts are 18 scalar-selector theorems,
-15 Pareto theorems, and 9 interval-enclosure/domain theorems. `AXIOMS.txt` contains
-the combined output. Every theorem depends only on `propext`, `Classical.choice`,
-and `Quot.sound`; none depends on an admitted proof or a project-specific axiom.
+The checkpoint's theorem inventory was generated from actual
+fresh Lean output, recorded every theorem's allowed logical dependencies, and
+bound each module to its SHA-256. Counts were 18 scalar-selector theorems,
+15 Pareto theorems, and 9 interval-enclosure/domain theorems. `AXIOMS.txt` held
+the combined output, now extended by the latest audit. Every theorem depended
+only on `propext`, `Classical.choice`, and `Quot.sound`; none depended on an
+admitted proof or a project-specific axiom.
 
 The local build reused the already compiled, pinned dependency graph via an
 ignored `.lake/packages` symlink. Both new project modules were freshly compiled;
