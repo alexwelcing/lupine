@@ -139,3 +139,93 @@ scope and permitted metadata, not calibration/evaluation outcome-driven tuning. 
 semantics or paired-panel availability do not support the desired task, preserve
 the readiness finding and execute an honestly narrower evaluation where possible.
 No recommendation-quality or superiority conclusion follows from these notes.
+
+## A separately declared complete-record secondary population
+
+A separately preregistered complete-record archival population could support a
+valid secondary recovery evaluation. This is a design distinction, not a
+registered population, an executed eligibility decision or permission to read
+rows. No actual observation rows or targets were read, and no numeric parameters
+are selected by this addition. All usable counts remain unknown.
+
+Assign and preserve every original record identity and study allocation before
+target-presence assessment. Before target access, a future protocol must freeze
+the required quantities, semantic eligibility, numeric parsing and missingness
+criteria, and the rule for generating secondary panels. These rules must cover
+malformed values, ambiguous units, duplicate observations and unresolved pairing.
+Completeness means interpretable measurements of the declared quantities, not
+merely nonempty cells. The rules can be frozen before target access even though
+actual eligibility membership becomes known afterward.
+
+A custodian could then determine complete-record eligibility without exposing
+numeric performance values to ranking or task-selection decisions. After that
+eligible population is formed, declare its panels using the already frozen rule.
+This differs from declaring calibration panels, discovering incomplete outcomes
+and dropping the difficult panels or calibrating only their known scores. Once
+secondary panels are declared, preserve every panel and retain the direct-pool
+incomplete-panel abstention behavior. Do not reallocate studies or strata after
+seeing eligibility counts to obtain more favorable or larger splits.
+
+Training targets alone may fit the ranker and apply any preregistered
+training-derived threshold rule. Calibration and evaluation targets may not
+choose the task, ranker, subgroup, panel rule or threshold. The secondary task's
+estimand is recovery among records with the required reported outcomes, not
+performance over the entire original archive or future materials.
+
+Report the full eligibility funnel from all original records, with exclusion
+reasons, preserved study allocations, condition counts, and metadata distributions
+of included and excluded records. Incomplete records remain part of the broader
+readiness result. Complete-case selection may reflect publication practices or
+unobserved performance; missingness must not be assumed random. Success in this
+secondary population cannot establish success for incomplete records.
+
+Fixed panel generation does not establish exchangeability. Direct-pool results
+would remain empirical unless a separately justified sampling law supports their
+probabilistic interpretation. A complete-record secondary protocol must be
+identified as a new, selected archival population, never as a retrospective
+repair of already declared incomplete calibration panels or evidence of
+deployment coverage.
+
+## Pool stopping is distinct from ranking improvement
+
+The direct pool's weak ordinal test `rank <= tau*m` retains the prefix of length
+`K=floor(tau*m)` under a frozen ranking pi. The floor follows from integer ordinal
+ranks; it is not a ceiling or rounded budget. A frozen deterministic tie rule
+assigns unique ordinals to equal predicted scores. True objective ties remain
+distinct: all-optima retention must include every tied feasible optimum.
+
+At a nonnegative integer budget cap b, acquisition in this prefix following pi
+reveals its first `min(b,K)` candidates. Untruncated nominal acquisition following
+the same pi reveals its first `min(b,m)` candidates. The observations are identical
+through K; thereafter the stopped pool's revealed set is a subset of nominal's.
+Thus this same-order pool cannot improve feasible discoveries, feasible hit,
+any-optimum or all-optima recovery, best feasible score, or regret at matched
+budget caps. These discovery metrics are monotone under additional observations;
+no feasible discovery leaves best feasible score/regret undefined unless a
+predeclared reporting convention supplies a sentinel.
+
+An empty prefix reveals nothing and is not an infeasibility certificate. An
+infeasible panel has vacuous optimum retention, which must be separated from
+useful recovery. An empty universe has no discovery opportunity; whole-universe
+fallback is identical to nominal at every budget. Budgets beyond the universe
+size add no observations. None of these cases creates a same-order advantage.
+
+For b>K, stopping spends fewer bundles than nominal under the same cap. This is
+a cost/recall tradeoff, not superiority at equal actual measurement spend. At
+actual spend K, both policies have observed exactly the same prefix. Account
+separately for calibration-label overhead and any declared bundle-cost model;
+unused budget or omitted calibration cost cannot establish measurement efficiency.
+
+A future protocol should distinguish pool reduction with all-optima recall and
+stopping cost from ranking quality against random or simpler scoped baselines.
+The same-pi comparison is an equivalence control, not a superiority target.
+Direct calibration may justify a stopping threshold conditional on its score-law
+premises; it does not improve pi's candidate order. A distinct acquisition rule,
+such as training-only feasibility prioritization or diversity, would need its
+own freeze before calibration/evaluation outcomes. Compare that same rule on the
+full universe and the pool, with nominal/random controls, and attribute any
+advantage to the combined policy rather than calibration alone. Do not change
+ranking after calibration or evaluation results to escape the equivalence.
+
+This section records an arithmetic design implication only. It selects no
+numeric protocol parameters and reads no raw inputs, undisclosed rows or targets.

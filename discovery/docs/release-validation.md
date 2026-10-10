@@ -189,8 +189,26 @@ with standard logical axioms only, and all 11 parser tests pass. See
 [formal verification](../formal/VERIFICATION.md) and [precise scope](finite-exchangeability.md).
 The existing runtime, its tests and browser/package smoke sources are unchanged
 from the green `d169b10` checkpoint; no new local runtime run is claimed for this
-formal-only change. New-commit CI must be verified after publication.
+formal-only change. [All four CI jobs passed](https://github.com/alexwelcing/lupine/actions/runs/38077825298)
+at published `b899fc6`; the runtime checks also executed at that commit.
 
 This closes a finite-law derivation gap. It does not prove physical exchangeability,
 arbitrary measurable laws, conditional reliability, runtime refinement or useful
 screening. No scientific release gate changes state.
+
+## Target-opaque MPEA row-metadata freeze
+
+The [G15B engineering checkpoint](../reports/mpea-row-metadata-engineering-v1.md)
+passes 37 focused and 601 full-suite Python checks, with 192 unchanged source
+hashes. It exposes only five prescribed metadata roles and preserves all framed
+rows. Targets, their presence/missingness, eligibility, features and fits remain
+withheld. Commit and successful CI must precede the first real observation scan.
+No local browser/package/formal rerun is claimed for this metadata-only change;
+the prior sources and 125-statement formal inventory are unchanged.
+
+The [evaluation design notes](mpea-evaluation-design-notes.md) distinguish a
+prospectively declared complete-record secondary population from dropping
+incomplete declared calibration panels. They also show that a calibrated prefix
+cannot improve equal-budget discoveries over its own unchanged ranking; stopping
+cost and pool recall must be assessed separately from ranking value. No numerical
+protocol, scientific result or release gate is selected or promoted by these notes.

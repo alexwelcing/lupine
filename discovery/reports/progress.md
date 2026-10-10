@@ -3,6 +3,39 @@
 The current goal and ordered backlog are in `../GOAL.md`. Append concise entries
 with artifacts, actual checks, scientific implications, and the next action.
 
+## 2026-10-10 19:15 UTC — reviewed target-opaque row-metadata freeze
+
+- Verified published `b899fc6995f6dab9bfbb5eade958371e1033ee11` and
+  [all four CI jobs](https://github.com/alexwelcing/lupine/actions/runs/38077825298).
+  The 125-statement finite-law package and unchanged six-mode runtime are green.
+  G17 is published; its finite-support and conditional claim limits remain explicit.
+- G15B implements a committed-source/cache-only reader with exactly five metadata
+  roles. All other cells remain opaque, including target presence/missingness.
+  Unknown metadata retains every framed row; late errors withhold the entire
+  array/count. Successful metadata processing still exits2 with unresolved
+  scientific schema. All21 source/mapping/custody bindings match reviewed bytes.
+- Actual checks:37 focused tests (19 author+18 independent),360 opaque-cell
+  substitutions, and601 full Python tests pass in77.006s. All192 source/resource
+  hashes remain unchanged;214 pre-existing runtime/test/script/example/formal
+  files match b899. Independent tests include actual temporaryGit gates, bounded
+  single reads, exact scanner caps, late failures, resealed scope changes and
+  atomic publication. No actual observation rows have been processed.
+- Evidence: `mpea-row-metadata-engineering-v1.md` links source-bound logs, receipts,
+  independent review and exact promotion hashes. Prior prototype evidence and
+  development corrections remain recorded. Original frozen scientific producers,
+  reports, failed gates and125-proof sources are unchanged.
+- Scientific design notes now distinguish preregistered complete-record secondary
+  populations from dropping incomplete declared panels. They prove the elementary
+  same-order prefix limitation: calibration can change stopping cost/recall, but
+  cannot improve discoveries over the same ranking at equal budget. No protocol
+  parameters, target completeness, splits, models or new scientific result chosen.
+- Owner/checkpoint:root publishes the G15B source freeze, verifies its remote SHA
+  and all-four-job CI, then executes the fixed-cache reader twice in fresh
+  processes. Next: audit permitted metadata and freeze the narrow scientific task
+  before performance-target interpretation. In parallel, G7 artifact-retention
+  and committed-proof-receipt CI checks are being prepared in isolated scratch;
+  they have not changed this tested checkpoint or run a new experiment.
+
 ## 2026-10-10 18:55 UTC — finite-law symmetry derived and strictly verified
 
 - Verified `d169b1070eaec916ebf9af221aa4596dd4b2cb1d` on the remote and

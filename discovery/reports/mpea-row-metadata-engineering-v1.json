@@ -1,0 +1,48 @@
+{
+  "artifacts": {
+    "reports/mpea-row-metadata-author-engineering-v1.json": "9cc346da010b5c4a70e2a7ecf23cd2bfae8a0207754150875daaf79827601f13",
+    "reports/mpea-row-metadata-focused-tests-v1.txt": "ef33dc840f50227cc3a63cb85087c66fb8f1c5350401420be0486c230316ba64",
+    "reports/mpea-row-metadata-independent-review-v1.json": "d9c6785683185ebd9a031b2df2b1510501b596198b10b331f6b092bf7f2e30f0",
+    "reports/mpea-row-metadata-independent-tests-v1.txt": "665cb7e83791000a004f38709acee35df9eb0b7689d18c4eb15c3faf8fbe3641",
+    "reports/mpea-row-metadata-promotion-v1.json": "bb7d2e3c2da74a731d2adc25097671a5316cffb1c6fc441b7a1f0962ba26d625",
+    "reports/mpea-row-metadata-release-tests-v1.txt": "46d5348af86d78b6b516d7cdb1c410764f5ddfe3b7bc6999af5caf8f898672b4",
+    "reports/mpea-row-metadata-scientific-contract-review-v1.json": "5ff262f9c0028c28aaff159ed7045ccf2d6f167dc7cdf0e7762d102a3129240e",
+    "reports/mpea-row-metadata-test-receipt-v1.json": "739c50ce01dbd7b50a267047c473e531475e13d3c3b3db0f5ea2a01be64cabd9"
+  },
+  "author_tests": 19,
+  "focused_tests": 37,
+  "full_python_tests": 601,
+  "full_source_file_count": 192,
+  "full_sources_unchanged": true,
+  "full_suite_elapsed_seconds": 77.92821691599966,
+  "historical_checks": {
+    "browser_checks": 46,
+    "green_ci": "https://github.com/alexwelcing/lupine/actions/runs/38077825298",
+    "green_commit": "b899fc6995f6dab9bfbb5eade958371e1033ee11",
+    "installed_cases": 28,
+    "note": "Those prior sources are unchanged. No new local browser/wheel/formal run is claimed by this metadata-only increment; new commit CI must be verified before production.",
+    "proof_statements": 125,
+    "wire_schemas": 6
+  },
+  "independent_tests": 18,
+  "opaque_substitutions": {
+    "author": 90,
+    "independent": 270
+  },
+  "prior_pins_unchanged": 16,
+  "recorded_at": "2026-10-10T19:14:35.346370+00:00",
+  "review_document_transition": "Scientific-contract source review binds the same wrapper and the prior scratch-status opening. Final amendment changes that opening only; independent18-test review and rootpromotion bind the final71118703 source.",
+  "reviewed_files_promoted_byte_identically": 5,
+  "schema": "lupine.discovery.mpea.row_metadata.integration.v1",
+  "scope": {
+    "features_generated": false,
+    "fits": 0,
+    "real_source_row_scans": 0,
+    "scientific_validation": false,
+    "splits": 0,
+    "synthetic_rows_only": true,
+    "target_presence_checked": false,
+    "target_values_decoded": false
+  },
+  "status": "PASS"
+}

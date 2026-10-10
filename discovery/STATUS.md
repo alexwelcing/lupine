@@ -35,6 +35,8 @@ The active outcome, ordered backlog, and autonomous execution rules are in
 
 - The [finite exchangeability bridge](docs/finite-exchangeability.md) adds eight reviewed statements deriving equal indexed failure masses from an invariant finite joint score law. All nine modules strictly build and 125 statements pass the fresh axiom audit; eleven audit-parser tests pass. Existing runtime sources remain byte-identical to the green `d169b10` checkpoint. Arbitrary measurable laws, scientific exchangeability and Python refinement remain unproved.
 
+- The [G15B metadata reader](reports/mpea-row-metadata-engineering-v1.md) passes 37 focused and 601 full-suite Python checks with 192 stable source/resource hashes. It permits only five metadata roles, preserves every framed row and keeps targets opaque. This is a pre-execution checkpoint; the reviewed commit and CI must precede the first real row scan. Existing browser/package/formal sources are unchanged.
+
 ## Remaining four-day gates
 
 This checkpoint covers the kernel, local research interface, and initial retrospective validation. The full four-day research and release program remains open; `docs/release-validation.md` tracks the distinction between preview readiness and scientific recommendation claims.
@@ -43,7 +45,7 @@ This checkpoint covers the kernel, local research interface, and initial retrosp
 - Broaden independent archived tasks, including actual operating-condition constraints and distribution shift; freeze protocols before examining evaluation outcomes.
 - Preserve the completed negative training-only comparison. Further model changes need a new development protocol; any scientific validation then needs unused calibration/evaluation targets and cannot overwrite the completed negative benchmark.
 - Preserve the coupled adapter's premise, consistency, identity and resource boundaries. Preserve the verified projection wrapper, which retains original declarations in CLI, guarded HTTP, replay and browser. The Python adapter and runnable examples remain conditional algebra, not scientific validation.
-- Preserve the completed Rhizo custody result and unresolved scientific prerequisites. Preserve the verified statistical-pool interface and its marginal claim. Preserve the reproduced header disclosure and reviewed semantic mapping, then freeze and independently test the separate row-metadata producer before any observation record is scanned. No hard discrepancy bounds or physically justified field sharing are established.
+- Preserve the completed Rhizo custody result and unresolved scientific prerequisites. Preserve the verified statistical-pool interface and its marginal claim. Preserve the reproduced header disclosure and reviewed semantic mapping, then publish the reviewed row-metadata producer, verify CI and reproduce its metadata-only output before any scientific protocol or target interpretation. No hard discrepancy bounds or physically justified field sharing are established.
 - Audit runtime/formal conformance beyond examples and exhaustive small worlds; no formal refinement claim exists yet.
 - Resolve original dataset provenance and redistribution rights before bundling data.
 - Complete independent scientific reproduction and scoped release review. Branch publication is not a validated scientific release.

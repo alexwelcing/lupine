@@ -1,0 +1,24 @@
+{
+  "exit_code": 0,
+  "independent_review_sha256": "ed03a53e438d4ec53d3e6a70fa8f1c9479fe8a664741e1a316bfff04c50db693",
+  "schema": "lupine.discovery.synthetic_row_metadata.author_engineering.v1",
+  "scope": {
+    "production_gate_tested": false,
+    "real_cache_read": false,
+    "synthetic_inputs_only": true
+  },
+  "source_after": {
+    ".cache/mpea-row-metadata/review/fixture_oracle.py": "cd70655f8598dcc7933a9f16294e86df698fcf3aecb642af3b61d2241587bd0b",
+    ".cache/mpea-row-metadata/review/test_row_metadata_review.py": "6b85eaf3e2b5c44dd2fb4948de0156f4d3ef13781207b73393f60edd9fcab818",
+    ".cache/mpea-row-metadata/scripts/row_metadata.py": "8aec58a1a48c173a0750137daf320d22abe04398108a74567c28ed7f2a093775",
+    ".cache/mpea-row-metadata/tests/test_row_metadata.py": "79ccca4bee78ad555430c6ca0a97b0d626f42699f2b53e7ce4e96d3f9acc8b8e"
+  },
+  "source_before": {
+    ".cache/mpea-row-metadata/review/fixture_oracle.py": "cd70655f8598dcc7933a9f16294e86df698fcf3aecb642af3b61d2241587bd0b",
+    ".cache/mpea-row-metadata/review/test_row_metadata_review.py": "6b85eaf3e2b5c44dd2fb4948de0156f4d3ef13781207b73393f60edd9fcab818",
+    ".cache/mpea-row-metadata/scripts/row_metadata.py": "8aec58a1a48c173a0750137daf320d22abe04398108a74567c28ed7f2a093775",
+    ".cache/mpea-row-metadata/tests/test_row_metadata.py": "79ccca4bee78ad555430c6ca0a97b0d626f42699f2b53e7ce4e96d3f9acc8b8e"
+  },
+  "status": "PASS",
+  "test_count": 18
+}
