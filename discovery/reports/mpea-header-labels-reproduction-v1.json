@@ -1,0 +1,64 @@
+{
+  "byte_identical": true,
+  "ci": {
+    "all_four_jobs_passed_before_execution": true,
+    "conclusion": "success",
+    "head_sha": "c9fb192ed15cf11874c59083b1fae72f7af3224f",
+    "status": "completed",
+    "url": "https://github.com/alexwelcing/lupine/actions/runs/38076623056"
+  },
+  "commands": [
+    {
+      "command": [
+        "python",
+        "scripts/mpea_header_labels.py",
+        "--output",
+        ".cache/mpea-custody/header-labels-v1.json"
+      ],
+      "exit_code": 2,
+      "stderr": "",
+      "stdout": "{\"reason\": \"SCHEMA_UNCONFIRMED\", \"receipt_sha256\": \"70f50fa99db6b39b769be392ec1c64c655f8f32d7587f04f522e6a794c4accee\", \"status\": \"BLOCKED_SCHEMA\"}\n"
+    },
+    {
+      "command": [
+        "python",
+        "scripts/mpea_header_labels.py",
+        "--output",
+        ".cache/mpea-custody/header-labels-second-process-v1.json"
+      ],
+      "exit_code": 2,
+      "stderr": "",
+      "stdout": "{\"reason\": \"SCHEMA_UNCONFIRMED\", \"receipt_sha256\": \"70f50fa99db6b39b769be392ec1c64c655f8f32d7587f04f522e6a794c4accee\", \"status\": \"BLOCKED_SCHEMA\"}\n"
+    }
+  ],
+  "date": "2026-10-10",
+  "expected_status": "BLOCKED_SCHEMA",
+  "interpretation": "First-record label disclosure only; semantic mapping and observation metadata require separate stages. No scientific gate advanced.",
+  "mapping_review": {
+    "independent_review": "calibrated_backend",
+    "mapping": "docs/mpea-column-mapping-v1.json",
+    "result": "No blocking issue. All 23 Markdown/JSON labels and original receipt/archive identities match. Only positions 1, 3, 9, 10 and 20 allow metadata. Paper Sec5 prose confirms documented meanings/units and measured-versus-ROM and tension-versus-compression distinctions.",
+    "review_exposure": "Public header and paper prose only; no raw cache, observation rows, target evaluation or benchmark registration.",
+    "root_structural_check": "PASS: 23 exact positions/tokens, receipt binding, all citation IDs, and exactly five allowlisted positions.",
+    "sha256": "812255e53cceec8c66bd2a4b11d5d1e556941a053c888a7970cf2e3ec6728f97"
+  },
+  "receipt": "reports/mpea-header-labels-v1.json",
+  "receipt_sha256": "70f50fa99db6b39b769be392ec1c64c655f8f32d7587f04f522e6a794c4accee",
+  "schema": "lupine.discovery.mpea.header_labels_reproduction.v1",
+  "scope": {
+    "captured_source_bytes_read": true,
+    "data_rows_decoded": false,
+    "first_record_labels_disclosed": true,
+    "fits": 0,
+    "full_schema_established": false,
+    "header_decode_attempted": true,
+    "initial_receipts_verified": true,
+    "numeric_completeness": null,
+    "row_count": null,
+    "row_metadata_extracted": false,
+    "scientific_eligibility_decisions": false,
+    "splits": 0,
+    "target_numeric_validity_checked": false
+  },
+  "source_commit": "c9fb192ed15cf11874c59083b1fae72f7af3224f"
+}

@@ -165,10 +165,17 @@ Selection precedes future-outcome loading; failed and unknown retention stays
 visible. The 117 formal statements and the statistical core are unchanged.
 A marginal retention claim does not certify a returned pool or condition on
 feasibility. All scientific screening, superiority and physical-scope gates
-above retain their existing states. New-commit remote CI is checked separately.
+above retain their existing states. [All four CI jobs passed](https://github.com/alexwelcing/lupine/actions/runs/38076623056) at the published `c9fb192` source checkpoint.
 
 The [G15A amendment](mpea-header-disclosure-amendment-v1.md) passes 31 synthetic
 checks and must be committed before exact first-record labels can be disclosed
 from the verified cache. This remains BLOCKED_SCHEMA pending a separate semantic
 mapping. Neither the source freeze nor header labels authorize a scientific
 benchmark, target-cell interpretation, eligibility selection or model fitting.
+
+The subsequent [G15A production run](../reports/mpea-header-labels-readiness-v1.md)
+reproduced all 23 first-record labels in two fresh processes after that green CI.
+The reviewed [mapping](mpea-column-mapping-v1.md) distinguishes documented
+concepts and four uninterpreted fields, allowing only five prospective metadata
+roles. No observation rows were decoded. Scientific schema, pairing, targets
+and a new benchmark remain separate unresolved stages.

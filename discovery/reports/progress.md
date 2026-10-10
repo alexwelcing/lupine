@@ -3,6 +3,37 @@
 The current goal and ordered backlog are in `../GOAL.md`. Append concise entries
 with artifacts, actual checks, scientific implications, and the next action.
 
+## 2026-10-10 18:47 UTC — published workbench; exact header and reviewed mapping
+
+- Pushed `c9fb192ed15cf11874c59083b1fae72f7af3224f`, verified the remote ref,
+  and checked [all four CI jobs](https://github.com/alexwelcing/lupine/actions/runs/38076623056):
+  Python 3.11/3.12, browser and Lean all pass. The source manifest binds 173
+  files. G16 is published: 564 local Python tests, 46 browser checks, 28 installed
+  cases/six schemas; unchanged 117 formal statements compile and audit in CI.
+- After that green source checkpoint, ran `scripts/mpea_header_labels.py` twice
+  against the existing verified cache. Both fresh processes return expected
+  exit2/BLOCKED_SCHEMA and identical receipt SHA-256
+  `70f50fa99db6b39b769be392ec1c64c655f8f32d7587f04f522e6a794c4accee`.
+  All 23 labels are disclosed; observation rows remain undecoded. The original
+  G15 source, redacted header and initial failure are preserved unchanged.
+- `docs/mpea-column-mapping-v1.{md,json}` enumerate every exact position using
+  the header and cited Data Records prose. Independent review confirms labels,
+  bindings, units and measured/ROM and tension/compression distinctions. Four
+  fields remain uninterpreted/withheld. Only formula, processing, test mode,
+  temperature and source DOI have prospective metadata roles; all performance
+  values and target missingness remain withheld. Mapping is not measured truth.
+- A read-only scientific critique is saved as `mpea-evaluation-design-notes.md`:
+  held-out-study archival recovery is a defensible possible narrower task, with
+  explicitly unresolved pairing, completeness, study/composition independence
+  and panel-score law. No thresholds, bins, ranker, splits or protocol selected.
+- Owner/checkpoint: root publishes header evidence/mapping and reviews the G15B
+  target-opaque byte scanner in ignored scratch; a separate reviewer challenges
+  disclosure/framing boundaries. G17's eight-statement finite permutation-law
+  bridge compiles in scratch and is independently reviewed; published inventory
+  remains117. Next: freeze reviewed row-metadata code/tests/mapping before any
+  row scan; integrate and strictly rebuild the finite-law bridge separately.
+  No new scientific evaluation, physical-bound claim or superiority result.
+
 ## 2026-10-10 18:38 UTC — statistical workbench verified; disclosure source ready
 
 - Verified pushed `6c322147afd3926455037c188d499d3da96c12d1` and

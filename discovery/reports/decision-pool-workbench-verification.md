@@ -94,3 +94,12 @@ header-disclosure command. Only after the reviewed source is published may the
 cache-only first-record tool run. It must preserve BLOCKED_SCHEMA pending a
 separate cited semantic mapping; observation-row access, split assignment and a
 new scientific protocol are not part of this checkpoint.
+
+## Published source checkpoint
+
+Pushed `c9fb192ed15cf11874c59083b1fae72f7af3224f` and verified the remote ref.
+[Discovery Verify 38076623056](https://github.com/alexwelcing/lupine/actions/runs/38076623056)
+passed all four jobs: Python 3.11, Python 3.12, browser and Lean. The manifest
+binds 173 source files. G15A production disclosure occurred only after that
+source verification; its separate report does not change the software or
+scientific scope above.
