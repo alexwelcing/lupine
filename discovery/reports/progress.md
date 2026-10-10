@@ -35,6 +35,25 @@ with artifacts, actual checks, scientific implications, and the next action.
   informed by opened outcomes require fresh calibration/evaluation before any
   new scientific claim. Branch publication and remote CI are the next checks.
 
+## 2026-10-10 — published checkpoint and frozen development follow-up
+
+- Published the complete constrained checkpoint as
+  `a8775ad825c54b41e067e0fc2c4cc8d9288d3aa7`. [All four CI jobs
+  passed](https://github.com/alexwelcing/lupine/actions/runs/38067639369), including
+  Python 3.11/3.12, package/manifest checks, browser and all 69 theorem audits.
+- Froze and pushed training-only protocol `jarvis-training-tail-v1` in
+  `188752f733e4768a995165fe9770696d5bbf09e1`, SHA-256
+  `56b1810a2bae15261f64eef62abb7d74886d80b3116c7233700b0c52da88c9bf`.
+  Two independent reviews found no blocker before any fits. The next work is
+  its tested runner, two bounded fresh-process executions, and a preserved
+  development go/no-go result. Original calibration/evaluation targets are
+  prohibited inputs; no scientific validation is claimed from model selection.
+- Continued G10 beyond the sharpness limit: implement and prove a conservative
+  exact checker for explicitly assumed affine relationships. Its common-world
+  premise must be visible, strict ties must survive, and unsupported or
+  inconsistent premises must leave every candidate operationally retained.
+  Source and proof construction are active; they are not yet released features.
+
 ## 2026-10-10 — sustained active development
 
 - Alex clarified that he wants continuous work. Continued the active session
