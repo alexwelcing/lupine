@@ -1,0 +1,26 @@
+{
+  "certificate_digest": "08a6fd0d0c93e1c5fc78cd9bbb20ff0610adf96b3c2fd2212a811393a103366a",
+  "latent_world": {
+    "kind": "hypothetical_model_world",
+    "point": [
+      "1",
+      "0",
+      "0"
+    ]
+  },
+  "outcomes": [
+    {
+      "constraints": {},
+      "id": "A",
+      "score": "4"
+    },
+    {
+      "constraints": {},
+      "id": "B",
+      "score": "3"
+    }
+  ],
+  "problem_digest": "6fab7b9c566b87860da3c376f7cf324c5b9034a48e2195288a542eb07eee21dc",
+  "scenario_id": "coupled-field",
+  "schema": "lupine.discovery.coupled_outcomes.v1"
+}

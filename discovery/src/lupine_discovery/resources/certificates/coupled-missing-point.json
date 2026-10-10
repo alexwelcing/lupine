@@ -1,0 +1,108 @@
+{
+  "assumptions": [
+    "One common latent vector in the declared domain represents every actual score and constraint.",
+    "A consistency point proves model nonemptiness, not physical validity or observational provenance.",
+    "All quantities use the declared scenario, reference, and normalized dimensionless latent coordinates.",
+    "Every exactly tied feasible minimizer in the finite input universe is retained under these premises.",
+    "The conservative search is incomplete; retention does not certify possible or robust optimality."
+  ],
+  "certificate_digest": "ceadaa36347bb5fd5cbf1f1fb0f463477b33a84e4a8f8e5526d09bc850ee8945",
+  "claim": "conditional_common_world_finite_universe_all_minimizer_retention",
+  "common_world": {
+    "claim": "one_common_latent_vector_represents_all_quantities",
+    "premise_status": "assumed_unverified",
+    "reference": "Declared synthetic relation; the consistency point proves only model nonemptiness and is not an observed world.",
+    "relation_basis": "declared_affine_assumption",
+    "scientific_validity": "unestablished"
+  },
+  "coupling": {
+    "consistency": {
+      "domain_id": "b4139369cfd114af0900f934fa64e418fefd818fe1ef76e610b322df7e0b10b7",
+      "operations_used": 0,
+      "reason": "common_feasible_point_missing",
+      "status": "unresolved"
+    },
+    "status": "consistency_unresolved_all_retained",
+    "supplied_consistency_point": null
+  },
+  "diagnostics": {
+    "box_pool_role": "diagnostic_only_gate_closed",
+    "box_selection_diagnostic": {
+      "certified_feasible": [
+        "A",
+        "B"
+      ],
+      "certified_infeasible": [],
+      "dominated": [
+        "A"
+      ],
+      "incumbent": "B",
+      "possible_feasible": [
+        "A",
+        "B"
+      ],
+      "regret_bound": "2",
+      "retained": [
+        "B"
+      ],
+      "threshold": "2"
+    },
+    "marginal_intervals": {
+      "A": {
+        "constraints": {},
+        "score": {
+          "lower": "3",
+          "upper": "5"
+        }
+      },
+      "B": {
+        "constraints": {},
+        "score": {
+          "lower": "0",
+          "upper": "2"
+        }
+      }
+    }
+  },
+  "engine_version": "0.1.0",
+  "exclusion_certificates": {},
+  "execution": {
+    "effective_limits": {
+      "max_certificate_terms": 512,
+      "max_integer_bits": 2048,
+      "max_operations": 100000,
+      "max_witness_pairs": 4096
+    },
+    "kernel_operations_used": 0,
+    "ordered_supplied_proof_digests": [],
+    "profile_id": "coupled-local-v1",
+    "requested_limits": {
+      "max_certificate_terms": 512,
+      "max_integer_bits": 2048,
+      "max_operations": 100000,
+      "max_witness_pairs": 4096
+    }
+  },
+  "model_identity": {
+    "domain_id": "b4139369cfd114af0900f934fa64e418fefd818fe1ef76e610b322df7e0b10b7",
+    "instance_digest": "d90238889fd4c8d84bc994dbcc6e086f023c16e602fbbde032270482de900af0",
+    "kernel_model_digest": "0f6e0ca6add26d03c786d41c36cb81ec3d599065d24a351122f4aa5e4c742ed8"
+  },
+  "physical_attestation": "not_established_by_this_program",
+  "problem_digest": "d2c32514d3e669088544645fe1e1ee00b605671d7100303cf94ddae5e6807fa5",
+  "proof_assessments": [],
+  "scenario_id": "coupled-missing-point",
+  "schema": "lupine.discovery.coupled_certificate.v1",
+  "selection": {
+    "certified_feasible": [],
+    "coupled_dominated": [],
+    "coupled_infeasible": [],
+    "dominance_witnesses": {},
+    "interval_dominated": [],
+    "interval_infeasible": [],
+    "retained": [
+      "A",
+      "B"
+    ]
+  }
+}

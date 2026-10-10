@@ -11,11 +11,14 @@ from urllib.parse import urlsplit
 
 from .benchmarks import archived_reports, case_catalog, get_case, get_case_outcomes, run_known_answers
 from .cli import certificate, replay_report
+from .coupled_io import preflight_json_text
+from .coupled_worker import CoupledWorkerError, run_coupled
 from .evidence import fields
 from .serialization import loads
 
 MAX_BODY_BYTES = 2 * 1024 * 1024
 MAX_CANDIDATES = 5000
+COUPLED_SCHEMA = "lupine.discovery.coupled_problem.v1"
 ASSETS = {"/": ("index.html", "text/html; charset=utf-8"),
           "/index.html": ("index.html", "text/html; charset=utf-8"),
           "/styles.css": ("styles.css", "text/css; charset=utf-8"),
@@ -31,6 +34,22 @@ def bounded_problem(problem):
     return problem
 
 
+def coupled_problem(problem):
+    return isinstance(problem, dict) and problem.get("schema") == COUPLED_SCHEMA
+
+
+def raw_document(value):
+    """Encode a legacy object envelope without changing its exact scalar values."""
+    return json.dumps(value, ensure_ascii=True, allow_nan=False, separators=(",", ":"))
+
+
+def select_problem(problem):
+    problem = bounded_problem(problem)
+    if coupled_problem(problem):
+        return run_coupled("select", raw_document(problem))
+    return certificate(problem)
+
+
 def benchmark_report():
     result = {"known_answers": run_known_answers(), "archived": archived_reports(),
               "release_status": "research_preview_not_release_certified"}
@@ -40,6 +59,9 @@ def benchmark_report():
     constrained = files("lupine_discovery").joinpath("resources/constrained-v1.json")
     if constrained.is_file():
         result["constrained_archived"] = json.loads(constrained.read_text(encoding="utf-8"))
+    training = files("lupine_discovery").joinpath("resources/training-tail-v1.json")
+    if training.is_file():
+        result["training_tail"] = json.loads(training.read_text(encoding="utf-8"))
     return result
 
 
@@ -125,25 +147,53 @@ class WorkbenchHandler(BaseHTTPRequestHandler):
             if not 0 <= length <= MAX_BODY_BYTES:
                 self.error(413, "Send a JSON document of at most 2 MiB.")
                 return
-            value = loads(self.rfile.read(length).decode("utf-8"))
+            value = loads(preflight_json_text(self.rfile.read(length),
+                                             max_bytes=MAX_BODY_BYTES, max_depth=32))
             if path == "/api/select":
-                fields(value, ("problem",))
-                result = certificate(bounded_problem(value["problem"]))
+                if isinstance(value, dict) and "problem_raw" in value:
+                    fields(value, ("problem_raw",))
+                    result = run_coupled("select", value["problem_raw"])
+                else:
+                    fields(value, ("problem",))
+                    result = select_problem(value["problem"])
+            elif path == "/api/coupled-domains":
+                fields(value, ("problem_raw",))
+                result = run_coupled("domains", value["problem_raw"])
             elif path == "/api/replay":
-                fields(value, ("problem", "outcomes"))
-                result = replay_report(bounded_problem(value["problem"]), value["outcomes"])
+                if isinstance(value, dict) and "problem_raw" in value:
+                    fields(value, ("problem_raw", "outcomes_raw"))
+                    result = run_coupled("replay", value["problem_raw"], value["outcomes_raw"])
+                else:
+                    fields(value, ("problem", "outcomes"))
+                    problem = bounded_problem(value["problem"])
+                    if coupled_problem(problem):
+                        raise CoupledWorkerError("raw_outcomes_required",
+                            "Coupled replay requires problem_raw and outcomes_raw JSON text so the decision is sealed before outcome decoding.", 400)
+                    result = replay_report(problem, value["outcomes"])
             elif re.fullmatch(r"/api/cases/[a-z0-9_-]+/replay", path):
-                fields(value, ("problem",))
-                problem = bounded_problem(value["problem"])
                 # Fix the selection before opening the built-in answer resource.
                 # Replay recomputes from the same input; no answers enter select.
-                certificate(problem)
+                if isinstance(value, dict) and "problem_raw" in value:
+                    fields(value, ("problem_raw",))
+                    problem_raw = value["problem_raw"]
+                    run_coupled("select", problem_raw)
+                    # The child has already bounded and validated this document.
+                    # Decode it here only for the packaged-problem seal check.
+                    problem = loads(problem_raw)
+                else:
+                    fields(value, ("problem",))
+                    problem = bounded_problem(value["problem"])
+                    select_problem(problem)
+                    problem_raw = raw_document(problem) if coupled_problem(problem) else None
                 outcomes = get_case_outcomes(path.split("/")[3], problem)
-                result = replay_report(problem, outcomes)
+                result = (run_coupled("replay", problem_raw, raw_document(outcomes))
+                          if coupled_problem(problem) else replay_report(problem, outcomes))
             else:
                 self.error(404, "Not found.")
                 return
             self.respond(200, result)
+        except CoupledWorkerError as exc:
+            self.respond(exc.http_status, exc.payload())
         except KeyError:
             self.error(400, "Unknown case or missing input field.")
         except (ValueError, TypeError, UnicodeError, ZeroDivisionError) as exc:

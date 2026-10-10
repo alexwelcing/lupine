@@ -40,10 +40,12 @@ The web assets, HTTP server and CLI modes are unchanged at this checkpoint.
 The 17 browser checks in [the preceding record](browser-constrained-v1.json)
 remain historical evidence; they were not rerun locally for these Python-only
 additions. Coupled JSON/CLI/browser integration is the next increment and is
-not included in these counts. Remote CI will verify this published snapshot
-separately; pending CI must not be described as passed.
+not included in these counts. After publication as `b37d8db3acbcd98d761da451d348ac5b15df00c1`,
+[all four CI jobs passed](https://github.com/alexwelcing/lupine/actions/runs/38069767606):
+Python 3.11/3.12, source manifest, isolated packages, the 17 browser checks, and
+the strict Lean build/axiom audit.
 
-The current runtime byte inventory is [runtime-manifest.json](runtime-manifest.json).
+The checkpoint runtime byte inventory is [runtime-manifest-coupled-kernel.json](runtime-manifest-coupled-kernel.json).
 The previous 98-file inventory is preserved as
 [runtime-manifest-constrained.json](runtime-manifest-constrained.json).
 Source hashes establish identity, not physical truth, independent scientific

@@ -1,0 +1,18 @@
+{
+  "certificate_digest": "fe8db575e4139ab665cdff82d2856fae0ad78821c6c97c722e501bb93f15e15b",
+  "outcomes": [
+    {
+      "constraints": {},
+      "id": "A",
+      "score": "0"
+    },
+    {
+      "constraints": {},
+      "id": "B",
+      "score": "2"
+    }
+  ],
+  "problem_digest": "7b7d5a790bc3aeeafe859bd24d663f5e2b8949240837629fbbd93c1c4ccf9de6",
+  "scenario_id": "coupled-learned-relation",
+  "schema": "lupine.discovery.coupled_outcomes.v1"
+}

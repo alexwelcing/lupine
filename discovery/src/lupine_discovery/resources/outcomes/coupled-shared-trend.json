@@ -1,0 +1,24 @@
+{
+  "certificate_digest": "92399d10c661249d50be845ff285dea96b8e4f5bd057380dfd84d6a3232acde2",
+  "latent_world": {
+    "kind": "hypothetical_model_world",
+    "point": [
+      "0"
+    ]
+  },
+  "outcomes": [
+    {
+      "constraints": {},
+      "id": "A",
+      "score": "1"
+    },
+    {
+      "constraints": {},
+      "id": "B",
+      "score": "0"
+    }
+  ],
+  "problem_digest": "d30de478dd2073884e893dfad3138b956d8e90deca0cfd762225f713d9c32a27",
+  "scenario_id": "coupled-shared-trend",
+  "schema": "lupine.discovery.coupled_outcomes.v1"
+}

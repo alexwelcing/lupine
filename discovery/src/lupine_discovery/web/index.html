@@ -56,6 +56,16 @@
                 <p id="calibration-identifiers" class="field-help"></p>
                 <p id="calibration-scope" class="field-help"></p>
               </section>
+              <section id="coupled-panel" class="panel coupled-panel" aria-labelledby="coupled-heading" hidden>
+                <p class="eyebrow">SHARED MODEL / CONDITIONAL SCREENING</p>
+                <h3 id="coupled-heading">One shared mathematical world</h3>
+                <p id="coupled-premise" class="field-help"></p>
+                <dl id="coupled-facts" class="calibration-facts"></dl>
+                <div id="coupled-latents"></div>
+                <details class="replay-details"><summary>Declared rows, scopes &amp; model identity</summary><div id="coupled-model-details"></div></details>
+                <details id="coupled-diagnostic" class="replay-details coupled-diagnostic"><summary>Separate model-derived box diagnostic</summary><div id="coupled-diagnostic-content"></div></details>
+                <div id="coupled-proofs"></div>
+              </section>
               <div class="metrics" id="selection-metrics"></div>
               <section class="pool-panel panel" aria-labelledby="pool-heading"><div class="pool-toolbar"><h3 id="pool-heading">Candidate intervals</h3><div class="segmented" role="group" aria-label="Filter candidates"><button class="selected" data-filter="all" aria-pressed="true">All</button><button data-filter="retained" aria-pressed="false">Retained</button><button data-filter="excluded" aria-pressed="false">Excluded</button></div></div><p id="pool-help" class="table-help">Lower scores are better. Intervals show the supplied bounds.</p><div id="pool-table" data-testid="pool-table"></div><div id="pool-legend" class="chart-legend"><span><i class="legend-line retained-line"></i> Retained</span><span><i class="legend-line excluded-line"></i> Excluded</span><span id="threshold-legend"><i class="legend-threshold"></i> Incumbent upper bound</span></div></section>
               <div class="support-grid"><section class="panel evidence-panel" aria-labelledby="evidence-heading"><p class="eyebrow">EVIDENCE / PREMISES</p><h3 id="evidence-heading">What supports this pool?</h3><div id="evidence-content"></div></section><section class="panel queue-panel" aria-labelledby="queue-heading"><p class="eyebrow">NEXT / MEASUREMENT</p><h3 id="queue-heading">Where to look next</h3><div id="measurement-queue"></div><p id="measurement-note" class="field-help">A heuristic ordering for further measurement. It does not reduce the retained pool or guarantee a discovery.</p></section></div>
@@ -81,6 +91,11 @@
             <div id="constrained-arms" class="constrained-arms"></div>
             <details class="protocol-details"><summary>Report scope, calibration &amp; reproduction</summary><div id="constrained-protocol"></div></details>
           </div>
+        </section><section id="training-tail-section" class="benchmark-section" aria-labelledby="training-tail-heading">
+          <div class="section-heading"><div><p class="eyebrow">04 / TRAINING-ONLY MODEL DEVELOPMENT</p><h2 id="training-tail-heading">Can prediction errors improve?</h2></div><span class="tag">DEVELOPMENT ONLY</span></div>
+          <p class="section-description">A frozen comparison of composition 5NN and three ridge models uses training records only. These out-of-fold errors are not calibration coverage or an untouched evaluation. The original constrained benchmark remains unchanged.</p>
+          <p id="training-tail-status" class="notice" role="status">No training-only development report is bundled yet.</p>
+          <div id="training-tail-content" hidden></div>
         </section><section class="release-note"><span aria-hidden="true">↗</span><div><h3>Research preview, with the open questions intact.</h3><p id="release-note-text">Release requires broader independent benchmarks, an evidence policy for real scenarios, and a prospective test. Passing a constructed case does not settle those questions.</p></div></section></div>
       </section>
       <footer class="footer"><span>LUPINE DISCOVERY</span><span>Recommendation is a claim. Evidence makes it accountable.</span></footer>

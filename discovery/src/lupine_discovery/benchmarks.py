@@ -27,12 +27,12 @@ def _entry(case_id):
 
 
 def _catalog_entries():
-    return [entry for name in ("catalog.json", "calibration-catalog.json", "pareto-catalog.json")
+    return [entry for name in ("catalog.json", "calibration-catalog.json", "pareto-catalog.json", "coupled-catalog.json")
             for entry in _resource(name)]
 
 
 def case_catalog():
-    """List interval-only demonstrations without exposing their known answers."""
+    """List demonstrations without exposing their known answers."""
     return [{key: entry[key] for key in ("id", "title", "description", "kind", "has_outcomes")}
             for entry in _catalog_entries()]
 

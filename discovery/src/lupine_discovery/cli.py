@@ -12,6 +12,9 @@ from .serialization import encode, loads, parse_outcomes, parse_problem
 
 
 def certificate(value):
+    if isinstance(value, dict) and value.get("schema") == "lupine.discovery.coupled_problem.v1":
+        from .coupled_io import coupled_certificate
+        return coupled_certificate(value)
     if isinstance(value, dict) and value.get("schema") == "lupine.discovery.pareto_problem.v1":
         from .pareto_io import pareto_certificate
         return pareto_certificate(value)
@@ -51,10 +54,11 @@ def certificate(value):
 
 def verify_certificate(problem_value, supplied):
     recomputed = certificate(problem_value)
-    # JSON booleans compare equal to Python integers; calibrated count fields
+    # JSON booleans compare equal to Python integers; count-bearing receipts
     # require a type-sensitive identity check as well as ordinary equality.
     exact_json = isinstance(problem_value, dict) and problem_value.get("schema") in {
-        "lupine.discovery.calibrated_problem.v1", "lupine.discovery.pareto_problem.v1"}
+        "lupine.discovery.calibrated_problem.v1", "lupine.discovery.pareto_problem.v1",
+        "lupine.discovery.coupled_problem.v1"}
     if supplied != recomputed or (exact_json and digest(supplied) != digest(recomputed)):
         raise ValueError("certificate differs from exact deterministic recomputation")
     return {"schema": "lupine.discovery.verification.v1", "verified": True,
@@ -64,6 +68,9 @@ def verify_certificate(problem_value, supplied):
 
 
 def replay_report(value, outcome_value):
+    if isinstance(value, dict) and value.get("schema") == "lupine.discovery.coupled_problem.v1":
+        from .coupled_io import coupled_replay_report
+        return coupled_replay_report(value, outcome_value)
     if isinstance(value, dict) and value.get("schema") == "lupine.discovery.pareto_problem.v1":
         from .pareto_io import pareto_replay_report
         return pareto_replay_report(value, outcome_value)
@@ -77,12 +84,27 @@ def replay_report(value, outcome_value):
             "evaluation": encode(evaluate(problem.candidates, outcomes))}
 
 
+def _read_document(path, coupled=False):
+    """All CLI documents: 2 MiB/depth32; coupled inputs: 256 KiB/depth24."""
+    from .coupled_io import MAX_DOCUMENT_BYTES, loads_coupled, preflight_json_text
+    maximum = MAX_DOCUMENT_BYTES if coupled else 2 * 1024 * 1024
+    with path.open('rb') as handle:
+        raw = handle.read(maximum + 1)
+    if coupled:
+        return loads_coupled(raw)
+    value = loads(preflight_json_text(raw, max_bytes=maximum, max_depth=32))
+    if isinstance(value, dict) and value.get('schema') == 'lupine.discovery.coupled_problem.v1':
+        return loads_coupled(raw)
+    return value
+
+
 def main(argv=None):
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(description=__doc__,
+        epilog="CLI JSON documents are limited to 2 MiB and nesting depth 32; coupled inputs use the stricter coupled-local-v1 profile.")
     sub = parser.add_subparsers(dest="command", required=True)
     workbench = sub.add_parser("serve", help="Run the local research workbench")
     workbench.add_argument("--port", type=int, default=8765)
-    for name in ("select", "verify", "replay"):
+    for name in ("select", "verify", "replay", "coupled-domains"):
         command = sub.add_parser(name)
         command.add_argument("problem", type=Path)
         if name == "verify":
@@ -95,13 +117,19 @@ def main(argv=None):
         if args.command == "serve":
             from .server import serve
             return serve(args.port)
-        value = loads(args.problem.read_text())
+        value = _read_document(args.problem, coupled=args.command == "coupled-domains")
         if args.command == "select":
             result = certificate(value)
+        elif args.command == "coupled-domains":
+            from .coupled_io import coupled_domains
+            result = coupled_domains(value)
         elif args.command == "verify":
-            result = verify_certificate(value, loads(args.certificate.read_text()))
+            result = verify_certificate(value, _read_document(args.certificate))
+        elif isinstance(value, dict) and value.get("schema") == "lupine.discovery.coupled_problem.v1":
+            # The loader opens the truth file only after the coupled receipt is sealed.
+            result = replay_report(value, lambda: _read_document(args.outcomes, coupled=True))
         else:
-            outcome_value = loads(args.outcomes.read_text())
+            outcome_value = _read_document(args.outcomes)
             result = replay_report(value, outcome_value)
         output = json.dumps(result, indent=2, sort_keys=True, allow_nan=False) + "\n"
         if args.output:

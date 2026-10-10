@@ -20,14 +20,16 @@ certificate to preserve a result.
 
 1. Choose a built-in known-answer case, or upload a problem JSON. The example
    `examples/abstract.json` shows the scalar format; the menu also includes
-   calibrated and Pareto demonstrations. Each versioned problem declares
+   calibrated, Pareto and coupled demonstrations. Each versioned problem declares
    scenario semantics and evidence; outcomes remain separate.
 2. Build the candidate pool. Inspect the retained and excluded candidates,
    interval bounds, exclusion witnesses, evidence gaps, and measurement order.
    Scalar mode reports an incumbent and regret when established. Pareto mode
    preserves separate objectives and ties without a scalar winner. Calibrated
    abstention retains everyone and withholds screening. None of these proves the supplied physical
-   intervals sound.
+   intervals sound. Coupled mode distinguishes an exact model-consistency point
+   from the assumed common physical world, and shows the operational pool
+   separately from marginal box diagnostics.
 3. Download the certificate. Verify it independently with
    `lupine-discovery verify problem.json certificate.json` using the exact
    input. Verification checks identity and deterministic computation.
@@ -71,6 +73,18 @@ The [release matrix](release-validation.md) separates research-preview readiness
 from scientific recommendation claims. The [known-answer protocol](known-answer-benchmarks.md)
 and [additional archive protocol](additional-archived-benchmark.md) preserve the
 meaning and limits of these checks.
+
+The **Training-only development** section records the reproduced comparison on
+4,096 training records. All three ridge alternatives are ineligible; no model
+is selected. Inspect both properties, every fold, ordinary and numerical-guard
+gates, costs, and source identities. Its NO-GO result is development evidence,
+not an independent coverage estimate. Loading the dashboard performs no fits.
+
+Coupled inputs use a separate Linux worker with CPU, wall-time, address-space
+and output limits. Unsupported platforms refuse coupled HTTP processing;
+the other interface modes remain available. A hard failure clears the pending
+result and offers no decision receipt. See the [coupled guide](coupled-problem.md)
+for exact inputs, proof inspection, deferred outcome replay and limits.
 
 ## Package and test
 

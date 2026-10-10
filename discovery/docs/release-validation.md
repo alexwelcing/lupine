@@ -85,7 +85,10 @@ The shared-affine Python API passes 18 focused tests and an independent finite-w
 audit; 19 new conditional statements bring the compiled inventory to 88. The
 combined Python suite passes 226 tests and the isolated wheel exercises the new
 API. [Verification](../reports/coupled-training-verification.md) records scope.
-Coupled wire and browser integration remain under development.
+The subsequent [coupled interface checkpoint](../reports/coupled-interface-verification.md)
+passes 298 Python tests, 24 browser checks and an isolated wheel with 22 cases.
+Strict coupled wire/CLI/replay and Linux-guarded HTTP/browser integration are
+implemented; whole-universe fallback and false-common-world failures remain visible.
 
 The frozen training-only ridge comparison is **NO-GO for model replacement**.
 Two fresh processes reproduce all exact outputs and gate decisions; all three

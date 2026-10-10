@@ -47,6 +47,10 @@ for row in catalog:
     schemas.add(problem['schema'])
     certificates[row['id']] = digest(selected)
     replays[row['id']] = digest(replay)
+assert schemas == {'lupine.discovery.problem.v1', 'lupine.discovery.calibrated_problem.v1',
+                   'lupine.discovery.pareto_problem.v1', 'lupine.discovery.coupled_problem.v1'}
+assert sum(get_case(row['id'])['problem']['schema'] == 'lupine.discovery.coupled_problem.v1'
+           for row in catalog) == 3, 'missing coupled demonstration in installed catalog'
 known = run_known_answers()
 assert known['summary']['failed'] == 0
 assert known['negative_control_metrics']['lost_optimum_cases'] == 2
@@ -66,6 +70,12 @@ constrained = json.loads(resources.joinpath('resources', 'constrained-v1.json').
 assert constrained['schema'] == 'lupine.discovery.constrained.dashboard.v1'
 assert constrained['gates']['observed_primary_screening']['status'] == 'FAIL'
 assert constrained['gates']['recommendation_value']['status'] == 'FAIL'
+training_tail = json.loads(resources.joinpath('resources', 'training-tail-v1.json').read_text())
+assert training_tail['schema'] == 'lupine.discovery.training_tail.dashboard.v1'
+assert training_tail['decision']['status'] == 'NO_GO_MODEL_IMPROVEMENT'
+assert training_tail['decision']['selected_model'] is None
+assert training_tail['reproduction']['execution_status'] == 'COMPLETE_REPRODUCED'
+assert len(training_tail['models']) == 4
 server = make_server(0)
 thread = threading.Thread(target=server.serve_forever, daemon=True)
 thread.start()
@@ -76,7 +86,9 @@ try:
     with urlopen(url + '/api/catalog') as response:
         assert json.load(response)['cases'] == catalog
     with urlopen(url + '/api/benchmarks') as response:
-        assert json.load(response)['constrained_archived'] == constrained
+        observed_reports = json.load(response)
+        assert observed_reports['constrained_archived'] == constrained
+        assert observed_reports['training_tail'] == training_tail
     for schema in sorted(schemas):
         row = next(row for row in catalog if get_case(row['id'])['problem']['schema'] == schema)
         problem = get_case(row['id'])['problem']
@@ -84,6 +96,17 @@ try:
                           headers={'Content-Type': 'application/json'})
         with urlopen(request) as response:
             assert json.load(response) == certificate(problem)
+    for row in catalog:
+        problem = get_case(row['id'])['problem']
+        if problem['schema'] != 'lupine.discovery.coupled_problem.v1':
+            continue
+        outcomes = get_case_outcomes(row['id'], problem)
+        request = Request(url + '/api/replay',
+                          data=json.dumps({'problem_raw': json.dumps(problem),
+                                           'outcomes_raw': json.dumps(outcomes)}).encode(),
+                          headers={'Content-Type': 'application/json'})
+        with urlopen(request) as response:
+            assert json.load(response) == replay_report(problem, outcomes)
 finally:
     server.shutdown()
     server.server_close()
@@ -95,7 +118,9 @@ print(json.dumps({'status': 'passed', 'python': sys.version.split()[0],
                   'known_answer_summary': known['summary'],
                   'checks': ['all_packaged_cases_select_verify_replay', 'known_answer_oracle_and_controls',
                              'web_assets_and_original_archive_reports', 'constrained_negative_results_packaged_and_served',
-                             'installed_http_cli_agreement', 'coupled_python_api_and_missing_point_fallback']},
+                             'installed_http_cli_agreement', 'coupled_python_api_and_missing_point_fallback',
+                             'coupled_guarded_http_replay_agrees_with_installed_cli',
+                             'training_only_no_go_packaged_and_served']},
                  sort_keys=True))
 '''
 

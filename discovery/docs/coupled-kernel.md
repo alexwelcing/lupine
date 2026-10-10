@@ -5,8 +5,9 @@ conservative part of the [coupled-evidence design](coupled-evidence-design.md).
 It can remove candidates that independent score intervals cannot distinguish,
 using exact shared-variable cancellation or supplied rational linear proofs.
 It does not implement a general LP solver, complete possible-optimum search,
-JSON/CLI integration, or a workbench mode. No scientific benchmark result is
-changed by this addition.
+wire parsing or a workbench itself. The separate [coupled adapter](coupled-problem.md)
+now supplies strict JSON/CLI and guarded HTTP integration. No scientific
+benchmark result is changed by this addition.
 
 All screening claims are conditional on a common latent vector representing the
 actual quantities in the declared scenario. A checked feasible point establishes
@@ -113,7 +114,7 @@ binds the complete normalized problem, the candidate defining the domain, all
 latent IDs, and every row. Changing a unit, reference, candidate, affine
 expression, coupling row, or original universe invalidates that identity. This
 is normalized Python-model identity, not a claim about original JSON bytes;
-there is no coupled JSON wire protocol yet.
+the separate wire adapter also seals the complete original JSON and its scoped instance.
 
 Every proof keeps the original universe and its original domains. If a witness
 is later excluded, its earlier strict comparison remains meaningful. An

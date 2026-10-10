@@ -7,11 +7,13 @@ Run: python scripts/browser_smoke.py
 import json
 from pathlib import Path
 import threading
+from unittest.mock import patch
 
 from playwright.sync_api import expect, sync_playwright
 
-from lupine_discovery.benchmarks import case_catalog, get_case
+from lupine_discovery.benchmarks import case_catalog, get_case, get_case_outcomes
 from lupine_discovery.cli import verify_certificate
+from lupine_discovery.coupled_worker import CoupledWorkerError
 from lupine_discovery.server import make_server
 
 
@@ -186,6 +188,101 @@ def run():
             expect(page.locator("#replay-results")).to_contain_text("Failed bounds")
             checks.append("pareto_unsound_control_exposes_excluded_true_front")
 
+            coupled = select_case("coupled-shared-trend")
+            assert coupled["selection"]["retained"] == ["B"]
+            assert coupled["diagnostics"]["box_selection_diagnostic"]["retained"] == ["A", "B"]
+            expect(page.locator("#result-title")).to_have_text("Conditional coupled pool")
+            expect(page.locator("#coupled-panel")).to_be_visible()
+            expect(page.locator("#coupled-proofs")).to_contain_text("shared-trend-cancellation")
+            expect(page.locator('[data-excluded-candidate="A"]')).to_contain_text("≤ -1 < 0")
+            expect(page.locator("#selection-metrics")).not_to_contain_text("REGRET")
+            expect(page.locator("#pool-table")).not_to_contain_text("undefined")
+            with page.expect_download() as downloaded:
+                page.locator("#download-certificate").click()
+            coupled_target = artifacts / "coupled-certificate.json"
+            downloaded.value.save_as(coupled_target)
+            assert verify_certificate(get_case("coupled-shared-trend")["problem"],
+                                      json.loads(coupled_target.read_text()))["verified"]
+            with page.expect_response(lambda r: r.url.endswith("/replay")) as response:
+                page.locator("#replay-builtin").click()
+            assert response.value.json()["decision"]["certificate"] == coupled
+            expect(page.locator("#replay-results")).to_contain_text("All true feasible optima")
+            expect(page.locator("#provided-world-audit")).to_contain_text("fits the complete finite reported values")
+            checks.append("coupled_exact_witness_actual_pool_and_sealed_export")
+
+            for case_id, expected_status in (("coupled-missing-point", "consistency_unresolved_all_retained"),
+                                             ("coupled-learned-relation", "unsupported_all_retained")):
+                withheld = select_case(case_id)
+                assert withheld["coupling"]["status"] == expected_status
+                assert withheld["selection"]["retained"] == ["A", "B"]
+                expect(page.locator("#result-title")).to_contain_text("Screening withheld")
+                expect(page.locator("#coupled-diagnostic")).not_to_have_attribute("open", "")
+                page.locator("#coupled-diagnostic").evaluate("element => element.open = true")
+                expect(page.locator("#coupled-diagnostic")).to_contain_text("DIAGNOSTIC ONLY")
+                expect(page.locator("#coupled-diagnostic")).to_contain_text("Separate box pool: B. Actual operational pool: A, B.")
+                with page.expect_response(lambda r: r.url.endswith("/replay")) as response:
+                    page.locator("#replay-builtin").click()
+                replay = response.value.json()
+                assert replay["decision"]["selection"]["retained"] == ["A", "B"]
+                assert replay["outcome_audit"]["all_true_minimizers_retained"] is True
+                if case_id == "coupled-missing-point":
+                    expect(page.locator("#provided-world-audit")).to_contain_text("cannot repair screening")
+            checks.append("coupled_closed_gates_keep_whole_universe_despite_box_diagnostic")
+
+            select_case("coupled-shared-trend")
+            problem = get_case("coupled-shared-trend")["problem"]
+            false_world = get_case_outcomes("coupled-shared-trend", problem)
+            false_world["outcomes"][1]["score"] = "2"
+            with page.expect_response(lambda r: r.url.endswith("/api/replay")) as response:
+                page.locator("#outcomes-upload").set_input_files({
+                    "name": "false-common-world.json", "mimeType": "application/json",
+                    "buffer": json.dumps(false_world).encode(),
+                })
+            replay = response.value.json()
+            assert replay["outcome_audit"]["lost_optimum_ids"] == ["A"]
+            assert replay["diagnostics"]["marginal_coverage"]["score_coverage"]["rate"] == "1"
+            expect(page.locator("#replay-results")).to_contain_text("lost a true feasible optimum")
+            expect(page.locator("#provided-world-audit")).to_contain_text("does not match all reported quantities")
+            page.locator("#coupled-replay-coverage").evaluate("element => element.open = true")
+            expect(page.locator("#coupled-replay-coverage")).to_contain_text("Score: 2 / 2")
+            expect(page.locator("#coupled-replay-coverage")).to_contain_text("does not establish a single shared world")
+            checks.append("false_common_world_loses_optimum_despite_full_marginal_coverage")
+            page.screenshot(path=str(artifacts / "desktop-coupled-negative-control.png"), full_page=True)
+            partial_truth = get_case_outcomes("coupled-shared-trend", problem)
+            partial_truth["outcomes"][0]["score"] = None
+            with page.expect_response(lambda r: r.url.endswith("/api/replay")) as response:
+                page.locator("#outcomes-upload").set_input_files({
+                    "name": "partial-coupled-truth.json", "mimeType": "application/json",
+                    "buffer": json.dumps(partial_truth).encode(),
+                })
+            assert response.value.json()["outcome_audit"]["all_true_minimizers_retained"] is None
+            expect(page.locator("#replay-results")).to_contain_text("full-universe optimum retention unresolved")
+            expect(page.locator("#provided-world-audit")).to_contain_text("unreported quantities remain unresolved")
+            checks.append("partial_coupled_outcomes_leave_global_retention_unknown")
+
+            original_raw = "\n  " + json.dumps(problem, indent=3) + "\n\n"
+            page.locator("#problem-upload").set_input_files({
+                "name": "original-affine-input.json", "mimeType": "application/json",
+                "buffer": original_raw.encode(),
+            })
+            expect(page.locator("#case-kind")).to_have_text("CUSTOM INPUT")
+            with page.expect_response(lambda r: r.url.endswith("/api/select")) as response:
+                page.locator("#analyze").click()
+            assert response.value.request.post_data_json == {"problem_raw": original_raw}
+            expect(page.locator("#analysis-results")).to_be_visible()
+            expect(page.locator("#problem-json")).to_have_value(original_raw)
+            with patch("lupine_discovery.server.run_coupled", side_effect=CoupledWorkerError(
+                    "worker_timeout", "Synthetic guard timeout: no receipt produced.")):
+                with page.expect_response(lambda r: r.url.endswith("/api/select")) as response:
+                    page.locator("#analyze").click()
+                assert response.value.status == 503
+                expect(page.locator("#notice")).to_contain_text("Synthetic guard timeout")
+                expect(page.locator("#analysis-results")).to_be_hidden()
+            page.locator("#analyze").click()
+            expect(page.locator("#analysis-results")).to_be_visible()
+            expect(page.locator("#problem-json")).to_have_value(original_raw)
+            checks.append("coupled_raw_input_preserved_and_guard_failure_clears_stale_receipt")
+
             page.locator("#nav-benchmarks").click()
             expect(page.locator("#benchmark-content")).to_be_visible()
             expect(page.locator("#known-case-list .known-case")).to_have_count(13)
@@ -205,6 +302,32 @@ def run():
             expect(page.locator("#constrained-protocol")).to_contain_text(constrained["scientific_result_sha256"])
             expect(page.locator('[data-arm="shift"]')).to_contain_text("unsupported")
             checks.append("measured_constrained_gates_scopes_budgets_and_identity")
+            training = json.loads((root / "src/lupine_discovery/resources/training-tail-v1.json").read_text())
+            expect(page.locator("#training-tail-content")).to_be_visible()
+            expect(page.locator("#training-tail-verdict")).to_have_attribute("data-status", training["decision"]["status"])
+            expect(page.locator("#training-tail-verdict")).to_contain_text("No replacement model was selected")
+            expect(page.locator("#training-tail-metrics tbody tr")).to_have_count(8)
+            for model in training["models"]:
+                for property in training["properties"]:
+                    expect(page.locator("#training-tail-metrics")).to_contain_text(str(model["metrics"][property["id"]]["pooled"]["tail"]))
+                    if model["role"] != "baseline":
+                        card = page.locator(f'#training-tail-gates [data-model="{model["id"]}"]')
+                        expect(card).to_have_count(1)
+                        expect(card.locator(f'[data-property="{property["id"]}"]')).to_have_count(1)
+                        for gate in ("ordinary", "numeric_guard"):
+                            margins = training["decision"]["alternatives"][model["id"]][gate][property["id"]]["pooled_margins"]
+                            for margin in margins.values():
+                                expect(card).to_contain_text(str(margin))
+            expect(page.locator("#training-tail-provenance")).to_contain_text(training["scientific_result_sha256"])
+            expect(page.locator("#training-tail-content")).to_contain_text("No new coverage guarantee")
+            for measured in training["resources"]["passes"]:
+                expect(page.locator("#training-tail-content")).to_contain_text(str(measured["peak_rss_kib_linux"]))
+            with page.expect_download() as downloaded:
+                page.locator("#download-training-tail").click()
+            training_target = artifacts / "training-tail-dashboard.json"
+            downloaded.value.save_as(training_target)
+            assert json.loads(training_target.read_text()) == training
+            checks.append("training_only_no_go_all_models_properties_gates_costs_and_exact_export")
             page.evaluate("window.scrollTo(0, 0)")
             page.screenshot(path=str(artifacts / "desktop-benchmarks.png"), full_page=True)
 
@@ -224,16 +347,37 @@ def run():
             mobile.locator("#analyze").click()
             expect(mobile.locator("#result-title")).to_have_text("3 candidates in the Pareto pool")
             assert mobile.evaluate("document.documentElement.scrollWidth <= window.innerWidth + 1")
+            mobile.locator("#case-select").select_option("coupled-shared-trend")
+            expect(mobile.locator("#case-title")).to_have_text(get_case("coupled-shared-trend")["title"])
+            mobile.locator("#analyze").click()
+            expect(mobile.locator("#result-title")).to_have_text("Conditional coupled pool")
+            assert mobile.evaluate("document.documentElement.scrollWidth <= window.innerWidth + 1")
+            mobile.locator("#coupled-diagnostic").evaluate("element => element.open = true")
+            assert mobile.evaluate("document.documentElement.scrollWidth <= window.innerWidth + 1")
             mobile.locator("#nav-benchmarks").click()
             expect(mobile.locator("#benchmark-content")).to_be_visible()
             assert mobile.evaluate("document.documentElement.scrollWidth <= window.innerWidth + 1")
             expect(mobile.locator("#constrained-content")).to_be_visible()
+            expect(mobile.locator("#training-tail-content")).to_be_visible()
             mobile.locator('[data-arm="primary"] .constrained-table-region').focus()
             mobile.keyboard.press("ArrowRight")
             assert mobile.evaluate("document.documentElement.scrollWidth <= window.innerWidth + 1")
             mobile.evaluate("window.scrollTo(0, 0)")
             mobile.screenshot(path=str(artifacts / "mobile-benchmarks.png"), full_page=True)
             checks.append("mobile_navigation_selection_and_no_horizontal_overflow")
+            empty = browser.new_page()
+            empty.on("pageerror", lambda error: errors.append(str(error)))
+            def omit_training(route):
+                response = route.fetch()
+                report = response.json()
+                report.pop("training_tail", None)
+                route.fulfill(response=response, json=report)
+            empty.route("**/api/benchmarks", omit_training)
+            empty.goto(url + "#benchmarks", wait_until="networkidle")
+            expect(empty.locator("#training-tail-status")).to_contain_text("No training-only development report is bundled")
+            expect(empty.locator("#training-tail-content")).to_be_hidden()
+            expect(empty.locator("#archive-cards .archive-card")).to_have_count(3)
+            checks.append("missing_training_report_does_not_invent_results_or_change_archived_cards")
             assert not errors, errors
             checks.append("no_browser_javascript_errors")
             browser.close()

@@ -82,12 +82,13 @@ class AdversarialIntegrationTests(unittest.TestCase):
         replacement = copy.deepcopy(initial)
         replacement["outcomes"][0]["score"] = "999"
         reads = []
-        def fake_read(path, *args, **kwargs):
+        def fake_open(path, mode="r", *args, **kwargs):
+            self.assertEqual(mode, "rb")
             if path.name == "problem.json":
-                return json.dumps(value)
+                return io.BytesIO(json.dumps(value).encode("utf-8"))
             reads.append(path.name)
-            return json.dumps(initial if len(reads) == 1 else replacement)
-        with patch.object(Path, "read_text", fake_read), patch("sys.stdout", new_callable=io.StringIO) as output:
+            return io.BytesIO(json.dumps(initial if len(reads) == 1 else replacement).encode("utf-8"))
+        with patch.object(Path, "open", fake_open), patch("sys.stdout", new_callable=io.StringIO) as output:
             self.assertEqual(main(["replay", "problem.json", "outcomes.json"]), 0)
         report = json.loads(output.getvalue())
         self.assertEqual(report["outcomes_digest"], digest(initial))

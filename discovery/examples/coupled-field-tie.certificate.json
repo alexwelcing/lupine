@@ -1,0 +1,145 @@
+{
+  "assumptions": [
+    "One common latent vector in the declared domain represents every actual score and constraint.",
+    "A consistency point proves model nonemptiness, not physical validity or observational provenance.",
+    "All quantities use the declared scenario, reference, and normalized dimensionless latent coordinates.",
+    "Every exactly tied feasible minimizer in the finite input universe is retained under these premises.",
+    "The conservative search is incomplete; retention does not certify possible or robust optimality."
+  ],
+  "certificate_digest": "4ddb637dfbfcf622f20c3361c9bd1f52ea795e62a3335bb51cd73bc94db37192",
+  "claim": "conditional_common_world_finite_universe_all_minimizer_retention",
+  "common_world": {
+    "claim": "one_common_latent_vector_represents_all_quantities",
+    "premise_status": "assumed_unverified",
+    "reference": "Constructed common-field and bounded-discrepancy premises, not learned correlation or scientific attestation.",
+    "relation_basis": "bounded_error_model",
+    "scientific_validity": "unestablished"
+  },
+  "coupling": {
+    "consistency": {
+      "domain_id": "338b0b88fb0a256585277afd0bc19fc260e27a647aaa9af4b11d292c1a1ff9b9",
+      "operations_used": 57,
+      "reason": "exact_common_feasible_point",
+      "status": "verified"
+    },
+    "status": "conditional_screened",
+    "supplied_consistency_point": [
+      "0",
+      "0",
+      "0"
+    ]
+  },
+  "diagnostics": {
+    "box_pool_role": "active_conditional_baseline",
+    "box_selection_diagnostic": {
+      "certified_feasible": [
+        "A",
+        "B"
+      ],
+      "certified_infeasible": [],
+      "dominated": [],
+      "incumbent": "B",
+      "possible_feasible": [
+        "A",
+        "B"
+      ],
+      "regret_bound": "3",
+      "retained": [
+        "A",
+        "B"
+      ],
+      "threshold": "9/2"
+    },
+    "marginal_intervals": {
+      "A": {
+        "constraints": {},
+        "score": {
+          "lower": "5/2",
+          "upper": "11/2"
+        }
+      },
+      "B": {
+        "constraints": {},
+        "score": {
+          "lower": "3/2",
+          "upper": "9/2"
+        }
+      }
+    }
+  },
+  "engine_version": "0.1.0",
+  "exclusion_certificates": {},
+  "execution": {
+    "effective_limits": {
+      "max_certificate_terms": 512,
+      "max_integer_bits": 2048,
+      "max_operations": 100000,
+      "max_witness_pairs": 4096
+    },
+    "kernel_operations_used": 175,
+    "ordered_supplied_proof_digests": [],
+    "profile_id": "coupled-local-v1",
+    "requested_limits": {
+      "max_certificate_terms": 512,
+      "max_integer_bits": 2048,
+      "max_operations": 100000,
+      "max_witness_pairs": 4096
+    }
+  },
+  "model_identity": {
+    "domain_id": "338b0b88fb0a256585277afd0bc19fc260e27a647aaa9af4b11d292c1a1ff9b9",
+    "instance_digest": "133488d84c285510713722afab8e64bc4452db2edb8dc683d58421dfd564f49f",
+    "kernel_model_digest": "375048c9d2a80d0ae482d985fbcc9be8cddc49682e5772d22d0a57eba9ee5397"
+  },
+  "physical_attestation": "not_established_by_this_program",
+  "problem_digest": "163974139cce113f0dd93115f4c1d752bc49f044c870006ec5bf4303b9c81280",
+  "proof_assessments": [
+    {
+      "candidate_id": "A",
+      "certificate_digest": "7875756dfaf4a8e9e621fb7d210934ee8a5ded16eccaf9fe3323f2b9f95cfa72",
+      "check": {
+        "domain_id": "066cd4d9b1d6ab32be152257946eca7b1e202bef746d672a1039967bff125a18",
+        "operations_used": 116,
+        "reason": "strict_improvement_not_established_ties_retained",
+        "status": "not_applicable"
+      },
+      "input_index": null,
+      "source": "automatic",
+      "supplied_id": null,
+      "wire_proof_digest": null,
+      "witness_id": "B"
+    },
+    {
+      "candidate_id": "B",
+      "certificate_digest": "70ca861c099caeb21068e67d243838267ab56cf634539a7f402ea1444fd0aa01",
+      "check": {
+        "domain_id": "ac1458aa44d45c91f80a254354f47d74a1c0b5b61c5aa320367c2e545d02658c",
+        "operations_used": 175,
+        "reason": "strict_improvement_not_established_ties_retained",
+        "status": "not_applicable"
+      },
+      "input_index": null,
+      "source": "automatic",
+      "supplied_id": null,
+      "wire_proof_digest": null,
+      "witness_id": "A"
+    }
+  ],
+  "scenario_id": "coupled-field-tie",
+  "schema": "lupine.discovery.coupled_certificate.v1",
+  "selection": {
+    "certified_feasible": [
+      "A",
+      "B"
+    ],
+    "coupled_dominated": [],
+    "coupled_infeasible": [],
+    "dominance_witnesses": {},
+    "interval_dominated": [],
+    "interval_infeasible": [],
+    "retained": [
+      "A",
+      "B"
+    ]
+  }
+}

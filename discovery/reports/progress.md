@@ -3,6 +3,36 @@
 The current goal and ordered backlog are in `../GOAL.md`. Append concise entries
 with artifacts, actual checks, scientific implications, and the next action.
 
+## 2026-10-10 — coupled interface and visible training result
+
+- Published `b37d8db3acbcd98d761da451d348ac5b15df00c1`; all four jobs in
+  https://github.com/alexwelcing/lupine/actions/runs/38069767606 passed,
+  including Python 3.11/3.12, package/manifest, browser and all 88 proof audits.
+- Completed strict coupled JSON, CLI/domain export, identity verification,
+  actual-pool replay, guarded HTTP and three sealed workbench demonstrations.
+  A false common relation now visibly loses an optimum despite full marginal
+  coverage; optional model points never replace observed values. Unsupported
+  premises and missing consistency retain the entire universe.
+- The training-only dashboard preserves all four models, both properties,
+  every fold and gate, costs, provenance and the reproduced NO-GO. It pins
+  published receipts and rejects internally resealed result substitution.
+- Independent review found and corrected proof occurrence indexing, process
+  descendant cleanup, transport/seal handling, and stale UI receipts after a
+  failed repeated build. Regressions exercise each behavior.
+- Actual final checks: 298 Python tests with unchanged before/after source
+  hashes, 24 Chromium checks with no JavaScript errors, and a noneditable
+  isolated wheel with all 22 cases and guarded coupled replay pass. The first
+  full run's stale read-method test fixture was repaired without weakening its
+  single-read/outcome-digest assertions; its failure evidence is preserved.
+  See `coupled-interface-verification.md`.
+- Added two hand-constructed correction-field wire examples: discrepancy
+  radius 1/4 supports a strict -1/2 comparison; radius 1/2 preserves an attained
+  tie. Their real CLI verify/replay commands pass. They are synthetic algebra,
+  not an implemented automatic scientific adapter or physical validation.
+- Next: publish this interface checkpoint, inspect its remote CI, then implement
+  the scoped projection-field adapter and prove/test its algebraic translation.
+  Scientific superiority remains NO-GO for all completed constructions.
+
 ## 2026-10-10 — reproduced training NO-GO and coupled mathematics
 
 - Executed frozen `jarvis-training-tail-v1` after the source-bound 22-test

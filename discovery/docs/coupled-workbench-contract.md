@@ -1,9 +1,11 @@
-# Proposed coupled workbench contract
+# Coupled workbench design and wire contract
 
-Status: **design only**. This document specifies a small adapter around the
-existing [pure kernel](coupled-kernel.md); it implements no parser, CLI command,
-HTTP route, catalog case, or UI mode. The current 19 built-in cases remain
-unchanged. No archived scientific result or physical claim changes.
+Status: the adapter, CLI, guarded HTTP routes, three additional catalog cases
+and browser mode are implemented. The [verification record](../reports/coupled-interface-verification.md)
+records the executed tests. The initial proposal below records the design rationale and
+boundaries. The [user guide](coupled-problem.md) describes implemented usage.
+The catalog now contains 22 cases. No archived scientific result or physical
+claim changes.
 
 The first adapter should expose conservative screening with shared affine
 uncertainty, explicit proof checking, and separate outcome auditing. It should
@@ -73,8 +75,7 @@ mean `g <= 0`.
 }
 ```
 
-The example is valid under this **proposed** schema, not an input currently
-accepted by the CLI. An affine record always has exactly `coefficients` and
+The example is accepted by the implemented coupled CLI schema. An affine record always has exactly `coefficients` and
 `constant`, with one coefficient per latent in the declared order. Constraint
 specifications reuse the existing `{unit, reference}` shape. Each candidate uses
 exactly those constraint keys; `score` is reserved. A coupling row has exactly
@@ -177,7 +178,7 @@ external proof generation practical without a circular seal:
 lupine-discovery coupled-domains problem.json --output domains.json
 ```
 
-It would emit `lupine.discovery.coupled_domains.v1`, the wire instance and kernel
+It emits `lupine.discovery.coupled_domains.v1`, the wire instance and kernel
 model digests, `P`, and every candidate's `Qx`, including exact row IDs and rows.
 It builds no exclusion and reads no outcomes. Users first request domains with
 an empty proof list, then insert their separately generated proofs. The instance
@@ -293,7 +294,7 @@ text labels, not only colored badges. Desktop and mobile tables retain exact
 strings, labeled scopes, accessible proof details, and exportable receipts.
 
 Propose these **three** initial synthetic demos; the edits below are exact
-transformations of the complete JSON example above, not current catalog entries:
+transformations of the complete JSON example above, now implemented as catalog entries:
 
 | ID / input | Expected operational state and pool | Separate known outcomes |
 | --- | --- | --- |
@@ -330,7 +331,7 @@ alone is not an adequate web boundary. Start with one fixed local profile,
 | Resource | Proposed initial ceiling |
 | --- | --- |
 | Coupled input document | 256 KiB UTF-8, including proofs; apply the existing outer HTTP cap as well |
-| JSON nesting / scalar string | Depth 24 / 512 characters before rational conversion |
+| JSON nesting / rational string | Depth 24 / 512 characters before rational conversion |
 | Candidate count / latent dimension / constraints | 64 / 16 / 8; zero latents and zero constraints are valid |
 | Additional coupling rows / supplied proofs | 64 / 64 |
 | Total rational tokens / supplied multiplier entries | 16,384 / 4,096 across the whole document |
@@ -338,8 +339,9 @@ alone is not an adequate web boundary. Start with one fixed local profile,
 | Kernel work ceilings | 100,000 operations; 512 terms per certificate; 2,048-bit checked arithmetic; 4,096 attempted witness pairs |
 | Worker / response | One coupled worker at a time; proposed 5 CPU seconds, 10 wall seconds, 256 MiB address-space limit where enforceable, and 2 MiB response cap |
 
-These are conservative **proposed engineering limits**, not measured performance
-guarantees. Profile values need adversarial measurement before enabling a route.
+These conservative limits are enforced by the adapter and Linux worker.
+Adversarial tests exercise the boundary; they do not guarantee completion or
+performance for every accepted problem.
 Requested kernel limits may only lower these ceilings; reject higher requests.
 Reject IDs/references that are empty or over a documented bounded string length
 (proposed 128 / 2,048 characters). Count nested feasibility certificates in term
@@ -369,20 +371,20 @@ equivalent guard exists; never silently execute it in the server process.
 Continue loopback binding, same-origin guards, no network
 lookups, and no automatic storage of uploaded problems or outcomes.
 
-## Decisions still needing kernel/backend coordination
+## Implementation decisions and remaining boundaries
 
 1. **Identity normalization:** freeze the exact wire projection and versioned
    profile before storing receipts. The dedicated `coupled-domains` CLI is the
    selected design; its manifest must preserve original domains and avoid
    proof-seal circularity. Backend conformance tests must pin exact identities.
-2. **Proof assessment joins:** implement the chosen index/ID-preserving mapping,
+2. **Proof assessment joins:** the adapter implements the index/ID-preserving mapping,
    pre-kernel rejection of wrong instance envelopes, and explicit gate-skipped
    `not_checked` results. Do not assign “verified” to a supplied proof merely
    because an automatic proof later excludes the same candidate.
-3. **Work enforcement:** measure the proposed ceilings, implement a guarded worker,
-   and settle portable memory enforcement and shared-route preflight behavior
-   before adding an HTTP mode. The current pure kernel's limits cannot supply
-   these guarantees by themselves.
+3. **Work enforcement:** the Linux worker enforces the fixed process boundary;
+   unsupported platforms refuse coupled HTTP processing. The pure kernel's
+   proof counter does not supply these process guarantees. Broader portable
+   support and performance characterization remain separate work.
 4. **Replay completeness:** the first wire version deliberately requires every
    declared quantity for full optimum claims. A later mathematically justified
    partial-truth rule or common-world feasibility solver needs separate design

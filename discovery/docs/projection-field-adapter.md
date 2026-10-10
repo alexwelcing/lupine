@@ -113,6 +113,29 @@ be removed under the declared common-field and discrepancy premises. Increasing
 both discrepancy bounds to `1/2` permits a tie; the strict exclusion must stop.
 This example is synthetic algebra, not a prediction for an actual material.
 
+Two hand-constructed wire examples make this bridge executable without claiming
+an automatic scientific adapter: [bounded discrepancies](../examples/coupled-field.json)
+and the [attained tie](../examples/coupled-field-tie.json). Each numeric latent
+coordinate is divided by one synthetic score unit, so it is dimensionless;
+the affine coefficients carry the declared score units. The anchor rows are
+explicit even though they duplicate the coordinate bounds in these fixtures.
+Their outcome files use constructed values from one separately declared model
+point, not measurements.
+
+From `discovery/`, run:
+
+```sh
+lupine-discovery select examples/coupled-field.json
+lupine-discovery verify examples/coupled-field.json examples/coupled-field.certificate.json
+lupine-discovery replay examples/coupled-field.json examples/coupled-field.outcomes.json
+lupine-discovery verify examples/coupled-field-tie.json examples/coupled-field-tie.certificate.json
+lupine-discovery replay examples/coupled-field-tie.json examples/coupled-field-tie.outcomes.json
+```
+
+The first example retains B and records the exact `-1/2` improvement bound.
+The second retains A and B; its constructed outcomes attain the common score
+`9/2`. Both marginal interval selectors retain both candidates.
+
 The general pairwise difference is
 
 ```

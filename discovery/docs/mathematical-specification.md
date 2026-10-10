@@ -240,9 +240,9 @@ bounds can restrict the admissible worlds and permit further pruning. See
 
 ## Shared affine evidence and conservative exclusions
 
-The experimental [coupled Python API](coupled-kernel.md) supplies additional
-relations between quantities. It has no coupled JSON, CLI, or browser route
-yet. In its declared scenario, use one common latent vector z and write
+The [coupled kernel](coupled-kernel.md) supplies additional relations between
+quantities. A separate [strict adapter](coupled-problem.md) exposes these through
+JSON/CLI, actual-pool replay and guarded HTTP. In its declared scenario, use one common latent vector z and write
 
     P = {z : M_r dot z <= u_r for every original row r}
     score_x(z) = a_x dot z + c_x

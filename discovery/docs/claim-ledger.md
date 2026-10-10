@@ -14,13 +14,14 @@ explicit finite weighted probability instance; exchangeability, conformal
 marginal coverage, Python refinement and physical predictor validity remain
 unproved.
 
-The [coupled kernel contract](coupled-kernel.md) describes the experimental
-Python API; it has no coupled CLI, JSON route, or browser mode. Its 18 focused
-tests and [independent audit](../reports/coupled-independent-audit.json) are
-separate from the historical full-release count of 186 Python tests and 17
-browser checks. The audit reports PASS for 10,003 checks across 11,027 synthetic
-worlds and binds the tested source hashes. No refreshed combined test total is
-asserted here.
+The [coupled kernel contract](coupled-kernel.md) documents exact affine proofs
+and their common-world premise. Its 18 focused tests and [independent audit](../reports/coupled-independent-audit.json)
+cover 10,003 checks across 11,027 synthetic worlds. The [strict adapter](coupled-problem.md)
+adds scoped wire identities, actual-pool replay and a guarded local HTTP route.
+Independent adapter/worker tests include false-common-world controls, 144 partial
+truth patterns, stale seals and process cleanup. The [coupled interface verification](../reports/coupled-interface-verification.md)
+records 298 Python tests, 24 browser checks and an isolated wheel exercising
+22 cases. Historical records remain separately identified.
 
 | Claim | Evidence | Status and limit |
 |---|---|---|
@@ -52,6 +53,9 @@ asserted here.
 | Archived pilots expose interval failures | `reports/archived-v1.json`, `reports/additional-archived-v1.json`, corresponding protocols | All three archives refute simultaneous soundness of their empirical intervals |
 | Frozen constrained experiment establishes useful screening or recommendation superiority | [Measured result](../reports/constrained-result-v1.md), [compact dashboard](../reports/constrained-v1.json), frozen protocol | **Not established:** all 1,000 primary candidates retained; budget-four 42/50 vs nominal 40/50 fails predeclared gain and paired-test thresholds. Every negative result remains visible |
 | Unsupported chemistry-family shift triggers abstention | [Measured result](../reports/constrained-result-v1.md), [calibrated contract](calibrated-problem.md) | All 50 shift panels retain every candidate; transferred-bound diagnostic covers only 18/50 panels and has unsupported premises. Abstention is not accurate shift prediction |
+| Coupled replay audits the actual selected pool and preserves unknown truth | [Wire tests](../tests/test_coupled_io.py), [independent review](../tests/test_coupled_wire_review.py), [guide](coupled-problem.md) | Complete marginal coverage can coexist with a lost optimum when the common relation is false. Optional latent points are audited separately and never replace observed values or repair the prior decision |
+| Coupled HTTP computation is bounded and hard failures carry no receipt | [Worker tests](../tests/test_coupled_worker.py), [HTTP tests](../tests/test_coupled_server.py), independent review | Linux CPU/address-space/wall/output boundary; one worker per server process. Unsupported platforms refuse this mode. Process checks do not prove completion of every accepted problem |
+| The training dashboard preserves the fixed published experiment | [Projector tests](../tests/test_training_dashboard.py), [recorded projection](../reports/training-tail-v1.json) | Pins original public receipts and scientific digest; rejects even internally resealed result substitution. No fitting or original-data access; presentation is not new validation |
 | Frozen source/model artifacts reproduce in a fresh wheel environment | [Reproduction receipt](../reports/constrained-reproduction.json) | All six artifact identities match after rebuilding from verified raw bytes; same host and interpreter, isolated noneditable wheel, no new independent data or outcome replay in that particular check |
 | Composition-only predictors have a 1.15 eV archive worst-error floor | `descriptor_collision_lower_bound`, `reports/descriptor-audit.json`, `docs/descriptor-audit.md` | General conditional inequality formalized; archive instantiation computed by Python from three descriptor collisions; not a claim of physical irreducibility |
 | The training-only follow-up establishes a better predictor | [Frozen protocol](training-tail-protocol-v1.md), [executed result](../reports/training-tail-result-v1.md), [two-pass receipt](../reports/training-tail-reproduction-v1.json) | **Not established:** all three ridge alternatives fail the predeclared joint requirements. Exact outputs reproduce in two processes. Training-only model selection is not independent validation or calibration; no changed predictor is authorized by this result |
