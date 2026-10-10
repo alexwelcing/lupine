@@ -150,3 +150,10 @@ source and passing CI before actual allocation or performance-target decoding.
 The source-specific arithmetic, 130 conditional proofs and every historical
 scientific negative remain unchanged. Final clean release reproduction remains
 pending the complete committed candidate.
+
+The first hosted run of the guarded checkpoint failed: namespace capability was
+unavailable, causing the Python 3.12 assertions to fail and cancelling 3.11.
+Browser and Lean passed. [The CI repair](reports/mpea-namespace-ci-v1/README.md)
+pins a supported runner and adds a strict namespace preflight; hosted completion
+is pending. This does not erase successful local checks or authorize claiming
+all-four-job CI success. Root owns this repair before actual study registration.

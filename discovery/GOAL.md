@@ -63,7 +63,7 @@ can complete an experiment while leaving its scientific release gate open.
 
 | ID | Priority | Work and acceptance | State | Dependencies / evidence |
 |---|---|---|---|---|
-| G0 | P0 | Preserve and repair current CI before stacking changes | DONE at baseline | `fb26810`; [all four jobs passed](https://github.com/alexwelcing/lupine/actions/runs/38055093551) |
+| G0 | P0 | Preserve and repair current CI before stacking changes | ACTIVE hosted namespace capability repair | a67815e browser/Lean pass; Python 3.12 fails closed on namespace refusal, 3.11 cancelled. [Preserved failure and strict runner preflight](reports/mpea-namespace-ci-v1/README.md); root owns new remote four-job verification |
 | G1a | P0 | Exact joint-risk calibration planner; finite/unbounded distinction; adversarial rank/budget tests | DONE | `src/lupine_discovery/calibration.py`; five focused checks; `docs/calibration-planner.md`. Integration remains G1b. |
 | G1b | P0 | Integrate calibration outcomes and safe abstention through versioned inputs, replay, CLI, and browser; reject unsupported guarantee promotion | DONE | Published in `b1e0d4f`; calibrated schema, original-seal replay, 3 demonstrations, exact browser exports and all-retained abstention |
 | G2 | P1 | Select, provenance-audit, and preregister a constrained multi-property archived task before reading evaluation targets | DONE | NIST JARVIS protocol and source audit frozen in `b5d432d1e7123ae8c33d48bbef2e04c44de7b37c` before acquiring targets |

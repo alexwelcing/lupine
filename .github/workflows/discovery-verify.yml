@@ -9,11 +9,14 @@ permissions:
   contents: read
 jobs:
   python:
-    runs-on: ubuntu-latest
+    # The guarded archival worker requires unprivileged user/network namespaces.
+    # ubuntu-latest refused this boundary in run 38087285589; never skip its tests.
+    runs-on: ubuntu-22.04
     defaults:
       run:
         working-directory: discovery
     strategy:
+      fail-fast: false
       matrix:
         python: ['3.11', '3.12']
     steps:
@@ -22,6 +25,9 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
       - run: python -m pip install -e '.[benchmark]'
+      - name: Verify required user and network namespaces
+        run: |
+          LUPINE_PARENT_NETNS="$(readlink /proc/self/ns/net)" unshare --user --map-root-user --net python -c 'import os; assert os.readlink("/proc/self/ns/net") != os.environ["LUPINE_PARENT_NETNS"]; assert {line.split(":")[0].strip() for line in open("/proc/net/dev").read().splitlines()[2:]} == {"lo"}; print("Separate loopback-only network namespace verified")'
       - run: python -m unittest discover -s tests -v
       - run: lupine-discovery verify examples/abstract.json examples/abstract.certificate.json
       - run: lupine-discovery replay examples/abstract.json examples/abstract.outcomes.json

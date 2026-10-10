@@ -3,6 +3,25 @@
 The current goal and ordered backlog are in `../GOAL.md`. Append concise entries
 with artifacts, actual checks, scientific implications, and the next action.
 
+## 2026-10-10 21:27 UTC — hosted namespace refusal preserved; CI repair
+
+- Published and verified remote `a67815e60561df1ea08a44e63227e2e3b6780c6c`.
+  Run 38087285589 passed browser/Lean but failed Python 3.12 (981 tests,
+  57 failures/one error); matrix cancellation prevented a completed 3.11 result.
+  Guarded tests reported NETWORK_ISOLATION_UNAVAILABLE. The complete official
+  responses and lossless log are in [the CI repair record](mpea-namespace-ci-v1/README.md).
+- Pinned Python jobs to supported Ubuntu 22.04 and added a strict distinct,
+  loopback-only namespace preflight. It passes locally; hosted verification is
+  pending publication. Every existing assertion remains, with no skip, runtime
+  fallback or host-wide security change. Both matrix jobs now finish independently.
+- The actual a67815e retained wheel passed 28 cases/six schemas locally. Independent
+  artifact audit found the historical verifier's nested-file coverage lag; its
+  corrected candidate passes and preserves the first failure. That utility and
+  production boundary components remain the next uncommitted increment.
+- Scientific implications: none. Actual MPEA registration/targets remain closed.
+  Owner/checkpoint: root restores all-four-job CI, then integrates reviewed
+  production flow while delegated adapter/bridge/launcher reviews continue.
+
 ## 2026-10-10 21:19 UTC — guarded components and archive workbench; 981 tests pass
 
 - Verified remote `b442e53dc1e7e0e7bf3b2576ebc4e76f69afb28c` and all four
