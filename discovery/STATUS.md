@@ -29,6 +29,7 @@ The active outcome, ordered backlog, and autonomous execution rules are in
 - Problem and certificate downloads preserve the exact successful input together; stale responses, edits and failed builds cannot export an old pair. Real CLI checks cover all five wire schemas; full projection replay exports retain original declarations and unavailable-model states.
 - The [training-only follow-up protocol](docs/training-tail-protocol-v1.md) and [runner contract](docs/training-tail-run.md) freeze a bounded 5NN-versus-ridge development comparison. The completed two-pass result is NO-GO; no improved predictor is established.
 - A separate exact [statistical candidate-pool API](docs/decision-pool-calibration-design.md) preserves all tied minimizers in its calibration score and supports distinct whole-universe fallbacks. Eighteen author tests and 16 independent runtime tests pass; the formal extension adds 17 counting/finite-law statements. Explicit counterexamples refute conditioning the marginal guarantee on feasibility or realized calibration. This is Python-only, with no new fitted ranker or scientific coverage result.
+- The [MPEA header custody run](reports/mpea-custody-readiness-v1.md) verified the pinned 332,126-byte experimental archive after the reviewed source freeze and green CI. Two fresh header processes match: 23 columns, 3 recognized and 20 redacted labels. Observation rows remain undecoded and schema/paired-condition readiness remains unresolved; no new scientific benchmark ran.
 
 ## Remaining four-day gates
 

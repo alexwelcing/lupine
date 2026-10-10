@@ -3,6 +3,32 @@
 The current goal and ordered backlog are in `../GOAL.md`. Append concise entries
 with artifacts, actual checks, scientific implications, and the next action.
 
+## 2026-10-10 18:21 UTC — actual MPEA capture and preserved schema block
+
+- Pushed `75caf5fc56ed3c8bb4a8da4cc913fc3816c3bb63`, verified the remote
+  ref, and waited for [all four CI jobs](https://github.com/alexwelcing/lupine/actions/runs/38075147915)
+  before acquisition. The committed manifest binds 154 files; 485 Python tests,
+  package, 35 browser checks and all 117 formal audits pass at that checkpoint.
+- Ran the frozen acquire command successfully: 332,126 bytes and declared MD5 match;
+  whole-file SHA-256 `c5504d93fd324d1be26cf814d0694ee9ee95578d68a0b38aba6813b939fa2c5d`.
+  Both fresh header processes return expected BLOCKED_SCHEMA/exit2 and identical
+  public receipt `01f0e9899f8afb1517d0efd0d2bb4c43ca9df94daadc6a2d15664ac1bbe4d827`.
+- The actual first record has 23 columns, LF/no BOM. Three predeclared labels are
+  visible; 20 unknown labels remain redacted. The full target-bearing artifact
+  was acquired/hashed, but no observation row was decoded. Row counts, missing
+  syntax, target completeness, pairing, eligibility and scientific claims remain
+  unresolved. No fit, split, threshold selection or changed benchmark occurred.
+- Independent metadata research verified the companion JSON; it points to v7
+  and supplies concepts rather than exact v9 columns. A narrow header-disclosure
+  amendment is being built and reviewed before unknown labels are released.
+  It will remain schema-blocked pending a separate semantic mapping; original
+  custody source and receipts remain frozen. No new Alex decision is required.
+- Owner/checkpoint: root publishes actual custody evidence and reviews the
+  amendment; its author works in ignored scratch. G16 backend/worker/UI and
+  independent wire/browser owners are integrating the statistical workbench.
+  Next: freeze/test the amendment, execute only its first-record path, and finish
+  G16 source-bound full-suite, browser and fresh-wheel verification.
+
 ## 2026-10-10 18:16 UTC — published statistical API; archive custodian ready
 
 - Pushed `522fb280bad7ef1794c97a0de1f64a0e90598efe` and verified the exact

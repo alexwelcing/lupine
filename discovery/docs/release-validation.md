@@ -151,3 +151,8 @@ claim or scientific-superiority gate is passed by this engineering increment.
 before real acquisition and then preserve BLOCKED_SCHEMA until a separate
 schema amendment. No observation rows, numerical completeness, paired operating
 conditions, physical bounds or benchmark success are established by these tests.
+
+The subsequent [actual MPEA acquisition](../reports/mpea-custody-readiness-v1.md)
+verified the fixed 332,126-byte archive, then reproduced the redacted header in
+two fresh processes. It remains BLOCKED_SCHEMA with 20 unknown labels among
+23 columns. No observation rows were decoded and no scientific gate advanced.

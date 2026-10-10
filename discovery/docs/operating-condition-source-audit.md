@@ -1,6 +1,9 @@
 # Operating-condition source audit
 
-Audit date: **2026-10-10**. Status: **source reconnaissance only; no benchmark registered**.
+Audit date: **2026-10-10**. Status: **historical source reconnaissance; no benchmark registered**.
+The later [custody run](../reports/mpea-custody-readiness-v1.md) acquired the pinned
+MPEA archive and decoded its header only. The access statements below describe
+this earlier reconnaissance checkpoint.
 
 The strongest accessible next lead is the archived **MPEA mechanical-property
 compilation**, because its documented fields include test temperature, loading
