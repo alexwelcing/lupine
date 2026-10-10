@@ -1,0 +1,42 @@
+{
+  "schema": "lupine.discovery.outcomes.v1",
+  "scenario_id": "abstract-fixture-v1",
+  "problem_digest": "5678d4faf2fb6aced0eb45d8ad33cc220929e6566f6655ebf47c04444e42f125",
+  "outcomes": [
+    {
+      "id": "A",
+      "score": 2,
+      "constraints": {
+        "capacity": 0
+      }
+    },
+    {
+      "id": "B",
+      "score": 3,
+      "constraints": {
+        "capacity": -1
+      }
+    },
+    {
+      "id": "C",
+      "score": 0,
+      "constraints": {
+        "capacity": 1
+      }
+    },
+    {
+      "id": "D",
+      "score": 0,
+      "constraints": {
+        "capacity": 1
+      }
+    },
+    {
+      "id": "E",
+      "score": 2,
+      "constraints": {
+        "capacity": -1
+      }
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lupine-discovery"
+version = "0.1.0"
+description = "Exact, evidence-aware candidate pools with conditional formal guarantees"
+requires-python = ">=3.11"
+license = "AGPL-3.0-or-later"
+dependencies = []
+
+[project.optional-dependencies]
+benchmark = ["numpy>=2,<3"]
+
+[project.scripts]
+lupine-discovery = "lupine_discovery.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"

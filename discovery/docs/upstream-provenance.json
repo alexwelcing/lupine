@@ -1,0 +1,28 @@
+{
+  "schema": "lupine.discovery.upstream.v1",
+  "review_date": "2026-10-10",
+  "rhizo": {
+    "repository": "https://github.com/alexwelcing/lupine-rhizo",
+    "commit": "81079a8e1bac7ed332712cc92002bd3435e40776",
+    "files": [
+      "lean-spec/OpenDistillationFactory/Materials/Theory/UniversalCorrection.lean",
+      "lean-spec/OpenDistillationFactory/Materials/Theory/UniversalCorrection/Scope.lean",
+      "lean-spec/OpenDistillationFactory/Materials/Theory/UniversalCorrection/ScalarEnvelope.lean",
+      "lean-spec/OpenDistillationFactory/Materials/Theory/UniversalCorrection/RobustRanking.lean",
+      "lean-spec/OpenDistillationFactory/Materials/Theory/UniversalCorrection/Attestation.lean",
+      "lean-spec/OpenDistillationFactory/Materials/Theory/UniversalCorrection/ColdStart.lean",
+      "lean-spec/OpenDistillationFactory/Materials/Theory/UniversalCorrection/Descriptor.lean",
+      "lean-spec/OpenDistillationFactory/Materials/Theory/UniversalCorrection/FixedSampledLipschitz.lean"
+    ]
+  },
+  "library": {
+    "repository": "https://github.com/alexwelcing/lupine-ledger",
+    "commit": "9acdbaf9de337fccdfad419c23867378fce1aafd",
+    "files": [
+      "content/ontology/The-Lupine-Ontological-Atlas.md",
+      "content/latest/articles/docs/research-index.md",
+      "content/latest/articles/docs/formal-proof-ledger.md"
+    ]
+  },
+  "relationship": "New selection composition above Rhizo conditional correction theory; no claim of runtime formal refinement or universal physical accuracy."
+}
