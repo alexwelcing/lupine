@@ -3,6 +3,37 @@
 The current goal and ordered backlog are in `../GOAL.md`. Append concise entries
 with artifacts, actual checks, scientific implications, and the next action.
 
+## 2026-10-10 20:28 UTC — feature reader reviewed; normalization release verified
+
+- Published `2e4162b1953fa1762b73b81140eb9057394ff07f`, verified remote identity
+  and all four CI jobs in run 38082913494. The clean retained wheel passes all
+  28 installed cases/six schemas; a separate fresh noneditable installation
+  passes five exact normalization API checks. Independent byte audit verifies
+  577 original Git blobs, 191 manifest entries and 110 wheel RECORD entries.
+  `normalization-release-v1/` preserves six exact safe artifacts and their map.
+- Integrated the independently reviewed production feature reader and tests
+  unchanged. Actual checks: 34 focused and 762 full Python tests pass, the latter
+  in 121.477 unittest seconds with 208 stable source/resource hashes. Reviewed
+  specifications, initial reviewer fixture errors, corrected logs and promotion
+  identities remain in `mpea-feature-reader-engineering-v1/`. No actual feature
+  extraction has occurred. Existing interface and 130-statement proofs unchanged.
+- The reader verifies historical ancestry and current source/test/specification
+  identities before one bounded raw-source read. Only formula cells are decoded;
+  vectors remain under ignored private paths and public outputs are aggregates.
+  All rows and explicit unknowns remain. These checks do not validate physical
+  fractions, target completeness, useful prediction or a scientific release.
+- Prospective study kernel passes 24 constructed-data author tests in scratch;
+  target parser passes 13. Independent reviews and the persistent stage driver
+  are still in progress. Review identified a row-local target-failure versus
+  study-stop wording ambiguity; resolve it before registration. No source-group
+  allocation, OS entropy, performance-target interpretation or fit has run.
+- Owner/checkpoint: root publishes this reader freeze and verifies remote SHA
+  plus all four CI jobs before two distinct feature-only processes. Protocol
+  engineer owns immutable stage custody; backend owns exact synthetic study
+  kernel; reviewers own independent scratch tests. Next publish only verified
+  aggregate feature evidence, complete/freeze the study protocol and full runner,
+  then follow its staged access gates. All historical scientific negatives stand.
+
 ## 2026-10-10 20:12 UTC — exact normalization integrated and independently tested
 
 - Published `28b929f6ac74edaeccef148c7a1aa29b3b4bfdb0`; verified its remote SHA

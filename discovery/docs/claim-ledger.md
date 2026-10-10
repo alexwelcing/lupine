@@ -2,11 +2,11 @@
 
 This ledger separates mathematical implications, software execution, archived observations, and open scientific premises. A stronger claim requires stronger evidence than the row beneath it supplies.
 
-The [generated formal inventory](../formal/theorem-inventory.json) records 125
+The [generated formal inventory](../formal/theorem-inventory.json) records 130
 compiled statements: 18 scalar-selector, 15 Pareto, 9 nonlinear interval/domain,
 15 conditional finite-risk/rank, 12 interval-box sharpness, and 19 conservative
 coupled-affine statements, plus 12 projection-algebra, 17 direct-pool counting/finite-law
-and 8 finite permutation-law statements. The [formal verification record](../formal/VERIFICATION.md)
+and 8 finite permutation-law and 5 exact normalization statements. The [formal verification record](../formal/VERIFICATION.md)
 documents actual compilation and axiom auditing. The
 [engine extension verification record](../reports/engine-extension-verification.md)
 records execution evidence for the new runtime and interface routes. These are
@@ -78,6 +78,18 @@ records 298 Python tests, 24 browser checks and an isolated wheel exercising
 | Real source intervals are globally sound | None in this release | Open scientific premise; evidence labels do not establish it |
 | Source citations and input hashes certify physical truth | No such implication | Not claimed |
 | All physical materials are represented | No exhaustive physical enumerator | Not claimed; guarantees are relative to the candidate universe |
+
+## Declared-coefficient normalization and feature custody
+
+Five compiled conditional finite-real statements prove normalized-coordinate
+bounds, unit sum, positive-scale invariance, L1 bounds and zero-distance equality.
+[Executed engineering evidence](../reports/normalization-engineering-v1/README.md)
+checks the exact Python implementation independently; no runtime refinement or
+physical descriptor validity is claimed. The [source-bound feature reader](../reports/mpea-feature-reader-engineering-v1/README.md)
+passes synthetic custody tests and the 762-test full suite. At this freeze it
+has not constructed an actual archived feature table. Its public receipt is
+aggregate evidence; private vectors and checksums cannot establish useful
+ranking, physical composition or target validity.
 
 ## Why finite retrospective success cannot prove unconditional prediction
 

@@ -1,0 +1,142 @@
+{
+  "blocking_findings": [],
+  "checked_scope": [
+    "Exact Fraction oracle and all original synthetic row identities/denominators.",
+    "Only formula column accumulated; other 22 columns remain opaque.",
+    "Every new source path checked against a real temporary Git freeze; old historical gate mocked explicitly.",
+    "Dirty/missing/symlink source and committed historical receipt rewrite rejected before source-data access.",
+    "Single bounded constructed-source read; same captured bytes used after the file changes.",
+    "Captured module bytes execute unchanged even if source file is replaced after capture.",
+    "Closed local/public schema, metadata/group consistency, canonical exact vectors and deterministic public/local binding.",
+    "Private ignored path verified through real Git, force-tracked path rejected; atomic file mode, no overwrite and parent-swap cleanup.",
+    "CLI argument/failure sanitation with no real source or production toggle."
+  ],
+  "commands": [
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "review",
+        "-p",
+        "test_mpea_feature_reader_review.py",
+        "-v"
+      ],
+      "elapsed_seconds": 4.651311749999877,
+      "exit_code": 0,
+      "log": "review/reader-independent-tests-final-v1.txt",
+      "log_sha256": "1474d98eb0efa5b71a724110a680951f3dbc26750eb583829ec22b8dc124223f",
+      "test_count": 22,
+      "unittest_seconds": 4.175,
+      "working_directory": "/workspace/lupine-discovery-branch/discovery/.cache/mpea-feature-contract"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_mpea_feature_reader.py",
+        "-v"
+      ],
+      "elapsed_seconds": 2.4130586100000073,
+      "exit_code": 0,
+      "log": "review/reader-author-tests-rerun-v1.txt",
+      "log_sha256": "9a4c473d4c647683ab319e64ee23dcf0b9dca0e3d00639c52892815add0fea9e",
+      "test_count": 12,
+      "unittest_seconds": 2.102,
+      "working_directory": "/workspace/lupine-discovery-branch/discovery/.cache/mpea-feature-contract"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-c",
+        "import unittest; suite=unittest.TestSuite((unittest.TestLoader().discover('tests'), unittest.TestLoader().discover('review'))); result=unittest.TextTestRunner(verbosity=2).run(suite); raise SystemExit(not result.wasSuccessful())"
+      ],
+      "elapsed_seconds": 6.408844780999061,
+      "exit_code": 0,
+      "log": "review/reader-and-kernel-combined-tests-v1.txt",
+      "log_sha256": "37f9216428307e79ef1c50c537008a100147908f047b7cb00757f1f58c790382",
+      "test_count": 78,
+      "unittest_seconds": 6.107,
+      "working_directory": "/workspace/lupine-discovery-branch/discovery/.cache/mpea-feature-contract"
+    }
+  ],
+  "experimental_cache_accessed": false,
+  "experimental_formula_or_target_accessed": false,
+  "finished_at": "2026-10-10T20:13:36.493403+00:00",
+  "independent_reader_tests": 22,
+  "known_limitations": [
+    {
+      "name": "Standalone module identity",
+      "observation": "load_context replaces lupine_discovery.representation in sys.modules. Successive contexts are internally consistent but their NormalizedVector class identities are not interchangeable. This review does not certify ordinary in-process library interchangeability."
+    },
+    {
+      "name": "Structural validation is not source rederivation",
+      "observation": "A resealed independently valid simplex vector for a distinct lexical group can pass structural validation. Actual source transformation must come from the frozen producer plus reproduction, as documented."
+    },
+    {
+      "name": "Execution authorization boundary",
+      "observation": "The local Git gate does not establish remote publication or CI success. Root must verify both before the first feature extraction."
+    },
+    {
+      "name": "Scientific scope",
+      "observation": "Constructed checks establish software behavior only; no true composition, physical predictor quality, independence, target eligibility or scientific schema completeness is established."
+    }
+  ],
+  "main_sources_modified_by_reviewer": false,
+  "preserved_first_failures": [
+    {
+      "cause": "Reviewer test called public receipt loading while synthetic SOURCE was patched; loader correctly rejected identity.",
+      "failed_or_error_tests": 1,
+      "log": "review/reader-independent-tests-initial-v1.txt",
+      "production_source_changed_to_fix": false,
+      "sha256": "bbdaa2b65362a62500d0b63a9faec409b5966f6f87032936d84895b9d569a864",
+      "tests_run": 20
+    },
+    {
+      "cause": "Reviewer read spy counted scanner source-code loading as a second source-data read; changed to identify the constructed input file by inode.",
+      "failed_or_error_tests": 1,
+      "log": "review/reader-independent-tests-second-v1.txt",
+      "production_source_changed_to_fix": false,
+      "sha256": "97015a78053e959c401424f0b9bb5e595b9169937e5576dd43936b7e28ce46d3",
+      "tests_run": 22
+    }
+  ],
+  "production_extraction_executed": false,
+  "public_historical_metadata_receipts_read": true,
+  "python_version": "3.12.14",
+  "reviewer": "/root/representation_review",
+  "schema": "lupine.discovery.mpea_feature_reader_independent_review.v1",
+  "source_files_after": {
+    "docs/mpea-feature-reader-v1.md": "e2a965adc013e0c6eb703154bad295d730819886a61232b46a511c2fdf44d12c",
+    "review/test_mpea_feature_reader_review.py": "153fe927723fac68c8881224f3a5eec564181aa40d1290e8794f008c7ccb94ca",
+    "review/test_representation_independent.py": "f6a56e20cbc3acd3f353b7bf78c3d3bbf04abb4af27362290a6c48996fc28cd9",
+    "scripts/mpea_feature_reader.py": "032d5341f29479437149d2fbd94879134dc2e4e51c895c1fba3cf771db1f34ef",
+    "scripts/mpea_features.py": "b24c0f1bb62fc56794e1232f973a6020ee42a0d3765d33cb51246f3c7a3a47d9",
+    "src/lupine_discovery/representation.py": "c65c0eed659025a0e41eb325e75182ac2b980c35ac43dfddaa501f4f3ddf3b9e",
+    "tests/test_mpea_feature_reader.py": "0a20ad55287334f63b5fb1754d9c42c803930ce95659374c1c85f2c9a787424b",
+    "tests/test_mpea_features.py": "58009de4d9c7d3338f36dca5baf67b1300715caeef17a95fb9d6e142eb79f541",
+    "tests/test_representation.py": "3f894a0427a45f3b6c65b232616b1bc19930c9b1ee02cce0c2b0a1c9d014d70e"
+  },
+  "source_files_before": {
+    "docs/mpea-feature-reader-v1.md": "e2a965adc013e0c6eb703154bad295d730819886a61232b46a511c2fdf44d12c",
+    "review/test_mpea_feature_reader_review.py": "153fe927723fac68c8881224f3a5eec564181aa40d1290e8794f008c7ccb94ca",
+    "review/test_representation_independent.py": "f6a56e20cbc3acd3f353b7bf78c3d3bbf04abb4af27362290a6c48996fc28cd9",
+    "scripts/mpea_feature_reader.py": "032d5341f29479437149d2fbd94879134dc2e4e51c895c1fba3cf771db1f34ef",
+    "scripts/mpea_features.py": "b24c0f1bb62fc56794e1232f973a6020ee42a0d3765d33cb51246f3c7a3a47d9",
+    "src/lupine_discovery/representation.py": "c65c0eed659025a0e41eb325e75182ac2b980c35ac43dfddaa501f4f3ddf3b9e",
+    "tests/test_mpea_feature_reader.py": "0a20ad55287334f63b5fb1754d9c42c803930ce95659374c1c85f2c9a787424b",
+    "tests/test_mpea_features.py": "58009de4d9c7d3338f36dca5baf67b1300715caeef17a95fb9d6e142eb79f541",
+    "tests/test_representation.py": "3f894a0427a45f3b6c65b232616b1bc19930c9b1ee02cce0c2b0a1c9d014d70e"
+  },
+  "source_files_unchanged": true,
+  "started_at": "2026-10-10T20:13:23.019690+00:00",
+  "status": "PASS",
+  "withheld_cell_substitutions": 88
+}

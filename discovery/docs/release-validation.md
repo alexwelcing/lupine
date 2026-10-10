@@ -294,7 +294,23 @@ invariants are exercised independently. Python refinement and physical descripto
 validity remain unproved.
 
 The preceding `28b929f` evidence checkpoint passes [all four CI jobs](https://github.com/alexwelcing/lupine/actions/runs/38082387214)
-and independent publication review. The normalization source still requires its
-own publication, CI and isolated-package checks. Production feature custody and
-the scientific protocol are separate gates; no real feature table, random
-allocation, target interpretation, fit or new benchmark is claimed here.
+and independent publication review. The normalization source subsequently
+published as `2e4162b` and passes [all four CI jobs](https://github.com/alexwelcing/lupine/actions/runs/38082913494),
+28 installed cases and five additional isolated generic-API checks. The
+[retained-byte audit](../reports/normalization-release-v1/README.md) verifies
+577 original source files, 191 manifest entries and 110 wheel RECORD entries.
+Remote CI storage bytes remain independently unverified.
+
+## Feature-custody source freeze
+
+The [independently reviewed reader](../reports/mpea-feature-reader-engineering-v1/README.md)
+passes 34 focused and 762 full Python tests with 208 unchanged hashes. Its source,
+helper/test/specification ancestry checks precede a single bounded source read;
+the same verified buffer supplies only formula cells. All original rows remain,
+unknown vectors remain null and actual vectors stay in ignored private storage.
+Public outputs contain only aggregate readiness and whole-artifact provenance.
+No actual extraction is claimed at this freeze. Publication and all four CI jobs
+must precede two real processes; only their validated aggregate evidence may be
+published. The separately registered scientific task and complete staged runner
+remain prerequisites to random allocation or performance-target interpretation.
+No new scientific result or release gate is established by these software tests.

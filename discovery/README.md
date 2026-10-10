@@ -11,10 +11,11 @@ nonlinear enclosures, shared-affine screening, scoped projection and direct
 statistical pools. The proof package contains **130 compiled and audited Lean
 statements**; its probability results retain explicit finite-law premises.
 The six-mode interface passes **46 Chromium checks** and **28 installed-wheel
-cases**. The integrated [normalization extension](reports/normalization-engineering-v1/README.md)
-passes **728 Python tests**. The preceding evidence checkpoint passes [all four CI
-jobs](https://github.com/alexwelcing/lupine/actions/runs/38082387214); this new source
-requires its own publication checks.
+cases**. The integrated [feature-custody reader](reports/mpea-feature-reader-engineering-v1/README.md)
+passes **762 Python tests**. The preceding normalization checkpoint passes [all four CI
+jobs](https://github.com/alexwelcing/lupine/actions/runs/38082913494) and
+[retained/installed checks](reports/normalization-release-v1/README.md); the new
+reader requires its own publication checks before actual feature extraction.
 See the [interface verification](reports/decision-pool-workbench-verification.md),
 [formal scope](formal/VERIFICATION.md), and [source-bound inventory](formal/theorem-inventory.json).
 

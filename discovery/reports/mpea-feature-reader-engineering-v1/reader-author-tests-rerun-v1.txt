@@ -1,0 +1,17 @@
+test_all_rows_original_ids_metadata_and_unknown_vectors (test_mpea_feature_reader.FeatureReaderTests.test_all_rows_original_ids_metadata_and_unknown_vectors) ... ok
+test_atomic_fault_and_parent_swap_preserve_unrelated_files (test_mpea_feature_reader.FeatureReaderTests.test_atomic_fault_and_parent_swap_preserve_unrelated_files) ... ok
+test_cli_has_no_default_execution_and_sanitizes_failure (test_mpea_feature_reader.FeatureReaderTests.test_cli_has_no_default_execution_and_sanitizes_failure) ... ok
+test_extract_calls_gate_before_one_bounded_source_read (test_mpea_feature_reader.FeatureReaderTests.test_extract_calls_gate_before_one_bounded_source_read) ... ok
+test_formula_only_frame_and_no_legacy_numeric_or_identity_helpers (test_mpea_feature_reader.FeatureReaderTests.test_formula_only_frame_and_no_legacy_numeric_or_identity_helpers) ... ok
+test_new_source_gate_checks_actual_temporary_git_tree_and_historical_inputs (test_mpea_feature_reader.FeatureReaderTests.test_new_source_gate_checks_actual_temporary_git_tree_and_historical_inputs) ... ok
+test_opaque_cell_substitutions_preserve_features_and_all_rows (test_mpea_feature_reader.FeatureReaderTests.test_opaque_cell_substitutions_preserve_features_and_all_rows) ... ok
+test_output_requires_ignored_local_path_and_keeps_public_projection_closed (test_mpea_feature_reader.FeatureReaderTests.test_output_requires_ignored_local_path_and_keeps_public_projection_closed) ... ok
+test_public_validator_rejects_raw_channels_wrong_counts_and_scope_promotion (test_mpea_feature_reader.FeatureReaderTests.test_public_validator_rejects_raw_channels_wrong_counts_and_scope_promotion) ... ok
+test_real_public_pins_checked_and_nonproduction_location_blocks_before_cache (test_mpea_feature_reader.FeatureReaderTests.test_real_public_pins_checked_and_nonproduction_location_blocks_before_cache) ... ok
+test_source_mismatch_and_late_framing_or_group_conflict_publish_no_result (test_mpea_feature_reader.FeatureReaderTests.test_source_mismatch_and_late_framing_or_group_conflict_publish_no_result) ... ok
+test_strict_local_validator_rejects_resealed_scope_identity_and_vector_mutations (test_mpea_feature_reader.FeatureReaderTests.test_strict_local_validator_rejects_resealed_scope_identity_and_vector_mutations) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 2.102s
+
+OK

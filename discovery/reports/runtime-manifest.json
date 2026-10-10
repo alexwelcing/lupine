@@ -1,7 +1,7 @@
 {
   "schema": "lupine.discovery.runtime-manifest.v1",
   "python": "3.12.14",
-  "checkpoint": "exact-coefficient-normalization",
+  "checkpoint": "mpea-feature-custody-source-freeze",
   "files": {
     "pyproject.toml": "a73eec989447b99fec48de193218a0750079eeb5973406c53d7a0dc840d9d90f",
     "scripts/additional_archived_benchmark.py": "8f50f0fc8aaade6f895500856db91b6593e5da8f676c7bf325cdc0a938d73b9a",
@@ -22,6 +22,7 @@
     "scripts/diagnose_frozen_pool.py": "259213dfcd6ebc249a62364a36cc4e57e789b9dddcad24f964876734d07dff79",
     "scripts/known_answer_benchmark.py": "811bb416db778f23a7ed4fbc875f3820a4971b8428b07eac469fc2cceeaa8f2e",
     "scripts/mpea_custody.py": "046aac4812802d1abf656aa93d0b832e8011e2feb59574615957c2550fe11b98",
+    "scripts/mpea_feature_reader.py": "032d5341f29479437149d2fbd94879134dc2e4e51c895c1fba3cf771db1f34ef",
     "scripts/mpea_features.py": "b24c0f1bb62fc56794e1232f973a6020ee42a0d3765d33cb51246f3c7a3a47d9",
     "scripts/mpea_formula_tokens.py": "8f2bbaa34dccc9c50341f86863526cd3ad6380e97ff3d0e2ca07c0fbbe4c3139",
     "scripts/mpea_header_labels.py": "0d1e37cfef2889ed955d30f0fd987ba9b06dc2a1f8bf89ba7085112355b287c7",
@@ -164,6 +165,8 @@
     "tests/test_known_answers.py": "1961b0a81d37f694df3486832aa41da0b57a8b9adfeda2b3a15a0e81d2768748",
     "tests/test_mpea_custody.py": "cf2fc7a0bdaf9bd59589c123745aae6f353fa5837849e26d2a9438d62d090b19",
     "tests/test_mpea_custody_review.py": "27cca2dc9ec6d96cbcbf06971fe352d6d4f5fb0572b33f8d6648a8ad4cb299bc",
+    "tests/test_mpea_feature_reader.py": "0a20ad55287334f63b5fb1754d9c42c803930ce95659374c1c85f2c9a787424b",
+    "tests/test_mpea_feature_reader_review.py": "153fe927723fac68c8881224f3a5eec564181aa40d1290e8794f008c7ccb94ca",
     "tests/test_mpea_features.py": "58009de4d9c7d3338f36dca5baf67b1300715caeef17a95fb9d6e142eb79f541",
     "tests/test_mpea_formula_tokens.py": "4b3c1862d2c10b9bb5eb5ce35ebfb8b6e390292f651572aa0336b7d27e77d8e4",
     "tests/test_mpea_formula_tokens_review.py": "fd1509cb343ff067445bc316d1c3c960f38ad290f7bbb65f449401d11b421059",

@@ -101,9 +101,20 @@ semantics. Five new conditional proofs strictly compile and bring the fresh
 audit to 130 statements/ten modules; all nine prior proof modules are unchanged.
 There is no actual formula feature construction or scientific result here.
 
-Current owner/checkpoint: root publishes the integrated helper/proofs, verifies
-remote CI, and checks the new isolated wheel. The production feature reader is
-under independent synthetic review in ignored scratch. The protocol engineer
-finalizes the registered task and stage contracts before any actual source
-allocation or performance-target interpretation. Published evidence commit
-`28b929f` passes all four CI jobs; its independent claim review finds no blocker.
+Published normalization commit `2e4162b` passes all four CI jobs, 28 installed
+cases and five additional isolated generic-API checks. An independent audit
+verifies its 577 source files, 191 manifest entries and 110 wheel RECORD entries.
+[Exact retained/installed evidence](reports/normalization-release-v1/README.md).
+
+The [source-bound feature reader](reports/mpea-feature-reader-engineering-v1/README.md)
+passes 34 focused and 762 full Python tests with 208 stable hashes. It preserves
+all original rows, reads only formula cells, keeps exact vectors in ignored
+private storage and emits only aggregates. Source and specifications have passed
+independent review. No actual feature run has happened at this checkpoint.
+
+Current owner/checkpoint: root publishes the reader freeze, verifies remote CI,
+then runs two fresh feature-only processes and audits their aggregate receipts.
+The protocol and study engineers implement and review constructed-data stage,
+prediction and evaluation tests before registration, allocation or target access.
+The existing browser, wire modes and 130-statement proof sources are unchanged;
+all scientific negatives and unresolved physical premises remain.

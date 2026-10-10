@@ -1,0 +1,32 @@
+{
+  "ci-verification.json": {
+    "bytes": 5515,
+    "sha256": "991149bca03dfb26a756ed65cde93b66c20ae3d5870ae2b528119abc07eea193",
+    "source": ".cache/release/normalization-ci-v1.json"
+  },
+  "historical-installed-probe.py": {
+    "bytes": 3354,
+    "sha256": "363edf045f17e439ef12efb2280f9b4ea4ee97e973b1c726310fa1b50ffbd1e2",
+    "source": ".cache/check-installed-normalization.py"
+  },
+  "installed-api-probe.json": {
+    "bytes": 2871,
+    "sha256": "72543d6109d356ce9377a83bf86eb47aeea975cd8fac2dce5aa049ecd9e3b75a",
+    "source": ".cache/release/normalization-installed-probe-v1.json"
+  },
+  "package-smoke.json": {
+    "bytes": 7482,
+    "sha256": "a6e55f657d375dc8df0def6c544724a42a8864adf289d58af72297b9229ab577",
+    "source": ".cache/release/normalization-2e4162b-smoke.json"
+  },
+  "release-artifacts.json": {
+    "bytes": 7522,
+    "sha256": "c822965ab374135dc9ab4484ef6557b9b5f8d1226b587b3014397235cabb9b60",
+    "source": ".cache/release/normalization-2e4162b/release-artifacts.json"
+  },
+  "retained-byte-audit.json": {
+    "bytes": 2782,
+    "sha256": "27bc61f0e4822c362cc035675424ceb05ff62176bed227bf10dafd8224824f97",
+    "source": ".cache/release/normalization-retained-audit-v1.json"
+  }
+}
