@@ -27,6 +27,9 @@ from lupine_discovery.benchmarks import case_catalog, get_case, get_case_outcome
 from lupine_discovery.cli import certificate, replay_report, verify_certificate
 from lupine_discovery.evidence import digest
 from lupine_discovery.server import make_server
+from lupine_discovery.core import Interval
+from lupine_discovery.coupled import Affine, CoupledCandidate, CoupledProblem, screen_coupled
+from lupine_discovery.evidence import Scope
 
 module_path = Path(lupine_discovery.__file__).resolve()
 assert Path(sys.prefix).resolve() in module_path.parents, 'package imported outside isolated installation'
@@ -47,6 +50,13 @@ for row in catalog:
 known = run_known_answers()
 assert known['summary']['failed'] == 0
 assert known['negative_control_metrics']['lost_optimum_cases'] == 2
+coupled = CoupledProblem('package-coupled', ('t',), (Interval(0, 2),),
+    Scope('package-coupled', 'score', 'utility', 'synthetic package check'), {},
+    (CoupledCandidate('A', Affine((1,), 1), {}), CoupledCandidate('B', Affine((1,), 0), {})))
+coupled_result = screen_coupled(coupled, (0,))
+assert coupled_result.box_selection_diagnostic.retained == ('A', 'B')
+assert coupled_result.retained == ('B',)
+assert screen_coupled(coupled).retained == ('A', 'B')
 resources = files('lupine_discovery')
 for name in ('index.html', 'app.js', 'styles.css'):
     assert resources.joinpath('web', name).read_bytes(), 'missing web asset'
@@ -85,7 +95,7 @@ print(json.dumps({'status': 'passed', 'python': sys.version.split()[0],
                   'known_answer_summary': known['summary'],
                   'checks': ['all_packaged_cases_select_verify_replay', 'known_answer_oracle_and_controls',
                              'web_assets_and_original_archive_reports', 'constrained_negative_results_packaged_and_served',
-                             'installed_http_cli_agreement']},
+                             'installed_http_cli_agreement', 'coupled_python_api_and_missing_point_fallback']},
                  sort_keys=True))
 '''
 

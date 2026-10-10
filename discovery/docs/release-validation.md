@@ -14,7 +14,7 @@ gate. No aggregate score averages away blocking failures.
 | Gate | State | Evidence and release consequence |
 |---|---|---|
 | Exact conditional selection kernel | PASS | Exact rational runtime, exhaustive small-world and adversarial tests. Conditional guarantees require sound intervals and a fixed finite candidate universe. |
-| Conditional mathematical statements | PASS | 69 compiled Lean theorems and axiom audit in `formal/VERIFICATION.md`. This does not prove Python refinement or physical premises. |
+| Conditional mathematical statements | PASS | 88 compiled Lean statements and axiom audit in `formal/VERIFICATION.md`. This does not prove Python refinement or physical premises. |
 | Published constrained checkpoint verification | PASS | [Discovery Verify run 38067639369](https://github.com/alexwelcing/lupine/actions/runs/38067639369) passed at `a8775ad` on 2026-10-10: Python 3.11/3.12, source manifest, isolated packages, 17 browser checks and 69 Lean theorem audits. Subsequent increments require their own checks. |
 | Interface through actual selector | PASS | 17 Chromium checks exercise scalar, calibrated, Pareto and measured constrained-report views, desktop/mobile loading, abstention, missing/failed outcomes, raw-input rejection, and exact export/reverification. 15 HTTP tests cover the API and exact CLI agreement. This is a local research interface. |
 | Calibration and unsupported-scope abstention | PASS | Exact versioned inputs, original-seal replay, all-retained abstention and browser diagnostics. This software behavior does not establish exchangeability or physical coverage. |
@@ -78,3 +78,17 @@ gates resolved for its declared scope, and current failures addressed by a new,
 independently evaluated interval construction or a narrower, honestly labeled
 claim. Retrospective success can validate recovery of known answers; it cannot
 prove that an unknown proposed material works before independent evidence.
+
+## Coupled kernel and training-only development checkpoint
+
+The shared-affine Python API passes 18 focused tests and an independent finite-world
+audit; 19 new conditional statements bring the compiled inventory to 88. The
+combined Python suite passes 226 tests and the isolated wheel exercises the new
+API. [Verification](../reports/coupled-training-verification.md) records scope.
+Coupled wire and browser integration remain under development.
+
+The frozen training-only ridge comparison is **NO-GO for model replacement**.
+Two fresh processes reproduce all exact outputs and gate decisions; all three
+alternatives fail. See [the complete negative result](../reports/training-tail-result-v1.md).
+This does not change the constrained scientific screening/utility failures or
+authorize a predictive-superiority claim.

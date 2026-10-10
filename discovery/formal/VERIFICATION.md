@@ -1,9 +1,47 @@
 # Actual verification record
 
-## Joint-risk and interval-box sharpness extension
+## Conservative coupled-evidence extension
+
+Completed on `2026-10-10` in the Linux x86_64 branch workspace using the same
+pinned Lean `4.29.0` and Mathlib commit documented below.
+
+- `lake env lean LupineCoupled.lean`: freshly elaborated the new source and
+  printed all 19 theorem axiom sets successfully.
+- `lake --wfail build`: passed all six default modules, 983 jobs, no warnings.
+- `python3 audit_axioms.py`: independently re-elaborated all six sources,
+  verified complete per-module output coverage, and passed all 88 theorem audits.
+- `python3 -m unittest test_audit_axioms -v`: all eleven adversarial audit tests
+  passed.
+
+The current [theorem inventory](theorem-inventory.json) records the source hashes
+and actual axiom dependencies of all 88 statements: 19 coupled certificates and
+screening statements, plus the 69 historical statements listed below.
+[AXIOMS.txt](AXIOMS.txt) contains their fresh combined Lean output. Every dependency
+is among `propext`, `Classical.choice`, and `Quot.sound`; no admitted proof or
+project-specific axiom occurs. Source hashes and the combined-output hash were
+independently checked against the generated inventory after the audit.
+
+The coupled module reuses the compiled finite-sum dependency graph and adds no
+project axiom declarations. Its statements prove exact affine weighted-row
+bounds, strict contradiction certificates, consistency-point soundness,
+candidate-feasible domain construction, conditional feasible strict witnesses,
+and preservation of every tied feasible minimizer under one common admissible
+latent world. The final retention theorem requires baseline retention explicitly.
+It permits any supplied subset of certified exclusions and does not assume a
+complete search.
+
+The inactive-gate theorem has an explicit full-candidate fallback instantiation.
+The runtime must use that fallback when its diagnostic intervals themselves
+depend on unsupported or inconsistent affine premises; those intervals cannot
+justify operational exclusions while the coupling gate is inactive. A verified
+model point proves mathematical consistency only. The actual common-world
+premise, physically justified coupling, Python refinement, exhaustive branch
+reasoning, and certificate-search completeness remain outside the result.
+
+## Historical joint-risk and interval-box sharpness extension
 
 Completed on `2026-10-10` in the Linux x86_64 branch workspace. The commands
-below were actually executed successfully against the current sources.
+below were actually executed successfully against the sources at that checkpoint.
 
 - `lake --wfail build`: passed all five default modules, 981 jobs, no warnings.
 - `python3 audit_axioms.py`: independently re-elaborated all five proof modules,
@@ -15,12 +53,12 @@ below were actually executed successfully against the current sources.
 - `git -C .lake/packages/mathlib rev-parse HEAD`: exact manifest/config pin
   `8a178386ffc0f5fef0b77738bb5449d50efeea95`.
 
-The current [theorem inventory](theorem-inventory.json) and [axiom output](AXIOMS.txt)
-were regenerated from that fresh audit. Counts are 18 scalar-selector theorems,
+The checkpoint's theorem inventory and axiom output were regenerated from that
+fresh audit; the current artifacts extend them. Counts were 18 scalar-selector theorems,
 15 Pareto theorems, 9 interval-enclosure/domain theorems, 15 joint-risk/rank
-theorems, and 12 scalar interval-box sharpness theorems. Each module is bound to
-its source SHA-256 and each theorem lists its actual logical dependencies.
-All 69 depend only on `propext`, `Classical.choice`, and `Quot.sound`; none depends
+theorems, and 12 scalar interval-box sharpness theorems. Each module was bound to
+its source SHA-256 and each theorem listed its actual logical dependencies.
+All 69 depended only on `propext`, `Classical.choice`, and `Quot.sound`; none depended
 on an admitted proof or project-specific axiom.
 
 The local build reused the already compiled pinned dependencies through the

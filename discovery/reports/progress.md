@@ -3,6 +3,39 @@
 The current goal and ordered backlog are in `../GOAL.md`. Append concise entries
 with artifacts, actual checks, scientific implications, and the next action.
 
+## 2026-10-10 — reproduced training NO-GO and coupled mathematics
+
+- Executed frozen `jarvis-training-tail-v1` after the source-bound 22-test
+  engineering receipt and independent review. Both fresh processes completed;
+  exact predictions, all metrics, decisions, and raw float artifacts match.
+  Scientific digest: `60cbe9c1d8d4a4b6fe5810765dd9cd5f31f4fe5ac21c9e83e4e802c14fcd0656`.
+- Decision is **NO_GO_MODEL_IMPROVEMENT**. All three ridge configurations fail
+  the joint predeclared criteria. Lower-regularization models improve formation
+  tail error but worsen average error; all three worsen the gap tail. No model
+  replaces 5NN. Original calibration/evaluation files remain unopened by this
+  experiment; OOF development is not new scientific validation.
+- A separately expressed standard-library audit reconstructs all 96 metric
+  summaries, 24 target gate evaluations and the negative decision. It verifies
+  saved-neighbor averages and raw ridge prediction quantization without refits.
+  Evidence: `training-tail-independent-audit.json`.
+- Completed the exact conservative shared-affine kernel, 18 focused tests,
+  and an independent audit with 10,003 checks across 11,027 synthetic worlds.
+  A shared error can cancel in a pairwise difference; unsupported/inconsistent
+  premises retain the whole universe. The common-world premise stays explicit.
+- Compiled and audited 19 new Lean statements, bringing the total to 88.
+  The combined Python suite passes 226 tests; an isolated wheel passes all
+  19 existing cases and new coupled Python API probes. The previous 17 browser
+  checks remain historical evidence for the unchanged interface. See
+  `coupled-training-verification.md` for exact verification scope.
+- Retrieved and independently hash-checked two pinned Library correction-field
+  documents. `docs/projection-field-adapter.md` connects scoped observation
+  maps, anchors and bounded discrepancy to this kernel without assuming that
+  fields transfer across materials or that nonlinear quantities are affine.
+- Active next increment: strict coupled wire identities, actual-pool replay
+  with a false-common-world control, and a resource-guarded browser mode.
+  New adapter/worker files are being developed separately from this checkpoint.
+  Draft PR: https://github.com/alexwelcing/lupine/pull/263.
+
 ## 2026-10-10 — constrained experiment, reproduction and information limits
 
 - Completed the preregistered JARVIS constrained evaluation: 100 panels,

@@ -2,9 +2,10 @@
 
 This ledger separates mathematical implications, software execution, archived observations, and open scientific premises. A stronger claim requires stronger evidence than the row beneath it supplies.
 
-The [generated formal inventory](../formal/theorem-inventory.json) records 69
+The [generated formal inventory](../formal/theorem-inventory.json) records 88
 compiled statements: 18 scalar-selector, 15 Pareto, 9 nonlinear interval/domain,
-15 conditional finite-risk/rank, and 12 interval-box sharpness theorems. The [formal verification record](../formal/VERIFICATION.md)
+15 conditional finite-risk/rank, 12 interval-box sharpness, and 19 conservative
+coupled-affine statements. The [formal verification record](../formal/VERIFICATION.md)
 documents actual compilation and axiom auditing. The
 [engine extension verification record](../reports/engine-extension-verification.md)
 records execution evidence for the new runtime and interface routes. These are
@@ -12,6 +13,14 @@ conditional mathematical and software results. Finite-risk composition has an
 explicit finite weighted probability instance; exchangeability, conformal
 marginal coverage, Python refinement and physical predictor validity remain
 unproved.
+
+The [coupled kernel contract](coupled-kernel.md) describes the experimental
+Python API; it has no coupled CLI, JSON route, or browser mode. Its 18 focused
+tests and [independent audit](../reports/coupled-independent-audit.json) are
+separate from the historical full-release count of 186 Python tests and 17
+browser checks. The audit reports PASS for 10,003 checks across 11,027 synthetic
+worlds and binds the tested source hashes. No refreshed combined test total is
+asserted here.
 
 | Claim | Evidence | Status and limit |
 |---|---|---|
@@ -21,6 +30,11 @@ unproved.
 | Incumbent regret is bounded | `regret_bound`, mathematical specification | Formal statement takes an explicit lower-envelope bound; finite minimum instantiation is explained in the specification |
 | Compatible refinement shrinks the pool | `best_upper_retained_shrinks` | Same candidate type/scope and a refined best-upper witness |
 | The scalar pool is the smallest universally safe pool under interval-only information | [Sharpness specification](sharpness.md), [LupineSharpness.lean](../formal/LupineSharpness.lean), [constructive tests](../tests/test_sharpness.py) | Every retained candidate can be a tied feasible optimum in a compatible Cartesian interval world. No claim that every such world is physically attainable; valid coupling or tighter evidence can change the admissible worlds |
+| Nonnegative affine row combinations certify bounds and strict contradictions certify empty domains | [LupineCoupled.lean](../formal/LupineCoupled.lean): `affine_combination_upper_bound`, `contradiction_no_point` | Exact coefficient identities, nonnegative multipliers, and the stated right-side inequalities are required. An inconsistent common model does not establish material-universe infeasibility |
+| Conservative coupled exclusions preserve every tied feasible minimizer | `candidate_domain_iff`, `conditional_witness_better`, `minimizer_retained` in [LupineCoupled.lean](../formal/LupineCoupled.lean) | One actual common latent world must satisfy the original rows, and the baseline must retain the optimum. Witness feasibility and strictly negative score difference are certified over the same target-feasible domain. No complete possible-optimum search is proved |
+| Inactive coupled premises cannot authorize operational box pruning | [Coupled contract](coupled-kernel.md), [focused tests](../tests/test_coupled.py), `disabled_retains_all` | Unsupported or learned-correlation premises, missing/rejected consistency, or proved-inconsistent common models retain all IDs. Affine-derived box intervals remain diagnostic only; a consistency point establishes nonemptiness, not physical truth |
+| The experimental coupled Python kernel passes independent finite-world checks | [Independent audit](../reports/coupled-independent-audit.json), [audit script](../scripts/audit_coupled.py), [focused tests](../tests/test_coupled.py) | 18 focused tests; 10,003 independent audit checks across 11,027 synthetic worlds. Source-bound software evidence, not Python refinement, scientific validation, or end-to-end resource guarantees |
+| Lupine correction fields can supply a scoped affine adapter | [Projection-field adapter design](projection-field-adapter.md), [coupled design](coupled-evidence-design.md) | Concrete proposed interface with observation weights, anchors and discrepancy bounds. Not implemented or scientifically validated; learned correlations alone do not supply hard coupling premises |
 | Valid individual failure budgets compose into a finite joint bound | [LupineRisk.lean](../formal/LupineRisk.lean), [formal verification](../formal/VERIFICATION.md) | Explicit normalized monotone subadditive risk law, with a finite weighted probability instance. Individual event-risk bounds and deterministic implication are premises; no stochastic independence is needed for the union bound |
 | Calibration finite-rank resolution and minimum count are exact | `finite_rank_iff`, `finite_rank_iff_minimum_count`, `insufficient_resolution_rank` in [LupineRisk.lean](../formal/LupineRisk.lean) | Rational ceiling arithmetic; unavailable rank is n+1. This does not prove that empirical residual ranks have the assumed marginal coverage |
 | Runtime implements the finite equations | `tests/test_core.py`, `tests/test_envelope.py` | Exhaustive bounded worlds and randomized refinement tests; no full formal refinement proof |
@@ -40,6 +54,7 @@ unproved.
 | Unsupported chemistry-family shift triggers abstention | [Measured result](../reports/constrained-result-v1.md), [calibrated contract](calibrated-problem.md) | All 50 shift panels retain every candidate; transferred-bound diagnostic covers only 18/50 panels and has unsupported premises. Abstention is not accurate shift prediction |
 | Frozen source/model artifacts reproduce in a fresh wheel environment | [Reproduction receipt](../reports/constrained-reproduction.json) | All six artifact identities match after rebuilding from verified raw bytes; same host and interpreter, isolated noneditable wheel, no new independent data or outcome replay in that particular check |
 | Composition-only predictors have a 1.15 eV archive worst-error floor | `descriptor_collision_lower_bound`, `reports/descriptor-audit.json`, `docs/descriptor-audit.md` | General conditional inequality formalized; archive instantiation computed by Python from three descriptor collisions; not a claim of physical irreducibility |
+| The training-only follow-up establishes a better predictor | [Frozen protocol](training-tail-protocol-v1.md), [executed result](../reports/training-tail-result-v1.md), [two-pass receipt](../reports/training-tail-reproduction-v1.json) | **Not established:** all three ridge alternatives fail the predeclared joint requirements. Exact outputs reproduce in two processes. Training-only model selection is not independent validation or calibration; no changed predictor is authorized by this result |
 | Engine improves discovery efficiency across materials | None yet | Open; pilot does not establish superiority |
 | Real source intervals are globally sound | None in this release | Open scientific premise; evidence labels do not establish it |
 | Source citations and input hashes certify physical truth | No such implication | Not claimed |
@@ -55,6 +70,9 @@ The reusable result is the decision implication: **given justified enclosing
 intervals, scalar and Pareto selectors preserve their respective feasible
 optima; scalar selection also reports a conditional regret bound when a
 certified incumbent exists**. Abstention preserves candidates by retaining the
-whole universe and reports no such bound. Retrospective evaluation can refute a
+whole universe and reports no such bound. With an additional justified common
+affine world, verified conservative coupled exclusions also preserve tied
+feasible minima; the supplied relations are extra premises, not consequences
+of interval-only sharpness. Retrospective evaluation can refute a
 proposed interval construction and measure its usefulness. It cannot remove
 the construction's assumptions merely by succeeding on a finite dataset.

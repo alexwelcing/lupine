@@ -6,7 +6,7 @@ A universal, conditional candidate-pool engine grounded in [Lupine Rhizo](https:
 
 This is the initial research implementation for a [four-day project](docs/four-day-plan.md). See [STATUS.md](STATUS.md) for completed work and open gates. No new DFT is required to run the examples or archived experiments.
 
-Verification now includes exact calibration abstention, multi-objective Pareto selection, nonlinear interval enclosures, and desktop/mobile interaction checks. The proof package contains **69 compiled and audited Lean statements**, including conditional risk composition and the limits of safe pruning from intervals alone. **186 Python tests and 17 browser checks pass.** See the [current verification record](reports/constrained-release-verification.md), [formal record](formal/VERIFICATION.md), and machine-readable [theorem inventory](formal/theorem-inventory.json). The active goal and ordered backlog are in [GOAL.md](GOAL.md).
+Verification includes exact calibration abstention, multi-objective Pareto selection, nonlinear interval enclosures, and conservative shared-affine screening. The proof package contains **88 compiled and audited Lean statements**. The coupled/training checkpoint passes **226 Python tests** and an isolated-wheel check. The unchanged interface last passed **17 browser checks** at the constrained checkpoint. The new coupled Python API has **18 focused tests** and an [independent audit](reports/coupled-independent-audit.json) reporting **10,003 checks across 11,027 synthetic worlds**. See the [current verification record](reports/coupled-training-verification.md), [formal record](formal/VERIFICATION.md), and [theorem inventory](formal/theorem-inventory.json). The active goal and ordered backlog are in [GOAL.md](GOAL.md).
 
 ## Open the interface
 
@@ -30,6 +30,7 @@ python -m pip install -e .
 lupine-discovery select examples/abstract.json --output /tmp/certificate.json
 lupine-discovery verify examples/abstract.json /tmp/certificate.json
 lupine-discovery replay examples/abstract.json examples/abstract.outcomes.json
+python -m pip install -e '.[benchmark]'  # numerical development tests
 python -m unittest discover -s tests -v
 ```
 
@@ -76,7 +77,7 @@ Three published experimental-property archives were evaluated with frozen surrog
 
 Nominal top-one ranking already selected an optimum in each archive. These results establish neither superiority of this engine nor a physical discovery. The band-gap failure demonstrates why roughly 90% individual coverage is insufficient for a guarantee about the whole pool.
 
-The next, preregistered constrained experiment uses archived NIST JARVIS band
+The completed, preregistered constrained experiment uses archived NIST JARVIS band
 gaps and formation energies. It retains all 1,000 primary candidates: 49/50
 panels have simultaneous interval coverage, but the useful-screening gate
 fails. At four reveals, interval acquisition finds a near-optimal feasible
@@ -85,6 +86,8 @@ recommendation-value gate also fails. Unsupported oxygen-family panels
 explicitly abstain. Read the [executed result](reports/constrained-result-v1.md)
 and [one-command reproduction](docs/constrained-reproduce.md). These are
 archived calculations, not operating-condition or experimental validation.
+
+The subsequent [frozen training-only comparison](reports/training-tail-result-v1.md) also returned **NO-GO**: none of three fixed ridge configurations met both properties' improvement gates. Two fresh processes reproduced all exact predictions, metrics and decisions. This is development evidence; it does not reuse calibration/evaluation targets or establish new coverage.
 
 ```sh
 python -m pip install -e '.[benchmark]'
@@ -96,7 +99,9 @@ Read the [Matbench protocol](docs/archived-benchmark.md), [FreeSolv protocol](do
 
 The [joint-coverage design](docs/joint-coverage-design.md) derives one possible probabilistic route under explicit exchangeability assumptions. The new [exact calibration planner](docs/calibration-planner.md) implements its risk allocation and rank arithmetic, returning explicit unbounded diagnostics when calibration is insufficient. At a 5% joint failure budget, the gap and steel pilot dimensions require that result. Sampling assumptions remain unverified. The planner is connected to selection, CLI, replay, and the browser: insufficient calibration or unsupported premises produces an explicit all-retained abstention. This repair does not validate the three pilot constructions.
 
-The next [constrained evaluation protocol](docs/constrained-benchmark-protocol.md) was committed before target acquisition. It uses a pinned NIST JARVIS archive to maximize calculated band gap subject to nonpositive formation energy, with an oxygen-family holdout and matched measurement budgets. Formation energy here is an elemental-reference screen; it does not establish phase stability, synthesis, or power-plant suitability. Results are reported separately from the three experimental-property pilots.
+The [constrained evaluation protocol](docs/constrained-benchmark-protocol.md) was committed before target acquisition. It uses a pinned NIST JARVIS archive to maximize calculated band gap subject to nonpositive formation energy, with an oxygen-family holdout and matched measurement budgets. Formation energy here is an elemental-reference screen; it does not establish phase stability, synthesis, or power-plant suitability. Results are reported separately from the three experimental-property pilots.
+
+A [frozen training-only follow-up](docs/training-tail-protocol-v1.md) compares composition 5NN with three ridge configurations using only original training records. Its [runner contract](docs/training-tail-run.md) separates model development from a future fresh evaluation. The completed run returned NO-GO; see the recorded result above.
 
 A separate [posthoc descriptor audit](docs/descriptor-audit.md) found three normalized-composition collisions with different band-gap labels. Their maximum disagreement gives a rigorous 1.15 eV worst-case error floor for deterministic predictors using only that descriptor on the recorded archive. The cause of the label disagreement remains unresolved; benchmark settings were not changed.
 
@@ -105,6 +110,10 @@ A separate [posthoc descriptor audit](docs/descriptor-audit.md) found three norm
 Certificates record the sealed input digest, exact selection, exclusion witnesses, evidence-link assessment, and a heuristic measurement queue. `verify` recomputes the certificate; it verifies identity and runtime consistency. It does not attest physical truth. Missing, assumed, rejected, or synthetic evidence remains visible. The measurement queue never truncates the retained pool and carries no acquisition-optimality guarantee.
 
 The [Pareto engine](docs/pareto.md) excludes a candidate only when a certified-feasible witness is no worse in every objective and strictly better in at least one. The [nonlinear interval operations](docs/nonlinear.md) enclose products, reciprocal, quotient, and square on their declared domains; zero-containing reciprocal or division inputs are rejected. These are representation-independent conditional mathematics, not a descriptor or a physical model.
+
+The experimental [coupled-evidence kernel](docs/coupled-kernel.md) adds a **Python API only**, with no coupled CLI, JSON route, or browser mode yet. Shared affine quantities can expose strict comparisons hidden by overlapping marginal intervals. Exact nonnegative row multipliers certify bounds or contradictions; a candidate-specific witness must be feasible and strictly better wherever its target is feasible. Retention of tied optima assumes one common admissible latent world represents the actual quantities. Unsupported premises, learned correlation alone, missing/rejected consistency, or a proved-inconsistent model retain every candidate; diagnostic box intervals do not authorize pruning in those states. A verified consistency point establishes model nonemptiness, not physical truth. See the [design and limits](docs/coupled-evidence-design.md) and [independent synthetic audit](reports/coupled-independent-audit.json).
+
+The [projection-field adapter design](docs/projection-field-adapter.md) connects this kernel to Lupine's shared correction-field research through explicit observation weights, anchor rows, and bounded discrepancies. It is a design, not an implemented or scientifically validated adapter. Neither this design nor the coupled kernel changes the frozen JARVIS result.
 
 The residual-envelope adapter supports Lupine's anchored Lipschitz correction formulation, conditional on a global residual bound in the declared scope. A Lipschitz estimate from sampled pairs does not discharge that premise. Run `python examples/anchored.py` for a synthetic end-to-end example. See [upstream provenance](docs/upstream-provenance.json) and the [adapter architecture](docs/architecture.md).
 

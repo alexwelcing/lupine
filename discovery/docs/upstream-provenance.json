@@ -22,7 +22,20 @@
       "content/ontology/The-Lupine-Ontological-Atlas.md",
       "content/latest/articles/docs/research-index.md",
       "content/latest/articles/docs/formal-proof-ledger.md"
+    ],
+    "additional_review_2026_10_10": [
+      {
+        "file": "content/latest/articles/paper/environment-error-field-2026-07-02.md",
+        "sha256": "f9335f6d0cb0a1e5d27c6835e64b131b5c23e37880f905f21f04490207412dea",
+        "retrieval": "Pinned GitHub content bytes matched the local research copy"
+      },
+      {
+        "file": "content/latest/articles/docs/projection-law-in-plain-language.md",
+        "sha256": "963b76fb0384decfbc4b1bef44716f62e72efda81aece84fde11f518d3e61cdb",
+        "retrieval": "Pinned GitHub content bytes matched the local research copy"
+      }
     ]
   },
-  "relationship": "New selection composition above Rhizo conditional correction theory; no claim of runtime formal refinement or universal physical accuracy."
+  "relationship": "New selection composition above Rhizo conditional correction theory; no claim of runtime formal refinement or universal physical accuracy.",
+  "projection_field_adapter": "docs/projection-field-adapter.md is a proposed conditional mapping from shared correction coordinates and bounded discrepancies into affine certificates; no upstream simulation or statistical claim was independently reproduced."
 }

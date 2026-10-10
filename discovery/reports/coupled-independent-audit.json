@@ -1,0 +1,34 @@
+{
+  "audit_script_sha256": "f3a123e19b8b108c13bf6b2cd8158245142e42dcc9de761378707d0d1ad4b601",
+  "checks": 10003,
+  "limits": [
+    "Finite tests, not a formal refinement proof of the Python implementation.",
+    "No proof of complete possible-optimum search or physical validity of affine premises.",
+    "Resource checks concern the documented proof-work limits, not end-to-end runtime or memory."
+  ],
+  "random_problem_count": 500,
+  "random_seed": 10341,
+  "reproduce": [
+    "python",
+    "scripts/audit_coupled.py",
+    "--output",
+    "reports/coupled-independent-audit.json"
+  ],
+  "schema": "lupine.discovery.coupled.independent-audit.v1",
+  "scientific_data_read": false,
+  "scope": "Synthetic algebra and independent finite-world preservation of every tied feasible minimizer.",
+  "source_sha256_after": {
+    "src/lupine_discovery/core.py": "c7bab15c662eaa79b6e6312271d3351e79ccb97ef42fcdfc830fdbbf3118d5a0",
+    "src/lupine_discovery/coupled.py": "67a06d724e89edb210fb1fe3d2d8a8c0ac9e87267c4ee90238035c5f13d81fd1",
+    "src/lupine_discovery/evidence.py": "ab16a2f5f31601f95f3ec88f7fc230a07c85ebfdb175f0298a467c4425037dae",
+    "src/lupine_discovery/serialization.py": "cfec006ed4cb51fbbb6539422a5d829cadaa7bf0ff78bebbffd58aaba6f2523c"
+  },
+  "source_sha256_before": {
+    "src/lupine_discovery/core.py": "c7bab15c662eaa79b6e6312271d3351e79ccb97ef42fcdfc830fdbbf3118d5a0",
+    "src/lupine_discovery/coupled.py": "67a06d724e89edb210fb1fe3d2d8a8c0ac9e87267c4ee90238035c5f13d81fd1",
+    "src/lupine_discovery/evidence.py": "ab16a2f5f31601f95f3ec88f7fc230a07c85ebfdb175f0298a467c4425037dae",
+    "src/lupine_discovery/serialization.py": "cfec006ed4cb51fbbb6539422a5d829cadaa7bf0ff78bebbffd58aaba6f2523c"
+  },
+  "status": "PASS",
+  "synthetic_worlds_checked": 11027
+}

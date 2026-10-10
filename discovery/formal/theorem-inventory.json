@@ -1,7 +1,105 @@
 {
-  "axiom_output_sha256": "7a888e8a69f5af1a30f070afda4635bbc123c2d0fea80a3c710726dac871fc57",
-  "module_count": 5,
+  "axiom_output_sha256": "2408b6f596473b3f2ebd33e4b30ff67581a72be71d681b37a0f41e9b854843be",
+  "module_count": 6,
   "modules": [
+    {
+      "source": "LupineCoupled.lean",
+      "source_sha256": "d79afad3eafbf1cfe35fb920c5864059570f2018ff15c7b1badae5de83e39d7f",
+      "theorem_count": 19,
+      "theorems": {
+        "LupineCoupled.affine_combination_upper_bound": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineCoupled.affine_nonpositive_iff": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineCoupled.candidate_domain_iff": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineCoupled.certified_exclusion_not_minimizer": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineCoupled.combined_dot": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineCoupled.conditional_witness_better": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineCoupled.consistent_no_contradiction": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineCoupled.contradiction_no_point": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineCoupled.difference_evaluate": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineCoupled.disabled_retains_all": [
+          "propext"
+        ],
+        "LupineCoupled.disabled_retains_baseline": [
+          "propext"
+        ],
+        "LupineCoupled.equal_scores_no_strict_witness": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineCoupled.finite_sum_mul": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineCoupled.inconsistent_gate_retains_baseline": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineCoupled.infeasible_exclusion_sound": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineCoupled.minimizer_retained": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineCoupled.mul_finite_sum": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineCoupled.point_consistency": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineCoupled.strict_witness_exclusion_sound": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ]
+      }
+    },
     {
       "source": "LupineDiscovery.lean",
       "source_sha256": "93adb82c8caceb6620285bea612b4c80e4cf11c7da6d1e04b8ba595f43c6c515",
@@ -384,5 +482,5 @@
     }
   ],
   "schema": "lupine-formal-theorem-inventory-v1",
-  "theorem_count": 69
+  "theorem_count": 88
 }

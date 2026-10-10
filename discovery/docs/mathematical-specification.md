@@ -1,9 +1,9 @@
 # Universal candidate-pool specification
 
 Status: mathematical specification. The [formal theorem inventory](../formal/theorem-inventory.json)
-records 69 compiled statements: 18 scalar-selector, 15 Pareto, 9 nonlinear
-interval/domain, 15 conditional finite-risk/rank, and 12 interval-box sharpness
-theorems. See the [theorem map](../formal/README.md) and
+records 88 compiled statements: 18 scalar-selector, 15 Pareto, 9 nonlinear
+interval/domain, 15 conditional finite-risk/rank, 12 interval-box sharpness,
+and 19 conservative coupled-affine statements. See the [theorem map](../formal/README.md) and
 [actual verification record](../formal/VERIFICATION.md) for their precise scope.
 Python conformance tests are not a formal refinement proof of the executable
 runtime. Conditional finite-risk composition is included; exchangeability and
@@ -238,6 +238,90 @@ in physics. Sound cross-candidate relations, mechanistic restrictions or tighter
 bounds can restrict the admissible worlds and permit further pruning. See
 [the sharpness contract and constructed-world tests](sharpness.md).
 
+## Shared affine evidence and conservative exclusions
+
+The experimental [coupled Python API](coupled-kernel.md) supplies additional
+relations between quantities. It has no coupled JSON, CLI, or browser route
+yet. In its declared scenario, use one common latent vector z and write
+
+    P = {z : M_r dot z <= u_r for every original row r}
+    score_x(z) = a_x dot z + c_x
+    constraint_xj(z) = h_xj dot z + k_xj.
+
+The runtime has finite rational coefficients, normalized dimensionless latent
+coordinates with finite rational bounds, and finite candidate and row scopes.
+The Lean statements use real semantics, an arbitrary candidate type, and finite
+coordinate, row, and constraint types, including empty types. The certificate
+soundness proof does not require boundedness or a complete solver.
+
+The scientific premise is that **one actual z in P simultaneously represents
+all actual candidate quantities**. Different latent explanations for individual
+candidates are insufficient. A point checked against every row proves P is
+nonempty; it does not establish that the model represents the physical world.
+Learned correlation alone does not justify a hard affine relation.
+
+For q(z)=a dot z+c, a nonnegative multiplier certificate verifies exactly
+
+    lambda_r >= 0
+    sum_r lambda_r * M_r = a
+    sum_r lambda_r * u_r + c <= beta.
+
+Multiplying and summing the domain inequalities then proves q(z)<=beta for
+every z in that domain. A contradiction certificate instead requires zero
+combined coefficients and `sum_r lambda_r*u_r < 0`; no point can satisfy those
+rows. Equality at zero is not a contradiction. Certificates bind the complete
+original problem, domain rows, candidate scope, and actual affine expression.
+Sparse omitted multipliers mean zero. Exact checking accepts no numerical
+tolerance or solver-status substitute.
+
+For each candidate x, form its feasible domain
+
+    Qx = P intersect {z : every h_xj dot z <= -k_xj}.
+
+Two conservative exclusions are supported. A contradiction certificate for Qx
+proves x is never feasible in the admitted model. Alternatively, a candidate y
+can exclude x when certificates over that same Qx prove every constraint of y
+nonpositive and `score_y-score_x <= beta` for a strictly negative beta. Thus
+whenever x is feasible, y is feasible and strictly better. The witness need not
+be feasible throughout P; conditional feasibility is not global certification.
+Weak equality cannot exclude a tied optimum.
+
+Every feasible global minimizer at the common actual z survives these rules.
+Any collection of verified exclusions remains safe because every certificate
+uses the original fixed universe and domains; later excluding a witness does
+not change its mathematical comparison. The compiled `minimizer_retained`
+statement takes baseline retention explicitly, then proves that any supplied
+subset of certified coupled exclusions preserves it. It does not silently prove
+the Python baseline or certificate parser correct.
+
+Operational screening requires both an admitted `assumed_unverified` premise
+and a checked consistency point. Unsupported premises, a learned-correlation
+basis, missing/rejected/unchecked consistency, or a proved-inconsistent P retain
+**all candidate IDs**, with no operational feasibility or exclusion claims.
+An interval-box selection derived from that same affine model may remain visible
+as a diagnostic, but is not used for pruning while this gate is closed. Empty P
+means inconsistent model premises, not an empty physical material universe.
+After the gate opens, already verified exclusions remain valid if later search
+or checking exhausts its budget; every candidate without another valid exclusion
+remains retained.
+Proof-work limits are not end-to-end runtime or memory guarantees.
+
+This method is incomplete: for always-feasible scores `X=1/2`, `Y=t`, `Z=-t`
+on `[-1,1]`, X is never best but neither fixed witness is always better. The
+kernel may retain X. It does not establish that every retained candidate has a
+compatible optimality world, and it does not implement the design document's
+full disjunctive branch procedure.
+
+[LupineCoupled.lean](../formal/LupineCoupled.lean) proves the conservative real
+rules. The [18 focused tests](../tests/test_coupled.py) and
+[independent audit](../reports/coupled-independent-audit.json), reporting
+10,003 checks across 11,027 synthetic worlds, are software evidence rather than
+a Python refinement proof. No physical coupling or scientific benchmark
+improvement follows. The [projection-field adapter design](projection-field-adapter.md)
+proposes scoped observation weights, anchors, and bounded discrepancies to
+connect Lupine correction fields to this interface; that scientific adapter
+is not yet implemented or validated.
+
 ## Separate outcomes and partial truth
 
 Outcome replay binds to the original problem digest and scenario. It fixes the
@@ -275,8 +359,9 @@ success. An empty Pareto universe is valid but gives null pool fraction and
 4. Serialization preserves interval bounds, with outward rounding where needed.
 5. Selection arithmetic implements the specification.
 6. The conditional theorems establish feasibility, scalar/Pareto retention,
-   scalar regret, and the stated nonlinear enclosures; probability premises
-   remain a separate obligation.
+   scalar regret, nonlinear enclosures, and conservative coupled exclusion
+   under a shared-world premise; probability and physical coupling premises
+   remain separate obligations.
 7. Archival evaluation measures usefulness without leaking evaluation outcomes.
 
 The first three include scientific obligations. Lean proves implications from

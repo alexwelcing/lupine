@@ -11,7 +11,8 @@ proves finite real multiplication, reciprocal, division, and square enclosures.
 `LupineRisk.lean` proves finite event-risk composition and exact rational rank
 resolution from explicit premises. `LupineSharpness.lean` characterizes the scalar
 retained set as the smallest universally safe set when only the supplied interval
-constraints are known. Each module has its own namespace. All five
+constraints are known. `LupineCoupled.lean` proves conservative affine-certificate
+screening under one shared latent world. Each module has its own namespace. All six
 modules are default build targets.
 
 The standalone package pins Lean `v4.29.0` and Mathlib
@@ -190,6 +191,60 @@ safe pools. A large retained pool can therefore be unavoidable under the supplie
 interval information without establishing that the predictor or evidence is
 adequate for useful material discovery. This module does not prove Python
 refinement or Pareto-selector minimality.
+
+## Coupled affine certificate theorem map
+
+`LupineCoupled` models finite real affine quantities and normalized rows
+`M_r dot z <= upper_r`. The candidate type is arbitrary; the latent-coordinate,
+domain-row, and per-candidate constraint types are finite and may be empty.
+The executable interface restricts coefficients, points, and multipliers to
+rationals. The real-valued proof encompasses those numbers, but it does not
+establish a refinement of the rational checker or its input parsing.
+
+An upper certificate supplies nonnegative multipliers whose coefficient sum is
+the target affine coefficient vector and whose weighted right sides plus the
+target constant are at most the claimed bound. A contradiction certificate
+instead has zero combined coefficients and a strictly negative weighted right
+side. These arguments do not require the row domain to be bounded, a solver to
+be complete, or a feasible point to be found by any particular algorithm.
+
+| Theorem in `LupineCoupled` | Mathematical guarantee |
+| --- | --- |
+| `finite_sum_mul`, `mul_finite_sum`, `combined_dot` | Finite distributivity and interchange justify the weighted-row calculation |
+| `difference_evaluate` | Subtracting affine coefficients and constants evaluates to the exact difference |
+| `affine_nonpositive_iff` | An affine constraint is normalized by moving its constant to the right with the correct sign |
+| `point_consistency` | A point satisfying every row proves the declared model has an admissible world |
+| `affine_combination_upper_bound` | A verified nonnegative multiplier certificate bounds the affine expression at every point in the exact certified domain |
+| `contradiction_no_point`, `consistent_no_contradiction` | A strict contradiction certificate excludes every domain point and cannot coexist with a verified consistency point |
+| `candidate_domain_iff` | Appending every normalized constraint of x constructs exactly Qx: base-domain membership and feasibility of x |
+| `conditional_witness_better` | A witness certified feasible and strictly better over Qx is feasible and better whenever x is feasible in the same base world |
+| `infeasible_exclusion_sound`, `strict_witness_exclusion_sound`, `certified_exclusion_not_minimizer` | Either supported exclusion rule prevents the target from being a feasible global minimizer in an admissible world |
+| `equal_scores_no_strict_witness` | The strict-witness rule cannot exclude a feasible target through a witness with an equal score at that world |
+| `disabled_retains_baseline`, `disabled_retains_all`, `inconsistent_gate_retains_baseline` | An inactive gate preserves its baseline; choosing the full candidate universe provides complete fallback, and an enabling-implies-consistency contract prevents pruning under inconsistent premises |
+| `minimizer_retained` | Every tied feasible minimizer at one common admissible world survives any supplied subset of certified exclusions, if it was retained by the baseline |
+
+Both witness feasibility and its strictly negative score-difference bound use
+the identical Qx, constructed from the original fixed problem. Witnesses need
+not be globally feasible. They also need not survive screening themselves:
+their validity concerns the fixed candidate universe and admitted worlds.
+An exhausted search budget supplies no certificate and cannot justify an
+exclusion. This fixed-witness method is intentionally incomplete.
+
+The inactive-gate theorem is parameterized by a baseline. In the new coupled
+runtime, even the diagnostic interval bounds derive from the affine premises,
+so unsupported premises, a missing/rejected consistency point, or inconsistent
+premises require the **full candidate universe** as fallback. The affine-derived
+interval baseline may be used only after that gate is enabled. The final
+retention theorem explicitly assumes baseline retention; it does not silently
+prove the interval-baseline implementation correct.
+
+A consistency point establishes mathematical nonemptiness, not the scientific
+claim that actual candidate values share an admissible latent vector. The
+retention result requires that common-world premise. No physical affine
+coupling, automatic certificate production, exhaustive branch reasoning,
+possible-minimizer completeness, LP duality completeness, or Python refinement
+is proved. The original interval-box sharpness theorem is unchanged; the new
+rule uses additional premises restricting compatible worlds.
 
 ## Reproduction and trust
 

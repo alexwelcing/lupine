@@ -35,7 +35,7 @@ artifacts containing revealed archive values. The compact report is bundled
 for the interface. Source attribution, point-target limitations, failed gates,
 unsupported shift diagnostics and exact denominators remain visible.
 
-The current byte manifest is [runtime-manifest.json](runtime-manifest.json).
+The source snapshot for this checkpoint is [runtime-manifest-constrained.json](runtime-manifest-constrained.json).
 Earlier engine-extension bytes remain in
 [runtime-manifest-engine-extensions.json](runtime-manifest-engine-extensions.json).
 These hashes establish source identity, not physical truth or formal refinement
