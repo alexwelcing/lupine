@@ -1,13 +1,12 @@
-# Proposed projection workbench wrapper
+# Projection workbench wrapper
 
-Status: **G12 design only; not an accepted wire schema or an implemented UI
-mode**. Implementation waits for G11 publication. The existing
+Status: **G12 implemented; release verification is recorded separately**. The
+[strict wire adapter](../src/lupine_discovery/projection_io.py) preserves the
+original declarations through CLI, guarded HTTP, browser and replay. The
 [Python projection adapter](../src/lupine_discovery/projection.py) implements
-the translation and its abstention rules. The
+the translation and abstention rules. The
 [projection-field design](projection-field-adapter.md) explains the scientific
-premises, and the [coupled wire](coupled-problem.md) is already implemented.
-This document specifies the smallest additional interface that preserves the
-original relation while using that existing decision engine.
+premises, and the [coupled wire](coupled-problem.md) supplies the decision engine.
 
 No new field fitting, discrepancy estimation, physical validation, solver, or
 scientific benchmark is part of this interface. A user supplies a scoped
@@ -31,7 +30,7 @@ the adapter's explicit all-retained result without manufacturing numerical
 input for the coupled engine. The original wrapper remains the decision input
 through selection, verification, replay, and export.
 
-## Proposed input schema
+## Input schema
 
 Schema: `lupine.discovery.projection_problem.v1`.
 
@@ -170,7 +169,7 @@ receipt's prepared problem, relation record, or nested coupled certificate is
 never trusted as a substitute. A profile/engine/adapter version mismatch fails
 verification explicitly. No identity edge is obtained from outcome data.
 
-## Proposed certificate shape
+## Certificate shape
 
 Schema: `lupine.discovery.projection_certificate.v1`. Required fields:
 
@@ -222,7 +221,7 @@ view. The original outcome document is retained for its own digest; internally
 rebinding already validated values to the nested coupled decision is an explicit
 implementation step, not permission to accept stale outer seals.
 
-Proposed replay schema: `lupine.discovery.projection_replay.v1`, with exactly
+Replay schema: `lupine.discovery.projection_replay.v1`, with exactly
 `schema`, `engine_version`, `problem_digest`, `certificate_digest`,
 `outcomes_digest`, `decision`, `outcome_audit`, `provided_world_audit`,
 `diagnostics`, `physical_attestation`, and `replay_digest`. `decision` contains
@@ -262,7 +261,7 @@ The pure Python API is not the HTTP boundary. Apply a fixed
 Fraction conversion, dataclass construction, copying/hashing full relations,
 or building generated vectors/rows. Never truncate to fit a limit.
 
-| Resource | Proposed v1 ceiling |
+| Resource | v1 ceiling |
 | --- | --- |
 | Document / JSON nesting / nodes | 256 KiB UTF-8 / depth 24 / 65,536 nodes |
 | Candidates / constraint keys | 64 / 8 |
@@ -277,6 +276,13 @@ or building generated vectors/rows. Never truncate to fit a limit.
 | Supplied proofs | Exactly zero |
 | Requested kernel ceilings | 100,000 operations; 512 certificate terms; 2,048 checked integer bits; 4,096 candidate pairs |
 | HTTP worker | Shared nonblocking worker slot; 5 CPU seconds, 10 wall seconds, 256 MiB address space, 2 MiB output |
+
+The raw certificate cap is 2 MiB. `/api/verify` alone allows a 14,156,800-byte
+outer envelope so JSON escaping can carry a bounded 256 KiB problem and 2 MiB
+certificate. Other HTTP envelopes remain limited to 2 MiB. Separate document
+caps are checked after decoding. CLI and browser export coupled/projection
+receipts as compact JSON to preserve round trips at the byte boundary; the
+original problem download retains its exact submitted text.
 
 Count D using array lengths before expansion, including zero-radius observations
 and unsupported/missing-bound records. Validate matrix/vector dimensions and

@@ -1,0 +1,650 @@
+{
+  "adapter_version": "projection-adapter-v1",
+  "assumptions": [
+    "The declared fields, all observations, anchors and discrepancy enclosures admit one common actual latent world.",
+    "Parameterization image coverage and normalized-coordinate enclosures are separate assumed premises.",
+    "Physical context, source scopes, unit references and complete signed quantity maps match the stated problem.",
+    "All exactly tied feasible minimizers of the finite candidate universe are retained under those premises.",
+    "Conservative screening is incomplete; retained candidates need not have a possible or robust optimum certificate."
+  ],
+  "certificate_digest": "e8d2d64036f6f848839c8744fda2e2c6f0e90cec7442f85907aac6b426ad2ff8",
+  "coupled_certificate": {
+    "assumptions": [
+      "One common latent vector in the declared domain represents every actual score and constraint.",
+      "A consistency point proves model nonemptiness, not physical validity or observational provenance.",
+      "All quantities use the declared scenario, reference, and normalized dimensionless latent coordinates.",
+      "Every exactly tied feasible minimizer in the finite input universe is retained under these premises.",
+      "The conservative search is incomplete; retention does not certify possible or robust optimality."
+    ],
+    "certificate_digest": "fc23b57ac1e74dc2299971e35a449cbe994d03b4c8bcecc6632ab59b72ce01cb",
+    "claim": "conditional_common_world_finite_universe_all_minimizer_retention",
+    "common_world": {
+      "claim": "one_common_latent_vector_represents_all_quantities",
+      "premise_status": "assumed_unverified",
+      "reference": "projection_relation:b80e7e84dd3f7c49a4e35a5e898811f53fa1fb614840858615944a203803dd19",
+      "relation_basis": "bounded_error_model",
+      "scientific_validity": "unestablished"
+    },
+    "coupling": {
+      "consistency": {
+        "domain_id": "29d405a3668e455b108a46cd35f5c1d48d90711069ebabc6b8a6b9a3c1cfe940",
+        "operations_used": 91,
+        "reason": "exact_common_feasible_point",
+        "status": "verified"
+      },
+      "status": "conditional_screened",
+      "supplied_consistency_point": [
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    "diagnostics": {
+      "box_pool_role": "active_conditional_baseline",
+      "box_selection_diagnostic": {
+        "certified_feasible": [
+          "A",
+          "B"
+        ],
+        "certified_infeasible": [],
+        "dominated": [],
+        "incumbent": "B",
+        "possible_feasible": [
+          "A",
+          "B"
+        ],
+        "regret_bound": "3",
+        "retained": [
+          "A",
+          "B"
+        ],
+        "threshold": "9/2"
+      },
+      "marginal_intervals": {
+        "A": {
+          "constraints": {},
+          "score": {
+            "lower": "5/2",
+            "upper": "11/2"
+          }
+        },
+        "B": {
+          "constraints": {},
+          "score": {
+            "lower": "3/2",
+            "upper": "9/2"
+          }
+        }
+      }
+    },
+    "engine_version": "0.1.0",
+    "exclusion_certificates": {},
+    "execution": {
+      "effective_limits": {
+        "max_certificate_terms": 512,
+        "max_integer_bits": 2048,
+        "max_operations": 100000,
+        "max_witness_pairs": 4096
+      },
+      "kernel_operations_used": 255,
+      "ordered_supplied_proof_digests": [],
+      "profile_id": "coupled-local-v1",
+      "requested_limits": {
+        "max_certificate_terms": 512,
+        "max_integer_bits": 2048,
+        "max_operations": 100000,
+        "max_witness_pairs": 4096
+      }
+    },
+    "model_identity": {
+      "domain_id": "29d405a3668e455b108a46cd35f5c1d48d90711069ebabc6b8a6b9a3c1cfe940",
+      "instance_digest": "0f765ead80ba6aee4a0be82e9ed88ede51e91b3c861b606110223b06064abcf5",
+      "kernel_model_digest": "e4ca72521f6ede32c1f0197806c0706686dd0462540f776c4e3ac40f32e13643"
+    },
+    "physical_attestation": "not_established_by_this_program",
+    "problem_digest": "8146d888531d24f88da3c82acaceed606041a4d58099e79879b40f4d308a153c",
+    "proof_assessments": [
+      {
+        "candidate_id": "A",
+        "certificate_digest": "c875204918ead482b704f7be596e2addbd402d067db228ea18d1d4786cb3a138",
+        "check": {
+          "domain_id": "037fe73f51689df02e52913747807a525e00d5b3d8cb470aefb9488cd67f5f9e",
+          "operations_used": 173,
+          "reason": "strict_improvement_not_established_ties_retained",
+          "status": "not_applicable"
+        },
+        "input_index": null,
+        "source": "automatic",
+        "supplied_id": null,
+        "wire_proof_digest": null,
+        "witness_id": "B"
+      },
+      {
+        "candidate_id": "B",
+        "certificate_digest": "78b7786819fe8d85a8cc89ee67c9e0b02b2fb5eb80143db419110f0005723ac9",
+        "check": {
+          "domain_id": "f6d797fce59b72d791963d0f84ca9c16fea2fa596e14106b4b3685eef0958f6c",
+          "operations_used": 255,
+          "reason": "strict_improvement_not_established_ties_retained",
+          "status": "not_applicable"
+        },
+        "input_index": null,
+        "source": "automatic",
+        "supplied_id": null,
+        "wire_proof_digest": null,
+        "witness_id": "A"
+      }
+    ],
+    "scenario_id": "projection-tie",
+    "schema": "lupine.discovery.coupled_certificate.v1",
+    "selection": {
+      "certified_feasible": [
+        "A",
+        "B"
+      ],
+      "coupled_dominated": [],
+      "coupled_infeasible": [],
+      "dominance_witnesses": {},
+      "interval_dominated": [],
+      "interval_infeasible": [],
+      "retained": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  "engine_version": "0.1.0",
+  "execution": {
+    "effective_limits": {
+      "max_certificate_terms": 512,
+      "max_integer_bits": 2048,
+      "max_operations": 100000,
+      "max_witness_pairs": 4096
+    },
+    "kernel_operations_used": 255,
+    "requested_limits": {
+      "max_certificate_terms": 512,
+      "max_integer_bits": 2048,
+      "max_operations": 100000,
+      "max_witness_pairs": 4096
+    }
+  },
+  "physical_attestation": "not_established_by_this_program",
+  "prepared_problem": {
+    "candidates": [
+      {
+        "constraints": {},
+        "id": "A",
+        "score": {
+          "coefficients": [
+            "-1",
+            "1/2",
+            "0",
+            "0"
+          ],
+          "constant": "4"
+        }
+      },
+      {
+        "constraints": {},
+        "id": "B",
+        "score": {
+          "coefficients": [
+            "-1",
+            "0",
+            "1/2",
+            "0"
+          ],
+          "constant": "3"
+        }
+      }
+    ],
+    "common_world": {
+      "claim": "one_common_latent_vector_represents_all_quantities",
+      "premise_status": "assumed_unverified",
+      "reference": "projection_relation:b80e7e84dd3f7c49a4e35a5e898811f53fa1fb614840858615944a203803dd19",
+      "relation_basis": "bounded_error_model"
+    },
+    "latent_variables": [
+      {
+        "bounds": [
+          "-1",
+          "1"
+        ],
+        "id": "field:21:shared-within-context:1:z",
+        "reference": "projection_relation:b80e7e84dd3f7c49a4e35a5e898811f53fa1fb614840858615944a203803dd19;coordinate:0",
+        "unit": "1"
+      },
+      {
+        "bounds": [
+          "-1",
+          "1"
+        ],
+        "id": "discrepancy:7:A-value",
+        "reference": "projection_relation:b80e7e84dd3f7c49a4e35a5e898811f53fa1fb614840858615944a203803dd19;coordinate:1",
+        "unit": "1"
+      },
+      {
+        "bounds": [
+          "-1",
+          "1"
+        ],
+        "id": "discrepancy:7:B-value",
+        "reference": "projection_relation:b80e7e84dd3f7c49a4e35a5e898811f53fa1fb614840858615944a203803dd19;coordinate:2",
+        "unit": "1"
+      },
+      {
+        "bounds": [
+          "-1",
+          "1"
+        ],
+        "id": "discrepancy:12:anchor-value",
+        "reference": "projection_relation:b80e7e84dd3f7c49a4e35a5e898811f53fa1fb614840858615944a203803dd19;coordinate:3",
+        "unit": "1"
+      }
+    ],
+    "rows": [
+      {
+        "coefficients": [
+          "1",
+          "0",
+          "0",
+          "0"
+        ],
+        "id": "anchor-lower:16:uncertain-anchor",
+        "reference": "projection_relation:b80e7e84dd3f7c49a4e35a5e898811f53fa1fb614840858615944a203803dd19;anchor:uncertain-anchor",
+        "unit": "synthetic-score-unit",
+        "upper": "1"
+      },
+      {
+        "coefficients": [
+          "-1",
+          "0",
+          "0",
+          "0"
+        ],
+        "id": "anchor-upper:16:uncertain-anchor",
+        "reference": "projection_relation:b80e7e84dd3f7c49a4e35a5e898811f53fa1fb614840858615944a203803dd19;anchor:uncertain-anchor",
+        "unit": "synthetic-score-unit",
+        "upper": "1"
+      }
+    ],
+    "scenario": {
+      "constraints": {},
+      "id": "projection-tie",
+      "objective": {
+        "direction": "minimize",
+        "reference": "minimize constructed value",
+        "unit": "synthetic-score-unit"
+      }
+    },
+    "schema": "lupine.discovery.coupled_problem.v1",
+    "screening": {
+      "consistency_point": [
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "limits": {
+        "max_certificate_terms": 512,
+        "max_integer_bits": 2048,
+        "max_operations": 100000,
+        "max_witness_pairs": 4096
+      },
+      "proofs": []
+    }
+  },
+  "problem_digest": "ff62946b0b3d8a2fcc8770fd069709481d95c1adb9478e023dcd363ec472dd2e",
+  "profile_id": "projection-local-v1",
+  "projection": {
+    "build_status": "finite_conditional",
+    "input_digest": "e96e4d8b38217d5dd92bdc959229f824f213eef8473b3ecc8f8dc0ff76b01435",
+    "reasons": [],
+    "relation_digest": "b80e7e84dd3f7c49a4e35a5e898811f53fa1fb614840858615944a203803dd19",
+    "relation_record": {
+      "anchor_rows": {
+        "uncertain-anchor": [
+          "anchor-upper:16:uncertain-anchor",
+          "anchor-lower:16:uncertain-anchor"
+        ]
+      },
+      "common_image_premise": "all true field vectors and all quantities are represented by one admitted common latent vector",
+      "coordinates": {
+        "discrepancy:12:anchor-value": {
+          "index": 3,
+          "kind": "discrepancy",
+          "observation_id": "anchor-value",
+          "unit": "1"
+        },
+        "discrepancy:7:A-value": {
+          "index": 1,
+          "kind": "discrepancy",
+          "observation_id": "A-value",
+          "unit": "1"
+        },
+        "discrepancy:7:B-value": {
+          "index": 2,
+          "kind": "discrepancy",
+          "observation_id": "B-value",
+          "unit": "1"
+        },
+        "field:21:shared-within-context:1:z": {
+          "block_id": "shared-within-context",
+          "index": 0,
+          "kind": "field",
+          "local_id": "z",
+          "unit": "1"
+        }
+      },
+      "declarations": {
+        "anchors": [
+          {
+            "anchor_id": "uncertain-anchor",
+            "interval": {
+              "lower": "1",
+              "upper": "3"
+            },
+            "observation_id": "anchor-value",
+            "premise_status": "assumed_unverified",
+            "reference": "Constructed reference interval with zero declared discrepancy",
+            "source_ids": [
+              "declared-example"
+            ],
+            "source_scope": {
+              "quantity": "source-value",
+              "reference": "constructed quantity",
+              "scenario_id": "projection-tie",
+              "unit": "synthetic-score-unit"
+            }
+          }
+        ],
+        "blocks": [
+          {
+            "block_id": "shared-within-context",
+            "field_bound_basis": "declared_bound",
+            "field_bound_reference": "The constructed example assumes -1 <= z <= 1",
+            "latent_bounds": [
+              {
+                "lower": "-1",
+                "upper": "1"
+              }
+            ],
+            "latent_ids": [
+              "z"
+            ],
+            "matrix": [
+              [
+                "1"
+              ]
+            ],
+            "offset": [
+              "1"
+            ],
+            "parameter_ids": [
+              "theta"
+            ],
+            "parameter_units": [
+              "synthetic-score-unit"
+            ],
+            "parameterization_reference": "Declared common-image relation theta = 1 + z",
+            "premise_status": "assumed_unverified",
+            "scope": {
+              "context": {
+                "composition_id": "synthetic-composition",
+                "material_id": "synthetic-system",
+                "operating_conditions_id": "fixed-synthetic-conditions",
+                "scenario_id": "projection-tie",
+                "structure_id": "fixed-synthetic-structure"
+              },
+              "descriptor_id": "one-fixed-coordinate",
+              "model_id": "synthetic-model",
+              "model_version": "1",
+              "observation_family": "synthetic-observations",
+              "reference_method": "constructed-reference"
+            },
+            "source_ids": [
+              "declared-example"
+            ]
+          }
+        ],
+        "candidates": [
+          {
+            "candidate_id": "A",
+            "constraints": {},
+            "context": {
+              "composition_id": "synthetic-composition",
+              "material_id": "synthetic-system",
+              "operating_conditions_id": "fixed-synthetic-conditions",
+              "scenario_id": "projection-tie",
+              "structure_id": "fixed-synthetic-structure"
+            },
+            "score": {
+              "conversion_reference": "Identity target map applied to the entire expression",
+              "observation_id": "A-value",
+              "offset": "0",
+              "output_scope": {
+                "quantity": "score",
+                "reference": "minimize constructed value",
+                "scenario_id": "projection-tie",
+                "unit": "synthetic-score-unit"
+              },
+              "scale": "1",
+              "source_ids": [
+                "declared-example"
+              ]
+            }
+          },
+          {
+            "candidate_id": "B",
+            "constraints": {},
+            "context": {
+              "composition_id": "synthetic-composition",
+              "material_id": "synthetic-system",
+              "operating_conditions_id": "fixed-synthetic-conditions",
+              "scenario_id": "projection-tie",
+              "structure_id": "fixed-synthetic-structure"
+            },
+            "score": {
+              "conversion_reference": "Identity target map applied to the entire expression",
+              "observation_id": "B-value",
+              "offset": "0",
+              "output_scope": {
+                "quantity": "score",
+                "reference": "minimize constructed value",
+                "scenario_id": "projection-tie",
+                "unit": "synthetic-score-unit"
+              },
+              "scale": "1",
+              "source_ids": [
+                "declared-example"
+              ]
+            }
+          }
+        ],
+        "constraint_scopes": {},
+        "objective_scope": {
+          "quantity": "score",
+          "reference": "minimize constructed value",
+          "scenario_id": "projection-tie",
+          "unit": "synthetic-score-unit"
+        },
+        "observations": [
+          {
+            "block_id": "shared-within-context",
+            "bound_basis": "declared_bound",
+            "bound_reference": "Declared enclosure for this constructed observation",
+            "discrepancy_radius": "1/2",
+            "field_scope": {
+              "context": {
+                "composition_id": "synthetic-composition",
+                "material_id": "synthetic-system",
+                "operating_conditions_id": "fixed-synthetic-conditions",
+                "scenario_id": "projection-tie",
+                "structure_id": "fixed-synthetic-structure"
+              },
+              "descriptor_id": "one-fixed-coordinate",
+              "model_id": "synthetic-model",
+              "model_version": "1",
+              "observation_family": "synthetic-observations",
+              "reference_method": "constructed-reference"
+            },
+            "nominal": "5",
+            "observation_id": "A-value",
+            "premise_status": "assumed_unverified",
+            "source_ids": [
+              "declared-example"
+            ],
+            "source_scope": {
+              "quantity": "source-value",
+              "reference": "constructed quantity",
+              "scenario_id": "projection-tie",
+              "unit": "synthetic-score-unit"
+            },
+            "weights": [
+              "1"
+            ]
+          },
+          {
+            "block_id": "shared-within-context",
+            "bound_basis": "declared_bound",
+            "bound_reference": "Declared enclosure for this constructed observation",
+            "discrepancy_radius": "1/2",
+            "field_scope": {
+              "context": {
+                "composition_id": "synthetic-composition",
+                "material_id": "synthetic-system",
+                "operating_conditions_id": "fixed-synthetic-conditions",
+                "scenario_id": "projection-tie",
+                "structure_id": "fixed-synthetic-structure"
+              },
+              "descriptor_id": "one-fixed-coordinate",
+              "model_id": "synthetic-model",
+              "model_version": "1",
+              "observation_family": "synthetic-observations",
+              "reference_method": "constructed-reference"
+            },
+            "nominal": "4",
+            "observation_id": "B-value",
+            "premise_status": "assumed_unverified",
+            "source_ids": [
+              "declared-example"
+            ],
+            "source_scope": {
+              "quantity": "source-value",
+              "reference": "constructed quantity",
+              "scenario_id": "projection-tie",
+              "unit": "synthetic-score-unit"
+            },
+            "weights": [
+              "1"
+            ]
+          },
+          {
+            "block_id": "shared-within-context",
+            "bound_basis": "declared_bound",
+            "bound_reference": "Declared enclosure for this constructed observation",
+            "discrepancy_radius": "0",
+            "field_scope": {
+              "context": {
+                "composition_id": "synthetic-composition",
+                "material_id": "synthetic-system",
+                "operating_conditions_id": "fixed-synthetic-conditions",
+                "scenario_id": "projection-tie",
+                "structure_id": "fixed-synthetic-structure"
+              },
+              "descriptor_id": "one-fixed-coordinate",
+              "model_id": "synthetic-model",
+              "model_version": "1",
+              "observation_family": "synthetic-observations",
+              "reference_method": "constructed-reference"
+            },
+            "nominal": "3",
+            "observation_id": "anchor-value",
+            "premise_status": "assumed_unverified",
+            "source_ids": [
+              "declared-example"
+            ],
+            "source_scope": {
+              "quantity": "source-value",
+              "reference": "constructed quantity",
+              "scenario_id": "projection-tie",
+              "unit": "synthetic-score-unit"
+            },
+            "weights": [
+              "1"
+            ]
+          }
+        ],
+        "premise_status": "assumed_unverified",
+        "relation_reference": "One common synthetic field plus separately bounded observation discrepancies",
+        "scenario_id": "projection-tie",
+        "sources": [
+          {
+            "reference": "Constructed equations, not physical evidence",
+            "sha256": null,
+            "source_id": "declared-example",
+            "source_uri": "urn:lupine:synthetic:projection-options:v1"
+          }
+        ]
+      },
+      "error_domain_meaning": "all combinations admitted; no stochastic independence is asserted",
+      "field_convention": "theta = offset + matrix @ normalized_latents",
+      "input_digest": "e96e4d8b38217d5dd92bdc959229f824f213eef8473b3ecc8f8dc0ff76b01435",
+      "kernel_model_digest": "e4ca72521f6ede32c1f0197806c0706686dd0462540f776c4e3ac40f32e13643",
+      "observation_affines": {
+        "A-value": {
+          "coefficients": [
+            "-1",
+            "1/2",
+            "0",
+            "0"
+          ],
+          "constant": "4"
+        },
+        "B-value": {
+          "coefficients": [
+            "-1",
+            "0",
+            "1/2",
+            "0"
+          ],
+          "constant": "3"
+        },
+        "anchor-value": {
+          "coefficients": [
+            "-1",
+            "0",
+            "0",
+            "0"
+          ],
+          "constant": "2"
+        }
+      },
+      "observation_convention": "truth = nominal - weights @ theta + radius * independent_normalized_error",
+      "physical_attestation": "not_established_by_this_program",
+      "schema": "lupine.discovery.projection_relation.v1",
+      "status": "finite_conditional",
+      "target_convention": "target = scale * entire_observation_expression + offset"
+    }
+  },
+  "scenario_id": "projection-tie",
+  "schema": "lupine.discovery.projection_certificate.v1",
+  "selection": {
+    "certified_feasible": [
+      "A",
+      "B"
+    ],
+    "coupled_dominated": [],
+    "coupled_infeasible": [],
+    "dominance_witnesses": {},
+    "interval_dominated": [],
+    "interval_infeasible": [],
+    "retained": [
+      "A",
+      "B"
+    ]
+  },
+  "status": "conditional_screened"
+}

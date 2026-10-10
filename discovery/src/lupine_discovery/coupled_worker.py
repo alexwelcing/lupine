@@ -1,4 +1,4 @@
-"""Bounded Linux subprocess boundary for the local coupled workbench.
+"""Shared bounded Linux process boundary for coupled and projection work.
 
 The public entry point accepts raw documents, never Python code or a command.
 Only a completed successful child response becomes a receipt. The pure kernel's
@@ -21,11 +21,18 @@ from .evidence import digest
 
 TRANSPORT_SCHEMA = "lupine.discovery.coupled.worker.v1"
 MAX_DOCUMENT_BYTES = 256 * 1024
+MAX_CERTIFICATE_BYTES = 2 * 1024 * 1024
 MAX_HEADER_BYTES = 512
 EXPECTED_SCHEMAS = {
     "select": "lupine.discovery.coupled_certificate.v1",
     "domains": "lupine.discovery.coupled_domains.v1",
     "replay": "lupine.discovery.coupled_replay.v1",
+}
+VERIFICATION_SCHEMA = "lupine.discovery.verification.v1"
+OPERATIONS = frozenset((*EXPECTED_SCHEMAS, "verify"))
+PROJECTION_SCHEMAS = {
+    "select": "lupine.discovery.projection_certificate.v1",
+    "replay": "lupine.discovery.projection_replay.v1",
 }
 _SLOT = threading.Lock()
 
@@ -76,33 +83,40 @@ def guard_available():
         return False
 
 
-def _document_bytes(raw, label):
+def _document_bytes(raw, label, maximum=MAX_DOCUMENT_BYTES):
     if not isinstance(raw, (str, bytes)):
         raise CoupledWorkerError("invalid_input", f"{label} must be a raw JSON document.", 400)
     # Check text length first, avoiding an arbitrarily large encoding allocation.
-    if len(raw) > MAX_DOCUMENT_BYTES:
-        raise CoupledWorkerError("input_limit", f"{label} exceeds 256 KiB.", 413)
+    if len(raw) > maximum:
+        raise CoupledWorkerError("input_limit", f"{label} exceeds {maximum} bytes.", 413)
     try:
         encoded = raw.encode("utf-8") if isinstance(raw, str) else raw
     except UnicodeError:
         raise CoupledWorkerError("invalid_input", f"{label} is not valid UTF-8.", 400) from None
-    if len(encoded) > MAX_DOCUMENT_BYTES:
-        raise CoupledWorkerError("input_limit", f"{label} exceeds 256 KiB.", 413)
+    if len(encoded) > maximum:
+        raise CoupledWorkerError("input_limit", f"{label} exceeds {maximum} bytes.", 413)
     return encoded
 
 
-def _frame(operation, raw_problem, raw_outcomes):
-    if not isinstance(operation, str) or operation not in EXPECTED_SCHEMAS:
+def _frame(operation, raw_problem, raw_outcomes, raw_certificate=None):
+    if not isinstance(operation, str) or operation not in OPERATIONS:
         raise CoupledWorkerError("invalid_operation", "Unsupported coupled operation.", 400)
     if (operation == "replay") != (raw_outcomes is not None):
         raise CoupledWorkerError("invalid_input", "Only replay requires a separate outcome document.", 400)
+    if (operation == "verify") != (raw_certificate is not None):
+        raise CoupledWorkerError("invalid_input", "Only verify requires a separate certificate document.", 400)
     problem = _document_bytes(raw_problem, "Problem")
     outcomes = None if raw_outcomes is None else _document_bytes(raw_outcomes, "Outcomes")
+    certificate = None if raw_certificate is None else _document_bytes(
+        raw_certificate, "Certificate", MAX_CERTIFICATE_BYTES)
     header = {"schema": TRANSPORT_SCHEMA, "operation": operation,
               "problem_bytes": len(problem), "outcome_bytes": None if outcomes is None else len(outcomes)}
+    if operation == "verify":
+        header["certificate_bytes"] = len(certificate)
     # Length framing keeps raw documents intact, without JSON parse/reserialize
     # or escape expansion. The child reads outcomes only when replay asks for them.
-    return json.dumps(header, separators=(",", ":")).encode("ascii") + b"\n" + problem + (outcomes or b"")
+    return (json.dumps(header, separators=(",", ":")).encode("ascii") + b"\n" + problem
+            + (outcomes or b"") + (certificate or b""))
 
 
 def _child_command(limits, body=None):
@@ -242,20 +256,23 @@ def _response(returncode, output):
     return value["result"]
 
 
-def run_coupled(operation, raw_problem, raw_outcomes=None):
-    """Run one coupled operation under fixed hard guards, returning its receipt.
+def run_coupled(operation, raw_problem, raw_outcomes=None, *, raw_certificate=None):
+    """Run one coupled/projection operation under the same fixed hard guards.
 
     There is one nonblocking slot per parent process. Request inputs cannot
     choose commands, process limits, environment variables, or package paths.
     """
-    frame = _frame(operation, raw_problem, raw_outcomes)
+    frame = _frame(operation, raw_problem, raw_outcomes, raw_certificate)
     if not guard_available():
         raise CoupledWorkerError("guard_unavailable", "Coupled HTTP processing requires Linux CPU and memory guards.")
     if not _SLOT.acquire(blocking=False):
         raise CoupledWorkerError("worker_busy", "Another coupled operation is running; try again when it completes.", 429)
     try:
         result = _response(*_bounded_process(frame))
-        _validate_receipt(operation, result)
+        try:
+            _validate_receipt(operation, result)
+        except (AttributeError, KeyError, TypeError, ValueError, RecursionError):
+            raise CoupledWorkerError("worker_invalid_response", "The worker returned a malformed result.", 502) from None
         return result
     finally:
         _SLOT.release()
@@ -270,6 +287,21 @@ def _validate_receipt(operation, result):
     def sealed(value, key):
         return (isinstance(value, dict) and checksum(value.get(key))
                 and value[key] == digest({k: v for k, v in value.items() if k != key}))
+    def same(left, right):
+        return left == right and digest(left) == digest(right)
+    if operation == "verify":
+        valid = (set(result) == {"schema", "verified", "scope", "physical_attestation", "certificate_digest"}
+                 and result.get("schema") == VERIFICATION_SCHEMA
+                 and result.get("verified") is True
+                 and result.get("scope") == "identity_and_exact_runtime_recomputation_only"
+                 and result.get("physical_attestation") == "not_established_by_this_program"
+                 and checksum(result.get("certificate_digest")))
+        if not valid:
+            raise CoupledWorkerError("worker_invalid_response", "The worker returned no complete verification result.", 502)
+        return
+    if result.get("schema") == PROJECTION_SCHEMAS.get(operation):
+        _validate_projection_receipt(operation, result, checksum, sealed, same)
+        return
     valid = result.get("schema") == EXPECTED_SCHEMAS[operation] and checksum(result.get("problem_digest"))
     if operation == "select":
         valid = (valid and sealed(result, "certificate_digest")
@@ -296,6 +328,88 @@ def _validate_receipt(operation, result):
         raise CoupledWorkerError("worker_invalid_response", "The worker returned no complete, sealed result for this operation.", 502)
 
 
+def _validate_projection_receipt(operation, result, checksum, sealed, same):
+    """Bind the full projection relation, derived decision and outer replay.
+
+    This validates transport identity only. Preparation and arithmetic happen
+    exclusively in the isolated child; no model is reconstructed in the parent.
+    """
+    valid = checksum(result.get("problem_digest"))
+    if operation == "select":
+        projection = result.get("projection")
+        selection = result.get("selection")
+        valid = valid and sealed(result, "certificate_digest") and isinstance(projection, dict)
+        valid = valid and isinstance(selection, dict) and isinstance(result.get("execution"), dict)
+        if valid:
+            relation = projection.get("relation_record")
+            valid = (isinstance(relation, dict) and checksum(projection.get("input_digest"))
+                     and checksum(projection.get("relation_digest"))
+                     and projection["relation_digest"] == digest(relation)
+                     and relation.get("input_digest") == projection["input_digest"]
+                     and relation.get("status") == projection.get("build_status")
+                     and isinstance(projection.get("reasons"), list)
+                     and result.get("physical_attestation") == "not_established_by_this_program")
+        if valid:
+            declarations = relation.get("declarations", {})
+            candidates = declarations.get("candidates") if isinstance(declarations, dict) else None
+            valid = (isinstance(declarations, dict) and projection["input_digest"] == digest(declarations)
+                     and isinstance(candidates, list) and all(isinstance(row, dict)
+                     and isinstance(row.get("candidate_id"), str) for row in candidates))
+        if valid:
+            candidate_ids = sorted(row["candidate_id"] for row in candidates)
+            prepared, nested = result.get("prepared_problem"), result.get("coupled_certificate")
+            if projection["build_status"] == "unsupported_all_retained":
+                empty = {key: [] for key in ("certified_feasible", "interval_infeasible", "interval_dominated",
+                                            "coupled_infeasible", "coupled_dominated")}
+                expected = {"retained": candidate_ids, **empty, "dominance_witnesses": {}}
+                valid = (result.get("status") == "unsupported_all_retained" and prepared is None and nested is None
+                         and bool(projection["reasons"]) and same(selection, expected)
+                         and result["execution"].get("kernel_operations_used") == 0
+                         and type(result["execution"].get("kernel_operations_used")) is int)
+            elif projection["build_status"] == "finite_conditional":
+                valid = (isinstance(prepared, dict) and isinstance(nested, dict)
+                         and prepared.get("schema") == "lupine.discovery.coupled_problem.v1"
+                         and nested.get("schema") == EXPECTED_SCHEMAS["select"])
+                if valid:
+                    _validate_receipt("select", nested)
+                    prepared_ids = prepared.get("candidates", [])
+                    common = prepared.get("common_world")
+                    valid = (isinstance(prepared_ids, list) and isinstance(common, dict)
+                             and all(isinstance(row, dict) and isinstance(row.get("id"), str) for row in prepared_ids)
+                             and sorted(row["id"] for row in prepared_ids) == candidate_ids
+                             and same(selection, nested["selection"])
+                             and nested["problem_digest"] == digest(prepared)
+                             and result.get("status") == nested["coupling"].get("status")
+                             and relation.get("kernel_model_digest") == nested["model_identity"].get("kernel_model_digest")
+                             and common.get("reference") ==
+                                 "projection_relation:" + projection["relation_digest"])
+            else:
+                valid = False
+    elif operation == "replay":
+        decision = result.get("decision")
+        nested = decision.get("certificate") if isinstance(decision, dict) else None
+        valid = (valid and sealed(result, "replay_digest") and isinstance(nested, dict)
+                 and nested.get("schema") == PROJECTION_SCHEMAS["select"])
+        if valid:
+            _validate_receipt("select", nested)
+            valid = (checksum(result.get("outcomes_digest"))
+                     and result["problem_digest"] == nested["problem_digest"]
+                     and result.get("certificate_digest") == nested["certificate_digest"]
+                     and same(decision.get("selection"), nested["selection"])
+                     and isinstance(result.get("outcome_audit"), dict)
+                     and isinstance(result.get("provided_world_audit"), dict)
+                     and isinstance(result.get("diagnostics"), dict))
+            if valid and nested["prepared_problem"] is None:
+                valid = (result["provided_world_audit"].get("status") == "unavailable_no_prepared_model"
+                         and result["diagnostics"].get("box_selection_diagnostic") is None
+                         and isinstance(result["diagnostics"].get("marginal_coverage"), dict)
+                         and result["diagnostics"]["marginal_coverage"].get("status") == "unavailable_no_prepared_model")
+    else:
+        valid = False
+    if not valid:
+        raise CoupledWorkerError("worker_invalid_response", "The worker returned no complete, bound projection result.", 502)
+
+
 def _read_exact(stream, length):
     data = bytearray()
     while len(data) < length:
@@ -318,21 +432,33 @@ def _dispatch(stream):
             value[key] = item
         return value
     header = json.loads(header_raw, object_pairs_hook=unique)
-    if (not isinstance(header, dict) or set(header) != {"schema", "operation", "problem_bytes", "outcome_bytes"}
-            or header["schema"] != TRANSPORT_SCHEMA or not isinstance(header["operation"], str)
-            or header["operation"] not in EXPECTED_SCHEMAS):
+    if (not isinstance(header, dict) or header.get("schema") != TRANSPORT_SCHEMA
+            or not isinstance(header.get("operation"), str) or header["operation"] not in OPERATIONS):
         raise ValueError("invalid worker header")
+    expected_fields = {"schema", "operation", "problem_bytes", "outcome_bytes"}
+    if header["operation"] == "verify":
+        expected_fields.add("certificate_bytes")
+    if set(header) != expected_fields:
+        raise ValueError("invalid worker header fields")
     for key in ("problem_bytes", "outcome_bytes"):
         value = header[key]
         if key == "outcome_bytes" and value is None:
             continue
         if type(value) is not int or not 0 <= value <= MAX_DOCUMENT_BYTES:
             raise ValueError("worker document size exceeds limit")
+    if "certificate_bytes" in header and (type(header["certificate_bytes"]) is not int
+            or not 0 <= header["certificate_bytes"] <= MAX_CERTIFICATE_BYTES):
+        raise ValueError("worker certificate size exceeds limit")
     operation = header["operation"]
     if (operation == "replay") != (header["outcome_bytes"] is not None):
         raise ValueError("outcome framing does not match operation")
     from .coupled_io import loads_coupled, coupled_certificate, coupled_domains, coupled_replay_report
     problem = loads_coupled(_read_exact(stream, header["problem_bytes"]))
+    projection = isinstance(problem, dict) and problem.get("schema") == "lupine.discovery.projection_problem.v1"
+    if projection:
+        from .projection_io import loads_projection, projection_certificate, projection_replay_report
+        if operation == "domains":
+            raise ValueError("projection v1 does not accept supplied proofs or expose projection domains")
 
     def no_trailing_data():
         if stream.read(1):
@@ -342,9 +468,23 @@ def _dispatch(stream):
         def load_outcomes():
             raw = _read_exact(stream, header["outcome_bytes"])
             no_trailing_data()
-            return loads_coupled(raw)
-        return coupled_replay_report(problem, load_outcomes)
+            return loads_projection(raw) if projection else loads_coupled(raw)
+        return (projection_replay_report(problem, load_outcomes) if projection
+                else coupled_replay_report(problem, load_outcomes))
+    if operation == "verify":
+        if not projection and (not isinstance(problem, dict)
+                               or problem.get("schema") != "lupine.discovery.coupled_problem.v1"):
+            raise ValueError("guarded verification accepts only coupled or projection problems")
+        from .cli import verify_certificate
+        from .coupled_io import preflight_json_text
+        from .serialization import loads
+        raw = _read_exact(stream, header["certificate_bytes"])
+        no_trailing_data()
+        supplied = loads(preflight_json_text(raw, max_bytes=MAX_CERTIFICATE_BYTES, max_depth=32))
+        return verify_certificate(problem, supplied)
     no_trailing_data()
+    if projection:
+        return projection_certificate(problem)
     return coupled_certificate(problem) if operation == "select" else coupled_domains(problem)
 
 

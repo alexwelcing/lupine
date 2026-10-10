@@ -3,6 +3,54 @@
 The current goal and ordered backlog are in `../GOAL.md`. Append concise entries
 with artifacts, actual checks, scientific implications, and the next action.
 
+## 2026-10-10 17:46 UTC — projection workbench complete; custody freeze ready
+
+- G12 now preserves original projection declarations through strict JSON,
+  CLI, guarded HTTP, browser and separately sealed replay. No-model abstention
+  retains the original universe without invented intervals or model diagnostics.
+  Three synthetic demonstrations expand the package to 25 cases/five schemas.
+- Actual final checks: 416 Python tests with stable source snapshots,
+  35 Chromium checks with zero JavaScript errors, and a fresh noneditable
+  wheel with installed CLI/guarded-HTTP agreement pass. The independent wire
+  audit adds 19 checks and 144 partial-truth patterns. All 100 formal statements
+  and mathematical sources are unchanged; remote CI will rebuild them.
+- Review fixed large pretty-JSON exports that failed their own byte cap, and
+  stale/reordered outcome-file reads. Actual CLI/browser regressions pass.
+  The first browser attempt's harness-cleanup failure remains preserved beside
+  the successful rerun. See `projection-workbench-verification.md`.
+- G13 construction passes 31 synthetic tests and independent redaction/source
+  review. No real mixed target JSON has been acquired or decoded. Source,
+  tests, documentation and engineering receipt are being frozen together before
+  the first allowed acquisition. The future public metadata cannot establish
+  checkpoint identity, reference suitability or physical discrepancy bounds.
+- Owner/checkpoint: root publishes this reviewed increment and inspects remote
+  CI, then runs the fixed custody commands. Delegates separately investigate
+  direct decision-pool calibration mathematics and operating-condition archive
+  metadata; neither has a new experiment, changed protocol or scientific result.
+  All published negative scientific outcomes remain unchanged.
+
+## 2026-10-10 17:39 UTC — published projection API; active integration
+
+- Pushed `0a8b248943fa1a65400214eebbe54377d8c3ff5e`. All four jobs in
+  [Discovery Verify 38071896576](https://github.com/alexwelcing/lupine/actions/runs/38071896576)
+  pass at that exact commit. The 128-file source manifest is preserved as
+  `runtime-manifest-projection-api.json` before extending the interface.
+- A continuation request arrived during this active implementation session.
+  Re-read repository instructions and release records; fetched remote state
+  and confirmed local HEAD equals FETCH_HEAD. No competing writer or independent
+  continuous worker was started. The bounded schedule remains unchanged.
+- Current owner: root integrates G12; delegated owners cover strict wire/CLI,
+  shared guarded worker, browser, and independent adversarial checks. G13 has
+  separate custody-tool and redaction-review owners. Construction tests use
+  synthetic bytes only; real archive acquisition must follow publication of
+  reviewed custody code. No new scientific targets or fits have been opened.
+- Review found a valid large receipt whose pretty JSON exceeds the verifier
+  byte cap. Compact CLI/browser exports and a real round-trip regression are
+  being completed before full-suite/package checks and branch publication.
+- Next action: finish G12 integration and independently reviewed G13 custody
+  construction, run release checks, publish, and inspect remote CI. Existing
+  scientific failures and the model-replacement NO-GO remain unchanged.
+
 ## 2026-10-10 — scoped projection algebra and complete input exports
 
 - G11 is implemented as a Python API with explicit physical context, separate

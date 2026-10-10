@@ -1,0 +1,42 @@
+{
+  "command": [
+    "python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_projection_custody*.py",
+    "-v"
+  ],
+  "cwd": "/workspace/lupine-discovery-branch/discovery",
+  "elapsed_seconds": 7.143175760000304,
+  "independent_review_status": "NO_REMAINING_BLOCKER_SOURCE_AND_SYNTHETIC_ONLY",
+  "independent_review_test_count": 14,
+  "log_path": ".cache/projection-custody-engineering/tests.log",
+  "log_sha256": "b9737ef492151199c7a12cf0b3435674a503d9e5321caa4fc19ecda7b964a1a7",
+  "original_mixed_target_json_acquired": false,
+  "original_mixed_target_json_decoded": false,
+  "pre_freeze_base_commit": "0a8b248943fa1a65400214eebbe54377d8c3ff5e",
+  "process_exit_code": 0,
+  "public_pinned_source_inventory_read": true,
+  "real_acquisition_authorized_by_this_receipt": false,
+  "schema": "lupine.discovery.projection_custody_engineering.v1",
+  "scope": "synthetic_fixture_tests_only",
+  "source_hashes_after": {
+    "docs/projection-custody.md": "bc30d58abbfc4772c0064904789fbb239562afeb975bdea9607766612102eee7",
+    "scripts/projection_custody.py": "751bcec5123feef65bf4b459691b5ab89197dd28e599fa23a178e2f10ff36fcc",
+    "tests/test_projection_custody.py": "279dfacfa842908d84f8efb856047c8427399620c86e45e36e8a3e383d8f92e8",
+    "tests/test_projection_custody_review.py": "587a896c20f512534ed519fd6a6acc83c5d4c05b339a8a32205d7385ba58f428"
+  },
+  "source_hashes_before": {
+    "docs/projection-custody.md": "bc30d58abbfc4772c0064904789fbb239562afeb975bdea9607766612102eee7",
+    "scripts/projection_custody.py": "751bcec5123feef65bf4b459691b5ab89197dd28e599fa23a178e2f10ff36fcc",
+    "tests/test_projection_custody.py": "279dfacfa842908d84f8efb856047c8427399620c86e45e36e8a3e383d8f92e8",
+    "tests/test_projection_custody_review.py": "587a896c20f512534ed519fd6a6acc83c5d4c05b339a8a32205d7385ba58f428"
+  },
+  "source_unchanged": true,
+  "status": "PASS",
+  "test_count": 31
+}

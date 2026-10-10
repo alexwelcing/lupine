@@ -12,13 +12,18 @@ from urllib.parse import urlsplit
 from .benchmarks import archived_reports, case_catalog, get_case, get_case_outcomes, run_known_answers
 from .cli import certificate, replay_report
 from .coupled_io import preflight_json_text
-from .coupled_worker import CoupledWorkerError, run_coupled
+from .coupled_worker import CoupledWorkerError, MAX_CERTIFICATE_BYTES, MAX_DOCUMENT_BYTES, run_coupled
 from .evidence import fields
 from .serialization import loads
 
 MAX_BODY_BYTES = 2 * 1024 * 1024
+# Verification accepts exported receipts larger than an input problem. Six
+# bytes per source byte accommodates JSON string escaping in the outer envelope;
+# the child still enforces the separate 256 KiB problem and 2 MiB receipt caps.
+MAX_VERIFY_BODY_BYTES = 6 * (MAX_CERTIFICATE_BYTES + MAX_DOCUMENT_BYTES) + 1024
 MAX_CANDIDATES = 5000
 COUPLED_SCHEMA = "lupine.discovery.coupled_problem.v1"
+PROJECTION_SCHEMA = "lupine.discovery.projection_problem.v1"
 ASSETS = {"/": ("index.html", "text/html; charset=utf-8"),
           "/index.html": ("index.html", "text/html; charset=utf-8"),
           "/styles.css": ("styles.css", "text/css; charset=utf-8"),
@@ -38,6 +43,10 @@ def coupled_problem(problem):
     return isinstance(problem, dict) and problem.get("schema") == COUPLED_SCHEMA
 
 
+def guarded_problem(problem):
+    return isinstance(problem, dict) and problem.get("schema") in {COUPLED_SCHEMA, PROJECTION_SCHEMA}
+
+
 def raw_document(value):
     """Encode a legacy object envelope without changing its exact scalar values."""
     return json.dumps(value, ensure_ascii=True, allow_nan=False, separators=(",", ":"))
@@ -45,7 +54,7 @@ def raw_document(value):
 
 def select_problem(problem):
     problem = bounded_problem(problem)
-    if coupled_problem(problem):
+    if guarded_problem(problem):
         return run_coupled("select", raw_document(problem))
     return certificate(problem)
 
@@ -144,11 +153,12 @@ class WorkbenchHandler(BaseHTTPRequestHandler):
             if self.headers.get("Transfer-Encoding"):
                 raise ValueError("Chunked request bodies are not supported.")
             length = int(self.headers.get("Content-Length", "-1"))
-            if not 0 <= length <= MAX_BODY_BYTES:
-                self.error(413, "Send a JSON document of at most 2 MiB.")
+            body_cap = MAX_VERIFY_BODY_BYTES if path == "/api/verify" else MAX_BODY_BYTES
+            if not 0 <= length <= body_cap:
+                self.error(413, f"Send a JSON document of at most {body_cap} bytes.")
                 return
             value = loads(preflight_json_text(self.rfile.read(length),
-                                             max_bytes=MAX_BODY_BYTES, max_depth=32))
+                                             max_bytes=body_cap, max_depth=32))
             if path == "/api/select":
                 if isinstance(value, dict) and "problem_raw" in value:
                     fields(value, ("problem_raw",))
@@ -159,6 +169,10 @@ class WorkbenchHandler(BaseHTTPRequestHandler):
             elif path == "/api/coupled-domains":
                 fields(value, ("problem_raw",))
                 result = run_coupled("domains", value["problem_raw"])
+            elif path == "/api/verify":
+                fields(value, ("problem_raw", "certificate_raw"))
+                result = run_coupled("verify", value["problem_raw"],
+                                     raw_certificate=value["certificate_raw"])
             elif path == "/api/replay":
                 if isinstance(value, dict) and "problem_raw" in value:
                     fields(value, ("problem_raw", "outcomes_raw"))
@@ -166,9 +180,9 @@ class WorkbenchHandler(BaseHTTPRequestHandler):
                 else:
                     fields(value, ("problem", "outcomes"))
                     problem = bounded_problem(value["problem"])
-                    if coupled_problem(problem):
+                    if guarded_problem(problem):
                         raise CoupledWorkerError("raw_outcomes_required",
-                            "Coupled replay requires problem_raw and outcomes_raw JSON text so the decision is sealed before outcome decoding.", 400)
+                            "Coupled and projection replay require problem_raw and outcomes_raw JSON text so the decision is sealed before outcome decoding.", 400)
                     result = replay_report(problem, value["outcomes"])
             elif re.fullmatch(r"/api/cases/[a-z0-9_-]+/replay", path):
                 # Fix the selection before opening the built-in answer resource.
@@ -184,10 +198,10 @@ class WorkbenchHandler(BaseHTTPRequestHandler):
                     fields(value, ("problem",))
                     problem = bounded_problem(value["problem"])
                     select_problem(problem)
-                    problem_raw = raw_document(problem) if coupled_problem(problem) else None
+                    problem_raw = raw_document(problem) if guarded_problem(problem) else None
                 outcomes = get_case_outcomes(path.split("/")[3], problem)
                 result = (run_coupled("replay", problem_raw, raw_document(outcomes))
-                          if coupled_problem(problem) else replay_report(problem, outcomes))
+                          if guarded_problem(problem) else replay_report(problem, outcomes))
             else:
                 self.error(404, "Not found.")
                 return

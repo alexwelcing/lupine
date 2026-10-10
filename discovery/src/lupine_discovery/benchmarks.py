@@ -1,6 +1,6 @@
 """Sealed, finite known-answer checks of the selector, not physical validation.
 
-Problem resources contain intervals only. Outcome resources are opened only after
+Problem resources contain declared inputs without known outcomes. Outcome resources are opened only after
 selection and are bound to the exact problem digest. The independent oracle uses
 only exhaustive truth enumeration; it never sees the intervals or selector result.
 """
@@ -27,7 +27,7 @@ def _entry(case_id):
 
 
 def _catalog_entries():
-    return [entry for name in ("catalog.json", "calibration-catalog.json", "pareto-catalog.json", "coupled-catalog.json")
+    return [entry for name in ("catalog.json", "calibration-catalog.json", "pareto-catalog.json", "coupled-catalog.json", "projection-catalog.json")
             for entry in _resource(name)]
 
 
@@ -57,7 +57,9 @@ def get_case_outcomes(case_id, problem):
     result = _resource(f"outcomes/{entry['id']}.json")
     # Strict schema validation occurs in replay after selection. The resource
     # seal is also checked here, independent of its scalar/Pareto schema.
-    if result.get("problem_digest") != expected_digest or result.get("scenario_id") != problem["scenario"]["id"]:
+    scenario_id = (problem["projection"]["scenario_id"]
+                   if problem.get("schema") == "lupine.discovery.projection_problem.v1" else problem["scenario"]["id"])
+    if result.get("problem_digest") != expected_digest or result.get("scenario_id") != scenario_id:
         raise ValueError("known answers do not match the packaged problem seal")
     return result
 

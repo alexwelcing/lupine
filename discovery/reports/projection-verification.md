@@ -42,10 +42,14 @@ whose [four CI jobs passed](https://github.com/alexwelcing/lupine/actions/runs/3
 
 The final adapter source SHA-256 is
 `4a7eb4a48f281f888132c5bb235b10ec037c685f2ba8a192f976a00337e0de09`.
-The current source inventory is [runtime-manifest.json](runtime-manifest.json);
-the preceding 124-file inventory remains in
+The published checkpoint is `0a8b248943fa1a65400214eebbe54377d8c3ff5e`.
+Its 128-file inventory is preserved in
+[runtime-manifest-projection-api.json](runtime-manifest-projection-api.json);
+[runtime-manifest.json](runtime-manifest.json) follows subsequent work.
+The preceding 124-file inventory remains in
 [runtime-manifest-coupled-interface.json](runtime-manifest-coupled-interface.json).
-Remote CI for this subsequent checkpoint must be recorded after publication.
+[All four remote CI jobs passed](https://github.com/alexwelcing/lupine/actions/runs/38071896576)
+at that exact checkpoint: Python 3.11/3.12, browser, and Lean.
 
 The adapter has no new JSON/browser mode yet. Its pure Python construction is
 not a resource guard; the [proposed wrapper](../docs/projection-workbench-contract.md)

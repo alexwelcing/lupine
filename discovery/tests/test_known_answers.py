@@ -80,7 +80,9 @@ class KnownAnswerTests(unittest.TestCase):
             self.assertEqual(set(case), {"id", "title", "description", "kind", "problem"})
             self.assertNotIn("outcomes", case["problem"])
             self.assertNotIn("expected", case)
-            self.assertLessEqual(len(case["problem"]["candidates"]), 200)
+            declarations = case["problem"].get("projection", case["problem"])
+            self.assertNotIn("outcomes", declarations)
+            self.assertLessEqual(len(declarations["candidates"]), 200)
             certificate(case["problem"])
 
     def test_outcomes_are_bound_to_the_entire_problem(self):

@@ -16,6 +16,7 @@ from playwright.sync_api import expect, sync_playwright
 from lupine_discovery.benchmarks import case_catalog, get_case, get_case_outcomes
 from lupine_discovery.cli import verify_certificate
 from lupine_discovery.coupled_worker import CoupledWorkerError
+from lupine_discovery.evidence import digest
 from lupine_discovery.server import make_server
 
 
@@ -67,13 +68,14 @@ def run():
             def assert_no_export():
                 expect(page.locator("#download-problem")).to_be_disabled()
                 expect(page.locator("#download-certificate")).to_be_disabled()
+                expect(page.locator("#download-replay")).to_be_disabled()
                 # Dispatch directly as well: disabled-button styling alone must
                 # not leave a stale receipt in either download handler.
                 created = page.evaluate("""() => {
                   const create = URL.createObjectURL; let calls = 0;
                   URL.createObjectURL = (...args) => { calls += 1; return create(...args); };
                   try {
-                    for (const id of ['download-problem', 'download-certificate'])
+                    for (const id of ['download-problem', 'download-certificate', 'download-replay'])
                       document.getElementById(id).dispatchEvent(new MouseEvent('click'));
                   } finally { URL.createObjectURL = create; }
                   return calls;
@@ -363,6 +365,245 @@ def run():
             export_pair("new-revision-coupled", edited_raw)
             checks.append("pending_or_stale_revision_cannot_export_and_exact_raw_pair_recovers")
 
+            def upload_projection(value, filename):
+                raw = value if isinstance(value, str) else json.dumps(value, indent=2)
+                page.locator("#problem-upload").set_input_files({
+                    "name": filename, "mimeType": "application/json", "buffer": raw.encode(),
+                })
+                expect(page.locator("#problem-json")).to_have_value(raw)
+                with page.expect_response(lambda r: r.url.endswith("/api/select")) as response:
+                    page.locator("#analyze").click()
+                assert response.value.status == 200, response.value.json()
+                assert response.value.request.post_data_json == {"problem_raw": raw}
+                expect(page.locator("#analysis-results")).to_be_visible()
+                return response.value.json()
+
+            def upload_projection_outcomes(value, filename):
+                with page.expect_response(lambda r: r.url.endswith("/api/replay")) as response:
+                    page.locator("#outcomes-upload").set_input_files({
+                        "name": filename, "mimeType": "application/json", "buffer": json.dumps(value).encode(),
+                    })
+                return response.value
+
+            def export_projection_replay(label, expected, outcome_path):
+                with page.expect_download() as downloaded:
+                    page.locator("#download-replay").click()
+                replay_path = artifacts / f"{label}-full-replay.json"
+                downloaded.value.save_as(replay_path)
+                value = json.loads(replay_path.read_text())
+                assert value == expected
+                assert value["schema"] == "lupine.discovery.projection_replay.v1"
+                assert value["decision"]["certificate"]["schema"] == "lupine.discovery.projection_certificate.v1"
+                assert value["replay_digest"] == digest({k: v for k, v in value.items() if k != "replay_digest"})
+                actual = subprocess.run([sys.executable, "-m", "lupine_discovery", "replay",
+                    str((artifacts / f"{label}-problem.json").resolve()), str(outcome_path)],
+                    capture_output=True, text=True, check=True)
+                assert json.loads(actual.stdout) == value
+
+            projection = select_case("projection-shared-field")
+            assert projection["selection"]["retained"] == ["B"]
+            assert projection["selection"] == projection["coupled_certificate"]["selection"]
+            expect(page.locator("#result-title")).to_have_text("Conditional projection pool")
+            expect(page.locator("#projection-panel")).to_be_visible()
+            expect(page.locator("#coupled-panel")).to_be_visible()
+            for section, token in (("projection-fields", "parameterization reference"),
+                                   ("projection-observations", "weights"),
+                                   ("projection-conversions", "entire observation"),
+                                   ("projection-anchors", "uncertain-anchor"),
+                                   ("projection-sources", "urn:lupine:synthetic:projection-options:v1")):
+                expect(page.locator("#" + section)).to_contain_text(token)
+            expect(page.locator("#projection-panel")).to_contain_text("fixed-synthetic-conditions")
+            expect(page.locator("#selection-metrics")).not_to_contain_text("REGRET")
+            expect(page.locator("#pool-table")).not_to_contain_text("undefined")
+            export_pair("projection-shared")
+            with page.expect_response(lambda r: r.url.endswith("/replay")) as response:
+                page.locator("#replay-builtin").click()
+            projection_replay = response.value.json()
+            assert projection_replay["decision"]["certificate"] == projection
+            assert projection_replay["outcome_audit"]["all_true_minimizers_retained"] is True
+            export_projection_replay("projection-shared", projection_replay,
+                root / "src/lupine_discovery/resources/outcomes/projection-shared-field.json")
+            checks.append("projection_scoped_relation_original_pair_and_full_outer_replay_verify")
+
+            # Control the read promises themselves: a previous replay must be
+            # cleared before reading, and older files must not win by finishing last.
+            page.evaluate("""() => {
+                window.projectionReads = {};
+                window.originalProjectionFileText = File.prototype.text;
+                File.prototype.text = function () {
+                    if (!this.name.startsWith('projection-read-'))
+                        return window.originalProjectionFileText.call(this);
+                    return new Promise((resolve, reject) => {
+                        window.projectionReads[this.name] = {resolve, reject};
+                    });
+                };
+            }""")
+            replay_requests = []
+            def track_projection_replay(request):
+                if request.url.endswith("/api/replay"):
+                    replay_requests.append(request.post_data)
+            page.on("request", track_projection_replay)
+            def pending_outcome_file(name):
+                page.locator("#outcomes-upload").set_input_files({
+                    "name": name, "mimeType": "application/json", "buffer": b"{}",
+                })
+                page.wait_for_function("name => Boolean(window.projectionReads[name])", arg=name)
+                expect(page.locator("#download-replay")).to_be_disabled()
+                expect(page.locator("#replay-results")).to_be_hidden()
+            pending_outcome_file("projection-read-failed.json")
+            page.evaluate("window.projectionReads['projection-read-failed.json'].reject(new Error('Synthetic file read failed'))")
+            expect(page.locator("#notice")).to_contain_text("Synthetic file read failed")
+            expect(page.locator("#download-replay")).to_be_disabled()
+            assert not replay_requests
+            pending_outcome_file("projection-read-older.json")
+            pending_outcome_file("projection-read-latest.json")
+            race_truth = get_case_outcomes("projection-shared-field", get_case("projection-shared-field")["problem"])
+            with page.expect_response(lambda r: r.url.endswith("/api/replay")) as response:
+                page.evaluate("raw => window.projectionReads['projection-read-latest.json'].resolve(raw)", json.dumps(race_truth))
+            latest_replay = response.value.json()
+            assert latest_replay["outcome_audit"]["all_true_minimizers_retained"] is True
+            expect(page.locator("#download-replay")).to_be_enabled()
+            race_truth["outcomes"][0]["score"] = "3"
+            race_truth["outcomes"][1]["score"] = "4"
+            page.evaluate("""async raw => {
+                window.projectionReads['projection-read-older.json'].resolve(raw);
+                await Promise.resolve(); await Promise.resolve();
+            }""", json.dumps(race_truth))
+            assert len(replay_requests) == 1
+            export_projection_replay("projection-shared", latest_replay,
+                root / "src/lupine_discovery/resources/outcomes/projection-shared-field.json")
+            page.evaluate("() => { File.prototype.text = window.originalProjectionFileText; }")
+            page.remove_listener("request", track_projection_replay)
+            checks.append("projection_failed_or_older_outcome_reads_cannot_restore_stale_replay")
+
+            missing = select_case("projection-missing-bound")
+            assert missing["prepared_problem"] is None and missing["coupled_certificate"] is None
+            assert missing["selection"]["retained"] == ["A", "B"]
+            expect(page.locator("#result-title")).to_have_text("Screening withheld · no prepared model")
+            expect(page.locator('[data-reason="finite_field_bound_missing"]')).to_be_visible()
+            expect(page.locator("#coupled-panel")).to_be_hidden()
+            expect(page.locator("#pool-table tbody tr")).to_have_count(2)
+            expect(page.locator("#pool-table .score-line")).to_have_count(0)
+            expect(page.locator("#pool-table")).not_to_contain_text("undefined")
+            expect(page.locator("#pool-table")).to_contain_text("No prepared model or feasibility certificate")
+            export_pair("projection-missing")
+            with page.expect_response(lambda r: r.url.endswith("/replay")) as response:
+                page.locator("#replay-builtin").click()
+            missing_replay = response.value.json()
+            assert missing_replay["outcome_audit"]["all_true_minimizers_retained"] is True
+            assert missing_replay["provided_world_audit"]["status"] == "unavailable_no_prepared_model"
+            expect(page.locator("#provided-world-audit")).to_contain_text("No prepared model exists")
+            page.locator("#coupled-replay-coverage").evaluate("element => element.open = true")
+            expect(page.locator("#coupled-replay-coverage")).to_contain_text("No intervals or coverage rates were manufactured")
+            export_projection_replay("projection-missing", missing_replay,
+                root / "src/lupine_discovery/resources/outcomes/projection-missing-bound.json")
+            missing_truth = get_case_outcomes("projection-missing-bound", get_case("projection-missing-bound")["problem"])
+            missing_truth["outcomes"][0]["score"] = None
+            missing_truth["latent_world"] = {"kind": "hypothetical_model_world", "point": ["0"] * 4}
+            response = upload_projection_outcomes(missing_truth, "projection-partial-no-model.json")
+            assert response.status == 200
+            assert response.json()["outcome_audit"]["all_true_minimizers_retained"] is None
+            assert response.json()["decision"]["certificate"] == missing
+            expect(page.locator("#replay-results")).to_contain_text("full-universe optimum retention unresolved")
+            expect(page.locator("#provided-world-audit")).to_contain_text("Outcome point supplied: Yes")
+            expect(page.locator("#provided-world-audit")).to_contain_text("Empty mismatches do not mean a fit")
+            checks.append("projection_no_model_full_and_partial_truth_preserve_abstention")
+
+            tied = select_case("projection-tie")
+            assert tied["selection"]["retained"] == ["A", "B"]
+            with page.expect_response(lambda r: r.url.endswith("/replay")) as response:
+                page.locator("#replay-builtin").click()
+            assert response.value.json()["outcome_audit"]["true_minimizer_ids"] == ["A", "B"]
+            expect(page.locator("#replay-results")).to_contain_text("9/2")
+            checks.append("projection_exact_ties_survive_original_scope_replay")
+
+            projection = select_case("projection-shared-field")
+            projection_problem = get_case("projection-shared-field")["problem"]
+            false_projection_truth = get_case_outcomes("projection-shared-field", projection_problem)
+            false_projection_truth["outcomes"][0]["score"] = "3"
+            false_projection_truth["outcomes"][1]["score"] = "4"
+            response = upload_projection_outcomes(false_projection_truth, "projection-false-common-world.json")
+            assert response.status == 200
+            failed = response.json()
+            assert failed["outcome_audit"]["lost_optimum_ids"] == ["A"]
+            assert failed["diagnostics"]["marginal_coverage"]["score_coverage"]["rate"] == "1"
+            expect(page.locator("#replay-results")).to_contain_text("Actual projection selection lost a true feasible optimum")
+            expect(page.locator("#provided-world-audit")).to_contain_text("does not match all reported quantities")
+            page.locator("#coupled-replay-coverage").evaluate("element => element.open = true")
+            expect(page.locator("#coupled-replay-coverage")).to_contain_text("Score: 2 / 2")
+            page.screenshot(path=str(artifacts / "desktop-projection-negative-control.png"), full_page=True)
+            checks.append("projection_false_common_world_loss_stays_visible_despite_marginal_coverage")
+
+            metadata_only = json.loads(json.dumps(projection_problem))
+            metadata_text = '<img src="never-load" onerror="window.projectionMetadataExecuted=true"> declared source only'
+            metadata_only["projection"]["sources"][0]["reference"] = metadata_text
+            metadata_only["projection"]["sources"][0]["source_uri"] = 'javascript:window.projectionMetadataExecuted=true'
+            metadata_raw = "\n  " + json.dumps(metadata_only, indent=3) + "\n\n"
+            changed = upload_projection(metadata_raw, "projection-metadata-only.json")
+            assert changed["problem_digest"] != projection["problem_digest"]
+            assert changed["projection"]["relation_digest"] != projection["projection"]["relation_digest"]
+            assert changed["coupled_certificate"]["problem_digest"] != projection["coupled_certificate"]["problem_digest"]
+            assert changed["coupled_certificate"]["model_identity"]["kernel_model_digest"] == projection["coupled_certificate"]["model_identity"]["kernel_model_digest"]
+            expect(page.locator("#projection-sources")).to_contain_text(metadata_text)
+            expect(page.locator("#projection-sources a, #projection-sources img")).to_have_count(0)
+            assert page.evaluate("window.projectionMetadataExecuted") is None
+            export_pair("projection-metadata", metadata_raw)
+            rejected = subprocess.run([sys.executable, "-m", "lupine_discovery", "verify",
+                str((artifacts / "projection-metadata-problem.json").resolve()),
+                str((artifacts / "projection-shared-paired-certificate.json").resolve())], capture_output=True, text=True)
+            assert rejected.returncode == 2
+            response = upload_projection_outcomes(get_case_outcomes("projection-shared-field", projection_problem), "stale-projection-outcomes.json")
+            assert response.status == 400
+            expect(page.locator("#notice")).to_contain_text("sealed original projection decision")
+            expect(page.locator("#download-replay")).to_be_disabled()
+            expect(page.locator("#replay-results")).to_be_hidden()
+            checks.append("projection_metadata_is_text_and_changes_outer_seals_without_changing_kernel")
+
+            empirical = json.loads(json.dumps(projection_problem))
+            empirical["projection"]["blocks"][0]["field_bound_basis"] = "empirical_residual"
+            unsupported = upload_projection(empirical, "projection-empirical-field.json")
+            assert unsupported["prepared_problem"] is None
+            assert unsupported["selection"]["retained"] == ["A", "B"]
+            expect(page.locator('[data-reason="empirical_field_range_is_not_a_global_bound"]')).to_be_visible()
+            with patch("lupine_discovery.server.run_coupled", side_effect=CoupledWorkerError(
+                    "worker_timeout", "Synthetic projection guard failure; no receipt.")):
+                with page.expect_response(lambda r: r.url.endswith("/api/select")) as response:
+                    page.locator("#analyze").click()
+                assert response.value.status == 503
+                expect(page.locator("#analysis-results")).to_be_hidden()
+                assert_no_export()
+            explicit_proof = json.loads(json.dumps(projection_problem))
+            explicit_proof["screening"]["proofs"] = [{"kind": "not-accepted-in-v1"}]
+            page.locator("#json-editor").evaluate("element => element.open = true")
+            page.locator("#problem-json").fill(json.dumps(explicit_proof))
+            with page.expect_response(lambda r: r.url.endswith("/api/select")) as response:
+                page.locator("#analyze").click()
+            assert response.value.status == 400
+            expect(page.locator("#notice")).to_contain_text("proofs=[]")
+            assert_no_export()
+            checks.append("projection_empirical_bounds_and_invalid_proofs_or_guard_failures_never_fake_model")
+
+            # A real in-profile receipt whose pretty representation exceeds the
+            # verifier's 2 MiB document cap must remain re-verifiable on export.
+            large_problem = json.loads(json.dumps(projection_problem))
+            large_problem["projection"]["anchors"] = []
+            large_problem["projection"]["observations"] = large_problem["projection"]["observations"][:2]
+            large_problem["screening"]["consistency_point"] = ["0"] * 3
+            candidate = large_problem["projection"]["candidates"][0]
+            large_problem["projection"]["candidates"] = [
+                dict(json.loads(json.dumps(candidate)), candidate_id=f"{index:02d}" + "x" * 38)
+                for index in range(64)
+            ]
+            large_certificate = upload_projection(large_problem, "projection-large-receipt.json")
+            assert len(large_certificate["selection"]["retained"]) == 64
+            assert len(json.dumps(large_certificate, indent=2).encode()) > 2 * 1024 * 1024
+            export_pair("projection-large")
+            exported = (artifacts / "projection-large-paired-certificate.json").read_bytes()
+            assert len(exported) <= 2 * 1024 * 1024
+            assert json.loads(exported) == large_certificate
+            assert b"\n" not in exported
+            checks.append("projection_large_receipt_compact_export_stays_within_verifier_cap")
+
             page.locator("#nav-benchmarks").click()
             expect(page.locator("#benchmark-content")).to_be_visible()
             expect(page.locator("#known-case-list .known-case")).to_have_count(13)
@@ -434,6 +675,19 @@ def run():
             assert mobile.evaluate("document.documentElement.scrollWidth <= window.innerWidth + 1")
             mobile.locator("#coupled-diagnostic").evaluate("element => element.open = true")
             assert mobile.evaluate("document.documentElement.scrollWidth <= window.innerWidth + 1")
+            mobile.locator("#case-select").select_option("projection-shared-field")
+            expect(mobile.locator("#case-title")).to_have_text(get_case("projection-shared-field")["title"])
+            mobile.locator("#analyze").click()
+            expect(mobile.locator("#result-title")).to_have_text("Conditional projection pool")
+            mobile.locator("#projection-fields").evaluate("element => element.open = true")
+            mobile.locator("#projection-conversions").evaluate("element => element.open = true")
+            assert mobile.evaluate("document.documentElement.scrollWidth <= window.innerWidth + 1")
+            mobile.screenshot(path=str(artifacts / "mobile-projection-scopes.png"), full_page=True)
+            mobile.locator("#case-select").select_option("projection-missing-bound")
+            expect(mobile.locator("#case-title")).to_have_text(get_case("projection-missing-bound")["title"])
+            mobile.locator("#analyze").click()
+            expect(mobile.locator("#result-title")).to_have_text("Screening withheld · no prepared model")
+            assert mobile.evaluate("document.documentElement.scrollWidth <= window.innerWidth + 1")
             mobile.locator("#nav-benchmarks").click()
             expect(mobile.locator("#benchmark-content")).to_be_visible()
             assert mobile.evaluate("document.documentElement.scrollWidth <= window.innerWidth + 1")
@@ -470,6 +724,7 @@ def run():
     report_text = json.dumps(report, indent=2) + "\n"
     (artifacts / "browser-report.json").write_text(report_text)
     (artifacts / "browser-problem-export-report.json").write_text(report_text)
+    (artifacts / "browser-projection-report.json").write_text(report_text)
     print(json.dumps(report, indent=2))
 
 

@@ -3,7 +3,7 @@
 (() => {
   'use strict';
   const $ = (id) => document.getElementById(id);
-  const state = { catalog: [], caseId: null, metadata: null, raw: '', problem: null, certificate: null, selectedRaw: null, replay: null, revision: 0, busy: false, filter: 'all', benchmarksLoaded: false };
+  const state = { catalog: [], caseId: null, metadata: null, raw: '', problem: null, certificate: null, selectedRaw: null, replay: null, replayRequest: 0, revision: 0, busy: false, filter: 'all', benchmarksLoaded: false };
   const node = (tag, className, text) => {
     const el = document.createElement(tag);
     if (className) el.className = className;
@@ -17,8 +17,14 @@
   const isCalibrated = () => state.certificate?.schema === 'lupine.discovery.calibrated_certificate.v1';
   const isAbstained = () => isCalibrated() && state.certificate.calibration?.status === 'abstained';
   const isPareto = () => state.certificate?.schema === 'lupine.discovery.pareto_certificate.v1';
-  const isCoupled = () => state.certificate?.schema === 'lupine.discovery.coupled_certificate.v1';
-  const coupledActive = () => isCoupled() && String(state.certificate.coupling?.status).startsWith('conditional_');
+  const isProjection = () => state.certificate?.schema === 'lupine.discovery.projection_certificate.v1';
+  const projectionHasModel = () => Boolean(isProjection() && state.certificate.prepared_problem && state.certificate.coupled_certificate);
+  const isCoupled = () => state.certificate?.schema === 'lupine.discovery.coupled_certificate.v1' || projectionHasModel();
+  // Derived coupled data is only a display view. State and exports retain the
+  // original projection wrapper and complete outer certificate throughout.
+  const coupledCertificate = () => isProjection() ? state.certificate.coupled_certificate : state.certificate;
+  const coupledProblem = () => isProjection() ? state.certificate.prepared_problem : state.problem;
+  const coupledActive = () => isCoupled() && String(coupledCertificate()?.coupling?.status).startsWith('conditional_');
   // Keep the submitted nominal problem intact for its digest and separate replay.
   // Prepared intervals are a presentation view of the certificate, never new input.
   const intervalProblem = () => isCalibrated() ? state.certificate.prepared_problem : state.problem;
@@ -62,10 +68,12 @@
     const exportDisabled = value || !state.certificate || state.selectedRaw === null;
     $('download-certificate').disabled = exportDisabled;
     $('download-problem').disabled = exportDisabled;
+    $('download-replay').disabled = exportDisabled || !state.replay;
     $('analyze').setAttribute('aria-busy', String(value));
   }
   function invalidate() {
     state.revision += 1;
+    state.replayRequest += 1;
     state.certificate = null;
     state.selectedRaw = null;
     state.replay = null;
@@ -88,15 +96,17 @@
     const problem = state.problem;
     $('scenario-overview').hidden = !problem || typeof problem !== 'object';
     if (!problem || typeof problem !== 'object') return;
-    const scenario = problem.scenario || {};
+    const projection = problem.schema === 'lupine.discovery.projection_problem.v1' ? problem.projection : null;
+    const scenario = projection ? { id: projection.scenario_id, objective: { ...projection.objective_scope, direction: 'minimize' }, constraints: projection.constraint_scopes } : problem.scenario || {};
     const objective = scenario.objective || {};
     const objectives = Object.entries(scenario.objectives || {});
     const constraints = Object.keys(scenario.constraints || {});
     $('case-kind').textContent = state.metadata ? pretty(state.metadata.kind || 'known-answer case').toUpperCase() : 'CUSTOM INPUT';
-    $('candidate-count').textContent = `${list(problem.candidates).length} candidates`;
+    $('candidate-count').textContent = `${list(projection ? projection.candidates : problem.candidates).length} candidates`;
     $('case-title').textContent = state.metadata?.title || scenario.id || 'Untitled scenario';
     $('case-description').textContent = state.metadata?.description || problem.description || (problem.schema === 'lupine.discovery.calibrated_problem.v1'
       ? 'Nominal predictions and separate calibration residuals determine whether conditional screening is available.'
+      : projection ? 'Inspect the scoped field relation, whole-quantity conversions, and declared bounds before conditional screening.'
       : problem.schema === 'lupine.discovery.pareto_problem.v1' ? 'Compare objective bounds without collapsing tradeoffs into a single score.'
         : problem.schema === 'lupine.discovery.coupled_problem.v1' ? 'Inspect shared affine quantities, exact exclusion proofs, and the separate common-world premise.' : 'Supply score bounds and constraints for the candidates in this scenario.');
     $('scenario-objective').textContent = objectives.length ? objectives.map(([key, spec]) => `${key}: ${pretty(spec.direction || 'minimize')} · ${spec.unit || 'unit not declared'}`).join('; ')
@@ -144,9 +154,137 @@
   }
   function affineText(expression) {
     if (!expression || typeof expression !== 'object') return 'Expression unavailable';
-    const latents = list(state.problem?.latent_variables);
+    const latents = list(coupledProblem()?.latent_variables);
     const terms = list(expression.coefficients).map((value, index) => `(${exactText(value)}) × ${latents[index]?.id || `z${index}`}`);
     return [...terms, `(${exactText(expression.constant)})`].join(' + ');
+  }
+  function declarationFacts(record) {
+    const facts = node('dl', 'coupled-facts');
+    for (const [key, value] of Object.entries(record || {})) addFact(facts, pretty(key),
+      value === null ? 'Not supplied' : typeof value === 'object' ? JSON.stringify(value) : String(value));
+    return facts;
+  }
+  function projectionUseText(use) {
+    return `(${exactText(use?.scale)}) × entire observation ${use?.observation_id || 'undeclared'} + (${exactText(use?.offset)})`;
+  }
+  function renderProjectionRelation() {
+    const certificate = state.certificate, declaration = state.problem.projection, projection = certificate.projection;
+    const facts = $('projection-facts'); facts.replaceChildren();
+    addFact(facts, 'Preparation', pretty(projection.build_status));
+    addFact(facts, 'Actual screening state', pretty(certificate.status));
+    addFact(facts, 'Original premise', pretty(declaration.premise_status));
+    addFact(facts, 'Relation reference', declaration.relation_reference);
+    addFact(facts, 'Physical attestation', 'Not established by this program');
+    const reasons = $('projection-reasons'); reasons.replaceChildren();
+    for (const reason of list(projection.reasons)) {
+      const item = node('li', '', `${pretty(reason.code)} · ${reason.record_kind}: ${reason.record_id}`);
+      item.dataset.reason = reason.code; reasons.append(item);
+    }
+    reasons.hidden = reasons.childElementCount === 0;
+    const target = $('projection-declarations'); target.replaceChildren();
+    target.append(exactDetails('Original objective and constraint scopes', { objective_scope: declaration.objective_scope, constraint_scopes: declaration.constraint_scopes }));
+    const fields = node('details', 'replay-details'); fields.id = 'projection-fields';
+    fields.append(node('summary', '', `Scoped fields and θ = b + S z (${list(declaration.blocks).length})`));
+    for (const block of list(declaration.blocks)) {
+      const card = node('article', 'projection-record'); card.dataset.fieldBlock = block.block_id;
+      card.append(node('h4', '', block.block_id), node('p', 'field-help', 'One declared common-image parameterization; its finite bound is a separate premise.'));
+      card.append(declarationFacts({ parameter_ids: block.parameter_ids, parameter_units: block.parameter_units,
+        'b · offset': block.offset, 'S · matrix': block.matrix, latent_ids: block.latent_ids, latent_bounds: block.latent_bounds,
+        parameterization_reference: block.parameterization_reference, field_bound_basis: block.field_bound_basis,
+        field_bound_reference: block.field_bound_reference, premise_status: block.premise_status, source_ids: block.source_ids }));
+      card.append(node('h5', '', 'Field scope'), declarationFacts(block.scope), exactDetails('Complete physical context', block.scope?.context));
+      fields.append(card);
+    }
+    if (!list(declaration.blocks).length) fields.append(node('p', 'field-help', 'No field blocks declared.'));
+    target.append(fields);
+    const observations = node('details', 'replay-details'); observations.id = 'projection-observations';
+    observations.append(node('summary', '', `Observation weights and discrepancy bounds (${list(declaration.observations).length})`));
+    observations.append(node('p', 'field-help', 'Observation = nominal − weights · θ + radius × its normalized discrepancy coordinate. Independent coordinates admit all combinations; no stochastic independence is claimed.'));
+    for (const observation of list(declaration.observations)) {
+      const card = node('article', 'projection-record'); card.dataset.observation = observation.observation_id;
+      card.append(node('h4', '', observation.observation_id), declarationFacts({ block_id: observation.block_id,
+        nominal: observation.nominal, weights: observation.weights, discrepancy_radius: observation.discrepancy_radius,
+        bound_basis: observation.bound_basis, bound_reference: observation.bound_reference,
+        premise_status: observation.premise_status, source_ids: observation.source_ids }),
+        exactDetails('Original field scope', observation.field_scope), exactDetails('Source quantity scope', observation.source_scope));
+      observations.append(card);
+    }
+    target.append(observations);
+    const candidates = node('details', 'replay-details'); candidates.id = 'projection-conversions';
+    candidates.append(node('summary', '', `Candidate contexts and whole-quantity conversions (${list(declaration.candidates).length})`));
+    candidates.append(node('p', 'field-help', 'Scale and offset apply to the entire observation expression, including its field and discrepancy terms. A shared name does not establish transfer between physical contexts.'));
+    for (const candidate of list(declaration.candidates)) {
+      const card = node('article', 'projection-record'); card.dataset.projectionCandidate = candidate.candidate_id;
+      card.append(node('h4', '', candidate.candidate_id), declarationFacts(candidate.context));
+      for (const [quantity, use] of Object.entries({ score: candidate.score, ...candidate.constraints })) {
+        const item = node('div', 'projection-conversion'); item.dataset.quantity = quantity;
+        item.append(node('h5', '', quantity), node('code', 'affine-formula', `${quantity} = ${projectionUseText(use)}`),
+          declarationFacts({ output_scope: use.output_scope, conversion_reference: use.conversion_reference, source_ids: use.source_ids }));
+        card.append(item);
+      }
+      candidates.append(card);
+    }
+    target.append(candidates);
+    const anchors = node('details', 'replay-details'); anchors.id = 'projection-anchors';
+    anchors.append(node('summary', '', `Scoped anchors (${list(declaration.anchors).length})`));
+    for (const anchor of list(declaration.anchors)) {
+      const card = node('article', 'projection-record'); card.append(node('h4', '', anchor.anchor_id), declarationFacts(anchor)); anchors.append(card);
+    }
+    if (!list(declaration.anchors).length) anchors.append(node('p', 'field-help', 'No anchors declared; no anchor values have been inferred.'));
+    target.append(anchors);
+    const sources = node('details', 'replay-details'); sources.id = 'projection-sources';
+    sources.append(node('summary', '', `Declared source identities (${list(declaration.sources).length})`),
+      node('p', 'field-help', 'References, URIs and hashes below are supplied text. No source was retrieved, checked, or promoted to physical evidence.'));
+    for (const source of list(declaration.sources)) sources.append(declarationFacts(source));
+    if (!list(declaration.sources).length) sources.append(node('p', 'field-help', 'No source identities declared.'));
+    target.append(sources, exactDetails('Full relation record and identity graph', {
+      problem_digest: certificate.problem_digest, certificate_digest: certificate.certificate_digest,
+      adapter_version: certificate.adapter_version, profile_id: certificate.profile_id, projection,
+    }));
+  }
+  function renderProjectionAbstention() {
+    const certificate = state.certificate, declaration = state.problem.projection;
+    $('empty-state').hidden = true; $('analysis-results').hidden = false; $('calibration-panel').hidden = true; $('coupled-panel').hidden = true;
+    $('result-title').textContent = 'Screening withheld · no prepared model';
+    $('selection-note').classList.add('abstained');
+    $('selection-note').textContent = 'Every original candidate remains. Missing or unsupported relation premises prevent preparing a finite model. No operational feasibility, exclusion, interval-coverage, point-compatibility, incumbent, or regret claim is available. A supplied point cannot repair these premises.';
+    $('selection-metrics').replaceChildren(
+      metric('ACTUAL RETAINED POOL', list(certificate.selection.retained).length, 'Whole original universe', `/ ${list(declaration.candidates).length}`),
+      metric('OPERATIONAL EXCLUSIONS', 0, 'Screening withheld'),
+      metric('PREPARED MODEL', 'Unavailable', 'No numerical stand-in was created'),
+    );
+    renderProjectionUnpreparedPool();
+    $('evidence-content').replaceChildren(node('p', 'evidence-summary', 'The scoped declarations above remain inspectable. A bound label, reference, hash, or consistency point does not supply a missing global enclosure or establish physical truth.'),
+      declarationFacts({ original_premise: declaration.premise_status, relation_reference: declaration.relation_reference, physical_attestation: certificate.physical_attestation }));
+    const queue = node('div', 'queue-chips');
+    for (const id of list(certificate.selection.retained)) queue.append(node('span', 'queue-chip', id));
+    $('measurement-queue').replaceChildren(queue);
+    $('measurement-note').textContent = 'Every retained ID is listed. No acquisition ranking or numerical screening model is available.';
+    $('replay-intro').textContent = 'The all-retained projection decision is sealed. Separate reported outcomes can audit actual feasible optima; no prepared model exists for marginal coverage or an outcome-world compatibility check.';
+    $('replay-builtin').hidden = !state.caseId || state.metadata?.has_outcomes === false;
+    $('step-prepare').className = 'complete'; $('step-select').className = 'current';
+  }
+  function renderProjectionUnpreparedPool() {
+    const retained = new Set(list(state.certificate.selection.retained));
+    const candidates = list(state.problem.projection.candidates).filter((row) => state.filter === 'all' || (state.filter === 'retained') === retained.has(row.candidate_id));
+    $('pool-heading').textContent = 'Original candidates · screening withheld';
+    $('pool-help').textContent = 'These are declared observation references and target maps, not predictions or uncertainty intervals. No candidate feasibility has been certified.';
+    $('pool-legend').hidden = true;
+    const table = node('table', 'candidate-table projection-unprepared-table');
+    table.append(node('caption', 'sr-only', 'Original projection candidates retained without a prepared numerical model.'));
+    const head = node('thead'), headers = node('tr');
+    for (const title of ['Candidate', 'Declared score map', 'Actual decision']) { const th = node('th', '', title); th.scope = 'col'; headers.append(th); }
+    head.append(headers); const body = node('tbody');
+    for (const candidate of candidates) {
+      const row = node('tr'); row.dataset.candidateId = candidate.candidate_id; row.dataset.decision = 'retained';
+      const id = node('th', 'candidate-id', candidate.candidate_id); id.scope = 'row';
+      const declaration = node('td'); declaration.append(node('code', 'affine-formula', projectionUseText(candidate.score)));
+      const decision = node('td'); decision.append(node('span', 'row-status withheld', 'Retained'), node('p', 'row-reason', 'Screening withheld. No prepared model or feasibility certificate.'));
+      row.append(id, declaration, decision); body.append(row);
+    }
+    table.append(head, body); $('pool-table').replaceChildren(table);
+    $('pool-table').tabIndex = 0; $('pool-table').setAttribute('role', 'region'); $('pool-table').setAttribute('aria-label', 'Scrollable original projection candidate table');
+    if (!candidates.length) $('pool-table').append(node('p', 'empty-filter', 'No candidates in this group.'));
   }
   function coupledReason(id) {
     if (!coupledActive()) return 'Screening withheld. No operational feasibility or exclusion claim.';
@@ -159,8 +297,8 @@
   }
   function renderCoupledSelection() {
     $('coupled-diagnostic').open = false;
-    const certificate = state.certificate, selection = certificate.selection;
-    const active = coupledActive(), count = list(state.problem.candidates).length, retained = list(selection.retained).length;
+    const certificate = coupledCertificate(), selection = state.certificate.selection;
+    const active = coupledActive(), count = list(coupledProblem().candidates).length, retained = list(selection.retained).length;
     $('empty-state').hidden = true; $('analysis-results').hidden = false; $('calibration-panel').hidden = true;
     $('selection-note').classList.toggle('abstained', !active);
     const labels = {
@@ -170,6 +308,7 @@
       proved_inconsistent_all_retained: 'Model premises inconsistent · all retained',
     };
     $('result-title').textContent = labels[certificate.coupling?.status] || 'Coupled screening status unresolved';
+    if (isProjection() && active) $('result-title').textContent = certificate.coupling.status === 'conditional_partially_screened' ? 'Conditional partial projection screening' : 'Conditional projection pool';
     $('selection-note').textContent = active
       ? 'If one common admissible latent world represents all actual quantities, every tied feasible optimum remains. Retained candidates are unresolved, not certified possible or robust optima. This conservative search does not establish physical validity.'
       : 'All original candidates remain. No operational feasibility or exclusion claim is made. Any smaller model-derived box pool below is a separate diagnostic and cannot replace this decision. Inconsistent model premises do not prove that no material is feasible.';
@@ -198,8 +337,9 @@
     $('step-prepare').className = 'complete'; $('step-select').className = 'current';
   }
   function renderCoupledModel() {
-    const certificate = state.certificate, coupling = certificate.coupling || {}, active = coupledActive();
+    const certificate = coupledCertificate(), problem = coupledProblem(), coupling = certificate.coupling || {}, active = coupledActive();
     $('coupled-panel').hidden = false;
+    $('coupled-heading').textContent = isProjection() ? 'Prepared shared mathematical model' : 'One shared mathematical world';
     $('coupled-premise').textContent = 'Model consistency and scientific validity are separate. A verified point lies in the mathematical domain; it is not a confirmed physical world.';
     const facts = $('coupled-facts'); facts.replaceChildren();
     addFact(facts, 'Screening state', pretty(coupling.status));
@@ -208,10 +348,10 @@
     addFact(facts, 'Supplied selection-time point', coupling.supplied_consistency_point == null ? 'Not supplied' : JSON.stringify(coupling.supplied_consistency_point));
     const latents = $('coupled-latents'); latents.replaceChildren(node('h4', '', 'Shared normalized latent coordinates'));
     const latentList = node('ul', 'observation-list');
-    for (const latent of list(state.problem.latent_variables)) latentList.append(node('li', '', `${latent.id}: [${list(latent.bounds).join(', ')}] · unit ${latent.unit} · ${latent.reference}`));
+    for (const latent of list(problem.latent_variables)) latentList.append(node('li', '', `${latent.id}: [${list(latent.bounds).join(', ')}] · unit ${latent.unit} · ${latent.reference}`));
     latents.append(latentList.childElementCount ? latentList : node('p', 'field-help', 'No latent coordinates: every expression is constant. An explicit empty point [] is distinct from a missing point.'));
     const model = $('coupled-model-details'); model.replaceChildren();
-    model.append(exactDetails('Objective and constraint scopes', state.problem.scenario), exactDetails('Original coupling rows', state.problem.rows), exactDetails('Sealed model identities', certificate.model_identity), exactDetails('Execution profile and limits', certificate.execution));
+    model.append(exactDetails('Objective and constraint scopes', problem.scenario), exactDetails(isProjection() ? 'Prepared coupling rows' : 'Original coupling rows', problem.rows), exactDetails('Sealed model identities', certificate.model_identity), exactDetails('Execution profile and limits', certificate.execution));
     const diagnostic = $('coupled-diagnostic-content'); diagnostic.replaceChildren();
     diagnostic.append(node('p', 'field-help', active ? 'This model-derived box selection supplies the active conditional baseline. It remains separate from the actual coupled result above.' : 'DIAGNOSTIC ONLY · GATE CLOSED. These bounds derive from the same unaccepted model and authorize no operational pruning or feasibility claim.'));
     const box = certificate.diagnostics?.box_selection_diagnostic || {};
@@ -240,16 +380,16 @@
     proofs.append(assessments);
   }
   function renderCoupledPool() {
-    const selection = state.certificate.selection, retained = new Set(list(selection.retained));
+    const selection = state.certificate.selection, problem = coupledProblem(), retained = new Set(list(selection.retained));
     $('pool-heading').textContent = 'Affine quantities & actual decisions';
     $('pool-help').textContent = 'Every formula uses the same normalized latent coordinates. Exact values are shown. Selection comes from the operational receipt, never from the separate box diagnostic.';
     $('pool-legend').hidden = true;
     const table = node('table', 'candidate-table coupled-table');
     table.append(node('caption', 'sr-only', 'Shared affine candidate expressions and actual coupled screening decisions.'));
     const head = node('thead'), headers = node('tr');
-    for (const title of ['Candidate', `Affine score · ${state.problem.scenario?.objective?.unit || 'declared unit'}`, 'Actual decision']) { const th = node('th', '', title); th.scope = 'col'; headers.append(th); }
+    for (const title of ['Candidate', `Affine score · ${problem.scenario?.objective?.unit || 'declared unit'}`, 'Actual decision']) { const th = node('th', '', title); th.scope = 'col'; headers.append(th); }
     head.append(headers); const body = node('tbody');
-    const candidates = list(state.problem.candidates).filter((row) => state.filter === 'all' || (state.filter === 'retained') === retained.has(row.id));
+    const candidates = list(problem.candidates).filter((row) => state.filter === 'all' || (state.filter === 'retained') === retained.has(row.id));
     for (const candidate of candidates) {
       const included = retained.has(candidate.id), row = node('tr'); row.dataset.candidateId = candidate.id; row.dataset.decision = included ? 'retained' : 'excluded';
       const id = node('th', 'candidate-id', candidate.id); id.scope = 'row';
@@ -257,7 +397,7 @@
       const constraints = Object.entries(candidate.constraints || {});
       if (constraints.length) {
         const details = node('details', 'row-reason'); details.append(node('summary', '', `${constraints.length} affine constraint${constraints.length === 1 ? '' : 's'}`));
-        for (const [key, expression] of constraints) details.append(node('p', '', `${key}: ${affineText(expression)} ≤ 0 · ${state.problem.scenario?.constraints?.[key]?.unit || 'declared unit'} · ${state.problem.scenario?.constraints?.[key]?.reference || 'reference undeclared'}`));
+        for (const [key, expression] of constraints) details.append(node('p', '', `${key}: ${affineText(expression)} ≤ 0 · ${problem.scenario?.constraints?.[key]?.unit || 'declared unit'} · ${problem.scenario?.constraints?.[key]?.reference || 'reference undeclared'}`));
         quantity.append(details);
       }
       const decision = node('td'); decision.append(node('span', `row-status${!coupledActive() ? ' withheld' : included ? '' : ' excluded'}`, included ? 'Retained' : 'Excluded'), node('p', 'row-reason', coupledReason(candidate.id)));
@@ -268,7 +408,13 @@
     if (!candidates.length) $('pool-table').append(node('p', 'empty-filter', 'No candidates in this group.'));
   }
   function renderSelection() {
+    $('projection-panel').hidden = !isProjection();
+    $('download-replay').hidden = !isProjection();
     $('coupled-panel').hidden = !isCoupled();
+    if (isProjection()) {
+      renderProjectionRelation();
+      if (!projectionHasModel()) { renderProjectionAbstention(); return; }
+    }
     if (isCoupled()) { renderCoupledSelection(); return; }
     const certificate = state.certificate;
     const selection = certificate.selection;
@@ -331,6 +477,7 @@
     return list(state.certificate.selection.certified_feasible).includes(id) ? 'Feasible across the supplied bounds.' : 'Feasibility or ranking remains unresolved.';
   }
   function renderPool() {
+    if (isProjection() && !projectionHasModel()) { renderProjectionUnpreparedPool(); return; }
     if (isCoupled()) { renderCoupledPool(); return; }
     if (isPareto()) { renderParetoPool(); return; }
     const selection = state.certificate.selection;
@@ -555,16 +702,17 @@
     try {
       state.problem = parseForDisplay(submittedRaw);
       const coupled = state.problem.schema === 'lupine.discovery.coupled_problem.v1';
-      busy(true); notify(coupled ? 'Checking shared-model premises, consistency and exact proofs…' : state.problem.schema === 'lupine.discovery.calibrated_problem.v1' ? 'Checking the calibration budget before screening the pool…' : 'Building the pool from the declared bounds…');
+      const projection = state.problem.schema === 'lupine.discovery.projection_problem.v1';
+      busy(true); notify(projection ? 'Checking the scoped relation and bounds before preparing a shared model…' : coupled ? 'Checking shared-model premises, consistency and exact proofs…' : state.problem.schema === 'lupine.discovery.calibrated_problem.v1' ? 'Checking the calibration budget before screening the pool…' : 'Building the pool from the declared bounds…');
       // Preserve the original JSON. The server detects duplicate keys and parses
       // exact values; JSON.stringify(JSON.parse(input)) would erase those checks.
-      const result = await api('/api/select', coupled ? JSON.stringify({ problem_raw: submittedRaw }) : `{"problem":${submittedRaw}}`);
+      const result = await api('/api/select', coupled || projection ? JSON.stringify({ problem_raw: submittedRaw }) : `{"problem":${submittedRaw}}`);
       if (revision !== state.revision) return;
       state.certificate = result; state.selectedRaw = submittedRaw; state.replay = null;
       $('replay-results').hidden = true;
       $('replay-tag').textContent = 'NOT YET EVALUATED';
       renderSelection();
-      const withheld = isAbstained() || (isCoupled() && !coupledActive());
+      const withheld = isAbstained() || (isProjection() && !projectionHasModel()) || (isCoupled() && !coupledActive());
       notify(withheld ? 'Screening withheld. All candidates remain; the decision is fixed before outcomes are evaluated.' : 'Pool built. The decision is fixed before outcomes are evaluated.', withheld ? '' : 'success');
     } catch (error) { if (revision === state.revision) notify(error.message, 'error'); }
     finally { if (revision === state.revision) busy(false); }
@@ -577,8 +725,9 @@
     const target = $('replay-results'); target.hidden = false; target.replaceChildren();
     const retained = audit.all_true_minimizers_retained, complete = audit.outcome_completeness === 'complete';
     const noFeasible = audit.retention_status === 'undefined_no_feasible_candidate', empty = audit.retention_status === 'not_evaluated_empty_universe';
-    const verdict = retained === false ? 'Actual coupled selection lost a true feasible optimum in the complete reported values.'
-      : retained === true ? 'All true feasible optima in the complete reported values survived the actual coupled selection.'
+    const mode = isProjection() ? 'projection' : 'coupled';
+    const verdict = retained === false ? `Actual ${mode} selection lost a true feasible optimum in the complete reported values.`
+      : retained === true ? `All true feasible optima in the complete reported values survived the actual ${mode} selection.`
         : noFeasible ? 'The complete reported values contain no feasible candidate. Optimum retention is undefined.'
           : empty ? 'The candidate universe is empty. Optimum retention is not evaluated.'
             : 'Partial outcomes leave full-universe optimum retention unresolved.';
@@ -607,9 +756,12 @@
       provided_point_consistent_no_reported_values: 'The supplied point is in the domain, but no observed quantities were available to compare.',
       provided_point_matches_reported_values: world.all_quantities_reported ? 'This point fits the complete finite reported values.' : 'This point fits the available reported values; unreported quantities remain unresolved.',
       unresolved_by_work_limit: 'The outcome-point check did not finish within its work limit.',
+      unavailable_no_prepared_model: 'No prepared model exists. Outcome-world compatibility is unavailable, even if a point was supplied.',
     };
     worldPanel.append(node('p', 'field-help', worldLabels[world.status] || 'Outcome-point compatibility is not established.'));
-    worldPanel.append(node('p', 'field-help', `Compared ${exactText(world.checked_quantity_count)} quantities. This outcome point is separate from the selection-time consistency point and cannot repair screening. A rejected or mismatching point does not rule out another fitting common point; a matching point does not establish physical truth.`));
+    worldPanel.append(node('p', 'field-help', world.status === 'unavailable_no_prepared_model'
+      ? `Outcome point supplied: ${truthText(world.point_supplied)}. No quantities were compared with a model. Empty mismatches do not mean a fit, and a supplied point cannot repair the original preparation.`
+      : `Compared ${exactText(world.checked_quantity_count)} quantities. This outcome point is separate from the selection-time consistency point and cannot repair screening. A rejected or mismatching point does not rule out another fitting common point; a matching point does not establish physical truth.`));
     if (list(world.mismatches).length) {
       const mismatches = node('ul', 'observation-list status-fail');
       for (const mismatch of world.mismatches) mismatches.append(node('li', '', `${mismatch.candidate_id} / ${mismatch.quantity}: reported ${exactText(mismatch.reported)}, model at this point ${exactText(mismatch.model_at_provided_point)}.`));
@@ -619,15 +771,20 @@
     const coverage = report.diagnostics?.marginal_coverage || {};
     const diagnostic = node('details', 'replay-details coupled-diagnostic'); diagnostic.id = 'coupled-replay-coverage';
     diagnostic.append(node('summary', '', 'Diagnostic marginal coverage · not common-world evidence'));
-    for (const [label, values] of [['Score', coverage.score_coverage], ['Constraints', coverage.constraint_coverage]]) {
-      diagnostic.append(node('p', 'field-help', `${label}: ${exactText(values?.covered)} / ${exactText(values?.checked)} observed values inside model-derived box intervals; rate ${values?.rate == null ? 'Unavailable' : `${percent(values.rate)} (exact ${values.rate})`}.`));
+    if (coverage.status === 'unavailable_no_prepared_model') {
+      diagnostic.append(node('p', 'field-help', 'Marginal coverage and the box diagnostic are unavailable because no model was prepared. No intervals or coverage rates were manufactured.'));
+    } else {
+      for (const [label, values] of [['Score', coverage.score_coverage], ['Constraints', coverage.constraint_coverage]]) {
+        diagnostic.append(node('p', 'field-help', `${label}: ${exactText(values?.covered)} / ${exactText(values?.checked)} observed values inside model-derived box intervals; rate ${values?.rate == null ? 'Unavailable' : `${percent(values.rate)} (exact ${values.rate})`}.`));
+      }
+      diagnostic.append(node('p', 'field-help', 'Even full marginal coverage does not establish a single shared world. Diagnostic coverage is not the actual pool-retention decision and does not upgrade the common-world premise.'));
     }
-    diagnostic.append(node('p', 'field-help', 'Even full marginal coverage does not establish a single shared world. Diagnostic coverage is not the actual pool-retention decision and does not upgrade the common-world premise.'), exactDetails('Full marginal diagnostic', coverage)); target.append(diagnostic);
+    diagnostic.append(exactDetails('Full marginal diagnostic', coverage)); target.append(diagnostic);
     target.append(node('p', 'replay-caveat', `${complete ? 'This describes only the supplied finite reported values.' : 'Complete scores and constraints for the whole universe are required for a global optimum claim.'} Scientific validity remains unestablished. Retaining everyone can pass retention without any screening benefit.`));
     $('step-select').className = 'complete'; $('step-replay').className = 'current';
   }
   function renderReplay(report) {
-    if (isCoupled()) { renderCoupledReplay(report); return; }
+    if (isCoupled() || isProjection()) { renderCoupledReplay(report); return; }
     if (isPareto()) { renderParetoReplay(report); return; }
     const evaluation = report.evaluation || report;
     const abstained = isAbstained();
@@ -707,25 +864,34 @@
     target.append(node('p', 'replay-caveat', refuted ? 'Failed bounds prevent applying the conditional Pareto-retention guarantee. A lost true Pareto candidate is a measured failure of these inputs; it is not erased by a successful result on another objective.' : complete ? 'This front describes the supplied finite archive. It does not establish physical accuracy, future coverage, or performance beyond this candidate universe.' : 'Keep the full-front conclusion unknown until the separately supplied outcomes are complete.'));
     $('step-select').className = 'complete'; $('step-replay').className = 'current';
   }
-  async function replay(rawOutcomes) {
+  function clearReplay() {
+    state.replay = null;
+    $('replay-results').replaceChildren(); $('replay-results').hidden = true;
+    $('replay-tag').textContent = 'NOT YET EVALUATED';
+  }
+  async function replay(rawOutcomes, uploadRequest = null) {
     if (!state.certificate || state.busy) return;
+    if (uploadRequest !== null && uploadRequest !== state.replayRequest) return;
+    const request = uploadRequest === null ? ++state.replayRequest : uploadRequest;
     const revision = state.revision;
-    if (isCoupled()) { state.replay = null; $('replay-results').replaceChildren(); }
-    busy(true); $('replay-results').hidden = true;
+    const guarded = isCoupled() || isProjection();
+    clearReplay(); busy(true);
     notify('Comparing the fixed pool with separate known outcomes…');
     try {
-      if (rawOutcomes !== undefined && !isCoupled()) parseForDisplay(rawOutcomes);
+      if (rawOutcomes !== undefined && !guarded) parseForDisplay(rawOutcomes);
       const result = rawOutcomes === undefined
-        ? await api(`/api/cases/${encodeURIComponent(state.caseId)}/replay`, isCoupled() ? JSON.stringify({ problem_raw: state.raw }) : `{"problem":${state.raw}}`)
-        : await api('/api/replay', isCoupled() ? JSON.stringify({ problem_raw: state.raw, outcomes_raw: rawOutcomes }) : `{"problem":${state.raw},"outcomes":${rawOutcomes}}`);
-      if (revision !== state.revision) return;
+        ? await api(`/api/cases/${encodeURIComponent(state.caseId)}/replay`, guarded ? JSON.stringify({ problem_raw: state.selectedRaw }) : `{"problem":${state.selectedRaw}}`)
+        : await api('/api/replay', guarded ? JSON.stringify({ problem_raw: state.selectedRaw, outcomes_raw: rawOutcomes }) : `{"problem":${state.selectedRaw},"outcomes":${rawOutcomes}}`);
+      if (revision !== state.revision || request !== state.replayRequest) return;
       state.replay = result; renderReplay(result); notify('Evaluation complete. Observed failures and unknown outcomes are retained in the result.');
     } catch (error) {
-      if (revision === state.revision) { $('replay-tag').textContent = 'EVALUATION NOT COMPLETED'; notify(error.message, 'error'); }
-    } finally { if (revision === state.revision) busy(false); }
+      if (revision === state.revision && request === state.replayRequest) { $('replay-tag').textContent = 'EVALUATION NOT COMPLETED'; notify(error.message, 'error'); }
+    } finally { if (revision === state.revision && request === state.replayRequest) busy(false); }
   }
   function download(value, name) {
-    downloadText(`${JSON.stringify(value, null, 2)}\n`, name);
+    // Keep generated receipts within the same byte limit as worker responses.
+    // Pretty-printing can expand a valid receipt beyond the verifier's cap.
+    downloadText(JSON.stringify(value), name);
   }
   function downloadText(text, name) {
     const url = URL.createObjectURL(new Blob([text], { type: 'application/json' }));
@@ -1101,11 +1267,22 @@
     finally { event.target.value = ''; }
   });
   $('outcomes-upload').addEventListener('change', async (event) => {
-    const file = event.target.files[0]; if (!file) return;
+    const file = event.target.files[0]; if (!file || !state.certificate || state.busy) return;
     const revision = state.revision;
-    try { const raw = await file.text(); if (revision === state.revision) await replay(raw); }
-    catch (error) { notify(`Could not read this file: ${error.message}`, 'error'); }
-    finally { event.target.value = ''; }
+    const request = ++state.replayRequest;
+    clearReplay(); busy(false);
+    notify('Reading separate outcomes. The previous evaluation has been cleared.');
+    try {
+      const raw = await file.text();
+      if (revision === state.revision && request === state.replayRequest) await replay(raw, request);
+    }
+    catch (error) {
+      if (revision === state.revision && request === state.replayRequest) {
+        $('replay-tag').textContent = 'EVALUATION NOT COMPLETED';
+        notify(`Could not read this file: ${error.message}`, 'error');
+      }
+    }
+    finally { if (revision === state.revision && request === state.replayRequest) event.target.value = ''; }
   });
   $('analyze').addEventListener('click', analyze);
   $('replay-builtin').addEventListener('click', () => replay());
@@ -1114,6 +1291,9 @@
   });
   $('download-problem').addEventListener('click', () => {
     if (!state.busy && state.certificate && state.selectedRaw !== null) downloadText(state.selectedRaw, `lupine-problem-${String(state.certificate.scenario_id).replace(/[^a-zA-Z0-9_-]/g, '_')}.json`);
+  });
+  $('download-replay').addEventListener('click', () => {
+    if (!state.busy && state.certificate && state.selectedRaw !== null && state.replay) download(state.replay, `lupine-replay-${String(state.certificate.scenario_id).replace(/[^a-zA-Z0-9_-]/g, '_')}.json`);
   });
   document.querySelectorAll('[data-filter]').forEach((button) => button.addEventListener('click', () => {
     state.filter = button.dataset.filter;

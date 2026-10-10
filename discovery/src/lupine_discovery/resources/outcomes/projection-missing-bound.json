@@ -1,0 +1,18 @@
+{
+  "certificate_digest": "3564ffd4f1689fe918b26d7d6ce6199e229b12e492c81c7679b4cc8130df03de",
+  "outcomes": [
+    {
+      "constraints": {},
+      "id": "A",
+      "score": "4"
+    },
+    {
+      "constraints": {},
+      "id": "B",
+      "score": "3"
+    }
+  ],
+  "problem_digest": "365d14a719e79b381249c97460f7714132a8ce36980e039fb0fe1ff846202f27",
+  "scenario_id": "projection-missing-bound",
+  "schema": "lupine.discovery.projection_outcomes.v1"
+}

@@ -12,6 +12,9 @@ from .serialization import encode, loads, parse_outcomes, parse_problem
 
 
 def certificate(value):
+    if isinstance(value, dict) and value.get("schema") == "lupine.discovery.projection_problem.v1":
+        from .projection_io import projection_certificate
+        return projection_certificate(value)
     if isinstance(value, dict) and value.get("schema") == "lupine.discovery.coupled_problem.v1":
         from .coupled_io import coupled_certificate
         return coupled_certificate(value)
@@ -58,7 +61,7 @@ def verify_certificate(problem_value, supplied):
     # require a type-sensitive identity check as well as ordinary equality.
     exact_json = isinstance(problem_value, dict) and problem_value.get("schema") in {
         "lupine.discovery.calibrated_problem.v1", "lupine.discovery.pareto_problem.v1",
-        "lupine.discovery.coupled_problem.v1"}
+        "lupine.discovery.coupled_problem.v1", "lupine.discovery.projection_problem.v1"}
     if supplied != recomputed or (exact_json and digest(supplied) != digest(recomputed)):
         raise ValueError("certificate differs from exact deterministic recomputation")
     return {"schema": "lupine.discovery.verification.v1", "verified": True,
@@ -68,6 +71,9 @@ def verify_certificate(problem_value, supplied):
 
 
 def replay_report(value, outcome_value):
+    if isinstance(value, dict) and value.get("schema") == "lupine.discovery.projection_problem.v1":
+        from .projection_io import projection_replay_report
+        return projection_replay_report(value, outcome_value)
     if isinstance(value, dict) and value.get("schema") == "lupine.discovery.coupled_problem.v1":
         from .coupled_io import coupled_replay_report
         return coupled_replay_report(value, outcome_value)
@@ -85,7 +91,7 @@ def replay_report(value, outcome_value):
 
 
 def _read_document(path, coupled=False):
-    """All CLI documents: 2 MiB/depth32; coupled inputs: 256 KiB/depth24."""
+    """All CLI documents: 2 MiB/depth32; coupled/projection: 256 KiB/depth24."""
     from .coupled_io import MAX_DOCUMENT_BYTES, loads_coupled, preflight_json_text
     maximum = MAX_DOCUMENT_BYTES if coupled else 2 * 1024 * 1024
     with path.open('rb') as handle:
@@ -95,15 +101,18 @@ def _read_document(path, coupled=False):
     value = loads(preflight_json_text(raw, max_bytes=maximum, max_depth=32))
     if isinstance(value, dict) and value.get('schema') == 'lupine.discovery.coupled_problem.v1':
         return loads_coupled(raw)
+    if isinstance(value, dict) and value.get('schema') == 'lupine.discovery.projection_problem.v1':
+        from .projection_io import loads_projection
+        return loads_projection(raw)
     return value
 
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__,
-        epilog="CLI JSON documents are limited to 2 MiB and nesting depth 32; coupled inputs use the stricter coupled-local-v1 profile.")
+        epilog="CLI JSON documents are limited to 2 MiB and nesting depth 32; coupled and projection use stricter input profiles and compact output capped at 2 MiB.")
     sub = parser.add_subparsers(dest="command", required=True)
     workbench = sub.add_parser("serve", help="Run the local research workbench",
-        description="Open the local workbench at http://127.0.0.1:8765. Coupled HTTP mode requires Linux process guards.")
+        description="Open the local workbench at http://127.0.0.1:8765. Coupled and projection HTTP modes require Linux process guards.")
     workbench.add_argument("--port", type=int, default=8765, help="Loopback port (default: 8765)")
     descriptions = {
         "select": "Create an exact conditional candidate-pool certificate from a problem; no outcomes are read.",
@@ -133,13 +142,19 @@ def main(argv=None):
             result = coupled_domains(value)
         elif args.command == "verify":
             result = verify_certificate(value, _read_document(args.certificate))
-        elif isinstance(value, dict) and value.get("schema") == "lupine.discovery.coupled_problem.v1":
-            # The loader opens the truth file only after the coupled receipt is sealed.
+        elif isinstance(value, dict) and value.get("schema") in {
+                "lupine.discovery.coupled_problem.v1", "lupine.discovery.projection_problem.v1"}:
+            # The loader opens truth only after the complete original receipt is sealed.
             result = replay_report(value, lambda: _read_document(args.outcomes, coupled=True))
         else:
             outcome_value = _read_document(args.outcomes)
             result = replay_report(value, outcome_value)
-        output = json.dumps(result, indent=2, sort_keys=True, allow_nan=False) + "\n"
+        bounded_output = isinstance(value, dict) and value.get("schema") in {
+            "lupine.discovery.coupled_problem.v1", "lupine.discovery.projection_problem.v1"}
+        formatting = {"separators": (",", ":")} if bounded_output else {"indent": 2}
+        output = json.dumps(result, sort_keys=True, allow_nan=False, **formatting) + "\n"
+        if bounded_output and len(output.encode('utf-8')) > 2 * 1024 * 1024:
+            raise ValueError("coupled/projection output exceeds 2 MiB; reduce input size or proof-work limits")
         if args.output:
             args.output.write_text(output)
         else:

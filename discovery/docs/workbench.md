@@ -11,10 +11,11 @@ python -m lupine_discovery serve
 ```
 
 With the wheel already installed, run `python -m lupine_discovery serve` from
-any directory. Its 22 built-in cases and displayed reports are bundled; no
+any directory. Its 25 built-in cases and displayed reports are bundled; no
 source checkout, dataset download, or numerical package is needed to try them.
-All four interface modes are available on Linux. Coupled HTTP mode requires
-Linux process guards; the other three modes remain available on other platforms.
+All five interface modes are available on Linux. Coupled and projection HTTP
+modes require Linux process guards; the other three modes remain available on
+other platforms.
 
 Open `http://127.0.0.1:8765` on the machine running the command. Use
 `--port 8766` to choose another port. The server binds to loopback only, stores
@@ -39,7 +40,7 @@ saved pair, not physical truth. An altered or mismatched pair exits with code 2.
 
 1. Choose a built-in known-answer case, or upload a problem JSON. The example
    `examples/abstract.json` shows the scalar format; the menu also includes
-   calibrated, Pareto and coupled demonstrations. Each versioned problem declares
+   calibrated, Pareto, coupled and scoped projection demonstrations. Each versioned problem declares
    scenario semantics and evidence; outcomes remain separate.
 2. Build the candidate pool. Inspect the retained and excluded candidates,
    interval bounds, exclusion witnesses, evidence gaps, and measurement order.
@@ -48,7 +49,9 @@ saved pair, not physical truth. An altered or mismatched pair exits with code 2.
    abstention retains everyone and withholds screening. None of these proves the supplied physical
    intervals sound. Coupled mode distinguishes an exact model-consistency point
    from the assumed common physical world, and shows the operational pool
-   separately from marginal box diagnostics.
+   separately from marginal box diagnostics. Projection mode also shows the
+   original physical context, normalization, quantity maps, anchors and source
+   declarations; missing bounds yield no numerical model and retain every ID.
 3. Download **Problem** and **Certificate** together. The problem download is
    the exact text submitted for this successful decision, including whitespace
    and exact numeric strings. It is not a reconstruction from displayed bounds.
@@ -57,16 +60,19 @@ saved pair, not physical truth. An altered or mismatched pair exits with code 2.
    deterministic computation. Both exports are disabled during pending work;
    edits and failed rebuilds clear the previous pair.
 4. Reveal the case's known answers, or upload an outcome file bound to the
-   problem digest; coupled outcomes also bind the certificate digest. Replay
+   problem digest; coupled and projection outcomes also bind the certificate digest. Replay
    audits the actual pool, reported feasibility and retained optima, preserving
    missing outcomes. Coverage, Pareto fronts, and regret appear only in the modes
    and states where they are defined. Editing a problem invalidates its
    prior displayed result and the packaged answer binding.
 
-The outer request limit is 2 MiB and nesting depth 32. Scalar, calibrated and
-Pareto inputs allow up to 5,000 candidates. Coupled input documents have stricter
+The usual outer request limit is 2 MiB and nesting depth 32. Verification alone
+allows 14,156,800 bytes to carry JSON-escaped text, while separately enforcing
+the 256 KiB problem and 2 MiB certificate document caps. Scalar, calibrated and
+Pareto inputs allow up to 5,000 candidates. Coupled and projection input documents have stricter
 limits: 256 KiB, depth 24 and 64 candidates, plus the dimension and proof limits
-in the [coupled guide](coupled-problem.md#local-workbench-and-resource-limits).
+in the [coupled guide](coupled-problem.md#local-workbench-and-resource-limits)
+and [projection contract](projection-workbench-contract.md).
 Decimal values should be strings, such as `"0.125"`; fractions such as
 `"1/3"` are also exact. Use quoted strings for large integers beyond the
 browser safe-integer range as well. Floating-point JSON values and duplicate keys are
@@ -81,6 +87,7 @@ requests so parsing cannot silently change those decisions.
 | **Insufficient calibration** or **Unsupported sampling scope** | All three candidates remain and screening is withheld. The nominal values do not certify feasibility, exclusions, coverage, or regret. Inspect the calibration reason before changing any premise. |
 | **Tradeoffs and tied Pareto candidates** | The pool retains a, a-twin and b. Separate objectives and ties need not yield one winner. |
 | **Missing consistency point, screening withheld** or **Learned relation, screening withheld** | Both candidates remain operationally, even when the separate box diagnostic is smaller. A hypothetical point or learned correlation does not establish a common physical world. |
+| **Scoped correction field, conditional screening**, **Missing field bound, no numerical model**, or **Scoped field with an attained tie** | Inspect the complete original relation. A synthetic shared field can support a strict difference; missing bounds abstain, and attained ties survive. These examples do not validate a material model. |
 | **Negative control: false score interval** | Replay exposes the lost true optimum. Detecting this deliberately false premise is expected engine behavior. |
 | **Known answers** → scientific gates and training-only development | Failed recommendation gates and `NO_GO_MODEL_IMPROVEMENT` are recorded scientific/development results, not installation errors. No replacement model or new coverage claim follows. |
 
@@ -91,8 +98,8 @@ displays separately recorded scientific archive results. Synthetic passes mean
 the implementation matched independently enumerated truth and declared
 expectations. A negative-control pass means a deliberate failure was detected;
 it is not successful physical screening.
-The selector contains those 13 cases plus nine calibrated, Pareto and coupled
-demonstrations. Open and evaluate those demonstrations from the candidate-pool
+The selector contains those 13 cases plus twelve calibrated, Pareto, coupled
+and projection demonstrations. Open and evaluate those demonstrations from the candidate-pool
 menu; the suite counter continues to describe the original 13 cases.
 
 The scientific reports cover experimental band gaps, steel yield strength,
@@ -122,8 +129,8 @@ is selected. Inspect both properties, every fold, ordinary and numerical-guard
 gates, costs, and source identities. Its NO-GO result is development evidence,
 not an independent coverage estimate. Loading the dashboard performs no fits.
 
-Coupled inputs use a separate Linux worker with CPU, wall-time, address-space
-and output limits. Unsupported platforms refuse coupled HTTP processing;
+Coupled and projection inputs share a separate Linux worker with CPU, wall-time, address-space
+and output limits. Unsupported platforms refuse these two HTTP modes;
 the other interface modes remain available. A hard failure clears the pending
 result and offers no decision receipt. See the [coupled guide](coupled-problem.md)
 for exact inputs, proof inspection, deferred outcome replay and limits.

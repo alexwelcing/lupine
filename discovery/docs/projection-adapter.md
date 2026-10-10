@@ -2,8 +2,9 @@
 
 `lupine_discovery.projection` translates an explicitly declared correction-field
 model into the existing [coupled certificate kernel](coupled-kernel.md). It is a
-Python API. It adds no fitting, LP solver, scientific dataset, JSON input mode,
-CLI command, or workbench mode. The [upstream design note](projection-field-adapter.md)
+Python API. It adds no fitting, LP solver or scientific dataset. The separate
+[workbench wrapper](projection-workbench-contract.md) adds bounded JSON, CLI,
+guarded HTTP, browser and replay integration. The [upstream design note](projection-field-adapter.md)
 describes the research connection and the limits of the source claims.
 
 The adapter checks algebra and declared identities. It does not establish that
@@ -192,9 +193,10 @@ For unsupported builds, no kernel point or supplied proof is checked and
 
 Kernel `Limits` apply to kernel proof work. They do not bound the preceding
 adapter construction, exact transformations, normalization, or identity hashing.
-This pure Python API has no untrusted input or HTTP execution boundary. A later
-wire route must separately bound declared and derived dimensions, including one
+This pure Python API has no untrusted input or HTTP execution boundary. The
+separate wire route bounds declared and derived dimensions, including one
 extra latent per observation and two rows per anchor, before construction.
+HTTP preparation and screening occur inside the shared isolated worker.
 
 ## Synthetic verification and remaining boundary
 

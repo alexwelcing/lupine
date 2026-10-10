@@ -16,11 +16,11 @@ gate. No aggregate score averages away blocking failures.
 | Exact conditional selection kernel | PASS | Exact rational runtime, exhaustive small-world and adversarial tests. Conditional guarantees require sound intervals and a fixed finite candidate universe. |
 | Conditional mathematical statements | PASS | 100 compiled Lean statements and axiom audit in `formal/VERIFICATION.md`. This does not prove Python refinement or physical premises. |
 | Published constrained checkpoint verification | PASS | [Discovery Verify run 38067639369](https://github.com/alexwelcing/lupine/actions/runs/38067639369) passed at `a8775ad` on 2026-10-10: Python 3.11/3.12, source manifest, isolated packages, 17 browser checks and 69 Lean theorem audits. Subsequent increments require their own checks. |
-| Interface through actual selector | PASS | 27 Chromium checks cover four schemas, scientific reports, desktop/mobile states, raw input preservation and paired problem/certificate downloads verified by the real CLI. Edits, failures and pending/stale responses cannot export old pairs. See `reports/projection-verification.md`; the projection API itself is not yet a browser mode. |
+| Interface through actual selector | PASS | 35 Chromium checks cover five schemas, scientific reports, desktop/mobile states, raw input preservation and paired problem/certificate downloads verified by the real CLI. Edits, failures and pending/stale responses cannot export old pairs. Projection declarations and unavailable-model states remain inspectable; see `reports/projection-workbench-verification.md`. |
 | Calibration and unsupported-scope abstention | PASS | Exact versioned inputs, original-seal replay, all-retained abstention and browser diagnostics. This software behavior does not establish exchangeability or physical coverage. |
 | Pareto and nonlinear conditional extensions | PASS | Exact runtime, 24 new compiled theorems, one million compatible Pareto truth worlds, nonlinear domain tests, and partial-truth replay. No scalarized Pareto winner or regret is asserted. |
 | Diverse sealed known-answer suite | PASS | 13 deterministic fixtures use an independent finite-truth oracle: 11 sound cases and 2 unsound controls. Ties, infeasibility, multiple constraints, unknown feasibility, refinement, and exact ordering are exercised. All declared expectations pass; control passes mean failures were detected. Fixture success establishes software behavior, not chemical accuracy. |
-| Packaged research preview | PASS | A fresh wheel was imported in isolation outside the source tree, with 22 problem/outcome pairs across scalar, calibrated, Pareto and coupled modes, web assets, and original scientific report resources present. Every packaged case passed selection, certificate verification and replay; installed projection translation and missing-bound fallback also pass. This is packaging evidence, not independent scientific reproduction. |
+| Packaged research preview | PASS | A fresh wheel was imported in isolation outside the source tree, with 25 problem/outcome pairs across scalar, calibrated, Pareto, coupled and projection modes, web assets, and original scientific report resources present. Every packaged case passed selection, certificate verification and replay; installed projection translation and missing-bound fallback also pass. This is packaging evidence, not independent scientific reproduction. |
 | Reproducible archival source identity | PASS | Two Matbench archives and FreeSolv use pinned source commits and byte hashes; cached corruption fails closed. Methods and negative results are retained. |
 | Held-out target separation | PASS | Frozen train/calibration/test protocols; FreeSolv tests prohibit test-label access before prediction freezing. Public historical data are not prospective blind evidence. |
 | Simultaneous interval soundness in current pilots | FAIL | Gap misses 89/888, steel 6/68, hydration energy 22/138. All three archives refute the current simultaneous interval premise. No certified physical recommendation mode may claim success from these pilots. |
@@ -103,8 +103,11 @@ retention checks; 12 new algebraic statements bring the formal inventory to
 100. The combined suite passes 325 tests, paired-export browser checks pass
 27 cases, and an isolated wheel verifies the adapter alongside all 22 packaged
 examples. [Verification](../reports/projection-verification.md) preserves the
-actual execution evidence. A provenance-preserving projection wire/browser
-route is still proposed, not released.
+actual execution evidence. The subsequent [projection workbench checkpoint](../reports/projection-workbench-verification.md)
+passes 416 Python tests, 35 browser checks and an isolated wheel with 25 cases
+across five schemas. It preserves original declarations through strict wire,
+CLI, guarded HTTP and actual-pool replay; missing bounds yield no model.
+The mathematical sources and 100-statement inventory are unchanged.
 
 The [upstream readiness audit](projection-data-readiness.md) identifies a Rhizo
 archive suitable for further metadata review. It establishes neither hard

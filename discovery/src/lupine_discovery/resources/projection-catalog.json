@@ -1,0 +1,23 @@
+[
+  {
+    "id": "projection-shared-field",
+    "title": "Scoped correction field, conditional screening",
+    "description": "Two synthetic observation options in the same explicit physical context share theta=1+z. B is conditionally better; field cancellation does not imply transfer between materials. Constructed algebra, not a material prediction.",
+    "kind": "projection_demo",
+    "has_outcomes": true
+  },
+  {
+    "id": "projection-missing-bound",
+    "title": "Missing field bound, no numerical model",
+    "description": "A missing coordinate bound produces no numerical model. Both original candidates remain, with the original scope and bound declarations available for inspection. Constructed algebra, not a material prediction.",
+    "kind": "projection_demo",
+    "has_outcomes": true
+  },
+  {
+    "id": "projection-tie",
+    "title": "Scoped field with an attained tie",
+    "description": "Larger independent discrepancies allow an exact tie. Both options survive the strict comparison despite a shared correction field. Constructed algebra, not a material prediction.",
+    "kind": "projection_demo",
+    "has_outcomes": true
+  }
+]
