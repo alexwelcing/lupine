@@ -1,0 +1,37 @@
+{
+  "after": {
+    ".cache/mpea-registration-allocation/mpea_registration_allocation.py": "5957d87e3fc05e9e2afdd58dd822618704273b10695406360796d4a50d4f23e6",
+    ".cache/mpea-registration-allocation/test_author_boundaries.py": "32df2e8556e95b2d6ce06d32122a87808ae269e61d3938692d770a82899eb607",
+    ".cache/mpea-registration-allocation/test_store_integration.py": "f1c546efe3e23cfbe5aa973eacfca8b9b3ad1efc5e3db806efd468671668f3ec",
+    ".cache/mpea-study-custody/scripts/mpea_production_store.py": "9b5caa9a013da7b2bae8bb78d89a74a697201bdc73b1cd2db1d38c2e750db6b4",
+    ".cache/mpea-study-custody/scripts/mpea_stage_store.py": "13c42919e79e0949f4cbcf5ce0eeeb1cb66d3a48893e6e4fdc3cd3fdf68498db",
+    "scripts/mpea_target_custody.py": "7f649dd50d7c5589fd9da0f9745b7936b7a3a2bf631a8418affae4a67be1ee9c",
+    "scripts/permutation_allocation.py": "a7f454b4541f75603019bf73091c97190ea6f618efa52988c3065971273405e5"
+  },
+  "all_success": true,
+  "before": {
+    ".cache/mpea-registration-allocation/mpea_registration_allocation.py": "5957d87e3fc05e9e2afdd58dd822618704273b10695406360796d4a50d4f23e6",
+    ".cache/mpea-registration-allocation/test_author_boundaries.py": "32df2e8556e95b2d6ce06d32122a87808ae269e61d3938692d770a82899eb607",
+    ".cache/mpea-registration-allocation/test_store_integration.py": "f1c546efe3e23cfbe5aa973eacfca8b9b3ad1efc5e3db806efd468671668f3ec",
+    ".cache/mpea-study-custody/scripts/mpea_production_store.py": "9b5caa9a013da7b2bae8bb78d89a74a697201bdc73b1cd2db1d38c2e750db6b4",
+    ".cache/mpea-study-custody/scripts/mpea_stage_store.py": "13c42919e79e0949f4cbcf5ce0eeeb1cb66d3a48893e6e4fdc3cd3fdf68498db",
+    "scripts/mpea_target_custody.py": "7f649dd50d7c5589fd9da0f9745b7936b7a3a2bf631a8418affae4a67be1ee9c",
+    "scripts/permutation_allocation.py": "a7f454b4541f75603019bf73091c97190ea6f618efa52988c3065971273405e5"
+  },
+  "commands": [
+    {
+      "exit_code": 0,
+      "log_sha256": "af957a61dfbb118780a00d9397db12a6c68024386eeb87c1ce7bfeac9a2dc44b",
+      "test": "test_author_boundaries.py"
+    },
+    {
+      "exit_code": 0,
+      "log_sha256": "4d52601799b8328bc8b0e930bf3b350ed257c9f84fedd34ee7747e9aff4d934b",
+      "test": "test_store_integration.py"
+    }
+  ],
+  "schema": "lupine.registration-allocation.author-milestone.v2",
+  "scope": "constructed source/provider only; no actual archive, allocation, OS entropy, live API, features or targets",
+  "source_unchanged": true,
+  "status": "DRAFT_ENGINEERING_AUTH_SCOPE_PENDING"
+}

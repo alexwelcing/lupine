@@ -1,0 +1,7 @@
+{
+  "original_bytes": 231,
+  "original_path": ".cache/mpea-study-custody/review_production/archive-driver-failure-source-v1.json",
+  "original_sha256": "9220589e9725ff335e9502c693e563181e04427ad9390f77c0455794c9ac8533",
+  "schema": "lupine.discovery.lossless_utf8_artifact.v1",
+  "text": "{\n  \"path\": \".cache/mpea-study-custody/scripts/mpea_archive_driver.py\",\n  \"scope\": \"Captured after failed v2 run; hash matches before/after record.\",\n  \"sha256\": \"bfd543280c0f2f6f5b7f123ec39a2440b8db541440902adb3fe5bed3123f7537\"\n}\n"
+}

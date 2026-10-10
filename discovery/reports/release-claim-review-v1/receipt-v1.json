@@ -1,0 +1,19 @@
+{
+  "commit": "ae573ea9581a8e75bdffd787cba11d8051bfa83d",
+  "files": {
+    "audit_snapshot.py": "862d762612042e33e95b5ce5c8fa731ed959572ec78252be4ca34e2795ae239c",
+    "execution-first.log": "9f4f50f612b3a084210b6550bf1f9a3b2b4c51d22e26ed0c8a59a57289132abe",
+    "execution-first.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "link-check.json": "9a21057b3eeaada9abe69985913388414e355383e61d406e201a7aac33d47432",
+    "review-v1.md": "a31959595c6bdc9c26544352d00d49a45c627f523a93a0cfb0244198e7d56835",
+    "source-bound-check.json": "f90a2bcd419a44116e5bd794ebf96587008e0d3eab3e8ad365164a729d52a09b"
+  },
+  "findings": [
+    "calibration-planner stale no-probability-theorem statement",
+    "archiveUI measurements label mixes calculation archives",
+    "publicregistration required before entropy: root chose annotatedtag, implementation/review pending"
+  ],
+  "schema": "lupine.release-claim-audit-receipt.v1",
+  "scope": "Pinnedpublicsource/receipts;no privateCSV/features/targets/fullsuite/Lean/liveCI/reproduction or finalGO",
+  "status": "CONDITIONAL_PREVIEW_EVIDENCE_SUPPORTED_FINAL_GATES_OPEN"
+}

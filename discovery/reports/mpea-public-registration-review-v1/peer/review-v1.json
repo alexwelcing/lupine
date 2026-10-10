@@ -1,0 +1,55 @@
+{
+  "checked": [
+    "Exact fixed annotated tag name/type and underlying registered commit.",
+    "Canonical allowlisted registration/CI annotation, no extra scientific fields or whitespace reinterpretation.",
+    "Actual Git object preimage identity binds raw tag bytes and official API message/tagger fields.",
+    "Both parent factory modes require published-tag capture; offline worker requires same exact capture under external parent hash.",
+    "Resealed missing/lightweight/wrong-binding/wrong-CI captures reject; ordinary original HEAD and restricted reproduction gates remain.",
+    "Single-attempt protocol/source ledger and first accepted draw preserve original 1545 row routes; previous 36 negative controls remain passing."
+  ],
+  "claim_limits": [
+    "Constructed tag objects do not establish that a production registration exists or was published.",
+    "Live GitHub authenticity relies on trusted parent/gh/Git transport; offline worker does not reauthenticate the network.",
+    "Tagger dates are metadata, not independent publication timestamps.",
+    "Hashes and passing tests do not attest engineering sufficiency, source physical truth, sample independence, future conditional coverage, or archival usefulness."
+  ],
+  "execution_receipt_sha256": "d16fe17ff6de25d885308ab924d9f1e4b02d1baf213f5161bc1186117bf38e93",
+  "independent_tests": 45,
+  "resolved_findings": [
+    {
+      "finding": "A JSON lone surrogate in raw_tag raised raw UnicodeEncodeError rather than the closed registration error.",
+      "original_run": "attempt1.json:44 pass/one error",
+      "original_source_sha256": "eee033a4d39120cbbd5393a83ee0c53c6be4bdb709ccb2684e4cc3d12f1e4176",
+      "resolution": "UTF-8 encoding now catches UnicodeEncodeError and returns PUBLIC_REGISTRATION_INVALID; same test passes.",
+      "severity": "error-contract robustness; rejected authority, no authorization bypass"
+    }
+  ],
+  "schema": "lupine.mpea.public_registration.independent_review.v1",
+  "scope": [
+    "Nine new independently constructed Git-object/public-tag controls plus all 36 prior registration/allocation checks.",
+    "Prior suite adapted only for source location, required inert publication document, and injected tag evidence in two positive factory paths; original assertions preserved and adaptation patch retained.",
+    "Official ref/tag transport is injected. No real API, production tag, actual source metadata, CSV, feature vectors, targets, allocation, or OS allocation provider accessed.",
+    "Separate authored integration rerun completes constructed eight-stage store and verifies exact original allocation import in a fresh Python process with no reproduction entropy."
+  ],
+  "separately_authored_fresh_process_store_tests_rerun": 1,
+  "skips": 0,
+  "source_bindings": {
+    ".cache/mpea-registration-allocation/API.md": "58e3f5eecc44113a82e356c9865e4015d1f76e4353d6447e208a85aae401aa93",
+    ".cache/mpea-registration-allocation/mpea_registration_allocation.py": "d4a11c4c2b941e45d4079129583efc7bcf5ecfed551de137aae02f3f49a3146d",
+    ".cache/mpea-registration-allocation/review/public_tag_extension/prior-suite-adaptation.patch": "5d76d7083f2e2d8ef92f1b60dcc2fd1fed4052793059e2fa1553c427286e9836",
+    ".cache/mpea-registration-allocation/review/public_tag_extension/public_tag_fixture.py": "70946efe012ed1abbc77025d2c4d441d5e49d16d5ab5371422098f00240c443c",
+    ".cache/mpea-registration-allocation/review/public_tag_extension/test_public_tag_review.py": "bee123e2ef24b5fdce8c933962f4950fc4d7288fdf721865b506f256f455ccbc",
+    ".cache/mpea-registration-allocation/review/public_tag_extension/test_registration_allocation_review.py": "154b4a02900f6b9fcb14ca546416db0901c770940d967f4da16fa8bef6f6565a",
+    ".cache/mpea-registration-allocation/test_store_integration.py": "c34c9f5b7ad852f0f6cd2d4c44b1057fd34a75c9530d76d64909d8ffcbe3830f",
+    "docs/mpea-registration-publication-v1.md": "c9fb1f2c44ae8b97c10a88ddbb369eb8d0feca752824c2ca3cbb656d3619c730",
+    "docs/mpea-t25-archival-protocol-v1.md": "c49047341d3932ddd67c67c9f2a04a6759c0d679bfeb96d811ba9541c0cc0378",
+    "docs/mpea-t25-implementation-contract-v1.md": "be45b1d8db9586035cf37bd9bbb9046c065c3851b91f93386f8c68d155215af9",
+    "scripts/mpea_production_store.py": "9b5caa9a013da7b2bae8bb78d89a74a697201bdc73b1cd2db1d38c2e750db6b4",
+    "scripts/mpea_stage_store.py": "13c42919e79e0949f4cbcf5ce0eeeb1cb66d3a48893e6e4fdc3cd3fdf68498db",
+    "scripts/mpea_target_custody.py": "7f649dd50d7c5589fd9da0f9745b7936b7a3a2bf631a8418affae4a67be1ee9c",
+    "scripts/permutation_allocation.py": "a7f454b4541f75603019bf73091c97190ea6f618efa52988c3065971273405e5"
+  },
+  "source_sha256": "d4a11c4c2b941e45d4079129583efc7bcf5ecfed551de137aae02f3f49a3146d",
+  "status": "PASS_WITH_SCOPED_ENGINEERING_CLAIMS",
+  "unresolved_blockers": []
+}

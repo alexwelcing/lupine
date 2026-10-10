@@ -1,0 +1,117 @@
+{
+  "coverage": [
+    "All eight stage envelopes have independently recomputed scientific/content/whole-file identities and exact predecessor triples.",
+    "Source and every scientific registration field, including operational amendment, affect scientific identity; usage and engineering/CI/wrapper changes affect content while original/reproduction share registered scope and synthetic scope remains distinct.",
+    "Known semantic input identities and byte fallback are distinct; a resealed predecessor usage change leaves its scientific seal but is rejected against frozen whole bytes.",
+    "Terminal failure and injected publication failure preserve exact prior bytes and do not invent a successor or scientific completion.",
+    "Original allocation import retains all original route/allocation bytes, identities, original execution kind and original allocation attempt ID; new marker alone records reproduction.",
+    "Wrong kind, occupied prefix, failed or wrong-stage allocation, wrong schema, source, registration, scope, route references, forged predecessor, noncanonical bytes and changed expected seals are rejected before import publication.",
+    "Partial allocation import preserves the copied route artifact, has no sealed allocation, rejects re-import and cannot satisfy require(allocation).",
+    "Fresh subprocess uses same fabricated allocation without any os.urandom call; all eight scientific stage identities match, allocation bytes match exactly and usage-bearing later bytes differ.",
+    "17 independent tests and 7 author tests executed with PYTHONPATH removed; all nine source/spec/test/worker hashes unchanged."
+  ],
+  "findings_fixed": [
+    {
+      "actual_first_result": "11 tests; 1 failure in 0.576s.",
+      "finding": "Public execution_kind mutation allowed an attempt marker declaring synthetic execution and stage scope declaring registered study.",
+      "initial_source": "26a524be65f98cb92d49d75b852de84d1d38771b6a5c1a977983fab57a43ae7e",
+      "resolution": "Read-only execution kind, marker consistency check and closed expected-scope validation."
+    },
+    {
+      "actual_first_result": "16 tests; 1 failure in 3.253s.",
+      "finding": "Imported raw bytes reached hashing and JSON load without the private 32 MiB input preflight.",
+      "initial_source": "7b4f55a6cd51dc16a8cdbe728453dc00636aa786f7c64e21ac41254e38a8a6c8",
+      "resolution": "Input byte bound now precedes hash and decode. First failure log printed the fabricated whitespace argument via unittest mock assertion; exact log is preserved compressed and the independent assertion now uses scalar call_count to prevent noisy future output."
+    }
+  ],
+  "integration_requirements": [
+    "Production caller must authenticate original pinned source and parent/worker registration identity before capture/target decode; the store intentionally accepts fabricated source metadata for source-free tests and does not establish authorization.",
+    "Final driver must enforce strict stage-specific payload/input schemas, target row/semantic validation and ordinary string limits; generic store private serialization is not that semantic verifier.",
+    "The forthcoming production driver still requires separate independent stage-order, feature linkage, known/unknown, complete 960-ledger, projector and full fixed-allocation fresh-process reproduction review.",
+    "No hostile-code, concurrency, physical truth, statistical independence or scientific superiority guarantee follows from this store review."
+  ],
+  "preserved_evidence": {
+    "execution-kind-probe-v1.json": "7c4093416de284e4c386c1e42299d77d34d6ca01a7377de480e2fa0de1a1110a",
+    "store-cap-first-v1-preservation.json": "2ce0c37c9e9eac7265429490f5d31961d9e5c6db661c398766579dd9c01bd3fc",
+    "store-cap-first-v1.txt.gz": "28afb18b41fa45ca9296b58600dfd23a1c0a44fe96dd12b7f9f31f21011057a1",
+    "store-first-checkpoint-v1.json": "2cae76cb97ea0328ae1aa053cf193a3547e4b1c1faaa9c5fcb44e24269df94a9",
+    "store-first-run-v1.txt": "2ae3a0780aac79aff66a633e88223a5f7183b744e879c3dd7dae31d2eba6d932",
+    "store-first-tests-v1.py": "8688dc1676954b795b222e599a370c9266524baeb31097462bd3a7187351aadf",
+    "store-import-first-v1.txt": "de2ae7d2afa746b6a3a1d58918819347fa743f35c5fcdb2446454ee660ea0037",
+    "store-scope-failing-tests-v1.py": "0ab24865f1d539b98a4c507717da3c22bd8f39bbbf33633f52dd8a74f7734081",
+    "store-scope-regression-first-v1.txt": "cebea5d9797b1c51b1afe3c5e201d56b32616991195436bb500dd17c240d9b31"
+  },
+  "schema": "lupine.synthetic.mpea_production_store.independent_review.v1",
+  "scope": "Source-free private envelope/store controls only; original-source authentication, target custody, allocator, production driver and semantic stage payload validation remain separate gates. No actual archive, scientific feature/target data, or OS scientific allocation was accessed; no main-tree edits.",
+  "source_bound_run": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "pythonpath": null,
+    "runs": [
+      {
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          ".cache/mpea-study-custody/review_production",
+          "-p",
+          "test_production_store_review.py",
+          "-v"
+        ],
+        "elapsed_seconds": 2.590163,
+        "exit_code": 0,
+        "label": "independent",
+        "log": ".cache/mpea-study-custody/review_production/store-final-independent-v1.txt",
+        "log_sha256": "81c60b2f96bfe8e704852cd7bed540b46bfa8f649112ef4c2ed0bc4b6588780f"
+      },
+      {
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          ".cache/mpea-study-custody/tests",
+          "-p",
+          "test_mpea_production_store.py",
+          "-v"
+        ],
+        "elapsed_seconds": 0.91041,
+        "exit_code": 0,
+        "label": "author",
+        "log": ".cache/mpea-study-custody/review_production/store-final-author-v1.txt",
+        "log_sha256": "2ba85b1d685072b1c5a58b8f29a7bfae0cb812b8e4cbc4c2274fc72e59fa0418"
+      }
+    ],
+    "schema": "lupine.synthetic.mpea_production_store.source_bound_validation.v1",
+    "source_after": {
+      ".cache/mpea-operational-addendum/mpea-t25-operational-enforcement-v1.md": "e36e72818f92096c316df34789a35840c1e5b1561f9467561dd8787da072cf98",
+      ".cache/mpea-protocol-design/mpea-t25-archival-protocol-v1.md": "c49047341d3932ddd67c67c9f2a04a6759c0d679bfeb96d811ba9541c0cc0378",
+      ".cache/mpea-protocol-design/mpea-t25-implementation-contract-v1.md": "be45b1d8db9586035cf37bd9bbb9046c065c3851b91f93386f8c68d155215af9",
+      ".cache/mpea-study-custody/review_production/store_reproduction_fixture.py": "bdf2c50642376b1d25e767e1a7b4f14e4df70c77637328e262780a0bb2b2614b",
+      ".cache/mpea-study-custody/review_production/test_production_store_review.py": "0959f57f7ab4f8de5586afb90a11c8305de800df2f23cc7fc72ee2c974650fa4",
+      ".cache/mpea-study-custody/scripts/mpea_production_store.py": "9b5caa9a013da7b2bae8bb78d89a74a697201bdc73b1cd2db1d38c2e750db6b4",
+      ".cache/mpea-study-custody/scripts/mpea_stage_store.py": "13c42919e79e0949f4cbcf5ce0eeeb1cb66d3a48893e6e4fdc3cd3fdf68498db",
+      ".cache/mpea-study-custody/scripts/mpea_target_custody.py": "7f649dd50d7c5589fd9da0f9745b7936b7a3a2bf631a8418affae4a67be1ee9c",
+      ".cache/mpea-study-custody/tests/test_mpea_production_store.py": "dbdc2dc1712d8bdac50c813b202f71357bcafc0c49d9f5e03c164809bcd58fa9"
+    },
+    "source_before": {
+      ".cache/mpea-operational-addendum/mpea-t25-operational-enforcement-v1.md": "e36e72818f92096c316df34789a35840c1e5b1561f9467561dd8787da072cf98",
+      ".cache/mpea-protocol-design/mpea-t25-archival-protocol-v1.md": "c49047341d3932ddd67c67c9f2a04a6759c0d679bfeb96d811ba9541c0cc0378",
+      ".cache/mpea-protocol-design/mpea-t25-implementation-contract-v1.md": "be45b1d8db9586035cf37bd9bbb9046c065c3851b91f93386f8c68d155215af9",
+      ".cache/mpea-study-custody/review_production/store_reproduction_fixture.py": "bdf2c50642376b1d25e767e1a7b4f14e4df70c77637328e262780a0bb2b2614b",
+      ".cache/mpea-study-custody/review_production/test_production_store_review.py": "0959f57f7ab4f8de5586afb90a11c8305de800df2f23cc7fc72ee2c974650fa4",
+      ".cache/mpea-study-custody/scripts/mpea_production_store.py": "9b5caa9a013da7b2bae8bb78d89a74a697201bdc73b1cd2db1d38c2e750db6b4",
+      ".cache/mpea-study-custody/scripts/mpea_stage_store.py": "13c42919e79e0949f4cbcf5ce0eeeb1cb66d3a48893e6e4fdc3cd3fdf68498db",
+      ".cache/mpea-study-custody/scripts/mpea_target_custody.py": "7f649dd50d7c5589fd9da0f9745b7936b7a3a2bf631a8418affae4a67be1ee9c",
+      ".cache/mpea-study-custody/tests/test_mpea_production_store.py": "dbdc2dc1712d8bdac50c813b202f71357bcafc0c49d9f5e03c164809bcd58fa9"
+    },
+    "unchanged": true
+  },
+  "status": "PASS_AFTER_FIXES",
+  "test_counts": {
+    "author": 7,
+    "independent": 17
+  }
+}

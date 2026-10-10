@@ -157,3 +157,28 @@ Browser and Lean passed. [The CI repair](reports/mpea-namespace-ci-v1/README.md)
 pins a supported runner and adds a strict namespace preflight; hosted completion
 is pending. This does not erase successful local checks or authorize claiming
 all-four-job CI success. Root owns this repair before actual study registration.
+
+That repair now passes all four hosted jobs at `ae573ea` (run 38087728540),
+including both strict namespace preflights. The next working increment has 67
+passing production-boundary controls and eleven retained-auditor controls.
+Complete source/bridge/launcher review and the public pre-allocation registration
+record remain required. The [prospective publication note](docs/mpea-registration-publication-v1.md)
+keeps the source branch fixed while publishing the exact registration binding;
+no actual registration tag, allocation or performance access has occurred.
+
+The final literal implementation-contract audit now identifies a registration
+blocker: compact stage containers lack some required named evidence members,
+and per-stage resource maps are empty. The passing independent custody, bridge,
+launcher and registration controls are retained as scoped engineering evidence.
+Root is preserving and testing the integrated checkpoint while the custody
+engineer supplies complete artifact evidence and a separate resource engineer
+adds explicitly scoped stage measurements. An independent reviewer verifies
+both against the original contract. No actual tag, allocation, targets or fit
+is permitted until this gap and the complete-source publication gates close.
+
+The integrated checkpoint now passes all 1,153 Python tests (724.952 seconds;
+318 unchanged source/specification/example hashes) and 56 Chromium checks.
+Root has preserved the full actual run and independent contract blocker. Hosted
+verification of this new checkpoint is pending publication; the last confirmed
+green source remains ae573ea. Passing tests do not close the artifact/resource
+requirements or authorize opening the archive.

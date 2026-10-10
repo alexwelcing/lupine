@@ -1,0 +1,35 @@
+{
+  "existing_helpers": [
+    "tests/mpea_archive_review_constructed_case.py",
+    "tests/test_mpea_production_store_review.py"
+  ],
+  "mapping": [
+    {
+      "allowed_change": "Import/fixture path selection and ignored temporary output location only; all test assertions unchanged.",
+      "destination": "tests/test_mpea_public_bridge_review.py",
+      "destination_sha256": "5bc37564fa431e77b7bda94f0cd34d6fc0c5aa4a8980a5db2e5e00873aa8a21b",
+      "promotion_source": ".cache/mpea-study-custody/review_public_bridge/promotion/test_mpea_public_bridge_review.py",
+      "source": ".cache/mpea-study-custody/review_public_bridge/test_public_bridge_review.py",
+      "source_sha256": "cf46f0b36ae48f216c229ec811d0605a2afb82dfbb6893ed173cd3e7c9fea268"
+    },
+    {
+      "allowed_change": "Import/fixture path selection and ignored temporary output location only; all test assertions unchanged.",
+      "destination": "tests/test_mpea_public_bridge_boundaries.py",
+      "destination_sha256": "7b76dd623ba7dcdf0484daea982db08a6f470a8c783bca53b9e6c19fb7f4549b",
+      "promotion_source": ".cache/mpea-study-custody/review_public_bridge/promotion/test_mpea_public_bridge_boundaries.py",
+      "source": ".cache/mpea-study-custody/review_public_bridge/test_public_bridge_boundaries.py",
+      "source_sha256": "087d35884f1f841729b53df18899e9e87e5ea2b9c0f7e814837f4486ac77934e"
+    },
+    {
+      "allowed_change": "Exact byte copy.",
+      "destination": "tests/fixtures/mpea_bridge_review/bridge-before-binding-fix.py",
+      "destination_sha256": "4cd0feb5a3ae20b45aa7a5fc9128dd8010a5cd09f1d5a1051fb6bf3148361d24",
+      "promotion_source": ".cache/mpea-study-custody/review_public_bridge/promotion/bridge-before-binding-fix.py",
+      "source": ".cache/mpea-study-custody/review_public_bridge/bridge-before-binding-fix.py",
+      "source_sha256": "4cd0feb5a3ae20b45aa7a5fc9128dd8010a5cd09f1d5a1051fb6bf3148361d24"
+    }
+  ],
+  "original_independent_receipt_sha256": "7b8f54e76dfc3fa86ff22cef85a3c39e248c31026a62e04cc2aa47b0ec40ab66",
+  "schema": "lupine.review.promotion_map.v1",
+  "scope": "Only reviewer test import and temporary-directory adaptations; no production or numerical assertion edits."
+}

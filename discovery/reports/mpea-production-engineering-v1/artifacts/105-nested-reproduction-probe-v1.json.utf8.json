@@ -1,0 +1,7 @@
+{
+  "original_bytes": 395,
+  "original_path": ".cache/mpea-study-custody/review_public_bridge/nested-reproduction-probe-v1.json",
+  "original_sha256": "ebfd337b48738fab2bbc9afcd53ab948150b9279b01244765f9567a27a82e6ad",
+  "schema": "lupine.discovery.lossless_utf8_artifact.v1",
+  "text": "{\n  \"scope\": \"constructed envelopes only; no scientific data\",\n  \"preceding_scientific_stages_equal\": true,\n  \"vault_scientific_equal\": true,\n  \"vault_bytes_equal\": false,\n  \"reserved_scientific_equal\": false,\n  \"original_reserved\": \"42cd6950913d569cf943dee70e31e1b71f41e868294b67184435cbce2d56449b\",\n  \"reproduced_reserved\": \"cba90cb4642a7aa036a947ac71462180c79f2fa9cf224a347207d42ec0cf12c3\"\n}\n"
+}

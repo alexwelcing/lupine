@@ -361,3 +361,41 @@ is claimed. Independent review, complete source-bound production tests and
 published green CI must precede them. Existing scientific negatives and the
 130 conditional formal statements retain their previous scope. Fresh complete
 release packaging/reproduction and the final claim-tier decision remain open.
+
+## Production custody and preregistration integration
+
+The production adapter, worker, durable allocation gate and aggregate bridge
+have completed independent constructed-data reviews. Registration now requires
+the exact [public annotated record](mpea-registration-publication-v1.md), the
+reviewed source/engineering identities and all four successful original CI jobs
+before entropy. Reproduction imports the original allocation and requires its
+original source checkout and published ancestor relationship.
+
+Independent checks comprise 18 archive custody controls, 21 report-bridge
+controls, 32 launcher controls and 45 registration/public-tag controls, alongside
+authored arithmetic/reproduction tests. The previous registration without a
+public tag is preserved as historical evidence. Root's final integrated suite,
+published complete-source CI and actual registration are separate prerequisites;
+no real performance result or release approval follows from these review counts.
+See [the production contract](mpea-archive-driver-contract.md) for stage
+boundaries, unavailable reports and the prospective original/reproduction CLI.
+
+The retained-source/wheel auditor now independently checks nested runtime
+resources and runs in CI after isolated package testing. A local audit of the
+a67815e artifact checks 929 source blobs, 230 manifest entries and 111 wheel
+RECORD entries. [The retained evidence](../reports/guarded-release-artifact-v1/README.md)
+preserves the initial auditor omission and correction; this is byte identity and
+packaging evidence, not physical truth or a new scientific reproduction.
+
+### Literal contract audit blocks registration
+
+A later independent audit found that the compact private stage payloads do not
+yet supply every member required by section 2 of the frozen implementation
+contract, and their per-stage `usage` maps are empty. Whole-worker supervision
+and successful numerical tests do not satisfy those separate requirements.
+This is a blocking engineering finding, preserved alongside the passing
+component reviews. The integration checkpoint is not approved for actual
+registration or target access. Correct the evidence containers and stage
+measurements, independently verify the contract mapping, then rerun/publish the
+complete source freeze. No scientific threshold, allocation or algorithm changes
+are authorized by this repair.

@@ -1,0 +1,7 @@
+{
+  "bytes": "dGVzdF9leGFjdF9wcm9jZXNzIChfX21haW5fXy5DaGVja3MudGVzdF9leGFjdF9wcm9jZXNzKSAuLi4gb2sKdGVzdF9tYWluX3NvdXJjZV9vcmlnaW4gKF9fbWFpbl9fLkNoZWNrcy50ZXN0X21haW5fc291cmNlX29yaWdpbikgLi4uIG9rCnRlc3RfcmVtb3RlX3ByZXNlcnZlZF9hbmRfY2xvc2VkIChfX21haW5fXy5DaGVja3MudGVzdF9yZW1vdGVfcHJlc2VydmVkX2FuZF9jbG9zZWQpIC4uLiBvawoKLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQpSYW4gMyB0ZXN0cyBpbiAwLjAwNHMKCk9LCg==",
+  "encoding": "base64",
+  "original_path": ".cache/mpea-registration-allocation/capture-runbook/observation-controls-v2.log",
+  "original_sha256": "c530f66491e284900e86459df8e3e0083f67d24ade5c1337d5ff2a44e93d5fd2",
+  "schema": "lupine.lossless.evidence-bytes.v1"
+}

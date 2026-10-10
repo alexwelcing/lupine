@@ -1,0 +1,37 @@
+test_mpea_public_bridge_boundaries (unittest.loader._FailedTest.test_mpea_public_bridge_boundaries) ... ERROR
+test_mpea_public_bridge_review (unittest.loader._FailedTest.test_mpea_public_bridge_review) ... ERROR
+
+======================================================================
+ERROR: test_mpea_public_bridge_boundaries (unittest.loader._FailedTest.test_mpea_public_bridge_boundaries)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_mpea_public_bridge_boundaries
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_public_bridge_boundaries.py", line 27, in <module>
+    from test_production_store_review import registration, identity
+ModuleNotFoundError: No module named 'test_production_store_review'
+
+
+======================================================================
+ERROR: test_mpea_public_bridge_review (unittest.loader._FailedTest.test_mpea_public_bridge_review)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_mpea_public_bridge_review
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_public_bridge_review.py", line 27, in <module>
+    from test_production_store_review import registration, identity
+ModuleNotFoundError: No module named 'test_production_store_review'
+
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+FAILED (errors=2)

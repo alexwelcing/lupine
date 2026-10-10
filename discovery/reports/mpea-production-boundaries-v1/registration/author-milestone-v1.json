@@ -1,0 +1,21 @@
+{
+  "files": {
+    "author-boundaries-first.log": "967c92d36cebcf36f2f214cac7698609db89c071c595426864067899c8d2dcc7",
+    "author-boundaries-second.log": "b78b97f2b8241ff51b8275d33930545775873f41b39c268eb2034031c0e104af",
+    "mpea_registration_allocation.py": "5957d87e3fc05e9e2afdd58dd822618704273b10695406360796d4a50d4f23e6",
+    "store-integration-first.log": "411ad5397dafb973f66809239ecc3d15eb93cb326bad49b56a902c4ec682d86d",
+    "store-integration-second.log": "394a41fa72440221c703280e646a2b87e614472fbdfcf0220bafbf2b5328068a",
+    "test_author_boundaries.py": "32df2e8556e95b2d6ce06d32122a87808ae269e61d3938692d770a82899eb607",
+    "test_store_integration.py": "f1c546efe3e23cfbe5aa973eacfca8b9b3ad1efc5e3db806efd468671668f3ec"
+  },
+  "first_failures_preserved": [
+    "store-integration-first.log"
+  ],
+  "results": {
+    "author_boundaries": 4,
+    "real_store_constructed_integration": 1
+  },
+  "schema": "lupine.registration-allocation.author-milestone.v1",
+  "scope": "constructed identities/providers only; no actual source allocation, OS entropy, live API, features or targets",
+  "status": "DRAFT_NOT_PROMOTION_READY"
+}

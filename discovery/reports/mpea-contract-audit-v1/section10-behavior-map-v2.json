@@ -1,0 +1,542 @@
+{
+  "contract_sha256": "be45b1d8db9586035cf37bd9bbb9046c065c3851b91f93386f8c68d155215af9",
+  "evidence": {
+    "archive_author": {
+      "log": ".cache/mpea-study-custody/reports/archive-final-author-v2-1.txt",
+      "log_sha256": "a44c75593ebfbd05ded400730b6214b6948e87ff6c7d1ea47ea3fa5d3838148a",
+      "receipt": ".cache/mpea-study-custody/reports/archive-final-author-v2.json",
+      "receipt_sha256": "026200e4a37e40719986a8253d36d15d09e7bd4933de89964019af05eedb9d06"
+    },
+    "bridge": {
+      "log": ".cache/mpea-study-custody/review_public_bridge/final-tests-v1.log",
+      "log_sha256": "11f68f89c6f3028dc45903932caf9a464f87dd1b92b86938f7d043b2e979366c",
+      "receipt": ".cache/mpea-study-custody/review_public_bridge/independent-review-v1.json",
+      "receipt_sha256": "7b8f54e76dfc3fa86ff22cef85a3c39e248c31026a62e04cc2aa47b0ec40ab66"
+    },
+    "core": {
+      "log": ".cache/mpea-study-custody/review_production/archive-driver-final-v3.txt",
+      "log_sha256": "90c78b5b360a5aef0feaf9ed89d800e29d0d9de7454f8dffa26e2f8ee1d3800e",
+      "receipt": ".cache/mpea-study-custody/review_production/archive-custody-independent-review-v1.json",
+      "receipt_sha256": "a48de3971da063e7dc90f84c51feae0987f54a5e1e080c4c904e78c6c1d4384a"
+    },
+    "feature": {
+      "log": "reports/mpea-feature-reader-engineering-v1/reader-independent-tests-final-v1.txt",
+      "log_sha256": "1474d98eb0efa5b71a724110a680951f3dbc26750eb583829ec22b8dc124223f",
+      "receipt": "reports/mpea-feature-reader-engineering-v1/reader-independent-review-v1.json",
+      "receipt_sha256": "bfbcb2de5d847d87a2762e6ee9666975461d24aeee5c4e15a5fb9fdacaaa2a10"
+    },
+    "fixture_author": {
+      "log": ".cache/mpea-study-custody/reports/archive-final-author-v2-2.txt",
+      "log_sha256": "df1609f5ab93a034a85f7f0fdbc2884e4177d4ded2c6c4e6023936884d3d7776",
+      "receipt": ".cache/mpea-study-custody/reports/archive-final-author-v2.json",
+      "receipt_sha256": "026200e4a37e40719986a8253d36d15d09e7bd4933de89964019af05eedb9d06"
+    },
+    "generic": {
+      "log": "reports/mpea-study-components-engineering-v1/full-tests-v1.txt",
+      "log_sha256": "e5360eb47cde1eba96bb5df6fe75bd83b9552c3c18e7ca349460c091606f7458",
+      "receipt": "reports/mpea-study-components-engineering-v1/full-suite-v1.json",
+      "receipt_sha256": "137fb8f0f3c4d0df16b3b32b2fef4c54f13411a11852b48bc0064c443836b572"
+    },
+    "launcher": {
+      "log": ".cache/mpea-study-custody/review_launcher/final-execution-v1.stderr.txt",
+      "log_sha256": "55ccc46bda53e15002834ab3da024aba6c426670a0c136293f82c02265275f43",
+      "receipt": ".cache/mpea-study-custody/review_launcher/final-execution-v1.json",
+      "receipt_sha256": "b6f49d2b309aa286f914d37c032b7684603729edd9a0cbf75c63ce26b5835137"
+    },
+    "parser": {
+      "log": "reports/mpea-study-components-engineering-v1/parser-review/tests-final.txt",
+      "log_sha256": "a47e1874f676a7da3336ea1fab38850f6f21ccf3231b4b6f1a034d424f9b41fe",
+      "receipt": "reports/mpea-study-components-engineering-v1/parser-review/independent-review-v1.json",
+      "receipt_sha256": "0c50774489d1471894429790816299e63a725320cad3bb7bfc9b772982a1af73"
+    },
+    "projector": {
+      "log": "reports/mpea-guarded-components-v1/projector/review/source-bound-independent-v1.txt",
+      "log_sha256": "519f4250ac7cc2560a8fe54c48c58f08249b3c050a445e0825338284f2a50775",
+      "receipt": "reports/mpea-guarded-components-v1/projector/review/independent-review-v1.json",
+      "receipt_sha256": "b959bb194b7150fabe184fe6344f58ce14e17c36c8a7d4be210727c92017f6be"
+    },
+    "registration": {
+      "log": ".cache/mpea-registration-allocation/review/public_tag_extension/promotion/execution-v2.stderr.txt",
+      "log_sha256": "32e06eaf9042c8fa8e386a0b971f77a4d160b0b8c4f387ef9eab676e1d4feb54",
+      "receipt": ".cache/mpea-registration-allocation/review/public_tag_extension/promotion/execution-v2.json",
+      "receipt_sha256": "33a9aa9d39b266bdb845358469aa2332f5afee729221986565a27508e1df0d52"
+    },
+    "study": {
+      "log": "reports/mpea-study-components-engineering-v1/study-review/independent-tests-final-v1.txt",
+      "log_sha256": "88ace4f5ea0d78af6ddb0130a0a62362f5589d8452f58a9d17192dba850ced62",
+      "receipt": "reports/mpea-study-components-engineering-v1/study-review/independent-review-v1.json",
+      "receipt_sha256": "3025e997f6e9cb2ce784cf64de64e43422fd92f02b08c484a2c3972d20572c12"
+    },
+    "study_author": {
+      "log": "reports/mpea-study-components-engineering-v1/study-review/author-tests-rerun-v1.txt",
+      "log_sha256": "2c9c627c20654abafd6788cf44ab4447d679272f145eb78329134b14e43a29fd",
+      "receipt": "reports/mpea-study-components-engineering-v1/study-review/independent-review-v1.json",
+      "receipt_sha256": "3025e997f6e9cb2ce784cf64de64e43422fd92f02b08c484a2c3972d20572c12"
+    }
+  },
+  "final_main_and_ci": "PENDING_CORRECTED_SOURCE_FREEZE",
+  "log_link_errors": [],
+  "overall": "BASELINE_BEHAVIORS_HAVE_EXECUTED_CONTROLS_BUT_LITERAL_ARTIFACT_AND_USAGE_GAPS_BLOCK_FULL_CONFORMANCE",
+  "prior_map": {
+    "correction": "Generic runtime full-suite log is governed by full-suite-v1.json, not the focused study-review receipt. Test names, passing lines, scopes and conclusions unchanged.",
+    "path": ".cache/mpea-study-custody/review_production/evidence_audit/section10-behavior-map-v1.json",
+    "sha256": "16df0fe7a770c9b01bf881ced677be278561f5b54bf2c82dc1a97543bb226f59"
+  },
+  "requirements": [
+    {
+      "behavior": "Source pin/same captured buffer, late framing/count/header rejection; no partial success",
+      "limits_or_followup": "New persisted source-framing descriptors require fresh schema controls.",
+      "requirement": 1,
+      "status": "EXECUTED_BASELINE_CONTROLS_FINAL_CORRECTED_SOURCE_AND_CI_PENDING",
+      "tests": [
+        {
+          "evidence": "core",
+          "executed_ok_in_bound_log": true,
+          "test": "test_source_size_md5_and_sha_are_checked_before_any_framing"
+        },
+        {
+          "evidence": "core",
+          "executed_ok_in_bound_log": true,
+          "test": "test_failed_complete_source_framing_decodes_no_target_and_preserves_stage_prefix"
+        },
+        {
+          "evidence": "core",
+          "executed_ok_in_bound_log": true,
+          "test": "test_input_receipt_or_missing_predecessor_blocks_source_loader"
+        },
+        {
+          "evidence": "parser",
+          "executed_ok_in_bound_log": true,
+          "test": "test_every_late_framing_failure_precedes_first_numeric_call"
+        },
+        {
+          "evidence": "parser",
+          "executed_ok_in_bound_log": true,
+          "test": "test_count_header_and_role_authority_mismatch_never_decode"
+        }
+      ]
+    },
+    {
+      "behavior": "Original rows/exact condition and role routing; unauthorized cell canaries; development has no reserved capability",
+      "limits_or_followup": "No actual cells inspected; malformed unselected fixture fields exercise decoder non-observation.",
+      "requirement": 2,
+      "status": "EXECUTED_BASELINE_CONTROLS_FINAL_CORRECTED_SOURCE_AND_CI_PENDING",
+      "tests": [
+        {
+          "evidence": "parser",
+          "executed_ok_in_bound_log": true,
+          "test": "test_372_opaque_cell_replacements_preserve_every_authorized_result"
+        },
+        {
+          "evidence": "parser",
+          "executed_ok_in_bound_log": true,
+          "test": "test_authorization_precedes_byte_accumulation_in_every_cell"
+        },
+        {
+          "evidence": "parser",
+          "executed_ok_in_bound_log": true,
+          "test": "test_reserved_roles_are_symmetric_and_all_authorized_bad_rows_survive"
+        },
+        {
+          "evidence": "core",
+          "executed_ok_in_bound_log": true,
+          "test": "test_complete_actual_shaped_workflow_and_ordered_consumer_boundaries"
+        },
+        {
+          "evidence": "core",
+          "executed_ok_in_bound_log": true,
+          "test": "test_inadequate_development_has_no_model_or_reserved_access"
+        }
+      ]
+    },
+    {
+      "behavior": "Exact decimal grammar, signed zero/conflicts, unsupported tokens, conversion preflight and resource boundaries",
+      "limits_or_followup": "Parser author controls additionally cover signed-zero and finite nonnegative unit grammar; profile projection still pending.",
+      "requirement": 3,
+      "status": "EXECUTED_BASELINE_CONTROLS_FINAL_CORRECTED_SOURCE_AND_CI_PENDING",
+      "tests": [
+        {
+          "evidence": "parser",
+          "executed_ok_in_bound_log": true,
+          "test": "test_exact_decimal_oracle_over_sign_mantissa_and_exponent_grid"
+        },
+        {
+          "evidence": "parser",
+          "executed_ok_in_bound_log": true,
+          "test": "test_preflight_happens_before_integer_fraction_or_power_construction"
+        },
+        {
+          "evidence": "parser",
+          "executed_ok_in_bound_log": true,
+          "test": "test_missing_whitespace_nonfinite_limits_and_conflicts_stay_distinct"
+        },
+        {
+          "evidence": "parser",
+          "executed_ok_in_bound_log": true,
+          "test": "test_exact_record_byte_cap_accepts_boundary_and_rejects_next_byte"
+        },
+        {
+          "evidence": "parser",
+          "executed_ok_in_bound_log": true,
+          "test": "test_raw_field_limit_counts_quotes_and_fails_before_numeric_decode"
+        },
+        {
+          "evidence": "parser",
+          "executed_ok_in_bound_log": true,
+          "test": "test_4096_rows_are_preserved_and_late_extra_row_cannot_decode_prefix"
+        }
+      ]
+    },
+    {
+      "behavior": "Rank/unrank; durable request/response before draws; first accepted, cap/provider failure; no redraw or reproduction entropy",
+      "limits_or_followup": "Constructed provider only; no evidence establishes independent/uniform actual provider bytes.",
+      "requirement": 4,
+      "status": "EXECUTED_BASELINE_CONTROLS_FINAL_CORRECTED_SOURCE_AND_CI_PENDING",
+      "tests": [
+        {
+          "evidence": "registration",
+          "executed_ok_in_bound_log": true,
+          "test": "test_unrank_first_last_and_interior_against_independent_factoradic"
+        },
+        {
+          "evidence": "registration",
+          "executed_ok_in_bound_log": true,
+          "test": "test_first_accepted_draw_cannot_be_skipped_or_followed"
+        },
+        {
+          "evidence": "registration",
+          "executed_ok_in_bound_log": true,
+          "test": "test_durable_request_before_callback_and_response_before_next_draw"
+        },
+        {
+          "evidence": "registration",
+          "executed_ok_in_bound_log": true,
+          "test": "test_interruption_never_allows_replacement_allocation"
+        },
+        {
+          "evidence": "registration",
+          "executed_ok_in_bound_log": true,
+          "test": "test_provider_failure_preserves_prior_rejection_and_never_retries"
+        },
+        {
+          "evidence": "registration",
+          "executed_ok_in_bound_log": true,
+          "test": "test_cap128_has_no_129th_draw_or_partial_allocation"
+        },
+        {
+          "evidence": "registration",
+          "executed_ok_in_bound_log": true,
+          "test": "test_new_registration_for_same_protocol_and_source_cannot_redraw"
+        },
+        {
+          "evidence": "registration",
+          "executed_ok_in_bound_log": true,
+          "test": "test_reproduction_imports_exact_original_bytes_without_entropy_or_new_registry"
+        }
+      ]
+    },
+    {
+      "behavior": "Pinned exact feature/row linkage; unknown overlap; source-balanced 5NN, ordinal ties, complete-only lower medians and fallbacks",
+      "limits_or_followup": "Independent Fraction oracle exists; explicit persisted input/profile/development-membership fields still pending.",
+      "requirement": 5,
+      "status": "EXECUTED_BASELINE_CONTROLS_FINAL_CORRECTED_SOURCE_AND_CI_PENDING",
+      "tests": [
+        {
+          "evidence": "feature",
+          "executed_ok_in_bound_log": true,
+          "test": "test_exact_vector_oracle_metadata_reuse_and_full_original_denominator"
+        },
+        {
+          "evidence": "feature",
+          "executed_ok_in_bound_log": true,
+          "test": "test_group_and_row_identity_conflicts_block_complete_invocation"
+        },
+        {
+          "evidence": "study",
+          "executed_ok_in_bound_log": true,
+          "test": "test_source_balanced_representatives_against_direct_fraction_oracle"
+        },
+        {
+          "evidence": "study",
+          "executed_ok_in_bound_log": true,
+          "test": "test_zero_based_numeric_ties_and_not_string_or_label_ties"
+        },
+        {
+          "evidence": "study",
+          "executed_ok_in_bound_log": true,
+          "test": "test_lower_medians_are_endpoint_separate_complete_record_weighted"
+        },
+        {
+          "evidence": "study",
+          "executed_ok_in_bound_log": true,
+          "test": "test_unknown_and_fewer_source_fallbacks_preserve_categories"
+        },
+        {
+          "evidence": "core",
+          "executed_ok_in_bound_log": true,
+          "test": "test_unknown_vectors_are_excluded_from_equality_groups_and_processing_is_explicit"
+        }
+      ]
+    },
+    {
+      "behavior": "Rank before every reserved decode; all-40 role symmetry; one future unknown forces unsupported primary; literal secondary restrictions including empty panels",
+      "limits_or_followup": "Separate strict completeness/secondary artifacts are still absent from baseline producer.",
+      "requirement": 6,
+      "status": "EXECUTED_BASELINE_CONTROLS_FINAL_CORRECTED_SOURCE_AND_CI_PENDING",
+      "tests": [
+        {
+          "evidence": "core",
+          "executed_ok_in_bound_log": true,
+          "test": "test_every_reserved_order_is_frozen_before_targets_and_secondary_is_literal_restriction"
+        },
+        {
+          "evidence": "core",
+          "executed_ok_in_bound_log": true,
+          "test": "test_corrupt_rank_receipt_blocks_reserved_decode_and_future_vault_creation"
+        },
+        {
+          "evidence": "core",
+          "executed_ok_in_bound_log": true,
+          "test": "test_all_reserved_unknowns_keep_primary_universe_and_every_empty_secondary_ledger"
+        },
+        {
+          "evidence": "parser",
+          "executed_ok_in_bound_log": true,
+          "test": "test_reserved_roles_are_symmetric_and_all_authorized_bad_rows_survive"
+        },
+        {
+          "evidence": "study",
+          "executed_ok_in_bound_log": true,
+          "test": "test_one_future_unknown_forces_primary_unsupported_and_keeps_unknown_metrics"
+        },
+        {
+          "evidence": "study",
+          "executed_ok_in_bound_log": true,
+          "test": "test_secondary_is_literal_restriction_and_empty_panels_remain"
+        }
+      ]
+    },
+    {
+      "behavior": "Calibration alpha 1/10 rank19; tied optima/two score-one; empty score0; unsupported precedence; zero threshold; variable-size exact weak boundary",
+      "limits_or_followup": "Variable-panel/weak-prefix evidence is executed generic-runtime conformance, combined with unchanged MPEA kernel calibration integration; not a probability-premise proof.",
+      "requirement": 7,
+      "status": "EXECUTED_BASELINE_CONTROLS_FINAL_CORRECTED_SOURCE_AND_CI_PENDING",
+      "tests": [
+        {
+          "evidence": "study",
+          "executed_ok_in_bound_log": true,
+          "test": "test_actual_20_panel_alpha_and_24_policy_schedule"
+        },
+        {
+          "evidence": "study",
+          "executed_ok_in_bound_log": true,
+          "test": "test_two_score_one_calibration_panels_force_tau_one_and_keep_ties"
+        },
+        {
+          "evidence": "study",
+          "executed_ok_in_bound_log": true,
+          "test": "test_all_infeasible_calibration_yields_statistical_empty_not_certificate"
+        },
+        {
+          "evidence": "study",
+          "executed_ok_in_bound_log": true,
+          "test": "test_explicit_unsupported_sampling_cannot_be_promoted_by_complete_secondary"
+        },
+        {
+          "evidence": "study_author",
+          "executed_ok_in_bound_log": true,
+          "test": "test_incomplete_calibration_reasons_preserved_and_secondary_empty"
+        },
+        {
+          "evidence": "generic",
+          "executed_ok_in_bound_log": true,
+          "test": "test_runtime_prefix_matches_independent_fraction_comparison_for_variable_m"
+        },
+        {
+          "evidence": "generic",
+          "executed_ok_in_bound_log": true,
+          "test": "test_all_minimizer_maximum_and_weak_boundary_detect_wrong_targets"
+        },
+        {
+          "evidence": "generic",
+          "executed_ok_in_bound_log": true,
+          "test": "test_unsupported_plus_incomplete_keeps_all_reasons_and_validates_every_record"
+        }
+      ]
+    },
+    {
+      "behavior": "All decisions sealed before reveal; stale/cross-identity rejection; raw/canonical identities separate; complete 960 ledgers before truth",
+      "limits_or_followup": "Production-store independent import whitespace rejection and raw-byte seals complement canonical kernel identities; no claim that canonicalization preserves arbitrary raw formatting.",
+      "requirement": 8,
+      "status": "EXECUTED_BASELINE_CONTROLS_FINAL_CORRECTED_SOURCE_AND_CI_PENDING",
+      "tests": [
+        {
+          "evidence": "core",
+          "executed_ok_in_bound_log": true,
+          "test": "test_complete_actual_shaped_workflow_and_ordered_consumer_boundaries"
+        },
+        {
+          "evidence": "core",
+          "executed_ok_in_bound_log": true,
+          "test": "test_invalid_or_stale_population_plans_never_open_future_vault"
+        },
+        {
+          "evidence": "core",
+          "executed_ok_in_bound_log": true,
+          "test": "test_all_960_ledgers_and_every_original_condition_row_remain_bound"
+        },
+        {
+          "evidence": "study",
+          "executed_ok_in_bound_log": true,
+          "test": "test_replay_requires_all_480_runs_even_zero_cost_and_exact_seals"
+        },
+        {
+          "evidence": "study",
+          "executed_ok_in_bound_log": true,
+          "test": "test_later_truth_requires_every_original_id_and_completeness_consistency"
+        },
+        {
+          "evidence": "generic",
+          "executed_ok_in_bound_log": true,
+          "test": "test_canonical_universe_and_rows_do_not_erase_declared_ranking"
+        }
+      ]
+    },
+    {
+      "behavior": "Exact same-K controls, constructed improvement and failure, gate equality/zero denominators, unknown truth remains unknown",
+      "limits_or_followup": "Constructed passes demonstrate implemented arithmetic, not empirical superiority.",
+      "requirement": 9,
+      "status": "EXECUTED_BASELINE_CONTROLS_FINAL_CORRECTED_SOURCE_AND_CI_PENDING",
+      "tests": [
+        {
+          "evidence": "study",
+          "executed_ok_in_bound_log": true,
+          "test": "test_same_actual_cost_primary_and_stopped_are_identical"
+        },
+        {
+          "evidence": "study",
+          "executed_ok_in_bound_log": true,
+          "test": "test_constructed_positive_control_requires_both_real_replay_populations"
+        },
+        {
+          "evidence": "study",
+          "executed_ok_in_bound_log": true,
+          "test": "test_losing_a_tied_optimum_can_have_zero_regret_and_fails_pool_gate"
+        },
+        {
+          "evidence": "study",
+          "executed_ok_in_bound_log": true,
+          "test": "test_fixed_gate_boundaries_and_no_empty_denominator_success"
+        },
+        {
+          "evidence": "study",
+          "executed_ok_in_bound_log": true,
+          "test": "test_no_feasible_panels_exposes_unavailable_components_not_threshold_failures"
+        },
+        {
+          "evidence": "study",
+          "executed_ok_in_bound_log": true,
+          "test": "test_feasible_singletons_leave_ranking_unavailable_but_pool_failure_defined"
+        },
+        {
+          "evidence": "bridge",
+          "executed_ok_in_bound_log": true,
+          "test": "test_all_policies_caps_and_same_cost_preserve_exact_numerators"
+        },
+        {
+          "evidence": "bridge",
+          "executed_ok_in_bound_log": true,
+          "test": "test_unknown_primary_and_empty_secondary_never_become_success_or_superiority"
+        }
+      ]
+    },
+    {
+      "behavior": "Closed public schema/sink, row/target/extra-key and stronger-claim rejection, constant failures, safe destination",
+      "limits_or_followup": "New public completeness schema and companions require fresh allowlist/sink controls. Existing launcher supervisor tests use controlled dependencies, not actual registration.",
+      "requirement": 10,
+      "status": "EXECUTED_BASELINE_CONTROLS_FINAL_CORRECTED_SOURCE_AND_CI_PENDING",
+      "tests": [
+        {
+          "evidence": "projector",
+          "executed_ok_in_bound_log": true,
+          "test": "test_resealed_fields_types_and_scope_promotions_are_rejected"
+        },
+        {
+          "evidence": "projector",
+          "executed_ok_in_bound_log": true,
+          "test": "test_reason_vocabulary_and_target_status_intersection_are_closed"
+        },
+        {
+          "evidence": "bridge",
+          "executed_ok_in_bound_log": true,
+          "test": "test_aggregate_hidden_keys_and_unsealed_claims_are_rejected"
+        },
+        {
+          "evidence": "bridge",
+          "executed_ok_in_bound_log": true,
+          "test": "test_owned_publication_is_exact_and_cannot_overwrite"
+        },
+        {
+          "evidence": "bridge",
+          "executed_ok_in_bound_log": true,
+          "test": "test_valid_projection_cannot_be_written_into_unrelated_attempt"
+        },
+        {
+          "evidence": "bridge",
+          "executed_ok_in_bound_log": true,
+          "test": "test_corrupted_stage_blocks_projection_and_publication"
+        },
+        {
+          "evidence": "launcher",
+          "executed_ok_in_bound_log": true,
+          "test": "test_registration_failure_never_constructs_sink_or_worker"
+        },
+        {
+          "evidence": "launcher",
+          "executed_ok_in_bound_log": true,
+          "test": "test_supervisor_failure_ignores_any_locally_complete_scientific_result"
+        },
+        {
+          "evidence": "launcher",
+          "executed_ok_in_bound_log": true,
+          "test": "test_projector_failure_after_eight_seals_cannot_promote_to_complete"
+        }
+      ]
+    },
+    {
+      "behavior": "Actual-shaped constructed flow under active supervisor plus fresh-process same scientific stages/no entropy",
+      "limits_or_followup": "Genuine full shared arithmetic flow under real namespace/supervisor and production-format fresh-process reproduction are complementary separate tests. They do not establish one fully production-authorized worker run. Stage usage missing; new metadata/usage integration and final main CI pending.",
+      "requirement": 11,
+      "status": "EXECUTED_BASELINE_CONTROLS_FINAL_CORRECTED_SOURCE_AND_CI_PENDING",
+      "tests": [
+        {
+          "evidence": "fixture_author",
+          "executed_ok_in_bound_log": true,
+          "test": "test_complete_fixture_inside_network_namespace"
+        },
+        {
+          "evidence": "fixture_author",
+          "executed_ok_in_bound_log": true,
+          "test": "test_insufficient_development_has_valid_negative_terminal"
+        },
+        {
+          "evidence": "archive_author",
+          "executed_ok_in_bound_log": true,
+          "test": "test_two_processes_preserve_allocation_bytes_scientific_stages_no_entropy"
+        },
+        {
+          "evidence": "core",
+          "executed_ok_in_bound_log": true,
+          "test": "test_fresh_process_same_constructed_fixed_roles_reproduces_every_scientific_stage"
+        },
+        {
+          "evidence": "core",
+          "executed_ok_in_bound_log": true,
+          "test": "test_unissued_or_synthetic_registration_stops_before_source_or_feature_read"
+        }
+      ]
+    }
+  ],
+  "schema": "lupine.discovery.required_synthetic_behavior_evidence_map.v1",
+  "scope": "Read-only evidence indexing; no tests executed by this map; no actual scientific source/feature/target/entropy access. Logs and receipts retain their original exact source scopes."
+}

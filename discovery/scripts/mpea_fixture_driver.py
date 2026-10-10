@@ -42,6 +42,7 @@ def implementation_identity():
         "mpea_target_custody": HERE / "mpea_target_custody.py",
         "mpea_stage_store": HERE / "mpea_stage_store.py",
         "mpea_fixture_driver": HERE / "mpea_fixture_driver.py",
+        "mpea_study_flow": HERE / "mpea_study_flow.py",
         "mpea_study": ROOT / "scripts/mpea_study.py",
         "mpea_features": ROOT / "scripts/mpea_features.py",
     }
@@ -343,6 +344,14 @@ class FixtureEvaluator:
     def complete(self):
         return len(self.__finished) == len(self.__schedules)
 
+    @property
+    def completed_policy_runs(self):
+        return len(self.__finished)
+
+    @property
+    def bundle_requests(self):
+        return sum(len(history) for history in self.__history.values())
+
     def policy(self, plan_digest, panel_id, policy_id):
         """Trusted scheduler allocates one capability; consumers get only it."""
         key = (plan_digest, panel_id, policy_id)
@@ -501,73 +510,12 @@ def run_fixture(case, attempt, *, sampling_premise="unsupported", checkpoint=Non
     try:
         seal("allocation", _allocation_payload(case, store._source))
         seal("input_freeze", _input_payload(case))
-        emit({"event": "TARGET_PHASE_BEGIN"})
-        rows = custodian.development()
-        aggregates["DEVELOPMENT"] = _target_aggregate(rows)
-        aggregate = aggregates["DEVELOPMENT"]
-        reasons = tuple(code for condition, code in (
-            (aggregate["complete_row_count"] < 50, "DEVELOPMENT_ROWS_BELOW_50"),
-            (aggregate["complete_group_count"] < 15, "DEVELOPMENT_GROUPS_BELOW_15")) if condition)
-        development_status = "NO_GO_INSUFFICIENT_DEVELOPMENT" if reasons else "COMPLETE"
-        seal("development", {"rows": _target_payload(rows), "aggregate": aggregate,
-                             "status": development_status, "reasons": reasons},
-             status=development_status, reasons=reasons)
-        if reasons:
-            return FixtureResult(development_status, store, None, (), None, (), None,
-                                 MappingProxyType(aggregates), tuple(custodian.access), reasons)
-        # Model access starts only after the parsed development artifact closes.
-        store.require("development")
-        feature_map = {row.record_id: row for row in case.features}
-        fit = kernel.fit_development(tuple(kernel.DevelopmentRow(feature_map[row.record_id], row)
-                                           for row in _targets(rows)))
-        if fit.status != "COMPLETE" or fit.reasons:
-            fail("INTERNAL_FAILURE")
-        ranks = tuple(kernel.rank_panel(fit, panel) for role in ROLES for panel in _panels(case, role))
-        rank_sha = seal("rank_freeze", {"fit_digest": fit.fit_digest, "threshold": fit.threshold,
-            "processing_medians": fit.processing_medians, "global_medians": fit.global_medians,
-            "ranks": [_compact_rank(rank) for rank in ranks]})
-        role_by_group = {str(row.source_group): row.role for row in case.routes.rows if row.condition_eligible}
-        calibration_ranks = tuple(r for r in ranks if role_by_group[r.panel.source_group] == "CALIBRATION")
-        future_ranks = tuple(r for r in ranks if role_by_group[r.panel.source_group] == "EVALUATION")
-        completeness, reserved_aggregates, identities = custodian.reserved(
-            tuple(r.panel for r in calibration_ranks + future_ranks), rank_sha)
-        aggregates.update(reserved_aggregates)
-        seal("reserved", {"completeness_digest": completeness.completeness_digest,
-            "all_40_endpoints_defined": completeness.all_defined, "complete_ids": completeness.complete_ids,
-            "target_aggregates": reserved_aggregates, "vault_identities": identities})
-        calibration_targets = custodian.calibration()
-        plans = tuple(kernel.calibrate_population(fit, calibration_ranks, calibration_targets,
-            future_ranks, completeness, population, sampling_premise, rank_sha,
-            "constructed fixture column 11 yield strength MPa",
-            "constructed fixture column 13 total elongation percentage points",
-            "constructed fixture recorded endpoints, no physical uncertainty attested")
-            for population in ("primary", "secondary"))
-        seal("calibration", {"plan_digests": [plan.plan_digest for plan in plans],
-            "all_future_decisions_sealed": True, "plans": [_compact_plan(plan) for plan in plans]})
-        evaluator = custodian.evaluator(plans)
-        runs = []
-        for plan in plans:
-            one = []
-            for schedule in plan.schedules:
-                oracle = evaluator.policy(plan.plan_digest, schedule.panel_id, schedule.policy_id)
-                for record_id in schedule.reveal_ids:
-                    token = oracle.request(record_id)
-                    oracle.reveal(token)
-                one.append(oracle.finish())
-            runs.append(tuple(one))
-        seal("replay", {"completed_policy_runs": sum(map(len, runs)), "runs": runs,
-                        "all_policy_runs_complete": evaluator.complete})
-        truth = custodian.audit_truth(evaluator)
-        replays = tuple(kernel.audit_replay(plan, one, truth) for plan, one in zip(plans, runs))
-        evaluation = kernel.evaluate_study(*replays)
-        # Compact exact assessment without recursively embedding plans/fits again.
-        assessment = {name: getattr(evaluation, name) for name in evaluation.__dataclass_fields__
-                      if name not in ("primary", "secondary")}
-        seal("evaluation", {"evaluation": assessment,
-             "population_audits": [_compact_replay(replay) for replay in replays],
-             "access": custodian.access})
-        return FixtureResult("COMPLETE", store, fit, ranks, completeness, plans, evaluation,
-                             MappingProxyType(aggregates), tuple(custodian.access))
+        from mpea_study_flow import execute
+        return execute(case,store,custodian,seal,emit,sampling_premise=sampling_premise,
+            references=("constructed fixture column 11 yield strength MPa",
+                "constructed fixture column 13 total elongation percentage points",
+                "constructed fixture recorded endpoints, no physical uncertainty attested"),
+            result_type=FixtureResult)
     except Exception as exc:
         # Preserve exact prefix and a closed terminal stage when storage remains
         # valid. Never report a successful later artifact after a failed stage.

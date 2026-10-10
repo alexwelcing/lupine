@@ -1,0 +1,19 @@
+{
+  "elapsed_seconds": 1.039743023000483,
+  "exit_code": 1,
+  "scope": "constructed Git, metadata, entropy callbacks, and temporary filesystem only",
+  "source_after": {
+    ".cache/mpea-registration-allocation/mpea_registration_allocation.py": "1199d1147f03569b510b8d17caa1a27c7e4c71ca00320a77a449e67238779967",
+    ".cache/mpea-registration-allocation/review/test_registration_allocation_review.py": "efb2a7f9a570fe87fddea784497b34e7bc34b2b9a5ccbb7058d290f34f54d0ca",
+    "scripts/mpea_target_custody.py": "7f649dd50d7c5589fd9da0f9745b7936b7a3a2bf631a8418affae4a67be1ee9c",
+    "scripts/permutation_allocation.py": "a7f454b4541f75603019bf73091c97190ea6f618efa52988c3065971273405e5"
+  },
+  "source_before": {
+    ".cache/mpea-registration-allocation/mpea_registration_allocation.py": "1199d1147f03569b510b8d17caa1a27c7e4c71ca00320a77a449e67238779967",
+    ".cache/mpea-registration-allocation/review/test_registration_allocation_review.py": "efb2a7f9a570fe87fddea784497b34e7bc34b2b9a5ccbb7058d290f34f54d0ca",
+    "scripts/mpea_target_custody.py": "7f649dd50d7c5589fd9da0f9745b7936b7a3a2bf631a8418affae4a67be1ee9c",
+    "scripts/permutation_allocation.py": "a7f454b4541f75603019bf73091c97190ea6f618efa52988c3065971273405e5"
+  },
+  "stderr_sha256": "af2123a335fcca3cc0bf73b3864dc06134a0f2b369d2ad6bb254dbc7a6ba0af0",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

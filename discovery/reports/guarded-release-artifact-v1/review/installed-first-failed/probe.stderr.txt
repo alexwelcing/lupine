@@ -1,0 +1,3 @@
+Traceback (most recent call last):
+  File "<string>", line 4, in <module>
+ImportError: cannot import name 'STATIC' from 'lupine_discovery.server' (/tmp/a67815e-installed-audit-46hqgqzh/venv/lib/python3.12/site-packages/lupine_discovery/server.py)

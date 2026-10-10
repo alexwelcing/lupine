@@ -1,0 +1,17 @@
+{
+  "results": [
+    {
+      "destination": "tests/test_mpea_public_bridge_review.py",
+      "fixture_module": "mpea_archive_review_constructed_case",
+      "main_imports": "PASS",
+      "sha256": "5bc37564fa431e77b7bda94f0cd34d6fc0c5aa4a8980a5db2e5e00873aa8a21b"
+    },
+    {
+      "destination": "tests/test_mpea_public_bridge_boundaries.py",
+      "fixture_module": "mpea_archive_review_constructed_case",
+      "main_imports": "PASS",
+      "sha256": "7b76dd623ba7dcdf0484daea982db08a6f470a8c783bca53b9e6c19fb7f4549b"
+    }
+  ],
+  "scope": "Import-only compile with planned main __file__; no cases executed or main files edited"
+}

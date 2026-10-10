@@ -1,0 +1,41 @@
+{
+  "commands": [
+    {
+      "argv": [
+        "/tmp/a67815e-installed-audit-46hqgqzh/venv/bin/python",
+        "-I",
+        "-m",
+        "pip",
+        "install",
+        "--no-index",
+        "--no-deps",
+        "/workspace/lupine-discovery-branch/discovery/.cache/release-artifacts-a67815e/lupine_discovery-0.1.0-py3-none-any.whl"
+      ],
+      "exit_code": 0,
+      "name": "install",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "3c7d03e7111ddce2e673b7744eb33792f2294af708375bb8c2a381094d6ff6d9"
+    },
+    {
+      "argv": [
+        "/tmp/a67815e-installed-audit-46hqgqzh/venv/bin/python",
+        "-I",
+        "-c",
+        "from importlib.resources import files\nfrom pathlib import Path\nimport hashlib,json,sys,lupine_discovery\nfrom lupine_discovery.server import benchmark_report,STATIC\nasset=files('lupine_discovery').joinpath('web/mpea.js').read_bytes()\nassert hashlib.sha256(asset).hexdigest()==sys.argv[1]\nassert not files('lupine_discovery').joinpath('resources/mpea-t25-v1.json').is_file()\nassert 'mpea_archived' not in benchmark_report()\nassert '/mpea.js' in STATIC\nprint(json.dumps({'status':'PASS','module_path':str(Path(lupine_discovery.__file__).resolve()),'mpea_js_sha256':hashlib.sha256(asset).hexdigest(),'mpea_resource_absent':True,'mpea_benchmark_field_absent':True,'static_route_present':True}))\n",
+        "f760f6225e60f08d7b4217bae7e7499fe1b4d3ea91514c5b1e429c5b4523f35e"
+      ],
+      "exit_code": 1,
+      "name": "probe",
+      "stderr_sha256": "a270494724137227f1efac76dc9b08f04951eb5ef1a5b23a0662ec219b176de5",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "expected_commit": "a67815e60561df1ea08a44e63227e2e3b6780c6c",
+  "expected_mpea_js_sha256": "f760f6225e60f08d7b4217bae7e7499fe1b4d3ea91514c5b1e429c5b4523f35e",
+  "probe_sha256": "28f8b7c7c5bfc26894ce184f1c06fd4895c81c7e2a892c419a90782ec50de582",
+  "schema": "lupine.retained-installed-asset-audit.v1",
+  "scope": "Actual fresh isolated installed asset/API check, not repetition of28case smoke or scientific evaluation",
+  "status": "FAIL",
+  "wheel_after": "fd34e05a081c0adcc77a6efaa1bc13db9aae6a58f76208ce4aa99cb9b53189fe",
+  "wheel_before": "fd34e05a081c0adcc77a6efaa1bc13db9aae6a58f76208ce4aa99cb9b53189fe"
+}

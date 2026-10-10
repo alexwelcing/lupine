@@ -1,0 +1,7 @@
+{
+  "original_bytes": 1127,
+  "original_path": ".cache/mpea-study-custody/review_production/archive-contract-review-v1.json",
+  "original_sha256": "789596d224124ec5b1a484391988e66fb1834d8b86f43a3634378321789c3852",
+  "schema": "lupine.discovery.lossless_utf8_artifact.v1",
+  "text": "{\n  \"assessment\": \"Consistent with reviewed custody/driver scope; no premature actual-source or physical-science claim.\",\n  \"delegated_source_scopes\": [\n    \"registration authentication\",\n    \"supervisor isolation\",\n    \"launcher persisted-envelope verification\",\n    \"public projection and sink binding\"\n  ],\n  \"limitation\": \"Source/specification reading; not a production experiment or runtime proof.\",\n  \"path\": \".cache/mpea-study-custody/archive-driver-contract.md\",\n  \"reviewed_points\": [\n    \"constructed-data scope and production prerequisites explicit\",\n    \"same-buffer whole-source authentication before framing and selected target interpretation\",\n    \"rank/calibration/replay ordering agrees with source\",\n    \"recorded result identity can preserve blocked incident; publication still verifies persisted prefix\",\n    \"source groups and descriptor equalities do not establish independence\",\n    \"same-allocation reproduction is not an independent scientific sample\"\n  ],\n  \"schema\": \"lupine.discovery.archive_contract_peer_review.v1\",\n  \"sha256\": \"e419520b061adf0ac18a36e7b25e890370e6a999f1a4982b1e13025db25323e2\"\n}\n"
+}

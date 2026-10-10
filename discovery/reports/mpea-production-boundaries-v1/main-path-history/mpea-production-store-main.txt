@@ -1,0 +1,45 @@
+test_chain_sidecar_identity_and_exact_reconstruction (test_mpea_production_store.ProductionStoreTests.test_chain_sidecar_identity_and_exact_reconstruction) ... ok
+test_closed_bindings_and_no_implicit_registration_claim (test_mpea_production_store.ProductionStoreTests.test_closed_bindings_and_no_implicit_registration_claim) ... ok
+test_execution_kind_readonly_and_marker_consistent (test_mpea_production_store.ProductionStoreTests.test_execution_kind_readonly_and_marker_consistent) ... ok
+test_original_allocation_preserved_byte_for_byte (test_mpea_production_store.ProductionStoreTests.test_original_allocation_preserved_byte_for_byte) ... ok
+test_predecessor_tamper_and_sidecar_denial (test_mpea_production_store.ProductionStoreTests.test_predecessor_tamper_and_sidecar_denial) ... ok
+test_status_reasons_and_access_are_scientific (test_mpea_production_store.ProductionStoreTests.test_status_reasons_and_access_are_scientific) ... ok
+test_usage_and_wrappers_change_content_not_scientific_chain (test_mpea_production_store.ProductionStoreTests.test_usage_and_wrappers_change_content_not_scientific_chain) ... ok
+test_all_eight_stages_bind_exact_bytes_and_independent_scientific_preimage (test_mpea_production_store_review.IndependentProductionStoreReview.test_all_eight_stages_bind_exact_bytes_and_independent_scientific_preimage) ... ok
+test_bad_binding_and_source_types_are_rejected_before_filesystem_open (test_mpea_production_store_review.IndependentProductionStoreReview.test_bad_binding_and_source_types_are_rejected_before_filesystem_open) ... ok
+test_closed_common_envelope_rejects_resealed_wrong_keys_and_statuses (test_mpea_production_store_review.IndependentProductionStoreReview.test_closed_common_envelope_rejects_resealed_wrong_keys_and_statuses) ... ok
+test_execution_scope_cannot_contradict_the_exclusive_attempt_marker (test_mpea_production_store_review.IndependentProductionStoreReview.test_execution_scope_cannot_contradict_the_exclusive_attempt_marker) ... ok
+test_fresh_process_import_has_identical_scientific_chain_and_original_allocation_bytes (test_mpea_production_store_review.IndependentProductionStoreReview.test_fresh_process_import_has_identical_scientific_chain_and_original_allocation_bytes) ... FAIL
+test_import_rejects_wrong_kind_occupied_attempt_and_raw_whitespace_substitution (test_mpea_production_store_review.IndependentProductionStoreReview.test_import_rejects_wrong_kind_occupied_attempt_and_raw_whitespace_substitution) ... ok
+test_import_requires_exact_allocation_and_route_linkages_even_after_resealing (test_mpea_production_store_review.IndependentProductionStoreReview.test_import_requires_exact_allocation_and_route_linkages_even_after_resealing) ... ok
+test_original_allocation_import_preserves_every_byte_and_never_requests_entropy (test_mpea_production_store_review.IndependentProductionStoreReview.test_original_allocation_import_preserves_every_byte_and_never_requests_entropy) ... ok
+test_oversized_import_is_rejected_before_hash_or_json_decode (test_mpea_production_store_review.IndependentProductionStoreReview.test_oversized_import_is_rejected_before_hash_or_json_decode) ... ok
+test_partial_import_keeps_copied_route_and_prevents_retry_or_downstream_require (test_mpea_production_store_review.IndependentProductionStoreReview.test_partial_import_keeps_copied_route_and_prevents_retry_or_downstream_require) ... ok
+test_publication_failure_preserves_verified_prefix_and_records_no_new_seal (test_mpea_production_store_review.IndependentProductionStoreReview.test_publication_failure_preserves_verified_prefix_and_records_no_new_seal) ... ok
+test_resealed_predecessor_usage_change_preserves_semantic_seal_but_breaks_whole_byte_gate (test_mpea_production_store_review.IndependentProductionStoreReview.test_resealed_predecessor_usage_change_preserves_semantic_seal_but_breaks_whole_byte_gate) ... ok
+test_semantic_chain_reproduces_despite_usage_and_operational_wrapper_changes (test_mpea_production_store_review.IndependentProductionStoreReview.test_semantic_chain_reproduces_despite_usage_and_operational_wrapper_changes) ... ok
+test_semantic_input_seal_and_fallback_bytes_have_distinct_roles (test_mpea_production_store_review.IndependentProductionStoreReview.test_semantic_input_seal_and_fallback_bytes_have_distinct_roles) ... ok
+test_sidecar_identity_scope_and_snapshots_do_not_alias (test_mpea_production_store_review.IndependentProductionStoreReview.test_sidecar_identity_scope_and_snapshots_do_not_alias) ... ok
+test_source_and_all_five_scientific_registration_fields_change_scientific_identity (test_mpea_production_store_review.IndependentProductionStoreReview.test_source_and_all_five_scientific_registration_fields_change_scientific_identity) ... ok
+test_terminal_failure_keeps_prior_bytes_and_prevents_successor (test_mpea_production_store_review.IndependentProductionStoreReview.test_terminal_failure_keeps_prior_bytes_and_prevents_successor) ... ok
+
+======================================================================
+FAIL: test_fresh_process_import_has_identical_scientific_chain_and_original_allocation_bytes (test_mpea_production_store_review.IndependentProductionStoreReview.test_fresh_process_import_has_identical_scientific_chain_and_original_allocation_bytes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_mpea_production_store_review.py", line 282, in test_fresh_process_import_has_identical_scientific_chain_and_original_allocation_bytes
+    self.assertEqual(process.returncode,0,process.stderr.decode())
+AssertionError: 1 != 0 : Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/tests/mpea_store_reproduction_fixture.py", line 28, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/tests/mpea_store_reproduction_fixture.py", line 14, in main
+    if HERE not in root.parents:raise ValueError('SYNTHETIC_FIXTURE_REQUIRED')
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: SYNTHETIC_FIXTURE_REQUIRED
+
+
+----------------------------------------------------------------------
+Ran 24 tests in 2.077s
+
+FAILED (failures=1)

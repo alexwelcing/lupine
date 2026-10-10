@@ -3,6 +3,70 @@
 The current goal and ordered backlog are in `../GOAL.md`. Append concise entries
 with artifacts, actual checks, scientific implications, and the next action.
 
+## 2026-10-10 22:01 UTC — 1,153 integration tests pass; contract audit blocks registration
+
+- Promoted the reviewed production store, source adapter, shared stage flow,
+  aggregate bridge and parent/worker launcher. Final public-tag registration
+  source is `d4a11c4c`; no actual registration tag or scientific allocation exists.
+  Root checks pass: archive author 10, independent custody 18, bridge 21 and
+  combined registration 56. Portable launcher 32 and updated browser 56 pass;
+  the browser has zero JavaScript errors. Original import/path migration failures
+  remain in [the integration evidence](mpea-production-integration-v1/README.md).
+- Preserved 124 lossless production source/review artifacts, 51 public-tag review
+  artifacts and the earlier 92 store/registration artifacts. Independent review
+  checked the older publication maps, including reconstruction of the large
+  compressed failed-test log. Original negative scientific results are unchanged.
+- Added the independently tested retained-artifact auditor to current CI after
+  the package build. Eleven auditor tests and the actual historical a67815e
+  retained wheel/source audit pass. Full integration passed 1,153 tests in 724.952 seconds with all 318
+  source/specification/example hashes unchanged. The complete actual log and
+  before/after map are retained. Runtime manifest covers 264 source/resource files.
+- A late literal audit of implementation-contract sections 2 and 10 found
+  missing required private artifact members and empty per-stage resource maps.
+  This is a release/registration blocker despite passing numerical and custody
+  controls. The frozen scientific protocol, acceptance criteria and all target
+  access restrictions remain unchanged. The checkpoint must not be registered
+  for actual performance access while those discrepancies remain.
+- Owner/checkpoint: root publishes the tested, explicitly blocked checkpoint and verifies
+  its exact remote SHA and all four hosted CI jobs. The custody engineer supplies
+  the literal artifact evidence; a separate resource engineer provides measured
+  stage CPU/wall time and explicitly scoped RSS observations. Independent
+  reviewers check schema completeness, numerical equivalence and usage exclusion
+  from scientific digests. Next resolve these gaps, rerun the complete corrected
+  source, then publish the actual registration before the sole allocation.
+
+## 2026-10-10 21:37 UTC — hosted repair verified; production integration continues
+
+- Verified remote `ae573ea9581a8e75bdffd787cba11d8051bfa83d` and every
+  successful job in run 38087728540: both Python versions, browser and Lean.
+  Both hosted namespace preflights passed. Exact official evidence is retained
+  in `mpea-namespace-ci-v1/repaired-ci.json`; the original a67815e failure remains.
+- A repeated continuation request arrived during active implementation. Fetched
+  HEAD matched the local commit; root preserved existing owner lanes and edits.
+  `continuation.json` records this reconciliation without claiming another worker
+  or interpreting a wake-up as experiment execution.
+- Reviewed production store and registration boundary sources are in main's
+  next working increment: 24 store and 43 registration tests pass after a
+  preserved test-helper workspace-path failure. A current retained-artifact
+  auditor passes eleven tests; the real a67815e wheel audit verifies 929 source
+  blobs, 230 manifest entries and 111 RECORD entries. These are not new science.
+- Independent claim review found two stale labels: calibration documentation now
+  acknowledges compiled finite-law probability statements without Python refinement;
+  the mixed experimental/calculated pilot section now says PUBLISHED ARCHIVES.
+  Final browser verification of this changed label remains pending.
+- The written registration contract requires a public binding before allocation.
+  [The prospective publication note](../docs/mpea-registration-publication-v1.md)
+  specifies an annotated research-registration tag pointing to the exact green
+  source commit while leaving the working branch unchanged. No actual tag has
+  been created. The parent/offline binding implementation and independent tests
+  are in progress; tagger dates will not be presented as trusted publication times.
+- Owner/checkpoint: root integrates and preserves reviewed artifacts; custody
+  engineer fixes reproduced partial-failure accounting before the common source
+  freeze; independent adapter/bridge/launcher reviewers check those paths.
+  Registration engineer/reviewer finish the public-record gate. Next promote
+  final exact sources, run complete source-bound tests, publish/verify the freeze,
+  then register publicly before the sole actual allocation. Targets remain closed.
+
 ## 2026-10-10 21:27 UTC — hosted namespace refusal preserved; CI repair
 
 - Published and verified remote `a67815e60561df1ea08a44e63227e2e3b6780c6c`.

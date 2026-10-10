@@ -1,0 +1,18 @@
+{
+  "schema": "lupine.release-claim-snapshot-audit.v1",
+  "commit": "ae573ea9581a8e75bdffd787cba11d8051bfa83d",
+  "formal_receipt_check": {
+    "statements": 130,
+    "modules": 10,
+    "module_hashes_match": true,
+    "axiom_output_hash_matches": true,
+    "only_standard_axioms": true,
+    "same_formal_tree_as_a67815e": true,
+    "new_compilation_performed": false
+  },
+  "relative_doc_links_checked": 287,
+  "missing_relative_links": [],
+  "known_answer_case_count": 13,
+  "actual_mpea_result_resource_present": false,
+  "scope": "Pinned public source/receipt identity and manual claim analysis only; no privateCSV/features/targets, no fulltest/Lean/reproduction/liveCI execution, no finalGO"
+}

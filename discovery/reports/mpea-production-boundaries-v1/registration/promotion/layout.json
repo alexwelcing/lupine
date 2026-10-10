@@ -1,0 +1,9 @@
+{
+  "files": {
+    "scripts/mpea_registration_allocation.py": "51c19d99043b4d620669fa91bb1bd1e331a628410dcc9251febabd6ecbdcb192",
+    "tests/test_mpea_registration_allocation_boundaries.py": "f31da1b3d016fed0cfee6ba2562060a44cbb0c47a38e0d7aa0a272e3823a1248",
+    "tests/test_mpea_registration_allocation_store_integration.py": "b6e5150b469259bb73d50ce470eaaf3680472f5cdaf4634eeb6a3f04d3a0ebe8"
+  },
+  "schema": "lupine.registration-allocation.promotion-layout.v1",
+  "scope": "Source byte-identical; test loader paths only adapted; not executed before main store/source promotion"
+}

@@ -1,0 +1,79 @@
+{
+  "author_written_integration_tests_reexecuted": 1,
+  "confirmed_findings_resolved": [
+    "Exact integer typing rejects boolean ordinals/ranks/group IDs/CI run IDs.",
+    "Closed CI nested repository validation returns constant errors instead of AttributeError.",
+    "Manifest closure includes pinned header, sampler evidence, pyproject, correct existing feature-publication paths.",
+    "Reproduction imports original byte/content/scientific identities; original allocation can be loaded after later stages.",
+    "Bounded JSON inputs reject floats/duplicates/excess depth/string length.",
+    "New allocation registry directory entries are fsynced before entropy callbacks.",
+    "Trusted-parent approved engineering SHA is explicit; before/after source maps must equal committed manifest."
+  ],
+  "coverage": [
+    "Independent development salt/order and factorial unranking on constructed nonconsecutive groups.",
+    "All1545 synthetic original routes retained;314 condition rows/75groups;noncondition active-source roles,unknownsource and absentformula preserved.",
+    "Official response shape/commit/workflow/four distinct successful jobs, frozen/live job equality, offline launchcapture hash, dirtysource and missingmanifest gate.",
+    "First accepted draw only;128draw cap;provider failure, interruption and response write failure preserve prefixes and preventreplacement draw.",
+    "Durable marker/request/response ordering;directory/file fsync calls;symlink ancestor and nooverwrite boundaries.",
+    "No entropy and originalbyte import in reproduction;fixture relabel cannot acquire factory authority."
+  ],
+  "evidence_sha256": {
+    "final-author-store-integration.stderr.txt": "6370cb7d46f1f1cc4ce08c04cd8728bae810a68c27fece2ce59cf4f2783c76ce",
+    "final-author-store-integration.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "final-execution-v1.json": "f13258895dd4a81b85043516d31c4db90cf639aec31e5395cd451658368b2a0b",
+    "final-independent.stderr.txt": "9daf19228e5c08d7098238d6b9f11e8bf27b3e8a1cbf879450335cf11842dc98",
+    "final-independent.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "independent_test_count": 26,
+  "independent_test_skips": 0,
+  "limits": [
+    "No actual scientific source, privatefeatures/targets, actual metadata group allocation, production allocation OS entropy provider, or liveGitHub transport was invoked.",
+    "OfficialGitHub transport validation was source-reviewed and tested with injected constructed responses; offline worker trusts authenticated parent capture hash.",
+    "Approved engineering hash is supplied by trustedparent; seals and parsed logs do not independentlyprove test execution,adequacy,hostintegrity or physicaltruth.",
+    "File/fsync ordering tests assume ordinaryfilesystem durability semantics;no powerloss fault campaign or hostileoperator/filesystem isolationproof.",
+    "Sampler uniformity remains assumed_unverified conditional on uniformindependent entropy;falseattestationflags preserved.",
+    "Live gate currently requires remote branchHEAD equal registeredcommit;futurearchival replay afterbranchadvance needs reviewedworkflow or this explicitrestriction.",
+    "No Python-to-Lean refinement,no targeteligibility result,and no realstudy readiness/releaseauthorization established."
+  ],
+  "prior_runs_preserved": {
+    "1": {
+      "exit_code": 1,
+      "receipt": "attempt-1.json",
+      "receipt_sha256": "b68f05dc87990cb8de041fa0a8dc4c2fb8daef1570763da53288126fa58f196b"
+    },
+    "2": {
+      "exit_code": 1,
+      "receipt": "attempt-2.json",
+      "receipt_sha256": "2314e0f1f9cc9f00cc274c93ad8e0a64b1f011823ebbd7b810b9f840f8192256"
+    },
+    "3": {
+      "exit_code": 1,
+      "receipt": "attempt-3.json",
+      "receipt_sha256": "ad325877f84acdea9d63edbb0f19bbc09c1efba18b2984e3a95bd02b80542d84"
+    },
+    "4": {
+      "exit_code": 0,
+      "receipt": "attempt-4.json",
+      "receipt_sha256": "408bbe1bd7305de54f7cb88e49dd04661588441d365bbc0e8060f3c533f009b1"
+    },
+    "5": {
+      "exit_code": 0,
+      "receipt": "attempt-5.json",
+      "receipt_sha256": "e306ad187c4b2abc4c7dc01566e219f77afae4ddc09a022e27286dec3a944ae2"
+    }
+  },
+  "schema": "lupine.registration-allocation.independent-review.v1",
+  "source_sha256": {
+    ".cache/mpea-registration-allocation/API.md": "57b003ec1bc823b98a6c0c35521669bf18b95a47a98ad3209f2ec97b6b45c3e1",
+    ".cache/mpea-registration-allocation/mpea_registration_allocation.py": "fff2750f2648e8f1dba58aff6de8b234d3300efc005e05c6581f469e539b91e3",
+    ".cache/mpea-registration-allocation/review/test_registration_allocation_review.py": "b7c19da6c2c2c885cded2e7bf496815e016467af3bb32aa77b72424490a93dba",
+    ".cache/mpea-registration-allocation/test_store_integration.py": "f1c546efe3e23cfbe5aa973eacfca8b9b3ad1efc5e3db806efd468671668f3ec",
+    ".cache/mpea-study-custody/scripts/mpea_production_store.py": "9b5caa9a013da7b2bae8bb78d89a74a697201bdc73b1cd2db1d38c2e750db6b4",
+    ".cache/mpea-study-custody/scripts/mpea_stage_store.py": "13c42919e79e0949f4cbcf5ce0eeeb1cb66d3a48893e6e4fdc3cd3fdf68498db",
+    "docs/mpea-t25-archival-protocol-v1.md": "c49047341d3932ddd67c67c9f2a04a6759c0d679bfeb96d811ba9541c0cc0378",
+    "docs/mpea-t25-implementation-contract-v1.md": "be45b1d8db9586035cf37bd9bbb9046c065c3851b91f93386f8c68d155215af9",
+    "scripts/mpea_target_custody.py": "7f649dd50d7c5589fd9da0f9745b7936b7a3a2bf631a8418affae4a67be1ee9c",
+    "scripts/permutation_allocation.py": "a7f454b4541f75603019bf73091c97190ea6f618efa52988c3065971273405e5"
+  },
+  "status": "PASS_SYNTHETIC_ENGINEERING_SCOPED"
+}

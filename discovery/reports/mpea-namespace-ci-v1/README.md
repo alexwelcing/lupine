@@ -26,3 +26,9 @@ Root owns this CI repair and remote verification. The reviewed production
 registration/store integration continues in a separate uncommitted increment.
 No real allocation or performance target was opened. All scientific results and
 claim limits remain unchanged.
+
+The repair subsequently published as
+`ae573ea9581a8e75bdffd787cba11d8051bfa83d`. Both hosted namespace preflights
+and all four jobs passed in [run 38087728540](https://github.com/alexwelcing/lupine/actions/runs/38087728540).
+`repaired-ci.json` preserves the actual completed run, jobs and matching remote
+branch identity. The original failure remains above and is not reclassified.

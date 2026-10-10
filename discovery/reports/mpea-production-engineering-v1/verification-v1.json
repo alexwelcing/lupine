@@ -1,0 +1,10 @@
+{
+  "actual_scientific_data_read": false,
+  "all_decoded_bytes_match_original": true,
+  "all_originals_unchanged": true,
+  "all_retained_bytes_verified": true,
+  "artifacts_checked": 124,
+  "copy_manifest_sha256": "8a040495807667e15ad4ed137c21d3b6ac11c5f2bd7268992aa3838cb0b6a31a",
+  "schema": "lupine.discovery.lossless_evidence_verification.v1",
+  "status": "PASS"
+}

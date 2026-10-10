@@ -1,0 +1,1 @@
+{"status": "PASS", "module_path": "/tmp/a67815e-installed-audit-og9qq0bd/venv/lib/python3.12/site-packages/lupine_discovery/__init__.py", "mpea_js_sha256": "f760f6225e60f08d7b4217bae7e7499fe1b4d3ea91514c5b1e429c5b4523f35e", "mpea_resource_absent": true, "mpea_benchmark_field_absent": true, "static_route_present": true}

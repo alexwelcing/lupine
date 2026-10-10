@@ -1,0 +1,11 @@
+{
+  "allocation_execution_scope": "registered_study",
+  "marker_execution_kind": "SYNTHETIC_FIXTURE",
+  "scope": "Constructed source metadata only; probe shows same-store marker/scope inconsistency, not authentication bypass.",
+  "source_sha256": "26a524be65f98cb92d49d75b852de84d1d38771b6a5c1a977983fab57a43ae7e",
+  "verify_result": {
+    "bytes_sha256": "37f150c2e24f6da93cb15eb3526f7106fba0e3c6959aa6d34f1e33c97eb6b6f4",
+    "content_sha256": "b02c665f157246addf76ad716a8b350489ec38dcf1291282b59c0a0745f62608",
+    "scientific_sha256": "221d2fd51644778636f0ed82039856d5abfbafbdd361bc898b4d225f06269ca6"
+  }
+}

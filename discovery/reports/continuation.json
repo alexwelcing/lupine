@@ -25,10 +25,10 @@
   "scheduler_continuity_limit": "Maximum supported recurrence is hourly; uninterrupted execution is unsupported.",
   "active_session_policy": "Continue implementation across successive useful tasks; scheduled runs are recovery, not a claim of constant execution.",
   "last_observed_continuation": {
-    "recorded_at": "2026-10-10T17:39:28Z",
-    "context": "Existing active session; tools and file-owning delegates were already executing G12/G13. Remote FETCH_HEAD and local HEAD both matched 0a8b248943fa1a65400214eebbe54377d8c3ff5e.",
-    "action": "Reconciled current branch and continued implementation, review and tests without starting a competing writer.",
-    "scheduled_origin": "Provider lookup reports last_run_time 2026-10-10T17:31:51.582589+00:00 for this automation. This is wake-up metadata, not evidence of a separate worker or completed experiment."
+    "recorded_at": "2026-10-10T21:37:00.608443+00:00",
+    "context": "Existing active implementation session; local HEAD and fetched remote both ae573ea9581a8e75bdffd787cba11d8051bfa83d. Root and file-owning delegates were already executing production custody/registration reviews.",
+    "action": "Reconciled current branch/instructions, preserved in-progress changes and continued the existing owner lanes; no competing writer started.",
+    "scheduled_origin": "Continuation request received during active work; provider state not independently queried in this reconciliation. A wake-up is not a build or experiment."
   },
   "provider_state_observed": {
     "is_enabled": true,
@@ -36,5 +36,13 @@
     "updated_at": "2026-10-10T17:32:13.927464+00:00",
     "schedule_unchanged": true,
     "continuous_worker_started": false
+  },
+  "current_checkpoint": {
+    "recorded_at": "2026-10-10T22:01:05+00:00",
+    "owner": "root integration; constrained_protocol artifact compliance; formal_kernel resource collector; representation_review and calibrated_backend independent contract review; pareto_runtime resource review",
+    "published_commit": "ae573ea9581a8e75bdffd787cba11d8051bfa83d",
+    "working_checkpoint": "production integration 1,153 full tests passed with 318 unchanged hashes; literal artifact/resource gaps block real registration",
+    "next_action": "Publish this tested blocked checkpoint and verify exact-commit CI; complete the artifact/resource repair before actual registration",
+    "actual_scientific_allocation_performed": false
   }
 }

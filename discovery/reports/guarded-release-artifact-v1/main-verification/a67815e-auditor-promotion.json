@@ -1,0 +1,12 @@
+[
+  {
+    "source": ".cache/a67815e-release-audit/promotion/scripts/verify_retained_artifacts.py",
+    "destination": "scripts/verify_retained_artifacts.py",
+    "sha256": "ca91b7fccafee1f1717830bd74edf3256dac5751e7c11b11d5f3b8eaf81c1a07"
+  },
+  {
+    "source": ".cache/a67815e-release-audit/promotion/tests/test_retained_artifacts.py",
+    "destination": "tests/test_retained_artifacts.py",
+    "sha256": "edd7e16c7d740d338345337eca69cd7eb599d1c9df248e6048ea59872d5678fa"
+  }
+]

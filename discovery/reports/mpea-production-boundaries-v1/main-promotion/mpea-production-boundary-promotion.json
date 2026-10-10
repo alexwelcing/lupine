@@ -1,0 +1,61 @@
+{
+  "scope": "Reviewed producer bytes unchanged; only test paths/cache initialization adapted. Original author loader-only diff retained separately.",
+  "files": [
+    {
+      "source": ".cache/mpea-study-custody/scripts/mpea_production_store.py",
+      "destination": "scripts/mpea_production_store.py",
+      "reviewed_sha256": "9b5caa9a013da7b2bae8bb78d89a74a697201bdc73b1cd2db1d38c2e750db6b4",
+      "promoted_sha256": "9b5caa9a013da7b2bae8bb78d89a74a697201bdc73b1cd2db1d38c2e750db6b4",
+      "path_adaptation": ""
+    },
+    {
+      "source": ".cache/mpea-study-custody/tests/test_mpea_production_store.py",
+      "destination": "tests/test_mpea_production_store.py",
+      "reviewed_sha256": "dbdc2dc1712d8bdac50c813b202f71357bcafc0c49d9f5e03c164809bcd58fa9",
+      "promoted_sha256": "0fb1189d3a851105f0434faa715aa4182839926e685c6892ce60b7e24c0c11fd",
+      "path_adaptation": "--- .cache/mpea-study-custody/tests/test_mpea_production_store.py\n+++ tests/test_mpea_production_store.py\n@@ -18,6 +18,7 @@\n \n class ProductionStoreTests(unittest.TestCase):\n     def setUp(self):\n+        (s.ROOT/'.cache').mkdir(exist_ok=True)\n         self.temp=tempfile.TemporaryDirectory(dir=s.ROOT/'.cache',prefix='production-store-fixture-')\n         self.addCleanup(self.temp.cleanup)\n         self.root=Path(self.temp.name)/'attempts'\n"
+    },
+    {
+      "source": ".cache/mpea-study-custody/review_production/test_production_store_review.py",
+      "destination": "tests/test_mpea_production_store_review.py",
+      "reviewed_sha256": "0959f57f7ab4f8de5586afb90a11c8305de800df2f23cc7fc72ee2c974650fa4",
+      "promoted_sha256": "bc12ea636818fbd2ccce3424e5da279f129a5f537d913c431b6c7aea90f9904b",
+      "path_adaptation": "--- .cache/mpea-study-custody/review_production/test_production_store_review.py\n+++ tests/test_mpea_production_store_review.py\n@@ -49,7 +49,8 @@\n \n class IndependentProductionStoreReview(unittest.TestCase):\n     def setUp(self):\n-        self.temp=tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parent,prefix='store-control-')\n+        (s.ROOT/'.cache').mkdir(exist_ok=True)\n+        self.temp=tempfile.TemporaryDirectory(dir=s.ROOT/'.cache',prefix='store-control-')\n         self.addCleanup(self.temp.cleanup)\n         self.root=Path(self.temp.name)/'attempts'\n         self.patch=patch.object(s,'OUTPUT_ROOT',self.root);self.patch.start();self.addCleanup(self.patch.stop)\n@@ -276,7 +277,7 @@\n         (source/'stage.json').write_bytes(stage_raw);(source/'routes.json').write_bytes(routes_raw)\n         (source/'stage-identity.json').write_text(json.dumps(stage_identity));(source/'route-identity.json').write_text(json.dumps(route_identity))\n         for index,stage in enumerate(s.STAGES[1:],1):original.commit(stage,{'fixed':index},usage={'wall':'1/1'})\n-        process=subprocess.run([sys.executable,str(Path(__file__).with_name('store_reproduction_fixture.py')),self.temp.name],\n+        process=subprocess.run([sys.executable,str(Path(__file__).with_name('mpea_store_reproduction_fixture.py')),self.temp.name],\n             stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=30,check=False)\n         self.assertEqual(process.returncode,0,process.stderr.decode())\n         result=json.loads(process.stdout)\n"
+    },
+    {
+      "source": ".cache/mpea-study-custody/review_production/store_reproduction_fixture.py",
+      "destination": "tests/mpea_store_reproduction_fixture.py",
+      "reviewed_sha256": "bdf2c50642376b1d25e767e1a7b4f14e4df70c77637328e262780a0bb2b2614b",
+      "promoted_sha256": "80c76fa2bc2e11c75654809e78970efed9d596c46936ff1e3c525a56f106ae1d",
+      "path_adaptation": "--- .cache/mpea-study-custody/review_production/store_reproduction_fixture.py\n+++ tests/mpea_store_reproduction_fixture.py\n@@ -5,13 +5,14 @@\n \n HERE=Path(__file__).resolve().parent\n sys.path.insert(0,str(HERE))\n-from test_production_store_review import s,registration,SOURCE\n+from test_mpea_production_store_review import s,registration,SOURCE\n \n \n def main():\n-    # The independent test creates this directory under its review workspace.\n+    # The independent test creates this directory in its dedicated ignored-cache fixture workspace.\n     root=Path(sys.argv[1]).resolve()\n-    if HERE not in root.parents:raise ValueError('SYNTHETIC_FIXTURE_REQUIRED')\n+    if s.ROOT/'.cache' not in root.parents or not root.name.startswith('store-control-'):\n+        raise ValueError('SYNTHETIC_FIXTURE_REQUIRED')\n     s.OUTPUT_ROOT=root/'reproduction-attempts'\n     source=root/'original-artifacts'\n     s.os.urandom=lambda _:(_ for _ in ()).throw(AssertionError('unexpected entropy request'))\n"
+    },
+    {
+      "source": ".cache/mpea-registration-allocation/promotion/scripts/mpea_registration_allocation.py",
+      "destination": "scripts/mpea_registration_allocation.py",
+      "reviewed_sha256": "51c19d99043b4d620669fa91bb1bd1e331a628410dcc9251febabd6ecbdcb192",
+      "promoted_sha256": "51c19d99043b4d620669fa91bb1bd1e331a628410dcc9251febabd6ecbdcb192",
+      "path_adaptation": ""
+    },
+    {
+      "source": ".cache/mpea-registration-allocation/promotion/tests/test_mpea_registration_allocation_boundaries.py",
+      "destination": "tests/test_mpea_registration_allocation_boundaries.py",
+      "reviewed_sha256": "f31da1b3d016fed0cfee6ba2562060a44cbb0c47a38e0d7aa0a272e3823a1248",
+      "promoted_sha256": "f31da1b3d016fed0cfee6ba2562060a44cbb0c47a38e0d7aa0a272e3823a1248",
+      "path_adaptation": ""
+    },
+    {
+      "source": ".cache/mpea-registration-allocation/promotion/tests/test_mpea_registration_allocation_store_integration.py",
+      "destination": "tests/test_mpea_registration_allocation_store_integration.py",
+      "reviewed_sha256": "b6e5150b469259bb73d50ce470eaaf3680472f5cdaf4634eeb6a3f04d3a0ebe8",
+      "promoted_sha256": "b6e5150b469259bb73d50ce470eaaf3680472f5cdaf4634eeb6a3f04d3a0ebe8",
+      "path_adaptation": ""
+    },
+    {
+      "source": ".cache/mpea-registration-allocation/review/test_registration_allocation_review.py",
+      "destination": "tests/test_mpea_registration_allocation_review.py",
+      "reviewed_sha256": "2735baa0137148b36412326c3cae0e74a4bbb1ef7299b63e1eeb3108c5924115",
+      "promoted_sha256": "344a61193a71fc58a1569b403993526077dcf344bc9b2eede68d10efcdd286fd",
+      "path_adaptation": "--- .cache/mpea-registration-allocation/review/test_registration_allocation_review.py\n+++ tests/test_mpea_registration_allocation_review.py\n@@ -17,7 +17,7 @@\n import unittest\n from unittest import mock\n \n-SOURCE = Path(__file__).resolve().parents[1] / 'mpea_registration_allocation.py'\n+SOURCE = Path(__file__).resolve().parents[1] / 'scripts/mpea_registration_allocation.py'\n spec = importlib.util.spec_from_file_location('independent_registration_allocation', SOURCE)\n m = importlib.util.module_from_spec(spec)\n sys.modules[spec.name] = m\n"
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "author_written_integration_tests_reexecuted": 1,
+  "confirmed_findings_resolved": [
+    "Exact integer typing rejects boolean ordinals/ranks/group IDs/CI run IDs.",
+    "Closed CI nested repository validation returns constant errors instead of AttributeError.",
+    "Manifest closure includes pinned header, sampler evidence, pyproject, correct existing feature-publication paths.",
+    "Reproduction imports original byte/content/scientific identities; original allocation can be loaded after later stages.",
+    "Bounded JSON inputs reject floats/duplicates/excess depth/string length.",
+    "New allocation registry directory entries are fsynced before entropy callbacks.",
+    "Trusted-parent approved engineering SHA is explicit; before/after source maps must equal committed manifest.",
+    "Protocol/source ledger identity prevents another attempt through replacement registration.",
+    "Explicit8192-bit integer cap; malformed fullyresealed typed originalroutes rejected.",
+    "Freshprocess originalbytes loader validates envelopes/identities/route reconstruction against durable firstaccepted transcript.",
+    "Exact ledger filename closure rejects skipped later requests,notonly immediatelynextordinal.",
+    "Separate reproduction-only officialancestor gate supports branchadvance while retaining originalproduction exactHEAD gate and forbiddingnewentropy."
+  ],
+  "coverage": [
+    "Independent development salt/order and factorial unranking on constructed nonconsecutive groups.",
+    "All1545 synthetic original routes retained;314 condition rows/75groups;noncondition active-source roles,unknownsource and absentformula preserved.",
+    "Official response shape/commit/workflow/four distinct successful jobs, frozen/live job equality, offline launchcapture hash, dirtysource and missingmanifest gate.",
+    "First accepted draw only;128draw cap;provider failure, interruption and response write failure preserve prefixes and preventreplacement draw.",
+    "Durable marker/request/response ordering;directory/file fsync calls;symlink ancestor and nooverwrite boundaries.",
+    "No entropy and originalbyte import in reproduction;fixture relabel cannot acquire factory authority.",
+    "Constructed closed originalartifact capture loads after storeclose; freshprocessauthorintegration exercises newinterpreter withoutretainedstore object.",
+    "Fullyresealed routebool/int substitutions and changed firstdrawledger fail.",
+    "Ancestor gate accepts samehead/ahead only;11mutations challenge divergent/behind/base/mergebase/endpoint/commit/CI types; factory/worker mode preserves originalregistration and forbidsfreshallocation.",
+    "Registration replacement after interruptedallocation isblocked;8192-bit positive and8193-bitnegative parserboundaries."
+  ],
+  "evidence_sha256": {
+    "final-execution-v2.json": "36d173db8bb42c587177930afe763754389e1ebc3bedb1a5b2e0905d5acaef30",
+    "final-v2-author-store-integration.stderr.txt": "50a25ad525d074fcf6c03db54eaae89791f65806039edb7bf647756200374353",
+    "final-v2-author-store-integration.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "final-v2-independent.stderr.txt": "be2a4c6eae3e1d5d4631fb20d7383e0a64c707113ca3dde248a0e685b3c3252e",
+    "final-v2-independent.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "independent_test_count": 36,
+  "independent_test_skips": 0,
+  "limits": [
+    "No actual scientific source, privatefeatures/targets, actual metadata group allocation, production allocation OS entropy provider, or liveGitHub transport was invoked.",
+    "OfficialGitHub transport validation was source-reviewed and tested with injected constructed responses; offline worker trusts authenticated parent capture hash.",
+    "Approved engineering hash is supplied by trustedparent; seals and parsed logs do not independentlyprove test execution,adequacy,hostintegrity or physicaltruth.",
+    "File/fsync ordering tests assume ordinaryfilesystem durability semantics;no powerloss fault campaign or hostileoperator/filesystem isolationproof.",
+    "Sampler uniformity remains assumed_unverified conditional on uniformindependent entropy;falseattestationflags preserved.",
+    "No Python-to-Lean refinement,no targeteligibility result,and no realstudy readiness/releaseauthorization established.",
+    "Production requires exactremoteHEAD. Reproduction retains original localcheckout/manifest/registration/CI and additionallytrusts authenticated officialcomparison proving originalcommit is an ancestorof currentremoteHEAD; divergent/deleted branches safelyblock."
+  ],
+  "prior_runs_preserved": {
+    "1": {
+      "exit_code": 1,
+      "receipt": "attempt-1.json",
+      "receipt_sha256": "b68f05dc87990cb8de041fa0a8dc4c2fb8daef1570763da53288126fa58f196b"
+    },
+    "2": {
+      "exit_code": 1,
+      "receipt": "attempt-2.json",
+      "receipt_sha256": "2314e0f1f9cc9f00cc274c93ad8e0a64b1f011823ebbd7b810b9f840f8192256"
+    },
+    "3": {
+      "exit_code": 1,
+      "receipt": "attempt-3.json",
+      "receipt_sha256": "ad325877f84acdea9d63edbb0f19bbc09c1efba18b2984e3a95bd02b80542d84"
+    },
+    "4": {
+      "exit_code": 0,
+      "receipt": "attempt-4.json",
+      "receipt_sha256": "408bbe1bd7305de54f7cb88e49dd04661588441d365bbc0e8060f3c533f009b1"
+    },
+    "5": {
+      "exit_code": 0,
+      "receipt": "attempt-5.json",
+      "receipt_sha256": "e306ad187c4b2abc4c7dc01566e219f77afae4ddc09a022e27286dec3a944ae2"
+    },
+    "6": {
+      "exit_code": 1,
+      "finding": "Valid sealed request003 after accepted draw001 bypassed next-only check; now exact filename closure rejects every extra/gap.",
+      "receipt": "attempt-6.json",
+      "receipt_sha256": "1442119d8f2f0b1b62a8a2363192a11a4e4c81963e68f645ebe16b26c2733a73"
+    }
+  },
+  "schema": "lupine.registration-allocation.independent-review.v1",
+  "source_sha256": {
+    ".cache/mpea-registration-allocation/API.md": "935f70e129e1464542a57dc8d1b6efad054e65c305ffb5f5233b604f369bf2fc",
+    ".cache/mpea-registration-allocation/mpea_registration_allocation.py": "51c19d99043b4d620669fa91bb1bd1e331a628410dcc9251febabd6ecbdcb192",
+    ".cache/mpea-registration-allocation/review/test_registration_allocation_review.py": "2735baa0137148b36412326c3cae0e74a4bbb1ef7299b63e1eeb3108c5924115",
+    ".cache/mpea-registration-allocation/test_store_integration.py": "6d9f4d03c92e26778876253e0c7522c7f8826a208e3d1863f48aab4327c1f459",
+    ".cache/mpea-study-custody/scripts/mpea_production_store.py": "9b5caa9a013da7b2bae8bb78d89a74a697201bdc73b1cd2db1d38c2e750db6b4",
+    ".cache/mpea-study-custody/scripts/mpea_stage_store.py": "13c42919e79e0949f4cbcf5ce0eeeb1cb66d3a48893e6e4fdc3cd3fdf68498db",
+    "docs/mpea-t25-archival-protocol-v1.md": "c49047341d3932ddd67c67c9f2a04a6759c0d679bfeb96d811ba9541c0cc0378",
+    "docs/mpea-t25-implementation-contract-v1.md": "be45b1d8db9586035cf37bd9bbb9046c065c3851b91f93386f8c68d155215af9",
+    "scripts/mpea_target_custody.py": "7f649dd50d7c5589fd9da0f9745b7936b7a3a2bf631a8418affae4a67be1ee9c",
+    "scripts/permutation_allocation.py": "a7f454b4541f75603019bf73091c97190ea6f618efa52988c3065971273405e5"
+  },
+  "status": "PASS_SYNTHETIC_ENGINEERING_SCOPED",
+  "supersedes": "review-v1.json (historical26-test candidatefff2750f; retained)"
+}

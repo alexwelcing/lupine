@@ -1,0 +1,7 @@
+{
+  "original_bytes": 963,
+  "original_path": ".cache/mpea-study-custody/review_launcher/parent-attempt1.json",
+  "original_sha256": "4a36af8516b23f004a7540507ecdcb0372aca7ee2cd9b6ec5c80c2401143f80a",
+  "schema": "lupine.discovery.lossless_utf8_artifact.v1",
+  "text": "{\n  \"elapsed_seconds\": 0.25762076600221917,\n  \"exit_code\": 1,\n  \"scope\": \"stubbed parent dispatch only; no actual registration/network/metadata/scientificsource or allocationOSprovider\",\n  \"source_after\": {\n    \".cache/mpea-study-custody/review_launcher/test_archive_parent_review.py\": \"932fc1ed80d1865e0c8fa50d3c120dc0810f41bf243c0d27ad72c11520369f52\",\n    \".cache/mpea-study-custody/scripts/mpea_archive_run.py\": \"35c3861de75be09d4a9a224ee83513bed6ca2d53578c0a6c1b00b3566292ab51\"\n  },\n  \"source_before\": {\n    \".cache/mpea-study-custody/review_launcher/test_archive_parent_review.py\": \"932fc1ed80d1865e0c8fa50d3c120dc0810f41bf243c0d27ad72c11520369f52\",\n    \".cache/mpea-study-custody/scripts/mpea_archive_run.py\": \"35c3861de75be09d4a9a224ee83513bed6ca2d53578c0a6c1b00b3566292ab51\"\n  },\n  \"stderr_sha256\": \"ccf9a4c33112cc4e0d01d99738c37514047016f9500a5ee3f18465ffe9a3dc34\",\n  \"stdout_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\"\n}\n"
+}

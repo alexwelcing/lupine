@@ -1,0 +1,6 @@
+test_exact_original_after_all_eight_stages_and_no_entropy (__main__.Integration.test_exact_original_after_all_eight_stages_and_no_entropy) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.671s
+
+OK

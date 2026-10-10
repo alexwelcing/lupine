@@ -1,0 +1,54 @@
+{
+  "after": {
+    ".cache/mpea-registration-allocation/API.md": "58e3f5eecc44113a82e356c9865e4015d1f76e4353d6447e208a85aae401aa93",
+    ".cache/mpea-registration-allocation/mpea_registration_allocation.py": "d4a11c4c2b941e45d4079129583efc7bcf5ecfed551de137aae02f3f49a3146d",
+    ".cache/mpea-registration-allocation/test_author_boundaries.py": "9ef3e49357f92cfd979c44af84d6f59b20220992ea64b773f5ea3b8c64c2a081",
+    ".cache/mpea-registration-allocation/test_public_registration_tag.py": "f03463a0b599e12a335390aaaa55a218f37da2ed413e09fdfa693ff926485112",
+    ".cache/mpea-registration-allocation/test_store_integration.py": "c34c9f5b7ad852f0f6cd2d4c44b1057fd34a75c9530d76d64909d8ffcbe3830f",
+    "docs/mpea-registration-publication-v1.md": "c9fb1f2c44ae8b97c10a88ddbb369eb8d0feca752824c2ca3cbb656d3619c730",
+    "scripts/mpea_production_store.py": "9b5caa9a013da7b2bae8bb78d89a74a697201bdc73b1cd2db1d38c2e750db6b4",
+    "scripts/mpea_stage_store.py": "13c42919e79e0949f4cbcf5ce0eeeb1cb66d3a48893e6e4fdc3cd3fdf68498db",
+    "scripts/mpea_target_custody.py": "7f649dd50d7c5589fd9da0f9745b7936b7a3a2bf631a8418affae4a67be1ee9c",
+    "scripts/permutation_allocation.py": "a7f454b4541f75603019bf73091c97190ea6f618efa52988c3065971273405e5"
+  },
+  "all_success": true,
+  "before": {
+    ".cache/mpea-registration-allocation/API.md": "58e3f5eecc44113a82e356c9865e4015d1f76e4353d6447e208a85aae401aa93",
+    ".cache/mpea-registration-allocation/mpea_registration_allocation.py": "d4a11c4c2b941e45d4079129583efc7bcf5ecfed551de137aae02f3f49a3146d",
+    ".cache/mpea-registration-allocation/test_author_boundaries.py": "9ef3e49357f92cfd979c44af84d6f59b20220992ea64b773f5ea3b8c64c2a081",
+    ".cache/mpea-registration-allocation/test_public_registration_tag.py": "f03463a0b599e12a335390aaaa55a218f37da2ed413e09fdfa693ff926485112",
+    ".cache/mpea-registration-allocation/test_store_integration.py": "c34c9f5b7ad852f0f6cd2d4c44b1057fd34a75c9530d76d64909d8ffcbe3830f",
+    "docs/mpea-registration-publication-v1.md": "c9fb1f2c44ae8b97c10a88ddbb369eb8d0feca752824c2ca3cbb656d3619c730",
+    "scripts/mpea_production_store.py": "9b5caa9a013da7b2bae8bb78d89a74a697201bdc73b1cd2db1d38c2e750db6b4",
+    "scripts/mpea_stage_store.py": "13c42919e79e0949f4cbcf5ce0eeeb1cb66d3a48893e6e4fdc3cd3fdf68498db",
+    "scripts/mpea_target_custody.py": "7f649dd50d7c5589fd9da0f9745b7936b7a3a2bf631a8418affae4a67be1ee9c",
+    "scripts/permutation_allocation.py": "a7f454b4541f75603019bf73091c97190ea6f618efa52988c3065971273405e5"
+  },
+  "commands": [
+    {
+      "exit_code": 0,
+      "log_sha256": "7073097349bb3e56e99c38ffda26a8a3b5487028ac4473f8f5a7e708b5018120",
+      "test": "test_author_boundaries.py"
+    },
+    {
+      "exit_code": 0,
+      "log_sha256": "e73c3805f810fdcf3d0167ced7085c48306c9482a952ffb710551d230cdb3e51",
+      "test": "test_public_registration_tag.py"
+    },
+    {
+      "exit_code": 0,
+      "log_sha256": "ae7dd8a7e763a7433f09b30a30c72bf7ad86ac3e01b9779d3a3e122d897f31f2",
+      "test": "test_store_integration.py"
+    }
+  ],
+  "failure_history": "Independent lone-surrogate rawencoding exception fixed; firstmainstorepresence loaderfailure retained and corrected onlytestloader",
+  "prior_core": "51c/935f/36-test evidence preserved under history/pre-public-tag and independentreview",
+  "schema": "lupine.registration.public-tag.author-verification.v1",
+  "scope": "Constructed rawtag/API/identities/provider only; no actualtag/publication/liveAPI/OSentropy/scientificinput/allocation",
+  "source_unchanged": true,
+  "tests": {
+    "author_boundary": 6,
+    "constructed8stage_freshprocess_exactbyte_store": 1,
+    "public_tag": 4
+  }
+}
