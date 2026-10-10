@@ -6,6 +6,8 @@ A universal, conditional candidate-pool engine grounded in [Lupine Rhizo](https:
 
 This is the initial research implementation for a [four-day project](docs/four-day-plan.md). See [STATUS.md](STATUS.md) for completed work and open gates. No new DFT is required to run the examples or archived experiments.
 
+Local verification: **18 Lean theorems compiled, 41 Python tests passed, and 6 axiom-audit parser tests passed**. See the [software execution record](reports/software-verification.md) and [formal verification record](formal/VERIFICATION.md). Remote CI has not run.
+
 ## Run it
 
 Python 3.11 or newer:

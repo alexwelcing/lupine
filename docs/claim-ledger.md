@@ -12,7 +12,7 @@ This ledger separates mathematical implications, software execution, archived ob
 | Runtime implements the finite equations | `tests/test_core.py`, `tests/test_envelope.py` | Exhaustive bounded worlds and randomized refinement tests; no full formal refinement proof |
 | Serialization and certificate recomputation reject tested tampering | `tests/test_io.py`, `tests/test_adversarial_integration.py` | Tested cases; certificate is not a digital signature or physical attestation |
 | Archived pilots expose interval failures | `reports/archived-v1.json`, `docs/archived-benchmark.md` | Both archives refute simultaneous soundness of their empirical intervals |
-| Composition-only predictors have a 1.15 eV archive worst-error floor | `reports/descriptor-audit.json`, `docs/descriptor-audit.md` | Posthoc finite-label result from three descriptor collisions; not a claim of physical irreducibility |
+| Composition-only predictors have a 1.15 eV archive worst-error floor | `descriptor_collision_lower_bound`, `reports/descriptor-audit.json`, `docs/descriptor-audit.md` | General conditional inequality formalized; archive instantiation computed by Python from three descriptor collisions; not a claim of physical irreducibility |
 | Engine improves discovery efficiency across materials | None yet | Open; pilot does not establish superiority |
 | Real source intervals are globally sound | None in this release | Open scientific premise; evidence labels do not establish it |
 | Source citations and input hashes certify physical truth | No such implication | Not claimed |

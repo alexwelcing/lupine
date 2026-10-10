@@ -11,4 +11,6 @@ Executed locally on 2026-10-10 with Python 3.12.14. This is a software verificat
 
 `runtime-manifest.json` pins final Python source, tests, and benchmark-script bytes. The Lean package has a separate actual execution and axiom record in `../formal/VERIFICATION.md`. The Python tests are not a formal refinement proof from the executable implementation to Lean.
 
+The formal gate's six independent parser tests also passed: `python3 -m unittest test_audit_axioms -v` from `formal/`. They test accepted standard axioms and rejection of admitted proofs, custom axioms, missing output, duplicate output, and unexpected theorem output. These are separate from the 41 engine/replay tests.
+
 A GitHub Actions workflow is configured for Python 3.11/3.12 and the pinned Lean toolchain. It has **not run remotely**, because repository creation is blocked by integration permissions. Local testing used Python 3.12; Python 3.11 compatibility is configured for CI but has not been executed in this environment.
