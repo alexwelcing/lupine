@@ -1,7 +1,7 @@
 """Adversarial checks of the formal verification gate's output parser."""
 import unittest
 
-from audit_axioms import parse_audit
+from audit_axioms import declared_theorems, parse_audit
 
 
 class AxiomAuditTests(unittest.TestCase):
@@ -33,6 +33,29 @@ class AxiomAuditTests(unittest.TestCase):
     def test_unexpected_theorem_rejected(self):
         with self.assertRaises(ValueError):
             parse_audit("'LupineDiscovery.other' does not depend on any axioms\n", self.declared)
+
+    def test_module_namespace_is_checked(self):
+        source = "namespace LupinePareto\ntheorem fixture : True := True.intro\nend LupinePareto\n#print axioms LupinePareto.fixture\n"
+        self.assertEqual(declared_theorems(source, "LupinePareto"), {"LupinePareto.fixture"})
+        with self.assertRaises(ValueError):
+            declared_theorems(source, "LupineDiscovery")
+
+    def test_unprinted_theorem_rejected(self):
+        with self.assertRaises(ValueError):
+            declared_theorems("namespace LupinePareto\ntheorem hidden : True := True.intro\n", "LupinePareto")
+
+    def test_extra_axiom_declaration_rejected(self):
+        with self.assertRaises(ValueError):
+            declared_theorems("namespace LupinePareto\naxiom physicalOracle : True\n", "LupinePareto")
+
+    def test_admitted_source_rejected(self):
+        with self.assertRaises(ValueError):
+            declared_theorems("namespace LupinePareto\ntheorem broken : True := sorry\n", "LupinePareto")
+
+    def test_unexpected_source_print_rejected(self):
+        source = "namespace LupinePareto\ntheorem fixture : True := True.intro\nend LupinePareto\n#print axioms LupinePareto.fixture\n#print axioms LupinePareto.extra\n"
+        with self.assertRaises(ValueError):
+            declared_theorems(source, "LupinePareto")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,27 @@
+{
+  "schema": "lupine.discovery.pareto_outcomes.v1",
+  "scenario_id": "pareto-unsound-control",
+  "problem_digest": "cf36d41e5d26c701990441ba09a5c17b25f7bc5abfbb4edfe5c7d659a747d29e",
+  "outcomes": [
+    {
+      "id": "a",
+      "objectives": {
+        "cost": "0",
+        "risk": "3"
+      },
+      "constraints": {
+        "limit": "-1"
+      }
+    },
+    {
+      "id": "bad",
+      "objectives": {
+        "cost": "-1",
+        "risk": "2"
+      },
+      "constraints": {
+        "limit": "-1"
+      }
+    }
+  ]
+}

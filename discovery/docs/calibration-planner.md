@@ -2,7 +2,7 @@
 
 The optional `lupine_discovery.calibration` module implements the arithmetic described in [joint-coverage-design.md](joint-coverage-design.md). It plans a uniform Bonferroni allocation and computes one scalar target's nonnegative residual order statistic. Its outputs are conditional diagnostics with **unverified assumptions**. They do not establish exchangeability, physical validity, simultaneous interval soundness, or optimizer retention. No probability theorem has been compiled in Lean, and this module is not a refinement of a formally verified probability implementation.
 
-The finite selector, CLI, and archived benchmark have not been changed. In particular, no unbounded result enters the existing finite `Interval` core automatically.
+The finite selector and archived benchmark remain unchanged. The CLI and workbench now accept [calibrated problems](calibrated-problem.md): finite radii with explicitly unverified premises produce an ordinary interval problem, while unbounded radii or unsupported sampling retain the whole candidate universe without entering the finite `Interval` core.
 
 ## API and interpretation
 

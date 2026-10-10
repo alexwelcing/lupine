@@ -9,6 +9,7 @@ import unittest
 from unittest.mock import patch
 
 from lupine_discovery import benchmarks
+from lupine_discovery.cli import certificate
 from lupine_discovery.core import select
 from lupine_discovery.evidence import digest
 from lupine_discovery.serialization import parse_problem
@@ -80,7 +81,7 @@ class KnownAnswerTests(unittest.TestCase):
             self.assertNotIn("outcomes", case["problem"])
             self.assertNotIn("expected", case)
             self.assertLessEqual(len(case["problem"]["candidates"]), 200)
-            parse_problem(case["problem"])
+            certificate(case["problem"])
 
     def test_outcomes_are_bound_to_the_entire_problem(self):
         problem = benchmarks.get_case("tied-optima")["problem"]

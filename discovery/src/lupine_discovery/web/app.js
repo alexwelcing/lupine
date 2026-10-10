@@ -14,6 +14,12 @@
   const list = (value) => Array.isArray(value) ? value : [];
   const exactText = (value) => value === null || value === undefined ? 'Not established' : String(value);
   const truthText = (value) => value === true ? 'Yes' : value === false ? 'No' : 'Unknown';
+  const isCalibrated = () => state.certificate?.schema === 'lupine.discovery.calibrated_certificate.v1';
+  const isAbstained = () => isCalibrated() && state.certificate.calibration?.status === 'abstained';
+  const isPareto = () => state.certificate?.schema === 'lupine.discovery.pareto_certificate.v1';
+  // Keep the submitted nominal problem intact for its digest and separate replay.
+  // Prepared intervals are a presentation view of the certificate, never new input.
+  const intervalProblem = () => isCalibrated() ? state.certificate.prepared_problem : state.problem;
   const ratio = (value) => {
     if (value === null || value === undefined || value === '') return NaN;
     const parts = String(value).split('/');
@@ -78,14 +84,18 @@
     if (!problem || typeof problem !== 'object') return;
     const scenario = problem.scenario || {};
     const objective = scenario.objective || {};
+    const objectives = Object.entries(scenario.objectives || {});
     const constraints = Object.keys(scenario.constraints || {});
     $('case-kind').textContent = state.metadata ? pretty(state.metadata.kind || 'known-answer case').toUpperCase() : 'CUSTOM INPUT';
     $('candidate-count').textContent = `${list(problem.candidates).length} candidates`;
     $('case-title').textContent = state.metadata?.title || scenario.id || 'Untitled scenario';
-    $('case-description').textContent = state.metadata?.description || problem.description || 'Supply score bounds and constraints for the candidates in this scenario.';
-    $('scenario-objective').textContent = `${pretty(objective.direction || 'minimize')} · ${objective.unit || 'unit not declared'}`;
+    $('case-description').textContent = state.metadata?.description || problem.description || (problem.schema === 'lupine.discovery.calibrated_problem.v1'
+      ? 'Nominal predictions and separate calibration residuals determine whether conditional screening is available.'
+      : problem.schema === 'lupine.discovery.pareto_problem.v1' ? 'Compare objective bounds without collapsing tradeoffs into a single score.' : 'Supply score bounds and constraints for the candidates in this scenario.');
+    $('scenario-objective').textContent = objectives.length ? objectives.map(([key, spec]) => `${key}: ${pretty(spec.direction || 'minimize')} · ${spec.unit || 'unit not declared'}`).join('; ')
+      : `${pretty(objective.direction || 'minimize')} · ${objective.unit || 'unit not declared'}`;
     $('scenario-constraints').textContent = constraints.length ? `${constraints.join(', ')} ≤ 0` : 'None declared';
-    $('scenario-reference').textContent = objective.reference || 'Not declared';
+    $('scenario-reference').textContent = objectives.length ? objectives.map(([key, spec]) => `${key}: ${spec.reference || 'not declared'}`).join('; ') : objective.reference || 'Not declared';
   }
   function setRaw(raw, metadata = null) {
     state.raw = raw;
@@ -125,16 +135,26 @@
     const selection = certificate.selection;
     const count = list(state.problem.candidates).length;
     const retained = list(selection.retained).length;
+    const abstained = isAbstained();
+    const pareto = isPareto();
     $('empty-state').hidden = true;
     $('analysis-results').hidden = false;
     $('selection-metrics').replaceChildren(
       metric('RETAINED POOL', retained, 'All unresolved candidates remain', `/ ${count}`),
-      metric('EXCLUDED', count - retained, `${list(selection.certified_infeasible).length} infeasible · ${list(selection.dominated).length} dominated`),
-      metric('CONDITIONAL REGRET BOUND', exactText(selection.regret_bound), selection.incumbent ? `Incumbent: ${selection.incumbent}` : 'No feasible incumbent established'),
+      metric('EXCLUDED', count - retained, abstained ? 'Screening withheld; no exclusions' : `${list(selection.certified_infeasible).length} infeasible · ${list(selection.dominated).length} dominated`),
+      pareto ? metric('FEASIBLE ACROSS BOUNDS', list(selection.certified_feasible).length, 'Conditional on sound constraint intervals')
+        : metric('CONDITIONAL REGRET BOUND', abstained ? 'Unavailable' : exactText(selection.regret_bound), abstained ? 'No certified incumbent or feasibility' : selection.incumbent ? `Incumbent: ${selection.incumbent}` : 'No feasible incumbent established'),
     );
-    if (!list(selection.possible_feasible).length) {
+    $('selection-note').classList.toggle('abstained', abstained);
+    if (abstained) {
+      $('result-title').textContent = 'Screening withheld';
+      $('selection-note').textContent = 'Every candidate remains in the pool. Calibration does not support screening this input: no candidate is certified feasible, no candidate is excluded, and no incumbent or regret bound is established. Nominal predictions below are not uncertainty bounds.';
+    } else if (!list(selection.possible_feasible).length) {
       $('result-title').textContent = 'No possible feasible candidates';
       $('selection-note').textContent = 'If every supplied interval is sound, this finite candidate universe is infeasible. This does not rule out candidates beyond the input.';
+    } else if (pareto) {
+      $('result-title').textContent = `${retained} candidate${retained === 1 ? '' : 's'} in the Pareto pool`;
+      $('selection-note').textContent = 'If every supplied interval contains its true value, this pool retains every feasible Pareto optimum, including equal objective ties. It can still contain dominated or infeasible candidates whose status the bounds do not resolve. Each objective is compared separately; this pool is not yet an observed Pareto front.';
     } else if (!selection.incumbent) {
       $('result-title').textContent = 'Uncertainty keeps the pool open';
       $('selection-note').textContent = 'No candidate is feasible across all its constraint bounds. All possibly feasible candidates remain; an incumbent and regret bound cannot yet be established.';
@@ -142,6 +162,10 @@
       $('result-title').textContent = `${retained} candidate${retained === 1 ? ' remains' : 's remain'} in the pool`;
       $('selection-note').textContent = 'Conditional guarantee: if the supplied intervals contain the true values, every feasible best candidate in this input is retained. Physical accuracy is not established by this decision.';
     }
+    if (isCalibrated() && !abstained) {
+      $('selection-note').textContent += ' These intervals come from calibration arithmetic under assumed, unverified sampling and predictor-independence premises. A finite radius does not establish their soundness.';
+    }
+    renderCalibration();
     renderPool();
     renderEvidence();
     const queue = node('div', 'queue-chips');
@@ -152,20 +176,32 @@
     });
     $('measurement-queue').replaceChildren(queue);
     if (!queue.childElementCount) $('measurement-queue').append(node('p', 'selection-empty', 'No retained candidates to measure.'));
+    $('measurement-note').textContent = abstained || pareto ? 'Listed in deterministic identifier order. This is not a ranking by predicted quality or a guarantee of discovery.' : 'A heuristic ordering for further measurement. It does not reduce the retained pool or guarantee a discovery.';
+    $('replay-intro').textContent = abstained ? 'The all-retained pool has been fixed. Separate known outcomes can audit feasibility and retained optima. Interval coverage and incumbent regret are unavailable because screening was withheld.' : pareto ? 'The pool has been fixed. Separate known outcomes check each objective and constraint, and establish the true Pareto front only when the finite archive is complete.' : 'The pool has been fixed. Compare it with separate known outcomes to check coverage, retained optima, and observed regret.';
     $('replay-builtin').hidden = !state.caseId || state.metadata?.has_outcomes === false;
     $('step-prepare').className = 'complete';
     $('step-select').className = 'current';
   }
   function candidateReason(id) {
+    if (isAbstained()) return 'Retained because screening is withheld. Feasibility is not certified.';
     const reason = state.certificate.reasons?.[id] || {};
     if (reason.reason === 'constraint_lower_bound_positive') return `Outside constraints: ${list(reason.constraints).join(', ')}.`;
     if (reason.reason === 'incumbent_upper_strictly_below_candidate_lower') return `Worse than ${reason.witness} across all score bounds.`;
+    if (reason.reason === 'certified_feasible_bound_dominance') return `Dominated across the bounds by feasible witness ${reason.witness}; strictly better in ${list(reason.strict_objectives).join(', ')}.`;
+    if (isPareto()) return list(state.certificate.selection.certified_feasible).includes(id) ? 'Feasible across the bounds; dominance remains unproved.' : 'Feasibility or objective tradeoffs remain unresolved.';
     return list(state.certificate.selection.certified_feasible).includes(id) ? 'Feasible across the supplied bounds.' : 'Feasibility or ranking remains unresolved.';
   }
   function renderPool() {
+    if (isPareto()) { renderParetoPool(); return; }
     const selection = state.certificate.selection;
     const retained = new Set(list(selection.retained));
-    const candidates = list(state.problem.candidates);
+    const abstained = isAbstained();
+    const candidates = list((intervalProblem() || state.problem).candidates);
+    $('pool-heading').textContent = abstained ? 'Nominal predictions' : 'Candidate intervals';
+    $('pool-help').textContent = abstained ? 'Lower predictions indicate nominal preference only. These exact values carry no interval coverage or feasibility claim.'
+      : isCalibrated() ? 'Lower scores are better. Intervals use the calibrated radii under the declared, unverified premises.' : 'Lower scores are better. Intervals show the supplied bounds.';
+    $('pool-legend').hidden = abstained;
+    $('threshold-legend').hidden = false;
     const numbers = candidates.flatMap((c) => list(c.score).map(ratio));
     const chartUsable = numbers.length > 0 && numbers.every(Number.isFinite);
     let low = chartUsable ? Math.min(...numbers) : 0;
@@ -174,10 +210,10 @@
     const scaleUsable = chartUsable && Number.isFinite(high - low) && high > low;
     const position = (value) => Math.max(0, Math.min(100, (ratio(value) - low) / (high - low) * 100));
     const table = node('table', 'candidate-table');
-    const caption = node('caption', 'sr-only', 'Candidate score intervals and selection decisions. Bar positions are approximate; endpoint labels are exact.');
+    const caption = node('caption', 'sr-only', abstained ? 'Nominal predictions only. Screening is withheld; every candidate is retained without certified feasibility.' : 'Candidate score intervals and selection decisions. Bar positions are approximate; endpoint labels are exact.');
     const head = node('thead');
     const headRow = node('tr');
-    ['Candidate', `Score · ${state.problem.scenario?.objective?.unit || 'declared unit'}`, 'Decision'].forEach((text) => {
+    ['Candidate', `${abstained ? 'Prediction' : 'Score'} · ${state.problem.scenario?.objective?.unit || 'declared unit'}`, 'Decision'].forEach((text) => {
       const th = node('th', '', text); th.scope = 'col'; headRow.append(th);
     });
     head.append(headRow);
@@ -200,14 +236,15 @@
         }
         scoreCell.append(track);
       }
-      scoreCell.append(node('span', 'score-values', `[${candidate.score[0]}, ${candidate.score[1]}]`));
+      scoreCell.append(node('span', 'score-values', abstained ? exactText(candidate.score) : `[${candidate.score[0]}, ${candidate.score[1]}]`));
+      if (abstained) scoreCell.append(node('span', 'prediction-label', 'Nominal · no interval'));
       const decision = node('td');
-      decision.append(node('span', `row-status${included ? '' : ' excluded'}`, included ? 'Retained' : 'Excluded'), node('p', 'row-reason', candidateReason(candidate.id)));
+      decision.append(node('span', `row-status${abstained ? ' withheld' : included ? '' : ' excluded'}`, included ? 'Retained' : 'Excluded'), node('p', 'row-reason', candidateReason(candidate.id)));
       const constraints = Object.entries(candidate.constraints || {});
       if (constraints.length) {
         const details = node('details', 'row-reason');
         details.append(node('summary', '', `${constraints.length} constraint${constraints.length === 1 ? '' : 's'}`));
-        for (const [key, interval] of constraints) details.append(node('div', '', `${key}: [${interval[0]}, ${interval[1]}]`));
+        for (const [key, interval] of constraints) details.append(node('div', '', abstained ? `${key}: ${exactText(interval)} (nominal prediction)` : `${key}: [${interval[0]}, ${interval[1]}]`));
         decision.append(details);
       }
       row.append(idCell, scoreCell, decision); body.append(row);
@@ -216,14 +253,121 @@
     $('pool-table').replaceChildren(table);
     $('pool-table').tabIndex = 0;
     $('pool-table').setAttribute('role', 'region');
-    $('pool-table').setAttribute('aria-label', 'Scrollable candidate interval table');
+    $('pool-table').setAttribute('aria-label', abstained ? 'Scrollable nominal prediction table' : 'Scrollable candidate interval table');
     if (!filtered.length) $('pool-table').append(node('p', 'empty-filter', 'No candidates in this group.'));
-    if (!scaleUsable && filtered.length) $('pool-table').append(node('p', 'field-help', 'Visual scale unavailable for these values. The exact endpoints are shown.'));
+    if (!abstained && !scaleUsable && filtered.length) $('pool-table').append(node('p', 'field-help', 'Visual scale unavailable for these values. The exact endpoints are shown.'));
+  }
+  function renderParetoPool() {
+    const selection = state.certificate.selection;
+    const retained = new Set(list(selection.retained));
+    const candidates = list(state.problem.candidates);
+    const objectives = Object.entries(state.problem.scenario?.objectives || {});
+    const scales = new Map();
+    for (const [key] of objectives) {
+      const values = candidates.flatMap((candidate) => list(candidate.objectives?.[key]).map(ratio));
+      let low = Math.min(...values), high = Math.max(...values);
+      if (low === high) { low -= 1; high += 1; }
+      if (values.length && values.every(Number.isFinite) && Number.isFinite(high - low) && high > low) scales.set(key, { low, high });
+    }
+    $('pool-heading').textContent = 'Objective intervals';
+    $('pool-help').textContent = 'Minimize each objective. Every objective has its own illustrative scale; exact endpoint labels govern the decision. Tradeoffs and equal objective ties remain unless a feasible witness proves strict dominance.';
+    $('pool-legend').hidden = false;
+    $('threshold-legend').hidden = true;
+    const table = node('table', 'candidate-table pareto-table');
+    const caption = node('caption', 'sr-only', 'Candidate objective intervals and Pareto screening decisions. Each objective uses its own approximate scale; endpoint labels are exact.');
+    const head = node('thead'), headRow = node('tr');
+    for (const label of ['Candidate', 'Objectives · minimize each', 'Decision']) {
+      const th = node('th', '', label); th.scope = 'col'; headRow.append(th);
+    }
+    head.append(headRow);
+    const body = node('tbody');
+    const filtered = candidates.filter((candidate) => state.filter === 'all' || (state.filter === 'retained') === retained.has(candidate.id));
+    for (const candidate of filtered) {
+      const included = retained.has(candidate.id);
+      const row = node('tr'); row.dataset.candidateId = candidate.id; row.dataset.decision = included ? 'retained' : 'excluded';
+      const idCell = node('td'); idCell.append(node('span', 'candidate-id', candidate.id));
+      const objectiveCell = node('td');
+      for (const [key, spec] of objectives) {
+        const bound = candidate.objectives[key];
+        const objective = node('div', 'objective-bound'); objective.dataset.objective = key;
+        objective.append(node('span', 'objective-label', `${key} · ${spec.unit}`));
+        const scale = scales.get(key);
+        if (scale) {
+          const position = (value) => Math.max(0, Math.min(100, (ratio(value) - scale.low) / (scale.high - scale.low) * 100));
+          const track = node('div', 'score-interval'); track.setAttribute('aria-hidden', 'true');
+          const line = node('span', `score-line${included ? '' : ' excluded'}`);
+          line.style.left = `${position(bound[0])}%`;
+          line.style.width = `${Math.max(0, position(bound[1]) - position(bound[0]))}%`;
+          track.append(line); objective.append(track);
+        }
+        objective.append(node('span', 'score-values', `[${exactText(bound[0])}, ${exactText(bound[1])}]`));
+        objectiveCell.append(objective);
+      }
+      const decision = node('td');
+      decision.append(node('span', `row-status${included ? '' : ' excluded'}`, included ? 'Retained' : 'Excluded'), node('p', 'row-reason', candidateReason(candidate.id)));
+      const constraints = Object.entries(candidate.constraints || {});
+      if (constraints.length) {
+        const details = node('details', 'row-reason'); details.append(node('summary', '', `${constraints.length} constraint${constraints.length === 1 ? '' : 's'}`));
+        for (const [key, bound] of constraints) details.append(node('div', '', `${key}: [${exactText(bound[0])}, ${exactText(bound[1])}]`));
+        decision.append(details);
+      }
+      row.append(idCell, objectiveCell, decision); body.append(row);
+    }
+    table.append(caption, head, body);
+    $('pool-table').replaceChildren(table);
+    $('pool-table').tabIndex = 0;
+    $('pool-table').setAttribute('role', 'region');
+    $('pool-table').setAttribute('aria-label', 'Scrollable candidate objective interval table');
+    if (!filtered.length) $('pool-table').append(node('p', 'empty-filter', 'No candidates in this group.'));
+    if (scales.size < objectives.length && filtered.length) $('pool-table').append(node('p', 'field-help', 'Some visual scales are unavailable. All exact objective endpoints are shown.'));
+  }
+  function renderCalibration() {
+    const panel = $('calibration-panel');
+    panel.hidden = !isCalibrated();
+    if (!isCalibrated()) return;
+    const calibration = state.certificate.calibration;
+    const plan = calibration.plan || {};
+    const abstained = isAbstained();
+    panel.classList.toggle('abstained', abstained);
+    $('calibration-status').textContent = abstained ? 'Screening withheld' : 'Finite conditional intervals';
+    $('calibration-premise').textContent = calibration.premise_status === 'unsupported'
+      ? 'Premises unsupported. The arithmetic does not authorize exclusion.'
+      : 'Premises assumed and unverified. This is conditional calibration arithmetic, not an observed coverage guarantee.';
+    const facts = $('calibration-facts'); facts.replaceChildren();
+    addFact(facts, 'Declared whole-pool risk budget δ', exactText(plan.delta));
+    addFact(facts, 'Scalar events (candidates × targets)', exactText(plan.event_count));
+    addFact(facts, 'Per-event budget ε', exactText(plan.epsilon));
+    addFact(facts, 'Residuals per target n', exactText(plan.calibration_count));
+    addFact(facts, 'Required order-statistic rank k', exactText(plan.rank));
+    addFact(facts, 'Minimum n for a finite radius', exactText(plan.minimum_finite_calibration_count));
+    const reasons = $('calibration-reasons'); reasons.replaceChildren();
+    const reasonText = {
+      required_rank_exceeds_calibration_count: 'The required rank exceeds the available calibration count. Using the largest observed error would not meet this budget.',
+      unsupported_premises: 'The declared sampling or predictor-independence premises are unsupported.',
+      premises_unsupported: 'The declared sampling or predictor-independence premises are unsupported.',
+      sampling_scope_unsupported: 'The declared sampling scope does not support the calibration premises.',
+      finite_order_statistic_under_unverified_premises: 'A finite order statistic is available only under the declared, unverified premises.',
+    };
+    for (const reason of list(calibration.reasons)) reasons.append(node('li', '', reasonText[reason] || pretty(reason)));
+    reasons.hidden = !reasons.childElementCount;
+    const targets = $('calibration-targets'); targets.replaceChildren();
+    for (const [name, target] of Object.entries(calibration.targets || {})) {
+      const radius = target.radius === null || target.radius === undefined ? 'Unavailable' : exactText(target.radius);
+      const row = node('div', 'calibration-target');
+      row.append(node('strong', '', name), node('span', '', `Radius: ${radius}${abstained && target.radius !== null && target.radius !== undefined ? ' · screening withheld' : ''}`));
+      if (target.reason) row.append(node('small', '', calibration.premise_status === 'unsupported' && target.outcome_kind === 'finite' ? 'Finite arithmetic radius; unsupported premises prevent using it for screening.' : reasonText[target.reason] || pretty(target.reason)));
+      targets.append(row);
+    }
+    $('calibration-identifiers').textContent = `Predictor: ${calibration.predictor_id || 'undeclared'} · Calibration: ${calibration.calibration_id || 'undeclared'}`;
+    $('calibration-scope').textContent = `Sampling scope: ${calibration.sampling_scope || 'undeclared'}`;
   }
   function renderEvidence() {
     const assessments = Object.values(state.certificate.evidence_assessment || {});
     const target = $('evidence-content');
-    target.replaceChildren(node('p', 'evidence-summary', 'Evidence links describe the premises. They do not establish physical truth.'));
+    target.replaceChildren(node('p', 'evidence-summary', isCalibrated()
+      ? state.certificate.calibration.premise_status === 'unsupported' ? 'Calibration premises are unsupported. All candidates remain; physical accuracy and interval coverage are unestablished.'
+        : 'Calibration premises are assumed and unverified. A declared risk budget and a finite radius do not verify exchangeability, predictor independence, or physical accuracy.'
+      : 'Evidence links describe the premises. They do not establish physical truth.'));
     const counts = new Map();
     for (const entry of assessments) {
       const label = {
@@ -236,7 +380,7 @@
     for (const [label, count] of counts) {
       const row = node('div', 'evidence-state'); row.append(node('span', '', label), node('strong', '', `${count} candidate${count === 1 ? '' : 's'}`)); target.append(row);
     }
-    if (!assessments.length) target.append(node('p', 'field-help', 'No linked evidence was supplied. Interval soundness remains an assumption.'));
+    if (!assessments.length) target.append(node('p', 'field-help', isAbstained() ? 'No interval certificate is available for screening.' : 'No linked evidence was supplied. Interval soundness remains an assumption.'));
     const missing = assessments.filter((entry) => list(entry.missing_quantities).length).length;
     const rejected = assessments.filter((entry) => list(entry.rejected_evidence).length).length;
     const unpinned = assessments.filter((entry) => list(entry.unpinned_sources).length).length;
@@ -267,7 +411,7 @@
     const revision = state.revision;
     try {
       state.problem = parseForDisplay(state.raw);
-      busy(true); notify('Building the pool from the declared bounds…');
+      busy(true); notify(state.problem.schema === 'lupine.discovery.calibrated_problem.v1' ? 'Checking the calibration budget before screening the pool…' : 'Building the pool from the declared bounds…');
       // Preserve the original JSON. The server detects duplicate keys and parses
       // exact values; JSON.stringify(JSON.parse(input)) would erase those checks.
       const result = await api('/api/select', `{"problem":${state.raw}}`);
@@ -275,7 +419,7 @@
       state.certificate = result; state.replay = null;
       $('replay-results').hidden = true;
       $('replay-tag').textContent = 'NOT YET EVALUATED';
-      renderSelection(); notify('Pool built. The decision is fixed before outcomes are evaluated.', 'success');
+      renderSelection(); notify(isAbstained() ? 'Screening withheld. All candidates remain; the decision is fixed before outcomes are evaluated.' : 'Pool built. The decision is fixed before outcomes are evaluated.', isAbstained() ? '' : 'success');
     } catch (error) { if (revision === state.revision) notify(error.message, 'error'); }
     finally { if (revision === state.revision) busy(false); }
   }
@@ -283,21 +427,23 @@
     const row = node('div'); row.append(node('dt', '', label), node('dd', '', value)); target.append(row);
   }
   function renderReplay(report) {
+    if (isPareto()) { renderParetoReplay(report); return; }
     const evaluation = report.evaluation || report;
+    const abstained = isAbstained();
     const target = $('replay-results'); target.hidden = false; target.replaceChildren();
     const refuted = evaluation.empirical_soundness === 'refuted_on_observed_outcomes';
     const complete = evaluation.outcome_completeness === 'complete';
     const supported = evaluation.empirical_soundness === 'supported_on_complete_finite_archive';
-    const verdict = refuted ? 'Interval premises failed on observed outcomes.' : supported ? 'All supplied bounds contained the known outcomes in this finite case.' : 'The available outcomes do not establish full coverage.';
+    const verdict = abstained ? 'Retention audit only. Screening was withheld, so interval coverage is unavailable.' : refuted ? 'Interval premises failed on observed outcomes.' : supported ? 'All supplied bounds contained the known outcomes in this finite case.' : 'The available outcomes do not establish full coverage.';
     target.append(node('div', `replay-verdict${refuted ? ' fail' : supported ? '' : ' unknown'}`, verdict));
-    $('replay-tag').textContent = refuted ? 'COVERAGE FAILURE' : supported ? 'OBSERVED COVERAGE' : 'INCOMPLETE EVIDENCE';
+    $('replay-tag').textContent = abstained ? 'RETENTION AUDIT' : refuted ? 'COVERAGE FAILURE' : supported ? 'OBSERVED COVERAGE' : 'INCOMPLETE EVIDENCE';
     const facts = node('dl', 'replay-stats');
     addFact(facts, 'All true optima retained', truthText(evaluation.all_true_minimizers_retained));
     addFact(facts, 'Outcome completeness', pretty(evaluation.outcome_completeness || 'unknown'));
-    addFact(facts, 'Score coverage', percent(evaluation.score_coverage));
-    addFact(facts, 'Constraint coverage', Object.keys(state.problem.scenario?.constraints || {}).length ? percent(evaluation.constraint_coverage) : 'No constraints declared');
-    addFact(facts, 'Observed incumbent regret', exactText(evaluation.incumbent_regret));
-    addFact(facts, 'Conditional regret bound held', truthText(evaluation.regret_bound_holds));
+    addFact(facts, 'Score coverage', abstained ? 'Unavailable · no interval' : percent(evaluation.score_coverage));
+    addFact(facts, 'Constraint coverage', abstained ? 'Unavailable · no interval' : Object.keys(state.problem.scenario?.constraints || {}).length ? percent(evaluation.constraint_coverage) : 'No constraints declared');
+    addFact(facts, 'Observed incumbent regret', abstained ? 'Unavailable · no incumbent' : exactText(evaluation.incumbent_regret));
+    addFact(facts, 'Conditional regret bound held', abstained ? 'Unavailable · no bound' : truthText(evaluation.regret_bound_holds));
     target.append(facts);
     const minimizers = list(evaluation.true_minimizers);
     if (minimizers.length) target.append(node('p', 'field-help', `Known best feasible candidates: ${minimizers.join(', ')}.`));
@@ -309,10 +455,55 @@
       const constraintValues = Object.values(observation.constraint_coverage || {});
       const constraints = constraintValues.length ? constraintValues.some((v) => v === false) ? 'failed' : constraintValues.every((v) => v === true) ? 'covered' : 'unknown' : 'none / unreported';
       const score = observation.score_covered === true ? 'covered' : observation.score_covered === false ? 'failed' : 'unknown';
-      observations.append(node('li', '', `${id} · score ${score} · constraints ${constraints} · feasible: ${truthText(observation.true_feasible)}`));
+      observations.append(node('li', '', abstained ? `${id} · interval coverage unavailable · observed feasible: ${truthText(observation.true_feasible)}` : `${id} · score ${score} · constraints ${constraints} · feasible: ${truthText(observation.true_feasible)}`));
     }
     details.append(observations); target.append(details);
-    target.append(node('p', 'replay-caveat', refuted ? 'A failed interval premise prevents applying the conditional retention guarantee. This is a measured failure of the supplied bounds, not a contradiction of the theorem.' : complete ? 'This result describes the supplied finite case. It does not establish accuracy for new candidates, new conditions, or a different source of evidence.' : 'Incomplete outcomes cannot establish that every optimum was retained. Keep the unresolved states open.'));
+    target.append(node('p', 'replay-caveat', abstained ? 'Retaining every candidate prevents screening losses, but provides no reduction of the pool or evidence of predictive accuracy. Outcomes audit the retained pool; they cannot retrospectively supply the missing calibration premise.' : refuted ? 'A failed interval premise prevents applying the conditional retention guarantee. This is a measured failure of the supplied bounds, not a contradiction of the theorem.' : complete ? 'This result describes the supplied finite case. It does not establish accuracy for new candidates, new conditions, or a different source of evidence.' : 'Incomplete outcomes cannot establish that every optimum was retained. Keep the unresolved states open.'));
+    $('step-select').className = 'complete'; $('step-replay').className = 'current';
+  }
+  function renderParetoReplay(report) {
+    const evaluation = report.evaluation || report;
+    const target = $('replay-results'); target.hidden = false; target.replaceChildren();
+    const refuted = evaluation.empirical_soundness === 'refuted_on_observed_outcomes';
+    const supported = evaluation.empirical_soundness === 'supported_on_complete_finite_archive';
+    const complete = evaluation.outcome_completeness === 'complete';
+    const verdict = refuted ? 'Objective or constraint bounds failed on observed outcomes.' : supported ? 'All objective and constraint bounds contained the known outcomes in this finite case.' : 'Incomplete outcomes leave the true Pareto front and full coverage unresolved.';
+    target.append(node('div', `replay-verdict${refuted ? ' fail' : supported ? '' : ' unknown'}`, verdict));
+    $('replay-tag').textContent = refuted ? 'COVERAGE FAILURE' : supported ? 'OBSERVED COVERAGE' : 'INCOMPLETE EVIDENCE';
+    const facts = node('dl', 'replay-stats');
+    addFact(facts, 'Every true Pareto candidate retained', truthText(evaluation.all_true_pareto_candidates_retained));
+    addFact(facts, 'Outcome completeness', pretty(evaluation.outcome_completeness || 'unknown'));
+    for (const [key, coverage] of Object.entries(evaluation.objective_coverage || {})) addFact(facts, `${key} coverage`, percent(coverage));
+    addFact(facts, 'Constraint coverage', Object.keys(state.problem.scenario?.constraints || {}).length ? percent(evaluation.constraint_coverage) : 'No constraints declared');
+    target.append(facts);
+    const front = list(evaluation.true_pareto_front);
+    const frontPanel = node('div', 'pareto-front'); frontPanel.id = 'pareto-front';
+    frontPanel.append(node('h4', '', complete ? 'True Pareto front in this finite case' : 'True Pareto front unresolved'));
+    if (complete && Array.isArray(evaluation.true_pareto_front)) {
+      if (front.length) {
+        const members = node('ul', 'pareto-front-members');
+        for (const id of front) members.append(node('li', '', id));
+        frontPanel.append(members);
+        frontPanel.append(node('p', 'field-help', 'Every listed candidate is feasible and undominated among the complete known outcomes. Equal objective ties remain distinct candidates.'));
+      } else frontPanel.append(node('p', 'field-help', 'The complete outcomes contain no feasible candidates.'));
+    } else {
+      frontPanel.append(node('p', 'field-help', 'Missing objectives or constraints can change the front. The observed subset cannot establish retention of the full true front.'));
+      const observed = list(evaluation.observed_pareto_front);
+      if (observed.length) frontPanel.append(node('p', 'field-help', `Front of the observed complete candidates only: ${observed.join(', ')}.`));
+    }
+    target.append(frontPanel);
+    const missing = list(evaluation.missing_truth_ids);
+    if (missing.length) target.append(node('p', 'field-help status-fail', `Incomplete outcomes: ${missing.join(', ')}. Unknown values are not failures or passes.`));
+    const details = node('details', 'replay-details'); details.append(node('summary', '', 'Inspect per-candidate observations'));
+    const observations = node('ul', 'observation-list');
+    const coveredText = (covered) => covered === true ? 'covered' : covered === false ? 'failed' : 'unknown';
+    for (const [id, observation] of Object.entries(evaluation.per_candidate || {})) {
+      const objectives = Object.entries(observation.objective_coverage || {}).map(([key, covered]) => `${key} ${coveredText(covered)}`);
+      const constraints = Object.entries(observation.constraint_coverage || {}).map(([key, covered]) => `${key} ${coveredText(covered)}`);
+      observations.append(node('li', '', `${id} · ${objectives.join(' · ')} · constraints: ${constraints.join(', ') || 'none declared'} · observed feasible: ${truthText(observation.true_feasible)}`));
+    }
+    details.append(observations); target.append(details);
+    target.append(node('p', 'replay-caveat', refuted ? 'Failed bounds prevent applying the conditional Pareto-retention guarantee. A lost true Pareto candidate is a measured failure of these inputs; it is not erased by a successful result on another objective.' : complete ? 'This front describes the supplied finite archive. It does not establish physical accuracy, future coverage, or performance beyond this candidate universe.' : 'Keep the full-front conclusion unknown until the separately supplied outcomes are complete.'));
     $('step-select').className = 'complete'; $('step-replay').className = 'current';
   }
   async function replay(rawOutcomes) {

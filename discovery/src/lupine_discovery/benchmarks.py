@@ -20,16 +20,21 @@ def _resource(name):
 
 
 def _entry(case_id):
-    for entry in _resource("catalog.json"):
+    for entry in _catalog_entries():
         if entry["id"] == case_id:
             return entry
     raise ValueError(f"unknown benchmark case: {case_id}")
 
 
+def _catalog_entries():
+    return [entry for name in ("catalog.json", "calibration-catalog.json", "pareto-catalog.json")
+            for entry in _resource(name)]
+
+
 def case_catalog():
     """List interval-only demonstrations without exposing their known answers."""
     return [{key: entry[key] for key in ("id", "title", "description", "kind", "has_outcomes")}
-            for entry in _resource("catalog.json")]
+            for entry in _catalog_entries()]
 
 
 def get_case(case_id):
@@ -50,7 +55,10 @@ def get_case_outcomes(case_id, problem):
     if digest(problem) != expected_digest:
         raise ValueError("known answers require the unchanged packaged problem")
     result = _resource(f"outcomes/{entry['id']}.json")
-    parse_outcomes(result, problem["scenario"]["id"], expected_digest)
+    # Strict schema validation occurs in replay after selection. The resource
+    # seal is also checked here, independent of its scalar/Pareto schema.
+    if result.get("problem_digest") != expected_digest or result.get("scenario_id") != problem["scenario"]["id"]:
+        raise ValueError("known answers do not match the packaged problem seal")
     return result
 
 

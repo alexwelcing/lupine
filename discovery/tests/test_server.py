@@ -129,6 +129,77 @@ class ServerTests(unittest.TestCase):
         self.assertEqual(headers["Cache-Control"], "no-store")
         self.assertIn("frame-ancestors 'none'", headers["Content-Security-Policy"])
 
+    def test_calibration_demo_select_export_and_replay(self):
+        from lupine_discovery.cli import verify_certificate
+        for case_id, expected in [("calibrated-finite", ["A"]),
+                                  ("calibrated-insufficient", ["A", "B", "C"]),
+                                  ("calibrated-unsupported", ["A", "B", "C"])]:
+            status, case, _ = self.request("/api/cases/" + case_id)
+            self.assertEqual(status, 200)
+            self.assertNotIn("outcomes", case["problem"])
+            status, selected, _ = self.request("/api/select", {"problem": case["problem"]})
+            self.assertEqual(status, 200)
+            self.assertEqual(selected["selection"]["retained"], expected)
+            self.assertTrue(verify_certificate(case["problem"], selected)["verified"])
+            status, replay, _ = self.request("/api/cases/" + case_id + "/replay",
+                                             {"problem": case["problem"]})
+            self.assertEqual(status, 200)
+            self.assertEqual(replay["evaluation"]["selection"], selected["selection"])
+            self.assertEqual(replay["evaluation"]["true_minimizers"], ["A"])
+            self.assertTrue(replay["evaluation"]["all_true_minimizers_retained"])
+            if case_id != "calibrated-finite":
+                self.assertIsNone(replay["evaluation"]["score_coverage"])
+                self.assertIsNone(replay["evaluation"]["regret_bound_holds"])
+                self.assertEqual(replay["evaluation"]["empirical_soundness"],
+                                 "not_evaluated_abstention")
+
+    def test_calibration_answers_reject_changed_risk_budget(self):
+        _, case, _ = self.request("/api/cases/calibrated-finite")
+        changed = copy.deepcopy(case["problem"])
+        changed["calibration"]["delta"] = "1/10"
+        self.assertEqual(self.request("/api/cases/calibrated-finite/replay", {"problem": changed})[0], 400)
+
+    def test_calibration_cannot_promote_unverified_premises(self):
+        _, case, _ = self.request("/api/cases/calibrated-finite")
+        case["problem"]["calibration"]["premise_status"] = "verified"
+        self.assertEqual(self.request("/api/select", {"problem": case["problem"]})[0], 400)
+
+    def test_pareto_tradeoffs_ties_and_export_match_cli(self):
+        from lupine_discovery.cli import verify_certificate
+        _, case, _ = self.request("/api/cases/pareto-tradeoffs")
+        status, selected, _ = self.request("/api/select", {"problem": case["problem"]})
+        self.assertEqual(status, 200)
+        self.assertEqual(selected, certificate(case["problem"]))
+        self.assertTrue(verify_certificate(case["problem"], selected)["verified"])
+        self.assertEqual(selected["selection"]["retained"], ["a", "a-twin", "b"])
+        self.assertEqual(selected["selection"]["dominance_witnesses"], {"bad": "a"})
+        self.assertNotIn("incumbent", selected["selection"])
+        self.assertNotIn("regret_bound", selected["selection"])
+        status, replay, _ = self.request("/api/cases/pareto-tradeoffs/replay", {"problem": case["problem"]})
+        self.assertEqual(status, 200)
+        self.assertEqual(replay["evaluation"]["true_pareto_front"], ["a", "a-twin", "b"])
+        self.assertTrue(replay["evaluation"]["all_true_pareto_candidates_retained"])
+
+    def test_pareto_missing_truth_never_establishes_full_front(self):
+        _, case, _ = self.request("/api/cases/pareto-partial")
+        status, report, _ = self.request("/api/cases/pareto-partial/replay", {"problem": case["problem"]})
+        self.assertEqual(status, 200)
+        self.assertEqual(report["evaluation"]["outcome_completeness"], "partial")
+        self.assertIsNone(report["evaluation"]["true_pareto_front"])
+        self.assertIsNone(report["evaluation"]["all_true_pareto_candidates_retained"])
+        self.assertEqual(report["evaluation"]["observed_pareto_front"], ["a", "a-twin"])
+
+    def test_pareto_unsound_bounds_expose_lost_true_front(self):
+        _, case, _ = self.request("/api/cases/pareto-unsound-control")
+        status, report, _ = self.request("/api/cases/pareto-unsound-control/replay", {"problem": case["problem"]})
+        self.assertEqual(status, 200)
+        result = report["evaluation"]
+        self.assertEqual(result["selection"]["retained"], ["a"])
+        self.assertEqual(result["true_pareto_front"], ["bad"])
+        self.assertFalse(result["all_true_pareto_candidates_retained"])
+        self.assertEqual(result["dominance_witness_correctness"], {"bad": False})
+        self.assertEqual(result["empirical_soundness"], "refuted_on_observed_outcomes")
+
 
 if __name__ == "__main__":
     unittest.main()

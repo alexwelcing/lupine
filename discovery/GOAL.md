@@ -5,6 +5,11 @@ Owner: Codex, delegated by Alex Welcing on 2026-10-10. Work in
 The user has authorized implementation, research, delegation, testing, and
 branch publication and does not want to manage individual work items.
 
+Alex clarified that work should continue constantly rather than stop after each
+small increment. During an active session, proceed directly to the next useful
+task while parallel agents work. The scheduled task is a recovery mechanism,
+not a substitute for sustained active implementation.
+
 ## Outcome
 
 Produce a reproducible research release candidate that recommends inspectable
@@ -60,13 +65,13 @@ can complete an experiment while leaving its scientific release gate open.
 |---|---|---|---|---|
 | G0 | P0 | Preserve and repair current CI before stacking changes | DONE at baseline | `fb26810`; [all four jobs passed](https://github.com/alexwelcing/lupine/actions/runs/38055093551) |
 | G1a | P0 | Exact joint-risk calibration planner; finite/unbounded distinction; adversarial rank/budget tests | DONE | `src/lupine_discovery/calibration.py`; five focused checks; `docs/calibration-planner.md`. Integration remains G1b. |
-| G1b | P0 | Integrate calibration outcomes and safe abstention through versioned inputs, replay, CLI, and browser; reject unsupported guarantee promotion | TODO | G1a; preserve existing finite-core contract |
-| G2 | P1 | Select, provenance-audit, and preregister a constrained multi-property archived task before reading evaluation targets | TODO | Investigate jointly recorded properties, including NIST JARVIS as a possible archived-calculation source; source not selected yet |
-| G3 | P1 | Run frozen constrained and shift evaluations with equal-budget baselines and complete failure reporting | TODO | G1b, G2; no tuning against the three already opened pilot test sets |
-| G4 | P1 | Prove and implement Pareto retention and selected domain-checked nonlinear interval maps; extend independent oracle | TODO | Preserve ties, feasibility, and explicit assumptions; do not defer uncertainty repair to add features |
-| G5 | P1 | Evaluate evidence-acquisition rules over a predeclared sequence of measurement budgets | TODO | G2/G3; hidden targets unavailable to acquisition policy until chosen |
-| G6 | P1 | Extend workbench for accepted engine modes and scientific benchmark comparisons | TODO | G1b/G3/G4; desktop/mobile and certificate replay checks |
-| G7 | P0 at close | Fresh-environment reproduction, claim audit, release package, and go/no-go decision | TODO | Completed applicable gates and reviewed record of remaining limitations |
+| G1b | P0 | Integrate calibration outcomes and safe abstention through versioned inputs, replay, CLI, and browser; reject unsupported guarantee promotion | DONE locally | Calibrated versioned schema, original-seal replay, 3 demonstrations, exact browser exports and all-retained abstention; publication checks in progress |
+| G2 | P1 | Select, provenance-audit, and preregister a constrained multi-property archived task before reading evaluation targets | DONE | NIST JARVIS protocol and source audit frozen in `b5d432d1e7123ae8c33d48bbef2e04c44de7b37c` before acquiring targets |
+| G3 | P1 | Run frozen constrained and shift evaluations with equal-budget baselines and complete failure reporting | ACTIVE | Guarded custodian/freeze/replay implementation and independent leakage review; no tuning against opened pilot tests |
+| G4 | P1 | Prove and implement Pareto retention and selected domain-checked nonlinear interval maps; extend independent oracle | ACTIVE integration | Pure exact runtime, 24 additional compiled theorems, one million compatible Pareto truth worlds; CLI/replay/browser integration passing focused checks |
+| G5 | P1 | Evaluate evidence-acquisition rules over a predeclared sequence of measurement budgets | ACTIVE | Frozen budgets 0/1/2/4/8/20; per-policy target access and equal-budget baselines |
+| G6 | P1 | Extend workbench for accepted engine modes and scientific benchmark comparisons | ACTIVE | Calibration/Pareto modes pass 16 browser checks; constrained dashboard awaits measured report |
+| G7 | P0 at close | Fresh-environment reproduction, claim audit, release package, and go/no-go decision | ACTIVE | Fresh wheel checks pass all 19 packaged cases; scientific release gates remain open |
 
 The existing interface and 13-case finite suite are completed foundations;
 they are not the end of this goal. Current archive results do not establish
@@ -82,7 +87,8 @@ On every continuation:
    `reports/progress.md`, and the relevant release gates. Do not depend on a
    previous conversation, transient workspace path, or an unpushed commit.
 2. Check current CI and any active work recorded in the journal. Pick the
-   highest-priority unblocked item and complete a bounded, reviewable increment.
+   highest-priority unblocked item and complete reviewable increments, then
+   continue to the next useful item while execution remains available.
    Delegate independent work with explicit file ownership; keep integrating,
    researching, or reviewing while delegates work.
 3. Implement, run checks appropriate to the changed behavior, review claims,
@@ -119,6 +125,12 @@ Bounded scheduled continuation was configured successfully: every four hours,
 configuration is recorded in `reports/continuation.json`.
 Scheduled wake-ups are not a claim that a process runs uninterrupted between
 them. On each run, attempt actual progress and save the checkpoint to GitHub.
+
+An attempt to start a standalone Codex worker on 2026-10-10 failed with an
+authentication error before doing any repository work. No continuous worker
+was launched. The scheduler cannot run more frequently than hourly and cannot
+provide uninterrupted execution. Do not claim either that the failed worker
+is running or that scheduled wake-ups prove work occurred between them.
 
 Stop early only when the definition of done and release decision are recorded,
 or the user cancels. At the window's close, publish a concrete final checkpoint:

@@ -16,7 +16,7 @@ Executed locally on 2026-10-10 with Python 3.12.14.
 - Independent code review accepted the exact mathematics and premise labels;
   its concrete input-shape defect was corrected and regression-tested.
 
-The current `runtime-manifest.json` pins the source and test bytes for this
+The historical `runtime-manifest-calibration-planner.json` pins the source and test bytes for this
 checkpoint. The previous interface manifest is preserved as
 `runtime-manifest-workbench.json`.
 

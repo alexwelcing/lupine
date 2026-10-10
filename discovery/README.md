@@ -6,7 +6,7 @@ A universal, conditional candidate-pool engine grounded in [Lupine Rhizo](https:
 
 This is the initial research implementation for a [four-day project](docs/four-day-plan.md). See [STATUS.md](STATUS.md) for completed work and open gates. No new DFT is required to run the examples or archived experiments.
 
-Verification: **71 Python tests passed**, including the new calibration planner and 13 deterministic known-answer cases. The workbench checkpoint passed **10 desktop/mobile Chromium checks**; the unchanged formal kernel has **18 compiled Lean theorems and 6 passing axiom-audit parser tests**. See the [calibration record](reports/calibration-verification.md), [workbench record](reports/workbench-verification.md), and [formal record](formal/VERIFICATION.md). The active build goal and ordered backlog are in [GOAL.md](GOAL.md).
+Verification now includes exact calibration abstention, multi-objective Pareto selection, nonlinear interval enclosures, and desktop/mobile interaction checks. The proof package contains **42 compiled and audited Lean statements**. See the [engine extension record](reports/engine-extension-verification.md), [formal record](formal/VERIFICATION.md), and machine-readable [theorem inventory](formal/theorem-inventory.json). The active goal and ordered backlog are in [GOAL.md](GOAL.md).
 
 ## Open the interface
 
@@ -35,7 +35,9 @@ python -m unittest discover -s tests -v
 
 The synthetic example retains `A`, `D`, and `E`. It excludes `B` using a better certified feasible incumbent and excludes `C` using a violated constraint. The replay reveals that both true optima, `A` and `E`, survived. `refined.json` demonstrates tighter intervals; `unresolved.json` demonstrates the absence of a certified feasible incumbent.
 
-Inputs minimize one scalar objective and express each constraint as `g <= 0`. Normalize a maximization objective by negation. Use integers or exact rational/decimal strings, such as `"1/3"` or `"0.125"`; floating-point JSON literals are rejected. Objective units, constraint units, scenario IDs, and reference definitions are explicit. Outcomes live in a separate file bound to the input digest.
+The original input schema minimizes one scalar objective and expresses each constraint as `g <= 0`. Normalize a maximization objective by negation. Use integers or exact rational/decimal strings, such as `"1/3"` or `"0.125"`; floating-point JSON literals are rejected. Objective units, constraint units, scenario IDs, and reference definitions are explicit. Outcomes live in a separate file bound to the input digest.
+
+The interface also accepts [calibrated nominal predictions](docs/calibrated-problem.md) and [multiple Pareto objectives](docs/pareto-problem.md). Insufficient calibration or unsupported sampling premises retains every candidate and withholds screening. Pareto mode preserves tradeoffs and ties without inventing a scalar winner; incomplete outcomes leave the full true frontier unresolved. Six additional packaged demonstrations exercise these modes, including deliberately unsound Pareto bounds.
 
 ## The mathematics
 
@@ -82,7 +84,9 @@ python scripts/additional_archived_benchmark.py --output .cache/additional-archi
 
 Read the [Matbench protocol](docs/archived-benchmark.md), [FreeSolv protocol](docs/additional-archived-benchmark.md), their [original](reports/archived-v1.json) and [additional](reports/additional-archived-v1.json) result artifacts, and the [general evaluation protocol](docs/evaluation-protocol.md). Raw datasets are downloaded with pinned hashes and are not bundled. The runs used NumPy 2.3.5; install that version to reproduce the recorded numerical environment.
 
-The [joint-coverage design](docs/joint-coverage-design.md) derives one possible probabilistic route under explicit exchangeability assumptions. The new [exact calibration planner](docs/calibration-planner.md) implements its risk allocation and rank arithmetic, returning explicit unbounded diagnostics when calibration is insufficient. At a 5% joint failure budget, the gap and steel pilot dimensions require that result. Sampling assumptions remain unverified; the planner is not yet connected to the selection interface and has not validated the pilots.
+The [joint-coverage design](docs/joint-coverage-design.md) derives one possible probabilistic route under explicit exchangeability assumptions. The new [exact calibration planner](docs/calibration-planner.md) implements its risk allocation and rank arithmetic, returning explicit unbounded diagnostics when calibration is insufficient. At a 5% joint failure budget, the gap and steel pilot dimensions require that result. Sampling assumptions remain unverified. The planner is connected to selection, CLI, replay, and the browser: insufficient calibration or unsupported premises produces an explicit all-retained abstention. This repair does not validate the three pilot constructions.
+
+The next [constrained evaluation protocol](docs/constrained-benchmark-protocol.md) was committed before target acquisition. It uses a pinned NIST JARVIS archive to maximize calculated band gap subject to nonpositive formation energy, with an oxygen-family holdout and matched measurement budgets. Formation energy here is an elemental-reference screen; it does not establish phase stability, synthesis, or power-plant suitability. Results are reported separately from the three experimental-property pilots.
 
 A separate [posthoc descriptor audit](docs/descriptor-audit.md) found three normalized-composition collisions with different band-gap labels. Their maximum disagreement gives a rigorous 1.15 eV worst-case error floor for deterministic predictors using only that descriptor on the recorded archive. The cause of the label disagreement remains unresolved; benchmark settings were not changed.
 
@@ -90,7 +94,11 @@ A separate [posthoc descriptor audit](docs/descriptor-audit.md) found three norm
 
 Certificates record the sealed input digest, exact selection, exclusion witnesses, evidence-link assessment, and a heuristic measurement queue. `verify` recomputes the certificate; it verifies identity and runtime consistency. It does not attest physical truth. Missing, assumed, rejected, or synthetic evidence remains visible. The measurement queue never truncates the retained pool and carries no acquisition-optimality guarantee.
 
+The [Pareto engine](docs/pareto.md) excludes a candidate only when a certified-feasible witness is no worse in every objective and strictly better in at least one. The [nonlinear interval operations](docs/nonlinear.md) enclose products, reciprocal, quotient, and square on their declared domains; zero-containing reciprocal or division inputs are rejected. These are representation-independent conditional mathematics, not a descriptor or a physical model.
+
 The residual-envelope adapter supports Lupine's anchored Lipschitz correction formulation, conditional on a global residual bound in the declared scope. A Lipschitz estimate from sampled pairs does not discharge that premise. Run `python examples/anchored.py` for a synthetic end-to-end example. See [upstream provenance](docs/upstream-provenance.json) and the [adapter architecture](docs/architecture.md).
+
+A source-byte manifest is checked in CI. `python scripts/package_smoke.py` builds a wheel, installs it into a fresh environment, and exercises every packaged case plus installed HTTP/CLI agreement. This is distribution verification, not an independent scientific rerun.
 
 See [HOSTING.md](HOSTING.md) for the branch location and later extraction.
 

@@ -1,8 +1,11 @@
 # Universal candidate-pool specification
 
-Status: mathematical specification. See `formal/README.md` for precisely which
-statements have compiled Lean proofs. Python conformance tests are not a formal
-refinement proof of the executable runtime.
+Status: mathematical specification. The [formal theorem inventory](../formal/theorem-inventory.json)
+records 42 compiled statements: 18 scalar-selector, 15 Pareto, and 9 nonlinear
+interval/domain theorems. See the [theorem map](../formal/README.md) and
+[actual verification record](../formal/VERIFICATION.md) for their precise scope.
+Python conformance tests are not a formal refinement proof of the executable
+runtime. No probability theorem is included in that Lean inventory.
 
 ## Objects and scope
 
@@ -11,6 +14,11 @@ objective to minimize, and g_j(x,c) real constraint residuals. A constraint is
 satisfied when g_j <= 0. Molecules, structures, alloys, processing histories and
 other representations are all admissible candidate types. The abstract theorem
 does not prescribe a descriptor or a scientific model.
+
+The executable selectors use a finite X. The abstract scalar and Pareto Lean
+statements quantify over arbitrary candidate types, with any required optimum
+or incumbent existence stated as a hypothesis. That extra abstraction does not
+make the runtime an infinite-domain search or establish physical completeness.
 
 For a fixed c, each candidate has sound, finite intervals
 
@@ -94,14 +102,68 @@ Rhizo owns the existing envelope/collision/cold-start formalization. This repo
 implements the exact finite cone arithmetic and extends the selection layer;
 see `upstream-provenance.json` for pinned sources.
 
-## Multiple objectives and nonlinear properties
+## Pareto candidate pools
 
-Version 0.1 certifies a declared scalar objective with multiple constraints.
-Signed linear interval combinations and coordinatewise min/max are supplied.
-They are conservative without independence assumptions. A universal Pareto pool,
-nonlinear monotone maps, infinite-domain coverage, probabilistic joint coverage,
-and optimal information acquisition need their own statements and proof modules.
-They are not implied by scalar ordering or a low-dimensional error manifold.
+Let I be a nonempty finite set of objective keys in the runtime. Each objective
+f_i is minimized and has a sound finite enclosure [L_i(x), U_i(x)]. Constraints
+and Fminus/Fplus retain the definitions above. True Pareto dominance means
+
+    y dominates x iff every f_i(y) <= f_i(x), and some f_i(y) < f_i(x).
+
+A true feasible Pareto optimum has no feasible dominator. The interval rule
+requires a certified feasible witness:
+
+    W(y,x) iff y in Fminus,
+               every U_i(y) <= L_i(x), and some U_i(y) < L_i(x).
+    P_pareto = {x in Fplus : no y satisfies W(y,x)}.
+
+Soundness implies that W(y,x) supplies a truly feasible y that dominates x:
+f_i(y)<=U_i(y)<=L_i(x)<=f_i(x), with the required strict component.
+Consequently every true feasible Pareto optimum is retained, even when its
+feasibility is only possible from the intervals. Equal objective vectors cannot
+exclude each other; all truly optimal ties survive. A third candidate can still
+exclude two equal nonoptimal vectors. Incomparable tradeoffs are not resolved
+by an implicit weighted sum, lexicographic objective order, or top-k cutoff.
+
+Without a certified feasible witness, all of Fplus remains. The retained pool
+may contain dominated or infeasible candidates whose exclusion is not justified
+by these intervals; it is a superset of the true feasible front, not a claim to
+have identified it exactly. No scalar incumbent, threshold, or regret bound is
+defined for this mode. Empty Fplus certifies infeasibility only of the supplied X.
+
+With fixed candidate identities, objective/constraint keys and semantic scope,
+componentwise interval tightening expands Fminus, shrinks Fplus, and preserves
+each old witness, including its strict coordinate. Thus the Pareto retained pool
+can only shrink. This arithmetic relation does not establish soundness of the
+new intervals. [LupinePareto.lean](../formal/LupinePareto.lean) proves these
+implications; the [runtime contract](pareto.md) and
+[scoped JSON protocol](pareto-problem.md) describe their finite implementation.
+
+## Domain-checked nonlinear enclosures
+
+Signed linear combinations and coordinatewise min/max remain available.
+For finite intervals A=[a,b] and B=[c,d], the additional exact operations are:
+
+| Operation | Enclosure | Required domain |
+| --- | --- | --- |
+| Product | [min(ac,ad,bc,bd), max(ac,ad,bc,bd)] | Any finite A and B |
+| Reciprocal of A | [1/b,1/a] | a>0 or b<0 |
+| Quotient A/B | Product enclosure of A and [1/d,1/c] | c>0 or d<0 |
+| Square of A | [a²,b²] if a>=0; [b²,a²] if b<=0; [0,max(a²,b²)] otherwise | Any finite A |
+
+Reciprocal and division reject a denominator interval touching or crossing zero,
+including when the numerator is zero. They do not insert a large finite bound.
+Containment requires the true operands to lie in their supplied intervals, but
+requires no statistical independence. Repeated dependencies can widen composed
+enclosures. For example, interval multiplication of [-2,3] by itself gives
+[-6,9], while direct squaring preserves the shared operand and gives [0,9].
+
+[LupineIntervals.lean](../formal/LupineIntervals.lean) proves the finite-real
+containment and domain statements. [The runtime operations](nonlinear.md) use
+exact rational endpoints. Neither these rules nor their tests establish a
+general nonlinear solver, physical model validity, or a Python-to-Lean
+refinement. Infinite-domain coverage and optimal information acquisition remain
+separate problems.
 
 ## Probability is a separate layer
 
@@ -111,6 +173,76 @@ coverage is not joint coverage of adaptively selected candidates. This version
 does not manufacture simultaneous coverage from split-conformal quantiles or a
 held-out coverage fraction. Distribution shift remains an empirical concern.
 
+The integrated [calibrated-problem route](calibrated-problem.md) currently covers
+one scalar objective plus all its constraints. It does not add a calibration
+wrapper for Pareto objective vectors. For m>=1 candidates, p scalar targets
+(one score plus the constraints), n calibration residuals per target, and
+0<delta<1, the exact planner computes
+
+    event_count = m*p
+    epsilon = delta/(m*p)
+    k = ceil((n+1)*(1-epsilon)).
+
+For each target, k<=n selects the kth nonnegative absolute-error residual q.
+Its prepared interval is [nominal-q, nominal+q]. If k=n+1, the radius is
+unbounded, represented explicitly rather than clamped to the largest residual.
+Finite rank is possible exactly when n>=ceil(1/epsilon)-1. Candidate and target
+counts come from the submitted problem; a caller cannot reduce the allocation
+denominator by supplying different counts.
+
+The usual marginal split-conformal argument requires suitable exchangeability,
+independent predictor/rule freezing, and candidate generation that preserves
+each marginal premise. The union bound then needs no independence between
+candidate events. These are explicit unverified assumptions, not facts inferred
+from IDs, timestamps, residual arrays, or a receipt digest. Exact rank/allocation
+arithmetic and finite output establish no probability guarantee by themselves;
+no probability theorem or probabilistic Python refinement is compiled here.
+
+With finite radii and `assumed_unverified` premises, the prepared scalar problem
+enters the existing exact selector, retaining its conditional sound-interval
+interpretation. If any radius is unbounded or the sampling premise is
+`unsupported`, the route abstains from pruning and retains all of X. It reports
+no certified feasible/infeasible candidates, no dominance exclusions, no
+incumbent, threshold or regret bound, and no prepared interval problem.
+`possible_feasible` includes every candidate as an unresolved state. Nominal
+predictions remain point estimates; they are not finite bounds, feasibility
+certificates, or a ranking guarantee during abstention. A finite diagnostic
+radius under unsupported sampling is likewise never used for pruning.
+
+Retaining everyone preserves every feasible optimum trivially, but provides no
+evidence of useful pool reduction. Physical evidence remains missing or
+unverified, and the three existing archived pilot failures are not repaired by
+adding this conservative route.
+
+## Separate outcomes and partial truth
+
+Outcome replay binds to the original problem digest and scenario. It fixes the
+selected pool before parsing separately supplied outcomes; observing failures
+does not change that original decision. Hashes establish identity, not outcome
+independence or scientific truth.
+
+Missing candidate outcomes or target values remain unknown. Pareto outcomes
+explicitly allow absent or null individual objectives and constraints. Any
+observed positive constraint proves that candidate infeasible, even if other
+constraints are missing. Feasibility is true only when every declared
+constraint is known and nonpositive; with no constraints it is vacuously true.
+Otherwise feasibility remains unknown.
+
+The global true minimizer set or Pareto front is reported only with complete
+truth for the entire finite universe. Partial Pareto replay can report an
+`observed_pareto_front` among fully measured objective vectors of known feasible
+observed candidates; it is explicitly not the global front. A measured value
+outside its supplied interval refutes the joint soundness premise immediately,
+even with partial truth. Coverage fractions use observed scalar counts; no
+observations yield null coverage rather than perfect coverage.
+
+Abstention has no interval coverage to audit: replay reports null coverage and
+regret, with `not_evaluated_abstention` status. Nominal prediction accuracy is not
+substituted for interval coverage. Complete truth with no feasible candidate
+reports an empty optimum/front and null retention, avoiding a claimed discovery
+success. An empty Pareto universe is valid but gives null pool fraction and
+`not_evaluated_empty_universe` soundness.
+
 ## Proof obligations, end to end
 
 1. Domain representation and observable meanings are adequate.
@@ -118,7 +250,9 @@ held-out coverage fraction. Distribution shift remains an empirical concern.
 3. Anchor and regularity premises justify intervals (or intervals stay assumed).
 4. Serialization preserves interval bounds, with outward rounding where needed.
 5. Selection arithmetic implements the specification.
-6. The conditional theorems establish feasibility, retention and regret.
+6. The conditional theorems establish feasibility, scalar/Pareto retention,
+   scalar regret, and the stated nonlinear enclosures; probability premises
+   remain a separate obligation.
 7. Archival evaluation measures usefulness without leaking evaluation outcomes.
 
 The first three include scientific obligations. Lean proves implications from

@@ -16,10 +16,12 @@ The active outcome, ordered backlog, and autonomous execution rules are in
 - Local browser workbench using the actual selector: input upload/editing, candidate and evidence inspection, certificate export, and separately bound outcome replay. Desktop and mobile Chromium checks passed.
 - Thirteen deterministic known-answer cases with an independent exhaustive oracle: eleven sound fixtures and two deliberately unsound controls. All declared expectations pass; this is software evidence, not materials prediction validation.
 - Three pinned published-data pilots with recorded negative findings; no new DFT or synthesis. All three empirical interval constructions fail simultaneous coverage; band gap loses five tied optima.
-- Independently reviewed joint-coverage derivation and identifiability limits. Exact calibration planning now implements uniform scalar-event risk allocation, rational rank arithmetic, and explicit unbounded diagnostics. Assumptions remain unverified; safe selection/CLI/UI integration is the next task (G1b).
+- Independently reviewed joint-coverage derivation and identifiability limits. Exact calibration planning now implements uniform scalar-event risk allocation, rational rank arithmetic, and explicit unbounded diagnostics. Assumptions remain unverified. Versioned calibrated inputs now propagate finite conditional intervals or explicit all-retained abstention through CLI, replay, and browser.
 - Posthoc exact-descriptor audit: three band-gap label collisions imply a 1.15 eV archive worst-error floor for composition-only predictors; physical causes remain unresolved.
-- Standalone conditional Lean proof package: 18 theorems compiled. Consult `formal/VERIFICATION.md` for exact execution evidence and axioms.
-- Workbench checkpoint: 66 Python tests and 10 Chromium interaction checks passed; packaged assets and fixtures verified in an isolated wheel install. See `reports/workbench-verification.md`.
+- Standalone conditional Lean proof package: 42 theorems compiled across scalar, Pareto, and nonlinear interval modules. Consult `formal/VERIFICATION.md` for exact execution evidence and axioms.
+- Pareto runtime and IO preserve tradeoffs, ties, feasible witnesses, and partial-truth states. Selected exact nonlinear maps reject invalid domains. See `reports/engine-extension-verification.md` for current checks; earlier checkpoints remain archived.
+- All 19 packaged cases pass selection, certificate verification and replay in a fresh wheel installation. The interface passes 16 Chromium checks across scalar, calibrated, and Pareto modes.
+- The constrained NIST JARVIS evaluation protocol was frozen and pushed before target acquisition; implementation and guarded equal-budget evaluation are active.
 
 ## Remaining four-day gates
 
@@ -27,7 +29,7 @@ This checkpoint covers the kernel, local research interface, and initial retrosp
 
 - Establish defensible simultaneous interval bounds under declared scientific scope, or explicitly abstain from physical guarantees.
 - Broaden independent archived tasks, including actual operating-condition constraints and distribution shift; freeze protocols before examining evaluation outcomes.
-- Implement and prove Pareto/nonlinear extensions and evaluate evidence acquisition at matched budgets.
+- Complete constrained archived-calculation and family-shift evaluation at matched evidence-acquisition budgets. Pareto/nonlinear mathematical implementation is complete; scientific usefulness remains a separate gate.
 - Audit runtime/formal conformance beyond examples and exhaustive small worlds; no formal refinement claim exists yet.
 - Resolve original dataset provenance and redistribution rights before bundling data.
 - Complete independent scientific reproduction and scoped release review. Branch publication is not a validated scientific release.

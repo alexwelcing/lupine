@@ -10,7 +10,7 @@ import threading
 
 from playwright.sync_api import expect, sync_playwright
 
-from lupine_discovery.benchmarks import get_case
+from lupine_discovery.benchmarks import case_catalog, get_case
 from lupine_discovery.cli import verify_certificate
 from lupine_discovery.server import make_server
 
@@ -30,7 +30,7 @@ def run():
             page = browser.new_page(viewport={"width": 1440, "height": 1050})
             page.on("pageerror", lambda error: errors.append(str(error)))
             page.goto(url, wait_until="networkidle")
-            expect(page.locator("#case-select option")).to_have_count(14)
+            expect(page.locator("#case-select option")).to_have_count(len(case_catalog()) + 1)
 
             def select_case(case_id):
                 page.locator("#case-select").select_option(case_id)
@@ -100,6 +100,92 @@ def run():
             expect(page.locator("#replay-results")).to_be_visible()
             checks.append("custom_problem_and_separate_outcome_upload")
 
+            finite = select_case("calibrated-finite")
+            assert finite["calibration"]["status"] == "finite_conditional"
+            assert finite["selection"]["retained"] == ["A"]
+            expect(page.locator("#calibration-panel")).to_be_visible()
+            expect(page.locator("#pool-table")).not_to_contain_text("undefined")
+            with page.expect_download() as downloaded:
+                page.locator("#download-certificate").click()
+            calibrated_target = artifacts / "calibrated-certificate.json"
+            downloaded.value.save_as(calibrated_target)
+            verify_certificate(get_case("calibrated-finite")["problem"],
+                               json.loads(calibrated_target.read_text()))
+            checks.append("calibrated_finite_intervals_and_sealed_export")
+
+            for case_id in ("calibrated-insufficient", "calibrated-unsupported"):
+                withheld = select_case(case_id)
+                assert withheld["calibration"]["status"] == "abstained"
+                assert withheld["selection"]["retained"] == ["A", "B", "C"]
+                expect(page.locator("#result-title")).to_have_text("Screening withheld")
+                expect(page.locator("#pool-table .score-line")).to_have_count(0)
+                expect(page.locator("#pool-table")).not_to_contain_text("undefined")
+                with page.expect_response(lambda r: r.url.endswith("/replay")) as response:
+                    page.locator("#replay-builtin").click()
+                evaluation = response.value.json()["evaluation"]
+                assert evaluation["score_coverage"] is None
+                assert evaluation["all_true_minimizers_retained"] is True
+                expect(page.locator("#replay-results")).to_be_visible()
+            checks.append("insufficient_and_unsupported_calibration_withhold_screening")
+            page.evaluate("window.scrollTo(0, 0)")
+            page.screenshot(path=str(artifacts / "desktop-abstention.png"))
+
+            tiny = get_case("calibrated-finite")["problem"]
+            tiny["candidates"] = tiny["candidates"][:1]
+            tiny["calibration"]["delta"] = "1/100000000000000000"
+            tiny["calibration"]["residuals"] = {"score": [], "limit": []}
+            page.locator("#problem-upload").set_input_files({
+                "name": "tiny-risk-budget.json", "mimeType": "application/json",
+                "buffer": json.dumps(tiny).encode(),
+            })
+            expect(page.locator("#case-kind")).to_have_text("CUSTOM INPUT")
+            page.locator("#analyze").click()
+            expect(page.locator("#result-title")).to_have_text("Screening withheld")
+            expect(page.locator("#calibration-facts")).to_contain_text("199999999999999999")
+            with page.expect_download() as downloaded:
+                page.locator("#download-certificate").click()
+            tiny_target = artifacts / "tiny-risk-certificate.json"
+            downloaded.value.save_as(tiny_target)
+            verify_certificate(tiny, json.loads(tiny_target.read_text()))
+            checks.append("large_exact_calibration_diagnostic_roundtrip")
+
+            pareto = select_case("pareto-tradeoffs")
+            assert pareto["selection"]["retained"] == ["a", "a-twin", "b"]
+            assert pareto["selection"]["dominance_witnesses"] == {"bad": "a"}
+            expect(page.locator("#result-title")).to_have_text("3 candidates in the Pareto pool")
+            expect(page.locator("#selection-metrics")).not_to_contain_text("REGRET")
+            expect(page.locator("#pool-table")).to_contain_text("cost")
+            expect(page.locator("#pool-table")).to_contain_text("risk")
+            expect(page.locator("#pool-table")).not_to_contain_text("undefined")
+            with page.expect_download() as downloaded:
+                page.locator("#download-certificate").click()
+            pareto_target = artifacts / "pareto-certificate.json"
+            downloaded.value.save_as(pareto_target)
+            verify_certificate(get_case("pareto-tradeoffs")["problem"], json.loads(pareto_target.read_text()))
+            with page.expect_response(lambda r: r.url.endswith("/replay")) as response:
+                page.locator("#replay-builtin").click()
+            assert response.value.json()["evaluation"]["true_pareto_front"] == ["a", "a-twin", "b"]
+            expect(page.locator("#pareto-front")).to_contain_text("a-twin")
+            checks.append("pareto_tradeoffs_ties_sealed_export_and_true_front")
+            page.evaluate("window.scrollTo(0, 0)")
+            page.screenshot(path=str(artifacts / "desktop-pareto.png"), full_page=True)
+
+            select_case("pareto-partial")
+            with page.expect_response(lambda r: r.url.endswith("/replay")) as response:
+                page.locator("#replay-builtin").click()
+            assert response.value.json()["evaluation"]["true_pareto_front"] is None
+            expect(page.locator("#pareto-front")).to_contain_text("unresolved")
+            checks.append("partial_pareto_truth_keeps_global_front_unknown")
+
+            select_case("pareto-unsound-control")
+            with page.expect_response(lambda r: r.url.endswith("/replay")) as response:
+                page.locator("#replay-builtin").click()
+            evaluation = response.value.json()["evaluation"]
+            assert evaluation["true_pareto_front"] == ["bad"]
+            assert evaluation["all_true_pareto_candidates_retained"] is False
+            expect(page.locator("#replay-results")).to_contain_text("Failed bounds")
+            checks.append("pareto_unsound_control_exposes_excluded_true_front")
+
             page.locator("#nav-benchmarks").click()
             expect(page.locator("#benchmark-content")).to_be_visible()
             expect(page.locator("#known-case-list .known-case")).to_have_count(13)
@@ -114,6 +200,16 @@ def run():
             mobile.goto(url, wait_until="networkidle")
             mobile.locator("#analyze").click()
             expect(mobile.locator("#analysis-results")).to_be_visible()
+            assert mobile.evaluate("document.documentElement.scrollWidth <= window.innerWidth + 1")
+            mobile.locator("#case-select").select_option("calibrated-insufficient")
+            expect(mobile.locator("#case-title")).to_have_text(get_case("calibrated-insufficient")["title"])
+            mobile.locator("#analyze").click()
+            expect(mobile.locator("#result-title")).to_have_text("Screening withheld")
+            assert mobile.evaluate("document.documentElement.scrollWidth <= window.innerWidth + 1")
+            mobile.locator("#case-select").select_option("pareto-tradeoffs")
+            expect(mobile.locator("#case-title")).to_have_text(get_case("pareto-tradeoffs")["title"])
+            mobile.locator("#analyze").click()
+            expect(mobile.locator("#result-title")).to_have_text("3 candidates in the Pareto pool")
             assert mobile.evaluate("document.documentElement.scrollWidth <= window.innerWidth + 1")
             mobile.locator("#nav-benchmarks").click()
             expect(mobile.locator("#benchmark-content")).to_be_visible()

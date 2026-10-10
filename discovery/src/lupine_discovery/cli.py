@@ -12,6 +12,12 @@ from .serialization import encode, loads, parse_outcomes, parse_problem
 
 
 def certificate(value):
+    if isinstance(value, dict) and value.get("schema") == "lupine.discovery.pareto_problem.v1":
+        from .pareto_io import pareto_certificate
+        return pareto_certificate(value)
+    if isinstance(value, dict) and value.get("schema") == "lupine.discovery.calibrated_problem.v1":
+        from .calibrated import calibrated_certificate
+        return calibrated_certificate(value)
     problem = parse_problem(value)
     decision = select(problem.candidates)
     indexed = {c.candidate_id: c for c in problem.candidates}
@@ -44,7 +50,12 @@ def certificate(value):
 
 
 def verify_certificate(problem_value, supplied):
-    if supplied != certificate(problem_value):
+    recomputed = certificate(problem_value)
+    # JSON booleans compare equal to Python integers; calibrated count fields
+    # require a type-sensitive identity check as well as ordinary equality.
+    exact_json = isinstance(problem_value, dict) and problem_value.get("schema") in {
+        "lupine.discovery.calibrated_problem.v1", "lupine.discovery.pareto_problem.v1"}
+    if supplied != recomputed or (exact_json and digest(supplied) != digest(recomputed)):
         raise ValueError("certificate differs from exact deterministic recomputation")
     return {"schema": "lupine.discovery.verification.v1", "verified": True,
             "scope": "identity_and_exact_runtime_recomputation_only",
@@ -53,6 +64,12 @@ def verify_certificate(problem_value, supplied):
 
 
 def replay_report(value, outcome_value):
+    if isinstance(value, dict) and value.get("schema") == "lupine.discovery.pareto_problem.v1":
+        from .pareto_io import pareto_replay_report
+        return pareto_replay_report(value, outcome_value)
+    if isinstance(value, dict) and value.get("schema") == "lupine.discovery.calibrated_problem.v1":
+        from .calibrated import calibrated_replay_report
+        return calibrated_replay_report(value, outcome_value)
     problem = parse_problem(value)
     outcomes = parse_outcomes(outcome_value, problem.scenario_id, digest(value))
     return {"schema": "lupine.discovery.replay.v1", "problem_digest": digest(value),

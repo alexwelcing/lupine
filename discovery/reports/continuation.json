@@ -19,5 +19,9 @@
   "scope": "Resume latest GitHub goal and implement the next bounded increment with available tools, testing and recording actual outcomes.",
   "limits": "Scheduling success does not prove future tool availability, a completed build, or uninterrupted execution. Check and record each run. Do not silently extend the bounded schedule.",
   "schedule_update_confirmed_at": "2026-10-10T13:38:36.683074+00:00",
-  "start_reason": "First continuation begins after this implementation session to reduce overlapping edits."
+  "start_reason": "First continuation begins after this implementation session to reduce overlapping edits.",
+  "continuous_execution_requested": true,
+  "continuous_worker_status": "not_started; standalone Codex read-only capability check failed authentication (HTTP 401)",
+  "scheduler_continuity_limit": "Maximum supported recurrence is hourly; uninterrupted execution is unsupported.",
+  "active_session_policy": "Continue implementation across successive useful tasks; scheduled runs are recovery, not a claim of constant execution."
 }
