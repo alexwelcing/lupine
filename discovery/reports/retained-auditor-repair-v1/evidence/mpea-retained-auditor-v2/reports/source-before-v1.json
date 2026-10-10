@@ -1,0 +1,12 @@
+{
+  ".cache/mpea-retained-auditor-v2/copy-manifest-v1.json": "551030479ecf492150ac95c4d6c2f48db7fde3faf515c29049b6342c1cb19fd0",
+  ".cache/mpea-retained-auditor-v2/run-checks-v1.py": "e756860553ee0ec9f3e4eddb52f9f9d3bc2cbad02ff7c5874d8bf97492150cda",
+  ".cache/mpea-retained-auditor-v2/scripts/verify_retained_artifacts.py": "b88514b490f1cad8c705bbe4066dc558ffe844c257efeffa6ce63e086209ba13",
+  ".cache/mpea-retained-auditor-v2/tests/test_retained_artifacts.py": "ffdd9dd80e5e2c23a9294d35bc70bb7bf9591384f4071229c414c0c0562fb3f3",
+  ".cache/mpea-retained-auditor-v2/tests/test_retained_mpea_transport.py": "30d5037d4bcafa69d732efb04a0c0dc90934e4c9ef50fe214f9019b98d37d81b",
+  ".cache/release-artifacts-contract-478208f0f3be/lupine-discovery-source-478208f0f3be.tar": "9c7b9bc5971b3db801fb911505ae72b89a0010ca821ea2ad3549ee88cefeeb0c",
+  ".cache/release-artifacts-contract-478208f0f3be/lupine_discovery-0.1.0-py3-none-any.whl": "d15d4dce13e44eab3779987b20f0738d690e1e53a86314e54fcde686beb45390",
+  ".cache/release-artifacts-contract-478208f0f3be/release-artifacts.json": "e302ab2d23315469be5db2c3658acb8c2777d84accfe600e5f56e5c01809a20a",
+  "scripts/package_smoke.py": "f64489f64aefc6624298e25d9dad493186c25b1c91e3f063e9e73d23f8ebf6a1",
+  "scripts/verify_retained_artifacts.py": "ca91b7fccafee1f1717830bd74edf3256dac5751e7c11b11d5f3b8eaf81c1a07"
+}

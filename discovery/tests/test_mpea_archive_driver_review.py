@@ -241,7 +241,34 @@ class IndependentArchiveDriverReview(unittest.TestCase):
         result=json.loads(process.stdout)
         self.assertEqual(result['status'],'COMPLETE',result['reasons'])
         self.assertEqual(result['scientific_digests'],[list(pair) for pair in self.result.store.scientific_digests()])
-        self.assertEqual(result['allocation_identity'],self.result.store.stage_identity('allocation'))
+        # This child independently recomputes the same constructed fixed roles.
+        # It does not import allocation bytes: each receipt binds its own measured
+        # usage while all scientific fields and exact role metadata must agree.
+        parent=self.artifact(self.result,'allocation');child=result['allocation_envelope']
+        source=self.case.routes.source
+        expected_source={'bytes':source.byte_count,'md5':source.md5,'sha256':source.sha256}
+        d.persistence.verify_envelope(child,registration(),expected_source,execution_scope='synthetic_fixture')
+        child_raw=d.io.canonical(child);parent_raw=self.result.store.stage_bytes('allocation')
+        self.assertEqual(result['allocation_identity'],{'bytes_sha256':sha256(child_raw).hexdigest(),
+            'content_sha256':child['content_sha256'],'scientific_sha256':child['scientific_sha256']})
+        self.assertEqual(self.result.store.stage_identity('allocation'),{'bytes_sha256':sha256(parent_raw).hexdigest(),
+            'content_sha256':parent['content_sha256'],'scientific_sha256':parent['scientific_sha256']})
+        self.assertEqual(d.io.canonical(child['source']),d.io.canonical(expected_source))
+        self.assertEqual(d.io.canonical(d.persistence.scientific_preimage(child)),
+            d.io.canonical(d.persistence.scientific_preimage(parent)))
+        self.assertEqual(child['scientific_sha256'],parent['scientific_sha256'])
+        parent_route=parent['payload']['route_artifact']
+        self.assertEqual(result['label_routes_identity'],parent_route)
+        self.assertEqual(result['label_routes_bytes_sha256'],parent_route['bytes_sha256'])
+        self.assertEqual(result['label_routes_bytes_sha256'],sha256(self.result.store.artifact_bytes('label-routes.json',parent_route)).hexdigest())
+        # Canonical whole receipts differ exactly when their usage differs. The
+        # genuine fixed-allocation import test separately requires byte equality.
+        same_usage=d.io.canonical(child['usage'])==d.io.canonical(parent['usage'])
+        self.assertEqual(child_raw==parent_raw,same_usage)
+        self.assertEqual(child['content_sha256']==parent['content_sha256'],same_usage)
+        self.assertEqual(result['allocation_identity']['bytes_sha256']==self.result.store.stage_identity('allocation')['bytes_sha256'],same_usage)
+        self.assertEqual(d.io.canonical({k:v for k,v in child.items() if k not in ('usage','content_sha256')}),
+            d.io.canonical({k:v for k,v in parent.items() if k not in ('usage','content_sha256')}))
         self.assertEqual(result['evaluation_digest'],self.result.evaluation.evaluation_digest)
         self.assertEqual((result['source_captures'],result['captured_bytes']),(1,len(self.case.raw)))
 

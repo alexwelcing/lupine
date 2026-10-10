@@ -1,0 +1,196 @@
+{
+  "files": [
+    {
+      "bytes": 2960,
+      "sha256": "8963e527e55a5bce738682ae00b0737dbba80287037e1d5173436492b5e6dafe",
+      "source": ".cache/mpea-retained-auditor-v2/README.md"
+    },
+    {
+      "bytes": 1840,
+      "sha256": "551030479ecf492150ac95c4d6c2f48db7fde3faf515c29049b6342c1cb19fd0",
+      "source": ".cache/mpea-retained-auditor-v2/copy-manifest-v1.json"
+    },
+    {
+      "bytes": 3195,
+      "sha256": "e756860553ee0ec9f3e4eddb52f9f9d3bc2cbad02ff7c5874d8bf97492150cda",
+      "source": ".cache/mpea-retained-auditor-v2/run-checks-v1.py"
+    },
+    {
+      "bytes": 19640,
+      "sha256": "b88514b490f1cad8c705bbe4066dc558ffe844c257efeffa6ce63e086209ba13",
+      "source": ".cache/mpea-retained-auditor-v2/scripts/verify_retained_artifacts.py"
+    },
+    {
+      "bytes": 14107,
+      "sha256": "ffdd9dd80e5e2c23a9294d35bc70bb7bf9591384f4071229c414c0c0562fb3f3",
+      "source": ".cache/mpea-retained-auditor-v2/tests/test_retained_artifacts.py"
+    },
+    {
+      "bytes": 7651,
+      "sha256": "30d5037d4bcafa69d732efb04a0c0dc90934e4c9ef50fe214f9019b98d37d81b",
+      "source": ".cache/mpea-retained-auditor-v2/tests/test_retained_mpea_transport.py"
+    },
+    {
+      "bytes": 13820,
+      "sha256": "edd7e16c7d740d338345337eca69cd7eb599d1c9df248e6048ea59872d5678fa",
+      "source": ".cache/mpea-retained-auditor-v2/history/test_retained_artifacts.py"
+    },
+    {
+      "bytes": 17157,
+      "sha256": "ca91b7fccafee1f1717830bd74edf3256dac5751e7c11b11d5f3b8eaf81c1a07",
+      "source": ".cache/mpea-retained-auditor-v2/history/verify_retained_artifacts.py"
+    },
+    {
+      "bytes": 2342,
+      "sha256": "0132d6a6e676e7ddc7d6c23dbe427a848ae7485015712cccd1a52083e8a5b958",
+      "source": ".cache/mpea-retained-auditor-v2/diffs/test_retained_artifacts.py.patch"
+    },
+    {
+      "bytes": 7920,
+      "sha256": "c91f097fa68846abd3e99684fa6988c0ebd227b0351fe8de5610bd3a0dcf875c",
+      "source": ".cache/mpea-retained-auditor-v2/diffs/test_retained_mpea_transport.py.patch"
+    },
+    {
+      "bytes": 5472,
+      "sha256": "bd3d19ed123213dc965f278e977766c96f95f7d7fdcdcac6e1ec2c98f9b77b11",
+      "source": ".cache/mpea-retained-auditor-v2/diffs/verify_retained_artifacts.py.patch"
+    },
+    {
+      "bytes": 5014,
+      "sha256": "34a51db73627635b13e26c1dd2210eeb71bde010fd4d9ae4af21e7d26460e4f8",
+      "source": ".cache/mpea-retained-auditor-v2/reports/execution-v1.json"
+    },
+    {
+      "bytes": 1347,
+      "sha256": "1412a506f722dc0c7acd033e9dcafe97176604aa28f0d4ea78d73b5907b474ab",
+      "source": ".cache/mpea-retained-auditor-v2/reports/source-before-v1.json"
+    },
+    {
+      "bytes": 1919,
+      "sha256": "bfe6546922f030c16d17e829cab4e9bff08a60538cf424aa2eb81346353123d5",
+      "source": ".cache/mpea-retained-auditor-v2/reports/existing-controls.stderr.txt"
+    },
+    {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": ".cache/mpea-retained-auditor-v2/reports/existing-controls.stdout.txt"
+    },
+    {
+      "bytes": 2113,
+      "sha256": "306646b86c517a6a84d8ef038ce8067ca21172d4f15aec51d1a6495b6ed4cf9d",
+      "source": ".cache/mpea-retained-auditor-v2/reports/new-controls.stderr.txt"
+    },
+    {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": ".cache/mpea-retained-auditor-v2/reports/new-controls.stdout.txt"
+    },
+    {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": ".cache/mpea-retained-auditor-v2/reports/retained478-candidate-audit.stderr.txt"
+    },
+    {
+      "bytes": 3347,
+      "sha256": "8b8678f6f6ed589bfa30bf387385a44f8e7eba952fce05e66479b9063aa33e20",
+      "source": ".cache/mpea-retained-auditor-v2/reports/retained478-candidate-audit.stdout.txt"
+    },
+    {
+      "bytes": 1259,
+      "sha256": "14712da5837c0537929a9b61b9be890847ae56129c664263b579e0bd4f17659a",
+      "source": ".cache/package-release-execution-478208f0f3be/README.md"
+    },
+    {
+      "bytes": 8834,
+      "sha256": "4217f6d199796388a285afbd6c1b25796142ef87af8cb190b03e1705ff55aef1",
+      "source": ".cache/package-release-execution-478208f0f3be/execution.json"
+    },
+    {
+      "bytes": 1660,
+      "sha256": "f1a133836a1099146f3669b6045317dccd8f85ef2f0dc3ddd8e6e94fefa91e82",
+      "source": ".cache/package-release-execution-478208f0f3be/package.execution.json"
+    },
+    {
+      "bytes": 1326,
+      "sha256": "f3b7269ae01aee0c429cd1af4c0c3d6e2ba6f413ec25ce61c9b133d2f6282fd3",
+      "source": ".cache/package-release-execution-478208f0f3be/package.started.json"
+    },
+    {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": ".cache/package-release-execution-478208f0f3be/package.stderr.txt"
+    },
+    {
+      "bytes": 997,
+      "sha256": "bce183dc6a30d389fcef9e6c87858456410808505ae998621b37704a2b467aea",
+      "source": ".cache/package-release-execution-478208f0f3be/package.stdout.txt"
+    },
+    {
+      "bytes": 1740,
+      "sha256": "55774a1fb1900bbcb3ac0548e6f9298c0ab63bc4c9be27fa27ba3b0b1e95c5d0",
+      "source": ".cache/package-release-execution-478208f0f3be/retained-verifier.execution.json"
+    },
+    {
+      "bytes": 1395,
+      "sha256": "ffa3d978e0f5edffb283848f902af9df8f9c885b4f9294a297295f0c5abbb927",
+      "source": ".cache/package-release-execution-478208f0f3be/retained-verifier.started.json"
+    },
+    {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": ".cache/package-release-execution-478208f0f3be/retained-verifier.stderr.txt"
+    },
+    {
+      "bytes": 93,
+      "sha256": "db0afb05d4a3bd022a8e8fd82749672ff25cbdb780f3dc2cc05d93ffdee0d175",
+      "source": ".cache/package-release-execution-478208f0f3be/retained-verifier.stdout.txt"
+    },
+    {
+      "bytes": 5848,
+      "sha256": "60ef7563da469031af66cfe01219a19598e0f1bf4f500ba729d0d5a3a2561f3e",
+      "source": ".cache/package-release-execution-478208f0f3be/run.py"
+    },
+    {
+      "bytes": 912,
+      "sha256": "e97a50255e72e1cdbb4cf355f933d8fdbaf3fe3412bd418790949568cb696ba3",
+      "source": ".cache/package-release-execution-478208f0f3be/source-before.json"
+    },
+    {
+      "bytes": 1656,
+      "sha256": "6bd65528a17c537bf40d967a24c8a838e1bf7e7562a7529adb7b3c91f4fe905b",
+      "source": ".cache/package-release-execution-478208f0f3be/wheel-source-audit.execution.json"
+    },
+    {
+      "bytes": 1310,
+      "sha256": "ce225cf689bb02936d5d2fc6cb17e421bbcb3fb868d234c74cf61914c56e96f0",
+      "source": ".cache/package-release-execution-478208f0f3be/wheel-source-audit.started.json"
+    },
+    {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": ".cache/package-release-execution-478208f0f3be/wheel-source-audit.stderr.txt"
+    },
+    {
+      "bytes": 1411,
+      "sha256": "f51030bbe31fa2a97c49d0d45e9c6c36927eff7e79f77eee2dd3206433c7730f",
+      "source": ".cache/package-release-execution-478208f0f3be/wheel-source-audit.stdout.txt"
+    },
+    {
+      "bytes": 7734,
+      "sha256": "e302ab2d23315469be5db2c3658acb8c2777d84accfe600e5f56e5c01809a20a",
+      "source": ".cache/release-artifacts-contract-478208f0f3be/release-artifacts.json"
+    },
+    {
+      "bytes": 33284,
+      "sha256": "607050e06120417fe7b1a79ccfe506f791d91360891bfc8358689370e20aa9f5",
+      "source": ".cache/wheel-source-contract-478208f0f3be.json"
+    },
+    {
+      "bytes": 3605,
+      "sha256": "45d61046ec6fb5b46dfc66ee753e4917a1f300db93b7223ae3f46253dc1f8c0f",
+      "source": ".cache/audit-wheel-source-contract-v1.py"
+    }
+  ],
+  "schema": "lupine.discovery.retained_mpea_auditor_evidence.v1",
+  "scope": "Exact candidate and baseline sources/tests, constructed control logs, actual clean478 package/audit failure/byte-audit receipts, and later candidate verification. No binary wheel/tar or temporary fixture directories."
+}

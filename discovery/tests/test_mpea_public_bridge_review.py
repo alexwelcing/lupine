@@ -30,7 +30,14 @@ import mpea_archive_driver as driver
 import mpea_archive_report as bridge
 
 
-METADATA = {name: identity(name, False) for name in ('mapping', 'metadata_b', 'formula_c')}
+# Match the declared public-metadata identities of this constructed case.
+# Keep them independent of a possibly corrupted result/store so corruption
+# assertions still exercise bridge.project, not a fixture-side receipt read.
+_CONSTRUCTED_HEADER_HEX = [part.hex() for part in make_case().routes.header]
+METADATA = {name: {
+    'bytes_sha256': driver.io.digest({'synthetic_metadata': name, 'header_hex': _CONSTRUCTED_HEADER_HEX}),
+    'content_sha256': None, 'scientific_sha256': None,
+} for name in ('mapping', 'metadata_b', 'formula_c')}
 
 
 class IndependentPublicBridgeReview(unittest.TestCase):

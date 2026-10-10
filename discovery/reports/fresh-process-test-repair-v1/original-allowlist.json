@@ -1,0 +1,84 @@
+{
+  "count": 19,
+  "files": {
+    ".cache/mpea-fresh-process-failure-478208f/before-manifest.json": {
+      "bytes": 1271,
+      "sha256": "1a3feccb5f9bab3ac73f443971891d9d90d110f1bc1dd4661987a91a7386d8a5"
+    },
+    ".cache/mpea-fresh-process-failure-478208f/before/mpea_archive_repro_fixture.py": {
+      "bytes": 4422,
+      "sha256": "0cb32959650840ed5785aad2aa63bac6be1f8fed4d52df3cb508b7641f15e066"
+    },
+    ".cache/mpea-fresh-process-failure-478208f/before/mpea_archive_review_reproduction.py": {
+      "bytes": 1608,
+      "sha256": "193d39f2dceda1709bff123a0280a08785aaebc35464858bfaa0b720a2193cba"
+    },
+    ".cache/mpea-fresh-process-failure-478208f/before/test_mpea_archive_driver_review.py": {
+      "bytes": 19944,
+      "sha256": "b34ca211196f96d507d89a99c33716c2fc148b1915612b6d837a269b67a767bf"
+    },
+    ".cache/mpea-fresh-process-failure-478208f/before/test_mpea_archive_reproduction.py": {
+      "bytes": 2356,
+      "sha256": "559f1192608903880bac1c4e32215b014fe4aad622c241487174e433b2197e67"
+    },
+    ".cache/mpea-fresh-process-failure-478208f/candidate-manifest.json": {
+      "bytes": 1520,
+      "sha256": "0f3d6bde06f06989695d91c3e0e8c4fda0d34a680a07ebe06a1eebfc06d22d15"
+    },
+    ".cache/mpea-fresh-process-failure-478208f/candidate-test.json": {
+      "bytes": 7731,
+      "sha256": "95b0a33e209cbf477e77cf222b5904d917f42af913e9de61026585ca106d2bab"
+    },
+    ".cache/mpea-fresh-process-failure-478208f/candidate-test.log": {
+      "bytes": 334,
+      "sha256": "7499358b1a8c64f0d36b2f63364ae8073aba2c931aaa1f979fb2171b24f03576"
+    },
+    ".cache/mpea-fresh-process-failure-478208f/candidate/mpea_archive_review_reproduction.py": {
+      "bytes": 2016,
+      "sha256": "b0947a81a367a8efcb1e779898cba5096c165c9136042055344d37c2c1c23012"
+    },
+    ".cache/mpea-fresh-process-failure-478208f/candidate/test_mpea_archive_driver_review.py": {
+      "bytes": 22384,
+      "sha256": "4f1093e89114ae8daab5f2ae6c9b8a115f27296ab2363ae45a4dabb9c2b0a2c9"
+    },
+    ".cache/mpea-fresh-process-failure-478208f/diagnosis.md": {
+      "bytes": 1791,
+      "sha256": "c91e88c2e21ee948361047301b1f8f8095cb8366e9368aac26d2b4f701b2b7c0"
+    },
+    ".cache/mpea-fresh-process-failure-478208f/exact-test.json": {
+      "bytes": 6219,
+      "sha256": "7c988c2154c8f250a368e9e5f597e54e522d3825ffb989c6e84a49ea3bdd3c07"
+    },
+    ".cache/mpea-fresh-process-failure-478208f/exact-test.log": {
+      "bytes": 1672,
+      "sha256": "bd079e1f87255f099aeb6ff386de689c1b4cd099f46944d080a8f9959e250983"
+    },
+    ".cache/mpea-fresh-process-failure-478208f/independent-source-review.json": {
+      "bytes": 1170,
+      "sha256": "7490a8ad83e786e049acedfc583c182519b8320c4928962424c5e2ba9413be97"
+    },
+    ".cache/mpea-fresh-process-failure-478208f/mpea_archive_review_reproduction.py.patch": {
+      "bytes": 1399,
+      "sha256": "70361a307bed6e0e92a336927a6be6f4000933d927eac2cd2a39cb406489ef48"
+    },
+    ".cache/mpea-fresh-process-failure-478208f/reproduce.py": {
+      "bytes": 1989,
+      "sha256": "fa9b533d74cc655e75626817184a55ccbaee35900c6db83cc2d5c41b765f1755"
+    },
+    ".cache/mpea-fresh-process-failure-478208f/result-v1.json": {
+      "bytes": 1273,
+      "sha256": "f1927fdf915c5e635edaf772245c76c70ac9aa35bc600bcdaaea00c9a0b8beaf"
+    },
+    ".cache/mpea-fresh-process-failure-478208f/run_candidate.py": {
+      "bytes": 2320,
+      "sha256": "ddce34569ed7a9b96b2bceada96803c70899ff0ffdc9b7fa87767acb8e6fed4c"
+    },
+    ".cache/mpea-fresh-process-failure-478208f/test_mpea_archive_driver_review.py.patch": {
+      "bytes": 3223,
+      "sha256": "a6be4e08c6243e0edf88b7a5df7a77341c9ed768bd6bbcdc29566c850e5b230c"
+    }
+  },
+  "original_bytes": 84642,
+  "schema": "lupine.explicit-test-repair-evidence-allowlist.v1",
+  "scope": "Explicit source/test/diff/log/receipt files only; all constructed inputs, no generated fixture attempt tree or actual scientific data. Copy these files plus this manifest; preserve bytes through UTF8 JSON wrappers."
+}

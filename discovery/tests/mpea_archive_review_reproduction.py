@@ -1,5 +1,6 @@
 """Fresh-process constructed fixed-role computation; never an archive runner."""
 import json
+from hashlib import sha256
 from pathlib import Path
 import sys
 
@@ -20,9 +21,14 @@ def main():
     driver.persistence.os.urandom=lambda _:(_ for _ in ()).throw(AssertionError('unexpected scientific entropy request'))
     result=driver.run_synthetic(make_case(),'fixed-roles',registration(),sampling_premise='assumed_unverified')
     try:
+        allocation=driver.io._loads(result.store.stage_bytes('allocation'))
+        route_identity=allocation['payload']['route_artifact']
+        route_bytes=result.store.artifact_bytes('label-routes.json',route_identity)
         print(json.dumps({'status':result.status,'reasons':result.reasons,
             'scientific_digests':result.store.scientific_digests(),
             'allocation_identity':result.store.stage_identity('allocation'),
+            'allocation_envelope':allocation,'label_routes_identity':route_identity,
+            'label_routes_bytes_sha256':sha256(route_bytes).hexdigest(),
             'evaluation_digest':None if result.evaluation is None else result.evaluation.evaluation_digest,
             'source_captures':result.source_captures,'captured_bytes':result.captured_bytes},sort_keys=True))
     finally:result.store.close()

@@ -1,0 +1,66 @@
+{
+  "base_commit": "478208f0f3be4b5d810a2c113dbc395b9f1744cb",
+  "files": [
+    {
+      "candidate": ".cache/mpea-fresh-process-failure-478208f/candidate/test_mpea_archive_driver_review.py",
+      "destination": "tests/test_mpea_archive_driver_review.py",
+      "original_sha256": "b34ca211196f96d507d89a99c33716c2fc148b1915612b6d837a269b67a767bf",
+      "sha256": "4f1093e89114ae8daab5f2ae6c9b8a115f27296ab2363ae45a4dabb9c2b0a2c9"
+    },
+    {
+      "candidate": ".cache/mpea-fresh-process-failure-478208f/candidate/mpea_archive_review_reproduction.py",
+      "destination": "tests/mpea_archive_review_reproduction.py",
+      "original_sha256": "193d39f2dceda1709bff123a0280a08785aaebc35464858bfaa0b720a2193cba",
+      "sha256": "b0947a81a367a8efcb1e779898cba5096c165c9136042055344d37c2c1c23012"
+    },
+    {
+      "candidate": ".cache/mpea-study-custody/review_production/bridge_failure_478208f/candidates/tests/test_mpea_public_bridge_boundaries.py",
+      "destination": "tests/test_mpea_public_bridge_boundaries.py",
+      "original_sha256": "7b76dd623ba7dcdf0484daea982db08a6f470a8c783bca53b9e6c19fb7f4549b",
+      "sha256": "1d0fc7d3ec036d979fc4199bb2fe8c60f2e33a29c1b0668e7070897713470ba2"
+    },
+    {
+      "candidate": ".cache/mpea-study-custody/review_production/bridge_failure_478208f/candidates/tests/test_mpea_public_bridge_review.py",
+      "destination": "tests/test_mpea_public_bridge_review.py",
+      "original_sha256": "5bc37564fa431e77b7bda94f0cd34d6fc0c5aa4a8980a5db2e5e00873aa8a21b",
+      "sha256": "c763e82c47bcd22a86fde949c6c8aec96d0d3f623bd66318b512cadc473d98f1"
+    },
+    {
+      "candidate": ".cache/supervisor-rss-failure-478208f/candidate/tests/test_mpea_study_supervisor.py",
+      "destination": "tests/test_mpea_study_supervisor.py",
+      "original_sha256": "ecffc888a8f678d60072b6dbf8df844d81c53864b870372a3b05fdf0d5f22add",
+      "sha256": "3bd2b7803a42c94d123aac347653acc30751896e68d30d7d698743537f40ac5c"
+    },
+    {
+      "candidate": ".cache/supervisor-rss-failure-478208f/candidate/tests/test_mpea_study_supervisor_review.py",
+      "destination": "tests/test_mpea_study_supervisor_review.py",
+      "original_sha256": "3cca098e6f5e3ab65d49dd0c311bda9069a0c033afb85fc70074ba6b73b60421",
+      "sha256": "1939497ea0c49b37e33c7a129e9dce6a955be711089f327c16699ea9a44665ea"
+    },
+    {
+      "candidate": ".cache/supervisor-rss-failure-478208f/candidate/tests/fixtures/mpea_supervisor_isolated_driver.py",
+      "destination": "tests/fixtures/mpea_supervisor_isolated_driver.py",
+      "original_sha256": null,
+      "sha256": "2ad3c7a510cc8554538e7a4f157950f3cc96bc96fd758ab40c3a1f30f2450d62"
+    },
+    {
+      "candidate": ".cache/mpea-retained-auditor-v2/scripts/verify_retained_artifacts.py",
+      "destination": "scripts/verify_retained_artifacts.py",
+      "original_sha256": "ca91b7fccafee1f1717830bd74edf3256dac5751e7c11b11d5f3b8eaf81c1a07",
+      "sha256": "b88514b490f1cad8c705bbe4066dc558ffe844c257efeffa6ce63e086209ba13"
+    },
+    {
+      "candidate": ".cache/mpea-retained-auditor-v2/tests/test_retained_artifacts.py",
+      "destination": "tests/test_retained_artifacts.py",
+      "original_sha256": "edd7e16c7d740d338345337eca69cd7eb599d1c9df248e6048ea59872d5678fa",
+      "sha256": "ffdd9dd80e5e2c23a9294d35bc70bb7bf9591384f4071229c414c0c0562fb3f3"
+    },
+    {
+      "candidate": ".cache/mpea-retained-auditor-v2/tests/test_retained_mpea_transport.py",
+      "destination": "tests/test_retained_mpea_transport.py",
+      "original_sha256": null,
+      "sha256": "30d5037d4bcafa69d732efb04a0c0dc90934e4c9ef50fe214f9019b98d37d81b"
+    }
+  ],
+  "scope": "Exact reviewed copies; no producer, protocol, cap or decision-gate changes. Main full suite remains pending."
+}

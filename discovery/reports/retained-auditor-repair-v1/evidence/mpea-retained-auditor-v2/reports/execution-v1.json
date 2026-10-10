@@ -1,0 +1,71 @@
+{
+  "commands": [
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/lupine-discovery-branch/discovery/.cache/mpea-retained-auditor-v2/tests/test_retained_artifacts.py",
+        "-v"
+      ],
+      "elapsed_seconds": 1.4672443189992919,
+      "exit_code": 0,
+      "name": "existing-controls",
+      "stderr_sha256": "bfe6546922f030c16d17e829cab4e9bff08a60538cf424aa2eb81346353123d5",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/lupine-discovery-branch/discovery/.cache/mpea-retained-auditor-v2/tests/test_retained_mpea_transport.py",
+        "-v"
+      ],
+      "elapsed_seconds": 1.1902695969984052,
+      "exit_code": 0,
+      "name": "new-controls",
+      "stderr_sha256": "306646b86c517a6a84d8ef038ce8067ca21172d4f15aec51d1a6495b6ed4cf9d",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/lupine-discovery-branch/discovery/.cache/mpea-retained-auditor-v2/scripts/verify_retained_artifacts.py",
+        "--directory",
+        "/workspace/lupine-discovery-branch/discovery/.cache/release-artifacts-contract-478208f0f3be",
+        "--commit",
+        "478208f0f3be4b5d810a2c113dbc395b9f1744cb"
+      ],
+      "elapsed_seconds": 0.8103292870000587,
+      "exit_code": 0,
+      "name": "retained478-candidate-audit",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "8b8678f6f6ed589bfa30bf387385a44f8e7eba952fce05e66479b9063aa33e20"
+    }
+  ],
+  "schema": "lupine.discovery.retained_mpea_candidate_execution.v1",
+  "scope": "Constructed full-reseal adversarial controls plus read-only candidate verification of unchanged retained478 artifacts. The published old-auditor failure is preserved. No artifact code imported/executed, no new wheel build or scientific/registration approval.",
+  "source_after": {
+    ".cache/mpea-retained-auditor-v2/copy-manifest-v1.json": "551030479ecf492150ac95c4d6c2f48db7fde3faf515c29049b6342c1cb19fd0",
+    ".cache/mpea-retained-auditor-v2/run-checks-v1.py": "e756860553ee0ec9f3e4eddb52f9f9d3bc2cbad02ff7c5874d8bf97492150cda",
+    ".cache/mpea-retained-auditor-v2/scripts/verify_retained_artifacts.py": "b88514b490f1cad8c705bbe4066dc558ffe844c257efeffa6ce63e086209ba13",
+    ".cache/mpea-retained-auditor-v2/tests/test_retained_artifacts.py": "ffdd9dd80e5e2c23a9294d35bc70bb7bf9591384f4071229c414c0c0562fb3f3",
+    ".cache/mpea-retained-auditor-v2/tests/test_retained_mpea_transport.py": "30d5037d4bcafa69d732efb04a0c0dc90934e4c9ef50fe214f9019b98d37d81b",
+    ".cache/release-artifacts-contract-478208f0f3be/lupine-discovery-source-478208f0f3be.tar": "9c7b9bc5971b3db801fb911505ae72b89a0010ca821ea2ad3549ee88cefeeb0c",
+    ".cache/release-artifacts-contract-478208f0f3be/lupine_discovery-0.1.0-py3-none-any.whl": "d15d4dce13e44eab3779987b20f0738d690e1e53a86314e54fcde686beb45390",
+    ".cache/release-artifacts-contract-478208f0f3be/release-artifacts.json": "e302ab2d23315469be5db2c3658acb8c2777d84accfe600e5f56e5c01809a20a",
+    "scripts/package_smoke.py": "f64489f64aefc6624298e25d9dad493186c25b1c91e3f063e9e73d23f8ebf6a1",
+    "scripts/verify_retained_artifacts.py": "ca91b7fccafee1f1717830bd74edf3256dac5751e7c11b11d5f3b8eaf81c1a07"
+  },
+  "source_before": {
+    ".cache/mpea-retained-auditor-v2/copy-manifest-v1.json": "551030479ecf492150ac95c4d6c2f48db7fde3faf515c29049b6342c1cb19fd0",
+    ".cache/mpea-retained-auditor-v2/run-checks-v1.py": "e756860553ee0ec9f3e4eddb52f9f9d3bc2cbad02ff7c5874d8bf97492150cda",
+    ".cache/mpea-retained-auditor-v2/scripts/verify_retained_artifacts.py": "b88514b490f1cad8c705bbe4066dc558ffe844c257efeffa6ce63e086209ba13",
+    ".cache/mpea-retained-auditor-v2/tests/test_retained_artifacts.py": "ffdd9dd80e5e2c23a9294d35bc70bb7bf9591384f4071229c414c0c0562fb3f3",
+    ".cache/mpea-retained-auditor-v2/tests/test_retained_mpea_transport.py": "30d5037d4bcafa69d732efb04a0c0dc90934e4c9ef50fe214f9019b98d37d81b",
+    ".cache/release-artifacts-contract-478208f0f3be/lupine-discovery-source-478208f0f3be.tar": "9c7b9bc5971b3db801fb911505ae72b89a0010ca821ea2ad3549ee88cefeeb0c",
+    ".cache/release-artifacts-contract-478208f0f3be/lupine_discovery-0.1.0-py3-none-any.whl": "d15d4dce13e44eab3779987b20f0738d690e1e53a86314e54fcde686beb45390",
+    ".cache/release-artifacts-contract-478208f0f3be/release-artifacts.json": "e302ab2d23315469be5db2c3658acb8c2777d84accfe600e5f56e5c01809a20a",
+    "scripts/package_smoke.py": "f64489f64aefc6624298e25d9dad493186c25b1c91e3f063e9e73d23f8ebf6a1",
+    "scripts/verify_retained_artifacts.py": "ca91b7fccafee1f1717830bd74edf3256dac5751e7c11b11d5f3b8eaf81c1a07"
+  },
+  "source_unchanged": true,
+  "status": "PASS"
+}

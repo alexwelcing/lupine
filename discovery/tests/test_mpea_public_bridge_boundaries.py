@@ -29,7 +29,14 @@ else:
 import mpea_archive_driver as driver
 import mpea_archive_report as bridge
 
-METADATA = {name: identity(name, False) for name in ('mapping','metadata_b','formula_c')}
+# Match the declared public-metadata identities of this constructed case.
+# Keep them independent of a possibly corrupted result/store so corruption
+# assertions still exercise bridge.project, not a fixture-side receipt read.
+_CONSTRUCTED_HEADER_HEX = [part.hex() for part in make_case().routes.header]
+METADATA = {name: {
+    'bytes_sha256': driver.io.digest({'synthetic_metadata': name, 'header_hex': _CONSTRUCTED_HEADER_HEX}),
+    'content_sha256': None, 'scientific_sha256': None,
+} for name in ('mapping', 'metadata_b', 'formula_c')}
 
 
 class IndependentBridgeBoundaryReview(unittest.TestCase):
@@ -138,9 +145,10 @@ class IndependentBridgeBoundaryReview(unittest.TestCase):
         original=driver.persistence.ProductionStageStore('declared-original',registration(),declared,execution_kind='PRODUCTION_ARCHIVE')
         reproduced=driver.persistence.ProductionStageStore('declared-reproduction',registration(),declared,execution_kind='REPRODUCTION_FIXED_ALLOCATION')
         for store in (original,reproduced): self.addCleanup(store.close)
+        allocation_store=driver.AllocationUsageStore(original)
         context=driver.custody.RouteContext(case.routes.header,case.routes.rows)
-        route=original.write_artifact('label-routes.json',driver.custody._route_payload(context,'c'*64),schema='lupine.discovery.mpea.label_routes.v1')
-        original.commit('allocation',dict(route_artifact=route,role_map_sha256=route['bytes_sha256']),inputs={'label_routes':route})
+        route=allocation_store.write_artifact('label-routes.json',driver.custody._route_payload(context,'c'*64),schema='lupine.discovery.mpea.label_routes.v1')
+        allocation_store.commit('allocation',dict(route_artifact=route,role_map_sha256=route['bytes_sha256']),inputs={'label_routes':route})
         reproduced.import_original_allocation(original.stage_bytes('allocation'),original.stage_identity('allocation'),original.artifact_bytes('label-routes.json',route),route)
         results=[]
         for store,wall in ((original,1),(reproduced,99)):

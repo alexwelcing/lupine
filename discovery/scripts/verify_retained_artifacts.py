@@ -33,6 +33,8 @@ CHECKS = [
     'scoped_projection_translation_and_missing_bound_abstention',
     'direct_statistical_pool_python_api_and_distinct_abstention',
     'training_only_no_go_packaged_and_served',
+    'optional_mpea_resource_presence_and_http_agreement',
+    'mpea_javascript_packaged_and_served',
 ]
 FORBIDDEN = {'.cache', '.git', '.venv', '__pycache__'}
 
@@ -98,6 +100,17 @@ def safe_member(name):
     return path
 
 
+def check_optional_mpea(value):
+    require(type(value) is dict and set(value) == {'resource', 'status', 'javascript'}
+            and all(type(key) is str for key in value)
+            and all(type(item) is str for item in value.values()),
+            'optional MPEA transport metadata shape differs')
+    require(value['resource'] == 'resources/mpea-t25-v1.json'
+            and value['status'] in ('absent', 'present_exactly_served')
+            and value['javascript'] == 'packaged_and_exactly_served',
+            'optional MPEA transport metadata values differ')
+
+
 def check_probe(report):
     require(type(report) is dict, 'smoke verification must be an object')
     require(report.get('schema') == 'lupine.discovery.package_verification.v1', 'smoke schema differs')
@@ -106,7 +119,9 @@ def check_probe(report):
     require(type(report.get('case_count')) is int and report['case_count'] == 28,
             'smoke case count differs from 28-case audit profile')
     require(report.get('problem_schemas') == SCHEMAS, 'six schema claims differ')
-    require(report.get('checks') == CHECKS, 'probe check flags differ')
+    require(type(report.get('checks')) is list and all(type(flag) is str for flag in report['checks'])
+            and report['checks'] == CHECKS, 'probe check flags differ')
+    check_optional_mpea(report.get('optional_mpea'))
     require(report.get('runtime_dependencies') == [], 'runtime dependency claim differs')
     require(type(report.get('python')) is str and re.fullmatch(r'3\.(11|12)\.\d+', report['python']),
             'reported Python is outside current CI profile')
@@ -152,6 +167,34 @@ def check_wheel(raw):
         return {'member_count': len(entries), 'record_entries': len(table),
                 'expanded_bytes': sum(item.file_size for item in entries),
                 'all_record_digests_verified': True, 'archive_contents_executed': False}
+
+
+def check_mpea_transport(raw, claim):
+    """Join recorded presence claims to verified wheel bytes; no HTTP execution.
+
+    Called after check_wheel validates unique members, types, sizes and RECORD.
+    This checks resource transport consistency, not scientific report semantics.
+    """
+    check_optional_mpea(claim)
+    with zipfile.ZipFile(io.BytesIO(raw)) as wheel:
+        names = wheel.namelist()
+        asset_name = 'lupine_discovery/web/mpea.js'
+        require(asset_name in names, 'claimed MPEA JavaScript is absent from wheel')
+        asset = wheel.read(asset_name)
+        require(bool(asset), 'claimed MPEA JavaScript is empty in wheel')
+        report_name = 'lupine_discovery/resources/mpea-t25-v1.json'
+        present = report_name in names
+        require(present == (claim['status'] == 'present_exactly_served'),
+                'optional MPEA presence claim differs from wheel')
+        report_raw = wheel.read(report_name) if present else None
+        if present:
+            require(type(strict_json(report_raw)) is dict,
+                    'optional MPEA wheel resource is not a JSON object')
+        return {'optional_resource_present': present,
+                'optional_resource_sha256': digest(report_raw) if present else None,
+                'nonempty_javascript_sha256': digest(asset),
+                'http_agreement_reexecuted': False,
+                'scientific_report_semantics_validated': False}
 
 
 def check_source(raw, source, repo, commit):
@@ -277,13 +320,15 @@ def verify(directory, commit, repo):
     require(receipt['verification'].get('wheel_sha256') == digest(artifacts['wheel']), 'probe wheel hash differs')
     source = check_source(artifacts['source_archive'], receipt['source'], repo, commit)
     wheel = check_wheel(artifacts['wheel'])
+    mpea = check_mpea_transport(artifacts['wheel'], receipt['verification']['optional_mpea'])
     return {'schema': 'lupine.discovery.retained-artifact-independent-audit.v1', 'status': 'PASS',
         'verifier_sha256': digest(Path(__file__).read_bytes()), 'expected_git_commit': commit,
         'receipt_sha256': digest(receipt_raw), 'artifact_identities': receipt['artifacts'],
-        'source_audit': source, 'wheel_audit': wheel,
+        'source_audit': source, 'wheel_audit': wheel, 'mpea_transport_audit': mpea,
         'reported_smoke': {'status': receipt['verification']['status'], 'case_count': 28,
                            'problem_schemas': SCHEMAS, 'checks': CHECKS,
-                           'python': receipt['verification']['python'], 'isolated_install': True},
+                           'python': receipt['verification']['python'], 'isolated_install': True,
+                           'optional_mpea': dict(receipt['verification']['optional_mpea'])},
         'scope': 'Exact retained artifact identity and recorded probe-claim consistency; not an independent probe execution, deterministic-build proof, publisher signature, whole-CI result or scientific validation.',
         'archive_contents_executed': False, 'scientific_data_opened': False,
         'ci_success_established': False}

@@ -3,6 +3,32 @@
 The current goal and ordered backlog are in `../GOAL.md`. Append concise entries
 with artifacts, actual checks, scientific implications, and the next action.
 
+## 2026-10-10 23:34 UTC — full integration failed; narrow reviewed repairs promoted
+
+- The actual complete command finished with **1,324 tests, 19 failures and eight
+  errors**, exit 1, with all 337 source files unchanged. Its exact log and receipt
+  remain in [the failure record](contract-integration-failure-v1/README.md),
+  including a correction to the original recorder's pre-commit chronology wording.
+  Published 478208f is not approved for registration. Its browser and Lean CI jobs
+  pass; both Python jobs remain running at the latest actual observation.
+- [Ten exact reviewed files](contract-integration-repair-v1/README.md) repair stale
+  bridge metadata, usage-dependent synthetic allocation comparisons, inherited
+  pre-exec RSS in test parents, and the retained auditor's obsolete flag list.
+  Bridge21, fresh-process1, supervisor41 plus independent real resource controls,
+  and auditor23 plus five independent controls pass in their recorded scopes.
+  Main combined verification also passes 64 tests in 87.032 seconds with all
+  339 source bindings unchanged. Production supervision, scientific algorithms,
+  thresholds and caps are unchanged.
+- Actual 478208f installed-package execution passes 28 cases/six schemas, while
+  its old retained auditor fails. Both observations are preserved. The revised
+  auditor strictly requires all 12 transport flags and checks wheel agreement.
+  No actual MPEA allocation, performance targets or scientific result was opened.
+- Owner/checkpoint: root publishes the repair, executes a new complete suite from
+  working=index=HEAD with genuine new snapshots, verifies installed artifacts and
+  all four exact-source CI jobs, then explicitly approves the engineering receipt.
+  Only those completed gates permit public preregistration and the sole archival
+  attempt plus fixed-allocation reproduction. Scientific negatives remain NO-GO.
+
 ## 2026-10-10 23:14 UTC — final contract sources held; integration and publication
 
 - Final held-v3 closes the nine literal-contract findings without changing the

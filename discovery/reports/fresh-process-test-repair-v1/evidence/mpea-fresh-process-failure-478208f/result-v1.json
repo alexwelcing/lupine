@@ -1,0 +1,30 @@
+{
+  "actual_data_or_allocation": false,
+  "candidate_files": 2,
+  "candidate_validation": {
+    "bindings": 30,
+    "exit_code": 0,
+    "receipt": "candidate-test.json",
+    "source_unchanged": true,
+    "tests": 1,
+    "unittest_seconds": "96.712",
+    "wrapper_seconds": "97.11398749899672"
+  },
+  "diagnosis": "Full allocation byte/content identity was incorrectly required for independent fresh computations after measured usage was added. All eight scientific identities already matched.",
+  "genuine_fixed_allocation_import_test_changed": false,
+  "independent_assertion_review": "independent-source-review.json",
+  "initial_main_commit": "478208f0f3be4b5d810a2c113dbc395b9f1744cb",
+  "main_changes_by_author": false,
+  "negative_reproduction": {
+    "exit_code": 1,
+    "receipt": "exact-test.json",
+    "source_unchanged": true,
+    "tests": 1,
+    "unittest_seconds": "100.606",
+    "wrapper_seconds": "101.56573955400381"
+  },
+  "runtime_producer_changes": false,
+  "schema": "lupine.fresh-fixed-role-test-diagnosis-result.v1",
+  "scope": "Test-only candidate; verifies each fresh receipt own seals, exact source/role/science identity and usage-only complete-file distinctions. Root owns promotion and full mandatory revalidation.",
+  "timeouts_changed": false
+}

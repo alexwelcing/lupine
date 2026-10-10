@@ -1,0 +1,28 @@
+{
+  "actual_data_access": false,
+  "checked": [
+    "Required closure matches registration verifier source prefixes plus workflow, pyproject, publication/specification documents, four pinned public metadata records, randomization evidence and feature-readiness records.",
+    "No reused before/after snapshots: both are constructed by reading current source bytes during this invocation.",
+    "Actual commit before and after is separately captured; a changed commit, changed source or unsuccessful summary prevents recorder success.",
+    "Exact command, child identity, subprocess exit, complete combined log/hash and test count are recorded.",
+    "Output directory must not already exist; individual logs/JSON outputs use exclusive creation.",
+    "No source mutation, actual scientific capture, entropy or registration action is invoked."
+  ],
+  "closed_findings": {
+    "R1": "HEAD source paths are independently enumerated by git ls-tree; exact index/HEAD path equality is required and required closure derives from HEAD. Fresh working/index/committed-byte maps must match before subprocess execution.",
+    "R2": "Exactly one parsed unittest count must be positive, the log must contain an exact OK line without skipped=, and actual child exit must be zero for recorder success."
+  },
+  "limitations": [
+    "This is review, not execution; it does not assert clean HEAD/index or any test success. Root must commit the reviewed closure before invoking it.",
+    "An exception/interruption after child execution may leave the exclusive log without a final execution receipt; such an incomplete run supplies no successful engineering receipt.",
+    "Source freeze assumes the cooperating project process; this is not a malicious-concurrent-writer sandbox or interpreter/OS attestation.",
+    "The registration verifier and exact-commit CI must independently check the eventual receipt and published source closure."
+  ],
+  "main_edits": false,
+  "previous_findings_preserved": "review-v1.json",
+  "review_kind": "SOURCE_INSPECTION_AND_AST_PARSE_ONLY",
+  "schema": "lupine.mpea.freeze_recorder_review.v2",
+  "source_path": ".cache/run-contract-freeze-suite-v2.py",
+  "source_sha256": "a4d890661da9088df072b46ddb9fb20ee74f7efbb24f6fc85e098694d8485b26",
+  "status": "NO_SCOPED_BLOCKER_FOUND"
+}

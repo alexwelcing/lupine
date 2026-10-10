@@ -1,0 +1,158 @@
+{
+  "artifacts": {
+    "source_archive": {
+      "bytes": 29716480,
+      "filename": "lupine-discovery-source-478208f0f3be.tar",
+      "sha256": "9c7b9bc5971b3db801fb911505ae72b89a0010ca821ea2ad3549ee88cefeeb0c"
+    },
+    "wheel": {
+      "bytes": 246653,
+      "filename": "lupine_discovery-0.1.0-py3-none-any.whl",
+      "sha256": "d15d4dce13e44eab3779987b20f0738d690e1e53a86314e54fcde686beb45390"
+    }
+  },
+  "commands": [
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/package_smoke.py",
+        "--retain-directory",
+        ".cache/release-artifacts-contract-478208f0f3be"
+      ],
+      "cwd": "/workspace/lupine-discovery-branch/discovery",
+      "elapsed_seconds": 28.861708350996196,
+      "exit_code": 0,
+      "finished_at_utc": "2026-10-10T23:16:57.381788+00:00",
+      "name": "package",
+      "pid": 103230,
+      "source_after": {
+        "git_head": "478208f0f3be4b5d810a2c113dbc395b9f1744cb",
+        "git_status_porcelain": "",
+        "optional_mpea_resource_exists": false,
+        "source_sha256": {
+          ".cache/audit-wheel-source-contract-v1.py": "45d61046ec6fb5b46dfc66ee753e4917a1f300db93b7223ae3f46253dc1f8c0f",
+          ".cache/package-release-execution-478208f0f3be/run.py": "60ef7563da469031af66cfe01219a19598e0f1bf4f500ba729d0d5a3a2561f3e",
+          "pyproject.toml": "a73eec989447b99fec48de193218a0750079eeb5973406c53d7a0dc840d9d90f",
+          "reports/runtime-manifest.json": "cbc75f3204651f755990d96e2fd83931ef1af033480cc18def076aefb51646e1",
+          "scripts/package_smoke.py": "f64489f64aefc6624298e25d9dad493186c25b1c91e3f063e9e73d23f8ebf6a1",
+          "scripts/runtime_manifest.py": "604dbb0a4d6b8984324332c32ab7d7f6ab9cee5673f870a4a3de9b6ec56a8b7d",
+          "scripts/verify_retained_artifacts.py": "ca91b7fccafee1f1717830bd74edf3256dac5751e7c11b11d5f3b8eaf81c1a07"
+        }
+      },
+      "source_unchanged": true,
+      "started_at_utc": "2026-10-10T23:16:28.520116+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "bce183dc6a30d389fcef9e6c87858456410808505ae998621b37704a2b467aea",
+      "timeout": false
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/verify_retained_artifacts.py",
+        "--directory",
+        ".cache/release-artifacts-contract-478208f0f3be",
+        "--commit",
+        "478208f0f3be4b5d810a2c113dbc395b9f1744cb"
+      ],
+      "cwd": "/workspace/lupine-discovery-branch/discovery",
+      "elapsed_seconds": 0.13947488499979954,
+      "exit_code": 2,
+      "finished_at_utc": "2026-10-10T23:16:57.555062+00:00",
+      "name": "retained-verifier",
+      "pid": 103458,
+      "source_after": {
+        "git_head": "478208f0f3be4b5d810a2c113dbc395b9f1744cb",
+        "git_status_porcelain": "",
+        "optional_mpea_resource_exists": false,
+        "source_sha256": {
+          ".cache/audit-wheel-source-contract-v1.py": "45d61046ec6fb5b46dfc66ee753e4917a1f300db93b7223ae3f46253dc1f8c0f",
+          ".cache/package-release-execution-478208f0f3be/run.py": "60ef7563da469031af66cfe01219a19598e0f1bf4f500ba729d0d5a3a2561f3e",
+          "pyproject.toml": "a73eec989447b99fec48de193218a0750079eeb5973406c53d7a0dc840d9d90f",
+          "reports/runtime-manifest.json": "cbc75f3204651f755990d96e2fd83931ef1af033480cc18def076aefb51646e1",
+          "scripts/package_smoke.py": "f64489f64aefc6624298e25d9dad493186c25b1c91e3f063e9e73d23f8ebf6a1",
+          "scripts/runtime_manifest.py": "604dbb0a4d6b8984324332c32ab7d7f6ab9cee5673f870a4a3de9b6ec56a8b7d",
+          "scripts/verify_retained_artifacts.py": "ca91b7fccafee1f1717830bd74edf3256dac5751e7c11b11d5f3b8eaf81c1a07"
+        }
+      },
+      "source_unchanged": true,
+      "started_at_utc": "2026-10-10T23:16:57.415588+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "db0afb05d4a3bd022a8e8fd82749672ff25cbdb780f3dc2cc05d93ffdee0d175",
+      "timeout": false
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        ".cache/audit-wheel-source-contract-v1.py",
+        "478208f0f3be4b5d810a2c113dbc395b9f1744cb"
+      ],
+      "cwd": "/workspace/lupine-discovery-branch/discovery",
+      "elapsed_seconds": 0.39239571000507567,
+      "exit_code": 0,
+      "finished_at_utc": "2026-10-10T23:16:57.974533+00:00",
+      "name": "wheel-source-audit",
+      "pid": 103484,
+      "source_after": {
+        "git_head": "478208f0f3be4b5d810a2c113dbc395b9f1744cb",
+        "git_status_porcelain": "",
+        "optional_mpea_resource_exists": false,
+        "source_sha256": {
+          ".cache/audit-wheel-source-contract-v1.py": "45d61046ec6fb5b46dfc66ee753e4917a1f300db93b7223ae3f46253dc1f8c0f",
+          ".cache/package-release-execution-478208f0f3be/run.py": "60ef7563da469031af66cfe01219a19598e0f1bf4f500ba729d0d5a3a2561f3e",
+          "pyproject.toml": "a73eec989447b99fec48de193218a0750079eeb5973406c53d7a0dc840d9d90f",
+          "reports/runtime-manifest.json": "cbc75f3204651f755990d96e2fd83931ef1af033480cc18def076aefb51646e1",
+          "scripts/package_smoke.py": "f64489f64aefc6624298e25d9dad493186c25b1c91e3f063e9e73d23f8ebf6a1",
+          "scripts/runtime_manifest.py": "604dbb0a4d6b8984324332c32ab7d7f6ab9cee5673f870a4a3de9b6ec56a8b7d",
+          "scripts/verify_retained_artifacts.py": "ca91b7fccafee1f1717830bd74edf3256dac5751e7c11b11d5f3b8eaf81c1a07"
+        }
+      },
+      "source_unchanged": true,
+      "started_at_utc": "2026-10-10T23:16:57.582138+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "f51030bbe31fa2a97c49d0d45e9c6c36927eff7e79f77eee2dd3206433c7730f",
+      "timeout": false
+    }
+  ],
+  "optional_mpea_probe": {
+    "javascript": "packaged_and_exactly_served",
+    "resource": "resources/mpea-t25-v1.json",
+    "status": "absent"
+  },
+  "retained_receipt_path": ".cache/release-artifacts-contract-478208f0f3be/release-artifacts.json",
+  "retained_receipt_sha256": "e302ab2d23315469be5db2c3658acb8c2777d84accfe600e5f56e5c01809a20a",
+  "schema": "lupine.discovery.retained_release_execution.v1",
+  "scope": "Actual clean-commit wheel build, isolated installation and HTTP/CLI probe; independent retained-identity verification and byte audit are separate command results. No actual MPEA study, allocation or scientific source execution. Package results do not override the separate full Python suite or registration gates.",
+  "source_after": {
+    "git_head": "478208f0f3be4b5d810a2c113dbc395b9f1744cb",
+    "git_status_porcelain": "",
+    "optional_mpea_resource_exists": false,
+    "source_sha256": {
+      ".cache/audit-wheel-source-contract-v1.py": "45d61046ec6fb5b46dfc66ee753e4917a1f300db93b7223ae3f46253dc1f8c0f",
+      ".cache/package-release-execution-478208f0f3be/run.py": "60ef7563da469031af66cfe01219a19598e0f1bf4f500ba729d0d5a3a2561f3e",
+      "pyproject.toml": "a73eec989447b99fec48de193218a0750079eeb5973406c53d7a0dc840d9d90f",
+      "reports/runtime-manifest.json": "cbc75f3204651f755990d96e2fd83931ef1af033480cc18def076aefb51646e1",
+      "scripts/package_smoke.py": "f64489f64aefc6624298e25d9dad493186c25b1c91e3f063e9e73d23f8ebf6a1",
+      "scripts/runtime_manifest.py": "604dbb0a4d6b8984324332c32ab7d7f6ab9cee5673f870a4a3de9b6ec56a8b7d",
+      "scripts/verify_retained_artifacts.py": "ca91b7fccafee1f1717830bd74edf3256dac5751e7c11b11d5f3b8eaf81c1a07"
+    }
+  },
+  "source_before": {
+    "git_head": "478208f0f3be4b5d810a2c113dbc395b9f1744cb",
+    "git_status_porcelain": "",
+    "optional_mpea_resource_exists": false,
+    "source_sha256": {
+      ".cache/audit-wheel-source-contract-v1.py": "45d61046ec6fb5b46dfc66ee753e4917a1f300db93b7223ae3f46253dc1f8c0f",
+      ".cache/package-release-execution-478208f0f3be/run.py": "60ef7563da469031af66cfe01219a19598e0f1bf4f500ba729d0d5a3a2561f3e",
+      "pyproject.toml": "a73eec989447b99fec48de193218a0750079eeb5973406c53d7a0dc840d9d90f",
+      "reports/runtime-manifest.json": "cbc75f3204651f755990d96e2fd83931ef1af033480cc18def076aefb51646e1",
+      "scripts/package_smoke.py": "f64489f64aefc6624298e25d9dad493186c25b1c91e3f063e9e73d23f8ebf6a1",
+      "scripts/runtime_manifest.py": "604dbb0a4d6b8984324332c32ab7d7f6ab9cee5673f870a4a3de9b6ec56a8b7d",
+      "scripts/verify_retained_artifacts.py": "ca91b7fccafee1f1717830bd74edf3256dac5751e7c11b11d5f3b8eaf81c1a07"
+    }
+  },
+  "source_commit": "478208f0f3be4b5d810a2c113dbc395b9f1744cb",
+  "source_unchanged": true,
+  "status": "FAIL",
+  "wheel_source_audit_path": ".cache/wheel-source-contract-478208f0f3be.json",
+  "wheel_source_audit_sha256": "607050e06120417fe7b1a79ccfe506f791d91360891bfc8358689370e20aa9f5"
+}

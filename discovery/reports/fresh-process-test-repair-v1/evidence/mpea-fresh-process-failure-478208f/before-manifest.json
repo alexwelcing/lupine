@@ -1,0 +1,31 @@
+{
+  "actual_data": false,
+  "commit": "478208f0f3be4b5d810a2c113dbc395b9f1744cb",
+  "files": [
+    {
+      "bytes": 19944,
+      "retained": ".cache/mpea-fresh-process-failure-478208f/before/test_mpea_archive_driver_review.py",
+      "sha256": "b34ca211196f96d507d89a99c33716c2fc148b1915612b6d837a269b67a767bf",
+      "source": "tests/test_mpea_archive_driver_review.py"
+    },
+    {
+      "bytes": 1608,
+      "retained": ".cache/mpea-fresh-process-failure-478208f/before/mpea_archive_review_reproduction.py",
+      "sha256": "193d39f2dceda1709bff123a0280a08785aaebc35464858bfaa0b720a2193cba",
+      "source": "tests/mpea_archive_review_reproduction.py"
+    },
+    {
+      "bytes": 2356,
+      "retained": ".cache/mpea-fresh-process-failure-478208f/before/test_mpea_archive_reproduction.py",
+      "sha256": "559f1192608903880bac1c4e32215b014fe4aad622c241487174e433b2197e67",
+      "source": "tests/test_mpea_archive_reproduction.py"
+    },
+    {
+      "bytes": 4422,
+      "retained": ".cache/mpea-fresh-process-failure-478208f/before/mpea_archive_repro_fixture.py",
+      "sha256": "0cb32959650840ed5785aad2aa63bac6be1f8fed4d52df3cb508b7641f15e066",
+      "source": "tests/mpea_archive_repro_fixture.py"
+    }
+  ],
+  "schema": "lupine.constructed-test-diagnosis.v1"
+}

@@ -1,7 +1,7 @@
 import json,os,signal,subprocess,sys,tempfile,time,unittest
 from pathlib import Path
 from unittest.mock import patch
-ROOT=Path(__file__).resolve().parents[1]
+ROOT=next(p for p in Path(__file__).resolve().parents if (p/'src/lupine_discovery').is_dir())
 sys.path.insert(0,str(ROOT/'scripts'))
 import mpea_study_supervisor as _supervisor
 sys.modules['supervisor']=_supervisor
@@ -11,7 +11,10 @@ class SupervisorTests(unittest.TestCase):
     def case(self,name,**caps):
         with tempfile.TemporaryDirectory() as d:
             path=Path(d)/'receipt.json'
-            r=run_synthetic([sys.executable,str(H/'fixtures/mpea_supervisor_worker.py'),name],path,wall_seconds=caps.get('wall',60),rss_bytes=caps.get('rss',256*1024**2),startup_seconds=caps.get('startup',60))
+            request=dict(command=[sys.executable,str(H/'fixtures/mpea_supervisor_worker.py'),name],receipt=str(path),wall_seconds=caps.get('wall',60),rss_bytes=caps.get('rss',256*1024**2),startup_seconds=caps.get('startup',60),fixture_mode='normal')
+            process=subprocess.run([sys.executable,str(H/'fixtures/mpea_supervisor_isolated_driver.py')],input=json.dumps(request).encode(),stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=request['wall_seconds']+request['startup_seconds']+5,check=False)
+            self.assertEqual(process.returncode,0,process.stderr.decode())
+            r=json.loads(process.stdout)['receipt']
             self.assertEqual(r,json.loads(path.read_text()));self.assertNotIn('PRIVATE_SENTINEL',path.read_text());return r
     def test_complete(self):
         r=self.case('complete');self.assertEqual(r['status'],'COMPLETE');self.assertTrue(r['network_namespace_verified']);self.assertEqual(len(r['sealed_stages']),8)
@@ -51,7 +54,10 @@ class SupervisorTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             pidfile=Path(d)/'pid';receipt=Path(d)/'receipt'
             with patch.dict(os.environ,{'LUPINE_SYNTHETIC_PID':str(pidfile)}):
-                r=run_synthetic([sys.executable,str(H/'fixtures/mpea_supervisor_worker.py'),'descendant_group'],receipt,wall_seconds=.15,rss_bytes=268435456)
+                request=dict(command=[sys.executable,str(H/'fixtures/mpea_supervisor_worker.py'),'descendant_group'],receipt=str(receipt),wall_seconds=.15,rss_bytes=268435456,startup_seconds=3,fixture_mode='normal')
+                process=subprocess.run([sys.executable,str(H/'fixtures/mpea_supervisor_isolated_driver.py')],input=json.dumps(request).encode(),stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=8.15,check=False)
+                self.assertEqual(process.returncode,0,process.stderr.decode())
+                r=json.loads(process.stdout)['receipt']
             self.assertEqual(r['reason'],'WALL_TIME_LIMIT');pid=int(pidfile.read_text())
             stat=Path('/proc')/str(pid)/'stat'
             self.assertTrue(not stat.exists() or stat.read_text().rsplit(')',1)[1].split()[0]=='Z')

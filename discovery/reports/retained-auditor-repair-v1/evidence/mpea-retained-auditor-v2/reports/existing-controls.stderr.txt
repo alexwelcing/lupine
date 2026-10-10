@@ -1,0 +1,16 @@
+test_changed_artifact_and_symlink_fail_without_touching_sources (__main__.ArtifactVerifierTests.test_changed_artifact_and_symlink_fail_without_touching_sources) ... ok
+test_committed_incomplete_manifest_is_rejected_against_source_path_inventory (__main__.ArtifactVerifierTests.test_committed_incomplete_manifest_is_rejected_against_source_path_inventory) ... ok
+test_metadata_aliases_paths_and_extra_files_fail (__main__.ArtifactVerifierTests.test_metadata_aliases_paths_and_extra_files_fail) ... ok
+test_missing_nested_fixture_manifest_entry_fails_after_full_reseal (__main__.ArtifactVerifierTests.test_missing_nested_fixture_manifest_entry_fails_after_full_reseal) ... ok
+test_mutated_nested_fixture_bytes_fail_after_full_reseal (__main__.ArtifactVerifierTests.test_mutated_nested_fixture_bytes_fail_after_full_reseal) ... ok
+test_noncanonical_duplicate_and_broken_seal_are_rejected (__main__.ArtifactVerifierTests.test_noncanonical_duplicate_and_broken_seal_are_rejected) ... ok
+test_probe_claim_tampering_fails_even_after_resealing (__main__.ArtifactVerifierTests.test_probe_claim_tampering_fails_even_after_resealing) ... ok
+test_recursive_fixture_extensions_are_independently_covered (__main__.ArtifactVerifierTests.test_recursive_fixture_extensions_are_independently_covered) ... ok
+test_resealed_source_change_omission_and_link_cannot_replace_original_commit (__main__.ArtifactVerifierTests.test_resealed_source_change_omission_and_link_cannot_replace_original_commit) ... ok
+test_resealed_wheel_content_cannot_bypass_record_digest (__main__.ArtifactVerifierTests.test_resealed_wheel_content_cannot_bypass_record_digest) ... ok
+test_valid_fixture_checks_all_original_blobs_manifest_and_wheel_records (__main__.ArtifactVerifierTests.test_valid_fixture_checks_all_original_blobs_manifest_and_wheel_records) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 1.070s
+
+OK

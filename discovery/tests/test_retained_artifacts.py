@@ -14,7 +14,7 @@ import unittest
 import zipfile
 
 ROOT=next(p for p in Path(__file__).resolve().parents if (p/'src/lupine_discovery/decision_pool.py').is_file())
-SPEC = importlib.util.spec_from_file_location('retained_verifier_review', ROOT/'scripts/verify_retained_artifacts.py')
+SPEC = importlib.util.spec_from_file_location('retained_verifier_review', Path(__file__).resolve().parents[1]/'scripts/verify_retained_artifacts.py')
 v = importlib.util.module_from_spec(SPEC); SPEC.loader.exec_module(v)
 
 
@@ -55,6 +55,7 @@ class ArtifactVerifierTests(unittest.TestCase):
 
     def make_wheel(self):
         files = {'lupine_discovery/__init__.py':b'INERT synthetic bytes; never import',
+                 'lupine_discovery/web/mpea.js':b'// INERT synthetic asset; never execute\n',
                  'lupine_discovery-0.1.0.dist-info/METADATA':b'Name: lupine-discovery\nVersion: 0.1.0\n',
                  'lupine_discovery-0.1.0.dist-info/WHEEL':b'Wheel-Version: 1.0\n'}
         lines = []
@@ -85,6 +86,8 @@ class ArtifactVerifierTests(unittest.TestCase):
                                       'checkpoint':manifest['checkpoint'],'file_count':len(manifest['files'])}}
         verification = {'schema':'lupine.discovery.package_verification.v1','status':'passed','isolated_install':True,
             'case_count':28,'problem_schemas':v.SCHEMAS,'checks':v.CHECKS,'runtime_dependencies':[], 'python':'3.12.0',
+            'optional_mpea':{'resource':'resources/mpea-t25-v1.json','status':'absent',
+                             'javascript':'packaged_and_exactly_served'},
             'certificate_digests':{f'synthetic_{i}':'a'*64 for i in range(28)},
             'replay_digests':{f'synthetic_{i}':'b'*64 for i in range(28)}, 'known_answer_summary':{'failed':0}}
         self.receipt = {'schema':'lupine.discovery.release_artifacts.v1','source':source,
@@ -111,7 +114,7 @@ class ArtifactVerifierTests(unittest.TestCase):
         self.assertEqual(report['status'],'PASS')
         self.assertEqual(report['source_audit']['archived_file_count'],7)
         self.assertEqual(report['source_audit']['runtime_manifest_source_count'],4)
-        self.assertEqual(report['wheel_audit']['record_entries'],4)
+        self.assertEqual(report['wheel_audit']['record_entries'],5)
         self.assertIs(report['archive_contents_executed'],False)
         self.assertIs(report['ci_success_established'],False)
 

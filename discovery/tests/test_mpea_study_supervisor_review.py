@@ -15,7 +15,8 @@ from unittest.mock import patch
 
 sys.dont_write_bytecode = True
 HERE = Path(__file__).resolve().parent
-SOURCE = HERE.parent / 'scripts/mpea_study_supervisor.py'
+ROOT = next(p for p in HERE.parents if (p/'src/lupine_discovery').is_dir())
+SOURCE = ROOT / 'scripts/mpea_study_supervisor.py'
 spec = importlib.util.spec_from_file_location('reviewed_supervisor', SOURCE)
 supervisor = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(supervisor)
@@ -31,9 +32,21 @@ class SupervisorReview(unittest.TestCase):
         self.receipt = self.directory / 'receipt.json'
         self.observation = self.directory / 'synthetic-observation.txt'
 
-    def run_case(self, mode, wall=10, rss=256 * 1024 ** 2, startup=10):
-        result = supervisor.run_synthetic([sys.executable, str(CHILD), mode, str(self.observation)],
-            self.receipt, wall_seconds=wall, rss_bytes=rss, startup_seconds=startup)
+    def run_case(self, mode, wall=10, rss=256 * 1024 ** 2, startup=10, fixture_mode='normal', local=False):
+        if local:
+            result = supervisor.run_synthetic([sys.executable, str(CHILD), mode, str(self.observation)],
+                self.receipt, wall_seconds=wall, rss_bytes=rss, startup_seconds=startup)
+        else:
+            request = dict(command=[sys.executable, str(CHILD), mode, str(self.observation)],
+                receipt=str(self.receipt), wall_seconds=wall, rss_bytes=rss, startup_seconds=startup,
+                fixture_mode=fixture_mode)
+            process = subprocess.run([sys.executable, str(HERE/'fixtures/mpea_supervisor_isolated_driver.py')],
+                input=json.dumps(request).encode(), stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                timeout=wall+startup+5, check=False)
+            self.assertEqual(process.returncode, 0, process.stderr.decode())
+            response = json.loads(process.stdout)
+            self.assertEqual(response['fixture_mode'], fixture_mode)
+            result = response['receipt']
         self.assertEqual(result, json.loads(self.receipt.read_bytes()))
         self.assertNotIn('SENSITIVE_SENTINEL', self.receipt.read_text())
         capture = os.environ.get('SUPERVISOR_REVIEW_CAPTURE')
@@ -106,12 +119,7 @@ class SupervisorReview(unittest.TestCase):
                 self.assertEqual(self.run_case(mode)['reason'], 'MARKER_ORDER_INVALID')
 
     def test_fast_post_terminal_socket_tail_cannot_be_complete(self):
-        real_wait4 = os.wait4
-        def delayed_wait4(*args):
-            time.sleep(.015)
-            return real_wait4(*args)
-        with patch.object(supervisor.os, 'wait4', delayed_wait4):
-            result = self.run_case('late_tail')
+        result = self.run_case('late_tail', fixture_mode='delayed_wait4')
         self.assertNotEqual(result['status'], 'COMPLETE')
         self.assertIn(result['reason'], ('MARKER_ORDER_INVALID', 'MARKER_INCOMPLETE'))
 
@@ -167,8 +175,7 @@ class SupervisorReview(unittest.TestCase):
         self.assertIn('inter-sample', result['measurement'])
 
     def test_wait4_leader_peak_catches_deliberately_unsampled_burst(self):
-        with patch.object(supervisor, '_rss', return_value=(0, 1)):
-            result = self.run_case('exit_peak', rss=64 * 1024 ** 2)
+        result = self.run_case('exit_peak', rss=64 * 1024 ** 2, fixture_mode='zero_samples')
         self.assertEqual(result['reason'], 'RSS_LIMIT')
         self.assertEqual(result['peak_sampled_rss_bytes'], 0)
         self.assertGreater(result['child_exit_peak_rss_bytes'], 64 * 1024 ** 2)
@@ -203,7 +210,7 @@ class SupervisorReview(unittest.TestCase):
 
     def test_unsupported_platform_never_launches_child(self):
         with patch.object(supervisor.sys, 'platform', 'unsupported'), patch.object(supervisor.subprocess, 'Popen') as spawn:
-            result = self.run_case('sensitive')
+            result = self.run_case('sensitive', local=True)
         spawn.assert_not_called()
         self.assertEqual(result['reason'], 'UNSUPPORTED_PLATFORM')
         self.assertFalse(result['network_namespace_verified'])

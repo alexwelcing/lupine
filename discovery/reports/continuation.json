@@ -38,16 +38,16 @@
     "continuous_worker_started": false
   },
   "current_checkpoint": {
-    "recorded_at": "2026-10-10T23:14:27.906018+00:00",
-    "owner": "root source publication/full integration/package/CI; calibrated_backend prepares independent actual arithmetic audit; representation_review prepares public-only result review",
-    "published_commit": "a865147fb4ec2055cfca60bfafd8d9f3591bd033",
-    "published_ci_run": 38089905975,
-    "published_ci_all_four_jobs_pass": true,
-    "working_checkpoint": "Final held-v3 sources reviewed and unchanged; current Chromium56 PASS, main package transport48 PASS, runtime288 PASS. Full337-closure unittest still running. Publish source checkpoint for concurrent exact-commit CI; no local fullsuite success or actual MPEA study claimed.",
-    "next_action": "Collect actual full-suite completion and unchanged337 map; verify published SHA/all4CI and clean installed package. Only then explicitly approve engineeringSHA, publish immutable preregistration and launch sole original study/fixed-allocation reproduction.",
+    "recorded_at": "2026-10-10T23:31:06.693231+00:00",
+    "owner": "root integration, source publication, full suite and exact CI; independent reviewers complete fixture/auditor repairs",
+    "published_commit": "478208f0f3be4b5d810a2c113dbc395b9f1744cb",
+    "published_ci_run": 38094346953,
+    "published_ci_all_four_jobs_pass": false,
+    "published_ci_observation": "Lean and browser successful; both Python jobs still running at current observation. No final failure or pass inferred.",
+    "working_checkpoint": "Ten exact reviewed test/helper/auditor repairs promoted. Prior complete337-closure run failed1324 tests/19 failures/8 errors. All failure evidence retained; production methods and limits unchanged.",
+    "next_action": "Commit repairs; start genuine complete v2 suite from working=index=HEAD; clean installed package; verify exact remote commit and all4CI. Only after actual gates pass approve engineeringSHA, publish public registration, run sole original and fixed-allocation reproduction.",
     "actual_scientific_allocation_performed": false,
     "active_test": {
-      "session_id": 56925,
       "command": [
         "python",
         "-m",
@@ -59,7 +59,11 @@
       ],
       "receipt_directory": ".cache/mpea-contract-full-suite-v1",
       "mandatory_source_files": 337,
-      "result": "RUNNING_NO_PASS_CLAIM"
+      "result": "COMPLETED_FAIL",
+      "exit_code": 1,
+      "tests": 1324,
+      "failures": 19,
+      "errors": 8
     }
   }
 }
