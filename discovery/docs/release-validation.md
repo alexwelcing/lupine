@@ -238,3 +238,20 @@ environment and distinguish two-process agreement from matching the original
 scientific digest. Their syntax and source-contract checks are not a new
 scientific rerun. Current scientific screening/superiority failures and all
 open physical-scope gates remain unchanged.
+
+## Retained artifact and supplemental grammar freeze
+
+The published 2a09d36 checkpoint passes [all four CI jobs](https://github.com/alexwelcing/lupine/actions/runs/38080586212).
+Its actual clean local retained wheel passes28cases/sixschemas. An independent
+[artifact audit](../reports/release-artifact-audit-v1/README.md) checks458Gitblobs,
+183manifestentries and109wheelRECORDentries; eight synthetic audit tests pass.
+Both CI bundles uploaded, but repeated signed-storage downloadForbidden leaves
+remote bytes independently unverified. This limitation does not erase successful
+local execution or authorize claiming downloaded-artifact verification.
+
+[G15C engineering](../reports/mpea-formula-engineering-v1.md) passes33focused and
+684full Python tests with200stable hashes. It is a separately documented,
+post-metadata formula grammar; original0/1545 recognition remains a preserved
+result. No actual formula scan has run at this freeze. Production must follow
+committed reviewed source and all-four-job CI. Lexical success cannot establish
+composition semantics, target completeness, independence or useful screening.

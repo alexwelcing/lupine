@@ -1,0 +1,54 @@
+{
+  "actual_local_audit": {
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "/workspace/lupine-discovery-branch/discovery/.cache/release-artifact-audit/verify_retained_artifacts.py",
+      "--directory",
+      "/workspace/lupine-discovery-branch/discovery/.cache/release/metadata-2a09d36",
+      "--commit",
+      "2a09d36491e092e851a529e58000444f3b6479e2",
+      "--repository",
+      "/workspace/lupine-discovery-branch"
+    ],
+    "exit_code": 0,
+    "report_sha256": "0ea0f1f765688a827a4deda0c0e94512417b75f0d7f7feff9db1801c1d9c64aa",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "elapsed_seconds": 3.546452,
+  "failure_history": "No actual artifact failure or synthetic test failure occurred in this audit; adversarial synthetic inputs were intentionally rejected.",
+  "first_pass_preserved": {
+    "path": ".cache/release-artifact-audit/local-first-check.json",
+    "sha256": "fc1474a9ab71a513db292628496784226882b3dfda5aafa80cefccd5f9a6baf0",
+    "status": "PASS, preliminary verifier before exact manifest coverage check"
+  },
+  "inputs_after": {
+    ".cache/release-artifact-audit/test_verify_retained_artifacts.py": "510e2689c75a2e4ca2c2318fcb753eaa42bfbcb887f0658941f81e8e7a8ecc4a",
+    ".cache/release-artifact-audit/verify_retained_artifacts.py": "aa46ee367c0d8bd3227d4617ab23e60dc878e9b27bb5de71a6d0d286dc62ffc7",
+    ".cache/release/metadata-2a09d36/lupine-discovery-source-2a09d36491e0.tar": "989ffaff6d7404fb6b4e439e8b3fc57e91fc8d6a649711a6c7c56cc9c4262586",
+    ".cache/release/metadata-2a09d36/lupine_discovery-0.1.0-py3-none-any.whl": "2fd062dfeb02a9b2a7a3ffbb5fe91acc23c2bcffb3f0ce447195cc18d0441a62",
+    ".cache/release/metadata-2a09d36/release-artifacts.json": "634efb96c298f01da46e782443c65d909cb9c2971d3b6aafd9a32c71a93d64fd"
+  },
+  "inputs_before": {
+    ".cache/release-artifact-audit/test_verify_retained_artifacts.py": "510e2689c75a2e4ca2c2318fcb753eaa42bfbcb887f0658941f81e8e7a8ecc4a",
+    ".cache/release-artifact-audit/verify_retained_artifacts.py": "aa46ee367c0d8bd3227d4617ab23e60dc878e9b27bb5de71a6d0d286dc62ffc7",
+    ".cache/release/metadata-2a09d36/lupine-discovery-source-2a09d36491e0.tar": "989ffaff6d7404fb6b4e439e8b3fc57e91fc8d6a649711a6c7c56cc9c4262586",
+    ".cache/release/metadata-2a09d36/lupine_discovery-0.1.0-py3-none-any.whl": "2fd062dfeb02a9b2a7a3ffbb5fe91acc23c2bcffb3f0ce447195cc18d0441a62",
+    ".cache/release/metadata-2a09d36/release-artifacts.json": "634efb96c298f01da46e782443c65d909cb9c2971d3b6aafd9a32c71a93d64fd"
+  },
+  "inputs_unchanged": true,
+  "remote_ci_artifact_bytes_verified": false,
+  "schema": "lupine.discovery.retained-artifact-audit-validation.v1",
+  "scientific_validation_established": false,
+  "scope": "Independent local retained-byte and recorded-claim audit. Synthetic tests use only inert artifacts. No archive code imported/executed, scientific source acquisition, scientific rerun, package rebuild or remote CI artifact download.",
+  "status": "PASS",
+  "synthetic_tests": {
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "/workspace/lupine-discovery-branch/discovery/.cache/release-artifact-audit/test_verify_retained_artifacts.py",
+      "-v"
+    ],
+    "count": 8,
+    "exit_code": 0,
+    "log_sha256": "c7f8d6b464b7a36ee9cb45ae1d772213588aee063c0a3a412d254270f5140ce7"
+  }
+}

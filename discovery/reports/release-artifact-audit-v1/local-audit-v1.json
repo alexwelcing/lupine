@@ -1,0 +1,69 @@
+{
+  "archive_contents_executed": false,
+  "artifact_identities": {
+    "source_archive": {
+      "bytes": 7168000,
+      "filename": "lupine-discovery-source-2a09d36491e0.tar",
+      "sha256": "989ffaff6d7404fb6b4e439e8b3fc57e91fc8d6a649711a6c7c56cc9c4262586"
+    },
+    "wheel": {
+      "bytes": 238796,
+      "filename": "lupine_discovery-0.1.0-py3-none-any.whl",
+      "sha256": "2fd062dfeb02a9b2a7a3ffbb5fe91acc23c2bcffb3f0ce447195cc18d0441a62"
+    }
+  },
+  "ci_success_established": false,
+  "expected_git_commit": "2a09d36491e092e851a529e58000444f3b6479e2",
+  "receipt_sha256": "634efb96c298f01da46e782443c65d909cb9c2971d3b6aafd9a32c71a93d64fd",
+  "reported_smoke": {
+    "case_count": 28,
+    "checks": [
+      "all_packaged_cases_select_verify_replay",
+      "known_answer_oracle_and_controls",
+      "web_assets_and_original_archive_reports",
+      "constrained_negative_results_packaged_and_served",
+      "installed_http_cli_agreement",
+      "coupled_python_api_and_missing_point_fallback",
+      "coupled_projection_and_statistical_guarded_http_replay_agree_with_installed_cli",
+      "scoped_projection_translation_and_missing_bound_abstention",
+      "direct_statistical_pool_python_api_and_distinct_abstention",
+      "training_only_no_go_packaged_and_served"
+    ],
+    "isolated_install": true,
+    "problem_schemas": [
+      "lupine.discovery.calibrated_problem.v1",
+      "lupine.discovery.coupled_problem.v1",
+      "lupine.discovery.decision_pool_problem.v1",
+      "lupine.discovery.pareto_problem.v1",
+      "lupine.discovery.problem.v1",
+      "lupine.discovery.projection_problem.v1"
+    ],
+    "python": "3.12.14",
+    "status": "passed"
+  },
+  "schema": "lupine.discovery.retained-artifact-independent-audit.v1",
+  "scientific_data_opened": false,
+  "scope": "Exact retained artifact identity and recorded probe-claim consistency; not an independent probe execution, deterministic-build proof, publisher signature, whole-CI result or scientific validation.",
+  "source_audit": {
+    "all_original_git_blobs_verified": true,
+    "archive_copyset": [
+      "discovery",
+      ".github/workflows/discovery-verify.yml"
+    ],
+    "archived_file_count": 458,
+    "git_commit": "2a09d36491e092e851a529e58000444f3b6479e2",
+    "git_tree": "159d5b35940196e0a13f76b76a63b4c168144230",
+    "no_links_or_cache_paths": true,
+    "runtime_manifest_sha256": "e4f95b3d73b31e83c5e636de8034a55d84a3315beb6c75021784262af337e6a7",
+    "runtime_manifest_source_count": 183
+  },
+  "status": "PASS",
+  "verifier_sha256": "aa46ee367c0d8bd3227d4617ab23e60dc878e9b27bb5de71a6d0d286dc62ffc7",
+  "wheel_audit": {
+    "all_record_digests_verified": true,
+    "archive_contents_executed": false,
+    "expanded_bytes": 972415,
+    "member_count": 109,
+    "record_entries": 109
+  }
+}

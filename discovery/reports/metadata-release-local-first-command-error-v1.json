@@ -1,0 +1,7 @@
+{
+  "attempt": "shell redirection before launch",
+  "exit_code": 1,
+  "error": ".cache/release/metadata-2a09d36-run.txt: No such file or directory",
+  "package_smoke_started": false,
+  "correction": "Create ignored log parent before launching; retain destination remains new"
+}

@@ -1,0 +1,24 @@
+{
+  "paths": {
+    "docs/mpea-formula-amendment-v1.md": [
+      "docs/mpea-formula-amendment-v1.md",
+      "751fe402dfc331c7b5498bc5503e4739ae4f127ddc7e291d0c7aea27efa09f1f"
+    ],
+    "review/test_mpea_formula_tokens_review.py": [
+      "tests/test_mpea_formula_tokens_review.py",
+      "fd1509cb343ff067445bc316d1c3c960f38ad290f7bbb65f449401d11b421059"
+    ],
+    "scripts/mpea_formula_tokens.py": [
+      "scripts/mpea_formula_tokens.py",
+      "8f2bbaa34dccc9c50341f86863526cd3ad6380e97ff3d0e2ca07c0fbbe4c3139"
+    ],
+    "tests/test_mpea_formula_tokens.py": [
+      "tests/test_mpea_formula_tokens.py",
+      "4b3c1862d2c10b9bb5eb5ce35ebfb8b6e390292f651572aa0336b7d27e77d8e4"
+    ]
+  },
+  "production_pending_committed_source_and_green_ci": true,
+  "real_cache_accessed": false,
+  "schema": "lupine.discovery.formula_promotion.v1",
+  "source_bytes_identical": true
+}

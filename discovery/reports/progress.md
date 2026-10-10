@@ -3,6 +3,35 @@
 The current goal and ordered backlog are in `../GOAL.md`. Append concise entries
 with artifacts, actual checks, scientific implications, and the next action.
 
+## 2026-10-10 19:45 UTC — retained artifact verified; supplemental formula freeze
+
+- Published2a09d36491e092e851a529e58000444f3b6479e2 and verified its remoteSHA
+  and allfour CIjobs38080586212. Each Pythonversion passes651tests and28installed
+  cases; browser46 and formal125 checks pass, including the new receipt diff.
+- Actual clean local retention builds from the committed scoped archive and
+  passes28cases/sixschemas. The238796-byte wheel and7168000-byte tar are retained.
+  Independent audit verifies458originalGitblobs,183manifestentries,109wheelRECORD
+  entries; eight synthetic verifier tests pass. Exact audit source/tests/receipts
+  are preserved under `release-artifact-audit-v1/`; root reproduces its report.
+- Both CIbundles uploaded. Direct API and `gh run download` attempts returned
+  Forbidden at signed storage; recorded redacted failures preserve the limit.
+  Remote artifact bytes remain independently unverified. No bypass or invented
+  verification. See `metadata-release-ci-verification-v1.json` and local receipts.
+- G15C adds a separately reviewed formula-only grammar from cited source research.
+  Only position1 is accumulated; all22othercells remain opaque. OriginalG15B
+  receipts/producer/scanner/mapping stay unchanged, including0/1545 recognition.
+  No numeric coefficient conversion, features, targets, eligibility, splits orfits.
+- Actual checks:33focused (14author+19independent) and684full Python tests pass
+  in131.923s, with200stable source hashes. Independent review challenges330opaque
+  substitutions,960grammarcases, exactrow/cap/sourcegates and atomic publication.
+  `mpea-formula-engineering-v1.md` records exact artifacts and limits.
+- Owner/checkpoint:root publishesG15Cfreeze and verifies remoteSHA/allfourCI before
+  two real fixed-cache invocations. Feature and archival-protocol delegates own
+  scratchdesignonly. Clean-reproduction owner preparesdetached2a09 numericenv,
+  then executes original frozen constrained/training protocols against historical
+  negative digests. Mainruntime/package/browser/proof sources matchgreen2a09;
+  no sciencegate advances and no new experiment has run.
+
 ## 2026-10-10 19:37 UTC — actual metadata preserved; release integration tested
 
 - Verified ec32247 remote SHA and all four CI jobs before two fixed-cache G15B

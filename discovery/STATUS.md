@@ -29,9 +29,9 @@ The active outcome, ordered backlog, and autonomous execution rules are in
 - Problem and certificate downloads preserve the exact successful input together; stale responses, edits and failed builds cannot export an old pair. Real CLI checks cover all six wire schemas; full projection replay exports retain original declarations and unavailable-model states.
 - The [training-only follow-up protocol](docs/training-tail-protocol-v1.md) and [runner contract](docs/training-tail-run.md) freeze a bounded 5NN-versus-ridge development comparison. The completed two-pass result is NO-GO; no improved predictor is established.
 - A separate exact [statistical candidate-pool API](docs/decision-pool-calibration-design.md) preserves all tied minimizers in its calibration score and supports distinct whole-universe fallbacks. Eighteen author tests and 16 independent runtime tests pass; the formal extension adds 17 counting/finite-law statements. Explicit counterexamples refute conditioning the marginal guarantee on feasibility or realized calibration. The [strict wrapper](docs/decision-pool-workbench-contract.md) now integrates wire/CLI, guarded HTTP, separate future-outcome replay and the browser, with no new fitted ranker or scientific coverage result.
-- The [MPEA header custody run](reports/mpea-custody-readiness-v1.md) verified the pinned 332,126-byte experimental archive after the reviewed source freeze and green CI. Two fresh header processes match: 23 columns, 3 recognized and 20 redacted labels. Observation rows remain undecoded and schema/paired-condition readiness remains unresolved; no new scientific benchmark ran.
+- The [MPEA header custody run](reports/mpea-custody-readiness-v1.md) verified the pinned 332,126-byte experimental archive after the reviewed source freeze and green CI. Two fresh header processes match: 23 columns, 3 recognized and 20 redacted labels. At that header-only checkpoint, observation rows remained undecoded; schema/paired-condition readiness was unresolved. The later G15B result below records the subsequent metadata scan; no new scientific benchmark ran.
 
-- The [G15A header-disclosure run](reports/mpea-header-labels-readiness-v1.md) followed its 31 synthetic checks, reviewed source freeze and green CI. Two fresh processes disclose all 23 labels identically and preserve BLOCKED_SCHEMA. The separate cited mapping permits only five prospective metadata roles and withholds all performance values; no observation rows have been decoded.
+- The [G15A header-disclosure run](reports/mpea-header-labels-readiness-v1.md) followed its 31 synthetic checks, reviewed source freeze and green CI. Two fresh processes disclose all 23 labels identically and preserve BLOCKED_SCHEMA. The separate cited mapping permits only five prospective metadata roles and withholds all performance values; no observation rows had been decoded at that header-disclosure checkpoint.
 
 - The [finite exchangeability bridge](docs/finite-exchangeability.md) adds eight reviewed statements deriving equal indexed failure masses from an invariant finite joint score law. All nine modules strictly build and 125 statements pass the fresh axiom audit; eleven audit-parser tests pass. Existing runtime sources remain byte-identical to the green `d169b10` checkpoint. Arbitrary measurable laws, scientific exchangeability and Python refinement remain unproved.
 
@@ -70,3 +70,20 @@ The frozen five-fold comparison on 4,096 original training representatives retur
 **NO_GO_MODEL_IMPROVEMENT**. All three ridge alternatives were ineligible; two
 fresh processes matched exact predictions, metrics, gate decisions and raw float
 artifacts. Original calibration/evaluation targets were not opened. The [result](reports/training-tail-result-v1.md) preserves every failed gate. No predictor is replaced and no new coverage claim follows.
+
+## Supplemental formula and retained-release checkpoint
+
+Published `2a09d36` passes [all four CI jobs](https://github.com/alexwelcing/lupine/actions/runs/38080586212).
+The actual clean local wheel passes 28 cases/six schemas; independent byte audit
+verifies 458 source files, 183 manifest entries and 109 wheel RECORD entries.
+Both CI bundles uploaded, but two storage download attempts returned Forbidden;
+remote artifact bytes remain independently unverified. Local exact-byte retention
+and CI execution are established, not deterministic builds or scientific validity.
+
+The separate formula-only G15C reader passes 33 focused and 684 full Python tests
+with 200 stable source hashes. It recognizes an explicitly documented lexical
+profile and withholds all other cells. The original 0/1545 result remains intact;
+no real formula extraction has run. Next: publish/freeze, verify CI, then execute
+twice before designing features and a scientific protocol. [Engineering evidence](reports/mpea-formula-engineering-v1.md).
+A detached clean numerical reproduction of the historical constrained/training
+protocols is being prepared; no new result is claimed from environment setup.

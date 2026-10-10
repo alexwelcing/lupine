@@ -1,0 +1,18 @@
+{
+  "checks": [
+    "canonical receipt and consequential type checks",
+    "expected-commit-derived copyset and every original Git blob",
+    "independent complete manifest coverage",
+    "wheel ZIP CRC and RECORD coverage and digests",
+    "no extraction/import/execution",
+    "scope distinguishes exact artifact identity and recorded claims from independent build/probe/science"
+  ],
+  "limits": [
+    "Does not independently rebuild the wheel or prove wheel/source derivation; original executed build/smoke receipt supplies that claim."
+  ],
+  "reviewer": "calibrated_backend",
+  "reviewer_executed_tests_or_artifacts": false,
+  "schema": "lupine.discovery.retained-artifact-verifier-source-review.v1",
+  "status": "NO_BLOCKER_IN_BOUNDED_READ_ONLY_REVIEW",
+  "verifier_sha256": "aa46ee367c0d8bd3227d4617ab23e60dc878e9b27bb5de71a6d0d286dc62ffc7"
+}
