@@ -37,3 +37,7 @@ execution state in [`discovery/STATUS.md`](../discovery/STATUS.md) and claims in
 It is incubating on branch `research/lupine-discovery` at Alex Welcing's direction
 and may be extracted later. Initial kernel and retrospective checkpoints are
 complete; the full research program remains IN PROGRESS.
+
+Alex has delegated autonomous continuation. The current completion goal and
+ordered backlog live in [`discovery/GOAL.md`](../discovery/GOAL.md), with actual
+execution checkpoints in [`discovery/reports/progress.md`](../discovery/reports/progress.md).

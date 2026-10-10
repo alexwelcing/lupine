@@ -2,6 +2,10 @@
 
 Snapshot: 2026-10-10. Initial implementation session; four calendar days of work have not elapsed.
 
+Alex has delegated the multi-day build without task-by-task management.
+The active outcome, ordered backlog, and autonomous execution rules are in
+[`GOAL.md`](GOAL.md); checkpoints are in [`reports/progress.md`](reports/progress.md).
+
 ## Implemented and exercised
 
 - Exact rational finite candidate selection, tied-optimum retention, feasibility bounds, regret bounds, compatible refinement, signed linear and min/max interval composition.
@@ -38,4 +42,4 @@ and the monorepo CI boundary.
 
 ## Resume
 
-Start with `AGENTS.md`, this file, `docs/four-day-plan.md`, and the verification record. Run the README smoke commands. Keep failed scientific assumptions visible in reports. Do not reinterpret successful finite-archive examples as universal physical accuracy.
+Start with `AGENTS.md`, `GOAL.md`, this file, `reports/progress.md`, and the verification record. Continue the highest-priority unblocked backlog item. Keep failed scientific assumptions visible in reports. Do not reinterpret successful finite-archive examples as universal physical accuracy.

@@ -4,6 +4,11 @@ Requested by Alex Welcing on 2026-10-10. This is a work plan, not a claim that f
 days have elapsed or a promise that an unattended process will continue after a
 session ends. Resume from `STATUS.md` and the repository commits.
 
+Alex subsequently delegated autonomous ownership of this goal. The concrete
+completion criteria and executable backlog are in `../GOAL.md`, with scheduled
+continuation details and actual run evidence in `../reports/`. The dated
+checkpoint record distinguishes configured wake-ups from work that ran.
+
 ## Day 1 — universal decision kernel
 
 Deliver an exact selector, general specification, machine-checked core theorem
