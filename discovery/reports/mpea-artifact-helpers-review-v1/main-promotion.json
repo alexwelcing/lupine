@@ -1,0 +1,38 @@
+[
+  {
+    "change": "none",
+    "destination": "scripts/mpea_archive_profiles.py",
+    "origin": ".cache/mpea-study-custody/scripts/mpea_archive_profiles.py",
+    "sha256": "1d9d8da568fd7d15c30b268832739b13a7ec6b281edfc93f8c700cea889c936f"
+  },
+  {
+    "change": "none",
+    "destination": "scripts/mpea_archive_artifacts.py",
+    "origin": ".cache/mpea-study-custody/scripts/mpea_archive_artifacts.py",
+    "sha256": "0f251d97ca247b29f06f2a6f32251b1ca443baf52047b0e07de8c50befa812a6"
+  },
+  {
+    "change": "none",
+    "destination": "tests/test_mpea_archive_profiles.py",
+    "origin": ".cache/mpea-archive-artifacts-review/promotion/tests/test_mpea_archive_profiles.py",
+    "sha256": "eaadf3aedc424f752eb77baddf55fb31ff2c0f424a0c291cdf26c0bc0f05b105"
+  },
+  {
+    "change": "source-loader path only",
+    "destination": "tests/test_mpea_archive_profiles_review.py",
+    "origin": ".cache/mpea-archive-artifacts-review/promotion/tests/test_mpea_archive_profiles_review.py",
+    "sha256": "bb47da852ac77e602da5b837a1072de9e6c0dd2ade8a9d77719d04809f9884fc"
+  },
+  {
+    "change": "create existing allowed ignored temporary parent on clean checkout; no assertion change",
+    "destination": "tests/test_mpea_archive_artifacts.py",
+    "origin": ".cache/mpea-archive-artifacts-review/promotion/tests/test_mpea_archive_artifacts.py",
+    "sha256": "679fd9857aa931927d2d6765cd210ce52b7698b4d207911c52e1d40c5e172603"
+  },
+  {
+    "change": "source-loader path only",
+    "destination": "tests/test_mpea_archive_artifacts_review.py",
+    "origin": ".cache/mpea-archive-artifacts-review/promotion/tests/test_mpea_archive_artifacts_review.py",
+    "sha256": "10aecd8893b8eebf708790ecaf86285cbccefc2dffd90b721eaf929645cefa33"
+  }
+]

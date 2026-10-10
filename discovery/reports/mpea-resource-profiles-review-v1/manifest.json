@@ -1,0 +1,304 @@
+{
+  "count": 59,
+  "files": {
+    "collector/author/README.md.bytes.json": {
+      "original_path": ".cache/mpea-stage-usage/README.md",
+      "original_sha256": "c4d2c8159edf1e3b996633a6b2bb6abc72436e2c1223fb11c226cb964e607f5e",
+      "stored_sha256": "42080608f1a3108adb1b7057e822be3627700f32127271940a3cc7d63456b8d0"
+    },
+    "collector/author/author-final.stderr.txt.bytes.json": {
+      "original_path": ".cache/mpea-stage-usage/author-final.stderr.txt",
+      "original_sha256": "0ab528a31e19443522fe3175d498363f6fb5db76c65b5cff55b8acc7e52e049c",
+      "stored_sha256": "729ac4422853e0557b3ac4c0371cff3760663979c2db24b178966cfccd32e31d"
+    },
+    "collector/author/author-final.stdout.txt.bytes.json": {
+      "original_path": ".cache/mpea-stage-usage/author-final.stdout.txt",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_sha256": "892863d1f30781b6d26d3734b6c31fd9642e47345eb551b9148d94a8af15074c"
+    },
+    "collector/author/author-receipt-v1.json.bytes.json": {
+      "original_path": ".cache/mpea-stage-usage/author-receipt-v1.json",
+      "original_sha256": "7da78da866bee2dc84ed634160f788d54c788a77c198fc7ae176ef6277788f3a",
+      "stored_sha256": "8ebdceee33f0c9d5a41d33b1ff0bc1453f4f499fc729fe681082c612be78e9da"
+    },
+    "collector/author/author-tests-v1.log.bytes.json": {
+      "original_path": ".cache/mpea-stage-usage/author-tests-v1.log",
+      "original_sha256": "4b4877510c9c208e9d095181df081490e872d6379c941e835ca047ad3a4d1b90",
+      "stored_sha256": "229867500a77b6b87d1bce133ea22311bcd5f59ce36f2a8b7fb736889fcd9249"
+    },
+    "collector/author/author-tests-v2.log.bytes.json": {
+      "original_path": ".cache/mpea-stage-usage/author-tests-v2.log",
+      "original_sha256": "5705c8aae2cee8cf743cf30aa7033f9a0cc55529f5af11de3342ba09171f3f90",
+      "stored_sha256": "dbcc73a80352a4393051f636447e14c729bef5e7baba27e7e2d9a42efaab1a88"
+    },
+    "collector/author/author-tests-v3.log.bytes.json": {
+      "original_path": ".cache/mpea-stage-usage/author-tests-v3.log",
+      "original_sha256": "d82761726c45205a78e5552014fdcc799309ec7409cd7a88543bc42257fdda88",
+      "stored_sha256": "22aa283f3478410d91c609fef1ec98c5f3d1d18c4b10bdf2e789e123b51d2555"
+    },
+    "collector/author/stage_usage.py.bytes.json": {
+      "original_path": ".cache/mpea-stage-usage/stage_usage.py",
+      "original_sha256": "ae1967ee12d778e02dc92ec8a8af41035e58c62c835236eed6f9322aa04cd5d0",
+      "stored_sha256": "8ae3b90c2af8ca684de1d0c2d083dd1b3fa6279f4963721db328451d84a47045"
+    },
+    "collector/author/test_stage_usage.py.bytes.json": {
+      "original_path": ".cache/mpea-stage-usage/test_stage_usage.py",
+      "original_sha256": "0cb52efb6f64d89b0b558a07f971a2027dc9e3ed41a6b86034636ed9aeb07f82",
+      "stored_sha256": "51e5d9a674370abd9c8e4910369a12d676b1992c64bcdfd0a7fdc7f57383a4d4"
+    },
+    "collector/peer/attempt1-classification.md.bytes.json": {
+      "original_path": ".cache/mpea-stage-usage/review/attempt1-classification.md",
+      "original_sha256": "a22a972e555b865618d4a3f24b98de694609a38af6754df3edb684dd791b0785",
+      "stored_sha256": "afa65b2359338058c96b5be820b8874eb867036c866e37c4e0b90b571379575f"
+    },
+    "collector/peer/attempt1-source.py.bytes.json": {
+      "original_path": ".cache/mpea-stage-usage/review/attempt1-source.py",
+      "original_sha256": "adae91a65d52d631afec3892bc91278906fa75f19ac2aff60d1af688660b0628",
+      "stored_sha256": "809abc9f79f5c7795c927d739bd56d3088c5cda78427b5cbd0cb7cb7b597e21e"
+    },
+    "collector/peer/attempt1-test.py.bytes.json": {
+      "original_path": ".cache/mpea-stage-usage/review/attempt1-test.py",
+      "original_sha256": "ced5faadb53b63f2d6064ed1b5086149f5ca5812ae29f81ce67eb40ce1c39d07",
+      "stored_sha256": "a72af928fcdb3383d2592647ca47d4c9f85007386533135da4f7f7985429803d"
+    },
+    "collector/peer/attempt1.json.bytes.json": {
+      "original_path": ".cache/mpea-stage-usage/review/attempt1.json",
+      "original_sha256": "583975380ca53c35dd16daff8e5c257af80d74b5e594c920fd3e3c699f4219e4",
+      "stored_sha256": "555384d9c4d470003dd74e2131f65d499c86c1e7756d9cb9b6d08710dda3868c"
+    },
+    "collector/peer/attempt1.stderr.txt.bytes.json": {
+      "original_path": ".cache/mpea-stage-usage/review/attempt1.stderr.txt",
+      "original_sha256": "f89b4081ba8ea9f3e84e42a2d913ba606e0504db0b7afd72ac477c5accd03099",
+      "stored_sha256": "4fce397aaa468b2ba724f29764817c63696c77790bcf566613a6ff8f6ca1266f"
+    },
+    "collector/peer/attempt1.stdout.txt.bytes.json": {
+      "original_path": ".cache/mpea-stage-usage/review/attempt1.stdout.txt",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_sha256": "cb3952d3eb18a741cbcf763ff1a89a7c98d955153cb9910577aa5ceceac3c6d3"
+    },
+    "collector/peer/final-author-actual-linux.stderr.txt.bytes.json": {
+      "original_path": ".cache/mpea-stage-usage/review/final-author-actual-linux.stderr.txt",
+      "original_sha256": "c335a80b2238a820310c2b770e7841341d1563b85f555a3bdebe8e1f465b9e2a",
+      "stored_sha256": "2785970a0c93862031bf4b75a5a900dafb42308538b753e50eea1d2c34d3418c"
+    },
+    "collector/peer/final-author-actual-linux.stdout.txt.bytes.json": {
+      "original_path": ".cache/mpea-stage-usage/review/final-author-actual-linux.stdout.txt",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_sha256": "14ec0e01983894b960ff711afaf00714f9dab7cd53d629d87e8adadd5dfeb087"
+    },
+    "collector/peer/final-execution-v1.json.bytes.json": {
+      "original_path": ".cache/mpea-stage-usage/review/final-execution-v1.json",
+      "original_sha256": "99aba0d847158de5b134280cb15354589947d9fd4105c084bd2e6ecc1f3ff0f3",
+      "stored_sha256": "211c778eb80ec63a097749c2425785b68bbdca34eec4ac690bb13bc02314299d"
+    },
+    "collector/peer/final-independent.stderr.txt.bytes.json": {
+      "original_path": ".cache/mpea-stage-usage/review/final-independent.stderr.txt",
+      "original_sha256": "b1cc1a261e1f016acc99160a8ad10750ba6d0c0058d619145eb8bc062f5adb09",
+      "stored_sha256": "5af9876ea84556e490f0a1634bdc6a6b1ff8a6b9845bd89f08e11f47872f1fb2"
+    },
+    "collector/peer/final-independent.stdout.txt.bytes.json": {
+      "original_path": ".cache/mpea-stage-usage/review/final-independent.stdout.txt",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_sha256": "235ac4524ff9a51c9d6038cd5625303aae0fa25db55e844a48fd7dd752ea103a"
+    },
+    "collector/peer/final-source-v1.py.bytes.json": {
+      "original_path": ".cache/mpea-stage-usage/review/final-source-v1.py",
+      "original_sha256": "ae1967ee12d778e02dc92ec8a8af41035e58c62c835236eed6f9322aa04cd5d0",
+      "stored_sha256": "2832a301e21af76cf2c77afaa8850501d6e5ddc2a1f502ed55124d6307f1b180"
+    },
+    "collector/peer/review-v1.json.bytes.json": {
+      "original_path": ".cache/mpea-stage-usage/review/review-v1.json",
+      "original_sha256": "049118b068311f34e8fccc9bb179081e320b0bc09234b96a6f58921809dee88f",
+      "stored_sha256": "24b7e78e2720ac7e5ca662b337b818f64a24b547bb176d39ba9eee73b2eb7c23"
+    },
+    "collector/peer/review-v1.md.bytes.json": {
+      "original_path": ".cache/mpea-stage-usage/review/review-v1.md",
+      "original_sha256": "6a949bdd912476098fb6612cc98bfe66806173d61bebd858510de8cb4abb4729",
+      "stored_sha256": "3971db160103255883244b0caf0103be6fe410e609fba29bc46259b41b70bf9e"
+    },
+    "collector/peer/test_stage_usage_review.py.bytes.json": {
+      "original_path": ".cache/mpea-stage-usage/review/test_stage_usage_review.py",
+      "original_sha256": "befd6d938cffd51c8e1d347d1df1588a9e7c97be4a475558f4abd57b94e1b917",
+      "stored_sha256": "e96594189c327dc69bd0beeed091dcf18ee27998ed53c26e9f389a807477b8db"
+    },
+    "collector/second-review/independent-review-v1.json.bytes.json": {
+      "original_path": ".cache/mpea-study-custody/review_production/stage_usage_review/independent-review-v1.json",
+      "original_sha256": "3d4cdbc208a32fd3420f9f91e96bd851311ac7dd1b90bd5b96dcb51d0cb71a49",
+      "stored_sha256": "906dfaae813fb79fcf6164640f08f1b7d4495d05ae901a57ac65530b0d04beb0"
+    },
+    "collector/second-review/test_stage_usage_review.py.bytes.json": {
+      "original_path": ".cache/mpea-study-custody/review_production/stage_usage_review/test_stage_usage_review.py",
+      "original_sha256": "d19fb453bc1b09776971a32b0132010625768c105069186e300fff7a4e1b43ac",
+      "stored_sha256": "9cee4859ca9082b4063387f7b42f1bfa4c488e72f466075268c71ce16cae7d0a"
+    },
+    "collector/second-review/tests-v1.txt.bytes.json": {
+      "original_path": ".cache/mpea-study-custody/review_production/stage_usage_review/tests-v1.txt",
+      "original_sha256": "b3d22b70c528a86068d74fb558de7e7e044c6efffb951fc09db1063caccd515a",
+      "stored_sha256": "e53a7331e4ef3c0ee796463b2f073a447d9f066a34e177d455941f5cb7d194d9"
+    },
+    "profiles/author/mpea_archive_profiles.py.bytes.json": {
+      "original_path": ".cache/mpea-study-custody/scripts/mpea_archive_profiles.py",
+      "original_sha256": "1d9d8da568fd7d15c30b268832739b13a7ec6b281edfc93f8c700cea889c936f",
+      "stored_sha256": "007744b69000a7eadd7ecf723da64d0b4e95e2a78ef53e083ab85bba99b6b74f"
+    },
+    "profiles/author/profiles-api-v1.md.bytes.json": {
+      "original_path": ".cache/mpea-study-custody/profiles-api-v1.md",
+      "original_sha256": "56a40f3e39b4e51928f3650da5f02d0fb1a9eec8563f7b4745617215ffc1aa72",
+      "stored_sha256": "22cfafd2248f4d7764fadf2f7a864f833e8b13008f46dd387bff1a3fee10f560"
+    },
+    "profiles/author/profiles-author-receipt-v1.json.bytes.json": {
+      "original_path": ".cache/mpea-study-custody/profiles-author-receipt-v1.json",
+      "original_sha256": "69473fd68259eea447b258c666936daae4c9ac86fcedd3719ab71273190b29ec",
+      "stored_sha256": "4ed2868f238e7a44b70a517b94d45df1b945fe334c0bfa3931e5e1ab67f5f392"
+    },
+    "profiles/author/profiles-author-v1.log.bytes.json": {
+      "original_path": ".cache/mpea-study-custody/profiles-author-v1.log",
+      "original_sha256": "decd992a0c5a2817c10ae06d53352f85d8e065b45a38bcc172625959e62d3942",
+      "stored_sha256": "4b0a404e377560bfc3c6ca34184a6a8198d51d2de1529ebc94fea1e0bfaf51fe"
+    },
+    "profiles/author/profiles-author-v2.log.bytes.json": {
+      "original_path": ".cache/mpea-study-custody/profiles-author-v2.log",
+      "original_sha256": "2faa660b514ce1889176f2eef7b69c149caa971c03ff3c86b59a3484456fac65",
+      "stored_sha256": "772b4d246ef878a10befcd2bbd5bf445a9b7c3f4dc5d3ce5c32f4100c568bf8b"
+    },
+    "profiles/author/profiles-author-v3.log.bytes.json": {
+      "original_path": ".cache/mpea-study-custody/profiles-author-v3.log",
+      "original_sha256": "4076b060e6981a737da05bc8f68a1a076a22dce97c0108557322e5591023ceb7",
+      "stored_sha256": "5fbe45fbffcf9860d36f629d1e77db46552f5bec81f2dd90595b9641a848c28d"
+    },
+    "profiles/author/profiles-final.stderr.txt.bytes.json": {
+      "original_path": ".cache/mpea-study-custody/profiles-final.stderr.txt",
+      "original_sha256": "0d6fa0e3738fd97967f6288be9a9fb951049ac45b155e91915398e40cac5b577",
+      "stored_sha256": "62e6566539903d7af469be3b21b7c8d54a4470964d0a71a18a1035036c9ac354"
+    },
+    "profiles/author/profiles-final.stdout.txt.bytes.json": {
+      "original_path": ".cache/mpea-study-custody/profiles-final.stdout.txt",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_sha256": "81d02a1f4a188242cb362674288252784951c619ee3526751cdd324701727af5"
+    },
+    "profiles/author/test_mpea_archive_profiles.py.bytes.json": {
+      "original_path": ".cache/mpea-study-custody/tests/test_mpea_archive_profiles.py",
+      "original_sha256": "eaadf3aedc424f752eb77baddf55fb31ff2c0f424a0c291cdf26c0bc0f05b105",
+      "stored_sha256": "35ddf05748eed8a9108032435139b7988d2d8c14f21485a91df9afe2988ceee0"
+    },
+    "profiles/peer/attempt1-source.py.bytes.json": {
+      "original_path": ".cache/mpea-archive-profiles-review/attempt1-source.py",
+      "original_sha256": "69409b27091a406ae1a43d0828e6ffe2e7e91d01a9387e391b4c45289105d9dc",
+      "stored_sha256": "74ac66fd356d2c767175f9ecc13b62173dc3518e765386fabbdf0186edf8fe29"
+    },
+    "profiles/peer/attempt1-test.py.bytes.json": {
+      "original_path": ".cache/mpea-archive-profiles-review/attempt1-test.py",
+      "original_sha256": "0299545ca6d7a0671bff891cd5764d4b6811e29d12dcd1c47029c25ca104763a",
+      "stored_sha256": "c6b75323769cd9dc2e97a830e2ed98cca65746ea78bdd832ff205b0eb3b6ff2f"
+    },
+    "profiles/peer/attempt1.json.bytes.json": {
+      "original_path": ".cache/mpea-archive-profiles-review/attempt1.json",
+      "original_sha256": "14da284e6a0d955a36774f13dc3577184ef836887423e9576df63783d66b0132",
+      "stored_sha256": "4c9cac07730fab3b7c0aad6d196ca73cb7c3aff1da222f1576d860aa7e1f82f7"
+    },
+    "profiles/peer/attempt1.stderr.txt.bytes.json": {
+      "original_path": ".cache/mpea-archive-profiles-review/attempt1.stderr.txt",
+      "original_sha256": "cc570a5e3727a4851b4ced989c34798ba2e997e0c9d92952edb0b51362ecc06c",
+      "stored_sha256": "99bf75077796958c1e0193d88d9fd8e28369648c64bfa3f277e15685e8683e8d"
+    },
+    "profiles/peer/attempt1.stdout.txt.bytes.json": {
+      "original_path": ".cache/mpea-archive-profiles-review/attempt1.stdout.txt",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_sha256": "15ac6e879abb1b832063b66837afa08c306b1cd65cc5f984b05497a355265048"
+    },
+    "profiles/peer/final-author.stderr.txt.bytes.json": {
+      "original_path": ".cache/mpea-archive-profiles-review/final-author.stderr.txt",
+      "original_sha256": "7c8af14ae40fea2e7e6856c84e95d5c52711562f8a398249d64317f0a115bf78",
+      "stored_sha256": "cd059b5761b56641d3f3afbfec6a253b485a65dc401c11b81234d52ebe30fbe4"
+    },
+    "profiles/peer/final-author.stdout.txt.bytes.json": {
+      "original_path": ".cache/mpea-archive-profiles-review/final-author.stdout.txt",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_sha256": "68ec3ec8ec5ebefbe02b82522a3b4ed0dc4587ab4de34ffe029dcb9b37e7cb4c"
+    },
+    "profiles/peer/final-execution-v1.json.bytes.json": {
+      "original_path": ".cache/mpea-archive-profiles-review/final-execution-v1.json",
+      "original_sha256": "15163a74be01181e87de92d885f00bfc534fb68d03eaaa9e7756fdf394ef586d",
+      "stored_sha256": "da593815a01493873e7e4f090f2706dd1a16ce89744cc8ec9cb99ddee609eb8b"
+    },
+    "profiles/peer/final-execution-v2.json.bytes.json": {
+      "original_path": ".cache/mpea-archive-profiles-review/final-execution-v2.json",
+      "original_sha256": "c452cbbf8e2865144946cf567071896f41a75d1ba729493098949ca1994445ce",
+      "stored_sha256": "e30f401a21babc2a220add3efe6a24514603c469b7dfa2f1926f643fe62509ee"
+    },
+    "profiles/peer/final-independent.stderr.txt.bytes.json": {
+      "original_path": ".cache/mpea-archive-profiles-review/final-independent.stderr.txt",
+      "original_sha256": "4af2b38e3d512932101c0000e8023eb2fc3b730515f1e3b80881482efe97e27b",
+      "stored_sha256": "acfcce57d8647d4889accf8c6f94e63398df44e842c5dcfe11608f0a7ef646bb"
+    },
+    "profiles/peer/final-independent.stdout.txt.bytes.json": {
+      "original_path": ".cache/mpea-archive-profiles-review/final-independent.stdout.txt",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_sha256": "01c8f95a073de1fedf6e836b98b959d38be1e346f967717cda0f1d33a3fa7eed"
+    },
+    "profiles/peer/final-source-v1.py.bytes.json": {
+      "original_path": ".cache/mpea-archive-profiles-review/final-source-v1.py",
+      "original_sha256": "3a84297f06814063cefaade9d88708761a70fecff637a29087a71b8796ffdc7a",
+      "stored_sha256": "b0f2e97ddb366d2309227ff562210d1b36989a1598ddba430ce842f5230055ec"
+    },
+    "profiles/peer/final-source-v2.py.bytes.json": {
+      "original_path": ".cache/mpea-archive-profiles-review/final-source-v2.py",
+      "original_sha256": "1d9d8da568fd7d15c30b268832739b13a7ec6b281edfc93f8c700cea889c936f",
+      "stored_sha256": "a417a56ad3b84166e255b3b8f38f34be612b3c9d16525a770d038c31757b366f"
+    },
+    "profiles/peer/final-test-v1.py.bytes.json": {
+      "original_path": ".cache/mpea-archive-profiles-review/final-test-v1.py",
+      "original_sha256": "0299545ca6d7a0671bff891cd5764d4b6811e29d12dcd1c47029c25ca104763a",
+      "stored_sha256": "2352341340706cbd1c23dfa84b4958a473170b4dff162c5ccbef72c9b3eae003"
+    },
+    "profiles/peer/final-v2-author.stderr.txt.bytes.json": {
+      "original_path": ".cache/mpea-archive-profiles-review/final-v2-author.stderr.txt",
+      "original_sha256": "c7b4fa10e618390017a0580e0a511f344489beaaafabdd068628630fd84deb86",
+      "stored_sha256": "01227d56cd5bcdedc098d22f5ebd18b302b476c1a4d15458052d9935023527f9"
+    },
+    "profiles/peer/final-v2-author.stdout.txt.bytes.json": {
+      "original_path": ".cache/mpea-archive-profiles-review/final-v2-author.stdout.txt",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_sha256": "7cdea4df7a50f3a63943a65f856ae5755a982c33637b4087728e1f7559a2fb76"
+    },
+    "profiles/peer/final-v2-independent.stderr.txt.bytes.json": {
+      "original_path": ".cache/mpea-archive-profiles-review/final-v2-independent.stderr.txt",
+      "original_sha256": "5d383e583cae3c2f149a17c79120ec3c8ebdfc6d7f2db4cfd5ad91eedbefa9ff",
+      "stored_sha256": "69c947e36d45ffc46ceee7c1fd4e9e3294faff925cb5b4938f49868f3ca5efa5"
+    },
+    "profiles/peer/final-v2-independent.stdout.txt.bytes.json": {
+      "original_path": ".cache/mpea-archive-profiles-review/final-v2-independent.stdout.txt",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_sha256": "77d5554415cdb5de69d40b5af6751bad635db15f8717d7201b914244f46c5007"
+    },
+    "profiles/peer/review-v1.json.bytes.json": {
+      "original_path": ".cache/mpea-archive-profiles-review/review-v1.json",
+      "original_sha256": "878c1c29e7b7775340bee30dbf0793756c3ebf92928aa962ab4d476f89144acb",
+      "stored_sha256": "ef5d15094e8e325e4f20f02103b288358abfa44f39b5da8969746c37f633daf9"
+    },
+    "profiles/peer/review-v1.md.bytes.json": {
+      "original_path": ".cache/mpea-archive-profiles-review/review-v1.md",
+      "original_sha256": "f647f245c48790aff6ee97bcb944342af55f42ff608fd67d380289411278138d",
+      "stored_sha256": "a0f6635e2de63b82be73995f8b1ee4e0f652bd7046d93160cf2ce0d6d8fd8af8"
+    },
+    "profiles/peer/test_archive_profiles_review.py.bytes.json": {
+      "original_path": ".cache/mpea-archive-profiles-review/test_archive_profiles_review.py",
+      "original_sha256": "ddd92a8c73a5824790fdbf14fc7c61b914b3977fe6e4f604db43b192e9f3088b",
+      "stored_sha256": "0f2f142362289329870d48603ea9c925cb2cc8ed7d64d242c3587390220240cf"
+    },
+    "specifications/mpea-t25-implementation-contract-v1.md.bytes.json": {
+      "original_path": "docs/mpea-t25-implementation-contract-v1.md",
+      "original_sha256": "be45b1d8db9586035cf37bd9bbb9046c065c3851b91f93386f8c68d155215af9",
+      "stored_sha256": "8563563d4c80f8ea6b59b30ec5740d997e17951b9f87cb82c5098a1ab2aad927"
+    },
+    "specifications/mpea-t25-operational-enforcement-v1.md.bytes.json": {
+      "original_path": "docs/mpea-t25-operational-enforcement-v1.md",
+      "original_sha256": "e36e72818f92096c316df34789a35840c1e5b1561f9467561dd8787da072cf98",
+      "stored_sha256": "0f0d1a68319b3d067c631ae8d1bfbe611209c201d34aba833753e24cbb61246c"
+    }
+  },
+  "final_collector_sha256": "ae1967ee12d778e02dc92ec8a8af41035e58c62c835236eed6f9322aa04cd5d0",
+  "final_profiles_sha256": "1d9d8da568fd7d15c30b268832739b13a7ec6b281edfc93f8c700cea889c936f",
+  "schema": "lupine.collector-profile-promotion-evidence.v1",
+  "scope": "No artifact-helper evidence; exact collector/profile history only. Tests constructed, no real scientific inputs or registration."
+}

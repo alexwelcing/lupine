@@ -85,6 +85,36 @@
       "destination": "section10-behavior-map-v2.md",
       "bytes": 9404,
       "sha256": "b7cbafc44dc14b546e571ff7c16b51998857e33a769326c3f326088c80cf13bf"
+    },
+    {
+      "source": ".cache/mpea-study-custody/review_production/evidence_audit/full-literal-contract-review-v1.md",
+      "destination": "full-literal-contract-review-v1.md",
+      "bytes": 11308,
+      "sha256": "b383c17f21f75a26ff689796f61254d43804753cacf83b6aca24b5285ceb6f22"
+    },
+    {
+      "source": ".cache/mpea-study-custody/review_production/evidence_audit/full-literal-contract-review-v1.json",
+      "destination": "full-literal-contract-review-v1.json",
+      "bytes": 4267,
+      "sha256": "df0a1eae83b57a182efbf254d64326211f869bb673da112e88199873b57134cc"
+    },
+    {
+      "source": ".cache/mpea-study-custody/review_production/evidence_audit/full-literal-contract-snapshot-v1.json",
+      "destination": "full-literal-contract-snapshot-v1.json",
+      "bytes": 402829,
+      "sha256": "1873c10bf74ce322e4a2d23690bbe445a9dea47a99ffbcf4835f67d262d25f5c"
+    },
+    {
+      "source": ".cache/mpea-contract-compliance-review/sections-6-9-literal-review-v1.md",
+      "destination": "sections-6-9-literal-review-v1.md",
+      "bytes": 6944,
+      "sha256": "c6ab06f9f0a9291251f203c813505d5d591991021340c32ec2535a22eee5b8a4"
+    },
+    {
+      "source": ".cache/mpea-registration-allocation/contract-boundary-review-v1/review.json",
+      "destination": "outer-boundary-review-v1.json",
+      "bytes": 3500,
+      "sha256": "3c785ac269ba77cf67b5c07f238c650f9f2eee33d275450127166649ac875352"
     }
   ]
 }

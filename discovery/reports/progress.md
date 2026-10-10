@@ -3,6 +3,119 @@
 The current goal and ordered backlog are in `../GOAL.md`. Append concise entries
 with artifacts, actual checks, scientific implications, and the next action.
 
+## 2026-10-10 23:14 UTC — final contract sources held; integration and publication
+
+- Final held-v3 closes the nine literal-contract findings without changing the
+  frozen scientific protocol, sampler, parser, numerical kernel or decision gates.
+  All seven companions have explicit access/resource scope and are checked before
+  their consumers. Two fresh 960-policy constructed runs preserve the numerical
+  results after exactly 46 checked provenance-reference changes, with unchanged
+  scientific seals under different resource observations. Original alias/join
+  failures and all earlier held versions remain preserved in the
+  [integration evidence](mpea-contract-conformance-v1/README.md).
+- The [current Chromium run](contract-browser-v1/README.md) passes 56 checks with
+  zero JavaScript errors and stable source bindings. Main package transport and
+  retention checks pass 48 tests; the actual new clean wheel is still pending.
+  The independent map identifies all 11 required synthetic behaviors and states
+  where dependencies are controlled. Evidence-copy audits preserve exact originals.
+- Root's full command `python -m unittest discover -s tests -v` is still running
+  over a genuine 337-file pre-test source/index snapshot. No full-suite success
+  is claimed here. The reviewed implementation is being published so exact-commit
+  CI can execute alongside the local suite. The runtime manifest verifies 288
+  source/resource files. No actual MPEA allocation or performance labels opened.
+- Owner/checkpoint: root owns full-suite completion, exact remote publication,
+  clean installed-wheel/source audit and all four original-branch CI jobs.
+  Backend and publication reviewers prepare independent actual-result audits
+  without reading actual study inputs. Next, only after observed gates pass,
+  approve the exact engineering receipt, publish/authenticate preregistration,
+  and run the sole allocation plus fixed-allocation reproduction. The scientific
+  superiority and physical recommendation gates remain NO-GO.
+
+## 2026-10-10 22:47 UTC — exact constructed comparison complete; final companion sweep
+
+- Held-v2 author checks pass 31 tests, including the real supervised constructed
+  workflow and two fresh fixed-allocation processes. Independent numerical review
+  passes two 960-schedule processes, 22 live controls and seven completeness tests:
+  all numerical values/public metrics equal the preserved baseline apart from 46
+  explicitly checked provenance-reference updates. Eight stage scientific seals
+  and the public scientific seal agree under different resource observations.
+  [The exact evidence](mpea-contract-numerical-review-v1/README.md) preserves the
+  first reviewer harness failure and all source/version distinctions.
+- Promoted the reviewed v2 wrappers and original-decision helper unchanged. The
+  decision alias and compact/original join failures remain preserved. Portable
+  private/decision/launcher tests are copied; the launcher preview passes 41
+  controls. Main full-suite execution has not yet run. The
+  [integration index](mpea-contract-conformance-v1/README.md) records exact copies,
+  scoped independent reviews and the provisional claim-tier checklist.
+- A final literal common-envelope sweep found that seven companion files need
+  explicit attribution of their resource work to the enclosing measured stage;
+  label-routes also needs its actor/zero-counter view, and target companions need
+  their stage names. The bounded correction preserves every v2 pass, adds strict
+  view validation and does not alter sampling, predictions or scientific gates.
+- Owner/checkpoint: custody engineer implements this final metadata correction;
+  representation reviewer checks all seven companions; backend reviewer will bind
+  a minimal final two-process equivalence check. Root owns main integration and
+  source-bound full testing/publication. A parallel package check will exercise
+  the optional MPEA report and JavaScript in an installed wheel. No actual source
+  allocation, performance labels or new scientific claim were opened.
+
+## 2026-10-10 22:31 UTC — helper integration complete; full contract workflow under review
+
+- Promoted four pure helpers unchanged from reviewed sources. Main-layout checks
+  pass: resource collector 36, profiles/artifacts 51, operational mappings and
+  artifact comparisons 22. Test adaptations are limited to recorded loaders and
+  the existing ignored temporary directory. Original failures remain in the
+  [resource/profile](mpea-resource-profiles-review-v1/README.md),
+  [artifact](mpea-artifact-helpers-review-v1/MAIN.md), and
+  [operations](mpea-operations-review-v1/MAIN.md) evidence bundles.
+- Independent copy review verified all four producer identities, 140 lossless
+  evidence wrappers, unchanged test assertions and the recorded main test logs.
+  The [complete literal contract review](mpea-contract-audit-v1/full-literal-contract-review-v1.md)
+  consolidates all ten sections into C1–C9. No new predictor or acceptance-gate
+  discrepancy was found; that source review is not execution approval.
+- The producer owner completed one constructed full workflow under the new
+  schema and held its eleven sources for peer execution. Root then found a
+  shallow-copy defect in the new full-decision storage declaration: a returned
+  mutable list could change the validator's expected declaration. Independent
+  controls reproduce it. Preserve this first held source and failures; finish
+  running checks before the narrow detachment/original-join correction and a
+  second stable hold. No numerical method or scientific threshold is changed.
+- Owner/checkpoint: root has prepared a recorder that saves the exact mandatory
+  registration closure and verifies index parity before the full test command,
+  with actual return code and unchanged after-map. It has only been syntax
+  checked, not executed. Peers own private C1–C9 controls, exact old/new numerical
+  parity and usage-digest invariance, and launcher/reproduction boundaries.
+  Next promote the final reviewed workflow, execute complete integration,
+  publish/verify CI, and preregister before any actual archive allocation.
+  Scientific negatives and the absence of actual MPEA performance access remain.
+
+## 2026-10-10 22:14 UTC — exact published CI and collector integration verified
+
+- Verified `a865147fb4ec2055cfca60bfafd8d9f3591bd033` against the remote
+  branch and all four successful jobs in run 38089905975. Preserved the official
+  response alongside the actual clean-wheel execution and byte audits in
+  [the package record](production-release-artifact-v1/README.md): 28 installed
+  cases/six schemas, 1,308 source blobs, 264 manifest entries and 111 RECORD
+  entries; 104 runtime files and two license files match source exactly.
+- Promoted the reviewed resource collector unchanged. Its three test loaders
+  received only main-path adaptations. All 36 collector checks pass with four
+  source files stable. The [lossless review bundle](mpea-resource-profiles-review-v1/README.md)
+  retains 59 original source/test/review artifacts and earlier failures. Boundary
+  RSS samples and process-lifetime peaks are explicitly distinguished; a true
+  within-stage RSS peak remains NOT_MEASURED.
+- The complete contract repair is still under review. Beyond required artifact
+  fields and usage, reviewers identified missing explicit per-label provenance,
+  the rank-stage public aggregate receipt, and revalidation of private companions
+  before publication. These are implementation defects to repair against the
+  frozen contract, not reasons to change scientific rules or acceptance gates.
+- Owner/checkpoint: root owns main integration and publication; custody engineer
+  owns private schema/stage integration; representation reviewer checks the full
+  literal contract; backend reviewer checks unchanged numerical results and
+  usage-independent scientific seals; helper reviewer checks the pure projections.
+  Next finish the stable repaired producer, run source-bound full integration,
+  publish and verify its CI, then register before the sole actual allocation.
+  No actual MPEA targets or allocation were opened; scientific negatives remain.
+
 ## 2026-10-10 22:01 UTC — 1,153 integration tests pass; contract audit blocks registration
 
 - Promoted the reviewed production store, source adapter, shared stage flow,

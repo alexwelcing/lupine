@@ -1,0 +1,50 @@
+{
+  "schema": "final_release_claim_review.v1",
+  "review_status": "PROVISIONAL_NO_UNSUPPORTED_PUBLIC_PROMISE_FOUND_IN_REVIEWED_WORDING",
+  "source_commit": "a865147fb4ec2055cfca60bfafd8d9f3591bd033",
+  "working_tree_snapshot": true,
+  "source_hashes": {
+    "GOAL.md": "bfcaf73503db902b336580aeae753cabed781fc8ce787820e14318f9f2b41f7f",
+    "STATUS.md": "9d9792f5f4a93fe09c4126499e2d43461ccda00f59357d59fa8d49bc32a8c3ea",
+    "docs/release-validation.md": "2e0ea53e89db1b6802ce8000a7cdf084ed3b2fee1a1045c997794d6770ef49d7",
+    "docs/claim-ledger.md": "853c1fe0afc5d38b8f4f3034a07fede26e8edde39b708f7f0a9181335a8002c6",
+    "docs/calibration-planner.md": "9bab9758249ad391cb268657fe9b966a3bb2260a706414ee8e49f9f4520a0b85",
+    "formal/VERIFICATION.md": "6a097886d61dc9a1bb4c4cba2a6a20cb63d254f9649dd70e6da3cf80e5aa99df",
+    "formal/theorem-inventory.json": "834a14198ce1f8d52d4ba33871c143d7c76246cfd81b736109a6de78798acc40",
+    "src/lupine_discovery/web/index.html": "98e12ccb706ab2f75497254d362769ae70f579d95be3fd3bfa93548255588618",
+    "src/lupine_discovery/web/mpea.js": "f760f6225e60f08d7b4217bae7e7499fe1b4d3ea91514c5b1e429c5b4523f35e",
+    "reports/constrained-result-v1.md": "87030a8ad0b21577220f6d94824734ba1fdec7c89daa181a85e8cbc727abd8cb",
+    "reports/training-tail-result-v1.md": "22c0faf2caaafe9f8624192b57ea3850edcc4b8f1163a671e39851878aa6e1a8",
+    "reports/mpea-feature-readiness-v1/README.md": "0e9f3138a3052c3dbe6973f33c7c180f9cb60dd1f9628d42a7070b4b308da52d"
+  },
+  "tiers": {
+    "research_preview": "Conditionally eligible after final exact-source engineering/CI/installed-artifact checks and explicit claim decision; not a final GO at this snapshot.",
+    "predictive_or_physical_recommender": "NO-GO: historical interval failures and usefulness negatives persist; physical enclosure, sampling/shift premises, uncertainty interpretation and independent scientific replication remain unestablished."
+  },
+  "scope_boundaries": [
+    "130 conditional Lean statements prove abstract implications; no Python refinement or physical premises follow.",
+    "Six supported modes and deterministic known-answer controls establish scoped implementation behavior; two unsound controls pass by detecting failures.",
+    "Joint-risk interval planning needs its declared simultaneous budget and scope; the direct pool law is marginal for one future panel and does not imply all20 panels together or conditional-on-calibration reliability.",
+    "Actual MPEA feature construction establishes declared exact parser/vector behavior on pinned archive; physical composition, predictive utility and performance target validity do not follow.",
+    "Known scientific negatives remain: gap89/888,steel6/68,hydration22/138 coverage misses; five tied gap optima discarded; JARVIS no screening/all1000 retained and budget4 advantage gate failed; training ridge alternatives no replacement."
+  ],
+  "actual_MPEA_outcomes": {
+    "complete_positive": "GO_DESIGN_INDEPENDENT_STUDY only: retrospective source-group recovery meets frozen scoped archival gates. Supports designing independent study, not deployment, physical guarantees, general prediction accuracy, independent replication or erasure of prior negatives.",
+    "complete_negative": "NO_GO_ARCHIVAL_USEFULNESS; retain every failed gate/denominator and unchanged threshold.",
+    "blocked_incomplete_insufficient_development": "No scientific success verdict; preserve stop reason, unavailable metrics and sealed prefix."
+  },
+  "required_final_actions": [
+    "Close C1-C9 literal contract findings and bind final producer/test source with independent reviews and actual full source-before/after suite; resolve failures without silently altering frozen scientific rules.",
+    "Publish exact source commit and verify all4 CI jobs on that commit; freshly audit strict Lean/inventory receipts, source manifest, package/browser checks as required by workflow.",
+    "Rebuild and retain source/wheel from final candidate; isolated install28cases/sixschemas plus current web and nested resources; byte identity audit and clean reproduction evidence must bind final candidate, not older checkpoints.",
+    "For actual MPEA execution: trusted engineering approval of exact receipt, live authenticated source/CI capture, immutable public annotated registration before sole entropy; unchanged protocol and original allocation; source-before-target overlap/access/resource gates.",
+    "Run original plus fresh-process fixed-allocation reproduction; separately compare scientific digests and whole-file differences, retain actual stage resource/access receipts and aggregate-only report.",
+    "Publish explicit research-preview release decision with exact commit/artifacts/checks and unresolved scientific/redistribution limitations; independent scientific replication stays open."
+  ],
+  "wording_notes": [
+    "UI explicitly labels synthetic control versus registered archival replay and physical unqualified status; absent report has no verdict.",
+    "Release matrix mixes historical checkpoint PASS rows with later pending integration notes. Preserve checkpoint labels and replace final-candidate readiness only using actual final evidence.",
+    "Release matrix simultaneous-risk requirement applies simultaneous interval claim; direct-pool marginal mode remains a separate explicitly weaker permitted claim."
+  ],
+  "limits": "Read-only bounded claim/source review. No new test, formal build, scientific execution, API, private data or release approval. Final C3/launcher/full-suite/actual MPEA evidence not yet bound; append final-candidate addendum later."
+}

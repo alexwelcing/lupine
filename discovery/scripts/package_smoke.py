@@ -122,8 +122,30 @@ assert select_pool(statistical_unknown, statistical_future).retained == ('C', 'D
 statistical_unresolved = calibrate_panels(statistical_protocol, (), '1/20')
 assert statistical_unresolved.status == 'insufficient_calibration'
 assert select_pool(statistical_unresolved, statistical_future).retained == ('C', 'D', 'E')
+def check_optional_mpea(resources, observed_reports, url):
+    """Compare installed/served identities only; never infer a scientific verdict."""
+    report_resource = resources.joinpath('resources', 'mpea-t25-v1.json')
+    present = report_resource.is_file()
+    if present:
+        packaged = json.loads(report_resource.read_text(encoding='utf-8'))
+        assert type(packaged) is dict, 'packaged MPEA report must be a JSON object'
+        assert 'mpea_archived' in observed_reports, 'packaged MPEA report missing from HTTP'
+        exact = lambda value: json.dumps(value, sort_keys=True, separators=(',', ':'),
+                                        ensure_ascii=True, allow_nan=False)
+        assert exact(observed_reports['mpea_archived']) == exact(packaged), 'MPEA HTTP payload differs from installed resource'
+    else:
+        assert 'mpea_archived' not in observed_reports, 'HTTP invented an absent MPEA report'
+    asset = resources.joinpath('web', 'mpea.js').read_bytes()
+    assert asset, 'missing MPEA JavaScript asset'
+    with urlopen(url + '/mpea.js') as response:
+        assert response.status == 200 and response.read() == asset, 'MPEA HTTP JavaScript differs from installed asset'
+    return {'resource': 'resources/mpea-t25-v1.json',
+            'status': 'present_exactly_served' if present else 'absent',
+            'javascript': 'packaged_and_exactly_served'}
+
+
 resources = files('lupine_discovery')
-for name in ('index.html', 'app.js', 'styles.css'):
+for name in ('index.html', 'app.js', 'styles.css', 'mpea.js'):
     assert resources.joinpath('web', name).read_bytes(), 'missing web asset'
 for name in ('archived-v1.json', 'additional-archived-v1.json'):
     assert json.loads(resources.joinpath('resources', name).read_text())
@@ -150,6 +172,7 @@ try:
         observed_reports = json.load(response)
         assert observed_reports['constrained_archived'] == constrained
         assert observed_reports['training_tail'] == training_tail
+    mpea_check = check_optional_mpea(resources, observed_reports, url)
     for schema in sorted(schemas):
         row = next(row for row in catalog if get_case(row['id'])['problem']['schema'] == schema)
         problem = get_case(row['id'])['problem']
@@ -180,13 +203,16 @@ print(json.dumps({'status': 'passed', 'python': sys.version.split()[0],
                   'case_count': len(catalog), 'problem_schemas': sorted(schemas),
                   'certificate_digests': certificates, 'replay_digests': replays,
                   'known_answer_summary': known['summary'],
+                  'optional_mpea': mpea_check,
                   'checks': ['all_packaged_cases_select_verify_replay', 'known_answer_oracle_and_controls',
                              'web_assets_and_original_archive_reports', 'constrained_negative_results_packaged_and_served',
                              'installed_http_cli_agreement', 'coupled_python_api_and_missing_point_fallback',
                              'coupled_projection_and_statistical_guarded_http_replay_agree_with_installed_cli',
                              'scoped_projection_translation_and_missing_bound_abstention',
                              'direct_statistical_pool_python_api_and_distinct_abstention',
-                             'training_only_no_go_packaged_and_served']},
+                             'training_only_no_go_packaged_and_served',
+                             'optional_mpea_resource_presence_and_http_agreement',
+                             'mpea_javascript_packaged_and_served']},
                  sort_keys=True))
 '''
 

@@ -1,0 +1,34 @@
+{
+  "expected_tests": {
+    "author": 5,
+    "independent": 17
+  },
+  "preview_producer": {
+    "original": ".cache/mpea-study-custody/scripts/mpea_archive_operations.py",
+    "preview_copy": "scripts/mpea_archive_operations.py",
+    "role": "byte-identical preview dependency; root owns producer promotion",
+    "sha256": "9ce72dd8ce48dfa5f1a4b3535f992ad4b38ea7c07fb86ead01a86970c479bf3e"
+  },
+  "schema": "lupine.mpea.operations_test_promotion.v1",
+  "scope": "Path-only portable tests; no main writes",
+  "tests": [
+    {
+      "candidate": "tests/test_mpea_archive_operations.py",
+      "candidate_sha256": "25d421d679837db08be40b944e6e5246de5bfd9a5ea853bf3d1c6142d9ea0ec6",
+      "change_scope": "byte-identical",
+      "destination": "tests/test_mpea_archive_operations.py",
+      "diff": "test_mpea_archive_operations.py.patch",
+      "original": ".cache/mpea-study-custody/tests/test_mpea_archive_operations.py",
+      "original_sha256": "25d421d679837db08be40b944e6e5246de5bfd9a5ea853bf3d1c6142d9ea0ec6"
+    },
+    {
+      "candidate": "tests/test_mpea_archive_operations_review.py",
+      "candidate_sha256": "96fd5aba487d9d4080efeb71f6d3db14cd776a16db775964c511a729ff0959a9",
+      "change_scope": "source-loader sibling path only",
+      "destination": "tests/test_mpea_archive_operations_review.py",
+      "diff": "test_mpea_archive_operations_review.py.patch",
+      "original": ".cache/mpea-execution-status-review/test_operations_review.py",
+      "original_sha256": "6c47d577b4a3358d967652a7b3ada561d4c185cd235cd614855fb088f139882a"
+    }
+  ]
+}

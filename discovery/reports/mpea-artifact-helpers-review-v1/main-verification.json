@@ -1,0 +1,44 @@
+{
+  "commands": [
+    [
+      "python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-p",
+      "test_mpea_archive_profiles*.py",
+      "-v"
+    ],
+    [
+      "python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-p",
+      "test_mpea_archive_artifacts*.py",
+      "-v"
+    ]
+  ],
+  "logs": {
+    "archive-artifacts-main-tests.txt": {
+      "exit_code": 0,
+      "sha256": "6a76cc0c9ec3830d1e4b64cbe8ab67b9fe6d9fda82bb32a94e8341f60804b024",
+      "test_count": 32
+    },
+    "archive-profiles-main-tests.txt": {
+      "exit_code": 0,
+      "sha256": "b5e2c0c7460053432817c7e2232ead32266d2e9e1ec82b1640134a78cb9fb294",
+      "test_count": 19
+    }
+  },
+  "promotion_map_sha256": "70e478514b126f3b778eedb1843e5293eb80944b7a90b3b404393fead9a76d74",
+  "schema": "lupine.discovery.archive-helpers-main-verification.v1",
+  "scope": "Main-layout pure helper checks using constructed inputs; no wrapper integration, actual archive or scientific validity claim.",
+  "status": "PASS",
+  "test_count": 51,
+  "unchanged_promoted_source_files": 6
+}

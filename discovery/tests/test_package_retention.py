@@ -298,7 +298,7 @@ class PackageRetentionTests(unittest.TestCase):
     def test_original_probe_is_unchanged(self):
         # Source-bound G16/G15B installed six-mode probe; deliberate future probe
         # changes must update this baseline explicitly, not compare a file to itself.
-        self.assertEqual(sha256(smoke.PROBE.encode()).hexdigest(), '125bef5afe9d4d5c547dc008d08e19424b2eb6bedc5cf15ab6b197e1e29f0b85')
+        self.assertEqual(sha256(smoke.PROBE.encode()).hexdigest(), '53ec0ffbdbaf26f2160692c1a4b11f681784b341d2af5b6742435a5e13a28653')
 
 
 

@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "case_count": 28,
+  "problem_schemas": [
+    "lupine.discovery.calibrated_problem.v1",
+    "lupine.discovery.coupled_problem.v1",
+    "lupine.discovery.decision_pool_problem.v1",
+    "lupine.discovery.pareto_problem.v1",
+    "lupine.discovery.problem.v1",
+    "lupine.discovery.projection_problem.v1"
+  ],
+  "checks": [
+    "all_packaged_cases_select_verify_replay",
+    "known_answer_oracle_and_controls",
+    "web_assets_and_original_archive_reports",
+    "constrained_negative_results_packaged_and_served",
+    "installed_http_cli_agreement",
+    "coupled_python_api_and_missing_point_fallback",
+    "coupled_projection_and_statistical_guarded_http_replay_agree_with_installed_cli",
+    "scoped_projection_translation_and_missing_bound_abstention",
+    "direct_statistical_pool_python_api_and_distinct_abstention",
+    "training_only_no_go_packaged_and_served"
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "schema": "final_evidence_copy_audit.v1",
+  "status": "PASS_BYTE_RESTORATION_AND_LABELS",
+  "bundles": [
+    {
+      "directory": "reports/mpea-private-contract-review-v1/v3",
+      "restored_wrappers": 28,
+      "exact_original_matches": 28,
+      "sealed_files_verified": 0
+    },
+    {
+      "directory": "reports/mpea-contract-numerical-review-v1/v3",
+      "restored_wrappers": 12,
+      "exact_original_matches": 12,
+      "sealed_files_verified": 0
+    },
+    {
+      "directory": "reports/mpea-conformance-producer-v3",
+      "restored_wrappers": 54,
+      "exact_original_matches": 54,
+      "sealed_files_verified": 56
+    },
+    {
+      "directory": "reports/mpea-package-interface-v1",
+      "restored_wrappers": 25,
+      "exact_original_matches": 25,
+      "sealed_files_verified": 0
+    },
+    {
+      "directory": "reports/mpea-launcher-contract-review-v1",
+      "restored_wrappers": 49,
+      "exact_original_matches": 49,
+      "sealed_files_verified": 0
+    }
+  ],
+  "preserved_failure_wrappers": [
+    "reports/mpea-conformance-producer-v3/artifacts/0043.json",
+    "reports/mpea-package-interface-v1/24.json",
+    "reports/mpea-launcher-contract-review-v1/18.json",
+    "reports/mpea-launcher-contract-review-v1/17.json",
+    "reports/mpea-launcher-contract-review-v1/31.json"
+  ],
+  "explicit_reconstruction_records": [
+    {
+      "wrapper": "reports/mpea-conformance-producer-v3/artifacts/0009.json",
+      "original": ".cache/mpea-study-custody/pre-observability-v2/integration-note-reconstruction-v2.json",
+      "sha256": "a882dbda842944620cc873b94480b674dae2a10853152ad6e545624a9763171e"
+    }
+  ],
+  "historical_v2_private_wrappers_unchanged": 30,
+  "package_actual48_log_and_direct_copies_verified": true,
+  "producer_sealed_count": "56 named files plus seal itself =57; launcher49 wrappers distinct from41 executed tests",
+  "harness_note": "Initial relative numerical original path resolution corrected explicitly; no copied evidence changed",
+  "version_scope": "v1/v2 historical runs remain separate from focused v3 observations. Producer reconstructed integration note explicitly labeled and original-hash checked. No recomputation is represented as an earlier retained copy.",
+  "scope": "Read-only safe evidence restoration/copy audit; not engineering approval, test execution, full-suite PASS, actual registration or scientific validation."
+}

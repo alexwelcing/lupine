@@ -1,0 +1,30 @@
+{
+  "schema": "recorder_child_identity_review.v1",
+  "review_type": "read-only source comparison; recorder and full suite NOT executed",
+  "prior_reconstructed_sha256": "e7cb0afa1d30a9df6b2fc917ebfe53d98ab700e877ceb7749954c4142165a4d6",
+  "current_sha256": "57276dc466ae6bff0c43b49b916fd92ae3caa9387965fa0cacace4bf23245634",
+  "finding": "Current recorder explicitly distinguishes parent identity from an actual PATH-python subprocess identity probe. Probe and suite use same python command and cwd; trusted host/PATH stability between processes remains an assumption. Mandatory closure and genuine before/index/process/after capture unchanged.",
+  "diff": [
+    "--- \n",
+    "+++ \n",
+    "@@ -31,6 +31,8 @@\n",
+    " if before!=index:raise SystemExit('Held source differs from index; stage the exact reviewed promotion before tests')",
+    " out.mkdir(mode=0o700,exist_ok=False);write('source-before.json',before);write('index-before.json',index)",
+    " command=['python','-m','unittest','discover','-s','tests','-v']",
+    "+child_identity_command=['python','-c','import json,sys,platform; print(json.dumps({\"executable\":sys.executable,\"version\":platform.python_version()}))']",
+    "+child_identity=json.loads(subprocess.check_output(child_identity_command,cwd=root,text=True))",
+    " started=datetime.datetime.now(datetime.timezone.utc).isoformat();tick=time.monotonic()",
+    " with (out/'unittest.log').open('xb') as log:",
+    "  result=subprocess.run(command,cwd=root,stdout=log,stderr=subprocess.STDOUT)",
+    "@@ -39,7 +41,8 @@\n",
+    " raw=(out/'unittest.log').read_bytes();text=raw.decode('utf-8');matches=re.findall(r'^Ran ([0-9]+) tests? in ',text,re.M)",
+    " summary_ok=len(matches)==1 and re.search(r'^OK\\s*$',text,re.M) is not None and 'skipped=' not in text",
+    " value={'schema':'lupine.discovery.contract-freeze-suite.v1','command':command,'working_directory':'discovery',",
+    "- 'python_executable':sys.executable,'python_version':sys.version.split()[0],",
+    "+ 'parent_python_executable':sys.executable,'parent_python_version':sys.version.split()[0],",
+    "+ 'child_python_identity':child_identity,'child_identity_command':child_identity_command,",
+    "  'started_at':started,'completed_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'wall_seconds':time.monotonic()-tick,",
+    "  'exit_code':result.returncode,'test_count':int(matches[0]) if len(matches)==1 else None,'complete_unskipped_success_summary':summary_ok,",
+    "  'source_before':before,'source_after':after,'source_unchanged':before==after,'registration_closure_count':len(before),"
+  ]
+}

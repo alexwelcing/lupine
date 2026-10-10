@@ -18,7 +18,8 @@ import unittest
 from unittest import mock
 
 ROOT = next(path for path in Path(__file__).resolve().parents if (path / 'src/lupine_discovery/decision_pool.py').is_file())
-SOURCE = ROOT / 'scripts/mpea_archive_worker.py'
+SOURCE = Path(__file__).resolve().parents[1] / 'scripts/mpea_archive_worker.py'
+sys.path.insert(0, str(SOURCE.parent))
 spec = importlib.util.spec_from_file_location('independent_archive_worker', SOURCE)
 worker = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(worker)
@@ -111,6 +112,9 @@ class WorkerReview(unittest.TestCase):
             self.events.append(('allocate', kind, original_allocation))
             if self.fail_at == 'allocation':
                 raise FixtureError('ALLOCATION_ALREADY_ATTEMPTED')
+            self.assertIsInstance(store, AllocationUsageStore)
+            if kind == 'REPRODUCTION_FIXED_ALLOCATION':
+                store.import_usage = {'constructed_import_observation': True}
             store.commit('allocation', {})
             return types.SimpleNamespace(allocation_identity=store.stage_identity('allocation'))
         def original(*args):
@@ -130,9 +134,11 @@ class WorkerReview(unittest.TestCase):
             'DEVELOPMENT_ROWS_BELOW_50', 'STAGE_ORDER_VIOLATION'})
 
         def execute(reg, meta, allocation, store, feature, *, registration_module, checkpoint,
-                    allocation_marker_emitted=False):
-            self.events.append(('driver', feature, allocation_marker_emitted))
+                    allocation_marker_emitted=False, allocation_import_usage=None):
+            self.events.append(('driver', feature, allocation_marker_emitted, allocation_import_usage))
             self.assertTrue(allocation_marker_emitted)
+            self.assertEqual(allocation_import_usage, {'constructed_import_observation': True}
+                if store.execution_kind == 'REPRODUCTION_FIXED_ALLOCATION' else None)
             if self.fail_at == 'driver':
                 raise RuntimeError('sensitive synthetic driver failure')
             for stage in STAGES[1:]:
@@ -148,7 +154,16 @@ class WorkerReview(unittest.TestCase):
         def exclusive(path, raw, **kwargs):
             self.events.append(('attempt_record', str(path)))
             self.published.append(json.loads(raw))
+        class AllocationUsageStore:
+            def __init__(self, store):
+                self.store, self.import_usage = store, None
+                owner.events.append(('allocation_usage_wrapper',))
+            def __getattr__(self, name):
+                return getattr(self.store, name)
         self.driver = types.SimpleNamespace(run_registered=execute, ArchiveResult=Result, _seal_result=lambda result: result,
+            AllocationUsageStore=AllocationUsageStore,
+            StageObservation=lambda stage: types.SimpleNamespace(finish=lambda: {'constructed_usage': stage}),
+            stage_access=lambda stage: {'constructed_access': stage},
             persistence=types.SimpleNamespace(ProductionStageStore=Store, STAGES=STAGES),
             helpers=types.SimpleNamespace(ROLES=('DEVELOPMENT', 'CALIBRATION', 'EVALUATION')),
             io=types.SimpleNamespace(_loads=json.loads, digest=lambda v: hashlib.sha256(canonical(v)).hexdigest(),

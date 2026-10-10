@@ -1,0 +1,9 @@
+{
+  "all_decoded_hashes_and_original_bytes_match": true,
+  "at": "2026-10-10T22:40:29.362999+00:00",
+  "first_copy_attempt": "Stopped before wrapper copies: verifier expected a key name containing base64; actual closed wrapper uses encoding=base64 and data. No source or assertion was changed to correct the reader.",
+  "full_suite_executed": false,
+  "historical_fixture_sha256": "44c4a9ca5f710364c54d207fb19bcc3efe3acd11e99e931d8af56ad69298ee53",
+  "portable_test_sha256": "e3866d71efb91d3cd6fead2849292f4d75ece00060878126fc390dc402f7d47f",
+  "wrapper_count": 16
+}

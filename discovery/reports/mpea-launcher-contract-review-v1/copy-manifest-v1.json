@@ -1,0 +1,78 @@
+{
+  "files": [
+    {
+      "adaptation": "SOURCE sibling-path loader only",
+      "candidate": ".cache/mpea-study-custody/review_launcher_contract/promotion/tests/test_mpea_archive_launcher_review.py",
+      "candidate_sha256": "d5b31e315d251fc662d407f3a56bca8b85d7cbc3415b8c81fa5604be14791cb7",
+      "destination": "tests/test_mpea_archive_launcher_review.py",
+      "diff": ".cache/mpea-study-custody/review_launcher_contract/promotion/diffs/test_mpea_archive_launcher_review.py.patch",
+      "diff_sha256": "e8c3ff8d87326daaae810524574b09a56c19451d698bdc0c0f1546c4902d8e1a",
+      "non_loader_ast_unchanged": true,
+      "source": ".cache/mpea-study-custody/review_launcher_contract/test_mpea_archive_launcher_review.py",
+      "source_sha256": "9eead39dafa0e03a731a13a4fe4562d547259a856255f0ee5a8baffa5b8fb38a"
+    },
+    {
+      "adaptation": "SOURCE sibling-path loader only",
+      "candidate": ".cache/mpea-study-custody/review_launcher_contract/promotion/tests/test_mpea_archive_worker_review.py",
+      "candidate_sha256": "81702ddcac3bf1a306d71bfe117ad5d3a6059e787d24f1e1c2cd0b4dfb037c32",
+      "destination": "tests/test_mpea_archive_worker_review.py",
+      "diff": ".cache/mpea-study-custody/review_launcher_contract/promotion/diffs/test_mpea_archive_worker_review.py.patch",
+      "diff_sha256": "ce917520d8cef90edbe179989aa15e9e8c8e3a4dde39664ecfae3238fac7e944",
+      "non_loader_ast_unchanged": true,
+      "source": ".cache/mpea-study-custody/review_launcher_contract/test_mpea_archive_worker_review.py",
+      "source_sha256": "db675acfb779c26771c6a82929d98313fa509d41186ef62e762b30590e8ca2e0"
+    },
+    {
+      "adaptation": "byte-identical",
+      "candidate": ".cache/mpea-study-custody/review_launcher_contract/promotion/tests/test_mpea_archive_transport_review.py",
+      "candidate_sha256": "b6b05cb801442e094cb6d454f8cd61d36ddb2a4134f42a757845c8915dce45fc",
+      "destination": "tests/test_mpea_archive_transport_review.py",
+      "diff": ".cache/mpea-study-custody/review_launcher_contract/promotion/diffs/test_mpea_archive_transport_review.py.patch",
+      "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "non_loader_ast_unchanged": true,
+      "source": ".cache/mpea-study-custody/review_launcher_contract/test_mpea_archive_transport_review.py",
+      "source_sha256": "b6b05cb801442e094cb6d454f8cd61d36ddb2a4134f42a757845c8915dce45fc"
+    },
+    {
+      "adaptation": "byte-identical",
+      "candidate": ".cache/mpea-study-custody/review_launcher_contract/promotion/tests/test_mpea_archive_supervised_review.py",
+      "candidate_sha256": "1a5bdef9506a424b8483c0a10fc06f3518f00817981529d3af677fc4c71df4b4",
+      "destination": "tests/test_mpea_archive_supervised_review.py",
+      "diff": ".cache/mpea-study-custody/review_launcher_contract/promotion/diffs/test_mpea_archive_supervised_review.py.patch",
+      "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "non_loader_ast_unchanged": true,
+      "source": ".cache/mpea-study-custody/review_launcher_contract/test_mpea_archive_supervised_review.py",
+      "source_sha256": "1a5bdef9506a424b8483c0a10fc06f3518f00817981529d3af677fc4c71df4b4"
+    }
+  ],
+  "hold": ".cache/mpea-study-custody/reports/contract-producer-hold-v2.json",
+  "hold_sha256": "b95fb36c07ae89d6dd89b84e61bd45c80939f6a8c6db1828fad65e20af1ab35d",
+  "preview_dependencies": [
+    {
+      "preview": ".cache/mpea-study-custody/review_launcher_contract/promotion/scripts/mpea_archive_run.py",
+      "promotion_by": "root separately; preview byte copy only",
+      "sha256": "44172bd86ee640cece11d4c20c37a787c725fdd6ca61da0d3db28e511d7c4bbc",
+      "source": ".cache/mpea-study-custody/scripts/mpea_archive_run.py"
+    },
+    {
+      "preview": ".cache/mpea-study-custody/review_launcher_contract/promotion/scripts/mpea_archive_worker.py",
+      "promotion_by": "root separately; preview byte copy only",
+      "sha256": "e4cd303752b459cadc94b1fca4227c4e6f63054283f911fb435f56ffb4fead26",
+      "source": ".cache/mpea-study-custody/scripts/mpea_archive_worker.py"
+    },
+    {
+      "preview": ".cache/mpea-study-custody/review_launcher_contract/promotion/scripts/mpea_archive_operations.py",
+      "promotion_by": "root separately; preview byte copy only",
+      "sha256": "9ce72dd8ce48dfa5f1a4b3535f992ad4b38ea7c07fb86ead01a86970c479bf3e",
+      "source": ".cache/mpea-study-custody/scripts/mpea_archive_operations.py"
+    },
+    {
+      "preview": ".cache/mpea-study-custody/review_launcher_contract/promotion/tests/mpea_archive_controlled_worker_child.py",
+      "promotion_by": "unchanged existing main helper; no copy required",
+      "sha256": "0ba8a9aacdbe0f25fdb47642725ccc6ec9f71d38ef7f16c2a8c6e90ece59027f",
+      "source": ".cache/mpea-study-custody/review_launcher_contract/mpea_archive_controlled_worker_child.py"
+    }
+  ],
+  "schema": "lupine.mpea.launcher_contract.portable_copy.v1",
+  "scope": "Four test candidates only. Existing 32 controls plus 9 additions preserve all reviewed assertions; this adaptation changes only two SOURCE paths. Preview scripts are exact held bytes; main unchanged."
+}

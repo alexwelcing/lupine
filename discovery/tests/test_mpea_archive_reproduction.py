@@ -23,6 +23,13 @@ class FreshArchiveReproduction(unittest.TestCase):
             self.assertEqual(len(original['stage_digests']),8);self.assertEqual(original['completed_policy_runs'],960)
             for name in ('stage-00-allocation.json','label-routes.json'):
                 self.assertEqual((root/'attempts/original'/name).read_bytes(),(root/'attempts/reproduction'/name).read_bytes())
+            differences=[]
+            for index,stage in enumerate(driver.persistence.STAGES):
+                name=f'stage-{index:02d}-{stage.replace("_","-")}.json'
+                a=(root/'attempts/original'/name).read_bytes();b=(root/'attempts/reproduction'/name).read_bytes()
+                self.assertEqual(json.loads(a)['scientific_sha256'],json.loads(b)['scientific_sha256'])
+                if a!=b:differences.append(stage)
+            self.assertEqual(differences,list(driver.persistence.STAGES[1:]))
         self.assertEqual(before,{str(path):sha256(path.read_bytes()).hexdigest() for path in files})
 
 

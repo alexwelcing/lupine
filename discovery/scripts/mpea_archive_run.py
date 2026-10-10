@@ -10,6 +10,7 @@ import os
 from pathlib import Path
 import re
 import sys
+import mpea_archive_operations as operations
 
 ROOT=next(parent for parent in Path(__file__).resolve().parents if (parent/'src/lupine_discovery/decision_pool.py').is_file())
 _NAME=re.compile('[A-Za-z0-9][A-Za-z0-9_-]{0,79}\\Z')
@@ -48,10 +49,11 @@ class LaunchSink:
             os.close(fd)
 
 
-def _verify_prefix(root,operational,registration,custody,io):
+def _verify_prefix(root,operational,registration,custody,io,artifact_inventory=None):
     """Validate persisted receipts after successful terminal; no new model fit."""
     import mpea_production_store as store
     previous=None;stages={};values={}
+    inventory={} if artifact_inventory is None else artifact_inventory
     markers=operational['sealed_stages']
     expected=store.STAGES if operational['status']=='COMPLETE' else store.STAGES[:3]
     if type(markers) is not list or [m.get('stage') for m in markers]!=list(expected):raise ValueError('INPUT_IDENTITY_MISMATCH')
@@ -66,6 +68,15 @@ def _verify_prefix(root,operational,registration,custody,io):
             raise ValueError('INPUT_IDENTITY_MISMATCH')
         previous={'bytes_sha256':sha256(raw).hexdigest(),'content_sha256':value['content_sha256'],'scientific_sha256':value['scientific_sha256']}
         stages[stage]=previous;values[stage]=value
+        inventory[f'stage-{index:02d}-{stage.replace("_","-")}.json']=dict(previous)
+    def read_companion(name,identity):
+        raw=custody.capture(root/name,32*1048576)
+        if identity is not None and sha256(raw).hexdigest()!=identity['bytes_sha256']:raise ValueError('INPUT_IDENTITY_MISMATCH')
+        value=io._loads(raw);store.verify_envelope(value,registration.binding,custody.SOURCE,execution_scope='registered_study')
+        if identity is not None and any(value[key]!=identity[key] for key in ('content_sha256','scientific_sha256')):raise ValueError('INPUT_IDENTITY_MISMATCH')
+        inventory[name]={'bytes_sha256':sha256(raw).hexdigest(),'content_sha256':value['content_sha256'],'scientific_sha256':value['scientific_sha256']}
+        return value
+    custody.verify_evidence_graph(values,read_companion)
     return stages,values
 
 
@@ -169,7 +180,8 @@ def launch(*,registration_path,approved_engineering_sha256,feature_path,attempt,
             expected={m['stage']:m['scientific_sha256'] for m in operational['sealed_stages']}
             if io.canonical(result['scientific_stages'])!=io.canonical(expected):raise ValueError('INPUT_IDENTITY_MISMATCH')
             public_raw=custody.capture(attempt_root/'public-report.json',8*1048576)
-            stages,values=_verify_prefix(attempt_root,operational,registration,custody,io)
+            inventory={}
+            stages,values=_verify_prefix(attempt_root,operational,registration,custody,io,inventory)
             receipt['post_terminal_private_receipts_decoded']=True
             public=_public_transport(public_raw,result,registration,command[-2],stages,values,io)
             identity=result['public_identity']
@@ -177,18 +189,36 @@ def launch(*,registration_path,approved_engineering_sha256,feature_path,attempt,
                 raise ValueError('INPUT_IDENTITY_MISMATCH')
             receipt['attempt_result_identity']={'bytes_sha256':sha256(raw).hexdigest(),'content_sha256':result['content_sha256']}
             receipt['scientific_verdict']=public['payload'].get('overall_verdict')
+            inventory['public-report.json']=dict(identity)
+            inventory['attempt-result.json']={**receipt['attempt_result_identity'],'scientific_sha256':None}
             if original_attempt is not None:
                 original_raw=custody.capture(ROOT/'.cache/mpea-archival'/original_attempt/'attempt-result.json',8*1048576)
                 original=io._loads(original_raw)
                 if original['content_sha256']!=io.digest({k:v for k,v in original.items() if k!='content_sha256'}):raise ValueError('INPUT_IDENTITY_MISMATCH')
+                original_root=ROOT/'.cache/mpea-archival'/original_attempt
+                if original['status'] not in ('COMPLETE','NO_GO_INSUFFICIENT_DEVELOPMENT') or original['execution_kind'] not in ('PRODUCTION_ARCHIVE','REPRODUCTION_FIXED_ALLOCATION'):raise ValueError('INPUT_IDENTITY_MISMATCH')
+                original_operational={'status':original['status'],'sealed_stages':[{'stage':name,'scientific_sha256':original['scientific_stages'][name]}
+                    for name in ('allocation','input_freeze','development','rank_freeze','reserved','calibration','replay','evaluation') if name in original['scientific_stages']]}
+                original_inventory={}
+                original_stages,original_values=_verify_prefix(original_root,original_operational,registration,custody,io,original_inventory)
+                original_public_raw=custody.capture(original_root/'public-report.json',8*1048576)
+                original_public=_public_transport(original_public_raw,original,registration,original['execution_kind'],original_stages,original_values,io)
+                original_identity={'bytes_sha256':sha256(original_public_raw).hexdigest(),'content_sha256':original_public['content_sha256'],'scientific_sha256':original_public['scientific_sha256']}
+                if io.canonical(original_identity)!=io.canonical(original['public_identity']):raise ValueError('INPUT_IDENTITY_MISMATCH')
+                original_inventory['public-report.json']=original_identity
+                original_inventory['attempt-result.json']={'bytes_sha256':sha256(original_raw).hexdigest(),'content_sha256':original['content_sha256'],'scientific_sha256':None}
+                comparison=operations.compare_artifact_identities(original_inventory,inventory)
                 same_stages=io.canonical(original['scientific_stages'])==io.canonical(result['scientific_stages'])
                 same_public=original['public_identity']['scientific_sha256']==result['public_identity']['scientific_sha256']
+                reproduced=same_stages and same_public and comparison['scientific_seals_identical']
                 receipt['reproduction']={'original_result_sha256':sha256(original_raw).hexdigest(),
                     'scientific_stages_identical':same_stages,'public_scientific_identity_identical':same_public,
-                    'status':'REPRODUCED' if same_stages and same_public else 'MISMATCH',
+                    'artifact_comparison':comparison,'status':'REPRODUCED' if reproduced else 'MISMATCH',
                     'new_allocation_draw':False,'independent_scientific_sample':False}
-                if not same_stages or not same_public:receipt['operational_status']='BLOCKED';receipt['operational_reason']='INPUT_IDENTITY_MISMATCH';receipt['scientific_verdict']=None
+                if not reproduced:receipt['operational_status']='BLOCKED';receipt['operational_reason']='INPUT_IDENTITY_MISMATCH';receipt['scientific_verdict']=None
         registration_module.verify_registered_sources(registration)
+        receipt.update(operations.study_outcome(receipt['operational_status'],receipt['operational_reason']))
+        if receipt['study_status']!='COMPLETE':receipt['scientific_verdict']=None
         receipt['content_sha256']=io.digest(receipt);sink.write('launch-result.json',io.canonical(receipt))
         return receipt
     finally:sink.close()
@@ -206,11 +236,14 @@ def main(argv=None):
         if not allowed-{'--original-attempt'}<=set(options):raise ValueError()
         receipt=launch(registration_path=options['--registration'],approved_engineering_sha256=options['--engineering-sha256'],
             feature_path=options['--feature'],attempt=options['--attempt'],original_attempt=options.get('--original-attempt'))
-        status,reason=receipt['operational_status'],receipt['operational_reason']
+        status,reason=receipt['study_status'],receipt['study_reason']
         print(json.dumps({'status':status,'reason':reason},sort_keys=True))
         return 0 if status in ('COMPLETE','NO_GO_INSUFFICIENT_DEVELOPMENT') else 2
-    except Exception:
-        print('{"reason":"LAUNCH_BLOCKED","status":"BLOCKED"}')
+    except Exception as error:
+        reason=getattr(error,'code','INTERNAL_FAILURE')
+        if type(error) is ValueError and len(error.args)==1 and type(error.args[0]) is str and error.args[0] in operations.STUDY_REASONS:reason=error.args[0]
+        outcome=operations.study_outcome('BLOCKED',reason)
+        print(json.dumps({'status':outcome['study_status'],'reason':outcome['study_reason']},sort_keys=True))
         return 2
 
 

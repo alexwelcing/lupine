@@ -1,0 +1,20 @@
+{
+  "command": [
+    "python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_mpea_stage_usage*.py",
+    "-v"
+  ],
+  "exit_code": 0,
+  "log_sha256": "098f584fd6fc41b52d604ade37461ad656d34edc097a47bc703af09c81463c11",
+  "promotion_map_sha256": "d6e4c360a46bf1c00a2b92c534ca23c80cdafa08a447211d254d4da472350a18",
+  "schema": "lupine.discovery.stage-usage-main-verification.v1",
+  "scope": "Linux actual collector and two independent synthetic boundary suites. No stage integration or scientific execution claim.",
+  "test_count": 36,
+  "unchanged_promoted_files": 4
+}

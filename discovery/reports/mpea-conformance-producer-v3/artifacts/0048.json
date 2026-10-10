@@ -1,0 +1,7 @@
+{
+  "bytes": 264,
+  "original_path": ".cache/mpea-study-custody/reports/contract-driver-third.log",
+  "schema": "lupine.lossless.utf8-evidence.v1",
+  "sha256": "c40b4995bb50fb064de71e1374f2a86a3babe8346c76a6fc7f5506c713688514",
+  "utf8": "test_full_archive_envelopes_only_authorized_role_access (test_mpea_archive_driver.ArchiveDriverTests.test_full_archive_envelopes_only_authorized_role_access) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 110.627s\n\nOK\n"
+}

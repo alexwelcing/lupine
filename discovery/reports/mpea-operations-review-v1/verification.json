@@ -1,0 +1,10 @@
+{
+  "decoded_original_byte_equality_verified": true,
+  "manifest_sha256": "e18b1de0d130734ed19d75d87ab8e73a560a7300645c8ca6d153f51ad4bc4ad6",
+  "schema": "lupine.mpea.operations.evidence-check.v1",
+  "scope": "Lossless copy verification only; executed checks retain their own source-bound receipt scope",
+  "source_unchanged_during_copy": true,
+  "status": "PASS",
+  "total_stored_bytes": 123862,
+  "wrapped_files_verified": 27
+}

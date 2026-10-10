@@ -1,0 +1,84 @@
+{
+  "execution_sha256": "9c0ca7e6046945c649e275479f1e517f3e505aad693b6bc6773b9b43f06660c4",
+  "files": [
+    {
+      "bytes": 1892,
+      "destination": "README.md",
+      "kind": "engineering",
+      "sha256": "b68458e42add57653c924601c30de62e5720f135c77bbd57120ec8519b3cd8a8",
+      "source": ".cache/browser-final-main-v1/README.md"
+    },
+    {
+      "bytes": 4846,
+      "destination": "run-current-main.py",
+      "kind": "engineering",
+      "sha256": "b1c6d506af814604046eab770935fbe1494202ba14c18935ec3b04528422c98b",
+      "source": ".cache/browser-final-main-v1/run-current-main.py"
+    },
+    {
+      "bytes": 35383,
+      "destination": "execution.json",
+      "kind": "engineering",
+      "sha256": "9c0ca7e6046945c649e275479f1e517f3e505aad693b6bc6773b9b43f06660c4",
+      "source": ".cache/browser-final-main-v1/execution.json"
+    },
+    {
+      "bytes": 16654,
+      "destination": "source-before.json",
+      "kind": "engineering",
+      "sha256": "e05f5e2adedbe91f25457f0566ec699732f060fde4dab803de4c3f082bd0634d",
+      "source": ".cache/browser-final-main-v1/source-before.json"
+    },
+    {
+      "bytes": 16654,
+      "destination": "source-after.json",
+      "kind": "engineering",
+      "sha256": "e05f5e2adedbe91f25457f0566ec699732f060fde4dab803de4c3f082bd0634d",
+      "source": ".cache/browser-final-main-v1/source-after.json"
+    },
+    {
+      "bytes": 10475,
+      "destination": "stdout.txt",
+      "kind": "engineering",
+      "sha256": "69627ede23234e7c7832eebe7e5757f149671b779bc46c2c41359d1e1e8c1e50",
+      "source": ".cache/browser-final-main-v1/stdout.txt"
+    },
+    {
+      "bytes": 0,
+      "destination": "stderr.txt",
+      "kind": "engineering",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": ".cache/browser-final-main-v1/stderr.txt"
+    },
+    {
+      "bytes": 10475,
+      "destination": "browser-report.json",
+      "kind": "engineering",
+      "sha256": "69627ede23234e7c7832eebe7e5757f149671b779bc46c2c41359d1e1e8c1e50",
+      "source": ".cache/browser-final-main-v1/.cache/browser/decision-pool/browser-report.json"
+    },
+    {
+      "bytes": 997748,
+      "destination": "mpea-synthetic-mobile.png",
+      "kind": "screenshot",
+      "sha256": "04deebbdf5ee0c270f496a7a93feadf2da01f8809a3bec465b785fc901bdaf14",
+      "source": ".cache/browser-final-main-v1/.cache/browser/decision-pool/mpea/synthetic-mobile.png"
+    },
+    {
+      "bytes": 963821,
+      "destination": "desktop-benchmarks.png",
+      "kind": "screenshot",
+      "sha256": "7c54c9cc0639405cb346c531601de29219d509af4fce72365143edcb5455c621",
+      "source": ".cache/browser-final-main-v1/.cache/browser/decision-pool/desktop-benchmarks.png"
+    },
+    {
+      "bytes": 830171,
+      "destination": "mobile-benchmarks.png",
+      "kind": "screenshot",
+      "sha256": "6fa75df3fb9bb5122c5fc83c37d1d501b3ade6583d7911faf9a913686aa461b5",
+      "source": ".cache/browser-final-main-v1/.cache/browser/decision-pool/mobile-benchmarks.png"
+    }
+  ],
+  "schema": "lupine.discovery.browser_safe_copy_candidates.v1",
+  "scope": "Exact engineering artifacts and public/synthetic interface screenshots; no downloaded problem/certificate/outcome or actual MPEA report artifacts."
+}

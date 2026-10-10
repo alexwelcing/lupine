@@ -1,5 +1,6 @@
 """Only constructed archive bytes; no production authority, source or entropy."""
 from dataclasses import replace
+import copy
 from fractions import Fraction
 from hashlib import sha256
 from pathlib import Path
@@ -28,11 +29,12 @@ class ArchiveDriverTests(unittest.TestCase):
     def prepare(self,original,name='manual'):
         source={'bytes':original.routes.source.byte_count,'md5':original.routes.source.md5,'sha256':original.routes.source.sha256}
         store=driver.persistence.ProductionStageStore(name,binding(),source,execution_kind='SYNTHETIC_FIXTURE');self.closed.append(store)
+        allocation_store=driver.AllocationUsageStore(store)
         routes=custody.RouteContext(original.routes.header,original.routes.rows)
-        route=store.write_artifact('label-routes.json',custody._route_payload(routes,'c'*64),schema='lupine.discovery.mpea.label_routes.v1')
-        store.commit('allocation',{'route_artifact':route,'role_map_sha256':route['bytes_sha256']},inputs={'label_routes':route})
+        route=allocation_store.write_artifact('label-routes.json',custody._route_payload(routes,'c'*64),schema='lupine.discovery.mpea.label_routes.v1')
+        allocation_store.commit('allocation',{'route_artifact':route,'role_map_sha256':route['bytes_sha256']},inputs={'label_routes':route})
         case=custody.fixture_case(original,store,store.stage_identity('allocation'),route)
-        store.commit('input_freeze',case.input_payload)
+        store.commit('input_freeze',case.input_payload,inputs={name:dict(value) for name,value in case.input_context['metadata_receipts'].items()})
         return case,store,custody.fixture_custodian(original,case,store)
 
     def test_full_archive_envelopes_only_authorized_role_access(self):
@@ -48,7 +50,52 @@ class ArchiveDriverTests(unittest.TestCase):
         self.assertEqual(result.captured_bytes,len(case.raw))
         self.assertEqual(sum(len(plan.schedules) for plan in result.plans),960)
         self.assertLess(sum(p.stat().st_size for p in result.store.path.glob('*.json')),32*1048576)
-        identities={name:{'bytes_sha256':'a'*64,'content_sha256':None,'scientific_sha256':None} for name in ('mapping','metadata_b','formula_c')}
+        for stage in driver.persistence.STAGES:
+            receipt=driver.io._loads(result.store.stage_bytes(stage))
+            observed=receipt['usage']['stage_resource']
+            self.assertEqual(receipt['usage']['measurement_status'],'OBSERVED')
+            self.assertEqual(observed['stage'],stage)
+            self.assertIsNone(observed['within_stage_peak_rss_bytes'])
+            self.assertEqual(observed['within_stage_peak_rss_status'],'NOT_MEASURED')
+        expected={
+            'input_freeze':{'feature_artifact','metadata_receipts','mapping','profile','label_route_seal','funnel_counts','role_counts','overlap_counts','original_membership'},
+            'rank_freeze':{'threshold','development_membership','processing_medians','predictions','neighbor_or_fallback_records','full_orders','fallback_counts','predictor_profile'},
+            'calibration':{'protocols','calibrations','future_panels','decisions','policy_schedules','all_future_decisions_sealed','scope'}}
+        for stage,required in expected.items():self.assertLessEqual(required,set(driver.io._loads(result.store.stage_bytes(stage))['payload']))
+        calibration=driver.io._loads(result.store.stage_bytes('calibration'))['payload']
+        driver.decision_views.validate_calibration_payload(calibration)
+        for plan in result.plans:
+            for row,decision in zip(calibration['decisions'][plan.population],plan.decisions):
+                self.assertEqual({key:row[key] for key in driver.decision_views.FIELDS},
+                    driver.io.normalize({key:getattr(decision,key) for key in driver.decision_views.FIELDS}))
+                self.assertEqual(row['panel_digest'],decision.panel.panel_digest)
+                self.assertEqual(row['calibration_digest'],decision.calibration.calibration_digest)
+        for field in driver.decision_views.FIELDS+driver.decision_views.LINKS:
+            changed=copy.deepcopy(calibration);del changed['decisions']['primary'][0][field]
+            with self.assertRaises(driver.artifacts.ArtifactError):driver.decision_views.validate_calibration_payload(changed)
+        changed=copy.deepcopy(calibration);changed['decisions']['primary'][0]['conditional_guarantee']='UNSUPPORTED_NEW_CLAIM'
+        with self.assertRaises(driver.artifacts.ArtifactError):driver.decision_views.validate_calibration_payload(changed)
+        compact={key:calibration[key] for key in ('plan_digests','all_future_decisions_sealed','plans')}
+        projected=driver.decision_views.complete_calibration_payload(compact,result.plans)
+        storage=copy.deepcopy(driver.decision_views.STORAGE)
+        projected['generic_object_storage']['decision_links'].append('UNREGISTERED_LINK')
+        self.assertEqual(driver.decision_views.STORAGE,storage)
+        with self.assertRaises(driver.artifacts.ArtifactError):driver.decision_views.validate_calibration_payload(projected)
+        changed=copy.deepcopy(compact);changed['plans'][0]['fit_digest']='0'*64
+        with self.assertRaises(driver.artifacts.ArtifactError):driver.decision_views.complete_calibration_payload(changed,result.plans)
+        rank_payload=driver.io._loads(result.store.stage_bytes('rank_freeze'))['payload']
+        summary=driver.io._loads((result.store.path/'rank-summary.json').read_bytes())
+        self.assertEqual(summary['payload'],custody.public_rank_summary(rank_payload,result.store.stage_identity('rank_freeze')['scientific_sha256']))
+        self.assertNotIn(case.features[0].record_id,driver.io.canonical(summary).decode())
+        for name,required in {
+            'development-targets.json':{'rows','target_profile','status_counts','complete_row_count','complete_group_count','adequacy','source_framing'},
+            'secondary-membership.json':{'members_by_source_group','restricted_orders','membership_rule','rank_freeze_scientific_sha256'},
+            'completeness.json':{'reserved_primary_panel_count','reserved_primary_row_count','all_40_endpoints_defined','target_status_counts','population_counts','secondary_membership_artifact','calibration_vault_identity','evaluation_vault_identity','scope'}}.items():
+            doc=driver.io._loads((result.store.path/name).read_bytes());self.assertLessEqual(required,set(doc['payload']))
+            self.assertEqual(doc['access']['actor'],'target_custodian')
+        public_completeness=driver.io._loads((result.store.path/'completeness.json').read_bytes())
+        self.assertNotIn(case.features[0].record_id,driver.io.canonical(public_completeness).decode())
+        identities={name:driver.io._loads(result.store.stage_bytes('input_freeze'))['payload']['metadata_receipts'][name] for name in ('mapping','metadata_b','formula_c')}
         projected=bridge.project(result,metadata_identities=identities)
         self.assertEqual(projected.as_dict()['status'],'COMPLETE')
         self.assertEqual(projected.as_dict()['execution_kind'],'synthetic_fixture')
@@ -63,7 +110,7 @@ class ArchiveDriverTests(unittest.TestCase):
         self.assertEqual(result.access,(('DEVELOPMENT',63),))
         self.assertIsNone(result.fit);self.assertIsNone(result.aggregates['CALIBRATION'])
         self.assertFalse((result.store.path/'evaluation-vault.json').exists())
-        identities={name:{'bytes_sha256':'a'*64,'content_sha256':None,'scientific_sha256':None} for name in ('mapping','metadata_b','formula_c')}
+        identities={name:driver.io._loads(result.store.stage_bytes('input_freeze'))['payload']['metadata_receipts'][name] for name in ('mapping','metadata_b','formula_c')}
         document=bridge.project(result,metadata_identities=identities).as_dict()
         self.assertEqual(document['status'],'NO_GO_INSUFFICIENT_DEVELOPMENT')
         self.assertIsNone(document['payload']['overall_verdict'])
@@ -132,6 +179,23 @@ class ArchiveDriverTests(unittest.TestCase):
         result=self.run_case(make_case(),checkpoint=lambda _:(_ for _ in ()).throw(ValueError('SECRET_TARGET_CANARY')))
         self.assertEqual(result.status,'BLOCKED');self.assertEqual(result.reasons,('INTERNAL_FAILURE',))
         self.assertNotIn('SECRET_TARGET_CANARY',str(result.reasons))
+
+    def test_failed_resource_observation_is_unknown_not_zero(self):
+        with patch.object(driver.stage_usage.StageUsage,'start',side_effect=ValueError('SECRET_RESOURCE')):
+            result=self.run_case(make_case(missing_development=True))
+        self.assertEqual(result.status,'NO_GO_INSUFFICIENT_DEVELOPMENT')
+        for stage in result.store.stages:
+            usage=driver.io._loads(result.store.stage_bytes(stage))['usage']
+            self.assertEqual(usage['measurement_status'],'UNAVAILABLE')
+            self.assertIsNone(usage['stage_resource'])
+            self.assertEqual(usage['measurement_reason'],'USAGE_OBSERVATION_UNAVAILABLE')
+            self.assertNotIn('SECRET_RESOURCE',driver.io.canonical(usage).decode())
+
+    def test_only_trusted_kernel_error_arguments_receive_closed_mapping(self):
+        self.assertEqual(driver.error_code(driver.helpers.kernel.StudyError('ARITHMETIC_LIMIT')),'ARITHMETIC_LIMIT')
+        self.assertEqual(driver.error_code(driver.helpers.kernel.StudyError('PRIVATE_UNKNOWN')),'INTERNAL_FAILURE')
+        self.assertEqual(driver.error_code(ValueError('ARITHMETIC_LIMIT')),'INTERNAL_FAILURE')
+        self.assertEqual(driver.error_code(driver.helpers.kernel.StudyError('ARITHMETIC_LIMIT','PRIVATE_UNKNOWN')),'INTERNAL_FAILURE')
 
 
 if __name__=='__main__':unittest.main()

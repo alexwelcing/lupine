@@ -1,0 +1,475 @@
+[
+  {
+    "path": "../.github/workflows/atlas-view-ci.yml",
+    "sha256": "34c2e2102c16d596328e5b5c5e8c95f5fed85d5529fa324cf4c189dc139fe15f",
+    "events": {
+      "pull_request": {
+        "paths": [
+          "atlas/atlas-view/**",
+          "atlas/nist_ipr/**",
+          ".github/workflows/atlas-view-ci.yml"
+        ]
+      },
+      "push": {
+        "branches": [
+          "main"
+        ],
+        "paths": [
+          "atlas/atlas-view/**",
+          ".github/workflows/atlas-view-ci.yml"
+        ]
+      }
+    },
+    "fixed_tag_push_can_trigger": false
+  },
+  {
+    "path": "../.github/workflows/build-atlas-distill.yml",
+    "sha256": "fbd26b5ad56883a0e0424a87090d6d196efba575dd2bd8fec22c684aec2c44a2",
+    "events": {
+      "push": {
+        "branches": [
+          "main"
+        ],
+        "paths": [
+          "Cargo.toml",
+          "Cargo.lock",
+          "atlas-distill/**",
+          "lupine-ops/**",
+          ".github/workflows/build-atlas-distill.yml"
+        ]
+      },
+      "pull_request": {
+        "branches": [
+          "main"
+        ],
+        "paths": [
+          "Cargo.toml",
+          "Cargo.lock",
+          "atlas-distill/**",
+          "lupine-ops/**"
+        ]
+      }
+    },
+    "fixed_tag_push_can_trigger": false
+  },
+  {
+    "path": "../.github/workflows/deploy-deck.yml",
+    "sha256": "c7f84bebe5949704f1fb99a88ab7741f38fd516004440e8a066093ce8d90184e",
+    "events": {
+      "push": {
+        "branches": [
+          "deck"
+        ],
+        "paths": [
+          "deck/**",
+          ".github/workflows/deploy-deck.yml"
+        ]
+      },
+      "workflow_dispatch": ""
+    },
+    "fixed_tag_push_can_trigger": false
+  },
+  {
+    "path": "../.github/workflows/deploy-functions.yml",
+    "sha256": "7529cedb4495532034ff191d252c749909a76c28b2f1a242090f281d03deb39a",
+    "events": {
+      "push": {
+        "branches": [
+          "main"
+        ],
+        "paths": [
+          "atlas/atlas-view/functions/**",
+          "atlas/atlas-view/firebase.json",
+          "atlas/atlas-view/firestore.rules",
+          "atlas/atlas-view/firestore.indexes.json",
+          ".github/workflows/deploy-functions.yml"
+        ]
+      },
+      "workflow_dispatch": {}
+    },
+    "fixed_tag_push_can_trigger": false
+  },
+  {
+    "path": "../.github/workflows/deploy-glim-compute.yml",
+    "sha256": "64b2bf638ec83a48dee4cea2c68b2267ac633fee79437d14da488acb7da17c01",
+    "events": {
+      "push": {
+        "branches": [
+          "main"
+        ],
+        "paths": [
+          "atlas/compute/**",
+          "atlas/scripts/generate_nist_demos.py",
+          ".github/workflows/deploy-glim-compute.yml"
+        ]
+      },
+      "workflow_dispatch": ""
+    },
+    "fixed_tag_push_can_trigger": false
+  },
+  {
+    "path": "../.github/workflows/deploy-glim-eval.yml",
+    "sha256": "ec594bb0f2ba7b4da2de4e09a2838fa6940154e20239b7e37321fff8e35b363a",
+    "events": {
+      "push": {
+        "branches": [
+          "main"
+        ],
+        "paths": [
+          "glim-think/evals/**",
+          ".github/workflows/deploy-glim-eval.yml"
+        ]
+      },
+      "workflow_dispatch": ""
+    },
+    "fixed_tag_push_can_trigger": false
+  },
+  {
+    "path": "../.github/workflows/deploy-glim-think.yml",
+    "sha256": "d5bb823369b47c56f0f9249b77065c92c54b2823b9ef7fa897bea990b6672065",
+    "events": {
+      "push": {
+        "branches": [
+          "main"
+        ],
+        "paths": [
+          "glim-think/**",
+          ".github/workflows/deploy-glim-think.yml"
+        ]
+      },
+      "workflow_dispatch": ""
+    },
+    "fixed_tag_push_can_trigger": false
+  },
+  {
+    "path": "../.github/workflows/deploy-glim-viewer.yml",
+    "sha256": "ecf8d96a24e5065a1e17c9426d8e38e091341cddd12db2fbf3ee1bfff230cc50",
+    "events": {
+      "workflow_dispatch": {}
+    },
+    "fixed_tag_push_can_trigger": false
+  },
+  {
+    "path": "../.github/workflows/deploy-library-proxy.yml",
+    "sha256": "380a39fd7c19ded8a78cfb4235eed4e52f5d74ce838ca88d988004c29d384fce",
+    "events": {
+      "push": {
+        "branches": [
+          "main"
+        ],
+        "paths": [
+          "cloudflare/library-proxy/**",
+          ".github/workflows/deploy-library-proxy.yml"
+        ]
+      },
+      "workflow_dispatch": {}
+    },
+    "fixed_tag_push_can_trigger": false
+  },
+  {
+    "path": "../.github/workflows/deploy-library-site.yml",
+    "sha256": "9d598638fa4f020b936fe6f579c4fb5262c2af50cd3211b9c7c5903e57d3eb39",
+    "events": {
+      "workflow_dispatch": {
+        "inputs": {
+          "rollback_confirmed": {
+            "description": "Explicitly restore the legacy Cloud Run reader; current Library is owned by lupine-ledger.",
+            "type": "boolean",
+            "required": "true",
+            "default": "false"
+          }
+        }
+      }
+    },
+    "fixed_tag_push_can_trigger": false
+  },
+  {
+    "path": "../.github/workflows/deploy-lupine-site-router.yml",
+    "sha256": "4751a8e950d4d92f1ecbcec0354ff01ef6e3f8d9322a21077708cf3184910889",
+    "events": {
+      "push": {
+        "branches": [
+          "main"
+        ],
+        "paths": [
+          "gcp/lupine-site-router/**",
+          ".github/workflows/deploy-lupine-site-router.yml"
+        ]
+      }
+    },
+    "fixed_tag_push_can_trigger": false
+  },
+  {
+    "path": "../.github/workflows/deploy-otlp-relay.yml",
+    "sha256": "844344455a4550ae3e13f77d4747986dd43f91b19a766036ad5b2dff54f3c4e7",
+    "events": {
+      "push": {
+        "branches": [
+          "main"
+        ],
+        "paths": [
+          "glim-think/otlp-relay/**",
+          ".github/workflows/deploy-otlp-relay.yml"
+        ]
+      },
+      "workflow_dispatch": ""
+    },
+    "fixed_tag_push_can_trigger": false
+  },
+  {
+    "path": "../.github/workflows/discovery-verify.yml",
+    "sha256": "e7c4ad74bcfc1b8ab733fc3eecec2544b9671054e14ffee565255321832c14d0",
+    "events": {
+      "push": {
+        "paths": [
+          "discovery/**",
+          ".github/workflows/discovery-verify.yml"
+        ]
+      },
+      "pull_request": {
+        "paths": [
+          "discovery/**",
+          ".github/workflows/discovery-verify.yml"
+        ]
+      },
+      "workflow_dispatch": ""
+    },
+    "fixed_tag_push_can_trigger": true
+  },
+  {
+    "path": "../.github/workflows/glim-m3-ab-generate.yml",
+    "sha256": "687da3c7d461f2238ab5a411c4ae8984aa6bb4b6c8d84e65ebf357b58bad87cf",
+    "events": {
+      "workflow_dispatch": {
+        "inputs": {
+          "baseline": {
+            "description": "Baseline model id",
+            "required": "false",
+            "default": "MiniMax-M2.7"
+          },
+          "candidate": {
+            "description": "Candidate model id",
+            "required": "false",
+            "default": "MiniMax-M3"
+          }
+        }
+      }
+    },
+    "fixed_tag_push_can_trigger": false
+  },
+  {
+    "path": "../.github/workflows/glim-think-evals.yml",
+    "sha256": "3527dfa849e62c30f81895d81d615f7569469549e14c4ba38589745479c3ba6f",
+    "events": {
+      "workflow_dispatch": ""
+    },
+    "fixed_tag_push_can_trigger": false
+  },
+  {
+    "path": "../.github/workflows/glim-think-evolver.yml",
+    "sha256": "50971266163c78dde3145df9a710a94f0929040c18765a98c60caa2e74560c02",
+    "events": {
+      "workflow_dispatch": {
+        "inputs": {
+          "agent": {
+            "description": "Target agent class (blank = all in active.json)",
+            "required": "false",
+            "default": ""
+          },
+          "dataset": {
+            "description": "Eval dataset name",
+            "required": "false",
+            "default": "glim-research-qa"
+          },
+          "limit": {
+            "description": "A/B sample limit",
+            "required": "false",
+            "default": "30"
+          }
+        }
+      },
+      "schedule": [
+        {
+          "cron": "0 6 * * 1"
+        }
+      ]
+    },
+    "fixed_tag_push_can_trigger": false
+  },
+  {
+    "path": "../.github/workflows/glim-think.yml",
+    "sha256": "c13a389713983a298ef43ba01099d8171698f827dd566e325c902820c4e3e67b",
+    "events": {
+      "push": {
+        "branches": [
+          "main"
+        ],
+        "paths": [
+          "glim-think/**",
+          ".github/workflows/glim-think.yml"
+        ]
+      },
+      "pull_request": {
+        "branches": [
+          "main"
+        ],
+        "paths": [
+          "glim-think/**",
+          ".github/workflows/glim-think.yml"
+        ]
+      },
+      "workflow_dispatch": ""
+    },
+    "fixed_tag_push_can_trigger": false
+  },
+  {
+    "path": "../.github/workflows/lean-spec.yml",
+    "sha256": "7e898fe6a5943617adf57b5c8729647177fa482117c7809462871af8e35fef54",
+    "events": {
+      "push": {
+        "branches": [
+          "main"
+        ],
+        "paths": [
+          "lean-spec/**",
+          ".github/workflows/lean-spec.yml"
+        ]
+      },
+      "pull_request": {
+        "branches": [
+          "main"
+        ],
+        "paths": [
+          "lean-spec/**",
+          ".github/workflows/lean-spec.yml"
+        ]
+      },
+      "workflow_dispatch": ""
+    },
+    "fixed_tag_push_can_trigger": false
+  },
+  {
+    "path": "../.github/workflows/mlip-benchmark.yml",
+    "sha256": "2ee06c2edea08e37a379635fffc367a43cd67ca61285eec111237686697866cd",
+    "events": {
+      "workflow_dispatch": {
+        "inputs": {
+          "use_space": {
+            "description": "Call the HF ZeroGPU Space (true) vs local install (false)",
+            "required": "false",
+            "type": "boolean",
+            "default": "true"
+          },
+          "mlips": {
+            "description": "Comma-separated MLIP ids (chgnet, mace_mp0, m3gnet, emt)",
+            "required": "false",
+            "default": "chgnet"
+          },
+          "elements": {
+            "description": "Optional comma-separated element subset (default: all 15)",
+            "required": "false",
+            "default": ""
+          },
+          "ingest": {
+            "description": "POST results to glim-think /ingest/batch",
+            "required": "false",
+            "type": "boolean",
+            "default": "false"
+          }
+        }
+      }
+    },
+    "fixed_tag_push_can_trigger": false
+  },
+  {
+    "path": "../.github/workflows/paper-build.yml",
+    "sha256": "a307a87155d331d1171ab5da827b990e6b4def8ea052e76da1110e54ba9c1c99",
+    "events": {
+      "workflow_dispatch": {
+        "inputs": {
+          "deploy": {
+            "description": "Save rebuilt historical PDFs to main. Does not publish the current Library.",
+            "type": "boolean",
+            "default": "true"
+          },
+          "regenerate_figures": {
+            "description": "Also regenerate figures from atlas-distill JSON (needs the JSON present). Off = use committed figures.",
+            "type": "boolean",
+            "default": "false"
+          }
+        }
+      }
+    },
+    "fixed_tag_push_can_trigger": false
+  },
+  {
+    "path": "../.github/workflows/pitch-content-validation.yml",
+    "sha256": "58584acce747664a1d56738163d98080b906407fba9ae239f3fcf3a368586bd3",
+    "events": {
+      "push": {
+        "branches": [
+          "main"
+        ],
+        "paths": [
+          "brand.config.json",
+          "docs/brand/**",
+          "gcp/lupine-site-router/**",
+          "deck/public/**",
+          "raise/**",
+          "library-site/**",
+          "atlas/lupine-vc/**",
+          "atlas/manifesto/**",
+          "atlas/atlas-view/apps/web/public/llms*.txt",
+          "atlas/atlas-view/apps/web/public/brand.json",
+          "README.md",
+          "CHANGELOG.md",
+          "docs/research_evolution_2026_05_05.md",
+          "paper/README.md",
+          "atlas-distill/README.md",
+          "tools/validate_pitch_claims.py",
+          ".github/workflows/pitch-content-validation.yml"
+        ]
+      },
+      "pull_request": {
+        "paths": [
+          "brand.config.json",
+          "docs/brand/**",
+          "gcp/lupine-site-router/**",
+          "deck/public/**",
+          "raise/**",
+          "library-site/**",
+          "atlas/lupine-vc/**",
+          "atlas/manifesto/**",
+          "atlas/atlas-view/apps/web/public/llms*.txt",
+          "atlas/atlas-view/apps/web/public/brand.json",
+          "README.md",
+          "CHANGELOG.md",
+          "docs/research_evolution_2026_05_05.md",
+          "paper/README.md",
+          "atlas-distill/README.md",
+          "tools/validate_pitch_claims.py",
+          ".github/workflows/pitch-content-validation.yml"
+        ]
+      }
+    },
+    "fixed_tag_push_can_trigger": false
+  },
+  {
+    "path": "../.github/workflows/verify.yml",
+    "sha256": "70c1fade21bea39633aa2931bcb32c2069ba312fefcb7451730319919847b2ba",
+    "events": {
+      "push": {
+        "branches": [
+          "main"
+        ]
+      },
+      "pull_request": {
+        "branches": [
+          "main"
+        ]
+      },
+      "workflow_dispatch": ""
+    },
+    "fixed_tag_push_can_trigger": false
+  }
+]

@@ -1,0 +1,510 @@
+{
+  "companion_observability": {
+    "calibration-vault.json": {
+      "access": {
+        "accumulated_row_counts": {
+          "CALIBRATION": 120,
+          "EVALUATION": 131
+        },
+        "actor": "target_custodian",
+        "authorized_roles": [
+          "CALIBRATION",
+          "EVALUATION"
+        ],
+        "authorized_target_positions": [
+          11,
+          13
+        ],
+        "counter_scope": "completed_authorized_role_parse_snapshot",
+        "counter_unit": "co_recorded_target_row_bundle_two_cells",
+        "decoded_row_counts": {
+          "CALIBRATION": 120,
+          "EVALUATION": 131
+        },
+        "execution_scope": "synthetic_fixture",
+        "interpreted_row_counts": {
+          "CALIBRATION": 120,
+          "EVALUATION": 131
+        },
+        "mixed_source_captured_bytes": 316868,
+        "mixed_source_captures": 1,
+        "mixed_source_counter_scope": "cumulative_worker_custodian_source_capture",
+        "stage": "reserved",
+        "unselected_target_values_decoded": false
+      },
+      "stage": "reserved",
+      "usage": {
+        "artifact_cpu_seconds": null,
+        "artifact_measurement_status": "NOT_SEPARATELY_MEASURED",
+        "artifact_peak_rss_bytes": null,
+        "artifact_wall_seconds": null,
+        "enclosing_stage": "reserved",
+        "independent_artifact_measurement": false,
+        "measurement_scope": "included_in_enclosing_stage_entry_to_prepublication_observation",
+        "schema": "lupine.discovery.mpea.companion_usage.v1",
+        "stage_observation_may_be_unavailable": true
+      }
+    },
+    "completeness.json": {
+      "access": {
+        "accumulated_row_counts": {
+          "CALIBRATION": 120,
+          "EVALUATION": 131
+        },
+        "actor": "target_custodian",
+        "authorized_roles": [
+          "CALIBRATION",
+          "EVALUATION"
+        ],
+        "authorized_target_positions": [
+          11,
+          13
+        ],
+        "counter_scope": "completed_authorized_role_parse_snapshot",
+        "counter_unit": "co_recorded_target_row_bundle_two_cells",
+        "decoded_row_counts": {
+          "CALIBRATION": 120,
+          "EVALUATION": 131
+        },
+        "execution_scope": "synthetic_fixture",
+        "interpreted_row_counts": {
+          "CALIBRATION": 120,
+          "EVALUATION": 131
+        },
+        "mixed_source_captured_bytes": 316868,
+        "mixed_source_captures": 1,
+        "mixed_source_counter_scope": "cumulative_worker_custodian_source_capture",
+        "stage": "reserved",
+        "unselected_target_values_decoded": false
+      },
+      "stage": "reserved",
+      "usage": {
+        "artifact_cpu_seconds": null,
+        "artifact_measurement_status": "NOT_SEPARATELY_MEASURED",
+        "artifact_peak_rss_bytes": null,
+        "artifact_wall_seconds": null,
+        "enclosing_stage": "reserved",
+        "independent_artifact_measurement": false,
+        "measurement_scope": "included_in_enclosing_stage_entry_to_prepublication_observation",
+        "schema": "lupine.discovery.mpea.companion_usage.v1",
+        "stage_observation_may_be_unavailable": true
+      }
+    },
+    "development-targets.json": {
+      "access": {
+        "accumulated_row_counts": {
+          "DEVELOPMENT": 63
+        },
+        "actor": "target_custodian",
+        "authorized_roles": [
+          "DEVELOPMENT"
+        ],
+        "authorized_target_positions": [
+          11,
+          13
+        ],
+        "counter_scope": "completed_authorized_role_parse_snapshot",
+        "counter_unit": "co_recorded_target_row_bundle_two_cells",
+        "decoded_row_counts": {
+          "DEVELOPMENT": 63
+        },
+        "execution_scope": "synthetic_fixture",
+        "interpreted_row_counts": {
+          "DEVELOPMENT": 63
+        },
+        "mixed_source_captured_bytes": 316868,
+        "mixed_source_captures": 1,
+        "mixed_source_counter_scope": "cumulative_worker_custodian_source_capture",
+        "stage": "development",
+        "unselected_target_values_decoded": false
+      },
+      "stage": "development",
+      "usage": {
+        "artifact_cpu_seconds": null,
+        "artifact_measurement_status": "NOT_SEPARATELY_MEASURED",
+        "artifact_peak_rss_bytes": null,
+        "artifact_wall_seconds": null,
+        "enclosing_stage": "development",
+        "independent_artifact_measurement": false,
+        "measurement_scope": "included_in_enclosing_stage_entry_to_prepublication_observation",
+        "schema": "lupine.discovery.mpea.companion_usage.v1",
+        "stage_observation_may_be_unavailable": true
+      }
+    },
+    "evaluation-vault.json": {
+      "access": {
+        "accumulated_row_counts": {
+          "CALIBRATION": 120,
+          "EVALUATION": 131
+        },
+        "actor": "target_custodian",
+        "authorized_roles": [
+          "CALIBRATION",
+          "EVALUATION"
+        ],
+        "authorized_target_positions": [
+          11,
+          13
+        ],
+        "counter_scope": "completed_authorized_role_parse_snapshot",
+        "counter_unit": "co_recorded_target_row_bundle_two_cells",
+        "decoded_row_counts": {
+          "CALIBRATION": 120,
+          "EVALUATION": 131
+        },
+        "execution_scope": "synthetic_fixture",
+        "interpreted_row_counts": {
+          "CALIBRATION": 120,
+          "EVALUATION": 131
+        },
+        "mixed_source_captured_bytes": 316868,
+        "mixed_source_captures": 1,
+        "mixed_source_counter_scope": "cumulative_worker_custodian_source_capture",
+        "stage": "reserved",
+        "unselected_target_values_decoded": false
+      },
+      "stage": "reserved",
+      "usage": {
+        "artifact_cpu_seconds": null,
+        "artifact_measurement_status": "NOT_SEPARATELY_MEASURED",
+        "artifact_peak_rss_bytes": null,
+        "artifact_wall_seconds": null,
+        "enclosing_stage": "reserved",
+        "independent_artifact_measurement": false,
+        "measurement_scope": "included_in_enclosing_stage_entry_to_prepublication_observation",
+        "schema": "lupine.discovery.mpea.companion_usage.v1",
+        "stage_observation_may_be_unavailable": true
+      }
+    },
+    "label-routes.json": {
+      "access": {
+        "accumulated_row_counts": {
+          "CALIBRATION": 0,
+          "DEVELOPMENT": 0,
+          "EVALUATION": 0
+        },
+        "actor": "allocation_manager",
+        "authorized_target_positions": [
+          11,
+          13
+        ],
+        "counter_scope": "cumulative_worker_custodian_completed_role_parse_or_unknown",
+        "counter_unit": "co_recorded_target_row_bundle_two_cells",
+        "decoded_row_counts": {
+          "CALIBRATION": 0,
+          "DEVELOPMENT": 0,
+          "EVALUATION": 0
+        },
+        "execution_scope": "synthetic_fixture",
+        "interpreted_row_counts": {
+          "CALIBRATION": 0,
+          "DEVELOPMENT": 0,
+          "EVALUATION": 0
+        },
+        "mixed_source_captured_bytes": 0,
+        "mixed_source_captures": 0,
+        "stage": "allocation",
+        "target_access_actor": "target_custodian",
+        "unselected_target_values_decoded": false
+      },
+      "stage": "allocation",
+      "usage": {
+        "artifact_cpu_seconds": null,
+        "artifact_measurement_status": "NOT_SEPARATELY_MEASURED",
+        "artifact_peak_rss_bytes": null,
+        "artifact_wall_seconds": null,
+        "enclosing_stage": "allocation",
+        "independent_artifact_measurement": false,
+        "measurement_scope": "included_in_enclosing_stage_entry_to_prepublication_observation",
+        "schema": "lupine.discovery.mpea.companion_usage.v1",
+        "stage_observation_may_be_unavailable": true
+      }
+    },
+    "rank-summary.json": {
+      "access": {
+        "accumulated_row_counts": {
+          "CALIBRATION": 0,
+          "DEVELOPMENT": 0,
+          "EVALUATION": 0
+        },
+        "actor": "public_rank_projector",
+        "authorized_target_positions": [
+          11,
+          13
+        ],
+        "counter_scope": "local_projector_no_source_capture_or_target_decode",
+        "counter_unit": "co_recorded_target_row_bundle_two_cells",
+        "decoded_row_counts": {
+          "CALIBRATION": 0,
+          "DEVELOPMENT": 0,
+          "EVALUATION": 0
+        },
+        "execution_scope": "synthetic_fixture",
+        "interpreted_row_counts": {
+          "CALIBRATION": 0,
+          "DEVELOPMENT": 0,
+          "EVALUATION": 0
+        },
+        "mixed_source_captured_bytes": 0,
+        "mixed_source_captures": 0,
+        "scope": "projection_of_already_frozen_development_model_aggregates_no_target_decode",
+        "stage": "rank_freeze"
+      },
+      "stage": "rank_freeze",
+      "usage": {
+        "artifact_cpu_seconds": null,
+        "artifact_measurement_status": "NOT_SEPARATELY_MEASURED",
+        "artifact_peak_rss_bytes": null,
+        "artifact_wall_seconds": null,
+        "enclosing_stage": "rank_freeze",
+        "independent_artifact_measurement": false,
+        "measurement_scope": "included_in_enclosing_stage_entry_to_prepublication_observation",
+        "schema": "lupine.discovery.mpea.companion_usage.v1",
+        "stage_observation_may_be_unavailable": true
+      }
+    },
+    "secondary-membership.json": {
+      "access": {
+        "accumulated_row_counts": {
+          "CALIBRATION": 120,
+          "EVALUATION": 131
+        },
+        "actor": "target_custodian",
+        "authorized_roles": [
+          "CALIBRATION",
+          "EVALUATION"
+        ],
+        "authorized_target_positions": [
+          11,
+          13
+        ],
+        "counter_scope": "completed_authorized_role_parse_snapshot",
+        "counter_unit": "co_recorded_target_row_bundle_two_cells",
+        "decoded_row_counts": {
+          "CALIBRATION": 120,
+          "EVALUATION": 131
+        },
+        "execution_scope": "synthetic_fixture",
+        "interpreted_row_counts": {
+          "CALIBRATION": 120,
+          "EVALUATION": 131
+        },
+        "mixed_source_captured_bytes": 316868,
+        "mixed_source_captures": 1,
+        "mixed_source_counter_scope": "cumulative_worker_custodian_source_capture",
+        "stage": "reserved",
+        "unselected_target_values_decoded": false
+      },
+      "stage": "reserved",
+      "usage": {
+        "artifact_cpu_seconds": null,
+        "artifact_measurement_status": "NOT_SEPARATELY_MEASURED",
+        "artifact_peak_rss_bytes": null,
+        "artifact_wall_seconds": null,
+        "enclosing_stage": "reserved",
+        "independent_artifact_measurement": false,
+        "measurement_scope": "included_in_enclosing_stage_entry_to_prepublication_observation",
+        "schema": "lupine.discovery.mpea.companion_usage.v1",
+        "stage_observation_may_be_unavailable": true
+      }
+    }
+  },
+  "comparison_receipt": {
+    "bytes": 31520,
+    "sha256": "9c960dca0a88e6e5d78772d1d19276b9e62470893a8d1a643f693a4ce1043c81"
+  },
+  "completed_policy_runs_per_process": 960,
+  "declarations": {
+    ".cache/mpea-study-custody/companion-observability-clarification-v3.md": {
+      "bytes": 1011,
+      "sha256": "cbbc2d495cd857fe4dca01b0995ffde4926dad8b1b513b5826501694a2f2c583"
+    },
+    ".cache/mpea-study-custody/companion-observability-proposal-v3.md": {
+      "bytes": 4511,
+      "sha256": "fbc5871bea41726f650a53ce4038fd5c863114d67edc22dfd0978cca3d97e1df"
+    },
+    ".cache/mpea-study-custody/reports/contract-producer-hold-v3.json": {
+      "bytes": 1540,
+      "sha256": "b6696c17ee14fec36513ce348ad9991bff8eef4e9381ed23d0ce92d0929cd4df"
+    }
+  },
+  "executing_source_before_after_unchanged_in_both_processes": true,
+  "executing_source_count": 21,
+  "executing_source_sha256": {
+    ".cache/mpea-study-custody/scripts/mpea_archive_artifacts.py": "0f251d97ca247b29f06f2a6f32251b1ca443baf52047b0e07de8c50befa812a6",
+    ".cache/mpea-study-custody/scripts/mpea_archive_custody.py": "c79b8b45068a75243512336d1f25bb67a8c57059b5aae2bb3d885d414f98192e",
+    ".cache/mpea-study-custody/scripts/mpea_archive_decisions.py": "777fb6fbf75c44bdc073dfcd2815702cd3519b455f93beacb08c9f97782a46d6",
+    ".cache/mpea-study-custody/scripts/mpea_archive_driver.py": "920deb6d52ced3e5d4182ad914ce4ad7544f7b4096f91b463e101d0b3f45b7e9",
+    ".cache/mpea-study-custody/scripts/mpea_archive_profiles.py": "1d9d8da568fd7d15c30b268832739b13a7ec6b281edfc93f8c700cea889c936f",
+    ".cache/mpea-study-custody/scripts/mpea_archive_report.py": "b27cfdeed4051cb1875beccbd1c03b97e3d35e2f338104ddf1aa3ff83a630696",
+    ".cache/mpea-study-custody/scripts/mpea_fixture_driver.py": "335faf09b89b84a1e5e3b7f404d178eadd29e72a585fac2290c33c8d80d458fe",
+    ".cache/mpea-study-custody/scripts/mpea_production_store.py": "9b5caa9a013da7b2bae8bb78d89a74a697201bdc73b1cd2db1d38c2e750db6b4",
+    ".cache/mpea-study-custody/scripts/mpea_stage_store.py": "13c42919e79e0949f4cbcf5ce0eeeb1cb66d3a48893e6e4fdc3cd3fdf68498db",
+    ".cache/mpea-study-custody/scripts/mpea_stage_usage.py": "ae1967ee12d778e02dc92ec8a8af41035e58c62c835236eed6f9322aa04cd5d0",
+    ".cache/mpea-study-custody/scripts/mpea_study_flow.py": "c4c49108feda2aa38adc7c9761788057b1e716ef7ac18b7b26dceb4cfab213d7",
+    ".cache/mpea-study-custody/scripts/mpea_target_custody.py": "7f649dd50d7c5589fd9da0f9745b7936b7a3a2bf631a8418affae4a67be1ee9c",
+    "scripts/mpea_features.py": "b24c0f1bb62fc56794e1232f973a6020ee42a0d3765d33cb51246f3c7a3a47d9",
+    "scripts/mpea_study.py": "61ddfdf9e8db9cacb3f64d3310021812a96aa66c98ae4e68febb6a794352648b",
+    "scripts/mpea_study_report.py": "a7d4650df6405df61c18d6c017af281bc2779e6b000fc391327cb5a2e11cc1f2",
+    "src/lupine_discovery/core.py": "c7bab15c662eaa79b6e6312271d3351e79ccb97ef42fcdfc830fdbbf3118d5a0",
+    "src/lupine_discovery/decision_pool.py": "76e96165102ebe8c3785f510d169b5d393838fb144f9c4275ffdb0aa6c21f1f9",
+    "src/lupine_discovery/evidence.py": "ab16a2f5f31601f95f3ec88f7fc230a07c85ebfdb175f0298a467c4425037dae",
+    "src/lupine_discovery/replay.py": "14426e8a7c9552ec2d651ac95f4d7b2688d744c1474d21fc579ad9dd85babb10",
+    "src/lupine_discovery/representation.py": "c65c0eed659025a0e41eb325e75182ac2b980c35ac43dfddaa501f4f3ddf3b9e",
+    "src/lupine_discovery/serialization.py": "cfec006ed4cb51fbbb6539422a5d829cadaa7bf0ff78bebbffd58aaba6f2523c"
+  },
+  "fixture_source_equal_to_saved_original": true,
+  "fresh_process_count": 2,
+  "held_producer_sha256": {
+    "mpea_archive_artifacts.py": "0f251d97ca247b29f06f2a6f32251b1ca443baf52047b0e07de8c50befa812a6",
+    "mpea_archive_custody.py": "c79b8b45068a75243512336d1f25bb67a8c57059b5aae2bb3d885d414f98192e",
+    "mpea_archive_decisions.py": "777fb6fbf75c44bdc073dfcd2815702cd3519b455f93beacb08c9f97782a46d6",
+    "mpea_archive_driver.py": "920deb6d52ced3e5d4182ad914ce4ad7544f7b4096f91b463e101d0b3f45b7e9",
+    "mpea_archive_operations.py": "9ce72dd8ce48dfa5f1a4b3535f992ad4b38ea7c07fb86ead01a86970c479bf3e",
+    "mpea_archive_profiles.py": "1d9d8da568fd7d15c30b268832739b13a7ec6b281edfc93f8c700cea889c936f",
+    "mpea_archive_report.py": "b27cfdeed4051cb1875beccbd1c03b97e3d35e2f338104ddf1aa3ff83a630696",
+    "mpea_archive_run.py": "44172bd86ee640cece11d4c20c37a787c725fdd6ca61da0d3db28e511d7c4bbc",
+    "mpea_archive_worker.py": "e4cd303752b459cadc94b1fca4227c4e6f63054283f911fb435f56ffb4fead26",
+    "mpea_stage_usage.py": "ae1967ee12d778e02dc92ec8a8af41035e58c62c835236eed6f9322aa04cd5d0",
+    "mpea_study_flow.py": "c4c49108feda2aa38adc7c9761788057b1e716ef7ac18b7b26dceb4cfab213d7"
+  },
+  "interpretation": [
+    "Exactly 46 named reference slots migrate again to the new access-bound scientific graph; every other enumerated numerical field matches both the original baseline and final v2 capture.",
+    "All eight stage and public scientific identities agree across fresh final-source processes with distinct injected clocks/RSS. All seven companion scientific identities and fixed observability descriptors agree.",
+    "Label-route bytes remain identical across profiles; other companion bytes change through measured predecessor identities. No separate artifact time or memory measurements are fabricated.",
+    "V2 mutation tests remain historical unchanged-source evidence, not reruns against v3. New metadata refusals and final main-path checks belong to separate evidence.",
+    "Injected observations are test controls. Real resource performance, registered execution, allocation entropy/import, physical validity and exchangeability are outside this review."
+  ],
+  "new_corruption_suite_runs": 0,
+  "new_unit_suite_runs": 0,
+  "numerical_result": {
+    "changed_usage_preserved_scientific_identity": true,
+    "predictions_per_process": 314,
+    "public_scientific_sha256": "c58adaba98c62f1dacd423eacae2ce58556b6058ea5f2052c2164f3fd9d4dc8f",
+    "public_values_sha256": "a4017ca6cb433fa1e5a45da9d8fd147a4eab324b61f869bb61e34631d161ae40",
+    "reference_migration_count": 46,
+    "stage_scientific_sha256": [
+      [
+        "allocation",
+        "dba06bafa0360f717ccc90c5c26cc01943697354867473764f15843017519311"
+      ],
+      [
+        "input_freeze",
+        "4ed1ad2c099bd95a8420addc2a9a0462430faa2fe7f2149d6e4bd25d89acc3d5"
+      ],
+      [
+        "development",
+        "4c86224462e56e89551b37f6e02985081c31717f91dbfd58ba78eb4baf562259"
+      ],
+      [
+        "rank_freeze",
+        "9bb9531d28e2bd8fca1c985c7cc9f5292f55710470e5f5d149b04f9ed00db515"
+      ],
+      [
+        "reserved",
+        "32d6ff67cc59cf8c8930f1631f1e38ef131332aeae314d75fbcec77184d2b96f"
+      ],
+      [
+        "calibration",
+        "a800812aa11274be6c37b935e4f0d1f66b8347cb8fa81fcc3bc46e5d8748f640"
+      ],
+      [
+        "replay",
+        "04766af42e771363f691c15f343ff1f0f7737017c7ef1e4ae3ef6157438167f0"
+      ],
+      [
+        "evaluation",
+        "10ec9cc626e69446bf997de69c754677be74ad8fe3a9608b2428af9fb9345709"
+      ]
+    ],
+    "unchanged_numerical_values_sha256": "fdc454ac82b0b4c4aca52c81d2d21640df5b3ebed0886d91047453054fecc07e"
+  },
+  "positive_checks_per_process": [
+    "development_rank_reserved_companion_semantic_and_full_identity_joins",
+    "public_completeness_exact_counts_full_links_and_no_private_ids",
+    "all_40_secondary_memberships_and_23_literal_order_restrictions",
+    "public_rank_freeze_exact_counts_and_private_data_exclusion",
+    "all_46_reference_slots_bound_to_exact_source_parser_rank_calibration_vault",
+    "all_40_complete_decisions_equal_typed_originals_and_shared_tables",
+    "all_eight_stage_observations_explicit_with_unmeasured_stage_peaks",
+    "all_seven_companion_usage_descriptors_exact_and_independent_measurements_null",
+    "all_seven_companion_actor_stage_and_role_counters_equal_original_evidence",
+    "all_seven_companion_enclosing_stages_have_explicit_observed_windows"
+  ],
+  "prior_v2_allowlisted_files_unchanged": 40,
+  "prior_v2_copyset": {
+    "bytes": 7143,
+    "sha256": "e380e14363ec82ddc4efab648239b323dccf4d1277bf1f144c85022bd6309c47"
+  },
+  "prior_v2_receipt": {
+    "bytes": 16212,
+    "sha256": "8dc13d0edc3cb7925df33d7f303ccc5a422eec0417c98169e49becba960ae69f"
+  },
+  "private_constructed_captures_not_for_public_copy": {
+    "candidate-values-first-v3.json": {
+      "bytes": 9833639,
+      "sha256": "494ca77c8d7cd8c3ee41b5289119d99aa97908689cd51d5f65b62b9c406e5371"
+    },
+    "candidate-values-second-v3.json": {
+      "bytes": 9833760,
+      "sha256": "677dcc04afd654f534647b3f8b68b6c64e7a5a49a2518b5776ee981abb8ea581"
+    }
+  },
+  "public_evidence_files": {
+    "REVIEW-v3.md": {
+      "bytes": 3397,
+      "sha256": "747f60579f8856c53490bfbf2beecd225e9738b4dacd8fb4078c3829ee9c9b30"
+    },
+    "audit_live_result_v3.py": {
+      "bytes": 5240,
+      "sha256": "f188458684b1a6130870e8d84fbc56f0b57a3d7b1e9159de0e0db490e191ce97"
+    },
+    "candidate-first-v3.log": {
+      "bytes": 263,
+      "sha256": "fefa5e916f8beb80874e735a111085d330150dfcde1036491c0d23be788fc567"
+    },
+    "candidate-second-v3.log": {
+      "bytes": 263,
+      "sha256": "7fa0d7c369c1a01e00a99b0110b76b9d661fdcc858dc56b0f607009a404a3934"
+    },
+    "capture_synthetic_values_v3.py": {
+      "bytes": 5208,
+      "sha256": "275c792614a616953b183ebcbe45cab375ff245d5b3612fa192c8e1142cc6e9f"
+    },
+    "compare_captures_v3.py": {
+      "bytes": 6924,
+      "sha256": "08c9a646179fc2338a4ae693acbe11790824ceac3f48da9c67824ba037b837b7"
+    },
+    "comparison-v3.log": {
+      "bytes": 306,
+      "sha256": "39138b38c85658f2724e736f9b189095e8bd38f7cc8a0b0fead89fc78dd1b823"
+    },
+    "finalize_review_v3.py": {
+      "bytes": 6754,
+      "sha256": "f54be69b4af6e65219e1dcc4339f681c9f2af8443191a1a13097afd39ef6b8c9"
+    },
+    "numerical-usage-equivalence-v3.json": {
+      "bytes": 31520,
+      "sha256": "9c960dca0a88e6e5d78772d1d19276b9e62470893a8d1a643f693a4ce1043c81"
+    },
+    "review-plan-v3.md": {
+      "bytes": 3128,
+      "sha256": "4264df3a81a23f6190bf673c4f6f0eb879a625871d6c97867b23b429cef03ccd"
+    },
+    "v3-review-harness-before.json": {
+      "bytes": 491,
+      "sha256": "ee331f539b9365b710727ed055043aae39fe7ed9b2300cedd1e3410bd31495b4"
+    }
+  },
+  "remaining_blocking_findings_in_reviewed_scope": [],
+  "review_helper_sha256_before_after": {
+    "audit_live_result.py": "59750f00cf08300686d235d8768388268fa84a6303218ecd1c748b54e332f45b",
+    "audit_live_result_v3.py": "f188458684b1a6130870e8d84fbc56f0b57a3d7b1e9159de0e0db490e191ce97",
+    "capture_synthetic_values_v3.py": "275c792614a616953b183ebcbe45cab375ff245d5b3612fa192c8e1142cc6e9f",
+    "compare_captures_v3.py": "08c9a646179fc2338a4ae693acbe11790824ceac3f48da9c67824ba037b837b7",
+    "numerical_projection.py": "bde8a5fd59c2a73476e9cb6e8733ace4669bc1f2c10074167dba84f5494058df"
+  },
+  "schema": "lupine.review.mpea_companion_observability_followup.v1",
+  "scope": "Positive-only final-source synthetic follow-up; no actual archive, feature table, allocation, entropy, or scientific target access.",
+  "status": "PASS"
+}

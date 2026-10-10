@@ -41,7 +41,10 @@ def project(result,*,metadata_identities,usage=None):
         routes=store.read_artifact('label-routes.json',route_identity)['payload']['original_row_routes']
     if 'input_freeze' in store.stages:
         frozen=_stage(store,'input_freeze')
-        if frozen['status']=='COMPLETE':inputs['feature']=_identity(frozen['payload']['feature_identity'])
+        if frozen['status']=='COMPLETE':
+            inputs['feature']=_identity(frozen['payload']['feature_identity'])
+            for name,identity in metadata_identities.items():
+                if io.canonical(identity)!=io.canonical(frozen['payload']['metadata_receipts'][name]):driver.persistence.fail('INPUT_IDENTITY_MISMATCH')
     funnel=None;roles={role:None for role in report.ROLES}
     if routes is not None:
         selected=[row for row in routes if row['condition_eligible']]

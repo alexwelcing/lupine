@@ -1,0 +1,75 @@
+{
+  "commands": [
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/lupine-discovery-branch/discovery/.cache/mpea-package-interface-v1/tests/test_package_mpea_interface.py",
+        "-v"
+      ],
+      "elapsed_seconds": 0.5971632959990529,
+      "exit_code": 0,
+      "pass": true,
+      "stderr_sha256": "23a81a5e6e0f006e4255d34d13d7f65296a583c6e6cbdf313d999ff2fbc5b2f2",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "test_count": 16
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/lupine-discovery-branch/discovery/.cache/mpea-package-interface-v1/tests/test_package_retention.py",
+        "-v"
+      ],
+      "elapsed_seconds": 5.386889932000486,
+      "exit_code": 0,
+      "pass": true,
+      "stderr_sha256": "a36aac4140e6fcd210d5d032919fe4e080aeaec871385e377b27d0db5bd63a30",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "test_count": 17
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/lupine-discovery-branch/discovery/.cache/mpea-package-interface-v1/tests/test_package_retention_review.py",
+        "-v"
+      ],
+      "elapsed_seconds": 3.445385172002716,
+      "exit_code": 0,
+      "pass": true,
+      "stderr_sha256": "07faa0bfe0eb5dc8a783bcb6125316041c09296bc43fb294685a1ec6fea7025b",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "test_count": 15
+    }
+  ],
+  "schema": "lupine.mpea.package_interface.execution.v1",
+  "scope": "Synthetic optional-resource localhost HTTP checks and inert-wheel retention controls only. No actual wheel built or installed, full package PROBE executed, MPEA resource created in main, scientific source read, allocation or live API.",
+  "source_after": {
+    ".cache/mpea-package-interface-v1/copy-manifest-v1.json": "239cadc5ba2569d7fa54c86da60dc1d0a059ce03f7d8ac4412604a738364a3df",
+    ".cache/mpea-package-interface-v1/run-checks-v1.py": "68ea0128ebc77dd51c659d17ff28998087c5f07e156aac12b475d553ec31c29a",
+    ".cache/mpea-package-interface-v1/scripts/package_smoke.py": "f64489f64aefc6624298e25d9dad493186c25b1c91e3f063e9e73d23f8ebf6a1",
+    ".cache/mpea-package-interface-v1/tests/test_package_mpea_interface.py": "0ef43d5023e213a9524f2e6dcf5638638679939c75407a72d99b1429f1be2390",
+    ".cache/mpea-package-interface-v1/tests/test_package_retention.py": "ebaaac5da083b20fb47f1c702ddf54b638f3b880fa502bd0333403b8bba77250",
+    ".cache/mpea-package-interface-v1/tests/test_package_retention_review.py": "8385c47830d8ea6d0b06a48367f0e1cf9141d32a65ec9529e063e09a4d47c6d5",
+    "pyproject.toml": "a73eec989447b99fec48de193218a0750079eeb5973406c53d7a0dc840d9d90f",
+    "scripts/package_smoke.py": "5809a810ad15c48181979c482fbd793d5eb1bd3c6c08c4f98fc2a552c9a0ac05",
+    "scripts/runtime_manifest.py": "604dbb0a4d6b8984324332c32ab7d7f6ab9cee5673f870a4a3de9b6ec56a8b7d",
+    "src/lupine_discovery/server.py": "f58f55c5284dfe34478840dca45e897c7fd1b5d5002a423876ebf228b7c7a5cb",
+    "src/lupine_discovery/web/index.html": "98e12ccb706ab2f75497254d362769ae70f579d95be3fd3bfa93548255588618",
+    "src/lupine_discovery/web/mpea.js": "f760f6225e60f08d7b4217bae7e7499fe1b4d3ea91514c5b1e429c5b4523f35e"
+  },
+  "source_before": {
+    ".cache/mpea-package-interface-v1/copy-manifest-v1.json": "239cadc5ba2569d7fa54c86da60dc1d0a059ce03f7d8ac4412604a738364a3df",
+    ".cache/mpea-package-interface-v1/run-checks-v1.py": "68ea0128ebc77dd51c659d17ff28998087c5f07e156aac12b475d553ec31c29a",
+    ".cache/mpea-package-interface-v1/scripts/package_smoke.py": "f64489f64aefc6624298e25d9dad493186c25b1c91e3f063e9e73d23f8ebf6a1",
+    ".cache/mpea-package-interface-v1/tests/test_package_mpea_interface.py": "0ef43d5023e213a9524f2e6dcf5638638679939c75407a72d99b1429f1be2390",
+    ".cache/mpea-package-interface-v1/tests/test_package_retention.py": "ebaaac5da083b20fb47f1c702ddf54b638f3b880fa502bd0333403b8bba77250",
+    ".cache/mpea-package-interface-v1/tests/test_package_retention_review.py": "8385c47830d8ea6d0b06a48367f0e1cf9141d32a65ec9529e063e09a4d47c6d5",
+    "pyproject.toml": "a73eec989447b99fec48de193218a0750079eeb5973406c53d7a0dc840d9d90f",
+    "scripts/package_smoke.py": "5809a810ad15c48181979c482fbd793d5eb1bd3c6c08c4f98fc2a552c9a0ac05",
+    "scripts/runtime_manifest.py": "604dbb0a4d6b8984324332c32ab7d7f6ab9cee5673f870a4a3de9b6ec56a8b7d",
+    "src/lupine_discovery/server.py": "f58f55c5284dfe34478840dca45e897c7fd1b5d5002a423876ebf228b7c7a5cb",
+    "src/lupine_discovery/web/index.html": "98e12ccb706ab2f75497254d362769ae70f579d95be3fd3bfa93548255588618",
+    "src/lupine_discovery/web/mpea.js": "f760f6225e60f08d7b4217bae7e7499fe1b4d3ea91514c5b1e429c5b4523f35e"
+  },
+  "source_unchanged": true,
+  "status": "PASS"
+}

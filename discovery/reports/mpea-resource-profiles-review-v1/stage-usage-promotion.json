@@ -1,0 +1,30 @@
+[
+  {
+    "destination": "scripts/mpea_stage_usage.py",
+    "origin": ".cache/mpea-stage-usage/stage_usage.py",
+    "original_sha256": "ae1967ee12d778e02dc92ec8a8af41035e58c62c835236eed6f9322aa04cd5d0",
+    "path_only_diff": "",
+    "promoted_sha256": "ae1967ee12d778e02dc92ec8a8af41035e58c62c835236eed6f9322aa04cd5d0"
+  },
+  {
+    "destination": "tests/test_mpea_stage_usage.py",
+    "origin": ".cache/mpea-stage-usage/test_stage_usage.py",
+    "original_sha256": "0cb52efb6f64d89b0b558a07f971a2027dc9e3ed41a6b86034636ed9aeb07f82",
+    "path_only_diff": "--- .cache/mpea-stage-usage/test_stage_usage.py\n+++ tests/test_mpea_stage_usage.py\n@@ -1,7 +1,7 @@\n import importlib.util,time,unittest\n from fractions import Fraction\n from pathlib import Path\n-p=Path(__file__).with_name('stage_usage.py');spec=importlib.util.spec_from_file_location('usage',p);m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)\n+p=Path(__file__).resolve().parents[1]/'scripts/mpea_stage_usage.py';spec=importlib.util.spec_from_file_location('usage',p);m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)\n class Observations(unittest.TestCase):\n     def test_actual_wait_and_cpu(self):\n         stage=m.StageUsage('development');time.sleep(.02)\n",
+    "promoted_sha256": "0fe364191d2df0ee36bc1d3de346ba2a9c2d76dc49faf883bdce259f7f194e79"
+  },
+  {
+    "destination": "tests/test_mpea_stage_usage_review.py",
+    "origin": ".cache/mpea-stage-usage/review/test_stage_usage_review.py",
+    "original_sha256": "befd6d938cffd51c8e1d347d1df1588a9e7c97be4a475558f4abd57b94e1b917",
+    "path_only_diff": "--- .cache/mpea-stage-usage/review/test_stage_usage_review.py\n+++ tests/test_mpea_stage_usage_review.py\n@@ -6,7 +6,7 @@\n import unittest\n from unittest import mock\n \n-SOURCE = Path(__file__).resolve().parents[1] / 'stage_usage.py'\n+SOURCE = Path(__file__).resolve().parents[1] / 'scripts/mpea_stage_usage.py'\n spec = importlib.util.spec_from_file_location('independent_stage_usage', SOURCE)\n m = importlib.util.module_from_spec(spec)\n spec.loader.exec_module(m)\n",
+    "promoted_sha256": "ebf8d64e91c9f2ea0bc3d37d3d2c76b8e1d138caccdcebad7900bb56751476a1"
+  },
+  {
+    "destination": "tests/test_mpea_stage_usage_secondary_review.py",
+    "origin": ".cache/mpea-study-custody/review_production/stage_usage_review/test_stage_usage_review.py",
+    "original_sha256": "d19fb453bc1b09776971a32b0132010625768c105069186e300fff7a4e1b43ac",
+    "path_only_diff": "--- .cache/mpea-study-custody/review_production/stage_usage_review/test_stage_usage_review.py\n+++ tests/test_mpea_stage_usage_secondary_review.py\n@@ -8,7 +8,7 @@\n from unittest.mock import patch\n \n ROOT = next(p for p in Path(__file__).resolve().parents if (p / 'src/lupine_discovery').is_dir())\n-SOURCE = ROOT / '.cache/mpea-stage-usage/stage_usage.py'\n+SOURCE = ROOT / 'scripts/mpea_stage_usage.py'\n spec = importlib.util.spec_from_file_location('reviewed_stage_usage', SOURCE)\n usage = importlib.util.module_from_spec(spec)\n spec.loader.exec_module(usage)\n",
+    "promoted_sha256": "7ebf3104929a193542a54b172ebc00c487437a2db3bff0f208034a0d922a2b6d"
+  }
+]

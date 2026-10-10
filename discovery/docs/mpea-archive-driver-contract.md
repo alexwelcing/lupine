@@ -52,7 +52,8 @@ feature reader's validators and reconstructs vectors using the study kernel's
 own `NormalizedVector` class. This explicitly handles the reader's representation
 module reload without changing the frozen reader.
 
-The input freeze contains all314 selected feature records, full original-role
+The input freeze contains the full1,545-row membership and all314 selected
+feature records, the closed feature/header/metadata profile, full original-role
 counts and source-token, lexical-formula, normalized-composition and combined-
 descriptor cross-role equality aggregates. Unknown compositions are not grouped
 as one zero vector. No equality finding changes roles or removes a row.
@@ -66,11 +67,15 @@ selected target is interpreted. Only authorized role+condition cells in columns
 11 and13 are accumulated. Non-T25 rows sharing an active source remain unopened
 at the target-cell decoder.
 
-Development labels are sealed before the model receives them. An inadequate
+Development labels and their explicit provenance are sealed in the separate
+`development-targets.json` companion. Its persisted bytes and original target
+join are verified before the model receives labels. An inadequate
 50-row/15-source development set produces a durable NO_GO and no fit/reserved
 access. Otherwise all314 predictions and75 full panel rankings are sealed before
 role-blind parsing of the40 reserved panels. Both target vaults bind that rank
-freeze. The calibration consumer opens only its own numerical vault; it can see
+freeze, their source framing and the per-label source/parser/column identities.
+`secondary-membership.json` retains all40 groups including empty panels;
+`completeness.json` exposes only the declared aggregate counts and references. The calibration consumer opens only its own numerical vault; it can see
 the fixed completeness manifest and all40-defined boolean. All40 future pool
 receipts across both populations are sealed before an evaluator is issued.
 
@@ -118,6 +123,56 @@ model or independently recompute aggregation from public seals. After completion
 this persistence verification parses private stage receipts; it is not described
 as a public-metadata-only audit. A locally complete public file does not override
 supervisor failure. Reproduction mismatch clears the launcher's scientific verdict.
+
+## Literal contract records and resource observations
+
+The closed profile/artifact helpers project existing evidence; they do not fit,
+rank or calibrate. Both endpoint provenance records distinguish an exact known
+value from an unresolved label. Uncertainty remains `NOT_INTERPRETED` and pairing
+remains `CO_RECORDED_NOT_SPECIMEN_VERIFIED`. The aggregate `rank-summary.json`
+binds the actual rank-stage scientific seal, counts and fallbacks without record
+IDs, predictions or orders. A prospective seal is checked against the committed
+stage before reserved access; the summary is not an input to its own referenced
+stage. The complete declared companion graph is authenticated before publication.
+
+`mpea_archive_decisions.py` preserves each original generic decision's scalar and
+tuple fields. Original calibrations and future panels live in named shared tables
+with explicit digest joins. The compact compatibility projection must match those
+original typed plans; validation reconstructs identities without selecting a new
+pool. Semantic references include the source, columns, parser and rank seal; the
+calibration outcome additionally binds its original vault's scientific seal.
+
+Every stage records wall/process CPU clock differences and explicitly scoped RSS
+observations. The observer ends before that stage's publication/marker ACK; input
+observation starts before feature validation. Boundary RSS and the process-lifetime
+high-water mark are distinguished. A true within-stage RSS peak is unavailable,
+not estimated or presented as zero. The separate unchanged supervisor enforces
+its declared target-phase wall and sampled process-tree RSS limits. Reproduction
+preserves original allocation/route bytes; import cost is recorded separately.
+
+Every companion explicitly attributes its resource work to the enclosing stage;
+its separate duration/CPU/peak fields are null and marked not separately measured.
+The descriptor creates no circular stage seal. Companion construction/publication
+occurs inside the measured stage window; a missing stage observation remains
+unavailable. The complete access and usage views are checked at dependent consumer
+gates and during final persisted-evidence verification.
+
+Access records distinguish mixed-source capture from role-bundle accumulation,
+decoding and interpretation. They name the actor, stage, authorized columns and
+counter scope. A phase started without a completed observation has unknown counts.
+Target companions report completed authorized-role snapshots and actual cumulative
+source captures separately. Rank-summary zeros describe its local projection work;
+allocation zeros describe the pre-target state. The parent later parses private
+receipts to verify persistence; these counters do not assert that only the worker
+can ever see those receipt contents.
+
+The launcher exposes the closed outer study status/reason separately from its
+bound internal operational cause. Marker failures map to the contract's stage
+order violation; otherwise unknown failures remain `INTERNAL_FAILURE`. A trusted
+kernel arithmetic-limit reason is preserved. The reproduction report separately
+compares each declared artifact's full bytes/content and scientific identity.
+Usage can change full-file bytes without changing scientific seals. Equality of
+partial maps cannot establish complete-study reproduction.
 
 ## Entry points after registration publication
 

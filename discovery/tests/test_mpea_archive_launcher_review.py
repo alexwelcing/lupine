@@ -2,6 +2,8 @@
 import copy
 import hashlib
 import importlib.util
+import contextlib
+import io as textio
 import json
 from pathlib import Path
 import sys
@@ -11,7 +13,8 @@ import unittest
 from unittest import mock
 
 ROOT = next(path for path in Path(__file__).resolve().parents if (path / 'src/lupine_discovery/decision_pool.py').is_file())
-SOURCE = ROOT / 'scripts/mpea_archive_run.py'
+SOURCE = Path(__file__).resolve().parents[1] / 'scripts/mpea_archive_run.py'
+sys.path.insert(0, str(SOURCE.parent))
 spec = importlib.util.spec_from_file_location('independent_archive_parent', SOURCE)
 parent = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(parent)
@@ -147,7 +150,7 @@ class ParentReview(unittest.TestCase):
 
     def complete_fixture(self, original=False):
         stages = {name: digest(name) for name in ('allocation', 'input_freeze', 'development', 'rank_freeze', 'reserved', 'calibration', 'replay', 'evaluation')}
-        self.operational = {'status': 'COMPLETE', 'reason': None, 'sealed_stages': [
+        self.operational = {'status': 'COMPLETE', 'reason': 'COMPLETE', 'sealed_stages': [
             {'stage': name, 'scientific_sha256': value} for name, value in stages.items()]}
         public = {'content_sha256': 'b' * 64, 'scientific_sha256': 'c' * 64,
                   'payload': {'overall_verdict': 'GO_DESIGN_INDEPENDENT_STUDY'}}
@@ -161,20 +164,106 @@ class ParentReview(unittest.TestCase):
         self.raws[str(path / 'attempt-result.json')] = canonical(result)
         self.raws[str(path / 'public-report.json')] = public_raw
         self.addCleanup(mock.patch.stopall)
-        mock.patch.object(parent, '_verify_prefix', return_value=({}, {})).start()
-        mock.patch.object(parent, '_public_transport', return_value=public).start()
+        self.inventory_changes = {}
+        self.graph_failure = None
+        def prefix(root, operational, registration, custody, io, inventory):
+            self.events.append(('verified_prefix', root.name))
+            if root.name == self.graph_failure:
+                raise ValueError('INPUT_IDENTITY_MISMATCH')
+            for name in parent.operations.ARTIFACT_NAMES:
+                if name in ('public-report.json', 'attempt-result.json'): continue
+                item = {'bytes_sha256': digest(root.name + name), 'content_sha256': digest('content:' + root.name + name),
+                        'scientific_sha256': digest('science:' + name)}
+                item.update(self.inventory_changes.get((root.name, name), {}))
+                inventory[name] = item
+            return {}, {}
+        mock.patch.object(parent, '_verify_prefix', side_effect=prefix).start()
+        mock.patch.object(parent, '_public_transport', side_effect=lambda raw, *args: json.loads(raw)).start()
         return result
+
+    def original_fixture(self, current, *, changed_public=False):
+        original = copy.deepcopy(current)
+        original['execution_kind'] = 'PRODUCTION_ARCHIVE'
+        current_root = self.root / '.cache/mpea-archival/constructed-new'
+        old_root = self.root / '.cache/mpea-archival/constructed-original'
+        public = json.loads(self.raws[str(current_root / 'public-report.json')])
+        if changed_public:
+            public['content_sha256'] = 'e' * 64
+            public['scientific_sha256'] = 'f' * 64
+        raw = canonical(public)
+        self.raws[str(old_root / 'public-report.json')] = raw
+        original['public_identity'] = {'bytes_sha256': hashlib.sha256(raw).hexdigest(),
+            'content_sha256': public['content_sha256'], 'scientific_sha256': public['scientific_sha256']}
+        original = seal({k: v for k, v in original.items() if k != 'content_sha256'})
+        self.raws[str(old_root / 'attempt-result.json')] = canonical(original)
+        return original
 
     def test_reproduction_mismatch_clears_prior_go_verdict(self):
         current = self.complete_fixture(original=True)
-        original = copy.deepcopy(current)
-        original['public_identity']['scientific_sha256'] = 'f' * 64
-        original = seal({k: v for k, v in original.items() if k != 'content_sha256'})
-        self.raws[str(self.root / '.cache/mpea-archival/constructed-original/attempt-result.json')] = canonical(original)
+        self.original_fixture(current, changed_public=True)
         result = self.invoke('constructed-original')
         self.assertEqual(result['operational_status'], 'BLOCKED')
         self.assertEqual(result['reproduction']['status'], 'MISMATCH')
         self.assertIsNone(result['scientific_verdict'])
+
+    def test_all_authenticated_companion_identities_reach_reproduction_comparison(self):
+        self.original_fixture(self.complete_fixture(original=True))
+        result = self.invoke('constructed-original')
+        compared = result['reproduction']['artifact_comparison']
+        self.assertEqual(set(compared['files']), set(parent.operations.ARTIFACT_NAMES))
+        self.assertEqual(compared['scientific_identities_compared'], 16)
+        self.assertTrue(compared['scientific_seals_identical'])
+        self.assertFalse(compared['all_complete_file_bytes_identical'])
+        self.assertIn('attempt-result.json', compared['complete_file_differences'])
+        self.assertEqual(result['reproduction']['status'], 'REPRODUCED')
+        self.assertEqual(result['study_status'], 'COMPLETE')
+        self.assertEqual([e[1] for e in self.events if e[0] == 'verified_prefix'], ['constructed-new', 'constructed-original'])
+
+    def test_companion_scientific_mismatch_blocks_even_when_stage_and_public_match(self):
+        self.original_fixture(self.complete_fixture(original=True))
+        self.inventory_changes[('constructed-original', 'calibration-vault.json')] = {'scientific_sha256': 'e' * 64}
+        result = self.invoke('constructed-original')
+        self.assertTrue(result['reproduction']['scientific_stages_identical'])
+        self.assertTrue(result['reproduction']['public_scientific_identity_identical'])
+        self.assertFalse(result['reproduction']['artifact_comparison']['scientific_seals_identical'])
+        self.assertEqual(result['study_status'], 'BLOCKED')
+        self.assertEqual(result['study_reason'], 'INPUT_IDENTITY_MISMATCH')
+        self.assertIsNone(result['scientific_verdict'])
+
+    def test_original_graph_failure_cannot_be_replaced_by_matching_summary_seals(self):
+        self.original_fixture(self.complete_fixture(original=True))
+        self.graph_failure = 'constructed-original'
+        with self.assertRaises(ValueError): self.invoke('constructed-original')
+        self.assertNotIn('launch-result.json', self.writes)
+
+    def test_original_public_bytes_must_match_its_authenticated_result_identity(self):
+        self.original_fixture(self.complete_fixture(original=True))
+        original_public = str(self.root / '.cache/mpea-archival/constructed-original/public-report.json')
+        self.raws[original_public] += b' '
+        with self.assertRaises(ValueError): self.invoke('constructed-original')
+        self.assertNotIn('launch-result.json', self.writes)
+
+    def test_closed_outer_reason_keeps_internal_cause_in_bound_operational_receipt(self):
+        for original_reason, outer_reason in [('WORKER_SIGNALLED', 'INTERNAL_FAILURE'),
+                ('NETWORK_ISOLATION_FAILED', 'INTERNAL_FAILURE'), ('MARKER_INVALID', 'STAGE_ORDER_VIOLATION'),
+                ('WALL_TIME_LIMIT', 'WALL_TIME_LIMIT')]:
+            self.writes.clear(); self.events.clear()
+            self.operational['reason'] = original_reason
+            value = self.invoke()
+            self.assertEqual(value['operational_reason'], original_reason)
+            self.assertEqual(value['study_reason'], outer_reason)
+            self.assertEqual(value['supervisor_sha256'], hashlib.sha256(canonical(self.operational)).hexdigest())
+            self.assertIsNone(value['scientific_verdict'])
+            self.assertFalse(value['post_terminal_private_receipts_decoded'])
+
+    def test_cli_emits_only_closed_outer_status_and_reason(self):
+        output = textio.StringIO()
+        receipt = {'study_status': 'BLOCKED', 'study_reason': 'INTERNAL_FAILURE',
+                   'operational_status': 'BLOCKED', 'operational_reason': 'WORKER_SIGNALLED'}
+        with mock.patch.object(parent, 'launch', return_value=receipt), contextlib.redirect_stdout(output):
+            code = parent.main(['--registration','r','--engineering-sha256','a'*64,'--feature','f','--attempt','a'])
+        self.assertEqual(code, 2)
+        self.assertEqual(json.loads(output.getvalue()), {'status': 'BLOCKED', 'reason': 'INTERNAL_FAILURE'})
 
     def test_captured_public_bytes_mismatch_blocks_even_successful_terminal(self):
         self.complete_fixture()

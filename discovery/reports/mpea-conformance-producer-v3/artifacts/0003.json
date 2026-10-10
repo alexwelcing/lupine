@@ -1,0 +1,7 @@
+{
+  "bytes": 1011,
+  "original_path": ".cache/mpea-study-custody/companion-observability-clarification-v3.md",
+  "schema": "lupine.lossless.utf8-evidence.v1",
+  "sha256": "cbbc2d495cd857fe4dca01b0995ffde4926dad8b1b513b5826501694a2f2c583",
+  "utf8": "# Companion counter scope clarification\n\nThis prospectively completes the accepted v3 proposal before any final source\nhold or actual scientific access. Target companions carry\n`counter_scope=completed_authorized_role_parse_snapshot` and\n`counter_unit=co_recorded_target_row_bundle_two_cells`. Their\n`mixed_source_counter_scope=cumulative_worker_custodian_source_capture` separates\nactual capture count/bytes from the authorized-role row counts. Issuance copies\nthe actual custodian counters; successful authenticated graph gates reconstruct\nexactly one verified capture and the pinned source byte count.\n\nThe rank summary uses `local_projector_no_source_capture_or_target_decode` for\nits zero row/capture counters. Allocation's existing cumulative worker counters\nare zero before target phase. These scopes do not imply repeated source capture,\nadditional target interpretation or independent artifact resource measurements.\nNo numerical, source-selection, target grammar, allocation, or model choice changes.\n"
+}

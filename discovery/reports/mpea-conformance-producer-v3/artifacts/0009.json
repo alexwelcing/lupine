@@ -1,0 +1,7 @@
+{
+  "bytes": 518,
+  "original_path": ".cache/mpea-study-custody/pre-observability-v2/integration-note-reconstruction-v2.json",
+  "schema": "lupine.lossless.utf8-evidence.v1",
+  "sha256": "a882dbda842944620cc873b94480b674dae2a10853152ad6e545624a9763171e",
+  "utf8": "{\n  \"bytes\": 8030,\n  \"method\": \"Removed only the prospective v3 appended section; exact retained v2 execution hash independently matched. This is a reconstruction, not a claimed pre-edit capture.\",\n  \"retained\": \".cache/mpea-study-custody/pre-observability-v2/contract-conformance-integration-v1.md\",\n  \"schema\": \"lupine.lossless-source-reconstruction.v1\",\n  \"sha256\": \"e28d65a0c7128e459ca1dfd5f1f57057ff61cbade53693a6f1d8d35e4b4289fe\",\n  \"source\": \".cache/mpea-study-custody/contract-conformance-integration-v1.md\"\n}\n"
+}

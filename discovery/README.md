@@ -10,13 +10,14 @@ The implemented engine covers exact calibration abstention, Pareto selection,
 nonlinear enclosures, shared-affine screening, scoped projection and direct
 statistical pools. The proof package contains **130 compiled and audited Lean
 statements**; its probability results retain explicit finite-law premises.
-The [guarded components and archive interface](reports/mpea-guarded-components-v1/README.md)
-pass **981 Python tests** and **56 Chromium checks**. The preceding source
-checkpoint `b442e53` passes [all four CI jobs](https://github.com/alexwelcing/lupine/actions/runs/38084821268).
-The six engine modes passed **28 installed-wheel cases** at the earlier
-[retained/installed checkpoint](reports/normalization-release-v1/README.md);
-fresh final release packaging remains pending. The optional MPEA archive view
-shows unavailable results until the separately registered study executes.
+The published production checkpoint `a865147` passes [all four CI jobs](https://github.com/alexwelcing/lupine/actions/runs/38089905975),
+with 1,153 Python tests, 56 Chromium checks and a clean installed wheel covering
+28 cases across six schemas. Its [retained source and wheel](reports/production-release-artifact-v1/README.md)
+were separately audited. The [subsequent contract-conformance increment](reports/mpea-contract-conformance-v1/README.md)
+repairs private evidence, observation scopes and consumer checks under unchanged
+scientific rules; final integration and new-source publication gates remain open.
+The optional MPEA archive view shows unavailable results until the separately
+registered study executes.
 See the [interface verification](reports/decision-pool-workbench-verification.md),
 [formal scope](formal/VERIFICATION.md), and [source-bound inventory](formal/theorem-inventory.json).
 
@@ -30,8 +31,8 @@ Two subsequent [feature-only processes](reports/mpea-feature-readiness-v1/README
 produce identical exact declared-coefficient tables and preserve every row.
 Performance targets remain opaque; no MPEA source allocation, fit or scientific
 experiment has run. The [prospective study specification](reports/mpea-protocol-review-v1/README.md)
-has passed independent review but still requires its guarded runner and complete
-registration. The ordered backlog and current owners are in [GOAL.md](GOAL.md).
+has passed independent review. Its guarded runner is implemented; complete
+source-bound verification and public registration must precede the actual study. The ordered backlog and current owners are in [GOAL.md](GOAL.md).
 
 ## Open the interface
 

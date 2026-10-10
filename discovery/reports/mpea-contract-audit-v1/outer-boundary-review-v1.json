@@ -1,0 +1,31 @@
+{
+  "files": {
+    ".cache/mpea-study-custody/scripts/mpea_archive_custody.py": "8923e32fb77d8d5162f927302c6f525813b66d6ee450cbd81b2eee42e163877c",
+    ".cache/mpea-study-custody/scripts/mpea_archive_driver.py": "45796fce546b58aedf54751607a8a884ca6389062665f8dadd1b111c98caf994",
+    ".cache/mpea-study-custody/scripts/mpea_archive_run.py": "68bd793a60a2d815aadff12396571ea6f168399017bcdc9f89c1a822ccbc0ba3",
+    ".cache/mpea-study-custody/scripts/mpea_archive_worker.py": "e4cd303752b459cadc94b1fca4227c4e6f63054283f911fb435f56ffb4fead26",
+    "docs/mpea-registration-publication-v1.md": "c9fb1f2c44ae8b97c10a88ddbb369eb8d0feca752824c2ca3cbb656d3619c730",
+    "docs/mpea-t25-implementation-contract-v1.md": "be45b1d8db9586035cf37bd9bbb9046c065c3851b91f93386f8c68d155215af9",
+    "docs/mpea-t25-operational-enforcement-v1.md": "e36e72818f92096c316df34789a35840c1e5b1561f9467561dd8787da072cf98",
+    "scripts/mpea_registration_allocation.py": "d4a11c4c2b941e45d4079129583efc7bcf5ecfed551de137aae02f3f49a3146d",
+    "scripts/mpea_target_custody.py": "7f649dd50d7c5589fd9da0f9745b7936b7a3a2bf631a8418affae4a67be1ee9c"
+  },
+  "findings": [
+    {
+      "id": "REPRODUCTION_COMPLETE_FILE_COMPARISON",
+      "observed": "launch reproduction reports original_resultSHA, scientific_stages_identical, public_scientific_identity_identical only. No explicit stage/companion complete-file map and difference report.",
+      "repair": "Bound actual whole-file identity maps and per-artifact byte/content differences for declared scientific outputs; retain scientific comparison separately. Usage file differences do not fail scientific reproduction.",
+      "requirement": "\u00a72 reproduction compares scientific stage digests and separately reports any complete-file difference"
+    },
+    {
+      "id": "OUTER_STUDY_FAILURE_MAPPING",
+      "observed": "Launcher receipt and CLI reuse operational_status/reason; exception emits LAUNCH_BLOCKED. No declared outer mapping found.",
+      "repair": "Separate study_status/study_reason closed adapter as amendment table; preserve internal reason solely in separately bound operational receipt. Unknown/launchexceptions safely BLOCKED/INTERNAL_FAILURE.",
+      "requirement": "Operational amendment production adapter maps internal reasons to original closedstudy status/reason vocabulary"
+    }
+  ],
+  "other_boundaries": "No additional concrete mismatch observed in registration exactHEAD/fourCI/publictag/engineering/sourceclosure gates; original and restrictedancestor reproduction modes; cacheonly singlecapture/wholeblob verification; complete framed header/rows/counts before selectedcell decoding; stagecapabilities; durable fixed40! firstaccepted entropy/no replacement and exact originalallocationbyte import. This code inspection is not runtime or physical validation.",
+  "pending_actual_ceremony": "Final reviewed main source/tests/dependencies commit+allfourCI, approved exact engineeringSHA, authenticated public annotated tag observation before entropy, authenticated parentcapture, finalmainintegration tests and actual source/feature/target custody remain required; no synthetic pass satisfies them.",
+  "schema": "lupine.mpea.contract-boundary-read-review.v1",
+  "scope": "Read-only code/spec audit \u00a7\u00a71,3,4 plus amendment/publication and \u00a72 reproduction query. Current prospective scratch implementation snapshot; no tests/API/data/entropy. Scope does not re-review complete repaired\u00a72 artifacts or numerical\u00a7\u00a76-9."
+}

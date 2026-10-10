@@ -45,6 +45,7 @@ def main(argv=None):
         registration=registration_module.verify_worker_registration(args[0],args[1],args[2])
         metadata=registration_module.load_public_metadata(registration)
         store=driver.persistence.ProductionStageStore(args[3],registration.binding,custody.SOURCE,execution_kind=args[5])
+        allocation_store=driver.AllocationUsageStore(store)
         original=None
         if args[6]!='-':
             original_root=ROOT/'.cache/mpea-archival'/args[6]
@@ -56,17 +57,22 @@ def main(argv=None):
             route_raw=custody.capture(original_root/'label-routes.json',32*1048576)
             original=registration_module.load_original_allocation_bytes(metadata,registration,
                 stage_raw,stage_identity,route_raw,route_identity)
-        allocation=registration_module.allocate(metadata,registration,store,args[5],original_allocation=original)
+        allocation=registration_module.allocate(metadata,registration,allocation_store,args[5],original_allocation=original)
         emit({'event':'STAGE_SEALED','stage':'allocation','scientific_sha256':allocation.allocation_identity['scientific_sha256']})
         result=driver.run_registered(registration,metadata,allocation,store,args[4],
-            registration_module=registration_module,checkpoint=emit,allocation_marker_emitted=True)
+            registration_module=registration_module,checkpoint=emit,allocation_marker_emitted=True,
+            allocation_import_usage=allocation_store.import_usage)
     except Exception as error:
         code=getattr(error,'code','INTERNAL_FAILURE')
         if type(code) is not str or code not in supervisor.STOP_REASONS:code='INTERNAL_FAILURE'
         if store is not None:
             try:
                 if len(store.stages)<8 and not store._terminal:
-                    store.commit(driver.persistence.STAGES[len(store.stages)],{'available':None},status='BLOCKED',reasons=(code,))
+                    stage=driver.persistence.STAGES[len(store.stages)]
+                    usage=getattr(store,'_input_failure_usage',None)
+                    if usage is None:usage=driver.StageObservation(stage).finish()
+                    store.commit(stage,{'available':None},status='BLOCKED',reasons=(code,),
+                        usage=usage,access=driver.stage_access(stage))
                 for stage in store.stages[len(emitted):]:
                     emit({'event':'STAGE_SEALED','stage':stage,'scientific_sha256':store.stage_identity(stage)['scientific_sha256']})
                 result=driver._seal_result(driver.ArchiveResult('BLOCKED',store,None,(),None,(),None,

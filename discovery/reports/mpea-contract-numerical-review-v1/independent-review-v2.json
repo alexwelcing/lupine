@@ -1,0 +1,324 @@
+{
+  "baseline_original_source_and_specification_count": 14,
+  "comparison_receipt": {
+    "bytes": 31900,
+    "sha256": "9f2082936d3bea57f32b7db26af5bad03341227c2b79d7c2eef5c8377edab8f3"
+  },
+  "executing_source_before_after_unchanged_in_both_processes": true,
+  "executing_source_count": 21,
+  "executing_source_sha256": {
+    ".cache/mpea-study-custody/scripts/mpea_archive_artifacts.py": "0f251d97ca247b29f06f2a6f32251b1ca443baf52047b0e07de8c50befa812a6",
+    ".cache/mpea-study-custody/scripts/mpea_archive_custody.py": "da37f99e2f42d7572e1acb1656e8c3913b5a4b52a3bd92bc7eb8371e400e2d41",
+    ".cache/mpea-study-custody/scripts/mpea_archive_decisions.py": "777fb6fbf75c44bdc073dfcd2815702cd3519b455f93beacb08c9f97782a46d6",
+    ".cache/mpea-study-custody/scripts/mpea_archive_driver.py": "d8427266ee799db12fb448413d2ee6e7722ffd5314d8edcbe875cbf2dd6db532",
+    ".cache/mpea-study-custody/scripts/mpea_archive_profiles.py": "1d9d8da568fd7d15c30b268832739b13a7ec6b281edfc93f8c700cea889c936f",
+    ".cache/mpea-study-custody/scripts/mpea_archive_report.py": "b27cfdeed4051cb1875beccbd1c03b97e3d35e2f338104ddf1aa3ff83a630696",
+    ".cache/mpea-study-custody/scripts/mpea_fixture_driver.py": "335faf09b89b84a1e5e3b7f404d178eadd29e72a585fac2290c33c8d80d458fe",
+    ".cache/mpea-study-custody/scripts/mpea_production_store.py": "9b5caa9a013da7b2bae8bb78d89a74a697201bdc73b1cd2db1d38c2e750db6b4",
+    ".cache/mpea-study-custody/scripts/mpea_stage_store.py": "13c42919e79e0949f4cbcf5ce0eeeb1cb66d3a48893e6e4fdc3cd3fdf68498db",
+    ".cache/mpea-study-custody/scripts/mpea_stage_usage.py": "ae1967ee12d778e02dc92ec8a8af41035e58c62c835236eed6f9322aa04cd5d0",
+    ".cache/mpea-study-custody/scripts/mpea_study_flow.py": "c4c49108feda2aa38adc7c9761788057b1e716ef7ac18b7b26dceb4cfab213d7",
+    ".cache/mpea-study-custody/scripts/mpea_target_custody.py": "7f649dd50d7c5589fd9da0f9745b7936b7a3a2bf631a8418affae4a67be1ee9c",
+    "scripts/mpea_features.py": "b24c0f1bb62fc56794e1232f973a6020ee42a0d3765d33cb51246f3c7a3a47d9",
+    "scripts/mpea_study.py": "61ddfdf9e8db9cacb3f64d3310021812a96aa66c98ae4e68febb6a794352648b",
+    "scripts/mpea_study_report.py": "a7d4650df6405df61c18d6c017af281bc2779e6b000fc391327cb5a2e11cc1f2",
+    "src/lupine_discovery/core.py": "c7bab15c662eaa79b6e6312271d3351e79ccb97ef42fcdfc830fdbbf3118d5a0",
+    "src/lupine_discovery/decision_pool.py": "76e96165102ebe8c3785f510d169b5d393838fb144f9c4275ffdb0aa6c21f1f9",
+    "src/lupine_discovery/evidence.py": "ab16a2f5f31601f95f3ec88f7fc230a07c85ebfdb175f0298a467c4425037dae",
+    "src/lupine_discovery/replay.py": "14426e8a7c9552ec2d651ac95f4d7b2688d744c1474d21fc579ad9dd85babb10",
+    "src/lupine_discovery/representation.py": "c65c0eed659025a0e41eb325e75182ac2b980c35ac43dfddaa501f4f3ddf3b9e",
+    "src/lupine_discovery/serialization.py": "cfec006ed4cb51fbbb6539422a5d829cadaa7bf0ff78bebbffd58aaba6f2523c"
+  },
+  "fixture_source_equal_to_saved_original": true,
+  "held_producer_map": {
+    "bytes": 1480,
+    "sha256": "b95fb36c07ae89d6dd89b84e61bd45c80939f6a8c6db1828fad65e20af1ab35d"
+  },
+  "held_producer_sha256": {
+    "mpea_archive_artifacts.py": "0f251d97ca247b29f06f2a6f32251b1ca443baf52047b0e07de8c50befa812a6",
+    "mpea_archive_custody.py": "da37f99e2f42d7572e1acb1656e8c3913b5a4b52a3bd92bc7eb8371e400e2d41",
+    "mpea_archive_decisions.py": "777fb6fbf75c44bdc073dfcd2815702cd3519b455f93beacb08c9f97782a46d6",
+    "mpea_archive_driver.py": "d8427266ee799db12fb448413d2ee6e7722ffd5314d8edcbe875cbf2dd6db532",
+    "mpea_archive_operations.py": "9ce72dd8ce48dfa5f1a4b3535f992ad4b38ea7c07fb86ead01a86970c479bf3e",
+    "mpea_archive_profiles.py": "1d9d8da568fd7d15c30b268832739b13a7ec6b281edfc93f8c700cea889c936f",
+    "mpea_archive_report.py": "b27cfdeed4051cb1875beccbd1c03b97e3d35e2f338104ddf1aa3ff83a630696",
+    "mpea_archive_run.py": "44172bd86ee640cece11d4c20c37a787c725fdd6ca61da0d3db28e511d7c4bbc",
+    "mpea_archive_worker.py": "e4cd303752b459cadc94b1fca4227c4e6f63054283f911fb435f56ffb4fead26",
+    "mpea_stage_usage.py": "ae1967ee12d778e02dc92ec8a8af41035e58c62c835236eed6f9322aa04cd5d0",
+    "mpea_study_flow.py": "c4c49108feda2aa38adc7c9761788057b1e716ef7ac18b7b26dceb4cfab213d7"
+  },
+  "interpretation": [
+    "Exactly 46 named source-reference fields migrate to verified source/parser/rank/calibration-vault references; every other enumerated numerical field is byte-identical after canonical exact encoding.",
+    "Old and new schema scientific identities need not agree. All eight stage and public scientific identities agree between the two final-source fresh processes despite distinct injected observer values and full artifact identities.",
+    "Injected resource values are test controls, not measurements of real operational performance.",
+    "The successful held-v1 capture is retained as superseded evidence, not the final-source pair. The failed initial baseline harness attempt remains documented.",
+    "No registered execution, entropy allocation, original-allocation import, hostile-process isolation, actual science, physical validity, or exchangeability attestation is supplied by this review."
+  ],
+  "numerical_result": {
+    "changed_usage_preserved_scientific_identity": true,
+    "completed_policy_runs_per_process": 960,
+    "predictions_per_process": 314,
+    "public_scientific_sha256": "20f7a2cfa3255a77c222216f12439bb662c819c74ea47c5e8a7f9292a797098e",
+    "public_values_sha256": "a4017ca6cb433fa1e5a45da9d8fd147a4eab324b61f869bb61e34631d161ae40",
+    "reference_migration_count": 46,
+    "stage_scientific_sha256": [
+      [
+        "allocation",
+        "56e77216674be5fb01ffa3f1951d33ee6aed7590798245ca37e8e60e95f29f43"
+      ],
+      [
+        "input_freeze",
+        "4794a538e71345250b7f596875b89c2573042b086664d72293c91d726a41f7f0"
+      ],
+      [
+        "development",
+        "bfe282dc447ca8420aad4f96b91f183a8eb64aa67a399c22be4c8708bcd8ce95"
+      ],
+      [
+        "rank_freeze",
+        "b4188645e0f50dd111cac2651216d3f4cd0755f7884973daada5f07e937d63d8"
+      ],
+      [
+        "reserved",
+        "c19d33c2ee53caeabffb995159682faebddadeff3ba80e820d508d2c224cf352"
+      ],
+      [
+        "calibration",
+        "7d17f52db5d27e5604b68104a69d630f38e1992cf3fa74b3277fcb940296de95"
+      ],
+      [
+        "replay",
+        "49b083d01eb51c69eb921019ce6c5bc38c6d0e2390163264c1da86b09c2485a0"
+      ],
+      [
+        "evaluation",
+        "eb249d5aa233952ef6b3b6504c1fb58e39a288f507bcee0f791ae118ff695b5c"
+      ]
+    ],
+    "unchanged_numerical_values_sha256": "fdc454ac82b0b4c4aca52c81d2d21640df5b3ebed0886d91047453054fecc07e"
+  },
+  "private_constructed_captures_not_for_public_copy": {
+    "baseline-values-v1.json": {
+      "bytes": 9797951,
+      "sha256": "91c028920f008408455a89ec7e52401a3866aece1ca8f8a75618edb42f1cb75f"
+    },
+    "candidate-values-first-v1.json": {
+      "bytes": 9826239,
+      "sha256": "94e8accf4c95f8708e918b079a3dbccac8b2a5f0f5d44b90073ecb5665188f84"
+    },
+    "candidate-values-first-v2.json": {
+      "bytes": 9826273,
+      "sha256": "5e0827ad6d45ef5fe0c828d106f44de961a35f09fdea4f464c04ace849455470"
+    },
+    "candidate-values-second-v2.json": {
+      "bytes": 9825561,
+      "sha256": "1d34472e95596e802b2f9a983926adfbadcabe8a6905f9def990052604fb820f"
+    }
+  },
+  "public_evidence_files": {
+    "audit_live_result.py": {
+      "bytes": 9431,
+      "sha256": "59750f00cf08300686d235d8768388268fa84a6303218ecd1c748b54e332f45b"
+    },
+    "baseline-attempt-1-review-harness-failure.md": {
+      "bytes": 782,
+      "sha256": "7958d364b4bb104d17c8e219a1e3a38dcd2ee4ce3be7c20d285c271922441a50"
+    },
+    "baseline-attempt-2.log": {
+      "bytes": 262,
+      "sha256": "d8800e6ce2eb9c2adc4ca658b01fe86f7604d6bf3873b642d01280c394bbdae0"
+    },
+    "baseline-sources-v1.json": {
+      "bytes": 3758,
+      "sha256": "c815e8f0024193411aac3f724198307c73b6369fab1a995c4834d5ce4bed5265"
+    },
+    "baseline/contract-conformance-proposal-v1.md": {
+      "bytes": 12330,
+      "sha256": "2b08ccbde4a03c21d02cd85c8a8363beb015bb2dadb95d0914c1e6d11ffe9e54"
+    },
+    "baseline/docs/mpea-t25-archival-protocol-v1.md": {
+      "bytes": 20971,
+      "sha256": "c49047341d3932ddd67c67c9f2a04a6759c0d679bfeb96d811ba9541c0cc0378"
+    },
+    "baseline/docs/mpea-t25-implementation-contract-v1.md": {
+      "bytes": 39271,
+      "sha256": "be45b1d8db9586035cf37bd9bbb9046c065c3851b91f93386f8c68d155215af9"
+    },
+    "baseline/docs/mpea-t25-operational-enforcement-v1.md": {
+      "bytes": 9892,
+      "sha256": "e36e72818f92096c316df34789a35840c1e5b1561f9467561dd8787da072cf98"
+    },
+    "baseline/review_production/constructed_archive_case.py": {
+      "bytes": 2744,
+      "sha256": "d1cb093b7d58fc432743e08cb5991638fa95781986cee42f4df0f3eed83861dd"
+    },
+    "baseline/review_production/test_production_store_review.py": {
+      "bytes": 20384,
+      "sha256": "0959f57f7ab4f8de5586afb90a11c8305de800df2f23cc7fc72ee2c974650fa4"
+    },
+    "baseline/scripts/mpea_archive_custody.py": {
+      "bytes": 25986,
+      "sha256": "26cf561be32f2c3476944dc7613fd63438ed99b4ff706258037db2b8d77b2c02"
+    },
+    "baseline/scripts/mpea_archive_driver.py": {
+      "bytes": 10677,
+      "sha256": "993470740a163f28ee0a9e247603d80b52b5045c8d7943f33fd86075d6cf7df4"
+    },
+    "baseline/scripts/mpea_archive_report.py": {
+      "bytes": 7268,
+      "sha256": "082169e5526bc42793208bf8e119e97ec08001a0c5e6144f7a28a31c766d1781"
+    },
+    "baseline/scripts/mpea_fixture_driver.py": {
+      "bytes": 24970,
+      "sha256": "335faf09b89b84a1e5e3b7f404d178eadd29e72a585fac2290c33c8d80d458fe"
+    },
+    "baseline/scripts/mpea_production_store.py": {
+      "bytes": 16242,
+      "sha256": "9b5caa9a013da7b2bae8bb78d89a74a697201bdc73b1cd2db1d38c2e750db6b4"
+    },
+    "baseline/scripts/mpea_stage_store.py": {
+      "bytes": 15957,
+      "sha256": "13c42919e79e0949f4cbcf5ce0eeeb1cb66d3a48893e6e4fdc3cd3fdf68498db"
+    },
+    "baseline/scripts/mpea_study_flow.py": {
+      "bytes": 5129,
+      "sha256": "eabb65d9b16de97ce43990b7d60c43dbeb15ced5762e7506035ca3b8e3e56e18"
+    },
+    "baseline/scripts/mpea_target_custody.py": {
+      "bytes": 16141,
+      "sha256": "7f649dd50d7c5589fd9da0f9745b7936b7a3a2bf631a8418affae4a67be1ee9c"
+    },
+    "candidate-first-attempt-1.log": {
+      "bytes": 263,
+      "sha256": "798b80a0e02e5ebde54295cf6da475d28a8ec53fea5cbf433733a7feeb81ed5b"
+    },
+    "candidate-first-v2.log": {
+      "bytes": 263,
+      "sha256": "b6adf3ea28347067842ee57726c0b83440964cf740f1db79d9c0a6bc267ef393"
+    },
+    "candidate-second-v2.log": {
+      "bytes": 263,
+      "sha256": "ddc20eecb538e0f2f1f5f66e56ccd0400b1d44d574da4fdd2304b5015cda7953"
+    },
+    "capture_synthetic_values.py": {
+      "bytes": 4973,
+      "sha256": "a0296ad286b7924f09ceac6ddc30137a6136c8b06b85f040d6390fb5f3d39136"
+    },
+    "compare_captures.py": {
+      "bytes": 6187,
+      "sha256": "108840f7726b54314286b859a2331caaf221c2e903f7b72e476ef8a586dcb56f"
+    },
+    "comparison-v2.log": {
+      "bytes": 306,
+      "sha256": "eb8f5eaa432879ec49374af5b183f07094a7e1f4fbf7001dac16592b052694f0"
+    },
+    "completeness-attempt-1.log": {
+      "bytes": 1406,
+      "sha256": "ca42950faf70d7b5944fc205765b2f81d1cfd0520e258d717961071a91d5ce18"
+    },
+    "completeness-final-v1.log": {
+      "bytes": 1406,
+      "sha256": "7328af1107e107505161ea619a587cd1b904e73bba0e3a267486c3b1fb3650ae"
+    },
+    "finalize_review.py": {
+      "bytes": 6820,
+      "sha256": "a4c82569e1b49c018f7da9f5f295fab310fcec893bb42d1cef155b5210e00f9d"
+    },
+    "held-v1-numerical-comparison.json": {
+      "bytes": 2883,
+      "sha256": "9d9ac3624ccd30df1b68d872466f758ee748decd0120ab5a2fb22ad42efe7f54"
+    },
+    "numerical-usage-equivalence-v2.json": {
+      "bytes": 31900,
+      "sha256": "9f2082936d3bea57f32b7db26af5bad03341227c2b79d7c2eef5c8377edab8f3"
+    },
+    "numerical_projection.py": {
+      "bytes": 4250,
+      "sha256": "bde8a5fd59c2a73476e9cb6e8733ace4669bc1f2c10074167dba84f5494058df"
+    },
+    "review-code-held-v1/audit_live_result.py": {
+      "bytes": 9225,
+      "sha256": "d78d9f8c2d4f5015a5fdf8f7119721a003c9d47df1b52ed7e497c6d483db9c58"
+    },
+    "review-code-held-v1/capture_synthetic_values.py": {
+      "bytes": 4797,
+      "sha256": "2b75dad227e0eead2bebfc2d6807ae71ae2127f31b139c8f807f614dcfea17ec"
+    },
+    "review-code-held-v1/compare_captures.py": {
+      "bytes": 6037,
+      "sha256": "c99c75f6b37fbf60c46e9c31bf072f5591aa139f53ef5219a553646fc770f90c"
+    },
+    "review-code-held-v1/numerical_projection.py": {
+      "bytes": 4250,
+      "sha256": "bde8a5fd59c2a73476e9cb6e8733ace4669bc1f2c10074167dba84f5494058df"
+    },
+    "review-code-held-v1/source-sha256.json": {
+      "bytes": 371,
+      "sha256": "1fee89098a458cfa2d65a4d024310b3a1a817ab912b24d8c464638cadf0c8265"
+    },
+    "review-plan-v1.md": {
+      "bytes": 5526,
+      "sha256": "7251b7c50801b9ae4cb73f044c24d5371f55f3fcf43e042efc36c48213353758"
+    },
+    "sections-6-9-literal-review-v1.md": {
+      "bytes": 6944,
+      "sha256": "c6ab06f9f0a9291251f203c813505d5d591991021340c32ec2535a22eee5b8a4"
+    },
+    "test_public_completeness.py": {
+      "bytes": 6154,
+      "sha256": "115f34251c380a847afc93f9f84b9917c071d7d2e8c5103c2faee4ba0a6d6dd5"
+    }
+  },
+  "remaining_blocking_findings_in_reviewed_scope": [],
+  "schema": "lupine.review.mpea_contract_public_numerical_usage.v1",
+  "scope": "Independent constructed-data regression and contract evidence review; no actual archive, feature table, allocation, entropy, or scientific target access.",
+  "status": "PASS",
+  "tests": {
+    "final_first_process_live_checks": [
+      "development_rank_reserved_companion_semantic_and_full_identity_joins",
+      "public_completeness_exact_counts_full_links_and_no_private_ids",
+      "all_40_secondary_memberships_and_23_literal_order_restrictions",
+      "public_rank_freeze_exact_counts_and_private_data_exclusion",
+      "all_46_reference_slots_bound_to_exact_source_parser_rank_calibration_vault",
+      "all_40_complete_decisions_equal_typed_originals_and_shared_tables",
+      "complete_decision_field_corruption_rejected:threshold",
+      "complete_decision_field_corruption_rejected:guarantee_status",
+      "complete_decision_field_corruption_rejected:assumptions",
+      "complete_decision_field_corruption_rejected:original_ids",
+      "complete_decision_field_corruption_rejected:panel_digest",
+      "complete_decision_field_corruption_rejected:m",
+      "late_companion_corruption_rejected:development-targets.json",
+      "late_companion_corruption_rejected:rank-summary.json",
+      "late_companion_corruption_rejected:secondary-membership.json",
+      "late_companion_corruption_rejected:completeness.json",
+      "late_companion_corruption_rejected:calibration-vault.json",
+      "late_companion_corruption_rejected:evaluation-vault.json",
+      "public_metadata_mismatch_rejected:mapping",
+      "public_metadata_mismatch_rejected:metadata_b",
+      "public_metadata_mismatch_rejected:formula_c",
+      "all_eight_stage_observations_explicit_with_unmeasured_stage_peaks"
+    ],
+    "final_second_process_positive_checks": [
+      "development_rank_reserved_companion_semantic_and_full_identity_joins",
+      "public_completeness_exact_counts_full_links_and_no_private_ids",
+      "all_40_secondary_memberships_and_23_literal_order_restrictions",
+      "public_rank_freeze_exact_counts_and_private_data_exclusion",
+      "all_46_reference_slots_bound_to_exact_source_parser_rank_calibration_vault",
+      "all_40_complete_decisions_equal_typed_originals_and_shared_tables",
+      "all_eight_stage_observations_explicit_with_unmeasured_stage_peaks"
+    ],
+    "public_completeness": {
+      "count": 7,
+      "log": "completeness-final-v1.log",
+      "names": [
+        "test_all_empty_secondary_preserves_40_original_panels",
+        "test_boolean_counts_and_omitted_primary_panel_rejected",
+        "test_each_companion_identity_must_match_authenticated_arguments",
+        "test_every_missing_required_member_and_extra_private_field_rejected",
+        "test_exact_contract_keys_and_derived_original_denominators",
+        "test_false_success_changed_counts_and_unknown_labels_are_not_valid_shells",
+        "test_public_payload_has_no_original_ids_or_private_rows"
+      ]
+    }
+  }
+}

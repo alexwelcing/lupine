@@ -1,0 +1,12 @@
+[
+  {
+    "source": ".cache/mpea-study-custody/review_production/publication_review/procedure-v1.md",
+    "destination": "reports/mpea-contract-conformance-v1/publication-procedure/procedure-v1.md",
+    "sha256": "5e116a8c6687e8d7219c797911ca881c47cf5940003f895420bcc7b9f17e4ea0"
+  },
+  {
+    "source": ".cache/mpea-study-custody/review_production/publication_review/procedure-receipt-v1.json",
+    "destination": "reports/mpea-contract-conformance-v1/publication-procedure/procedure-receipt-v1.json",
+    "sha256": "d3586b99d3926015f273f4a80dbe75ebbc6fd6bf580188cc481d1a7d4a646520"
+  }
+]

@@ -98,18 +98,70 @@ class TransportReview(unittest.TestCase):
             raw_by_name[f'stage-{index:02d}-{stage.replace("_", "-")}.json'] = raw
             markers.append({'stage': stage, 'scientific_sha256': value['scientific_sha256']})
             previous = identity(raw, value)
+        self.companion_identities = {}
+        for name, stage in [('label-routes.json', 'allocation'), ('development-targets.json', 'development'),
+                ('calibration-vault.json', 'reserved'), ('evaluation-vault.json', 'reserved'),
+                ('secondary-membership.json', 'reserved'), ('completeness.json', 'reserved'),
+                ('rank-summary.json', 'rank_freeze')]:
+            value = {'schema': 'lupine.discovery.mpea.constructed_companion.v1', 'protocol_id': 'mpea-t25-archival-v1',
+                'stage': stage, 'status': 'COMPLETE', 'reasons': [], 'registration': self.registration.binding,
+                'source': self.source, 'inputs': {}, 'payload': {'constructed_companion': name},
+                'access': {'execution_scope': 'registered_study'}, 'usage': {}}
+            value['scientific_sha256'] = io.digest(store.scientific_preimage(value))
+            value['content_sha256'] = io.digest(value)
+            raw = io.canonical(value)
+            raw_by_name[name] = raw
+            self.companion_identities[name] = identity(raw, value)
         return raw_by_name, {'status': 'COMPLETE', 'sealed_stages': markers}
 
     def check_prefix(self, raws, operational):
-        custody = types.SimpleNamespace(SOURCE=self.source, capture=lambda path, cap: raws[Path(path).name])
+        self.read_names, self.last_inventory = [], {}
+        def capture(path, cap):
+            self.read_names.append(Path(path).name)
+            return raws[Path(path).name]
+        def graph(values, read):
+            # This explicit graph stand-in requests every required companion;
+            # private payload semantic validation is another reviewer's scope.
+            self.assertEqual(tuple(values), store.STAGES)
+            for name, expected in self.companion_identities.items():
+                read(name, None if name == 'rank-summary.json' else expected)
+        custody = types.SimpleNamespace(SOURCE=self.source, capture=capture, verify_evidence_graph=graph)
         with mock.patch.dict(sys.modules, {'mpea_production_store': store}):
-            return parent._verify_prefix(Path('/constructed'), operational, self.registration, custody, io)
+            return parent._verify_prefix(Path('/constructed'), operational, self.registration, custody, io, self.last_inventory)
 
     def test_complete_persisted_chain_accepts_all_eight_original_seals(self):
         raws, operational = self.prefix()
         stages, values = self.check_prefix(raws, operational)
         self.assertEqual(tuple(stages), store.STAGES)
         self.assertEqual(tuple(values), store.STAGES)
+
+    def test_every_authenticated_stage_and_companion_enters_identity_inventory(self):
+        raws, operational = self.prefix()
+        self.check_prefix(raws, operational)
+        expected = set(parent.operations.ARTIFACT_NAMES) - {'public-report.json', 'attempt-result.json'}
+        self.assertEqual(set(self.last_inventory), expected)
+        self.assertEqual(set(self.read_names), expected)
+        self.assertEqual(self.read_names[:8], [f'stage-{i:02d}-{s.replace("_", "-")}.json' for i, s in enumerate(store.STAGES)])
+        for name, value in self.last_inventory.items():
+            self.assertEqual(value, identity(raws[name], json.loads(raws[name])))
+
+    def test_changed_companion_bytes_reject_before_comparison(self):
+        raws, operational = self.prefix()
+        raws['evaluation-vault.json'] += b' '
+        with self.assertRaises(Exception): self.check_prefix(raws, operational)
+        self.assertNotIn('evaluation-vault.json', self.last_inventory)
+
+    def test_resealed_companion_from_other_source_rejects_even_matching_supplied_identity(self):
+        raws, operational = self.prefix()
+        value = json.loads(raws['evaluation-vault.json'])
+        value['source'] = {**value['source'], 'sha256': 'd' * 64}
+        value['scientific_sha256'] = io.digest(store.scientific_preimage(value))
+        value['content_sha256'] = io.digest({k: v for k, v in value.items() if k != 'content_sha256'})
+        raw = io.canonical(value)
+        raws['evaluation-vault.json'] = raw
+        self.companion_identities['evaluation-vault.json'] = identity(raw, value)
+        with self.assertRaises(Exception): self.check_prefix(raws, operational)
+        self.assertNotIn('evaluation-vault.json', self.last_inventory)
 
     def test_modified_stage_bytes_are_rejected_despite_successful_terminal(self):
         raws, operational = self.prefix()

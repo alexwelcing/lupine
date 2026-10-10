@@ -1,0 +1,10 @@
+{
+  "decoded_original_byte_equality_verified": true,
+  "manifest_sha256": "4a60c6db57e77d58d63ead0de95204f4b63006a39b93d3f8a699cd8aa18f4ab7",
+  "schema": "lupine.mpea.artifact-helper.evidence-check.v1",
+  "scope": "Exact-byte archival verification only; test outcomes remain those in preserved source-bound receipts",
+  "source_unchanged_during_copy": true,
+  "status": "PASS",
+  "total_stored_bytes": 550384,
+  "wrapped_files_verified": 54
+}

@@ -19,7 +19,7 @@ _compact_replay = helpers._compact_replay
 fail = helpers.fail
 
 
-def execute(case,store,custodian,seal,emit,*,sampling_premise,references,result_type):
+def execute(case,store,custodian,seal,emit,*,sampling_premise,references,result_type,stage_gate=None,stage_evidence=None):
     fit,ranks,completeness,plans=None,(),None,()
     aggregates={role:None for role in ROLES}
     emit({"event": "TARGET_PHASE_BEGIN"})
@@ -38,6 +38,7 @@ def execute(case,store,custodian,seal,emit,*,sampling_premise,references,result_
                              MappingProxyType(aggregates), tuple(custodian.access), reasons)
     # Model access starts only after the parsed development artifact closes.
     store.require("development")
+    if stage_gate is not None:stage_gate()
     feature_map = {row.record_id: row for row in case.features}
     fit = kernel.fit_development(tuple(kernel.DevelopmentRow(feature_map[row.record_id], row)
                                        for row in _targets(rows)))
@@ -57,10 +58,12 @@ def execute(case,store,custodian,seal,emit,*,sampling_premise,references,result_
         "all_40_endpoints_defined": completeness.all_defined, "complete_ids": completeness.complete_ids,
         "target_aggregates": reserved_aggregates, "vault_identities": identities})
     calibration_targets = custodian.calibration()
+    resolved_references=references(rank_sha) if callable(references) else references
     plans = tuple(kernel.calibrate_population(fit, calibration_ranks, calibration_targets,
         future_ranks, completeness, population, sampling_premise, rank_sha,
-        *references)
+        *resolved_references)
         for population in ("primary", "secondary"))
+    if stage_evidence is not None:stage_evidence("calibration",plans)
     seal("calibration", {"plan_digests": [plan.plan_digest for plan in plans],
         "all_future_decisions_sealed": True, "plans": [_compact_plan(plan) for plan in plans]})
     evaluator = custodian.evaluator(plans)

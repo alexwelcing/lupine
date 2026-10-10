@@ -23,6 +23,11 @@ import mpea_archive_driver as d
 import mpea_archive_custody as c
 
 
+def declared_input_identities(case):
+    return {'feature':dict(case.feature_identity),'label_routes':dict(case.route_identity),
+            **{key:dict(value) for key,value in case.input_context['metadata_receipts'].items()}}
+
+
 class IndependentArchiveDriverReview(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -61,9 +66,10 @@ class IndependentArchiveDriverReview(unittest.TestCase):
     def prepared(self,case,name):
         source=case.routes.source
         store=d.persistence.ProductionStageStore(name,registration(),{'bytes':source.byte_count,'md5':source.md5,'sha256':source.sha256},execution_kind='SYNTHETIC_FIXTURE')
-        self.addCleanup(store.close);routes=c.RouteContext(case.routes.header,case.routes.rows)
-        route=store.write_artifact('label-routes.json',c._route_payload(routes,'c'*64),schema='lupine.discovery.mpea.label_routes.v1')
-        store.commit('allocation',{'route_artifact':route,'role_map_sha256':route['bytes_sha256']},inputs={'label_routes':route})
+        self.addCleanup(store.close);allocation_store=d.AllocationUsageStore(store)
+        routes=c.RouteContext(case.routes.header,case.routes.rows)
+        route=allocation_store.write_artifact('label-routes.json',c._route_payload(routes,'c'*64),schema='lupine.discovery.mpea.label_routes.v1')
+        allocation_store.commit('allocation',{'route_artifact':route,'role_map_sha256':route['bytes_sha256']},inputs={'label_routes':route})
         archive=c.fixture_case(case,store,store.stage_identity('allocation'),route)
         return archive,store
 
@@ -143,7 +149,7 @@ class IndependentArchiveDriverReview(unittest.TestCase):
 
     def test_source_size_md5_and_sha_are_checked_before_any_framing(self):
         for index,change in enumerate((lambda raw:raw[:-1],lambda raw:raw+b'X',lambda raw:raw.replace(b'opaque',b'opaquE',1))):
-            case,store=self.prepared(self.case,'source-'+str(index));store.commit('input_freeze',case.input_payload)
+            case,store=self.prepared(self.case,'source-'+str(index));store.commit('input_freeze',case.input_payload,inputs=declared_input_identities(case))
             loader=lambda:change(self.case.raw)
             custodian=c.ArchiveCustodian(case,store,loader,authority=c._AUTHORITY)
             with patch.object(c.parser,'_authorized_cells',side_effect=AssertionError('unexpected framing')) as frame:
@@ -154,14 +160,14 @@ class IndependentArchiveDriverReview(unittest.TestCase):
     def test_input_receipt_or_missing_predecessor_blocks_source_loader(self):
         for index,sealed in enumerate((False,True)):
             case,store=self.prepared(self.case,'freeze-'+str(index))
-            if sealed:store.commit('input_freeze',dict(case.input_payload,condition_rows=313))
+            if sealed:store.commit('input_freeze',dict(case.input_payload,condition_rows=313),inputs=declared_input_identities(case))
             reads=[]
             custodian=c.ArchiveCustodian(case,store,lambda:(reads.append(1),self.case.raw)[1],authority=c._AUTHORITY)
             with self.assertRaises((d.persistence.ProductionError,c.io.StageError)):custodian.development()
             self.assertEqual(reads,[])
 
     def test_development_capability_cannot_be_reused_after_successful_decode(self):
-        case,store=self.prepared(self.case,'reuse');store.commit('input_freeze',case.input_payload)
+        case,store=self.prepared(self.case,'reuse');store.commit('input_freeze',case.input_payload,inputs=declared_input_identities(case))
         custodian=c.fixture_custodian(self.case,case,store)
         self.assertEqual(len(custodian.development()),63)
         with self.assertRaises(d.persistence.ProductionError):custodian.development()
@@ -205,10 +211,11 @@ class IndependentArchiveDriverReview(unittest.TestCase):
         store=d.persistence.ProductionStageStore('plan-validation',registration(),
             {'bytes':source.byte_count,'md5':source.md5,'sha256':source.sha256},execution_kind='SYNTHETIC_FIXTURE')
         self.addCleanup(store.close)
+        allocation_store=d.AllocationUsageStore(store)
         allocation=self.artifact(self.result,'allocation')
         route_identity=allocation['payload']['route_artifact']
         route_payload=self.result.store.read_artifact('label-routes.json',route_identity)['payload']
-        self.assertEqual(store.write_artifact('label-routes.json',route_payload,
+        self.assertEqual(allocation_store.write_artifact('label-routes.json',route_payload,
             schema='lupine.discovery.mpea.label_routes.v1'),route_identity)
         for stage in d.persistence.STAGES[:6]:
             envelope=self.artifact(self.result,stage)
@@ -260,10 +267,13 @@ class IndependentRegistrationHandoffReview(unittest.TestCase):
         # belongs to the separately reviewed parent/worker registration verifier.
         events=[];registration_=object();case=object();custodian=object();answer=object()
         module=SimpleNamespace(verify_registered_sources=lambda value:events.append(value))
-        def execute(case_arg,store,custodian_arg,*,sampling_premise,checkpoint,preflight,allocation_marker_emitted):
+        def execute(case_arg,store,custodian_arg,*,sampling_premise,checkpoint,preflight,allocation_marker_emitted,
+                    input_observation,allocation_import_usage):
             self.assertIs(case_arg,case);self.assertIs(custodian_arg,custodian)
             self.assertEqual(sampling_premise,'unsupported');self.assertTrue(callable(preflight))
             self.assertIs(allocation_marker_emitted,False)
+            self.assertIsInstance(input_observation,d.StageObservation)
+            self.assertIsNone(allocation_import_usage)
             preflight();return answer
         with patch.object(c,'prepare_registered',return_value=case),patch.object(c,'registered_custodian',return_value=custodian),patch.object(d,'_execute',side_effect=execute):
             actual=d.run_registered(registration_,None,SimpleNamespace(sampling_premise='unsupported'),None,None,

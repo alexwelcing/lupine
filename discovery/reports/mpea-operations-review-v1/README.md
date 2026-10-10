@@ -1,0 +1,7 @@
+# Pure operations helper review and portable tests
+
+Final producer9ce72dd8 passed17 independent checks and a separate rerun of author5 against unchanged7-file source/specification bindings. The portable sibling-layout author5+peer17 then passed again with11 unchanged bindings. These are overlapping software checks, not independent scientific samples. No source defect was identified, and no failed test run occurred in this review.
+
+The explicit `manifest.json` copy ledger binds each original path, original bytes SHA and stored wrapper SHA. Each `.bytes.json` contains exact base64 bytes; decoding and SHA verification reconstructs the historical source/tests/API/logs/receipts without newline loss. `verification.json` records byte equality to every original. Portable manifests and diffs identify only two candidate test copies; the independent loader changes to the sibling scripts path and the author test remains byte-identical.
+
+No actual source, scientific targets, feature vectors, allocation, API, entropy provider or terminal process was used. Helpers compare supplied identities and map supplied status strings; they cannot authenticate files, enforce full artifact inventory, validate actual terminal markers or establish scientific usefulness. The caller must bind the original operational cause in its separate receipt, authenticate complete graphs and retain separate stage/public scientific comparison checks. Custody and representation reviewers own that integration.

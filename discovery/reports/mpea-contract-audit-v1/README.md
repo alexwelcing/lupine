@@ -21,3 +21,5 @@ That coverage does not override the separate literal-schema/resource blockers.
 
 The original behavior map is retained; v2 corrects the generic full-suite receipt
 reference without changing the named executed tests or blocker findings.
+
+The subsequent [complete literal review](full-literal-contract-review-v1.md) maps all ten sections against a preserved 20-file source snapshot. It consolidates C1–C9, including row provenance, full generic decision records, public rank handoff and operational/reproduction receipts. Its verdict remains IMPLEMENTATION_CONFORMANCE_PENDING; it is a source review, not a new test execution or study authorization. The source snapshot and both peer section/boundary reviews are in the expanded copy ledger.

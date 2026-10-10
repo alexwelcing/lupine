@@ -1,0 +1,32 @@
+{
+  "command": [
+    "python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_package_*.py",
+    "-v"
+  ],
+  "completed_at": "2026-10-10T22:51:30.172776+00:00",
+  "exit_code": 0,
+  "log_sha256": "9d482608e28003a08f321cc43221dc47fd59037296d2285c2b8fcd97d9724aa6",
+  "scope": "Constructed transport/retention tests in main paths; not an actual wheel or full installed probe.",
+  "source_after": {
+    "scripts/package_smoke.py": "f64489f64aefc6624298e25d9dad493186c25b1c91e3f063e9e73d23f8ebf6a1",
+    "tests/test_package_mpea_interface.py": "0ef43d5023e213a9524f2e6dcf5638638679939c75407a72d99b1429f1be2390",
+    "tests/test_package_retention.py": "ebaaac5da083b20fb47f1c702ddf54b638f3b880fa502bd0333403b8bba77250",
+    "tests/test_package_retention_review.py": "8385c47830d8ea6d0b06a48367f0e1cf9141d32a65ec9529e063e09a4d47c6d5"
+  },
+  "source_before": {
+    "scripts/package_smoke.py": "f64489f64aefc6624298e25d9dad493186c25b1c91e3f063e9e73d23f8ebf6a1",
+    "tests/test_package_mpea_interface.py": "0ef43d5023e213a9524f2e6dcf5638638679939c75407a72d99b1429f1be2390",
+    "tests/test_package_retention.py": "ebaaac5da083b20fb47f1c702ddf54b638f3b880fa502bd0333403b8bba77250",
+    "tests/test_package_retention_review.py": "8385c47830d8ea6d0b06a48367f0e1cf9141d32a65ec9529e063e09a4d47c6d5"
+  },
+  "source_unchanged": true,
+  "started_at": "2026-10-10T22:51:23.307492+00:00",
+  "wall_seconds": 6.865288328001043
+}

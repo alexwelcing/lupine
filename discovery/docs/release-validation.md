@@ -399,3 +399,7 @@ registration or target access. Correct the evidence containers and stage
 measurements, independently verify the contract mapping, then rerun/publish the
 complete source freeze. No scientific threshold, allocation or algorithm changes
 are authorized by this repair.
+
+Production checkpoint update, 2026-10-10 22:14 UTC: exact remote commit `a865147` and all four jobs in [run 38089905975](https://github.com/alexwelcing/lupine/actions/runs/38089905975) are verified successful. Its clean installed wheel passed 28 cases/six schemas; the source/wheel byte audit is retained in [the package record](../reports/production-release-artifact-v1/README.md). The current collector increment passes 36 focused tests. Complete literal-contract repair, full integration and new-source CI remain pending; actual MPEA registration and target access remain blocked.
+
+Contract-conformance checkpoint, 2026-10-10 23:14 UTC: the final scoped C1–C9 reviews and current 56-check Chromium run pass; original failures remain preserved in [the integration record](../reports/mpea-contract-conformance-v1/README.md). The 337-file full local suite is running; this source checkpoint is published for concurrent exact-commit CI. Full-suite completion, clean installed package and all four new-source CI jobs still block registration. No actual MPEA allocation, targets or scientific verdict are claimed.

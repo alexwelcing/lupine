@@ -1,0 +1,34 @@
+{
+  "at": "2026-10-10T22:53:54.639297+00:00",
+  "files": [
+    {
+      "before_sha256": "da37f99e2f42d7572e1acb1656e8c3913b5a4b52a3bd92bc7eb8371e400e2d41",
+      "copied_sha256": "c79b8b45068a75243512336d1f25bb67a8c57059b5aae2bb3d885d414f98192e",
+      "path": "scripts/mpea_archive_custody.py"
+    },
+    {
+      "before_sha256": "d8427266ee799db12fb448413d2ee6e7722ffd5314d8edcbe875cbf2dd6db532",
+      "copied_sha256": "920deb6d52ced3e5d4182ad914ce4ad7544f7b4096f91b463e101d0b3f45b7e9",
+      "path": "scripts/mpea_archive_driver.py"
+    },
+    {
+      "before_sha256": "96f563387c621c35e05a2a30c3e6cc30d92c128e51cc3b9c08de4770e792b542",
+      "copied_sha256": "adec19a85fb7ddaa9f5d702c00ac6e752a7c6a3aea10a4bdcdb4c47a3d11ad80",
+      "path": "tests/test_mpea_archive_driver.py"
+    },
+    {
+      "before_sha256": "d767e5eabaefc91ba14f897da2ae4cfeede9b7980f831e74e315b7f804c1bea9",
+      "copied_sha256": "0cb32959650840ed5785aad2aa63bac6be1f8fed4d52df3cb508b7641f15e066",
+      "path": "tests/mpea_archive_repro_fixture.py"
+    },
+    {
+      "adaptation": "Create ignored temporary parent in setUp, enabling independent execution from a fresh checkout; assertions unchanged.",
+      "before_sha256": null,
+      "copied_sha256": "4232660d6d3295bb843028f9fd1f386a10e837807c0d4c78e7790c2e0e9a38df",
+      "main_sha256": "a97dc1ed914c13ee2379a0b553cbab8a32709f6c4ddbdda8716daee281c00042",
+      "path": "tests/test_mpea_companion_observability.py"
+    }
+  ],
+  "manifest_sha256": "9a3191510d98d9daead54daff6062d8245f7e54958a22ba02e7c7912209db446",
+  "runtime": "Final focused peer checks active; full main integration pending."
+}
