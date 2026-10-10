@@ -11,11 +11,11 @@ python -m lupine_discovery serve
 ```
 
 With the wheel already installed, run `python -m lupine_discovery serve` from
-any directory. Its 25 built-in cases and displayed reports are bundled; no
+any directory. Its 28 built-in cases and displayed reports are bundled; no
 source checkout, dataset download, or numerical package is needed to try them.
-All five interface modes are available on Linux. Coupled and projection HTTP
-modes require Linux process guards; the other three modes remain available on
-other platforms.
+All six interface modes are available on Linux. Coupled, projection and direct
+statistical-pool HTTP modes require Linux process guards; the other three modes
+remain available on other platforms.
 
 Open `http://127.0.0.1:8765` on the machine running the command. Use
 `--port 8766` to choose another port. The server binds to loopback only, stores
@@ -40,8 +40,10 @@ saved pair, not physical truth. An altered or mismatched pair exits with code 2.
 
 1. Choose a built-in known-answer case, or upload a problem JSON. The example
    `examples/abstract.json` shows the scalar format; the menu also includes
-   calibrated, Pareto, coupled and scoped projection demonstrations. Each versioned problem declares
-   scenario semantics and evidence; outcomes remain separate.
+   calibrated, Pareto, coupled, scoped projection and statistical-pool demonstrations.
+   Each versioned problem declares scenario semantics and evidence; future
+   outcomes remain separate. Statistical calibration outcomes are explicit input
+   records and are displayed as such.
 2. Build the candidate pool. Inspect the retained and excluded candidates,
    interval bounds, exclusion witnesses, evidence gaps, and measurement order.
    Scalar mode reports an incumbent and regret when established. Pareto mode
@@ -52,6 +54,9 @@ saved pair, not physical truth. An altered or mismatched pair exits with code 2.
    separately from marginal box diagnostics. Projection mode also shows the
    original physical context, normalization, quantity maps, anchors and source
    declarations; missing bounds yield no numerical model and retain every ID.
+   Statistical mode displays the supplied ranking, complete calibration records,
+   exact risk budget and quantile, and the actual prefix. Its conditional marginal
+   claim supplies no feasibility or regret certificate.
 3. Download **Problem** and **Certificate** together. The problem download is
    the exact text submitted for this successful decision, including whitespace
    and exact numeric strings. It is not a reconstruction from displayed bounds.
@@ -60,7 +65,8 @@ saved pair, not physical truth. An altered or mismatched pair exits with code 2.
    deterministic computation. Both exports are disabled during pending work;
    edits and failed rebuilds clear the previous pair.
 4. Reveal the case's known answers, or upload an outcome file bound to the
-   problem digest; coupled and projection outcomes also bind the certificate digest. Replay
+   problem digest; coupled, projection and statistical outcomes also bind the
+   certificate digest. Statistical outcomes additionally bind the future panel. Replay
    audits the actual pool, reported feasibility and retained optima, preserving
    missing outcomes. Coverage, Pareto fronts, and regret appear only in the modes
    and states where they are defined. Editing a problem invalidates its
@@ -72,7 +78,11 @@ the 256 KiB problem and 2 MiB certificate document caps. Scalar, calibrated and
 Pareto inputs allow up to 5,000 candidates. Coupled and projection input documents have stricter
 limits: 256 KiB, depth 24 and 64 candidates, plus the dimension and proof limits
 in the [coupled guide](coupled-problem.md#local-workbench-and-resource-limits)
-and [projection contract](projection-workbench-contract.md).
+and [projection contract](projection-workbench-contract.md). Statistical pools
+use the same byte/depth profile, at most 64 calibration panels, 64 candidates per
+panel, 4,096 total calibration-plus-future candidate slots and eight constraints.
+All lexical/node/number limits also apply; they can reject a request before a
+count ceiling is reached. See the [statistical contract](decision-pool-workbench-contract.md).
 Decimal values should be strings, such as `"0.125"`; fractions such as
 `"1/3"` are also exact. Use quoted strings for large integers beyond the
 browser safe-integer range as well. Floating-point JSON values and duplicate keys are
@@ -88,6 +98,9 @@ requests so parsing cannot silently change those decisions.
 | **Tradeoffs and tied Pareto candidates** | The pool retains a, a-twin and b. Separate objectives and ties need not yield one winner. |
 | **Missing consistency point, screening withheld** or **Learned relation, screening withheld** | Both candidates remain operationally, even when the separate box diagnostic is smaller. A hypothetical point or learned correlation does not establish a common physical world. |
 | **Scoped correction field, conditional screening**, **Missing field bound, no numerical model**, or **Scoped field with an attained tie** | Inspect the complete original relation. A synthetic shared field can support a strict difference; missing bounds abstain, and attained ties survive. These examples do not validate a material model. |
+| **Statistical prefix loses a tied optimum** | The exact prefix retains a,b; the separate truth reveals tied minima a,c. Lost optimum c remains a visible failure. A marginal theorem does not guarantee this realized pool. |
+| **Unknown calibration label, full pool** | Every calibration record remains in n; the missing value withholds the threshold and retains all future candidates. Successful future replay cannot upgrade the sampling premise. |
+| **Empty statistical prefix loses a feasible optimum** | Nineteen infeasible calibration panels yield threshold zero. The future feasible optimum is lost. The empty pool does not certify infeasibility, and vacuous calibration panels are not successful held-out discoveries. |
 | **Negative control: false score interval** | Replay exposes the lost true optimum. Detecting this deliberately false premise is expected engine behavior. |
 | **Known answers** → scientific gates and training-only development | Failed recommendation gates and `NO_GO_MODEL_IMPROVEMENT` are recorded scientific/development results, not installation errors. No replacement model or new coverage claim follows. |
 
@@ -98,8 +111,8 @@ displays separately recorded scientific archive results. Synthetic passes mean
 the implementation matched independently enumerated truth and declared
 expectations. A negative-control pass means a deliberate failure was detected;
 it is not successful physical screening.
-The selector contains those 13 cases plus twelve calibrated, Pareto, coupled
-and projection demonstrations. Open and evaluate those demonstrations from the candidate-pool
+The selector contains those 13 cases plus fifteen calibrated, Pareto, coupled,
+projection and statistical-pool demonstrations. Open and evaluate those demonstrations from the candidate-pool
 menu; the suite counter continues to describe the original 13 cases.
 
 The scientific reports cover experimental band gaps, steel yield strength,
@@ -129,11 +142,36 @@ is selected. Inspect both properties, every fold, ordinary and numerical-guard
 gates, costs, and source identities. Its NO-GO result is development evidence,
 not an independent coverage estimate. Loading the dashboard performs no fits.
 
-Coupled and projection inputs share a separate Linux worker with CPU, wall-time, address-space
-and output limits. Unsupported platforms refuse these two HTTP modes;
+Coupled, projection and statistical-pool inputs share a separate Linux worker
+with CPU, wall-time, address-space and output limits. Unsupported platforms
+refuse these three HTTP modes;
 the other interface modes remain available. A hard failure clears the pending
 result and offers no decision receipt. See the [coupled guide](coupled-problem.md)
 for exact inputs, proof inspection, deferred outcome replay and limits.
+
+## Interpret statistical-pool calibration
+
+This mode requires an externally frozen ranking and complete recorded calibration
+panels from a declared population. The receipt binds those declarations; it does
+not verify their history or exchangeability. Its retention statement is marginal
+over calibration and **one** future panel. It is not a verified risk for the
+particular displayed pool, nor coverage conditional on feasibility, family, a
+candidate, or the realized calibration set. Repeated/adaptive use is outside the
+stated single-panel guarantee.
+
+Incomplete labels and unsupported sampling withhold the threshold and retain
+every candidate. Insufficient calibration uses threshold one, also retaining
+every candidate. A finite threshold one is a distinct calibrated outcome; it
+still offers no pool reduction. Empty statistical prefixes and empty universes
+are separate states. There is no automatic top-one substitute, physical
+feasibility color, candidate confidence, incumbent or regret bound.
+
+The calibration table retains every original source, panel, ranking, label/null
+and assessment. Future replay fixes the decision first, then checks every tied
+minimizer against the actual pool. Incomplete future truth remains unknown;
+complete empty/infeasible panels show vacuous logical retention separately from
+feasible success. Every lost optimum remains visible. These constructed examples
+are software controls, not a scientific validation of the panel sampling law.
 
 ## Package and test
 

@@ -24,6 +24,7 @@ MAX_VERIFY_BODY_BYTES = 6 * (MAX_CERTIFICATE_BYTES + MAX_DOCUMENT_BYTES) + 1024
 MAX_CANDIDATES = 5000
 COUPLED_SCHEMA = "lupine.discovery.coupled_problem.v1"
 PROJECTION_SCHEMA = "lupine.discovery.projection_problem.v1"
+DECISION_POOL_SCHEMA = "lupine.discovery.decision_pool_problem.v1"
 ASSETS = {"/": ("index.html", "text/html; charset=utf-8"),
           "/index.html": ("index.html", "text/html; charset=utf-8"),
           "/styles.css": ("styles.css", "text/css; charset=utf-8"),
@@ -44,7 +45,7 @@ def coupled_problem(problem):
 
 
 def guarded_problem(problem):
-    return isinstance(problem, dict) and problem.get("schema") in {COUPLED_SCHEMA, PROJECTION_SCHEMA}
+    return isinstance(problem, dict) and problem.get("schema") in {COUPLED_SCHEMA, PROJECTION_SCHEMA, DECISION_POOL_SCHEMA}
 
 
 def raw_document(value):
@@ -54,6 +55,9 @@ def raw_document(value):
 
 def select_problem(problem):
     problem = bounded_problem(problem)
+    if problem.get("schema") == DECISION_POOL_SCHEMA:
+        raise CoupledWorkerError("raw_problem_required",
+            "Statistical-pool selection requires problem_raw JSON text.", 400)
     if guarded_problem(problem):
         return run_coupled("select", raw_document(problem))
     return certificate(problem)
@@ -180,6 +184,9 @@ class WorkbenchHandler(BaseHTTPRequestHandler):
                 else:
                     fields(value, ("problem", "outcomes"))
                     problem = bounded_problem(value["problem"])
+                    if problem.get("schema") == DECISION_POOL_SCHEMA:
+                        raise CoupledWorkerError("raw_outcomes_required",
+                            "Statistical-pool replay requires problem_raw and outcomes_raw JSON text so the decision is sealed before outcome decoding.", 400)
                     if guarded_problem(problem):
                         raise CoupledWorkerError("raw_outcomes_required",
                             "Coupled and projection replay require problem_raw and outcomes_raw JSON text so the decision is sealed before outcome decoding.", 400)

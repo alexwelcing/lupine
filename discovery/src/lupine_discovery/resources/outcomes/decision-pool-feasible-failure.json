@@ -1,0 +1,24 @@
+{
+  "certificate_digest": "70e57e7e4b5815bbe6acecc9a1c5d1f0e1e7ae273ad2065182a50ec941181eb2",
+  "panel_digest": "ed9aae4071615cf15d438e51b59d9ceaaadfa2aaf09598f4b690cad1f5118658",
+  "problem_digest": "ab7c0372b97706de18b8fd59c44a0d2cf9085164246f11844ce0c0097d928055",
+  "rows": [
+    {
+      "candidate_id": "first",
+      "constraints": {
+        "g": "1"
+      },
+      "score": "0"
+    },
+    {
+      "candidate_id": "last",
+      "constraints": {
+        "g": "0"
+      },
+      "score": "0"
+    }
+  ],
+  "scenario_id": "decision-pool-feasible-failure",
+  "schema": "lupine.discovery.decision_pool_outcomes.v1",
+  "source_reference": "Public constructed future labels, revealed after selection in this executable example; no physical evidence."
+}

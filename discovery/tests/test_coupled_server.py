@@ -53,7 +53,7 @@ class CoupledServerTests(unittest.TestCase):
         expected = [("coupled-shared-trend", "conditional_screened", ["B"]),
                     ("coupled-missing-point", "consistency_unresolved_all_retained", ["A", "B"]),
                     ("coupled-learned-relation", "unsupported_all_retained", ["A", "B"])]
-        self.assertEqual(len(case_catalog()), 25)
+        self.assertEqual(len(case_catalog()), 28)
         for case_id, state, retained in expected:
             with self.subTest(case_id=case_id):
                 problem = self.problem(case_id)

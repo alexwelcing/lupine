@@ -39,7 +39,7 @@
             <div id="scenario-overview" class="scenario-overview" hidden><div class="case-heading"><span id="case-kind" class="tag">CASE</span><span id="candidate-count" class="tiny-label"></span></div><h3 id="case-title"></h3><p id="case-description"></p><dl class="scenario-facts"><div><dt>Objective</dt><dd id="scenario-objective"></dd></div><div><dt>Constraints</dt><dd id="scenario-constraints"></dd></div><div><dt>Reference</dt><dd id="scenario-reference"></dd></div></dl></div>
             <details class="json-editor" id="json-editor"><summary>Edit problem JSON <span aria-hidden="true">↗</span></summary><label class="sr-only" for="problem-json">Problem JSON</label><textarea id="problem-json" spellcheck="false" autocomplete="off" data-testid="problem-json" placeholder="Load a case or paste a problem here."></textarea><p class="field-help">Use strings for decimal values and large integers. Every constraint means g ≤ 0. Editing clears the previous result.</p></details>
             <button id="analyze" class="button button-primary" data-testid="analyze" disabled>Build candidate pool <span aria-hidden="true">→</span></button>
-            <p class="input-footnote">Known outcomes stay separate until you choose to evaluate the result.</p>
+            <p id="input-footnote" class="input-footnote">Known outcomes stay separate until you choose to evaluate the result.</p>
           </section>
           <div class="analysis-column">
             <section id="empty-state" class="empty-state panel" aria-labelledby="empty-title"><div class="empty-chart" aria-hidden="true"><span class="empty-axis"></span><span class="empty-interval interval-one"></span><span class="empty-interval interval-two"></span><span class="empty-interval interval-three"></span><span class="empty-interval interval-four"></span><span class="empty-bound"></span><span class="chart-word">POSSIBILITY → EVIDENCE</span></div><p class="eyebrow">READY TO EXPLORE</p><h2 id="empty-title">A recommendation you can inspect.</h2><p>Choose a case and build its pool. See which candidates remain possible, which can be excluded, and what evidence the decision assumes.</p><div class="empty-principles"><span>Exact interval decisions</span><span>Ties kept with sound bounds</span><span>Uncertainty made visible</span></div></section>
@@ -55,6 +55,15 @@
                 <div id="calibration-targets" class="calibration-targets"></div>
                 <p id="calibration-identifiers" class="field-help"></p>
                 <p id="calibration-scope" class="field-help"></p>
+              </section>
+              <section id="decision-pool-panel" class="panel decision-pool-panel" aria-labelledby="decision-pool-heading" hidden>
+                <p class="eyebrow">STATISTICAL POOL / DECLARED PANEL LAW</p>
+                <h3 id="decision-pool-heading">Calibrate a ranked prefix</h3>
+                <p id="decision-pool-limitations" class="field-help"></p>
+                <dl id="decision-pool-facts" class="calibration-facts"></dl>
+                <ul id="decision-pool-reasons" class="calibration-reasons"></ul>
+                <details class="replay-details"><summary>Frozen protocol, sources &amp; future ranking</summary><div id="decision-pool-protocol"></div></details>
+                <div id="decision-pool-calibration"></div>
               </section>
               <section id="projection-panel" class="panel projection-panel" aria-labelledby="projection-heading" hidden>
                 <p class="eyebrow">SCOPED RELATION / ORIGINAL DECLARATION</p>

@@ -1,6 +1,6 @@
 # Engine architecture and extension boundaries
 
-The recommendation engine consumes a finite candidate universe and scientifically scoped intervals. Candidate generation and property modeling are separate adapters. This makes the decision mathematics reusable across molecules, atomic structures, alloys, processing histories, and operating scenarios without pretending their physical models are interchangeable.
+The recommendation engine consumes a finite candidate universe and scientifically scoped evidence. Interval modes use declared enclosures; a separate statistical mode calibrates a ranking prefix from complete labeled panels. Candidate generation and property modeling are separate adapters. This makes the decision mathematics reusable across molecules, atomic structures, alloys, processing histories, and operating scenarios without pretending their physical models are interchangeable.
 
 ```text
 published sources / measurements / archived calculations
@@ -23,7 +23,12 @@ sealed held-out outcomes ------------------------> replay audit
 |---|---|---|
 | `core.py` | Exact interval arithmetic and finite selection | Assumes semantic scope and physical enclosure |
 | `envelope.py` | Intersect anchored residual cones | Supplied distances and global Lipschitz premise are not inferred |
-| `calibration.py` | Exact uniform joint-risk allocation and finite/unbounded order-statistic diagnostics | Sampling premises remain unverified; not yet integrated with selector/CLI/UI |
+| `calibration.py` | Exact uniform joint-risk allocation and finite/unbounded order-statistic diagnostics | Sampling premises remain unverified; calibrated IO integrates finite bounds or explicit abstention with CLI/replay/UI |
+| `pareto.py`, `pareto_io.py` | Exact vector dominance and partial-outcome replay | No scalar winner; sound componentwise intervals remain premises |
+| `coupled.py`, `coupled_io.py` | Exact affine witnesses over one shared domain | One physical common world must exist; consistency alone cannot establish it |
+| `projection.py`, `projection_io.py` | Translate declared correction fields, anchors and discrepancy bounds | Missing bounds yield no model; original scope and provenance remain sealed |
+| `decision_pool.py`, `decision_pool_io.py` | Calibrate an exact ranked pool and audit the actual retained set | Marginal all-optimum retention under explicit panel-score law; no feasibility or regret certificate |
+| `coupled_worker.py`, `decision_pool_transport.py` | Bounded Linux subprocess and strict statistical receipt transport | Worker limits and identity checks are engineering guards, not physical attestation |
 | `evidence.py` | Validate evidence identity and scope links | A reported source is not a verified physical premise |
 | `serialization.py` | Strict JSON, rational decoding, outcome binding | No implicit unit conversion or floating-point rounding |
 | `cli.py` | Certificates, explanations, recomputation, replay interface | Certificate verification proves runtime consistency only |
@@ -48,4 +53,10 @@ Adding new candidates changes the optimization universe. It may expand the pool,
 
 ## Research extensions
 
-Pareto retention requires vector objectives and a different dominance predicate. Nonlinear transformations require domain-aware enclosure rules. Simultaneous probabilistic coverage requires explicit joint events and sampling assumptions. Distribution shift requires separate scrutiny. Each extension should bring a precise theorem, runtime contract, counterexample at its boundary, and outcome-independent evaluation protocol.
+Implemented Pareto retention uses vector objectives and strict feasible dominance. Implemented nonlinear maps enforce their enclosing-domain requirements. Calibrated interval and direct-pool modes expose distinct probabilistic events and sampling premises. None establishes scientific exchangeability from a declared identifier. Distribution shift requires separate scrutiny, and a new scientific evaluation must freeze its protocol before opening its evaluation targets.
+
+## Statistical branch
+
+The direct-pool path consumes a frozen protocol, complete ranked calibration panels with recorded labels, and one unlabeled future panel. It seals selection before loading separate future outcomes. Unknown calibration labels preserve every panel in the denominator and trigger whole-universe fallback; unsupported assumptions and insufficient calibration have separate states. A finite threshold can retain zero candidates, which is not a certificate of infeasibility. Replay reports lost tied optima and incomplete truth without changing the selected pool.
+
+The [wire contract](decision-pool-workbench-contract.md) specifies exact identities, lexical and total-panel limits, original-input seals, guarded HTTP, and paired exports. A marginal claim averages over calibration and a future panel; it does not become a guarantee conditional on feasibility, the observed calibration set, an individual material, or repeated adaptive use.

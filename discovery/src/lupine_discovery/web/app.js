@@ -18,6 +18,7 @@
   const isAbstained = () => isCalibrated() && state.certificate.calibration?.status === 'abstained';
   const isPareto = () => state.certificate?.schema === 'lupine.discovery.pareto_certificate.v1';
   const isProjection = () => state.certificate?.schema === 'lupine.discovery.projection_certificate.v1';
+  const isDecisionPool = () => state.certificate?.schema === 'lupine.discovery.decision_pool_certificate.v1';
   const projectionHasModel = () => Boolean(isProjection() && state.certificate.prepared_problem && state.certificate.coupled_certificate);
   const isCoupled = () => state.certificate?.schema === 'lupine.discovery.coupled_certificate.v1' || projectionHasModel();
   // Derived coupled data is only a display view. State and exports retain the
@@ -97,15 +98,19 @@
     $('scenario-overview').hidden = !problem || typeof problem !== 'object';
     if (!problem || typeof problem !== 'object') return;
     const projection = problem.schema === 'lupine.discovery.projection_problem.v1' ? problem.projection : null;
-    const scenario = projection ? { id: projection.scenario_id, objective: { ...projection.objective_scope, direction: 'minimize' }, constraints: projection.constraint_scopes } : problem.scenario || {};
+    const protocol = problem.schema === 'lupine.discovery.decision_pool_problem.v1' ? problem.protocol : null;
+    const scoped = projection || protocol;
+    const scenario = scoped ? { id: scoped.scenario_id, objective: { ...scoped.objective_scope, direction: 'minimize' }, constraints: scoped.constraint_scopes } : problem.scenario || {};
     const objective = scenario.objective || {};
     const objectives = Object.entries(scenario.objectives || {});
     const constraints = Object.keys(scenario.constraints || {});
     $('case-kind').textContent = state.metadata ? pretty(state.metadata.kind || 'known-answer case').toUpperCase() : 'CUSTOM INPUT';
-    $('candidate-count').textContent = `${list(projection ? projection.candidates : problem.candidates).length} candidates`;
+    $('candidate-count').textContent = `${list(protocol ? problem.future_panel?.candidate_ids : projection ? projection.candidates : problem.candidates).length} candidates`;
+    $('input-footnote').textContent = protocol ? 'Calibration labels are selection inputs. Future outcomes stay separate until you choose to evaluate the result.' : 'Known outcomes stay separate until you choose to evaluate the result.';
     $('case-title').textContent = state.metadata?.title || scenario.id || 'Untitled scenario';
     $('case-description').textContent = state.metadata?.description || problem.description || (problem.schema === 'lupine.discovery.calibrated_problem.v1'
       ? 'Nominal predictions and separate calibration residuals determine whether conditional screening is available.'
+      : protocol ? 'Inspect the frozen ranking, complete calibration declarations, and single-panel statistical premises before selecting a future prefix.'
       : projection ? 'Inspect the scoped field relation, whole-quantity conversions, and declared bounds before conditional screening.'
       : problem.schema === 'lupine.discovery.pareto_problem.v1' ? 'Compare objective bounds without collapsing tradeoffs into a single score.'
         : problem.schema === 'lupine.discovery.coupled_problem.v1' ? 'Inspect shared affine quantities, exact exclusion proofs, and the separate common-world premise.' : 'Supply score bounds and constraints for the candidates in this scenario.');
@@ -129,7 +134,7 @@
     invalidate();
     const revision = state.revision;
     busy(true);
-    notify('Loading the scenario. Known outcomes remain separate.');
+    notify('Loading the scenario. Future outcomes remain separate.');
     try {
       const result = await api(`/api/cases/${encodeURIComponent(id)}`);
       if (revision !== state.revision) return;
@@ -166,6 +171,101 @@
   }
   function projectionUseText(use) {
     return `(${exactText(use?.scale)}) × entire observation ${use?.observation_id || 'undeclared'} + (${exactText(use?.offset)})`;
+  }
+  const decisionPoolLimitations = 'The finite claim is marginal over calibration and one future panel under an unverified exchangeable score law. It is not a verified probability for this realized pool, conditional coverage given this calibration set, protection conditional on feasibility or a family, a per-candidate probability, or a simultaneous guarantee for repeated queries.';
+  function renderDecisionPoolSelection() {
+    const certificate = state.certificate, calibration = certificate.calibration, selection = certificate.selection;
+    const status = calibration.status, withheld = ['unsupported_premise', 'incomplete_calibration'].includes(status);
+    const count = selection.m, retained = list(selection.retained).length;
+    $('empty-state').hidden = true; $('analysis-results').hidden = false;
+    $('calibration-panel').hidden = true; $('coupled-panel').hidden = true;
+    const titles = { unsupported_premise: 'Screening withheld · unsupported premise', incomplete_calibration: 'Screening withheld · incomplete calibration', insufficient_calibration: 'All retained · insufficient calibration' };
+    $('result-title').textContent = count === 0 ? 'Empty candidate universe' : titles[status] || (retained === 0 ? 'Empty statistical pool' : retained === count ? 'All retained · finite threshold' : 'Statistical candidate pool');
+    $('selection-note').classList.toggle('abstained', withheld || retained === 0);
+    $('selection-note').textContent = withheld
+      ? 'Every original candidate remains in its supplied rank order. No calibrated guarantee is available. All calibration records, sources and missing labels remain visible; none were dropped to obtain a smaller pool.'
+      : status === 'insufficient_calibration'
+        ? 'Every original candidate remains because the requested rank exceeds the calibration count. Threshold 1 uses the universal upper bound on the panel score; retention follows from returning the whole universe.'
+        : `${retained === 0 && count > 0 ? 'This does not establish infeasibility. ' : ''}The actual pool is the weak ranked prefix selected before future labels are opened. The marginal statement permits realized failures, including loss of a tied optimum. Retained candidates are not certified feasible.`;
+    if (count === 0) $('selection-note').textContent += ' The supplied future universe is empty; no candidate exists to retain or lose.';
+    $('selection-metrics').replaceChildren(
+      metric('ACTUAL RETAINED POOL', retained, 'Supplied rank order preserved', `/ ${exactText(count)}`),
+      metric('RETAINED FRACTION', selection.retained_fraction === null ? 'Undefined' : exactText(selection.retained_fraction), count === 0 ? 'Empty future universe' : 'Exact fraction of this future universe'),
+      metric('CALIBRATION LABELS COMPLETE', `${exactText(calibration.complete_count)} / ${exactText(calibration.n)}`, 'Panel completeness; not a success or coverage rate'),
+    );
+    $('decision-pool-limitations').textContent = decisionPoolLimitations;
+    const facts = $('decision-pool-facts'); facts.replaceChildren();
+    for (const [label, value] of [
+      ['Calibration status', pretty(status)], ['Premise status', pretty(calibration.premise_status)],
+      ['Risk budget α (exact)', exactText(calibration.alpha)], ['Calibration panels n', exactText(calibration.n)],
+      ['Complete calibration panels', exactText(calibration.complete_count)], ['Required rank k', exactText(calibration.k)],
+      ['Operational threshold τ', calibration.threshold === null ? 'Unavailable' : exactText(calibration.threshold)],
+      ['Guarantee scope', pretty(calibration.guarantee_status)],
+    ]) addFact(facts, label, value);
+    const reasons = $('decision-pool-reasons'); reasons.replaceChildren();
+    for (const reason of list(selection.reasons)) { const item = node('li', '', pretty(reason)); item.dataset.reason = reason; reasons.append(item); }
+    const protocol = $('decision-pool-protocol'); protocol.replaceChildren(
+      declarationFacts(certificate.protocol),
+      node('p', 'field-help', 'Source references, feature manifests and freezing declarations are supplied metadata. Their identities do not establish the claimed sampling law, training independence, or physical truth.'),
+      exactDetails('Complete original future ranking and identities', certificate.future_panel),
+      exactDetails('Original problem and decision identity', { problem_digest: certificate.problem_digest, certificate_digest: certificate.certificate_digest, decision_digest: selection.decision_digest, calibration_digest: calibration.calibration_digest }),
+    );
+    const calibrationTarget = $('decision-pool-calibration'); calibrationTarget.replaceChildren(node('h4', '', 'Every calibration panel · selection inputs'),
+      node('p', 'field-help', 'These labels were used to calibrate the prefix. They are not held-out future evaluations. Complete, incomplete, infeasible and empty panels remain in the original record order; a complete-count fraction is not a success denominator.'));
+    const records = list(calibration.panels);
+    if (!records.length) calibrationTarget.append(node('p', 'field-help', 'No calibration panels were supplied. The full future universe is retained.'));
+    else {
+      const rows = records.map(({ panel, outcomes, assessment }) => [panel.panel_id, panel.universe_id, outcomes.source_reference, exactText(assessment.m), pretty(assessment.status), pretty(assessment.reason), exactText(assessment.score), list(assessment.missing).length]);
+      const table = dataTable(['Panel draw', 'Universe', 'Declared source', 'Candidates', 'Label state', 'Assessment reason', 'Exact panel score', 'Missing values'], rows, 'All original calibration panels · no future evaluation success rate', 'decision-calibration-table');
+      table.id = 'decision-pool-calibration-table'; calibrationTarget.append(table);
+    }
+    for (const record of records) {
+      const detail = node('details', 'replay-details decision-calibration-record'); detail.dataset.panelId = record.panel.panel_id;
+      detail.append(node('summary', '', `${record.panel.panel_id} · ${pretty(record.assessment.status)} · ${pretty(record.assessment.reason)}`));
+      if (list(record.assessment.missing).length) detail.append(node('p', 'field-help', `Missing calibration values: ${record.assessment.missing.map(([id, quantity]) => `${id} / ${quantity}`).join(', ')}.`));
+      detail.append(exactDetails('Original ranked panel', record.panel), exactDetails('Complete calibration source and labels', record.outcomes), exactDetails('Exact assessment and linked identities', record.assessment));
+      calibrationTarget.append(detail);
+    }
+    renderDecisionPool();
+    const evidence = $('evidence-content'); evidence.replaceChildren();
+    const claim = calibration.conditional_guarantee || (status === 'insufficient_calibration' ? 'Deterministic retention follows from returning the whole candidate universe.' : 'No calibrated guarantee is supplied. Retaining everyone is an operational fallback.');
+    evidence.append(node('p', 'evidence-summary', claim), node('p', 'field-help', decisionPoolLimitations));
+    const assumptions = node('ul', 'observation-list');
+    for (const assumption of list(certificate.assumptions)) assumptions.append(node('li', '', assumption));
+    evidence.append(assumptions, node('p', 'field-help', 'Physical attestation: not established by this program. A passed replay cannot upgrade the premise status.'));
+    const queue = node('div', 'queue-chips');
+    for (const id of list(selection.retained)) queue.append(node('span', 'queue-chip', id));
+    $('measurement-queue').replaceChildren(queue);
+    if (!retained) $('measurement-queue').append(node('p', 'selection-empty', count ? 'The statistical prefix is empty. No physical infeasibility has been established.' : 'The future universe contains no candidates.'));
+    $('measurement-note').textContent = 'The supplied rank order is preserved. Pool size is not a measured acquisition cost. No top-one addition or budget truncation is applied.';
+    $('replay-intro').textContent = 'The actual statistical pool is fixed. Reveal separately sealed future labels to audit every tied feasible minimum. Infeasible or empty panels give vacuous retention, not a feasible-panel success.';
+    $('replay-builtin').hidden = !state.caseId || state.metadata?.has_outcomes === false;
+    $('step-prepare').className = 'complete'; $('step-select').className = 'current';
+  }
+  function renderDecisionPool() {
+    const selection = state.certificate.selection, ranked = list(selection.ranked_ids), retained = new Set(list(selection.retained));
+    $('pool-heading').textContent = 'Future candidates · supplied ranking';
+    $('pool-help').textContent = 'Ordinal ranks come from the declared frozen permutation. Outside the prefix does not mean infeasible or dominated. No predicted quantity or per-candidate probability is supplied.';
+    $('pool-legend').hidden = true;
+    const table = node('table', 'candidate-table decision-pool-table');
+    table.append(node('caption', 'sr-only', 'Exact original ranking and actual statistical-prefix selection. No candidate feasibility certificate.'));
+    const head = node('thead'), header = node('tr');
+    for (const label of ['Candidate', 'Ordinal / panel size', 'Actual decision']) { const cell = node('th', '', label); cell.scope = 'col'; header.append(cell); }
+    head.append(header); const body = node('tbody');
+    for (const [index, id] of ranked.entries()) {
+      const included = retained.has(id);
+      if (state.filter !== 'all' && (state.filter === 'retained') !== included) continue;
+      const row = node('tr'); row.dataset.candidateId = id; row.dataset.decision = included ? 'retained' : 'excluded';
+      const identity = node('th', 'candidate-id', id); identity.scope = 'row';
+      const rank = node('td', 'score-values', `${index + 1} / ${selection.m}`);
+      const decision = node('td');
+      const reason = selection.calibration_status === 'finite_conditional' ? included ? 'Inside the weak statistical prefix.' : 'Outside the weak statistical prefix; a true optimum can be lost.' : 'Whole-universe retention; no candidate was removed.';
+      decision.append(node('span', `row-status${included ? '' : ' withheld'}`, included ? 'Retained' : 'Outside prefix'), node('p', 'row-reason', reason));
+      row.append(identity, rank, decision); body.append(row);
+    }
+    table.append(head, body); $('pool-table').replaceChildren(table);
+    $('pool-table').tabIndex = 0; $('pool-table').setAttribute('role', 'region'); $('pool-table').setAttribute('aria-label', 'Scrollable supplied ranking and statistical decision table');
+    if (!body.childElementCount) $('pool-table').append(node('p', 'empty-filter', ranked.length ? 'No candidates in this group.' : 'The original future universe is empty.'));
   }
   function renderProjectionRelation() {
     const certificate = state.certificate, declaration = state.problem.projection, projection = certificate.projection;
@@ -408,9 +508,12 @@
     if (!candidates.length) $('pool-table').append(node('p', 'empty-filter', 'No candidates in this group.'));
   }
   function renderSelection() {
+    $('decision-pool-panel').hidden = !isDecisionPool();
     $('projection-panel').hidden = !isProjection();
-    $('download-replay').hidden = !isProjection();
+    $('download-replay').hidden = !(isProjection() || isDecisionPool());
     $('coupled-panel').hidden = !isCoupled();
+    document.querySelector('[data-filter="excluded"]').textContent = isDecisionPool() ? 'Outside prefix' : 'Excluded';
+    if (isDecisionPool()) { renderDecisionPoolSelection(); return; }
     if (isProjection()) {
       renderProjectionRelation();
       if (!projectionHasModel()) { renderProjectionAbstention(); return; }
@@ -477,6 +580,7 @@
     return list(state.certificate.selection.certified_feasible).includes(id) ? 'Feasible across the supplied bounds.' : 'Feasibility or ranking remains unresolved.';
   }
   function renderPool() {
+    if (isDecisionPool()) { renderDecisionPool(); return; }
     if (isProjection() && !projectionHasModel()) { renderProjectionUnpreparedPool(); return; }
     if (isCoupled()) { renderCoupledPool(); return; }
     if (isPareto()) { renderParetoPool(); return; }
@@ -703,22 +807,65 @@
       state.problem = parseForDisplay(submittedRaw);
       const coupled = state.problem.schema === 'lupine.discovery.coupled_problem.v1';
       const projection = state.problem.schema === 'lupine.discovery.projection_problem.v1';
-      busy(true); notify(projection ? 'Checking the scoped relation and bounds before preparing a shared model…' : coupled ? 'Checking shared-model premises, consistency and exact proofs…' : state.problem.schema === 'lupine.discovery.calibrated_problem.v1' ? 'Checking the calibration budget before screening the pool…' : 'Building the pool from the declared bounds…');
+      const decisionPool = state.problem.schema === 'lupine.discovery.decision_pool_problem.v1';
+      busy(true); notify(decisionPool ? 'Assessing every declared calibration panel before selecting the future ranked prefix…' : projection ? 'Checking the scoped relation and bounds before preparing a shared model…' : coupled ? 'Checking shared-model premises, consistency and exact proofs…' : state.problem.schema === 'lupine.discovery.calibrated_problem.v1' ? 'Checking the calibration budget before screening the pool…' : 'Building the pool from the declared bounds…');
       // Preserve the original JSON. The server detects duplicate keys and parses
       // exact values; JSON.stringify(JSON.parse(input)) would erase those checks.
-      const result = await api('/api/select', coupled || projection ? JSON.stringify({ problem_raw: submittedRaw }) : `{"problem":${submittedRaw}}`);
+      const result = await api('/api/select', coupled || projection || decisionPool ? JSON.stringify({ problem_raw: submittedRaw }) : `{"problem":${submittedRaw}}`);
       if (revision !== state.revision) return;
       state.certificate = result; state.selectedRaw = submittedRaw; state.replay = null;
       $('replay-results').hidden = true;
       $('replay-tag').textContent = 'NOT YET EVALUATED';
       renderSelection();
-      const withheld = isAbstained() || (isProjection() && !projectionHasModel()) || (isCoupled() && !coupledActive());
-      notify(withheld ? 'Screening withheld. All candidates remain; the decision is fixed before outcomes are evaluated.' : 'Pool built. The decision is fixed before outcomes are evaluated.', withheld ? '' : 'success');
+      const withheld = isAbstained() || (isDecisionPool() && ['unsupported_premise', 'incomplete_calibration'].includes(result.calibration.status)) || (isProjection() && !projectionHasModel()) || (isCoupled() && !coupledActive());
+      notify(withheld ? 'Screening withheld. All candidates remain; the decision is fixed before future outcomes are evaluated.' : 'Pool built. The decision is fixed before future outcomes are evaluated.', withheld ? '' : 'success');
     } catch (error) { if (revision === state.revision) notify(error.message, 'error'); }
     finally { if (revision === state.revision) busy(false); }
   }
   function addFact(target, label, value) {
     const row = node('div'); row.append(node('dt', '', label), node('dd', '', value)); target.append(row);
+  }
+  function renderDecisionPoolReplay(report) {
+    const audit = report.outcome_audit || {}, selection = report.decision?.selection || {};
+    const complete = audit.status === 'complete', vacuous = String(audit.retention_test).startsWith('vacuous_');
+    const failed = audit.retention_test === 'feasible_failure', success = audit.retention_test === 'feasible_success';
+    const target = $('replay-results'); target.hidden = false; target.replaceChildren();
+    const panel = node('section', 'decision-pool-replay'); panel.id = 'decision-pool-replay'; panel.dataset.retentionTest = audit.retention_test || 'unknown';
+    const verdict = failed ? 'The actual statistical pool lost a true feasible optimum. This realized failure remains part of the result.'
+      : success ? 'Every true feasible tied optimum in the complete reported future panel was retained.'
+        : audit.retention_test === 'vacuous_empty_universe' ? 'The future universe is empty. Retention is vacuously true; this is not a feasible-panel success.'
+          : vacuous ? 'The complete future labels contain no feasible candidate. Retention is vacuously true; this is not a feasible-panel success.'
+            : 'Incomplete future labels leave the full-panel feasible set, tied optima and retention unknown.';
+    panel.append(node('div', `replay-verdict${failed ? ' fail' : success ? '' : ' unknown'}`, verdict));
+    $('replay-tag').textContent = failed ? 'OPTIMUM LOST' : success ? 'REPORTED OPTIMA RETAINED' : vacuous ? 'VACUOUS RETENTION' : 'RETENTION UNKNOWN';
+    const facts = node('dl', 'replay-stats');
+    const ids = (value) => Array.isArray(value) ? value.join(', ') || 'None' : 'Unknown';
+    for (const [label, value] of [
+      ['Actual pool fixed before replay', list(selection.retained).join(', ') || 'Empty'],
+      ['Future label completeness', pretty(audit.status || 'unknown')],
+      ['Retention test', pretty(audit.retention_test || 'unknown')],
+      ['Every true tied optimum retained', vacuous ? 'Vacuously yes · no feasible optimum' : truthText(audit.all_true_minimizers_retained)],
+      ['Reported feasible IDs', ids(audit.reported_feasible_ids)],
+      ['All true minimizer IDs', ids(audit.true_minimizer_ids)],
+      ['Lost minimizer IDs', ids(audit.lost_minimizer_ids)],
+      ['True optimum value', vacuous ? 'None · no feasible optimum' : exactText(audit.true_optimum_value)],
+      ['Worst true minimizer rank fraction', exactText(audit.worst_minimizer_rank_fraction)],
+      ['Realized threshold event', selection.threshold == null ? 'Unavailable · no operational threshold' : truthText(audit.threshold_event_holds)],
+    ]) addFact(facts, label, value);
+    panel.append(facts);
+    if (list(audit.missing).length) panel.append(node('p', 'field-help', `Missing future values: ${audit.missing.map(([id, quantity]) => `${id} / ${quantity}`).join(', ')}. They are not passes or failures.`));
+    panel.append(node('p', 'replay-caveat', failed
+      ? 'A marginal statement can coexist with this realized failure. Retaining one optimum is insufficient when another tied optimum is lost. Neither an aggregate rate nor a vacuous success can erase the loss.'
+      : vacuous ? 'This case belongs to the empty or infeasible panel count, outside a feasible-panel success denominator. Vacuous retention is not evidence of useful discovery.'
+        : complete ? 'This is an audit of one supplied finite panel, not verification of the exchangeable panel law or a future success probability.'
+          : 'Every required future score and constraint must be reported to establish the global minimizer set. The fixed selection and its premise status remain unchanged.'));
+    panel.append(node('p', 'field-help', decisionPoolLimitations));
+    if (typeof report.interpretation === 'string') panel.append(node('p', 'field-help', report.interpretation));
+    else if (report.interpretation !== undefined) panel.append(exactDetails('Recorded interpretation', report.interpretation));
+    panel.append(exactDetails('Original reported source and every future label', report.reported_outcomes), exactDetails('Complete exact outcome audit', audit),
+      node('p', 'field-help', 'No physical attestation is established. A future audit does not change calibration completeness, rank order, or the original statistical decision.'));
+    target.append(panel);
+    $('step-select').className = 'complete'; $('step-replay').className = 'current';
   }
   function renderCoupledReplay(report) {
     const audit = report.outcome_audit || {}, world = report.provided_world_audit || {};
@@ -784,6 +931,7 @@
     $('step-select').className = 'complete'; $('step-replay').className = 'current';
   }
   function renderReplay(report) {
+    if (isDecisionPool()) { renderDecisionPoolReplay(report); return; }
     if (isCoupled() || isProjection()) { renderCoupledReplay(report); return; }
     if (isPareto()) { renderParetoReplay(report); return; }
     const evaluation = report.evaluation || report;
@@ -874,7 +1022,7 @@
     if (uploadRequest !== null && uploadRequest !== state.replayRequest) return;
     const request = uploadRequest === null ? ++state.replayRequest : uploadRequest;
     const revision = state.revision;
-    const guarded = isCoupled() || isProjection();
+    const guarded = isCoupled() || isProjection() || isDecisionPool();
     clearReplay(); busy(true);
     notify('Comparing the fixed pool with separate known outcomes…');
     try {

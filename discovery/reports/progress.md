@@ -3,6 +3,37 @@
 The current goal and ordered backlog are in `../GOAL.md`. Append concise entries
 with artifacts, actual checks, scientific implications, and the next action.
 
+## 2026-10-10 18:38 UTC — statistical workbench verified; disclosure source ready
+
+- Verified pushed `6c322147afd3926455037c188d499d3da96c12d1` and
+  [all four CI jobs](https://github.com/alexwelcing/lupine/actions/runs/38075484716).
+  No competing branch changes were present before this increment.
+- G16 now integrates direct statistical pools through strict wire/CLI, bounded
+  HTTP worker, original-seal replay and browser. Three new examples preserve
+  a lost tied optimum, missing-calibration abstention and a finite empty pool
+  losing a feasible optimum. All 25 prior certificate encodings remain identical.
+- Actual final checks: 564 Python tests pass in 84.929s with 187 unchanged
+  source/resource hashes; 46 Chromium checks pass with zero JS errors and 38
+  stable source hashes; a fresh isolated wheel passes 28 cases/six schemas and
+  installed guarded HTTP/CLI agreement. `decision-pool-workbench-verification.md`
+  links evidence, independent boundary tests and preserved first-run failure.
+- The first 533-test run's old flat-candidate catalog assertion failed; the
+  corrected test explicitly distinguishes labeled calibration inputs from the
+  label-free future panel. That run also captures a UI wording change, so it
+  is not counted as stable-source success. Final checks include that correction.
+  No worker limit, scientific threshold or benchmark was weakened or retuned.
+- G15A cache-only first-record disclosure and amendment pass 31 synthetic checks,
+  including 13 independent tests. Original custody source and two receipts
+  match their pins. No additional real label or observation row has been decoded.
+  The new source must be committed before its production path runs.
+- Scientific implication: no new fit, archive evaluation, physical premise or
+  superiority result. The statistical mode remains marginal under explicit
+  unverified panel-score assumptions; all previous scientific negatives stand.
+- Owner/checkpoint: all implementation owners are frozen; root publishes this
+  combined increment, verifies remote SHA/CI, then runs the reviewed header-label
+  command twice. Next: preserve BLOCKED_SCHEMA and freeze a cited mapping before
+  any separately reviewed row-metadata extraction or new scientific protocol.
+
 ## 2026-10-10 18:21 UTC — actual MPEA capture and preserved schema block
 
 - Pushed `75caf5fc56ed3c8bb4a8da4cc913fc3816c3bb63`, verified the remote

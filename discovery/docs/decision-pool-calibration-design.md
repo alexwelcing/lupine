@@ -1,10 +1,8 @@
-# Research design and Python prototype: calibrating a candidate pool directly
+# Research design: calibrating a candidate pool directly
 
-**Status: exact Python-only prototype; scientific premises remain unverified.**
+**Status: exact core and strict workbench integration; scientific premises remain unverified.**
 [decision_pool.py](../src/lupine_discovery/decision_pool.py) implements this
-separate statistical pool-selection rule. It adds no wire schema, UI mode,
-trained ranking, or scientific benchmark result. No scientific targets were
-opened and no model was fitted for this inquiry. The argument below was
+separate statistical pool-selection rule. Its [versioned workbench adapter](decision-pool-workbench-contract.md) adds strict JSON, CLI, guarded HTTP, separate replay and browser inspection. Neither component supplies a trained ranking or scientific benchmark result. No scientific targets were opened and no model was fitted for this mathematical inquiry. The argument below was
 independently reviewed; focused and independent synthetic software checks are
 recorded at the end. Formal proof scope is maintained separately, and there is
 no Python-to-Lean refinement proof or verified deployment sampling law.

@@ -54,11 +54,13 @@ for row in catalog:
     replays[row['id']] = digest(replay)
 assert schemas == {'lupine.discovery.problem.v1', 'lupine.discovery.calibrated_problem.v1',
                    'lupine.discovery.pareto_problem.v1', 'lupine.discovery.coupled_problem.v1',
-                   'lupine.discovery.projection_problem.v1'}
+                   'lupine.discovery.projection_problem.v1', 'lupine.discovery.decision_pool_problem.v1'}
 assert sum(get_case(row['id'])['problem']['schema'] == 'lupine.discovery.coupled_problem.v1'
            for row in catalog) == 3, 'missing coupled demonstration in installed catalog'
 assert sum(get_case(row['id'])['problem']['schema'] == 'lupine.discovery.projection_problem.v1'
            for row in catalog) == 3, 'missing scoped projection demonstration in installed catalog'
+assert sum(get_case(row['id'])['problem']['schema'] == 'lupine.discovery.decision_pool_problem.v1'
+           for row in catalog) == 3, 'missing statistical pool demonstration in installed catalog'
 known = run_known_answers()
 assert known['summary']['failed'] == 0
 assert known['negative_control_metrics']['lost_optimum_cases'] == 2
@@ -149,13 +151,16 @@ try:
     for schema in sorted(schemas):
         row = next(row for row in catalog if get_case(row['id'])['problem']['schema'] == schema)
         problem = get_case(row['id'])['problem']
-        request = Request(url + '/api/select', data=json.dumps({'problem': problem}).encode(),
+        envelope = ({'problem_raw': json.dumps(problem)}
+                    if schema == 'lupine.discovery.decision_pool_problem.v1' else {'problem': problem})
+        request = Request(url + '/api/select', data=json.dumps(envelope).encode(),
                           headers={'Content-Type': 'application/json'})
         with urlopen(request) as response:
             assert json.load(response) == certificate(problem)
     for row in catalog:
         problem = get_case(row['id'])['problem']
-        if problem['schema'] not in {'lupine.discovery.coupled_problem.v1', 'lupine.discovery.projection_problem.v1'}:
+        if problem['schema'] not in {'lupine.discovery.coupled_problem.v1', 'lupine.discovery.projection_problem.v1',
+                                     'lupine.discovery.decision_pool_problem.v1'}:
             continue
         outcomes = get_case_outcomes(row['id'], problem)
         request = Request(url + '/api/replay',
@@ -176,9 +181,9 @@ print(json.dumps({'status': 'passed', 'python': sys.version.split()[0],
                   'checks': ['all_packaged_cases_select_verify_replay', 'known_answer_oracle_and_controls',
                              'web_assets_and_original_archive_reports', 'constrained_negative_results_packaged_and_served',
                              'installed_http_cli_agreement', 'coupled_python_api_and_missing_point_fallback',
-                             'coupled_and_projection_guarded_http_replay_agree_with_installed_cli',
+                             'coupled_projection_and_statistical_guarded_http_replay_agree_with_installed_cli',
                              'scoped_projection_translation_and_missing_bound_abstention',
-               'direct_statistical_pool_python_api_and_distinct_abstention',
+                             'direct_statistical_pool_python_api_and_distinct_abstention',
                              'training_only_no_go_packaged_and_served']},
                  sort_keys=True))
 '''

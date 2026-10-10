@@ -1,4 +1,4 @@
-"""Shared bounded Linux process boundary for coupled and projection work.
+"""Shared bounded Linux process boundary for coupled, projection and statistical work.
 
 The public entry point accepts raw documents, never Python code or a command.
 Only a completed successful child response becomes a receipt. The pure kernel's
@@ -30,6 +30,10 @@ EXPECTED_SCHEMAS = {
 }
 VERIFICATION_SCHEMA = "lupine.discovery.verification.v1"
 OPERATIONS = frozenset((*EXPECTED_SCHEMAS, "verify"))
+DECISION_POOL_SCHEMAS = {
+    "select": "lupine.discovery.decision_pool_certificate.v1",
+    "replay": "lupine.discovery.decision_pool_replay.v1",
+}
 PROJECTION_SCHEMAS = {
     "select": "lupine.discovery.projection_certificate.v1",
     "replay": "lupine.discovery.projection_replay.v1",
@@ -257,7 +261,7 @@ def _response(returncode, output):
 
 
 def run_coupled(operation, raw_problem, raw_outcomes=None, *, raw_certificate=None):
-    """Run one coupled/projection operation under the same fixed hard guards.
+    """Run one coupled/projection/statistical operation under the same hard guards.
 
     There is one nonblocking slot per parent process. Request inputs cannot
     choose commands, process limits, environment variables, or package paths.
@@ -271,11 +275,47 @@ def run_coupled(operation, raw_problem, raw_outcomes=None, *, raw_certificate=No
         result = _response(*_bounded_process(frame))
         try:
             _validate_receipt(operation, result)
+            _bind_decision_pool_request(operation, result, raw_problem, raw_outcomes, raw_certificate)
         except (AttributeError, KeyError, TypeError, ValueError, RecursionError):
             raise CoupledWorkerError("worker_invalid_response", "The worker returned a malformed result.", 502) from None
         return result
     finally:
         _SLOT.release()
+
+
+def _bind_decision_pool_request(operation, result, raw_problem, raw_outcomes, raw_certificate):
+    """Reject recycled statistical receipts after the guarded decision is sealed.
+
+    Only bounded JSON and canonical identities are reconstructed here. Protocol,
+    calibration, selection and outcome assessment stay inside the child.
+    """
+    from .coupled_io import loads_coupled, preflight_json_text
+    from .serialization import loads
+    # Determine both sides from bounded JSON: a recycled old-mode receipt must
+    # not bypass this new-mode check merely by carrying an old schema label.
+    statistical_result = result.get("schema") in DECISION_POOL_SCHEMAS.values()
+    problem = loads_coupled(raw_problem)
+    statistical_input = isinstance(problem, dict) and problem.get("schema") == "lupine.discovery.decision_pool_problem.v1"
+    if not statistical_input:
+        if statistical_result:
+            raise ValueError("statistical worker response does not match the input mode")
+        return
+    problem_digest = digest(problem)
+    if operation == "verify":
+        supplied = loads(preflight_json_text(raw_certificate, max_bytes=MAX_CERTIFICATE_BYTES, max_depth=32))
+        _validate_receipt("select", supplied)
+        if (supplied.get("schema") != DECISION_POOL_SCHEMAS["select"]
+                or supplied.get("problem_digest") != problem_digest
+                or result.get("certificate_digest") != supplied.get("certificate_digest")):
+            raise ValueError("statistical verification does not match the original problem and receipt")
+    else:
+        if result.get("schema") != DECISION_POOL_SCHEMAS.get(operation) or result.get("problem_digest") != problem_digest:
+            raise ValueError("statistical worker response does not match the original problem")
+        if operation == "replay":
+            # _validate_receipt has already checked the complete original decision.
+            outcomes = loads_coupled(raw_outcomes)
+            if result.get("outcomes_digest") != digest(outcomes):
+                raise ValueError("statistical replay does not match the submitted future outcomes")
 
 
 def _validate_receipt(operation, result):
@@ -298,6 +338,10 @@ def _validate_receipt(operation, result):
                  and checksum(result.get("certificate_digest")))
         if not valid:
             raise CoupledWorkerError("worker_invalid_response", "The worker returned no complete verification result.", 502)
+        return
+    if result.get("schema") == DECISION_POOL_SCHEMAS.get(operation):
+        from .decision_pool_transport import validate_decision_pool_receipt
+        validate_decision_pool_receipt(operation, result)
         return
     if result.get("schema") == PROJECTION_SCHEMAS.get(operation):
         _validate_projection_receipt(operation, result, checksum, sealed, same)
@@ -455,6 +499,11 @@ def _dispatch(stream):
     from .coupled_io import loads_coupled, coupled_certificate, coupled_domains, coupled_replay_report
     problem = loads_coupled(_read_exact(stream, header["problem_bytes"]))
     projection = isinstance(problem, dict) and problem.get("schema") == "lupine.discovery.projection_problem.v1"
+    statistical = isinstance(problem, dict) and problem.get("schema") == "lupine.discovery.decision_pool_problem.v1"
+    if statistical:
+        from .decision_pool_io import loads_decision_pool, decision_pool_certificate, decision_pool_replay_report
+        if operation == "domains":
+            raise ValueError("statistical pools do not expose coupled proof domains")
     if projection:
         from .projection_io import loads_projection, projection_certificate, projection_replay_report
         if operation == "domains":
@@ -468,13 +517,16 @@ def _dispatch(stream):
         def load_outcomes():
             raw = _read_exact(stream, header["outcome_bytes"])
             no_trailing_data()
-            return loads_projection(raw) if projection else loads_coupled(raw)
+            return (loads_decision_pool(raw) if statistical else
+                    loads_projection(raw) if projection else loads_coupled(raw))
+        if statistical:
+            return decision_pool_replay_report(problem, load_outcomes)
         return (projection_replay_report(problem, load_outcomes) if projection
                 else coupled_replay_report(problem, load_outcomes))
     if operation == "verify":
-        if not projection and (not isinstance(problem, dict)
+        if not projection and not statistical and (not isinstance(problem, dict)
                                or problem.get("schema") != "lupine.discovery.coupled_problem.v1"):
-            raise ValueError("guarded verification accepts only coupled or projection problems")
+            raise ValueError("guarded verification accepts only coupled, projection or statistical-pool problems")
         from .cli import verify_certificate
         from .coupled_io import preflight_json_text
         from .serialization import loads
@@ -483,6 +535,8 @@ def _dispatch(stream):
         supplied = loads(preflight_json_text(raw, max_bytes=MAX_CERTIFICATE_BYTES, max_depth=32))
         return verify_certificate(problem, supplied)
     no_trailing_data()
+    if statistical:
+        return decision_pool_certificate(problem)
     if projection:
         return projection_certificate(problem)
     return coupled_certificate(problem) if operation == "select" else coupled_domains(problem)

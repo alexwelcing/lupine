@@ -655,7 +655,7 @@ textarea {
   margin:7px 0 0;
   font-size:10px
 }
-.projection-panel {
+.decision-pool-panel,.projection-panel {
   margin-bottom:22px;
   padding:24px;
   min-width:0
@@ -663,6 +663,15 @@ textarea {
 .projection-panel h3 {
   margin:0 0 12px
 }
+.decision-pool-panel h3 { margin-top:0 }
+.decision-pool-panel dd,.decision-pool-panel p,.decision-calibration-record,.decision-pool-replay dd {
+  overflow-wrap:anywhere;
+  min-width:0
+}
+#decision-pool-calibration { margin-top:22px; min-width:0 }
+#decision-pool-calibration h4 { margin-bottom:8px }
+.decision-calibration-table td { overflow-wrap:anywhere; max-width:260px }
+.decision-pool-table th,.decision-pool-table td { overflow-wrap:anywhere }
 .projection-record {
   border-top:1px solid var(--line);
   padding:14px 0;

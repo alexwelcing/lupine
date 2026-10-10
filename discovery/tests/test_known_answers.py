@@ -72,7 +72,7 @@ class KnownAnswerTests(unittest.TestCase):
         self.assertTrue(check["regret_bound_nonincreasing"])
         self.assertEqual((check["pool_size_before"], check["pool_size_after"]), (6, 1))
 
-    def test_catalog_never_reveals_answers(self):
+    def test_catalog_keeps_future_outcome_records_separate(self):
         allowed = {"id", "title", "description", "kind", "has_outcomes"}
         for entry in benchmarks.case_catalog():
             self.assertEqual(set(entry), allowed)
@@ -80,9 +80,22 @@ class KnownAnswerTests(unittest.TestCase):
             self.assertEqual(set(case), {"id", "title", "description", "kind", "problem"})
             self.assertNotIn("outcomes", case["problem"])
             self.assertNotIn("expected", case)
-            declarations = case["problem"].get("projection", case["problem"])
-            self.assertNotIn("outcomes", declarations)
-            self.assertLessEqual(len(declarations["candidates"]), 200)
+            if case["problem"]["schema"] == "lupine.discovery.decision_pool_problem.v1":
+                # Calibration truth is a declared selection input. The future
+                # panel carries only membership/ranking, never its answer rows.
+                panel_fields = {"panel_id", "universe_id", "feature_manifest_digest",
+                                "candidate_ids", "ranked_ids"}
+                future = case["problem"]["future_panel"]
+                self.assertEqual(set(future), panel_fields)
+                self.assertLessEqual(len(future["candidate_ids"]), 200)
+                for entry in case["problem"]["calibration_panels"]:
+                    self.assertEqual(set(entry), {"panel", "outcomes"})
+                    self.assertEqual(set(entry["panel"]), panel_fields)
+                    self.assertLessEqual(len(entry["panel"]["candidate_ids"]), 200)
+            else:
+                declarations = case["problem"].get("projection", case["problem"])
+                self.assertNotIn("outcomes", declarations)
+                self.assertLessEqual(len(declarations["candidates"]), 200)
             certificate(case["problem"])
 
     def test_outcomes_are_bound_to_the_entire_problem(self):

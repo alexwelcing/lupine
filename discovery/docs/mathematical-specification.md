@@ -387,7 +387,7 @@ runtime adapter to construct no numerical model and retain all original IDs.
 
 ## Direct statistical candidate pools
 
-This separate Python-only mode calibrates a nested family of ranked pools,
+This separate statistical mode calibrates a nested family of ranked pools,
 not an interval enclosure. For each complete finite panel, let M contain all
 true feasible tied minimizers. A frozen supplied permutation gives unique
 ranks r=1,...,m. Define R=0 if M is empty, otherwise

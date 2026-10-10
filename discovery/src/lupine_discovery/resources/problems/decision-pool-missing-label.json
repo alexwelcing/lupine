@@ -1,0 +1,205 @@
+{
+  "alpha": "1/2",
+  "calibration_panels": [
+    {
+      "outcomes": {
+        "rows": [
+          {
+            "candidate_id": "a",
+            "constraints": {
+              "g": "0"
+            },
+            "score": "0"
+          },
+          {
+            "candidate_id": "b",
+            "constraints": {
+              "g": "0"
+            },
+            "score": "1"
+          },
+          {
+            "candidate_id": "c",
+            "constraints": {
+              "g": "0"
+            },
+            "score": "1"
+          },
+          {
+            "candidate_id": "d",
+            "constraints": {
+              "g": "0"
+            },
+            "score": "1"
+          }
+        ],
+        "source_reference": "Public constructed calibration labels; no physical experiment."
+      },
+      "panel": {
+        "candidate_ids": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "feature_manifest_digest": "b5370bdc407b8dd638632253402d8ee120d8690403b5d1c43184d49274c1763b",
+        "panel_id": "calibration-00",
+        "ranked_ids": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "universe_id": "decision-pool-missing-label:declared-universe"
+      }
+    },
+    {
+      "outcomes": {
+        "rows": [
+          {
+            "candidate_id": "a",
+            "constraints": {
+              "g": "0"
+            },
+            "score": null
+          },
+          {
+            "candidate_id": "b",
+            "constraints": {
+              "g": "0"
+            },
+            "score": "0"
+          },
+          {
+            "candidate_id": "c",
+            "constraints": {
+              "g": "0"
+            },
+            "score": "1"
+          },
+          {
+            "candidate_id": "d",
+            "constraints": {
+              "g": "0"
+            },
+            "score": "1"
+          }
+        ],
+        "source_reference": "Public constructed calibration labels; no physical experiment."
+      },
+      "panel": {
+        "candidate_ids": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "feature_manifest_digest": "b5370bdc407b8dd638632253402d8ee120d8690403b5d1c43184d49274c1763b",
+        "panel_id": "calibration-01",
+        "ranked_ids": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "universe_id": "decision-pool-missing-label:declared-universe"
+      }
+    },
+    {
+      "outcomes": {
+        "rows": [
+          {
+            "candidate_id": "a",
+            "constraints": {
+              "g": "0"
+            },
+            "score": "1"
+          },
+          {
+            "candidate_id": "b",
+            "constraints": {
+              "g": "0"
+            },
+            "score": "1"
+          },
+          {
+            "candidate_id": "c",
+            "constraints": {
+              "g": "0"
+            },
+            "score": "0"
+          },
+          {
+            "candidate_id": "d",
+            "constraints": {
+              "g": "0"
+            },
+            "score": "1"
+          }
+        ],
+        "source_reference": "Public constructed calibration labels; no physical experiment."
+      },
+      "panel": {
+        "candidate_ids": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "feature_manifest_digest": "b5370bdc407b8dd638632253402d8ee120d8690403b5d1c43184d49274c1763b",
+        "panel_id": "calibration-02",
+        "ranked_ids": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "universe_id": "decision-pool-missing-label:declared-universe"
+      }
+    }
+  ],
+  "description": "An explicit unknown calibration score keeps n=3 and complete_count=2; no quantile is used, and every future ID remains. Complete future labels do not repair the original missing calibration evidence.",
+  "future_panel": {
+    "candidate_ids": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "feature_manifest_digest": "b5370bdc407b8dd638632253402d8ee120d8690403b5d1c43184d49274c1763b",
+    "panel_id": "future",
+    "ranked_ids": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "universe_id": "decision-pool-missing-label:declared-universe"
+  },
+  "protocol": {
+    "constraint_scopes": {
+      "g": {
+        "quantity": "g",
+        "reference": "Constructed exact scalar; not a measured material property.",
+        "scenario_id": "decision-pool-missing-label",
+        "unit": "synthetic-unit"
+      }
+    },
+    "freeze_reference": "Declared fixed order for an executable example; no scientific freeze or independent training attested.",
+    "generator_id": "public-constructed-panels",
+    "objective_scope": {
+      "quantity": "score",
+      "reference": "Constructed exact scalar; not a measured material property.",
+      "scenario_id": "decision-pool-missing-label",
+      "unit": "synthetic-unit"
+    },
+    "premise_status": "assumed_unverified",
+    "protocol_id": "decision-pool-missing-label:protocol",
+    "ranker_id": "synthetic-fixed-order",
+    "ranking_rule_id": "explicit-ordinal-permutation-v1",
+    "sampling_scope": "Hypothetical whole-panel score law. Exchangeability is an unverified premise; this deterministic fixture does not sample that law.",
+    "scenario_id": "decision-pool-missing-label",
+    "tie_rule_id": "declared-candidate-order"
+  },
+  "schema": "lupine.discovery.decision_pool_problem.v1"
+}

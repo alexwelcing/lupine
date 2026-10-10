@@ -1,0 +1,72 @@
+{
+  "author_tests": 18,
+  "environment": {
+    "implementation": "CPython",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "python": "3.12.14"
+  },
+  "errors": 0,
+  "executed_at_date": "2026-10-10",
+  "failures": 0,
+  "independent_review_tests": 13,
+  "limits": [
+    "Finite executable boundary evidence, not formal parser refinement.",
+    "Does not establish the actual full CSV schema, measurement pairing, scientific applicability, or predictive quality.",
+    "Combined committed source checkpoint remains required before production label disclosure."
+  ],
+  "original_five_files_and_two_receipts_match_pins": true,
+  "pre_runtime_fixture_correction": {
+    "note": "The initial scratch run installed its no-scan mock before constructing a synthetic prior-header fixture; fixture construction was moved before the mock. No real source or scientific result was involved.",
+    "path": "reports/mpea-header-disclosure-first-fixture-failure-v1.json",
+    "scientific_failure": false,
+    "sha256": "dfcd73acc71b1960ac29f27abac7575ef036582047f14c592a2dc59c209e54ca"
+  },
+  "schema": "lupine.discovery.mpea.header_disclosure_engineering.v1",
+  "scope": {
+    "data_rows_decoded": false,
+    "fits": 0,
+    "network_calls": 0,
+    "production_header_disclosures": 0,
+    "real_cache_files_opened": 0,
+    "splits": 0,
+    "synthetic_fixtures_only": true,
+    "unknown_real_header_labels_disclosed": false
+  },
+  "skipped": 0,
+  "source_after": {
+    "docs/mpea-custody-plan.md": "381406c91451ffb4592539b7bc66beb215bdb00cd852bf1a01106bebe7d1b895",
+    "docs/mpea-header-disclosure-amendment-v1.md": "ce9c95e713b79ec2d8029f0da51c8d76c390f1b349de67b0e842034c42f9a525",
+    "reports/mpea-custody-acquisition-v1.json": "2bd6a5f44c28e97460a5ee0fca8eaf0e77a243cd72259e23fff2a75b264aca83",
+    "reports/mpea-custody-header-v1.json": "01f0e9899f8afb1517d0efd0d2bb4c43ca9df94daadc6a2d15664ac1bbe4d827",
+    "reports/mpea-source-inventory.json": "ce2e1487cb91436137086f7c9900d091eed30068f6c8e9595687458c3f12679c",
+    "scripts/mpea_custody.py": "046aac4812802d1abf656aa93d0b832e8011e2feb59574615957c2550fe11b98",
+    "scripts/mpea_header_labels.py": "0d1e37cfef2889ed955d30f0fd987ba9b06dc2a1f8bf89ba7085112355b287c7",
+    "tests/test_mpea_custody.py": "cf2fc7a0bdaf9bd59589c123745aae6f353fa5837849e26d2a9438d62d090b19",
+    "tests/test_mpea_custody_review.py": "27cca2dc9ec6d96cbcbf06971fe352d6d4f5fb0572b33f8d6648a8ad4cb299bc",
+    "tests/test_mpea_header_labels.py": "1bd9f9f967925faac4479135adb7d10051a4cb60bd17932759e0d3c0dc441dc9",
+    "tests/test_mpea_header_labels_review.py": "6f118b84ea8f77a2d5659e7aacc15f582fc974dc070b67e939efadd4006a9341"
+  },
+  "source_before": {
+    "docs/mpea-custody-plan.md": "381406c91451ffb4592539b7bc66beb215bdb00cd852bf1a01106bebe7d1b895",
+    "docs/mpea-header-disclosure-amendment-v1.md": "ce9c95e713b79ec2d8029f0da51c8d76c390f1b349de67b0e842034c42f9a525",
+    "reports/mpea-custody-acquisition-v1.json": "2bd6a5f44c28e97460a5ee0fca8eaf0e77a243cd72259e23fff2a75b264aca83",
+    "reports/mpea-custody-header-v1.json": "01f0e9899f8afb1517d0efd0d2bb4c43ca9df94daadc6a2d15664ac1bbe4d827",
+    "reports/mpea-source-inventory.json": "ce2e1487cb91436137086f7c9900d091eed30068f6c8e9595687458c3f12679c",
+    "scripts/mpea_custody.py": "046aac4812802d1abf656aa93d0b832e8011e2feb59574615957c2550fe11b98",
+    "scripts/mpea_header_labels.py": "0d1e37cfef2889ed955d30f0fd987ba9b06dc2a1f8bf89ba7085112355b287c7",
+    "tests/test_mpea_custody.py": "cf2fc7a0bdaf9bd59589c123745aae6f353fa5837849e26d2a9438d62d090b19",
+    "tests/test_mpea_custody_review.py": "27cca2dc9ec6d96cbcbf06971fe352d6d4f5fb0572b33f8d6648a8ad4cb299bc",
+    "tests/test_mpea_header_labels.py": "1bd9f9f967925faac4479135adb7d10051a4cb60bd17932759e0d3c0dc441dc9",
+    "tests/test_mpea_header_labels_review.py": "6f118b84ea8f77a2d5659e7aacc15f582fc974dc070b67e939efadd4006a9341"
+  },
+  "source_unchanged": true,
+  "stage": "tracked_pre_commit",
+  "status": "PASS",
+  "test_command": "python -m unittest discover -s tests -p 'test_mpea_header_labels*.py' -v",
+  "test_log": {
+    "path": "reports/mpea-header-disclosure-tests.txt",
+    "sha256": "b455794b64192816b634dbd3a310e4ed0c34dfcbe79b2792beed3cfbdf4ed905"
+  },
+  "test_runner": "unittest.TextTestRunner with identical discovery arguments; output captured as the attached log",
+  "tests_run": 31
+}

@@ -1,0 +1,205 @@
+{
+  "alpha": "1/2",
+  "calibration_panels": [
+    {
+      "outcomes": {
+        "rows": [
+          {
+            "candidate_id": "a",
+            "constraints": {
+              "g": "0"
+            },
+            "score": "0"
+          },
+          {
+            "candidate_id": "b",
+            "constraints": {
+              "g": "0"
+            },
+            "score": "1"
+          },
+          {
+            "candidate_id": "c",
+            "constraints": {
+              "g": "0"
+            },
+            "score": "1"
+          },
+          {
+            "candidate_id": "d",
+            "constraints": {
+              "g": "0"
+            },
+            "score": "1"
+          }
+        ],
+        "source_reference": "Public constructed calibration labels; no physical experiment."
+      },
+      "panel": {
+        "candidate_ids": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "feature_manifest_digest": "611027513a312f966a38296699d050dfed9dd61d06b921f93852f199ec25ad5b",
+        "panel_id": "calibration-00",
+        "ranked_ids": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "universe_id": "decision-pool-ranked-ties:declared-universe"
+      }
+    },
+    {
+      "outcomes": {
+        "rows": [
+          {
+            "candidate_id": "a",
+            "constraints": {
+              "g": "0"
+            },
+            "score": "1"
+          },
+          {
+            "candidate_id": "b",
+            "constraints": {
+              "g": "0"
+            },
+            "score": "0"
+          },
+          {
+            "candidate_id": "c",
+            "constraints": {
+              "g": "0"
+            },
+            "score": "1"
+          },
+          {
+            "candidate_id": "d",
+            "constraints": {
+              "g": "0"
+            },
+            "score": "1"
+          }
+        ],
+        "source_reference": "Public constructed calibration labels; no physical experiment."
+      },
+      "panel": {
+        "candidate_ids": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "feature_manifest_digest": "611027513a312f966a38296699d050dfed9dd61d06b921f93852f199ec25ad5b",
+        "panel_id": "calibration-01",
+        "ranked_ids": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "universe_id": "decision-pool-ranked-ties:declared-universe"
+      }
+    },
+    {
+      "outcomes": {
+        "rows": [
+          {
+            "candidate_id": "a",
+            "constraints": {
+              "g": "0"
+            },
+            "score": "1"
+          },
+          {
+            "candidate_id": "b",
+            "constraints": {
+              "g": "0"
+            },
+            "score": "1"
+          },
+          {
+            "candidate_id": "c",
+            "constraints": {
+              "g": "0"
+            },
+            "score": "0"
+          },
+          {
+            "candidate_id": "d",
+            "constraints": {
+              "g": "0"
+            },
+            "score": "1"
+          }
+        ],
+        "source_reference": "Public constructed calibration labels; no physical experiment."
+      },
+      "panel": {
+        "candidate_ids": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "feature_manifest_digest": "611027513a312f966a38296699d050dfed9dd61d06b921f93852f199ec25ad5b",
+        "panel_id": "calibration-02",
+        "ranked_ids": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "universe_id": "decision-pool-ranked-ties:declared-universe"
+      }
+    }
+  ],
+  "description": "Three constructed calibration scores 1/4,1/2,3/4 give tau=1/2. The future has tied minima a,c, so the actual prefix a,b loses c. This is an allowed realized statistical failure, not a conditional interval certificate.",
+  "future_panel": {
+    "candidate_ids": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "feature_manifest_digest": "611027513a312f966a38296699d050dfed9dd61d06b921f93852f199ec25ad5b",
+    "panel_id": "future",
+    "ranked_ids": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "universe_id": "decision-pool-ranked-ties:declared-universe"
+  },
+  "protocol": {
+    "constraint_scopes": {
+      "g": {
+        "quantity": "g",
+        "reference": "Constructed exact scalar; not a measured material property.",
+        "scenario_id": "decision-pool-ranked-ties",
+        "unit": "synthetic-unit"
+      }
+    },
+    "freeze_reference": "Declared fixed order for an executable example; no scientific freeze or independent training attested.",
+    "generator_id": "public-constructed-panels",
+    "objective_scope": {
+      "quantity": "score",
+      "reference": "Constructed exact scalar; not a measured material property.",
+      "scenario_id": "decision-pool-ranked-ties",
+      "unit": "synthetic-unit"
+    },
+    "premise_status": "assumed_unverified",
+    "protocol_id": "decision-pool-ranked-ties:protocol",
+    "ranker_id": "synthetic-fixed-order",
+    "ranking_rule_id": "explicit-ordinal-permutation-v1",
+    "sampling_scope": "Hypothetical whole-panel score law. Exchangeability is an unverified premise; this deterministic fixture does not sample that law.",
+    "scenario_id": "decision-pool-ranked-ties",
+    "tie_rule_id": "declared-candidate-order"
+  },
+  "schema": "lupine.discovery.decision_pool_problem.v1"
+}

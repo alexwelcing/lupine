@@ -1,0 +1,336 @@
+{
+  "adapter_version": "decision-pool-adapter-v1",
+  "assumptions": [
+    "Calibration and one future panel score are exchangeable under an additive probability law.",
+    "The ranker, features, tie rule, generator, risk budget and calibration count were frozen independently of calibration labels.",
+    "Complete recorded outcomes represent the declared objective and constraints in the stated panel population.",
+    "The statement is marginal over calibration and one future panel, not conditional on calibration, feasibility, family or a candidate."
+  ],
+  "calibration": {
+    "alpha": "1/2",
+    "calibration_digest": "4cb8dd137f6096d5987e35172ba0d6a744c08381e25d996213ad428836d1a1d0",
+    "complete_count": 2,
+    "conditional_guarantee": null,
+    "guarantee_status": "no_calibrated_guarantee",
+    "k": 2,
+    "n": 3,
+    "panels": [
+      {
+        "assessment": {
+          "assessment_digest": "683e7e105b21a068c36637c216f6c69adf59c62f6a79c627e76e4384f3e065ee",
+          "feasible": [
+            "a",
+            "b",
+            "c",
+            "d"
+          ],
+          "m": 4,
+          "minimizers": [
+            "a"
+          ],
+          "missing": [],
+          "outcomes_digest": "29f797cf8248f5700e17664abb6999d38b312884f2edde075c7f9badba8dabc3",
+          "panel_digest": "1a958ce9dce1fd00a4ad4e0d6e29e6eb0a78b5770ec9515ffb5f4b33fd3fb852",
+          "reason": "feasible_minimizers",
+          "score": "1/4",
+          "status": "complete"
+        },
+        "outcomes": {
+          "outcomes_digest": "29f797cf8248f5700e17664abb6999d38b312884f2edde075c7f9badba8dabc3",
+          "panel_digest": "1a958ce9dce1fd00a4ad4e0d6e29e6eb0a78b5770ec9515ffb5f4b33fd3fb852",
+          "rows": [
+            {
+              "candidate_id": "a",
+              "constraints": {
+                "g": "0"
+              },
+              "score": "0"
+            },
+            {
+              "candidate_id": "b",
+              "constraints": {
+                "g": "0"
+              },
+              "score": "1"
+            },
+            {
+              "candidate_id": "c",
+              "constraints": {
+                "g": "0"
+              },
+              "score": "1"
+            },
+            {
+              "candidate_id": "d",
+              "constraints": {
+                "g": "0"
+              },
+              "score": "1"
+            }
+          ],
+          "source_reference": "Public constructed calibration labels; no physical experiment."
+        },
+        "panel": {
+          "candidate_ids": [
+            "a",
+            "b",
+            "c",
+            "d"
+          ],
+          "feature_manifest_digest": "b5370bdc407b8dd638632253402d8ee120d8690403b5d1c43184d49274c1763b",
+          "panel_digest": "1a958ce9dce1fd00a4ad4e0d6e29e6eb0a78b5770ec9515ffb5f4b33fd3fb852",
+          "panel_id": "calibration-00",
+          "protocol_digest": "dfa53db465d74d50b9444375ab4b2be2a3fa2f816a846d671da5320b21aebaca",
+          "ranked_ids": [
+            "a",
+            "b",
+            "c",
+            "d"
+          ],
+          "universe_id": "decision-pool-missing-label:declared-universe"
+        }
+      },
+      {
+        "assessment": {
+          "assessment_digest": "85154c7e1261efa0c2e7bea1ca2b4dc9ce6f240ae7fec03ce2c201a24e607e06",
+          "feasible": null,
+          "m": 4,
+          "minimizers": null,
+          "missing": [
+            [
+              "a",
+              "score"
+            ]
+          ],
+          "outcomes_digest": "5e3b44d0db40e056d353f310e1ffbabdc52a6d236567748e03d43ce2901f4091",
+          "panel_digest": "27d2886ff7755f9370f5079a6243fc82d50736489bc49b8feba16d89afa477ee",
+          "reason": "missing_truth",
+          "score": null,
+          "status": "incomplete"
+        },
+        "outcomes": {
+          "outcomes_digest": "5e3b44d0db40e056d353f310e1ffbabdc52a6d236567748e03d43ce2901f4091",
+          "panel_digest": "27d2886ff7755f9370f5079a6243fc82d50736489bc49b8feba16d89afa477ee",
+          "rows": [
+            {
+              "candidate_id": "a",
+              "constraints": {
+                "g": "0"
+              },
+              "score": null
+            },
+            {
+              "candidate_id": "b",
+              "constraints": {
+                "g": "0"
+              },
+              "score": "0"
+            },
+            {
+              "candidate_id": "c",
+              "constraints": {
+                "g": "0"
+              },
+              "score": "1"
+            },
+            {
+              "candidate_id": "d",
+              "constraints": {
+                "g": "0"
+              },
+              "score": "1"
+            }
+          ],
+          "source_reference": "Public constructed calibration labels; no physical experiment."
+        },
+        "panel": {
+          "candidate_ids": [
+            "a",
+            "b",
+            "c",
+            "d"
+          ],
+          "feature_manifest_digest": "b5370bdc407b8dd638632253402d8ee120d8690403b5d1c43184d49274c1763b",
+          "panel_digest": "27d2886ff7755f9370f5079a6243fc82d50736489bc49b8feba16d89afa477ee",
+          "panel_id": "calibration-01",
+          "protocol_digest": "dfa53db465d74d50b9444375ab4b2be2a3fa2f816a846d671da5320b21aebaca",
+          "ranked_ids": [
+            "a",
+            "b",
+            "c",
+            "d"
+          ],
+          "universe_id": "decision-pool-missing-label:declared-universe"
+        }
+      },
+      {
+        "assessment": {
+          "assessment_digest": "d0f76923d29c0b22b338a457ad591e3689c793de3fd750804896c7c976d46e69",
+          "feasible": [
+            "a",
+            "b",
+            "c",
+            "d"
+          ],
+          "m": 4,
+          "minimizers": [
+            "c"
+          ],
+          "missing": [],
+          "outcomes_digest": "b33b383ff0993a38dfde860255008bfc833fd83691df9711de39aeb6cabac81a",
+          "panel_digest": "f0dc22efaaff894005329e29485fe1655096fe2ff3a74dab49c36b60fd87119a",
+          "reason": "feasible_minimizers",
+          "score": "3/4",
+          "status": "complete"
+        },
+        "outcomes": {
+          "outcomes_digest": "b33b383ff0993a38dfde860255008bfc833fd83691df9711de39aeb6cabac81a",
+          "panel_digest": "f0dc22efaaff894005329e29485fe1655096fe2ff3a74dab49c36b60fd87119a",
+          "rows": [
+            {
+              "candidate_id": "a",
+              "constraints": {
+                "g": "0"
+              },
+              "score": "1"
+            },
+            {
+              "candidate_id": "b",
+              "constraints": {
+                "g": "0"
+              },
+              "score": "1"
+            },
+            {
+              "candidate_id": "c",
+              "constraints": {
+                "g": "0"
+              },
+              "score": "0"
+            },
+            {
+              "candidate_id": "d",
+              "constraints": {
+                "g": "0"
+              },
+              "score": "1"
+            }
+          ],
+          "source_reference": "Public constructed calibration labels; no physical experiment."
+        },
+        "panel": {
+          "candidate_ids": [
+            "a",
+            "b",
+            "c",
+            "d"
+          ],
+          "feature_manifest_digest": "b5370bdc407b8dd638632253402d8ee120d8690403b5d1c43184d49274c1763b",
+          "panel_digest": "f0dc22efaaff894005329e29485fe1655096fe2ff3a74dab49c36b60fd87119a",
+          "panel_id": "calibration-02",
+          "protocol_digest": "dfa53db465d74d50b9444375ab4b2be2a3fa2f816a846d671da5320b21aebaca",
+          "ranked_ids": [
+            "a",
+            "b",
+            "c",
+            "d"
+          ],
+          "universe_id": "decision-pool-missing-label:declared-universe"
+        }
+      }
+    ],
+    "premise_status": "assumed_unverified",
+    "reasons": [
+      "incomplete_calibration_truth"
+    ],
+    "status": "incomplete_calibration",
+    "threshold": null
+  },
+  "certificate_digest": "eec326eaf3e632ee48fe4d8235e608242d16ce1fe7b3abe8b4511b789e054ebc",
+  "engine_version": "0.1.0",
+  "future_panel": {
+    "candidate_ids": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "feature_manifest_digest": "b5370bdc407b8dd638632253402d8ee120d8690403b5d1c43184d49274c1763b",
+    "panel_digest": "f4f5feb5c76309a1cedbbd0748a0d8952e70ce6b0f43df687589cf56e7f18f34",
+    "panel_id": "future",
+    "protocol_digest": "dfa53db465d74d50b9444375ab4b2be2a3fa2f816a846d671da5320b21aebaca",
+    "ranked_ids": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "universe_id": "decision-pool-missing-label:declared-universe"
+  },
+  "physical_attestation": "not_established_by_this_program",
+  "problem_digest": "14f2e02a9455f8e509c26ce0b9c3e0edc4e8ba342b76af1f54d71c9d864e6bbd",
+  "profile_id": "decision-pool-local-v1",
+  "protocol": {
+    "constraint_scopes": {
+      "g": {
+        "quantity": "g",
+        "reference": "Constructed exact scalar; not a measured material property.",
+        "scenario_id": "decision-pool-missing-label",
+        "unit": "synthetic-unit"
+      }
+    },
+    "freeze_reference": "Declared fixed order for an executable example; no scientific freeze or independent training attested.",
+    "generator_id": "public-constructed-panels",
+    "objective_scope": {
+      "quantity": "score",
+      "reference": "Constructed exact scalar; not a measured material property.",
+      "scenario_id": "decision-pool-missing-label",
+      "unit": "synthetic-unit"
+    },
+    "premise_status": "assumed_unverified",
+    "protocol_digest": "dfa53db465d74d50b9444375ab4b2be2a3fa2f816a846d671da5320b21aebaca",
+    "protocol_id": "decision-pool-missing-label:protocol",
+    "ranker_id": "synthetic-fixed-order",
+    "ranking_rule_id": "explicit-ordinal-permutation-v1",
+    "sampling_scope": "Hypothetical whole-panel score law. Exchangeability is an unverified premise; this deterministic fixture does not sample that law.",
+    "scenario_id": "decision-pool-missing-label",
+    "tie_rule_id": "declared-candidate-order"
+  },
+  "scenario_id": "decision-pool-missing-label",
+  "schema": "lupine.discovery.decision_pool_certificate.v1",
+  "selection": {
+    "calibration_status": "incomplete_calibration",
+    "conditional_guarantee": null,
+    "decision_digest": "5344eea07a11e3cd5a30236d4277fbbe94537914ecaf171567b93b0e52cc22a0",
+    "guarantee_status": "no_calibrated_guarantee",
+    "m": 4,
+    "not_retained": [],
+    "original_ids": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "premise_status": "assumed_unverified",
+    "ranked_ids": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "reasons": [
+      "incomplete_calibration_truth",
+      "retained_all_incomplete_calibration",
+      "no_pool_reduction"
+    ],
+    "retained": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "retained_count": 4,
+    "retained_fraction": "1",
+    "threshold": null
+  }
+}

@@ -1,0 +1,23 @@
+[
+  {
+    "description": "A finite threshold keeps a,b and replay exposes the tied optimum c outside the pool. A single constructed failure does not refute a marginal theorem.",
+    "has_outcomes": true,
+    "id": "decision-pool-ranked-ties",
+    "kind": "decision_pool_demo",
+    "title": "Statistical prefix loses a tied optimum"
+  },
+  {
+    "description": "The unknown label remains in the receipt, no calibration panel is dropped, and all four future candidates remain.",
+    "has_outcomes": true,
+    "id": "decision-pool-missing-label",
+    "kind": "decision_pool_demo",
+    "title": "Unknown calibration label, full pool"
+  },
+  {
+    "description": "Nineteen infeasible calibration panels give tau=0; the future has a feasible optimum that the empty prefix misses. No infeasibility claim follows from an empty statistical pool.",
+    "has_outcomes": true,
+    "id": "decision-pool-feasible-failure",
+    "kind": "decision_pool_demo",
+    "title": "Empty statistical prefix loses a feasible optimum"
+  }
+]

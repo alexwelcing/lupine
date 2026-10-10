@@ -4,6 +4,7 @@
 Install: pip install -e '.[test-ui]' && python -m playwright install chromium
 Run: python scripts/browser_smoke.py
 """
+from hashlib import sha256
 import json
 from pathlib import Path
 import subprocess
@@ -21,8 +22,17 @@ from lupine_discovery.server import make_server
 
 
 def run():
-    artifacts = Path(".cache/browser")
+    artifacts = Path(".cache/browser/decision-pool")
     artifacts.mkdir(parents=True, exist_ok=True)
+    project_root = Path(__file__).resolve().parents[1]
+    def source_digests():
+        package = project_root / "src/lupine_discovery"
+        paths = [Path(__file__).resolve(), *package.rglob("*.py"),
+                 *(package / "web" / name for name in ("app.js", "index.html", "styles.css"))]
+        paths.extend((package / "resources").rglob("decision-pool*.json"))
+        return {str(path.relative_to(project_root)): sha256(path.read_bytes()).hexdigest()
+                for path in sorted(paths)}
+    sources_before = source_digests()
     server = make_server(0)
     thread = threading.Thread(target=server.serve_forever, daemon=True)
     thread.start()
@@ -604,6 +614,336 @@ def run():
             assert b"\n" not in exported
             checks.append("projection_large_receipt_compact_export_stays_within_verifier_cap")
 
+            def upload_statistical(value, filename="decision-pool-custom.json"):
+                raw = value if isinstance(value, str) else json.dumps(value, indent=2)
+                page.locator("#problem-upload").set_input_files({
+                    "name": filename, "mimeType": "application/json", "buffer": raw.encode(),
+                })
+                expect(page.locator("#problem-json")).to_have_value(raw)
+                with page.expect_response(lambda r: r.url.endswith("/api/select")) as response:
+                    page.locator("#analyze").click()
+                assert response.value.status == 200, response.value.json()
+                assert response.value.request.post_data_json == {"problem_raw": raw}
+                expect(page.locator("#analysis-results")).to_be_visible()
+                expect(page.locator("#decision-pool-panel")).to_be_visible()
+                return response.value.json()
+
+            def statistical_outcomes(problem, receipt, rows):
+                return {"schema": "lupine.discovery.decision_pool_outcomes.v1",
+                    "scenario_id": problem["protocol"]["scenario_id"],
+                    "problem_digest": receipt["problem_digest"],
+                    "certificate_digest": receipt["certificate_digest"],
+                    "panel_digest": receipt["future_panel"]["panel_digest"],
+                    "source_reference": "Constructed browser-test labels; no material experiment",
+                    "rows": rows}
+
+            def reveal_statistical(value, filename="decision-pool-custom-outcomes.json"):
+                raw = "\n " + json.dumps(value, indent=2) + "\n"
+                with page.expect_response(lambda r: r.url.endswith("/api/replay")) as response:
+                    page.locator("#outcomes-upload").set_input_files({
+                        "name": filename, "mimeType": "application/json", "buffer": raw.encode(),
+                    })
+                assert response.value.status == 200, response.value.json()
+                assert response.value.request.post_data_json["outcomes_raw"] == raw
+                expect(page.locator("#decision-pool-replay")).to_be_visible()
+                return response.value.json()
+
+            def export_statistical_replay(label, expected, outcomes):
+                with page.expect_download() as downloaded:
+                    page.locator("#download-replay").click()
+                path = artifacts / f"{label}-full-replay.json"
+                downloaded.value.save_as(path)
+                replay = json.loads(path.read_text())
+                assert replay == expected
+                assert replay["schema"] == "lupine.discovery.decision_pool_replay.v1"
+                assert replay["decision"]["certificate"]["schema"] == "lupine.discovery.decision_pool_certificate.v1"
+                assert replay["replay_digest"] == digest({k: v for k, v in replay.items() if k != "replay_digest"})
+                truth_path = artifacts / f"{label}-outcomes.json"
+                truth_path.write_text(json.dumps(outcomes))
+                cli_replay = subprocess.run([sys.executable, "-m", "lupine_discovery", "replay",
+                    str((artifacts / f"{label}-problem.json").resolve()), str(truth_path.resolve())],
+                    capture_output=True, text=True, check=True)
+                assert json.loads(cli_replay.stdout) == replay
+
+            def assert_statistical_pool(receipt):
+                selected = receipt["selection"]
+                assert page.locator("#pool-table tbody tr").evaluate_all(
+                    "rows => rows.map(row => row.dataset.candidateId)") == selected["ranked_ids"]
+                for forbidden in ("certified_feasible", "possible_feasible", "certified_infeasible",
+                                  "dominated", "incumbent", "regret_bound", "coverage"):
+                    assert forbidden not in selected
+                expect(page.locator("#selection-metrics")).not_to_contain_text("REGRET")
+                expect(page.locator("#pool-table .score-line")).to_have_count(0)
+                expect(page.locator("#pool-table")).not_to_contain_text("undefined")
+                expect(page.locator("#decision-pool-limitations")).to_contain_text("marginal")
+
+            ranked = select_case("decision-pool-ranked-ties")
+            assert ranked["calibration"]["n"] == ranked["calibration"]["complete_count"] == 3
+            assert ranked["calibration"]["k"] == 2 and ranked["calibration"]["threshold"] == "1/2"
+            assert ranked["selection"]["retained"] == ["a", "b"]
+            assert ranked["selection"]["retained_fraction"] == "1/2"
+            expect(page.locator("#result-title")).to_have_text("Statistical candidate pool")
+            assert_statistical_pool(ranked)
+            displayed_facts = page.locator("#decision-pool-facts > div").evaluate_all(
+                "rows => Object.fromEntries(rows.map(row => [row.querySelector('dt').textContent, row.querySelector('dd').textContent]))")
+            for label, value in (("Risk budget α (exact)", "1/2"), ("Calibration panels n", "3"),
+                                 ("Complete calibration panels", "3"), ("Required rank k", "2"),
+                                 ("Operational threshold τ", "1/2")):
+                assert displayed_facts[label] == value
+            expect(page.locator('#pool-table tr[data-candidate-id="b"]')).to_contain_text("2 / 4")
+            expect(page.locator("#decision-pool-calibration-table tbody tr")).to_have_count(3)
+            assert page.locator("#decision-pool-calibration .decision-calibration-record").evaluate_all(
+                "records => records.map(record => record.dataset.panelId)") == [
+                    entry["panel"]["panel_id"] for entry in ranked["calibration"]["panels"]]
+            for entry in ranked["calibration"]["panels"]:
+                record = page.locator(f'.decision-calibration-record[data-panel-id="{entry["panel"]["panel_id"]}"]')
+                expect(record).to_contain_text(entry["outcomes"]["source_reference"])
+                expect(record).to_contain_text(entry["assessment"]["assessment_digest"])
+            for name in ("ranker_id", "ranking_rule_id", "tie_rule_id", "generator_id",
+                         "freeze_reference", "sampling_scope", "premise_status"):
+                expect(page.locator("#decision-pool-protocol")).to_contain_text(ranked["protocol"][name])
+            export_pair("decision-pool-ranked")
+            assert paired_schemas == {f"lupine.discovery.{prefix}problem.v1"
+                                      for prefix in ("", "calibrated_", "pareto_", "coupled_", "projection_", "decision_pool_")}
+            with page.expect_response(lambda r: r.url.endswith("/replay")) as response:
+                page.locator("#replay-builtin").click()
+            ranked_replay = response.value.json()
+            assert ranked_replay["decision"]["certificate"] == ranked
+            assert ranked_replay["outcome_audit"]["true_minimizer_ids"] == ["a", "c"]
+            assert ranked_replay["outcome_audit"]["lost_minimizer_ids"] == ["c"]
+            assert ranked_replay["outcome_audit"]["all_true_minimizers_retained"] is False
+            expect(page.locator("#decision-pool-replay")).to_contain_text("c")
+            expect(page.locator("#replay-results")).to_contain_text("lost")
+            export_statistical_replay("decision-pool-ranked", ranked_replay,
+                get_case_outcomes("decision-pool-ranked-ties", get_case("decision-pool-ranked-ties")["problem"]))
+            checks.append("decision_pool_all_tied_minima_loss_original_pair_and_full_replay_verify")
+            checks.append("six_schema_problem_certificate_downloads_verify_with_real_cli")
+            page.screenshot(path=str(artifacts / "desktop-decision-pool-tied-loss.png"), full_page=True)
+
+            missing_pool = select_case("decision-pool-missing-label")
+            assert missing_pool["calibration"]["status"] == "incomplete_calibration"
+            assert missing_pool["calibration"]["n"] == 3 and missing_pool["calibration"]["complete_count"] == 2
+            assert missing_pool["calibration"]["threshold"] is None
+            assert missing_pool["selection"]["retained"] == ["a", "b", "c", "d"]
+            expect(page.locator("#result-title")).to_have_text("Screening withheld · incomplete calibration")
+            expect(page.locator("#decision-pool-calibration-table tbody tr")).to_have_count(3)
+            expect(page.locator("#decision-pool-reasons")).to_contain_text("incomplete")
+            assert_statistical_pool(missing_pool)
+            with page.expect_response(lambda r: r.url.endswith("/replay")) as response:
+                page.locator("#replay-builtin").click()
+            assert response.value.json()["outcome_audit"]["all_true_minimizers_retained"] is True
+            assert response.value.json()["decision"]["certificate"] == missing_pool
+            assert missing_pool["selection"]["conditional_guarantee"] is None
+            checks.append("decision_pool_missing_calibration_preserves_every_panel_and_full_universe")
+            page.screenshot(path=str(artifacts / "desktop-decision-pool-withheld.png"), full_page=True)
+
+            failure_pool = select_case("decision-pool-feasible-failure")
+            assert failure_pool["calibration"]["n"] == failure_pool["calibration"]["k"] == 19
+            assert failure_pool["calibration"]["threshold"] == "0"
+            assert failure_pool["selection"]["retained"] == []
+            expect(page.locator("#result-title")).to_have_text("Empty statistical pool")
+            expect(page.locator("#analysis-results")).to_contain_text("does not establish infeasibility")
+            expect(page.locator("#decision-pool-calibration-table tbody tr")).to_have_count(19)
+            with page.expect_response(lambda r: r.url.endswith("/replay")) as response:
+                page.locator("#replay-builtin").click()
+            failure_replay = response.value.json()
+            assert failure_replay["outcome_audit"]["retention_test"] == "feasible_failure"
+            assert failure_replay["outcome_audit"]["lost_minimizer_ids"] == ["last"]
+            expect(page.locator("#decision-pool-replay")).to_contain_text("last")
+            expect(page.locator("#replay-results")).to_contain_text("lost")
+            checks.append("decision_pool_empty_statistical_prefix_exposes_feasible_failure")
+            page.screenshot(path=str(artifacts / "desktop-decision-pool-empty-failure.png"), full_page=True)
+
+            unsupported_problem = get_case("decision-pool-missing-label")["problem"]
+            unsupported_problem["protocol"]["premise_status"] = "unsupported"
+            unsupported_pool = upload_statistical(unsupported_problem)
+            assert unsupported_pool["calibration"]["status"] == "unsupported_premise"
+            assert unsupported_pool["calibration"]["threshold"] is None
+            assert unsupported_pool["selection"]["retained"] == ["a", "b", "c", "d"]
+            expect(page.locator("#result-title")).to_have_text("Screening withheld · unsupported premise")
+            expect(page.locator("#decision-pool-reasons")).to_contain_text("unsupported")
+            expect(page.locator("#decision-pool-reasons")).to_contain_text("incomplete")
+            expect(page.locator("#decision-pool-calibration-table tbody tr")).to_have_count(3)
+            base_pool_problem = get_case("decision-pool-ranked-ties")["problem"]
+            insufficient_problem = json.loads(json.dumps(base_pool_problem))
+            insufficient_problem["calibration_panels"] = []
+            insufficient_pool = upload_statistical(insufficient_problem)
+            assert insufficient_pool["calibration"]["status"] == "insufficient_calibration"
+            assert insufficient_pool["calibration"]["n"] == 0 and insufficient_pool["calibration"]["k"] == 1
+            assert insufficient_pool["selection"]["retained"] == ["a", "b", "c", "d"]
+            expect(page.locator("#result-title")).to_have_text("All retained · insufficient calibration")
+            finite_one_problem = json.loads(json.dumps(base_pool_problem))
+            for entry in finite_one_problem["calibration_panels"]:
+                last = entry["panel"]["ranked_ids"][-1]
+                for row in entry["outcomes"]["rows"]:
+                    row["score"] = "0" if row["candidate_id"] == last else "1"
+                    row["constraints"] = {key: "0" for key in row["constraints"]}
+            finite_one_pool = upload_statistical(finite_one_problem)
+            assert finite_one_pool["calibration"]["status"] == "finite_conditional"
+            assert finite_one_pool["calibration"]["threshold"] == "1"
+            assert finite_one_pool["selection"]["retained"] == ["a", "b", "c", "d"]
+            expect(page.locator("#result-title")).to_have_text("All retained · finite threshold")
+            checks.append("decision_pool_unsupported_missing_insufficient_and_finite_one_are_distinct")
+
+            boundary_problem = json.loads(json.dumps(base_pool_problem))
+            boundary_problem["protocol"]["constraint_scopes"] = {}
+            boundary_problem["alpha"] = "1/4"
+            for entry in boundary_problem["calibration_panels"]:
+                for row in entry["outcomes"]["rows"]:
+                    row["constraints"] = {}
+            boundary_pool = upload_statistical(boundary_problem)
+            assert boundary_pool["calibration"]["k"] == 3
+            assert boundary_pool["calibration"]["threshold"] == "3/4"
+            assert boundary_pool["selection"]["retained"] == ["a", "b", "c"]
+            boundary_problem["alpha"] = "1/5"
+            unresolved_pool = upload_statistical(boundary_problem)
+            assert unresolved_pool["calibration"]["k"] == 4
+            assert unresolved_pool["calibration"]["status"] == "insufficient_calibration"
+            assert unresolved_pool["selection"]["retained"] == ["a", "b", "c", "d"]
+            boundary_problem["protocol"]["premise_status"] = "unsupported"
+            unsupported_only = upload_statistical(boundary_problem)
+            assert unsupported_only["calibration"]["status"] == "unsupported_premise"
+            assert unsupported_only["calibration"]["complete_count"] == 3
+            assert unsupported_only["selection"]["conditional_guarantee"] is None
+            checks.append("decision_pool_zero_constraints_exact_resolution_and_unsupported_complete_input")
+
+            empty_problem = json.loads(json.dumps(base_pool_problem))
+            empty_problem["future_panel"]["candidate_ids"] = []
+            empty_problem["future_panel"]["ranked_ids"] = []
+            empty_problem["future_panel"]["universe_id"] += "-empty-browser-case"
+            empty_pool = upload_statistical(empty_problem)
+            assert empty_pool["selection"]["retained"] == [] and empty_pool["selection"]["retained_fraction"] is None
+            expect(page.locator("#result-title")).to_have_text("Empty candidate universe")
+            empty_replay = reveal_statistical(statistical_outcomes(empty_problem, empty_pool, []))
+            assert empty_replay["outcome_audit"]["retention_test"] == "vacuous_empty_universe"
+            expect(page.locator("#decision-pool-replay")).to_contain_text("vacuous")
+            assert empty_replay["outcome_audit"]["all_true_minimizers_retained"] is True
+            complete_pool = upload_statistical(base_pool_problem)
+            rows = get_case_outcomes("decision-pool-ranked-ties", base_pool_problem)["rows"]
+            assert base_pool_problem["protocol"]["constraint_scopes"], "infeasibility probe requires a declared constraint"
+            for row in rows:
+                row["constraints"] = {key: "1" for key in row["constraints"]}
+            vacuous_replay = reveal_statistical(statistical_outcomes(base_pool_problem, complete_pool, rows))
+            assert vacuous_replay["outcome_audit"]["retention_test"] == "vacuous_no_feasible_candidate"
+            assert vacuous_replay["outcome_audit"]["true_minimizer_ids"] == []
+            expect(page.locator("#decision-pool-replay")).to_contain_text("vacuous")
+            rows[0]["score"] = None
+            partial_replay = reveal_statistical(statistical_outcomes(base_pool_problem, complete_pool, rows))
+            for key in ("reported_feasible_ids", "true_minimizer_ids", "true_optimum_value",
+                        "has_feasible_candidate", "all_true_minimizers_retained", "lost_minimizer_ids", "threshold_event_holds"):
+                assert partial_replay["outcome_audit"][key] is None, key
+            assert partial_replay["outcome_audit"]["retention_test"] == "unknown_incomplete_truth"
+            expect(page.locator("#decision-pool-replay")).to_contain_text("unknown")
+            assert partial_replay["decision"]["certificate"] == complete_pool
+            checks.append("decision_pool_empty_vacuous_and_partial_future_truth_remain_distinct")
+
+            metadata_pool_problem = json.loads(json.dumps(base_pool_problem))
+            metadata_pool_problem["future_panel"]["ranked_ids"] = ["d", "b", "a", "c"]
+            pool_metadata_text = '<img src="never-load" onerror="window.poolMetadataExecuted=true"> frozen declaration'
+            metadata_pool_problem["protocol"]["freeze_reference"] = pool_metadata_text
+            exact_pool_raw = "\n   " + json.dumps(metadata_pool_problem, indent=3) + "\n\n"
+            metadata_pool = upload_statistical(exact_pool_raw)
+            assert metadata_pool["selection"]["retained"] == ["d", "b"]
+            assert_statistical_pool(metadata_pool)
+            expect(page.locator("#decision-pool-protocol")).to_contain_text(pool_metadata_text)
+            expect(page.locator("#decision-pool-protocol img")).to_have_count(0)
+            assert page.evaluate("window.poolMetadataExecuted") is None
+            export_pair("decision-pool-original-order", exact_pool_raw)
+            checks.append("decision_pool_original_raw_rank_order_metadata_text_and_exports_preserved")
+
+            # A worker error is an execution failure, never a scientific all-retained state.
+            with patch("lupine_discovery.server.run_coupled", side_effect=CoupledWorkerError(
+                    "worker_timeout", "Synthetic statistical worker timeout; no receipt.")):
+                with page.expect_response(lambda r: r.url.endswith("/api/select")) as response:
+                    page.locator("#analyze").click()
+                assert response.value.status == 503
+                expect(page.locator("#analysis-results")).to_be_hidden()
+                assert_no_export()
+            page.locator("#analyze").click()
+            expect(page.locator("#analysis-results")).to_be_visible()
+            export_pair("decision-pool-recovered", exact_pool_raw)
+            page.locator("#json-editor").evaluate("element => element.open = true")
+            page.locator("#problem-json").fill(exact_pool_raw + " ")
+            expect(page.locator("#analysis-results")).to_be_hidden()
+            assert_no_export()
+            def edit_statistical_while_pending(route):
+                response = route.fetch()
+                assert_no_export()
+                page.locator("#problem-json").fill(exact_pool_raw + "\n  ")
+                route.fulfill(response=response)
+            page.route("**/api/select", edit_statistical_while_pending, times=1)
+            with page.expect_response(lambda r: r.url.endswith("/api/select")) as response:
+                page.locator("#analyze").click()
+            assert response.value.status == 200
+            expect(page.locator("#notice")).to_contain_text("Inputs changed")
+            expect(page.locator("#analysis-results")).to_be_hidden()
+            assert_no_export()
+            checks.append("decision_pool_worker_failure_and_input_edits_clear_stale_exports")
+
+            selected_for_reads = select_case("decision-pool-ranked-ties")
+            read_truth = get_case_outcomes("decision-pool-ranked-ties", base_pool_problem)
+            reveal_statistical(read_truth)
+            with patch("lupine_discovery.server.run_coupled", side_effect=CoupledWorkerError(
+                    "worker_timeout", "Synthetic statistical replay failure; no replay.")):
+                with page.expect_response(lambda r: r.url.endswith("/replay")) as response:
+                    page.locator("#replay-builtin").click()
+                assert response.value.status == 503
+                expect(page.locator("#replay-results")).to_be_hidden()
+                expect(page.locator("#download-replay")).to_be_disabled()
+                expect(page.locator("#download-problem")).to_be_enabled()
+                expect(page.locator("#download-certificate")).to_be_enabled()
+            page.evaluate("""() => {
+                window.statisticalReads = {};
+                window.originalStatisticalFileText = File.prototype.text;
+                File.prototype.text = function () {
+                    if (!this.name.startsWith('decision-pool-read-'))
+                        return window.originalStatisticalFileText.call(this);
+                    return new Promise((resolve, reject) => {
+                        window.statisticalReads[this.name] = {resolve, reject};
+                    });
+                };
+            }""")
+            statistical_requests = []
+            def track_statistical_request(request):
+                if request.url.endswith("/api/replay"):
+                    statistical_requests.append(request.post_data)
+            page.on("request", track_statistical_request)
+            def pending_statistical_read(name):
+                page.locator("#outcomes-upload").set_input_files({
+                    "name": name, "mimeType": "application/json", "buffer": b"{}",
+                })
+                page.wait_for_function("name => Boolean(window.statisticalReads[name])", arg=name)
+                expect(page.locator("#replay-results")).to_be_hidden()
+                expect(page.locator("#download-replay")).to_be_disabled()
+            pending_statistical_read("decision-pool-read-failed.json")
+            page.evaluate("window.statisticalReads['decision-pool-read-failed.json'].reject(new Error('Synthetic statistical file failure'))")
+            expect(page.locator("#notice")).to_contain_text("Synthetic statistical file failure")
+            assert not statistical_requests
+            pending_statistical_read("decision-pool-read-older.json")
+            pending_statistical_read("decision-pool-read-latest.json")
+            latest_truth = json.loads(json.dumps(read_truth))
+            latest_truth["rows"][0]["score"] = None
+            with page.expect_response(lambda r: r.url.endswith("/api/replay")) as response:
+                page.evaluate("raw => window.statisticalReads['decision-pool-read-latest.json'].resolve(raw)", json.dumps(latest_truth))
+            latest_statistical_replay = response.value.json()
+            assert latest_statistical_replay["outcome_audit"]["all_true_minimizers_retained"] is None
+            assert latest_statistical_replay["decision"]["certificate"] == selected_for_reads
+            expect(page.locator("#download-replay")).to_be_enabled()
+            page.evaluate("""async raw => {
+                window.statisticalReads['decision-pool-read-older.json'].resolve(raw);
+                await Promise.resolve(); await Promise.resolve();
+            }""", json.dumps(read_truth))
+            assert len(statistical_requests) == 1
+            expect(page.locator("#decision-pool-replay")).to_contain_text("unknown")
+            with page.expect_download() as downloaded:
+                page.locator("#download-replay").click()
+            latest_path = artifacts / "decision-pool-latest-read-replay.json"
+            downloaded.value.save_as(latest_path)
+            assert json.loads(latest_path.read_text()) == latest_statistical_replay
+            page.evaluate("() => { File.prototype.text = window.originalStatisticalFileText; }")
+            page.remove_listener("request", track_statistical_request)
+            checks.append("decision_pool_failed_replay_or_older_outcome_reads_cannot_restore_stale_results")
+
             page.locator("#nav-benchmarks").click()
             expect(page.locator("#benchmark-content")).to_be_visible()
             expect(page.locator("#known-case-list .known-case")).to_have_count(13)
@@ -688,6 +1028,28 @@ def run():
             mobile.locator("#analyze").click()
             expect(mobile.locator("#result-title")).to_have_text("Screening withheld · no prepared model")
             assert mobile.evaluate("document.documentElement.scrollWidth <= window.innerWidth + 1")
+            mobile.locator("#case-select").select_option("decision-pool-ranked-ties")
+            expect(mobile.locator("#case-title")).to_have_text(get_case("decision-pool-ranked-ties")["title"])
+            mobile.locator("#analyze").click()
+            expect(mobile.locator("#result-title")).to_have_text("Statistical candidate pool")
+            mobile.locator("#decision-pool-panel details").evaluate_all("items => items.forEach(item => item.open = true)")
+            expect(mobile.locator("#decision-pool-calibration-table tbody tr")).to_have_count(3)
+            expect(mobile.locator("#decision-pool-calibration-table")).to_have_attribute("tabindex", "0")
+            mobile.locator("#decision-pool-calibration-table").focus()
+            mobile.keyboard.press("ArrowRight")
+            assert mobile.evaluate("document.documentElement.scrollWidth <= window.innerWidth + 1")
+            mobile.locator("#replay-builtin").click()
+            expect(mobile.locator("#decision-pool-replay")).to_be_visible()
+            expect(mobile.locator("#replay-results")).to_contain_text("lost")
+            assert mobile.evaluate("document.documentElement.scrollWidth <= window.innerWidth + 1")
+            mobile.screenshot(path=str(artifacts / "mobile-decision-pool.png"), full_page=True)
+            mobile.locator("#case-select").select_option("decision-pool-feasible-failure")
+            expect(mobile.locator("#case-title")).to_have_text(get_case("decision-pool-feasible-failure")["title"])
+            mobile.locator("#analyze").click()
+            expect(mobile.locator("#result-title")).to_have_text("Empty statistical pool")
+            expect(mobile.locator("#analysis-results")).to_contain_text("does not establish infeasibility")
+            assert mobile.evaluate("document.documentElement.scrollWidth <= window.innerWidth + 1")
+            checks.append("decision_pool_mobile_ordered_prefix_calibration_and_loss_have_no_overflow")
             mobile.locator("#nav-benchmarks").click()
             expect(mobile.locator("#benchmark-content")).to_be_visible()
             assert mobile.evaluate("document.documentElement.scrollWidth <= window.innerWidth + 1")
@@ -719,12 +1081,18 @@ def run():
         server.shutdown()
         server.server_close()
         thread.join(timeout=2)
+    sources_after = source_digests()
+    assert sources_after == sources_before, "Browser inputs changed during the run"
     report = {"status": "passed", "checks": checks, "javascript_errors": errors,
+              "source_sha256": sources_after,
+              "screenshots_sha256": {path.name: sha256(path.read_bytes()).hexdigest()
+                                     for path in artifacts.glob("*decision-pool*.png")},
               "scope": "Chromium research-preview interaction checks; not scientific validation"}
     report_text = json.dumps(report, indent=2) + "\n"
     (artifacts / "browser-report.json").write_text(report_text)
     (artifacts / "browser-problem-export-report.json").write_text(report_text)
     (artifacts / "browser-projection-report.json").write_text(report_text)
+    (artifacts.parent / "browser-decision-pool-report.json").write_text(report_text)
     print(json.dumps(report, indent=2))
 
 

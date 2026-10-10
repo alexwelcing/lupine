@@ -1,0 +1,38 @@
+{
+  "certificate_digest": "eec326eaf3e632ee48fe4d8235e608242d16ce1fe7b3abe8b4511b789e054ebc",
+  "panel_digest": "f4f5feb5c76309a1cedbbd0748a0d8952e70ce6b0f43df687589cf56e7f18f34",
+  "problem_digest": "14f2e02a9455f8e509c26ce0b9c3e0edc4e8ba342b76af1f54d71c9d864e6bbd",
+  "rows": [
+    {
+      "candidate_id": "a",
+      "constraints": {
+        "g": "0"
+      },
+      "score": "0"
+    },
+    {
+      "candidate_id": "b",
+      "constraints": {
+        "g": "0"
+      },
+      "score": "1"
+    },
+    {
+      "candidate_id": "c",
+      "constraints": {
+        "g": "0"
+      },
+      "score": "0"
+    },
+    {
+      "candidate_id": "d",
+      "constraints": {
+        "g": "0"
+      },
+      "score": "2"
+    }
+  ],
+  "scenario_id": "decision-pool-missing-label",
+  "schema": "lupine.discovery.decision_pool_outcomes.v1",
+  "source_reference": "Public constructed future labels, revealed after selection in this executable example; no physical evidence."
+}
