@@ -22,3 +22,13 @@ The copies were checked against committed G11/G13 bytes, the axiom-output digest
 and all seven current source hashes before the new module was added. The seven
 historical source modules remain unchanged by the decision-pool extension.
 Their inventory paths are relative to the parent `formal/` directory.
+
+`g16-theorem-inventory.json` and `g16-AXIOMS.txt` preserve the eight-module,
+117-statement receipt at checkpoint
+`d169b1070eaec916ebf9af221aa4596dd4b2cb1d`, immediately before the finite
+exchangeability increment. These receipt bytes originated at G14 checkpoint
+`522fb280bad7ef1794c97a0de1f64a0e90598efe` and remained unchanged through the
+G16 release. The copies were checked against both committed checkpoints, the
+axiom-output digest and all eight current source hashes before the ninth module
+was added. The eight historical Lean sources remain byte-identical after this
+increment. Their inventory paths are relative to the parent `formal/` directory.

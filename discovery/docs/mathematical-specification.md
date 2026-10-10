@@ -1,9 +1,10 @@
 # Universal candidate-pool specification
 
 Status: mathematical specification. The [formal theorem inventory](../formal/theorem-inventory.json)
-records 117 compiled statements: 18 scalar-selector, 15 Pareto, 9 nonlinear
+records 125 compiled statements: 18 scalar-selector, 15 Pareto, 9 nonlinear
 interval/domain, 15 conditional finite-risk/rank, 12 interval-box sharpness,
-19 conservative coupled-affine statements, 12 projection-algebra statements, and 17 direct-pool counting/finite-law statements. See the [theorem map](../formal/README.md) and
+19 conservative coupled-affine statements, 12 projection-algebra statements,
+17 direct-pool counting/finite-law statements and 8 finite permutation-law statements. See the [theorem map](../formal/README.md) and
 [actual verification record](../formal/VERIFICATION.md) for their precise scope.
 Python conformance tests are not a formal refinement proof of the executable
 runtime. Conditional finite-risk composition and a direct-pool finite weighted probability
@@ -404,11 +405,12 @@ certificate of physical infeasibility.
 
 Whole-panel score exchangeability under a frozen ranking procedure yields the
 usual marginal split-conformal retention statement. The compiled probability
-result has narrower explicit scope: finite outcome weights sum to one and all
-indexed leave-one-out failure events have equal mass. It proves the count and
-weighted-sum bridge and then the alpha bound, without assuming the bound itself.
-It does not formalize arbitrary measurable exchangeability or validate a source
-population. The runtime's permutation upper bound, insufficient-rank branch
+results have narrower explicit scope. The original finite weighted theorem
+assumes equal indexed failure-event masses. The [finite exchangeability extension](finite-exchangeability.md)
+derives that equality from a finite joint score support closed under coordinate
+permutations with invariant nonnegative normalized atom weights, then applies
+the proved count and weighted-sum bridge. It does not assume the risk bound
+itself, formalize arbitrary measurable exchangeability, or validate a source population. The runtime's permutation upper bound, insufficient-rank branch
 and Python refinement are not formalized in this module.
 
 The guarantee is marginal over calibration and one future panel; it is neither

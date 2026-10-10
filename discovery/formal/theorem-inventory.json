@@ -1,6 +1,6 @@
 {
-  "axiom_output_sha256": "47973449335d90538dc233321d7087265f2ad1dfd4e51f4990dfae671fc8c468",
-  "module_count": 8,
+  "axiom_output_sha256": "d99b1d075507166a731d2a7e2c35d20e58eeba3dfa50ad12f796c575d3ca3811",
+  "module_count": 9,
   "modules": [
     {
       "source": "LupineCoupled.lean",
@@ -283,6 +283,53 @@
           "propext"
         ],
         "LupineDiscovery.threshold_decreases": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ]
+      }
+    },
+    {
+      "source": "LupineExchangeability.lean",
+      "source_sha256": "0e326c4b51e5ca00d1deb32be61ba7b80ca0c443059d0fbf13e22f05717610ce",
+      "theorem_count": 8,
+      "theorems": {
+        "LupineExchangeability.finite_exchangeable_loo_ceiling_bound": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineExchangeability.finite_exchangeable_loo_failure_bound": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineExchangeability.finite_joint_failure_mass_invariant": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineExchangeability.finite_joint_failure_masses_equal": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineExchangeability.finite_mass_reindex": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineExchangeability.loo_failure_iff_strict_lower": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineExchangeability.loo_failure_reindex": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineExchangeability.strict_lower_reindex": [
           "Classical.choice",
           "Quot.sound",
           "propext"
@@ -641,5 +688,5 @@
     }
   ],
   "schema": "lupine-formal-theorem-inventory-v1",
-  "theorem_count": 117
+  "theorem_count": 125
 }

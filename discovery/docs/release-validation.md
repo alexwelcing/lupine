@@ -14,7 +14,7 @@ gate. No aggregate score averages away blocking failures.
 | Gate | State | Evidence and release consequence |
 |---|---|---|
 | Exact conditional selection kernel | PASS | Exact rational runtime, exhaustive small-world and adversarial tests. Conditional guarantees require sound intervals and a fixed finite candidate universe. |
-| Conditional mathematical statements | PASS | 117 compiled Lean statements and axiom audit in `formal/VERIFICATION.md`. This does not prove Python refinement or physical premises. |
+| Conditional mathematical statements | PASS | 125 compiled Lean statements and axiom audit in `formal/VERIFICATION.md`. This does not prove Python refinement or physical premises. |
 | Published constrained checkpoint verification | PASS | [Discovery Verify run 38067639369](https://github.com/alexwelcing/lupine/actions/runs/38067639369) passed at `a8775ad` on 2026-10-10: Python 3.11/3.12, source manifest, isolated packages, 17 browser checks and 69 Lean theorem audits. Subsequent increments require their own checks. |
 | Interface through actual selector | PASS | 46 Chromium checks cover six schemas, scientific reports, desktop/mobile states, paired exact input/certificate exports and replay verified by the real CLI. Statistical lost optima, missing labels, finite empty pools and marginal limitations remain visible; see `reports/decision-pool-workbench-verification.md`. |
 | Calibration and unsupported-scope abstention | PASS | Exact versioned inputs, original-seal replay, all-retained abstention and browser diagnostics. This software behavior does not establish exchangeability or physical coverage. |
@@ -179,3 +179,18 @@ The reviewed [mapping](mpea-column-mapping-v1.md) distinguishes documented
 concepts and four uninterpreted fields, allowing only five prospective metadata
 roles. No observation rows were decoded. Scientific schema, pairing, targets
 and a new benchmark remain separate unresolved stages.
+
+## Finite permutation-law proof checkpoint
+
+Eight reviewed statements derive equal indexed leave-one-out failure masses
+from a permutation-invariant finite joint score law, then the marginal alpha
+bound. All nine modules strictly build; a fresh audit passes 125 statements
+with standard logical axioms only, and all 11 parser tests pass. See
+[formal verification](../formal/VERIFICATION.md) and [precise scope](finite-exchangeability.md).
+The existing runtime, its tests and browser/package smoke sources are unchanged
+from the green `d169b10` checkpoint; no new local runtime run is claimed for this
+formal-only change. New-commit CI must be verified after publication.
+
+This closes a finite-law derivation gap. It does not prove physical exchangeability,
+arbitrary measurable laws, conditional reliability, runtime refinement or useful
+screening. No scientific release gate changes state.

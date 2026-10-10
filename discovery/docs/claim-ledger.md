@@ -2,19 +2,21 @@
 
 This ledger separates mathematical implications, software execution, archived observations, and open scientific premises. A stronger claim requires stronger evidence than the row beneath it supplies.
 
-The [generated formal inventory](../formal/theorem-inventory.json) records 117
+The [generated formal inventory](../formal/theorem-inventory.json) records 125
 compiled statements: 18 scalar-selector, 15 Pareto, 9 nonlinear interval/domain,
 15 conditional finite-risk/rank, 12 interval-box sharpness, and 19 conservative
-coupled-affine statements, plus 12 projection-algebra and 17 direct-pool counting/finite-law statements. The [formal verification record](../formal/VERIFICATION.md)
+coupled-affine statements, plus 12 projection-algebra, 17 direct-pool counting/finite-law
+and 8 finite permutation-law statements. The [formal verification record](../formal/VERIFICATION.md)
 documents actual compilation and axiom auditing. The
 [engine extension verification record](../reports/engine-extension-verification.md)
 records execution evidence for the new runtime and interface routes. These are
 conditional mathematical and software results. Finite-risk composition has an
 explicit finite weighted probability instance. The direct-pool extension proves
 a marginal bound for a finite weighted outcome model with equal failure-event
-masses as a premise. Arbitrary measurable exchangeable laws, deriving that
-symmetry from exchangeability, Python refinement and physical validity remain
-unproved.
+masses as a premise. The subsequent [finite exchangeability bridge](finite-exchangeability.md)
+derives those equal masses from invariant atom weights and coordinate-permutation
+closure of a finite score-vector support. Arbitrary measurable exchangeable laws,
+Python refinement and physical validity remain unproved.
 
 The [coupled kernel contract](coupled-kernel.md) documents exact affine proofs
 and their common-world premise. Its 18 focused tests and [independent audit](../reports/coupled-independent-audit.json)
@@ -47,6 +49,7 @@ records 298 Python tests, 24 browser checks and an isolated wheel exercising
 | Finite calibration output establishes simultaneous physical coverage | No such implication | Not claimed. Exchangeability, predictor freezing and candidate-generation validity are explicit unverified premises; conditional finite-risk composition is proved, while exchangeability and conformal marginal coverage are not |
 | All tied feasible minimizers are retained exactly when their maximum normalized rank is at most the threshold | [Direct-pool design](decision-pool-calibration-design.md), `all_minimizers_retained_iff` in [LupineDecisionPool.lean](../formal/LupineDecisionPool.lean) | Deterministic finite-panel bridge, with nonnegative threshold and score zero for no feasible optimum. Complete recorded labels and a supplied ranking remain premises |
 | Direct pool calibration has a conditional marginal failure bound | `leave_one_out_failure_count`, `finite_weighted_loo_ceiling_bound`, [formal scope](../formal/VERIFICATION.md) | Formal probability result uses a finite weighted outcome space and equal indexed failure-event masses. No arbitrary measurable-law theorem, application exchangeability proof, conditional-on-feasibility guarantee, or physical attestation |
+| Finite joint-score permutation invariance implies the direct-pool marginal risk bound | [LupineExchangeability.lean](../formal/LupineExchangeability.lean), [finite-law scope](finite-exchangeability.md), [actual build/audit](../formal/VERIFICATION.md) | Eight compiled statements derive equal indexed failure masses instead of assuming them. Finite support, invariant normalized nonnegative atom weights and exact leave-one-out quantiles are required; no arbitrary measurable-law, scientific sampling, conditional-coverage or Python-refinement claim |
 | Exact statistical pool runtime preserves incomplete calibration and abstains explicitly | [Core](../src/lupine_discovery/decision_pool.py), [independent tests](../tests/test_decision_pool_review.py), [workbench verification](../reports/decision-pool-workbench-verification.md) | Separate core with strict wire/CLI, guarded HTTP, actual-pool replay and browser integration. Every calibration panel remains in n; any missing target yields no calibrated threshold and whole-universe fallback. Future truth is absent from the selection API; no feasibility, regret, or hard interval certificate |
 | A marginal pool guarantee implies reliability on feasible panels or a fixed calibration set | [Exact counterexamples](../reports/decision-pool-independent-audit.json), [runtime controls](../tests/test_decision_pool_review.py) | False: constructed marginal retention 19/20 coexists with zero retention conditional on feasibility. Marginal failure 1/2 can coexist with failure 1 conditional on a realized calibration set. No scientific archive is involved |
 | Every feasible Pareto optimum is retained | [LupinePareto.lean](../formal/LupinePareto.lean): `pareto_retained`, `equal_vectors_no_witness` | Sound finite real endpoints required. Witnesses must be certified feasible, weakly better in every objective and strictly better in at least one; all true optimal ties survive |

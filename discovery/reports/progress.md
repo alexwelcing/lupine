@@ -3,6 +3,37 @@
 The current goal and ordered backlog are in `../GOAL.md`. Append concise entries
 with artifacts, actual checks, scientific implications, and the next action.
 
+## 2026-10-10 18:55 UTC — finite-law symmetry derived and strictly verified
+
+- Verified `d169b1070eaec916ebf9af221aa4596dd4b2cb1d` on the remote and
+  [all four CI jobs](https://github.com/alexwelcing/lupine/actions/runs/38077229090).
+  Header disclosure and the reviewed 23-column mapping are published; no real
+  observation rows have been processed.
+- G17 adds eight independently reviewed statements deriving equal indexed
+  failure masses from coordinate-permutation closure and invariant atom weights
+  of a finite joint real-score law. The final new bounds do not assume equal
+  risks. Exact source bytes match the reviewed scratch proof; all eight prior
+  modules are unchanged, with the old 117 receipt preserved under formal/history.
+- Actual checks: strict nine-module build passes 1,013 jobs; fresh full axiom audit
+  passes 125 statements; all 11 adversarial audit-parser tests pass. Independent
+  current-source elaboration/audit passes the new 8 statements and a standalone
+  checker passes 24,336 synthetic action/event comparisons. Root rechecked source,
+  inventory, output and log hashes. `exchangeability-verification-v1.md` links
+  the evidence and precise finite-support limitations.
+- Runtime continuity checks all 151 tracked library/test/resource/browser/package
+  files against the green prior checkpoint. They are byte-identical; no new local
+  564-test/browser/wheel rerun is claimed for this formal-only increment. New
+  commit CI will execute the repository checks after publication.
+- Scientific implication: a finite-law derivation gap is closed; arbitrary
+  measurable laws, scientific exchangeability, conditional reliability, physical
+  premises and runtime refinement remain unproved. Counterexamples and original
+  scientific NO-GO results are unchanged. No new targets, fits or benchmarks.
+- Owner/checkpoint: root publishes G17 and verifies CI. G15B byte-scanner prototype
+  passes 18 author and 14 independent synthetic checks (63 opaque-target changes);
+  source/production guards and lexical policies are being built in ignored
+  scratch against the committed mapping. Root and independent reviewer will
+  review/test the complete producer before a committed freeze and actual rows.
+
 ## 2026-10-10 18:47 UTC — published workbench; exact header and reviewed mapping
 
 - Pushed `c9fb192ed15cf11874c59083b1fae72f7af3224f`, verified the remote ref,

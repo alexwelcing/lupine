@@ -612,4 +612,15 @@ These checks read only synthetic records. No archived target tables, train/test
 splits, existing selectors, or benchmark results changed. The runtime deliberately
 does not infer a missing ranking, detect an undeclared label leak, attest a
 source, or establish the declared sampling law. Its cost grows with record
-counts and rational bit lengths; no end-to-end execution or memory cap is claimed.
+counts and rational bit lengths; no end-to-end execution or memory cap is claimed
+for the direct Python core. The separate wire/worker profile bounds accepted inputs.
+
+## Subsequent finite-law proof extension
+
+The [finite exchangeability bridge](finite-exchangeability.md) derives equality
+of indexed leave-one-out failure masses from a finite joint score law invariant
+under coordinate permutations. Eight additional statements strictly compile and
+audit; the current formal inventory is 125 across nine modules. This improves the
+explicit mathematical implication without establishing a scientific score law,
+arbitrary measurable exchangeability, or conditional coverage. The runtime and
+all counterexamples above remain unchanged.

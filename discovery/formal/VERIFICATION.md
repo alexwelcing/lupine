@@ -1,6 +1,74 @@
 # Actual verification record
 
-## Direct candidate-pool counting and finite probability extension
+## Finite permutation-invariant score-law extension
+
+Completed on `2026-10-10` in the Linux x86_64 branch workspace after checkpoint
+`d169b1070eaec916ebf9af221aa4596dd4b2cb1d`, using the same pinned Lean `4.29.0`
+and Mathlib revision documented below.
+
+- The new module first compiled in ignored scratch with warnings treated as
+  errors and all eight statements axiom-audited. An independent reviewer then
+  reproduced the strict scratch compile, checked its source/object/output
+  bindings, and found no blocking mathematical issue.
+- `lake --wfail build`: passed all nine default modules, 1,013 jobs, no warnings.
+- `python3 audit_axioms.py`: freshly re-elaborated all nine sources, checked
+  complete declaration/output coverage, and passed all 125 theorem audits.
+- `python3 -m unittest test_audit_axioms -v`: all eleven adversarial parser
+  tests passed.
+
+The current [theorem inventory](theorem-inventory.json) records **125 statements
+in nine modules**. The fresh [combined axiom output](AXIOMS.txt) contains only
+`propext`, `Classical.choice`, and `Quot.sound`. The new module imports only
+`LupineDecisionPool`, reusing its existing dependency graph. No new project
+axiom or admitted proof is present.
+
+`LupineExchangeability.lean` was copied byte-for-byte from the independently
+reviewed scratch module; there were no proof integration edits. Its SHA-256 is
+`0e326c4b51e5ca00d1deb32be61ba7b80ca0c443059d0fbf13e22f05717610ce`.
+The current inventory SHA-256 is
+`bd6823b9340a1d8b8f4595f95b83677df5e19eae4ac2585f6ec7f304db2424e7`, and
+the combined axiom-output SHA-256 is
+`d99b1d075507166a731d2a7e2c35d20e58eeba3dfa50ad12f796c575d3ca3811`.
+Every current module and the combined output were checked against those
+generated bindings after the audit.
+
+Before refreshing the inventory, the eight-module 117-statement receipt was
+preserved as [history/g16-theorem-inventory.json](history/g16-theorem-inventory.json)
+and [history/g16-AXIOMS.txt](history/g16-AXIOMS.txt). Those bytes were verified
+against both the pre-integration checkpoint and their G14 origin
+`522fb280bad7ef1794c97a0de1f64a0e90598efe`. All eight previous Lean source
+files remain byte-identical. The audit parser, its tests, dependency manifest,
+and toolchain pin were unchanged.
+
+Local execution logs, relative to `discovery/`, are
+`.cache/formal/g17-build.log`, `.cache/formal/g17-audit.log`, and
+`.cache/formal/g17-audit-tests.log`. The local source-bound receipt
+`.cache/formal/g17-verification.json` records command outcomes, log digests,
+old/new module hashes, historical receipt hashes, the compiled object, and
+configuration bindings. Its SHA-256 is
+`2ecb87e8df75292148dfa671cce6247563128aa31377daa6c2b45f605cff8c7f`.
+These ignored artifacts supplement the committed inventory and axiom output.
+
+The eight new statements prove strict-lower count and exact leave-one-out
+failure equivariance, finite event-mass invariance under a weight-preserving
+bijection, and equality of indexed failure masses for a finite joint score
+support closed under coordinate permutations with invariant atom weights.
+Nonnegative normalized weights then yield the proved marginal `(N-k)/N` bound;
+the exact rational ceiling finite branch yields the alpha bound. Equality of
+indexed failure masses is derived, not separately assumed in the new final
+statements. The independent review also executed 24,336 synthetic event/action
+checks; these are separate executable evidence, not additional Lean statements.
+
+The law must have finite support. The result does not establish arbitrary
+measurable or infinite-support exchangeability, scientific sampling validity,
+conditional-on-feasible or observed-calibration coverage, Python refinement,
+or useful pool reduction. Exact quantiles are still explicit premises. The
+insufficient-rank/full-universe runtime branch is not covered here. Applying
+the existing all-minimizer retention equivalence also requires the actual
+panel-score definition and a nonnegative threshold; no physical labels or
+ranking protocol are validated by this new mathematical implication.
+
+## Historical direct candidate-pool counting and finite probability extension
 
 Completed on `2026-10-10` in the Linux x86_64 branch workspace after G13
 checkpoint `429751038af7be32b0e6bac583508a59d0aa23c1`, using the same pinned
@@ -15,8 +83,8 @@ Lean `4.29.0` and Mathlib revision documented below.
 - `python3 -m unittest test_audit_axioms -v`: all eleven adversarial parser tests
   passed.
 
-The current [theorem inventory](theorem-inventory.json) records 117 statements
-in eight modules. The fresh [combined axiom output](AXIOMS.txt) contains only
+The preserved [theorem inventory](history/g16-theorem-inventory.json) records
+117 statements in eight modules. Its [combined axiom output](history/g16-AXIOMS.txt) contains only
 `propext`, `Classical.choice` and `Quot.sound`; there is no admitted proof or
 project-specific axiom. Every source hash and the combined-output hash were
 checked against the generated inventory after the audit. New-module source
@@ -49,8 +117,8 @@ bound is assumed. Independent read-only reviews of the deterministic and
 finite-law source found no contract defect; those reviews were separate from
 compilation and the axiom audit.
 
-This is not a formal theorem for an arbitrary measurable exchangeable law, and
-does not derive equal failure masses from exchangeability or validate a
+This historical module is not a formal theorem for an arbitrary measurable
+exchangeable law. It does not derive equal failure masses from exchangeability or validate a
 scientific sampling premise. A finite candidate universe does not make the
 outcome law finite. Rank permutation/upper bounds, the prefix-size formula,
 the insufficient-rank full-universe runtime branch and Python refinement are

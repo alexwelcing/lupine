@@ -1,7 +1,7 @@
 {
   "schema": "lupine.discovery.runtime-manifest.v1",
   "python": "3.12.14",
-  "checkpoint": "statistical-pool-workbench-and-header-disclosure-freeze",
+  "checkpoint": "finite-permutation-law-bridge",
   "files": {
     "pyproject.toml": "a73eec989447b99fec48de193218a0750079eeb5973406c53d7a0dc840d9d90f",
     "scripts/additional_archived_benchmark.py": "8f50f0fc8aaade6f895500856db91b6593e5da8f676c7bf325cdc0a938d73b9a",
@@ -9,6 +9,7 @@
     "scripts/audit_constrained_result.py": "08c6a72e87174c2d0f27215e131d3855d46ef25a802f880c1f11ad88e1d1b9ba",
     "scripts/audit_coupled.py": "f3a123e19b8b108c13bf6b2cd8158245142e42dcc9de761378707d0d1ad4b601",
     "scripts/audit_decision_pool.py": "c3052dfae2283913bcd83df67575f9270009f608384196923a7b5d69cb9cc9ab",
+    "scripts/audit_exchangeability.py": "b03dc88edb45cbb5726f520e5aebd89dd11e0174d26bc4c61aa64a0072fc12fb",
     "scripts/audit_projection.py": "e1db031f44a3d1ec512711c8e0a5f7044cff08e5b4e107f685fd2be8c664c080",
     "scripts/audit_projection_wire.py": "3eabe371684b9e8218f3db2e45649f1de0679234f88f94b80f45374097675a9a",
     "scripts/audit_training_tail.py": "b4bfc9f464ded920f627b6195cc26f9a8784740c73b6893bf57e99b57b63ec3d",

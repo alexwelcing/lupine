@@ -16,8 +16,10 @@ screening under one shared latent world. `LupineProjection.lean` proves the exac
 algebra translating a declared correction field into those affine quantities and
 anchor rows. `LupineDecisionPool.lean` proves finite all-minimizer rank counting
 and a marginal failure bound for finite weighted outcome laws with explicitly
-equal leave-one-out failure probabilities. Each module has its own namespace.
-All eight modules are default build targets.
+equal leave-one-out failure probabilities. `LupineExchangeability.lean` derives
+that equality from permutation invariance of a finite joint score-vector law
+and applies the marginal failure bound. Each module has its own namespace.
+All nine modules are default build targets.
 
 The standalone package pins Lean `v4.29.0` and Mathlib
 `8a178386ffc0f5fef0b77738bb5449d50efeea95`, matching the Mathlib/toolchain
@@ -336,8 +338,10 @@ The **equality of all indexed leave-one-out failure probabilities** is a separat
 explicit symmetry hypothesis. It is not inferred from an archive, a descriptor,
 or the existing `RiskLaw` capacity abstraction. The module does not prove a
 general measurable-probability exchangeability theorem or derive the symmetry
-hypothesis from exchangeability. A finite material panel alone does not imply
-that sampling randomness has a finite outcome space.
+hypothesis from exchangeability. The separate `LupineExchangeability` module
+below supplies the latter step for finite-support permutation-invariant joint
+score laws. A finite material panel alone does not imply that sampling
+randomness has a finite outcome space.
 
 The panel bridge accepts any natural-valued rank. Rank being a bijection onto
 `1..m`, the score bound by one, the exact prefix size, and the insufficient-rank
@@ -355,6 +359,53 @@ guarantee. The [decision-pool design](../docs/decision-pool-calibration-design.m
 states the broader probabilistic argument, protocol requirements and explicit
 counterexamples to those stronger interpretations. Those scientific and general
 probability premises remain separate from the compiled finite-law kernel.
+
+## Finite exchangeability theorem map
+
+`LupineExchangeability` represents a joint score law by a finite support `S` of
+vectors `s : I → ℝ`, where `I` is a finite coordinate type. The support is closed
+under every coordinate permutation `s ↦ s ∘ σ`, and atom weights obey
+`w(s ∘ σ) = w(s)`. For probability bounds, the weights must be nonnegative on
+`S` and sum to one. They may be nonuniform. These are explicit hypotheses about
+the joint law; they are not inferred from an archive or a fitted model.
+
+For each supported vector and left-out index, the supplied threshold must be
+the exact kth order statistic of the other `N−1` scores. Exactness fixes the
+strict-failure event, so a separate equivariance premise about a quantile
+implementation is unnecessary. The module constructs the support bijection
+under coordinate permutations, proves finite event-mass invariance, and derives
+equal indexed failure masses by swapping coordinates. Its final risk statements
+therefore do not assume equality of failure probabilities separately.
+
+| Theorem in `LupineExchangeability` | Mathematical guarantee |
+| --- | --- |
+| `strict_lower_reindex` | Coordinate permutations preserve strict-lower counts, including score ties |
+| `loo_failure_iff_strict_lower` | Exact leave-one-out failure is equivalent to at least k strictly smaller scores in the full vector |
+| `loo_failure_reindex` | Exact leave-one-out failure events are equivariant under coordinate permutations |
+| `finite_mass_reindex` | A weight-preserving finite sample bijection preserves additive event mass |
+| `finite_joint_failure_mass_invariant` | Invariant joint-vector weights give event-mass invariance under any coordinate permutation |
+| `finite_joint_failure_masses_equal` | Coordinate swaps derive equal failure masses for any two indices |
+| `finite_exchangeable_loo_failure_bound` | The proved count and averaging results yield marginal failure mass at most `(N-k)/N` for the stated finite joint law |
+| `finite_exchangeable_loo_ceiling_bound` | Exact rational `k = ceil(N*(1-alpha)) < N` gives marginal failure mass at most alpha |
+
+A designated target implies `N > 0`; normalization excludes empty support.
+Exact leave-one-out quantiles on that support require `1 <= k <= N−1`, so the
+unsupported rank endpoints cannot satisfy the premises. The ceiling result
+covers the finite branch only. Score ties are conservative because failure is
+strict and retention uses a weak threshold.
+
+To obtain candidate retention, use `LupineDecisionPool.all_minimizers_retained_iff`
+with the actual panel-score definition and a nonnegative threshold. Different
+finite panel sizes may supply those scalar scores, but neither variable sizes
+nor finite candidate counts establish their joint-law invariance. Complete
+physical labels, the ranking protocol, and the sampling mechanism remain
+separate premises.
+
+This extension proves a finite-support exchangeability implication, not a
+result for arbitrary measurable or infinite-support probability laws. It does
+not establish scientific exchangeability, conditional coverage given feasibility
+or realized calibration, Python refinement, or useful pool reduction. The
+insufficient-rank/full-universe runtime branch remains outside this module.
 
 ## Reproduction and trust
 
