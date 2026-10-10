@@ -8,11 +8,13 @@ This is the initial research implementation for a [four-day project](docs/four-d
 
 The implemented engine covers exact calibration abstention, Pareto selection,
 nonlinear enclosures, shared-affine screening, scoped projection and direct
-statistical pools. The proof package contains **125 compiled and audited Lean
+statistical pools. The proof package contains **130 compiled and audited Lean
 statements**; its probability results retain explicit finite-law premises.
 The six-mode interface passes **46 Chromium checks** and **28 installed-wheel
-cases**. The latest source freeze passes **684 Python tests** and [all four CI
-jobs](https://github.com/alexwelcing/lupine/actions/runs/38081148087).
+cases**. The integrated [normalization extension](reports/normalization-engineering-v1/README.md)
+passes **728 Python tests**. The preceding evidence checkpoint passes [all four CI
+jobs](https://github.com/alexwelcing/lupine/actions/runs/38082387214); this new source
+requires its own publication checks.
 See the [interface verification](reports/decision-pool-workbench-verification.md),
 [formal scope](formal/VERIFICATION.md), and [source-bound inventory](formal/theorem-inventory.json).
 

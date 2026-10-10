@@ -1,6 +1,42 @@
 # Actual verification record
 
-## Finite permutation-invariant score-law extension
+## Finite coefficient normalization extension
+
+Completed on `2026-10-10` after published checkpoint
+`28b929f6ac74edaeccef148c7a1aa29b3b4bfdb0`, using pinned Lean `4.29.0`
+and the same Mathlib revision documented below.
+
+- `LEAN_NUM_THREADS=1 lake --wfail build`: passed all ten default modules,
+  1,015 jobs, with warnings treated as errors.
+- `LEAN_NUM_THREADS=1 python3 audit_axioms.py`: freshly re-elaborated all ten
+  sources and passed complete axiom coverage for **130 statements**.
+- `python3 -m unittest test_audit_axioms -v`: all eleven parser tests passed.
+
+The current [inventory](theorem-inventory.json) and [axiom output](AXIOMS.txt)
+were checked against every module source and the combined-output hash. Only
+`propext`, `Classical.choice`, and `Quot.sound` occur. The new source was promoted
+unchanged from the strictly compiled and independently reviewed scratch file;
+its SHA-256 is `280be8e7b4724af3b6092bf497d3b29c3a9b3a29b135942cf76cfa273015db32`.
+All nine prior Lean sources remain byte-identical. The audit parser, its tests,
+toolchain, and dependency manifest were unchanged. The prior 125-statement
+inventory/output were verified against committed bytes and their source bindings
+before preservation under `history/pre-normalization-*`.
+
+The [integration receipt](../reports/formal-normalization-review-v1/integration-receipt.json)
+binds current source/configuration/inventory/output, compiled normalization object,
+old sources, and actual command logs. The same report folder preserves historical
+scratch compile and independent peer-review evidence, including the reviewer's
+initial regex-check failure and corrected successful check. The reviewer did
+not claim an independent recompile. See the [provenance guide](../reports/formal-normalization-review-v1/README.md).
+
+The five new statements prove finite-real coordinate bounds, unit sum,
+positive-scale normalization invariance, normalized L1 bounds, and L1 zero iff
+coordinate equality under the hypotheses in the [theorem map](README.md).
+They do not prove physical composition validity, chemical distance predictivity,
+scientific source adequacy, Python/Fraction refinement, input/resource contracts,
+or any additional normalization property beyond those five statements.
+
+## Historical finite permutation-invariant score-law extension
 
 Completed on `2026-10-10` in the Linux x86_64 branch workspace after checkpoint
 `d169b1070eaec916ebf9af221aa4596dd4b2cb1d`, using the same pinned Lean `4.29.0`
@@ -16,8 +52,8 @@ and Mathlib revision documented below.
 - `python3 -m unittest test_audit_axioms -v`: all eleven adversarial parser
   tests passed.
 
-The current [theorem inventory](theorem-inventory.json) records **125 statements
-in nine modules**. The fresh [combined axiom output](AXIOMS.txt) contains only
+The preserved [theorem inventory](history/pre-normalization-theorem-inventory.json) records **125 statements
+in nine modules**. The fresh [combined axiom output](history/pre-normalization-AXIOMS.txt) contains only
 `propext`, `Classical.choice`, and `Quot.sound`. The new module imports only
 `LupineDecisionPool`, reusing its existing dependency graph. No new project
 axiom or admitted proof is present.
@@ -25,11 +61,11 @@ axiom or admitted proof is present.
 `LupineExchangeability.lean` was copied byte-for-byte from the independently
 reviewed scratch module; there were no proof integration edits. Its SHA-256 is
 `0e326c4b51e5ca00d1deb32be61ba7b80ca0c443059d0fbf13e22f05717610ce`.
-The current inventory SHA-256 is
+The historical inventory SHA-256 is
 `bd6823b9340a1d8b8f4595f95b83677df5e19eae4ac2585f6ec7f304db2424e7`, and
 the combined axiom-output SHA-256 is
 `d99b1d075507166a731d2a7e2c35d20e58eeba3dfa50ad12f796c575d3ca3811`.
-Every current module and the combined output were checked against those
+Every checkpoint module and the combined output were checked against those
 generated bindings after the audit.
 
 Before refreshing the inventory, the eight-module 117-statement receipt was

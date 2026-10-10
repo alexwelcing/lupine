@@ -1,0 +1,31 @@
+{
+  "files": [
+    {
+      "destination": "src/lupine_discovery/representation.py",
+      "sha256": "c65c0eed659025a0e41eb325e75182ac2b980c35ac43dfddaa501f4f3ddf3b9e",
+      "source": ".cache/mpea-feature-contract/src/lupine_discovery/representation.py"
+    },
+    {
+      "destination": "scripts/mpea_features.py",
+      "sha256": "b24c0f1bb62fc56794e1232f973a6020ee42a0d3765d33cb51246f3c7a3a47d9",
+      "source": ".cache/mpea-feature-contract/scripts/mpea_features.py"
+    },
+    {
+      "destination": "tests/test_representation.py",
+      "sha256": "3f894a0427a45f3b6c65b232616b1bc19930c9b1ee02cce0c2b0a1c9d014d70e",
+      "source": ".cache/mpea-feature-contract/tests/test_representation.py"
+    },
+    {
+      "destination": "tests/test_mpea_features.py",
+      "sha256": "58009de4d9c7d3338f36dca5baf67b1300715caeef17a95fb9d6e142eb79f541",
+      "source": ".cache/mpea-feature-contract/tests/test_mpea_features.py"
+    },
+    {
+      "destination": "tests/test_representation_independent.py",
+      "sha256": "f6a56e20cbc3acd3f353b7bf78c3d3bbf04abb4af27362290a6c48996fc28cd9",
+      "source": ".cache/mpea-feature-contract/review/test_representation_independent.py"
+    }
+  ],
+  "schema": "lupine.discovery.normalization.promotion.v1",
+  "scope": "Exact byte-preserving promotion of reviewed synthetic code/tests; no scientific data execution."
+}

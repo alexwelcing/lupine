@@ -18,7 +18,7 @@ The active outcome, ordered backlog, and autonomous execution rules are in
 - Three pinned published-data pilots with recorded negative findings; no new DFT or synthesis. All three empirical interval constructions fail simultaneous coverage; band gap loses five tied optima.
 - Independently reviewed joint-coverage derivation and identifiability limits. Exact calibration planning now implements uniform scalar-event risk allocation, rational rank arithmetic, and explicit unbounded diagnostics. Assumptions remain unverified. Versioned calibrated inputs now propagate finite conditional intervals or explicit all-retained abstention through CLI, replay, and browser.
 - Posthoc exact-descriptor audit: three band-gap label collisions imply a 1.15 eV archive worst-error floor for composition-only predictors; physical causes remain unresolved.
-- Standalone conditional Lean proof package: **125 statements** compiled and audited across scalar, Pareto, nonlinear interval, finite-risk, sharpness, coupled-affine, projection-algebra, direct-pool counting/finite-law and finite permutation-invariance modules. The 19 coupled statements cover multiplier bounds, contradiction/consistency, candidate-feasible domains, strict conditional witnesses, ties, and conservative fallback. Consult [formal verification](formal/VERIFICATION.md) and the [source-bound inventory](formal/theorem-inventory.json).
+- Standalone conditional Lean proof package: **130 statements** compiled and audited across scalar, Pareto, nonlinear interval, finite-risk, sharpness, coupled-affine, projection-algebra, direct-pool counting/finite-law finite permutation-invariance and finite normalization modules. The 19 coupled statements cover multiplier bounds, contradiction/consistency, candidate-feasible domains, strict conditional witnesses, ties, and conservative fallback. Consult [formal verification](formal/VERIFICATION.md) and the [source-bound inventory](formal/theorem-inventory.json).
 - Pareto runtime and IO preserve tradeoffs, ties, feasible witnesses, and partial-truth states. Selected exact nonlinear maps reject invalid domains. See `reports/engine-extension-verification.md` for current checks; earlier checkpoints remain archived.
 - The statistical-workbench/custody integration passes **564 Python tests** with unchanged source hashes, **46 Chromium checks** with no JavaScript errors, and a fresh isolated wheel with **28 cases across six wire schemas**. The first catalog-test failure and source transition remain recorded. See [current verification](reports/decision-pool-workbench-verification.md); [all four CI jobs passed](https://github.com/alexwelcing/lupine/actions/runs/38076623056) at `c9fb192`.
 - Experimental [coupled-evidence Python API](docs/coupled-kernel.md): 18 focused tests pass, and the [independent audit](reports/coupled-independent-audit.json) reports PASS for 10,003 checks across 11,027 synthetic worlds. Exact proofs bind the original domain and candidate universe; conditional witnesses preserve tied minima. Unsupported/learned-correlation premises, missing consistency, and proved-inconsistent models retain every candidate. The separate [strict adapter](docs/coupled-problem.md) now adds JSON/CLI, actual-pool replay and guarded HTTP routes; the coupled browser mode and training dashboard are verified. No general solver or scientific validation is claimed.
@@ -94,9 +94,16 @@ workers agree. Screening/utility failures and all three rejected ridge models
 remain unchanged. [Exact commands, safe receipts and limits](reports/clean-reproduction-v1/README.md).
 This is same-host computational reproduction, not independent scientific evidence.
 
-Current owner/checkpoint: root publishes these actual results and verifies remote
-CI. Feature engineer owns the production reader in ignored scratch; protocol
-engineer finalizes an independently reviewed prospective task. Reviewed generic
-normalization code, 44 synthetic tests and five conditional proofs remain scratch
-work, not a published feature or scientific result. Next: integrate, test and
-freeze feature custody; independently review the complete scientific protocol.
+The [exact normalization integration](reports/normalization-engineering-v1/README.md)
+passes 728 Python tests with 205 unchanged source/resource hashes. The generic
+helper and synthetic formula adapter preserve unknown states and exact rational
+semantics. Five new conditional proofs strictly compile and bring the fresh
+audit to 130 statements/ten modules; all nine prior proof modules are unchanged.
+There is no actual formula feature construction or scientific result here.
+
+Current owner/checkpoint: root publishes the integrated helper/proofs, verifies
+remote CI, and checks the new isolated wheel. The production feature reader is
+under independent synthetic review in ignored scratch. The protocol engineer
+finalizes the registered task and stage contracts before any actual source
+allocation or performance-target interpretation. Published evidence commit
+`28b929f` passes all four CI jobs; its independent claim review finds no blocker.

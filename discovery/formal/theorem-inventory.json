@@ -1,6 +1,6 @@
 {
-  "axiom_output_sha256": "d99b1d075507166a731d2a7e2c35d20e58eeba3dfa50ad12f796c575d3ca3811",
-  "module_count": 9,
+  "axiom_output_sha256": "84a9ed0c9cf6acc58ea2a9a196ec46cd8f1b69b0d1dd79fd041b0c37291065f1",
+  "module_count": 10,
   "modules": [
     {
       "source": "LupineCoupled.lean",
@@ -389,6 +389,38 @@
       }
     },
     {
+      "source": "LupineNormalization.lean",
+      "source_sha256": "280be8e7b4724af3b6092bf497d3b29c3a9b3a29b135942cf76cfa273015db32",
+      "theorem_count": 5,
+      "theorems": {
+        "LupineNormalization.l1_zero_iff_equal": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineNormalization.normalized_coordinate_bounds": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineNormalization.normalized_l1_bounds": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineNormalization.normalized_sum": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineNormalization.positive_scale_invariance": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ]
+      }
+    },
+    {
       "source": "LupinePareto.lean",
       "source_sha256": "077e657e5b6d77ef878c325baf9db909adff73f23408385ee464482cd6acd4c0",
       "theorem_count": 15,
@@ -688,5 +720,5 @@
     }
   ],
   "schema": "lupine-formal-theorem-inventory-v1",
-  "theorem_count": 125
+  "theorem_count": 130
 }

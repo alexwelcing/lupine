@@ -1,5 +1,5 @@
 name = "LupineDiscovery"
-defaultTargets = ["LupineDiscovery", "LupinePareto", "LupineIntervals", "LupineRisk", "LupineSharpness", "LupineCoupled", "LupineProjection", "LupineDecisionPool", "LupineExchangeability"]
+defaultTargets = ["LupineDiscovery", "LupinePareto", "LupineIntervals", "LupineRisk", "LupineSharpness", "LupineCoupled", "LupineProjection", "LupineDecisionPool", "LupineExchangeability", "LupineNormalization"]
 [[require]]
 name = "mathlib"
 git = "https://github.com/leanprover-community/mathlib4"
@@ -22,3 +22,5 @@ name = "LupineProjection"
 name = "LupineDecisionPool"
 [[lean_lib]]
 name = "LupineExchangeability"
+[[lean_lib]]
+name = "LupineNormalization"

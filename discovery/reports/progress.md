@@ -3,6 +3,36 @@
 The current goal and ordered backlog are in `../GOAL.md`. Append concise entries
 with artifacts, actual checks, scientific implications, and the next action.
 
+## 2026-10-10 20:12 UTC — exact normalization integrated and independently tested
+
+- Published `28b929f6ac74edaeccef148c7a1aa29b3b4bfdb0`; verified its remote SHA
+  and all four CI jobs in run 38082387214. Independent publication review binds
+  59 files, verifies 37 exact safe copies and finds no blocking claim or data
+  disclosure. The two historical negative scientific digests remain unchanged.
+- Promoted reviewed exact normalization and synthetic formula code/tests without
+  source edits. Explicit unknown coefficients, invalid axes/nonpositive totals
+  and arithmetic limits produce no vector. The formula parser preserves rows,
+  original groups, null unknown vectors and distinct unresolved processing.
+- Actual main-path checks: 44 focused tests and 728 full Python tests pass, with
+  205 stable source/resource hashes. Full unittest time is 124.636 seconds.
+  `normalization-engineering-v1/` preserves actual logs, source bindings,
+  promotion identities, the 27-test independent review and author rerun.
+- Five independently reviewed normalization proofs integrate unchanged. Strict
+  full build passes 1,015 jobs; fresh audit passes 130 statements/ten modules;
+  all eleven parser tests pass. Nine previous proof modules and toolchain/parser
+  bytes remain unchanged. Prior 125-statement receipts and the reviewer regex
+  failure are preserved under formal history and `formal-normalization-review-v1/`.
+- Scientific implication: unit sum, positive-scale invariance and finite L1 bounds
+  apply to declared coefficients under explicit hypotheses. They do not recover
+  unrounded composition, establish useful distances, prove Python refinement or
+  change any screening/superiority failure. No scientific data were processed.
+- Owner/checkpoint: root publishes this integration, verifies remote SHA/CI and
+  runs a clean retained-wheel plus isolated generic-API probe. Feature reviewer
+  owns synthetic adversarial review of the production reader; protocol engineer
+  owns the prospective task/stage contract. Next: independently review and freeze
+  feature custody, then execute only after publication/CI; register the complete
+  scientific protocol before any source allocation or performance interpretation.
+
 ## 2026-10-10 20:02 UTC — formula result and both historical negatives reproduced
 
 - Verified `a1e47024898072111f80e3ff911026306a50df2b` on the remote and all four

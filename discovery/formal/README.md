@@ -18,8 +18,9 @@ anchor rows. `LupineDecisionPool.lean` proves finite all-minimizer rank counting
 and a marginal failure bound for finite weighted outcome laws with explicitly
 equal leave-one-out failure probabilities. `LupineExchangeability.lean` derives
 that equality from permutation invariance of a finite joint score-vector law
-and applies the marginal failure bound. Each module has its own namespace.
-All nine modules are default build targets.
+and applies the marginal failure bound. `LupineNormalization.lean` proves
+conditional finite coefficient normalization and L1 algebra. Each module has
+its own namespace. All ten modules are default build targets.
 
 The standalone package pins Lean `v4.29.0` and Mathlib
 `8a178386ffc0f5fef0b77738bb5449d50efeea95`, matching the Mathlib/toolchain
@@ -406,6 +407,30 @@ result for arbitrary measurable or infinite-support probability laws. It does
 not establish scientific exchangeability, conditional coverage given feasibility
 or realized calibration, Python refinement, or useful pool reduction. The
 insufficient-rank/full-universe runtime branch remains outside this module.
+
+## Finite normalization theorem map
+
+`LupineNormalization` uses an arbitrary finite coordinate type and real coefficient
+functions. Define `A = sum_i a_i`, `p_i = a_i/A`, and `L1(p,q) = sum_i |p_i-q_i|`.
+Positive total is an explicit premise. Definitions are total outside that domain;
+the theorems do not certify normalization with zero or negative total.
+
+| Theorem | Mathematical guarantee |
+| --- | --- |
+| `normalized_coordinate_bounds` | Nonnegative coefficients and positive total imply every normalized coordinate lies in [0,1] |
+| `normalized_sum` | Positive total implies normalized coordinates sum exactly to one |
+| `positive_scale_invariance` | A positive common scale preserves positive total and the normalized function |
+| `normalized_l1_bounds` | Two nonnegative coefficient families with positive totals have normalized L1 distance in [0,2] |
+| `l1_zero_iff_equal` | Arbitrary finite real coordinate functions have L1 zero exactly when they agree |
+
+Unit sum and scale invariance require no nonnegativity premise; their narrower
+algebraic conclusions do not imply coordinate bounds. Positive total excludes
+the empty coordinate type. The generic L1 equality theorem still holds there.
+These are descriptor algebra statements, with no physical composition validity,
+distance predictivity, source adequacy, axis validation, resource-limit behavior,
+or Python/Fraction implementation refinement inferred. See
+[normalization scope](../docs/normalization.md) and the
+[review provenance](../reports/formal-normalization-review-v1/README.md).
 
 ## Reproduction and trust
 

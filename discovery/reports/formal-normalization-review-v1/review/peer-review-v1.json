@@ -1,0 +1,43 @@
+{
+  "boundary_review": {
+    "empty_axis_type": "Positive-total premises are impossible, so normalization bounds are conditional; L1 equality remains valid on the empty type.",
+    "negative_coefficients_with_positive_total": "Unit sum and positive scale statements still hold; coordinate and normalized L1 bounds require nonnegativity.",
+    "uncompiled_claims": "No new formal claim of term permutation/coalescing, proportionality equivalence, symmetry, or triangle inequality is counted in these five theorems.",
+    "zero_or_negative_total": "No positive-total normalization certificate is given."
+  },
+  "checked_direct_import_hashes": 6,
+  "checked_published_formal_files": 18,
+  "findings": [],
+  "independent_lean_recompile": false,
+  "limitations": [
+    "The reviewed audit is actual prior compilation evidence; this peer review did not rerun Lean.",
+    "No physical composition, material similarity, archival independence, useful predictor, or coverage guarantee follows.",
+    "No Python/Fraction refinement or correspondence to resource/grammar/input rejection has been proved.",
+    "Hashes verify current bytes against the supplied execution receipt; they do not prove scientific truth."
+  ],
+  "main_or_formal_sources_modified_by_reviewer": false,
+  "preserved_first_command_error": "review/peer-review-first-command-error-v1.json",
+  "readme_sha256": "88b19c475dc278b336a9e07ff5ced18740db8e03d7e95780937cf552de6e82a5",
+  "review_script_sha256": "5aa10a485078f79a947c07822fbeabb4b06afd746511e1bf96741bd576f937f3",
+  "reviewed_at": "2026-10-10T19:58:16.030125+00:00",
+  "reviewed_audit_receipt": ".cache/normalization-formal/audit-receipt.json",
+  "reviewed_audit_receipt_sha256": "979a709c9c7a2d3746bec970652658de8e3edc9d19eb60b093981db366c00e30",
+  "reviewer": "/root/representation_review",
+  "schema": "lupine.discovery.normalization_formal_peer_review.v1",
+  "standard_axioms_only_in_reviewed_log": true,
+  "statement_review": {
+    "l1_zero_iff_equal": "For arbitrary real maps on a finite type, a sum of nonnegative absolute differences is zero iff all coordinates agree; the empty finite type is also valid.",
+    "normalized_coordinate_bounds": "Nonnegative coefficients and strictly positive finite total imply each normalized real coordinate lies in [0,1]. No physical interpretation.",
+    "normalized_l1_bounds": "Uses both nonnegative coefficient maps and positive totals. The finite triangle bound and two unit sums give [0,2].",
+    "normalized_sum": "Strictly positive total implies exact unit sum. The weaker lack of nonnegativity premise is valid for this statement.",
+    "positive_scale_invariance": "Strictly positive common scale and positive total preserve both total positivity and the normalized function; coefficient nonnegativity is not needed."
+  },
+  "status": "PASS_READ_ONLY_PEER_REVIEW",
+  "theorem_count": 5,
+  "verified_current_scratch_files": {
+    "LupineNormalization.lean": "280be8e7b4724af3b6092bf497d3b29c3a9b3a29b135942cf76cfa273015db32",
+    "LupineNormalization.olean": "815bdcd86e988d109c655408225ae0c0aa443259674ebb6067da74ff431ee65c",
+    "audit.py": "63805f60020b00d85c712944ff0fa3b134bbc3a1f0987bdff6ef2bb14b7df007",
+    "strict-compile.log": "e5cf25edea13ce4ff789c99ad016118c2b482c61dfd3475d5deb7ff2b3f1d94d"
+  }
+}

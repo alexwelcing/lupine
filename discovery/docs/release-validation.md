@@ -14,7 +14,7 @@ gate. No aggregate score averages away blocking failures.
 | Gate | State | Evidence and release consequence |
 |---|---|---|
 | Exact conditional selection kernel | PASS | Exact rational runtime, exhaustive small-world and adversarial tests. Conditional guarantees require sound intervals and a fixed finite candidate universe. |
-| Conditional mathematical statements | PASS | 125 compiled Lean statements and axiom audit in `formal/VERIFICATION.md`. This does not prove Python refinement or physical premises. |
+| Conditional mathematical statements | PASS | 130 compiled Lean statements and axiom audit in `formal/VERIFICATION.md`. This does not prove Python refinement or physical premises. |
 | Published constrained checkpoint verification | PASS | [Discovery Verify run 38067639369](https://github.com/alexwelcing/lupine/actions/runs/38067639369) passed at `a8775ad` on 2026-10-10: Python 3.11/3.12, source manifest, isolated packages, 17 browser checks and 69 Lean theorem audits. Subsequent increments require their own checks. |
 | Interface through actual selector | PASS | 46 Chromium checks cover six schemas, scientific reports, desktop/mobile states, paired exact input/certificate exports and replay verified by the real CLI. Statistical lost optima, missing labels, finite empty pools and marginal limitations remain visible; see `reports/decision-pool-workbench-verification.md`. |
 | Calibration and unsupported-scope abstention | PASS | Exact versioned inputs, original-seal replay, all-retained abstention and browser diagnostics. This software behavior does not establish exchangeability or physical coverage. |
@@ -282,3 +282,19 @@ normalization tests and conditional finite-real proofs do not authorize interpre
 archival coefficients as physical fractions or opening performance targets before
 protocol registration. Preserve unknown values, source/formula overlaps and the
 whole-universe fallback whenever the declared finite-score-law premise fails.
+
+## Exact normalization engineering checkpoint
+
+The generic helper and synthetic-only formula adapter pass [728 Python tests](../reports/normalization-engineering-v1/README.md)
+with 205 stable source/resource hashes. Five conditional finite-real normalization
+statements bring the strictly compiled and freshly audited inventory to 130 in
+ten modules; all nine existing proof modules remain unchanged. Source limits,
+unknown-versus-zero distinctions, exact rational operations and manual-constructor
+invariants are exercised independently. Python refinement and physical descriptor
+validity remain unproved.
+
+The preceding `28b929f` evidence checkpoint passes [all four CI jobs](https://github.com/alexwelcing/lupine/actions/runs/38082387214)
+and independent publication review. The normalization source still requires its
+own publication, CI and isolated-package checks. Production feature custody and
+the scientific protocol are separate gates; no real feature table, random
+allocation, target interpretation, fit or new benchmark is claimed here.

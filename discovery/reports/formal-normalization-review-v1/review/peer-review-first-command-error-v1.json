@@ -1,0 +1,18 @@
+{
+  "cause": "Reviewer theorem-name regex [a-z_]+ incorrectly truncated l1_zero_iff_equal to l.",
+  "command_kind": "read-only peer-receipt validation",
+  "correction": "Use [a-z0-9_]+ to include digits in theorem identifiers.",
+  "error": "AssertionError at stdin line 29",
+  "exit_code": 1,
+  "lean_compilation_ran": false,
+  "observed_names": [
+    "normalized_coordinate_bounds",
+    "normalized_sum",
+    "positive_scale_invariance",
+    "normalized_l",
+    "l"
+  ],
+  "recorded_at": "2026-10-10T19:57:55.550687+00:00",
+  "schema": "lupine.discovery.review_command_error.v1",
+  "scientific_or_formal_source_failure": false
+}

@@ -1,0 +1,97 @@
+{
+  "author_tests_rerun": 17,
+  "commands": [
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "review",
+        "-v"
+      ],
+      "elapsed_seconds": 2.273582441994222,
+      "exit_code": 0,
+      "log": "review/independent-tests-final-v1.txt",
+      "log_sha256": "2dc624b33b8078bb2bf1a48d6888fc7e0603c8ed7c1f2437750604fbaa93e81b",
+      "test_count": 27,
+      "unittest_seconds": 0.576,
+      "working_directory": "/workspace/lupine-discovery-branch/discovery/.cache/mpea-feature-contract"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "elapsed_seconds": 0.6421887570031686,
+      "exit_code": 0,
+      "log": "review/author-tests-rerun-v1.txt",
+      "log_sha256": "aeb87137f011ebdbd68d5504d1c96fec1219de3bbaa385fa405966b125614c63",
+      "test_count": 17,
+      "unittest_seconds": 0.328,
+      "working_directory": "/workspace/lupine-discovery-branch/discovery/.cache/mpea-feature-contract"
+    }
+  ],
+  "decision": "No blocking defect found in this synthetic-only prototype.",
+  "findings": [],
+  "finished_at": "2026-10-10T19:56:55.161798+00:00",
+  "first_execution": {
+    "log": "review/independent-tests-initial-v1.txt",
+    "seconds": 0.475,
+    "sha256": "043bd5d0c53576676911ea746d3d00ed51bd340672bf57b549332a5e1117f168",
+    "status": "PASS",
+    "tests": 27
+  },
+  "formal_source_modified_by_reviewer": false,
+  "independent_case_scope": {
+    "decimal_term_oracle_cases": 125,
+    "generic_four_axis_exact_maps": 624,
+    "positive_two_axis_map_pairs": 225,
+    "preserved_unknown_row_boundary": 4096,
+    "simplex_metric_triples": 125
+  },
+  "independent_tests": 27,
+  "limitations": [
+    "No physical composition or predictive validity is established.",
+    "No experimental formula, raw source cache, target, or target-presence cell was accessed.",
+    "No production source adapter exists; these results do not authorize uncommitted real-data execution.",
+    "No Python-to-Lean refinement is established.",
+    "Known source SHA rejection is an API guard, not evidence that a caller-supplied fixture identity hashes an artifact.",
+    "Source hashes bind observed files around execution, not a defense against malicious concurrent process mutation."
+  ],
+  "main_tree_modified_by_reviewer": false,
+  "python_version": "3.12.14",
+  "review_scope": [
+    "Pure exact coefficient normalization and L1 only.",
+    "Strict lexical/numeric feature compiler on constructed tokens only.",
+    "Immutable row/group linkage and all-row denominator preservation.",
+    "Manual constructor validation, type and resource rejection, aggregate disclosure boundary."
+  ],
+  "reviewer": "/root/representation_review",
+  "schema": "lupine.discovery.synthetic_feature_independent_review.v1",
+  "source_files_after": {
+    "formula-feature-adapter-contract.md": "6aec54dd66dd85a021f4a88ed65dd614d8cd19ce54f8faf6562b9b8291a9daaa",
+    "review/test_representation_independent.py": "f6a56e20cbc3acd3f353b7bf78c3d3bbf04abb4af27362290a6c48996fc28cd9",
+    "scripts/mpea_features.py": "b24c0f1bb62fc56794e1232f973a6020ee42a0d3765d33cb51246f3c7a3a47d9",
+    "src/lupine_discovery/representation.py": "c65c0eed659025a0e41eb325e75182ac2b980c35ac43dfddaa501f4f3ddf3b9e",
+    "tests/test_mpea_features.py": "58009de4d9c7d3338f36dca5baf67b1300715caeef17a95fb9d6e142eb79f541",
+    "tests/test_representation.py": "3f894a0427a45f3b6c65b232616b1bc19930c9b1ee02cce0c2b0a1c9d014d70e"
+  },
+  "source_files_before": {
+    "formula-feature-adapter-contract.md": "6aec54dd66dd85a021f4a88ed65dd614d8cd19ce54f8faf6562b9b8291a9daaa",
+    "review/test_representation_independent.py": "f6a56e20cbc3acd3f353b7bf78c3d3bbf04abb4af27362290a6c48996fc28cd9",
+    "scripts/mpea_features.py": "b24c0f1bb62fc56794e1232f973a6020ee42a0d3765d33cb51246f3c7a3a47d9",
+    "src/lupine_discovery/representation.py": "c65c0eed659025a0e41eb325e75182ac2b980c35ac43dfddaa501f4f3ddf3b9e",
+    "tests/test_mpea_features.py": "58009de4d9c7d3338f36dca5baf67b1300715caeef17a95fb9d6e142eb79f541",
+    "tests/test_representation.py": "3f894a0427a45f3b6c65b232616b1bc19930c9b1ee02cce0c2b0a1c9d014d70e"
+  },
+  "source_files_unchanged": true,
+  "started_at": "2026-10-10T19:56:52.245658+00:00",
+  "status": "PASS"
+}

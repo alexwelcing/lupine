@@ -32,3 +32,9 @@ G16 release. The copies were checked against both committed checkpoints, the
 axiom-output digest and all eight current source hashes before the ninth module
 was added. The eight historical Lean sources remain byte-identical after this
 increment. Their inventory paths are relative to the parent `formal/` directory.
+
+`pre-normalization-theorem-inventory.json` and `pre-normalization-AXIOMS.txt`
+preserve the nine-module, 125-statement receipt at checkpoint
+`28b929f6ac74edaeccef148c7a1aa29b3b4bfdb0`, before normalization integration.
+The copies were verified against committed bytes, all nine module source hashes,
+and the combined axiom-output hash. Paths remain relative to parent `formal/`.
