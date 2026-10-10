@@ -1,0 +1,30 @@
+test_all40_missing_evaluation_forces_primary_unsupported (test_mpea_study.CalibrationTests.test_all40_missing_evaluation_forces_primary_unsupported) ... ok
+test_complete_manifest_and_role_membership_conflicts_rejected (test_mpea_study.CalibrationTests.test_complete_manifest_and_role_membership_conflicts_rejected) ... ok
+test_exact_rank_and_weak_tied_optimum_score (test_mpea_study.CalibrationTests.test_exact_rank_and_weak_tied_optimum_score) ... ok
+test_future_numeric_truth_cannot_change_the_frozen_selection (test_mpea_study.CalibrationTests.test_future_numeric_truth_cannot_change_the_frozen_selection) ... ok
+test_incomplete_calibration_reasons_preserved_and_secondary_empty (test_mpea_study.CalibrationTests.test_incomplete_calibration_reasons_preserved_and_secondary_empty) ... ok
+test_sampling_unsupported_is_never_promoted (test_mpea_study.CalibrationTests.test_sampling_unsupported_is_never_promoted) ... ok
+test_zero_threshold_is_statistical_empty_and_can_lose_future_optimum (test_mpea_study.CalibrationTests.test_zero_threshold_is_statistical_empty_and_can_lose_future_optimum) ... ok
+test_distinct_source_representatives_and_numeric_ordinal_ties (test_mpea_study.ExactPredictorTests.test_distinct_source_representatives_and_numeric_ordinal_ties) ... ok
+test_fewer_neighbors_and_all_fallback_routes (test_mpea_study.ExactPredictorTests.test_fewer_neighbors_and_all_fallback_routes) ... ok
+test_frozen_rank_hash_rules_no_label_input (test_mpea_study.ExactPredictorTests.test_frozen_rank_hash_rules_no_label_input) ... ok
+test_lower_median_complete_rows_only_and_fixed_adequacy (test_mpea_study.ExactPredictorTests.test_lower_median_complete_rows_only_and_fixed_adequacy) ... ok
+test_nearest_per_source_then_exact_five_group_mean (test_mpea_study.ExactPredictorTests.test_nearest_per_source_then_exact_five_group_mean) ... ok
+test_original_zero_based_ordinal_boundary (test_mpea_study.ExactPredictorTests.test_original_zero_based_ordinal_boundary) ... ok
+test_prediction_known_answer_independent_simplex_worlds (test_mpea_study.ExactPredictorTests.test_prediction_known_answer_independent_simplex_worlds) ... ok
+test_primary_feasibility_direction_and_objective_only_control (test_mpea_study.ExactPredictorTests.test_primary_feasibility_direction_and_objective_only_control) ... ok
+test_target_strictness_immutable_originals_and_resource_bounds (test_mpea_study.ExactPredictorTests.test_target_strictness_immutable_originals_and_resource_bounds) ... ok
+test_all_ties_lost_optimum_and_equal_cost_controls (test_mpea_study.ReplayTests.test_all_ties_lost_optimum_and_equal_cost_controls) ... ok
+test_available_pool_but_unavailable_singleton_discovery (test_mpea_study.ReplayTests.test_available_pool_but_unavailable_singleton_discovery) ... ok
+test_empty_and_infeasible_metrics_and_unknown_never_zero (test_mpea_study.ReplayTests.test_empty_and_infeasible_metrics_and_unknown_never_zero) ... ok
+test_empty_feasible_denominators_cannot_pass (test_mpea_study.ReplayTests.test_empty_feasible_denominators_cannot_pass) ... ok
+test_every_gate_equality_boundary_exactly (test_mpea_study.ReplayTests.test_every_gate_equality_boundary_exactly) ... ok
+test_gates_preserve_all_failures_no_inflation_by_ties_or_small_panels (test_mpea_study.ReplayTests.test_gates_preserve_all_failures_no_inflation_by_ties_or_small_panels) ... ok
+test_independent_full_truth_metric_oracle_exhaustive (test_mpea_study.ReplayTests.test_independent_full_truth_metric_oracle_exhaustive) ... ok
+test_stale_missing_outoforder_duplicate_and_rewritten_reveals (test_mpea_study.ReplayTests.test_stale_missing_outoforder_duplicate_and_rewritten_reveals) ... ok
+test_truth_incomplete_must_match_original_roleblind_membership (test_mpea_study.ReplayTests.test_truth_incomplete_must_match_original_roleblind_membership) ... ok
+
+----------------------------------------------------------------------
+Ran 25 tests in 6.383s
+
+OK

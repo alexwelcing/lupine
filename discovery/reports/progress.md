@@ -3,6 +3,40 @@
 The current goal and ordered backlog are in `../GOAL.md`. Append concise entries
 with artifacts, actual checks, scientific implications, and the next action.
 
+## 2026-10-10 20:41 UTC — exact study components integrated; 850 tests pass
+
+- Published `b608188663ddfe47eb61d7ee0af7eeada3888052`, verified remote identity
+  and all four CI jobs in run 38084393900. Forty-three exact evidence copies
+  were checked before publication. The only whitespace diagnostics were five
+  required blank context lines in the source-bound historical unified diff;
+  its exact hash was preserved, with no source/configuration check weakened.
+- Integrated the reviewed exact study kernel, fixture target parser and
+  injected-byte allocator without producer edits. Main-path tests pass 49 study,
+  28 parser and 11 allocator checks without `PYTHONPATH`. The complete suite
+  passes 850 tests in 118.599 unittest seconds with 216 stable hashes. Actual
+  logs, promotion identities, retained prior failures and independent receipts
+  are under `mpea-study-components-engineering-v1/`. Only the sampler test loader
+  and documentation paths changed for main-layout use; original bytes remain.
+- Independent study controls cover all 960 policy runs, 3,360 cap snapshots,
+  480 same-K snapshots, exact neighbor/median/rank rules, tied-optimum loss and
+  explicit incomplete/empty denominators. Parser review uses 372 opaque-cell
+  substitutions and 378 independent decimal oracles. No real source allocation,
+  performance target, threshold, model fit or new scientific result is involved.
+- Scientific implication: these components implement the proposed arithmetic
+  and fixture custody behavior. They do not provide full production stage access,
+  physical validity, a new coverage estimate or runtime formal refinement. The
+  existing statistical core, six-mode interface, 130 proofs and all historical
+  negative scientific results remain unchanged.
+- Owner/checkpoint: root publishes this increment and verifies remote SHA/CI.
+  Custody engineer owns the persistent driver/production entry; backend owns a
+  closed aggregate projector; supervisor engineer owns user/network namespace
+  isolation and cumulative 3600-second/2-GiB-RSS enforcement. Local capability
+  probes for both unshare and bwrap network isolation succeeded. Independent
+  store tests found four publication/read/interruption defects; the subsequent
+  scratch fixes pass 21 independent tests and remain unpromoted. Next integrate the
+  reviewed complete guarded runner, run actual-shaped synthetic reproduction,
+  then freeze registration/source/tests/CI before allocation or performance access.
+
 ## 2026-10-10 20:34 UTC — real feature construction reproduced; study reviewed
 
 - Published `5b1ed62f1c7f0010682ce3f554e2430f103e4709`, verified the remote SHA

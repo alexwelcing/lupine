@@ -1,0 +1,20 @@
+test_372_opaque_cell_replacements_preserve_every_authorized_result (__main__.TargetCustodyReview.test_372_opaque_cell_replacements_preserve_every_authorized_result) ... ok
+test_4096_rows_are_preserved_and_late_extra_row_cannot_decode_prefix (__main__.TargetCustodyReview.test_4096_rows_are_preserved_and_late_extra_row_cannot_decode_prefix) ... ok
+test_authorization_precedes_byte_accumulation_in_every_cell (__main__.TargetCustodyReview.test_authorization_precedes_byte_accumulation_in_every_cell) ... ok
+test_count_header_and_role_authority_mismatch_never_decode (__main__.TargetCustodyReview.test_count_header_and_role_authority_mismatch_never_decode) ... ok
+test_every_late_framing_failure_precedes_first_numeric_call (__main__.TargetCustodyReview.test_every_late_framing_failure_precedes_first_numeric_call) ... ok
+test_exact_decimal_oracle_over_sign_mantissa_and_exponent_grid (__main__.TargetCustodyReview.test_exact_decimal_oracle_over_sign_mantissa_and_exponent_grid) ... ok
+test_exact_record_byte_cap_accepts_boundary_and_rejects_next_byte (__main__.TargetCustodyReview.test_exact_record_byte_cap_accepts_boundary_and_rejects_next_byte) ... ok
+test_missing_whitespace_nonfinite_limits_and_conflicts_stay_distinct (__main__.TargetCustodyReview.test_missing_whitespace_nonfinite_limits_and_conflicts_stay_distinct) ... ok
+test_no_io_logs_exception_payloads_or_unrelated_cells_escape (__main__.TargetCustodyReview.test_no_io_logs_exception_payloads_or_unrelated_cells_escape) ... ok
+test_preflight_happens_before_integer_fraction_or_power_construction (__main__.TargetCustodyReview.test_preflight_happens_before_integer_fraction_or_power_construction) ... ok
+test_quoted_final_fields_bom_newlines_and_trailing_empty_are_exact (__main__.TargetCustodyReview.test_quoted_final_fields_bom_newlines_and_trailing_empty_are_exact) ... ok
+test_raw_field_limit_counts_quotes_and_fails_before_numeric_decode (__main__.TargetCustodyReview.test_raw_field_limit_counts_quotes_and_fails_before_numeric_decode) ... ok
+test_reserved_roles_are_symmetric_and_all_authorized_bad_rows_survive (__main__.TargetCustodyReview.test_reserved_roles_are_symmetric_and_all_authorized_bad_rows_survive) ... ok
+test_route_group_role_and_source_ordinal_conflicts_are_fail_closed (__main__.TargetCustodyReview.test_route_group_role_and_source_ordinal_conflicts_are_fail_closed) ... ok
+test_whole_identity_size_md5_sha_and_known_real_identity_precede_framing (__main__.TargetCustodyReview.test_whole_identity_size_md5_sha_and_known_real_identity_precede_framing) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 1.409s
+
+OK

@@ -11,8 +11,8 @@ nonlinear enclosures, shared-affine screening, scoped projection and direct
 statistical pools. The proof package contains **130 compiled and audited Lean
 statements**; its probability results retain explicit finite-law premises.
 The six-mode interface passes **46 Chromium checks** and **28 installed-wheel
-cases**. The integrated [feature-custody reader](reports/mpea-feature-reader-engineering-v1/README.md)
-passes **762 Python tests**. The preceding normalization checkpoint passes [all four CI
+cases**. The integrated [study components](reports/mpea-study-components-engineering-v1/README.md)
+pass **850 Python tests**. The preceding normalization checkpoint passes [all four CI
 jobs](https://github.com/alexwelcing/lupine/actions/runs/38082913494) and
 [retained/installed checks](reports/normalization-release-v1/README.md). The reader
 freeze `5b1ed62` also passes [all four CI jobs](https://github.com/alexwelcing/lupine/actions/runs/38083897613).

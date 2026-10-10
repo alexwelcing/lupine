@@ -126,10 +126,19 @@ all-40 primary completeness gate, fixed secondary population, exact baselines
 and budgets remain explicit. Two wording defects were corrected before targets.
 It is still unregistered until the complete guarded runner and tests are frozen.
 
-Current owner/checkpoint: root publishes actual aggregate evidence and reviewed
-specifications, then integrates the source-specific study components. Custody
-and backend engineers own constructed-data stage/prediction/evaluation code;
-independent reviewers own separate tests. Next complete the persistent guarded
-runner, exercise actual-shaped synthetic end-to-end reproduction, publish its
+Evidence/specification commit `b608188` passes all four CI jobs. The reviewed
+source-specific kernel, fixture target parser and permutation helper are now
+integrated and pass 88 focused plus 850 full Python tests with 216 stable hashes.
+[Executed component evidence](reports/mpea-study-components-engineering-v1/README.md).
+All three producer files are unchanged from independent review. No real source
+allocation or performance-target interpretation has occurred.
+
+Current owner/checkpoint: root publishes and verifies this component increment.
+Custody engineer owns persistent stages and production entry; backend owns the
+closed public report projector; supervisor engineer owns actual network isolation
+and cumulative wall/RSS enforcement; reviewers own independent scratch tests.
+Four store publication/read defects found by review are fixed in scratch with
+21 independent passing tests; guarded-driver integration remains pending.
+Next complete guarded end-to-end constructed-data reproduction, freeze the full
 registration and verify CI before actual allocation or performance decoding.
 Existing interface/proofs and every scientific negative remain unchanged.

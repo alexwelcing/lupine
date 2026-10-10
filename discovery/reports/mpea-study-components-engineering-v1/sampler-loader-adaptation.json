@@ -1,0 +1,8 @@
+{
+  "adapted_sha256": "8ea8a0f5d3d75edcced98d4b6aba5af8eb112988ebae1f889a6d79abaa7ffb17",
+  "change": "Load unchanged sampler script explicitly with importlib from project scripts; no test assertions or producer behavior changed. Standalone main-path tests passed.",
+  "original_sha256": "ed73c8859bd283e740defca2f4ff3d6a71aa25cd4ae937934a3b9fc57a0df3d3",
+  "path": "tests/test_permutation_allocation.py",
+  "producer_sha256": "a7f454b4541f75603019bf73091c97190ea6f618efa52988c3065971273405e5",
+  "schema": "lupine.discovery.mpea.study_components.loader_adaptation.v1"
+}

@@ -1,0 +1,18 @@
+test_actual_archive_identity_and_malformed_scalar_containers_rejected (test_mpea_target_custody.RoutingTests.test_actual_archive_identity_and_malformed_scalar_containers_rejected) ... ok
+test_development_role_and_condition_filter_precede_decoding (test_mpea_target_custody.RoutingTests.test_development_role_and_condition_filter_precede_decoding) ... ok
+test_late_framing_error_precedes_every_numeric_decoder (test_mpea_target_custody.RoutingTests.test_late_framing_error_precedes_every_numeric_decoder) ... ok
+test_linkage_and_access_rejection_sanitized_without_logs (test_mpea_target_custody.RoutingTests.test_linkage_and_access_rejection_sanitized_without_logs) ... ok
+test_quoted_cells_bom_crlf_and_embedded_newline (test_mpea_target_custody.RoutingTests.test_quoted_cells_bom_crlf_and_embedded_newline) ... ok
+test_reserved_parse_is_symmetric_and_preserves_bad_rows (test_mpea_target_custody.RoutingTests.test_reserved_parse_is_symmetric_and_preserves_bad_rows) ... ok
+test_source_byte_cap_precedes_hashing_and_identifiers_are_bounded (test_mpea_target_custody.RoutingTests.test_source_byte_cap_precedes_hashing_and_identifiers_are_bounded) ... ok
+test_source_verified_before_framing_and_no_reopening (test_mpea_target_custody.RoutingTests.test_source_verified_before_framing_and_no_reopening) ... ok
+test_exact_finite_decimal_forms_and_units (test_mpea_target_custody.TargetParserTests.test_exact_finite_decimal_forms_and_units) ... ok
+test_immutable_target_shape_and_constant_failures (test_mpea_target_custody.TargetParserTests.test_immutable_target_shape_and_constant_failures) ... ok
+test_missing_unsupported_nonfinite_and_negative_are_distinct (test_mpea_target_custody.TargetParserTests.test_missing_unsupported_nonfinite_and_negative_are_distinct) ... ok
+test_resource_preflight_and_reduced_bit_limit (test_mpea_target_custody.TargetParserTests.test_resource_preflight_and_reduced_bit_limit) ... ok
+test_signed_zero_is_valid_but_caps_apply_first (test_mpea_target_custody.TargetParserTests.test_signed_zero_is_valid_but_caps_apply_first) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.016s
+
+OK

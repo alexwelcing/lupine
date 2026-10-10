@@ -1,0 +1,67 @@
+{
+  "actual_data_cache_or_targets_opened": false,
+  "actual_entropy_drawn": false,
+  "actual_group_allocation": false,
+  "corrected_initial_14_tests_log_sha256": "f161df38201ebbda229ea8c6a1272d4437582cd8c088aa34d7a4f959c7bbb73d",
+  "coverage": {
+    "checks": [
+      "instrumented accumulation contains only header and authorized target cells",
+      "same-buffer whole-source size/MD5/SHA identity before framing",
+      "development versus reserved role/column/condition gates",
+      "late frame/header/count failures before first numeric decoder",
+      "field/record/row caps at boundary and one-over",
+      "quoted/BOM/LF/CRLF/final-empty semantics",
+      "stdlib Decimal-to-Fraction oracle over signs/mantissas/exponents",
+      "preflight before integer/Fraction/power conversion",
+      "missing/nonfinite/unsupported/resource/negative states distinct",
+      "role-blind reserved parsing and bad-row preservation",
+      "source ordinal and source-group role linkage",
+      "constant exceptions, no output/IO, immutable results"
+    ],
+    "maximum_framed_rows_checked": 4096,
+    "opaque_cell_substitutions": 372,
+    "target_exact_decimal_oracle_cases": 378
+  },
+  "implementation_defects_found": [],
+  "limits": [
+    "Constructed fixture evidence only; not a formal refinement proof or validation of actual archive target semantics.",
+    "Pure fixture parser does not establish stage order, persistent capabilities, endpoint provenance or production authorization.",
+    "Whole-source capture/hash and framing observe source bytes; only cell accumulation/interpretation is role-limited.",
+    "No independent stage-driver review is included."
+  ],
+  "main_tree_modified": false,
+  "preserved_initial_failure": {
+    "classification": "independent test fixture arithmetic error before producer call",
+    "detail": "Boundary fixture originally had65534 bytes while assertion expected65536. Its fourth opaque field was increased by2bytes. Producer and scientific grammar unchanged.",
+    "log_sha256": "2dadd4f6f8422f5a36dddbb093b8466ec8965a16cf5a52c7a554a464156a5edc"
+  },
+  "production_authorized": false,
+  "schema": "lupine.mpea-target-custody.independent-review.v1",
+  "source_files_unchanged": true,
+  "source_sha256_after": {
+    "author_tests": "f8b53da93fd7aa5f2bb9a79657b221bcae89e103c08655dbb07ffc87f8b5a5f5",
+    "implementation_contract": "be45b1d8db9586035cf37bd9bbb9046c065c3851b91f93386f8c68d155215af9",
+    "independent_tests": "6432c8b6c59effee8a8ab7bd7fcb47ff2fd5c4798d5f2008f85756d608703187",
+    "producer": "7f649dd50d7c5589fd9da0f9745b7936b7a3a2bf631a8418affae4a67be1ee9c",
+    "readme": "ef81f4da44e9afb8f119b7331ad254eba5546e6ffffff871de34b281cd9223b4"
+  },
+  "source_sha256_before": {
+    "author_tests": "f8b53da93fd7aa5f2bb9a79657b221bcae89e103c08655dbb07ffc87f8b5a5f5",
+    "implementation_contract": "be45b1d8db9586035cf37bd9bbb9046c065c3851b91f93386f8c68d155215af9",
+    "independent_tests": "6432c8b6c59effee8a8ab7bd7fcb47ff2fd5c4798d5f2008f85756d608703187",
+    "producer": "7f649dd50d7c5589fd9da0f9745b7936b7a3a2bf631a8418affae4a67be1ee9c",
+    "readme": "ef81f4da44e9afb8f119b7331ad254eba5546e6ffffff871de34b281cd9223b4"
+  },
+  "status": "PASS",
+  "tests": {
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "/workspace/lupine-discovery-branch/discovery/.cache/mpea-study-custody/review/test_target_custody_review.py",
+      "-v"
+    ],
+    "count": 15,
+    "elapsed_seconds": 1.806061,
+    "exit_code": 0,
+    "log_sha256": "a47e1874f676a7da3336ea1fab38850f6f21ccf3231b4b6f1a034d424f9b41fe"
+  }
+}

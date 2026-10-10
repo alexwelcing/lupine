@@ -331,3 +331,16 @@ synthetic checks and explicit marginal-law limits. Neither document publication
 nor a successful synthetic ranking case constitutes study registration. Complete
 guarded implementation, source-bound end-to-end tests and green CI must precede
 actual allocation, development targets and every subsequent custody stage.
+
+## Constructed-data study components
+
+The reviewed source-specific kernel, fixture target parser and injected-byte
+allocator pass [88 focused and 850 full Python tests](../reports/mpea-study-components-engineering-v1/README.md),
+with 216 unchanged source/resource hashes. Independent controls exercise all 960
+scheduled policies, exact baselines/gates, incomplete primary truth, role-blind
+secondary restriction, unknown metrics and target-cell authorization. These
+checks preserve the existing generic statistical core and 130 conditional proofs.
+The source-specific entry remains unregistered: persistent custody, actual
+resource/network supervision, a closed public sink and complete end-to-end
+checks are required before any real target access. Synthetic positive controls
+are software checks and do not change the scientific release decision.
