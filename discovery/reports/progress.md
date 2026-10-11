@@ -3,6 +3,30 @@
 The current goal and ordered backlog are in `../GOAL.md`. Append concise entries
 with artifacts, actual checks, scientific implications, and the next action.
 
+## 2026-10-10 23:48 UTC — repair published; clean package passes; complete gates running
+
+- Pushed `9704ef46c1d0ab098dabb083199403a6296f7cf6` and independently verified
+  the remote branch SHA. The [clean installed package](contract-release-artifact-v2/README.md)
+  passes 28 cases/six schemas/12 transport checks. Both the strict retained auditor
+  and the separate 106-payload wheel/source byte comparison pass. Sources and Git
+  remained unchanged throughout actual execution; these are local retained bytes.
+- The genuine new complete command is running from matching working/index/HEAD
+  bytes over 339 source files. Its recorder/source review and main64 focused PASS
+  are retained in [the repair evidence](contract-integration-repair-v1/README.md).
+  No full-suite success is inferred. Current original-branch CI run 38095426716
+  has successful browser/Lean jobs and two Python jobs still executing unittest.
+- Earlier run 38094346953 completed with both Python jobs failed at unittest and
+  browser/Lean successful. [Official responses and the local failure](contract-integration-failure-v1/README.md)
+  remain preserved. Remote log-body downloads returned storage Forbidden, so no
+  remote traceback or test count is claimed. Six whitespace-bearing patch copies
+  are stored losslessly in JSON wrappers with their original byte digests.
+- Owner/checkpoint: root holds the committed source through full testing, then
+  verifies exact CI and explicitly approves the engineering receipt before public
+  registration and the sole archival original/reproduction. Independent arithmetic,
+  aggregate publication and actual-public-report browser checks are prepared only.
+  No actual MPEA allocation, performance labels or fits have been opened. Existing
+  scientific failures and physical/general-superiority NO-GO remain unchanged.
+
 ## 2026-10-10 23:34 UTC — full integration failed; narrow reviewed repairs promoted
 
 - The actual complete command finished with **1,324 tests, 19 failures and eight
@@ -985,3 +1009,72 @@ with artifacts, actual checks, scientific implications, and the next action.
 - Independent review found and corrected a residual-container bug (text/bytes
   and mapping keys could be silently treated as scores). The full Python suite
   passes **71 tests** after correction. See `calibration-verification.md`.
+
+
+## 2026-10-11 00:12 UTC — green engineering, registered preallocation failure, repair underway
+
+Owner: root; constrained_protocol owns the upstream-seal candidate/regressions,
+calibrated_backend independent repair review, representation_review operational
+failure/publication review, and formal_kernel the distinct-registration boundary.
+No overlapping main-tree source edits are authorized.
+
+The complete genuine local suite at 9704 passed 1,349 tests with zero skips and
+339 unchanged registered source files; [the preserved run](contract-integration-pass-v2/README.md)
+records actual command, elapsed time and working/index/HEAD bindings. All four
+original-branch jobs in [CI 38095426716](https://github.com/alexwelcing/lupine/actions/runs/38095426716)
+and the [clean installed package](contract-release-artifact-v2/README.md) pass.
+Root explicitly approved engineering SHA 3e93f7e924e18d1b702cab6c0a65260c4ae5b80c03ff7cb9627e940bf3164d0e;
+immutable annotated tag `mpea-t25-registration-v1`, object
+96d383ae5f3b11685073c584fdd5c225dd0ee01d, was created, pushed and authenticated
+before the sole actual original launcher command.
+
+The actual command terminated exit 2 after 8.668 seconds with
+`BLOCKED / INPUT_IDENTITY_MISMATCH`. The supervisor recorded no sealed stages,
+no target phase and worker exit 0; launcher exit 2 denotes the closed stop, not
+scientific NO-GO. No authenticated result or reproduction exists. A read-only
+source-bound diagnostic revalidated worker registration, reproduced failure in
+public metadata loading and used lstat on the exact attempt directory, global
+protocol/source allocation-ledger directory and attempt marker: all are absent.
+The registered 339 source files and HEAD remain unchanged during diagnosis.
+
+Independent public-input inspection identifies a real integration bug: all three
+metadata producers seal canonical JSON including LF, but the registration reader
+used its internal no-LF seal verifier. All four pinned file hashes and the
+public metadata linkage/counts agree; the wrong seal preimage causes the stop.
+Passing synthetic and package tests had not exercised this real public-metadata
+boundary. The repair must add that regression without weakening either seal
+contract. No performance cells, features or raw archive were opened by diagnosis.
+
+Next: preserve a closed reviewed operational-failure report, fix the upstream
+seal boundary, retain the old tag/source/failure, and freeze a separately versioned
+engineering-only recovery amendment. Root will require independent review,
+complete source-bound testing, clean artifacts, all four exact new-commit CI
+jobs, explicit engineering approval and a distinct authenticated tag before any
+new allocation. The global no-redraw ledger and every scientific rule remain.
+The interface correctly reports the absent authenticated resource; no placeholder
+scientific report, zero counters or verdict will be invented.
+
+
+## 2026-10-11 00:18 UTC — reviewed preallocation recovery integrated
+
+Root integrated the separate exact-one-LF upstream seal verifier and preserved
+internal no-LF seals. Seven authored regressions and ten independent peer tests
+pass; the adjacent public feature-readiness preflight and five tamper controls
+also pass. Main integration passes 53 registration tests in 6.575 seconds, followed
+by 13 supplemental public-tag tests. The independent final source review finds
+no strategy drift. See [retained repair evidence](mpea-preallocation-repair-v2/README.md).
+
+The [closed original failure](mpea-t25-archival-v1/README.md), immutable v1
+annotation and verified 9704 engineering results are retained for publication.
+The [adopted prospective recovery amendment](../docs/mpea-preallocation-recovery-v2.md)
+and failure summary are mandatory new-manifest members. Current source accepts
+only the distinct fixed v2 tag; the global protocol/source allocation registry
+and all scientific decisions remain unchanged. No corrected production launch
+or v2 registration exists.
+
+Owner/checkpoint: root owns commit/push and complete source-bound testing;
+pareto_runtime is prepared for a clean new-commit package gate. Next: publish
+this reviewed source, finish package checks before the full-suite run, verify
+all four exact-commit CI jobs, then independently review actual new engineering
+evidence before any distinct registration. Old engineering approval cannot
+authorize the changed source.

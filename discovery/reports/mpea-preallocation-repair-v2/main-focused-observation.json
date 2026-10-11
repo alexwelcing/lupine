@@ -1,0 +1,19 @@
+{
+  "command": [
+    "python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_mpea_registration*.py",
+    "-v"
+  ],
+  "exit_code": 0,
+  "registration_source_sha256": "cc8590ae64ca8e983d8fb164290c8d087847a97c651cded4d18e0b2cce555197",
+  "schema": "lupine.executed_tool_observation.v1",
+  "scope": "Observed actual tool session88244 completion; this concise receipt is not an original raw stdout-byte artifact. The separate forthcoming complete source-bound recorder provides the full retained log.",
+  "tests": 53,
+  "unittest_reported_seconds": "6.575"
+}

@@ -1,0 +1,25 @@
+{
+  "files": [
+    {
+      "copied_sha256": "0cb4fb8c0dc94d88fe4d18ef54ed9f51ed934b33c7fa86a491ff7276b2c2b20f",
+      "destination": "reports/mpea-t25-archival-v1/adoption-only.patch.json",
+      "encoding": "lossless_base64",
+      "original_sha256": "61454f7f3e9971d441a5d5f5f3b33bb4ea27ef4129ec267d09096a96c3ce5a2d",
+      "source": ".cache/mpea-study-custody/review_production/publication_review/preallocation-stop-v1/publication-copy-review/adoption-only.patch"
+    },
+    {
+      "copied_sha256": "8f0b5fe6ab752898ea90b2431f545dab7a9d0c68afe2f43e03fcca05cd6fb3f8",
+      "destination": "reports/mpea-t25-archival-v1/operational-review-publication-addendum.json",
+      "encoding": "exact_bytes",
+      "original_sha256": "8f0b5fe6ab752898ea90b2431f545dab7a9d0c68afe2f43e03fcca05cd6fb3f8",
+      "source": ".cache/mpea-study-custody/review_production/publication_review/preallocation-stop-v1/publication-copy-review/operational-review-publication-addendum.json"
+    },
+    {
+      "copied_sha256": "570b3b3a48538923a176b60b1613505a38336a5f6e06909041854f0b40bb86bd",
+      "destination": "reports/mpea-t25-archival-v1/reviewer-seal-preimage-correction.patch.json",
+      "encoding": "lossless_base64",
+      "original_sha256": "9d765cec1984624e1846f6ee7d5f610ead73154020baa3dcd4850928473c9374",
+      "source": ".cache/mpea-study-custody/review_production/publication_review/preallocation-stop-v1/reviewer-seal-preimage-correction.patch"
+    }
+  ]
+}

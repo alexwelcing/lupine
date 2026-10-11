@@ -1,0 +1,18 @@
+test_original_parent_and_offline_worker_require_public_capture (test_mpea_public_registration_tag.PublicTag.test_original_parent_and_offline_worker_require_public_capture) ... ok
+test_positive_exact_object_and_record (test_mpea_public_registration_tag.PublicTag.test_positive_exact_object_and_record) ... ok
+test_ref_object_record_time_mutations (test_mpea_public_registration_tag.PublicTag.test_ref_object_record_time_mutations) ... ok
+test_resealed_different_binding_and_unknown_science_field (test_mpea_public_registration_tag.PublicTag.test_resealed_different_binding_and_unknown_science_field) ... ok
+test_annotation_cannot_add_science_or_reformat_canonical_bytes (test_mpea_public_registration_tag_review.PublicTagReview.test_annotation_cannot_add_science_or_reformat_canonical_bytes) ... ok
+test_both_parent_factories_require_tag_and_bind_same_public_capture (test_mpea_public_registration_tag_review.PublicTagReview.test_both_parent_factories_require_tag_and_bind_same_public_capture) ... ok
+test_captured_git_bytes_and_api_message_must_both_match (test_mpea_public_registration_tag_review.PublicTagReview.test_captured_git_bytes_and_api_message_must_both_match) ... ok
+test_independent_git_object_and_allowlisted_annotation (test_mpea_public_registration_tag_review.PublicTagReview.test_independent_git_object_and_allowlisted_annotation) ... ok
+test_lightweight_wrong_ref_and_commit_are_rejected (test_mpea_public_registration_tag_review.PublicTagReview.test_lightweight_wrong_ref_and_commit_are_rejected) ... ok
+test_new_valid_tag_hash_cannot_rebind_registration_or_ci (test_mpea_public_registration_tag_review.PublicTagReview.test_new_valid_tag_hash_cannot_rebind_registration_or_ci) ... ok
+test_official_transport_uses_fixed_tag_ref_then_exact_object (test_mpea_public_registration_tag_review.PublicTagReview.test_official_transport_uses_fixed_tag_ref_then_exact_object) ... ok
+test_offline_resealed_missing_or_changed_tag_stays_blocked_without_api (test_mpea_public_registration_tag_review.PublicTagReview.test_offline_resealed_missing_or_changed_tag_stays_blocked_without_api) ... ok
+test_surrogate_raw_tag_is_closed_error (test_mpea_public_registration_tag_review.PublicTagReview.test_surrogate_raw_tag_is_closed_error) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.018s
+
+OK

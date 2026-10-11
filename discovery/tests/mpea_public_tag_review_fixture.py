@@ -2,7 +2,7 @@
 import hashlib
 import json
 
-NAME = 'mpea-t25-registration-v1'
+NAME = 'mpea-t25-registration-v2'
 
 
 def encode(value):

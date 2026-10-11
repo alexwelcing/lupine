@@ -38,32 +38,40 @@
     "continuous_worker_started": false
   },
   "current_checkpoint": {
-    "recorded_at": "2026-10-10T23:31:06.693231+00:00",
-    "owner": "root integration, source publication, full suite and exact CI; independent reviewers complete fixture/auditor repairs",
-    "published_commit": "478208f0f3be4b5d810a2c113dbc395b9f1744cb",
-    "published_ci_run": 38094346953,
-    "published_ci_all_four_jobs_pass": false,
-    "published_ci_observation": "Lean and browser successful; both Python jobs still running at current observation. No final failure or pass inferred.",
-    "working_checkpoint": "Ten exact reviewed test/helper/auditor repairs promoted. Prior complete337-closure run failed1324 tests/19 failures/8 errors. All failure evidence retained; production methods and limits unchanged.",
-    "next_action": "Commit repairs; start genuine complete v2 suite from working=index=HEAD; clean installed package; verify exact remote commit and all4CI. Only after actual gates pass approve engineeringSHA, publish public registration, run sole original and fixed-allocation reproduction.",
+    "recorded_at": "2026-10-11T00:18:02.785094+00:00",
+    "owner": "root integration; constrained_protocol seal fix; calibrated_backend independent fix review; representation_review operational failure; formal_kernel v2 boundary",
+    "published_commit": "9704ef46c1d0ab098dabb083199403a6296f7cf6",
+    "published_ci_run": 38095426716,
+    "published_ci_all_four_jobs_pass": true,
+    "published_ci_observation": "All four original-branch jobs in38095426716 completed success; remote9704 matched.",
+    "working_checkpoint": "Reviewed preallocation recovery integrated: dedicated upstream LF seal, actual-public-input regression, exclusive v2 tag, mandatory amendment/failure summary, unchanged no-redraw ledger and scientific rules. Authored7/peer10, main53 and supplemental13 PASS; full new-source gates not yet run. Immutable v1 remains BLOCKED before allocation with null scientific verdict.",
+    "next_action": "Commit/push reviewed recovery, run clean installed package before genuine complete committed-source suite, and verify exact four-job CI. Prepare distinct v2 registration only after new explicit engineering approval. Never replace v1, reset the protocol/source ledger or claim science from this repair.",
     "actual_scientific_allocation_performed": false,
-    "active_test": {
-      "command": [
-        "python",
-        "-m",
-        "unittest",
-        "discover",
-        "-s",
-        "tests",
-        "-v"
-      ],
-      "receipt_directory": ".cache/mpea-contract-full-suite-v1",
-      "mandatory_source_files": 337,
-      "result": "COMPLETED_FAIL",
-      "exit_code": 1,
-      "tests": 1324,
-      "failures": 19,
-      "errors": 8
+    "active_test": null,
+    "active_ci_watcher": null,
+    "prior_ci_observed": {
+      "commit": "478208f0f3be4b5d810a2c113dbc395b9f1744cb",
+      "run_id": 38094346953,
+      "python_311": "failure",
+      "python_312": "failure",
+      "browser": "success",
+      "lean": "success",
+      "remote_log_downloads": "storage Forbidden; no remote traceback/count claimed"
+    },
+    "active_study": {
+      "session_id": null,
+      "attempt": "mpea-t25-original-9704-v1",
+      "command_recorder": ".cache/mpea-actual-command-records/mpea-t25-original-9704-v1",
+      "status": "BLOCKED",
+      "reason": "INPUT_IDENTITY_MISMATCH",
+      "exit_code": 2
+    },
+    "registration": {
+      "tag": "mpea-t25-registration-v1",
+      "object_sha": "96d383ae5f3b11685073c584fdd5c225dd0ee01d",
+      "commit": "9704ef46c1d0ab098dabb083199403a6296f7cf6",
+      "engineering_sha256": "3e93f7e924e18d1b702cab6c0a65260c4ae5b80c03ff7cb9627e940bf3164d0e",
+      "private_capture": ".cache/mpea-private-registration-9704-v1"
     }
   }
 }

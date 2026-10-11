@@ -1,0 +1,75 @@
+{
+  "files": [
+    {
+      "copied_sha256": "ece380b2d891522ee47e68cdc188859a2ef53b7d69598a08b0007ad4fda233ec",
+      "destination": "reports/mpea-preallocation-repair-v2/author/diagnose.py",
+      "encoding": "exact_bytes",
+      "source": ".cache/mpea-preallocation-diagnosis/diagnose.py",
+      "source_sha256": "ece380b2d891522ee47e68cdc188859a2ef53b7d69598a08b0007ad4fda233ec"
+    },
+    {
+      "copied_sha256": "ed1a7bf180708ea62913670030a20e19c1ca07a542742486633e8bd1291a0139",
+      "destination": "reports/mpea-preallocation-repair-v2/author/diagnosis-v1.json",
+      "encoding": "exact_bytes",
+      "source": ".cache/mpea-preallocation-diagnosis/diagnosis-v1.json",
+      "source_sha256": "ed1a7bf180708ea62913670030a20e19c1ca07a542742486633e8bd1291a0139"
+    },
+    {
+      "copied_sha256": "4cdd5bb9a686a3a6ee79252aca3f80d871e98cea7f36e591274305fb0622bd25",
+      "destination": "reports/mpea-preallocation-repair-v2/author/diagnosis.md",
+      "encoding": "exact_bytes",
+      "source": ".cache/mpea-preallocation-diagnosis/diagnosis.md",
+      "source_sha256": "4cdd5bb9a686a3a6ee79252aca3f80d871e98cea7f36e591274305fb0622bd25"
+    },
+    {
+      "copied_sha256": "d4a11c4c2b941e45d4079129583efc7bcf5ecfed551de137aae02f3f49a3146d",
+      "destination": "reports/mpea-preallocation-repair-v2/author/before/mpea_registration_allocation.py",
+      "encoding": "exact_bytes",
+      "source": ".cache/mpea-preallocation-diagnosis/before/mpea_registration_allocation.py",
+      "source_sha256": "d4a11c4c2b941e45d4079129583efc7bcf5ecfed551de137aae02f3f49a3146d"
+    },
+    {
+      "copied_sha256": "bcd9ce48ef90012225a9035dc6638f607b53ade7cc3d219702fe4ee211a93704",
+      "destination": "reports/mpea-preallocation-repair-v2/author/candidate/scripts/mpea_registration_allocation.py",
+      "encoding": "exact_bytes",
+      "source": ".cache/mpea-preallocation-diagnosis/candidate/scripts/mpea_registration_allocation.py",
+      "source_sha256": "bcd9ce48ef90012225a9035dc6638f607b53ade7cc3d219702fe4ee211a93704"
+    },
+    {
+      "copied_sha256": "e9d6f66390992cfa1e4022f94855435a6cf118ae7690de94775aebb06fd99d93",
+      "destination": "reports/mpea-preallocation-repair-v2/author/candidate/tests/test_mpea_registration_public_metadata.py",
+      "encoding": "exact_bytes",
+      "source": ".cache/mpea-preallocation-diagnosis/candidate/tests/test_mpea_registration_public_metadata.py",
+      "source_sha256": "e9d6f66390992cfa1e4022f94855435a6cf118ae7690de94775aebb06fd99d93"
+    },
+    {
+      "copied_sha256": "adf1bcd22b17bda7d649a48d109f9411654f0f216b191e279dce6c0a5ba5886a",
+      "destination": "reports/mpea-preallocation-repair-v2/author/candidate.patch.json",
+      "encoding": "lossless_base64",
+      "source": ".cache/mpea-preallocation-diagnosis/candidate.patch",
+      "source_sha256": "d0b1b3fa861c9e895e86d421d50d0aa5ec93f31cef65f1e575f51fd7b18ee222"
+    },
+    {
+      "copied_sha256": "f5f4b979531653b3e82f27b091043f5e3dfc2865f3045e9684437fd1b3ec872d",
+      "destination": "reports/mpea-preallocation-repair-v2/author/author-regression-v1.log",
+      "encoding": "exact_bytes",
+      "source": ".cache/mpea-preallocation-diagnosis/author-regression-v1.log",
+      "source_sha256": "f5f4b979531653b3e82f27b091043f5e3dfc2865f3045e9684437fd1b3ec872d"
+    },
+    {
+      "copied_sha256": "5cc56320c0ce1c8a09a3ed8ea31f81ca44a95ab767891158e83e3620a7019042",
+      "destination": "reports/mpea-preallocation-repair-v2/author/author-regression-v1.json",
+      "encoding": "exact_bytes",
+      "source": ".cache/mpea-preallocation-diagnosis/author-regression-v1.json",
+      "source_sha256": "5cc56320c0ce1c8a09a3ed8ea31f81ca44a95ab767891158e83e3620a7019042"
+    },
+    {
+      "copied_sha256": "d7ad5e622f6d782d297cf0ceb0ad63a57ffcf0b0ba692e2c54208fce1396ae57",
+      "destination": "reports/mpea-preallocation-repair-v2/author/promotion-manifest-v1.json",
+      "encoding": "exact_bytes",
+      "source": ".cache/mpea-preallocation-diagnosis/promotion-manifest-v1.json",
+      "source_sha256": "d7ad5e622f6d782d297cf0ceb0ad63a57ffcf0b0ba692e2c54208fce1396ae57"
+    }
+  ],
+  "scope": "Public metadata and source-only operational diagnosis with synthetic seal tamper regressions. No private attempts, source data, feature table, allocation, entropy or target values."
+}

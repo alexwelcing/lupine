@@ -6,6 +6,24 @@ Alex has delegated the multi-day build without task-by-task management.
 The active outcome, ordered backlog, and autonomous execution rules are in
 [`GOAL.md`](GOAL.md); checkpoints are in [`reports/progress.md`](reports/progress.md).
 
+## Current checkpoint: 2026-10-11
+
+Commit `9704ef46c1d0ab098dabb083199403a6296f7cf6` passed the complete
+1,349-test local suite without skips, all four original-branch CI jobs and a
+clean installed package. The source-bound preregistration was published as the
+immutable tag `mpea-t25-registration-v1` before the actual launch.
+
+That launch is **BLOCKED**, with `INPUT_IDENTITY_MISMATCH` and no scientific
+verdict. The upstream metadata producers hash a trailing newline; the registered
+reader incorrectly omitted it. Read-only diagnosis revalidated worker
+registration and located failure in public metadata validation before store
+creation. Exact attempt and allocation-registry paths are absent; the supervisor
+recorded no sealed stage or target phase. The failed v1 record remains permanent.
+A separately reviewed prospective engineering repair is in progress. It must
+pass complete new-source gates before a distinct registration; no retry,
+reproduction or scientific result is claimed. The optional interface resource
+remains absent, and all previous scientific negatives stand.
+
 ## Implemented and exercised
 
 - Exact rational finite candidate selection, tied-optimum retention, feasibility bounds, regret bounds, compatible refinement, signed linear and min/max interval composition.

@@ -114,6 +114,8 @@ def fixture_repository(root):
              'discovery/docs/contract.md': b'constructed contract\n',
              'discovery/docs/operational.md': b'constructed operational\n',
              'discovery/docs/mpea-registration-publication-v1.md': b'constructed publication contract\n',
+             'discovery/docs/mpea-preallocation-recovery-v2.md': b'constructed recovery amendment\n',
+             'discovery/reports/mpea-t25-archival-v1/operational-stop.json': b'{"constructed":true}\n',
              'discovery/reports/mpea-header-labels-v1.json': b'{"constructed":true}\n'}
     files.update({'discovery/' + key: b'{"constructed":true}\n' for key in m.METADATA_PINS})
     files.update({'discovery/reports/mpea-protocol-review-v1/randomization/' + name: b'constructed review evidence\n'

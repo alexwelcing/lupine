@@ -1,0 +1,13 @@
+{
+  "actual_reviewed_executed_base": ".cache/run-contract-freeze-suite-v2.py",
+  "base_sha256": "a4d890661da9088df072b46ddb9fb20ee74f7efbb24f6fc85e098694d8485b26",
+  "clarification": "HEAD/index/working parity, positive test count and unchanged commit checks already existed in executed v2 base; earlier review compared older v1 and must not imply these are new recovery changes.",
+  "correction_to": "review.json recorder comparison paragraph",
+  "exact_delta": [
+    "fresh exclusive output directory",
+    "two mandatory amendment/operational-stop manifest paths"
+  ],
+  "execution": "Neither future recorder nor capture helper executed in this review.",
+  "new_recorder_sha256": "9a8f169c1f0a9b2a01ec72036d5e9b4efe10dca19202353f3f3c42b0a5e78df2",
+  "preserves_original_review": true
+}

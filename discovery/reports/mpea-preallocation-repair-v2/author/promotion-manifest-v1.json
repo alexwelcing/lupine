@@ -1,0 +1,30 @@
+{
+  "base_commit": "9704ef46c1d0ab098dabb083199403a6296f7cf6",
+  "copies": [
+    {
+      "bytes": 45831,
+      "destination": "scripts/mpea_registration_allocation.py",
+      "sha256": "bcd9ce48ef90012225a9035dc6638f607b53ade7cc3d219702fe4ee211a93704",
+      "source": "candidate/scripts/mpea_registration_allocation.py"
+    },
+    {
+      "bytes": 7837,
+      "destination": "tests/test_mpea_registration_public_metadata.py",
+      "sha256": "e9d6f66390992cfa1e4022f94855435a6cf118ae7690de94775aebb06fd99d93",
+      "source": "candidate/tests/test_mpea_registration_public_metadata.py"
+    }
+  ],
+  "existing_top_level_definitions_unchanged_except": [
+    "load_public_metadata"
+  ],
+  "internal_canonical_or_seal_changed": false,
+  "main_registration_unchanged": true,
+  "new_definitions": [
+    "_read_public_metadata",
+    "verify_upstream_metadata_seal"
+  ],
+  "original_registration_sha256": "d4a11c4c2b941e45d4079129583efc7bcf5ecfed551de137aae02f3f49a3146d",
+  "schema": "lupine.mpea.preallocation.repair-promotion.v1",
+  "scientific_algorithm_changed": false,
+  "unchanged_definition_count": 45
+}

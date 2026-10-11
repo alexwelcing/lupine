@@ -25,3 +25,7 @@ published as `478208f0f3be4b5d810a2c113dbc395b9f1744cb` during that interval.
 The receipt is not rewritten. Its 337-file before/after identity is valid; it is
 not a claim that the complete command passed or finished before publication.
 A new run needs a new genuine source snapshot, log and process receipt.
+
+Final official CI observation: [run 38094346953](https://github.com/alexwelcing/lupine/actions/runs/38094346953) completed with both Python jobs failed and browser/Lean successful. [The actual response](ci-final.json) records that the remote branch had already advanced to the repair commit 9704ef4; `remote_matches: false` reflects that chronology, not a claim that 478208f was never published. The new source has its own separate CI run.
+
+Both official Python job records identify the full-unittest step as failed. Remote log-body downloads returned storage Forbidden; [the access record](ci-log-access.json) claims no remote traceback or test count. The 1,324/19/eight counts above are the preserved actual local execution.

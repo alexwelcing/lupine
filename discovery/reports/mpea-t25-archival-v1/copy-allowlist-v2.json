@@ -1,0 +1,39 @@
+{
+  "destination_note": "Root chose operational-stop.json for the adopted amendment; source bytes are unchanged. Original v1 copy allowlist retained.",
+  "do_not_publish_raw_operational_records": true,
+  "files": {
+    "mpea-preallocation-recovery-v2.md": {
+      "action": "PROSPECTIVE_DRAFT_REQUIRES_ROOT_REVIEW_AND_ADOPTION",
+      "bytes": 6466,
+      "sha256": "b07f4fd92b9c8d3ace0d21f0184b615e2150802a1dcd87a8d3d389f1397d2abe",
+      "source": ".cache/mpea-study-custody/review_production/publication_review/preallocation-stop-v1/mpea-preallocation-recovery-v2.md",
+      "suggested_destination": "docs/mpea-preallocation-recovery-v2.md"
+    },
+    "original-v1-operational-failure.json": {
+      "action": "EXACT_PUBLIC_COPY_CANDIDATE",
+      "bytes": 2399,
+      "sha256": "c6553fc321b1447392eee90e08ec173161c34d1fb488b8244dab78663322be14",
+      "source": ".cache/mpea-study-custody/review_production/publication_review/preallocation-stop-v1/original-v1-operational-failure.json",
+      "suggested_destination": "reports/mpea-t25-archival-v1/operational-stop.json"
+    },
+    "stopping-rule-review.md": {
+      "action": "SOURCE_CITED_REVIEW_COPY_CANDIDATE",
+      "bytes": 6877,
+      "sha256": "3c1c0f514620ff0b6b31f63bb13f6770c75951287590356e8af84dac93b3ac29",
+      "source": ".cache/mpea-study-custody/review_production/publication_review/preallocation-stop-v1/stopping-rule-review.md",
+      "suggested_destination": "reports/mpea-t25-archival-v1/stopping-rule-review.md"
+    }
+  },
+  "never_copy_failure_summary_as_scientific_resource": true,
+  "no_recursive_copy": true,
+  "preserved_reviewer_failure": {
+    "classification": "Reviewer initially used registration no-newline seal preimage on launcher receipt. Corrected to fixed producer-specific conventions; no producer change. First failed review and final successful audit remain distinct.",
+    "correction_sha256": "9d765cec1984624e1846f6ee7d5f610ead73154020baa3dcd4850928473c9374",
+    "old_source_sha256": "c742751e4aaf1a384b68cc6f033bc41e225572181cf3ee72427f45179dc3b77b",
+    "receipt_sha256": "d419c0d8bab281dcccf69d524672b633659209f41195b8e956d10b7451d905f7"
+  },
+  "previous_allowlist_sha256": "ce143e95eead702030177921fdf04a5292565b630ddb0e1391d9555e9699fea1",
+  "review_sha256": "812c5e8b2fde8b2a3711ebc599115cd00c6f9e3dd16e7b0162f5a00fc05bcc68",
+  "schema": "lupine.mpea.preallocation_failure_public_allowlist.v2",
+  "scope": "Reviewable public summary and source-cited analysis; amendment is prospective only. Root owns publication/adoption. No runtime or scientific approval."
+}

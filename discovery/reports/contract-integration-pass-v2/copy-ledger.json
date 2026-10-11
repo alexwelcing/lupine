@@ -1,0 +1,44 @@
+[
+  {
+    "source": ".cache/mpea-contract-full-suite-v2/source-before.json",
+    "copy": "reports/contract-integration-pass-v2/source-before.json",
+    "bytes": 42490,
+    "sha256": "85f256d811bfea42a990362af724a1d99c9e90cf055af00bdcd1380457e65809"
+  },
+  {
+    "source": ".cache/mpea-contract-full-suite-v2/index-before.json",
+    "copy": "reports/contract-integration-pass-v2/index-before.json",
+    "bytes": 42490,
+    "sha256": "85f256d811bfea42a990362af724a1d99c9e90cf055af00bdcd1380457e65809"
+  },
+  {
+    "source": ".cache/mpea-contract-full-suite-v2/head-before.json",
+    "copy": "reports/contract-integration-pass-v2/head-before.json",
+    "bytes": 42490,
+    "sha256": "85f256d811bfea42a990362af724a1d99c9e90cf055af00bdcd1380457e65809"
+  },
+  {
+    "source": ".cache/mpea-contract-full-suite-v2/source-after.json",
+    "copy": "reports/contract-integration-pass-v2/source-after.json",
+    "bytes": 42490,
+    "sha256": "85f256d811bfea42a990362af724a1d99c9e90cf055af00bdcd1380457e65809"
+  },
+  {
+    "source": ".cache/mpea-contract-full-suite-v2/unittest.log",
+    "copy": "reports/contract-integration-pass-v2/unittest.log",
+    "bytes": 240332,
+    "sha256": "cc149d2f05b42000775c1ab5827e286d9de7b13f58b5c566f8b51b24ed8fe3eb"
+  },
+  {
+    "source": ".cache/mpea-contract-full-suite-v2/unittest-process.json",
+    "copy": "reports/contract-integration-pass-v2/unittest-process.json",
+    "bytes": 129,
+    "sha256": "caad74006849b9100886834694df07d8850e4b5fac6bf56f7c2b8b1d4d01f756"
+  },
+  {
+    "source": ".cache/mpea-contract-full-suite-v2/execution.json",
+    "copy": "reports/contract-integration-pass-v2/execution.json",
+    "bytes": 88130,
+    "sha256": "6ec61f6922f3c919f9254035fc029a3af22dea2e59d2e5f1f3da2cc218573dc5"
+  }
+]

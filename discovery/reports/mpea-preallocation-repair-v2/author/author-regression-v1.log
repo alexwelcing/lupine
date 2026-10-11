@@ -1,0 +1,12 @@
+test_actual_public_metadata_shape_and_pins_pass_without_authority (__main__.PublicMetadataRegression.test_actual_public_metadata_shape_and_pins_pass_without_authority) ... ok
+test_all_actual_pins_and_upstream_primitive_seals (__main__.PublicMetadataRegression.test_all_actual_pins_and_upstream_primitive_seals) ... ok
+test_alternate_line_endings_spacing_and_tampered_payload_reject (__main__.PublicMetadataRegression.test_alternate_line_endings_spacing_and_tampered_payload_reject) ... ok
+test_corrupted_and_validly_resealed_public_bytes_fail_whole_file_pins (__main__.PublicMetadataRegression.test_corrupted_and_validly_resealed_public_bytes_fail_whole_file_pins) ... ok
+test_internal_and_upstream_serializations_are_separate (__main__.PublicMetadataRegression.test_internal_and_upstream_serializations_are_separate) ... ok
+test_missing_or_invalid_seal_has_closed_failure (__main__.PublicMetadataRegression.test_missing_or_invalid_seal_has_closed_failure) ... ok
+test_nonissued_registration_stops_before_public_reads (__main__.PublicMetadataRegression.test_nonissued_registration_stops_before_public_reads) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.366s
+
+OK

@@ -1,0 +1,116 @@
+[
+  {
+    "bytes": 2182,
+    "sha256": "5d431c621295f1d123eb4a95c8e5dd655cb0a6b93809787f02a3ee8ebcb39337",
+    "source": ".cache/package-release-execution-9704ef46c1d0/README.md",
+    "destination": "reports/contract-release-artifact-v2/evidence/package-release-execution-9704ef46c1d0/README.md"
+  },
+  {
+    "bytes": 8868,
+    "sha256": "8bbfc53c9e50092aab7473a19de2cff4dd1233b3ddb91b9793ede22c8e9507f8",
+    "source": ".cache/package-release-execution-9704ef46c1d0/execution.json",
+    "destination": "reports/contract-release-artifact-v2/evidence/package-release-execution-9704ef46c1d0/execution.json"
+  },
+  {
+    "bytes": 1667,
+    "sha256": "92a536a00705bd666ae800e972708d248244c793ed693a1a58578037a9bc09af",
+    "source": ".cache/package-release-execution-9704ef46c1d0/package.execution.json",
+    "destination": "reports/contract-release-artifact-v2/evidence/package-release-execution-9704ef46c1d0/package.execution.json"
+  },
+  {
+    "bytes": 1333,
+    "sha256": "b835b395e2ff2fd8e04ef61d7cb1cbbc40b32c4c40d4275a017a108a48e97976",
+    "source": ".cache/package-release-execution-9704ef46c1d0/package.started.json",
+    "destination": "reports/contract-release-artifact-v2/evidence/package-release-execution-9704ef46c1d0/package.started.json"
+  },
+  {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": ".cache/package-release-execution-9704ef46c1d0/package.stderr.txt",
+    "destination": "reports/contract-release-artifact-v2/evidence/package-release-execution-9704ef46c1d0/package.stderr.txt"
+  },
+  {
+    "bytes": 997,
+    "sha256": "bce183dc6a30d389fcef9e6c87858456410808505ae998621b37704a2b467aea",
+    "source": ".cache/package-release-execution-9704ef46c1d0/package.stdout.txt",
+    "destination": "reports/contract-release-artifact-v2/evidence/package-release-execution-9704ef46c1d0/package.stdout.txt"
+  },
+  {
+    "bytes": 1746,
+    "sha256": "e6fd48411071382d8aae235f64f8fe62118cad7da13bea4dc1f853138c97aa40",
+    "source": ".cache/package-release-execution-9704ef46c1d0/retained-verifier.execution.json",
+    "destination": "reports/contract-release-artifact-v2/evidence/package-release-execution-9704ef46c1d0/retained-verifier.execution.json"
+  },
+  {
+    "bytes": 1402,
+    "sha256": "e8ef640919d553cb9f8b5587349d2697ef4b97dc2a28918f151c480151843c67",
+    "source": ".cache/package-release-execution-9704ef46c1d0/retained-verifier.started.json",
+    "destination": "reports/contract-release-artifact-v2/evidence/package-release-execution-9704ef46c1d0/retained-verifier.started.json"
+  },
+  {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": ".cache/package-release-execution-9704ef46c1d0/retained-verifier.stderr.txt",
+    "destination": "reports/contract-release-artifact-v2/evidence/package-release-execution-9704ef46c1d0/retained-verifier.stderr.txt"
+  },
+  {
+    "bytes": 3347,
+    "sha256": "17b72b6409e2ed02b9a03a3ce82f9c0cc04efb093897d0f9abdd4914681c206e",
+    "source": ".cache/package-release-execution-9704ef46c1d0/retained-verifier.stdout.txt",
+    "destination": "reports/contract-release-artifact-v2/evidence/package-release-execution-9704ef46c1d0/retained-verifier.stdout.txt"
+  },
+  {
+    "bytes": 919,
+    "sha256": "419885dc7e6d81175317b43c7dbf33854b7cff77b29cce0552d3c9aea6a543b0",
+    "source": ".cache/package-release-execution-9704ef46c1d0/source-before.json",
+    "destination": "reports/contract-release-artifact-v2/evidence/package-release-execution-9704ef46c1d0/source-before.json"
+  },
+  {
+    "bytes": 1663,
+    "sha256": "3de2037e8415828968ea5ae9624ec18386276a1843f31f5b61d589781f59135c",
+    "source": ".cache/package-release-execution-9704ef46c1d0/wheel-source-audit.execution.json",
+    "destination": "reports/contract-release-artifact-v2/evidence/package-release-execution-9704ef46c1d0/wheel-source-audit.execution.json"
+  },
+  {
+    "bytes": 1317,
+    "sha256": "ce84b670a3735e3c833a770ae2bc8016f2849e59588a0a275790d814696d76fa",
+    "source": ".cache/package-release-execution-9704ef46c1d0/wheel-source-audit.started.json",
+    "destination": "reports/contract-release-artifact-v2/evidence/package-release-execution-9704ef46c1d0/wheel-source-audit.started.json"
+  },
+  {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": ".cache/package-release-execution-9704ef46c1d0/wheel-source-audit.stderr.txt",
+    "destination": "reports/contract-release-artifact-v2/evidence/package-release-execution-9704ef46c1d0/wheel-source-audit.stderr.txt"
+  },
+  {
+    "bytes": 1411,
+    "sha256": "aa43216dc66dcd22dfc1765b3134f19fbd69a694d16f672354678200ce719ec8",
+    "source": ".cache/package-release-execution-9704ef46c1d0/wheel-source-audit.stdout.txt",
+    "destination": "reports/contract-release-artifact-v2/evidence/package-release-execution-9704ef46c1d0/wheel-source-audit.stdout.txt"
+  },
+  {
+    "bytes": 6004,
+    "sha256": "37ce77206c414c4153b55e17092a77f6d576f48233ea4e3a0768791798c26127",
+    "source": ".cache/package-release-execution-preparation-v1/run-next.py",
+    "destination": "reports/contract-release-artifact-v2/evidence/package-release-execution-preparation-v1/run-next.py"
+  },
+  {
+    "bytes": 3605,
+    "sha256": "45d61046ec6fb5b46dfc66ee753e4917a1f300db93b7223ae3f46253dc1f8c0f",
+    "source": ".cache/audit-wheel-source-contract-v1.py",
+    "destination": "reports/contract-release-artifact-v2/evidence/audit-wheel-source-contract-v1.py"
+  },
+  {
+    "bytes": 33284,
+    "sha256": "5baf9b518a9e6218318495266bb74e9583924ca274dfc756a679f225d5ca6593",
+    "source": ".cache/wheel-source-contract-9704ef46c1d0.json",
+    "destination": "reports/contract-release-artifact-v2/evidence/wheel-source-contract-9704ef46c1d0.json"
+  },
+  {
+    "bytes": 7733,
+    "sha256": "81c99123ce1e815afdd39dd20c2d7301832e22f39e1ce64aefc46752b9d6fff8",
+    "source": ".cache/release-artifacts-contract-9704ef46c1d0/release-artifacts.json",
+    "destination": "reports/contract-release-artifact-v2/evidence/release-artifacts-contract-9704ef46c1d0/release-artifacts.json"
+  }
+]

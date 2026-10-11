@@ -21,7 +21,7 @@ PRODUCTION_MODES=frozenset({'PARENT_LIVE','WORKER_PARENT_TRUST'})
 REPRODUCTION_MODES=frozenset({'REPRODUCTION_PARENT_LIVE','REPRODUCTION_WORKER_PARENT_TRUST'})
 AUTHORIZED_MODES=PRODUCTION_MODES|REPRODUCTION_MODES
 JOBS=frozenset({'python (3.11)','python (3.12)','lean','browser'})
-PUBLIC_TAG='mpea-t25-registration-v1'
+PUBLIC_TAG='mpea-t25-registration-v2'
 SALT=b'mpea-t25-archive-option-v1'
 HEX=re.compile('[0-9a-f]{64}\\Z');COMMIT=re.compile('[0-9a-f]{40}\\Z')
 _AUTHORITY=object()
@@ -59,6 +59,15 @@ def decode(raw):
 def verify_seal(v):
     if type(v) is not dict or 'content_sha256' not in v:fail('SCHEMA_INVALID')
     if v['content_sha256']!=digest({k:x for k,x in v.items() if k!='content_sha256'}):fail('INPUT_IDENTITY_MISMATCH')
+def verify_upstream_metadata_seal(v):
+    """Verify the frozen metadata producers' canonical JSON plus one LF.
+
+    Registration/capture/ledger seals use verify_seal's distinct no-LF format.
+    Whole metadata file pins must also match before accepting these documents.
+    """
+    if type(v) is not dict or 'content_sha256' not in v:fail('SCHEMA_INVALID')
+    content={k:x for k,x in v.items() if k!='content_sha256'}
+    if v['content_sha256']!=sha256(canonical(content)+b'\n').hexdigest():fail('INPUT_IDENTITY_MISMATCH')
 def hex64(v):return type(v) is str and HEX.fullmatch(v) is not None
 def path_under(base,relative):
     if type(relative) is not str:fail('SCHEMA_INVALID')
@@ -240,6 +249,7 @@ def _request(path,root):
     tracked=_git(root,'ls-tree','-r','--name-only',v['commit']).decode().splitlines()
     required={name for name in tracked if name.startswith(('discovery/src/','discovery/scripts/','discovery/tests/','discovery/formal/'))}
     required.update({'.github/workflows/discovery-verify.yml','discovery/pyproject.toml','discovery/docs/mpea-registration-publication-v1.md'})
+    required.update({'discovery/docs/mpea-preallocation-recovery-v2.md','discovery/reports/mpea-t25-archival-v1/operational-stop.json'})
     if type(v['specifications']) is not dict or set(v['specifications'])!={'protocol','contract','operational_amendment'}:fail('SCHEMA_INVALID')
     for spec in v['specifications'].values():
         if type(spec) is not dict or set(spec)!={'path','sha256'} or not hex64(spec['sha256']):fail('SCHEMA_INVALID')
@@ -344,14 +354,18 @@ def metadata_fixture(rows,header,source_sha):
     return _context(rows,header,source_sha,digest({'rows':[dataclasses.asdict(r) for r in rows],'header':[x.hex() for x in header]}),'SYNTHETIC')
 def load_public_metadata(registration):
     if registration._authority is not _AUTHORITY or registration.mode not in AUTHORIZED_MODES:fail('REGISTRATION_MISMATCH')
+    return _read_public_metadata()
+
+def _read_public_metadata():
+    """Validate pinned public inputs only; this grants no registration authority."""
     documents={};identities={}
     for name,expected in METADATA_PINS.items():
         raw=captured(path_under(ROOT,name))
         if sha256(raw).hexdigest()!=expected:fail('INPUT_IDENTITY_MISMATCH')
         value=decode(raw);documents[name]=value;identities[name]=expected
-    header_document=documents['reports/mpea-header-labels-v1.json'];verify_seal(header_document)
+    header_document=documents['reports/mpea-header-labels-v1.json'];verify_upstream_metadata_seal(header_document)
     b=documents['reports/mpea-row-metadata-v1.json'];c=documents['reports/mpea-formula-tokens-v1.json']
-    verify_seal(b);verify_seal(c)
+    verify_upstream_metadata_seal(b);verify_upstream_metadata_seal(c)
     if b.get('observed')!=SOURCE or c.get('observed')!=SOURCE or header_document.get('observed')!=SOURCE:fail('SOURCE_IDENTITY_MISMATCH')
     if b.get('row_count')!=1545 or c.get('row_count')!=1545 or len(b['rows'])!=1545 or len(c['rows'])!=1545:fail('METADATA_COUNT_MISMATCH')
     columns=header_document['header']['columns']

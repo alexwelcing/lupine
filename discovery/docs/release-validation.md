@@ -405,3 +405,23 @@ Production checkpoint update, 2026-10-10 22:14 UTC: exact remote commit `a865147
 Contract-conformance checkpoint, 2026-10-10 23:14 UTC: the final scoped C1–C9 reviews and current 56-check Chromium run pass; original failures remain preserved in [the integration record](../reports/mpea-contract-conformance-v1/README.md). The 337-file full local suite is running; this source checkpoint is published for concurrent exact-commit CI. Full-suite completion, clean installed package and all four new-source CI jobs still block registration. No actual MPEA allocation, targets or scientific verdict are claimed.
 
 Integration repair checkpoint, 2026-10-10 23:34 UTC: the complete 478208f run failed (1,324 tests, 19 failures/eight errors). [Exact failures and reviewed repairs](../reports/contract-integration-repair-v1/README.md) are retained. Ten narrow test/helper/auditor changes preserve production science and enforcement. New committed-source full testing, clean installed artifacts and all four exact-commit CI jobs remain required. Actual MPEA registration and target access remain blocked.
+
+
+## Registered v1 preallocation engineering stop, 2026-10-11
+
+The [complete 9704 engineering run](../reports/contract-integration-pass-v2/README.md)
+passes 1,349 tests without skips; all four exact-commit CI jobs and clean packaging
+also pass. The separately approved immutable v1 registration preceded one actual
+launcher command, which stopped `BLOCKED / INPUT_IDENTITY_MISMATCH` before store
+creation and allocation. Public metadata seals used the wrong newline preimage.
+The [closed operational record](../reports/mpea-t25-archival-v1/operational-stop.json)
+has a null scientific verdict; absence of an authenticated report is neither
+archival success nor `NO_GO_ARCHIVAL_USEFULNESS`. The UI's absent-resource state
+remains appropriate. No original reproduction ran.
+
+The [prospective engineering recovery amendment](mpea-preallocation-recovery-v2.md)
+preserves v1, all frozen scientific decisions and the global no-redraw ledger.
+A distinct v2 registration requires new independent review, complete source-bound
+tests, clean packaging and all four exact-commit CI jobs. Those gates remain
+pending at amendment adoption. Final research-preview approval is still pending;
+scientific superiority and physical qualification remain unsupported.

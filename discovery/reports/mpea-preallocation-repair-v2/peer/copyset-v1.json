@@ -1,0 +1,46 @@
+{
+  "files": [
+    {
+      "bytes": 2608,
+      "path": "README.md",
+      "sha256": "d2c2cff83bbdee1ab6f99eb96c2dc9f828c6f1d35137c1fcfa33262470c4ef81"
+    },
+    {
+      "bytes": 4159,
+      "path": "run_review.py",
+      "sha256": "6ce1280654dba3d46b6abc7820f4a30c4510a94aca9a18f342bca2b8885c8c21"
+    },
+    {
+      "bytes": 9825,
+      "path": "test_upstream_seal_peer.py",
+      "sha256": "7b5d09e6ba981b02f354ee35f527a2bdcb09b1cfadcaa4197afdd6bcd0d3e9e8"
+    },
+    {
+      "bytes": 6356,
+      "path": "check_public_feature_readiness.py",
+      "sha256": "bfb3e33d179707e12049937c34431a406d9f716b138ebcc929175b163b080488"
+    },
+    {
+      "bytes": 1657,
+      "path": "independent-tests-v1.txt",
+      "sha256": "d97087c123c48f8535f800c4b6f1a6cdfc06772e5b0cae05c0c17463cdf6a41c"
+    },
+    {
+      "bytes": 74,
+      "path": "public-feature-readiness-execution-v1.txt",
+      "sha256": "2154b571841b0a040120aad79458880b1f0c923eac1dafdcf88676291ef34298"
+    },
+    {
+      "bytes": 2365,
+      "path": "public-feature-readiness-v1.json",
+      "sha256": "4c8884c92876cd7064f9f873d3cc14761932a7dea8d8d274847110a9c9f5a6d3"
+    },
+    {
+      "bytes": 14869,
+      "path": "independent-review-v1.json",
+      "sha256": "8018b33620c97787163df5120217b34b1406fa2c6512869ca31ef97c88f12413"
+    }
+  ],
+  "schema": "lupine.review.copyset.v1",
+  "scope": "public-metadata seal and readiness review only; no private artifacts"
+}
