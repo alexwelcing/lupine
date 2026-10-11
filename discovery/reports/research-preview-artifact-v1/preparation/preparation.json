@@ -1,0 +1,45 @@
+{
+  "actual_resource_read": false,
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "/workspace/lupine-discovery-branch/discovery/.cache/package-present-release-preparation-v1/test_preparation.py"
+  ],
+  "cwd": "/workspace/lupine-discovery-branch/discovery",
+  "elapsed_seconds": 0.4095124690065859,
+  "exit_code": 0,
+  "expected_resource_sha256": "d93769b07fba52f9bc95dbed92c5303aa8344867e7a663d0ca58cff7af2ba274",
+  "finished_at_utc": "2026-10-11T01:08:58.925725+00:00",
+  "release_commands_executed": false,
+  "schema": "lupine.discovery.package_present_release_preparation.v1",
+  "scientific_data_opened": false,
+  "scope": "Twelve constructed checks of extracted gate predicates and reviewed-resource audit block; syntax checks and source deltas only. No actual release gate or scientific evaluation.",
+  "source_after": {
+    ".cache/audit-wheel-source-contract-v1.py": "45d61046ec6fb5b46dfc66ee753e4917a1f300db93b7223ae3f46253dc1f8c0f",
+    ".cache/package-present-release-preparation-v1/README.md": "592a4a283fda3d72055394c9b50919d672500025fd3e188c5378b27ec47e7060",
+    ".cache/package-present-release-preparation-v1/audit-wheel-source-present-v1.py": "a821b8533a3bce158788489618f5e42c33b474d238cc18ded2a5da23d8242e6a",
+    ".cache/package-present-release-preparation-v1/payload-auditor.patch": "1ff5c209f500404d3701f10097ec11795227e3877da1dc8350527524aa06c760",
+    ".cache/package-present-release-preparation-v1/recorder.patch": "d023ad1cddf2f9b7c828dfd64524b4f3cae362284c60175dabb4f10dd8a54168",
+    ".cache/package-present-release-preparation-v1/run-next.py": "f634e87b5437b2d556a8705184ae5c504c747d8b004137eb918fb7ab898b7457",
+    ".cache/package-present-release-preparation-v1/test_preparation.py": "c6f80926690dc421c42b96c4f4ca74c0cdefd2115b509825d7b5d01065d998ad",
+    ".cache/package-release-execution-preparation-v1/run-next.py": "37ce77206c414c4153b55e17092a77f6d576f48233ea4e3a0768791798c26127",
+    "scripts/package_smoke.py": "f64489f64aefc6624298e25d9dad493186c25b1c91e3f063e9e73d23f8ebf6a1",
+    "scripts/verify_retained_artifacts.py": "b88514b490f1cad8c705bbe4066dc558ffe844c257efeffa6ce63e086209ba13"
+  },
+  "source_before": {
+    ".cache/audit-wheel-source-contract-v1.py": "45d61046ec6fb5b46dfc66ee753e4917a1f300db93b7223ae3f46253dc1f8c0f",
+    ".cache/package-present-release-preparation-v1/README.md": "592a4a283fda3d72055394c9b50919d672500025fd3e188c5378b27ec47e7060",
+    ".cache/package-present-release-preparation-v1/audit-wheel-source-present-v1.py": "a821b8533a3bce158788489618f5e42c33b474d238cc18ded2a5da23d8242e6a",
+    ".cache/package-present-release-preparation-v1/payload-auditor.patch": "1ff5c209f500404d3701f10097ec11795227e3877da1dc8350527524aa06c760",
+    ".cache/package-present-release-preparation-v1/recorder.patch": "d023ad1cddf2f9b7c828dfd64524b4f3cae362284c60175dabb4f10dd8a54168",
+    ".cache/package-present-release-preparation-v1/run-next.py": "f634e87b5437b2d556a8705184ae5c504c747d8b004137eb918fb7ab898b7457",
+    ".cache/package-present-release-preparation-v1/test_preparation.py": "c6f80926690dc421c42b96c4f4ca74c0cdefd2115b509825d7b5d01065d998ad",
+    ".cache/package-release-execution-preparation-v1/run-next.py": "37ce77206c414c4153b55e17092a77f6d576f48233ea4e3a0768791798c26127",
+    "scripts/package_smoke.py": "f64489f64aefc6624298e25d9dad493186c25b1c91e3f063e9e73d23f8ebf6a1",
+    "scripts/verify_retained_artifacts.py": "b88514b490f1cad8c705bbe4066dc558ffe844c257efeffa6ce63e086209ba13"
+  },
+  "source_unchanged": true,
+  "started_at_utc": "2026-10-11T01:08:58.516215+00:00",
+  "status": "PASS",
+  "stderr_sha256": "0ce80dd24a2cb584fd8779d5d74ab65f7dbaa62a7dcde1bdcc57242423e602a0",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

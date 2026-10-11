@@ -4,7 +4,9 @@ Current checkpoint: the v2 MPEA original and fixed-allocation reproduction are C
 
 [The original recommendation](recommendation.md) below remains a dated historical preparation record: it was written before v2 registration and has not been rewritten in response to exposed evaluation data. Its substantive next evidence gap remains a distinct, previously unused experimental study-panel population with paired outcomes, condition/source metadata, frozen ranking and complete-record rules, matched information budgets and explicit abstention. A new protocol must be frozen before new evaluation access; no current thresholds, alpha, predictor, populations or gates are retuned on these exposed panels.
 
-External computational reproduction needs the authenticated original registration/allocation/custody graph. A fresh independent statistical sample is a separate evidence objective; neither establishes plant suitability. This status update does not acquire data, approve a new protocol, launch a study or add that broader research as a condition for the narrow preview.
+The scoped build/release decision is **GO_RESEARCH_PREVIEW**; its engineering evidence does not change the negative scientific result. External computational reproduction needs the authenticated original registration/allocation/custody graph. A fresh independent statistical sample is a separate evidence objective; neither establishes plant suitability. This status update does not acquire data, approve a new protocol, launch a study or add that broader research as a condition for the narrow preview.
+
+The [NIMS creep metadata lead](source-leads.md) is an optional future direction toward operating-condition evidence. Access/redistribution terms and usable paired counts remain unresolved; it is not ready for acquisition, and no new study is authorized or launched.
 
 ## Historical recommendation and provenance
 

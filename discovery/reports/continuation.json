@@ -14,7 +14,7 @@
   "default_timezone": "America/New_York",
   "next_run_time_returned_at_creation": null,
   "last_run_time_returned_at_creation": null,
-  "execution_status": "provider reports a scheduled run; matching continuation request was handled within the existing active implementation session",
+  "execution_status": "Scoped research-preview build completed; automation disabled and independently re-queried. Active final report publication/CI verification continues before handoff.",
   "notification_policy": "Substantive daily milestone summary, actionable blocker, or final release decision; suppress unchanged status.",
   "scope": "Resume latest GitHub goal and implement the next bounded increment with available tools, testing and recording actual outcomes.",
   "limits": "Scheduling success does not prove future tool availability, a completed build, or uninterrupted execution. Check and record each run. Do not silently extend the bounded schedule.",
@@ -25,27 +25,27 @@
   "scheduler_continuity_limit": "Maximum supported recurrence is hourly; uninterrupted execution is unsupported.",
   "active_session_policy": "Continue implementation across successive useful tasks; scheduled runs are recovery, not a claim of constant execution.",
   "last_observed_continuation": {
-    "recorded_at": "2026-10-10T21:37:00.608443+00:00",
-    "context": "Existing active implementation session; local HEAD and fetched remote both ae573ea9581a8e75bdffd787cba11d8051bfa83d. Root and file-owning delegates were already executing production custody/registration reviews.",
-    "action": "Reconciled current branch/instructions, preserved in-progress changes and continued the existing owner lanes; no competing writer started.",
-    "scheduled_origin": "Continuation request received during active work; provider state not independently queried in this reconciliation. A wake-up is not a build or experiment."
+    "recorded_at": "2026-10-11T01:46:45.468833+00:00",
+    "context": "Continuation request received in existing active implementation session after runtime CI completed; fetched remote and HEAD both6585a605, preserved owned report edits.",
+    "action": "Completed scoped claim review and disabled scheduled continuation; no competing writer, new study or standalone worker started.",
+    "scheduled_origin": "Provider last_run_time2026-10-11T01:40:22.030232+00:00 observed separately; wake-up is not a build or experiment."
   },
   "provider_state_observed": {
-    "is_enabled": true,
-    "last_run_time": "2026-10-10T17:31:51.582589+00:00",
-    "updated_at": "2026-10-10T17:32:13.927464+00:00",
+    "is_enabled": false,
+    "last_run_time": "2026-10-11T01:40:22.030232+00:00",
+    "updated_at": "2026-10-11T01:45:57.014089+00:00",
     "schedule_unchanged": true,
     "continuous_worker_started": false
   },
   "current_checkpoint": {
-    "recorded_at": "2026-10-11T01:12:17.578177+00:00",
-    "owner": "Root integrates reviewed public evidence and final research-preview release; independent package/claims lanes own verification.",
-    "published_commit": "a0624cac9abb20320629cce41f10270b9b8e2136",
-    "published_ci_run": 38098039812,
+    "recorded_at": "2026-10-11T01:46:45.468833+00:00",
+    "owner": "Root closes scoped build/release goal and verifies final report-only descendant push/CI; delegates completed independent reviews.",
+    "published_commit": "6585a605d5d325e84423c7e35c7286efe85cfb6f",
+    "published_ci_run": 38101296342,
     "published_ci_all_four_jobs_pass": true,
-    "published_ci_observation": "Official original-branch run38098039812 completed success; allfour required jobs, exacta0624cac and remoteHEAD authenticated, independentcaptured-response review complete. No downloadedCIjoblogs/artifacts.",
-    "working_checkpoint": "Independent closed publication review approved original/reproduction/auditor aggregate evidence. Exact original d93769b resource is integrated; runtime manifest293. Actual-resource browser first run PASS10 assertion groups, all3 screenshots visually inspected. Registered science remains COMPLETE/NO_GO; final clean commit/package/CI pending.",
-    "next_action": "Commit/push the reviewed resource increment with coherent current docs, execute the prepared clean installed package recorder at that exact commit, verify all four exact-commit CI jobs and finish final conditional claim/release review.",
+    "published_ci_observation": "All four original push jobs completed successfully for exact6585a605 in run38101296342, observed2026-10-11T01:40:16.973611+00:00; remote matched.",
+    "working_checkpoint": "GO_RESEARCH_PREVIEW at tested runtime6585a605. Clean present-resource package and both byte audits PASS; independent artifact and final claim reviews PASS. All science remains NO_GO; no physical qualification. Automation disabled. Final descendant contains only documentation/evidence.",
+    "next_action": "Root publishes this report-only closeout and verifies exact remote/CI before final handoff, linking final hash/run in PR263. No further automated work. Any future superiority study needs separately frozen protocol and appropriate unused independent evidence.",
     "actual_scientific_allocation_performed": true,
     "active_test": {
       "session_id": 3123,
@@ -57,9 +57,9 @@
       "execution_sha256": "b3e2cde17e25be0719f520161147ebf3ba44dc7d43bc081394b60ffd0f163f9b"
     },
     "active_ci_watcher": {
-      "session_id": 76222,
-      "receipt": ".cache/a0624ca-ci-final.json",
-      "status": "COMPLETED_EXIT_0"
+      "session_id": 62714,
+      "receipt": "reports/research-preview-verification-v1/ci/official-run-jobs-observation.json",
+      "status": "COMPLETED_PASS_EXIT_0"
     },
     "prior_ci_observed": {
       "commit": "478208f0f3be4b5d810a2c113dbc395b9f1744cb",
@@ -89,9 +89,10 @@
     },
     "clean_package": {
       "status": "PASS",
-      "commit": "a0624cac9abb20320629cce41f10270b9b8e2136",
-      "receipt_directory": ".cache/package-release-execution-a0624cac9abb",
-      "execution_sha256": "8715f18cf0b84fe211634921e608619bf00c0db28316452c704a9a27b709fe76"
+      "commit": "6585a605d5d325e84423c7e35c7286efe85cfb6f",
+      "receipt_directory": "reports/research-preview-artifact-v1",
+      "execution_sha256": "0eb931dc8f73a2fdf71f8d91d42f8b9951e9574d66abb0b948d192e9933fd15a",
+      "resource_present": true
     },
     "local_browser": {
       "status": "PASS",
@@ -140,6 +141,26 @@
       "resource_sha256": "d93769b07fba52f9bc95dbed92c5303aa8344867e7a663d0ca58cff7af2ba274",
       "receipt": "reports/research-preview-interface-v1/execution-result.json",
       "visual_review": "All three screenshots inspected by root; no layout defect observed."
+    },
+    "goal_state": "CLOSED_SCOPED_RESEARCH_PREVIEW",
+    "release_decision": "GO_RESEARCH_PREVIEW",
+    "scientific_usefulness": "NO_GO_ARCHIVAL_USEFULNESS",
+    "automation_closure_receipt": "reports/research-preview-verification-v1/automation-closure.json",
+    "final_claim_review": {
+      "status": "NO_BLOCKING_CLAIM_WORDING",
+      "receipt": "reports/research-preview-verification-v1/claim-review/independent-review.json",
+      "sha256": "4a48636bf4c66519d8f06e1746a871a51e8d9e228b521cedc7ebae06c5cfb339"
     }
+  },
+  "closure": {
+    "decision": "GO_RESEARCH_PREVIEW",
+    "scientific_claims": "NO_GO",
+    "recorded_at": "2026-10-11T01:46:45.468833+00:00",
+    "is_enabled": false,
+    "provider_updated_at": "2026-10-11T01:45:57.014089+00:00",
+    "fresh_peek_confirmed_disabled": true,
+    "schedule_extended": false,
+    "receipt": "reports/research-preview-verification-v1/automation-closure.json",
+    "final_publication_verification": "Final report-only descendant hash and actual CI completion are recorded in public PR263/GitHub after this file is committed; no self-referential precommit CI success is claimed."
   }
 }

@@ -1,0 +1,16 @@
+{
+  "schema": "lupine.discovery.custody_source_review_copy.v1",
+  "files": [
+    {
+      "path": "recommendation.md",
+      "sha256": "b8ea85e966bafe505416c4a3e891875719f3efeaf544cf8443d6dbdebfb6585b",
+      "bytes": 10467
+    },
+    {
+      "path": "source-review-v1.json",
+      "sha256": "5e15b4284affa86b5579e645ef0b9f143dd94df5d5b0413844c852cbb1cec6e9",
+      "bytes": 3685
+    }
+  ],
+  "scope": "Exact source-review copies, no actual custody capture or private data."
+}

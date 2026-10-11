@@ -1,0 +1,36 @@
+{
+  "schema": "lupine.discovery.wheel-source-payload-audit.v1",
+  "status": "PASS",
+  "executed_at_utc": "2026-10-11T01:17:14.469374+00:00",
+  "source_commit": "6585a605d5d325e84423c7e35c7286efe85cfb6f",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    ".cache/package-present-release-preparation-v1/audit-wheel-source-present-v1.py",
+    "6585a605d5d325e84423c7e35c7286efe85cfb6f"
+  ],
+  "audit_source_sha256": "a821b8533a3bce158788489618f5e42c33b474d238cc18ded2a5da23d8242e6a",
+  "retained_receipt_sha256": "d23ec59ee0c0d483a5c3147d1a2b5edceddd1b2a5f8eda15718b4122f7694f97",
+  "wheel_sha256": "1b883929426c1b0502ff988d3a2d2d1bd77ed158c660058c319d5c39229c7189",
+  "source_archive_sha256": "07edb5d7b5809e79029e6e4e863ddb13eca4d2ade76503d476a6db19ce3dac20",
+  "runtime_payload_count": 105,
+  "exact_source_payload_count": 107,
+  "runtime_payload_set_equals_archived_source_set": true,
+  "reviewed_mpea_resource": {
+    "wheel_member": "lupine_discovery/resources/mpea-t25-v1.json",
+    "source_member": "lupine-source/discovery/src/lupine_discovery/resources/mpea-t25-v1.json",
+    "bytes": 1664719,
+    "sha256": "d93769b07fba52f9bc95dbed92c5303aa8344867e7a663d0ca58cff7af2ba274",
+    "wheel_equals_source_bytes": true,
+    "recorded_http_value_agreement": true,
+    "http_reexecuted_by_this_auditor": false,
+    "scientific_report_semantics_validated": false
+  },
+  "generated_metadata_not_byte_compared_to_source": [
+    "lupine_discovery-0.1.0.dist-info/METADATA",
+    "lupine_discovery-0.1.0.dist-info/RECORD",
+    "lupine_discovery-0.1.0.dist-info/WHEEL",
+    "lupine_discovery-0.1.0.dist-info/entry_points.txt",
+    "lupine_discovery-0.1.0.dist-info/top_level.txt"
+  ],
+  "scope": "Exact wheel library, resources, web assets and license bytes match retained committed source. Does not execute wheel, establish build reproducibility, or establish scientific correctness."
+}

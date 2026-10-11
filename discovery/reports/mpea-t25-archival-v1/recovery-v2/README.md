@@ -61,3 +61,9 @@ is a preserved read-only review-tool error, not a failed scientific attempt.
 This closes the archival experiment with a negative result. Actual-resource
 browser and installed-package verification, exact new-commit CI and the final
 research-preview decision remain separate release gates.
+
+Final release addendum, 2026-10-11: the separate [actual-resource browser](../../research-preview-interface-v1/README.md),
+[clean installed package and byte audits](../../research-preview-artifact-v1/README.md),
+and [all four exact-runtime CI jobs](../../research-preview-verification-v1/README.md)
+have now passed. The [scoped decision](../../research-preview-decision.md) permits
+research-preview use; this study remains NO_GO_ARCHIVAL_USEFULNESS.

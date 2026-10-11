@@ -1,0 +1,18 @@
+{
+  "findings": [
+    "All old retention/source payload guards retained.",
+    "Reviewed resource fixed SHA required before build and snapshots and exact wheel/source bytes.",
+    "HTTP canonical JSON equality explicitly distinguished from file-byte equality.",
+    "Scientific semantics and HTTP reexecution not claimed by byte auditor.",
+    "Actual PASS requires all three commands, exact transport claims and unchanged snapshot."
+  ],
+  "hashes": {
+    ".cache/package-present-release-preparation-v1/audit-wheel-source-present-v1.py": "a821b8533a3bce158788489618f5e42c33b474d238cc18ded2a5da23d8242e6a",
+    ".cache/package-present-release-preparation-v1/payload-auditor.patch": "1ff5c209f500404d3701f10097ec11795227e3877da1dc8350527524aa06c760",
+    ".cache/package-present-release-preparation-v1/recorder.patch": "d023ad1cddf2f9b7c828dfd64524b4f3cae362284c60175dabb4f10dd8a54168",
+    ".cache/package-present-release-preparation-v1/run-next.py": "f634e87b5437b2d556a8705184ae5c504c747d8b004137eb918fb7ab898b7457"
+  },
+  "pending": "Actual clean root-authorized commit and package commands.",
+  "scope": "Bounded source/patch review only; no release recorder execution, resource access, build or HTTP audit.",
+  "status": "NO_SOURCE_REVIEW_BLOCKER"
+}

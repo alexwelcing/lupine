@@ -1087,3 +1087,42 @@ authorize the changed source.
 - The [original MPEA stop](mpea-t25-archival-v1/README.md) remains permanently blocked before allocation. Its `INPUT_IDENTITY_MISMATCH` is an operational failure, not a scientific usefulness result. The reviewed repair preserves producer LF and internal no-LF seal conventions separately. V2: The authenticated v2 original and fixed-allocation reproduction are both COMPLETE at registered source a0624cac9abb20320629cce41f10270b9b8e2136. Scientific verdict: NO_GO_ARCHIVAL_USEFULNESS; adequacy, pool size and all three ranking comparisons fail. Reproduction: COMPLETE on the same host with the same operator and fixed original allocation; all eight referenced stage scientific identities and the public scientific identity agree. It is not an independent statistical sample or external reproduction.
 - Preview decision: **PENDING final public-resource release checks**. The registered scientific study and its fixed-allocation reproduction completed with NO_GO_ARCHIVAL_USEFULNESS. The actual-resource browser check passes; final clean packaging and exact-commit checks remain pending. No release approval is issued here. [The decision record](research-preview-decision.md) preserves every known scientific negative, explicit remaining gate and claim boundary. The goal is not yet closed. The scientific evaluation and reproductions are complete, with their negative outcomes preserved. The remaining current work is the reviewed public-resource integration and exact-source release decision.
 - Next: Preserve the passing actual-resource browser evidence and complete the new source-closure, clean package and exact-commit CI checks for the reviewed public bytes. Root can then record GO_RESEARCH_PREVIEW if those gates pass, while retaining scientific superiority/physical claims as NO-GO. No scheduler or automation action is performed by this documentation update.
+
+## 2026-10-11 01:40 UTC (exact CI observation `2026-10-11T01:40:16.973611+00:00`) — final scoped release decision
+
+- Runtime/artifact source: `6585a605d5d325e84423c7e35c7286efe85cfb6f`; scientific registration remains `a0624cac`. Exact runtime CI [38101296342](https://github.com/alexwelcing/lupine/actions/runs/38101296342): PASS: all four jobs completed successfully for exact runtime `6585a605` (observed `2026-10-11T01:40:16.973611+00:00`). The registered-source full suite passed 1,359 unskipped tests; final integration additionally has 55 focused checks and the 10-group actual-resource browser check. [Final source evidence](research-preview-verification-v1/README.md) keeps these scopes distinct.
+- PASS at clean runtime commit `6585a605`: 28 cases, six schemas and 12 installed-package checks, followed by the strict retained-artifact verifier and independent wheel/source byte audit. The authentic MPEA resource is present in the wheel and agrees with installed HTTP output. Actual retained wheel SHA `1b883929426c1b0502ff988d3a2d2d1bd77ed158c660058c319d5c39229c7189`; source archive SHA `07edb5d7b5809e79029e6e4e863ddb13eca4d2ade76503d476a6db19ce3dac20`. [Package evidence](research-preview-artifact-v1/README.md) preserves all three commands and source identity; these are local retained bytes, not remote CI downloads or a bit-reproducible-build claim.
+- The runtime manifest binds 293 files. Its only runtime-file change from registered study source `a0624cac` is the reviewed public MPEA aggregate; selectors, algorithms, tests, benchmark rules and workflow are unchanged. The clean package run preserved HEAD, worktree and its bound source hashes. [Actual-interface evidence](research-preview-interface-v1/README.md) binds the original public report and API/export object agreement.
+- Decision: **GO_RESEARCH_PREVIEW**. The conditional engine, known-answer evaluation, interface, reproducible package and scoped claim audit meet the recorded preview definition. All scientific negatives remain unchanged; no physical-performance or general predictive-superiority claim is approved. The scoped build goal is CLOSED for the narrow research preview at runtime commit `6585a605d5d325e84423c7e35c7286efe85cfb6f`, with completed source, package, interface and exact-commit CI evidence. Scientific evaluation and its computational reproductions are complete, including the negative results. Physical validity, independent scientific replication and general predictive superiority remain separate future research; they are not silently declared solved or added as unfinished preview requirements.
+- All scientific negatives and the permanent v1 operational block remain preserved: the original interval pilots, constrained JARVIS, training-only NO_GO_MODEL_IMPROVEMENT, and completed MPEA v2 NO_GO_ARCHIVAL_USEFULNESS. V1's preallocation stop has no scientific verdict. Original/reproduction both retain all 82 primary and all 55 complete-record secondary candidates; independent arithmetic PASS does not turn that result into useful screening.
+- No automation action is performed by this documentation. Root handles and records any shutdown separately. Further scientific work needs a new frozen protocol and appropriate unused evidence; it is not a missing narrow-preview release gate.
+
+## 2026-10-11 01:46 UTC — operational closeout
+
+Owner: root. The independent final eight-document claim review found no blocking
+wording and bound the actual successful runtime CI/package evidence. Root
+applied and checked all eight reviewed file hashes before this operational
+addendum. [Claim review](research-preview-verification-v1/claim-review/README.md).
+
+The bounded automation was disabled through the actual provider update at
+2026-10-11T01:45:57.014089+00:00. A fresh query confirmed disabled status, no
+next run, and unchanged prompt/schedule. [Filtered actual receipt](research-preview-verification-v1/automation-closure.json).
+The matching 01:40 continuation arrived during existing active work and caused
+no second writer or experiment; wake-up metadata is not execution evidence.
+
+Checkpoint: GO_RESEARCH_PREVIEW at tested runtime6585a605, with all scientific
+NO-GO decisions retained. Root's remaining active action is publish this
+report-only descendant and verify its own exact remote/CI; the final hash/run
+will be linked from [draft PR263](https://github.com/alexwelcing/lupine/pull/263).
+No future completion is asserted here. Once verified, the bounded build goal
+is complete and has no scheduled extension. Future scientific work requires a
+new frozen protocol and unused evidence; [prospective source notes](next-independent-study-v1/README.md)
+do not authorize retuning, infer acquisition readiness or change current results.
+
+Final publication checks: runtime manifest293 passes; all60 staged files are
+documentation/evidence, all staged JSON parses and266 relative link targets
+exist. The first administrative branch check referenced an absent local
+remote-tracking name and stopped before checking links; the corrected check
+uses the actual fetched `FETCH_HEAD`, which matches HEAD. This was a local
+review-helper failure, not a test or scientific run. No source edits or
+scientific reruns resulted.

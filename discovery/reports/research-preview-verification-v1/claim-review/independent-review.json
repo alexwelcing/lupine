@@ -1,0 +1,26 @@
+{
+  "ci_observation_sha256": "39f5c0f69fb6d188944050dbd5588b86f380f6f0c310339b217cffb178faf3ec",
+  "final_documents": {
+    "GOAL.md": "61a79327f81cbfcef125c10c8614c3186399315591c642c8b4450da36b0275f3",
+    "README.md": "96ad8d1fb5b134a664b3ba5ebedc0ee3079e06800dc63c86696837e18fc02204",
+    "STATUS.md": "6f0a4663aca6645ea99e3ad7b1bebd73553fce0f892bffdddfb660395cef0177",
+    "docs/release-validation.md": "3cfed5ed73c6e31b6b93d73de04ac235f1744514f00f2f274499f951d82d6aba",
+    "docs/research-preview-guide.md": "bab21597446402c845ad141836f817221fdb51d664676c699ed57b11ae3802ba",
+    "reports/next-independent-study-v1/README.md": "24933e25f626d59210471503206fac33436c7a484267737e21fa61a0c7cef62b",
+    "reports/progress.md": "70825b5c56bf856d1144adb5402852590288b76302a14b6267b8ec8262931901",
+    "reports/research-preview-decision.md": "2a0c029f489209effd7c8941e0e3237c3c0f6bc4c7b53dbf41244dd5d9218020"
+  },
+  "materialization_sha256": "023a2359abe5aeed5d536e750b6a0725569db7006f3f4125fc25956508dfcd5e",
+  "patch_sha256": "d9330331578bc51642495e6f59e9d5be4fb2059393d0ebc942009d3dbeece50e",
+  "review": [
+    "All four exact6585 jobs completed success in retained official observation; no new remote request or downloaded-log claim.",
+    "Concrete eight docs have no unresolved tokens; stale statistical-evaluation sentence corrected.",
+    "Narrow GO_RESEARCH_PREVIEW closure matches preview definition; all archival scientific negatives and physical/general superiority NO-GO remain.",
+    "Finite-law marginal conditional mathematics,130 statements without refinement,13oraclecases versus28demos correctly limited.",
+    "Actual tau1 full retention deterministic but no useful screening/exchangeability validation;82\u219255 completeness restriction and all failed gates preserved.",
+    "6585 package/interface source distinct from a062 registered science; later report-only descendant needs its separately verified CI.",
+    "Private workspace retention lacks verified durable backup/restore/public reconstruction; honest limits explicit."
+  ],
+  "scope": "Read-only concrete final docs plus safe official CI evidence; no private input, science execution, proof/test rerun or tracked edits.",
+  "status": "NO_BLOCKING_CLAIM_WORDING"
+}
