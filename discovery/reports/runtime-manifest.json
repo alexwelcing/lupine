@@ -1,7 +1,7 @@
 {
   "schema": "lupine.discovery.runtime-manifest.v1",
   "python": "3.12.14",
-  "checkpoint": "preallocation-recovery-v2",
+  "checkpoint": "actual-reviewed-mpea-negative-resource-v1",
   "files": {
     "pyproject.toml": "a73eec989447b99fec48de193218a0750079eeb5973406c53d7a0dc840d9d90f",
     "scripts/additional_archived_benchmark.py": "8f50f0fc8aaade6f895500856db91b6593e5da8f676c7bf325cdc0a938d73b9a",
@@ -98,6 +98,7 @@
     "src/lupine_discovery/resources/constrained-v1.json": "98683fbfeaca816a32f339989ea40c44c00d3d6a15016bd7cfef56b4ed8d4e0b",
     "src/lupine_discovery/resources/coupled-catalog.json": "bdf26b607ea3a483c0d8df59bbb7f47f718fd8665a6574545bcdbc48c09dd127",
     "src/lupine_discovery/resources/decision-pool-catalog.json": "e115188f3d10eba390abccb062adc2ded6d0834dfb2f94e9045cedc3b1d594b5",
+    "src/lupine_discovery/resources/mpea-t25-v1.json": "d93769b07fba52f9bc95dbed92c5303aa8344867e7a663d0ca58cff7af2ba274",
     "src/lupine_discovery/resources/outcomes/calibrated-finite.json": "8c332fabf864a0083f20b9eaa1c79f16986dafebf9d30171891cf516467471f3",
     "src/lupine_discovery/resources/outcomes/calibrated-insufficient.json": "1547673dbaf0011b7bf33a89c08b83734d9990eb5fc63cbe12b55dedb1e6b4e9",
     "src/lupine_discovery/resources/outcomes/calibrated-unsupported.json": "086876b567a949b6f8478278e902a15c3ae4a967baf13c73a071de4842ea3a94",

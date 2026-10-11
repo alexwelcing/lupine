@@ -1,0 +1,106 @@
+{
+  "files": [
+    {
+      "bytes": 2285,
+      "destination": "README.md",
+      "kind": "engineering",
+      "sha256": "485baeaafd18ac5ff744fe24429383361dd7eeaad639627a45e0c1c35f3c67f9",
+      "source": ".cache/preallocation-recovery-browser-v1/README.md"
+    },
+    {
+      "bytes": 5986,
+      "destination": "run.py",
+      "kind": "engineering",
+      "sha256": "44de93db9f0bf4784889db7b97a222b3ff38bba3ee523fcd6f3c1d43ebf422c8",
+      "source": ".cache/preallocation-recovery-browser-v1/run.py"
+    },
+    {
+      "bytes": 511,
+      "destination": "started.json",
+      "kind": "engineering",
+      "sha256": "9d244d55abacf4583781e0569a27a5ba71f65aab6193f07527b389ad0c264ec5",
+      "source": ".cache/preallocation-recovery-browser-v1/started.json"
+    },
+    {
+      "bytes": 95595,
+      "destination": "execution.json",
+      "kind": "engineering",
+      "sha256": "48059c52d522698c7a4ab5e978f050c26b178680b297a9436c5740ed8db09f37",
+      "source": ".cache/preallocation-recovery-browser-v1/execution.json"
+    },
+    {
+      "bytes": 46109,
+      "destination": "source-before.json",
+      "kind": "engineering",
+      "sha256": "872f6bdf24268957f5e1cb1a1be42f8fd73afaceb50328793922dcee5906549b",
+      "source": ".cache/preallocation-recovery-browser-v1/source-before.json"
+    },
+    {
+      "bytes": 46109,
+      "destination": "source-after.json",
+      "kind": "engineering",
+      "sha256": "872f6bdf24268957f5e1cb1a1be42f8fd73afaceb50328793922dcee5906549b",
+      "source": ".cache/preallocation-recovery-browser-v1/source-after.json"
+    },
+    {
+      "bytes": 10475,
+      "destination": "stdout.txt",
+      "kind": "engineering",
+      "sha256": "69627ede23234e7c7832eebe7e5757f149671b779bc46c2c41359d1e1e8c1e50",
+      "source": ".cache/preallocation-recovery-browser-v1/stdout.txt"
+    },
+    {
+      "bytes": 0,
+      "destination": "stderr.txt",
+      "kind": "engineering",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": ".cache/preallocation-recovery-browser-v1/stderr.txt"
+    },
+    {
+      "bytes": 848,
+      "destination": "copy-preparation-attempt1.json",
+      "kind": "engineering",
+      "sha256": "b2bc4d2e753cfc14275c9a862e874080590eb156cbc5ceec4fd6e70f55c15a7f",
+      "source": ".cache/preallocation-recovery-browser-v1/copy-preparation-attempt1.json"
+    },
+    {
+      "bytes": 10475,
+      "destination": "browser-report.json",
+      "kind": "engineering",
+      "sha256": "69627ede23234e7c7832eebe7e5757f149671b779bc46c2c41359d1e1e8c1e50",
+      "source": ".cache/preallocation-recovery-browser-v1/.cache/browser/decision-pool/browser-report.json"
+    },
+    {
+      "bytes": 43004,
+      "destination": "full-suite-source-baseline.json",
+      "kind": "engineering",
+      "sha256": "63b80f8ac9e5db2792994dd7bb3b30deb95f0e5d1dc1059d480b322bd5f47ebd",
+      "source": ".cache/mpea-preallocation-recovery-full-suite-v1/source-before.json"
+    },
+    {
+      "bytes": 997748,
+      "destination": "mpea-synthetic-mobile.png",
+      "kind": "screenshot",
+      "sha256": "04deebbdf5ee0c270f496a7a93feadf2da01f8809a3bec465b785fc901bdaf14",
+      "source": ".cache/preallocation-recovery-browser-v1/.cache/browser/decision-pool/mpea/synthetic-mobile.png"
+    },
+    {
+      "bytes": 963821,
+      "destination": "desktop-benchmarks.png",
+      "kind": "screenshot",
+      "sha256": "7c54c9cc0639405cb346c531601de29219d509af4fce72365143edcb5455c621",
+      "source": ".cache/preallocation-recovery-browser-v1/.cache/browser/decision-pool/desktop-benchmarks.png"
+    },
+    {
+      "bytes": 829828,
+      "destination": "mobile-benchmarks.png",
+      "kind": "screenshot",
+      "sha256": "1d539f98fa9c592bf281cec9c7c94d55fd57758f0e7c0970f2b080affcae71d8",
+      "source": ".cache/preallocation-recovery-browser-v1/.cache/browser/decision-pool/mobile-benchmarks.png"
+    }
+  ],
+  "schema": "lupine.discovery.preallocation_recovery_browser_safe_copy.v1",
+  "scope": "Fresh actual full-browser execution evidence with343source binding and safe public/synthetic screenshots; HEAD/stable held source, not global-clean-checkout claim; no private study inputs or downloaded problem/outcome artifacts.",
+  "source_commit": "a0624cac9abb20320629cce41f10270b9b8e2136",
+  "total_bytes": 3052794
+}

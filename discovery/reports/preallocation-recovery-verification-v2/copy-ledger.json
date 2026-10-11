@@ -1,0 +1,54 @@
+{
+  "files": [
+    {
+      "encoding": "exact_bytes",
+      "published_path": "post-gate-review/capture-wrapper-review.json",
+      "published_sha256": "79638a835cb4ceaffc4d8390ddfae1f5ef99b9aca7fd8b14a4e16f34e4fcc221",
+      "source": ".cache/mpea-study-custody/review_production/publication_review/post-gate-compatibility-v1/capture-wrapper-review.json",
+      "source_sha256": "79638a835cb4ceaffc4d8390ddfae1f5ef99b9aca7fd8b14a4e16f34e4fcc221"
+    },
+    {
+      "encoding": "exact_bytes",
+      "published_path": "post-gate-review/compatibility-review.json",
+      "published_sha256": "7e1fc4c9369b8044d1725e8f831518f07b6eea75e1d8cc0d2a8b93c2be4259a5",
+      "source": ".cache/mpea-study-custody/review_production/publication_review/post-gate-compatibility-v1/compatibility-review.json",
+      "source_sha256": "7e1fc4c9369b8044d1725e8f831518f07b6eea75e1d8cc0d2a8b93c2be4259a5"
+    },
+    {
+      "encoding": "exact_bytes",
+      "published_path": "post-gate-review/handoff-plan.md",
+      "published_sha256": "a17025ecb466eaf0a1d26c53364144664a14d310517e006528031857a213f6b4",
+      "source": ".cache/mpea-study-custody/review_production/publication_review/post-gate-compatibility-v1/handoff-plan.md",
+      "source_sha256": "a17025ecb466eaf0a1d26c53364144664a14d310517e006528031857a213f6b4"
+    },
+    {
+      "encoding": "lossless_base64_wrapper",
+      "published_path": "post-gate-review/recorder-exact-delta.patch.json",
+      "published_sha256": "906337e7856563a3976b54699da738b671ad27a4fa6d5cda2f508279f31110c9",
+      "source": ".cache/mpea-study-custody/review_production/publication_review/post-gate-compatibility-v1/recorder-exact-delta.patch",
+      "source_sha256": "1b58336d188978a1d4773d108d1a779a85e9e732eb6fc2804bd1aa9f33fdb76a"
+    },
+    {
+      "encoding": "exact_bytes",
+      "published_path": "post-gate-review/verify_existing_evidence.py",
+      "published_sha256": "d9c9c16ddc7956cf96a65a3ea397c83853b0232854d1af362d8e2dd063442446",
+      "source": ".cache/mpea-study-custody/review_production/publication_review/post-gate-compatibility-v1/verify_existing_evidence.py",
+      "source_sha256": "d9c9c16ddc7956cf96a65a3ea397c83853b0232854d1af362d8e2dd063442446"
+    },
+    {
+      "encoding": "exact_bytes",
+      "published_path": "arithmetic-handoff/checklist.md",
+      "published_sha256": "ffe53b5b1ebf8bc34a4c770667ae71ac1087b2a229b685cbb7f70b93309559f4",
+      "source": ".cache/mpea-actual-result-audit/v2-handoff-review-v1/checklist.md",
+      "source_sha256": "ffe53b5b1ebf8bc34a4c770667ae71ac1087b2a229b685cbb7f70b93309559f4"
+    },
+    {
+      "encoding": "exact_bytes",
+      "published_path": "arithmetic-handoff/review.json",
+      "published_sha256": "d3006292ed4eca1357a64e81f8ed46c0b42289e15dac859864cb7c6b273cbf97",
+      "source": ".cache/mpea-actual-result-audit/v2-handoff-review-v1/review.json",
+      "source_sha256": "d3006292ed4eca1357a64e81f8ed46c0b42289e15dac859864cb7c6b273cbf97"
+    }
+  ],
+  "scope": "Explicit reviewed source/preparation artifacts only; actual full-suite, CI, registration and science remain pending."
+}

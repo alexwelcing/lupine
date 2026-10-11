@@ -1,0 +1,46 @@
+{
+  "allowed_exact_copies": [
+    {
+      "bytes": 39373,
+      "candidate": "candidates/arithmetic/audit_terminal_results.py",
+      "destination": "reports/mpea-t25-archival-v1/recovery-v2/arithmetic/audit_terminal_results.py",
+      "sha256": "4c8bc724b35ae30197b741c566fa2ab9bc7202091eb1be94800b9863ec371fea"
+    },
+    {
+      "bytes": 1216,
+      "candidate": "candidates/publication-reviewer-correction.json",
+      "destination": "reports/mpea-t25-archival-v1/recovery-v2/publication-reviewer-correction.json",
+      "sha256": "8be3fdf279a141102aa7dc5cb504f1f624df6d860ed76b718f5517270a85a32d"
+    },
+    {
+      "bytes": 894,
+      "candidate": "candidates/publication-reviewer-filename-correction-context-free.patch",
+      "destination": "reports/mpea-t25-archival-v1/recovery-v2/publication-reviewer-filename-correction.patch",
+      "sha256": "9e0d379030261f337e90fc6db7877d535c5c12bb3c936269381cdd57c3c32a14"
+    },
+    {
+      "bytes": 1192,
+      "candidate": "candidates/auditor-source-publication-review.json",
+      "destination": "reports/mpea-t25-archival-v1/recovery-v2/auditor-source-publication-review.json",
+      "sha256": "0931d8aecb3377491efee2a617ecaeeea52d0deb1fac434e04ceda54be40f0e3"
+    }
+  ],
+  "base_allowlist_sha256": "8b2177bf38cb26e56ce0f787657c6eaf9b386bc2650ae11f8fe9390d3bb766ca",
+  "no_main_edits": true,
+  "private_retained": [
+    "full reviewer first-failure traceback",
+    "original and corrected reviewer scripts with exact authorized operational paths",
+    "detailed reviewer input ledger",
+    "actual independent-audit execution command and terminal manifest",
+    "superseded patch with unrelated context lines naming private operational directories"
+  ],
+  "root_accepted_destination_remapping": {
+    "from": "reports/mpea-t25-archival-v1/",
+    "scope": "Only terminal-report destinations in the base allowlist; exact bytes unchanged; resource destination unchanged; previously preserved v1 and registration evidence unchanged.",
+    "to": "reports/mpea-t25-archival-v1/recovery-v2/"
+  },
+  "schema": "lupine.mpea.final_publication_allowlist_addendum.v2",
+  "status": "APPROVED",
+  "superseded_patch_not_for_publication": "834a1266657224af34fe9b9b4c2f528115c0ee652592941b466eab70c585cfca",
+  "supersedes_unpublished_addendum_sha256": "949152d59acc15cd937f36c3e963789dff70db36795ebe405a7e3626aacd9b42"
+}

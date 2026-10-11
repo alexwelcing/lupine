@@ -1,0 +1,81 @@
+{
+  "allocation_and_target_order_review": "PENDING_TERMINAL_HANDOFF",
+  "annotation_sha256": "b7f1cbb2df6af72c3284cc8d66270ab843259aad0364e7b4352ec07fce4e56bf",
+  "authentication_scope": "REVIEW_OF_RETAINED_OFFICIAL_GITHUB_CAPTURE_NO_NEW_NETWORK_OBSERVATION",
+  "branch": "research/lupine-discovery",
+  "ci": {
+    "all_four_jobs_success": true,
+    "exact_commit": "a0624cac9abb20320629cce41f10270b9b8e2136",
+    "job_ids": [
+      114347958772,
+      114347958832,
+      114347958873,
+      114347958948
+    ],
+    "run_id": 38098039812
+  },
+  "clock_scope": "RECORDED_WALL_CLOCK_NOT_INDEPENDENT_TIMESTAMP_ATTESTATION",
+  "commit": "a0624cac9abb20320629cce41f10270b9b8e2136",
+  "engineering_approval": "RECORDED_EXPLICIT_ROOT_APPROVAL",
+  "engineering_receipt_sha256": "d84040b1374d4c3a6633b4d4c7b5cdcca00c730202e8bd73cd32c6d6ea2b1e6d",
+  "evidence_sha256": {
+    "authenticated_tag_capture": "a364c7b69579ec4583a70653430cf6eee9673b90e9b1797cf7239d0babe68fea",
+    "clean_package": "8715f18cf0b84fe211634921e608619bf00c0db28316452c704a9a27b709fe76",
+    "full_suite": "b3e2cde17e25be0719f520161147ebf3ba44dc7d43bc081394b60ffd0f163f9b",
+    "independent_final_engineering_review": "7ee4fa8ff234267c1288f9b2b28e2b911db146f88ba7321a0cff9967037403fe",
+    "local_browser": "48059c52d522698c7a4ab5e978f050c26b178680b297a9436c5740ed8db09f37",
+    "original_ci_observation": "2b78be510484c8fb51120b04cc413fc97bc804e49037776485015cdd8c1d1da9",
+    "preserved_v1_stop": "c6553fc321b1447392eee90e08ec173161c34d1fb488b8244dab78663322be14",
+    "recovery_amendment": "d8055ec620478cc12cd2486a88c16833616053934882b93f367872d520d695cf",
+    "root_engineering_approval": "2453cb992ece48db9a73434408380f0cfc5f28fbbc7e518a8d2dfd78dc1c4b10"
+  },
+  "implementation_manifest_sha256": "0a6bab167c8bea7f3e29655095fc9e8831b1d0dfd9be6f6b00ca2454d39cbcb2",
+  "local_browser": {
+    "checks": 56,
+    "globally_clean_checkout_claim": false,
+    "held_source_unchanged": true,
+    "javascript_errors": 0
+  },
+  "local_tests": {
+    "count": 1359,
+    "exit_code": 0,
+    "skipped": 0,
+    "source_and_commit_unchanged": true,
+    "source_files": 343,
+    "working_index_head_equal_before": true
+  },
+  "package": {
+    "clean_commit_build_install_transport": "PASS",
+    "scientific_resource_at_build": "ABSENT"
+  },
+  "preserved_v1": {
+    "commit": "9704ef46c1d0ab098dabb083199403a6296f7cf6",
+    "disposition": "PRESERVED_BLOCKED_NO_RELAUNCH_UNDER_V1",
+    "preservation_scope": "RECORDED_REMOTE_OBSERVATION_BEFORE_V2_PUBLICATION_AND_CURRENT_LOCAL_IDENTITY",
+    "tag_name": "mpea-t25-registration-v1",
+    "tag_object_sha1": "96d383ae5f3b11685073c584fdd5c225dd0ee01d"
+  },
+  "protocol_id": "mpea-t25-archival-v1",
+  "recorded_sequence": [
+    "ENGINEERING_AND_CI_COMPLETE",
+    "PRIVATE_REGISTRATION_PREPARED",
+    "ROOT_ENGINEERING_APPROVED",
+    "TAG_ABSENCE_RECHECKED",
+    "ANNOTATED_TAG_CREATED",
+    "TAG_PUSH_COMPLETED",
+    "OFFICIAL_TAG_CAPTURE_AUTHENTICATED"
+  ],
+  "recorded_times": {
+    "engineering_approved_at": "2026-10-11T00:53:13.735357+00:00",
+    "tag_authenticated_at": "2026-10-11T00:53:51.445296+00:00",
+    "tag_push_completed_at": "2026-10-11T00:53:50.057138+00:00"
+  },
+  "registration_generation": 2,
+  "repository": "alexwelcing/lupine",
+  "schema": "lupine.mpea.public_registration_review.v2",
+  "scientific_verdict": null,
+  "scope": "PUBLIC_REGISTRATION_ONLY",
+  "tag_name": "mpea-t25-registration-v2",
+  "tag_object_sha1": "86e075496d38054d37c291959b6ebefdf9ff5f6e",
+  "tag_signature_scope": "UNSIGNED_TAG_AUTHENTICATED_BY_CAPTURE_AND_EXACT_GIT_OBJECT_IDENTITY"
+}

@@ -1,0 +1,54 @@
+{
+  "schema": "lupine.discovery.actual_resource_interface_review.v1",
+  "reviewed_at": "2026-10-11T01:11:27.259905+00:00",
+  "reviewer": "root",
+  "scope": "Exact artifact copying and actual visual inspection of all three screenshots through view_image; not scientific calculation or accessibility certification.",
+  "visual_observations": [
+    "Negative usefulness verdict and failed adequacy/pool/ranking cards visible; complete execution separate.",
+    "Primary unsupported and secondary assumed-unverified statements visible.",
+    "Both population sections render; mobile cards and metadata stack; tables retain horizontal scrolling inside their containers.",
+    "Desktop and 390/320 screenshots inspected; no missing section or layout defect observed."
+  ],
+  "copies": [
+    {
+      "path": "execution-start.json",
+      "bytes": 5725,
+      "sha256": "611bf52efaf21bed53875eb99793c54c1bb21aabb975e166894eaa6e887b840d"
+    },
+    {
+      "path": "execution-result.json",
+      "bytes": 11540,
+      "sha256": "db45c710818149aa84a2308965dfc5a049eb61c172c753bdbf6c567b860b060f"
+    },
+    {
+      "path": "desktop.png",
+      "bytes": 349190,
+      "sha256": "89d00b1ea9c56e3259356fd1a1ec13250ebf65f04c8209ba836f4166efd175ed"
+    },
+    {
+      "path": "mobile-390.png",
+      "bytes": 308326,
+      "sha256": "0478431f97a44fada622dcf5692ebb6e1078066c94a0527407d51588840694be"
+    },
+    {
+      "path": "mobile-320.png",
+      "bytes": 295489,
+      "sha256": "33c275a6a6abfa349dfdf9812970700aab8bc840e484ef28cf2c97853b0ad9f7"
+    },
+    {
+      "path": "displayed-original-public-report.json",
+      "bytes": 1664719,
+      "sha256": "d93769b07fba52f9bc95dbed92c5303aa8344867e7a663d0ca58cff7af2ba274"
+    },
+    {
+      "path": "probe-source.py",
+      "bytes": 27060,
+      "sha256": "bc4bee299eccc6ca3cc93f6ce0fa0a772919d5d85bddef42f0199c0d5756c75c"
+    },
+    {
+      "path": "probe-preparation.md",
+      "bytes": 4486,
+      "sha256": "13dce5992879dfa2730a1debcf527473914c9fe61240b3577d6121f4fdbb9d3a"
+    }
+  ]
+}

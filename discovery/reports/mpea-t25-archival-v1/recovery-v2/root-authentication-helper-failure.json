@@ -1,0 +1,15 @@
+{
+  "both_corrected_reauthentications": "PASS",
+  "corrected_helper_sha256": "5c411947f3a9f193f5865002891235efcd8a4424e00c0e51120a1b57d709fbe2",
+  "corrected_original_receipt_sha256": "c0470d4bef9e1b1dfa7f9dd3aac3adcfca7d238ddf1e09ac9d718a11d5591788",
+  "corrected_reproduction_receipt_sha256": "d33ac82c4fd5a2dd1deac95398507b5cf4b81acdb92ba3e34990c0b93dd8bf79",
+  "error": "AttributeError: module mpea_archive_artifacts has no attribute _loads",
+  "exit_code": 1,
+  "failure_point": "Launch raw-file identity checked; failed at launch decoder lookup before supervisor, parent or private attempt-stage reads.",
+  "observed_failure_identity": "dec6c6c61bfb2d885af5ae38f160819b5bb6acc2b8791e93b708eb27ab59fea3",
+  "original_helper_sha256": "eefd3c6ec74e364a4f048ae9a92a336daff2cfdf4ded7470ec9b4867a8e2517f",
+  "recorded_at": "2026-10-11T00:57:37.869599+00:00",
+  "repair": "Use the frozen launcher actual mpea_stage_store io module; use a fresh audit output directory. Original helper and failed output directory preserved. No study relaunch, allocation, scientific rule or registered-source change.",
+  "schema": "lupine.mpea.root_terminal_authentication_helper_failure.v1",
+  "scope": "Root tool observation of a read-only post-terminal authentication helper failure; not an original-study failure or retained raw stderr."
+}

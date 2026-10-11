@@ -1,28 +1,24 @@
 # Project state
 
-Snapshot: 2026-10-10. Initial implementation session; four calendar days of work have not elapsed.
+Snapshot: 2026-10-11 01:10 UTC. Tested runtime/artifact source: `PENDING_AUTHENTIC_PUBLIC_RESOURCE_COMMIT`. [Scoped decision and evidence](reports/research-preview-decision.md).
 
-Alex has delegated the multi-day build without task-by-task management.
-The active outcome, ordered backlog, and autonomous execution rules are in
-[`GOAL.md`](GOAL.md); checkpoints are in [`reports/progress.md`](reports/progress.md).
+**Research preview: PENDING final public-resource release checks. Physical-performance/general superiority: NO-GO.** The registered scientific study and its fixed-allocation reproduction completed with NO_GO_ARCHIVAL_USEFULNESS. The actual-resource browser check passes; final clean packaging and exact-commit checks remain pending. No release approval is issued here.
 
-## Current checkpoint: 2026-10-11
+| Current evidence | Actual state |
+| --- | --- |
+| Registered-source Python integration | PASS at registered study source a0624cac9abb20320629cce41f10270b9b8e2136, no skips/failures/errors; count: 1,359. All 343 mandatory files matched working/index/HEAD and remained unchanged. |
+| Final public-resource CI | [PENDING_NEW_RUN](https://github.com/alexwelcing/lupine/actions/workflows/discovery-verify.yml): PENDING for the final public-resource commit. |
+| Installed package / byte audits | PENDING for the actual-resource release; the earlier a062 package passed 28 cases/six schemas/12 checks and both byte audits with the actual resource absent. [Retained evidence](reports/research-preview-artifact-v1/README.md). |
+| Interface / formal evidence | The local 56-check run passed at registered source a0624cac with all 343 held files unchanged; it used synthetic MPEA controls and no actual resource. Actual-resource/interface verification: PASS: the first actual-resource Chromium run completed 10 assertion groups in 18.046 seconds with stable original bytes, exact API/export object agreement, all 24 policies/seven caps/both populations and denominator views, same-cost metrics, no JavaScript errors and three inspected screenshots. Installed-wheel HTTP checks remain separate.. 130 conditional statements retain strict-build/axiom evidence, with successful Lean CI at registered source a0624cac; final resource-commit CI is separately identified. |
+| Historical scientific reproduction | Both original negative digests match in the [fresh same-host run](reports/clean-reproduction-v1/README.md); no independent scientific replication is claimed. |
+| MPEA v1 | Permanently `BLOCKED / INPUT_IDENTITY_MISMATCH` before allocation; [operational evidence](reports/mpea-t25-archival-v1/README.md), no scientific verdict. |
+| MPEA v2 | The authenticated v2 original and fixed-allocation reproduction are both COMPLETE at registered source a0624cac9abb20320629cce41f10270b9b8e2136. NO_GO_ARCHIVAL_USEFULNESS; adequacy, pool size and all three ranking comparisons fail. |
+| MPEA reproduction | COMPLETE on the same host with the same operator and fixed original allocation; all eight referenced stage scientific identities and the public scientific identity agree. It is not an independent statistical sample or external reproduction. |
+| Actual public view | PASS: the first actual-resource Chromium run completed 10 assertion groups in 18.046 seconds with stable original bytes, exact API/export object agreement, all 24 policies/seven caps/both populations and denominator views, same-cost metrics, no JavaScript errors and three inspected screenshots. Installed-wheel HTTP checks remain separate.; [verification](reports/research-preview-interface-v1/README.md). |
 
-Commit `9704ef46c1d0ab098dabb083199403a6296f7cf6` passed the complete
-1,349-test local suite without skips, all four original-branch CI jobs and a
-clean installed package. The source-bound preregistration was published as the
-immutable tag `mpea-t25-registration-v1` before the actual launch.
+The goal is not yet closed. The scientific evaluation and reproductions are complete, with their negative outcomes preserved. The remaining current work is the reviewed public-resource integration and exact-source release decision. Next: Preserve the passing actual-resource browser evidence and complete the new source-closure, clean package and exact-commit CI checks for the reviewed public bytes. Root can then record GO_RESEARCH_PREVIEW if those gates pass, while retaining scientific superiority/physical claims as NO-GO.
 
-That launch is **BLOCKED**, with `INPUT_IDENTITY_MISMATCH` and no scientific
-verdict. The upstream metadata producers hash a trailing newline; the registered
-reader incorrectly omitted it. Read-only diagnosis revalidated worker
-registration and located failure in public metadata validation before store
-creation. Exact attempt and allocation-registry paths are absent; the supervisor
-recorded no sealed stage or target phase. The failed v1 record remains permanent.
-A separately reviewed prospective engineering repair is in progress. It must
-pass complete new-source gates before a distinct registration; no retry,
-reproduction or scientific result is claimed. The optional interface resource
-remains absent, and all previous scientific negatives stand.
+The [original integration failure](reports/contract-integration-failure-v1/README.md), [reviewed integration repairs](reports/contract-integration-repair-v1/README.md), [preallocation repair](reports/mpea-preallocation-repair-v2/README.md) and all historical scientific negatives remain preserved. The dated implementation/checkpoint records below retain their original counts and chronology; the table above is the current snapshot. [GOAL](GOAL.md) records ownership and scope.
 
 ## Implemented and exercised
 

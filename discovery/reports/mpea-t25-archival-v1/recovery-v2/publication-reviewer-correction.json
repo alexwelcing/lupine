@@ -1,0 +1,18 @@
+{
+  "changes": "Only map stage enum underscores to serialized basename hyphens and back for exact public-stage joins.",
+  "corrected_review_exit_code": 0,
+  "corrected_review_status": "PASS",
+  "corrected_reviewer_sha256": "92ae89650617935c59583d62493fc059f98f45eb58ed38eca0fb4293f50fa09b",
+  "corrected_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "corrected_stdout_sha256": "650347fb529d44564862976f3ba97b27773a030cf7e73db5f3adefbfb3393140",
+  "first_failed_assertion": "Exact fixed artifact basename set comparison; no publication candidate was emitted.",
+  "first_review_exit_code": 1,
+  "first_stderr_sha256": "f645556094ff377df536b4a4c52b9768a13d7d4058159b5fa69f0845060e65e4",
+  "first_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "original_reviewer_sha256": "aa8d6bb0c84cae8354a0ef653d1a1f8638b0e0fabc4656b01466ed2e0e189cf0",
+  "producer_or_result_changes": false,
+  "raw_traceback_publication": false,
+  "reason": "Reviewer expected underscore stage basenames where the authenticated artifact inventory uses hyphens.",
+  "schema": "lupine.mpea.publication_reviewer_correction.v1",
+  "study_or_arithmetic_audit_rerun": false
+}

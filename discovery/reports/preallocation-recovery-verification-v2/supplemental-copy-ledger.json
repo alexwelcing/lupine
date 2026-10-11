@@ -1,0 +1,17 @@
+{
+  "files": [
+    {
+      "destination": "prospective-claim-wording-review.json",
+      "encoding": "exact_bytes",
+      "sha256": "c7a02b833140fed49a42e93bdf56942085b0ca82312bd19a7fd9f0ea8528c9cf",
+      "source": ".cache/research-preview-wording-review-v1/review.json"
+    },
+    {
+      "destination": "browser/independent-receipt-review.json",
+      "encoding": "exact_bytes",
+      "sha256": "6d89703df5e72a3c0aea62b2e771f5e9f53bd69e2606fef5348d8f413ddee402",
+      "source": ".cache/mpea-study-custody/review_production/publication_review/browser-a0624-review-v1/review.json"
+    }
+  ],
+  "scope": "Public-source mathematical wording and existing engineering receipt review only; no scientific result or approval."
+}

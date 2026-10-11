@@ -1,0 +1,17 @@
+{
+  "encoding": "exact_bytes",
+  "files": [
+    {
+      "bytes": 995,
+      "destination": "reports/mpea-t25-archival-v1/registration-v2/public-registration.json",
+      "sha256": "b7f1cbb2df6af72c3284cc8d66270ab843259aad0364e7b4352ec07fce4e56bf",
+      "source": ".cache/mpea-study-custody/review_production/publication_review/registration-a0624-v2/public-registration.json"
+    },
+    {
+      "bytes": 3575,
+      "destination": "reports/mpea-t25-archival-v1/registration-v2/registration-publication-summary.json",
+      "sha256": "816ba2bb2b64960830411e7c755c597fff69d7a514fb8822473f5d2c6f4101c7",
+      "source": ".cache/mpea-study-custody/review_production/publication_review/registration-a0624-v2/registration-publication-summary.json"
+    }
+  ]
+}

@@ -425,3 +425,45 @@ A distinct v2 registration requires new independent review, complete source-boun
 tests, clean packaging and all four exact-commit CI jobs. Those gates remain
 pending at amendment adoption. Final research-preview approval is still pending;
 scientific superiority and physical qualification remain unsupported.
+
+
+## Reproduction scope and MPEA custody prerequisites
+
+Fresh installed examples and bundled report inspection are packaging checks.
+The historical JARVIS/training reruns establish their recorded same-host
+computational scope. They do not demonstrate that a third party can regenerate
+a MPEA study from public aggregates.
+
+Original MPEA reproduction requires the exact registered source/tag and complete
+registration, engineering and CI custody; pinned raw source and private feature
+bytes; byte-identical original allocation/routes and durable draw registry; and
+the original persisted stage, companion and result graph. Restricted reproduction
+authority imports that allocation and cannot request new entropy. Public hashes
+and aggregate reports do not supply those private artifacts or reconstruct the
+scientific result. These prerequisites are defined in the
+[driver contract](mpea-archive-driver-contract.md).
+
+At the earlier pre-registration checkpoint, v1 had stopped before allocation;
+no MPEA reproduction had yet run and v2 registration/execution were pending.
+The current completed v2 result is recorded in the dated addendum below. Any later reproduction must state
+its authenticated custody inputs and actual environment/operator scope. Physical
+replication and deployment validity are separate claims. The
+[preview guide](research-preview-guide.md) distinguishes interface use from
+historical numerical reproduction and its pinned environment.
+
+
+## Current scoped decision — 2026-10-11 01:10 UTC
+
+The [current decision record](../reports/research-preview-decision.md) names tested source `PENDING_AUTHENTIC_PUBLIC_RESOURCE_COMMIT`, retained artifacts, individual check outcomes and any authenticated MPEA result. Earlier sections remain historical evidence.
+
+| Claim tier | Current state |
+| --- | --- |
+| Research-preview release | **PENDING final public-resource release checks**. The registered scientific study and its fixed-allocation reproduction completed with NO_GO_ARCHIVAL_USEFULNESS. The actual-resource browser check passes; final clean packaging and exact-commit checks remain pending. No release approval is issued here. |
+| Exact-source engineering | Full Python: PASS at registered study source a0624cac9abb20320629cce41f10270b9b8e2136, no skips/failures/errors. CI: PENDING for the final public-resource commit. PENDING for the actual-resource release; the earlier a062 package passed 28 cases/six schemas/12 checks and both byte audits with the actual resource absent. |
+| Mathematical implications | 130 conditional statements with retained strict-build/axiom evidence; physical premises and Python refinement remain unproved. |
+| Archived JARVIS / training / MPEA science | Completed negative studies, computationally reproduced in their recorded scopes. MPEA v2 is COMPLETE / NO_GO_ARCHIVAL_USEFULNESS; all candidates retained in each declared population, five frozen gates failed. Engineering success upgrades none of these verdicts. |
+| MPEA original / reproduction | V1 permanently blocked before allocation, no scientific verdict. The authenticated v2 original and fixed-allocation reproduction are both COMPLETE at registered source a0624cac9abb20320629cce41f10270b9b8e2136. NO_GO_ARCHIVAL_USEFULNESS; adequacy, pool size and all three ranking comparisons fail. |
+| Unknown-material physical validity / general superiority | NO-GO. A narrow preview decision cannot promote these claims. |
+| Independent scientific replication | OPEN. Same-host reruns and independent arithmetic/receipt checks have narrower scope. |
+
+The goal is not yet closed. The scientific evaluation and reproductions are complete, with their negative outcomes preserved. The remaining current work is the reviewed public-resource integration and exact-source release decision. This applies the existing preview definition; it neither requires a positive scientific result nor marks an unfinished workflow complete. The completed MPEA reproduction used the original fixed allocation; further external reproduction still requires the custody and registration prerequisites above, which public aggregate hashes do not reconstruct. No scientific threshold or protocol is changed.

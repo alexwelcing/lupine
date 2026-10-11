@@ -1,0 +1,120 @@
+{
+  "files": [
+    {
+      "bytes": 1983,
+      "destination": "reports/preallocation-recovery-artifact-v2/execution/README.md",
+      "sha256": "a78848b0aa391520d729ac1be16b9d9883053dedf50add1b009f02137ee0568f",
+      "source": ".cache/package-release-execution-a0624cac9abb/README.md"
+    },
+    {
+      "bytes": 8868,
+      "destination": "reports/preallocation-recovery-artifact-v2/execution/execution.json",
+      "sha256": "8715f18cf0b84fe211634921e608619bf00c0db28316452c704a9a27b709fe76",
+      "source": ".cache/package-release-execution-a0624cac9abb/execution.json"
+    },
+    {
+      "bytes": 1667,
+      "destination": "reports/preallocation-recovery-artifact-v2/execution/package.execution.json",
+      "sha256": "9f8683c6c9aee324f31e0eafd0ab0d4e753662c6b92f1191e7a6cc2de8ab7245",
+      "source": ".cache/package-release-execution-a0624cac9abb/package.execution.json"
+    },
+    {
+      "bytes": 1333,
+      "destination": "reports/preallocation-recovery-artifact-v2/execution/package.started.json",
+      "sha256": "4f3a0bf05d14905ecc34a946125cf0fab7aa6e84f735b40f826663ac761da5ff",
+      "source": ".cache/package-release-execution-a0624cac9abb/package.started.json"
+    },
+    {
+      "bytes": 0,
+      "destination": "reports/preallocation-recovery-artifact-v2/execution/package.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": ".cache/package-release-execution-a0624cac9abb/package.stderr.txt"
+    },
+    {
+      "bytes": 997,
+      "destination": "reports/preallocation-recovery-artifact-v2/execution/package.stdout.txt",
+      "sha256": "bce183dc6a30d389fcef9e6c87858456410808505ae998621b37704a2b467aea",
+      "source": ".cache/package-release-execution-a0624cac9abb/package.stdout.txt"
+    },
+    {
+      "bytes": 1746,
+      "destination": "reports/preallocation-recovery-artifact-v2/execution/retained-verifier.execution.json",
+      "sha256": "4dd38cbf7cb01a104320da29046ca2deceeddf70ac4895470d15fa6714c01677",
+      "source": ".cache/package-release-execution-a0624cac9abb/retained-verifier.execution.json"
+    },
+    {
+      "bytes": 1402,
+      "destination": "reports/preallocation-recovery-artifact-v2/execution/retained-verifier.started.json",
+      "sha256": "0371c4adbf5913e763e58b6b9a2d029a7cff2372d87ef84146e706df6f3071c0",
+      "source": ".cache/package-release-execution-a0624cac9abb/retained-verifier.started.json"
+    },
+    {
+      "bytes": 0,
+      "destination": "reports/preallocation-recovery-artifact-v2/execution/retained-verifier.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": ".cache/package-release-execution-a0624cac9abb/retained-verifier.stderr.txt"
+    },
+    {
+      "bytes": 3347,
+      "destination": "reports/preallocation-recovery-artifact-v2/execution/retained-verifier.stdout.txt",
+      "sha256": "dc67a318081b5bd468347833b1729d230bd82a15e72b91b90821e6c600d1f239",
+      "source": ".cache/package-release-execution-a0624cac9abb/retained-verifier.stdout.txt"
+    },
+    {
+      "bytes": 919,
+      "destination": "reports/preallocation-recovery-artifact-v2/execution/source-before.json",
+      "sha256": "e6b9bf9daf1597447e8558cad16f2dec81b4962216bc3f8548098a216a45fae7",
+      "source": ".cache/package-release-execution-a0624cac9abb/source-before.json"
+    },
+    {
+      "bytes": 1663,
+      "destination": "reports/preallocation-recovery-artifact-v2/execution/wheel-source-audit.execution.json",
+      "sha256": "128d69cf4e091375bae0b81deb9565c904a0a3542dc85d5f9cde0657dea09798",
+      "source": ".cache/package-release-execution-a0624cac9abb/wheel-source-audit.execution.json"
+    },
+    {
+      "bytes": 1317,
+      "destination": "reports/preallocation-recovery-artifact-v2/execution/wheel-source-audit.started.json",
+      "sha256": "5a798b8f43171c4794387fa5bc184e437d889311e3349050848c7716ef1389e7",
+      "source": ".cache/package-release-execution-a0624cac9abb/wheel-source-audit.started.json"
+    },
+    {
+      "bytes": 0,
+      "destination": "reports/preallocation-recovery-artifact-v2/execution/wheel-source-audit.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": ".cache/package-release-execution-a0624cac9abb/wheel-source-audit.stderr.txt"
+    },
+    {
+      "bytes": 1411,
+      "destination": "reports/preallocation-recovery-artifact-v2/execution/wheel-source-audit.stdout.txt",
+      "sha256": "f9cff201453bee28c4483bd2db5351052a369a98b97dd1e536a63cd9a906b726",
+      "source": ".cache/package-release-execution-a0624cac9abb/wheel-source-audit.stdout.txt"
+    },
+    {
+      "bytes": 6004,
+      "destination": "reports/preallocation-recovery-artifact-v2/audit/run-next.py",
+      "sha256": "37ce77206c414c4153b55e17092a77f6d576f48233ea4e3a0768791798c26127",
+      "source": ".cache/package-release-execution-preparation-v1/run-next.py"
+    },
+    {
+      "bytes": 3605,
+      "destination": "reports/preallocation-recovery-artifact-v2/audit/audit-wheel-source-contract-v1.py",
+      "sha256": "45d61046ec6fb5b46dfc66ee753e4917a1f300db93b7223ae3f46253dc1f8c0f",
+      "source": ".cache/audit-wheel-source-contract-v1.py"
+    },
+    {
+      "bytes": 33284,
+      "destination": "reports/preallocation-recovery-artifact-v2/audit/wheel-source-contract-a0624cac9abb.json",
+      "sha256": "4bb1dc8a9802d1318174c4bb48899e9c0037eb37b6376aadb99b020f8e15c93d",
+      "source": ".cache/wheel-source-contract-a0624cac9abb.json"
+    },
+    {
+      "bytes": 7728,
+      "destination": "reports/preallocation-recovery-artifact-v2/release-artifacts.json",
+      "sha256": "13d3d60a795a47ec30eb234d893380148d9c2d57d327e64350f05f28a4afc4ab",
+      "source": ".cache/release-artifacts-contract-a0624cac9abb/release-artifacts.json"
+    }
+  ],
+  "scope": "Exact original engineering evidence; all3 unchanged commands executed against clean recovery commit. No actual MPEA study or full-suite/CI/registration approval.",
+  "source_commit": "a0624cac9abb20320629cce41f10270b9b8e2136"
+}

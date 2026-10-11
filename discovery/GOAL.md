@@ -56,6 +56,12 @@ criteria after seeing results.
    recommendations using `docs/release-validation.md`. No blanket claim of
    unknown-material validity follows from retrospective success.
 
+## Current scoped release state
+
+**ACTIVE: actual scientific evaluation complete; final preview release pending.** Research-preview decision: **PENDING final public-resource release checks**; physical-performance/general superiority: **NO-GO**. [The decision record](reports/research-preview-decision.md) separates completed engineering evidence from scientific outcomes and unfinished work. The goal is not yet closed. The scientific evaluation and reproductions are complete, with their negative outcomes preserved. The remaining current work is the reviewed public-resource integration and exact-source release decision.
+
+A positive scientific result is not added as a requirement for the narrow evidence-review preview already defined in [release-validation](docs/release-validation.md). Broader scientific claims remain open or NO-GO according to their evidence. Existing execution, review and stopping rules below remain in force; this documentation candidate changes no automation.
+
 ## Ordered backlog
 
 Statuses: TODO, ACTIVE, DONE, BLOCKED, NEGATIVE. A negative scientific result
@@ -63,7 +69,7 @@ can complete an experiment while leaving its scientific release gate open.
 
 | ID | Priority | Work and acceptance | State | Dependencies / evidence |
 |---|---|---|---|---|
-| G0 | P0 | Preserve and repair current CI before stacking changes | ACTIVE; actual preallocation validation defect found after green engineering | [1,349 unskipped full-suite tests](reports/contract-integration-pass-v2/README.md), clean package and all four exact 9704 CI jobs pass. The registered actual worker then stopped on an upstream metadata seal newline mismatch; [Independent diagnosis and the separately versioned repair](reports/mpea-preallocation-repair-v2/README.md) pass focused review; complete new-source gates remain pending. Preserve every earlier failure. |
+| G0 | P0 | Preserve and repair current CI before stacking changes | Registered-source gates PASS; final public-resource checks pending | Registered source a0624cac passed 1,359 unskipped tests, all four CI 38098039812 jobs, local 56 browser checks and clean package 28/6/12. Final public-resource source `PENDING_AUTHENTIC_PUBLIC_RESOURCE_COMMIT` requires [its own completed checks](reports/research-preview-verification-v1/README.md). Earlier integration and v1 operational failures remain. |
 | G1a | P0 | Exact joint-risk calibration planner; finite/unbounded distinction; adversarial rank/budget tests | DONE | `src/lupine_discovery/calibration.py`; five focused checks; `docs/calibration-planner.md`. Integration remains G1b. |
 | G1b | P0 | Integrate calibration outcomes and safe abstention through versioned inputs, replay, CLI, and browser; reject unsupported guarantee promotion | DONE | Published in `b1e0d4f`; calibrated schema, original-seal replay, 3 demonstrations, exact browser exports and all-retained abstention |
 | G2 | P1 | Select, provenance-audit, and preregister a constrained multi-property archived task before reading evaluation targets | DONE | NIST JARVIS protocol and source audit frozen in `b5d432d1e7123ae8c33d48bbef2e04c44de7b37c` before acquiring targets |
@@ -71,7 +77,7 @@ can complete an experiment while leaving its scientific release gate open.
 | G4 | P1 | Prove and implement Pareto retention and selected domain-checked nonlinear interval maps; extend independent oracle | DONE | Published in `b1e0d4f`; 24 additional compiled theorems, one million compatible Pareto truth worlds; complete CLI/replay/browser integration |
 | G5 | P1 | Evaluate evidence-acquisition rules over a predeclared sequence of measurement budgets | DONE / NEGATIVE | Budgets 0/1/2/4/8/20; 206,000 target bundles. Budget-four 42/50 vs nominal 40/50 fails predeclared advantage gate |
 | G6 | P1 | Extend workbench for accepted engine modes and scientific benchmark comparisons | DONE | Measured constrained gates, both arms, denominators and all budgets visible; 17 browser checks pass |
-| G7 | P0 at close | Fresh-environment reproduction, claim audit, release package, and go/no-go decision | ACTIVE final scoped release review; both historical reruns complete | [Clean reproduction](reports/clean-reproduction-v1/README.md): six constrained stages/34 tests and two training processes/22 tests reproduce both original negative science digests. Exact local retained wheel/source audited; remote storage downloads remain unavailable. Independent scientific replication remains OPEN; superiority NO-GO |
+| G7 | P0 at close | Fresh-environment reproduction, claim audit, release package, and go/no-go decision | ACTIVE; reproductions complete, final resource release decision pending | Both historical negative digests match in the [clean same-host reproduction](reports/clean-reproduction-v1/README.md). [Current source/package/claim record](reports/research-preview-decision.md) distinguishes local retained bytes from remote artifact downloads and computational reproduction from scientific replication. Independent arithmetic audit PASS and aggregate scientific interpretation recommends a narrowly scoped preview once final release gates pass; no physical qualification, useful-screening superiority or final release approval follows from those reviews alone. |
 | G8 | P1 | Explain interval bottlenecks and prove the limits of safe pruning | DONE | Target-free posthoc diagnosis, 12 compiled sharpness statements and 15 finite-risk/rank statements; 69 total audited theorems. No benchmark retuning |
 | G9 | P1 | Freeze and run a bounded training-only model comparison before allocating fresh validation data | DONE / NEGATIVE | `reports/training-tail-result-v1.md`: all three ridge alternatives fail; two fresh processes reproduce exact outputs and decisions. Original calibration/evaluation untouched; no predictor replacement or new coverage claim |
 | G10 | P2 | Design, prove and expose conditional screening using explicit relationships between candidates | DONE | `reports/coupled-interface-verification.md`: strict identities, actual-pool replay, guarded HTTP and browser mode. 298 Python tests, 24 browser checks, 22 packaged cases; 88 unchanged compiled statements. False common-world and stale-result controls pass |
@@ -82,13 +88,13 @@ can complete an experiment while leaving its scientific release gate open.
 | G15 | P2 | Audit an operating-condition archive and freeze reviewed metadata custody before deciding a new scoped benchmark | DONE for metadata custody; scientific readiness unresolved | [Actual G15C result](reports/mpea-formula-readiness-v1.md): a1e4702 plus all four CI jobs preceded two identical scans, 1,545 rows/630 lexical formula groups. Original G15B zero-recognition result preserved. Exact-25 °C/tensile cohort has 314 rows/75 source groups; no targets, eligibility, features, splits or fits |
 | G16 | P2 | Integrate the direct statistical pool API into strict wire, separate replay and workbench without strengthening its marginal claim | DONE; published c9fb192, all four CI jobs pass | `reports/decision-pool-workbench-verification.md`: 564 full-suite tests, 46 browser checks, 28 cases/six schemas in a fresh wheel. Strict original seals, actual-pool replay, explicit failure/unknown states; no scientific claim promotion |
 | G17 | P2 | Derive the direct-pool finite-law symmetry premise from permutation invariance of a joint score law | DONE; published b899fc6, all four CI jobs pass | `formal/VERIFICATION.md`: eight independently reviewed new statements; all nine modules strictly build, fresh audit passes 125 statements, eleven parser tests pass. Existing runtime unchanged; no arbitrary measurable-law or physical sampling claim |
-| G18 | P2 | Build exact declared-coefficient features, freeze a constrained experimental-archive protocol and evaluate source-group recovery at equal budgets | v1 BLOCKED before allocation; v2 engineering recovery ACTIVE | Immutable registration tag `mpea-t25-registration-v1` binds 9704 and approved engineering. Actual original launcher stopped `INPUT_IDENTITY_MISMATCH`; worker registration revalidation passes, public metadata validation fails, and exact attempt/ledger/marker paths are absent. No entropy, target phase, scientific verdict or reproduction is established by this launch. The narrow upstream-seal repair, actual-public-input regressions and prospective v2 amendment are integrated after independent review. Root owns publication, full source-bound checks, clean packaging and new exact CI before any v2 registration. Never replace v1 or redraw. |
+| G18 | P2 | Build exact declared-coefficient features, freeze a constrained experimental-archive protocol and evaluate source-group recovery at equal budgets | Scientific original/reproduction COMPLETE / NEGATIVE; public-release closure pending | V1 remains blocked. [V2 original and fixed-allocation reproduction](reports/mpea-t25-archival-v1/recovery-v2/README.md) are COMPLETE / NO_GO_ARCHIVAL_USEFULNESS; primary 82/82 and secondary 55/55 retained; five frozen gates fail; independent arithmetic PASS. Same host/operator, not an independent sample. Final actual-resource checks and decision remain pending. |
 
-The existing interface and 13-case finite suite are completed foundations;
-they are not the end of this goal. Current archive results do not establish
-predictive superiority. Choose additional models or justified assumptions based
-on training/development evidence, and allocate fresh evaluation data before
-testing a changed scientific claim.
+The interface, six supported modes, 13-case independent finite suite and 28
+packaged demonstrations support the scoped release record above. The completed
+scientific negatives do not establish superiority. Any later changed scientific
+claim needs a separately frozen evaluation with appropriate fresh data; that
+broader research does not replace the narrow preview definition of done.
 
 ## Autonomous execution contract
 

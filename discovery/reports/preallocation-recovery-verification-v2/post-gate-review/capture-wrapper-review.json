@@ -1,0 +1,17 @@
+{
+  "authority": "No engineering approval or study authority is produced by this review",
+  "compatibility_review_sha256": "7e1fc4c9369b8044d1725e8f831518f07b6eea75e1d8cc0d2a8b93c2be4259a5",
+  "handoff_plan_sha256": "a17025ecb466eaf0a1d26c53364144664a14d310517e006528031857a213f6b4",
+  "remaining_handoff": "Actual completed suite, exact CI, local browser and newly prepared engineering/registration records must be independently joined before explicit root approval",
+  "schema": "lupine.mpea.capture_wrapper_source_review.v1",
+  "scientific_verdict": null,
+  "scope": "Source-only review of the post-gate preparation path; no wrapper/helper execution, API/tag mutation, actual registration creation or scientific input access",
+  "source_commit": "a0624cac9abb20320629cce41f10270b9b8e2136",
+  "source_sha256": {
+    ".cache/capture-recovery-engineering-v2.py": "735a1137d4d44a5c7c2842dc21300565cf581c1c003713db05c3c9490e267ce0",
+    ".cache/mpea-registration-allocation/capture-runbook/prepare_capture_v2.py": "96f112f293df30833a6f6c3ad38ac1539633b42197eaac08e94f9a08f4565460",
+    ".cache/record-registered-study-command-v1.py": "ed1635e82d3ab5180ee6ce550c8893fa1f722755d75dd637e01c6afb77ec881a",
+    ".cache/run-preallocation-recovery-full-suite-v1.py": "9a8f169c1f0a9b2a01ec72036d5e9b4efe10dca19202353f3f3c42b0a5e78df2"
+  },
+  "status": "NO_ADDITIONAL_SOURCE_BLOCKER_IDENTIFIED_IN_REVIEWED_SCOPE"
+}

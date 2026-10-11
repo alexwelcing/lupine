@@ -1,38 +1,14 @@
 # Lupine Discovery
 
-A universal, conditional candidate-pool engine grounded in [Lupine Rhizo](https://github.com/alexwelcing/lupine-rhizo) and the [Lupine Library](https://github.com/alexwelcing/lupine-ledger). The core operates on arbitrary candidate IDs, objective intervals, and constraint intervals. Material-specific models supply those intervals and their evidence.
+A local research tool for inspectable candidate pools across declared material and property representations, grounded in [Lupine Rhizo](https://github.com/alexwelcing/lupine-rhizo) and the [Lupine Library](https://github.com/alexwelcing/lupine-ledger). Start with the [preview guide](docs/research-preview-guide.md) for installation, a verifiable first case and the six input modes.
 
-**The scalar guarantee:** if every supplied interval encloses its corresponding true value, screening retains every feasible optimum in the supplied finite candidate universe. When a certified feasible incumbent exists, its regret is bounded. Pareto mode preserves feasible tradeoffs; shared-affine mode additionally requires one common admissible world. Physical validity remains an explicit premise. A checksum, calibration score, or successful proof compilation cannot establish it.
+**Research-preview decision: PENDING final public-resource release checks.** The registered scientific study and its fixed-allocation reproduction completed with NO_GO_ARCHIVAL_USEFULNESS. The actual-resource browser check passes; final clean packaging and exact-commit checks remain pending. No release approval is issued here. The [decision record](reports/research-preview-decision.md) binds the exact source, checks, artifacts and limits; [STATUS](STATUS.md) gives the current checkpoint.
 
-This is the initial research implementation for a [four-day project](docs/four-day-plan.md). See [STATUS.md](STATUS.md) for completed work and open gates. No new DFT is required to run the examples or archived experiments.
+The engine supports exact scalar and Pareto screening, calibration abstention, shared-affine relationships, scoped projection and direct statistical pools. For scalar screening, sound intervals imply retention of every feasible optimum in the supplied finite universe. Coupled screening additionally requires one common admissible world; statistical retention is marginal under its stated score-law assumptions. The [130 formal statements](formal/VERIFICATION.md) do not establish physical premises or a refinement of Python from Lean.
 
-The implemented engine covers exact calibration abstention, Pareto selection,
-nonlinear enclosures, shared-affine screening, scoped projection and direct
-statistical pools. The proof package contains **130 compiled and audited Lean
-statements**; its probability results retain explicit finite-law premises.
-The published production checkpoint `a865147` passes [all four CI jobs](https://github.com/alexwelcing/lupine/actions/runs/38089905975),
-with 1,153 Python tests, 56 Chromium checks and a clean installed wheel covering
-28 cases across six schemas. Its [retained source and wheel](reports/production-release-artifact-v1/README.md)
-were separately audited. The [subsequent contract-conformance increment](reports/mpea-contract-conformance-v1/README.md)
-repairs private evidence, observation scopes and consumer checks under unchanged
-scientific rules; final integration and new-source publication gates remain open.
-The optional MPEA archive view shows unavailable results until the separately
-registered study executes.
-See the [interface verification](reports/decision-pool-workbench-verification.md),
-[formal scope](formal/VERIFICATION.md), and [source-bound inventory](formal/theorem-inventory.json).
+The three original archive pilots fail simultaneous interval soundness. Frozen JARVIS fails useful-screening and recommendation-value gates; the training-only follow-up remains `NO_GO_MODEL_IMPROVEMENT`. Both historical scientific digests match in a [fresh same-host computational reproduction](reports/clean-reproduction-v1/README.md), which is not independent scientific replication. The separately registered [MPEA v2 study](reports/mpea-t25-archival-v1/recovery-v2/README.md) completed and computationally reproduced **NO_GO_ARCHIVAL_USEFULNESS**: all 82 primary and all 55 complete-record secondary candidates survived, with adequacy, pool-size and ranking gates failed. The 82-to-55 difference is a predefined population restriction, not screening. The [blocked v1 attempt](reports/mpea-t25-archival-v1/README.md) remains preserved.
 
-[Fresh same-host reproduction](reports/clean-reproduction-v1/README.md) matches
-both historical negative scientific digests. Exact local wheel/source bytes are
-[independently audited](reports/release-artifact-audit-v1/README.md); remote CI
-artifact storage downloads remain unverified. The [MPEA metadata result](reports/mpea-formula-readiness-v1.md)
-preserves all 1,545 rows: a separately frozen grammar recognizes 630 lexical
-formula groups while the original zero-recognition result remains intact.
-Two subsequent [feature-only processes](reports/mpea-feature-readiness-v1/README.md)
-produce identical exact declared-coefficient tables and preserve every row.
-Performance targets remain opaque; no MPEA source allocation, fit or scientific
-experiment has run. The [prospective study specification](reports/mpea-protocol-review-v1/README.md)
-has passed independent review. Its guarded runner is implemented; complete
-source-bound verification and public registration must precede the actual study. The ordered backlog and current owners are in [GOAL.md](GOAL.md).
+**Physical-performance and general predictive-superiority claims remain NO-GO.** This tool exposes conditional decisions and observed failures; it does not establish that an unknown material will work in a power plant. No new DFT is required for the examples or archived replays. The [release matrix](docs/release-validation.md) separates preview readiness from scientific recommendation claims.
 
 ## Open the interface
 

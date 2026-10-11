@@ -1,0 +1,37 @@
+{
+  "files": [
+    {
+      "path": "GOAL.md",
+      "sha256": "d7760f6fa4ac665e908378a64dc4d7f293fedf2709b8fd413f55265cfb66e079"
+    },
+    {
+      "path": "docs/release-validation.md",
+      "sha256": "25de0084e8d84550f3fa1705ae8c2015e7549ac39ff14bbc2b27a9d39848ab56"
+    },
+    {
+      "path": "docs/mpea-evaluation-design-notes.md",
+      "sha256": "cb0d1aee0b3842f6d8ec1aa9ccd12336df0499d10558f89392602dc49b5b82d0"
+    },
+    {
+      "path": "docs/mpea-t25-archival-protocol-v1.md",
+      "sha256": "c49047341d3932ddd67c67c9f2a04a6759c0d679bfeb96d811ba9541c0cc0378"
+    },
+    {
+      "path": "docs/decision-pool-calibration-design.md",
+      "sha256": "9025a7486f533272fc48e0e72a953d28530a4cacb4c46f6101122081495ad490"
+    },
+    {
+      "path": "reports/constrained-result-v1.md",
+      "sha256": "87030a8ad0b21577220f6d94824734ba1fdec7c89daa181a85e8cbc727abd8cb"
+    },
+    {
+      "path": "reports/training-tail-result-v1.md",
+      "sha256": "22c0faf2caaafe9f8624192b57ea3850edcc4b8f1163a671e39851878aa6e1a8"
+    },
+    {
+      "path": "reports/mpea-t25-archival-v1/operational-stop.json",
+      "sha256": "c6553fc321b1447392eee90e08ec173161c34d1fb488b8244dab78663322be14"
+    }
+  ],
+  "scope": "public project source/documentation identities; no private or raw inputs"
+}

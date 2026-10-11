@@ -1,0 +1,92 @@
+{
+  "schema": "lupine.mpea.exact_public_copy_ledger.v1",
+  "copied_at": "2026-10-11T01:09:48.776809+00:00",
+  "review_allowlist_sha256": "8b2177bf38cb26e56ce0f787657c6eaf9b386bc2650ae11f8fe9390d3bb766ca",
+  "root_decision": "Approve exact reviewed copies; preserve negative scientific result. Report subdirectory remap separates registration generations; resource path unchanged.",
+  "copies": [
+    {
+      "reviewed_candidate": "candidates/original-public.json",
+      "reviewed_destination": "reports/mpea-t25-archival-v1/original-public.json",
+      "actual_destination": "reports/mpea-t25-archival-v1/recovery-v2/original-public.json",
+      "bytes": 1664719,
+      "sha256": "d93769b07fba52f9bc95dbed92c5303aa8344867e7a663d0ca58cff7af2ba274"
+    },
+    {
+      "reviewed_candidate": "candidates/reproduction-public.json",
+      "reviewed_destination": "reports/mpea-t25-archival-v1/reproduction-public.json",
+      "actual_destination": "reports/mpea-t25-archival-v1/recovery-v2/reproduction-public.json",
+      "bytes": 1664724,
+      "sha256": "def0d535d4481d8e1f65ba69cd41cdedff13d2acafda69d1ca4e71656975cf1c"
+    },
+    {
+      "reviewed_candidate": "candidates/mpea-t25-v1.json",
+      "reviewed_destination": "src/lupine_discovery/resources/mpea-t25-v1.json",
+      "actual_destination": "src/lupine_discovery/resources/mpea-t25-v1.json",
+      "bytes": 1664719,
+      "sha256": "d93769b07fba52f9bc95dbed92c5303aa8344867e7a663d0ca58cff7af2ba274"
+    },
+    {
+      "reviewed_candidate": "candidates/arithmetic/arithmetic-audit.json",
+      "reviewed_destination": "reports/mpea-t25-archival-v1/arithmetic/arithmetic-audit.json",
+      "actual_destination": "reports/mpea-t25-archival-v1/recovery-v2/arithmetic/arithmetic-audit.json",
+      "bytes": 16624,
+      "sha256": "fd0686f269320a0b351d18b7c2fa825db37025d1622f5be0b8d806acb3fbcfa7"
+    },
+    {
+      "reviewed_candidate": "candidates/arithmetic/aggregate-findings-candidate.json",
+      "reviewed_destination": "reports/mpea-t25-archival-v1/arithmetic/aggregate-findings-candidate.json",
+      "actual_destination": "reports/mpea-t25-archival-v1/recovery-v2/arithmetic/aggregate-findings-candidate.json",
+      "bytes": 7725,
+      "sha256": "f52cd811b4077a31694b63259a1541a47362caa92a6512d830482ef32e9eaf96"
+    },
+    {
+      "reviewed_candidate": "candidates/arithmetic/public-execution-candidate.json",
+      "reviewed_destination": "reports/mpea-t25-archival-v1/arithmetic/public-execution-candidate.json",
+      "actual_destination": "reports/mpea-t25-archival-v1/recovery-v2/arithmetic/public-execution-candidate.json",
+      "bytes": 1195,
+      "sha256": "6a6a1202b4a106a887067d92f576a2755f97fc82b7ae6fcf45a252c316f8eebe"
+    },
+    {
+      "reviewed_candidate": "candidates/arithmetic/review-note.md",
+      "reviewed_destination": "reports/mpea-t25-archival-v1/arithmetic/review-note.md",
+      "actual_destination": "reports/mpea-t25-archival-v1/recovery-v2/arithmetic/review-note.md",
+      "bytes": 4556,
+      "sha256": "8658be6b012702500f649b3fcc221b37d9dbbde9f845517a234272ca42aed269"
+    },
+    {
+      "reviewed_candidate": "candidates/arithmetic/stdout.txt",
+      "reviewed_destination": "reports/mpea-t25-archival-v1/arithmetic/stdout.txt",
+      "actual_destination": "reports/mpea-t25-archival-v1/recovery-v2/arithmetic/stdout.txt",
+      "bytes": 105,
+      "sha256": "07d2b664702b851d52d87614248808fc155e42eb815fcbc62e79fe7f1cfd6683"
+    },
+    {
+      "reviewed_candidate": "candidates/arithmetic/stderr.txt",
+      "reviewed_destination": "reports/mpea-t25-archival-v1/arithmetic/stderr.txt",
+      "actual_destination": "reports/mpea-t25-archival-v1/recovery-v2/arithmetic/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "reviewed_candidate": "candidates/artifact-comparison.json",
+      "reviewed_destination": "reports/mpea-t25-archival-v1/artifact-comparison.json",
+      "actual_destination": "reports/mpea-t25-archival-v1/recovery-v2/artifact-comparison.json",
+      "bytes": 16126,
+      "sha256": "bbcdd63249c22ad1f9fa1ecf07bb1449f87f0cfe21a43136866b4e52772c9c45"
+    },
+    {
+      "reviewed_candidate": "candidates/root-authentication-helper-failure.json",
+      "reviewed_destination": "reports/mpea-t25-archival-v1/root-authentication-helper-failure.json",
+      "actual_destination": "reports/mpea-t25-archival-v1/recovery-v2/root-authentication-helper-failure.json",
+      "bytes": 1325,
+      "sha256": "9057861bbe274b1f40f238a17552b82d3a3278c93d665e98b0fc3c10f6c9f485"
+    },
+    {
+      "reviewed_candidate": "candidates/publication-decision.json",
+      "reviewed_destination": "reports/mpea-t25-archival-v1/publication-decision.json",
+      "actual_destination": "reports/mpea-t25-archival-v1/recovery-v2/publication-decision.json",
+      "bytes": 12663,
+      "sha256": "8b5f9bc319e09cc5e2bf138706130f733226a89493ab29c9a314e59a655849b3"
+    }
+  ]
+}

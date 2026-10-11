@@ -38,17 +38,29 @@
     "continuous_worker_started": false
   },
   "current_checkpoint": {
-    "recorded_at": "2026-10-11T00:18:02.785094+00:00",
-    "owner": "root integration; constrained_protocol seal fix; calibrated_backend independent fix review; representation_review operational failure; formal_kernel v2 boundary",
-    "published_commit": "9704ef46c1d0ab098dabb083199403a6296f7cf6",
-    "published_ci_run": 38095426716,
+    "recorded_at": "2026-10-11T01:12:17.578177+00:00",
+    "owner": "Root integrates reviewed public evidence and final research-preview release; independent package/claims lanes own verification.",
+    "published_commit": "a0624cac9abb20320629cce41f10270b9b8e2136",
+    "published_ci_run": 38098039812,
     "published_ci_all_four_jobs_pass": true,
-    "published_ci_observation": "All four original-branch jobs in38095426716 completed success; remote9704 matched.",
-    "working_checkpoint": "Reviewed preallocation recovery integrated: dedicated upstream LF seal, actual-public-input regression, exclusive v2 tag, mandatory amendment/failure summary, unchanged no-redraw ledger and scientific rules. Authored7/peer10, main53 and supplemental13 PASS; full new-source gates not yet run. Immutable v1 remains BLOCKED before allocation with null scientific verdict.",
-    "next_action": "Commit/push reviewed recovery, run clean installed package before genuine complete committed-source suite, and verify exact four-job CI. Prepare distinct v2 registration only after new explicit engineering approval. Never replace v1, reset the protocol/source ledger or claim science from this repair.",
-    "actual_scientific_allocation_performed": false,
-    "active_test": null,
-    "active_ci_watcher": null,
+    "published_ci_observation": "Official original-branch run38098039812 completed success; allfour required jobs, exacta0624cac and remoteHEAD authenticated, independentcaptured-response review complete. No downloadedCIjoblogs/artifacts.",
+    "working_checkpoint": "Independent closed publication review approved original/reproduction/auditor aggregate evidence. Exact original d93769b resource is integrated; runtime manifest293. Actual-resource browser first run PASS10 assertion groups, all3 screenshots visually inspected. Registered science remains COMPLETE/NO_GO; final clean commit/package/CI pending.",
+    "next_action": "Commit/push the reviewed resource increment with coherent current docs, execute the prepared clean installed package recorder at that exact commit, verify all four exact-commit CI jobs and finish final conditional claim/release review.",
+    "actual_scientific_allocation_performed": true,
+    "active_test": {
+      "session_id": 3123,
+      "status": "COMPLETED_PASS_EXIT_0",
+      "receipt_directory": ".cache/mpea-preallocation-recovery-full-suite-v1",
+      "expected_source_files": 343,
+      "test_count": 1359,
+      "skipped": 0,
+      "execution_sha256": "b3e2cde17e25be0719f520161147ebf3ba44dc7d43bc081394b60ffd0f163f9b"
+    },
+    "active_ci_watcher": {
+      "session_id": 76222,
+      "receipt": ".cache/a0624ca-ci-final.json",
+      "status": "COMPLETED_EXIT_0"
+    },
     "prior_ci_observed": {
       "commit": "478208f0f3be4b5d810a2c113dbc395b9f1744cb",
       "run_id": 38094346953,
@@ -60,11 +72,13 @@
     },
     "active_study": {
       "session_id": null,
-      "attempt": "mpea-t25-original-9704-v1",
-      "command_recorder": ".cache/mpea-actual-command-records/mpea-t25-original-9704-v1",
-      "status": "BLOCKED",
-      "reason": "INPUT_IDENTITY_MISMATCH",
-      "exit_code": 2
+      "attempt": "mpea-t25-reproduction-a0624cac-v2",
+      "original_attempt": "mpea-t25-original-a0624cac-v2",
+      "status": "COMPLETED_REPRODUCED_EXIT_0",
+      "command_recorder": ".cache/mpea-actual-command-records/mpea-t25-reproduction-a0624cac-v2",
+      "launch_sha256": "6f8ec40e56701a32687998da229a8eff0ed0ad9e9a3b2615c0c3c09e9595b90b",
+      "new_allocation_draw": false,
+      "independent_scientific_sample": false
     },
     "registration": {
       "tag": "mpea-t25-registration-v1",
@@ -72,6 +86,60 @@
       "commit": "9704ef46c1d0ab098dabb083199403a6296f7cf6",
       "engineering_sha256": "3e93f7e924e18d1b702cab6c0a65260c4ae5b80c03ff7cb9627e940bf3164d0e",
       "private_capture": ".cache/mpea-private-registration-9704-v1"
+    },
+    "clean_package": {
+      "status": "PASS",
+      "commit": "a0624cac9abb20320629cce41f10270b9b8e2136",
+      "receipt_directory": ".cache/package-release-execution-a0624cac9abb",
+      "execution_sha256": "8715f18cf0b84fe211634921e608619bf00c0db28316452c704a9a27b709fe76"
+    },
+    "local_browser": {
+      "status": "PASS",
+      "check_count": 56,
+      "javascript_errors": 0,
+      "receipt": ".cache/preallocation-recovery-browser-v1/execution.json",
+      "sha256": "48059c52d522698c7a4ab5e978f050c26b178680b297a9436c5740ed8db09f37",
+      "scope": "HEAD/343 heldsource unchanged; preexisting documentation edits present, no clean-checkoutclaim."
+    },
+    "prospective_registration_v2": {
+      "status": "APPROVED_PUBLISHED_AUTHENTICATED",
+      "private_capture": ".cache/mpea-private-registration-a0624cac-v2",
+      "engineering_sha256": "d84040b1374d4c3a6633b4d4c7b5cdcca00c730202e8bd73cd32c6d6ea2b1e6d",
+      "registration_sha256": "ff2a52adc462104a4512bf9bb45cce66841a5805a4f2f2decaae1932b204b2f5",
+      "annotation_sha256": "b7f1cbb2df6af72c3284cc8d66270ab843259aad0364e7b4352ec07fce4e56bf",
+      "tag": "mpea-t25-registration-v2",
+      "object_sha": "86e075496d38054d37c291959b6ebefdf9ff5f6e",
+      "approval_sha256": "2453cb992ece48db9a73434408380f0cfc5f28fbbc7e518a8d2dfd78dc1c4b10"
+    },
+    "original_v2": {
+      "status": "COMPLETE",
+      "verdict": "NO_GO_ARCHIVAL_USEFULNESS",
+      "verdict_scope": "Registered worker result confirmed by independent actual arithmetic recomputation.",
+      "attempt": "mpea-t25-original-a0624cac-v2",
+      "launch_sha256": "b6ecd73fadcbe7052aedb37429a8cb79aa5716ac452b261c04d2d735c7014432",
+      "public_report_sha256": "d93769b07fba52f9bc95dbed92c5303aa8344867e7a663d0ca58cff7af2ba274",
+      "root_authentication": ".cache/mpea-terminal-authentication-v2-corrected/mpea-t25-original-a0624cac-v2/receipt.json"
+    },
+    "active_arithmetic_review": {
+      "owner": "calibrated_backend",
+      "handoff": ".cache/mpea-terminal-audit-handoff-v2/terminal-manifest.json",
+      "status": "COMPLETED_PASS_EXIT_0_FIRST_INVOCATION",
+      "receipt": ".cache/mpea-actual-arithmetic-v2-first/arithmetic-audit.json",
+      "sha256": "fd0686f269320a0b351d18b7c2fa825db37025d1622f5be0b8d806acb3fbcfa7"
+    },
+    "active_publication_review": {
+      "owner": "representation_review",
+      "status": "COMPLETED_APPROVED_ROOT_INTEGRATED",
+      "receipt": "reports/mpea-t25-archival-v1/recovery-v2/publication-decision.json"
+    },
+    "actual_resource_interface": {
+      "status": "PASS",
+      "assertion_groups": 10,
+      "elapsed_seconds": 18.045695,
+      "javascript_errors": 0,
+      "resource_sha256": "d93769b07fba52f9bc95dbed92c5303aa8344867e7a663d0ca58cff7af2ba274",
+      "receipt": "reports/research-preview-interface-v1/execution-result.json",
+      "visual_review": "All three screenshots inspected by root; no layout defect observed."
     }
   }
 }

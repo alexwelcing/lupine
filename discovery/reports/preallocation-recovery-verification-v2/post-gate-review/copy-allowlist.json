@@ -1,0 +1,27 @@
+{
+  "exclude": "No recursive source/receipt/cache directory copies; no actual study records or binaries",
+  "files": {
+    "capture-wrapper-review.json": {
+      "bytes": 1404,
+      "sha256": "79638a835cb4ceaffc4d8390ddfae1f5ef99b9aca7fd8b14a4e16f34e4fcc221"
+    },
+    "compatibility-review.json": {
+      "bytes": 6503,
+      "sha256": "7e1fc4c9369b8044d1725e8f831518f07b6eea75e1d8cc0d2a8b93c2be4259a5"
+    },
+    "handoff-plan.md": {
+      "bytes": 7011,
+      "sha256": "a17025ecb466eaf0a1d26c53364144664a14d310517e006528031857a213f6b4"
+    },
+    "recorder-exact-delta.patch": {
+      "bytes": 1476,
+      "sha256": "1b58336d188978a1d4773d108d1a779a85e9e732eb6fc2804bd1aa9f33fdb76a"
+    },
+    "verify_existing_evidence.py": {
+      "bytes": 10038,
+      "sha256": "d9c9c16ddc7956cf96a65a3ea397c83853b0232854d1af362d8e2dd063442446"
+    }
+  },
+  "schema": "lupine.mpea.safe_source_review_copyset.v1",
+  "scope": "Explicit safe public-source/engineering review files only"
+}

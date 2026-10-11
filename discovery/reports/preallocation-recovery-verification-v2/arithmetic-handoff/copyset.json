@@ -1,0 +1,15 @@
+{
+  "files": [
+    {
+      "bytes": 8785,
+      "path": "checklist.md",
+      "sha256": "ffe53b5b1ebf8bc34a4c770667ae71ac1087b2a229b685cbb7f70b93309559f4"
+    },
+    {
+      "bytes": 4611,
+      "path": "review.json",
+      "sha256": "d3006292ed4eca1357a64e81f8ed46c0b42289e15dac859864cb7c6b273cbf97"
+    }
+  ],
+  "schema": "lupine.review.copyset.v1"
+}

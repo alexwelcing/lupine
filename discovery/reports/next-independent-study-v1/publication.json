@@ -1,0 +1,17 @@
+{
+  "files": [
+    {
+      "bytes": 5664,
+      "name": "recommendation.md",
+      "sha256": "e1230db4310f229cbd9a5331346a72b078f1de09b124f402d3786571bf75de28"
+    },
+    {
+      "bytes": 1281,
+      "name": "source-bindings.json",
+      "sha256": "52d92c5c5f6c164536e036a8672d81995ab0f1e668a9a9f53c4582b5a3b891da"
+    }
+  ],
+  "recorded_at": "2026-10-11T00:43:44.672431+00:00",
+  "scope": "Recommendation only; no new acquisition, preregistration, targets, numeric protocol or paid/third-party action.",
+  "state_when_prepared": "a0624cac v2 registration not performed; full-suite and finalCI pending; v1 preallocation failure preserved"
+}

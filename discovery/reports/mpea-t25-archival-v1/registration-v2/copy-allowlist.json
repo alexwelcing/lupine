@@ -1,0 +1,67 @@
+{
+  "closed_summary_top_fields": [
+    "allocation_and_target_order_review",
+    "annotation_sha256",
+    "authentication_scope",
+    "branch",
+    "ci",
+    "clock_scope",
+    "commit",
+    "engineering_approval",
+    "engineering_receipt_sha256",
+    "evidence_sha256",
+    "implementation_manifest_sha256",
+    "local_browser",
+    "local_tests",
+    "package",
+    "preserved_v1",
+    "protocol_id",
+    "recorded_sequence",
+    "recorded_times",
+    "registration_generation",
+    "repository",
+    "schema",
+    "scientific_verdict",
+    "scope",
+    "tag_name",
+    "tag_object_sha1",
+    "tag_signature_scope"
+  ],
+  "copy_exactly": [
+    {
+      "bytes": 995,
+      "destination": "reports/mpea-t25-archival-v1/registration-v2/public-registration.json",
+      "name": "public-registration.json",
+      "sha256": "b7f1cbb2df6af72c3284cc8d66270ab843259aad0364e7b4352ec07fce4e56bf"
+    },
+    {
+      "bytes": 3575,
+      "destination": "reports/mpea-t25-archival-v1/registration-v2/registration-publication-summary.json",
+      "name": "registration-publication-summary.json",
+      "sha256": "816ba2bb2b64960830411e7c755c597fff69d7a514fb8822473f5d2c6f4101c7"
+    }
+  ],
+  "exclude": [
+    "raw approval record",
+    "raw tag commands and stderr/stdout",
+    "raw tag object and tagger contact metadata",
+    "raw authenticated GitHub capture",
+    "raw private registration manifest/engineering/CI records",
+    "prospective path records",
+    "all actual attempt/launch/registry/feature/target records"
+  ],
+  "retained_private_review_sha256": {
+    "audit_registration.py": "590713a9407a6aad0aa4d9310b1d6b10d039022dc2f60820562bdb5bbc509f01",
+    "independent-review.json": "f782d8791b35206763e5e3435d902beed73493d485e747fb4c2a3d40db15d07c"
+  },
+  "rules": [
+    "No recursive directory copy",
+    "The two public candidates are exact reviewed bytes",
+    "Summary schema is explicit v2 ceremony metadata; the immutable annotation retains its original v1 public-registration schema",
+    "Allocation and target order remain pending terminal handoff",
+    "No actual outcome or counter is inferred from the running study"
+  ],
+  "schema": "lupine.mpea.public_registration_copy_allowlist.v2",
+  "scientific_verdict": null,
+  "scope": "Closed registration ceremony evidence only; no actual study outcome claim"
+}

@@ -1,0 +1,17 @@
+{
+  "files": [
+    {
+      "destination": "ci/independent-receipt-review.json",
+      "encoding": "exact_bytes",
+      "sha256": "a30e20f52bd310435e3c3a3f6e91199da9f4f7b01dc0d4a8216f1291a7104e65",
+      "source": ".cache/mpea-study-custody/review_production/publication_review/ci-a0624-review-v1/review.json"
+    },
+    {
+      "destination": "actual-resource-preflight.md",
+      "encoding": "exact_bytes",
+      "sha256": "fc73d459832ee5fd438f483c75ba28e86fd27bfd27311ada5263fc16b8bb0b8d",
+      "source": ".cache/final-release-documentation/20261011T004727Z-actual-resource-preflight/preflight.md"
+    }
+  ],
+  "scope": "Captured successful CI review and future resource source preflight; no actual resource or scientific result."
+}

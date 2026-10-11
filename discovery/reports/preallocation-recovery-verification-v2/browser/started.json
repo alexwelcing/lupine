@@ -1,0 +1,12 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "scripts/browser_smoke.py"
+  ],
+  "cwd": "/workspace/lupine-discovery-branch/discovery/.cache/preallocation-recovery-browser-v1",
+  "pid": 120928,
+  "resolved_script": "/workspace/lupine-discovery-branch/discovery/scripts/browser_smoke.py",
+  "script_sha256": "3b1ca5cecaa62407583415a1038076aa96a14dde2dd57c940ff9cc885264a6e4",
+  "started_at_utc": "2026-10-11T00:36:36.498367+00:00",
+  "wrapper_pid": 120912
+}
