@@ -9,8 +9,16 @@
     "kind",
     "radius"
   ],
-  "edge_count": 1238,
+  "edge_count": 3293,
   "kinds": {
+    "acceptance_test": {
+      "index": 9,
+      "radius": 1.8
+    },
+    "claim": {
+      "index": 10,
+      "radius": 2.2
+    },
     "config": {
       "index": 0,
       "radius": 1.5
@@ -19,13 +27,29 @@
       "index": 1,
       "radius": 1.2
     },
+    "discovery_chain": {
+      "index": 11,
+      "radius": 2.2
+    },
     "doc": {
       "index": 8,
       "radius": 2.0
     },
+    "emblem": {
+      "index": 12,
+      "radius": 2.0
+    },
+    "error_type": {
+      "index": 13,
+      "radius": 2.2
+    },
     "file": {
       "index": 2,
       "radius": 1.1
+    },
+    "material_class": {
+      "index": 14,
+      "radius": 2.4
     },
     "mcp_server": {
       "index": 5,
@@ -34,10 +58,6 @@
     "plugin": {
       "index": 6,
       "radius": 1.7
-    },
-    "project": {
-      "index": 9,
-      "radius": 3.0
     },
     "repo": {
       "index": 3,
@@ -50,9 +70,13 @@
     "sphere": {
       "index": 4,
       "radius": 2.8
+    },
+    "time_gate": {
+      "index": 15,
+      "radius": 1.3
     }
   },
-  "node_count": 635,
+  "node_count": 1700,
   "spheres": [
     {
       "atomic_number": 27,
@@ -60,11 +84,11 @@
       "id": "hermes-core",
       "index": 0,
       "kinds": [
-        "sphere",
-        "repo",
         "config",
+        "directory",
         "file",
-        "directory"
+        "repo",
+        "sphere"
       ],
       "name": "Hermes Core"
     },
@@ -74,13 +98,13 @@
       "id": "hermes-local-extensions",
       "index": 1,
       "kinds": [
-        "skill",
-        "plugin",
-        "sphere",
         "config",
-        "file",
         "directory",
-        "mcp_server"
+        "file",
+        "mcp_server",
+        "plugin",
+        "skill",
+        "sphere"
       ],
       "name": "Hermes Local Extensions"
     },
@@ -88,14 +112,31 @@
       "atomic_number": 26,
       "element": "Fe",
       "id": "lupine-science",
-      "index": 5,
+      "index": 6,
       "kinds": [
-        "repo",
         "directory",
         "file",
+        "repo",
         "sphere"
       ],
       "name": "Lupine Science"
+    },
+    {
+      "atomic_number": 21,
+      "element": "Sc",
+      "id": "lupine-research",
+      "index": 5,
+      "kinds": [
+        "acceptance_test",
+        "claim",
+        "discovery_chain",
+        "emblem",
+        "error_type",
+        "material_class",
+        "sphere",
+        "time_gate"
+      ],
+      "name": "Lupine Research"
     },
     {
       "atomic_number": 29,
@@ -103,8 +144,8 @@
       "id": "lupine-ledger",
       "index": 2,
       "kinds": [
-        "file",
         "directory",
+        "file",
         "repo",
         "sphere"
       ],
@@ -117,11 +158,10 @@
       "index": 3,
       "kinds": [
         "directory",
-        "file",
-        "sphere",
-        "project",
         "doc",
-        "repo"
+        "file",
+        "repo",
+        "sphere"
       ],
       "name": "Lupine Media"
     },
@@ -131,8 +171,8 @@
       "id": "lupine-public",
       "index": 4,
       "kinds": [
-        "file",
         "directory",
+        "file",
         "repo",
         "sphere"
       ],
