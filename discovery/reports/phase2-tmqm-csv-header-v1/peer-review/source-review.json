@@ -1,0 +1,80 @@
+{
+  "authorization_boundary": "No blocker for the one inspection already conditionally authorized by root. This review adds no retry, parser relaxation, alternate source request, data row acquisition or scientific admission. Preserve the first actual result.",
+  "finding_and_resolution": {
+    "final_author_fixture_methods_passed": 15,
+    "fixture_scope": "Only synthetic responses and stubbed production openers; reviewer read source and retained logs, did not independently execute fixtures.",
+    "initial": "Completed reader process returned zero for blocked header or failed close, which could obscure failure if only process status were reported.",
+    "resolution": "Author preserved initial source/tests/13PASS receipt, returned2 unless lexical header observed and close_completed is True, and added denial/close-failure stub controls."
+  },
+  "inputs": {
+    ".cache/phase2-primary-github-source-survey-v1/commit_ref/projection.json": {
+      "bytes": 319,
+      "sha256": "42db2918f0415590e8b73fe85b907ffd10fc1cba3b3de4f28399480fb96419a8"
+    },
+    ".cache/phase2-primary-github-source-survey-v1/data_directory_metadata/projection.json": {
+      "bytes": 2622,
+      "sha256": "f0ae9dbf5001c52f82829b8a2fbfe07f4115a7654a8ef4f9b4925895791179af"
+    },
+    ".cache/phase2-tmqm-csv-header-v1/fixtures-final/receipt.json": {
+      "bytes": 668,
+      "sha256": "8799c5f0a7a5baad22be97c4cdf9d6cdfdf346ef1493ed48ee36ecd9576a106b"
+    },
+    ".cache/phase2-tmqm-csv-header-v1/fixtures-final/stderr.log": {
+      "bytes": 2096,
+      "sha256": "e3b6f6fe2d6b52f4bae67f5b20eb73d71ba534e882db7c1b27c34cf9becd207e"
+    },
+    ".cache/phase2-tmqm-csv-header-v1/fixtures-first/receipt.json": {
+      "bytes": 616,
+      "sha256": "de611dd47ae3134b36b7b546dd2415e648bc512be0af23d7b99c09116ef35cd5"
+    },
+    ".cache/phase2-tmqm-csv-header-v1/inspect_header.py": {
+      "bytes": 8016,
+      "sha256": "fb52747391f2176591f7aa08d3aa207846b5a466e55a9e162646c8a1cc58c952"
+    },
+    ".cache/phase2-tmqm-csv-header-v1/scope.json": {
+      "bytes": 3536,
+      "sha256": "3b8cc500e9b84702134b995b95a3817d2760356ac4174109cde414218482e71c"
+    },
+    ".cache/phase2-tmqm-csv-header-v1/source-hold-final.json": {
+      "bytes": 830,
+      "sha256": "422eb7b3dad5eb7c94b031a4ba00413428b81afbe755fa1f88c500b1ac0d73b8"
+    },
+    ".cache/phase2-tmqm-csv-header-v1/test_header.py": {
+      "bytes": 9316,
+      "sha256": "8d72a5803bd2ce06b4ab4deaf2710c671042ad09595d4bf0b55763625bc85303"
+    },
+    ".cache/phase2-tmqm-curator-schema-v1/README.md": {
+      "bytes": 1697,
+      "sha256": "742f5a653a6f40b983da94145127fd7eeada24eb8d1cdc3a27cce346eb9ea4da"
+    },
+    ".cache/phase2-tmqm-documentary-review-v1/README.md": {
+      "bytes": 4357,
+      "sha256": "540e083add5a66f908fb5d8540afd1e715ce390733783944b9517947e535ea27"
+    }
+  },
+  "kind": "Source-only independent review; author synthetic fixture receipts inspected, not rerun",
+  "limitations": [
+    "Header-only acquisition cannot verify the full CSV blob or server-declared size.",
+    "The application read cap is not a bound on TCP/TLS/Python buffer read-ahead; numeric rows may already have entered underlying buffers.",
+    "A parser accepting a lexical header does not establish homogeneous scientific methods, valid joins, complete labels, independent units or model readiness."
+  ],
+  "reviewed_at_utc": "2026-10-16T17:37:47.492703+00:00",
+  "reviewed_properties": [
+    "The exact primary GitHub URL/commit/path and declared size/blob match the already retained metadata; this is separate from the denied curator webpage.",
+    "The sole ordinary GET has no retry, redirects, credentials, Range request or linked follow-up; status/encoding/declared-length checks precede body access.",
+    "Exactly one application readline(4096) call is made; no extra-byte peek, row/remainder read or automatic decompression is requested.",
+    "Strict first physical newline, UTF8, delimiter, unique nonempty bounded ASCII label checks reject unsupported/overlong/numeric-looking first rows without public echo.",
+    "Malformed returned bytes remain private; error messages are closed reason codes. Lower-layer numerical row buffering remains possible and unmeasured, not asserted absent.",
+    "Exclusive actual-directory reservation prevents an automatic repeat; blocked header and failed close return nonzero after retaining the result.",
+    "Header-label observation is lexical documentary evidence only. Full file blob/size validity, unit semantics absent from names, pairing, grouping, rights and scientific admission remain unestablished."
+  ],
+  "reviewer_operations": {
+    "actual_network_requests": 0,
+    "csv_or_private_scientific_input_read": false,
+    "reader_import_or_execution": false,
+    "test_execution": false,
+    "tracked_edits": false
+  },
+  "schema": "lupine.tmqm.header-source-peer-review.v1",
+  "status": "NO_BLOCKING_SOURCE_REVIEW_FINDING"
+}

@@ -1,0 +1,24 @@
+{
+  "actual_process_receipt": {
+    "path": "execution-first/receipt.json",
+    "sha256": "34c4f4da5c31d6a76c1a737057ce152c57bccd9286f585819eda88af6cac401d"
+  },
+  "actual_public_receipt": {
+    "path": "actual/public.json",
+    "sha256": "3db7720778e66ba80918c2b70b2aca21d868ce5721490d1c0098a1913a5fa014"
+  },
+  "full_file_identity_verified": false,
+  "peer_review": {
+    "original_path": ".cache/phase2-tmqm-header-peer-review-v1/review.json",
+    "public_exact_copy": "peer-review/source-review.json",
+    "scope": "Source-only preflight, no independent execution or actual source inspection.",
+    "sha256": "65f990901a709300c3609f3a25d5510fad28293ba9e896f4fa93daeb0113cfcb"
+  },
+  "prior_metadata_projection": {
+    "path": "../phase2-primary-github-source-survey-v1/data_directory_metadata/projection.json",
+    "sha256": "f0ae9dbf5001c52f82829b8a2fbfe07f4115a7654a8ef4f9b4925895791179af"
+  },
+  "rights_verified_by_header": false,
+  "scientific_admission": false,
+  "source_url": "https://raw.githubusercontent.com/uiocompcat/tmQM/ece824419c9006fe66436daf233822b75533b82f/tmQM/tmQM_y.csv"
+}

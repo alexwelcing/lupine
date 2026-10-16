@@ -1,0 +1,12 @@
+{
+  "held_at": "2026-10-16T17:36:43.856507+00:00",
+  "scope_sha256": "3b8cc500e9b84702134b995b95a3817d2760356ac4174109cde414218482e71c",
+  "source_sha256": "fb52747391f2176591f7aa08d3aa207846b5a466e55a9e162646c8a1cc58c952",
+  "tests_sha256": "8d72a5803bd2ce06b4ab4deaf2710c671042ad09595d4bf0b55763625bc85303",
+  "fixture_receipt_sha256": "8799c5f0a7a5baad22be97c4cdf9d6cdfdf346ef1493ed48ee36ecd9576a106b",
+  "fixture_methods_passed": 15,
+  "initial13_PASS_preserved": true,
+  "reviewer_repair": "Return nonzero for blocked header or failed close; no claim that zero process exit alone validates science.",
+  "actual_requests_completed": 0,
+  "source_interpretation": "HEADER_LABELS_OBSERVED is lexical header evidence only; no unit/semantic mapping unless literally present, and no clean transport if close_completed is false."
+}

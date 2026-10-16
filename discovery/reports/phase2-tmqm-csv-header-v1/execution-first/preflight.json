@@ -1,0 +1,10 @@
+{
+  "recorded_at": "2026-10-16T17:38:19.707874+00:00",
+  "producer_sha256": "fb52747391f2176591f7aa08d3aa207846b5a466e55a9e162646c8a1cc58c952",
+  "scope_sha256": "3b8cc500e9b84702134b995b95a3817d2760356ac4174109cde414218482e71c",
+  "review_path": ".cache/phase2-tmqm-header-peer-review-v1/review.json",
+  "review_sha256": "65f990901a709300c3609f3a25d5510fad28293ba9e896f4fa93daeb0113cfcb",
+  "authorization": "Root authorized one ordinary pinned header inspection after this independent source-only no-blocker review. No runtime promotion required.",
+  "requests_allowed": 1,
+  "retry_allowed": false
+}

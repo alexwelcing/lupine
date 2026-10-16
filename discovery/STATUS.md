@@ -1,8 +1,10 @@
 # Project state
 
 Current checkpoint: 2026-10-16; renewed active work, root owns integration.
-Published source **`eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f`** is verified against
-the remote branch. Its [clean installed reproduction](reports/phase2-source-readiness-release-verification-v1/README.md)
+Runtime source **`eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f`** was verified against
+the remote branch when published. The later report commit `cb19c0a` preserves
+all 351 runtime files and separately passes clean packaging and strict verification.
+This checkpoint adds documentation only. Its [clean installed reproduction](reports/phase2-source-readiness-release-verification-v1/README.md)
 passes 28 demonstrations, six schemas, eighteen required checks and strict retained
 verification. The independent artifact audit passes **22,005 checks** over all
 6,794 Git source files, 351 runtime files and 113 wheel payloads. These are local
@@ -25,13 +27,17 @@ independence and upstream CSD terms remain unresolved. The separate
 [curator-page request returned HTTP 403](reports/phase2-tmqm-curator-schema-v1/README.md);
 no retry/parser/follow-up ran. [Independent review](reports/phase2-tmqm-documentary-review-v1/README.md)
 qualifies exposure: old benchmark heading/filename were visible, body/data/performance
-withheld. No numerical dataset, protocol, target pair or allocation is admitted.
+withheld. A separate [header inspection](reports/phase2-tmqm-csv-header-v1/README.md) observed
+eleven literal labels in one 115-byte application read through LF. No remainder
+read occurred; underlying numeric-row buffering remains possible and unmeasured.
+No complete numerical frame, protocol, target pair or allocation is admitted.
+The [intake card](reports/phase2-tmqm-intake-v1/README.md) is explicitly unregistered.
 
 Li A1's XML block and partial exposure, Dryad/QM9 access failures, restrictive AFLOW
 terms and all historical scientific negatives remain. G20 unresolved/G21 blocked;
 physical-performance/general-superiority NO-GO unchanged. Root next verifies exact
-Python CI and completes a separately bounded header-only documentary step. The old
-automation remains disabled; no new DFT or exposed-test tuning is authorized here.
+Python CI and the final documentary checkpoint; primary units/key/rights definitions
+remain prerequisites to any fresh benchmark. The old automation remains disabled; no new DFT or exposed-test tuning is authorized here.
 
 Historical Snapshot: 2026-10-11 01:40 UTC (exact CI observation `2026-10-11T01:40:16.973611+00:00`). Tested runtime/artifact source: `6585a605d5d325e84423c7e35c7286efe85cfb6f`. [Scoped decision and evidence](reports/research-preview-decision.md).
 

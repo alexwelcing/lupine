@@ -93,10 +93,13 @@ previously unused source with paired outcomes and credible study grouping.
 | G37 | Formalize the finite-population zero-failure counting bound with explicit premises | DONE at `88d512c` | [Exact four-job CI, clean package and independent artifact audit pass](reports/phase2-finite-planning-release-verification-v1/README.md). Thirteen statements extend the audit to 143; all ten earlier modules and 345 runtime files held. No Python refinement or scientific admission. |
 | G38 | Prove finite-population evaluation monotonicity, capped feasibility and the unique first qualifying count | PUBLISHED at `eaed2e7`; exact Lean CI PASS | [Four independently compiled statements](reports/phase2-finite-planning-monotone-verification-v1/README.md); strict twelve-module build, fresh axiom audit and eleven parser tests pass. All 143 earlier inventory entries held. [Clean packaging and independent artifact verification pass](reports/phase2-source-readiness-release-verification-v1/README.md); Python CI remains pending. |
 | G39 | Make blocked-source readiness inspectable in CLI, HTTP, browser and installed package | PUBLISHED at `eaed2e7`; clean 18-check package/audit PASS | [Actual integrated checks and independent review](reports/phase2-source-readiness-verification-v1/README.md). Fixed documentary Li/Dryad snapshot, explicit unavailable states and exact exports; no source admission or acquisition. Exact browser/Lean CI pass; two Python CI jobs remain pending. |
-| G40 | Establish a primary scientist-curated GitHub lead without choosing on performance | DOCUMENTARY LEAD; NOT_ADMITTED | [Pinned tmQM README/license/property-file metadata](reports/phase2-primary-github-source-survey-v1/README.md) and [independent qualifications](reports/phase2-tmqm-documentary-review-v1/README.md). Current CSV contents, units, joins, complete pairs and upstream rights remain unresolved; separate curator-page request returned HTTP 403. |
+| G40 | Establish a primary scientist-curated GitHub lead without choosing on performance | DOCUMENTARY LEAD; NOT_ADMITTED | [Pinned tmQM README/license/property-file metadata](reports/phase2-primary-github-source-survey-v1/README.md) and [independent qualifications](reports/phase2-tmqm-documentary-review-v1/README.md). One [bounded header inspection](reports/phase2-tmqm-csv-header-v1/README.md) observed eleven literal labels. Units, joins, complete pairs and upstream rights remain unresolved; the separate curator page returned HTTP 403. |
 
 Current owner/checkpoint: root published `eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f`
-and verified the remote SHA. Its [clean installed reproduction and independent
+and verified the remote SHA. The later published documentary commit `cb19c0a`
+keeps all 351 runtime files unchanged and separately passes clean packaging/strict
+verification; this checkpoint adds documentation only. The runtime source
+[clean installed reproduction and independent
 artifact audit](reports/phase2-source-readiness-release-verification-v1/README.md)
 pass: 28 demonstrations, six schemas, eighteen required checks, strict retention
 and 22,005 independent checks. All 6,794 source files match Git; 351 runtime files
@@ -111,12 +114,16 @@ no related numerical datasets were acquired. AFLOW's restrictive terms remain.
 [tmQM is a separate primary GitHub lead](reports/phase2-primary-github-source-survey-v1/README.md),
 with an explicit repository MIT notice and mixed archived DFT/GFN2-xTB methods.
 Its [curator page returned HTTP 403](reports/phase2-tmqm-curator-schema-v1/README.md).
-No units or rights are inferred from the denial; a separately bounded literal
-CSV-header inspection is being prepared against the accessible pinned repository.
-It cannot establish complete pairs, full-file identity or upstream rights.
+The separately reviewed [header-only inspection](reports/phase2-tmqm-csv-header-v1/README.md)
+returned 115 bytes through the first LF and eleven labels, including `CSD_code`
+and `CSD_years`. No units, complete pairs, full-file identity, grouping rule or
+upstream rights follow. Underlying transport/library buffering may have included
+numerical rows; its extent is unknown and no numerical values were disclosed.
 
-Next: verify both exact-source Python CI jobs, preserve the clean release records,
-and complete the bounded documentary schema step with explicit exposure accounting.
+Next: verify the remaining exact-source Python CI jobs and the documentary
+checkpoint CI. The [unregistered intake card](reports/phase2-tmqm-intake-v1/README.md)
+identifies the primary unit/key/rights definitions and frozen study design needed
+before any numerical-frame acquisition or scientific evaluation.
 No scientific protocol, target pair, feature set, threshold, allocation or fit is
 registered. Root owns integration and publication; independent reviews remain
 separate. G20 is unresolved and G21 blocked. All historical scientific negatives,

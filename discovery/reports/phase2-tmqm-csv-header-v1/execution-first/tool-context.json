@@ -1,0 +1,10 @@
+{
+  "tool": "functions.exec -> exec_command",
+  "actual_tool_chunk_id": "24ecae",
+  "workspace": "/workspace/lupine-discovery-branch/discovery",
+  "operation": "Exactly one subprocess: python .cache/phase2-tmqm-csv-header-v1/inspect_header.py --inspect",
+  "wrapper_process_exit_code": 0,
+  "actual_reader_process_exit_code": 0,
+  "actual_process_receipt": "execution-first/receipt.json",
+  "note": "Tool chunk is execution provenance, not a scientific test or full-file audit. No running session or retry was used."
+}

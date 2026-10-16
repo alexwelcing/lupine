@@ -1,0 +1,17 @@
+{
+  "schema":"lupine.discovery.tmqm_csv_header_scope.v1",
+  "status":"FROZEN_BEFORE_HEADER_REQUEST",
+  "purpose":"Observe only the first physical CSV record as validated literal header labels. This may resolve names/explicit unit suffixes and an identifier label; it cannot establish units absent from labels, join validity, rights, row completeness, file integrity or scientific admission.",
+  "url":"https://raw.githubusercontent.com/uiocompcat/tmQM/ece824419c9006fe66436daf233822b75533b82f/tmQM/tmQM_y.csv",
+  "declared_commit":"ece824419c9006fe66436daf233822b75533b82f",
+  "declared_git_blob_sha1":"3d5bbfa75f01a8d334d1e630b07f94dc7d36603f",
+  "declared_file_bytes":19925955,
+  "identity_basis":"Previously retained public GitHub directory metadata; this ordinary primary-repository URL is separate from the denied curator webpage, and is not an alternate access route to that webpage.",
+  "transport":"Exactly one ordinary HTTPS GET;30s timeout;no redirects,retries,credentials,Range request or linked follow-up. Require HTTP200 and absent/identity Content-Encoding. If Content-Length is present it must equal declared file size; matching it is still only a server declaration.",
+  "application_read":"One call to HTTPResponse.readline(4096). No second body call. Require first LF within returned prefix, at its end, and no more than4096 returned bytes. Immediately close response. No automatic remainder read, decompression or parsing.",
+  "exposure":"The Python/socket/network stack may buffer data beyond the returned first line, including numerical target rows, while processing headers or readline. That count is unmeasured and stays null. The4096 cap applies to the requested application body read, not an asserted bound on network or library buffering. Do not call this target-free. Any returned prefix stays private; researcher/public output is only validated header-label strings and transport/provenance metadata. A read exception may follow unobserved partial buffering.",
+  "header_validation":"Strict UTF8, optional initial UTF8 BOM; LF or CRLF physical-line ending; no embedded CR/LF/NUL. CSV parser strict; candidates comma,semicolon,tab only; exactly one delimiter must yield2-32 unique nonempty labels. Every label must be1-96 ASCII characters, begin with a letter, contain only letters,digits,underscore,space,dot,slash,parentheses,caret,plus or minus, and have no leading/trailing whitespace. Numeric-looking rows, unsupported labels, unterminated/multiline quoting, ambiguous delimiters or cap failure block without public echo. No automatic loosening on actual data.",
+  "retention":"Reserve one exclusive actual output directory before GET; preserve private prefix bytes separately from public JSON. Failed or malformed content is never placed in stdout/stderr/public JSON. Publish fixed source URL/pins, response headers/status/time, returned-prefix hash/length, outcome and approved labels only. Full-file Git blob/SHA/size verification is false.",
+  "gate":"One actual request is authorized only after independent source review verifies this held reader and synthetic cap/no-follow/closed-output controls. No runtime promotion or new user approval required. Original fixture/execution failures remain retained.",
+  "forbidden":["Intentional numerical row reading or remainder download","Private scientific values, fits, thresholds, allocation or model choice","Claims of data license, full file/paired-frame validity or scientific admission","Curator403 retry/alternate access or other source requests"]
+}

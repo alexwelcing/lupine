@@ -4,7 +4,7 @@ A local research tool for inspectable candidate pools across declared material a
 
 **Research-preview decision: GO_RESEARCH_PREVIEW.** The conditional engine, known-answer evaluation, interface, reproducible package and scoped claim audit meet the recorded preview definition. All scientific negatives remain unchanged; no physical-performance or general predictive-superiority claim is approved. The [decision record](reports/research-preview-decision.md) binds runtime `6585a605`, its checks, artifacts and limits; [STATUS](STATUS.md) gives the current evidence.
 
-The engine supports exact scalar and Pareto screening, calibration abstention, shared-affine relationships, scoped projection and direct statistical pools. For scalar screening, sound intervals imply retention of every feasible optimum in the supplied finite universe. Coupled screening additionally requires one common admissible world; statistical retention is marginal under its stated score-law assumptions. The [130 formal statements](formal/VERIFICATION.md) do not establish physical premises or a refinement of Python from Lean.
+The engine supports exact scalar and Pareto screening, calibration abstention, shared-affine relationships, scoped projection and direct statistical pools. For scalar screening, sound intervals imply retention of every feasible optimum in the supplied finite universe. Coupled screening additionally requires one common admissible world; statistical retention is marginal under its stated score-law assumptions. The [147 formal statements](formal/VERIFICATION.md) do not establish physical premises or a refinement of Python from Lean.
 
 The three original archive pilots fail simultaneous interval soundness. Frozen JARVIS fails useful-screening and recommendation-value gates; the training-only follow-up remains `NO_GO_MODEL_IMPROVEMENT`. Both historical scientific digests match in a [fresh same-host computational reproduction](reports/clean-reproduction-v1/README.md), which is not independent scientific replication. The separately registered [MPEA v2 study](reports/mpea-t25-archival-v1/recovery-v2/README.md) completed and computationally reproduced **NO_GO_ARCHIVAL_USEFULNESS**: all 82 primary and all 55 complete-record secondary candidates survived, with adequacy, pool-size and ranking gates failed. The 82-to-55 difference is a predefined population restriction, not screening. The [blocked v1 attempt](reports/mpea-t25-archival-v1/README.md) remains preserved.
 
@@ -21,7 +21,7 @@ counts. The [finite-frame walkthrough](docs/finite-planning-walkthrough.md)
 shows how to define a fixed archive, interpret the result and export the exact
 calculation. Its [figure and exact data](reports/phase2-finite-planning-figure-v1/PUBLICATION.md)
 compare two explicitly different sampling experiments. The completed negative
-benchmarks remain unchanged. The [current source checkpoint](reports/phase2-notebook-header-verification-v1/README.md) records the completed bounded inspections and unresolved source-admission gates. The [paper provenance audit](reports/phase2-li-paper-methods-v1/PUBLICATION.md) preserves count differences and reused source material; none is treated as independent validation.
+benchmarks remain unchanged. The [current source-readiness checkpoint](reports/phase2-source-readiness-release-verification-v1/README.md) records the installed workbench, independent artifact audit and unresolved source-admission gates. The [paper provenance audit](reports/phase2-li-paper-methods-v1/PUBLICATION.md) preserves count differences and reused source material; none is treated as independent validation.
 
 ## Open the interface
 
@@ -33,6 +33,21 @@ lupine-discovery serve
 ```
 
 Open `http://127.0.0.1:8765` on the machine running the command. The **Study planning** screen calculates exact hypothetical threshold probabilities and best-case zero-failure resolution, with separate IID and fixed finite-population models, preserving unknown assumptions and exporting the full JSON. Choose a case or upload a problem, inspect the retained pool and exclusion reasons, download its exact input and certificate, then reveal separately bound known answers. The **Known answers** screen runs the finite fixture suite and displays the three original archive pilots plus the measured constrained JARVIS comparison, including every failed release gate. See the [workbench guide](docs/workbench.md).
+
+The **Source readiness** section explains the recorded Li tensile and Dryad
+dielectric source blocks, including completed actions, missing evidence and
+exposure limits. It displays a fixed documentary snapshot; viewing it acquires
+no data and admits no study. Expand either card for details or download the exact
+JSON. The same snapshot is available from the command line:
+
+```sh
+lupine-discovery source-readiness --output /tmp/source-readiness.json
+```
+
+See the [snapshot contract](docs/source-readiness.md) for unavailable states and
+scope. The [tmQM intake](reports/phase2-primary-github-source-survey-v1/README.md)
+is a separate documentary lead; it is not an admitted benchmark or part of that
+fixed two-source snapshot.
 
 This is a local research preview. The [release matrix](docs/release-validation.md) records remaining scientific validation gates.
 

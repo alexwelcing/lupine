@@ -2011,3 +2011,33 @@ rights, pairing, processed semantics, equivalence and freshness remain unresolve
   scoped header-only documentary inspection is in preparation, with independent
   bounded-reader review before its one attempt. G20 unresolved/G21 blocked; all prior
   scientific negatives remain. No new DFT, tuning, admission or superiority claim.
+
+
+## 2026-10-16 17:40 UTC — literal tmQM header and unregistered study intake
+
+- One independently reviewed bounded request to the pinned primary GitHub CSV
+  returned HTTP 200 and 115 application bytes through the first newline. Its eleven
+  labels include `CSD_code`, `CSD_years`, dipole, gap, orbital energies,
+  polarizability and SMILES. [Actual evidence](phase2-tmqm-csv-header-v1/README.md)
+  retains the single invocation, source hold, completed close and no retry or
+  remainder call. Header-only access does not verify the declared whole-file blob.
+  Lower-layer numeric-row buffering is possible and unmeasured; no numerical
+  values were disclosed. No fresh-unexposed-data or physical claim follows.
+- The reader's original 13 synthetic fixture passes remain preserved. Review found
+  a process-status weakness: blocked/close-failure results could exit zero. The
+  final held reader corrects that and passes 15 fixture methods, including two
+  additional status controls. Those are software tests, not scientific trials.
+- The [study intake](phase2-tmqm-intake-v1/README.md) chooses no pair, threshold,
+  grouping, allocation, feature set or model. Literal labels do not supply units,
+  key semantics, complete pairs, temporal independence or upstream CSD rights.
+  Mixed archived DFT/xTB methods and orbital/gap leakage risks remain explicit.
+- Corrected the main README's stale 130-statement link to 147 and documented the
+  installed readiness CLI/browser workflow. Current documentary parent `cb19c0a`
+  separately passes clean 28/six-schema/18-check packaging and strict verification;
+  root observed actual exit 0 with 351 runtime files held. Runtime and formal source
+  bytes are unchanged by this documentary checkpoint. Exact CI remains pending;
+  no completion is inferred from scheduling or predecessor checks.
+- Owner/checkpoint: root publishes this bounded result and unregistered intake,
+  verifies exact remote and remaining CI, then follows the unresolved unit/key/
+  rights prerequisites before any numerical evaluation. G20 unresolved/G21 blocked;
+  all negative science and physical/general-superiority NO-GO remain unchanged.

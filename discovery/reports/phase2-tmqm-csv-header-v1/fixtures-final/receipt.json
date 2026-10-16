@@ -1,0 +1,11 @@
+{
+  "started_at": "2026-10-16T17:36:29.732690+00:00",
+  "finished_at": "2026-10-16T17:36:30.002609+00:00",
+  "exit_code": 0,
+  "elapsed_seconds": 0.26994216199818766,
+  "source_sha256": "fb52747391f2176591f7aa08d3aa207846b5a466e55a9e162646c8a1cc58c952",
+  "test_sha256": "8d72a5803bd2ce06b4ab4deaf2710c671042ad09595d4bf0b55763625bc85303",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "e3b6f6fe2d6b52f4bae67f5b20eb73d71ba534e882db7c1b27c34cf9becd207e",
+  "scope": "Synthetic fixtures only; all production openers stubbed, no actual request/source data. Original13PASS source/receipt preserved separately."
+}

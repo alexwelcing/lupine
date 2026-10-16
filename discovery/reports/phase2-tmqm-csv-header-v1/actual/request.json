@@ -1,0 +1,14 @@
+{
+  "declared_commit": "ece824419c9006fe66436daf233822b75533b82f",
+  "declared_file_bytes": 19925955,
+  "declared_git_blob_sha1": "3d5bbfa75f01a8d334d1e630b07f94dc7d36603f",
+  "method": "GET",
+  "producer_sha256": "fb52747391f2176591f7aa08d3aa207846b5a466e55a9e162646c8a1cc58c952",
+  "readline_request_bytes": 4096,
+  "redirects": false,
+  "retries": 0,
+  "scope_sha256": "3b8cc500e9b84702134b995b95a3817d2760356ac4174109cde414218482e71c",
+  "started_at": "2026-10-16T17:38:19.811591+00:00",
+  "timeout_seconds": 30,
+  "url": "https://raw.githubusercontent.com/uiocompcat/tmQM/ece824419c9006fe66436daf233822b75533b82f/tmQM/tmQM_y.csv"
+}
