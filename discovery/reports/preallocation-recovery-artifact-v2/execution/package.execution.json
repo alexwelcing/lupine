@@ -1,0 +1,33 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "scripts/package_smoke.py",
+    "--retain-directory",
+    ".cache/release-artifacts-contract-a0624cac9abb"
+  ],
+  "cwd": "/workspace/lupine-discovery-branch/discovery",
+  "elapsed_seconds": 15.732802964004804,
+  "exit_code": 0,
+  "finished_at_utc": "2026-10-11T00:19:59.636605+00:00",
+  "name": "package",
+  "pid": 117849,
+  "source_after": {
+    "git_head": "a0624cac9abb20320629cce41f10270b9b8e2136",
+    "git_status_porcelain": "",
+    "optional_mpea_resource_exists": false,
+    "source_sha256": {
+      ".cache/audit-wheel-source-contract-v1.py": "45d61046ec6fb5b46dfc66ee753e4917a1f300db93b7223ae3f46253dc1f8c0f",
+      ".cache/package-release-execution-preparation-v1/run-next.py": "37ce77206c414c4153b55e17092a77f6d576f48233ea4e3a0768791798c26127",
+      "pyproject.toml": "a73eec989447b99fec48de193218a0750079eeb5973406c53d7a0dc840d9d90f",
+      "reports/runtime-manifest.json": "7ab9d7f1ed881d88b7d9faed25bf51ec6e435e12d49d300ece907cbd1f7f3dbf",
+      "scripts/package_smoke.py": "f64489f64aefc6624298e25d9dad493186c25b1c91e3f063e9e73d23f8ebf6a1",
+      "scripts/runtime_manifest.py": "604dbb0a4d6b8984324332c32ab7d7f6ab9cee5673f870a4a3de9b6ec56a8b7d",
+      "scripts/verify_retained_artifacts.py": "b88514b490f1cad8c705bbe4066dc558ffe844c257efeffa6ce63e086209ba13"
+    }
+  },
+  "source_unchanged": true,
+  "started_at_utc": "2026-10-11T00:19:43.903797+00:00",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "bce183dc6a30d389fcef9e6c87858456410808505ae998621b37704a2b467aea",
+  "timeout": false
+}

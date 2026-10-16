@@ -1,0 +1,27 @@
+{
+  "install_exit_code": 0,
+  "install_log_sha256": "c3757b949f67c993f4571e2c34bea91182dbaf63f05b40b6a898ac50374da148",
+  "probe_exit_code": 0,
+  "probe_sha256": "90c0807052cc62a1d63d7b404f9a0ca99195a85f737e801953c978a71b5f1470",
+  "probe_source": "from fractions import Fraction\nimport hashlib, json, pathlib, sys\nfrom lupine_discovery import representation as r\npath = pathlib.Path(r.__file__).resolve()\nassert path.is_relative_to(pathlib.Path(sys.prefix).resolve())\nassert hashlib.sha256(path.read_bytes()).hexdigest() == \"c65c0eed659025a0e41eb325e75182ac2b980c35ac43dfddaa501f4f3ddf3b9e\"\np = r.normalize_coefficients((\"x\", \"y\", \"z\"), {\"x\": 1, \"y\": 3})\nq = r.normalize_coefficients((\"x\", \"y\", \"z\"), {\"x\": 2, \"y\": 2})\nassert p.values == (Fraction(1, 4), Fraction(3, 4), Fraction(0))\nassert r.l1_distance(p, q) == Fraction(1, 2)\nassert r.normalize_coefficients(p.axes, {\"y\": Fraction(3, 7), \"x\": Fraction(1, 7)}) == p\nfor values, reason in (({\"x\": None}, \"UNKNOWN_COEFFICIENT\"), ({\"x\": 0}, \"NONPOSITIVE_TOTAL\"), ({\"x\": -1}, \"NEGATIVE_COEFFICIENT\")):\n    try:\n        r.normalize_coefficients((\"x\",), values)\n    except r.RepresentationError as error:\n        assert str(error) == reason\n    else:\n        raise AssertionError(\"Invalid coefficient unexpectedly normalized\")\nprint(json.dumps({\"status\":\"PASS\", \"isolated_module_sha256\":hashlib.sha256(path.read_bytes()).hexdigest(), \"checks\":[\"isolated_installed_module_identity\", \"exact_sparse_normalization\", \"exact_l1_distance\", \"positive_scale_and_map_order\", \"unknown_zero_total_negative_rejection\"], \"python\":sys.version.split()[0]}))\n",
+  "result": {
+    "checks": [
+      "isolated_installed_module_identity",
+      "exact_sparse_normalization",
+      "exact_l1_distance",
+      "positive_scale_and_map_order",
+      "unknown_zero_total_negative_rejection"
+    ],
+    "isolated_module_sha256": "c65c0eed659025a0e41eb325e75182ac2b980c35ac43dfddaa501f4f3ddf3b9e",
+    "python": "3.12.14",
+    "status": "PASS"
+  },
+  "runner_sha256": "363edf045f17e439ef12efb2280f9b4ea4ee97e973b1c726310fa1b50ffbd1e2",
+  "schema": "lupine.discovery.normalization.installed_probe.v1",
+  "scope": "Fresh noneditable wheel in temporary venv outside source checkout, isolated Python; synthetic API evidence only.",
+  "source_commit": "2e4162b1953fa1762b73b81140eb9057394ff07f",
+  "stderr": "",
+  "stdout": "{\"status\": \"PASS\", \"isolated_module_sha256\": \"c65c0eed659025a0e41eb325e75182ac2b980c35ac43dfddaa501f4f3ddf3b9e\", \"checks\": [\"isolated_installed_module_identity\", \"exact_sparse_normalization\", \"exact_l1_distance\", \"positive_scale_and_map_order\", \"unknown_zero_total_negative_rejection\"], \"python\": \"3.12.14\"}\n",
+  "wheel_sha256": "c40473f94a1ccceecd29889a56e7144d286c89ed768dd77b7f158d30605191d7",
+  "wheel_unchanged": true
+}

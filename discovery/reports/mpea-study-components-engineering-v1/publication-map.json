@@ -1,0 +1,112 @@
+[
+  {
+    "destination": "reports/mpea-study-components-engineering-v1/study-author/kernel-contract-original.md",
+    "sha256": "72bf2a61585a06d1084c307f50344392a7bb4b55f517a29d15d9369d4bfe2ca6",
+    "source": ".cache/mpea-study-engine/docs/kernel-contract.md"
+  },
+  {
+    "destination": "reports/mpea-study-components-engineering-v1/parser-scope-at-review.md",
+    "sha256": "ef81f4da44e9afb8f119b7331ad254eba5546e6ffffff871de34b281cd9223b4",
+    "source": ".cache/mpea-study-custody/README.md"
+  },
+  {
+    "destination": "reports/mpea-study-components-engineering-v1/parser-author-receipt.json",
+    "sha256": "8ae08c400df8c642d8f5be1b768df5976e1b973fbf08e7c8530916c760bb41a2",
+    "source": ".cache/mpea-study-custody/reports/parser-fixture-engineering-v1.json"
+  },
+  {
+    "destination": "reports/mpea-study-components-engineering-v1/study-author/author-tests-v1.txt",
+    "sha256": "2b8d1b866c715bf08f36daf80f96502a7f31dca3a2f282544da9e3c717eb3694",
+    "source": ".cache/mpea-study-engine/reports/author-tests-v1.txt"
+  },
+  {
+    "destination": "reports/mpea-study-components-engineering-v1/study-author/author-tests-v2.txt",
+    "sha256": "1f4192dd8c7efb5d1dcdf4ad2fe3230dfe6606c50286d50b5159dcdf71840bf9",
+    "source": ".cache/mpea-study-engine/reports/author-tests-v2.txt"
+  },
+  {
+    "destination": "reports/mpea-study-components-engineering-v1/study-author/author-tests-v3.txt",
+    "sha256": "59169d46962ef3cde0e3bb2bd70f74ce867793051f07913324df2a1609e87402",
+    "source": ".cache/mpea-study-engine/reports/author-tests-v3.txt"
+  },
+  {
+    "destination": "reports/mpea-study-components-engineering-v1/study-author/author-validation-v1.json",
+    "sha256": "63ed77a6159f46faeeaaf9caf9fa370e45f8eca06d3c7290d1dc6fdb7da6c9f3",
+    "source": ".cache/mpea-study-engine/reports/author-validation-v1.json"
+  },
+  {
+    "destination": "reports/mpea-study-components-engineering-v1/study-author/author-validation-v2.json",
+    "sha256": "eda077d16b6d7abe950f2a03432adbad02040f997f91c62cd1aed96b6845dff9",
+    "source": ".cache/mpea-study-engine/reports/author-validation-v2.json"
+  },
+  {
+    "destination": "reports/mpea-study-components-engineering-v1/study-author/author-validation-v3.json",
+    "sha256": "fc5ec32beb3c8388df11f32897a1f52ec3d799d4d2468f8ba84370b340fcb37a",
+    "source": ".cache/mpea-study-engine/reports/author-validation-v3.json"
+  },
+  {
+    "destination": "reports/mpea-study-components-engineering-v1/study-author/main-layout-loader-v1.txt",
+    "sha256": "4156edf7d42184c13772cf2e57bfb26e3057f0ab1920a3b64983d1fff3df4ad3",
+    "source": ".cache/mpea-study-engine/reports/main-layout-loader-v1.txt"
+  },
+  {
+    "destination": "reports/mpea-study-components-engineering-v1/study-review/author-tests-rerun-v1.txt",
+    "sha256": "2c9c627c20654abafd6788cf44ab4447d679272f145eb78329134b14e43a29fd",
+    "source": ".cache/mpea-study-engine/review/author-tests-rerun-v1.txt"
+  },
+  {
+    "destination": "reports/mpea-study-components-engineering-v1/study-review/combined-tests-v1.txt",
+    "sha256": "02826e3a1be428b00383e1954f13a656b998dc67294a7d06ceb1ede000313b72",
+    "source": ".cache/mpea-study-engine/review/combined-tests-v1.txt"
+  },
+  {
+    "destination": "reports/mpea-study-components-engineering-v1/study-review/independent-review-v1.json",
+    "sha256": "3025e997f6e9cb2ce784cf64de64e43422fd92f02b08c484a2c3972d20572c12",
+    "source": ".cache/mpea-study-engine/review/independent-review-v1.json"
+  },
+  {
+    "destination": "reports/mpea-study-components-engineering-v1/study-review/independent-tests-amended-v1.txt",
+    "sha256": "29672cd6fa5c3ea1f6cbe36ed31b1b1eac95ba84b2651dac97af440357a17ea0",
+    "source": ".cache/mpea-study-engine/review/independent-tests-amended-v1.txt"
+  },
+  {
+    "destination": "reports/mpea-study-components-engineering-v1/study-review/independent-tests-final-v1.txt",
+    "sha256": "88ace4f5ea0d78af6ddb0130a0a62362f5589d8452f58a9d17192dba850ced62",
+    "source": ".cache/mpea-study-engine/review/independent-tests-final-v1.txt"
+  },
+  {
+    "destination": "reports/mpea-study-components-engineering-v1/study-review/independent-tests-initial-v1.txt",
+    "sha256": "d0d70883c0cc2c01777ee0f8b967817ab6899655a124fd52ab6165f7cf5ad5d7",
+    "source": ".cache/mpea-study-engine/review/independent-tests-initial-v1.txt"
+  },
+  {
+    "destination": "reports/mpea-study-components-engineering-v1/parser-review/README.md",
+    "sha256": "388f3fe56e500622e9537bfe265461765d40cfb85249f92aafca5f7dd9a79a96",
+    "source": ".cache/mpea-study-custody/review/README.md"
+  },
+  {
+    "destination": "reports/mpea-study-components-engineering-v1/parser-review/independent-review-v1.json",
+    "sha256": "0c50774489d1471894429790816299e63a725320cad3bb7bfc9b772982a1af73",
+    "source": ".cache/mpea-study-custody/review/independent-review-v1.json"
+  },
+  {
+    "destination": "reports/mpea-study-components-engineering-v1/parser-review/tests-corrected.txt",
+    "sha256": "f161df38201ebbda229ea8c6a1272d4437582cd8c088aa34d7a4f959c7bbb73d",
+    "source": ".cache/mpea-study-custody/review/tests-corrected.txt"
+  },
+  {
+    "destination": "reports/mpea-study-components-engineering-v1/parser-review/tests-final.txt",
+    "sha256": "a47e1874f676a7da3336ea1fab38850f6f21ccf3231b4b6f1a034d424f9b41fe",
+    "source": ".cache/mpea-study-custody/review/tests-final.txt"
+  },
+  {
+    "destination": "reports/mpea-study-components-engineering-v1/parser-review/tests-first.txt",
+    "sha256": "2dadd4f6f8422f5a36dddbb093b8466ec8965a16cf5a52c7a554a464156a5edc",
+    "source": ".cache/mpea-study-custody/review/tests-first.txt"
+  },
+  {
+    "destination": "reports/mpea-study-components-engineering-v1/parser-author-tests.txt",
+    "sha256": "04e201f362a815dd41cee7c39ac7af8d8ac04dddfe15b3fb1511d5770ceba9a3",
+    "source": ".cache/mpea-study-custody/reports/parser-fixture-tests-v1.txt"
+  }
+]

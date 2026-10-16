@@ -1,0 +1,85 @@
+{
+  "acquisition_receipt_sha256": "f0947cf030f0a5c8bcf67cd548d85237266f048f2b6659c6c13138cc0e06c25b",
+  "acquisition_running_observed_at": "2026-10-10T17:50:21Z",
+  "commands": [
+    {
+      "argv": [
+        "python",
+        "scripts/projection_custody.py",
+        "acquire",
+        "--output",
+        ".cache/projection-custody/acquisition-receipt.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "python",
+        "scripts/projection_custody.py",
+        "extract",
+        "--output",
+        ".cache/projection-custody/metadata-receipt.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "python",
+        "scripts/projection_custody.py",
+        "extract",
+        "--output",
+        ".cache/projection-custody/metadata-receipt-second-process.json"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "counts": {
+    "expected_artifacts": 110,
+    "expected_units": 36,
+    "metadata_verified_artifacts": 110,
+    "received_artifacts": 110,
+    "units_reported": 36
+  },
+  "first_metadata_sha256": "8f987cff79add822430d47bac9cdd9fda202bb4135c078f08241ea9682be0b04",
+  "limitations": [
+    "Two fresh local extraction subprocesses used the same captured archive and unchanged producer.",
+    "This is deterministic custody reproduction, not independent scientific replication.",
+    "The custodian acquired and decoded target-bearing source bytes; public outputs withhold target values.",
+    "No numerical target completeness, reference preference, split, fit, simulation, hard-bound validation or scientific eligibility decision was performed.",
+    "All original negative benchmark results remain unchanged."
+  ],
+  "matches_published_reviewed_sources": true,
+  "metadata_same_bytes": true,
+  "metadata_status": "METADATA_COMPLETE",
+  "public_schema_revalidated": true,
+  "python": "3.12.14",
+  "recorded_at": "2026-10-10T17:52:51Z",
+  "schema": "lupine.discovery.projection_custody_reproduction.v1",
+  "scope": {
+    "fitting_or_simulation_performed": false,
+    "fully_blinded_research_claim": false,
+    "mixed_source_json_decoded": true,
+    "new_protocol_registered": false,
+    "scientific_eligibility_decisions_made": false,
+    "target_bearing_source_bytes_acquired": true,
+    "target_numeric_validity_checked": false,
+    "targets_withheld_from_researcher_output": true,
+    "upstream_loaders_executed": false
+  },
+  "second_metadata_sha256": "8f987cff79add822430d47bac9cdd9fda202bb4135c078f08241ea9682be0b04",
+  "source_freeze_ci": {
+    "conclusion": "success",
+    "head_sha": "7c82058672e2f9ee24b9a774d530506a7e4526eb",
+    "jobs": 4,
+    "run_id": 38073151394,
+    "status": "completed"
+  },
+  "source_freeze_commit": "7c82058672e2f9ee24b9a774d530506a7e4526eb",
+  "source_freeze_remote_verified": true,
+  "source_hashes_after": {
+    "docs/projection-custody.md": "bc30d58abbfc4772c0064904789fbb239562afeb975bdea9607766612102eee7",
+    "scripts/projection_custody.py": "751bcec5123feef65bf4b459691b5ab89197dd28e599fa23a178e2f10ff36fcc",
+    "tests/test_projection_custody.py": "279dfacfa842908d84f8efb856047c8427399620c86e45e36e8a3e383d8f92e8",
+    "tests/test_projection_custody_review.py": "587a896c20f512534ed519fd6a6acc83c5d4c05b339a8a32205d7385ba58f428"
+  }
+}

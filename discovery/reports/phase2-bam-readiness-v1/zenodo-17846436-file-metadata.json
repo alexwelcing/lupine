@@ -1,0 +1,25 @@
+{
+  "record_id": 17846436,
+  "doi": "10.5281/zenodo.17846436",
+  "version": "1.0",
+  "files": [
+    {
+      "key": "2025-12_Data-Schema-Tensile-HT_v1.0.xlsx",
+      "size": 33427,
+      "checksum": "md5:be4cdcde938753c448e1bec239480c82",
+      "type": null
+    },
+    {
+      "key": "Figure1.pdf",
+      "size": 531310,
+      "checksum": "md5:3b5aa58ce87e8fdf821d51569ee80f57",
+      "type": null
+    },
+    {
+      "key": "2025-12_Data-Schema-Tensile-HT_v1.0.csv",
+      "size": 41000,
+      "checksum": "md5:330a8405f6cb9c4fcfe221baea7ced27",
+      "type": null
+    }
+  ]
+}

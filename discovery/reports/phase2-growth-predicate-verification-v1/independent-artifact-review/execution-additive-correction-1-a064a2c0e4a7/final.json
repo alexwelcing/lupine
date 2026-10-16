@@ -1,0 +1,8 @@
+{
+  "additive_review": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-artifact-review-v1/additive-correction-1-a064a2c0e4a7/additive-review.json",
+  "commit": "a064a2c0e4a7cce1fbcb0541f49aae132944e785",
+  "full_review": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-artifact-review-v1/actual-a064a2c0e4a7/review.json",
+  "operator": "/root/phase2_math",
+  "source_reader_invoked": false,
+  "status": "CORRECTED_ADDITIVE_ONLY_AUDIT_PROCESS_EXITED_ZERO"
+}

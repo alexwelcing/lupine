@@ -1,0 +1,6 @@
+{
+  "id": "commit_ref",
+  "url": "https://api.github.com/repos/uiocompcat/tmQM/git/ref/heads/master",
+  "maximum_bytes": 1048576,
+  "purpose": "Pin the exact default branch commit of the sole exact tmQM name returned by bounded repository metadata search; no commit diff or file content."
+}

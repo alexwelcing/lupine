@@ -1,0 +1,56 @@
+{
+  "acquirer_sha256": "63b8786b5c8d8710379f5b49e7abf3988780ce45cab23767e4ac47967d1531c6",
+  "new_request": {
+    "body_bytes": 20018,
+    "body_sha256": "3f426725e3c3b495b2180a5bc8ca9a72c8266f67f73da406a01fda8c6c2152db",
+    "projection_sha256": "cd0f88f897c2d95c7906fc67b25264f9f73a5c9deee0d4bd197161bd9e028e38",
+    "raw_body_publication_allowed": false,
+    "receipt_sha256": "947e643169663d6c1466c281941072ec540d78ff00314ad19e6221d2e95e1a7e",
+    "request_sha256": "172f60fefdfeb1edaf6c0df0386bdd4fb10c07d36eaf13d756432a444cecfe05",
+    "url": "https://api.datacite.org/dois/10.5061/dryad.ph81h"
+  },
+  "primary_archive_to_derivative_equivalence": "UNRESOLVED",
+  "prior_documentary_sources": [
+    {
+      "bytes": 8517,
+      "full_article_or_data_object": false,
+      "path": ".cache/phase2-dielectric-methods-rights-v1/README.md",
+      "sha256": "3872a184c8a210baf5b04ba22eab8e22cf88662dd1e0f17d716b0f768197aadb"
+    },
+    {
+      "bytes": 859,
+      "full_article_or_data_object": false,
+      "path": ".cache/phase2-dielectric-methods-rights-v1/documentary-metadata-projection.json",
+      "sha256": "56eee89171796aa30ee0185849874a7b009a05ba6c226dfb0f0551dd66a23be8"
+    },
+    {
+      "bytes": 1572,
+      "full_article_or_data_object": false,
+      "path": ".cache/phase2-dielectric-methods-rights-v1/exposure-ledger.json",
+      "sha256": "85aabd1e87d26e9b707ce0765d0ac35e69d2cd4972454813ae736e456f507602"
+    },
+    {
+      "bytes": 3884,
+      "full_article_or_data_object": false,
+      "path": ".cache/phase2-paired-archive-fallback-metadata-v1/selected-metadata.json",
+      "sha256": "6f5a33db33c0f81ad911e53ebade918905b5d4cec040b9797efb0de3720ece5a"
+    },
+    {
+      "bytes": 2890,
+      "full_article_or_data_object": false,
+      "path": ".cache/phase2-paired-archive-fallback-metadata-v1/dielectric_paper_metadata/projection.json",
+      "sha256": "dee9b09cb2bfffc81554b84516df4d33378cb98804b5eee2a9d084f3146a01e8"
+    },
+    {
+      "bytes": 28096,
+      "full_article_or_data_object": false,
+      "path": ".cache/phase2-paired-archive-fallback-metadata-v1/dielectric_paper_metadata/response.body",
+      "sha256": "85f966296f5cc16e8d2d80f3e687b22d93f4d4b2ae303da28bd14a6b5b6d57e6"
+    }
+  ],
+  "prior_qualitative_results_exposure": "Preserved; no freshness claim. No old article/raw-data container reread.",
+  "schema": "lupine.discovery.dielectric_archive_identity.source_bindings.v1",
+  "scope_hold_sha256": "6bdfe57c69dfa4e7e25e3fd702e7710f508b1e91db2bb8df9f8f331d77e9603e",
+  "scope_sha256": "f442435c1610b1a9ec36ff58708fb33c5b251f30b4118fe52cbe4fc39ac9390b",
+  "title_and_creator_differences_not_normalized": true
+}

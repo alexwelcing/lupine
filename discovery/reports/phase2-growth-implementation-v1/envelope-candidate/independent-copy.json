@@ -1,0 +1,9 @@
+{
+  "bytes": 46615,
+  "destination": ".cache/phase2-growth-envelope-candidate-v1/promotion/tests/test_li_v3_growth_envelope_review.py",
+  "origin": "Independent child first-run 24/24 PASS; exact copy only, not an author rerun.",
+  "recorded_at": "2026-10-16T10:29:08.717800+00:00",
+  "sha256": "4e23e7582dc1da3b0a51507eab4181a39707f0d9057506f25eba61d72ce73ccb",
+  "source": ".cache/phase2-growth-envelope-review-v1/independent/promotion/tests/test_li_v3_growth_envelope_review.py",
+  "transformation": null
+}

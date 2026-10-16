@@ -1,0 +1,53 @@
+{
+  "schema": "lupine.discovery.li_layout_design.v1",
+  "status": "PROSPECTIVE_DIAGNOSTIC_DESIGN",
+  "files": [
+    {
+      "path": "discovery/.cache/li-v3-custody/capture-1/public.json",
+      "bytes": 2254,
+      "sha256": "13f6f1b0354d15a214169cdd52e58d5349a30b6c2f481f793f9d3af12fb28009"
+    },
+    {
+      "path": "discovery/.cache/li-v3-custody/envelope-1/public.json",
+      "bytes": 2777,
+      "sha256": "fe74a4a7b5a411ddee79c852335e3e330cce4e923e959d8162a4d1480900433c"
+    },
+    {
+      "path": "discovery/.cache/li-v3-custody/envelope-2/public.json",
+      "bytes": 2777,
+      "sha256": "fe74a4a7b5a411ddee79c852335e3e330cce4e923e959d8162a4d1480900433c"
+    },
+    {
+      "path": "discovery/.cache/phase2-li-production-v1/0/execution.json",
+      "bytes": 71597,
+      "sha256": "62fbd5e0df2bdd16a1b046202365596c3a6e092ab96e7b7bfecff909761b9ac0"
+    },
+    {
+      "path": "discovery/.cache/phase2-li-production-v1/1/execution.json",
+      "bytes": 71624,
+      "sha256": "33674e3f4a2945cbd2639ad1bdf6a887b33965effd255749bf2439faff8f88ce"
+    },
+    {
+      "path": "discovery/.cache/phase2-li-production-v1/2/execution.json",
+      "bytes": 71624,
+      "sha256": "b3df4b9e0ad9c1e2e88edbe03dbb5f1395b171bd62ab791e696a55f7479a2e42"
+    },
+    {
+      "path": "discovery/scripts/li_v3_custody.py",
+      "bytes": 35358,
+      "sha256": "3ead51f0afdf16be973743257be488669c988aa40443779e7a5c400e9b0d3234"
+    }
+  ],
+  "raw_object_read": false,
+  "network_used": false,
+  "runtime_tests_run": false,
+  "tracked_edits": false,
+  "parent_reported_ci": {
+    "run": 38854925885,
+    "successful_jobs": 4,
+    "independently_fetched_here": false
+  },
+  "notes": [
+    "Initial execution-record display included all runtime file hashes and was output-truncated; the follow-up read summarized scalar results and compared full parsed before/after maps. No scientific target contents were accessed."
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "bytes": 38136,
+  "finished_at": "2026-10-16T16:17:54.776354+00:00",
+  "headers": {
+    "Content-Length": "38136",
+    "Content-Type": "text/html; charset=utf-8",
+    "ETag": "W/\"80d2afe88f7bbe6921fc7387cfe8d3dd\""
+  },
+  "over_cap": false,
+  "redirects_followed": 0,
+  "requests": 1,
+  "retries": 0,
+  "sha256": "80d2afe88f7bbe6921fc7387cfe8d3dd37e4d2a85e1077897efcd24c36746c29",
+  "started_at": "2026-10-16T16:17:53.823231+00:00",
+  "status": 200,
+  "transport_error": null,
+  "url": "https://datadryad.org/dataset/doi:10.5061/dryad.ph81h"
+}

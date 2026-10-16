@@ -1,0 +1,10 @@
+{
+  "actual_data_access": false,
+  "at": "2026-10-16T13:25:01.476231+00:00",
+  "candidate_source": "e5db3bc5786bdfd9deb992e6dfddd858932ae486439a357fcd17997be3ce81c8",
+  "no_candidate_or_census_import": true,
+  "prospective_bound_challenge": "Positive 5001-digit numerator must fail the accepted 5000-numerator-digit cap; negative sign is excluded from digit count.",
+  "scope": "Independent generated 16-group/36-reference fixture; real standalone Chromium. Exact arithmetic display, counts/units/all IDs, no-winner/synthetic claims, browser downloads, stale detached exports, malformed/blocked states, injection and mobile containment.",
+  "script_sha256": "79e718181143ee5e44f5c762435706905913a8b7faa8606ff35e3a970c5336c4",
+  "status": "FROZEN_GENERATED_BROWSER_CHALLENGES_BEFORE_FIRST_INVOCATION"
+}

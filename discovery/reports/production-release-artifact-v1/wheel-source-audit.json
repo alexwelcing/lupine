@@ -1,0 +1,663 @@
+{
+  "audit_source_sha256": "029e46e315b3129e0cac377b542f6a8893a024cedfa100818f085747cef898df",
+  "bindings": [
+    {
+      "bytes": 217,
+      "sha256": "9f3e5972643a56b1e64182152264e383eeff10fdfc4646b16e2a4422b913d061",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/__init__.py",
+      "wheel_member": "lupine_discovery/__init__.py"
+    },
+    {
+      "bytes": 48,
+      "sha256": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/__main__.py",
+      "wheel_member": "lupine_discovery/__main__.py"
+    },
+    {
+      "bytes": 12978,
+      "sha256": "8ba5efb94feddbfceadef8425bdcb73cf4f340642e5f5c5b1addfc1d00ba1009",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/benchmarks.py",
+      "wheel_member": "lupine_discovery/benchmarks.py"
+    },
+    {
+      "bytes": 11924,
+      "sha256": "26bad944228a006a16f9b8d4e1a1937d5776a6cf36f7c59582ef389eb1eba90b",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/calibrated.py",
+      "wheel_member": "lupine_discovery/calibrated.py"
+    },
+    {
+      "bytes": 5523,
+      "sha256": "33e71fba54813336af244230261cef639a334328dbd1578d995d377ead7d8f15",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/calibration.py",
+      "wheel_member": "lupine_discovery/calibration.py"
+    },
+    {
+      "bytes": 11159,
+      "sha256": "efd9176dcc17cc96f42c4fd90492d0643a370aca163c46b1db0fac9e92ad0057",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/cli.py",
+      "wheel_member": "lupine_discovery/cli.py"
+    },
+    {
+      "bytes": 5305,
+      "sha256": "c7bab15c662eaa79b6e6312271d3351e79ccb97ef42fcdfc830fdbbf3118d5a0",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/core.py",
+      "wheel_member": "lupine_discovery/core.py"
+    },
+    {
+      "bytes": 28917,
+      "sha256": "67a06d724e89edb210fb1fe3d2d8a8c0ac9e87267c4ee90238035c5f13d81fd1",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/coupled.py",
+      "wheel_member": "lupine_discovery/coupled.py"
+    },
+    {
+      "bytes": 33906,
+      "sha256": "b18968e56d6e448f16d5bc3aa8b842458263a4abe704118d55eb8d2d239a83ea",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/coupled_io.py",
+      "wheel_member": "lupine_discovery/coupled_io.py"
+    },
+    {
+      "bytes": 30208,
+      "sha256": "b93f1691ff3def7213edca22b56f1ace239818ace96bc7e30d83a1fbbeb4d7be",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/coupled_worker.py",
+      "wheel_member": "lupine_discovery/coupled_worker.py"
+    },
+    {
+      "bytes": 18307,
+      "sha256": "76e96165102ebe8c3785f510d169b5d393838fb144f9c4275ffdb0aa6c21f1f9",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/decision_pool.py",
+      "wheel_member": "lupine_discovery/decision_pool.py"
+    },
+    {
+      "bytes": 14536,
+      "sha256": "7dbc5d6c53b299fe69df9a79decd318972d3c11886b46e8556b5dbfe3973eac5",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/decision_pool_io.py",
+      "wheel_member": "lupine_discovery/decision_pool_io.py"
+    },
+    {
+      "bytes": 17412,
+      "sha256": "280c02e7dfb7e7ba644f324a7b05645504121460142dc43a7f314f8052f0e1ce",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/decision_pool_transport.py",
+      "wheel_member": "lupine_discovery/decision_pool_transport.py"
+    },
+    {
+      "bytes": 1882,
+      "sha256": "5bb171454a0cf0bf5f1ccb54413d39cc1ca09519da6869195be0e2f0dd2d4ebf",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/envelope.py",
+      "wheel_member": "lupine_discovery/envelope.py"
+    },
+    {
+      "bytes": 4945,
+      "sha256": "ab16a2f5f31601f95f3ec88f7fc230a07c85ebfdb175f0298a467c4425037dae",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/evidence.py",
+      "wheel_member": "lupine_discovery/evidence.py"
+    },
+    {
+      "bytes": 1952,
+      "sha256": "5e4618c58ea1f744819f612bfaf7f1aa3cc916cad8a88e327de5d658b5fc7831",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/nonlinear.py",
+      "wheel_member": "lupine_discovery/nonlinear.py"
+    },
+    {
+      "bytes": 6058,
+      "sha256": "2180f390dee22c9d2716d75717b0709f2d163f61cb45f0fe5381f07fd935d5f9",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/pareto.py",
+      "wheel_member": "lupine_discovery/pareto.py"
+    },
+    {
+      "bytes": 13172,
+      "sha256": "de06b809552dc5d95ced007e94db63b4ac9c5ffeef09d8e5e9445dbce87d679c",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/pareto_io.py",
+      "wheel_member": "lupine_discovery/pareto_io.py"
+    },
+    {
+      "bytes": 22442,
+      "sha256": "4a7eb4a48f281f888132c5bb235b10ec037c685f2ba8a192f976a00337e0de09",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/projection.py",
+      "wheel_member": "lupine_discovery/projection.py"
+    },
+    {
+      "bytes": 25447,
+      "sha256": "5168001df2cb291a44d544b6b04898002ea8b3ad5822f314007f282f1e7aea30",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/projection_io.py",
+      "wheel_member": "lupine_discovery/projection_io.py"
+    },
+    {
+      "bytes": 5397,
+      "sha256": "14426e8a7c9552ec2d651ac95f4d7b2688d744c1474d21fc579ad9dd85babb10",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/replay.py",
+      "wheel_member": "lupine_discovery/replay.py"
+    },
+    {
+      "bytes": 5275,
+      "sha256": "c65c0eed659025a0e41eb325e75182ac2b980c35ac43dfddaa501f4f3ddf3b9e",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/representation.py",
+      "wheel_member": "lupine_discovery/representation.py"
+    },
+    {
+      "bytes": 83,
+      "sha256": "0fde54e0f87be5426f86fb26d827bf55c4b69931ad3ade7ff2ce79b5c119278f",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/__init__.py",
+      "wheel_member": "lupine_discovery/resources/__init__.py"
+    },
+    {
+      "bytes": 4407,
+      "sha256": "c8c08e0f603cb1128ed3e7e7b3ac81dac6e2510f3b049315db84e6fec6ec1362",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/additional-archived-v1.json",
+      "wheel_member": "lupine_discovery/resources/additional-archived-v1.json"
+    },
+    {
+      "bytes": 7802,
+      "sha256": "7d6417b5e0a789cc89f508ba9cf33a5fea192cf039db9ae51d0a744676daa187",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/archived-v1.json",
+      "wheel_member": "lupine_discovery/resources/archived-v1.json"
+    },
+    {
+      "bytes": 763,
+      "sha256": "cf9df889091d563d768ee88d7483f78b90345f501c75600e485ed845aef68a9b",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/calibration-catalog.json",
+      "wheel_member": "lupine_discovery/resources/calibration-catalog.json"
+    },
+    {
+      "bytes": 10403,
+      "sha256": "c227cbe2afbc939ca37dcbff86fccfd3ff093069a9c0da0cf395836164dd4352",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/catalog.json",
+      "wheel_member": "lupine_discovery/resources/catalog.json"
+    },
+    {
+      "bytes": 3479,
+      "sha256": "4538d4f38c324cd83a5c098d3b7213deceda64e90ca831fc18eadc9228e11b7d",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/certificates/coupled-learned-relation.json",
+      "wheel_member": "lupine_discovery/resources/certificates/coupled-learned-relation.json"
+    },
+    {
+      "bytes": 3482,
+      "sha256": "bb1e53442a325414e8c7124e151307eaf422c49d57f9d8a7f8f46bfaad55b4c6",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/certificates/coupled-missing-point.json",
+      "wheel_member": "lupine_discovery/resources/certificates/coupled-missing-point.json"
+    },
+    {
+      "bytes": 5279,
+      "sha256": "b4661b8636530eed418a8b128f69514f71efeee0f5b09cdb21dd2deccbebb91a",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/certificates/coupled-shared-trend.json",
+      "wheel_member": "lupine_discovery/resources/certificates/coupled-shared-trend.json"
+    },
+    {
+      "bytes": 38947,
+      "sha256": "1c933a27cc7ca817a3358674870a43c0403dc9e9f30e2ddce997a2068f7ef174",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/certificates/decision-pool-feasible-failure.json",
+      "wheel_member": "lupine_discovery/resources/certificates/decision-pool-feasible-failure.json"
+    },
+    {
+      "bytes": 10842,
+      "sha256": "bf2ecf0993067bdb714529e403c7b159c904d267a398acfb9ce7bd9ecc285f9f",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/certificates/decision-pool-missing-label.json",
+      "wheel_member": "lupine_discovery/resources/certificates/decision-pool-missing-label.json"
+    },
+    {
+      "bytes": 11159,
+      "sha256": "bd77c68980e682a324b0ff5cb919bb9ae389149a07c264445077acf3ecbc2fb2",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/certificates/decision-pool-ranked-ties.json",
+      "wheel_member": "lupine_discovery/resources/certificates/decision-pool-ranked-ties.json"
+    },
+    {
+      "bytes": 12352,
+      "sha256": "de0ed1952fb7882e2ee25de2d5decb9e1875969d02a52746a89ec2196818af7c",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/certificates/projection-missing-bound.json",
+      "wheel_member": "lupine_discovery/resources/certificates/projection-missing-bound.json"
+    },
+    {
+      "bytes": 22496,
+      "sha256": "d988070450e262d7a3088a491f9c6161cc91d8ea61746f77cb6d7fc83752db0b",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/certificates/projection-shared-field.json",
+      "wheel_member": "lupine_discovery/resources/certificates/projection-shared-field.json"
+    },
+    {
+      "bytes": 21541,
+      "sha256": "57cff80ece77483a8d65fc93dfddc37d2600d78d2e89f81650f6e430e445f29e",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/certificates/projection-tie.json",
+      "wheel_member": "lupine_discovery/resources/certificates/projection-tie.json"
+    },
+    {
+      "bytes": 80683,
+      "sha256": "98683fbfeaca816a32f339989ea40c44c00d3d6a15016bd7cfef56b4ed8d4e0b",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/constrained-v1.json",
+      "wheel_member": "lupine_discovery/resources/constrained-v1.json"
+    },
+    {
+      "bytes": 949,
+      "sha256": "bdf26b607ea3a483c0d8df59bbb7f47f718fd8665a6574545bcdbc48c09dd127",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/coupled-catalog.json",
+      "wheel_member": "lupine_discovery/resources/coupled-catalog.json"
+    },
+    {
+      "bytes": 1014,
+      "sha256": "e115188f3d10eba390abccb062adc2ded6d0834dfb2f94e9045cedc3b1d594b5",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/decision-pool-catalog.json",
+      "wheel_member": "lupine_discovery/resources/decision-pool-catalog.json"
+    },
+    {
+      "bytes": 502,
+      "sha256": "8c332fabf864a0083f20b9eaa1c79f16986dafebf9d30171891cf516467471f3",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/outcomes/calibrated-finite.json",
+      "wheel_member": "lupine_discovery/resources/outcomes/calibrated-finite.json"
+    },
+    {
+      "bytes": 508,
+      "sha256": "1547673dbaf0011b7bf33a89c08b83734d9990eb5fc63cbe12b55dedb1e6b4e9",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/outcomes/calibrated-insufficient.json",
+      "wheel_member": "lupine_discovery/resources/outcomes/calibrated-insufficient.json"
+    },
+    {
+      "bytes": 507,
+      "sha256": "086876b567a949b6f8478278e902a15c3ae4a967baf13c73a071de4842ea3a94",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/outcomes/calibrated-unsupported.json",
+      "wheel_member": "lupine_discovery/resources/outcomes/calibrated-unsupported.json"
+    },
+    {
+      "bytes": 448,
+      "sha256": "ab4357185127f086011fee92e47002a99f583d0edda0fdf79b60ebf8195e35a1",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/outcomes/coupled-learned-relation.json",
+      "wheel_member": "lupine_discovery/resources/outcomes/coupled-learned-relation.json"
+    },
+    {
+      "bytes": 541,
+      "sha256": "c379447745a3123bd31b1d1a0d7d809722dd4679d72aa4c980fce62461a13c31",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/outcomes/coupled-missing-point.json",
+      "wheel_member": "lupine_discovery/resources/outcomes/coupled-missing-point.json"
+    },
+    {
+      "bytes": 540,
+      "sha256": "c0fdf3d512aeed0db4d325ed08051b3685b775f416621300631eba02d1877ebc",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/outcomes/coupled-shared-trend.json",
+      "wheel_member": "lupine_discovery/resources/outcomes/coupled-shared-trend.json"
+    },
+    {
+      "bytes": 751,
+      "sha256": "c40cce9f98e05348397b8c44ba70aeb49835ef6b711c3a99c69e8eac1abcec81",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/outcomes/decision-pool-feasible-failure.json",
+      "wheel_member": "lupine_discovery/resources/outcomes/decision-pool-feasible-failure.json"
+    },
+    {
+      "bytes": 957,
+      "sha256": "215ebecb4876ba49228378e7249ca31d56facf3cf53db3b893963b32dcead5b6",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/outcomes/decision-pool-missing-label.json",
+      "wheel_member": "lupine_discovery/resources/outcomes/decision-pool-missing-label.json"
+    },
+    {
+      "bytes": 955,
+      "sha256": "9eaf39af93fa5c145d33bf8b9f30489e8e3abf06bc98328141f039f04f3a0de3",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/outcomes/decision-pool-ranked-ties.json",
+      "wheel_member": "lupine_discovery/resources/outcomes/decision-pool-ranked-ties.json"
+    },
+    {
+      "bytes": 484,
+      "sha256": "e3c92578faafe9252f8c43d10af41018c133df426b9bd770887d2a0936a03fa8",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/outcomes/exact-rational-order.json",
+      "wheel_member": "lupine_discovery/resources/outcomes/exact-rational-order.json"
+    },
+    {
+      "bytes": 550,
+      "sha256": "89b9d5d1fd67b02d369da3a34a5eea47bf01a72acfc1e88c6d23068a732e30b1",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/outcomes/finite-infeasible.json",
+      "wheel_member": "lupine_discovery/resources/outcomes/finite-infeasible.json"
+    },
+    {
+      "bytes": 11287,
+      "sha256": "bbd7c881f3fcb05152160fee2ee830c5785f4d4b4952b9bfa45a6b8781ce1210",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/outcomes/integer-design-grid.json",
+      "wheel_member": "lupine_discovery/resources/outcomes/integer-design-grid.json"
+    },
+    {
+      "bytes": 645,
+      "sha256": "d22b7bcc7c70b5ecccce8d6c7c93134a17fbcb2bfaa98611ce5fe035323251a3",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/outcomes/loose-intervals.json",
+      "wheel_member": "lupine_discovery/resources/outcomes/loose-intervals.json"
+    },
+    {
+      "bytes": 598,
+      "sha256": "2394bab3b0cc876fbe330aa983724491580f864cd1a2008c2668aede863615a6",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/outcomes/no-incumbent.json",
+      "wheel_member": "lupine_discovery/resources/outcomes/no-incumbent.json"
+    },
+    {
+      "bytes": 724,
+      "sha256": "55f98c103d5b3ff2f465501fc0d235434bdab48932e2a49a103415d5061641c7",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/outcomes/normalized-maximization.json",
+      "wheel_member": "lupine_discovery/resources/outcomes/normalized-maximization.json"
+    },
+    {
+      "bytes": 990,
+      "sha256": "6edca841134058ca075d0fe29f1bcd38e3c329055825fb93f7bc08fd536cec02",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/outcomes/pareto-partial.json",
+      "wheel_member": "lupine_discovery/resources/outcomes/pareto-partial.json"
+    },
+    {
+      "bytes": 991,
+      "sha256": "f24a41e7519cdae9e9da39cbd27c076aea7f3dea8561fb738eb88476a20e86ae",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/outcomes/pareto-tradeoffs.json",
+      "wheel_member": "lupine_discovery/resources/outcomes/pareto-tradeoffs.json"
+    },
+    {
+      "bytes": 518,
+      "sha256": "02eb705fbb4d14482837d85db36e9b793496ea3d06d17f7c81199871e43162a8",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/outcomes/pareto-unsound-control.json",
+      "wheel_member": "lupine_discovery/resources/outcomes/pareto-unsound-control.json"
+    },
+    {
+      "bytes": 451,
+      "sha256": "b14a63db6bc6bbbcdf26e7b56ecb572422edf7be588313201c6f9129cdb29d3b",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/outcomes/projection-missing-bound.json",
+      "wheel_member": "lupine_discovery/resources/outcomes/projection-missing-bound.json"
+    },
+    {
+      "bytes": 579,
+      "sha256": "0a83583f6270e18e125fe067be1e44ba3e90a4c9551ea0744c7a5428ffa89db8",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/outcomes/projection-shared-field.json",
+      "wheel_member": "lupine_discovery/resources/outcomes/projection-shared-field.json"
+    },
+    {
+      "bytes": 576,
+      "sha256": "52e0b9f506a64585d507ee6bc43d13e6b9adb3f9d5295ffc297df9b819d5a739",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/outcomes/projection-tie.json",
+      "wheel_member": "lupine_discovery/resources/outcomes/projection-tie.json"
+    },
+    {
+      "bytes": 645,
+      "sha256": "6d307a914ea97d8704babfade6f70966d655a4c806e4184e976e132ba0052c02",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/outcomes/refined-intervals.json",
+      "wheel_member": "lupine_discovery/resources/outcomes/refined-intervals.json"
+    },
+    {
+      "bytes": 1205,
+      "sha256": "b0166e379132028d260bd8deb6b277ed5399326949e01a745666d4dc49a5db42",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/outcomes/signed-composition.json",
+      "wheel_member": "lupine_discovery/resources/outcomes/signed-composition.json"
+    },
+    {
+      "bytes": 483,
+      "sha256": "e2153a1600968e0dc84eefa62cbffec9f4f14f2e868d385f945bf3a2706b0b97",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/outcomes/tied-optima.json",
+      "wheel_member": "lupine_discovery/resources/outcomes/tied-optima.json"
+    },
+    {
+      "bytes": 418,
+      "sha256": "e08b08cc57d8a0022447090610c06a083433fa8e291f885198602bab0cb377e0",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/outcomes/tight-nonzero-regret.json",
+      "wheel_member": "lupine_discovery/resources/outcomes/tight-nonzero-regret.json"
+    },
+    {
+      "bytes": 521,
+      "sha256": "99974c5682fc4e7c7bd9c2713ff42233e827cbc763f6adaf6c1b7f0d53e7796e",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/outcomes/uncertified-optimum.json",
+      "wheel_member": "lupine_discovery/resources/outcomes/uncertified-optimum.json"
+    },
+    {
+      "bytes": 408,
+      "sha256": "10222d911e81a9a28b87b186837db070eed831b013989127df237296922143c0",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/outcomes/unsound-constraint-control.json",
+      "wheel_member": "lupine_discovery/resources/outcomes/unsound-constraint-control.json"
+    },
+    {
+      "bytes": 345,
+      "sha256": "10cf3c74f2dab7dc8d4c719f5974d0cc576b21fdc51df5027779ffda369b7a9e",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/outcomes/unsound-score-control.json",
+      "wheel_member": "lupine_discovery/resources/outcomes/unsound-score-control.json"
+    },
+    {
+      "bytes": 802,
+      "sha256": "dde2d317937b4d1dc84b82d596bf2543c343c3e2250f2d9c858aa014e1e5db3d",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/pareto-catalog.json",
+      "wheel_member": "lupine_discovery/resources/pareto-catalog.json"
+    },
+    {
+      "bytes": 2054,
+      "sha256": "187a04464c4b08b59b89f3488be39205aa1da5671c3be234a5d10c6d100e0ebe",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/problems/calibrated-finite.json",
+      "wheel_member": "lupine_discovery/resources/problems/calibrated-finite.json"
+    },
+    {
+      "bytes": 1250,
+      "sha256": "93fd567db91f1d04d91bf82166db3f710d64c931100c0027cca1f4e48d2c36be",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/problems/calibrated-insufficient.json",
+      "wheel_member": "lupine_discovery/resources/problems/calibrated-insufficient.json"
+    },
+    {
+      "bytes": 2052,
+      "sha256": "fa029ce5ccea7451bb1cd99ec1cb1421a353fbc1f24fe6e5c694bbe0099165dd",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/problems/calibrated-unsupported.json",
+      "wheel_member": "lupine_discovery/resources/problems/calibrated-unsupported.json"
+    },
+    {
+      "bytes": 1644,
+      "sha256": "066d70c08f7d7958d0b464a5b53d1559c20163e88d5065f80aa914e824b1a13e",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/problems/coupled-learned-relation.json",
+      "wheel_member": "lupine_discovery/resources/problems/coupled-learned-relation.json"
+    },
+    {
+      "bytes": 1602,
+      "sha256": "9d9dc20741cb73815b11842aeab11b30b50c694e4e6122fc42511d68993d6a83",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/problems/coupled-missing-point.json",
+      "wheel_member": "lupine_discovery/resources/problems/coupled-missing-point.json"
+    },
+    {
+      "bytes": 2194,
+      "sha256": "49ca085d9ad053bbff7a8e4ea367bf50f249813a04805251680ab49985ef0785",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/problems/coupled-shared-trend.json",
+      "wheel_member": "lupine_discovery/resources/problems/coupled-shared-trend.json"
+    },
+    {
+      "bytes": 18099,
+      "sha256": "73fb442c6e6a9bda242d116c971002c5ce1b2eae38bd5920cd30c41a8e703e1a",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/problems/decision-pool-feasible-failure.json",
+      "wheel_member": "lupine_discovery/resources/problems/decision-pool-feasible-failure.json"
+    },
+    {
+      "bytes": 5392,
+      "sha256": "66d2e6ef81ede781236f3a1e07fb918079b1e1a9fd268c39cbdce8293d390362",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/problems/decision-pool-missing-label.json",
+      "wheel_member": "lupine_discovery/resources/problems/decision-pool-missing-label.json"
+    },
+    {
+      "bytes": 5393,
+      "sha256": "5994124acd4a64865d07899fc53f9fd58e56433b9dffa71ec885f1243ccafd8e",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/problems/decision-pool-ranked-ties.json",
+      "wheel_member": "lupine_discovery/resources/problems/decision-pool-ranked-ties.json"
+    },
+    {
+      "bytes": 1738,
+      "sha256": "5af0820e80fa9fb97010576ef44d7ae3c67c0bea4ca44f2f51ddd7c2bf4a5b19",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/problems/exact-rational-order.json",
+      "wheel_member": "lupine_discovery/resources/problems/exact-rational-order.json"
+    },
+    {
+      "bytes": 3546,
+      "sha256": "646a59a6f04ec878c69310551ab286933626a19b4fc350df3bd86658e55ee916",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/problems/finite-infeasible.json",
+      "wheel_member": "lupine_discovery/resources/problems/finite-infeasible.json"
+    },
+    {
+      "bytes": 42405,
+      "sha256": "cc847ea290f9586f114e02d4903ca029918c5eb4924e8558484e48053d4ae6a5",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/problems/integer-design-grid.json",
+      "wheel_member": "lupine_discovery/resources/problems/integer-design-grid.json"
+    },
+    {
+      "bytes": 2193,
+      "sha256": "e4ffe29f17e74a803044b6ca87d0a4d09eda73f5a0f05ec63474c3b049988190",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/problems/loose-intervals.json",
+      "wheel_member": "lupine_discovery/resources/problems/loose-intervals.json"
+    },
+    {
+      "bytes": 2887,
+      "sha256": "01a8cb7e498af5cdfbb61b245ef1d64ef091e4f9c22bca99e6634c6774d226ca",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/problems/no-incumbent.json",
+      "wheel_member": "lupine_discovery/resources/problems/no-incumbent.json"
+    },
+    {
+      "bytes": 3424,
+      "sha256": "7248c49187f1c6da5f4151d7133214b2bcfa04bfcb98ba704561fbd30f8e463d",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/problems/normalized-maximization.json",
+      "wheel_member": "lupine_discovery/resources/problems/normalized-maximization.json"
+    },
+    {
+      "bytes": 2053,
+      "sha256": "932bfa5c803a2d9fb95c0e77649d010f8f24c338100156d16b7a429d3b32ce4b",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/problems/pareto-partial.json",
+      "wheel_member": "lupine_discovery/resources/problems/pareto-partial.json"
+    },
+    {
+      "bytes": 2091,
+      "sha256": "15536b4087b7781b1b9f5adfd8a97303426d5f612ed2496426077fbf48f20a6d",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/problems/pareto-tradeoffs.json",
+      "wheel_member": "lupine_discovery/resources/problems/pareto-tradeoffs.json"
+    },
+    {
+      "bytes": 1278,
+      "sha256": "7a7f1fca7b4a307fcc8e761e93f5b60a977ddbe49dc07832842bdb7c199b84ea",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/problems/pareto-unsound-control.json",
+      "wheel_member": "lupine_discovery/resources/problems/pareto-unsound-control.json"
+    },
+    {
+      "bytes": 8734,
+      "sha256": "84cbec74580eabfe0a66c97a0230a4abafcad09ff368574802057d0933845588",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/problems/projection-missing-bound.json",
+      "wheel_member": "lupine_discovery/resources/problems/projection-missing-bound.json"
+    },
+    {
+      "bytes": 8779,
+      "sha256": "39540214fb02f48f2b98ee841a00f1cf873efd4a2f48d3ea9b9d65f68b527327",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/problems/projection-shared-field.json",
+      "wheel_member": "lupine_discovery/resources/problems/projection-shared-field.json"
+    },
+    {
+      "bytes": 8606,
+      "sha256": "330b61abc2b8bbe3fa16746dd95590a3d6a35d5b22d2b770e2cf35e49bdb4158",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/problems/projection-tie.json",
+      "wheel_member": "lupine_discovery/resources/problems/projection-tie.json"
+    },
+    {
+      "bytes": 2211,
+      "sha256": "35571eab8d684e811698cbd763e6fc27b7ca02f77bbf2bb92bd57cade9aa7f80",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/problems/refined-intervals.json",
+      "wheel_member": "lupine_discovery/resources/problems/refined-intervals.json"
+    },
+    {
+      "bytes": 4827,
+      "sha256": "c74cb6ed248c1ae7496439bea2bc527d99c5958b169b90199b28ed281aa1ad52",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/problems/signed-composition.json",
+      "wheel_member": "lupine_discovery/resources/problems/signed-composition.json"
+    },
+    {
+      "bytes": 1706,
+      "sha256": "ce6b65f56d3775ba9993eee9dc79191ecb2deb833efaec865797e7979a90586d",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/problems/tied-optima.json",
+      "wheel_member": "lupine_discovery/resources/problems/tied-optima.json"
+    },
+    {
+      "bytes": 1597,
+      "sha256": "dcff78f760a6dd9d6b816e70ecdf363dd68db5115781f1dce8cab1a27dfe1a91",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/problems/tight-nonzero-regret.json",
+      "wheel_member": "lupine_discovery/resources/problems/tight-nonzero-regret.json"
+    },
+    {
+      "bytes": 2674,
+      "sha256": "db981ecb6f7fb798116ffa02b969ebd55ace45e215a9ccf0eb02259d7b3d8b5e",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/problems/uncertified-optimum.json",
+      "wheel_member": "lupine_discovery/resources/problems/uncertified-optimum.json"
+    },
+    {
+      "bytes": 2342,
+      "sha256": "fad7f4ff9f15c15a5c9e81b8bc75ad85d19120f48d4f212d794daef1fe6dec46",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/problems/unsound-constraint-control.json",
+      "wheel_member": "lupine_discovery/resources/problems/unsound-constraint-control.json"
+    },
+    {
+      "bytes": 1370,
+      "sha256": "86860920c104f0e41ecc53e324b668340c4620a6fcc072ea66881cb59138f3e8",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/problems/unsound-score-control.json",
+      "wheel_member": "lupine_discovery/resources/problems/unsound-score-control.json"
+    },
+    {
+      "bytes": 1151,
+      "sha256": "e1dd1ae8f3f73b90eae75b812f85e89af02b8c3bce4958e438f8a7b44c150f95",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/projection-catalog.json",
+      "wheel_member": "lupine_discovery/resources/projection-catalog.json"
+    },
+    {
+      "bytes": 34955,
+      "sha256": "5b53c11014f2d5ba08ac1e3ee0960c85a4c1b88dc94e36de9654ddda93f97df5",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/resources/training-tail-v1.json",
+      "wheel_member": "lupine_discovery/resources/training-tail-v1.json"
+    },
+    {
+      "bytes": 4987,
+      "sha256": "cfec006ed4cb51fbbb6539422a5d829cadaa7bf0ff78bebbffd58aaba6f2523c",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/serialization.py",
+      "wheel_member": "lupine_discovery/serialization.py"
+    },
+    {
+      "bytes": 12075,
+      "sha256": "f58f55c5284dfe34478840dca45e897c7fd1b5d5002a423876ebf228b7c7a5cb",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/server.py",
+      "wheel_member": "lupine_discovery/server.py"
+    },
+    {
+      "bytes": 131408,
+      "sha256": "20f8d73303258d218cee5e02b052b71287b09a1405d51a336aaf2d097653546d",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/web/app.js",
+      "wheel_member": "lupine_discovery/web/app.js"
+    },
+    {
+      "bytes": 19116,
+      "sha256": "98e12ccb706ab2f75497254d362769ae70f579d95be3fd3bfa93548255588618",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/web/index.html",
+      "wheel_member": "lupine_discovery/web/index.html"
+    },
+    {
+      "bytes": 17096,
+      "sha256": "f760f6225e60f08d7b4217bae7e7499fe1b4d3ea91514c5b1e429c5b4523f35e",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/web/mpea.js",
+      "wheel_member": "lupine_discovery/web/mpea.js"
+    },
+    {
+      "bytes": 41345,
+      "sha256": "6a837b57aa7540a9d00d83a6de026d6996a51563abcd7c7fd0a1dd243bb7f8d3",
+      "source_member": "lupine-source/discovery/src/lupine_discovery/web/styles.css",
+      "wheel_member": "lupine_discovery/web/styles.css"
+    },
+    {
+      "bytes": 34523,
+      "sha256": "0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0",
+      "source_member": "lupine-source/discovery/LICENSE",
+      "wheel_member": "lupine_discovery-0.1.0.dist-info/licenses/LICENSE"
+    },
+    {
+      "bytes": 1260,
+      "sha256": "513ae83c4beafaff03474d55340335e783a7c51e48f877b4dff1ded0eb7ea74b",
+      "source_member": "lupine-source/discovery/NOTICE.md",
+      "wheel_member": "lupine_discovery-0.1.0.dist-info/licenses/NOTICE.md"
+    }
+  ],
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    ".cache/audit-wheel-source-a865147.py"
+  ],
+  "exact_source_payload_count": 106,
+  "executed_at_utc": "2026-10-10T22:10:25.834694+00:00",
+  "generated_metadata_not_byte_compared_to_source": [
+    "lupine_discovery-0.1.0.dist-info/METADATA",
+    "lupine_discovery-0.1.0.dist-info/RECORD",
+    "lupine_discovery-0.1.0.dist-info/WHEEL",
+    "lupine_discovery-0.1.0.dist-info/entry_points.txt",
+    "lupine_discovery-0.1.0.dist-info/top_level.txt"
+  ],
+  "retained_receipt_sha256": "812b85aa946e4a92c39706cc22f0e1b7475d0a416495922eb396c53bed4a0da3",
+  "runtime_payload_count": 104,
+  "runtime_payload_set_equals_archived_source_set": true,
+  "schema": "lupine.discovery.wheel-source-payload-audit.v1",
+  "scope": "Exact wheel library, resources, web assets and license bytes match retained committed source. Does not execute wheel, establish build reproducibility, or establish scientific correctness.",
+  "source_archive_sha256": "96b5a8fcb879337dba226cdb50ab27b554b811dbb2b1ade4b798c332b57dd1ef",
+  "source_commit": "a865147fb4ec2055cfca60bfafd8d9f3591bd033",
+  "status": "PASS",
+  "wheel_sha256": "f1075ee6cd25d1d40244db427176c91944c3746107f4566cdc6b0f325368ed90"
+}

@@ -1,0 +1,7 @@
+{
+  "logical_gets": 1,
+  "no_retry": true,
+  "pdf_parsed": false,
+  "source_data_file_acquired": false,
+  "status": "STOPPED_FIRST_ACQUISITION_RESULT"
+}

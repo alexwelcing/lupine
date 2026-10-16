@@ -1,0 +1,19 @@
+{
+  "checks": [
+    {
+      "held_inputs_unchanged_during_run": true,
+      "receipt_log_bytes_match": true,
+      "recorded_exit_code": 1,
+      "run": "author-first"
+    },
+    {
+      "held_inputs_unchanged_during_run": true,
+      "receipt_log_bytes_match": true,
+      "recorded_exit_code": 0,
+      "run": "author-second"
+    }
+  ],
+  "schema": "lupine.discovery.candidate_receipt_static_audit.v1",
+  "scope": "Receipt and exact-byte audit only, no additional runtime test.",
+  "source_unchanged_across_runs": true
+}

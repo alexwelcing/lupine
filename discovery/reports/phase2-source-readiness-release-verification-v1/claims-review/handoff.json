@@ -1,0 +1,13 @@
+{
+  "copy_files": [
+    "initial-findings.json",
+    "review.json",
+    "inventory.json",
+    "handoff.json"
+  ],
+  "disposition": "NO_BLOCKING_FINDING",
+  "executions_by_reviewer": 0,
+  "inventory_sha256": "a3ef3b0b38cfc6ec7de4f720b9bb9cc2690d7f7745ef3384842c9988d295ba1a",
+  "review_sha256": "ec2ba00d4f850220882f488801ff33ccfb696cd28a1a106c3af162864953b7d4",
+  "schema": "lupine.source-readiness.final-review-handoff.v1"
+}

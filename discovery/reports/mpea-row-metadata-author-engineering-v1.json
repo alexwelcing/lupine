@@ -1,0 +1,27 @@
+{
+  "log_path": ".cache/mpea-row-metadata/reports/production-author-tests.txt",
+  "log_sha256": "ae7fa0f4fcedfb8962165ba146274089879c40472631bd49d6d743a4fb635379",
+  "notes": [
+    "This receipt binds current source bytes to the most recent successful author-test log; independent review and root committed-source execution are separate gates.",
+    "Original synthetic18+14 evidence is preserved separately before the production wrapper was added.",
+    "The only real source material read during wrapper development was already-public pinned mapping/header metadata.",
+    "The source-gate author test explicitly simulates an uncommitted path; it does not assume the test itself remains in scratch after eventual promotion/commit."
+  ],
+  "opaque_substitutions": 90,
+  "prior_artifacts_unchanged": true,
+  "schema": "lupine.discovery.mpea.row_metadata.author_engineering.v1",
+  "scope": {
+    "production_source_frozen": false,
+    "real_cache_read": false,
+    "scientific_validation": false,
+    "synthetic_inputs_only": true
+  },
+  "source_hashes_at_report_creation": {
+    "docs/mpea-row-metadata-amendment-v1.md": "300f37a87c7dd37d398cdf9e9946dd56c5c4cf1d61db41d38dbc09ffbb253bc0",
+    "scripts/mpea_row_metadata.py": "d50ce1cf06761cd080ca0fcc6516c07ef71e0a4106bba73660642c846915e33b",
+    "scripts/mpea_row_scanner.py": "8aec58a1a48c173a0750137daf320d22abe04398108a74567c28ed7f2a093775",
+    "tests/test_mpea_row_metadata.py": "10998dc11338e1cfb1af4563f61efaa89a764ff5974a9c97c34d55a877143854"
+  },
+  "status": "PASS",
+  "test_count": 19
+}

@@ -1,0 +1,21 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-local-extra-artifact-review-v1/additive_audit.py",
+    "--commit",
+    "d0505b9b358a4bdeafbd742f1aeeb6c2b955abf3",
+    "--retained-directory",
+    ".cache/phase2-local-extra-clean-package-v1",
+    "--full-review",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-local-extra-artifact-review-v1/actual-d0505b9b358a/review.json",
+    "--reviewed-pins",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-local-extra-artifact-review-v1/reviewed-pins.json",
+    "--output-directory",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-local-extra-artifact-review-v1/additive-d0505b9b358a"
+  ],
+  "commit": "d0505b9b358a4bdeafbd742f1aeeb6c2b955abf3",
+  "reviewed_pins_sha256": "af2fbb73b2c48c293ca7ab034e9fa2322d7b7382c5b556fc918bb85371fd7bb1",
+  "scope": "Read-only retained artifact/source audit; no package test, production diagnostic or network command.",
+  "script_sha256": "6b267cd11a73b0f73c63a7b9ae2ba75d30f9699edf14e41c5fd1f98f4932ce2a",
+  "started_at": "2026-10-16T09:34:01.971530+00:00"
+}

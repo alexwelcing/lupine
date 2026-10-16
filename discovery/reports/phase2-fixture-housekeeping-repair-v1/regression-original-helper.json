@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-final-ci-failure-v1/venv311/bin/python",
+    "-m",
+    "unittest",
+    "test_li_v3_readiness_production.ProductionAuthorTests.test_fixture_commit_does_not_launch_automatic_maintenance",
+    "-v"
+  ],
+  "cwd": "/workspace/lupine-discovery-branch/discovery",
+  "pythonpath": "/workspace/lupine-discovery-branch/discovery/tests",
+  "started_at": "2026-10-16T18:15:25.851886+00:00",
+  "finished_at": "2026-10-16T18:15:26.578698+00:00",
+  "returncode": 1,
+  "source_sha256": "80ee6dbca6301d0d041d98d2098326bd5aeb6e9183fc80552386a9f4dd4811df",
+  "source_unchanged": true
+}

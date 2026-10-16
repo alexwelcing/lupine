@@ -1,0 +1,21 @@
+{
+  "files": [
+    {
+      "destination": "scripts/mpea_feature_reader.py",
+      "sha256": "032d5341f29479437149d2fbd94879134dc2e4e51c895c1fba3cf771db1f34ef",
+      "source": ".cache/mpea-feature-contract/scripts/mpea_feature_reader.py"
+    },
+    {
+      "destination": "tests/test_mpea_feature_reader.py",
+      "sha256": "0a20ad55287334f63b5fb1754d9c42c803930ce95659374c1c85f2c9a787424b",
+      "source": ".cache/mpea-feature-contract/tests/test_mpea_feature_reader.py"
+    },
+    {
+      "destination": "tests/test_mpea_feature_reader_review.py",
+      "sha256": "153fe927723fac68c8881224f3a5eec564181aa40d1290e8794f008c7ccb94ca",
+      "source": ".cache/mpea-feature-contract/review/test_mpea_feature_reader_review.py"
+    }
+  ],
+  "schema": "lupine.discovery.mpea.feature_reader.promotion.v1",
+  "scope": "Source and tests copied unchanged; no production extraction."
+}

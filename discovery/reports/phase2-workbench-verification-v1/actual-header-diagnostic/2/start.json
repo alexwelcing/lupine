@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "scripts/li_v3_zip_diagnostic.py",
+    "diagnose",
+    "--run",
+    "2"
+  ],
+  "commit": "41d3e31a14bea040fb37b0aa6a650d6d5e704551",
+  "started_at": "2026-10-16T06:23:41.309999+00:00",
+  "expected_exit_code": 2,
+  "ci_run": 38858784217,
+  "exposure_until_completed_receipt": "UNKNOWN"
+}

@@ -1,0 +1,33 @@
+{
+  "actual_source_access": false,
+  "bindings_after": {
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-backend-v1/overlay/docs/source-readiness.md": "a62f93a7b450f5d5d508dd11a538ff2b44adb5cfd9b7623291c85584f1088e5a",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-backend-v1/overlay/src/lupine_discovery/cli.py": "6af272356429e7fabcbe81f0be34c3a201ad5d5655537d74ecefd4ba9c587965",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-backend-v1/overlay/src/lupine_discovery/resources/source-readiness-v1.json": "9abad97d5675f416cc38a325bcd1e108825af001b2fdfccaa1f5c7dfb66f3f0b",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-backend-v1/overlay/src/lupine_discovery/server.py": "5e665bb32d1d80b902a8a64c9e2e66efa9e38b7b5a481e80408f4af8716f3390",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-backend-v1/overlay/src/lupine_discovery/source_readiness.py": "dbb76ec1aa6a82490b30fe19883a94b56cf0cddfd3ebc14cc555f17f927ca42c",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-independent-v1/source-readiness-v1.json": "9abad97d5675f416cc38a325bcd1e108825af001b2fdfccaa1f5c7dfb66f3f0b",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-independent-v1/test_source_readiness_review.py": "ab3e19232f160ad53b92c8048ebc69678f3d095be74e961985108a39ec4891aa"
+  },
+  "bindings_before": {
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-backend-v1/overlay/docs/source-readiness.md": "a62f93a7b450f5d5d508dd11a538ff2b44adb5cfd9b7623291c85584f1088e5a",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-backend-v1/overlay/src/lupine_discovery/cli.py": "6af272356429e7fabcbe81f0be34c3a201ad5d5655537d74ecefd4ba9c587965",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-backend-v1/overlay/src/lupine_discovery/resources/source-readiness-v1.json": "9abad97d5675f416cc38a325bcd1e108825af001b2fdfccaa1f5c7dfb66f3f0b",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-backend-v1/overlay/src/lupine_discovery/server.py": "5e665bb32d1d80b902a8a64c9e2e66efa9e38b7b5a481e80408f4af8716f3390",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-backend-v1/overlay/src/lupine_discovery/source_readiness.py": "dbb76ec1aa6a82490b30fe19883a94b56cf0cddfd3ebc14cc555f17f927ca42c",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-independent-v1/source-readiness-v1.json": "9abad97d5675f416cc38a325bcd1e108825af001b2fdfccaa1f5c7dfb66f3f0b",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-independent-v1/test_source_readiness_review.py": "ab3e19232f160ad53b92c8048ebc69678f3d095be74e961985108a39ec4891aa"
+  },
+  "elapsed_seconds": 0.18161493899970083,
+  "errors": 0,
+  "exit_code": 0,
+  "failures": 0,
+  "finished": "2026-10-16T17:01:18.626679+00:00",
+  "schema": "lupine.source-readiness.independent-backend-run.v1",
+  "socket_or_target_process_calls": false,
+  "source_held": true,
+  "started": "2026-10-16T17:01:18.445069+00:00",
+  "stderr_sha256": "7c082111374622bc59ec6023c025daa0bd928f74db06d3f69200f0b63552b212",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "test_methods": 10
+}

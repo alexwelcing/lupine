@@ -1,0 +1,16 @@
+{
+  "HTTP_status": 403,
+  "current_release_links": null,
+  "data_specific_terms": null,
+  "documentary_parser_invoked": false,
+  "identifier_join_definitions": null,
+  "no_target_free_claim": true,
+  "reason": "No documentary projection attempted after access denial; null does not assert absence from the unseen source.",
+  "response_body_researcher_disclosed": false,
+  "scientific_admission": false,
+  "source_passages_inspected": [],
+  "status": "BLOCKED_ACCESS",
+  "units": null,
+  "upstream_CSD_terms": null,
+  "whole_response_machine_read": true
+}

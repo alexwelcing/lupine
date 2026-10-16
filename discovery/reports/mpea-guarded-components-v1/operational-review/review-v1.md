@@ -1,0 +1,13 @@
+# Independent operational-amendment review
+
+Result: no blocking document/source mismatch on amendment SHA256 `e36e72818f92096c316df34789a35840c1e5b1561f9467561dd8787da072cf98` and supervisor `1dbd4a1b0e9c3f0246d23bd7670527cfa3bd69f754279aabba06e4ae464e87ab`. The original protocol and implementation contract match their unchanged published hashes. The initially supplied amendment hash changed during review; the writer stopped, the author identified the command-authentication clarification, and the final text was reread before this signoff. That bookkeeping event is retained separately and was not a source execution or failed scientific test.
+
+The prospective amendment accurately replaces the stronger peak-RSS wording with an observed resident-memory stop threshold. It separates sampled same-session aggregate RSS, nominal polling interval, possible double counting/missed peaks and leader wait4 peak. It makes no instantaneous aggregate hard-cap claim. One acknowledged target-entry clock, the separate startup guard and separately recorded cleanup duration match the source.
+
+Network and cleanup claims stay within the cooperative boundary: actual user/network namespaces, loopback-only shim and parent namespace check, no connected fallback, suppressed child output and observed same-session process-group cleanup. Filesystem secrecy, hostile code, detached new sessions, supervisor SIGKILL and entropy attestation remain excluded. The production caller, rather than the supervisor, must authenticate the frozen command/source and anchor the output path.
+
+The strict UTF-8 claim matches the final decoder patch and its independent old/new regression. DONE and STOP match the final-failed-eighth-seal rule. Closed internal error causes remain available in the separately bound operational receipt, while outer mappings use the original study vocabulary. A valid operational sequence cannot itself establish a scientific GO: scientific artifact/registration validation and final gate interpretation remain driver obligations.
+
+The original scientific cohort, endpoints, representation, ranking, threshold, allocation, calibration law, budgets and usefulness gates remain unchanged. This explicit pre-registration enforcement amendment grants no target access, physical claim or stronger probability premise. The independent 21-test supervisor review supports only exercised engineering behavior; complete driver integration, registration and green CI remain separate prerequisites.
+
+No actual scientific cache, feature vectors, target values, entropy, allocation or fit was used. No main files were edited. This signoff is a read-only source/document comparison; input identities are in review-v1.json.

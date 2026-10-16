@@ -1,0 +1,10 @@
+{
+  "api_tree_requested_commit": "d19b15127c8ae1be49308c29eac718b609ad895c",
+  "api_tree_reported_sha": "d19b15127c8ae1be49308c29eac718b609ad895c",
+  "commit_metadata_tree_sha": "3a16cf9d749f20514a2f7e8002ca12492b1bc505",
+  "git_tree_object_sha1_computed": "3a16cf9d749f20514a2f7e8002ca12492b1bc505",
+  "tree_identity_matches": true,
+  "truncated": false,
+  "entry_count": 4,
+  "method": "Git tree object encoded from the four flat entries in returned order, modes stripped of leading zero; no blob contents except README/license used"
+}

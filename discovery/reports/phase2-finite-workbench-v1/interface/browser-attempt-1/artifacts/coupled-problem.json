@@ -1,0 +1,85 @@
+{
+  "candidates": [
+    {
+      "constraints": {},
+      "id": "A",
+      "score": {
+        "coefficients": [
+          "1"
+        ],
+        "constant": "1"
+      }
+    },
+    {
+      "constraints": {},
+      "id": "B",
+      "score": {
+        "coefficients": [
+          "1"
+        ],
+        "constant": "0"
+      }
+    }
+  ],
+  "common_world": {
+    "claim": "one_common_latent_vector_represents_all_quantities",
+    "premise_status": "assumed_unverified",
+    "reference": "Declared synthetic relation; the consistency point proves only model nonemptiness and is not an observed world.",
+    "relation_basis": "declared_affine_assumption"
+  },
+  "description": "A = t + 1 and B = t share one assumed latent value. Exact cancellation excludes A even though the marginal intervals overlap. Synthetic mathematical demonstration, not a physical material model.",
+  "latent_variables": [
+    {
+      "bounds": [
+        "0",
+        "2"
+      ],
+      "id": "t",
+      "reference": "Dimensionless normalized synthetic coordinate on [0, 2].",
+      "unit": "1"
+    }
+  ],
+  "rows": [],
+  "scenario": {
+    "constraints": {},
+    "id": "coupled-shared-trend",
+    "objective": {
+      "direction": "minimize",
+      "reference": "Constructed affine quantity; lower is better.",
+      "unit": "synthetic score"
+    }
+  },
+  "schema": "lupine.discovery.coupled_problem.v1",
+  "screening": {
+    "consistency_point": [
+      "0"
+    ],
+    "limits": {
+      "max_certificate_terms": 512,
+      "max_integer_bits": 2048,
+      "max_operations": 100000,
+      "max_witness_pairs": 4096
+    },
+    "proofs": [
+      {
+        "candidate_id": "A",
+        "feasibility": {},
+        "id": "shared-trend-cancellation",
+        "improvement": {
+          "domain_id": "651ebfc56caa1d7d78755dcb58b9ea3f4908d07f054a59fd4539121a5e033235",
+          "expression": {
+            "coefficients": [
+              "0"
+            ],
+            "constant": "-1"
+          },
+          "multipliers": {},
+          "upper": "-1"
+        },
+        "instance_digest": "cb3ef8e59091bb2a49128e4b00a11b00bc9bb22544a0861106690ca46d0e00e4",
+        "kind": "dominance",
+        "witness_id": "B"
+      }
+    ]
+  }
+}

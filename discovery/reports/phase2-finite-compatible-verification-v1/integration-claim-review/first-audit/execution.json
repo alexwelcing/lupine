@@ -1,0 +1,11 @@
+{
+  "observed_at": "2026-10-16T07:32:10.554789+00:00",
+  "exit_code": 1,
+  "scope": "Read-only audit, not a test suite or runtime failure.",
+  "cause": "Reviewer audit incorrectly expected package producer CHECKS module variable; actual ordered checks are literal inside PROBE. No product change.",
+  "preserved_files": {
+    "audit.stderr.txt": "08111938b6790f63ccb28d1887edb14bc1d54ae02e47fbac34ce302b7882b627",
+    "audit.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "audit_evidence.py": "c8fbb0aa5ed9417b0af090d87fc6ba2db0594d37ec37f4be41846549f698895a"
+  }
+}

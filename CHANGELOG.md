@@ -16,6 +16,53 @@ Newest first. Dates are absolute.
 
 ---
 
+## 2026-10-10 - Lupine Discovery branch incubation
+
+- **Constrained evaluation and information limits.** The frozen NIST JARVIS
+  experiment completed 100 panels and 103 equal-budget acquisition policies.
+  Useful screening and recommendation-value gates both fail: all 1,000 primary
+  candidates survive, and budget-four near-optimal success is 42/50 versus
+  nominal ranking's 40/50. Unsupported shift explicitly abstains. An independent
+  arithmetic audit and a complete fresh-workdir rerun confirm the result. The
+  local interface displays the failures; 186 Python tests, 17 browser checks,
+  isolated package checks and 69 compiled/audited Lean statements pass.
+  [The result and provenance](discovery/reports/constrained-result-v1.md) remain
+  separate from software verification. New proofs show that smaller universally
+  safe pools require tighter bounds or additional relationships beyond the
+  supplied interval box. Next: frozen training-only tail-error development and
+  explicit, conditionally justified coupling certificates.
+
+- **Autonomous goal.** Alex delegated the multi-day build and task selection.
+  Added the [completion goal and backlog](discovery/GOAL.md), durable execution
+  journal, and a bounded four-day continuation schedule. Began the uncertainty
+  repair with exact risk allocation and calibration ranks; insufficient samples
+  produce an explicit unbounded diagnostic. Five focused tests pass. This does
+  not establish sampling premises or add physical certification.
+
+- **Workbench follow-up.** Added a local research interface backed by the exact
+  engine, separate outcome reveal, certificate download, and a known-answer
+  screen. Thirteen finite cases pass their independently derived expectations;
+  two are deliberate failure-detection controls. The checkpoint passes 66
+  Python tests and 10 desktop/mobile browser checks. A third pinned archive,
+  FreeSolv hydration energies, retains its optimum but misses 22 of 138 held-out
+  interval targets; nominal ranking already selects that optimum. The
+  [release matrix](discovery/docs/release-validation.md) preserves these limits
+  and the remaining scientific gates.
+
+- **Why.** House the universal candidate recommendation project in Lupine at
+  Alex Welcing's direction, with a separate repository deferred.
+- **What.** Import the standalone project and its three original commits into
+  `discovery/`, with exact interval selection, evidence-aware replay, conditional
+  Lean proofs, and a [four-day agenda](discovery/docs/four-day-plan.md).
+- **Results.** The imported checkpoint records 18 compiled theorems, 41 Python
+  tests and six axiom-audit tests passing. Two archived pilots expose unsound
+  interval assumptions; a posthoc descriptor audit establishes a 1.15 eV
+  archive error floor for composition-only band-gap predictors. These are
+  conditional and finite-archive results, not physical discovery certification.
+- **Next.** Follow the [remaining gates](discovery/STATUS.md), improve justified
+  joint coverage, and retain a clean path to extraction. Existing Rhizo and
+  Library responsibilities remain as recorded in the research release map.
+
 ## 2026-06-19 - LUPI 0.3 Studio, molecule trust, and public-surface split prep
 
 - **Why.** The checkout had a full LUPI release pass, public-surface split plan,

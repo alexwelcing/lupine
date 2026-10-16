@@ -1,0 +1,53 @@
+{
+  "files": [
+    {
+      "bytes": 1610,
+      "destination": "reports/phase2-notebook-header-verification-v1/publication-claim-review/README.md",
+      "sha256": "864ec80f30a21f2e83e80775ca93368d0c60a12a7f4b58f32157b5e358c35466",
+      "source": ".cache/phase2-a6-publication-claim-review-v1/README.md"
+    },
+    {
+      "bytes": 6849,
+      "destination": "reports/phase2-notebook-header-verification-v1/publication-claim-review/check_publication.py",
+      "sha256": "d422b32eb534b840903ebe5b94728e5c7d205f33ac47337073c765cfe7e27d81",
+      "source": ".cache/phase2-a6-publication-claim-review-v1/check_publication.py"
+    },
+    {
+      "bytes": 5761,
+      "destination": "reports/phase2-notebook-header-verification-v1/publication-claim-review/check_publication_initial.py",
+      "sha256": "d80741bf1b237e7233ca51a605cab0038a199bc676b0c614c8444295968a551b",
+      "source": ".cache/phase2-a6-publication-claim-review-v1/check_publication_initial.py"
+    },
+    {
+      "bytes": 998,
+      "destination": "reports/phase2-notebook-header-verification-v1/publication-claim-review/inventory.json",
+      "sha256": "61e8c7b4c402f2b1b358e0deb745c36a863a9e3c134117ffb18ff16a257d2f0f",
+      "source": ".cache/phase2-a6-publication-claim-review-v1/inventory.json"
+    },
+    {
+      "bytes": 62322,
+      "destination": "reports/phase2-notebook-header-verification-v1/publication-claim-review/publication-checks-initial.json",
+      "sha256": "9ee2a0bf6d916b66cebd34ce6452c83836300c945f396e1287546bbb37eac744",
+      "source": ".cache/phase2-a6-publication-claim-review-v1/publication-checks-initial.json"
+    },
+    {
+      "bytes": 62875,
+      "destination": "reports/phase2-notebook-header-verification-v1/publication-claim-review/publication-checks.json",
+      "sha256": "6306cbac1ba9505eee8a4f6fab0abb2cf88e41c7bd027eb0713593ee21892717",
+      "source": ".cache/phase2-a6-publication-claim-review-v1/publication-checks.json"
+    },
+    {
+      "bytes": 6513,
+      "destination": "reports/phase2-notebook-header-verification-v1/publication-claim-review/review.json",
+      "sha256": "50f52da16f512d511462762fd53efa5920a2332ae9898e26b4f3d598a50d4b57",
+      "source": ".cache/phase2-a6-publication-claim-review-v1/review.json"
+    },
+    {
+      "bytes": 342,
+      "destination": "reports/phase2-notebook-header-verification-v1/publication-checks/root-publication-check.json",
+      "sha256": "9c97e08db2dd7092ecc1c70598e2f807d04462a49bc766e350c7b4e74bdde733",
+      "source": ".cache/phase2-notebook-header-final-publication-v1/root-publication-check.json"
+    }
+  ],
+  "scope": "Exact final independent claim-review files and prior root publication-check receipt added after their checks; no reviewed narrative or runtime change."
+}

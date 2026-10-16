@@ -1,0 +1,7 @@
+{
+  "basis": "DataCite explicit IsSupplementTo relation from the exact collection DOI.",
+  "created": "2026-10-16T16:57:09.292907+00:00",
+  "exact_primary_doi": "10.1038/sdata.2014.22",
+  "failed_article_id_assumption_retained": true,
+  "source_sha256": "63a2d078526a680d2a26ff17c181a9542e5d3af6652af0f48a31c96577bc011e"
+}

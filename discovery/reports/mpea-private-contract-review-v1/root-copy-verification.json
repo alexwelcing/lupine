@@ -1,0 +1,218 @@
+{
+  "all_original_hashes_and_bytes_checked": true,
+  "at": "2026-10-10T22:40:58.428458+00:00",
+  "files": [
+    {
+      "bytes": 2744,
+      "original": ".cache/mpea-study-custody/review_production/constructed_archive_case.py",
+      "sha256": "d1cb093b7d58fc432743e08cb5991638fa95781986cee42f4df0f3eed83861dd",
+      "wrapper": "00.json",
+      "wrapper_sha256": "3b3cf062e5bd1ce46b86a672e65d13b5c46fc4e8846b6d01e9d1329236342961"
+    },
+    {
+      "bytes": 1188,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/core-fixture-promotion-v1/adaptation-v1.json",
+      "sha256": "6d4826eb1d3ed716fb7c26db3616c9f3f41e289feecbdb146cd82f855607a9af",
+      "wrapper": "01.json",
+      "wrapper_sha256": "497243e85d6c60a343473d0892bf3600fd11980dbc1d4d0d3da07aa7bc5c305d"
+    },
+    {
+      "bytes": 2940,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/core-fixture-promotion-v1/before/test_mpea_archive_case_consistency_review.py",
+      "sha256": "65bca38563513f6db2085f59d91d4af5c8a3daff1b49f74ac3ff73f25390f522",
+      "wrapper": "02.json",
+      "wrapper_sha256": "5d8d44c30c1f058f699c0c84fb8691868096e764d7211ee483d8acdf6c3f8616"
+    },
+    {
+      "bytes": 19265,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/core-fixture-promotion-v1/before/test_mpea_archive_driver_review.py",
+      "sha256": "2b2e1fa298d1042fcbee0b92a7695f5bffcf0aa53ed2dce0af90c815e716156c",
+      "wrapper": "03.json",
+      "wrapper_sha256": "4995be7a985173692577305620459093f30560bceb797f8ba54b80a7f08aea11"
+    },
+    {
+      "bytes": 4383,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/core-fixture-promotion-v1/fixture-input-identities.patch",
+      "sha256": "4b83bb4de9c137b740dcd480a7b85575850d35f4131a3903e2e506fef53f8290",
+      "wrapper": "04.json",
+      "wrapper_sha256": "2c8845b8eb1461a595d239a6ad1bba939954c8dfa4d6807595ffda8afe44ce13"
+    },
+    {
+      "bytes": 3257,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/core-fixture-promotion-v1/tests/test_mpea_archive_case_consistency_review.py",
+      "sha256": "7017ed67dce793e0abf09ba78f8e211898e600518af6ed3ef867dc69e6f0a440",
+      "wrapper": "05.json",
+      "wrapper_sha256": "f46159b52f4be270fd6ac517c700d841dd810d6874935c81a499ec82a26b8e91"
+    },
+    {
+      "bytes": 19611,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/core-fixture-promotion-v1/tests/test_mpea_archive_driver_review.py",
+      "sha256": "b5bcc8ef78aa43fbd077247af6961b5b863eb696589ec4be37d8e279c71da0d0",
+      "wrapper": "06.json",
+      "wrapper_sha256": "a75480c1c3a22fbf3b2dcdf736aa02045da6a51aada98783f1d10c3c57135025"
+    },
+    {
+      "bytes": 4841,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/correction-closure-map-v1.json",
+      "sha256": "6f77dddc550001354e9059f669d3920f77a7feeca3c7b9ee4ddda91939a5c397",
+      "wrapper": "07.json",
+      "wrapper_sha256": "a514af4cdcb2ab0767d4ee03cd99a44d420d3a1f0a28e040d7c4cba5e09f1343"
+    },
+    {
+      "bytes": 6862,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/correction-closure-map-v1.md",
+      "sha256": "b9a9d24b70559aacc99d1077413ee300522d09d697a7b8189edddc44baf6a60f",
+      "wrapper": "08.json",
+      "wrapper_sha256": "d0f1dc13895dc4abbeb8e208d7b36c328e32190f120ee2a73c99a54ed8700515"
+    },
+    {
+      "bytes": 4607,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/decision-views-v1.json",
+      "sha256": "29d59a72795e317c6ee205d9d925ebf48b36779548ec3002b69fc9e76888b9da",
+      "wrapper": "09.json",
+      "wrapper_sha256": "1e49027be1232499fdd4b5d62ff1d4d866c4ff4b0d9322791da590a88716aa58"
+    },
+    {
+      "bytes": 2178,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/decision-views-v1.txt",
+      "sha256": "acb41499d2ecee77333b4f6fbedfe3522b081bfcacb9d4b7cacbff35cbc8d2ca",
+      "wrapper": "10.json",
+      "wrapper_sha256": "3fc5891f23c88d9b525aafb9fea52f7d6138999a14862e2cdd401f1d23b4731a"
+    },
+    {
+      "bytes": 4607,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/decision-views-v2.json",
+      "sha256": "e6f2c2e79791baf270821df2f12a38303dda5679f503894cdacbe4a80bc48ff9",
+      "wrapper": "11.json",
+      "wrapper_sha256": "55c02b6f7c8e5bc64fc2a4790cda353d4be414a9de8c8ac98e31f5cc127cf316"
+    },
+    {
+      "bytes": 903,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/decision-views-v2.txt",
+      "sha256": "41208947276f5db208fc16c91d6c45c4d8d8677f1c3f885941ed46b32a9f9843",
+      "wrapper": "12.json",
+      "wrapper_sha256": "7f0f7f85ae12dd6ab156e6c0ff64ab628a4b0d5f7717238c07abedfb1191d798"
+    },
+    {
+      "bytes": 4949,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/evidence-allowlist-v1.json",
+      "sha256": "3f1ae60a71f0f970dbd59256c1f98b5155352d78ac033bc8b17b4689099f1297",
+      "wrapper": "13.json",
+      "wrapper_sha256": "b35da450fc7eafb097d95e55230bab2ee83348076f25de3709175f15b2699359"
+    },
+    {
+      "bytes": 4459,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/held-v1-decisions-source.py",
+      "sha256": "44c4a9ca5f710364c54d207fb19bcc3efe3acd11e99e931d8af56ad69298ee53",
+      "wrapper": "14.json",
+      "wrapper_sha256": "6fd2d691a098292a65c6f00a4ee737c511538819f85701d059736874d41176e6"
+    },
+    {
+      "bytes": 4800,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/held-v2-decisions-source.py",
+      "sha256": "777fb6fbf75c44bdc073dfcd2815702cd3519b455f93beacb08c9f97782a46d6",
+      "wrapper": "15.json",
+      "wrapper_sha256": "5853d84388f4e4fff8bde097f34c0d42235c662ec754a222b84e0eb2a4a8dccb"
+    },
+    {
+      "bytes": 2281,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/hold-v1-to-v2-decisions.patch",
+      "sha256": "69b8845b69e8ef840751d03922c41ea315e290714e0db4de9a0f2af83eebf751",
+      "wrapper": "16.json",
+      "wrapper_sha256": "05985edec67f1b46e066fe9343457d6f0fcf71ac56455ce3acc86a3c053d4102"
+    },
+    {
+      "bytes": 7889,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/private-contract-integration-v1.json",
+      "sha256": "a1715cc6458ec44707f9bdc18093c4f5c5dc1590608fc08b7a113384488242cb",
+      "wrapper": "17.json",
+      "wrapper_sha256": "7e9471de1f18a1a456213bd25ae924a94567c73a8b775f1dfefe2b827df81a3b"
+    },
+    {
+      "bytes": 3247,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/private-contract-integration-v1.txt",
+      "sha256": "d5dcc72b721052e5e81430e838e303825ac0927ae3763f9c051c7bc496d8c5c0",
+      "wrapper": "18.json",
+      "wrapper_sha256": "18557de53b54c23ce76b22bd75c92de2cf0c5cf5db9010361af1ed67368b38e1"
+    },
+    {
+      "bytes": 3089,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/private-contract-review-v2.json",
+      "sha256": "62111c1652d057ce32beb7e316966e361e87c5b1fb6caa0fe5547c14718e0553",
+      "wrapper": "19.json",
+      "wrapper_sha256": "843df4ccaa0a05990d40b49bd6f11f36da593a80d60cbe18304f19b521835a9a"
+    },
+    {
+      "bytes": 1129,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/promotion-v1/candidate-v1.json",
+      "sha256": "123e671deeb5b3c83caac82abb7560d406c1a7d42375629f4369133354dc98f3",
+      "wrapper": "20.json",
+      "wrapper_sha256": "ad1047ce432d0b05946fa5bb75d608ed140928fbe0f3a1c218cf7f3c144bcd5f"
+    },
+    {
+      "bytes": 839,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/promotion-v1/decision-candidate-v1.json",
+      "sha256": "8f7c846701f6e097ec66362a510a406bea73ea14c8c3ef310009c8e6dcbf6a4d",
+      "wrapper": "21.json",
+      "wrapper_sha256": "b5682167414ba67473bd9c1ce1dc11ea83aebb7138ad14f0d783988b69f3a40f"
+    },
+    {
+      "bytes": 478,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/promotion-v1/decision-loader-only.patch",
+      "sha256": "4548a3bd1ba2c23987a03934e98f1cfacd7b33715035d1b12602c6d50e3bab02",
+      "wrapper": "22.json",
+      "wrapper_sha256": "52484deb3e855216b7cccdc3cb573fa90b2cae6bf804c5d55c5a141be9426c77"
+    },
+    {
+      "bytes": 1377,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/promotion-v1/loader-only.patch",
+      "sha256": "df6fceb328b40a53581a1d66c1c7caf748412714525189db7739d8d96f5e485a",
+      "wrapper": "23.json",
+      "wrapper_sha256": "9df74758a1019163f6026526401c292d1e3b919b38490839f07d42b1a16b85bf"
+    },
+    {
+      "bytes": 17993,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/promotion-v1/tests/test_mpea_archive_contract_integration_review.py",
+      "sha256": "e79105c493b5c425063c868089098a4f11fff756532172c5bf9f21dba2ad28b1",
+      "wrapper": "24.json",
+      "wrapper_sha256": "4a17ca017fc77f450eb7ecfda32cf90d46edf278405a14341364bb21d92d4a85"
+    },
+    {
+      "bytes": 5993,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/promotion-v1/tests/test_mpea_archive_decision_views_review.py",
+      "sha256": "4eb5371dcbb22d20cc947c39a06882c45fc2ea35411c013fac150457e16b7455",
+      "wrapper": "25.json",
+      "wrapper_sha256": "9e9a8b68b7ddcaa78b7eef4cfbe06d1166b92fe429d9c56fcd3cf5f7f2d4c3fc"
+    },
+    {
+      "bytes": 2963,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/run_review.py",
+      "sha256": "bfcf10e36cd98f6a93a908a82ae7d94dd84b42095e48237aac86f4f68802848a",
+      "wrapper": "26.json",
+      "wrapper_sha256": "4f8cb3a13e23426f50a2505499c5ca6ebf77c704bc8cf31914f253ac40b27170"
+    },
+    {
+      "bytes": 17865,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/test_archive_contract_integration_review.py",
+      "sha256": "d627a9473b24ff3766114c07bb98a70782263ed64587e89871e30a9587a9c857",
+      "wrapper": "27.json",
+      "wrapper_sha256": "8cfe74835a6aa5a57203434335977db1a1b15733b0d7170d478d5dd9db130879"
+    },
+    {
+      "bytes": 6027,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/test_decision_views_review.py",
+      "sha256": "7b43a9a8cc1606eb2e58103319c191bd996b488cd20e0a71b65e611ec12e58ff",
+      "wrapper": "28.json",
+      "wrapper_sha256": "eabcae53629761be40af503b572da96e852e966e381c9ee07d8c4c5c8e804af9"
+    },
+    {
+      "bytes": 20384,
+      "original": ".cache/mpea-study-custody/review_production/test_production_store_review.py",
+      "sha256": "0959f57f7ab4f8de5586afb90a11c8305de800df2f23cc7fc72ee2c974650fa4",
+      "wrapper": "29.json",
+      "wrapper_sha256": "ac395c8f879ed31580635348934f1322e9c54758659c2ee1705bc2f3e77de1d1"
+    }
+  ],
+  "main_runtime_execution": "pending",
+  "scope": "Only enumerated source, constructed tests/helper definitions, exact failure/pass logs and receipts, source/fixture diffs and review maps. No generated source/feature/target/attempt artifacts."
+}

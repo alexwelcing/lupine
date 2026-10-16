@@ -1,0 +1,9 @@
+{
+  "existing_identical": [
+    "reports/phase2-growth-verification-v1/ci.json",
+    "reports/phase2-growth-verification-v1/clean-package/artifacts/release-artifacts.json"
+  ],
+  "first_copy_attempt": "AssertionError on existing destination after ci.json copied; no operation/test executed or source changed",
+  "recorded_at": "2026-10-16T11:08:33.412484+00:00",
+  "recovery": "Existing destinations verified byte-identical; retained and included in ledger"
+}

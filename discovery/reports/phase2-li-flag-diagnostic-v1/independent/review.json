@@ -1,0 +1,69 @@
+{
+  "schema": "lupine.discovery.li_flag_diagnostic_independent_review.v1",
+  "reviewed_at": "2026-10-16T06:51:02.698160+00:00",
+  "owner": "/root/phase2_planner",
+  "separate_source_reviewer": "/root/phase2_planner/ui_review",
+  "status": "PASS_SYNTHETIC_TESTS_NO_SOURCE_REVIEW_BLOCKER",
+  "source": {
+    "path": ".cache/phase2-li-flags-candidate-v1/promotion/scripts/li_v3_flag_diagnostic.py",
+    "sha256": "c08c295dae15ae1f5125510076f75ce2cc6ed58f54ef5ff06861a1759dbfabc5",
+    "contract_path": ".cache/phase2-li-flags-candidate-v1/promotion/docs/li-v3-flag-diagnostic-plan.md",
+    "contract_sha256": "dd36f011deb04d8141178ea0ead75e7a02fb588f6573cac5332410fb63173f46",
+    "independent_test_path": ".cache/phase2-li-flags-implementation-review-v1/test_li_v3_flag_diagnostic_review.py",
+    "independent_test_sha256": "fdc18fd0016e0fde210716e619e5f688652fb76d226f909a1b8608f76aeae4d5",
+    "all_nine_prior_public_source_hashes_match": true,
+    "tracked_runtime_edited_by_review": false
+  },
+  "actual_executions": [
+    {
+      "receipt": "first/execution.json",
+      "receipt_sha256": "5d60c32f317ec892661ec86081247352f29a00c563622c7feb02ffc55a37a842",
+      "exit_code": 1,
+      "test_methods": 16,
+      "unittest_seconds": "0.798",
+      "elapsed_seconds": 2.4517323700001725,
+      "result": "15 passed;1 reviewer-fixture assertion failed. Undeclared SOURCE_READ_BLOCKED was correctly mapped to INTERNAL_FAILURE by unchanged custody.CustodyError. Original fixture/source/logs retained."
+    },
+    {
+      "receipt": "second/execution.json",
+      "receipt_sha256": "952788570629a70a61a93d51245743e415b06f82922657d26d04f2c47b9e5127",
+      "exit_code": 0,
+      "test_methods": 16,
+      "unittest_seconds": "0.965",
+      "elapsed_seconds": 1.6217597449995083,
+      "result": "All16 passed after only the reviewer stub/expected code changed to actual FILE_READ_FAILED. Product source unchanged."
+    }
+  ],
+  "coverage": [
+    "3144 public-API flag/method combinations:526 masks minus empty/UTF8-only, across6 methods; independently enumerated option/descriptor sets and encryption precedence.",
+    "Closed schema, null scientific counts, unassessed overlap, malformed XML/target canaries in opaque components and report-mutation noninterference.",
+    "Local-offset first-failure ordering independent of central-entry order or later more severe flags; earlier path/compression/local-header faults prevent classification.",
+    "Empty/UTF8-only masks never invent MEMBER_FLAGS; descriptor category can be emitted without any descriptor or local agreement, preserving narrow declaration semantics.",
+    "Constant reparse failures, bytes/type/size/member-count boundaries and fake-hash rejection of known real-source identity before parsing.",
+    "All9 prior file hashes against public source bytes; ignored-path guard before git/cache; fully stubbed positive production_context and changed prior/index rejection.",
+    "Pinned capture rejection before object read; unknown read exposure on incomplete object read; failed source-size validation prevents identity claims/write.",
+    "Fixed run1/run2 output paths and negative schema status under fully stubbed production; invalid inputs and CLI errors do not echo canaries.",
+    "Socket/DNS/URL, member-open/read/extract, decompression and XML APIs forbidden throughout each test; their call counts remain zero. Network additionally forbidden during candidate import."
+  ],
+  "source_review": {
+    "original_reviewed_sha256": "183ffd16ff8b1c3a86e08ab3016eaae54891f37c92f3606627995f2a4788fbcb",
+    "known_original_blocker": "Stale prior header-reviewer test pin. Root identified it before independent execution; author preserved original12-test source/receipts separately. No independent pass is claimed on that source.",
+    "corrected_source_changes": "Only the prior-review pin changed to0c3609f46cd244abe64dfdb1fa32e829bc0a16316539a2aea276b061df5413e3 and the docstring now says no member decompression. Contract unchanged.",
+    "findings": "Source guard order, same-buffer first-failure equivalence, family precedence, closed projections and read-exposure distinctions match the contract. No further blocker found."
+  },
+  "scope": {
+    "actual_workbook_or_private_custody_opened": false,
+    "network_used": false,
+    "actual_source_flags_observed": false,
+    "real_production_context_attested": false,
+    "new_scientific_experiment": false,
+    "schema_approval": false,
+    "new_scientific_claim": false
+  },
+  "limits": [
+    "Synthetic tests and source review do not show that the real object has a particular flag family or valid local headers/descriptors.",
+    "Mocked production-context/cache paths demonstrate guard plumbing only; exact published-source execution still requires root publication and CI.",
+    "The metadata category is a limited disclosure, not a zero-information or hostile-Python security boundary.",
+    "Every actual classification remains BLOCKED_SCHEMA; pairing, counts, independence and scientific usefulness remain unestablished."
+  ]
+}

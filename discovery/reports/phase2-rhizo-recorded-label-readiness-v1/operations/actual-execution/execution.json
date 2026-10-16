@@ -1,0 +1,15 @@
+{
+  "actual_source_operations": 1,
+  "automatic_retry": false,
+  "exit_code": 0,
+  "finished_at": "2026-10-16T12:16:28.783277+00:00",
+  "performance_computation_requested": false,
+  "process_seconds": 0.21620310999787762,
+  "source_and_runtime_held": true,
+  "started_at": "2026-10-16T12:16:28.490798+00:00",
+  "stderr_bytes": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_bytes": 115893,
+  "stdout_sha256": "b444e7d33cb18619942c2dfbb5cd3374fd9cd9adee6732825ce20ed431641a33",
+  "timed_out": false
+}

@@ -1,0 +1,72 @@
+{
+  "schema": "lupine.discovery.behavior_evidence_locations.v1",
+  "scope": "Locate losslessly preserved original evidence named by the independent behavior map; no new execution claim",
+  "locations": {
+    ".cache/mpea-registration-allocation/review/public_tag_extension/promotion/execution-v2.json": {
+      "retained_path": "reports/mpea-public-registration-review-v1/peer/promotion/execution-v2.json",
+      "encoding": "direct",
+      "original_sha256": "33a9aa9d39b266bdb845358469aa2332f5afee729221986565a27508e1df0d52",
+      "retained_sha256": "33a9aa9d39b266bdb845358469aa2332f5afee729221986565a27508e1df0d52"
+    },
+    ".cache/mpea-registration-allocation/review/public_tag_extension/promotion/execution-v2.stderr.txt": {
+      "retained_path": "reports/mpea-public-registration-review-v1/peer/promotion/execution-v2.stderr.txt.json",
+      "encoding": "base64_json",
+      "original_sha256": "32e06eaf9042c8fa8e386a0b971f77a4d160b0b8c4f387ef9eab676e1d4feb54",
+      "retained_sha256": "92b2ea21902daec294328be6f276c1269e4be6cd036c0b0c95f81b29110f2b8c"
+    },
+    ".cache/mpea-study-custody/reports/archive-final-author-v2-1.txt": {
+      "retained_path": "reports/mpea-production-engineering-v1/artifacts/009-archive-final-author-v2-1.txt.utf8.json",
+      "encoding": "json_utf8",
+      "original_sha256": "a44c75593ebfbd05ded400730b6214b6948e87ff6c7d1ea47ea3fa5d3838148a",
+      "retained_sha256": "1e2f25405d21aabf98e28babd6f805b86e61c968c20c7bb8da511f46f1282d97"
+    },
+    ".cache/mpea-study-custody/reports/archive-final-author-v2-2.txt": {
+      "retained_path": "reports/mpea-production-engineering-v1/artifacts/010-archive-final-author-v2-2.txt.utf8.json",
+      "encoding": "json_utf8",
+      "original_sha256": "df1609f5ab93a034a85f7f0fdbc2884e4177d4ded2c6c4e6023936884d3d7776",
+      "retained_sha256": "6ed70df4866ee460a8ca2270d07dab69b4cd46516c60622d4426b816e884bcb4"
+    },
+    ".cache/mpea-study-custody/reports/archive-final-author-v2.json": {
+      "retained_path": "reports/mpea-production-engineering-v1/artifacts/011-archive-final-author-v2.json.utf8.json",
+      "encoding": "json_utf8",
+      "original_sha256": "026200e4a37e40719986a8253d36d15d09e7bd4933de89964019af05eedb9d06",
+      "retained_sha256": "f2672a07250f432d8961adf21f0211c62129516885837d5b486ea81245cf5588"
+    },
+    ".cache/mpea-study-custody/review_launcher/final-execution-v1.json": {
+      "retained_path": "reports/mpea-production-engineering-v1/artifacts/021-final-execution-v1.json.utf8.json",
+      "encoding": "json_utf8",
+      "original_sha256": "b6f49d2b309aa286f914d37c032b7684603729edd9a0cbf75c63ce26b5835137",
+      "retained_sha256": "3981bcb4637c573e5e2242ca59fba9b9eaf32d4d7b2d3c009a111a67012e94cf"
+    },
+    ".cache/mpea-study-custody/review_launcher/final-execution-v1.stderr.txt": {
+      "retained_path": "reports/mpea-production-engineering-v1/artifacts/022-final-execution-v1.stderr.txt.utf8.json",
+      "encoding": "json_utf8",
+      "original_sha256": "55ccc46bda53e15002834ab3da024aba6c426670a0c136293f82c02265275f43",
+      "retained_sha256": "6a73832721a7402da4328ae80be7b56ca77bab64b374f25280c83759a9d9d8a2"
+    },
+    ".cache/mpea-study-custody/review_production/archive-custody-independent-review-v1.json": {
+      "retained_path": "reports/mpea-production-engineering-v1/artifacts/059-archive-custody-independent-review-v1.json.utf8.json",
+      "encoding": "json_utf8",
+      "original_sha256": "a48de3971da063e7dc90f84c51feae0987f54a5e1e080c4c904e78c6c1d4384a",
+      "retained_sha256": "257fcb6d0180f7e72f838b07db718b478df0c3ff0c9735e3e364fce2a468667e"
+    },
+    ".cache/mpea-study-custody/review_production/archive-driver-final-v3.txt": {
+      "retained_path": "reports/mpea-production-engineering-v1/artifacts/067-archive-driver-final-v3.txt.utf8.json",
+      "encoding": "json_utf8",
+      "original_sha256": "90c78b5b360a5aef0feaf9ed89d800e29d0d9de7454f8dffa26e2f8ee1d3800e",
+      "retained_sha256": "6667fb465c3e2cc380971d9a1dc95d5bd5e4bfd7c11f704bfeafe5ac0c653951"
+    },
+    ".cache/mpea-study-custody/review_public_bridge/final-tests-v1.log": {
+      "retained_path": "reports/mpea-production-engineering-v1/artifacts/095-final-tests-v1.log.utf8.json",
+      "encoding": "json_utf8",
+      "original_sha256": "11f68f89c6f3028dc45903932caf9a464f87dd1b92b86938f7d043b2e979366c",
+      "retained_sha256": "049087779ad0e98dcd79763e76f0d6bcc020a61767e691cc9c3904fa77070393"
+    },
+    ".cache/mpea-study-custody/review_public_bridge/independent-review-v1.json": {
+      "retained_path": "reports/mpea-production-engineering-v1/artifacts/096-independent-review-v1.json.utf8.json",
+      "encoding": "json_utf8",
+      "original_sha256": "7b8f54e76dfc3fa86ff22cef85a3c39e248c31026a62e04cc2aa47b0ec40ab66",
+      "retained_sha256": "3ce2c33f28208e9892c2a36147e97a0db53e7ec496c651c0894fbddf5b4ffb50"
+    }
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "files": [
+    {
+      "bytes": 32221,
+      "path": "GOAL.md",
+      "sha256": "086ea05abc42f9afba7ac191d2f20a6c328d08f0c59e5eb9e6732bc92c713fc2"
+    },
+    {
+      "bytes": 30631,
+      "path": "STATUS.md",
+      "sha256": "1772fe4b457c46ab929aab21e47863493bc61ad3ab99e9d6dfc08b9bdc882a24"
+    },
+    {
+      "bytes": 76159,
+      "path": "reports/continuation.json",
+      "sha256": "961b6c9550eaae502d156723b71370ae2934be017a002623ab8566fa9c618deb"
+    },
+    {
+      "bytes": 37277,
+      "path": "formal/README.md",
+      "sha256": "7782fb9495e94714aeb75b85f44906c54a90de02ec49d88133d16b270897f63f"
+    },
+    {
+      "bytes": 25128,
+      "path": "formal/VERIFICATION.md",
+      "sha256": "d4e9f31b8e0f82492addb723bb40acfc33d116b41ed0a7402c00d8859a9069a1"
+    },
+    {
+      "bytes": 22073,
+      "path": "formal/theorem-inventory.json",
+      "sha256": "ae31d83d3fa136bf52c2d3cb8f2e94b349066eefa2d7f7e2eb672c68ce6b715b"
+    },
+    {
+      "bytes": 14435,
+      "path": "formal/AXIOMS.txt",
+      "sha256": "1386bccd866f772b801b50c692bc50bebbeae492ca08b41b833bbf3260f0a6e8"
+    },
+    {
+      "bytes": 6905,
+      "path": "formal/LupineFinitePlanning.lean",
+      "sha256": "391b03aefda0f7bac5bd380347b81febc8a4ebbd329ae3a099981784803973bd"
+    },
+    {
+      "bytes": 20076,
+      "path": "formal/history/pre-finite-planning-theorem-inventory.json",
+      "sha256": "834a14198ce1f8d52d4ba33871c143d7c76246cfd81b736109a6de78798acc40"
+    },
+    {
+      "bytes": 13122,
+      "path": "formal/history/pre-finite-planning-AXIOMS.txt",
+      "sha256": "84a9ed0c9cf6acc58ea2a9a196ec46cd8f1b69b0d1dd79fd041b0c37291065f1"
+    },
+    {
+      "bytes": 58987,
+      "path": "docs/release-validation.md",
+      "sha256": "531d7d4582f8252195382e846927ad9b06c84f197fde2d03e9bc6df3f6249ce6"
+    },
+    {
+      "bytes": 7271,
+      "path": "docs/finite-population-planning.md",
+      "sha256": "049d2c794c1e7085bcdc1cdb05920552fdf5a4948a592da6bf6c4bbcbfeae08d"
+    },
+    {
+      "bytes": 5241,
+      "path": "reports/phase2-finite-planning-formal-verification-v1/README.md",
+      "sha256": "26c9d44c5171f31b32bd283c7a284bfd5207ba3809eea686d1bc279bbee0f17e"
+    },
+    {
+      "bytes": 4377,
+      "path": "reports/phase2-finite-planning-formal-verification-v1/root-execution/result.json",
+      "sha256": "e87a11c390724c985362c0907cfa7aae3154f7bd07642b6857e9ab98dd1f634d"
+    },
+    {
+      "bytes": 3931,
+      "path": "reports/phase2-li-complete-layout-verification-v1/README.md",
+      "sha256": "9783a8f71621cba62794dacdbb9f7f26a614368b66e74df60bd3788c1cb4a4e5"
+    },
+    {
+      "bytes": 7760,
+      "path": "reports/phase2-li-complete-layout-verification-v1/operation/1/persisted-public.json",
+      "sha256": "aae55ee5a939c37ed13e73d82d68c9e3c92273f22aa7161f46d19b2799158545"
+    },
+    {
+      "bytes": 84525,
+      "path": "reports/phase2-li-complete-layout-verification-v1/operation/1/execution.json",
+      "sha256": "c47477e3b91a8c9a4be3c3751cd679d218c02b24f32add199f21919c3c949d03"
+    },
+    {
+      "bytes": 2908,
+      "path": "reports/phase2-dielectric-readme-schema-v1/README.md",
+      "sha256": "81fca5e06d0055bc0f4f0dea57fb210f74f5438dcaaf1ad2b5bc14ca533b45fd"
+    },
+    {
+      "bytes": 1039,
+      "path": "reports/phase2-dielectric-readme-schema-v1/acquisition/receipt.json",
+      "sha256": "a98d8760705f11be505f13dabd32950156c7735bfce118a88fe34467db60caba"
+    },
+    {
+      "bytes": 14137,
+      "path": "src/lupine_discovery/server.py",
+      "sha256": "451324d9ce1fa84ec1759699bd2ea25759a29368b84c82f30741ea4e7e2ca826"
+    },
+    {
+      "bytes": 131529,
+      "path": "src/lupine_discovery/web/app.js",
+      "sha256": "1537f759ef443a218b74eaf55d14ff0520b1195dc3bc8835034e57b3b4613a7c"
+    },
+    {
+      "bytes": 29560,
+      "path": "src/lupine_discovery/web/index.html",
+      "sha256": "8120a35af3c415e36b7c3a627a44fd45f9c5ab7628ce0e251103bcccb7b82243"
+    }
+  ],
+  "read_scope": "Current tracked docs, public receipts/inventory and interface source only. No project imports or build/runtime executions."
+}

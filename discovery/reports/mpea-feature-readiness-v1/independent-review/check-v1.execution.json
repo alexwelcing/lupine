@@ -1,0 +1,11 @@
+{
+  "checker_sha256": "72964fac16faf46be7d23221c7bb0fe2bf39288e191172ef2a0151576a5cbc09",
+  "checker_unchanged": true,
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    ".cache/mpea-feature-result-review/check_public_execution.py"
+  ],
+  "exit_code": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "6ffa1ea8ee3a7303210ef82fbf40a7b5e29fa6da986399ccf8760fb9af8d2a1b"
+}

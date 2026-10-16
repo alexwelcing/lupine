@@ -1,0 +1,14 @@
+First G12 Chromium attempt: failed (exit 1).
+Command: python scripts/browser_smoke.py
+Captured failure from the tool output; the complete successful rerun is recorded separately.
+
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/scripts/browser_smoke.py", line 732, in <module>
+    run()
+  File "/workspace/lupine-discovery-branch/discovery/scripts/browser_smoke.py", line 475, in run
+    page.evaluate("File.prototype.text = window.originalProjectionFileText")
+playwright._impl._errors.Error: Page.evaluate: TypeError: Failed to execute 'text' on 'Blob': Illegal invocation
+    at UtilityScript.evaluate (<anonymous>:318:18)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+
+Explanation: The new failed-read and reverse-completion assertions had completed, including the exported replay/CLI comparison. The cleanup expression returned the native File.text function; Playwright attempted to invoke the returned function without a Blob receiver. This was a browser harness cleanup error, not a passing test run. It was corrected to an arrow body that restores the method without returning it. No application or scientific runtime source changed in this correction.

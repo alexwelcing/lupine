@@ -1,0 +1,51 @@
+{
+  "command": [
+    "python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    ".cache/mpea-study-engine/tests",
+    "-v"
+  ],
+  "earlier_development_findings": [
+    "First 20-test run: one error-code expectation failure on 481 policy ledgers; fixed to REPLAY_INCOMPLETE and rerun.",
+    "Custody source read caught one-based ordinal validation; corrected to original 0..1544 before final review."
+  ],
+  "elapsed_seconds": 9.768199,
+  "exit_code": 0,
+  "log_sha256": "2b8d1b866c715bf08f36daf80f96502a7f31dca3a2f282544da9e3c717eb3694",
+  "non_claims": [
+    "No empirical MPEA evaluation",
+    "No fitted uncertainty bound",
+    "No physical or source attestation",
+    "No Python-to-Lean refinement",
+    "No custody capability enforcement in the pure kernel"
+  ],
+  "pythonpath": ".cache/mpea-study-engine/scripts:scripts:src",
+  "schema": "lupine.synthetic.mpea_study.author_validation.v1",
+  "scope": "synthetic-only; no source/feature/target artifact access; no production authorization",
+  "source_after": {
+    ".cache/mpea-protocol-design/mpea-t25-archival-protocol-v1.md": "989f79359af45a9bcc698400d1ddee410677933a8360c0c71a30e9bc2dba8eb4",
+    ".cache/mpea-protocol-design/mpea-t25-implementation-contract-v1.md": "2113d0e45799fb0117f22dbd80188e17d92f0e63c9857ba7a693e7f4ade99f10",
+    ".cache/mpea-study-engine/docs/kernel-contract.md": "2d4abda5ab3776e7596ee534ff7f0c9f7e150208e7eef47f512dca6138e7b25c",
+    ".cache/mpea-study-engine/scripts/mpea_study.py": "8065f0106345dcb39b6d009a85c0dcabb9cede228d3adc84dc5cedc7c2ac341e",
+    ".cache/mpea-study-engine/tests/test_mpea_study.py": "175a4b2d0ff5027065939b1af29f2f7ed1459492d089cb76c5aab4d604f31291",
+    "scripts/mpea_features.py": "b24c0f1bb62fc56794e1232f973a6020ee42a0d3765d33cb51246f3c7a3a47d9",
+    "src/lupine_discovery/decision_pool.py": "76e96165102ebe8c3785f510d169b5d393838fb144f9c4275ffdb0aa6c21f1f9",
+    "src/lupine_discovery/representation.py": "c65c0eed659025a0e41eb325e75182ac2b980c35ac43dfddaa501f4f3ddf3b9e"
+  },
+  "source_before": {
+    ".cache/mpea-protocol-design/mpea-t25-archival-protocol-v1.md": "989f79359af45a9bcc698400d1ddee410677933a8360c0c71a30e9bc2dba8eb4",
+    ".cache/mpea-protocol-design/mpea-t25-implementation-contract-v1.md": "2113d0e45799fb0117f22dbd80188e17d92f0e63c9857ba7a693e7f4ade99f10",
+    ".cache/mpea-study-engine/docs/kernel-contract.md": "2d4abda5ab3776e7596ee534ff7f0c9f7e150208e7eef47f512dca6138e7b25c",
+    ".cache/mpea-study-engine/scripts/mpea_study.py": "8065f0106345dcb39b6d009a85c0dcabb9cede228d3adc84dc5cedc7c2ac341e",
+    ".cache/mpea-study-engine/tests/test_mpea_study.py": "175a4b2d0ff5027065939b1af29f2f7ed1459492d089cb76c5aab4d604f31291",
+    "scripts/mpea_features.py": "b24c0f1bb62fc56794e1232f973a6020ee42a0d3765d33cb51246f3c7a3a47d9",
+    "src/lupine_discovery/decision_pool.py": "76e96165102ebe8c3785f510d169b5d393838fb144f9c4275ffdb0aa6c21f1f9",
+    "src/lupine_discovery/representation.py": "c65c0eed659025a0e41eb325e75182ac2b980c35ac43dfddaa501f4f3ddf3b9e"
+  },
+  "status": "PASS",
+  "test_count": 24,
+  "unchanged": true
+}

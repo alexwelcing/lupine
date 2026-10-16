@@ -1,0 +1,61 @@
+{
+  "baseline_commit": "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace",
+  "commit": null,
+  "files": {
+    "README.md": {
+      "bytes": 2312,
+      "sha256": "e88623a4514a74cd7789dc3fff2009eb6691c3bef8ac1e7e215fc693669e8564"
+    },
+    "additive_audit.py": {
+      "bytes": 10537,
+      "sha256": "e87a8d0181c986f85883ebe28ef8295581c0a97976ab927feb3de60be096f649"
+    },
+    "additive_audit.py.diff": {
+      "bytes": 4175,
+      "sha256": "fb9730f0ca56273fd22f6c36bac6b85c151095aecae7c9df79ec814cc7994f6b"
+    },
+    "audit.py": {
+      "bytes": 21353,
+      "sha256": "b81293cba3632449830932175e9fa938913650ade05f5e524b258aba78923119"
+    },
+    "bindings.unbound.json": {
+      "bytes": 455,
+      "sha256": "48f37fa641ff4423e91d61589900bd7244081c211da4f96f54112a0ece9a31a8"
+    },
+    "check-adaptation.json": {
+      "bytes": 41414,
+      "sha256": "2606ed35da854a04dfb0631c65d2e5e987f481b6e30d1a7240ad97b719e144b4"
+    },
+    "preparation.json": {
+      "bytes": 2218,
+      "sha256": "3d768a667cf489db25d950d1a5ba17ba6060e288848828e58e0569e492861363"
+    },
+    "prior-additive_audit.py": {
+      "bytes": 10639,
+      "sha256": "22b3cbaa1335a85d81d79a11e6722f5fadd6db51854ca8c2de483a65d45528f7"
+    },
+    "prior-audit.py": {
+      "bytes": 21353,
+      "sha256": "b81293cba3632449830932175e9fa938913650ade05f5e524b258aba78923119"
+    },
+    "prior-run_recorded.py": {
+      "bytes": 6579,
+      "sha256": "681bdae3895b320274e898b819e9d8b092bb9edd76562c8c2e92dbcd9935f483"
+    },
+    "recorder-schema-review.json": {
+      "bytes": 2020,
+      "sha256": "55387d38fe4e988d1b3a867b6ae824754cd9af8e878fd15622de32f3e1e587eb"
+    },
+    "run_recorded.py": {
+      "bytes": 6579,
+      "sha256": "8f61b3f89da773e2aeaa1be2949c1cf82c671e338538cccfa0b5358c8c37a613"
+    },
+    "run_recorded.py.diff": {
+      "bytes": 388,
+      "sha256": "04bf7c2bd30167df0d29824ca31face32f5ad827d4ba8779a86de3e48264928a"
+    }
+  },
+  "next_action": "Await root published commit, completed retained package and final reviewed pin record before a single recorded full-plus-additive audit.",
+  "scope": "Only source/AST preparation and receipt-schema review; no artifact reads, imports of auditors, production guards, source operations or network.",
+  "status": "PREPARED_NOT_EXECUTED"
+}

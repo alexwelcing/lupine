@@ -1,0 +1,6 @@
+{
+  "encoding": "utf-8",
+  "bytes": 617,
+  "sha256": "905a23e385d52e663ad252a7d8f31a5b0096676584d304768ef34913a1777d51",
+  "text": "--- baseline/li_v3_local_extra_headers.py\n+++ mutants/m01-prior-equality/li_v3_local_extra_headers.py\n@@ -134,7 +134,7 @@\n             # Preserve its classification without calling that absence a close failure.\n             if report['predecessor_classification'] == EXPECTED_CLASSIFICATION:\n                 raise LocalExtraError('PREDECESSOR_CLEANUP_FAILED')\n-        if report['predecessor_classification'] != EXPECTED_CLASSIFICATION:\n+        if False:\n             raise LocalExtraError('PREDECESSOR_PATH_MISMATCH')\n         start, end = _locate(raw, exposure)\n         fields = _walk(raw, start, end, exposure)\n"
+}

@@ -1,0 +1,356 @@
+{
+  "calibration": {
+    "primary": {
+      "alpha": "1/10",
+      "complete_count": 15,
+      "complete_infeasible_calibration_panels": 5,
+      "decision_counts": {
+        "empty_pool_nonempty_universe": 0,
+        "empty_universe": 0,
+        "full_nonempty_pool": 20,
+        "proper_nonempty_reduction": 0
+      },
+      "empty_calibration_panels": 0,
+      "future_assigned_panels": 20,
+      "k": 19,
+      "n": 20,
+      "premise_status": "unsupported",
+      "score_histogram": [
+        {
+          "count": 5,
+          "score": "0/1"
+        },
+        {
+          "count": 2,
+          "score": "1/7"
+        },
+        {
+          "count": 1,
+          "score": "1/3"
+        },
+        {
+          "count": 1,
+          "score": "4/11"
+        },
+        {
+          "count": 1,
+          "score": "3/5"
+        },
+        {
+          "count": 1,
+          "score": "4/5"
+        },
+        {
+          "count": 4,
+          "score": "1/1"
+        }
+      ],
+      "status": "unsupported_premise",
+      "threshold": null,
+      "unknown_score_count": 5
+    },
+    "secondary": {
+      "alpha": "1/10",
+      "complete_count": 20,
+      "complete_infeasible_calibration_panels": 5,
+      "decision_counts": {
+        "empty_pool_nonempty_universe": 0,
+        "empty_universe": 6,
+        "full_nonempty_pool": 14,
+        "proper_nonempty_reduction": 0
+      },
+      "empty_calibration_panels": 3,
+      "future_assigned_panels": 20,
+      "k": 19,
+      "n": 20,
+      "premise_status": "assumed_unverified",
+      "score_histogram": [
+        {
+          "count": 8,
+          "score": "0/1"
+        },
+        {
+          "count": 2,
+          "score": "1/7"
+        },
+        {
+          "count": 1,
+          "score": "1/3"
+        },
+        {
+          "count": 1,
+          "score": "4/11"
+        },
+        {
+          "count": 1,
+          "score": "3/5"
+        },
+        {
+          "count": 1,
+          "score": "4/5"
+        },
+        {
+          "count": 6,
+          "score": "1/1"
+        }
+      ],
+      "status": "finite_conditional",
+      "threshold": "1/1",
+      "unknown_score_count": 0
+    }
+  },
+  "claim_limits": [
+    "Reproducible audited archival research result; frozen usefulness conjunction is NO_GO.",
+    "No physical qualification, unconditional calibration, universal empirical accuracy or superiority claim.",
+    "The secondary sampling premise remains assumed and unverified; primary guarantee remains unavailable.",
+    "All primary and complete-record secondary candidates were retained; completeness restriction is not selective screening.",
+    "Same-allocation reproduction is not an independent statistical sample.",
+    "The separate arithmetic auditor did not refit predictors, independently regenerate nonprimary orders or attest raw source parsing.",
+    "This publication reviewer read public reports and explicitly authorized operational and aggregate audit evidence only; private graph authentication is joined from root frozen-validator receipts.",
+    "Recorded transport/order and cooperative workflow evidence do not constitute hostile-host or trusted timestamp attestation.",
+    "Whole-artifact identities bind records, not physical truth; aggregates are not a differential-privacy claim.",
+    "No new DFT was performed; this is an archived experimental-property study.",
+    "Preserve exposed test results; future improvement requires a new independent preregistered evaluation, not tuning this frozen study."
+  ],
+  "component_reasons": {
+    "adequacy": [
+      "SECONDARY_DISCOVERY_PANELS_BELOW_10"
+    ],
+    "complete_execution": [],
+    "pool_usefulness": [
+      "POOL_MEAN_FRACTION_ABOVE_3_4"
+    ],
+    "ranking_usefulness": [
+      "RANKING_RANDOM_MARGIN_BELOW_1_10",
+      "RANKING_NOT_ABOVE_PROCESSING",
+      "RANKING_NOT_ABOVE_OBJECTIVE_ONLY"
+    ]
+  },
+  "component_verdicts": {
+    "adequacy": false,
+    "complete_execution": true,
+    "pool_usefulness": false,
+    "ranking_usefulness": false
+  },
+  "costs_per_attempt": {
+    "calibration_unique_bundles": 89,
+    "development_unique_bundles": 143,
+    "evaluation_unique_bundles": 82,
+    "policy_bundle_requests": 3288
+  },
+  "derived_threshold": {
+    "quantity": "lower_development_median_elongation",
+    "unit": "percentage_points",
+    "value": "383/10"
+  },
+  "engineering_approval_sha256": "2453cb992ece48db9a73434408380f0cfc5f28fbbc7e518a8d2dfd78dc1c4b10",
+  "engineering_receipt_sha256": "d84040b1374d4c3a6633b4d4c7b5cdcca00c730202e8bd73cd32c6d6ea2b1e6d",
+  "failed_gates": [
+    "SECONDARY_DISCOVERY_PANELS_BELOW_10",
+    "POOL_MEAN_FRACTION_ABOVE_3_4",
+    "RANKING_RANDOM_MARGIN_BELOW_1_10",
+    "RANKING_NOT_ABOVE_PROCESSING",
+    "RANKING_NOT_ABOVE_OBJECTIVE_ONLY"
+  ],
+  "gate_denominators": {
+    "assigned_panels_per_population": 20,
+    "discovery_secondary_panels": 9,
+    "discovery_secondary_panels_larger_than_four": 6,
+    "feasible_secondary_panels": 9,
+    "pool_recall_numerator": 9,
+    "ranking_objective_only_hits": 7,
+    "ranking_primary_hits": 7,
+    "ranking_processing_hits": 8,
+    "ranking_random_controls": 20,
+    "ranking_random_hit_sum": 147,
+    "scheduled_policy_runs": 960
+  },
+  "gate_margins": {
+    "adequacy": -1,
+    "pool_recall": 9,
+    "pool_size": "-9/1",
+    "ranking_objective_only": 0,
+    "ranking_processing": -1,
+    "ranking_random": -25
+  },
+  "historical_negative_evidence": {
+    "helper_failure_was_study_retry": false,
+    "root_postterminal_helper_failure_sha256": "dec6c6c61bfb2d885af5ae38f160819b5bb6acc2b8791e93b708eb27ab59fea3",
+    "v1_preallocation_stop": "Preserved as BLOCKED INPUT_IDENTITY_MISMATCH; v1 tag and failure report remain unchanged. Distinct prospectively registered v2 recovery is not a retry under v1."
+  },
+  "independent_arithmetic_audit": "PASS",
+  "independent_arithmetic_receipt_sha256": "fd0686f269320a0b351d18b7c2fa825db37025d1622f5be0b8d806acb3fbcfa7",
+  "operational": {
+    "original": {
+      "command_completed_at": "2026-10-11T00:55:45.599531+00:00",
+      "command_started_at": "2026-10-11T00:54:12.552658+00:00",
+      "command_wall_seconds": 93.04692652600352,
+      "launcher_exit_code": 0,
+      "network_namespace_verified": true,
+      "resource_measurement_scope": "Sum of sampled resident pages for worker session; shared pages may be counted more than once; inter-sample peaks may be missed.",
+      "sealed_stage_count": 8,
+      "supervisor_child_exit_peak_rss_bytes": 93224960,
+      "supervisor_peak_sampled_rss_bytes": 93114368,
+      "supervisor_wall_seconds": 76.52053624299879,
+      "target_phase_started": true,
+      "worker_public_usage": {
+        "cpu_seconds": "4738971187/125000000",
+        "peak_rss_bytes": 93224960,
+        "wall_seconds": "9526457351/250000000"
+      }
+    },
+    "reproduction": {
+      "command_completed_at": "2026-10-11T00:59:24.268537+00:00",
+      "command_started_at": "2026-10-11T00:57:54.191012+00:00",
+      "command_wall_seconds": 90.07752763199096,
+      "launcher_exit_code": 0,
+      "network_namespace_verified": true,
+      "resource_measurement_scope": "Sum of sampled resident pages for worker session; shared pages may be counted more than once; inter-sample peaks may be missed.",
+      "sealed_stage_count": 8,
+      "supervisor_child_exit_peak_rss_bytes": 93233152,
+      "supervisor_peak_sampled_rss_bytes": 93339648,
+      "supervisor_wall_seconds": 71.14896753900393,
+      "target_phase_started": true,
+      "worker_public_usage": {
+        "cpu_seconds": "1515641697/50000000",
+        "peak_rss_bytes": 93233152,
+        "wall_seconds": "30679438589/1000000000"
+      }
+    }
+  },
+  "original_public_identity": {
+    "bytes_sha256": "d93769b07fba52f9bc95dbed92c5303aa8344867e7a663d0ca58cff7af2ba274",
+    "content_sha256": "8afb6ee59cd1f5b6883f8fc66a90c1f02ff8b8a70ec139c313c63c00807546f0",
+    "scientific_sha256": "b6b6f4befa12fca322750a6a7570c4aea93984aa44ca8bbd59b0eca6b53051c8"
+  },
+  "population_counts": {
+    "primary": {
+      "assigned_panels": 20,
+      "complete_infeasible_panels": 3,
+      "complete_panels": 11,
+      "empty_panels": 0,
+      "feasible_panels": 8,
+      "original_candidate_total": 82,
+      "original_unknown_candidate_total": 27,
+      "population_candidate_total": 82,
+      "population_unknown_candidate_total": 27,
+      "retained_candidate_total": 82,
+      "unknown_panels": 9
+    },
+    "secondary": {
+      "assigned_panels": 20,
+      "complete_infeasible_panels": 5,
+      "complete_panels": 20,
+      "empty_panels": 6,
+      "feasible_panels": 9,
+      "original_candidate_total": 82,
+      "original_unknown_candidate_total": 27,
+      "population_candidate_total": 55,
+      "population_unknown_candidate_total": 0,
+      "retained_candidate_total": 55,
+      "unknown_panels": 0
+    }
+  },
+  "protocol_id": "mpea-t25-archival-v1",
+  "publication_decision": "APPROVED_EXACT_AGGREGATE_ARTIFACTS_WITH_NEGATIVE_SCIENTIFIC_VERDICT",
+  "ranking_comparison": {
+    "comparison_panel_count": 9,
+    "objective_only": {
+      "hits": 7,
+      "rate": "7/9"
+    },
+    "primary": {
+      "hits": 7,
+      "rate": "7/9"
+    },
+    "primary_minus_random_rate": "-7/180",
+    "processing": {
+      "hits": 8,
+      "rate": "8/9"
+    },
+    "random": {
+      "controls": 20,
+      "hit_sum": 147,
+      "panel_control_denominator": 180,
+      "rate": "49/60"
+    }
+  },
+  "registered_worker_verdict": "NO_GO_ARCHIVAL_USEFULNESS",
+  "registration_tag": "mpea-t25-registration-v2",
+  "reproduction": {
+    "all_eight_stage_scientific_identities_equal": true,
+    "all_files_byte_identical": false,
+    "byte_identical_files": [
+      "label-routes.json",
+      "stage-00-allocation.json"
+    ],
+    "compared_files": 17,
+    "full_file_differences": [
+      "attempt-result.json",
+      "calibration-vault.json",
+      "completeness.json",
+      "development-targets.json",
+      "evaluation-vault.json",
+      "public-report.json",
+      "rank-summary.json",
+      "secondary-membership.json",
+      "stage-01-input-freeze.json",
+      "stage-02-development.json",
+      "stage-03-rank-freeze.json",
+      "stage-04-reserved.json",
+      "stage-05-calibration.json",
+      "stage-06-replay.json",
+      "stage-07-evaluation.json"
+    ],
+    "independent_statistical_sample": false,
+    "new_allocation_draw": false,
+    "public_scientific_identity_equal": true,
+    "same_fixed_allocation": true,
+    "scientific_seals_compared": 16,
+    "scientific_seals_equal": 16,
+    "status": "REPRODUCED"
+  },
+  "reproduction_public_identity": {
+    "bytes_sha256": "def0d535d4481d8e1f65ba69cd41cdedff13d2acafda69d1ca4e71656975cf1c",
+    "content_sha256": "37732bf97912891964b223e02a5c893a4eaf605dd011d38f43c3b5e26a54bd05",
+    "scientific_sha256": "b6b6f4befa12fca322750a6a7570c4aea93984aa44ca8bbd59b0eca6b53051c8"
+  },
+  "resource_identity": {
+    "bytes_sha256": "d93769b07fba52f9bc95dbed92c5303aa8344867e7a663d0ca58cff7af2ba274",
+    "content_sha256": "8afb6ee59cd1f5b6883f8fc66a90c1f02ff8b8a70ec139c313c63c00807546f0",
+    "scientific_sha256": "b6b6f4befa12fca322750a6a7570c4aea93984aa44ca8bbd59b0eca6b53051c8"
+  },
+  "resource_is_exact_original_public_report": true,
+  "review_checks": {
+    "all_343_registered_working_source_files_unchanged": true,
+    "all_report_content_scientific_seals_recomputed": true,
+    "complete_comparison_identity_logic_and_public_stage_joins": true,
+    "independent_arithmetic_receipt_joins_both_exact_publics": true,
+    "no_row_group_assignment_target_value_or_cell_hash_fields": true,
+    "original_closed_schema_and_6080_public_metric_summaries": true,
+    "recorded_parent_tag_command_supervisor_and_terminal_joins": true,
+    "reproduction_payload_identical_and_changed_fields_closed": true
+  },
+  "review_completed_at": "2026-10-11T01:09:06.546000+00:00",
+  "run_accounting_per_attempt": {
+    "assigned_panels_per_population": 20,
+    "completed_runs": 960,
+    "policies_per_panel": 24,
+    "populations": 2,
+    "scheduled_runs": 960
+  },
+  "schema": "lupine.mpea.closed_publication_decision.v1",
+  "secondary_pool": {
+    "all_tied_optima_recall": {
+      "denominator": 9,
+      "numerator": 9,
+      "value": "1/1"
+    },
+    "feasible_panel_mean_pool_fraction": "1/1",
+    "interpretation": "All 55 candidates in the predefined complete-record secondary population are retained. Its smaller size than the 82-row primary population is the predefined complete-record restriction, not selective pool reduction.",
+    "mean_fraction_limit": "3/4"
+  },
+  "source_commit": "a0624cac9abb20320629cce41f10270b9b8e2136",
+  "study_status": "COMPLETE",
+  "threshold_scope": "Lower development median in this archived cohort; not a power-plant design requirement."
+}

@@ -1,0 +1,9 @@
+{
+  "tool_chunk_id": "6d63ec",
+  "tool_exit_code": 1,
+  "failure": "AssertionError during publication local-link validation",
+  "diagnosis": "Validator asked is_file on a path traversing the not-yet-created future report directory before ../ normalization. The destination existed; a normalized absolute path check succeeds.",
+  "correction": "Normalize the publication-relative destination using Path.resolve before checking its existence. No source/runtime/header/private-prefix change or test rerun.",
+  "evidence": "Follow-up tool chunk bb5539: unnormalized_exists=false, normalized_exists=true for the prior public curator report.",
+  "scientific_or_actual_operation_failure": false
+}

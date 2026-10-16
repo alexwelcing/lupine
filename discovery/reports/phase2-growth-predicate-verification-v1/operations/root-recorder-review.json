@@ -1,0 +1,17 @@
+{
+  "reviewed_at": "2026-10-16T12:42:46.048772+00:00",
+  "reviewer": "root",
+  "source_sha256": "b89fcabf338e9329c3cdabdc58fb13d71396540aeec405ed5e3a01cc12ff6079",
+  "read_complete_source": true,
+  "blockers": [],
+  "source_operation_invoked": false,
+  "checks": [
+    "All five exact gate receipts and all335runtimefiles checked before real source guard.",
+    "Only fixed two slots; exclusive recorder and production reservations; no retry.",
+    "Returned stdout independently validated, retained, and byte-compared to persisted public; late cleanup/guard failure blocks second run.",
+    "Original selected growth and primaryprogress must match; first category remains unknown within closedfamilies.",
+    "All member/XML decoders stayzero; incomplete aggregate dependencies never countaspass.",
+    "After-state source/HEAD/branch/remote/gate receipts rechecked for both fixed invocations."
+  ],
+  "scope": "Source review only; final binding awaits complete exactCI."
+}

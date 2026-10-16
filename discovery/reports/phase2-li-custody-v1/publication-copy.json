@@ -1,0 +1,69 @@
+{
+  "recorded_at": "2026-10-16T04:59:07.107411+00:00",
+  "owner": "root",
+  "scope": "Reviewed safe candidate receipts; no actual workbook/data. Original candidate paths and not-promoted status describe their handoff checkpoint. Test source is promoted separately; recorder remains in ignored custody.",
+  "review_files_copied": [
+    {
+      "from": ".cache/phase2-li-custody-review-v1/review-plan.json",
+      "to": "reports/phase2-li-custody-v1/independent/review-plan.json",
+      "sha256": "08d18015c50875a38532c01339b24625288db76ef58845697fec6513d7667228",
+      "bytes": 2206
+    },
+    {
+      "from": ".cache/phase2-li-custody-review-v1/review.json",
+      "to": "reports/phase2-li-custody-v1/independent/review.json",
+      "sha256": "34947f4a36ac49679e7f7837de092a6a0988564f6ddc3dc8033082538214939c",
+      "bytes": 4959
+    },
+    {
+      "from": ".cache/phase2-li-custody-review-v1/first/start.json",
+      "to": "reports/phase2-li-custody-v1/independent/first/start.json",
+      "sha256": "c2e54e3fbbc287284fb7501976d6c719014023bbe2617adf58d351ebcf73dd5d",
+      "bytes": 624
+    },
+    {
+      "from": ".cache/phase2-li-custody-review-v1/first/execution.json",
+      "to": "reports/phase2-li-custody-v1/independent/first/execution.json",
+      "sha256": "33187ce1a6fca83b202be74f21e3ef788cef2c0a3694024ae9a2667d21b57b9e",
+      "bytes": 1162
+    },
+    {
+      "from": ".cache/phase2-li-custody-review-v1/first/stdout.log",
+      "to": "reports/phase2-li-custody-v1/independent/first/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "from": ".cache/phase2-li-custody-review-v1/first/stderr.log",
+      "to": "reports/phase2-li-custody-v1/independent/first/stderr.log",
+      "sha256": "87739a2f6ad14e11799bac17221b161e1ccc469f86a1eac8ee4f754f918004b8",
+      "bytes": 2357
+    }
+  ],
+  "author_logs_copied": [
+    {
+      "from": ".cache/phase2-li-custody-implementation-v1/receipts/author-first/stdout.log",
+      "to": "reports/phase2-li-custody-v1/author/receipts/author-first/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "from": ".cache/phase2-li-custody-implementation-v1/receipts/author-first/stderr.log",
+      "to": "reports/phase2-li-custody-v1/author/receipts/author-first/stderr.log",
+      "bytes": 3545,
+      "sha256": "d774aaad3418c8ad8f5fb863a477df63f0b2adf83ca51b1c20a2f08d1ba45d37"
+    },
+    {
+      "from": ".cache/phase2-li-custody-implementation-v1/receipts/author-second/stdout.log",
+      "to": "reports/phase2-li-custody-v1/author/receipts/author-second/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "from": ".cache/phase2-li-custody-implementation-v1/receipts/author-second/stderr.log",
+      "to": "reports/phase2-li-custody-v1/author/receipts/author-second/stderr.log",
+      "bytes": 2384,
+      "sha256": "e4787632648e06113f7c1fd75f96e67146e27421f1dda44221ec0a955ad2edc8"
+    }
+  ]
+}

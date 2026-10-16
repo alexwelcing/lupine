@@ -1,0 +1,11 @@
+{
+  "started_at": "2026-10-16T17:35:48.969860+00:00",
+  "finished_at": "2026-10-16T17:35:49.279620+00:00",
+  "exit_code": 0,
+  "elapsed_seconds": 0.30978014600259485,
+  "source_sha256": "329c0e372bc9b1231e1ee6c63d3360570c24e14786b70df1008ced20eb7fbe17",
+  "test_sha256": "a08d9073fa9bab79abe9a958b194faf98f2ed873624c01f4eae9deebbab21675",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "92f6af16362b78aee3a52fecd5470b00625273a614efc51517531c5ae112597c",
+  "scope": "Synthetic fixtures only; all production openers stubbed, no actual request/source data."
+}

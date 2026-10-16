@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "checks": [
+    "planning_unknown_score_law_preserved_and_exact_export_matches_http",
+    "planning_nonmonotone_counts_match_exact_http_without_js_probability_math",
+    "planning_rank_infeasible_zero_and_iid_endpoints_keep_guarantees_unestablished",
+    "planning_zero_failure_29_59_empty_and_insufficient_caps_no_power_claim",
+    "planning_invalid_inputs_and_failed_requests_clear_result_and_export",
+    "planning_older_success_and_error_responses_cannot_restore_stale_results",
+    "planning_mobile_390_and_320_have_no_document_overflow",
+    "planning_maximum_valid_fraction_renders_exports_and_contains_overflow_at_320",
+    "planning_navigation_preserves_existing_problem_and_reads_no_case_outcomes_or_archives"
+  ],
+  "javascript_errors": [],
+  "scope": "Synthetic local HTTP and Chromium planner integration; no archived reports or outcomes in execution overlay.",
+  "screenshots": {
+    "mobile-320-large-exact.png": "d1f3769c45ebccb798670005a536a0a72b24862c39756b5e9543865cfdb03872",
+    "mobile-320-planning.png": "5a7011eac30328918a4f7363852564312883e7f24065333eed23461216876566",
+    "desktop-planning.png": "7e7205a49ad50dcd73f855b518057dc7604fbb9c3181a8695260405d2fa9a717",
+    "mobile-390-planning.png": "51ba2d331e287275f7623b8b53dcbd152b89b11df09c43ec56f68764cb4a8000"
+  }
+}

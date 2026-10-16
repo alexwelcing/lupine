@@ -1,0 +1,7 @@
+{
+  "observed_tool_chunk": "e24432",
+  "exit_code": 1,
+  "phase": "AFTER_PUBLIC_COPY_BEFORE_FINAL_INVENTORY",
+  "reason": "Copied predecessor claim-review README referenced omitted source-bindings.json.",
+  "correction": "Added exact original source-bindings.json; added source-bound final author logs, whose hashes match validation receipt; no product or test source changed and no test rerun."
+}

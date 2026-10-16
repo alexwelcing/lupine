@@ -1,0 +1,61 @@
+{
+  "active_local_links": [
+    {
+      "exists": true,
+      "source": "README.md",
+      "target": "scope.json"
+    },
+    {
+      "exists": true,
+      "source": "README.md",
+      "target": "historical-directory-preservation.json"
+    },
+    {
+      "exists": true,
+      "source": "README.md",
+      "target": "fixture-origin.json"
+    },
+    {
+      "exists": true,
+      "source": "README.md",
+      "target": "namespace-cap-scope-addendum.json"
+    },
+    {
+      "exists": true,
+      "source": "README.md",
+      "target": "receipts/first/execution.json"
+    },
+    {
+      "exists": true,
+      "source": "README.md",
+      "target": "receipts/namespace_final/execution.json"
+    },
+    {
+      "exists": true,
+      "source": "FINAL.md",
+      "target": "README.md"
+    },
+    {
+      "exists": true,
+      "source": "FINAL.md",
+      "target": "namespace-cap-scope-addendum.json"
+    },
+    {
+      "exists": true,
+      "source": "FINAL.md",
+      "target": "namespace-source-hold.json"
+    },
+    {
+      "exists": true,
+      "source": "FINAL.md",
+      "target": "publication-layout.json"
+    }
+  ],
+  "checked_at": "2026-10-16T11:00:00.439668+00:00",
+  "earlier_g23_files_held": 9,
+  "historical_raw_markdown_linkcheck_exemption": "before-namespace-cap/README.md is omitted from publication in favor of reconstructed lossless wrapper",
+  "json_files": 17,
+  "status": "PASS",
+  "whitespace_issues": [],
+  "wrapper_reconstruction": true
+}

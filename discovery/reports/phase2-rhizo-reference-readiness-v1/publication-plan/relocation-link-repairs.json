@@ -1,0 +1,14 @@
+{
+  "repairs": [
+    {
+      "new_target": "../projector/scope.json",
+      "occurrences": 1,
+      "old_target": "scope.json",
+      "original": ".cache/phase2-rhizo-reference-projector-review-v1/reviewed-contract.md",
+      "original_sha256": "f5f1582036db4f13b879cd47ae1abeccb2380df07bba09b3f0450696b21ef65e",
+      "original_wrapper": "reports/phase2-rhizo-reference-readiness-v1/independent-review/reviewed-contract.original.json",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/independent-review/reviewed-contract.md",
+      "published_sha256": "577d7284b927cd6c5e8aaef2e0a6509223a06574cc536eaf484c0ca3aa8f66cf"
+    }
+  ]
+}

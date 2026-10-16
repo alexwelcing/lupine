@@ -1,0 +1,20 @@
+--- first-held-source
++++ final-held-source
+@@ -237,6 +237,9 @@
+             report['exposure']['value_tokens_machine_exposed_not_numerically_evaluated'] = True
+             value = BoundedJSON(raw).parse()
+             exposure['json_parse_completed'] = True
++            report['exposure']['whole_json_parse_completed'] = (
++                len(report['exposure']['objects']) == len(specs)
++                and all(item['json_parse_completed'] for item in report['exposure']['objects']))
+             if (type(value) is not dict or value.get('schema') != 'lupine.y_matrix_targets.v1'
+                     or value.get('family') != spec['family'] or type(value.get('entries')) is not list
+                     or any(type(row) is not dict for row in value['entries'])):
+@@ -271,7 +274,6 @@
+                                     'conditions_status': 'UNKNOWN', 'primary_source_rights': 'UNKNOWN'})
+                 exposure['selected_locations_materialized'] += 1
+             exposure['projection_completed'] = True
+-        report['exposure']['whole_json_parse_completed'] = True
+         private = {'schema': 'lupine.rhizo.private-documentary-projection.v1',
+                    'warning': 'TARGET_BEARING_CITATIONS_LOCATORS_NOTES_MAY_CONTAIN_OUTCOMES',
+                    'actual_bound_reference_choice': 'UNKNOWN', 'locations': private_rows}

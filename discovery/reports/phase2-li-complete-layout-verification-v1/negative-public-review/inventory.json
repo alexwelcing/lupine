@@ -1,0 +1,134 @@
+{
+  "actual_public_review_runs": 1,
+  "actual_source_operation_runs_here": 0,
+  "files": [
+    {
+      "bytes": 993,
+      "path": "CHECKLIST.md",
+      "sha256": "a05e7cefd9a0d4ba65a216be0ee8f9ce7c926f0034f243985cbcea10ba96d456"
+    },
+    {
+      "bytes": 3560,
+      "path": "README.md",
+      "sha256": "510ce6e34c97d00bb2c05f6642105a1b7398be075697a547d66df9d14936a22e"
+    },
+    {
+      "bytes": 19085,
+      "path": "audit_public.py",
+      "sha256": "4c5f23ee4fcaa754da97c8f7bbac079911d2cc309ef630314db08f6a3318d9ce"
+    },
+    {
+      "bytes": 363,
+      "path": "first-execution.json",
+      "sha256": "5aabe62225565076ef3e5583bc6dbbbd177406a1302056a51a47c1ec50f82fa3"
+    },
+    {
+      "bytes": 12201,
+      "path": "first-public-audit/review.json",
+      "sha256": "64068f835b348466da5fa4030e5362808e4a26d40c3bde9d7d0ef11ef9e4b3ff"
+    },
+    {
+      "bytes": 582,
+      "path": "first-start.json",
+      "sha256": "139d78499e331aada21a5a266863af9434bf21fe0a9cd84850a129a70f1f39ac"
+    },
+    {
+      "bytes": 0,
+      "path": "first-stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 1221,
+      "path": "first-stdout.txt",
+      "sha256": "d9cf9eef6ae4a817dfe9b11c674071f08996399896604958330eaa3c8495c9fe"
+    },
+    {
+      "bytes": 84525,
+      "path": "inputs/operation/1/execution.json",
+      "sha256": "c47477e3b91a8c9a4be3c3751cd679d218c02b24f32add199f21919c3c949d03"
+    },
+    {
+      "bytes": 7760,
+      "path": "inputs/operation/1/persisted-public.json",
+      "sha256": "aae55ee5a939c37ed13e73d82d68c9e3c92273f22aa7161f46d19b2799158545"
+    },
+    {
+      "bytes": 5447,
+      "path": "inputs/operation/1/persisted-reservation.json",
+      "sha256": "30d43b01eccc92d54cdb4e34f88255381bd1f16fc9be3e5bbf9e96dc2db75e1e"
+    },
+    {
+      "bytes": 41411,
+      "path": "inputs/operation/1/start.json",
+      "sha256": "243859d06ba4751d358fa0e1ecf9fcc48d3d9b49534f2cec3c3da4acd012b6b9"
+    },
+    {
+      "bytes": 0,
+      "path": "inputs/operation/1/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 7760,
+      "path": "inputs/operation/1/stdout.bin",
+      "sha256": "aae55ee5a939c37ed13e73d82d68c9e3c92273f22aa7161f46d19b2799158545"
+    },
+    {
+      "bytes": 52860,
+      "path": "inputs/operation/preflight.json",
+      "sha256": "f57690cea63c2cd1c5b084c83736ff721507f42a9cffda3a22cba864410a0275"
+    },
+    {
+      "bytes": 172,
+      "path": "inputs/operation/reservation.json",
+      "sha256": "b0973d2a34b125755c78b031df81db3cf1ea1d8fce4b620304745fcc97ea1dda"
+    },
+    {
+      "bytes": 182,
+      "path": "inputs/operation/stopped.json",
+      "sha256": "420f26b82b435766609d25d7640f6f4250989d6b6f037df3956b8b725a0a09ef"
+    },
+    {
+      "bytes": 40242,
+      "path": "inputs/outer/after-state.json",
+      "sha256": "1ebadf6ac8ecbbfeb9d6020ab1ec4a875c7beb64a70840f4ab4afd5dceb99911"
+    },
+    {
+      "bytes": 40242,
+      "path": "inputs/outer/before-state.json",
+      "sha256": "1ebadf6ac8ecbbfeb9d6020ab1ec4a875c7beb64a70840f4ab4afd5dceb99911"
+    },
+    {
+      "bytes": 1142,
+      "path": "inputs/outer/execution.json",
+      "sha256": "e3a5f0f021bc02b90eb81a4b7684c50f8a87518d0ec9c40d81c3518af882eccb"
+    },
+    {
+      "bytes": 0,
+      "path": "inputs/outer/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 111,
+      "path": "inputs/outer/stdout.bin",
+      "sha256": "3adaf470d1d5a4c4fb286fd442e5b09be39c58071b6d389fc0e8d05787539643"
+    },
+    {
+      "bytes": 1250,
+      "path": "inputs/outer/stopped.json",
+      "sha256": "8ff777c743e700175c99fb4e66737fb7254791b21f75d57e18e320b4ec63b5e0"
+    },
+    {
+      "bytes": 329,
+      "path": "inputs/root-observed-layout.json",
+      "sha256": "dc1725f9b73ba0ee52a6953bf64335bb8b86fa944625dcab033caba51969a24e"
+    },
+    {
+      "bytes": 2698,
+      "path": "scope.json",
+      "sha256": "c79a09e3ff4e4431a29009f4d35974fec2171c77730be1ca66dc886c1aef5e10"
+    }
+  ],
+  "first_review_failures": 0,
+  "input_evidence_files": 16,
+  "schema": "lupine.li.complete-layout.independent-public-review-inventory.v1"
+}

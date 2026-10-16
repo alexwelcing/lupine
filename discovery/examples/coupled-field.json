@@ -1,0 +1,112 @@
+{
+  "candidates": [
+    {
+      "constraints": {},
+      "id": "A",
+      "score": {
+        "coefficients": [
+          "-1",
+          "1",
+          "0"
+        ],
+        "constant": "5"
+      }
+    },
+    {
+      "constraints": {},
+      "id": "B",
+      "score": {
+        "coefficients": [
+          "-1",
+          "0",
+          "1"
+        ],
+        "constant": "4"
+      }
+    }
+  ],
+  "common_world": {
+    "claim": "one_common_latent_vector_represents_all_quantities",
+    "premise_status": "assumed_unverified",
+    "reference": "Constructed common-field and bounded-discrepancy premises, not learned correlation or scientific attestation.",
+    "relation_basis": "bounded_error_model"
+  },
+  "description": "Synthetic correction-field bridge with one uncertain anchor and explicitly assumed bounded discrepancies. No physical material prediction.",
+  "latent_variables": [
+    {
+      "bounds": [
+        "0",
+        "2"
+      ],
+      "id": "theta",
+      "reference": "Shared correction divided by one synthetic score unit; same declared model/material/family.",
+      "unit": "1"
+    },
+    {
+      "bounds": [
+        "-1/4",
+        "1/4"
+      ],
+      "id": "error_A",
+      "reference": "Discrepancy A divided by one synthetic score unit; bound is assumed for this fixture.",
+      "unit": "1"
+    },
+    {
+      "bounds": [
+        "-1/4",
+        "1/4"
+      ],
+      "id": "error_B",
+      "reference": "Discrepancy B divided by one synthetic score unit; bound is assumed for this fixture.",
+      "unit": "1"
+    }
+  ],
+  "rows": [
+    {
+      "coefficients": [
+        "-1",
+        "0",
+        "0"
+      ],
+      "id": "anchor_upper",
+      "reference": "Anchor nominal 3, zero discrepancy, known interval [1,3]: 3-theta <= 3.",
+      "unit": "synthetic utility",
+      "upper": "0"
+    },
+    {
+      "coefficients": [
+        "1",
+        "0",
+        "0"
+      ],
+      "id": "anchor_lower",
+      "reference": "Same anchor lower bound: -(3-theta) <= -1.",
+      "unit": "synthetic utility",
+      "upper": "2"
+    }
+  ],
+  "scenario": {
+    "constraints": {},
+    "id": "coupled-field",
+    "objective": {
+      "direction": "minimize",
+      "reference": "constructed correction-field algebra",
+      "unit": "synthetic utility"
+    }
+  },
+  "schema": "lupine.discovery.coupled_problem.v1",
+  "screening": {
+    "consistency_point": [
+      "0",
+      "0",
+      "0"
+    ],
+    "limits": {
+      "max_certificate_terms": 512,
+      "max_integer_bits": 2048,
+      "max_operations": 100000,
+      "max_witness_pairs": 4096
+    },
+    "proofs": []
+  }
+}

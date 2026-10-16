@@ -1,0 +1,33 @@
+{
+  "candidate_manifest": {
+    "docs/finite-population-planning.md": "11f4efe987632293bfc8dfcbd24a32d3a05e4c9e23624c9933ec030028de3414",
+    "src/lupine_discovery/finite_planning.py": "027785ccdf24f6e8cf9b7a8ac98987b821fcdb19c875bbe8d2ba52d2fc3895f8",
+    "tests/test_finite_planning.py": "032f9643e077caaa39f7c021d4e58b79f8d99fadbc226490f23756869d083adb"
+  },
+  "candidate_unchanged": true,
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-finite-planner-candidate-v1/author-tests-first/tests",
+    "-p",
+    "test_finite_planning.py",
+    "-v"
+  ],
+  "duration_seconds": 0.7724850089998654,
+  "exit_code": 0,
+  "expectation_met": true,
+  "expected_exit_code": 0,
+  "git_head_after": "ea69d01e144747c97bf288b37249f39af9e8f715",
+  "git_head_before": "ea69d01e144747c97bf288b37249f39af9e8f715",
+  "git_status_after": "",
+  "git_status_before": "",
+  "mutation": null,
+  "scope": "isolated synthetic executable arithmetic; no scientific observations",
+  "source_held": true,
+  "started_at_utc": "2026-10-16T06:48:32.756687+00:00",
+  "tracked_package_unchanged": true
+}

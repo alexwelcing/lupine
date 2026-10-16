@@ -1,0 +1,8 @@
+{
+  "encoding": "utf-8",
+  "original_bytes": 1300,
+  "original_path": "root-execution/parser-tests-stderr.txt",
+  "original_sha256": "9388369479d9f7261f9476f7c1c61af4ca2eeced213d6a8032a6918ff8b8038b",
+  "schema": "lupine.public.utf8-evidence.v1",
+  "text": "test_admitted_proof_rejected (test_audit_axioms.AxiomAuditTests.test_admitted_proof_rejected) ... ok\ntest_admitted_source_rejected (test_audit_axioms.AxiomAuditTests.test_admitted_source_rejected) ... ok\ntest_custom_axiom_rejected (test_audit_axioms.AxiomAuditTests.test_custom_axiom_rejected) ... ok\ntest_duplicate_output_rejected (test_audit_axioms.AxiomAuditTests.test_duplicate_output_rejected) ... ok\ntest_extra_axiom_declaration_rejected (test_audit_axioms.AxiomAuditTests.test_extra_axiom_declaration_rejected) ... ok\ntest_missing_output_rejected (test_audit_axioms.AxiomAuditTests.test_missing_output_rejected) ... ok\ntest_module_namespace_is_checked (test_audit_axioms.AxiomAuditTests.test_module_namespace_is_checked) ... ok\ntest_standard_axioms_and_empty_set_accepted (test_audit_axioms.AxiomAuditTests.test_standard_axioms_and_empty_set_accepted) ... ok\ntest_unexpected_source_print_rejected (test_audit_axioms.AxiomAuditTests.test_unexpected_source_print_rejected) ... ok\ntest_unexpected_theorem_rejected (test_audit_axioms.AxiomAuditTests.test_unexpected_theorem_rejected) ... ok\ntest_unprinted_theorem_rejected (test_audit_axioms.AxiomAuditTests.test_unprinted_theorem_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 11 tests in 0.014s\n\nOK\n"
+}

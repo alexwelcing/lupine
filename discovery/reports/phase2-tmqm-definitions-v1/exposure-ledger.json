@@ -1,0 +1,42 @@
+{
+  "schema": "lupine.discovery.tmqm_definitions_exposure.v1",
+  "whole_metadata_body_machine_read": true,
+  "whole_article_xml_machine_read": true,
+  "whole_article_xml_machine_parsed": true,
+  "raw_article_bytes": 138193,
+  "raw_article_sha256": "a8b959d00e3f63aa5c649e16bb0f2118fdb55e26e712aba6cd0638155915fb72",
+  "researcher_disclosures": [
+    "Exact identity/title/date/PMCID and source receipts",
+    "Section titles/direct-paragraph inventory; masked table caption withheld",
+    "Article CC-BY permission statement",
+    "Initial selected direct paragraphs with numeric tokens masked",
+    "Exact selected methods sentences with numeric tokens masked except already documented GFN2-xTB/D3BJ/def2-SVP labels"
+  ],
+  "first_projection_incident": {
+    "retained": "primary_xml/methods-initial-projection.json",
+    "locator": "sec1.1 direct paragraph5",
+    "description": "The definition-keyword paragraph also contains qualitative chemical abundance/composition and fingerprint discussion. The simple result-word filter did not suppress these statements. They were shown with all digit tokens masked. This is incidental qualitative result exposure; no outcome-free source claim.",
+    "correction": "Later extraction uses specific methods sentence locators; original projection remains unchanged."
+  },
+  "not_researcher_disclosed": [
+    "Article abstract",
+    "Table cells",
+    "Figures",
+    "Pairwise Property Representations section",
+    "Data Benchmarks section",
+    "Conclusions",
+    "Numerical target examples or published performance values",
+    "Numerical CSV contents",
+    "private-prefix.bin"
+  ],
+  "method_constants_not_outcome_values": true,
+  "full_source_untouched_or_fresh_claim": false,
+  "article_rights_scope": "Front article permission text: CC-BY attribution required; no version stated. Not a dataset or CSD license grant.",
+  "requests_used": 2,
+  "requests_remaining_in_scope": 0,
+  "redirects": 0,
+  "retries": 0,
+  "followed_links": false,
+  "dataset_acquisitions": 0,
+  "scientific_admission": false
+}

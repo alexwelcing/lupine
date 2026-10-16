@@ -1,0 +1,30 @@
+{
+  "actual_source_operations": 0,
+  "addition": [
+    "Before creating the new ZipFile, check exactly the declared count of raw central fixed headers and signatures.",
+    "Bound every declared filename/extra/comment span inside the directory and require exact final consumption.",
+    "Apply the existing central-extra/comment prohibition to declared lengths as well as retained parsed-field checks.",
+    "No text decoding or raw metadata publication; separate preflight started/completed exposure; closed rejection code."
+  ],
+  "author_test_before_sha256": "c4f281ca1fcbc473296286672703733ff1f250c9f151a960018a5af10120db01",
+  "authorization": "Root explicitly approved additional bounded raw central framing validation before actual operations; no user decision required within authorized implementation.",
+  "finding": "Inherited bounded ZipFile central-directory parsing can truncate a final declared comment/extra/name span while returning empty/short parsed fields. Recomputed central size from parsed values does not establish declared span completeness. The unchanged missing-comment-byte fixture was accepted.",
+  "first_outcome": {
+    "errors": 0,
+    "failures": 1,
+    "guard_violations": [],
+    "methods": 28,
+    "passed": 27
+  },
+  "first_run": "receipts/first/execution.json",
+  "original_scope_sha256": "7dc85a75fc54cee03d92d6cd04b0444bb4e252379e55ae2c1aea7f7f23b08c4b",
+  "production_guards_invoked": 0,
+  "recorded_at": "2026-10-16T10:23:29.934395+00:00",
+  "source_before_sha256": "a8c0cea16c1c44d6cf57986edcd6ca22e0229cb0f3bb7f935910d6fa2aef3045",
+  "status": "ROOT_APPROVED_PRE_ACTUAL_SCOPE_STRENGTHENING",
+  "unchanged": [
+    "Every prior source file and original predicate",
+    "Exact G29 existing prerequisite and G30 same-buffer gate",
+    "Scientific BLOCKED_SCHEMA and all prior negative results"
+  ]
+}

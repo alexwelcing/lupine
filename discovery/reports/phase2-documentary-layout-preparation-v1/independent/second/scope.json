@@ -1,0 +1,58 @@
+{
+  "actual_production_guard_invocations": 0,
+  "actual_source_or_receipt_reads": 0,
+  "adaptation": {
+    "actual_role_presence_verified": false,
+    "exact_g31_producer_commit": null,
+    "exact_g31_receipt_sha256": null,
+    "future_envelope_profile": "li_v3.xlsx_envelope.local_growth_hint.v1",
+    "prior_design_profile": "li_v3.xlsx_envelope.deflate_options.v1",
+    "reason": "Original compatible profile remains blocked. This pure candidate reuses the separately reviewed G31 whole-buffer predicate and original four envelope validators. A future production prerequisite must bind an actually verified G31 result and producer; neither is assumed here.",
+    "stage_production_commit": null
+  },
+  "implementation_scope": [
+    "Public pure API accepts exact bytes, rejects known actual source SHA256 or MD5/size identity and fixed source size excess. No CLI, file output, production_context, private-custody reads, network or production wrapper.",
+    "Repeat G29/G30 selected growth and complete G31 ZIP/central/local traversal on the same immutable generated buffer; keep all original envelope validators unchanged, retaining verified workbook/relationship structures.",
+    "Resolve both exact roles by actual namespace-qualified r:id in the validated workbook map, require distinct worksheet members and correct validated content type. Never use ordinal or sheetId for member selection.",
+    "Open only four envelope XML members and the two role-resolved worksheet members. Preserve selected-stage and own archive cleanup exposure privately; public envelope exposure is exactly the design allowlist without lengths.",
+    "A separate bounded streaming XML target implements the exact prospective grammar. Strict UTF8 decoding is tracked separately from XML parse and structure traversal. No retained cell text/value/formula body, style interpretation, external resolution or shared-string read.",
+    "Return both complete role inventories or no layout payload. Exact canonical row/cell/domain/type/duplicate/merge checks and all frozen limits apply. No semantic role classification or numeric conversion of values.",
+    "Exceptions and cleanup failures return closed categories with truthful partial exposure; no raw exception text. Public canonical size cap is checked after bounded construction and clears layout on failure."
+  ],
+  "limits": {
+    "attribute_name_characters": 256,
+    "attribute_value_characters": 1024,
+    "attributes_per_element": 32,
+    "canonical_public_receipt_bytes": 2097152,
+    "coordinate_column_maximum": 16384,
+    "coordinate_row_maximum": 1048576,
+    "engineering_bounds_not_source_observations": true,
+    "explicit_cells_per_role": 8192,
+    "merge_rectangles_per_role": 1024,
+    "new_worksheet_decompressed_bytes_each": 2097152,
+    "new_worksheet_decompressed_bytes_total": 4194304,
+    "no_truncated_success_or_postexposure_cap_change": true,
+    "xml_depth_each": 64,
+    "xml_nodes_each": 65536
+  },
+  "owner": "/root/finite_inverse_check",
+  "planned_artifacts": [
+    "li_v3_layout_localization.py",
+    "test_li_v3_layout_localization.py",
+    "generated author execution receipts and first failures",
+    "README.md / source inventory"
+  ],
+  "prior_design_pins": {
+    "docs/li-v3-growth-envelope-plan.md": "4a5954b93b84d05c32a8ee2ea8254aec63283e915c331339cb97875e4b2aeb59",
+    "reports/phase2-li-layout-localization-design-v1/README.md": "5871e1c6acfbfe6d76b0ad79ba3a91ba56e9f222f0a8b1df70ee44659a6b3ade",
+    "reports/phase2-li-layout-localization-design-v1/design-review.json": "8c6573e38a937c15e1216f60f621de60defa9e3275273c3259fba4582fe3df34",
+    "reports/phase2-li-layout-localization-design-v1/proposal.json": "49d0cc50b0642d7c67c93fa8a5f51315382a1d1ca4b3886d2a074c77a7980595",
+    "scripts/li_v3_growth_envelope.py": "f50069d028526ea045441a2e574a26192a210ff78ba34f5170777d32f5692ec3"
+  },
+  "production_readiness": "Explicitly unavailable: later root choice, exact observed G31 prerequisite, independent tests/review, published source, exact CI/package/artifact gates all remain separate.",
+  "purpose": "Implement and test one complete two-role coordinate/type/formula-presence/merge inventory on generated workbook bytes only. No production binding or source operation.",
+  "recorded_at": "2026-10-16T10:41:55.332829+00:00",
+  "scientific_eligibility_or_allocation": false,
+  "scientific_status": "BLOCKED_SCHEMA",
+  "status": "FROZEN_GENERATED_BYTE_IMPLEMENTATION_SCOPE"
+}

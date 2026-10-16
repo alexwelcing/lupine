@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-B",
+    "-m",
+    "unittest",
+    "-v",
+    "test_retained_mpea_transport.RetainedMpeaTransportTests.test_all_sixteen_flags_required_without_omission_extra_or_reorder"
+  ],
+  "scope": "Only the original single retained-transport test; inert temporary Git/archive/wheel fixture; no actual scientific source/private inputs or full suite.",
+  "source_pins": {
+    "scripts/verify_retained_artifacts.py": "3d3247beb74905c3f6d3a48aa42566d73c7a550645116ce084c0d8e4d664446a",
+    "tests/test_retained_artifacts.py": "ffdd9dd80e5e2c23a9294d35bc70bb7bf9591384f4071229c414c0c0562fb3f3",
+    "tests/test_retained_mpea_transport.py": "b841a8dcc5ac955f3e82a7de0e34186e9d752552c022a750c3cdec85c94da84a"
+  },
+  "started_at": "2026-10-16T14:35:51.857395+00:00"
+}

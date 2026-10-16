@@ -1,0 +1,47 @@
+{
+  "bindings": [
+    {
+      "bytes": 61640,
+      "path": ".cache/phase2-li-complete-readiness-production-v1/counter-consistency-v1/held/li_v3_readiness_production.py",
+      "sha256": "a3370ac84762ef7f859061bde93f118a1c1981b02460e9ddd0b1cd38e55b840b"
+    },
+    {
+      "bytes": 61640,
+      "path": ".cache/phase2-li-complete-readiness-production-v1/li_v3_readiness_production.py",
+      "sha256": "77dece96850b09be2f13acd275cc28789ea0e3bc408cfcec86bcd02f488fed85"
+    },
+    {
+      "bytes": 81591,
+      "path": ".cache/phase2-li-complete-readiness-candidate-v1/li_v3_readiness.py",
+      "sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219"
+    },
+    {
+      "bytes": 35358,
+      "path": "scripts/li_v3_custody.py",
+      "sha256": "3ead51f0afdf16be973743257be488669c988aa40443779e7a5c400e9b0d3234"
+    },
+    {
+      "bytes": 10597,
+      "path": ".cache/phase2-li-complete-route-public-review-design-v1/README.md",
+      "sha256": "dcb9af53df282495865c6212804f2d719ceb9a41323a7245b6eabfb13438f16e"
+    },
+    {
+      "bytes": 6100,
+      "path": ".cache/phase2-li-complete-route-public-review-design-v1/validator-design.json",
+      "sha256": "ccbe427834e49677e273fd120ab49b75348ddc9a09d46d24ac42d9142f61b7fd"
+    },
+    {
+      "bytes": 1344,
+      "path": ".cache/phase2-li-complete-route-public-review-design-v1/root-acceptance.json",
+      "sha256": "db12feddf0cb06339d127876eaa30f5fa64842ea46b8091c91cab8f287722785"
+    },
+    {
+      "bytes": 1974,
+      "path": ".cache/phase2-li-complete-route-counter-correction-v1/decision.json",
+      "sha256": "597b297e12ed013756f849bf606c4e1309fe8b62cce8f97a903169c4c9a9170c"
+    }
+  ],
+  "final_release_commit": null,
+  "final_release_gates": null,
+  "status": "SOURCE_ONLY_PUBLIC_CONSISTENCY_IMPLEMENTATION"
+}

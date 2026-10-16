@@ -1,0 +1,12 @@
+test_active_or_image_content_never_becomes_text (__main__.ProjectionTests.test_active_or_image_content_never_becomes_text) ... ok
+test_crossed_ancestor_cannot_escape_suppression (__main__.ProjectionTests.test_crossed_ancestor_cannot_escape_suppression) ... ok
+test_finite_parser_limits (__main__.ProjectionTests.test_finite_parser_limits) ... ok
+test_fixed_size_type_and_encoding_rejections (__main__.ProjectionTests.test_fixed_size_type_and_encoding_rejections) ... ok
+test_incomplete_markup_has_explicit_static_projection_only (__main__.ProjectionTests.test_incomplete_markup_has_explicit_static_projection_only) ... ok
+test_no_external_resolution_or_instruction_execution (__main__.ProjectionTests.test_no_external_resolution_or_instruction_execution) ... ok
+test_static_text_and_entity_normalization (__main__.ProjectionTests.test_static_text_and_entity_normalization) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.040s
+
+OK

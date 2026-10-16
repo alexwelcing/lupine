@@ -1,0 +1,14 @@
+{
+  "started_at": "2026-10-16T18:07:03.928973+00:00",
+  "finished_at": "2026-10-16T18:07:04.862869+00:00",
+  "command": [
+    "gh",
+    "api",
+    "repos/alexwelcing/lupine/actions/jobs/117111359882/logs"
+  ],
+  "exit_code": 1,
+  "stdout_bytes": 0,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_bytes": 521,
+  "stderr_sha256": "9592067c049c54b448d2b3823241bb90c1bc826bae5b55b6734aa9e40af62dc2"
+}

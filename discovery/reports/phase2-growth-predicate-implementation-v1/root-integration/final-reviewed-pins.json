@@ -1,0 +1,13 @@
+{
+  "baseline_commit": "9766b6838388c35a92d32b1a60e65613c72b3fee",
+  "files": {
+    "docs/li-v3-growth-predicate-audit-plan.md": "a1a7d8fe820ddcd8d3479d53e4f35d5ce0ed6e123385bcbb1b646786e1d064d9",
+    "scripts/li_v3_growth_predicate_audit.py": "70a0339212b971bf7824ae256600b959ae7a7d22b6fc8853eb2208d3c8ece207",
+    "tests/test_li_v3_growth_predicate_audit.py": "1ca8b259f26c88e46a0e108d13c202afa15954871d5750c17307b58b90dd97d3",
+    "tests/test_li_v3_growth_predicate_audit_review.py": "3dd4b23024028e2e7ba5876ca8d9705e066e57362bfae63d9999783e76b5dc49"
+  },
+  "old332_unchanged": true,
+  "reviewed_at": "2026-10-16T12:27:58.532179+00:00",
+  "scope": "Exact reviewed G34 files; no actual source operation or scientific admission.",
+  "status": "FINAL_REVIEWED_SOURCE_PINS"
+}

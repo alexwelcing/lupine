@@ -1,0 +1,15 @@
+{
+  "exclude_directories": [
+    "__pycache__"
+  ],
+  "preserve_ignored_originals": true,
+  "schema": "lupine.publication-layout.v1",
+  "scope": "Representation only; exact historical original bytes remain reconstructible. No code/test result changed.",
+  "wrappers": [
+    {
+      "copy_wrapper": "first-author/README.md.json",
+      "omit_raw_on_publication": "first-author/README.md",
+      "original_sha256": "073e1a391e1fa8c22eedf331bbe0f934c556ccbead7d0c0a9a32b4bb0f8f6686"
+    }
+  ]
+}

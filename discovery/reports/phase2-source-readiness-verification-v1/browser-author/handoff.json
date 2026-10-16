@@ -1,0 +1,40 @@
+{
+  "actual_source_operations": 0,
+  "contract": {
+    "bytes": 3162,
+    "path": ".cache/phase2-source-readiness-browser-v1/README.md",
+    "sha256": "538d67c292ccd97d57e3b5cc1495ede0d556a4f9aa3367c7bd2e21a40c800a6b"
+  },
+  "copyset": {
+    "bytes": 3204,
+    "path": ".cache/phase2-source-readiness-browser-v1/promotion-copyset.final.json",
+    "sha256": "12600c414ae00448174d92e36124681b6aa41c909ce9f06317ad3729dbc611c8"
+  },
+  "durable_source_only_review": {
+    "bytes": 1034,
+    "path": ".cache/phase2-source-readiness-independent-v1/durable-helper-source-review/review.json",
+    "sha256": "f9da557eb2e07f0b37d2addecca19be44c524494030708520b950ddb1b61885d"
+  },
+  "entrypoint": {
+    "bytes": 2530,
+    "path": ".cache/phase2-source-readiness-browser-v1/VERIFICATION.md",
+    "sha256": "a32268ce268b052db9881a23862c79ff51fa8ebdd3ec99a8485944bf61293bbb"
+  },
+  "further_author_execution_needed": false,
+  "independent_browser_handoff": {
+    "bytes": 1899,
+    "path": ".cache/phase2-source-readiness-independent-v1/handoff.json",
+    "sha256": "9db446df3f02e89292d5cdd6269b420f8c52980e9a10c1ffeaafa23e6b48b89d"
+  },
+  "inventory": {
+    "bytes": 6218,
+    "path": ".cache/phase2-source-readiness-browser-v1/inventory.json",
+    "sha256": "b2e664e94a57178c25f47aeb0be8cf6ff65891e187cff9387fb4671953d5e2a1"
+  },
+  "status": "READY_FOR_ROOT_INTEGRATION_AND_FIRST_DURABLE_HTTP_RUN",
+  "verification": {
+    "bytes": 1262,
+    "path": ".cache/phase2-source-readiness-browser-v1/verification.json",
+    "sha256": "a356ad21e09c044383bc2ce9bdd6aec94b4d82dd08f249027284a09252fbd7f9"
+  }
+}

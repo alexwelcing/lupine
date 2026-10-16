@@ -1,0 +1,58 @@
+{
+  "actual_operation_approved": false,
+  "actual_operation_receipts_read": 0,
+  "actual_source_reads": 0,
+  "at": "2026-10-16T15:41:50.218324+00:00",
+  "documentation": {
+    "bytes": 10262,
+    "path": "VALIDATOR.md",
+    "sha256": "2ac317b7b9d6279cff0860fec0674a6840122e0d3285db736123b9791ca3846d"
+  },
+  "final_commit": null,
+  "final_gate_pins": null,
+  "network_calls": 0,
+  "product_imports": 0,
+  "production_guard_calls": 0,
+  "release_approved": false,
+  "runtime_imports": [
+    "hashlib",
+    "json",
+    "re"
+  ],
+  "schema": "lupine.complete-route.public-review-validator-handoff.v1",
+  "scientific_admission": false,
+  "scope": "Author implementation and authored generated public-fixture tests; external source/gate authentication remains root-owned. No additional reviewer hierarchy.",
+  "source": {
+    "bytes": 50912,
+    "path": "public_review_validator.py",
+    "sha256": "db934708623a69282918c35f96d1eec442c94a5e4d6af109e51e2079653f14ca"
+  },
+  "status": "GENERATED_TESTS_PASS_NO_OPERATION_APPROVAL",
+  "test_history": [
+    {
+      "directory": "validator-first-run",
+      "exit_code": 0,
+      "failures": 0,
+      "tests": 24
+    },
+    {
+      "cause": "Validator omitted single-cell merge rejection and letters-only bound columns; both demonstrated before correction.",
+      "directory": "validator-adversarial-first",
+      "exit_code": 1,
+      "failures": 2,
+      "tests": 26
+    },
+    {
+      "directory": "validator-final-run",
+      "exit_code": 0,
+      "failures": 0,
+      "tests": 26
+    }
+  ],
+  "tests": {
+    "bytes": 27752,
+    "path": "test_public_review_validator.py",
+    "sha256": "835cab953d7251d509bcaa965675560b94835ccb242077b56de66134e29a3085"
+  },
+  "tracked_edits": 0
+}

@@ -1,0 +1,112 @@
+{
+  "schema": "lupine.next-source-priorities.independent-review.v1",
+  "created_at": "2026-10-16T11:18:41.589770+00:00",
+  "reviewer": "/root/phase2_evidence/author_methods_review",
+  "status": "NO_BLOCKER_WITH_DOCUMENTED_LIMITS",
+  "scope": "Read-only documentary and mathematical-claim review of the held prioritization note, with exact checks of its 15 named local documentary inputs. This is not a source-admission decision, empirical test, independent G31 execution audit, protocol selection, or mathematical formal verification.",
+  "reviewed_report": {
+    "path": ".cache/phase2-next-source-priorities-v1/README.md",
+    "bytes": 8860,
+    "sha256": "96d4909c144cef965be752834c54fddedb16b84ef1efc9f75a4cd05bd9df0e63"
+  },
+  "reviewed_source_bindings": {
+    "path": ".cache/phase2-next-source-priorities-v1/source-bindings.json",
+    "bytes": 3531,
+    "sha256": "effe1e02b7d960bacbccc768075971fb3da35f8a0d15bfd062bd03ee5347b783"
+  },
+  "findings": [
+    {
+      "topic": "Finite archive counting",
+      "conclusion": "For a fixed M-ID frame, fixed binary labels and fixed policy, a uniform size-e subset has the stated hypergeometric count irrespective of physical dependence among rows. The report keeps these sampling premises distinct from row independence and future-material claims."
+    },
+    {
+      "topic": "Grouping and leakage",
+      "conclusion": "Unknown physical grouping alone does not refute a declared ID-weighted archive-label estimand. Group definitions remain necessary when labels depend on panels; source overlap remains relevant to distinct-material/study claims, training leakage, fresh holdouts and unique evidence cost. Repeated IDs do not become independent evidence."
+    },
+    {
+      "topic": "Calibration distinction",
+      "conclusion": "The separate need for role-invariant score construction is stated. A fixed-policy residual-label audit and a calibration construction with role-dependent fitting are not conflated."
+    },
+    {
+      "topic": "Rhizo priority",
+      "conclusion": "The retained 36 IDs, 110 artifacts and 43 reference locations support an economical readiness inquiry. They do not establish numeric completeness, finiteness, permissible use, unique references or scientific comparability. The note requires those uncertainties to remain visible, and does not select a reference or numerical outcome."
+    },
+    {
+      "topic": "Narrow archival claim",
+      "conclusion": "Exact recorded-label comparison need not establish hard physical discrepancy bounds or an independently reproducible model checkpoint. Those remain relevant to stronger physical pruning and named-calculator reproduction. The note correctly distinguishes the historical map from re-relaxed calculation and does not claim one held-out facet per block is a shared-field candidate pool."
+    },
+    {
+      "topic": "AM Bench and BAM",
+      "conclusion": "Deferring five same-alloy specimens for the screening objective is justified without a universal minimum-N claim. BAM remains explicitly exposed documentary/metrology evidence, not a fresh holdout. No reviewed catalog is newly admitted here."
+    },
+    {
+      "topic": "Historical and prospective claims",
+      "conclusion": "The note preserves exposed historical negative results and prohibits retuning. Its proposed readiness decision does not complete G21 paired screening or fresh transfer, and no census or scientific protocol was run or frozen by this note."
+    },
+    {
+      "topic": "G31 receipt consistency",
+      "conclusion": "The two allowed public JSON receipts are byte-identical and agree with the production-final receipt. They record three completed local extra areas, no decompression/XML decoding, zero inspected XML bytes and member_count null. Three is not a total-member count. The review checks these documentary declarations only; it does not attest that the producer executed correctly or claim an actual auditor PASS."
+    },
+    {
+      "topic": "Implementation identity precision",
+      "conclusion": "The report phrase source commit is read as the public receipt field implementation.commit, which matches production final.commit. It is not an identity for the upstream scientific archive. This is a nonblocking precision observation; no upstream identity is inferred from that commit."
+    },
+    {
+      "topic": "Binding integrity",
+      "conclusion": "All 15 declared source byte counts and SHA256 hashes match. The held report hash matches the source-bindings readme_sha256. Earlier dated readiness notes and the pending-auditor statement are treated as documented historical checkpoints, not promoted to current verification claims."
+    }
+  ],
+  "blocking_findings": [],
+  "g31_documentary_assertions": {
+    "two_public_receipts_byte_identical": true,
+    "status": "BLOCKED_SCHEMA",
+    "engineering_status": "BLOCKED_LAYOUT",
+    "reason": "ZIP_LAYOUT_UNSUPPORTED",
+    "completed_local_extra_areas": 3,
+    "member_count": null,
+    "decompression_started_count": 0,
+    "decompression_completed_count": 0,
+    "inspected_xml_bytes": 0,
+    "xml_decoding_started_count": 0,
+    "xml_decoding_completed_count": 0,
+    "implementation_commit": "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace",
+    "source_execution_independently_verified": false,
+    "actual_receipt_auditor_pass_claimed": false
+  },
+  "exposure": {
+    "reads": "Only named public project reports/metadata and the three specifically root-approved G31 public receipts; already-reviewed BAM own-paraphrase README only. Source hashes traverse those documentary files.",
+    "new_network": false,
+    "raw_scientific_objects_read": false,
+    "target_values_read_from_raw_objects": false,
+    "runtime_imports_or_tests": false,
+    "source_scripts_executed": false,
+    "tracked_edits": false
+  },
+  "supporting_review_artifacts": [
+    {
+      "path": ".cache/phase2-next-source-priorities-review-v1/README.md",
+      "bytes": 5379,
+      "sha256": "3637fd8d7f477af7073dee0f4a55c2a3ec3e1dcc24ed82eb3aa51c45af4c38db"
+    },
+    {
+      "path": ".cache/phase2-next-source-priorities-review-v1/source-bindings.json",
+      "bytes": 2927,
+      "sha256": "58980094088ec29f903fe3556778d8869e02cc49f753f03490dff8a261f9adbb"
+    },
+    {
+      "path": ".cache/phase2-next-source-priorities-review-v1/rhizo-priority-addendum.md",
+      "bytes": 5003,
+      "sha256": "0dd4d28c83d0f23250148773a9d2f1b316ebef478da81899be0debe68a586482"
+    },
+    {
+      "path": ".cache/phase2-next-source-priorities-review-v1/rhizo-addendum-bindings.json",
+      "bytes": 833,
+      "sha256": "76c4c438a9dcb4e1567d9786d06cf3a09d5ad506cb4c12e8acb5b60de876f8de"
+    },
+    {
+      "path": ".cache/phase2-next-source-priorities-review-v1/artifact-check.json",
+      "bytes": 3670,
+      "sha256": "3f03f5b343dac74c1a1bec353421209e47be32bff9b4f63f834eecffc366244a"
+    }
+  ]
+}

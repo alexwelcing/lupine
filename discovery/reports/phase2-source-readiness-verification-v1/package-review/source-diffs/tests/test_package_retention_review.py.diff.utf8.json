@@ -1,0 +1,7 @@
+{
+  "schema": "lupine.preserved-utf8.v1",
+  "original_source": ".cache/phase2-source-readiness-package-review-v1/source-diffs/tests/test_package_retention_review.py.diff",
+  "original_bytes": 514,
+  "original_sha256": "df4a11a3e4297468a0c3d9cb70c161baa53a5c420576d563d65c79a2df28ee12",
+  "text": "--- baseline/tests/test_package_retention_review.py\n+++ candidate/tests/test_package_retention_review.py\n@@ -23,7 +23,7 @@\n m = importlib.util.module_from_spec(spec)\n spec.loader.exec_module(m)\n INERT_WHEEL = b'Synthetic inert wheel bytes. No package installation or probe is performed.\\n'\n-PROBE_SHA256 = '52e04bd2af952ae239f9da2dc8b966352f438db204dcdfe8725f92e46bea7710'\n+PROBE_SHA256 = '0500909f0aee8a3275b44d8c60ad8f3880247332966525c126141e8f8ced70c7'\n \n \n class RetentionIndependentReview(unittest.TestCase):\n"
+}

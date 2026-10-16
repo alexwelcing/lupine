@@ -1,0 +1,17 @@
+test_selected_growth_specific_closed_failure_is_preserved (__main__.ProductionReview.test_selected_growth_specific_closed_failure_is_preserved) ... FAIL
+
+======================================================================
+FAIL: test_selected_growth_specific_closed_failure_is_preserved (__main__.ProductionReview.test_selected_growth_specific_closed_failure_is_preserved)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-production-review-v1/test_li_v3_growth_predicate_audit_review.py", line 450, in test_selected_growth_specific_closed_failure_is_preserved
+    self.assertEqual(report['first_rejection']['g31_reason'],'GROWTH_PREDECESSOR_FIELDS_MISMATCH')
+AssertionError: 'GROWTH_PREDECESSOR_BLOCKED' != 'GROWTH_PREDECESSOR_FIELDS_MISMATCH'
+- GROWTH_PREDECESSOR_BLOCKED
++ GROWTH_PREDECESSOR_FIELDS_MISMATCH
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.035s
+
+FAILED (failures=1)

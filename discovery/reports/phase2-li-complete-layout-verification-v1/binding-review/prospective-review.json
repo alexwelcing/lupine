@@ -1,0 +1,117 @@
+{
+  "builder_executed": false,
+  "builder_sha256": "76ad354efe5af82dde1e9726ac8365478a78d9376943a5f04fdb7fa79fc215c7",
+  "expected_sha256": "fb80f9e41d6bc81d608ee936208752280d3a619d910744b78a9a3a04b40f93ed",
+  "findings": [
+    "Builder root and package/retained paths resolve to discovery and the fixed published9d source; no source-target invocation exists.",
+    "Expected eight source files match current public bytes; ddd4 baseline and67d manifest remain distinct from9d operation producer and6bfd current manifest.",
+    "Expected layout remains the fixed A profile: null phase-binding pins and frame binding, empty prior acceptances, fixed G34 prerequisite/capture identity. No scientific premise or outcome expectation is introduced.",
+    "Expected package/strict/artifact/CI pin fields match held recorder schemas; actual detailed acceptance is deferred to load_bindings/load_validator/_expected/gates_valid on final supplied public bytes.",
+    "Five copied outer tool digests match current held source and outer package producer is9d. Root-observed package metadata records actual outer exit0; no actual outer invocation was made by reviewer.",
+    "Publication mutation is bounded local assembly, not custody execution. If an exclusive publication or later pin assertion fails, existing originals must remain; this review does not authorize retry of actual slots."
+  ],
+  "inputs": [
+    {
+      "bytes": 5013,
+      "path": ".cache/phase2-li-complete-readiness-binding-preparation-v1/bind_layout.py",
+      "sha256": "76ad354efe5af82dde1e9726ac8365478a78d9376943a5f04fdb7fa79fc215c7"
+    },
+    {
+      "bytes": 6540,
+      "path": ".cache/phase2-li-complete-readiness-binding-preparation-v1/expected-layout.json",
+      "sha256": "fb80f9e41d6bc81d608ee936208752280d3a619d910744b78a9a3a04b40f93ed"
+    },
+    {
+      "bytes": 3306,
+      "path": ".cache/phase2-li-complete-readiness-operations-v1/bindings-layout.json",
+      "sha256": "a602bb995437a6eb2f2c8dadfa22dcff961972cdd0f86cba41bbec51ad653524"
+    },
+    {
+      "bytes": 34564,
+      "path": ".cache/phase2-li-complete-readiness-operations-v1/run_after_ci.py",
+      "sha256": "f13ec4ad78d28266a405120e9ff644ba3856bfeacae851912678ceeb7f486dc5"
+    },
+    {
+      "bytes": 15907,
+      "path": ".cache/phase2-li-complete-readiness-operations-v1/recorder_support.py",
+      "sha256": "6533ff3b934646fb2fa4e11cead85bc9f0ce5ffe8e4901ad27eb55c4e12e625c"
+    },
+    {
+      "bytes": 4660,
+      "path": ".cache/phase2-li-complete-readiness-operations-v1/run_package.py",
+      "sha256": "ff75410bb8b68de831a6db16dab89d314b0cf329ca22188badd4e2d0ff38831a"
+    },
+    {
+      "bytes": 867,
+      "path": ".cache/phase2-li-complete-readiness-outer-observer-v1/bindings-package.json",
+      "sha256": "d1f73657bd1a3b5e9eceb93b85e461cdc64abcd339bfc0c80c78275834a992ef"
+    },
+    {
+      "bytes": 473,
+      "path": ".cache/phase2-li-complete-readiness-outer-observer-v1/root-observed-package.json",
+      "sha256": "4b200c4383ad8bd66c522d8f600db69a5621fa9ff43c12b1bba98a9cafcec2f5"
+    },
+    {
+      "bytes": 8721,
+      "path": ".cache/phase2-li-complete-readiness-outer-observer-v1/observe.py",
+      "sha256": "3ef3c337ef5bd1b2f496034716311d9027027352510b18a3e57e7b3eaa13aa55"
+    },
+    {
+      "bytes": 40693,
+      "path": "reports/runtime-manifest.json",
+      "sha256": "6bfd99aa4b3fdf254038570fc9e40cbb574a1fbbe587c943cdf909359c456a5f"
+    },
+    {
+      "bytes": 81591,
+      "path": "scripts/li_v3_readiness.py",
+      "sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219"
+    },
+    {
+      "bytes": 61640,
+      "path": "scripts/li_v3_readiness_production.py",
+      "sha256": "77dece96850b09be2f13acd275cc28789ea0e3bc408cfcec86bcd02f488fed85"
+    },
+    {
+      "bytes": 23867,
+      "path": "tests/test_li_v3_readiness.py",
+      "sha256": "f961582942c7e1964ef2b1b462d81520278a85c17a459be24c099c95ef9654a3"
+    },
+    {
+      "bytes": 60149,
+      "path": "tests/test_li_v3_readiness_review.py",
+      "sha256": "dda4d354ff55f09d4542105df7c7180097ad187477b4c03743bafd95a527a34b"
+    },
+    {
+      "bytes": 46051,
+      "path": "tests/test_li_v3_readiness_production.py",
+      "sha256": "809c0126ef9f130fad264ef2617f67b9b99db103a3a14c476a6e60bfb4905470"
+    },
+    {
+      "bytes": 89651,
+      "path": "tests/test_li_v3_readiness_production_review.py",
+      "sha256": "2f2295d0f04fbc0f3399f904eed757e8a6c0f713a13cf9bb13850c52ea1e91e0"
+    },
+    {
+      "bytes": 10283,
+      "path": "docs/li-v3-readiness.md",
+      "sha256": "295a04a9b411001e22a4e39c831c609203c2feb1958be5e663cfbb6a9e4704b7"
+    },
+    {
+      "bytes": 18081,
+      "path": "docs/li-v3-readiness-production.md",
+      "sha256": "1fd11e47c4a332034b213348e4a85165e18ba0693791483cd703c326eb8d87ca"
+    }
+  ],
+  "limits": [
+    "No actual completed CI/artifact audit packet was validated in this prospective review.",
+    "The builder copies a root-observed completion record; its presence cannot independently authenticate a process exit. Root must retain actual execution observation.",
+    "Byte identity and gate validation are engineering prerequisites, not physical validity or archive admission."
+  ],
+  "network_or_private_source_access": false,
+  "repository_guards_or_git_invoked": false,
+  "reviewed_at": "2026-10-16T16:14:54.326647+00:00",
+  "runtime_tests_executed": 0,
+  "schema": "lupine.li.complete-readiness.prospective_binding_review.v1",
+  "source_only": true,
+  "status": "SOURCE_REVIEW_NO_BLOCKER_ACTUAL_BINDING_PENDING"
+}

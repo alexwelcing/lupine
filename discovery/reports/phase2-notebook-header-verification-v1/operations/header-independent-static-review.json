@@ -1,0 +1,41 @@
+{
+  "contract_sha256": "44fdb50c071c1d9ade4a83f18753d91f8283105ee805221cb4b83175837eb0ff",
+  "limitations": [
+    "Static review is not execution evidence or a total program equivalence proof.",
+    "Closed category/stage/scope sets are not an independent semantic validator; actual-result review must inspect consistency with the pinned source path.",
+    "Controlled workflow, not hostile-operator protection. Filesystem failures can prevent writing new receipts.",
+    "Byte-identical diagnoses do not approve schema, documentary layout or science."
+  ],
+  "method": "Independent static read of full c626 source and exact final delta/contract, with source-byte hash binding. No recorder import or invocation; no tests/network/private source access.",
+  "network_used": false,
+  "positive_review": [
+    "fixed commit/branch and original four successful named CI jobs",
+    "clean-package and strict-verifier receipts bound to same323 runtime map",
+    "canonical exact top-level/exposure key sets and fixed source/capture/prerequisite identities",
+    "bounded child timeout/group-kill and bounded Git calls",
+    "pre/post remote,HEAD,worktree,runtime,source-guard,recorder and gate checks each run",
+    "execution receipts preserve partial/unknown state before success requirement",
+    "exclusive slots and output files; two validated public outputs compared byte-for-byte",
+    "fixed error strings and stopped summaries, no automatic retry"
+  ],
+  "prior_review_sha256": "def7dbfa808d92b000f8a16205780c595c86b17770479b763f528dfffd89f308",
+  "private_scientific_source_read": false,
+  "recorder_imported_or_invoked": false,
+  "resolved_findings": [
+    {
+      "id": "POST_RUN_GATE_RECORDER_BINDING",
+      "resolution": "run_command now receives held script_hash/gate_hashes; after every subprocess it rechecks them inside the same post-state try. Stop or general failure clears validated after_identity, records state_recheck_error in the execution receipt, prints a bounded summary and stops before subsequent command/final success."
+    },
+    {
+      "id": "VALIDATOR_SEMANTIC_SCOPE",
+      "resolution": "Public flag renamed canonical_and_closed in execution and summary. Source comment and README explicitly limit validation to fixed identity, canonical shape and disclosure scope; all previous checks retained. No duplicate classifier or private-source reexecution introduced."
+    }
+  ],
+  "reviewed_utc": "2026-10-16T08:45:05.037997+00:00",
+  "reviewer": "/root/phase2_planner",
+  "schema": "lupine.discovery.static_operation_recorder_review.v1",
+  "source": ".cache/phase2-next-source-operations-v1/run_header_after_ci.py",
+  "source_sha256": "6cfb4cca5d3460d80318d129ed529cc7476a78729908733ac7ef50512f3b4dbb",
+  "tests_executed": false,
+  "verdict": "PASS_FOR_DOCUMENTED_CONTROLLED_WORKFLOW_SCOPE"
+}

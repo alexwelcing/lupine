@@ -1,0 +1,79 @@
+{
+  "schema": "lupine.bam-projected-documentary-search.v1",
+  "source_projection_sha256": "4a0c0165e980e2e40418dac63f161215a04ab955aeff750193030cbd7c6e44e1",
+  "searched_fields": [
+    "resolved_text_or_raw_number",
+    "formula.text",
+    "ordinary comment.text"
+  ],
+  "matching": "Unicode casefolded literal substring, no synonyms or semantic absence inference",
+  "terms": [
+    {
+      "substring": "uncert",
+      "hits": [],
+      "hit_count": 0
+    },
+    {
+      "substring": "covarian",
+      "hits": [],
+      "hit_count": 0
+    },
+    {
+      "substring": "correlat",
+      "hits": [],
+      "hit_count": 0
+    },
+    {
+      "substring": "coverage",
+      "hits": [],
+      "hit_count": 0
+    },
+    {
+      "substring": "confidence",
+      "hits": [],
+      "hit_count": 0
+    },
+    {
+      "substring": "standard deviation",
+      "hits": [],
+      "hit_count": 0
+    },
+    {
+      "substring": "expanded",
+      "hits": [
+        {
+          "sheet": "Common-to-all",
+          "ref": "B8",
+          "field": "resolved_text_or_raw_number"
+        }
+      ],
+      "hit_count": 1
+    },
+    {
+      "substring": "batch",
+      "hits": [],
+      "hit_count": 0
+    },
+    {
+      "substring": "heat number",
+      "hits": [],
+      "hit_count": 0
+    },
+    {
+      "substring": "license",
+      "hits": [],
+      "hit_count": 0
+    },
+    {
+      "substring": "copyright",
+      "hits": [],
+      "hit_count": 0
+    },
+    {
+      "substring": "CC BY",
+      "hits": [],
+      "hit_count": 0
+    }
+  ],
+  "limits": "Only admitted projection, not all shared strings, unsupported parts, external sources or whole OOXML semantics; counts are text hits, not specimens."
+}

@@ -1,0 +1,22 @@
+{
+  "files": {
+    "README.md": {
+      "bytes": 6147,
+      "sha256": "ebc465645ab4ca661fbca78fb4ba8b6a9f5cc222504153cd5ce948c3cf9d2484"
+    },
+    "permissions-selected.json": {
+      "bytes": 615,
+      "sha256": "11f832f0d29e25359e191208d6cfdc5dc9cf58c68d0ed850880f1865d760ad39"
+    },
+    "review.json": {
+      "bytes": 1466,
+      "sha256": "1b5336c10621df358dc8d8f2ed1caa458925bb1583afd8a20f0a3eb85a46aefb"
+    },
+    "source-bindings.json": {
+      "bytes": 5920,
+      "sha256": "3b7b0936b03a42f28edfe55ebae57572f19c075f8fb0689726ce51bb74d3f82f"
+    }
+  },
+  "raw_article_or_record_files_included": false,
+  "schema": "lupine.public-copy-inventory.v1"
+}

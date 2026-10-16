@@ -1,0 +1,78 @@
+{
+  "schema": "lupine.li-documentary-citation-map.v1",
+  "scope": "Public bibliographic/reference graph only; no endpoint values, workbook joins, inferred measurement reuse or normalized identity merge",
+  "source_article_doi": "10.1038/s41597-024-04329-2",
+  "source_article_xml_sha256": "c7e527712991ce14fb233b57a7e1f5f2dc26e6728835df03510cd6c588146534",
+  "node_key_rule": "Keep article-local reference IDs separate; an asserted DOI literal is an attribute/edge, not the node identity. Registry records retain their returned DOI identities.",
+  "article_reference_nodes": [
+    {
+      "id": "CR49",
+      "asserted_doi_literal": "10.1520/STP157620140013",
+      "status": "REGISTRY_CORE_AUTHOR_TITLE_AGREEMENT_WITH_YEAR_PAGE_DISCREPANCY"
+    },
+    {
+      "id": "CR50",
+      "asserted_doi_literal": "10.1520/STP157620140013",
+      "status": "ASSERTED_DOI_REGISTRY_IDENTITY_CONFLICT"
+    }
+  ],
+  "registry_nodes": [
+    {
+      "doi": "10.1520/stp157620140013",
+      "evidence": "Exact DOI registry response",
+      "relation_to_article_reference": "CR49 core author/title agreement; year/page fields differ; conflicts with CR50 author/title/year"
+    },
+    {
+      "doi": "10.1016/0167-899x(85)90028-x",
+      "evidence": "Bounded title/author/year registry query",
+      "relation_to_article_reference": "CR50 bibliographic candidate consistent with title, author, year, volume, issue, pages and expanded journal name; not applied as correction"
+    },
+    {
+      "doi": "10.1016/s0920-3796(85)80060-0",
+      "evidence": "Same bounded registry query",
+      "relation_to_article_reference": "Second CR50 candidate sharing title/year/volume/pages and Klueh author; container differs and returned issue absent; not declared alias"
+    }
+  ],
+  "documentary_dataset_edges": [
+    {
+      "data_source_reference": "CR5",
+      "dataset_reference": "CR60",
+      "basis": "Table2 Data Source/Dataset citation cells",
+      "meaning": "Paper presents a documentary source-to-dataset citation, not verified shared measurement IDs"
+    },
+    {
+      "data_source_reference": "CR69",
+      "dataset_reference": "CR70",
+      "basis": "Table2 Data Source/Dataset citation cells",
+      "meaning": "Paper presents a documentary source-to-dataset citation, not verified shared measurement IDs"
+    },
+    {
+      "data_source_reference": "CR74",
+      "dataset_reference_range": {
+        "literal": "75–86",
+        "explicit_xref_endpoints": [
+          "CR75",
+          "CR86"
+        ],
+        "expanded": false
+      },
+      "basis": "Table2 Dataset cell with a printed range and two explicit XML xrefs",
+      "meaning": "Citation-range syntax only; neither two datasets nor an inferred count of independent sources"
+    }
+  ],
+  "experimental_data_labels": "Other table cells may say Experimental data; that label supplies no unique specimen/heat/test IDs or proof of originality. No count is promoted as a dataset/independent-unit count.",
+  "unverified": [
+    "DOI aliases or registrations across Klueh candidates",
+    "final corrected article citation identity",
+    "archive reference worksheet joins",
+    "specimen/heat/batch/test lineage",
+    "number of repeated underlying measurements",
+    "overlap with exposed MPEA/JARVIS/Li outcome objects",
+    "independent evaluation-unit count"
+  ],
+  "independent_unit_count": null,
+  "automatic_corrections": [],
+  "automatic_merges": [],
+  "query_count": 2,
+  "linked_content_requests": 0
+}

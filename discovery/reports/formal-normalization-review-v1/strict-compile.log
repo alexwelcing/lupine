@@ -1,0 +1,5 @@
+'LupineNormalization.normalized_coordinate_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LupineNormalization.normalized_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LupineNormalization.positive_scale_invariance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LupineNormalization.normalized_l1_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LupineNormalization.l1_zero_iff_equal' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,0 +1,26 @@
+{
+  "conclusions": [
+    "The final specifications preserve the reviewed grammar, exact coefficient normalization, resource caps, original row/group identities, explicit unknown states, and null whole-vector behavior.",
+    "The source reader remains a distinct custody stage. The first actual feature invocation still requires committed source/specifications, verified remote publication, and all four CI jobs before execution.",
+    "No actual archived feature extraction, true composition, scientific independence, useful predictor, completed scientific schema, or Python-to-Lean refinement is claimed.",
+    "The final publication policy is explicit: normalized per-row artifacts remain ignored and local; only validated aggregate reports and whole-artifact identities may be published.",
+    "The added standalone-process module-identity statement accurately describes the independently observed load_context behavior; it does not claim object interchangeability across contexts.",
+    "The closed local/public schema and structural-validation limits still match the unchanged reader. Source transformation depends on the controlled producer and reproduction, not an arbitrary resealed vector.",
+    "Source-role allocation, target interpretation, and predictive evaluation still require their own separately frozen scientific protocol."
+  ],
+  "findings": [],
+  "promotion_record_sha256": "9e4fadbdc58dd2130e5e9cfa0341362fc4fa0edbe5635ea0b1546212fd85b398",
+  "reader_and_kernels_equal_reviewed_scratch_bytes": true,
+  "reviewed_at": "2026-10-10T20:18:40.110618+00:00",
+  "reviewed_files": {
+    "docs/mpea-feature-adapter-contract-v1.md": "dee9044de66fe33f9c36b43259fae21778b12281d06bdcef54f84c1bf886f000",
+    "docs/mpea-feature-reader-v1.md": "bbfce38e180685b657fa6b81c55d6be6d81607ca9ac79998ca5f3fdc312bb160",
+    "scripts/mpea_feature_reader.py": "032d5341f29479437149d2fbd94879134dc2e4e51c895c1fba3cf771db1f34ef",
+    "scripts/mpea_features.py": "b24c0f1bb62fc56794e1232f973a6020ee42a0d3765d33cb51246f3c7a3a47d9",
+    "src/lupine_discovery/representation.py": "c65c0eed659025a0e41eb325e75182ac2b980c35ac43dfddaa501f4f3ddf3b9e"
+  },
+  "reviewer": "/root/representation_review",
+  "schema": "lupine.discovery.mpea_feature_specification.post_promotion_review.v1",
+  "scope": "Manual read-only review and source/hash comparison; no implementation change, test rerun, cache read, feature extraction, CI verification, or deployment performed by this review.",
+  "status": "PASS_READ_ONLY_SPECIFICATION_REVIEW"
+}

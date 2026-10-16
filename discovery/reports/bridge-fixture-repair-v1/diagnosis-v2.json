@@ -1,0 +1,117 @@
+{
+  "all_bound_files_unchanged": true,
+  "all_original_assertion_calls_unchanged": 98,
+  "candidate_boundary_tests_passed": 8,
+  "candidate_review_tests_passed": 13,
+  "classification": "STALE_TEST_FIXTURE_CONTRACTS_CONFIRMED",
+  "files": {
+    ".cache/mpea-study-custody/review_production/bridge_failure_478208f/boundary-candidate-v1.json": {
+      "bytes": 6565,
+      "sha256": "bec75c082568694c32c72bf8311aec3126a0123471f6071d4bd174ecc0bb9609"
+    },
+    ".cache/mpea-study-custody/review_production/bridge_failure_478208f/boundary-candidate-v1.log": {
+      "bytes": 1749,
+      "sha256": "926b7da2b9b347fa7a62007657bce98af469fc3fcfcbb5222c4e5a76b33ff794"
+    },
+    ".cache/mpea-study-custody/review_production/bridge_failure_478208f/boundary-comparison-v1.json": {
+      "bytes": 431,
+      "sha256": "875f3659bbbb28ac3079dd7cef9c08ffd9f0b69aff3e9dfc7ed1bca0abee9a38"
+    },
+    ".cache/mpea-study-custody/review_production/bridge_failure_478208f/boundary-first.json": {
+      "bytes": 6121,
+      "sha256": "a81c874119ae6f6b05c84b8a98a3a502638cd8c30044e987f886c912204763e1"
+    },
+    ".cache/mpea-study-custody/review_production/bridge_failure_478208f/boundary-first.log": {
+      "bytes": 11898,
+      "sha256": "2fb417caff90e9427fa4a8c8e7fc9e246fd42f58000819be861638dcca308705"
+    },
+    ".cache/mpea-study-custody/review_production/bridge_failure_478208f/candidate-v1.json": {
+      "bytes": 906,
+      "sha256": "53a5cddedf8fed265bfc4eeaf5cd8cac466a467c2982248edfd19febcf4cac6e"
+    },
+    ".cache/mpea-study-custody/review_production/bridge_failure_478208f/candidates/tests/test_mpea_public_bridge_boundaries.py": {
+      "bytes": 12652,
+      "sha256": "1d0fc7d3ec036d979fc4199bb2fe8c60f2e33a29c1b0668e7070897713470ba2"
+    },
+    ".cache/mpea-study-custody/review_production/bridge_failure_478208f/candidates/tests/test_mpea_public_bridge_review.py": {
+      "bytes": 14581,
+      "sha256": "c763e82c47bcd22a86fde949c6c8aec96d0d3f623bd66318b512cadc473d98f1"
+    },
+    ".cache/mpea-study-custody/review_production/bridge_failure_478208f/diagnosis-v1.json": {
+      "bytes": 4253,
+      "sha256": "39af1af0047822e7584e06aa05f9f72fc46d5d0d7802c8febf549ce1bc30c651"
+    },
+    ".cache/mpea-study-custody/review_production/bridge_failure_478208f/diagnosis-v1.md": {
+      "bytes": 3046,
+      "sha256": "f5bc49c7c6a83a33e19875afef71d8a388600c60d2b5b70d898975bbe23d14f9"
+    },
+    ".cache/mpea-study-custody/review_production/bridge_failure_478208f/diagnosis-v2.md": {
+      "bytes": 1473,
+      "sha256": "387b014a73babeb9837a5d73c0858f530f25798a2bd21c8c792790cbe41557fc"
+    },
+    ".cache/mpea-study-custody/review_production/bridge_failure_478208f/finalize_diagnosis.py": {
+      "bytes": 3440,
+      "sha256": "14eac180e50734d2ae08ad8f2c0ced41a7a78216df9864f46afd49b719386783"
+    },
+    ".cache/mpea-study-custody/review_production/bridge_failure_478208f/fixture-only.patch": {
+      "bytes": 3165,
+      "sha256": "54c014d5c9376a963dec5762dd2f43494c634840e94ef3ac4617de262c28ad16"
+    },
+    ".cache/mpea-study-custody/review_production/bridge_failure_478208f/main-full-review-setup-error.json": {
+      "bytes": 392,
+      "sha256": "271f2e114ffce30dea56dff63484ed9c527ae4c99e1fe41608d3c81995437596"
+    },
+    ".cache/mpea-study-custody/review_production/bridge_failure_478208f/main-full-review-setup-error.log": {
+      "bytes": 1064,
+      "sha256": "043962b866529855c2cdf04ab85e54693586ec52340d27f30e6ae7b8df83e039"
+    },
+    ".cache/mpea-study-custody/review_production/bridge_failure_478208f/optional-class-cleanup.json": {
+      "bytes": 525,
+      "sha256": "f975a7c8b9fd9c2163b039f8ec3f267216395c6c5c9b8d3f358648fffd2231e9"
+    },
+    ".cache/mpea-study-custody/review_production/bridge_failure_478208f/optional-class-cleanup.patch": {
+      "bytes": 2047,
+      "sha256": "a85abb28384a75c64b3addc150fb46697c08c720264563ae867c9fd5b2a8ecdd"
+    },
+    ".cache/mpea-study-custody/review_production/bridge_failure_478208f/original/test_mpea_public_bridge_boundaries.py": {
+      "bytes": 12124,
+      "sha256": "7b76dd623ba7dcdf0484daea982db08a6f470a8c783bca53b9e6c19fb7f4549b"
+    },
+    ".cache/mpea-study-custody/review_production/bridge_failure_478208f/original/test_mpea_public_bridge_review.py": {
+      "bytes": 14134,
+      "sha256": "5bc37564fa431e77b7bda94f0cd34d6fc0c5aa4a8980a5db2e5e00873aa8a21b"
+    },
+    ".cache/mpea-study-custody/review_production/bridge_failure_478208f/review-candidate-v1.json": {
+      "bytes": 6550,
+      "sha256": "b2940e5e658f796b6f54b0690290ec4c5737cd219c4a9b09906c57537be2c8ec"
+    },
+    ".cache/mpea-study-custody/review_production/bridge_failure_478208f/review-candidate-v1.log": {
+      "bytes": 2556,
+      "sha256": "4e94a6c8cc059310d3b4395fafc11aee90b0d578ac73041e58bf64fba6e5d77c"
+    },
+    ".cache/mpea-study-custody/review_production/bridge_failure_478208f/review-legacy-source-before.json": {
+      "bytes": 333,
+      "sha256": "2fb354f516dfcd903ea12927be50240551202235fb2d15504fe6d62a9a00cae3"
+    },
+    ".cache/mpea-study-custody/review_production/bridge_failure_478208f/run_boundary.py": {
+      "bytes": 1829,
+      "sha256": "cb3e9bcbfcd52079305212f65298f653ebfbaa96d9a95e3420d4346a21dd4cce"
+    },
+    ".cache/mpea-study-custody/review_production/bridge_failure_478208f/run_boundary_candidate.py": {
+      "bytes": 1977,
+      "sha256": "580c0f7ed001f7b57c46a0845ea32124e9ccd94cacfa0bb4a10348611f202953"
+    },
+    ".cache/mpea-study-custody/review_production/bridge_failure_478208f/run_review_candidate.py": {
+      "bytes": 1962,
+      "sha256": "cefd8ae3da451b50b828f096efc155149529116713428c8f9199263989121f49"
+    }
+  },
+  "legacy_source_sha256": "4cd0feb5a3ae20b45aa7a5fc9128dd8010a5cd09f1d5a1051fb6bf3148361d24",
+  "main_edits": false,
+  "optional_cleanup_tested": false,
+  "original_boundary_errors": 7,
+  "original_commit": "478208f0f3be4b5d810a2c113dbc395b9f1744cb",
+  "producer_changes_required": false,
+  "schema": "lupine.mpea.bridge-fixture-failure-diagnosis.v2",
+  "scope": "Scratch candidates executed against held main imports with explicit main-layout loader simulation; integrated main rerun/CI remain root obligations."
+}

@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "scripts/li_v3_flag_diagnostic.py",
+    "diagnose",
+    "--run",
+    "2"
+  ],
+  "commit": "f7c6ccd04b535f8830f07905b51a5dc2c8a6ca4f",
+  "started_at": "2026-10-16T07:23:12.594094+00:00",
+  "expected_exit_code": 2,
+  "ci_run": 38864077153,
+  "exposure_until_completed_receipt": "UNKNOWN"
+}

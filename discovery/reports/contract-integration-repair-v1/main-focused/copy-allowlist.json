@@ -1,0 +1,34 @@
+{
+  "schema": "focused_repair_safe_copy_allowlist.v1",
+  "files": {
+    "execution.json": {
+      "bytes": 87403,
+      "sha256": "0e41db721d8f72d7540fbd5bcd12cb81aa13e7da115f6750b1c6e432fb90c6bb"
+    },
+    "tests.log": {
+      "bytes": 10039,
+      "sha256": "8c1bc0798edb00a56d033aef3a72f69f5524bce28c11ea0200ed3b0714455349"
+    },
+    "copy-audit.json": {
+      "bytes": 1096,
+      "sha256": "432430e3b04f9eb44fc47a6b6a08d5042350c192859fa35ddb78a38f7cc9b9ba"
+    },
+    "run.py": {
+      "bytes": 2173,
+      "sha256": "96bb0f940f1d44e90ba7f64ccf3c1ad38f94978f3b3d2bea31ffa777ea5607d5"
+    },
+    "audit_copies.py": {
+      "bytes": 1116,
+      "sha256": "dae75b45b3dcc618f730ee98eb3d9ba4c53cba5cc73b1f3df57315f6a38c67e2"
+    },
+    "source-before.json": {
+      "bytes": 42490,
+      "sha256": "85f256d811bfea42a990362af724a1d99c9e90cf055af00bdcd1380457e65809"
+    },
+    "source-after.json": {
+      "bytes": 42490,
+      "sha256": "85f256d811bfea42a990362af724a1d99c9e90cf055af00bdcd1380457e65809"
+    }
+  },
+  "scope": "Actual main64 focusedtests PASS87.032s,339sourcebindingsunchanged. No fullsuite/registration/scientific approval."
+}

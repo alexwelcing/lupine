@@ -1,0 +1,73 @@
+{
+  "schema": "lupine.evidence-publication-independent-review.v1",
+  "completed_at": "2026-10-16T08:52:07.739664+00:00",
+  "owner": "/root/phase2_evidence/author_methods_review",
+  "result": "PASS_PUBLICATION_IDENTITY_NAVIGATION_AND_CLAIM_SCOPE",
+  "held_promotion_inventory_sha256": "36003129e24418038f4a9d7b3ec276b2868781e6cfb0fb9cec7a353b997c7ba7",
+  "checks": {
+    "promoted_files": 57,
+    "total_bytes": 371075,
+    "exact_original_copies": 46,
+    "bam_original_copies": 22,
+    "finite_original_copies_including_counting": 24,
+    "local_markdown_links": 30,
+    "symlinks": 0,
+    "wrappers_or_normalizations": 0,
+    "counting_inventory_entries_verified": 11,
+    "counting_bundle_files_including_inventory": 12,
+    "existing_public_binding_checks": 10
+  },
+  "findings": [
+    {
+      "issue": "Current finite publication wording initially said all illustrative counts were hand derivations, which could be read as including the additive executable audit.",
+      "severity": "wording_clarification",
+      "status": "resolved",
+      "resolution": "Changed only that sentence to qualify the original design. The exact prior publication bytes and delta are retained. Original mathematical/source review artifacts remained byte-identical.",
+      "old_publication_sha256": "ff830e00c06ca7d2980215f2ed379493bc6269095ded61c6f4ae7d779f09cd98",
+      "final_publication_sha256": "296687aaa59ec34665a36366344c282ca528c287902bd560dd5ea317c623424d"
+    }
+  ],
+  "blocking_findings": [],
+  "exactness_and_paths": [
+    "The full 57-file inventory exactly matches the promoted tree and stays inside the two reports directories; no symlinks or runtime-path promotion.",
+    "All 46 publication-map original pairs compare equal byte for byte against their permitted original caches, including the 12-file additive counting bundle. No wrappers or transformations occurred.",
+    "All 30 local Markdown links resolve in the virtual published layout, using existing public project files where appropriate. Original JSON .cache paths are historical provenance with explicit publication mappings.",
+    "The copied counting recorder and historic command are correctly disclosed as describing their original ignored layout; publication does not promise that the archived command runs unchanged at its relocated path."
+  ],
+  "counting_receipt_review": {
+    "method": "Read source and recorder statically; verify retained identities and consistency without executing either.",
+    "source_and_design": "Execution before/after SHA256 values match the exact promoted audit.py and design README; start receipt agrees with execution; original clean HEAD is a6e87c198d8116d26c523e0e1b2eedce4aeb225b.",
+    "outputs": "stdout/stderr hashes match; stderr is empty; exit code is zero; review, result, and stdout report identical count dictionaries. Eleven original inventory entries match byte/hash and total.",
+    "publication_claims": "510 binary worlds, 284 distinct distributions, 87380 initial allocations, 196776 coverage checks, 707147 instrumentation assertions and 6.846437356 seconds agree with retained receipts. The 24 retained permutation rows contain 12 first-draw, 16 stopped, and 12 fixed-three rejections.",
+    "limits": "These are retained finite synthetic execution records. This reviewer did not rerun the counting audit, reproduce its full mathematics computationally, or certify physical premises. No arbitrary-M proof or runtime conformance follows from these finite passes."
+  },
+  "metadata_publication_review": [
+    "The four retained DataCite/Zenodo responses are exact previously reviewed public metadata, with no linked workbook/LIS/schema/figure/notebook body included.",
+    "New BAM publication attribution matches both retained Zenodo records: titles, creators, DOI, version 1.0 and declared CC BY 4.0; linked-body notices and rights are explicitly not independently inspected.",
+    "Previously exposed aggregate uncertainty/temperature prose, file identities and prior access failures remain disclosed. Pairing intent is not promoted to empirical paired completeness, independent units, blind validation or an admitted benchmark.",
+    "The separate prospective schema-disclosure contract remains required before actual schema body acquisition; publication neither fetches it nor silently admits scientific data."
+  ],
+  "publication_scope": [
+    "Written finite design/review remains separate from later additive counting evidence; implementation explicitly deferred until a justified G21 fixed-frame contract.",
+    "No endpoint/model/threshold/allocation/UI/runtime feature or scientific superiority claim is introduced.",
+    "The two initial packaging harness errors are retained as such; no false product-test failure/pass or scientific implication is attached.",
+    "Parent whitespace receipt has 57 entries, matching current file set, ordinary no-index status 0/1 and empty diagnostics. This review checked that receipt but did not rerun its commands."
+  ],
+  "actual_review_activity": {
+    "network_requests": 0,
+    "scientific_body_access": false,
+    "private_custody_access": false,
+    "copied_code_execution": false,
+    "product_imports": false,
+    "product_tests": false,
+    "lean_compilation": false,
+    "git_mutation": false,
+    "tracked_writes": false,
+    "performed": "Local read/hash/JSON and Markdown navigation checks; static counting-source/recorder review; retained receipt consistency; current publication prose review."
+  },
+  "limitations": [
+    "Identity hashes and navigation checks are audit/reconstruction evidence, not proof of scientific truth.",
+    "This is a pre-publication cache review; no pushed commit or CI outcome is certified here.",
+    "Unchanged original mathematical/source arguments were not re-derived or comprehensively re-reviewed; exact bytes preserve the earlier independent reviews."
+  ]
+}

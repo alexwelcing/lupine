@@ -1,0 +1,37 @@
+{
+  "schema": "lupine.discovery.outcomes.v1",
+  "scenario_id": "interval-refinement-pair",
+  "problem_digest": "f7233406ac2eb877cf093f7a6d91ebdac1b4ef8b8bcd16997ed60e8d69876420",
+  "outcomes": [
+    {
+      "id": "A",
+      "score": "0",
+      "constraints": {}
+    },
+    {
+      "id": "B",
+      "score": "2",
+      "constraints": {}
+    },
+    {
+      "id": "C",
+      "score": "4",
+      "constraints": {}
+    },
+    {
+      "id": "D",
+      "score": "6",
+      "constraints": {}
+    },
+    {
+      "id": "E",
+      "score": "8",
+      "constraints": {}
+    },
+    {
+      "id": "F",
+      "score": "10",
+      "constraints": {}
+    }
+  ]
+}

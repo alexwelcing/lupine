@@ -1,0 +1,36 @@
+{
+  "actual_receipt_reads": 0,
+  "actual_source_reads": 0,
+  "changes": [
+    "Explicit MEMBER_KIND_PROFILE classification and bounded OPC content-type/relationship requirements; category does not identify member/type or justify guessed names/arbitrary-part acceptance. Actual category remains unknown.",
+    "Replace ambiguous no-endpoints restriction with no numerical endpoint values; endpoint definitions remain within the documentary mapping."
+  ],
+  "delta": {
+    "bytes": 5225,
+    "path": "clarification-v2.diff",
+    "sha256": "1159f8352bf9cca9c2369aaf1e8bc520095dcd3357f0eff87801880a47700b28"
+  },
+  "final_note": {
+    "bytes": 8556,
+    "path": "README.final-v2.md",
+    "sha256": "cb3d44902bc566d5b6442c3751295b4fa5d5f736d184d716247ffb9959fc6b21"
+  },
+  "network_requests": 0,
+  "new_framework": false,
+  "new_test_runs": 0,
+  "original_draft_preserved": {
+    "bytes": 8112,
+    "path": "README.md",
+    "sha256": "57e2e8ead0e8ef259dcd88d7719290ffe4f7a967d76602f843d99e98ad781d90"
+  },
+  "original_handoff_preserved": {
+    "bytes": 800,
+    "path": "handoff.json",
+    "sha256": "9b92c6400c34b8fac4644fe5a46320347e6ac92ac039fda5ee84612a6f9688a5"
+  },
+  "owner": "/root/growth_predicate_diagnostic",
+  "production_guard_invocations": 0,
+  "recorded_at": "2026-10-16T12:51:58.078638+00:00",
+  "status": "PROSPECTIVE_NOTE_V2_READY_FOR_ROOT_REVIEW",
+  "tracked_edits": 0
+}

@@ -1,0 +1,204 @@
+{
+  "status": "PASS",
+  "commit": "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace",
+  "baseline_commit": "d0505b9b358a4bdeafbd742f1aeeb6c2b955abf3",
+  "unchanged_prior_runtime_files": 326,
+  "added_runtime_files": {
+    "scripts/li_v3_growth_envelope.py": "f50069d028526ea045441a2e574a26192a210ff78ba34f5170777d32f5692ec3",
+    "scripts/li_v3_growth_hint_shape.py": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a",
+    "tests/test_li_v3_growth_envelope.py": "f569d732f02d90233fd20e9d5bf14ab9bb29337c09022093e15320af031523f1",
+    "tests/test_li_v3_growth_envelope_review.py": "4e23e7582dc1da3b0a51507eab4181a39707f0d9057506f25eba61d72ce73ccb",
+    "tests/test_li_v3_growth_hint_review.py": "13db80f49a6d8f83df58a3f2ae22f27450e5367c156368333db1908f90d01f85",
+    "tests/test_li_v3_growth_hint_shape.py": "1f863ee2f1eefd54919767f7b4c75b6d460332d50f6234103dd47e586557685e"
+  },
+  "baseline_runtime_pins_verified_against_baseline_git_bytes": 326,
+  "new_source_test_contracts_exact_in_git_archive_worktree": {
+    "docs/li-v3-growth-envelope-plan.md": "4a5954b93b84d05c32a8ee2ea8254aec63283e915c331339cb97875e4b2aeb59",
+    "docs/li-v3-growth-hint-shape-plan.md": "e0ca28ad61181c6cf56d20a46733d2285acb6cb5bc39348f46ee3acb29dfcbc6",
+    "scripts/li_v3_growth_envelope.py": "f50069d028526ea045441a2e574a26192a210ff78ba34f5170777d32f5692ec3",
+    "scripts/li_v3_growth_hint_shape.py": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a",
+    "tests/test_li_v3_growth_envelope.py": "f569d732f02d90233fd20e9d5bf14ab9bb29337c09022093e15320af031523f1",
+    "tests/test_li_v3_growth_envelope_review.py": "4e23e7582dc1da3b0a51507eab4181a39707f0d9057506f25eba61d72ce73ccb",
+    "tests/test_li_v3_growth_hint_review.py": "13db80f49a6d8f83df58a3f2ae22f27450e5367c156368333db1908f90d01f85",
+    "tests/test_li_v3_growth_hint_shape.py": "1f863ee2f1eefd54919767f7b4c75b6d460332d50f6234103dd47e586557685e"
+  },
+  "source_pins_match_final_reviewed_pin_record": true,
+  "reviewed_pin_record_sha256": "f65508a95077542381e000102ba2eb460ad080b058d8204a00ee34b74c9577e7",
+  "unchanged_wheel_package_members": 108,
+  "wheel_payload_equals_complete_baseline_git_package": true,
+  "wheel_nonpackage_content_delta": {},
+  "wheel_archive_bytes_claimed_unchanged": false,
+  "prior_manifest_sha256": "e806d052dcfaadc5bbc0a9378318709da011fbaf3a53a290aa6141014bae3959",
+  "current_manifest_sha256": "6007f58926fca8bca1dc88ee56fd6d55e2226c74bec0e363a6122759b9fe7fe3",
+  "unchanged_full_artifact_auditor_review_sha256": "59074b0b245d47caa13410841a87319e2cf079005e692e4bab9352810d2b11fd",
+  "held_public_inputs": {
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-artifact-review-v1/additive_audit.py": "22b3cbaa1335a85d81d79a11e6722f5fadd6db51854ca8c2de483a65d45528f7",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-release-v1/final-reviewed-pins.json": "f65508a95077542381e000102ba2eb460ad080b058d8204a00ee34b74c9577e7",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-artifact-review-v1/actual-c17c4c6b152a/review.json": "59074b0b245d47caa13410841a87319e2cf079005e692e4bab9352810d2b11fd",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-local-extra-clean-package-v1/artifacts/release-artifacts.json": "86d7e2991298364b03f288b06ada9d3c20024acc98ec4aefdca7d3e34cffe705",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-clean-package-v1/artifacts/release-artifacts.json": "a653d5d2738aaf1cd6f0422bb1af42b65e4cb87054751207f80202da035c03ee",
+    "/workspace/lupine-discovery-branch/discovery/reports/runtime-manifest.json": "6007f58926fca8bca1dc88ee56fd6d55e2226c74bec0e363a6122759b9fe7fe3",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-clean-package-v1/artifacts/lupine-discovery-source-c17c4c6b152a.tar": "08fc0093210c2b6051529c7ea4ebdf7656bfd525680ac79107e108f30e65bb67",
+    "/workspace/lupine-discovery-branch/discovery/docs/li-v3-growth-envelope-plan.md": "4a5954b93b84d05c32a8ee2ea8254aec63283e915c331339cb97875e4b2aeb59",
+    "/workspace/lupine-discovery-branch/discovery/docs/li-v3-growth-hint-shape-plan.md": "e0ca28ad61181c6cf56d20a46733d2285acb6cb5bc39348f46ee3acb29dfcbc6",
+    "/workspace/lupine-discovery-branch/discovery/scripts/li_v3_growth_envelope.py": "f50069d028526ea045441a2e574a26192a210ff78ba34f5170777d32f5692ec3",
+    "/workspace/lupine-discovery-branch/discovery/scripts/li_v3_growth_hint_shape.py": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a",
+    "/workspace/lupine-discovery-branch/discovery/tests/test_li_v3_growth_envelope.py": "f569d732f02d90233fd20e9d5bf14ab9bb29337c09022093e15320af031523f1",
+    "/workspace/lupine-discovery-branch/discovery/tests/test_li_v3_growth_envelope_review.py": "4e23e7582dc1da3b0a51507eab4181a39707f0d9057506f25eba61d72ce73ccb",
+    "/workspace/lupine-discovery-branch/discovery/tests/test_li_v3_growth_hint_review.py": "13db80f49a6d8f83df58a3f2ae22f27450e5367c156368333db1908f90d01f85",
+    "/workspace/lupine-discovery-branch/discovery/tests/test_li_v3_growth_hint_shape.py": "1f863ee2f1eefd54919767f7b4c75b6d460332d50f6234103dd47e586557685e",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-local-extra-clean-package-v1/artifacts/lupine_discovery-0.1.0-py3-none-any.whl": "b04beb40d502c54f1d91c6dfa719e8c17ef92f159e76c535141a249ecb94929d",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-clean-package-v1/artifacts/lupine_discovery-0.1.0-py3-none-any.whl": "5cac629c8d162d3de2e63ab3eb2ff33cacee20a2522796373ab263cd20a3efc0"
+  },
+  "scope": "Byte identity and additive-source preservation only; no project import, tests, scientific private input, production acquisition or diagnostic executed.",
+  "scientific_claim_changed": false,
+  "remote_ci_verified": false,
+  "independence_note": "The addendum was prepared by the G30 author; its later operator/reviewer must be identified in the execution receipt. Byte preservation and package custody are distinct from diagnostic correctness, and shared-team review is not external validation.",
+  "started_utc": "2026-10-16T10:42:47.970570+00:00",
+  "elapsed_seconds": 2.6080847949997406,
+  "script_sha256": "22b3cbaa1335a85d81d79a11e6722f5fadd6db51854ca8c2de483a65d45528f7",
+  "actual_git_commands": [
+    {
+      "arguments": [
+        "rev-parse",
+        "HEAD"
+      ],
+      "stdout_sha256": "64ac7ab6a0fcbb35ebf85e93f758530b122156358ca072fbe5ba87f18b52582c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "show",
+        "d0505b9b358a4bdeafbd742f1aeeb6c2b955abf3:discovery/reports/runtime-manifest.json"
+      ],
+      "stdout_sha256": "e806d052dcfaadc5bbc0a9378318709da011fbaf3a53a290aa6141014bae3959",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "show",
+        "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace:discovery/reports/runtime-manifest.json"
+      ],
+      "stdout_sha256": "6007f58926fca8bca1dc88ee56fd6d55e2226c74bec0e363a6122759b9fe7fe3",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "show",
+        "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace:discovery/docs/li-v3-growth-envelope-plan.md"
+      ],
+      "stdout_sha256": "4a5954b93b84d05c32a8ee2ea8254aec63283e915c331339cb97875e4b2aeb59",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "show",
+        "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace:discovery/docs/li-v3-growth-hint-shape-plan.md"
+      ],
+      "stdout_sha256": "e0ca28ad61181c6cf56d20a46733d2285acb6cb5bc39348f46ee3acb29dfcbc6",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "show",
+        "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace:discovery/scripts/li_v3_growth_envelope.py"
+      ],
+      "stdout_sha256": "f50069d028526ea045441a2e574a26192a210ff78ba34f5170777d32f5692ec3",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "show",
+        "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace:discovery/scripts/li_v3_growth_hint_shape.py"
+      ],
+      "stdout_sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "show",
+        "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace:discovery/tests/test_li_v3_growth_envelope.py"
+      ],
+      "stdout_sha256": "f569d732f02d90233fd20e9d5bf14ab9bb29337c09022093e15320af031523f1",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "show",
+        "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace:discovery/tests/test_li_v3_growth_envelope_review.py"
+      ],
+      "stdout_sha256": "4e23e7582dc1da3b0a51507eab4181a39707f0d9057506f25eba61d72ce73ccb",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "show",
+        "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace:discovery/tests/test_li_v3_growth_hint_review.py"
+      ],
+      "stdout_sha256": "13db80f49a6d8f83df58a3f2ae22f27450e5367c156368333db1908f90d01f85",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "show",
+        "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace:discovery/tests/test_li_v3_growth_hint_shape.py"
+      ],
+      "stdout_sha256": "1f863ee2f1eefd54919767f7b4c75b6d460332d50f6234103dd47e586557685e",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "-C",
+        "/workspace/lupine-discovery-branch",
+        "archive",
+        "--format=tar",
+        "d0505b9b358a4bdeafbd742f1aeeb6c2b955abf3",
+        "discovery"
+      ],
+      "stdout_sha256": "4cba6f33d36538d7da5e5df46f1e1fcef2f8cb2fbb41e70a6ec79af8c9ff069a",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "rev-parse",
+        "HEAD"
+      ],
+      "stdout_sha256": "64ac7ab6a0fcbb35ebf85e93f758530b122156358ca072fbe5ba87f18b52582c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    }
+  ],
+  "exit_code": 0
+}

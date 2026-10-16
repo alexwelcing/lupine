@@ -1,0 +1,19 @@
+{
+  "copy_instruction": "Copy README.md, review.json, inventory.json and this handoff exactly; contains no raw source bodies or data.",
+  "inventory": {
+    "bytes": 441,
+    "path": "inventory.json",
+    "sha256": "73eb523d3b34854f09ffdad81c62d42fd1d61282c9694ab3d9164899830609cc"
+  },
+  "new_acquisition_authorized": false,
+  "review": {
+    "bytes": 5954,
+    "path": "review.json",
+    "sha256": "b40942f6d25ae7d7a9d51cede87948adb78b8a627bf333cb58423eb186c1032d"
+  },
+  "schema": "lupine.discovery.dielectric_archive_identity.review_handoff.v1",
+  "scientific_admission": false,
+  "source_public_inventory_sha256": "3574db7d7053359c8105beeed8b7e25a25ad00324d9cea115f6a55443739210f",
+  "source_report_readme_sha256": "c5dba2ad2963e5c466bc867662bc4b8b576e767b4e6438a0540770ab0f168f0a",
+  "status": "PASS_NARROW_PUBLIC_DOCUMENTARY_SCOPE"
+}

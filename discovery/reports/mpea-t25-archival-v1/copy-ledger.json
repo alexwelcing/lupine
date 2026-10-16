@@ -1,0 +1,21 @@
+{
+  "files": [
+    {
+      "destination": "reports/mpea-t25-archival-v1/recovery-amendment-review-draft.md",
+      "sha256": "b07f4fd92b9c8d3ace0d21f0184b615e2150802a1dcd87a8d3d389f1397d2abe",
+      "source": ".cache/mpea-study-custody/review_production/publication_review/preallocation-stop-v1/mpea-preallocation-recovery-v2.md"
+    },
+    {
+      "destination": "reports/mpea-t25-archival-v1/operational-stop.json",
+      "sha256": "c6553fc321b1447392eee90e08ec173161c34d1fb488b8244dab78663322be14",
+      "source": ".cache/mpea-study-custody/review_production/publication_review/preallocation-stop-v1/original-v1-operational-failure.json"
+    },
+    {
+      "destination": "reports/mpea-t25-archival-v1/stopping-rule-review.md",
+      "sha256": "3c1c0f514620ff0b6b31f63bb13f6770c75951287590356e8af84dac93b3ac29",
+      "source": ".cache/mpea-study-custody/review_production/publication_review/preallocation-stop-v1/stopping-rule-review.md"
+    }
+  ],
+  "raw_operational_records_copied": false,
+  "review_sha256": "812c5e8b2fde8b2a3711ebc599115cd00c6f9e3dd16e7b0162f5a00fc05bcc68"
+}

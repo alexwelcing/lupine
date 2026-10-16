@@ -1,0 +1,62 @@
+{
+  "file_count": 11,
+  "files": [
+    {
+      "bytes": 5736,
+      "path": "README.md",
+      "sha256": "6dc07e1cfcd845844bb2d65b4b8d6a5454474bc6d293783f9516a693806d9394"
+    },
+    {
+      "bytes": 10728,
+      "path": "audit.py",
+      "sha256": "4ad598ca979ae154df67ebcefecf0307261f18a430bfe25c205b7dc5d753d6f7"
+    },
+    {
+      "bytes": 55030,
+      "path": "exact-distributions.json",
+      "sha256": "50b6432ba9afbee740415a5c2a502b87185a4adb50a86cc5e1c7e57a395e7a4c"
+    },
+    {
+      "bytes": 1213,
+      "path": "execution.json",
+      "sha256": "6d0abec8b8b5b5bc35a60126550cf2e28861d2b357ee7898919991e9846b31bf"
+    },
+    {
+      "bytes": 4523,
+      "path": "optional-stopping-paths.json",
+      "sha256": "fc8e7192c75406fb4a0330166d48068660285ce5440fc30682ff41d98851cded"
+    },
+    {
+      "bytes": 24937,
+      "path": "result.json",
+      "sha256": "7ae235055e903f61de8897aaa9ef9f097b8f795ea509e533481c562802b2b530"
+    },
+    {
+      "bytes": 3352,
+      "path": "review.json",
+      "sha256": "a3ebcc071ecd9749abae1d38fc800c943ac0d50ba1839d0f1bfa9385334dea3e"
+    },
+    {
+      "bytes": 1628,
+      "path": "run_recorded.py",
+      "sha256": "6490a4d590acbff9902dfaf10eb8b37e92c68c71a6953b0c3a9f92ef7da46527"
+    },
+    {
+      "bytes": 651,
+      "path": "start.json",
+      "sha256": "6396e172a31db427c2a9159530d5dd194747534a45cb93d62226cc0fba738ef5"
+    },
+    {
+      "bytes": 0,
+      "path": "stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2362,
+      "path": "stdout.txt",
+      "sha256": "cf2bb3e48d5b08cd974abc1ce1a515664c25f7ed744345b5bbffd2db70723cda"
+    }
+  ],
+  "scope": "Ignored local audit bundle; inventory excludes itself.",
+  "total_bytes": 110160
+}

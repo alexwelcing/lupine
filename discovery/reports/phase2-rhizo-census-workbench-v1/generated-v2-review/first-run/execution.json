@@ -1,0 +1,94 @@
+{
+  "browser_errors": [],
+  "checks_passed": [
+    "all_16_means_16_sums_36_reference_rows_exact_sorted_counts_units_and_ids",
+    "synthetic_scope_no_winner_disclaimers_and_keyboard_details",
+    "actual_browser_download_preserves_complete_json_and_exact_rationals",
+    "missing_malformed_and_blocked_clear_tables_and_detached_old_export",
+    "detached_old_button_cannot_export_after_valid_replacement",
+    "malicious_identity_text_is_literal_without_DOM_execution_or_requests",
+    "reject_wrong_status",
+    "reject_output_failure",
+    "reject_wrong_sign",
+    "reject_scientific_promotion",
+    "reject_winner_claim",
+    "reject_fresh_claim",
+    "reject_missing_group",
+    "reject_duplicate_group",
+    "reject_missing_reference",
+    "reject_truth_claim",
+    "reject_token_rational_conflict",
+    "reject_wrong_squared_unit",
+    "reject_negative_absolute",
+    "reject_zero_denominator",
+    "reject_numeric_not_string",
+    "reject_huge_denominator"
+  ],
+  "elapsed_seconds": 11.202598397001566,
+  "failures": [
+    {
+      "check": "5000_digit_numerator_2500_digit_denominator_exact_and_mobile_contained",
+      "detail": "",
+      "exception": "AssertionError",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/lupine-discovery-branch/discovery/.cache/phase2-rhizo-census-ui-review-v1/browser_review.py\", line 78, in attempt\n    try:fn();checks.append(name)\n        ^^^^\n  File \"/workspace/lupine-discovery-branch/discovery/.cache/phase2-rhizo-census-ui-review-v1/browser_review.py\", line 115, in huge\n    assert len(h['groups'][1]['mean_squared_discrepancy']['denominator'])==2500\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+    },
+    {
+      "check": "reject_positive_5001_digit_numerator_above_contract_cap",
+      "detail": "Locator expected to be hidden\nActual value: visible \nCall log:\n  - Expect \"to_be_hidden\" with timeout 5000ms\n  - waiting for locator(\"#recorded-census-content\")\n    13 \u00d7 locator resolved to <div id=\"recorded-census-content\">\u2026</div>\n       - unexpected value \"visible\"\n\nAria snapshot:\n- paragraph: SYNTHETIC CONTROL \u00b7 no measured stored-label result\n- paragraph: All 144 stored pairs across 36 material/model IDs are included. Each of the 16 groups contains nine material positions with equal weight. Counts are archive positions, not independent experiments.\n- paragraph: Signed discrepancy = stored prediction \u2212 stored reference. Absolute and squared discrepancies use that same stored pair. These are exact arithmetic summaries of serialized values, not physical error estimates. NULL tolerances provide no success threshold.\n- region \"All 16 fixed groups \u00b7 exact stored-label discrepancy means, ordered by identity\":\n  - table \"All 16 fixed groups \u00b7 exact stored-label discrepancy means, ordered by identity\"\n- group: All exact sums and fixed contributing IDs\n- heading \"Do the models use the same stored reference?\" [level=3]\n- paragraph: Equality below compares stored rational values, token spellings and citation strings separately. Equal values do not establish common physical truth or equivalent geometry. Different values do not identify the correct reference or prove a binding error. Historical reference choice remains UNKNOWN; no model winner is selected.\n- group: All 36 material/property reference checks\n- paragraph: This generated fixture provides no measured historical result. Neither establishes a fresh holdout, training independence, uncertainty coverage, primary-source extraction accuracy or operating-condition transfer. No fit, ranking, threshold or scientific pass decision is introduced.\n- button \"\u2193 Complete stored-label census\"",
+      "exception": "AssertionError",
+      "traceback": "ensus-ui-review-v1/browser_review.py\", line 78, in attempt\n    try:fn();checks.append(name)\n        ^^^^\n  File \"/workspace/lupine-discovery-branch/discovery/.cache/phase2-rhizo-census-ui-review-v1/browser_review.py\", line 178, in positive_cap\n    render(x);blocked()\n              ^^^^^^^^^\n  File \"/workspace/lupine-discovery-branch/discovery/.cache/phase2-rhizo-census-ui-review-v1/browser_review.py\", line 74, in blocked\n    expect(page.locator('#recorded-census-content')).to_be_hidden();expect(page.locator('#recorded-census-status')).to_be_visible()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/sync_api/_generated.py\", line 23269, in to_be_hidden\n    self._sync(self._impl_obj.to_be_hidden(timeout=to_milliseconds(timeout)))\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_sync_base.py\", line 115, in _sync\n    return task.result()\n           ^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_assertions.py\", line 828, in to_be_hidden\n    await self._expect_impl(\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_assertions.py\", line 128, in _expect_impl\n    _record_soft_or_raise(\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_assertions.py\", line 60, in _record_soft_or_raise\n    raise error\nAssertionError: Locator expected to be hidden\nActual value: visible \nCall log:\n  - Expect \"to_be_hidden\" with timeout 5000ms\n  - waiting for locator(\"#recorded-census-content\")\n    13 \u00d7 locator resolved to <div id=\"recorded-census-content\">\u2026</div>\n       - unexpected value \"visible\"\n\nAria snapshot:\n- paragraph: SYNTHETIC CONTROL \u00b7 no measured stored-label result\n- paragraph: All 144 stored pairs across 36 material/model IDs are included. Each of the 16 groups contains nine material positions with equal weight. Counts are archive positions, not independent experiments.\n- paragraph: Signed discrepancy = stored prediction \u2212 stored reference. Absolute and squared discrepancies use that same stored pair. These are exact arithmetic summaries of serialized values, not physical error estimates. NULL tolerances provide no success threshold.\n- region \"All 16 fixed groups \u00b7 exact stored-label discrepancy means, ordered by identity\":\n  - table \"All 16 fixed groups \u00b7 exact stored-label discrepancy means, ordered by identity\"\n- group: All exact sums and fixed contributing IDs\n- heading \"Do the models use the same stored reference?\" [level=3]\n- paragraph: Equality below compares stored rational values, token spellings and citation strings separately. Equal values do not establish common physical truth or equivalent geometry. Different values do not identify the correct reference or prove a binding error. Historical reference choice remains UNKNOWN; no model winner is selected.\n- group: All 36 material/property reference checks\n- paragraph: This generated fixture provides no measured historical result. Neither establishes a fresh holdout, training independence, uncertainty coverage, primary-source extraction accuracy or operating-condition transfer. No fit, ranking, threshold or scientific pass decision is introduced.\n- button \"\u2193 Complete stored-label census\"\n"
+    }
+  ],
+  "finished_at": "2026-10-16T13:25:19.721204+00:00",
+  "network_requests": [],
+  "runner_sha256": "79e718181143ee5e44f5c762435706905913a8b7faa8606ff35e3a970c5336c4",
+  "scope": "Standalone real Chromium with independently generated public aggregate and held script/section plus existing product stylesheet. No HTTP integration, actual numeric projection/source/private reader, network or tracked edits.",
+  "source_after": {
+    "contract": {
+      "bytes": 8585,
+      "path": ".cache/phase2-rhizo-census-candidate-v1/contract.json",
+      "sha256": "e849d36004f0e73fdde22620bbffe06d1e53425907ca5fce974c536a5e1ea052"
+    },
+    "script": {
+      "bytes": 11596,
+      "path": ".cache/phase2-rhizo-census-ui-v1/recorded-census.js",
+      "sha256": "e5db3bc5786bdfd9deb992e6dfddd858932ae486439a357fcd17997be3ce81c8"
+    },
+    "section": {
+      "bytes": 761,
+      "path": ".cache/phase2-rhizo-census-ui-v1/section.html",
+      "sha256": "66ec27e80dad95674ad6b30c6346f448cd19859f77bb8a07ae92e3f381e05331"
+    },
+    "style": {
+      "bytes": 43104,
+      "path": "src/lupine_discovery/web/styles.css",
+      "sha256": "23b439d2f1b60bd5837bddf113d215d7e1dee14f21324075a030e802f13d9fdf"
+    }
+  },
+  "source_before": {
+    "contract": {
+      "bytes": 8585,
+      "path": ".cache/phase2-rhizo-census-candidate-v1/contract.json",
+      "sha256": "e849d36004f0e73fdde22620bbffe06d1e53425907ca5fce974c536a5e1ea052"
+    },
+    "script": {
+      "bytes": 11596,
+      "path": ".cache/phase2-rhizo-census-ui-v1/recorded-census.js",
+      "sha256": "e5db3bc5786bdfd9deb992e6dfddd858932ae486439a357fcd17997be3ce81c8"
+    },
+    "section": {
+      "bytes": 761,
+      "path": ".cache/phase2-rhizo-census-ui-v1/section.html",
+      "sha256": "66ec27e80dad95674ad6b30c6346f448cd19859f77bb8a07ae92e3f381e05331"
+    },
+    "style": {
+      "bytes": 43104,
+      "path": "src/lupine_discovery/web/styles.css",
+      "sha256": "23b439d2f1b60bd5837bddf113d215d7e1dee14f21324075a030e802f13d9fdf"
+    }
+  },
+  "source_unchanged": true,
+  "started_at": "2026-10-16T13:25:08.518637+00:00",
+  "status": "FAIL",
+  "synthetic_only": true
+}

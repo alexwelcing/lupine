@@ -1,0 +1,8 @@
+{
+  "encoding": "utf-8",
+  "original_bytes": 1221,
+  "original_path": "negative-public-review/first-stdout.txt",
+  "original_sha256": "d9cf9eef6ae4a817dfe9b11c674071f08996399896604958330eaa3c8495c9fe",
+  "schema": "lupine.public.utf8-evidence.v1",
+  "text": "{\n  \"status\": \"PASS_CONSISTENT_BLOCKED_LAYOUT_STOP\",\n  \"checks\": 55,\n  \"failures\": [],\n  \"findings\": {\n    \"actual_layout_slots_observed\": 1,\n    \"second_layout_slot_public_artifacts_present\": false,\n    \"dependent_phase_public_artifacts_present\": false,\n    \"producer_exit_code\": 2,\n    \"outer_observed_exit_code\": 2,\n    \"engineering_status\": \"NO_GO\",\n    \"status\": \"BLOCKED_SCHEMA\",\n    \"reason\": \"XML_PROFILE_UNSUPPORTED\",\n    \"member_opens\": {\n      \"started\": 5,\n      \"completed\": 5\n    },\n    \"decompressions\": {\n      \"started\": 5,\n      \"completed\": 5\n    },\n    \"utf8_decodes\": {\n      \"started\": 5,\n      \"completed\": 5\n    },\n    \"xml_parses\": {\n      \"started\": 5,\n      \"completed\": 4\n    },\n    \"public_payloads_cleared\": true,\n    \"names_projected\": 0,\n    \"role_projection_started\": false,\n    \"source_bytes_read\": 183878,\n    \"character_data_state\": \"PRIVATE_XML_DECODE_COMPLETED\",\n    \"archive_close_completed\": true,\n    \"output_directory_close_error\": null,\n    \"completed_layout_counter_equation_applicable\": false,\n    \"reusable_completed_prior\": false,\n    \"retry_or_next_phase_authorized\": false,\n    \"scientific_admission\": false,\n    \"blocking_member_or_XML_construct_identified\": false\n  }\n}\n"
+}

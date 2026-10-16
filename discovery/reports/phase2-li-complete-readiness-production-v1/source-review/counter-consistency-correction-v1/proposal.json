@@ -1,0 +1,105 @@
+{
+  "actual_or_private_inputs_read": false,
+  "additional_counterexamples": [
+    {
+      "counts_M_D_U_X": [
+        5,
+        5,
+        5,
+        5
+      ],
+      "scope": "A"
+    },
+    {
+      "counts_M_D_U_X": [
+        6,
+        6,
+        6,
+        6
+      ],
+      "s": 0,
+      "scope": "B"
+    },
+    {
+      "counts_M_D_U_X": [
+        6,
+        6,
+        8,
+        8
+      ],
+      "s": 1,
+      "scope": "B"
+    },
+    {
+      "A_counts": [
+        7,
+        7,
+        7,
+        7
+      ],
+      "B_counts": [
+        8,
+        8,
+        10,
+        10
+      ],
+      "s": 0,
+      "scope": "pair"
+    }
+  ],
+  "authentication_claim": false,
+  "candidate_or_tests_executed": false,
+  "concrete_forgery": {
+    "base": "any valid generated complete A outer receipt",
+    "executed": false,
+    "old_acceptance_basis": "source-derived: all int/range/start-complete predicates accept zero; payload replay omits historical total comparison",
+    "preserve": "all other fields including both completed role ledgers and complete package/roles/manifest",
+    "reseal": "canonicalize both identical generated slot receipts and update only their fixture pins",
+    "set_existing_fields": {
+      "/result/exposure/decompressions_completed": 0,
+      "/result/exposure/decompressions_started": 0,
+      "/result/exposure/member_opens_completed": 0,
+      "/result/exposure/member_opens_started": 0,
+      "/result/exposure/utf8_decodes_completed": 0,
+      "/result/exposure/utf8_decodes_started": 0,
+      "/result/exposure/xml_parses_completed": 0,
+      "/result/exposure/xml_parses_started": 0
+    }
+  },
+  "definitions": {
+    "D": "decompressions_started=decompressions_completed",
+    "M": "member_opens_started=member_opens_completed",
+    "U": "utf8_decodes_started=utf8_decodes_completed",
+    "X": "xml_parses_started=xml_parses_completed",
+    "s": "1 iff any B inventory field declared_type equals s; otherwise0"
+  },
+  "derivation_sha256": "6d9ee9f505f01835c7edcd67b122893e164d75094e89ee5a425f9fc9bdaa29c4",
+  "exact_historical_recomputation_claim": false,
+  "necessary_predicates": {
+    "A": [
+      "M=D=U=X",
+      "M>=6"
+    ],
+    "B": [
+      "M=D",
+      "U=X=M+2",
+      "M>=6+s"
+    ],
+    "same_source_pair": [
+      "M_B=M_A+s"
+    ]
+  },
+  "preserved_checks": [
+    "all eight counter fields have exact int type",
+    "all counters remain in existing0..4096 range",
+    "started equals completed per family",
+    "closed receipt shapes, original source/producer pins and cleanup requirements"
+  ],
+  "schema": "lupine.discovery.li.completed-prior-counter-proposal.v1",
+  "scope": "Only completed historical A/B and their authenticated same-source relation. Not failure prefixes or full C.",
+  "source_sha256": {
+    "li_v3_readiness.py": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219",
+    "li_v3_readiness_production.py": "540088bce4341b1f4137e44ef75244ada5786d000c50af597083dadbfc02c9d8"
+  },
+  "status": "ROOT_ACCEPTED_NARROW_PRE_PUBLICATION_CORRECTION"
+}

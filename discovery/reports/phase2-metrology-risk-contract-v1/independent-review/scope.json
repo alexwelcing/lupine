@@ -1,0 +1,27 @@
+{
+  "schema": "lupine.metrology-risk-contract-review-scope.v1",
+  "written_at": "2026-10-16T10:40:54.714780+00:00",
+  "owner": "/root/phase2_evidence",
+  "purpose": "Independent source-only challenge of math agent metrology risk contract: check hypotheses/counterexample and whether each actual BAM premise is supported, unsupported or unresolved.",
+  "permitted_sources": [
+    "Held math contract and source-only mathematical check artifacts once supplied",
+    "Previously reviewed .cache/phase2-bam-metrology-workbook-v1/README.md and documentary-findings.json",
+    "Already public reports/phase2-bam-readiness-v1/zenodo-17846617.json metadata where needed",
+    "Previously reviewed schema/header documentary reports, without raw CSV or internal projection reread"
+  ],
+  "excluded": [
+    "Raw XLSX",
+    "Internal workbook or CSV projection",
+    "Schema CSV bytes",
+    "Any new request or external body",
+    "Model or statistical study execution",
+    "Tracked writes or Git mutation"
+  ],
+  "distinctions": [
+    "Publisher-reported metrology confidence wording versus an established probability model",
+    "Measurement coverage versus predictive/calibration/joint-event coverage",
+    "Within-document test pairing versus independence or random sampling",
+    "Synthetic counterexample/proof premises versus actual source validity"
+  ],
+  "no_scientific_threshold_or_protocol_choice": true
+}

@@ -1,0 +1,53 @@
+test_a_counter_equation_and_minimum (test_public_review_validator.PublicReviewTests.test_a_counter_equation_and_minimum) ... ok
+test_b_complete_cell_partition_and_nontext_withholding (test_public_review_validator.PublicReviewTests.test_b_complete_cell_partition_and_nontext_withholding) ... ok
+test_b_counter_equation_and_cross_phase_identity (test_public_review_validator.PublicReviewTests.test_b_counter_equation_and_cross_phase_identity) ... ok
+test_bound_column_requires_letters_not_a_cell_coordinate (test_public_review_validator.PublicReviewTests.test_bound_column_requires_letters_not_a_cell_coordinate) ... FAIL
+test_c_does_not_reuse_b_counter_equation (test_public_review_validator.PublicReviewTests.test_c_does_not_reuse_b_counter_equation) ... ok
+test_c_replayed_inventory_and_inner_hash_binding (test_public_review_validator.PublicReviewTests.test_c_replayed_inventory_and_inner_hash_binding) ... ok
+test_closed_failure_prefix_not_completed_counter_test (test_public_review_validator.PublicReviewTests.test_closed_failure_prefix_not_completed_counter_test) ... ok
+test_closed_science_flags_and_all_rows_accounted (test_public_review_validator.PublicReviewTests.test_closed_science_flags_and_all_rows_accounted) ... ok
+test_duplicate_noncanonical_float_depth_size_and_bool_rejected (test_public_review_validator.PublicReviewTests.test_duplicate_noncanonical_float_depth_size_and_bool_rejected) ... ok
+test_exit_zero_negative_vs_mechanical_two (test_public_review_validator.PublicReviewTests.test_exit_zero_negative_vs_mechanical_two) ... ok
+test_failure_stops_route_and_slot_budget (test_public_review_validator.PublicReviewTests.test_failure_stops_route_and_slot_budget) ... ok
+test_generated_routes_both_sst_and_semantic_modes (test_public_review_validator.PublicReviewTests.test_generated_routes_both_sst_and_semantic_modes) ... ok
+test_inner_cleanup_failure_and_success_exposure_drift (test_public_review_validator.PublicReviewTests.test_inner_cleanup_failure_and_success_exposure_drift) ... ok
+test_late_close_failure_cannot_accept_persisted_success (test_public_review_validator.PublicReviewTests.test_late_close_failure_cannot_accept_persisted_success) ... ok
+test_missing_persisted_or_reservation_blocks_completed (test_public_review_validator.PublicReviewTests.test_missing_persisted_or_reservation_blocks_completed) ... ok
+test_order_lineage_and_binding_producers (test_public_review_validator.PublicReviewTests.test_order_lineage_and_binding_producers) ... ok
+test_pair_bytes_and_reservations_cannot_be_normalized (test_public_review_validator.PublicReviewTests.test_pair_bytes_and_reservations_cannot_be_normalized) ... ok
+test_partial_read_and_custody_error_reason_mapping (test_public_review_validator.PublicReviewTests.test_partial_read_and_custody_error_reason_mapping) ... ok
+test_recording_wrong_hash_command_slot_state_gate_and_timeout (test_public_review_validator.PublicReviewTests.test_recording_wrong_hash_command_slot_state_gate_and_timeout) ... ok
+test_semantic_binding_exact_text_storage_and_endpoint_scope (test_public_review_validator.PublicReviewTests.test_semantic_binding_exact_text_storage_and_endpoint_scope) ... ok
+test_single_cell_merge_is_not_a_valid_declared_merge (test_public_review_validator.PublicReviewTests.test_single_cell_merge_is_not_a_valid_declared_merge) ... FAIL
+test_source_identity_and_counter_type_drift (test_public_review_validator.PublicReviewTests.test_source_identity_and_counter_type_drift) ... ok
+test_sst_exposure_and_formula_rejection (test_public_review_validator.PublicReviewTests.test_sst_exposure_and_formula_rejection) ... ok
+test_structural_frames_no_semantic_payload_or_reclassification (test_public_review_validator.PublicReviewTests.test_structural_frames_no_semantic_payload_or_reclassification) ... ok
+test_unknown_fields_and_types_never_echo_in_review (test_public_review_validator.PublicReviewTests.test_unknown_fields_and_types_never_echo_in_review) ... ok
+test_zero_row_frames_cannot_win_vacuously (test_public_review_validator.PublicReviewTests.test_zero_row_frames_cannot_win_vacuously) ... ok
+
+======================================================================
+FAIL: test_bound_column_requires_letters_not_a_cell_coordinate (test_public_review_validator.PublicReviewTests.test_bound_column_requires_letters_not_a_cell_coordinate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-route-public-review-design-v1/test_public_review_validator.py", line 384, in test_bound_column_requires_letters_not_a_cell_coordinate
+    self.reject_report(reports['frame'], e['frame'], binding)
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-route-public-review-design-v1/test_public_review_validator.py", line 169, in reject_report
+    with self.assertRaises(v.ReviewError): v.validate_public(v.canonical(report), e, binding)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ReviewError not raised
+
+======================================================================
+FAIL: test_single_cell_merge_is_not_a_valid_declared_merge (test_public_review_validator.PublicReviewTests.test_single_cell_merge_is_not_a_valid_declared_merge)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-route-public-review-design-v1/test_public_review_validator.py", line 377, in test_single_cell_merge_is_not_a_valid_declared_merge
+    self.reject_report(report, e)
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-route-public-review-design-v1/test_public_review_validator.py", line 169, in reject_report
+    with self.assertRaises(v.ReviewError): v.validate_public(v.canonical(report), e, binding)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ReviewError not raised
+
+----------------------------------------------------------------------
+Ran 26 tests in 0.374s
+
+FAILED (failures=2)

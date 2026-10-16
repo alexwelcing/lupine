@@ -1,0 +1,24 @@
+{
+  "w": 320,
+  "body": 320,
+  "regions": [
+    {
+      "left": 18,
+      "right": 302,
+      "client": 282,
+      "scroll": 61652
+    },
+    {
+      "left": 18,
+      "right": 302,
+      "client": 282,
+      "scroll": 61685
+    },
+    {
+      "left": 18,
+      "right": 302,
+      "client": 282,
+      "scroll": 716
+    }
+  ]
+}

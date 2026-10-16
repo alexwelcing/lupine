@@ -1,0 +1,410 @@
+{
+  "scope": "Only completed preoperation bundle files; no actual-operation files included or read.",
+  "sources": [
+    {
+      "bytes": 9723,
+      "path": ".cache/phase2-rhizo-reference-readiness-design-v1/README.md",
+      "sha256": "c3152108ac58cae50e815cf27bf3a73787a34a0360f33642b15a00a33e948a0a"
+    },
+    {
+      "bytes": 1915,
+      "path": ".cache/phase2-rhizo-reference-readiness-design-v1/independent-review/design-check.json",
+      "sha256": "78782282aa9003d8ed836191cf2e1d3b4ba84ca6e08a6b0f32bd9087534916c8"
+    },
+    {
+      "bytes": 2064,
+      "path": ".cache/phase2-rhizo-reference-readiness-design-v1/independent-review/final-review-bindings.json",
+      "sha256": "659278d1b64398338e0eb9da83e453afed363051c2497c30787ea36db0fd65f8"
+    },
+    {
+      "bytes": 5325,
+      "path": ".cache/phase2-rhizo-reference-readiness-design-v1/independent-review/final-review.json",
+      "sha256": "986dd2184018353b041aa2c1f90abb59edc5961e561af635109cf53e7541d2f2"
+    },
+    {
+      "bytes": 5504,
+      "path": ".cache/phase2-rhizo-reference-readiness-design-v1/independent-review/initial-challenge.md",
+      "sha256": "51b313a6e4e11f05e23d17462e032afe4a38d81cf4f4d4a67eae1861b376f8cd"
+    },
+    {
+      "bytes": 3027,
+      "path": ".cache/phase2-rhizo-reference-readiness-design-v1/independent-review/public-counts.json",
+      "sha256": "88a19d9042aaa805d6c96d7ca095c4a5974d59ed9815612913d6ecba49636545"
+    },
+    {
+      "bytes": 1269,
+      "path": ".cache/phase2-rhizo-reference-readiness-design-v1/independent-review/source-bindings.json",
+      "sha256": "520f3bacd46514f8ef76209643352e58c55bccc73cb6e1d023639ef41b48a7e9"
+    },
+    {
+      "bytes": 4746,
+      "path": ".cache/phase2-rhizo-reference-readiness-design-v1/planned-inputs.json",
+      "sha256": "216907d07f977881c4220cb9c697708217101c2747c54bb7874b20e1470e3092"
+    },
+    {
+      "bytes": 71649,
+      "path": ".cache/phase2-rhizo-reference-readiness-design-v1/reference-frame.json",
+      "sha256": "80a1aca0fd56d89f49ff5f0e4b3930405f11ae1cd4acea14b8edab2381940aa4"
+    },
+    {
+      "bytes": 1755,
+      "path": ".cache/phase2-rhizo-reference-readiness-design-v1/review-copy-map.json",
+      "sha256": "f1e81236ef20a82d8f3e4627a8a98605809bff44327b11a75d352ebe6572f32f"
+    },
+    {
+      "bytes": 1874,
+      "path": ".cache/phase2-rhizo-reference-readiness-design-v1/source-bindings.json",
+      "sha256": "63402374fe80c558007fc17e56f9937ed1bbd9611fd1a5ae8d98adb2f2fa8709"
+    },
+    {
+      "bytes": 1385,
+      "path": ".cache/phase2-rhizo-reference-readiness-design-v1/static-check.json",
+      "sha256": "cf2ca6d25df9eced1cee6556b2b4e3725fd5b90d2a522e91c5bb19017ab9d17e"
+    },
+    {
+      "bytes": 1347,
+      "path": ".cache/phase2-rhizo-reference-projector-review-v1/aggregate-exposure-fix.diff",
+      "sha256": "8538d128effc06098644d174c9a6724c658bcb89f60673ff85dc7ea3f5349825"
+    },
+    {
+      "bytes": 2713,
+      "path": ".cache/phase2-rhizo-reference-projector-review-v1/challenge-plan.md",
+      "sha256": "27150804d9a8cd72b7949b6ceb1ed6f2a07ac9263e5e47a05acf59a7255d5d0e"
+    },
+    {
+      "bytes": 2814,
+      "path": ".cache/phase2-rhizo-reference-projector-review-v1/first-run/execution.json",
+      "sha256": "a1a3acc2883ddfefb49ccc56c7c120b09f99583bb74596f98beb7fb28bc74993"
+    },
+    {
+      "bytes": 2587,
+      "path": ".cache/phase2-rhizo-reference-projector-review-v1/first-run/generated_fixtures.py",
+      "sha256": "afbb07d937dd82078ef3f155beae36befe67f997faeecdd4893778e929ea7704"
+    },
+    {
+      "bytes": 21700,
+      "path": ".cache/phase2-rhizo-reference-projector-review-v1/first-run/reference_projector.py",
+      "sha256": "a477032c8b396cd68119bb604549b499da3e3e6f8dfd749206799bcaaca21f79"
+    },
+    {
+      "bytes": 3046,
+      "path": ".cache/phase2-rhizo-reference-projector-review-v1/first-run/run_review.py",
+      "sha256": "3b0fae4d499ed74b0fabb3fe569e93628e98a7f006f120b8786432f822b63041"
+    },
+    {
+      "bytes": 4401,
+      "path": ".cache/phase2-rhizo-reference-projector-review-v1/first-run/scope.json",
+      "sha256": "f5446b9507ea394ea1631a7a85a9306cbb1407341df1e76de71186a6524ef9e5"
+    },
+    {
+      "bytes": 1490,
+      "path": ".cache/phase2-rhizo-reference-projector-review-v1/first-run/start.json",
+      "sha256": "9510461809a7bd0348c05129b87b9d22e419da79301cf51566abf4190012372b"
+    },
+    {
+      "bytes": 3128,
+      "path": ".cache/phase2-rhizo-reference-projector-review-v1/first-run/stderr.txt",
+      "sha256": "411b890c21fa198481b0877a6bd06b7e04f6ba3145d2680ed881a9f2a60c95d5"
+    },
+    {
+      "bytes": 0,
+      "path": ".cache/phase2-rhizo-reference-projector-review-v1/first-run/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 16254,
+      "path": ".cache/phase2-rhizo-reference-projector-review-v1/first-run/test_reference_projector_review.py",
+      "sha256": "54384a8dfc23ca1e026d8da75317b7960330e834b4cf00fd4aead41923cb17d8"
+    },
+    {
+      "bytes": 2587,
+      "path": ".cache/phase2-rhizo-reference-projector-review-v1/generated_fixtures.py",
+      "sha256": "afbb07d937dd82078ef3f155beae36befe67f997faeecdd4893778e929ea7704"
+    },
+    {
+      "bytes": 762,
+      "path": ".cache/phase2-rhizo-reference-projector-review-v1/handoff.json",
+      "sha256": "6e7d400ab5cba703890e68240e36765ecb99e57d5d93b0508d089970bc8e5f00"
+    },
+    {
+      "bytes": 4307,
+      "path": ".cache/phase2-rhizo-reference-projector-review-v1/inventory.json",
+      "sha256": "7a6781c4c6e640163985c674d4cdf53a254a20e4a315bfe36192694524642dbf"
+    },
+    {
+      "bytes": 2673,
+      "path": ".cache/phase2-rhizo-reference-projector-review-v1/preparation.json",
+      "sha256": "eeb0fe2817f17fc4d8734aa3254c26998be2144f8240442b63790269317ed6fc"
+    },
+    {
+      "bytes": 6875,
+      "path": ".cache/phase2-rhizo-reference-projector-review-v1/review.json",
+      "sha256": "664c62d3a0488ab0a0c11fbb91a4c14cd12f5bb6117ef829aac4d36e4de52e8a"
+    },
+    {
+      "bytes": 6291,
+      "path": ".cache/phase2-rhizo-reference-projector-review-v1/reviewed-contract.md",
+      "sha256": "f5f1582036db4f13b879cd47ae1abeccb2380df07bba09b3f0450696b21ef65e"
+    },
+    {
+      "bytes": 3046,
+      "path": ".cache/phase2-rhizo-reference-projector-review-v1/run_review.py",
+      "sha256": "3b0fae4d499ed74b0fabb3fe569e93628e98a7f006f120b8786432f822b63041"
+    },
+    {
+      "bytes": 2815,
+      "path": ".cache/phase2-rhizo-reference-projector-review-v1/second-run/execution.json",
+      "sha256": "52e8aedcaf90ee1e0c7288ac376c090054a5527be1c71be725f1f4fee34ad780"
+    },
+    {
+      "bytes": 2587,
+      "path": ".cache/phase2-rhizo-reference-projector-review-v1/second-run/generated_fixtures.py",
+      "sha256": "afbb07d937dd82078ef3f155beae36befe67f997faeecdd4893778e929ea7704"
+    },
+    {
+      "bytes": 21863,
+      "path": ".cache/phase2-rhizo-reference-projector-review-v1/second-run/reference_projector.py",
+      "sha256": "bab641881335f57d4571fe0d4f720696f57e5816fa36266647cdf86d0701b263"
+    },
+    {
+      "bytes": 3046,
+      "path": ".cache/phase2-rhizo-reference-projector-review-v1/second-run/run_review.py",
+      "sha256": "3b0fae4d499ed74b0fabb3fe569e93628e98a7f006f120b8786432f822b63041"
+    },
+    {
+      "bytes": 4401,
+      "path": ".cache/phase2-rhizo-reference-projector-review-v1/second-run/scope.json",
+      "sha256": "f5446b9507ea394ea1631a7a85a9306cbb1407341df1e76de71186a6524ef9e5"
+    },
+    {
+      "bytes": 1490,
+      "path": ".cache/phase2-rhizo-reference-projector-review-v1/second-run/start.json",
+      "sha256": "d821580abab71da4aa1ea9fe7645fc7eac9866ee37b52967860f7b82092204d7"
+    },
+    {
+      "bytes": 2385,
+      "path": ".cache/phase2-rhizo-reference-projector-review-v1/second-run/stderr.txt",
+      "sha256": "fe335524f6b7710a4aa9ebe4f914473bc1d1bbfe0d64b732220c22fb92516d81"
+    },
+    {
+      "bytes": 0,
+      "path": ".cache/phase2-rhizo-reference-projector-review-v1/second-run/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 16254,
+      "path": ".cache/phase2-rhizo-reference-projector-review-v1/second-run/test_reference_projector_review.py",
+      "sha256": "54384a8dfc23ca1e026d8da75317b7960330e834b4cf00fd4aead41923cb17d8"
+    },
+    {
+      "bytes": 16254,
+      "path": ".cache/phase2-rhizo-reference-projector-review-v1/test_reference_projector_review.py",
+      "sha256": "54384a8dfc23ca1e026d8da75317b7960330e834b4cf00fd4aead41923cb17d8"
+    },
+    {
+      "bytes": 3255,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/FINAL.md",
+      "sha256": "ef51b9f4c72164b6997fba93a4a78aa6151f62cad66a1e67aa2cfdb8c11e1d33"
+    },
+    {
+      "bytes": 6291,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/README.md",
+      "sha256": "f5f1582036db4f13b879cd47ae1abeccb2380df07bba09b3f0450696b21ef65e"
+    },
+    {
+      "bytes": 762,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/aggregate-parse-correction.json",
+      "sha256": "8dae590dce1d2395bba309e4671dd0afa2b3e1b028762786182904332606f08b"
+    },
+    {
+      "bytes": 6291,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/before-aggregate-parse-fix/README.md",
+      "sha256": "f5f1582036db4f13b879cd47ae1abeccb2380df07bba09b3f0450696b21ef65e"
+    },
+    {
+      "bytes": 21700,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/before-aggregate-parse-fix/reference_projector.py",
+      "sha256": "a477032c8b396cd68119bb604549b499da3e3e6f8dfd749206799bcaaca21f79"
+    },
+    {
+      "bytes": 4401,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/before-aggregate-parse-fix/scope.json",
+      "sha256": "f5446b9507ea394ea1631a7a85a9306cbb1407341df1e76de71186a6524ef9e5"
+    },
+    {
+      "bytes": 654,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/before-aggregate-parse-fix/source-hold.json",
+      "sha256": "3de81fc4aa892e941607f78605b915c7ceeb778048844650c2d2cfbcf47bdcea"
+    },
+    {
+      "bytes": 14499,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/before-aggregate-parse-fix/test_reference_projector.py",
+      "sha256": "48a2a267e335e4c02e93e197f8f4341376677e38397f5fd25a14977f4dd618fc"
+    },
+    {
+      "bytes": 1276,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/field-bindings.json",
+      "sha256": "dd45be17e381379eca4848e3ae4c7f186011ad301c8f250010a219bb82bbde8d"
+    },
+    {
+      "bytes": 6291,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/final-author/README.md",
+      "sha256": "f5f1582036db4f13b879cd47ae1abeccb2380df07bba09b3f0450696b21ef65e"
+    },
+    {
+      "bytes": 79092,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/final-author/execution.json",
+      "sha256": "876d089716da84e38f0c7c2f78483de7b46d1d93ecef2594ad1c088f01f6e6dd"
+    },
+    {
+      "bytes": 21863,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/final-author/reference_projector.py",
+      "sha256": "bab641881335f57d4571fe0d4f720696f57e5816fa36266647cdf86d0701b263"
+    },
+    {
+      "bytes": 1161,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/final-author/run_guarded.py",
+      "sha256": "9a01075290bb4afc06a2a7bc2841a47ee6cd8fb131dc57e47e8571f6f3d8e199"
+    },
+    {
+      "bytes": 4401,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/final-author/scope.json",
+      "sha256": "f5446b9507ea394ea1631a7a85a9306cbb1407341df1e76de71186a6524ef9e5"
+    },
+    {
+      "bytes": 39626,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/final-author/start.json",
+      "sha256": "1e9a9cab645b064ea16d613b6760b6781549ab50becef021f32c5f96de426160"
+    },
+    {
+      "bytes": 3311,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/final-author/stderr.txt",
+      "sha256": "8ab851805d2cd52da8744c4c15b6bf860f750a2554160bf6a6371b59ac928fc7"
+    },
+    {
+      "bytes": 3719,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/final-author/stderr.txt.json",
+      "sha256": "ed2a1168900f59cab820d8d55efbddfeae09acfb42a4083d4dcdd7e4b4077c54"
+    },
+    {
+      "bytes": 84,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/final-author/stdout.txt",
+      "sha256": "dea717817f07267842c73aef7e60457667a27e046ccd4515b80b6265037dbfc3"
+    },
+    {
+      "bytes": 15159,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/final-author/test_reference_projector.py",
+      "sha256": "8de45bfd5c369549b930bec2d42542880de05bfb5769c632fe8ac920b8dd67b8"
+    },
+    {
+      "bytes": 6291,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/first-author/README.md",
+      "sha256": "f5f1582036db4f13b879cd47ae1abeccb2380df07bba09b3f0450696b21ef65e"
+    },
+    {
+      "bytes": 79094,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/first-author/execution.json",
+      "sha256": "d6ca04799b025cee87d6559fd1a54b7ab0ecd4c1256058665ac1059c81e7e0f7"
+    },
+    {
+      "bytes": 21700,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/first-author/reference_projector.py",
+      "sha256": "a477032c8b396cd68119bb604549b499da3e3e6f8dfd749206799bcaaca21f79"
+    },
+    {
+      "bytes": 1161,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/first-author/run_guarded.py",
+      "sha256": "9a01075290bb4afc06a2a7bc2841a47ee6cd8fb131dc57e47e8571f6f3d8e199"
+    },
+    {
+      "bytes": 4401,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/first-author/scope.json",
+      "sha256": "f5446b9507ea394ea1631a7a85a9306cbb1407341df1e76de71186a6524ef9e5"
+    },
+    {
+      "bytes": 39626,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/first-author/start.json",
+      "sha256": "fff16e633d45dadd8c024c4864b0771f87569e272e69bc5613f80667eaf0f8d3"
+    },
+    {
+      "bytes": 3145,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/first-author/stderr.txt",
+      "sha256": "51de64a54a7af214fdd99d9900cc62ae283d32f4292adfea2e93aa8664c0670b"
+    },
+    {
+      "bytes": 3552,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/first-author/stderr.txt.json",
+      "sha256": "b64d0c57288a1b4aea62a2c6cee8d30916c67ccb8e6f362736686c7e7507a0a0"
+    },
+    {
+      "bytes": 84,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/first-author/stdout.txt",
+      "sha256": "3b263de1048c7b4edbf14df98d462c92c155869676b90af6f45d55597a83cf53"
+    },
+    {
+      "bytes": 14499,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/first-author/test_reference_projector.py",
+      "sha256": "48a2a267e335e4c02e93e197f8f4341376677e38397f5fd25a14977f4dd618fc"
+    },
+    {
+      "bytes": 1793,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/handoff.json",
+      "sha256": "9b965f3f3127641fe1b9c381f2da4efdad46cf3f8a2c6a51bbc8994b4f0495da"
+    },
+    {
+      "bytes": 1078,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/independent-review-binding.json",
+      "sha256": "8b88712bfbef92453b5bf08e35175a0cc5abd0a52530dd4c6ea7132733a9345c"
+    },
+    {
+      "bytes": 5922,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/inventory.json",
+      "sha256": "a68f61a6a060b889e181210e01df7c00910173acb3f0d1cee14128ae111365b5"
+    },
+    {
+      "bytes": 629,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/pre-hold-review-finding.json",
+      "sha256": "2fd8b1321ebaf8d84d451e2caf7e998fcdd62c7db0bb7f5dbf9fe60461031867"
+    },
+    {
+      "bytes": 3391,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/publication-check.json",
+      "sha256": "c94e92ad15abeb5eff3cc2f34f15845a765c88f72c61ac559bd6554018c84a3b"
+    },
+    {
+      "bytes": 786,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/publication-layout.json",
+      "sha256": "2f512137ff5da469be6af98dc97d7b7604243b40ee78914d3201a10a5d991921"
+    },
+    {
+      "bytes": 21863,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/reference_projector.py",
+      "sha256": "bab641881335f57d4571fe0d4f720696f57e5816fa36266647cdf86d0701b263"
+    },
+    {
+      "bytes": 1161,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/run_guarded.py",
+      "sha256": "9a01075290bb4afc06a2a7bc2841a47ee6cd8fb131dc57e47e8571f6f3d8e199"
+    },
+    {
+      "bytes": 4401,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/scope.json",
+      "sha256": "f5446b9507ea394ea1631a7a85a9306cbb1407341df1e76de71186a6524ef9e5"
+    },
+    {
+      "bytes": 1776,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/source-diff.json",
+      "sha256": "3929b10f416808edb65269c3f707659f0a07ce60f0b327741061d8866731b74c"
+    },
+    {
+      "bytes": 660,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/source-hold.json",
+      "sha256": "65a788a1118ac9207e97a482098f682e1ff9ad780d4ca586cf90194168601013"
+    },
+    {
+      "bytes": 15159,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/test_reference_projector.py",
+      "sha256": "8de45bfd5c369549b930bec2d42542880de05bfb5769c632fe8ac920b8dd67b8"
+    }
+  ]
+}

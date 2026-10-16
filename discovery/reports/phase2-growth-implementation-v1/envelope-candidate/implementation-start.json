@@ -1,0 +1,9 @@
+{
+  "G30_other_source_pins": "Awaiting independently frozen final tests; no placeholder may pass production.",
+  "actual_source_operations": 0,
+  "compatible_source_sha256": "e771b3fc2a66d6e2ff3a26d8aae88b7a2915ac908907908316e697997761c847",
+  "frozen_scope_sha256": "7dc85a75fc54cee03d92d6cd04b0444bb4e252379e55ae2c1aea7f7f23b08c4b",
+  "growth_source_sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a",
+  "production_guards_invoked": 0,
+  "recorded_at": "2026-10-16T10:11:13.484822+00:00"
+}

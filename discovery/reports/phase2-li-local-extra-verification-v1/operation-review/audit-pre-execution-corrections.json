@@ -1,0 +1,10 @@
+{
+  "after": "c91920a7d9e992b7c4acdd47fca7ac151282d4190b429977ae01ef7caee700cb",
+  "before": "a3517ab1885a26a00213bd8652af3ef28b41bb863c589056119f7dd8d754e211",
+  "changes": [
+    "Retain first-seen evidence hashes by rejecting any repeated-read digest change.",
+    "Require actual final timestamp no later than audit start."
+  ],
+  "invocations_before_correction": 0,
+  "reviewed_at": "2026-10-16T09:37:45.717766+00:00"
+}

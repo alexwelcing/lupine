@@ -1,0 +1,31 @@
+{
+  "status": "AWAITING_RETAINED_ALLOWLISTED_SOURCE",
+  "source_commit": "d19b15127c8ae1be49308c29eac718b609ad895c",
+  "reviewed_background": [
+    {
+      "path": "reports/phase2-source-readiness-v1/README.md",
+      "sha256": "bd351e8814fb33776e375ed48d1bf2e3aae985404dd8a33920bf40e46a0ca1c5"
+    },
+    {
+      "path": "reports/phase2-source-readiness-v1/source-bindings.json",
+      "sha256": "d7a53adf40427753d7c0c48a54ab5c6ab42407f4dd53045cd508bb695afaa973"
+    }
+  ],
+  "required_distinctions": [
+    "README publisher counts versus locally audited row/column counts",
+    "Endpoint names versus paired observed outcomes",
+    "Field availability versus row completeness or units conformity",
+    "Ordinary source-code transformations versus verified application to archived workbook",
+    "Source reference labels versus complete source lineage, deduplication, overlap or independent units",
+    "MIT software/documentation license versus observation-data terms",
+    "Pinned author repository identity versus equivalence to Materials Cloud v3 workbook"
+  ],
+  "unperformed": [
+    "network access",
+    "workbook/data table/notebook/figure/model read",
+    "private custody read",
+    "source execution",
+    "criteria/model/split change",
+    "tracked file write"
+  ]
+}

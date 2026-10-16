@@ -1,0 +1,10 @@
+{
+  "request_url": "https://api.github.com/repos/avakanski/Subsized-Specimens-Tensile-Properties/git/commits/d19b15127c8ae1be49308c29eac718b609ad895c",
+  "started_at": "2026-10-16T07:36:54.901749+00:00",
+  "scope": "Git commit metadata only; no diff/file body",
+  "status": 200,
+  "final_url": "https://api.github.com/repos/avakanski/Subsized-Specimens-Tensile-Properties/git/commits/d19b15127c8ae1be49308c29eac718b609ad895c",
+  "body_sha256": "24ccd3800f545f5ea88d07ade9e1d2a74b7498a9bfa98cabd1ca64f55e87ed3d",
+  "body_bytes": 2312,
+  "completed_at": "2026-10-16T07:36:55.462449+00:00"
+}

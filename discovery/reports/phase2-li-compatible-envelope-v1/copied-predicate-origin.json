@@ -1,0 +1,13 @@
+{
+  "source": "discovery/scripts/li_v3_custody.py",
+  "sha256": "3ead51f0afdf16be973743257be488669c988aa40443779e7a5c400e9b0d3234",
+  "function": "_zip_structure",
+  "delta": "Method8 allowed flag mask0x806; all other methods mask0x800. Function name changed; no other function-body delta.",
+  "prior_flag_files": {
+    "scripts/li_v3_flag_diagnostic.py": "c08c295dae15ae1f5125510076f75ce2cc6ed58f54ef5ff06861a1759dbfabc5",
+    "tests/test_li_v3_flag_diagnostic.py": "ebe198fba3d0371e5fc6b7fe013e55734f30f7ebd75fe6f4c47fe78c11c401d4",
+    "tests/test_li_v3_flag_diagnostic_review.py": "fdc18fd0016e0fde210716e619e5f688652fb76d226f909a1b8608f76aeae4d5",
+    "docs/li-v3-flag-diagnostic-plan.md": "dd36f011deb04d8141178ea0ead75e7a02fb588f6573cac5332410fb63173f46"
+  },
+  "actual_source_read": false
+}

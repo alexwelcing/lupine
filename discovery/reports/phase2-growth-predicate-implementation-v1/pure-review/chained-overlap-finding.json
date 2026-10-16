@@ -1,0 +1,21 @@
+{
+  "actual": "LOCAL_CRC_AGREEMENT status FAILURES_AND_INCOMPLETE instead of incomplete without observed CRC failure",
+  "actual_source_operations": 0,
+  "case": "A local extent overlaps B; B also claims extent overlapping C. Only B has modified CRC.",
+  "execution": {
+    "failures": 1,
+    "methods": 1,
+    "path": "chained-overlap-first/execution.json",
+    "returncode": 1,
+    "sha256": "c04f4a0abbb7416a269bbd68c5561e5599a9bda3aa2f9fc4114a6a444b4557f3"
+  },
+  "expected": "Incoming overlap blocks B local-family findings regardless of outgoing overlap; safe scalar facts for A remain.",
+  "failure": "B was retained as extent_owner despite incoming ambiguity, producing a CRC comparison from an unavailable association.",
+  "primary_original_reason_equivalence_passed": true,
+  "root_and_author_notified": true,
+  "schema": "lupine.growth_predicate.chained_overlap_finding.v1",
+  "source_sha256": "6881d6f2db09ada9e76e1e9a0560e24f3f83f78e3063fe6740f88a66e2ff6ba6",
+  "source_unchanged": true,
+  "test_fixture_or_expectation_correction": false,
+  "written_at": "2026-10-16T12:05:32.997610+00:00"
+}

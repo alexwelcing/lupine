@@ -1,0 +1,7 @@
+# Read-only promotion/copy audit
+
+Receipt verifies four exact reviewed helper source hashes, 140 lossless report wrappers, retained copy maps and test assertion AST parity. Promotion differences inspected are loader paths and creation of the allowed ignored fixture parent. Four retained root logs parse unskipped OK summaries: collector36, profiles19 + artifacts32 (51), operations22. Tests were not rerun; execution is evidenced by root's retained logs/receipts, not newly independently observed here.
+
+The private freeze runner's mandatory closure matches registration's required set under the canonical three specification paths, using current index313paths. Its source enforces genuine pretest working-tree/index parity, executes the literal unittest command with captured stdout/stderr and actual returncode, then records a genuine after-map and rejects source drift or incomplete/skipped summary. It was not executed in this audit. A later committed closure and exact-commit CI must independently match the captured map.
+
+Minor metadata qualification: recorder sys.executable/version identify its own interpreter; PATH `python` is the child command. Root should verify those resolve to the same interpreter or separately record actual child identity. This is a source/copy/provenance review of author's own modules, not independent implementation correctness. No real scientific inputs, API, tag, entropy or registration used.

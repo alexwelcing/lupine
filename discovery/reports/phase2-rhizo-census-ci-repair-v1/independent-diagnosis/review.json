@@ -1,0 +1,113 @@
+{
+  "AST_data_only_checks": {
+    "actual_suffix": [
+      "mpea_javascript_packaged_and_served",
+      "fixed_stored_census_identity_scope_and_http_asset_agreement"
+    ],
+    "negative_variants_preserved": true,
+    "old_asserted_count": 16,
+    "old_expected_suffix": [
+      "optional_mpea_resource_presence_and_http_agreement",
+      "mpea_javascript_packaged_and_served"
+    ],
+    "proposal_syntax_parsed": true,
+    "proposed_literal_equals_reviewed_order": true,
+    "proposed_negative_variant_count": 19,
+    "verifier_literal_checks": 17
+  },
+  "CI_observation": {
+    "attribution_limit": "Without raw job tracebacks this source diagnosis identifies a deterministic failure, not proof that it is the only cause of either CI failure.",
+    "browser": "success",
+    "lean": "success",
+    "python_3_11": "failure",
+    "python_3_12": "failure",
+    "raw_job_logs_available": false,
+    "receipt_path": ".cache/phase2-rhizo-census-ci-v1/final.json",
+    "receipt_sha256": "36af95307bd31bde71d8f8848b413347077490ee6361f811aa2e18b69cef5611",
+    "run": 38912404614
+  },
+  "baseline": "d4d8504a97d362a6339eaa27453a86e0eb167cee",
+  "bounded_search_scope": [
+    "Exact d4\u21922975 nine-existing/four-added runtime diff.",
+    "Python files only under discovery/tests and discovery/scripts for old probe hashes, PROBE/packaging references, CHECKS/16 assumptions and API benchmark/resource mocks.",
+    "New HTTP test global patch/environment behavior and older optional MPEA server/resource paths inspected statically."
+  ],
+  "commit": "2975d6d0b9111cc84adb82ccc673bc82339ab154",
+  "created_at": "2026-10-16T14:34:36.603074+00:00",
+  "execution_scope": {
+    "existing_earlier_reviews_mutated": false,
+    "full_suite_overlap": false,
+    "local_full_suite_owned_by_root": true,
+    "network_requests": 0,
+    "product_tests_executed_by_reviewer": 0,
+    "runtime_or_tracked_edits": false,
+    "source_or_private_scientific_reads": false
+  },
+  "findings": [
+    {
+      "evidence_chain": [
+        "tests/test_retained_artifacts.py:88 sets checks to v.CHECKS.",
+        "scripts/verify_retained_artifacts.py:CHECKS literal has17 names, including final fixed_stored_census_identity_scope_and_http_asset_agreement.",
+        "tests/test_retained_mpea_transport.py:57 asserts len(expected)==16 before negative variants run."
+      ],
+      "lines": [
+        55,
+        57,
+        58,
+        59
+      ],
+      "path": "tests/test_retained_mpea_transport.py",
+      "production_changes_required": false,
+      "proposed_correction": "An independent literal ordered17-check expectation replaces the count/suffix assumption. Preserve every omission, invented-flag and reversed-order rejection variant; rename only the changed test to reflect17.",
+      "reason": "The fixture assigns verification.checks from v.CHECKS. That verifier literal now has17 ordered entries, while the unchanged test first asserts length16. Its following last-two MPEA assertion is also stale because the census check is appended. The first assertion deterministically fails for the declared current fixture.",
+      "severity": "blocking_existing_test",
+      "test": "RetainedMpeaTransportTests.test_all_sixteen_flags_required_without_omission_extra_or_reorder"
+    },
+    {
+      "correction_required_for_current_failure": false,
+      "line": 317,
+      "path": "tests/test_package_retention.py",
+      "reason": "Test method name still says sixteen, but its comment and exact reviewed PROBE hash already cover17. This does not explain an assertion failure.",
+      "severity": "cosmetic_nonblocking"
+    }
+  ],
+  "other_findings": "No additional definite regression found within this bounded source search; absence of a finding is not a complete test pass.",
+  "proposed_patch_sha256": "1a9c7dd43dfb1c6f3db2e8187895b8839081f297dddb55d348bdc86d5c3b2912",
+  "proposed_source_sha256": "bce07a6927df9efe261f0477eae7b65f7babbd227721fb77333b7fe34188cf82",
+  "runtime_delta_reviewed": {
+    "added": 4,
+    "changed_existing": 9
+  },
+  "schema": "lupine.rhizo.census.ci-static-review.v1",
+  "source_pins": [
+    {
+      "baseline_sha256": "b841a8dcc5ac955f3e82a7de0e34186e9d752552c022a750c3cdec85c94da84a",
+      "commit_sha256": "b841a8dcc5ac955f3e82a7de0e34186e9d752552c022a750c3cdec85c94da84a",
+      "path": "tests/test_retained_mpea_transport.py",
+      "snapshot": "source-snapshots/test_retained_mpea_transport.py",
+      "unchanged_from_baseline": true
+    },
+    {
+      "baseline_sha256": "ffdd9dd80e5e2c23a9294d35bc70bb7bf9591384f4071229c414c0c0562fb3f3",
+      "commit_sha256": "ffdd9dd80e5e2c23a9294d35bc70bb7bf9591384f4071229c414c0c0562fb3f3",
+      "path": "tests/test_retained_artifacts.py",
+      "snapshot": "source-snapshots/test_retained_artifacts.py",
+      "unchanged_from_baseline": true
+    },
+    {
+      "baseline_sha256": "22455c93a2539868cf8a9dda76b67413eefe05917603718f19eef1585a1c741d",
+      "commit_sha256": "3d3247beb74905c3f6d3a48aa42566d73c7a550645116ce084c0d8e4d664446a",
+      "path": "scripts/verify_retained_artifacts.py",
+      "snapshot": "source-snapshots/verify_retained_artifacts.py",
+      "unchanged_from_baseline": false
+    },
+    {
+      "baseline_sha256": "88a939e73efb90c053ce15e3a95a23413400a002b79b510c61ce397a0c803b45",
+      "commit_sha256": "afd324bbd06962c09898bc000afaa1ff3a52f000ce947e5a364980faed6e832b",
+      "path": "tests/test_package_retention.py",
+      "snapshot": "source-snapshots/test_package_retention.py",
+      "unchanged_from_baseline": false
+    }
+  ],
+  "status": "DEFINITE_STALE_TEST_CONTRACT_FOUND_STATICALLY"
+}

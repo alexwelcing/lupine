@@ -1,0 +1,25 @@
+{
+  "changed_pure_functions": [
+    "_classify"
+  ],
+  "classification_change": "One optional production prerequisite gate defaults false; generated-fixture API remains unchanged.",
+  "identical_pure_functions": [
+    "_first",
+    "_result",
+    "_central",
+    "_local",
+    "_growth",
+    "_first_growth",
+    "_sequential",
+    "_new_exposure",
+    "_new_families",
+    "_record",
+    "_skip",
+    "_project",
+    "_aggregate",
+    "inspect_synthetic_headers"
+  ],
+  "production_sha256": "70a0339212b971bf7824ae256600b959ae7a7d22b6fc8853eb2208d3c8ece207",
+  "pure_sha256": "167c8e3d0cba758057c60991debe8d831c8638da5ce3dbd1a183503c46efea11",
+  "scope": "Source AST comparison, not formal refinement or an executed scientific test"
+}

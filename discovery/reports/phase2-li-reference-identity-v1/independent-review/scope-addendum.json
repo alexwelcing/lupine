@@ -1,0 +1,16 @@
+{
+  "schema": "lupine.li-reference-identity-independent-review-scope-addendum.v1",
+  "recorded_at": "2026-10-16T09:16:01.694684+00:00",
+  "source": "Parent authorization message after initial independent boundary note",
+  "additional_read_scope": "Separately frozen title+author+1985 Crossref query scope, retained metadata response/receipt/projection, and preserved projection correction. No reviewer network or linked article/body access.",
+  "review_requirements": [
+    "Compare exact-DOI title/author agreement separately from declared year/page mismatches.",
+    "Treat same-title candidate DOI records independently; no inferred alias, autocorrection, fuzzy merge, measurements overlap or independent units.",
+    "Retain initial public affiliation/role exposure; verify narrow final author projection without describing the original response as unexposed.",
+    "Both acquisition scopes must predate their corresponding requests; a later scope cannot retrospectively bless a request."
+  ],
+  "scope_unchanged": [
+    "Bibliography/table-citation projection only from retained XML; whole-container parse exposure recorded.",
+    "No actual observation or endpoint-table projection, no model/split/criterion changes, no source admission."
+  ]
+}

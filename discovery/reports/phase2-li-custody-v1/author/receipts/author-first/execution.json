@@ -1,0 +1,25 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    ".cache/phase2-li-custody-implementation-v1/promotion/tests",
+    "-p",
+    "test_li_v3_custody.py",
+    "-v"
+  ],
+  "started_at": "2026-10-16T04:54:38.888413+00:00",
+  "finished_at": "2026-10-16T04:54:39.576739+00:00",
+  "duration_seconds": 0.6883328200001415,
+  "exit_code": 1,
+  "before_sha256": {
+    ".cache/phase2-li-custody-implementation-v1/promotion/scripts/li_v3_custody.py": "7bbe790e4c3afff93a4cea70bf718d6e4b1ed2ef9413b834b03abc1a2bb96578",
+    ".cache/phase2-li-custody-implementation-v1/promotion/tests/test_li_v3_custody.py": "63124e8156d77c28dfff932879f93f11e7bb7b1baaecf769f5d5758101ab23a1"
+  },
+  "after_sha256": {
+    ".cache/phase2-li-custody-implementation-v1/promotion/scripts/li_v3_custody.py": "7bbe790e4c3afff93a4cea70bf718d6e4b1ed2ef9413b834b03abc1a2bb96578",
+    ".cache/phase2-li-custody-implementation-v1/promotion/tests/test_li_v3_custody.py": "63124e8156d77c28dfff932879f93f11e7bb7b1baaecf769f5d5758101ab23a1"
+  }
+}

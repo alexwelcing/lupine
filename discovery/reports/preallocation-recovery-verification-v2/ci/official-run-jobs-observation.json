@@ -1,0 +1,741 @@
+{
+  "all_four_pass": true,
+  "expected_commit": "a0624cac9abb20320629cce41f10270b9b8e2136",
+  "jobs": {
+    "jobs": [
+      {
+        "check_run_url": "https://api.github.com/repos/alexwelcing/lupine/check-runs/114347958772",
+        "completed_at": "2026-10-11T00:39:13Z",
+        "conclusion": "success",
+        "created_at": "2026-10-11T00:19:34Z",
+        "head_branch": "research/lupine-discovery",
+        "head_sha": "a0624cac9abb20320629cce41f10270b9b8e2136",
+        "html_url": "https://github.com/alexwelcing/lupine/actions/runs/38098039812/job/114347958772",
+        "id": 114347958772,
+        "labels": [
+          "ubuntu-22.04"
+        ],
+        "name": "python (3.11)",
+        "node_id": "CR_kwDOSDbQvc8AAAAan6th9A",
+        "run_attempt": 1,
+        "run_id": 38098039812,
+        "run_url": "https://api.github.com/repos/alexwelcing/lupine/actions/runs/38098039812",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions",
+        "runner_id": 1000013365,
+        "runner_name": "GitHub Actions 1000013365",
+        "started_at": "2026-10-11T00:19:37Z",
+        "status": "completed",
+        "steps": [
+          {
+            "completed_at": "2026-10-11T00:19:38Z",
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "started_at": "2026-10-11T00:19:38Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:19:54Z",
+            "conclusion": "success",
+            "name": "Run actions/checkout@v4",
+            "number": 2,
+            "started_at": "2026-10-11T00:19:38Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:19:55Z",
+            "conclusion": "success",
+            "name": "Run actions/setup-python@v5",
+            "number": 3,
+            "started_at": "2026-10-11T00:19:54Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:20:01Z",
+            "conclusion": "success",
+            "name": "Run python -m pip install -e '.[benchmark]'",
+            "number": 4,
+            "started_at": "2026-10-11T00:19:55Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:20:02Z",
+            "conclusion": "success",
+            "name": "Verify required user and network namespaces",
+            "number": 5,
+            "started_at": "2026-10-11T00:20:01Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:38:54Z",
+            "conclusion": "success",
+            "name": "Run python -m unittest discover -s tests -v",
+            "number": 6,
+            "started_at": "2026-10-11T00:20:02Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:38:54Z",
+            "conclusion": "success",
+            "name": "Run lupine-discovery verify examples/abstract.json examples/abstract.certificate.json",
+            "number": 7,
+            "started_at": "2026-10-11T00:38:54Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:38:54Z",
+            "conclusion": "success",
+            "name": "Run lupine-discovery replay examples/abstract.json examples/abstract.outcomes.json",
+            "number": 8,
+            "started_at": "2026-10-11T00:38:54Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:38:54Z",
+            "conclusion": "success",
+            "name": "Run python scripts/runtime_manifest.py",
+            "number": 9,
+            "started_at": "2026-10-11T00:38:54Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:39:02Z",
+            "conclusion": "success",
+            "name": "Run python scripts/package_smoke.py --retain-directory .cache/release-artifacts",
+            "number": 10,
+            "started_at": "2026-10-11T00:38:54Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:39:03Z",
+            "conclusion": "success",
+            "name": "Audit retained source and wheel bytes",
+            "number": 11,
+            "started_at": "2026-10-11T00:39:02Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:39:05Z",
+            "conclusion": "success",
+            "name": "Run actions/upload-artifact@v4",
+            "number": 12,
+            "started_at": "2026-10-11T00:39:03Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:39:05Z",
+            "conclusion": "success",
+            "name": "Post Run actions/setup-python@v5",
+            "number": 23,
+            "started_at": "2026-10-11T00:39:05Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:39:05Z",
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v4",
+            "number": 24,
+            "started_at": "2026-10-11T00:39:05Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:39:05Z",
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 25,
+            "started_at": "2026-10-11T00:39:05Z",
+            "status": "completed"
+          }
+        ],
+        "url": "https://api.github.com/repos/alexwelcing/lupine/actions/jobs/114347958772",
+        "workflow_name": "Discovery Verify"
+      },
+      {
+        "check_run_url": "https://api.github.com/repos/alexwelcing/lupine/check-runs/114347958832",
+        "completed_at": "2026-10-11T00:45:08Z",
+        "conclusion": "success",
+        "created_at": "2026-10-11T00:19:34Z",
+        "head_branch": "research/lupine-discovery",
+        "head_sha": "a0624cac9abb20320629cce41f10270b9b8e2136",
+        "html_url": "https://github.com/alexwelcing/lupine/actions/runs/38098039812/job/114347958832",
+        "id": 114347958832,
+        "labels": [
+          "ubuntu-22.04"
+        ],
+        "name": "python (3.12)",
+        "node_id": "CR_kwDOSDbQvc8AAAAan6tiMA",
+        "run_attempt": 1,
+        "run_id": 38098039812,
+        "run_url": "https://api.github.com/repos/alexwelcing/lupine/actions/runs/38098039812",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions",
+        "runner_id": 1000013364,
+        "runner_name": "GitHub Actions 1000013364",
+        "started_at": "2026-10-11T00:19:37Z",
+        "status": "completed",
+        "steps": [
+          {
+            "completed_at": "2026-10-11T00:19:38Z",
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "started_at": "2026-10-11T00:19:37Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:19:53Z",
+            "conclusion": "success",
+            "name": "Run actions/checkout@v4",
+            "number": 2,
+            "started_at": "2026-10-11T00:19:38Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:19:53Z",
+            "conclusion": "success",
+            "name": "Run actions/setup-python@v5",
+            "number": 3,
+            "started_at": "2026-10-11T00:19:53Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:20:01Z",
+            "conclusion": "success",
+            "name": "Run python -m pip install -e '.[benchmark]'",
+            "number": 4,
+            "started_at": "2026-10-11T00:19:53Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:20:01Z",
+            "conclusion": "success",
+            "name": "Verify required user and network namespaces",
+            "number": 5,
+            "started_at": "2026-10-11T00:20:01Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:44:54Z",
+            "conclusion": "success",
+            "name": "Run python -m unittest discover -s tests -v",
+            "number": 6,
+            "started_at": "2026-10-11T00:20:01Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:44:54Z",
+            "conclusion": "success",
+            "name": "Run lupine-discovery verify examples/abstract.json examples/abstract.certificate.json",
+            "number": 7,
+            "started_at": "2026-10-11T00:44:54Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:44:54Z",
+            "conclusion": "success",
+            "name": "Run lupine-discovery replay examples/abstract.json examples/abstract.outcomes.json",
+            "number": 8,
+            "started_at": "2026-10-11T00:44:54Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:44:54Z",
+            "conclusion": "success",
+            "name": "Run python scripts/runtime_manifest.py",
+            "number": 9,
+            "started_at": "2026-10-11T00:44:54Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:45:04Z",
+            "conclusion": "success",
+            "name": "Run python scripts/package_smoke.py --retain-directory .cache/release-artifacts",
+            "number": 10,
+            "started_at": "2026-10-11T00:44:54Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:45:04Z",
+            "conclusion": "success",
+            "name": "Audit retained source and wheel bytes",
+            "number": 11,
+            "started_at": "2026-10-11T00:45:04Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:45:06Z",
+            "conclusion": "success",
+            "name": "Run actions/upload-artifact@v4",
+            "number": 12,
+            "started_at": "2026-10-11T00:45:04Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:45:06Z",
+            "conclusion": "success",
+            "name": "Post Run actions/setup-python@v5",
+            "number": 23,
+            "started_at": "2026-10-11T00:45:06Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:45:06Z",
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v4",
+            "number": 24,
+            "started_at": "2026-10-11T00:45:06Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:45:06Z",
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 25,
+            "started_at": "2026-10-11T00:45:06Z",
+            "status": "completed"
+          }
+        ],
+        "url": "https://api.github.com/repos/alexwelcing/lupine/actions/jobs/114347958832",
+        "workflow_name": "Discovery Verify"
+      },
+      {
+        "check_run_url": "https://api.github.com/repos/alexwelcing/lupine/check-runs/114347958873",
+        "completed_at": "2026-10-11T00:22:39Z",
+        "conclusion": "success",
+        "created_at": "2026-10-11T00:19:34Z",
+        "head_branch": "research/lupine-discovery",
+        "head_sha": "a0624cac9abb20320629cce41f10270b9b8e2136",
+        "html_url": "https://github.com/alexwelcing/lupine/actions/runs/38098039812/job/114347958873",
+        "id": 114347958873,
+        "labels": [
+          "ubuntu-latest"
+        ],
+        "name": "lean",
+        "node_id": "CR_kwDOSDbQvc8AAAAan6tiWQ",
+        "run_attempt": 1,
+        "run_id": 38098039812,
+        "run_url": "https://api.github.com/repos/alexwelcing/lupine/actions/runs/38098039812",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions",
+        "runner_id": 1000013367,
+        "runner_name": "GitHub Actions 1000013367",
+        "started_at": "2026-10-11T00:19:37Z",
+        "status": "completed",
+        "steps": [
+          {
+            "completed_at": "2026-10-11T00:19:38Z",
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "started_at": "2026-10-11T00:19:38Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:19:54Z",
+            "conclusion": "success",
+            "name": "Run actions/checkout@v4",
+            "number": 2,
+            "started_at": "2026-10-11T00:19:38Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:19:55Z",
+            "conclusion": "success",
+            "name": "Install elan",
+            "number": 3,
+            "started_at": "2026-10-11T00:19:54Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:22:37Z",
+            "conclusion": "success",
+            "name": "Build pinned proof package",
+            "number": 4,
+            "started_at": "2026-10-11T00:19:55Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:22:37Z",
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v4",
+            "number": 8,
+            "started_at": "2026-10-11T00:22:37Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:22:38Z",
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 9,
+            "started_at": "2026-10-11T00:22:37Z",
+            "status": "completed"
+          }
+        ],
+        "url": "https://api.github.com/repos/alexwelcing/lupine/actions/jobs/114347958873",
+        "workflow_name": "Discovery Verify"
+      },
+      {
+        "check_run_url": "https://api.github.com/repos/alexwelcing/lupine/check-runs/114347958948",
+        "completed_at": "2026-10-11T00:21:09Z",
+        "conclusion": "success",
+        "created_at": "2026-10-11T00:19:34Z",
+        "head_branch": "research/lupine-discovery",
+        "head_sha": "a0624cac9abb20320629cce41f10270b9b8e2136",
+        "html_url": "https://github.com/alexwelcing/lupine/actions/runs/38098039812/job/114347958948",
+        "id": 114347958948,
+        "labels": [
+          "ubuntu-latest"
+        ],
+        "name": "browser",
+        "node_id": "CR_kwDOSDbQvc8AAAAan6tipA",
+        "run_attempt": 1,
+        "run_id": 38098039812,
+        "run_url": "https://api.github.com/repos/alexwelcing/lupine/actions/runs/38098039812",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions",
+        "runner_id": 1000013366,
+        "runner_name": "GitHub Actions 1000013366",
+        "started_at": "2026-10-11T00:19:37Z",
+        "status": "completed",
+        "steps": [
+          {
+            "completed_at": "2026-10-11T00:19:39Z",
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "started_at": "2026-10-11T00:19:38Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:19:55Z",
+            "conclusion": "success",
+            "name": "Run actions/checkout@v4",
+            "number": 2,
+            "started_at": "2026-10-11T00:19:39Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:19:55Z",
+            "conclusion": "success",
+            "name": "Run actions/setup-python@v5",
+            "number": 3,
+            "started_at": "2026-10-11T00:19:55Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:20:00Z",
+            "conclusion": "success",
+            "name": "Run python -m pip install -e '.[test-ui]'",
+            "number": 4,
+            "started_at": "2026-10-11T00:19:55Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:20:21Z",
+            "conclusion": "success",
+            "name": "Run python -m playwright install --with-deps chromium",
+            "number": 5,
+            "started_at": "2026-10-11T00:20:00Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:21:03Z",
+            "conclusion": "success",
+            "name": "Run python scripts/browser_smoke.py",
+            "number": 6,
+            "started_at": "2026-10-11T00:20:21Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:21:05Z",
+            "conclusion": "success",
+            "name": "Run actions/upload-artifact@v4",
+            "number": 7,
+            "started_at": "2026-10-11T00:21:03Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:21:06Z",
+            "conclusion": "success",
+            "name": "Post Run actions/setup-python@v5",
+            "number": 13,
+            "started_at": "2026-10-11T00:21:05Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:21:06Z",
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v4",
+            "number": 14,
+            "started_at": "2026-10-11T00:21:06Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-11T00:21:06Z",
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 15,
+            "started_at": "2026-10-11T00:21:06Z",
+            "status": "completed"
+          }
+        ],
+        "url": "https://api.github.com/repos/alexwelcing/lupine/actions/jobs/114347958948",
+        "workflow_name": "Discovery Verify"
+      }
+    ],
+    "total_count": 4
+  },
+  "observed_at": "2026-10-11T00:45:25.709464+00:00",
+  "remote_matches": true,
+  "remote_observed_commit": "a0624cac9abb20320629cce41f10270b9b8e2136",
+  "run": {
+    "actor": {
+      "avatar_url": "https://avatars.githubusercontent.com/u/13339261?v=4",
+      "events_url": "https://api.github.com/users/alexwelcing/events{/privacy}",
+      "followers_url": "https://api.github.com/users/alexwelcing/followers",
+      "following_url": "https://api.github.com/users/alexwelcing/following{/other_user}",
+      "gists_url": "https://api.github.com/users/alexwelcing/gists{/gist_id}",
+      "gravatar_id": "",
+      "html_url": "https://github.com/alexwelcing",
+      "id": 13339261,
+      "login": "alexwelcing",
+      "node_id": "MDQ6VXNlcjEzMzM5MjYx",
+      "organizations_url": "https://api.github.com/users/alexwelcing/orgs",
+      "received_events_url": "https://api.github.com/users/alexwelcing/received_events",
+      "repos_url": "https://api.github.com/users/alexwelcing/repos",
+      "site_admin": false,
+      "starred_url": "https://api.github.com/users/alexwelcing/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/alexwelcing/subscriptions",
+      "type": "User",
+      "url": "https://api.github.com/users/alexwelcing",
+      "user_view_type": "public"
+    },
+    "artifacts_url": "https://api.github.com/repos/alexwelcing/lupine/actions/runs/38098039812/artifacts",
+    "cancel_url": "https://api.github.com/repos/alexwelcing/lupine/actions/runs/38098039812/cancel",
+    "check_suite_id": 103223754669,
+    "check_suite_node_id": "CS_kwDOSDbQvc8AAAAYCJ1_rQ",
+    "check_suite_url": "https://api.github.com/repos/alexwelcing/lupine/check-suites/103223754669",
+    "conclusion": "success",
+    "created_at": "2026-10-11T00:19:34Z",
+    "display_title": "Repair public metadata seal validation and freeze preallocation recovery",
+    "event": "push",
+    "head_branch": "research/lupine-discovery",
+    "head_commit": {
+      "author": {
+        "email": "alexwelcing@gmail.com",
+        "name": "Alex Welcing"
+      },
+      "committer": {
+        "email": "alexwelcing@gmail.com",
+        "name": "Alex Welcing"
+      },
+      "id": "a0624cac9abb20320629cce41f10270b9b8e2136",
+      "message": "Repair public metadata seal validation and freeze preallocation recovery",
+      "timestamp": "2026-10-11T00:19:30Z",
+      "tree_id": "a317c58295a39fcd8ce07044346a66fe9a283c84"
+    },
+    "head_repository": {
+      "archive_url": "https://api.github.com/repos/alexwelcing/lupine/{archive_format}{/ref}",
+      "assignees_url": "https://api.github.com/repos/alexwelcing/lupine/assignees{/user}",
+      "blobs_url": "https://api.github.com/repos/alexwelcing/lupine/git/blobs{/sha}",
+      "branches_url": "https://api.github.com/repos/alexwelcing/lupine/branches{/branch}",
+      "collaborators_url": "https://api.github.com/repos/alexwelcing/lupine/collaborators{/collaborator}",
+      "comments_url": "https://api.github.com/repos/alexwelcing/lupine/comments{/number}",
+      "commits_url": "https://api.github.com/repos/alexwelcing/lupine/commits{/sha}",
+      "compare_url": "https://api.github.com/repos/alexwelcing/lupine/compare/{base}...{head}",
+      "contents_url": "https://api.github.com/repos/alexwelcing/lupine/contents/{+path}",
+      "contributors_url": "https://api.github.com/repos/alexwelcing/lupine/contributors",
+      "deployments_url": "https://api.github.com/repos/alexwelcing/lupine/deployments",
+      "description": "materials ",
+      "downloads_url": "https://api.github.com/repos/alexwelcing/lupine/downloads",
+      "events_url": "https://api.github.com/repos/alexwelcing/lupine/events",
+      "fork": false,
+      "forks_url": "https://api.github.com/repos/alexwelcing/lupine/forks",
+      "full_name": "alexwelcing/lupine",
+      "git_commits_url": "https://api.github.com/repos/alexwelcing/lupine/git/commits{/sha}",
+      "git_refs_url": "https://api.github.com/repos/alexwelcing/lupine/git/refs{/sha}",
+      "git_tags_url": "https://api.github.com/repos/alexwelcing/lupine/git/tags{/sha}",
+      "hooks_url": "https://api.github.com/repos/alexwelcing/lupine/hooks",
+      "html_url": "https://github.com/alexwelcing/lupine",
+      "id": 1211551933,
+      "issue_comment_url": "https://api.github.com/repos/alexwelcing/lupine/issues/comments{/number}",
+      "issue_events_url": "https://api.github.com/repos/alexwelcing/lupine/issues/events{/number}",
+      "issues_url": "https://api.github.com/repos/alexwelcing/lupine/issues{/number}",
+      "keys_url": "https://api.github.com/repos/alexwelcing/lupine/keys{/key_id}",
+      "labels_url": "https://api.github.com/repos/alexwelcing/lupine/labels{/name}",
+      "languages_url": "https://api.github.com/repos/alexwelcing/lupine/languages",
+      "merges_url": "https://api.github.com/repos/alexwelcing/lupine/merges",
+      "milestones_url": "https://api.github.com/repos/alexwelcing/lupine/milestones{/number}",
+      "name": "lupine",
+      "node_id": "R_kgDOSDbQvQ",
+      "notifications_url": "https://api.github.com/repos/alexwelcing/lupine/notifications{?since,all,participating}",
+      "owner": {
+        "avatar_url": "https://avatars.githubusercontent.com/u/13339261?v=4",
+        "events_url": "https://api.github.com/users/alexwelcing/events{/privacy}",
+        "followers_url": "https://api.github.com/users/alexwelcing/followers",
+        "following_url": "https://api.github.com/users/alexwelcing/following{/other_user}",
+        "gists_url": "https://api.github.com/users/alexwelcing/gists{/gist_id}",
+        "gravatar_id": "",
+        "html_url": "https://github.com/alexwelcing",
+        "id": 13339261,
+        "login": "alexwelcing",
+        "node_id": "MDQ6VXNlcjEzMzM5MjYx",
+        "organizations_url": "https://api.github.com/users/alexwelcing/orgs",
+        "received_events_url": "https://api.github.com/users/alexwelcing/received_events",
+        "repos_url": "https://api.github.com/users/alexwelcing/repos",
+        "site_admin": false,
+        "starred_url": "https://api.github.com/users/alexwelcing/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/alexwelcing/subscriptions",
+        "type": "User",
+        "url": "https://api.github.com/users/alexwelcing",
+        "user_view_type": "public"
+      },
+      "private": false,
+      "pulls_url": "https://api.github.com/repos/alexwelcing/lupine/pulls{/number}",
+      "releases_url": "https://api.github.com/repos/alexwelcing/lupine/releases{/id}",
+      "stargazers_url": "https://api.github.com/repos/alexwelcing/lupine/stargazers",
+      "statuses_url": "https://api.github.com/repos/alexwelcing/lupine/statuses/{sha}",
+      "subscribers_url": "https://api.github.com/repos/alexwelcing/lupine/subscribers",
+      "subscription_url": "https://api.github.com/repos/alexwelcing/lupine/subscription",
+      "tags_url": "https://api.github.com/repos/alexwelcing/lupine/tags",
+      "teams_url": "https://api.github.com/repos/alexwelcing/lupine/teams",
+      "trees_url": "https://api.github.com/repos/alexwelcing/lupine/git/trees{/sha}",
+      "url": "https://api.github.com/repos/alexwelcing/lupine"
+    },
+    "head_sha": "a0624cac9abb20320629cce41f10270b9b8e2136",
+    "html_url": "https://github.com/alexwelcing/lupine/actions/runs/38098039812",
+    "id": 38098039812,
+    "jobs_url": "https://api.github.com/repos/alexwelcing/lupine/actions/runs/38098039812/jobs",
+    "logs_url": "https://api.github.com/repos/alexwelcing/lupine/actions/runs/38098039812/logs",
+    "name": "Discovery Verify",
+    "node_id": "WFR_kwLOSDbQvc8AAAAI3tH0BA",
+    "path": ".github/workflows/discovery-verify.yml",
+    "previous_attempt_url": null,
+    "pull_requests": [
+      {
+        "base": {
+          "ref": "main",
+          "repo": {
+            "id": 1211551933,
+            "name": "lupine",
+            "url": "https://api.github.com/repos/alexwelcing/lupine"
+          },
+          "sha": "701430be937b4ecf376c163b1de67793ed6fdaf7"
+        },
+        "head": {
+          "ref": "research/lupine-discovery",
+          "repo": {
+            "id": 1211551933,
+            "name": "lupine",
+            "url": "https://api.github.com/repos/alexwelcing/lupine"
+          },
+          "sha": "a0624cac9abb20320629cce41f10270b9b8e2136"
+        },
+        "id": 4812747982,
+        "number": 263,
+        "url": "https://api.github.com/repos/alexwelcing/lupine/pulls/263"
+      }
+    ],
+    "referenced_workflows": [],
+    "repository": {
+      "archive_url": "https://api.github.com/repos/alexwelcing/lupine/{archive_format}{/ref}",
+      "assignees_url": "https://api.github.com/repos/alexwelcing/lupine/assignees{/user}",
+      "blobs_url": "https://api.github.com/repos/alexwelcing/lupine/git/blobs{/sha}",
+      "branches_url": "https://api.github.com/repos/alexwelcing/lupine/branches{/branch}",
+      "collaborators_url": "https://api.github.com/repos/alexwelcing/lupine/collaborators{/collaborator}",
+      "comments_url": "https://api.github.com/repos/alexwelcing/lupine/comments{/number}",
+      "commits_url": "https://api.github.com/repos/alexwelcing/lupine/commits{/sha}",
+      "compare_url": "https://api.github.com/repos/alexwelcing/lupine/compare/{base}...{head}",
+      "contents_url": "https://api.github.com/repos/alexwelcing/lupine/contents/{+path}",
+      "contributors_url": "https://api.github.com/repos/alexwelcing/lupine/contributors",
+      "deployments_url": "https://api.github.com/repos/alexwelcing/lupine/deployments",
+      "description": "materials ",
+      "downloads_url": "https://api.github.com/repos/alexwelcing/lupine/downloads",
+      "events_url": "https://api.github.com/repos/alexwelcing/lupine/events",
+      "fork": false,
+      "forks_url": "https://api.github.com/repos/alexwelcing/lupine/forks",
+      "full_name": "alexwelcing/lupine",
+      "git_commits_url": "https://api.github.com/repos/alexwelcing/lupine/git/commits{/sha}",
+      "git_refs_url": "https://api.github.com/repos/alexwelcing/lupine/git/refs{/sha}",
+      "git_tags_url": "https://api.github.com/repos/alexwelcing/lupine/git/tags{/sha}",
+      "hooks_url": "https://api.github.com/repos/alexwelcing/lupine/hooks",
+      "html_url": "https://github.com/alexwelcing/lupine",
+      "id": 1211551933,
+      "issue_comment_url": "https://api.github.com/repos/alexwelcing/lupine/issues/comments{/number}",
+      "issue_events_url": "https://api.github.com/repos/alexwelcing/lupine/issues/events{/number}",
+      "issues_url": "https://api.github.com/repos/alexwelcing/lupine/issues{/number}",
+      "keys_url": "https://api.github.com/repos/alexwelcing/lupine/keys{/key_id}",
+      "labels_url": "https://api.github.com/repos/alexwelcing/lupine/labels{/name}",
+      "languages_url": "https://api.github.com/repos/alexwelcing/lupine/languages",
+      "merges_url": "https://api.github.com/repos/alexwelcing/lupine/merges",
+      "milestones_url": "https://api.github.com/repos/alexwelcing/lupine/milestones{/number}",
+      "name": "lupine",
+      "node_id": "R_kgDOSDbQvQ",
+      "notifications_url": "https://api.github.com/repos/alexwelcing/lupine/notifications{?since,all,participating}",
+      "owner": {
+        "avatar_url": "https://avatars.githubusercontent.com/u/13339261?v=4",
+        "events_url": "https://api.github.com/users/alexwelcing/events{/privacy}",
+        "followers_url": "https://api.github.com/users/alexwelcing/followers",
+        "following_url": "https://api.github.com/users/alexwelcing/following{/other_user}",
+        "gists_url": "https://api.github.com/users/alexwelcing/gists{/gist_id}",
+        "gravatar_id": "",
+        "html_url": "https://github.com/alexwelcing",
+        "id": 13339261,
+        "login": "alexwelcing",
+        "node_id": "MDQ6VXNlcjEzMzM5MjYx",
+        "organizations_url": "https://api.github.com/users/alexwelcing/orgs",
+        "received_events_url": "https://api.github.com/users/alexwelcing/received_events",
+        "repos_url": "https://api.github.com/users/alexwelcing/repos",
+        "site_admin": false,
+        "starred_url": "https://api.github.com/users/alexwelcing/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/alexwelcing/subscriptions",
+        "type": "User",
+        "url": "https://api.github.com/users/alexwelcing",
+        "user_view_type": "public"
+      },
+      "private": false,
+      "pulls_url": "https://api.github.com/repos/alexwelcing/lupine/pulls{/number}",
+      "releases_url": "https://api.github.com/repos/alexwelcing/lupine/releases{/id}",
+      "stargazers_url": "https://api.github.com/repos/alexwelcing/lupine/stargazers",
+      "statuses_url": "https://api.github.com/repos/alexwelcing/lupine/statuses/{sha}",
+      "subscribers_url": "https://api.github.com/repos/alexwelcing/lupine/subscribers",
+      "subscription_url": "https://api.github.com/repos/alexwelcing/lupine/subscription",
+      "tags_url": "https://api.github.com/repos/alexwelcing/lupine/tags",
+      "teams_url": "https://api.github.com/repos/alexwelcing/lupine/teams",
+      "trees_url": "https://api.github.com/repos/alexwelcing/lupine/git/trees{/sha}",
+      "url": "https://api.github.com/repos/alexwelcing/lupine"
+    },
+    "rerun_url": "https://api.github.com/repos/alexwelcing/lupine/actions/runs/38098039812/rerun",
+    "run_attempt": 1,
+    "run_number": 62,
+    "run_started_at": "2026-10-11T00:19:34Z",
+    "status": "completed",
+    "triggering_actor": {
+      "avatar_url": "https://avatars.githubusercontent.com/u/13339261?v=4",
+      "events_url": "https://api.github.com/users/alexwelcing/events{/privacy}",
+      "followers_url": "https://api.github.com/users/alexwelcing/followers",
+      "following_url": "https://api.github.com/users/alexwelcing/following{/other_user}",
+      "gists_url": "https://api.github.com/users/alexwelcing/gists{/gist_id}",
+      "gravatar_id": "",
+      "html_url": "https://github.com/alexwelcing",
+      "id": 13339261,
+      "login": "alexwelcing",
+      "node_id": "MDQ6VXNlcjEzMzM5MjYx",
+      "organizations_url": "https://api.github.com/users/alexwelcing/orgs",
+      "received_events_url": "https://api.github.com/users/alexwelcing/received_events",
+      "repos_url": "https://api.github.com/users/alexwelcing/repos",
+      "site_admin": false,
+      "starred_url": "https://api.github.com/users/alexwelcing/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/alexwelcing/subscriptions",
+      "type": "User",
+      "url": "https://api.github.com/users/alexwelcing",
+      "user_view_type": "public"
+    },
+    "updated_at": "2026-10-11T00:45:09Z",
+    "url": "https://api.github.com/repos/alexwelcing/lupine/actions/runs/38098039812",
+    "workflow_id": 380486704,
+    "workflow_url": "https://api.github.com/repos/alexwelcing/lupine/actions/workflows/380486704"
+  },
+  "scope": "Official GitHub original-branch CI responses; no downloaded job logs or artifacts."
+}

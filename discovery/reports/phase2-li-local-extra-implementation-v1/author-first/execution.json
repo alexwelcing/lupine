@@ -1,0 +1,30 @@
+{
+  "schema": "lupine.engineering.execution.v1",
+  "command": [
+    "python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-local-extra-candidate-v1/promotion/tests",
+    "-p",
+    "test_li_v3_local_extra_headers.py",
+    "-v"
+  ],
+  "cwd": "/workspace/lupine-discovery-branch/discovery",
+  "started_utc": "2026-10-16T09:12:58.907414+00:00",
+  "finished_utc": "2026-10-16T09:12:59.444374+00:00",
+  "elapsed_seconds": 0.5369652820008923,
+  "exit_code": 0,
+  "before": {
+    ".cache/phase2-li-local-extra-candidate-v1/promotion/scripts/li_v3_local_extra_headers.py": "54db58a567afc9211303f2edff13541ab2f97beb77ef2edaa518ad32bf6b1026",
+    ".cache/phase2-li-local-extra-candidate-v1/promotion/tests/test_li_v3_local_extra_headers.py": "b072f2e63a79d3c032838f49f4e2eeea845b7872d67c43f9e0e8a9964ca74a78",
+    ".cache/phase2-li-local-extra-candidate-v1/promotion/docs/li-v3-local-extra-headers-plan.md": "2c0c10dd23ba855c6eb1fd6831373a07698c7a6d6280a89f8bb55e7fcc1331aa"
+  },
+  "after": {
+    ".cache/phase2-li-local-extra-candidate-v1/promotion/scripts/li_v3_local_extra_headers.py": "54db58a567afc9211303f2edff13541ab2f97beb77ef2edaa518ad32bf6b1026",
+    ".cache/phase2-li-local-extra-candidate-v1/promotion/tests/test_li_v3_local_extra_headers.py": "b072f2e63a79d3c032838f49f4e2eeea845b7872d67c43f9e0e8a9964ca74a78",
+    ".cache/phase2-li-local-extra-candidate-v1/promotion/docs/li-v3-local-extra-headers-plan.md": "2c0c10dd23ba855c6eb1fd6831373a07698c7a6d6280a89f8bb55e7fcc1331aa"
+  },
+  "scope": "Synthetic author tests only; no actual source or scientific inference."
+}

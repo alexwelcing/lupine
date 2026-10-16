@@ -1,0 +1,24 @@
+test_delete_each_required_field (test_mpea_archive_profiles.Profiles.test_delete_each_required_field) ... ok
+test_fixed_and_detached (test_mpea_archive_profiles.Profiles.test_fixed_and_detached) ... ok
+test_framing_constructor_rejects_unfounded_shapes (test_mpea_archive_profiles.Profiles.test_framing_constructor_rejects_unfounded_shapes) ... ok
+test_framing_shape_and_expected_identity (test_mpea_archive_profiles.Profiles.test_framing_shape_and_expected_identity) ... ok
+test_frozen_feature_reader_parity (test_mpea_archive_profiles.Profiles.test_frozen_feature_reader_parity) ... ok
+test_typed_corruption (test_mpea_archive_profiles.Profiles.test_typed_corruption) ... ok
+test_all_caps_and_zero_selected_rows_are_exact (test_mpea_archive_profiles_review.FramingReview.test_all_caps_and_zero_selected_rows_are_exact) ... ok
+test_descriptor_is_a_caller_claim_and_cannot_verify_framing (test_mpea_archive_profiles_review.FramingReview.test_descriptor_is_a_caller_claim_and_cannot_verify_framing) ... ok
+test_exact_string_subclasses_cannot_enter_constructor_output (test_mpea_archive_profiles_review.FramingReview.test_exact_string_subclasses_cannot_enter_constructor_output) ... ok
+test_expected_identity_includes_role_counts_flags_and_target_order (test_mpea_archive_profiles_review.FramingReview.test_expected_identity_includes_role_counts_flags_and_target_order) ... ok
+test_inputs_and_returned_nested_mappings_are_detached (test_mpea_archive_profiles_review.FramingReview.test_inputs_and_returned_nested_mappings_are_detached) ... ok
+test_role_order_scope_duplicates_and_counts_cannot_change (test_mpea_archive_profiles_review.FramingReview.test_role_order_scope_duplicates_and_counts_cannot_change) ... ok
+test_declared_grammar_and_zero_behavior_match_frozen_parser_on_constructed_cells (test_mpea_archive_profiles_review.ProfilesReview.test_declared_grammar_and_zero_behavior_match_frozen_parser_on_constructed_cells) ... ok
+test_feature_profile_matches_actual_frozen_axes_and_reader (test_mpea_archive_profiles_review.ProfilesReview.test_feature_profile_matches_actual_frozen_axes_and_reader) ... ok
+test_malformed_deep_cyclic_and_surrogate_inputs_fail_closed (test_mpea_archive_profiles_review.ProfilesReview.test_malformed_deep_cyclic_and_surrogate_inputs_fail_closed) ... ok
+test_nested_bool_float_tuple_and_extra_fields_reject (test_mpea_archive_profiles_review.ProfilesReview.test_nested_bool_float_tuple_and_extra_fields_reject) ... ok
+test_nested_mutation_cannot_change_later_descriptors (test_mpea_archive_profiles_review.ProfilesReview.test_nested_mutation_cannot_change_later_descriptors) ... ok
+test_predictor_frozen_choices_and_policy_count (test_mpea_archive_profiles_review.ProfilesReview.test_predictor_frozen_choices_and_policy_count) ... ok
+test_target_profile_fixed_limits_units_and_code_identity (test_mpea_archive_profiles_review.ProfilesReview.test_target_profile_fixed_limits_units_and_code_identity) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 0.052s
+
+OK

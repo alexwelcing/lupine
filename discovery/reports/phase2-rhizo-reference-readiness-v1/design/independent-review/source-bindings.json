@@ -1,0 +1,32 @@
+{
+  "schema": "lupine.rhizo-reference-readiness.review-input-bindings.v1",
+  "created_at": "2026-10-16T11:22:59.249180+00:00",
+  "scope": "Only the five parent-authorized public documents were read. Initial broad documentary/metadata displays were truncated; no raw scientific source content was accessed. Counts computed only from the redacted public metadata.",
+  "bindings": [
+    {
+      "path": "docs/projection-data-readiness.md",
+      "bytes": 16530,
+      "sha256": "e36218568234f426b050492a9ee25ff52d302a3317818ce4590dfe86855d85d9"
+    },
+    {
+      "path": "reports/projection-custody-readiness-v1.md",
+      "bytes": 10769,
+      "sha256": "6805f075c90ba122726bcdfbe9d2f9a9714d2cbbd2f2ecd05d1dcb769e2629b0"
+    },
+    {
+      "path": "reports/projection-source-inventory.json",
+      "bytes": 54932,
+      "sha256": "4874aebfa7e6f8003b6b733750ddac6675770a7b815b9ac8e1de81f55d118f42"
+    },
+    {
+      "path": "reports/projection-custody-metadata-v1.json",
+      "bytes": 199380,
+      "sha256": "8f987cff79add822430d47bac9cdd9fda202bb4135c078f08241ea9682be0b04"
+    },
+    {
+      "path": "reports/projection-custody-acquisition-v1.json",
+      "bytes": 7468,
+      "sha256": "f0947cf030f0a5c8bcf67cd548d85237266f048f2b6659c6c13138cc0e06c25b"
+    }
+  ]
+}

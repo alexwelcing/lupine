@@ -1,0 +1,15 @@
+{
+  "schema": "lupine.rhizo.documentary-review.preparation.v1",
+  "prepared_at": "2026-10-16T11:38:43.096558+00:00",
+  "status": "WAITING_FOR_ROOT_COMPLETED_PATHS",
+  "checklist": {
+    "path": ".cache/phase2-rhizo-documentary-review-v1/RESEARCHER_CHECKLIST.md",
+    "bytes": 4651,
+    "sha256": "15ce9b483b54dc76196993d4451ddd619cbb6cf6038b9a1801fb3cdd218fbbe8"
+  },
+  "raw_objects_read": false,
+  "private_projection_read": false,
+  "network_requests": 0,
+  "scientific_operation": false,
+  "expected_scope": "Completed selected43-location citation/URL/notes projection plus public receipt only; no actual paths yet authorized."
+}

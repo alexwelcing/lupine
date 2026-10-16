@@ -1,0 +1,16 @@
+{
+  "files": [
+    {
+      "bytes": 1895,
+      "path": "README.md",
+      "sha256": "eeacbc888e2dfd80201474a8052c262addb2232ff96277f8edc3e6f74fbd8b64"
+    },
+    {
+      "bytes": 5954,
+      "path": "review.json",
+      "sha256": "b40942f6d25ae7d7a9d51cede87948adb78b8a627bf333cb58423eb186c1032d"
+    }
+  ],
+  "raw_bodies_or_scientific_data_included": false,
+  "schema": "lupine.discovery.dielectric_archive_identity.review_inventory.v1"
+}

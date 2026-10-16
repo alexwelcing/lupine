@@ -1,0 +1,46 @@
+{
+  "actual_operations": 0,
+  "author_execution": "receipts/completed-counter-first/execution.json",
+  "author_execution_sha256": "64be08f24030b925a649f1ae9f6e0bdb4b4fcdf946217296020cd5e46e31c37c",
+  "author_methods": 60,
+  "baseline_status": "2975 behavior baseline; final root published repair rebind pending",
+  "files": {
+    "README.md": {
+      "bytes": 17903,
+      "sha256": "87d3bc80f6442658fc1d027e30206bbb04c44635c5f9b258f0ec0f6c207ff6cb"
+    },
+    "interface.complete-route-v2.json": {
+      "bytes": 10467,
+      "sha256": "4c16d7156f43388982ce778a0c90ba503e3a3765e6cc444e038d7a15f61e91c1"
+    },
+    "li_v3_readiness.py": {
+      "bytes": 81591,
+      "sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219"
+    },
+    "li_v3_readiness_production.py": {
+      "bytes": 61640,
+      "sha256": "a3370ac84762ef7f859061bde93f118a1c1981b02460e9ddd0b1cd38e55b840b"
+    },
+    "test_li_v3_readiness_production.py": {
+      "bytes": 46051,
+      "sha256": "809c0126ef9f130fad264ef2617f67b9b99db103a3a14c476a6e60bfb4905470"
+    }
+  },
+  "held_at": "2026-10-16T14:59:54.820666+00:00",
+  "independent_status": "Awaiting unchanged51-method corrected run; first focused failure retained",
+  "source_audit": {
+    "actual_operations": 0,
+    "added_helpers": [
+      "_completed_prior_counters",
+      "_matching_prior_counts"
+    ],
+    "all_other_helpers_AST_identical_to_behavior540": true,
+    "core_byte_identical": true,
+    "modified_helpers": [
+      "_phase_material",
+      "_prior_inventory",
+      "_prior_production",
+      "_run_production"
+    ]
+  }
+}

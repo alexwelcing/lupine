@@ -1,0 +1,82 @@
+{
+  "checks_performed": [
+    "Syntax ast.parse and compile without execution",
+    "Source-only full recorder review and independent final delta rebind",
+    "Exact source/contract/review byte hashes"
+  ],
+  "expected_commit": "a6e87c198d8116d26c523e0e1b2eedce4aeb225b",
+  "files": {
+    ".cache/phase2-next-source-operations-v1/HEADER-README.md": {
+      "bytes": 2489,
+      "sha256": "44fdb50c071c1d9ade4a83f18753d91f8283105ee805221cb4b83175837eb0ff"
+    },
+    ".cache/phase2-next-source-operations-v1/before-header-post-command-hash-fix/header-syntax-check.json": {
+      "bytes": 683,
+      "sha256": "18bdfd353e46065f461f74ebc8941b665ccc65d70453e55498f30a93bf69a656"
+    },
+    ".cache/phase2-next-source-operations-v1/before-header-post-command-hash-fix/independent-static-review.json": {
+      "bytes": 2026,
+      "sha256": "def7dbfa808d92b000f8a16205780c595c86b17770479b763f528dfffd89f308"
+    },
+    ".cache/phase2-next-source-operations-v1/before-header-post-command-hash-fix/run_header_after_ci.py": {
+      "bytes": 16809,
+      "sha256": "c626d286f7c89b3506feb397c7f0346f4be0e9483498d157e48e8b197641d009"
+    },
+    ".cache/phase2-next-source-operations-v1/before-header-review-fixes/child-static-review.json": {
+      "bytes": 3212,
+      "sha256": "2ed757a770c61b5cb2150f3a7580160063b615efa1a2cf26a950132de29b7d82"
+    },
+    ".cache/phase2-next-source-operations-v1/before-header-review-fixes/review.json": {
+      "bytes": 4354,
+      "sha256": "58e8cf5b6befc80e04969592e7ff9bdc4af8646b6851f6df145d258f48f61b30"
+    },
+    ".cache/phase2-next-source-operations-v1/before-header-review-fixes/run_header_after_ci.py": {
+      "bytes": 7287,
+      "sha256": "dbb47fb996f46284537fc7aa6a4b62a64c7af815630eaacc4c8f7ef1544eefa6"
+    },
+    ".cache/phase2-next-source-operations-v1/header-independent-static-review.json": {
+      "bytes": 2820,
+      "sha256": "ddf32d845663d6f40f41cba5518b97e68d970459e4bf58152a890b8324155efa"
+    },
+    ".cache/phase2-next-source-operations-v1/header-post-command-hash-repair.diff": {
+      "bytes": 3375,
+      "sha256": "4a1ec9a29f99568cfd0123606b4db1bdca35dc9d697fbcf8b7629d3a8e86164c"
+    },
+    ".cache/phase2-next-source-operations-v1/header-repair-notes.json": {
+      "bytes": 2944,
+      "sha256": "bca526b434e7563bbcb1028002416ec8c70bd31015fe6a914a34d32558a83d71"
+    },
+    ".cache/phase2-next-source-operations-v1/header-repair.diff": {
+      "bytes": 24059,
+      "sha256": "33ab7361885357df64cd8aea304ab1b35e9ecf02177baf20aba2fbdd7a2675b2"
+    },
+    ".cache/phase2-next-source-operations-v1/header-syntax-check.json": {
+      "bytes": 683,
+      "sha256": "8c6d9aab98c1358efa0d50a11c69d861a4775a751eeb80286b2f37ca445b9bd2"
+    },
+    ".cache/phase2-next-source-operations-v1/run_header_after_ci.py": {
+      "bytes": 17265,
+      "sha256": "6cfb4cca5d3460d80318d129ed529cc7476a78729908733ac7ef50512f3b4dbb"
+    }
+  },
+  "gates_remaining": "Root must independently observe the matching original four-job CI success plus clean package/strict verification and artifact audit, then invoke once and retain actual receipts. This handoff does not attest gate completion.",
+  "helpers_executed": false,
+  "network": false,
+  "prepared_argv": [
+    "python",
+    ".cache/phase2-next-source-operations-v1/run_header_after_ci.py",
+    "--artifact-review",
+    ".cache/phase2-notebook-header-artifact-review-v1/actual-a6e87c/review.json"
+  ],
+  "private_source_reads": false,
+  "recorded_at": "2026-10-16T08:46:07.310656+00:00",
+  "recorder_imported": false,
+  "recorder_invoked": false,
+  "root_reported_artifact_audit_sha256": "25d384048d0fd862b1ccc1dac304599fe97fe6bb8b38ce4eb53393e821d61303",
+  "runtime_tests": false,
+  "schema": "lupine.discovery.header_recorder_handoff.v1",
+  "scope": "Canonical closed fixed-source categorical output and computational replay only. The operational validator does not certify classifier semantic equivalence; actual results require source-path review. No scientific schema approval or physical conclusion.",
+  "source_sha256": "6cfb4cca5d3460d80318d129ed529cc7476a78729908733ac7ef50512f3b4dbb",
+  "status": "PREPARED_STATIC_REVIEWED_NOT_EXECUTED",
+  "tracked_files_edited": false
+}

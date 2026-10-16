@@ -1,0 +1,170 @@
+{
+  "alpha_arithmetic": [
+    {
+      "N": 20,
+      "alpha": "1/20",
+      "bound": "1/20",
+      "finite_branch": true,
+      "k": 19,
+      "n": 19
+    },
+    {
+      "N": 19,
+      "alpha": "1/20",
+      "bound": null,
+      "finite_branch": false,
+      "k": 19,
+      "n": 18
+    },
+    {
+      "N": 20,
+      "alpha": "1/10",
+      "bound": "1/10",
+      "finite_branch": true,
+      "k": 18,
+      "n": 19
+    },
+    {
+      "N": 4,
+      "alpha": "1/2",
+      "bound": "1/2",
+      "finite_branch": true,
+      "k": 2,
+      "n": 3
+    }
+  ],
+  "bindings_unchanged_during_run": true,
+  "command": [
+    "/home/agent/.elan/bin/lake",
+    "env",
+    "lean",
+    "-DwarningAsError=true",
+    "LupineExchangeability.lean"
+  ],
+  "command_cwd": "/workspace/lupine-discovery-branch/discovery/formal",
+  "compiler_exit_code": 0,
+  "compiler_log_sha256": "130c11c47884060038b853a3fa8a084944a83398fc94b7d509954cb47cf7818f",
+  "completed_utc": "2026-10-10T18:53:47.888017+00:00",
+  "current_inventory_module_count": 9,
+  "current_inventory_sha256": "bd6823b9340a1d8b8f4595f95b83677df5e19eae4ac2585f6ec7f304db2424e7",
+  "current_inventory_theorem_count": 125,
+  "formal_bindings_after": {
+    ".lake/build/lib/lean/LupineDecisionPool.olean": "e4c2f51974095158853bef0d1b4521814a1147a26485d4f893b6d8a2f9cb78d6",
+    ".lake/build/lib/lean/LupineExchangeability.olean": "c777ecb6e5d567f06d07937946cceda85ed3798cf208f430b417d3c604348238",
+    "AXIOMS.txt": "d99b1d075507166a731d2a7e2c35d20e58eeba3dfa50ad12f796c575d3ca3811",
+    "LupineCoupled.lean": "d79afad3eafbf1cfe35fb920c5864059570f2018ff15c7b1badae5de83e39d7f",
+    "LupineDecisionPool.lean": "10a5962eedf30819388a835b052df91f4fff130c79258d31eb345f51071cf00a",
+    "LupineDiscovery.lean": "93adb82c8caceb6620285bea612b4c80e4cf11c7da6d1e04b8ba595f43c6c515",
+    "LupineExchangeability.lean": "0e326c4b51e5ca00d1deb32be61ba7b80ca0c443059d0fbf13e22f05717610ce",
+    "LupineIntervals.lean": "9dec04611f670efdd8deaa6e05f802199f418c9089a5c29148bf8ca4534d8fc4",
+    "LupinePareto.lean": "077e657e5b6d77ef878c325baf9db909adff73f23408385ee464482cd6acd4c0",
+    "LupineProjection.lean": "600af2ee02e8f5ed7f84046d5abab253dc74be3d556414d67438e49a6f3c4f2d",
+    "LupineRisk.lean": "bea0e0cb18daeb41a26e7c721bef0dec6e1c361f3ccf1c9f7f7dbf2176c0fcdf",
+    "LupineSharpness.lean": "1135d8ba14c6d2c388bc5aaa40fc4ce71d55fe09cb8c90bf7319a70a84cbb871",
+    "audit_axioms.py": "1a30e19f3e38d5481ac321be5ece1efc7025925a4a218e51ff5f5f0b49756386",
+    "lake-manifest.json": "641a25267cd8312c08757ff0f0f5738f3adb67598b8205603dbf8ac2255f9275",
+    "lakefile.toml": "391a3c62b80d45a29330d5f2161649719cb557c48abbf4be39d5df6a2462f86f",
+    "lean-toolchain": "651c8accb402b0c071cd336e9d3dc0a55516b1bfb434ddc4801f14936785b1d2",
+    "theorem-inventory.json": "bd6823b9340a1d8b8f4595f95b83677df5e19eae4ac2585f6ec7f304db2424e7"
+  },
+  "formal_bindings_before": {
+    ".lake/build/lib/lean/LupineDecisionPool.olean": "e4c2f51974095158853bef0d1b4521814a1147a26485d4f893b6d8a2f9cb78d6",
+    ".lake/build/lib/lean/LupineExchangeability.olean": "c777ecb6e5d567f06d07937946cceda85ed3798cf208f430b417d3c604348238",
+    "AXIOMS.txt": "d99b1d075507166a731d2a7e2c35d20e58eeba3dfa50ad12f796c575d3ca3811",
+    "LupineCoupled.lean": "d79afad3eafbf1cfe35fb920c5864059570f2018ff15c7b1badae5de83e39d7f",
+    "LupineDecisionPool.lean": "10a5962eedf30819388a835b052df91f4fff130c79258d31eb345f51071cf00a",
+    "LupineDiscovery.lean": "93adb82c8caceb6620285bea612b4c80e4cf11c7da6d1e04b8ba595f43c6c515",
+    "LupineExchangeability.lean": "0e326c4b51e5ca00d1deb32be61ba7b80ca0c443059d0fbf13e22f05717610ce",
+    "LupineIntervals.lean": "9dec04611f670efdd8deaa6e05f802199f418c9089a5c29148bf8ca4534d8fc4",
+    "LupinePareto.lean": "077e657e5b6d77ef878c325baf9db909adff73f23408385ee464482cd6acd4c0",
+    "LupineProjection.lean": "600af2ee02e8f5ed7f84046d5abab253dc74be3d556414d67438e49a6f3c4f2d",
+    "LupineRisk.lean": "bea0e0cb18daeb41a26e7c721bef0dec6e1c361f3ccf1c9f7f7dbf2176c0fcdf",
+    "LupineSharpness.lean": "1135d8ba14c6d2c388bc5aaa40fc4ce71d55fe09cb8c90bf7319a70a84cbb871",
+    "audit_axioms.py": "1a30e19f3e38d5481ac321be5ece1efc7025925a4a218e51ff5f5f0b49756386",
+    "lake-manifest.json": "641a25267cd8312c08757ff0f0f5738f3adb67598b8205603dbf8ac2255f9275",
+    "lakefile.toml": "391a3c62b80d45a29330d5f2161649719cb557c48abbf4be39d5df6a2462f86f",
+    "lean-toolchain": "651c8accb402b0c071cd336e9d3dc0a55516b1bfb434ddc4801f14936785b1d2",
+    "theorem-inventory.json": "bd6823b9340a1d8b8f4595f95b83677df5e19eae4ac2585f6ec7f304db2424e7"
+  },
+  "fresh_audited_theorem_count": 8,
+  "historical_scope": "Earlier scratch review occurred before authorized integration. This receipt binds current published inputs and makes no claim that old configuration/inventory hashes remain unchanged.",
+  "imported_source_sha256": "10a5962eedf30819388a835b052df91f4fff130c79258d31eb345f51071cf00a",
+  "not_validated": [
+    "General measurable or infinite-support laws",
+    "Scientific exchangeability or fitting independence",
+    "Conditional coverage",
+    "Python implementation refinement",
+    "Physical validity or discovery",
+    "Full-universe insufficient-rank implementation branch",
+    "Downstream retention without actual panel scores and nonnegative threshold"
+  ],
+  "schema": "lupine-published-finite-exchangeability-independent-review-v1",
+  "scope": [
+    "Lean statements quantify over arbitrary real score values in finite-support weighted joint laws",
+    "Closure and invariant atom weights derive equal indexed event masses",
+    "Strict leave-one-out failures preserve ties; finite exact-ceiling alpha branch",
+    "Synthetic checks use only the explicitly recorded finite integer score alphabet"
+  ],
+  "script_sha256": "b03dc88edb45cbb5726f520e5aebd89dd11e0174d26bc4c61aa64a0072fc12fb",
+  "source": "LupineExchangeability.lean",
+  "source_sha256": "0e326c4b51e5ca00d1deb32be61ba7b80ca0c443059d0fbf13e22f05717610ce",
+  "status": "STRICT_SOURCE_AUDIT_AND_SYNTHETIC_CHECKS_PASSED",
+  "synthetic_action_event_checks": 24336,
+  "synthetic_domain": {
+    "N": [
+      2,
+      3,
+      4
+    ],
+    "all_coordinate_permutations": true,
+    "all_valid_loo_ranks": true,
+    "atom_weight": "1 + count_zero_scores",
+    "score_values": [
+      -1,
+      0,
+      1
+    ]
+  },
+  "theorems": {
+    "LupineExchangeability.finite_exchangeable_loo_ceiling_bound": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LupineExchangeability.finite_exchangeable_loo_failure_bound": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LupineExchangeability.finite_joint_failure_mass_invariant": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LupineExchangeability.finite_joint_failure_masses_equal": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LupineExchangeability.finite_mass_reindex": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LupineExchangeability.loo_failure_iff_strict_lower": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LupineExchangeability.loo_failure_reindex": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LupineExchangeability.strict_lower_reindex": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ]
+  }
+}

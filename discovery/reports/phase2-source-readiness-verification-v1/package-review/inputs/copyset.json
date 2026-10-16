@@ -1,0 +1,32 @@
+{
+  "baseline": "88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d",
+  "files": {
+    "scripts/package_smoke.py": {
+      "baseline_sha256": "28ff8c56cf632924e0ae28e0560b149d7b1044d63772bc12e61797842c6728ee",
+      "sha256": "db99cb2406c57f68f03497ac13508e3ee462b336bea17f04f7e6dc8236dcfdda"
+    },
+    "scripts/verify_retained_artifacts.py": {
+      "baseline_sha256": "3d3247beb74905c3f6d3a48aa42566d73c7a550645116ce084c0d8e4d664446a",
+      "sha256": "4a1c0e1cf078cbde3a6b9de210b46b065c19576394e052c97e95bfea5ac09840"
+    },
+    "tests/test_retained_mpea_transport.py": {
+      "baseline_sha256": "bce07a6927df9efe261f0477eae7b65f7babbd227721fb77333b7fe34188cf82",
+      "sha256": "f75ff714c84f9b4e9918ca2d9f4ff857dc3a1479cc45bfc5371393a7ecdc5453"
+    },
+    "tests/test_package_retention.py": {
+      "baseline_sha256": "afd324bbd06962c09898bc000afaa1ff3a52f000ce947e5a364980faed6e832b",
+      "sha256": "e3a2112241a03646c9b5a8b60b7483f36305fb7e528fdb6ffcae587c87a14309"
+    },
+    "tests/test_package_retention_review.py": {
+      "baseline_sha256": "9e74246a9c6813efbc1dee855ccb68ac9a20fdaf3e64a340a719202e8f8cbfd1",
+      "sha256": "4934d597cb6b64dd97c6ecabac91a783b025e09ded9831314f78d944881db8f2"
+    },
+    "tests/test_package_source_readiness.py": {
+      "baseline_sha256": null,
+      "sha256": "6afc85434950e0fc29b1ef595849e5423e29b7475116e8b915307f9673683cf8"
+    }
+  },
+  "probe_sha256": "0500909f0aee8a3275b44d8c60ad8f3880247332966525c126141e8f8ced70c7",
+  "resource_sha256": "9abad97d5675f416cc38a325bcd1e108825af001b2fdfccaa1f5c7dfb66f3f0b",
+  "checks": 18
+}

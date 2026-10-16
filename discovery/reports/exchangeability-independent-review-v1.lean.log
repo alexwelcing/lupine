@@ -1,0 +1,8 @@
+'LupineExchangeability.strict_lower_reindex' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LupineExchangeability.loo_failure_iff_strict_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LupineExchangeability.loo_failure_reindex' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LupineExchangeability.finite_mass_reindex' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LupineExchangeability.finite_joint_failure_mass_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LupineExchangeability.finite_joint_failure_masses_equal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LupineExchangeability.finite_exchangeable_loo_failure_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LupineExchangeability.finite_exchangeable_loo_ceiling_bound' depends on axioms: [propext, Classical.choice, Quot.sound]

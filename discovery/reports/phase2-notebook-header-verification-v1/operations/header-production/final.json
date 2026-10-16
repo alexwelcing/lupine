@@ -1,0 +1,8 @@
+{
+  "commit": "a6e87c198d8116d26c523e0e1b2eedce4aeb225b",
+  "finished_at": "2026-10-16T08:51:29.342657+00:00",
+  "public_sha256": "4ee25afe053f68b4b9331a9ebc94bccb2e1d96e0ce5700d78a45866ef7b0cc12",
+  "scientific_schema_approved": false,
+  "scope": "Fixed-source categorical computational replay only; scientific gates remain blocked.",
+  "status": "COMPLETE_TWO_IDENTICAL_DIAGNOSES"
+}

@@ -1,0 +1,81 @@
+{
+  "adapter_sha256": "4a7eb4a48f281f888132c5bb235b10ec037c685f2ba8a192f976a00337e0de09",
+  "cases": {
+    "bounded": {
+      "diagnostic_box_retained": [
+        "A",
+        "B"
+      ],
+      "input_digest": "6037d604c02efa90345ac2b1c723a890551574f7278d040e4b1293bd48be248c",
+      "model_available": true,
+      "reasons": [],
+      "relation_digest": "f142467667b34e53d5dfaeecd7c7c84c5cbc0a3d31aa3b37ee25fe0dac040d5f",
+      "retained": [
+        "B"
+      ],
+      "status": "conditional_screened",
+      "verified_difference_upper": "-1/2"
+    },
+    "inconsistent_anchors": {
+      "diagnostic_box_retained": [
+        "A",
+        "B"
+      ],
+      "input_digest": "3540fcd735c3b4cca3f1460d3bf81893fd1d53e6204a40495e40878ff3793217",
+      "model_available": true,
+      "reasons": [],
+      "relation_digest": "de2b160890c479871917660b3998a3b089fc32e56ede018e72ed47541f640631",
+      "retained": [
+        "A",
+        "B"
+      ],
+      "status": "consistency_unresolved_all_retained"
+    },
+    "missing_bound": {
+      "diagnostic_box_retained": null,
+      "input_digest": "f808ac0749a5fcb20d12ef5a8d455b6a3cf77a7179288ea9de7a3cb13b9a6f3d",
+      "model_available": false,
+      "reasons": [
+        {
+          "code": "finite_field_bound_missing",
+          "record_id": "shared-within-context",
+          "record_kind": "field"
+        }
+      ],
+      "relation_digest": "6d16d88fe0ef861e53e3516f1eac4e4b892dc3418fe0047c04da92be4a7d8e92",
+      "retained": [
+        "A",
+        "B"
+      ],
+      "status": "unsupported_all_retained"
+    },
+    "tie": {
+      "constructed_scores": {
+        "A": "9/2",
+        "B": "9/2"
+      },
+      "diagnostic_box_retained": [
+        "A",
+        "B"
+      ],
+      "input_digest": "ca855c147444655cb534200add2a24f5b50adaa913c25612ad3cd94069319196",
+      "model_available": true,
+      "reasons": [],
+      "relation_digest": "515a25de5ea0ccebe22b210a989ed49098745539ec4f4dfaf1e353675b5ab436",
+      "retained": [
+        "A",
+        "B"
+      ],
+      "status": "conditional_screened"
+    }
+  },
+  "command": [
+    "python",
+    "examples/projected.py"
+  ],
+  "result_sha256": "981a9530fc3371281ed1a985cac8fc173764e9c656c2811c4d8ba0f435324ac3",
+  "schema": "lupine.discovery.projection-example.execution.v1",
+  "scope": "Constructed equations and failure controls only; output is not a workbench input schema",
+  "source_sha256": "bd1e1b43babfe44fefa96c296909ee2b6fd52e26671ddf2810d86dea9d4bdb36",
+  "status": "PASS"
+}

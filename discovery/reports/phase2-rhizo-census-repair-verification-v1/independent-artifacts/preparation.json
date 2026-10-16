@@ -1,0 +1,31 @@
+{
+  "actual_commit_binding": null,
+  "actual_retention_path": null,
+  "base_commit": "2975d6d0b9111cc84adb82ccc673bc82339ab154",
+  "bindings": [
+    {
+      "bytes": 804,
+      "sha256": "3197d9169f1a48bb39ac1e3ad3282b5764ce79e0f6683c9a46732be55ee5e752",
+      "snapshot": "prepared-scope.json",
+      "source": "root task instruction"
+    },
+    {
+      "bytes": 364,
+      "sha256": "46a62f36494deac815f9470d6657fc93782ec1c9434378ecd0700d31d8e416c4",
+      "snapshot": "prepared-promotion-inputs.json",
+      "source": "root task instruction"
+    }
+  ],
+  "claim_limits": [
+    "Byte and packaging evidence only; no physical truth, training independence or superiority.",
+    "No source/test/probe/census execution, private/raw scientific reads, Git mutation or network.",
+    "Report/document additions are admitted only as exact Git-scoped source files, not as unreviewed runtime/payload deltas."
+  ],
+  "created_at": "2026-10-16T14:40:14.589771+00:00",
+  "existing_reviews_unchanged": true,
+  "expected_public_resource_sha256": "a9ab9d72c6c39be9338e951b657e0587ae8f4dbe534b276b8f8f8951a7b1a63a",
+  "predecessor_auditor_sha256": "b6566a01f8704699174dbdaaacb4a51182e58bf1e346bf249375c534ac1728db",
+  "proposed_fix_source_read_or_executed_for_preparation": false,
+  "schema": "lupine.rhizo.census.repair-artifact-review.preparation.v1",
+  "status": "PREPARATION_ONLY_FINAL_AUDIT_NOT_RUN"
+}

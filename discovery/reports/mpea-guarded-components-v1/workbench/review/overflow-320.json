@@ -1,0 +1,17 @@
+{
+  "absent": {
+    "width": 320,
+    "scrollWidth": 320,
+    "items": []
+  },
+  "closed": {
+    "width": 320,
+    "scrollWidth": 320,
+    "items": []
+  },
+  "expanded": {
+    "width": 320,
+    "scrollWidth": 405,
+    "items": []
+  }
+}

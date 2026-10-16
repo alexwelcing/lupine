@@ -1,0 +1,8 @@
+{
+  "max_bytes": 1048576,
+  "method": "GET",
+  "redirects": false,
+  "retries": 0,
+  "started_at": "2026-10-16T16:57:09.805727+00:00",
+  "url": "https://api.crossref.org/works/10.1038/sdata.2014.22"
+}

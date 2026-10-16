@@ -1,0 +1,50 @@
+{
+  "actual_compatible_header_diagnostic": {
+    "execution_receipt_present": false,
+    "status": "NOT_RECORDED_IN_THIS_BUNDLE"
+  },
+  "actual_notebook_operations": {
+    "execution_receipt_present": false,
+    "status": "NOT_RECORDED_IN_THIS_BUNDLE"
+  },
+  "assembled_utc": "2026-10-16T08:37:53.586108+00:00",
+  "ci": {
+    "status": "PENDING",
+    "verified_in_this_bundle": false
+  },
+  "commit": "a6e87c198d8116d26c523e0e1b2eedce4aeb225b",
+  "completed": {
+    "additive_source_audit": {
+      "baseline_runtime_files_preserved": 317,
+      "new_runtime_files": 6,
+      "new_source_test_contract_files": 8,
+      "status": "PASS"
+    },
+    "independent_artifact_audit": {
+      "git_source_files": 3172,
+      "required_checks": 16,
+      "runtime_files": 323,
+      "status": "PASS",
+      "wheel_members": 115,
+      "wheel_package_members": 108
+    },
+    "retained_package": {
+      "elapsed_seconds": 24.746919402999993,
+      "exit_code": 0,
+      "finished_utc": "2026-10-16T08:23:33.751179+00:00",
+      "status": "PASS"
+    },
+    "strict_retained_verifier": {
+      "elapsed_seconds": 1.2371022570005152,
+      "exit_code": 0,
+      "finished_utc": "2026-10-16T08:23:35.021839+00:00",
+      "status": "PASS"
+    }
+  },
+  "decision_map": {
+    "actual_cause_inferred": false,
+    "status": "PROSPECTIVE_SOURCE_ONLY"
+  },
+  "schema": "lupine.discovery.engineering_verification_checkpoint.v1",
+  "scientific_claim_changed": false
+}

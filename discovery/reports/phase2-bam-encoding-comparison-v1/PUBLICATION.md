@@ -1,0 +1,11 @@
+# Publication scope and documentary reviews
+
+Read the [report](README.md) and [source-bound findings](documentary-findings.json). Both strict codec hypotheses parsed, but actual encoding remains unbound. The earlier UTF-8 failure and first-record header checkpoint remain preserved separately. No benchmark, adapter, model or uncertainty guarantee is admitted.
+
+The [pre-invocation review](independent-review/source-review.json) preceded the one [recorded invocation](execution.json). The [result and claim review](independent-review/result-review.json) checked receipts, the retained internal projection and precise documentary citations; it did not independently rerun a raw-source decoder or parser. Agent independence is not sample independence or a second scientific experiment.
+
+[publication-map.json](publication-map.json) records exact copies and explicit omissions. The raw CSV and full internal selected-cell projection remain ignored. Historical `.cache` paths in exact receipts identify retained workspace inputs; their appearance does not imply those bodies are public in this directory. The [exposure ledger](exposure-ledger.json) distinguishes whole-document machine access from selected researcher inspection, including possible illustrative values in comments/entries.
+
+The first source/scope and two pre-invocation reporting findings remain preserved: the final reader verifies prior checkpoints before source access and labels its cell-count denominator. Initial source snapshots were not executed against the document; neither they nor the final documentary checks are product/scientific test passes. The original pre-invocation binding check is a dated initial snapshot, not a verification of the later refined source. No source bytes, prior failures or original artifact copies were rewritten.
+
+Only own paraphrase, selected technical labels, source hashes, aggregate documentary structure, locators, scopes, receipts and review/source artifacts are published. No arbitrary example-column values, full raw schema, internal full-cell text or long translated standard quotations are included. The record's declared CC BY 4.0 is not a claim about unrelated cited standards or measurement objects. The exact small reader is retained as historical documentary source; its ignored raw input is intentionally omitted.

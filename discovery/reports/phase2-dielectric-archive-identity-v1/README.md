@@ -1,0 +1,21 @@
+# Primary Dryad identity and declared terms resolved in registry metadata
+
+The one permitted request confirms a concrete primary-data record: [10.5061/dryad.ph81h](https://doi.org/10.5061/dryad.ph81h). DataCite identifies its publisher as **Dryad**, resource type as **Dataset**, version as the literal string **`1`**, and declared rights as **Creative Commons Zero v1.0 Universal (`cc0-1.0`)**. These are the registry's statements about the cited primary dataset. They do not verify data-file bytes or establish equivalence to matminer's processed Figshare file.
+
+Identity was established without guessing or rereading the full article. The already retained Crossref metadata for the primary paper has reference 62 (zero based), whose DOI field and Dryad citation text both identify this one DOI. The new DataCite record also explicitly states `IsCitedBy` DOI `10.1038/sdata.2016.134`. The [retained citation projection](retained-metadata-identity-projection.json) and [selected DataCite metadata](datacite/projection.json) preserve those two directions of documentary linkage.
+
+| Registry field | Observed metadata | Interpretation limit |
+|---|---|---|
+| Title | *Data from: High-throughput screening of inorganic compounds for dielectric and optical properties to enable the discovery of novel materials* | This title differs from the final paper title. The explicit DOI references support the association; titles were not silently normalized or used for a fuzzy join. |
+| Version | `1` | This is an explicit dataset-version field, not inferred from a year or API schema. No version-specific file manifest, filenames, checksums or file bytes were acquired. |
+| Rights | CC0-1.0, with [legal-code URI](https://creativecommons.org/publicdomain/zero/1.0/legalcode) | This narrows the primary-dataset rights uncertainty. It is a registry declaration, not a check of every file or exception, and it does not automatically establish terms for the processed Figshare object. |
+| Related identifier | `IsCitedBy` the exact primary-paper DOI | Documentary source association; no row, value, calculation or byte-equivalence verification. |
+| Publication and dates | Publication year `2017`; submitted `2016-03-26`; issued/available `2017-11-16`; record created/registered `2016-11-16`; registry updated `2026-01-27` | These distinct fields are preserved without reconciliation. The later registry update is not a new scientific calculation, dataset-version change or evidence that files changed. |
+| Metadata schema | DataCite kernel-4 | This is the registry metadata schema, not a data-archive version or observation schema. |
+| Creators | Nine creator names are supplied in the selected record. | The earlier paper metadata supplies ten authors, including Donald Winston, who is absent from this creator list. That documentary difference is retained; authorship equality is not asserted. |
+
+The [prospective scope](scope.json) was frozen before the exact [DataCite API request](https://api.datacite.org/dois/10.5061/dryad.ph81h). It returned HTTP 200 once: 20,018 bytes, SHA256 `3f426725e3c3b495b2180a5bc8ca9a72c8266f67f73da406a01fda8c6c2152db`. There was no redirect, retry, mirror, second request or landing-page visit. The complete registry metadata container was machine read; researcher-facing output excluded descriptions, arbitrary XML, contacts and data values. The raw response is retained ignored and excluded from publication.
+
+This resolves a **primary-archive documentary identity/declared-rights/version gap**. It leaves file custody, exact schema and units, calculation-level pairing, missingness, source overlap and the relationship to catalog file `13213475` unresolved. The catalog's expected hash was not checked against any data bytes. Earlier qualitative-result exposure from the paper remains unchanged; this is not fresh or untouched evidence, and no independence or new-prediction claim follows.
+
+No data files, numerical target tables, full articles, joins, fits or scientific comparisons were acquired or executed in this task. No benchmark, threshold or admission changed. Li remains primary. The [source bindings](source-bindings.json) and [disposition](disposition.json) preserve the narrow scope; any later source acquisition remains a separate root decision.

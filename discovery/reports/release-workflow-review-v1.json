@@ -1,0 +1,14 @@
+{
+  "findings": [
+    "Shallow checkout suffices for retention HEAD/tree/blob reads; history-based scientific custody not invoked.",
+    "Build/cache outputs ignored; tests use temporary synthetic paths.",
+    "Artifact upload path is repository-relative and names are matrix-distinct.",
+    "Lean audit is followed by tracked receipt diff in discovery/formal."
+  ],
+  "limitation": "Python artifacts may upload before separate Lean/browser jobs finish; whole workflow must be green before candidate acceptance.",
+  "method": "Read-only source/path/CI contract review; no test execution",
+  "reviewer": "adversarial_review",
+  "schema": "lupine.discovery.release_workflow_review.v1",
+  "status": "NO_BLOCKER_FOUND",
+  "workflow_sha256": "4806e3bb0f8ea39fc9d4bd86ff96b30decdf8bd612860bb0d9abad8c3c88050e"
+}

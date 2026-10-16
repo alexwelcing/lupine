@@ -1,0 +1,28 @@
+{
+  "schema": "lupine.bam-metrology-workbook-identity-precheck.v1",
+  "checked_at": "2026-10-16T10:13:59.331990+00:00",
+  "source_metadata": {
+    "path": "reports/phase2-bam-readiness-v1/zenodo-17846617.json",
+    "bytes": 14771,
+    "sha256": "48f84c7d6fc841a13de8ecccbba5f0604834cec45c3033d0d55bfd7a2e89f4d6"
+  },
+  "record_doi": "10.5281/zenodo.17846617",
+  "version": "1.0",
+  "record_license": {
+    "id": "cc-by-4.0"
+  },
+  "selected_file": {
+    "id": "097e288f-1eb7-4ce5-8eb8-653b2b1fffe2",
+    "key": "2025-12_HT-Tensile-reference-data-CMSX-6_v1.0.xlsx",
+    "size": 54960,
+    "checksum": "md5:e85ef58139a68592f36452de195a0a10",
+    "links": {
+      "self": "https://zenodo.org/api/records/17846617/files/2025-12_HT-Tensile-reference-data-CMSX-6_v1.0.xlsx/content"
+    }
+  },
+  "quoted_identity_matches": true,
+  "actual_workbook_acquired": false,
+  "raw_source_sha256": null,
+  "network_requests": 0,
+  "source_role": "EXPOSED_METROLOGY_REFERENCE_ONLY; excluded from any new blind predictive benchmark"
+}

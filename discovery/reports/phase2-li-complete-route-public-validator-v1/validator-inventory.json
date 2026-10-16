@@ -1,0 +1,139 @@
+{
+  "exclusions": [
+    "validator-inventory.json (self)",
+    "validator-handoff.json (separate outer handoff)"
+  ],
+  "files": [
+    {
+      "bytes": 10597,
+      "path": "README.md",
+      "sha256": "dcb9af53df282495865c6212804f2d719ceb9a41323a7245b6eabfb13438f16e"
+    },
+    {
+      "bytes": 10262,
+      "path": "VALIDATOR.md",
+      "sha256": "2ac317b7b9d6279cff0860fec0674a6840122e0d3285db736123b9791ca3846d"
+    },
+    {
+      "bytes": 445,
+      "path": "handoff.json",
+      "sha256": "d5d25276d4547bbb216ea5256e090b437697ff4ab63476e3a34baf54a53d8f54"
+    },
+    {
+      "bytes": 50912,
+      "path": "public_review_validator.py",
+      "sha256": "db934708623a69282918c35f96d1eec442c94a5e4d6af109e51e2079653f14ca"
+    },
+    {
+      "bytes": 1344,
+      "path": "root-acceptance.json",
+      "sha256": "db12feddf0cb06339d127876eaa30f5fa64842ea46b8091c91cab8f287722785"
+    },
+    {
+      "bytes": 27752,
+      "path": "test_public_review_validator.py",
+      "sha256": "835cab953d7251d509bcaa965675560b94835ccb242077b56de66134e29a3085"
+    },
+    {
+      "bytes": 797,
+      "path": "validator-adapter-rebind.json",
+      "sha256": "b30ca5450041d5793c0ac51c36ddbc5d3d756eb1649fca0a26d7285d2ae12fc5"
+    },
+    {
+      "bytes": 1061,
+      "path": "validator-adversarial-first/execution.json",
+      "sha256": "cacf7d4e67dde5e360b89024a145f71b05b37937977fce34f9dc10f9e7fd5c5e"
+    },
+    {
+      "bytes": 50765,
+      "path": "validator-adversarial-first/public_review_validator.py",
+      "sha256": "01cc1a5f070b8c73360cae46ea2135d2e9da6e8a2eac9bed533847324f6a7885"
+    },
+    {
+      "bytes": 6094,
+      "path": "validator-adversarial-first/stderr.txt",
+      "sha256": "0c48c177572bc93d6bd5e75f751f3d8dc6f572d1a68d45bd3e8259afc72afc64"
+    },
+    {
+      "bytes": 0,
+      "path": "validator-adversarial-first/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 27752,
+      "path": "validator-adversarial-first/test_public_review_validator.py",
+      "sha256": "835cab953d7251d509bcaa965675560b94835ccb242077b56de66134e29a3085"
+    },
+    {
+      "bytes": 2207,
+      "path": "validator-correction.diff",
+      "sha256": "ab99c6647fc4028fd72b5079c59c3fe695e09c8327f1fc00519d746998306fa6"
+    },
+    {
+      "bytes": 6100,
+      "path": "validator-design.json",
+      "sha256": "ccbe427834e49677e273fd120ab49b75348ddc9a09d46d24ac42d9142f61b7fd"
+    },
+    {
+      "bytes": 1078,
+      "path": "validator-final-run/execution.json",
+      "sha256": "a8fac586e0020e06f07ad35acb697275172bc46bfb0083a519ab00dd88458141"
+    },
+    {
+      "bytes": 50912,
+      "path": "validator-final-run/public_review_validator.py",
+      "sha256": "db934708623a69282918c35f96d1eec442c94a5e4d6af109e51e2079653f14ca"
+    },
+    {
+      "bytes": 4179,
+      "path": "validator-final-run/stderr.txt",
+      "sha256": "ec6f5ac6de92086ed199d82e56a87cf039e54d84e5679d50a0e76182cbb98bbe"
+    },
+    {
+      "bytes": 0,
+      "path": "validator-final-run/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 27752,
+      "path": "validator-final-run/test_public_review_validator.py",
+      "sha256": "835cab953d7251d509bcaa965675560b94835ccb242077b56de66134e29a3085"
+    },
+    {
+      "bytes": 1103,
+      "path": "validator-first-run/execution.json",
+      "sha256": "5c88ae671bba1e20b1411f28b310e45391601f17afc0e5c5fd9428c12a8ff9b8"
+    },
+    {
+      "bytes": 50765,
+      "path": "validator-first-run/public_review_validator.py",
+      "sha256": "01cc1a5f070b8c73360cae46ea2135d2e9da6e8a2eac9bed533847324f6a7885"
+    },
+    {
+      "bytes": 3847,
+      "path": "validator-first-run/stderr.txt",
+      "sha256": "03771d4254734b17bf3ba779d43e06cf7c48943419fff9140a20690827a1bb18"
+    },
+    {
+      "bytes": 0,
+      "path": "validator-first-run/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 26972,
+      "path": "validator-first-run/test_public_review_validator.py",
+      "sha256": "a65b502728ec4aa366833afb9e31bafc5e36c875c879502d90f79240ba84db39"
+    },
+    {
+      "bytes": 1725,
+      "path": "validator-review.json",
+      "sha256": "e22613c6725567cc7287bda37647f3fb6efef8981827e7b6b4e1e5d3c92f1af4"
+    },
+    {
+      "bytes": 1794,
+      "path": "validator-source-bindings.json",
+      "sha256": "3f81d44a505ac5d82aee205295f505a1b7cb7f2df1fd094a419af02a24a65944"
+    }
+  ],
+  "schema": "lupine.complete-route.public-review-validator-inventory.v1"
+}

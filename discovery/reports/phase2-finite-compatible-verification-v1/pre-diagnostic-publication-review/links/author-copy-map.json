@@ -1,0 +1,87 @@
+{
+  "schema": "lupine.discovery.author_methods_public_copy_map.v1",
+  "created_by": "independent publication-link reviewer",
+  "scope": "Exact author-audit cache-to-public correspondence; original review/source bindings remain unchanged. Paths are relative to discovery/.",
+  "copies": [
+    {
+      "historical_source": ".cache/phase2-li-author-methods-v1/README.md",
+      "published": "reports/phase2-li-author-methods-v1/README.md",
+      "representation_kind": "direct_exact_bytes",
+      "bytes": 7746,
+      "sha256": "e0bc80439db113297fe78631196dc55743d845241919efe580856d6285862ea6",
+      "exact_copy": true
+    },
+    {
+      "historical_source": ".cache/phase2-li-author-methods-v1/commit-retrieval.json",
+      "published": "reports/phase2-li-author-methods-v1/commit-retrieval.json",
+      "representation_kind": "direct_exact_bytes",
+      "bytes": 589,
+      "sha256": "b91f76bd9a60fd9331b2315530030d20fa4e8f20d9374846972fd259407d6a9d",
+      "exact_copy": true
+    },
+    {
+      "historical_source": ".cache/phase2-li-author-methods-v1/document-retrieval.json",
+      "published": "reports/phase2-li-author-methods-v1/document-retrieval.json",
+      "representation_kind": "direct_exact_bytes",
+      "bytes": 1535,
+      "sha256": "e99bad06973fcc3c04ab503b3f66dcea0069acdee63733c8c7785d07f7d72706",
+      "exact_copy": true
+    },
+    {
+      "historical_source": ".cache/phase2-li-author-methods-v1/repository-commit.json",
+      "published": "reports/phase2-li-author-methods-v1/repository-commit.json",
+      "representation_kind": "direct_exact_bytes",
+      "bytes": 2312,
+      "sha256": "24ccd3800f545f5ea88d07ade9e1d2a74b7498a9bfa98cabd1ca64f55e87ed3d",
+      "exact_copy": true
+    },
+    {
+      "historical_source": ".cache/phase2-li-author-methods-v1/repository-tree.json",
+      "published": "reports/phase2-li-author-methods-v1/repository-tree.json",
+      "representation_kind": "direct_exact_bytes",
+      "bytes": 1262,
+      "sha256": "09dad184bd0d6cdb049fd656f9f32e3772c4c59bc92ea6dba00fcb7f0edecd0f",
+      "exact_copy": true
+    },
+    {
+      "historical_source": ".cache/phase2-li-author-methods-v1/sources/License - MIT.txt",
+      "published": "reports/phase2-li-author-methods-v1/sources/License - MIT.txt.bytes.json",
+      "representation_kind": "lossless_original_wrapper_with_whitespace_only_readable_copy",
+      "bytes": 1186,
+      "sha256": "51e6879a7ff147df3ebdd959714018d8bce2bd0434862e8d0b082e9e7c2f8214",
+      "exact_copy": true
+    },
+    {
+      "historical_source": ".cache/phase2-li-author-methods-v1/sources/README.md",
+      "published": "reports/phase2-li-author-methods-v1/sources/README.md.bytes.json",
+      "representation_kind": "lossless_original_wrapper_with_whitespace_only_readable_copy",
+      "bytes": 7042,
+      "sha256": "8d950ccb30ca70a616cd68385535b397f46eb86b27587030c73afe370b035182",
+      "exact_copy": true
+    },
+    {
+      "historical_source": ".cache/phase2-li-author-methods-v1/tree-identity.json",
+      "published": "reports/phase2-li-author-methods-v1/tree-identity.json",
+      "representation_kind": "direct_exact_bytes",
+      "bytes": 538,
+      "sha256": "41951ea3071fd4c4dd449265b8b6db2ef2b211dfcc9d3b40f5f2c58d651f4dfd",
+      "exact_copy": true
+    },
+    {
+      "historical_source": ".cache/phase2-li-author-methods-v1/tree-retrieval.json",
+      "published": "reports/phase2-li-author-methods-v1/tree-retrieval.json",
+      "representation_kind": "direct_exact_bytes",
+      "bytes": 684,
+      "sha256": "d60953e49ed2b1d48aea1054fc70219a41b0a011fe6c9884c0f244a590dad1d3",
+      "exact_copy": true
+    },
+    {
+      "historical_source": ".cache/phase2-li-author-methods-v1/source-bindings.json",
+      "published": "reports/phase2-li-author-methods-v1/source-bindings.json",
+      "representation_kind": "direct_exact_bytes",
+      "bytes": 7459,
+      "sha256": "f136a6955119e4c03b7a6352b574c29fc759a3b2a3aebb380ad53352b7f1b5fb",
+      "exact_copy": true
+    }
+  ]
+}

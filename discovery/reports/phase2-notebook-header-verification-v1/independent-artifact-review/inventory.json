@@ -1,0 +1,85 @@
+{
+  "files": {
+    "README.md": {
+      "bytes": 3358,
+      "sha256": "a618e520cb873a4a6091c14a88fdcae86542b612457dcdb79922cd61aed0f550"
+    },
+    "actual-a6e87c/review.json": {
+      "bytes": 10819,
+      "sha256": "25d384048d0fd862b1ccc1dac304599fe97fe6bb8b38ce4eb53393e821d61303"
+    },
+    "additive-execution.json": {
+      "bytes": 568,
+      "sha256": "e760af1d431b73b689991d94b5e068457a61a05ad8768b30fa62f0141769b920"
+    },
+    "additive-first/additive-execution.json": {
+      "bytes": 569,
+      "sha256": "f002c8ad532662ba1e4af26a901092b31cab151b35c17f5f8f7a8c26cf8f0ebb"
+    },
+    "additive-first/additive-review.json": {
+      "bytes": 5683,
+      "sha256": "3b9ddc00e37f373abe8dcab04930740850a33ad36f6d174fdfd7f2f0885ba843"
+    },
+    "additive-first/additive-stderr.txt": {
+      "bytes": 1160,
+      "sha256": "1b074badb583691fc3b0b66a3bb82b77442f2adf0398da6804cf2478b607fa0f"
+    },
+    "additive-first/additive-stdout.txt": {
+      "bytes": 5683,
+      "sha256": "3b9ddc00e37f373abe8dcab04930740850a33ad36f6d174fdfd7f2f0885ba843"
+    },
+    "additive-first/additive_audit.py": {
+      "bytes": 9853,
+      "sha256": "cab22da7d064d3ddadb1bd3dd8033a8e5078d94c27b92beb716921062c44847a"
+    },
+    "additive-first/git-failure-reproduction.json": {
+      "bytes": 568,
+      "sha256": "a55dcb561a71bd1a0ce8d87434629082f5f8b8a0a7b450b61f2b016c1ad62921"
+    },
+    "additive-review.json": {
+      "bytes": 11765,
+      "sha256": "705a8098391ed8f5eda42b6530e861f8a41767f4097ef5443a9336b41a4d8c1a"
+    },
+    "additive-stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "additive-stdout.txt": {
+      "bytes": 11765,
+      "sha256": "705a8098391ed8f5eda42b6530e861f8a41767f4097ef5443a9336b41a4d8c1a"
+    },
+    "additive_audit.py": {
+      "bytes": 10038,
+      "sha256": "a9bbef30cd81cddccc3a089cf0c4109c61cb7497fc906f7fcab236aaf5b49643"
+    },
+    "audit.py": {
+      "bytes": 21353,
+      "sha256": "b81293cba3632449830932175e9fa938913650ade05f5e524b258aba78923119"
+    },
+    "execution.json": {
+      "bytes": 817,
+      "sha256": "e3cea9ff8282fc2b31be7445dde3b689a15727969e2d333ebba6e10ce8e20c3e"
+    },
+    "handoff.json": {
+      "bytes": 1128,
+      "sha256": "c144871dbcff1eeb19174757ff73862d6d1f1078c87b2e69802cd1708af1cbdb"
+    },
+    "independent-source-review/source-review.initial.md": {
+      "bytes": 3482,
+      "sha256": "fd59ad8004cbba551f6630aea67d8df9f6dd3eab34e92ef020ac3b332cd89b30"
+    },
+    "independent-source-review/source-review.md": {
+      "bytes": 4189,
+      "sha256": "84453c0ad1de856c357aecbbcaf1af1f71fdfb3d390843f9cbaaca83665727cf"
+    },
+    "stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout.txt": {
+      "bytes": 10819,
+      "sha256": "25d384048d0fd862b1ccc1dac304599fe97fe6bb8b38ce4eb53393e821d61303"
+    }
+  },
+  "scope": "Exact bounded audit sources, receipts, logs, preserved failed attempt and independent source review; no retained wheels, source archives or scientific inputs copied; excludes itself."
+}

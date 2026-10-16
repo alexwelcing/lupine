@@ -1,0 +1,77 @@
+{
+  "actual_preparation": [
+    "Source-only nine-pin byte binding",
+    "Syntax ast.parse and compile without execution",
+    "Independent complete control-flow review and exact SCHEMAS repair AST-delta rebind"
+  ],
+  "ci_or_package_completion_attested_by_this_handoff": false,
+  "files": {
+    ".cache/phase2-next-source-operations-v1/README.md": {
+      "bytes": 3715,
+      "sha256": "95eef82663f79bfefded5e7b8404fcd2c73fb995ecfeab547ae41ddc6a58fb5e"
+    },
+    ".cache/phase2-next-source-operations-v1/before-schema-ast-fix/README.md": {
+      "bytes": 3715,
+      "sha256": "95eef82663f79bfefded5e7b8404fcd2c73fb995ecfeab547ae41ddc6a58fb5e"
+    },
+    ".cache/phase2-next-source-operations-v1/before-schema-ast-fix/run_notebook_after_ci.py": {
+      "bytes": 28041,
+      "sha256": "803f9a03f2b8c265ddf586ee45a59f7dbc79cba0122420eca1fb4655b2e29a31"
+    },
+    ".cache/phase2-next-source-operations-v1/before-schema-ast-fix/syntax-check.json": {
+      "bytes": 749,
+      "sha256": "5b50bc4038b277c1b244cc48501fe457e74bca002c20ee4e0b925876ce318cc2"
+    },
+    ".cache/phase2-next-source-operations-v1/independent-static-review.json": {
+      "bytes": 2169,
+      "sha256": "7a477572a6eedc10696e0750e4a70d113d82da3d5e2a8c575d4c65dead9ca951"
+    },
+    ".cache/phase2-next-source-operations-v1/run_notebook_after_ci.py": {
+      "bytes": 29047,
+      "sha256": "2f25e433eb682a2047bc5c1c7d1548081dfbd88765c97c0278a020c2d60a97b0"
+    },
+    ".cache/phase2-next-source-operations-v1/schema-ast-repair.diff": {
+      "bytes": 1934,
+      "sha256": "3bed9c3c60d2aa936984b805d4b395943cc6ffc7a631fe8a8917a5aa09115a0a"
+    },
+    ".cache/phase2-next-source-operations-v1/static-source-bindings.json": {
+      "bytes": 2444,
+      "sha256": "4dbe97307f7dcd6ce862df09d8f643c7473364030fd73e53038cb533ef0ccfe3"
+    },
+    ".cache/phase2-next-source-operations-v1/syntax-check.json": {
+      "bytes": 861,
+      "sha256": "60699528c703591bc69127c3b9e1fba3c0364f0463f253b3c35a77fc85cb77f8"
+    }
+  },
+  "gates_before_root_invocation": [
+    "Exact published commit and clean source/remote branch",
+    "Own original four-job CI success",
+    "Own clean retained package and strict verifier success",
+    "Root independent retained-artifact byte audit (outside recorder)"
+  ],
+  "network_operations": false,
+  "notebook_or_private_capture_read": false,
+  "prepared_argv": [
+    "python",
+    ".cache/phase2-next-source-operations-v1/run_notebook_after_ci.py",
+    "--expected-commit",
+    "a6e87c198d8116d26c523e0e1b2eedce4aeb225b",
+    "--ci-receipt",
+    ".cache/phase2-notebook-header-ci-v1/final.json",
+    "--package-receipt",
+    ".cache/phase2-notebook-header-clean-package-v1/0-execution.json",
+    "--verifier-receipt",
+    ".cache/phase2-notebook-header-clean-package-v1/1-execution.json"
+  ],
+  "preserved_issue": "Historical 803f recorder would reject valid preflight because verifier SCHEMAS uses sorted(generator), not a literal; repaired by exact AST-pattern matching plus fixed reconstruction, duplicate/missing rejection. Original source and syntax receipt retained.",
+  "production_commands_run": false,
+  "recorded_at": "2026-10-16T08:28:58.902278+00:00",
+  "recorder_imported": false,
+  "recorder_invoked": false,
+  "recorder_sha256": "2f25e433eb682a2047bc5c1c7d1548081dfbd88765c97c0278a020c2d60a97b0",
+  "root_reported_new_commit": "a6e87c198d8116d26c523e0e1b2eedce4aeb225b",
+  "runtime_tests_run": false,
+  "schema": "lupine.discovery.notebook_operation_recorder_handoff.v1",
+  "scope": "Root-owned controlled recorder preparation only. Future actual operations must produce their own complete receipts; syntax and static review establish neither execution success nor scientific readiness.",
+  "status": "PREPARED_STATIC_REVIEWED_NOT_EXECUTED"
+}

@@ -1,0 +1,18 @@
+{
+  "actual_operations": 0,
+  "advisory_readme_sha256": "94a79853d6d520deda2f95ab3c52c02917a84adc00f6b3b8dcd5fe1a1b0e2c88",
+  "budget": {
+    "frame": 2,
+    "inventory": 2,
+    "layout": 2
+  },
+  "exact_roles": [
+    "References",
+    "Column Descriptions"
+  ],
+  "new_profile": "A layout / B complete two-role plain-text inventory / C typed strict reconstruction and frame",
+  "pure_source_sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219",
+  "root_decision_path": ".cache/phase2-li-documentary-inventory-amendment-v1/decision.json",
+  "root_decision_sha256": "745175f952dd0c95c2e9fa2079e4e2ab3d1ae2f9f9e49b1177922e87bddd7016",
+  "strict_checkpoint": "strict-checkpoint-v1/identity.json"
+}

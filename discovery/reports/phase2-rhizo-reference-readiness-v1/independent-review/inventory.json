@@ -1,0 +1,139 @@
+{
+  "excludes": [
+    "inventory.json",
+    "handoff.json"
+  ],
+  "files": [
+    {
+      "bytes": 1347,
+      "path": "aggregate-exposure-fix.diff",
+      "sha256": "8538d128effc06098644d174c9a6724c658bcb89f60673ff85dc7ea3f5349825"
+    },
+    {
+      "bytes": 2713,
+      "path": "challenge-plan.md",
+      "sha256": "27150804d9a8cd72b7949b6ceb1ed6f2a07ac9263e5e47a05acf59a7255d5d0e"
+    },
+    {
+      "bytes": 2814,
+      "path": "first-run/execution.json",
+      "sha256": "a1a3acc2883ddfefb49ccc56c7c120b09f99583bb74596f98beb7fb28bc74993"
+    },
+    {
+      "bytes": 2587,
+      "path": "first-run/generated_fixtures.py",
+      "sha256": "afbb07d937dd82078ef3f155beae36befe67f997faeecdd4893778e929ea7704"
+    },
+    {
+      "bytes": 21700,
+      "path": "first-run/reference_projector.py",
+      "sha256": "a477032c8b396cd68119bb604549b499da3e3e6f8dfd749206799bcaaca21f79"
+    },
+    {
+      "bytes": 3046,
+      "path": "first-run/run_review.py",
+      "sha256": "3b0fae4d499ed74b0fabb3fe569e93628e98a7f006f120b8786432f822b63041"
+    },
+    {
+      "bytes": 4401,
+      "path": "first-run/scope.json",
+      "sha256": "f5446b9507ea394ea1631a7a85a9306cbb1407341df1e76de71186a6524ef9e5"
+    },
+    {
+      "bytes": 1490,
+      "path": "first-run/start.json",
+      "sha256": "9510461809a7bd0348c05129b87b9d22e419da79301cf51566abf4190012372b"
+    },
+    {
+      "bytes": 3128,
+      "path": "first-run/stderr.txt",
+      "sha256": "411b890c21fa198481b0877a6bd06b7e04f6ba3145d2680ed881a9f2a60c95d5"
+    },
+    {
+      "bytes": 0,
+      "path": "first-run/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 16254,
+      "path": "first-run/test_reference_projector_review.py",
+      "sha256": "54384a8dfc23ca1e026d8da75317b7960330e834b4cf00fd4aead41923cb17d8"
+    },
+    {
+      "bytes": 2587,
+      "path": "generated_fixtures.py",
+      "sha256": "afbb07d937dd82078ef3f155beae36befe67f997faeecdd4893778e929ea7704"
+    },
+    {
+      "bytes": 2673,
+      "path": "preparation.json",
+      "sha256": "eeb0fe2817f17fc4d8734aa3254c26998be2144f8240442b63790269317ed6fc"
+    },
+    {
+      "bytes": 6875,
+      "path": "review.json",
+      "sha256": "664c62d3a0488ab0a0c11fbb91a4c14cd12f5bb6117ef829aac4d36e4de52e8a"
+    },
+    {
+      "bytes": 6291,
+      "path": "reviewed-contract.md",
+      "sha256": "f5f1582036db4f13b879cd47ae1abeccb2380df07bba09b3f0450696b21ef65e"
+    },
+    {
+      "bytes": 3046,
+      "path": "run_review.py",
+      "sha256": "3b0fae4d499ed74b0fabb3fe569e93628e98a7f006f120b8786432f822b63041"
+    },
+    {
+      "bytes": 2815,
+      "path": "second-run/execution.json",
+      "sha256": "52e8aedcaf90ee1e0c7288ac376c090054a5527be1c71be725f1f4fee34ad780"
+    },
+    {
+      "bytes": 2587,
+      "path": "second-run/generated_fixtures.py",
+      "sha256": "afbb07d937dd82078ef3f155beae36befe67f997faeecdd4893778e929ea7704"
+    },
+    {
+      "bytes": 21863,
+      "path": "second-run/reference_projector.py",
+      "sha256": "bab641881335f57d4571fe0d4f720696f57e5816fa36266647cdf86d0701b263"
+    },
+    {
+      "bytes": 3046,
+      "path": "second-run/run_review.py",
+      "sha256": "3b0fae4d499ed74b0fabb3fe569e93628e98a7f006f120b8786432f822b63041"
+    },
+    {
+      "bytes": 4401,
+      "path": "second-run/scope.json",
+      "sha256": "f5446b9507ea394ea1631a7a85a9306cbb1407341df1e76de71186a6524ef9e5"
+    },
+    {
+      "bytes": 1490,
+      "path": "second-run/start.json",
+      "sha256": "d821580abab71da4aa1ea9fe7645fc7eac9866ee37b52967860f7b82092204d7"
+    },
+    {
+      "bytes": 2385,
+      "path": "second-run/stderr.txt",
+      "sha256": "fe335524f6b7710a4aa9ebe4f914473bc1d1bbfe0d64b732220c22fb92516d81"
+    },
+    {
+      "bytes": 0,
+      "path": "second-run/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 16254,
+      "path": "second-run/test_reference_projector_review.py",
+      "sha256": "54384a8dfc23ca1e026d8da75317b7960330e834b4cf00fd4aead41923cb17d8"
+    },
+    {
+      "bytes": 16254,
+      "path": "test_reference_projector_review.py",
+      "sha256": "54384a8dfc23ca1e026d8da75317b7960330e834b4cf00fd4aead41923cb17d8"
+    }
+  ],
+  "schema": "lupine.rhizo.reference_projector.independent_review_inventory.v1"
+}

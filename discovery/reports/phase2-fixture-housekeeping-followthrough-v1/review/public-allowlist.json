@@ -1,0 +1,25 @@
+{
+  "schema": "lupine.fixture_housekeeping_review_public_allowlist.v1",
+  "base_directory": ".cache/phase2-fixture-housekeeping-followthrough-v1",
+  "files": [
+    {
+      "path": "review/source-review-v1.json",
+      "sha256": "391c23ddd0291d1c63a81e339a21e19938f94a17e62064a3b259773c5d8f0cd0"
+    },
+    {
+      "path": "review/reviewer-final-message.txt",
+      "sha256": "6e34e1f67ee6b820fda87ce63f85a471d02d2d5357f25a233faeebd48f3cc373"
+    },
+    {
+      "path": "copyset.json",
+      "sha256": "9c7921d0382548cf97bb1d08177419019a1a2cc8f27a723a7b6136106a0d2af2"
+    },
+    {
+      "path": "changes.patch",
+      "sha256": "cde4ff8c5aea6df999b5937987248035e8d5b28376742c101bd405e78a5044ca"
+    }
+  ],
+  "this_allowlist_may_be_published": true,
+  "exclusions": "No recursive cache copy. Candidate/baseline source copies, temporary repositories, external logs, private attempts, scientific inputs, and registry are outside this compact packet.",
+  "scope": "Source review only; candidate/baseline held, concurrent main integration disclosed; no test-pass or CI-pass claim."
+}

@@ -1,0 +1,21 @@
+{
+  "schema": "lupine.discovery.test_eof_normalization.v1",
+  "recorded_utc": "2026-10-16T09:51:41.390368+00:00",
+  "reason": "Repository diff check rejects extra blank lines at EOF; parent requested final test formatting only",
+  "before": {
+    "bytes": 27548,
+    "sha256": "7a3e4263af08577c9c5884f5d486caca3eee7e78e5b89cc47e43724e13733a0f",
+    "trailing_lf": 3
+  },
+  "after": {
+    "bytes": 27546,
+    "sha256": "3296335a815dd5ac9712c4584699cd2b5e48417e1ff7a9a04eddafc245b5d36c",
+    "trailing_lf": 1
+  },
+  "exact_relation": "before == after + two LF bytes",
+  "ast_equal_excluding_locations": true,
+  "expectations_changed": false,
+  "product_or_contract_changed": false,
+  "preserved_first_run": "first-run/",
+  "preserved_prior_report": "before-eof-normalization/"
+}

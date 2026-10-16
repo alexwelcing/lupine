@@ -1,0 +1,102 @@
+{
+  "actual_reference_choice": "UNKNOWN",
+  "exposure_interpretation": "Public receipt records complete reading/parsing of all 36 mixed target-bearing objects, selected historical label/citation materialization and private-file writing. private_projection_returned=False describes the wrapper return, not absence of private processing or availability. Researcher inspection remains unobserved; no fresh holdout is claimed.",
+  "limitations": [
+    "Consistency review of public receipt and held source, not independent recomputation from private data.",
+    "No private.json, raw retained object, source operation, project import, production guard, test suite or network was accessed/executed.",
+    "No claim of citation adequacy, actual source attribution, physical truth, uncertainty admission, independence, performance or new benchmark evidence.",
+    "Runtime/source held and empty stderr are supported by the recorded operation and bound recorder; this review did not rerun state() or inspect private output."
+  ],
+  "operation_record": {
+    "exit_code": 0,
+    "finished_at": "2026-10-16T12:16:28.783277+00:00",
+    "head": "9766b6838388c35a92d32b1a60e65613c72b3fee",
+    "process_seconds": 0.21620310999787762,
+    "runtime_files_recorded_held": 332,
+    "source_operations_recorded": 1,
+    "started_at": "2026-10-16T12:16:28.490798+00:00",
+    "stderr_bytes_recorded": 0
+  },
+  "public_sha256": "b444e7d33cb18619942c2dfbb5cd3374fd9cd9adee6732825ce20ed431641a33",
+  "recorder_source_review": "Static source shows one bounded child command with no automatic retry and before/after source, reviewed-receipt and 332-file state checks. Command directly compiles the hash-verified implementation; receipt reports those checks held. Recorder was not imported or executed by this reviewer.",
+  "reviewed_at": "2026-10-16T12:19:12.368080+00:00",
+  "reviewed_source_sha256": "13f1f4ee41947eff4b47faaa0a3463af96363fbc8c09d6a9d398d76d78f9d647",
+  "scientific_status": "NOT_ADMITTED",
+  "source_bindings": {
+    ".cache/phase2-rhizo-bound-choice-scope-v1/objects.json": {
+      "bytes": 11141,
+      "sha256": "e0059b2d6eead1eb4f1e2323fdea88a8e00e48fdc132c04eceeb994cd363ce3a"
+    },
+    ".cache/phase2-rhizo-recorded-label-candidate-v1/actual/public.json": {
+      "bytes": 115893,
+      "sha256": "b444e7d33cb18619942c2dfbb5cd3374fd9cd9adee6732825ce20ed431641a33"
+    },
+    ".cache/phase2-rhizo-recorded-label-candidate-v1/actual/reservation.json": {
+      "bytes": 913,
+      "sha256": "a4c6faa4240111ebe9bb5675b0cec847a08676e10be6f39fbc2a95ec05ed6885"
+    },
+    ".cache/phase2-rhizo-recorded-label-candidate-v1/reviewed-invocation.json": {
+      "bytes": 902,
+      "sha256": "fe5c3ab1d75e9895bff133e5c8e7ec5a12502bb8d1f27b832eabc6d84c7ba860"
+    },
+    ".cache/phase2-rhizo-recorded-label-operations-v1/actual-execution/execution.json": {
+      "bytes": 553,
+      "sha256": "083d6053316c83973c0c67ff01b326501c29266f45e5e70ddfa179e19c7807c9"
+    },
+    ".cache/phase2-rhizo-recorded-label-operations-v1/actual-execution/start.json": {
+      "bytes": 41248,
+      "sha256": "be87cee0133341377b409545ce65be7e2361311cc8ebf7d7162170dee85c9dc9"
+    },
+    ".cache/phase2-rhizo-recorded-label-operations-v1/actual-execution/stdout.json": {
+      "bytes": 115893,
+      "sha256": "b444e7d33cb18619942c2dfbb5cd3374fd9cd9adee6732825ce20ed431641a33"
+    },
+    ".cache/phase2-rhizo-recorded-label-operations-v1/public-summary.json": {
+      "bytes": 2196,
+      "sha256": "74b2d3593e87a53ee09b62f356cd39277023dc53f47860eab987f1ad10c62ec1"
+    },
+    ".cache/phase2-rhizo-recorded-label-operations-v1/run_actual_once.py": {
+      "bytes": 3837,
+      "sha256": "529fa3c1a42099e34660291408a4b07231840ce4261717cd32a15e329d79ba1a"
+    },
+    ".cache/phase2-rhizo-recorded-label-review-v1/review.json": {
+      "bytes": 5809,
+      "sha256": "356e8c4ad77d12edcf072ac278db997e286e6144be9163e4ed49ad066754745b"
+    },
+    ".cache/phase2-rhizo-recorded-label-review-v1/third/contract.json": {
+      "bytes": 7082,
+      "sha256": "8b1f1b43fd5cf780a258b91bd346c6fef2d4cf4e1ee2af0cb3ef192092f32c49"
+    },
+    ".cache/phase2-rhizo-recorded-label-review-v1/third/recorded_labels.py": {
+      "bytes": 27028,
+      "sha256": "13f1f4ee41947eff4b47faaa0a3463af96363fbc8c09d6a9d398d76d78f9d647"
+    },
+    ".cache/phase2-rhizo-reference-readiness-design-v1/reference-frame.json": {
+      "bytes": 71649,
+      "sha256": "80a1aca0fd56d89f49ff5f0e4b3930405f11ae1cd4acea14b8edab2381940aa4"
+    },
+    "reports/runtime-manifest.json": {
+      "bytes": 39131,
+      "sha256": "6007f58926fca8bca1dc88ee56fd6d55e2226c74bec0e363a6122759b9fe7fe3"
+    }
+  },
+  "status": "PASS_PUBLIC_RECEIPT_CONSISTENCY",
+  "verified_public_structure": {
+    "all_positions_single": true,
+    "both_number_states_valid_exact": true,
+    "candidate_edges": 172,
+    "canonical_public_equals_stdout": true,
+    "citations_nonempty_strings": true,
+    "fixed_ids": 36,
+    "graph_and_input_bindings_exact": true,
+    "inputs_held_during_review": true,
+    "label_positions": 144,
+    "reference_locations": 43,
+    "reservation_manifest_review_source_bindings_match": true,
+    "source_bytes": 126885,
+    "source_objects": 36,
+    "summary_exact": true,
+    "tolerances_all_null": true,
+    "units_match": true
+  }
+}

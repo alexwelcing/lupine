@@ -1,0 +1,114 @@
+{
+  "copied_at": "2026-10-16T11:23:29.966764+00:00",
+  "copies": [
+    {
+      "bytes": 3562,
+      "original": ".cache/phase2-growth-verification-publication-review-v1/CHECKLIST.md",
+      "published": "reports/phase2-growth-verification-v1/publication-review/CHECKLIST.md",
+      "sha256": "76c26a70d31963ee84f6f31e49187bdd59a6344b59ec10e2f3f7e6626414d5cf"
+    },
+    {
+      "bytes": 3102,
+      "original": ".cache/phase2-growth-verification-publication-review-v1/README.md",
+      "published": "reports/phase2-growth-verification-v1/publication-review/README.md",
+      "sha256": "120e17df6cbf258574693d7c4648549f9ad7c5e002114dcd072b1f37638a0c90"
+    },
+    {
+      "bytes": 20751,
+      "original": ".cache/phase2-growth-verification-publication-review-v1/audit_publication.py",
+      "published": "reports/phase2-growth-verification-v1/publication-review/audit_publication.py",
+      "sha256": "2a593cbdc29aa2db503f69647ea423c300ce94c84d8d3ad0db4a3f36b3b6abff"
+    },
+    {
+      "bytes": 1858,
+      "original": ".cache/phase2-growth-verification-publication-review-v1/completion.json",
+      "published": "reports/phase2-growth-verification-v1/publication-review/completion.json",
+      "sha256": "f59895862a06496a6922e23a421463cb75067f9a318d89af78af426f5fa9dec9"
+    },
+    {
+      "bytes": 77856,
+      "original": ".cache/phase2-growth-verification-publication-review-v1/final-input-manifest.json",
+      "published": "reports/phase2-growth-verification-v1/publication-review/final-input-manifest.json",
+      "sha256": "cd7b2a6ff07f6f728fdb36827236965b7e662cbe8f1d2bf46c2dca9d9289d574"
+    },
+    {
+      "bytes": 1860128,
+      "original": ".cache/phase2-growth-verification-publication-review-v1/first/review.json",
+      "published": "reports/phase2-growth-verification-v1/publication-review/first/review.json",
+      "sha256": "e060f706349ddca8a27747d2168fd4db975617f5d67f4f304e23c879f00845a2"
+    },
+    {
+      "bytes": 1018,
+      "original": ".cache/phase2-growth-verification-publication-review-v1/first-process-execution.json",
+      "published": "reports/phase2-growth-verification-v1/publication-review/first-process-execution.json",
+      "sha256": "f1fe0bd65c39647617f510de33317527526b30a86f1f99286e274d4367e69a0e"
+    },
+    {
+      "bytes": 767,
+      "original": ".cache/phase2-growth-verification-publication-review-v1/first-process-start.json",
+      "published": "reports/phase2-growth-verification-v1/publication-review/first-process-start.json",
+      "sha256": "6353581012fc8484dd2d8fdd30451d09f08d3e5493b42f790ef4348c7ec5a7f3"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-growth-verification-publication-review-v1/first-process-stderr.log",
+      "published": "reports/phase2-growth-verification-v1/publication-review/first-process-stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 184,
+      "original": ".cache/phase2-growth-verification-publication-review-v1/first-process-stdout.log",
+      "published": "reports/phase2-growth-verification-v1/publication-review/first-process-stdout.log",
+      "sha256": "5cff0d00d17147d8dbbf9686a101be7239b6643b99d877815f147395c7655d6f"
+    },
+    {
+      "bytes": 574,
+      "original": ".cache/phase2-growth-verification-publication-review-v1/handoff.json",
+      "published": "reports/phase2-growth-verification-v1/publication-review/handoff.json",
+      "sha256": "6c3d15246354b0ddfe88aa2210fe2e1a0f0d70cd0066d65dc19462cf4daf1d13"
+    },
+    {
+      "bytes": 3586,
+      "original": ".cache/phase2-growth-verification-publication-review-v1/inventory.json",
+      "published": "reports/phase2-growth-verification-v1/publication-review/inventory.json",
+      "sha256": "568acf44edca02f5deae847f3af3edd03af10a58446e921cc998a28210e6ee03"
+    },
+    {
+      "bytes": 1203,
+      "original": ".cache/phase2-growth-verification-publication-review-v1/preparation-history.json",
+      "published": "reports/phase2-growth-verification-v1/publication-review/preparation-history.json",
+      "sha256": "a7c96e101fabbf6c9854b22732d3109fad6a341f82da07ee0f8c434fb9ee020d"
+    },
+    {
+      "bytes": 20751,
+      "original": ".cache/phase2-growth-verification-publication-review-v1/static-review/audit_publication.py",
+      "published": "reports/phase2-growth-verification-v1/publication-review/static-review/audit_publication.py",
+      "sha256": "2a593cbdc29aa2db503f69647ea423c300ce94c84d8d3ad0db4a3f36b3b6abff"
+    },
+    {
+      "bytes": 391,
+      "original": ".cache/phase2-growth-verification-publication-review-v1/static-review/inventory.json",
+      "published": "reports/phase2-growth-verification-v1/publication-review/static-review/inventory.json",
+      "sha256": "cb1e3c37ca1ff75349df983abb067198d0b3392cba8ccae8c5be26e397bddcb8"
+    },
+    {
+      "bytes": 5980,
+      "original": ".cache/phase2-growth-verification-publication-review-v1/static-review/review.json",
+      "published": "reports/phase2-growth-verification-v1/publication-review/static-review/review.json",
+      "sha256": "3b36ef04ad7ce2706271807a32dc087de6bdefa00e0a851243c376aee4d4b28d"
+    },
+    {
+      "bytes": 173,
+      "original": ".cache/phase2-growth-verification-publication-review-v1/syntax-only.json",
+      "published": "reports/phase2-growth-verification-v1/publication-review/syntax-only.json",
+      "sha256": "357fd9c2e52ab0b35117d31df142a38e751bb23e6273f2d277b567f9afb49cac"
+    },
+    {
+      "bytes": 20268,
+      "original": ".cache/phase2-growth-verification-publication-review-v1/unexecuted-before-role-closure.py",
+      "published": "reports/phase2-growth-verification-v1/publication-review/unexecuted-before-role-closure.py",
+      "sha256": "c1c7c9522b0e98e275df7aab7e9a6298bc0b805385a07a6c6ba840a76d32eba7"
+    }
+  ],
+  "scope": "Exact copies added after the reviewed485-file publication snapshot; no claim that the earlier audit included its own future output."
+}

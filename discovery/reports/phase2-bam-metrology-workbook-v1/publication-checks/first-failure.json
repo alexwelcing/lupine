@@ -1,0 +1,11 @@
+{
+  "schema": "lupine.bam-metrology-publication-first-check-failure.v1",
+  "tool_chunk": "6daa09",
+  "exit_code": 1,
+  "failure": "AssertionError: independent-review/reviewed-documentary-claims/README.md relative link acquisition.json does not resolve inside copied review snapshot.",
+  "meaning": "Historical reviewed README kept original-root navigation when copied to a subdirectory. No source evidence or current report claim changed.",
+  "original_failed_readme_sha256": "cad9aec959b34c7e6fc4dd4e98bf022ac93745d2192be28dbe263c1d33b8a233",
+  "first_byte_map_sha256": "75f78dd4384ea43983298f28521838efd577f2fedad81a303630e8f501af5728",
+  "repair": "Preserve historical README bytes in a base64 JSON wrapper; keep current root README unchanged; update final original-byte map and navigation.",
+  "additional_source_or_network_access": false
+}

@@ -1,0 +1,140 @@
+{
+  "evidence_strength": "Public receipt inspection/source reasoning, not independent actual execution, numerical evidence or tests.",
+  "inputs": [
+    {
+      "bytes": 5879,
+      "full_input_republication": false,
+      "path": "docs/li-v3-growth-predicate-audit-plan.md",
+      "sha256": "a1a7d8fe820ddcd8d3479d53e4f35d5ce0ed6e123385bcbb1b646786e1d064d9"
+    },
+    {
+      "bytes": 35358,
+      "full_input_republication": false,
+      "path": "scripts/li_v3_custody.py",
+      "sha256": "3ead51f0afdf16be973743257be488669c988aa40443779e7a5c400e9b0d3234"
+    },
+    {
+      "bytes": 20609,
+      "full_input_republication": false,
+      "path": "scripts/li_v3_growth_envelope.py",
+      "sha256": "f50069d028526ea045441a2e574a26192a210ff78ba34f5170777d32f5692ec3"
+    },
+    {
+      "bytes": 40316,
+      "full_input_republication": false,
+      "path": "scripts/li_v3_growth_predicate_audit.py",
+      "sha256": "70a0339212b971bf7824ae256600b959ae7a7d22b6fc8853eb2208d3c8ece207"
+    },
+    {
+      "bytes": 7517,
+      "full_input_republication": false,
+      "path": "reports/phase2-documentary-layout-preparation-v1/candidate/README.md",
+      "sha256": "c16fd29a51f9b1650cff19e77b36bf991c847286ecbd5877633379bdd8f8d65f"
+    },
+    {
+      "bytes": 4452,
+      "full_input_republication": false,
+      "path": "reports/phase2-documentary-layout-preparation-v1/candidate/scope.json",
+      "sha256": "10e2c29be646c94cd1c0feb1d458a6b18c56dd658f2c6389faffd6b8b9a357d4"
+    },
+    {
+      "bytes": 26076,
+      "full_input_republication": false,
+      "path": "reports/phase2-documentary-layout-preparation-v1/candidate/li_v3_layout_localization.py",
+      "sha256": "4624e68c28f911bc0bcc927834bd9f9bbb8cd4622a47db80f5a99e3f63b6ba7d"
+    },
+    {
+      "bytes": 8505,
+      "full_input_republication": false,
+      "path": "reports/phase2-li-documentary-contract-v1/README.md",
+      "sha256": "7ccdf382941d535b72d833cae3fe92c0a5dce614f0ce3fe4358aa6467af526a3"
+    },
+    {
+      "bytes": 9573,
+      "full_input_republication": false,
+      "path": "reports/phase2-li-schema-gates-v1/README.md",
+      "sha256": "1d293554cb5e933df913f21333ed20e274e0b5a569aa6315fded0ac62eb6bb3c"
+    },
+    {
+      "bytes": 7621,
+      "full_input_republication": false,
+      "path": "reports/phase2-li-reference-identity-v1/README.md",
+      "sha256": "f564c79b7b731191fbb8bc58669dbc6a1897bc22e57db3b59d09b737c60555ae"
+    },
+    {
+      "bytes": 8860,
+      "full_input_republication": false,
+      "path": "reports/phase2-next-source-priorities-v1/README.md",
+      "sha256": "96d4909c144cef965be752834c54fddedb16b84ef1efc9f75a4cd05bd9df0e63"
+    },
+    {
+      "bytes": 8556,
+      "full_input_republication": false,
+      "path": ".cache/phase2-growth-predicate-next-decision-v1/README.final-v2.md",
+      "sha256": "cb3d44902bc566d5b6442c3751295b4fa5d5f736d184d716247ffb9959fc6b21"
+    },
+    {
+      "bytes": 4474,
+      "full_input_republication": false,
+      "path": ".cache/phase2-opc-part-scope-v1/README.md",
+      "sha256": "36c2c226e6f90ef2d1886b9ae4185d357aad0898ad85753348b8314a9080ad5c"
+    },
+    {
+      "bytes": 3800,
+      "full_input_republication": false,
+      "path": ".cache/phase2-opc-part-scope-v1/standard-review.json",
+      "sha256": "675916383a7230ff47e59ceffb795372657d42249ae42378630fd10aca607a07"
+    },
+    {
+      "bytes": 1895,
+      "full_input_republication": false,
+      "path": ".cache/phase2-opc-part-scope-v1/scope.json",
+      "sha256": "59cd3fbbb5d4657ca8d48c9cc6bd536ab43a8d43494ad37a6b08be7d8e453cde"
+    },
+    {
+      "bytes": 630,
+      "full_input_republication": false,
+      "path": ".cache/phase2-opc-part-scope-v1/document-identity.json",
+      "sha256": "ec4828196b2ffc9aec249a26d96a92f076867b198c6ef85e41ca80e407ae0373"
+    },
+    {
+      "bytes": 200233,
+      "full_input_republication": false,
+      "path": ".cache/phase2-opc-part-scope-v1/part2.txt",
+      "sha256": "a63bc368c20e9cb5c4ca588687cf56b2de2ff2de7c1a64b50b9bdba309e31209"
+    },
+    {
+      "bytes": 12894,
+      "full_input_republication": false,
+      "path": ".cache/li-v3-custody/growth-predicate-audit-v1/1/public.json",
+      "sha256": "68c9042325e93cebd08f9dd056ccbf8833b16f4f045f25bbe2e8be69623326be"
+    },
+    {
+      "bytes": 12894,
+      "full_input_republication": false,
+      "path": ".cache/li-v3-custody/growth-predicate-audit-v1/2/public.json",
+      "sha256": "68c9042325e93cebd08f9dd056ccbf8833b16f4f045f25bbe2e8be69623326be"
+    },
+    {
+      "bytes": 724,
+      "full_input_republication": false,
+      "path": ".cache/phase2-growth-predicate-operations-v1/production/final.json",
+      "sha256": "647938acffae8262efa52834166dd6bd182c0675509deb976013ac6142a69189"
+    },
+    {
+      "bytes": 1879,
+      "full_input_republication": false,
+      "path": ".cache/phase2-growth-predicate-operations-v1/bindings.json",
+      "sha256": "f658a3ee3d9a7e676a8f21cd73fab1f4a892f729d05a0ec9d35ecb7df5bc2898"
+    },
+    {
+      "bytes": 895,
+      "full_input_republication": false,
+      "path": ".cache/phase2-growth-predicate-verification-release-v1/root-prospective-decision-review.json",
+      "sha256": "4d51fa6698374606ba46bb5acc10251462763caf02e0449ffb7f2aaf07821ab2"
+    }
+  ],
+  "reading_boundary": "Only listed public/explicitly allowed metadata, standards and code/docs; no actual target or private capture. Primary full standards text is not a publication artifact.",
+  "recorded_at": "2026-10-16T13:08:15.137702+00:00",
+  "source_only": true
+}

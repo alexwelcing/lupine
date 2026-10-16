@@ -1,0 +1,16 @@
+{
+  "actual_operations": 0,
+  "at": "2026-10-16T15:58:37.989844+00:00",
+  "demonstrated": "One virtual-descriptor generated test failed as expected; no actual filesystem descriptor operation occurred.",
+  "external_acceptance": "Require separately root-observed successful outer recorder completion with actual stdout exactly matching canonical final.json, empty stderr, command/source/identity bindings. Apply to package gate and historical phase acceptance, not final marker presence alone.",
+  "finding": "Temporary-file close occurs after linking the success name and outside the guarded exception cleanup. A close exception skips temp unlink and parent close, leaving the success name.",
+  "network_calls": 0,
+  "no_additional_profile_admission": true,
+  "private_reads": 0,
+  "release_approved": false,
+  "repair": "Close temporary file before success link in guarded code; attempt remaining cleanup independently; explicitly document that a final parent-directory close failure can leave a published name.",
+  "schema": "lupine.complete-route.independent-recorder-cleanup-finding.v1",
+  "status": "REPAIR_REQUIRED_BEFORE_ACCEPTANCE",
+  "support_sha256": "6f02c0ed8f8981e1f2c18e6107fb4bff343cf91427bcfe549b2fc4808dd53e0a",
+  "test": "cleanup-first/execution.json"
+}

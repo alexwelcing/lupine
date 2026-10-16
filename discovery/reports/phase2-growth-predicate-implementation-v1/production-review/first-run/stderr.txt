@@ -1,0 +1,21 @@
+test_capture_failure_blocks_before_target_and_consumes_slot (__main__.ProductionReview.test_capture_failure_blocks_before_target_and_consumes_slot) ... ok
+test_complete_generated_wrapper_matches_entire_pure_projection (__main__.ProductionReview.test_complete_generated_wrapper_matches_entire_pure_projection) ... ok
+test_context_drift_before_read_and_before_write (__main__.ProductionReview.test_context_drift_before_read_and_before_write) ... ok
+test_generated_repo_guard_head_and_inherited_identity_drift (__main__.ProductionReview.test_generated_repo_guard_head_and_inherited_identity_drift) ... ok
+test_generated_repo_guard_index_drift (__main__.ProductionReview.test_generated_repo_guard_index_drift) ... ok
+test_generated_repo_guard_success_and_worktree_drift (__main__.ProductionReview.test_generated_repo_guard_success_and_worktree_drift) ... ok
+test_ignored_script_location_refuses_guard_without_git (__main__.ProductionReview.test_ignored_script_location_refuses_guard_without_git) ... ok
+test_invalid_runs_do_not_enter_context_or_read (__main__.ProductionReview.test_invalid_runs_do_not_enter_context_or_read) ... ok
+test_output_close_failure_is_not_a_completed_return (__main__.ProductionReview.test_output_close_failure_is_not_a_completed_return) ... ok
+test_partial_reservation_and_public_writes_are_truthful_and_nonretryable (__main__.ProductionReview.test_partial_reservation_and_public_writes_are_truthful_and_nonretryable) ... ok
+test_prerequisite_mutations_block_before_target (__main__.ProductionReview.test_prerequisite_mutations_block_before_target) ... ok
+test_public_cap_and_arbitrary_error_redaction (__main__.ProductionReview.test_public_cap_and_arbitrary_error_redaction) ... ok
+test_second_slot_and_retry_refusal (__main__.ProductionReview.test_second_slot_and_retry_refusal) ... ok
+test_source_identity_failure_and_partial_read_keep_exposure (__main__.ProductionReview.test_source_identity_failure_and_partial_read_keep_exposure) ... ok
+test_symlink_output_slot_blocks_before_target (__main__.ProductionReview.test_symlink_output_slot_blocks_before_target) ... ok
+test_unexpected_primary_acceptance_stops_before_aggregate (__main__.ProductionReview.test_unexpected_primary_acceptance_stops_before_aggregate) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.403s
+
+OK

@@ -1,0 +1,28 @@
+[
+  {
+    "path": "License - MIT.txt",
+    "request_url": "https://raw.githubusercontent.com/avakanski/Subsized-Specimens-Tensile-Properties/d19b15127c8ae1be49308c29eac718b609ad895c/License%20-%20MIT.txt",
+    "git_blob_sha1_expected": "4b89403c8299ddd7ddea4beb2952efeada00bc6b",
+    "started_at": "2026-10-16T07:36:31.638946+00:00",
+    "status": 200,
+    "final_url": "https://raw.githubusercontent.com/avakanski/Subsized-Specimens-Tensile-Properties/d19b15127c8ae1be49308c29eac718b609ad895c/License%20-%20MIT.txt",
+    "body_bytes": 1186,
+    "sha256": "51e6879a7ff147df3ebdd959714018d8bce2bd0434862e8d0b082e9e7c2f8214",
+    "git_blob_sha1_observed": "4b89403c8299ddd7ddea4beb2952efeada00bc6b",
+    "blob_matches": true,
+    "completed_at": "2026-10-16T07:36:32.074346+00:00"
+  },
+  {
+    "path": "README.md",
+    "request_url": "https://raw.githubusercontent.com/avakanski/Subsized-Specimens-Tensile-Properties/d19b15127c8ae1be49308c29eac718b609ad895c/README.md",
+    "git_blob_sha1_expected": "778b8c93622c08d9fcdf9eba5d25727976cd3e90",
+    "started_at": "2026-10-16T07:36:31.640438+00:00",
+    "status": 200,
+    "final_url": "https://raw.githubusercontent.com/avakanski/Subsized-Specimens-Tensile-Properties/d19b15127c8ae1be49308c29eac718b609ad895c/README.md",
+    "body_bytes": 7042,
+    "sha256": "8d950ccb30ca70a616cd68385535b397f46eb86b27587030c73afe370b035182",
+    "git_blob_sha1_observed": "778b8c93622c08d9fcdf9eba5d25727976cd3e90",
+    "blob_matches": true,
+    "completed_at": "2026-10-16T07:36:32.062511+00:00"
+  }
+]

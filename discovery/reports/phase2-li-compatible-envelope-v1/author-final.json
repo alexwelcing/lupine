@@ -1,0 +1,21 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-compatible-envelope-candidate-v1/promotion/tests",
+    "-p",
+    "test_li_v3_compatible_envelope.py",
+    "-v"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 1.1871273517608643,
+  "script_sha256": "e771b3fc2a66d6e2ff3a26d8aae88b7a2915ac908907908316e697997761c847",
+  "test_sha256": "2b4c5561c8158b76ddd739b96799ee0fecbd1c31e60d16df2e6e8b0bd2618f64",
+  "contract_sha256": "86b663de7a0e88e559a8cc6acbbacd3b17d4ca9ee4e759abc826f7afbd6211ca",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "3d3d1ad1464efa623663b7fe0e3ec38969fe86aa765aa41d2f2086048cba1954",
+  "scope": "Synthetic fixtures/public source checks only; no actual source/private capture/network."
+}

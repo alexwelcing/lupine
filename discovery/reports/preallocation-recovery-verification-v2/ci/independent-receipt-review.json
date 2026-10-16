@@ -1,0 +1,93 @@
+{
+  "authentication_scope": "Independent validation of root-retained official GitHub capture under the recorded trusted transport boundary; no new network observation, job-log download, signature or independent timestamp attestation.",
+  "capture_sha256": "2b78be510484c8fb51120b04cc413fc97bc804e49037776485015cdd8c1d1da9",
+  "captured_at": "2026-10-11T00:45:25.709464+00:00",
+  "checks": {
+    "all_recorded_job_steps_successful": true,
+    "commit_tree_and_workflow_match_local_git": true,
+    "exact_four_named_successful_jobs": true,
+    "recorded_dates_ordered": true,
+    "recorded_remote_matches_exact_commit": true,
+    "repository_branch_workflow_exact": true,
+    "run_job_commit_and_id_joins": true
+  },
+  "engineering_approval": null,
+  "full_suite_status": "AWAITING_TERMINAL_HANDOFF",
+  "job_ids": [
+    114347958772,
+    114347958832,
+    114347958873,
+    114347958948
+  ],
+  "jobs": [
+    {
+      "completed_at": "2026-10-11T00:21:09Z",
+      "conclusion": "success",
+      "head_sha": "a0624cac9abb20320629cce41f10270b9b8e2136",
+      "html_url": "https://github.com/alexwelcing/lupine/actions/runs/38098039812/job/114347958948",
+      "id": 114347958948,
+      "name": "browser",
+      "run_attempt": 1,
+      "run_id": 38098039812,
+      "started_at": "2026-10-11T00:19:37Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-11T00:22:39Z",
+      "conclusion": "success",
+      "head_sha": "a0624cac9abb20320629cce41f10270b9b8e2136",
+      "html_url": "https://github.com/alexwelcing/lupine/actions/runs/38098039812/job/114347958873",
+      "id": 114347958873,
+      "name": "lean",
+      "run_attempt": 1,
+      "run_id": 38098039812,
+      "started_at": "2026-10-11T00:19:37Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-11T00:39:13Z",
+      "conclusion": "success",
+      "head_sha": "a0624cac9abb20320629cce41f10270b9b8e2136",
+      "html_url": "https://github.com/alexwelcing/lupine/actions/runs/38098039812/job/114347958772",
+      "id": 114347958772,
+      "name": "python (3.11)",
+      "run_attempt": 1,
+      "run_id": 38098039812,
+      "started_at": "2026-10-11T00:19:37Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-11T00:45:08Z",
+      "conclusion": "success",
+      "head_sha": "a0624cac9abb20320629cce41f10270b9b8e2136",
+      "html_url": "https://github.com/alexwelcing/lupine/actions/runs/38098039812/job/114347958832",
+      "id": 114347958832,
+      "name": "python (3.12)",
+      "run_attempt": 1,
+      "run_id": 38098039812,
+      "started_at": "2026-10-11T00:19:37Z",
+      "status": "completed"
+    }
+  ],
+  "new_engineering_receipt": "AWAITING_EXPLICIT_HANDOFF",
+  "not_performed": [
+    "network query",
+    "test duplication",
+    "registration/tag mutation",
+    "archive/private feature/target/attempt/registry access",
+    "main-tree edits"
+  ],
+  "recorded_remote_commit": "a0624cac9abb20320629cce41f10270b9b8e2136",
+  "recorded_review_completed_at": "2026-10-11T00:47:33.518527+00:00",
+  "recorded_review_started_at": "2026-10-11T00:47:33.499360+00:00",
+  "registration_source_sha256": "cc8590ae64ca8e983d8fb164290c8d087847a97c651cded4d18e0b2cce555197",
+  "reviewer_source_sha256": "c362121d704b1ec8c39ffc987a4001fd12e4bf78afa2637492548e41e8323beb",
+  "run_id": 38098039812,
+  "schema": "lupine.mpea.captured_ci_review.v1",
+  "scientific_verdict": null,
+  "source_commit": "a0624cac9abb20320629cce41f10270b9b8e2136",
+  "status": "CAPTURED_EXACT_COMMIT_ALL_FOUR_JOBS_VALIDATED",
+  "suite_start_map_sha256": "63b80f8ac9e5db2792994dd7bb3b30deb95f0e5d1dc1059d480b322bd5f47ebd",
+  "watcher_exit_observation": "Root reported actual watcher session76222 exit0; this review does not rerun or independently instrument that process.",
+  "workflow_sha256": "e7c4ad74bcfc1b8ab733fc3eecec2544b9671054e14ffee565255321832c14d0"
+}

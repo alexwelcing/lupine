@@ -1,0 +1,27 @@
+{
+  "peer_probes_source_sealed": false,
+  "recorded_by": "adversarial_review",
+  "reported_exploratory_probes": {
+    "accepted_patterns_per_index": 32,
+    "forty_id_all_ff_cap": "20-byte/160-bit requests;128draws;BLOCKED;permutationNone",
+    "one_byte_patterns": 256,
+    "one_byte_size": 3,
+    "oracle": "itertools.permutations plus rank inverse",
+    "permutation_count": 5912,
+    "permutation_sizes": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "rejected_patterns": 64
+  },
+  "reviewer": "pareto_runtime",
+  "schema": "lupine.permutation-allocation.peer-review-note.v1",
+  "scope": "Peer probes were exploratory engineering evidence, not retroactively source-bound tests. Separate engineering-v1.json binds the final 11-test author execution before/after. No real IDs, OS entropy, source observations or allocation. Conditional uniformity premise remains unverified.",
+  "source_review_findings": "Frozen receipt structures, lexicographic inverse, rejection rather than modulo, and strict type handling showed no blocker.",
+  "source_sha256": "a7f454b4541f75603019bf73091c97190ea6f618efa52988c3065971273405e5",
+  "status": "NO_BLOCKER_IN_BOUNDED_SOURCE_REVIEW"
+}

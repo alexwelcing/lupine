@@ -1,0 +1,69 @@
+{
+  "schema": "lupine.bam-readiness-artifact-inventory.v1",
+  "base": ".cache/phase2-bam-readiness-v1",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 8384,
+      "sha256": "2c2730f8551b51d42cc035b718a0f05807e242a769666183ec485feed361ec29"
+    },
+    {
+      "path": "initial-bindings-before-review-timing-clarification.json",
+      "bytes": 8646,
+      "sha256": "0f9970bbd1f9f17c3d073ccf8bb8aead6643255261ae292199c2e74c93d97c52"
+    },
+    {
+      "path": "pre-fetch-scope.json",
+      "bytes": 600,
+      "sha256": "b520c2f8ba4626f29904ff24f3743e7cc4da0eaab782446eeed036d74614e43b"
+    },
+    {
+      "path": "review-handoff.json",
+      "bytes": 1413,
+      "sha256": "2bfe9947525c2507711bdd860b8320f1bf7ce613476c4e828a000313150d39f2"
+    },
+    {
+      "path": "source-bindings.json",
+      "bytes": 8666,
+      "sha256": "1a61b05a8e7142c303e3384a2a6661cf78a6d27ceac9f179849ec2b99e8b4798"
+    },
+    {
+      "path": "verification.json",
+      "bytes": 2668,
+      "sha256": "1993932999c36553ce12e9b9d8162814bfc4cdb5c984b54d61d426f6245cef5f"
+    },
+    {
+      "path": "zenodo-17846436-file-metadata.json",
+      "bytes": 576,
+      "sha256": "07cb949abcbca0c5b9e6e0979840401c02b4692ed4fa027f791b8cfc21d181fd"
+    },
+    {
+      "path": "zenodo-17846436-receipt.json",
+      "bytes": 520,
+      "sha256": "bfc61a4f78f5c969da46acb4cf3ff27af05047a9f09ae06f4cfde013ba426bf4"
+    },
+    {
+      "path": "zenodo-17846436.json",
+      "bytes": 14107,
+      "sha256": "3bcc7e2622fe555f1d0d9ae75e1326f3f09ed036cb61da1c27e06d87d6855cb0"
+    },
+    {
+      "path": "zenodo-17846617-file-metadata.json",
+      "bytes": 1649,
+      "sha256": "ba8e1708ab17ebdac5b39b6536137067d4ddcee0bfe9a759c1050593ab327dbe"
+    },
+    {
+      "path": "zenodo-17846617-receipt.json",
+      "bytes": 520,
+      "sha256": "41a36cec6e853407fd616c5d26fad96bb3ce38c056290bcc4d6b2c4973902805"
+    },
+    {
+      "path": "zenodo-17846617.json",
+      "bytes": 14771,
+      "sha256": "48f84c7d6fc841a13de8ecccbba5f0604834cec45c3033d0d55bfd7a2e89f4d6"
+    }
+  ],
+  "file_count": 12,
+  "total_bytes": 62520,
+  "limits": "Only metadata/audit artifacts. No linked body, project tests, science outcomes or CI receipts."
+}

@@ -1,0 +1,7 @@
+{
+  "activity": "AST-only source/schema helper, not auditor/product execution",
+  "exit_code": 1,
+  "source_sha256": "5820c55519167c5d6a03b4a49cd763a0439e90a66ed0128bfb60b1aaafe6e944",
+  "failure": "AssertionError: ('shape_report', {'predecessor_reason'})",
+  "cause": "Review helper counted dict update/pop but omitted direct subscript assignment adding predecessor_reason; product and corrected auditor unchanged."
+}

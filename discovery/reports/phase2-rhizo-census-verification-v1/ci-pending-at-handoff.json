@@ -1,0 +1,9 @@
+{
+  "commit": "2975d6d0b9111cc84adb82ccc673bc82339ab154",
+  "next_action": "Root must independently verify the exact-source run and preserve its final receipt before reporting CI success. Retain this pending checkpoint as history.",
+  "run_id": 38912404614,
+  "schema": "lupine.discovery.ci-handoff-status.v1",
+  "source": "Root task reported this CI run pending; this publication builder made no GitHub/network query.",
+  "status": "PENDING_OBSERVATION",
+  "url": "https://github.com/alexwelcing/lupine/actions/runs/38912404614"
+}

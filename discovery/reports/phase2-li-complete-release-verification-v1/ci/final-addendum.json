@@ -1,0 +1,27 @@
+{
+  "all_four_jobs_successful": true,
+  "commit": "9d1f21dae141a28db378ee2e16aa83340df57877",
+  "final_receipt": {
+    "bytes": 1304,
+    "path": "ci/final-ci.json",
+    "sha256": "3e8bf0b2dcc7bb141486608c684e903b5d3e1a421e1d9f5f5600d54b8cda4768"
+  },
+  "full_test_count_inferred": false,
+  "initial_assembly_status_preserved": "ci/pending-at-assembly.json",
+  "li_operation_authorization": false,
+  "observed_at": "2026-10-16T16:18:26.557325+00:00",
+  "original_publication_receipt": {
+    "bytes": 860,
+    "bytes_preserved": true,
+    "original_ci_status": "PENDING_OBSERVATION",
+    "path": "publication/published.json",
+    "sha256": "749d920be0660a3c253944e25868bafb257bfb89538023901613fa5d78dee064"
+  },
+  "remote_artifact_download_provided": false,
+  "run_attempt": 1,
+  "run_id": 38926984138,
+  "schema": "lupine.li.release-verification.ci-addendum.v1",
+  "scientific_admission": false,
+  "scope": "CI status comes from the supplied root observation for this exact original commit/run. No new network query or CI execution by publication assembler.",
+  "status": "ORIGINAL_FOUR_JOB_PUSH_CI_PASSED"
+}

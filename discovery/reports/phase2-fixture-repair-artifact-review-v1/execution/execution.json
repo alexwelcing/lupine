@@ -1,0 +1,23 @@
+{
+  "actual_exit_code": 0,
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-I",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-fixture-repair-artifact-review-v1/audit_repair.py"
+  ],
+  "audit_source_sha256": "79ff5924319e06be9538ea1900bdf162ef62193e05945c58c74935b1bf05d9fa",
+  "cwd": "/workspace/lupine-discovery-branch/discovery",
+  "finished_at": "2026-10-16T18:27:51.459288+00:00",
+  "scope_sha256": "7c5dfc69ed57015e8259fe5d0187250a7147bd6787bfe78cf76ca975d64a99a3",
+  "seconds": 2.1522840519974125,
+  "source_unchanged": true,
+  "started_at": "2026-10-16T18:27:49.306789+00:00",
+  "stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 1756,
+    "sha256": "0e910d51fe8deef800199f273d084accaca7ed5ee660273799dd1e0ad04292ed"
+  }
+}

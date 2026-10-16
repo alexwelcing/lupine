@@ -1,0 +1,50 @@
+{
+  "actual_receipts_read": false,
+  "claims": [
+    "Production first fixes source/index/HEAD identity, predecessor public-receipt hash and original capture identity, then privately reads and verifies the whole captured workbook bytes.",
+    "On the same in-memory bytes, inherited categorical classification must match LOCAL_EXTRA_PRESENT at entry_local with CHECKED same-entry checks, only one primary category, no supplementary categories, and successful archive close.",
+    "The locator scans bounded local headers from offset zero, checks every skipped local/name/extra/compressed span, and selects the first positive local-extra region; it introduces no second ZipFile or name decoding.",
+    "The field walker reads only consecutive four-byte little-endian uint16 ID/length headers, checks data-span bounds and advances over opaque data. It permits unknown/duplicate IDs and zero-length data, caps at 256 records and at a 65535-byte local-extra region, and publishes either the completed ordered list or null.",
+    "LOCAL_EXTRA_HEADERS_COMPLETE establishes completion of this first local-extra structural walk only. It neither accepts the entire archive nor identifies field payload semantics or worksheet/scientific schema.",
+    "Inherited ZipFile use decodes directory names and metadata and may process ordinary central extras. The local_extra_payload_interpreted=false flag is narrower than a claim of no raw payload exposure or no ZIP metadata interpretation.",
+    "All expected diagnoses remain BLOCKED_SCHEMA with unknown scientific counts, zero fits/splits, no member decompression or XML/worksheet decoding. Two matching runs would be computational replay only."
+  ],
+  "kind": "STATIC_SOURCE_PATH_REVIEW",
+  "private_objects_read": false,
+  "production_module_imported": false,
+  "reviewed_at": "2026-10-16T09:38:45.199792+00:00",
+  "source_files": {
+    "docs/li-v3-local-extra-headers-plan.md": {
+      "sha256": "1247430dfe174bb1d7dd2e17ca06b5781ef41fadd7cb13d60d6d01e202dbb594"
+    },
+    "scripts/li_v3_compatible_zip_diagnostic.py": {
+      "function_lines": {
+        "_base": 208,
+        "_classification": 68,
+        "_classify": 103,
+        "_failed": 64,
+        "_local_failures": 79,
+        "_validate_prerequisite": 262,
+        "diagnose": 271,
+        "inspect_synthetic_headers": 220,
+        "main": 307,
+        "production_context": 234
+      },
+      "sha256": "59b4b549a1de33abf2c54ccfce15f4f980a3a36351f98e246ae4e9fd6c44c5d3"
+    },
+    "scripts/li_v3_local_extra_headers.py": {
+      "function_lines": {
+        "_base": 55,
+        "_inspect": 126,
+        "_locate": 68,
+        "_validate_prerequisite": 191,
+        "_walk": 104,
+        "diagnose": 204,
+        "inspect_synthetic_local_extra": 149,
+        "main": 240,
+        "production_context": 161
+      },
+      "sha256": "54db58a567afc9211303f2edff13541ab2f97beb77ef2edaa518ad32bf6b1026"
+    }
+  }
+}

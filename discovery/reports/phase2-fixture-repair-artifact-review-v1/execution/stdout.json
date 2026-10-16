@@ -1,0 +1,41 @@
+{
+  "status": "PASS_BOUNDED_REPAIR_ARTIFACT_DELTA",
+  "checks": 57,
+  "failures": [],
+  "observed": {
+    "commit": "e668b349e130cdfd1a8cfe94e3e38d4755507f72",
+    "baseline_commit": "eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f",
+    "source_archive_files": 6981,
+    "runtime_files": 351,
+    "runtime_changed": [
+      "tests/test_li_v3_readiness_production.py"
+    ],
+    "runtime_unchanged": 350,
+    "old_test_sha256": "809c0126ef9f130fad264ef2617f67b9b99db103a3a14c476a6e60bfb4905470",
+    "new_test_sha256": "a38e2d7c0cfdc0fd0ef122795f12e97d1b9ba1cd263495356b5e3f79b7325503",
+    "runtime_manifest_sha256": "452711071f2e3abf8eb734cb6e2e94ee85d04b64f8b40d39300b0597d64d489b",
+    "package_payloads": 113,
+    "package_payloads_unchanged": 113,
+    "wheel_members": 120,
+    "RECORD_content_digests": 119,
+    "mandatory_receipt_flags": 18,
+    "prior_audit_check_count_not_reattributed": 22005,
+    "new_artifacts": {
+      "source_archive": {
+        "bytes": 136755200,
+        "filename": "lupine-discovery-source-e668b349e130.tar",
+        "sha256": "620c44709621a341d48d478cd4a45397a9cff68e146b899249e766f851664877"
+      },
+      "wheel": {
+        "bytes": 324053,
+        "filename": "lupine_discovery-0.1.0-py3-none-any.whl",
+        "sha256": "b41e20694a1b5efb68729c65b5f900a09482e112864daf6e2556cda32494ce58"
+      }
+    },
+    "release_receipt_sha256": "88b9c7006997d1da0c77d4c8efdc9f3051fe41e597196e827b9cbb312982a454",
+    "first_attempt": "STOPPED_BEFORE_PACKAGE_CONNECT_502",
+    "recovered_attempt": "PACKAGE_AND_STRICT_EXIT_ZERO",
+    "package_execution_sha256": "6e25e65f40a92c2297e492c659fead33e5cf8a81b871605814656e1fa4e5b693",
+    "strict_execution_sha256": "a2ef8efa230891e8bb53f70eb63594eb8d17234f4e08b8510e0a56480dc1999b"
+  }
+}

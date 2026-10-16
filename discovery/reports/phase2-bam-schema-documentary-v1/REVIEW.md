@@ -1,0 +1,5 @@
+# Documentary review and publication map
+
+Read [PUBLICATION.md](PUBLICATION.md) for the current finding: eleven literal headers including `UNIT`, while body encoding remains unresolved. The [original review](independent-review/review.json) and [blocked-report addendum](independent-review/blocked-report-addendum.json) preserve the UTF-8 failure. The [independent first-record audit](independent-review/header-ascii-review.json) and [final claim review](independent-review/header-claim-addendum.json) verify the later narrow header observation and its limits.
+
+[publication-map.json](publication-map.json) maps every copied original without byte transformation, identifies the omitted raw CSV, and distinguishes already-public metadata from the retained deferred parser design. Original path strings inside frozen receipts refer to the acquisition workspace; they are not rewritten to imply raw inputs are included. The small projection script is retained historical documentary source; its omitted raw input prevents treating this report as a self-contained raw-data execution package. No scientific or runtime test pass is implied by the document checks.

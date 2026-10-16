@@ -1,0 +1,119 @@
+{
+  "added_guarded_docs": [
+    "docs/source-readiness.md"
+  ],
+  "added_runtime": [
+    "scripts/source_readiness_browser_checks.py",
+    "src/lupine_discovery/resources/source-readiness-v1.json",
+    "src/lupine_discovery/source_readiness.py",
+    "src/lupine_discovery/web/source-readiness.js",
+    "tests/test_package_source_readiness.py",
+    "tests/test_source_readiness.py"
+  ],
+  "baseline": "88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d",
+  "changed_existing": [
+    "scripts/browser_smoke.py",
+    "scripts/package_smoke.py",
+    "scripts/verify_retained_artifacts.py",
+    "src/lupine_discovery/cli.py",
+    "src/lupine_discovery/server.py",
+    "src/lupine_discovery/web/app.js",
+    "src/lupine_discovery/web/index.html",
+    "src/lupine_discovery/web/styles.css",
+    "tests/test_package_retention.py",
+    "tests/test_package_retention_review.py",
+    "tests/test_retained_mpea_transport.py"
+  ],
+  "files": {
+    "docs/source-readiness.md": {
+      "baseline_sha256": null,
+      "sha256": "a62f93a7b450f5d5d508dd11a538ff2b44adb5cfd9b7623291c85584f1088e5a",
+      "source": ".cache/phase2-source-readiness-backend-v1/overlay/docs/source-readiness.md"
+    },
+    "scripts/browser_smoke.py": {
+      "baseline_sha256": "04289d220d1ef64d7be619eec4850bcaa6e9793b48058f43378b59c390c68d3d",
+      "sha256": "e1311385b7b3ec4c382b8e56b274107b819702d37015865267999d27e9b92339",
+      "source": ".cache/phase2-source-readiness-browser-v1/overlay/scripts/browser_smoke.py"
+    },
+    "scripts/package_smoke.py": {
+      "baseline_sha256": "28ff8c56cf632924e0ae28e0560b149d7b1044d63772bc12e61797842c6728ee",
+      "sha256": "db99cb2406c57f68f03497ac13508e3ee462b336bea17f04f7e6dc8236dcfdda",
+      "source": ".cache/phase2-source-readiness-package-v1/overlay/scripts/package_smoke.py"
+    },
+    "scripts/source_readiness_browser_checks.py": {
+      "baseline_sha256": null,
+      "sha256": "fe3de053e1c390c5119cfe05bf41c0084d53de99ec0da268d4014ae728080882",
+      "source": ".cache/phase2-source-readiness-browser-v1/overlay/scripts/source_readiness_browser_checks.py"
+    },
+    "scripts/verify_retained_artifacts.py": {
+      "baseline_sha256": "3d3247beb74905c3f6d3a48aa42566d73c7a550645116ce084c0d8e4d664446a",
+      "sha256": "4a1c0e1cf078cbde3a6b9de210b46b065c19576394e052c97e95bfea5ac09840",
+      "source": ".cache/phase2-source-readiness-package-v1/overlay/scripts/verify_retained_artifacts.py"
+    },
+    "src/lupine_discovery/cli.py": {
+      "baseline_sha256": "e5bb4a838f989bba85e7435e6a7aff5e658e09f23d032ad4082f4dc5318d1a61",
+      "sha256": "6af272356429e7fabcbe81f0be34c3a201ad5d5655537d74ecefd4ba9c587965",
+      "source": ".cache/phase2-source-readiness-backend-v1/overlay/src/lupine_discovery/cli.py"
+    },
+    "src/lupine_discovery/resources/source-readiness-v1.json": {
+      "baseline_sha256": null,
+      "sha256": "9abad97d5675f416cc38a325bcd1e108825af001b2fdfccaa1f5c7dfb66f3f0b",
+      "source": ".cache/phase2-source-readiness-backend-v1/overlay/src/lupine_discovery/resources/source-readiness-v1.json"
+    },
+    "src/lupine_discovery/server.py": {
+      "baseline_sha256": "451324d9ce1fa84ec1759699bd2ea25759a29368b84c82f30741ea4e7e2ca826",
+      "sha256": "5e665bb32d1d80b902a8a64c9e2e66efa9e38b7b5a481e80408f4af8716f3390",
+      "source": ".cache/phase2-source-readiness-backend-v1/overlay/src/lupine_discovery/server.py"
+    },
+    "src/lupine_discovery/source_readiness.py": {
+      "baseline_sha256": null,
+      "sha256": "dbb76ec1aa6a82490b30fe19883a94b56cf0cddfd3ebc14cc555f17f927ca42c",
+      "source": ".cache/phase2-source-readiness-backend-v1/overlay/src/lupine_discovery/source_readiness.py"
+    },
+    "src/lupine_discovery/web/app.js": {
+      "baseline_sha256": "1537f759ef443a218b74eaf55d14ff0520b1195dc3bc8835034e57b3b4613a7c",
+      "sha256": "9e81d71a7381173776d928cc558791402f1d2b2ce02d7e4ae7531514233c5b45",
+      "source": ".cache/phase2-source-readiness-browser-v1/overlay/src/lupine_discovery/web/app.js"
+    },
+    "src/lupine_discovery/web/index.html": {
+      "baseline_sha256": "8120a35af3c415e36b7c3a627a44fd45f9c5ab7628ce0e251103bcccb7b82243",
+      "sha256": "20432ede14b5892a6e3ff45fc305e2d4bcb664d5924e2679cf1ca3b016ef72f2",
+      "source": ".cache/phase2-source-readiness-browser-v1/overlay/src/lupine_discovery/web/index.html"
+    },
+    "src/lupine_discovery/web/source-readiness.js": {
+      "baseline_sha256": null,
+      "sha256": "d533611c9a975040a55569bf474689846aa8f5ca2f4f73c4e52730917efe95d0",
+      "source": ".cache/phase2-source-readiness-browser-v1/overlay/src/lupine_discovery/web/source-readiness.js"
+    },
+    "src/lupine_discovery/web/styles.css": {
+      "baseline_sha256": "d7042060aae32dba2c9c5ad6f6df86a5ee51f7f1ea0dfb7aea413bf81bd3eaf9",
+      "sha256": "2bfdac8e02a00fd2e67b3b0e0788cf9b73f5dac4ab72fc8dd4f37f077a83d3e1",
+      "source": ".cache/phase2-source-readiness-browser-v1/overlay/src/lupine_discovery/web/styles.css"
+    },
+    "tests/test_package_retention.py": {
+      "baseline_sha256": "afd324bbd06962c09898bc000afaa1ff3a52f000ce947e5a364980faed6e832b",
+      "sha256": "e3a2112241a03646c9b5a8b60b7483f36305fb7e528fdb6ffcae587c87a14309",
+      "source": ".cache/phase2-source-readiness-package-v1/overlay/tests/test_package_retention.py"
+    },
+    "tests/test_package_retention_review.py": {
+      "baseline_sha256": "9e74246a9c6813efbc1dee855ccb68ac9a20fdaf3e64a340a719202e8f8cbfd1",
+      "sha256": "4934d597cb6b64dd97c6ecabac91a783b025e09ded9831314f78d944881db8f2",
+      "source": ".cache/phase2-source-readiness-package-v1/overlay/tests/test_package_retention_review.py"
+    },
+    "tests/test_package_source_readiness.py": {
+      "baseline_sha256": null,
+      "sha256": "6afc85434950e0fc29b1ef595849e5423e29b7475116e8b915307f9673683cf8",
+      "source": ".cache/phase2-source-readiness-package-v1/overlay/tests/test_package_source_readiness.py"
+    },
+    "tests/test_retained_mpea_transport.py": {
+      "baseline_sha256": "bce07a6927df9efe261f0477eae7b65f7babbd227721fb77333b7fe34188cf82",
+      "sha256": "f75ff714c84f9b4e9918ca2d9f4ff857dc3a1479cc45bfc5371393a7ecdc5453",
+      "source": ".cache/phase2-source-readiness-package-v1/overlay/tests/test_retained_mpea_transport.py"
+    },
+    "tests/test_source_readiness.py": {
+      "baseline_sha256": null,
+      "sha256": "c83bb950986d1d2e7990a0946fb1111ab6f6dc843337efc61a6ad84151a07c81",
+      "source": ".cache/phase2-source-readiness-backend-v1/overlay/tests/test_source_readiness.py"
+    }
+  }
+}

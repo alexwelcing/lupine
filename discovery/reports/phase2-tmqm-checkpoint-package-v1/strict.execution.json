@@ -1,0 +1,28 @@
+{
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-I",
+    "/workspace/lupine-discovery-branch/discovery/scripts/verify_retained_artifacts.py",
+    "--directory",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-cb19c0a2788cc70dbe6e78f80d416ad8f11ece74/retained",
+    "--commit",
+    "cb19c0a2788cc70dbe6e78f80d416ad8f11ece74",
+    "--repository",
+    "/workspace/lupine-discovery-branch"
+  ],
+  "cwd": "/workspace/lupine-discovery-branch/discovery",
+  "finished_utc": "2026-10-16T17:37:45.395353+00:00",
+  "launch_error": null,
+  "returncode": 0,
+  "started_utc": "2026-10-16T17:37:43.850229+00:00",
+  "stderr": "strict.stderr",
+  "stderr_identity": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": "strict.stdout",
+  "stdout_identity": {
+    "bytes": 3806,
+    "sha256": "d209320e8c1eae59940ddc7f180449aaf3b4a3afdb864286ab126849e09856c9"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "bytes": 141350,
+  "finished_at": "2026-10-16T15:28:57.874975+00:00",
+  "headers": {
+    "Content-Type": "application/xml"
+  },
+  "over_cap": false,
+  "requests": 1,
+  "sha256": "1711b5f59a82ed48acca1a97312a863180bf09a07597c44b0a3cfa109402cb19",
+  "started_at": "2026-10-16T15:28:55.728478+00:00",
+  "status": 200,
+  "transport_error": null,
+  "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC5315501/fullTextXML"
+}

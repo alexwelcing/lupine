@@ -1,0 +1,56 @@
+{
+  "schema": "lupine.discovery.li_flags_design_review.v1",
+  "status": "NO_SUBSTANTIVE_BLOCKER",
+  "reviewed_at": "2026-10-16T06:34:23.462272+00:00",
+  "owner": "phase2_math",
+  "source_bindings": [
+    {
+      "path": "scripts/li_v3_zip_diagnostic.py",
+      "bytes": 12822,
+      "sha256": "de7807a8721cc243a9acf71e01c80aa531454248b2cde92c5518f875e89e0d87"
+    },
+    {
+      "path": "scripts/li_v3_custody.py",
+      "bytes": 35358,
+      "sha256": "3ead51f0afdf16be973743257be488669c988aa40443779e7a5c400e9b0d3234"
+    },
+    {
+      "path": ".cache/phase2-li-flags-next-v1/README.md",
+      "bytes": 6985,
+      "sha256": "7355d2ec3717f2c9e956fa23c5a55ce17fea360316f64bdce60495ae77387ec6"
+    },
+    {
+      "path": ".cache/phase2-li-flags-next-v1/source-bindings.json",
+      "bytes": 2036,
+      "sha256": "d98c0f5e20725bb707bb03bc80bd660617a87070a1192ba3f554e646b460aedd"
+    },
+    {
+      "path": ".cache/phase2-li-flags-next-v1/APPNOTE.TXT",
+      "bytes": 174585,
+      "sha256": "0b993022a7d320a0bf704e6980bea36fafd17a6066ab994db0a0c16278a50cd6"
+    }
+  ],
+  "scope": "Independent source-predicate and retained-public-standard review only; actual diagnostic outcome reported by root/evidence agent, not independently read in this review.",
+  "findings": [
+    "MEMBER_FLAGS establishes a nonzero central-directory general-purpose bit outside 0x800 at the first member reaching and failing that predicate; compression method, local/central agreement and later checks remain unestablished.",
+    "Further separately frozen categorical central-field diagnostic is proportionate before any reader amendment; it must reproduce the same ordered first-failure traversal and stay BLOCKED_SCHEMA.",
+    "Encryption/masking precedence is sound; method0 descriptor class may allow only mask0x808, method8 mask0x80e; method9/14 and reserved/unsupported mixtures remain OTHER.",
+    "No class proves actual encryption/descriptor presence, valid compressed stream, later-member compatibility, XLSX validity, schema/data readiness or statistical independence."
+  ],
+  "nonblocking_wording_refinements": [
+    "Use at least one of bits1/2 to explicitly include both option bits.",
+    "Scope generic descriptor-requirement language to the unencrypted route; APPNOTE4.3.9.6 has a central-directory-encryption exception already excluded by category precedence."
+  ],
+  "independent_child_review": {
+    "agent": "proof_check",
+    "verdict": "NO_SUBSTANTIVE_BLOCKER",
+    "scope": "Same note and retained APPNOTE4.4.4/4.3.9; no code/archive reads or execution"
+  },
+  "tests_run": false,
+  "network_used": false,
+  "raw_archive_read": false,
+  "production_cache_read": false,
+  "private_receipt_read": false,
+  "tracked_files_edited": false,
+  "scientific_claim_changed": false
+}

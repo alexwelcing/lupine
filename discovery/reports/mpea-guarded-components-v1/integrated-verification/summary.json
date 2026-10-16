@@ -1,0 +1,44 @@
+{
+  "schema": "lupine.discovery.guarded_components_integrated_verification.v1",
+  "scope": "Constructed-input engineering only; prospective MPEA study remains unregistered.",
+  "python": {
+    "tests": 981,
+    "unittest_seconds": "374.132",
+    "source_hash_count": 244,
+    "passed": true
+  },
+  "browser": {
+    "checks": 56,
+    "source_hash_count": 47,
+    "javascript_errors": 0,
+    "passed": true
+  },
+  "copies": [
+    {
+      "source": ".cache/mpea-guarded-full-suite/execution.json",
+      "destination": "python-execution.json",
+      "bytes": 58171,
+      "sha256": "c6b6aeaacd86e3e5ba1e9b7827d544967fe4f7228df1a939232aa57884da3620"
+    },
+    {
+      "source": ".cache/mpea-guarded-full-suite/unittest.txt",
+      "destination": "python-unittest.txt",
+      "bytes": 172540,
+      "sha256": "ee0842193d6ac49c5cde6beb2eaccdb1294b0dfe405b2fe14379e009ccca1898"
+    },
+    {
+      "source": ".cache/browser/decision-pool/browser-report.json",
+      "destination": "browser-report.json",
+      "bytes": 10475,
+      "sha256": "d3f7992cfac03b719546cc4e7708d1d1b783ce2a8c91a6e9461bc4970ad342a4"
+    },
+    {
+      "source": ".cache/mpea-workbench/integrated-browser.txt",
+      "destination": "browser-execution.txt",
+      "bytes": 10475,
+      "sha256": "d3f7992cfac03b719546cc4e7708d1d1b783ce2a8c91a6e9461bc4970ad342a4"
+    }
+  ],
+  "formal": "130 previously compiled/audited statements unchanged; no new local formal execution in this increment.",
+  "package": "Fresh installed release reproduction pending the committed source; prior packaging evidence is historical."
+}

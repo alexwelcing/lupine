@@ -1,0 +1,156 @@
+{
+  "checks": [
+    {
+      "expectation": "Bind final published source/remote/branch/index/runtime/recorder/validator identities; a337 preparation is not final authorization.",
+      "id": "G01",
+      "required": true
+    },
+    {
+      "expectation": "Exact original four-job push CI and clean package/strict/artifact gates precede each phase; bind actual logs/artifacts.",
+      "id": "G02",
+      "required": true
+    },
+    {
+      "expectation": "Check full source/gate bytes before and after each command, including final slot; missing poststate fails.",
+      "id": "G03",
+      "required": true
+    },
+    {
+      "expectation": "Fixed command/phase/slot, exclusive reservation, bounded subprocess and outputs; preserve all failures without retry.",
+      "id": "O01",
+      "required": true
+    },
+    {
+      "expectation": "Strict closed canonical <=2MiB stdout and persisted byte equality; separately observable returned artifact only if actually captured once.",
+      "id": "O02",
+      "required": true
+    },
+    {
+      "expectation": "Exit/status/reason table and both inner/outer cleanup; COMPLETE negative C exits0 but remains NO_GO.",
+      "id": "O03",
+      "required": true
+    },
+    {
+      "expectation": "Two distinct command/reservation slots, same source/binding producer and exact full public bytes; no deletion-based normalization.",
+      "id": "P01",
+      "required": true
+    },
+    {
+      "expectation": "Authenticate A/B original producers and ordered lineage; each B embedded A equals C A; C binding remains identical across pair.",
+      "id": "P02",
+      "required": true
+    },
+    {
+      "expectation": "Complete A manifest/role shape and explicit literal-name exposure; no semantic inference from names.",
+      "id": "S01",
+      "required": true
+    },
+    {
+      "expectation": "B complete bounded cell partition, exposure/SST disclosure, A replay; semantic safety/freshness unestablished.",
+      "id": "S02",
+      "required": true
+    },
+    {
+      "expectation": "Completed historical counter equations A/B and same-source pair only; never full C or failure prefixes.",
+      "id": "S03",
+      "required": true
+    },
+    {
+      "expectation": "C public counts/modes/rows/binding consistency, structural no-values, strict-or-not-requested documentary state, mandatory negative/vacuity rules.",
+      "id": "S04",
+      "required": true
+    },
+    {
+      "expectation": "Root alone freezes dependent pins; no auto phase advance, at most2x3, no actual strict-B fourth phase or adaptive second C.",
+      "id": "R01",
+      "required": true
+    },
+    {
+      "expectation": "Review distinguishes public consistency/byte identity from raw recomputation, authenticity of arbitrary receipts and scientific truth.",
+      "id": "R02",
+      "required": true
+    }
+  ],
+  "created_at": "2026-10-16T15:07:34.691700+00:00",
+  "design_source_adapter_sha256": "a3370ac84762ef7f859061bde93f118a1c1981b02460e9ddd0b1cd38e55b840b",
+  "future_binding": {
+    "actual_output_hashes": null,
+    "ci_package_artifact_gate_pins": null,
+    "final_adapter_sha256": null,
+    "own_file_pins": null,
+    "phase_pin_pairs": null,
+    "published_commit": null,
+    "recorder_sha256": null,
+    "runtime_count": null,
+    "runtime_manifest_sha256": null,
+    "validator_sha256": null
+  },
+  "maximum_operations": {
+    "frame": 2,
+    "inventory": 2,
+    "layout": 2
+  },
+  "outcomes": [
+    "ACCEPTED_COMPLETED_PHASE",
+    "ACCEPTED_COMPLETED_NEGATIVE_FRAME",
+    "RETAINED_BLOCKED_OPERATION",
+    "REJECTED_EXTERNAL_ACCEPTANCE"
+  ],
+  "public_maximum_bytes": 2097152,
+  "readme_sha256": "dcb9af53df282495865c6212804f2d719ceb9a41323a7245b6eabfb13438f16e",
+  "return_observation_limit": "Under reviewed CLI, stdout is canonical serialization of inspect return after final close; no separately captured third return channel is implied. Any separate return artifact must be captured in the same single invocation.",
+  "reviewer": "/root/phase2_math",
+  "schema": "lupine.complete-route.public-operation-review-design.v1",
+  "scope": {
+    "actual_receipts_read": 0,
+    "network_calls": 0,
+    "product_or_test_execution": 0,
+    "production_guard_calls": 0,
+    "target_workbook_or_private_capture_reads": 0,
+    "tracked_edits": 0
+  },
+  "source_bindings": [
+    {
+      "bytes": 61640,
+      "path": ".cache/phase2-li-complete-readiness-production-v1/counter-consistency-v1/held/li_v3_readiness_production.py",
+      "sha256": "a3370ac84762ef7f859061bde93f118a1c1981b02460e9ddd0b1cd38e55b840b"
+    },
+    {
+      "bytes": 81591,
+      "path": ".cache/phase2-li-complete-readiness-candidate-v1/li_v3_readiness.py",
+      "sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219"
+    },
+    {
+      "bytes": 17903,
+      "path": ".cache/phase2-li-complete-readiness-production-v1/README.md",
+      "sha256": "87d3bc80f6442658fc1d027e30206bbb04c44635c5f9b258f0ec0f6c207ff6cb"
+    },
+    {
+      "bytes": 10467,
+      "path": ".cache/phase2-li-complete-readiness-production-v1/interface.complete-route-v2.json",
+      "sha256": "4c16d7156f43388982ce778a0c90ba503e3a3765e6cc444e038d7a15f61e91c1"
+    },
+    {
+      "bytes": 4976,
+      "path": ".cache/phase2-li-complete-route-amendment-v1/decision.json",
+      "sha256": "beaedd68842954d2c292491152645a6cf879541c30334a60fd4a28885753145c"
+    },
+    {
+      "bytes": 1487,
+      "path": ".cache/phase2-li-complete-route-amendment-v1/empty-semantic-premise-clarification.json",
+      "sha256": "41ea1b3ff2e27ba452ae2d9701a9803d711641428502f44c0b8126b8f828f206"
+    },
+    {
+      "bytes": 1974,
+      "path": ".cache/phase2-li-complete-route-counter-correction-v1/decision.json",
+      "sha256": "597b297e12ed013756f849bf606c4e1309fe8b62cce8f97a903169c4c9a9170c"
+    },
+    {
+      "bytes": 25290,
+      "path": ".cache/phase2-growth-predicate-operations-v1/run_after_ci.py",
+      "sha256": "b89fcabf338e9329c3cdabdc58fb13d71396540aeec405ed5e3a01cc12ff6079"
+    }
+  ],
+  "status": "PROSPECTIVE_UNEXECUTED",
+  "strict_core_sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219"
+}

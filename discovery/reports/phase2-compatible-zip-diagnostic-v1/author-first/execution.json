@@ -1,0 +1,28 @@
+{
+  "after": {
+    ".cache/phase2-li-compatible-diagnostic-candidate-v1/promotion/docs/li-v3-compatible-zip-diagnostic-plan.md": "87076a0b7cb1f99852144a6951254adf3df1dc7b2691a1e3ca3bf131edf2f600",
+    ".cache/phase2-li-compatible-diagnostic-candidate-v1/promotion/scripts/li_v3_compatible_zip_diagnostic.py": "f4d99799f55e890fdf68a4eebc2343cfb4c4a16ecc7227ae9938a9721b5d8925",
+    ".cache/phase2-li-compatible-diagnostic-candidate-v1/promotion/tests/test_li_v3_compatible_zip_diagnostic.py": "8ee41382b0fcc943af2bb35fb209e85027da9d975afa9e78efa08db058f8d890"
+  },
+  "before": {
+    ".cache/phase2-li-compatible-diagnostic-candidate-v1/promotion/docs/li-v3-compatible-zip-diagnostic-plan.md": "87076a0b7cb1f99852144a6951254adf3df1dc7b2691a1e3ca3bf131edf2f600",
+    ".cache/phase2-li-compatible-diagnostic-candidate-v1/promotion/scripts/li_v3_compatible_zip_diagnostic.py": "f4d99799f55e890fdf68a4eebc2343cfb4c4a16ecc7227ae9938a9721b5d8925",
+    ".cache/phase2-li-compatible-diagnostic-candidate-v1/promotion/tests/test_li_v3_compatible_zip_diagnostic.py": "8ee41382b0fcc943af2bb35fb209e85027da9d975afa9e78efa08db058f8d890"
+  },
+  "command": [
+    "python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    ".cache/phase2-li-compatible-diagnostic-candidate-v1/promotion/tests",
+    "-p",
+    "test_li_v3_compatible_zip_diagnostic.py",
+    "-v"
+  ],
+  "elapsed_seconds": 0.6298157199998968,
+  "exit_code": 0,
+  "scientific_scope": "Synthetic headers only; no actual source access or science claim.",
+  "source_unchanged": true,
+  "started_utc": "2026-10-16T08:13:52.765636+00:00"
+}

@@ -1,0 +1,78 @@
+{
+  "authored_paths": [
+    "reports/phase2-li-complete-readiness-integration-v1/execution/README.md",
+    "reports/phase2-li-complete-readiness-integration-v1/execution/publication-copy-map.json",
+    "reports/phase2-li-complete-readiness-integration-v1/execution/publication-checks.json"
+  ],
+  "copies": [
+    {
+      "destination": {
+        "bytes": 4679,
+        "path": "reports/phase2-li-complete-readiness-integration-v1/execution/promote_and_test.py",
+        "sha256": "4bfbe3f6c6783d992a0d2c83f0b1de6f08d788614a572ca58acd9d35c193f746"
+      },
+      "mode": "EXACT_BYTES",
+      "source": ".cache/phase2-li-complete-readiness-integration-v1/promote_and_test.py",
+      "source_bytes": 4679,
+      "source_sha256": "4bfbe3f6c6783d992a0d2c83f0b1de6f08d788614a572ca58acd9d35c193f746"
+    },
+    {
+      "destination": {
+        "bytes": 41485,
+        "path": "reports/phase2-li-complete-readiness-integration-v1/execution/promotion.json",
+        "sha256": "ec7679abeda210cec88b98618e7fc8a006a373fd54867efdbaa9d511e3ddb2bb"
+      },
+      "mode": "EXACT_BYTES",
+      "source": ".cache/phase2-li-complete-readiness-integration-v1/promotion.json",
+      "source_bytes": 41485,
+      "source_sha256": "ec7679abeda210cec88b98618e7fc8a006a373fd54867efdbaa9d511e3ddb2bb"
+    },
+    {
+      "destination": {
+        "bytes": 41183,
+        "path": "reports/phase2-li-complete-readiness-integration-v1/execution/focused-first/start.json",
+        "sha256": "94556ce2c0045952b17966f5168d79233c5af7a9e8ccfd538dc8790da156bf0f"
+      },
+      "mode": "EXACT_BYTES",
+      "source": ".cache/phase2-li-complete-readiness-integration-v1/focused-first/start.json",
+      "source_bytes": 41183,
+      "source_sha256": "94556ce2c0045952b17966f5168d79233c5af7a9e8ccfd538dc8790da156bf0f"
+    },
+    {
+      "destination": {
+        "bytes": 421,
+        "path": "reports/phase2-li-complete-readiness-integration-v1/execution/focused-first/execution.json",
+        "sha256": "72baa5b288c08d69b97419e433aff5cba0cc4b0501ac28e85a98330941b6cfce"
+      },
+      "mode": "EXACT_BYTES",
+      "source": ".cache/phase2-li-complete-readiness-integration-v1/focused-first/execution.json",
+      "source_bytes": 421,
+      "source_sha256": "72baa5b288c08d69b97419e433aff5cba0cc4b0501ac28e85a98330941b6cfce"
+    },
+    {
+      "destination": {
+        "bytes": 22,
+        "path": "reports/phase2-li-complete-readiness-integration-v1/execution/focused-first/stdout.txt",
+        "sha256": "3c55e309a0a40298bda184ef0c57b51745eea8a35eb79d09076208030cbf66f4"
+      },
+      "mode": "EXACT_BYTES",
+      "source": ".cache/phase2-li-complete-readiness-integration-v1/focused-first/stdout.txt",
+      "source_bytes": 22,
+      "source_sha256": "3c55e309a0a40298bda184ef0c57b51745eea8a35eb79d09076208030cbf66f4"
+    },
+    {
+      "destination": {
+        "bytes": 106676,
+        "path": "reports/phase2-li-complete-readiness-integration-v1/execution/focused-first/stderr.txt",
+        "sha256": "d72ae4411e5cc2758c0d761b93a9a3c7307968a315f62128e558b7db1daeeaba"
+      },
+      "mode": "EXACT_BYTES",
+      "source": ".cache/phase2-li-complete-readiness-integration-v1/focused-first/stderr.txt",
+      "source_bytes": 106676,
+      "source_sha256": "d72ae4411e5cc2758c0d761b93a9a3c7307968a315f62128e558b7db1daeeaba"
+    }
+  ],
+  "preservation": "All311 earlier production report files unchanged; no duplicate author/independent rebind source copies.",
+  "previous_production_inventory_sha256": "40ce9805fe1167e8b4e4f0653f6309b6a80d6b806c2e0b9c8e07079cff2a8e1f",
+  "schema": "li.readiness.root-integration-publication-copy-map.v1"
+}

@@ -1,0 +1,10 @@
+{
+  "stage": "FIXTURES_PREPARED_NOT_EXECUTED",
+  "source": ".cache/phase2-growth-hint-production-review-v1/independent/promotion/tests/test_li_v3_growth_hint_review.py",
+  "test_or_product_executions": 0,
+  "fixture_origin": "Own earlier independent raw ZIP/TLV/growth body helpers only",
+  "actual_source_or_receipt_read": false,
+  "network_used": false,
+  "guard_invocations_pending_full_dependency_mocks": true,
+  "fixture_sha256": "fd8675e09014d5a7963a963631aeaef763ca0c47cbd912372927695b71ab1aca"
+}

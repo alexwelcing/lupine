@@ -1,0 +1,26 @@
+{
+  "at": "2026-10-16T16:50:20.056483+00:00",
+  "scope": "Small source-readiness workbench section after Rhizo census; optional validated source-readiness.v1 report, no source operation controls. Ignored overlay only.",
+  "baseline_files": {
+    "src/lupine_discovery/web/index.html": {
+      "bytes": 29560,
+      "sha256": "8120a35af3c415e36b7c3a627a44fd45f9c5ab7628ce0e251103bcccb7b82243"
+    },
+    "src/lupine_discovery/web/app.js": {
+      "bytes": 131529,
+      "sha256": "1537f759ef443a218b74eaf55d14ff0520b1195dc3bc8835034e57b3b4613a7c"
+    },
+    "src/lupine_discovery/web/styles.css": {
+      "bytes": 43409,
+      "sha256": "d7042060aae32dba2c9c5ad6f6df86a5ee51f7f1ea0dfb7aea413bf81bd3eaf9"
+    },
+    "src/lupine_discovery/web/recorded-census.js": {
+      "bytes": 13634,
+      "sha256": "8e45d59eab288d5ce6c83fabe6b30ef4c707736913d13b8bf99f0e09a5b0628a"
+    }
+  },
+  "backend_fixture": "Awaiting frozen backend schema/resource; no guessed source facts.",
+  "browser_policy": "Direct fixture checks before root-owned actual HTTP integration; preserve first failures.",
+  "actual_source_operations": 0,
+  "tracked_edits": 0
+}

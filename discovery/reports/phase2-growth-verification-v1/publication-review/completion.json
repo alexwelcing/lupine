@@ -1,0 +1,42 @@
+{
+  "schema": "lupine.discovery.publication_verification_handoff.v1",
+  "status": "FIRST_FROZEN_AUDIT_PASS",
+  "recorded_utc": "2026-10-16T11:22:38.037344+00:00",
+  "operator": "/root/phase2_planner",
+  "actual_result": {
+    "path": ".cache/phase2-growth-verification-publication-review-v1/first/review.json",
+    "bytes": 1860128,
+    "sha256": "e060f706349ddca8a27747d2168fd4db975617f5d67f4f304e23c879f00845a2"
+  },
+  "process_execution": {
+    "path": ".cache/phase2-growth-verification-publication-review-v1/first-process-execution.json",
+    "bytes": 1018,
+    "sha256": "f1fe0bd65c39647617f510de33317527526b30a86f1f99286e274d4367e69a0e"
+  },
+  "auditor": {
+    "path": ".cache/phase2-growth-verification-publication-review-v1/audit_publication.py",
+    "bytes": 20751,
+    "sha256": "2a593cbdc29aa2db503f69647ea423c300ce94c84d8d3ad0db4a3f36b3b6abff"
+  },
+  "frozen_inputs": {
+    "path": ".cache/phase2-growth-verification-publication-review-v1/final-input-manifest.json",
+    "bytes": 77856,
+    "sha256": "cd7b2a6ff07f6f728fdb36827236965b7e662cbe8f1d2bf46c2dca9d9289d574"
+  },
+  "independent_static_review": {
+    "path": ".cache/phase2-growth-verification-publication-review-v1/static-review/review.json",
+    "bytes": 5980,
+    "sha256": "3b36ef04ad7ce2706271807a32dc087de6bdefa00e0a851243c376aee4d4b28d"
+  },
+  "runtime_check_calls": 15328,
+  "test_methods_run": 0,
+  "scientific_claim_changed": false,
+  "tracked_edits_by_reviewer": false,
+  "publication_files": 485,
+  "project_documents": 5,
+  "runtime_files_held": 332,
+  "relative_markdown_links": 330,
+  "historical_provenance_links": 0,
+  "source_commit": "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace",
+  "scope": "Entire directory is safe public-review evidence. Includes original first process logs, static history and exact frozen manifest; no workbook/capture/archive/wheel/raw pages."
+}

@@ -1,0 +1,54 @@
+{
+  "excluded": [
+    "attempts/first/LupineFinitePlanningMonotone.olean"
+  ],
+  "exclusion_reason": "Compiled object stays local; execution receipt records its exact hash.",
+  "files": [
+    {
+      "bytes": 4346,
+      "path": "LupineFinitePlanningMonotone.lean",
+      "sha256": "fa1dedddf324fbd66a96de9eef1d775babccbc3668a81fd48726287dffe2268d"
+    },
+    {
+      "bytes": 3730,
+      "path": "README.md",
+      "sha256": "d4bf62e58a04c9e268778b60febaca00f4551eae11cd918bc6424c5ec6d4f278"
+    },
+    {
+      "bytes": 4346,
+      "path": "attempts/first/LupineFinitePlanningMonotone.lean",
+      "sha256": "fa1dedddf324fbd66a96de9eef1d775babccbc3668a81fd48726287dffe2268d"
+    },
+    {
+      "bytes": 2304,
+      "path": "attempts/first/execution.json",
+      "sha256": "81398d2c10351997f0f76f662d41448e14abebe046ae40ecb557ff9b734f778e"
+    },
+    {
+      "bytes": 0,
+      "path": "attempts/first/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 435,
+      "path": "attempts/first/stdout.txt",
+      "sha256": "eed1869d5b92605094ce9e3d77f16b2482541de1e23f8e966181f3b6422ba7b1"
+    },
+    {
+      "bytes": 1533,
+      "path": "axiom-audit.json",
+      "sha256": "7881bb294603796242d9a796a4049948210a76e75229f750efbac39f8d4377bd"
+    },
+    {
+      "bytes": 3181,
+      "path": "compile_recorded.py",
+      "sha256": "53c518bf45916f12eade016ce56f06dc53ad4a660a07ca4691b16e1920176f0a"
+    },
+    {
+      "bytes": 1587,
+      "path": "scope.json",
+      "sha256": "56910a188461a8da53e0d92134ae67a5b907986e9cba4f249de82e2118c0b903"
+    }
+  ],
+  "schema": "lupine.finite-planning-monotone.inventory.v1"
+}

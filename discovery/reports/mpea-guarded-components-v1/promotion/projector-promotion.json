@@ -1,0 +1,47 @@
+[
+  {
+    "source": ".cache/mpea-study-engine/scripts/mpea_study_report.py",
+    "destination": "scripts/mpea_study_report.py",
+    "sha256": "a7d4650df6405df61c18d6c017af281bc2779e6b000fc391327cb5a2e11cc1f2"
+  },
+  {
+    "source": ".cache/mpea-study-engine/tests/test_mpea_study_report.py",
+    "destination": "tests/test_mpea_study_report.py",
+    "sha256": "3a9fb5a5c1f41266c94d1eeb997c0fadd484b6f7deb3c9a31bcb7c06e64e52fb"
+  },
+  {
+    "source": ".cache/mpea-study-engine/review_report/test_mpea_study_report_review.py",
+    "destination": "tests/test_mpea_study_report_review.py",
+    "sha256": "6ae1eed89d9deb26900bad8d0fe19d3e0a866df71884aa7a1380a9bff330db79"
+  },
+  {
+    "source": ".cache/mpea-study-engine/reports/ui-fixtures/complete-negative.json",
+    "destination": "tests/fixtures/mpea_ui/complete-negative.json",
+    "sha256": "4557668a055759aedefaefa886deb9ed7205d2730ca8a9672b7a8e7a3aa35209"
+  },
+  {
+    "source": ".cache/mpea-study-engine/reports/ui-fixtures/unknown-empty-null-gates.json",
+    "destination": "tests/fixtures/mpea_ui/unknown-empty-null-gates.json",
+    "sha256": "370f1ff73c2dfef40fa97815b0c4218e50d2a1e2282ed905ae79f5aa0c511b34"
+  },
+  {
+    "source": ".cache/mpea-study-engine/reports/ui-fixtures/insufficient-development.json",
+    "destination": "tests/fixtures/mpea_ui/insufficient-development.json",
+    "sha256": "2253f3b42314119a40b20433f602f2fbc2edfddbe19219b89a22a510fb15a4a1"
+  },
+  {
+    "source": ".cache/mpea-study-engine/reports/ui-fixtures/registration-unavailable.json",
+    "destination": "tests/fixtures/mpea_ui/registration-unavailable.json",
+    "sha256": "89693f17d524c9a91e6256e7e8e58e524071f0e073b425e847b4f39587d6388d"
+  },
+  {
+    "source": ".cache/mpea-study-engine/reports/ui-fixtures/complete-positive.json",
+    "destination": "tests/fixtures/mpea_ui/complete-positive.json",
+    "sha256": "d9a22582e891cda665aa2ba4ea995a9de45a865b5899c275712ba7834cecbd76"
+  },
+  {
+    "source": ".cache/mpea-study-engine/reports/ui-fixtures/manifest.json",
+    "destination": "tests/fixtures/mpea_ui/manifest.json",
+    "sha256": "2cc848601048711d296c9304a4fa7b06b15638fdad8778301237a0370f5a3cae"
+  }
+]

@@ -1,0 +1,39 @@
+{
+  "bytes": 118,
+  "finished_at": "2026-10-16T16:26:25.593089+00:00",
+  "headers": {
+    "Content-Length": "118",
+    "Content-Type": "text/html"
+  },
+  "initial_url": "https://datadryad.org/downloads/file_stream/69472",
+  "logical_gets": 1,
+  "over_cap": false,
+  "pdf_header": false,
+  "retries": 0,
+  "sha256": "58bf2215b395dcac74c009aa98701854e43cbe54a1cd3a95fee6a647ca9910d4",
+  "signed_query_values_retained": false,
+  "started_at": "2026-10-16T16:26:24.778453+00:00",
+  "status_chain": [
+    {
+      "followed": false,
+      "request": {
+        "host": "datadryad.org",
+        "path": "/downloads/file_stream/69472",
+        "query_parameter_names": [],
+        "query_present": false,
+        "scheme": "https"
+      },
+      "status": 403,
+      "terminal": true
+    }
+  ],
+  "terminal_status": 403,
+  "terminal_url_redacted": {
+    "host": "datadryad.org",
+    "path": "/downloads/file_stream/69472",
+    "query_parameter_names": [],
+    "query_present": false,
+    "scheme": "https"
+  },
+  "transport_error_category": null
+}

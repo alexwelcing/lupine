@@ -1,0 +1,26 @@
+{
+  "schema": "lupine.discovery.wheel-source-payload-audit.v1",
+  "status": "PASS",
+  "executed_at_utc": "2026-10-10T23:33:36.796290+00:00",
+  "source_commit": "9704ef46c1d0ab098dabb083199403a6296f7cf6",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    ".cache/audit-wheel-source-contract-v1.py",
+    "9704ef46c1d0ab098dabb083199403a6296f7cf6"
+  ],
+  "audit_source_sha256": "45d61046ec6fb5b46dfc66ee753e4917a1f300db93b7223ae3f46253dc1f8c0f",
+  "retained_receipt_sha256": "81c99123ce1e815afdd39dd20c2d7301832e22f39e1ce64aefc46752b9d6fff8",
+  "wheel_sha256": "2509d5aa9b7f3ce68db625f23dbcb05a0ec42f5cb56910d769266944758af129",
+  "source_archive_sha256": "a29974559b9cc613631042f4763e8886a66b9a6f0e3d7bf4b0365998d898e14b",
+  "runtime_payload_count": 104,
+  "exact_source_payload_count": 106,
+  "runtime_payload_set_equals_archived_source_set": true,
+  "generated_metadata_not_byte_compared_to_source": [
+    "lupine_discovery-0.1.0.dist-info/METADATA",
+    "lupine_discovery-0.1.0.dist-info/RECORD",
+    "lupine_discovery-0.1.0.dist-info/WHEEL",
+    "lupine_discovery-0.1.0.dist-info/entry_points.txt",
+    "lupine_discovery-0.1.0.dist-info/top_level.txt"
+  ],
+  "scope": "Exact wheel library, resources, web assets and license bytes match retained committed source. Does not execute wheel, establish build reproducibility, or establish scientific correctness."
+}

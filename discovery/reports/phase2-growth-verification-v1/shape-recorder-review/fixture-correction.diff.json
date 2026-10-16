@@ -1,0 +1,8 @@
+{
+  "original_bytes": 689,
+  "original_path": "reports/phase2-growth-verification-v1/shape-recorder-review/fixture-correction.diff",
+  "original_sha256": "4449be1d77f03eb77297855bdbd5c0a603040e880de0386186332dc184cbe8dd",
+  "reason": "Preserve historical whitespace-bearing patch bytes without normalizing them.",
+  "representation": "lossless_utf8_text",
+  "text": "--- first-run-review-fixture\n+++ corrected-review-fixture\n@@ -65,6 +65,11 @@\n                  production_prerequisite_status='VERIFIED',\n                  observed={'sha256': diagnostic.predecessor.header_diagnostic.OBJECT_SHA256,\n                            'bytes': diagnostic.custody.SOURCE_BYTES, 'md5': diagnostic.custody.SOURCE_MD5})\n+    # The fixture conversion represents a completed mocked production raw read;\n+    # the pure synthetic API correctly leaves these custody-read flags false.\n+    for key in ('raw_buffer_read_started', 'raw_buffer_read_completed',\n+                'target_bearing_source_bytes_read'):\n+        value['exposure'][key] = True\n     return value\n \n \n"
+}

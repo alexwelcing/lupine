@@ -1,0 +1,10 @@
+test_empty_and_all_unknown_groups_do_not_create_a_shared_unknown_source (test_public_formula_audit.PublicAuditIndependentTests.test_empty_and_all_unknown_groups_do_not_create_a_shared_unknown_source) ... ok
+test_exact_temperature_cohort_no_float_tolerance_or_unknown_inclusion (test_public_formula_audit.PublicAuditIndependentTests.test_exact_temperature_cohort_no_float_tolerance_or_unknown_inclusion) ... ok
+test_hand_counted_lexical_overlap_unknowns_and_two_pair_denominators (test_public_formula_audit.PublicAuditIndependentTests.test_hand_counted_lexical_overlap_unknowns_and_two_pair_denominators) ... ok
+test_join_is_original_source_order_identity_not_group_equivalence (test_public_formula_audit.PublicAuditIndependentTests.test_join_is_original_source_order_identity_not_group_equivalence) ... ok
+test_strict_public_json_rejects_duplicate_keys_and_numeric_extensions (test_public_formula_audit.PublicAuditIndependentTests.test_strict_public_json_rejects_duplicate_keys_and_numeric_extensions) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.001s
+
+OK

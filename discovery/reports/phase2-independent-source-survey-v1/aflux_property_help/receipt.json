@@ -1,0 +1,17 @@
+{
+  "bytes": 39105,
+  "finished_at": "2026-10-16T16:50:26.844878+00:00",
+  "headers": {
+    "Content-Type": "application/json;charset=utf-8"
+  },
+  "logical_gets": 1,
+  "over_cap": false,
+  "redirects": [],
+  "retries": 0,
+  "sha256": "d495aa82b1166dc85f573dae728500190b38a14ba0f627d0ae528816a8fc0c27",
+  "started_at": "2026-10-16T16:50:25.985971+00:00",
+  "status": 200,
+  "terminal_url": "https://aflow.org/API/aflux/?help(properties)",
+  "transport_error": null,
+  "url": "https://aflow.org/API/aflux/?help(properties)"
+}

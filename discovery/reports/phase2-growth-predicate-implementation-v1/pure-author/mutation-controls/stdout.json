@@ -1,0 +1,33 @@
+{
+  "all_killed": true,
+  "results": [
+    {
+      "errors": 0,
+      "failures": 1,
+      "killed": true,
+      "mutation": "skip_family",
+      "output": "test_later_independent_faults (predicate_author_mutations.AuditTests.test_later_independent_faults) ... FAIL\n\n======================================================================\nFAIL: test_later_independent_faults (predicate_author_mutations.AuditTests.test_later_independent_faults)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-candidate-v1/test_growth_predicate_audit.py\", line 164, in test_later_independent_faults\n    self.assertEqual(r['families'][family]['status'], 'FAILURES_OBSERVED')\nAssertionError: 'NOT_APPLICABLE' != 'FAILURES_OBSERVED'\n- NOT_APPLICABLE\n+ FAILURES_OBSERVED\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.006s\n\nFAILED (failures=1)\n",
+      "test": "test_later_independent_faults",
+      "tests_run": 1
+    },
+    {
+      "errors": 0,
+      "failures": 1,
+      "killed": true,
+      "mutation": "erase_dependency",
+      "output": "test_duplicate_offset_skips_ambiguous_local_but_later_independent_fault (predicate_author_mutations.AuditTests.test_duplicate_offset_skips_ambiguous_local_but_later_independent_fault) ... FAIL\n\n======================================================================\nFAIL: test_duplicate_offset_skips_ambiguous_local_but_later_independent_fault (predicate_author_mutations.AuditTests.test_duplicate_offset_skips_ambiguous_local_but_later_independent_fault)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-candidate-v1/test_growth_predicate_audit.py\", line 169, in test_duplicate_offset_skips_ambiguous_local_but_later_independent_fault\n    self.assertIn('NOT_CHECKED_AMBIGUOUS_ASSOCIATION', r['families']['LOCAL_SIGNATURE']['dependencies'])\nAssertionError: 'NOT_CHECKED_AMBIGUOUS_ASSOCIATION' not found in ['CHECKED']\n\n----------------------------------------------------------------------\nRan 1 test in 0.125s\n\nFAILED (failures=1)\n",
+      "test": "test_duplicate_offset_skips_ambiguous_local_but_later_independent_fault",
+      "tests_run": 1
+    },
+    {
+      "errors": 0,
+      "failures": 1,
+      "killed": true,
+      "mutation": "promote_partial_complete",
+      "output": "test_duplicate_offset_skips_ambiguous_local_but_later_independent_fault (predicate_author_mutations.AuditTests.test_duplicate_offset_skips_ambiguous_local_but_later_independent_fault) ... FAIL\n\n======================================================================\nFAIL: test_duplicate_offset_skips_ambiguous_local_but_later_independent_fault (predicate_author_mutations.AuditTests.test_duplicate_offset_skips_ambiguous_local_but_later_independent_fault)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-candidate-v1/test_growth_predicate_audit.py\", line 171, in test_duplicate_offset_skips_ambiguous_local_but_later_independent_fault\n    self.assertFalse(r['diagnostic_complete'])\nAssertionError: True is not false\n\n----------------------------------------------------------------------\nRan 1 test in 0.022s\n\nFAILED (failures=1)\n",
+      "test": "test_duplicate_offset_skips_ambiguous_local_but_later_independent_fault",
+      "tests_run": 1
+    }
+  ],
+  "scope": "Generated-fixture mutation sensitivity, not scientific evidence"
+}

@@ -1,0 +1,53 @@
+{
+  "base": "88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d",
+  "baseline_runtime_total": 345,
+  "baseline_wheel_payload_count": 110,
+  "execution_policy": "Do not run until root supplies exact published commit, held clean source, completed successful package/strict receipts, retained path and actual binding. Any candidate source change requires a separately preserved prospective rebind.",
+  "existing_runtime_changes": [
+    "scripts/browser_smoke.py",
+    "scripts/package_smoke.py",
+    "scripts/verify_retained_artifacts.py",
+    "src/lupine_discovery/cli.py",
+    "src/lupine_discovery/server.py",
+    "src/lupine_discovery/web/app.js",
+    "src/lupine_discovery/web/index.html",
+    "src/lupine_discovery/web/styles.css",
+    "tests/test_package_retention.py",
+    "tests/test_package_retention_review.py",
+    "tests/test_retained_mpea_transport.py"
+  ],
+  "expected_archive_copyset": [
+    "discovery",
+    ".github/workflows/discovery-verify.yml"
+  ],
+  "formal_boundary": "All committed formal files are checked as archive bytes; no proof count or compilation correctness is inferred by this audit.",
+  "guarded_document_additions": [
+    "docs/source-readiness.md"
+  ],
+  "mandatory_check_count": 18,
+  "runtime_additions": [
+    "scripts/source_readiness_browser_checks.py",
+    "src/lupine_discovery/resources/source-readiness-v1.json",
+    "src/lupine_discovery/source_readiness.py",
+    "src/lupine_discovery/web/source-readiness.js",
+    "tests/test_package_source_readiness.py",
+    "tests/test_source_readiness.py"
+  ],
+  "runtime_total": 351,
+  "source_readiness_sha256": "9abad97d5675f416cc38a325bcd1e108825af001b2fdfccaa1f5c7dfb66f3f0b",
+  "unchanged_baseline_runtime_total": 334,
+  "unchanged_baseline_wheel_payload_count": 105,
+  "wheel_payload_additions": [
+    "lupine_discovery/resources/source-readiness-v1.json",
+    "lupine_discovery/source_readiness.py",
+    "lupine_discovery/web/source-readiness.js"
+  ],
+  "wheel_payload_changes": [
+    "lupine_discovery/cli.py",
+    "lupine_discovery/server.py",
+    "lupine_discovery/web/app.js",
+    "lupine_discovery/web/index.html",
+    "lupine_discovery/web/styles.css"
+  ],
+  "wheel_payload_count": 113
+}

@@ -1,0 +1,9 @@
+{
+  "actual_result": "16 tests, 1 failure, 3.253s",
+  "compressed_bytes": 33821,
+  "compressed_sha256": "28afb18b41fa45ca9296b58600dfd23a1c0a44fe96dd12b7f9f31f21011057a1",
+  "original_bytes": 33558889,
+  "original_sha256": "f376ace7f5132f23ae493b522dd05073344332f2480c5ed66ac67698ac06caed",
+  "path": ".cache/mpea-study-custody/review_production/store-cap-first-v1.txt.gz",
+  "scope": "Preserved actual failing resource-preflight run. Initial assert_not_called printed the fabricated oversized whitespace argument; reviewer replaced it with scalar call_count assertion to avoid noisy future logs. No actual scientific data were present."
+}

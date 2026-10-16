@@ -1,0 +1,7 @@
+{
+  "acquirer_sha256": "120dd993148a0e69f4c4700c9fa31c536b7b7034d22c853d85c7c8916b02baa6",
+  "frozen_at": "2026-10-16T16:54:30.556735+00:00",
+  "prior_search": "rg published md/source/catalog-json and public filename search: no named matches; exit1 means no matches. Prior catalog key-only membership also empty. No raw target access.",
+  "requests_completed": 0,
+  "scope_sha256": "35a578161a6fa75d03e309e70f045a4c42dead5a4baa61a9b10f11583177da0b"
+}

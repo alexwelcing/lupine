@@ -1,0 +1,6 @@
+{
+  "encoding": "exact_bytes",
+  "scope": "Official exact original-branch push CI responses; no downloaded job logs/artifacts or scientific result.",
+  "sha256": "2b78be510484c8fb51120b04cc413fc97bc804e49037776485015cdd8c1d1da9",
+  "source": ".cache/a0624ca-ci-final.json"
+}

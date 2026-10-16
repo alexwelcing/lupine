@@ -1,0 +1,55 @@
+test_all_three_complete_classifications_are_accepted (__main__.RecorderTests.test_all_three_complete_classifications_are_accepted) ... ERROR
+test_closed_shape_type_and_exposure_drift_are_rejected (__main__.RecorderTests.test_closed_shape_type_and_exposure_drift_are_rejected) ... ok
+test_complete_negative_can_repeat_same_fixed_report (__main__.RecorderTests.test_complete_negative_can_repeat_same_fixed_report) ... FAIL
+test_negative_reason_cannot_claim_positive_or_skipped_exposure (__main__.RecorderTests.test_negative_reason_cannot_claim_positive_or_skipped_exposure) ... ok
+test_noncanonical_duplicate_and_unexpected_error_are_rejected (__main__.RecorderTests.test_noncanonical_duplicate_and_unexpected_error_are_rejected) ... ok
+test_persisted_report_stdout_disagreement_is_retained_and_blocks (__main__.RecorderTests.test_persisted_report_stdout_disagreement_is_retained_and_blocks) ... FAIL
+test_post_command_gate_drift_stops_after_retaining_complete_result (__main__.RecorderTests.test_post_command_gate_drift_stops_after_retaining_complete_result) ... FAIL
+test_unbound_commit_does_not_attempt_any_preflight_or_command (__main__.RecorderTests.test_unbound_commit_does_not_attempt_any_preflight_or_command) ... ok
+test_unexpected_failure_stops_main_before_second_run (__main__.RecorderTests.test_unexpected_failure_stops_main_before_second_run) ... ok
+
+======================================================================
+ERROR: test_all_three_complete_classifications_are_accepted (__main__.RecorderTests.test_all_three_complete_classifications_are_accepted)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-shape-recorder-review-v1/test_recorder.py", line 175, in test_all_three_complete_classifications_are_accepted
+    self.assertEqual(self.validate(value), value)
+                     ^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-shape-recorder-review-v1/test_recorder.py", line 170, in validate
+    return self.e['validate_report'](diagnostic.custody.canonical(value), diagnostic, IDENTITY)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-shape-operations-v1/run_after_ci.py:extracted", line 139, in validate_report
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-shape-operations-v1/run_after_ci.py:extracted", line 32, in require
+Stop: SOURCE_EXPOSURE_INCOMPLETE
+
+======================================================================
+FAIL: test_complete_negative_can_repeat_same_fixed_report (__main__.RecorderTests.test_complete_negative_can_repeat_same_fixed_report)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-shape-recorder-review-v1/test_recorder.py", line 264, in test_complete_negative_can_repeat_same_fixed_report
+    self.assertEqual(self.e['main'](['--artifact-review', '.cache/full-review.json',
+AssertionError: 2 != 0
+
+======================================================================
+FAIL: test_persisted_report_stdout_disagreement_is_retained_and_blocks (__main__.RecorderTests.test_persisted_report_stdout_disagreement_is_retained_and_blocks)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-shape-recorder-review-v1/test_recorder.py", line 238, in test_persisted_report_stdout_disagreement_is_retained_and_blocks
+    self.assertEqual(receipt['public_validation_error'], 'PUBLIC_RECEIPT_MISMATCH')
+AssertionError: 'SOURCE_EXPOSURE_INCOMPLETE' != 'PUBLIC_RECEIPT_MISMATCH'
+- SOURCE_EXPOSURE_INCOMPLETE
++ PUBLIC_RECEIPT_MISMATCH
+
+
+======================================================================
+FAIL: test_post_command_gate_drift_stops_after_retaining_complete_result (__main__.RecorderTests.test_post_command_gate_drift_stops_after_retaining_complete_result)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-shape-recorder-review-v1/test_recorder.py", line 249, in test_post_command_gate_drift_stops_after_retaining_complete_result
+    self.assertTrue(receipt['public_report_canonical_and_closed'])
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.141s
+
+FAILED (failures=3, errors=1)

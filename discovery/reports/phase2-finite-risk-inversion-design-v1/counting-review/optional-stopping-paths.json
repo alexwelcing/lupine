@@ -1,0 +1,314 @@
+[
+  {
+    "first_k": 1,
+    "first_reject": false,
+    "fixed_three_reject": false,
+    "order": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "stopped_reject": false,
+    "three_k": 2
+  },
+  {
+    "first_k": 1,
+    "first_reject": false,
+    "fixed_three_reject": false,
+    "order": [
+      0,
+      1,
+      3,
+      2
+    ],
+    "stopped_reject": false,
+    "three_k": 2
+  },
+  {
+    "first_k": 1,
+    "first_reject": false,
+    "fixed_three_reject": false,
+    "order": [
+      0,
+      2,
+      1,
+      3
+    ],
+    "stopped_reject": false,
+    "three_k": 2
+  },
+  {
+    "first_k": 1,
+    "first_reject": false,
+    "fixed_three_reject": true,
+    "order": [
+      0,
+      2,
+      3,
+      1
+    ],
+    "stopped_reject": true,
+    "three_k": 1
+  },
+  {
+    "first_k": 1,
+    "first_reject": false,
+    "fixed_three_reject": false,
+    "order": [
+      0,
+      3,
+      1,
+      2
+    ],
+    "stopped_reject": false,
+    "three_k": 2
+  },
+  {
+    "first_k": 1,
+    "first_reject": false,
+    "fixed_three_reject": true,
+    "order": [
+      0,
+      3,
+      2,
+      1
+    ],
+    "stopped_reject": true,
+    "three_k": 1
+  },
+  {
+    "first_k": 1,
+    "first_reject": false,
+    "fixed_three_reject": false,
+    "order": [
+      1,
+      0,
+      2,
+      3
+    ],
+    "stopped_reject": false,
+    "three_k": 2
+  },
+  {
+    "first_k": 1,
+    "first_reject": false,
+    "fixed_three_reject": false,
+    "order": [
+      1,
+      0,
+      3,
+      2
+    ],
+    "stopped_reject": false,
+    "three_k": 2
+  },
+  {
+    "first_k": 1,
+    "first_reject": false,
+    "fixed_three_reject": false,
+    "order": [
+      1,
+      2,
+      0,
+      3
+    ],
+    "stopped_reject": false,
+    "three_k": 2
+  },
+  {
+    "first_k": 1,
+    "first_reject": false,
+    "fixed_three_reject": true,
+    "order": [
+      1,
+      2,
+      3,
+      0
+    ],
+    "stopped_reject": true,
+    "three_k": 1
+  },
+  {
+    "first_k": 1,
+    "first_reject": false,
+    "fixed_three_reject": false,
+    "order": [
+      1,
+      3,
+      0,
+      2
+    ],
+    "stopped_reject": false,
+    "three_k": 2
+  },
+  {
+    "first_k": 1,
+    "first_reject": false,
+    "fixed_three_reject": true,
+    "order": [
+      1,
+      3,
+      2,
+      0
+    ],
+    "stopped_reject": true,
+    "three_k": 1
+  },
+  {
+    "first_k": 0,
+    "first_reject": true,
+    "fixed_three_reject": false,
+    "order": [
+      2,
+      0,
+      1,
+      3
+    ],
+    "stopped_reject": true,
+    "three_k": 2
+  },
+  {
+    "first_k": 0,
+    "first_reject": true,
+    "fixed_three_reject": true,
+    "order": [
+      2,
+      0,
+      3,
+      1
+    ],
+    "stopped_reject": true,
+    "three_k": 1
+  },
+  {
+    "first_k": 0,
+    "first_reject": true,
+    "fixed_three_reject": false,
+    "order": [
+      2,
+      1,
+      0,
+      3
+    ],
+    "stopped_reject": true,
+    "three_k": 2
+  },
+  {
+    "first_k": 0,
+    "first_reject": true,
+    "fixed_three_reject": true,
+    "order": [
+      2,
+      1,
+      3,
+      0
+    ],
+    "stopped_reject": true,
+    "three_k": 1
+  },
+  {
+    "first_k": 0,
+    "first_reject": true,
+    "fixed_three_reject": true,
+    "order": [
+      2,
+      3,
+      0,
+      1
+    ],
+    "stopped_reject": true,
+    "three_k": 1
+  },
+  {
+    "first_k": 0,
+    "first_reject": true,
+    "fixed_three_reject": true,
+    "order": [
+      2,
+      3,
+      1,
+      0
+    ],
+    "stopped_reject": true,
+    "three_k": 1
+  },
+  {
+    "first_k": 0,
+    "first_reject": true,
+    "fixed_three_reject": false,
+    "order": [
+      3,
+      0,
+      1,
+      2
+    ],
+    "stopped_reject": true,
+    "three_k": 2
+  },
+  {
+    "first_k": 0,
+    "first_reject": true,
+    "fixed_three_reject": true,
+    "order": [
+      3,
+      0,
+      2,
+      1
+    ],
+    "stopped_reject": true,
+    "three_k": 1
+  },
+  {
+    "first_k": 0,
+    "first_reject": true,
+    "fixed_three_reject": false,
+    "order": [
+      3,
+      1,
+      0,
+      2
+    ],
+    "stopped_reject": true,
+    "three_k": 2
+  },
+  {
+    "first_k": 0,
+    "first_reject": true,
+    "fixed_three_reject": true,
+    "order": [
+      3,
+      1,
+      2,
+      0
+    ],
+    "stopped_reject": true,
+    "three_k": 1
+  },
+  {
+    "first_k": 0,
+    "first_reject": true,
+    "fixed_three_reject": true,
+    "order": [
+      3,
+      2,
+      0,
+      1
+    ],
+    "stopped_reject": true,
+    "three_k": 1
+  },
+  {
+    "first_k": 0,
+    "first_reject": true,
+    "fixed_three_reject": true,
+    "order": [
+      3,
+      2,
+      1,
+      0
+    ],
+    "stopped_reject": true,
+    "three_k": 1
+  }
+]

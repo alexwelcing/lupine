@@ -1,0 +1,9 @@
+{
+  "acquirer_sha256": "ed21a2409fd9d6de30dc3fb2534ffdb7c3d8599adc2fd2208755fc1335959ab0",
+  "id": "data_directory_metadata",
+  "maximum_bytes": 1048576,
+  "purpose": "Literal documented tmQM directory metadata only: file names, Git blob IDs, sizes and paths. No file content, rows, examples or download.",
+  "scope_sha256": "f041d0e741e11639213383a33a65184ae0c225d5a341557820084c93a77cdb0d",
+  "started_at": "2026-10-16T17:20:41.148065+00:00",
+  "url": "https://api.github.com/repos/uiocompcat/tmQM/contents/tmQM?ref=ece824419c9006fe66436daf233822b75533b82f"
+}

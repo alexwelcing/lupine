@@ -1,0 +1,96 @@
+{
+  "created_at": "2026-10-16T12:54:16.993962+00:00",
+  "publication_allowlist": [
+    "README.md",
+    "scope.json",
+    "page-request.json",
+    "download-request.json",
+    "download-receipt.json",
+    "document-identity.json",
+    "pdf-text-stderr.txt",
+    "standard-review.json",
+    "source-index.json"
+  ],
+  "publication_exclusions": [
+    "primary-page.body",
+    "official-part2.zip",
+    "part2.pdf",
+    "part2.txt"
+  ],
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 4474,
+      "sha256": "36c2c226e6f90ef2d1886b9ae4185d357aad0898ad85753348b8314a9080ad5c",
+      "publication": "PUBLIC_NOTE_OR_RECEIPT"
+    },
+    {
+      "path": "document-identity.json",
+      "bytes": 630,
+      "sha256": "ec4828196b2ffc9aec249a26d96a92f076867b198c6ef85e41ca80e407ae0373",
+      "publication": "PUBLIC_NOTE_OR_RECEIPT"
+    },
+    {
+      "path": "download-receipt.json",
+      "bytes": 851,
+      "sha256": "c2822993bd02f54213d62ae2ad4212e2c42dc8aa2dc2a185c9ff7aca4fced234",
+      "publication": "PUBLIC_NOTE_OR_RECEIPT"
+    },
+    {
+      "path": "download-request.json",
+      "bytes": 484,
+      "sha256": "e4f94a730d45d145d5d751f10209b058bce6cf6f673cc5edf86bfc50d58f774c",
+      "publication": "PUBLIC_NOTE_OR_RECEIPT"
+    },
+    {
+      "path": "official-part2.zip",
+      "bytes": 1899204,
+      "sha256": "1d489dc491168ea1f9e9a59063acc8dd5f02b4ad1d21aa7ec19ba9a58d020c70",
+      "publication": "EXCLUDED_FULL_SOURCE"
+    },
+    {
+      "path": "page-request.json",
+      "bytes": 742,
+      "sha256": "49e84fef7cc8a5702212fe1f47eb6e7e15b3b0dd6e8b62969694c6902f085a8e",
+      "publication": "PUBLIC_NOTE_OR_RECEIPT"
+    },
+    {
+      "path": "part2.pdf",
+      "bytes": 2009726,
+      "sha256": "18701071fe15f39389761f82512c70d2effbf22bd16dd034f2939797ff5f6147",
+      "publication": "EXCLUDED_FULL_SOURCE"
+    },
+    {
+      "path": "part2.txt",
+      "bytes": 200233,
+      "sha256": "a63bc368c20e9cb5c4ca588687cf56b2de2ff2de7c1a64b50b9bdba309e31209",
+      "publication": "EXCLUDED_FULL_SOURCE"
+    },
+    {
+      "path": "pdf-text-stderr.txt",
+      "bytes": 37,
+      "sha256": "828e1ef46d184f10f5443334ed243081f7f2c02beeb20dcef989289535dc945a",
+      "publication": "PUBLIC_NOTE_OR_RECEIPT"
+    },
+    {
+      "path": "primary-page.body",
+      "bytes": 87545,
+      "sha256": "c01e6813be4081dc6525bc77f7db7c6fefdbea22f4b3a6afd3536226b01e88fe",
+      "publication": "EXCLUDED_FULL_SOURCE"
+    },
+    {
+      "path": "scope.json",
+      "bytes": 1895,
+      "sha256": "59cd3fbbb5d4657ca8d48c9cc6bd536ab43a8d43494ad37a6b08be7d8e453cde",
+      "publication": "PUBLIC_NOTE_OR_RECEIPT"
+    },
+    {
+      "path": "standard-review.json",
+      "bytes": 3800,
+      "sha256": "675916383a7230ff47e59ceffb795372657d42249ae42378630fd10aca607a07",
+      "publication": "PUBLIC_NOTE_OR_RECEIPT"
+    }
+  ],
+  "request_budget_exhausted": true,
+  "primary_part2_pdf_only": true
+}

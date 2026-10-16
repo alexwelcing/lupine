@@ -1,0 +1,28 @@
+{
+  "actual_audit_rerun": false,
+  "actual_invocation_or_handoff_publication": false,
+  "auditor_source_bytes": 39373,
+  "auditor_source_sha256": "4c8bc724b35ae30197b741c566fa2ab9bc7202091eb1be94800b9863ec371fea",
+  "checks_scope": "Source confidentiality and published algorithm identity; actual executed arithmetic audit remains the separately joined first-invocation receipt.",
+  "imports": [
+    "argparse",
+    "collections",
+    "fractions",
+    "hashlib",
+    "json",
+    "os",
+    "pathlib",
+    "re",
+    "stat"
+  ],
+  "independent_arithmetic_digest_recomputed_for_both_aggregate_receipts": true,
+  "recorded_at": "2026-10-11T01:10:14.384918+00:00",
+  "schema": "lupine.mpea.independent_auditor_source_publication_review.v1",
+  "source_contains_actual_private_row_values_memberships_or_credentials": false,
+  "source_contains_public_whole_archive_pin": true,
+  "source_copy_does_not_make_private_input_reproduction_publicly_self_contained": true,
+  "source_executes_no_study_model_allocation_or_producer_import": true,
+  "source_inspected_in_full": true,
+  "source_requires_external_terminal_manifest_and_private_sealed_inputs": true,
+  "status": "APPROVED_EXACT_SOURCE_ONLY_COPY"
+}

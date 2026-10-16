@@ -1,0 +1,16 @@
+{
+  "scope": "Source-only reproduction of auditor pathspec error; not a product/package test.",
+  "command": [
+    "git",
+    "archive",
+    "--format=tar",
+    "4492858d9e55ddfa3cca2e208063799517948b13",
+    "discovery"
+  ],
+  "cwd": "/workspace/lupine-discovery-branch/discovery",
+  "exit_code": 128,
+  "stdout_bytes": 0,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr": "fatal: pathspec 'discovery' did not match any files\n",
+  "stderr_sha256": "1a561a378e015db63a64d2239201036a5db9658fc465cb1bbc7aa6bf9d235ca1"
+}

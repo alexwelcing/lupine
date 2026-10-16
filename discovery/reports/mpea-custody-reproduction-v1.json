@@ -1,0 +1,32 @@
+{
+  "acquisition_receipt_sha256": "2bd6a5f44c28e97460a5ee0fca8eaf0e77a243cd72259e23fff2a75b264aca83",
+  "commands": [
+    {
+      "command": "python scripts/mpea_custody.py acquire --output .cache/mpea-custody/acquisition-v1.json",
+      "exit_code": 0
+    },
+    {
+      "command": "python scripts/mpea_custody.py header --output .cache/mpea-custody/header-v1.json",
+      "exit_code": 2
+    },
+    {
+      "command": "python scripts/mpea_custody.py header --output .cache/mpea-custody/header-second-process-v1.json",
+      "exit_code": 2
+    }
+  ],
+  "executed_at_date": "2026-10-10",
+  "freeze_ci": "https://github.com/alexwelcing/lupine/actions/runs/38075147915",
+  "freeze_ci_all_four_jobs_passed_before_acquisition": true,
+  "freeze_commit": "75caf5fc56ed3c8bb4a8da4cc913fc3816c3bb63",
+  "fresh_process_header_outputs_byte_identical": true,
+  "header_exit_two_is_expected_schema_block": true,
+  "header_receipt_bytes": 3168,
+  "header_receipt_sha256": "01f0e9899f8afb1517d0efd0d2bb4c43ca9df94daadc6a2d15664ac1bbe4d827",
+  "schema": "lupine.discovery.mpea.header_reproduction.v1",
+  "scope": "Whole experimental artifact acquired and hashed; only the bounded first CSV record decoded. Observation rows were not decoded. This is not blind validation, scientific completeness, a selected benchmark, or a fitted model.",
+  "source_observed": {
+    "bytes": 332126,
+    "md5": "6d29eb6018157b863ca0033ccec936d5",
+    "sha256": "c5504d93fd324d1be26cf814d0694ee9ee95578d68a0b38aba6813b939fa2c5d"
+  }
+}

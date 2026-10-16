@@ -1,0 +1,33 @@
+{
+  "after": {
+    ".cache/phase2-li-complete-readiness-operations-v1/recorder_support.py": "6533ff3b934646fb2fa4e11cead85bc9f0ce5ffe8e4901ad27eb55c4e12e625c",
+    ".cache/phase2-li-complete-readiness-operations-v1/run_after_ci.py": "f13ec4ad78d28266a405120e9ff644ba3856bfeacae851912678ceeb7f486dc5",
+    ".cache/phase2-li-complete-readiness-operations-v1/run_package.py": "ff75410bb8b68de831a6db16dab89d314b0cf329ca22188badd4e2d0ff38831a",
+    ".cache/phase2-li-complete-recorder-independent-review-v1/test_ordering.py": "36ff06301a095b06e5da9e637d20400ce6715b871780d6d82fb28a672c9ff042",
+    ".cache/phase2-li-complete-recorder-independent-review-v1/test_publish_cleanup.py": "3b86c9b67967c5ddeed9da68d13a85cb57becfdf73187072b38c81ef760feb27"
+  },
+  "before": {
+    ".cache/phase2-li-complete-readiness-operations-v1/recorder_support.py": "6533ff3b934646fb2fa4e11cead85bc9f0ce5ffe8e4901ad27eb55c4e12e625c",
+    ".cache/phase2-li-complete-readiness-operations-v1/run_after_ci.py": "f13ec4ad78d28266a405120e9ff644ba3856bfeacae851912678ceeb7f486dc5",
+    ".cache/phase2-li-complete-readiness-operations-v1/run_package.py": "ff75410bb8b68de831a6db16dab89d314b0cf329ca22188badd4e2d0ff38831a",
+    ".cache/phase2-li-complete-recorder-independent-review-v1/test_ordering.py": "36ff06301a095b06e5da9e637d20400ce6715b871780d6d82fb28a672c9ff042",
+    ".cache/phase2-li-complete-recorder-independent-review-v1/test_publish_cleanup.py": "3b86c9b67967c5ddeed9da68d13a85cb57becfdf73187072b38c81ef760feb27"
+  },
+  "command": [
+    "python",
+    "-B",
+    "-m",
+    "unittest",
+    "-v",
+    "test_ordering",
+    "test_publish_cleanup"
+  ],
+  "elapsed_seconds": 0.28553231499972753,
+  "exit_code": 0,
+  "finished_at": "2026-10-16T16:06:04.728610+00:00",
+  "scope": "Unchanged three ordering expectations plus one virtual close-fault regression. All external operations mocked; no actual descriptors, product/recorder imports, guards, raw inputs or network.",
+  "started_at": "2026-10-16T16:06:04.443109+00:00",
+  "status": "INDEPENDENT_GENERATED_REGRESSION",
+  "stderr_sha256": "a1913e8eb8e2945b828ac0a74e8d4bc91fdc11598c1d27e03ed14b8ba32f0b3b",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

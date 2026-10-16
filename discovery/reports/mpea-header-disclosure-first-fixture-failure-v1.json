@@ -1,0 +1,17 @@
+{
+  "author_test_sha256": "cbf56522d40fba8706b7b31f3bf41b2b0b8e6ba016c81258bfbdc794eddbbc30",
+  "cause": "One author test constructed its prior-header fixture inside its no-scan mock context. The mock correctly raised during fixture preparation; no production defect or real-source access.",
+  "classification": "PRE_RUNTIME_FIXTURE_CORRECTION",
+  "errors": 0,
+  "failures": 2,
+  "real_cache_files_opened": 0,
+  "resolution": "Prepared the synthetic prior-header fixture before installing the no-scan mock. Production source was not changed in response to this test failure.",
+  "schema": "lupine.discovery.mpea.header_labels_fixture_correction.v1",
+  "scientific_failure": false,
+  "scope": "synthetic fixture tests only",
+  "source_sha256": "0d1e37cfef2889ed955d30f0fd987ba9b06dc2a1f8bf89ba7085112355b287c7",
+  "stage": "scratch_pre_promotion",
+  "status": "FAIL",
+  "tests_run": 28,
+  "unknown_real_header_labels_disclosed": false
+}

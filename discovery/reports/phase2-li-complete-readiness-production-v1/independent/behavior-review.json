@@ -1,0 +1,69 @@
+{
+  "baseline_commit": "2975d6d0b9111cc84adb82ccc673bc82339ab154",
+  "baseline_manifest_sha256": "b2c35e48c8dc837d78aba0047d112dabbd30b8ff11e66bba0f45e9da92a0eb2f",
+  "contract_sha256": "e0f1794f938afde364138cc324451822d00c9b470e087cfc96b1f9038856cc5b",
+  "coverage": [
+    "Temporary Git baseline, worktree/index/HEAD identity and fixed own-file guards; symlinks and missing/drifted source.",
+    "Fixed G34 producer/prerequisite and same-buffer replay before any XML; no caller expectation or bytes on public entrypoint.",
+    "Exclusive fixed slots, reservation before object access, partial read/write/close and source-change failures with retained exposure and atomic cleared payloads.",
+    "Ordered paired historical receipts, complete canonical identity, B-to-A historical edge, typed closed source/operation/scientific fields and selected historical ledger contradictions.",
+    "Complete bounded A sheet-name manifest including hidden/unassigned names; prior manifest replay.",
+    "B exact role-only plain-text inventory, unknown incidental outcomes, all explicit cells, actual 1024/1025 and 2048/2049 bounds and actual 2MiB serialized output bound; shared-string whole-table exposure and withheld unrelated values.",
+    "C full A/B replay and current strict mapping before record reads, exact sheet coverage, declared-absent rows, default unresolved observed rows, complete negative inventories, no vacuous empty/all-header/all-note readiness.",
+    "Structural-only and explicit no-semantic branches retain rows without selected values or fabricated strict documentary success; mixed empty structural sheet remains negative."
+  ],
+  "distinct_test_methods": 50,
+  "executions": [
+    {
+      "disposition": "Five generated-fixture source-size overrides incorrectly constrained larger inputs; one substring assertion matched air inside pairing. All original source/logs preserved.",
+      "errors": 0,
+      "failures": 6,
+      "guard_violations": 0,
+      "methods": 50,
+      "path": "first/execution.json",
+      "sha256": "d4b3a67ceb07d9a4118900f95b722240381146c3eb65e554d990cb695ae48111"
+    },
+    {
+      "disposition": "Same 50 methods after reviewer fixture/oracle corrections; product and acceptance rules unchanged.",
+      "errors": 0,
+      "failures": 0,
+      "guard_violations": 0,
+      "methods": 50,
+      "path": "fixture-correction-1/execution.json",
+      "sha256": "7da3f87258d68dcb787f1e1d6ae4edbf13ef2b7926f4ad4012d980993c09f292"
+    }
+  ],
+  "final_production_source_approval": "BLOCKED_PENDING_COUNTER_LEDGER_REPAIR_AND_PUBLISHED_BASELINE_REBIND",
+  "interface_sha256": "e8b0e6a2cbedbe1c4207a6eb45d27fa0d48f5ad64d93328b065e588f63625a84",
+  "limits": [
+    "No actual workbook/capture/private object or real-checkout production guard was read or invoked; no network or scientific evaluation. Parent G34 custody identity is mocked only inside independently generated temporary repositories.",
+    "Source/counter hashes and generated passes establish engineering evidence, not physical truth, source independence, label validity or scientific admission.",
+    "A late output-directory close failure may leave an earlier COMPLETE persisted file while returned report is BLOCKED_GUARD. An actual recorder must require returned/stdout/persisted identity and final cleanup before prior pins are committed.",
+    "The held behavior source uses the old 2975 baseline. Final production source needs the exact root-supplied repair rebind and separate release gates."
+  ],
+  "portable_test_sha256": "23f263d40f819a5ed9724006835369d6b721a24c2a5cd8c71158b547d01b04b8",
+  "post_run_source_finding": {
+    "actual_access": false,
+    "finding": "Both role-operation ledgers may be complete while all aggregate member/decompression/UTF8/XML counters are zero. Type/range/pair checks do not reject this contradiction.",
+    "id": "HISTORICAL_COMPLETE_COUNTER_CONTRADICTION",
+    "observed_by": "Independent source inspection after corrected50 execution; no new runtime test yet",
+    "root_disposition": "Close the necessary counter contradiction before final publication; existing source reviewer derives precise lower bounds/relations; author preserves540 intermediate and final generated regression awaits held correction."
+  },
+  "pure_core_sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219",
+  "rebind_plan": {
+    "path": "rebind-plan.json",
+    "sha256": "236bff45460a9966287d036feb572a9ed78c2e4e71c6ffe951410c867dd28688",
+    "status": "PREPARED_NOT_EXECUTED"
+  },
+  "runtime_files_held": 339,
+  "schema": "li.readiness.independent-production-behavior-review.v1",
+  "scope": "Independent generated engineering behavior only. A/layout, B/documentary-role inventory, C/complete structural frame all retain BLOCKED_SCHEMA; no admission, target interpretation or actual freshness claim.",
+  "source_sha256": "540088bce4341b1f4137e44ef75244ada5786d000c50af597083dadbfc02c9d8",
+  "static_audit": {
+    "checks": 18,
+    "pass": true,
+    "path": "static-first.json",
+    "sha256": "49ff91ce2dd1c4e75dc3d49bce76f63eda5cd1204d74f836d5f19d17c9101586"
+  },
+  "verdict": "PASS_EXECUTED_GENERATED_INTERMEDIATE_WITH_POST_RUN_SOURCE_FINDING"
+}

@@ -1,0 +1,1067 @@
+{
+  "created_at": "2026-10-16T08:50:39.369219+00:00",
+  "held_inventory_sha256": "36003129e24418038f4a9d7b3ec276b2868781e6cfb0fb9cec7a353b997c7ba7",
+  "file_count": 57,
+  "total_bytes": 371075,
+  "files": [
+    {
+      "path": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "bytes": 4332,
+      "sha256": "561dc3786cda2cd55e37c9ec341d4c29290ad854e06984bbc44c7a1a680df014",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/README.md",
+      "bytes": 8384,
+      "sha256": "2c2730f8551b51d42cc035b718a0f05807e242a769666183ec485feed361ec29",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/independent-review/before-binding-timing-key/review.json",
+      "bytes": 8204,
+      "sha256": "ff2f12033f7d6740d82691ce6aff0c80cd280bae613363ee468f0fbd2045c8ad",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/independent-review/before-binding-timing-key/reviewed-source-bindings.json",
+      "bytes": 8646,
+      "sha256": "0f9970bbd1f9f17c3d073ccf8bb8aead6643255261ae292199c2e74c93d97c52",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/independent-review/before-binding-timing-key/source-bindings.json",
+      "bytes": 2857,
+      "sha256": "01d60e9724c4f3e96f6ff01b65f600524a8b7a033d6a68ee2c5f3b1c61626d9c",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/independent-review/binding-timing-addendum.json",
+      "bytes": 1135,
+      "sha256": "c78cbf4575bf467750e21a7077d2284fe78f4b5513f6fa8e6c5552a4deb6a4e5",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/independent-review/review.json",
+      "bytes": 8204,
+      "sha256": "ff2f12033f7d6740d82691ce6aff0c80cd280bae613363ee468f0fbd2045c8ad",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/independent-review/scope.json",
+      "bytes": 2790,
+      "sha256": "1b36614791a5a06ff048ddca2d3392675b8600fa81e4e1818fe9d8fe7a942764",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/independent-review/source-bindings.json",
+      "bytes": 2857,
+      "sha256": "01d60e9724c4f3e96f6ff01b65f600524a8b7a033d6a68ee2c5f3b1c61626d9c",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/initial-bindings-before-review-timing-clarification.json",
+      "bytes": 8646,
+      "sha256": "0f9970bbd1f9f17c3d073ccf8bb8aead6643255261ae292199c2e74c93d97c52",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/inventory.json",
+      "bytes": 2199,
+      "sha256": "d6ec19978db4f8c047b16a5ec7ab0fe5d4cc4e57891155b7929aa18c44666cf8",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/pre-fetch-scope.json",
+      "bytes": 600,
+      "sha256": "b520c2f8ba4626f29904ff24f3743e7cc4da0eaab782446eeed036d74614e43b",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/publication-checks.json",
+      "bytes": 7037,
+      "sha256": "04fc73fc919815dbd2be8de0890359c022934b4c332f1241dfca02ed945c768f",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/publication-content-scope.json",
+      "bytes": 1767,
+      "sha256": "39020081ccb60596942bcc9d74a8f8b28478ed75636102720e4a2eb8ff26b679",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/publication-first-check-failure.json",
+      "bytes": 703,
+      "sha256": "c3432653d589b82478ef3ed52f8db6d6fedc7777044cb93c0d4f30088dfceeda",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/publication-map.json",
+      "bytes": 10347,
+      "sha256": "3aa0e8aea664f1bb0ac6dc1cefaed3fd3f67c09872b9251d41b6b602f273615f",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/publication-whitespace-harness-correction.json",
+      "bytes": 841,
+      "sha256": "35a5fe3dfbc3eb0aad24dd86137b3a983ed7c18a5cd1d08ff76a0670b2133a67",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/retained-metadata/datacite-17846436.json",
+      "bytes": 25593,
+      "sha256": "a897e6645fc159571afdd57ebf69fa00aa543e7ff68c98ec1e90f45ad5f70a9b",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/retained-metadata/datacite-17846617.json",
+      "bytes": 21241,
+      "sha256": "65c2df41a4d31b503cea88d7929184dceeedd59dc7643d84c960697f827e8cad",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/review-handoff.json",
+      "bytes": 1413,
+      "sha256": "2bfe9947525c2507711bdd860b8320f1bf7ce613476c4e828a000313150d39f2",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/source-bindings.json",
+      "bytes": 8666,
+      "sha256": "1a61b05a8e7142c303e3384a2a6661cf78a6d27ceac9f179849ec2b99e8b4798",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/verification.json",
+      "bytes": 2668,
+      "sha256": "1993932999c36553ce12e9b9d8162814bfc4cdb5c984b54d61d426f6245cef5f",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/zenodo-17846436-file-metadata.json",
+      "bytes": 576,
+      "sha256": "07cb949abcbca0c5b9e6e0979840401c02b4692ed4fa027f791b8cfc21d181fd",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/zenodo-17846436-receipt.json",
+      "bytes": 520,
+      "sha256": "bfc61a4f78f5c969da46acb4cf3ff27af05047a9f09ae06f4cfde013ba426bf4",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/zenodo-17846436.json",
+      "bytes": 14107,
+      "sha256": "3bcc7e2622fe555f1d0d9ae75e1326f3f09ed036cb61da1c27e06d87d6855cb0",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/zenodo-17846617-file-metadata.json",
+      "bytes": 1649,
+      "sha256": "ba8e1708ab17ebdac5b39b6536137067d4ddcee0bfe9a759c1050593ab327dbe",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/zenodo-17846617-receipt.json",
+      "bytes": 520,
+      "sha256": "41a36cec6e853407fd616c5d26fad96bb3ce38c056290bcc4d6b2c4973902805",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/zenodo-17846617.json",
+      "bytes": 14771,
+      "sha256": "48f84c7d6fc841a13de8ecccbba5f0604834cec45c3033d0d55bfd7a2e89f4d6",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "bytes": 4316,
+      "sha256": "296687aaa59ec34665a36366344c282ca528c287902bd560dd5ea317c623424d",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-finite-risk-inversion-design-v1/README-before-api-domain-clarification.md",
+      "bytes": 12555,
+      "sha256": "693c42b4db020df157a64a1fbbeb479f8bf901dfb2fb4bb8cecd3f12f0e4971e",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-finite-risk-inversion-design-v1/README.md",
+      "bytes": 12700,
+      "sha256": "142fc8fed2bc05fc784aa1cf0b2c696b818b0d2f2766087f8685b88198023e94",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/README.md",
+      "bytes": 5736,
+      "sha256": "6dc07e1cfcd845844bb2d65b4b8d6a5454474bc6d293783f9516a693806d9394",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/audit.py",
+      "bytes": 10728,
+      "sha256": "4ad598ca979ae154df67ebcefecf0307261f18a430bfe25c205b7dc5d753d6f7",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/exact-distributions.json",
+      "bytes": 55030,
+      "sha256": "50b6432ba9afbee740415a5c2a502b87185a4adb50a86cc5e1c7e57a395e7a4c",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/execution.json",
+      "bytes": 1213,
+      "sha256": "6d0abec8b8b5b5bc35a60126550cf2e28861d2b357ee7898919991e9846b31bf",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/inventory.json",
+      "bytes": 1768,
+      "sha256": "72bd4ceabf12adf0456822c678bfa497acfa03daa151ad0e05d1486537c1794f",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/optional-stopping-paths.json",
+      "bytes": 4523,
+      "sha256": "fc8e7192c75406fb4a0330166d48068660285ce5440fc30682ff41d98851cded",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/result.json",
+      "bytes": 24937,
+      "sha256": "7ae235055e903f61de8897aaa9ef9f097b8f795ea509e533481c562802b2b530",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/review.json",
+      "bytes": 3352,
+      "sha256": "a3ebcc071ecd9749abae1d38fc800c943ac0d50ba1839d0f1bfa9385334dea3e",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/run_recorded.py",
+      "bytes": 1628,
+      "sha256": "6490a4d590acbff9902dfaf10eb8b37e92c68c71a6953b0c3a9f92ef7da46527",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/start.json",
+      "bytes": 651,
+      "sha256": "6396e172a31db427c2a9159530d5dd194747534a45cb93d62226cc0fba738ef5",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/stdout.txt",
+      "bytes": 2362,
+      "sha256": "cf2bb3e48d5b08cd974abc1ce1a515664c25f7ed744345b5bbffd2db70723cda",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-finite-risk-inversion-design-v1/document-check.json",
+      "bytes": 1109,
+      "sha256": "50a48d330751a472dcc7d72f8b488d78fe8f737ba00608aa9dd541dfac32f1bc",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-finite-risk-inversion-design-v1/independent-review/independent-derivation.md",
+      "bytes": 5556,
+      "sha256": "97cde0228ec4ccb6c8be452a52ba8d61da02db5e6f8b360d5c64c060fa14628e",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-finite-risk-inversion-design-v1/independent-review/initial-held-README.md",
+      "bytes": 12555,
+      "sha256": "693c42b4db020df157a64a1fbbeb479f8bf901dfb2fb4bb8cecd3f12f0e4971e",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-finite-risk-inversion-design-v1/independent-review/initial-wording-review.json",
+      "bytes": 590,
+      "sha256": "8c091957df0ddaaf12e09f3a1be3db8701c3982d2ced97323f785e5c9ef28d81",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-finite-risk-inversion-design-v1/independent-review/review.json",
+      "bytes": 6900,
+      "sha256": "ef9be0e13f392c429c6f603d6e95cb610f10fcbb08afcb31f86df971ca35e2b4",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-finite-risk-inversion-design-v1/independent-review/source-bindings.json",
+      "bytes": 2781,
+      "sha256": "9c442036a9d4b10e82dafda907de4175b32e43e9e19ab1cfb2a5493019c65105",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-finite-risk-inversion-design-v1/inventory.json",
+      "bytes": 1268,
+      "sha256": "735d3e0d80cae9675bc131678bc3d80718885286b4b3b86f875bddeae9b88841",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-finite-risk-inversion-design-v1/publication-checks.json",
+      "bytes": 7033,
+      "sha256": "a7f49d5720d57f52c03c63e6af05d6cf4e4d2e93c734b0490b23d66de2bb776b",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-finite-risk-inversion-design-v1/publication-first-check-failure.json",
+      "bytes": 703,
+      "sha256": "c3432653d589b82478ef3ed52f8db6d6fedc7777044cb93c0d4f30088dfceeda",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-finite-risk-inversion-design-v1/publication-map.json",
+      "bytes": 12174,
+      "sha256": "23461408302042b7ee60babdfdb26c09a44701588111b050df9cd3b49595f080",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-finite-risk-inversion-design-v1/publication-whitespace-harness-correction.json",
+      "bytes": 841,
+      "sha256": "35a5fe3dfbc3eb0aad24dd86137b3a983ed7c18a5cd1d08ff76a0670b2133a67",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-finite-risk-inversion-design-v1/review-handoff.json",
+      "bytes": 1255,
+      "sha256": "f766ef43818637882bfe6a5b1ae2892286d1943167061cdb9d5ed7fbc402d8f3",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-finite-risk-inversion-design-v1/source-bindings-before-commit-binding.json",
+      "bytes": 2464,
+      "sha256": "790c9295b79aaafbf2c8354c75285272b3c9b33b84899c1036e6fbc259463b28",
+      "inventory_matches": true,
+      "symlink": false
+    },
+    {
+      "path": "reports/phase2-finite-risk-inversion-design-v1/source-bindings.json",
+      "bytes": 3074,
+      "sha256": "d9e24db1ca5e826a2501c948856b0b8ae065b0b7f8637a5b2686c18d662de460",
+      "inventory_matches": true,
+      "symlink": false
+    }
+  ],
+  "original_mapping_count": 46,
+  "exact_original_copies": [
+    {
+      "original_path": ".cache/phase2-bam-readiness-v1/README.md",
+      "published_path": "reports/phase2-bam-readiness-v1/README.md",
+      "bytes": 8384,
+      "sha256": "2c2730f8551b51d42cc035b718a0f05807e242a769666183ec485feed361ec29",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-bam-readiness-v1/initial-bindings-before-review-timing-clarification.json",
+      "published_path": "reports/phase2-bam-readiness-v1/initial-bindings-before-review-timing-clarification.json",
+      "bytes": 8646,
+      "sha256": "0f9970bbd1f9f17c3d073ccf8bb8aead6643255261ae292199c2e74c93d97c52",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-bam-readiness-v1/inventory.json",
+      "published_path": "reports/phase2-bam-readiness-v1/inventory.json",
+      "bytes": 2199,
+      "sha256": "d6ec19978db4f8c047b16a5ec7ab0fe5d4cc4e57891155b7929aa18c44666cf8",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-bam-readiness-v1/pre-fetch-scope.json",
+      "published_path": "reports/phase2-bam-readiness-v1/pre-fetch-scope.json",
+      "bytes": 600,
+      "sha256": "b520c2f8ba4626f29904ff24f3743e7cc4da0eaab782446eeed036d74614e43b",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-bam-readiness-v1/review-handoff.json",
+      "published_path": "reports/phase2-bam-readiness-v1/review-handoff.json",
+      "bytes": 1413,
+      "sha256": "2bfe9947525c2507711bdd860b8320f1bf7ce613476c4e828a000313150d39f2",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-bam-readiness-v1/source-bindings.json",
+      "published_path": "reports/phase2-bam-readiness-v1/source-bindings.json",
+      "bytes": 8666,
+      "sha256": "1a61b05a8e7142c303e3384a2a6661cf78a6d27ceac9f179849ec2b99e8b4798",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-bam-readiness-v1/verification.json",
+      "published_path": "reports/phase2-bam-readiness-v1/verification.json",
+      "bytes": 2668,
+      "sha256": "1993932999c36553ce12e9b9d8162814bfc4cdb5c984b54d61d426f6245cef5f",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-bam-readiness-v1/zenodo-17846436-file-metadata.json",
+      "published_path": "reports/phase2-bam-readiness-v1/zenodo-17846436-file-metadata.json",
+      "bytes": 576,
+      "sha256": "07cb949abcbca0c5b9e6e0979840401c02b4692ed4fa027f791b8cfc21d181fd",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-bam-readiness-v1/zenodo-17846436-receipt.json",
+      "published_path": "reports/phase2-bam-readiness-v1/zenodo-17846436-receipt.json",
+      "bytes": 520,
+      "sha256": "bfc61a4f78f5c969da46acb4cf3ff27af05047a9f09ae06f4cfde013ba426bf4",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-bam-readiness-v1/zenodo-17846436.json",
+      "published_path": "reports/phase2-bam-readiness-v1/zenodo-17846436.json",
+      "bytes": 14107,
+      "sha256": "3bcc7e2622fe555f1d0d9ae75e1326f3f09ed036cb61da1c27e06d87d6855cb0",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-bam-readiness-v1/zenodo-17846617-file-metadata.json",
+      "published_path": "reports/phase2-bam-readiness-v1/zenodo-17846617-file-metadata.json",
+      "bytes": 1649,
+      "sha256": "ba8e1708ab17ebdac5b39b6536137067d4ddcee0bfe9a759c1050593ab327dbe",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-bam-readiness-v1/zenodo-17846617-receipt.json",
+      "published_path": "reports/phase2-bam-readiness-v1/zenodo-17846617-receipt.json",
+      "bytes": 520,
+      "sha256": "41a36cec6e853407fd616c5d26fad96bb3ce38c056290bcc4d6b2c4973902805",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-bam-readiness-v1/zenodo-17846617.json",
+      "published_path": "reports/phase2-bam-readiness-v1/zenodo-17846617.json",
+      "bytes": 14771,
+      "sha256": "48f84c7d6fc841a13de8ecccbba5f0604834cec45c3033d0d55bfd7a2e89f4d6",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-bam-readiness-review-v1/before-binding-timing-key/review.json",
+      "published_path": "reports/phase2-bam-readiness-v1/independent-review/before-binding-timing-key/review.json",
+      "bytes": 8204,
+      "sha256": "ff2f12033f7d6740d82691ce6aff0c80cd280bae613363ee468f0fbd2045c8ad",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-bam-readiness-review-v1/before-binding-timing-key/reviewed-source-bindings.json",
+      "published_path": "reports/phase2-bam-readiness-v1/independent-review/before-binding-timing-key/reviewed-source-bindings.json",
+      "bytes": 8646,
+      "sha256": "0f9970bbd1f9f17c3d073ccf8bb8aead6643255261ae292199c2e74c93d97c52",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-bam-readiness-review-v1/before-binding-timing-key/source-bindings.json",
+      "published_path": "reports/phase2-bam-readiness-v1/independent-review/before-binding-timing-key/source-bindings.json",
+      "bytes": 2857,
+      "sha256": "01d60e9724c4f3e96f6ff01b65f600524a8b7a033d6a68ee2c5f3b1c61626d9c",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-bam-readiness-review-v1/binding-timing-addendum.json",
+      "published_path": "reports/phase2-bam-readiness-v1/independent-review/binding-timing-addendum.json",
+      "bytes": 1135,
+      "sha256": "c78cbf4575bf467750e21a7077d2284fe78f4b5513f6fa8e6c5552a4deb6a4e5",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-bam-readiness-review-v1/review.json",
+      "published_path": "reports/phase2-bam-readiness-v1/independent-review/review.json",
+      "bytes": 8204,
+      "sha256": "ff2f12033f7d6740d82691ce6aff0c80cd280bae613363ee468f0fbd2045c8ad",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-bam-readiness-review-v1/scope.json",
+      "published_path": "reports/phase2-bam-readiness-v1/independent-review/scope.json",
+      "bytes": 2790,
+      "sha256": "1b36614791a5a06ff048ddca2d3392675b8600fa81e4e1818fe9d8fe7a942764",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-bam-readiness-review-v1/source-bindings.json",
+      "published_path": "reports/phase2-bam-readiness-v1/independent-review/source-bindings.json",
+      "bytes": 2857,
+      "sha256": "01d60e9724c4f3e96f6ff01b65f600524a8b7a033d6a68ee2c5f3b1c61626d9c",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-high-temperature-leads-v1/bam-data.json",
+      "published_path": "reports/phase2-bam-readiness-v1/retained-metadata/datacite-17846617.json",
+      "bytes": 21241,
+      "sha256": "65c2df41a4d31b503cea88d7929184dceeedd59dc7643d84c960697f827e8cad",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-high-temperature-leads-v1/bam-schema.json",
+      "published_path": "reports/phase2-bam-readiness-v1/retained-metadata/datacite-17846436.json",
+      "bytes": 25593,
+      "sha256": "a897e6645fc159571afdd57ebf69fa00aa543e7ff68c98ec1e90f45ad5f70a9b",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-finite-risk-inversion-design-v1/README-before-api-domain-clarification.md",
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/README-before-api-domain-clarification.md",
+      "bytes": 12555,
+      "sha256": "693c42b4db020df157a64a1fbbeb479f8bf901dfb2fb4bb8cecd3f12f0e4971e",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-finite-risk-inversion-design-v1/README.md",
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/README.md",
+      "bytes": 12700,
+      "sha256": "142fc8fed2bc05fc784aa1cf0b2c696b818b0d2f2766087f8685b88198023e94",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-finite-risk-inversion-design-v1/document-check.json",
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/document-check.json",
+      "bytes": 1109,
+      "sha256": "50a48d330751a472dcc7d72f8b488d78fe8f737ba00608aa9dd541dfac32f1bc",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-finite-risk-inversion-design-v1/inventory.json",
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/inventory.json",
+      "bytes": 1268,
+      "sha256": "735d3e0d80cae9675bc131678bc3d80718885286b4b3b86f875bddeae9b88841",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-finite-risk-inversion-design-v1/review-handoff.json",
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/review-handoff.json",
+      "bytes": 1255,
+      "sha256": "f766ef43818637882bfe6a5b1ae2892286d1943167061cdb9d5ed7fbc402d8f3",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-finite-risk-inversion-design-v1/source-bindings-before-commit-binding.json",
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/source-bindings-before-commit-binding.json",
+      "bytes": 2464,
+      "sha256": "790c9295b79aaafbf2c8354c75285272b3c9b33b84899c1036e6fbc259463b28",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-finite-risk-inversion-design-v1/source-bindings.json",
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/source-bindings.json",
+      "bytes": 3074,
+      "sha256": "d9e24db1ca5e826a2501c948856b0b8ae065b0b7f8637a5b2686c18d662de460",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-finite-risk-inversion-review-v1/independent-derivation.md",
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/independent-review/independent-derivation.md",
+      "bytes": 5556,
+      "sha256": "97cde0228ec4ccb6c8be452a52ba8d61da02db5e6f8b360d5c64c060fa14628e",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-finite-risk-inversion-review-v1/initial-held-README.md",
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/independent-review/initial-held-README.md",
+      "bytes": 12555,
+      "sha256": "693c42b4db020df157a64a1fbbeb479f8bf901dfb2fb4bb8cecd3f12f0e4971e",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-finite-risk-inversion-review-v1/initial-wording-review.json",
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/independent-review/initial-wording-review.json",
+      "bytes": 590,
+      "sha256": "8c091957df0ddaaf12e09f3a1be3db8701c3982d2ced97323f785e5c9ef28d81",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-finite-risk-inversion-review-v1/review.json",
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/independent-review/review.json",
+      "bytes": 6900,
+      "sha256": "ef9be0e13f392c429c6f603d6e95cb610f10fcbb08afcb31f86df971ca35e2b4",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-finite-risk-inversion-review-v1/source-bindings.json",
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/independent-review/source-bindings.json",
+      "bytes": 2781,
+      "sha256": "9c442036a9d4b10e82dafda907de4175b32e43e9e19ab1cfb2a5493019c65105",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-finite-risk-inversion-counting-v1/README.md",
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/README.md",
+      "bytes": 5736,
+      "sha256": "6dc07e1cfcd845844bb2d65b4b8d6a5454474bc6d293783f9516a693806d9394",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-finite-risk-inversion-counting-v1/audit.py",
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/audit.py",
+      "bytes": 10728,
+      "sha256": "4ad598ca979ae154df67ebcefecf0307261f18a430bfe25c205b7dc5d753d6f7",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-finite-risk-inversion-counting-v1/exact-distributions.json",
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/exact-distributions.json",
+      "bytes": 55030,
+      "sha256": "50b6432ba9afbee740415a5c2a502b87185a4adb50a86cc5e1c7e57a395e7a4c",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-finite-risk-inversion-counting-v1/execution.json",
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/execution.json",
+      "bytes": 1213,
+      "sha256": "6d0abec8b8b5b5bc35a60126550cf2e28861d2b357ee7898919991e9846b31bf",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-finite-risk-inversion-counting-v1/inventory.json",
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/inventory.json",
+      "bytes": 1768,
+      "sha256": "72bd4ceabf12adf0456822c678bfa497acfa03daa151ad0e05d1486537c1794f",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-finite-risk-inversion-counting-v1/optional-stopping-paths.json",
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/optional-stopping-paths.json",
+      "bytes": 4523,
+      "sha256": "fc8e7192c75406fb4a0330166d48068660285ce5440fc30682ff41d98851cded",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-finite-risk-inversion-counting-v1/result.json",
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/result.json",
+      "bytes": 24937,
+      "sha256": "7ae235055e903f61de8897aaa9ef9f097b8f795ea509e533481c562802b2b530",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-finite-risk-inversion-counting-v1/review.json",
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/review.json",
+      "bytes": 3352,
+      "sha256": "a3ebcc071ecd9749abae1d38fc800c943ac0d50ba1839d0f1bfa9385334dea3e",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-finite-risk-inversion-counting-v1/run_recorded.py",
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/run_recorded.py",
+      "bytes": 1628,
+      "sha256": "6490a4d590acbff9902dfaf10eb8b37e92c68c71a6953b0c3a9f92ef7da46527",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-finite-risk-inversion-counting-v1/start.json",
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/start.json",
+      "bytes": 651,
+      "sha256": "6396e172a31db427c2a9159530d5dd194747534a45cb93d62226cc0fba738ef5",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-finite-risk-inversion-counting-v1/stderr.txt",
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exact_bytes": true
+    },
+    {
+      "original_path": ".cache/phase2-finite-risk-inversion-counting-v1/stdout.txt",
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/stdout.txt",
+      "bytes": 2362,
+      "sha256": "cf2bb3e48d5b08cd974abc1ce1a515664c25f7ed744345b5bbffd2db70723cda",
+      "exact_bytes": true
+    }
+  ],
+  "existing_public_bindings": [
+    {
+      "path": "reports/phase2-high-temperature-leads-v1/bam-data-receipt.json",
+      "bytes": 1531,
+      "sha256": "c7149819c72f50ba40db5ce9632f0f924d533282e3720607f0037e21d8c666c0",
+      "matches": true
+    },
+    {
+      "path": "reports/phase2-high-temperature-leads-v1/bam-schema-receipt.json",
+      "bytes": 1176,
+      "sha256": "51f71322f83684a0a303f5efde4095b267eb9a6d31a286eabcbaa438c19c3e0a",
+      "matches": true
+    },
+    {
+      "path": "reports/phase2-high-temperature-leads-v1/README.md",
+      "bytes": 4445,
+      "sha256": "54191247eab5cb1455f506420ef5422081a609d4f685d1f1c4352750ce5f15a7",
+      "matches": true
+    },
+    {
+      "path": "reports/phase2-high-temperature-leads-v1/source-bindings.json",
+      "bytes": 1886,
+      "sha256": "4097046dbb9799b2991651ef411ee9cb1740f35e6b4cb89912e51e91e895bb89",
+      "matches": true
+    },
+    {
+      "path": "reports/phase2-high-temperature-leads-v1/independent-review.json",
+      "bytes": 3062,
+      "sha256": "91964393c44faaabaff7801a185cb71e7a890f41294f3c28fcd7e8c079e0e941",
+      "matches": true
+    },
+    {
+      "path": "GOAL.md",
+      "bytes": 24904,
+      "sha256": "a218767ffb40b1df8bac35cd3138cb7aa88b4e14e1a1e3192f1fce22262583c9",
+      "matches": true
+    },
+    {
+      "path": "docs/study-planning.md",
+      "bytes": 14039,
+      "sha256": "0ac34bfcfb6b1198065923c932d8ddf7d80c7411ed027e0cfe5cbc1ff1e01641",
+      "matches": true
+    },
+    {
+      "path": "docs/finite-population-planning.md",
+      "bytes": 6568,
+      "sha256": "11f4efe987632293bfc8dfcbd24a32d3a05e4c9e23624c9933ec030028de3414",
+      "matches": true
+    },
+    {
+      "path": "reports/phase2-finite-archive-design-v1/README.md",
+      "bytes": 19059,
+      "sha256": "c26fcba7ea5e70660e8d5657539ab36effd6bf991df6471f5d7da61ba0a8886a",
+      "matches": true
+    },
+    {
+      "path": "reports/phase2-risk-contracts-v1/README.md",
+      "bytes": 5034,
+      "sha256": "de10ef8fd4d6cc6b78fd70ebc00518fd9c76139634861a0d8d62c8c009041633",
+      "matches": true
+    }
+  ],
+  "local_link_count": 30,
+  "local_links": [
+    {
+      "from": "reports/phase2-bam-readiness-v1/README.md",
+      "href": "source-bindings.json",
+      "resolution": "promotion",
+      "resolved_project_path": "reports/phase2-bam-readiness-v1/source-bindings.json",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-bam-readiness-v1/README.md",
+      "href": "pre-fetch-scope.json",
+      "resolution": "promotion",
+      "resolved_project_path": "reports/phase2-bam-readiness-v1/pre-fetch-scope.json",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-bam-readiness-v1/README.md",
+      "href": "../../reports/phase2-high-temperature-leads-v1/README.md",
+      "resolution": "existing_project_file",
+      "resolved_project_path": "reports/phase2-high-temperature-leads-v1/README.md",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "href": "README.md",
+      "resolution": "promotion",
+      "resolved_project_path": "reports/phase2-bam-readiness-v1/README.md",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "href": "independent-review/review.json",
+      "resolution": "promotion",
+      "resolved_project_path": "reports/phase2-bam-readiness-v1/independent-review/review.json",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "href": "independent-review/binding-timing-addendum.json",
+      "resolution": "promotion",
+      "resolved_project_path": "reports/phase2-bam-readiness-v1/independent-review/binding-timing-addendum.json",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "href": "publication-map.json",
+      "resolution": "promotion",
+      "resolved_project_path": "reports/phase2-bam-readiness-v1/publication-map.json",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "href": "publication-checks.json",
+      "resolution": "promotion",
+      "resolved_project_path": "reports/phase2-bam-readiness-v1/publication-checks.json",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "href": "retained-metadata/datacite-17846617.json",
+      "resolution": "promotion",
+      "resolved_project_path": "reports/phase2-bam-readiness-v1/retained-metadata/datacite-17846617.json",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "href": "retained-metadata/datacite-17846436.json",
+      "resolution": "promotion",
+      "resolved_project_path": "reports/phase2-bam-readiness-v1/retained-metadata/datacite-17846436.json",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "href": "zenodo-17846617.json",
+      "resolution": "promotion",
+      "resolved_project_path": "reports/phase2-bam-readiness-v1/zenodo-17846617.json",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "href": "zenodo-17846436.json",
+      "resolution": "promotion",
+      "resolved_project_path": "reports/phase2-bam-readiness-v1/zenodo-17846436.json",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "href": "source-bindings.json",
+      "resolution": "promotion",
+      "resolved_project_path": "reports/phase2-bam-readiness-v1/source-bindings.json",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "href": "../phase2-high-temperature-leads-v1/README.md",
+      "resolution": "existing_project_file",
+      "resolved_project_path": "reports/phase2-high-temperature-leads-v1/README.md",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "href": "publication-first-check-failure.json",
+      "resolution": "promotion",
+      "resolved_project_path": "reports/phase2-bam-readiness-v1/publication-first-check-failure.json",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "href": "publication-content-scope.json",
+      "resolution": "promotion",
+      "resolved_project_path": "reports/phase2-bam-readiness-v1/publication-content-scope.json",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "href": "publication-whitespace-harness-correction.json",
+      "resolution": "promotion",
+      "resolved_project_path": "reports/phase2-bam-readiness-v1/publication-whitespace-harness-correction.json",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "href": "README.md",
+      "resolution": "promotion",
+      "resolved_project_path": "reports/phase2-finite-risk-inversion-design-v1/README.md",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "href": "independent-review/independent-derivation.md",
+      "resolution": "promotion",
+      "resolved_project_path": "reports/phase2-finite-risk-inversion-design-v1/independent-review/independent-derivation.md",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "href": "independent-review/review.json",
+      "resolution": "promotion",
+      "resolved_project_path": "reports/phase2-finite-risk-inversion-design-v1/independent-review/review.json",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "href": "publication-map.json",
+      "resolution": "promotion",
+      "resolved_project_path": "reports/phase2-finite-risk-inversion-design-v1/publication-map.json",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "href": "source-bindings.json",
+      "resolution": "promotion",
+      "resolved_project_path": "reports/phase2-finite-risk-inversion-design-v1/source-bindings.json",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "href": "publication-checks.json",
+      "resolution": "promotion",
+      "resolved_project_path": "reports/phase2-finite-risk-inversion-design-v1/publication-checks.json",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "href": "publication-first-check-failure.json",
+      "resolution": "promotion",
+      "resolved_project_path": "reports/phase2-finite-risk-inversion-design-v1/publication-first-check-failure.json",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "href": "counting-review/README.md",
+      "resolution": "promotion",
+      "resolved_project_path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/README.md",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "href": "counting-review/execution.json",
+      "resolution": "promotion",
+      "resolved_project_path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/execution.json",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "href": "counting-review/review.json",
+      "resolution": "promotion",
+      "resolved_project_path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/review.json",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "href": "counting-review/inventory.json",
+      "resolution": "promotion",
+      "resolved_project_path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/inventory.json",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "href": "README.md",
+      "resolution": "promotion",
+      "resolved_project_path": "reports/phase2-finite-risk-inversion-design-v1/README.md",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "href": "publication-whitespace-harness-correction.json",
+      "resolution": "promotion",
+      "resolved_project_path": "reports/phase2-finite-risk-inversion-design-v1/publication-whitespace-harness-correction.json",
+      "exists": true
+    }
+  ],
+  "counting_inventory": [
+    {
+      "bytes": 5736,
+      "path": "README.md",
+      "sha256": "6dc07e1cfcd845844bb2d65b4b8d6a5454474bc6d293783f9516a693806d9394"
+    },
+    {
+      "bytes": 10728,
+      "path": "audit.py",
+      "sha256": "4ad598ca979ae154df67ebcefecf0307261f18a430bfe25c205b7dc5d753d6f7"
+    },
+    {
+      "bytes": 55030,
+      "path": "exact-distributions.json",
+      "sha256": "50b6432ba9afbee740415a5c2a502b87185a4adb50a86cc5e1c7e57a395e7a4c"
+    },
+    {
+      "bytes": 1213,
+      "path": "execution.json",
+      "sha256": "6d0abec8b8b5b5bc35a60126550cf2e28861d2b357ee7898919991e9846b31bf"
+    },
+    {
+      "bytes": 4523,
+      "path": "optional-stopping-paths.json",
+      "sha256": "fc8e7192c75406fb4a0330166d48068660285ce5440fc30682ff41d98851cded"
+    },
+    {
+      "bytes": 24937,
+      "path": "result.json",
+      "sha256": "7ae235055e903f61de8897aaa9ef9f097b8f795ea509e533481c562802b2b530"
+    },
+    {
+      "bytes": 3352,
+      "path": "review.json",
+      "sha256": "a3ebcc071ecd9749abae1d38fc800c943ac0d50ba1839d0f1bfa9385334dea3e"
+    },
+    {
+      "bytes": 1628,
+      "path": "run_recorded.py",
+      "sha256": "6490a4d590acbff9902dfaf10eb8b37e92c68c71a6953b0c3a9f92ef7da46527"
+    },
+    {
+      "bytes": 651,
+      "path": "start.json",
+      "sha256": "6396e172a31db427c2a9159530d5dd194747534a45cb93d62226cc0fba738ef5"
+    },
+    {
+      "bytes": 0,
+      "path": "stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2362,
+      "path": "stdout.txt",
+      "sha256": "cf2bb3e48d5b08cd974abc1ce1a515664c25f7ed744345b5bbffd2db70723cda"
+    }
+  ],
+  "counting_receipt_checks": "Start keys agree with execution; pre/post source/design hashes match exact copies; stdout/stderr exact; review/result/stdout counts agree; 284 distributions and 24 paths retained, path flags recount 12 first/16 stopped/12 fixed-three rejections. This is retained artifact consistency checking, not re-execution.",
+  "whitespace_receipt_checked": true,
+  "actual_work": "Read/hash/JSON/Markdown metadata checks only; no copied source execution, product imports/tests, network, scientific body access, or tracked writes."
+}

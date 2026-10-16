@@ -1,0 +1,35 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-compatible-envelope-review-v1",
+    "-p",
+    "test_li_v3_compatible_envelope_review.py",
+    "-v"
+  ],
+  "started_at": "2026-10-16T07:17:07.228296+00:00",
+  "source_before": {
+    ".cache/phase2-li-compatible-envelope-candidate-v1/promotion/scripts/li_v3_compatible_envelope.py": "e771b3fc2a66d6e2ff3a26d8aae88b7a2915ac908907908316e697997761c847",
+    ".cache/phase2-li-compatible-envelope-candidate-v1/promotion/tests/test_li_v3_compatible_envelope.py": "2b4c5561c8158b76ddd739b96799ee0fecbd1c31e60d16df2e6e8b0bd2618f64",
+    ".cache/phase2-li-compatible-envelope-candidate-v1/promotion/docs/li-v3-compatible-envelope-plan.md": "86b663de7a0e88e559a8cc6acbbacd3b17d4ca9ee4e759abc826f7afbd6211ca",
+    ".cache/phase2-li-compatible-envelope-review-v1/test_li_v3_compatible_envelope_review.py": "71176d6677aa9392edf69b0a1e4834848214f9453ebfc2afaf14694aee0f8f86",
+    "scripts/li_v3_custody.py": "3ead51f0afdf16be973743257be488669c988aa40443779e7a5c400e9b0d3234",
+    "tests/test_li_v3_custody.py": "b8113942416f5a2fc6cda565fa5e8b3d5fb9efb887d9241cc36047caca58780a",
+    "tests/test_li_v3_custody_review.py": "6d49955ff2850484bdf8e47af061fa7649ba016a739467cbd0799379913e0151",
+    "docs/li-v3-custody-plan.md": "0be13b0ed7dd7bc41b9c430d4f7d30f8efa0ead54a85d162f31c728eb928a241",
+    "reports/li-v3-source-inventory.json": "ef4d3de4deb08b3903230a7456fb50de689e49265868d78f0c73faab4461f9ba",
+    "scripts/li_v3_zip_diagnostic.py": "de7807a8721cc243a9acf71e01c80aa531454248b2cde92c5518f875e89e0d87",
+    "tests/test_li_v3_zip_diagnostic.py": "d94c59c55aebb793d7285c3ac748f2f0ad76770346d6a14cff2e53aeaace3c77",
+    "tests/test_li_v3_zip_diagnostic_review.py": "0c3609f46cd244abe64dfdb1fa32e829bc0a16316539a2aea276b061df5413e3",
+    "docs/li-v3-zip-diagnostic-plan.md": "e3726819a1c4a133f90ba28a2bfa0bd7ed8e52454f21a61275bfbc8f76dcf6f1",
+    "scripts/li_v3_flag_diagnostic.py": "c08c295dae15ae1f5125510076f75ce2cc6ed58f54ef5ff06861a1759dbfabc5",
+    "tests/test_li_v3_flag_diagnostic.py": "ebe198fba3d0371e5fc6b7fe013e55734f30f7ebd75fe6f4c47fe78c11c401d4",
+    "tests/test_li_v3_flag_diagnostic_review.py": "fdc18fd0016e0fde210716e619e5f688652fb76d226f909a1b8608f76aeae4d5",
+    "docs/li-v3-flag-diagnostic-plan.md": "dd36f011deb04d8141178ea0ead75e7a02fb588f6573cac5332410fb63173f46"
+  },
+  "scope": "synthetic independent review; no actual custody object or receipt"
+}

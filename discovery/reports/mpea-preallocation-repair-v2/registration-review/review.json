@@ -1,0 +1,34 @@
+{
+  "executed_tests": 3,
+  "findings": [
+    "Require v2 exclusively in current code; preserve immutable v1 tag and original checkout. Annotation schema remains v1 because its closed shape is unchanged.",
+    "PROTOCOL, source-ledger key and development salt remain unchanged. Any existing attempt marker blocks changed registration before provider, including interrupted first attempt.",
+    "Both new amendment and operational-stop evidence must be in mandatory manifest and genuine pre/post test capture. Historical publication-v1 remains mandatory and unchanged.",
+    "Recorder additionally strengthens committed HEAD/index/working parity, positive test count, and unchanged commit checks. This is more than only output-path changes; no gate weakening found. Capture helper delta is exactly the two closure paths."
+  ],
+  "hashes": {
+    ".cache/mpea-preallocation-recovery-review-v2/candidate/mpea_public_tag_review_fixture.py": "cebfab41c1e39ab5a24ef607b6dd132eb4ff43599b849f068d857f7768e844ed",
+    ".cache/mpea-preallocation-recovery-review-v2/candidate/proposed_registration.py": "914995ff8f857d52d4367360078e3646f66c169bb9b295572301c3c43196691c",
+    ".cache/mpea-preallocation-recovery-review-v2/candidate/test_mpea_registration_allocation_review.py": "c39ac600a252998c508eac418a01da4942983e6bcafbad37e47ad7041104b20b",
+    ".cache/mpea-preallocation-recovery-review-v2/candidate/test_recovery_v2.py": "bc47dcfaf4ee24ce7e27222218e69eb96f7deb9eb65b9afbec49223ad3e916b0",
+    ".cache/mpea-preallocation-recovery-review-v2/promotion/mpea_public_tag_review_fixture.py": "cebfab41c1e39ab5a24ef607b6dd132eb4ff43599b849f068d857f7768e844ed",
+    ".cache/mpea-preallocation-recovery-review-v2/promotion/test_mpea_registration_allocation_review.py": "08f952bca1881e79d4c3d9b75aee8a8a533429f9bb41e586e88fffdf4a4c6073",
+    ".cache/mpea-preallocation-recovery-review-v2/tests.log": "73629cd4fa0780ee01e4db06b6a3bec2c1cf11dc0c2a50afed49e725991dacf7",
+    ".cache/mpea-registration-allocation/capture-runbook/prepare_capture_v2.py": "96f112f293df30833a6f6c3ad38ac1539633b42197eaac08e94f9a08f4565460",
+    ".cache/run-preallocation-recovery-full-suite-v1.py": "9a8f169c1f0a9b2a01ec72036d5e9b4efe10dca19202353f3f3c42b0a5e78df2",
+    "scripts/mpea_registration_allocation.py": "d4a11c4c2b941e45d4079129583efc7bcf5ecfed551de137aae02f3f49a3146d"
+  },
+  "log": "test_changed_registration_preserves_failed_first_attempt (test_recovery_v2.Recovery.test_changed_registration_preserves_failed_first_attempt) ... ok\ntest_each_new_closure_entry_mandatory (test_recovery_v2.Recovery.test_each_new_closure_entry_mandatory) ... ok\ntest_exact_v2_accepts_v1_rejects (test_recovery_v2.Recovery.test_exact_v2_accepts_v1_rejects) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 0.110s\n\nOK\n",
+  "pending": [
+    "Actual narrow metadata seal-fix source review and final integrated gates/tests against final source.",
+    "Full genuine committed-source suite, exact four CI jobs, trusted engineering approval, v2 public tag authentication before any allocation."
+  ],
+  "prohibitions": [
+    "No v1-or-v2 fallback",
+    "No new PROTOCOL or tag-based ledger namespace",
+    "No deleting registry marker",
+    "No altered original reproduction allocation bytes"
+  ],
+  "scope": "Source-only strategy review plus three executed constructed tests on explicitly proposed scratch gates; not final producer approval, actual capture or study authorization.",
+  "status": "CONDITIONAL_NO_BLOCKER"
+}

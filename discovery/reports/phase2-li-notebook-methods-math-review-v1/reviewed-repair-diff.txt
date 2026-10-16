@@ -1,0 +1,44 @@
+--- initial70eb1dd8
++++ reviewed5021605e
+@@ -54,8 +54,8 @@
+               'sort', 'suffixes', 'copy', 'indicator', 'validate'),
+     'join': ('other', 'on', 'how', 'lsuffix', 'rsuffix', 'sort', 'validate'),
+ }
+-# Only read_excel's first two and split's first three positions have reviewed meanings;
+-# all other positional arguments are presence-only, avoiding version/signature guesses.
++# Only a bounded number of syntactic positions are exposed for these names.
++# Position labels intentionally do not infer parameter meaning or runtime signatures.
+ POSITIONAL = {'read_excel': ('position_1', 'position_2'),
+               'split': ('position_1', 'position_2', 'position_3')}
+ ERRORS = frozenset({'JSON_INVALID', 'NOTEBOOK_PROFILE_UNSUPPORTED', 'CODE_SYNTAX_UNSUPPORTED',
+@@ -198,7 +198,7 @@
+                     unknown_calls = True
+                 else:
+                     calls[custody.canonical(item)] = item
+-    report['exposure']['code_ast_parse_completed'] = True
++    report['exposure']['code_ast_parse_completed'] = report['exposure']['code_ast_parse_started']
+     report['inventory'] = {'known_import_categories': sorted(imports),
+                            'unreported_imports_present': unknown_imports,
+                            'syntactic_calls': [calls[key] for key in sorted(calls)],
+@@ -210,9 +210,11 @@
+ def inspect_synthetic_notebook(raw):
+     report = _base(True)
+     try:
+-        if type(raw) is bytes and _blob(raw) == BLOB:
++        if type(raw) is not bytes or len(raw) > 512 * 1024:
++            raise MethodsError('STATIC_LIMIT')
++        report['exposure']['target_bearing_source_bytes_read'] = True
++        if _blob(raw) == BLOB:
+             raise custody.CustodyError('SYNTHETIC_REAL_SOURCE_FORBIDDEN')
+-        report['exposure']['target_bearing_source_bytes_read'] = type(raw) is bytes
+         _inspect(raw, report)
+     except (MethodsError, custody.CustodyError) as exc:
+         report['engineering_status'] = 'BLOCKED_STATIC_PROFILE'
+@@ -288,6 +290,7 @@
+         if (not re.fullmatch('[0-9a-f]{40}', producer['commit'])
+                 or producer != dict(identity, commit=producer['commit'])
+                 or not re.fullmatch('[0-9a-f]{64}', source['sha256'])
++                or type(source['bytes']) is not int
+                 or source != {'repository': 'avakanski/Subsized-Specimens-Tensile-Properties',
+                               'commit': COMMIT, 'path': 'Sample_Code.ipynb', 'git_blob_sha1': BLOB,
+                               'bytes': SOURCE_BYTES, 'sha256': source['sha256']}

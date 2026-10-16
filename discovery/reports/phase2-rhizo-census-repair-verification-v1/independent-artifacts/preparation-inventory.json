@@ -1,0 +1,49 @@
+{
+  "actual_audit_runs": 0,
+  "excluded": [
+    "__pycache__/ syntax-check bytecode"
+  ],
+  "files": [
+    {
+      "bytes": 22151,
+      "path": "predecessor-audit_retained.py",
+      "sha256": "b6566a01f8704699174dbdaaacb4a51182e58bf1e346bf249375c534ac1728db"
+    },
+    {
+      "bytes": 22105,
+      "path": "audit_retained.py",
+      "sha256": "1813a9a94d7d4b9b17ec788703d433072a827480a1fc8a6d1f0c348890539a84"
+    },
+    {
+      "bytes": 804,
+      "path": "prepared-scope.json",
+      "sha256": "3197d9169f1a48bb39ac1e3ad3282b5764ce79e0f6683c9a46732be55ee5e752"
+    },
+    {
+      "bytes": 364,
+      "path": "prepared-promotion-inputs.json",
+      "sha256": "46a62f36494deac815f9470d6657fc93782ec1c9434378ecd0700d31d8e416c4"
+    },
+    {
+      "bytes": 1392,
+      "path": "preparation.json",
+      "sha256": "75820e2f9f4f981c07600cf7edd6eba99392b35fd3b0ae3af0b3cebcb1bbc1c1"
+    },
+    {
+      "bytes": 10283,
+      "path": "preparation-delta.diff",
+      "sha256": "b0e340990904afc9c1f9415ccfa1384e37e7017a416ff19966e4f924a642e6d9"
+    },
+    {
+      "bytes": 455,
+      "path": "syntax-only.json",
+      "sha256": "c574720f5eb1264b28f28d77a6cb0fec97625f1f3db5012b8ae15e885eb39f38"
+    },
+    {
+      "bytes": 2354,
+      "path": "README.md",
+      "sha256": "2987d11b2c661431a0bc476b8cdb1b87db04aae631592e3705db8d01ad06bf50"
+    }
+  ],
+  "schema": "lupine.rhizo.census.repair-artifact-review.preparation-inventory.v1"
+}

@@ -1,0 +1,16 @@
+{
+  "excludes": [
+    "inventory.json"
+  ],
+  "files": {
+    "audit_publication.py": {
+      "bytes": 20751,
+      "sha256": "2a593cbdc29aa2db503f69647ea423c300ce94c84d8d3ad0db4a3f36b3b6abff"
+    },
+    "review.json": {
+      "bytes": 5980,
+      "sha256": "3b36ef04ad7ce2706271807a32dc087de6bdefa00e0a851243c376aee4d4b28d"
+    }
+  },
+  "scope": "Static review only; no auditor execution"
+}

@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    ".cache/mpea-registration-allocation/review/test_registration_allocation_review.py",
+    "-v"
+  ],
+  "elapsed_seconds": 0.34861229800299043,
+  "exit_code": 1,
+  "scope": "synthetic metadata and injected bytes only; no scientific source, public actual metadata allocation, or OS entropy",
+  "source_after": {
+    ".cache/mpea-registration-allocation/mpea_registration_allocation.py": "03e83cdca5c54f928d459bf896ffc09c7b03fac70b9cf8c4eb6fee71ea2ff810",
+    ".cache/mpea-registration-allocation/review/test_registration_allocation_review.py": "1336bd087ff7ffaa739b6e569225f2bb08934dc497c2c5dc13ca06c0148e52db",
+    "scripts/mpea_target_custody.py": "7f649dd50d7c5589fd9da0f9745b7936b7a3a2bf631a8418affae4a67be1ee9c",
+    "scripts/permutation_allocation.py": "a7f454b4541f75603019bf73091c97190ea6f618efa52988c3065971273405e5"
+  },
+  "source_before": {
+    ".cache/mpea-registration-allocation/mpea_registration_allocation.py": "03e83cdca5c54f928d459bf896ffc09c7b03fac70b9cf8c4eb6fee71ea2ff810",
+    ".cache/mpea-registration-allocation/review/test_registration_allocation_review.py": "1336bd087ff7ffaa739b6e569225f2bb08934dc497c2c5dc13ca06c0148e52db",
+    "scripts/mpea_target_custody.py": "7f649dd50d7c5589fd9da0f9745b7936b7a3a2bf631a8418affae4a67be1ee9c",
+    "scripts/permutation_allocation.py": "a7f454b4541f75603019bf73091c97190ea6f618efa52988c3065971273405e5"
+  },
+  "stderr_sha256": "1ab75f003bf01eb59abb886f1df56e21f0e7b0456efe16d897f90902685a43b3",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

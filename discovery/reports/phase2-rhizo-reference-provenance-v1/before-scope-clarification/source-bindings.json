@@ -1,0 +1,74 @@
+{
+  "schema": "lupine.rhizo.documentary-result-bindings.v1",
+  "created_at": "2026-10-16T11:52:28.190573+00:00",
+  "sources": [
+    {
+      "path": ".cache/phase2-rhizo-reference-projector-v1/actual/public.json",
+      "bytes": 59591,
+      "sha256": "c1d3083573e427bfec886a2b28ee26f84c5970a717171c0e0b5e381ca9087535",
+      "publication": "IDENTITY_REFERENCE_ONLY_UNLESS_SEPARATELY_COPIED"
+    },
+    {
+      "path": ".cache/phase2-rhizo-reference-projector-v1/actual/private.json",
+      "bytes": 32046,
+      "sha256": "8b19c9d47e3b33729417b3a8c09ecd4483929b697954246ee98ecf4e805d3a82",
+      "publication": "EXCLUDED_PRIVATE"
+    },
+    {
+      "path": ".cache/phase2-rhizo-reference-readiness-design-v1/README.md",
+      "bytes": 9723,
+      "sha256": "c3152108ac58cae50e815cf27bf3a73787a34a0360f33642b15a00a33e948a0a",
+      "publication": "IDENTITY_REFERENCE_ONLY_UNLESS_SEPARATELY_COPIED"
+    },
+    {
+      "path": ".cache/phase2-rhizo-reference-readiness-design-v1/reference-frame.json",
+      "bytes": 71649,
+      "sha256": "80a1aca0fd56d89f49ff5f0e4b3930405f11ae1cd4acea14b8edab2381940aa4",
+      "publication": "IDENTITY_REFERENCE_ONLY_UNLESS_SEPARATELY_COPIED"
+    },
+    {
+      "path": ".cache/phase2-rhizo-documentary-review-v1/RESEARCHER_CHECKLIST.md",
+      "bytes": 5058,
+      "sha256": "105e6567669af00e1085d2ee7c8dbaf8989e1ad574d57520175df714d9e16939",
+      "publication": "IDENTITY_REFERENCE_ONLY_UNLESS_SEPARATELY_COPIED"
+    }
+  ],
+  "report_artifacts": {
+    "README.md": {
+      "bytes": 7874,
+      "sha256": "66b2963a5da356ad660e6a08a88f4303ab3bc503cec307d33d0407a75933e38f"
+    },
+    "reference-provenance.csv": {
+      "bytes": 14358,
+      "sha256": "e72f2e3a567123f5ac5ffb31581787b5121f57e7c3a4b841c244a72827ff83f1"
+    },
+    "bibliography.json": {
+      "bytes": 3265,
+      "sha256": "2224e70b183485cc3e9fb1ccea1a554ec44fb1d18760c1812b36af7d742a3d64"
+    },
+    "exposure-ledger.json": {
+      "bytes": 1890,
+      "sha256": "42e8bcceefad8494371ab07b6ef364cff3e82e8da3d43eb0af8ed822f036938f"
+    },
+    "graph-check.json": {
+      "bytes": 717,
+      "sha256": "45807381c4914fdbb393eb7ff6d02158d94ad5b69d604809fa4a1df814f30921"
+    },
+    "original-reference-frame.json": {
+      "bytes": 71649,
+      "sha256": "80a1aca0fd56d89f49ff5f0e4b3930405f11ae1cd4acea14b8edab2381940aa4"
+    },
+    "actual-review-start.json": {
+      "bytes": 869,
+      "sha256": "d2f3a345b2c8a50477b692b6710070f50e34e2438aa22f3f0dc9bf64f4f42529"
+    },
+    "identity-review.json": {
+      "bytes": 1371,
+      "sha256": "96629c4e0588b8fe55d57e8368b64446f46f11cb5f201929b8b9633a8e800537"
+    }
+  },
+  "claim_scope": "Declared reference provenance and preserved graph only; no primary-source verification, numerical audit, scientific admission or new operation.",
+  "private_projection_published": false,
+  "raw_sources_read_by_researcher": false,
+  "convention_clarification": "Independent reviewer suggested an explicit H_vf/property-name caveat; original report/bindings preserved before-convention-clarification. No source or value comparison."
+}

@@ -1,0 +1,63 @@
+{
+  "files": {
+    "README.md": {
+      "bytes": 6953,
+      "sha256": "667a9bbf39dad6bb2e43bb49003301564d786f4db259eaf8b1c567823474b093"
+    },
+    "blob-check.json": {
+      "bytes": 448,
+      "sha256": "76a36d19e172b538981e30d3ff32410cecb7ff64523a2670408943ba156fe590"
+    },
+    "commit_ref/projection.json": {
+      "bytes": 319,
+      "sha256": "42db2918f0415590e8b73fe85b907ffd10fc1cba3b3de4f28399480fb96419a8"
+    },
+    "data_directory_metadata/projection.json": {
+      "bytes": 2622,
+      "sha256": "f0ae9dbf5001c52f82829b8a2fbfe07f4115a7654a8ef4f9b4925895791179af"
+    },
+    "exposure-ledger.json": {
+      "bytes": 1604,
+      "sha256": "c9fc3dc3c06e049176e2d06b654d178c6ecd7f06656234d501c1d8e1c1dbd6a5"
+    },
+    "license/response.body": {
+      "bytes": 1082,
+      "sha256": "a70905b4e682be470306a66e28d85b4f123f05233b73c2751fdde53dd0a6fbf9"
+    },
+    "paper_metadata/projection.json": {
+      "bytes": 1221,
+      "sha256": "ba83402e49eec24cb203f1be165f600847732975ed846d41337d0c3bf82e0df0"
+    },
+    "readme/documentary-constants.json": {
+      "bytes": 1066,
+      "sha256": "6afe0fbaf4ea175f102177c2ab6eec18b9d42511f0fa32cc6defa7ad060a8ab9"
+    },
+    "readme/layout-projection.json": {
+      "bytes": 1840,
+      "sha256": "24b8be5ec71954bdd91987e20212cfdfe3dc7c9f3bc0fb50a7f32d6704ab873e"
+    },
+    "readme/projection.json": {
+      "bytes": 8967,
+      "sha256": "5ccfed40add395da6bd9f473e6d770e670c58875a784949941ae8c91d6602775"
+    },
+    "root_contents/projection.json": {
+      "bytes": 1168,
+      "sha256": "4f7500d2d01d33fb996a5054e23c6c487e512d30ec89ffba2089f2b2480b4669"
+    },
+    "selected-findings.json": {
+      "bytes": 2455,
+      "sha256": "e6856957f911cec043a2d8d399af46f6e75c384ded396f2b700a32208b180631"
+    },
+    "source-bindings.json": {
+      "bytes": 3836,
+      "sha256": "d8a6b3c60c8cbbb551659af767ec1d9203e5a2e3fa0329086cc224c5dfa8f1f6"
+    }
+  },
+  "network_or_source_operations": 0,
+  "raw_metadata_or_full_paper_read": false,
+  "raw_readme_or_numerical_record_read": false,
+  "readme_blob_match_scope": "Author retained receipt and projection linkage only; raw README not reread by reviewer.",
+  "reviewer_recomputed_license_git_blob_sha1": "93c7b0cfe77ee705d1c0d91cefac1563921a8f65",
+  "schema": "lupine.tmqm.documentary-independent-bindings.v1",
+  "source_directory": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-primary-github-source-survey-v1"
+}

@@ -1,0 +1,16 @@
+{
+  "claims": "Transport denial only; no scientific/file-manifest evidence obtained.",
+  "prior_identity": {
+    "path": "../phase2-independent-source-survey-v1/qm9/datacite_identity/projection.json",
+    "role": "Exact registry-declared collection landing URL and collection DOI; not file identity.",
+    "sha256": "63a2d078526a680d2a26ff17c181a9542e5d3af6652af0f48a31c96577bc011e"
+  },
+  "response": {
+    "bytes": 118,
+    "raw_body_public": false,
+    "receipt": "landing/receipt.json",
+    "sha256": "58bf2215b395dcac74c009aa98701854e43cbe54a1cd3a95fee6a647ca9910d4",
+    "status": 403,
+    "url": "https://springernature.figshare.com/collections/Quantum_chemistry_structures_and_properties_of_134_kilo_molecules/978904/4"
+  }
+}

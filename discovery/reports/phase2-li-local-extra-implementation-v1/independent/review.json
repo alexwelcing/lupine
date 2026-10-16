@@ -1,0 +1,92 @@
+{
+  "schema": "lupine.discovery.independent_local_extra_review.v1",
+  "reviewer": "/root/phase2_planner/ui_review",
+  "finished_utc": "2026-10-16T09:16:20.838252+00:00",
+  "status": "PASS",
+  "blockers": [],
+  "scope": "Independent source/contract review and synthetic engineering checks only",
+  "bindings": {
+    "implementation": {
+      "path": ".cache/phase2-li-local-extra-candidate-v1/promotion/scripts/li_v3_local_extra_headers.py",
+      "bytes": 11921,
+      "sha256": "54db58a567afc9211303f2edff13541ab2f97beb77ef2edaa518ad32bf6b1026"
+    },
+    "contract": {
+      "path": ".cache/phase2-li-local-extra-candidate-v1/promotion/docs/li-v3-local-extra-headers-plan.md",
+      "bytes": 8495,
+      "sha256": "1247430dfe174bb1d7dd2e17ca06b5781ef41fadd7cb13d60d6d01e202dbb594"
+    },
+    "design": {
+      "path": ".cache/phase2-li-local-extra-design-v1/README.md",
+      "bytes": 13418,
+      "sha256": "42f84bca7035b17f8e032110aedeb48845bb47169b147fe99310ce78d577d00d"
+    },
+    "final_test": {
+      "path": "promotion/tests/test_li_v3_local_extra_headers_review.py",
+      "bytes": 40327,
+      "sha256": "24e54f7674a116a043aecaf3e5b396aba3139eb1739998f45ab5149c82b5602b"
+    },
+    "first_execution": {
+      "path": "first-run/execution.json",
+      "bytes": 1844,
+      "sha256": "a635c882c1796c464af192aaa020292fa8dbb52f40516f53052afb9c0add66f7"
+    },
+    "final_execution": {
+      "path": "final-run/execution.json",
+      "bytes": 1844,
+      "sha256": "f4b8b89bd55a06b8c34ccb7cea043a1cc75ada7f00214e5d28dafd65c1d9a6ef"
+    },
+    "runner": {
+      "path": "run_review.py",
+      "bytes": 2972,
+      "sha256": "3314fa1be38112cc592f82a54769d28cc02b9aface0717382e1de9bab68739c1"
+    }
+  },
+  "first_run": {
+    "tests": 30,
+    "passed": 29,
+    "failures": 1,
+    "exit_code": 1,
+    "classification": "REVIEWER_EXPECTATION_ERROR",
+    "reason": "Expected overlong 65535-character filename acceptance despite unchanged predecessor 256-character limit",
+    "product_change_required": false,
+    "preserved": "first-run/"
+  },
+  "final_run": {
+    "tests": 30,
+    "failures": 0,
+    "errors": 0,
+    "exit_code": 0,
+    "unittest_seconds": 0.105,
+    "process_seconds": 0.4561559440007841,
+    "held_unchanged": true
+  },
+  "coverage": {
+    "public_predecessor_pins": 21,
+    "permitted_method_flag_pairs": 10,
+    "maximum_members": 128,
+    "record_limit": 256,
+    "extra_span_limit": 65535,
+    "first_and_middle_entries": true,
+    "opaque_payload_and_name_invariance": true,
+    "complete_or_null_projection": true,
+    "no_257th_header_read": true,
+    "prohibited_payload_xml_network_apis": true,
+    "source_and_prerequisite_stubs": true,
+    "partial_read_write_close_exposure": true,
+    "explicit_close_gc_stderr_and_unraisable_capture": true
+  },
+  "limits": {
+    "author_fixture_imported_or_read": false,
+    "actual_source_or_capture_read": false,
+    "actual_precursor_receipt_read": false,
+    "network_used": false,
+    "production_custody_io": false,
+    "git_invoked": false,
+    "broader_package_or_ci_validation": false,
+    "scientific_claim_changed": false,
+    "actual_field_inventory_established": false,
+    "formal_total_program_equivalence_established": false
+  },
+  "next_action": "Root may integrate exact held files, then independently run combined checks, publication/CI and retained package gates; no actual source operation is authorized by this review alone."
+}

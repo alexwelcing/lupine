@@ -1,0 +1,50 @@
+{
+  "schema": "lupine.engineering.growth_hint_provisional_source_review.v1",
+  "reviewer": "/root/phase2_planner",
+  "recorded_utc": "2026-10-16T09:46:02.082589+00:00",
+  "status": "NO_PROVISIONAL_BLOCKER_WAITING_AUTHOR_FREEZE",
+  "source": {
+    "path": ".cache/phase2-growth-hint-candidate-v1/promotion/scripts/li_v3_growth_hint_shape.py",
+    "sha256": "c42313ddc1d6c64e6d9c18338bc3efc9bacc65e7ff7f8281e1da28870e74d7cb"
+  },
+  "standard": {
+    "path": ".cache/phase2-li-flags-next-v1/APPNOTE.TXT",
+    "bytes": 174585,
+    "sha256": "0b993022a7d320a0bf704e6980bea36fafd17a6066ab994db0a0c16278a50cd6",
+    "read_line_ranges": [
+      [
+        348,
+        351
+      ],
+      [
+        654,
+        655
+      ],
+      [
+        1615,
+        1635
+      ],
+      [
+        1820,
+        1828
+      ]
+    ]
+  },
+  "argument": [
+    "APPNOTE4.6.10 lists two fixed unsigned little-endian short fields followed by NUL padding; length>=4 is derived from that declared shape.",
+    "Signature0xA028 is checked before scanning padding; no equality between withheld PadVal and remaining length follows from the retained clause.",
+    "Exactly one outer0xA220 record is a narrow engineering policy, not a normative duplicate rule or an assertion about an actual Li field.",
+    "New locator is reached only after unchanged G29 complete synthetic header result; boundedspanmustmatch4+declaredlength; fixedwordsrequirelength>=4.",
+    "The loop visits the full bounded remainder even after a nonzero byte and distinguishes scan completion from shape success.",
+    "Output removes field headers and publishes closed booleans/enums; PadVal is decoded but not returned and semanticsstayUNBOUND.",
+    "No own production_context,diagnose,main/CLI or actualreceipt binding exists; productionprerequisiteisNone and reportstatusUNBOUND.",
+    "Original and new partial exposure are retained on second-locator, unpack and scan failures; currentgenericpayloadflagisconservativeatinterpretationstart."
+  ],
+  "precision_note": "Contract should describe local_extra_payload_interpreted=True as conservative interpretation-start exposure; fixed_words/completed flags carry completion precision. Author notified; no code change requested.",
+  "limits": [
+    "Candidate not held yet; this is not final approval or an executed test claim.",
+    "No production guard,actualarchive,capture,prerequisite,scientificoutcome or network was read/invoked.",
+    "Only public code and retained public standard were read; no fulltext copied into this review.",
+    "No normative padding-history,producerauthentication,duplicatebehavior,wholearchiveacceptance or scientificresult inferred."
+  ]
+}

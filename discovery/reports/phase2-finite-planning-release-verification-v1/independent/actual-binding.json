@@ -1,0 +1,127 @@
+{
+  "actual_artifact_audit_runs_before_binding": 0,
+  "ci_success_established": false,
+  "head_exact": true,
+  "inputs": [
+    {
+      "bytes": 157427,
+      "path": ".cache/phase2-li-complete-readiness-operations-v1/package-88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/package-execution.json",
+      "sha256": "c39271caa4e35027e78471a39c2f6ce4e062d89db93106b63edc72f73ce65d8e",
+      "snapshot": "inputs/package/package-execution.json"
+    },
+    {
+      "bytes": 1307,
+      "path": ".cache/phase2-li-complete-readiness-operations-v1/package-88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/package-stdout.txt",
+      "sha256": "f2c0d25b6ddff3c70e3bb273964e322b260f35aebcad70fbd8277f9d0a747b5c",
+      "snapshot": "inputs/package/package-stdout.txt"
+    },
+    {
+      "bytes": 0,
+      "path": ".cache/phase2-li-complete-readiness-operations-v1/package-88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/package-stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "snapshot": "inputs/package/package-stderr.txt"
+    },
+    {
+      "bytes": 157302,
+      "path": ".cache/phase2-li-complete-readiness-operations-v1/package-88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/strict-execution.json",
+      "sha256": "18fa62ccf79c006eb93459ccb10b219673b0ea260e59fbc20a6df76c8588d04e",
+      "snapshot": "inputs/package/strict-execution.json"
+    },
+    {
+      "bytes": 3746,
+      "path": ".cache/phase2-li-complete-readiness-operations-v1/package-88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/strict-stdout.txt",
+      "sha256": "57c7561e2c686f822f7534e3d2584ac3a42f6ab0689716569c3374b2a73cd225",
+      "snapshot": "inputs/package/strict-stdout.txt"
+    },
+    {
+      "bytes": 0,
+      "path": ".cache/phase2-li-complete-readiness-operations-v1/package-88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/strict-stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "snapshot": "inputs/package/strict-stderr.txt"
+    },
+    {
+      "bytes": 8126,
+      "path": ".cache/phase2-li-complete-readiness-operations-v1/package-88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/package-verification.json",
+      "sha256": "2680b8a1c4a4d9c9e120912aad6210c34abd0ccb5c4ff39332add8d824a4aad7",
+      "snapshot": "inputs/package/package-verification.json"
+    },
+    {
+      "bytes": 138,
+      "path": ".cache/phase2-li-complete-readiness-operations-v1/package-88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/final.json",
+      "sha256": "13dec0970d61f147dcafac7934d2a998e22aa7cb2fa0c1a2b4850e4925c83e7a",
+      "snapshot": "inputs/package/final.json"
+    },
+    {
+      "bytes": 8107,
+      "path": ".cache/phase2-li-complete-readiness-operations-v1/package-88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/retained/release-artifacts.json",
+      "sha256": "37fe56f103a9ade5220c25ef1ab3ba72b7aab3f7ca3b7008e63493d0f8e693f2",
+      "snapshot": "inputs/retained/release-artifacts.json"
+    },
+    {
+      "bytes": 909,
+      "path": ".cache/phase2-finite-planning-release-observer-v1/runs/package-88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/completion-packet.json",
+      "sha256": "3489f79af6ec44ef8db590fbcadd46c7b1931a6695aca40935d9909fd2b3b5c9",
+      "snapshot": "inputs/outer/completion-packet.json"
+    },
+    {
+      "bytes": 1026,
+      "path": ".cache/phase2-finite-planning-release-observer-v1/runs/package-88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/execution.json",
+      "sha256": "695c6471d34ef16fe46ae9b2b40655e373448dd71752033656b9bff2ec543b9f",
+      "snapshot": "inputs/outer/execution.json"
+    },
+    {
+      "bytes": 138,
+      "path": ".cache/phase2-finite-planning-release-observer-v1/runs/package-88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/persisted-final.json",
+      "sha256": "13dec0970d61f147dcafac7934d2a998e22aa7cb2fa0c1a2b4850e4925c83e7a",
+      "snapshot": "inputs/outer/persisted-final.json"
+    },
+    {
+      "bytes": 0,
+      "path": ".cache/phase2-finite-planning-release-observer-v1/runs/package-88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "snapshot": "inputs/outer/stderr.bin"
+    },
+    {
+      "bytes": 138,
+      "path": ".cache/phase2-finite-planning-release-observer-v1/runs/package-88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/stdout.bin",
+      "sha256": "13dec0970d61f147dcafac7934d2a998e22aa7cb2fa0c1a2b4850e4925c83e7a",
+      "snapshot": "inputs/outer/stdout.bin"
+    },
+    {
+      "bytes": 40238,
+      "path": ".cache/phase2-finite-planning-release-observer-v1/runs/package-88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/before-state.json",
+      "sha256": "399fdac60ce5532347aac9bcb5d923aa65cb4f92a1eac934ffb041b25c32a326",
+      "snapshot": "inputs/outer/before-state.json"
+    },
+    {
+      "bytes": 40238,
+      "path": ".cache/phase2-finite-planning-release-observer-v1/runs/package-88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/after-state.json",
+      "sha256": "399fdac60ce5532347aac9bcb5d923aa65cb4f92a1eac934ffb041b25c32a326",
+      "snapshot": "inputs/outer/after-state.json"
+    },
+    {
+      "bytes": 503,
+      "path": ".cache/phase2-finite-planning-release-observer-v1/root-observed-package.json",
+      "sha256": "b71dea2a002b040ef108594092ac584095a86a3eb0c4d7278648a31132068704",
+      "snapshot": "inputs/outer/root-observed-package.json"
+    },
+    {
+      "bytes": 863,
+      "path": ".cache/phase2-finite-planning-release-observer-v1/bindings-package.json",
+      "sha256": "cb1b30365b7fa4281355d819f8f29ec5b7ca0005dd7be59383a221a7013b4da8",
+      "snapshot": "inputs/outer/bindings-package.json"
+    }
+  ],
+  "outer_observed_exit_code": 0,
+  "package_exit_code": 0,
+  "published_commit": "88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d",
+  "retained_directory": ".cache/phase2-li-complete-readiness-operations-v1/package-88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/retained",
+  "reuse_plan_sha256": "046459ec8876056f841b6fb5c1db9e3a764c9423a754d5442d982444c1b496bc",
+  "runtime_manifest_sha256": "6bfd99aa4b3fdf254038570fc9e40cbb574a1fbbe587c943cdf909359c456a5f",
+  "schema": "lupine.finite-planning.independent-artifact-actual-binding.v1",
+  "scientific_admission": false,
+  "source_sha256": "b00541daccbbe8626880f59bc59d9694dc9f34e922690f968dfb50ed348bb738",
+  "strict_exit_code": 0,
+  "validation_sha256": "40e51f38f4aa49ffe8dc11a9a882820df86a687dfd8d67ccf4c9a8a9b711c36e",
+  "worktree_clean": true
+}

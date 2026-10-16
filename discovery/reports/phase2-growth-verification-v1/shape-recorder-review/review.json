@@ -1,0 +1,77 @@
+{
+  "actual_private_input_read": false,
+  "actual_recorder_invoked": false,
+  "blocking_findings": [],
+  "checks": [
+    "Three complete reason projections admitted with exact reason/shape/exposure consistency.",
+    "Strict booleans, observed-byte type, identity, closed keys, null scientific counts, forbidden XML/member/fit exposure and cleanup drift rejected.",
+    "Noncanonical/duplicate JSON and unexpected failure reasons rejected.",
+    "Persisted report/stdout disagreement retained and stopped.",
+    "Post-command gate-byte drift retained complete public result but stopped continuation.",
+    "Unexpected diagnostic failure stops main before second command.",
+    "Complete fixed negative report may repeat exactly; science remains blocked.",
+    "Unbound commit stops before preflight or any command."
+  ],
+  "extraction_scope": [
+    "Stop",
+    "require",
+    "now",
+    "digest",
+    "validate_report",
+    "run_command",
+    "Parser",
+    "main"
+  ],
+  "final_execution": {
+    "bytes": 3378,
+    "path": ".cache/phase2-growth-shape-recorder-review-v1/second-run/execution.json",
+    "sha256": "c24993432db6c6f3338bbc856782ebc8950623ac7145c447877dc9b545f3cd91"
+  },
+  "final_process_seconds": 0.6527329700002156,
+  "final_tests": 9,
+  "final_unittest_seconds": 0.207,
+  "first_execution": {
+    "bytes": 3376,
+    "path": ".cache/phase2-growth-shape-recorder-review-v1/first-run/execution.json",
+    "sha256": "aa9dfc867aa4d5e28e98adc1e25887f924ada8ec0cb02898916af6bc840d18e7"
+  },
+  "first_result": {
+    "cause": "Reviewer fixture omitted completed mock raw-read flags; validator correctly rejected before intended check.",
+    "errors": 1,
+    "failures": 3,
+    "tests": 9
+  },
+  "fixture_correction": {
+    "bytes": 532,
+    "path": ".cache/phase2-growth-shape-recorder-review-v1/fixture-correction.json",
+    "sha256": "28fd6622bde12ea69333b46b0f8607b5f8982c0434078f951af45c1edc6a11ae"
+  },
+  "limits": [
+    "The test runner itself is an ordinary local Python process; extracted run_command uses a mocked Popen and generated fixture reports.",
+    "CI/package/remote/source preflight attestation is not established by mocks. Root must bind the actual published commit and satisfy gates before invocation.",
+    "This review is independent of recorder authorship; reviewer authored G30 and this is not independent evidence of G30 correctness.",
+    "A canonical accepted report is a bounded source/exposure projection, not scientific truth, archive admission or sampling independence."
+  ],
+  "network_access": false,
+  "next_action": "Root may bind only the final exact source commit, retaining this unbound source; rebind any changed code before actual operations.",
+  "real_child_process_from_helpers": false,
+  "real_production_guard_invoked": false,
+  "reviewed_source": {
+    "bytes": 18674,
+    "path": ".cache/phase2-growth-shape-operations-v1/run_after_ci.py",
+    "sha256": "c0e5e38f4669cd339002defd7c563afec6ea931525b4faad625c05fdd4af555d"
+  },
+  "schema": "lupine.discovery.growth_shape_recorder_review.v1",
+  "static_observations": [
+    "Exact CI branch/remote/source checks remain in state; source itself was read-only reviewed, not invoked.",
+    "Whole-group timeout/lifecycle and post-state/gate/script binding flow are inherited; no real subprocess used by tests.",
+    "Capture identity has only fixed strings/maps; equality cannot admit float/bool substitutions in that identity. Observed bytes has an explicit exact-int check.",
+    "The complete-operation validator rejects partial/error reports; those are retained in stdout/receipts and do not silently trigger run2."
+  ],
+  "test": {
+    "bytes": 14974,
+    "path": ".cache/phase2-growth-shape-recorder-review-v1/test_recorder.py",
+    "sha256": "52df140dc2a185c25860d2b72ae56d263e3cf1013b64fa27b51c58141cd72c94"
+  },
+  "verdict": "PASS_WITH_PRESERVED_REVIEW_FIXTURE_FAILURE"
+}

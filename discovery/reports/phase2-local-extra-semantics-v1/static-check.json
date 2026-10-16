@@ -1,0 +1,128 @@
+{
+  "first_failure_retained": "static-check-first-failure.json",
+  "line_spans": [
+    {
+      "bounded_in_retained_body": true,
+      "end_line": 319,
+      "section": "4.1.10\u20134.1.11",
+      "start_line": 308
+    },
+    {
+      "bounded_in_retained_body": true,
+      "end_line": 351,
+      "section": "4.3.3",
+      "start_line": 348
+    },
+    {
+      "bounded_in_retained_body": true,
+      "end_line": 438,
+      "section": "4.3.7\u20134.3.9.2",
+      "start_line": 387
+    },
+    {
+      "bounded_in_retained_body": true,
+      "end_line": 655,
+      "section": "4.4.1.1",
+      "start_line": 654
+    },
+    {
+      "bounded_in_retained_body": true,
+      "end_line": 946,
+      "section": "4.4.8\u20134.4.12",
+      "start_line": 919
+    },
+    {
+      "bounded_in_retained_body": true,
+      "end_line": 988,
+      "section": "4.4.16",
+      "start_line": 981
+    },
+    {
+      "bounded_in_retained_body": true,
+      "end_line": 1145,
+      "section": "4.4.28\u20134.5.2",
+      "start_line": 1082
+    },
+    {
+      "bounded_in_retained_body": true,
+      "end_line": 1180,
+      "section": "4.5.3",
+      "start_line": 1148
+    },
+    {
+      "bounded_in_retained_body": true,
+      "end_line": 1236,
+      "section": "4.5.5",
+      "start_line": 1204
+    },
+    {
+      "bounded_in_retained_body": true,
+      "end_line": 1635,
+      "section": "4.6.1\u20134.6.3",
+      "start_line": 1565
+    },
+    {
+      "bounded_in_retained_body": true,
+      "end_line": 1775,
+      "section": "4.6.8",
+      "start_line": 1736
+    },
+    {
+      "bounded_in_retained_body": true,
+      "end_line": 1817,
+      "section": "4.6.9",
+      "start_line": 1778
+    },
+    {
+      "bounded_in_retained_body": true,
+      "end_line": 1828,
+      "section": "4.6.10",
+      "start_line": 1820
+    },
+    {
+      "bounded_in_retained_body": true,
+      "end_line": 1853,
+      "section": "4.6.11",
+      "start_line": 1830
+    },
+    {
+      "bounded_in_retained_body": true,
+      "end_line": 1879,
+      "section": "4.7",
+      "start_line": 1857
+    },
+    {
+      "bounded_in_retained_body": true,
+      "end_line": 3744,
+      "section": "Appendix D.2\u2013D.5",
+      "start_line": 3716
+    },
+    {
+      "bounded_in_retained_body": true,
+      "end_line": 3798,
+      "section": "Appendix E.3\u2013E.6.2",
+      "start_line": 3781
+    }
+  ],
+  "schema": "lupine.discovery.source_only_static_check.v1",
+  "scope": "Static retained-byte identity and line bounds only; not executable archive validation or proof that every interpretive claim is correct.",
+  "sources": [
+    {
+      "bytes_and_sha256_match": true,
+      "path": ".cache/phase2-li-flags-next-v1/APPNOTE.TXT"
+    },
+    {
+      "bytes_and_sha256_match": true,
+      "path": ".cache/phase2-li-flags-next-v1/appnote-retrieval.json"
+    },
+    {
+      "bytes_and_sha256_match": true,
+      "path": ".cache/phase2-li-local-extra-design-v1/README.md"
+    },
+    {
+      "bytes_and_sha256_match": true,
+      "path": ".cache/phase2-li-local-extra-design-v1/source-bindings.json"
+    }
+  ],
+  "status": "BOUND_SOURCE_IDENTITIES_AND_CITATION_RANGES_CHECKED"
+}

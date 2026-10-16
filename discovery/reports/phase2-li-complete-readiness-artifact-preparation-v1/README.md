@@ -1,0 +1,11 @@
+# Prepared independent additive Li artifact audit
+
+The auditor is prepared and syntax-compiled only. **No Li retained-artifact audit has run.** Root must supply an exact published commit, retained directory, final public copyset and completed package/generic-verifier gates while holding the release source clean before invocation.
+
+The baseline is `ddd4a6a8df0f908a162b7e5387b0faac325180d6`. The sole permitted runtime delta is six new Python files; all 339 existing runtime files must remain identical and runtime membership must total 345. Two new guarded Markdown documents are also pinned. The authoritative eight-path author copyset has SHA `b3b065ade262319238108efd0b6b296cc7ff947cb3c4c4eec8154d072db7559a`; all eight public promotion-overlay identities were checked during preparation without importing their contents.
+
+All 110 package payloads must remain identical to the baseline. The source archive is checked against every exact Git blob within the existing archive copyset. Runtime membership and current/baseline manifests are independently reconciled. The audit retains strict wheel member/RECORD checks, literal ordered 17 package receipt checks, and the fixed public census SHA. Every declared new Python/document source is checked against its prepared SHA.
+
+The successful prior repair auditor is preserved byte-for-byte. The preparation diff changes only the baseline, six-addition/no-existing-change contract, two pinned documents and report metadata needed by the operation recorder. The prospective report contract describes future fields; it is not a completed validation receipt. Syntax checking used Python compile without evaluation and produced no bytecode. No behavior tests were run for this preparation.
+
+The future actual audit will preserve its first result in an exclusive attempt directory. It will not extract or execute artifact code, tests, probes, census/readiness sources, the generic verifier or formal code, open private/raw scientific inputs, acquire sources, mutate Git or use the network. Root package results will be checked as retained receipts, not repeated. This artifact audit does not establish CI success, authorize an actual scientific operation or establish physical truth, training independence, scientific superiority or deterministic wheel reconstruction.

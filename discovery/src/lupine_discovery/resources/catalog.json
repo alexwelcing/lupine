@@ -1,0 +1,327 @@
+[
+  {
+    "id": "tied-optima",
+    "title": "Keep every tied optimum",
+    "description": "Distinct candidates can share the best feasible score.",
+    "kind": "synthetic_sound",
+    "has_outcomes": true,
+    "expected": {
+      "intervals_sound": true,
+      "true_minimizers": [
+        "A",
+        "B"
+      ],
+      "true_feasible_optimum": "1",
+      "retained": [
+        "A",
+        "B"
+      ],
+      "pool_size": 2,
+      "incumbent": "A",
+      "incumbent_regret": "0",
+      "regret_bound": "1",
+      "all_true_minimizers_retained": true
+    },
+    "oracle": "Hand enumeration: truth scores A=1, B=1, C=4, D=6. A and B tie for the minimum; inclusive lower-bound comparison retains B."
+  },
+  {
+    "id": "uncertified-optimum",
+    "title": "An optimum with uncertain feasibility",
+    "description": "A retained candidate can be better than the certified incumbent without certified feasibility.",
+    "kind": "synthetic_sound",
+    "has_outcomes": true,
+    "expected": {
+      "intervals_sound": true,
+      "true_minimizers": [
+        "uncertain"
+      ],
+      "retained": [
+        "anchor",
+        "uncertain"
+      ],
+      "pool_size": 2,
+      "incumbent": "anchor",
+      "regret_bound": "4",
+      "incumbent_regret": "4",
+      "regret_bound_holds": true,
+      "all_true_minimizers_retained": true
+    },
+    "oracle": "Hand enumeration: all three true slacks are -1 and true scores are 4, 0, 7. The uncertain-feasibility candidate is the unique optimum."
+  },
+  {
+    "id": "no-incumbent",
+    "title": "No certified incumbent",
+    "description": "When all remaining feasibility intervals cross zero, screening must preserve all possibilities.",
+    "kind": "synthetic_sound",
+    "has_outcomes": true,
+    "expected": {
+      "intervals_sound": true,
+      "true_minimizers": [
+        "A"
+      ],
+      "true_feasible_count": 2,
+      "retained": [
+        "A",
+        "B",
+        "C"
+      ],
+      "incumbent": null,
+      "regret_bound": null,
+      "incumbent_regret": null,
+      "all_true_minimizers_retained": true,
+      "certified_infeasible": [
+        "D"
+      ]
+    },
+    "oracle": "Hand enumeration: only A and C are feasible; their scores are 1 and 7. No constraint upper bound is nonpositive among possible candidates."
+  },
+  {
+    "id": "finite-infeasible",
+    "title": "An infeasible finite universe",
+    "description": "Every candidate violates at least one independently checked constraint.",
+    "kind": "synthetic_sound",
+    "has_outcomes": true,
+    "expected": {
+      "intervals_sound": true,
+      "true_minimizers": [],
+      "true_feasible_count": 0,
+      "true_feasible_optimum": null,
+      "retained": [],
+      "pool_size": 0,
+      "incumbent": null,
+      "all_true_minimizers_retained": null,
+      "certified_infeasible": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    "oracle": "Hand enumeration: A violates c1, B violates c2, C violates both. This proves infeasibility of these three candidates only."
+  },
+  {
+    "id": "tight-nonzero-regret",
+    "title": "A tight nonzero regret bound",
+    "description": "The best certified upper bound need not belong to the truly best candidate.",
+    "kind": "synthetic_sound",
+    "has_outcomes": true,
+    "expected": {
+      "intervals_sound": true,
+      "true_minimizers": [
+        "B"
+      ],
+      "retained": [
+        "A",
+        "B"
+      ],
+      "incumbent": "A",
+      "regret_bound": "2",
+      "incumbent_regret": "2",
+      "regret_bound_holds": true,
+      "all_true_minimizers_retained": true
+    },
+    "oracle": "Hand solution: min true score is B=0, incumbent A=2; actual regret 2 equals the conditional bound 2-0."
+  },
+  {
+    "id": "integer-design-grid",
+    "title": "Exhaustive integer design problem",
+    "description": "A constrained quadratic design objective is evaluated on an 81-candidate integer grid.",
+    "kind": "synthetic_sound",
+    "has_outcomes": true,
+    "expected": {
+      "intervals_sound": true,
+      "true_minimizers": [
+        "x3-y5"
+      ],
+      "true_feasible_optimum": "0",
+      "true_feasible_count": 35,
+      "retained": [
+        "x3-y5"
+      ],
+      "pool_size": 1,
+      "incumbent": "x3-y5",
+      "incumbent_regret": "0",
+      "regret_bound": "1/2",
+      "all_true_minimizers_retained": true
+    },
+    "oracle": "Independent enumeration: x,y in {0,...,8}; f=(x-3)^2+2(y-5)^2, g1=x+y-9, g2=2-x. Nonnegative f has unique zero (3,5), which satisfies both constraints. Formula truth is recomputed independently at runtime."
+  },
+  {
+    "id": "signed-composition",
+    "title": "Signed objectives and combined constraints",
+    "description": "A signed linear objective is screened under the maximum of two constraint slacks.",
+    "kind": "synthetic_sound",
+    "has_outcomes": true,
+    "expected": {
+      "intervals_sound": true,
+      "true_minimizers": [
+        "a2-b4"
+      ],
+      "true_feasible_optimum": "-15/2",
+      "true_feasible_count": 5,
+      "retained": [
+        "a2-b2",
+        "a2-b4"
+      ],
+      "pool_size": 2,
+      "incumbent": "a2-b2",
+      "incumbent_regret": "6",
+      "regret_bound": "7",
+      "all_true_minimizers_retained": true
+    },
+    "oracle": "Independent enumeration: a,b in {0,2,4}; f=2a-3b+1/2, g=max(a+b-6,1-a). Feasible points: (2,0),(2,2),(2,4),(4,0),(4,2). Minimum is -15/2 at (2,4). Score intervals propagate a,b uncertainty +/-1/10 through signed coefficients; combined slack uncertainty is +/-1/10. Formula truth recomputed at runtime."
+  },
+  {
+    "id": "normalized-maximization",
+    "title": "Maximization as a normalized objective",
+    "description": "A benefit is negated to minimize it under an exact budget constraint.",
+    "kind": "synthetic_sound",
+    "has_outcomes": true,
+    "expected": {
+      "intervals_sound": true,
+      "true_minimizers": [
+        "D"
+      ],
+      "true_feasible_optimum": "-11",
+      "true_feasible_count": 4,
+      "retained": [
+        "D"
+      ],
+      "pool_size": 1,
+      "incumbent": "D",
+      "incumbent_regret": "0",
+      "regret_bound": "1",
+      "all_true_minimizers_retained": true,
+      "certified_infeasible": [
+        "C"
+      ]
+    },
+    "oracle": "Hand enumeration: budget=3 excludes C (cost 4, benefit 13). Among feasible benefits 5,7,11,2, D has maximum 11; negation gives minimum -11."
+  },
+  {
+    "id": "exact-rational-order",
+    "title": "An order smaller than float precision",
+    "description": "Exact rational scores distinguish candidates that collapse to the same binary float.",
+    "kind": "synthetic_sound",
+    "has_outcomes": true,
+    "expected": {
+      "intervals_sound": true,
+      "true_minimizers": [
+        "A"
+      ],
+      "true_feasible_optimum": "1/3",
+      "retained": [
+        "A"
+      ],
+      "pool_size": 1,
+      "incumbent": "A",
+      "incumbent_regret": "0",
+      "regret_bound": "0",
+      "all_true_minimizers_retained": true
+    },
+    "oracle": "Hand solution: A=1/3; B=A+1/(3*10^30)>A; C=A+1>A. No rounding or tolerance is part of the comparison."
+  },
+  {
+    "id": "loose-intervals",
+    "title": "Loose intervals",
+    "description": "The same six true candidates are screened with intentionally uninformative intervals.",
+    "kind": "synthetic_sound",
+    "has_outcomes": true,
+    "expected": {
+      "intervals_sound": true,
+      "true_minimizers": [
+        "A"
+      ],
+      "true_feasible_optimum": "0",
+      "retained": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "pool_size": 6,
+      "incumbent": "A",
+      "incumbent_regret": "0",
+      "regret_bound": "13",
+      "all_true_minimizers_retained": true
+    },
+    "oracle": "Hand enumeration: true scores A..F are 0,2,4,6,8,10. The refined case uses [s-1/4,s+1/4] inside each loose [-1,12] interval. Both worlds share the same candidate IDs and truth."
+  },
+  {
+    "id": "refined-intervals",
+    "title": "Tightened intervals",
+    "description": "The same six true candidates are screened with narrower intervals.",
+    "kind": "synthetic_sound",
+    "has_outcomes": true,
+    "expected": {
+      "intervals_sound": true,
+      "true_minimizers": [
+        "A"
+      ],
+      "true_feasible_optimum": "0",
+      "retained": [
+        "A"
+      ],
+      "pool_size": 1,
+      "incumbent": "A",
+      "incumbent_regret": "0",
+      "regret_bound": "1/2",
+      "all_true_minimizers_retained": true
+    },
+    "oracle": "Hand enumeration: true scores A..F are 0,2,4,6,8,10. The refined case uses [s-1/4,s+1/4] inside each loose [-1,12] interval. Both worlds share the same candidate IDs and truth."
+  },
+  {
+    "id": "unsound-score-control",
+    "title": "Negative control: false score interval",
+    "description": "A deliberately incorrect interval can screen out the true optimum.",
+    "kind": "synthetic_negative_control",
+    "has_outcomes": true,
+    "expected": {
+      "intervals_sound": false,
+      "true_minimizers": [
+        "B"
+      ],
+      "retained": [
+        "A"
+      ],
+      "pool_size": 1,
+      "incumbent": "A",
+      "regret_bound": "0",
+      "incumbent_regret": "1",
+      "regret_bound_holds": false,
+      "all_true_minimizers_retained": false,
+      "score_intervals_sound": false,
+      "constraint_intervals_sound": true
+    },
+    "oracle": "Hand solution: B=0<A=1, but B is falsely declared to lie in [2,2]. The true optimum is discarded and claimed conditional regret bound fails; replay must expose the invalid premise."
+  },
+  {
+    "id": "unsound-constraint-control",
+    "title": "Negative control: false infeasibility",
+    "description": "A deliberately incorrect constraint interval can falsely reject the best candidate.",
+    "kind": "synthetic_negative_control",
+    "has_outcomes": true,
+    "expected": {
+      "intervals_sound": false,
+      "true_minimizers": [
+        "B"
+      ],
+      "retained": [
+        "A"
+      ],
+      "pool_size": 1,
+      "incumbent": "A",
+      "regret_bound": "0",
+      "incumbent_regret": "1",
+      "regret_bound_holds": false,
+      "all_true_minimizers_retained": false,
+      "score_intervals_sound": true,
+      "constraint_intervals_sound": false,
+      "certified_infeasible": [
+        "B"
+      ]
+    },
+    "oracle": "Hand solution: both true constraints are -1, so B=0 is feasible and better than A=1. The false [1,1] constraint interval rejects B. Replay must expose the unsound constraint premise."
+  }
+]

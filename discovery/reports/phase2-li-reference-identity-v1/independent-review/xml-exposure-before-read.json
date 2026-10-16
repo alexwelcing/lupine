@@ -1,0 +1,9 @@
+{
+  "started_at": "2026-10-16T09:16:57.457050+00:00",
+  "input_path": ".cache/phase2-li-paper-methods-v1/article.xml",
+  "declared_size": 143727,
+  "declared_sha256": "c7e527712991ce14fb233b57a7e1f5f2dc26e6728835df03510cd6c588146534",
+  "whole_container_machine_read_and_parse_planned": true,
+  "source_not_target_free": true,
+  "human_projection": "CR49/CR50 bibliography and Table2 DataSource/Dataset citations only; table IDs/column labels for selection, no record-count/material/performance cells"
+}

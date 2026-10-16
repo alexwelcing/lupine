@@ -1,0 +1,24 @@
+test_cli_errors_are_sanitized (test_mpea_row_metadata.ProductionMetadataTests.test_cli_errors_are_sanitized) ... ok
+test_closed_validator_rejects_resealed_forgeries (test_mpea_row_metadata.ProductionMetadataTests.test_closed_validator_rejects_resealed_forgeries) ... ok
+test_doi_grammar_forms_kept_distinct (test_mpea_row_metadata.ProductionMetadataTests.test_doi_grammar_forms_kept_distinct) ... ok
+test_exact_groups_no_normalization_or_unknown_merge (test_mpea_row_metadata.ProductionMetadataTests.test_exact_groups_no_normalization_or_unknown_merge) ... ok
+test_formula_lexical_grammar_no_arithmetic (test_mpea_row_metadata.ProductionMetadataTests.test_formula_lexical_grammar_no_arithmetic) ... ok
+test_group_before_other_metadata_completeness (test_mpea_row_metadata.ProductionMetadataTests.test_group_before_other_metadata_completeness) ... ok
+test_invalid_utf8_allowed_metadata_unresolved_without_text_echo (test_mpea_row_metadata.ProductionMetadataTests.test_invalid_utf8_allowed_metadata_unresolved_without_text_echo) ... ok
+test_late_invalid_framing_and_width_publish_no_prefix (test_mpea_row_metadata.ProductionMetadataTests.test_late_invalid_framing_and_width_publish_no_prefix) ... ok
+test_mapping_capture_verified_before_json_parse (test_mpea_row_metadata.ProductionMetadataTests.test_mapping_capture_verified_before_json_parse) ... ok
+test_markers_and_ascii_whitespace_all_unresolved (test_mpea_row_metadata.ProductionMetadataTests.test_markers_and_ascii_whitespace_all_unresolved) ... ok
+test_production_commit_gate_before_any_cache_access (test_mpea_row_metadata.ProductionMetadataTests.test_production_commit_gate_before_any_cache_access) ... ok
+test_returned_report_does_not_alias_policy_or_caller_identity (test_mpea_row_metadata.ProductionMetadataTests.test_returned_report_does_not_alias_policy_or_caller_identity) ... ok
+test_scanner_source_hash_checked_before_exec (test_mpea_row_metadata.ProductionMetadataTests.test_scanner_source_hash_checked_before_exec) ... ok
+test_sink_atomic_no_overwrite_no_symlinks (test_mpea_row_metadata.ProductionMetadataTests.test_sink_atomic_no_overwrite_no_symlinks) ... ok
+test_sink_publication_failure_leaves_no_partial_destination (test_mpea_row_metadata.ProductionMetadataTests.test_sink_publication_failure_leaves_no_partial_destination) ... ok
+test_source_identity_before_frame_and_real_fixture_block (test_mpea_row_metadata.ProductionMetadataTests.test_source_identity_before_frame_and_real_fixture_block) ... ok
+test_target_opaque_noninterference_all_eighteen_columns (test_mpea_row_metadata.ProductionMetadataTests.test_target_opaque_noninterference_all_eighteen_columns) ... ok
+test_temperature_exact_decimal_limits_no_exponent (test_mpea_row_metadata.ProductionMetadataTests.test_temperature_exact_decimal_limits_no_exponent) ... ok
+test_valid_all_five_roles_and_sealed_ids (test_mpea_row_metadata.ProductionMetadataTests.test_valid_all_five_roles_and_sealed_ids) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 3.912s
+
+OK

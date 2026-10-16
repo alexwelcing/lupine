@@ -1,0 +1,36 @@
+test_bounded_process_success_and_overflow (test_operations_recorder.RecorderTests.test_bounded_process_success_and_overflow) ... FAIL
+test_completed_negative_frame_exit0_allowed (test_operations_recorder.RecorderTests.test_completed_negative_frame_exit0_allowed) ... ok
+test_exit2_stops_with_evidence_even_complete_looking_public (test_operations_recorder.RecorderTests.test_exit2_stops_with_evidence_even_complete_looking_public) ... ok
+test_final_post_pair_state_loss_never_publishes_completion (test_operations_recorder.RecorderTests.test_final_post_pair_state_loss_never_publishes_completion) ... ok
+test_fixed_private_public_allowlist (test_operations_recorder.RecorderTests.test_fixed_private_public_allowlist) ... ok
+test_full_generated_pair_uses_real_validator_and_six_state_checks (test_operations_recorder.RecorderTests.test_full_generated_pair_uses_real_validator_and_six_state_checks) ... ok
+test_gate_shapes_success_and_fourteen_mutations (test_operations_recorder.RecorderTests.test_gate_shapes_success_and_fourteen_mutations) ... ok
+test_json_duplicate_nonfinite_deep_and_canonical (test_operations_recorder.RecorderTests.test_json_duplicate_nonfinite_deep_and_canonical) ... ok
+test_late_close_stdout_difference_is_preserved (test_operations_recorder.RecorderTests.test_late_close_stdout_difference_is_preserved) ... ok
+test_package_failure_has_postcheck_and_no_strict_launch (test_operations_recorder.RecorderTests.test_package_failure_has_postcheck_and_no_strict_launch) ... ok
+test_pair_mismatch_and_final_check_preserved (test_operations_recorder.RecorderTests.test_pair_mismatch_and_final_check_preserved) ... ok
+test_parent_rename_symlink_preserves_outside_sentinel (test_operations_recorder.RecorderTests.test_parent_rename_symlink_preserves_outside_sentinel) ... ok
+test_phase_failure_never_launches_slot2_or_nextphase (test_operations_recorder.RecorderTests.test_phase_failure_never_launches_slot2_or_nextphase) ... ok
+test_pin_capture_no_symlink_fifo_or_outside (test_operations_recorder.RecorderTests.test_pin_capture_no_symlink_fifo_or_outside) ... ok
+test_post_state_failure_never_passes (test_operations_recorder.RecorderTests.test_post_state_failure_never_passes) ... ok
+test_prior_packets_original_producer_and_historical_edge (test_operations_recorder.RecorderTests.test_prior_packets_original_producer_and_historical_edge) ... ok
+test_publish_no_overwrite_and_complete_name_after_fsync (test_operations_recorder.RecorderTests.test_publish_no_overwrite_and_complete_name_after_fsync) ... ok
+test_real_pure_validator_accepts_recorder_generated_recording (test_operations_recorder.RecorderTests.test_real_pure_validator_accepts_recorder_generated_recording) ... ok
+test_synthetic_git_345_index_blob_and_hidden_worktree_guard (test_operations_recorder.RecorderTests.test_synthetic_git_345_index_blob_and_hidden_worktree_guard) ... ok
+test_timeout_kills_group_even_after_leader_exit (test_operations_recorder.RecorderTests.test_timeout_kills_group_even_after_leader_exit) ... ok
+test_unbound_binding_rejected_before_process_or_state (test_operations_recorder.RecorderTests.test_unbound_binding_rejected_before_process_or_state) ... ok
+test_validator_rejection_cannot_be_ignored (test_operations_recorder.RecorderTests.test_validator_rejection_cannot_be_ignored) ... ok
+
+======================================================================
+FAIL: test_bounded_process_success_and_overflow (test_operations_recorder.RecorderTests.test_bounded_process_success_and_overflow)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-operations-v1/tests/test_operations_recorder.py", line 75, in test_bounded_process_success_and_overflow
+    self.assertTrue(result['process_completed']);self.assertEqual(result['stdout'],b'synthetic\n')
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 22 tests in 10.806s
+
+FAILED (failures=1)

@@ -1,0 +1,27 @@
+{
+  "actual_artifact_audits": 0,
+  "audit_source_sha256": "7487bc9ca66ed5b132c928836fd9c435d43577f2b00b6fa4f6383e812b5139a6",
+  "inventory_sha256": "b989ede015f8f664f1f40e712dbb5d59f14c373a9cac4131c5d2e4857dce03ec",
+  "next_action": "Bind unchanged prepared auditor to exact published commit and completed clean package/strict evidence; preserve prospective amendments if any candidate source changes.",
+  "preparation_sha256": "8fee501aa69b69bf772d1c402f185e97743f0a0e934065e61af3d851972b3b17",
+  "prospective_review_sha256": "b8a83faf6d9c11c8f07ee2e65b99520162a478e6a3d9e1b3b2237f2d01382abb",
+  "public_allowlist": [
+    "README.md",
+    "audit_retained.py",
+    "auditor-from-b005.diff",
+    "candidate-source-identity.json",
+    "peer-review/source-review-v1.json",
+    "preparation.json",
+    "prepare_auditor.py",
+    "prepared-promotion-inputs.json",
+    "prepared-report-contract.json",
+    "prepared-scope.json",
+    "prospective-review.json",
+    "root-candidate-copyset.json",
+    "preparation-inventory.json",
+    "preparation-handoff.json"
+  ],
+  "schema": "lupine.source-readiness.artifact-preparation-handoff.v1",
+  "static_checks": 19,
+  "status": "PREPARED_SOURCE_REVIEW_PASS_ACTUAL_AUDIT_NOT_RUN"
+}

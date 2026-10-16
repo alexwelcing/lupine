@@ -1,0 +1,6 @@
+{
+  "id": "repository",
+  "url": "https://api.github.com/repos/bskjelstad/tmQM",
+  "maximum_bytes": 1048576,
+  "purpose": "Verify repository identity, default branch and declared license metadata only."
+}

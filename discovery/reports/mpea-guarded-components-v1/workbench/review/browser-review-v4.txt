@@ -1,0 +1,1 @@
+{"status": "PASS", "checks": 7, "receipt_sha256": "284d71cbfb43aa3eda23cb1fe51b733121036a256b4e870be329464af05814c9", "access_counters_present": true}

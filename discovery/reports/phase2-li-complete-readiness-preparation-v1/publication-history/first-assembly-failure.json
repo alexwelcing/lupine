@@ -1,0 +1,15 @@
+{
+  "actual_source_operations": 0,
+  "all116_source_reconstruction_completed": true,
+  "candidate_failure": false,
+  "command": "python .cache/phase2-li-complete-readiness-publication-v1/prepare.py",
+  "correction": "Collect relative links first; verify every target exists after publication-checks.json is written. No exemptions or relaxed final checks.",
+  "exit_code": 1,
+  "failure": "AssertionError: README.md link publication-checks.json was checked before that generated file was written.",
+  "first_partial_inventory_sha256": "1eea3e2dc0ccfcd1449ce932e4d14681c0a348a9a3ad8b7f9cba197b56b86735",
+  "first_partial_tree_preserved": "../first-assembly-proposal",
+  "recorded_at": "2026-10-16T13:53:57.253662+00:00",
+  "source_sha256": "012cc54542be0dda06e101dbb697ffd5f3b8484c68eedacf9402807d2cc3c54a",
+  "status": "FAILED_PUBLICATION_ASSEMBLY",
+  "test_invocations": 0
+}

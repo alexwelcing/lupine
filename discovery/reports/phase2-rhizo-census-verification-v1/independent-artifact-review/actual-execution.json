@@ -1,0 +1,26 @@
+{
+  "artifact_or_scientific_code_executed": false,
+  "attempt": 1,
+  "audit_assertion_failures": 0,
+  "audit_source_sha256": "b6566a01f8704699174dbdaaacb4a51182e58bf1e346bf249375c534ac1728db",
+  "auditor_internal_seconds": 1.8464643290062668,
+  "ci_observed_by_this_audit": false,
+  "command": [
+    "python",
+    ".cache/phase2-rhizo-census-artifact-review-v1/audit_retained.py",
+    "--published-commit",
+    "2975d6d0b9111cc84adb82ccc673bc82339ab154",
+    "--retained-directory",
+    ".cache/phase2-rhizo-census-verification-v1/retained",
+    "--attempt",
+    "first-actual-artifact-audit"
+  ],
+  "exit_code": 0,
+  "finished_at": "2026-10-16T14:03:42.231628+00:00",
+  "first_review_sha256": "6fbffd98613fe6a2602001c89ada2f4ac745ed9ca1909487a0154c8852ea1016",
+  "private_or_raw_scientific_inputs_opened": false,
+  "root_supplied_commit_and_retention_before_invocation": true,
+  "schema": "lupine.rhizo.census.artifact-review.actual-execution.v1",
+  "started_at": "2026-10-16T14:03:40.385168+00:00",
+  "tool_process_wall_seconds": 2.00421452
+}

@@ -1,0 +1,16 @@
+{
+  "bindings_captured_after_run": {
+    "loader-only.patch": "466c3c0d57b1d273f9dab7d765e26474eddc46c69396ef7139b9b4d333f28258",
+    "main-layout-tests.log": "535ce07d94a14b7159d5dae0c11a649681e63e1b7f366c7d91e9c10e8d6aa8d2",
+    "scripts/mpea_study_supervisor.py": "1dbd4a1b0e9c3f0246d23bd7670527cfa3bd69f754279aabba06e4ae464e87ab",
+    "tests/fixtures/mpea_supervisor_worker.py": "e43842b5632c23e72e0ad0007fba9a0904227fb311b54b83a92c62bf15077f42",
+    "tests/test_mpea_study_supervisor.py": "ecffc888a8f678d60072b6dbf8df844d81c53864b870372a3b05fdf0d5f22add"
+  },
+  "command": "python3 -m unittest discover -s promotion/tests -p test_mpea_study_supervisor.py -v",
+  "elapsed_seconds": 16.461,
+  "exit_code": 0,
+  "schema": "lupine-supervisor-main-layout-preview-v1",
+  "scope": "Scratch main-layout preview only; path/import adaptation, unchanged assertions and supervisor bytes; no actual scientific inputs or main writes.",
+  "supervisor_matches_independently_reviewed_source": true,
+  "test_count": 20
+}

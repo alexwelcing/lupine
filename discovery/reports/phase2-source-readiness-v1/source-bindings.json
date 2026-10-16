@@ -1,0 +1,61 @@
+{
+  "schema_version": "phase2-source-reconnaissance-v1",
+  "audit_date": "2026-10-16",
+  "owner": "phase2_evidence",
+  "status": "METADATA_REVIEW_ONLY",
+  "repository": "alexwelcing/lupine",
+  "repository_commit": "df844ef37ad22d6352ca6b1b4a997904b0309785",
+  "body_retention": "External HTTP response bodies were not retained; no response-body SHA-256 hashes are claimed.",
+  "repository_documents": [
+    {"path": "discovery/AGENTS.md", "git_blob_sha1": "64b6ff45c4f42880591a6982a6d7dac709fd89b8"},
+    {"path": "discovery/reports/next-independent-study-v1/README.md", "git_blob_sha1": "3764ff38b4e851b7e9d1c1f6590bf8acd311af54"},
+    {"path": "discovery/reports/next-independent-study-v1/recommendation.md", "git_blob_sha1": "d697ca34c1296ea915f5abf8665e3c467165bf7a"},
+    {"path": "discovery/reports/next-independent-study-v1/source-leads.md", "git_blob_sha1": "e98afea6c8712ead1c45e651f114e5decafb9bb7"},
+    {"path": "discovery/docs/constrained-source-audit.md", "git_blob_sha1": "1a6e03908fb01bc009d31246cef51653bc896c86"},
+    {"path": "discovery/docs/operating-condition-source-audit.md", "git_blob_sha1": "8aeca91eb08ebeacc9d2ef7b628ead8199c169f8"}
+  ],
+  "external_git_sources": [
+    {
+      "repository": "usnistgov/ambench",
+      "commit": "77adb06c6de95b9b97e1dd26d46561f29db927af",
+      "files": [
+        {"path": "AMBench2022/MetadataModel/README.md", "git_blob_sha1": "0d2209e13a9ef30c606a0204447f84009b7e0893", "read_ref": "main", "note": "GitHub returned this blob before the commit lookup; pinned XSD contents were read separately at the commit."},
+        {"path": "AMBench2022/MetadataModel/Model/XSD/AMMeasurement.xsd", "git_blob_sha1": "93a44d0e78e2a596c5d053bec9c89bced32bda10", "read_ref": "77adb06c6de95b9b97e1dd26d46561f29db927af"},
+        {"path": "AMBench2022/MetadataModel/Model/XSD/AMBuild.xsd", "git_blob_sha1": "a3837f5c587ca138bf59bcc8b20c6eefa73728d4", "read_ref": "77adb06c6de95b9b97e1dd26d46561f29db927af"}
+      ],
+      "finding": "Specimen identity, condition and parent fields can be optional in the upstream schemas; schema validity is not scientific readiness."
+    },
+    {
+      "repository": "avakanski/Subsized-Specimens-Tensile-Properties",
+      "commit": "d19b15127c8ae1be49308c29eac718b609ad895c",
+      "files": [
+        {"path": "README.md", "git_blob_sha1": "778b8c93622c08d9fcdf9eba5d25727976cd3e90", "read_ref": "d19b15127c8ae1be49308c29eac718b609ad895c"},
+        {"path": "License - MIT.txt", "git_blob_sha1": "4b89403c8299ddd7ddea4beb2952efeada00bc6b", "read_ref": "d19b15127c8ae1be49308c29eac718b609ad895c"}
+      ],
+      "finding": "README describes paired-property candidates and 1070 records/54 parameters, but workbook content was not read; distinct DOI references and observation-license scope remain unresolved."
+    }
+  ],
+  "external_web_sources": [
+    {"url": "https://archive.materialscloud.org/records/vywsz-wxn79", "scope": "Dataset landing metadata and file listing only", "observed_version": "v3, published 2024-12-20", "observed_doi": "10.24435/materialscloud:ws-8j", "source_advertised_record_count": 1070, "source_advertised_parameter_count": 54, "audited_usable_record_count": null, "independent_panel_count": null},
+    {"url": "https://www.nist.gov/ambench/am-bench-data-management-systems", "scope": "Official access and metadata documentation"},
+    {"url": "https://www.nist.gov/ambench/direct-am-bench-data-links-and-referencing-guidance", "scope": "Official dataset and schema identifiers; no linked observation datasets or papers opened"},
+    {"url": "https://catalog.data.gov/dataset/am-bench-2022-astm-e8-macroscale-tension-at-different-strain-rates-on-as-built-in625", "scope": "Government catalog metadata and distribution listing", "identifier": "ark:/88434/mds2-2760", "access_level": "public", "license_url": "https://www.nist.gov/open/license", "source_advertised_specimen_count": 5, "source_advertised_strain_rate_group_count": 2, "audited_usable_record_count": null, "independent_panel_count": null},
+    {"url": "https://www.nist.gov/open/license", "resolved_url": "https://www.nist.gov/open/copyright-fair-use-and-licensing-statements-srd-data-software-and-technical-series-publications", "scope": "Data/software licensing and attribution guidance"},
+    {"url": "https://cds.nims.go.jp/en/", "scope": "Official landing and access restrictions", "acquisition_disposition": "BLOCKED_CURRENT_ROUTE", "restrictions": ["DICE account registration", "Email-domain registration", "Service application", "No web scraping", "No bulk manual or mechanical acquisition"]}
+  ],
+  "failed_reads": [
+    {"url": "https://api.datacite.org/dois/10.24435/materialscloud:ws-8j", "tool": "search_service_web_run", "observed_failure": "URL not accessible via the tool", "content_read": false},
+    {"url": "https://data.nist.gov/od/ds/mds2-2760/README_AMBench_2022_Tensile_data.txt", "tool": "search_service_web_run", "observed_failure": "URL not accessible via the tool", "content_read": false},
+    {"url": "https://archive.materialscloud.org/records/vywsz-wxn79/files/files_description.md?download=1", "tool": "search_service_web_run", "observed_failure": "Fetch failed after a signed-object redirect was judged unsafe by the tool; no redirect URL or credential parameters retained here", "content_read": false},
+    {"url": "https://archive.materialscloud.org/api/records/vywsz-wxn79", "tool": "search_service_web_run", "observed_failure": "URL not accessible via the tool", "content_read": false}
+  ],
+  "exposure_ledger": {
+    "new_sources_observation_files_read": [],
+    "visible_metadata": ["Source-advertised record/parameter/specimen counts", "Endpoint names", "Specimen geometry dimensions", "Room-temperature and as-built condition descriptions", "Nominal strain rates and instrument/protocol descriptions", "Publication titles and catalog descriptions"],
+    "prior_exposure": "Existing Lupine source-audit text contains previously recorded numerical/qualitative results. No claim that all historical context was blinded.",
+    "search_scope": "Public documentation/catalog searches for NIST AM Bench, materials data and NIMS access; unrelated search descriptions were not used for any protocol or model choice."
+  },
+  "unperformed_actions": ["Observation workbook/CSV/curve/data-sheet acquisition", "Private custody or target reads", "Example notebook execution", "Data allocation", "Model fitting or ranking", "Threshold or acceptance-criterion selection", "New protocol registration", "New scientific experiment", "Third-party contact", "Account application", "Paid compute", "New DFT", "Release, CI or runtime-test verification"],
+  "priority": ["Li metadata identity, observation license and target-free schema audit", "NIST small reference/adapter semantics route", "NIMS restricted route remains blocked"],
+  "claim_limits": ["Metadata counts are not independent sampling-unit counts", "Independent-agent review is not statistical independence", "A hash identifies bytes, not physical validity or freshness", "No source is approved for a new study", "Existing scientific negatives remain unchanged"]
+}

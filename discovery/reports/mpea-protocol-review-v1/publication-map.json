@@ -1,0 +1,158 @@
+[
+  {
+    "bytes": 20971,
+    "destination": "docs/mpea-t25-archival-protocol-v1.md",
+    "sha256": "c49047341d3932ddd67c67c9f2a04a6759c0d679bfeb96d811ba9541c0cc0378",
+    "source": ".cache/mpea-protocol-design/mpea-t25-archival-protocol-v1.md"
+  },
+  {
+    "bytes": 39271,
+    "destination": "docs/mpea-t25-implementation-contract-v1.md",
+    "sha256": "be45b1d8db9586035cf37bd9bbb9046c065c3851b91f93386f8c68d155215af9",
+    "source": ".cache/mpea-protocol-design/mpea-t25-implementation-contract-v1.md"
+  },
+  {
+    "bytes": 5802,
+    "destination": "reports/mpea-protocol-review-v1/draft-handoff.json",
+    "sha256": "4b253ebbd3df76b72502f56b0a2934f5395da8568382ae9463267fb010ccfedb",
+    "source": ".cache/mpea-protocol-design/protocol-draft-handoff-v1.json"
+  },
+  {
+    "bytes": 30587,
+    "destination": "reports/mpea-protocol-review-v1/reviewed-option.md",
+    "sha256": "49a2682412aff4b764ffa2c23d9ade1f06858e12dee699897e2f04e35b9fd8b7",
+    "source": ".cache/mpea-protocol-design/archival-recovery-option.md"
+  },
+  {
+    "bytes": 8180,
+    "destination": "reports/mpea-protocol-review-v1/math/README.md",
+    "sha256": "7845607aba5799dd730e3699cb3fe47fc9cfac3c884f53efbe6eaed1ae9a26f2",
+    "source": ".cache/mpea-protocol-math-review/README.md"
+  },
+  {
+    "bytes": 4536,
+    "destination": "reports/mpea-protocol-review-v1/math/clarification-diff.patch",
+    "sha256": "566bda8a1fa86d269ad052f42a775777bbddba3fd01d43e1afee12183e9d3300",
+    "source": ".cache/mpea-protocol-math-review/clarification-diff.patch"
+  },
+  {
+    "bytes": 117,
+    "destination": "reports/mpea-protocol-review-v1/math/clarification-execution.txt",
+    "sha256": "1822275c5831891310d029ea11473c9510d5b61de0a1dea5b6e5dd3454eea4ff",
+    "source": ".cache/mpea-protocol-math-review/clarification-execution.log"
+  },
+  {
+    "bytes": 1573,
+    "destination": "reports/mpea-protocol-review-v1/math/clarification-receipt.json",
+    "sha256": "87cdc5c9797098d5c0b2ddb1db1273b577db29c18fb797e4b3daf80474b7ead7",
+    "source": ".cache/mpea-protocol-math-review/clarification-receipt.json"
+  },
+  {
+    "bytes": 92,
+    "destination": "reports/mpea-protocol-review-v1/math/execution.txt",
+    "sha256": "ee5d4cb9ae3623bdd627023a8fdde7c0ba0158fd57a54ecfa20925bcba1aabae",
+    "source": ".cache/mpea-protocol-math-review/execution.log"
+  },
+  {
+    "bytes": 3337,
+    "destination": "reports/mpea-protocol-review-v1/math/rebind.py",
+    "sha256": "b670f9c805e5d5b1320d838789c3b2efe6ce418a2be917294520f6ed70fae2e0",
+    "source": ".cache/mpea-protocol-math-review/rebind.py"
+  },
+  {
+    "bytes": 2305,
+    "destination": "reports/mpea-protocol-review-v1/math/review-receipt.json",
+    "sha256": "cd0648283e6abb7a4f1c551c68b60a46d1ed8731706b57b437cef147ab780ded",
+    "source": ".cache/mpea-protocol-math-review/review-receipt.json"
+  },
+  {
+    "bytes": 2947,
+    "destination": "reports/mpea-protocol-review-v1/math/review.py",
+    "sha256": "a63e54ee93cef2c64c12785b73f42f2cfe53bcb4686978a2a64096ed2b63bfe7",
+    "source": ".cache/mpea-protocol-math-review/review.py"
+  },
+  {
+    "bytes": 20174,
+    "destination": "reports/mpea-protocol-review-v1/math/reviewed-original-mpea-t25-archival-protocol-v1.md",
+    "sha256": "989f79359af45a9bcc698400d1ddee410677933a8360c0c71a30e9bc2dba8eb4",
+    "source": ".cache/mpea-protocol-math-review/reviewed-original-mpea-t25-archival-protocol-v1.md"
+  },
+  {
+    "bytes": 38234,
+    "destination": "reports/mpea-protocol-review-v1/math/reviewed-original-mpea-t25-implementation-contract-v1.md",
+    "sha256": "2113d0e45799fb0117f22dbd80188e17d92f0e63c9857ba7a693e7f4ade99f10",
+    "source": ".cache/mpea-protocol-math-review/reviewed-original-mpea-t25-implementation-contract-v1.md"
+  },
+  {
+    "bytes": 2296,
+    "destination": "reports/mpea-protocol-review-v1/access/final-review.json",
+    "sha256": "0ac63ebf7ecfe77a52485a069a2ba23cd43120c3857bd4832acc45da0ced0691",
+    "source": ".cache/mpea-protocol-access-review/final-review.json"
+  },
+  {
+    "bytes": 4917,
+    "destination": "reports/mpea-protocol-review-v1/access/final-review.md",
+    "sha256": "d394702af52ed9d2d7f7487fcdf83caca87fa2c6c6f63e66a571451a099cc26e",
+    "source": ".cache/mpea-protocol-access-review/final-review.md"
+  },
+  {
+    "bytes": 1388,
+    "destination": "reports/mpea-protocol-review-v1/access/initial-review.json",
+    "sha256": "fd89cad1532df8b9c3c5f5a3172eb72953f3d4b35dfecd5d697c62ea3fe4a0cd",
+    "source": ".cache/mpea-protocol-access-review/initial-review.json"
+  },
+  {
+    "bytes": 20174,
+    "destination": "reports/mpea-protocol-review-v1/access/mpea-t25-archival-protocol-v1.initial.md",
+    "sha256": "989f79359af45a9bcc698400d1ddee410677933a8360c0c71a30e9bc2dba8eb4",
+    "source": ".cache/mpea-protocol-access-review/mpea-t25-archival-protocol-v1.initial.md"
+  },
+  {
+    "bytes": 38234,
+    "destination": "reports/mpea-protocol-review-v1/access/mpea-t25-implementation-contract-v1.initial.md",
+    "sha256": "2113d0e45799fb0117f22dbd80188e17d92f0e63c9857ba7a693e7f4ade99f10",
+    "source": ".cache/mpea-protocol-access-review/mpea-t25-implementation-contract-v1.initial.md"
+  },
+  {
+    "bytes": 6151,
+    "destination": "reports/mpea-protocol-review-v1/randomization/README.md",
+    "sha256": "6a7a7593a63860425b77bb0ec13a72d8fdca10bac39c1703d0dae15c78c6400e",
+    "source": ".cache/mpea-protocol-design/randomization/README.md"
+  },
+  {
+    "bytes": 2862,
+    "destination": "reports/mpea-protocol-review-v1/randomization/engineering-v1.json",
+    "sha256": "6118d5a8c99293cd5edd552b215d51347c26a5189336c27866ac26e86e7a93e8",
+    "source": ".cache/mpea-protocol-design/randomization/engineering-v1.json"
+  },
+  {
+    "bytes": 1193,
+    "destination": "reports/mpea-protocol-review-v1/randomization/peer-review-note-v1.json",
+    "sha256": "741c01f214b022f5f997a0110e375433fdba72b5e3500ded1ce12a62716c1a63",
+    "source": ".cache/mpea-protocol-design/randomization/peer-review-note-v1.json"
+  },
+  {
+    "bytes": 5859,
+    "destination": "reports/mpea-protocol-review-v1/randomization/permutation_allocation.py",
+    "sha256": "a7f454b4541f75603019bf73091c97190ea6f618efa52988c3065971273405e5",
+    "source": ".cache/mpea-protocol-design/randomization/permutation_allocation.py"
+  },
+  {
+    "bytes": 7996,
+    "destination": "reports/mpea-protocol-review-v1/randomization/test_permutation_allocation.py",
+    "sha256": "ed73c8859bd283e740defca2f4ff3d6a71aa25cd4ae937934a3b9fc57a0df3d3",
+    "source": ".cache/mpea-protocol-design/randomization/test_permutation_allocation.py"
+  },
+  {
+    "bytes": 1791,
+    "destination": "reports/mpea-protocol-review-v1/randomization/tests-final.txt",
+    "sha256": "3a0696232588f06aaa891c57370510967289e98b2c03790462e10f44ed07e962",
+    "source": ".cache/mpea-protocol-design/randomization/tests-final.txt"
+  },
+  {
+    "bytes": 1791,
+    "destination": "reports/mpea-protocol-review-v1/randomization/tests-first.txt",
+    "sha256": "3eb5dbe5db628eee5cc6e6476e0ccafdc4533921bd647a45269b0ada9c7f235f",
+    "source": ".cache/mpea-protocol-design/randomization/tests-first.txt"
+  }
+]

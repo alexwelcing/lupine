@@ -1,0 +1,12 @@
+{
+  "all_four_jobs_successful": null,
+  "commit": "9d1f21dae141a28db378ee2e16aa83340df57877",
+  "operation_authorization": false,
+  "permission_to_publish_as_all_green": false,
+  "planned_final_addendum": "ci/final-addendum.json",
+  "planned_final_receipt": "ci/final-ci.json",
+  "reported_remaining_job": "python (3.12)",
+  "schema": "lupine.li.release-verification.ci-placeholder.v1",
+  "source": "Root assembly instruction, not a new network observation.",
+  "status": "PENDING_FINAL_ROOT_CI_RECEIPT"
+}

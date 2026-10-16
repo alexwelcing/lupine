@@ -1,0 +1,29 @@
+{
+  "bindings": {
+    ".cache/phase2-qm9-file-manifest-v1/README.md": "7e7ae18174110cae6a646572e1cc2650c29acaff359b24246ed5583be9ecccfd",
+    ".cache/phase2-qm9-file-manifest-v1/disposition.json": "04fdcd22c726d1be8f5684e7b9b10734b9fe9bda0e85d329e487ca558f6a7efb",
+    ".cache/phase2-qm9-file-manifest-v1/handoff.json": "dfb2093ea2f00686286804baebec2056521c34bbc2e9a26e407054dde5a972c7",
+    ".cache/phase2-qm9-file-manifest-v1/inventory.json": "2fe15ee64243dd2bb329da89b39e59a0458005a05b9aa6a565b7ffc8f3204f75",
+    ".cache/phase2-qm9-file-manifest-v1/landing/receipt.json": "f50569f9611718d141350009ca083fffebbcb1d245545971d80dd78388c4904f",
+    ".cache/phase2-qm9-file-manifest-v1/landing/request.json": "db708a86ebbc48d9bc1ac7856119e224b04fbed9c06726c75864c8ffa2abdfe4",
+    ".cache/phase2-qm9-file-manifest-v1/scope-hold.json": "38b8a2455b606d6cf848b439e87f6b1d0fec2b82ea66d31d19ee62282289a15a",
+    ".cache/phase2-qm9-file-manifest-v1/scope.json": "3e8cacb03a13214ab0136661cef03e78e0d5b9b45d23d7f6cb4f850a024a2e87",
+    ".cache/phase2-qm9-file-manifest-v1/source-bindings.json": "28972873385dfd7056297582f5b236fb12eb674fcde5b00a9a9325c814d3f20c"
+  },
+  "disposition": "CONSISTENT_PUBLIC_RECEIPTS_ROUTE_STOPPED",
+  "frozen_scope_precedes_request": true,
+  "limitation": "Receipt consistency is not a system-wide no-other-operations attestation; no denial cause or global access conclusion.",
+  "literal_registry_url_equal": true,
+  "minimal_metadata_next_step": "CONSUMED_WITH_ACCESS_DENIAL_NOT_A_PENDING_RETRY",
+  "new_network_or_source_operations": 0,
+  "prior_review_handoff_sha256": "b15542f633d588f785f5c11f9d73e4bacfdfab452acbcc10f3ca3c08e5379f74",
+  "raw_response_read_by_reviewer": false,
+  "recorded_bytes": 118,
+  "recorded_redirects": 0,
+  "recorded_requests": 1,
+  "recorded_retries": 0,
+  "recorded_status": 403,
+  "schema": "lupine.qm9.manifest-public-receipt-independent-review.v1",
+  "scientific_admission": "NOT_ADMITTED",
+  "tests_or_formal_proofs": 0
+}

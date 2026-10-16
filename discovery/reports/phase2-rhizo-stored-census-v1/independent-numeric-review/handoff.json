@@ -1,0 +1,26 @@
+{
+  "actual_private_projection_read": false,
+  "candidate_source_sha256": "d77a1ca2eeeb1d0f4e02fac6d624fa63527c4a8d423fdf8f7f645db102c67630",
+  "contract_sha256": "e849d36004f0e73fdde22620bbffe06d1e53425907ca5fce974c536a5e1ea052",
+  "first_attempt_pass": true,
+  "inventory_sha256": "46e197b158fd3d2fceb080dc90286a2dd8f23786522df8e5ff9059806d03bcc3",
+  "production_guards_run": false,
+  "publication_files": [
+    "plan.json",
+    "generated_fixtures.py",
+    "test_census_independent.py",
+    "run_review.py",
+    "arithmetic-bound-review.md",
+    "first-independent/start.json",
+    "first-independent/unittest.txt",
+    "first-independent/execution.json",
+    "review.json",
+    "README.md",
+    "inventory.json",
+    "handoff.json"
+  ],
+  "review_sha256": "fdae85ce4e444ef5e98f913f472111eb8b8f95afb1b5a4ec43be9961cefc9f04",
+  "schema": "lupine.rhizo.census.independent.handoff.v1",
+  "status": "PASS_GENERATED_NUMERIC_AND_SCHEMA_REVIEW",
+  "tests_run": 22
+}

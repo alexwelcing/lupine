@@ -1,0 +1,7 @@
+{
+  "bytes": 836,
+  "original_path": ".cache/mpea-study-custody/promotion-contract-v3/diffs/mpea_archive_repro_fixture.py.patch",
+  "schema": "lupine.lossless.utf8-evidence.v1",
+  "sha256": "53f19ebd28f6e7023619c55cd6fe922b12e900d048bddcf10e06c8949bdf8e99",
+  "utf8": "--- held-v2/tests/mpea_archive_repro_fixture.py\n+++ held-v3/tests/mpea_archive_repro_fixture.py\n@@ -28,7 +28,7 @@\n     allocation_store=driver.AllocationUsageStore(store)\n     routes=custody.RouteContext(original.routes.header,original.routes.rows)\n     if mode=='original':\n-        route=store.write_artifact('label-routes.json',custody._route_payload(routes,'c'*64),schema='lupine.discovery.mpea.label_routes.v1')\n+        route=allocation_store.write_artifact('label-routes.json',custody._route_payload(routes,'c'*64),schema='lupine.discovery.mpea.label_routes.v1')\n         allocation_store.commit('allocation',{'execution_kind':'PRODUCTION_ARCHIVE','route_artifact':route,'role_map_sha256':route['bytes_sha256'],\n             'scope':'constructed_format_simulation_no_real_registration'},inputs={'label_routes':route})\n     else:\n"
+}

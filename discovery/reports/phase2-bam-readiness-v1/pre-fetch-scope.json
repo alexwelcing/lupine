@@ -1,0 +1,7 @@
+{
+  "recorded_at": "2026-10-16T08:13:53.417166+00:00",
+  "decision": "SCHEMA_CONTENT_NOT_ADMITTED",
+  "reason": "Official schema prose describes metadata plus test-result fields and exemplary answers; origin/empirical content of examples is unknown. No CSV/XLSX/schema body will be fetched.",
+  "allowed_next_read": "Only Zenodo JSON record metadata and file listing/checksums, no file content URLs followed.",
+  "known_incidental_exposure": "Already retained metadata includes aggregate measurement uncertainty and temperature-deviation values; no fresh individual endpoint values are requested."
+}

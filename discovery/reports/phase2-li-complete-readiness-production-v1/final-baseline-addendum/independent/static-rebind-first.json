@@ -1,0 +1,70 @@
+{
+  "before_source_sha256": "a3370ac84762ef7f859061bde93f118a1c1981b02460e9ddd0b1cd38e55b840b",
+  "checks": [
+    {
+      "name": "old_baseline_is_reviewed2975",
+      "pass": true
+    },
+    {
+      "name": "new_commit_and_manifest_exact",
+      "pass": true
+    },
+    {
+      "name": "only_two_baseline_assignment_AST_changes",
+      "pass": true
+    },
+    {
+      "name": "all_other_literal_pins_unchanged",
+      "pass": true
+    },
+    {
+      "name": "runtime_count339_retained",
+      "pass": true
+    },
+    {
+      "name": "old_Git_manifest_identity",
+      "pass": true
+    },
+    {
+      "name": "new_Git_manifest_identity",
+      "pass": true
+    },
+    {
+      "name": "same339_manifest_paths",
+      "pass": true
+    },
+    {
+      "name": "only_authorized_transport_delta",
+      "pass": true
+    },
+    {
+      "name": "all339_worktree_bytes_match_new_manifest",
+      "pass": true
+    },
+    {
+      "name": "all339_published_Git_bytes_match_new_manifest",
+      "pass": true
+    },
+    {
+      "name": "pure_core_exact",
+      "pass": true
+    },
+    {
+      "name": "held_source_before_after",
+      "pass": true
+    }
+  ],
+  "checks_count": 13,
+  "final_source_sha256": "77dece96850b09be2f13acd275cc28789ea0e3bc408cfcec86bcd02f488fed85",
+  "new_commit": "ddd4a6a8df0f908a162b7e5387b0faac325180d6",
+  "new_manifest_sha256": "67d686934ba718b50f8d14e1efa9e2c8dfbc96bc88e43d1a341b4719440509aa",
+  "passed": true,
+  "runtime_delta": {
+    "tests/test_retained_mpea_transport.py": {
+      "after": "bce07a6927df9efe261f0477eae7b65f7babbd227721fb77333b7fe34188cf82",
+      "before": "b841a8dcc5ac955f3e82a7de0e34186e9d752552c022a750c3cdec85c94da84a"
+    }
+  },
+  "schema": "li.readiness.independent-static-baseline-rebind.v1",
+  "scope": "Source/Git byte and AST audit only. No candidate import, production guard, actual workbook/capture or private data reads; no network."
+}

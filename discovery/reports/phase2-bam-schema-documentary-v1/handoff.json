@@ -1,0 +1,25 @@
+{
+  "schema": "lupine.bam-documentary-handoff.v1",
+  "entrypoint": "reports/phase2-bam-schema-documentary-v1/REVIEW.md",
+  "promotion_root": ".cache/phase2-bam-schema-documentary-v1/promotion",
+  "inventory": {
+    "path": ".cache/phase2-bam-schema-documentary-v1/promotion-inventory.json",
+    "bytes": 6321,
+    "sha256": "6b33f728fb0db536d1b6330ac779687440aebf7f5075f524238a34a46d5059f4"
+  },
+  "result": "One acquired identity-verified CSV; full UTF8 failure preserved. Separate first-record ASCII projection confirms11headers, UNITseventh; full encoding/bodysemantics remainUNBOUND.",
+  "independent_header_review": {
+    "path": ".cache/phase2-bam-schema-documentary-review-v1/header-ascii-review.json",
+    "bytes": 5149,
+    "sha256": "bf73775aa5b22dad8801a7191ed0e120abdbca1ec164ec2bd2b8b6799ae1d39d"
+  },
+  "final_claim_review": {
+    "path": ".cache/phase2-bam-schema-documentary-review-v1/header-claim-addendum.json",
+    "bytes": 5581,
+    "sha256": "2c739e214dc6697b4138cd76f232cbb9d9f10834a4c456654c8627921a70bc58"
+  },
+  "stop": "No further source operations; no alternative decode, body parsing or requests.",
+  "network_GETs": 1,
+  "new_benchmark_admitted": false,
+  "tracked_edits": false
+}

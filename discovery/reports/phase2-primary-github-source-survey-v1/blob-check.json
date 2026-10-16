@@ -1,0 +1,16 @@
+[
+  {
+    "id": "readme",
+    "bytes": 6018,
+    "git_blob_sha1": "a03d55b12582567d826430d4c7423db79b2b327b",
+    "sha256": "9f5b9b9606d27af203462fcd872f6745324d8bbb85f8e3421cd7142b3eb2c83c",
+    "expected_match": true
+  },
+  {
+    "id": "license",
+    "bytes": 1082,
+    "git_blob_sha1": "93c7b0cfe77ee705d1c0d91cefac1563921a8f65",
+    "sha256": "a70905b4e682be470306a66e28d85b4f123f05233b73c2751fdde53dd0a6fbf9",
+    "expected_match": true
+  }
+]

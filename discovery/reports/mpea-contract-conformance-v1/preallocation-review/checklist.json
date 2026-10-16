@@ -1,0 +1,48 @@
+{
+  "schema": "final_engineering_gate_checklist.v1",
+  "decision": "PROSPECTIVE_SEQUENCE_CONDITIONALLY_ACCEPTABLE_NOT_ACTUAL_APPROVAL",
+  "source_hashes": {
+    ".cache/mpea-registration-allocation/capture-runbook/prepare_capture.py": "0f1b29305bc2e7392ef978e3937572a8106a95df329dcf2545ce2d643efa37b8",
+    ".cache/mpea-registration-allocation/capture-runbook/RUNBOOK.md": "c3db0e9a3c00a2b43d3712a741657c92f77c01ac0375b0fc5c71ade0a7a77b1a",
+    "scripts/mpea_registration_allocation.py": "d4a11c4c2b941e45d4079129583efc7bcf5ecfed551de137aae02f3f49a3146d",
+    "docs/mpea-registration-publication-v1.md": "c9fb1f2c44ae8b97c10a88ddbb369eb8d0feca752824c2ca3cbb656d3619c730",
+    "docs/mpea-t25-archival-protocol-v1.md": "c49047341d3932ddd67c67c9f2a04a6759c0d679bfeb96d811ba9541c0cc0378",
+    "docs/mpea-t25-implementation-contract-v1.md": "be45b1d8db9586035cf37bd9bbb9046c065c3851b91f93386f8c68d155215af9",
+    "docs/mpea-t25-operational-enforcement-v1.md": "e36e72818f92096c316df34789a35840c1e5b1561f9467561dd8787da072cf98",
+    "reports/mpea-private-contract-review-v1/v3/correction-closure-map-v3.md": "8b0fb861510ee90005c5a8f360ae96622c2fa15ee038c430cfd3bb1faeca6d9e",
+    "reports/mpea-contract-audit-v1/full-literal-contract-review-v1.md": "b383c17f21f75a26ff689796f61254d43804753cacf83b6aca24b5285ceb6f22",
+    ".cache/mpea-contract-full-suite-v1/source-before.json": "0fc119b1098db8bf75742ab584fd8c9959cc14cb04c6bc0a251d8c35b584d6f6",
+    ".cache/mpea-contract-full-suite-v1/index-before.json": "0fc119b1098db8bf75742ab584fd8c9959cc14cb04c6bc0a251d8c35b584d6f6"
+  },
+  "held_source": "hold-v3 custodyc79b8b45/driver920deb6d plus9 unchanged producers; source/index337 parity separately audited",
+  "C1_C9": "All nine repairs have scoped peer closure evidence; v1/v2/v3 suites are explicitly separate and historical failures preserved. This does not replace final integrated suite or source-bound CI. No additional concrete producer mismatch found in this bounded checklist.",
+  "pending_blockers": [
+    "Root genuine full337-closure unittest remains in progress at this observation; successful exit/unskipped summary and source-after==before must be captured before approval.",
+    "Final committed/pushed source closure must equal genuinely tested source map; remote sourceSHA and all4 exact original-branch Discovery Verify jobs must be authenticated successful.",
+    "Final browser and retained installed-source/wheel evidence must cover changed source and package probe; historical48 transport checks are not actual installed full PROBE execution.",
+    "Root must explicitly approve one exact engineering receipt byteSHA only after inspecting Python/browser/11 required behavioral mappings/independent reviews; self-sealed PASS is insufficient.",
+    "No actual private registration, annotatedtag publication, authenticated parent authorization or original scientific launch is claimed yet."
+  ],
+  "preallocation_sequence": [
+    "Retain final source-before/index/process/log/source-after from actual engineering run; keep all failures and scope labels.",
+    "Commit/push unchanged required closure; verify helper committed-source hashes equal genuine pretest map, exact observed remoteSHA and original run/fourjobIDs.",
+    "Use fresh exclusive private capture output; prepare helper requires exact command/intzero process and unskippedlog; retain all official response bytes and commands.",
+    "Review/approve exact engineeringSHA including external browser/behavior reviews; helper alone cannot authenticate execution or adequacy.",
+    "Create fixed annotated tag only after verified local/remote absence; canonicalASCIIJSON+exactLF annotation, unchanged commit, no force/replacement/GitHubRelease; retain rawobject/command and publicAPI evidence.",
+    "Original parentfactory authenticates live exactbranchHEAD, original4CI and fixed publictag under explicitapprovedengineeringSHA; worker consumes bound capture offline. Only then sole original entropy/allocation and guarded scientific stages.",
+    "Reproduction retains original sourcecheckout/tag/registration/allocationbytes and original4CI, restricts officialancestor authority and noentropy; report scientific equality separately from whole-file differences."
+  ],
+  "tag_trigger_safety": {
+    "workflows": 22,
+    "hash_snapshot_sha256": "7828d3f5908121783fe880c4dd219e398a55b089ee7d879d9d8c2e1cac8bd6d5",
+    "deploy_or_release_triggered_by_fixed_tag": false,
+    "verification_trigger_possible": "Discovery Verify has paths-only push; tag push ignores path filters and can run verification. Contents read and artifact uploads; no deploy/publish/GitHubRelease job. This tag run cannot replace original research-branch exactcommit CI."
+  },
+  "trust_boundaries": [
+    "Root authenticity of actual command/log/CI transport captures; GH/Git/host/PATH/interpreter discipline.",
+    "Publication verified before entropy by actual ordered execution receipts; tagger timestamp alone untrusted.",
+    "Network/resource supervised trustedworker boundary, sampledaggregateRSS+leaderpeak not instantaneoushardRSS isolation.",
+    "No scientific approval from conditional130proofs, checksums, features, engineeringPASS or retrospective positive result."
+  ],
+  "scope": "Read-only checklist and22-workflow source audit. No tests, API, tag, entropy, allocation, targets or sourcewrites. Actual approval requires outstanding observed gates."
+}

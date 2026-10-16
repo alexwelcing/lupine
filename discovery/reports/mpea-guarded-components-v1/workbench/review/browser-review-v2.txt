@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/mpea-workbench/review/browser_review.py", line 138, in <module>
+    if __name__=='__main__':run()
+                            ^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/mpea-workbench/review/browser_review.py", line 88, in run
+    assert canonical(json.loads(downloaded.read_bytes()))==(FIX/'complete-negative.json').read_bytes()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

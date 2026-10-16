@@ -1,0 +1,21 @@
+test_ceiling_respects_attainable_fractions_and_exact_jump (test_finite_planning.FinitePlanningWorldTests.test_ceiling_respects_attainable_fractions_and_exact_jump) ... FAIL
+
+======================================================================
+FAIL: test_ceiling_respects_attainable_fractions_and_exact_jump (test_finite_planning.FinitePlanningWorldTests.test_ceiling_respects_attainable_fractions_and_exact_jump)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-finite-planner-candidate-v1/mutant-floor/tests/test_finite_planning.py", line 74, in test_ceiling_respects_attainable_fractions_and_exact_jump
+    self.assertEqual((below.minimum_null_failures, exact.minimum_null_failures,
+AssertionError: Tuples differ: (1, 2, 2) != (2, 2, 3)
+
+First differing element 0:
+1
+2
+
+- (1, 2, 2)
++ (2, 2, 3)
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)

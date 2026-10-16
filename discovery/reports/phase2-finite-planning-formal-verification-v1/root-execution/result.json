@@ -1,0 +1,94 @@
+{
+  "status": "PASS_STRICT_BUILD_FRESH_AXIOM_AUDIT_AND_PARSER_TESTS",
+  "theorems": 143,
+  "modules": 11,
+  "prior_theorems": 130,
+  "added_theorems": 13,
+  "old_modules_unchanged": 10,
+  "runtime_files_unchanged": 345,
+  "source_held": {
+    "formal/LupineCoupled.lean": "d79afad3eafbf1cfe35fb920c5864059570f2018ff15c7b1badae5de83e39d7f",
+    "formal/LupineDecisionPool.lean": "10a5962eedf30819388a835b052df91f4fff130c79258d31eb345f51071cf00a",
+    "formal/LupineDiscovery.lean": "93adb82c8caceb6620285bea612b4c80e4cf11c7da6d1e04b8ba595f43c6c515",
+    "formal/LupineExchangeability.lean": "0e326c4b51e5ca00d1deb32be61ba7b80ca0c443059d0fbf13e22f05717610ce",
+    "formal/LupineIntervals.lean": "9dec04611f670efdd8deaa6e05f802199f418c9089a5c29148bf8ca4534d8fc4",
+    "formal/LupineNormalization.lean": "280be8e7b4724af3b6092bf497d3b29c3a9b3a29b135942cf76cfa273015db32",
+    "formal/LupinePareto.lean": "077e657e5b6d77ef878c325baf9db909adff73f23408385ee464482cd6acd4c0",
+    "formal/LupineProjection.lean": "600af2ee02e8f5ed7f84046d5abab253dc74be3d556414d67438e49a6f3c4f2d",
+    "formal/LupineRisk.lean": "bea0e0cb18daeb41a26e7c721bef0dec6e1c361f3ccf1c9f7f7dbf2176c0fcdf",
+    "formal/LupineSharpness.lean": "1135d8ba14c6d2c388bc5aaa40fc4ce71d55fe09cb8c90bf7319a70a84cbb871",
+    "formal/README.md": "7782fb9495e94714aeb75b85f44906c54a90de02ec49d88133d16b270897f63f",
+    "formal/VERIFICATION.md": "6a097886d61dc9a1bb4c4cba2a6a20cb63d254f9649dd70e6da3cf80e5aa99df",
+    "formal/audit_axioms.py": "1a30e19f3e38d5481ac321be5ece1efc7025925a4a218e51ff5f5f0b49756386",
+    "formal/history/README.md": "63eb1576eeb3209dae801ff54346fa404fa42da110e091c7e0d1ce1da33b2d46",
+    "formal/lake-manifest.json": "641a25267cd8312c08757ff0f0f5738f3adb67598b8205603dbf8ac2255f9275",
+    "formal/lakefile.toml": "c8250ba2c032f8950501da16d50f9001cad13dc8fb204970cb15c3ac37484363",
+    "formal/lean-toolchain": "651c8accb402b0c071cd336e9d3dc0a55516b1bfb434ddc4801f14936785b1d2",
+    "formal/test_audit_axioms.py": "fb9a8795c852ea59835be51b34a9c6592597ec5bd47ec3b8506e754222e1a993",
+    "formal/LupineFinitePlanning.lean": "391b03aefda0f7bac5bd380347b81febc8a4ebbd329ae3a099981784803973bd"
+  },
+  "inventory_sha256": "ae31d83d3fa136bf52c2d3cb8f2e94b349066eefa2d7f7e2eb672c68ce6b715b",
+  "axiom_output_sha256": "1386bccd866f772b801b50c692bc50bebbeae492ca08b41b833bbf3260f0a6e8",
+  "commands": [
+    {
+      "command": [
+        "/home/agent/.elan/bin/lake",
+        "--wfail",
+        "build"
+      ],
+      "cwd": "formal",
+      "exit_code": 0,
+      "timed_out": false,
+      "started_ns": 1792168342177205331,
+      "finished_ns": 1792168362077460772,
+      "process_seconds": 19.93577615999675,
+      "source_held": true,
+      "runtime_345_held": true,
+      "stdout_sha256": "dbc02b3149cf5d83587ad1d4f45c4705c0fb2819815cb0cefc5345d00b0bfa96",
+      "stdout_bytes": 19818,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "audit_axioms.py"
+      ],
+      "cwd": "formal",
+      "exit_code": 0,
+      "timed_out": false,
+      "started_ns": 1792168362113382053,
+      "finished_ns": 1792168494770596886,
+      "process_seconds": 132.71293271600007,
+      "source_held": true,
+      "runtime_345_held": true,
+      "stdout_sha256": "619af67a3b1ce4ec3b9fcebb26348f54e00cbef5ee72d76a3d96d00921c3c6dd",
+      "stdout_bytes": 78,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-m",
+        "unittest",
+        "test_audit_axioms",
+        "-v"
+      ],
+      "cwd": "formal",
+      "exit_code": 0,
+      "timed_out": false,
+      "started_ns": 1792168494828073625,
+      "finished_ns": 1792168495297797707,
+      "process_seconds": 0.8532594959979178,
+      "source_held": true,
+      "runtime_345_held": true,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stderr_sha256": "9388369479d9f7261f9476f7c1c61af4ca2eeced213d6a8032a6918ff8b8038b",
+      "stderr_bytes": 1300
+    }
+  ],
+  "python_refinement": false,
+  "scientific_admission": false
+}

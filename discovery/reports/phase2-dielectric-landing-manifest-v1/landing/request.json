@@ -1,0 +1,10 @@
+{
+  "credentials": false,
+  "maximum_response_bytes": 2097152,
+  "method": "GET",
+  "redirects": "reject",
+  "retries": 0,
+  "started_at": "2026-10-16T16:17:53.823231+00:00",
+  "timeout_seconds": 30,
+  "url": "https://datadryad.org/dataset/doi:10.5061/dryad.ph81h"
+}

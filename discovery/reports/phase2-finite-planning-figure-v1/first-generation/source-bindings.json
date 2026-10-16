@@ -1,0 +1,8 @@
+{
+  "binding_scope": "Current planner source identity only; no project module imported and no runtime conformance assertion executed.",
+  "commit": "4492858d9e55ddfa3cca2e208063799517948b13",
+  "files": {
+    "src/lupine_discovery/finite_planning.py": "027785ccdf24f6e8cf9b7a8ac98987b821fcdb19c875bbe8d2ba52d2fc3895f8",
+    "src/lupine_discovery/study_planning.py": "7a2b00bc81f8bc025b9bb3d6c6c212875d44a9839c4665ec67c86e46fe5f6d83"
+  }
+}

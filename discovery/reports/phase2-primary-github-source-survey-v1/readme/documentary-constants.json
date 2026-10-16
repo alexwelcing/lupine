@@ -1,0 +1,80 @@
+[
+  {
+    "line": 1,
+    "documentary_number_tokens": [
+      "2024"
+    ]
+  },
+  {
+    "line": 3,
+    "documentary_number_tokens": [
+      "108k",
+      "30",
+      "3d",
+      "4d",
+      "5d",
+      "30k"
+    ]
+  },
+  {
+    "line": 7,
+    "documentary_number_tokens": [
+      "2024",
+      "-1",
+      "0",
+      "1"
+    ]
+  },
+  {
+    "line": 7,
+    "exact_method_tokens_present": [
+      "GFN2-xTB",
+      "closed-shell singlet"
+    ]
+  },
+  {
+    "line": 9,
+    "documentary_number_tokens": [
+      "2024",
+      "86k",
+      "10.1021",
+      "0",
+      "60k",
+      "2023",
+      "30k",
+      "024",
+      "00616",
+      "5"
+    ]
+  },
+  {
+    "line": 17,
+    "documentary_number_tokens": [
+      "108k"
+    ]
+  },
+  {
+    "line": 22,
+    "exact_method_tokens_present": [
+      "DFT(TPSSh-D3BJ/def2-SVP)"
+    ]
+  },
+  {
+    "line": 23,
+    "exact_method_tokens_present": [
+      "GFN2-xTB"
+    ]
+  },
+  {
+    "line": 36,
+    "documentary_number_tokens": [
+      "86k"
+    ]
+  },
+  {
+    "line": 39,
+    "documentary_number_tokens": [
+      "2020"
+    ]
+  }
+]

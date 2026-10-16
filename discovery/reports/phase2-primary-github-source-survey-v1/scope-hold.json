@@ -1,0 +1,7 @@
+{
+  "frozen_at": "2026-10-16T17:15:10.624046+00:00",
+  "scope_sha256": "f041d0e741e11639213383a33a65184ae0c225d5a341557820084c93a77cdb0d",
+  "acquirer_sha256": "ed21a2409fd9d6de30dc3fb2534ffdb7c3d8599adc2fd2208755fc1335959ab0",
+  "requests_completed": 0,
+  "network_observation": "Managed environment connected; current unrestricted HTTP policy enforced; inherited proxy/TLS retained; no credentials used."
+}

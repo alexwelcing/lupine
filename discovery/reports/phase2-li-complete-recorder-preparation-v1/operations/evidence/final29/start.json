@@ -1,0 +1,66 @@
+{
+  "before": {
+    ".cache/phase2-li-complete-readiness-operations-v1/README.md": {
+      "bytes": 12079,
+      "sha256": "314cb6f2e45600c25a59672abed9f02dccd6898ee97dc5581bf60b9b1bc5e5b0"
+    },
+    ".cache/phase2-li-complete-readiness-operations-v1/bindings-frame.json": {
+      "bytes": 6070,
+      "sha256": "b5722ac77423b8e531d763e0e4ca9d84efb83a3d13715dc1aaa6d44be4235f77"
+    },
+    ".cache/phase2-li-complete-readiness-operations-v1/bindings-inventory.json": {
+      "bytes": 4636,
+      "sha256": "46a997ff76b981d8e7a57861dc94fc2823867b8e4cc0f3d1a2cd908933029fc1"
+    },
+    ".cache/phase2-li-complete-readiness-operations-v1/bindings-layout.json": {
+      "bytes": 3306,
+      "sha256": "a602bb995437a6eb2f2c8dadfa22dcff961972cdd0f86cba41bbec51ad653524"
+    },
+    ".cache/phase2-li-complete-readiness-operations-v1/record_synthetic.py": {
+      "bytes": 2510,
+      "sha256": "2966fec8548d6dbf88029a54e0f9111b3700eb429875454d1b7a98804f1a87f3"
+    },
+    ".cache/phase2-li-complete-readiness-operations-v1/recorder_support.py": {
+      "bytes": 15907,
+      "sha256": "6533ff3b934646fb2fa4e11cead85bc9f0ce5ffe8e4901ad27eb55c4e12e625c"
+    },
+    ".cache/phase2-li-complete-readiness-operations-v1/run_after_ci.py": {
+      "bytes": 34564,
+      "sha256": "f13ec4ad78d28266a405120e9ff644ba3856bfeacae851912678ceeb7f486dc5"
+    },
+    ".cache/phase2-li-complete-readiness-operations-v1/run_package.py": {
+      "bytes": 4660,
+      "sha256": "ff75410bb8b68de831a6db16dab89d314b0cf329ca22188badd4e2d0ff38831a"
+    },
+    ".cache/phase2-li-complete-readiness-operations-v1/source-hold.json": {
+      "bytes": 1326,
+      "sha256": "751b0a4f346489075e326c15aaa71e0d0c93ddab7f6e9878d1cc0c8b9c832e0c"
+    },
+    ".cache/phase2-li-complete-readiness-operations-v1/tests/test_operations_recorder.py": {
+      "bytes": 36662,
+      "sha256": "9bd9789eadf3e876a823ce2d30b9d2dcbb06d64123d4675c4e6da6a1f02f9f8b"
+    },
+    ".cache/phase2-li-complete-route-public-review-design-v1/public_review_validator.py": {
+      "bytes": 50912,
+      "sha256": "db934708623a69282918c35f96d1eec442c94a5e4d6af109e51e2079653f14ca"
+    },
+    ".cache/phase2-li-complete-route-public-review-design-v1/test_public_review_validator.py": {
+      "bytes": 27752,
+      "sha256": "835cab953d7251d509bcaa965675560b94835ccb242077b56de66134e29a3085"
+    }
+  },
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-operations-v1/tests",
+    "-p",
+    "test_*.py",
+    "-v"
+  ],
+  "scope": "Generated fixtures/local temporary Git/inert child processes only; no actual source operations.",
+  "started_ns": 1792166720218574491
+}

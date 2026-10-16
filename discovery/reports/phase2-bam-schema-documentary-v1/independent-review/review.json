@@ -1,0 +1,59 @@
+{
+  "schema": "lupine.bam-schema-documentary-independent-review.v1",
+  "completed_at": "2026-10-16T09:47:38.572545+00:00",
+  "owner": "/root/phase2_evidence/author_methods_review",
+  "result": "IDENTITY_CONFIRMED_DOCUMENTARY_INTERPRETATION_BLOCKED_UNKNOWN_ENCODING",
+  "blocking_finding": {
+    "kind": "DECLARED_CHARSET_STRICT_DECODE_FAILURE",
+    "details": "Response advertises UTF-8, but strict UTF-8 decoding independently fails at zero-based byte offset 2738 on byte 0x85, invalid start byte. No full text decode or CSV parsing completed. Encoding is unknown; no fallback was attempted.",
+    "first_failure_receipt": "first-decode-failure.json",
+    "first_failure_sha256": "e2a30f0698c84394ed6424e7fc3126e645df3fcb8408fe1ad122d90e4da39a0b"
+  },
+  "verified": {
+    "frozen_scope_sha256": "4dd45c8c32569abed1db62a133b36408c981a19cf4da0a637757930349dee25d",
+    "scope_precedes_get": true,
+    "scope_frozen_at": "2026-10-16T09:45:14.187120+00:00",
+    "request_started_at": "2026-10-16T09:45:36.233548+00:00",
+    "request_finished_at": "2026-10-16T09:45:37.804119+00:00",
+    "request_and_final_url_match_frozen_url": true,
+    "recorded_requests_attempted": 1,
+    "recorded_http_status": 200,
+    "recorded_retries": 0,
+    "recorded_redirects_followed": 0,
+    "recorded_content_encoding": null,
+    "expected_size_matches": true,
+    "publisher_md5_matches": true,
+    "retained_sha256_matches_receipt": true,
+    "bytes": 41000,
+    "md5": "330a8405f6cb9c4fcfe221baea7ced27",
+    "sha256": "e75c85d770598acf19a4bd1cb9c94b6adf7bb92cf46b153cbc904896a1160f1a",
+    "utf8_bom_present": false
+  },
+  "exposure": {
+    "whole_retained_schema_bytes_read": true,
+    "strict_decode_attempted": true,
+    "complete_decode_succeeded": false,
+    "csv_parse_attempted": false,
+    "header_or_cell_projection_completed": false,
+    "researcher_visible_body_projection": "None. The decode failed before the intended first-line layout projection. Only the technical exception byte/offset was returned.",
+    "honest_scope": "Full raw documentation was machine-read. Unknown examples/comments may exist inside it; no target-blind or untouched-evidence claim is made."
+  },
+  "not_established": [
+    "Actual eleven headers or eleventh role",
+    "CSV delimiter, record framing or hierarchy",
+    "Units, uncertainty, covariance or provenance semantics from schema cells",
+    "Empirical example interpretation or source readiness",
+    "Any claim that the earlier closed PARTIAL parser ran or passed"
+  ],
+  "stop_respected": [
+    "No ASCII, Latin1, CP1252 or other fallback reinterpretation.",
+    "No network by reviewer, secondary URL, workbook, LIS, XLSX, image, measurement archive or private custody access.",
+    "No formula evaluation, product import/test, scientific evaluation, tracked edit or Git mutation."
+  ],
+  "next_boundary": "Any encoding-provenance investigation or alternate documentary interpretation requires a separately bounded scope that preserves this failed UTF-8 attempt; no silent repair or admission follows from matching byte identity.",
+  "limitations": [
+    "Acquisition request facts are checked against the retained receipt and frozen scope; reviewer did not perform an independent network request.",
+    "Matching hashes/MD5 establish artifact identity, not valid encoding, reliable schema semantics or scientific truth.",
+    "This is a documentary decode failure, not a product or scientific test failure."
+  ]
+}

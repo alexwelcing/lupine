@@ -1,0 +1,245 @@
+{
+  "amended": {
+    "broken_local_links": [],
+    "links": [
+      {
+        "checked": true,
+        "exists": true,
+        "kind": "inline",
+        "line": 69,
+        "path": "reports/phase2-finite-planning-formal-verification-v1/README.md",
+        "resolved_path": "reports/phase2-finite-planning-formal-verification-v1/integration-preparation/finite-planning-section.md.utf8.json",
+        "scope": "local",
+        "target": "integration-preparation/finite-planning-section.md.utf8.json"
+      },
+      {
+        "checked": true,
+        "exists": true,
+        "kind": "inline",
+        "line": 70,
+        "path": "reports/phase2-finite-planning-formal-verification-v1/README.md",
+        "resolved_path": "reports/phase2-finite-planning-formal-verification-v1/integration-preparation/promotion/formal/README.md.utf8.json",
+        "scope": "local",
+        "target": "integration-preparation/promotion/formal/README.md.utf8.json"
+      },
+      {
+        "checked": true,
+        "exists": true,
+        "kind": "inline",
+        "line": 3,
+        "path": "reports/phase2-finite-planning-formal-verification-v1/independent-review/README.md",
+        "resolved_path": "reports/phase2-finite-planning-formal-verification-v1/independent-review/review.json",
+        "scope": "local",
+        "target": "review.json"
+      },
+      {
+        "checked": true,
+        "exists": true,
+        "kind": "inline",
+        "line": 3,
+        "path": "reports/phase2-finite-planning-formal-verification-v1/independent-review/README.md",
+        "resolved_path": "reports/phase2-finite-planning-formal-verification-v1/independent-review/first-compile/execution.json",
+        "scope": "local",
+        "target": "first-compile/execution.json"
+      }
+    ],
+    "markdown_count": 5,
+    "markdown_files": [
+      {
+        "bytes": 5241,
+        "path": "reports/phase2-finite-planning-formal-verification-v1/README.md",
+        "sha256": "26c9d44c5171f31b32bd283c7a284bfd5207ba3809eea686d1bc279bbee0f17e"
+      },
+      {
+        "bytes": 4565,
+        "path": "reports/phase2-finite-planning-formal-verification-v1/candidate/README.md",
+        "sha256": "c0b94315bd759832bc48aaa5328cea797810278d177f917ba25cad0521cb1a26"
+      },
+      {
+        "bytes": 2377,
+        "path": "reports/phase2-finite-planning-formal-verification-v1/independent-review/README.md",
+        "sha256": "1c2f19579f665aa19bada77c9b5225d88ad517a197eab40dc3009588a1300f5d"
+      },
+      {
+        "bytes": 3221,
+        "path": "reports/phase2-finite-planning-formal-verification-v1/integration-preparation/README.md",
+        "sha256": "3fdeec5114f4ec1dcb5369cde5f8e633ed3468eaac3e1eee9e813eee803efb8f"
+      },
+      {
+        "bytes": 3009,
+        "path": "reports/phase2-finite-planning-formal-verification-v1/integration-preparation/promotion/formal/history/README.md",
+        "sha256": "63eb1576eeb3209dae801ff54346fa404fa42da110e091c7e0d1ce1da33b2d46"
+      }
+    ],
+    "reference_style_uses": [],
+    "scope": "All listed Markdown files; local path existence, no network requests or generic rendering/fragment-anchor proof."
+  },
+  "original": {
+    "broken_local_links": [
+      {
+        "checked": true,
+        "exists": false,
+        "kind": "inline",
+        "line": 37,
+        "path": "reports/phase2-finite-planning-formal-verification-v1/integration-preparation/finite-planning-section.md",
+        "resolved_path": "reports/phase2-finite-planning-formal-verification-v1/docs/finite-population-planning.md",
+        "scope": "local",
+        "target": "../docs/finite-population-planning.md"
+      },
+      {
+        "checked": true,
+        "exists": false,
+        "kind": "inline",
+        "line": 361,
+        "path": "reports/phase2-finite-planning-formal-verification-v1/integration-preparation/promotion/formal/README.md",
+        "resolved_path": "reports/phase2-finite-planning-formal-verification-v1/integration-preparation/promotion/docs/decision-pool-calibration-design.md",
+        "scope": "local",
+        "target": "../docs/decision-pool-calibration-design.md"
+      },
+      {
+        "checked": true,
+        "exists": false,
+        "kind": "inline",
+        "line": 434,
+        "path": "reports/phase2-finite-planning-formal-verification-v1/integration-preparation/promotion/formal/README.md",
+        "resolved_path": "reports/phase2-finite-planning-formal-verification-v1/integration-preparation/promotion/docs/normalization.md",
+        "scope": "local",
+        "target": "../docs/normalization.md"
+      },
+      {
+        "checked": true,
+        "exists": false,
+        "kind": "inline",
+        "line": 435,
+        "path": "reports/phase2-finite-planning-formal-verification-v1/integration-preparation/promotion/formal/README.md",
+        "resolved_path": "reports/phase2-finite-planning-formal-verification-v1/integration-preparation/promotion/reports/formal-normalization-review-v1/README.md",
+        "scope": "local",
+        "target": "../reports/formal-normalization-review-v1/README.md"
+      },
+      {
+        "checked": true,
+        "exists": false,
+        "kind": "inline",
+        "line": 473,
+        "path": "reports/phase2-finite-planning-formal-verification-v1/integration-preparation/promotion/formal/README.md",
+        "resolved_path": "reports/phase2-finite-planning-formal-verification-v1/integration-preparation/promotion/docs/finite-population-planning.md",
+        "scope": "local",
+        "target": "../docs/finite-population-planning.md"
+      }
+    ],
+    "links": [
+      {
+        "checked": true,
+        "exists": true,
+        "kind": "inline",
+        "line": 3,
+        "path": "reports/phase2-finite-planning-formal-verification-v1/independent-review/README.md",
+        "resolved_path": "reports/phase2-finite-planning-formal-verification-v1/independent-review/review.json",
+        "scope": "local",
+        "target": "review.json"
+      },
+      {
+        "checked": true,
+        "exists": true,
+        "kind": "inline",
+        "line": 3,
+        "path": "reports/phase2-finite-planning-formal-verification-v1/independent-review/README.md",
+        "resolved_path": "reports/phase2-finite-planning-formal-verification-v1/independent-review/first-compile/execution.json",
+        "scope": "local",
+        "target": "first-compile/execution.json"
+      },
+      {
+        "checked": true,
+        "exists": false,
+        "kind": "inline",
+        "line": 37,
+        "path": "reports/phase2-finite-planning-formal-verification-v1/integration-preparation/finite-planning-section.md",
+        "resolved_path": "reports/phase2-finite-planning-formal-verification-v1/docs/finite-population-planning.md",
+        "scope": "local",
+        "target": "../docs/finite-population-planning.md"
+      },
+      {
+        "checked": true,
+        "exists": false,
+        "kind": "inline",
+        "line": 361,
+        "path": "reports/phase2-finite-planning-formal-verification-v1/integration-preparation/promotion/formal/README.md",
+        "resolved_path": "reports/phase2-finite-planning-formal-verification-v1/integration-preparation/promotion/docs/decision-pool-calibration-design.md",
+        "scope": "local",
+        "target": "../docs/decision-pool-calibration-design.md"
+      },
+      {
+        "checked": true,
+        "exists": false,
+        "kind": "inline",
+        "line": 434,
+        "path": "reports/phase2-finite-planning-formal-verification-v1/integration-preparation/promotion/formal/README.md",
+        "resolved_path": "reports/phase2-finite-planning-formal-verification-v1/integration-preparation/promotion/docs/normalization.md",
+        "scope": "local",
+        "target": "../docs/normalization.md"
+      },
+      {
+        "checked": true,
+        "exists": false,
+        "kind": "inline",
+        "line": 435,
+        "path": "reports/phase2-finite-planning-formal-verification-v1/integration-preparation/promotion/formal/README.md",
+        "resolved_path": "reports/phase2-finite-planning-formal-verification-v1/integration-preparation/promotion/reports/formal-normalization-review-v1/README.md",
+        "scope": "local",
+        "target": "../reports/formal-normalization-review-v1/README.md"
+      },
+      {
+        "checked": true,
+        "exists": false,
+        "kind": "inline",
+        "line": 473,
+        "path": "reports/phase2-finite-planning-formal-verification-v1/integration-preparation/promotion/formal/README.md",
+        "resolved_path": "reports/phase2-finite-planning-formal-verification-v1/integration-preparation/promotion/docs/finite-population-planning.md",
+        "scope": "local",
+        "target": "../docs/finite-population-planning.md"
+      }
+    ],
+    "markdown_count": 7,
+    "markdown_files": [
+      {
+        "bytes": 4564,
+        "path": "reports/phase2-finite-planning-formal-verification-v1/README.md",
+        "sha256": "ce98f8b404ce3feb790866d85c90525810f0e2504d479765912181c966386cc9"
+      },
+      {
+        "bytes": 4565,
+        "path": "reports/phase2-finite-planning-formal-verification-v1/candidate/README.md",
+        "sha256": "c0b94315bd759832bc48aaa5328cea797810278d177f917ba25cad0521cb1a26"
+      },
+      {
+        "bytes": 2377,
+        "path": "reports/phase2-finite-planning-formal-verification-v1/independent-review/README.md",
+        "sha256": "1c2f19579f665aa19bada77c9b5225d88ad517a197eab40dc3009588a1300f5d"
+      },
+      {
+        "bytes": 3221,
+        "path": "reports/phase2-finite-planning-formal-verification-v1/integration-preparation/README.md",
+        "sha256": "3fdeec5114f4ec1dcb5369cde5f8e633ed3468eaac3e1eee9e813eee803efb8f"
+      },
+      {
+        "bytes": 2935,
+        "path": "reports/phase2-finite-planning-formal-verification-v1/integration-preparation/finite-planning-section.md",
+        "sha256": "3951aac1a186c8c3400606ee77f65bca42da7d9d58034b8839413edb6ac08afa"
+      },
+      {
+        "bytes": 37277,
+        "path": "reports/phase2-finite-planning-formal-verification-v1/integration-preparation/promotion/formal/README.md",
+        "sha256": "7782fb9495e94714aeb75b85f44906c54a90de02ec49d88133d16b270897f63f"
+      },
+      {
+        "bytes": 3009,
+        "path": "reports/phase2-finite-planning-formal-verification-v1/integration-preparation/promotion/formal/history/README.md",
+        "sha256": "63eb1576eeb3209dae801ff54346fa404fa42da110e091c7e0d1ce1da33b2d46"
+      }
+    ],
+    "reference_style_uses": [],
+    "scope": "All listed Markdown files; local path existence, no network requests or generic rendering/fragment-anchor proof."
+  },
+  "schema": "lupine.publication-local-link-review.v1",
+  "status": "PASS_AMENDED_LOCAL_PATHS"
+}

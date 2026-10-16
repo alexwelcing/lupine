@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-16T14:12:59.641658+00:00",
+  "decision_sha256": "745175f952dd0c95c2e9fa2079e4e2ab3d1ae2f9f9e49b1177922e87bddd7016",
+  "exact_role_labels": [
+    "References",
+    "Column Descriptions"
+  ],
+  "clarification": "The decision prose used ColumnDescriptions as shorthand. The literal admitted role remains Column Descriptions with a space, exactly as unchanged pure5fd1 ROLES and publisher evidence. No alias, normalization or new role is authorized.",
+  "actual_source_operation": false
+}

@@ -1,0 +1,31 @@
+{
+  "schema": "lupine.bam-encoding-comparison-execution.v1",
+  "started_at": "2026-10-16T10:01:38.345873+00:00",
+  "finished_at": "2026-10-16T10:01:38.450290+00:00",
+  "elapsed_seconds": 0.10441660499782301,
+  "command": [
+    "python",
+    ".cache/phase2-bam-encoding-comparison-v1/compare_documentation.py"
+  ],
+  "cwd": "discovery/",
+  "exit_code": 0,
+  "frozen_inputs": [
+    {
+      "path": ".cache/phase2-bam-encoding-comparison-v1/scope.json",
+      "sha256": "31c0b4fd7325abe9338405284f4afb1da4ccb6aad52f67b8a4849e4c96d11593"
+    },
+    {
+      "path": ".cache/phase2-bam-encoding-comparison-v1/compare_documentation.py",
+      "sha256": "a1c879a6a9b9a0a62e8e570e98758fb2194ddc430db97b0aeeede758dfa91f53"
+    },
+    {
+      "path": ".cache/phase2-bam-encoding-comparison-review-v1/source-review.json",
+      "sha256": "2c18aa2c6c3e0c3b1178ba623d3c66970f33394fbef94bbba34ad92bbac29042"
+    }
+  ],
+  "stdout_sha256": "4bd33191b050582a194d99f83759a4be4ded48134f1958f4ea0ad6ee384a60e2",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "invocations": 1,
+  "network_requests": 0,
+  "scope": "Both named strict codec hypotheses on the same retained schema as exposed technical documentation; no encoding winner or source correction."
+}

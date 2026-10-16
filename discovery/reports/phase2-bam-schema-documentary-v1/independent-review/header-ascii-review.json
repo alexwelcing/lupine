@@ -1,0 +1,99 @@
+{
+  "schema": "lupine.bam-ascii-header-independent-review.v1",
+  "completed_at": "2026-10-16T09:51:22.717703+00:00",
+  "owner": "/root/phase2_evidence/author_methods_review",
+  "result": "PASS_FIRST_RECORD_ASCII_HEADER_ONLY",
+  "bindings": [
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/header-ascii-v1/scope.json",
+      "bytes": 3561,
+      "sha256": "e2e1c87754e378f56d3cfa9f13dc3d2e538f7cb88ac2890bb3acd301bd1908ef"
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/header-ascii-v1/project_header.py",
+      "bytes": 4369,
+      "sha256": "58646fec093fe189aced911df6e62a38bd3e2bd789d0176420e1c0393778f92a"
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/header-ascii-v1/execution.json",
+      "bytes": 756,
+      "sha256": "771f572a122ae2a4c8d4d23c971ad35b301acea7428e186c3219a0c2f46a213d"
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/header-ascii-v1/result.json",
+      "bytes": 1170,
+      "sha256": "8b1d45a9a9400ac12b9dec60b72ad8de9d7788d232d98a6889cd7a450519377b"
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/header-ascii-v1/stdout.txt",
+      "bytes": 1170,
+      "sha256": "8b1d45a9a9400ac12b9dec60b72ad8de9d7788d232d98a6889cd7a450519377b"
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/header-ascii-v1/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-review-v1/header-exposure-before-read.json",
+      "bytes": 385,
+      "sha256": "0dbf33cd6980182da4c20c7afa3e91d925f9d07216b3fde84923ee05663ecbb4"
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-review-v1/review.json",
+      "bytes": 3451,
+      "sha256": "50fe823ce8891471739fedafa8880838c2ac7fe5543a2b5c2c55bdc244f3c8c4"
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-review-v1/first-decode-failure.json",
+      "bytes": 1454,
+      "sha256": "e2a30f0698c84394ed6424e7fc3126e645df3fcb8408fe1ad122d90e4da39a0b"
+    }
+  ],
+  "checks": {
+    "scope_precedes_recorded_invocation": true,
+    "script_identity_matches_scope_and_execution": true,
+    "result_stdout_and_execution_identities_agree": true,
+    "recorded_exit_code": 0,
+    "recorded_stderr_empty": true,
+    "prior_blocked_artifact_identities_unchanged": true,
+    "same_raw_body_size_md5_sha256_verified": true,
+    "independent_first_record_matches_authored_result": true,
+    "first_record_bytes": 179,
+    "first_terminator": "CRLF",
+    "all_record_bytes_ascii_and_no_forbidden_controls": true,
+    "actual_record_contains_no_quote_bytes": true,
+    "unique_delimiter_among_three_frozen_candidates": "SEMICOLON",
+    "literal_field_count": 11,
+    "headers": [
+      "CATEGORY I",
+      "CATEGORY II",
+      "CATEGORY III",
+      "CATEGORY IV",
+      "ENTRY",
+      "SYMBOL",
+      "UNIT",
+      "DATA TYPE",
+      "EXEMPLARY ANSWER OR OPTIONS SEPARATED BY SLASH IN CASE OF DATA TYPE DROP-DOWN LIST",
+      "REQUIREMENT",
+      "COMMENTS"
+    ]
+  },
+  "source_review": "The authored source checks complete raw identity before projection; constrains first terminator, ASCII/control bytes, strict quoted/unquoted/closed states and three delimiter candidates; it only ASCII-decodes accepted first-record field bytes. No network, subsequent record decode or body CSV parse exists in this path. This was static review, not a general parser test suite.",
+  "independent_method": "Did not import or execute project_header.py. Rehashed the exact retained raw bytes, selected the first physical record within the frozen prefix bound, verified actual record has no quotes, and independently checked delimiter-separated exact ASCII labels for all three frozen candidates. No later record was interpreted.",
+  "conclusion": "Literal first-record labels establish eleven columns including UNIT at position seven, resolving the previously missing header label. They do not establish unit contents, hierarchy behavior, row framing, uncertainty/covariance/provenance meanings or a whole-file dialect.",
+  "preserved_failure": "The earlier full-body UTF-8 failure at offset 2738 / byte 0x85 is unchanged. Whole-document encoding and body interpretation remain blocked. Header-only success is additional separately scoped evidence, not a fallback decode or a successful whole-document/partial-role parser run.",
+  "exposure": {
+    "whole_raw_body_machine_read_again_for_identity": true,
+    "first_physical_record_ascii_decoded_and_reviewed": true,
+    "later_record_text_decoded_or_parsed": false,
+    "full_file_decode_completed": false,
+    "not_target_blind_or_untouched": true
+  },
+  "blocking_findings": [],
+  "limitations": [
+    "Header delimiter uniqueness is relative only to comma/semicolon/tab and this one physical record. It does not prove a complete dialect or multiline body conformance.",
+    "The authored projector was not rerun and no product/scientific tests were performed.",
+    "No new network, other object/archive/workbook/LIS/XLSX/image, formula evaluation, model, scientific criterion, tracked edit or Git mutation."
+  ]
+}

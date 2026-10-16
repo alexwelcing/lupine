@@ -1,0 +1,32 @@
+{
+  "schema": "lupine.li-reference-identity-artifact-check.v1",
+  "created_at": "2026-10-16T09:17:07.035731+00:00",
+  "result": "PASS_LOCAL_METADATA_BINDINGS_CHRONOLOGY_AND_NAVIGATION",
+  "bound_artifacts": 17,
+  "queries": [
+    {
+      "request": "exact",
+      "scope_precedes_request": true,
+      "response_bytes_hash_match_receipt": true,
+      "status": 200,
+      "no_retry": true,
+      "no_redirect": true
+    },
+    {
+      "request": "candidate",
+      "scope_precedes_request": true,
+      "response_bytes_hash_match_receipt": true,
+      "status": 200,
+      "no_retry": true,
+      "no_redirect": true
+    }
+  ],
+  "projection_correction_exact": true,
+  "candidate_count_is_registry_result_count_only": 3,
+  "local_markdown_links": [
+    "citation-map.json",
+    "scope.json",
+    "candidate-query-scope.json"
+  ],
+  "limits": "Identity/projection/chronology checks only; no product test, full-paper request, source correction, measurement join, sampling or scientific validation."
+}

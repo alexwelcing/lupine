@@ -1,0 +1,57 @@
+{
+  "schema": "lupine.discovery.pareto_outcomes.v1",
+  "scenario_id": "pareto-tradeoffs",
+  "problem_digest": "12b3bf44a7ecc5c59a2e29e34127e184349fde514a65345c518c62c5f7f6cc09",
+  "outcomes": [
+    {
+      "id": "a",
+      "objectives": {
+        "cost": "0",
+        "risk": "3"
+      },
+      "constraints": {
+        "limit": "-1"
+      }
+    },
+    {
+      "id": "a-twin",
+      "objectives": {
+        "cost": "0",
+        "risk": "3"
+      },
+      "constraints": {
+        "limit": "-1"
+      }
+    },
+    {
+      "id": "b",
+      "objectives": {
+        "cost": "3",
+        "risk": "0"
+      },
+      "constraints": {
+        "limit": "-1"
+      }
+    },
+    {
+      "id": "bad",
+      "objectives": {
+        "cost": "4",
+        "risk": "4"
+      },
+      "constraints": {
+        "limit": "-1"
+      }
+    },
+    {
+      "id": "infeasible",
+      "objectives": {
+        "cost": "-1",
+        "risk": "-1"
+      },
+      "constraints": {
+        "limit": "1"
+      }
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "lupine.discovery.finite_archive_design_review.v1",
+  "status": "PASS_WRITTEN_MATHEMATICAL_REVIEW",
+  "reviewed_at": "2026-10-16T06:48:10.144750+00:00",
+  "author": "phase2_math",
+  "independent_reviewer": "phase2_math/proof_check",
+  "note_sha256": "c26fcba7ea5e70660e8d5657539ab36effd6bf991df6471f5d7da61ba0a8886a",
+  "source_bindings_sha256": "1e7cf370d96b538d59bb35158e77acd4288bc218708e99f248bc5cf38099df54",
+  "scope": "Original finite randomization design argument and public-source/formal-premise review, not a selected study, executed experiment, new proof-assistant theorem or implementation refinement.",
+  "checked": [
+    "Uniform fixed-panel permutation yields exchangeable selected score coordinates via a measure-preserving position bijection; pushed-forward weights account for repeated score vectors.",
+    "Exact marginal finite-rank loss bound and deterministic all-universe fallback; no conditional-on-calibration/feasibility/fixed-future identity claim.",
+    "Frozen role-independent training, grouping, endpoint, fixed-label and complete/role-blind secondary-population requirements; overlap does not supply physical independence or separate cost.",
+    "Constructed calibration, fixed-future, feasibility, missingness, role-dependent-fit and shared-calibration counterexamples.",
+    "Conditional residual sampling Hypergeometric(M,K,e), exact zero-failure null supremum at K_min=ceil(rho*M), positive minimal count, equality, e0/M0/rho1/census boundaries and product comparison.",
+    "Hypergeometric prospective threshold event with hypothetical fixed count; no empirical count fitted.",
+    "Published MPEA narrow permutation claim correctly distinguished from unchanged historical results and future physical generalization."
+  ],
+  "review_refinements_applied": [
+    "Expected average loss explicitly requires e>=1.",
+    "Conditional residual information excludes designated evaluation subset/order/full allocation transcript; operational sealing does not create full-transcript conditional coverage."
+  ],
+  "tests_run": false,
+  "lean_compilation_run": false,
+  "runtime_changed": false,
+  "network_used": false,
+  "private_archive_or_outcomes_read": false,
+  "new_allocation_or_model_or_threshold_chosen": false,
+  "scientific_claim_promoted": false
+}

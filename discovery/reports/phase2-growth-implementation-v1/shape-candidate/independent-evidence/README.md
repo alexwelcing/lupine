@@ -1,0 +1,15 @@
+# G30 independent production-binding review
+
+PASS for bounded source/contract review and synthetic, completely mocked execution. No actual G30 payload operation was performed by these reviewers. The scientific status remains blocked.
+
+The held implementation is `1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a`; final contract is `e0ca28ad61181c6cf56d20a46733d2285acb6cb5bc39348f46ee3acb29dfcbc6`. The independent production test is `13db80f49a6d8f83df58a3f2ae22f27450e5367c156368333db1908f90d01f85`, normalized to one terminal newline before its first execution.
+
+The independent child ran 21 tests once: all passed, with 0.620 seconds recorded by unittest and 2.503269385 seconds process elapsed. It exercised nine own-context and 41 own-wrapper calls under complete dependency stubs. Its scope instrumentation recorded zero forbidden real predecessor/custody calls or private-file/process/network events. The child did not read the actual prerequisite receipt; inner applicability tests used a synthetic canonical report with an explicitly limited digest stub.
+
+The parent source reviewer read the exact authorized public G29 receipt, verified its fixed producer and A220/516 inventory, and checked all 25 predecessor hashes against public source and scope. Ten byte/AST checks passed, including exact AST identity of the extracted payload predicate and the original pure predicate, with all 326 tracked runtime files matching the retained manifest. The parent also audited the author’s first 35-test pass and 472 complete synthetic old/new report comparisons against retained receipts, logs and snapshots. It did not import or rerun product code.
+
+Source review found a new error code being routed through the frozen custody allowlist; the author repaired it with a local closed error type before any candidate test run. The final contract also limits replay protection to serialized operations and corrects capture/read/identity-check chronology. The earlier contract remains with the author’s first receipts. There were no failed independent test runs in this production-binding review. Earlier pure-candidate failures and prior G29 mutation evidence remain separately preserved.
+
+`source-review/final-source-review.json` and `source-review/source-argument.md` describe the source reasoning and its limits. `source-review/independent-receipt-review.json` audits the child’s actual receipt. `independent/review.json`, README, complete first logs, source/test/contract snapshots and inventory retain executable evidence. The early `review-plan.md` is historical preparation, superseded by these final results.
+
+The production stage remains separately gated by parent-owned integration, exact source publication, CI, package/byte audit and serialized actual operations. A header ID and body length are not payload observations. Shape matching would not accept the archive, establish PadVal history, enable scientific interpretation or prove physical validity. Output may precede a descriptor-close failure; the returned blocked report and earlier file must both remain visible.

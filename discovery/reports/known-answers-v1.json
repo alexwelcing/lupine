@@ -1,0 +1,1154 @@
+{
+  "cases": [
+    {
+      "checks": {
+        "all_certified_infeasibility_decisions_correct": true,
+        "all_feasible_optima_retained": true,
+        "all_supplied_intervals_contain_truth": true,
+        "expected_all_true_minimizers_retained": true,
+        "expected_incumbent": true,
+        "expected_incumbent_regret": true,
+        "expected_intervals_sound": true,
+        "expected_pool_size": true,
+        "expected_regret_bound": true,
+        "expected_retained": true,
+        "expected_true_feasible_optimum": true,
+        "expected_true_minimizers": true,
+        "incumbent_regret_within_conditional_bound": true,
+        "outcome_universe_matches_problem": true,
+        "replay_minimizers_match_independent_oracle": true,
+        "replay_optimum_matches_independent_oracle": true,
+        "replay_regret_matches_independent_oracle": true,
+        "replay_retention_matches_independent_oracle": true,
+        "replay_selection_matches_sealed_run": true,
+        "replay_soundness_matches_direct_endpoint_checks": true
+      },
+      "expected": {
+        "all_true_minimizers_retained": true,
+        "incumbent": "A",
+        "incumbent_regret": "0",
+        "intervals_sound": true,
+        "pool_size": 2,
+        "regret_bound": "1",
+        "retained": [
+          "A",
+          "B"
+        ],
+        "true_feasible_optimum": "1",
+        "true_minimizers": [
+          "A",
+          "B"
+        ]
+      },
+      "id": "tied-optima",
+      "kind": "synthetic_sound",
+      "observed": {
+        "all_true_minimizers_retained": true,
+        "candidate_count": 4,
+        "certified_infeasible": [],
+        "constraint_intervals_sound": true,
+        "empirical_soundness": "supported_on_complete_finite_archive",
+        "incumbent": "A",
+        "incumbent_regret": "0",
+        "intervals_sound": true,
+        "pool_fraction": "1/2",
+        "pool_size": 2,
+        "regret_bound": "1",
+        "regret_bound_holds": true,
+        "retained": [
+          "A",
+          "B"
+        ],
+        "score_intervals_sound": true,
+        "threshold": "1",
+        "true_feasible_count": 4,
+        "true_feasible_ids": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "true_feasible_optimum": "1",
+        "true_minimizers": [
+          "A",
+          "B"
+        ]
+      },
+      "oracle": "Hand enumeration: truth scores A=1, B=1, C=4, D=6. A and B tie for the minimum; inclusive lower-bound comparison retains B.",
+      "outcome_digest": "1c5b76cb35321f737abd41ac0eaa5d728ee5164e43ac063df28ff88d0a141cdb",
+      "problem_digest": "0efdf29e95f194043e2b52923a254b99c733255225d92f2b8aa4fad6f764e2bc",
+      "status": "pass",
+      "title": "Keep every tied optimum"
+    },
+    {
+      "checks": {
+        "all_certified_infeasibility_decisions_correct": true,
+        "all_feasible_optima_retained": true,
+        "all_supplied_intervals_contain_truth": true,
+        "expected_all_true_minimizers_retained": true,
+        "expected_incumbent": true,
+        "expected_incumbent_regret": true,
+        "expected_intervals_sound": true,
+        "expected_pool_size": true,
+        "expected_regret_bound": true,
+        "expected_regret_bound_holds": true,
+        "expected_retained": true,
+        "expected_true_minimizers": true,
+        "incumbent_regret_within_conditional_bound": true,
+        "outcome_universe_matches_problem": true,
+        "replay_minimizers_match_independent_oracle": true,
+        "replay_optimum_matches_independent_oracle": true,
+        "replay_regret_matches_independent_oracle": true,
+        "replay_retention_matches_independent_oracle": true,
+        "replay_selection_matches_sealed_run": true,
+        "replay_soundness_matches_direct_endpoint_checks": true
+      },
+      "expected": {
+        "all_true_minimizers_retained": true,
+        "incumbent": "anchor",
+        "incumbent_regret": "4",
+        "intervals_sound": true,
+        "pool_size": 2,
+        "regret_bound": "4",
+        "regret_bound_holds": true,
+        "retained": [
+          "anchor",
+          "uncertain"
+        ],
+        "true_minimizers": [
+          "uncertain"
+        ]
+      },
+      "id": "uncertified-optimum",
+      "kind": "synthetic_sound",
+      "observed": {
+        "all_true_minimizers_retained": true,
+        "candidate_count": 3,
+        "certified_infeasible": [],
+        "constraint_intervals_sound": true,
+        "empirical_soundness": "supported_on_complete_finite_archive",
+        "incumbent": "anchor",
+        "incumbent_regret": "4",
+        "intervals_sound": true,
+        "pool_fraction": "2/3",
+        "pool_size": 2,
+        "regret_bound": "4",
+        "regret_bound_holds": true,
+        "retained": [
+          "anchor",
+          "uncertain"
+        ],
+        "score_intervals_sound": true,
+        "threshold": "4",
+        "true_feasible_count": 3,
+        "true_feasible_ids": [
+          "anchor",
+          "uncertain",
+          "worse"
+        ],
+        "true_feasible_optimum": "0",
+        "true_minimizers": [
+          "uncertain"
+        ]
+      },
+      "oracle": "Hand enumeration: all three true slacks are -1 and true scores are 4, 0, 7. The uncertain-feasibility candidate is the unique optimum.",
+      "outcome_digest": "0ffe8faf74589aea4669b9a03260f677084dd0c1410d5d1b68acfd69f4a1b628",
+      "problem_digest": "30d600b19541da89091b94cce33ebfdb6b31014b3d37d126a4d783cadb9bda23",
+      "status": "pass",
+      "title": "An optimum with uncertain feasibility"
+    },
+    {
+      "checks": {
+        "all_certified_infeasibility_decisions_correct": true,
+        "all_feasible_optima_retained": true,
+        "all_supplied_intervals_contain_truth": true,
+        "expected_all_true_minimizers_retained": true,
+        "expected_certified_infeasible": true,
+        "expected_incumbent": true,
+        "expected_incumbent_regret": true,
+        "expected_intervals_sound": true,
+        "expected_regret_bound": true,
+        "expected_retained": true,
+        "expected_true_feasible_count": true,
+        "expected_true_minimizers": true,
+        "incumbent_regret_within_conditional_bound": true,
+        "outcome_universe_matches_problem": true,
+        "replay_minimizers_match_independent_oracle": true,
+        "replay_optimum_matches_independent_oracle": true,
+        "replay_regret_matches_independent_oracle": true,
+        "replay_retention_matches_independent_oracle": true,
+        "replay_selection_matches_sealed_run": true,
+        "replay_soundness_matches_direct_endpoint_checks": true
+      },
+      "expected": {
+        "all_true_minimizers_retained": true,
+        "certified_infeasible": [
+          "D"
+        ],
+        "incumbent": null,
+        "incumbent_regret": null,
+        "intervals_sound": true,
+        "regret_bound": null,
+        "retained": [
+          "A",
+          "B",
+          "C"
+        ],
+        "true_feasible_count": 2,
+        "true_minimizers": [
+          "A"
+        ]
+      },
+      "id": "no-incumbent",
+      "kind": "synthetic_sound",
+      "observed": {
+        "all_true_minimizers_retained": true,
+        "candidate_count": 4,
+        "certified_infeasible": [
+          "D"
+        ],
+        "constraint_intervals_sound": true,
+        "empirical_soundness": "supported_on_complete_finite_archive",
+        "incumbent": null,
+        "incumbent_regret": null,
+        "intervals_sound": true,
+        "pool_fraction": "3/4",
+        "pool_size": 3,
+        "regret_bound": null,
+        "regret_bound_holds": null,
+        "retained": [
+          "A",
+          "B",
+          "C"
+        ],
+        "score_intervals_sound": true,
+        "threshold": null,
+        "true_feasible_count": 2,
+        "true_feasible_ids": [
+          "A",
+          "C"
+        ],
+        "true_feasible_optimum": "1",
+        "true_minimizers": [
+          "A"
+        ]
+      },
+      "oracle": "Hand enumeration: only A and C are feasible; their scores are 1 and 7. No constraint upper bound is nonpositive among possible candidates.",
+      "outcome_digest": "66ffc220c5d997e79e2f48a796a1c4bf409564c806ab652b8bbee53bece1a595",
+      "problem_digest": "4fb06ce5c0ba281e14609963006af3ff8d55f97219bb9b2a6e4f565ecce539c3",
+      "status": "pass",
+      "title": "No certified incumbent"
+    },
+    {
+      "checks": {
+        "all_certified_infeasibility_decisions_correct": true,
+        "all_feasible_optima_retained": true,
+        "all_supplied_intervals_contain_truth": true,
+        "expected_all_true_minimizers_retained": true,
+        "expected_certified_infeasible": true,
+        "expected_incumbent": true,
+        "expected_intervals_sound": true,
+        "expected_pool_size": true,
+        "expected_retained": true,
+        "expected_true_feasible_count": true,
+        "expected_true_feasible_optimum": true,
+        "expected_true_minimizers": true,
+        "incumbent_regret_within_conditional_bound": true,
+        "outcome_universe_matches_problem": true,
+        "replay_minimizers_match_independent_oracle": true,
+        "replay_optimum_matches_independent_oracle": true,
+        "replay_regret_matches_independent_oracle": true,
+        "replay_retention_matches_independent_oracle": true,
+        "replay_selection_matches_sealed_run": true,
+        "replay_soundness_matches_direct_endpoint_checks": true
+      },
+      "expected": {
+        "all_true_minimizers_retained": null,
+        "certified_infeasible": [
+          "A",
+          "B",
+          "C"
+        ],
+        "incumbent": null,
+        "intervals_sound": true,
+        "pool_size": 0,
+        "retained": [],
+        "true_feasible_count": 0,
+        "true_feasible_optimum": null,
+        "true_minimizers": []
+      },
+      "id": "finite-infeasible",
+      "kind": "synthetic_sound",
+      "observed": {
+        "all_true_minimizers_retained": null,
+        "candidate_count": 3,
+        "certified_infeasible": [
+          "A",
+          "B",
+          "C"
+        ],
+        "constraint_intervals_sound": true,
+        "empirical_soundness": "supported_on_complete_finite_archive",
+        "incumbent": null,
+        "incumbent_regret": null,
+        "intervals_sound": true,
+        "pool_fraction": "0",
+        "pool_size": 0,
+        "regret_bound": null,
+        "regret_bound_holds": null,
+        "retained": [],
+        "score_intervals_sound": true,
+        "threshold": null,
+        "true_feasible_count": 0,
+        "true_feasible_ids": [],
+        "true_feasible_optimum": null,
+        "true_minimizers": []
+      },
+      "oracle": "Hand enumeration: A violates c1, B violates c2, C violates both. This proves infeasibility of these three candidates only.",
+      "outcome_digest": "22dc3603ac2587776fdd355d775e08e788f1cc26e03e540ed002857e9855ae4c",
+      "problem_digest": "ed36f5135bc03df9679ce06dda799bbcabbebc748dcd236e78b8a095e60f9f26",
+      "status": "pass",
+      "title": "An infeasible finite universe"
+    },
+    {
+      "checks": {
+        "all_certified_infeasibility_decisions_correct": true,
+        "all_feasible_optima_retained": true,
+        "all_supplied_intervals_contain_truth": true,
+        "expected_all_true_minimizers_retained": true,
+        "expected_incumbent": true,
+        "expected_incumbent_regret": true,
+        "expected_intervals_sound": true,
+        "expected_regret_bound": true,
+        "expected_regret_bound_holds": true,
+        "expected_retained": true,
+        "expected_true_minimizers": true,
+        "incumbent_regret_within_conditional_bound": true,
+        "outcome_universe_matches_problem": true,
+        "replay_minimizers_match_independent_oracle": true,
+        "replay_optimum_matches_independent_oracle": true,
+        "replay_regret_matches_independent_oracle": true,
+        "replay_retention_matches_independent_oracle": true,
+        "replay_selection_matches_sealed_run": true,
+        "replay_soundness_matches_direct_endpoint_checks": true
+      },
+      "expected": {
+        "all_true_minimizers_retained": true,
+        "incumbent": "A",
+        "incumbent_regret": "2",
+        "intervals_sound": true,
+        "regret_bound": "2",
+        "regret_bound_holds": true,
+        "retained": [
+          "A",
+          "B"
+        ],
+        "true_minimizers": [
+          "B"
+        ]
+      },
+      "id": "tight-nonzero-regret",
+      "kind": "synthetic_sound",
+      "observed": {
+        "all_true_minimizers_retained": true,
+        "candidate_count": 3,
+        "certified_infeasible": [],
+        "constraint_intervals_sound": true,
+        "empirical_soundness": "supported_on_complete_finite_archive",
+        "incumbent": "A",
+        "incumbent_regret": "2",
+        "intervals_sound": true,
+        "pool_fraction": "2/3",
+        "pool_size": 2,
+        "regret_bound": "2",
+        "regret_bound_holds": true,
+        "retained": [
+          "A",
+          "B"
+        ],
+        "score_intervals_sound": true,
+        "threshold": "2",
+        "true_feasible_count": 3,
+        "true_feasible_ids": [
+          "A",
+          "B",
+          "C"
+        ],
+        "true_feasible_optimum": "0",
+        "true_minimizers": [
+          "B"
+        ]
+      },
+      "oracle": "Hand solution: min true score is B=0, incumbent A=2; actual regret 2 equals the conditional bound 2-0.",
+      "outcome_digest": "b2529a556b52a7512a0a9c176cbdfebc623213014dbff1d64c26114fd095ba95",
+      "problem_digest": "ea08a6949bfe3b5a47b75e33de869b6a61561e6bd9a92eae7cb61789a2b6ff4b",
+      "status": "pass",
+      "title": "A tight nonzero regret bound"
+    },
+    {
+      "checks": {
+        "all_certified_infeasibility_decisions_correct": true,
+        "all_feasible_optima_retained": true,
+        "all_supplied_intervals_contain_truth": true,
+        "expected_all_true_minimizers_retained": true,
+        "expected_incumbent": true,
+        "expected_incumbent_regret": true,
+        "expected_intervals_sound": true,
+        "expected_pool_size": true,
+        "expected_regret_bound": true,
+        "expected_retained": true,
+        "expected_true_feasible_count": true,
+        "expected_true_feasible_optimum": true,
+        "expected_true_minimizers": true,
+        "incumbent_regret_within_conditional_bound": true,
+        "outcome_universe_matches_problem": true,
+        "replay_minimizers_match_independent_oracle": true,
+        "replay_optimum_matches_independent_oracle": true,
+        "replay_regret_matches_independent_oracle": true,
+        "replay_retention_matches_independent_oracle": true,
+        "replay_selection_matches_sealed_run": true,
+        "replay_soundness_matches_direct_endpoint_checks": true,
+        "stored_truth_matches_independent_formula_enumeration": true
+      },
+      "expected": {
+        "all_true_minimizers_retained": true,
+        "incumbent": "x3-y5",
+        "incumbent_regret": "0",
+        "intervals_sound": true,
+        "pool_size": 1,
+        "regret_bound": "1/2",
+        "retained": [
+          "x3-y5"
+        ],
+        "true_feasible_count": 35,
+        "true_feasible_optimum": "0",
+        "true_minimizers": [
+          "x3-y5"
+        ]
+      },
+      "id": "integer-design-grid",
+      "kind": "synthetic_sound",
+      "observed": {
+        "all_true_minimizers_retained": true,
+        "candidate_count": 81,
+        "certified_infeasible": [
+          "x0-y0",
+          "x0-y1",
+          "x0-y2",
+          "x0-y3",
+          "x0-y4",
+          "x0-y5",
+          "x0-y6",
+          "x0-y7",
+          "x0-y8",
+          "x1-y0",
+          "x1-y1",
+          "x1-y2",
+          "x1-y3",
+          "x1-y4",
+          "x1-y5",
+          "x1-y6",
+          "x1-y7",
+          "x1-y8",
+          "x2-y8",
+          "x3-y7",
+          "x3-y8",
+          "x4-y6",
+          "x4-y7",
+          "x4-y8",
+          "x5-y5",
+          "x5-y6",
+          "x5-y7",
+          "x5-y8",
+          "x6-y4",
+          "x6-y5",
+          "x6-y6",
+          "x6-y7",
+          "x6-y8",
+          "x7-y3",
+          "x7-y4",
+          "x7-y5",
+          "x7-y6",
+          "x7-y7",
+          "x7-y8",
+          "x8-y2",
+          "x8-y3",
+          "x8-y4",
+          "x8-y5",
+          "x8-y6",
+          "x8-y7",
+          "x8-y8"
+        ],
+        "constraint_intervals_sound": true,
+        "empirical_soundness": "supported_on_complete_finite_archive",
+        "incumbent": "x3-y5",
+        "incumbent_regret": "0",
+        "intervals_sound": true,
+        "pool_fraction": "1/81",
+        "pool_size": 1,
+        "regret_bound": "1/2",
+        "regret_bound_holds": true,
+        "retained": [
+          "x3-y5"
+        ],
+        "score_intervals_sound": true,
+        "threshold": "1/4",
+        "true_feasible_count": 35,
+        "true_feasible_ids": [
+          "x2-y0",
+          "x2-y1",
+          "x2-y2",
+          "x2-y3",
+          "x2-y4",
+          "x2-y5",
+          "x2-y6",
+          "x2-y7",
+          "x3-y0",
+          "x3-y1",
+          "x3-y2",
+          "x3-y3",
+          "x3-y4",
+          "x3-y5",
+          "x3-y6",
+          "x4-y0",
+          "x4-y1",
+          "x4-y2",
+          "x4-y3",
+          "x4-y4",
+          "x4-y5",
+          "x5-y0",
+          "x5-y1",
+          "x5-y2",
+          "x5-y3",
+          "x5-y4",
+          "x6-y0",
+          "x6-y1",
+          "x6-y2",
+          "x6-y3",
+          "x7-y0",
+          "x7-y1",
+          "x7-y2",
+          "x8-y0",
+          "x8-y1"
+        ],
+        "true_feasible_optimum": "0",
+        "true_minimizers": [
+          "x3-y5"
+        ]
+      },
+      "oracle": "Independent enumeration: x,y in {0,...,8}; f=(x-3)^2+2(y-5)^2, g1=x+y-9, g2=2-x. Nonnegative f has unique zero (3,5), which satisfies both constraints. Formula truth is recomputed independently at runtime.",
+      "outcome_digest": "2df60d364de668c684133fc981032806a28fd354f3830f522a51694904701131",
+      "problem_digest": "2700ae49dd4ebd229df55da500f6f7590b4ad21123f728da4ed58282c594d799",
+      "status": "pass",
+      "title": "Exhaustive integer design problem"
+    },
+    {
+      "checks": {
+        "all_certified_infeasibility_decisions_correct": true,
+        "all_feasible_optima_retained": true,
+        "all_supplied_intervals_contain_truth": true,
+        "expected_all_true_minimizers_retained": true,
+        "expected_incumbent": true,
+        "expected_incumbent_regret": true,
+        "expected_intervals_sound": true,
+        "expected_pool_size": true,
+        "expected_regret_bound": true,
+        "expected_retained": true,
+        "expected_true_feasible_count": true,
+        "expected_true_feasible_optimum": true,
+        "expected_true_minimizers": true,
+        "incumbent_regret_within_conditional_bound": true,
+        "outcome_universe_matches_problem": true,
+        "replay_minimizers_match_independent_oracle": true,
+        "replay_optimum_matches_independent_oracle": true,
+        "replay_regret_matches_independent_oracle": true,
+        "replay_retention_matches_independent_oracle": true,
+        "replay_selection_matches_sealed_run": true,
+        "replay_soundness_matches_direct_endpoint_checks": true,
+        "stored_truth_matches_independent_formula_enumeration": true
+      },
+      "expected": {
+        "all_true_minimizers_retained": true,
+        "incumbent": "a2-b2",
+        "incumbent_regret": "6",
+        "intervals_sound": true,
+        "pool_size": 2,
+        "regret_bound": "7",
+        "retained": [
+          "a2-b2",
+          "a2-b4"
+        ],
+        "true_feasible_count": 5,
+        "true_feasible_optimum": "-15/2",
+        "true_minimizers": [
+          "a2-b4"
+        ]
+      },
+      "id": "signed-composition",
+      "kind": "synthetic_sound",
+      "observed": {
+        "all_true_minimizers_retained": true,
+        "candidate_count": 9,
+        "certified_infeasible": [
+          "a0-b0",
+          "a0-b2",
+          "a0-b4",
+          "a4-b4"
+        ],
+        "constraint_intervals_sound": true,
+        "empirical_soundness": "supported_on_complete_finite_archive",
+        "incumbent": "a2-b2",
+        "incumbent_regret": "6",
+        "intervals_sound": true,
+        "pool_fraction": "2/9",
+        "pool_size": 2,
+        "regret_bound": "7",
+        "regret_bound_holds": true,
+        "retained": [
+          "a2-b2",
+          "a2-b4"
+        ],
+        "score_intervals_sound": true,
+        "threshold": "-1",
+        "true_feasible_count": 5,
+        "true_feasible_ids": [
+          "a2-b0",
+          "a2-b2",
+          "a2-b4",
+          "a4-b0",
+          "a4-b2"
+        ],
+        "true_feasible_optimum": "-15/2",
+        "true_minimizers": [
+          "a2-b4"
+        ]
+      },
+      "oracle": "Independent enumeration: a,b in {0,2,4}; f=2a-3b+1/2, g=max(a+b-6,1-a). Feasible points: (2,0),(2,2),(2,4),(4,0),(4,2). Minimum is -15/2 at (2,4). Score intervals propagate a,b uncertainty +/-1/10 through signed coefficients; combined slack uncertainty is +/-1/10. Formula truth recomputed at runtime.",
+      "outcome_digest": "1a109883ab87a54e2feb053180260b7a8fb20ca06ce3db587be80ceff7f5879d",
+      "problem_digest": "9b3930441644619e1b940355b4bee0e99cc5823121cb7150463cd68a881d1a06",
+      "status": "pass",
+      "title": "Signed objectives and combined constraints"
+    },
+    {
+      "checks": {
+        "all_certified_infeasibility_decisions_correct": true,
+        "all_feasible_optima_retained": true,
+        "all_supplied_intervals_contain_truth": true,
+        "expected_all_true_minimizers_retained": true,
+        "expected_certified_infeasible": true,
+        "expected_incumbent": true,
+        "expected_incumbent_regret": true,
+        "expected_intervals_sound": true,
+        "expected_pool_size": true,
+        "expected_regret_bound": true,
+        "expected_retained": true,
+        "expected_true_feasible_count": true,
+        "expected_true_feasible_optimum": true,
+        "expected_true_minimizers": true,
+        "incumbent_regret_within_conditional_bound": true,
+        "outcome_universe_matches_problem": true,
+        "replay_minimizers_match_independent_oracle": true,
+        "replay_optimum_matches_independent_oracle": true,
+        "replay_regret_matches_independent_oracle": true,
+        "replay_retention_matches_independent_oracle": true,
+        "replay_selection_matches_sealed_run": true,
+        "replay_soundness_matches_direct_endpoint_checks": true
+      },
+      "expected": {
+        "all_true_minimizers_retained": true,
+        "certified_infeasible": [
+          "C"
+        ],
+        "incumbent": "D",
+        "incumbent_regret": "0",
+        "intervals_sound": true,
+        "pool_size": 1,
+        "regret_bound": "1",
+        "retained": [
+          "D"
+        ],
+        "true_feasible_count": 4,
+        "true_feasible_optimum": "-11",
+        "true_minimizers": [
+          "D"
+        ]
+      },
+      "id": "normalized-maximization",
+      "kind": "synthetic_sound",
+      "observed": {
+        "all_true_minimizers_retained": true,
+        "candidate_count": 5,
+        "certified_infeasible": [
+          "C"
+        ],
+        "constraint_intervals_sound": true,
+        "empirical_soundness": "supported_on_complete_finite_archive",
+        "incumbent": "D",
+        "incumbent_regret": "0",
+        "intervals_sound": true,
+        "pool_fraction": "1/5",
+        "pool_size": 1,
+        "regret_bound": "1",
+        "regret_bound_holds": true,
+        "retained": [
+          "D"
+        ],
+        "score_intervals_sound": true,
+        "threshold": "-21/2",
+        "true_feasible_count": 4,
+        "true_feasible_ids": [
+          "A",
+          "B",
+          "D",
+          "E"
+        ],
+        "true_feasible_optimum": "-11",
+        "true_minimizers": [
+          "D"
+        ]
+      },
+      "oracle": "Hand enumeration: budget=3 excludes C (cost 4, benefit 13). Among feasible benefits 5,7,11,2, D has maximum 11; negation gives minimum -11.",
+      "outcome_digest": "d4b4730c0872f66222d947ee23c386fbd45b0a691e3895e4ed6470f61c930bd4",
+      "problem_digest": "d8a2eb9d22fef7a1a3d8b52959f6ab063576a11695bbd5c3d8dd4f06dc51398f",
+      "status": "pass",
+      "title": "Maximization as a normalized objective"
+    },
+    {
+      "checks": {
+        "all_certified_infeasibility_decisions_correct": true,
+        "all_feasible_optima_retained": true,
+        "all_supplied_intervals_contain_truth": true,
+        "expected_all_true_minimizers_retained": true,
+        "expected_incumbent": true,
+        "expected_incumbent_regret": true,
+        "expected_intervals_sound": true,
+        "expected_pool_size": true,
+        "expected_regret_bound": true,
+        "expected_retained": true,
+        "expected_true_feasible_optimum": true,
+        "expected_true_minimizers": true,
+        "incumbent_regret_within_conditional_bound": true,
+        "outcome_universe_matches_problem": true,
+        "replay_minimizers_match_independent_oracle": true,
+        "replay_optimum_matches_independent_oracle": true,
+        "replay_regret_matches_independent_oracle": true,
+        "replay_retention_matches_independent_oracle": true,
+        "replay_selection_matches_sealed_run": true,
+        "replay_soundness_matches_direct_endpoint_checks": true
+      },
+      "expected": {
+        "all_true_minimizers_retained": true,
+        "incumbent": "A",
+        "incumbent_regret": "0",
+        "intervals_sound": true,
+        "pool_size": 1,
+        "regret_bound": "0",
+        "retained": [
+          "A"
+        ],
+        "true_feasible_optimum": "1/3",
+        "true_minimizers": [
+          "A"
+        ]
+      },
+      "id": "exact-rational-order",
+      "kind": "synthetic_sound",
+      "observed": {
+        "all_true_minimizers_retained": true,
+        "candidate_count": 3,
+        "certified_infeasible": [],
+        "constraint_intervals_sound": true,
+        "empirical_soundness": "supported_on_complete_finite_archive",
+        "incumbent": "A",
+        "incumbent_regret": "0",
+        "intervals_sound": true,
+        "pool_fraction": "1/3",
+        "pool_size": 1,
+        "regret_bound": "0",
+        "regret_bound_holds": true,
+        "retained": [
+          "A"
+        ],
+        "score_intervals_sound": true,
+        "threshold": "1/3",
+        "true_feasible_count": 3,
+        "true_feasible_ids": [
+          "A",
+          "B",
+          "C"
+        ],
+        "true_feasible_optimum": "1/3",
+        "true_minimizers": [
+          "A"
+        ]
+      },
+      "oracle": "Hand solution: A=1/3; B=A+1/(3*10^30)>A; C=A+1>A. No rounding or tolerance is part of the comparison.",
+      "outcome_digest": "0f81fd9b85955ba67e2bc6d0832f823bb584c6a604ab9303320715424aa30f20",
+      "problem_digest": "b958b83b96755df03a8f8c5b54c05f19e0f28f6aaca53a84f201aa3722fef9a6",
+      "status": "pass",
+      "title": "An order smaller than float precision"
+    },
+    {
+      "checks": {
+        "all_certified_infeasibility_decisions_correct": true,
+        "all_feasible_optima_retained": true,
+        "all_supplied_intervals_contain_truth": true,
+        "expected_all_true_minimizers_retained": true,
+        "expected_incumbent": true,
+        "expected_incumbent_regret": true,
+        "expected_intervals_sound": true,
+        "expected_pool_size": true,
+        "expected_regret_bound": true,
+        "expected_retained": true,
+        "expected_true_feasible_optimum": true,
+        "expected_true_minimizers": true,
+        "incumbent_regret_within_conditional_bound": true,
+        "outcome_universe_matches_problem": true,
+        "replay_minimizers_match_independent_oracle": true,
+        "replay_optimum_matches_independent_oracle": true,
+        "replay_regret_matches_independent_oracle": true,
+        "replay_retention_matches_independent_oracle": true,
+        "replay_selection_matches_sealed_run": true,
+        "replay_soundness_matches_direct_endpoint_checks": true
+      },
+      "expected": {
+        "all_true_minimizers_retained": true,
+        "incumbent": "A",
+        "incumbent_regret": "0",
+        "intervals_sound": true,
+        "pool_size": 6,
+        "regret_bound": "13",
+        "retained": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ],
+        "true_feasible_optimum": "0",
+        "true_minimizers": [
+          "A"
+        ]
+      },
+      "id": "loose-intervals",
+      "kind": "synthetic_sound",
+      "observed": {
+        "all_true_minimizers_retained": true,
+        "candidate_count": 6,
+        "certified_infeasible": [],
+        "constraint_intervals_sound": true,
+        "empirical_soundness": "supported_on_complete_finite_archive",
+        "incumbent": "A",
+        "incumbent_regret": "0",
+        "intervals_sound": true,
+        "pool_fraction": "1",
+        "pool_size": 6,
+        "regret_bound": "13",
+        "regret_bound_holds": true,
+        "retained": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ],
+        "score_intervals_sound": true,
+        "threshold": "12",
+        "true_feasible_count": 6,
+        "true_feasible_ids": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ],
+        "true_feasible_optimum": "0",
+        "true_minimizers": [
+          "A"
+        ]
+      },
+      "oracle": "Hand enumeration: true scores A..F are 0,2,4,6,8,10. The refined case uses [s-1/4,s+1/4] inside each loose [-1,12] interval. Both worlds share the same candidate IDs and truth.",
+      "outcome_digest": "9ef47583937d6704222e53a2cdcace17ad9211cb0d9a42864e91e079c3652f42",
+      "problem_digest": "f7233406ac2eb877cf093f7a6d91ebdac1b4ef8b8bcd16997ed60e8d69876420",
+      "status": "pass",
+      "title": "Loose intervals"
+    },
+    {
+      "checks": {
+        "all_certified_infeasibility_decisions_correct": true,
+        "all_feasible_optima_retained": true,
+        "all_supplied_intervals_contain_truth": true,
+        "expected_all_true_minimizers_retained": true,
+        "expected_incumbent": true,
+        "expected_incumbent_regret": true,
+        "expected_intervals_sound": true,
+        "expected_pool_size": true,
+        "expected_regret_bound": true,
+        "expected_retained": true,
+        "expected_true_feasible_optimum": true,
+        "expected_true_minimizers": true,
+        "incumbent_regret_within_conditional_bound": true,
+        "outcome_universe_matches_problem": true,
+        "refinement_both_retain_all_optima": true,
+        "refinement_intervals_nested": true,
+        "refinement_regret_bound_nonincreasing": true,
+        "refinement_retained_subset": true,
+        "refinement_same_semantic_scope": true,
+        "replay_minimizers_match_independent_oracle": true,
+        "replay_optimum_matches_independent_oracle": true,
+        "replay_regret_matches_independent_oracle": true,
+        "replay_retention_matches_independent_oracle": true,
+        "replay_selection_matches_sealed_run": true,
+        "replay_soundness_matches_direct_endpoint_checks": true
+      },
+      "expected": {
+        "all_true_minimizers_retained": true,
+        "incumbent": "A",
+        "incumbent_regret": "0",
+        "intervals_sound": true,
+        "pool_size": 1,
+        "regret_bound": "1/2",
+        "retained": [
+          "A"
+        ],
+        "true_feasible_optimum": "0",
+        "true_minimizers": [
+          "A"
+        ]
+      },
+      "id": "refined-intervals",
+      "kind": "synthetic_sound",
+      "observed": {
+        "all_true_minimizers_retained": true,
+        "candidate_count": 6,
+        "certified_infeasible": [],
+        "constraint_intervals_sound": true,
+        "empirical_soundness": "supported_on_complete_finite_archive",
+        "incumbent": "A",
+        "incumbent_regret": "0",
+        "intervals_sound": true,
+        "pool_fraction": "1/6",
+        "pool_size": 1,
+        "regret_bound": "1/2",
+        "regret_bound_holds": true,
+        "retained": [
+          "A"
+        ],
+        "score_intervals_sound": true,
+        "threshold": "1/4",
+        "true_feasible_count": 6,
+        "true_feasible_ids": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ],
+        "true_feasible_optimum": "0",
+        "true_minimizers": [
+          "A"
+        ]
+      },
+      "oracle": "Hand enumeration: true scores A..F are 0,2,4,6,8,10. The refined case uses [s-1/4,s+1/4] inside each loose [-1,12] interval. Both worlds share the same candidate IDs and truth.",
+      "outcome_digest": "4fd184d8fc79c84908cce8526d16db9df70427d9ad151f8d9e3a6c24d560a16b",
+      "problem_digest": "66d59f6843f4e6eb006cb9c00616ea487eb9ee21932f373d8694f469d74bbad6",
+      "status": "pass",
+      "title": "Tightened intervals"
+    },
+    {
+      "checks": {
+        "deliberately_unsound_input_detected_on_replay": true,
+        "expected_all_true_minimizers_retained": true,
+        "expected_constraint_intervals_sound": true,
+        "expected_incumbent": true,
+        "expected_incumbent_regret": true,
+        "expected_intervals_sound": true,
+        "expected_pool_size": true,
+        "expected_regret_bound": true,
+        "expected_regret_bound_holds": true,
+        "expected_retained": true,
+        "expected_score_intervals_sound": true,
+        "expected_true_minimizers": true,
+        "negative_control_exposes_lost_optimum": true,
+        "outcome_universe_matches_problem": true,
+        "replay_minimizers_match_independent_oracle": true,
+        "replay_optimum_matches_independent_oracle": true,
+        "replay_regret_matches_independent_oracle": true,
+        "replay_retention_matches_independent_oracle": true,
+        "replay_selection_matches_sealed_run": true,
+        "replay_soundness_matches_direct_endpoint_checks": true
+      },
+      "expected": {
+        "all_true_minimizers_retained": false,
+        "constraint_intervals_sound": true,
+        "incumbent": "A",
+        "incumbent_regret": "1",
+        "intervals_sound": false,
+        "pool_size": 1,
+        "regret_bound": "0",
+        "regret_bound_holds": false,
+        "retained": [
+          "A"
+        ],
+        "score_intervals_sound": false,
+        "true_minimizers": [
+          "B"
+        ]
+      },
+      "id": "unsound-score-control",
+      "kind": "synthetic_negative_control",
+      "observed": {
+        "all_true_minimizers_retained": false,
+        "candidate_count": 2,
+        "certified_infeasible": [],
+        "constraint_intervals_sound": true,
+        "empirical_soundness": "refuted_on_observed_outcomes",
+        "incumbent": "A",
+        "incumbent_regret": "1",
+        "intervals_sound": false,
+        "pool_fraction": "1/2",
+        "pool_size": 1,
+        "regret_bound": "0",
+        "regret_bound_holds": false,
+        "retained": [
+          "A"
+        ],
+        "score_intervals_sound": false,
+        "threshold": "1",
+        "true_feasible_count": 2,
+        "true_feasible_ids": [
+          "A",
+          "B"
+        ],
+        "true_feasible_optimum": "0",
+        "true_minimizers": [
+          "B"
+        ]
+      },
+      "oracle": "Hand solution: B=0<A=1, but B is falsely declared to lie in [2,2]. The true optimum is discarded and claimed conditional regret bound fails; replay must expose the invalid premise.",
+      "outcome_digest": "540ed61154bd74707117f575f900e742bfd5d0eb2d9a9ee37f6060e1a050e715",
+      "problem_digest": "565cefbb823137eb2686db89410ab286608cc125841dbd2c0b59afd34333cef5",
+      "status": "pass",
+      "title": "Negative control: false score interval"
+    },
+    {
+      "checks": {
+        "deliberately_unsound_input_detected_on_replay": true,
+        "expected_all_true_minimizers_retained": true,
+        "expected_certified_infeasible": true,
+        "expected_constraint_intervals_sound": true,
+        "expected_incumbent": true,
+        "expected_incumbent_regret": true,
+        "expected_intervals_sound": true,
+        "expected_pool_size": true,
+        "expected_regret_bound": true,
+        "expected_regret_bound_holds": true,
+        "expected_retained": true,
+        "expected_score_intervals_sound": true,
+        "expected_true_minimizers": true,
+        "negative_control_exposes_lost_optimum": true,
+        "outcome_universe_matches_problem": true,
+        "replay_minimizers_match_independent_oracle": true,
+        "replay_optimum_matches_independent_oracle": true,
+        "replay_regret_matches_independent_oracle": true,
+        "replay_retention_matches_independent_oracle": true,
+        "replay_selection_matches_sealed_run": true,
+        "replay_soundness_matches_direct_endpoint_checks": true
+      },
+      "expected": {
+        "all_true_minimizers_retained": false,
+        "certified_infeasible": [
+          "B"
+        ],
+        "constraint_intervals_sound": false,
+        "incumbent": "A",
+        "incumbent_regret": "1",
+        "intervals_sound": false,
+        "pool_size": 1,
+        "regret_bound": "0",
+        "regret_bound_holds": false,
+        "retained": [
+          "A"
+        ],
+        "score_intervals_sound": true,
+        "true_minimizers": [
+          "B"
+        ]
+      },
+      "id": "unsound-constraint-control",
+      "kind": "synthetic_negative_control",
+      "observed": {
+        "all_true_minimizers_retained": false,
+        "candidate_count": 2,
+        "certified_infeasible": [
+          "B"
+        ],
+        "constraint_intervals_sound": false,
+        "empirical_soundness": "refuted_on_observed_outcomes",
+        "incumbent": "A",
+        "incumbent_regret": "1",
+        "intervals_sound": false,
+        "pool_fraction": "1/2",
+        "pool_size": 1,
+        "regret_bound": "0",
+        "regret_bound_holds": false,
+        "retained": [
+          "A"
+        ],
+        "score_intervals_sound": true,
+        "threshold": "1",
+        "true_feasible_count": 2,
+        "true_feasible_ids": [
+          "A",
+          "B"
+        ],
+        "true_feasible_optimum": "0",
+        "true_minimizers": [
+          "B"
+        ]
+      },
+      "oracle": "Hand solution: both true constraints are -1, so B=0 is feasible and better than A=1. The false [1,1] constraint interval rejects B. Replay must expose the unsound constraint premise.",
+      "outcome_digest": "9ea5a7e15055060b8789994b7d0fef289534d0dd95a52c4651af8d6fdb8846d8",
+      "problem_digest": "9650089223f46195a2584c38b548b7c8daeb1341e3bdc91a465a5d6d8a788522",
+      "status": "pass",
+      "title": "Negative control: false infeasibility"
+    }
+  ],
+  "negative_control_metrics": {
+    "detected_unsound_intervals": 2,
+    "lost_optimum_cases": 2,
+    "not_counted_as_sound_case_successes": true,
+    "total": 2
+  },
+  "pass_meaning": "Predeclared expectations match independent finite truth; negative-control passes mean failures were exposed.",
+  "physical_validation_status": "unestablished; synthetic engine checks do not validate a materials predictor",
+  "refinement_check": {
+    "after": "refined-intervals",
+    "before": "loose-intervals",
+    "both_retain_all_optima": true,
+    "intervals_nested": true,
+    "pool_size_after": 1,
+    "pool_size_before": 6,
+    "regret_bound_nonincreasing": true,
+    "retained_subset": true,
+    "same_semantic_scope": true
+  },
+  "schema": "lupine.discovery.known_answers.v1",
+  "sound_case_metrics": {
+    "cases_retaining_all_optima": 10,
+    "cases_with_feasible_optima": 10,
+    "cases_with_smaller_pool": 10,
+    "passed": 11,
+    "total": 11
+  },
+  "study_status": "Public deterministic fixtures, not a prospective blinded experiment",
+  "summary": {
+    "failed": 0,
+    "passed": 13,
+    "total": 13
+  }
+}

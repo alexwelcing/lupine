@@ -1,0 +1,35 @@
+{
+  "command": [
+    "/home/agent/.elan/toolchains/leanprover--lean4---v4.29.0/bin/lean",
+    "-DwarningAsError=true",
+    "-o",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-finite-planning-monotone-candidate-v1/attempts/first/LupineFinitePlanningMonotone.olean",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-finite-planning-monotone-candidate-v1/LupineFinitePlanningMonotone.lean"
+  ],
+  "compiled_object_sha256": "b39d9bab874b23dc10d2a3465f19120860802024d21629d2f11bd3367021dc7d",
+  "cwd": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-finite-planning-monotone-candidate-v1",
+  "elapsed_seconds": 9.711060839006677,
+  "exit_code": 0,
+  "finished": "2026-10-16T16:50:43.752887+00:00",
+  "lean_executable_sha256": "3e0d0d3d801675359f2d4cf9815bfdb417b20b92fdd9d48b3b14c95bbae28bbf",
+  "lean_path": [
+    "/workspace/lupine-discovery-branch/discovery/formal/.lake/build/lib/lean",
+    "/workspace/lupine-discovery-branch/discovery/formal/.lake/packages/LeanSearchClient/.lake/build/lib/lean",
+    "/workspace/lupine-discovery-branch/discovery/formal/.lake/packages/Qq/.lake/build/lib/lean",
+    "/workspace/lupine-discovery-branch/discovery/formal/.lake/packages/aesop/.lake/build/lib/lean",
+    "/workspace/lupine-discovery-branch/discovery/formal/.lake/packages/batteries/.lake/build/lib/lean",
+    "/workspace/lupine-discovery-branch/discovery/formal/.lake/packages/importGraph/.lake/build/lib/lean",
+    "/workspace/lupine-discovery-branch/discovery/formal/.lake/packages/mathlib/.lake/build/lib/lean",
+    "/workspace/lupine-discovery-branch/discovery/formal/.lake/packages/plausible/.lake/build/lib/lean",
+    "/workspace/lupine-discovery-branch/discovery/formal/.lake/packages/proofwidgets/.lake/build/lib/lean"
+  ],
+  "network_or_dependency_build": false,
+  "original_bindings_held": true,
+  "source_held": true,
+  "source_sha256_after": "fa1dedddf324fbd66a96de9eef1d775babccbc3668a81fd48726287dffe2268d",
+  "source_sha256_before": "fa1dedddf324fbd66a96de9eef1d775babccbc3668a81fd48726287dffe2268d",
+  "started": "2026-10-16T16:50:34.040744+00:00",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "eed1869d5b92605094ce9e3d77f16b2482541de1e23f8e966181f3b6422ba7b1",
+  "timed_out": false
+}

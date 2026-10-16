@@ -1,0 +1,66 @@
+{
+  "checks": {
+    "24_tests_OK": true,
+    "contract_snapshot": true,
+    "exit_zero": true,
+    "final_test_single_EOF_LF": true,
+    "growth_predecessor_snapshot": true,
+    "held_unchanged": true,
+    "implementation_snapshot": true,
+    "inventory_count": true,
+    "inventory_matches": true,
+    "no_forbidden_events": true,
+    "scope_observation_bytes": true,
+    "stderr_bytes": true,
+    "stdout_bytes": true,
+    "tests_snapshot": true
+  },
+  "execution_sha256": "c6b2b4e9860fca108052d05e4814029136513f0c1eff70eec954baec5f1368ce",
+  "limits": [
+    "Parent audited test/runner source, logs, receipts, snapshots and inventory only; child performed executable tests.",
+    "All wrapper/context dependencies mocked; no actual source/capture/receipt/object/network/real production chain used.",
+    "Canary projection comparison excludes whole-object observed identity, whose hashes intentionally change with synthetic bytes.",
+    "Author first failure retained separately; no failed independent invocation in this review.",
+    "No scientific acceptance or exhaustive/hostile-runtime guarantee."
+  ],
+  "process_elapsed_seconds": 2.6162562019999314,
+  "recorded_utc": "2026-10-16T10:31:46.606735+00:00",
+  "review_preparation_issue": "First parent metadata audit assumed snapshot name independent-tests.py (G30 naming); G31 uses tests.py. It stopped with FileNotFoundError before producing a review result. Filename corrected against actual inventory; no product/test run or file content changed. The original error was tool output only.",
+  "schema": "lupine.discovery.growth_envelope_independent_receipt_review.v1",
+  "scope_observation": {
+    "blocked_network_private_or_process_events": [],
+    "blocked_real_predecessor_or_read_calls": [],
+    "current_wrapper_permitted_only_with_test_dependency_mocks": true,
+    "instrumentation_installed_before_test_import": true,
+    "mocked_current_wrapper_calls": {
+      "envelope": 23,
+      "production_context": 5
+    },
+    "test_setUp_default_rejecting_mocks_verified_unused": true
+  },
+  "source_bindings": {
+    "contract": {
+      "bytes": 9273,
+      "sha256": "4a5954b93b84d05c32a8ee2ea8254aec63283e915c331339cb97875e4b2aeb59"
+    },
+    "growth_predecessor": {
+      "bytes": 20556,
+      "sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a"
+    },
+    "guard_runner": {
+      "bytes": 2553,
+      "sha256": "1200cce98e62d103186bb3fbd568a8c2c641de07581fb5430df11df42f572746"
+    },
+    "implementation": {
+      "bytes": 20609,
+      "sha256": "f50069d028526ea045441a2e574a26192a210ff78ba34f5170777d32f5692ec3"
+    },
+    "tests": {
+      "bytes": 46615,
+      "sha256": "4e23e7582dc1da3b0a51507eab4181a39707f0d9057506f25eba61d72ce73ccb"
+    }
+  },
+  "status": "PASS",
+  "test_count": 24,
+  "unittest_seconds": "2.000"
+}

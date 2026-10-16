@@ -1,0 +1,12 @@
+{
+  "actual_operations_by_reviewer": 0,
+  "actual_reference_choice": "UNKNOWN",
+  "bytes": 19619,
+  "files": 6,
+  "inventory_sha256": "bd13e9d8c09b49742bba17e98637b9728721b5ceddd13600cd5dfb28de5b848f",
+  "private_or_raw_reads_by_reviewer": 0,
+  "public_sha256": "b444e7d33cb18619942c2dfbb5cd3374fd9cd9adee6732825ce20ed431641a33",
+  "review_sha256": "592ee1a2f1effc36153da79e5d4584d6ab545b3c2770f29abf121d1f7ac99b50",
+  "scientific_status": "NOT_ADMITTED",
+  "status": "PASS_PUBLIC_RECEIPT_CONSISTENCY"
+}

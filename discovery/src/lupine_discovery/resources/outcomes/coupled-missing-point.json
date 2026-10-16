@@ -1,0 +1,24 @@
+{
+  "certificate_digest": "ceadaa36347bb5fd5cbf1f1fb0f463477b33a84e4a8f8e5526d09bc850ee8945",
+  "latent_world": {
+    "kind": "hypothetical_model_world",
+    "point": [
+      "0"
+    ]
+  },
+  "outcomes": [
+    {
+      "constraints": {},
+      "id": "A",
+      "score": "3"
+    },
+    {
+      "constraints": {},
+      "id": "B",
+      "score": "0"
+    }
+  ],
+  "problem_digest": "d2c32514d3e669088544645fe1e1ee00b605671d7100303cf94ddae5e6807fa5",
+  "scenario_id": "coupled-missing-point",
+  "schema": "lupine.discovery.coupled_outcomes.v1"
+}

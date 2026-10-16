@@ -1,0 +1,50 @@
+{
+  "before_any_operation": [
+    "Root-reviewed final source and generated author/independent evidence",
+    "Exact committed/pushed final producer after successful current CI, clean package and independent artifact verification",
+    "Final baseline descendant pins rebound explicitly; current2975 behavior hold is not final production authorization"
+  ],
+  "finite_scope": {
+    "automatic_advance": false,
+    "maximum_source_operations": 6,
+    "phases": [
+      "layout",
+      "inventory",
+      "frame"
+    ],
+    "slots_per_phase": [
+      "1",
+      "2"
+    ]
+  },
+  "immutable_history": [
+    "strict-checkpoint-v1",
+    "inventory-checkpoint-v1",
+    "receipts/first",
+    "receipts/corrected-dirfd",
+    "receipts/baseline-bound",
+    "receipts/prior-pair-corrected",
+    "receipts/inventory-first",
+    "receipts/complete-route-first"
+  ],
+  "negative_boundary": [
+    "Unjustified semantic binding does not admit guessed roles, row classes or columns",
+    "Entirely structural/no-assertion C uses explicit SEMANTIC_PROJECTION_NOT_REQUESTED; null strict payload/digest and mandatory completed negative result",
+    "Any unresolved row/sheet/meaning or zero DATA rows prevents metadata readiness",
+    "No numerical endpoint values, label extraction, fitting, split or threshold work is authorized by these receipts"
+  ],
+  "operation_acceptance": [
+    "Fixed phase and slot only; preserve reservation and complete stdout/stderr/exit",
+    "Require returned report, emitted canonical stdout and persisted public bytes to agree exactly",
+    "Require expected engineering/negative outcome, same-source identity, complete exposure and all cleanup accepted",
+    "A public file alone is insufficient because the final output-directory close occurs afterward",
+    "Any mismatch or cleanup failure is terminal, preserving both persisted and returned forms; do not reuse the consumed slot"
+  ],
+  "phase_dependencies": [
+    "B requires two accepted byte-identical complete A receipts with original producer pins",
+    "C requires two accepted A receipts plus two accepted B inventory receipts and their exact historical A edge",
+    "B and C authentication/recomputation includes complete workbook-order manifest and whole inventory payload",
+    "C binding is reviewed and committed once from permitted evidence before either C invocation; no learned class/column exceptions"
+  ],
+  "scope": "Prospective recorder requirements only; this file authorizes no actual source operation."
+}

@@ -1,0 +1,159 @@
+{
+  "actual_public_audit_claim": {
+    "checks": 517,
+    "necessary_relations": 208,
+    "private_recomputation": false,
+    "rationals": 96
+  },
+  "chronology_checked": "Identity-only seal before one census invocation; prior report CI observation later, not a retroactive gate.",
+  "created_at": "2026-10-16T13:37:13.410883+00:00",
+  "lossless_wrapper_entries": 1,
+  "private_projection_or_raw_object_reads": 0,
+  "product_tests_run": 0,
+  "public_result_bytes": 31448,
+  "public_result_sha256": "a9ab9d72c6c39be9338e951b657e0587ae8f4dbe534b276b8f8f8951a7b1a63a",
+  "public_shape": {
+    "all_stored_reference_rational_token_citation_groups_equal": true,
+    "groups": 16,
+    "models_per_reference_group": 4,
+    "positions": 144,
+    "positions_per_group": 9,
+    "reference_groups": 36
+  },
+  "relative_markdown_links": [
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-stored-census-v1/README.md",
+      "target": "actual/public.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-stored-census-v1/README.md",
+      "target": "operations/projection-binding.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-stored-census-v1/README.md",
+      "target": "operations/actual-execution/execution.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-stored-census-v1/README.md",
+      "target": "author/contract.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-stored-census-v1/README.md",
+      "target": "independent-numeric-review/README.md"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-stored-census-v1/README.md",
+      "target": "scientific-scope-review/review.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-stored-census-v1/README.md",
+      "target": "actual-public-review/README.md"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-stored-census-v1/README.md",
+      "target": "prior-report-ci/final.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-stored-census-v1/README.md",
+      "target": "publication-copy-map.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-stored-census-v1/README.md",
+      "target": "publication-checks.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-stored-census-v1/actual-public-review/README.md",
+      "target": "first-public-audit/review.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-stored-census-v1/actual-public-review/README.md",
+      "target": "audit_public.py"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-stored-census-v1/author/FINAL.md",
+      "target": "contract.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-stored-census-v1/author/FINAL.md",
+      "target": "first-author/execution.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-stored-census-v1/author/FINAL.md",
+      "target": "source-hold.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-stored-census-v1/author/FINAL.md",
+      "target": "independent-review-binding.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-stored-census-v1/author/FINAL.md",
+      "target": "publication-layout.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-stored-census-v1/author/README.md",
+      "target": "contract.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-stored-census-v1/author/README.md",
+      "target": "public-aggregate-amendment.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-stored-census-v1/author/README.md",
+      "target": "parser-heritage.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-stored-census-v1/author/before-public-aggregate-amendment/scope.md",
+      "target": "contract.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-stored-census-v1/author/scope.md",
+      "target": "contract.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-stored-census-v1/independent-numeric-review/README.md",
+      "target": "first-independent/execution.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-stored-census-v1/independent-numeric-review/README.md",
+      "target": "first-independent/unittest.txt"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-stored-census-v1/independent-numeric-review/README.md",
+      "target": "arithmetic-bound-review.md"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-stored-census-v1/independent-numeric-review/README.md",
+      "target": "review.json"
+    }
+  ],
+  "runtime_files_edited": 0,
+  "source_entries_reconstructed": 64,
+  "source_operations_run": 0,
+  "status": "PASS_EXACT_COPY_PUBLIC_CLAIM_AND_LINK_CHECKS"
+}

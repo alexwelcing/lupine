@@ -1,0 +1,424 @@
+{
+  "schema": "lupine.discovery.finite_final_claim_review.v1",
+  "status": "NO_BLOCKER",
+  "reviewed_at": "2026-10-16T07:15:13.883132+00:00",
+  "owner": "phase2_math",
+  "independent_mathematical_claim_reviewer": "phase2_math/proof_check",
+  "verified_execution_records": [
+    {
+      "receipt": "reports/phase2-finite-workbench-v1/combined-v1/0/execution.json",
+      "exit_code": 0,
+      "test_count": 67,
+      "runtime_files": 310
+    },
+    {
+      "receipt": "reports/phase2-finite-workbench-v1/combined-v1/1/execution.json",
+      "exit_code": 0,
+      "test_count": 49,
+      "runtime_files": 310
+    },
+    {
+      "receipt": "reports/phase2-finite-workbench-v1/combined-v1/2/execution.json",
+      "exit_code": 1,
+      "test_count": 23,
+      "runtime_files": 310
+    },
+    {
+      "receipt": "reports/phase2-finite-workbench-v1/combined-v2/0/execution.json",
+      "exit_code": 0,
+      "test_count": 76,
+      "runtime_files": 311
+    },
+    {
+      "receipt": "reports/phase2-finite-workbench-v1/combined-v2/1/execution.json",
+      "exit_code": 0,
+      "test_count": 49,
+      "runtime_files": 311
+    },
+    {
+      "receipt": "reports/phase2-finite-workbench-v1/combined-v2/2/execution.json",
+      "exit_code": 0,
+      "test_count": 23,
+      "runtime_files": 311
+    },
+    {
+      "receipt": "reports/phase2-finite-workbench-v1/combined-v2/3/execution.json",
+      "exit_code": 0,
+      "test_count": null,
+      "runtime_files": 311
+    },
+    {
+      "receipt": "reports/phase2-finite-planner-author-v1/author-tests-first/execution.json",
+      "exit_code": 0,
+      "test_count": 13,
+      "intentional_negative": false
+    },
+    {
+      "receipt": "reports/phase2-finite-planner-author-v1/mutant-floor/execution.json",
+      "exit_code": 1,
+      "test_count": 1,
+      "intentional_negative": true
+    },
+    {
+      "receipt": "reports/phase2-finite-planner-author-v1/mutant-strict/execution.json",
+      "exit_code": 1,
+      "test_count": 1,
+      "intentional_negative": true
+    },
+    {
+      "receipt": "reports/phase2-finite-planner-author-v1/mutant-iid/execution.json",
+      "exit_code": 1,
+      "test_count": 1,
+      "intentional_negative": true
+    },
+    {
+      "receipt": "reports/phase2-finite-planner-author-v1/mutant-last-minimum/execution.json",
+      "exit_code": 1,
+      "test_count": 1,
+      "intentional_negative": true
+    },
+    {
+      "receipt": "reports/phase2-finite-planner-review-v1/first/execution.json",
+      "exit_code": 0,
+      "test_count": 9,
+      "finite_null_cases": 3663,
+      "sequential_draw_distributions": 284
+    },
+    {
+      "receipt": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/execution.json",
+      "exit_code": 0,
+      "browser_checks": 73,
+      "old_checks_preserved_in_order": 65,
+      "elapsed_seconds": 144.08017203399868
+    },
+    {
+      "receipt": "reports/phase2-finite-workbench-v1/independent-interface/first/execution.json",
+      "exit_code": 0,
+      "focused_groups": 8,
+      "intentional_negative": false,
+      "elapsed_seconds": 14.284566033000374
+    },
+    {
+      "receipt": "reports/phase2-finite-workbench-v1/independent-interface/mutation-control/execution.json",
+      "exit_code": 1,
+      "focused_groups": null,
+      "intentional_negative": true,
+      "elapsed_seconds": 6.536804620000112
+    }
+  ],
+  "findings": [
+    "All claimed test and browser counts/durations agree with retained actual receipts and logs; source-before/after maps agree.",
+    "The failed retained suite is preserved as one stale15-versus16 expectation, not a scientific or installed-product failure. Repaired overlay changes exactly two test files and adds the independent test; product hashes remain unchanged.",
+    "Four author mutants and the stale-browser mutant fail intentionally at the documented controls; they are not counted as extra passing product tests.",
+    "Isolated overlay package28cases/sixschemas/16checks is explicitly distinct from committed retention/publication/CI, which remain later gates.",
+    "Finite K/M residual-frame hypergeometric resolution is distinct from IID q-risk/binomial planning, marginal conformal coverage, empirical power and future physical risk. Realized-subset/full-transcript conditioning is excluded.",
+    "Documented ten-panel1/15-versus1/45 and finite25-versusIID29 examples satisfy exact integer comparisons, without any scientific input or superiority conclusion.",
+    "Existing mathematical/scientific NO_GO limits and original failures remain explicit; no Lean compilation/refinement or actual source sampling is inferred."
+  ],
+  "scope_limits": [
+    "Read-only retained public/candidate receipt and narrative audit; no tests, browser or package rerun.",
+    "No actual Li source, private archive or production cache read; no network request.",
+    "Independent browser screenshots and assistive-technology behavior were not re-inspected here; their separately scoped review remains the evidence.",
+    "Source/API/UI integration reviews were already performed and are retained separately."
+  ],
+  "source_bindings": [
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v1/0/stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v1/0/stderr.txt",
+      "bytes": 11886,
+      "sha256": "310901aa74cdaf0d4f61a3c02859fc3d831014c730232874830af73df23c4a0b"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v1/0/execution.json",
+      "bytes": 73691,
+      "sha256": "c36eb3186c7caba850125096d97a72e45a2e8ff3c304ed8538aa383522f1fbbb"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v1/1/stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v1/1/stderr.txt",
+      "bytes": 8948,
+      "sha256": "1254f0003dbed38745d022bd1bd6a86c1d70d11daca04f0e904a4ba6dd54112f"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v1/1/execution.json",
+      "bytes": 73689,
+      "sha256": "c23ae5742d3016073b30ca00554db9081bfa981c832d534cdb6d07f07446e40f"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v1/2/stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v1/2/stderr.txt",
+      "bytes": 5019,
+      "sha256": "6f07cf1b5e315df1175cbd5d603283e4b7ff64a627b200f26ab9487bf6e11e1b"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v1/2/execution.json",
+      "bytes": 73690,
+      "sha256": "6306ac995aa07a90bfae74da838ea141aef974c2c7f38ec19f78a260e6495d2f"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v2/0/stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v2/0/stderr.txt",
+      "bytes": 13518,
+      "sha256": "a9390c752fd842dacc9e1878930cdbbc902674bc9ef465c18bbcb9ffb49a46ec"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v2/0/execution.json",
+      "bytes": 73914,
+      "sha256": "4a47b58956e9911e162d5f71001b104d02bca388d88248d50c0ab67ecbbeae97"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v2/1/stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v2/1/stderr.txt",
+      "bytes": 8947,
+      "sha256": "24df02690efb822780a1fb4e07c8387ac750ccc358f2c9a6c802c1c623dc9c74"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v2/1/execution.json",
+      "bytes": 73913,
+      "sha256": "e770d2c3fb6828c678b5d0b992933fc9203d64af162d8bd10b33c9aa599b8f33"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v2/2/stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v2/2/stderr.txt",
+      "bytes": 4340,
+      "sha256": "38a7147346342dddb2f12e3c786e0270b92e55029f089694add50cab0f88efa5"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v2/2/execution.json",
+      "bytes": 73914,
+      "sha256": "fad1aff31855341dc256f8377840340dc9b5cd3900cd0332841c71e51f03e19f"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v2/3/stdout.txt",
+      "bytes": 1240,
+      "sha256": "59277c822ac9141d9bc4d24e019211c1715ee779f27cd6c716aebf9f4ec6ec27"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v2/3/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v2/3/execution.json",
+      "bytes": 73836,
+      "sha256": "bf1a578ecef9ce8b9a653175f11be6c0e8cbc92595f8e4f243960eaf4e71ed4a"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/author-tests-first/stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/author-tests-first/stderr.txt",
+      "bytes": 2354,
+      "sha256": "8f0f22ddb328d7522409d5a6b271aac37aa0ab9fa931c40907623b601c1c6e44"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/author-tests-first/execution.json",
+      "bytes": 1240,
+      "sha256": "ea741e943431cec2ba51b652ab9651e1528f8e99a66a9ac9b9c0862b440a4ed7"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/mutant-floor/stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/mutant-floor/stderr.txt",
+      "bytes": 1036,
+      "sha256": "5161c3365d239eaf8e4495ebe96f0585a2c32dd9b9930e3de77bbdf401cfd4b8"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/mutant-floor/execution.json",
+      "bytes": 1317,
+      "sha256": "7a3f5a6a069702ebdd82446777e9a7d6ba378abaa0ace6e99b34a93d6d7fbf64"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/mutant-strict/stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/mutant-strict/stderr.txt",
+      "bytes": 954,
+      "sha256": "27151e0ab2752bfcad8ad34f00181746a64bc6868834582b3e28e7c9086624de"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/mutant-strict/execution.json",
+      "bytes": 1211,
+      "sha256": "3ca44b37a9dfff9a216ccf5a64b8720ddd8056a6ed47bf5edfefd1ec2b2c4dd5"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/mutant-iid/stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/mutant-iid/stderr.txt",
+      "bytes": 939,
+      "sha256": "877fe28033cd6d20d35d4e1634f68c40c4289f0ff09aa084e956e8c10dc4c75e"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/mutant-iid/execution.json",
+      "bytes": 1269,
+      "sha256": "6d85a4039de4bac15dabe243f3ed16917cc7519666afd530bf7f17f647f6bd04"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/mutant-last-minimum/stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/mutant-last-minimum/stderr.txt",
+      "bytes": 878,
+      "sha256": "243061868d04acb9ed6f82a98f1709f71d8cd3fe7d3f405645206b37ff8dc70a"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/mutant-last-minimum/execution.json",
+      "bytes": 1216,
+      "sha256": "463b96283b258612a8db6a4163991178c7a32fd30bbdaaabf31e0dcbcdc9445d"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-review-v1/first/stdout.txt",
+      "bytes": 97,
+      "sha256": "bd21610cb011922d4a4c69f205d99ab6459ad608f7ee52f8fcc35f58792e22f8"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-review-v1/first/stderr.txt",
+      "bytes": 1560,
+      "sha256": "3a7854fcc0d2de90157a47a26a24cce1cb2e3a8a7d9e59456c1abc8deeb9892d"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-review-v1/first/execution.json",
+      "bytes": 2135,
+      "sha256": "3779b220624fe4bc21ecdbcd0f139e53c66697e7084b482e18af2e7a67c3c8b3"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/stdout.txt",
+      "bytes": 12407,
+      "sha256": "a134a82cbd3424cc02161e73b44e15d24588d0461580dfd2c026af970872dfc7"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/execution.json",
+      "bytes": 73673,
+      "sha256": "f726f1ae8fd8ba6fe671d114f074010c6da778c9760f9ce5420b2920779dff6b"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/independent-interface/first/stdout.txt",
+      "bytes": 162,
+      "sha256": "3adb176cd35742d6551509744190e5907b42cb16471cbc7dd25f59a342377235"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/independent-interface/first/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/independent-interface/first/execution.json",
+      "bytes": 74229,
+      "sha256": "af155123d67f860f33a82d19ea993615dc59f1a16d508cf608d89341f121d8e3"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/independent-interface/mutation-control/stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/independent-interface/mutation-control/stderr.txt",
+      "bytes": 567,
+      "sha256": "60d0c54d09c2a2358b733df70ef5ad93f8acb079c88f6f3426ca3fdbea1896ff"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/independent-interface/mutation-control/execution.json",
+      "bytes": 74267,
+      "sha256": "53c7c289f031bd50083cb8406eb798aa9c3d41d322a8ff705c12534a1643f145"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/README.md",
+      "bytes": 6978,
+      "sha256": "c25f7f30d82fbc6f49178d97a509a69b02a8a8ca3c287ca786d36424e6f90829"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/README.md",
+      "bytes": 17436,
+      "sha256": "f0e03f1bc392b6e52aad0767ce33fdd1b45c3b34893d1a5332fe2a2e847d874f"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/docs/study-planning.md",
+      "bytes": 13621,
+      "sha256": "cd7b5c130a3df693948b208716ed74d991fab09619de4c94b4628b5a18dfbe16"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/static-review.json",
+      "bytes": 204,
+      "sha256": "ba5d49a4123f3968f960da3a29d2cfb6058df7ce63171a3eda2a85739c3d53b8"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/verification-summary.json",
+      "bytes": 1201,
+      "sha256": "1983c01f251015b8860fa1c821366f1c85c4cbc20b41f7f8810c0e07050d8fb2"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/independent-interface/review.json",
+      "bytes": 4706,
+      "sha256": "c6a34c413c414470fc285a5ad568f105cd7de7b92714cf785e3dafda450f2a3a"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/integration/package-probe-delta.json",
+      "bytes": 448,
+      "sha256": "f506c58070f0d9c47e874a59778cf3f663e263eb754aab57a587c9d85d9af984"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/publication-scope.json",
+      "bytes": 448,
+      "sha256": "24fd7f5e8f5a729e1396f820423e517239bef89c07cc78799c43d23ed70cf7f5"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-review-v1/review.json",
+      "bytes": 6608,
+      "sha256": "c0687cc9d6a16cd4cedda17b26686086aed7f530abce6653d193569586de5aa4"
+    },
+    {
+      "path": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/README.md",
+      "bytes": 3546,
+      "sha256": "7df891e3191f6543420bd94d976f022032321ed6a77857c0cf188aa5d13ed1d1"
+    },
+    {
+      "path": "reports/phase2-study-workbench-v1/combined-v2/2/stdout.txt",
+      "bytes": 11519,
+      "sha256": "02ea540253b78b76c19cecc0d984e8d422bb969d255bc90f3c8f16106bae6694"
+    }
+  ],
+  "tracked_edits": false,
+  "runtime_tests_run": false,
+  "scientific_experiment_performed": false
+}

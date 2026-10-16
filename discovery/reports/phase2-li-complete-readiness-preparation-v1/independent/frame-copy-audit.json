@@ -1,0 +1,9 @@
+{
+  "candidate_sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219",
+  "changed_cap_occurrences": 1,
+  "frame_target_exact_except_class_name_and_approved_frame_cell_cap": true,
+  "g32_sha256": "4624e68c28f911bc0bcc927834bd9f9bbb8cd4622a47db80f5a99e3f63b6ba7d",
+  "runtime_invocations": 0,
+  "scope": "Static AST source identity check, not runtime or scientific proof.",
+  "status": "PASS"
+}

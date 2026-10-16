@@ -1,0 +1,122 @@
+{
+  "schema": "lupine.reference-identity-publication-map.v1",
+  "originals": [
+    {
+      "original_path": ".cache/phase2-li-reference-identity-v1/README.md",
+      "published_path": "reports/phase2-li-reference-identity-v1/README.md",
+      "bytes": 7621,
+      "sha256": "f564c79b7b731191fbb8bc58669dbc6a1897bc22e57db3b59d09b737c60555ae",
+      "transformation": "none"
+    },
+    {
+      "original_path": ".cache/phase2-li-reference-identity-v1/source-bindings.json",
+      "published_path": "reports/phase2-li-reference-identity-v1/source-bindings.json",
+      "bytes": 4198,
+      "sha256": "611a033ab0ae45e628f64252e83b5042e47f1afcc7f03fbe24fb3efa5f0525da",
+      "transformation": "none"
+    },
+    {
+      "original_path": ".cache/phase2-li-reference-identity-v1/scope.json",
+      "published_path": "reports/phase2-li-reference-identity-v1/scope.json",
+      "bytes": 2675,
+      "sha256": "9dc7286011a9ab08a16e96b8f0c86d2379c8b79e6e9d38a8bbb940ada2c3532f",
+      "transformation": "none"
+    },
+    {
+      "original_path": ".cache/phase2-li-reference-identity-v1/candidate-query-scope.json",
+      "published_path": "reports/phase2-li-reference-identity-v1/candidate-query-scope.json",
+      "bytes": 1749,
+      "sha256": "b0f0e2a0ada2fdd5b11904be5ce83c3c0fd4718de7ffe97c3354e15ae52d7dff",
+      "transformation": "none"
+    },
+    {
+      "original_path": ".cache/phase2-li-reference-identity-v1/crossref-receipt.json",
+      "published_path": "reports/phase2-li-reference-identity-v1/crossref-receipt.json",
+      "bytes": 673,
+      "sha256": "f6f498d24eb0f27fa472023f6d3d2587b3b46d9120383b5d21f3cb4b8b6a0065",
+      "transformation": "none"
+    },
+    {
+      "original_path": ".cache/phase2-li-reference-identity-v1/candidate-query-receipt.json",
+      "published_path": "reports/phase2-li-reference-identity-v1/candidate-query-receipt.json",
+      "bytes": 1247,
+      "sha256": "3dc2aca14c55c05dbdc296ce9d84a7c9576f04ace128ed851e8210424f0b0f61",
+      "transformation": "none"
+    },
+    {
+      "original_path": ".cache/phase2-li-reference-identity-v1/crossref-citation-projection.json",
+      "published_path": "reports/phase2-li-reference-identity-v1/crossref-citation-projection.json",
+      "bytes": 1415,
+      "sha256": "43a3555be3a4a9ac988720bfe8f7b2bc8c045e38ddc50ced7d3a8f1c060eb4f9",
+      "transformation": "none"
+    },
+    {
+      "original_path": ".cache/phase2-li-reference-identity-v1/candidate-citation-projection.json",
+      "published_path": "reports/phase2-li-reference-identity-v1/candidate-citation-projection.json",
+      "bytes": 2165,
+      "sha256": "1838d3da41834c8ace7eaf9aba838f7c6d35b1581e32600a9a19f113aaf91394",
+      "transformation": "none"
+    },
+    {
+      "original_path": ".cache/phase2-li-reference-identity-v1/crossref-projection-before-author-field-narrowing.json",
+      "published_path": "reports/phase2-li-reference-identity-v1/crossref-projection-before-author-field-narrowing.json",
+      "bytes": 2592,
+      "sha256": "f263393944265ad5c96e16a7a2c3ce1f5be3e897a9d86a6e79b11f7be1272857",
+      "transformation": "none"
+    },
+    {
+      "original_path": ".cache/phase2-li-reference-identity-v1/projection-correction.json",
+      "published_path": "reports/phase2-li-reference-identity-v1/projection-correction.json",
+      "bytes": 733,
+      "sha256": "e50e6d4cd4d1b10d0c7a1b57e3f0c7a97e99828c694ed8caaedf2ec04c7eca89",
+      "transformation": "none"
+    },
+    {
+      "original_path": ".cache/phase2-li-reference-identity-v1/article-citation-projection.json",
+      "published_path": "reports/phase2-li-reference-identity-v1/article-citation-projection.json",
+      "bytes": 7786,
+      "sha256": "37a0821bd225f85e453a8b195eaaf0bda871f93502aff4ea76c797a94c0e94a2",
+      "transformation": "none"
+    },
+    {
+      "original_path": ".cache/phase2-li-reference-identity-v1/citation-map.json",
+      "published_path": "reports/phase2-li-reference-identity-v1/citation-map.json",
+      "bytes": 3461,
+      "sha256": "7ed2ef187e9c08d58b253581cf806d75abd23e1fb08eb3cf4b18cdeb4614716c",
+      "transformation": "none"
+    },
+    {
+      "original_path": ".cache/phase2-li-reference-identity-v1/artifact-check.json",
+      "published_path": "reports/phase2-li-reference-identity-v1/artifact-check.json",
+      "bytes": 999,
+      "sha256": "4dfec1f84b7ba506d5cbc21e423fcd54ada5c50d1695008d599249f8acb164e7",
+      "transformation": "none"
+    }
+  ],
+  "retained_not_published": [
+    {
+      "retained_original_path": ".cache/phase2-li-paper-methods-v1/article.xml",
+      "bytes": 143727,
+      "sha256": "c7e527712991ce14fb233b57a7e1f5f2dc26e6728835df03510cd6c588146534",
+      "published": false,
+      "reason": "Full article XML with machine-visible tables/results; remains ignored; article declares CC BY-NC-ND4.0"
+    },
+    {
+      "retained_original_path": ".cache/phase2-li-reference-identity-v1/crossref-response.json",
+      "bytes": 12819,
+      "sha256": "a3d83af7737c0ac38db0bf08b14a9dd81c140492001b022403b48633dabcee12",
+      "published": false,
+      "reason": "Full registry metadata response remains ignored; selected citation fields and response receipt published"
+    },
+    {
+      "retained_original_path": ".cache/phase2-li-reference-identity-v1/candidate-query-response.json",
+      "bytes": 1744,
+      "sha256": "1bb5ff13a349222477d42e7e2a2e1d27ad238d516ba03e56c07d253916cbf07c",
+      "published": false,
+      "reason": "Full bounded candidate metadata response remains ignored; selected citation fields and response receipt published"
+    }
+  ],
+  "raw_article_or_registry_bodies_copied": false,
+  "byte_transformations": [],
+  "review_pending_at_map_creation": true
+}

@@ -1,0 +1,6 @@
+{
+  "encoding": "utf-8",
+  "bytes": 673,
+  "sha256": "213eb7e3c28c7eb7794217827a535f905b4ff94a6c480fb70d37262ffd219f6f",
+  "text": "--- baseline/li_v3_local_extra_headers.py\n+++ mutants/m02-close-required/li_v3_local_extra_headers.py\n@@ -132,7 +132,7 @@\n                 or exposure['archive_close_error'] is not None):\n             # For a non-local predecessor rejection, no archive may have opened.\n             # Preserve its classification without calling that absence a close failure.\n-            if report['predecessor_classification'] == EXPECTED_CLASSIFICATION:\n+            if False:\n                 raise LocalExtraError('PREDECESSOR_CLEANUP_FAILED')\n         if report['predecessor_classification'] != EXPECTED_CLASSIFICATION:\n             raise LocalExtraError('PREDECESSOR_PATH_MISMATCH')\n"
+}

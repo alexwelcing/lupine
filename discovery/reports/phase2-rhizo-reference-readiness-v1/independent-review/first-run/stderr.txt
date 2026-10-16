@@ -1,0 +1,26 @@
+test_changed_generated_object_stops_before_second_read (test_reference_projector_review.IndependentProjectorReview.test_changed_generated_object_stops_before_second_read) ... ok
+test_complete_graph_and_private_public_boundary (test_reference_projector_review.IndependentProjectorReview.test_complete_graph_and_private_public_boundary) ... ok
+test_context_is_exact_and_frame_is_bound (test_reference_projector_review.IndependentProjectorReview.test_context_is_exact_and_frame_is_bound) ... ok
+test_depth_string_and_node_boundaries (test_reference_projector_review.IndependentProjectorReview.test_depth_string_and_node_boundaries) ... ok
+test_documentary_absence_null_empty_and_wrong_type (test_reference_projector_review.IndependentProjectorReview.test_documentary_absence_null_empty_and_wrong_type) ... ok
+test_duplicate_keys_utf8_and_surrogate_contract (test_reference_projector_review.IndependentProjectorReview.test_duplicate_keys_utf8_and_surrogate_contract) ... ok
+test_generated_file_wrapper_reads_each_once_and_separates_outputs (test_reference_projector_review.IndependentProjectorReview.test_generated_file_wrapper_reads_each_once_and_separates_outputs) ... ok
+test_known_actual_identity_rejected_before_json (test_reference_projector_review.IndependentProjectorReview.test_known_actual_identity_rejected_before_json) ... ok
+test_late_second_object_failure_preserves_exposure_not_partial_projection (test_reference_projector_review.IndependentProjectorReview.test_late_second_object_failure_preserves_exposure_not_partial_projection) ... FAIL
+test_occupied_slot_and_source_symlink_block (test_reference_projector_review.IndependentProjectorReview.test_occupied_slot_and_source_symlink_block) ... ok
+test_opaque_values_and_unselected_notes_do_not_change_conclusions (test_reference_projector_review.IndependentProjectorReview.test_opaque_values_and_unselected_notes_do_not_change_conclusions) ... ok
+test_partial_write_or_later_public_failure_preserves_private_disclosure (test_reference_projector_review.IndependentProjectorReview.test_partial_write_or_later_public_failure_preserves_private_disclosure) ... ok
+test_source_guard_change_before_read_stops_closed (test_reference_projector_review.IndependentProjectorReview.test_source_guard_change_before_read_stops_closed) ... ok
+
+======================================================================
+FAIL: test_late_second_object_failure_preserves_exposure_not_partial_projection (test_reference_projector_review.IndependentProjectorReview.test_late_second_object_failure_preserves_exposure_not_partial_projection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-rhizo-reference-projector-review-v1/test_reference_projector_review.py", line 112, in test_late_second_object_failure_preserves_exposure_not_partial_projection
+    self.assertTrue(public['exposure']['whole_json_parse_completed'])
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.426s
+
+FAILED (failures=1)

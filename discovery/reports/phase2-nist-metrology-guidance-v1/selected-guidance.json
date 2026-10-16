@@ -1,0 +1,184 @@
+{
+  "schema": "lupine.nist-metrology-selected-guidance.v1",
+  "created_at": "2026-10-16T10:55:47.301817+00:00",
+  "publication": "Own paraphrase, short quotations and exact section/retained-HTML locators only; no full guidance page or full projection.",
+  "quotes_are_exact_substrings_of_retained_projection": true,
+  "claims": [
+    {
+      "id": "N01",
+      "paraphrase": "NIST treats combined standard uncertainty as an estimated standard deviation of the measurement result. Combining component standard uncertainties includes appropriate covariances, whether components are evaluated by Type A or Type B methods. Its RSS shorthand does not authorize discarding covariance or treating shared inputs as independent.",
+      "sources": [
+        {
+          "source": "section5",
+          "url": "https://www.nist.gov/pml/nist-technical-note-1297/nist-tn-1297-5-combined-standard-uncertainty",
+          "html_sha256": "42fb9ec839c7ec5e5e252c35799f58e75ecfe69ddfa14e17dff7ae94c5b353d4",
+          "section_locator": "§5.1",
+          "projection_block_index_zero_based": 128,
+          "html_start_line": 739,
+          "short_quote": "and covariances as appropriate"
+        }
+      ],
+      "lupine_implication": "A source adapter cannot manufacture independent errors from marginal uncertainty fields. A dependence-robust bound may instead avoid covariance, but still needs valid marginal risk premises; that latter mathematical implication is ours, not an additional NIST theorem."
+    },
+    {
+      "id": "N02",
+      "paraphrase": "The guidance assumes effort to identify significant systematic effects and correction for recognized significant effects; uncertainty of an applied correction is part of the uncertainty assessment. Its note distinguishes uncertainty about the correction from the systematic error itself, and another note acknowledges that corrections may sometimes be impractical.",
+      "sources": [
+        {
+          "source": "section5",
+          "url": "https://www.nist.gov/pml/nist-technical-note-1297/nist-tn-1297-5-combined-standard-uncertainty",
+          "html_sha256": "42fb9ec839c7ec5e5e252c35799f58e75ecfe69ddfa14e17dff7ae94c5b353d4",
+          "section_locator": "§5.2",
+          "projection_block_index_zero_based": 129,
+          "html_start_line": 743,
+          "short_quote": "recognized systematic effect"
+        },
+        {
+          "source": "section5",
+          "url": "https://www.nist.gov/pml/nist-technical-note-1297/nist-tn-1297-5-combined-standard-uncertainty",
+          "html_sha256": "42fb9ec839c7ec5e5e252c35799f58e75ecfe69ddfa14e17dff7ae94c5b353d4",
+          "section_locator": "§5.2 note 1",
+          "projection_block_index_zero_based": 130,
+          "html_start_line": 746,
+          "short_quote": "incomplete knowledge"
+        },
+        {
+          "source": "section5",
+          "url": "https://www.nist.gov/pml/nist-technical-note-1297/nist-tn-1297-5-combined-standard-uncertainty",
+          "html_sha256": "42fb9ec839c7ec5e5e252c35799f58e75ecfe69ddfa14e17dff7ae94c5b353d4",
+          "section_locator": "§5.2 note 2",
+          "projection_block_index_zero_based": 131,
+          "html_start_line": 748,
+          "short_quote": "may not be practical"
+        }
+      ],
+      "lupine_implication": "A reported calibration deviation or a Yes/No traceability field is not itself an uncertainty budget. This guidance does not establish whether a particular BAM correction is significant, adequately accounted for or compliant."
+    },
+    {
+      "id": "N03",
+      "paraphrase": "The approximate 68% interpretation of one combined-standard-uncertainty interval is qualified by an approximately normal distribution and negligible uncertainty in the combined standard uncertainty. The page discusses circumstances supporting a normal approximation, including comparable contributions and an adequate linear approximation.",
+      "sources": [
+        {
+          "source": "section5",
+          "url": "https://www.nist.gov/pml/nist-technical-note-1297/nist-tn-1297-5-combined-standard-uncertainty",
+          "html_sha256": "42fb9ec839c7ec5e5e252c35799f58e75ecfe69ddfa14e17dff7ae94c5b353d4",
+          "section_locator": "§5.4 first paragraph",
+          "projection_block_index_zero_based": 134,
+          "html_start_line": 757,
+          "short_quote": "approximately normal (Gaussian)"
+        },
+        {
+          "source": "section5",
+          "url": "https://www.nist.gov/pml/nist-technical-note-1297/nist-tn-1297-5-combined-standard-uncertainty",
+          "html_sha256": "42fb9ec839c7ec5e5e252c35799f58e75ecfe69ddfa14e17dff7ae94c5b353d4",
+          "section_locator": "§5.4 continuation",
+          "projection_block_index_zero_based": 135,
+          "html_start_line": 759,
+          "short_quote": "linear approximation"
+        }
+      ],
+      "lupine_implication": "No universal tail probability, exact nonlinear propagation certificate or deterministic enclosure follows from a standard-uncertainty number alone."
+    },
+    {
+      "id": "N04",
+      "paraphrase": "NIST distinguishes the statistical term confidence interval from its general uncertainty-interval usage. Its stated statistical conditions include that all contributing uncertainty components come from Type A evaluations; this is an including condition, not a claim that Type A status alone suffices. In these guidelines the interval is described as covering a fraction of the distribution characterized by the measurement result and its uncertainty.",
+      "sources": [
+        {
+          "source": "section5",
+          "url": "https://www.nist.gov/pml/nist-technical-note-1297/nist-tn-1297-5-combined-standard-uncertainty",
+          "html_sha256": "42fb9ec839c7ec5e5e252c35799f58e75ecfe69ddfa14e17dff7ae94c5b353d4",
+          "section_locator": "§5.5",
+          "projection_block_index_zero_based": 136,
+          "html_start_line": 763,
+          "short_quote": "has a specific definition in statistics"
+        },
+        {
+          "source": "section6",
+          "url": "https://www.nist.gov/pml/nist-technical-note-1297/nist-tn-1297-6-expanded-uncertainty",
+          "html_sha256": "40bdfd8fcd5e386406fe00e8a8b0593401035ac56a731d7a78b108fe87cb8041",
+          "section_locator": "§6.1 following paragraph",
+          "projection_block_index_zero_based": 129,
+          "html_start_line": 755,
+          "short_quote": "subsection 5.5 also applies"
+        }
+      ],
+      "lupine_implication": "The probability interpretation and source of randomness must be declared. Publisher language about confidence is not automatically a frequentist, conditional-on-selection or posterior claim under a newly chosen Lupine probability model."
+    },
+    {
+      "id": "N05",
+      "paraphrase": "Expanded uncertainty is formed as U = k times the combined standard uncertainty. NIST says k=2 corresponds to approximately 95% when the normal distribution applies and the combined standard uncertainty has negligible uncertainty. The approximation and its conditions are explicit; the scale factor alone is not a universal 95% theorem.",
+      "sources": [
+        {
+          "source": "section6",
+          "url": "https://www.nist.gov/pml/nist-technical-note-1297/nist-tn-1297-6-expanded-uncertainty",
+          "html_sha256": "40bdfd8fcd5e386406fe00e8a8b0593401035ac56a731d7a78b108fe87cb8041",
+          "section_locator": "§6.1",
+          "projection_block_index_zero_based": 128,
+          "html_start_line": 753,
+          "short_quote": "coverage factor"
+        },
+        {
+          "source": "section6",
+          "url": "https://www.nist.gov/pml/nist-technical-note-1297/nist-tn-1297-6-expanded-uncertainty",
+          "html_sha256": "40bdfd8fcd5e386406fe00e8a8b0593401035ac56a731d7a78b108fe87cb8041",
+          "section_locator": "§6.2",
+          "projection_block_index_zero_based": 130,
+          "html_start_line": 757,
+          "short_quote": "approximately 95 percent"
+        }
+      ],
+      "lupine_implication": "A stored k=2 field does not by itself validate exact marginal coverage, turn U/2 into a verified Gaussian noise parameter, or supply joint coverage."
+    },
+    {
+      "id": "N06",
+      "paraphrase": "Mapping a chosen k to a well-defined coverage level is difficult in practice because it requires detailed distributions of contributing quantities and their combination. The guidance discusses approximate ways to establish this relation, and gives a t-factor example when the combined standard uncertainty has low degrees of freedom.",
+      "sources": [
+        {
+          "source": "section6",
+          "url": "https://www.nist.gov/pml/nist-technical-note-1297/nist-tn-1297-6-expanded-uncertainty",
+          "html_sha256": "40bdfd8fcd5e386406fe00e8a8b0593401035ac56a731d7a78b108fe87cb8041",
+          "section_locator": "§6.3",
+          "projection_block_index_zero_based": 131,
+          "html_start_line": 759,
+          "short_quote": "knowing in considerable detail"
+        },
+        {
+          "source": "section6",
+          "url": "https://www.nist.gov/pml/nist-technical-note-1297/nist-tn-1297-6-expanded-uncertainty",
+          "html_sha256": "40bdfd8fcd5e386406fe00e8a8b0593401035ac56a731d7a78b108fe87cb8041",
+          "section_locator": "§6.4",
+          "projection_block_index_zero_based": 132,
+          "html_start_line": 761,
+          "short_quote": "approximate solution"
+        },
+        {
+          "source": "section6",
+          "url": "https://www.nist.gov/pml/nist-technical-note-1297/nist-tn-1297-6-expanded-uncertainty",
+          "html_sha256": "40bdfd8fcd5e386406fe00e8a8b0593401035ac56a731d7a78b108fe87cb8041",
+          "section_locator": "§6.5 following example paragraph",
+          "projection_block_index_zero_based": 134,
+          "html_start_line": 765,
+          "short_quote": "low degrees of freedom"
+        }
+      ],
+      "lupine_implication": "A particular larger coverage level cannot be obtained by relabeling a risk allocation or rescaling an uncertainty width without a justified model. No t-factor, degree of freedom, distribution or new interval is selected here."
+    },
+    {
+      "id": "N07",
+      "paraphrase": "These official sections describe measurement uncertainty for a specified measurand. They are not a validation report for BAM or Lupine and supply no candidate-pool, future-prediction, selection-conditional or simultaneous multi-endpoint guarantee for this project.",
+      "sources": [
+        {
+          "source": "section6",
+          "url": "https://www.nist.gov/pml/nist-technical-note-1297/nist-tn-1297-6-expanded-uncertainty",
+          "html_sha256": "40bdfd8fcd5e386406fe00e8a8b0593401035ac56a731d7a78b108fe87cb8041",
+          "section_locator": "§6.1",
+          "projection_block_index_zero_based": 128,
+          "html_start_line": 753,
+          "short_quote": "value of the measurand"
+        }
+      ],
+      "lupine_implication": "The separate source-free metrology risk contract supplies the event/union-bound/decision-bridge reasoning under explicit premises. NIST guidance grounds terminology and cautions; empirical marginal coverage, target transfer, source lineage and scientific admission remain unestablished."
+    }
+  ],
+  "limits": "Static selected text; image equations, full HTML layout, unselected policy wording and linked appendices/standards were not used as extracted evidence. Project-specific mathematical implications are distinguished from NIST statements."
+}

@@ -1,0 +1,37 @@
+{
+  "actual_private_projection_reads": 0,
+  "actual_raw_source_reads": 0,
+  "actual_source_operations": 0,
+  "first_author_execution_sha256": "b10830c82ee59479efa19542f8875366eae093e5672ffa7c2ce9aadca039865e",
+  "held_at": "2026-10-16T13:23:22.543608+00:00",
+  "independent_execution_pending": true,
+  "pins": {
+    "README.md": {
+      "bytes": 4819,
+      "sha256": "073e1a391e1fa8c22eedf331bbe0f934c556ccbead7d0c0a9a32b4bb0f8f6686"
+    },
+    "census.py": {
+      "bytes": 26565,
+      "sha256": "d77a1ca2eeeb1d0f4e02fac6d624fa63527c4a8d423fdf8f7f645db102c67630"
+    },
+    "contract.json": {
+      "bytes": 8585,
+      "sha256": "e849d36004f0e73fdde22620bbffe06d1e53425907ca5fce974c536a5e1ea052"
+    },
+    "run_author.py": {
+      "bytes": 2576,
+      "sha256": "6df38bf620f3182c80074d5e548ad7c2eba00c6445849ee052bcd039b1520c16"
+    },
+    "test_census.py": {
+      "bytes": 18939,
+      "sha256": "ea8677a6a59f91d7376f688a57335e0838228230f324a1b77ec77d57613f97c9"
+    }
+  },
+  "process_seconds": 1.970520173003024,
+  "production_wrapper_invocations": 0,
+  "status": "HELD_AFTER_FIRST_AUTHOR_29_PASS",
+  "stderr_sha256": "c54b9522b848f48af3c0cd9e6e3a093b949be84659a7663d62351d7a3145b1ec",
+  "stdout_sha256": "c36b07bb7018dfe1e63dc4d724150f7c95a81ee7ce1513db235bc1242442c684",
+  "tests_run": 29,
+  "unittest_seconds": 1.786
+}

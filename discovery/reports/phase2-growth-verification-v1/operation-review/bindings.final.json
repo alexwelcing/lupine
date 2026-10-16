@@ -1,0 +1,22 @@
+{
+  "actual_outcomes": "READ_FROM_COMPLETED_CANONICAL_REPORTS_NOT_ASSUMED_BY_THIS_BINDING",
+  "bound_at": "2026-10-16T11:07:37.301653+00:00",
+  "commit": "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace",
+  "gate_sha256": {
+    "additive_review": "4e90e28fa6889360346982c602497c8e3c3d58a9e83d040d184bfa7328537f6f",
+    "artifact_execution0": "04e51bab14eb01ce2d59cca28d3cc31557ff45f1dd173ba7b4bcb2e92675f1d2",
+    "artifact_execution1": "d4bbd0202a10b395bb21629430b40fa9611bb0872892c67930a45c7508045f25",
+    "artifact_review": "59074b0b245d47caa13410841a87319e2cf079005e692e4bab9352810d2b11fd",
+    "ci": "a54c34896c21e8478c581df4ab91659c8f94a4070bb756b2397d46d8f703486f",
+    "package0": "f7879f390bd965ba3ba05f5f0bcdffd45758315ff73ed94caae002a8131b002e",
+    "package1": "a8233ae5eeb34f57b4fb7bc786a7477ae0dc9b8edb77ed28b169d385ae81fae0"
+  },
+  "recorders": {
+    "envelope": "5c2a3fe1190c585f9dbb0d9c27d896a852fc84710d70839925f4f7c1c69cea10",
+    "shape": "bf5d4bd82a840aaf8514265ae5a93ecdd152032840d6efcb129f3be9bb24b4a8"
+  },
+  "reviewed_pins_sha256": "f65508a95077542381e000102ba2eb460ad080b058d8204a00ee34b74c9577e7",
+  "schema": "lupine.discovery.growth_operation_audit_bindings.v1",
+  "scope": "Exact source/CI/package/artifact/recorder bindings; audit reads completed public outputs without rerunning source classifiers.",
+  "status": "FINAL_BOUND_OPERATION_AUDIT"
+}

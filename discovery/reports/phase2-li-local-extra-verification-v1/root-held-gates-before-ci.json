@@ -1,0 +1,49 @@
+{
+  "at": "2026-10-16T09:41:17.997291+00:00",
+  "commit": "d0505b9b358a4bdeafbd742f1aeeb6c2b955abf3",
+  "worktree_clean": true,
+  "bindings": [
+    {
+      "path": ".cache/phase2-local-extra-clean-package-v1/0-execution.json",
+      "bytes": 77402,
+      "sha256": "92070c96cf28edb493cbf22a053737ae922a58e620cd72556352cc2678c3bdb9"
+    },
+    {
+      "path": ".cache/phase2-local-extra-clean-package-v1/1-execution.json",
+      "bytes": 77471,
+      "sha256": "787a29ac5112f1c9d26108a68ee45540e8d0ee9b95f0ba4b939f292a3fcc91b6"
+    },
+    {
+      "path": ".cache/phase2-local-extra-clean-package-v1/artifacts/release-artifacts.json",
+      "bytes": 7971,
+      "sha256": "86d7e2991298364b03f288b06ada9d3c20024acc98ec4aefdca7d3e34cffe705"
+    },
+    {
+      "path": ".cache/phase2-local-extra-artifact-review-v1/actual-d0505b9b358a/review.json",
+      "bytes": 10851,
+      "sha256": "6d3d05fa15c2d1bf72cf2470ee8f823df8e8f3a14da36b053a99bb4c1a12caa1"
+    },
+    {
+      "path": ".cache/phase2-local-extra-artifact-review-v1/additive-d0505b9b358a/additive-review.json",
+      "bytes": 8712,
+      "sha256": "1f0149016cdfe4d87793c5855291474775e6301d2ad35e996289bc8dd1db030c"
+    },
+    {
+      "path": ".cache/phase2-local-extra-operations-v1/run_after_ci.py",
+      "bytes": 17988,
+      "sha256": "01f45e732c930bbf45c81467a709b648d83802945146e4e76b06265a8ff0d5b9"
+    },
+    {
+      "path": ".cache/phase2-local-extra-operation-review-v1/recorder-commit-binding-review.json",
+      "bytes": 571,
+      "sha256": "7a4db7e2838fbe88178b9460f68a463d7c6ecab033f92013c4fc0cf29637ce4d"
+    },
+    {
+      "path": ".cache/phase2-local-extra-operation-review-v1/synthetic-challenge-review.json",
+      "bytes": 1972,
+      "sha256": "214d9f671d34eaf66bec32ce8a06bac95025b832e0d2c14c16c24ca7a4ee87bf"
+    }
+  ],
+  "remaining_operational_gate": "original4jobCIcompletion",
+  "actual_source_operation_invoked": false
+}

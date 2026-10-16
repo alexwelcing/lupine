@@ -1,0 +1,121 @@
+{
+  "C_reconstruction": "Authenticate/recompute exact A and complete inventory payloads on same verified buffer. Match role/coordinate/storage/literal. Strip only expected_storage/map nested schema for unchanged strict _doc_binding/_documentary. Hash current strict documentary payload internally, never synthesize historical strict-B receipt. Then unchanged frame helpers before record exposure.",
+  "additional_result_keys": "inventory and inventory_exposure appear only in inventory/frame phases; layout shape unchanged. All failures clear inventory too; exposure remains.",
+  "canonical": "Compact sorted ensure_ascii JSON + LF, ASCII; hashes include LF.",
+  "default_phase_bindings": {
+    "frame": null,
+    "inventory": null
+  },
+  "frame_binding": "Same keys as pure li_v3.frame_binding.v1 except schema=li_v3.inventory_frame_binding.v1 and prior_inventory_sha256 replaces prior_documentary_sha256. Nested documentary_binding schema=li_v3.inventory_documentary_binding.v1; each field adds expected_storage inlineStr|s, or null only for optional unresolved fields. All remaining fields retain pure strict shape.",
+  "internal_call": "_run_production(raw, phase, g34_implementation, binding=None, prior_layout=None, prior_inventory=None)",
+  "inventory": {
+    "completeness": "COMPLETE_TWO_ROLE_EXPLICIT_CELL_INVENTORY",
+    "explicit_cells": "int total across both roles, <=1024",
+    "fields": [
+      {
+        "coordinate": "canonical A1",
+        "declared_type": "supported G32 storage excluding str",
+        "formula_element_present": false,
+        "role": "exact References or Column Descriptions",
+        "semantics": "UNINTERPRETED",
+        "text": "plain literal including empty string, or null for nontext",
+        "text_state": "PLAIN_LITERAL_DISCLOSED | NON_TEXT_VALUE_WITHHELD"
+      }
+    ],
+    "fresh_status": "UNESTABLISHED",
+    "non_text_cells": "int",
+    "numerical_outcome_text_absence": "UNESTABLISHED",
+    "scientific_admission": "NOT_ASSESSED",
+    "semantic_safety": "UNESTABLISHED",
+    "text_cells": "int"
+  },
+  "inventory_exposure": {
+    "completed": "bool",
+    "disclosure_policy": "ALL_ROLE_PLAIN_TEXT_MAY_INCLUDE_INCIDENTAL_OUTCOMES",
+    "fresh_status": "UNESTABLISHED",
+    "non_text_cells_accounted": "int",
+    "plain_text_cells_processed": "int",
+    "record_worksheet_member_opens": 0,
+    "scope": "INVENTORY_SUBSTAGE_ONLY",
+    "shared_strings_may_include_record_values": "bool",
+    "started": "bool",
+    "whole_documentary_worksheet_character_data": "NOT_ATTEMPTED | FULL_TWO_ROLE_WORKSHEETS_DECODED",
+    "whole_shared_strings_completed": "bool only after complete bounded SST validation",
+    "whole_shared_strings_started": "bool before entire bounded SST decode/validation"
+  },
+  "inventory_failures": [
+    "formula anywhere in either role",
+    "unsupported str/rich/required text storage or unresolved shared dependency",
+    "merged selected text",
+    "1025+ total explicit cells or text2049+ chars",
+    "any existing parser/cap/source/cleanup failure"
+  ],
+  "inventory_order": "pure.ROLES order then canonical numeric row/column order; every explicit cell is included or whole projection blocks. Empty literal text remains text=\"\". Full worksheet headers/footers/attributes are private decoding exposure, outside coordinate-cell inventory.",
+  "limits": "All existing caps unchanged;1024 covers structural nontext entries too,2048 includes empty permitted text. No first-N projection/no value-based filtering.",
+  "phase_bindings": {
+    "frame": {
+      "binding": {
+        "path": ".cache/li-v3-custody/complete-readiness-bindings-v1/frame.json",
+        "sha256": "exact reviewed canonical binding digest"
+      },
+      "inventory": [
+        {
+          "path": ".cache/li-v3-custody/complete-readiness-v1/inventory/1/public.json",
+          "producer": "original 40hex producer",
+          "sha256": "exact canonical public receipt digest"
+        },
+        {
+          "path": ".cache/li-v3-custody/complete-readiness-v1/inventory/2/public.json",
+          "producer": "original 40hex producer",
+          "sha256": "exact canonical public receipt digest"
+        }
+      ],
+      "layout": [
+        {
+          "path": ".cache/li-v3-custody/complete-readiness-v1/layout/1/public.json",
+          "producer": "original 40hex producer",
+          "sha256": "exact canonical public receipt digest"
+        },
+        {
+          "path": ".cache/li-v3-custody/complete-readiness-v1/layout/2/public.json",
+          "producer": "original 40hex producer",
+          "sha256": "exact canonical public receipt digest"
+        }
+      ]
+    },
+    "inventory": {
+      "layout": [
+        {
+          "path": ".cache/li-v3-custody/complete-readiness-v1/layout/1/public.json",
+          "producer": "original 40hex producer",
+          "sha256": "exact canonical public receipt digest"
+        },
+        {
+          "path": ".cache/li-v3-custody/complete-readiness-v1/layout/2/public.json",
+          "producer": "original 40hex producer",
+          "sha256": "exact canonical public receipt digest"
+        }
+      ]
+    }
+  },
+  "phases": [
+    "layout",
+    "inventory",
+    "frame"
+  ],
+  "prior_rule": "Two complete identical canonical outer receipts, exact original producer/source/closed historical shape. Root separately accepts returned/stdout/persisted agreement, exit and all cleanup before freezing dependent pins.",
+  "production_call": "inspect(phase, run); fixed slots1/2 each; no caller bytes/expectation/path/binding",
+  "profile": "li_v3.complete_bounded_inventory_frame.v1",
+  "pure_core": "Unchanged5fd1; strict pure documentary API retained, no extra actual phase.",
+  "result_marker_substitutions": {
+    "production_binding": "FIXED_LI_V3_SOURCE_G34_PREREQUISITE",
+    "schema": "lupine.discovery.li_v3.readiness.result.v1",
+    "synthetic_fixture": false
+  },
+  "success_reasons": {
+    "frame": "METADATA_FRAME_READY_FOR_SEPARATE_LABEL_RULE or completed negative NO_GO_UNRESOLVED_PREMISE",
+    "inventory": "DOCUMENTARY_TEXT_INVENTORY_COMPLETE",
+    "layout": "LAYOUT_READY_MAPPING_UNBOUND"
+  },
+  "test_seams": "Generated tests may patch ROOT/custody.ROOT, __file__, baseline constants, source/capture/prerequisite/projection identities and PHASE_BINDINGS to generated equivalents; mock only preceding diagnostic.production_context and capture validator. Full current production_context runs solely in temporary generated Git repo. No real guards/cache."
+}

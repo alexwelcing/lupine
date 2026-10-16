@@ -1,0 +1,16 @@
+{
+  "actual_audit_runs": 0,
+  "audit_source_sha256": "1813a9a94d7d4b9b17ec788703d433072a827480a1fc8a6d1f0c348890539a84",
+  "baseline": "2975d6d0b9111cc84adb82ccc673bc82339ab154",
+  "checks_compare_ordered_literal": true,
+  "inventory_sha256": "ea6ac8ef51e4ec1b929317508eeacb834c102afc9fd717fb5380a9760b1b4504",
+  "promotion_sha256": "46a62f36494deac815f9470d6657fc93782ec1c9434378ecd0700d31d8e416c4",
+  "runtime_changed": 1,
+  "runtime_count": 339,
+  "runtime_unchanged": 338,
+  "schema": "lupine.rhizo.census.repair-artifact-review.preparation-handoff.v1",
+  "scope_sha256": "3197d9169f1a48bb39ac1e3ad3282b5764ce79e0f6683c9a46732be55ee5e752",
+  "status": "READY_AWAITING_ROOT_PUBLISHED_COMMIT_RETENTION_AND_COPYSET",
+  "wheel_payload_changed": 0,
+  "wheel_payload_count": 110
+}

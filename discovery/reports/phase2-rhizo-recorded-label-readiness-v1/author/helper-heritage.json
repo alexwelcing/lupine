@@ -1,0 +1,17 @@
+{
+  "copied_helpers": [
+    "ProjectionError",
+    "fail",
+    "sha",
+    "blob",
+    "canonical",
+    "BoundedJSON",
+    "_safe_path",
+    "_read_once",
+    "_write_new"
+  ],
+  "parser_change": "Keep exact matched numeric token in ExactJSONNumber instead of discarded opaque marker. No float conversion or upstream import.",
+  "scope": "Own previously reviewed standalone helper source, copied before recorded-label author tests; new label logic requires its own review.",
+  "source_path": ".cache/phase2-rhizo-reference-projector-v1/reference_projector.py",
+  "source_sha256": "bab641881335f57d4571fe0d4f720696f57e5816fa36266647cdf86d0701b263"
+}

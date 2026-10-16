@@ -1,0 +1,29 @@
+{
+  "actual_private_projection_reads": 0,
+  "actual_source_reads": 0,
+  "author_fixtures_imported": false,
+  "blocked_operations": [],
+  "case_counter": {
+    "candidate_invocations": 107,
+    "equality_group_comparisons": 468,
+    "negative_cases": 94,
+    "private_position_rational_comparisons": 5616,
+    "summary_rational_comparisons": 1248
+  },
+  "errors": 0,
+  "failures": 0,
+  "finished_at": "2026-10-16T13:24:00.902010+00:00",
+  "fixture_source_sha256": "89e74f282079f6964ef8b11dc138c7c3df8879c0780870707a2cb725b279ae9d",
+  "production_guards_run": false,
+  "schema": "lupine.rhizo.census.independent.execution.v1",
+  "scope": "Independent generated projections only; fixed public frame/readiness; no actual labels, network or production guards.",
+  "seconds": 5.070600744002149,
+  "skipped": 0,
+  "source": ".cache/phase2-rhizo-census-candidate-v1/census.py",
+  "source_held_after": true,
+  "source_sha256": "d77a1ca2eeeb1d0f4e02fac6d624fa63527c4a8d423fdf8f7f645db102c67630",
+  "started_at": "2026-10-16T13:23:55.756353+00:00",
+  "successful": true,
+  "test_source_sha256": "486f49f795cb3b564be836fab34f66eac2ac1ce0df94399533d5c34abdff36a7",
+  "tests_run": 22
+}

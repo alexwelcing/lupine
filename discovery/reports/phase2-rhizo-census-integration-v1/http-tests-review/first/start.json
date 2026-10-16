@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-B",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-rhizo-census-http-tests-v1/run_tests.py"
+  ],
+  "cwd": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-rhizo-census-http-tests-v1",
+  "source_hashes": {
+    "run_once.py": "6560ac9fbb527f6f98e19b01d64ca2bb5d88c3f18d0a9711bde250a16ab06fb0",
+    "run_tests.py": "4698f7427b56498d88c2cca8c94a6344efbcf01670eb0e9cf4c69dc339954ed7",
+    "tests/test_server_recorded_census.py": "ec140f7f4cb00fcf86b099f7a0bee96c6022db7eaed6e07644db5ad997bd65f5"
+  },
+  "started_at": "2026-10-16T13:48:37.791320+00:00"
+}

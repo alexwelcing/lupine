@@ -1,0 +1,21 @@
+{
+  "schema": "lupine.nist-guidance-synthetic-test.v1",
+  "command": [
+    "python",
+    "test_author_projection.py"
+  ],
+  "started_at": "2026-10-16T10:49:45.431065+00:00",
+  "finished_at": "2026-10-16T10:49:46.083455+00:00",
+  "elapsed_seconds": 0.5046335699989868,
+  "exit_code": 0,
+  "source_hashes": {
+    "scope.json": "9ba83c19ab696274fb42f655ae6ff174aa2aa64bd550633bddda20d2abce6cff",
+    "html_projection.py": "3b6072811492fcdfe8154cf65d92b59c62f8db0cc50a915cd2c4a77b6dc48831",
+    "acquire.py": "866080b970f0953bb3fb24045623855e0787456864953d9ea3098c731a96acdd",
+    "test_author_projection.py": "5602263ed34a05ed44073b791b81537aaae130539336a5d3fd9802d9f57cd1ac"
+  },
+  "source_held": true,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "44fd157645099be04b1b85b5be343a0d6cc95329e74647d6bf566329a452ed90",
+  "actual_source_or_network_access": false
+}

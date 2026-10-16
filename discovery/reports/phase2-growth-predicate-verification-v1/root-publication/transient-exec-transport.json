@@ -1,0 +1,7 @@
+{
+  "recorded_at": "2026-10-16T12:56:22.169055+00:00",
+  "failure": "CreateProcess rejected: exec-server transport disconnected",
+  "affected_action": "Preparation-script update; no source operation launched",
+  "recovery": "Next pwd succeeded; checked insertion absent before applying update once.",
+  "actual_operations": 0
+}

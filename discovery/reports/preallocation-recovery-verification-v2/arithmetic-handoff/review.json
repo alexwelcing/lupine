@@ -1,0 +1,105 @@
+{
+  "CI_outcome_verified_here": false,
+  "actual_auditor_executed": false,
+  "allocation_or_entropy": false,
+  "auditor_source_unchanged": true,
+  "engineering_approval": null,
+  "external_handoff_prerequisites": [
+    "exact source/full-suite/CI/approved engineering/v2 tag authenticated by parent",
+    "same original v2 registration binding",
+    "two successful terminal launch receipts and supervisor/evidence graphs",
+    "fixed-allocation reproduction original-result binding and no-new-draw flags",
+    "parent verified full launch-file SHA and exact separate attempt path",
+    "explicit parent authorization for terminal private audit allowlist"
+  ],
+  "findings": [],
+  "limits": [
+    "source-only review is not an executed actual arithmetic audit",
+    "no guarantee of future terminal study status",
+    "registration/CI/parent authority and supplied fixed non-primary order generation remain external trust boundaries",
+    "v1 operational stop preserved; no v1 scientific result exists to reproduce"
+  ],
+  "main_tree_edits": false,
+  "prepared_dependencies_unchanged": {
+    ".cache/mpea-actual-result-audit/RUNBOOK.md": true,
+    ".cache/mpea-actual-result-audit/audit_terminal_results.py": true,
+    "scripts/mpea_archive_run.py": true,
+    "scripts/mpea_production_store.py": true,
+    "scripts/mpea_stage_store.py": true,
+    "scripts/mpea_study.py": true,
+    "scripts/mpea_study_report.py": true
+  },
+  "private_attempt_or_features_or_targets_or_registry_access": false,
+  "registration_publication_verified_here": false,
+  "reviewed_head": "a0624cac9abb20320629cce41f10270b9b8e2136",
+  "schema": "lupine.review.mpea_terminal_audit_v2_handoff_source.v1",
+  "source_bindings": {
+    ".cache/mpea-actual-result-audit/RUNBOOK.md": {
+      "bytes": 7139,
+      "sha256": "b9edd9307844b1977bc4e1c0e52dd41e27e36fe6082f9dcd5bebe9a4e7ba6776"
+    },
+    ".cache/mpea-actual-result-audit/audit_terminal_results.py": {
+      "bytes": 39373,
+      "sha256": "4c8bc724b35ae30197b741c566fa2ab9bc7202091eb1be94800b9863ec371fea"
+    },
+    ".cache/mpea-actual-result-audit/preparation-v1.json": {
+      "bytes": 3395,
+      "sha256": "40af7a30aa5876255f85870cd35884bff3adbd1cb7fe0eefc4ef9febcb1a583f"
+    },
+    ".cache/mpea-actual-result-audit/v2-handoff-review-v1/checklist.md": {
+      "bytes": 8785,
+      "sha256": "ffe53b5b1ebf8bc34a4c770667ae71ac1087b2a229b685cbb7f70b93309559f4"
+    },
+    ".cache/mpea-study-custody/review_production/publication_review/prospective-v2-ceremony-review-v1/checklist.md": {
+      "bytes": 8764,
+      "sha256": "9b4fbcf6433978752d1c6b56ef55da64a35920965b0669bb1de9fb6785de5e30"
+    },
+    ".cache/mpea-study-custody/review_production/publication_review/prospective-v2-ceremony-review-v1/publication-fields.json": {
+      "bytes": 18611,
+      "sha256": "e32f25953d65077aaa7984a73bbe23d7414a061b32efb87a26a09e60e238041a"
+    },
+    ".cache/mpea-study-custody/review_production/publication_review/prospective-v2-ceremony-review-v1/review.json": {
+      "bytes": 9034,
+      "sha256": "84cdd6c8cce17040471abafa2b131129fcf46050a425a7adcba7a47489ee4b67"
+    },
+    "docs/mpea-preallocation-recovery-v2.md": {
+      "bytes": 6731,
+      "sha256": "d8055ec620478cc12cd2486a88c16833616053934882b93f367872d520d695cf"
+    },
+    "scripts/mpea_archive_operations.py": {
+      "bytes": 4879,
+      "sha256": "9ce72dd8ce48dfa5f1a4b3535f992ad4b38ea7c07fb86ead01a86970c479bf3e"
+    },
+    "scripts/mpea_archive_run.py": {
+      "bytes": 19851,
+      "sha256": "44172bd86ee640cece11d4c20c37a787c725fdd6ca61da0d3db28e511d7c4bbc"
+    },
+    "scripts/mpea_production_store.py": {
+      "bytes": 16242,
+      "sha256": "9b5caa9a013da7b2bae8bb78d89a74a697201bdc73b1cd2db1d38c2e750db6b4"
+    },
+    "scripts/mpea_registration_allocation.py": {
+      "bytes": 45968,
+      "sha256": "cc8590ae64ca8e983d8fb164290c8d087847a97c651cded4d18e0b2cce555197"
+    },
+    "scripts/mpea_stage_store.py": {
+      "bytes": 15957,
+      "sha256": "13c42919e79e0949f4cbcf5ce0eeeb1cb66d3a48893e6e4fdc3cd3fdf68498db"
+    },
+    "scripts/mpea_study.py": {
+      "bytes": 40805,
+      "sha256": "61ddfdf9e8db9cacb3f64d3310021812a96aa66c98ae4e68febb6a794352648b"
+    },
+    "scripts/mpea_study_report.py": {
+      "bytes": 36620,
+      "sha256": "a7d4650df6405df61c18d6c017af281bc2779e6b000fc391327cb5a2e11cc1f2"
+    },
+    "scripts/mpea_study_supervisor.py": {
+      "bytes": 12599,
+      "sha256": "1dbd4a1b0e9c3f0246d23bd7670527cfa3bd69f754279aabba06e4ae464e87ab"
+    }
+  },
+  "source_bindings_still_match": true,
+  "status": "NO_SOURCE_HANDOFF_OR_PREIMAGE_BLOCKER_IDENTIFIED",
+  "tests_executed": false
+}

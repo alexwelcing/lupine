@@ -1,0 +1,18 @@
+{
+  "errors": [],
+  "finished_utc": "2026-10-16T17:37:46.317454+00:00",
+  "package_execution": "package.execution.json",
+  "package_returncode": 0,
+  "published_commit": "cb19c0a2788cc70dbe6e78f80d416ad8f11ece74",
+  "recorder_sha256": "b74867438bda41235f0b93b028f91caf422284037d6ebe65cf244fa4f4084c33",
+  "retained_directory": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-cb19c0a2788cc70dbe6e78f80d416ad8f11ece74/retained",
+  "run_directory": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-cb19c0a2788cc70dbe6e78f80d416ad8f11ece74",
+  "runtime_file_count_required": 351,
+  "schema": "lupine.source-readiness.recorded-release.v1",
+  "scope": "Observed local command exits and source identity; not CI verification, scientific admission, independent scientific reproduction or bit-identical rebuilding.",
+  "source_held": true,
+  "started_utc": "2026-10-16T17:37:18.386304+00:00",
+  "status": "PASS",
+  "strict_execution": "strict.execution.json",
+  "strict_returncode": 0
+}

@@ -1,0 +1,320 @@
+{
+  "scope": "Actual a67815e retained/installed artifact audit and preserved verifier correction; no scientific rerun or CI approval.",
+  "copies": [
+    {
+      "source": ".cache/a67815e-release-audit/README.md",
+      "destination": "review/README.md",
+      "original_bytes": 2005,
+      "original_sha256": "154c8ce715f461bb0309240cd7deaf9b5c1c23ca3bd95d2b648da85bd2eacfc9",
+      "encoding": "direct",
+      "bytes": 2005,
+      "sha256": "154c8ce715f461bb0309240cd7deaf9b5c1c23ca3bd95d2b648da85bd2eacfc9"
+    },
+    {
+      "source": ".cache/a67815e-release-audit/asset-byte-check.json",
+      "destination": "review/asset-byte-check.json",
+      "original_bytes": 180,
+      "original_sha256": "dcc06aa3097d7fe6da4d325183b4688ee6ef63e52d9442dadbfc2315375978f5",
+      "encoding": "direct",
+      "bytes": 180,
+      "sha256": "dcc06aa3097d7fe6da4d325183b4688ee6ef63e52d9442dadbfc2315375978f5"
+    },
+    {
+      "source": ".cache/a67815e-release-audit/audit-receipt-v1.json",
+      "destination": "review/audit-receipt-v1.json",
+      "original_bytes": 9153,
+      "original_sha256": "4bc93638d05ae543c9eb5e28017a76a40b891b335d0c0dd7a1d39ca8297546e2",
+      "encoding": "direct",
+      "bytes": 9153,
+      "sha256": "4bc93638d05ae543c9eb5e28017a76a40b891b335d0c0dd7a1d39ca8297546e2"
+    },
+    {
+      "source": ".cache/a67815e-release-audit/audit_installed_asset.py",
+      "destination": "review/audit_installed_asset.py",
+      "original_bytes": 2741,
+      "original_sha256": "1a38bc020ef1074e689cf30cc8b6308d621dd5ed7d30eb430278dc94c9195d49",
+      "encoding": "direct",
+      "bytes": 2741,
+      "sha256": "1a38bc020ef1074e689cf30cc8b6308d621dd5ed7d30eb430278dc94c9195d49"
+    },
+    {
+      "source": ".cache/a67815e-release-audit/install.stderr.txt",
+      "destination": "review/install.stderr.txt",
+      "original_bytes": 0,
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "encoding": "direct",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/a67815e-release-audit/install.stdout.txt",
+      "destination": "review/install.stdout.txt",
+      "original_bytes": 223,
+      "original_sha256": "3c7d03e7111ddce2e673b7744eb33792f2294af708375bb8c2a381094d6ff6d9",
+      "encoding": "direct",
+      "bytes": 223,
+      "sha256": "3c7d03e7111ddce2e673b7744eb33792f2294af708375bb8c2a381094d6ff6d9"
+    },
+    {
+      "source": ".cache/a67815e-release-audit/installed-asset-current.json",
+      "destination": "review/installed-asset-current.json",
+      "original_bytes": 2344,
+      "original_sha256": "766589ae4d46b7c911c9f220e1bc715af087352dacec27c94f2c11b0a239e4c6",
+      "encoding": "direct",
+      "bytes": 2344,
+      "sha256": "766589ae4d46b7c911c9f220e1bc715af087352dacec27c94f2c11b0a239e4c6"
+    },
+    {
+      "source": ".cache/a67815e-release-audit/installed-asset-first.json",
+      "destination": "review/installed-asset-first.json",
+      "original_bytes": 2344,
+      "original_sha256": "28d45afe88a44fbc9629af66daf1032a68c7babfb06f8c9fd4630d3acb88fddb",
+      "encoding": "direct",
+      "bytes": 2344,
+      "sha256": "28d45afe88a44fbc9629af66daf1032a68c7babfb06f8c9fd4630d3acb88fddb"
+    },
+    {
+      "source": ".cache/a67815e-release-audit/installed-first-failed/audit_installed_asset.py",
+      "destination": "review/installed-first-failed/audit_installed_asset.py",
+      "original_bytes": 2739,
+      "original_sha256": "b0a2ea51294baaba7a326bf2273101859eae18db599fa5cd2b2c0d9e42c00bb6",
+      "encoding": "direct",
+      "bytes": 2739,
+      "sha256": "b0a2ea51294baaba7a326bf2273101859eae18db599fa5cd2b2c0d9e42c00bb6"
+    },
+    {
+      "source": ".cache/a67815e-release-audit/installed-first-failed/install.stderr.txt",
+      "destination": "review/installed-first-failed/install.stderr.txt",
+      "original_bytes": 0,
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "encoding": "direct",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/a67815e-release-audit/installed-first-failed/install.stdout.txt",
+      "destination": "review/installed-first-failed/install.stdout.txt",
+      "original_bytes": 223,
+      "original_sha256": "3c7d03e7111ddce2e673b7744eb33792f2294af708375bb8c2a381094d6ff6d9",
+      "encoding": "direct",
+      "bytes": 223,
+      "sha256": "3c7d03e7111ddce2e673b7744eb33792f2294af708375bb8c2a381094d6ff6d9"
+    },
+    {
+      "source": ".cache/a67815e-release-audit/installed-first-failed/installed-asset-first.json",
+      "destination": "review/installed-first-failed/installed-asset-first.json",
+      "original_bytes": 2344,
+      "original_sha256": "28d45afe88a44fbc9629af66daf1032a68c7babfb06f8c9fd4630d3acb88fddb",
+      "encoding": "direct",
+      "bytes": 2344,
+      "sha256": "28d45afe88a44fbc9629af66daf1032a68c7babfb06f8c9fd4630d3acb88fddb"
+    },
+    {
+      "source": ".cache/a67815e-release-audit/installed-first-failed/installed-probe.py",
+      "destination": "review/installed-first-failed/installed-probe.py",
+      "original_bytes": 690,
+      "original_sha256": "28f8b7c7c5bfc26894ce184f1c06fd4895c81c7e2a892c419a90782ec50de582",
+      "encoding": "direct",
+      "bytes": 690,
+      "sha256": "28f8b7c7c5bfc26894ce184f1c06fd4895c81c7e2a892c419a90782ec50de582"
+    },
+    {
+      "source": ".cache/a67815e-release-audit/installed-first-failed/probe.stderr.txt",
+      "destination": "review/installed-first-failed/probe.stderr.txt",
+      "original_bytes": 247,
+      "original_sha256": "a270494724137227f1efac76dc9b08f04951eb5ef1a5b23a0662ec219b176de5",
+      "encoding": "direct",
+      "bytes": 247,
+      "sha256": "a270494724137227f1efac76dc9b08f04951eb5ef1a5b23a0662ec219b176de5"
+    },
+    {
+      "source": ".cache/a67815e-release-audit/installed-first-failed/probe.stdout.txt",
+      "destination": "review/installed-first-failed/probe.stdout.txt",
+      "original_bytes": 0,
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "encoding": "direct",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/a67815e-release-audit/installed-probe.py",
+      "destination": "review/installed-probe.py",
+      "original_bytes": 690,
+      "original_sha256": "dfbd7b02be2061edd5463c1ba92dfbfac879d504f900120aac2ca22351155e2f",
+      "encoding": "direct",
+      "bytes": 690,
+      "sha256": "dfbd7b02be2061edd5463c1ba92dfbfac879d504f900120aac2ca22351155e2f"
+    },
+    {
+      "source": ".cache/a67815e-release-audit/probe.stderr.txt",
+      "destination": "review/probe.stderr.txt",
+      "original_bytes": 0,
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "encoding": "direct",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/a67815e-release-audit/probe.stdout.txt",
+      "destination": "review/probe.stdout.txt",
+      "original_bytes": 321,
+      "original_sha256": "83d6520daf7e266aa636536993610c89828d733ba135ac06199590f9f3e0000d",
+      "encoding": "direct",
+      "bytes": 321,
+      "sha256": "83d6520daf7e266aa636536993610c89828d733ba135ac06199590f9f3e0000d"
+    },
+    {
+      "source": ".cache/a67815e-release-audit/profile-delta.json",
+      "destination": "review/profile-delta.json",
+      "original_bytes": 634,
+      "original_sha256": "2ec7290401f86155bc892935ad0e3ebf97d752f695fa7edb0ac9896ba8a79418",
+      "encoding": "direct",
+      "bytes": 634,
+      "sha256": "2ec7290401f86155bc892935ad0e3ebf97d752f695fa7edb0ac9896ba8a79418"
+    },
+    {
+      "source": ".cache/a67815e-release-audit/retained-byte-audit-current.json",
+      "destination": "review/retained-byte-audit-current.json",
+      "original_bytes": 2783,
+      "original_sha256": "f08037b6bdbf283346afe9aca4f78cb5c7d080fcb0b8aeae7ffe99726c03eabd",
+      "encoding": "direct",
+      "bytes": 2783,
+      "sha256": "f08037b6bdbf283346afe9aca4f78cb5c7d080fcb0b8aeae7ffe99726c03eabd"
+    },
+    {
+      "source": ".cache/a67815e-release-audit/retained-byte-audit-current.stderr.txt",
+      "destination": "review/retained-byte-audit-current.stderr.txt",
+      "original_bytes": 0,
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "encoding": "direct",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/a67815e-release-audit/retained-byte-audit-final.json",
+      "destination": "review/retained-byte-audit-final.json",
+      "original_bytes": 2783,
+      "original_sha256": "496fe41afcb943f3c9dc4c254a0fcc428bba84f694c118ae44b50653d5d3cfeb",
+      "encoding": "direct",
+      "bytes": 2783,
+      "sha256": "496fe41afcb943f3c9dc4c254a0fcc428bba84f694c118ae44b50653d5d3cfeb"
+    },
+    {
+      "source": ".cache/a67815e-release-audit/retained-byte-audit-final.stderr.txt",
+      "destination": "review/retained-byte-audit-final.stderr.txt",
+      "original_bytes": 0,
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "encoding": "direct",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/a67815e-release-audit/retained-byte-audit-first.json",
+      "destination": "review/retained-byte-audit-first.json",
+      "original_bytes": 109,
+      "original_sha256": "85430ca1d62472c206498212e387f7def11be7f2f7a91d769402e13fb6e004e0",
+      "encoding": "direct",
+      "bytes": 109,
+      "sha256": "85430ca1d62472c206498212e387f7def11be7f2f7a91d769402e13fb6e004e0"
+    },
+    {
+      "source": ".cache/a67815e-release-audit/retained-byte-audit-first.stderr.txt",
+      "destination": "review/retained-byte-audit-first.stderr.txt",
+      "original_bytes": 0,
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "encoding": "direct",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/a67815e-release-audit/synthetic-tests-final.log",
+      "destination": "review/synthetic-tests-final.log",
+      "original_bytes": 110,
+      "original_sha256": "9298a9965daef93a54a50cd1032c7aa3f90b121411568ba885e1d515ad9ad894",
+      "encoding": "direct",
+      "bytes": 110,
+      "sha256": "9298a9965daef93a54a50cd1032c7aa3f90b121411568ba885e1d515ad9ad894"
+    },
+    {
+      "source": ".cache/a67815e-release-audit/synthetic-tests-first.log",
+      "destination": "review/synthetic-tests-first.log",
+      "original_bytes": 110,
+      "original_sha256": "795bb78b800cff2cca287505f5bb96981159394a6aa811caff804859db1a7f56",
+      "encoding": "direct",
+      "bytes": 110,
+      "sha256": "795bb78b800cff2cca287505f5bb96981159394a6aa811caff804859db1a7f56"
+    },
+    {
+      "source": ".cache/a67815e-release-audit/test_verify_retained_artifacts.patch",
+      "destination": "review/test_verify_retained_artifacts.patch.json",
+      "original_bytes": 2341,
+      "original_sha256": "80046290321a7baf25b3c62f53ad724bd8139f24b8f1bcf321fa8a5cd113a268",
+      "encoding": "lossless_utf8_text",
+      "bytes": 2583,
+      "sha256": "ab45b3c3fce3e0ce784f1d1c3d65e7bb03c925f15ecad0c4f89935d66d748dac"
+    },
+    {
+      "source": ".cache/a67815e-release-audit/test_verify_retained_artifacts.py",
+      "destination": "review/test_verify_retained_artifacts.py",
+      "original_bytes": 13721,
+      "original_sha256": "2d59d0ff23c8f5bbe39bed768fb64889125e3b2799a0919d886d72b96917b789",
+      "encoding": "direct",
+      "bytes": 13721,
+      "sha256": "2d59d0ff23c8f5bbe39bed768fb64889125e3b2799a0919d886d72b96917b789"
+    },
+    {
+      "source": ".cache/a67815e-release-audit/verify_retained_artifacts.patch",
+      "destination": "review/verify_retained_artifacts.patch",
+      "original_bytes": 2036,
+      "original_sha256": "2137bad70c8cc5bc410366c01289b1ef3c6d9916ab69f5f33b6c5caad6fc9d11",
+      "encoding": "direct",
+      "bytes": 2036,
+      "sha256": "2137bad70c8cc5bc410366c01289b1ef3c6d9916ab69f5f33b6c5caad6fc9d11"
+    },
+    {
+      "source": ".cache/a67815e-release-audit/verify_retained_artifacts.py",
+      "destination": "review/verify_retained_artifacts.py",
+      "original_bytes": 17157,
+      "original_sha256": "ca91b7fccafee1f1717830bd74edf3256dac5751e7c11b11d5f3b8eaf81c1a07",
+      "encoding": "direct",
+      "bytes": 17157,
+      "sha256": "ca91b7fccafee1f1717830bd74edf3256dac5751e7c11b11d5f3b8eaf81c1a07"
+    },
+    {
+      "source": ".cache/a67815e-auditor-promotion.json",
+      "destination": "main-verification/a67815e-auditor-promotion.json",
+      "original_bytes": 479,
+      "original_sha256": "b87c271d911e92606a280beafe70b7f4eecbef8968aac74994a51865cbee3a0e",
+      "encoding": "direct",
+      "bytes": 479,
+      "sha256": "b87c271d911e92606a280beafe70b7f4eecbef8968aac74994a51865cbee3a0e"
+    },
+    {
+      "source": ".cache/retained-auditor-main-tests.txt",
+      "destination": "main-verification/retained-auditor-main-tests.txt",
+      "original_bytes": 2084,
+      "original_sha256": "265aafb25ec3184cbc27b3ff720e82c7e1d3c424a722574ae69e87fe3c3b9b43",
+      "encoding": "direct",
+      "bytes": 2084,
+      "sha256": "265aafb25ec3184cbc27b3ff720e82c7e1d3c424a722574ae69e87fe3c3b9b43"
+    },
+    {
+      "source": ".cache/package-a67815e.txt",
+      "destination": "main-verification/package-a67815e.txt",
+      "original_bytes": 896,
+      "original_sha256": "52aa3f88f5645b185123263c0925f022d31104e0c2dd345f995ec10ff676cd9c",
+      "encoding": "direct",
+      "bytes": 896,
+      "sha256": "52aa3f88f5645b185123263c0925f022d31104e0c2dd345f995ec10ff676cd9c"
+    },
+    {
+      "source": ".cache/release-artifacts-a67815e/release-artifacts.json",
+      "destination": "retained/release-artifacts.json",
+      "original_bytes": 7515,
+      "original_sha256": "8b0f2cbe648e91ac6fd50bc993f382d310388fabacb530b68d388164f80d9a1d",
+      "encoding": "direct",
+      "bytes": 7515,
+      "sha256": "8b0f2cbe648e91ac6fd50bc993f382d310388fabacb530b68d388164f80d9a1d"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "at": "2026-10-16T14:30:58.851132+00:00",
+  "candidate_executions": 0,
+  "files": {
+    "generated_package.py": {
+      "bytes": 9850,
+      "sha256": "f06f4b4922458d89239ed6d544fca69549527634a3b12b09bf3e4874897434ab"
+    },
+    "generated_replay.py": {
+      "bytes": 5872,
+      "sha256": "9b4e760bedaaca96338c0d585492bca3a75596950ac2fb01b86665f0cd25b111"
+    },
+    "guarded_child.py": {
+      "bytes": 4852,
+      "sha256": "2de69731119b7d525e5d3e5dbe320c5b4145dd05159461851abc19d015d90160"
+    },
+    "prehold-findings.json": {
+      "bytes": 2157,
+      "sha256": "70d62ba953019c7251d3a7fa998e48b5f5dfde9540a62471e94cf5f58a8c06fd"
+    },
+    "prepared-suite.json": {
+      "bytes": 493,
+      "sha256": "b121301a6299c6cadaafb2be16276356196b3929a1cb9d57b74d0f46079d9384"
+    },
+    "run_review.py": {
+      "bytes": 3668,
+      "sha256": "716443a3886a9d2beff6cdcbcafe8531c7bb4c518b3ec8f8cbb792c2666077d7"
+    },
+    "static_source_audit.py": {
+      "bytes": 4147,
+      "sha256": "9135ec5171741630820df7051128e6f259b283d9a66e5364eaa2008bef2b3811"
+    },
+    "test_li_v3_readiness_production_review.py": {
+      "bytes": 64613,
+      "sha256": "ff53f26b43e94cc4fe128e36f7aea63dfcc6339e409734ed6b65c1ec88f46339"
+    }
+  },
+  "methods": 37,
+  "reason": "Root requested preserving current independent suite as historical intermediate pending consolidated A/C feasibility decision. No actual source operations or candidate imports.",
+  "status": "PREPARED_NOT_EXECUTED"
+}

@@ -1,0 +1,114 @@
+{
+  "schema": "lupine.bam-schema-contract-independent-design-review.v1",
+  "created_at": "2026-10-16T09:25:23.619964+00:00",
+  "owner": "/root/phase2_evidence",
+  "status": "PASS_PROSPECTIVE_SOURCE_AND_SCOPE_REVIEW",
+  "design": {
+    "path": ".cache/phase2-bam-schema-contract-design-v1/README.md",
+    "bytes": 13651,
+    "sha256": "224617c23f9361369509600264112303ced2d14193d2b274832d80259f5b43b4"
+  },
+  "bindings": {
+    "path": ".cache/phase2-bam-schema-contract-design-v1/source-bindings.json",
+    "bytes": 3441,
+    "sha256": "ae5727270711b386786b225c9a1a74bc8797f88f9edfdd0f04b3ec68f0d71200"
+  },
+  "blocking_findings": [],
+  "checks": {
+    "bound_public_sources": 10,
+    "prospective_file_identity_matches_publisher_metadata": true,
+    "ten_recognition_labels_match_publisher_prose": true,
+    "eleventh_role_and_actual_coordinates_unbound": true
+  },
+  "findings": [
+    {
+      "topic": "Evidence limit",
+      "conclusion": "The public schema description specifies eleven columns but names ten roles. The proposed exact-label first-record rule is explicitly a prospective acceptance profile, not an observed layout; unknown eleventh semantics and every body-field dictionary remain unbound even after KNOWN_ROLES_PARTIAL."
+    },
+    {
+      "topic": "Exposure",
+      "conclusion": "The contract truthfully separates whole-body acquisition, full text decoding, full CSV cell parsing and researcher-visible closed output. It treats examples/options/comments as potentially empirical and preserves partial-failure exposure; no claim of target-free or untouched evidence follows from output withholding."
+    },
+    {
+      "topic": "Metrology and evaluation",
+      "conclusion": "Per-test endpoint documentary association is not verified pairing. Expanded marginal measurement uncertainty is not a hard enclosure, prediction interval or selected-pool joint guarantee. Finite-frame design would require its own fixed labels/randomization; no IID premise, candidate diversity or source readiness is invented."
+    },
+    {
+      "topic": "Necessity and boundedness",
+      "conclusion": "This deliberately partial lexical inventory is a defensible smallest engineering option but cannot by itself resolve eleven-versus-ten role semantics or G20/G21. Keep the implementation choice open until its informational value is compared with separately scoped missing-header documentary evidence; do not present this as a complete dictionary adapter."
+    }
+  ],
+  "pre_implementation_precision": [
+    {
+      "topic": "Normalization and parser contract",
+      "note": "Freeze the exact order of NBSP replacement and ASCII trimming, the permitted controls inside/outside quotes, and categorical error precedence in the synthetic contract. These are explicitly deferred implementation details, not currently observed source facts."
+    },
+    {
+      "topic": "Invariance fixture scope",
+      "note": "Apply withheld-cell canary invariance to synthetic buffers that remain within the same declared encoding/size/cell/record limits and accepted structure, or explicitly account for changed limit failures. Production identity mismatches necessarily block before role projection; no canary test can imply production identity is ignored."
+    }
+  ],
+  "source_read_scope": "Read held design/bindings and previously public metadata/report bytes; parsed retained Zenodo schema metadata and printed its documentary description plus advertised CSV file record. No linked body, schema cell, measurement source or new network request was accessed. Previously published aggregate numerical prose was reread.",
+  "actual_operations": {
+    "network_requests": 0,
+    "actual_schema_or_workbook_reads": false,
+    "implementation_or_tests": false,
+    "product_import": false,
+    "tracked_edits": false,
+    "git_mutation": false
+  },
+  "checked_public_sources": [
+    {
+      "path": "reports/phase2-bam-readiness-v1/README.md",
+      "bytes": 8384,
+      "sha256": "2c2730f8551b51d42cc035b718a0f05807e242a769666183ec485feed361ec29"
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "bytes": 4332,
+      "sha256": "561dc3786cda2cd55e37c9ec341d4c29290ad854e06984bbc44c7a1a680df014"
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/pre-fetch-scope.json",
+      "bytes": 600,
+      "sha256": "b520c2f8ba4626f29904ff24f3743e7cc4da0eaab782446eeed036d74614e43b"
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/publication-map.json",
+      "bytes": 10347,
+      "sha256": "3aa0e8aea664f1bb0ac6dc1cefaed3fd3f67c09872b9251d41b6b602f273615f"
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/source-bindings.json",
+      "bytes": 8666,
+      "sha256": "1a61b05a8e7142c303e3384a2a6661cf78a6d27ceac9f179849ec2b99e8b4798"
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/zenodo-17846436.json",
+      "bytes": 14107,
+      "sha256": "3bcc7e2622fe555f1d0d9ae75e1326f3f09ed036cb61da1c27e06d87d6855cb0"
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/zenodo-17846617.json",
+      "bytes": 14771,
+      "sha256": "48f84c7d6fc841a13de8ecccbba5f0604834cec45c3033d0d55bfd7a2e89f4d6"
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/zenodo-17846436-file-metadata.json",
+      "bytes": 576,
+      "sha256": "07cb949abcbca0c5b9e6e0979840401c02b4692ed4fa027f791b8cfc21d181fd"
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/independent-review/review.json",
+      "bytes": 8204,
+      "sha256": "ff2f12033f7d6740d82691ce6aff0c80cd280bae613363ee468f0fbd2045c8ad"
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/independent-review/binding-timing-addendum.json",
+      "bytes": 1135,
+      "sha256": "c78cbf4575bf467750e21a7077d2284fe78f4b5513f6fa8e6c5552a4deb6a4e5"
+    }
+  ],
+  "scientific_pass": false,
+  "independent_review_is_not_statistical_independence": true
+}

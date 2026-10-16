@@ -1,0 +1,10 @@
+{
+  "actual_audit_runs": 0,
+  "artifact_contents_executed": false,
+  "at": "2026-10-16T14:41:40.823429+00:00",
+  "audit_source_sha256": "1813a9a94d7d4b9b17ec788703d433072a827480a1fc8a6d1f0c348890539a84",
+  "note": "Source was syntax-compiled; no final artifact audit invocation or test/probe execution.",
+  "ordered_check_list_compared_literally": true,
+  "schema": "lupine.rhizo.census.repair-artifact-review.syntax.v1",
+  "status": "SYNTAX_ONLY_PASS"
+}

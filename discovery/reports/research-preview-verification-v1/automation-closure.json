@@ -1,0 +1,17 @@
+{
+  "schema": "lupine.discovery.automation_closure.v1",
+  "automation_id": "6aca3f1ee03c8191b9b5abc8365df516",
+  "observed_at": "2026-10-11 01:46:08 UTC",
+  "update_success": true,
+  "fresh_peek_confirmed_disabled": true,
+  "is_enabled": false,
+  "updated_at": "2026-10-11T01:45:57.014089+00:00",
+  "last_run_time": "2026-10-11T01:40:22.030232+00:00",
+  "schedule": "BEGIN:VEVENT\nDTSTART;TZID=America/New_York:20261010T133526\nRRULE:FREQ=HOURLY;INTERVAL=4;COUNT=24\nEND:VEVENT",
+  "schedule_unchanged": true,
+  "title_unchanged": true,
+  "prompt_unchanged": true,
+  "next_run_time": null,
+  "reason": "Scoped research-preview build goal completed; scientific usefulness and physical qualification remain NO_GO. Active final report publication and CI verification continue to completion. No scheduled extension.",
+  "scope": "Filtered actual provider update and fresh peek; unrelated automations omitted. Scheduled wake-up is not experiment execution."
+}

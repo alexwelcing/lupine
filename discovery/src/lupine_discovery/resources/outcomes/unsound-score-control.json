@@ -1,0 +1,17 @@
+{
+  "schema": "lupine.discovery.outcomes.v1",
+  "scenario_id": "unsound-score-control",
+  "problem_digest": "565cefbb823137eb2686db89410ab286608cc125841dbd2c0b59afd34333cef5",
+  "outcomes": [
+    {
+      "id": "A",
+      "score": "1",
+      "constraints": {}
+    },
+    {
+      "id": "B",
+      "score": "0",
+      "constraints": {}
+    }
+  ]
+}

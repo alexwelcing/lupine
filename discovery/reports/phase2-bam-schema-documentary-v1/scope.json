@@ -1,0 +1,78 @@
+{
+  "schema": "lupine.bam-schema-documentary-scope.v1",
+  "frozen_at": "2026-10-16T09:45:14.187120+00:00",
+  "owner": "/root/phase2_evidence",
+  "purpose": "DOCUMENTARY_ONLY: resolve the actual eleven schema headers, hierarchy, field definitions, units, uncertainty/covariance and provenance roles in the pinned public technical documentation. No empirical benchmark admission or modeling.",
+  "authorization": "Root task explicitly authorizes one ordinary request and full documentary reading including potentially empirical examples/comments under Alex renewed evidence-acquisition authorization. Earlier PARTIAL role-only parser proposal remains unchanged, deferred and unimplemented; this separate scope does not revise an implemented reader, frozen benchmark or scientific protocol.",
+  "request": {
+    "method": "GET",
+    "url": "https://zenodo.org/api/records/17846436/files/2025-12_Data-Schema-Tensile-HT_v1.0.csv/content",
+    "maximum_requests": 1,
+    "redirects": "reject",
+    "retries": 0,
+    "credentials": false,
+    "alternate_mirrors": false,
+    "maximum_body_bytes_read": 41001,
+    "timeout_seconds": 30,
+    "accept_encoding": "identity"
+  },
+  "identity": {
+    "version_doi": "10.5281/zenodo.17846436",
+    "concept_doi": "10.5281/zenodo.17846435",
+    "version": "1.0",
+    "file_id": "5fc320ce-9ba9-4eb6-8ce0-665d0f8ffed5",
+    "filename": "2025-12_Data-Schema-Tensile-HT_v1.0.csv",
+    "expected_bytes": 41000,
+    "expected_md5": "330a8405f6cb9c4fcfe221baea7ced27",
+    "observed_sha256": null
+  },
+  "license": "Record declares CC BY4.0. Embedded body notices remain uninspected; no general archive/software/cited-work license transfer.",
+  "exposure": {
+    "machine": "Whole raw documentation body, decoded text and all schema cells may be read, including examples/options/comments/defaults that may contain empirical values. Acquisition/decoding/parsing stages and failures will be recorded.",
+    "researcher": "Explicitly permits inspecting the complete documentation, including potential empirical example values and comments, to understand schema semantics. Exposure will be reported honestly; this is not target-blind or untouched evidence.",
+    "publication": "Own paraphrase and necessary selected field labels/definitions with row/column citations and source hash; no full raw CSV, arbitrary example values, low-entropy cell hashes or copied long comments. Numerical conventions such as unit symbols or proof-strain definitions may be described as technical definitions, not observations."
+  },
+  "inspection": "After size/MD5 match, inspect documented byte/BOM/response charset and actual text layout. Record exact strict decode and delimiter choices plus ambiguity/failure. This is documentary investigation, not an execution of the earlier closed PARTIAL parser. Do not claim its predicates passed. No formula/expression evaluation, link following, secondary-file opening or data fitting.",
+  "stop_rules": [
+    "HTTP/access/redirect/transport failure ends this route with retained receipt; no retry or alternative URL.",
+    "Size, advertised MD5 or unsupported content encoding mismatch stops content interpretation.",
+    "Unknown encoding or layout is reported rather than silently repaired.",
+    "Any need for measurement workbook/LIS/XLSX/images or linked standards/fulltexts is outside this scope."
+  ],
+  "excluded": [
+    "data workbook",
+    "LIS",
+    "images/figures",
+    "schema XLSX alternative",
+    "measurement evaluation",
+    "model fitting",
+    "target/eligibility/protocol/threshold selection",
+    "scientific split or allocation",
+    "tracked/runtime edits",
+    "benchmark admission",
+    "new network by reviewer"
+  ],
+  "independent_review": "Separate agent may read only the same retained pinned documentation and public metadata/projections locally, under the same full-documentary exposure; no additional request.",
+  "preexisting_sources": [
+    {
+      "path": ".cache/phase2-bam-schema-contract-design-v1/README.md",
+      "bytes": 13933,
+      "sha256": "ca4622e6958b7a13aad95e9f3e722f4b77b120ccf856f31b76daa169ddf47918"
+    },
+    {
+      "path": ".cache/phase2-bam-schema-contract-design-v1/source-bindings.json",
+      "bytes": 3948,
+      "sha256": "cd08fa3d8e6e697a51368a20e8b9e44ba77b6d108307be79e423de3d2cf58b1c"
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/zenodo-17846436.json",
+      "bytes": 14107,
+      "sha256": "3bcc7e2622fe555f1d0d9ae75e1326f3f09ed036cb61da1c27e06d87d6855cb0"
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/README.md",
+      "bytes": 8384,
+      "sha256": "2c2730f8551b51d42cc035b718a0f05807e242a769666183ec485feed361ec29"
+    }
+  ]
+}

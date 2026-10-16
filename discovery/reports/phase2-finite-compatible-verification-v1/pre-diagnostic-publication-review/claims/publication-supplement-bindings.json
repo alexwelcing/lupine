@@ -1,0 +1,31 @@
+{
+  "observed_at": "2026-10-16T08:09:01.045441+00:00",
+  "scope": "tracked public publication metadata only",
+  "bindings": [
+    {
+      "path": "reports/phase2-li-author-methods-v1/PUBLICATION.md",
+      "sha256": "d083e4e8f59c584099742fed705bfabb953fd99d6856d60856cca9661d1b4b4b",
+      "bytes": 922
+    },
+    {
+      "path": "reports/phase2-finite-compatible-verification-v1/publication-checks/lossless-map.json",
+      "sha256": "375eb1d885571d848688964c36ea42b9aacc9fe5d1c924d4d8cb070fc8b87053",
+      "bytes": 1587
+    },
+    {
+      "path": "reports/phase2-finite-planning-figure-v1/publication-format.json",
+      "sha256": "eccbe1b56f16e538289c266cd4f721b22d264c326c52b33725404e3961014707",
+      "bytes": 2215
+    },
+    {
+      "path": "reports/phase2-finite-planning-figure-v1/PUBLICATION.md",
+      "sha256": "ca09947525ffe342742ddf2032349ddfd4315374cd4609c63155e6d94c64fd67",
+      "bytes": 1505
+    },
+    {
+      "path": "reports/phase2-finite-planning-figure-v1/README.md",
+      "sha256": "721faca77b302f8c494a280d7ecfc3be9dddd973bd037964886f603b98b3af4f",
+      "bytes": 5261
+    }
+  ]
+}

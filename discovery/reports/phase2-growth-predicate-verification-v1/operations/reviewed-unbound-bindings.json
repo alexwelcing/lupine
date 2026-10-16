@@ -1,0 +1,36 @@
+{
+  "branch": "research/lupine-discovery",
+  "commit": null,
+  "gates": {
+    "additive_review": {
+      "path": null,
+      "sha256": null
+    },
+    "artifact_review": {
+      "path": null,
+      "sha256": null
+    },
+    "ci": {
+      "path": null,
+      "sha256": null
+    },
+    "package": {
+      "path": null,
+      "sha256": null
+    },
+    "strict": {
+      "path": null,
+      "sha256": null
+    }
+  },
+  "recorder_sha256": null,
+  "runtime_count": 335,
+  "runtime_manifest_sha256": null,
+  "schema": "lupine.discovery.g34.operation-binding.v1",
+  "source_files": {
+    "docs/li-v3-growth-predicate-audit-plan.md": null,
+    "scripts/li_v3_growth_predicate_audit.py": null,
+    "tests/test_li_v3_growth_predicate_audit.py": null,
+    "tests/test_li_v3_growth_predicate_audit_review.py": null
+  }
+}

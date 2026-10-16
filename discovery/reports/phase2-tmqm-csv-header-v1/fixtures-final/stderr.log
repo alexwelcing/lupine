@@ -1,0 +1,20 @@
+test_cap_no_newline_never_reads_next_byte (__main__.HeaderFixtures.test_cap_no_newline_never_reads_next_byte) ... ok
+test_encoding_and_declared_length_mismatch_prevent_read (__main__.HeaderFixtures.test_encoding_and_declared_length_mismatch_prevent_read) ... ok
+test_exact_cap_with_newline_reaches_boundary_but_label_is_invalid (__main__.HeaderFixtures.test_exact_cap_with_newline_reaches_boundary_but_label_is_invalid) ... ok
+test_http_errors_and_redirects_do_not_read_body (__main__.HeaderFixtures.test_http_errors_and_redirects_do_not_read_body) ... ok
+test_malformed_or_numerical_first_records_never_echo (__main__.HeaderFixtures.test_malformed_or_numerical_first_records_never_echo) ... ok
+test_misbehaving_stream_overrun_is_blocked_without_echo (__main__.HeaderFixtures.test_misbehaving_stream_overrun_is_blocked_without_echo) ... ok
+test_no_newline_and_empty_are_blocked (__main__.HeaderFixtures.test_no_newline_and_empty_are_blocked) ... ok
+test_quoted_single_line_labels_supported (__main__.HeaderFixtures.test_quoted_single_line_labels_supported) ... ok
+test_read_exception_is_closed_and_partial_exposure_unknown (__main__.HeaderFixtures.test_read_exception_is_closed_and_partial_exposure_unknown) ... ok
+test_stops_at_first_line_and_withholds_canary_values (__main__.HeaderFixtures.test_stops_at_first_line_and_withholds_canary_values) ... ok
+test_stubbed_close_failure_is_nonzero_and_explicit (__main__.HeaderFixtures.test_stubbed_close_failure_is_nonzero_and_explicit) ... ok
+test_stubbed_denial_returns_nonzero_and_never_reads_body (__main__.HeaderFixtures.test_stubbed_denial_returns_nonzero_and_never_reads_body) ... ok
+test_synthetic_once_closes_and_reserves_slot_before_network (__main__.HeaderFixtures.test_synthetic_once_closes_and_reserves_slot_before_network) ... ok
+test_three_delimiters_and_crlf_bom (__main__.HeaderFixtures.test_three_delimiters_and_crlf_bom) ... ok
+test_wrong_pin_blocks_before_opener (__main__.HeaderFixtures.test_wrong_pin_blocks_before_opener) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.010s
+
+OK

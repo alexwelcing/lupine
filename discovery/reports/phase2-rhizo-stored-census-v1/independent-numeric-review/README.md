@@ -1,0 +1,13 @@
+# Independent generated census arithmetic review
+
+The first held candidate `d77a1ca2eeeb1d0f4e02fac6d624fa63527c4a8d423fdf8f7f645db102c67630` passed **22 independent test methods** on 2026-10-16 at 13:24 UTC. The run took 5.071 seconds in unittest, with no failures, errors, skips or blocked audit events. The source hash held after execution.
+
+The [execution receipt](first-independent/execution.json) records 107 pure generated-input calls: 13 complete results and 94 deliberate rejected inputs. Those results supplied 1,248 exact aggregate-rational comparisons, 5,616 individual generated-discrepancy comparisons, and 468 reference-equality group checks. These are software check counts, not scientific samples. The [first test log](first-independent/unittest.txt) is unchanged.
+
+Fixtures were independently constructed from the already public fixed frame and readiness schema. The reviewer did not read the author's tests or fixtures. The oracle uses `Decimal.as_integer_ratio` and `Fraction`, with hand-calculated decimal and symmetric-population controls. The [rational-size argument](arithmetic-bound-review.md) bounds exact output sizes; an accepted extreme fixture also exercises an integer numerator exceeding Python's default 4,300-digit string conversion limit without changing that process-global setting.
+
+The tests check all 144 positions and private provenance against generated input, 16 groups of nine, 36 equality groups of four, signed and absolute and squared discrepancies, unit labels, numerical versus lexical/citation equality, signed zero, strict schema and identity failures, bounded parsing, and absence of individual values/citations/discrepancies in public summaries. Exposure, `NOT_ADMITTED`, unknown reference choice, no fresh holdout, no success threshold and no winner remain explicit.
+
+One draft exposure-label issue was reported statically before any candidate execution: oversized bytes supplied to the pure function were rejected before the supplied-bytes flag was set. The author corrected it before source hold and preserved the earlier draft/finding. No candidate assertion failed in this review.
+
+The [review receipt](review.json) states the scope and limits. The runner denies non-allowlisted repository opens, sockets and subprocesses. No actual private numerical projection, original scientific source object, network operation or production guard/invocation was used. This numeric review does not replace the separate file lifecycle review, actual-run binding or scientific admission review. Synthetic checks establish neither physical error nor model superiority.

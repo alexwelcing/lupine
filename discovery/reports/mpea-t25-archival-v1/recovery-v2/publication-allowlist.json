@@ -1,0 +1,88 @@
+{
+  "allowed_exact_copies": [
+    {
+      "bytes": 1664719,
+      "candidate": "candidates/original-public.json",
+      "destination": "reports/mpea-t25-archival-v1/original-public.json",
+      "sha256": "d93769b07fba52f9bc95dbed92c5303aa8344867e7a663d0ca58cff7af2ba274"
+    },
+    {
+      "bytes": 1664724,
+      "candidate": "candidates/reproduction-public.json",
+      "destination": "reports/mpea-t25-archival-v1/reproduction-public.json",
+      "sha256": "def0d535d4481d8e1f65ba69cd41cdedff13d2acafda69d1ca4e71656975cf1c"
+    },
+    {
+      "bytes": 1664719,
+      "candidate": "candidates/mpea-t25-v1.json",
+      "destination": "src/lupine_discovery/resources/mpea-t25-v1.json",
+      "sha256": "d93769b07fba52f9bc95dbed92c5303aa8344867e7a663d0ca58cff7af2ba274"
+    },
+    {
+      "bytes": 16624,
+      "candidate": "candidates/arithmetic/arithmetic-audit.json",
+      "destination": "reports/mpea-t25-archival-v1/arithmetic/arithmetic-audit.json",
+      "sha256": "fd0686f269320a0b351d18b7c2fa825db37025d1622f5be0b8d806acb3fbcfa7"
+    },
+    {
+      "bytes": 7725,
+      "candidate": "candidates/arithmetic/aggregate-findings-candidate.json",
+      "destination": "reports/mpea-t25-archival-v1/arithmetic/aggregate-findings-candidate.json",
+      "sha256": "f52cd811b4077a31694b63259a1541a47362caa92a6512d830482ef32e9eaf96"
+    },
+    {
+      "bytes": 1195,
+      "candidate": "candidates/arithmetic/public-execution-candidate.json",
+      "destination": "reports/mpea-t25-archival-v1/arithmetic/public-execution-candidate.json",
+      "sha256": "6a6a1202b4a106a887067d92f576a2755f97fc82b7ae6fcf45a252c316f8eebe"
+    },
+    {
+      "bytes": 4556,
+      "candidate": "candidates/arithmetic/review-note.md",
+      "destination": "reports/mpea-t25-archival-v1/arithmetic/review-note.md",
+      "sha256": "8658be6b012702500f649b3fcc221b37d9dbbde9f845517a234272ca42aed269"
+    },
+    {
+      "bytes": 105,
+      "candidate": "candidates/arithmetic/stdout.txt",
+      "destination": "reports/mpea-t25-archival-v1/arithmetic/stdout.txt",
+      "sha256": "07d2b664702b851d52d87614248808fc155e42eb815fcbc62e79fe7f1cfd6683"
+    },
+    {
+      "bytes": 0,
+      "candidate": "candidates/arithmetic/stderr.txt",
+      "destination": "reports/mpea-t25-archival-v1/arithmetic/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 16126,
+      "candidate": "candidates/artifact-comparison.json",
+      "destination": "reports/mpea-t25-archival-v1/artifact-comparison.json",
+      "sha256": "bbcdd63249c22ad1f9fa1ecf07bb1449f87f0cfe21a43136866b4e52772c9c45"
+    },
+    {
+      "bytes": 1325,
+      "candidate": "candidates/root-authentication-helper-failure.json",
+      "destination": "reports/mpea-t25-archival-v1/root-authentication-helper-failure.json",
+      "sha256": "9057861bbe274b1f40f238a17552b82d3a3278c93d665e98b0fc3c10f6c9f485"
+    },
+    {
+      "bytes": 12663,
+      "candidate": "candidates/publication-decision.json",
+      "destination": "reports/mpea-t25-archival-v1/publication-decision.json",
+      "sha256": "8b5f9bc319e09cc5e2bf138706130f733226a89493ab29c9a314e59a655849b3"
+    }
+  ],
+  "excluded": [
+    "raw parent, launch, supervisor or command records",
+    "raw archive, private features, targets or per-row hashes",
+    "private allocation, role assignment, rank, stage or registry files",
+    "this review script and detailed exact-path input ledger"
+  ],
+  "no_main_files_written": true,
+  "original_prior_boundary_review_sha256": "711391d61478c7131fdea3fcc82a5cf82e2378e514f1b02002ef38ddd6233499",
+  "release_scope": "These exact aggregate artifacts may be committed and the exact original report bundled. This is not approval of scientific usefulness or production plant deployment.",
+  "schema": "lupine.mpea.final_publication_allowlist.v1",
+  "source_commit": "a0624cac9abb20320629cce41f10270b9b8e2136",
+  "status": "INDEPENDENT_PUBLICATION_REVIEW_APPROVED_ROOT_INTEGRATES"
+}

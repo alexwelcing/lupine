@@ -1,0 +1,112 @@
+{
+  "calibration": {
+    "calibration_id": "synthetic-calibration-v1",
+    "delta": "1/5",
+    "predictor_id": "synthetic-fixed-predictor",
+    "premise_status": "assumed_unverified",
+    "residuals": {
+      "limit": [
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4"
+      ],
+      "score": [
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4"
+      ]
+    },
+    "sampling_scope": "Constructed finite example; exchangeability is assumed, not verified."
+  },
+  "candidates": [
+    {
+      "constraints": {
+        "limit": -1
+      },
+      "id": "A",
+      "score": 0
+    },
+    {
+      "constraints": {
+        "limit": -1
+      },
+      "id": "B",
+      "score": 4
+    },
+    {
+      "constraints": {
+        "limit": 1
+      },
+      "id": "C",
+      "score": -5
+    }
+  ],
+  "description": "Synthetic scalar predictions with separate calibration residuals and separately revealed outcomes. No physical validity is asserted.",
+  "scenario": {
+    "constraints": {
+      "limit": {
+        "reference": "synthetic-v1",
+        "unit": "synthetic-slack"
+      }
+    },
+    "id": "calibrated-finite",
+    "objective": {
+      "direction": "minimize",
+      "reference": "synthetic-v1",
+      "unit": "synthetic-score"
+    }
+  },
+  "schema": "lupine.discovery.calibrated_problem.v1"
+}

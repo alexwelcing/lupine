@@ -1,0 +1,69 @@
+{
+  "case_count": 19,
+  "certificate_digests": {
+    "calibrated-finite": "4f61fa82bf9643bd0002f23f1951f291261324f5785887147d3745dc2c1ff348",
+    "calibrated-insufficient": "6a1ab888ef60364b7bbac38b83ad0771b0420dc5b3eb6b3b581e1debfb780f00",
+    "calibrated-unsupported": "1430cba6eb076c2ae48feddda3be39e32dec7c4d2cb7a98637188a9f7874285d",
+    "exact-rational-order": "1c8c888ea99d8941cc20cfe7afee9794fb4ba0312ba2cbbe55a7fe6600b2285d",
+    "finite-infeasible": "6f5ebacfa670ea4421d7000a39a9b5925d5bf2c30c32b52979bb8839c3b63801",
+    "integer-design-grid": "65f69e5fd54e495ab17c436ec334d8f53677c0070f4554b64257ababa1898ac2",
+    "loose-intervals": "6f2aba60c14092f277a4924760c473b76a769a9b4901e1613d0cd923afc02bbc",
+    "no-incumbent": "56e5bc244f9967bea90877130f654e3350bcaa44198ee8b41e9e14e9511c3243",
+    "normalized-maximization": "0c72d6dd0ed33728d9e7a85b3300ea032668ff9f6f30b7a8d36c808480d5fc6b",
+    "pareto-partial": "db43bda2cb1b86f88369e063a667ec7dab14ed3b46a11b8af7c443a89f81ca9e",
+    "pareto-tradeoffs": "b8548e6b599cbe950b94ce96c3a946c2df4afcb77a271a296cb4dea192b001d9",
+    "pareto-unsound-control": "15c4622d2a95b1863f29d6c63e792eb2199e1bf9679974f8e36946fafefc0cea",
+    "refined-intervals": "962e8f1afd0f1df9629e825e94a8c4183329113d8e10368d4ec6321506f919f0",
+    "signed-composition": "f685da1396152b6e3cbe05a742b05af297900538d5bdceed063be9f476c816f1",
+    "tied-optima": "ba9415f7ba84bb90fe6e276b4012a840a21dcdd8de693e4cd9c14843590e3136",
+    "tight-nonzero-regret": "07f99eaf00fcb3888a587265f619237e7b5c09ceb6a3cce0a6a99e54361498cd",
+    "uncertified-optimum": "602884d40bed3115987218fcd5dd39c97568aac81be2dfede71d3d2e530f8625",
+    "unsound-constraint-control": "f258708bea7e6a7ccc8c58a05476939c429e434f5a27bc41a8e39c201ef35a74",
+    "unsound-score-control": "badca8cfc36d80d7678e80e677ddca5a610585f06884ba7ac6be791a2ba26e3e"
+  },
+  "checks": [
+    "all_packaged_cases_select_verify_replay",
+    "known_answer_oracle_and_controls",
+    "web_assets_and_original_archive_reports",
+    "constrained_negative_results_packaged_and_served",
+    "installed_http_cli_agreement"
+  ],
+  "isolated_install": true,
+  "known_answer_summary": {
+    "failed": 0,
+    "passed": 13,
+    "total": 13
+  },
+  "problem_schemas": [
+    "lupine.discovery.calibrated_problem.v1",
+    "lupine.discovery.pareto_problem.v1",
+    "lupine.discovery.problem.v1"
+  ],
+  "python": "3.12.14",
+  "replay_digests": {
+    "calibrated-finite": "fade7fb491a9d9d7bdaa493415870d0afb199463c99c411cf24f13d58eea3bc5",
+    "calibrated-insufficient": "56f0efb067ffe78a7266834fa54427c32edbc83e945a395539e42966c8fbb4ad",
+    "calibrated-unsupported": "18259b80bda908b16c5806b681c4f96c8bada2402534c045fb24c84b5f82b8b2",
+    "exact-rational-order": "1e25433d111f1dcfdfffb6afbf90078237844a7a8a157528a20b724c5b8048d3",
+    "finite-infeasible": "e0726d2373bc1ff3a9f8fe190c13386e1db97b181f3f8994b06f43d80f8e87d2",
+    "integer-design-grid": "332e7a79163b5bdec351f826ff603836455b2f01f95aaffecc9911a97d3c5568",
+    "loose-intervals": "e8013934d325cf1b2fbd3233bc33f21def83f20689030a8710ebea180ab0a99e",
+    "no-incumbent": "a79e85a4b41c1e773fca58585f12de9380f3aa5f67d6e2424b7c0728f53afd31",
+    "normalized-maximization": "0644e0f9634deabef36e582b3f0747bb03c44d1c63326883ea6b735c646ced13",
+    "pareto-partial": "5aee3560e03ff7a6e97bf383bb9f1d28ebade0a3dc3ecaa62ea01d114857021a",
+    "pareto-tradeoffs": "071b19a47d32153507ed5114751e7f1bddc530cedfe338ff5c66f97b2626e233",
+    "pareto-unsound-control": "bd9a94c120d2cb2b85320751a7a4c69bbfdbcc1308edfe4e72dbd1163bab3252",
+    "refined-intervals": "247b0800196c33159b5868f19cea4dc4bdfd9b840de52ae23505032235336765",
+    "signed-composition": "d29bb4171eeec5f9ac5f6f8c85feb7b3e94548cc81c410d71fd2c64426b74086",
+    "tied-optima": "ca4abe808843aca95d70b23f1de818e48123ff43ab43867df82bfb2b286190d2",
+    "tight-nonzero-regret": "2ded88de19aa94386b556e943b9fd9214eb7461d49d7a6575f2748b36f2cf417",
+    "uncertified-optimum": "1d10fffdc4f09d131cd6a7d85915c2c00c0884d0a2b96a5572b19a390c22f388",
+    "unsound-constraint-control": "1852db96530f845a56688562d17dbaea76628f0414e01a26690085c6b1120f55",
+    "unsound-score-control": "3c9d74e6db0a50819d38b3843c3ca2f043fc5b0f0e4ea201a65dafb257e0fec6"
+  },
+  "runtime_dependencies": [],
+  "schema": "lupine.discovery.package_verification.v1",
+  "scope": "Isolated wheel and installed HTTP checks; not independent scientific reproduction",
+  "status": "passed",
+  "wheel_sha256": "1387f9707898bf08af166f71480886577e8f82774b1d64ad515a8ec84e189bef"
+}

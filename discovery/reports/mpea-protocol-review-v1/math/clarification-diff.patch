@@ -1,0 +1,68 @@
+--- reviewed-original/mpea-t25-archival-protocol-v1.md
++++ clarified/mpea-t25-archival-protocol-v1.md
+@@ -245,6 +245,9 @@
+ 
+ Define F as all secondary evaluation panels with at least one feasible record;
+ define D as those in F with size>=2. Require |D|>=10 or report inadequacy. Gates:
++When F is empty, pool recall, mean fraction and the pool-usefulness component
++are unavailable with reason `NO_FEASIBLE_CANDIDATE`; zero cross-products do not
++make them pass. Likewise empty D leaves ranking rates/component unavailable.
+ 
+ 1. Complete execution, all 20 evaluation panels in each population, fixed identities.
+ 2. Pool: `10*all_optima_retained_count(F)>=9*|F|`, mean `K/m` over F<=3/4,
+@@ -270,9 +273,16 @@
+ 
+ ## Stop and revision rules
+ 
+-Any source/semantic conflict, failed CI/engineering gate, malformed role/panel
+-identity, unavailable feature artifact, exhausted allocation provider or resource
+-limit blocks the dependent stage under the closed vocabulary in the contract.
++Any source or schema identity conflict, documented endpoint-definition conflict,
++failed CI/engineering gate, malformed role/panel identity, unavailable feature
++artifact, exhausted allocation provider or operational/derived-arithmetic limit
++blocks the dependent stage under the closed vocabulary in the contract. These
++are distinct from a target cell's `SEMANTIC_CONFLICT` or `UNRESOLVED_LIMIT` status:
++a negative endpoint or an out-of-profile decimal remains an unknown endpoint in
++its preserved primary row and does not block the whole stage. Such a row is
++absent only from the predeclared complete-record secondary subset. CSV framing
++or field/record byte-limit failure blocks the parse; a well-framed cell's target
++token/digit/exponent/reduced-bit limit is row-local. No alternate parser is tried.
+ Incomplete data are retained under the declared primary/secondary rules, not a
+ reason to redraw, refill, exclude a source, change temperature, lower adequacy,
+ or retune the model/threshold. Exact-token and normalized-descriptor overlaps
+--- reviewed-original/mpea-t25-implementation-contract-v1.md
++++ clarified/mpea-t25-implementation-contract-v1.md
+@@ -249,6 +249,13 @@
+ and grammar failures preserve the primary record and yield no numeric endpoint;
+ they do not authorize fallback parsers, repair, recoding or row substitution.
+ Secondary membership is exactly VALID for both YS and E after this parser.
++These cell-local statuses do not raise a study-level stop: preserve the row,
++carry its unknown endpoint and continue the uniform parse. A documented conflict
++in the meaning/coding of the selected endpoint is the separate stage-level
++`DOCUMENTED_ENDPOINT_CONFLICT`. Invalid CSV framing or inherited field/record
++byte caps block the source parse. Target token/digit/exponent/reduced-bit caps
++on a valid framed cell are row-local; derived model/metric arithmetic, worker
++memory and wall-time limits are study-level operational stops.
+ 
+ Each private label row records original identity, source column, status/reason,
+ exact value or null, source blob and parser version. It records fixed uncertainty
+@@ -418,11 +425,18 @@
+ - Pool recall passes iff `10*sum_F all_optima_retained >= 9*|F|`.
+   Pool size passes iff `4*sum_F Fraction(K_p,m_p) <= 3*|F|`.
+   Secondary calibration must be exactly `finite_conditional`.
++  These recall/size inequalities are evaluated only when F is nonempty. For
++  empty F, their values/margins and pool-usefulness component are unavailable
++  with reason NO_FEASIBLE_CANDIDATE; their required-to-proceed checks are false,
++  not vacuous passes or measured below-threshold errors. Calibration status is
++  still reported independently.
+ - At cap 4 define integer A, P and O as the any-optimum hits over D for primary,
+   processing and objective-only full orders, and R as the sum of hits over all
+   20 hash controls over D. The gates are `20*A-R >= 2*|D|`, `A>P` and `A>O`.
+   Thus the first is an exact 1/10 macro hit-rate improvement. Empty D makes
+-  metrics unavailable and adequacy fail, never a zero-denominator pass.
++  metrics and ranking-usefulness component unavailable and adequacy fail, never
++  a zero-denominator pass. The reason is SECONDARY_DISCOVERY_PANELS_BELOW_10;
++  do not describe an undefined difference as an observed negative margin.
+ - Publish each signed integer/rational gate margin and every failed gate.
+   Both pool and ranking usefulness plus adequacy and complete execution are
+   necessary for GO. A model cannot win by one target metric or one favorable cap.

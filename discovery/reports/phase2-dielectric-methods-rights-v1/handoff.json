@@ -1,0 +1,26 @@
+{
+  "cancelled_request": "Prospective conditional DataCite branch unexecuted; stopped by root.",
+  "copy_instruction": "Copy exactly the20 listed public files plus public-inventory.json and this handoff if publishing. Never copy raw XML/JSON response bodies or Python caches.",
+  "data_or_repository_requests": 0,
+  "data_terms_and_archive_equivalence": "UNRESOLVED",
+  "entrypoint": "README.md",
+  "entrypoint_sha256": "3872a184c8a210baf5b04ba22eab8e22cf88662dd1e0f17d716b0f768197aadb",
+  "first_projection_sha256": "7e1b30726d20e9f5d5e2e220828add68531b4fbd92899635b4e3b6ba572dcda1",
+  "first_projection_wrapper_sha256": "15293cb1596f07d2297307e58bdc7c1e61dec9844377f9f8975e8867ae8d5c31",
+  "http_statuses": [
+    200,
+    200
+  ],
+  "no_test_or_independent_review_pass_claim": true,
+  "numerical_target_table_or_value_researcher_display": false,
+  "public_inventory": "public-inventory.json",
+  "public_inventory_sha256": "6d76c4b421ed19abef904740ee17855a09d6812c6a77d83bd15abb6e6c49aa09",
+  "public_listed_bytes": 62112,
+  "public_listed_files": 20,
+  "qualitative_results_researcher_exposure": true,
+  "requests": 2,
+  "schema": "lupine.discovery.dielectric_methods.handoff.v1",
+  "scientific_admission": false,
+  "status": "HELD_EXPOSED_DOCUMENTARY_METHODS_NOT_ADMITTED",
+  "whole_primary_container_machine_exposure": true
+}

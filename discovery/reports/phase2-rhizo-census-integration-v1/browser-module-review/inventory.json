@@ -1,0 +1,186 @@
+{
+  "contains_private_scientific_inputs": false,
+  "exclusions": [
+    "Full copied package trees except the two executed browser helpers. Complete hashes retained in execution receipts.",
+    "__pycache__",
+    "inventory.json and handoff.json self-references"
+  ],
+  "files": [
+    {
+      "bytes": 2365,
+      "path": "README.md",
+      "sha256": "0e8e05ae2f9bace1f5de2a451bb509076150d36cbe5a40df6fe0df8eed4a9ba3"
+    },
+    {
+      "bytes": 3631,
+      "path": "after-finite-run/browser-artifacts/generated-rounding-observations.json",
+      "sha256": "5d4df9a83b8c985823276c3af46d6eb599acb27a5c91168ee1fdd49bf31fe3fb"
+    },
+    {
+      "bytes": 210692,
+      "path": "after-finite-run/browser-artifacts/recorded-census-desktop-generated.png",
+      "sha256": "e57a5c61acd20bbbc146e7b828d9da495d2bd40aa7bf52a85198d9fb3f06f621"
+    },
+    {
+      "bytes": 44736,
+      "path": "after-finite-run/browser-artifacts/recorded-census-generated-large-export.json",
+      "sha256": "cdbb25fc2e9a0a3ab2686be830958beb51a4c38c1b1e605c7a3c69fe95d0dfbb"
+    },
+    {
+      "bytes": 49898,
+      "path": "after-finite-run/browser-artifacts/recorded-census-mobile-320-generated.png",
+      "sha256": "81a6ded5a942b72e0b5571e3ac82abc39e8bdfb0caa882eca82d424505a3c788"
+    },
+    {
+      "bytes": 58286,
+      "path": "after-finite-run/browser-artifacts/recorded-census-mobile-390-generated.png",
+      "sha256": "d24aacf09c8703f020c761eb7c12d63066171d1eae375108cd4bc123fa64ac73"
+    },
+    {
+      "bytes": 42773,
+      "path": "after-finite-run/browser-artifacts/recorded-census-public-export.json",
+      "sha256": "6e499eb55877fee29c4947a7e9944e952495c6b9ea72f48bb8e3946532a91444"
+    },
+    {
+      "bytes": 33024,
+      "path": "after-finite-run/execution.json",
+      "sha256": "1e0e1acd22d5ee3f150d1b483e8fb266ac8b07e9258aeadcbb3584e66bd01c41"
+    },
+    {
+      "bytes": 2001,
+      "path": "after-finite-run/finite-artifacts/finite-default.json",
+      "sha256": "ad21a0c6b0b797b23759c8e6bf24fa882252956efd135ab31d97429dba8a0a08"
+    },
+    {
+      "bytes": 409956,
+      "path": "after-finite-run/finite-artifacts/finite-desktop.png",
+      "sha256": "30ba5c0cfff3f19fa99a8617c6d75c8cf8768322a99f520e9b2dfc065f6b25eb"
+    },
+    {
+      "bytes": 1965,
+      "path": "after-finite-run/finite-artifacts/finite-empty-cap.json",
+      "sha256": "1311ce4380855a07697b3d20ca7a57f6db78a787bd423a5a55500316c7a71e7b"
+    },
+    {
+      "bytes": 1976,
+      "path": "after-finite-run/finite-artifacts/finite-equality-rounding.json",
+      "sha256": "b331b8f1a6ff511447636149620c5f39163df5143fa62608aac70ce39bce8ce2"
+    },
+    {
+      "bytes": 2100,
+      "path": "after-finite-run/finite-artifacts/finite-large-exact.json",
+      "sha256": "0a13869f62ec88d39ce16201a5d56b57be0fe5c60f2abf03ffaf73000ef92c5f"
+    },
+    {
+      "bytes": 1976,
+      "path": "after-finite-run/finite-artifacts/finite-latest-error.json",
+      "sha256": "b331b8f1a6ff511447636149620c5f39163df5143fa62608aac70ce39bce8ce2"
+    },
+    {
+      "bytes": 1976,
+      "path": "after-finite-run/finite-artifacts/finite-latest-success.json",
+      "sha256": "b331b8f1a6ff511447636149620c5f39163df5143fa62608aac70ce39bce8ce2"
+    },
+    {
+      "bytes": 341824,
+      "path": "after-finite-run/finite-artifacts/finite-mobile-320.png",
+      "sha256": "c9c39071f43701ded2369a9eaaf98a7747e1746861ac875f4e75e2079546b60f"
+    },
+    {
+      "bytes": 342237,
+      "path": "after-finite-run/finite-artifacts/finite-mobile-390.png",
+      "sha256": "757eede97bbecf89b3baeeebd73995cba79a7ca7e10c67798c8813b7061c94d3"
+    },
+    {
+      "bytes": 1971,
+      "path": "after-finite-run/finite-artifacts/finite-single-census.json",
+      "sha256": "0d3cebd3aacc7ed52ef24b9af1f36d2537783d6c25c8903026f134eaf74ef7d2"
+    },
+    {
+      "bytes": 13887,
+      "path": "after-finite-run/package/scripts/finite_planning_browser_checks.py",
+      "sha256": "50c6ba74701388c8a91b62ff2d399d18e572de2fc9aaa7acfb9962030fda9390"
+    },
+    {
+      "bytes": 19171,
+      "path": "after-finite-run/package/scripts/recorded_census_browser_checks.py",
+      "sha256": "ed9f25b9260c7ab2a2fe33a5459f12c3d5c989f11abc6a969a2796b9ceb3ffc1"
+    },
+    {
+      "bytes": 4152,
+      "path": "after-finite-run/run_review.py",
+      "sha256": "e75a1ff93ecb2d2ca2ca4cd13be073d8b03502e47e0f311c1672aa9bd64d61cc"
+    },
+    {
+      "bytes": 3631,
+      "path": "first-run/browser-artifacts/generated-rounding-observations.json",
+      "sha256": "5d4df9a83b8c985823276c3af46d6eb599acb27a5c91168ee1fdd49bf31fe3fb"
+    },
+    {
+      "bytes": 210692,
+      "path": "first-run/browser-artifacts/recorded-census-desktop-generated.png",
+      "sha256": "e57a5c61acd20bbbc146e7b828d9da495d2bd40aa7bf52a85198d9fb3f06f621"
+    },
+    {
+      "bytes": 44736,
+      "path": "first-run/browser-artifacts/recorded-census-generated-large-export.json",
+      "sha256": "cdbb25fc2e9a0a3ab2686be830958beb51a4c38c1b1e605c7a3c69fe95d0dfbb"
+    },
+    {
+      "bytes": 49898,
+      "path": "first-run/browser-artifacts/recorded-census-mobile-320-generated.png",
+      "sha256": "81a6ded5a942b72e0b5571e3ac82abc39e8bdfb0caa882eca82d424505a3c788"
+    },
+    {
+      "bytes": 58286,
+      "path": "first-run/browser-artifacts/recorded-census-mobile-390-generated.png",
+      "sha256": "d24aacf09c8703f020c761eb7c12d63066171d1eae375108cd4bc123fa64ac73"
+    },
+    {
+      "bytes": 42773,
+      "path": "first-run/browser-artifacts/recorded-census-public-export.json",
+      "sha256": "6e499eb55877fee29c4947a7e9944e952495c6b9ea72f48bb8e3946532a91444"
+    },
+    {
+      "bytes": 30588,
+      "path": "first-run/execution.json",
+      "sha256": "9533c3418bcc8ba9b2c5c04d1a62855011b9d515328126cf194eb217cb61cb83"
+    },
+    {
+      "bytes": 19171,
+      "path": "first-run/package/scripts/recorded_census_browser_checks.py",
+      "sha256": "ed9f25b9260c7ab2a2fe33a5459f12c3d5c989f11abc6a969a2796b9ceb3ffc1"
+    },
+    {
+      "bytes": 3741,
+      "path": "first-run/run_review.py",
+      "sha256": "ff3d0add62c0d2c705f76b213be6bc1a367c7c92c8ff55ba4ff0f64b87b5c4ab"
+    },
+    {
+      "bytes": 19171,
+      "path": "promotion/scripts/recorded_census_browser_checks.py",
+      "sha256": "ed9f25b9260c7ab2a2fe33a5459f12c3d5c989f11abc6a969a2796b9ceb3ffc1"
+    },
+    {
+      "bytes": 1858,
+      "path": "review.json",
+      "sha256": "307002c918ddb55756bd7023cc9db4628b26d51f96b9a34368170652119986ed"
+    },
+    {
+      "bytes": 4152,
+      "path": "run_review.py",
+      "sha256": "e75a1ff93ecb2d2ca2ca4cd13be073d8b03502e47e0f311c1672aa9bd64d61cc"
+    },
+    {
+      "bytes": 1327,
+      "path": "scope.json",
+      "sha256": "d1522e57edde8ace083ab1d045d433b7221ae7382c1fe0eccddccbc9e59d79f0"
+    },
+    {
+      "bytes": 408,
+      "path": "source-hold.json",
+      "sha256": "c5e394cb5a0cc8fe98c88d89ce1f7456e9656fadfad73790cffbdf26db5bc8cc"
+    }
+  ],
+  "schema": "lupine.browser-evidence-inventory.v1"
+}

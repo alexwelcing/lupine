@@ -1,0 +1,122 @@
+{
+  "schema": "lupine.bam-metrology-independent-publication-review.v1",
+  "reviewed_at": "2026-10-16T10:39:43.258620+00:00",
+  "verdict": "PASS_LOSSLESS_NAVIGATION_AND_SCOPED_PUBLICATION",
+  "held_inventory_sha256": "4be5f48d27c257ad726db3ec93892db670a71ecd8cfca7891cff177d682e3a25",
+  "publication_root": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1",
+  "file_count": 81,
+  "total_bytes": 448309,
+  "original_artifacts": 79,
+  "exact_original_copies_verified": 78,
+  "lossless_original_wrappers_verified": 1,
+  "local_markdown_links_verified": 19,
+  "wrapper": {
+    "path": "independent-review/reviewed-documentary-claims/README.md.bytes.json",
+    "decoded_bytes": 6220,
+    "decoded_sha256": "cad9aec959b34c7e6fc4dd4e98bf022ac93745d2192be28dbe263c1d33b8a233",
+    "meaning": "Original review snapshot root-relative navigation preserved as encoded historical bytes, not represented as live subdirectory links. Current root README remains exact original."
+  },
+  "first_finding_preserved": {
+    "artifact": "publication-checks/first-failure.json",
+    "meaning": "Original snapshot-relative link failure and first byte map retained. Publication-only correction; no evidence, scientific claim, source or executable change."
+  },
+  "privacy_boundary": {
+    "raw_xlsx_absent": true,
+    "full_internal_projection_absent": true,
+    "binary_source_and_secondary_files_absent": true,
+    "email_like_contact_strings_in_published_text": 0,
+    "scope": "Verified allowlisted copied sources/receipts/reviews and publication text; no actual XLSX/projection reread. No new raw table/contact roster artifact. Source identities remain referenced, not copied."
+  },
+  "public_page_assessment": "PUBLICATION.md accurately distinguishes synthetic tests, actual acquisition, independent result review, original historical cache paths, wrapper recovery and permanent exposed-reference limits. Preserved acquisition source is an audit artifact and explicitly not authorization for another GET. No scientific admission or standalone reacquisition guarantee is claimed.",
+  "reviewer_activity": {
+    "network_requests": 0,
+    "workbook_raw_reads": 0,
+    "internal_projection_reads": 0,
+    "workbook_parser_or_test_invocations": 0,
+    "tracked_edits": false,
+    "git_mutations": false
+  },
+  "unresolved_blockers": [],
+  "generated_artifacts": {
+    "PUBLICATION.md": "35080b46854dd9c39dbbe909e9a4e2ea1486cceb8d6d4f5879e63e957110ed29",
+    "original-byte-map.json": "4435b65fdc4fcda81c3927e4c46a349582414a807539e15ca954049fdfaa6ff1"
+  },
+  "checked_links": [
+    {
+      "from": "PUBLICATION.md",
+      "target": "README.md"
+    },
+    {
+      "from": "PUBLICATION.md",
+      "target": "documentary-findings.json"
+    },
+    {
+      "from": "PUBLICATION.md",
+      "target": "source-bindings.json"
+    },
+    {
+      "from": "PUBLICATION.md",
+      "target": "exposure-ledger.json"
+    },
+    {
+      "from": "PUBLICATION.md",
+      "target": "independent-review/preacquisition-review.json"
+    },
+    {
+      "from": "PUBLICATION.md",
+      "target": "independent-review/result-review.json"
+    },
+    {
+      "from": "PUBLICATION.md",
+      "target": "independent-review/documentary-result-review.json"
+    },
+    {
+      "from": "PUBLICATION.md",
+      "target": "independent-review/actual-artifact-check.json"
+    },
+    {
+      "from": "PUBLICATION.md",
+      "target": "original-byte-map.json"
+    },
+    {
+      "from": "PUBLICATION.md",
+      "target": "publication-checks/first-failure.json"
+    },
+    {
+      "from": "PUBLICATION.md",
+      "target": "independent-review/reviewed-documentary-claims/README.md.bytes.json"
+    },
+    {
+      "from": "PUBLICATION.md",
+      "target": "publication-checks/first-byte-map.json"
+    },
+    {
+      "from": "README.md",
+      "target": "acquisition.json"
+    },
+    {
+      "from": "README.md",
+      "target": "result.json"
+    },
+    {
+      "from": "README.md",
+      "target": "actual-first/execution.json"
+    },
+    {
+      "from": "README.md",
+      "target": "documentary-findings.json"
+    },
+    {
+      "from": "README.md",
+      "target": "documentary-search.json"
+    },
+    {
+      "from": "README.md",
+      "target": "scope.json"
+    },
+    {
+      "from": "README.md",
+      "target": "pre-acquisition-history.md"
+    }
+  ]
+}

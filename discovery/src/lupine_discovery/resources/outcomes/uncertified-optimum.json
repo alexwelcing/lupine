@@ -1,0 +1,28 @@
+{
+  "schema": "lupine.discovery.outcomes.v1",
+  "scenario_id": "uncertified-optimum",
+  "problem_digest": "30d600b19541da89091b94cce33ebfdb6b31014b3d37d126a4d783cadb9bda23",
+  "outcomes": [
+    {
+      "id": "anchor",
+      "score": "4",
+      "constraints": {
+        "limit": "-1"
+      }
+    },
+    {
+      "id": "uncertain",
+      "score": "0",
+      "constraints": {
+        "limit": "-1"
+      }
+    },
+    {
+      "id": "worse",
+      "score": "7",
+      "constraints": {
+        "limit": "-1"
+      }
+    }
+  ]
+}

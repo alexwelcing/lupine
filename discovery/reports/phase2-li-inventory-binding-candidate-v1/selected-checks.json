@@ -1,0 +1,70 @@
+{
+  "author_file": "tests/test_li_v3_readiness_production.py",
+  "author_methods": [
+    {
+      "name": "test_unbound_later_phase_stops_before_target",
+      "purpose": "Generated unbound inventory/frame states still block before target; this does not assert deployed B is unbound."
+    },
+    {
+      "name": "test_invalid_bound_prior_hash_stops_before_target",
+      "purpose": "Wrong A receipt digest blocks B before target."
+    },
+    {
+      "name": "test_single_prior_receipt_rejected_before_target",
+      "purpose": "One A receipt cannot authorize B."
+    },
+    {
+      "name": "test_different_complete_prior_receipts_rejected",
+      "purpose": "A pair must remain canonically identical."
+    },
+    {
+      "name": "test_returned_phase_pins_cannot_mutate_configuration",
+      "purpose": "Positive B slots and detached public pin metadata."
+    },
+    {
+      "name": "test_forged_full_name_manifest_rejected_by_same_buffer_replay",
+      "purpose": "Resealed historical A manifest cannot replace same-buffer replay."
+    },
+    {
+      "name": "test_completed_layout_counters_cannot_claim_zero_operations",
+      "purpose": "Contradictory completed A exposure blocks before target."
+    }
+  ],
+  "execution_policy": "Only after the accepted A pair is supplied, the minimal literal binding is held and root authorizes its generated verification. Use existing isolated generated fixtures, never the real production guard or actual source. Retain first execution output and source identities. Root may apply repository-wide CI gates separately.",
+  "important_limitation": "Both test fixtures reset PHASE_BINDINGS. Passing these methods does not authenticate the actual production literal; the separate source-only accepted-receipt comparison is mandatory.",
+  "independent_file": "tests/test_li_v3_readiness_production_review.py",
+  "independent_methods": [
+    {
+      "name": "test_01_positive_synthetic_git_guard_and_phase_a_complete_route",
+      "purpose": "Changed source fingerprint works with generated Git/own-path context."
+    },
+    {
+      "name": "test_02_worktree_changes_fail_before_cache",
+      "purpose": "Own source drift still stops before cache."
+    },
+    {
+      "name": "test_03_index_change_and_missing_file_block",
+      "purpose": "Index and absent baseline-file guards remain closed."
+    },
+    {
+      "name": "test_04_baseline_and_parent_identity_inconsistency_block",
+      "purpose": "Existing baseline and G34 producer chain remain unchanged."
+    },
+    {
+      "name": "test_20_inventory_requires_two_ordered_complete_layout_slots",
+      "purpose": "Ordered distinct slots, pair equality and qualifying prior status."
+    },
+    {
+      "name": "test_21_historical_outer_receipt_is_closed_and_type_strict",
+      "purpose": "Closed historical source/identity/exposure shape."
+    },
+    {
+      "name": "test_22_inventory_scope_full_accounting_and_detached_pin_metadata",
+      "purpose": "Positive complete B with no record member opening, detached pins and second slot."
+    }
+  ],
+  "status": "PROSPECTIVE_NOT_EXECUTED",
+  "test_assertion_changes_required": false,
+  "total_selected_existing_methods": 14,
+  "unchanged_behavior_not_rerun_for_counts": "No broad parser/cap/C-science rerun is proposed solely for a literal binding change; those behaviors remain covered by retained integrated602 and subsequent required CI."
+}

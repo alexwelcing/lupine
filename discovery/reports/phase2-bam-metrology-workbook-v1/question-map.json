@@ -1,0 +1,31 @@
+{
+  "schema": "lupine.bam-metrology-documentary-questions.v1",
+  "written_before_acquisition": true,
+  "questions": [
+    {
+      "question": "Which endpoint names and units are actually labelled?",
+      "required_evidence": "Exact sheet/cell labels and nearby documentary hierarchy. Do not infer a proof-strain level from an unrelated material-history field."
+    },
+    {
+      "question": "Which identifiers link endpoints to the same test or specimen?",
+      "required_evidence": "Literal identifier labels and row/column association, with merged-range provenance distinguished from author-imposed fill. Repeated display identifiers do not alone establish specimen, heat or batch independence."
+    },
+    {
+      "question": "How are uncertainty quantities defined?",
+      "required_evidence": "Documentary definitions distinguishing standard uncertainty, expanded uncertainty, relative/absolute units, coverage factor and any stated probability. A label or stored number alone does not validate coverage."
+    },
+    {
+      "question": "What do stored formulas and cached values establish?",
+      "required_evidence": "Separate unexecuted formula text, raw caches and literal labels. Do not use caches as recomputed or verified results; preserve missing or inconsistent cached values."
+    },
+    {
+      "question": "Are shared error sources or covariance specified?",
+      "required_evidence": "Literal uncertainty component/source labels, documentary common-input references and any explicit covariance/correlation definitions. Repeated calibration/equipment labels are provenance clues, not measured dependence or exchangeability."
+    },
+    {
+      "question": "What remains necessary before any validation use?",
+      "required_evidence": "List concrete documentary gaps and unobserved components. This exposed route may support metrology-reference engineering only, never a fresh blind predictive test or new scientific protocol."
+    }
+  ],
+  "scientific_criteria_or_model_selection": false
+}

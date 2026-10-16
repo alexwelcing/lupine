@@ -1,0 +1,28 @@
+{
+  "actual_operations": 0,
+  "current_source_sha256": "77dece96850b09be2f13acd275cc28789ea0e3bc408cfcec86bcd02f488fed85",
+  "disposition": {
+    "bytes": 2574,
+    "path": ".cache/phase2-li-inventory-binding-candidate-v1/disposition.json",
+    "sha256": "95fe5b687ef0116a24e94473c14b157270a28b4dfc7bec7f5798b5cc35fc64fd"
+  },
+  "entrypoint": {
+    "bytes": 2244,
+    "path": ".cache/phase2-li-inventory-binding-candidate-v1/README.md",
+    "sha256": "0a93ea19389941d65986be3e9be572b56cadeaffaf487d901adb199ecf5050e1"
+  },
+  "inventory": {
+    "bytes": 875,
+    "path": ".cache/phase2-li-inventory-binding-candidate-v1/inventory.json",
+    "sha256": "27d5abf058df52ad1739924952239197d611dd3c38917a4e6a22879ea38bee47"
+  },
+  "root_next_action": "Preserve and publicly review the first negative; choose another source within current research scope. This plan neither authorizes nor implements a retry.",
+  "source_only_localization": {
+    "bytes": 3912,
+    "path": ".cache/phase2-li-inventory-binding-candidate-v1/BLOCKED.md",
+    "sha256": "4361315c7cc8f39b439b434684d4cddc71a60f6b1e699a93626db52af58c008b"
+  },
+  "source_unchanged": true,
+  "status": "TERMINAL_A1_BLOCK_NO_INVENTORY_PROMOTION",
+  "tests_executed": 0
+}

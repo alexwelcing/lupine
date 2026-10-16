@@ -1,0 +1,20 @@
+{
+  "bytes": 2025,
+  "finished_at": "2026-10-16T16:51:31.425407+00:00",
+  "headers": {
+    "Content-Length": "2025",
+    "Content-Type": "text/html",
+    "ETag": "\"7e9-651e039122767\"",
+    "Last-Modified": "Fri, 15 May 2026 19:28:52 GMT"
+  },
+  "logical_gets": 1,
+  "over_cap": false,
+  "redirects": [],
+  "retries": 0,
+  "sha256": "fc4c10e6771f25c3581ce8959ac42796a91eecacbf884654106f8a4596525500",
+  "started_at": "2026-10-16T16:51:30.958257+00:00",
+  "status": 200,
+  "terminal_url": "https://aflow.org/",
+  "transport_error": null,
+  "url": "https://aflow.org/"
+}

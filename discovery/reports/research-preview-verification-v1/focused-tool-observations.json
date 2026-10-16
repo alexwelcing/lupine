@@ -1,0 +1,85 @@
+{
+  "schema": "lupine.discovery.focused_tool_observation.v1",
+  "recorded_at": "2026-10-11T01:16:38.068222+00:00",
+  "scope": "Root observations of actual exec_command results; raw stdout was returned by the execution tool, not captured as an on-disk subprocess log. No later reconstructed log is represented as a raw capture.",
+  "cwd": "discovery/",
+  "head_at_execution": "a0624cac9abb20320629cce41f10270b9b8e2136",
+  "new_worktree_resource_sha256": "d93769b07fba52f9bc95dbed92c5303aa8344867e7a663d0ca58cff7af2ba274",
+  "completed": [
+    {
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_package_mpea_interface.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "tests": 16,
+      "unittest_seconds": 0.276,
+      "tool_chunk": "71a6e2"
+    },
+    {
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_server.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "tests": 16,
+      "unittest_seconds": 1.127,
+      "tool_session": 4605
+    },
+    {
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_runtime_manifest.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "tests": 2,
+      "unittest_seconds": 0.084,
+      "tool_session": 4605
+    },
+    {
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_mpea_public_bridge*.py",
+        "-v"
+      ],
+      "tool_session": 46994,
+      "exit_code": 0,
+      "tests": 21,
+      "unittest_seconds": 382.333,
+      "completion_tool_chunk": "f72a3a"
+    }
+  ],
+  "running": [],
+  "completed_test_count": 55
+}

@@ -1,0 +1,9 @@
+{
+  "recorded_at": "2026-10-16T09:11:39.539518+00:00",
+  "initial_projection": "The original author array included public affiliation addresses and role metadata in addition to planned author-name fields.",
+  "repair": "Preserve original projection and narrow current projection to names and sequence; no second request.",
+  "incidental_exposure": "Public bibliographic author affiliations/addresses and role labels were printed; no scientific endpoint or cited-paper body accessed.",
+  "before_sha256": "f263393944265ad5c96e16a7a2c3ce1f5be3e897a9d86a6e79b11f7be1272857",
+  "after_sha256": "43a3555be3a4a9ac988720bfe8f7b2bc8c045e38ddc50ced7d3a8f1c060eb4f9",
+  "scope_change": "No new network permission or endpoint interpretation"
+}

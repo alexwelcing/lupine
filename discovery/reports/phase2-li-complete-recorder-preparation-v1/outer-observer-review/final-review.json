@@ -1,0 +1,34 @@
+{
+  "actual_source_operations": 0,
+  "corrected_invocation": {
+    "exit_code": 0,
+    "methods": 18,
+    "process_seconds": 2.5110637990001123,
+    "receipt": "corrected-first/execution.json",
+    "source_and_test_unchanged": true,
+    "unittest_seconds": 1.746
+  },
+  "first_invocation": {
+    "failing_methods": 1,
+    "failure_subcases": 3,
+    "finding": "CONTRADICTORY_PROCESS_FLAGS",
+    "methods": 18,
+    "methods_without_failures": 17,
+    "receipt": "first/execution.json",
+    "source_sha256": "b2fa9a4b6e852b4094fa9e6df6160ab14ff52be0ec184d18f014c7d2a8dc2bfa"
+  },
+  "known_remaining_blockers": [],
+  "required_outer_gate": "A persisted completion packet alone is insufficient. Root must separately observe this wrapper process exit integer0 with the expected complete stdout and source binding. The test demonstrates late packet publication and outer stdout failure after packet existence.",
+  "schema": "lupine.li.outer_observer.independent_review.v1",
+  "scope_limits": [
+    "Generated temporary files and inert captured support only.",
+    "No actual production helper target subprocess, repository guard, Git operation, network or private/source archive access.",
+    "Actual Python test process ran; fake bounded_process never launched a helper.",
+    "These tests concern operational evidence handling, not physical truth, dataset admission, measured performance or new DFT."
+  ],
+  "source_diff": "Only one success-predicate line adds literal False requirements for timed_out, launch_failed and output_limit. Exact byte deletion recovers first source.",
+  "source_sha256": "3ef3c337ef5bd1b2f496034716311d9027027352510b18a3e57e7b3eaa13aa55",
+  "status": "GENERATED_CHECKS_PASSED_WITH_LIMITS",
+  "test_diff": "Only SOURCE_SHA pin changed; all18 methods, fixture bodies and assertions unchanged.",
+  "test_sha256": "8d3b0c4e2de38966988f9cd708b99faae6a55a10c35f3fff2d63b9c1c215cb0d"
+}

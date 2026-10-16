@@ -1,0 +1,83 @@
+{
+  "at": "2026-10-16T18:15:47.775412+00:00",
+  "causal_limits": [
+    "Original CI remaining entry and writer not observed.",
+    "Root-reported Trace2 detached-command observation is not an independently rerun test by this reviewer.",
+    "2.55 maintenance-lock correction is documented but not established as the cause.",
+    "No causal Python patch-version inference."
+  ],
+  "disposition": "MECHANISM_SUPPORTED_ORIGINAL_RACE_UNPROVEN",
+  "downloaded_source_executed": false,
+  "official_public_requests": 13,
+  "project_tests_executed": false,
+  "schema": "lupine.git-maintenance-documentary-review.v1",
+  "source_bindings": {
+    "v2.52.0--builtin--gc.c": {
+      "bytes": 92902,
+      "sha256": "5f95bf5c2a72fb68b9e5885a49bcc8aede5bbe65c3f248c0d38ef2d3886abde7",
+      "url": "https://raw.githubusercontent.com/git/git/v2.52.0/builtin/gc.c"
+    },
+    "v2.52.0--run-command.c": {
+      "bytes": 45451,
+      "sha256": "4647e16cb00072315bf807165bd5a6577321d2589a099af95319e97dcffbf2fc",
+      "url": "https://raw.githubusercontent.com/git/git/v2.52.0/run-command.c"
+    },
+    "v2.52.0--tempfile.c": {
+      "bytes": 9578,
+      "sha256": "a34ef38d1981b2b269436288685a4af3453d102bac2f29fc2449b8c98b6279d2",
+      "url": "https://raw.githubusercontent.com/git/git/v2.52.0/tempfile.c"
+    },
+    "v2.52.0--wrapper.c": {
+      "bytes": 19207,
+      "sha256": "925d5be378f586fed14ac12b2b9957828fbef590f8d8f16a37b8c6d07700d7d4",
+      "url": "https://raw.githubusercontent.com/git/git/v2.52.0/wrapper.c"
+    },
+    "v2.55.0--Documentation--RelNotes--2.53.0.adoc": {
+      "bytes": 14320,
+      "sha256": "82bc5d0671461c16f44a47554ffa9b76c8b53c8b6aeed72b9f86027990beda1a",
+      "url": "https://raw.githubusercontent.com/git/git/v2.55.0/Documentation/RelNotes/2.53.0.adoc"
+    },
+    "v2.55.0--Documentation--RelNotes--2.54.0.adoc": {
+      "bytes": 24868,
+      "sha256": "0a0e02b2d41b622186aa70d3e8415d4fc86da83304a81d6e25fbbf39d6987ca2",
+      "url": "https://raw.githubusercontent.com/git/git/v2.55.0/Documentation/RelNotes/2.54.0.adoc"
+    },
+    "v2.55.0--Documentation--RelNotes--2.55.0.adoc": {
+      "bytes": 20770,
+      "sha256": "14b333ba079a289afc2658747f19a0ede80751426208e76af6edcf39ea42f1b4",
+      "url": "https://raw.githubusercontent.com/git/git/v2.55.0/Documentation/RelNotes/2.55.0.adoc"
+    },
+    "v2.55.0--Documentation--config--maintenance.adoc": {
+      "bytes": 6980,
+      "sha256": "eeb6a2660edc2ce014f85bc05935bdddf2c352977776677a250d5004ba1a39a7",
+      "url": "https://raw.githubusercontent.com/git/git/v2.55.0/Documentation/config/maintenance.adoc"
+    },
+    "v2.55.0--builtin--commit.c": {
+      "bytes": 62317,
+      "sha256": "3404e51612fd63c284275c9d9a98b16dd4eeea80d650339643ae60b18207a121",
+      "url": "https://raw.githubusercontent.com/git/git/v2.55.0/builtin/commit.c"
+    },
+    "v2.55.0--builtin--gc.c": {
+      "bytes": 95113,
+      "sha256": "6640547903186a7e597b2826cd7b64a36c01033c49bee845c0d032dab19d3581",
+      "url": "https://raw.githubusercontent.com/git/git/v2.55.0/builtin/gc.c"
+    },
+    "v2.55.0--run-command.c": {
+      "bytes": 49349,
+      "sha256": "68cdb7e7a83b1d3ca71af1620e16af3e537e8e3921564c6e8acb60460bcea1e1",
+      "url": "https://raw.githubusercontent.com/git/git/v2.55.0/run-command.c"
+    },
+    "v2.55.0--tempfile.c": {
+      "bytes": 9853,
+      "sha256": "175bbc71b0d79494a640a85ffd1a5d6c45dba992317b922a0325642cf1735066",
+      "url": "https://raw.githubusercontent.com/git/git/v2.55.0/tempfile.c"
+    },
+    "v2.55.0--wrapper.c": {
+      "bytes": 19196,
+      "sha256": "788c07b315a6e98bfcaf78291b83b17e52579f17b604a94db5c149c017a83b04",
+      "url": "https://raw.githubusercontent.com/git/git/v2.55.0/wrapper.c"
+    }
+  },
+  "supported_fix": "Configure maintenance.auto=false locally before the first fixture commit; gc.auto=0 may supplement, not replace it on2.52. Keep cleanup and scientific/source assertions unchanged.",
+  "tracked_files_changed": false
+}

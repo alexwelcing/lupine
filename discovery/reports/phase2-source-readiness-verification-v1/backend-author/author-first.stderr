@@ -1,0 +1,26 @@
+test_http_cli_full_resource_equality_and_existing_fields_unchanged (__main__.SourceReadinessHTTPTests.test_http_cli_full_resource_equality_and_existing_fields_unchanged) ... ok
+test_http_failure_remains_explicit_after_success (__main__.SourceReadinessHTTPTests.test_http_failure_remains_explicit_after_success) ... ok
+test_static_asset_route_preserves_exact_bytes (__main__.SourceReadinessHTTPTests.test_static_asset_route_preserves_exact_bytes) ... ok
+test_cli_cannot_enter_acquisition_or_scientific_input_paths (__main__.SourceReadinessTests.test_cli_cannot_enter_acquisition_or_scientific_input_paths) ... ok
+test_cli_exact_deterministic_stdout_and_output_file (__main__.SourceReadinessTests.test_cli_exact_deterministic_stdout_and_output_file) ... ok
+test_cli_failure_is_structured_exit_two_no_cached_snapshot (__main__.SourceReadinessTests.test_cli_failure_is_structured_exit_two_no_cached_snapshot) ... ok
+test_decoder_rejects_duplicates_scalars_invalid_utf8_and_syntax (__main__.SourceReadinessTests.test_decoder_rejects_duplicates_scalars_invalid_utf8_and_syntax) ... ok
+test_direct_input_strict_containers_and_scalars (__main__.SourceReadinessTests.test_direct_input_strict_containers_and_scalars) ... ok
+test_fixed_snapshot_preserves_blocked_and_unexecuted_scope (__main__.SourceReadinessTests.test_fixed_snapshot_preserves_blocked_and_unexecuted_scope) ... ok
+test_loader_has_one_fixed_bounded_read (__main__.SourceReadinessTests.test_loader_has_one_fixed_bounded_read) ... ok
+test_missing_empty_extra_and_reordered_sources_rejected (__main__.SourceReadinessTests.test_missing_empty_extra_and_reordered_sources_rejected) ... ok
+test_missing_unreadable_and_invalid_resource_fail_closed (__main__.SourceReadinessTests.test_missing_unreadable_and_invalid_resource_fail_closed) ... ok
+test_original_scalar_certificate_bytes_preserved (__main__.SourceReadinessTests.test_original_scalar_certificate_bytes_preserved) ... ok
+test_prepass_does_not_count_quoted_delimiters (__main__.SourceReadinessTests.test_prepass_does_not_count_quoted_delimiters) ... ok
+test_reordered_object_keys_are_same_documentary_identity (__main__.SourceReadinessTests.test_reordered_object_keys_are_same_documentary_identity) ... ok
+test_scientific_admission_and_success_forgery_rejected (__main__.SourceReadinessTests.test_scientific_admission_and_success_forgery_rejected) ... ok
+test_size_and_depth_are_checked_before_json_decode (__main__.SourceReadinessTests.test_size_and_depth_are_checked_before_json_decode) ... ok
+test_stale_commit_schema_and_evidence_urls_rejected (__main__.SourceReadinessTests.test_stale_commit_schema_and_evidence_urls_rejected) ... ok
+test_text_and_array_caps_and_unknowns_not_replaced (__main__.SourceReadinessTests.test_text_and_array_caps_and_unknowns_not_replaced) ... ok
+test_valid_shape_scope_forgeries_rejected (__main__.SourceReadinessTests.test_valid_shape_scope_forgeries_rejected) ... ok
+test_validator_detaches_and_loader_does_not_cache_mutation (__main__.SourceReadinessTests.test_validator_detaches_and_loader_does_not_cache_mutation) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 6.183s
+
+OK

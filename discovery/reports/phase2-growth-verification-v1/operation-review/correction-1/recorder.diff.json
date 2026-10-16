@@ -1,0 +1,8 @@
+{
+  "original_bytes": 1022,
+  "original_path": "reports/phase2-growth-verification-v1/operation-review/correction-1/recorder.diff",
+  "original_sha256": "9bb99dba8342cfc4064623f9ced7f235bd887983c9c7936a5a51361edf4bee19",
+  "reason": "Retain historical patch whitespace exactly; original ignored file unchanged.",
+  "representation": "lossless_utf8_text",
+  "text": "--- recorder-original\n+++ recorder-corrected\n@@ -37,10 +37,10 @@\n assert ARGS.operator and len(ARGS.operator) <= 128\n binding_path = ARGS.bindings.resolve()\n assert binding_path.is_relative_to(ROOT / '.cache') and not binding_path.is_relative_to(ROOT / '.cache/li-v3-custody')\n-script = BASE / 'audit_completed_operations.py'\n+script = BASE / 'audit_completed_operations_corrected.py'\n expected = {str(script): ARGS.audit_sha256, str(binding_path): ARGS.bindings_sha256,\n             str(Path(__file__).resolve()): sha(Path(__file__).read_bytes())}\n-folder = BASE / ('execution-' + ARGS.stage)\n+folder = BASE / ('execution-' + ARGS.stage + '-corrected')\n folder.mkdir(exist_ok=False)\n \n \n@@ -100,7 +100,7 @@\n after = snapshot()\n if not after['held_equal'] or not after['final_bindings_valid'] or before != after:\n     code = 125\n-result_path = BASE / ('actual-review-' + ARGS.stage + '.json')\n+result_path = BASE / ('actual-review-' + ARGS.stage + '-corrected.json')\n result_identity = None\n if child_exit == 0:\n     try:\n"
+}

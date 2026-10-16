@@ -1,0 +1,61 @@
+{
+  "base_commit": "df844ef37ad22d6352ca6b1b4a997904b0309785",
+  "executed_independent_tests": {
+    "adversarial_findings": [
+      "Rank-jump probability ratio P20/P19=741/760<1; no monotone calibration sample-count search is justified.",
+      "A perfectly dependent exchangeable law with p=1/2 has threshold-event probability 1/2 while IID predicts 1/4.",
+      "All-score-one laws never achieve a cutoff below one at any tested count; finite rank alone cannot establish reduction."
+    ],
+    "command": "PYTHONPATH=src python -m unittest discover -s tests -p test_study_planning_review.py -v",
+    "execution_evidence": "Actual exec_command tool result chunk ff6495; this review is not a reconstructed raw subprocess log.",
+    "exit_code": 0,
+    "first_invocation": true,
+    "oracle_cases": {
+      "labeled_bernoulli_world_parameter_cases": 192,
+      "zero_failure_integer_inequality_cases": 96
+    },
+    "reported_unittest_seconds": 0.148,
+    "test_count": 8
+  },
+  "limitations": [
+    "Synthetic executable conformance and source review do not establish sampling independence, empirical power, useful material recommendations, physical truth, or Python-to-Lean refinement.",
+    "No archived numerical outcomes, private inputs, allocations, registrations, or evidence stores were accessed.",
+    "Prior scientific negative results and frozen protocols remain unchanged."
+  ],
+  "not_executed_by_this_review": [
+    "isolated package smoke",
+    "retained artifact binary audit",
+    "root CLI test suite",
+    "combined full test suite",
+    "CI",
+    "Lean build"
+  ],
+  "reviewed_at_utc": "2026-10-16T04:36:38.777690+00:00",
+  "reviewer": "phase2_math",
+  "schema": "lupine.discovery.prospective_planning_independent_review.v1",
+  "source_review": {
+    "claims": "Hypothetical IID is stronger than exchangeability; unknown p remains null; finite rank is not useful screening; bounded zero-failure resolution is not power or observed evidence.",
+    "cli_boundary": "Planner routes accept numeric arguments, return before the problem/outcome document reader, validate before output writes, and encode fractions exactly.",
+    "documentation_correction": "The k>n branch now explicitly defines tau=1/full-universe fallback before asserting zero probability for cutoff<1. Implementer corrected documentation only.",
+    "mathematics": "Exact finite-rank, threshold-event IID binomial tail, and zero-failure null-bound calculations agree with their stated premises.",
+    "package_integration": "Source inspection confirms new checks invoke installed CLI through isolated Python (-I) with timeout, assert exact schemas and safe statuses, and only then add two probe flags.",
+    "resource_bounds": "Counts bounded to 0..256; text length <=128 and exponent rejection precede exact parsing; normalized rational components <=32 bits; direct integers/fractions checked before conversion.",
+    "retained_verifier": "All 14 flags remain mandatory and ordered; test adds individual omission challenge for every flag, plus extra/reordered flags. Existing checks were not weakened."
+  },
+  "source_sha256": {
+    "docs/study-planning.md": "9092d26148c7184cb7ce1cd765bb40dcd55ce1ccc46425ad5ee0ed62bdb554a5",
+    "scripts/package_smoke.py": "7b1c0a3ba39526751207be22997ddf1701113bf2f3dd156c34381d0e41021251",
+    "scripts/verify_retained_artifacts.py": "d167412182893dbf341c44eb957704cd22da7f95595c57ac11546c21c84f5acf",
+    "src/lupine_discovery/cli.py": "4d31d7b9b5621bb57830542d76c8dfa85227f817118d9cdc0de0aae8562379db",
+    "src/lupine_discovery/serialization.py": "cfec006ed4cb51fbbb6539422a5d829cadaa7bf0ff78bebbffd58aaba6f2523c",
+    "src/lupine_discovery/study_planning.py": "7a2b00bc81f8bc025b9bb3d6c6c212875d44a9839c4665ec67c86e46fe5f6d83",
+    "tests/test_retained_mpea_transport.py": "96e2cd1038c346822727166874061f148c82b8226b8d87a6f2e8ab9f55e85be3",
+    "tests/test_study_planning_cli.py": "aa880e228d8bb7a6debc6f7ed4ac8a90196b3dd77c0c982713403f9ab4fd57c2",
+    "tests/test_study_planning_review.py": "f20f88ad23610d5876714789bc58f6f825b728892df505c31120531d9795ac6f"
+  },
+  "source_state": "uncommitted implementation and integration, explicitly bound by file hashes",
+  "tracked_file_ownership": [
+    "tests/test_study_planning_review.py"
+  ],
+  "verdict": "PASS_WITH_DECLARED_SCOPE"
+}

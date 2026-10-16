@@ -1,0 +1,21 @@
+{
+  "checked_local_links": 3,
+  "entrypoint": "README.md",
+  "exact_copyset": "Eight allowlisted files plus inventory.json and handoff.json; no wrappers or raw body.",
+  "file_count_excluding_inventory_handoff": 8,
+  "followups": 0,
+  "held_at": "2026-10-16T17:10:47.451766+00:00",
+  "inventory_sha256": "2fe15ee64243dd2bb329da89b39e59a0458005a05b9aa6a565b7ffc8f3204f75",
+  "public_bytes_excluding_inventory_handoff": 9364,
+  "record_downloads": 0,
+  "redirects": 0,
+  "requests": 1,
+  "retries": 0,
+  "review": "Separate root-assigned documentary reviewer may bind this receipt; no independent review pass claimed here.",
+  "runtime_tests_executed": false,
+  "schema": "lupine.discovery.qm9_manifest_handoff.v1",
+  "scientific_admission": false,
+  "source_schema_parser_invocations": 0,
+  "status": "BLOCKED_ACCESS_HTTP403",
+  "tracked_edits": false
+}

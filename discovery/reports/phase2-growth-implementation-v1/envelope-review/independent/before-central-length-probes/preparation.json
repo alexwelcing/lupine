@@ -1,0 +1,6 @@
+{
+  "status": "UNEXECUTED_PREPARATION",
+  "tests_sha256": "0f418225d834e57c4aef1e14ac72925f15972dcec6d328de89db6f224e0761ab",
+  "reason": "Parent requested explicit independent final central name/extra/comment declared-length overrun probes after genuine first author failure; malformed-layout expectations retained",
+  "product_or_test_executions_in_this_lane": 0
+}

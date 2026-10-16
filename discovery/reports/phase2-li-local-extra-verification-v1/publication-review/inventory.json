@@ -1,0 +1,41 @@
+{
+  "created_at": "2026-10-16T10:06:15.846446+00:00",
+  "files": {
+    "README.md": {
+      "bytes": 2585,
+      "sha256": "ee469f7349b1cd00e10756441c755f77dc1bb3de5cc1a7ccfc4d795f180429da"
+    },
+    "check_publication-before-amendment-binding.py": {
+      "bytes": 4681,
+      "sha256": "90ace5593f78bb731e24c0cdf418761f80a42a19a562510dd73a29b3f6006c4d"
+    },
+    "check_publication-before-public-allowlist.py": {
+      "bytes": 4484,
+      "sha256": "0d858a015edf062a3085618a0d5a965461b6a9acbb59141c14cf3ea4da4cb873"
+    },
+    "check_publication.py": {
+      "bytes": 6062,
+      "sha256": "cf25bfb42a2524fc5832774f26da4ba0e30778ee175116bf47750f344e4a9117"
+    },
+    "claim-findings.json": {
+      "bytes": 830,
+      "sha256": "72ecf588b507a634e9534945563d2d3a6b796ac3e165f0d4e2f704e18ca80843"
+    },
+    "final-publication-check.json": {
+      "bytes": 240802,
+      "sha256": "d7b24b44a89568dc331a02c290af9de703a9d1bef6506066f0a5c9ba0a8f7670"
+    },
+    "first-check-failure.json": {
+      "bytes": 649,
+      "sha256": "47950ff9588a802f51115c6cef01ccafc76e7f0642ca3d9134deeed826738475"
+    },
+    "initial-publication-check.json": {
+      "bytes": 236437,
+      "sha256": "30245e15c817c9efa8046fb99c0589053181840e08724295047c19e36b512ca4"
+    },
+    "review.json": {
+      "bytes": 6504,
+      "sha256": "d2fa3b6fa079372625aacc4a4aaeec0bff9c521401396a19a2afa1081175a82a"
+    }
+  }
+}

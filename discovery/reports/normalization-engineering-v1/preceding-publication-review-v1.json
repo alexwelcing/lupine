@@ -1,0 +1,288 @@
+{
+  "checks_executed": {
+    "anchored_test_log_counts": {
+      "constrained": 34,
+      "training": 22
+    },
+    "declared_support_files_only": 4,
+    "original_to_published_artifacts_byte_equal": 37,
+    "public_formula_checker_run_matches_published_audit": "PASS",
+    "publication_allowlist_and_writer_hash_bindings": "PASS",
+    "reviewed_markdown_relative_links": "ALL_RESOLVE",
+    "runtime_manifest_verifier": {
+      "checkpoint": "mpea-formula-amendment-c-source-freeze",
+      "file_count": 186,
+      "status": "passed"
+    },
+    "snapshot_files_equal_reviewed_publication_commit": true,
+    "successful_constrained_stage_source_bindings": 6,
+    "training_worker_comparison_fields_and_four_input_scope": "PASS",
+    "training_worker_scientific_digests_recomputed": 2,
+    "unsafe_per_record_payload_key_and_JID_scan": "NO_MATCHES"
+  },
+  "limits": [
+    "No raw archive, experimental cache, derived label arrays, per-record predictions or coefficient vectors read.",
+    "Only the 37 allowlisted safe original artifacts were compared to publication copies.",
+    "No scientific workloads, production scans, feature extraction, allocations or fits were run.",
+    "No independent GitHub CI query, proof build or constrained full-policy digest reconstruction was performed for this review.",
+    "Metadata token groups are lexical identities, not validated compositions, studies, independence, endpoint completeness or eligibility.",
+    "Historical helper scripts remain historical artifacts; source inspection and run-only public audit were used instead of their exclusive-write entrypoints.",
+    "Snapshot equality applies only to listed reviewed files; this does not assert the entire working tree is clean or frozen."
+  ],
+  "preserved_results": {
+    "constrained_recommendation_gate": "FAIL",
+    "constrained_scientific_result_sha256_from_bound_safe_receipts": "cd6308600c90b431f8ce22b9aeee196ab747e4e8e84ca18809120043dc0ba900",
+    "constrained_screening_gate": "FAIL",
+    "mpea_exact_lexical_formula_groups": 630,
+    "mpea_formula_rows": 1545,
+    "t_exact_25_C_cross_source_formula_groups": 12,
+    "t_exact_25_C_formula_groups": 106,
+    "t_exact_25_C_rows": 314,
+    "t_exact_25_C_rows_in_cross_source_formula_groups": 131,
+    "t_exact_25_C_source_groups": 75,
+    "training_decision": "NO_GO_MODEL_IMPROVEMENT",
+    "training_scientific_result_sha256": "60cbe9c1d8d4a4b6fe5810765dd9cd5f31f4fe5ac21c9e83e4e802c14fcd0656"
+  },
+  "reviewed_commit": "28b929f6ac74edaeccef148c7a1aa29b3b4bfdb0",
+  "reviewed_file_sha256": {
+    "GOAL.md": {
+      "bytes": 14856,
+      "sha256": "60727cfa8be4b761cb2c27d58b7fd435549ed2950ff534eb61cb49f23cf5e062"
+    },
+    "README.md": {
+      "bytes": 16414,
+      "sha256": "0114eb07cf680985140615bd5a78228808cdef86073ce4697b9066d6e5040ba7"
+    },
+    "STATUS.md": {
+      "bytes": 14936,
+      "sha256": "d50afecece691d6ae37813183774c6c3a748f80881638f65e3923a81807b1369"
+    },
+    "docs/release-validation.md": {
+      "bytes": 22673,
+      "sha256": "97ac40c5de0328b4c1d5cab5dc492b18b0d23c418914b2dd975531154c11cf3f"
+    },
+    "reports/clean-reproduction-v1/README.md": {
+      "bytes": 3206,
+      "sha256": "0c4ee022c0478b4312b8ee499526055d9192a615bacf92138b51c2e7b60f9dba"
+    },
+    "reports/clean-reproduction-v1/constrained/01-acquire-result.json": {
+      "bytes": 7991,
+      "sha256": "15af5f70b21cc929ea08d0b0587458cd65ae392d42325e8b3ad8bb222e5779b7"
+    },
+    "reports/clean-reproduction-v1/constrained/01-acquire-start.json": {
+      "bytes": 4188,
+      "sha256": "206cddf4f2900451053d4f48207b4df1069eeef855f7fdddad8163c26f439417"
+    },
+    "reports/clean-reproduction-v1/constrained/02-freeze-result.json": {
+      "bytes": 7948,
+      "sha256": "6b9d340bb59e73b7aa6de0570f8cfc8342c1945091fc008d4355f8fb2e23b1a3"
+    },
+    "reports/clean-reproduction-v1/constrained/02-freeze-start.json": {
+      "bytes": 4145,
+      "sha256": "03749077c5a3d8202e83e48ac1f6494b9a0462e83cff3a7cf756d2b937f49062"
+    },
+    "reports/clean-reproduction-v1/constrained/03-verify-result.json": {
+      "bytes": 7948,
+      "sha256": "05ec3658269be2df3b784738a6ee3196763ef412fc95044e0b83d7420fdcc2fc"
+    },
+    "reports/clean-reproduction-v1/constrained/03-verify-start.json": {
+      "bytes": 4145,
+      "sha256": "6039b6bcf4085981a07f4ec6e6dd2890c77aa9afd06cd200d674f53d8fd94b50"
+    },
+    "reports/clean-reproduction-v1/constrained/04-engineering-tests-result.json": {
+      "bytes": 7875,
+      "sha256": "fc118d4c95275918171aa38043528e1cf0b66257e4254376b30b7170b8729ea8"
+    },
+    "reports/clean-reproduction-v1/constrained/04-engineering-tests-start.json": {
+      "bytes": 4072,
+      "sha256": "2cb2fd66f53f3edd4917cb9d827e9fd3f87cfaa65d3062d6f5b91031d2bcc408"
+    },
+    "reports/clean-reproduction-v1/constrained/05-replay-result.json": {
+      "bytes": 8244,
+      "sha256": "1ab2fc765b1e622e78a0f58ae3135c4be864bb11021ee5fd737dd780277a0d9c"
+    },
+    "reports/clean-reproduction-v1/constrained/05-replay-start.json": {
+      "bytes": 4441,
+      "sha256": "280118e0e5905edba1cd145e184d2107f19eaee590a90a1cedf28a86294a5ac0"
+    },
+    "reports/clean-reproduction-v1/constrained/06-dashboard-result.json": {
+      "bytes": 8415,
+      "sha256": "8b567e06301de6f945eccdadfa4bb9197cbb2e2bad0a894dd5a395e9817b665b"
+    },
+    "reports/clean-reproduction-v1/constrained/06-dashboard-start.json": {
+      "bytes": 4612,
+      "sha256": "5043e40b66037ac45adaf675e639247e8b6625f74704affc505ebd21c3699068"
+    },
+    "reports/clean-reproduction-v1/constrained/engineering-validation.json": {
+      "bytes": 4234,
+      "sha256": "31265d531a07751ab4cf19e58ceebddb5a3a11df723e347b3550242d60d59213"
+    },
+    "reports/clean-reproduction-v1/constrained/logs/04-engineering-tests.log": {
+      "bytes": 6308,
+      "sha256": "4d7d794960296be0bb14655081818959c64de5a2dfb98894531b9caeb71d67b3"
+    },
+    "reports/clean-reproduction-v1/constrained/raw-source-reuse.json": {
+      "bytes": 425,
+      "sha256": "10ba175824a15bcbd45ff6eedd045781d10766514caec2a8a1157a044aedb9df"
+    },
+    "reports/clean-reproduction-v1/constrained/scientific-digest-comparison.json": {
+      "bytes": 173,
+      "sha256": "e3145a2380e33abfc77149054d8f9284c82e5ce0a84b6c8bd133f95bbf5ed58b"
+    },
+    "reports/clean-reproduction-v1/constrained/scientific-result.json": {
+      "bytes": 1328,
+      "sha256": "18bb5ff99b4c5437dd053299ba49941d04f4a4c528fea78ea9a42e9ad974ffc3"
+    },
+    "reports/clean-reproduction-v1/constrained/workflow-result.json": {
+      "bytes": 2486,
+      "sha256": "cc175256a269c3e8e374ddc73e51027bc7cf4baffd79f0e609239fcff67e12c7"
+    },
+    "reports/clean-reproduction-v1/constrained/workflow-start.json": {
+      "bytes": 5073,
+      "sha256": "ea1833d4bac7b9f6ff0dc19e1bdc479cdd9bdf36afc84ce978df273f2a97e90a"
+    },
+    "reports/clean-reproduction-v1/engineering/training-tail-engineering-tests-local-20261010T194558Z-58801.txt": {
+      "bytes": 3937,
+      "sha256": "b78d701078ed0691e8c4e80ac5371b9c5f339477eed4c5cc82ca1270a816eaa1"
+    },
+    "reports/clean-reproduction-v1/engineering/training-tail-engineering-validation-local-20261010T194558Z-58801.json": {
+      "bytes": 1799,
+      "sha256": "d2ddaa80657c2e1189aee723f021085493ec06ac5f0eabedc0d624c08c98c6da"
+    },
+    "reports/clean-reproduction-v1/environment/environment-check.json": {
+      "bytes": 107892,
+      "sha256": "5763f95f6b68f6590d797884a5786ae63b4f132135fc819c142132fa498df1cb"
+    },
+    "reports/clean-reproduction-v1/preparation/audit-console-v2.log": {
+      "bytes": 441,
+      "sha256": "dc6ba4f86f4c1179197733f87e45fe1d8d6e1ae49ade700773a551e4350dfb6c"
+    },
+    "reports/clean-reproduction-v1/preparation/audit-reproduction-v2.py": {
+      "bytes": 10613,
+      "sha256": "467b8e03c9e07dacb3c137c0bd3b5a071f6365fd9f132f1e4309e761eaae41cf"
+    },
+    "reports/clean-reproduction-v1/preparation/audit-result-v2.json": {
+      "bytes": 61109,
+      "sha256": "cff5a2e6602ecc43a0b43d6b5752a69ba7fb23b244e2b31ce965e642d676e58d"
+    },
+    "reports/clean-reproduction-v1/preparation/environment-comparison.json": {
+      "bytes": 497,
+      "sha256": "44accf3486a70636d8e99d7a306277bca47cd79c8c48bdb7817437d15873ac25"
+    },
+    "reports/clean-reproduction-v1/preparation/preparation-receipt.json": {
+      "bytes": 1907,
+      "sha256": "d6c487a45d7a7472343c3e203ece73f7c6682ccff83cf42a5f93147d2b8538b1"
+    },
+    "reports/clean-reproduction-v1/preparation/raw-source-reuse.json": {
+      "bytes": 657,
+      "sha256": "4fbd89b2f49018c9e91609e6af3c891c473fb738f311f642f30ca915952e765c"
+    },
+    "reports/clean-reproduction-v1/preparation/run-constrained.sh": {
+      "bytes": 523,
+      "sha256": "0e38c5ecf113a4cf32f2523bbce70e66e6f359b2ce6845b2f5f795ab56c4609a"
+    },
+    "reports/clean-reproduction-v1/preparation/run-training-engineering.sh": {
+      "bytes": 2514,
+      "sha256": "03130ff6dacf026980c9668873c854bc59a138b7ca1beb5a1703c24a98a986d6"
+    },
+    "reports/clean-reproduction-v1/preparation/run-training.sh": {
+      "bytes": 670,
+      "sha256": "90b8316a83d8c338815069cbaccf936d80a237cffe8aa30985895224917ae76a"
+    },
+    "reports/clean-reproduction-v1/preparation/summary-v2.md": {
+      "bytes": 7416,
+      "sha256": "ef69879c89bb080682ff39d69084990fd01dc0ec0f3e9df944cb64913967839c"
+    },
+    "reports/clean-reproduction-v1/publication-allowlist.json": {
+      "bytes": 7932,
+      "sha256": "92d1c53f79ca8ae28e985f582b8b8ebfcd69bd549ecc8b507168d0b088088c2e"
+    },
+    "reports/clean-reproduction-v1/root-publication-verification.json": {
+      "bytes": 11329,
+      "sha256": "fdb261819a71a2001fd0b75f89b84bfb31fdcf581693243bb346242fa133b927"
+    },
+    "reports/clean-reproduction-v1/training/pass-1/folds-receipt.json": {
+      "bytes": 313,
+      "sha256": "44e397d8df983eb82623be3bc1418f6b0d70c3ae108b6d06ef0336e1addd5843"
+    },
+    "reports/clean-reproduction-v1/training/pass-1/pass-receipt.json": {
+      "bytes": 135665,
+      "sha256": "60a9e788993d9be70d9cf8ba2c1e500d8aece53c82981ca7bfd3300f99a92cbc"
+    },
+    "reports/clean-reproduction-v1/training/pass-2/folds-receipt.json": {
+      "bytes": 313,
+      "sha256": "44e397d8df983eb82623be3bc1418f6b0d70c3ae108b6d06ef0336e1addd5843"
+    },
+    "reports/clean-reproduction-v1/training/pass-2/pass-receipt.json": {
+      "bytes": 135649,
+      "sha256": "ff048bf38aa57262d494be69db7875f8a1fab5fbc09f597cb6fb89bc0a3a08b8"
+    },
+    "reports/clean-reproduction-v1/training/reproduction.json": {
+      "bytes": 3899,
+      "sha256": "f0a11c3526eba5c195f67e477fcd2e3f457b06c61f10e70e7878e4ba4eb71e28"
+    },
+    "reports/clean-reproduction-v1/verify-publication-source.py": {
+      "bytes": 6989,
+      "sha256": "7f369cc3e084cb5c8e05cea937593fedb15beda5f5d1f240ff405b59cf01c372"
+    },
+    "reports/mpea-formula-readiness-summary-v1.json": {
+      "bytes": 5601,
+      "sha256": "937cb722266709f06d164c65b127fff415ba77cd9c6c9d1a8ba0b2336cf46ca6"
+    },
+    "reports/mpea-formula-readiness-v1.md": {
+      "bytes": 4312,
+      "sha256": "ed349758c1553ec0da19892dbd31c5303dc590062716ab58cda6493daabfa5ce"
+    },
+    "reports/mpea-formula-reproduction-v1.json": {
+      "bytes": 7221,
+      "sha256": "3453b69b906230a627b128e8af8c7ff2722740295981950f972ec581096017ec"
+    },
+    "reports/mpea-formula-result-audit-v1/check_public_formula.py": {
+      "bytes": 12037,
+      "sha256": "f19eecb9f1b4c1ead4fce721a66c0dc21753a60d7d6a7234cbdb8a853919f77e"
+    },
+    "reports/mpea-formula-result-audit-v1/engineering-v1.json": {
+      "bytes": 9043,
+      "sha256": "ec46d5c0ada72a68d9a9a82570b644ac515c44147adc24f4d41a15ecc86d6b5c"
+    },
+    "reports/mpea-formula-result-audit-v1/public-audit-v1.json": {
+      "bytes": 10562,
+      "sha256": "fb5d90e07be470119692b1743988f9c84f671af7732c3ff82de31a8e4c1477ba"
+    },
+    "reports/mpea-formula-result-audit-v1/public-audit-v1.txt": {
+      "bytes": 1983,
+      "sha256": "9114bfe56494cc2ad3241e5b6eda9adde9a5105f55e8717761136b3f134449ca"
+    },
+    "reports/mpea-formula-result-audit-v1/review.md": {
+      "bytes": 4846,
+      "sha256": "f84c01c3cd60686d0c85457c3824ad676029566f41a01e44c569c337f360f541"
+    },
+    "reports/mpea-formula-result-audit-v1/root-public-summary-source.py": {
+      "bytes": 3297,
+      "sha256": "3cf6500037b0c8937e5dfdcda6d1482280d1a05e3f1aab6e925f5e78ef3a3f0a"
+    },
+    "reports/mpea-formula-result-audit-v1/synthetic-tests-v1.txt": {
+      "bytes": 1107,
+      "sha256": "b6727560611145e4402510f3434960e6365bab832c0c852745df53520484224b"
+    },
+    "reports/mpea-formula-result-audit-v1/test_public_formula_audit.py": {
+      "bytes": 4159,
+      "sha256": "88e0d10ecc5257dcb5f79b5cd120d627f639199c847bf6ee427dc80149ca0ddd"
+    },
+    "reports/mpea-formula-tokens-v1.json": {
+      "bytes": 231945,
+      "sha256": "ce2b8d12464bac1c5e9533e136f09b3b65761188609279b40a78f31dbcc6d3a7"
+    },
+    "reports/progress.md": {
+      "bytes": 42448,
+      "sha256": "2580046d42f24eee6e85beedc5a280670ce17178ea12101bc0540ff07653f2d6"
+    },
+    "reports/runtime-manifest.json": {
+      "bytes": 22516,
+      "sha256": "31ea8047c938a5fe7b3ad5be9a2b2d56cb071e169f08cac6639c6d0437735fb3"
+    }
+  },
+  "schema": "lupine.discovery.release_result_claim_review.v1",
+  "scope": "Independent read-only claim, path, public-metadata and safe-artifact publication review; engineering evidence only.",
+  "status": "NO_BLOCKING_FINDING"
+}

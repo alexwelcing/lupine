@@ -1,0 +1,51 @@
+{
+  "total_count": 40,
+  "incomplete_results": false,
+  "items": [
+    {
+      "full_name": "uiocompcat/tmQM",
+      "html_url": "https://github.com/uiocompcat/tmQM",
+      "description": "tmQM dataset files",
+      "default_branch": "master",
+      "license": {
+        "key": "mit",
+        "name": "MIT License",
+        "spdx_id": "MIT",
+        "url": "https://api.github.com/licenses/mit",
+        "node_id": "MDc6TGljZW5zZTEz"
+      },
+      "fork": false,
+      "url": "https://api.github.com/repos/uiocompcat/tmQM"
+    },
+    {
+      "full_name": "uiocompcat/tmQMg",
+      "html_url": "https://github.com/uiocompcat/tmQMg",
+      "description": "Repository for the tmQMg dataset files and analysis scripts.",
+      "default_branch": "main",
+      "license": {
+        "key": "mit",
+        "name": "MIT License",
+        "spdx_id": "MIT",
+        "url": "https://api.github.com/licenses/mit",
+        "node_id": "MDc6TGljZW5zZTEz"
+      },
+      "fork": false,
+      "url": "https://api.github.com/repos/uiocompcat/tmQMg"
+    },
+    {
+      "full_name": "uiocompcat/tmQMg-L",
+      "html_url": "https://github.com/uiocompcat/tmQMg-L",
+      "description": "Repository for the tmQMg-L dataset files. ",
+      "default_branch": "main",
+      "license": {
+        "key": "other",
+        "name": "Other",
+        "spdx_id": "NOASSERTION",
+        "url": null,
+        "node_id": "MDc6TGljZW5zZTA="
+      },
+      "fork": false,
+      "url": "https://api.github.com/repos/uiocompcat/tmQMg-L"
+    }
+  ]
+}

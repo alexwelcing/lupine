@@ -1,0 +1,23 @@
+{
+  "actual_operations": 0,
+  "author": {
+    "methods": 60,
+    "process_seconds": 59.438822,
+    "receipt": "receipts/completed-counter-first/execution.json",
+    "source": "a3370ac84762ef7f859061bde93f118a1c1981b02460e9ddd0b1cd38e55b840b",
+    "unittest_seconds": 54.172
+  },
+  "baseline_rebind": "Pending root exact published CI repair baseline pins",
+  "independent": {
+    "counter_variants_completed": 33,
+    "full_portable_suite_methods": 51,
+    "full_portable_suite_not_rerun_here": true,
+    "methods_executed": 5,
+    "process_seconds": 8.944669299,
+    "receipt": ".cache/phase2-li-complete-readiness-production-review-v1/counter-fixed-first/execution.json",
+    "receipt_sha256": "c74cd04d5bd489fdfd417c258bdc26271ccab357cabdbaea925aec9eee9c96a0",
+    "root_integrated_full_run_pending": true,
+    "unittest_seconds": 6.184
+  },
+  "scope": "Root narrowed post-correction independent rerun to five affected methods after the historical hold described a requested51-method run."
+}

@@ -1,0 +1,49 @@
+{
+  "actual_first_run": {
+    "failure_events": 2,
+    "methods": 18,
+    "original_sources_held": true,
+    "process_seconds": 0.40723623799931374,
+    "returncode": 1,
+    "unit_test_seconds": 0.072
+  },
+  "candidate_sha256": "8919fe45fdfe4810f83fcc965977d4c84e0c43a0e4b219a7a939911435d59198",
+  "execution_receipt": {
+    "path": "first-run/execution.json",
+    "sha256": "f4545f41f125210dafe3a76eebca2ecc57d0c02d78f265d0b8f5ece526f32502"
+  },
+  "final_status": "CORRECTION_PENDING",
+  "observed_failures": [
+    {
+      "actual_aggregate_status": "INCOMPLETE_NO_FAILURE_OBSERVED",
+      "case": "First local compressed field +1 relative to central, newly enlarged span overlaps next entry",
+      "classification": "Product aggregate information loss after safely bounded fixed-header read",
+      "expected_aggregate_family": "LOCAL_COMPRESSED_SIZE_AGREEMENT",
+      "primary_category_and_original_reason_correct": true
+    },
+    {
+      "actual_aggregate_status": "INCOMPLETE_NO_FAILURE_OBSERVED",
+      "case": "First local extra_length=65535, fixed-header arithmetic proves beyond-directory body",
+      "classification": "Product aggregate information loss after safely bounded fixed-header read",
+      "expected_aggregate_family": "MEMBER_DATA_BOUNDS",
+      "primary_category_and_original_reason_correct": true
+    }
+  ],
+  "prospective_additions_not_observed_first_run": [
+    {
+      "issue": "header_checks_started initialized true even when stage never entered",
+      "origin": "Author source review"
+    },
+    {
+      "issue": "Bad local signature must not authorize variable-name or extra-payload interpretation",
+      "origin": "Independent source review and root-authorized dependency clarification"
+    },
+    {
+      "issue": "Non-A220 outer ID must not authorize growth signature/padding interpretation",
+      "origin": "Root-authorized dependency clarification"
+    }
+  ],
+  "schema": "lupine.growth_predicate.independent_initial_findings.v1",
+  "scope": "Generated raw ZIP fixtures, source review and unchanged G31 header-only oracle. No actual source, private file, production guard, network, XML or member operation. No first-rejection or acceptance relaxation requested.",
+  "written_at": "2026-10-16T12:02:31.791139+00:00"
+}

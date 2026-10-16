@@ -1,0 +1,7 @@
+{
+  "original_bytes": 594,
+  "original_path": ".cache/mpea-study-custody/review_production/archive-case-after-fix-v1.txt",
+  "original_sha256": "f7d302b7bbc9ebadd2755d7a9c27c29cf7e0ea917beabc62a45d84b68853ec74",
+  "schema": "lupine.discovery.lossless_utf8_artifact.v1",
+  "text": "test_mutable_input_snapshot_cannot_disagree_with_typed_features_before_target_access (test_archive_case_consistency_initial.InitialArchiveCaseConsistency.test_mutable_input_snapshot_cannot_disagree_with_typed_features_before_target_access) ... ok\ntest_replaced_features_cannot_disagree_with_frozen_input_payload_before_target_access (test_archive_case_consistency_initial.InitialArchiveCaseConsistency.test_replaced_features_cannot_disagree_with_frozen_input_payload_before_target_access) ... ok\n\n----------------------------------------------------------------------\nRan 2 tests in 1.570s\n\nOK\n"
+}

@@ -1,0 +1,27 @@
+{
+  "behavior_source_sha256": "540088bce4341b1f4137e44ef75244ada5786d000c50af597083dadbfc02c9d8",
+  "behavior_test_sha256": "23f263d40f819a5ed9724006835369d6b721a24c2a5cd8c71158b547d01b04b8",
+  "expected_one_runtime_delta": {
+    "new_sha256": "bce07a6927df9efe261f0477eae7b65f7babbd227721fb77333b7fe34188cf82",
+    "path": "tests/test_retained_mpea_transport.py"
+  },
+  "expected_runtime_count": 339,
+  "prepared_files": {
+    "guarded_rebind_child.py": "4d47f9788d3deb18ef92b14255c1c045566e815fc548820cb29da8596c55f3b0",
+    "run_rebind_review.py": "49abe52c3c18ab6996e5ceaf7370ee1aa7a57254fffc6002d9054c6227b9c309"
+  },
+  "scope": "Only final published-baseline pin changes; no altered algorithm or broad rerun. Final expected commit and manifest SHA remain pending root.",
+  "selected_existing_methods": [
+    "test_01_positive_synthetic_git_guard_and_phase_a_complete_route",
+    "test_02_worktree_changes_fail_before_cache",
+    "test_03_index_change_and_missing_file_block",
+    "test_04_baseline_and_parent_identity_inconsistency_block"
+  ],
+  "static_checks": [
+    "Adapter AST identical after replacing only BASELINE_COMMIT and BASELINE_MANIFEST_SHA256 literal values",
+    "Final published Git manifest hash/count and actual source bytes match root pins",
+    "Manifest delta is exactly declared transport test; 338 unchanged",
+    "Pure core and fixed G34 source/prerequisite/producer/projection unchanged"
+  ],
+  "status": "PREPARED_NOT_EXECUTED"
+}

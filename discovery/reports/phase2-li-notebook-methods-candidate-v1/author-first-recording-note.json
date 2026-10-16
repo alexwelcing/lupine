@@ -1,0 +1,6 @@
+{
+  "schema": "lupine.discovery.test_receipt_clarification.v1",
+  "receipt": "author-first.json",
+  "clarification": "The author-first started_at field was populated when recording the completed subprocess, not before invocation. Treat it as recorded_at. The elapsed_seconds value measures monotonic duration across subprocess.run; exit code, stdout/stderr and source/test hashes are actual retained results. The original receipt remains unchanged.",
+  "new_test_run": false
+}

@@ -1,0 +1,13 @@
+{
+  "files": {
+    "README.md": {
+      "bytes": 1290,
+      "sha256": "90998e3242332d3d069abd9ead094894df9895abecf76e05cc49039231a50693"
+    },
+    "review.json": {
+      "bytes": 1977,
+      "sha256": "632fa32a03c2da2a9e2e0cfc3cfd73bfdf5e3977c25900e9af40e22c74a4807e"
+    }
+  },
+  "schema": "lupine.public-copy-inventory.v1"
+}

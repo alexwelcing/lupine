@@ -1,0 +1,19 @@
+{
+  "command": [
+    "python",
+    ".cache/phase2-notebook-header-artifact-review-v1/audit.py",
+    "--commit",
+    "a6e87c198d8116d26c523e0e1b2eedce4aeb225b",
+    "--retained-directory",
+    ".cache/phase2-notebook-header-clean-package-v1",
+    "--output-directory",
+    ".cache/phase2-notebook-header-artifact-review-v1/actual-a6e87c"
+  ],
+  "started_utc": "2026-10-16T08:24:26.286134+00:00",
+  "elapsed_seconds": 3.2885868049997953,
+  "exit_code": 0,
+  "script_sha256": "b81293cba3632449830932175e9fa938913650ade05f5e524b258aba78923119",
+  "script_copied_unchanged_from": ".cache/phase2-finite-artifact-review-v1/actual-4492858/audit.py",
+  "stdout_sha256": "25d384048d0fd862b1ccc1dac304599fe97fe6bb8b38ce4eb53393e821d61303",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

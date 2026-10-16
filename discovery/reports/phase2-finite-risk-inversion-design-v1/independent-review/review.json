@@ -1,0 +1,122 @@
+{
+  "schema": "lupine.discovery.finite_risk_inversion_written_review.v1",
+  "reviewed_at": "2026-10-16T08:34:35.663633+00:00",
+  "reviewer": "/root/phase2_evidence/author_methods_review",
+  "status": "WRITTEN_MATHEMATICAL_REVIEW_PASS_NO_RUNTIME_OR_SCIENTIFIC_VALIDATION",
+  "draft_readme_sha256": "142fc8fed2bc05fc784aa1cf0b2c696b818b0d2f2766087f8685b88198023e94",
+  "draft_bindings_sha256": "d9e24db1ca5e826a2501c948856b0b8ae065b0b7f8637a5b2686c18d662de460",
+  "independent_derivation_sha256": "97cde0228ec4ccb6c8be452a52ba8d61da02db5e6f8b360d5c64c060fa14628e",
+  "blocking_findings": [],
+  "resolved_precision": [
+    {
+      "initial_readme_sha256": "693c42b4db020df157a64a1fbbeb479f8bf901dfb2fb4bb8cecd3f12f0e4971e",
+      "issue": "The theorem includes rho=1 while the existing planner API excludes it.",
+      "resolution": "Final text explicitly distinguishes the mathematical endpoint from current API admission. Byte comparison verifies this sentence is the sole README change."
+    }
+  ],
+  "proof_checks": [
+    {
+      "topic": "Hypergeometric law and support",
+      "result": "Correct exact subset counting; denominator C(M,e)>0; feasible failures max(0,e-M+K) through min(e,K). Fixed labels require no IID law."
+    },
+    {
+      "topic": "Nonempty accepted set and coupling",
+      "result": "F_0(k)=1>eta ensures nonemptiness. Nested hypothetical failure sets with a common uniform sample give stochastic monotonicity in K and initial-segment acceptance. No empirical nesting assumption is inferred."
+    },
+    {
+      "topic": "Discrete p-value",
+      "result": "Largest lower-tail cutoff c gives P_K(F_K(X)<=eta)=F_K(c)<=eta; impossible observations/support gaps and atoms do not invalidate the proof. Super-uniform, not generally uniform."
+    },
+    {
+      "topic": "Coverage inversion",
+      "result": "{U(X)<K}={F_K(X)<=eta}; hence P_K(K/M<=U(X)/M)>=1-eta for every fixed frame under the specified draw. No posterior, future-risk or selected-subgroup claim follows."
+    },
+    {
+      "topic": "Boundary and equality conventions",
+      "result": "e=0 yields U=M; census e=M yields U=k; k=e yields U=M; k<=U<=M-e+k. Equality F_K(k)=eta is excluded. eta=0 separately gives the support bound; eta=1 has an empty accepted set and is outside the proposed domain."
+    },
+    {
+      "topic": "Synthetic equality/sharpness example",
+      "result": "Hand derivation confirms M=4,e=2,eta=1/6 gives U(0)=1,U(1)=3,U(2)=4. Under true K=2, coverage fails only for X=0 with probability1/6. No program enumeration or experiment was run."
+    },
+    {
+      "topic": "Composite null and zero-failure link",
+      "result": "For K0=ceil(rho M), K>=K0 implies F_K0(X)>=F_K(X); the boundary p-value is valid over the composite null. U<K0 iff F_K0(k)<=eta iff U/M<rho. At k=0 this recovers C(M-K0,e)/C(M,e). The different non-strict target uses floor(rho M)+1."
+    },
+    {
+      "topic": "Optional stopping",
+      "result": "The hand example M=4,K=2,eta=1/2 has early false rejection1/2 plus a disjoint later branch1/6, totaling2/3. Fixed-count validity is not sequential validity."
+    },
+    {
+      "topic": "Repeated comparisons",
+      "result": "One fixed-eta bound supports all logically implied nested threshold comparisons on the same coverage event. Separate looks, frames, policies, endpoint choices or selected eta are not covered merely by reusing the formula. Repetition adds no independent evidence."
+    },
+    {
+      "topic": "Implementation scope",
+      "result": "Prospective exact numerator/denominator arithmetic, strict acceptance, bounded inputs and either monotone search or scan are consistent with the proof. Existing observed-evidence-free planner is preserved. Future independent allocation enumeration is proposed, not claimed executed."
+    },
+    {
+      "topic": "Priority and scientific limits",
+      "result": "Retaining the design until G21 has a defensible complete fixed frame is justified. Inversion does not solve G20 source identity, missingness, measurement semantics, lineage or overlap, and does not upgrade historical scientific NO-GO findings."
+    }
+  ],
+  "documentation_bindings": [
+    {
+      "path": "GOAL.md",
+      "bytes": 24904,
+      "sha256": "a218767ffb40b1df8bac35cd3138cb7aa88b4e14e1a1e3192f1fce22262583c9",
+      "git_blob_sha1": "ec6d10d59d875357a4ed62403389aa76497f140c",
+      "verified_commit": "a6e87c198d8116d26c523e0e1b2eedce4aeb225b",
+      "exact_commit_bytes_match": true
+    },
+    {
+      "path": "docs/study-planning.md",
+      "bytes": 14039,
+      "sha256": "0ac34bfcfb6b1198065923c932d8ddf7d80c7411ed027e0cfe5cbc1ff1e01641",
+      "git_blob_sha1": "87d64f166360c89e4d40296d8e6044ee129e6f19",
+      "verified_commit": "a6e87c198d8116d26c523e0e1b2eedce4aeb225b",
+      "exact_commit_bytes_match": true
+    },
+    {
+      "path": "docs/finite-population-planning.md",
+      "bytes": 6568,
+      "sha256": "11f4efe987632293bfc8dfcbd24a32d3a05e4c9e23624c9933ec030028de3414",
+      "git_blob_sha1": "fdbdacdf20c596842f39a5519683e38a994ee7c4",
+      "verified_commit": "a6e87c198d8116d26c523e0e1b2eedce4aeb225b",
+      "exact_commit_bytes_match": true
+    },
+    {
+      "path": "reports/phase2-finite-archive-design-v1/README.md",
+      "bytes": 19059,
+      "sha256": "c26fcba7ea5e70660e8d5657539ab36effd6bf991df6471f5d7da61ba0a8886a",
+      "git_blob_sha1": "1d83bb2a74bd291f33b814e8b470c1059cf94e50",
+      "verified_commit": "a6e87c198d8116d26c523e0e1b2eedce4aeb225b",
+      "exact_commit_bytes_match": true
+    },
+    {
+      "path": "reports/phase2-risk-contracts-v1/README.md",
+      "bytes": 5034,
+      "sha256": "de10ef8fd4d6cc6b78fd70ebc00518fd9c76139634861a0d8d62c8c009041633",
+      "git_blob_sha1": "caf156292070051ab379f7f257bd3cc116d2d80d",
+      "verified_commit": "a6e87c198d8116d26c523e0e1b2eedce4aeb225b",
+      "exact_commit_bytes_match": true
+    }
+  ],
+  "textually_read_existing_contract": "docs/finite-population-planning.md",
+  "other_bound_documents": "Byte/hash/Git identity checks only; no claim of a fresh substantive review of every bound document.",
+  "execution_scope": "Hand derivation plus own public-document byte/hash/Git comparisons. No runtime imports, product tests, Lean compilation, new network request or empirical source read.",
+  "unperformed": [
+    "empirical source/cache/measurement/outcome read",
+    "runtime source import or edit",
+    "product/synthetic runtime tests or numerical simulation",
+    "Lean build",
+    "protocol/endpoint/model/threshold/allocation selection",
+    "tracked edits",
+    "Git mutation"
+  ],
+  "claim_limits": [
+    "Coverage is conditional on the fixed labels/frame and uniformly selected fixed-size evaluation subset.",
+    "The written proof is neither a compiled formal proof nor executable conformance evidence.",
+    "Scientific source readiness, recommendation superiority and physical validity remain unestablished."
+  ]
+}

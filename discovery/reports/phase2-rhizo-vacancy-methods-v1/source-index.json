@@ -1,0 +1,49 @@
+{
+  "created_at": "2026-10-16T12:44:22.326852+00:00",
+  "primary_url": "https://iopscience.iop.org/article/10.1088/1367-2630/16/1/015018",
+  "doi": "10.1088/1367-2630/16/1/015018",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 3393,
+      "sha256": "7f742ff4e9b51455adaed76165a682aaa87a410ee0f437bcd00bff90a4e43967",
+      "publication": "PUBLIC_NOTE_OR_RECEIPT"
+    },
+    {
+      "path": "methods-review.json",
+      "bytes": 4107,
+      "sha256": "08a5e1b23867a565015bdb37339b1f87df1333089afcda5737277730d79922d5",
+      "publication": "PUBLIC_NOTE_OR_RECEIPT"
+    },
+    {
+      "path": "receipt.json",
+      "bytes": 1052,
+      "sha256": "8f92d50c58a8f267097d14516d7ee359f3e743dc64d9e414d4fb7c92548398ba",
+      "publication": "PUBLIC_NOTE_OR_RECEIPT"
+    },
+    {
+      "path": "request.json",
+      "bytes": 2087,
+      "sha256": "01a5803a152b37f544fe4047c55777d61d3b7b648322e98cdb91fe86d8d57ea2",
+      "publication": "PUBLIC_NOTE_OR_RECEIPT"
+    },
+    {
+      "path": "response.body",
+      "bytes": 235691,
+      "sha256": "0ede59974941e6172b51673568677f526ee2f9af93f575909825eaae0616e099",
+      "publication": "EXCLUDED_FULL_RESPONSE"
+    }
+  ],
+  "publication_allowlist": [
+    "README.md",
+    "request.json",
+    "receipt.json",
+    "methods-review.json",
+    "source-index.json"
+  ],
+  "publication_exclusions": [
+    "response.body"
+  ],
+  "new_external_requests": 1,
+  "source_hash_is_identity_not_physical_validation": true
+}

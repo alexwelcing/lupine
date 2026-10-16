@@ -1,0 +1,168 @@
+{
+  "bytes": 709858,
+  "excluded": "No pycache; inventory and handoff excluded from their own hash closure.",
+  "file_count": 40,
+  "files": {
+    "README.md": {
+      "bytes": 4226,
+      "sha256": "46ba39137a462fb5fa7cf4f6c58b38dd7f30287dd7e63aa60c0ac073de5d828d"
+    },
+    "canonical-format-note.json": {
+      "bytes": 336,
+      "sha256": "63a9c93f95af705dad61336711d6f7980669f945bfeae83d91e78685108433b2"
+    },
+    "challenge-outline.md": {
+      "bytes": 5928,
+      "sha256": "bba66931d5783b525630808820d73b4012a7bf2a610401b8541b9d045b5fea10"
+    },
+    "first/execution.json": {
+      "bytes": 82327,
+      "sha256": "64706edec90c3460276dcf76e5b4913d34044faa4914a5edb5dbefa23a7cff5f"
+    },
+    "first/generated_cases.py": {
+      "bytes": 6812,
+      "sha256": "f292e65917ef6a5097ef58c91b7424183e95af21a1d6b8535a0ee298d11b3970"
+    },
+    "first/generated_package.py": {
+      "bytes": 9850,
+      "sha256": "f06f4b4922458d89239ed6d544fca69549527634a3b12b09bf3e4874897434ab"
+    },
+    "first/generated_replay.py": {
+      "bytes": 5872,
+      "sha256": "9b4e760bedaaca96338c0d585492bca3a75596950ac2fb01b86665f0cd25b111"
+    },
+    "first/guarded_child.py": {
+      "bytes": 3267,
+      "sha256": "0bfc0a1bd5fd2437656e19b66b425ba877403fc813533bd15f8bcc56a55e4327"
+    },
+    "first/li_v3_readiness.py": {
+      "bytes": 81591,
+      "sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219"
+    },
+    "first/run_review.py": {
+      "bytes": 3299,
+      "sha256": "c05181c66675be2ed1e58c4aa7ae78e900899c184a3f4dec768780cc0af85670"
+    },
+    "first/stderr.log": {
+      "bytes": 6591,
+      "sha256": "8cbe0aba4b47ce1ccbd2a1f23805cdcabf8bd8d4804f10c2002929b47828de6d"
+    },
+    "first/stdout.log": {
+      "bytes": 83,
+      "sha256": "852a44e45cab659cc477a8af7e56ead7b5fa9f8c2c8e6d8baffe8ccadcbcf73a"
+    },
+    "first/test_li_v3_readiness_review.py": {
+      "bytes": 37129,
+      "sha256": "e3cc4570f27d9cb8a26f09c0563e22716e55a16b94ff5da073ff6539ec01ef50"
+    },
+    "fixture-validation.json": {
+      "bytes": 1023,
+      "sha256": "93342c30f8b8fa886e22d1f92ad4229a90cf4914a94555a47446c0007aa5f35e"
+    },
+    "frame-copy-audit.json": {
+      "bytes": 414,
+      "sha256": "1deb7e99876ead971f8d89be0690f7b17f9b788162c7b38f55b69f3cfc88c14a"
+    },
+    "generated_cases.py": {
+      "bytes": 6812,
+      "sha256": "f292e65917ef6a5097ef58c91b7424183e95af21a1d6b8535a0ee298d11b3970"
+    },
+    "generated_package.py": {
+      "bytes": 9850,
+      "sha256": "f06f4b4922458d89239ed6d544fca69549527634a3b12b09bf3e4874897434ab"
+    },
+    "generated_replay.py": {
+      "bytes": 5872,
+      "sha256": "9b4e760bedaaca96338c0d585492bca3a75596950ac2fb01b86665f0cd25b111"
+    },
+    "guarded_child.py": {
+      "bytes": 3267,
+      "sha256": "0bfc0a1bd5fd2437656e19b66b425ba877403fc813533bd15f8bcc56a55e4327"
+    },
+    "portable-adaptation/adaptation.json": {
+      "bytes": 946,
+      "sha256": "1179d31f292d87a9babe76edcd30c62b08b0973bb223a9a1b39a9d4cf4ad4ca1"
+    },
+    "portable-adaptation/original-test.py.txt": {
+      "bytes": 37129,
+      "sha256": "e3cc4570f27d9cb8a26f09c0563e22716e55a16b94ff5da073ff6539ec01ef50"
+    },
+    "portable/execution.json": {
+      "bytes": 82325,
+      "sha256": "a355a06cf584d18c85014ddd8c1044bb560742b3250e8f59974acb8cb9bfcc00"
+    },
+    "portable/generated_cases.py": {
+      "bytes": 6812,
+      "sha256": "f292e65917ef6a5097ef58c91b7424183e95af21a1d6b8535a0ee298d11b3970"
+    },
+    "portable/generated_package.py": {
+      "bytes": 9850,
+      "sha256": "f06f4b4922458d89239ed6d544fca69549527634a3b12b09bf3e4874897434ab"
+    },
+    "portable/generated_replay.py": {
+      "bytes": 5872,
+      "sha256": "9b4e760bedaaca96338c0d585492bca3a75596950ac2fb01b86665f0cd25b111"
+    },
+    "portable/guarded_child.py": {
+      "bytes": 3267,
+      "sha256": "0bfc0a1bd5fd2437656e19b66b425ba877403fc813533bd15f8bcc56a55e4327"
+    },
+    "portable/li_v3_readiness.py": {
+      "bytes": 81591,
+      "sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219"
+    },
+    "portable/run_review.py": {
+      "bytes": 3299,
+      "sha256": "c05181c66675be2ed1e58c4aa7ae78e900899c184a3f4dec768780cc0af85670"
+    },
+    "portable/stderr.log": {
+      "bytes": 6591,
+      "sha256": "c87ea30a11ef66a96f9586aea820ab93d12d59383c471846bfd5a2809d385f15"
+    },
+    "portable/stdout.log": {
+      "bytes": 83,
+      "sha256": "852a44e45cab659cc477a8af7e56ead7b5fa9f8c2c8e6d8baffe8ccadcbcf73a"
+    },
+    "portable/test_li_v3_readiness_review.py": {
+      "bytes": 60150,
+      "sha256": "7ec52e6a72aef1b289503d187fa5966025a1d488ca60f55200d12fd9c10b85f0"
+    },
+    "pre-hold-source-read-1/candidate.py.txt": {
+      "bytes": 62966,
+      "sha256": "360a0b42a8a0919639192811e5528bb931d2c875b027305d33bdb8e748043a7f"
+    },
+    "pre-hold-source-read-1/findings.json": {
+      "bytes": 930,
+      "sha256": "1b1886c3ca30f49de9e6ba9683252db8ed981cfbb89e641907021ab6e738a119"
+    },
+    "preexecution-suite.json": {
+      "bytes": 1082,
+      "sha256": "29f51dff67247d2100e7cdfd2071121a2394e896e350e2ab9819dfc7612e9fce"
+    },
+    "preparation.json": {
+      "bytes": 861,
+      "sha256": "640d37253b3301e395808e95f1eda060622559600e55c0d00e77c3f48c743241"
+    },
+    "review.json": {
+      "bytes": 5186,
+      "sha256": "1130922ce55a6ca231f3783507bab0e217d73d80141a557cf28a389d2343bf26"
+    },
+    "run_review.py": {
+      "bytes": 3299,
+      "sha256": "c05181c66675be2ed1e58c4aa7ae78e900899c184a3f4dec768780cc0af85670"
+    },
+    "static-first.json": {
+      "bytes": 784,
+      "sha256": "3a9eff953a10cf6f677342fb9f6e7a22bd8c70e28319b1b289ba8ec50953f42a"
+    },
+    "static_source_audit.py": {
+      "bytes": 2136,
+      "sha256": "59e6beb19641beb55e8fed98807e89a6b0e7a519ab7530416331733799fa73c3"
+    },
+    "test_li_v3_readiness_review.py": {
+      "bytes": 60150,
+      "sha256": "7ec52e6a72aef1b289503d187fa5966025a1d488ca60f55200d12fd9c10b85f0"
+    }
+  },
+  "schema": "li.readiness.independent-copy-inventory.v1"
+}

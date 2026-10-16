@@ -1,0 +1,6 @@
+test_utf16_json_marker_is_rejected_as_non_utf8 (__main__.SupervisorReview.test_utf16_json_marker_is_rejected_as_non_utf8) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.834s
+
+OK

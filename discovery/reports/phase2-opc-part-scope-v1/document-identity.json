@@ -1,0 +1,13 @@
+{
+  "zip_sha256": "1d489dc491168ea1f9e9a59063acc8dd5f02b4ad1d21aa7ec19ba9a58d020c70",
+  "selected_official_member": "Ecma Office Open XML Part 2 - Open Packaging Conventions.pdf",
+  "pdf_bytes": 2009726,
+  "pdf_sha256": "18701071fe15f39389761f82512c70d2effbf22bd16dd034f2939797ff5f6147",
+  "other_members_opened": false,
+  "actual_li_source_read": false,
+  "pdftotext_exit": 0,
+  "stderr_sha256": "828e1ef46d184f10f5443334ed243081f7f2c02beeb20dcef989289535dc945a",
+  "text_bytes": 200233,
+  "text_sha256": "a63bc368c20e9cb5c4ca588687cf56b2de2ff2de7c1a64b50b9bdba309e31209",
+  "whole_standard_pdf_and_text_machine_exposed": true
+}

@@ -1,0 +1,22 @@
+{
+  "schema": "lupine.discovery.paired_archive_fallback.metadata_scope.v1",
+  "status": "FROZEN_BEFORE_NEW_METADATA_REQUESTS",
+  "purpose": "Assess at most two named archival computational-property leads as a contingency for a finite recorded-label task; not select or admit a benchmark.",
+  "candidate_names": ["elastic_tensor_2015", "dielectric_constant"],
+  "candidate_provider_lead": "The matminer research repository's published dataset metadata. Candidate descriptions are hypotheses to verify, not established facts before responses.",
+  "exclusions": ["Already exposed BAM, Rhizo, JARVIS and MPEA", "Blocked NIMS and NETL acquisition routes", "No raw dataset file, label table, worksheet, notebook, figure, model or private input acquisition", "No fitting, ranker, threshold, allocation, protocol or scientific admission"],
+  "maximum_requests": 4,
+  "ordered_requests": [
+    {"id": "repository_commit", "url": "https://api.github.com/repos/hackingmaterials/matminer/commits/v0.9.3", "purpose": "Resolve the named existing release to an immutable source commit", "maximum_response_bytes": 1048576},
+    {"id": "dataset_metadata", "url_template": "https://raw.githubusercontent.com/hackingmaterials/matminer/{resolved_commit_sha}/matminer/datasets/dataset_metadata.json", "purpose": "Read only the dataset catalog metadata and project the two named entries; do not follow data URLs", "maximum_response_bytes": 1048576, "requires": "First response HTTP200, JSON object and exact40hex commit SHA"},
+    {"id": "elastic_paper_metadata", "url": "https://api.crossref.org/works/10.1038/sdata.2015.9", "purpose": "Verify cited primary paper identity and any supplied abstract/license metadata", "maximum_response_bytes": 1048576, "requires": "Successful catalog explicitly identifies elastic_tensor_2015 and this DOI"},
+    {"id": "dielectric_paper_metadata", "url": "https://api.crossref.org/works/10.1038/sdata.2016.134", "purpose": "Verify cited primary paper identity and any supplied abstract/license metadata", "maximum_response_bytes": 1048576, "requires": "Successful catalog explicitly identifies dielectric_constant and this DOI"}
+  ],
+  "transport": {"method": "GET", "timeout_seconds": 30, "redirects": "reject", "retries": 0, "credentials": false, "network_path": "ordinary inherited supported HTTPS proxy and certificate trust", "access_failure": "Preserve status/body/receipt and stop the affected route; no alternate endpoint, mirror or bypass"},
+  "parsing": "Bounded UTF8 JSON decoding only; no source execution or data URL resolution. Catalog must be a metadata mapping with the two named dictionary entries. Select documentary description, column definitions, advertised counts, reference/citation fields, source URLs and declared hash/size metadata; reject a response that instead supplies observation rows. Crossref projection is limited to DOI/title/author names/publisher/type/date/license/reference identity/abstract, withholding contact/affiliation strings.",
+  "retention": "Retain exact bounded responses and request/status/timing/hash receipts locally; public report uses own paraphrase and selected metadata with source pins. Do not publish raw catalog/registry bodies by default.",
+  "exposure": "Whole metadata response containers are machine read, including unrelated dataset descriptions and public commit/citation metadata. Researcher output is restricted to the two named entries and selected bibliographic fields. Counts, units, DOI numerals and incidental documentary descriptions are exposure; this is not a claim of globally untouched evidence. No raw observation data requested.",
+  "limits": "Advertised row count is neither usable paired count nor independent-unit count. Source-new-to-project requires existing-report check; prior corpus/physical overlap remains unresolved. Archived DFT is labeled archived calculation, never experimental validation or new DFT. Missing conditions, units or observation-use terms remain explicit blockers to admission.",
+  "owner": "phase2_evidence",
+  "root_owns_later_selection_and_acquisition": true
+}

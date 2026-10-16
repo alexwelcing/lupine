@@ -1,0 +1,30 @@
+{
+  "schema": "lupine.li-reference-identity-independent-review-scope.v1",
+  "frozen_at": "2026-10-16T09:10:49.805413+00:00",
+  "owner": "/root/phase2_evidence/author_methods_review",
+  "read_inputs_so_far": [
+    {
+      "path": "reports/phase2-li-paper-methods-v1/README.md",
+      "bytes": 7423,
+      "sha256": "b168331d3198c97b6cdf45d67b505b4ddf88acf60ab6b556e4b35798b5a3eb10"
+    }
+  ],
+  "allowed": "Forthcoming held parent scope/report/bibliography and table-citation projections/ordinary exact Crossref DOI metadata receipt. Retained article XML may be parsed solely for independent bibliography and Table 2 citation projection, with whole-XML machine exposure stated.",
+  "excluded": [
+    "Network by reviewer",
+    "Linked cited articles or paywalls",
+    "Measurement files/private custody/other empirical caches",
+    "Endpoint table projection",
+    "Model, criteria, thresholds, allocations or grouping changes",
+    "Fuzzy matching or silent bibliographic autocorrection",
+    "Runtime or scientific evaluation"
+  ],
+  "review_criteria": [
+    "Crossref response is bound to the one exact authorized DOI and receipt; response title/authors/year/type/DOI are compared against each conflicting citation separately.",
+    "Bibliography citations and metadata are distinct records; one DOI matching one citation does not silently repair the other or prove identity, nonidentity, duplication or independence of measurements.",
+    "Table Data Source and Dataset columns are represented with separate documentary roles and explicit citation/range syntax; citation IDs and graph edges are not article, dataset, test or independent-unit counts.",
+    "Range expansion, if included, is clearly syntactic and bound to source order, not an empirical source-contribution claim.",
+    "Whole XML acquisition/parsing exposure is acknowledged even where human-readable projection excludes endpoints; parent prior count/material/geometry exposure is preserved.",
+    "No metadata identity review admits observations, resolves archive version/count/layout or establishes actual row joins/reuse. G20 and G21 blockers remain unless separately evidenced."
+  ]
+}

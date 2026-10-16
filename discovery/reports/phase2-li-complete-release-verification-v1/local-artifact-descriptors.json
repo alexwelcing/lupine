@@ -1,0 +1,20 @@
+{
+  "artifacts": {
+    "source_archive": {
+      "bytes": 118917120,
+      "filename": "lupine-discovery-source-9d1f21dae141.tar",
+      "sha256": "c147695d6a91ce7c0fdf542c3f8be92b2103c62d612ab29258d879e249f23af8"
+    },
+    "wheel": {
+      "bytes": 315469,
+      "filename": "lupine_discovery-0.1.0-py3-none-any.whl",
+      "sha256": "202a595fe86042a0c7efe4cefd65474809f4f305d0daf0811a4de5172890c383"
+    }
+  },
+  "binary_artifacts_published": false,
+  "commit": "9d1f21dae141a28db378ee2e16aa83340df57877",
+  "release_receipt_sha256": "e069b3892cdd45a02371e35cc663777415ad9f6a23d558a21f2a22a96589314e",
+  "remote_artifact_download_provided": false,
+  "schema": "lupine.li.release-verification.local-artifact-descriptors.v1",
+  "scope": "Exact descriptors of the locally retained artifacts. This metadata bundle does not provide their bytes or a download link; no remote retrieval was performed for this assembly."
+}

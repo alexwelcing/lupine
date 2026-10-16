@@ -1,0 +1,29 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "/workspace/lupine-discovery-branch/discovery/.cache/mpea-registration-allocation/review/public_tag_extension",
+    "-p",
+    "test_*.py",
+    "-v"
+  ],
+  "elapsed_seconds": 4.414005388003716,
+  "returncode": 1,
+  "scope": "synthetic tag/API and constructed registration/allocation only; no actual tag/API/source/entropy",
+  "source_after": {
+    "/workspace/lupine-discovery-branch/discovery/.cache/mpea-registration-allocation/mpea_registration_allocation.py": "eee033a4d39120cbbd5393a83ee0c53c6be4bdb709ccb2684e4cc3d12f1e4176",
+    "/workspace/lupine-discovery-branch/discovery/.cache/mpea-registration-allocation/review/public_tag_extension/public_tag_fixture.py": "70946efe012ed1abbc77025d2c4d441d5e49d16d5ab5371422098f00240c443c",
+    "/workspace/lupine-discovery-branch/discovery/.cache/mpea-registration-allocation/review/public_tag_extension/test_public_tag_review.py": "bee123e2ef24b5fdce8c933962f4950fc4d7288fdf721865b506f256f455ccbc",
+    "/workspace/lupine-discovery-branch/discovery/.cache/mpea-registration-allocation/review/public_tag_extension/test_registration_allocation_review.py": "154b4a02900f6b9fcb14ca546416db0901c770940d967f4da16fa8bef6f6565a"
+  },
+  "source_before": {
+    "/workspace/lupine-discovery-branch/discovery/.cache/mpea-registration-allocation/mpea_registration_allocation.py": "eee033a4d39120cbbd5393a83ee0c53c6be4bdb709ccb2684e4cc3d12f1e4176",
+    "/workspace/lupine-discovery-branch/discovery/.cache/mpea-registration-allocation/review/public_tag_extension/public_tag_fixture.py": "70946efe012ed1abbc77025d2c4d441d5e49d16d5ab5371422098f00240c443c",
+    "/workspace/lupine-discovery-branch/discovery/.cache/mpea-registration-allocation/review/public_tag_extension/test_public_tag_review.py": "bee123e2ef24b5fdce8c933962f4950fc4d7288fdf721865b506f256f455ccbc",
+    "/workspace/lupine-discovery-branch/discovery/.cache/mpea-registration-allocation/review/public_tag_extension/test_registration_allocation_review.py": "154b4a02900f6b9fcb14ca546416db0901c770940d967f4da16fa8bef6f6565a"
+  },
+  "unchanged": true
+}

@@ -1,0 +1,19 @@
+{
+  "author_results_seen": false,
+  "bounded_schema_interfaces": {
+    "interface.final-v3.json": "c53c2e2d59599f6e568604d83ae33a4a6814e0b36d03b4362f3ad4163fe2d748"
+  },
+  "candidate_invocations": 0,
+  "source_files": {
+    "generated_cases.py": "f292e65917ef6a5097ef58c91b7424183e95af21a1d6b8535a0ee298d11b3970",
+    "generated_package.py": "f06f4b4922458d89239ed6d544fca69549527634a3b12b09bf3e4874897434ab",
+    "generated_replay.py": "9b4e760bedaaca96338c0d585492bca3a75596950ac2fb01b86665f0cd25b111",
+    "guarded_child.py": "0bfc0a1bd5fd2437656e19b66b425ba877403fc813533bd15f8bcc56a55e4327",
+    "run_review.py": "bf572f7c00762c29747c4d266cd873a26f35711d7330e807bb45b7340a31fbe0",
+    "static_source_audit.py": "59e6beb19641beb55e8fed98807e89a6b0e7a519ab7530416331733799fa73c3",
+    "test_li_v3_readiness_review.py": "4c04776b092e73a54e0bad668293402cd14f5090cf97b9be2a024fac5a20ad33"
+  },
+  "status": "PREEXECUTION_SUITE_PREPARED",
+  "test_methods": 35,
+  "validation": "AST parse only; tests wait for held candidate source. Generated fixture stdlib self-check is separate."
+}

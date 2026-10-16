@@ -1,0 +1,32 @@
+{
+  "status": "PROSPECTIVE_INDEPENDENT_REVIEW_PLAN_NOT_EXECUTED",
+  "scope": "Synthetic in-memory ZIP/XML and temporary fixture directories only. No real workbook, existing scientific cache or network.",
+  "target_candidate": ".cache/phase2-li-custody-implementation-v1/promotion/scripts/li_v3_custody.py",
+  "invariants": [
+    {
+      "name": "opaque_component_noninterference",
+      "method": "Construct independent minimal XLSX envelopes. Change worksheet/shared-string/comment payload canaries and unknown sheet names while preserving approved roles; require equal approved semantic output and no leaked text. Whole-object identity differences are excluded explicitly."
+    },
+    {
+      "name": "decompression_allowlist",
+      "method": "Instrument ZIP entry reads on synthetic buffers; fail if any worksheet/shared-string/other unapproved content is opened or decompressed, even when it is malformed XML."
+    },
+    {
+      "name": "safe_internal_graph",
+      "method": "Challenge canonical paths, duplicate members/relationship IDs/sheet names, external/traversal relationships, unresolved or mismatched targets; constant bounded failures must omit canaries."
+    },
+    {
+      "name": "bounded_parser",
+      "method": "Challenge exact-limit/over-limit member count, decompression output, XML depth and prohibited DTD/entity/profile constructs with small synthetic artifacts; no bomb allocations."
+    },
+    {
+      "name": "fixed_redirect_route",
+      "method": "Use an injected synthetic transport if available; require one approved HTTPS host/path redirect only, query kept out of receipts/errors, disallow second redirect and source mismatch without real requests."
+    },
+    {
+      "name": "production_guard_precedes_effects",
+      "method": "Invoke ignored-candidate/invalid inventory/cache/receipt paths using fake side-effect counters; source mismatch, symlinks or collisions must prevent network and output mutation."
+    }
+  ],
+  "evidence_policy": "Execute only after candidate API is available; retain actual command stdout/stderr/exit and bind reviewed source/test hashes before and after. Failed tests remain recorded. Author source is never modified by this reviewer."
+}

@@ -1,0 +1,73 @@
+{
+  "authorization": {
+    "real_acquisition_authorized_by_this_receipt": false,
+    "source_commit_required_before_real_acquisition": true
+  },
+  "command": [
+    "python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_mpea_custody*.py",
+    "-v"
+  ],
+  "elapsed_seconds": 1.3544196150032803,
+  "independently_authored_test_count": 22,
+  "limitations": [
+    "No real CSV format or contents validated; actual header and row count remain unknown",
+    "No scientific eligibility, pairing, numerical completeness, performance, feature permission or physical-bound assessment",
+    "Header-decode-attempted covers framing attempt and does not assert UTF-8 decoding was reached",
+    "MD5 is legacy source-integrity metadata, not cryptographic publisher authentication",
+    "Ordinary local filesystem integrity review, not a sandbox against malicious concurrent local processes",
+    "Future row-metadata stage remains unimplemented and requires a separately committed complete-schema amendment"
+  ],
+  "log_path": "reports/mpea-custody-independent-tests-v1.txt",
+  "log_sha256": "a71910722cf43602104b33c3495bba2c36f3dd33f5606e1cf3844d6bdda22a2b",
+  "no_remaining_blocker_within_review_scope": true,
+  "pre_freeze_base_commit": "522fb280bad7ef1794c97a0de1f64a0e90598efe",
+  "process_exit_code": 0,
+  "producer_test_count": 13,
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "review_date": "2026-10-10",
+  "reviewer_access": {
+    "data_rows_from_original_dataset_decoded": false,
+    "producer_source_edited_by_reviewer": false,
+    "public_plan_inventory_and_producer_source_read": true,
+    "real_csv_bytes_acquired_or_read": false,
+    "real_csv_get_performed": false,
+    "review_test_promotion_byte_identical": true,
+    "synthetic_fixture_bytes_only": true
+  },
+  "schema": "lupine.discovery.mpea.independent_custody_review.v1",
+  "scope": "SOURCE_AND_SYNTHETIC_HEADER_ONLY_CUSTODY",
+  "source_hashes_after": {
+    "docs/mpea-custody-plan.md": "381406c91451ffb4592539b7bc66beb215bdb00cd852bf1a01106bebe7d1b895",
+    "reports/mpea-source-inventory.json": "ce2e1487cb91436137086f7c9900d091eed30068f6c8e9595687458c3f12679c",
+    "scripts/mpea_custody.py": "046aac4812802d1abf656aa93d0b832e8011e2feb59574615957c2550fe11b98",
+    "tests/test_mpea_custody.py": "cf2fc7a0bdaf9bd59589c123745aae6f353fa5837849e26d2a9438d62d090b19",
+    "tests/test_mpea_custody_review.py": "27cca2dc9ec6d96cbcbf06971fe352d6d4f5fb0572b33f8d6648a8ad4cb299bc"
+  },
+  "source_hashes_before": {
+    "docs/mpea-custody-plan.md": "381406c91451ffb4592539b7bc66beb215bdb00cd852bf1a01106bebe7d1b895",
+    "reports/mpea-source-inventory.json": "ce2e1487cb91436137086f7c9900d091eed30068f6c8e9595687458c3f12679c",
+    "scripts/mpea_custody.py": "046aac4812802d1abf656aa93d0b832e8011e2feb59574615957c2550fe11b98",
+    "tests/test_mpea_custody.py": "cf2fc7a0bdaf9bd59589c123745aae6f353fa5837849e26d2a9438d62d090b19",
+    "tests/test_mpea_custody_review.py": "27cca2dc9ec6d96cbcbf06971fe352d6d4f5fb0572b33f8d6648a8ad4cb299bc"
+  },
+  "source_unchanged": true,
+  "status": "PASS",
+  "test_count": 35,
+  "verified_boundaries": [
+    "Source size and MD5 bind captured bytes before header parsing; whole-file SHA-256 also recorded",
+    "Only one bounded logical header is decoded; invalid UTF-8 and malformed data-row fixtures after its terminator are inert",
+    "Exact recognized tokens; unknown token spelling, length, hash and fragments withheld",
+    "Valid headers always BLOCKED_SCHEMA; scientific flags, target validity, fits, splits and row count cannot be promoted by resealing",
+    "Strict quote, BOM, CRLF, duplicate, empty, Unicode-character, byte-scan, record-character and column limits",
+    "No cache conflict replacement or refetch; path and object symlink escapes rejected; same-buffer inspection and cache-write race/failure exercised",
+    "One exact HTTPS redirect route; private query, malformed source text and errors do not leak through receipt or CLI",
+    "Public write sink revalidates and rejects conflicting outputs; source checkpoint gate covered with clean and dirty synthetic repositories"
+  ]
+}

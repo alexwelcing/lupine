@@ -1,0 +1,50 @@
+{
+  "conversions": [
+    {
+      "path": "artifact-review/independent-source-review/source-diff.txt",
+      "wrapper": "artifact-review/independent-source-review/source-diff.txt.bytes.json",
+      "sha256": "c27299cb175938e6836381f3f9552d86b446f3a4ad8a9509cee80d9f30379e5d"
+    },
+    {
+      "path": "bam-design/review-precision.diff",
+      "wrapper": "bam-design/review-precision.diff.bytes.json",
+      "sha256": "8ad33d2a613fefa2e1783503fcd29e11416141d1d0b5fa5a90961ec6e490832b"
+    },
+    {
+      "path": "mutation-review/mutants/m01-prior-equality/source.diff",
+      "wrapper": "mutation-review/mutants/m01-prior-equality/source.diff.bytes.json",
+      "sha256": "905a23e385d52e663ad252a7d8f31a5b0096676584d304768ef34913a1777d51"
+    },
+    {
+      "path": "mutation-review/mutants/m02-close-required/source.diff",
+      "wrapper": "mutation-review/mutants/m02-close-required/source.diff.bytes.json",
+      "sha256": "213eb7e3c28c7eb7794217827a535f905b4ff94a6c480fb70d37262ffd219f6f"
+    },
+    {
+      "path": "mutation-review/mutants/m03-data-bound/source.diff",
+      "wrapper": "mutation-review/mutants/m03-data-bound/source.diff.bytes.json",
+      "sha256": "e2f83c368758f6beeeaa11c6ca431db420bfd7dad4f456788d2c2c868f8f868d"
+    },
+    {
+      "path": "mutation-review/mutants/m04-record-cap/source.diff",
+      "wrapper": "mutation-review/mutants/m04-record-cap/source.diff.bytes.json",
+      "sha256": "c43e3568f6817f1ae1c59231d09acad2504e0942828e57790a69436f7b58f5cf"
+    },
+    {
+      "path": "mutation-review/mutants/m05-partial-list/source.diff",
+      "wrapper": "mutation-review/mutants/m05-partial-list/source.diff.bytes.json",
+      "sha256": "59c6fbc2b23ecbd08f1e1ce5bb3274e98ff8e9d54d87b64bc891f4a2f793b827"
+    },
+    {
+      "path": "mutation-review/mutants/m06-opaque-byte/source.diff",
+      "wrapper": "mutation-review/mutants/m06-opaque-byte/source.diff.bytes.json",
+      "sha256": "9c468101b7cfbb13d9e1286b3a27350f8a6a3c9d97329b3830dee881474c176c"
+    },
+    {
+      "path": "zip-semantics/unsigned-citation.diff",
+      "wrapper": "zip-semantics/unsigned-citation.diff.bytes.json",
+      "sha256": "c41020d61afc0a4537e8bdd4bebd75f876590003619e6192912f535b767f0efc"
+    }
+  ],
+  "originals_unchanged_in_ignored_evidence_directories": true
+}

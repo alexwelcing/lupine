@@ -1,0 +1,191 @@
+{
+  "schema": "supervisor_fixture_repair_evidence.v2",
+  "files": [
+    {
+      "original": "README.md",
+      "wrapper": "00.json",
+      "sha256": "a0665ab69c476afb604412b77de60ecf217184c506d91c79c9ea3dedc8eb6681"
+    },
+    {
+      "original": "diagnosis-v2.json",
+      "wrapper": "01.json",
+      "sha256": "debd9e751ab87e99b6c074489fef16580685b421c674dd61e5dc482b8114c89d"
+    },
+    {
+      "original": "candidate-v2-manifest.json",
+      "wrapper": "02.json",
+      "sha256": "feea5643a9500137d3a5b3926b26f2ce71bfe722cfec1c8df82ebc8a0a4c3c33"
+    },
+    {
+      "original": "probe.py",
+      "wrapper": "03.json",
+      "sha256": "9b232b103224b2c9a7793ce5e2cf64886da2029df91188df3f97f3426301b51f"
+    },
+    {
+      "original": "low.json",
+      "wrapper": "04.json",
+      "sha256": "48f3b9c4776b480521ff58539e64f4b0189763534a4d4916acca072016b13024"
+    },
+    {
+      "original": "high.json",
+      "wrapper": "05.json",
+      "sha256": "0934087a02def97bc00bc842a216586cc2359a6c6fddcd1285a4b91fc50c8f28"
+    },
+    {
+      "original": "isolated_driver.py",
+      "wrapper": "06.json",
+      "sha256": "35975f5d806eac7619b6601db01466654472a62f7980ce80a3d856eb24b746e3"
+    },
+    {
+      "original": "isolated_probe.py",
+      "wrapper": "07.json",
+      "sha256": "6e01e745742fb108f4f69c7454ca7df13f8f2b5ea79106a2996e4a98b044ddee"
+    },
+    {
+      "original": "high-isolated.json",
+      "wrapper": "08.json",
+      "sha256": "4ddc498edf4069de1a7b223d99a48cda7379f21786ad9dc538c084d4d0c69df7"
+    },
+    {
+      "original": "high-parent-candidate-controls.py",
+      "wrapper": "09.json",
+      "sha256": "0d8720bfd661a4255e3ccc40dbbb053ff8dd663e714a812675681f813f03e85f"
+    },
+    {
+      "original": "high-parent-candidate-controls.log",
+      "wrapper": "10.json",
+      "sha256": "d62c9c52464ea812a822ff76a8ab1c69c378531da93c368c5949ba3c61cc4889"
+    },
+    {
+      "original": "candidate-v2-focused.log",
+      "wrapper": "11.json",
+      "sha256": "020a40b2906838d592131b0b3b3a51a19d06a01513b7deefc76e6931cae47ff1"
+    },
+    {
+      "original": "original-supervisor-failure-trace.txt",
+      "wrapper": "12.json",
+      "sha256": "d86ec6bf33626973b02582bd7e124103024edf2e2515a1b636bfae7c1593442f"
+    },
+    {
+      "original": "test_mpea_study_supervisor.py.patch",
+      "wrapper": "13.json",
+      "sha256": "cc5681e250b45a4777a645443a35166c39751ceadfd6611319256a827c0dc940"
+    },
+    {
+      "original": "test_mpea_study_supervisor_review.py.patch",
+      "wrapper": "14.json",
+      "sha256": "84e134da4e420a6ef46bd50a8974ef37ee3773fdca31a671bfc9b62556d7a73b"
+    },
+    {
+      "original": "original-source/mpea_supervisor_worker.py",
+      "wrapper": "15.json",
+      "sha256": "e43842b5632c23e72e0ad0007fba9a0904227fb311b54b83a92c62bf15077f42"
+    },
+    {
+      "original": "original-source/mpea_supervisor_review_child.py",
+      "wrapper": "16.json",
+      "sha256": "89e4a9e4cb6cf03afdb4f326801491fc21f6c7332aff5e84cd57d8c8d4c820a6"
+    },
+    {
+      "original": "original-source/test_mpea_study_supervisor.py",
+      "wrapper": "17.json",
+      "sha256": "ecffc888a8f678d60072b6dbf8df844d81c53864b870372a3b05fdf0d5f22add"
+    },
+    {
+      "original": "original-source/test_mpea_study_supervisor_review.py",
+      "wrapper": "18.json",
+      "sha256": "3cca098e6f5e3ab65d49dd0c311bda9069a0c033afb85fc70074ba6b73b60421"
+    },
+    {
+      "original": "original-source/mpea_study_supervisor.py",
+      "wrapper": "19.json",
+      "sha256": "1dbd4a1b0e9c3f0246d23bd7670527cfa3bd69f754279aabba06e4ae464e87ab"
+    },
+    {
+      "original": "candidate/tests/test_mpea_study_supervisor.py",
+      "wrapper": "20.json",
+      "sha256": "3bd2b7803a42c94d123aac347653acc30751896e68d30d7d698743537f40ac5c"
+    },
+    {
+      "original": "candidate/tests/test_mpea_study_supervisor_review.py",
+      "wrapper": "21.json",
+      "sha256": "1939497ea0c49b37e33c7a129e9dce6a955be711089f327c16699ea9a44665ea"
+    },
+    {
+      "original": "candidate/tests/fixtures/mpea_supervisor_isolated_driver.py",
+      "wrapper": "22.json",
+      "sha256": "2ad3c7a510cc8554538e7a4f157950f3cc96bc96fd758ab40c3a1f30f2450d62"
+    },
+    {
+      "original": "wip-v1/tests/test_mpea_study_supervisor.py",
+      "wrapper": "23.json",
+      "sha256": "efa3422f20869e069ca16f7fec014298a62c188830a635e30870b46c765669e5"
+    },
+    {
+      "original": "wip-v1/tests/test_mpea_study_supervisor_review.py",
+      "wrapper": "24.json",
+      "sha256": "73ac90ca2a1377dc5b0f494405c14c0b56ed1c4195252c811fec33b115422419"
+    },
+    {
+      "original": "wip-v1/tests/fixtures/mpea_supervisor_isolated_driver.py",
+      "wrapper": "25.json",
+      "sha256": "42a0ebf07a8e72eb73416bc1b40dcfbb49d281abebdd4dadf841c71603102aa1"
+    },
+    {
+      "original": "wip-v1/focused.log",
+      "wrapper": "26.json",
+      "sha256": "d7c819fd3cb7f0446107cf1238f959b6dccbddab1e0797dcfa2c1f9d6c07fe63"
+    },
+    {
+      "original": ".cache/supervisor-rss-independent-review-478208f/complete-receipt.json",
+      "wrapper": "27.json",
+      "sha256": "1bd38b46e0f6112fb1b963a3fc55b71f8cba0954737bfa9286cd91e3209c6ef4"
+    },
+    {
+      "original": ".cache/supervisor-rss-independent-review-478208f/late_tail-observation.ready",
+      "wrapper": "28.json",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "original": ".cache/supervisor-rss-independent-review-478208f/late_tail-receipt.json",
+      "wrapper": "29.json",
+      "sha256": "1bb9f46958bc9ac0684edf10cfb2e006e242dc2270f152efbbc5955883db5e31"
+    },
+    {
+      "original": ".cache/supervisor-rss-independent-review-478208f/review-v1.json",
+      "wrapper": "30.json",
+      "sha256": "33b8906e84a37af864ddf4bdaf8c53c9e5563fe775277463e7919e817d754399"
+    },
+    {
+      "original": ".cache/supervisor-rss-independent-review-478208f/review-v1.log",
+      "wrapper": "31.json",
+      "sha256": "3f252e3b5b95f9ae11233030e8f583c9fee8ea0e7667f8affa47d741bf9ec848"
+    },
+    {
+      "original": ".cache/supervisor-rss-independent-review-478208f/review.py",
+      "wrapper": "32.json",
+      "sha256": "3f36ef39d5b6ec0d7c3028c6fc9b305c130881107b1d15cceec7fe796dd79f3b"
+    },
+    {
+      "original": ".cache/supervisor-rss-independent-review-478208f/sampled-observation.ready",
+      "wrapper": "33.json",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "original": ".cache/supervisor-rss-independent-review-478208f/sampled-receipt.json",
+      "wrapper": "34.json",
+      "sha256": "f4428fb998fcb330ed824f1e88e8d9f78187d1d62d3caebe8fc92fb5234c3c5b"
+    },
+    {
+      "original": ".cache/supervisor-rss-independent-review-478208f/unsampled_wait4-observation.ready",
+      "wrapper": "35.json",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "original": ".cache/supervisor-rss-independent-review-478208f/unsampled_wait4-receipt.json",
+      "wrapper": "36.json",
+      "sha256": "4b0dbf61882e550f7c5656f4fc8655cd2abc8211539d313525e81a6b0498dfb4"
+    }
+  ],
+  "review_status": "INDEPENDENT_SOURCE_AND_FOUR_HIGH_RSS_CONTROLS_PASS"
+}

@@ -1,0 +1,51 @@
+{
+  "checked_at": "2026-10-16T15:35:45.007628+00:00",
+  "copied_originals": 6,
+  "exact_copies": 6,
+  "existing_production_files_unchanged": 311,
+  "final_source_and_core_pins_match": true,
+  "lossless_wrappers": 0,
+  "no_tests_or_source_operations_run_by_assembler": true,
+  "passed": true,
+  "rendered_markdown_links": [
+    {
+      "resolved_report_path": "reports/phase2-li-complete-readiness-integration-v1/execution/focused-first/execution.json",
+      "target": "focused-first/execution.json"
+    },
+    {
+      "resolved_report_path": "reports/phase2-li-complete-readiness-integration-v1/execution/focused-first/start.json",
+      "target": "focused-first/start.json"
+    },
+    {
+      "resolved_report_path": "reports/phase2-li-complete-readiness-integration-v1/execution/focused-first/stdout.txt",
+      "target": "focused-first/stdout.txt"
+    },
+    {
+      "resolved_report_path": "reports/phase2-li-complete-readiness-integration-v1/execution/focused-first/stderr.txt",
+      "target": "focused-first/stderr.txt"
+    },
+    {
+      "resolved_report_path": "reports/phase2-li-complete-readiness-integration-v1/execution/promotion.json",
+      "target": "promotion.json"
+    },
+    {
+      "resolved_report_path": "reports/phase2-li-complete-readiness-integration-v1/execution/promote_and_test.py",
+      "target": "promote_and_test.py"
+    },
+    {
+      "resolved_report_path": "reports/phase2-li-complete-readiness-production-v1/FINAL-PUBLICATION.md",
+      "target": "../../phase2-li-complete-readiness-production-v1/FINAL-PUBLICATION.md"
+    },
+    {
+      "resolved_report_path": "reports/phase2-li-complete-readiness-integration-v1/execution/publication-copy-map.json",
+      "target": "publication-copy-map.json"
+    },
+    {
+      "resolved_report_path": "reports/phase2-li-complete-readiness-integration-v1/execution/publication-checks.json",
+      "target": "publication-checks.json"
+    }
+  ],
+  "root_receipt_and_log_hashes_match": true,
+  "schema": "li.readiness.root-integration-publication-checks.v1",
+  "start_and_promotion_347_bindings_match": true
+}

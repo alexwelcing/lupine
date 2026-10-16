@@ -1,0 +1,55 @@
+{
+  "access": {
+    "actual_allocation": false,
+    "actual_features": false,
+    "entropy": false,
+    "fits": false,
+    "main_tree_edits": false,
+    "raw_archive": false,
+    "targets": false
+  },
+  "findings": [
+    {
+      "id": "CELL_STATUS_VS_STAGE_STOP",
+      "resolution": "Cell-local negative/decimal-limit outcomes remain unknown endpoints; framing, documented semantic conflict and operational limits block stages.",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "EMPTY_FEASIBLE_GATE_DENOMINATOR",
+      "resolution": "Empty F and D component metrics are unavailable; no vacuous pass or fabricated negative margin.",
+      "status": "RESOLVED"
+    }
+  ],
+  "implementation_verified_by_review": false,
+  "initial_review_sha256": "fd89cad1532df8b9c3c5f5a3172eb72953f3d4b35dfecd5d697c62ea3fe4a0cd",
+  "input_documents_unchanged_during_final_record": true,
+  "inputs": {
+    "mpea-t25-archival-protocol-v1.md": {
+      "bytes": 20971,
+      "sha256": "c49047341d3932ddd67c67c9f2a04a6759c0d679bfeb96d811ba9541c0cc0378"
+    },
+    "mpea-t25-implementation-contract-v1.md": {
+      "bytes": 39271,
+      "sha256": "be45b1d8db9586035cf37bd9bbb9046c065c3851b91f93386f8c68d155215af9"
+    }
+  },
+  "method": "Independent read-only review of both complete initial documents, followed by exact diffs of the two revised documents. No implementation or scientific execution.",
+  "production_access_authorized_by_review": false,
+  "review_sha256": "d394702af52ed9d2d7f7487fcdf83caca87fa2c6c6f63e66a571451a099cc26e",
+  "reviewed_contracts": [
+    "target custody stage order and guarded capabilities",
+    "rank freeze before reserved target decoding",
+    "all-40 primary completeness and fixed secondary population",
+    "one production allocation and fixed-transcript reproduction",
+    "targetless feature/overlap controls",
+    "exact parser and predictor conventions",
+    "policy budget and deferred full-truth boundaries",
+    "exact nonempty gate denominators and unavailable empty metrics",
+    "conditional marginal scope and unsupported fallback",
+    "outer production identity around unchanged generic helper"
+  ],
+  "revision": "final",
+  "schema": "lupine.discovery.mpea.protocol_access_review.v1",
+  "status": "NO_REMAINING_DOCUMENT_CONTRACT_BLOCKER",
+  "tests_executed": 0
+}

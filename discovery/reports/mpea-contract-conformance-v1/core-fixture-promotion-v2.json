@@ -1,0 +1,24 @@
+{
+  "at": "2026-10-10T22:53:54.641303+00:00",
+  "files": [
+    {
+      "all_original_assertions_preserved": true,
+      "before_sha256": "7017ed67dce793e0abf09ba78f8e211898e600518af6ed3ef867dc69e6f0a440",
+      "candidate_assertions": 2,
+      "candidate_sha256": "ac03692691aca31506640bc8d24edf2fe4a3bd99de9eb1492520a695da09494f",
+      "from": ".cache/mpea-study-custody/review_production/contract_compliance/core-fixture-promotion-v1/tests/test_mpea_archive_case_consistency_review.py",
+      "original_assertions": 2,
+      "path": "tests/test_mpea_archive_case_consistency_review.py"
+    },
+    {
+      "all_original_assertions_preserved": true,
+      "before_sha256": "b5bcc8ef78aa43fbd077247af6961b5b863eb696589ec4be37d8e279c71da0d0",
+      "candidate_assertions": 95,
+      "candidate_sha256": "b34ca211196f96d507d89a99c33716c2fc148b1915612b6d837a269b67a767bf",
+      "from": ".cache/mpea-study-custody/review_production/contract_compliance/core-fixture-promotion-v1/tests/test_mpea_archive_driver_review.py",
+      "original_assertions": 93,
+      "path": "tests/test_mpea_archive_driver_review.py"
+    }
+  ],
+  "runtime": "pending full integration"
+}

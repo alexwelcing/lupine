@@ -1,0 +1,135 @@
+{
+  "actual_new_diagnostic": "NOT_RUN",
+  "actual_prerequisite_sha256": "7010e99afcafbf29d32d5ff7d3f356474c2a670571285d884b80441e91ce3d07",
+  "author_tests": {
+    "passed": 16,
+    "source_unchanged": true,
+    "unittest_seconds": 0.133
+  },
+  "candidate_root": ".cache/phase2-li-compatible-diagnostic-candidate-v1/promotion",
+  "file_count": 27,
+  "independent_tests": {
+    "method_flag_cases": 628,
+    "passed": 24,
+    "permitted_pairs": 10,
+    "process_seconds": 0.8082575179996638,
+    "source_unchanged": true,
+    "unittest_seconds": 0.41
+  },
+  "mapping": {
+    "docs/li-v3-compatible-zip-diagnostic-plan.md": {
+      "bytes": 8524,
+      "sha256": "73a0aa884876d042549e5250daff29e3e111b245c274e77551a6f85a82261755"
+    },
+    "reports/phase2-compatible-zip-diagnostic-v1/README.md": {
+      "bytes": 5098,
+      "sha256": "bc5279ec5281ca70dc73c1acb063655aa8e51ce7b0533b136697be3aa106862a"
+    },
+    "reports/phase2-compatible-zip-diagnostic-v1/author-final/execution.json": {
+      "bytes": 1586,
+      "sha256": "90ea714305dd6308495b2ac845cb3ff3721f2cc4d9e7d1b71524dd8f60a6257b"
+    },
+    "reports/phase2-compatible-zip-diagnostic-v1/author-final/stderr.txt": {
+      "bytes": 3423,
+      "sha256": "ca56bf0a8aa5833f159b45d3a8ff0efadcc0db78d756893dfe4d2427973f32e2"
+    },
+    "reports/phase2-compatible-zip-diagnostic-v1/author-final/stdout.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "reports/phase2-compatible-zip-diagnostic-v1/author-first/execution.json": {
+      "bytes": 1586,
+      "sha256": "b37e1d0aa9d8309a502a01e9d05a8cdc8bbcb21d7016d19b0060c28f1c3b923b"
+    },
+    "reports/phase2-compatible-zip-diagnostic-v1/author-first/source/docs/li-v3-compatible-zip-diagnostic-plan.md": {
+      "bytes": 8414,
+      "sha256": "87076a0b7cb1f99852144a6951254adf3df1dc7b2691a1e3ca3bf131edf2f600"
+    },
+    "reports/phase2-compatible-zip-diagnostic-v1/author-first/source/scripts/li_v3_compatible_zip_diagnostic.py": {
+      "bytes": 16619,
+      "sha256": "f4d99799f55e890fdf68a4eebc2343cfb4c4a16ecc7227ae9938a9721b5d8925"
+    },
+    "reports/phase2-compatible-zip-diagnostic-v1/author-first/source/tests/test_li_v3_compatible_zip_diagnostic.py": {
+      "bytes": 18720,
+      "sha256": "8ee41382b0fcc943af2bb35fb209e85027da9d975afa9e78efa08db058f8d890"
+    },
+    "reports/phase2-compatible-zip-diagnostic-v1/author-first/stderr.txt": {
+      "bytes": 3944,
+      "sha256": "e38192b9547b324fbfae48c7c3755b20f0c5f2feedaf495f741437d5ea9264c3"
+    },
+    "reports/phase2-compatible-zip-diagnostic-v1/author-first/stdout.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "reports/phase2-compatible-zip-diagnostic-v1/cleanup-correction.patch.bytes.json": {
+      "bytes": 4888,
+      "sha256": "6adce7f0cca07ff3f2be708578506663cbf9d9727e13ee3048b6ed677eda4a16"
+    },
+    "reports/phase2-compatible-zip-diagnostic-v1/independent/README.md": {
+      "bytes": 1671,
+      "sha256": "8fa8dfdb07a2212add75246bba0d96432d586e4dffe611ef3cc3bac709eba493"
+    },
+    "reports/phase2-compatible-zip-diagnostic-v1/independent/attempt-1/execution.json": {
+      "bytes": 2370,
+      "sha256": "fa376d5c4eec9952d11bb394a10a08cb40dd74e6be2e9d826c39f0a2bfe86d52"
+    },
+    "reports/phase2-compatible-zip-diagnostic-v1/independent/attempt-1/li_v3_compatible_zip_diagnostic.py": {
+      "bytes": 16878,
+      "sha256": "59b4b549a1de33abf2c54ccfce15f4f980a3a36351f98e246ae4e9fd6c44c5d3"
+    },
+    "reports/phase2-compatible-zip-diagnostic-v1/independent/attempt-1/source-before.json": {
+      "bytes": 785,
+      "sha256": "f48ed5abecfacfb78b7f4c64164694b5a3adfc8de13ae037e00e86bf0251e4dd"
+    },
+    "reports/phase2-compatible-zip-diagnostic-v1/independent/attempt-1/stderr.log": {
+      "bytes": 4919,
+      "sha256": "fc603e9567b89c2921ccb17e5802e4ccb07cc1185b46db18e319e7c44546a9ad"
+    },
+    "reports/phase2-compatible-zip-diagnostic-v1/independent/attempt-1/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "reports/phase2-compatible-zip-diagnostic-v1/independent/attempt-1/test_li_v3_compatible_zip_diagnostic_review.py": {
+      "bytes": 33115,
+      "sha256": "6bd746853c17e28da45937d0e1d57d19c4f6bd7b5c1c0a62f6f1afe2c0e852bf"
+    },
+    "reports/phase2-compatible-zip-diagnostic-v1/independent/inventory.json": {
+      "bytes": 1453,
+      "sha256": "9c056ed5cab94a9215d7d608a35a1458fc7388704740081634bc8c2ba62ddd28"
+    },
+    "reports/phase2-compatible-zip-diagnostic-v1/independent/promotion/tests/test_li_v3_compatible_zip_diagnostic_review.py": {
+      "bytes": 33115,
+      "sha256": "6bd746853c17e28da45937d0e1d57d19c4f6bd7b5c1c0a62f6f1afe2c0e852bf"
+    },
+    "reports/phase2-compatible-zip-diagnostic-v1/independent/review.json": {
+      "bytes": 4352,
+      "sha256": "1f38d536a6ffd5e1927df1c8973604a14772b12245e65595919de69b013e75ce"
+    },
+    "reports/phase2-compatible-zip-diagnostic-v1/inventory.json": {
+      "bytes": 3631,
+      "sha256": "2cd2c73351d1c9178c4c387973625485d7292c7da98746b13de61fbdfe786014"
+    },
+    "reports/phase2-compatible-zip-diagnostic-v1/source-bindings.json": {
+      "bytes": 3546,
+      "sha256": "dee937a3be1172aec38a723cb51dbc755dc41a0611a64be8c45642d3456539b4"
+    },
+    "scripts/li_v3_compatible_zip_diagnostic.py": {
+      "bytes": 16878,
+      "sha256": "59b4b549a1de33abf2c54ccfce15f4f980a3a36351f98e246ae4e9fd6c44c5d3"
+    },
+    "tests/test_li_v3_compatible_zip_diagnostic.py": {
+      "bytes": 18920,
+      "sha256": "e9ec6b188a117afeb952b2d20376f24ce249c6f175d08e999e546b6b1380e10a"
+    },
+    "tests/test_li_v3_compatible_zip_diagnostic_review.py": {
+      "bytes": 33115,
+      "sha256": "6bd746853c17e28da45937d0e1d57d19c4f6bd7b5c1c0a62f6f1afe2c0e852bf"
+    }
+  },
+  "predecessor_pins": 17,
+  "preserved_first_author_attempt": "16 passed, but a synthetic unconditional close fault printed an unraisable canary; source/test/logs retained and cleanup regression corrected.",
+  "publication_ci_package": "ROOT_PENDING",
+  "schema": "lupine.discovery.candidate_promotion_handoff.v1",
+  "scope": "Compatible ZIP header diagnostic only. Runtime source/tests/docs are additive; no tracked files changed and no actual raw objects read or changed by the author. Public predecessor source and the explicitly authorized public prerequisite receipt were read.",
+  "total_bytes": 247550
+}

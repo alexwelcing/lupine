@@ -1,0 +1,11 @@
+{
+  "disposition": "Preserve exact original prose as lossless UTF8 wrapper for publication; active root README links already resolve. Do not edit held original source/README.",
+  "missing_relative_targets": [
+    "first-author/public-aggregate-amendment.json",
+    "first-author/parser-heritage.json"
+  ],
+  "recorded_at": "2026-10-16T13:25:57.020786+00:00",
+  "scope": "Historical README relocated into first-author snapshot; no product test or implementation failure.",
+  "source_sha256": "073e1a391e1fa8c22eedf331bbe0f934c556ccbead7d0c0a9a32b4bb0f8f6686",
+  "status": "FAILED_STATIC_PUBLICATION_LINK_CHECK"
+}

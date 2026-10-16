@@ -1,0 +1,73 @@
+{
+  "at": "2026-10-16T15:52:42.772542+00:00",
+  "execution_history": [
+    {
+      "directory": "first-run",
+      "errors": 1,
+      "failures": 2,
+      "reviewer_error": "Mock support missing LOG_CAP, preserved.",
+      "tests": 3
+    },
+    {
+      "directory": "first-corrected-fixture-run",
+      "errors": 0,
+      "failures": 3,
+      "tests": 3
+    }
+  ],
+  "findings": [
+    {
+      "demonstration": "Rejected generated historical prefix reaches two command stubs before stopping.",
+      "finding": "Full public historical prefix review occurs only after two new command invocations. Narrow prior packet subset checks do not substitute for the held validator route check.",
+      "id": "R1",
+      "minimal_repair": "Validate supplied current expected packet and complete prior public prefix after validator load, before either new command; retain final full-prefix review.",
+      "scope": "run_phase",
+      "severity": "blocking"
+    },
+    {
+      "demonstration": "Generated log publication failure skips operation post-state and package post-state in separate tests.",
+      "finding": "stdout/stderr publication can raise after the child returns but before the post-state block, so post-command checks and execution receipt attempt are skipped.",
+      "id": "R2",
+      "minimal_repair": "Record log-publication error without bypassing post-state and execution-receipt attempts; fail completion if any log cannot be retained.",
+      "scope": [
+        "run_one",
+        "run_package.run"
+      ],
+      "severity": "blocking"
+    }
+  ],
+  "schema": "lupine.complete-route.independent-recorder-review.v1",
+  "scope_limits": {
+    "actual_G34_or_custody_receipt_reads": 0,
+    "actual_guards": 0,
+    "actual_operations": 0,
+    "network_calls": 0,
+    "private_or_raw_source_reads": 0,
+    "product_or_recorder_imports": 0,
+    "tracked_edits": 0
+  },
+  "source_bindings": [
+    {
+      "file": "run_after_ci.py",
+      "sha256": "6c8c9f96e046111423f7bbaf14cde9d978663d7101fd5ffa98184959b2a666c9"
+    },
+    {
+      "file": "run_package.py",
+      "sha256": "a03fc98c9f4099040344b4120bba57483a348f6c2f87ff771a0c63377b55fe10"
+    },
+    {
+      "file": "recorder_support.py",
+      "sha256": "6f02c0ed8f8981e1f2c18e6107fb4bff343cf91427bcfe549b2fc4808dd53e0a"
+    }
+  ],
+  "static_no_other_blocker_scope": [
+    "No production adapter imports; fixed production command shape and phase budget.",
+    "Exact eight-source pins,345 runtime manifest/worktree/index/HEAD checks, clean branch and remote hash, bounded Git calls.",
+    "No-follow regular bounded gate files and exact custody-public path allowlist; raw source/capture paths not opened by recorder.",
+    "CI four original push jobs, package/strict/source/archive identity and declared artifact delta are checked against root-pinned receipts.",
+    "Strict canonical comparisons retain bool-versus-int distinctions on key declared fields; evidence hashes are checked to supplied pins, not regarded as a signature.",
+    "Late-close stdout cannot be replaced by success-looking persisted public output; complete negative C exit0 remains scientific blocked."
+  ],
+  "status": "CHANGES_REQUIRED_BEFORE_OPERATION",
+  "test_execution_scope": "Only extracted function definitions with every external operation stubbed in memory; this establishes the narrow ordering findings, not actual filesystem/network custody."
+}

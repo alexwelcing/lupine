@@ -1,0 +1,21 @@
+{
+  "blocking_unknowns": [
+    "Explicit endpoint units and definitions",
+    "Detailed calculation conditions and compatible calculation/structure pairing",
+    "Archive file version, actual identity and applicable observation-data terms",
+    "Complete usable paired count, duplicate/material/source grouping and missingness",
+    "Overlap with prior archives/corpora and permitted-feature leakage"
+  ],
+  "conditional_first_fallback": "dielectric_constant",
+  "g21_completed": false,
+  "next_action": "Only if root elects to pursue the fallback: a separately bounded primary-methods/schema and archive-data rights check before any data-file acquisition.",
+  "no_new_DFT": true,
+  "no_new_scientific_selection_or_protocol": true,
+  "no_raw_observation_acquisition": true,
+  "not_blocked_on_physical_iid_for_fixed_frame_counting": true,
+  "primary_route_remains": "Li complete source readiness",
+  "schema": "lupine.discovery.paired_archive_fallback.decision.v1",
+  "second_metadata_lead": "elastic_tensor_2015",
+  "status": "TWO_DOCUMENTARY_LEADS_ZERO_ADMISSIONS",
+  "why_first": "Catalog documents electronic-gap and dielectric-response columns with Materials Project IDs and substantially more advertised entries than the small exposed metrology panels; scientific usefulness remains conditional on methods, terms, pairing and leakage review."
+}

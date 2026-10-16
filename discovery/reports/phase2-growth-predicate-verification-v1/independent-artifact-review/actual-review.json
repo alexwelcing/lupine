@@ -1,0 +1,84 @@
+{
+  "actual_executions": [
+    {
+      "before_after_bindings_held": true,
+      "elapsed_seconds": 3.228430398998171,
+      "execution": {
+        "bytes": 3111,
+        "path": "execution-a064a2c0e4a7/0-execution.json",
+        "sha256": "0b5981e756ef2045c83a7d54ad9adad314de92f1133d79970623a71539682f70"
+      },
+      "exit_code": 0,
+      "log_hashes_rechecked": true,
+      "review": {
+        "bytes": 10918,
+        "path": "actual-a064a2c0e4a7/review.json",
+        "sha256": "47aafc2bc5efba2a621d934568751892074473d7cc428f4e5a3c45f46937b1bb"
+      },
+      "stdout_equals_review_bytes": true
+    },
+    {
+      "before_after_bindings_held": true,
+      "elapsed_seconds": 0.21748710800238769,
+      "execution": {
+        "bytes": 3523,
+        "path": "execution-a064a2c0e4a7/1-execution.json",
+        "sha256": "bfbe2821dd3a1b15ded26c4c058628faa43c67ede764753bd777f25e4a7ca2fc"
+      },
+      "exit_code": 1,
+      "log_hashes_rechecked": true,
+      "review": {
+        "bytes": 1365,
+        "path": "additive-a064a2c0e4a7/additive-review.json",
+        "sha256": "6f1a4b0feccb67ab3a36d01cddec08fe2a0af67a1ed59eb459672bc24949ccc6"
+      },
+      "stdout_equals_review_bytes": true
+    },
+    {
+      "before_after_bindings_held": true,
+      "elapsed_seconds": 4.95002498300164,
+      "execution": {
+        "bytes": 3976,
+        "path": "execution-additive-correction-1-a064a2c0e4a7/0-execution.json",
+        "sha256": "4bbec735b6d63a633b511c539ca542e80b16c3ae7070330c3d3482b688dc2a0a"
+      },
+      "exit_code": 0,
+      "log_hashes_rechecked": true,
+      "review": {
+        "bytes": 8887,
+        "path": "additive-correction-1-a064a2c0e4a7/additive-review.json",
+        "sha256": "d0721e59e4c9fdc0b1ad592fc73431cc0c92b9fb2d57040c3ead4ce17bc9e14b"
+      },
+      "stdout_equals_review_bytes": true
+    }
+  ],
+  "additive_review": {
+    "bytes": 8887,
+    "path": "additive-correction-1-a064a2c0e4a7/additive-review.json",
+    "sha256": "d0721e59e4c9fdc0b1ad592fc73431cc0c92b9fb2d57040c3ead4ce17bc9e14b"
+  },
+  "commit": "a064a2c0e4a7cce1fbcb0541f49aae132944e785",
+  "first_failure": "Original root pin record used immediate integration parent9766b683 rather than confirmed retained-package/runtime baselinec17c4c6b. Exact baseline assertion failed; original record, sources, logs and failed receipt are preserved. Root supplied a separately named record distinguishing these roles. No auditor assertion changed. Only additive process reran; successful generic receipt was hash-bound before and after.",
+  "generic_review": {
+    "bytes": 10918,
+    "path": "actual-a064a2c0e4a7/review.json",
+    "sha256": "47aafc2bc5efba2a621d934568751892074473d7cc428f4e5a3c45f46937b1bb"
+  },
+  "result": {
+    "added_runtime_files": 3,
+    "exact_source_archive_Git_file_count": 5003,
+    "four_new_source_test_contract_pins_match": true,
+    "package_mandatory_checks": 16,
+    "runtime_files": 335,
+    "source_archive_sha256": "ec90a8de21e82c7c16877df64c082a875548aef1565a0beca8effff28cb0d8db",
+    "unchanged_predecessor_runtime_files": 332,
+    "wheel_RECORD_digest_count": 114,
+    "wheel_members": 115,
+    "wheel_nonpackage_content_delta": {},
+    "wheel_package_members_unchanged": 108,
+    "wheel_sha256": "4d70468ccdf5e70253e5f837c232e0bfb78b4d5ecbd483cb382e4263f9844478"
+  },
+  "reviewed_at": "2026-10-16T12:39:46.045495+00:00",
+  "scope": "Independent G34 reviewer, also prior G30 author, checked artifact identity and recorded installed engineering. No package/full test rerun, product import, private scientific input, source operation, remote CI verification, scientific replication or new acceptance decision.",
+  "status": "PASS_WITH_PRESERVED_FIRST_ADDITIVE_BASELINE_FAILURE"
+}

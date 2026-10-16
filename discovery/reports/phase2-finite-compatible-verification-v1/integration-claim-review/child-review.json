@@ -1,0 +1,21 @@
+{
+  "bindings": {
+    "GOAL.md": "fc47e71624f56ade636e78287cd410a3475bddf680d83af18f0dd3d79a5de86a",
+    "STATUS.md": "9b4468df40589be3b4c6bc25e6d33f19608345a81150e0677a772e0cb1e6c9b5",
+    "reports/continuation.json": "56e567eb7ce290dcb679cdae9385436d15ef32ad449c4eeb1cd6a677e424ccdc",
+    "reports/phase2-finite-workbench-v1/README.md": "fb15c3de23cbaf958338be11a79b2153fd4478acd996f7c1cf6f6bf8fa503f66",
+    "reports/phase2-li-compatible-envelope-v1/README.md": "bc080244c7486230a0adf9970c55c034923dac6796bae77932c658bdc645f606",
+    "reports/phase2-li-flag-verification-v1/README.md": "4e0dcc93c79b00dde3b33524fa85a802c11b082ba78255183ed8912d39cc4d72"
+  },
+  "findings": [
+    "Renewed phase is distinct from historical closure and expired disabled automation.",
+    "Verified f7 CI/package/flag runs are distinct from pending descendant gates.",
+    "Actual flag classification is first-entry only; compatible production run not preclaimed.",
+    "Finite-frame, IID, marginal calibration and future physical claims remain separate.",
+    "Scientific NO_GO, all original failures, exposure limits and absent f7 independent artifact audit are explicit."
+  ],
+  "reviewer": "/root/phase2_math/proof_check",
+  "source": "Agent handoff; hashes independently rebound by parent.",
+  "status": "PASS_READ_ONLY_NARRATIVE_REVIEW",
+  "tests_or_network_or_actual_object_access": false
+}

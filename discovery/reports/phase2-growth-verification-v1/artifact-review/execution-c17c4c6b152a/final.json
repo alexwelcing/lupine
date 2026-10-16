@@ -1,0 +1,8 @@
+{
+  "additive_review": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-artifact-review-v1/additive-c17c4c6b152a/additive-review.json",
+  "commit": "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace",
+  "full_review": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-artifact-review-v1/actual-c17c4c6b152a/review.json",
+  "operator": "/root/phase2_planner/ui_review",
+  "source_reader_invoked": false,
+  "status": "BOTH_READ_ONLY_AUDIT_PROCESSES_EXITED_ZERO"
+}

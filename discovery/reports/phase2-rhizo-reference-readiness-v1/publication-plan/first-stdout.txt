@@ -1,0 +1,1 @@
+{"status": "PASS_PREOPERATION_COPY_PLAN", "sources": 81, "publication_files": 80, "author_wrappers": 2, "new_whitespace_wrappers": 0, "link_repairs": 1, "links": 17}

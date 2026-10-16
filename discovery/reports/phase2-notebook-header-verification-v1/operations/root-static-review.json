@@ -1,0 +1,32 @@
+{
+  "actual_artifact_review_sha256": "25d384048d0fd862b1ccc1dac304599fe97fe6bb8b38ce4eb53393e821d61303",
+  "commit": "a6e87c198d8116d26c523e0e1b2eedce4aeb225b",
+  "completed_gates_read": [
+    "Actual clean package and strict verifier receipts, both exit zero",
+    "Independent actual artifact byte audit and separate source review, both PASS"
+  ],
+  "limits": [
+    "Static root review only; no recorder import or invocation by this review",
+    "Original exact CI has not yet completed at this review checkpoint",
+    "Independent header repair review remains pending",
+    "Private notebook/workbook/capture not opened",
+    "No runtime test or actual source operation attested by this review"
+  ],
+  "recorded_at": "2026-10-16T08:41:42.159329+00:00",
+  "recorders": {
+    "run_header_after_ci.py": "c626d286f7c89b3506feb397c7f0346f4be0e9483498d157e48e8b197641d009",
+    "run_notebook_after_ci.py": "2f25e433eb682a2047bc5c1c7d1548081dfbd88765c97c0278a020c2d60a97b0"
+  },
+  "reviewed": [
+    "Fixed commands and exclusive operation slots",
+    "Bounded child process execution, kill and reap",
+    "Full clean HEAD, remote, manifest and production guard checks before and after each operation",
+    "Actual stdout/stderr hashes, failures and unknown states preserved",
+    "Canonical public output matched to fixed public receipt and fixed source identity",
+    "Closed public projection; arbitrary code, outputs, XML and exception text not printed",
+    "Both replays required to match; matching alone is not scientific replication",
+    "Notebook schema-AST extraction repair and final header-recorder repair reviewed against source"
+  ],
+  "schema": "lupine.discovery.root_static_recorder_review.v1",
+  "status": "NO_BLOCKER_IN_REVIEWED_CONTROL_FLOW"
+}

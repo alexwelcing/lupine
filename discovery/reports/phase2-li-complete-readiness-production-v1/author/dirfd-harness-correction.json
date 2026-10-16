@@ -1,0 +1,8 @@
+{
+  "at": "2026-10-16T14:00:25.302922+00:00",
+  "first_run": "receipts/first",
+  "product_source_unchanged": true,
+  "reason": "Audit event open omits dir_fd. Original harness resolved descriptor-relative leaf names against cwd and falsely rejected generated repository/cleanup. Wrapper now resolves dir_fd through /proc/self/fd before audit, with directory-only ancestor allowance. Actual source objects remain forbidden.",
+  "recorder_before": "dbfe0f9a500e8f33088d056f5002772fa365cd519e4861bbcbfd0354d5b3b32c",
+  "recorder_after": "5ab1d861bd4e0e61df9b6f520f92ba40d3570f54ed90b590c4c1af7d27853806"
+}

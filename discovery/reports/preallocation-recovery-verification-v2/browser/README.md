@@ -1,0 +1,11 @@
+# Complete local browser gate for recovery commit
+
+The full local runbook command `[Python executable, scripts/browser_smoke.py]` completed with exit 0 and HEAD `a0624cac9abb20320629cce41f10270b9b8e2136`. It passed 56 checks with no JavaScript errors in 85.799 seconds. `started.json` and `execution.json` record the actual executable, command, resolved main script, process ID, UTC times, logs and exit status.
+
+All 343 source hashes exactly matched `.cache/mpea-preallocation-recovery-full-suite-v1/source-before.json` before and after execution. HEAD stayed fixed. The browser's own 47-file source closure also matches that held full closure. Whole-worktree Git status was unchanged but nonempty: 25 preexisting documentation/publication entries outside the held343 closure are preserved verbatim in both snapshots. This is a held-source browser result, not a globally clean-checkout claim. A post-run copy-preparation assertion that incorrectly expected an empty status failed before writing output; `copy-preparation-attempt1.json` records that bookkeeping correction separately from the passing browser execution.
+
+The browser report is byte-identical to the earlier unchanged-UI report; this new command's process/time/log and 343-file identity evidence is separate and freshly recorded. A scratch `scripts` symlink points directly to the unchanged main script directory, preserving the literal command while moving relative outputs into this new ignored directory. This lane edited no main source, test, formal, workflow or specification.
+
+The actual MPEA resource was absent before and after; ten MPEA controls used explicit synthetic aggregate reports. This lane accessed no private actual-study inputs and performed no allocation or study. It did not repeat Python tests or package gates. Browser engineering success does not establish physical/statistical assumptions, replace CI/full-suite evidence or authorize a scientific study by itself.
+
+`copy-candidates.json` lists exact engineering receipts/logs, the original baseline reference, wrapper and three safe screenshots. It excludes the scratch symlink and all downloaded problem/certificate/outcome fixtures. The wrapper is a historical execution record with exclusive output paths, not a portable new user interface.

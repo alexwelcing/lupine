@@ -1,0 +1,76 @@
+{
+  "schema": "lupine.source-readiness.v1",
+  "snapshot_commit": "88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d",
+  "sources": [
+    {
+      "blockers": [
+        "XML_PROFILE_UNSUPPORTED: no complete package result, role result or workbook manifest was produced.",
+        "Actual workbook scientific schema, eligibility, pairing, grouping and sampling independence are not established.",
+        "The stopped operation grants no retry, next operation or scientific admission."
+      ],
+      "completed_actions": [
+        "A1: exactly one actual layout command ran and stopped with BLOCKED_SCHEMA / XML_PROFILE_UNSUPPORTED. This was not a completed layout phase or a scientific negative result.",
+        "The returned blocked receipt and partial exposure counters were preserved. The consumed A1 slot was not retried."
+      ],
+      "data_kind": "Experimental alloy measurements; no scientific schema admitted",
+      "evidence_urls": [
+        "https://github.com/alexwelcing/lupine/blob/88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/discovery/reports/phase2-li-complete-layout-verification-v1/README.md",
+        "https://github.com/alexwelcing/lupine/blob/88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/discovery/reports/phase2-li-complete-layout-verification-v1/actual-summary.json",
+        "https://github.com/alexwelcing/lupine/blob/88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/discovery/docs/li-v3-custody-plan.md",
+        "https://github.com/alexwelcing/lupine/blob/88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/discovery/reports/phase2-li-paper-methods-v1/README.md"
+      ],
+      "exposure": [
+        "Earlier whole-article XML exposure is recorded in the paper-methods report; this snapshot makes no freshness claim.",
+        "The whole target-bearing source buffer was read and its identity verified; this is not target-free exposure.",
+        "Five members were opened, decompressed and UTF-8 decoded; five XML parses started and four completed. Archive close completed without a reported error.",
+        "No failing member, element or content is identified. Scientific counts remain unknown; partial XML exposure does not establish layout or scientific success.",
+        "The recorded absence of later operations concerns the fixed recorder and observer paths, not a system-wide execution history."
+      ],
+      "id": "li-tensile-v3",
+      "license_declaration": "The retained source contract records a declared dataset license of CC BY 4.0. This rights metadata is separate from the blocked layout operation, which did not reassess license terms.",
+      "scientific_admission": "NOT_ADMITTED",
+      "status": "BLOCKED_SCHEMA",
+      "title": "Li alloy tensile measurements",
+      "unexecuted_actions": [
+        "A2: NOT_RUN.",
+        "Inventory (B): NOT_RUN.",
+        "Frame (C): NOT_RUN.",
+        "No fitting, splitting, formula evaluation or numeric outcome interpretation ran."
+      ]
+    },
+    {
+      "blockers": [
+        "HTTP 403 applies to the exact README URL and request; it does not establish that all Dryad resources are inaccessible or identify the denial's cause.",
+        "File bytes and identity, exact observation schema, units, calculation-level pairing, missingness, completeness, grouping and source overlap remain unknown.",
+        "Dataset version 1 and filename suffix v3 are distinct unreconciled conventions; equivalence to the processed matminer/Figshare object is unverified."
+      ],
+      "completed_actions": [
+        "Primary identity metadata acquired for DOI 10.5061/dryad.ph81h; one DataCite request returned HTTP 200.",
+        "Landing metadata acquired; one GET returned HTTP 200 and identified literal README PDF and JSON data links without acquiring their contents.",
+        "One GET to the literal README PDF URL returned HTTP 403. The access failure was preserved without retry, redirect, alternate API, mirror, credential use or bypass."
+      ],
+      "data_kind": "Archived density-functional perturbation theory calculations; no data files acquired",
+      "evidence_urls": [
+        "https://github.com/alexwelcing/lupine/blob/88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/discovery/reports/phase2-dielectric-archive-identity-v1/README.md",
+        "https://github.com/alexwelcing/lupine/blob/88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/discovery/reports/phase2-dielectric-landing-manifest-v1/README.md",
+        "https://github.com/alexwelcing/lupine/blob/88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/discovery/reports/phase2-dielectric-readme-schema-v1/README.md"
+      ],
+      "exposure": [
+        "The complete registry metadata and landing HTML containers were machine read; the HTML may contain scientific descriptions, aggregate information or scripts. Published projections were restricted to documentary metadata.",
+        "Only the HTML denial body was newly machine read during the README request; it was not displayed or interpreted as scientific content. Planned whole-PDF exposure did not occur.",
+        "Earlier qualitative paper exposure remains unchanged. These records do not establish fresh or untouched evidence, sampling independence or scientific readiness."
+      ],
+      "id": "dryad-dielectric",
+      "license_declaration": "Registry and landing metadata declare CC0-1.0 for primary dataset version 1. This is a declaration, not verification of every file or exception, and does not establish terms or equivalence for the processed Figshare object.",
+      "scientific_admission": "NOT_ADMITTED",
+      "status": "BLOCKED_ACCESS",
+      "title": "Dryad archived dielectric calculations",
+      "unexecuted_actions": [
+        "README PDF acquisition: NOT_COMPLETED; the response was an HTML denial, not a PDF.",
+        "Offline PDF parser: NOT_RUN; its preparation is not tested or successful document reading.",
+        "Sibling JSON data acquisition: NOT_RUN. No data file, numerical target table or full article was acquired in these tasks.",
+        "No joins, fits, threshold choices, benchmark selection or scientific admission occurred."
+      ]
+    }
+  ]
+}

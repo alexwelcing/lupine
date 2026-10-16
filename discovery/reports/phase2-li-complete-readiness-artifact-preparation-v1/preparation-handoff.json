@@ -1,0 +1,17 @@
+{
+  "actual_audit_runs": 0,
+  "audit_source_sha256": "b00541daccbbe8626880f59bc59d9694dc9f34e922690f968dfb50ed348bb738",
+  "baseline_commit": "ddd4a6a8df0f908a162b7e5387b0faac325180d6",
+  "inventory_sha256": "64cb44621be4d7e76cce1b7f971ef53a5b3393934456b6c6c83b3728e6ba0bb9",
+  "new_guarded_documents": 2,
+  "new_runtime_files": 6,
+  "promotion_sha256": "11bc69deddfacd761522e3db0deaa4e8773d455999208e074d827248370fa7b3",
+  "report_contract_sha256": "5c37012cd8f90d8d6e790f81ae6703cccc340a46b16ab6df05ffe3749fc1e29f",
+  "runtime_files": 345,
+  "schema": "lupine.li.complete-readiness.artifact-preparation-handoff.v1",
+  "scope_sha256": "0ba8593c7abe3f65d5fd1a0686c96dd52e45b92144dbc51e65ab5f4dd3ce80e4",
+  "status": "READY_AWAITING_ROOT_PUBLISHED_COMMIT_RETENTION_COPYSET_AND_GATES",
+  "tests_run": 0,
+  "unchanged_baseline_package_payloads": 110,
+  "unchanged_baseline_runtime_files": 339
+}

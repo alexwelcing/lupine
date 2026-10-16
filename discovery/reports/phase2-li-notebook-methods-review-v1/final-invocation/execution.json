@@ -1,0 +1,17 @@
+{
+  "started_at": "2026-10-16T07:54:21.900987+00:00",
+  "elapsed_seconds": 1.2056334899989452,
+  "returncode": 0,
+  "source_sha256_before": "2423ee14f16b6b7ec46ef896f25cb5962b1c28dbea79fcb365e14b0919752049",
+  "source_sha256_after": "2423ee14f16b6b7ec46ef896f25cb5962b1c28dbea79fcb365e14b0919752049",
+  "test_sha256": "81e36eba1e7fd7c75b63ac04cc19ec00893520e37e71f944525eafaf7492dfc1",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "ba26306ef515e88f3bdf0be8bfe3645585a79098a9c5fdc6dadf240237cccfc2",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-B",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-notebook-methods-review-v1/test_li_v3_notebook_methods_review.py",
+    "-v"
+  ],
+  "scope": "synthetic-only with allowed prior public source pins"
+}

@@ -1,0 +1,33 @@
+{
+  "files": [
+    {
+      "path": "reports/mpea-preallocation-repair-v2/registration-review/candidate/mpea_public_tag_review_fixture.py",
+      "sha256": "cebfab41c1e39ab5a24ef607b6dd132eb4ff43599b849f068d857f7768e844ed"
+    },
+    {
+      "path": "reports/mpea-preallocation-repair-v2/registration-review/candidate/proposed_registration.py",
+      "sha256": "914995ff8f857d52d4367360078e3646f66c169bb9b295572301c3c43196691c"
+    },
+    {
+      "path": "reports/mpea-preallocation-repair-v2/registration-review/candidate/test_mpea_registration_allocation_review.py",
+      "sha256": "c39ac600a252998c508eac418a01da4942983e6bcafbad37e47ad7041104b20b"
+    },
+    {
+      "path": "reports/mpea-preallocation-repair-v2/registration-review/candidate/test_recovery_v2.py",
+      "sha256": "bc47dcfaf4ee24ce7e27222218e69eb96f7deb9eb65b9afbec49223ad3e916b0"
+    },
+    {
+      "path": "reports/mpea-preallocation-repair-v2/registration-review/promotion/mpea_public_tag_review_fixture.py",
+      "sha256": "cebfab41c1e39ab5a24ef607b6dd132eb4ff43599b849f068d857f7768e844ed"
+    },
+    {
+      "path": "reports/mpea-preallocation-repair-v2/registration-review/promotion/test_mpea_registration_allocation_review.py",
+      "sha256": "08f952bca1881e79d4c3d9b75aee8a8a533429f9bb41e586e88fffdf4a4c6073"
+    },
+    {
+      "path": "reports/mpea-preallocation-repair-v2/registration-review/tests.log",
+      "sha256": "73629cd4fa0780ee01e4db06b6a3bec2c1cf11dc0c2a50afed49e725991dacf7"
+    }
+  ],
+  "scope": "Source-only strategy review plus three executed constructed tests on explicitly proposed scratch gates; not final producer approval, actual capture or study authorization."
+}

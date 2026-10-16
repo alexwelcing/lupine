@@ -1,0 +1,11 @@
+{
+  "observed_at": "2026-10-16T16:22:12.252646+00:00",
+  "tool": "exec_command/write_stdin",
+  "pty_session": 62838,
+  "tool_chunk": "f8c4dd",
+  "actual_outer_exit_code": 2,
+  "stdout_status": "STOP_PRESERVE_EVIDENCE",
+  "commit": "9d1f21dae141a28db378ee2e16aa83340df57877",
+  "no_retry": true,
+  "scientific_admission": false
+}

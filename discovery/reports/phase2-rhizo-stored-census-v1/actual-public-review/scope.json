@@ -1,0 +1,14 @@
+{
+  "aggregate_numbers_machine_and_reviewer_exposed": true,
+  "audit_execution_count": 1,
+  "audit_first_attempt_pass": true,
+  "candidate_source_files_tests_or_production_guards_opened_or_run_for_this_audit": false,
+  "created_at": "2026-10-16T13:33:54.744441+00:00",
+  "independent_recomputation_from_private_inputs": false,
+  "input_files": 17,
+  "interpretation": "Necessary public consistency only, alongside separate previously recorded generated software verification; no scientific admission.",
+  "per_record_numbers_or_citations_opened": false,
+  "reviewed_public_output_sha256": "a9ab9d72c6c39be9338e951b657e0587ae8f4dbe534b276b8f8f8951a7b1a63a",
+  "root_authorization": "One public-only actual consistency/arithmetic audit; no source/tests/guards/private reads/reruns.",
+  "schema": "lupine.rhizo.census.actual-review.scope.v1"
+}

@@ -1,0 +1,8 @@
+{
+  "completed_at": "2026-10-16T09:16:57.468671+00:00",
+  "bytes_read": 143727,
+  "sha256": "c7e527712991ce14fb233b57a7e1f5f2dc26e6728835df03510cd6c588146534",
+  "whole_xml_machine_read": true,
+  "whole_xml_parse_completed": true,
+  "researcher_output": "Only table IDs/labels and whether CR49/CR50 reference nodes exist. No table values, counts or substantive article text projected."
+}

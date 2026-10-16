@@ -1,0 +1,17 @@
+{
+  "actual_inputs_read": false,
+  "at": "2026-10-16T15:40:13.652885+00:00",
+  "current_adapter_sha256": "77dece96850b09be2f13acd275cc28789ea0e3bc408cfcec86bcd02f488fed85",
+  "current_literals": {
+    "BASELINE_COMMIT": "ddd4a6a8df0f908a162b7e5387b0faac325180d6",
+    "BASELINE_MANIFEST_SHA256": "67d686934ba718b50f8d14e1efa9e2c8dfbc96bc88e43d1a341b4719440509aa"
+  },
+  "only_two_baseline_assignments_differ_by_normalized_ast": true,
+  "prior_adapter_sha256": "a3370ac84762ef7f859061bde93f118a1c1981b02460e9ddd0b1cd38e55b840b",
+  "prior_literals": {
+    "BASELINE_COMMIT": "2975d6d0b9111cc84adb82ccc673bc82339ab154",
+    "BASELINE_MANIFEST_SHA256": "b2c35e48c8dc837d78aba0047d112dabbd30b8ff11e66bba0f45e9da92a0eb2f"
+  },
+  "product_import_or_execution": false,
+  "status": "STATIC_BINDING_ONLY"
+}

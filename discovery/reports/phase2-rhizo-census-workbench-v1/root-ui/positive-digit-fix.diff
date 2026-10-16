@@ -1,0 +1,11 @@
+--- before/recorded-census.js
++++ after/recorded-census.js
+@@ -18,7 +18,7 @@
+   function rational(value, nonnegative = false) {
+     require(keys(value, ['numerator', 'denominator']));
+     require(typeof value.numerator === 'string' && typeof value.denominator === 'string');
+-    require(value.numerator.length <= 5001 && value.denominator.length <= 2500);
++    require(value.numerator.replace(/^-/, '').length <= 5000 && value.denominator.length <= 2500);
+     require(/^(0|-?[1-9][0-9]*)$/.test(value.numerator) && /^[1-9][0-9]*$/.test(value.denominator));
+     require(!nonnegative || !value.numerator.startsWith('-'));
+     return value.denominator === '1' ? value.numerator : `${value.numerator}/${value.denominator}`;

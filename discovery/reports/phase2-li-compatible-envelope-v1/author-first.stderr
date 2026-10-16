@@ -1,0 +1,20 @@
+test_all_thirteen_prior_pins_match_actual_tracked_source (test_li_v3_compatible_envelope.CompatibleTests.test_all_thirteen_prior_pins_match_actual_tracked_source) ... ok
+test_candidate_guard_precedes_cache_and_closed_cli (test_li_v3_compatible_envelope.CompatibleTests.test_candidate_guard_precedes_cache_and_closed_cli) ... ok
+test_each_option_combination_with_utf8_has_same_envelope_semantics (test_li_v3_compatible_envelope.CompatibleTests.test_each_option_combination_with_utf8_has_same_envelope_semantics) ... ok
+test_exact_single_predicate_ast_delta_and_original_bindings (test_li_v3_compatible_envelope.CompatibleTests.test_exact_single_predicate_ast_delta_and_original_bindings) ... ok
+test_flag_receipt_requires_exact_producer_family_identity_and_exposure (test_li_v3_compatible_envelope.CompatibleTests.test_flag_receipt_requires_exact_producer_family_identity_and_exposure) ... ok
+test_later_bad_flags_or_headers_still_reject (test_li_v3_compatible_envelope.CompatibleTests.test_later_bad_flags_or_headers_still_reject) ... ok
+test_local_central_flag_mismatch_is_not_cleared (test_li_v3_compatible_envelope.CompatibleTests.test_local_central_flag_mismatch_is_not_cleared) ... ok
+test_old_nonflag_rejections_preserved (test_li_v3_compatible_envelope.CompatibleTests.test_old_nonflag_rejections_preserved) ... ok
+test_original_clear_utf8_profiles_have_unchanged_semantics (test_li_v3_compatible_envelope.CompatibleTests.test_original_clear_utf8_profiles_have_unchanged_semantics) ... ok
+test_original_xml_size_limit_still_applies (test_li_v3_compatible_envelope.CompatibleTests.test_original_xml_size_limit_still_applies) ... ok
+test_partial_object_read_preserves_unknown_exposure (test_li_v3_compatible_envelope.CompatibleTests.test_partial_object_read_preserves_unknown_exposure) ... ok
+test_stored_options_and_every_nonoption_flag_reject_before_xml (test_li_v3_compatible_envelope.CompatibleTests.test_stored_options_and_every_nonoption_flag_reject_before_xml) ... ok
+test_target_and_shared_string_payloads_stay_opaque (test_li_v3_compatible_envelope.CompatibleTests.test_target_and_shared_string_payloads_stay_opaque) ... ok
+test_unapproved_flag_receipt_blocks_before_private_capture_or_object (test_li_v3_compatible_envelope.CompatibleTests.test_unapproved_flag_receipt_blocks_before_private_capture_or_object) ... ok
+test_xml_rejections_preserve_started_and_completed_exposure (test_li_v3_compatible_envelope.CompatibleTests.test_xml_rejections_preserve_started_and_completed_exposure) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.266s
+
+OK

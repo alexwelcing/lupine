@@ -1,0 +1,20 @@
+--- a/src/lupine_discovery/web/planner.js
++++ b/src/lupine_discovery/web/planner.js
+@@ -106,7 +106,7 @@
+           headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+           body: JSON.stringify(config.request()) });
+         const value = await response.json();
+-        if (revision !== requestRevision) return;
++        /* SYNTHETIC NEGATIVE CONTROL: revision guard deliberately removed. */
+         if (!response.ok) throw new Error(value.error?.message || 'The plan could not be calculated.');
+         if (value.schema !== config.schema || !value.plan || !config.valid(value.plan)
+             || value.plan.premise_status !== 'hypothetical_unverified' || !Array.isArray(value.plan.premises)) {
+@@ -124,7 +124,7 @@
+           ? 'Rank infeasible. The zero threshold-event probability is deterministic; no calibrated guarantee follows.'
+           : 'Calculated under hypothetical assumptions. Scientific usefulness remains unestablished.';
+       } catch (error) {
+-        if (revision !== requestRevision) return;
++        /* SYNTHETIC NEGATIVE CONTROL: revision guard deliberately removed. */
+         record = null; result.replaceChildren(); result.hidden = true; download.disabled = true;
+         status.className = 'notice planning-status error';
+         status.textContent = error.message || 'The plan could not be calculated.';

@@ -1,0 +1,51 @@
+{
+  "bytes": 28613,
+  "excluded": [
+    "first-compile/LupineFinitePlanning.olean (hash retained)",
+    "__pycache__"
+  ],
+  "file_count": 8,
+  "files": [
+    {
+      "bytes": 2377,
+      "path": "README.md",
+      "sha256": "1c2f19579f665aa19bada77c9b5225d88ad517a197eab40dc3009588a1300f5d"
+    },
+    {
+      "bytes": 4113,
+      "path": "compile_independent.py",
+      "sha256": "1735464050f4e61638d9dd31cdaf7e343f6c6a66c2db2ed2b664f1215a0f2cd3"
+    },
+    {
+      "bytes": 6905,
+      "path": "first-compile/LupineFinitePlanning.lean",
+      "sha256": "391b03aefda0f7bac5bd380347b81febc8a4ebbd329ae3a099981784803973bd"
+    },
+    {
+      "bytes": 4664,
+      "path": "first-compile/execution.json",
+      "sha256": "5db6968947d48beec28eedcee0ad2b28efde261107d78ff9f566e65ba9ee1ae1"
+    },
+    {
+      "bytes": 0,
+      "path": "first-compile/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 1313,
+      "path": "first-compile/stdout.txt",
+      "sha256": "1a414db714a311a44665ec02032bc3d89486705bf23d2c5466638677c4f506f5"
+    },
+    {
+      "bytes": 4841,
+      "path": "review.json",
+      "sha256": "023eae17f36ac1c6b038f17c4209dcf3b420c4be60c954f23255c9e294ee2b6a"
+    },
+    {
+      "bytes": 4400,
+      "path": "source-bindings.json",
+      "sha256": "470fbfe83d4385e77f12ca344811b13873356f28edab08879892e586541b13ac"
+    }
+  ],
+  "schema": "lupine.discovery.finite_planning_formal.review_inventory.v1"
+}

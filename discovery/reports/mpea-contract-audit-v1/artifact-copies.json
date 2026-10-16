@@ -1,0 +1,120 @@
+{
+  "schema": "lupine.discovery.contract_audit_copies.v1",
+  "scope": "Preserved independent contract-blocker finding and prospective implementation repair; no actual scientific data",
+  "copies": [
+    {
+      "source": ".cache/mpea-study-custody/review_production/evidence_audit/audit_copies-v1.py",
+      "destination": "audit_copies-v1.py",
+      "bytes": 6335,
+      "sha256": "939199224c38b03871b874853c59e3c72373c665b412aaacd368d0e22ba693be"
+    },
+    {
+      "source": ".cache/mpea-study-custody/review_production/evidence_audit/audit_copies.py",
+      "destination": "audit_copies.py",
+      "bytes": 7202,
+      "sha256": "c36d10ecb0a3ed87739fd0da7477688843ec07e42926b1000b29e310761fd863"
+    },
+    {
+      "source": ".cache/mpea-study-custody/review_production/evidence_audit/baseline-review-v1.json",
+      "destination": "baseline-review-v1.json",
+      "bytes": 6962,
+      "sha256": "b30d5352c2eb82187c195ea766a8c5e3528fbbb3ed23638d6f413b4fbcb778c3"
+    },
+    {
+      "source": ".cache/mpea-study-custody/review_production/evidence_audit/baseline-review-v1.md",
+      "destination": "baseline-review-v1.md",
+      "bytes": 1618,
+      "sha256": "3663de6f519e7d0025aa9feb6f55f89041aadb5ec54baeb8f7ac6515694e4f79"
+    },
+    {
+      "source": ".cache/mpea-study-custody/review_production/evidence_audit/copy-audit-v1.json",
+      "destination": "copy-audit-v1.json",
+      "bytes": 179425,
+      "sha256": "8e0a2357916ae0f9978d8df931e8e16ab58061158ab428b7a2da416e08f41958"
+    },
+    {
+      "source": ".cache/mpea-study-custody/review_production/evidence_audit/copy-audit-v2.json",
+      "destination": "copy-audit-v2.json",
+      "bytes": 208490,
+      "sha256": "fd36b6e665dbdb24431947977c85b21667e8c0104bdb700ce3f57b4092607f60"
+    },
+    {
+      "source": ".cache/mpea-study-custody/contract-conformance-proposal-v1.md",
+      "destination": "contract-conformance-proposal-v1.md",
+      "bytes": 12330,
+      "sha256": "2b08ccbde4a03c21d02cd85c8a8363beb015bb2dadb95d0914c1e6d11ffe9e54"
+    },
+    {
+      "source": ".cache/mpea-study-custody/review_production/evidence_audit/required-artifact-map-v1.md",
+      "destination": "required-artifact-map-v1.md",
+      "bytes": 7012,
+      "sha256": "344e1eec7af3161d374c9d0dd748d3f876c858e0161e5f01e717fffcc5747ae2"
+    },
+    {
+      "source": ".cache/mpea-study-custody/review_production/evidence_audit/section10-behavior-map-v1.json",
+      "destination": "section10-behavior-map-v1.json",
+      "bytes": 23829,
+      "sha256": "16df0fe7a770c9b01bf881ced677be278561f5b54bf2c82dc1a97543bb226f59"
+    },
+    {
+      "source": ".cache/mpea-study-custody/review_production/evidence_audit/section10-behavior-map-v1.md",
+      "destination": "section10-behavior-map-v1.md",
+      "bytes": 9286,
+      "sha256": "27647ae4e9af5ba153ac4412c9ab7fbcd31f8a9be8b521268b38a6de4f5161a6"
+    },
+    {
+      "source": ".cache/mpea-study-custody/review_production/evidence_audit/producer-bundle-audit-v1.json",
+      "destination": "producer-bundle-audit-v1.json",
+      "bytes": 32947,
+      "sha256": "dac972c306435e039f8be9259750694f24fa8c46be71c5eeff13be9f7eec5dde"
+    },
+    {
+      "source": ".cache/mpea-study-custody/review_production/evidence_audit/producer-main-copy-review-v1.json",
+      "destination": "producer-main-copy-review-v1.json",
+      "bytes": 24845,
+      "sha256": "c4c02e1787df87de16ebcc084592c0067558301b6d27e791cb2613e9d5b63d67"
+    },
+    {
+      "source": ".cache/mpea-study-custody/review_production/evidence_audit/section10-behavior-map-v2.json",
+      "destination": "section10-behavior-map-v2.json",
+      "bytes": 24202,
+      "sha256": "56be60cc522e43a5e254bb439c08f1f2beac491fb69abb845a1608baffc0db83"
+    },
+    {
+      "source": ".cache/mpea-study-custody/review_production/evidence_audit/section10-behavior-map-v2.md",
+      "destination": "section10-behavior-map-v2.md",
+      "bytes": 9404,
+      "sha256": "b7cbafc44dc14b546e571ff7c16b51998857e33a769326c3f326088c80cf13bf"
+    },
+    {
+      "source": ".cache/mpea-study-custody/review_production/evidence_audit/full-literal-contract-review-v1.md",
+      "destination": "full-literal-contract-review-v1.md",
+      "bytes": 11308,
+      "sha256": "b383c17f21f75a26ff689796f61254d43804753cacf83b6aca24b5285ceb6f22"
+    },
+    {
+      "source": ".cache/mpea-study-custody/review_production/evidence_audit/full-literal-contract-review-v1.json",
+      "destination": "full-literal-contract-review-v1.json",
+      "bytes": 4267,
+      "sha256": "df0a1eae83b57a182efbf254d64326211f869bb673da112e88199873b57134cc"
+    },
+    {
+      "source": ".cache/mpea-study-custody/review_production/evidence_audit/full-literal-contract-snapshot-v1.json",
+      "destination": "full-literal-contract-snapshot-v1.json",
+      "bytes": 402829,
+      "sha256": "1873c10bf74ce322e4a2d23690bbe445a9dea47a99ffbcf4835f67d262d25f5c"
+    },
+    {
+      "source": ".cache/mpea-contract-compliance-review/sections-6-9-literal-review-v1.md",
+      "destination": "sections-6-9-literal-review-v1.md",
+      "bytes": 6944,
+      "sha256": "c6ab06f9f0a9291251f203c813505d5d591991021340c32ec2535a22eee5b8a4"
+    },
+    {
+      "source": ".cache/mpea-registration-allocation/contract-boundary-review-v1/review.json",
+      "destination": "outer-boundary-review-v1.json",
+      "bytes": 3500,
+      "sha256": "3c785ac269ba77cf67b5c07f238c650f9f2eee33d275450127166649ac875352"
+    }
+  ]
+}

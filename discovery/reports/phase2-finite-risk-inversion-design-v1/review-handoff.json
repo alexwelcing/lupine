@@ -1,0 +1,30 @@
+{
+  "schema": "lupine.finite-risk-inversion-design-handoff.v1",
+  "created_at": "2026-10-16T08:35:09.220550+00:00",
+  "result": "WRITTEN_MATHEMATICAL_REVIEW_PASS_ONLY",
+  "readme_sha256": "142fc8fed2bc05fc784aa1cf0b2c696b818b0d2f2766087f8685b88198023e94",
+  "source_bindings_sha256": "d9e24db1ca5e826a2501c948856b0b8ae065b0b7f8637a5b2686c18d662de460",
+  "independent_review": [
+    {
+      "path": ".cache/phase2-finite-risk-inversion-review-v1/review.json",
+      "bytes": 6900,
+      "sha256": "ef9be0e13f392c429c6f603d6e95cb610f10fcbb08afcb31f86df971ca35e2b4"
+    },
+    {
+      "path": ".cache/phase2-finite-risk-inversion-review-v1/source-bindings.json",
+      "bytes": 2781,
+      "sha256": "9c442036a9d4b10e82dafda907de4175b32e43e9e19ab1cfb2a5493019c65105"
+    }
+  ],
+  "priority": "Retain proof/design now; source admission remains first. Implement a small exact reporting function only as a declared G21 fixed-frame component, not a substitute for G20.",
+  "unperformed": [
+    "runtime implementation",
+    "empirical source access",
+    "new source network",
+    "observed study/evaluation",
+    "new scientific threshold/model/allocation",
+    "runtime tests or simulations",
+    "Lean compilation",
+    "tracked edits or git mutations"
+  ]
+}

@@ -1,0 +1,9 @@
+# Final current-main Chromium gate
+
+The unchanged main `scripts/browser_smoke.py` completed successfully: 56 checks, no JavaScript errors, process exit 0, 73.120 seconds. The exact command and fresh ignored working directory are recorded in `execution.json`; stdout/stderr and the original browser report are preserved byte-for-byte.
+
+The established browser source closure contains 47 files. The independent wrapper also records 79 supplemental bindings, covering all packaged public JSON resources, two abstract upload examples, the wrapper itself and the current package-smoke source (116 unique paths across both sets). Every before/after binding matches, and the browser's own 47-file report matches the outer pre-execution snapshot. Package-smoke is contextual identity only: this command did not build/install a wheel or execute its PROBE.
+
+The optional actual `resources/mpea-t25-v1.json` was absent before and after. Ten MPEA checks use explicitly labeled synthetic aggregate controls, including absence, negative and positive conditional displays, unknown/empty states, stop reasons, malformed-state clearing, text safety, exact export and mobile layout. No actual MPEA resource, raw archive, private feature vectors, target measurements, allocation or live API was used. Existing six-schema workbench and public aggregate-report checks remain part of the unchanged gate.
+
+`copy-candidates.json` lists safe exact copies: execution/source receipts, command wrapper, logs, the browser report and three screenshots. Downloaded certificate/problem/outcome fixtures and all other transient browser artifacts remain local. The execution wrapper is a historical run record with exclusive output writes, not a new portable user command. This is browser engineering evidence, not physical or statistical validation. Root's concurrent full Python suite is separate and was not repeated here.

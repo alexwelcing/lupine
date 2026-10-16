@@ -1,0 +1,9 @@
+# Narrow public metadata review
+
+No blocker was found in the held primary-archive identity report. The selected DataCite fields explicitly identify DOI `10.5061/dryad.ph81h`, publisher Dryad, resource type Dataset, literal version `1`, and declared `cc0-1.0` rights. The retained Crossref citation projection and DataCite `IsCitedBy` identifier both link the exact primary-paper DOI. The different archive title and nine-versus-ten creator/author lists are preserved rather than silently reconciled.
+
+The rights statement applies to the primary dataset's registry record. It does not automatically establish the processed Figshare object's terms, per-file exceptions, row equivalence or byte custody. Dataset version `1`, DataCite kernel-4, publication/submission/issued/available dates, and registry creation/update timestamps remain distinct. The 2026 registry update is not treated as evidence of new calculations, a new dataset version, or changed file bytes.
+
+The ten-file public copyset was checked exactly: 17,537 bytes and all declared hashes match. Public request/receipt timestamps are consistent with the frozen one-request scope. This review also checked the selected public documentary sources and the preserved exposure ledger. It did not read either raw registry response, any data file, or the full paper, and did not issue a network request. Raw response hashes remain referenced bindings, not independently reverified bodies. Only local public byte/metadata consistency checks were executed.
+
+Earlier qualitative-result exposure remains explicit. The report supplies no fresh-population, independent-unit, physical-truth, paired-data or scientific-admission claim. It resolves the narrow documentary DOI/declared-rights/version gap; file identity, derivative equivalence and the other stated admission questions remain unresolved. No correction is requested within this scope.

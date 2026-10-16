@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "checks": [
+    "selection_and_download_reverification",
+    "answer_reveal_after_selection",
+    "unresolved_feasibility",
+    "finite_infeasible_state",
+    "negative_control_visible",
+    "edits_invalidate_and_raw_duplicate_keys_rejected",
+    "custom_problem_and_separate_outcome_upload",
+    "calibrated_finite_intervals_and_sealed_export",
+    "insufficient_and_unsupported_calibration_withhold_screening",
+    "large_exact_calibration_diagnostic_roundtrip",
+    "pareto_tradeoffs_ties_sealed_export_and_true_front",
+    "partial_pareto_truth_keeps_global_front_unknown",
+    "pareto_unsound_control_exposes_excluded_true_front",
+    "synthetic_and_three_archived_reports_separate",
+    "mobile_navigation_selection_and_no_horizontal_overflow",
+    "no_browser_javascript_errors"
+  ],
+  "javascript_errors": [],
+  "scope": "Chromium research-preview interaction checks; not scientific validation"
+}

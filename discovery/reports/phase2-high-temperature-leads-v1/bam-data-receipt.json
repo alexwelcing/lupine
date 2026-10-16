@@ -1,0 +1,51 @@
+{
+  "source_url": "https://api.datacite.org/dois/10.5281/zenodo.17846617",
+  "started_at": "2026-10-16T06:09:01.412113+00:00",
+  "scope": "DOI metadata only, no linked data files",
+  "http_status": 200,
+  "bytes": 21241,
+  "sha256": "65c2df41a4d31b503cea88d7929184dceeedd59dc7643d84c960697f827e8cad",
+  "doi": "10.5281/zenodo.17846617",
+  "url": "https://zenodo.org/doi/10.5281/zenodo.17846617",
+  "rightsList": [
+    {
+      "rights": "Creative Commons Attribution 4.0 International",
+      "rightsUri": "https://creativecommons.org/licenses/by/4.0/legalcode",
+      "schemeUri": "https://spdx.org/licenses/",
+      "rightsIdentifier": "cc-by-4.0",
+      "rightsIdentifierScheme": "SPDX"
+    }
+  ],
+  "dates": [
+    {
+      "date": "2025-12-18",
+      "dateType": "Issued"
+    }
+  ],
+  "publisher": "Zenodo",
+  "titles": [
+    {
+      "title": "BAM Reference Data: High Temperature Tensile Data of Single-Crystal Ni-Based Superalloy CMSX-6"
+    }
+  ],
+  "relatedIdentifiers": [
+    {
+      "relationType": "Cites",
+      "relatedIdentifier": "10.1016/j.actamat.2025.120735",
+      "resourceTypeGeneral": "Journal",
+      "relatedIdentifierType": "DOI"
+    },
+    {
+      "relationType": "Cites",
+      "relatedIdentifier": "10.5281/zenodo.17846436",
+      "resourceTypeGeneral": "Text",
+      "relatedIdentifierType": "DOI"
+    },
+    {
+      "relationType": "IsVersionOf",
+      "relatedIdentifier": "10.5281/zenodo.17846616",
+      "relatedIdentifierType": "DOI"
+    }
+  ],
+  "finished_at": "2026-10-16T06:09:02.814342+00:00"
+}

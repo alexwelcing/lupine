@@ -1,0 +1,8 @@
+{
+  "existing_browser_assertions": 167,
+  "preserved_exact_ast_in_order": true,
+  "node_check": "passed",
+  "python_ast_parse": "passed",
+  "browser_execution": "not_yet_run",
+  "tracked_writes": false
+}

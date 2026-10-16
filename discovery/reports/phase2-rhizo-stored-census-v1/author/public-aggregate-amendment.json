@@ -1,0 +1,12 @@
+{
+  "actual_private_labels_read": false,
+  "amended_contract_sha256": "e849d36004f0e73fdde22620bbffe06d1e53425907ca5fce974c536a5e1ea052",
+  "amended_scope_sha256": "4a6e7f9895bdbba2bb860ad933e87fc4b4201fea2b09022e5b53a2328578127b",
+  "authority": "Root instruction before material implementation; generated preparation only.",
+  "change": "Publishable16 stratified exact aggregate groups and36 stored-reference equality statuses after root-bound execution/review. Per-record labels/citations/discrepancies remain private. No ranking, physical-error interpretation or change to estimand/weights/input scope.",
+  "created_at": "2026-10-16T13:14:08.086367+00:00",
+  "implementation_started_before_amendment": false,
+  "original_contract_sha256": "eb4112fe3475599b674c39e3e73d9938c1fc69a3adfc420aaa3e86fad8963721",
+  "original_scope_sha256": "db2ab69e582f1a0c0c06de8e0b8a38ca0b0347afb1c5bf038d9cf846afe6fff6",
+  "schema": "lupine.rhizo.census.public-aggregate-amendment.v1"
+}

@@ -1,0 +1,13 @@
+{
+  "actual_source_operation_invoked": false,
+  "after_sha256": "01f45e732c930bbf45c81467a709b648d83802945146e4e76b06265a8ff0d5b9",
+  "before_sha256": "06e1a086dad664f51bb2b96533d8317889b909aa8a9fe349a7742c129f585adf",
+  "commit": "d0505b9b358a4bdeafbd742f1aeeb6c2b955abf3",
+  "private_objects_read": false,
+  "replacements": 1,
+  "reviewed_at": "2026-10-16T09:33:30.520090+00:00",
+  "runtime_logic_unchanged": true,
+  "status": "PASS_EXACT_COMMIT_ONLY_BINDING",
+  "synthetic_challenge_rerun": false,
+  "synthetic_challenge_retained": "synthetic-challenge-review.json"
+}

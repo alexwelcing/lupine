@@ -1,0 +1,27 @@
+{
+  "schema": "lupine.bam-readiness-review-handoff.v1",
+  "created_at": "2026-10-16T08:24:49.095772+00:00",
+  "result": "METADATA_READINESS_REVIEW_PASS_NO_EVALUATION_ADMISSION",
+  "report_sha256": "2c2730f8551b51d42cc035b718a0f05807e242a769666183ec485feed361ec29",
+  "final_source_bindings_sha256": "1a61b05a8e7142c303e3384a2a6661cf78a6d27ceac9f179849ec2b99e8b4798",
+  "independent_review_artifacts": [
+    {
+      "path": ".cache/phase2-bam-readiness-review-v1/review.json",
+      "bytes": 8204,
+      "sha256": "ff2f12033f7d6740d82691ce6aff0c80cd280bae613363ee468f0fbd2045c8ad"
+    },
+    {
+      "path": ".cache/phase2-bam-readiness-review-v1/source-bindings.json",
+      "bytes": 2857,
+      "sha256": "01d60e9724c4f3e96f6ff01b65f600524a8b7a033d6a68ee2c5f3b1c61626d9c"
+    },
+    {
+      "path": ".cache/phase2-bam-readiness-review-v1/binding-timing-addendum.json",
+      "bytes": 1135,
+      "sha256": "c78cbf4575bf467750e21a7077d2284fe78f4b5513f6fa8e6c5552a4deb6a4e5"
+    }
+  ],
+  "review_scope": "Metadata source identity and claim/stop-boundary review only; no linked bodies, new reviewer network or project tests",
+  "historical_review_binding_preserved": ".cache/phase2-bam-readiness-v1/initial-bindings-before-review-timing-clarification.json",
+  "next_action": "Separate fixed-source schema disclosure contract before any schema body request; actual paired data and evaluation units remain unknown"
+}

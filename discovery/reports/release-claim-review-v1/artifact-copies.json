@@ -1,0 +1,54 @@
+{
+  "schema": "lupine.discovery.claim_review_copies.v1",
+  "scope": "Pinned ae573ea claim review; original finding evidence preserved, no actual study result or final release decision",
+  "copies": [
+    {
+      "source": ".cache/release-claim-audit-v1/audit_snapshot.py",
+      "destination": "audit_snapshot.py",
+      "bytes": 4425,
+      "sha256": "862d762612042e33e95b5ce5c8fa731ed959572ec78252be4ca34e2795ae239c"
+    },
+    {
+      "source": ".cache/release-claim-audit-v1/ci-addendum-v1.json",
+      "destination": "ci-addendum-v1.json",
+      "bytes": 792,
+      "sha256": "71d0ccde1f158000d3b1e9743adcdde1929c44d267d528eb7096dddef12b4c6c"
+    },
+    {
+      "source": ".cache/release-claim-audit-v1/execution-first.log",
+      "destination": "execution-first.txt",
+      "bytes": 699,
+      "sha256": "9f4f50f612b3a084210b6550bf1f9a3b2b4c51d22e26ed0c8a59a57289132abe"
+    },
+    {
+      "source": ".cache/release-claim-audit-v1/execution-first.stderr.txt",
+      "destination": "execution-first.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/release-claim-audit-v1/link-check.json",
+      "destination": "link-check.json",
+      "bytes": 35970,
+      "sha256": "9a21057b3eeaada9abe69985913388414e355383e61d406e201a7aac33d47432"
+    },
+    {
+      "source": ".cache/release-claim-audit-v1/receipt-v1.json",
+      "destination": "receipt-v1.json",
+      "bytes": 1142,
+      "sha256": "85b1559d0bd107385ab9736ac8ba1b65e3383e4cb84dad09dc5e382d60b4d0cb"
+    },
+    {
+      "source": ".cache/release-claim-audit-v1/review-v1.md",
+      "destination": "review-v1.md",
+      "bytes": 9327,
+      "sha256": "a31959595c6bdc9c26544352d00d49a45c627f523a93a0cfb0244198e7d56835"
+    },
+    {
+      "source": ".cache/release-claim-audit-v1/source-bound-check.json",
+      "destination": "source-bound-check.json",
+      "bytes": 4808,
+      "sha256": "f90a2bcd419a44116e5bd794ebf96587008e0d3eab3e8ad365164a729d52a09b"
+    }
+  ]
+}

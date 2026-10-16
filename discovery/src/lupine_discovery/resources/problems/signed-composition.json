@@ -1,0 +1,241 @@
+{
+  "schema": "lupine.discovery.problem.v1",
+  "description": "A signed linear objective is screened under the maximum of two constraint slacks. Synthetic finite problem; no physical predictor validation.",
+  "scenario": {
+    "id": "signed-composition",
+    "objective": {
+      "unit": "synthetic-score",
+      "reference": "constructed-finite-world-v1",
+      "direction": "minimize"
+    },
+    "constraints": {
+      "combined": {
+        "unit": "synthetic-slack",
+        "reference": "constructed-finite-world-v1"
+      }
+    }
+  },
+  "evidence": [
+    {
+      "id": "signed-composition-score",
+      "kind": "synthetic_fixture",
+      "status": "reported",
+      "scope": {
+        "scenario_id": "signed-composition",
+        "quantity": "score",
+        "unit": "synthetic-score",
+        "reference": "constructed-finite-world-v1"
+      },
+      "statement": "Synthetic fixture. Intervals constructed to contain the independently enumerated finite truth.",
+      "source": {
+        "uri": "fixture://lupine-discovery/known-answers-v1/signed-composition"
+      }
+    },
+    {
+      "id": "signed-composition-combined",
+      "kind": "synthetic_fixture",
+      "status": "reported",
+      "scope": {
+        "scenario_id": "signed-composition",
+        "quantity": "combined",
+        "unit": "synthetic-slack",
+        "reference": "constructed-finite-world-v1"
+      },
+      "statement": "Synthetic fixture. Intervals constructed to contain the independently enumerated finite truth.",
+      "source": {
+        "uri": "fixture://lupine-discovery/known-answers-v1/signed-composition"
+      }
+    }
+  ],
+  "candidates": [
+    {
+      "id": "a0-b0",
+      "score": [
+        "0",
+        "1"
+      ],
+      "constraints": {
+        "combined": [
+          "9/10",
+          "11/10"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "signed-composition-score"
+        ],
+        "combined": [
+          "signed-composition-combined"
+        ]
+      }
+    },
+    {
+      "id": "a0-b2",
+      "score": [
+        "-6",
+        "-5"
+      ],
+      "constraints": {
+        "combined": [
+          "9/10",
+          "11/10"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "signed-composition-score"
+        ],
+        "combined": [
+          "signed-composition-combined"
+        ]
+      }
+    },
+    {
+      "id": "a0-b4",
+      "score": [
+        "-12",
+        "-11"
+      ],
+      "constraints": {
+        "combined": [
+          "9/10",
+          "11/10"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "signed-composition-score"
+        ],
+        "combined": [
+          "signed-composition-combined"
+        ]
+      }
+    },
+    {
+      "id": "a2-b0",
+      "score": [
+        "4",
+        "5"
+      ],
+      "constraints": {
+        "combined": [
+          "-11/10",
+          "-9/10"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "signed-composition-score"
+        ],
+        "combined": [
+          "signed-composition-combined"
+        ]
+      }
+    },
+    {
+      "id": "a2-b2",
+      "score": [
+        "-2",
+        "-1"
+      ],
+      "constraints": {
+        "combined": [
+          "-11/10",
+          "-9/10"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "signed-composition-score"
+        ],
+        "combined": [
+          "signed-composition-combined"
+        ]
+      }
+    },
+    {
+      "id": "a2-b4",
+      "score": [
+        "-8",
+        "-7"
+      ],
+      "constraints": {
+        "combined": [
+          "-1/10",
+          "1/10"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "signed-composition-score"
+        ],
+        "combined": [
+          "signed-composition-combined"
+        ]
+      }
+    },
+    {
+      "id": "a4-b0",
+      "score": [
+        "8",
+        "9"
+      ],
+      "constraints": {
+        "combined": [
+          "-21/10",
+          "-19/10"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "signed-composition-score"
+        ],
+        "combined": [
+          "signed-composition-combined"
+        ]
+      }
+    },
+    {
+      "id": "a4-b2",
+      "score": [
+        "2",
+        "3"
+      ],
+      "constraints": {
+        "combined": [
+          "-1/10",
+          "1/10"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "signed-composition-score"
+        ],
+        "combined": [
+          "signed-composition-combined"
+        ]
+      }
+    },
+    {
+      "id": "a4-b4",
+      "score": [
+        "-4",
+        "-3"
+      ],
+      "constraints": {
+        "combined": [
+          "19/10",
+          "21/10"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "signed-composition-score"
+        ],
+        "combined": [
+          "signed-composition-combined"
+        ]
+      }
+    }
+  ]
+}

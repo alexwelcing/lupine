@@ -1,0 +1,90 @@
+{
+  "status": "PASS",
+  "recorded_at": "2026-10-16T07:10:19.669573+00:00",
+  "scope": "Read-only local Git object identity audit of the exact13 source/test/contract pins at the declared flag producer commit; not CI or actual execution evidence.",
+  "flag_producer_commit": "f7c6ccd04b535f8830f07905b51a5dc2c8a6ca4f",
+  "candidate_sha256": "e771b3fc2a66d6e2ff3a26d8aae88b7a2915ac908907908316e697997761c847",
+  "files": [
+    {
+      "path": "docs/li-v3-custody-plan.md",
+      "expected_sha256": "0be13b0ed7dd7bc41b9c430d4f7d30f8efa0ead54a85d162f31c728eb928a241",
+      "git_blob_bytes": 11472,
+      "git_blob_sha256": "0be13b0ed7dd7bc41b9c430d4f7d30f8efa0ead54a85d162f31c728eb928a241"
+    },
+    {
+      "path": "reports/li-v3-source-inventory.json",
+      "expected_sha256": "ef4d3de4deb08b3903230a7456fb50de689e49265868d78f0c73faab4461f9ba",
+      "git_blob_bytes": 902,
+      "git_blob_sha256": "ef4d3de4deb08b3903230a7456fb50de689e49265868d78f0c73faab4461f9ba"
+    },
+    {
+      "path": "scripts/li_v3_custody.py",
+      "expected_sha256": "3ead51f0afdf16be973743257be488669c988aa40443779e7a5c400e9b0d3234",
+      "git_blob_bytes": 35358,
+      "git_blob_sha256": "3ead51f0afdf16be973743257be488669c988aa40443779e7a5c400e9b0d3234"
+    },
+    {
+      "path": "tests/test_li_v3_custody.py",
+      "expected_sha256": "b8113942416f5a2fc6cda565fa5e8b3d5fb9efb887d9241cc36047caca58780a",
+      "git_blob_bytes": 17743,
+      "git_blob_sha256": "b8113942416f5a2fc6cda565fa5e8b3d5fb9efb887d9241cc36047caca58780a"
+    },
+    {
+      "path": "tests/test_li_v3_custody_review.py",
+      "expected_sha256": "6d49955ff2850484bdf8e47af061fa7649ba016a739467cbd0799379913e0151",
+      "git_blob_bytes": 19053,
+      "git_blob_sha256": "6d49955ff2850484bdf8e47af061fa7649ba016a739467cbd0799379913e0151"
+    },
+    {
+      "path": "scripts/li_v3_zip_diagnostic.py",
+      "expected_sha256": "de7807a8721cc243a9acf71e01c80aa531454248b2cde92c5518f875e89e0d87",
+      "git_blob_bytes": 12822,
+      "git_blob_sha256": "de7807a8721cc243a9acf71e01c80aa531454248b2cde92c5518f875e89e0d87"
+    },
+    {
+      "path": "tests/test_li_v3_zip_diagnostic.py",
+      "expected_sha256": "d94c59c55aebb793d7285c3ac748f2f0ad76770346d6a14cff2e53aeaace3c77",
+      "git_blob_bytes": 10987,
+      "git_blob_sha256": "d94c59c55aebb793d7285c3ac748f2f0ad76770346d6a14cff2e53aeaace3c77"
+    },
+    {
+      "path": "tests/test_li_v3_zip_diagnostic_review.py",
+      "expected_sha256": "0c3609f46cd244abe64dfdb1fa32e829bc0a16316539a2aea276b061df5413e3",
+      "git_blob_bytes": 20587,
+      "git_blob_sha256": "0c3609f46cd244abe64dfdb1fa32e829bc0a16316539a2aea276b061df5413e3"
+    },
+    {
+      "path": "docs/li-v3-zip-diagnostic-plan.md",
+      "expected_sha256": "e3726819a1c4a133f90ba28a2bfa0bd7ed8e52454f21a61275bfbc8f76dcf6f1",
+      "git_blob_bytes": 4668,
+      "git_blob_sha256": "e3726819a1c4a133f90ba28a2bfa0bd7ed8e52454f21a61275bfbc8f76dcf6f1"
+    },
+    {
+      "path": "scripts/li_v3_flag_diagnostic.py",
+      "expected_sha256": "c08c295dae15ae1f5125510076f75ce2cc6ed58f54ef5ff06861a1759dbfabc5",
+      "git_blob_bytes": 7811,
+      "git_blob_sha256": "c08c295dae15ae1f5125510076f75ce2cc6ed58f54ef5ff06861a1759dbfabc5"
+    },
+    {
+      "path": "tests/test_li_v3_flag_diagnostic.py",
+      "expected_sha256": "ebe198fba3d0371e5fc6b7fe013e55734f30f7ebd75fe6f4c47fe78c11c401d4",
+      "git_blob_bytes": 13278,
+      "git_blob_sha256": "ebe198fba3d0371e5fc6b7fe013e55734f30f7ebd75fe6f4c47fe78c11c401d4"
+    },
+    {
+      "path": "tests/test_li_v3_flag_diagnostic_review.py",
+      "expected_sha256": "fdc18fd0016e0fde210716e619e5f688652fb76d226f909a1b8608f76aeae4d5",
+      "git_blob_bytes": 21905,
+      "git_blob_sha256": "fdc18fd0016e0fde210716e619e5f688652fb76d226f909a1b8608f76aeae4d5"
+    },
+    {
+      "path": "docs/li-v3-flag-diagnostic-plan.md",
+      "expected_sha256": "dd36f011deb04d8141178ea0ead75e7a02fb588f6573cac5332410fb63173f46",
+      "git_blob_bytes": 5272,
+      "git_blob_sha256": "dd36f011deb04d8141178ea0ead75e7a02fb588f6573cac5332410fb63173f46"
+    }
+  ],
+  "network_used": false,
+  "private_or_production_cache_read": false,
+  "candidate_imported_or_executed": false
+}

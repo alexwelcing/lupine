@@ -1,0 +1,77 @@
+{
+  "excluded": [
+    "attempts/first/LupineFinitePlanning.olean",
+    "attempts/ceiling-bridge/LupineFinitePlanning.olean"
+  ],
+  "exclusion_reason": "Compiled binary objects remain local; their exact hashes are retained in each source-bound execution receipt.",
+  "file_count": 13,
+  "files": [
+    {
+      "bytes": 6905,
+      "path": "LupineFinitePlanning.lean",
+      "sha256": "391b03aefda0f7bac5bd380347b81febc8a4ebbd329ae3a099981784803973bd"
+    },
+    {
+      "bytes": 4565,
+      "path": "README.md",
+      "sha256": "c0b94315bd759832bc48aaa5328cea797810278d177f917ba25cad0521cb1a26"
+    },
+    {
+      "bytes": 6905,
+      "path": "attempts/ceiling-bridge/LupineFinitePlanning.lean",
+      "sha256": "391b03aefda0f7bac5bd380347b81febc8a4ebbd329ae3a099981784803973bd"
+    },
+    {
+      "bytes": 2485,
+      "path": "attempts/ceiling-bridge/execution.json",
+      "sha256": "7ade389b2d392dace657beefdde6293617f6b36c6268c4785b4ca420c26b4e42"
+    },
+    {
+      "bytes": 0,
+      "path": "attempts/ceiling-bridge/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 1313,
+      "path": "attempts/ceiling-bridge/stdout.txt",
+      "sha256": "1a414db714a311a44665ec02032bc3d89486705bf23d2c5466638677c4f506f5"
+    },
+    {
+      "bytes": 5105,
+      "path": "attempts/first/LupineFinitePlanning.lean",
+      "sha256": "e818c15e49c0aa94ee38257406a5dedb2d0e046a2bcf8ac64f68e14a0e59b6f5"
+    },
+    {
+      "bytes": 2476,
+      "path": "attempts/first/execution.json",
+      "sha256": "c052088f7da9293e8f74d558f72f7bebc52a2d7bd5cc5901ee8362948e76c52e"
+    },
+    {
+      "bytes": 0,
+      "path": "attempts/first/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 1012,
+      "path": "attempts/first/stdout.txt",
+      "sha256": "17541bfb6c07e9a0eea5ceb4a7baaccac1e253187867ba3859848257f8ab36ce"
+    },
+    {
+      "bytes": 3332,
+      "path": "axiom-audit.json",
+      "sha256": "be41dc6e50d3d77effbbf2bc6fde690730f5d33c14f1d31eb0d3e9200708f4de"
+    },
+    {
+      "bytes": 3017,
+      "path": "compile_recorded.py",
+      "sha256": "56adeb2ee7c268faa14f9b2a3a0647146377d97ff826cc15805b59d3f2b823e8"
+    },
+    {
+      "bytes": 2614,
+      "path": "scope.json",
+      "sha256": "d2a8f6af76c3093ad2922fba43ed90cf02aaabba3928b117edf51f4e36a6856b"
+    }
+  ],
+  "schema": "lupine.finite-planning-formal-candidate.public-inventory.v1",
+  "total_bytes": 39729
+}

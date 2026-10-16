@@ -1,0 +1,14 @@
+test_all_sixteen_flags_required_without_omission_extra_or_reorder (test_retained_mpea_transport.RetainedMpeaTransportTests.test_all_sixteen_flags_required_without_omission_extra_or_reorder) ... FAIL
+
+======================================================================
+FAIL: test_all_sixteen_flags_required_without_omission_extra_or_reorder (test_retained_mpea_transport.RetainedMpeaTransportTests.test_all_sixteen_flags_required_without_omission_extra_or_reorder)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_retained_mpea_transport.py", line 57, in test_all_sixteen_flags_required_without_omission_extra_or_reorder
+    self.assertEqual(len(expected), 16)
+AssertionError: 17 != 16
+
+----------------------------------------------------------------------
+Ran 1 test in 0.105s
+
+FAILED (failures=1)

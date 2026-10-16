@@ -1,0 +1,83 @@
+{
+  "candidates": {
+    "dielectric_constant": {
+      "advertised_entries": 1056,
+      "archive_data_use_terms": "UNRESOLVED",
+      "archive_url_not_requested": "https://ndownloader.figshare.com/files/13213475",
+      "catalog_file_type": "json.gz",
+      "catalog_hash_algorithm_not_explicit_in_this_metadata": true,
+      "catalog_hash_literal": "8eb24812148732786cd7c657eccfc6b5ee66533429c2cfbcc4f0059c0295e8b6",
+      "catalog_method_label": "DFPT-PBE",
+      "catalog_pairing_role": "Columns are advertised in the same named dataset; material_id is described as a Materials Project ID. Actual row completeness, identifier uniqueness and calculation-level pairing were not inspected.",
+      "count_is_not_observed_complete_pairs_or_independent_units": true,
+      "crossref_article_license_url": "https://creativecommons.org/licenses/by/4.0",
+      "detailed_calculation_conditions": "UNRESOLVED beyond catalog method label",
+      "documented_auxiliary_unit": "volume: cubic angstroms",
+      "endpoint_units": "UNRESOLVED in acquired catalog/registry metadata",
+      "kind": "archived computed dielectric properties",
+      "paper_doi": "10.1038/sdata.2016.134",
+      "paper_title": "High-throughput screening of inorganic compounds for the discovery of novel dielectric and optical materials",
+      "raw_archive_acquired": false,
+      "scientific_admission": false,
+      "selected_exact_column_labels": [
+        "material_id",
+        "formula",
+        "structure",
+        "band_gap",
+        "e_electronic",
+        "e_total",
+        "poly_electronic",
+        "poly_total",
+        "n",
+        "volume"
+      ]
+    },
+    "elastic_tensor_2015": {
+      "advertised_entries": 1181,
+      "archive_data_use_terms": "UNRESOLVED",
+      "archive_url_not_requested": "https://ndownloader.figshare.com/files/13220603",
+      "catalog_file_type": "json.gz",
+      "catalog_hash_algorithm_not_explicit_in_this_metadata": true,
+      "catalog_hash_literal": "8c3b342f75da7e7baa1b769b59554485fd647f4cb1da9318d0d1ba3b3b838183",
+      "catalog_method_label": "DFT-PBE",
+      "catalog_pairing_role": "Columns are advertised in the same named dataset; material_id is described as a Materials Project ID. Actual row completeness, identifier uniqueness and calculation-level pairing were not inspected.",
+      "count_is_not_observed_complete_pairs_or_independent_units": true,
+      "crossref_article_license_url": "https://creativecommons.org/licenses/by/4.0",
+      "detailed_calculation_conditions": "UNRESOLVED beyond catalog method label",
+      "documented_auxiliary_unit": "volume: cubic angstroms",
+      "endpoint_units": "UNRESOLVED in acquired catalog/registry metadata",
+      "kind": "archived computed elastic properties",
+      "paper_doi": "10.1038/sdata.2015.9",
+      "paper_title": "Charting the complete elastic properties of inorganic crystalline compounds",
+      "raw_archive_acquired": false,
+      "scientific_admission": false,
+      "selected_exact_column_labels": [
+        "material_id",
+        "formula",
+        "structure",
+        "G_Reuss",
+        "G_VRH",
+        "G_Voigt",
+        "K_Reuss",
+        "K_VRH",
+        "K_Voigt",
+        "elastic_tensor",
+        "compliance_tensor",
+        "elastic_anisotropy",
+        "poisson_ratio",
+        "volume"
+      ]
+    }
+  },
+  "catalog": {
+    "body_sha256": "a637a1fe146b70f5f663fd480a2475362dc446741893c3048ec992219ba2a0b0",
+    "commit": "cc3573b8a6b19ef32c9a06595f187615f25012de",
+    "git_blob_was_not_independently_returned_by_API": true,
+    "locally_computed_git_blob_sha1": "adf353223dbb9f9cc833ca67a08592b46033deb5",
+    "path": "matminer/datasets/dataset_metadata.json",
+    "release": "v0.9.3",
+    "repository": "hackingmaterials/matminer"
+  },
+  "schema": "lupine.discovery.paired_archive_fallback.selected_metadata.v1",
+  "status": "DOCUMENTARY_LEADS_ONLY_NOT_ADMITTED"
+}

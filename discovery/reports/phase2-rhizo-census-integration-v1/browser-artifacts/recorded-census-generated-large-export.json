@@ -1,0 +1,1383 @@
+{
+  "schema": "lupine.rhizo.fixed-stored-census.v1",
+  "status": "DESCRIPTIVE_CENSUS_COMPLETE",
+  "reason": "ALL_FIXED_STORED_DISCREPANCIES_COMPUTED",
+  "synthetic": true,
+  "scientific_status": "NOT_ADMITTED",
+  "actual_reference_choice": "UNKNOWN",
+  "metric_interpretation": "EXACT_DESCRIPTIVE_STORED_LABEL_DISCREPANCIES_NOT_PHYSICAL_ERROR_ESTIMATES",
+  "sign_convention": "STORED_PREDICTION_MINUS_STORED_REFERENCE",
+  "fixed_position_weight": 1,
+  "model_ranking_or_winner": null,
+  "reference_choice_reconstructed": false,
+  "binder_executed": false,
+  "reference_or_bound_objects_read": false,
+  "tolerance_success_criterion": null,
+  "counts": {
+    "fixed_ids": 36,
+    "fixed_positions": 144,
+    "groups": 16,
+    "reference_equality_groups": 36,
+    "candidate_reference_edges": 172
+  },
+  "groups": [
+    {
+      "model_id": "fixture-D",
+      "property": "fixture-surface-1",
+      "unit": "J/m^2",
+      "squared_unit": "(J/m^2)^2",
+      "count": 9,
+      "fixed_position_weight": 1,
+      "unit_ids": [
+        "generated-0-0",
+        "generated-0-1",
+        "generated-0-2",
+        "generated-0-3",
+        "generated-0-4",
+        "generated-0-5",
+        "generated-0-6",
+        "generated-0-7",
+        "generated-0-8"
+      ],
+      "metric_interpretation": "STORED_LABEL_DISCREPANCIES",
+      "sum_signed_discrepancy": {
+        "numerator": "-18",
+        "denominator": "7"
+      },
+      "mean_signed_discrepancy": {
+        "numerator": "-10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "denominator": "9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999"
+      },
+      "sum_absolute_discrepancy": {
+        "numerator": "6",
+        "denominator": "1"
+      },
+      "mean_absolute_discrepancy": {
+        "numerator": "2",
+        "denominator": "3"
+      },
+      "sum_squared_discrepancy": {
+        "numerator": "276",
+        "denominator": "49"
+      },
+      "mean_squared_discrepancy": {
+        "numerator": "92",
+        "denominator": "147"
+      }
+    },
+    {
+      "model_id": "fixture-D",
+      "property": "fixture-vacancy-2",
+      "unit": "eV",
+      "squared_unit": "eV^2",
+      "count": 9,
+      "fixed_position_weight": 1,
+      "unit_ids": [
+        "generated-0-0",
+        "generated-0-1",
+        "generated-0-2",
+        "generated-0-3",
+        "generated-0-4",
+        "generated-0-5",
+        "generated-0-6",
+        "generated-0-7",
+        "generated-0-8"
+      ],
+      "metric_interpretation": "STORED_LABEL_DISCREPANCIES",
+      "sum_signed_discrepancy": {
+        "numerator": "-27",
+        "denominator": "7"
+      },
+      "mean_signed_discrepancy": {
+        "numerator": "-3",
+        "denominator": "7"
+      },
+      "sum_absolute_discrepancy": {
+        "numerator": "9",
+        "denominator": "1"
+      },
+      "mean_absolute_discrepancy": {
+        "numerator": "1",
+        "denominator": "1"
+      },
+      "sum_squared_discrepancy": {
+        "numerator": "621",
+        "denominator": "49"
+      },
+      "mean_squared_discrepancy": {
+        "numerator": "69",
+        "denominator": "49"
+      }
+    },
+    {
+      "model_id": "fixture-D",
+      "property": "fixture-surface-2",
+      "unit": "J/m^2",
+      "squared_unit": "(J/m^2)^2",
+      "count": 9,
+      "fixed_position_weight": 1,
+      "unit_ids": [
+        "generated-0-0",
+        "generated-0-1",
+        "generated-0-2",
+        "generated-0-3",
+        "generated-0-4",
+        "generated-0-5",
+        "generated-0-6",
+        "generated-0-7",
+        "generated-0-8"
+      ],
+      "metric_interpretation": "STORED_LABEL_DISCREPANCIES",
+      "sum_signed_discrepancy": {
+        "numerator": "-36",
+        "denominator": "7"
+      },
+      "mean_signed_discrepancy": {
+        "numerator": "-4",
+        "denominator": "7"
+      },
+      "sum_absolute_discrepancy": {
+        "numerator": "12",
+        "denominator": "1"
+      },
+      "mean_absolute_discrepancy": {
+        "numerator": "4",
+        "denominator": "3"
+      },
+      "sum_squared_discrepancy": {
+        "numerator": "1104",
+        "denominator": "49"
+      },
+      "mean_squared_discrepancy": {
+        "numerator": "368",
+        "denominator": "147"
+      }
+    },
+    {
+      "model_id": "fixture-D",
+      "property": "fixture-vacancy-1",
+      "unit": "eV",
+      "squared_unit": "eV^2",
+      "count": 9,
+      "fixed_position_weight": 1,
+      "unit_ids": [
+        "generated-0-0",
+        "generated-0-1",
+        "generated-0-2",
+        "generated-0-3",
+        "generated-0-4",
+        "generated-0-5",
+        "generated-0-6",
+        "generated-0-7",
+        "generated-0-8"
+      ],
+      "metric_interpretation": "STORED_LABEL_DISCREPANCIES",
+      "sum_signed_discrepancy": {
+        "numerator": "-45",
+        "denominator": "7"
+      },
+      "mean_signed_discrepancy": {
+        "numerator": "-5",
+        "denominator": "7"
+      },
+      "sum_absolute_discrepancy": {
+        "numerator": "15",
+        "denominator": "1"
+      },
+      "mean_absolute_discrepancy": {
+        "numerator": "5",
+        "denominator": "3"
+      },
+      "sum_squared_discrepancy": {
+        "numerator": "1725",
+        "denominator": "49"
+      },
+      "mean_squared_discrepancy": {
+        "numerator": "575",
+        "denominator": "147"
+      }
+    },
+    {
+      "model_id": "fixture-B",
+      "property": "fixture-surface-1",
+      "unit": "J/m^2",
+      "squared_unit": "(J/m^2)^2",
+      "count": 9,
+      "fixed_position_weight": 1,
+      "unit_ids": [
+        "generated-1-0",
+        "generated-1-1",
+        "generated-1-2",
+        "generated-1-3",
+        "generated-1-4",
+        "generated-1-5",
+        "generated-1-6",
+        "generated-1-7",
+        "generated-1-8"
+      ],
+      "metric_interpretation": "STORED_LABEL_DISCREPANCIES",
+      "sum_signed_discrepancy": {
+        "numerator": "-36",
+        "denominator": "7"
+      },
+      "mean_signed_discrepancy": {
+        "numerator": "-4",
+        "denominator": "7"
+      },
+      "sum_absolute_discrepancy": {
+        "numerator": "12",
+        "denominator": "1"
+      },
+      "mean_absolute_discrepancy": {
+        "numerator": "4",
+        "denominator": "3"
+      },
+      "sum_squared_discrepancy": {
+        "numerator": "1104",
+        "denominator": "49"
+      },
+      "mean_squared_discrepancy": {
+        "numerator": "368",
+        "denominator": "147"
+      }
+    },
+    {
+      "model_id": "fixture-B",
+      "property": "fixture-vacancy-2",
+      "unit": "eV",
+      "squared_unit": "eV^2",
+      "count": 9,
+      "fixed_position_weight": 1,
+      "unit_ids": [
+        "generated-1-0",
+        "generated-1-1",
+        "generated-1-2",
+        "generated-1-3",
+        "generated-1-4",
+        "generated-1-5",
+        "generated-1-6",
+        "generated-1-7",
+        "generated-1-8"
+      ],
+      "metric_interpretation": "STORED_LABEL_DISCREPANCIES",
+      "sum_signed_discrepancy": {
+        "numerator": "-54",
+        "denominator": "7"
+      },
+      "mean_signed_discrepancy": {
+        "numerator": "-6",
+        "denominator": "7"
+      },
+      "sum_absolute_discrepancy": {
+        "numerator": "18",
+        "denominator": "1"
+      },
+      "mean_absolute_discrepancy": {
+        "numerator": "2",
+        "denominator": "1"
+      },
+      "sum_squared_discrepancy": {
+        "numerator": "2484",
+        "denominator": "49"
+      },
+      "mean_squared_discrepancy": {
+        "numerator": "276",
+        "denominator": "49"
+      }
+    },
+    {
+      "model_id": "fixture-B",
+      "property": "fixture-surface-2",
+      "unit": "J/m^2",
+      "squared_unit": "(J/m^2)^2",
+      "count": 9,
+      "fixed_position_weight": 1,
+      "unit_ids": [
+        "generated-1-0",
+        "generated-1-1",
+        "generated-1-2",
+        "generated-1-3",
+        "generated-1-4",
+        "generated-1-5",
+        "generated-1-6",
+        "generated-1-7",
+        "generated-1-8"
+      ],
+      "metric_interpretation": "STORED_LABEL_DISCREPANCIES",
+      "sum_signed_discrepancy": {
+        "numerator": "-72",
+        "denominator": "7"
+      },
+      "mean_signed_discrepancy": {
+        "numerator": "-8",
+        "denominator": "7"
+      },
+      "sum_absolute_discrepancy": {
+        "numerator": "24",
+        "denominator": "1"
+      },
+      "mean_absolute_discrepancy": {
+        "numerator": "8",
+        "denominator": "3"
+      },
+      "sum_squared_discrepancy": {
+        "numerator": "4416",
+        "denominator": "49"
+      },
+      "mean_squared_discrepancy": {
+        "numerator": "1472",
+        "denominator": "147"
+      }
+    },
+    {
+      "model_id": "fixture-B",
+      "property": "fixture-vacancy-1",
+      "unit": "eV",
+      "squared_unit": "eV^2",
+      "count": 9,
+      "fixed_position_weight": 1,
+      "unit_ids": [
+        "generated-1-0",
+        "generated-1-1",
+        "generated-1-2",
+        "generated-1-3",
+        "generated-1-4",
+        "generated-1-5",
+        "generated-1-6",
+        "generated-1-7",
+        "generated-1-8"
+      ],
+      "metric_interpretation": "STORED_LABEL_DISCREPANCIES",
+      "sum_signed_discrepancy": {
+        "numerator": "-90",
+        "denominator": "7"
+      },
+      "mean_signed_discrepancy": {
+        "numerator": "-10",
+        "denominator": "7"
+      },
+      "sum_absolute_discrepancy": {
+        "numerator": "30",
+        "denominator": "1"
+      },
+      "mean_absolute_discrepancy": {
+        "numerator": "10",
+        "denominator": "3"
+      },
+      "sum_squared_discrepancy": {
+        "numerator": "6900",
+        "denominator": "49"
+      },
+      "mean_squared_discrepancy": {
+        "numerator": "2300",
+        "denominator": "147"
+      }
+    },
+    {
+      "model_id": "fixture-A",
+      "property": "fixture-surface-1",
+      "unit": "J/m^2",
+      "squared_unit": "(J/m^2)^2",
+      "count": 9,
+      "fixed_position_weight": 1,
+      "unit_ids": [
+        "generated-2-0",
+        "generated-2-1",
+        "generated-2-2",
+        "generated-2-3",
+        "generated-2-4",
+        "generated-2-5",
+        "generated-2-6",
+        "generated-2-7",
+        "generated-2-8"
+      ],
+      "metric_interpretation": "STORED_LABEL_DISCREPANCIES",
+      "sum_signed_discrepancy": {
+        "numerator": "-54",
+        "denominator": "7"
+      },
+      "mean_signed_discrepancy": {
+        "numerator": "-6",
+        "denominator": "7"
+      },
+      "sum_absolute_discrepancy": {
+        "numerator": "18",
+        "denominator": "1"
+      },
+      "mean_absolute_discrepancy": {
+        "numerator": "2",
+        "denominator": "1"
+      },
+      "sum_squared_discrepancy": {
+        "numerator": "2484",
+        "denominator": "49"
+      },
+      "mean_squared_discrepancy": {
+        "numerator": "276",
+        "denominator": "49"
+      }
+    },
+    {
+      "model_id": "fixture-A",
+      "property": "fixture-vacancy-2",
+      "unit": "eV",
+      "squared_unit": "eV^2",
+      "count": 9,
+      "fixed_position_weight": 1,
+      "unit_ids": [
+        "generated-2-0",
+        "generated-2-1",
+        "generated-2-2",
+        "generated-2-3",
+        "generated-2-4",
+        "generated-2-5",
+        "generated-2-6",
+        "generated-2-7",
+        "generated-2-8"
+      ],
+      "metric_interpretation": "STORED_LABEL_DISCREPANCIES",
+      "sum_signed_discrepancy": {
+        "numerator": "-81",
+        "denominator": "7"
+      },
+      "mean_signed_discrepancy": {
+        "numerator": "-9",
+        "denominator": "7"
+      },
+      "sum_absolute_discrepancy": {
+        "numerator": "27",
+        "denominator": "1"
+      },
+      "mean_absolute_discrepancy": {
+        "numerator": "3",
+        "denominator": "1"
+      },
+      "sum_squared_discrepancy": {
+        "numerator": "5589",
+        "denominator": "49"
+      },
+      "mean_squared_discrepancy": {
+        "numerator": "621",
+        "denominator": "49"
+      }
+    },
+    {
+      "model_id": "fixture-A",
+      "property": "fixture-surface-2",
+      "unit": "J/m^2",
+      "squared_unit": "(J/m^2)^2",
+      "count": 9,
+      "fixed_position_weight": 1,
+      "unit_ids": [
+        "generated-2-0",
+        "generated-2-1",
+        "generated-2-2",
+        "generated-2-3",
+        "generated-2-4",
+        "generated-2-5",
+        "generated-2-6",
+        "generated-2-7",
+        "generated-2-8"
+      ],
+      "metric_interpretation": "STORED_LABEL_DISCREPANCIES",
+      "sum_signed_discrepancy": {
+        "numerator": "-108",
+        "denominator": "7"
+      },
+      "mean_signed_discrepancy": {
+        "numerator": "-12",
+        "denominator": "7"
+      },
+      "sum_absolute_discrepancy": {
+        "numerator": "36",
+        "denominator": "1"
+      },
+      "mean_absolute_discrepancy": {
+        "numerator": "4",
+        "denominator": "1"
+      },
+      "sum_squared_discrepancy": {
+        "numerator": "9936",
+        "denominator": "49"
+      },
+      "mean_squared_discrepancy": {
+        "numerator": "1104",
+        "denominator": "49"
+      }
+    },
+    {
+      "model_id": "fixture-A",
+      "property": "fixture-vacancy-1",
+      "unit": "eV",
+      "squared_unit": "eV^2",
+      "count": 9,
+      "fixed_position_weight": 1,
+      "unit_ids": [
+        "generated-2-0",
+        "generated-2-1",
+        "generated-2-2",
+        "generated-2-3",
+        "generated-2-4",
+        "generated-2-5",
+        "generated-2-6",
+        "generated-2-7",
+        "generated-2-8"
+      ],
+      "metric_interpretation": "STORED_LABEL_DISCREPANCIES",
+      "sum_signed_discrepancy": {
+        "numerator": "-135",
+        "denominator": "7"
+      },
+      "mean_signed_discrepancy": {
+        "numerator": "-15",
+        "denominator": "7"
+      },
+      "sum_absolute_discrepancy": {
+        "numerator": "45",
+        "denominator": "1"
+      },
+      "mean_absolute_discrepancy": {
+        "numerator": "5",
+        "denominator": "1"
+      },
+      "sum_squared_discrepancy": {
+        "numerator": "15525",
+        "denominator": "49"
+      },
+      "mean_squared_discrepancy": {
+        "numerator": "1725",
+        "denominator": "49"
+      }
+    },
+    {
+      "model_id": "fixture-C",
+      "property": "fixture-surface-1",
+      "unit": "J/m^2",
+      "squared_unit": "(J/m^2)^2",
+      "count": 9,
+      "fixed_position_weight": 1,
+      "unit_ids": [
+        "generated-3-0",
+        "generated-3-1",
+        "generated-3-2",
+        "generated-3-3",
+        "generated-3-4",
+        "generated-3-5",
+        "generated-3-6",
+        "generated-3-7",
+        "generated-3-8"
+      ],
+      "metric_interpretation": "STORED_LABEL_DISCREPANCIES",
+      "sum_signed_discrepancy": {
+        "numerator": "-72",
+        "denominator": "7"
+      },
+      "mean_signed_discrepancy": {
+        "numerator": "-8",
+        "denominator": "7"
+      },
+      "sum_absolute_discrepancy": {
+        "numerator": "24",
+        "denominator": "1"
+      },
+      "mean_absolute_discrepancy": {
+        "numerator": "8",
+        "denominator": "3"
+      },
+      "sum_squared_discrepancy": {
+        "numerator": "4416",
+        "denominator": "49"
+      },
+      "mean_squared_discrepancy": {
+        "numerator": "1472",
+        "denominator": "147"
+      }
+    },
+    {
+      "model_id": "fixture-C",
+      "property": "fixture-vacancy-2",
+      "unit": "eV",
+      "squared_unit": "eV^2",
+      "count": 9,
+      "fixed_position_weight": 1,
+      "unit_ids": [
+        "generated-3-0",
+        "generated-3-1",
+        "generated-3-2",
+        "generated-3-3",
+        "generated-3-4",
+        "generated-3-5",
+        "generated-3-6",
+        "generated-3-7",
+        "generated-3-8"
+      ],
+      "metric_interpretation": "STORED_LABEL_DISCREPANCIES",
+      "sum_signed_discrepancy": {
+        "numerator": "-108",
+        "denominator": "7"
+      },
+      "mean_signed_discrepancy": {
+        "numerator": "-12",
+        "denominator": "7"
+      },
+      "sum_absolute_discrepancy": {
+        "numerator": "36",
+        "denominator": "1"
+      },
+      "mean_absolute_discrepancy": {
+        "numerator": "4",
+        "denominator": "1"
+      },
+      "sum_squared_discrepancy": {
+        "numerator": "9936",
+        "denominator": "49"
+      },
+      "mean_squared_discrepancy": {
+        "numerator": "1104",
+        "denominator": "49"
+      }
+    },
+    {
+      "model_id": "fixture-C",
+      "property": "fixture-surface-2",
+      "unit": "J/m^2",
+      "squared_unit": "(J/m^2)^2",
+      "count": 9,
+      "fixed_position_weight": 1,
+      "unit_ids": [
+        "generated-3-0",
+        "generated-3-1",
+        "generated-3-2",
+        "generated-3-3",
+        "generated-3-4",
+        "generated-3-5",
+        "generated-3-6",
+        "generated-3-7",
+        "generated-3-8"
+      ],
+      "metric_interpretation": "STORED_LABEL_DISCREPANCIES",
+      "sum_signed_discrepancy": {
+        "numerator": "-144",
+        "denominator": "7"
+      },
+      "mean_signed_discrepancy": {
+        "numerator": "-16",
+        "denominator": "7"
+      },
+      "sum_absolute_discrepancy": {
+        "numerator": "48",
+        "denominator": "1"
+      },
+      "mean_absolute_discrepancy": {
+        "numerator": "16",
+        "denominator": "3"
+      },
+      "sum_squared_discrepancy": {
+        "numerator": "17664",
+        "denominator": "49"
+      },
+      "mean_squared_discrepancy": {
+        "numerator": "5888",
+        "denominator": "147"
+      }
+    },
+    {
+      "model_id": "fixture-C",
+      "property": "fixture-vacancy-1",
+      "unit": "eV",
+      "squared_unit": "eV^2",
+      "count": 9,
+      "fixed_position_weight": 1,
+      "unit_ids": [
+        "generated-3-0",
+        "generated-3-1",
+        "generated-3-2",
+        "generated-3-3",
+        "generated-3-4",
+        "generated-3-5",
+        "generated-3-6",
+        "generated-3-7",
+        "generated-3-8"
+      ],
+      "metric_interpretation": "STORED_LABEL_DISCREPANCIES",
+      "sum_signed_discrepancy": {
+        "numerator": "-180",
+        "denominator": "7"
+      },
+      "mean_signed_discrepancy": {
+        "numerator": "-20",
+        "denominator": "7"
+      },
+      "sum_absolute_discrepancy": {
+        "numerator": "60",
+        "denominator": "1"
+      },
+      "mean_absolute_discrepancy": {
+        "numerator": "20",
+        "denominator": "3"
+      },
+      "sum_squared_discrepancy": {
+        "numerator": "27600",
+        "denominator": "49"
+      },
+      "mean_squared_discrepancy": {
+        "numerator": "9200",
+        "denominator": "147"
+      }
+    }
+  ],
+  "reference_equality": [
+    {
+      "material": "fixture-material-0",
+      "structure": "fixture-structure",
+      "property": "fixture-surface-1",
+      "unit": "J/m^2",
+      "model_ids": [
+        "fixture-C",
+        "fixture-A",
+        "fixture-B",
+        "fixture-D"
+      ],
+      "count": 4,
+      "stored_reference_equality": "STORED_REFERENCES_DIFFER",
+      "token_spellings_equal": false,
+      "citation_literals_equal": true,
+      "actual_reference_choice": "UNKNOWN",
+      "common_physical_truth_established": false
+    },
+    {
+      "material": "fixture-material-0",
+      "structure": "fixture-structure",
+      "property": "fixture-vacancy-2",
+      "unit": "eV",
+      "model_ids": [
+        "fixture-C",
+        "fixture-A",
+        "fixture-B",
+        "fixture-D"
+      ],
+      "count": 4,
+      "stored_reference_equality": "ALL_STORED_REFERENCES_EQUAL",
+      "token_spellings_equal": false,
+      "citation_literals_equal": false,
+      "actual_reference_choice": "UNKNOWN",
+      "common_physical_truth_established": false
+    },
+    {
+      "material": "fixture-material-0",
+      "structure": "fixture-structure",
+      "property": "fixture-surface-2",
+      "unit": "J/m^2",
+      "model_ids": [
+        "fixture-C",
+        "fixture-A",
+        "fixture-B",
+        "fixture-D"
+      ],
+      "count": 4,
+      "stored_reference_equality": "ALL_STORED_REFERENCES_EQUAL",
+      "token_spellings_equal": true,
+      "citation_literals_equal": false,
+      "actual_reference_choice": "UNKNOWN",
+      "common_physical_truth_established": false
+    },
+    {
+      "material": "fixture-material-0",
+      "structure": "fixture-structure",
+      "property": "fixture-vacancy-1",
+      "unit": "eV",
+      "model_ids": [
+        "fixture-C",
+        "fixture-A",
+        "fixture-B",
+        "fixture-D"
+      ],
+      "count": 4,
+      "stored_reference_equality": "STORED_REFERENCES_DIFFER",
+      "token_spellings_equal": false,
+      "citation_literals_equal": false,
+      "actual_reference_choice": "UNKNOWN",
+      "common_physical_truth_established": false
+    },
+    {
+      "material": "fixture-material-1",
+      "structure": "fixture-structure",
+      "property": "fixture-surface-1",
+      "unit": "J/m^2",
+      "model_ids": [
+        "fixture-C",
+        "fixture-A",
+        "fixture-B",
+        "fixture-D"
+      ],
+      "count": 4,
+      "stored_reference_equality": "ALL_STORED_REFERENCES_EQUAL",
+      "token_spellings_equal": false,
+      "citation_literals_equal": false,
+      "actual_reference_choice": "UNKNOWN",
+      "common_physical_truth_established": false
+    },
+    {
+      "material": "fixture-material-1",
+      "structure": "fixture-structure",
+      "property": "fixture-vacancy-2",
+      "unit": "eV",
+      "model_ids": [
+        "fixture-C",
+        "fixture-A",
+        "fixture-B",
+        "fixture-D"
+      ],
+      "count": 4,
+      "stored_reference_equality": "ALL_STORED_REFERENCES_EQUAL",
+      "token_spellings_equal": true,
+      "citation_literals_equal": false,
+      "actual_reference_choice": "UNKNOWN",
+      "common_physical_truth_established": false
+    },
+    {
+      "material": "fixture-material-1",
+      "structure": "fixture-structure",
+      "property": "fixture-surface-2",
+      "unit": "J/m^2",
+      "model_ids": [
+        "fixture-C",
+        "fixture-A",
+        "fixture-B",
+        "fixture-D"
+      ],
+      "count": 4,
+      "stored_reference_equality": "STORED_REFERENCES_DIFFER",
+      "token_spellings_equal": false,
+      "citation_literals_equal": false,
+      "actual_reference_choice": "UNKNOWN",
+      "common_physical_truth_established": false
+    },
+    {
+      "material": "fixture-material-1",
+      "structure": "fixture-structure",
+      "property": "fixture-vacancy-1",
+      "unit": "eV",
+      "model_ids": [
+        "fixture-C",
+        "fixture-A",
+        "fixture-B",
+        "fixture-D"
+      ],
+      "count": 4,
+      "stored_reference_equality": "ALL_STORED_REFERENCES_EQUAL",
+      "token_spellings_equal": true,
+      "citation_literals_equal": true,
+      "actual_reference_choice": "UNKNOWN",
+      "common_physical_truth_established": false
+    },
+    {
+      "material": "fixture-material-2",
+      "structure": "fixture-structure",
+      "property": "fixture-surface-1",
+      "unit": "J/m^2",
+      "model_ids": [
+        "fixture-C",
+        "fixture-A",
+        "fixture-B",
+        "fixture-D"
+      ],
+      "count": 4,
+      "stored_reference_equality": "ALL_STORED_REFERENCES_EQUAL",
+      "token_spellings_equal": true,
+      "citation_literals_equal": false,
+      "actual_reference_choice": "UNKNOWN",
+      "common_physical_truth_established": false
+    },
+    {
+      "material": "fixture-material-2",
+      "structure": "fixture-structure",
+      "property": "fixture-vacancy-2",
+      "unit": "eV",
+      "model_ids": [
+        "fixture-C",
+        "fixture-A",
+        "fixture-B",
+        "fixture-D"
+      ],
+      "count": 4,
+      "stored_reference_equality": "STORED_REFERENCES_DIFFER",
+      "token_spellings_equal": false,
+      "citation_literals_equal": false,
+      "actual_reference_choice": "UNKNOWN",
+      "common_physical_truth_established": false
+    },
+    {
+      "material": "fixture-material-2",
+      "structure": "fixture-structure",
+      "property": "fixture-surface-2",
+      "unit": "J/m^2",
+      "model_ids": [
+        "fixture-C",
+        "fixture-A",
+        "fixture-B",
+        "fixture-D"
+      ],
+      "count": 4,
+      "stored_reference_equality": "ALL_STORED_REFERENCES_EQUAL",
+      "token_spellings_equal": true,
+      "citation_literals_equal": true,
+      "actual_reference_choice": "UNKNOWN",
+      "common_physical_truth_established": false
+    },
+    {
+      "material": "fixture-material-2",
+      "structure": "fixture-structure",
+      "property": "fixture-vacancy-1",
+      "unit": "eV",
+      "model_ids": [
+        "fixture-C",
+        "fixture-A",
+        "fixture-B",
+        "fixture-D"
+      ],
+      "count": 4,
+      "stored_reference_equality": "ALL_STORED_REFERENCES_EQUAL",
+      "token_spellings_equal": false,
+      "citation_literals_equal": false,
+      "actual_reference_choice": "UNKNOWN",
+      "common_physical_truth_established": false
+    },
+    {
+      "material": "fixture-material-3",
+      "structure": "fixture-structure",
+      "property": "fixture-surface-1",
+      "unit": "J/m^2",
+      "model_ids": [
+        "fixture-C",
+        "fixture-A",
+        "fixture-B",
+        "fixture-D"
+      ],
+      "count": 4,
+      "stored_reference_equality": "STORED_REFERENCES_DIFFER",
+      "token_spellings_equal": false,
+      "citation_literals_equal": false,
+      "actual_reference_choice": "UNKNOWN",
+      "common_physical_truth_established": false
+    },
+    {
+      "material": "fixture-material-3",
+      "structure": "fixture-structure",
+      "property": "fixture-vacancy-2",
+      "unit": "eV",
+      "model_ids": [
+        "fixture-C",
+        "fixture-A",
+        "fixture-B",
+        "fixture-D"
+      ],
+      "count": 4,
+      "stored_reference_equality": "ALL_STORED_REFERENCES_EQUAL",
+      "token_spellings_equal": true,
+      "citation_literals_equal": true,
+      "actual_reference_choice": "UNKNOWN",
+      "common_physical_truth_established": false
+    },
+    {
+      "material": "fixture-material-3",
+      "structure": "fixture-structure",
+      "property": "fixture-surface-2",
+      "unit": "J/m^2",
+      "model_ids": [
+        "fixture-C",
+        "fixture-A",
+        "fixture-B",
+        "fixture-D"
+      ],
+      "count": 4,
+      "stored_reference_equality": "ALL_STORED_REFERENCES_EQUAL",
+      "token_spellings_equal": false,
+      "citation_literals_equal": false,
+      "actual_reference_choice": "UNKNOWN",
+      "common_physical_truth_established": false
+    },
+    {
+      "material": "fixture-material-3",
+      "structure": "fixture-structure",
+      "property": "fixture-vacancy-1",
+      "unit": "eV",
+      "model_ids": [
+        "fixture-C",
+        "fixture-A",
+        "fixture-B",
+        "fixture-D"
+      ],
+      "count": 4,
+      "stored_reference_equality": "STORED_REFERENCES_DIFFER",
+      "token_spellings_equal": false,
+      "citation_literals_equal": false,
+      "actual_reference_choice": "UNKNOWN",
+      "common_physical_truth_established": false
+    },
+    {
+      "material": "fixture-material-4",
+      "structure": "fixture-structure",
+      "property": "fixture-surface-1",
+      "unit": "J/m^2",
+      "model_ids": [
+        "fixture-C",
+        "fixture-A",
+        "fixture-B",
+        "fixture-D"
+      ],
+      "count": 4,
+      "stored_reference_equality": "ALL_STORED_REFERENCES_EQUAL",
+      "token_spellings_equal": true,
+      "citation_literals_equal": true,
+      "actual_reference_choice": "UNKNOWN",
+      "common_physical_truth_established": false
+    },
+    {
+      "material": "fixture-material-4",
+      "structure": "fixture-structure",
+      "property": "fixture-vacancy-2",
+      "unit": "eV",
+      "model_ids": [
+        "fixture-C",
+        "fixture-A",
+        "fixture-B",
+        "fixture-D"
+      ],
+      "count": 4,
+      "stored_reference_equality": "ALL_STORED_REFERENCES_EQUAL",
+      "token_spellings_equal": false,
+      "citation_literals_equal": false,
+      "actual_reference_choice": "UNKNOWN",
+      "common_physical_truth_established": false
+    },
+    {
+      "material": "fixture-material-4",
+      "structure": "fixture-structure",
+      "property": "fixture-surface-2",
+      "unit": "J/m^2",
+      "model_ids": [
+        "fixture-C",
+        "fixture-A",
+        "fixture-B",
+        "fixture-D"
+      ],
+      "count": 4,
+      "stored_reference_equality": "STORED_REFERENCES_DIFFER",
+      "token_spellings_equal": false,
+      "citation_literals_equal": false,
+      "actual_reference_choice": "UNKNOWN",
+      "common_physical_truth_established": false
+    },
+    {
+      "material": "fixture-material-4",
+      "structure": "fixture-structure",
+      "property": "fixture-vacancy-1",
+      "unit": "eV",
+      "model_ids": [
+        "fixture-C",
+        "fixture-A",
+        "fixture-B",
+        "fixture-D"
+      ],
+      "count": 4,
+      "stored_reference_equality": "ALL_STORED_REFERENCES_EQUAL",
+      "token_spellings_equal": false,
+      "citation_literals_equal": false,
+      "actual_reference_choice": "UNKNOWN",
+      "common_physical_truth_established": false
+    },
+    {
+      "material": "fixture-material-5",
+      "structure": "fixture-structure",
+      "property": "fixture-surface-1",
+      "unit": "J/m^2",
+      "model_ids": [
+        "fixture-C",
+        "fixture-A",
+        "fixture-B",
+        "fixture-D"
+      ],
+      "count": 4,
+      "stored_reference_equality": "ALL_STORED_REFERENCES_EQUAL",
+      "token_spellings_equal": false,
+      "citation_literals_equal": false,
+      "actual_reference_choice": "UNKNOWN",
+      "common_physical_truth_established": false
+    },
+    {
+      "material": "fixture-material-5",
+      "structure": "fixture-structure",
+      "property": "fixture-vacancy-2",
+      "unit": "eV",
+      "model_ids": [
+        "fixture-C",
+        "fixture-A",
+        "fixture-B",
+        "fixture-D"
+      ],
+      "count": 4,
+      "stored_reference_equality": "STORED_REFERENCES_DIFFER",
+      "token_spellings_equal": false,
+      "citation_literals_equal": false,
+      "actual_reference_choice": "UNKNOWN",
+      "common_physical_truth_established": false
+    },
+    {
+      "material": "fixture-material-5",
+      "structure": "fixture-structure",
+      "property": "fixture-surface-2",
+      "unit": "J/m^2",
+      "model_ids": [
+        "fixture-C",
+        "fixture-A",
+        "fixture-B",
+        "fixture-D"
+      ],
+      "count": 4,
+      "stored_reference_equality": "ALL_STORED_REFERENCES_EQUAL",
+      "token_spellings_equal": false,
+      "citation_literals_equal": false,
+      "actual_reference_choice": "UNKNOWN",
+      "common_physical_truth_established": false
+    },
+    {
+      "material": "fixture-material-5",
+      "structure": "fixture-structure",
+      "property": "fixture-vacancy-1",
+      "unit": "eV",
+      "model_ids": [
+        "fixture-C",
+        "fixture-A",
+        "fixture-B",
+        "fixture-D"
+      ],
+      "count": 4,
+      "stored_reference_equality": "ALL_STORED_REFERENCES_EQUAL",
+      "token_spellings_equal": true,
+      "citation_literals_equal": true,
+      "actual_reference_choice": "UNKNOWN",
+      "common_physical_truth_established": false
+    },
+    {
+      "material": "fixture-material-6",
+      "structure": "fixture-structure",
+      "property": "fixture-surface-1",
+      "unit": "J/m^2",
+      "model_ids": [
+        "fixture-C",
+        "fixture-A",
+        "fixture-B",
+        "fixture-D"
+      ],
+      "count": 4,
+      "stored_reference_equality": "STORED_REFERENCES_DIFFER",
+      "token_spellings_equal": false,
+      "citation_literals_equal": false,
+      "actual_reference_choice": "UNKNOWN",
+      "common_physical_truth_established": false
+    },
+    {
+      "material": "fixture-material-6",
+      "structure": "fixture-structure",
+      "property": "fixture-vacancy-2",
+      "unit": "eV",
+      "model_ids": [
+        "fixture-C",
+        "fixture-A",
+        "fixture-B",
+        "fixture-D"
+      ],
+      "count": 4,
+      "stored_reference_equality": "ALL_STORED_REFERENCES_EQUAL",
+      "token_spellings_equal": false,
+      "citation_literals_equal": false,
+      "actual_reference_choice": "UNKNOWN",
+      "common_physical_truth_established": false
+    },
+    {
+      "material": "fixture-material-6",
+      "structure": "fixture-structure",
+      "property": "fixture-surface-2",
+      "unit": "J/m^2",
+      "model_ids": [
+        "fixture-C",
+        "fixture-A",
+        "fixture-B",
+        "fixture-D"
+      ],
+      "count": 4,
+      "stored_reference_equality": "ALL_STORED_REFERENCES_EQUAL",
+      "token_spellings_equal": true,
+      "citation_literals_equal": true,
+      "actual_reference_choice": "UNKNOWN",
+      "common_physical_truth_established": false
+    },
+    {
+      "material": "fixture-material-6",
+      "structure": "fixture-structure",
+      "property": "fixture-vacancy-1",
+      "unit": "eV",
+      "model_ids": [
+        "fixture-C",
+        "fixture-A",
+        "fixture-B",
+        "fixture-D"
+      ],
+      "count": 4,
+      "stored_reference_equality": "STORED_REFERENCES_DIFFER",
+      "token_spellings_equal": false,
+      "citation_literals_equal": false,
+      "actual_reference_choice": "UNKNOWN",
+      "common_physical_truth_established": false
+    },
+    {
+      "material": "fixture-material-7",
+      "structure": "fixture-structure",
+      "property": "fixture-surface-1",
+      "unit": "J/m^2",
+      "model_ids": [
+        "fixture-C",
+        "fixture-A",
+        "fixture-B",
+        "fixture-D"
+      ],
+      "count": 4,
+      "stored_reference_equality": "ALL_STORED_REFERENCES_EQUAL",
+      "token_spellings_equal": false,
+      "citation_literals_equal": false,
+      "actual_reference_choice": "UNKNOWN",
+      "common_physical_truth_established": false
+    },
+    {
+      "material": "fixture-material-7",
+      "structure": "fixture-structure",
+      "property": "fixture-vacancy-2",
+      "unit": "eV",
+      "model_ids": [
+        "fixture-C",
+        "fixture-A",
+        "fixture-B",
+        "fixture-D"
+      ],
+      "count": 4,
+      "stored_reference_equality": "ALL_STORED_REFERENCES_EQUAL",
+      "token_spellings_equal": true,
+      "citation_literals_equal": true,
+      "actual_reference_choice": "UNKNOWN",
+      "common_physical_truth_established": false
+    },
+    {
+      "material": "fixture-material-7",
+      "structure": "fixture-structure",
+      "property": "fixture-surface-2",
+      "unit": "J/m^2",
+      "model_ids": [
+        "fixture-C",
+        "fixture-A",
+        "fixture-B",
+        "fixture-D"
+      ],
+      "count": 4,
+      "stored_reference_equality": "STORED_REFERENCES_DIFFER",
+      "token_spellings_equal": false,
+      "citation_literals_equal": false,
+      "actual_reference_choice": "UNKNOWN",
+      "common_physical_truth_established": false
+    },
+    {
+      "material": "fixture-material-7",
+      "structure": "fixture-structure",
+      "property": "fixture-vacancy-1",
+      "unit": "eV",
+      "model_ids": [
+        "fixture-C",
+        "fixture-A",
+        "fixture-B",
+        "fixture-D"
+      ],
+      "count": 4,
+      "stored_reference_equality": "ALL_STORED_REFERENCES_EQUAL",
+      "token_spellings_equal": true,
+      "citation_literals_equal": false,
+      "actual_reference_choice": "UNKNOWN",
+      "common_physical_truth_established": false
+    },
+    {
+      "material": "fixture-material-8",
+      "structure": "fixture-structure",
+      "property": "fixture-surface-1",
+      "unit": "J/m^2",
+      "model_ids": [
+        "fixture-C",
+        "fixture-A",
+        "fixture-B",
+        "fixture-D"
+      ],
+      "count": 4,
+      "stored_reference_equality": "ALL_STORED_REFERENCES_EQUAL",
+      "token_spellings_equal": true,
+      "citation_literals_equal": true,
+      "actual_reference_choice": "UNKNOWN",
+      "common_physical_truth_established": false
+    },
+    {
+      "material": "fixture-material-8",
+      "structure": "fixture-structure",
+      "property": "fixture-vacancy-2",
+      "unit": "eV",
+      "model_ids": [
+        "fixture-C",
+        "fixture-A",
+        "fixture-B",
+        "fixture-D"
+      ],
+      "count": 4,
+      "stored_reference_equality": "STORED_REFERENCES_DIFFER",
+      "token_spellings_equal": false,
+      "citation_literals_equal": false,
+      "actual_reference_choice": "UNKNOWN",
+      "common_physical_truth_established": false
+    },
+    {
+      "material": "fixture-material-8",
+      "structure": "fixture-structure",
+      "property": "fixture-surface-2",
+      "unit": "J/m^2",
+      "model_ids": [
+        "fixture-C",
+        "fixture-A",
+        "fixture-B",
+        "fixture-D"
+      ],
+      "count": 4,
+      "stored_reference_equality": "ALL_STORED_REFERENCES_EQUAL",
+      "token_spellings_equal": true,
+      "citation_literals_equal": false,
+      "actual_reference_choice": "UNKNOWN",
+      "common_physical_truth_established": false
+    },
+    {
+      "material": "fixture-material-8",
+      "structure": "fixture-structure",
+      "property": "fixture-vacancy-1",
+      "unit": "eV",
+      "model_ids": [
+        "fixture-C",
+        "fixture-A",
+        "fixture-B",
+        "fixture-D"
+      ],
+      "count": 4,
+      "stored_reference_equality": "ALL_STORED_REFERENCES_EQUAL",
+      "token_spellings_equal": false,
+      "citation_literals_equal": false,
+      "actual_reference_choice": "UNKNOWN",
+      "common_physical_truth_established": false
+    }
+  ],
+  "output_error": null,
+  "exposure": {
+    "fresh_holdout_claim": false
+  }
+}

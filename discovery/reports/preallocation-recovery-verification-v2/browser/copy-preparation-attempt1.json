@@ -1,0 +1,10 @@
+{
+  "actual_state": "Both Git-status strings were identical but had25 existing documentation/publication lines outside the held343 source closure. The browser gate correctly required source343/HEAD stability, not a globally clean checkout.",
+  "browser_execution_sha256": "48059c52d522698c7a4ab5e978f050c26b178680b297a9436c5740ed8db09f37",
+  "browser_execution_status": "PASS",
+  "changes_made": "No source edits and no browser rerun. Corrected README/copy-list wording to preserve the original nonempty status honestly. First attempt wrote no README or copy manifest.",
+  "observed_error": "AssertionError at the added assertion that both Git-status strings were empty",
+  "operation": "Post-run Python copy-list construction, first attempt",
+  "schema": "lupine.discovery.browser_copy_preparation_note.v1",
+  "status": "BOOKKEEPING_CORRECTION"
+}

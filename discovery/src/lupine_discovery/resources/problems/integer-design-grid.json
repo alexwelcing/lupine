@@ -1,0 +1,2339 @@
+{
+  "schema": "lupine.discovery.problem.v1",
+  "description": "A constrained quadratic design objective is evaluated on an 81-candidate integer grid. Synthetic finite problem; no physical predictor validation.",
+  "scenario": {
+    "id": "integer-design-grid",
+    "objective": {
+      "unit": "synthetic-score",
+      "reference": "constructed-finite-world-v1",
+      "direction": "minimize"
+    },
+    "constraints": {
+      "capacity": {
+        "unit": "synthetic-slack",
+        "reference": "constructed-finite-world-v1"
+      },
+      "minimum_x": {
+        "unit": "synthetic-slack",
+        "reference": "constructed-finite-world-v1"
+      }
+    }
+  },
+  "evidence": [
+    {
+      "id": "integer-design-grid-score",
+      "kind": "synthetic_fixture",
+      "status": "reported",
+      "scope": {
+        "scenario_id": "integer-design-grid",
+        "quantity": "score",
+        "unit": "synthetic-score",
+        "reference": "constructed-finite-world-v1"
+      },
+      "statement": "Synthetic fixture. Intervals constructed to contain the independently enumerated finite truth.",
+      "source": {
+        "uri": "fixture://lupine-discovery/known-answers-v1/integer-design-grid"
+      }
+    },
+    {
+      "id": "integer-design-grid-capacity",
+      "kind": "synthetic_fixture",
+      "status": "reported",
+      "scope": {
+        "scenario_id": "integer-design-grid",
+        "quantity": "capacity",
+        "unit": "synthetic-slack",
+        "reference": "constructed-finite-world-v1"
+      },
+      "statement": "Synthetic fixture. Intervals constructed to contain the independently enumerated finite truth.",
+      "source": {
+        "uri": "fixture://lupine-discovery/known-answers-v1/integer-design-grid"
+      }
+    },
+    {
+      "id": "integer-design-grid-minimum_x",
+      "kind": "synthetic_fixture",
+      "status": "reported",
+      "scope": {
+        "scenario_id": "integer-design-grid",
+        "quantity": "minimum_x",
+        "unit": "synthetic-slack",
+        "reference": "constructed-finite-world-v1"
+      },
+      "statement": "Synthetic fixture. Intervals constructed to contain the independently enumerated finite truth.",
+      "source": {
+        "uri": "fixture://lupine-discovery/known-answers-v1/integer-design-grid"
+      }
+    }
+  ],
+  "candidates": [
+    {
+      "id": "x0-y0",
+      "score": [
+        "235/4",
+        "237/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-9",
+          "-9"
+        ],
+        "minimum_x": [
+          "2",
+          "2"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x0-y1",
+      "score": [
+        "163/4",
+        "165/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-8",
+          "-8"
+        ],
+        "minimum_x": [
+          "2",
+          "2"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x0-y2",
+      "score": [
+        "107/4",
+        "109/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-7",
+          "-7"
+        ],
+        "minimum_x": [
+          "2",
+          "2"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x0-y3",
+      "score": [
+        "67/4",
+        "69/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-6",
+          "-6"
+        ],
+        "minimum_x": [
+          "2",
+          "2"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x0-y4",
+      "score": [
+        "43/4",
+        "45/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-5",
+          "-5"
+        ],
+        "minimum_x": [
+          "2",
+          "2"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x0-y5",
+      "score": [
+        "35/4",
+        "37/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-4",
+          "-4"
+        ],
+        "minimum_x": [
+          "2",
+          "2"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x0-y6",
+      "score": [
+        "43/4",
+        "45/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-3",
+          "-3"
+        ],
+        "minimum_x": [
+          "2",
+          "2"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x0-y7",
+      "score": [
+        "67/4",
+        "69/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-2",
+          "-2"
+        ],
+        "minimum_x": [
+          "2",
+          "2"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x0-y8",
+      "score": [
+        "107/4",
+        "109/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-1",
+          "-1"
+        ],
+        "minimum_x": [
+          "2",
+          "2"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x1-y0",
+      "score": [
+        "215/4",
+        "217/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-8",
+          "-8"
+        ],
+        "minimum_x": [
+          "1",
+          "1"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x1-y1",
+      "score": [
+        "143/4",
+        "145/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-7",
+          "-7"
+        ],
+        "minimum_x": [
+          "1",
+          "1"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x1-y2",
+      "score": [
+        "87/4",
+        "89/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-6",
+          "-6"
+        ],
+        "minimum_x": [
+          "1",
+          "1"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x1-y3",
+      "score": [
+        "47/4",
+        "49/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-5",
+          "-5"
+        ],
+        "minimum_x": [
+          "1",
+          "1"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x1-y4",
+      "score": [
+        "23/4",
+        "25/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-4",
+          "-4"
+        ],
+        "minimum_x": [
+          "1",
+          "1"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x1-y5",
+      "score": [
+        "15/4",
+        "17/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-3",
+          "-3"
+        ],
+        "minimum_x": [
+          "1",
+          "1"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x1-y6",
+      "score": [
+        "23/4",
+        "25/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-2",
+          "-2"
+        ],
+        "minimum_x": [
+          "1",
+          "1"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x1-y7",
+      "score": [
+        "47/4",
+        "49/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-1",
+          "-1"
+        ],
+        "minimum_x": [
+          "1",
+          "1"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x1-y8",
+      "score": [
+        "87/4",
+        "89/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "0",
+          "0"
+        ],
+        "minimum_x": [
+          "1",
+          "1"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x2-y0",
+      "score": [
+        "203/4",
+        "205/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-7",
+          "-7"
+        ],
+        "minimum_x": [
+          "0",
+          "0"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x2-y1",
+      "score": [
+        "131/4",
+        "133/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-6",
+          "-6"
+        ],
+        "minimum_x": [
+          "0",
+          "0"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x2-y2",
+      "score": [
+        "75/4",
+        "77/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-5",
+          "-5"
+        ],
+        "minimum_x": [
+          "0",
+          "0"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x2-y3",
+      "score": [
+        "35/4",
+        "37/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-4",
+          "-4"
+        ],
+        "minimum_x": [
+          "0",
+          "0"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x2-y4",
+      "score": [
+        "11/4",
+        "13/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-3",
+          "-3"
+        ],
+        "minimum_x": [
+          "0",
+          "0"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x2-y5",
+      "score": [
+        "3/4",
+        "5/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-2",
+          "-2"
+        ],
+        "minimum_x": [
+          "0",
+          "0"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x2-y6",
+      "score": [
+        "11/4",
+        "13/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-1",
+          "-1"
+        ],
+        "minimum_x": [
+          "0",
+          "0"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x2-y7",
+      "score": [
+        "35/4",
+        "37/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "0",
+          "0"
+        ],
+        "minimum_x": [
+          "0",
+          "0"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x2-y8",
+      "score": [
+        "75/4",
+        "77/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "1",
+          "1"
+        ],
+        "minimum_x": [
+          "0",
+          "0"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x3-y0",
+      "score": [
+        "199/4",
+        "201/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-6",
+          "-6"
+        ],
+        "minimum_x": [
+          "-1",
+          "-1"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x3-y1",
+      "score": [
+        "127/4",
+        "129/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-5",
+          "-5"
+        ],
+        "minimum_x": [
+          "-1",
+          "-1"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x3-y2",
+      "score": [
+        "71/4",
+        "73/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-4",
+          "-4"
+        ],
+        "minimum_x": [
+          "-1",
+          "-1"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x3-y3",
+      "score": [
+        "31/4",
+        "33/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-3",
+          "-3"
+        ],
+        "minimum_x": [
+          "-1",
+          "-1"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x3-y4",
+      "score": [
+        "7/4",
+        "9/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-2",
+          "-2"
+        ],
+        "minimum_x": [
+          "-1",
+          "-1"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x3-y5",
+      "score": [
+        "-1/4",
+        "1/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-1",
+          "-1"
+        ],
+        "minimum_x": [
+          "-1",
+          "-1"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x3-y6",
+      "score": [
+        "7/4",
+        "9/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "0",
+          "0"
+        ],
+        "minimum_x": [
+          "-1",
+          "-1"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x3-y7",
+      "score": [
+        "31/4",
+        "33/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "1",
+          "1"
+        ],
+        "minimum_x": [
+          "-1",
+          "-1"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x3-y8",
+      "score": [
+        "71/4",
+        "73/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "2",
+          "2"
+        ],
+        "minimum_x": [
+          "-1",
+          "-1"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x4-y0",
+      "score": [
+        "203/4",
+        "205/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-5",
+          "-5"
+        ],
+        "minimum_x": [
+          "-2",
+          "-2"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x4-y1",
+      "score": [
+        "131/4",
+        "133/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-4",
+          "-4"
+        ],
+        "minimum_x": [
+          "-2",
+          "-2"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x4-y2",
+      "score": [
+        "75/4",
+        "77/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-3",
+          "-3"
+        ],
+        "minimum_x": [
+          "-2",
+          "-2"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x4-y3",
+      "score": [
+        "35/4",
+        "37/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-2",
+          "-2"
+        ],
+        "minimum_x": [
+          "-2",
+          "-2"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x4-y4",
+      "score": [
+        "11/4",
+        "13/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-1",
+          "-1"
+        ],
+        "minimum_x": [
+          "-2",
+          "-2"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x4-y5",
+      "score": [
+        "3/4",
+        "5/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "0",
+          "0"
+        ],
+        "minimum_x": [
+          "-2",
+          "-2"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x4-y6",
+      "score": [
+        "11/4",
+        "13/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "1",
+          "1"
+        ],
+        "minimum_x": [
+          "-2",
+          "-2"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x4-y7",
+      "score": [
+        "35/4",
+        "37/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "2",
+          "2"
+        ],
+        "minimum_x": [
+          "-2",
+          "-2"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x4-y8",
+      "score": [
+        "75/4",
+        "77/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "3",
+          "3"
+        ],
+        "minimum_x": [
+          "-2",
+          "-2"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x5-y0",
+      "score": [
+        "215/4",
+        "217/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-4",
+          "-4"
+        ],
+        "minimum_x": [
+          "-3",
+          "-3"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x5-y1",
+      "score": [
+        "143/4",
+        "145/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-3",
+          "-3"
+        ],
+        "minimum_x": [
+          "-3",
+          "-3"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x5-y2",
+      "score": [
+        "87/4",
+        "89/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-2",
+          "-2"
+        ],
+        "minimum_x": [
+          "-3",
+          "-3"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x5-y3",
+      "score": [
+        "47/4",
+        "49/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-1",
+          "-1"
+        ],
+        "minimum_x": [
+          "-3",
+          "-3"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x5-y4",
+      "score": [
+        "23/4",
+        "25/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "0",
+          "0"
+        ],
+        "minimum_x": [
+          "-3",
+          "-3"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x5-y5",
+      "score": [
+        "15/4",
+        "17/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "1",
+          "1"
+        ],
+        "minimum_x": [
+          "-3",
+          "-3"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x5-y6",
+      "score": [
+        "23/4",
+        "25/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "2",
+          "2"
+        ],
+        "minimum_x": [
+          "-3",
+          "-3"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x5-y7",
+      "score": [
+        "47/4",
+        "49/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "3",
+          "3"
+        ],
+        "minimum_x": [
+          "-3",
+          "-3"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x5-y8",
+      "score": [
+        "87/4",
+        "89/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "4",
+          "4"
+        ],
+        "minimum_x": [
+          "-3",
+          "-3"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x6-y0",
+      "score": [
+        "235/4",
+        "237/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-3",
+          "-3"
+        ],
+        "minimum_x": [
+          "-4",
+          "-4"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x6-y1",
+      "score": [
+        "163/4",
+        "165/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-2",
+          "-2"
+        ],
+        "minimum_x": [
+          "-4",
+          "-4"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x6-y2",
+      "score": [
+        "107/4",
+        "109/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-1",
+          "-1"
+        ],
+        "minimum_x": [
+          "-4",
+          "-4"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x6-y3",
+      "score": [
+        "67/4",
+        "69/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "0",
+          "0"
+        ],
+        "minimum_x": [
+          "-4",
+          "-4"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x6-y4",
+      "score": [
+        "43/4",
+        "45/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "1",
+          "1"
+        ],
+        "minimum_x": [
+          "-4",
+          "-4"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x6-y5",
+      "score": [
+        "35/4",
+        "37/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "2",
+          "2"
+        ],
+        "minimum_x": [
+          "-4",
+          "-4"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x6-y6",
+      "score": [
+        "43/4",
+        "45/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "3",
+          "3"
+        ],
+        "minimum_x": [
+          "-4",
+          "-4"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x6-y7",
+      "score": [
+        "67/4",
+        "69/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "4",
+          "4"
+        ],
+        "minimum_x": [
+          "-4",
+          "-4"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x6-y8",
+      "score": [
+        "107/4",
+        "109/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "5",
+          "5"
+        ],
+        "minimum_x": [
+          "-4",
+          "-4"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x7-y0",
+      "score": [
+        "263/4",
+        "265/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-2",
+          "-2"
+        ],
+        "minimum_x": [
+          "-5",
+          "-5"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x7-y1",
+      "score": [
+        "191/4",
+        "193/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-1",
+          "-1"
+        ],
+        "minimum_x": [
+          "-5",
+          "-5"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x7-y2",
+      "score": [
+        "135/4",
+        "137/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "0",
+          "0"
+        ],
+        "minimum_x": [
+          "-5",
+          "-5"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x7-y3",
+      "score": [
+        "95/4",
+        "97/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "1",
+          "1"
+        ],
+        "minimum_x": [
+          "-5",
+          "-5"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x7-y4",
+      "score": [
+        "71/4",
+        "73/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "2",
+          "2"
+        ],
+        "minimum_x": [
+          "-5",
+          "-5"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x7-y5",
+      "score": [
+        "63/4",
+        "65/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "3",
+          "3"
+        ],
+        "minimum_x": [
+          "-5",
+          "-5"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x7-y6",
+      "score": [
+        "71/4",
+        "73/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "4",
+          "4"
+        ],
+        "minimum_x": [
+          "-5",
+          "-5"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x7-y7",
+      "score": [
+        "95/4",
+        "97/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "5",
+          "5"
+        ],
+        "minimum_x": [
+          "-5",
+          "-5"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x7-y8",
+      "score": [
+        "135/4",
+        "137/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "6",
+          "6"
+        ],
+        "minimum_x": [
+          "-5",
+          "-5"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x8-y0",
+      "score": [
+        "299/4",
+        "301/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "-1",
+          "-1"
+        ],
+        "minimum_x": [
+          "-6",
+          "-6"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x8-y1",
+      "score": [
+        "227/4",
+        "229/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "0",
+          "0"
+        ],
+        "minimum_x": [
+          "-6",
+          "-6"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x8-y2",
+      "score": [
+        "171/4",
+        "173/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "1",
+          "1"
+        ],
+        "minimum_x": [
+          "-6",
+          "-6"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x8-y3",
+      "score": [
+        "131/4",
+        "133/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "2",
+          "2"
+        ],
+        "minimum_x": [
+          "-6",
+          "-6"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x8-y4",
+      "score": [
+        "107/4",
+        "109/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "3",
+          "3"
+        ],
+        "minimum_x": [
+          "-6",
+          "-6"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x8-y5",
+      "score": [
+        "99/4",
+        "101/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "4",
+          "4"
+        ],
+        "minimum_x": [
+          "-6",
+          "-6"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x8-y6",
+      "score": [
+        "107/4",
+        "109/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "5",
+          "5"
+        ],
+        "minimum_x": [
+          "-6",
+          "-6"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x8-y7",
+      "score": [
+        "131/4",
+        "133/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "6",
+          "6"
+        ],
+        "minimum_x": [
+          "-6",
+          "-6"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    },
+    {
+      "id": "x8-y8",
+      "score": [
+        "171/4",
+        "173/4"
+      ],
+      "constraints": {
+        "capacity": [
+          "7",
+          "7"
+        ],
+        "minimum_x": [
+          "-6",
+          "-6"
+        ]
+      },
+      "evidence": {
+        "score": [
+          "integer-design-grid-score"
+        ],
+        "capacity": [
+          "integer-design-grid-capacity"
+        ],
+        "minimum_x": [
+          "integer-design-grid-minimum_x"
+        ]
+      }
+    }
+  ]
+}

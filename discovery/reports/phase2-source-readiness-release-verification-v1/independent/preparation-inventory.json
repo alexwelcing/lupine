@@ -1,0 +1,54 @@
+{
+  "files": {
+    "README.md": {
+      "bytes": 3339,
+      "sha256": "197de7a77825caf6639655a67ea2a4c40aa9889f119cc09381c7004477c48ebf"
+    },
+    "audit_retained.py": {
+      "bytes": 28452,
+      "sha256": "7487bc9ca66ed5b132c928836fd9c435d43577f2b00b6fa4f6383e812b5139a6"
+    },
+    "auditor-from-b005.diff": {
+      "bytes": 21618,
+      "sha256": "3d8e05def1e3e5fcb74c40e71f4af6f9f8f4786ccd2b28735b108cc0c2603656"
+    },
+    "candidate-source-identity.json": {
+      "bytes": 5198,
+      "sha256": "a1460c9c90821b8d993e5ca31ccc1c348076706114899c43bb9b85ea5d32bb56"
+    },
+    "peer-review/source-review-v1.json": {
+      "bytes": 2988,
+      "sha256": "456be3d883667110b13076aa8441e5ebc4862c078bfe87c282b114a86d763502"
+    },
+    "preparation.json": {
+      "bytes": 1578,
+      "sha256": "8fee501aa69b69bf772d1c402f185e97743f0a0e934065e61af3d851972b3b17"
+    },
+    "prepare_auditor.py": {
+      "bytes": 16300,
+      "sha256": "4bd6a6ea367bfcd413330ccd4dc98f5284407f6561056616bbdb479c48486dd9"
+    },
+    "prepared-promotion-inputs.json": {
+      "bytes": 6468,
+      "sha256": "ab85b1346812ff44d3d13148dee827f496e79cbf464fed55f45f74e6026ebec3"
+    },
+    "prepared-report-contract.json": {
+      "bytes": 1504,
+      "sha256": "d781787c60f0da9594771b8864967347d6379a9584035a46337b976d836e80bd"
+    },
+    "prepared-scope.json": {
+      "bytes": 2176,
+      "sha256": "2beec81fcf64ce3c2c5f5bcf0d0ad20a0e879451a3f366f7da941943e3dcb7c7"
+    },
+    "prospective-review.json": {
+      "bytes": 2859,
+      "sha256": "b8a83faf6d9c11c8f07ee2e65b99520162a478e6a3d9e1b3b2237f2d01382abb"
+    },
+    "root-candidate-copyset.json": {
+      "bytes": 5729,
+      "sha256": "b195165fbc7e86834400b408e7ccb86aa62319d0a34f6b3ea9f76c12b7a941e2"
+    }
+  },
+  "schema": "lupine.source-readiness.artifact-preparation-inventory.v1",
+  "status": "FROZEN_PROSPECTIVE_PREPARATION"
+}

@@ -1,0 +1,141 @@
+{
+  "assumptions": [
+    "All score and constraint intervals contain their stated true values.",
+    "All candidates use the declared scenario, units, reference and objective.",
+    "The candidate universe is the finite input; no completeness of matter is claimed."
+  ],
+  "certificate_digest": "6605dcbdd0582dabefe5a2298a7b731f0011d92bae4c6c53960958f7eee71d11",
+  "claim": "conditional_finite_universe_minimizer_retention",
+  "engine_version": "0.1.0",
+  "evidence_assessment": {
+    "A": {
+      "assumed_evidence": [],
+      "missing_quantities": [],
+      "rejected_evidence": [],
+      "state": "includes_synthetic_evidence",
+      "synthetic_evidence": [
+        "fixture-capacity",
+        "fixture-score"
+      ],
+      "unpinned_sources": [
+        "fixture-capacity",
+        "fixture-score"
+      ]
+    },
+    "B": {
+      "assumed_evidence": [],
+      "missing_quantities": [],
+      "rejected_evidence": [],
+      "state": "includes_synthetic_evidence",
+      "synthetic_evidence": [
+        "fixture-capacity",
+        "fixture-score"
+      ],
+      "unpinned_sources": [
+        "fixture-capacity",
+        "fixture-score"
+      ]
+    },
+    "C": {
+      "assumed_evidence": [],
+      "missing_quantities": [],
+      "rejected_evidence": [],
+      "state": "includes_synthetic_evidence",
+      "synthetic_evidence": [
+        "fixture-capacity",
+        "fixture-score"
+      ],
+      "unpinned_sources": [
+        "fixture-capacity",
+        "fixture-score"
+      ]
+    },
+    "D": {
+      "assumed_evidence": [],
+      "missing_quantities": [],
+      "rejected_evidence": [],
+      "state": "includes_synthetic_evidence",
+      "synthetic_evidence": [
+        "fixture-capacity",
+        "fixture-score"
+      ],
+      "unpinned_sources": [
+        "fixture-capacity",
+        "fixture-score"
+      ]
+    },
+    "E": {
+      "assumed_evidence": [],
+      "missing_quantities": [],
+      "rejected_evidence": [],
+      "state": "includes_synthetic_evidence",
+      "synthetic_evidence": [
+        "fixture-capacity",
+        "fixture-score"
+      ],
+      "unpinned_sources": [
+        "fixture-capacity",
+        "fixture-score"
+      ]
+    }
+  },
+  "measurement_queue": {
+    "candidate_ids": [
+      "D",
+      "A",
+      "E"
+    ],
+    "kind": "heuristic_not_a_guarantee"
+  },
+  "physical_attestation": "not_established_by_this_program",
+  "problem_digest": "5678d4faf2fb6aced0eb45d8ad33cc220929e6566f6655ebf47c04444e42f125",
+  "reasons": {
+    "A": {
+      "reason": "retained_not_proven_worse_or_infeasible"
+    },
+    "B": {
+      "reason": "incumbent_upper_strictly_below_candidate_lower",
+      "witness": "A"
+    },
+    "C": {
+      "constraints": [
+        "capacity"
+      ],
+      "reason": "constraint_lower_bound_positive"
+    },
+    "D": {
+      "reason": "retained_not_proven_worse_or_infeasible"
+    },
+    "E": {
+      "reason": "retained_not_proven_worse_or_infeasible"
+    }
+  },
+  "scenario_id": "abstract-fixture-v1",
+  "schema": "lupine.discovery.certificate.v1",
+  "selection": {
+    "certified_feasible": [
+      "A",
+      "E"
+    ],
+    "certified_infeasible": [
+      "C"
+    ],
+    "dominated": [
+      "B"
+    ],
+    "incumbent": "A",
+    "possible_feasible": [
+      "A",
+      "B",
+      "D",
+      "E"
+    ],
+    "regret_bound": "2",
+    "retained": [
+      "A",
+      "D",
+      "E"
+    ],
+    "threshold": "2"
+  }
+}

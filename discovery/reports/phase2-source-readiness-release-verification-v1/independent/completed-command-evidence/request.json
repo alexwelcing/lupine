@@ -1,0 +1,12 @@
+{
+  "commit": "eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f",
+  "mandatory_strict_flags_expected": 18,
+  "recorder": {
+    "bytes": 9526,
+    "sha256": "b74867438bda41235f0b93b028f91caf422284037d6ebe65cf244fa4f4084c33"
+  },
+  "runtime_file_count_required": 351,
+  "schema": "lupine.source-readiness.release-request.v1",
+  "scope": "Clean package and retained-artifact checks only; no source-science operation or admission.",
+  "started_utc": "2026-10-16T17:26:51.769845+00:00"
+}

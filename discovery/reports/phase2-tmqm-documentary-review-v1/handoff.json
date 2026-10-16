@@ -1,0 +1,14 @@
+{
+  "copy_files": [
+    "README.md",
+    "source-bindings.json",
+    "review.json",
+    "inventory.json",
+    "handoff.json"
+  ],
+  "inventory_sha256": "02242a5a8847e107a2431ded67260e5892f0ad6425b2abab1be982c38d8d35c1",
+  "review_sha256": "5ddb9cf0b6cba915abd6e88b8edaa1daabd340f988cd54747e2702cb6ec6dc01",
+  "schema": "lupine.tmqm.documentary-independent-handoff.v1",
+  "scientific_admission": "NOT_ADMITTED",
+  "source_survey_edited": false
+}

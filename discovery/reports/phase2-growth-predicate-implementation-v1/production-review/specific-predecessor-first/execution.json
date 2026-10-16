@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-B",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-production-review-v1/test_li_v3_growth_predicate_audit_review.py",
+    "ProductionReview.test_selected_growth_specific_closed_failure_is_preserved"
+  ],
+  "elapsed_seconds": 0.8603864340002474,
+  "finished_at": "2026-10-16T12:21:59.421478+00:00",
+  "returncode": 1,
+  "scope": "one generated wrong-predecessor test only; no actual inputs or real guards",
+  "source_held": true,
+  "source_sha256": "1bcbc0d16c2e9a516f3bce0ed98e5fd65d6ce4a26b7942f7dedd7724e201fc55",
+  "started_at": "2026-10-16T12:21:58.560327+00:00",
+  "stderr_sha256": "49466e030846f8e091a787ea1ef5cd8d9e22cc6b5aac38e662638d61aa1cfeb4",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "test_sha256": "3dd4b23024028e2e7ba5876ca8d9705e066e57362bfae63d9999783e76b5dc49"
+}

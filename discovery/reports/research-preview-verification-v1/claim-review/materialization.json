@@ -1,0 +1,96 @@
+{
+  "actual_artifacts_hashed": {
+    "source_archive": {
+      "bytes": 43898880,
+      "filename": "lupine-discovery-source-6585a605d5d3.tar",
+      "sha256": "07edb5d7b5809e79029e6e4e863ddb13eca4d2ade76503d476a6db19ce3dac20"
+    },
+    "wheel": {
+      "bytes": 294452,
+      "filename": "lupine_discovery-0.1.0-py3-none-any.whl",
+      "sha256": "1b883929426c1b0502ff988d3a2d2d1bd77ed158c660058c319d5c39229c7189"
+    }
+  },
+  "all_four_jobs_validated": [
+    {
+      "conclusion": "success",
+      "id": 114357587456,
+      "name": "python (3.11)",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "id": 114357587577,
+      "name": "python (3.12)",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "id": 114357587593,
+      "name": "lean",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "id": 114357587671,
+      "name": "browser",
+      "status": "completed"
+    }
+  ],
+  "before_sha256": {
+    "GOAL.md": "815f5f0b9c7c55c67056f174d0b902a629d40e32e17e9f4bd79bdf3e45e90968",
+    "README.md": "40122071285e46471b917bfe8485765c31dd65ff6a03af1fad2a94109b685502",
+    "STATUS.md": "cd281bb7a0e4527cfa0f78229a7ff8d00d96086786e696040e2dfb71cae115c6",
+    "docs/release-validation.md": "75f3d9e0541bbfe1dd191fcf32e53a668a7c589233fd6752e756145c06461d40",
+    "docs/research-preview-guide.md": "4ed1e85316699105ae510270c078e0818cb042c364f635b56ff8f8aac9aff01e",
+    "reports/next-independent-study-v1/README.md": "8956e587eb63fa398b0efed6330c5d5f51481432c92f356dcf36a3bc2d60ed38",
+    "reports/progress.md": "1cc4422cc529036667377638523fbf584483e61f724218bab4f78ac816b0dcaf",
+    "reports/research-preview-decision.md": "bef8fa65ffd71004c7910f99133c51270fbb7e32aa213f6ec1db02464615b8c9"
+  },
+  "bound_safe_evidence_sha256": {
+    ".cache/mpea-private-retention-design-v1/recommendation.md": "b8ea85e966bafe505416c4a3e891875719f3efeaf544cf8443d6dbdebfb6585b",
+    ".cache/package-present-release-execution-6585a605d5d3/execution.json": "0eb931dc8f73a2fdf71f8d91d42f8b9951e9574d66abb0b948d192e9933fd15a",
+    ".cache/release-artifacts-present-contract-6585a605d5d3/release-artifacts.json": "d23ec59ee0c0d483a5c3147d1a2b5edceddd1b2a5f8eda15718b4122f7694f97",
+    "reports/next-independent-study-v1/source-leads.md": "bcd7ccbf233ab0cbce27043a579d7aa8c14aa7db70ea8b5009f350e367d600cd",
+    "reports/research-preview-artifact-v1/independent-review/REVIEW.md": "eed4ba2d585c5b9fea8008cea36866b1b417eda07d631bd35266df0543661aba",
+    "reports/research-preview-artifact-v1/independent-review/review.json": "a05af305ca2dd7f554a4b22379b42f2d9c97d6a3a48682822ce9b29917da4e67",
+    "reports/research-preview-interface-v1/README.md": "72ceab3de93a005f64a425a524d7b1dbbca0a51aa3b001d76746303d278451a6",
+    "reports/research-preview-interface-v1/execution-result.json": "db45c710818149aa84a2308965dfc5a049eb61c172c753bdbf6c567b860b060f",
+    "reports/research-preview-verification-v1/ci/official-run-jobs-observation.json": "39f5c0f69fb6d188944050dbd5588b86f380f6f0c310339b217cffb178faf3ec",
+    "reports/research-preview-verification-v1/ci/root-review.json": "d52cc7fe381a800349034955b981911616b9c5ab2a54ac2768750db0e81728c2",
+    "reports/research-preview-verification-v1/runtime-delta.json": "68cf5ce790dd06ddc2dab13ff1c23c4d469bef7d9a25c70211e66ead70db90da"
+  },
+  "checks": {
+    "all_relative_link_files_exist": true,
+    "historical_progress_preserved": true,
+    "main_eight_baselines_unchanged": true,
+    "no_unresolved_template_tokens": true,
+    "private_custody_limits_explicit": true,
+    "scientific_negatives_preserved": true,
+    "scratch_applied_bytes_equal_final": true,
+    "scratch_patch_check_and_apply": true
+  },
+  "ci_observed_at": "2026-10-11T01:40:16.973611+00:00",
+  "ci_run_id": 38101296342,
+  "final_patch_bytes": 60023,
+  "final_patch_sha256": "d9330331578bc51642495e6f59e9d5be4fb2059393d0ebc942009d3dbeece50e",
+  "final_sha256": {
+    "GOAL.md": "61a79327f81cbfcef125c10c8614c3186399315591c642c8b4450da36b0275f3",
+    "README.md": "96ad8d1fb5b134a664b3ba5ebedc0ee3079e06800dc63c86696837e18fc02204",
+    "STATUS.md": "6f0a4663aca6645ea99e3ad7b1bebd73553fce0f892bffdddfb660395cef0177",
+    "docs/release-validation.md": "3cfed5ed73c6e31b6b93d73de04ac235f1744514f00f2f274499f951d82d6aba",
+    "docs/research-preview-guide.md": "bab21597446402c845ad141836f817221fdb51d664676c699ed57b11ae3802ba",
+    "reports/next-independent-study-v1/README.md": "24933e25f626d59210471503206fac33436c7a484267737e21fa61a0c7cef62b",
+    "reports/progress.md": "70825b5c56bf856d1144adb5402852590288b76302a14b6267b8ec8262931901",
+    "reports/research-preview-decision.md": "2a0c029f489209effd7c8941e0e3237c3c0f6bc4c7b53dbf41244dd5d9218020"
+  },
+  "materialized_at": "2026-10-11T01:45:08.547403+00:00",
+  "no_automation_action": true,
+  "no_main_edits": true,
+  "no_private_study_inputs_read": true,
+  "no_scientific_execution": true,
+  "runtime_commit": "6585a605d5d325e84423c7e35c7286efe85cfb6f",
+  "schema": "lupine.discovery.final_go_docs_materialization.v1",
+  "scope": "Root-authorized final eight-document candidate after exact-runtime CI success. Root applies/publishes and separately verifies the eventual report-only descendant CI; no remote logs/artifacts downloaded or remote test-count claims made.",
+  "status": "GO_RESEARCH_PREVIEW_CANDIDATE_NOT_APPLIED"
+}

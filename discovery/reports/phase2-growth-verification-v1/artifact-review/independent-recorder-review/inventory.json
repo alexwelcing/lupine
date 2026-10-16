@@ -1,0 +1,15 @@
+{
+  "files": {
+    "README.md": {
+      "bytes": 1249,
+      "sha256": "ce1261b9922f494cbdc87a8406d37c25d455ea75f7f5d18d866fc2774df5db71"
+    },
+    "review.json": {
+      "bytes": 3329,
+      "sha256": "b6776110623f474328722917203156e705e8ec1aaaf2838bf6f026e86e0a387a"
+    }
+  },
+  "excludes": [
+    "inventory.json"
+  ]
+}

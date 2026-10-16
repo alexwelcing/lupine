@@ -1,0 +1,28 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-finite-planner-review-v1/test_finite_planning_review.py"
+  ],
+  "started_at": "2026-10-16T06:53:43.228780+00:00",
+  "finished_at": "2026-10-16T06:53:43.795235+00:00",
+  "elapsed_seconds": 0.5667062800002896,
+  "exit_code": 0,
+  "before": {
+    ".cache/phase2-finite-planner-candidate-v1/promotion/src/lupine_discovery/finite_planning.py": "027785ccdf24f6e8cf9b7a8ac98987b821fcdb19c875bbe8d2ba52d2fc3895f8",
+    ".cache/phase2-finite-planner-candidate-v1/promotion/docs/finite-population-planning.md": "11f4efe987632293bfc8dfcbd24a32d3a05e4c9e23624c9933ec030028de3414",
+    "src/lupine_discovery/study_planning.py": "7a2b00bc81f8bc025b9bb3d6c6c212875d44a9839c4665ec67c86e46fe5f6d83",
+    "src/lupine_discovery/serialization.py": "cfec006ed4cb51fbbb6539422a5d829cadaa7bf0ff78bebbffd58aaba6f2523c",
+    ".cache/phase2-finite-planner-review-v1/test_finite_planning_review.py": "1ea22055827ca4d4c0e1ac13ae8003a631bbcf6dcab1081abcf5ae4db3adb0c2"
+  },
+  "after": {
+    ".cache/phase2-finite-planner-candidate-v1/promotion/src/lupine_discovery/finite_planning.py": "027785ccdf24f6e8cf9b7a8ac98987b821fcdb19c875bbe8d2ba52d2fc3895f8",
+    ".cache/phase2-finite-planner-candidate-v1/promotion/docs/finite-population-planning.md": "11f4efe987632293bfc8dfcbd24a32d3a05e4c9e23624c9933ec030028de3414",
+    "src/lupine_discovery/study_planning.py": "7a2b00bc81f8bc025b9bb3d6c6c212875d44a9839c4665ec67c86e46fe5f6d83",
+    "src/lupine_discovery/serialization.py": "cfec006ed4cb51fbbb6539422a5d829cadaa7bf0ff78bebbffd58aaba6f2523c",
+    ".cache/phase2-finite-planner-review-v1/test_finite_planning_review.py": "1ea22055827ca4d4c0e1ac13ae8003a631bbcf6dcab1081abcf5ae4db3adb0c2"
+  },
+  "source_unchanged": true,
+  "stdout_sha256": "bd21610cb011922d4a4c69f205d99ab6459ad608f7ee52f8fcc35f58792e22f8",
+  "stderr_sha256": "3a7854fcc0d2de90157a47a26a24cce1cb2e3a8a7d9e59456c1abc8deeb9892d",
+  "scope": "Synthetic finite arithmetic/input/claim tests only; no scientific archive or actual sampling."
+}

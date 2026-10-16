@@ -1,0 +1,146 @@
+[
+  {
+    "observed_at": "2026-10-16T17:27:13.954483+00:00",
+    "commit": "eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f",
+    "run": {
+      "id": 38939736040,
+      "head_sha": "eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f",
+      "event": "push",
+      "status": "in_progress",
+      "conclusion": null,
+      "html_url": "https://github.com/alexwelcing/lupine/actions/runs/38939736040",
+      "run_attempt": 1
+    },
+    "jobs": [
+      {
+        "id": 117104055270,
+        "name": "python (3.12)",
+        "status": "in_progress",
+        "conclusion": null,
+        "started_at": "2026-10-16T17:26:48Z",
+        "completed_at": null
+      },
+      {
+        "id": 117104055399,
+        "name": "browser",
+        "status": "in_progress",
+        "conclusion": null,
+        "started_at": "2026-10-16T17:26:48Z",
+        "completed_at": null
+      },
+      {
+        "id": 117104055563,
+        "name": "lean",
+        "status": "in_progress",
+        "conclusion": null,
+        "started_at": "2026-10-16T17:26:48Z",
+        "completed_at": null
+      },
+      {
+        "id": 117104055586,
+        "name": "python (3.11)",
+        "status": "in_progress",
+        "conclusion": null,
+        "started_at": "2026-10-16T17:26:49Z",
+        "completed_at": null
+      }
+    ],
+    "all_four_jobs_successful": false
+  },
+  {
+    "observed_at": "2026-10-16T17:29:46.761419+00:00",
+    "commit": "eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f",
+    "run": {
+      "id": 38939736040,
+      "head_sha": "eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f",
+      "event": "push",
+      "status": "in_progress",
+      "conclusion": null,
+      "html_url": "https://github.com/alexwelcing/lupine/actions/runs/38939736040",
+      "run_attempt": 1
+    },
+    "jobs": [
+      {
+        "id": 117104055270,
+        "name": "python (3.12)",
+        "status": "in_progress",
+        "conclusion": null,
+        "started_at": "2026-10-16T17:26:48Z",
+        "completed_at": null
+      },
+      {
+        "id": 117104055399,
+        "name": "browser",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-10-16T17:26:48Z",
+        "completed_at": "2026-10-16T17:28:24Z"
+      },
+      {
+        "id": 117104055563,
+        "name": "lean",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-10-16T17:26:48Z",
+        "completed_at": "2026-10-16T17:29:36Z"
+      },
+      {
+        "id": 117104055586,
+        "name": "python (3.11)",
+        "status": "in_progress",
+        "conclusion": null,
+        "started_at": "2026-10-16T17:26:49Z",
+        "completed_at": null
+      }
+    ],
+    "all_four_jobs_successful": false
+  },
+  {
+    "observed_at": "2026-10-16T17:32:33.850773+00:00",
+    "commit": "eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f",
+    "run": {
+      "id": 38939736040,
+      "head_sha": "eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f",
+      "event": "push",
+      "status": "in_progress",
+      "conclusion": null,
+      "html_url": "https://github.com/alexwelcing/lupine/actions/runs/38939736040",
+      "run_attempt": 1
+    },
+    "jobs": [
+      {
+        "id": 117104055270,
+        "name": "python (3.12)",
+        "status": "in_progress",
+        "conclusion": null,
+        "started_at": "2026-10-16T17:26:48Z",
+        "completed_at": null
+      },
+      {
+        "id": 117104055399,
+        "name": "browser",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-10-16T17:26:48Z",
+        "completed_at": "2026-10-16T17:28:24Z"
+      },
+      {
+        "id": 117104055563,
+        "name": "lean",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-10-16T17:26:48Z",
+        "completed_at": "2026-10-16T17:29:36Z"
+      },
+      {
+        "id": 117104055586,
+        "name": "python (3.11)",
+        "status": "in_progress",
+        "conclusion": null,
+        "started_at": "2026-10-16T17:26:49Z",
+        "completed_at": null
+      }
+    ],
+    "all_four_jobs_successful": false
+  }
+]

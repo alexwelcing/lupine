@@ -1,0 +1,55 @@
+{
+  "schema": "lupine.engineering.growth_hint_final_static_review.v1",
+  "reviewer": "/root/phase2_planner",
+  "recorded_utc": "2026-10-16T09:49:22.512689+00:00",
+  "status": "PASS_STATIC_SOURCE_AND_CONTRACT",
+  "blocking_findings": [],
+  "source": {
+    "path": ".cache/phase2-growth-hint-candidate-v1/promotion/scripts/li_v3_growth_hint_shape.py",
+    "bytes": 8507,
+    "sha256": "c42313ddc1d6c64e6d9c18338bc3efc9bacc65e7ff7f8281e1da28870e74d7cb"
+  },
+  "contract": {
+    "path": ".cache/phase2-growth-hint-candidate-v1/promotion/docs/li-v3-growth-hint-shape-plan.md",
+    "bytes": 7267,
+    "sha256": "9900ff73238a9d1c3629f364e4e97d9d450630b0ba938be74f1a03b52da9939c"
+  },
+  "predecessor_file_count": 25,
+  "all_predecessor_pins_match_public_files": true,
+  "runtime_file_count": 326,
+  "all_runtime_files_match_manifest": true,
+  "runtime_manifest_sha256": "e806d052dcfaadc5bbc0a9378318709da011fbaf3a53a290aa6141014bae3959",
+  "production_prerequisite": null,
+  "production_or_cli_functions_defined": false,
+  "author_receipts": {
+    "author-first": {
+      "path": ".cache/phase2-growth-hint-candidate-v1/receipts/author-first/execution.json",
+      "sha256": "f7b77231ca122a64f89e6580805a018b6f94fb8a2159ebb7d83de1d3c08d827a",
+      "exit_code": 1,
+      "elapsed_seconds": 0.3146053020027466
+    },
+    "author-second": {
+      "path": ".cache/phase2-growth-hint-candidate-v1/receipts/author-second/execution.json",
+      "sha256": "0eccf23d402cd7cff55ca0c91c894976507a2e4b0f379933750b51fddc8d1486",
+      "exit_code": 0,
+      "elapsed_seconds": 0.4340316959969641
+    }
+  },
+  "source_argument": [
+    "The retained APPNOTE clauses support unsigned little-endian fixed words, signature0xA028 and a NUL remainder; they do not bind initial-padding value to current length.",
+    "Exactly one outer0xA220 record is an explicit narrow engineering selection policy, not a normative duplicate rule or evidence about an actual archive.",
+    "For a complete predecessor span, end-start=4+L and L>=4 imply both fixed words fit. The scan has L-4 iterations and the inherited65535-byte span caps this at65527.",
+    "The scan evaluates each remaining byte even after a nonzero value; a negative shape result does not erase completed-read exposure.",
+    "The second locator and new interpretation stages have separate started/completed flags. Unexpected errors retain prior and current exposure; the generic interpreted flag deliberately records conservative attempted interpretation.",
+    "No production guard, capture/object/prerequisite read, writer or CLI is invoked. Changing the null constant cannot enable a missing production interface.",
+    "No source/global map is returned by alias: the prior report is local to this invocation and the field projection is removed."
+  ],
+  "disclosure_precision": "Arbitrary raw words and field values are omitted. The closed match predicates intentionally disclose comparisons to public constants; on a match a reader can infer the selected ID/signature. This is not a claim that those facts are hidden or that unacquired bytes were absent.",
+  "limits": [
+    "Source, contract, public standard and actual author receipts were reviewed; this parent did not import or execute the product.",
+    "Independent synthetic execution remains a separate child review and is not claimed by this static verdict.",
+    "No actual source ID, archive, private capture/object/prerequisite receipt, scientific outcome, network request or production guard was read or run.",
+    "A shape match does not establish padding history, producer authentication, full OPC semantics, archive acceptance, source independence or scientific validity."
+  ],
+  "next_action": "Await the separate held independent synthetic result; root owns any future integration and production-binding decision."
+}

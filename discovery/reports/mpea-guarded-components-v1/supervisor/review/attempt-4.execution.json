@@ -1,0 +1,32 @@
+{
+  "after": {
+    "/workspace/lupine-discovery-branch/discovery/.cache/mpea-study-supervisor/README.md": "2f34a8062bb26357740bc15c8875181bc0ba88dfea3e3bb1f2792328a78b333a",
+    "/workspace/lupine-discovery-branch/discovery/.cache/mpea-study-supervisor/review/review_child.py": "292aeb050e7db326db21c7d43a68c6feed57972557736b0a8fabc71a89aac911",
+    "/workspace/lupine-discovery-branch/discovery/.cache/mpea-study-supervisor/review/test_supervisor_review.py": "4cbd5739c8ba05242522395b4b40c6a2c98d3106fda173fa7c011d2bcdb40afa",
+    "/workspace/lupine-discovery-branch/discovery/.cache/mpea-study-supervisor/supervisor.py": "1dbd4a1b0e9c3f0246d23bd7670527cfa3bd69f754279aabba06e4ae464e87ab"
+  },
+  "before": {
+    "/workspace/lupine-discovery-branch/discovery/.cache/mpea-study-supervisor/README.md": "2f34a8062bb26357740bc15c8875181bc0ba88dfea3e3bb1f2792328a78b333a",
+    "/workspace/lupine-discovery-branch/discovery/.cache/mpea-study-supervisor/review/review_child.py": "292aeb050e7db326db21c7d43a68c6feed57972557736b0a8fabc71a89aac911",
+    "/workspace/lupine-discovery-branch/discovery/.cache/mpea-study-supervisor/review/test_supervisor_review.py": "4cbd5739c8ba05242522395b4b40c6a2c98d3106fda173fa7c011d2bcdb40afa",
+    "/workspace/lupine-discovery-branch/discovery/.cache/mpea-study-supervisor/supervisor.py": "1dbd4a1b0e9c3f0246d23bd7670527cfa3bd69f754279aabba06e4ae464e87ab"
+  },
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "/workspace/lupine-discovery-branch/discovery/.cache/mpea-study-supervisor/review",
+    "-p",
+    "test_supervisor_review.py",
+    "-v"
+  ],
+  "exit_code": 0,
+  "outer_timeout": false,
+  "sensitive_sentinel_absent_from_logs": true,
+  "sources_unchanged": true,
+  "stderr_sha256": "0feada63596eca428e033531f74440526ea8c6a2bc5bd29790f1ec253250e22f",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

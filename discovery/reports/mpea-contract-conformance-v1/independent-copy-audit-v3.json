@@ -1,0 +1,33 @@
+{
+  "schema": "final_held_promotion_readonly_audit.v1",
+  "status": "PASS_COPY_AND_SOURCE_PARITY_ONLY",
+  "held_manifest_sha256": "b6696c17ee14fec36513ce348ad9991bff8eef4e9381ed23d0ce92d0929cd4df",
+  "main_v3_files": [
+    "scripts/mpea_archive_artifacts.py",
+    "scripts/mpea_archive_custody.py",
+    "scripts/mpea_archive_decisions.py",
+    "scripts/mpea_archive_driver.py",
+    "scripts/mpea_archive_operations.py",
+    "scripts/mpea_archive_profiles.py",
+    "scripts/mpea_archive_report.py",
+    "scripts/mpea_archive_run.py",
+    "scripts/mpea_archive_worker.py",
+    "scripts/mpea_stage_usage.py",
+    "scripts/mpea_study_flow.py",
+    "tests/test_mpea_companion_observability_review.py",
+    "tests/test_mpea_companion_scope_review.py",
+    "scripts/package_smoke.py",
+    "tests/test_package_retention.py",
+    "tests/test_package_retention_review.py",
+    "tests/test_package_mpea_interface.py"
+  ],
+  "source_before_count": 337,
+  "source_before_sha256": "0fc119b1098db8bf75742ab584fd8c9959cc14cb04c6bc0a251d8c35b584d6f6",
+  "persisted_index_and_current_index_and_current_worktree_equal": true,
+  "recorder_sha256": "57276dc466ae6bff0c43b49b916fd92ae3caa9387965fa0cacace4bf23245634",
+  "root_test_session": 56925,
+  "execution_observation": "Root full suite in progress; this audit does not label PASS or rerun tests. Log hash is a point-in-time snapshot, not final receipt.",
+  "inprogress_log_bytes": 51590,
+  "inprogress_log_sha256": "3bb904032b4466aa4056826611885a64010fcb627622bef9cc247b4b55823988",
+  "scope": "No main/source/spec writes, no actual scientific inputs. Companion author sole temp-parent mkdir adaptation preserves every assertion. New peer files exact portable copies. Representation final evidence bundle pending."
+}

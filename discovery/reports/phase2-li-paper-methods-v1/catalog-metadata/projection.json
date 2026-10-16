@@ -1,0 +1,19 @@
+{
+  "hitCount": 1,
+  "results": [
+    {
+      "id": "39799135",
+      "source": "MED",
+      "pmid": "39799135",
+      "pmcid": "PMC11724850",
+      "doi": "10.1038/s41597-024-04329-2",
+      "title": "Dataset of tensile properties for sub-sized specimens of nuclear structural materials.",
+      "authorString": "Li L, Merickel JW, Tang Y, Song R, Rittenhouse JE, Vakanski A, Xu F.",
+      "journalTitle": "Sci Data",
+      "pubYear": "2025",
+      "isOpenAccess": "Y",
+      "inEPMC": "Y",
+      "inPMC": "Y"
+    }
+  ]
+}

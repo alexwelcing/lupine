@@ -1,0 +1,28 @@
+{
+  "schema": "lupine.discovery.outcomes.v1",
+  "scenario_id": "calibrated-insufficient",
+  "problem_digest": "1b5504f26becb992380efa40d167b377d057bdc462683a10f6c05786df091d3f",
+  "outcomes": [
+    {
+      "id": "A",
+      "score": "0",
+      "constraints": {
+        "limit": "-1"
+      }
+    },
+    {
+      "id": "B",
+      "score": "4",
+      "constraints": {
+        "limit": "-1"
+      }
+    },
+    {
+      "id": "C",
+      "score": "-5",
+      "constraints": {
+        "limit": "1"
+      }
+    }
+  ]
+}

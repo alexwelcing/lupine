@@ -1,0 +1,11 @@
+{
+  "after_sha256": "7e7f6ed276eae1475b3e2ef996cced8cf9b64f7d5cdb85cd715904aac9c84df6",
+  "before_sha256": "49e43f80392380abcf8c2ff91469d581a21910b49d228e1e4b550a5c2616dd09",
+  "changes": [
+    "Explicit integer/domain assumptions",
+    "Conditional randomization scope excludes conditioning on realized audit transcript"
+  ],
+  "new_executions": false,
+  "recorded_at": "2026-10-16T10:55:26.811657+00:00",
+  "scientific_claim_changed": false
+}

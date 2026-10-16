@@ -1,0 +1,379 @@
+{
+  "checks": [
+    {
+      "check": "public_regular_file_operation/1/execution.json",
+      "passed": true
+    },
+    {
+      "check": "public_regular_file_operation/1/start.json",
+      "passed": true
+    },
+    {
+      "check": "public_regular_file_operation/1/stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "public_regular_file_operation/1/stderr.bin",
+      "passed": true
+    },
+    {
+      "check": "public_regular_file_operation/1/persisted-public.json",
+      "passed": true
+    },
+    {
+      "check": "public_regular_file_operation/1/persisted-reservation.json",
+      "passed": true
+    },
+    {
+      "check": "public_regular_file_operation/preflight.json",
+      "passed": true
+    },
+    {
+      "check": "public_regular_file_operation/reservation.json",
+      "passed": true
+    },
+    {
+      "check": "public_regular_file_operation/stopped.json",
+      "passed": true
+    },
+    {
+      "check": "public_regular_file_outer/execution.json",
+      "passed": true
+    },
+    {
+      "check": "public_regular_file_outer/stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "public_regular_file_outer/stderr.bin",
+      "passed": true
+    },
+    {
+      "check": "public_regular_file_outer/stopped.json",
+      "passed": true
+    },
+    {
+      "check": "public_regular_file_outer/before-state.json",
+      "passed": true
+    },
+    {
+      "check": "public_regular_file_outer/after-state.json",
+      "passed": true
+    },
+    {
+      "check": "public_regular_file_root-observed-layout.json",
+      "passed": true
+    },
+    {
+      "check": "public_identity_and_stdout_persistence",
+      "passed": true
+    },
+    {
+      "check": "canonical_public_and_reservation",
+      "passed": true
+    },
+    {
+      "check": "public_closed_outer_shape",
+      "passed": true
+    },
+    {
+      "check": "public_closed_inner_shape",
+      "passed": true
+    },
+    {
+      "check": "negative_schema_and_scope",
+      "passed": true
+    },
+    {
+      "check": "science_claims_absent",
+      "passed": true
+    },
+    {
+      "check": "all_failed_payloads_cleared",
+      "passed": true
+    },
+    {
+      "check": "source_identity_matches_frozen_public_expectation",
+      "passed": true
+    },
+    {
+      "check": "outer_exposure_closed_and_complete",
+      "passed": true
+    },
+    {
+      "check": "inner_exposure_closed",
+      "passed": true
+    },
+    {
+      "check": "replay_and_archive_cleanup",
+      "passed": true
+    },
+    {
+      "check": "failure_prefix_counters_have_exact_integer_types",
+      "passed": true
+    },
+    {
+      "check": "failure_prefix_counter_order",
+      "passed": true
+    },
+    {
+      "check": "observed_five_read_decompress_decode_operations",
+      "passed": true
+    },
+    {
+      "check": "observed_partial_xml_parse",
+      "passed": true
+    },
+    {
+      "check": "retained_character_exposure_no_documentary_role_projection",
+      "passed": true
+    },
+    {
+      "check": "name_exposure_not_started",
+      "passed": true
+    },
+    {
+      "check": "reservation_matches_actual_public_implementation",
+      "passed": true
+    },
+    {
+      "check": "fixed_layout_binding_chain",
+      "passed": true
+    },
+    {
+      "check": "phase_reserved_then_stopped_without_retry",
+      "passed": true
+    },
+    {
+      "check": "recording_source_command_and_exit",
+      "passed": true
+    },
+    {
+      "check": "recording_stdout_identity",
+      "passed": true
+    },
+    {
+      "check": "recording_stderr_identity",
+      "passed": true
+    },
+    {
+      "check": "recording_persisted_reservation_identities",
+      "passed": true
+    },
+    {
+      "check": "source_child_completed_without_timeout_or_launch_failure",
+      "passed": true
+    },
+    {
+      "check": "execution_recording_errors_absent",
+      "passed": true
+    },
+    {
+      "check": "public_review_preserves_nonreusable_block",
+      "passed": true
+    },
+    {
+      "check": "operation_state_hashes_and_equality",
+      "passed": true
+    },
+    {
+      "check": "operation_gate_hashes_held",
+      "passed": true
+    },
+    {
+      "check": "recorded_repository_hold",
+      "passed": true
+    },
+    {
+      "check": "outer_observed_exit_and_cleanup",
+      "passed": true
+    },
+    {
+      "check": "outer_stdout_identity",
+      "passed": true
+    },
+    {
+      "check": "outer_stderr_identity",
+      "passed": true
+    },
+    {
+      "check": "outer_stop_preserves_missing_success_final",
+      "passed": true
+    },
+    {
+      "check": "outer_state_hashes_held",
+      "passed": true
+    },
+    {
+      "check": "root_observed_real_pty_exit",
+      "passed": true
+    },
+    {
+      "check": "chronology",
+      "passed": true
+    },
+    {
+      "check": "no_second_slot_or_dependent_phase_public_artifacts",
+      "passed": true
+    },
+    {
+      "check": "all_supplied_public_inputs_held",
+      "passed": true
+    }
+  ],
+  "findings": {
+    "actual_layout_slots_observed": 1,
+    "archive_close_completed": true,
+    "blocking_member_or_XML_construct_identified": false,
+    "character_data_state": "PRIVATE_XML_DECODE_COMPLETED",
+    "completed_layout_counter_equation_applicable": false,
+    "decompressions": {
+      "completed": 5,
+      "started": 5
+    },
+    "dependent_phase_public_artifacts_present": false,
+    "engineering_status": "NO_GO",
+    "member_opens": {
+      "completed": 5,
+      "started": 5
+    },
+    "names_projected": 0,
+    "outer_observed_exit_code": 2,
+    "output_directory_close_error": null,
+    "producer_exit_code": 2,
+    "public_payloads_cleared": true,
+    "reason": "XML_PROFILE_UNSUPPORTED",
+    "retry_or_next_phase_authorized": false,
+    "reusable_completed_prior": false,
+    "role_projection_started": false,
+    "scientific_admission": false,
+    "second_layout_slot_public_artifacts_present": false,
+    "source_bytes_read": 183878,
+    "status": "BLOCKED_SCHEMA",
+    "utf8_decodes": {
+      "completed": 5,
+      "started": 5
+    },
+    "xml_parses": {
+      "completed": 4,
+      "started": 5
+    }
+  },
+  "finished_at": "2026-10-16T16:27:16.757817+00:00",
+  "inputs": [
+    {
+      "bytes": 84525,
+      "sha256": "c47477e3b91a8c9a4be3c3751cd679d218c02b24f32add199f21919c3c949d03",
+      "snapshot": "inputs/operation/1/execution.json",
+      "source": ".cache/phase2-li-complete-readiness-operations-v1/production/layout/1/execution.json"
+    },
+    {
+      "bytes": 41411,
+      "sha256": "243859d06ba4751d358fa0e1ecf9fcc48d3d9b49534f2cec3c3da4acd012b6b9",
+      "snapshot": "inputs/operation/1/start.json",
+      "source": ".cache/phase2-li-complete-readiness-operations-v1/production/layout/1/start.json"
+    },
+    {
+      "bytes": 7760,
+      "sha256": "aae55ee5a939c37ed13e73d82d68c9e3c92273f22aa7161f46d19b2799158545",
+      "snapshot": "inputs/operation/1/stdout.bin",
+      "source": ".cache/phase2-li-complete-readiness-operations-v1/production/layout/1/stdout.bin"
+    },
+    {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "snapshot": "inputs/operation/1/stderr.bin",
+      "source": ".cache/phase2-li-complete-readiness-operations-v1/production/layout/1/stderr.bin"
+    },
+    {
+      "bytes": 7760,
+      "sha256": "aae55ee5a939c37ed13e73d82d68c9e3c92273f22aa7161f46d19b2799158545",
+      "snapshot": "inputs/operation/1/persisted-public.json",
+      "source": ".cache/phase2-li-complete-readiness-operations-v1/production/layout/1/persisted-public.json"
+    },
+    {
+      "bytes": 5447,
+      "sha256": "30d43b01eccc92d54cdb4e34f88255381bd1f16fc9be3e5bbf9e96dc2db75e1e",
+      "snapshot": "inputs/operation/1/persisted-reservation.json",
+      "source": ".cache/phase2-li-complete-readiness-operations-v1/production/layout/1/persisted-reservation.json"
+    },
+    {
+      "bytes": 52860,
+      "sha256": "f57690cea63c2cd1c5b084c83736ff721507f42a9cffda3a22cba864410a0275",
+      "snapshot": "inputs/operation/preflight.json",
+      "source": ".cache/phase2-li-complete-readiness-operations-v1/production/layout/preflight.json"
+    },
+    {
+      "bytes": 172,
+      "sha256": "b0973d2a34b125755c78b031df81db3cf1ea1d8fce4b620304745fcc97ea1dda",
+      "snapshot": "inputs/operation/reservation.json",
+      "source": ".cache/phase2-li-complete-readiness-operations-v1/production/layout/reservation.json"
+    },
+    {
+      "bytes": 182,
+      "sha256": "420f26b82b435766609d25d7640f6f4250989d6b6f037df3956b8b725a0a09ef",
+      "snapshot": "inputs/operation/stopped.json",
+      "source": ".cache/phase2-li-complete-readiness-operations-v1/production/layout/stopped.json"
+    },
+    {
+      "bytes": 1142,
+      "sha256": "e3a5f0f021bc02b90eb81a4b7684c50f8a87518d0ec9c40d81c3518af882eccb",
+      "snapshot": "inputs/outer/execution.json",
+      "source": ".cache/phase2-li-complete-readiness-outer-observer-v1/runs/layout-9d1f21dae141a28db378ee2e16aa83340df57877/execution.json"
+    },
+    {
+      "bytes": 111,
+      "sha256": "3adaf470d1d5a4c4fb286fd442e5b09be39c58071b6d389fc0e8d05787539643",
+      "snapshot": "inputs/outer/stdout.bin",
+      "source": ".cache/phase2-li-complete-readiness-outer-observer-v1/runs/layout-9d1f21dae141a28db378ee2e16aa83340df57877/stdout.bin"
+    },
+    {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "snapshot": "inputs/outer/stderr.bin",
+      "source": ".cache/phase2-li-complete-readiness-outer-observer-v1/runs/layout-9d1f21dae141a28db378ee2e16aa83340df57877/stderr.bin"
+    },
+    {
+      "bytes": 1250,
+      "sha256": "8ff777c743e700175c99fb4e66737fb7254791b21f75d57e18e320b4ec63b5e0",
+      "snapshot": "inputs/outer/stopped.json",
+      "source": ".cache/phase2-li-complete-readiness-outer-observer-v1/runs/layout-9d1f21dae141a28db378ee2e16aa83340df57877/stopped.json"
+    },
+    {
+      "bytes": 40242,
+      "sha256": "1ebadf6ac8ecbbfeb9d6020ab1ec4a875c7beb64a70840f4ab4afd5dceb99911",
+      "snapshot": "inputs/outer/before-state.json",
+      "source": ".cache/phase2-li-complete-readiness-outer-observer-v1/runs/layout-9d1f21dae141a28db378ee2e16aa83340df57877/before-state.json"
+    },
+    {
+      "bytes": 40242,
+      "sha256": "1ebadf6ac8ecbbfeb9d6020ab1ec4a875c7beb64a70840f4ab4afd5dceb99911",
+      "snapshot": "inputs/outer/after-state.json",
+      "source": ".cache/phase2-li-complete-readiness-outer-observer-v1/runs/layout-9d1f21dae141a28db378ee2e16aa83340df57877/after-state.json"
+    },
+    {
+      "bytes": 329,
+      "sha256": "dc1725f9b73ba0ee52a6953bf64335bb8b86fa944625dcab033caba51969a24e",
+      "snapshot": "inputs/root-observed-layout.json",
+      "source": ".cache/phase2-li-complete-readiness-outer-observer-v1/root-observed-layout.json"
+    }
+  ],
+  "public_sha256": "aae55ee5a939c37ed13e73d82d68c9e3c92273f22aa7161f46d19b2799158545",
+  "published_commit": "9d1f21dae141a28db378ee2e16aa83340df57877",
+  "schema": "lupine.li.complete-layout.independent-blocked-public-review.v1",
+  "scope": [
+    "Independent public-byte consistency audit after exposure to the first blocked result.",
+    "No raw workbook, capture/G34 receipt, custody source, producer/guard invocation, network or Git call.",
+    "No producer, test, validator or source operation rerun. Fixed documentary contracts were read before actual evidence.",
+    "State and gate hashes corroborate retained receipts; they do not independently authenticate external CI or recompute raw operations.",
+    "Absence checks concern only public operation folders, not private custody storage.",
+    "No complete manifest or role mapping exists to validate. No sheet names, cell values or physical units inferred.",
+    "Failure-prefix counters must not be subjected to the completed-layout equality and minimum-six rule.",
+    "PRIVATE_XML_DECODE_COMPLETED retains machine exposure despite no public names; this was not target-free access.",
+    "Generic terminal_negative=false denotes absence of a completed negative frame; it does not authorize retry of this blocked operation."
+  ],
+  "seconds": 0.04343617499398533,
+  "source_sha256": "4c5f23ee4fcaa754da97c8f7bbac079911d2cc309ef630314db08f6a3318d9ce",
+  "started_at": "2026-10-16T16:27:16.714364+00:00",
+  "status": "PASS_CONSISTENT_BLOCKED_LAYOUT_STOP"
+}

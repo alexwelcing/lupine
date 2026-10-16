@@ -1,0 +1,25 @@
+{
+  "schema": "lupine.local-extra-diagnostic-final-written-review.v1",
+  "reviewed_at": "2026-10-16T09:06:42.867966+00:00",
+  "status": "PASS_SOURCE_ONLY_DESIGN_REVIEW",
+  "reviewer": "/root/phase2_evidence",
+  "readme_sha256": "42f84bca7035b17f8e032110aedeb48845bb47169b147fe99310ce78d577d00d",
+  "source_bindings_sha256": "afff8bc740435b6bd70d0b7ee84a8b9ff6ae661e794f71ec3933d4b449f79fd4",
+  "initial_review_sha256": "dde28c8e6c1fef0974501ea4fc651241b873e655552bc8fe8d8bb5f479d0b9da",
+  "blocking_findings": [],
+  "resolved_precision": [
+    "Fixed cap belongs to this profile; overflow blocks without automatic retry/cap adjustment. A later separately reviewed profile is not categorically forbidden.",
+    "TLV loop precedence is explicit: count cap first while bytes remain, then four-byte header bound, then data-size bound; exact end after256 records succeeds."
+  ],
+  "delta_review": "Only the two planned README refinements changed. Source-binding additions preserve prior draft identity and clarify original receipt-relative paths; all seven bound source/spec objects unchanged.",
+  "conclusion": "Conditional on the exact same-buffer predecessor classification and successful cleanup, the contiguous-prefix locator and closed complete-or-null ID/declared-length projection are justified. No field semantics or reader acceptance is inferred.",
+  "scope": {
+    "source_read_only": true,
+    "actual_public_receipt_reads": false,
+    "private_archive_or_capture_reads": false,
+    "network_requests": 0,
+    "implementation_tests_or_lean": false,
+    "tracked_writes": false
+  },
+  "limits": "This approves the prospective written design only. Candidate implementation, source gates, actual operations and scientific readiness remain separate."
+}

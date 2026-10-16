@@ -1,0 +1,35 @@
+{
+  "reason": "Preserve exact patch bytes without whitespace errors in newly tracked report text. Original hashes and decode checks retained.",
+  "files": [
+    {
+      "original_copy": "reports/fresh-process-test-repair-v1/evidence/mpea-fresh-process-failure-478208f/test_mpea_archive_driver_review.py.patch",
+      "wrapper": "reports/fresh-process-test-repair-v1/evidence/mpea-fresh-process-failure-478208f/test_mpea_archive_driver_review.py.patch.json",
+      "original_sha256": "a6be4e08c6243e0edf88b7a5df7a77341c9ed768bd6bbcdc29566c850e5b230c"
+    },
+    {
+      "original_copy": "reports/fresh-process-test-repair-v1/evidence/mpea-fresh-process-failure-478208f/mpea_archive_review_reproduction.py.patch",
+      "wrapper": "reports/fresh-process-test-repair-v1/evidence/mpea-fresh-process-failure-478208f/mpea_archive_review_reproduction.py.patch.json",
+      "original_sha256": "70361a307bed6e0e92a336927a6be6f4000933d927eac2cd2a39cb406489ef48"
+    },
+    {
+      "original_copy": "reports/retained-auditor-repair-v1/evidence/mpea-retained-auditor-v2/diffs/test_retained_artifacts.py.patch",
+      "wrapper": "reports/retained-auditor-repair-v1/evidence/mpea-retained-auditor-v2/diffs/test_retained_artifacts.py.patch.json",
+      "original_sha256": "0132d6a6e676e7ddc7d6c23dbe427a848ae7485015712cccd1a52083e8a5b958"
+    },
+    {
+      "original_copy": "reports/retained-auditor-repair-v1/evidence/mpea-retained-auditor-v2/diffs/verify_retained_artifacts.py.patch",
+      "wrapper": "reports/retained-auditor-repair-v1/evidence/mpea-retained-auditor-v2/diffs/verify_retained_artifacts.py.patch.json",
+      "original_sha256": "bd3d19ed123213dc965f278e977766c96f95f7d7fdcdcac6e1ec2c98f9b77b11"
+    },
+    {
+      "original_copy": "reports/retained-auditor-repair-v1/evidence/mpea-retained-auditor-v2/diffs/test_retained_mpea_transport.py.patch",
+      "wrapper": "reports/retained-auditor-repair-v1/evidence/mpea-retained-auditor-v2/diffs/test_retained_mpea_transport.py.patch.json",
+      "original_sha256": "c91f097fa68846abd3e99684fa6988c0ebd227b0351fe8de5610bd3a0dcf875c"
+    },
+    {
+      "original_copy": "reports/contract-integration-repair-v1/recorder-review/recorder-v1-v2.patch",
+      "wrapper": "reports/contract-integration-repair-v1/recorder-review/recorder-v1-v2.patch.json",
+      "original_sha256": "9a4107d93178d3ad03b08a2fe8bd693b668b000240caba459b18ec1f8cc85a3e"
+    }
+  ]
+}

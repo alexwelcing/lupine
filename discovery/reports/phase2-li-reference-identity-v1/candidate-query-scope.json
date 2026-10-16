@@ -1,0 +1,35 @@
+{
+  "schema": "lupine.li-reference-candidate-metadata-scope.v1",
+  "frozen_at": "2026-10-16T09:12:18.497302+00:00",
+  "prior_exact_doi_response_sha256": "a3d83af7737c0ac38db0bf08b14a9dd81c140492001b022403b48633dabcee12",
+  "justification": "The one exact DOI metadata record names the Gussev chapter, not the Klueh1985 title/author. A single bounded registry title+author+year query can identify a documentary candidate for the unresolved CR50 citation; no source citation will be replaced or records merged.",
+  "source_query_fields": {
+    "reference_id": "CR50",
+    "title": "Miniature tensile test specimens for fusion reactor irradiation studies",
+    "author_family": "Klueh",
+    "publication_year": "1985"
+  },
+  "request": {
+    "method": "GET",
+    "url": "https://api.crossref.org/works?query.title=Miniature+tensile+test+specimens+for+fusion+reactor+irradiation+studies&query.author=Klueh&filter=from-pub-date%3A1985-01-01%2Cuntil-pub-date%3A1985-12-31&rows=3&select=DOI%2Ctitle%2Cauthor%2Ccontainer-title%2Cvolume%2Cissue%2Cpage%2Cpublished%2Cpublisher%2Ctype%2CURL",
+    "maximum_results": 3,
+    "maximum_body_bytes": 1048576,
+    "redirects_allowed": false,
+    "retries": 0
+  },
+  "projection": [
+    "DOI",
+    "title",
+    "author given/family names and sequence only",
+    "container-title",
+    "volume",
+    "issue",
+    "page",
+    "published",
+    "publisher",
+    "type",
+    "URL"
+  ],
+  "interpretation_limit": "Search ranking is not identity proof. Compare returned selected fields explicitly; candidate metadata does not correct the original citation or verify any underlying test/measurement. No DOI link/fulltext/paper/measurement request follows.",
+  "further_queries": "No additional query planned in this task."
+}

@@ -1,0 +1,67 @@
+{
+  "schema": "lupine.engineering.local_extra_handoff.v1",
+  "finished_utc": "2026-10-16T09:22:10.019184+00:00",
+  "status": "READY_FOR_ROOT_PUBLICATION_GATES",
+  "candidate_promotion_root": ".cache/phase2-li-local-extra-candidate-v1/promotion",
+  "promotion_files": [
+    {
+      "candidate": ".cache/phase2-li-local-extra-candidate-v1/promotion/scripts/li_v3_local_extra_headers.py",
+      "target": "scripts/li_v3_local_extra_headers.py",
+      "sha256": "54db58a567afc9211303f2edff13541ab2f97beb77ef2edaa518ad32bf6b1026",
+      "bytes": 11921,
+      "original_tracked_sha256": null,
+      "change": "add new file"
+    },
+    {
+      "candidate": ".cache/phase2-li-local-extra-candidate-v1/promotion/tests/test_li_v3_local_extra_headers.py",
+      "target": "tests/test_li_v3_local_extra_headers.py",
+      "sha256": "b072f2e63a79d3c032838f49f4e2eeea845b7872d67c43f9e0e8a9964ca74a78",
+      "bytes": 19937,
+      "original_tracked_sha256": null,
+      "change": "add new file"
+    },
+    {
+      "candidate": ".cache/phase2-li-local-extra-candidate-v1/promotion/tests/test_li_v3_local_extra_headers_review.py",
+      "target": "tests/test_li_v3_local_extra_headers_review.py",
+      "sha256": "24e54f7674a116a043aecaf3e5b396aba3139eb1739998f45ab5149c82b5602b",
+      "bytes": 40327,
+      "original_tracked_sha256": null,
+      "change": "add new file"
+    },
+    {
+      "candidate": ".cache/phase2-li-local-extra-candidate-v1/promotion/docs/li-v3-local-extra-headers-plan.md",
+      "target": "docs/li-v3-local-extra-headers-plan.md",
+      "sha256": "1247430dfe174bb1d7dd2e17ca06b5781ef41fadd7cb13d60d6d01e202dbb594",
+      "bytes": 8495,
+      "original_tracked_sha256": null,
+      "change": "add new file"
+    }
+  ],
+  "report_target": "reports/phase2-li-local-extra-implementation-v1",
+  "report_inventory_sha256": "831aaa823f82a19394fadc8e50408ed0aaef4fc2f33bfe6f591fd936a74ccc7c",
+  "report_file_count_including_inventory": 34,
+  "report_bytes_including_inventory": 264722,
+  "copied_originals": 30,
+  "lossless_copy_checks": "PASS",
+  "local_readme_links_checked": 11,
+  "trailing_whitespace_check": "PASS",
+  "author_execution": {
+    "tests": 19,
+    "exit_code": 0,
+    "source_held": true,
+    "receipt_sha256": "f9b36028e24a03924faea7e4104d94e8fb77f021488d8c21c82e8b8e0391bbf0"
+  },
+  "independent_execution": {
+    "tests": 30,
+    "exit_code": 0,
+    "source_held": true,
+    "first_negative": "29 pass; one preserved reviewer filename-profile expectation failure, corrected test only",
+    "review_sha256": "ae6c0403ee38df07c4d399e6072c2135c5deaa66de3b2e5815e1acb7601407be"
+  },
+  "source_review_sha256": "1083f9a93cff0ddd39dba8b668ce6614056295b4507d10ca794b0cb33aedbb10",
+  "parent_promoted_four_source_files_byte_verified": true,
+  "broader_root_checks": "Separate root receipts; not rerun or claimed executed by this lane.",
+  "actual_private_source_operations": "NOT_RUN",
+  "scientific_claim_change": false,
+  "held_source": "54db58a567afc9211303f2edff13541ab2f97beb77ef2edaa518ad32bf6b1026"
+}

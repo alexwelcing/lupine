@@ -1,0 +1,101 @@
+{
+  "schema": "lupine.nist-guidance-independent-interpretation.v1",
+  "reviewed_at": "2026-10-16T10:56:51.505991+00:00",
+  "scope": "Independent reading of retained static projection blocks only; no linked appendices, image equations, omitted policy blockquotes or measurement sources.",
+  "retained_artifact_check_sha256": "667f692f07848a08bd268b22a6da0a8187b370e7c4b1aee9297aa4f5ba73dae2",
+  "findings": [
+    {
+      "id": "N01",
+      "source": "section5",
+      "section": "5.1",
+      "block": 128,
+      "html_line": 739,
+      "assessment": "Combined standard uncertainty is an estimated standard deviation obtained from individual standard uncertainties and covariances as appropriate, with Type A and Type B contributions.",
+      "limit": "The prose does not authorize ignoring covariance or provide the unacquired Appendix A equation. This measurement-propagation statement is distinct from assumptions of a joint-risk theorem."
+    },
+    {
+      "id": "N02",
+      "source": "section5",
+      "section": "5.2 and notes",
+      "blocks": [
+        129,
+        130,
+        131
+      ],
+      "html_lines": [
+        743,
+        746,
+        748
+      ],
+      "assessment": "The account assumes compensation for recognized significant systematic effects and treats uncertainty of an applied correction separately from systematic error. A note acknowledges impractical correction in some limited-resource cases while urging conformity as far as possible.",
+      "limit": "An uncorrected effect is not automatically the same quantity as correction uncertainty; neither this guidance nor a documentary No field alone establishes the magnitude/significance of a particular BAM effect or invalidates its reported budget."
+    },
+    {
+      "id": "N03",
+      "source": "section5",
+      "section": "5.4",
+      "blocks": [
+        134,
+        135
+      ],
+      "html_lines": [
+        757,
+        759
+      ],
+      "assessment": "The approximate one-standard-uncertainty coverage statement requires an approximately normal characterized distribution and negligible uncertainty in the combined standard uncertainty. NIST describes a common CLT-based case with many well-behaved contributions of comparable importance and adequate linear approximation.",
+      "limit": "These premises have not been verified for BAM by this reading. The CLT example is not a proof that every reported k=2 result is normal, nor a claim that this is the only route to normality."
+    },
+    {
+      "id": "N04",
+      "source": "section5",
+      "section": "5.5",
+      "block": 136,
+      "html_line": 763,
+      "assessment": "Confidence interval has a specific statistical meaning requiring conditions including Type A evaluation of every contributing component. The guideline instead describes coverage probability of the distribution characterized by the result and its combined uncertainty.",
+      "limit": "Including is not if-and-only-if; all Type A components alone are not stated sufficient. Metrological coverage wording does not automatically establish a frequentist repeated-sampling, conditional, posterior or simultaneous-coverage interpretation."
+    },
+    {
+      "id": "N05",
+      "source": "section6",
+      "section": "6.1 and following paragraph",
+      "blocks": [
+        128,
+        129
+      ],
+      "html_lines": [
+        753,
+        755
+      ],
+      "assessment": "Expanded uncertainty is defined as the coverage factor times combined standard uncertainty; the cautions of5.5 also apply to that expanded interval.",
+      "limit": "This definitional relation does not, by algebra alone, identify an exact physical error standard deviation, error distribution or coverage guarantee for a separate data source."
+    },
+    {
+      "id": "N06",
+      "source": "section6",
+      "section": "6.2",
+      "block": 130,
+      "html_line": 757,
+      "assessment": "The k=2 approximate95percent statement explicitly requires the normal distribution and negligible uncertainty in the combined standard uncertainty.",
+      "limit": "Approximate is not exact, scalar coverage is not simultaneous coverage, and no premise is transferred to BAM or Lupine without justification."
+    },
+    {
+      "id": "N07",
+      "source": "section6",
+      "section": "6.3",
+      "block": 131,
+      "html_line": 759,
+      "assessment": "Assigning a specific coverage level to k is difficult in practice; it requires detailed probability distributions for the quantities on which the measurand depends and their combination into the measurand distribution.",
+      "limit": "A numerical coverage factor alone does not determine that distribution or joint endpoint risk."
+    }
+  ],
+  "omissions": "Direct policy blockquotes introduced in5.3,6.5,6.6 are not part of the bounded text projection, and image equations were not extracted. No content of those missing blocks, unrequested Appendix A/B/C or linked works is supplied here.",
+  "scientific_implication": "Guidance supports keeping measurement definitions and coverage assumptions explicit. It does not establish BAM per-test budgets, Z convention, dependence, a latent-property model, sampling/exchangeability or future-prediction validity. Existing BAM evidence was not reread.",
+  "activity": {
+    "network_requests": 0,
+    "raw_html_reads": 0,
+    "html_parser_reruns": 0,
+    "new_measurement_source_reads": 0,
+    "new_benchmark_or_model_choices": false
+  },
+  "publication": "Own paraphrase and locators only; no full projection, public-contact roster or raw HTML copied."
+}

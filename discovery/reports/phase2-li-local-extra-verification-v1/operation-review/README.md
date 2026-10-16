@@ -1,0 +1,27 @@
+# Local-extra actual-operation review
+
+The first actual independent audit passed at clean commit `d0505b9b358a4bdeafbd742f1aeeb6c2b955abf3`: 11,189 checks, 09:55:18.377585–09:55:21.206780 UTC on 2026-10-16, 2.828985877 seconds, exit 0 and empty stderr. The exact command, source hashes and complete logs are retained. The auditor only inspected public receipts, committed source, public gate records and package-audit results; it did not import a production module, invoke a reader, or open private objects or capture records.
+
+Both actual fixed diagnoses returned `LOCAL_EXTRA_HEADERS_COMPLETE` while remaining `BLOCKED_SCHEMA` with exit 2. Each discloses exactly `[{"data_size": 516, "header_id": 41504}]`; both public receipts hash to `52fe2d25f0c739c1c5137f0514f07f4ee0be35dffd7ef9141b19fe5ee5520d2e`. The completed walk therefore traversed a 520-byte first local-extra span: one four-byte structural header and 516 opaque data bytes. No payload semantics are inferred from that identifier or size.
+
+The prior categorical result remains `LOCAL_EXTRA_PRESENT` at `entry_local`, with same-entry local checks `CHECKED`, one primary category and no supplementary category. This completes only the fixed first local-extra field-header walk. It does not approve the full ZIP profile, certify later entries, interpret the field payload, identify scientific columns or establish independent observations.
+
+Whole target-bearing workbook bytes and ZIP directory names/metadata were privately read by the production command. Its local-extra payload remained opaque; this is not a claim that those bytes were unread. Member decompression, XML/worksheet/shared-string decoding, scientific eligibility decisions and sampling-independence checks remain false; fits and splits are zero and scientific counts remain null. Equal public results are computational replay, not scientific replication.
+
+Original four-job CI run `38880756519` was observed complete at 09:54:40.611671 UTC, before the first actual operation at 09:54:48.390471 UTC. The package, strict verifier and both independent artifact audits also completed before operation. All 326 runtime files, exact HEAD, worktree cleanliness, source guards and public input hashes were held through review. `actual-review.json` records the 361 public/source evidence identities and checked results; `review.json` records the source-path interpretation and limitations. No unresolved blocker was found for this narrow completed operation.
+
+The exact recorder changed from the corrected prospective version solely by replacing its pending commit with `d0505b9…`, producing SHA-256 `01f45e732c930bbf45c81467a709b648d83802945146e4e76b06265a8ff0d5b9`. The earlier 21-case synthetic challenge was not rerun or relabeled as an actual-source result. Before actual audit invocation, an independent source reviewer identified two auditor bookkeeping gaps: repeated-read hashes could replace earlier observations, and final operation time lacked an upper bound. Both were corrected, with original source and findings preserved. Actual audit passed on its first invocation; no actual source retry occurred in this review.
+
+## Historical preparation record
+
+The following text is the unchanged earlier preparation narrative. Its pending-commit wording describes that earlier stage; the actual completed record above supersedes that checkpoint. The original is also preserved as `README-before-actual.md`.
+
+# Prospective local-extra operation recorder review
+
+The corrected recorder `06e1a086dad664f51bb2b96533d8317889b909aa8a9fe349a7742c129f585adf` passes source review and a separate 21-case synthetic validation/flow challenge. Its production commit is still an explicit pending placeholder; no actual source operation is authorized by these preparatory checks alone.
+
+The first source-review finding was material: the original recorder accepted the candidate's broad unexpected-exception reason and could automatically proceed to a second diagnostic slot. Root preserved that original and narrowed replayable reasons to complete, header-truncated, data-truncated and record-limit outcomes. Unexpected parser, locator or predecessor failures now stop after retaining the first slot. Source snapshots and `recorder-review.json` preserve the finding and resolution before any source execution.
+
+The later first synthetic invocation passed in 0.568220915 seconds with empty stderr. It executed only extracted recorder definitions with invented identities and injected gate/context/file/transport dependencies. The harness itself ran; it never imported a source reader, called a production context, launched a source-reading process, or opened private custody contents. Four ordinary report shapes proceed to two fake slots; unexpected errors and malformed/partial field lists stop after one. The preserved original reproduces the expected bad-flow negative control. `synthetic-challenge-review.json`, exact results, code, logs and execution receipt record this additive scope; the earlier source-only review describes its earlier timing correctly.
+
+The local-extra candidate's exact predecessor check, bounded contiguous locator and ID/length walker appear consistent with the contract. Whole raw acquisition and inherited directory metadata decoding remain exposed. A complete field-header inventory would not interpret local payload semantics, approve an archive profile, establish independent observations or release a scientific claim.

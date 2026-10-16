@@ -1,0 +1,157 @@
+{
+  "status": "PASS",
+  "commit": "d0505b9b358a4bdeafbd742f1aeeb6c2b955abf3",
+  "baseline_commit": "a6e87c198d8116d26c523e0e1b2eedce4aeb225b",
+  "unchanged_prior_runtime_files": 323,
+  "added_runtime_files": {
+    "scripts/li_v3_local_extra_headers.py": "54db58a567afc9211303f2edff13541ab2f97beb77ef2edaa518ad32bf6b1026",
+    "tests/test_li_v3_local_extra_headers.py": "b072f2e63a79d3c032838f49f4e2eeea845b7872d67c43f9e0e8a9964ca74a78",
+    "tests/test_li_v3_local_extra_headers_review.py": "570dc7f3cfabb094550b8f1c5fed8f4f801d832dc8003611fc6638a8285a468e"
+  },
+  "baseline_runtime_pins_verified_against_baseline_git_bytes": 323,
+  "new_source_test_contracts_exact_in_git_archive_worktree": {
+    "docs/li-v3-local-extra-headers-plan.md": "1247430dfe174bb1d7dd2e17ca06b5781ef41fadd7cb13d60d6d01e202dbb594",
+    "scripts/li_v3_local_extra_headers.py": "54db58a567afc9211303f2edff13541ab2f97beb77ef2edaa518ad32bf6b1026",
+    "tests/test_li_v3_local_extra_headers.py": "b072f2e63a79d3c032838f49f4e2eeea845b7872d67c43f9e0e8a9964ca74a78",
+    "tests/test_li_v3_local_extra_headers_review.py": "570dc7f3cfabb094550b8f1c5fed8f4f801d832dc8003611fc6638a8285a468e"
+  },
+  "source_pins_match_final_reviewed_pin_record": true,
+  "reviewed_pin_record_sha256": "af2fbb73b2c48c293ca7ab034e9fa2322d7b7382c5b556fc918bb85371fd7bb1",
+  "unchanged_wheel_package_members": 108,
+  "wheel_payload_equals_complete_baseline_git_package": true,
+  "wheel_nonpackage_content_delta": {},
+  "wheel_archive_bytes_claimed_unchanged": false,
+  "prior_manifest_sha256": "b33c0652128fc256269a639589cbe772a64ab7e4e5177585a1ec96dd3c30292f",
+  "current_manifest_sha256": "e806d052dcfaadc5bbc0a9378318709da011fbaf3a53a290aa6141014bae3959",
+  "unchanged_full_artifact_auditor_review_sha256": "6d3d05fa15c2d1bf72cf2470ee8f823df8e8f3a14da36b053a99bb4c1a12caa1",
+  "held_public_inputs": {
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-local-extra-artifact-review-v1/additive_audit.py": "6b267cd11a73b0f73c63a7b9ae2ba75d30f9699edf14e41c5fd1f98f4932ce2a",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-local-extra-artifact-review-v1/reviewed-pins.json": "af2fbb73b2c48c293ca7ab034e9fa2322d7b7382c5b556fc918bb85371fd7bb1",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-local-extra-artifact-review-v1/actual-d0505b9b358a/review.json": "6d3d05fa15c2d1bf72cf2470ee8f823df8e8f3a14da36b053a99bb4c1a12caa1",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-notebook-header-clean-package-v1/artifacts/release-artifacts.json": "c7676452659b6909c874eac655e2ae337e9f1fe117402ffff2c91fc8e4a631db",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-local-extra-clean-package-v1/artifacts/release-artifacts.json": "86d7e2991298364b03f288b06ada9d3c20024acc98ec4aefdca7d3e34cffe705",
+    "/workspace/lupine-discovery-branch/discovery/reports/runtime-manifest.json": "e806d052dcfaadc5bbc0a9378318709da011fbaf3a53a290aa6141014bae3959",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-local-extra-clean-package-v1/artifacts/lupine-discovery-source-d0505b9b358a.tar": "8c0cb60e847c07e8887ea29afd9649d524bdfdc49f4fa59a68247da66f399861",
+    "/workspace/lupine-discovery-branch/discovery/docs/li-v3-local-extra-headers-plan.md": "1247430dfe174bb1d7dd2e17ca06b5781ef41fadd7cb13d60d6d01e202dbb594",
+    "/workspace/lupine-discovery-branch/discovery/scripts/li_v3_local_extra_headers.py": "54db58a567afc9211303f2edff13541ab2f97beb77ef2edaa518ad32bf6b1026",
+    "/workspace/lupine-discovery-branch/discovery/tests/test_li_v3_local_extra_headers.py": "b072f2e63a79d3c032838f49f4e2eeea845b7872d67c43f9e0e8a9964ca74a78",
+    "/workspace/lupine-discovery-branch/discovery/tests/test_li_v3_local_extra_headers_review.py": "570dc7f3cfabb094550b8f1c5fed8f4f801d832dc8003611fc6638a8285a468e",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-notebook-header-clean-package-v1/artifacts/lupine_discovery-0.1.0-py3-none-any.whl": "7ab8ef89c72bdf8c333ba866cf8e2e9fd19fa187d150f87e3b4f41b46e361a50",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-local-extra-clean-package-v1/artifacts/lupine_discovery-0.1.0-py3-none-any.whl": "b04beb40d502c54f1d91c6dfa719e8c17ef92f159e76c535141a249ecb94929d"
+  },
+  "scope": "Byte identity and additive-source preservation only; no project import, tests, scientific private input, production acquisition or diagnostic executed.",
+  "scientific_claim_changed": false,
+  "remote_ci_verified": false,
+  "independence_note": "The addendum reviewer did not implement or test the candidate diagnostic. This checks package/source custody and unchanged payloads, not an independent diagnostic-correctness theorem.",
+  "started_utc": "2026-10-16T09:34:02.047554+00:00",
+  "elapsed_seconds": 2.488503413002036,
+  "script_sha256": "6b267cd11a73b0f73c63a7b9ae2ba75d30f9699edf14e41c5fd1f98f4932ce2a",
+  "actual_git_commands": [
+    {
+      "arguments": [
+        "rev-parse",
+        "HEAD"
+      ],
+      "stdout_sha256": "5992a27b9dc2e4b4fd1dbd9a9693251b22256bcb2b3b668b68bc9beb7e8990d4",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "show",
+        "a6e87c198d8116d26c523e0e1b2eedce4aeb225b:discovery/reports/runtime-manifest.json"
+      ],
+      "stdout_sha256": "b33c0652128fc256269a639589cbe772a64ab7e4e5177585a1ec96dd3c30292f",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "show",
+        "d0505b9b358a4bdeafbd742f1aeeb6c2b955abf3:discovery/reports/runtime-manifest.json"
+      ],
+      "stdout_sha256": "e806d052dcfaadc5bbc0a9378318709da011fbaf3a53a290aa6141014bae3959",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "show",
+        "d0505b9b358a4bdeafbd742f1aeeb6c2b955abf3:discovery/docs/li-v3-local-extra-headers-plan.md"
+      ],
+      "stdout_sha256": "1247430dfe174bb1d7dd2e17ca06b5781ef41fadd7cb13d60d6d01e202dbb594",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "show",
+        "d0505b9b358a4bdeafbd742f1aeeb6c2b955abf3:discovery/scripts/li_v3_local_extra_headers.py"
+      ],
+      "stdout_sha256": "54db58a567afc9211303f2edff13541ab2f97beb77ef2edaa518ad32bf6b1026",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "show",
+        "d0505b9b358a4bdeafbd742f1aeeb6c2b955abf3:discovery/tests/test_li_v3_local_extra_headers.py"
+      ],
+      "stdout_sha256": "b072f2e63a79d3c032838f49f4e2eeea845b7872d67c43f9e0e8a9964ca74a78",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "show",
+        "d0505b9b358a4bdeafbd742f1aeeb6c2b955abf3:discovery/tests/test_li_v3_local_extra_headers_review.py"
+      ],
+      "stdout_sha256": "570dc7f3cfabb094550b8f1c5fed8f4f801d832dc8003611fc6638a8285a468e",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "-C",
+        "/workspace/lupine-discovery-branch",
+        "archive",
+        "--format=tar",
+        "a6e87c198d8116d26c523e0e1b2eedce4aeb225b",
+        "discovery"
+      ],
+      "stdout_sha256": "c286b6105d116d92256fea585782a5892bc026b5d13a720845a4b686c96c68e4",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "rev-parse",
+        "HEAD"
+      ],
+      "stdout_sha256": "5992a27b9dc2e4b4fd1dbd9a9693251b22256bcb2b3b668b68bc9beb7e8990d4",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    }
+  ],
+  "exit_code": 0
+}

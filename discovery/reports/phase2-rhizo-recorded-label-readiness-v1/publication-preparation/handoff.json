@@ -1,0 +1,26 @@
+{
+  "actual_reference_choice": "UNKNOWN",
+  "author_existing_wrapper_directive_honored": true,
+  "checks_sha256": "19b461fde40c42c169112d8c7b24f411d91377b0460f32a826e4751c3e030325",
+  "copy_map_sha256": "231816f8595e225b48e1c505ef1d26f7eb03e8a0160841461eaaa4223c3b7f09",
+  "destination_root": "reports/phase2-rhizo-recorded-label-readiness-v1",
+  "first_publication_assembly_failure": {
+    "cause": "Generated publication-checks link checked before its file existed; exact deferred check now validated after creation.",
+    "path": ".cache/phase2-rhizo-recorded-label-publication-v1/first-assembly-failure.json",
+    "preserved_first_build": ".cache/phase2-rhizo-recorded-label-publication-v1/first-build",
+    "product_or_source_failure": false,
+    "sha256": "e9de2a10abae8942e1cc2209b4bb54e195d3a1f26aa395706e1c94dc17fd1a28"
+  },
+  "historical_markdown_links": "All relative Markdown links resolve without prose repair; markdown_link_repairs is empty.",
+  "inventory_sha256": "591cf46eab789ef31b15f4ea0fc24816d99fb0de896103a0cb3a79c0603a0982",
+  "private_projection_or_raw_objects_read": false,
+  "promoted_bytes": 982265,
+  "promoted_files": 96,
+  "promotion_root": ".cache/phase2-rhizo-recorded-label-publication-v1/promotion",
+  "publication_builder_sha256": "e1a4dfd132000baac6b4ffa3260490ed397b3c8bf6c7e0c9d12e1f639d86c570",
+  "readme_sha256": "b60722c346e3f207209a59ce2bf84ae6a7e9dca0154bece2ad6e2d5d97b81d3f",
+  "scientific_status": "NOT_ADMITTED",
+  "source_entries": 94,
+  "source_operations_or_tests_rerun": false,
+  "status": "PUBLICATION_BUNDLE_READY"
+}

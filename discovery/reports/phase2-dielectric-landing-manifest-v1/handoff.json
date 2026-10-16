@@ -1,0 +1,21 @@
+{
+  "copy_instruction": "Copy exactly10 public-inventory files plus public-inventory.json and this handoff; never raw HTML or caches.",
+  "entrypoint": "README.md",
+  "entrypoint_sha256": "45e8278edbcdd81d78f16d59e91d9e7f6a6b55bf6524c478700b026cfd3d754c",
+  "file_bytes_downloaded": 0,
+  "file_links_identified": 2,
+  "file_size_or_checksum_available_in_projection": false,
+  "http_status": 200,
+  "metadata_only_next_url_identified": false,
+  "no_new_researcher_scientific_result_exposure": true,
+  "no_test_or_independent_review_pass_claim": true,
+  "public_inventory": "public-inventory.json",
+  "public_inventory_sha256": "dda66c732f97bd1df35ee9c7998af8efc7a98880313413639a75d08cf479df47",
+  "redirects_followed": 0,
+  "requests": 1,
+  "retries": 0,
+  "schema": "lupine.discovery.dielectric_landing_manifest.handoff.v1",
+  "scientific_admission": false,
+  "status": "HELD_LANDING_FILE_LOCATORS_ONLY_NO_VERIFIED_MANIFEST",
+  "whole_html_machine_exposure": true
+}

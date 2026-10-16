@@ -1,0 +1,38 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    ".cache/mpea-study-custody/tests",
+    "-p",
+    "test_mpea_target_custody.py",
+    "-v"
+  ],
+  "elapsed_seconds": 0.44602403300086735,
+  "exit_code": 0,
+  "log_sha256": "04e201f362a815dd41cee7c39ac7af8d8ac04dddfe15b3fb1511d5770ceba9a3",
+  "schema": "mpea.study_custody.synthetic_parser_engineering.v1",
+  "scope": {
+    "actual_source_allocation": false,
+    "constructed_fixture_bytes_only": true,
+    "features_extracted": false,
+    "fits": 0,
+    "os_entropy": false,
+    "production_authorization": false,
+    "raw_archive_read": false,
+    "stage_driver_implemented": false
+  },
+  "sources_after": {
+    ".cache/mpea-study-custody/scripts/mpea_target_custody.py": "7f649dd50d7c5589fd9da0f9745b7936b7a3a2bf631a8418affae4a67be1ee9c",
+    ".cache/mpea-study-custody/tests/test_mpea_target_custody.py": "f8b53da93fd7aa5f2bb9a79657b221bcae89e103c08655dbb07ffc87f8b5a5f5"
+  },
+  "sources_before": {
+    ".cache/mpea-study-custody/scripts/mpea_target_custody.py": "7f649dd50d7c5589fd9da0f9745b7936b7a3a2bf631a8418affae4a67be1ee9c",
+    ".cache/mpea-study-custody/tests/test_mpea_target_custody.py": "f8b53da93fd7aa5f2bb9a79657b221bcae89e103c08655dbb07ffc87f8b5a5f5"
+  },
+  "sources_unchanged": true,
+  "status": "PASS",
+  "test_count": 13
+}

@@ -1,0 +1,22 @@
+{
+  "schema": "lupine.discovery.outcomes.v1",
+  "scenario_id": "exact-rational-order",
+  "problem_digest": "b958b83b96755df03a8f8c5b54c05f19e0f28f6aaca53a84f201aa3722fef9a6",
+  "outcomes": [
+    {
+      "id": "A",
+      "score": "1/3",
+      "constraints": {}
+    },
+    {
+      "id": "B",
+      "score": "1000000000000000000000000000001/3000000000000000000000000000000",
+      "constraints": {}
+    },
+    {
+      "id": "C",
+      "score": "4/3",
+      "constraints": {}
+    }
+  ]
+}

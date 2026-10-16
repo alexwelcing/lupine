@@ -1,0 +1,4 @@
+'LupineFinitePlanningMonotone.evaluation_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LupineFinitePlanningMonotone.evaluation_antitone' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LupineFinitePlanningMonotone.capped_feasible_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LupineFinitePlanningMonotone.unique_first_count' depends on axioms: [propext, Classical.choice, Quot.sound]

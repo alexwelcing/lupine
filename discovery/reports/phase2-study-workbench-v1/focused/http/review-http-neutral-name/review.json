@@ -1,0 +1,33 @@
+{
+  "status": "PASS",
+  "review_kind": "independent_real_loopback_http_tests",
+  "test_methods": 15,
+  "unittest_reported_seconds": 0.834,
+  "execution_receipt_sha256": "5d34061124935de12593f9ff36b09d2b5208aa28cb6c3f06ec6eda1762bcd46e",
+  "test_source_sha256": "59310c4b1b33166d0651da37f9d2f0304d770d4e7db628d8ac84df420bda891e",
+  "candidate_server_sha256": "c2c0e436cf836c4c55b0e0060284f55b45db446614438e883f2777cbae0e943d",
+  "all_input_bindings_unchanged": true,
+  "scope": [
+    "Actual loopback HTTP boundary exercised; CLI JSON-value agreement tested in-process.",
+    "Closed request fields reject outcomes/evidence/extra scientific payloads.",
+    "Unknown and deterministic infeasible-rank states preserved.",
+    "Exact probability examples and 29/59 minimum-panel boundaries checked.",
+    "4096-byte requests accepted;4097 bytes rejected with413.",
+    "JSON duplicates,nonfinite/floating literals,invalidUTF8,deep nesting,large numeric text,boolean counts and out-of-domain exact inputs rejected.",
+    "No-store and loopback/origin guards retained.",
+    "Execution overlay copied Python modules only;no scientific resources or web assets included."
+  ],
+  "limits": [
+    "These are prospective mathematical/software checks,not evidence of scientific usefulness or physical accuracy.",
+    "This run does not exercise browser rendering,clicks,layout,download behavior or JavaScript races.",
+    "Underlying production planning mathematics were not independently reimplemented here;small known arithmetic values and wire-level CLI conformance are checked."
+  ],
+  "blocking_findings": [],
+  "test_file": "promotion/tests/test_server_study_planning.py",
+  "author": "/root/phase2_planner/ui_review",
+  "implementation_author": "/root/phase2_planner",
+  "authorship_scope": "A separate agent authored these HTTP tests and performed source review; this is internal agent separation, not an external laboratory or independent scientific replication.",
+  "rename_scope": "Only filename,class name,module docstring changed. AST comparison confirms identical class methods; original run, source overlay and receipts retained.",
+  "original_run": "../review-http-first/execution.json",
+  "class_methods_ast_identical_after_rename": true
+}

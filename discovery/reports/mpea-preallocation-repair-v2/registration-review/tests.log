@@ -1,0 +1,8 @@
+test_changed_registration_preserves_failed_first_attempt (test_recovery_v2.Recovery.test_changed_registration_preserves_failed_first_attempt) ... ok
+test_each_new_closure_entry_mandatory (test_recovery_v2.Recovery.test_each_new_closure_entry_mandatory) ... ok
+test_exact_v2_accepts_v1_rejects (test_recovery_v2.Recovery.test_exact_v2_accepts_v1_rejects) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.110s
+
+OK

@@ -1,0 +1,35 @@
+{
+  "schema": "lupine.discovery.outcomes.v1",
+  "scenario_id": "no-incumbent",
+  "problem_digest": "4fb06ce5c0ba281e14609963006af3ff8d55f97219bb9b2a6e4f565ecce539c3",
+  "outcomes": [
+    {
+      "id": "A",
+      "score": "1",
+      "constraints": {
+        "limit": "-1"
+      }
+    },
+    {
+      "id": "B",
+      "score": "4",
+      "constraints": {
+        "limit": "1"
+      }
+    },
+    {
+      "id": "C",
+      "score": "7",
+      "constraints": {
+        "limit": "0"
+      }
+    },
+    {
+      "id": "D",
+      "score": "-9",
+      "constraints": {
+        "limit": "1"
+      }
+    }
+  ]
+}

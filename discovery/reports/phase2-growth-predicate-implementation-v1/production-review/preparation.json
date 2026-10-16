@@ -1,0 +1,29 @@
+{
+  "actual_source_operations": 0,
+  "allowed_execution": "Generated temporary repositories and mocked/generated identities only; never real checkout/cache guards",
+  "challenge_design": {
+    "bytes": 3026,
+    "sha256": "c2f367dfd0c6fe781926ed1eb85f4e4fbc33bd698a62be655b1eb00cf7346e82"
+  },
+  "input_bindings": {
+    ".cache/phase2-growth-predicate-candidate-v1/growth_predicate_audit.py": {
+      "bytes": 24367,
+      "sha256": "167c8e3d0cba758057c60991debe8d831c8638da5ce3dbd1a183503c46efea11"
+    },
+    ".cache/phase2-growth-predicate-review-v1/handoff.json": {
+      "bytes": 938,
+      "sha256": "cdb1fb1d517571cfafa459a14a5b144f424ee72aa4e4723038b98c0b8887fd48"
+    },
+    "reports/phase2-growth-header-next-scope-v1/proposal.json": {
+      "bytes": 11040,
+      "sha256": "a6611e49f33ccc0e8730a479e9201c16f882d68035156f87760d153a029d395c"
+    },
+    "scripts/li_v3_growth_envelope.py": {
+      "bytes": 20609,
+      "sha256": "f50069d028526ea045441a2e574a26192a210ff78ba34f5170777d32f5692ec3"
+    }
+  },
+  "production_candidate_executions": 0,
+  "schema": "lupine.growth_predicate.production_review_preparation.v1",
+  "written_at": "2026-10-16T12:12:59.178508+00:00"
+}

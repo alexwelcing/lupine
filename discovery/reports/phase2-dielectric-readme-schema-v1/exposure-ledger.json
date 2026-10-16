@@ -1,0 +1,10 @@
+{
+  "actual_machine_access": "One118-byte HTTP403 text/html response; no PDF obtained.",
+  "actual_researcher_access": "Status chain, MIME/size/hash and source metadata only; denial-body text was not displayed or interpreted.",
+  "offline_parser_invoked": false,
+  "pdf_or_numeric_example_exposure_in_this_task": false,
+  "prior_exposure": "Earlier paper qualitative exposure and metadata findings remain unchanged; no fresh or untouched-evidence claim.",
+  "schema": "lupine.discovery.dielectric_readme_schema.exposure.v1",
+  "scientific_admission_or_new_benchmark": false,
+  "signed_query_values_retained_or_published": false
+}

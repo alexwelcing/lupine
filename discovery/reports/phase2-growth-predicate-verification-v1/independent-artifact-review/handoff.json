@@ -1,0 +1,26 @@
+{
+  "additive_review": {
+    "bytes": 8887,
+    "path": "additive-correction-1-a064a2c0e4a7/additive-review.json",
+    "sha256": "d0721e59e4c9fdc0b1ad592fc73431cc0c92b9fb2d57040c3ead4ce17bc9e14b"
+  },
+  "commit": "a064a2c0e4a7cce1fbcb0541f49aae132944e785",
+  "generic_review": {
+    "bytes": 10918,
+    "path": "actual-a064a2c0e4a7/review.json",
+    "sha256": "47aafc2bc5efba2a621d934568751892074473d7cc428f4e5a3c45f46937b1bb"
+  },
+  "inventory": {
+    "bytes": 5778,
+    "path": "inventory.json",
+    "sha256": "3adc07d68764febbc550c38d27b286541f644e835f19dd5dd92659260188622f"
+  },
+  "no_actual_source_operation_or_scientific_claim": true,
+  "review": {
+    "bytes": 3707,
+    "path": "actual-review.json",
+    "sha256": "cff4e8c747d326616270588958756eb7ea8ff0253333e9fa91dfcc5b434267ff"
+  },
+  "root_operation_gate_inputs": "Use exact generic review plus corrected additive review; CI remains separate.",
+  "status": "PASS_WITH_PRESERVED_FIRST_ADDITIVE_BASELINE_FAILURE"
+}

@@ -1,0 +1,27 @@
+{
+  "at": "2026-10-16T13:33:24.407070+00:00",
+  "browser_checks": [
+    "Explicit approximate label and bounded compact display; compare value with exact independent Fraction oracle.",
+    "Complete exact numerator/denominator retained in accessible expanded cell without float conversion.",
+    "Full JSON export exact and unchanged from generated report.",
+    "Existing renderer rejection and old-button invalidation remain covered by prior held evidence; run focused regression here when display alteration could affect it.",
+    "Mobile table containment with expanded exact values."
+  ],
+  "case_oracle_sha256": "100ad3710293df6d2165fbbda925eff6b3a1ae53ca3d91a6a11c767f5ceffe3a",
+  "cases": [
+    "zero",
+    "unit and thirds",
+    "positive/negative exact-half rounding",
+    "below/above rounding boundary",
+    "carry into next decade",
+    "tiny carry",
+    "maximum numerator and denominator lengths",
+    "negative extrema",
+    "simultaneous digit caps"
+  ],
+  "forbidden": "No actual aggregate/private source/reader, network, census arithmetic rerun, production operation or tracked edit.",
+  "policy_assumption_pending_author_hold": "Nearest four significant digits, exact half away from zero; if root declares another intentional policy this prospective fixture contract will be updated before renderer execution.",
+  "prior_completed_review": ".cache/phase2-rhizo-census-ui-review-v1/handoff.json",
+  "renderer_invocations": 0,
+  "status": "PROSPECTIVE_GENERATED_DISPLAY_REVIEW_PREPARATION"
+}

@@ -1,0 +1,26 @@
+{
+  "status": "DESIGN_REVIEW_COMPLETE_NO_UNRESOLVED_MEANINGFUL_INCONSISTENCY",
+  "reviewer": "/root/phase2_planner/ui_review",
+  "method": "Read-only source-informed design critique and correction diff review; no implementation/tests or actual data",
+  "final_readme_sha256": "5871e1c6acfbfe6d76b0ad79ba3a91ba56e9f222f0a8b1df70ee44659a6b3ade",
+  "final_proposal_sha256": "49d0cc50b0642d7c67c93fa8a5f51315382a1d1ca4b3886d2a074c77a7980595",
+  "findings_preserved": [
+    {
+      "finding": "Original nested envelope exposure contains inspected_xml_bytes, conflicting with new public no-content-length scope",
+      "resolution": "Original validators/instrumentation unchanged privately; new public envelope_exposure is a closed subset that omits byte counter and all undeclared fields."
+    },
+    {
+      "finding": "UTF-8 decoding or preparse scanning can expose private text before XML parsing starts",
+      "resolution": "Separate started/completed UTF8 and XML states; MAY_HAVE_BEEN_DECODED set before first decode-and-scan attempt; preserve completed earlier exposure on later failure."
+    },
+    {
+      "finding": "Default element text/tail handling and metadata multiplicity/order were unspecified",
+      "resolution": "Only declared opaque leaves accept text; all other element text and all tails allow XML whitespace only. Otherwise order/multiplicity are unconstrained within bounded child allowlists except explicit root/cell/row/merge rules; this does not claim full OOXML validity."
+    }
+  ],
+  "prior_draft_preserved": "before-review-corrections/",
+  "final_review_statement": "Exposure accounting, public output restrictions and grammar defaults agree. The design remains one nonexecutable prospective stage, with production bindings unbound and scientific status BLOCKED_SCHEMA.",
+  "tests_executed": false,
+  "actual_data_accessed": false,
+  "scientific_result_added": false
+}

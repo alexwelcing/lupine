@@ -1,0 +1,38 @@
+{
+  "amendment_review": "Prospective gates and scoped preallocation stop evidence are explicit; no immediate authority, no redraw/resume, no v1 tag rewrite.",
+  "command": [
+    "python",
+    "-m",
+    "unittest",
+    "-v",
+    "test_mpea_public_registration_tag",
+    "test_mpea_public_registration_tag_review"
+  ],
+  "elapsed_seconds": 0.3104085710074287,
+  "exit_code": 0,
+  "pending": "Genuine full suite, exact four CI, explicit new engineering approval and authenticated distinct v2 tag.",
+  "scope": "Supplemental constructed tag tests only; no actual tag/API/allocation/targets. Main registration53 not rerun.",
+  "source_after": {
+    "docs/mpea-preallocation-recovery-v2.md": "d8055ec620478cc12cd2486a88c16833616053934882b93f367872d520d695cf",
+    "docs/mpea-registration-publication-v1.md": "c9fb1f2c44ae8b97c10a88ddbb369eb8d0feca752824c2ca3cbb656d3619c730",
+    "scripts/mpea_registration_allocation.py": "cc8590ae64ca8e983d8fb164290c8d087847a97c651cded4d18e0b2cce555197",
+    "tests/mpea_public_tag_review_fixture.py": "cebfab41c1e39ab5a24ef607b6dd132eb4ff43599b849f068d857f7768e844ed",
+    "tests/test_mpea_public_registration_tag.py": "940c071632492c4d38e87117f583d93d89112f2c271492a2b7b320168dddf2bc",
+    "tests/test_mpea_public_registration_tag_review.py": "2994e184c1a7aa150a47ac445a904125f4b7ebca7d5bd7e4779c16fe0d7efe06",
+    "tests/test_mpea_registration_allocation_review.py": "08f952bca1881e79d4c3d9b75aee8a8a533429f9bb41e586e88fffdf4a4c6073",
+    "tests/test_mpea_registration_recovery_v2.py": "2d9609954ee1e2a132fa287b85a3353fedfcc038a2259d94da629903117b9897"
+  },
+  "source_before": {
+    "docs/mpea-preallocation-recovery-v2.md": "d8055ec620478cc12cd2486a88c16833616053934882b93f367872d520d695cf",
+    "docs/mpea-registration-publication-v1.md": "c9fb1f2c44ae8b97c10a88ddbb369eb8d0feca752824c2ca3cbb656d3619c730",
+    "scripts/mpea_registration_allocation.py": "cc8590ae64ca8e983d8fb164290c8d087847a97c651cded4d18e0b2cce555197",
+    "tests/mpea_public_tag_review_fixture.py": "cebfab41c1e39ab5a24ef607b6dd132eb4ff43599b849f068d857f7768e844ed",
+    "tests/test_mpea_public_registration_tag.py": "940c071632492c4d38e87117f583d93d89112f2c271492a2b7b320168dddf2bc",
+    "tests/test_mpea_public_registration_tag_review.py": "2994e184c1a7aa150a47ac445a904125f4b7ebca7d5bd7e4779c16fe0d7efe06",
+    "tests/test_mpea_registration_allocation_review.py": "08f952bca1881e79d4c3d9b75aee8a8a533429f9bb41e586e88fffdf4a4c6073",
+    "tests/test_mpea_registration_recovery_v2.py": "2d9609954ee1e2a132fa287b85a3353fedfcc038a2259d94da629903117b9897"
+  },
+  "stop_evidence_sha256": "c6553fc321b1447392eee90e08ec173161c34d1fb488b8244dab78663322be14",
+  "strategy_review": "No drift: exclusive v2 tag, unchanged scientific protocol and protocol/source ledger key; two mandatory amendment/evidence paths; separate metadata-producer LF verifier only. Historical publication-v1 retained.",
+  "unchanged": true
+}

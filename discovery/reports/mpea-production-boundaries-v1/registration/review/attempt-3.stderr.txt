@@ -1,0 +1,37 @@
+test_all_original_rows_and_lexical_groups_preserved_without_formula_filter (__main__.AllocationReview.test_all_original_rows_and_lexical_groups_preserved_without_formula_filter) ... ok
+test_durable_request_before_callback_and_response_before_next_draw (__main__.AllocationReview.test_durable_request_before_callback_and_response_before_next_draw) ... ERROR
+test_first_accepted_draw_cannot_be_skipped_or_followed (__main__.AllocationReview.test_first_accepted_draw_cannot_be_skipped_or_followed) ... ok
+test_fixture_rejects_actual_archive_identity_before_constructing_context (__main__.AllocationReview.test_fixture_rejects_actual_archive_identity_before_constructing_context) ... ok
+test_interruption_never_allows_replacement_allocation (__main__.AllocationReview.test_interruption_never_allows_replacement_allocation) ... ok
+test_metadata_rejects_bool_ordinal_duplicate_id_and_unknown_condition_source (__main__.AllocationReview.test_metadata_rejects_bool_ordinal_duplicate_id_and_unknown_condition_source) ... ok
+test_transcript_integer_slots_reject_booleans (__main__.AllocationReview.test_transcript_integer_slots_reject_booleans) ... ok
+test_unrank_first_last_and_interior_against_independent_factoradic (__main__.AllocationReview.test_unrank_first_last_and_interior_against_independent_factoradic) ... ok
+test_ci_boolean_run_id_is_rejected_even_when_equal_to_one (__main__.RegistrationReview.test_ci_boolean_run_id_is_rejected_even_when_equal_to_one) ... ok
+test_ci_exact_repository_commit_run_workflow_and_four_distinct_jobs (__main__.RegistrationReview.test_ci_exact_repository_commit_run_workflow_and_four_distinct_jobs) ... ok
+test_decoder_rejects_float_duplicate_deep_and_oversized_string (__main__.RegistrationReview.test_decoder_rejects_float_duplicate_deep_and_oversized_string) ... ok
+test_fixture_registration_does_not_call_live_transport_or_authorize_production (__main__.RegistrationReview.test_fixture_registration_does_not_call_live_transport_or_authorize_production) ... ok
+test_malformed_ci_returns_closed_error (__main__.RegistrationReview.test_malformed_ci_returns_closed_error) ... ok
+test_missing_header_manifest_entry_is_rejected (__main__.RegistrationReview.test_missing_header_manifest_entry_is_rejected) ... ok
+test_registered_file_change_fails_before_live_capture (__main__.RegistrationReview.test_registered_file_change_fails_before_live_capture) ... ok
+test_sink_preserves_existing_bytes_and_no_pending_file_on_conflict (__main__.RegistrationReview.test_sink_preserves_existing_bytes_and_no_pending_file_on_conflict) ... ok
+test_sink_rejects_symlink_ancestor_before_creating_descendants (__main__.RegistrationReview.test_sink_rejects_symlink_ancestor_before_creating_descendants) ... ok
+
+======================================================================
+ERROR: test_durable_request_before_callback_and_response_before_next_draw (__main__.AllocationReview.test_durable_request_before_callback_and_response_before_next_draw)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/mpea-registration-allocation/review/test_registration_allocation_review.py", line 234, in test_durable_request_before_callback_and_response_before_next_draw
+    allocation = m.allocate_fixture(c, reg, store, directory, provider)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/mpea-registration-allocation/mpea_registration_allocation.py", line 346, in allocate_fixture
+    return _allocate(context,registration,store,registry,provider,original_allocation)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/mpea-registration-allocation/mpea_registration_allocation.py", line 340, in _allocate
+    return Allocation(routes,context.header,tuple(payload['development_group_ids']),tuple(payload['calibration_group_ids']),tuple(payload['evaluation_group_ids']),canonical(payload),canonical(route),canonical(allocation_identity),canonical(identity),key,context.metadata_digest,'assumed_unverified',context.mode,store.stage_bytes('allocation'),store.artifact_bytes('label-routes.json',identity))
+                                                                                                                                                                                                                                                                                                                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'MemoryStore' object has no attribute 'stage_bytes'
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.731s
+
+FAILED (errors=1)

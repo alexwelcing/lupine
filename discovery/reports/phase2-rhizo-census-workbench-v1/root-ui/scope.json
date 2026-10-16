@@ -1,0 +1,12 @@
+{
+  "schema": "lupine.discovery.recorded-census-ui-preparation.v1",
+  "status": "GENERATED_PREPARATION_ONLY",
+  "tracked_edits": false,
+  "actual_numeric_results_inspected": false,
+  "purpose": "Render the exact complete public aggregate in the existing local workbench Known answers view, alongside a distinct descriptive-census label.",
+  "proposed_files": ["src/lupine_discovery/web/recorded-census.js", "src/lupine_discovery/web/index.html", "src/lupine_discovery/web/app.js", "src/lupine_discovery/server.py", "scripts/recorded_census_browser_checks.py", "scripts/browser_smoke.py", "tests/test_server_recorded_census.py"],
+  "presentation": "All16 groups in stable model/property/unit order; exact count and signed/absolute/squared means with explicit squared units; all36 stored-reference equality statuses; all sums and complete public report downloadable. No numerical ranking, winner, pass/fail styling or hidden denominator.",
+  "claims": "Historical/exposed; NOT_ADMITTED; reference choice UNKNOWN; discrepancy sign is prediction minus stored reference; NULL tolerances supply no success criterion. Equality of stored reference rationals is not physical truth or equal geometry.",
+  "boundaries": "No private inputs, individual labels/citations/errors, new data access or live computation triggered by UI. Serve one separately reviewed bundled public JSON report. Missing/malformed/blocked data produces explicit unavailable state and clears stale tables/exports.",
+  "verification": "Real HTTP serves exact bundled public report; real Chromium verifies all rows/units/exact large rationals, complete export, missing/malformed/blocked states, safe text rendering, stale-result removal and mobile containment. Source bindings and actual-resource pass after integration."
+}

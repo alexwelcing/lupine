@@ -1,0 +1,59 @@
+{
+  "actual_source_operations": 0,
+  "authored_execution": {
+    "bytes": 5643,
+    "path": "evidence/final29/execution.json",
+    "sha256": "431e78626c4d6fccba71c74134ed489e500474f680b3b072817e70c5b95079d5"
+  },
+  "authored_process_seconds": "1.986735312",
+  "authored_test_count": 29,
+  "authored_unittest_seconds": "1.588",
+  "bindings": "UNBOUND",
+  "completion_boundary": "Four root-pinned external observer files required for package and original prior phases. Persisted marker alone is insufficient. Pins are not self-authentication. Root must witness successful observer return.",
+  "held_inputs": 12,
+  "held_inputs_unchanged": true,
+  "historical_evidence": [
+    {
+      "path": "evidence/first16",
+      "result": "15 passed; one immediate signal-state assertion failed; full original console is conversation-only."
+    },
+    {
+      "path": "evidence/final22",
+      "result": "First source-bound22 failed an inert child2-second deadline assertion; exact cause not proved; preserved logs and unchanged hashes."
+    },
+    {
+      "path": "evidence/before-independent-ordering-fix",
+      "result": "Original late prior-prefix validation and skipped post-state-on-log-error source preserved."
+    },
+    {
+      "path": "evidence/final26",
+      "result": "Corrected source-bound26 passed; superseded by close and external-completion correction."
+    },
+    {
+      "path": "evidence/before-close-fix",
+      "result": "Temporary-file close-after-link source preserved; independent first failing close probe lives in separate review bundle."
+    },
+    {
+      "path": "evidence/close-completion-first.stderr.txt",
+      "result": "Initial29 passed5.084s; only final29 has dedicated before/after source-bound execution receipt."
+    }
+  ],
+  "network_calls": 0,
+  "operation_authorization": false,
+  "production_guard_calls": 0,
+  "remaining_limits": [
+    "No actual Git remote, CI, package, phase operation, custody or scientific outcome executed by this preparation.",
+    "Late directory-close or cleanup failure can leave a name; external process/stream evidence is required.",
+    "Process-group signal and leader reap do not establish that hostile escaped descendants were reaped.",
+    "Hashes establish identity, not scientific validity or authenticity."
+  ],
+  "schema": "lupine.li.complete-readiness.recorder-preparation.v1",
+  "scientific_admission": false,
+  "scientific_data_reads": 0,
+  "source_hold": {
+    "bytes": 1326,
+    "path": "source-hold.json",
+    "sha256": "751b0a4f346489075e326c15aaa71e0d0c93ddab7f6e9878d1cc0c8b9c832e0c"
+  },
+  "status": "SYNTHETIC_ENGINEERING_PASS_PROSPECTIVE_UNBOUND"
+}

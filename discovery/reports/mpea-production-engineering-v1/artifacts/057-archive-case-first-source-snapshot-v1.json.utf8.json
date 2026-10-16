@@ -1,0 +1,7 @@
+{
+  "original_bytes": 902,
+  "original_path": ".cache/mpea-study-custody/review_production/archive-case-first-source-snapshot-v1.json",
+  "original_sha256": "1313366d87a7af6be8120930883d676126893780f7d81b6bfc14e37f21476b91",
+  "schema": "lupine.discovery.lossless_utf8_artifact.v1",
+  "text": "{\n  \"mpea_archive_custody.py\": {\n    \"expected_post_run\": \"a248e0a416037fd10ae187492946521f2f7786515d78bcc902c1cca5ce66d55b\",\n    \"observed_now\": \"7dcd20d3a2aaa2830ac12282e98a386db284719ee011998ca8a52f5e672b3bc8\",\n    \"snapshot_matches_post_run\": false\n  },\n  \"mpea_archive_driver.py\": {\n    \"expected_post_run\": \"cca7dba529cf613a6f9a1a07b9ef60875fbb22fb26a08ecfa17b71df560e8b2b\",\n    \"observed_now\": \"7b4e9f0e92b4b4fa6588c49b8ea245f25a1cbceb102541af435cef0383d8d3a0\",\n    \"snapshot_matches_post_run\": false\n  },\n  \"mpea_study_flow.py\": {\n    \"expected_post_run\": \"eabb65d9b16de97ce43990b7d60c43dbeb15ced5762e7506035ca3b8e3e56e18\",\n    \"observed_now\": \"eabb65d9b16de97ce43990b7d60c43dbeb15ced5762e7506035ca3b8e3e56e18\",\n    \"snapshot_matches_post_run\": true\n  },\n  \"scope\": \"Post-run snapshots of initial actual two-failure feature-linkage regressions, not a before/after test-run source guarantee.\"\n}\n"
+}

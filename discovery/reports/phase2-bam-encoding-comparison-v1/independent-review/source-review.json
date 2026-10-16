@@ -1,0 +1,69 @@
+{
+  "schema": "lupine.bam-hypothetical-encoding-comparison-independent-source-review.v1",
+  "completed_at": "2026-10-16T10:00:55.609693+00:00",
+  "owner": "/root/phase2_evidence/author_methods_review",
+  "result": "PASS_PRE_INVOCATION_SOURCE_AND_SCOPE_REVIEW",
+  "scope_sha256": "31c0b4fd7325abe9338405284f4afb1da4ccb6aad52f67b8a4849e4c96d11593",
+  "script_sha256": "a1c879a6a9b9a0a62e8e570e98758fb2194ddc430db97b0aeeede758dfa91f53",
+  "script_bytes": 7065,
+  "no_blockers_for_one_authorized_invocation": true,
+  "execution_precondition": "Run from the discovery project directory: prior checkpoint bindings use project-relative .cache paths. Pin the reviewed script/scope before the single recorded invocation; do not import/run against a different source.",
+  "resolved_findings": [
+    {
+      "id": "prior_preservation_claim",
+      "resolution": "The final source reads scope-bound prior artifacts and checks exact length/SHA256 before SOURCE.read_bytes. Mismatch exits PRIOR_CHECKPOINT_IDENTITY_BLOCKED; the preserved-failure assertion is therefore conditional on that guard. The code only writes new comparison-directory outputs."
+    },
+    {
+      "id": "cell_count_denominator",
+      "resolution": "A fixed emitted cell_count_scope states that counters include the header and empty cells in eleven-column records only, excluding other widths. Scope adds the same distinction."
+    }
+  ],
+  "unchanged_limits": [
+    "Only strict cp1252 and strict iso8859-1 are attempted; no detection/winner, fallback replacement, normalization, alias merge or unit conversion.",
+    "Complete source bytes, both successful hypothetical decoded texts and all parsed cells may be machine exposed, including examples/options/comments. No untouched/blind evidence claim.",
+    "Semicolon csv.reader with explicit quote/doublequote/noescape/strict and StringIO(newline=\"\") preserves CR/LF framing without Unicode NEL splitlines behavior.",
+    "Both exact headers and structural record spans/widths must agree before projection. Unknown/nonASCII/different cells remain unbound, even if the hypotheses return the same nonASCII string.",
+    "Examples-column values are always omitted from internal selected-cell text. ASCII comments are permitted internally and may contain empirical examples; they are explicitly not public output.",
+    "Closed public output contains identity, stage/status, structural counters and locators only. Complete selected ASCII strings are written only to ignored internal-ascii-projection.json and are not printed.",
+    "No formulas, links, secondary objects, network, measurement files, scientific units, model/protocol criteria or benchmark admission are implemented."
+  ],
+  "interpretation_caveats": [
+    "Structural agreement is expected to be weak evidence between ASCII-compatible single-byte codecs with ASCII CSV syntax; it is not encoding identification or validation of the full scientific meanings.",
+    "ASCII invariance establishes textual agreement only. The code does not establish semantic independence from a nonASCII/unknown neighboring cell; researcher claims must retain those dependencies as unbound.",
+    "csv strict mode is the specifically scoped Python csv.reader behavior, not a separately proven complete general CSV grammar.",
+    "Actual hypothesis success, counts and exposure must come from the later recorded invocation; this review provides none of those observations."
+  ],
+  "delta_check": "Compared initial/final exact source and scope. Only prior-binding guard and counter-denominator statement were added to source; scope algorithm/script identity/refinement metadata changed accordingly. Initial finding/source/scope snapshots remain preserved.",
+  "artifacts": [
+    {
+      "path": ".cache/phase2-bam-encoding-comparison-v1/scope.json",
+      "bytes": 6528,
+      "sha256": "31c0b4fd7325abe9338405284f4afb1da4ccb6aad52f67b8a4849e4c96d11593"
+    },
+    {
+      "path": ".cache/phase2-bam-encoding-comparison-v1/compare_documentation.py",
+      "bytes": 7065,
+      "sha256": "a1c879a6a9b9a0a62e8e570e98758fb2194ddc430db97b0aeeede758dfa91f53"
+    },
+    {
+      "path": ".cache/phase2-bam-encoding-comparison-review-v1/initial-findings.json",
+      "bytes": 2451,
+      "sha256": "d9b7046db53086ffd7ab6c8925b3b8dd2e931cc6837813860c14ff063c98cf49"
+    },
+    {
+      "path": ".cache/phase2-bam-encoding-comparison-review-v1/reviewed-source-delta.diff",
+      "bytes": 1514,
+      "sha256": "daee0e4fa76ba9c4154d8c1876f05ee99b67a063283e37cf346384e1dc4c7c8e"
+    }
+  ],
+  "actual_review_activity": {
+    "raw_schema_reads": 0,
+    "candidate_imports_or_execution": 0,
+    "synthetic_tests": 0,
+    "network_requests": 0,
+    "measurement_or_secondary_source_reads": 0,
+    "tracked_edits": false,
+    "git_mutation": false,
+    "method": "Static source/scope inspection and exact documentary delta/hash checks only."
+  }
+}

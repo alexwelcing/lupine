@@ -1,0 +1,10 @@
+{
+  "status":"WRITTEN_BEFORE_METHODS_PROSE_OR_SCHEMA_CELL_DISCLOSURE",
+  "source_sha256":"d58de2a225114f57bc6bc28e808dd3c035580b756a3c09472ac1946539418b6b",
+  "allowed_direct_paragraph_section_titles":["Generation of atomic coordinates","Data Records","File format","Properties"],
+  "rule":"Only direct paragraph children of those uniquely identified sections. No recursive descendants, Background, Technical Validation, geometry validation, quantum-results validation, figures, supplementary material or model-performance prose.",
+  "numeric_handling":"Mask digit-bearing tokens before prose display. Computational method/basis labels and file/property schema indices or units may later be preserved as documentary metadata, never target examples or accuracy values.",
+  "tables":"Inspect only header cells of t2/t3 first. t1 validation table is prohibited. t2/t3 body cells remain withheld unless headers verify a file-layout/property-unit dictionary rather than observations.",
+  "license":"Primary article's CC BY-NC-SA and metadata-only CC0 footer are not generalized to dataset files. Collection registry currently declares CC BY4; constituent-data rights remain unknown.",
+  "no_new_network_or_observation_request":true
+}

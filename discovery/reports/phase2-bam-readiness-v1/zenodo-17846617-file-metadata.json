@@ -1,0 +1,67 @@
+{
+  "record_id": 17846617,
+  "doi": "10.5281/zenodo.17846617",
+  "version": "1.0",
+  "files": [
+    {
+      "key": "Vh5205_T-74.LIS",
+      "size": 1164063,
+      "checksum": "md5:f3c9defb8cb3e11d8de9cad849e3eb7c",
+      "type": null
+    },
+    {
+      "key": "Dendrite-overview.jpg",
+      "size": 596978,
+      "checksum": "md5:28573899cc09a145ac2c69fc1370c0bf",
+      "type": null
+    },
+    {
+      "key": "TestPiece-TensileTests-HT-CMSX-6.pdf",
+      "size": 229036,
+      "checksum": "md5:554a397d927779435b9ae8dea393123f",
+      "type": null
+    },
+    {
+      "key": "2025-12_HT-Tensile-reference-data-CMSX-6_v1.0.xlsx",
+      "size": 54960,
+      "checksum": "md5:e85ef58139a68592f36452de195a0a10",
+      "type": null
+    },
+    {
+      "key": "Vh5205_T-71.LIS",
+      "size": 1099693,
+      "checksum": "md5:6afb90c18e98ad22c549c8ae76cb621f",
+      "type": null
+    },
+    {
+      "key": "Dendrite-SEM.tif",
+      "size": 4475488,
+      "checksum": "md5:c97a17cdd139e928d0134a4697f61073",
+      "type": null
+    },
+    {
+      "key": "Interdentritic-region-detail.tif",
+      "size": 12418948,
+      "checksum": "md5:cbdcba23b8c84485991cc85ddb060d7f",
+      "type": null
+    },
+    {
+      "key": "Figure-Rohling.jpg",
+      "size": 2277591,
+      "checksum": "md5:f4f0f1d219ac0f66df753cabe0b79684",
+      "type": null
+    },
+    {
+      "key": "Vh5205_T-84.LIS",
+      "size": 1208897,
+      "checksum": "md5:763fdfb2ac9406518fb560188f5f8dd4",
+      "type": null
+    },
+    {
+      "key": "Interdentritic-region-overview.jpg",
+      "size": 710532,
+      "checksum": "md5:124b59e34ca3c7af55d5b316790beac5",
+      "type": null
+    }
+  ]
+}

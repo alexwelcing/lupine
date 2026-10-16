@@ -1,0 +1,347 @@
+{
+  "article_sha256": "c7e527712991ce14fb233b57a7e1f5f2dc26e6728835df03510cd6c588146534",
+  "selected_references": [
+    {
+      "reference_id": "CR49",
+      "bibliographic_text": "49.Gussev, M., Busby, J., Field, K., Sokolov, M. & Gray, S. Role of scale factor during tensile testing of small specimens. Small Specimen Test Techniques: 6, 31\u201349, ed. M. Sokolov, E. Lucon 10.1520/STP157620140013 (2015).",
+      "doi_nodes": [],
+      "external_links": []
+    },
+    {
+      "reference_id": "CR50",
+      "bibliographic_text": "50.Klueh, R. L. Miniature tensile test specimens for fusion reactor irradiation studies. Nucl. Eng. Des. Fusion2(3), 407\u2013416, 10.1520/STP157620140013 (1985).",
+      "doi_nodes": [],
+      "external_links": [
+        {
+          "href": "Klueh, R. L. Miniature tensile test specimens for fusion reactor irradiation studies. Nucl. Eng. Des. Fusion2(3), 407\u2013416, 10.1520/STP157620140013 (1985).",
+          "text": ""
+        }
+      ]
+    }
+  ],
+  "citation_columns": [
+    {
+      "table_row_ordinal": 1,
+      "Data Source": {
+        "citation_text": "Gussev et al.5",
+        "xref_ids": [
+          "CR5"
+        ]
+      },
+      "Dataset": {
+        "citation_text": "Byun et al.60",
+        "xref_ids": [
+          "CR60"
+        ]
+      }
+    },
+    {
+      "table_row_ordinal": 2,
+      "Data Source": {
+        "citation_text": "Pierron et al.61",
+        "xref_ids": [
+          "CR61"
+        ]
+      },
+      "Dataset": {
+        "citation_text": "Experimental data",
+        "xref_ids": []
+      }
+    },
+    {
+      "table_row_ordinal": 3,
+      "Data Source": {
+        "citation_text": "Gussev et al.49",
+        "xref_ids": [
+          "CR49"
+        ]
+      },
+      "Dataset": {
+        "citation_text": "Experimental data",
+        "xref_ids": []
+      }
+    },
+    {
+      "table_row_ordinal": 4,
+      "Data Source": {
+        "citation_text": "Kohno et al.36",
+        "xref_ids": [
+          "CR36"
+        ]
+      },
+      "Dataset": {
+        "citation_text": "Experimental data",
+        "xref_ids": []
+      }
+    },
+    {
+      "table_row_ordinal": 5,
+      "Data Source": {
+        "citation_text": "Rund et al.33",
+        "xref_ids": [
+          "CR33"
+        ]
+      },
+      "Dataset": {
+        "citation_text": "Experimental data",
+        "xref_ids": []
+      }
+    },
+    {
+      "table_row_ordinal": 6,
+      "Data Source": {
+        "citation_text": "Byun et al.60",
+        "xref_ids": [
+          "CR60"
+        ]
+      },
+      "Dataset": {
+        "citation_text": "Experimental data",
+        "xref_ids": []
+      }
+    },
+    {
+      "table_row_ordinal": 7,
+      "Data Source": {
+        "citation_text": "Alsabbagh et al.62",
+        "xref_ids": [
+          "CR62"
+        ]
+      },
+      "Dataset": {
+        "citation_text": "Experimental data",
+        "xref_ids": []
+      }
+    },
+    {
+      "table_row_ordinal": 8,
+      "Data Source": {
+        "citation_text": "D\u017eugan et al.63",
+        "xref_ids": [
+          "CR63"
+        ]
+      },
+      "Dataset": {
+        "citation_text": "Experimental data",
+        "xref_ids": []
+      }
+    },
+    {
+      "table_row_ordinal": 9,
+      "Data Source": {
+        "citation_text": "Van Zyl et al.59",
+        "xref_ids": [
+          "CR59"
+        ]
+      },
+      "Dataset": {
+        "citation_text": "Experimental data",
+        "xref_ids": []
+      }
+    },
+    {
+      "table_row_ordinal": 10,
+      "Data Source": {
+        "citation_text": "Zhang et al.13",
+        "xref_ids": [
+          "CR13"
+        ]
+      },
+      "Dataset": {
+        "citation_text": "Experimental data",
+        "xref_ids": []
+      }
+    },
+    {
+      "table_row_ordinal": 11,
+      "Data Source": {
+        "citation_text": "Kumar et al.64",
+        "xref_ids": [
+          "CR64"
+        ]
+      },
+      "Dataset": {
+        "citation_text": "Experimental data",
+        "xref_ids": []
+      }
+    },
+    {
+      "table_row_ordinal": 12,
+      "Data Source": {
+        "citation_text": "Balakrishnan et al.65",
+        "xref_ids": [
+          "CR65"
+        ]
+      },
+      "Dataset": {
+        "citation_text": "Experimental data",
+        "xref_ids": []
+      }
+    },
+    {
+      "table_row_ordinal": 13,
+      "Data Source": {
+        "citation_text": "Konop\u00edk et al.66",
+        "xref_ids": [
+          "CR66"
+        ]
+      },
+      "Dataset": {
+        "citation_text": "Experimental data",
+        "xref_ids": []
+      }
+    },
+    {
+      "table_row_ordinal": 14,
+      "Data Source": {
+        "citation_text": "Lanjewar et al.67",
+        "xref_ids": [
+          "CR67"
+        ]
+      },
+      "Dataset": {
+        "citation_text": "Experimental data",
+        "xref_ids": []
+      }
+    },
+    {
+      "table_row_ordinal": 15,
+      "Data Source": {
+        "citation_text": "Dym\u00e1\u010dek et al.54",
+        "xref_ids": [
+          "CR54"
+        ]
+      },
+      "Dataset": {
+        "citation_text": "Experimental data",
+        "xref_ids": []
+      }
+    },
+    {
+      "table_row_ordinal": 16,
+      "Data Source": {
+        "citation_text": "Sikan et al.68",
+        "xref_ids": [
+          "CR68"
+        ]
+      },
+      "Dataset": {
+        "citation_text": "Experimental data",
+        "xref_ids": []
+      }
+    },
+    {
+      "table_row_ordinal": 17,
+      "Data Source": {
+        "citation_text": "Klueh50",
+        "xref_ids": [
+          "CR50"
+        ]
+      },
+      "Dataset": {
+        "citation_text": "Experimental data",
+        "xref_ids": []
+      }
+    },
+    {
+      "table_row_ordinal": 18,
+      "Data Source": {
+        "citation_text": "Igata et al.69",
+        "xref_ids": [
+          "CR69"
+        ]
+      },
+      "Dataset": {
+        "citation_text": "Kestenbach et al.70",
+        "xref_ids": [
+          "CR70"
+        ]
+      }
+    },
+    {
+      "table_row_ordinal": 19,
+      "Data Source": {
+        "citation_text": "Roach et al.71",
+        "xref_ids": [
+          "CR71"
+        ]
+      },
+      "Dataset": {
+        "citation_text": "Experimental data",
+        "xref_ids": []
+      }
+    },
+    {
+      "table_row_ordinal": 20,
+      "Data Source": {
+        "citation_text": "Miyahara et al.72",
+        "xref_ids": [
+          "CR72"
+        ]
+      },
+      "Dataset": {
+        "citation_text": "Experimental data",
+        "xref_ids": []
+      }
+    },
+    {
+      "table_row_ordinal": 21,
+      "Data Source": {
+        "citation_text": "Yin et al.73",
+        "xref_ids": [
+          "CR73"
+        ]
+      },
+      "Dataset": {
+        "citation_text": "Experimental data",
+        "xref_ids": []
+      }
+    },
+    {
+      "table_row_ordinal": 22,
+      "Data Source": {
+        "citation_text": "Do Kweon et al.56",
+        "xref_ids": [
+          "CR56"
+        ]
+      },
+      "Dataset": {
+        "citation_text": "Experimental data",
+        "xref_ids": []
+      }
+    },
+    {
+      "table_row_ordinal": 23,
+      "Data Source": {
+        "citation_text": "Mishra et al.74",
+        "xref_ids": [
+          "CR74"
+        ]
+      },
+      "Dataset": {
+        "citation_text": "75\u201386",
+        "xref_ids": [
+          "CR75",
+          "CR86"
+        ]
+      }
+    },
+    {
+      "table_row_ordinal": 24,
+      "Data Source": {
+        "citation_text": "Seo et al.57",
+        "xref_ids": [
+          "CR57"
+        ]
+      },
+      "Dataset": {
+        "citation_text": "Experimental data",
+        "xref_ids": []
+      }
+    }
+  ],
+  "range_expansion_performed": false,
+  "whole_article_xml_machine_read_and_parsed": true,
+  "not_target_free": true,
+  "human_projection_limits": "Only bibliography CR49/CR50, table IDs/column labels and Data Source/Dataset cells. No actual record-count/material/performance cell projected."
+}

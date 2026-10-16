@@ -1,0 +1,53 @@
+{
+  "scope": "Exact focused review copies; no additional source acquisition or scientific sample.",
+  "files": [
+    {
+      "original_path": ".cache/phase2-rhizo-documentary-review-independent-v1/exposure-ledger-before-full-string-display.json",
+      "copy_path": "independent-review/exposure-ledger-before-full-string-display.json",
+      "bytes": 675,
+      "sha256": "d03d04a45ccf8242a8d840d24fee6792eeb29ce63001ba0e6ce01350c0370e85"
+    },
+    {
+      "original_path": ".cache/phase2-rhizo-documentary-review-independent-v1/exposure-ledger.json",
+      "copy_path": "independent-review/exposure-ledger.json",
+      "bytes": 1710,
+      "sha256": "62f030a28fa1988daf2c05202a8e75817fd04bf89e8d1945c0502a9aaaef5889"
+    },
+    {
+      "original_path": ".cache/phase2-rhizo-documentary-review-independent-v1/final-review-bindings.json",
+      "copy_path": "independent-review/final-review-bindings.json",
+      "bytes": 2163,
+      "sha256": "9e4345745f1a582ac90df2fccdeca9a6a1a2357786b58a68a8d2e25d2a109b69"
+    },
+    {
+      "original_path": ".cache/phase2-rhizo-documentary-review-independent-v1/final-review.json",
+      "copy_path": "independent-review/final-review.json",
+      "bytes": 7539,
+      "sha256": "daab9851c4eac7f3a192b8608edf5ed409bb3d6cc083a5dae214dfb176dec130"
+    },
+    {
+      "original_path": ".cache/phase2-rhizo-documentary-review-independent-v1/independent-interpretation.json",
+      "copy_path": "independent-review/independent-interpretation.json",
+      "bytes": 5017,
+      "sha256": "750e40a63cec7032d301f50500fcf6f3a1793e97396c3ac2fb326c8f9608916b"
+    },
+    {
+      "original_path": ".cache/phase2-rhizo-documentary-review-independent-v1/public-candidate-check.json",
+      "copy_path": "independent-review/public-candidate-check.json",
+      "bytes": 1731,
+      "sha256": "082c09344d3bb5f978020beaedd0441f3791edc925b22bf7a6d6774981d473bc"
+    },
+    {
+      "original_path": ".cache/phase2-rhizo-documentary-review-independent-v1/receipt-check.json",
+      "copy_path": "independent-review/receipt-check.json",
+      "bytes": 1705,
+      "sha256": "f040a23acdde7eafef2f7a3edf7b4c563aad780c248119b291fbf619ec16c9d3"
+    },
+    {
+      "original_path": ".cache/phase2-rhizo-documentary-review-independent-v1/scope.json",
+      "copy_path": "independent-review/scope.json",
+      "bytes": 1371,
+      "sha256": "3f6f3768f1cb65d55fd5045c5720757e6427b7afd155618139283cab6bf1d45f"
+    }
+  ]
+}

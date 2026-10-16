@@ -1,0 +1,196 @@
+{
+  "schema": "lupine.bam-metrology-source-bindings.v1",
+  "created_at": "2026-10-16T10:35:39.881114+00:00",
+  "source_identity": {
+    "record_doi": "10.5281/zenodo.17846617",
+    "concept_doi": "10.5281/zenodo.17846616",
+    "version": "1.0",
+    "filename": "2025-12_HT-Tensile-reference-data-CMSX-6_v1.0.xlsx",
+    "file_id": "097e288f-1eb7-4ce5-8eb8-653b2b1fffe2",
+    "bytes": 54960,
+    "md5": "e85ef58139a68592f36452de195a0a10",
+    "url": "https://zenodo.org/api/records/17846617/files/2025-12_HT-Tensile-reference-data-CMSX-6_v1.0.xlsx/content",
+    "observed_sha256": null,
+    "metadata_identity_check_passed": true
+  },
+  "observed_workbook": {
+    "retained_ignored_path": ".cache/phase2-bam-metrology-workbook-v1/workbook.xlsx",
+    "bytes": 54960,
+    "md5": "e85ef58139a68592f36452de195a0a10",
+    "sha256": "6cc298fa9922c60fc923b11dbfaa788057cb23593153d68a9aa95226b1795a83",
+    "published": false,
+    "hash_provenance": "Computed from acquired bytes by the reviewed runner; bound by actual receipts. No scientific validity inferred."
+  },
+  "internal_projection": {
+    "retained_ignored_path": ".cache/phase2-bam-metrology-workbook-v1/internal-workbook-projection.json",
+    "bytes": 760280,
+    "sha256": "4a0c0165e980e2e40418dac63f161215a04ab955aeff750193030cbd7c6e44e1",
+    "published": false
+  },
+  "bindings": [
+    {
+      "original_path": ".cache/phase2-bam-metrology-workbook-v1/metadata-identity-check.json",
+      "report_path": "metadata-identity-check.json",
+      "bytes": 1017,
+      "sha256": "72d1e8d4c8d07cace36732489854bbd203aed3af26f1945aa05a263d9d01158a"
+    },
+    {
+      "original_path": ".cache/phase2-bam-metrology-workbook-v1/scope.json",
+      "report_path": "scope.json",
+      "bytes": 7671,
+      "sha256": "ba4fc7fffc4a47933185c8dcd3d3224131ae64b0e4a7b6a7219df2da96d1a789"
+    },
+    {
+      "original_path": ".cache/phase2-bam-metrology-workbook-v1/workbook_reader.py",
+      "report_path": "workbook_reader.py",
+      "bytes": 14884,
+      "sha256": "d56939ba593414fbf751b5eab59d4ae5ab556513ce8b3108b4dc7305c8bef25c"
+    },
+    {
+      "original_path": ".cache/phase2-bam-metrology-workbook-v1/acquire_and_inspect.py",
+      "report_path": "acquire_and_inspect.py",
+      "bytes": 6453,
+      "sha256": "b9b726c7627b26938a91277b9b0e1f177aa001730c5ae503d7cd0d48b9011a56"
+    },
+    {
+      "original_path": ".cache/phase2-bam-metrology-workbook-v1/question-map.json",
+      "report_path": "question-map.json",
+      "bytes": 2015,
+      "sha256": "79c1abb00ef10d6af2166416f02f148233bbb22fc5eb206ec2c020adb025459d"
+    },
+    {
+      "original_path": ".cache/phase2-bam-metrology-workbook-v1/pre-acquisition-input-check.json",
+      "report_path": "pre-acquisition-input-check.json",
+      "bytes": 1106,
+      "sha256": "a745b7383acf1fe65426345eea07f6e90f6faf32b888346946c5a1d61aea3841"
+    },
+    {
+      "original_path": ".cache/phase2-bam-metrology-workbook-v1/actual-invocation-plan.json",
+      "report_path": "actual-invocation-plan.json",
+      "bytes": 1150,
+      "sha256": "4c12d51b4334a8fb26d7945874ea4b33f8bc8a7c70d866c31fb6f2d4b1430663"
+    },
+    {
+      "original_path": ".cache/phase2-bam-metrology-workbook-v1/request-slot.json",
+      "report_path": "request-slot.json",
+      "bytes": 460,
+      "sha256": "59e5c4d0b6cbf7c7b44b8b9118eb54f989a14aecbbdd2149e3b464ae39babb22"
+    },
+    {
+      "original_path": ".cache/phase2-bam-metrology-workbook-v1/acquisition.json",
+      "report_path": "acquisition.json",
+      "bytes": 1159,
+      "sha256": "ada0a1c180288cc4d44a83ef4d8ce61b97c6752b21dc1592ea9864f7bb65fefa"
+    },
+    {
+      "original_path": ".cache/phase2-bam-metrology-workbook-v1/result.json",
+      "report_path": "result.json",
+      "bytes": 1217,
+      "sha256": "f96cdfc7ead2bc4d4ef6264b09da376fe68af9369906131f306573ffb8eb36d4"
+    },
+    {
+      "original_path": ".cache/phase2-bam-metrology-workbook-v1/actual-first/execution.json",
+      "report_path": "actual-first/execution.json",
+      "bytes": 1810,
+      "sha256": "7bddd74d59aad721f96b8e8f314857c7f40db3bbec9a71076e1f21211986b598"
+    },
+    {
+      "original_path": ".cache/phase2-bam-metrology-workbook-v1/actual-first/stdout.json",
+      "report_path": "actual-first/stdout.json",
+      "bytes": 2524,
+      "sha256": "40e8ccabd5f87b8140ff39f7c9f123c7784ea875d6ff82cad4df5829d6640ecb"
+    },
+    {
+      "original_path": ".cache/phase2-bam-metrology-workbook-v1/actual-first/stderr.txt",
+      "report_path": "actual-first/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original_path": ".cache/phase2-bam-metrology-workbook-v1/documentary-findings.json",
+      "report_path": "documentary-findings.json",
+      "bytes": 13904,
+      "sha256": "245a6cbf65a43adaf96e3feae9af23b394c0f06bf5aeb580f574cb5de49609ed"
+    },
+    {
+      "original_path": ".cache/phase2-bam-metrology-workbook-v1/documentary-search.json",
+      "report_path": "documentary-search.json",
+      "bytes": 1686,
+      "sha256": "2f2f93ebf1d7cb9f5c5ac0c20e06f7c26ef5a8a46889696c3a891a7217f5bc7a"
+    },
+    {
+      "original_path": ".cache/phase2-bam-metrology-workbook-v1/exposure-ledger.json",
+      "report_path": "exposure-ledger.json",
+      "bytes": 1980,
+      "sha256": "f14be07c1f43196f864fa03c4c19156bca8fc0320925000394d50cf21eaf9f61"
+    },
+    {
+      "original_path": ".cache/phase2-bam-metrology-workbook-v1/README.md",
+      "report_path": "README.md",
+      "bytes": 6220,
+      "sha256": "cad9aec959b34c7e6fc4dd4e98bf022ac93745d2192be28dbe263c1d33b8a233"
+    },
+    {
+      "original_path": ".cache/phase2-bam-metrology-workbook-v1/pre-acquisition-history.md",
+      "report_path": "pre-acquisition-history.md",
+      "bytes": 2980,
+      "sha256": "f23f2126c5d40e7af2ea72aeff4c6b2d110f89cc04d702221c5e6a3f9946eced"
+    },
+    {
+      "original_path": ".cache/phase2-bam-metrology-workbook-v1/author-first/receipt.json",
+      "report_path": "author-first/receipt.json",
+      "bytes": 582,
+      "sha256": "9f6b3f19e988c0986ed40c54c8f32debd711ccfa35f8863091889c3e7e3618b5"
+    },
+    {
+      "original_path": ".cache/phase2-bam-metrology-workbook-v1/author-request-slot-repair/receipt.json",
+      "report_path": "author-request-slot-repair/receipt.json",
+      "bytes": 1427,
+      "sha256": "bad80b9a5721966117b1de6d4713bc93ad96c289c6f5d85367b9fde846a261fe"
+    },
+    {
+      "original_path": ".cache/phase2-bam-metrology-workbook-v1/author-reader-repair/receipt.json",
+      "report_path": "author-reader-repair/receipt.json",
+      "bytes": 1618,
+      "sha256": "081db219c730650d772b07b18af817020739c3972399fe13507d0c8198fbf8a8"
+    },
+    {
+      "original_path": "reports/phase2-bam-readiness-v1/zenodo-17846617.json",
+      "report_path": null,
+      "bytes": 14771,
+      "sha256": "48f84c7d6fc841a13de8ecccbba5f0604834cec45c3033d0d55bfd7a2e89f4d6"
+    },
+    {
+      "original_path": ".cache/phase2-bam-metrology-workbook-review-v1/preacquisition-review.json",
+      "report_path": "independent-review/preacquisition-review.json",
+      "bytes": 6773,
+      "sha256": "53a1ff4bb131d26d6787f38dfc592872be49d239bbff705e5db565520b951618"
+    },
+    {
+      "original_path": ".cache/phase2-bam-metrology-workbook-review-v1/actual-artifact-check.json",
+      "report_path": "independent-review/actual-artifact-check.json",
+      "bytes": 3200,
+      "sha256": "af240cc467ac03df7f0ba7a70417b4fd34ca5e27a32dbc1c9ef98db6864f6081"
+    },
+    {
+      "original_path": ".cache/phase2-bam-metrology-workbook-review-v1/documentary-result-review.json",
+      "report_path": "independent-review/documentary-result-review.json",
+      "bytes": 7360,
+      "sha256": "ad90a6561cf69d743fcfa7078d1ce6e6a78af2fd4af0f49c253ba0a9efa0b498"
+    },
+    {
+      "original_path": ".cache/phase2-bam-metrology-workbook-review-v1/result-review.json",
+      "report_path": "independent-review/result-review.json",
+      "bytes": 4564,
+      "sha256": "2a74bb0c25f236d539b98ea53ebf6b75648d649066ef6e89be30db7effb60c30"
+    },
+    {
+      "original_path": ".cache/phase2-bam-metrology-workbook-review-v1/result-review-bindings.json",
+      "report_path": "independent-review/result-review-bindings.json",
+      "bytes": 4096,
+      "sha256": "76ba177fc99a1cad275d202e7a2a8fb8f78a017c59a09d5ff0823ec13924ddfc"
+    }
+  ],
+  "path_semantics": "Original paths identify the real execution context. Report paths identify exact preserved publication copies. Previously published source metadata is referenced, not duplicated. Raw workbook/full cell projection/contact roster must remain ignored.",
+  "license": "Source record declares CC BY4.0; report provides attribution and own paraphrase. Linked sources were not acquired and have no inferred license."
+}

@@ -1,0 +1,10 @@
+{
+  "amendment_sha256": "8abec6e1ba7783f49b3603abf36d9cf037140acb253593f134711ea4dbf0ca9f",
+  "id": "datacite_identity",
+  "maximum_bytes": 1048576,
+  "redirects": false,
+  "retries": 0,
+  "started_at": "2026-10-16T16:56:13.457143+00:00",
+  "timeout_seconds": 30,
+  "url": "https://api.datacite.org/dois/10.6084/m9.figshare.978904"
+}

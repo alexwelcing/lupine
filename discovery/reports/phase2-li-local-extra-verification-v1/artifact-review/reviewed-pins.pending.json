@@ -1,0 +1,10 @@
+{
+  "baseline_commit": "a6e87c198d8116d26c523e0e1b2eedce4aeb225b",
+  "files": {
+    "docs/li-v3-local-extra-headers-plan.md": null,
+    "scripts/li_v3_local_extra_headers.py": "54db58a567afc9211303f2edff13541ab2f97beb77ef2edaa518ad32bf6b1026",
+    "tests/test_li_v3_local_extra_headers.py": null,
+    "tests/test_li_v3_local_extra_headers_review.py": null
+  },
+  "status": "PENDING_FINAL_INDEPENDENT_REVIEW"
+}

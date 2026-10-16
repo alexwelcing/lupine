@@ -1,0 +1,42 @@
+{
+  "additive_auditor_unchanged": {
+    "bytes": 10537,
+    "path": ".cache/phase2-growth-predicate-artifact-review-v1/additive_audit.py",
+    "sha256": "e87a8d0181c986f85883ebe28ef8295581c0a97976ab927feb3de60be096f649"
+  },
+  "all_seven_recorder_assertions_AST_identical": true,
+  "changes": [
+    "Only additive subprocess is invoked; successful generic receipt is an additional pre/post held input.",
+    "Distinct exclusive correction execution/output paths preserve all first-invocation artifacts.",
+    "Completion label describes only the additive invocation."
+  ],
+  "corrected_pin_record": {
+    "bytes": 1227,
+    "path": ".cache/phase2-growth-predicate-release-v1/artifact-reviewed-pins.json",
+    "sha256": "c41795d0460eb37bf7104f56891f5b9531eea85c40f2f610ceddf758dd47495a"
+  },
+  "corrected_recorder": {
+    "bytes": 6573,
+    "path": ".cache/phase2-growth-predicate-artifact-review-v1/run_additive_correction_1.py",
+    "sha256": "96174545a2883ca61db183a2b949ddc62b536b78d2493b3a333b54706448977b"
+  },
+  "first_additive_failure_preserved": {
+    "bytes": 1365,
+    "path": ".cache/phase2-growth-predicate-artifact-review-v1/additive-a064a2c0e4a7/additive-review.json",
+    "sha256": "6f1a4b0feccb67ab3a36d01cddec08fe2a0af67a1ed59eb459672bc24949ccc6"
+  },
+  "generic_PASS_receipt_held": {
+    "bytes": 10918,
+    "path": ".cache/phase2-growth-predicate-artifact-review-v1/actual-a064a2c0e4a7/review.json",
+    "sha256": "47aafc2bc5efba2a621d934568751892074473d7cc428f4e5a3c45f46937b1bb"
+  },
+  "no_auditor_assertions_or_source_modified": true,
+  "prepared_at": "2026-10-16T12:38:32.983500+00:00",
+  "prior_recorder": {
+    "bytes": 6579,
+    "path": ".cache/phase2-growth-predicate-artifact-review-v1/run_recorded.py",
+    "sha256": "8f61b3f89da773e2aeaa1be2949c1cf82c671e338538cccfa0b5358c8c37a613"
+  },
+  "status": "ADDITIVE_ONLY_CORRECTION_PREPARED",
+  "validation": "AST parse/source delta only; the corrected recorder has not run yet."
+}

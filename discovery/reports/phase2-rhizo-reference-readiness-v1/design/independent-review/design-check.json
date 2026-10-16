@@ -1,0 +1,42 @@
+{
+  "schema": "lupine.rhizo-reference-readiness.independent-design-check.v1",
+  "created_at": "2026-10-16T11:26:03.840557+00:00",
+  "status": "EXACT_DOCUMENTARY_CONSISTENCY",
+  "held_design_identities": [
+    {
+      "path": ".cache/phase2-rhizo-reference-readiness-design-v1/README.md",
+      "bytes": 9723,
+      "sha256": "c3152108ac58cae50e815cf27bf3a73787a34a0360f33642b15a00a33e948a0a"
+    },
+    {
+      "path": ".cache/phase2-rhizo-reference-readiness-design-v1/planned-inputs.json",
+      "bytes": 4746,
+      "sha256": "216907d07f977881c4220cb9c697708217101c2747c54bb7874b20e1470e3092"
+    },
+    {
+      "path": ".cache/phase2-rhizo-reference-readiness-design-v1/reference-frame.json",
+      "bytes": 71649,
+      "sha256": "80a1aca0fd56d89f49ff5f0e4b3930405f11ae1cd4acea14b8edab2381940aa4"
+    },
+    {
+      "path": ".cache/phase2-rhizo-reference-readiness-design-v1/source-bindings.json",
+      "bytes": 1874,
+      "sha256": "63402374fe80c558007fc17e56f9937ed1bbd9611fd1a5ae8d98adb2f2fa8709"
+    }
+  ],
+  "five_public_source_bindings_exact": true,
+  "three_bound_output_identities_exact": true,
+  "two_planned_object_pins_match_public_custody": true,
+  "six_documentary_pins_exact_prior_inventory_copies": true,
+  "total_planned_object_bytes": 61919,
+  "all_36_unit_records_match_public_metadata": true,
+  "all_43_location_contexts_match_public_metadata": true,
+  "all_172_candidate_edges_match_public_metadata": true,
+  "all_original_reference_choices_remain_false": true,
+  "actual_bound_reference_choices_all_unknown": true,
+  "raw_source_reads": 0,
+  "network_requests": 0,
+  "runtime_imports_or_tests": false,
+  "upstream_pins_independently_retrieved_or_verified": false,
+  "scope": "Artifact identities and metadata graph comparison only. The actual two raw objects and pinned source-code bodies were not opened. Proposed parser behavior has no implementation or test result in this review."
+}

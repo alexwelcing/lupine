@@ -1,0 +1,19 @@
+{
+  "started_at": "2026-10-16T07:50:29.374710+00:00",
+  "completed_at": "2026-10-16T07:50:30.406130+00:00",
+  "exit_code": 0,
+  "elapsed_seconds": 1.031425938999746,
+  "source_sha256": "0a11673c677f19dd109450542522be4f8e27df3b8fc2c8500f35ec21e195e0f1",
+  "test_sha256": "baf3f7a9a2ffad5687e8e88e2e235f114ae18e38caf44ca91640851a8ec4907f",
+  "command": [
+    "python",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-notebook-methods-candidate-v1/promotion/tests/test_li_v3_notebook_methods.py",
+    "-v"
+  ],
+  "scope": "synthetic notebooks and public source only; no actual notebook/private cache/network",
+  "repairs": [
+    "strict integer capture-size type",
+    "synthetic type/size guard before hashing",
+    "report byte traversal before synthetic identity hash"
+  ]
+}

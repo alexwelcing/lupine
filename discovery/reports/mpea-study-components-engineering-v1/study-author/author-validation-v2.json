@@ -1,0 +1,53 @@
+{
+  "amendment": "Prospective protocol clarification: unavailable F/D components are None with explicit reasons, not measured threshold failures; required-to-proceed checks remain false.",
+  "command": [
+    "python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    ".cache/mpea-study-engine/tests",
+    "-v"
+  ],
+  "earlier_development_findings": [
+    "First 20-test run: one error-code expectation failure on 481 policy ledgers; fixed to REPLAY_INCOMPLETE and rerun.",
+    "Custody source read caught one-based ordinal validation; corrected to original 0..1544 before final review."
+  ],
+  "elapsed_seconds": 7.14105,
+  "exit_code": 0,
+  "log_sha256": "1f4192dd8c7efb5d1dcdf4ad2fe3230dfe6606c50286d50b5159dcdf71840bf9",
+  "non_claims": [
+    "No empirical MPEA evaluation",
+    "No fitted uncertainty bound",
+    "No physical or source attestation",
+    "No Python-to-Lean refinement",
+    "No custody capability enforcement in the pure kernel"
+  ],
+  "prior_receipt_sha256": "63ed77a6159f46faeeaaf9caf9fa370e45f8eca06d3c7290d1dc6fdb7da6c9f3",
+  "pythonpath": ".cache/mpea-study-engine/scripts:scripts:src",
+  "schema": "lupine.synthetic.mpea_study.author_validation.v1",
+  "scope": "synthetic-only; no source/feature/target artifact access; no production authorization",
+  "source_after": {
+    ".cache/mpea-protocol-design/mpea-t25-archival-protocol-v1.md": "c49047341d3932ddd67c67c9f2a04a6759c0d679bfeb96d811ba9541c0cc0378",
+    ".cache/mpea-protocol-design/mpea-t25-implementation-contract-v1.md": "be45b1d8db9586035cf37bd9bbb9046c065c3851b91f93386f8c68d155215af9",
+    ".cache/mpea-study-engine/docs/kernel-contract.md": "72bf2a61585a06d1084c307f50344392a7bb4b55f517a29d15d9369d4bfe2ca6",
+    ".cache/mpea-study-engine/scripts/mpea_study.py": "61ddfdf9e8db9cacb3f64d3310021812a96aa66c98ae4e68febb6a794352648b",
+    ".cache/mpea-study-engine/tests/test_mpea_study.py": "6e72fec6ce46a57e963c2a9d7ebe512a6786283d35eca69f5d588aaa4110ca5b",
+    "scripts/mpea_features.py": "b24c0f1bb62fc56794e1232f973a6020ee42a0d3765d33cb51246f3c7a3a47d9",
+    "src/lupine_discovery/decision_pool.py": "76e96165102ebe8c3785f510d169b5d393838fb144f9c4275ffdb0aa6c21f1f9",
+    "src/lupine_discovery/representation.py": "c65c0eed659025a0e41eb325e75182ac2b980c35ac43dfddaa501f4f3ddf3b9e"
+  },
+  "source_before": {
+    ".cache/mpea-protocol-design/mpea-t25-archival-protocol-v1.md": "c49047341d3932ddd67c67c9f2a04a6759c0d679bfeb96d811ba9541c0cc0378",
+    ".cache/mpea-protocol-design/mpea-t25-implementation-contract-v1.md": "be45b1d8db9586035cf37bd9bbb9046c065c3851b91f93386f8c68d155215af9",
+    ".cache/mpea-study-engine/docs/kernel-contract.md": "72bf2a61585a06d1084c307f50344392a7bb4b55f517a29d15d9369d4bfe2ca6",
+    ".cache/mpea-study-engine/scripts/mpea_study.py": "61ddfdf9e8db9cacb3f64d3310021812a96aa66c98ae4e68febb6a794352648b",
+    ".cache/mpea-study-engine/tests/test_mpea_study.py": "6e72fec6ce46a57e963c2a9d7ebe512a6786283d35eca69f5d588aaa4110ca5b",
+    "scripts/mpea_features.py": "b24c0f1bb62fc56794e1232f973a6020ee42a0d3765d33cb51246f3c7a3a47d9",
+    "src/lupine_discovery/decision_pool.py": "76e96165102ebe8c3785f510d169b5d393838fb144f9c4275ffdb0aa6c21f1f9",
+    "src/lupine_discovery/representation.py": "c65c0eed659025a0e41eb325e75182ac2b980c35ac43dfddaa501f4f3ddf3b9e"
+  },
+  "status": "PASS",
+  "test_count": 25,
+  "unchanged": true
+}

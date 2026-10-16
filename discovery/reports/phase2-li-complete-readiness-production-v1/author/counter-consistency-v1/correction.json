@@ -1,0 +1,22 @@
+{
+  "actual_operations": 0,
+  "authority": "Root accepted exact independently derived completed-prior counter consistency predicates in task message before this correction.",
+  "constraints": {
+    "authenticated_pair": "M_B=M_A+s; outer fixed pins gate before target access and inner generated seam after header replay before XML",
+    "inventory": "s=int(any declared_type==s); M=D>=6+s; U=X=M+2",
+    "layout": "M=D=U=X>=6",
+    "meaning": "Necessary consistency, not proof of historical operation authenticity",
+    "scope": "Only completed historical A/B; never failure prefixes or C total counters",
+    "started_completed": "All four operation pairs are equal exact ints under existing bounds"
+  },
+  "first_independent_failure": {
+    "failure_records": 16,
+    "methods": 1,
+    "not_all_variants_executed": true,
+    "reason": "Final non-subtest assertion stopped before shared-string branch; do not claim all33 variants ran.",
+    "receipt": ".cache/phase2-li-complete-readiness-production-review-v1/counter-before-fix-first/execution.json",
+    "sha256": "5ec2abbcb2e242d7490673949be5b53a15f10d3f44ac0f6bd751ca0da21b5408"
+  },
+  "preserved_behavior_source": "540088bce4341b1f4137e44ef75244ada5786d000c50af597083dadbfc02c9d8",
+  "source_diff": "source.diff"
+}

@@ -1,0 +1,33 @@
+{
+  "schema": "lupine.bam-exposed-metrology-workbook-result.v1",
+  "acquisition_sha256": "ada0a1c180288cc4d44a83ef4d8ce61b97c6752b21dc1592ea9864f7bb65fefa",
+  "scope_sha256": "ba4fc7fffc4a47933185c8dcd3d3224131ae64b0e4a7b6a7219df2da96d1a789",
+  "status": "WORKBOOK_DOCUMENTARY_PROJECTED",
+  "exposure": {
+    "zip_parse_started": true,
+    "zip_parse_completed": true,
+    "xml_part_reads_started": 20,
+    "xml_part_reads_completed": 20,
+    "xml_decodes_started": 20,
+    "xml_decodes_completed": 20,
+    "xml_parses_started": 20,
+    "xml_parses_completed": 20
+  },
+  "permanently_exposed_metrology_reference": true,
+  "blind_predictive_benchmark_eligible": false,
+  "formulas_executed": false,
+  "macros_executed": false,
+  "linked_content_requested": false,
+  "source_sha256": "6cc298fa9922c60fc923b11dbfaa788057cb23593153d68a9aa95226b1795a83",
+  "archive_members": 33,
+  "declared_uncompressed_bytes": 228818,
+  "xml_parts_parsed": 20,
+  "sheets": 9,
+  "cells": 2409,
+  "formula_cells": 2,
+  "shared_strings": 475,
+  "external_relationships_seen_in_parsed_parts": 0,
+  "external_relationships_followed": 0,
+  "internal_cells_may_contain_measurements_and_contacts": true,
+  "internal_projection_written": true
+}

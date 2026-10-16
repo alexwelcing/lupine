@@ -1,0 +1,95 @@
+{
+  "actual_source_operations": 0,
+  "all_originals_reconstructed": 116,
+  "claim_review": "Publication provenance/metadata only, not revalidation of parser correctness or science.",
+  "created_at": "2026-10-16T13:53:57.542562+00:00",
+  "ignored_independent_logs_preserved": 4,
+  "relative_markdown_link_count": 17,
+  "relative_markdown_links": [
+    {
+      "link": "author/li_v3_readiness.py",
+      "path": "README.md"
+    },
+    {
+      "link": "author/README.md",
+      "path": "README.md"
+    },
+    {
+      "link": "design/README.final-v2.md",
+      "path": "README.md"
+    },
+    {
+      "link": "design/proposal.final-v2.json",
+      "path": "README.md"
+    },
+    {
+      "link": "design-review/review.json",
+      "path": "README.md"
+    },
+    {
+      "link": "root-implementation-scope.json",
+      "path": "README.md"
+    },
+    {
+      "link": "author/receipts/corrected-exposure/execution.json",
+      "path": "README.md"
+    },
+    {
+      "link": "independent/first/execution.json",
+      "path": "README.md"
+    },
+    {
+      "link": "independent/portable/execution.json",
+      "path": "README.md"
+    },
+    {
+      "link": "author/portable-author.json",
+      "path": "README.md"
+    },
+    {
+      "link": "author/receipts/first/execution.json",
+      "path": "README.md"
+    },
+    {
+      "link": "author/receipts/first-loaded/execution.json",
+      "path": "README.md"
+    },
+    {
+      "link": "author/first-loaded-corrections.json",
+      "path": "README.md"
+    },
+    {
+      "link": "independent/review.json",
+      "path": "README.md"
+    },
+    {
+      "link": "publication-copy-map.json",
+      "path": "README.md"
+    },
+    {
+      "link": "publication-checks.json",
+      "path": "README.md"
+    },
+    {
+      "link": "publication-history/first-assembly-failure.json",
+      "path": "README.md"
+    }
+  ],
+  "source_bytes_held_after": true,
+  "status": "PASS",
+  "test_invocations": 0,
+  "tracked_edits": 0,
+  "whitespace": {
+    "command": [
+      "git",
+      "diff",
+      "--no-index",
+      "--check",
+      "EMPTY",
+      "PROPOSED_REPORT"
+    ],
+    "exit_code": 1,
+    "stderr_bytes": 0,
+    "stdout_bytes": 0
+  }
+}

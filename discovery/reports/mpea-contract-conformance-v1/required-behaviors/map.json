@@ -1,0 +1,381 @@
+{
+  "schema": "required_behavior_source_map.v1",
+  "scope": "Read-only section10 source mapping, no test execution/approval or scientific inputs. Counts do not substitute behavior coverage.",
+  "behaviors": [
+    {
+      "required_behavior": 1,
+      "title": "Source pin/same-buffer/full framing fail closed",
+      "test_methods": [
+        {
+          "source": "tests/test_mpea_target_custody_review.py",
+          "method": "test_whole_identity_size_md5_sha_and_known_real_identity_precede_framing"
+        },
+        {
+          "source": "tests/test_mpea_target_custody_review.py",
+          "method": "test_every_late_framing_failure_precedes_first_numeric_call"
+        },
+        {
+          "source": "tests/test_mpea_target_custody_review.py",
+          "method": "test_count_header_and_role_authority_mismatch_never_decode"
+        },
+        {
+          "source": "tests/test_mpea_archive_driver_review.py",
+          "method": "test_source_size_md5_and_sha_are_checked_before_any_framing"
+        },
+        {
+          "source": "tests/test_mpea_archive_driver_review.py",
+          "method": "test_failed_complete_source_framing_decodes_no_target_and_preserves_stage_prefix"
+        }
+      ],
+      "evidence_status": "Specific source controls identified; prior independent executions retained separately. Final main full-suite outcome is NOT claimed by this map.",
+      "qualification": "Constructed inputs only; no physical premise or actual registration inferred."
+    },
+    {
+      "required_behavior": 2,
+      "title": "Original rows/routing/opaque unauthorized cells",
+      "test_methods": [
+        {
+          "source": "tests/test_mpea_target_custody_review.py",
+          "method": "test_authorization_precedes_byte_accumulation_in_every_cell"
+        },
+        {
+          "source": "tests/test_mpea_target_custody_review.py",
+          "method": "test_372_opaque_cell_replacements_preserve_every_authorized_result"
+        },
+        {
+          "source": "tests/test_mpea_target_custody_review.py",
+          "method": "test_reserved_roles_are_symmetric_and_all_authorized_bad_rows_survive"
+        },
+        {
+          "source": "tests/test_mpea_archive_driver_review.py",
+          "method": "test_inadequate_development_has_no_model_or_reserved_access"
+        },
+        {
+          "source": "tests/test_mpea_archive_driver_review.py",
+          "method": "test_all_960_ledgers_and_every_original_condition_row_remain_bound"
+        }
+      ],
+      "evidence_status": "Specific source controls identified; prior independent executions retained separately. Final main full-suite outcome is NOT claimed by this map.",
+      "qualification": "Constructed inputs only; no physical premise or actual registration inferred."
+    },
+    {
+      "required_behavior": 3,
+      "title": "Fixed decimal grammar/preflight/zero/conflicts/caps",
+      "test_methods": [
+        {
+          "source": "tests/test_mpea_target_custody_review.py",
+          "method": "test_exact_decimal_oracle_over_sign_mantissa_and_exponent_grid"
+        },
+        {
+          "source": "tests/test_mpea_target_custody_review.py",
+          "method": "test_preflight_happens_before_integer_fraction_or_power_construction"
+        },
+        {
+          "source": "tests/test_mpea_target_custody_review.py",
+          "method": "test_missing_whitespace_nonfinite_limits_and_conflicts_stay_distinct"
+        },
+        {
+          "source": "tests/test_mpea_target_custody_review.py",
+          "method": "test_exact_record_byte_cap_accepts_boundary_and_rejects_next_byte"
+        }
+      ],
+      "evidence_status": "Specific source controls identified; prior independent executions retained separately. Final main full-suite outcome is NOT claimed by this map.",
+      "qualification": "Constructed inputs only; no physical premise or actual registration inferred."
+    },
+    {
+      "required_behavior": 4,
+      "title": "Sampler/durable first draw/no replacement/reproduction",
+      "test_methods": [
+        {
+          "source": "tests/test_mpea_registration_allocation_review.py",
+          "method": "test_unrank_first_last_and_interior_against_independent_factoradic"
+        },
+        {
+          "source": "tests/test_mpea_registration_allocation_review.py",
+          "method": "test_first_accepted_draw_cannot_be_skipped_or_followed"
+        },
+        {
+          "source": "tests/test_mpea_registration_allocation_review.py",
+          "method": "test_interruption_never_allows_replacement_allocation"
+        },
+        {
+          "source": "tests/test_mpea_registration_allocation_review.py",
+          "method": "test_provider_failure_preserves_prior_rejection_and_never_retries"
+        },
+        {
+          "source": "tests/test_mpea_registration_allocation_review.py",
+          "method": "test_reproduction_imports_exact_original_bytes_without_entropy_or_new_registry"
+        },
+        {
+          "source": "tests/test_mpea_registration_allocation_review.py",
+          "method": "test_any_late_entropy_request_invalidates_original_transcript"
+        }
+      ],
+      "evidence_status": "Specific source controls identified; prior independent executions retained separately. Final main full-suite outcome is NOT claimed by this map.",
+      "qualification": "Constructed inputs only; no physical premise or actual registration inferred."
+    },
+    {
+      "required_behavior": 5,
+      "title": "Feature/profile/overlap/source-balanced exact prediction/fallbacks",
+      "test_methods": [
+        {
+          "source": "tests/test_mpea_study_review.py",
+          "method": "test_source_balanced_representatives_against_direct_fraction_oracle"
+        },
+        {
+          "source": "tests/test_mpea_study_review.py",
+          "method": "test_zero_based_numeric_ties_and_not_string_or_label_ties"
+        },
+        {
+          "source": "tests/test_mpea_study_review.py",
+          "method": "test_lower_medians_are_endpoint_separate_complete_record_weighted"
+        },
+        {
+          "source": "tests/test_mpea_study_review.py",
+          "method": "test_unknown_and_fewer_source_fallbacks_preserve_categories"
+        },
+        {
+          "source": "tests/test_mpea_archive_driver_review.py",
+          "method": "test_unknown_vectors_are_excluded_from_equality_groups_and_processing_is_explicit"
+        },
+        {
+          "source": "tests/test_mpea_archive_case_consistency_review.py",
+          "method": "test_replaced_features_cannot_disagree_with_frozen_input_payload_before_target_access"
+        }
+      ],
+      "evidence_status": "Specific source controls identified; prior independent executions retained separately. Final main full-suite outcome is NOT claimed by this map.",
+      "qualification": "Constructed inputs only; no physical premise or actual registration inferred."
+    },
+    {
+      "required_behavior": 6,
+      "title": "Freeze before reserved/role-blind all40/empty secondary",
+      "test_methods": [
+        {
+          "source": "tests/test_mpea_archive_driver_review.py",
+          "method": "test_every_reserved_order_is_frozen_before_targets_and_secondary_is_literal_restriction"
+        },
+        {
+          "source": "tests/test_mpea_archive_driver_review.py",
+          "method": "test_all_reserved_unknowns_keep_primary_universe_and_every_empty_secondary_ledger"
+        },
+        {
+          "source": "tests/test_mpea_study_review.py",
+          "method": "test_one_future_unknown_forces_primary_unsupported_and_keeps_unknown_metrics"
+        },
+        {
+          "source": "tests/test_mpea_study_review.py",
+          "method": "test_secondary_is_literal_restriction_and_empty_panels_remain"
+        }
+      ],
+      "evidence_status": "Specific source controls identified; prior independent executions retained separately. Final main full-suite outcome is NOT claimed by this map.",
+      "qualification": "Constructed inputs only; no physical premise or actual registration inferred."
+    },
+    {
+      "required_behavior": 7,
+      "title": "Complete direct-pool calibration runtime/rank19/weak ties",
+      "test_methods": [
+        {
+          "source": "tests/test_decision_pool_review.py",
+          "method": "test_runtime_prefix_matches_independent_fraction_comparison_for_variable_m"
+        },
+        {
+          "source": "tests/test_decision_pool_review.py",
+          "method": "test_all_minimizer_maximum_and_weak_boundary_detect_wrong_targets"
+        },
+        {
+          "source": "tests/test_mpea_study_review.py",
+          "method": "test_actual_20_panel_alpha_and_24_policy_schedule"
+        },
+        {
+          "source": "tests/test_mpea_study_review.py",
+          "method": "test_two_score_one_calibration_panels_force_tau_one_and_keep_ties"
+        },
+        {
+          "source": "tests/test_mpea_study_review.py",
+          "method": "test_all_infeasible_calibration_yields_statistical_empty_not_certificate"
+        },
+        {
+          "source": "tests/test_mpea_study_review.py",
+          "method": "test_explicit_unsupported_sampling_cannot_be_promoted_by_complete_secondary"
+        },
+        {
+          "source": "tests/test_mpea_study.py",
+          "method": "test_zero_threshold_is_statistical_empty_and_can_lose_future_optimum"
+        },
+        {
+          "source": "tests/test_mpea_study.py",
+          "method": "test_exact_rank_and_weak_tied_optimum_score"
+        }
+      ],
+      "evidence_status": "Specific source controls identified; prior independent executions retained separately. Final main full-suite outcome is NOT claimed by this map.",
+      "qualification": "Constructed inputs only; no physical premise or actual registration inferred."
+    },
+    {
+      "required_behavior": 8,
+      "title": "Sealed future decisions/raw identities/stale controls/all960",
+      "test_methods": [
+        {
+          "source": "tests/test_decision_pool_wire_review.py",
+          "method": "test_original_spelling_and_source_only_changes_invalidate_outer_replay_binding"
+        },
+        {
+          "source": "tests/test_decision_pool_wire_review.py",
+          "method": "test_future_loader_runs_after_complete_receipt_seal_and_not_for_invalid_input"
+        },
+        {
+          "source": "tests/test_mpea_study_review.py",
+          "method": "test_replay_requires_all_480_runs_even_zero_cost_and_exact_seals"
+        },
+        {
+          "source": "tests/test_mpea_study.py",
+          "method": "test_stale_missing_outoforder_duplicate_and_rewritten_reveals"
+        },
+        {
+          "source": "tests/test_mpea_archive_driver_review.py",
+          "method": "test_invalid_or_stale_population_plans_never_open_future_vault"
+        },
+        {
+          "source": "tests/test_mpea_archive_driver_review.py",
+          "method": "test_all_960_ledgers_and_every_original_condition_row_remain_bound"
+        }
+      ],
+      "evidence_status": "Specific source controls identified; prior independent executions retained separately. Final main full-suite outcome is NOT claimed by this map.",
+      "qualification": "Constructed inputs only; no physical premise or actual registration inferred."
+    },
+    {
+      "required_behavior": 9,
+      "title": "Same-cost controls/strict gains/failures/boundaries/unknowns",
+      "test_methods": [
+        {
+          "source": "tests/test_mpea_study_review.py",
+          "method": "test_same_actual_cost_primary_and_stopped_are_identical"
+        },
+        {
+          "source": "tests/test_mpea_study_review.py",
+          "method": "test_constructed_positive_control_requires_both_real_replay_populations"
+        },
+        {
+          "source": "tests/test_mpea_study_review.py",
+          "method": "test_fixed_gate_boundaries_and_no_empty_denominator_success"
+        },
+        {
+          "source": "tests/test_mpea_study_review.py",
+          "method": "test_no_feasible_panels_exposes_unavailable_components_not_threshold_failures"
+        },
+        {
+          "source": "tests/test_mpea_study.py",
+          "method": "test_every_gate_equality_boundary_exactly"
+        },
+        {
+          "source": "tests/test_mpea_study.py",
+          "method": "test_independent_full_truth_metric_oracle_exhaustive"
+        }
+      ],
+      "evidence_status": "Specific source controls identified; prior independent executions retained separately. Final main full-suite outcome is NOT claimed by this map.",
+      "qualification": "Constructed inputs only; no physical premise or actual registration inferred."
+    },
+    {
+      "required_behavior": 10,
+      "title": "Closed public allowlist/sink/sanitized failures",
+      "test_methods": [
+        {
+          "source": "tests/test_mpea_public_bridge_review.py",
+          "method": "test_aggregate_hidden_keys_and_unsealed_claims_are_rejected"
+        },
+        {
+          "source": "tests/test_mpea_public_bridge_review.py",
+          "method": "test_owned_publication_is_exact_and_cannot_overwrite"
+        },
+        {
+          "source": "tests/test_mpea_archive_driver.py",
+          "method": "test_ordinary_string_cap_no_target_exception_echo"
+        },
+        {
+          "source": "tests/test_mpea_archive_driver.py",
+          "method": "test_only_trusted_kernel_error_arguments_receive_closed_mapping"
+        },
+        {
+          "source": "tests/test_mpea_archive_launcher_review.py",
+          "method": "test_closed_outer_reason_keeps_internal_cause_in_bound_operational_receipt"
+        },
+        {
+          "source": "tests/test_mpea_archive_launcher_review.py",
+          "method": "test_cli_emits_only_closed_outer_status_and_reason"
+        }
+      ],
+      "evidence_status": "Specific source controls identified; prior independent executions retained separately. Final main full-suite outcome is NOT claimed by this map.",
+      "qualification": "Constructed inputs only; no physical premise or actual registration inferred."
+    },
+    {
+      "required_behavior": 11,
+      "title": "Actual-shaped guarded synthetic end-to-end/subprocess/reproduction",
+      "test_methods": [
+        {
+          "source": "tests/test_mpea_archive_driver_review.py",
+          "method": "test_complete_actual_shaped_workflow_and_ordered_consumer_boundaries"
+        },
+        {
+          "source": "tests/test_mpea_archive_reproduction.py",
+          "method": "test_two_processes_preserve_allocation_bytes_scientific_stages_no_entropy"
+        },
+        {
+          "source": "tests/test_mpea_fixture_worker.py",
+          "method": "test_complete_fixture_inside_network_namespace"
+        },
+        {
+          "source": "tests/test_mpea_archive_supervised_review.py",
+          "method": "test_complete_eight_stages_and_decoder_after_ack"
+        },
+        {
+          "source": "tests/test_mpea_study_supervisor_review.py",
+          "method": "test_cumulative_wall_does_not_restart_at_stage_seals"
+        },
+        {
+          "source": "tests/test_mpea_study_supervisor_review.py",
+          "method": "test_actual_sampled_rss_and_exit_peak_are_reported"
+        },
+        {
+          "source": "tests/test_mpea_study_supervisor_review.py",
+          "method": "test_real_user_and_network_namespace_and_no_external_route"
+        }
+      ],
+      "evidence_status": "Specific source controls identified; prior independent executions retained separately. Final main full-suite outcome is NOT claimed by this map.",
+      "qualification": "Actual numerical production-driver/fresh-process reproduction and actual supervised fixture arithmetic are complementary. Production worker-under-supervisor orchestration uses controlled scientific dependencies; do not describe it as unmocked registered actual study. Actual RSS sampling is not hard instantaneous peak enforcement."
+    }
+  ],
+  "source_hashes": {
+    "tests/test_mpea_target_custody_review.py": "6432c8b6c59effee8a8ab7bd7fcb47ff2fd5c4798d5f2008f85756d608703187",
+    "tests/test_mpea_archive_driver_review.py": "b34ca211196f96d507d89a99c33716c2fc148b1915612b6d837a269b67a767bf",
+    "tests/test_mpea_registration_allocation_review.py": "f77dbab176fac3755b6f6d74b41c384f6071ccd7f4a6414df0e21abf1c4252e4",
+    "tests/test_mpea_study_review.py": "7fe6374039fd06231d74d5c0ec9ffce3a0cd2f4ab3b93435a3d96be9fe8b7a90",
+    "tests/test_mpea_archive_case_consistency_review.py": "ac03692691aca31506640bc8d24edf2fe4a3bd99de9eb1492520a695da09494f",
+    "tests/test_decision_pool_review.py": "4237e60c1226412cf9b2d7f1f504cfff4f2daec8d8c8e058f7c05228d3084220",
+    "tests/test_mpea_study.py": "afffbc91445f0c3cd5625da975e0e327d64771be642450c556787d51eb112eef",
+    "tests/test_decision_pool_wire_review.py": "39937fd734019cd7c20116ecc537533ab04a9db95ad16a9a35d44426ea200aa4",
+    "tests/test_mpea_public_bridge_review.py": "5bc37564fa431e77b7bda94f0cd34d6fc0c5aa4a8980a5db2e5e00873aa8a21b",
+    "tests/test_mpea_archive_driver.py": "adec19a85fb7ddaa9f5d702c00ac6e752a7c6a3aea10a4bdcdb4c47a3d11ad80",
+    "tests/test_mpea_archive_launcher_review.py": "d5b31e315d251fc662d407f3a56bca8b85d7cbc3415b8c81fa5604be14791cb7",
+    "tests/test_mpea_archive_reproduction.py": "559f1192608903880bac1c4e32215b014fe4aad622c241487174e433b2197e67",
+    "tests/test_mpea_fixture_worker.py": "115644785c120b5b3526fe24db97cfbeeab1513be79ea03fcc5b270ff872e917",
+    "tests/test_mpea_archive_supervised_review.py": "1a5bdef9506a424b8483c0a10fc06f3518f00817981529d3af677fc4c71df4b4",
+    "tests/test_mpea_study_supervisor_review.py": "3cca098e6f5e3ab65d49dd0c311bda9069a0c033afb85fc70074ba6b73b60421",
+    "docs/mpea-t25-implementation-contract-v1.md": "be45b1d8db9586035cf37bd9bbb9046c065c3851b91f93386f8c68d155215af9",
+    "reports/mpea-private-contract-review-v1/v3/correction-closure-map-v3.md": "8b0fb861510ee90005c5a8f360ae96622c2fa15ee038c430cfd3bb1faeca6d9e",
+    "reports/mpea-contract-numerical-review-v1/v3/REVIEW-v3.md": "747f60579f8856c53490bfbf2beecd225e9738b4dacd8fb4078c3829ee9c9b30",
+    "reports/mpea-launcher-contract-review-v1/README.md": "f43bc7ff3c0881868794c90bb67f7dc9aa7782865a345d5c8f7065dac9e5c16a",
+    "reports/mpea-production-boundaries-v1/README.md": "4c4001c0905d99aa7993fe82f608244a7258427fea01a0b75d826c50f9a6fe6f",
+    "reports/mpea-study-components-engineering-v1/README.md": "c6bbbb7344a0a07455a75affe2a5204c12a8aaf1a7958180c953e2dda235d7c6"
+  },
+  "evidence_anchors": [
+    "reports/mpea-private-contract-review-v1/v3/correction-closure-map-v3.md",
+    "reports/mpea-contract-numerical-review-v1/v3/REVIEW-v3.md",
+    "reports/mpea-launcher-contract-review-v1/README.md",
+    "reports/mpea-production-boundaries-v1/README.md",
+    "reports/mpea-study-components-engineering-v1/README.md"
+  ],
+  "remaining_gate": "Root must review actual final command/exit/no-skips/source337before-after + exact4CI and approve exact engineeringSHA. Map supports review, not automatic sufficiency.",
+  "unsupported_claims": [
+    "One unmocked registered production launch integrating actual registration/provider/features/targets has NOT occurred.",
+    "Controlled supervisor scientific stubs do not establish production numerical execution. Real supervised constructed fixture plus actual-shaped production arithmetic/reproduction provide separate checks."
+  ]
+}

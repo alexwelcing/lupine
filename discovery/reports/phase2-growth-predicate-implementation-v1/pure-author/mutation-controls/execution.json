@@ -1,0 +1,23 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    ".cache/phase2-growth-predicate-candidate-v1/run_mutation_controls.py"
+  ],
+  "elapsed_seconds": 0.8265987640006642,
+  "exit_code": 0,
+  "finished_at": "2026-10-16T12:02:47.112621+00:00",
+  "source_after": {
+    "growth_predicate_audit.py": "6881d6f2db09ada9e76e1e9a0560e24f3f83f78e3063fe6740f88a66e2ff6ba6",
+    "run_mutation_controls.py": "103be0374ade683125fce07a3e1b9ca1cb8030bfe5245d799f7fafa7c215318c",
+    "test_growth_predicate_audit.py": "b03b1e9c02ad976c30cf92d98c9fec594b4c21e08aa231c2bd5293cbef10b40d"
+  },
+  "source_before": {
+    "growth_predicate_audit.py": "6881d6f2db09ada9e76e1e9a0560e24f3f83f78e3063fe6740f88a66e2ff6ba6",
+    "run_mutation_controls.py": "103be0374ade683125fce07a3e1b9ca1cb8030bfe5245d799f7fafa7c215318c",
+    "test_growth_predicate_audit.py": "b03b1e9c02ad976c30cf92d98c9fec594b4c21e08aa231c2bd5293cbef10b40d"
+  },
+  "source_held": true,
+  "started_at": "2026-10-16T12:02:46.286274+00:00",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "516425ddd5b1fcb19e679a9400d156bdb4d93e740fdb3914070568cad734dc98"
+}

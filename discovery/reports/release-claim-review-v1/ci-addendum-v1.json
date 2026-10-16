@@ -1,0 +1,15 @@
+{
+  "captured_response_sha256": "ddc409f183096b392d15ffbf78dc17a9709218ddfd65e2380e725f3b2b439b58",
+  "job_ids": {
+    "browser": 114317643837,
+    "lean": 114317643653,
+    "python (3.11)": 114317643839,
+    "python (3.12)": 114317643790
+  },
+  "observed_at": "2026-10-10T21:33:13.309057+00:00",
+  "result": "Four exact-commit required jobs completed successfully; recorded remote matches",
+  "run_id": 38087728540,
+  "schema": "lupine.release-claim-ci-addendum.v1",
+  "scope": "Independently checked root authenticated official-response fields; no newlivequery. Closes repaired-checkpointCI only, not futureproduction/finalcandidateCI or finalGO. Historicalreview-v1 pendingCI statement preserved as earlier observedperiod.",
+  "source_commit": "ae573ea9581a8e75bdffd787cba11d8051bfa83d"
+}

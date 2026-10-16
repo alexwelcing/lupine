@@ -1,0 +1,15 @@
+{
+  "current_source_hold": "namespace-source-hold.json",
+  "historical_originals_remain_unchanged": true,
+  "historical_source_hold": "source-hold.json",
+  "prepared_at": "2026-10-16T10:56:48.782546+00:00",
+  "publication_replacements": [
+    {
+      "action": "Copy wrapper, omit raw historical Markdown snapshot from public relocation; retained original remains ignored.",
+      "original": "before-namespace-cap/README.md",
+      "original_sha256": "c47dc68a34d4928c0886683885e7263c58e3c7b3ddfc98e72b617c83c55c1d3b",
+      "wrapper": "before-namespace-cap/README.md.json"
+    }
+  ],
+  "scientific_claim": "No actual-source or scientific validation."
+}

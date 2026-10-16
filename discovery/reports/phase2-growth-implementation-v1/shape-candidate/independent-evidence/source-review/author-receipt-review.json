@@ -1,0 +1,34 @@
+{
+  "checks": {
+    "35_tests_recorded": true,
+    "exit_zero": true,
+    "held_files_equal_before_after": true,
+    "log_ends_OK": true,
+    "stderr_bytes_match": true,
+    "stdout_bytes_match": true
+  },
+  "contract_at_execution": {
+    "bytes": 11122,
+    "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-hint-production-candidate-v1/promotion/docs/li-v3-growth-hint-shape-plan.md",
+    "sha256": "f4f0ce8eb5442fb4529fc17a7da60bfdeb3c7ad056b00c4105331ece55b5e659"
+  },
+  "process_elapsed_seconds": 0.5983863770015887,
+  "receipt_sha256": "2aa9ca3d8a470dd8f7d322899821a930feea10a8752ae1d41abd53c27be58123",
+  "recorded_utc": "2026-10-16T10:10:39.269592+00:00",
+  "schema": "lupine.discovery.growth_hint_author_receipt_review.v1",
+  "scope": "Independent receipt/log/byte audit only; author executed tests. No product import or test rerun by parent reviewer. Final contract chronology correction is pending and does not change implementation.",
+  "source_and_test_held_digests": [
+    {
+      "bytes": 20556,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-hint-production-candidate-v1/promotion/scripts/li_v3_growth_hint_shape.py",
+      "sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a"
+    },
+    {
+      "bytes": 28369,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-hint-production-candidate-v1/promotion/tests/test_li_v3_growth_hint_shape.py",
+      "sha256": "1f863ee2f1eefd54919767f7b4c75b6d460332d50f6234103dd47e586557685e"
+    }
+  ],
+  "test_count": 35,
+  "unittest_seconds": "0.086"
+}

@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-artifact-review-v1/additive_audit.py", line 200, in <module>
+    result = run()
+             ^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-artifact-review-v1/additive_audit.py", line 107, in run
+    assert pin_record['baseline_commit'] == BASELINE
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

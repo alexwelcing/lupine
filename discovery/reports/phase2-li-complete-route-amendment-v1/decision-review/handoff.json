@@ -1,0 +1,28 @@
+{
+  "files": [
+    {
+      "bytes": 3154,
+      "path": "README.initial.md",
+      "sha256": "913edd0ef5094e349dafe7b9c6c3ddecf2c8ce217dddca25056c45b84327f779"
+    },
+    {
+      "bytes": 2575,
+      "path": "review.initial.json",
+      "sha256": "7245f2b6f24690413baaa92569825340a01f20f0b990de27cbbd979f42ba06f6"
+    },
+    {
+      "bytes": 2071,
+      "path": "README.md",
+      "sha256": "7373683041aaac9ae2827badce414cb859198c47b362cfaef756e71483371748"
+    },
+    {
+      "bytes": 2961,
+      "path": "review.json",
+      "sha256": "98aa6ed60f855368160ba26a9d4be59f15589509e2b9465d540501b8b5a71bab"
+    }
+  ],
+  "implementation_or_actual_source_acceptance": false,
+  "reviewed_clarification_sha256": "41ea1b3ff2e27ba452ae2d9701a9803d711641428502f44c0b8126b8f828f206",
+  "reviewed_decision_sha256": "beaedd68842954d2c292491152645a6cf879541c30334a60fd4a28885753145c",
+  "status": "PASS_SOURCE_ONLY_DESIGN_REVIEW"
+}

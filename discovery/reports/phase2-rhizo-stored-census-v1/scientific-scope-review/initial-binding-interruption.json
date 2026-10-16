@@ -1,0 +1,10 @@
+{
+  "observed_at": "2026-10-16T13:15:09.916984+00:00",
+  "stage": "Final review source identity precheck",
+  "result": "AssertionError before final review was written",
+  "expected_original_contract_sha256": "eb4112fe3475599b674c39e3e73d9938c1fc69a3adfc420aaa3e86fad8963721",
+  "cause": "Author applied a separately root-requested public aggregate output amendment while reviewer was preparing final binding.",
+  "product_test_failure": false,
+  "private_reads": 0,
+  "disposition": "Preserve original reviewed scope and inspect/bind amended source separately."
+}

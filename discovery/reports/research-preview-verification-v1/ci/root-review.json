@@ -1,0 +1,38 @@
+{
+  "schema": "lupine.discovery.exact_runtime_ci_review.v1",
+  "reviewer": "root",
+  "source_commit": "6585a605d5d325e84423c7e35c7286efe85cfb6f",
+  "run_id": 38101296342,
+  "observed_at": "2026-10-11T01:40:16.973611+00:00",
+  "official_response_sha256": "39f5c0f69fb6d188944050dbd5588b86f380f6f0c310339b217cffb178faf3ec",
+  "remote_matches": true,
+  "original_push_run_attempt": 1,
+  "jobs": [
+    {
+      "id": 114357587456,
+      "name": "python (3.11)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 114357587577,
+      "name": "python (3.12)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 114357587593,
+      "name": "lean",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 114357587671,
+      "name": "browser",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "status": "PASS",
+  "scope": "Official exact-source run/job results and branch observation; no downloaded remote logs, remote test-count claim or remote binary artifact verification."
+}

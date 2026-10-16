@@ -1,0 +1,52 @@
+{
+  "activity": {
+    "auditor_imported_or_executed": false,
+    "git_commands": false,
+    "network_used": false,
+    "private_capture_or_objects_read": false,
+    "project_imports": false,
+    "selected_public_copied_receipts_read": true,
+    "source_AST_parse_only": true,
+    "source_reader_or_operation_invocations": false
+  },
+  "auditor_sha256": "2a593cbdc29aa2db503f69647ea423c300ce94c84d8d3ad0db4a3f36b3b6abff",
+  "blockers": [],
+  "limits": [
+    "Final external input manifest was not yet supplied; this review cannot attest its bytes, eventual copy closure, link result or any actual publication-audit PASS.",
+    "This is a controlled public-evidence workflow, not a hostile filesystem security boundary: reads use pre-read size checks and file/hash holds; excluded suffixes do not prove arbitrary files contain no raw data.",
+    "Markdown checking covers explicit inline links and file existence, not fragment correctness, reference-style link resolution or every historical prose claim.",
+    "Full underlying operation semantics and every gate are covered by retained audits; this publication auditor performs selected cross-checks and exact-copy joins, not an independent re-execution.",
+    "Reviewer authored the retained operation auditor and operated its corrected public-receipt audit; independence here is from this publication auditor author, not from every underlying receipt."
+  ],
+  "preexecution_findings_retained": {
+    "count_mismatch_and_missing_continuation_key": "Found before any auditor invocation and resolved before held hash.",
+    "preparation_history": "Author preserved a later draft and accurately discloses that earlier moving drafts were not individually snapshotted.",
+    "role_collision_and_directory_link_issues": "Held source adds ledger role separation, unique authored paths and file-only link targets."
+  },
+  "reviewed_at": "2026-10-16T11:20:41.357005+00:00",
+  "reviewer": "/root/phase2_planner/ui_review",
+  "schema": "lupine.discovery.growth_publication_auditor_static_review.v1",
+  "source_findings": {
+    "ci_scope": "Held source checks exactly four jobs, exact four distinct job names, matching run/commit, completion and retained observation chronology.",
+    "claim_scope": "Known G30 match does not establish archive acceptance; G31 remains blocked after three completed local shapes before decompression/XML. BAM is permanently exposed and ineligible for blind predictive benchmarking; NIST is conditional guidance; pure layout remains UNBOUND.",
+    "copy_transform_closure": "Frozen promotion/project-document maps are typed, ledger roles cannot shadow their paths, required ledgers are frozen, and all current file paths must occur in the frozen maps. Copy source bytes are joined to their declared identity; exact copies, UTF-8 wrappers and the single literal link relocation cover every publication path without authored-evidence overlap.",
+    "known_missing_field_resolved": "Draft current_checkpoint.growth_envelope.recognized_roles reference was absent. Held source uses its declared reason/archive-acceptance/XML-start fields; actual public envelope still must explicitly have recognized_roles:null.",
+    "relocation": "Original README remains in a lossless wrapper; published bytes must equal only the stated diff-link string replacement. Relative Markdown links are checked as final discovery paths, including four project Markdown documents; targets must be files.",
+    "runtime_and_receipts": "No project import or source reader. All332 runtime files are checked against the manifest and the exact c17 committed manifest. Copied CI/package/artifact/actual-operation fields match selected read schemas; exact public shape/envelope output hashes preserve the known negative envelope result.",
+    "wrapper_count": "Uses complete frozen ledger rather than stale count; currently observed ledger has17 wrappers, but final input freeze remains authoritative."
+  },
+  "status": "PASS_HELD_SOURCE_SCOPE_FINAL_INPUT_FREEZE_PENDING",
+  "supporting_public_source_bindings": {
+    ".cache/phase2-growth-verification-publication-review-v1/preparation-history.json": "a7c96e101fabbf6c9854b22732d3109fad6a341f82da07ee0f8c434fb9ee020d",
+    ".cache/phase2-growth-verification-release-v1/initial-copy-map.json": "6bddd56e5ef39ee5624258483daaf98ad48498f304e99a04b4441a3368127cdb",
+    ".cache/phase2-growth-verification-release-v1/lossless-wrappers.json": "b09acacbd65870b7621f94714c2db2664fd27b3cd2ba81ec55489649a7d9ab94",
+    ".cache/phase2-growth-verification-release-v1/project-docs/continuation.json": "b048f260986ee9dda2cc1d20400d34cd34af65720837674f8ad4dcc35fa7ae65",
+    ".cache/phase2-growth-verification-release-v1/promotion/reports/phase2-bam-metrology-workbook-v1/result.json": "f96cdfc7ead2bc4d4ef6264b09da376fe68af9369906131f306573ffb8eb36d4",
+    ".cache/phase2-growth-verification-release-v1/promotion/reports/phase2-documentary-layout-preparation-v1/independent/review.json": "fa343b5574bfda2a9a17e8fcacbb919758dbf8fe57125a63290fb62d34e70184",
+    ".cache/phase2-growth-verification-release-v1/promotion/reports/phase2-growth-verification-v1/clean-package/0-execution.json": "f7879f390bd965ba3ba05f5f0bcdffd45758315ff73ed94caae002a8131b002e",
+    ".cache/phase2-growth-verification-release-v1/promotion/reports/phase2-growth-verification-v1/clean-package/1-execution.json": "a8233ae5eeb34f57b4fb7bc786a7477ae0dc9b8edb77ed28b169d385ae81fae0",
+    ".cache/phase2-growth-verification-release-v1/promotion/reports/phase2-growth-verification-v1/clean-package/artifacts/release-artifacts.json": "a653d5d2738aaf1cd6f0422bb1af42b65e4cb87054751207f80202da035c03ee",
+    ".cache/phase2-growth-verification-release-v1/promotion/reports/phase2-nist-metrology-guidance-v1/operation.json": "b4d3a743dbf19c02c485b6bc9d28289324403d0c077b37c7ff5b2d69ea69cb38",
+    ".cache/phase2-growth-verification-release-v1/relocation-link-repairs.json": "db26eee11a5971d1a35079c338c6010f234483b0c012516ecb986c7af27efcf8"
+  }
+}

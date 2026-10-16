@@ -1,0 +1,29 @@
+{
+  "schema": "lupine.bam-encoding-comparison-initial-source-review.v1",
+  "reviewed_at": "2026-10-16T09:59:07.688750+00:00",
+  "result": "TWO_REPORTING_PRECISION_FIXES_REQUESTED_BEFORE_INVOCATION",
+  "source_sha256": "c6e1055cf54896c903136494eec872c3afcf25d9377e90dbab38c7f8f96b9d66",
+  "scope_sha256": "8507f26007453bc555b7d0170a2ef905247d2e065c4ffec0274b84e73b620fca",
+  "findings": [
+    {
+      "id": "prior_preservation_claim",
+      "issue": "The emitted original_utf8_failure_preserved flag is unconditional. The script reads scope for its hash but does not validate its prior_preserved bindings.",
+      "requested_fix": "Verify the frozen prior artifact bindings before raw interpretation, or label the flag as by-design intent and bind actual unchanged before/after artifacts externally.",
+      "scope": "Audit assertion precision, not a codec or scientific validity finding."
+    },
+    {
+      "id": "cell_count_denominator",
+      "issue": "ASCII/nonASCII/different-cell counts only traverse eleven-column records, including the header and empty cells. Other-width records are skipped. The closed aggregate report does not explicitly label this scope.",
+      "requested_fix": "Emit a fixed count-scope description and explicit exclusion of other-width records so aggregates cannot be mistaken for every parsed cell."
+    }
+  ],
+  "accepted_boundaries": [
+    "Only cp1252 and iso8859-1 strict decodes; no encoding winner, normalization or replacement.",
+    "csv.reader on StringIO(newline=\"\") with explicit semicolon/quote/doublequote/noescape/strict parameters; no splitlines that would split NEL.",
+    "Identity checked before any hypothesis interpretation. Full document, examples and comments machine exposure is acknowledged.",
+    "All example-column values are withheld from internal projection; other ASCII cells, including potentially empirical comments, remain internal-only.",
+    "NonASCII/different cells receive closed status/locators; same-string nonASCII cells are still unbound. No fill-down, alternative columns, unit conversion, formula execution or link following.",
+    "Public stdout contains only fixed identity/status/structural aggregates and record locators; internal selected-cell strings are not printed."
+  ],
+  "actual_review_activity": "Static reading of scope/source only; no raw schema/measurement source read, candidate import/execution, synthetic tests, network, tracked edit or Git mutation."
+}

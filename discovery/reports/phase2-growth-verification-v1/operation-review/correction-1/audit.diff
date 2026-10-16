@@ -1,0 +1,21 @@
+--- audit-original
++++ audit-corrected
+@@ -157,7 +157,8 @@
+     check(report['predecessor_classification'] == prior['predecessor_classification']
+           and report['predecessor_reason'] == 'LOCAL_EXTRA_HEADERS_COMPLETE', 'same first-local predecessor path')
+     check('field_headers' not in report, 'partial lists withheld')
+-    check(report['legacy_zip_reason'] == prior['legacy_zip_reason'], 'legacy rejection retained')
++    check(report['predecessor_classification'] == literal('scripts/li_v3_local_extra_headers.py', 'EXPECTED_CLASSIFICATION'),
++          'fixed compatible predecessor rejection retained')
+     reason = report['reason']
+     check(reason in {'GROWTH_HINT_SHAPE_MATCH', 'GROWTH_SIGNATURE_MISMATCH', 'GROWTH_PADDING_NONZERO'}, 'bounded actual shape reason')
+     signature = reason != 'GROWTH_SIGNATURE_MISMATCH'
+@@ -575,7 +576,7 @@
+                 'Identical results are computational replay, not scientific replication or independent sampling.',
+                 'Remote unchanged and source-guard outcomes are recorder evidence; this audit uses local Git only.',
+                 'Known negative diagnostics can pass receipt integrity; this never promotes archive or scientific acceptance.']}
+-    destination = BASE / ('actual-review-' + args.stage + '.json')
++    destination = BASE / ('actual-review-' + args.stage + '-corrected.json')
+     with destination.open('x') as stream:
+         json.dump(result, stream, indent=2, sort_keys=True); stream.write('\n')
+     print(json.dumps({'status': 'PASS', 'stage': args.stage, 'checks': COUNT, 'commit': COMMIT,

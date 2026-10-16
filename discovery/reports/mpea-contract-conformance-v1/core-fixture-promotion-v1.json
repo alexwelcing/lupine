@@ -1,0 +1,19 @@
+{
+  "at": "2026-10-10T22:39:17.779202+00:00",
+  "files": [
+    {
+      "assertion_calls_unchanged": 2,
+      "candidate_sha256": "7017ed67dce793e0abf09ba78f8e211898e600518af6ed3ef867dc69e6f0a440",
+      "main_before_sha256": "65bca38563513f6db2085f59d91d4af5c8a3daff1b49f74ac3ff73f25390f522",
+      "path": "tests/test_mpea_archive_case_consistency_review.py"
+    },
+    {
+      "assertion_calls_unchanged": 93,
+      "candidate_sha256": "b5bcc8ef78aa43fbd077247af6961b5b863eb696589ec4be37d8e279c71da0d0",
+      "main_before_sha256": "2b2e1fa298d1042fcbee0b92a7695f5bffcf0aa53ed2dce0af90c815e716156c",
+      "path": "tests/test_mpea_archive_driver_review.py"
+    }
+  ],
+  "runtime": "pending full integration",
+  "scope": "Only valid predecessor fixture metadata; unchanged adversarial assertions."
+}

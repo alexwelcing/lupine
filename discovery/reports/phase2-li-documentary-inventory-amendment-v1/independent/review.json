@@ -1,0 +1,102 @@
+{
+  "arbitrary_documentary_text_outcome_absence": "NOT_ESTABLISHED",
+  "architecture": "A layout; B complete plain-text documentary inventory; C authenticate/recompute A and inventory, reconstruct strict documentary mapping internally, then complete frame. Distinct prior_inventory_sha256; no fabricated historical strict-B receipt.",
+  "bindings": [
+    {
+      "bytes": 18051,
+      "path": ".cache/phase2-li-complete-readiness-design-v1/README.final-v2.md",
+      "review_scope": "Preserved accepted design; phase B and existing limits.",
+      "sha256": "a538a77065b6dfbe84e76038f9e60610cecc5183721961379c8292084ac34568"
+    },
+    {
+      "bytes": 8585,
+      "path": ".cache/phase2-li-complete-readiness-design-v1/proposal.final-v2.json",
+      "review_scope": "Three-phase maximum operation budget and exact engineering caps.",
+      "sha256": "d53ce5c1ad52a68e6f92aacfa9e457c238c90a434ca6e565923bd6d167ce6cfd"
+    },
+    {
+      "bytes": 81591,
+      "path": ".cache/phase2-li-complete-readiness-candidate-v1/li_v3_readiness.py",
+      "review_scope": "Read-only code review: _doc_binding and _documentary implement prior exact literals; pure5fd1 stays unchanged.",
+      "sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219"
+    },
+    {
+      "bytes": 10283,
+      "path": ".cache/phase2-li-complete-readiness-candidate-v1/README.md",
+      "review_scope": "Current contract: manifest assertions, explicit exposure and terminal unknowns.",
+      "sha256": "295a04a9b411001e22a4e39c831c609203c2feb1958be5e663cfbb6a9e4704b7"
+    },
+    {
+      "bytes": 6461,
+      "path": ".cache/phase2-li-complete-readiness-candidate-v1/interface.final-v3.json",
+      "review_scope": "Current exact-literal binding interface and strict prior dependencies.",
+      "sha256": "c53c2e2d59599f6e568604d83ae33a4a6814e0b36d03b4362f3ad4163fe2d748"
+    },
+    {
+      "bytes": 7423,
+      "path": "reports/phase2-li-paper-methods-v1/README.md",
+      "review_scope": "Published own-paraphrase primary-paper findings; Sec11 documentary roles; no raw article/workbook read in this review.",
+      "sha256": "b168331d3198c97b6cdf45d67b505b4ddf88acf60ab6b556e4b35798b5a3eb10"
+    },
+    {
+      "bytes": 8050,
+      "path": "reports/phase2-notebook-header-verification-v1/README.md",
+      "review_scope": "Published static notebook inventory and exposure limitations; literals withheld.",
+      "sha256": "1f7c09d7b201ee0310a55f9c8c8db389158634d1bdeb86ead1dbfa43b67c7bdf"
+    },
+    {
+      "bytes": 9573,
+      "path": "reports/phase2-li-schema-gates-v1/README.md",
+      "review_scope": "Published documentary/provenance gates and incidental exposure distinction.",
+      "sha256": "1d293554cb5e933df913f21333ed20e274e0b5a569aa6315fded0ac62eb6bb3c"
+    },
+    {
+      "bytes": 16170,
+      "path": "reports/phase2-li-layout-localization-design-v1/README.md",
+      "review_scope": "Published role/relationship binding and private character-data exposure warning.",
+      "sha256": "5871e1c6acfbfe6d76b0ad79ba3a91ba56e9f222f0a8b1df70ee44659a6b3ade"
+    },
+    {
+      "bytes": 5841,
+      "path": "reports/phase2-li-next-schema-design-v1/README.md",
+      "review_scope": "Published separation of documentary meaning and structural inventories.",
+      "sha256": "07e0acd3e4a759c147abca38ca57271548b551f7bd6b749bf14df52a7b39993b"
+    }
+  ],
+  "counterexample": "Two identically named/structured plain-string cells can contain a definition or an outcome-like example. This is hypothetical text, not a source observation.",
+  "created_at": "2026-10-16T14:12:09.469190+00:00",
+  "decision_owner": "/root",
+  "existing_design_and_pure_code_edited": false,
+  "findings": [
+    "Exact allowed_texts is a prior literal-content consistency/disclosure premise, not a general discovery mechanism or mathematical coverage prerequisite.",
+    "A different frozen role-scoped inventory can discover previously unknown documentary text, while retaining explicit potential outcome exposure.",
+    "No structural/plain-text policy proves semantic harmlessness; outcome-free or fresh-blind status must not be inferred.",
+    "All existing caps and complete-or-block rules remain; no truncation or after-observation exception.",
+    "C must authenticate and recompute inventory, bind strict literals to its exact coordinates/storage, and preserve the remaining legacy checks before record access.",
+    "Unsupported semantics or a missing complete frame binding remain terminal NO_GO."
+  ],
+  "fresh_status": "UNESTABLISHED",
+  "g20_admitted": false,
+  "maximum_operations": {
+    "additional_actual_strict_documentary_B_runs": 0,
+    "phases": 3,
+    "runs_per_phase": 2,
+    "total": 6
+  },
+  "readme_sha256": "94a79853d6d520deda2f95ab3c52c02917a84adc00f6b3b8dcd5fe1a1b0e2c88",
+  "reviewer": "/root/phase2_math",
+  "root_accepted_before_actual_complete_route": true,
+  "schema": "lupine.documentary-inventory-advisory-review.v1",
+  "scientific_admission": false,
+  "scope": {
+    "actual_complete_route_operations": 0,
+    "actual_receipt_reads": 0,
+    "network_requests": 0,
+    "published_docs_and_candidate_source_review": true,
+    "raw_workbook_or_private_capture_reads": 0,
+    "tests_or_product_execution": 0,
+    "tracked_edits": 0
+  },
+  "status": "PROSPECTIVE_AMENDMENT_SUPPORTED_WITH_EXPLICIT_EXPOSURE",
+  "test_status": "PROPOSED_ADVERSARIES_ONLY_NOT_EXECUTED"
+}

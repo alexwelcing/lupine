@@ -1,0 +1,9 @@
+{
+  "bytes": 26541,
+  "destination": ".cache/phase2-growth-predicate-production-v1/promotion/tests/test_li_v3_growth_predicate_audit_review.py",
+  "exact_copy": true,
+  "independent_handoff": ".cache/phase2-growth-predicate-production-review-v1/handoff.json",
+  "independent_handoff_sha256": "89433695522d59723db7ded94ff0697320c560312e61d5fb906816e237e039db",
+  "sha256": "3dd4b23024028e2e7ba5876ca8d9705e066e57362bfae63d9999783e76b5dc49",
+  "source": ".cache/phase2-growth-predicate-production-review-v1/promotion/tests/test_li_v3_growth_predicate_audit_review.py"
+}

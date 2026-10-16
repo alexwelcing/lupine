@@ -1,0 +1,15 @@
+{
+  "at": "2026-10-16T13:56:49.459549+00:00",
+  "audit_has_never_run": true,
+  "changes": [
+    "Root final promotion pins replace the prospective original map; both exact maps remain retained.",
+    "Static review removed an unjustified exact0644/0755 tar permission assumption: Git tar.umask may preserve group-write bits. Audit still checks tracked executable distinction, no special permission bits, exact regular-file set, modes in Git, and every blob byte.",
+    "Known-answer receipt summary compared by canonical JSON to distinguish bool/integer substitutions."
+  ],
+  "new_script_sha256": "b6566a01f8704699174dbdaaacb4a51182e58bf1e346bf249375c534ac1728db",
+  "no_actual_artifact_audit_or_scientific_operation": true,
+  "no_source_assertion_failure_observed": true,
+  "old_script_sha256": "4f1ea28955d378190f34ea155dde80922a51ff27b3bb6cde9888f75a8d62a071",
+  "original_script_preserved": "before-final-pins-audit_retained.py",
+  "schema": "lupine.rhizo.census.artifact-audit.preexecution-amendment.v1"
+}

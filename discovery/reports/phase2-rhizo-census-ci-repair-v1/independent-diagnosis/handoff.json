@@ -1,0 +1,31 @@
+{
+  "correction_executed": false,
+  "focused_addendum_sha256": "74a57d62e6019d4b6cef2dd006aeb2125259864b36d66fc32d3ebc0c4dba4ac4",
+  "inventory_sha256": "aa80e815f3f4b80f28636458769f3afeeed097a6cc6d1b836f81ba5b03223fe1",
+  "original_focused_tests_failed": 1,
+  "original_focused_tests_run": 1,
+  "proposed_patch_sha256": "1a9c7dd43dfb1c6f3db2e8187895b8839081f297dddb55d348bdc86d5c3b2912",
+  "proposed_source_sha256": "bce07a6927df9efe261f0477eae7b65f7babbd227721fb77333b7fe34188cf82",
+  "publication_files": [
+    "source-snapshots/test_retained_mpea_transport.py",
+    "source-snapshots/test_retained_artifacts.py",
+    "source-snapshots/verify_retained_artifacts.py",
+    "source-snapshots/test_package_retention.py",
+    "review.json",
+    "observed-ci-final.json",
+    "proposed-test_retained_mpea_transport.py",
+    "proposed-fix.patch",
+    "first-original-focused-reproduction/start.json",
+    "first-original-focused-reproduction/execution.json",
+    "first-original-focused-reproduction/stdout.txt",
+    "first-original-focused-reproduction/stderr.txt",
+    "focused-reproduction-addendum.json",
+    "README.md",
+    "inventory.json",
+    "handoff.json"
+  ],
+  "review_sha256": "77b35c9dd86d6be7d3182b87adbd76b67c2fdf5fc0be523dc11e675f97c3225f",
+  "runtime_edits": false,
+  "schema": "lupine.rhizo.census.ci-static-review.handoff.v1",
+  "status": "ORIGINAL_STALE_ASSERTION_CONFIRMED_BY_SINGLE_FOCUSED_FAILURE"
+}

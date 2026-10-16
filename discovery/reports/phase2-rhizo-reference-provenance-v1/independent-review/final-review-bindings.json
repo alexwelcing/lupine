@@ -1,0 +1,52 @@
+{
+  "schema": "lupine.rhizo.documentary-independent-review.bindings.v1",
+  "created_at": "2026-10-16T11:55:21.787507+00:00",
+  "scope": "Exact reviewed artifact identities; private projection is bound by identity only and is not copied or published by this review.",
+  "bindings": [
+    {
+      "path": ".cache/phase2-rhizo-documentary-review-v1/README.md",
+      "bytes": 7874,
+      "sha256": "66b2963a5da356ad660e6a08a88f4303ab3bc503cec307d33d0407a75933e38f"
+    },
+    {
+      "path": ".cache/phase2-rhizo-documentary-review-v1/source-bindings.json",
+      "bytes": 3066,
+      "sha256": "c0450f9d1370c551cd0dd102f8004897a5c849929a24e6403243bfd988bf88c2"
+    },
+    {
+      "path": ".cache/phase2-rhizo-documentary-review-independent-v1/scope.json",
+      "bytes": 1371,
+      "sha256": "3f6f3768f1cb65d55fd5045c5720757e6427b7afd155618139283cab6bf1d45f"
+    },
+    {
+      "path": ".cache/phase2-rhizo-documentary-review-independent-v1/receipt-check.json",
+      "bytes": 1705,
+      "sha256": "f040a23acdde7eafef2f7a3edf7b4c563aad780c248119b291fbf619ec16c9d3"
+    },
+    {
+      "path": ".cache/phase2-rhizo-documentary-review-independent-v1/exposure-ledger-before-full-string-display.json",
+      "bytes": 675,
+      "sha256": "d03d04a45ccf8242a8d840d24fee6792eeb29ce63001ba0e6ce01350c0370e85"
+    },
+    {
+      "path": ".cache/phase2-rhizo-documentary-review-independent-v1/exposure-ledger.json",
+      "bytes": 1710,
+      "sha256": "62f030a28fa1988daf2c05202a8e75817fd04bf89e8d1945c0502a9aaaef5889"
+    },
+    {
+      "path": ".cache/phase2-rhizo-documentary-review-independent-v1/independent-interpretation.json",
+      "bytes": 5017,
+      "sha256": "750e40a63cec7032d301f50500fcf6f3a1793e97396c3ac2fb326c8f9608916b"
+    },
+    {
+      "path": ".cache/phase2-rhizo-documentary-review-independent-v1/public-candidate-check.json",
+      "bytes": 1731,
+      "sha256": "082c09344d3bb5f978020beaedd0441f3791edc925b22bf7a6d6774981d473bc"
+    },
+    {
+      "path": ".cache/phase2-rhizo-documentary-review-independent-v1/final-review.json",
+      "bytes": 7539,
+      "sha256": "daab9851c4eac7f3a192b8608edf5ed409bb3d6cc083a5dae214dfb176dec130"
+    }
+  ]
+}

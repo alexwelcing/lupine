@@ -1,0 +1,15 @@
+{
+  "actual_source_operations": 0,
+  "adapter_sha256": "80e0d39728320d115ddc8a9ce3467904294a57310af719c81e9686786de25263",
+  "contract_sha256": "a08878616fa99d711399b643eb65cf813315ac2d26c54cb4eeceb5f65a80e701",
+  "core_byte_identical_to_reviewed": true,
+  "core_sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219",
+  "monkeypatch_in_product": false,
+  "orchestration_diff_sha256": "a382852679915471fd3d310cbfa7c4378730a27ecff3aa83935dea0d76d9a051",
+  "result_marker_substitutions": [
+    "schema",
+    "synthetic_fixture",
+    "production_binding"
+  ],
+  "test_sha256": "3c8c2b89e71bf86d6b74c22dd7629bc030771ed01756bb54379092589389b982"
+}

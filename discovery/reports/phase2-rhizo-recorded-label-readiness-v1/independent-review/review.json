@@ -1,0 +1,84 @@
+{
+  "actual_reference_choice": "UNKNOWN",
+  "all_test_bytes_unchanged_across_runs": true,
+  "candidate_and_332_runtime_held_every_run": true,
+  "contract_sha256": "8b1f1b43fd5cf780a258b91bd346c6fef2d4cf4e1ee2af0cb3ef192092f32c49",
+  "coverage": [
+    "All 36 IDs, 144 positions, 43 original reference locations and 172 candidate edges preserved; every choice remains UNKNOWN.",
+    "Twenty fixed exact decimal cases cover signed zero, nonzero tiny negative tolerance, 128/129 mantissa digits, exponent/scale 1024/1025 and binary-float overflow/underflow counterexamples.",
+    "Missing/null/bool/string/container numeric states; exact unit and separate citation/tolerance statuses; absent and duplicate property records with private order preserved.",
+    "Duplicate decoded keys, malformed UTF-8/JSON, lone surrogates, nonstandard constants and schema/context/provenance/property-layout failure.",
+    "Canary invariance excludes only declared whole-object identity bindings; no raw selected numbers/citations/declared companion hashes or unselected opaque data appears publicly.",
+    "Exact direct generated parser boundaries for depth32, node20000 and string16384; explicitly lowered property-list/output caps exercise failure paths without claiming large wrapper-bound coverage.",
+    "Late global failure returns no private projection while preserving progress; partial selected processing, partial read/write and first-failure precedence preserved.",
+    "Generated file source size/SHA256/Git-blob checks, symlink rejection, known-source identity rejection, exclusive reservation before target read, exact one-read size+1 per object and no overwrite.",
+    "Fixture-only source guard failures before reservation, before a later target read and before output; production entrypoint forbidden."
+  ],
+  "execution_history": [
+    {
+      "disposition": "Direct held-byte compilation into ModuleType; no guard widening/test/candidate edit.",
+      "finding": "Reviewer importlib loader requested candidate __pycache__; strict path guard stopped before source execution.",
+      "returncode": 1,
+      "run": "first",
+      "tests_executed": 0
+    },
+    {
+      "disposition": "Subprocess cwd changed to owned review directory; hook checks/test/candidate bytes unchanged.",
+      "finding": "Reviewer path hook misresolved dir_fd-relative temporary cleanup names against project cwd; all nine failures were cleanup guard assertions.",
+      "reported_errors": 0,
+      "reported_failures": 9,
+      "returncode": 1,
+      "run": "second",
+      "test_methods_run": 19
+    },
+    {
+      "execution_sha256": "5b8438586a2c53018a1f936cc78310ec801d305c4001b0ca074b3283f8f33325",
+      "guard_violations": 0,
+      "process_seconds": 2.3334656920014822,
+      "reported_errors": 0,
+      "reported_failures": 0,
+      "returncode": 0,
+      "run": "third",
+      "test_methods_run": 19,
+      "unittest_seconds": 1.86
+    }
+  ],
+  "findings": [
+    {
+      "issue": "Partial selected materialization could occur before the old completed-position flag was set.",
+      "kind": "pre_hold_source_finding",
+      "resolution": "Author added selected_historical_labels_materialization_started before position projection and documented completed-position flag/counters. Independent injected second-numeric failure confirms started=True, completed=False, zero complete positions and private=None."
+    },
+    {
+      "issue": "The 512 property bound means records in the container properties list, not each JSON object key count.",
+      "kind": "contract_clarification",
+      "resolution": "README explicitly states this; general keys remain bounded by bytes, nodes, strings and depth."
+    }
+  ],
+  "independent_test_sha256": "826598f8db7146a8b9c7cd203e9be3d9b22790d07e5c09ba343a6bb4f34a2488",
+  "limitations": [
+    "No actual retained object or private documentary projection was read. No upstream module, production guard or production entrypoint was executed by this reviewer.",
+    "No network or project test suite was run.",
+    "Runtime guards constrain these controlled generated tests; they are not a hostile-code security boundary, and dir_fd audit events do not include their base directory.",
+    "Production manifest/invocation and actual documentary completeness remain root-owned and untested here.",
+    "No physical accuracy, source attribution, independent units, uncertainty admission, held-out freshness or scientific superiority is established."
+  ],
+  "predeclared_plan": {
+    "before_source_or_author_results": true,
+    "numeric_lexeme_cases": 20,
+    "sha256": "a42f2a33c1f1e3347571c60ebd7b8386214847afdc1de52df86bdf24add78d6b"
+  },
+  "readme_sha256": "c562ed10f3b6c81fb60152118fbb932ea45f6f33033fe9d4a451e6fbddb9c4e3",
+  "reviewed_at": "2026-10-16T12:12:25.413216+00:00",
+  "schema": "lupine.rhizo.recorded-label-independent-review.v1",
+  "scientific_status": "NOT_ADMITTED",
+  "source_review": {
+    "custody_argument": "The actual wrapper is reviewed statically: fixed manifest/source/frame/object pins, exclusive slot, no-follow regular file reads, same-buffer three-part identities, closed errors and separate possible private-write state. Generated tests exercise only synthetic files and fixture guards.",
+    "no_float_eval_exec_calls": true,
+    "parser_and_numeric_argument": "Strict recursive JSON parse retains tokens, checks decoded duplicate keys and limits depth/nodes/strings. Numeric classification only counts mantissa digits and parses a bounded exponent; negative tolerance uses sign and a nonzero mantissa. No binary float, label comparison or source selection.",
+    "pin_matches": 5,
+    "stdlib_imports_only": true
+  },
+  "source_sha256": "13f1f4ee41947eff4b47faaa0a3463af96363fbc8c09d6a9d398d76d78f9d647",
+  "status": "PASS_SCOPED_GENERATED_AND_SOURCE_REVIEW"
+}

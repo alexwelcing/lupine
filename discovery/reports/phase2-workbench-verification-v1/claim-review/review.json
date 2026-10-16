@@ -1,0 +1,176 @@
+{
+  "schema": "lupine.discovery.final_claim_review.v1",
+  "status": "NO_BLOCKER",
+  "reviewed_at": "2026-10-16T06:36:17.664300+00:00",
+  "runtime_commit": "41d3e31a14bea040fb37b0aa6a650d6d5e704551",
+  "owner": "phase2_math",
+  "inventory_checks": [
+    {
+      "inventory": "copy-inventory.initial.json",
+      "destination_hashes_verified": 20
+    },
+    {
+      "inventory": "publication-copy-inventory.json",
+      "destination_hashes_verified": 59
+    }
+  ],
+  "execution_checks": [
+    {
+      "receipt": "clean-package/0-execution.json",
+      "exit_code": 0,
+      "runtime_hashes_unchanged": 306,
+      "log_hashes_match": true
+    },
+    {
+      "receipt": "clean-package/1-execution.json",
+      "exit_code": 0,
+      "runtime_hashes_unchanged": 306,
+      "log_hashes_match": true
+    },
+    {
+      "receipt": "actual-header-diagnostic/1/execution.json",
+      "exit_code": 2,
+      "runtime_hashes_unchanged": 306,
+      "log_hashes_match": true
+    },
+    {
+      "receipt": "actual-header-diagnostic/2/execution.json",
+      "exit_code": 2,
+      "runtime_hashes_unchanged": 306,
+      "log_hashes_match": true
+    }
+  ],
+  "findings": [
+    "Original push41d3, attempt1, four completed successful CI jobs agree with retained final observation and watcher; no remote test totals inferred.",
+    "Both actual diagnostics follow completed CI and clean package, preserve306hashes, and return identical expected BLOCKED_SCHEMA/MEMBER_FLAGS; whole-buffer/name exposure is disclosed, no decompression/XML/schema/scientific result inferred.",
+    "Clean package28cases/sixschemas/15checks and strict verifier match their actual logs; independent2522source/306runtime/113RECORD/107package-file audit evidence has the advertised narrower scope.",
+    "Renewed-phase records preserve old closed preview and unchanged scientific NO_GO; report-only descendant remote/CI remains pending.",
+    "A minor future-tense ambiguity in report intro was corrected by root during review."
+  ],
+  "source_bindings": [
+    {
+      "path": "reports/phase2-workbench-verification-v1/copy-inventory.initial.json",
+      "bytes": 5162,
+      "sha256": "fd875e0e6a3d083dfaff992401783c0b25111e4c1080913da6bd3bcfe0759b2d"
+    },
+    {
+      "path": "reports/phase2-workbench-verification-v1/publication-copy-inventory.json",
+      "bytes": 17654,
+      "sha256": "be3d90cacfbd4a14e5748ddb2f6c64fc09f320d8987c43c5e398405ebc03a537"
+    },
+    {
+      "path": "reports/phase2-workbench-verification-v1/clean-package/0-execution.json",
+      "bytes": 72721,
+      "sha256": "83645e457774f23105a503fee6091b34504fb452a34ea5452cfd38e5954130dc"
+    },
+    {
+      "path": "reports/phase2-workbench-verification-v1/clean-package/1-execution.json",
+      "bytes": 72789,
+      "sha256": "84b6c743d1ce0529ddaa1796a0c4cbabd79f45e15c953b76ff6d56d94b9f5ae9"
+    },
+    {
+      "path": "reports/phase2-workbench-verification-v1/actual-header-diagnostic/1/execution.json",
+      "bytes": 73520,
+      "sha256": "09772a12e863098116f62f849c216a09c744ea225d7f1f20fd1cf47183821f96"
+    },
+    {
+      "path": "reports/phase2-workbench-verification-v1/actual-header-diagnostic/2/execution.json",
+      "bytes": 73521,
+      "sha256": "1b0d2e7c40c144e79283c110e70caaa355205dcc578a55af7218957bbc648320"
+    },
+    {
+      "path": "reports/phase2-workbench-verification-v1/README.md",
+      "bytes": 6357,
+      "sha256": "bddf6fcd99c08154cae62608e961d408a90eb032b4c54ca8899ea72f7d4a9489"
+    },
+    {
+      "path": "reports/phase2-workbench-verification-v1/ci/final.json",
+      "bytes": 1304,
+      "sha256": "f5b4a5414f592dd5a73b4736b8cd67ff2cdaf4b220f2083548b6b8ac9d0943e4"
+    },
+    {
+      "path": "reports/phase2-workbench-verification-v1/ci/observations.json",
+      "bytes": 6596,
+      "sha256": "c5cb0ebb7545e3d55fbde5493d05dd9fe3b95a84c3233d7813af6f6d0c0aa022"
+    },
+    {
+      "path": "reports/phase2-workbench-verification-v1/ci/executed-watcher.py",
+      "bytes": 1720,
+      "sha256": "9b4dc5ce2c51dae425ed0bdbcfb3b3f3b294d3caa65736f8e587ba376430e0a8"
+    },
+    {
+      "path": "reports/phase2-workbench-verification-v1/clean-package/release-artifacts.json",
+      "bytes": 7927,
+      "sha256": "1b73636b32c7aae012286591677d590c977be2610f33a4fc5f6b4e960da4f02e"
+    },
+    {
+      "path": "reports/phase2-workbench-verification-v1/clean-package/executed-recorder.py",
+      "bytes": 1994,
+      "sha256": "fce9c7a520ee28bd7489b85a2c6e258098c4ca1c39f690d5908907ab1b69956d"
+    },
+    {
+      "path": "reports/phase2-workbench-verification-v1/actual-header-diagnostic/run_after_ci.py",
+      "bytes": 3500,
+      "sha256": "8b965f4ebd5d2d9bd20a940987a180b7e4fb104bf486fa5d9de0c1ebb58f10a9"
+    },
+    {
+      "path": "reports/phase2-workbench-verification-v1/actual-header-diagnostic/await_verified_ci.py",
+      "bytes": 635,
+      "sha256": "a45032aba6412912d18e74cb916593ea847d548fd34901902fdfec94fa29f945"
+    },
+    {
+      "path": "reports/phase2-workbench-verification-v1/actual-header-diagnostic/1/public.json",
+      "bytes": 2840,
+      "sha256": "50931018f877a66ee56cf522e5d8a0be35cfc35f2c8b7f34884f5ba6caba6ca0"
+    },
+    {
+      "path": "reports/phase2-workbench-verification-v1/actual-header-diagnostic/2/public.json",
+      "bytes": 2840,
+      "sha256": "50931018f877a66ee56cf522e5d8a0be35cfc35f2c8b7f34884f5ba6caba6ca0"
+    },
+    {
+      "path": "reports/phase2-workbench-verification-v1/runtime-manifest.json",
+      "bytes": 36143,
+      "sha256": "ba89f55040aaac689e6361182bf757fd946338f2268e7b02db219c6ca9ce570a"
+    },
+    {
+      "path": "reports/phase2-workbench-verification-v1/independent-artifact-review/review.json",
+      "bytes": 8201,
+      "sha256": "877613115dbcced1bf7ee6ccc6cd8b8234828a84b46c5bab38fa8bb805bf45a3"
+    },
+    {
+      "path": "GOAL.md",
+      "bytes": 22418,
+      "sha256": "4d0238e73d3379569579c880e0bea02f9872031c33eb296068b0350325d0599d"
+    },
+    {
+      "path": "STATUS.md",
+      "bytes": 27788,
+      "sha256": "4c49b29b7f8c75071d62083b2dcdbbfda5d858523325bacb18f3bf0b43b9da43"
+    },
+    {
+      "path": "reports/progress.md",
+      "bytes": 97669,
+      "sha256": "f4ab3de832a33c0ac0552c8cee756a69c7860117015880634d9ad46cc7ff103b"
+    },
+    {
+      "path": "reports/continuation.json",
+      "bytes": 17261,
+      "sha256": "38c4e43859c2114b1b024dd1d42efe9dba097c545f2434b5404aa0c1e58a85af"
+    },
+    {
+      "path": "docs/release-validation.md",
+      "bytes": 41533,
+      "sha256": "5c1b36ce323010582e9313637303f97219a79087f54fc94958bc77314a95577e"
+    }
+  ],
+  "limitations": [
+    "Reviewed retained public receipts and sources; no new independent GitHub API request.",
+    "No raw workbook/private capture/production cache read, test rerun or new scientific validation.",
+    "Final publication report-inventory.json is staging and will be regenerated by root after this review is copied."
+  ],
+  "tests_run": false,
+  "network_used": false,
+  "tracked_edits_by_reviewer": false,
+  "scientific_claim_changed": false
+}

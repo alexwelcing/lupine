@@ -1,0 +1,252 @@
+"""Explicit public evidence copy; never imports candidate code or reads actual input."""
+from datetime import datetime, timezone
+from hashlib import sha256
+import json
+from pathlib import Path, PurePosixPath
+import re
+import subprocess
+
+ROOT = Path(__file__).resolve().parents[2]
+LANE = Path(__file__).resolve().parent
+TARGET = Path('reports/phase2-li-complete-readiness-preparation-v1')
+OUT = LANE / 'promotion' / TARGET
+
+def digest(b):
+    return sha256(b).hexdigest()
+
+def write_json(path, value):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(value, indent=2, sort_keys=True, ensure_ascii=True) + '\n')
+
+inputs = []
+
+def add(source, destination, expected=None):
+    source = PurePosixPath(source)
+    assert not source.is_absolute() and '..' not in source.parts
+    assert not any(p in ('__pycache__', 'isolated-python-cache', 'actual') for p in source.parts)
+    assert not str(source).endswith(('.pyc', '.zip', '.whl'))
+    path = ROOT / source
+    assert path.is_file() and not path.is_symlink(), source
+    raw = path.read_bytes()
+    raw.decode('utf-8')
+    if expected is not None:
+        assert digest(raw) == expected['sha256'], source
+        if 'bytes' in expected:
+            assert len(raw) == expected['bytes'], source
+    inputs.append({'source': str(source), 'logical_destination': str(destination),
+                   'source_bytes': len(raw), 'source_sha256': digest(raw), 'raw': raw})
+
+for name, dest, inventory_sha, handoff_sha, count in [
+    ('phase2-li-complete-readiness-candidate-v1', 'author',
+     '4e98dbe47a148cd0bb74df2c8a158f1427f4d6475a9fda53852f58fefa04c9c7',
+     '9a3abc91', 58),
+    ('phase2-li-complete-readiness-review-v1', 'independent',
+     'db721cc93191614a5dc6f13381c0bfbd251b0857e409be1418dcd46e2e34a032',
+     '9cb7599fce4c9e7a82c5c6150fd775f03cee4d64d9562a51c4d08f696e076b47', 40),
+]:
+    base = Path('.cache') / name
+    invraw = (ROOT / base / 'inventory.json').read_bytes()
+    hraw = (ROOT / base / 'handoff.json').read_bytes()
+    assert digest(invraw) == inventory_sha
+    assert digest(hraw).startswith(handoff_sha)
+    inventory = json.loads(invraw)
+    handoff = json.loads(hraw)
+    assert len(inventory['files']) == count and handoff['inventory_sha256'] == inventory_sha
+    for rel, expected in sorted(inventory['files'].items()):
+        add(base / rel, Path(dest) / rel, expected)
+    add(base / 'inventory.json', Path(dest) / 'inventory.json', {'sha256': inventory_sha})
+    add(base / 'handoff.json', Path(dest) / 'handoff.json', {'sha256': digest(hraw)})
+
+base = Path('.cache/phase2-li-complete-readiness-design-v1')
+v2 = json.loads((ROOT / base / 'handoff-v2.json').read_bytes())
+for entry in v2['final_artifacts'] + v2['initial_artifacts_preserved']:
+    add(base / entry['path'], Path('design') / entry['path'], entry)
+add(base / 'handoff-v2.json', Path('design/handoff-v2.json'))
+base = Path('.cache/phase2-li-complete-readiness-design-review-v1')
+for name in ['initial-README.md', 'initial-source-bindings.json', 'initial-proposal.json',
+             'review-initial.json', 'review.json']:
+    add(base / name, Path('design-review') / name)
+add(Path('.cache/phase2-li-complete-readiness-root-v1/implementation-scope.json'),
+    Path('root-implementation-scope.json'),
+    {'sha256': '54bfe1b4c3c3ef0b38911dddda6f6a570d87f01eb57b57064fc0e80bf3c83742'})
+assert len(inputs) == 116
+assert len({x['logical_destination'] for x in inputs}) == len(inputs)
+scope = json.loads(inputs[-1]['raw'])
+by_source = {x['source']: x for x in inputs}
+for source, expected in scope['files'].items():
+    assert by_source[source]['source_sha256'] == expected
+assert len([x for x in inputs if x['source'].endswith('.log')]) == 4
+
+OUT.mkdir(parents=True, exist_ok=False)
+plan = {x['logical_destination'] for x in inputs}
+original_link_findings = []
+entries = []
+for item in inputs:
+    raw = item['raw']
+    logical = item['logical_destination']
+    reason = []
+    if logical.endswith('.log'):
+        reason.append('Preserve ignored log bytes in an explicitly staged JSON artifact.')
+    if logical.endswith('.diff'):
+        reason.append('Preserve exact historical diff including whitespace-bearing context lines.')
+    if any(line.rstrip(b' \t') != line for line in raw.splitlines()):
+        reason.append('Preserve original trailing whitespace without weakening publication whitespace checks.')
+    if raw.endswith(b'\n\n'):
+        reason.append('Preserve original extra final blank lines.')
+    if logical.endswith('.md'):
+        for link in re.findall(r'\]\(([^)]+)\)', raw.decode('utf-8')):
+            if '://' in link or link.startswith('#'):
+                continue
+            target = link.split('#')[0].strip('<>')
+            proposed = (OUT / logical).parent / target
+            normalized = proposed.resolve().relative_to(OUT.resolve()) if proposed.resolve().is_relative_to(OUT.resolve()) else None
+            if normalized is None or str(normalized) not in plan:
+                original_link_findings.append({'source': item['source'], 'link': link})
+                reason.append('Preserve historical Markdown whose relative links do not resolve after relocation.')
+    destination = logical + '.json' if reason else logical
+    path = OUT / destination
+    path.parent.mkdir(parents=True, exist_ok=True)
+    if reason:
+        write_json(path, {'schema': 'lupine.lossless_utf8_publication_wrapper.v1',
+                          'original_source': item['source'], 'original_relative_path': logical,
+                          'original_bytes': len(raw), 'original_sha256': digest(raw),
+                          'encoding': 'utf-8', 'reasons': list(dict.fromkeys(reason)),
+                          'text': raw.decode('utf-8')})
+        reconstructed = json.loads(path.read_bytes())['text'].encode('utf-8')
+    else:
+        path.write_bytes(raw)
+        reconstructed = path.read_bytes()
+    assert reconstructed == raw
+    entry = {key: value for key, value in item.items() if key != 'raw'}
+    entry.update(destination=str(TARGET / destination), destination_relative=destination,
+                 destination_bytes=path.stat().st_size, destination_sha256=digest(path.read_bytes()),
+                 transformation='lossless_utf8_json_wrapper' if reason else 'exact_copy',
+                 reasons=list(dict.fromkeys(reason)))
+    entries.append(entry)
+
+readme = '''# Li complete readiness: generated preparation
+
+The pure package → documentary → complete metadata-frame route has completed
+bounded generated-input testing and independent review. This report contains no
+new actual workbook access, production adapter, numerical extraction, scientific
+admission, or real-data readiness claim. Scientific status remains `BLOCKED_SCHEMA`.
+
+The held [pure implementation](author/li_v3_readiness.py) is SHA-256
+`5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219`;
+the [contract](author/README.md) is
+`295a04a9b411001e22a4e39c831c609203c2feb1958be5e663cfbb6a9e4704b7`.
+The [final design](design/README.final-v2.md), [proposal](design/proposal.final-v2.json),
+[independent design review](design-review/review.json), and
+[root implementation scope](root-implementation-scope.json) precede this work.
+Original design versions and their exact clarifications remain in the same bundle.
+
+The [final author receipt](author/receipts/corrected-exposure/execution.json)
+records **38 passing methods** (0.824 s unittest; 2.458545 s process).
+The [independent first receipt](independent/first/execution.json) records **35
+passing methods** (2.358 s unittest; 3.052987 s process), and the
+[portable independent receipt](independent/portable/execution.json) records the
+same **35 methods passing again** (3.842 s unittest; 4.941340 s process).
+These are 35 distinct independent methods, not 70 independent tests.
+The receipts report all 335 original runtime files held during those runs; this
+publication assembly did not rerun them or independently re-hash that runtime set.
+
+The [portable author adaptation](author/portable-author.json), SHA-256
+`f961582942c7e1964ef2b1b462d81520278a85c17a459be24c099c95ef9654a3`,
+has **not been executed**. Its original 38-method test result must not be attributed
+to the adapted file. Root must test the exact integrated version before release.
+
+All first failures remain visible: the [first author invocation](author/receipts/first/execution.json)
+stopped before the suite on a guarded bytecode-cache import; the
+[first loaded suite](author/receipts/first-loaded/execution.json) ran 38 methods
+with an overly broad author substring assertion failure and retained close-stub
+destructor behavior. The [correction record](author/first-loaded-corrections.json)
+separates fixture repairs from added replay-exposure instrumentation. Source
+snapshots and exact diffs are retained. The executed independent suites found no
+product failure; pre-hold source findings and corrections are preserved separately.
+
+The parser checks storage, declared joins, and full row accounting. Documentary
+meanings, units, classifications, pairing, and supplied overlap authentication
+remain `MANIFEST_ASSERTION` premises. They may be scientifically wrong. Unread
+opaque payload content/CRC is not attested. Generated passes establish no physical
+pairs, valid numerical outcomes, independence, fresh holdout, superiority, fit,
+split, or benchmark eligibility. The [independent review](independent/review.json)
+states these boundaries. A separately active production adapter is excluded and
+requires its own immutable review, bindings, package/CI gates, and root-controlled
+operation; this bundle authorizes no actual source access.
+
+The [publication copy map](publication-copy-map.json) binds every one of 116
+allowlisted originals to an explicit destination and source/destination hash.
+Exact copies are preferred. Historical diffs, whitespace-bearing artifacts, and
+all four otherwise ignored independent `.log` files use reversible UTF-8 JSON
+wrappers: encode their `text` value as UTF-8 to recover the original bytes and
+verify `original_sha256`. The original inventories and prose are historical
+snapshots; their local path strings are not new claims of installed availability.
+Only this entrypoint provides the publication navigation. The
+[publication checks](publication-checks.json) record reconstruction, links, and
+whitespace. No private/raw input, pyc/cache tree, archive/wheel binary, runtime
+promotion, test rerun, or tracked edit is included in assembly.
+'''
+# Rebind entrypoint links only when an exact historical text needs a wrapper.
+transforms = {entry['logical_destination']: entry['destination_relative'] for entry in entries}
+readme = re.sub(r'\]\(([^)]+)\)', lambda m: '](' + transforms.get(m.group(1), m.group(1)) + ')', readme)
+(OUT / 'README.md').write_text(readme)
+write_json(OUT / 'publication-copy-map.json', {
+    'schema': 'lupine.explicit_publication_copy_map.v1',
+    'created_at': datetime.now(timezone.utc).isoformat(), 'original_count': len(entries),
+    'wrapper_count': sum(x['transformation'] != 'exact_copy' for x in entries),
+    'entries': entries, 'historical_link_findings': original_link_findings,
+    'exclusions': ['actual/private or raw objects', 'active production adapter',
+                   'pyc and cache trees', 'archive/wheel binaries'],
+    'current_entrypoint': 'README.md', 'actual_source_operations': 0, 'new_tests': 0,
+})
+# Link check all published Markdown, not just the new entrypoint.
+links = []
+for path in sorted(OUT.rglob('*.md')):
+    for link in re.findall(r'\]\(([^)]+)\)', path.read_text()):
+        if '://' in link or link.startswith('#'):
+            continue
+        target = (path.parent / link.split('#')[0].strip('<>')).resolve()
+        assert target.is_file(), (path, link)
+        links.append({'path': str(path.relative_to(OUT)), 'link': link})
+for entry in entries:
+    copied = (OUT / entry['destination_relative']).read_bytes()
+    reconstructed = json.loads(copied)['text'].encode('utf-8') if entry['transformation'] != 'exact_copy' else copied
+    assert digest(reconstructed) == entry['source_sha256']
+    assert len(reconstructed) == entry['source_bytes']
+    assert (ROOT / entry['source']).read_bytes() == reconstructed
+empty = LANE / 'empty-for-whitespace-check'
+empty.mkdir()
+check = subprocess.run(['git', 'diff', '--no-index', '--check', str(empty), str(OUT)], capture_output=True)
+assert check.returncode in (0,1) and not check.stdout and not check.stderr, check.stdout + check.stderr
+write_json(OUT / 'publication-checks.json', {
+    'status': 'PASS', 'created_at': datetime.now(timezone.utc).isoformat(),
+    'all_originals_reconstructed': len(entries), 'source_bytes_held_after': True,
+    'relative_markdown_links': links, 'relative_markdown_link_count': len(links),
+    'ignored_independent_logs_preserved': 4,
+    'whitespace': {'command': ['git','diff','--no-index','--check','EMPTY','PROPOSED_REPORT'],
+                   'exit_code': check.returncode, 'stdout_bytes': len(check.stdout), 'stderr_bytes': len(check.stderr)},
+    'test_invocations': 0, 'actual_source_operations': 0, 'tracked_edits': 0,
+    'claim_review': 'Publication provenance/metadata only, not revalidation of parser correctness or science.',
+})
+files = sorted(p for p in OUT.rglob('*') if p.is_file())
+inventory = {'schema': 'lupine.publication_inventory.v1', 'file_count': len(files),
+             'total_bytes': sum(p.stat().st_size for p in files),
+             'files': [{'source': str(p.relative_to(ROOT)), 'destination': str(TARGET / p.relative_to(OUT)),
+                        'bytes': p.stat().st_size, 'sha256': digest(p.read_bytes())} for p in files]}
+write_json(LANE / 'inventory.json', inventory)
+handoff = {'status': 'PUBLICATION_READY', 'target': str(TARGET),
+           'inventory': str((LANE/'inventory.json').relative_to(ROOT)),
+           'inventory_sha256': digest((LANE/'inventory.json').read_bytes()),
+           'copy_map_sha256': digest((OUT/'publication-copy-map.json').read_bytes()),
+           'readme_sha256': digest((OUT/'README.md').read_bytes()),
+           'publication_checks_sha256': digest((OUT/'publication-checks.json').read_bytes()),
+           'builder_sha256': digest(Path(__file__).read_bytes()),
+           'file_count': len(files), 'total_bytes': inventory['total_bytes'],
+           'originals': len(entries), 'wrappers': sum(x['transformation'] != 'exact_copy' for x in entries),
+           'ignored_logs_retained': 4, 'relative_markdown_links': len(links),
+           'source_sha256': '5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219',
+           'contract_sha256': '295a04a9b411001e22a4e39c831c609203c2feb1958be5e663cfbb6a9e4704b7',
+           'author_portable_test_executed': False, 'actual_source_operations': 0,
+           'new_tests': 0, 'tracked_edits': 0, 'production_adapter_included': False}
+write_json(LANE/'handoff.json', handoff)
+print(json.dumps({'handoff_sha256': digest((LANE/'handoff.json').read_bytes()), **handoff}, indent=2))

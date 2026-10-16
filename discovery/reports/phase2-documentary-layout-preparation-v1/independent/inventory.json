@@ -1,0 +1,233 @@
+{
+  "schema": "lupine.discovery.review_copy_inventory.v1",
+  "self_and_handoff_excluded": true,
+  "files": [
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/README.md",
+      "bytes": 2604,
+      "sha256": "4b114ac69d468683057aea111252ffb3282595ae0ceebf5faf21d1fdce19a4fa"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/before-namespace-cap-tests/intermediate-review.json",
+      "bytes": 3116,
+      "sha256": "99cd6dcb7c5c149636c2102d25cdf1a327906802957444e8eaf5819d32dad0d9"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/before-namespace-cap-tests/run_guarded.py",
+      "bytes": 4676,
+      "sha256": "68739d24b69742d0d3609ef4ed2ffc54f37bcc39e118c1644cc7c1de91da8e6d"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/before-namespace-cap-tests/test_li_v3_layout_localization_review.py",
+      "bytes": 27820,
+      "sha256": "5dab7d76aa409aa83dd4ff58a13316b84535c4b8818a891f81680704ecb2f2cd"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/first/after.json",
+      "bytes": 39444,
+      "sha256": "e68a431325d61194bc0dad7087f8d1fce4eca4b7ea9a2e15d77c950514c46448"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/first/before.json",
+      "bytes": 39444,
+      "sha256": "e68a431325d61194bc0dad7087f8d1fce4eca4b7ea9a2e15d77c950514c46448"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/first/contract.md",
+      "bytes": 6207,
+      "sha256": "c47dc68a34d4928c0886683885e7263c58e3c7b3ddfc98e72b617c83c55c1d3b"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/first/execution.json",
+      "bytes": 1325,
+      "sha256": "9718f56d29543d78113ee38c54261d26c2273c04a9d973955b8f5e1169fa89a0"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/first/implementation.py",
+      "bytes": 25486,
+      "sha256": "5bfce76619655090d00670d2aba8cec17eef3764dcf23cf741b78b9f0d0d1e39"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/first/runner.py",
+      "bytes": 4676,
+      "sha256": "68739d24b69742d0d3609ef4ed2ffc54f37bcc39e118c1644cc7c1de91da8e6d"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/first/scope.json",
+      "bytes": 4452,
+      "sha256": "10e2c29be646c94cd1c0feb1d458a6b18c56dd658f2c6389faffd6b8b9a357d4"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/first/stderr.log",
+      "bytes": 10756,
+      "sha256": "1748f2abc361897ba6a337b0d643bd454b3a3b8ec478e4452f1408dd91c68336"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/first/stdout.log",
+      "bytes": 82,
+      "sha256": "60c030fd44087bdbc1ce75930e68f2fbe5686e4bd247c09a522698a868174ad9"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/first/tests.py",
+      "bytes": 27717,
+      "sha256": "114c0ace8ad7e8f8298a9eed2cb7d4169f402721baa6c72517a0e634a5ca8200"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/intermediate-review.json",
+      "bytes": 3116,
+      "sha256": "99cd6dcb7c5c149636c2102d25cdf1a327906802957444e8eaf5819d32dad0d9"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/namespace-cap-test-addition.diff",
+      "bytes": 2901,
+      "sha256": "7dbc9b56e098a8cbda50cca96cecc57d5b559ade9a32d1e7efecb43e5938e2ce"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/namespace-final/after.json",
+      "bytes": 39539,
+      "sha256": "bc98f1da19a9cd4ded80ec2f907122cdaed154f7076ce302659248274c3041e6"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/namespace-final/before.json",
+      "bytes": 39539,
+      "sha256": "bc98f1da19a9cd4ded80ec2f907122cdaed154f7076ce302659248274c3041e6"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/namespace-final/contract.md",
+      "bytes": 7517,
+      "sha256": "c16fd29a51f9b1650cff19e77b36bf991c847286ecbd5877633379bdd8f8d65f"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/namespace-final/execution.json",
+      "bytes": 1419,
+      "sha256": "3206e18f790bd48655b031dc362cd074c10a86560402fea826e6f4a7d07a635e"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/namespace-final/implementation.py",
+      "bytes": 26076,
+      "sha256": "4624e68c28f911bc0bcc927834bd9f9bbb8cd4622a47db80f5a99e3f63b6ba7d"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/namespace-final/runner.py",
+      "bytes": 4874,
+      "sha256": "5eb7f183439aa40d3425ccb61760b896d38e2504eca55e2399b418dfa31f0c77"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/namespace-final/scope-addendum.json",
+      "bytes": 1837,
+      "sha256": "548f64dceb10d6d47a626aff571c6a97704de84ca50744b593191d8b5ad40d1d"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/namespace-final/scope.json",
+      "bytes": 4452,
+      "sha256": "10e2c29be646c94cd1c0feb1d458a6b18c56dd658f2c6389faffd6b8b9a357d4"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/namespace-final/stderr.log",
+      "bytes": 4590,
+      "sha256": "b1a0f539a38095ee24735df7a99091870b7fd810745e2a0a46a424780fdfc978"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/namespace-final/stdout.log",
+      "bytes": 82,
+      "sha256": "5b7db5f126adff272712d563c5b070945ca054d7eb0a57dba7701408621872d5"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/namespace-final/tests.py",
+      "bytes": 30060,
+      "sha256": "93d062867f8fa612719084922474f13db9aa3936410cfa699c4d3b1007e8db62"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/review.json",
+      "bytes": 6160,
+      "sha256": "fa343b5574bfda2a9a17e8fcacbb919758dbf8fe57125a63290fb62d34e70184"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/reviewer-canary-assertion-correction.diff",
+      "bytes": 994,
+      "sha256": "2023046cbebf68777b9265e3c507dc89fdc7c11a59132b1f0b9516f31d3bafbe"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/reviewer-canary-assertion-correction.json",
+      "bytes": 908,
+      "sha256": "df4ec2050fe698c6386249057d06740bdd6a74d99824b81a2b66ec0e46066cbf"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/run_guarded.py",
+      "bytes": 4874,
+      "sha256": "5eb7f183439aa40d3425ccb61760b896d38e2504eca55e2399b418dfa31f0c77"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/second/after.json",
+      "bytes": 39444,
+      "sha256": "f0cb73a90a58e6637a7951accb5a6b5f976213cfceb048938e756b8091e0a5b0"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/second/before.json",
+      "bytes": 39444,
+      "sha256": "f0cb73a90a58e6637a7951accb5a6b5f976213cfceb048938e756b8091e0a5b0"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/second/contract.md",
+      "bytes": 6207,
+      "sha256": "c47dc68a34d4928c0886683885e7263c58e3c7b3ddfc98e72b617c83c55c1d3b"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/second/execution.json",
+      "bytes": 1325,
+      "sha256": "59b9293e80f2f730dffabd0e174d23946fb5fb8801454ca5a1c94b2d00366492"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/second/implementation.py",
+      "bytes": 25486,
+      "sha256": "5bfce76619655090d00670d2aba8cec17eef3764dcf23cf741b78b9f0d0d1e39"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/second/runner.py",
+      "bytes": 4676,
+      "sha256": "68739d24b69742d0d3609ef4ed2ffc54f37bcc39e118c1644cc7c1de91da8e6d"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/second/scope.json",
+      "bytes": 4452,
+      "sha256": "10e2c29be646c94cd1c0feb1d458a6b18c56dd658f2c6389faffd6b8b9a357d4"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/second/stderr.log",
+      "bytes": 4417,
+      "sha256": "a2158fdfba202755c10bed3f04a08b7664d7e6bf1c7d7e7e81b7ed5b91992052"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/second/stdout.log",
+      "bytes": 82,
+      "sha256": "33a32642fddf390f45c91c31dffa50ca8b2019ee0aa5867e93bc917a54beca5c"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/second/tests.py",
+      "bytes": 27820,
+      "sha256": "5dab7d76aa409aa83dd4ff58a13316b84535c4b8818a891f81680704ecb2f2cd"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/source-argument.md",
+      "bytes": 5120,
+      "sha256": "8b54b3d4e630cf18cc1eecfe7f3f56cadf5845ba9682e19ab582b6d76e872339"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/static-and-receipt-audit.json",
+      "bytes": 3147,
+      "sha256": "d086a0d88a6345b232223bd477f25d43215453f242cd99c44968b6fbc0b44b51"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/static_and_receipt_audit.py",
+      "bytes": 4577,
+      "sha256": "13e2ccf96d6c36a2deab453ee1b0c88d25c706d1fef1deabf2488e55eafcdf2e"
+    },
+    {
+      "path": ".cache/phase2-documentary-layout-review-v1/test_li_v3_layout_localization_review.py",
+      "bytes": 30060,
+      "sha256": "93d062867f8fa612719084922474f13db9aa3936410cfa699c4d3b1007e8db62"
+    }
+  ],
+  "file_count": 45,
+  "total_bytes": 573000
+}

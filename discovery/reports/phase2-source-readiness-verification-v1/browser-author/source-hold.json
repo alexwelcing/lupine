@@ -1,0 +1,39 @@
+{
+  "actual_source_operations": 0,
+  "at": "2026-10-16T17:00:34.023041+00:00",
+  "files": {
+    "README.md": {
+      "bytes": 3162,
+      "sha256": "538d67c292ccd97d57e3b5cc1495ede0d556a4f9aa3367c7bd2e21a40c800a6b"
+    },
+    "browser_checks.py": {
+      "bytes": 14155,
+      "sha256": "72ffc843e8a374e64ea84894d1af3fec82f42d15e79fa078c5baef9f1d5db4b8"
+    },
+    "fixture.json": {
+      "bytes": 6053,
+      "sha256": "9abad97d5675f416cc38a325bcd1e108825af001b2fdfccaa1f5c7dfb66f3f0b"
+    },
+    "overlay/src/lupine_discovery/web/app.js": {
+      "bytes": 131782,
+      "sha256": "9e81d71a7381173776d928cc558791402f1d2b2ce02d7e4ae7531514233c5b45"
+    },
+    "overlay/src/lupine_discovery/web/index.html": {
+      "bytes": 30293,
+      "sha256": "20432ede14b5892a6e3ff45fc305e2d4bcb664d5924e2679cf1ca3b016ef72f2"
+    },
+    "overlay/src/lupine_discovery/web/source-readiness.js": {
+      "bytes": 8182,
+      "sha256": "d533611c9a975040a55569bf474689846aa8f5ca2f4f73c4e52730917efe95d0"
+    },
+    "overlay/src/lupine_discovery/web/styles.css": {
+      "bytes": 44089,
+      "sha256": "2bfdac8e02a00fd2e67b3b0e0788cf9b73f5dac4ab72fc8dd4f37f077a83d3e1"
+    }
+  },
+  "public_api": "window.LupineSourceReadiness.render(report) -> Promise<boolean>",
+  "root_actual_http_integration": "PENDING",
+  "source_resource_canonical_sha256": "74e8ca924e2eb4524aea2e54362bf78e88208fa8699cdb38a3ad795c91bf2c24",
+  "status": "FIRST_SOURCE_HOLD_BEFORE_BROWSER_EXECUTION",
+  "tests_executed": 0
+}

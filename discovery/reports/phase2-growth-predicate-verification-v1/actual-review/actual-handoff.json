@@ -1,0 +1,18 @@
+{
+  "binding_sha256": "f658a3ee3d9a7e676a8f21cd73fab1f4a892f729d05a0ec9d35ecb7df5bc2898",
+  "blockers": [],
+  "bytes": 93706,
+  "check_count": 410,
+  "execution_sha256": "a15a72e3a387b343a5d08f276749c4bc1aee63a15a61172b4d2095f19e1acd96",
+  "file_count": 17,
+  "finding_sha256": "8bfe83886772c2d8a595109ca1d1c2244235c190be054dba6b364ab4139a5799",
+  "first_reviewer_schema_failure_preserved": true,
+  "inventory_sha256": "22070322facb64c0d2064fbb9f3c326c16998d9993aa359cc218fa46f8d390d1",
+  "private_or_raw_object_reads": 0,
+  "public_sha256": "68c9042325e93cebd08f9dd056ccbf8833b16f4f045f25bbe2e8be69623326be",
+  "review_sha256": "aecf1bbe08112e6507aba6b6d56f7b9ffc389759eaa3a4ffab8d45667bdb0aa3",
+  "scope": "Recorded public/source/gate consistency, not private-data recomputation or independent science.",
+  "source_commit": "a064a2c0e4a7cce1fbcb0541f49aae132944e785",
+  "source_operations_or_product_tests_run": 0,
+  "status": "PASS_PUBLIC_RECEIPT_CONSISTENCY"
+}

@@ -1,0 +1,30 @@
+--- reports/release-artifact-audit-v1/verify_retained_artifacts.py
++++ scripts/verify_retained_artifacts.py
+@@ -218,15 +218,15 @@
+     require(type(manifest_ref['file_count']) is int, 'runtime manifest count must be integer')
+     require(manifest.get('schema') == 'lupine.discovery.runtime-manifest.v1', 'runtime manifest schema differs')
+     require(type(manifest['files']) is dict and manifest['files'], 'empty runtime source manifest')
+-    suffixes = {'.py', '.json', '.html', '.css', '.js', '.svg'}
++    suffixes = {'.toml', '.py', '.json', '.html', '.css', '.js', '.svg'}
+     required_paths = set()
+     for name in hashes:
+         if not name.startswith('discovery/'):
+             continue
+         path = PurePosixPath(name.removeprefix('discovery/'))
+         if (str(path) == 'pyproject.toml'
+-                or (len(path.parts) == 2 and path.parts[0] in ('scripts', 'tests') and path.suffix == '.py')
+-                or (path.parts[:2] == ('src', 'lupine_discovery') and path.suffix in suffixes)):
++                or (path.parts[0] in ('scripts', 'tests') and path.suffix in suffixes and '__pycache__' not in path.parts)
++                or (path.parts[:2] == ('src', 'lupine_discovery') and path.suffix in suffixes and '__pycache__' not in path.parts)):
+             required_paths.add(str(path))
+     require(set(manifest['files']) == required_paths, 'runtime manifest source coverage differs')
+     for path, expected_hash in manifest['files'].items():
+@@ -293,7 +293,7 @@
+     parser = argparse.ArgumentParser(description=__doc__)
+     parser.add_argument('--directory', type=Path, required=True)
+     parser.add_argument('--commit', required=True)
+-    parser.add_argument('--repository', type=Path, default=Path(__file__).resolve().parents[3])
++    parser.add_argument('--repository', type=Path, default=next((p for p in Path(__file__).resolve().parents if (p / '.git').exists()), Path.cwd()))
+     args = parser.parse_args(argv)
+     try:
+         report = verify(args.directory, args.commit, args.repository)

@@ -1,0 +1,26 @@
+{
+  "accepted": [
+    "Fresh output directory and exclusive files; no old snapshots loaded.",
+    "Reads fresh working, index and HEAD file bytes for the selected closure.",
+    "Records actual HEAD before and after tests and fails success if it changes.",
+    "Records exact command, subprocess exit, combined log bytes/hash and parsed summary.",
+    "No actual scientific data, allocation, entropy or external access in recorder."
+  ],
+  "findings": [
+    {
+      "finding": "Index-derived closure can omit a source path staged for deletion but still present in HEAD. Enumerate HEAD source paths or require HEAD/index source path-set equality before hashing.",
+      "id": "R1",
+      "status": "BLOCKER"
+    },
+    {
+      "finding": "Successful summary must require positive test count; current predicate accepts Ran 0 tests with OK.",
+      "id": "R2",
+      "status": "BLOCKER"
+    }
+  ],
+  "review_kind": "SOURCE_INSPECTION_ONLY",
+  "schema": "lupine.mpea.freeze_recorder_review.v1",
+  "scope": "No recorder execution, no main edits, no actual data. Final repaired source requires reread.",
+  "source_path": ".cache/run-contract-freeze-suite-v2.py",
+  "source_sha256": "0f6de6e756623da6fc9e8e2fd84c3c00fe5a38f3e096db3a6c9fd9356bcb9c40"
+}

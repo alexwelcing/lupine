@@ -1,0 +1,36 @@
+{
+  "files": [
+    {
+      "bytes": 1890,
+      "destination": "reports/phase2-notebook-header-verification-v1/public-notebook/capture.json",
+      "sha256": "98f70bfea96dedeaad438d1809163e8c316748f4aabc545ab8e9348ce51f9a38",
+      "source": ".cache/li-v3-custody/notebook-methods-v1/capture/public.json"
+    },
+    {
+      "bytes": 2464,
+      "destination": "reports/phase2-notebook-header-verification-v1/public-notebook/1.json",
+      "sha256": "398009e670dc35077246938072e679a7254a8020feaa2a5c4cf285a9433d5205",
+      "source": ".cache/li-v3-custody/notebook-methods-v1/1/public.json"
+    },
+    {
+      "bytes": 2464,
+      "destination": "reports/phase2-notebook-header-verification-v1/public-notebook/2.json",
+      "sha256": "398009e670dc35077246938072e679a7254a8020feaa2a5c4cf285a9433d5205",
+      "source": ".cache/li-v3-custody/notebook-methods-v1/2/public.json"
+    },
+    {
+      "bytes": 4695,
+      "destination": "reports/phase2-notebook-header-verification-v1/public-header/1.json",
+      "sha256": "4ee25afe053f68b4b9331a9ebc94bccb2e1d96e0ce5700d78a45866ef7b0cc12",
+      "source": ".cache/li-v3-custody/compatible-zip-diagnostic-v1/1/public.json"
+    },
+    {
+      "bytes": 4695,
+      "destination": "reports/phase2-notebook-header-verification-v1/public-header/2.json",
+      "sha256": "4ee25afe053f68b4b9331a9ebc94bccb2e1d96e0ce5700d78a45866ef7b0cc12",
+      "source": ".cache/li-v3-custody/compatible-zip-diagnostic-v1/2/public.json"
+    }
+  ],
+  "recorded_at": "2026-10-16T08:54:34.646003+00:00",
+  "scope": "Only previously validated closed public receipts; no object/capture file opened"
+}

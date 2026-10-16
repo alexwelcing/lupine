@@ -1,0 +1,20 @@
+{
+  "actual_source_operations": 0,
+  "at_utc": "2026-10-16T10:48:01.078125+00:00",
+  "author": "/root/phase2_math",
+  "bindings_sha256": "ab5ad2783e77de9eb54eb18523bfdcc4416877090cf4712724c2de6a2de737b3",
+  "blockers": [],
+  "executed_tests": 0,
+  "independent_review": "/root/phase2_evidence",
+  "lean_compilations": 0,
+  "new_network_requests": 0,
+  "raw_workbook_schema_body_or_full_projection_reads": 0,
+  "readme_sha256": "ae56215f8b091a26d7369f640e708aa0f470395b9c037a082015f610fa6e4eea",
+  "review_sha256": "b2eac35946a5b20e82b6168266f027039a9cc701b19e757253d6ad8d3e5494b3",
+  "schema": "lupine.discovery.metrology_risk_contract_review_status.v1",
+  "scientific_experiments": 0,
+  "scientific_status": "No adapter or scientific admission. BAM remains an exposed documentary/metrology reference; G20 uncertainty/lineage and G21 evaluation design remain unresolved.",
+  "status": "REVIEWED_DESIGN_ONLY",
+  "tracked_changes": 0,
+  "verification_scope": "Written mathematical derivation, independent algebra/event-inclusion and source-premise review; byte/hash binding of retained public and authorized paraphrase sources."
+}

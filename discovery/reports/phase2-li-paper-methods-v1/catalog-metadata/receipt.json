@@ -1,0 +1,12 @@
+{
+  "started_at": "2026-10-16T08:43:31.501073+00:00",
+  "finished_at": "2026-10-16T08:43:33.707913+00:00",
+  "elapsed_seconds": 2.2069404519988893,
+  "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=DOI%3A10.1038%2Fs41597-024-04329-2&format=json",
+  "http_status": 200,
+  "error_type": null,
+  "bytes": 1024,
+  "sha256": "d2f83cb54a9eac8e3c62a97580875e7a3e302b15931a76b8462d58e58f30ccf2",
+  "scope": "Metadata response only",
+  "retries": 0
+}

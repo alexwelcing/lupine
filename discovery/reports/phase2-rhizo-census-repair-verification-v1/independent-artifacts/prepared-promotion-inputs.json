@@ -1,0 +1,12 @@
+{
+  "changed_existing": [
+    "tests/test_retained_mpea_transport.py"
+  ],
+  "files": {
+    "tests/test_retained_mpea_transport.py": {
+      "sha256": "bce07a6927df9efe261f0477eae7b65f7babbd227721fb77333b7fe34188cf82",
+      "source": ".cache/phase2-rhizo-census-ci-static-review-v1/proposed-test_retained_mpea_transport.py"
+    }
+  },
+  "runtime_additions": []
+}

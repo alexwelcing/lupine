@@ -1,0 +1,49 @@
+{
+  "after_fix": {
+    "completed_counter_variants": 33,
+    "errors": 0,
+    "executed_methods": 5,
+    "failures": 0,
+    "guard_violations": 0,
+    "process_seconds": 8.944669298994995,
+    "receipt": "counter-fixed-first/execution.json",
+    "runtime_held": 339,
+    "sha256": "c74cd04d5bd489fdfd417c258bdc26271ccab357cabdbaea925aec9eee9c96a0",
+    "unittest_seconds": 6.184
+  },
+  "before_fix": {
+    "executed_methods": 1,
+    "failure_records": 16,
+    "receipt": "counter-before-fix-first/execution.json",
+    "scope_limit": "Stopped at final inline-only pair assertion before shared-string branch; not all33 variants executed.",
+    "sha256": "5ec2abbcb2e242d7490673949be5b53a15f10d3f44ac0f6bd751ca0da21b5408"
+  },
+  "counting": "Original50 behavioral methods passed at540 after fixture correction. Five selected methods passed at corrected a337, including one new regression. This does not claim all51 executed together on corrected source; root integration will run the complete portable suite.",
+  "execution_scope": "Invented temporary Git and ZIP/XML only; no actual/private inputs, real-checkout guard, network, source operation, scientific result or new data admission.",
+  "final_production_source_approval": "PENDING_EXACT_PUBLISHED_BASELINE_REBIND_AND_ROOT_RELEASE_GATES",
+  "portable_test": {
+    "destination": "tests/test_li_v3_readiness_production_review.py",
+    "distinct_methods": 51,
+    "original50_methods_byte_preserved_as_file_prefix": true,
+    "path": "test_li_v3_readiness_production_review_final.py",
+    "sha256": "2f2295d0f04fbc0f3399f904eed757e8a6c0f713a13cf9bb13850c52ea1e91e0"
+  },
+  "previous_behavior_source_sha256": "540088bce4341b1f4137e44ef75244ada5786d000c50af597083dadbfc02c9d8",
+  "pure_core_sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219",
+  "schema": "li.readiness.independent-counter-correction-review.v1",
+  "source_delta_audit": {
+    "passed": true,
+    "receipt": "counter-delta-audit.json",
+    "scope": "All AST unchanged except exactly two reviewed count helpers and four inserted completed-prior checks. No Python/Lean refinement claim.",
+    "sha256": "cbec9c2c9a8553f873c4579b093f6c85edeac47441010c99f552e08f3bce3e90"
+  },
+  "source_review": [
+    "Existing exact integer, started/completed equality, bounds and closed schemas remain.",
+    "A completed totals satisfy M=D=U=X>=6. B satisfies M=D>=6+s, U=X=M+2, with s exactly shared-storage presence.",
+    "Same-source paired histories require M_B=M_A+s. Outer check precedes target access; inner check follows G34 replay and precedes XML.",
+    "No new constraint is applied to failure-prefix ledgers or full C counters.",
+    "Necessary consistency is not full historical replay/authentication. Original pinned receipts and external returned/stdout/persisted/cleanup acceptance remain required."
+  ],
+  "source_sha256": "a3370ac84762ef7f859061bde93f118a1c1981b02460e9ddd0b1cd38e55b840b",
+  "verdict": "PASS_NARROW_COUNTER_CORRECTION"
+}

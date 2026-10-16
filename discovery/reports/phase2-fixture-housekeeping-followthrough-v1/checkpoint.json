@@ -1,0 +1,97 @@
+{
+  "at": "2026-10-16T18:37:49.601450+00:00",
+  "owner": "root",
+  "parent_commit": "e668b349e130cdfd1a8cfe94e3e38d4755507f72",
+  "candidate_status": "INTEGRATED_PENDING_PUBLICATION_AND_EXACT_CI",
+  "runtime_files": 352,
+  "parent_runtime_files": 351,
+  "parent_runtime_unchanged": 339,
+  "changed_existing_runtime": [
+    "tests/test_li_v3_growth_predicate_audit_review.py",
+    "tests/test_li_v3_readiness_production_review.py",
+    "tests/test_mpea_custody.py",
+    "tests/test_mpea_feature_reader.py",
+    "tests/test_mpea_feature_reader_review.py",
+    "tests/test_mpea_formula_tokens_review.py",
+    "tests/test_mpea_header_labels.py",
+    "tests/test_mpea_registration_allocation_review.py",
+    "tests/test_mpea_row_metadata_review.py",
+    "tests/test_package_retention.py",
+    "tests/test_package_retention_review.py",
+    "tests/test_retained_artifacts.py"
+  ],
+  "added_runtime": [
+    "tests/fixtures/mpea_formula_historical_sources.json"
+  ],
+  "runtime_manifest_sha256": "6d98f823a226e451d3034acdd181255d5dcb64c5abfc90bfbcab3a95a4e610a0",
+  "focused_python": {
+    "version": "3.11.16",
+    "methods": 326,
+    "seconds": 87.765,
+    "status": "PASS",
+    "runtime_files_held": 352,
+    "automatic_housekeeping_launches_observed": 0
+  },
+  "original_integration": "FAIL1 of326;351held; live historical test sources rejected by unchanged pins",
+  "original_bd7_ci": "FAIL1 temporary Git cleanup; preserved original run38941904627",
+  "parent_clean_package": "PASS28demonstrations6schemas18checks; strictPASS; first CONNECT502 stopped before package separately retained",
+  "parent_independent_artifacts": "PASS57checks6981source351runtime113unchangedwheelpayloads",
+  "parent_ci_observation": {
+    "observed_at": "2026-10-16T18:37:21.254072+00:00",
+    "commit": "e668b349e130cdfd1a8cfe94e3e38d4755507f72",
+    "run": {
+      "id": 38946622026,
+      "head_sha": "e668b349e130cdfd1a8cfe94e3e38d4755507f72",
+      "event": "push",
+      "status": "in_progress",
+      "conclusion": null,
+      "html_url": "https://github.com/alexwelcing/lupine/actions/runs/38946622026",
+      "run_attempt": 1
+    },
+    "jobs": [
+      {
+        "id": 117127263394,
+        "name": "lean",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-10-16T18:20:51Z",
+        "completed_at": "2026-10-16T18:23:52Z"
+      },
+      {
+        "id": 117127263640,
+        "name": "python (3.11)",
+        "status": "in_progress",
+        "conclusion": null,
+        "started_at": "2026-10-16T18:20:51Z",
+        "completed_at": null
+      },
+      {
+        "id": 117127263656,
+        "name": "browser",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-10-16T18:20:51Z",
+        "completed_at": "2026-10-16T18:22:48Z"
+      },
+      {
+        "id": 117127263828,
+        "name": "python (3.12)",
+        "status": "in_progress",
+        "conclusion": null,
+        "started_at": "2026-10-16T18:20:51Z",
+        "completed_at": null
+      }
+    ],
+    "all_four_jobs_successful": false
+  },
+  "formal_statements": 147,
+  "formal_source_changed": false,
+  "scientific_runtime_changed": false,
+  "tmqm": "Original2020 primary method/key definitions; current2024 units/key/version/data-rights gaps unresolved; wholearticle machine/sectionheading/qualitative exposure explicit; NOT_ADMITTED",
+  "new_exact_ci": "PENDING_PUBLICATION",
+  "new_clean_package": "PENDING_PUBLICATION",
+  "scientific_admission": false,
+  "scientific_superiority": "NO_GO",
+  "automation_reenabled": false,
+  "next_action": "Publish this held implementation/documentary increment, verify exact remote and originalCI, cleanly reproduce352-file package/strict checks and bounded independent artifact delta review. Resolve current-source units/version/key/data-rights prerequisites before any separately frozen study; G20 unresolved/G21 blocked."
+}

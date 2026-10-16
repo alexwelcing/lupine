@@ -1,0 +1,32 @@
+{
+  "actual_path_reasoning": [
+    "member_count is set immediately after complete ZIP-structure admission and before every XML call; actual member_count is null.",
+    "Every permitted XML call marks decompression started before archive.open; caught failures retain the same inner report.",
+    "The returned actual report is BLOCKED_SCHEMA, so the inner _inspect_envelope returned successfully as a reporting operation, despite its reported layout failure.",
+    "The broad reason alone is insufficient because reused member/type helpers can also raise the same reason later inside XML validators; the null count and actual source path establish the narrower conclusion.",
+    "Complete raw target-bearing buffer access is recorded. Central-directory parsing decodes names internally; this receipt alone does not instrument how far header traversal got. Earlier same-object flag evidence records name decoding."
+  ],
+  "bindings": {
+    "actual_public_receipt": "7010e99afcafbf29d32d5ff7d3f356474c2a670571285d884b80441e91ce3d07",
+    "compatible_source": "e771b3fc2a66d6e2ff3a26d8aae88b7a2915ac908907908316e697997761c847",
+    "custody_source": "3ead51f0afdf16be973743257be488669c988aa40443779e7a5c400e9b0d3234"
+  },
+  "blockers_for_actual_receipt": [],
+  "not_performed": [
+    "imports",
+    "tests",
+    "network",
+    "private capture or source object access",
+    "tracked edits"
+  ],
+  "observed_at": "2026-10-16T08:02:12.062438+00:00",
+  "reviewer": "/root/phase2_math/proof_check",
+  "schema": "lupine.discovery.compatible_failure_path_review.v1",
+  "separate_unobserved_exception_path_limitation": {
+    "action": "Do not claim universal lossless exposure reporting on every exceptional path. Preserve this finding for a separately reviewed future profile/cleanup change; do not mutate frozen historical source.",
+    "description": "_inspect_envelope calls archive.close() in finally outside its except handlers. If that call raises after XML processing, the inner report does not return and the outer assignment is not completed; the outer guard handler can return its prior report without the inner XML exposure arrays.",
+    "excluded_here": "The actual report is returned BLOCKED_SCHEMA with null member_count, not an outer BLOCKED_GUARD result.",
+    "scope": "General source-reporting limitation, not a description of these actual runs."
+  },
+  "status": "PASS_FOR_ACTUAL_BLOCKED_SCHEMA_RECEIPT"
+}

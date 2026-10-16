@@ -1,0 +1,147 @@
+{
+  "activity": {
+    "actual_operation_receipt_reads": 0,
+    "auditor_or_product_execution": 0,
+    "git_commands": 0,
+    "network_requests": 0,
+    "private_object_or_capture_reads": 0,
+    "product_or_auditor_imports": 0,
+    "production_guard_invocations": 0,
+    "source_AST_parsing": true,
+    "tests": 0,
+    "tracked_edits": 0
+  },
+  "blockers": [],
+  "candidate_sha256": {
+    "audit_completed_operations.py": "a34b266e2316b14540b0abd0f2016274422a81b8eca90f3152aa734f5617deb7",
+    "check-adaptation.json": "087946b0f7c122f6f5b35879f2d171551e4bedebe5a059d946557884fc1398e9",
+    "run_audit_recorded.py": "62a1accf38b6fa0ed9c5cf27af966c58b69484fb1a718af73097a32dda41f562"
+  },
+  "check_mapping": {
+    "explicit_adaptations": 45,
+    "identical_AST_entries": 53,
+    "new_check_calls": 176,
+    "old_check_calls": 98,
+    "unmapped": 0,
+    "validation": "Independently parsed both source ASTs and checked every mapped expression against its line and every claimed identical AST; read the adapted predicates and common-gate/control-flow source. No audit function executed."
+  },
+  "findings": [
+    {
+      "area": "custody and source groups",
+      "conclusion": "Only five fixed public custody receipts are readable through the evidence helper; unresolved/symlink paths and oversized reads block. Source groups have exact keys and exact values reconstructed from pinned public literals and final eight-file pin record. Each source is compared to local committed bytes. Reader modules are never imported or invoked."
+    },
+    {
+      "area": "release and operation chronology",
+      "conclusion": "All original CI/package/full-artifact/additive predicates are retained with the reviewed 332-runtime,326-prior+6-new adaptation. Additional root-bound gate digests and actual artifact-execution completion/log/held-source checks precede operation audit. Each pair requires preflight after all gates, sequential starts/completions, final completion before audit, and no contradictory stopped receipt. G31 preflight additionally follows G30 final."
+    },
+    {
+      "area": "G30 outcomes",
+      "conclusion": "Only match, signature mismatch and nonzero padding are accepted as completed classifications. Exact booleans and partial/full scan flags agree with those reasons. Both fixed stdout files must equal canonical persisted public bytes; execution reason/exposure and pair/final identities must agree. Negative G30 requires absence of the G31 operation directory and public slots; partial or launched G31 is not silently classified NOT_RUN."
+    },
+    {
+      "area": "G31 projection",
+      "conclusion": "The selected same-buffer shape and nested exposure must equal the already validated G30 projection, with precisely the three nested acquisition flags false. Outer acquisition remains true. Central declaration failure has no own archive opening/later header/XML work while preserving selected lifecycle. Later outcomes retain bounded ordered progress and four-member XML exposure. Only complete SCHEMA_UNCONFIRMED can approve the declared envelope profile; all scientific status/counts remain blocked/unassessed."
+    },
+    {
+      "area": "audit recorder",
+      "conclusion": "Unbound bindings stop before child invocation. Exclusive execution directory preserves first attempts; expected auditor/binding/self bytes are held before and after. Bounded child execution records failures and logs; successful child exit additionally requires an existing matching PASS result with correct stage/commit/operator and blocked scientific flags. No candidate auditor or recorder was executed during this review."
+    }
+  ],
+  "reviewed_at": "2026-10-16T10:53:38.175322+00:00",
+  "reviewer": "/root/phase2_math",
+  "schema": "lupine.discovery.growth_operation_audit_independent_static_review.v1",
+  "scope_caveats": [
+    "This is static review of prepared source, not an executed audit, synthetic-adversary run, classifier equivalence proof, or attestation of actual operation outcomes. All operation binding values remain UNBOUND here.",
+    "The envelope validator enforces closed identity/projection/progress constraints but does not prove every syntactically allowed terminal-reason/progress combination is reachable. Interpret any actual observed negative path separately against pinned source; for example XML_INVALID is not itself tied to a nonempty XML-start list.",
+    "Source-guard and remote-unchanged claims are retained recorder evidence; the auditor performs local Git and byte checks only. Hashes and computational replay do not establish scientific sampling or physical correctness.",
+    "Reviewer authored G30 implementation previously; this review is independent of the new auditor/recorder authorship, not independent evidence for all G30 product correctness."
+  ],
+  "source_bindings": [
+    {
+      "bytes": 40774,
+      "path": ".cache/phase2-growth-operation-review-v1/audit_completed_operations.py",
+      "sha256": "a34b266e2316b14540b0abd0f2016274422a81b8eca90f3152aa734f5617deb7"
+    },
+    {
+      "bytes": 6073,
+      "path": ".cache/phase2-growth-operation-review-v1/run_audit_recorded.py",
+      "sha256": "62a1accf38b6fa0ed9c5cf27af966c58b69484fb1a718af73097a32dda41f562"
+    },
+    {
+      "bytes": 18988,
+      "path": ".cache/phase2-growth-operation-review-v1/prior-audit_completed_operations.py",
+      "sha256": "c91920a7d9e992b7c4acdd47fca7ac151282d4190b429977ae01ef7caee700cb"
+    },
+    {
+      "bytes": 1934,
+      "path": ".cache/phase2-growth-operation-review-v1/prior-run_audit_recorded.py",
+      "sha256": "05d2e12b0201a715d2c43b39028d60010bb57541a5f8b312effd15c6d4b0fde0"
+    },
+    {
+      "bytes": 69108,
+      "path": ".cache/phase2-growth-operation-review-v1/check-adaptation.json",
+      "sha256": "087946b0f7c122f6f5b35879f2d171551e4bedebe5a059d946557884fc1398e9"
+    },
+    {
+      "bytes": 585,
+      "path": ".cache/phase2-growth-operation-review-v1/bindings.unbound.json",
+      "sha256": "8f93019b8b6b0efbb78faa549668073a266a4cbb5f0079b95c6e8744f400c814"
+    },
+    {
+      "bytes": 4604,
+      "path": ".cache/phase2-growth-operation-review-v1/static-review/expectations.md",
+      "sha256": "a1c478aca02139e30d0e417b5df5ea41f1ca439012ed8c7d461f9c5ca0c88f05"
+    },
+    {
+      "bytes": 20556,
+      "path": "scripts/li_v3_growth_hint_shape.py",
+      "sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a"
+    },
+    {
+      "bytes": 20609,
+      "path": "scripts/li_v3_growth_envelope.py",
+      "sha256": "f50069d028526ea045441a2e574a26192a210ff78ba34f5170777d32f5692ec3"
+    },
+    {
+      "bytes": 35358,
+      "path": "scripts/li_v3_custody.py",
+      "sha256": "3ead51f0afdf16be973743257be488669c988aa40443779e7a5c400e9b0d3234"
+    },
+    {
+      "bytes": 11204,
+      "path": "docs/li-v3-growth-hint-shape-plan.md",
+      "sha256": "e0ca28ad61181c6cf56d20a46733d2285acb6cb5bc39348f46ee3acb29dfcbc6"
+    },
+    {
+      "bytes": 9273,
+      "path": "docs/li-v3-growth-envelope-plan.md",
+      "sha256": "4a5954b93b84d05c32a8ee2ea8254aec63283e915c331339cb97875e4b2aeb59"
+    },
+    {
+      "bytes": 18700,
+      "path": ".cache/phase2-growth-shape-operations-v1/run_after_ci.py",
+      "sha256": "bf5d4bd82a840aaf8514265ae5a93ecdd152032840d6efcb129f3be9bb24b4a8"
+    },
+    {
+      "bytes": 29683,
+      "path": ".cache/phase2-growth-envelope-operations-v1/run_after_ci.py",
+      "sha256": "5c2a3fe1190c585f9dbb0d9c27d896a852fc84710d70839925f4f7c1c69cea10"
+    },
+    {
+      "bytes": 21353,
+      "path": ".cache/phase2-growth-artifact-review-v1/audit.py",
+      "sha256": "b81293cba3632449830932175e9fa938913650ade05f5e524b258aba78923119"
+    },
+    {
+      "bytes": 10639,
+      "path": ".cache/phase2-growth-artifact-review-v1/additive_audit.py",
+      "sha256": "22b3cbaa1335a85d81d79a11e6722f5fadd6db51854ca8c2de483a65d45528f7"
+    },
+    {
+      "bytes": 6579,
+      "path": ".cache/phase2-growth-artifact-review-v1/run_recorded.py",
+      "sha256": "681bdae3895b320274e898b819e9d8b092bb9edd76562c8c2e92dbcd9935f483"
+    }
+  ],
+  "status": "PASS_STATIC_PREPARATION_SCOPE"
+}

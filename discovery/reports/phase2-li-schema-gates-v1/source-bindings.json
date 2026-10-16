@@ -1,0 +1,62 @@
+{
+  "schema": "lupine.discovery.li_schema_gates_design.v1",
+  "status": "DESIGN_ONLY",
+  "date": "2026-10-16",
+  "owner": "phase2_evidence",
+  "source_kind": "already_public_local_documents",
+  "repository_head_at_binding": "5addf4f80e345afa50a4bcc26b9db24d220a3af5",
+  "files": [
+    {
+      "path": "discovery/GOAL.md",
+      "bytes": 21764,
+      "sha256": "efbed94d3bd18771a2a5c2e9fa007a6c2bc67bcbd507e1f11ae441b57140dd99"
+    },
+    {
+      "path": "discovery/docs/li-v3-custody-plan.md",
+      "bytes": 11472,
+      "sha256": "0be13b0ed7dd7bc41b9c430d4f7d30f8efa0ead54a85d162f31c728eb928a241"
+    },
+    {
+      "path": "discovery/docs/study-planning.md",
+      "bytes": 8123,
+      "sha256": "9092d26148c7184cb7ce1cd765bb40dcd55ce1ccc46425ad5ee0ed62bdb554a5"
+    },
+    {
+      "path": "discovery/reports/li-v3-source-inventory.json",
+      "bytes": 902,
+      "sha256": "ef4d3de4deb08b3903230a7456fb50de689e49265868d78f0c73faab4461f9ba"
+    },
+    {
+      "path": "discovery/reports/phase2-source-readiness-v1/README.md",
+      "bytes": 9309,
+      "sha256": "bd351e8814fb33776e375ed48d1bf2e3aae985404dd8a33920bf40e46a0ca1c5"
+    },
+    {
+      "path": "discovery/reports/phase2-source-readiness-v1/li-metadata/README.md",
+      "bytes": 4321,
+      "sha256": "7e3f130e2c67e487ea2a0068194ccc374f6d4d9287081065a0d9052040996989"
+    },
+    {
+      "path": "discovery/reports/phase2-study-planning-v1/README.md",
+      "bytes": 5703,
+      "sha256": "619baec21571dea564f31969c7ddef9ded6657f0a3f23aeadb2ef4361a648170"
+    }
+  ],
+  "scope": {
+    "workbook_read": false,
+    "private_scientific_cache_read": false,
+    "network_used": false,
+    "target_values_inspected": false,
+    "runtime_tests_run": false,
+    "study_executed": false,
+    "tracked_files_edited": false
+  },
+  "observation": "File hashes bind local public document bytes only; they are not scientific evidence or remote publication/CI attestations.",
+  "read_failure_preserved": "An earlier guessed public path reports/phase2-source-readiness-v1/li-followup/README.md did not exist; rg located the actual li-metadata/README.md path. No scientific absence was inferred.",
+  "reviewer_wording_correction": {
+    "path": "discovery/reports/phase2-study-planning-v1/README.md",
+    "original": "Omission preserves an unknown probability.",
+    "proposed": "For a feasible rank, omission preserves an unknown probability.",
+    "tracked_edit_performed": false
+  }
+}

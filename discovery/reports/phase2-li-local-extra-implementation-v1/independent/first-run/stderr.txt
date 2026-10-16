@@ -1,0 +1,43 @@
+test_128th_local_entry_and_member_limit (__main__.LocalExtraHeadersReviewTests.test_128th_local_entry_and_member_limit) ... ok
+test_all_21_public_predecessor_source_pins_remain_exact (__main__.LocalExtraHeadersReviewTests.test_all_21_public_predecessor_source_pins_remain_exact) ... ok
+test_all_unsigned_id_byte_boundaries_order_duplicates_and_zero_lengths (__main__.LocalExtraHeadersReviewTests.test_all_unsigned_id_byte_boundaries_order_duplicates_and_zero_lengths) ... ok
+test_archive_close_failure_keeps_exposure_and_closes_exception_channel (__main__.LocalExtraHeadersReviewTests.test_archive_close_failure_keeps_exposure_and_closes_exception_channel) ... ok
+test_complete_field_span_65535_bytes_and_data_length_65531 (__main__.LocalExtraHeadersReviewTests.test_complete_field_span_65535_bytes_and_data_length_65531) ... ok
+test_declared_length_is_little_endian_and_payload_is_opaque (__main__.LocalExtraHeadersReviewTests.test_declared_length_is_little_endian_and_payload_is_opaque) ... ok
+test_exact_predecessor_result_and_cleanup_are_required_before_locator (__main__.LocalExtraHeadersReviewTests.test_exact_predecessor_result_and_cleanup_are_required_before_locator) ... ok
+test_exact_record_limit_and_one_more_byte_or_record (__main__.LocalExtraHeadersReviewTests.test_exact_record_limit_and_one_more_byte_or_record) ... ok
+test_first_and_each_middle_entry_same_complete_inventory (__main__.LocalExtraHeadersReviewTests.test_first_and_each_middle_entry_same_complete_inventory) ... ok
+test_first_extra_wins_without_later_profile_acceptance (__main__.LocalExtraHeadersReviewTests.test_first_extra_wins_without_later_profile_acceptance) ... ok
+test_incomplete_headers_never_publish_completed_prefix (__main__.LocalExtraHeadersReviewTests.test_incomplete_headers_never_publish_completed_prefix) ... ok
+test_invalid_run_and_candidate_path_guard_precede_reads (__main__.LocalExtraHeadersReviewTests.test_invalid_run_and_candidate_path_guard_precede_reads) ... ok
+test_locator_rejects_fixed_header_name_extra_and_compressed_crossings (__main__.LocalExtraHeadersReviewTests.test_locator_rejects_fixed_header_name_extra_and_compressed_crossings) ... ok
+test_member_payload_apis_xml_and_network_forbidden (__main__.LocalExtraHeadersReviewTests.test_member_payload_apis_xml_and_network_forbidden) ... ok
+test_mixed_local_central_and_earlier_rejections_publish_no_inventory (__main__.LocalExtraHeadersReviewTests.test_mixed_local_central_and_earlier_rejections_publish_no_inventory) ... ok
+test_overlong_data_never_publishes_partial_inventory (__main__.LocalExtraHeadersReviewTests.test_overlong_data_never_publishes_partial_inventory) ... ok
+test_partial_read_identity_and_write_failures_preserve_exposure (__main__.LocalExtraHeadersReviewTests.test_partial_read_identity_and_write_failures_preserve_exposure) ... ok
+test_partial_walk_and_locator_exceptions_keep_exposure_without_canary (__main__.LocalExtraHeadersReviewTests.test_partial_walk_and_locator_exceptions_keep_exposure_without_canary) ... ok
+test_permitted_stored_deflated_flag_profiles_do_not_interpret_payload (__main__.LocalExtraHeadersReviewTests.test_permitted_stored_deflated_flag_profiles_do_not_interpret_payload) ... ok
+test_prerequisite_digest_and_producer_guard_with_synthetic_bytes_only (__main__.LocalExtraHeadersReviewTests.test_prerequisite_digest_and_producer_guard_with_synthetic_bytes_only) ... ok
+test_production_guard_order_before_any_raw_read (__main__.LocalExtraHeadersReviewTests.test_production_guard_order_before_any_raw_read) ... ok
+test_public_inventory_does_not_depend_on_selected_allowed_member_name (__main__.LocalExtraHeadersReviewTests.test_public_inventory_does_not_depend_on_selected_allowed_member_name) ... ok
+test_real_source_identity_barriers_use_synthetic_digest_stubs (__main__.LocalExtraHeadersReviewTests.test_real_source_identity_barriers_use_synthetic_digest_stubs) ... ok
+test_result_lists_and_exposure_are_fresh_between_calls (__main__.LocalExtraHeadersReviewTests.test_result_lists_and_exposure_are_fresh_between_calls) ... ok
+test_simulated_success_and_descriptor_close_failure_have_honest_receipts (__main__.LocalExtraHeadersReviewTests.test_simulated_success_and_descriptor_close_failure_have_honest_receipts) ... ok
+test_source_context_stubs_and_detached_pin_maps (__main__.LocalExtraHeadersReviewTests.test_source_context_stubs_and_detached_pin_maps) ... ok
+test_synthetic_input_type_and_size_guards (__main__.LocalExtraHeadersReviewTests.test_synthetic_input_type_and_size_guards) ... ok
+test_unsigned_65535_byte_name_before_target_is_skipped_as_bytes (__main__.LocalExtraHeadersReviewTests.test_unsigned_65535_byte_name_before_target_is_skipped_as_bytes) ... FAIL
+test_walk_only_unpacks_headers_and_stops_before_257th_header (__main__.LocalExtraHeadersReviewTests.test_walk_only_unpacks_headers_and_stops_before_257th_header) ... ok
+test_walk_requires_bounded_nonempty_integer_span (__main__.LocalExtraHeadersReviewTests.test_walk_requires_bounded_nonempty_integer_span) ... ok
+
+======================================================================
+FAIL: test_unsigned_65535_byte_name_before_target_is_skipped_as_bytes (__main__.LocalExtraHeadersReviewTests.test_unsigned_65535_byte_name_before_target_is_skipped_as_bytes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-local-extra-review-v1/promotion/tests/test_li_v3_local_extra_headers_review.py", line 329, in test_unsigned_65535_byte_name_before_target_is_skipped_as_bytes
+    self.assertEqual(result["field_headers"], [{"header_id": 88, "data_size": 0}])
+AssertionError: None != [{'header_id': 88, 'data_size': 0}]
+
+----------------------------------------------------------------------
+Ran 30 tests in 1.013s
+
+FAILED (failures=1)

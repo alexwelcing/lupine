@@ -1,0 +1,56 @@
+{
+  "actual_archive_or_network_access": false,
+  "bindings_after": {
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-independent-v1/browser_mutation_review.py": "e3e02ed4161ae2fe72a6e9e157cd6d5c4c9c1ba5855d96b0445a39a4e7a05289",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-independent-v1/mutation-request-token/web/app.js": "9f4ffbfab0986c3bd3588d90a1e9830915d8fb0cbc980edaeba1229921d88942",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-independent-v1/mutation-request-token/web/source-readiness.js": "d533611c9a975040a55569bf474689846aa8f5ca2f4f73c4e52730917efe95d0",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-independent-v1/mutation-request-token/web/styles.css": "2bfdac8e02a00fd2e67b3b0e0788cf9b73f5dac4ab72fc8dd4f37f077a83d3e1",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-independent-v1/source-readiness-v1.json": "9abad97d5675f416cc38a325bcd1e108825af001b2fdfccaa1f5c7dfb66f3f0b"
+  },
+  "bindings_before": {
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-independent-v1/browser_mutation_review.py": "e3e02ed4161ae2fe72a6e9e157cd6d5c4c9c1ba5855d96b0445a39a4e7a05289",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-independent-v1/mutation-request-token/web/app.js": "9f4ffbfab0986c3bd3588d90a1e9830915d8fb0cbc980edaeba1229921d88942",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-independent-v1/mutation-request-token/web/source-readiness.js": "d533611c9a975040a55569bf474689846aa8f5ca2f4f73c4e52730917efe95d0",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-independent-v1/mutation-request-token/web/styles.css": "2bfdac8e02a00fd2e67b3b0e0788cf9b73f5dac4ab72fc8dd4f37f077a83d3e1",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-independent-v1/source-readiness-v1.json": "9abad97d5675f416cc38a325bcd1e108825af001b2fdfccaa1f5c7dfb66f3f0b"
+  },
+  "browser_errors": [],
+  "checks": [
+    "complete validated resource rendered",
+    "two blocked source cards",
+    "scientific non-admission remains explicit",
+    "complete exact JSON export",
+    "links have safe rel",
+    "details keyboard accessible",
+    "invalid clears result <class 'NoneType'>",
+    "invalid clears result <class 'dict'>",
+    "invalid clears result <class 'bool'>",
+    "invalid clears result <class 'dict'>",
+    "detached prior export invalidated",
+    "forgery or injection rejected scientific_admissionADMITTED",
+    "no cards or script event after rejection",
+    "forgery or injection rejected statusREADY",
+    "no cards or script event after rejection",
+    "forgery or injection rejected title<img src=x o",
+    "no cards or script event after rejection",
+    "forgery or injection rejected evidence_urls['javascript",
+    "no cards or script event after rejection",
+    "forgery or injection rejected evidence_urls['https://gi",
+    "no cards or script event after rejection",
+    "caller mutation cannot change pending/rendered snapshot",
+    "detached export remains exact",
+    "late digest cannot revive cleared state"
+  ],
+  "elapsed_seconds": 3.007110560000001,
+  "exit_code": 1,
+  "finished": "2026-10-16T17:02:43.539715+00:00",
+  "full_application_boot_tested": false,
+  "requests": [
+    "http://127.0.0.1/review",
+    "http://127.0.0.1/styles.css",
+    "http://127.0.0.1/source-readiness.js"
+  ],
+  "schema": "lupine.source-readiness.independent-browser-run.v1",
+  "source_held": true,
+  "started": "2026-10-16T17:02:40.532603+00:00"
+}

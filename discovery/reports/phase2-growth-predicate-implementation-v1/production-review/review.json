@@ -1,0 +1,85 @@
+{
+  "actual_source_operations": 0,
+  "additional_reviewer_hierarchy": false,
+  "blockers": [],
+  "contract": {
+    "bytes": 5879,
+    "sha256": "a1a7d8fe820ddcd8d3479d53e4f35d5ce0ed6e123385bcbb1b646786e1d064d9"
+  },
+  "final_execution": {
+    "bytes": 2957,
+    "failures": 0,
+    "methods": 17,
+    "path": "final-run/execution.json",
+    "process_seconds": 1.0443671920002089,
+    "sha256": "76fb49b0dbade5d4da2874a41314ee72a2fdde1daeb1ca747a44bde791f45c76",
+    "six_original_sources_held": true,
+    "source_test_contract_held": true,
+    "unit_test_seconds": 0.438
+  },
+  "independent_complete_pure_equivalence": {
+    "cases": 43,
+    "comparisons": 86,
+    "entire_reports_equal": true,
+    "execution": {
+      "bytes": 911,
+      "path": "pure-equivalence/execution.json",
+      "sha256": "ba49dee59aafe430aa738f97bd19ed3b987399ae228a5b1c190a09b78151b4c9"
+    },
+    "forbidden_operations": [],
+    "result": {
+      "bytes": 16055,
+      "path": "pure-equivalence/stdout.json",
+      "sha256": "4e40cbbe6144e75131ce2774c936f79a2a847bc1aea647b7fc102cace6b1e598"
+    },
+    "source_held": true
+  },
+  "operational_limits": [
+    "Guards ran only in generated temporary Git repositories; source/capture/prerequisite identities were generated or mocked",
+    "No actual checkout guard, actual source/prerequisite/capture/private read or network operation",
+    "No XML or ZIP member opening/decompression",
+    "A late directory-close failure can leave a complete earlier public file; returned guard failure and execution must also be checked",
+    "Current-source equality does not attest fixed release commit, remote branch, CI or package gates",
+    "Synthetic passes and hashes establish no source admission or scientific truth"
+  ],
+  "preserved_history": [
+    {
+      "classification": "Source-only inherited field names and partial reservation exposure; repaired before held execution",
+      "path": "pre-hold-findings.json"
+    },
+    {
+      "failure_events": 0,
+      "methods": 16,
+      "path": "first-run"
+    },
+    {
+      "classification": "Specific closed selected-growth failure was replaced by generic reason",
+      "failure_events": 1,
+      "methods": 1,
+      "path": "specific-predecessor-first"
+    },
+    {
+      "failure_events": 0,
+      "methods": 17,
+      "path": "final-run"
+    }
+  ],
+  "promotion_path": "tests/test_li_v3_growth_predicate_audit_review.py",
+  "review_test": {
+    "bytes": 26541,
+    "sha256": "3dd4b23024028e2e7ba5876ca8d9705e066e57362bfae63d9999783e76b5dc49"
+  },
+  "schema": "lupine.discovery.growth_predicate.production_independent_review.v1",
+  "source": {
+    "bytes": 40316,
+    "sha256": "70a0339212b971bf7824ae256600b959ae7a7d22b6fc8853eb2208d3c8ece207"
+  },
+  "static_audit": {
+    "bytes": 1498,
+    "path": "static-audit.json",
+    "sha256": "660d4d03c235daa20fe071e0a03a8c03cf718f5d81d7916be1ad29934476c392"
+  },
+  "status": "PASS_SOURCE_AND_GENERATED_PRODUCTION_ADAPTATION_REVIEW",
+  "tracked_writes": 0,
+  "written_at": "2026-10-16T12:26:44.158801+00:00"
+}

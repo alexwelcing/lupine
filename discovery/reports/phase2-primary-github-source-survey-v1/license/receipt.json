@@ -1,0 +1,17 @@
+{
+  "bytes": 1082,
+  "finished_at": "2026-10-16T17:16:39.738450+00:00",
+  "headers": {
+    "Content-Length": "1082",
+    "Content-Type": "text/plain; charset=utf-8",
+    "ETag": "\"3baa3e58d0f0dcfae617c820f9502c3d8258cf17100e8e7e09f8b3a1e3679d47\""
+  },
+  "over_cap": false,
+  "redirects_followed": 0,
+  "retries": 0,
+  "sha256": "a70905b4e682be470306a66e28d85b4f123f05233b73c2751fdde53dd0a6fbf9",
+  "started_at": "2026-10-16T17:16:39.133315+00:00",
+  "status": 200,
+  "transport_error": null,
+  "url": "https://raw.githubusercontent.com/uiocompcat/tmQM/ece824419c9006fe66436daf233822b75533b82f/LICENSE"
+}

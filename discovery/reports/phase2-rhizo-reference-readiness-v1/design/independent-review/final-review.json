@@ -1,0 +1,76 @@
+{
+  "schema": "lupine.rhizo-reference-readiness.independent-design-review.v1",
+  "created_at": "2026-10-16T11:26:36.488490+00:00",
+  "reviewer": "/root/phase2_evidence/author_methods_review",
+  "status": "NO_DESIGN_BLOCKER_IMPLEMENTATION_REVIEW_PENDING",
+  "review_scope": "Design and public-documentary consistency only. No acquisition, raw/private object inspection, pinned source-code read, runtime import/test, or implementation execution.",
+  "held_design": [
+    {
+      "path": ".cache/phase2-rhizo-reference-readiness-design-v1/README.md",
+      "bytes": 9723,
+      "sha256": "c3152108ac58cae50e815cf27bf3a73787a34a0360f33642b15a00a33e948a0a"
+    },
+    {
+      "path": ".cache/phase2-rhizo-reference-readiness-design-v1/planned-inputs.json",
+      "bytes": 4746,
+      "sha256": "216907d07f977881c4220cb9c697708217101c2747c54bb7874b20e1470e3092"
+    },
+    {
+      "path": ".cache/phase2-rhizo-reference-readiness-design-v1/reference-frame.json",
+      "bytes": 71649,
+      "sha256": "80a1aca0fd56d89f49ff5f0e4b3930405f11ae1cd4acea14b8edab2381940aa4"
+    },
+    {
+      "path": ".cache/phase2-rhizo-reference-readiness-design-v1/source-bindings.json",
+      "bytes": 1874,
+      "sha256": "63402374fe80c558007fc17e56f9937ed1bbd9611fd1a5ae8d98adb2f2fa8709"
+    }
+  ],
+  "blocking_findings": [],
+  "conclusions": [
+    "The two-object 61,919-byte pass is sufficient only for declared candidate-reference provenance enrichment using the existing public graph. It excludes all 108 run/evidence objects and the three unacquired reports; actual bound reference selection is expressly UNKNOWN.",
+    "The exact graph preserves all 36 material/model IDs, 43 location contexts and 172 candidate-reference edges. Each location is reused four times. Six documentary pins exactly copy the earlier public inventory, and the two object pins match the existing public custody metadata. No upstream content was newly verified.",
+    "Whole target-bearing bytes and complete parsed containers are declared machine-exposed, including all 85 projected entry positions and 42 outside the selected subset. Selected citation/locator/notes disclosure is expressly potentially numerical. Withholding value fields does not create an untouched holdout.",
+    "The design does not invent raw JSON pointers from presence booleans. Exact local object paths, source paths, container layout and code identity remain to be fixed and independently reviewed before the single invocation. Proposed parser limits are prospective, not observations or tested behavior.",
+    "Declared source/method/condition/license text is kept separate from verified primary-source identity, rights, uncertainty and compatibility. Unresolved terms remain UNKNOWN; links are not followed, notes are not arbitrarily published, and no reference is selected by observed error.",
+    "Historical anchor/output roles are documentary map annotations, not a new allocation or a verification of the actual loader, per-model geometry, conversion, numeric representation or checkpoint. Those limits remain explicit.",
+    "The deliverable is provenance readiness only. It does not establish numeric completeness, physical discrepancy bounds, common-field support, paired candidate screening, fresh superiority or G21 completion. Later actual bound-choice/completeness inspection requires a separate declared scope."
+  ],
+  "pre_invocation_requirements_not_yet_satisfied_by_this_design": [
+    "Bind exact existing local object paths without reading unrelated custody files.",
+    "Confirm raw container/field paths from the specifically pinned source/schema and custody implementation; review the resulting standalone extractor and receipt behavior.",
+    "Freeze exact code/input/output scope and review meaningful synthetic behavior before any raw-object invocation."
+  ],
+  "interpretive_precision": "The 85 entry positions and source hashes are reported by prior public custody metadata. The actual proposed read/parse may stop early; its future exposure receipt must distinguish byte traversal, parsing, projection and researcher disclosure. This design review is not approval of an unimplemented extractor or evidence that any source operation ran.",
+  "independent_artifacts": [
+    {
+      "path": ".cache/phase2-rhizo-reference-readiness-review-v1/initial-challenge.md",
+      "bytes": 5504,
+      "sha256": "51b313a6e4e11f05e23d17462e032afe4a38d81cf4f4d4a67eae1861b376f8cd"
+    },
+    {
+      "path": ".cache/phase2-rhizo-reference-readiness-review-v1/source-bindings.json",
+      "bytes": 1269,
+      "sha256": "520f3bacd46514f8ef76209643352e58c55bccc73cb6e1d023639ef41b48a7e9"
+    },
+    {
+      "path": ".cache/phase2-rhizo-reference-readiness-review-v1/public-counts.json",
+      "bytes": 3027,
+      "sha256": "88a19d9042aaa805d6c96d7ca095c4a5974d59ed9815612913d6ecba49636545"
+    },
+    {
+      "path": ".cache/phase2-rhizo-reference-readiness-review-v1/design-check.json",
+      "bytes": 1915,
+      "sha256": "78782282aa9003d8ed836191cf2e1d3b4ba84ca6e08a6b0f32bd9087534916c8"
+    }
+  ],
+  "performed": {
+    "public_documentary_reads": true,
+    "public_metadata_count_and_graph_comparison": true,
+    "raw_scientific_objects_read": false,
+    "source_code_read": false,
+    "network_requests": 0,
+    "runtime_tests": false,
+    "tracked_edits": false
+  }
+}

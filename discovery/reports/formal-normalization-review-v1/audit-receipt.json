@@ -1,0 +1,100 @@
+{
+  "auditor_sha256": "1a30e19f3e38d5481ac321be5ece1efc7025925a4a218e51ff5f5f0b49756386",
+  "axioms": {
+    "LupineNormalization.l1_zero_iff_equal": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LupineNormalization.normalized_coordinate_bounds": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LupineNormalization.normalized_l1_bounds": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LupineNormalization.normalized_sum": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LupineNormalization.positive_scale_invariance": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ]
+  },
+  "command": [
+    "/home/agent/.elan/bin/lake",
+    "env",
+    "lean",
+    "-DwarningAsError=true",
+    "-j",
+    "1",
+    "-R",
+    "/workspace/lupine-discovery-branch/discovery/.cache/normalization-formal",
+    "-o",
+    "/workspace/lupine-discovery-branch/discovery/.cache/normalization-formal/LupineNormalization.olean",
+    "/workspace/lupine-discovery-branch/discovery/.cache/normalization-formal/LupineNormalization.lean"
+  ],
+  "compile_log_sha256": "e5cf25edea13ce4ff789c99ad016118c2b482c61dfd3475d5deb7ff2b3f1d94d",
+  "exit_code": 0,
+  "imports": {
+    ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Algebra/BigOperators/Ring/Finset.olean": "e9d201807ca75f1f6ce20d83c836269c106d847269dc0788d6e11c750e9b32dc",
+    ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Algebra/Order/BigOperators/Group/Finset.olean": "cafb96a37dd576d384e5bb85f4863b66b60e751a0223570cba475ec053dd3e5e",
+    ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Data/Real/Basic.olean": "f8805658052bff6e1ad140c9fdfab740e53110be260a04e27eda2dfc45032c90",
+    ".lake/packages/mathlib/Mathlib/Algebra/BigOperators/Ring/Finset.lean": "2ed26aa75e75c02914d8a3fdc5ff08a3083937219f4276b6c58f88b1bc9e2674",
+    ".lake/packages/mathlib/Mathlib/Algebra/Order/BigOperators/Group/Finset.lean": "8e8cb48629c6f4d736b4949b09daa3d726a8a1ed9dcf6d76eb12beee3cb5cb26",
+    ".lake/packages/mathlib/Mathlib/Data/Real/Basic.lean": "04aedda6369b441837667a1997d62e64a5070e10f2c0d89309edd0f40903d0a9"
+  },
+  "olean_sha256": "815bdcd86e988d109c655408225ae0c0aa443259674ebb6067da74ff431ee65c",
+  "published_formal_after": {
+    "AXIOMS.txt": "d99b1d075507166a731d2a7e2c35d20e58eeba3dfa50ad12f796c575d3ca3811",
+    "LupineCoupled.lean": "d79afad3eafbf1cfe35fb920c5864059570f2018ff15c7b1badae5de83e39d7f",
+    "LupineDecisionPool.lean": "10a5962eedf30819388a835b052df91f4fff130c79258d31eb345f51071cf00a",
+    "LupineDiscovery.lean": "93adb82c8caceb6620285bea612b4c80e4cf11c7da6d1e04b8ba595f43c6c515",
+    "LupineExchangeability.lean": "0e326c4b51e5ca00d1deb32be61ba7b80ca0c443059d0fbf13e22f05717610ce",
+    "LupineIntervals.lean": "9dec04611f670efdd8deaa6e05f802199f418c9089a5c29148bf8ca4534d8fc4",
+    "LupinePareto.lean": "077e657e5b6d77ef878c325baf9db909adff73f23408385ee464482cd6acd4c0",
+    "LupineProjection.lean": "600af2ee02e8f5ed7f84046d5abab253dc74be3d556414d67438e49a6f3c4f2d",
+    "LupineRisk.lean": "bea0e0cb18daeb41a26e7c721bef0dec6e1c361f3ccf1c9f7f7dbf2176c0fcdf",
+    "LupineSharpness.lean": "1135d8ba14c6d2c388bc5aaa40fc4ce71d55fe09cb8c90bf7319a70a84cbb871",
+    "README.md": "302befb65162f649f59d0a051b4feefab147bb2fd1cf093245103dcb85a3cbd4",
+    "VERIFICATION.md": "d41147b2d60657faf0843a0a7cd9723d2d933b593319b891b42ce833bc82d873",
+    "audit_axioms.py": "1a30e19f3e38d5481ac321be5ece1efc7025925a4a218e51ff5f5f0b49756386",
+    "lake-manifest.json": "641a25267cd8312c08757ff0f0f5738f3adb67598b8205603dbf8ac2255f9275",
+    "lakefile.toml": "391a3c62b80d45a29330d5f2161649719cb557c48abbf4be39d5df6a2462f86f",
+    "lean-toolchain": "651c8accb402b0c071cd336e9d3dc0a55516b1bfb434ddc4801f14936785b1d2",
+    "test_audit_axioms.py": "fb9a8795c852ea59835be51b34a9c6592597ec5bd47ec3b8506e754222e1a993",
+    "theorem-inventory.json": "bd6823b9340a1d8b8f4595f95b83677df5e19eae4ac2585f6ec7f304db2424e7"
+  },
+  "published_formal_before": {
+    "AXIOMS.txt": "d99b1d075507166a731d2a7e2c35d20e58eeba3dfa50ad12f796c575d3ca3811",
+    "LupineCoupled.lean": "d79afad3eafbf1cfe35fb920c5864059570f2018ff15c7b1badae5de83e39d7f",
+    "LupineDecisionPool.lean": "10a5962eedf30819388a835b052df91f4fff130c79258d31eb345f51071cf00a",
+    "LupineDiscovery.lean": "93adb82c8caceb6620285bea612b4c80e4cf11c7da6d1e04b8ba595f43c6c515",
+    "LupineExchangeability.lean": "0e326c4b51e5ca00d1deb32be61ba7b80ca0c443059d0fbf13e22f05717610ce",
+    "LupineIntervals.lean": "9dec04611f670efdd8deaa6e05f802199f418c9089a5c29148bf8ca4534d8fc4",
+    "LupinePareto.lean": "077e657e5b6d77ef878c325baf9db909adff73f23408385ee464482cd6acd4c0",
+    "LupineProjection.lean": "600af2ee02e8f5ed7f84046d5abab253dc74be3d556414d67438e49a6f3c4f2d",
+    "LupineRisk.lean": "bea0e0cb18daeb41a26e7c721bef0dec6e1c361f3ccf1c9f7f7dbf2176c0fcdf",
+    "LupineSharpness.lean": "1135d8ba14c6d2c388bc5aaa40fc4ce71d55fe09cb8c90bf7319a70a84cbb871",
+    "README.md": "302befb65162f649f59d0a051b4feefab147bb2fd1cf093245103dcb85a3cbd4",
+    "VERIFICATION.md": "d41147b2d60657faf0843a0a7cd9723d2d933b593319b891b42ce833bc82d873",
+    "audit_axioms.py": "1a30e19f3e38d5481ac321be5ece1efc7025925a4a218e51ff5f5f0b49756386",
+    "lake-manifest.json": "641a25267cd8312c08757ff0f0f5738f3adb67598b8205603dbf8ac2255f9275",
+    "lakefile.toml": "391a3c62b80d45a29330d5f2161649719cb557c48abbf4be39d5df6a2462f86f",
+    "lean-toolchain": "651c8accb402b0c071cd336e9d3dc0a55516b1bfb434ddc4801f14936785b1d2",
+    "test_audit_axioms.py": "fb9a8795c852ea59835be51b34a9c6592597ec5bd47ec3b8506e754222e1a993",
+    "theorem-inventory.json": "bd6823b9340a1d8b8f4595f95b83677df5e19eae4ac2585f6ec7f304db2424e7"
+  },
+  "published_formal_unchanged": true,
+  "schema": "lupine-scratch-normalization-audit-v1",
+  "scope": "Conditional finite-real algebra only; no physical validity or Python refinement claim.",
+  "script_sha256": "63805f60020b00d85c712944ff0fa3b134bbc3a1f0987bdff6ef2bb14b7df007",
+  "source_sha256": "280be8e7b4724af3b6092bf497d3b29c3a9b3a29b135942cf76cfa273015db32",
+  "theorem_count": 5
+}

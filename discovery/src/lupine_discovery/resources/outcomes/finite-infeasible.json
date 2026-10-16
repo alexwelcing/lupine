@@ -1,0 +1,31 @@
+{
+  "schema": "lupine.discovery.outcomes.v1",
+  "scenario_id": "finite-infeasible",
+  "problem_digest": "ed36f5135bc03df9679ce06dda799bbcabbebc748dcd236e78b8a095e60f9f26",
+  "outcomes": [
+    {
+      "id": "A",
+      "score": "0",
+      "constraints": {
+        "c1": "1",
+        "c2": "-1"
+      }
+    },
+    {
+      "id": "B",
+      "score": "-4",
+      "constraints": {
+        "c1": "-1",
+        "c2": "2"
+      }
+    },
+    {
+      "id": "C",
+      "score": "2",
+      "constraints": {
+        "c1": "2",
+        "c2": "3"
+      }
+    }
+  ]
+}

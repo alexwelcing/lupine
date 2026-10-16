@@ -1,0 +1,25 @@
+{
+  "findings": [
+    "Reserved markers and ASCII-whitespace take precedence over formula/DOI/temperature recognition; NaN cannot become a formula group.",
+    "Accepted identities use separate exact unescaped-byte dictionaries; no normalization, chemical equivalence, specimen matching or independence is inferred.",
+    "Every framed row survives unresolved metadata; tension and compression stay distinct, temperature is declared test degC only.",
+    "All performance, ROM and measured descriptor fields remain opaque.",
+    "Scope flags distinguish attempted byte framing, completed framing and allowed-metadata processing.",
+    "Lexical grammar acceptance does not establish a complete scientific schema."
+  ],
+  "method": "Read-only review of the wrapper and amendment; no execution or raw data access.",
+  "reviewer": "calibrated_backend",
+  "schema": "lupine.discovery.mpea.row_metadata.scientific_contract_review.v1",
+  "scope": {
+    "execution_performed": false,
+    "physical_validation_established": false,
+    "real_cache_read": false,
+    "source_review_only": true,
+    "target_values_read": false
+  },
+  "source_sha256": {
+    "docs/mpea-row-metadata-amendment-v1.md": "300f37a87c7dd37d398cdf9e9946dd56c5c4cf1d61db41d38dbc09ffbb253bc0",
+    "scripts/mpea_row_metadata.py": "d50ce1cf06761cd080ca0fcc6516c07ef71e0a4106bba73660642c846915e33b"
+  },
+  "status": "NO_BLOCKER_FOUND"
+}

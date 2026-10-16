@@ -1,0 +1,11 @@
+{
+  "schema":"lupine.discovery.qm9_identity_amendment.v1",
+  "status":"WRITTEN_BEFORE_ADDITIONAL_REGISTRY_REQUEST",
+  "preserved_first_result":"Figshare v2 /articles/978904 returned404 EntityNotFound, message Entity not found: ArticleVersion. That failed record-type assumption is not rewritten or retried.",
+  "reason":"Root explicitly confirmed that an authoritative exact-DOI registry identity lookup is permitted public metadata research, not an alternate dataset-download route or access-denial bypass.",
+  "request":{"id":"datacite_identity","url":"https://api.datacite.org/dois/10.6084/m9.figshare.978904","maximum_bytes":1048576,"timeout_seconds":30,"redirects":false,"retries":0},
+  "updated_qm9_maximum_requests":5,
+  "counting":"One failed Figshare metadata call, this one DataCite call, then the original three primary-paper metadata/XML calls only if exact identity and legitimate open-access source are established. No file/record downloads or alternate guessed article IDs.",
+  "projection":"Exact DOI/type/title/creators/version/license/publisher/landing URL/related identifier metadata only; descriptions and numerical model-performance content withheld. All original exposure and no-data conditions retained.",
+  "failure":"Retain first registry response/error; no registry retry or mirror. Unknown identity or rights remains unknown."
+}

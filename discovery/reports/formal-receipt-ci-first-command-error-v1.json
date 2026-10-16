@@ -1,0 +1,9 @@
+{
+  "schema": "lupine.discovery.engineering_command_correction.v1",
+  "command": "python3 audit_axioms.py > ../reports/formal-receipt-ci-fresh-audit-v1.txt 2>&1",
+  "attempted_cwd": "discovery",
+  "error": "Shell redirection failed because ../reports did not exist from that cwd; audit process did not start.",
+  "correction": "Run from discovery/formal as specified by the proof package.",
+  "scientific_run": false,
+  "proof_audit_claimed_passed_on_failed_attempt": false
+}

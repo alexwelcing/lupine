@@ -1,0 +1,13 @@
+{
+  "schema": "lupine.rhizo.documentary-independent-review.exposure.v1",
+  "recorded_at": "2026-10-16T11:49:25.652263+00:00",
+  "private_projection_machine_bytes_read": 32046,
+  "private_projection_machine_sha256": "8b19c9d47e3b33729417b3a8c09ecd4483929b697954246ee98ecf4e805d3a82",
+  "private_projection_json_parse_completed": true,
+  "raw_source_objects_read": false,
+  "numerical_outcome_comparison_performed": false,
+  "fresh_or_target_free_claim": false,
+  "researcher_display_stage": "Structure and later selected documentary strings; all projected strings are potentially outcome-bearing.",
+  "untrusted_source_instructions_followed": false,
+  "network_requests": 0
+}

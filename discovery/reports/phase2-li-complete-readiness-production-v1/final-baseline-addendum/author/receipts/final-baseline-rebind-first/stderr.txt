@@ -1,0 +1,11 @@
+test_layout_complete_and_persisted (test_li_v3_readiness_production.ProductionAuthorTests.test_layout_complete_and_persisted) ... ok
+test_generated_full_result_equivalence (test_li_v3_readiness_production.ProductionAuthorTests.test_generated_full_result_equivalence) ... ok
+test_unbound_baseline_stops_before_cache (test_li_v3_readiness_production.ProductionAuthorTests.test_unbound_baseline_stops_before_cache) ... ok
+test_own_source_worktree_drift (test_li_v3_readiness_production.ProductionAuthorTests.test_own_source_worktree_drift) ... ok
+test_index_drift (test_li_v3_readiness_production.ProductionAuthorTests.test_index_drift) ... ok
+test_committed_baseline_runtime_drift (test_li_v3_readiness_production.ProductionAuthorTests.test_committed_baseline_runtime_drift) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 1.056s
+
+OK

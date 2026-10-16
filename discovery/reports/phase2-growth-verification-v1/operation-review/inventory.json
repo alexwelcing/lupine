@@ -1,0 +1,71 @@
+{
+  "schema": "lupine.discovery.growth_operation_audit_preparation_inventory.v1",
+  "scope": "Held source-preparation bundle; no actual operation audit executed; future bindings and outputs are separate.",
+  "excludes": [
+    "inventory.json"
+  ],
+  "file_count": 15,
+  "total_bytes": 333126,
+  "files": {
+    "README.md": {
+      "bytes": 6109,
+      "sha256": "7ef4c4723616f7c4f91dcb4a3293182c654f23c1773ed49a3c0b59e7762d5042"
+    },
+    "audit-source.diff": {
+      "bytes": 53784,
+      "sha256": "ffe61e6ed7750ca6f84ce955713b338a18d646102c9c9038ac957981dca62f4d"
+    },
+    "audit_completed_operations.py": {
+      "bytes": 40774,
+      "sha256": "a34b266e2316b14540b0abd0f2016274422a81b8eca90f3152aa734f5617deb7"
+    },
+    "bindings.unbound.json": {
+      "bytes": 585,
+      "sha256": "8f93019b8b6b0efbb78faa549668073a266a4cbb5f0079b95c6e8744f400c814"
+    },
+    "check-adaptation.json": {
+      "bytes": 69108,
+      "sha256": "087946b0f7c122f6f5b35879f2d171551e4bedebe5a059d946557884fc1398e9"
+    },
+    "common-gates.prepared.txt": {
+      "bytes": 5433,
+      "sha256": "2c528c0d2e43388f2bb3c82cd4b278e5d259f716574a24ab7b20856632bc4b00"
+    },
+    "math-static-review/audit_completed_operations.py": {
+      "bytes": 40774,
+      "sha256": "a34b266e2316b14540b0abd0f2016274422a81b8eca90f3152aa734f5617deb7"
+    },
+    "math-static-review/check-adaptation.json": {
+      "bytes": 69108,
+      "sha256": "087946b0f7c122f6f5b35879f2d171551e4bedebe5a059d946557884fc1398e9"
+    },
+    "math-static-review/review.json": {
+      "bytes": 8086,
+      "sha256": "c2e08af390ba3370f30587d041f2d09967cca4071bc9c97a4c6d8069f9c8b810"
+    },
+    "math-static-review/run_audit_recorded.py": {
+      "bytes": 6073,
+      "sha256": "62a1accf38b6fa0ed9c5cf27af966c58b69484fb1a718af73097a32dda41f562"
+    },
+    "preparation.json": {
+      "bytes": 1693,
+      "sha256": "557725d14b0ff43144f036f31e7a5e2c8d959a9967d7ff5ef0209c5da8296f5d"
+    },
+    "prior-audit_completed_operations.py": {
+      "bytes": 18988,
+      "sha256": "c91920a7d9e992b7c4acdd47fca7ac151282d4190b429977ae01ef7caee700cb"
+    },
+    "prior-run_audit_recorded.py": {
+      "bytes": 1934,
+      "sha256": "05d2e12b0201a715d2c43b39028d60010bb57541a5f8b312effd15c6d4b0fde0"
+    },
+    "run_audit_recorded.py": {
+      "bytes": 6073,
+      "sha256": "62a1accf38b6fa0ed9c5cf27af966c58b69484fb1a718af73097a32dda41f562"
+    },
+    "static-review/expectations.md": {
+      "bytes": 4604,
+      "sha256": "a1c478aca02139e30d0e417b5df5ea41f1ca439012ed8c7d461f9c5ca0c88f05"
+    }
+  }
+}

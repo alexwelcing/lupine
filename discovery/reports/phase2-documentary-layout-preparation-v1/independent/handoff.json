@@ -1,0 +1,27 @@
+{
+  "schema": "lupine.discovery.review_handoff.v1",
+  "status": "FINAL_PURE_REVIEW_READY",
+  "review": {
+    "path": ".cache/phase2-documentary-layout-review-v1/review.json",
+    "bytes": 6160,
+    "sha256": "fa343b5574bfda2a9a17e8fcacbb919758dbf8fe57125a63290fb62d34e70184"
+  },
+  "inventory": {
+    "path": ".cache/phase2-documentary-layout-review-v1/inventory.json",
+    "bytes": 9276,
+    "sha256": "1cf20582d14abc5e396246cd3e9fe561053e71ebe14f9c4b85f2d8cf43b03c37"
+  },
+  "source": {
+    "path": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/li_v3_layout_localization.py",
+    "bytes": 26076,
+    "sha256": "4624e68c28f911bc0bcc927834bd9f9bbb8cd4622a47db80f5a99e3f63b6ba7d"
+  },
+  "independent_test": {
+    "path": ".cache/phase2-documentary-layout-review-v1/test_li_v3_layout_localization_review.py",
+    "bytes": 30060,
+    "sha256": "93d062867f8fa612719084922474f13db9aa3936410cfa699c4d3b1007e8db62"
+  },
+  "copy_scope": "Entire review directory, including all historical attempts and source snapshots. No private objects, production inputs or binary artifacts.",
+  "production_binding": null,
+  "tracked_edits": false
+}

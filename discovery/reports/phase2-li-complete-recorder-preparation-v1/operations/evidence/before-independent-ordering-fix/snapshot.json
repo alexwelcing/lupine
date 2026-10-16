@@ -1,0 +1,18 @@
+{
+  "status": "PRESERVED_PRE_CORRECTION_INTERMEDIATE",
+  "files": {
+    "run_after_ci.py": "6c8c9f96e046111423f7bbaf14cde9d978663d7101fd5ffa98184959b2a666c9",
+    "recorder_support.py": "6f02c0ed8f8981e1f2c18e6107fb4bff343cf91427bcfe549b2fc4808dd53e0a",
+    "run_package.py": "a03fc98c9f4099040344b4120bba57483a348f6c2f87ff771a0c63377b55fe10",
+    "tests/test_operations_recorder.py": "3d801479972fc6b296b84a1d1959f836b44c0d4fdab8f54ed73f963507c3aa8d",
+    "README.md": "5757330670e6b7ac2bc00a23aef402514f998eb4d4c691bfa354f3f095434236",
+    "source-hold.json": "eaa7364d9ed5e44f0e056725a8c7a7bd8308b285a39c6869779262bed4969cfd",
+    "record_synthetic.py": "407ebbacf2314d1fe823d2e81c4f775a48fe3f9136ccb624a0a44c0bcff60962"
+  },
+  "findings": [
+    "Full prior-prefix review must precede new source operations",
+    "Log-publication failure must not skip post-child source recheck and execution receipt attempt"
+  ],
+  "prior_authored_evidence": "../final22/execution.json",
+  "actual_source_operations": 0
+}

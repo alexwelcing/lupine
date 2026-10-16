@@ -1,0 +1,39 @@
+{
+  "files": [
+    {
+      "candidate": ".cache/mpea-package-interface-v1/scripts/package_smoke.py",
+      "destination": "scripts/package_smoke.py",
+      "diff": ".cache/mpea-package-interface-v1/diffs/package_smoke.py.patch",
+      "diff_sha256": "aa67e91897403e17bdef9f34685f07280f09ad95cf5a61238ae50dad5afc1251",
+      "original_sha256": "5809a810ad15c48181979c482fbd793d5eb1bd3c6c08c4f98fc2a552c9a0ac05",
+      "sha256": "f64489f64aefc6624298e25d9dad493186c25b1c91e3f063e9e73d23f8ebf6a1"
+    },
+    {
+      "candidate": ".cache/mpea-package-interface-v1/tests/test_package_retention.py",
+      "destination": "tests/test_package_retention.py",
+      "diff": ".cache/mpea-package-interface-v1/diffs/test_package_retention.py.patch",
+      "diff_sha256": "973eb929040d9b9b958c18a786b1f8c9b600cf5dcbabc9b9aa008e56f9a7153b",
+      "original_sha256": "fbf1cfa6418ba9a75ed6d6618e8e135c44da05a63d1556b97dcbad01a68a4d87",
+      "sha256": "ebaaac5da083b20fb47f1c702ddf54b638f3b880fa502bd0333403b8bba77250"
+    },
+    {
+      "candidate": ".cache/mpea-package-interface-v1/tests/test_package_retention_review.py",
+      "destination": "tests/test_package_retention_review.py",
+      "diff": ".cache/mpea-package-interface-v1/diffs/test_package_retention_review.py.patch",
+      "diff_sha256": "524a2fd17106dcd366121ad2ffc5f9c42da19a9cb0d084bb1e303d41711d8771",
+      "original_sha256": "f8cbb72eef3de8c591a5340497394b63d4d513dd8253e1f1e9d55e59a1f10904",
+      "sha256": "8385c47830d8ea6d0b06a48367f0e1cf9141d32a65ec9529e063e09a4d47c6d5"
+    },
+    {
+      "candidate": ".cache/mpea-package-interface-v1/tests/test_package_mpea_interface.py",
+      "destination": "tests/test_package_mpea_interface.py",
+      "diff": ".cache/mpea-package-interface-v1/diffs/test_package_mpea_interface.py.patch",
+      "diff_sha256": "18a54e91cc8443b287c8d5f658519ccadbc6e12ccf73905582fc866aee2af030",
+      "original_sha256": null,
+      "sha256": "0ef43d5023e213a9524f2e6dcf5638638679939c75407a72d99b1429f1be2390"
+    }
+  ],
+  "non_probe_ast_unchanged": true,
+  "schema": "lupine.mpea.package_interface.copy_manifest.v1",
+  "scope": "Only embedded installed PROBE changes; existing top-level functions/APIs and retention logic AST-identical. Existing retention tests update expected PROBE SHA only. New synthetic transport tests do not build a wheel or run the full scientific probe."
+}

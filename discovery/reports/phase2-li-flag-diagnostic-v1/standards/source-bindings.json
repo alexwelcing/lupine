@@ -1,0 +1,63 @@
+{
+  "schema": "lupine.discovery.li_flags_next_proposal.v1",
+  "status": "PROPOSAL_ONLY",
+  "date": "2026-10-16",
+  "owner": "phase2_evidence",
+  "source_files": [
+    {
+      "path": "discovery/scripts/li_v3_zip_diagnostic.py",
+      "bytes": 12822,
+      "sha256": "de7807a8721cc243a9acf71e01c80aa531454248b2cde92c5518f875e89e0d87"
+    },
+    {
+      "path": "discovery/scripts/li_v3_custody.py",
+      "bytes": 35358,
+      "sha256": "3ead51f0afdf16be973743257be488669c988aa40443779e7a5c400e9b0d3234"
+    },
+    {
+      "path": "discovery/docs/li-v3-zip-diagnostic-plan.md",
+      "bytes": 4668,
+      "sha256": "e3726819a1c4a133f90ba28a2bfa0bd7ed8e52454f21a61275bfbc8f76dcf6f1"
+    },
+    {
+      "path": "discovery/.cache/li-v3-custody/zip-diagnostic-v1/1/public.json",
+      "bytes": 2840,
+      "sha256": "50931018f877a66ee56cf522e5d8a0be35cfc35f2c8b7f34884f5ba6caba6ca0"
+    },
+    {
+      "path": "discovery/.cache/li-v3-custody/zip-diagnostic-v1/2/public.json",
+      "bytes": 2840,
+      "sha256": "50931018f877a66ee56cf522e5d8a0be35cfc35f2c8b7f34884f5ba6caba6ca0"
+    }
+  ],
+  "standard": {
+    "url": "https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT",
+    "version": "6.3.10",
+    "revision_date": "2022-11-01",
+    "sections": [
+      "4.4.4",
+      "4.3.9.1",
+      "4.3.9.2",
+      "4.3.9.3",
+      "4.3.9.4",
+      "4.4.8",
+      "4.4.9"
+    ],
+    "retained_file": "APPNOTE.TXT",
+    "bytes": 174585,
+    "sha256": "0b993022a7d320a0bf704e6980bea36fafd17a6066ab994db0a0c16278a50cd6",
+    "retrieval_receipt": "appnote-retrieval.json"
+  },
+  "read_scope": {
+    "public_diagnostic_projections_read": true,
+    "raw_workbook_read": false,
+    "private_capture_read": false,
+    "standard_network_read_only": true,
+    "actual_source_execution": false,
+    "actual_flag_values_inspected": false,
+    "new_tests_run": false,
+    "tracked_edits": false,
+    "scientific_readiness_established": false
+  },
+  "ci_evidence": "Successful exact-source CI reported by root; no independent CI retrieval in this task."
+}

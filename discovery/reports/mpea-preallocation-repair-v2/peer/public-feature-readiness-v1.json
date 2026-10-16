@@ -1,0 +1,59 @@
+{
+  "checked_calls": [
+    "reader.load_context()",
+    "reader.validate_public_report(process1, _context=context)",
+    "reader.validate_public_report(process2, _context=context)"
+  ],
+  "forbidden_events": [],
+  "opened_repository_paths": [
+    "docs/mpea-column-mapping-v1.json",
+    "docs/mpea-formula-format-evidence.md",
+    "reports/mpea-feature-readiness-v1/process-1/readiness.json",
+    "reports/mpea-feature-readiness-v1/process-2/readiness.json",
+    "reports/mpea-feature-readiness-v1/reproduction.json",
+    "reports/mpea-formula-format-evidence-v1.json",
+    "reports/mpea-formula-reproduction-v1.json",
+    "reports/mpea-formula-tokens-v1.json",
+    "reports/mpea-header-labels-v1.json",
+    "reports/mpea-row-metadata-reproduction-v1.json",
+    "reports/mpea-row-metadata-v1.json",
+    "scripts/__pycache__/mpea_feature_reader.cpython-312.pyc",
+    "scripts/mpea_feature_reader.py",
+    "scripts/mpea_features.py",
+    "scripts/mpea_formula_tokens.py",
+    "scripts/mpea_row_metadata.py",
+    "src/lupine_discovery/representation.py"
+  ],
+  "public_inputs": {
+    "reports/mpea-feature-readiness-v1/process-1/readiness.json": {
+      "bytes": 7989,
+      "sha256": "666b13adf2ce0c9169806aa112f39f4aff49e7eff23e2a0f8427889f325e0b76"
+    },
+    "reports/mpea-feature-readiness-v1/process-2/readiness.json": {
+      "bytes": 7989,
+      "sha256": "666b13adf2ce0c9169806aa112f39f4aff49e7eff23e2a0f8427889f325e0b76"
+    },
+    "reports/mpea-feature-readiness-v1/reproduction.json": {
+      "bytes": 8345,
+      "sha256": "b5ca3d8b6475861096fc1430aebe3531b5840c642a3e2eb8d468f28ad19b2b4b"
+    }
+  },
+  "published_readiness_byte_identity": true,
+  "published_reproduction_links_and_aggregates_match": true,
+  "reader_source_sha256": "032d5341f29479437149d2fbd94879134dc2e4e51c895c1fba3cf771db1f34ef",
+  "schema": "lupine.review.mpea_public_feature_readiness_preflight.v1",
+  "scope": {
+    "allocation_called": false,
+    "entropy_requested": false,
+    "local_identity_compared_as_public_metadata_only": true,
+    "prepare_registered_called": false,
+    "private_features_read": false,
+    "raw_archive_read": false,
+    "registration_authority_created": false,
+    "target_values_read": false,
+    "worker_called": false
+  },
+  "status": "PASS",
+  "tampering_controls_rejected": 5,
+  "upstream_content_seal_format": "canonical_ascii_json_plus_one_LF"
+}

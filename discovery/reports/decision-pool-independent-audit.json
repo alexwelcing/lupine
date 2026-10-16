@@ -1,0 +1,70 @@
+{
+  "leave_one_out": {
+    "all_failure_counts_bounded": true,
+    "left_out_comparisons": 4200,
+    "maximum_population_size": 6,
+    "multisets": 205,
+    "vector_rank_cases": 799
+  },
+  "limitations": [
+    "No application exchangeability was established.",
+    "No scientific labels or fitted rankers were used.",
+    "This source-only oracle does not itself test the runtime implementation.",
+    "No Python-to-Lean refinement proof is claimed."
+  ],
+  "negative_controls": {
+    "feasible_conditioning": {
+      "exchangeable_test_positions": 20,
+      "feasible_conditional_retention": "0",
+      "feasible_test_positions": 1,
+      "marginal_retention": "19/20"
+    },
+    "interpretation": "Counterexamples refute stronger conditional or at-least-one interpretations, not the marginal theorem.",
+    "realized_calibration_conditioning": {
+      "equally_likely_orders": 2,
+      "failure_given_calibration_score_one_half": "1",
+      "marginal_failure": "1/2"
+    },
+    "strict_boundary_control": {
+      "weak_pool": [
+        "first"
+      ],
+      "wrong_strict_pool": []
+    },
+    "wrong_best_rank_target": {
+      "all_minimizer_score": "1",
+      "lost_minimizers": [
+        "last"
+      ],
+      "wrong_best_rank_score": "1/3"
+    }
+  },
+  "schema": "lupine.discovery.decision_pool.finite_oracle_review.v1",
+  "scope": "constructed_finite_combinatorial_checks_only",
+  "source_sha256": "c3052dfae2283913bcd83df67575f9270009f608384196923a7b5d69cb9cc9ab",
+  "weighted_finite_law": {
+    "checks": [
+      {
+        "failure_probabilities_by_index": [
+          "59/116",
+          "59/116",
+          "59/116"
+        ],
+        "k": 1,
+        "upper_bound": "2/3"
+      },
+      {
+        "failure_probabilities_by_index": [
+          "25/116",
+          "25/116",
+          "25/116"
+        ],
+        "k": 2,
+        "upper_bound": "1/3"
+      }
+    ],
+    "law": "weight(vector)=1+count(0)^2+2*count(1)",
+    "total_integer_weight": 232,
+    "world_count": 64
+  }
+}

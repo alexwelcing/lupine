@@ -1,0 +1,12 @@
+{
+  "started_at": "2026-10-16T08:44:28.426337+00:00",
+  "finished_at": "2026-10-16T08:44:33.326132+00:00",
+  "elapsed_seconds": 4.899841176000336,
+  "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC11724850/fullTextXML",
+  "http_status": 200,
+  "error_type": null,
+  "bytes": 143727,
+  "sha256": "c7e527712991ce14fb233b57a7e1f5f2dc26e6728835df03510cd6c588146534",
+  "scope": "Whole article XML, not merely methods; no linked assets requested",
+  "retries": 0
+}

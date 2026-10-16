@@ -1,0 +1,8 @@
+{
+  "before_sha256": "e7cb0afa1d30a9df6b2fc917ebfe53d98ab700e877ceb7749954c4142165a4d6",
+  "after_sha256": "57276dc466ae6bff0c43b49b916fd92ae3caa9387965fa0cacace4bf23245634",
+  "before_reconstruction": "Exact inverse of documented child-interpreter probe edit; matches prior independent audit SHA. The recorder had not executed tests at either version.",
+  "change": "Record parent Python separately and probe actual PATH python executable/version using the same child command route before unittest.",
+  "production_gate_changed": false,
+  "actual_suite_executed": false
+}

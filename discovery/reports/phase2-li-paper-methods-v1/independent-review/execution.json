@@ -1,0 +1,14 @@
+{
+  "command": [
+    "python",
+    ".cache/phase2-li-paper-methods-review-v1/audit.py"
+  ],
+  "elapsed_seconds": 0.08434478600065631,
+  "exit_code": 0,
+  "scope": "Actual public-source binding and aggregate arithmetic check only; no scientific experiment/test or archive access.",
+  "script_after": "00aaec78d8c07b4195a82f62f0fa58c91ec34865043bbbbb37978ef804b7f68f",
+  "script_before": "00aaec78d8c07b4195a82f62f0fa58c91ec34865043bbbbb37978ef804b7f68f",
+  "started_utc": "2026-10-16T08:52:46.759065+00:00",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "ad08b3895ce7784d6757afc986b6d0253002331ddf3df65148744d859fa69b4c"
+}

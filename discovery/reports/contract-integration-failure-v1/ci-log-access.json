@@ -1,0 +1,25 @@
+{
+  "scope": "Observed official job metadata; log-body downloads unavailable",
+  "job_ids": [
+    114337045540,
+    114337045786
+  ],
+  "download_exit_codes": [
+    1,
+    1
+  ],
+  "downloaded_log_bytes": [
+    0,
+    0
+  ],
+  "reason": "GitHub redirected to storage; storage returned Forbidden. Signed URLs retained privately and omitted here.",
+  "failed_steps": {
+    "114337045540": [
+      "Run python -m unittest discover -s tests -v"
+    ],
+    "114337045786": [
+      "Run python -m unittest discover -s tests -v"
+    ]
+  },
+  "remote_traceback_or_test_counts_claimed": false
+}

@@ -1,0 +1,39 @@
+{
+  "schema": "lupine.finite-risk-inversion-design-inventory.v1",
+  "base": ".cache/phase2-finite-risk-inversion-design-v1",
+  "files": [
+    {
+      "path": "README-before-api-domain-clarification.md",
+      "bytes": 12555,
+      "sha256": "693c42b4db020df157a64a1fbbeb479f8bf901dfb2fb4bb8cecd3f12f0e4971e"
+    },
+    {
+      "path": "README.md",
+      "bytes": 12700,
+      "sha256": "142fc8fed2bc05fc784aa1cf0b2c696b818b0d2f2766087f8685b88198023e94"
+    },
+    {
+      "path": "document-check.json",
+      "bytes": 1109,
+      "sha256": "50a48d330751a472dcc7d72f8b488d78fe8f737ba00608aa9dd541dfac32f1bc"
+    },
+    {
+      "path": "review-handoff.json",
+      "bytes": 1255,
+      "sha256": "f766ef43818637882bfe6a5b1ae2892286d1943167061cdb9d5ed7fbc402d8f3"
+    },
+    {
+      "path": "source-bindings-before-commit-binding.json",
+      "bytes": 2464,
+      "sha256": "790c9295b79aaafbf2c8354c75285272b3c9b33b84899c1036e6fbc259463b28"
+    },
+    {
+      "path": "source-bindings.json",
+      "bytes": 3074,
+      "sha256": "d9e24db1ca5e826a2501c948856b0b8ae065b0b7f8637a5b2686c18d662de460"
+    }
+  ],
+  "file_count": 6,
+  "total_bytes": 33157,
+  "scope": "Source-free written mathematics and artifact identities; no empirical observations or runtime validation."
+}

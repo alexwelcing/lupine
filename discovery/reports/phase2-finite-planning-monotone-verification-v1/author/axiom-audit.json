@@ -1,0 +1,44 @@
+{
+  "audit_parser_sha256": "1a30e19f3e38d5481ac321be5ece1efc7025925a4a218e51ff5f5f0b49756386",
+  "execution_receipt_sha256": "81398d2c10351997f0f76f662d41448e14abebe046ae40ecb557ff9b734f778e",
+  "method": "AST-extracted unchanged declared_theorems/parse_audit functions checked fresh actual compiler output; no main or build invoked",
+  "python_refinement_or_scientific_attestation": false,
+  "schema": "lupine.finite-planning-monotone.axiom-audit.v1",
+  "source_bindings_held": {
+    "docs/finite-population-planning.md": true,
+    "formal/AXIOMS.txt": true,
+    "formal/LupineFinitePlanning.lean": true,
+    "formal/README.md": true,
+    "formal/audit_axioms.py": true,
+    "formal/lake-manifest.json": true,
+    "formal/lakefile.toml": true,
+    "formal/lean-toolchain": true,
+    "formal/theorem-inventory.json": true,
+    "src/lupine_discovery/finite_planning.py": true
+  },
+  "source_sha256": "fa1dedddf324fbd66a96de9eef1d775babccbc3668a81fd48726287dffe2268d",
+  "status": "PASS",
+  "theorem_count": 4,
+  "theorems": {
+    "LupineFinitePlanningMonotone.capped_feasible_iff": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LupineFinitePlanningMonotone.evaluation_antitone": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LupineFinitePlanningMonotone.evaluation_step": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LupineFinitePlanningMonotone.unique_first_count": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ]
+  }
+}

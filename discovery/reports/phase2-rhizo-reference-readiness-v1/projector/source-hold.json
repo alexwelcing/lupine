@@ -1,0 +1,13 @@
+{
+  "actual_private_object_reads": 0,
+  "actual_production_executions": 0,
+  "created_at": "2026-10-16T11:40:14.079752+00:00",
+  "files": {
+    "README.md": "f5f1582036db4f13b879cd47ae1abeccb2380df07bba09b3f0450696b21ef65e",
+    "reference_projector.py": "bab641881335f57d4571fe0d4f720696f57e5816fa36266647cdf86d0701b263",
+    "run_guarded.py": "9a01075290bb4afc06a2a7bc2841a47ee6cd8fb131dc57e47e8571f6f3d8e199",
+    "scope.json": "f5446b9507ea394ea1631a7a85a9306cbb1407341df1e76de71186a6524ef9e5",
+    "test_reference_projector.py": "8de45bfd5c369549b930bec2d42542880de05bfb5769c632fe8ac920b8dd67b8"
+  },
+  "status": "HELD_AFTER_AGGREGATE_PARSE_CORRECTION"
+}

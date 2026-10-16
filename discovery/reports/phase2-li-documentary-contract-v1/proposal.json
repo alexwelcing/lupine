@@ -1,0 +1,103 @@
+{
+  "schema": "lupine.discovery.li_documentary_disclosure_proposal.v1",
+  "status": "UNBOUND_DOCUMENTARY_PROPOSAL",
+  "executable": false,
+  "source": {
+    "record_id": "vywsz-wxn79",
+    "version": 3,
+    "doi": "10.24435/materialscloud:ws-8j",
+    "license": "CC BY 4.0",
+    "object_sha256": "9741f826f6a97db7c2c0efa89820d3bdae43e8beb53cafd893ccdf0bb74f64fa"
+  },
+  "bindings": [
+    {
+      "role": "dictionary",
+      "documented_sheet_name": "Column Descriptions",
+      "actual_sheet_relationship": null,
+      "coordinates": null,
+      "permitted_cell_types": null,
+      "merged_cell_policy": null
+    },
+    {
+      "role": "reference",
+      "documented_sheet_name": "References",
+      "actual_sheet_relationship": null,
+      "coordinates": null,
+      "reference_key_coordinates": null,
+      "row_join_coordinates": null
+    }
+  ],
+  "semantic_roles": [
+    "reference_key_definition",
+    "material_type_definition",
+    "composition_definition",
+    "manufacturing_treatment_definition",
+    "irradiation_condition_definition",
+    "specimen_preparation_definition",
+    "specimen_dimension_definition",
+    "tensile_condition_definition",
+    "yield_strength_definition",
+    "ultimate_tensile_strength_definition",
+    "uniform_elongation_definition",
+    "total_elongation_definition",
+    "missingness_code_definition",
+    "record_unit_definition",
+    "curation_provenance_definition"
+  ],
+  "documented_units_by_role": {
+    "composition": "weight_percentage",
+    "temperature": "degree_Celsius",
+    "time": "hour",
+    "grain_size": "micrometre",
+    "specimen_dimension": "millimetre",
+    "strain_rate": "inverse_second",
+    "yield_strength": "MPa",
+    "ultimate_tensile_strength": "MPa",
+    "uniform_elongation": "percent",
+    "total_elongation": "percent"
+  },
+  "proposed_block_statuses": [
+    "BLOCKED_COORDINATES",
+    "BLOCKED_MIXED_ROLE",
+    "UNRESOLVED_SEMANTICS",
+    "UNRESOLVED_COUNT_DISCREPANCY"
+  ],
+  "withheld": [
+    "observation_values",
+    "condition_values",
+    "complete_shared_string_table",
+    "raw_reference_identifiers",
+    "reference_titles_abstracts_urls",
+    "per_cell_or_reference_token_hashes",
+    "formula_results",
+    "row_eligibility"
+  ],
+  "counts": {
+    "paper_claim": {
+      "records": 1050,
+      "columns": 55
+    },
+    "archive_claim": {
+      "records": 1070,
+      "parameters": 54
+    },
+    "audited_structural_rows": null,
+    "audited_fields": null,
+    "usable_paired_records": null,
+    "independent_panels": null,
+    "discrepancy_status": "UNRESOLVED_COUNT_DISCREPANCY"
+  },
+  "scope": {
+    "reader_implemented": false,
+    "source_object_opened": false,
+    "private_capture_opened": false,
+    "network_used": false,
+    "threshold_model_allocation_selected": false,
+    "scientific_readiness_claimed": false
+  },
+  "reference_disclosure_scope": {
+    "current_stage": "Narrow dictionary/reference-definition proposal only",
+    "current_token_withholding": "No raw reference identifiers/titles/abstracts/URLs/token hashes in this dictionary projection.",
+    "later_provenance_roster": "A separately frozen source-provenance roster must support auditable scientific citations, source/test lineage and overlap evidence; there is no blanket prohibition on public scientific citations."
+  }
+}

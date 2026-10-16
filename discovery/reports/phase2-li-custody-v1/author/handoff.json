@@ -1,0 +1,32 @@
+{
+  "status": "IMPLEMENTED_SYNTHETICALLY_TESTED_NOT_PROMOTED_NOT_PRODUCTION_EXECUTED",
+  "real_workbook_acquired": false,
+  "source_scientific_outcomes_read": false,
+  "tracked_files_modified_by_this_task": false,
+  "files": {
+    "promotion/scripts/li_v3_custody.py": {
+      "bytes": 35358,
+      "sha256": "3ead51f0afdf16be973743257be488669c988aa40443779e7a5c400e9b0d3234"
+    },
+    "promotion/tests/test_li_v3_custody.py": {
+      "bytes": 17743,
+      "sha256": "b8113942416f5a2fc6cda565fa5e8b3d5fb9efb887d9241cc36047caca58780a"
+    },
+    "promotion/docs/li-v3-custody-plan.md": {
+      "bytes": 11472,
+      "sha256": "0be13b0ed7dd7bc41b9c430d4f7d30f8efa0ead54a85d162f31c728eb928a241"
+    },
+    "promotion/reports/li-v3-source-inventory.json": {
+      "bytes": 902,
+      "sha256": "ef4d3de4deb08b3903230a7456fb50de689e49265868d78f0c73faab4461f9ba"
+    }
+  },
+  "author_first_result": "receipts/author-first/execution.json",
+  "author_first_failure": "One read-spy assertion also included fixture ZIP writes; first failure preserved.",
+  "author_second_result": "receipts/author-second/execution.json",
+  "author_second_tests": 13,
+  "author_second_exit_code": 0,
+  "independent_test_owner": "phase2_math",
+  "independent_test_file": "../phase2-li-custody-review-v1/test_li_v3_custody_review.py",
+  "remaining": "Root reviews and promotes into frozen source/manifest after current full-suite; exact commit and CI verified before any real GET. No acquisition was performed."
+}

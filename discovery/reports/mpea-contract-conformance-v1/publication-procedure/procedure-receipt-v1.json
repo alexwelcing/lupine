@@ -1,0 +1,83 @@
+{
+  "actual_attempt_paths_opened": false,
+  "actual_raw_source_or_feature_files_opened": false,
+  "allowed_future_inputs": "Only exact terminal paths explicitly supplied by root after registered execution; no recursive private-cache search.",
+  "allowed_public_files": [
+    "original-public.json",
+    "reproduction-public.json",
+    "original-rank-summary.json",
+    "reproduction-rank-summary.json",
+    "original-completeness.json",
+    "reproduction-completeness.json",
+    "publication-review.json",
+    "source-bound execution/reproduction note",
+    "previously published closed registration tag annotation"
+  ],
+  "complete_public_schema": "lupine.discovery.mpea.evaluation_public.v1",
+  "complete_top_level_keys": [
+    "schema",
+    "protocol_id",
+    "stage",
+    "status",
+    "reasons",
+    "registration",
+    "source",
+    "inputs",
+    "execution_kind",
+    "payload",
+    "access",
+    "usage",
+    "scientific_sha256",
+    "content_sha256"
+  ],
+  "entropy_or_api_access": false,
+  "limitations": [
+    "Public-only review cannot reconstruct private aggregation or authenticate a registration from seals alone",
+    "Package/browser transport is not schema or scientific validation",
+    "No actual publication is authorized by this prospective receipt"
+  ],
+  "main_edits": false,
+  "preserve_operational_only_failure": {
+    "invent_missing_counters": false,
+    "scientific_verdict": null,
+    "use_partial_public_file": false
+  },
+  "procedure": {
+    "path": ".cache/mpea-study-custody/review_production/publication_review/procedure-v1.md",
+    "sha256": "5e116a8c6687e8d7219c797911ca881c47cf5940003f895420bcc7b9f17e4ea0"
+  },
+  "publication_conditions": [
+    "Exact registered source and terminal authentication",
+    "Closed nested schema and explicit identity-slot audit",
+    "No private IDs/assignments/per-label values or hashes",
+    "Exact unavailable states and original denominators",
+    "Separate original/reproduction status and whole-file differences",
+    "Installed resource/API/browser/export fidelity",
+    "Separate root claim-tier release decision"
+  ],
+  "resource_destination": "src/lupine_discovery/resources/mpea-t25-v1.json",
+  "resource_policy": "Exact authenticated original public report bytes only; no added wrapper keys. Absent after supervisor-only failure unless an authenticated final worker projection exists.",
+  "schema": "lupine.mpea.prospective-publication-review.v1",
+  "source_bindings": {
+    "docs/mpea-public-projector-v1.md": "c281f8ad3199600131929392272b21f480b6526eb991993f155f801d462489ff",
+    "docs/mpea-registration-publication-v1.md": "c9fb1f2c44ae8b97c10a88ddbb369eb8d0feca752824c2ca3cbb656d3619c730",
+    "docs/mpea-t25-archival-protocol-v1.md": "c49047341d3932ddd67c67c9f2a04a6759c0d679bfeb96d811ba9541c0cc0378",
+    "docs/mpea-t25-implementation-contract-v1.md": "be45b1d8db9586035cf37bd9bbb9046c065c3851b91f93386f8c68d155215af9",
+    "docs/mpea-t25-operational-enforcement-v1.md": "e36e72818f92096c316df34789a35840c1e5b1561f9467561dd8787da072cf98",
+    "scripts/mpea_archive_custody.py": "c79b8b45068a75243512336d1f25bb67a8c57059b5aae2bb3d885d414f98192e",
+    "scripts/mpea_archive_operations.py": "9ce72dd8ce48dfa5f1a4b3535f992ad4b38ea7c07fb86ead01a86970c479bf3e",
+    "scripts/mpea_archive_report.py": "b27cfdeed4051cb1875beccbd1c03b97e3d35e2f338104ddf1aa3ff83a630696",
+    "scripts/mpea_archive_run.py": "44172bd86ee640cece11d4c20c37a787c725fdd6ca61da0d3db28e511d7c4bbc",
+    "scripts/mpea_archive_worker.py": "e4cd303752b459cadc94b1fca4227c4e6f63054283f911fb435f56ffb4fead26",
+    "scripts/mpea_browser_checks.py": "41055986dd995f698e0c2ff95654d6105ec2efa12b3870e0be3d47b19a4c302b",
+    "scripts/mpea_study_report.py": "a7d4650df6405df61c18d6c017af281bc2779e6b000fc391327cb5a2e11cc1f2",
+    "scripts/mpea_study_supervisor.py": "1dbd4a1b0e9c3f0246d23bd7670527cfa3bd69f754279aabba06e4ae464e87ab",
+    "scripts/package_smoke.py": "f64489f64aefc6624298e25d9dad493186c25b1c91e3f063e9e73d23f8ebf6a1",
+    "src/lupine_discovery/server.py": "f58f55c5284dfe34478840dca45e897c7fd1b5d5002a423876ebf228b7c7a5cb",
+    "src/lupine_discovery/web/app.js": "20f8d73303258d218cee5e02b052b71287b09a1405d51a336aaf2d097653546d",
+    "src/lupine_discovery/web/mpea.js": "f760f6225e60f08d7b4217bae7e7499fe1b4d3ea91514c5b1e429c5b4523f35e"
+  },
+  "status": "PROCEDURE_PREPARED_NO_ACTUAL_STUDY_REVIEW_OR_APPROVAL",
+  "tests_run": false,
+  "unavailable_public_schema": "lupine.discovery.mpea.unavailable_public.v1"
+}

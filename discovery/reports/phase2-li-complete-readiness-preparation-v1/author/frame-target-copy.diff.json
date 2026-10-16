@@ -1,0 +1,12 @@
+{
+  "encoding": "utf-8",
+  "original_bytes": 740,
+  "original_relative_path": "author/frame-target-copy.diff",
+  "original_sha256": "f1a278f78ca58845927a4bd4432f676f87d447749ef9aef0c478c9c0a12135b6",
+  "original_source": ".cache/phase2-li-complete-readiness-candidate-v1/frame-target-copy.diff",
+  "reasons": [
+    "Preserve exact historical diff including whitespace-bearing context lines."
+  ],
+  "schema": "lupine.lossless_utf8_publication_wrapper.v1",
+  "text": "--- frozen-G32-documentary-target\n+++ separate-frame-target\n@@ -1,4 +1,4 @@\n-class _WorksheetTarget:\n+class _FrameWorksheetTarget:\n     \"\"\"Bounded streaming structural target; character data is never retained.\"\"\"\n     def __init__(self, exposure):\n         self.exposure = exposure\n@@ -65,7 +65,7 @@\n                 raise LayoutError('ROW_CELL_MISMATCH')\n             if position in self.positions:\n                 raise LayoutError('DUPLICATE_CELL_REF')\n-            if len(self.positions) >= BOUNDS['explicit_cells_per_role']:\n+            if len(self.positions) >= LIMITS['frame_cells']:\n                 raise LayoutError('LAYOUT_LIMIT')\n             self.positions.add(position)\n             declared = attributes.get('t', 'absent')\n"
+}

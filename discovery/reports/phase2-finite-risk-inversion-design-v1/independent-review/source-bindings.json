@@ -1,0 +1,71 @@
+{
+  "artifacts": [
+    {
+      "path": ".cache/phase2-finite-risk-inversion-design-v1/README.md",
+      "bytes": 12700,
+      "sha256": "142fc8fed2bc05fc784aa1cf0b2c696b818b0d2f2766087f8685b88198023e94"
+    },
+    {
+      "path": ".cache/phase2-finite-risk-inversion-design-v1/source-bindings.json",
+      "bytes": 3074,
+      "sha256": "d9e24db1ca5e826a2501c948856b0b8ae065b0b7f8637a5b2686c18d662de460"
+    },
+    {
+      "path": ".cache/phase2-finite-risk-inversion-review-v1/independent-derivation.md",
+      "bytes": 5556,
+      "sha256": "97cde0228ec4ccb6c8be452a52ba8d61da02db5e6f8b360d5c64c060fa14628e"
+    },
+    {
+      "path": ".cache/phase2-finite-risk-inversion-review-v1/initial-held-README.md",
+      "bytes": 12555,
+      "sha256": "693c42b4db020df157a64a1fbbeb479f8bf901dfb2fb4bb8cecd3f12f0e4971e"
+    },
+    {
+      "path": ".cache/phase2-finite-risk-inversion-review-v1/initial-wording-review.json",
+      "bytes": 590,
+      "sha256": "8c091957df0ddaaf12e09f3a1be3db8701c3982d2ced97323f785e5c9ef28d81"
+    }
+  ],
+  "public_document_bindings": [
+    {
+      "path": "GOAL.md",
+      "bytes": 24904,
+      "sha256": "a218767ffb40b1df8bac35cd3138cb7aa88b4e14e1a1e3192f1fce22262583c9",
+      "git_blob_sha1": "ec6d10d59d875357a4ed62403389aa76497f140c",
+      "verified_commit": "a6e87c198d8116d26c523e0e1b2eedce4aeb225b",
+      "exact_commit_bytes_match": true
+    },
+    {
+      "path": "docs/study-planning.md",
+      "bytes": 14039,
+      "sha256": "0ac34bfcfb6b1198065923c932d8ddf7d80c7411ed027e0cfe5cbc1ff1e01641",
+      "git_blob_sha1": "87d64f166360c89e4d40296d8e6044ee129e6f19",
+      "verified_commit": "a6e87c198d8116d26c523e0e1b2eedce4aeb225b",
+      "exact_commit_bytes_match": true
+    },
+    {
+      "path": "docs/finite-population-planning.md",
+      "bytes": 6568,
+      "sha256": "11f4efe987632293bfc8dfcbd24a32d3a05e4c9e23624c9933ec030028de3414",
+      "git_blob_sha1": "fdbdacdf20c596842f39a5519683e38a994ee7c4",
+      "verified_commit": "a6e87c198d8116d26c523e0e1b2eedce4aeb225b",
+      "exact_commit_bytes_match": true
+    },
+    {
+      "path": "reports/phase2-finite-archive-design-v1/README.md",
+      "bytes": 19059,
+      "sha256": "c26fcba7ea5e70660e8d5657539ab36effd6bf991df6471f5d7da61ba0a8886a",
+      "git_blob_sha1": "1d83bb2a74bd291f33b814e8b470c1059cf94e50",
+      "verified_commit": "a6e87c198d8116d26c523e0e1b2eedce4aeb225b",
+      "exact_commit_bytes_match": true
+    },
+    {
+      "path": "reports/phase2-risk-contracts-v1/README.md",
+      "bytes": 5034,
+      "sha256": "de10ef8fd4d6cc6b78fd70ebc00518fd9c76139634861a0d8d62c8c009041633",
+      "git_blob_sha1": "caf156292070051ab379f7f257bd3cc116d2d80d",
+      "verified_commit": "a6e87c198d8116d26c523e0e1b2eedce4aeb225b",
+      "exact_commit_bytes_match": true
+    }
+  ]
+}

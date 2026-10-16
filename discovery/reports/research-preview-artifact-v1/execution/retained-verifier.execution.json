@@ -1,0 +1,38 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "scripts/verify_retained_artifacts.py",
+    "--directory",
+    ".cache/release-artifacts-present-contract-6585a605d5d3",
+    "--commit",
+    "6585a605d5d325e84423c7e35c7286efe85cfb6f"
+  ],
+  "cwd": "/workspace/lupine-discovery-branch/discovery",
+  "elapsed_seconds": 0.5429359870031476,
+  "exit_code": 0,
+  "finished_at_utc": "2026-10-11T01:17:14.134744+00:00",
+  "name": "retained-verifier",
+  "pid": 131602,
+  "source_after": {
+    "git_head": "6585a605d5d325e84423c7e35c7286efe85cfb6f",
+    "git_status_porcelain": "",
+    "optional_mpea_resource_exists": true,
+    "optional_mpea_resource_regular_path": true,
+    "optional_mpea_resource_sha256": "d93769b07fba52f9bc95dbed92c5303aa8344867e7a663d0ca58cff7af2ba274",
+    "source_sha256": {
+      ".cache/package-present-release-preparation-v1/audit-wheel-source-present-v1.py": "a821b8533a3bce158788489618f5e42c33b474d238cc18ded2a5da23d8242e6a",
+      ".cache/package-present-release-preparation-v1/run-next.py": "f634e87b5437b2d556a8705184ae5c504c747d8b004137eb918fb7ab898b7457",
+      "pyproject.toml": "a73eec989447b99fec48de193218a0750079eeb5973406c53d7a0dc840d9d90f",
+      "reports/runtime-manifest.json": "5381fe8c05287a95488e4df4190b6d0b48f2259426eb91745137ca1f18856122",
+      "scripts/package_smoke.py": "f64489f64aefc6624298e25d9dad493186c25b1c91e3f063e9e73d23f8ebf6a1",
+      "scripts/runtime_manifest.py": "604dbb0a4d6b8984324332c32ab7d7f6ab9cee5673f870a4a3de9b6ec56a8b7d",
+      "scripts/verify_retained_artifacts.py": "b88514b490f1cad8c705bbe4066dc558ffe844c257efeffa6ce63e086209ba13",
+      "src/lupine_discovery/resources/mpea-t25-v1.json": "d93769b07fba52f9bc95dbed92c5303aa8344867e7a663d0ca58cff7af2ba274"
+    }
+  },
+  "source_unchanged": true,
+  "started_at_utc": "2026-10-11T01:17:13.591811+00:00",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "4093a7c44c1e47c8e1e55c8775cf871bfde848277a29c02d322280176f7d2324",
+  "timeout": false
+}

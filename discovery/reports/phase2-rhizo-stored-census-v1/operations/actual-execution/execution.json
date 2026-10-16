@@ -1,0 +1,19 @@
+{
+  "started_at": "2026-10-16T13:28:04.403448+00:00",
+  "finished_at": "2026-10-16T13:28:05.426823+00:00",
+  "exit_code": 0,
+  "timed_out": false,
+  "process_seconds": 0.16555957200034754,
+  "source_runtime_remote_held": true,
+  "runtime_files_held": 335,
+  "stdout_bytes": 31448,
+  "stdout_sha256": "a9ab9d72c6c39be9338e951b657e0587ae8f4dbe534b276b8f8f8951a7b1a63a",
+  "stderr_bytes": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "persisted_public_matches_stdout": true,
+  "actual_census_invocations": 1,
+  "earlier_identity_only_reads": 1,
+  "original_objects_read": false,
+  "automatic_retry": false,
+  "manifest_sha256": "9a0429e0026653f65e7d01699c5ca7fba2799ca8b9af7b8c9025b91b2ad88a48"
+}

@@ -1,0 +1,38 @@
+{
+  "at": "2026-10-16T09:17:51.422368+00:00",
+  "files": [
+    {
+      "candidate": ".cache/phase2-li-local-extra-candidate-v1/promotion/scripts/li_v3_local_extra_headers.py",
+      "target": "scripts/li_v3_local_extra_headers.py",
+      "sha256": "54db58a567afc9211303f2edff13541ab2f97beb77ef2edaa518ad32bf6b1026",
+      "bytes": 11921,
+      "original_tracked_sha256": null,
+      "change": "add new file"
+    },
+    {
+      "candidate": ".cache/phase2-li-local-extra-candidate-v1/promotion/tests/test_li_v3_local_extra_headers.py",
+      "target": "tests/test_li_v3_local_extra_headers.py",
+      "sha256": "b072f2e63a79d3c032838f49f4e2eeea845b7872d67c43f9e0e8a9964ca74a78",
+      "bytes": 19937,
+      "original_tracked_sha256": null,
+      "change": "add new file"
+    },
+    {
+      "candidate": ".cache/phase2-li-local-extra-candidate-v1/promotion/tests/test_li_v3_local_extra_headers_review.py",
+      "target": "tests/test_li_v3_local_extra_headers_review.py",
+      "sha256": "24e54f7674a116a043aecaf3e5b396aba3139eb1739998f45ab5149c82b5602b",
+      "bytes": 40327,
+      "original_tracked_sha256": null,
+      "change": "add new file"
+    },
+    {
+      "candidate": ".cache/phase2-li-local-extra-candidate-v1/promotion/docs/li-v3-local-extra-headers-plan.md",
+      "target": "docs/li-v3-local-extra-headers-plan.md",
+      "sha256": "1247430dfe174bb1d7dd2e17ca06b5781ef41fadd7cb13d60d6d01e202dbb594",
+      "bytes": 8495,
+      "original_tracked_sha256": null,
+      "change": "add new file"
+    }
+  ],
+  "exact_copies": true
+}

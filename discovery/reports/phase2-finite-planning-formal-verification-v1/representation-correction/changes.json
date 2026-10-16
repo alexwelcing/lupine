@@ -1,0 +1,70 @@
+{
+  "added_wrappers": 2,
+  "byte_unchanged_files": 52,
+  "deletes": [
+    {
+      "bytes": 2935,
+      "path": "reports/phase2-finite-planning-formal-verification-v1/integration-preparation/finite-planning-section.md",
+      "sha256": "3951aac1a186c8c3400606ee77f65bca42da7d9d58034b8839413edb6ac08afa"
+    },
+    {
+      "bytes": 37277,
+      "path": "reports/phase2-finite-planning-formal-verification-v1/integration-preparation/promotion/formal/README.md",
+      "sha256": "7782fb9495e94714aeb75b85f44906c54a90de02ec49d88133d16b270897f63f"
+    }
+  ],
+  "final_files": 56,
+  "modified_metadata_files": 2,
+  "original_handoff": {
+    "bytes": 2366,
+    "path": ".cache/phase2-finite-planning-formal-publication-v1/handoff.json",
+    "sha256": "8f4493390050a0386d44c8a24ebe65e4be4bc3659ced7ab1ac08c69aaac93f34"
+  },
+  "original_inventory": {
+    "bytes": 13158,
+    "path": ".cache/phase2-finite-planning-formal-publication-v1/promotion-inventory.json",
+    "sha256": "ab4b10f1960077d2b2a32db2fc3ff827b14a2c461fdabe33a50d71c7e7e62b1b"
+  },
+  "reversible_wrappers": 17,
+  "schema": "lupine.finite-planning-formal.publication-representation-delta.v1",
+  "scope": "Two source documents are transported losslessly; only publication representation and its metadata change.",
+  "source_inputs_preserved": 54,
+  "tests_or_formal_commands_rerun": false,
+  "tracked_files_changed_by_assembler": false,
+  "writes": [
+    {
+      "before": {
+        "bytes": 4564,
+        "sha256": "ce98f8b404ce3feb790866d85c90525810f0e2504d479765912181c966386cc9"
+      },
+      "bytes": 5241,
+      "path": "reports/phase2-finite-planning-formal-verification-v1/README.md",
+      "sha256": "26c9d44c5171f31b32bd283c7a284bfd5207ba3809eea686d1bc279bbee0f17e",
+      "source": ".cache/phase2-finite-planning-formal-publication-v1/amendment-v1/promotion/reports/phase2-finite-planning-formal-verification-v1/README.md"
+    },
+    {
+      "before": {
+        "bytes": 23388,
+        "sha256": "dd6da3c0ead6745398f1fa3d5628992b90d48c3f6f873e603d1d7712f90c07ce"
+      },
+      "bytes": 23432,
+      "path": "reports/phase2-finite-planning-formal-verification-v1/assembly-map.json",
+      "sha256": "af08e2cbecdaf13ee740cbf72e14254f8e7b0b84610de0c953c3ba20b4142637",
+      "source": ".cache/phase2-finite-planning-formal-publication-v1/amendment-v1/promotion/reports/phase2-finite-planning-formal-verification-v1/assembly-map.json"
+    },
+    {
+      "before": null,
+      "bytes": 3306,
+      "path": "reports/phase2-finite-planning-formal-verification-v1/integration-preparation/finite-planning-section.md.utf8.json",
+      "sha256": "074a77baa62c07809d37108e36422adde8c709464bb1cee2021ff83073e66397",
+      "source": ".cache/phase2-finite-planning-formal-publication-v1/amendment-v1/promotion/reports/phase2-finite-planning-formal-verification-v1/integration-preparation/finite-planning-section.md.utf8.json"
+    },
+    {
+      "before": null,
+      "bytes": 38165,
+      "path": "reports/phase2-finite-planning-formal-verification-v1/integration-preparation/promotion/formal/README.md.utf8.json",
+      "sha256": "0ac2abcc3887b25655865297a2c61195070b0e9ce153fdaddc143a268b50b811",
+      "source": ".cache/phase2-finite-planning-formal-publication-v1/amendment-v1/promotion/reports/phase2-finite-planning-formal-verification-v1/integration-preparation/promotion/formal/README.md.utf8.json"
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "schema": "lupine.discovery.layout_static_receipt_audit.v1",
+  "status": "PASS",
+  "recorded_utc": "2026-10-16T10:57:34.705088+00:00",
+  "script": {
+    "path": ".cache/phase2-documentary-layout-review-v1/static_and_receipt_audit.py",
+    "bytes": 4577,
+    "sha256": "13e2ccf96d6c36a2deab453ee1b0c88d25c706d1fef1deabf2488e55eafcdf2e"
+  },
+  "source": {
+    "path": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/li_v3_layout_localization.py",
+    "bytes": 26076,
+    "sha256": "4624e68c28f911bc0bcc927834bd9f9bbb8cd4622a47db80f5a99e3f63b6ba7d"
+  },
+  "contract": {
+    "path": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/README.md",
+    "bytes": 7517,
+    "sha256": "c16fd29a51f9b1650cff19e77b36bf991c847286ecbd5877633379bdd8f8d65f"
+  },
+  "unchanged_top_level_functions": 10,
+  "namespace_delta": "Only target __init__/start changed plus new start_ns; all other method and top-level function ASTs unchanged. Grammar and numeric bound dictionaries still exactly match the published design.",
+  "independent_runs": [
+    {
+      "receipt": {
+        "path": ".cache/phase2-documentary-layout-review-v1/first/execution.json",
+        "bytes": 1325,
+        "sha256": "9718f56d29543d78113ee38c54261d26c2273c04a9d973955b8f5e1169fa89a0"
+      },
+      "summary": {
+        "errors": 0,
+        "failures": 2,
+        "forbidden_events": [],
+        "skips": 0,
+        "tests_run": 26
+      },
+      "elapsed_seconds": 21.530404990000534
+    },
+    {
+      "receipt": {
+        "path": ".cache/phase2-documentary-layout-review-v1/second/execution.json",
+        "bytes": 1325,
+        "sha256": "59b9293e80f2f730dffabd0e174d23946fb5fb8801454ca5a1c94b2d00366492"
+      },
+      "summary": {
+        "errors": 0,
+        "failures": 0,
+        "forbidden_events": [],
+        "skips": 0,
+        "tests_run": 26
+      },
+      "elapsed_seconds": 3.3360864970018156
+    },
+    {
+      "receipt": {
+        "path": ".cache/phase2-documentary-layout-review-v1/namespace-final/execution.json",
+        "bytes": 1419,
+        "sha256": "3206e18f790bd48655b031dc362cd074c10a86560402fea826e6f4a7d07a635e"
+      },
+      "summary": {
+        "errors": 0,
+        "failures": 0,
+        "forbidden_events": [],
+        "skips": 0,
+        "tests_run": 27
+      },
+      "elapsed_seconds": 4.366631775003043
+    }
+  ],
+  "author_runs": [
+    {
+      "receipt": {
+        "path": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/receipts/first/execution.json",
+        "bytes": 79638,
+        "sha256": "c8e6e75ade080c71a1266a9241234da490fbe8ad797a507962db3d89420a862d"
+      },
+      "methods": 31,
+      "elapsed_seconds": 3.632898292999016
+    },
+    {
+      "receipt": {
+        "path": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/receipts/namespace_final/execution.json",
+        "bytes": 79639,
+        "sha256": "337d1d26b67d45748116c3aefc51216f4bd5402e0c04a8e0ac51922018eedf51"
+      },
+      "methods": 33,
+      "elapsed_seconds": 15.904414825999993
+    }
+  ],
+  "source_imports": 0,
+  "private_source_or_production_operations": 0,
+  "scientific_claim_changed": false
+}

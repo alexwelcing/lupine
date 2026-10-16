@@ -1,0 +1,49 @@
+{
+  "schema": "lupine.finite-risk-inversion-design-bindings.v1",
+  "created_at": "2026-10-16T08:31:28.836911+00:00",
+  "result": "WRITTEN_DESIGN_ONLY",
+  "source_free_meaning": "No empirical dataset/source bodies or new external resources; only existing project mathematical/goal documentation",
+  "source_bindings": [
+    {
+      "path": "GOAL.md",
+      "bytes": 24904,
+      "sha256": "a218767ffb40b1df8bac35cd3138cb7aa88b4e14e1a1e3192f1fce22262583c9",
+      "git_blob_sha1_of_read_bytes": "ec6d10d59d875357a4ed62403389aa76497f140c",
+      "scope": "Existing public mathematical design and claim-boundary documentation; no empirical source acquired"
+    },
+    {
+      "path": "docs/study-planning.md",
+      "bytes": 14039,
+      "sha256": "0ac34bfcfb6b1198065923c932d8ddf7d80c7411ed027e0cfe5cbc1ff1e01641",
+      "git_blob_sha1_of_read_bytes": "87d64f166360c89e4d40296d8e6044ee129e6f19",
+      "scope": "Existing public mathematical design and claim-boundary documentation; no empirical source acquired"
+    },
+    {
+      "path": "docs/finite-population-planning.md",
+      "bytes": 6568,
+      "sha256": "11f4efe987632293bfc8dfcbd24a32d3a05e4c9e23624c9933ec030028de3414",
+      "git_blob_sha1_of_read_bytes": "fdbdacdf20c596842f39a5519683e38a994ee7c4",
+      "scope": "Existing public mathematical design and claim-boundary documentation; no empirical source acquired"
+    },
+    {
+      "path": "reports/phase2-finite-archive-design-v1/README.md",
+      "bytes": 19059,
+      "sha256": "c26fcba7ea5e70660e8d5657539ab36effd6bf991df6471f5d7da61ba0a8886a",
+      "git_blob_sha1_of_read_bytes": "1d83bb2a74bd291f33b814e8b470c1059cf94e50",
+      "scope": "Existing public mathematical design and claim-boundary documentation; no empirical source acquired"
+    },
+    {
+      "path": "reports/phase2-risk-contracts-v1/README.md",
+      "bytes": 5034,
+      "sha256": "de10ef8fd4d6cc6b78fd70ebc00518fd9c76139634861a0d8d62c8c009041633",
+      "git_blob_sha1_of_read_bytes": "caf156292070051ab379f7f257bd3cc116d2d80d",
+      "scope": "Existing public mathematical design and claim-boundary documentation; no empirical source acquired"
+    }
+  ],
+  "proof_claim": "Finite coverage for a fixed frame, fixed binary labels, fixed e and uniform sampling without replacement",
+  "new_empirical_inputs": false,
+  "runtime_changes": false,
+  "runtime_or_lean_tests_executed": false,
+  "scientific_design_selected": false,
+  "independent_review_pending_at_creation": true
+}

@@ -1,0 +1,11 @@
+{
+  "edits": [
+    {
+      "change": "One relative diff link now points to its lossless JSON wrapper; prose and claims unchanged.",
+      "original_sha256": "4b114ac69d468683057aea111252ffb3282595ae0ceebf5faf21d1fdce19a4fa",
+      "original_wrapper": "reports/phase2-documentary-layout-preparation-v1/independent/README.original.md.json",
+      "path": "reports/phase2-documentary-layout-preparation-v1/independent/README.md",
+      "published_sha256": "7cdf3dd403765ef117d0e5fd3f5984684431d953ee4546ec356f2269a391500c"
+    }
+  ]
+}

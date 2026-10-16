@@ -1,0 +1,139 @@
+{
+  "files": [
+    {
+      "bytes": 2441,
+      "path": "FIRST-PROJECTION-PUBLICATION.md",
+      "raw_body": false,
+      "sha256": "4e549777514a679c4764975e55565b42810d7434d4281923b310e8f292e862a0"
+    },
+    {
+      "bytes": 8517,
+      "path": "README.md",
+      "raw_body": false,
+      "sha256": "3872a184c8a210baf5b04ba22eab8e22cf88662dd1e0f17d716b0f768197aadb"
+    },
+    {
+      "bytes": 2461,
+      "path": "acquire.py",
+      "raw_body": false,
+      "sha256": "8f56eba3e274e3be2f2e415c8284637b739a869a8d0bf0aa51a0224c688123dd"
+    },
+    {
+      "bytes": 1002,
+      "path": "disposition.json",
+      "raw_body": false,
+      "sha256": "6937a87837babe8bc6fd6adb4afa90907c0c0592fa863a4dcb16d86f4723a999"
+    },
+    {
+      "bytes": 172,
+      "path": "documentary-followup-hold.json",
+      "raw_body": false,
+      "sha256": "44e7aa6a679701d61da839dccb61ca33af7a033cecfd92d14273f513d3aa50a8"
+    },
+    {
+      "bytes": 2204,
+      "path": "documentary-followup-scope.json",
+      "raw_body": false,
+      "sha256": "ab36eefbb16363fb3800fba1a5e9c0628b7220f6a5d520f87e9a6d20464e591a"
+    },
+    {
+      "bytes": 859,
+      "path": "documentary-metadata-projection.json",
+      "raw_body": false,
+      "sha256": "56eee89171796aa30ee0185849874a7b009a05ba6c226dfb0f0551dd66a23be8"
+    },
+    {
+      "bytes": 7505,
+      "path": "excerpt-index.json",
+      "raw_body": false,
+      "sha256": "e718e517ac2cbd95691ab85a70b78b69f9604cf71ae4c4671ce3c80970a96a45"
+    },
+    {
+      "bytes": 1572,
+      "path": "exposure-ledger.json",
+      "raw_body": false,
+      "sha256": "85aabd1e87d26e9b707ce0765d0ac35e69d2cd4972454813ae736e456f507602"
+    },
+    {
+      "bytes": 310,
+      "path": "primary_identity/projection.json",
+      "raw_body": false,
+      "sha256": "521dbaf6c3b964f85a34aef5bf6a0a774ddbe749df76b932cfddc3243612fc13"
+    },
+    {
+      "bytes": 504,
+      "path": "primary_identity/receipt.json",
+      "raw_body": false,
+      "sha256": "b999b4de215406c2b390a88b86784086d0db4a83ccd5b4a53f036bd1a54f5522"
+    },
+    {
+      "bytes": 307,
+      "path": "primary_identity/request.json",
+      "raw_body": false,
+      "sha256": "3ad6b1b71321200646e2e45dc61b51424c3d6683c11c3b557b9e7acd68be972e"
+    },
+    {
+      "bytes": 6457,
+      "path": "primary_identity/response.body",
+      "raw_body": true,
+      "sha256": "98399faa6e2cb65882f37c0f60b9c9370357615d8a3b8b9c840949b0a85f4517"
+    },
+    {
+      "bytes": 16289,
+      "path": "primary_methods/projection.json",
+      "raw_body": false,
+      "sha256": "7e1b30726d20e9f5d5e2e220828add68531b4fbd92899635b4e3b6ba572dcda1"
+    },
+    {
+      "bytes": 431,
+      "path": "primary_methods/receipt.json",
+      "raw_body": false,
+      "sha256": "6404deac85171dd8a13b01e226ec9b23e2ffb7915d20004644aed61e338497df"
+    },
+    {
+      "bytes": 248,
+      "path": "primary_methods/request.json",
+      "raw_body": false,
+      "sha256": "b6480fd0d803f91e82971196088896ab9675681b86d536af17a75a0f80968fae"
+    },
+    {
+      "bytes": 141350,
+      "path": "primary_methods/response.body",
+      "raw_body": true,
+      "sha256": "1711b5f59a82ed48acca1a97312a863180bf09a07597c44b0a3cfa109402cb19"
+    },
+    {
+      "bytes": 3794,
+      "path": "project_methods.py",
+      "raw_body": false,
+      "sha256": "e5d9f5eb0e0773546d83ef1485f03a852cce92d13e89c49f1ae2e198d04baa70"
+    },
+    {
+      "bytes": 17428,
+      "path": "public-evidence/first-projection.utf8.json",
+      "raw_body": false,
+      "sha256": "15293cb1596f07d2297307e58bdc7c1e61dec9844377f9f8975e8867ae8d5c31"
+    },
+    {
+      "bytes": 190,
+      "path": "scope-hold.json",
+      "raw_body": false,
+      "sha256": "45ac0237cb8be1386612316819bdad23b093a42203722c1311879402d212a5e8"
+    },
+    {
+      "bytes": 5023,
+      "path": "scope.json",
+      "raw_body": false,
+      "sha256": "ff3ae7afbb0d7812441cb8aee3b76728f32fb4733163faae5014d77d6efe838e"
+    },
+    {
+      "bytes": 2877,
+      "path": "source-bindings.json",
+      "raw_body": false,
+      "sha256": "39badb1c4b77c67a81ad82381c492077b4ec4fc9fee5947a4124773c232d9822"
+    }
+  ],
+  "index_scope": "Files retained before public inventory/handoff; Python caches excluded.",
+  "raw_bodies_public": false,
+  "schema": "lupine.discovery.dielectric_methods.retained_index.v1"
+}

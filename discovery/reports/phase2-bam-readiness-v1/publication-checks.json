@@ -1,0 +1,208 @@
+{
+  "schema": "lupine.evidence-publication-checks.v1",
+  "created_at": "2026-10-16T08:50:31.721327+00:00",
+  "result": "EXACT_ORIGINAL_BYTES_AND_LOCAL_LINKS_CHECKED",
+  "original_artifact_count": 22,
+  "original_copies": [
+    {
+      "published_path": "reports/phase2-bam-readiness-v1/README.md",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-bam-readiness-v1/initial-bindings-before-review-timing-clarification.json",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-bam-readiness-v1/inventory.json",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-bam-readiness-v1/pre-fetch-scope.json",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-bam-readiness-v1/review-handoff.json",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-bam-readiness-v1/source-bindings.json",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-bam-readiness-v1/verification.json",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-bam-readiness-v1/zenodo-17846436-file-metadata.json",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-bam-readiness-v1/zenodo-17846436-receipt.json",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-bam-readiness-v1/zenodo-17846436.json",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-bam-readiness-v1/zenodo-17846617-file-metadata.json",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-bam-readiness-v1/zenodo-17846617-receipt.json",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-bam-readiness-v1/zenodo-17846617.json",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-bam-readiness-v1/independent-review/before-binding-timing-key/review.json",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-bam-readiness-v1/independent-review/before-binding-timing-key/reviewed-source-bindings.json",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-bam-readiness-v1/independent-review/before-binding-timing-key/source-bindings.json",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-bam-readiness-v1/independent-review/binding-timing-addendum.json",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-bam-readiness-v1/independent-review/review.json",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-bam-readiness-v1/independent-review/scope.json",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-bam-readiness-v1/independent-review/source-bindings.json",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-bam-readiness-v1/retained-metadata/datacite-17846617.json",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-bam-readiness-v1/retained-metadata/datacite-17846436.json",
+      "bytes_and_sha256_match_original": true
+    }
+  ],
+  "local_markdown_link_count": 17,
+  "local_markdown_links": [
+    {
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "href": "README.md",
+      "resolution": "promotion",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "href": "independent-review/review.json",
+      "resolution": "promotion",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "href": "independent-review/binding-timing-addendum.json",
+      "resolution": "promotion",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "href": "publication-map.json",
+      "resolution": "promotion",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "href": "publication-checks.json",
+      "resolution": "promotion",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "href": "retained-metadata/datacite-17846617.json",
+      "resolution": "promotion",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "href": "retained-metadata/datacite-17846436.json",
+      "resolution": "promotion",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "href": "zenodo-17846617.json",
+      "resolution": "promotion",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "href": "zenodo-17846436.json",
+      "resolution": "promotion",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "href": "source-bindings.json",
+      "resolution": "promotion",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "href": "../phase2-high-temperature-leads-v1/README.md",
+      "resolution": "existing_project_file",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "href": "publication-first-check-failure.json",
+      "resolution": "promotion",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "href": "publication-content-scope.json",
+      "resolution": "promotion",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "href": "publication-whitespace-harness-correction.json",
+      "resolution": "promotion",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-bam-readiness-v1/README.md",
+      "href": "source-bindings.json",
+      "resolution": "promotion",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-bam-readiness-v1/README.md",
+      "href": "pre-fetch-scope.json",
+      "resolution": "promotion",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-bam-readiness-v1/README.md",
+      "href": "../../reports/phase2-high-temperature-leads-v1/README.md",
+      "resolution": "existing_project_file",
+      "exists": true
+    }
+  ],
+  "text_whitespace_check": {
+    "files": 28,
+    "trailing_space_or_tab_lines": 0,
+    "nul_characters": 0,
+    "original_bytes_transformed": false
+  },
+  "limits": "Artifact identity, text hygiene and local navigation only. No new evidence acquisition, scientific validation, product test, runtime import or CI pass."
+}

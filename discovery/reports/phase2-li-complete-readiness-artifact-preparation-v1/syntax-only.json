@@ -1,0 +1,9 @@
+{
+  "actual_audit_runs": 0,
+  "artifact_contents_executed": false,
+  "audit_source_sha256": "b00541daccbbe8626880f59bc59d9694dc9f34e922690f968dfb50ed348bb738",
+  "method": "Python built-in compile(text, filename, exec) without evaluation, imports or output bytecode",
+  "recorded_at": "2026-10-16T15:31:49.744660+00:00",
+  "status": "PASS",
+  "tests_run": 0
+}

@@ -1,0 +1,73 @@
+{
+  "candidate_source_sha256": "d77a1ca2eeeb1d0f4e02fac6d624fa63527c4a8d423fdf8f7f645db102c67630",
+  "contract_sha256": "e849d36004f0e73fdde22620bbffe06d1e53425907ca5fce974c536a5e1ea052",
+  "coverage": [
+    "Exactly144 output positions and exact provenance/token/citation preservation against independent generated inputs.",
+    "Exactly16 model/property/unit groups of9 and36 material/property groups of4 original models.",
+    "Independent exact signed/absolute/squared sums and means; literal squared units; unchanged Python integer-string digit limit.",
+    "Rational equality distinguished from reference-token and citation equality; signed zeros canonicalize numerically while spelling stays private.",
+    "Accepted128digit/\u00b11024exponent boundary and opposite-scale square above4300digits; rejected invalid numeric grammar, types and limits.",
+    "Duplicate/missing/extra frame entries, identifiers, paths, units, ordinals, schema states and public binding drift fail closed.",
+    "JSON duplicate keys, malformed UTF8/surrogates, depth/node/string/byte bounds fail closed.",
+    "No partial numerical groups/private return after late error; public records exclude individual tokens/citations/discrepancies.",
+    "Public results retain NOT_ADMITTED, UNKNOWN reference choice, historical exposure, no fresh-holdout claim, no tolerance success criterion or winner."
+  ],
+  "created_at": "2026-10-16T13:25:46.420374+00:00",
+  "first_candidate_execution": {
+    "actual_private_projection_reads": 0,
+    "actual_source_reads": 0,
+    "author_fixtures_imported": false,
+    "blocked_operations": [],
+    "case_counter": {
+      "candidate_invocations": 107,
+      "equality_group_comparisons": 468,
+      "negative_cases": 94,
+      "private_position_rational_comparisons": 5616,
+      "summary_rational_comparisons": 1248
+    },
+    "errors": 0,
+    "failures": 0,
+    "finished_at": "2026-10-16T13:24:00.902010+00:00",
+    "fixture_source_sha256": "89e74f282079f6964ef8b11dc138c7c3df8879c0780870707a2cb725b279ae9d",
+    "production_guards_run": false,
+    "schema": "lupine.rhizo.census.independent.execution.v1",
+    "scope": "Independent generated projections only; fixed public frame/readiness; no actual labels, network or production guards.",
+    "seconds": 5.070600744002149,
+    "skipped": 0,
+    "source": ".cache/phase2-rhizo-census-candidate-v1/census.py",
+    "source_held_after": true,
+    "source_sha256": "d77a1ca2eeeb1d0f4e02fac6d624fa63527c4a8d423fdf8f7f645db102c67630",
+    "started_at": "2026-10-16T13:23:55.756353+00:00",
+    "successful": true,
+    "test_source_sha256": "486f49f795cb3b564be836fab34f66eac2ac1ce0df94399533d5c34abdff36a7",
+    "tests_run": 22
+  },
+  "independence": {
+    "author_tests_or_fixtures_read": false,
+    "candidate_author": "finite_inverse_check",
+    "fixture_author": "census_numeric_review",
+    "hand_calculated_controls": [
+      "All pairs 0.1 minus 0.2: group signed sum -9/10 and mean -1/10; absolute 9/10 and 1/10; squared 9/100 and 1/100.",
+      "Each group prediction -4 through 4 with reference zero: signed sum0, absolute sum20 and mean20/9, squared sum60 and mean20/3."
+    ],
+    "oracle": "decimal.Decimal.as_integer_ratio then fractions.Fraction; returned integers parsed with independent nine-digit accumulation"
+  },
+  "limits": [
+    "Generated fixture correctness and software rejection evidence only; no scientific accuracy, generalization, source independence or binder correctness claim.",
+    "No actual numerical projection, original scientific raw object, production invocation, actual guard, network, or source acquisition was read/run.",
+    "No formal proof/refinement claim; rational-size inequality is a source/contract argument.",
+    "Negative tests require a closed blocked reason but do not assert every reason category separately; the specific frame-first priority is asserted.",
+    "File lifecycle/output failures belong to the separate lifecycle review; this review calls only inspect_synthetic."
+  ],
+  "pre_hold_static_finding": {
+    "author_reported_correction_before_first_author_execution": true,
+    "candidate_assertion_failure": false,
+    "finding": "Pure inspect_synthetic oversized-byte input was not labelled projection_bytes_supplied before size rejection.",
+    "limitation": "No post-hoc numerical-result-driven modification or exposed actual label used.",
+    "original_draft_and_finding_preserved_by_author": true,
+    "reported_before_source_hold_and_execution": true
+  },
+  "schema": "lupine.rhizo.census.independent.review.v1",
+  "status": "PASS_GENERATED_NUMERIC_AND_SCHEMA_REVIEW",
+  "unresolved_numeric_findings": []
+}

@@ -1,0 +1,8 @@
+{
+  "commit": "d0505b9b358a4bdeafbd742f1aeeb6c2b955abf3",
+  "finished_at": "2026-10-16T09:54:53.407767+00:00",
+  "public_sha256": "52fe2d25f0c739c1c5137f0514f07f4ee0be35dffd7ef9141b19fe5ee5520d2e",
+  "scientific_schema_approved": false,
+  "scope": "Fixed-source structural field-header computational replay only; no payload semantics or scientific admission.",
+  "status": "COMPLETE_TWO_IDENTICAL_DIAGNOSES"
+}

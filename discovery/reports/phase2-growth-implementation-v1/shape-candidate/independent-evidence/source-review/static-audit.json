@@ -1,0 +1,21 @@
+{
+  "checks": {
+    "all_25_predecessor_pins_unchanged_from_pure": true,
+    "all_25_predecessor_public_source_bytes_match": true,
+    "all_326_tracked_runtime_bytes_match_manifest": true,
+    "fixed_field_size_matches_public_receipt": true,
+    "fixed_public_producer_matches": true,
+    "fixed_public_receipt_hash_matches": true,
+    "grouped_prior_pins_equal_flat_pins": true,
+    "payload_predicate_AST_identical_after_refactor": true,
+    "pure_source_expected_identity": true,
+    "synthetic_schema_and_profile_unchanged": true
+  },
+  "manifest_sha256": "e806d052dcfaadc5bbc0a9378318709da011fbaf3a53a290aa6141014bae3959",
+  "pure_source_sha256": "c42313ddc1d6c64e6d9c18338bc3efc9bacc65e7ff7f8281e1da28870e74d7cb",
+  "recorded_utc": "2026-10-16T10:04:14.534551+00:00",
+  "schema": "lupine.discovery.growth_hint_production_static_audit.v1",
+  "scope": "Static AST and public-source byte checks only; no product import, runtime test, private object/capture read or production guard invocation.",
+  "source_sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a",
+  "status": "PASS"
+}

@@ -1,0 +1,20 @@
+{
+  "arithmetic_rerun": false,
+  "clarified_protocol_hashes": {
+    "mpea-t25-archival-protocol-v1.md": "c49047341d3932ddd67c67c9f2a04a6759c0d679bfeb96d811ba9541c0cc0378",
+    "mpea-t25-implementation-contract-v1.md": "be45b1d8db9586035cf37bd9bbb9046c065c3851b91f93386f8c68d155215af9"
+  },
+  "diff_sha256": "566bda8a1fa86d269ad052f42a775777bbddba3fd01d43e1afee12183e9d3300",
+  "exact_original_reconstruction_hashes_verified": true,
+  "prior_protocol_hashes": {
+    "mpea-t25-archival-protocol-v1.md": "989f79359af45a9bcc698400d1ddee410677933a8360c0c71a30e9bc2dba8eb4",
+    "mpea-t25-implementation-contract-v1.md": "2113d0e45799fb0117f22dbd80188e17d92f0e63c9857ba7a693e7f4ade99f10"
+  },
+  "prior_receipt_sha256": "cd0648283e6abb7a4f1c551c68b60a46d1ed8731706b57b437cef147ab780ded",
+  "prior_synthetic_checks": 66472,
+  "result": "NO_MATHEMATICAL_DESIGN_BLOCKER",
+  "review": "Only row-local versus stage-level stops and unavailable empty-F/D component semantics changed. No nonempty formula, population, allocation, rank, alpha, timing or statistical scope changed. Empty cross-products cannot produce success; row-local invalid endpoints retain original panels and preserve role-blind fixed secondary selection.",
+  "schema": "lupine-mpea-prospective-math-rebind-v1",
+  "scope": "Read-only prospective design review and synthetic exact arithmetic; no actual allocation, entropy, scientific features, targets, fit, new Lean compile, physical validation, or runtime formal refinement.",
+  "script_sha256": "b670f9c805e5d5b1320d838789c3b2efe6ce418a2be917294520f6ed70fae2e0"
+}

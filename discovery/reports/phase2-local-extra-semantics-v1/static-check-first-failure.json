@@ -1,0 +1,11 @@
+{
+  "actual_exit_code": 1,
+  "actual_output": "Traceback (most recent call last):\n  File \"<stdin>\", line 10, in <module>\nAssertionError\n",
+  "actual_tool_chunk": "47ab7e",
+  "cause": "Appendix E.3\u2013E.6.2 end_line was 3799; retained body has 3798 lines; all section content was already present through 3797.",
+  "failed_check": "All cited end lines fit within retained standard line count",
+  "original_bindings_sha256": "ed69348753fcd17200a75c52176e1b71a55a93fdd78f798859cd9102255a3928",
+  "recorded_utc": "2026-10-16T09:35:20.705554+00:00",
+  "schema": "lupine.discovery.static_check_failure.v1",
+  "scope": "Citation metadata error only; no source/claim or parser change, no actual archive operation."
+}

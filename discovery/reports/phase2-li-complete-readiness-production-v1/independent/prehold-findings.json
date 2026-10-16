@@ -1,0 +1,33 @@
+{
+  "at": "2026-10-16T14:24:41.139997+00:00",
+  "candidate_executions": 0,
+  "findings": [
+    {
+      "disposition": "Author corrected before amended final hold; covered by generated pair tests.",
+      "finding": "One historical prior was accepted although the frozen phase route requires two identical fixed-slot projections.",
+      "id": "PAIR_REQUIREMENT"
+    },
+    {
+      "disposition": "Author detached returned pin metadata; generated noninterference test prepared.",
+      "finding": "Nested returned phase_binding_pins shared the trusted PHASE_BINDINGS object.",
+      "id": "RETURNED_PIN_ALIAS"
+    },
+    {
+      "disposition": "Author added closed observed/operation/inner validation before amended hold; generated rehashed forgeries prepared.",
+      "finding": "Prior receipt validation originally checked root keys and selected fields but omitted complete nested operation/source/scientific state checks.",
+      "id": "OUTER_PRIOR_CLOSURE"
+    },
+    {
+      "disposition": "Author accepted canonical B-embedded-A versus C-selected-A pin equality before target access; generated adversary prepared.",
+      "finding": "C could authenticate an A pair and a B pair whose embedded historical A pins named a different pair. Payload equality alone did not bind that provenance edge.",
+      "id": "HISTORICAL_A_EDGE"
+    }
+  ],
+  "new_inventory_scope": "Prospective distinct A/layout, B/inventory, C/frame profile; strict pure5fd1 unchanged. Unrestricted discovery of numerical outcomes is not authorized; both exact documentary roles expose bounded plain text under declared incidental-outcome uncertainty. No actual operations in review.",
+  "prehold_snapshot": {
+    "path": "prehold-adapter.py.txt",
+    "sha256": "80e0d39728320d115ddc8a9ce3467904294a57310af719c81e9686786de25263"
+  },
+  "preserved_limitation": "A directory close failure after writing may leave an earlier COMPLETE file while returned report is BLOCKED_GUARD. Root must bind returned/stdout/persisted equality and execution cleanup before dependent pins; receipt existence alone is insufficient.",
+  "schema": "li.readiness.independent-production-prehold-findings.v1"
+}

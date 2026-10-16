@@ -1,0 +1,7 @@
+test_selection_matches_cli_and_does_not_need_truth (test_server.ServerTests.test_selection_matches_cli_and_does_not_need_truth) ... ok
+test_strict_wire_json_duplicate_and_float_rejected (test_server.ServerTests.test_strict_wire_json_duplicate_and_float_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.532s
+
+OK

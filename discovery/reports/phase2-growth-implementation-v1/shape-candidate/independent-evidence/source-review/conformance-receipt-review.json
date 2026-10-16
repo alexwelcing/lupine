@@ -1,0 +1,34 @@
+{
+  "checks": {
+    "472_complete_report_pairs": true,
+    "exit_zero": true,
+    "final_contract_snapshot": true,
+    "prior_contract_snapshot": true,
+    "same_sources_before_after": true,
+    "stderr_matches_receipt": true,
+    "stdout_matches_receipt": true
+  },
+  "complete_report_pairs": 472,
+  "contract_delta": [
+    "--- prior-contract",
+    "+++ final-contract",
+    "@@ -92,8 +92,9 @@",
+    "    its exact hash and canonical bytes, fixed producer, complete closed source",
+    "    groups, exact typed field list and explicit prior exposure/applicability.",
+    " 3. Opens the fixed new output slot and checks that its public receipt is absent.",
+    "-4. Uses the unchanged original capture validation and fixed-object identity",
+    "-   checks, then reads the fixed original object under its existing byte cap.",
+    "+4. Uses the unchanged original capture validation, marks raw-read exposure and",
+    "+   reads the fixed original object under its existing byte cap. It records",
+    "+   completed exposure before checking the object size, MD5 and SHA-256 identity.",
+    " 5. Repeats G29 on those verified bytes, checks the pinned field list, and applies",
+    "    the bounded shape predicate to that same immutable buffer.",
+    " 6. Writes one canonical public report with unchanged no-follow/exclusive helper"
+  ],
+  "process_elapsed_seconds": 0.41460819100029767,
+  "receipt_sha256": "affb7feb93dd23226b7128bf830bce7453fec2d82c9a7e1005563a78c3a18a57",
+  "recorded_utc": "2026-10-16T10:11:37.053476+00:00",
+  "schema": "lupine.discovery.growth_hint_conformance_receipt_review.v1",
+  "scope": "Parent read script and audited receipt/log bytes only, did not import product or rerun tests; author performed conformance. Cases are synthetic and do not establish general equivalence or scientific validity.",
+  "source_sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a"
+}

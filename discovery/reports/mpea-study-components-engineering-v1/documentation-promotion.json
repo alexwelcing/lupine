@@ -1,0 +1,10 @@
+{
+  "changes": [
+    "Use main scripts path and published study specification paths; all scientific/kernel semantics unchanged",
+    "Use standalone main-path focused-test command; tests do not require PYTHONPATH"
+  ],
+  "original_sha256": "72bf2a61585a06d1084c307f50344392a7bb4b55f517a29d15d9369d4bfe2ca6",
+  "path": "docs/mpea-study-kernel-v1.md",
+  "production_registration": false,
+  "promoted_sha256": "e762a10d5ce1e18dbf58cc4dfb248c48e38ee639bbeaf8e34604c95b44384277"
+}

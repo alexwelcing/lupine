@@ -1,0 +1,87 @@
+{
+  "actual_operations": {
+    "actual_schema_read": false,
+    "linked_body_read": false,
+    "network": false,
+    "production_invocation": false,
+    "runtime_or_product_test": false,
+    "tracked_write": false
+  },
+  "conclusion": "A bounded known-header-role inventory is specifiable; complete dictionary, eleventh role semantics and evaluation readiness remain unbound.",
+  "created_utc": "2026-10-16T09:23:22.397869+00:00",
+  "design": {
+    "bytes": 13651,
+    "path": ".cache/phase2-bam-schema-contract-design-v1/README.md",
+    "sha256": "224617c23f9361369509600264112303ced2d14193d2b274832d80259f5b43b4"
+  },
+  "incidental_exposure": "Previously published aggregate uncertainty/temperature prose was reread; no new scientific values or schema cells acquired.",
+  "independent_design_review_pending_at_creation": true,
+  "prospective_file": {
+    "body_acquired": false,
+    "checksum": "md5:330a8405f6cb9c4fcfe221baea7ced27",
+    "file_metadata_json_pointer": "/files/2",
+    "id": "5fc320ce-9ba9-4eb6-8ce0-665d0f8ffed5",
+    "key": "2025-12_Data-Schema-Tensile-HT_v1.0.csv",
+    "links": {
+      "self": "https://zenodo.org/api/records/17846436/files/2025-12_Data-Schema-Tensile-HT_v1.0.csv/content"
+    },
+    "observed_sha256": null,
+    "record_doi": "10.5281/zenodo.17846436",
+    "size": 41000,
+    "version": "1.0"
+  },
+  "read_public_sources": [
+    {
+      "bytes": 8384,
+      "path": "reports/phase2-bam-readiness-v1/README.md",
+      "sha256": "2c2730f8551b51d42cc035b718a0f05807e242a769666183ec485feed361ec29"
+    },
+    {
+      "bytes": 4332,
+      "path": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "sha256": "561dc3786cda2cd55e37c9ec341d4c29290ad854e06984bbc44c7a1a680df014"
+    },
+    {
+      "bytes": 600,
+      "path": "reports/phase2-bam-readiness-v1/pre-fetch-scope.json",
+      "sha256": "b520c2f8ba4626f29904ff24f3743e7cc4da0eaab782446eeed036d74614e43b"
+    },
+    {
+      "bytes": 10347,
+      "path": "reports/phase2-bam-readiness-v1/publication-map.json",
+      "sha256": "3aa0e8aea664f1bb0ac6dc1cefaed3fd3f67c09872b9251d41b6b602f273615f"
+    },
+    {
+      "bytes": 8666,
+      "path": "reports/phase2-bam-readiness-v1/source-bindings.json",
+      "sha256": "1a61b05a8e7142c303e3384a2a6661cf78a6d27ceac9f179849ec2b99e8b4798"
+    },
+    {
+      "bytes": 14107,
+      "path": "reports/phase2-bam-readiness-v1/zenodo-17846436.json",
+      "sha256": "3bcc7e2622fe555f1d0d9ae75e1326f3f09ed036cb61da1c27e06d87d6855cb0"
+    },
+    {
+      "bytes": 14771,
+      "path": "reports/phase2-bam-readiness-v1/zenodo-17846617.json",
+      "sha256": "48f84c7d6fc841a13de8ecccbba5f0604834cec45c3033d0d55bfd7a2e89f4d6"
+    },
+    {
+      "bytes": 576,
+      "path": "reports/phase2-bam-readiness-v1/zenodo-17846436-file-metadata.json",
+      "sha256": "07cb949abcbca0c5b9e6e0979840401c02b4692ed4fa027f791b8cfc21d181fd"
+    },
+    {
+      "bytes": 8204,
+      "path": "reports/phase2-bam-readiness-v1/independent-review/review.json",
+      "sha256": "ff2f12033f7d6740d82691ce6aff0c80cd280bae613363ee468f0fbd2045c8ad"
+    },
+    {
+      "bytes": 1135,
+      "path": "reports/phase2-bam-readiness-v1/independent-review/binding-timing-addendum.json",
+      "sha256": "c78cbf4575bf467750e21a7077d2284fe78f4b5513f6fa8e6c5552a4deb6a4e5"
+    }
+  ],
+  "schema": "lupine.discovery.bam_schema_contract_design_bindings.v1",
+  "scope": "Source-only prospective design, no content-body acquisition or executable reader"
+}

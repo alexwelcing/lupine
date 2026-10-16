@@ -1,0 +1,443 @@
+{
+  "all_original_bytes_hashes_checked": true,
+  "at": "2026-10-10T22:58:59.190821+00:00",
+  "files": [
+    {
+      "bytes": 2744,
+      "original": ".cache/mpea-study-custody/review_production/constructed_archive_case.py",
+      "reuse_existing_exact_copy": true,
+      "sha256": "d1cb093b7d58fc432743e08cb5991638fa95781986cee42f4df0f3eed83861dd",
+      "wrapper": "../00.json"
+    },
+    {
+      "bytes": 6760,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/companion-observability-review-v3.json",
+      "reuse_existing_exact_copy": false,
+      "sha256": "d095acbc959e896e8bb9ea0c0c32aed6f9d9e8016c50744c4fe9cb168718a291",
+      "wrapper": "01.json",
+      "wrapper_sha256": "12ddd4a3079b5f6eb488cf66cc8f4cef27a6e5687726c06fa3f95127c09fa253"
+    },
+    {
+      "bytes": 2386,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/companion-observability-sweep-v3.json",
+      "reuse_existing_exact_copy": false,
+      "sha256": "2e79f768d319647f68cb40638df936020f1dd5bc6f06d7529bd003424118b9e1",
+      "wrapper": "02.json",
+      "wrapper_sha256": "c43c69ffbc579255f749bdca28f760cb65a524a4584732d93d75f9c19cc2c4d1"
+    },
+    {
+      "bytes": 5219,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/companion-observability-sweep-v3.md",
+      "reuse_existing_exact_copy": false,
+      "sha256": "9dd8e0ab293c0ca385bfe6ab516a234f319b9b00a632db1a2285705e806368b1",
+      "wrapper": "03.json",
+      "wrapper_sha256": "62fa82e6270fe74e0ad22079529d609677a437c03f81896403a3c86cbc024495"
+    },
+    {
+      "bytes": 8166,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/companion-observability-v1.json",
+      "reuse_existing_exact_copy": false,
+      "sha256": "9f73c28976fcf6e6de0e46ed0b53b91f46a56eee7fa6eb0c95c735e0a7bcde14",
+      "wrapper": "04.json",
+      "wrapper_sha256": "bbb99e77eeb46954bd026628eb516a03066a9104f5a7f6433741e76c159584e1"
+    },
+    {
+      "bytes": 2511,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/companion-observability-v1.txt",
+      "reuse_existing_exact_copy": false,
+      "sha256": "05c2ea5c4c25a36a4230d48b42c47fa4a9d161838fb2beb8f5747a3a17a4f3c6",
+      "wrapper": "05.json",
+      "wrapper_sha256": "6347a81f84fb0a93a23e5417249cf1b7380844d8940a152af3fa69c446945a38"
+    },
+    {
+      "bytes": 8138,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/companion-scope-v1.json",
+      "reuse_existing_exact_copy": false,
+      "sha256": "5051ec5495ce47ceb1b24e93e1e4472544f008ca42a84eb08601c465acfbd62d",
+      "wrapper": "06.json",
+      "wrapper_sha256": "489d7de0d7ca5b5d597343bfa06d57bfb3d993b6c1e7c94315126983f8603464"
+    },
+    {
+      "bytes": 297,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/companion-scope-v1.txt",
+      "reuse_existing_exact_copy": false,
+      "sha256": "1a86a470b17a6aca4e7ab1d4f570efbfc8c90e0855c59dc0c7ad09ab5883712b",
+      "wrapper": "07.json",
+      "wrapper_sha256": "8df793ec29c70dfb0742c833c425e4975fec9f86f2e1475f19d4a14069176d36"
+    },
+    {
+      "bytes": 45677,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/companion-source-transition-v3/v2-mpea_archive_custody.py",
+      "reuse_existing_exact_copy": false,
+      "sha256": "da37f99e2f42d7572e1acb1656e8c3913b5a4b52a3bd92bc7eb8371e400e2d41",
+      "wrapper": "08.json",
+      "wrapper_sha256": "b979f888097ee2489786115045d090d5d1116a9e2f9b5ca5d54ce1d72165d1b4"
+    },
+    {
+      "bytes": 20116,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/companion-source-transition-v3/v2-mpea_archive_driver.py",
+      "reuse_existing_exact_copy": false,
+      "sha256": "d8427266ee799db12fb448413d2ee6e7722ffd5314d8edcbe875cbf2dd6db532",
+      "wrapper": "09.json",
+      "wrapper_sha256": "15d95f8bb53ed8d93298f5442fb6eda9a5332fa8150db945f870c71789babbf8"
+    },
+    {
+      "bytes": 19449,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/companion-source-transition-v3/v2-to-v3.patch",
+      "reuse_existing_exact_copy": false,
+      "sha256": "c0070b26fb8d56520c67f0a7280e015b7989b6ca381860716b862a227440bee1",
+      "wrapper": "10.json",
+      "wrapper_sha256": "2eed8160c090a148c77213cb4a872c07ae9e3cb05525243ec54387ef374d5e01"
+    },
+    {
+      "bytes": 50740,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/companion-source-transition-v3/v3-mpea_archive_custody.py",
+      "reuse_existing_exact_copy": false,
+      "sha256": "c79b8b45068a75243512336d1f25bb67a8c57059b5aae2bb3d885d414f98192e",
+      "wrapper": "11.json",
+      "wrapper_sha256": "93fdf18fb0f30967bc2f1fb619781dbc40dc013dde3141adad4d6d57f67a4f25"
+    },
+    {
+      "bytes": 20239,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/companion-source-transition-v3/v3-mpea_archive_driver.py",
+      "reuse_existing_exact_copy": false,
+      "sha256": "920deb6d52ced3e5d4182ad914ce4ad7544f7b4096f91b463e101d0b3f45b7e9",
+      "wrapper": "12.json",
+      "wrapper_sha256": "1aefdf9cc7edebec99312b1a87c613758a09549e916c4e71a82cfd3d3f1ff8f6"
+    },
+    {
+      "bytes": 1188,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/core-fixture-promotion-v1/adaptation-v1.json",
+      "reuse_existing_exact_copy": true,
+      "sha256": "6d4826eb1d3ed716fb7c26db3616c9f3f41e289feecbdb146cd82f855607a9af",
+      "wrapper": "../01.json"
+    },
+    {
+      "bytes": 2940,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/core-fixture-promotion-v1/before/test_mpea_archive_case_consistency_review.py",
+      "reuse_existing_exact_copy": true,
+      "sha256": "65bca38563513f6db2085f59d91d4af5c8a3daff1b49f74ac3ff73f25390f522",
+      "wrapper": "../02.json"
+    },
+    {
+      "bytes": 19265,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/core-fixture-promotion-v1/before/test_mpea_archive_driver_review.py",
+      "reuse_existing_exact_copy": true,
+      "sha256": "2b2e1fa298d1042fcbee0b92a7695f5bffcf0aa53ed2dce0af90c815e716156c",
+      "wrapper": "../03.json"
+    },
+    {
+      "bytes": 4383,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/core-fixture-promotion-v1/fixture-input-identities.patch",
+      "reuse_existing_exact_copy": true,
+      "sha256": "4b83bb4de9c137b740dcd480a7b85575850d35f4131a3903e2e506fef53f8290",
+      "wrapper": "../04.json"
+    },
+    {
+      "bytes": 3257,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/core-fixture-promotion-v1/tests/test_mpea_archive_case_consistency_review.py",
+      "reuse_existing_exact_copy": true,
+      "sha256": "7017ed67dce793e0abf09ba78f8e211898e600518af6ed3ef867dc69e6f0a440",
+      "wrapper": "../05.json"
+    },
+    {
+      "bytes": 19611,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/core-fixture-promotion-v1/tests/test_mpea_archive_driver_review.py",
+      "reuse_existing_exact_copy": true,
+      "sha256": "b5bcc8ef78aa43fbd077247af6961b5b863eb696589ec4be37d8e279c71da0d0",
+      "wrapper": "../06.json"
+    },
+    {
+      "bytes": 1355,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/core-fixture-promotion-v2/adaptation-v2.json",
+      "reuse_existing_exact_copy": false,
+      "sha256": "2e23032ca61dd045afc78c9565567b8d5acd86447f065132f404ad2c5f3d0b37",
+      "wrapper": "19.json",
+      "wrapper_sha256": "92d52e0f700b4a05c1c4388b80536768a38751309f20f3805d7ed210e142faa9"
+    },
+    {
+      "bytes": 4770,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/core-fixture-promotion-v2/route-metadata-and-observer.patch",
+      "reuse_existing_exact_copy": false,
+      "sha256": "ab500e516a96cb2a58fa5c434057dfe0f54a9082385b23c42f1de8191d5b2028",
+      "wrapper": "20.json",
+      "wrapper_sha256": "65cdd5004ac3928184c12b27ff59b5d4c3600de5e0cc42809986fa7c5b339293"
+    },
+    {
+      "bytes": 3329,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/core-fixture-promotion-v2/tests/test_mpea_archive_case_consistency_review.py",
+      "reuse_existing_exact_copy": false,
+      "sha256": "ac03692691aca31506640bc8d24edf2fe4a3bd99de9eb1492520a695da09494f",
+      "wrapper": "21.json",
+      "wrapper_sha256": "ce683c9e989c668313639b1f85d78c8c036440b398776506390c7d1cca79aa9e"
+    },
+    {
+      "bytes": 19944,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/core-fixture-promotion-v2/tests/test_mpea_archive_driver_review.py",
+      "reuse_existing_exact_copy": false,
+      "sha256": "b34ca211196f96d507d89a99c33716c2fc148b1915612b6d837a269b67a767bf",
+      "wrapper": "22.json",
+      "wrapper_sha256": "bdd0ed437e8b319fd558dbdd7491f7c3f4e283a392e5105f9e9399c2e2cd07a5"
+    },
+    {
+      "bytes": 4841,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/correction-closure-map-v1.json",
+      "reuse_existing_exact_copy": true,
+      "sha256": "6f77dddc550001354e9059f669d3920f77a7feeca3c7b9ee4ddda91939a5c397",
+      "wrapper": "../07.json"
+    },
+    {
+      "bytes": 6862,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/correction-closure-map-v1.md",
+      "reuse_existing_exact_copy": true,
+      "sha256": "b9a9d24b70559aacc99d1077413ee300522d09d697a7b8189edddc44baf6a60f",
+      "wrapper": "../08.json"
+    },
+    {
+      "bytes": 6307,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/correction-closure-map-v2.json",
+      "reuse_existing_exact_copy": false,
+      "sha256": "ebbd75e9831d2565e4fd59261940e6bf706212886a8d7b6cba9ad0e45ac34e6a",
+      "wrapper": "25.json",
+      "wrapper_sha256": "61ad79d30e9632170c272e9ba7a020c05e7c0e8f78e52db788998d49d2315f03"
+    },
+    {
+      "bytes": 7636,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/correction-closure-map-v3.json",
+      "reuse_existing_exact_copy": false,
+      "sha256": "3849ccae15f0d696ca13a5d67de7e784fec43ba9c2380425050208d2697e44e4",
+      "wrapper": "26.json",
+      "wrapper_sha256": "8bc0703cbd41369e961a6d91064eda4872c1601f88b2ad69dd7cd0fb5c65f238"
+    },
+    {
+      "bytes": 6038,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/correction-closure-map-v3.md",
+      "reuse_existing_exact_copy": false,
+      "sha256": "8b0fb861510ee90005c5a8f360ae96622c2fa15ee038c430cfd3bb1faeca6d9e",
+      "wrapper": "27.json",
+      "wrapper_sha256": "01dda2b9d838d9c3046a22233a3ca7a42bab2d623764164481d2875a9a80e935"
+    },
+    {
+      "bytes": 4607,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/decision-views-v1.json",
+      "reuse_existing_exact_copy": true,
+      "sha256": "29d59a72795e317c6ee205d9d925ebf48b36779548ec3002b69fc9e76888b9da",
+      "wrapper": "../09.json"
+    },
+    {
+      "bytes": 2178,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/decision-views-v1.txt",
+      "reuse_existing_exact_copy": true,
+      "sha256": "acb41499d2ecee77333b4f6fbedfe3522b081bfcacb9d4b7cacbff35cbc8d2ca",
+      "wrapper": "../10.json"
+    },
+    {
+      "bytes": 4607,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/decision-views-v2.json",
+      "reuse_existing_exact_copy": true,
+      "sha256": "e6f2c2e79791baf270821df2f12a38303dda5679f503894cdacbe4a80bc48ff9",
+      "wrapper": "../11.json"
+    },
+    {
+      "bytes": 903,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/decision-views-v2.txt",
+      "reuse_existing_exact_copy": true,
+      "sha256": "41208947276f5db208fc16c91d6c45c4d8d8677f1c3f885941ed46b32a9f9843",
+      "wrapper": "../12.json"
+    },
+    {
+      "bytes": 4949,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/evidence-allowlist-v1.json",
+      "reuse_existing_exact_copy": true,
+      "sha256": "3f1ae60a71f0f970dbd59256c1f98b5155352d78ac033bc8b17b4689099f1297",
+      "wrapper": "../13.json"
+    },
+    {
+      "bytes": 7804,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/evidence-allowlist-v2.json",
+      "reuse_existing_exact_copy": false,
+      "sha256": "f5dd9f90fecae9c9859ec2617d0c334df8041830e27a7f4a950d701369dc19d6",
+      "wrapper": "33.json",
+      "wrapper_sha256": "dda901deedcf35f4a7130d03a81c044c4accd019b206c9c8f808d777d1732e81"
+    },
+    {
+      "bytes": 4459,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/held-v1-decisions-source.py",
+      "reuse_existing_exact_copy": true,
+      "sha256": "44c4a9ca5f710364c54d207fb19bcc3efe3acd11e99e931d8af56ad69298ee53",
+      "wrapper": "../14.json"
+    },
+    {
+      "bytes": 4800,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/held-v2-decisions-source.py",
+      "reuse_existing_exact_copy": true,
+      "sha256": "777fb6fbf75c44bdc073dfcd2815702cd3519b455f93beacb08c9f97782a46d6",
+      "wrapper": "../15.json"
+    },
+    {
+      "bytes": 2281,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/hold-v1-to-v2-decisions.patch",
+      "reuse_existing_exact_copy": true,
+      "sha256": "69b8845b69e8ef840751d03922c41ea315e290714e0db4de9a0f2af83eebf751",
+      "wrapper": "../16.json"
+    },
+    {
+      "bytes": 7889,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/private-contract-integration-v1.json",
+      "reuse_existing_exact_copy": true,
+      "sha256": "a1715cc6458ec44707f9bdc18093c4f5c5dc1590608fc08b7a113384488242cb",
+      "wrapper": "../17.json"
+    },
+    {
+      "bytes": 3247,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/private-contract-integration-v1.txt",
+      "reuse_existing_exact_copy": true,
+      "sha256": "d5dcc72b721052e5e81430e838e303825ac0927ae3763f9c051c7bc496d8c5c0",
+      "wrapper": "../18.json"
+    },
+    {
+      "bytes": 3089,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/private-contract-review-v2.json",
+      "reuse_existing_exact_copy": true,
+      "sha256": "62111c1652d057ce32beb7e316966e361e87c5b1fb6caa0fe5547c14718e0553",
+      "wrapper": "../19.json"
+    },
+    {
+      "bytes": 1129,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/promotion-v1/candidate-v1.json",
+      "reuse_existing_exact_copy": true,
+      "sha256": "123e671deeb5b3c83caac82abb7560d406c1a7d42375629f4369133354dc98f3",
+      "wrapper": "../20.json"
+    },
+    {
+      "bytes": 839,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/promotion-v1/decision-candidate-v1.json",
+      "reuse_existing_exact_copy": true,
+      "sha256": "8f7c846701f6e097ec66362a510a406bea73ea14c8c3ef310009c8e6dcbf6a4d",
+      "wrapper": "../21.json"
+    },
+    {
+      "bytes": 478,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/promotion-v1/decision-loader-only.patch",
+      "reuse_existing_exact_copy": true,
+      "sha256": "4548a3bd1ba2c23987a03934e98f1cfacd7b33715035d1b12602c6d50e3bab02",
+      "wrapper": "../22.json"
+    },
+    {
+      "bytes": 1377,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/promotion-v1/loader-only.patch",
+      "reuse_existing_exact_copy": true,
+      "sha256": "df6fceb328b40a53581a1d66c1c7caf748412714525189db7739d8d96f5e485a",
+      "wrapper": "../23.json"
+    },
+    {
+      "bytes": 17993,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/promotion-v1/tests/test_mpea_archive_contract_integration_review.py",
+      "reuse_existing_exact_copy": true,
+      "sha256": "e79105c493b5c425063c868089098a4f11fff756532172c5bf9f21dba2ad28b1",
+      "wrapper": "../24.json"
+    },
+    {
+      "bytes": 5993,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/promotion-v1/tests/test_mpea_archive_decision_views_review.py",
+      "reuse_existing_exact_copy": true,
+      "sha256": "4eb5371dcbb22d20cc947c39a06882c45fc2ea35411c013fac150457e16b7455",
+      "wrapper": "../25.json"
+    },
+    {
+      "bytes": 1523,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/promotion-v3/candidate-v1.json",
+      "reuse_existing_exact_copy": false,
+      "sha256": "986ad39cb4df37b25bf8299f03a061e2d0e958dcd987a789c1207cc656ce16cc",
+      "wrapper": "46.json",
+      "wrapper_sha256": "0ab52470aad54fa734c514300c4ba4e795eaeeb171cff93d77c2ebf06e109dd3"
+    },
+    {
+      "bytes": 2577,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/promotion-v3/loader-temp-only.patch",
+      "reuse_existing_exact_copy": false,
+      "sha256": "0f44edde61c288ad7cbc9faaf5b737e6039c92a5d48fb36d83ecf507dbee172a",
+      "wrapper": "47.json",
+      "wrapper_sha256": "33bb25dd7b0ceea6f225c5c9a4b3356c60a9025bbc86792796a107888b15c90a"
+    },
+    {
+      "bytes": 14439,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/promotion-v3/tests/test_mpea_companion_observability_review.py",
+      "reuse_existing_exact_copy": false,
+      "sha256": "e63568ffba51a5f800feb0c40156e5c18f17528d928af225929c02fddbef005c",
+      "wrapper": "48.json",
+      "wrapper_sha256": "ee06a4b6eeefdbdd4f91851145c157a2082fbf0cd6913176af3dfd6b95e163eb"
+    },
+    {
+      "bytes": 2518,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/promotion-v3/tests/test_mpea_companion_scope_review.py",
+      "reuse_existing_exact_copy": false,
+      "sha256": "673336f031f3012789982c117a28bac6e5f87140370db09d270532f00ac46218",
+      "wrapper": "49.json",
+      "wrapper_sha256": "e8c19b27686c29a9987bf72c4a30a974bece2b73755266202877b32f995308d7"
+    },
+    {
+      "bytes": 3014,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/run_companion_review.py",
+      "reuse_existing_exact_copy": false,
+      "sha256": "a4aac7dcb800e45bc0cd33d63afbab65f98f538f6eb226f4cdc86109ca8f3957",
+      "wrapper": "50.json",
+      "wrapper_sha256": "edd6d06cc219e8ae5e6a407f54320bceb183d6bfc21a512112bcbcb0f414fafe"
+    },
+    {
+      "bytes": 2988,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/run_companion_scope_review.py",
+      "reuse_existing_exact_copy": false,
+      "sha256": "a75c42c56fd847feb60f20b54816c5291495b9d73bce910718fe771b8f39977b",
+      "wrapper": "51.json",
+      "wrapper_sha256": "4b46be3c10b51f22b87bd0ace42a9f6b982550dd1858df3cf789ab47c2b6da10"
+    },
+    {
+      "bytes": 2963,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/run_review.py",
+      "reuse_existing_exact_copy": true,
+      "sha256": "bfcf10e36cd98f6a93a908a82ae7d94dd84b42095e48237aac86f4f68802848a",
+      "wrapper": "../26.json"
+    },
+    {
+      "bytes": 17865,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/test_archive_contract_integration_review.py",
+      "reuse_existing_exact_copy": true,
+      "sha256": "d627a9473b24ff3766114c07bb98a70782263ed64587e89871e30a9587a9c857",
+      "wrapper": "../27.json"
+    },
+    {
+      "bytes": 14296,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/test_companion_observability_review.py",
+      "reuse_existing_exact_copy": false,
+      "sha256": "37b7f1e74fd91c21eeb57c391ebd9fdc97a27bc7351b444ae4e88147d53d39c9",
+      "wrapper": "54.json",
+      "wrapper_sha256": "b985a20fd3e0136abd3d582f409c8960d154c7617e36ebaf8c4d6fb65cc96abc"
+    },
+    {
+      "bytes": 2311,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/test_companion_scope_review.py",
+      "reuse_existing_exact_copy": false,
+      "sha256": "da2ecf6d57b66076309389517f35d510b7cb4435301af0f148215254556e8a61",
+      "wrapper": "55.json",
+      "wrapper_sha256": "05bb7a2de43719d6d760593810dfcd6f991b2f207e447a1a9f82e45da32deb39"
+    },
+    {
+      "bytes": 6027,
+      "original": ".cache/mpea-study-custody/review_production/contract_compliance/test_decision_views_review.py",
+      "reuse_existing_exact_copy": true,
+      "sha256": "7b43a9a8cc1606eb2e58103319c191bd996b488cd20e0a71b65e611ec12e58ff",
+      "wrapper": "../28.json"
+    },
+    {
+      "bytes": 20384,
+      "original": ".cache/mpea-study-custody/review_production/test_production_store_review.py",
+      "reuse_existing_exact_copy": true,
+      "sha256": "0959f57f7ab4f8de5586afb90a11c8305de800df2f23cc7fc72ee2c974650fa4",
+      "wrapper": "../29.json"
+    }
+  ],
+  "new_wrappers": 28,
+  "reused_existing_wrappers": 30,
+  "scope": "Explicit safe source/test/log/receipt/diff files only; excludes all constructed temp attempts and private scientific artifacts. Copy exactly these named bytes; retain all originals."
+}

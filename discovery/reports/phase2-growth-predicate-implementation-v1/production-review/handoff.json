@@ -1,0 +1,31 @@
+{
+  "README": {
+    "bytes": 3873,
+    "sha256": "152bf2d3b35c5e6f44b09465f8298e09a005324543ef608b9ec8d92b6d85ec20"
+  },
+  "candidate_contract": {
+    "bytes": 5879,
+    "sha256": "a1a7d8fe820ddcd8d3479d53e4f35d5ce0ed6e123385bcbb1b646786e1d064d9"
+  },
+  "candidate_source": {
+    "bytes": 40316,
+    "sha256": "70a0339212b971bf7824ae256600b959ae7a7d22b6fc8853eb2208d3c8ece207"
+  },
+  "file_count": 43,
+  "final_promotion_test": {
+    "bytes": 26541,
+    "path": "promotion/tests/test_li_v3_growth_predicate_audit_review.py",
+    "sha256": "3dd4b23024028e2e7ba5876ca8d9705e066e57362bfae63d9999783e76b5dc49"
+  },
+  "inventory": {
+    "bytes": 6386,
+    "sha256": "d6e9892e7740bc35ef31df8673cd6d463d0390a009d88222897b0218751e89bd"
+  },
+  "next_action": "Author/root may consume exact test and review bundle for integration; no actual operation before root verifies publication and release gates.",
+  "review": {
+    "bytes": 3030,
+    "sha256": "5dccb8c79ec15b94155af3ad4a6dbda632b22eea9501c76195afe91168cb0d93"
+  },
+  "schema": "lupine.growth_predicate.production_independent_handoff.v1",
+  "status": "PASS_SOURCE_AND_GENERATED_PRODUCTION_ADAPTATION_REVIEW"
+}

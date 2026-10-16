@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-I",
+    "/workspace/lupine-discovery-branch/discovery/scripts/package_smoke.py",
+    "--retain-directory",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/retained",
+    "--output",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/package-report.json"
+  ],
+  "cwd": "/workspace/lupine-discovery-branch/discovery",
+  "started_utc": "2026-10-16T17:26:53.214528+00:00",
+  "stderr": "package.stderr",
+  "stdout": "package.stdout"
+}

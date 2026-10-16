@@ -1,0 +1,21 @@
+{
+  "files": {
+    "README.md": {
+      "bytes": 1659,
+      "sha256": "2c5c66fba62ff8b7ec246d637c0fea02703caeb3fb22206a85001dad67128bb1"
+    },
+    "first-link-validation-failure.json": {
+      "bytes": 659,
+      "sha256": "ab646c67eaf8fba18a11f7869df8ddbe45bd1b05fb0c89fb6cf56649bfa42301"
+    },
+    "review.json": {
+      "bytes": 7657,
+      "sha256": "3f565a1fdc4bcd8bbb38b9d450d3f45459b75f3b6571cb4e869f86110f711aea"
+    }
+  },
+  "public_allowlist": [
+    "README.md",
+    "first-link-validation-failure.json",
+    "review.json"
+  ]
+}

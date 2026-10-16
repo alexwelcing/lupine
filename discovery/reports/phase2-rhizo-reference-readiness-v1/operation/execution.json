@@ -1,0 +1,14 @@
+{
+  "actual_source_operation_count": 1,
+  "automatic_retry": false,
+  "exit_code": 0,
+  "finished_at": "2026-10-16T11:47:02.666002+00:00",
+  "process_seconds": 0.11584904800110962,
+  "source_and_runtime_held": true,
+  "started_at": "2026-10-16T11:47:02.483264+00:00",
+  "stderr_bytes": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_bytes": 59591,
+  "stdout_sha256": "c1d3083573e427bfec886a2b28ee26f84c5970a717171c0e0b5e381ca9087535",
+  "timed_out": false
+}

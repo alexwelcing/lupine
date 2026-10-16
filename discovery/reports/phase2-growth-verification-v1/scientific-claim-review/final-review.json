@@ -1,0 +1,46 @@
+{
+  "schema": "lupine.c17-final-scientific-claim-review.v1",
+  "created_at": "2026-10-16T11:17:56.856894+00:00",
+  "outcome": "PASS_SCIENTIFIC_WORDING",
+  "blockers": [],
+  "required_corrections": [],
+  "reviewed_copy": {
+    "path": ".cache/phase2-c17-scientific-claim-review-v1/final-growth-README.md",
+    "bytes": 8506,
+    "sha256": "ad664721078c9105ac8dd68fd6341f5fbfaaff669486396bf0816cf4a3d8120b"
+  },
+  "source_path": ".cache/phase2-growth-verification-release-v1/promotion/reports/phase2-growth-verification-v1/README.md",
+  "pre_review_source_sha256": "ad664721078c9105ac8dd68fd6341f5fbfaaff669486396bf0816cf4a3d8120b",
+  "post_review_source_sha256": "ad664721078c9105ac8dd68fd6341f5fbfaaff669486396bf0816cf4a3d8120b",
+  "source_held_during_review": true,
+  "findings": [
+    "The final report accurately states the corrected public-receipt audit PASS: 19246 runtime check calls, not independent tests/samples. The approved public result reports PASS and checks=19246; its execution receipt records exit0, elapsed4.132584271999804 and empty-stderr digest.",
+    "First obsolete-field failure and the prior missed static review remain expressly retained; the corrected receipt audit does not become classifier correctness or physical validation.",
+    "G31 still BLOCKED_SCHEMA/BLOCKED_LAYOUT before decompression/XML. Three completed nonempty local extra areas are expressly not total archive members; no failing predicate or admission is inferred.",
+    "BAM paired documentary test records remain exposed reference evidence with no admitted per-test joint uncertainty or independent physical frame; NIST qualified approximate coverage is not source/selector validation.",
+    "Uniform finite-frame inference is separated from physical independence, latent truth and future transfer. Rhizo historical label-readiness is explicitly narrower than G21 paired screening and does not claim fresh predictive superiority."
+  ],
+  "review_history": {
+    "original_review_preserved": {
+      "path": ".cache/phase2-c17-scientific-claim-review-v1/review.json",
+      "bytes": 4690,
+      "sha256": "e3ce71068f00cac4385d7c54a8d07f5377ad09a07ac6cb7fd3aaedbdcd33c611"
+    },
+    "original_displayed_growth_sha256": "b6b5ccddf3aae55a26db42a98b44098d3f88837e6a1a1d056c7dd7ff5c8202c4",
+    "original_review_binding_growth_sha256": "a4cbe314e0f7383a92de5ffb74db23f2dc17410897411110f235e99263b1a14d",
+    "limitation": "Root changed the moving publication README between the earlier displayed read and later binding creation. The earlier review did not capture a pre-read immutable copy and cannot serve as an exact final-source identity claim. This mismatch is preserved; the present final review snapshots bytes before reading and checks they remain identical afterward."
+  },
+  "evidence": [
+    {
+      "path": ".cache/phase2-growth-operation-review-v1/actual-review-both-corrected.json",
+      "bytes": 60662,
+      "sha256": "20f345c69839bedaf4c7a073813f804996e83b4892cbf3395e241e05680e01bd"
+    },
+    {
+      "path": ".cache/phase2-growth-operation-review-v1/execution-both-corrected/execution.json",
+      "bytes": 2971,
+      "sha256": "989630dc83bf55510d190ec764de5f52fbabfd06cd499d7b399ff45e09319771"
+    }
+  ],
+  "scope": "Final scientific wording and selected public receipt comparison only. No independent rerun of audit, source reader, CI or package; no raw object, new acquisition, measurement data, execution or tracked edits."
+}

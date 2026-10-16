@@ -1,0 +1,18 @@
+{
+  "purpose": "Inspect only file-layout and property/units dictionary rows after header verification. Schema indices and documentary method/temperature/unit constants are permitted; no observation examples, validation table t1, figures, accuracy results or other article sections are projected.",
+  "scope": "Whole retained article bytes remain machine-exposed; this adds researcher exposure to two documentary dictionary tables only. No network and no dataset files.",
+  "source_sha256": "d58de2a225114f57bc6bc28e808dd3c035580b756a3c09472ac1946539418b6b",
+  "status": "AUTHORIZED_DICTIONARY_CELL_PROJECTION_BEFORE_INVOCATION",
+  "tables": {
+    "t2": [
+      "Line",
+      "Content"
+    ],
+    "t3": [
+      "No.",
+      "Property",
+      "Unit",
+      "Description"
+    ]
+  }
+}

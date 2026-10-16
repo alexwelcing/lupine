@@ -1,0 +1,21 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-m",
+    "unittest",
+    "test_audit_axioms",
+    "-v"
+  ],
+  "cwd": "formal",
+  "exit_code": 0,
+  "timed_out": false,
+  "started_ns": 1792169978915719306,
+  "finished_ns": 1792169979177857967,
+  "process_seconds": 0.2621384730009595,
+  "source_held": true,
+  "runtime_345_held": true,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_bytes": 0,
+  "stderr_sha256": "5bcec50826101bf533e9fa8a7fa8f60e940fd57e8a8d332ea98354332a313e12",
+  "stderr_bytes": 1300
+}

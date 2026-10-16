@@ -1,0 +1,9 @@
+# BAM documentation: verified bytes, known header, unresolved body encoding
+
+The pinned schema CSV was acquired once and matched its advertised 41,000-byte size and MD5. Strict UTF-8 decoding failed despite the response's declared charset. The original [blocked documentary report](README.md), [scope](scope.json), [receipt](receipt.json) and [failure](decode-failure.json) are retained unchanged; that report is the checkpoint before the later header-only step.
+
+A separately authorized and frozen [ASCII first-record addendum](header-ascii-v1/README.md) then identified eleven literal headers, including `UNIT` at column 7. It inspected no later record and performed no whole-file text decode or body CSV parse. Header structure is now known under that narrow scope; full-file encoding and all body-field semantics remain unresolved. The earlier role-only parser proposal remains deferred and unimplemented.
+
+The raw CSV remains ignored. Proposed publication contains own paraphrase, the selected literal header labels, scopes, acquisition/invocation receipts, the exact small documentary projection script, hashes and independent review artifacts. It excludes arbitrary example values, full raw documentation and all measurement files. The data record's workbook, LIS, figures/images and alternative schema XLSX were not requested.
+
+Whole raw-document machine acquisition and attempted text decoding are explicitly disclosed; this source and its derivatives are not claimed to be untouched blind evidence. The record's CC BY 4.0 declaration does not establish embedded-body notices or rights to unrelated linked material. One successful acquisition and a header projection do not admit a scientific benchmark. G20 remains unresolved and G21 blocked; BAM remains a possible small metrology reference.

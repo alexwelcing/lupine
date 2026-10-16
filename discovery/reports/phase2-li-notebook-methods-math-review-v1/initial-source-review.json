@@ -1,0 +1,43 @@
+{
+  "contract_sha256": "c19cd936e9c812e46a178d3dbff5d4bf2736505de6445858b6b5214e2066f5f5",
+  "findings": [
+    {
+      "description": "_capture_identity compares a supplied source object with ordinary Python equality, allowing bytes=353800.0 to equal the fixed integer count. Re-canonicalizing with that supplied source preserves the float; subsequent _verify dictionary equality does not reject it. This does not bypass exact Git blob verification.",
+      "id": "capture_byte_count_type",
+      "requested_fix": "Use a strict integer field check or independently constructed canonical expected source with integer SOURCE_BYTES; retain a regression for canonical altered float count.",
+      "severity": "blocking_capture_receipt_integrity"
+    },
+    {
+      "description": "inspect_synthetic_notebook computes _blob(raw) before the 512KiB admission cap, duplicating/hash-processing oversized bytes before rejection.",
+      "id": "synthetic_pre_hash_limit",
+      "requested_fix": "Validate exact bytes type and length before computing identity hash.",
+      "severity": "bounded_preprocessing"
+    },
+    {
+      "description": "No-code notebooks produce code_ast_parse_started=False and code_ast_parse_completed=True because completion is unconditional after the cell loop.",
+      "id": "no_code_parse_completion",
+      "requested_fix": "Leave both exposure flags false when no code AST parser ran; inventory completion can remain its separate engineering status.",
+      "severity": "exposure_precision"
+    }
+  ],
+  "next_action": "Review repaired held source and author/independent test evidence separately before any actual acquisition.",
+  "not_performed": [
+    "network",
+    "notebook_acquisition",
+    "actual_notebook_read",
+    "runtime_import",
+    "tests",
+    "tracked_edits"
+  ],
+  "observed_at": "2026-10-16T07:50:53.663968+00:00",
+  "positive_scope": [
+    "Static final-name categories are explicitly syntax only, including dead/function code.",
+    "Opaque literals and notebook outputs are not printed or evaluated; whole JSON and AST machine exposure are explicit.",
+    "Known category absence does not attest absence of transformations; positional slots avoid X/column semantics.",
+    "Source identity, committed-source and external CI/package gates remain distinct."
+  ],
+  "reviewed_source_sha256": "70eb1dd8cf05ade2c93e8dbbb1bae8bb59dc1e6dd762cf24e74de1d26dd5a02e",
+  "schema": "lupine.discovery.read_only_source_review.v1",
+  "source_path": ".cache/phase2-li-notebook-methods-candidate-v1/promotion/scripts/li_v3_notebook_methods.py",
+  "status": "CHANGES_REQUESTED_AT_INITIAL_SOURCE"
+}

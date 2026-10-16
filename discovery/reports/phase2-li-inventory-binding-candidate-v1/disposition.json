@@ -1,0 +1,66 @@
+{
+  "actual_operations_by_this_lane": 0,
+  "cannot_claim": [
+    "malformed XML",
+    "specific member name/type or element/text",
+    "completed package/layout",
+    "outcome-free or fresh source",
+    "scientific admission"
+  ],
+  "conditional_localization": "Non-whitespace character data rejected during the fifth distinct package-metadata XML parse, before the package returns. The metadata member/type/text is not identified.",
+  "evidence_kind": "Parent-reported public operation outcome plus committed-source control-flow review; receipt/raw bytes not read in this lane.",
+  "follow_on_operations": "NONE; no A2/B/C or parser-policy change",
+  "ordinal_alternatives": [
+    "Workbook XML after exactly three relationship parts",
+    "Fourth sorted relationship part when there are at least four relationship parts"
+  ],
+  "phase_bindings_unchanged": {
+    "frame": null,
+    "inventory": null
+  },
+  "planned_tests_run": 0,
+  "raw_or_private_reads": 0,
+  "receipt_reads": 0,
+  "recorded_at": "2026-10-16T16:25:54.466673+00:00",
+  "reported_a1": {
+    "cleanup": "COMPLETE_REPORTED",
+    "decompressions_completed": 5,
+    "exit_code": 2,
+    "member_reads_completed": 5,
+    "original_producer": "9d1f21dae141a28db378ee2e16aa83340df57877",
+    "process_seconds": 3.553669215,
+    "public_sha256": "aae55ee5a939c37ed13e73d82d68c9e3c92273f22aa7161f46d19b2799158545",
+    "reason": "XML_PROFILE_UNSUPPORTED",
+    "sheet_names_projected": 0,
+    "utf8_decodes_completed": 5,
+    "xml_parses_completed": 4,
+    "xml_parses_started": 5
+  },
+  "source_files_held": {
+    "docs/li-v3-readiness-production.md": {
+      "bytes": 18081,
+      "sha256": "1fd11e47c4a332034b213348e4a85165e18ba0693791483cd703c326eb8d87ca"
+    },
+    "reports/runtime-manifest.json": {
+      "bytes": 40693,
+      "sha256": "6bfd99aa4b3fdf254038570fc9e40cbb574a1fbbe587c943cdf909359c456a5f"
+    },
+    "scripts/li_v3_readiness.py": {
+      "bytes": 81591,
+      "sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219"
+    },
+    "scripts/li_v3_readiness_production.py": {
+      "bytes": 61640,
+      "sha256": "77dece96850b09be2f13acd275cc28789ea0e3bc408cfcec86bcd02f488fed85"
+    },
+    "tests/test_li_v3_readiness_production.py": {
+      "bytes": 46051,
+      "sha256": "809c0126ef9f130fad264ef2617f67b9b99db103a3a14c476a6e60bfb4905470"
+    },
+    "tests/test_li_v3_readiness_production_review.py": {
+      "bytes": 89651,
+      "sha256": "2f2295d0f04fbc0f3399f904eed757e8a6c0f713a13cf9bb13850c52ea1e91e0"
+    }
+  },
+  "status": "TERMINAL_A1_BLOCK_NO_INVENTORY_PROMOTION"
+}

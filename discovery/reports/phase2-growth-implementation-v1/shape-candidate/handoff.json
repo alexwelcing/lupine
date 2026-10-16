@@ -1,0 +1,67 @@
+{
+  "actual_private_inputs_read": false,
+  "actual_source_operations": false,
+  "author": {
+    "receipt": {
+      "bytes": 3029,
+      "path": ".cache/phase2-growth-hint-production-candidate-v1/receipts/author-first/execution.json",
+      "sha256": "2aa9ca3d8a470dd8f7d322899821a930feea10a8752ae1d41abd53c27be58123"
+    },
+    "result": "PASS",
+    "tests": 35,
+    "unittest_seconds": 0.086
+  },
+  "contract_only_post_run_order_correction": {
+    "bytes": 1172,
+    "path": ".cache/phase2-growth-hint-production-candidate-v1/contract-order-correction.json",
+    "sha256": "589f11a8161ed8c966c80e738f463113e68d034d05fba98d758b53910d509940"
+  },
+  "earlier_pure_failures_preserved": true,
+  "first_production_candidate_failures": 0,
+  "independent": {
+    "handoff": {
+      "bytes": 1388,
+      "path": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/handoff.json",
+      "sha256": "3157bf3ca3cc8193f968714e9c593844887546a6322b0763e14c511625fbd533"
+    },
+    "receipt": {
+      "bytes": 2433,
+      "path": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/independent/first-run/execution.json",
+      "sha256": "2aa417b4b957a4a2a13c154839e4998b54fab89f6893aed0d5440c780f6eb4c9"
+    },
+    "result": "PASS",
+    "source_review": {
+      "bytes": 3591,
+      "path": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/source-review/final-source-review.json",
+      "sha256": "c5f55fb093be56faff2c92e7c8409992075f11122fd90e2f7914108c7c46f5c6"
+    },
+    "tests": 21,
+    "unittest_seconds": 0.62
+  },
+  "inventory": {
+    "bytes": 13760,
+    "path": ".cache/phase2-growth-hint-production-candidate-v1/inventory.json",
+    "sha256": "9cd82b5c2848bc572d3fa24d4ea9e02925de3453245079fc6f330c15e0b46dd6"
+  },
+  "next_action": "Root integrates exact four files alongside separately reviewed G31 if ready, runs integration/release gates and exact published CI/package/artifact audit; any later actual diagnostic remains root-owned.",
+  "only_actual_receipt_read": "Root-authorized public G29 projection copied as public-prerequisite.json",
+  "original25pins_unchanged": true,
+  "promotion_files": {
+    "docs/li-v3-growth-hint-shape-plan.md": "e0ca28ad61181c6cf56d20a46733d2285acb6cb5bc39348f46ee3acb29dfcbc6",
+    "scripts/li_v3_growth_hint_shape.py": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a",
+    "tests/test_li_v3_growth_hint_review.py": "13db80f49a6d8f83df58a3f2ae22f27450e5367c156368333db1908f90d01f85",
+    "tests/test_li_v3_growth_hint_shape.py": "1f863ee2f1eefd54919767f7b4c75b6d460332d50f6234103dd47e586557685e"
+  },
+  "pure_conformance": {
+    "complete_report_pairs": 472,
+    "receipt": {
+      "bytes": 4046,
+      "path": ".cache/phase2-growth-hint-production-candidate-v1/receipts/pure-conformance-first/execution.json",
+      "sha256": "affb7feb93dd23226b7128bf830bce7453fec2d82c9a7e1005563a78c3a18a57"
+    },
+    "result": "PASS"
+  },
+  "schema": "lupine.discovery.growth_hint_production_candidate_handoff.v1",
+  "scientific_claims_changed": false,
+  "status": "READY_FOR_ROOT_INTEGRATION_AND_RELEASE_GATES"
+}

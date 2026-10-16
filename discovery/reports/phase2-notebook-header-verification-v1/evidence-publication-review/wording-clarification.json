@@ -1,0 +1,13 @@
+{
+  "schema": "lupine.evidence-publication-wording-clarification.v1",
+  "recorded_at": "2026-10-16T08:50:31.398984+00:00",
+  "issue": "Opening phrase about hand derivations could be read as covering later additive executable counting evidence",
+  "only_text_change": {
+    "before": "All illustrative counts are synthetic hand derivations.",
+    "after": "The original design's illustrative counts are synthetic hand derivations."
+  },
+  "before_sha256": "ff830e00c06ca7d2980215f2ed379493bc6269095ded61c6f4ae7d779f09cd98",
+  "after_sha256": "296687aaa59ec34665a36366344c282ca528c287902bd560dd5ea317c623424d",
+  "old_publication_bytes": "finite-PUBLICATION-before-counting-wording-clarification.md",
+  "original_source_design_or_review_bytes_changed": false
+}

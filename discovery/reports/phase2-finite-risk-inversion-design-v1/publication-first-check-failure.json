@@ -1,0 +1,11 @@
+{
+  "schema": "lupine.evidence-publication-first-check-failure.v1",
+  "recorded_at": "2026-10-16T08:40:39.507068+00:00",
+  "actual_result": "INLINE_CHECK_ABORTED",
+  "failure": "AssertionError: BAM PUBLICATION.md links publication-checks.json before that generated report was created",
+  "location": "First inline publication validator, local-link assertion",
+  "product_or_scientific_failure": false,
+  "files_changed_before_abort": false,
+  "repair": "Create explicit pending check reports before link validation, then replace with actual completed checks; no source/original bytes change",
+  "limits": "This records the observed tool error; no process timing or saved stderr checksum is invented."
+}

@@ -1,0 +1,50 @@
+{
+  "status": "PASS_EXACT_RETAINED_ARTIFACT_AND_DECLARED_DELTA",
+  "checks": 20959,
+  "failures": [],
+  "observed": {
+    "published_commit": "88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d",
+    "baseline_commit": "ddd4a6a8df0f908a162b7e5387b0faac325180d6",
+    "source_file_count": 6520,
+    "runtime_files": 345,
+    "baseline_runtime_files": 339,
+    "unchanged_baseline_runtime_files": 339,
+    "changed_existing_runtime_files": [],
+    "added_runtime_files": [
+      "scripts/li_v3_readiness.py",
+      "scripts/li_v3_readiness_production.py",
+      "tests/test_li_v3_readiness.py",
+      "tests/test_li_v3_readiness_production.py",
+      "tests/test_li_v3_readiness_production_review.py",
+      "tests/test_li_v3_readiness_review.py"
+    ],
+    "wheel_members": 117,
+    "wheel_RECORD_content_digests": 116,
+    "package_payloads": 110,
+    "baseline_package_payloads": 110,
+    "unchanged_baseline_package_payloads": 110,
+    "changed_package_payloads": [],
+    "added_package_payloads": [],
+    "public_resource_sha256": "a9ab9d72c6c39be9338e951b657e0587ae8f4dbe534b276b8f8f8951a7b1a63a",
+    "mandatory_package_receipt_checks": 17,
+    "retained_demonstrations": 28,
+    "retained_problem_schemas": 6,
+    "source_manifest_sha256": "6bfd99aa4b3fdf254038570fc9e40cbb574a1fbbe587c943cdf909359c456a5f",
+    "baseline_manifest_sha256": "67d686934ba718b50f8d14e1efa9e2c8dfbc96bc88e43d1a341b4719440509aa",
+    "promoted_source_pins": {
+      "docs/li-v3-readiness-production.md": "1fd11e47c4a332034b213348e4a85165e18ba0693791483cd703c326eb8d87ca",
+      "docs/li-v3-readiness.md": "295a04a9b411001e22a4e39c831c609203c2feb1958be5e663cfbb6a9e4704b7",
+      "scripts/li_v3_readiness.py": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219",
+      "scripts/li_v3_readiness_production.py": "77dece96850b09be2f13acd275cc28789ea0e3bc408cfcec86bcd02f488fed85",
+      "tests/test_li_v3_readiness.py": "f961582942c7e1964ef2b1b462d81520278a85c17a459be24c099c95ef9654a3",
+      "tests/test_li_v3_readiness_production.py": "809c0126ef9f130fad264ef2617f67b9b99db103a3a14c476a6e60bfb4905470",
+      "tests/test_li_v3_readiness_production_review.py": "2f2295d0f04fbc0f3399f904eed757e8a6c0f713a13cf9bb13850c52ea1e91e0",
+      "tests/test_li_v3_readiness_review.py": "dda4d354ff55f09d4542105df7c7180097ad187477b4c03743bafd95a527a34b"
+    },
+    "retained_receipt_sha256": "37fe56f103a9ade5220c25ef1ab3ba72b7aab3f7ca3b7008e63493d0f8e693f2",
+    "source_archive_sha256": "a5ece47253e8d5d6d68fd2c0d3dfdb5c41368d2ff90657f38a8f505518c32763",
+    "wheel_sha256": "2af9a5ca6d9e66451bab021e20ad2349a2f4e76f80a89ccf891ac0ccee073972",
+    "artifact_identities_held": true,
+    "removed_runtime_files": []
+  }
+}

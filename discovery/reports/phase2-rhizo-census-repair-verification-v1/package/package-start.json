@@ -1,0 +1,13 @@
+{
+  "at": "2026-10-16T15:23:18.714441+00:00",
+  "commit": "ddd4a6a8df0f908a162b7e5387b0faac325180d6",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "scripts/package_smoke.py",
+    "--retain-directory",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-rhizo-census-repair-verification-v1/retained",
+    "--output",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-rhizo-census-repair-verification-v1/package-verification.json"
+  ],
+  "recorder_sha256": "a87899879b0e673b00ca5a000fbaa81ae26f3ecb365150788ca4edab501dc544"
+}

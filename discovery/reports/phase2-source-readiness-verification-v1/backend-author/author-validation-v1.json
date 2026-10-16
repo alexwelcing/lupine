@@ -1,0 +1,74 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    ".cache/phase2-source-readiness-backend-v1/overlay/tests/test_source_readiness.py",
+    "-v"
+  ],
+  "exit_code": 0,
+  "finished_utc": "2026-10-16T17:01:45.522906+00:00",
+  "prior_execution": {
+    "status": "PASS; unittest log retained",
+    "stderr": "author-first.stderr",
+    "stdout": "author-first.stdout",
+    "test_count": 21
+  },
+  "schema": "lupine.source-readiness.author-validation.v1",
+  "scope": "Synthetic malformed/forged documentary inputs and loopback transport only; no raw source acquisition, source data or scientific admission.",
+  "source_after": {
+    "docs/source-readiness.md": {
+      "bytes": 3674,
+      "sha256": "a62f93a7b450f5d5d508dd11a538ff2b44adb5cfd9b7623291c85584f1088e5a"
+    },
+    "src/lupine_discovery/cli.py": {
+      "bytes": 16124,
+      "sha256": "6af272356429e7fabcbe81f0be34c3a201ad5d5655537d74ecefd4ba9c587965"
+    },
+    "src/lupine_discovery/resources/source-readiness-v1.json": {
+      "bytes": 6053,
+      "sha256": "9abad97d5675f416cc38a325bcd1e108825af001b2fdfccaa1f5c7dfb66f3f0b"
+    },
+    "src/lupine_discovery/server.py": {
+      "bytes": 14343,
+      "sha256": "5e665bb32d1d80b902a8a64c9e2e66efa9e38b7b5a481e80408f4af8716f3390"
+    },
+    "src/lupine_discovery/source_readiness.py": {
+      "bytes": 6035,
+      "sha256": "dbb76ec1aa6a82490b30fe19883a94b56cf0cddfd3ebc14cc555f17f927ca42c"
+    },
+    "tests/test_source_readiness.py": {
+      "bytes": 16148,
+      "sha256": "c83bb950986d1d2e7990a0946fb1111ab6f6dc843337efc61a6ad84151a07c81"
+    }
+  },
+  "source_before": {
+    "docs/source-readiness.md": {
+      "bytes": 3674,
+      "sha256": "a62f93a7b450f5d5d508dd11a538ff2b44adb5cfd9b7623291c85584f1088e5a"
+    },
+    "src/lupine_discovery/cli.py": {
+      "bytes": 16124,
+      "sha256": "6af272356429e7fabcbe81f0be34c3a201ad5d5655537d74ecefd4ba9c587965"
+    },
+    "src/lupine_discovery/resources/source-readiness-v1.json": {
+      "bytes": 6053,
+      "sha256": "9abad97d5675f416cc38a325bcd1e108825af001b2fdfccaa1f5c7dfb66f3f0b"
+    },
+    "src/lupine_discovery/server.py": {
+      "bytes": 14343,
+      "sha256": "5e665bb32d1d80b902a8a64c9e2e66efa9e38b7b5a481e80408f4af8716f3390"
+    },
+    "src/lupine_discovery/source_readiness.py": {
+      "bytes": 6035,
+      "sha256": "dbb76ec1aa6a82490b30fe19883a94b56cf0cddfd3ebc14cc555f17f927ca42c"
+    },
+    "tests/test_source_readiness.py": {
+      "bytes": 16148,
+      "sha256": "c83bb950986d1d2e7990a0946fb1111ab6f6dc843337efc61a6ad84151a07c81"
+    }
+  },
+  "sources_unchanged": true,
+  "started_utc": "2026-10-16T17:01:35.012590+00:00",
+  "stderr_sha256": "f978467ae110c2dd8bef2b727928d28bae38d003ff63fb4df2ec47babdc69922",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "test_count": 21
+}

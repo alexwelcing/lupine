@@ -1,0 +1,12 @@
+{
+  "actual_audit_runs": 0,
+  "audit_source_sha256": "b6566a01f8704699174dbdaaacb4a51182e58bf1e346bf249375c534ac1728db",
+  "baseline_commit": "d4d8504a97d362a6339eaa27453a86e0eb167cee",
+  "existing_numeric_and_actual_review_bundles_unchanged": true,
+  "final_preparation_sha256": "baf2eb33a09e6de36a572ca03ff13adf0fcda0b9a3b8639740bc93b15e39257e",
+  "final_promotion_map_sha256": "b3867dd99e7a7d890ac0bee36e1448ff811d3931be7f3a21c80035e995a82a6a",
+  "inventory_sha256": "43f4b8f09c016e69586c572cd3941ce84fc525c6f88107235bb84274a7196d5d",
+  "schema": "lupine.rhizo.census.artifact-review.preparation-handoff.v1",
+  "status": "READY_AWAITING_ROOT_EXACT_PUBLISHED_COMMIT_AND_RETENTION_PATH",
+  "syntax_only_passed": true
+}

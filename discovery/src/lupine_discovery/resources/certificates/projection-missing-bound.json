@@ -1,0 +1,325 @@
+{
+  "adapter_version": "projection-adapter-v1",
+  "assumptions": [
+    "The declared fields, all observations, anchors and discrepancy enclosures admit one common actual latent world.",
+    "Parameterization image coverage and normalized-coordinate enclosures are separate assumed premises.",
+    "Physical context, source scopes, unit references and complete signed quantity maps match the stated problem.",
+    "All exactly tied feasible minimizers of the finite candidate universe are retained under those premises.",
+    "Conservative screening is incomplete; retained candidates need not have a possible or robust optimum certificate."
+  ],
+  "certificate_digest": "3564ffd4f1689fe918b26d7d6ce6199e229b12e492c81c7679b4cc8130df03de",
+  "coupled_certificate": null,
+  "engine_version": "0.1.0",
+  "execution": {
+    "effective_limits": {
+      "max_certificate_terms": 512,
+      "max_integer_bits": 2048,
+      "max_operations": 100000,
+      "max_witness_pairs": 4096
+    },
+    "kernel_operations_used": 0,
+    "requested_limits": {
+      "max_certificate_terms": 512,
+      "max_integer_bits": 2048,
+      "max_operations": 100000,
+      "max_witness_pairs": 4096
+    }
+  },
+  "physical_attestation": "not_established_by_this_program",
+  "prepared_problem": null,
+  "problem_digest": "365d14a719e79b381249c97460f7714132a8ce36980e039fb0fe1ff846202f27",
+  "profile_id": "projection-local-v1",
+  "projection": {
+    "build_status": "unsupported_all_retained",
+    "input_digest": "ebf7f15046678dbe354100e9d724c7d1f3a1a3552c50de4e3a54d587249c2a7b",
+    "reasons": [
+      {
+        "code": "finite_field_bound_missing",
+        "record_id": "shared-within-context",
+        "record_kind": "field"
+      }
+    ],
+    "relation_digest": "6b96e757fb40659db628d20cf5d5051ebd1c4bc206dff7ec37d31b2a8794053a",
+    "relation_record": {
+      "common_image_premise": "all true field vectors and all quantities are represented by one admitted common latent vector",
+      "declarations": {
+        "anchors": [
+          {
+            "anchor_id": "uncertain-anchor",
+            "interval": {
+              "lower": "1",
+              "upper": "3"
+            },
+            "observation_id": "anchor-value",
+            "premise_status": "assumed_unverified",
+            "reference": "Constructed reference interval with zero declared discrepancy",
+            "source_ids": [
+              "declared-example"
+            ],
+            "source_scope": {
+              "quantity": "source-value",
+              "reference": "constructed quantity",
+              "scenario_id": "projection-missing-bound",
+              "unit": "synthetic-score-unit"
+            }
+          }
+        ],
+        "blocks": [
+          {
+            "block_id": "shared-within-context",
+            "field_bound_basis": "declared_bound",
+            "field_bound_reference": "The constructed example assumes -1 <= z <= 1",
+            "latent_bounds": [
+              null
+            ],
+            "latent_ids": [
+              "z"
+            ],
+            "matrix": [
+              [
+                "1"
+              ]
+            ],
+            "offset": [
+              "1"
+            ],
+            "parameter_ids": [
+              "theta"
+            ],
+            "parameter_units": [
+              "synthetic-score-unit"
+            ],
+            "parameterization_reference": "Declared common-image relation theta = 1 + z",
+            "premise_status": "assumed_unverified",
+            "scope": {
+              "context": {
+                "composition_id": "synthetic-composition",
+                "material_id": "synthetic-system",
+                "operating_conditions_id": "fixed-synthetic-conditions",
+                "scenario_id": "projection-missing-bound",
+                "structure_id": "fixed-synthetic-structure"
+              },
+              "descriptor_id": "one-fixed-coordinate",
+              "model_id": "synthetic-model",
+              "model_version": "1",
+              "observation_family": "synthetic-observations",
+              "reference_method": "constructed-reference"
+            },
+            "source_ids": [
+              "declared-example"
+            ]
+          }
+        ],
+        "candidates": [
+          {
+            "candidate_id": "A",
+            "constraints": {},
+            "context": {
+              "composition_id": "synthetic-composition",
+              "material_id": "synthetic-system",
+              "operating_conditions_id": "fixed-synthetic-conditions",
+              "scenario_id": "projection-missing-bound",
+              "structure_id": "fixed-synthetic-structure"
+            },
+            "score": {
+              "conversion_reference": "Identity target map applied to the entire expression",
+              "observation_id": "A-value",
+              "offset": "0",
+              "output_scope": {
+                "quantity": "score",
+                "reference": "minimize constructed value",
+                "scenario_id": "projection-missing-bound",
+                "unit": "synthetic-score-unit"
+              },
+              "scale": "1",
+              "source_ids": [
+                "declared-example"
+              ]
+            }
+          },
+          {
+            "candidate_id": "B",
+            "constraints": {},
+            "context": {
+              "composition_id": "synthetic-composition",
+              "material_id": "synthetic-system",
+              "operating_conditions_id": "fixed-synthetic-conditions",
+              "scenario_id": "projection-missing-bound",
+              "structure_id": "fixed-synthetic-structure"
+            },
+            "score": {
+              "conversion_reference": "Identity target map applied to the entire expression",
+              "observation_id": "B-value",
+              "offset": "0",
+              "output_scope": {
+                "quantity": "score",
+                "reference": "minimize constructed value",
+                "scenario_id": "projection-missing-bound",
+                "unit": "synthetic-score-unit"
+              },
+              "scale": "1",
+              "source_ids": [
+                "declared-example"
+              ]
+            }
+          }
+        ],
+        "constraint_scopes": {},
+        "objective_scope": {
+          "quantity": "score",
+          "reference": "minimize constructed value",
+          "scenario_id": "projection-missing-bound",
+          "unit": "synthetic-score-unit"
+        },
+        "observations": [
+          {
+            "block_id": "shared-within-context",
+            "bound_basis": "declared_bound",
+            "bound_reference": "Declared enclosure for this constructed observation",
+            "discrepancy_radius": "1/4",
+            "field_scope": {
+              "context": {
+                "composition_id": "synthetic-composition",
+                "material_id": "synthetic-system",
+                "operating_conditions_id": "fixed-synthetic-conditions",
+                "scenario_id": "projection-missing-bound",
+                "structure_id": "fixed-synthetic-structure"
+              },
+              "descriptor_id": "one-fixed-coordinate",
+              "model_id": "synthetic-model",
+              "model_version": "1",
+              "observation_family": "synthetic-observations",
+              "reference_method": "constructed-reference"
+            },
+            "nominal": "5",
+            "observation_id": "A-value",
+            "premise_status": "assumed_unverified",
+            "source_ids": [
+              "declared-example"
+            ],
+            "source_scope": {
+              "quantity": "source-value",
+              "reference": "constructed quantity",
+              "scenario_id": "projection-missing-bound",
+              "unit": "synthetic-score-unit"
+            },
+            "weights": [
+              "1"
+            ]
+          },
+          {
+            "block_id": "shared-within-context",
+            "bound_basis": "declared_bound",
+            "bound_reference": "Declared enclosure for this constructed observation",
+            "discrepancy_radius": "1/4",
+            "field_scope": {
+              "context": {
+                "composition_id": "synthetic-composition",
+                "material_id": "synthetic-system",
+                "operating_conditions_id": "fixed-synthetic-conditions",
+                "scenario_id": "projection-missing-bound",
+                "structure_id": "fixed-synthetic-structure"
+              },
+              "descriptor_id": "one-fixed-coordinate",
+              "model_id": "synthetic-model",
+              "model_version": "1",
+              "observation_family": "synthetic-observations",
+              "reference_method": "constructed-reference"
+            },
+            "nominal": "4",
+            "observation_id": "B-value",
+            "premise_status": "assumed_unverified",
+            "source_ids": [
+              "declared-example"
+            ],
+            "source_scope": {
+              "quantity": "source-value",
+              "reference": "constructed quantity",
+              "scenario_id": "projection-missing-bound",
+              "unit": "synthetic-score-unit"
+            },
+            "weights": [
+              "1"
+            ]
+          },
+          {
+            "block_id": "shared-within-context",
+            "bound_basis": "declared_bound",
+            "bound_reference": "Declared enclosure for this constructed observation",
+            "discrepancy_radius": "0",
+            "field_scope": {
+              "context": {
+                "composition_id": "synthetic-composition",
+                "material_id": "synthetic-system",
+                "operating_conditions_id": "fixed-synthetic-conditions",
+                "scenario_id": "projection-missing-bound",
+                "structure_id": "fixed-synthetic-structure"
+              },
+              "descriptor_id": "one-fixed-coordinate",
+              "model_id": "synthetic-model",
+              "model_version": "1",
+              "observation_family": "synthetic-observations",
+              "reference_method": "constructed-reference"
+            },
+            "nominal": "3",
+            "observation_id": "anchor-value",
+            "premise_status": "assumed_unverified",
+            "source_ids": [
+              "declared-example"
+            ],
+            "source_scope": {
+              "quantity": "source-value",
+              "reference": "constructed quantity",
+              "scenario_id": "projection-missing-bound",
+              "unit": "synthetic-score-unit"
+            },
+            "weights": [
+              "1"
+            ]
+          }
+        ],
+        "premise_status": "assumed_unverified",
+        "relation_reference": "One common synthetic field plus separately bounded observation discrepancies",
+        "scenario_id": "projection-missing-bound",
+        "sources": [
+          {
+            "reference": "Constructed equations, not physical evidence",
+            "sha256": null,
+            "source_id": "declared-example",
+            "source_uri": "urn:lupine:synthetic:projection-options:v1"
+          }
+        ]
+      },
+      "error_domain_meaning": "all combinations admitted; no stochastic independence is asserted",
+      "field_convention": "theta = offset + matrix @ normalized_latents",
+      "input_digest": "ebf7f15046678dbe354100e9d724c7d1f3a1a3552c50de4e3a54d587249c2a7b",
+      "observation_convention": "truth = nominal - weights @ theta + radius * independent_normalized_error",
+      "physical_attestation": "not_established_by_this_program",
+      "reasons": [
+        {
+          "code": "finite_field_bound_missing",
+          "record_id": "shared-within-context",
+          "record_kind": "field"
+        }
+      ],
+      "schema": "lupine.discovery.projection_relation.v1",
+      "status": "unsupported_all_retained",
+      "target_convention": "target = scale * entire_observation_expression + offset"
+    }
+  },
+  "scenario_id": "projection-missing-bound",
+  "schema": "lupine.discovery.projection_certificate.v1",
+  "selection": {
+    "certified_feasible": [],
+    "coupled_dominated": [],
+    "coupled_infeasible": [],
+    "dominance_witnesses": {},
+    "interval_dominated": [],
+    "interval_infeasible": [],
+    "retained": [
+      "A",
+      "B"
+    ]
+  },
+  "status": "unsupported_all_retained"
+}

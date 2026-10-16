@@ -1,0 +1,40 @@
+{
+  "files": [
+    {
+      "byte_identical": true,
+      "bytes": 7910,
+      "destination": "independent-review/review.json",
+      "sha256": "b2eac35946a5b20e82b6168266f027039a9cc701b19e757253d6ad8d3e5494b3",
+      "source": ".cache/phase2-bam-metrology-risk-contract-review-v1/review.json"
+    },
+    {
+      "byte_identical": true,
+      "bytes": 2056,
+      "destination": "independent-review/hypotheses-to-challenge.md",
+      "sha256": "e1e98db67aedcd83e734f542a0cb6379af43ab00145fa6058c11614f391b729a",
+      "source": ".cache/phase2-bam-metrology-risk-contract-review-v1/hypotheses-to-challenge.md"
+    },
+    {
+      "byte_identical": true,
+      "bytes": 1406,
+      "destination": "independent-review/scope.json",
+      "sha256": "bddd7b564bb04b18a30ef1d505c067233efef6a5c51fbb24dc03c7a24b1c1b70",
+      "source": ".cache/phase2-bam-metrology-risk-contract-review-v1/scope.json"
+    },
+    {
+      "byte_identical": true,
+      "bytes": 5847,
+      "destination": "independent-premise-review/README.md",
+      "sha256": "d746a7a8e03d4b0ee515ddb971a312d9de57346c66fb1b3573837ec3d49144ba",
+      "source": ".cache/phase2-bam-metrology-risk-premise-review-v1/README.md"
+    },
+    {
+      "byte_identical": true,
+      "bytes": 2014,
+      "destination": "independent-premise-review/source-bindings.json",
+      "sha256": "5bb694dcbd8bd6212d85b7f0aa29f4ee974176e897a8d28e6041f3824b04a94c",
+      "source": ".cache/phase2-bam-metrology-risk-premise-review-v1/source-bindings.json"
+    }
+  ],
+  "schema": "lupine.discovery.metrology_risk_contract_review_copy.v1"
+}

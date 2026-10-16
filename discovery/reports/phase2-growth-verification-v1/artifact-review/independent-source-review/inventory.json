@@ -1,0 +1,21 @@
+{
+  "schema": "lupine.discovery.review_inventory.v1",
+  "self_excluded": true,
+  "files": [
+    {
+      "path": ".cache/phase2-growth-artifact-review-v1/independent-source-review/README.md",
+      "bytes": 1068,
+      "sha256": "919c87daffe3094563b42717eee8c49d232304d511f574707953bda5dac4408a"
+    },
+    {
+      "path": ".cache/phase2-growth-artifact-review-v1/independent-source-review/bindings.json",
+      "bytes": 2871,
+      "sha256": "cdabfb1c8a4c69cced830be66e3261a7218e08105d6c2765c2233ea4afbd34a1"
+    },
+    {
+      "path": ".cache/phase2-growth-artifact-review-v1/independent-source-review/review.json",
+      "bytes": 5753,
+      "sha256": "b9a78915000f80986f10dcb6d8799f237af3198b6d7b36cf01f49d9b79d09a64"
+    }
+  ]
+}

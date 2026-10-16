@@ -1,0 +1,26 @@
+{
+  "conditional_followup": "NOT_INVOKED_ACCESS_DENIED",
+  "dataset_files_acquired": 0,
+  "javascript_executed": false,
+  "metadata_parser_invoked": false,
+  "new_manifest_fields_established": [],
+  "next_action": "Stop this access route; preserve the negative result. No alternate access request authorized by this scope.",
+  "reason": "HTTP403",
+  "redirects": 0,
+  "requests_completed": 1,
+  "response_text_researcher_disclosed": false,
+  "retries": 0,
+  "scientific_admission": false,
+  "scientific_values_researcher_disclosed": false,
+  "status": "BLOCKED_ACCESS",
+  "unknowns": [
+    "Constituent IDs",
+    "File list/count",
+    "Data-file versions",
+    "File checksums",
+    "File-level terms",
+    "Actual completeness and eligibility",
+    "Grouping and prior overlap"
+  ],
+  "whole_response_machine_read": true
+}

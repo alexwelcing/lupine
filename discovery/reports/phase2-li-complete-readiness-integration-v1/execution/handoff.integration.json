@@ -1,0 +1,19 @@
+{
+  "actual_operations": 0,
+  "bytes": 202922,
+  "destination_subfolder": "reports/phase2-li-complete-readiness-integration-v1/execution",
+  "duplicates_of_author_independent_rebind_files": 0,
+  "files": 9,
+  "inventory": "inventory.integration.json",
+  "inventory_sha256": "a3be68beb82b0c3724f920fc059de47afd9c4070082ade908f5fe18fba6fa782",
+  "old_production_files_held": 311,
+  "original_artifacts": 6,
+  "preparation_history": [
+    "Initial broad assembly stopped before any copy because its263-file assumption encountered the concurrently completed311-file publication. Root then narrowed this lane to integration-only; original source/failure retained under superseded-assembly-v1.",
+    "First integration-only assembly copied six unchanged originals then stopped on a reviewer expectation of two terminal LF in stdout; actual frozen log has one. Exact partial overlay/source/failure retained in integration-attempt-1. Only the newline assertion and link were corrected; no product or receipt bytes changed."
+  ],
+  "root_action": "Copy exactly inventory paths, verify all Git blobs before publication. Existing311 production report files and source/runtime files remain untouched.",
+  "root_integrated_run": "PASS602 recorded by root; no tests rerun here",
+  "schema": "li.readiness.root-integration-publication-handoff.v1",
+  "status": "READY_FOR_EXACT_ADDITIVE_COPY"
+}

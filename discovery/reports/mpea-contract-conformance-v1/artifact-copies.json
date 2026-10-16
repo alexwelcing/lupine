@@ -1,0 +1,65 @@
+{
+  "at": "2026-10-10T22:44:45.489726+00:00",
+  "files": [
+    {
+      "bytes": 3387,
+      "copy": "main-promotion-v2.json",
+      "original": ".cache/contract-main-promotion-v2.json",
+      "sha256": "92bfa2ef77623375727089b2002b74d73c2a49dc2bee05c14bb9d417c80a7294"
+    },
+    {
+      "bytes": 801,
+      "copy": "core-fixture-promotion-v1.json",
+      "original": ".cache/contract-core-fixture-promotion-v1.json",
+      "sha256": "778a2186a2b64bc0830db1b72883c3fd1c26e1a5b7aca9f89257c7ba4ce76bed"
+    },
+    {
+      "bytes": 5981,
+      "copy": "independent-copy-audit-v2.json",
+      "original": ".cache/contract-promotion-copy-audit-v1/receipt.json",
+      "sha256": "e2769522b48adb34ffb16602cdf57c46a3e2cd07f8234648e162c8579aa2581b"
+    },
+    {
+      "bytes": 4952,
+      "copy": "full-suite-recorder.py",
+      "original": ".cache/run-contract-freeze-suite.py",
+      "sha256": "57276dc466ae6bff0c43b49b916fd92ae3caa9387965fa0cacace4bf23245634"
+    },
+    {
+      "bytes": 2152,
+      "copy": "provisional-claim-checklist.md",
+      "original": ".cache/final-claim-review-v1/CHECKLIST.md",
+      "sha256": "ed94e97078615026bce375bb0b6e3338d494a239eebb45f487159a385e0373b3"
+    },
+    {
+      "bytes": 5617,
+      "copy": "provisional-claim-review.json",
+      "original": ".cache/final-claim-review-v1/review.json",
+      "sha256": "ea46c67c930f80136356666377142277bab75d976aa4a92c3b46b78c4f4311b0"
+    },
+    {
+      "bytes": 1633,
+      "copy": "main-promotion-v3.json",
+      "original": ".cache/contract-main-promotion-v3.json",
+      "sha256": "6360aafa4110b8a8b91019acdad1440dfcac8b23ef0b2949d1d7ed4c5167ef76"
+    },
+    {
+      "bytes": 1161,
+      "copy": "core-fixture-promotion-v2.json",
+      "original": ".cache/contract-core-fixture-promotion-v2.json",
+      "sha256": "384fd468a89406cf084daee27296c4d7411437cd88eb30fcd7c2974c6d02f0f5"
+    },
+    {
+      "bytes": 1181,
+      "copy": "peer-tests-promotion-v3.json",
+      "original": ".cache/contract-peer-tests-promotion-v3.json",
+      "sha256": "c373f8fdbf87d3f8c4e7413a326557cc88c8a3d66a24b0d3d9df0877d083bfdc"
+    },
+    {
+      "bytes": 1751,
+      "copy": "independent-copy-audit-v3.json",
+      "original": ".cache/final-held-promotion-audit-v1/receipt.json",
+      "sha256": "451226d91c59d6dacc213ec4e44c1ba0dbf0337530b74cd9f0bc29ab85b60de2"
+    }
+  ]
+}

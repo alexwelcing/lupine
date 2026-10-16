@@ -1,0 +1,30 @@
+{
+  "schema": "repair_evidence_copy_review.v1",
+  "status": "PASS",
+  "bundles": [
+    {
+      "directory": "reports/bridge-fixture-repair-v1",
+      "exact_wrappers_verified": 25,
+      "preserved_failure_wrappers": [
+        "reports/bridge-fixture-repair-v1/evidence/14.json",
+        "reports/bridge-fixture-repair-v1/evidence/04.json"
+      ]
+    },
+    {
+      "directory": "reports/supervisor-test-isolation-v1",
+      "exact_wrappers_verified": 37,
+      "preserved_failure_wrappers": [
+        "reports/supervisor-test-isolation-v1/18.json",
+        "reports/supervisor-test-isolation-v1/21.json",
+        "reports/supervisor-test-isolation-v1/17.json",
+        "reports/supervisor-test-isolation-v1/20.json",
+        "reports/supervisor-test-isolation-v1/26.json",
+        "reports/supervisor-test-isolation-v1/23.json",
+        "reports/supervisor-test-isolation-v1/12.json",
+        "reports/supervisor-test-isolation-v1/19.json",
+        "reports/supervisor-test-isolation-v1/24.json"
+      ]
+    }
+  ],
+  "scope": "Read-only restoration/copy audit; focusedtest receipt separate."
+}

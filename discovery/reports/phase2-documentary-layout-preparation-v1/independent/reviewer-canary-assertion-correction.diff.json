@@ -1,0 +1,8 @@
+{
+  "original_bytes": 994,
+  "original_path": "reports/phase2-documentary-layout-preparation-v1/independent/reviewer-canary-assertion-correction.diff",
+  "original_sha256": "2023046cbebf68777b9265e3c507dc89fdc7c11a59132b1f0b9516f31d3bafbe",
+  "reason": "Preserve exact historical bytes with original whitespace or directory-relative links; this wrapper does not rewrite the underlying evidence.",
+  "representation": "lossless_utf8_text",
+  "text": "--- first/tests.py\n+++ test_li_v3_layout_localization_review.py\n@@ -291,7 +291,8 @@\n             self.assertFalse(state['worksheet_read_completed'])\n             self.assertFalse(state['worksheet_utf8_decode_started'])\n             self.assertTrue(report['worksheet_exposure'][ROLES[0]]['worksheet_xml_parse_completed'])\n-            self.assertNotIn('PRIVATE_',json.dumps(report))\n+            self.assertNotIn('PRIVATE_READ_CANARY',json.dumps(report))\n+            self.assertNotIn('PRIVATE_CLOSE_CANARY',json.dumps(report))\n \n     def test_owned_archive_cleanup_failure_clears_layout_and_suppresses_retry(self):\n         original=M.envelope._growth_zip_structure\n@@ -316,7 +317,7 @@\n             held.clear()\n             gc.collect()\n         self.assertEqual(stderr.getvalue(),'')\n-        self.assertNotIn('PRIVATE_',json.dumps(report))\n+        self.assertNotIn('PRIVATE_ARCHIVE_CLOSE_CANARY',json.dumps(report))\n \n     def test_cell_count_exact_boundary(self):\n         def raw(count):\n"
+}

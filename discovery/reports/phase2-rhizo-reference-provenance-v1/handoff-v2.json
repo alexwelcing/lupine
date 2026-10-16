@@ -1,0 +1,21 @@
+{
+  "schema": "lupine.rhizo-documentary.handoff.v2",
+  "created_at": "2026-10-16T12:05:13.988480+00:00",
+  "copy_only_publication_root": ".cache/phase2-rhizo-documentary-review-v1/promotion-v2/reports/phase2-rhizo-reference-provenance-v1",
+  "do_not_copy": "Historical promotion/ or private projection. Use promotion-v2 only.",
+  "inventory": {
+    "path": ".cache/phase2-rhizo-documentary-review-v1/promotion-inventory-v2.json",
+    "bytes": 9006,
+    "sha256": "ca0e1764726279b4d21b94ab46ab0bc1b94144ad7b2d16f8974b9ea1849e5e38"
+  },
+  "file_count": 37,
+  "total_bytes": 272347,
+  "independent_correction_review_sha256": "783d1213a1c781e1e92716449d87be643524e4a4dc3e7133cd8fcf28832d3c36",
+  "final_readme_sha256": "9c5b031347363d113a5be6c66e584cab9c2f9fc0964441c7d9afdf0a79d1f758",
+  "final_source_bindings_sha256": "a5f2c526e55ecf12890f547c540fa3e47808817c51ed393f48ea19beff508939",
+  "historical_negative_scope_correction_preserved": true,
+  "status": "PUBLIC_DOCUMENTARY_PROVENANCE_ONLY_NOT_ADMITTED",
+  "scientific_result": "43 locations,36 IDs,172 candidate links accounted for. Exact paired stored labels/completeness/estimand remain unverified. Old binder reconstruction/source agreement are separate claims, not universal stored-label census prerequisites. G21 remains blocked.",
+  "next_scope": "Root selected data-free preparation of minimum36 bound-file stored-label readiness; no actual follow-on read authorized here.",
+  "actions": "Public-artifact copying, reversible wrapping, hash/size/link/whitespace verification only; no new source or private reads, numerical comparisons, tests, fits, network, tracked writes or Git operations."
+}

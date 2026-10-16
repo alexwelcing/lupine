@@ -1,0 +1,13 @@
+{
+  "actual_source_operations": 0,
+  "after_sha256": "80e0d39728320d115ddc8a9ce3467904294a57310af719c81e9686786de25263",
+  "at": "2026-10-16T14:05:47.442874+00:00",
+  "before_sha256": "8a744a3699317fb53680754e01067904a0afbe826057a9a2def6995d473e7e95",
+  "finder": "independent planner, source-only before independent execution",
+  "findings": [
+    "Accepted design requires two complete identical prior projections before phase advance; original draft bound only one.",
+    "Returned phase_binding_pins aliased trusted nested configuration."
+  ],
+  "phase_B_C_default_unbound": true,
+  "repair": "Require ordered fixed-slot1/2 pair and complete canonical equality; return detached pins."
+}

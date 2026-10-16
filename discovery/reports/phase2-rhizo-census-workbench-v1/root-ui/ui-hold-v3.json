@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-16T13:32:50.265616+00:00",
+  "source_sha256": "8e45d59eab288d5ce6c83fabe6b30ef4c707736913d13b8bf99f0e09a5b0628a",
+  "section_sha256": "66ec27e80dad95674ad6b30c6346f448cd19859f77bb8a07ae92e3f381e05331",
+  "styles_sha256": "d7042060aae32dba2c9c5ad6f6df86a5ee51f7f1ea0dfb7aea413bf81bd3eaf9",
+  "rounding": "four significant decimal digits; nearest; exact halfway away from zero; bounded BigInt division without binary floating conversion",
+  "format": "exact zero is0; \u2248 signed fixed decimal for rounded exponent-3..3, otherwise normalized decimal e notation; insignificant trailing zeros removed",
+  "dom": "each numeric cell is details.recorded-census-exact with summary rounded text and code full exact rational; export unchanged",
+  "actual_public_resource_unchanged": "a9ab9d72c6c39be9338e951b657e0587ae8f4dbe534b276b8f8f8951a7b1a63a",
+  "tests": "pending final syntax and independent display checks"
+}

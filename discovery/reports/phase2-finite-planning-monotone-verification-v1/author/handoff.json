@@ -1,0 +1,19 @@
+{
+  "actual_compile_exit_code": 0,
+  "axiom_audit_sha256": "7881bb294603796242d9a796a4049948210a76e75229f750efbac39f8d4377bd",
+  "baseline_commit": "88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d",
+  "compile_attempts": 1,
+  "compile_failures": 0,
+  "execution_receipt_sha256": "81398d2c10351997f0f76f662d41448e14abebe046ae40ecb557ff9b734f778e",
+  "independent_peer_review": false,
+  "inventory_sha256": "1d929b61f4908a98b25fc400452e83775e8b15e022f1e94f1e662682a41a6dce",
+  "original_thirteen_statements_unchanged": true,
+  "python_refinement_claim": false,
+  "readme_sha256": "d4bf62e58a04c9e268778b60febaca00f4551eae11cd918bc6424c5ec6d4f278",
+  "schema": "lupine.finite-planning-monotone.handoff.v1",
+  "scientific_status_change": false,
+  "source_sha256": "fa1dedddf324fbd66a96de9eef1d775babccbc3668a81fd48726287dffe2268d",
+  "status": "COMPILED_CANDIDATE",
+  "theorem_count": 4,
+  "tracked_integration_performed": false
+}

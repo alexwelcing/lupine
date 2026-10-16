@@ -1,0 +1,30 @@
+{
+  "dryad_reference_hits": [
+    {
+      "identifiers": [
+        {
+          "doi": "10.5061/dryad.ph81h",
+          "field": "DOI"
+        },
+        {
+          "doi": "10.5061/dryad.ph81h",
+          "field": "unstructured"
+        }
+      ],
+      "reference_index_zero_based": 62,
+      "selected_reference_fields": {
+        "DOI": "10.5061/dryad.ph81h",
+        "author": "I. Petousis",
+        "unstructured": "Petousis, I. Dryad Digital Repository http://dx.doi.org/10.5061/dryad.ph81h (2017)",
+        "year": "2017"
+      }
+    }
+  ],
+  "machine_access": "Retained full Crossref metadata JSON container only; researcher output limited to candidate Dryad reference identity fields.",
+  "no_full_article_read": true,
+  "no_new_network_request": true,
+  "primary_doi": "10.1038/sdata.2016.134",
+  "source_bytes": 28096,
+  "source_path": ".cache/phase2-paired-archive-fallback-metadata-v1/dielectric_paper_metadata/response.body",
+  "source_sha256": "85f966296f5cc16e8d2d80f3e687b22d93f4d4b2ae303da28bd14a6b5b6d57e6"
+}

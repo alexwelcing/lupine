@@ -1,0 +1,38 @@
+{
+  "files": [
+    {
+      "bytes": 13038,
+      "path": "review.py",
+      "sha256": "ac0ba78a870bb5139ee3bd78ac60f9a414e774809836a9ad336c2400504583ef"
+    },
+    {
+      "bytes": 14157,
+      "path": "review.json",
+      "sha256": "a05af305ca2dd7f554a4b22379b42f2d9c97d6a3a48682822ce9b29917da4e67"
+    },
+    {
+      "bytes": 68,
+      "path": "execution.json",
+      "sha256": "9b69fb07027886e5e77dd2db55885ad4bd45aa81a8a283065611ac25eebc2d36"
+    },
+    {
+      "bytes": 279,
+      "path": "execution.stdout",
+      "sha256": "9d9c14524911976477a17c8ec00e09f05cc8eaff5eb5888d6d8a66f3e0b5c962"
+    },
+    {
+      "bytes": 0,
+      "path": "execution.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2375,
+      "path": "REVIEW.md",
+      "sha256": "eed4ba2d585c5b9fea8008cea36866b1b417eda07d631bd35266df0543661aba"
+    }
+  ],
+  "schema": "lupine.mpea.final_release_review_copy_allowlist.v1",
+  "scope": "Review source, completed read-only review execution, artifact identity ledger and bounded interpretation only; no study inputs or raw registration captures.",
+  "source_commit": "6585a605d5d325e84423c7e35c7286efe85cfb6f",
+  "status": "SAFE_PUBLIC_RELEASE_EVIDENCE"
+}

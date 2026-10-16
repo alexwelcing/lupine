@@ -1,0 +1,148 @@
+{
+  "actual_operations": 0,
+  "exclusions": [
+    "generated-production-*",
+    "Python caches",
+    "promotion-bound file duplicates (copyset included; source snapshots and original test handoffs identify all eight files)",
+    "actual Li raw/private source or captures"
+  ],
+  "files": [
+    {
+      "bytes": 2497,
+      "path": "baseline-rebind-v1/README.md",
+      "sha256": "55afc092bd0c32438558f6549d5a2b54c8b470836ce5acbf3d37851cc8b6f0c8"
+    },
+    {
+      "bytes": 2278,
+      "path": "baseline-rebind-v1/README.md.diff",
+      "sha256": "9a63328eae12508d28942bd96a09ecf21efb543848ecb31e1ccc4746805ef208"
+    },
+    {
+      "bytes": 1468,
+      "path": "baseline-rebind-v1/baseline-source-verification.json",
+      "sha256": "bde795d85045d059bb16519961da25bd49bfc223740f59082f208e1bf8888c03"
+    },
+    {
+      "bytes": 17903,
+      "path": "baseline-rebind-v1/before/README.md",
+      "sha256": "87d3bc80f6442658fc1d027e30206bbb04c44635c5f9b258f0ec0f6c207ff6cb"
+    },
+    {
+      "bytes": 10467,
+      "path": "baseline-rebind-v1/before/interface.complete-route-v2.json",
+      "sha256": "4c16d7156f43388982ce778a0c90ba503e3a3765e6cc444e038d7a15f61e91c1"
+    },
+    {
+      "bytes": 81591,
+      "path": "baseline-rebind-v1/before/li_v3_readiness.py",
+      "sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219"
+    },
+    {
+      "bytes": 61640,
+      "path": "baseline-rebind-v1/before/li_v3_readiness_production.py",
+      "sha256": "a3370ac84762ef7f859061bde93f118a1c1981b02460e9ddd0b1cd38e55b840b"
+    },
+    {
+      "bytes": 46051,
+      "path": "baseline-rebind-v1/before/test_li_v3_readiness_production.py",
+      "sha256": "809c0126ef9f130fad264ef2617f67b9b99db103a3a14c476a6e60bfb4905470"
+    },
+    {
+      "bytes": 18081,
+      "path": "baseline-rebind-v1/held/README.md",
+      "sha256": "1fd11e47c4a332034b213348e4a85165e18ba0693791483cd703c326eb8d87ca"
+    },
+    {
+      "bytes": 10467,
+      "path": "baseline-rebind-v1/held/interface.complete-route-v2.json",
+      "sha256": "4c16d7156f43388982ce778a0c90ba503e3a3765e6cc444e038d7a15f61e91c1"
+    },
+    {
+      "bytes": 81591,
+      "path": "baseline-rebind-v1/held/li_v3_readiness.py",
+      "sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219"
+    },
+    {
+      "bytes": 61640,
+      "path": "baseline-rebind-v1/held/li_v3_readiness_production.py",
+      "sha256": "77dece96850b09be2f13acd275cc28789ea0e3bc408cfcec86bcd02f488fed85"
+    },
+    {
+      "bytes": 46051,
+      "path": "baseline-rebind-v1/held/test_li_v3_readiness_production.py",
+      "sha256": "809c0126ef9f130fad264ef2617f67b9b99db103a3a14c476a6e60bfb4905470"
+    },
+    {
+      "bytes": 1354,
+      "path": "baseline-rebind-v1/hold.json",
+      "sha256": "ddc585d492da41d6363d3926b9774c7b382bf6f71b92fd980ea54624be7c3841"
+    },
+    {
+      "bytes": 740,
+      "path": "baseline-rebind-v1/li_v3_readiness_production.py.diff",
+      "sha256": "277415d22d1b0649f6092ccab7cabb1903e264eb099968636013eaa7a91bcc78"
+    },
+    {
+      "bytes": 1823,
+      "path": "baseline-rebind-v1/verification.json",
+      "sha256": "bcb8e86545428220df9bcf93428f21b16c66876e79a534b90cd013ad5edb0861"
+    },
+    {
+      "bytes": 5136,
+      "path": "promotion-copyset.final.json",
+      "sha256": "b3b065ade262319238108efd0b6b296cc7ff947cb3c4c4eec8154d072db7559a"
+    },
+    {
+      "bytes": 1923,
+      "path": "receipts/final-baseline-rebind-first/bootstrap.py",
+      "sha256": "1d397950d5db09797ef443e3737ee7ac41cbcd664fbc2dafd8597f2bd76ba1de"
+    },
+    {
+      "bytes": 1953,
+      "path": "receipts/final-baseline-rebind-first/execution.json",
+      "sha256": "b78962fa26b7c99714e8d412fec13e91c4da91830a08f4d9ad966bdfb01a151f"
+    },
+    {
+      "bytes": 81591,
+      "path": "receipts/final-baseline-rebind-first/li_v3_readiness.py",
+      "sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219"
+    },
+    {
+      "bytes": 61640,
+      "path": "receipts/final-baseline-rebind-first/li_v3_readiness_production.py",
+      "sha256": "77dece96850b09be2f13acd275cc28789ea0e3bc408cfcec86bcd02f488fed85"
+    },
+    {
+      "bytes": 711,
+      "path": "receipts/final-baseline-rebind-first/scope.json",
+      "sha256": "8d58e756800538624f80add1f80cce229b7af9d84dcc03a7382b292a4a176b6b"
+    },
+    {
+      "bytes": 1150,
+      "path": "receipts/final-baseline-rebind-first/start.json",
+      "sha256": "17aaa3417e898275cb93f23f991de6010c8500af9094c47aed8a59a9c846d044"
+    },
+    {
+      "bytes": 878,
+      "path": "receipts/final-baseline-rebind-first/stderr.txt",
+      "sha256": "1ebf36237cd3e1ae66394b6a9188dc0f92192c08411d6cd8259dfb7c279e89dc"
+    },
+    {
+      "bytes": 0,
+      "path": "receipts/final-baseline-rebind-first/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 46051,
+      "path": "receipts/final-baseline-rebind-first/test_li_v3_readiness_production.py",
+      "sha256": "809c0126ef9f130fad264ef2617f67b9b99db103a3a14c476a6e60bfb4905470"
+    },
+    {
+      "bytes": 4353,
+      "path": "record_baseline_rebind.py",
+      "sha256": "79875718ea049bc97e3a860f86fad1d83e25d74b7f9ca3a03ff48936e1f326f7"
+    }
+  ],
+  "preservation": "Additive only; earlier behavior/counter report files unchanged.",
+  "status": "FROZEN_FINAL_BASELINE_REBIND_ADDENDUM"
+}

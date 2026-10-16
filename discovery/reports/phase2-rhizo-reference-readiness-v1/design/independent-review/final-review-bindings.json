@@ -1,0 +1,52 @@
+{
+  "schema": "lupine.rhizo-reference-readiness.independent-review-bindings.v1",
+  "created_at": "2026-10-16T11:26:36.488490+00:00",
+  "scope": "Byte identities of held design and independent review artifacts only.",
+  "bindings": [
+    {
+      "path": ".cache/phase2-rhizo-reference-readiness-design-v1/README.md",
+      "bytes": 9723,
+      "sha256": "c3152108ac58cae50e815cf27bf3a73787a34a0360f33642b15a00a33e948a0a"
+    },
+    {
+      "path": ".cache/phase2-rhizo-reference-readiness-design-v1/planned-inputs.json",
+      "bytes": 4746,
+      "sha256": "216907d07f977881c4220cb9c697708217101c2747c54bb7874b20e1470e3092"
+    },
+    {
+      "path": ".cache/phase2-rhizo-reference-readiness-design-v1/reference-frame.json",
+      "bytes": 71649,
+      "sha256": "80a1aca0fd56d89f49ff5f0e4b3930405f11ae1cd4acea14b8edab2381940aa4"
+    },
+    {
+      "path": ".cache/phase2-rhizo-reference-readiness-design-v1/source-bindings.json",
+      "bytes": 1874,
+      "sha256": "63402374fe80c558007fc17e56f9937ed1bbd9611fd1a5ae8d98adb2f2fa8709"
+    },
+    {
+      "path": ".cache/phase2-rhizo-reference-readiness-review-v1/initial-challenge.md",
+      "bytes": 5504,
+      "sha256": "51b313a6e4e11f05e23d17462e032afe4a38d81cf4f4d4a67eae1861b376f8cd"
+    },
+    {
+      "path": ".cache/phase2-rhizo-reference-readiness-review-v1/source-bindings.json",
+      "bytes": 1269,
+      "sha256": "520f3bacd46514f8ef76209643352e58c55bccc73cb6e1d023639ef41b48a7e9"
+    },
+    {
+      "path": ".cache/phase2-rhizo-reference-readiness-review-v1/public-counts.json",
+      "bytes": 3027,
+      "sha256": "88a19d9042aaa805d6c96d7ca095c4a5974d59ed9815612913d6ecba49636545"
+    },
+    {
+      "path": ".cache/phase2-rhizo-reference-readiness-review-v1/design-check.json",
+      "bytes": 1915,
+      "sha256": "78782282aa9003d8ed836191cf2e1d3b4ba84ca6e08a6b0f32bd9087534916c8"
+    },
+    {
+      "path": ".cache/phase2-rhizo-reference-readiness-review-v1/final-review.json",
+      "bytes": 5325,
+      "sha256": "986dd2184018353b041aa2c1f90abb59edc5961e561af635109cf53e7541d2f2"
+    }
+  ]
+}

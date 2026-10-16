@@ -1,0 +1,25 @@
+{
+  "actual_data_access": false,
+  "created": "2026-10-16T14:52:24.852224+00:00",
+  "distinct_methods": 50,
+  "final_source_approval": false,
+  "first_failed_preserved": true,
+  "inventory": {
+    "path": "inventory.json",
+    "sha256": "95fd6596328df5c0ed7ae9045ba5e22fb5fb4a4447d205c685da9c330bf33750"
+  },
+  "promotion_test": {
+    "destination": "tests/test_li_v3_readiness_production_review.py",
+    "sha256": "23f263d40f819a5ed9724006835369d6b721a24c2a5cd8c71158b547d01b04b8",
+    "source": "test_li_v3_readiness_production_review.py",
+    "status": "INTERMEDIATE_DO_NOT_PROMOTE_AS_FINAL_UNTIL_NARROW_COUNTER_REGRESSION_COMPLETE"
+  },
+  "publication_allowlist": "Exactly inventory.files plus inventory.json and handoff.json. No directory-wide copy.",
+  "review": {
+    "path": "behavior-review.json",
+    "sha256": "a10dd11c727409e272e0ea7880271f60491c9ceacfe69a2b15dacec2a35f746c"
+  },
+  "schema": "li.readiness.production.independent-intermediate-handoff.v1",
+  "status": "BLOCKED_PENDING_COUNTER_LEDGER_REPAIR_AND_PUBLISHED_BASELINE_REBIND",
+  "test_invocations": 2
+}

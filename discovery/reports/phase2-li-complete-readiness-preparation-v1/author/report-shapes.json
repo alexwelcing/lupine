@@ -1,0 +1,111 @@
+{
+  "documentary": {
+    "fields": [
+      {
+        "assertion": "MANIFEST_ASSERTION | UNRESOLVED",
+        "declared_type": "type or null",
+        "field_id": "identifier",
+        "meaning": "binding meaning",
+        "storage_checked": "bool",
+        "text": "reviewed literal only if disclose_text=true, otherwise null",
+        "unit": "binding unit or null"
+      }
+    ],
+    "numerical_validity": "NOT_CHECKED",
+    "semantic_authority": "REVIEWED_BINDING_PREMISES"
+  },
+  "exposure": {
+    "archive_close_completed": "bool",
+    "archive_close_error": "null | ARCHIVE_CLOSE_FAILED",
+    "archive_close_started": "bool",
+    "archive_open_completed": "bool",
+    "archive_open_started": "bool: new package-owned archive only",
+    "character_data_state": "NOT_ATTEMPTED | MAY_HAVE_BEEN_DECODED | PRIVATE_XML_DECODE_COMPLETED",
+    "decompressions_completed": "int",
+    "decompressions_started": "int",
+    "header_replay_completed": "bool: routine returned, even if mismatch; qualification separate",
+    "header_replay_started": "bool: before payload-free G34 routine call",
+    "layout_roles": "per-role unchanged G32 operation flags",
+    "member_opens_completed": "int",
+    "member_opens_started": "int",
+    "utf8_decodes_completed": "int",
+    "utf8_decodes_started": "int",
+    "whole_buffer_supplied": "bool",
+    "xml_parses_completed": "int",
+    "xml_parses_started": "int"
+  },
+  "failure_payload_policy": "Mechanical/binding/cleanup/public-size failure: engineering_status NO_GO, package/roles/documentary/frame null. Completed unresolved frame: engineering_status COMPLETE, reason and frame.admission_status NO_GO_UNRESOLVED_PREMISE, complete payload retained.",
+  "frame": {
+    "admission_status": "METADATA_FRAME_READY_FOR_SEPARATE_LABEL_RULE | NO_GO_UNRESOLVED_PREMISE",
+    "class_counts": "all six closed classes mapped to int",
+    "numerical_validity": "NOT_CHECKED",
+    "overlap_authority": "NOT_ASSESSED | SUPPLIED_AUTHENTICATED_MANIFEST_PREMISE",
+    "overlap_meaning": "PROVENANCE_KEY_COMPARISON_ONLY",
+    "paired_count": null,
+    "physical_explicit_rows": "int",
+    "physical_independence": "NOT_ESTABLISHED",
+    "rows": [
+      {
+        "class": "HEADER | DATA | BLANK | NOTE | SUMMARY | UNRESOLVED",
+        "class_authority": "MANIFEST_ASSERTION | NO_EXPLICIT_CELLS",
+        "endpoint_structure": {
+          "endpoint_id": {
+            "cell_present": "bool",
+            "declared_type": "type or null",
+            "formula_element_present": "bool",
+            "numerical_validity": "NOT_CHECKED"
+          }
+        },
+        "metadata": {
+          "field_id": "selected reviewed-role text or null"
+        },
+        "overlap": "NOT_ASSESSED | UNKNOWN_KEY | DECLARED_PROVENANCE_KEY_MATCH | NO_DECLARED_KEY_MATCH",
+        "pairing": "NOT_APPLICABLE | MANIFEST_ASSERTED_SAME_TEST | MANIFEST_ASSERTED_AGGREGATE | UNKNOWN",
+        "reference_join": "NOT_APPLICABLE | DECLARED_KEY_MATCH | UNRESOLVED",
+        "role_id": "identifier",
+        "row": "int",
+        "unresolved": [
+          "closed codes"
+        ]
+      }
+    ],
+    "unresolved_rows": "int"
+  },
+  "package": {
+    "known_role_checks": "UNCHANGED",
+    "opaque_parts": "int 0..128",
+    "opaque_semantics": "UNINTERPRETED",
+    "status": "RESTRICTED_METADATA_VALID",
+    "unopened_payload_crc_verified": false
+  },
+  "role": {
+    "binding_status": "EXACT_VALIDATED_WORKBOOK_RELATIONSHIP",
+    "cells": [
+      {
+        "coordinate": "A1",
+        "declared_type": "declared G32 type or absent",
+        "formula_element_present": "bool"
+      }
+    ],
+    "merges": [
+      {
+        "end_coordinate": "B2",
+        "start_coordinate": "A1"
+      }
+    ]
+  },
+  "roles": {
+    "Column Descriptions": "unchanged G32 role object",
+    "References": "unchanged G32 role object"
+  },
+  "schema": "lupine.discovery.li_v3.readiness.synthetic.v1",
+  "semantic_status": "Manifest assertions stay explicit; opaque semantics remain unresolved; all numerical/scientific fields stay blocked.",
+  "source_sha256": "whole generated buffer identity, not target-free or content-validity evidence",
+  "success_reasons": {
+    "documentary": "DOCUMENTARY_MAPPING_COMPLETE_WITH_EXPLICIT_UNKNOWNS",
+    "frame": "METADATA_FRAME_READY_FOR_SEPARATE_LABEL_RULE",
+    "layout": "LAYOUT_READY_MAPPING_UNBOUND"
+  },
+  "top_level": "See interface.final-v3.json report field list; exposure adds header_replay_started and header_replay_completed bools.",
+  "wire_format": "canonical = compact sorted-key ensure_ascii JSON + one LF, ASCII bytes; digest includes LF"
+}

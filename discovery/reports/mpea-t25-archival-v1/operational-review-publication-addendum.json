@@ -1,0 +1,64 @@
+{
+  "adopted_amendment": {
+    "adoption_diff_sha256": "61454f7f3e9971d441a5d5f5f3b33bb4ea27ef4129ec267d09096a96c3ce5a2d",
+    "only_changes": [
+      "EXPLICIT_ROOT_ADOPTION_WITH_EXECUTION_GATES_STILL_PENDING",
+      "LINK_TO_EXACT_PUBLIC_OPERATIONAL_STOP"
+    ],
+    "path": "docs/mpea-preallocation-recovery-v2.md",
+    "reviewed_draft_sha256": "b07f4fd92b9c8d3ace0d21f0184b615e2150802a1dcd87a8d3d389f1397d2abe",
+    "scientific_or_stopping_rule_drift": false,
+    "sha256": "d8055ec620478cc12cd2486a88c16833616053934882b93f367872d520d695cf"
+  },
+  "evidence_publication_policy": {
+    "raw_launch_supervisor_parent_capture": "PRIVATE_ONLY_NEVER_COPIED",
+    "review_receipt": "PRIVATE_ORIGINAL_RETAINED_HASH_PUBLISHED",
+    "reviewer_corrected_source": "PRIVATE_ORIGINAL_RETAINED_HASH_PUBLISHED",
+    "reviewer_correction_patch": "SAFE_EXACT_OPTIONAL_PUBLIC_COPY",
+    "reviewer_first_failure": "PRIVATE_ORIGINAL_RETAINED_CLOSED_STATUS_AND_HASH_PUBLISHED",
+    "reviewer_initial_source": "PRIVATE_ORIGINAL_RETAINED_HASH_PUBLISHED"
+  },
+  "limits": [
+    "The original review files contain private operational path metadata, so this closed addendum publishes their exact whole-file identities and failure/correction outcomes instead.",
+    "The patch contains only reviewer code changes and public source filenames; it includes no operational record contents or private path literals.",
+    "Original failure and successful review remain distinct immutable records; nothing has been relabeled as a first-pass success.",
+    "This review verifies copied public records and adopted amendment wording only; it does not execute or authorize a v2 study.",
+    "No scientific archive, feature vector, allocation transcript or target artifact was accessed."
+  ],
+  "no_main_edits": true,
+  "no_new_execution": true,
+  "public_copies": {
+    "reports/mpea-t25-archival-v1/operational-stop.json": {
+      "byte_exact": true,
+      "bytes": 2399,
+      "sha256": "c6553fc321b1447392eee90e08ec173161c34d1fb488b8244dab78663322be14"
+    },
+    "reports/mpea-t25-archival-v1/registration/public-registration.json": {
+      "byte_exact": true,
+      "bytes": 995,
+      "sha256": "b08e02721b147207664163de49008be729cfa400b27b4bfa83eb55e7651019a5"
+    },
+    "reports/mpea-t25-archival-v1/registration/registration-publication-summary.json": {
+      "byte_exact": true,
+      "bytes": 2253,
+      "sha256": "7d8916dd554f87b3a6c602f1a504f254d09224c2aa09e45c0821d3528bcc1c86"
+    }
+  },
+  "review_history": {
+    "correction": "EXACT_PRODUCER_SPECIFIC_SEAL_PREIMAGES",
+    "final_review_status": "PASS_OPERATIONAL_PREALLOCATION_BOUNDARY",
+    "first_failure_is_producer_failure": false,
+    "first_review_exit_code": 1,
+    "first_review_public_outputs_created": false,
+    "first_review_status": "FAILED_REVIEWER_PREIMAGE_ASSUMPTION",
+    "original_private_evidence_sha256": {
+      "review_receipt": "812c5e8b2fde8b2a3711ebc599115cd00c6f9e3dd16e7b0162f5a00fc05bcc68",
+      "reviewer_corrected_source": "a419ea06fb75306fc8362a470a0bd02d60e11490893b30760cc458da0a6af67d",
+      "reviewer_correction_patch": "9d765cec1984624e1846f6ee7d5f610ead73154020baa3dcd4850928473c9374",
+      "reviewer_first_failure": "d419c0d8bab281dcccf69d524672b633659209f41195b8e956d10b7451d905f7",
+      "reviewer_initial_source": "c742751e4aaf1a384b68cc6f033bc41e225572181cf3ee72427f45179dc3b77b"
+    }
+  },
+  "schema": "lupine.mpea.operational_stop_publication_review.v1",
+  "status": "PASS_PUBLIC_COPIES_AND_ADOPTION_SCOPE"
+}

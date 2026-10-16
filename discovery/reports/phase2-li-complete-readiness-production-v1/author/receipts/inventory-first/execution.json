@@ -1,0 +1,48 @@
+{
+  "actual_source_operations": 0,
+  "dependencies_held_after": true,
+  "dependencies_held_before": true,
+  "exit_code": 0,
+  "finished_at": "2026-10-16T14:28:44.196474+00:00",
+  "guard_policy": "Network forbidden; subprocess Git only with cwd under candidate generated repositories; repository reads restricted to fixed source allowlist or candidate directory. Production guards tested only with generated temporary ROOT and mocked prior G34 context.",
+  "held_dependency_count": 10,
+  "process_seconds": 40.278842,
+  "source_after": {
+    "li_v3_readiness.py": {
+      "bytes": 81591,
+      "sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219"
+    },
+    "li_v3_readiness_production.py": {
+      "bytes": 42389,
+      "sha256": "60d0790742982172a6184f3948f6aacdf9336026263a91485fcac102ff1a6ec3"
+    },
+    "scope.json": {
+      "bytes": 711,
+      "sha256": "8d58e756800538624f80add1f80cce229b7af9d84dcc03a7382b292a4a176b6b"
+    },
+    "test_li_v3_readiness_production.py": {
+      "bytes": 35020,
+      "sha256": "407e820ca0d534d06cce6edf7535e00bb7fef71292df6c22a9d17c5b81e629e7"
+    }
+  },
+  "source_before": {
+    "li_v3_readiness.py": {
+      "bytes": 81591,
+      "sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219"
+    },
+    "li_v3_readiness_production.py": {
+      "bytes": 42389,
+      "sha256": "60d0790742982172a6184f3948f6aacdf9336026263a91485fcac102ff1a6ec3"
+    },
+    "scope.json": {
+      "bytes": 711,
+      "sha256": "8d58e756800538624f80add1f80cce229b7af9d84dcc03a7382b292a4a176b6b"
+    },
+    "test_li_v3_readiness_production.py": {
+      "bytes": 35020,
+      "sha256": "407e820ca0d534d06cce6edf7535e00bb7fef71292df6c22a9d17c5b81e629e7"
+    }
+  },
+  "source_held": true,
+  "started_at": "2026-10-16T14:28:03.917682+00:00"
+}

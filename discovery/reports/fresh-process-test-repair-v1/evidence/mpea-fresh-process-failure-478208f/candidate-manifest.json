@@ -1,0 +1,27 @@
+{
+  "files": [
+    {
+      "bytes": 2016,
+      "candidate": ".cache/mpea-fresh-process-failure-478208f/candidate/mpea_archive_review_reproduction.py",
+      "destination": "tests/mpea_archive_review_reproduction.py",
+      "original_sha256": "193d39f2dceda1709bff123a0280a08785aaebc35464858bfaa0b720a2193cba",
+      "patch": ".cache/mpea-fresh-process-failure-478208f/mpea_archive_review_reproduction.py.patch",
+      "sha256": "b0947a81a367a8efcb1e779898cba5096c165c9136042055344d37c2c1c23012",
+      "source": ".cache/mpea-fresh-process-failure-478208f/before/mpea_archive_review_reproduction.py"
+    },
+    {
+      "bytes": 22384,
+      "candidate": ".cache/mpea-fresh-process-failure-478208f/candidate/test_mpea_archive_driver_review.py",
+      "destination": "tests/test_mpea_archive_driver_review.py",
+      "original_sha256": "b34ca211196f96d507d89a99c33716c2fc148b1915612b6d837a269b67a767bf",
+      "patch": ".cache/mpea-fresh-process-failure-478208f/test_mpea_archive_driver_review.py.patch",
+      "sha256": "4f1093e89114ae8daab5f2ae6c9b8a115f27296ab2363ae45a4dabb9c2b0a2c9",
+      "source": ".cache/mpea-fresh-process-failure-478208f/before/test_mpea_archive_driver_review.py"
+    }
+  ],
+  "main_edits": false,
+  "producer_changes": false,
+  "schema": "lupine.fresh-fixed-role-test-correction.v1",
+  "scope": "fresh fixed-role computation verifies exact scientific identity and explicit usage-only complete-receipt differences; immutable import test remains separate",
+  "true_import_test_unchanged": true
+}

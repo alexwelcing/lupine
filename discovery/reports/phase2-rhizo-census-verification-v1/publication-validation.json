@@ -1,0 +1,96 @@
+{
+  "additive_inventory_and_handoff": 2,
+  "all_selected_source_bytes_held": true,
+  "artifact_binaries_or_private_data_opened": false,
+  "ci": "PENDING_OBSERVATION_AT_HANDOFF",
+  "exact_copies": 30,
+  "format_check": "All publication files are UTF-8 text; no trailing whitespace, space-before-tab indentation or blank EOF.",
+  "independent_handoff_allowlist_count": 19,
+  "independent_inventory_members_reconciled": 17,
+  "lossless_wrappers": 0,
+  "markdown_local_link_count": 19,
+  "markdown_local_links": [
+    {
+      "from": "README.md",
+      "target": "package/package-execution.json"
+    },
+    {
+      "from": "README.md",
+      "target": "package/package-verification.json"
+    },
+    {
+      "from": "README.md",
+      "target": "package/retained-audit-execution.json"
+    },
+    {
+      "from": "README.md",
+      "target": "package/retained-audit.json"
+    },
+    {
+      "from": "README.md",
+      "target": "independent-artifact-review/ACTUAL-REVIEW.md"
+    },
+    {
+      "from": "README.md",
+      "target": "independent-artifact-review/first-actual-artifact-audit/review.json"
+    },
+    {
+      "from": "README.md",
+      "target": "independent-artifact-review/actual-execution.json"
+    },
+    {
+      "from": "README.md",
+      "target": "package/retained/release-artifacts.json"
+    },
+    {
+      "from": "README.md",
+      "target": "published.json"
+    },
+    {
+      "from": "README.md",
+      "target": "independent-artifact-review/README.md"
+    },
+    {
+      "from": "README.md",
+      "target": "independent-artifact-review/ACTUAL-REVIEW.md"
+    },
+    {
+      "from": "README.md",
+      "target": "independent-artifact-review/preexecution-amendment.json"
+    },
+    {
+      "from": "README.md",
+      "target": "source-copy-map.json"
+    },
+    {
+      "from": "README.md",
+      "target": "publication-validation.json"
+    },
+    {
+      "from": "README.md",
+      "target": "ci-pending-at-handoff.json"
+    },
+    {
+      "from": "independent-artifact-review/README.md",
+      "target": "prepared-promotion-inputs-final.json"
+    },
+    {
+      "from": "independent-artifact-review/README.md",
+      "target": "preexecution-amendment.json"
+    },
+    {
+      "from": "independent-artifact-review/ACTUAL-REVIEW.md",
+      "target": "first-actual-artifact-audit/review.json"
+    },
+    {
+      "from": "independent-artifact-review/ACTUAL-REVIEW.md",
+      "target": "README.md"
+    }
+  ],
+  "markdown_navigation_changed": false,
+  "network_or_ci_queries": false,
+  "originals": 30,
+  "source_receipt_commit_and_artifact_identity_metadata_match": true,
+  "status": "PASS_PUBLICATION_BYTE_LINK_TEXT_CHECKS",
+  "tests_or_artifact_verification_reexecuted": false
+}

@@ -1,0 +1,32 @@
+test_all_other_single_flag_bits_and_methods_block_before_decompression (test_li_v3_compatible_envelope_review.IndependentCompatibleEnvelopeReview.test_all_other_single_flag_bits_and_methods_block_before_decompression) ... ok
+test_all_thirteen_prior_pins_match_current_public_source (test_li_v3_compatible_envelope_review.IndependentCompatibleEnvelopeReview.test_all_thirteen_prior_pins_match_current_public_source) ... ok
+test_capture_rejection_and_partial_read_exposure_preserve_unknowns (test_li_v3_compatible_envelope_review.IndependentCompatibleEnvelopeReview.test_capture_rejection_and_partial_read_exposure_preserve_unknowns) ... ok
+test_duplicate_required_absence_and_member_limit_remain_closed (test_li_v3_compatible_envelope_review.IndependentCompatibleEnvelopeReview.test_duplicate_required_absence_and_member_limit_remain_closed) ... ok
+test_each_option_combination_and_stored_utf8_have_only_four_xml_reads (test_li_v3_compatible_envelope_review.IndependentCompatibleEnvelopeReview.test_each_option_combination_and_stored_utf8_have_only_four_xml_reads) ... ok
+test_expected_flag_receipt_closed_claims_pin_and_detached_values (test_li_v3_compatible_envelope_review.IndependentCompatibleEnvelopeReview.test_expected_flag_receipt_closed_claims_pin_and_detached_values) ... ok
+test_forged_or_missing_flag_receipt_blocks_before_capture_and_object (test_li_v3_compatible_envelope_review.IndependentCompatibleEnvelopeReview.test_forged_or_missing_flag_receipt_blocks_before_capture_and_object) ... ok
+test_ignored_location_blocks_before_git_prior_guard_or_cache (test_li_v3_compatible_envelope_review.IndependentCompatibleEnvelopeReview.test_ignored_location_blocks_before_git_prior_guard_or_cache) ... ok
+test_invalid_run_and_cli_never_echo_input_or_read_custody (test_li_v3_compatible_envelope_review.IndependentCompatibleEnvelopeReview.test_invalid_run_and_cli_never_echo_input_or_read_custody) ... ok
+test_later_bad_headers_and_every_local_central_agreement_remain_checked (test_li_v3_compatible_envelope_review.IndependentCompatibleEnvelopeReview.test_later_bad_headers_and_every_local_central_agreement_remain_checked) ... ok
+test_opaque_canary_and_unknown_sheet_names_do_not_change_semantic_projection (test_li_v3_compatible_envelope_review.IndependentCompatibleEnvelopeReview.test_opaque_canary_and_unknown_sheet_names_do_not_change_semantic_projection) ... ok
+test_positive_fully_stubbed_path_fixed_slots_and_exclusive_conflict (test_li_v3_compatible_envelope_review.IndependentCompatibleEnvelopeReview.test_positive_fully_stubbed_path_fixed_slots_and_exclusive_conflict) ... FAIL
+test_positive_stubbed_source_guard_and_modified_pin_or_index_fail_closed (test_li_v3_compatible_envelope_review.IndependentCompatibleEnvelopeReview.test_positive_stubbed_source_guard_and_modified_pin_or_index_fail_closed) ... ok
+test_relationship_external_unknown_and_unsupported_workbook_stay_blocked (test_li_v3_compatible_envelope_review.IndependentCompatibleEnvelopeReview.test_relationship_external_unknown_and_unsupported_workbook_stay_blocked) ... ok
+test_synthetic_type_bounds_and_actual_identity_guards_precede_parser (test_li_v3_compatible_envelope_review.IndependentCompatibleEnvelopeReview.test_synthetic_type_bounds_and_actual_identity_guards_precede_parser) ... ok
+test_unchanged_xml_profile_limits_and_partial_exposure (test_li_v3_compatible_envelope_review.IndependentCompatibleEnvelopeReview.test_unchanged_xml_profile_limits_and_partial_exposure) ... ok
+
+======================================================================
+FAIL: test_positive_fully_stubbed_path_fixed_slots_and_exclusive_conflict (test_li_v3_compatible_envelope_review.IndependentCompatibleEnvelopeReview.test_positive_fully_stubbed_path_fixed_slots_and_exclusive_conflict)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-compatible-envelope-review-v1/test_li_v3_compatible_envelope_review.py", line 456, in test_positive_fully_stubbed_path_fixed_slots_and_exclusive_conflict
+    self.assertEqual(report['reason'], 'OUTPUT_EXISTS')
+AssertionError: 'INTERNAL_FAILURE' != 'OUTPUT_EXISTS'
+- INTERNAL_FAILURE
++ OUTPUT_EXISTS
+
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.642s
+
+FAILED (failures=1)

@@ -1,0 +1,35 @@
+{
+  "activity": {
+    "actual_operations_invoked": false,
+    "network_used": false,
+    "operation_receipts_read": false,
+    "preparer_or_auditor_imported_or_executed": false,
+    "private_objects_or_capture_read": false,
+    "source_AST_only": true
+  },
+  "auditor_bindings": {
+    "audit_completed_operations.py": "a34b266e2316b14540b0abd0f2016274422a81b8eca90f3152aa734f5617deb7",
+    "bindings.unbound.json": "8f93019b8b6b0efbb78faa549668073a266a4cbb5f0079b95c6e8744f400c814",
+    "run_audit_recorded.py": "62a1accf38b6fa0ed9c5cf27af966c58b69484fb1a718af73097a32dda41f562"
+  },
+  "blockers": [],
+  "findings": {
+    "gate_paths": "All seven keys and paths match configured_paths for the exact c17 commit, including additive-review.json.",
+    "gate_validation": "Preparer binds observed gate bytes and checks minimal CI/head/clean conditions; full gate content and chronology are checked by the held auditor later.",
+    "outcomes": "No inferred operation reason; outcomes are read later from completed canonical reports.",
+    "output": "Exclusive bindings.final.json in auditor base; retained bindings.unbound.json is untouched.",
+    "recorder_paths_and_pins": "Shape/envelope paths and reviewed commit-bound digest literals match supplied final recorder identities.",
+    "schema_and_status": "Match held auditor requirements; supplementary scope/bound_at/outcome-description fields are permitted."
+  },
+  "limits": [
+    "This is schema/path alignment, not confirmation that CI or operations completed.",
+    "Run normally with assertions enabled, from the discovery directory; no optimized Python invocation.",
+    "No operation audit is authorized by this source-only review."
+  ],
+  "reviewed_at": "2026-10-16T11:07:10.232580+00:00",
+  "reviewer": "/root/phase2_planner/ui_review",
+  "schema": "lupine.discovery.growth_operation_binding_preparer_static_review.v1",
+  "source_path": ".cache/phase2-growth-release-v1/bind_operation_audit.py",
+  "source_sha256": "196411bcd56d83a666952604a6aea99675ae0b7ec38e667c7fdf7a25530c3187",
+  "status": "ALIGNED_STATIC_SCOPE"
+}

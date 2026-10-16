@@ -1,0 +1,25 @@
+{
+  "recorded_at": "2026-10-16T09:39:39.366700+00:00",
+  "source_commit": "d0505b9b358a4bdeafbd742f1aeeb6c2b955abf3",
+  "status": "DRAFT_PACKAGE_AND_ARTIFACT_AUDITS_COMPLETE_SOURCE_CI_PENDING",
+  "actual_local_extra_operations": "NOT_RUN",
+  "source_worktree_mutation": false,
+  "package_runtime_files": 326,
+  "cases": 28,
+  "schemas": 6,
+  "mandatory_checks": 16,
+  "package_exit_codes": [
+    0,
+    0
+  ],
+  "package_process_seconds": [
+    20.438050081997062,
+    0.9151472639969143
+  ],
+  "artifact_full_review_sha256": "6d3d05fa15c2d1bf72cf2470ee8f823df8e8f3a14da36b053a99bb4c1a12caa1",
+  "artifact_additive_review_sha256": "1f0149016cdfe4d87793c5855291474775e6301d2ad35e996289bc8dd1db030c",
+  "artifact_copy_scope": "Public audit scripts/reviews/logs and package receipts/manifest only. Retained wheel/tar omitted; no private source included.",
+  "source_archive_retained_locally": true,
+  "external_durable_backup_established": false,
+  "scientific_schema_approved": false
+}

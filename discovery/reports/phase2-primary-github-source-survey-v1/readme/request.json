@@ -1,0 +1,11 @@
+{
+  "acquirer_sha256": "ed21a2409fd9d6de30dc3fb2534ffdb7c3d8599adc2fd2208755fc1335959ab0",
+  "expected_bytes": 6018,
+  "expected_git_blob_sha1": "a03d55b12582567d826430d4c7423db79b2b327b",
+  "id": "readme",
+  "maximum_bytes": 1048576,
+  "purpose": "Pinned documentary README.md only; no dataset file.",
+  "scope_sha256": "f041d0e741e11639213383a33a65184ae0c225d5a341557820084c93a77cdb0d",
+  "started_at": "2026-10-16T17:16:39.139613+00:00",
+  "url": "https://raw.githubusercontent.com/uiocompcat/tmQM/ece824419c9006fe66436daf233822b75533b82f/README.md"
+}

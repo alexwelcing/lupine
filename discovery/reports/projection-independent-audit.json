@@ -1,0 +1,57 @@
+{
+  "checks": [
+    "Signed normalization and target conversion, including rectangular and empty parameter spaces.",
+    "Source anchor lower/upper inequalities match generated rows pointwise.",
+    "Separate field blocks and distinct discrepancies cannot merge through equal names or separator characters.",
+    "Gain, exact ties and reversal worlds preserve every feasible minimizer under admitted premises.",
+    "Full physical-context and field/source quantity scopes reject implicit transfer.",
+    "Missing and empirical-only field/discrepancy bounds produce no kernel model and retain the complete universe.",
+    "Contradictory anchors report model inconsistency and retain every candidate.",
+    "Source and premise metadata bind adapter identity; generated relation records remain immutable."
+  ],
+  "count_scope": "Counts are executed synthetic world cases; categories overlap and must not be summed as distinct worlds.",
+  "executed_counts": {
+    "admitted_retention_worlds": 5913,
+    "anchor_worlds": 81,
+    "reversal_worlds": 4,
+    "source_equation_worlds": 5949,
+    "varied_problem_count": 8
+  },
+  "limitations": [
+    "Finite executable evidence, not a formal refinement proof of Python from Lean.",
+    "No physical validation, learned predictor, empirical coverage guarantee, or scientific replication.",
+    "No proof of complete optimization/search or an end-to-end resource bound."
+  ],
+  "new_model_fit": false,
+  "oracle": "Direct Fraction evaluation of theta=b+Sz, q=nominal-weights\u00b7theta+radius\u00b7error, and whole-expression target maps; no production translation helper supplies expected values.",
+  "reproduce": [
+    "python",
+    "scripts/audit_projection.py",
+    "--output",
+    "reports/projection-independent-audit.json"
+  ],
+  "schema": "lupine.discovery.projection.independent-audit.v1",
+  "scientific_data_read": false,
+  "skipped_tests": 0,
+  "source_sha256_after": {
+    "scripts/audit_projection.py": "e1db031f44a3d1ec512711c8e0a5f7044cff08e5b4e107f685fd2be8c664c080",
+    "src/lupine_discovery/core.py": "c7bab15c662eaa79b6e6312271d3351e79ccb97ef42fcdfc830fdbbf3118d5a0",
+    "src/lupine_discovery/coupled.py": "67a06d724e89edb210fb1fe3d2d8a8c0ac9e87267c4ee90238035c5f13d81fd1",
+    "src/lupine_discovery/evidence.py": "ab16a2f5f31601f95f3ec88f7fc230a07c85ebfdb175f0298a467c4425037dae",
+    "src/lupine_discovery/projection.py": "4a7eb4a48f281f888132c5bb235b10ec037c685f2ba8a192f976a00337e0de09",
+    "src/lupine_discovery/serialization.py": "cfec006ed4cb51fbbb6539422a5d829cadaa7bf0ff78bebbffd58aaba6f2523c",
+    "tests/test_projection_review.py": "5117348d58dd84e48532fdb0b229a612de3b11d472c430590995228374917ca7"
+  },
+  "source_sha256_before": {
+    "scripts/audit_projection.py": "e1db031f44a3d1ec512711c8e0a5f7044cff08e5b4e107f685fd2be8c664c080",
+    "src/lupine_discovery/core.py": "c7bab15c662eaa79b6e6312271d3351e79ccb97ef42fcdfc830fdbbf3118d5a0",
+    "src/lupine_discovery/coupled.py": "67a06d724e89edb210fb1fe3d2d8a8c0ac9e87267c4ee90238035c5f13d81fd1",
+    "src/lupine_discovery/evidence.py": "ab16a2f5f31601f95f3ec88f7fc230a07c85ebfdb175f0298a467c4425037dae",
+    "src/lupine_discovery/projection.py": "4a7eb4a48f281f888132c5bb235b10ec037c685f2ba8a192f976a00337e0de09",
+    "src/lupine_discovery/serialization.py": "cfec006ed4cb51fbbb6539422a5d829cadaa7bf0ff78bebbffd58aaba6f2523c",
+    "tests/test_projection_review.py": "5117348d58dd84e48532fdb0b229a612de3b11d472c430590995228374917ca7"
+  },
+  "status": "PASS",
+  "tests_run": 15,
+  "varied_problem_seed": 11931
+}

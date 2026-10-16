@@ -1,0 +1,8 @@
+{
+  "encoding": "utf-8",
+  "original_bytes": 1313,
+  "original_path": "candidate/attempts/ceiling-bridge/stdout.txt",
+  "original_sha256": "1a414db714a311a44665ec02032bc3d89486705bf23d2c5466638677c4f506f5",
+  "schema": "lupine.public.utf8-evidence.v1",
+  "text": "'LupineFinitePlanning.zero_failure_subsets' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LupineFinitePlanning.zero_failure_count' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LupineFinitePlanning.uniform_count_ratio' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LupineFinitePlanning.denominator_positive' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LupineFinitePlanning.failure_count_antitone' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LupineFinitePlanning.composite_null_maximum' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LupineFinitePlanning.null_count_iff' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LupineFinitePlanning.null_count_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LupineFinitePlanning.fraction_null_maximum' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LupineFinitePlanning.zero_failure_iff' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LupineFinitePlanning.no_evaluation' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LupineFinitePlanning.census_zero' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LupineFinitePlanning.full_frame_resolution' depends on axioms: [propext, Classical.choice, Quot.sound]\n"
+}

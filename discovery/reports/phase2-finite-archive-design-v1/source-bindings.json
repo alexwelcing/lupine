@@ -1,0 +1,52 @@
+{
+  "schema": "lupine.discovery.finite_archive_design_sources.v1",
+  "recorded_at": "2026-10-16T06:46:56.809830+00:00",
+  "observed_head": "ea69d01e144747c97bf288b37249f39af9e8f715",
+  "scope": "Public source/document/theorem inspection for an original written design argument; not execution, source qualification or retrospective protocol revision.",
+  "sources": [
+    {
+      "path": "src/lupine_discovery/decision_pool.py",
+      "bytes": 18307,
+      "sha256": "76e96165102ebe8c3785f510d169b5d393838fb144f9c4275ffdb0aa6c21f1f9",
+      "used_for": "PREMISES and assumed_unverified; complete-label score; frozen rank; original n and explicit fallback/unsupported states."
+    },
+    {
+      "path": "docs/decision-pool-calibration-design.md",
+      "bytes": 36960,
+      "sha256": "9025a7486f533272fc48e0e72a953d28530a4cacb4c46f6101122081495ad490",
+      "used_for": "Panel score/bridge, finite rank argument, feasible/calibration conditional counterexamples, complete labels and finite resampling scope."
+    },
+    {
+      "path": "docs/finite-exchangeability.md",
+      "bytes": 4680,
+      "sha256": "e6d1e3617dfdf06e4001a63850fa3a78ec07e1a4c6278ac9a4a34d1c4e3c3d75",
+      "used_for": "Finite-support closure and invariant multiplicity weights; excludes physical law, conditional coverage and refinement."
+    },
+    {
+      "path": "formal/LupineDecisionPool.lean",
+      "bytes": 19952,
+      "sha256": "10a5962eedf30819388a835b052df91f4fff130c79258d31eb345f51071cf00a",
+      "used_for": "all_minimizers_retained_iff and finite weighted counting/order-statistic results."
+    },
+    {
+      "path": "formal/LupineExchangeability.lean",
+      "bytes": 11011,
+      "sha256": "0e326c4b51e5ca00d1deb32be61ba7b80ca0c443059d0fbf13e22f05717610ce",
+      "used_for": "finite_exchangeable_loo_failure_bound and finite_exchangeable_loo_ceiling_bound assumptions and exact statements."
+    },
+    {
+      "path": "docs/mpea-t25-archival-protocol-v1.md",
+      "bytes": 20971,
+      "sha256": "c49047341d3932ddd67c67c9f2a04a6759c0d679bfeb96d811ba9541c0cc0378",
+      "used_for": "Published population/missingness, allocation/information order, statistical-pool claim boundary, fixed evaluation metrics/uncertainty restrictions; no data/results read."
+    }
+  ],
+  "actual_source_or_threshold_selected": false,
+  "private_data_or_raw_archive_read": false,
+  "network_used": false,
+  "allocation_drawn_or_replayed": false,
+  "tests_run": false,
+  "runtime_changed": false,
+  "lean_compiled": false,
+  "new_lean_theorem_claimed": false
+}

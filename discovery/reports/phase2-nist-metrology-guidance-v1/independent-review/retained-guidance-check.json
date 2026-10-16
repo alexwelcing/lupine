@@ -1,0 +1,123 @@
+{
+  "schema": "lupine.nist-guidance-independent-retained-check.v1",
+  "checked_at": "2026-10-16T10:56:05.014075+00:00",
+  "status": "PASS",
+  "review_and_scope_precede_requests": true,
+  "exact_output_hashes_verified_except_raw_html": [
+    "request-slot.json",
+    "operation.json",
+    "section5-projection.json",
+    "section5-receipt.json",
+    "section6-projection.json",
+    "section6-receipt.json"
+  ],
+  "snapshots": [
+    {
+      "source": "section5",
+      "reported_html_sha256": "42fb9ec839c7ec5e5e252c35799f58e75ecfe69ddfa14e17dff7ae94c5b353d4",
+      "projection_sha256": "55ac1c31423de77157ebefa4a6defb036da1c2225acdfaa43ff2813900423397",
+      "blocks": 157,
+      "selected_block_locators": [
+        {
+          "zero_based_index": 128,
+          "html_start_line": 739,
+          "tag": "p"
+        },
+        {
+          "zero_based_index": 129,
+          "html_start_line": 743,
+          "tag": "p"
+        },
+        {
+          "zero_based_index": 130,
+          "html_start_line": 746,
+          "tag": "p"
+        },
+        {
+          "zero_based_index": 131,
+          "html_start_line": 748,
+          "tag": "p"
+        },
+        {
+          "zero_based_index": 132,
+          "html_start_line": 751,
+          "tag": "p"
+        },
+        {
+          "zero_based_index": 133,
+          "html_start_line": 755,
+          "tag": "p"
+        },
+        {
+          "zero_based_index": 134,
+          "html_start_line": 757,
+          "tag": "p"
+        },
+        {
+          "zero_based_index": 135,
+          "html_start_line": 759,
+          "tag": "p"
+        },
+        {
+          "zero_based_index": 136,
+          "html_start_line": 763,
+          "tag": "p"
+        }
+      ]
+    },
+    {
+      "source": "section6",
+      "reported_html_sha256": "40bdfd8fcd5e386406fe00e8a8b0593401035ac56a731d7a78b108fe87cb8041",
+      "projection_sha256": "0d4581d0476cb1239270b605495ca6b4563e7fa6222d987ff479608073c8e0f3",
+      "blocks": 156,
+      "selected_block_locators": [
+        {
+          "zero_based_index": 128,
+          "html_start_line": 753,
+          "tag": "p"
+        },
+        {
+          "zero_based_index": 129,
+          "html_start_line": 755,
+          "tag": "p"
+        },
+        {
+          "zero_based_index": 130,
+          "html_start_line": 757,
+          "tag": "p"
+        },
+        {
+          "zero_based_index": 131,
+          "html_start_line": 759,
+          "tag": "p"
+        },
+        {
+          "zero_based_index": 132,
+          "html_start_line": 761,
+          "tag": "p"
+        },
+        {
+          "zero_based_index": 133,
+          "html_start_line": 763,
+          "tag": "p"
+        },
+        {
+          "zero_based_index": 134,
+          "html_start_line": 765,
+          "tag": "p"
+        },
+        {
+          "zero_based_index": 135,
+          "html_start_line": 767,
+          "tag": "p"
+        }
+      ]
+    }
+  ],
+  "raw_html_digest_check": "Receipt/execution consistency only; raw HTML not independently reread or reparsed. Full retained projection JSON bytes independently hashed and parsed.",
+  "actual_guidance_requests_by_reviewer": 0,
+  "raw_html_reads_by_reviewer": 0,
+  "html_parser_invocations_by_reviewer": 0,
+  "measurement_body_reads": 0,
+  "exposure": "Whole two retained projection JSON containers machine exposed. Researcher inspected selected technical blocks plus adjacent headings/navigation/public webmaster text from indexes126..140. Full projections/contact text are not copied to this public review."
+}

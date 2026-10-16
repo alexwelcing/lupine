@@ -1,0 +1,13 @@
+{
+  "basis": "Initial inline read-only normalization check followed root description and correction receipt stating one LF removed.",
+  "check": "new == old.rstrip(b\"\\n\") + b\"\\n\" and len(old)-len(new) == 1",
+  "classification": "Reviewer consistency finding in correction metadata, not a product test failure.",
+  "first_process_log": "Observed tool output only; no separately redirected execution log.",
+  "new_bytes": 40325,
+  "new_trailing_lfs": 1,
+  "observed": "AssertionError on one-byte expectation. Hash checks had passed; observed actual length reduction is two bytes.",
+  "old_bytes": 40327,
+  "old_trailing_lfs": 3,
+  "recorded_at": "2026-10-16T09:26:29.562994+00:00",
+  "status": "FAILED_EXPECTED_BYTE_COUNT"
+}

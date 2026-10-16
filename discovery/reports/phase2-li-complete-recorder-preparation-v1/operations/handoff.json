@@ -1,0 +1,37 @@
+{
+  "actual_operations": 0,
+  "actual_package_builds": 0,
+  "authored_test_receipt": {
+    "bytes": 5643,
+    "path": "evidence/final29/execution.json",
+    "sha256": "431e78626c4d6fccba71c74134ed489e500474f680b3b072817e70c5b95079d5"
+  },
+  "authored_tests_passed": 29,
+  "bindings": "UNBOUND",
+  "independent_regressions_passed": 4,
+  "independent_review_handoff": {
+    "bytes": 1160,
+    "path": "../phase2-li-complete-recorder-independent-review-v1/handoff.json",
+    "sha256": "fcdfb3c49c090011ecdeaba3bad84e88facb4c09e860784cacf400e4a12d9653"
+  },
+  "network_calls": 0,
+  "next_action": "Root may publish this exact prospective preparation. Actual bindings and external observer packets require reviewed source, fresh exact CI/package/artifact gates and witnessed observer completion; this document supplies none of those actual results.",
+  "operation_authorization": false,
+  "production_guard_calls": 0,
+  "publication_inventory": {
+    "bytes": 8318,
+    "path": "publication-inventory.json",
+    "sha256": "e39f5a79fd73f123b3055df7724a46109e286f56f7c040d4ae2cadf033b690dd"
+  },
+  "publication_scope": "Exactly46 listed files plus publication-inventory.json and this handoff.json; no recursive extras. Independent review has its own separately pinned copyset.",
+  "schema": "lupine.li.complete-readiness.recorder-handoff.v1",
+  "scientific_admission": false,
+  "scientific_data_reads": 0,
+  "source_changes_after_final_tests": false,
+  "source_hold": {
+    "bytes": 1326,
+    "path": "source-hold.json",
+    "sha256": "751b0a4f346489075e326c15aaa71e0d0c93ddab7f6e9878d1cc0c8b9c832e0c"
+  },
+  "status": "PASS_PROSPECTIVE_ENGINEERING_AND_INDEPENDENT_REVIEW_UNBOUND"
+}

@@ -1,0 +1,10 @@
+{
+  "before_after_source_attestation": "not_completed_due_to_harness_timeout",
+  "current_source_sha256": "4ab18164c018cc473bee1fa43589a171248f58c2962c269b576520522c0d9afd",
+  "note": "Partial failing test output preserved. No pass claim; inspect timing causes and rerun. No scientific input access.",
+  "planned_source_sha256": "4ab18164c018cc473bee1fa43589a171248f58c2962c269b576520522c0d9afd",
+  "status": "HARNESS_TIMEOUT_INCOMPLETE",
+  "stderr_sha256": "e4be10a209cdad1a202227a44a321d3e270af3fdc2e8fcee3bad8d417c79377e",
+  "synthetic_processes_cleaned": [],
+  "timeout_seconds": 90
+}

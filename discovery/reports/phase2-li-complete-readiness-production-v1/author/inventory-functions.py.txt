@@ -1,0 +1,132 @@
+def _inventory_ledger():
+    return {'scope': 'INVENTORY_SUBSTAGE_ONLY', 'started': False, 'completed': False,
+            'whole_documentary_worksheet_character_data': 'NOT_ATTEMPTED',
+            'whole_shared_strings_started': False, 'whole_shared_strings_completed': False,
+            'shared_strings_may_include_record_values': False,
+            'plain_text_cells_processed': 0, 'non_text_cells_accounted': 0,
+            'record_worksheet_member_opens': 0,
+            'disclosure_policy': 'ALL_ROLE_PLAIN_TEXT_MAY_INCLUDE_INCIDENTAL_OUTCOMES',
+            'fresh_status': 'UNESTABLISHED'}
+
+
+def _clear_result(report, reason):
+    core._clear(report, reason)
+    if reason in GUARD_REASONS:
+        report['reason'] = reason
+    if 'inventory' in report:
+        report['inventory'] = None
+
+
+def _inventory(layouts, raw_sheets, package, report, shared_state):
+    ledger = report['inventory_exposure']
+    ledger['started'] = True
+    ledger['whole_documentary_worksheet_character_data'] = 'FULL_TWO_ROLE_WORKSHEETS_DECODED'
+    count = sum(len(layouts[role]['cells']) for role in core.ROLES)
+    _require(count <= core.LIMITS['fields'], 'INVENTORY_LIMIT')
+    _require(not any(cell['formula_element_present'] for role in core.ROLES
+                     for cell in layouts[role]['cells']), 'INVENTORY_FORMULA_UNSUPPORTED')
+    fields = []
+    def shared_get():
+        if shared_state[0] is None:
+            ledger['whole_shared_strings_started'] = True
+            ledger['shared_strings_may_include_record_values'] = True
+            shared_state[0] = core._shared(package, report)
+            ledger['whole_shared_strings_completed'] = True
+        return shared_state[0]
+    for role in core.ROLES:
+        cells = core._sheet_cells(core._xml_tree(raw_sheets[role], report, text_allowed=True))
+        for structural in layouts[role]['cells']:
+            coordinate, storage = structural['coordinate'], structural['declared_type']
+            item = {'role': role, 'coordinate': coordinate, 'declared_type': storage,
+                    'formula_element_present': False, 'text_state': 'NON_TEXT_VALUE_WITHHELD',
+                    'text': None, 'semantics': 'UNINTERPRETED'}
+            _require(storage != 'str', 'INVENTORY_STORAGE_UNSUPPORTED')
+            if storage in ('inlineStr', 's'):
+                core._require(not core._merged(coordinate, layouts[role]), 'SELECTED_CELL_MERGED')
+                text = core._cell_text(cells.get(coordinate), shared_get)
+                _require(len(text) <= core.LIMITS['definition_chars'], 'INVENTORY_LIMIT')
+                item.update(text_state='PLAIN_LITERAL_DISCLOSED', text=text)
+                ledger['plain_text_cells_processed'] += 1
+            else:
+                ledger['non_text_cells_accounted'] += 1
+            fields.append(item)
+    ledger['completed'] = True
+    return {'fields': fields, 'explicit_cells': len(fields),
+            'text_cells': ledger['plain_text_cells_processed'],
+            'non_text_cells': ledger['non_text_cells_accounted'],
+            'completeness': 'COMPLETE_TWO_ROLE_EXPLICIT_CELL_INVENTORY',
+            'fresh_status': 'UNESTABLISHED', 'numerical_outcome_text_absence': 'UNESTABLISHED',
+            'semantic_safety': 'UNESTABLISHED', 'scientific_admission': 'NOT_ASSESSED'}
+
+
+def _inventory_payload(value):
+    keys = {'fields', 'explicit_cells', 'text_cells', 'non_text_cells', 'completeness',
+            'fresh_status', 'numerical_outcome_text_absence', 'semantic_safety', 'scientific_admission'}
+    _require(core._keys(value, keys) and type(value['fields']) is list
+             and len(value['fields']) <= core.LIMITS['fields'], 'INVENTORY_PRIOR_INVALID')
+    positions, textual = [], 0
+    for field in value['fields']:
+        _require(core._keys(field, {'role', 'coordinate', 'declared_type', 'formula_element_present',
+                                   'text_state', 'text', 'semantics'})
+                 and field['role'] in core.ROLES and field['declared_type'] in core.CELL_TYPES
+                 and field['declared_type'] != 'str' and field['formula_element_present'] is False
+                 and field['semantics'] == 'UNINTERPRETED', 'INVENTORY_PRIOR_INVALID')
+        positions.append((core.ROLES.index(field['role']), *core._coordinate(field['coordinate'])))
+        if field['declared_type'] in ('inlineStr', 's'):
+            _require(field['text_state'] == 'PLAIN_LITERAL_DISCLOSED' and type(field['text']) is str
+                     and len(field['text']) <= core.LIMITS['definition_chars'], 'INVENTORY_PRIOR_INVALID')
+            textual += 1
+        else:
+            _require(field['text_state'] == 'NON_TEXT_VALUE_WITHHELD' and field['text'] is None,
+                     'INVENTORY_PRIOR_INVALID')
+    _require(positions == sorted(set(positions))
+             and all(type(value[k]) is int for k in ('explicit_cells', 'text_cells', 'non_text_cells'))
+             and value['explicit_cells'] == len(positions) and value['text_cells'] == textual
+             and value['non_text_cells'] == len(positions) - textual
+             and value['completeness'] == 'COMPLETE_TWO_ROLE_EXPLICIT_CELL_INVENTORY'
+             and value['fresh_status'] == value['numerical_outcome_text_absence'] == value['semantic_safety'] == 'UNESTABLISHED'
+             and value['scientific_admission'] == 'NOT_ASSESSED', 'INVENTORY_PRIOR_INVALID')
+
+
+def _prepare_inventory_frame(binding, source, layout_hash, inventory_hash):
+    core._bounded_json(binding, core.LIMITS['output'])
+    keys = {'schema', 'source_sha256', 'prior_layout_sha256', 'prior_inventory_sha256',
+            'documentary_binding', 'required_documentary_fields', 'row_unit', 'record_roles',
+            'excluded_sheets', 'reference_field', 'reference_keys', 'overlap_manifest'}
+    core._require(core._keys(binding, keys) and binding['schema'] == 'li_v3.inventory_frame_binding.v1',
+                  'BINDING_INVALID')
+    core._require(binding['source_sha256'] == source and binding['prior_layout_sha256'] == layout_hash
+                  and binding['prior_inventory_sha256'] == inventory_hash, 'SOURCE_BINDING_MISMATCH')
+    mapped = custody._detached(binding)
+    mapped['schema'] = 'li_v3.frame_binding.v1'
+    mapped.pop('prior_inventory_sha256')
+    # Null is an internal syntax-validation placeholder, never a historical receipt.
+    mapped['prior_documentary_sha256'] = None
+    documentary = mapped['documentary_binding']
+    core._require(core._keys(documentary, {'schema', 'source_sha256', 'prior_layout_sha256', 'fields'})
+                  and documentary['schema'] == 'li_v3.inventory_documentary_binding.v1'
+                  and type(documentary['fields']) is list, 'BINDING_INVALID')
+    documentary['schema'] = 'li_v3.documentary_binding.v1'
+    storage = {}
+    for field in documentary['fields']:
+        core._require(type(field) is dict and 'expected_storage' in field, 'BINDING_INVALID')
+        expected = field.pop('expected_storage')
+        core._require(expected in ('inlineStr', 's', None), 'BINDING_INVALID')
+        storage[field.get('field_id')] = expected
+    fields = core._doc_binding(documentary, source, layout_hash)
+    for field in fields:
+        core._require((storage[field['field_id']] in ('inlineStr', 's')) ==
+                      (field['review'] == 'DOCUMENTARY' and bool(field['allowed_texts'])), 'BINDING_INVALID')
+    records = core._frame_binding(mapped, source, layout_hash, None)
+    return mapped, fields, storage, records
+
+
+def _mapping_matches_inventory(fields, storage, inventory):
+    lookup = {(field['role'], field['coordinate']): field for field in inventory['fields']}
+    for field in fields:
+        if field['review'] != 'DOCUMENTARY' or not field['allowed_texts']:
+            continue
+        observed = lookup.get((field['role'], field['coordinate']))
+        _require(observed is not None and observed['text_state'] == 'PLAIN_LITERAL_DISCLOSED'
+                 and observed['declared_type'] == storage[field['field_id']]
+                 and observed['text'] in field['allowed_texts'], 'INVENTORY_MAPPING_MISMATCH')

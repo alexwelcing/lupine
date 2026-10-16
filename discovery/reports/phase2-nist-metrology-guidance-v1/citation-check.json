@@ -1,0 +1,110 @@
+{
+  "schema": "lupine.nist-guidance-selected-citation-check.v1",
+  "checked_at": "2026-10-16T10:59:00.067336+00:00",
+  "selected_guidance_sha256": "d9aed217f7c291077a060da7950be17a517144eba379d0d7a3dc5247b68a54ad",
+  "citations_checked": [
+    {
+      "claim": "N01",
+      "source": "section5",
+      "section": "\u00a75.1",
+      "block": 128,
+      "short_quote_verified": true
+    },
+    {
+      "claim": "N02",
+      "source": "section5",
+      "section": "\u00a75.2",
+      "block": 129,
+      "short_quote_verified": true
+    },
+    {
+      "claim": "N02",
+      "source": "section5",
+      "section": "\u00a75.2 note 1",
+      "block": 130,
+      "short_quote_verified": true
+    },
+    {
+      "claim": "N02",
+      "source": "section5",
+      "section": "\u00a75.2 note 2",
+      "block": 131,
+      "short_quote_verified": true
+    },
+    {
+      "claim": "N03",
+      "source": "section5",
+      "section": "\u00a75.4 first paragraph",
+      "block": 134,
+      "short_quote_verified": true
+    },
+    {
+      "claim": "N03",
+      "source": "section5",
+      "section": "\u00a75.4 continuation",
+      "block": 135,
+      "short_quote_verified": true
+    },
+    {
+      "claim": "N04",
+      "source": "section5",
+      "section": "\u00a75.5",
+      "block": 136,
+      "short_quote_verified": true
+    },
+    {
+      "claim": "N04",
+      "source": "section6",
+      "section": "\u00a76.1 following paragraph",
+      "block": 129,
+      "short_quote_verified": true
+    },
+    {
+      "claim": "N05",
+      "source": "section6",
+      "section": "\u00a76.1",
+      "block": 128,
+      "short_quote_verified": true
+    },
+    {
+      "claim": "N05",
+      "source": "section6",
+      "section": "\u00a76.2",
+      "block": 130,
+      "short_quote_verified": true
+    },
+    {
+      "claim": "N06",
+      "source": "section6",
+      "section": "\u00a76.3",
+      "block": 131,
+      "short_quote_verified": true
+    },
+    {
+      "claim": "N06",
+      "source": "section6",
+      "section": "\u00a76.4",
+      "block": 132,
+      "short_quote_verified": true
+    },
+    {
+      "claim": "N06",
+      "source": "section6",
+      "section": "\u00a76.5 following example paragraph",
+      "block": 134,
+      "short_quote_verified": true
+    },
+    {
+      "claim": "N07",
+      "source": "section6",
+      "section": "\u00a76.1",
+      "block": 128,
+      "short_quote_verified": true
+    }
+  ],
+  "total_quote_words": 47,
+  "new_network_requests": 0,
+  "raw_html_or_measurement_reads": 0,
+  "parser_reruns": 0,
+  "scope": "Retained static-projection and receipt citation consistency only, not empirical application verification."
+}

@@ -1,0 +1,11 @@
+{
+  "LupineCoupled.lean": "d79afad3eafbf1cfe35fb920c5864059570f2018ff15c7b1badae5de83e39d7f",
+  "LupineDecisionPool.lean": "10a5962eedf30819388a835b052df91f4fff130c79258d31eb345f51071cf00a",
+  "LupineDiscovery.lean": "93adb82c8caceb6620285bea612b4c80e4cf11c7da6d1e04b8ba595f43c6c515",
+  "LupineExchangeability.lean": "0e326c4b51e5ca00d1deb32be61ba7b80ca0c443059d0fbf13e22f05717610ce",
+  "LupineIntervals.lean": "9dec04611f670efdd8deaa6e05f802199f418c9089a5c29148bf8ca4534d8fc4",
+  "LupinePareto.lean": "077e657e5b6d77ef878c325baf9db909adff73f23408385ee464482cd6acd4c0",
+  "LupineProjection.lean": "600af2ee02e8f5ed7f84046d5abab253dc74be3d556414d67438e49a6f3c4f2d",
+  "LupineRisk.lean": "bea0e0cb18daeb41a26e7c721bef0dec6e1c361f3ccf1c9f7f7dbf2176c0fcdf",
+  "LupineSharpness.lean": "1135d8ba14c6d2c388bc5aaa40fc4ce71d55fe09cb8c90bf7319a70a84cbb871"
+}

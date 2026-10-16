@@ -1,0 +1,74 @@
+{
+  "excluded_private_captures": [
+    "candidate-values-first-v3.json",
+    "candidate-values-second-v3.json"
+  ],
+  "files": [
+    {
+      "bytes": 5208,
+      "path": "capture_synthetic_values_v3.py",
+      "sha256": "275c792614a616953b183ebcbe45cab375ff245d5b3612fa192c8e1142cc6e9f"
+    },
+    {
+      "bytes": 5240,
+      "path": "audit_live_result_v3.py",
+      "sha256": "f188458684b1a6130870e8d84fbc56f0b57a3d7b1e9159de0e0db490e191ce97"
+    },
+    {
+      "bytes": 6924,
+      "path": "compare_captures_v3.py",
+      "sha256": "08c9a646179fc2338a4ae693acbe11790824ceac3f48da9c67824ba037b837b7"
+    },
+    {
+      "bytes": 6754,
+      "path": "finalize_review_v3.py",
+      "sha256": "f54be69b4af6e65219e1dcc4339f681c9f2af8443191a1a13097afd39ef6b8c9"
+    },
+    {
+      "bytes": 3128,
+      "path": "review-plan-v3.md",
+      "sha256": "4264df3a81a23f6190bf673c4f6f0eb879a625871d6c97867b23b429cef03ccd"
+    },
+    {
+      "bytes": 491,
+      "path": "v3-review-harness-before.json",
+      "sha256": "ee331f539b9365b710727ed055043aae39fe7ed9b2300cedd1e3410bd31495b4"
+    },
+    {
+      "bytes": 263,
+      "path": "candidate-first-v3.log",
+      "sha256": "fefa5e916f8beb80874e735a111085d330150dfcde1036491c0d23be788fc567"
+    },
+    {
+      "bytes": 263,
+      "path": "candidate-second-v3.log",
+      "sha256": "7fa0d7c369c1a01e00a99b0110b76b9d661fdcc858dc56b0f607009a404a3934"
+    },
+    {
+      "bytes": 306,
+      "path": "comparison-v3.log",
+      "sha256": "39138b38c85658f2724e736f9b189095e8bd38f7cc8a0b0fead89fc78dd1b823"
+    },
+    {
+      "bytes": 31520,
+      "path": "numerical-usage-equivalence-v3.json",
+      "sha256": "9c960dca0a88e6e5d78772d1d19276b9e62470893a8d1a643f693a4ce1043c81"
+    },
+    {
+      "bytes": 3397,
+      "path": "REVIEW-v3.md",
+      "sha256": "747f60579f8856c53490bfbf2beecd225e9738b4dacd8fb4078c3829ee9c9b30"
+    },
+    {
+      "bytes": 21703,
+      "path": "independent-review-v3.json",
+      "sha256": "c05c38744691171244cf5077be320a550299f5029920a8d20ecd4a56c421654a"
+    }
+  ],
+  "prior_v2_copyset": {
+    "bytes": 7143,
+    "sha256": "e380e14363ec82ddc4efab648239b323dccf4d1277bf1f144c85022bd6309c47"
+  },
+  "schema": "lupine.review.explicit_public_copyset.v1",
+  "scope": "Additive v3 source/log/aggregate evidence only; requires the unchanged v2 evidence bundle for shared helpers and baseline source."
+}

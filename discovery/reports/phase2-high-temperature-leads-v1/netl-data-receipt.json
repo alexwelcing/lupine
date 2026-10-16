@@ -1,0 +1,25 @@
+{
+  "source_url": "https://api.datacite.org/dois/10.18141/1856486",
+  "started_at": "2026-10-16T06:09:01.416079+00:00",
+  "scope": "DOI metadata only, no linked data files",
+  "http_status": 200,
+  "bytes": 7577,
+  "sha256": "3338dfd4d9f792e85b7fac0d611b0694a42f111d1ee9775b0d61b55cd2026fcb",
+  "doi": "10.18141/1856486",
+  "url": "https://www.osti.gov/servlets/purl/1856486/",
+  "rightsList": [],
+  "dates": [
+    {
+      "date": "2022",
+      "dateType": "Issued"
+    }
+  ],
+  "publisher": "National Energy Technology Laboratory - Energy Data eXchange; NETL",
+  "titles": [
+    {
+      "title": "Characterization of Long-term Service Coal Combustion Power Plant Extreme Environment Materials"
+    }
+  ],
+  "relatedIdentifiers": [],
+  "finished_at": "2026-10-16T06:09:02.440013+00:00"
+}

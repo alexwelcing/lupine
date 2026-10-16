@@ -1,0 +1,1301 @@
+{
+  "artifact_sha256": {
+    ".cache/reproduce-jarvis-local-20261010T194558Z-58801/engineering-validation.json": "31265d531a07751ab4cf19e58ceebddb5a3a11df723e347b3550242d60d59213",
+    ".cache/reproduce-jarvis-local-20261010T194558Z-58801/scientific-digest-comparison.json": "e3145a2380e33abfc77149054d8f9284c82e5ce0a84b6c8bd133f95bbf5ed58b",
+    ".cache/reproduce-jarvis-local-20261010T194558Z-58801/scientific-result.json": "18bb5ff99b4c5437dd053299ba49941d04f4a4c528fea78ea9a42e9ad974ffc3",
+    ".cache/reproduce-jarvis-local-20261010T194558Z-58801/workflow-result.json": "cc175256a269c3e8e374ddc73e51027bc7cf4baffd79f0e609239fcff67e12c7",
+    ".cache/reproduce-jarvis-local-20261010T194558Z-58801/workflow-start.json": "ea1833d4bac7b9f6ff0dc19e1bdc479cdd9bdf36afc84ce978df273f2a97e90a",
+    ".cache/reproduction-envs/local-20261010T194558Z-58801/environment-check.json": "5763f95f6b68f6590d797884a5786ae63b4f132135fc819c142132fa498df1cb",
+    ".cache/reproduction-preparation/local-20261010T194558Z-58801/environment-comparison.json": "44accf3486a70636d8e99d7a306277bca47cd79c8c48bdb7817437d15873ac25",
+    ".cache/reproduction-preparation/local-20261010T194558Z-58801/raw-source-reuse.json": "4fbd89b2f49018c9e91609e6af3c891c473fb738f311f642f30ca915952e765c",
+    ".cache/training-tail/jarvis-training-tail-v1-local-20261010T194558Z-58801/reproduction.json": "f0a11c3526eba5c195f67e477fcd2e3f457b06c61f10e70e7878e4ba4eb71e28",
+    "reports/training-tail-engineering-tests-local-20261010T194558Z-58801.txt": "b78d701078ed0691e8c4e80ac5371b9c5f339477eed4c5cc82ca1270a816eaa1",
+    "reports/training-tail-engineering-validation-local-20261010T194558Z-58801.json": "d2ddaa80657c2e1189aee723f021085493ec06ac5f0eabedc0d624c08c98c6da"
+  },
+  "attempt": "local-20261010T194558Z-58801",
+  "constrained": {
+    "comparison": {
+      "actual": "cd6308600c90b431f8ce22b9aeee196ab747e4e8e84ca18809120043dc0ba900",
+      "expected": "cd6308600c90b431f8ce22b9aeee196ab747e4e8e84ca18809120043dc0ba900",
+      "status": "MATCH"
+    },
+    "raw_source_reuse": {
+      "copied": [
+        {
+          "bytes": 40811489,
+          "name": "jdft_3d-12-12-2022.json.zip",
+          "sha256": "d4c64660e9e1fa45c82bd8868a96ec10162195eed69636445972c05550d8d0d6"
+        }
+      ],
+      "labels_predictions_freezes_or_reports_reused": false,
+      "source_cache": "/workspace/lupine-release-reproduction/discovery/.cache/reproduction-raw-source/local-20261010T194558Z-58801",
+      "verification": "Pinned ZIP size/MD5 and ZIP-member agreement are checked by acquire before custody."
+    },
+    "scientific_result": {
+      "full_report_bytes_sha256": "4694453f2544d50ee10aa193ba8d9b2cdff4379e81b24a94b5dd24c57692d58a",
+      "gate_statuses": {
+        "engineering_integrity": "PASS",
+        "nontrivial_constrained_evidence": "PASS",
+        "observed_primary_screening": "FAIL",
+        "recommendation_value": "FAIL",
+        "shift_behavior": "PASS"
+      },
+      "model_digest": "d8fcbca7c9a7083b5ee4d2ceca501d12e5351a282ba9d83321f1ed1360ec154d",
+      "panel_count": 100,
+      "prediction_sha256": "530b13400aa1b6b97b3362f76358cfd2bce5a8610221f3fc69da3ec39323c343",
+      "report_content_sha256": "8c0d83b829b76f0f93f64e284fd8279e2702c431b1be4b3d5f56cbc08b4205ad",
+      "resources": {
+        "combined_budget_check": "verified_timing",
+        "computation_budget_seconds": 3600,
+        "elapsed_cpu_seconds": "49.025985",
+        "elapsed_wall_seconds": "49.128279",
+        "freeze_timing": {
+          "available": true,
+          "elapsed_cpu_seconds": null,
+          "elapsed_seconds": "17693221/1000000",
+          "peak_rss_kib_linux": 188832,
+          "record_sha256": "b09f9a664e2354d816add09db72adef922d8c2eb7047cc265b49becc4ad7e323"
+        },
+        "peak_memory_target_kib": 2097152,
+        "peak_rss_kib": 571088,
+        "policy_run_count": 10300,
+        "python_version": "3.12.14",
+        "target_bundles": 206000,
+        "timing_scope": "Replay through metric normalization; final JSON serialization excluded."
+      },
+      "scientific_result_sha256": "cd6308600c90b431f8ce22b9aeee196ab747e4e8e84ca18809120043dc0ba900",
+      "source_receipt_sha256": "dd2fd4405009e0b897b986b7392f21f664b3928f7fc4330909bef207dd5e3def"
+    },
+    "stages": [
+      {
+        "command": [
+          "/workspace/lupine-release-reproduction/discovery/.cache/reproduction-envs/local-20261010T194558Z-58801/bin/python",
+          "scripts/constrained_benchmark.py",
+          "acquire",
+          "--cache",
+          "/workspace/lupine-release-reproduction/discovery/.cache/reproduce-jarvis-local-20261010T194558Z-58801/artifacts",
+          "--source-format",
+          "nonfinite-sentinels"
+        ],
+        "exit_code": 0,
+        "log_sha256": "caade10623d586f8d2e9b10bb4cbe57310061870873d38bd3a234153ecbfc380",
+        "stage": "acquire"
+      },
+      {
+        "command": [
+          "/workspace/lupine-release-reproduction/discovery/.cache/reproduction-envs/local-20261010T194558Z-58801/bin/python",
+          "scripts/constrained_benchmark.py",
+          "freeze",
+          "--cache",
+          "/workspace/lupine-release-reproduction/discovery/.cache/reproduce-jarvis-local-20261010T194558Z-58801/artifacts"
+        ],
+        "exit_code": 0,
+        "log_sha256": "7781b2e7c8163b53428a1b4e4826dcff19cc34e24585fd648a9e69f1ffc7fac9",
+        "stage": "freeze"
+      },
+      {
+        "command": [
+          "/workspace/lupine-release-reproduction/discovery/.cache/reproduction-envs/local-20261010T194558Z-58801/bin/python",
+          "scripts/constrained_benchmark.py",
+          "verify",
+          "--cache",
+          "/workspace/lupine-release-reproduction/discovery/.cache/reproduce-jarvis-local-20261010T194558Z-58801/artifacts"
+        ],
+        "exit_code": 0,
+        "log_sha256": "ec5753fa7139e6fe0dab8bd3113702eec225c35c9e5906d888d11895ee795dca",
+        "stage": "verify"
+      },
+      {
+        "command": [
+          "/workspace/lupine-release-reproduction/discovery/.cache/reproduction-envs/local-20261010T194558Z-58801/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tests",
+          "-p",
+          "test_constrained*.py",
+          "-v"
+        ],
+        "exit_code": 0,
+        "log_sha256": "4d7d794960296be0bb14655081818959c64de5a2dfb98894531b9caeb71d67b3",
+        "stage": "engineering-tests"
+      },
+      {
+        "command": [
+          "/workspace/lupine-release-reproduction/discovery/.cache/reproduction-envs/local-20261010T194558Z-58801/bin/python",
+          "scripts/constrained_replay.py",
+          "/workspace/lupine-release-reproduction/discovery/.cache/reproduce-jarvis-local-20261010T194558Z-58801/artifacts/freeze.json",
+          "--output",
+          "/workspace/lupine-release-reproduction/discovery/.cache/reproduce-jarvis-local-20261010T194558Z-58801/artifacts/constrained-full.json",
+          "--engineering-validation",
+          "/workspace/lupine-release-reproduction/discovery/.cache/reproduce-jarvis-local-20261010T194558Z-58801/engineering-validation.json"
+        ],
+        "exit_code": 0,
+        "log_sha256": "935a0dee3a01c3b57c3f74962cb9ee7f4d0c74206da232fa18b8adcd156ae84f",
+        "stage": "replay"
+      },
+      {
+        "command": [
+          "/workspace/lupine-release-reproduction/discovery/.cache/reproduction-envs/local-20261010T194558Z-58801/bin/python",
+          "scripts/constrained_dashboard.py",
+          "/workspace/lupine-release-reproduction/discovery/.cache/reproduce-jarvis-local-20261010T194558Z-58801/artifacts/constrained-full.json",
+          "--output",
+          "/workspace/lupine-release-reproduction/discovery/.cache/reproduce-jarvis-local-20261010T194558Z-58801/derived/constrained-dashboard.json",
+          "--resource",
+          "/workspace/lupine-release-reproduction/discovery/.cache/reproduce-jarvis-local-20261010T194558Z-58801/derived/constrained-resource.json",
+          "--full-artifact",
+          "/workspace/lupine-release-reproduction/discovery/.cache/reproduce-jarvis-local-20261010T194558Z-58801/artifacts/constrained-full.json.gz"
+        ],
+        "exit_code": 0,
+        "log_sha256": "33f6f561599102f6891f05638fd4d8ec45a6f3d986b5d3c870a305b945d57c1d",
+        "stage": "dashboard"
+      }
+    ],
+    "test_count": 34
+  },
+  "environment_comparison": {
+    "actual_numpy_package_sha256": "93b3e82739780cbebe54313396f3ad297c649b2770736ee61f593ef035387f42",
+    "changed_distribution_files": [
+      "../../../bin/f2py",
+      "../../../bin/numpy-config",
+      "numpy-2.3.5.dist-info/RECORD"
+    ],
+    "comparison_scope": "environment metadata only; changed paths/scripts do not relax required numerical version gates",
+    "historical_numpy_package_sha256": "e6cd5dd9c188d974efa41175516cfc21a70e68a7b126dfca4b811fbca07b80a6",
+    "loaded_blas_hashes_match": true
+  },
+  "schema": "lupine.discovery.clean_reproduction.audit.v1",
+  "scope": "Same-host separate checkout/environment/process reproduction of frozen public archive and training-only negative experiment; reused raw ZIP, freshly rebuilt custody inputs; not new data or independent scientific evidence. Full constrained targets were replayed; separate trusted training workers read only four original data inputs. No raw targets copied into this audit.",
+  "source_commit": "2a09d36491e092e851a529e58000444f3b6479e2",
+  "status": "PASS",
+  "tracked_sources_unchanged": true,
+  "training": {
+    "decision": {
+      "comparisons": {
+        "decision": true,
+        "engineering_validation": true,
+        "environment": true,
+        "fold_manifest_sha256": true,
+        "implementation_sha256": true,
+        "input_sha256": true,
+        "metadata_artifact_sha256": true,
+        "metrics": true,
+        "prediction_sha256": true,
+        "protocol_commit": true,
+        "protocol_id": true,
+        "protocol_sha256": true,
+        "scientific_result_sha256": true
+      },
+      "execution_status": "COMPLETE_REPRODUCED",
+      "raw_artifacts_identical": true,
+      "scientific_result_sha256": "60cbe9c1d8d4a4b6fe5810765dd9cd5f31f4fe5ac21c9e83e4e802c14fcd0656",
+      "selected_model": null,
+      "status": "NO_GO_MODEL_IMPROVEMENT"
+    },
+    "engineering": {
+      "passed": 22,
+      "path": "reports/training-tail-engineering-validation-local-20261010T194558Z-58801.json",
+      "sha256": "d2ddaa80657c2e1189aee723f021085493ec06ac5f0eabedc0d624c08c98c6da",
+      "test_log_sha256": "b78d701078ed0691e8c4e80ac5371b9c5f339477eed4c5cc82ca1270a816eaa1",
+      "test_source_sha256": {
+        "tests/test_training_tail.py": "f3c66437ece01b7580f55dc5d67b3b331aff8d16c266f03a561a232656f94e0f",
+        "tests/test_training_tail_review.py": "1c08e5cbd1077b3f0e656dcf8cfee166079657aba443aa2569e272f3512470d1"
+      }
+    },
+    "passes": [
+      {
+        "decision": {
+          "alternatives": {
+            "ridge_1_10": {
+              "lambda": "1/10",
+              "numeric_guard": {
+                "formation": {
+                  "fold_margins": [
+                    {
+                      "max_10pct_allowance": "53398733/100000000",
+                      "strict_tail_improvement": "-74744919/100000000",
+                      "tail_10pct_allowance": "-47653679/100000000"
+                    },
+                    {
+                      "max_10pct_allowance": "15620369/50000000",
+                      "strict_tail_improvement": "-135520423/100000000",
+                      "tail_10pct_allowance": "-97848383/100000000"
+                    },
+                    {
+                      "max_10pct_allowance": "14949723/100000000",
+                      "strict_tail_improvement": "-24495071/100000000",
+                      "tail_10pct_allowance": "6885849/100000000"
+                    },
+                    {
+                      "max_10pct_allowance": "12634407/10000000",
+                      "strict_tail_improvement": "57068803/100000000",
+                      "tail_10pct_allowance": "93860363/100000000"
+                    },
+                    {
+                      "max_10pct_allowance": "11909669/20000000",
+                      "strict_tail_improvement": "-2469533/25000000",
+                      "tail_10pct_allowance": "2732571/12500000"
+                    }
+                  ],
+                  "metric_inflation": "1/1000000",
+                  "passed": false,
+                  "pooled_margins": {
+                    "pooled_mae_nonincrease": "-77994454949/409600000000",
+                    "pooled_max_10pct_allowance": "15620369/50000000",
+                    "pooled_tail_10pct": "-817041/1562500"
+                  },
+                  "pooled_tail_ratio": "42242353/39673375",
+                  "positive_baseline_tail": true,
+                  "ratio_unavailable_reason": null,
+                  "strictly_improving_folds": 1
+                },
+                "gap": {
+                  "fold_margins": [
+                    {
+                      "max_10pct_allowance": "39952523/100000000",
+                      "strict_tail_improvement": "-15018067/20000000",
+                      "tail_10pct_allowance": "-1584067/20000000"
+                    },
+                    {
+                      "max_10pct_allowance": "46187631/50000000",
+                      "strict_tail_improvement": "-41501863/100000000",
+                      "tail_10pct_allowance": "15572137/100000000"
+                    },
+                    {
+                      "max_10pct_allowance": "-2211459/2500000",
+                      "strict_tail_improvement": "-1000057/800000",
+                      "tail_10pct_allowance": "-591257/800000"
+                    },
+                    {
+                      "max_10pct_allowance": "37944319/100000000",
+                      "strict_tail_improvement": "-64132201/50000000",
+                      "tail_10pct_allowance": "-33857201/50000000"
+                    },
+                    {
+                      "max_10pct_allowance": "-209703411/100000000",
+                      "strict_tail_improvement": "-35251413/25000000",
+                      "tail_10pct_allowance": "-21392913/25000000"
+                    }
+                  ],
+                  "metric_inflation": "1/1000000",
+                  "passed": false,
+                  "pooled_margins": {
+                    "pooled_mae_nonincrease": "-76186892723/409600000000",
+                    "pooled_max_10pct_allowance": "-10493411/100000000",
+                    "pooled_tail_10pct": "-4960459/2500000"
+                  },
+                  "pooled_tail_ratio": "34661913/27490000",
+                  "positive_baseline_tail": true,
+                  "ratio_unavailable_reason": null,
+                  "strictly_improving_folds": 0
+                }
+              },
+              "ordinary": {
+                "formation": {
+                  "fold_margins": [
+                    {
+                      "max_10pct_allowance": "53398833/100000000",
+                      "strict_tail_improvement": "-74744819/100000000",
+                      "tail_10pct_allowance": "-47653579/100000000"
+                    },
+                    {
+                      "max_10pct_allowance": "15620419/50000000",
+                      "strict_tail_improvement": "-135520323/100000000",
+                      "tail_10pct_allowance": "-97848283/100000000"
+                    },
+                    {
+                      "max_10pct_allowance": "14949823/100000000",
+                      "strict_tail_improvement": "-24494971/100000000",
+                      "tail_10pct_allowance": "6885949/100000000"
+                    },
+                    {
+                      "max_10pct_allowance": "12634417/10000000",
+                      "strict_tail_improvement": "57068903/100000000",
+                      "tail_10pct_allowance": "93860463/100000000"
+                    },
+                    {
+                      "max_10pct_allowance": "11909689/20000000",
+                      "strict_tail_improvement": "-617377/6250000",
+                      "tail_10pct_allowance": "5465167/25000000"
+                    }
+                  ],
+                  "metric_inflation": "0",
+                  "passed": false,
+                  "pooled_margins": {
+                    "pooled_mae_nonincrease": "-77994045349/409600000000",
+                    "pooled_max_10pct_allowance": "15620419/50000000",
+                    "pooled_tail_10pct": "-13072631/25000000"
+                  },
+                  "pooled_tail_ratio": "42242353/39673375",
+                  "positive_baseline_tail": true,
+                  "ratio_unavailable_reason": null,
+                  "strictly_improving_folds": 1
+                },
+                "gap": {
+                  "fold_margins": [
+                    {
+                      "max_10pct_allowance": "39952623/100000000",
+                      "strict_tail_improvement": "-15018047/20000000",
+                      "tail_10pct_allowance": "-1584047/20000000"
+                    },
+                    {
+                      "max_10pct_allowance": "46187681/50000000",
+                      "strict_tail_improvement": "-41501763/100000000",
+                      "tail_10pct_allowance": "15572237/100000000"
+                    },
+                    {
+                      "max_10pct_allowance": "-4422913/5000000",
+                      "strict_tail_improvement": "-5000281/4000000",
+                      "tail_10pct_allowance": "-2956281/4000000"
+                    },
+                    {
+                      "max_10pct_allowance": "37944419/100000000",
+                      "strict_tail_improvement": "-64132151/50000000",
+                      "tail_10pct_allowance": "-33857151/50000000"
+                    },
+                    {
+                      "max_10pct_allowance": "-209703311/100000000",
+                      "strict_tail_improvement": "-8812847/6250000",
+                      "tail_10pct_allowance": "-2674111/3125000"
+                    }
+                  ],
+                  "metric_inflation": "0",
+                  "passed": false,
+                  "pooled_margins": {
+                    "pooled_mae_nonincrease": "-76186483123/409600000000",
+                    "pooled_max_10pct_allowance": "-10493311/100000000",
+                    "pooled_tail_10pct": "-9920913/5000000"
+                  },
+                  "pooled_tail_ratio": "34661913/27490000",
+                  "positive_baseline_tail": true,
+                  "ratio_unavailable_reason": null,
+                  "strictly_improving_folds": 0
+                }
+              },
+              "status": "INELIGIBLE"
+            },
+            "ridge_1_1000": {
+              "lambda": "1/1000",
+              "numeric_guard": {
+                "formation": {
+                  "fold_margins": [
+                    {
+                      "max_10pct_allowance": "82439603/50000000",
+                      "strict_tail_improvement": "8980333/20000000",
+                      "tail_10pct_allowance": "14398581/20000000"
+                    },
+                    {
+                      "max_10pct_allowance": "11362673/10000000",
+                      "strict_tail_improvement": "-48627747/100000000",
+                      "tail_10pct_allowance": "-10955707/100000000"
+                    },
+                    {
+                      "max_10pct_allowance": "5888861/25000000",
+                      "strict_tail_improvement": "9279733/20000000",
+                      "tail_10pct_allowance": "15555917/20000000"
+                    },
+                    {
+                      "max_10pct_allowance": "76854809/50000000",
+                      "strict_tail_improvement": "51563803/50000000",
+                      "tail_10pct_allowance": "69959583/50000000"
+                    },
+                    {
+                      "max_10pct_allowance": "19501743/20000000",
+                      "strict_tail_improvement": "14589367/20000000",
+                      "tail_10pct_allowance": "20937107/20000000"
+                    }
+                  ],
+                  "metric_inflation": "1/1000000",
+                  "passed": false,
+                  "pooled_margins": {
+                    "pooled_mae_nonincrease": "-26656423457/409600000000",
+                    "pooled_max_10pct_allowance": "11362673/10000000",
+                    "pooled_tail_10pct": "10430153/50000000"
+                  },
+                  "pooled_tail_ratio": "18913421/22670500",
+                  "positive_baseline_tail": true,
+                  "ratio_unavailable_reason": null,
+                  "strictly_improving_folds": 4
+                },
+                "gap": {
+                  "fold_margins": [
+                    {
+                      "max_10pct_allowance": "45646437/25000000",
+                      "strict_tail_improvement": "2551131/6250000",
+                      "tail_10pct_allowance": "843657/781250"
+                    },
+                    {
+                      "max_10pct_allowance": "57179513/25000000",
+                      "strict_tail_improvement": "97943173/100000000",
+                      "tail_10pct_allowance": "155017173/100000000"
+                    },
+                    {
+                      "max_10pct_allowance": "50452133/100000000",
+                      "strict_tail_improvement": "14904549/50000000",
+                      "tail_10pct_allowance": "40454549/50000000"
+                    },
+                    {
+                      "max_10pct_allowance": "73735743/100000000",
+                      "strict_tail_improvement": "-25648487/100000000",
+                      "tail_10pct_allowance": "34901513/100000000"
+                    },
+                    {
+                      "max_10pct_allowance": "-20751943/50000000",
+                      "strict_tail_improvement": "285599/2000000",
+                      "tail_10pct_allowance": "1394279/2000000"
+                    }
+                  ],
+                  "metric_inflation": "1/1000000",
+                  "passed": false,
+                  "pooled_margins": {
+                    "pooled_mae_nonincrease": "-32552245973/409600000000",
+                    "pooled_max_10pct_allowance": "112433743/100000000",
+                    "pooled_tail_10pct": "-1385069/2500000"
+                  },
+                  "pooled_tail_ratio": "27511133/27490000",
+                  "positive_baseline_tail": true,
+                  "ratio_unavailable_reason": null,
+                  "strictly_improving_folds": 4
+                }
+              },
+              "ordinary": {
+                "formation": {
+                  "fold_margins": [
+                    {
+                      "max_10pct_allowance": "82439653/50000000",
+                      "strict_tail_improvement": "8980353/20000000",
+                      "tail_10pct_allowance": "14398601/20000000"
+                    },
+                    {
+                      "max_10pct_allowance": "11362683/10000000",
+                      "strict_tail_improvement": "-48627647/100000000",
+                      "tail_10pct_allowance": "-10955607/100000000"
+                    },
+                    {
+                      "max_10pct_allowance": "2944443/12500000",
+                      "strict_tail_improvement": "9279753/20000000",
+                      "tail_10pct_allowance": "15555937/20000000"
+                    },
+                    {
+                      "max_10pct_allowance": "76854859/50000000",
+                      "strict_tail_improvement": "51563853/50000000",
+                      "tail_10pct_allowance": "69959633/50000000"
+                    },
+                    {
+                      "max_10pct_allowance": "19501763/20000000",
+                      "strict_tail_improvement": "14589387/20000000",
+                      "tail_10pct_allowance": "20937127/20000000"
+                    }
+                  ],
+                  "metric_inflation": "0",
+                  "passed": false,
+                  "pooled_margins": {
+                    "pooled_mae_nonincrease": "-26656013857/409600000000",
+                    "pooled_max_10pct_allowance": "11362683/10000000",
+                    "pooled_tail_10pct": "10430203/50000000"
+                  },
+                  "pooled_tail_ratio": "18913421/22670500",
+                  "positive_baseline_tail": true,
+                  "ratio_unavailable_reason": null,
+                  "strictly_improving_folds": 4
+                },
+                "gap": {
+                  "fold_margins": [
+                    {
+                      "max_10pct_allowance": "22823231/12500000",
+                      "strict_tail_improvement": "10204549/25000000",
+                      "tail_10pct_allowance": "26997049/25000000"
+                    },
+                    {
+                      "max_10pct_allowance": "28589769/12500000",
+                      "strict_tail_improvement": "97943273/100000000",
+                      "tail_10pct_allowance": "155017273/100000000"
+                    },
+                    {
+                      "max_10pct_allowance": "50452233/100000000",
+                      "strict_tail_improvement": "14904599/50000000",
+                      "tail_10pct_allowance": "40454599/50000000"
+                    },
+                    {
+                      "max_10pct_allowance": "73735843/100000000",
+                      "strict_tail_improvement": "-25648387/100000000",
+                      "tail_10pct_allowance": "34901613/100000000"
+                    },
+                    {
+                      "max_10pct_allowance": "-20751893/50000000",
+                      "strict_tail_improvement": "285601/2000000",
+                      "tail_10pct_allowance": "1394281/2000000"
+                    }
+                  ],
+                  "metric_inflation": "0",
+                  "passed": false,
+                  "pooled_margins": {
+                    "pooled_mae_nonincrease": "-32551836373/409600000000",
+                    "pooled_max_10pct_allowance": "112433843/100000000",
+                    "pooled_tail_10pct": "-2770133/5000000"
+                  },
+                  "pooled_tail_ratio": "27511133/27490000",
+                  "positive_baseline_tail": true,
+                  "ratio_unavailable_reason": null,
+                  "strictly_improving_folds": 4
+                }
+              },
+              "status": "INELIGIBLE"
+            },
+            "ridge_1_1000000": {
+              "lambda": "1/1000000",
+              "numeric_guard": {
+                "formation": {
+                  "fold_margins": [
+                    {
+                      "max_10pct_allowance": "39086729/20000000",
+                      "strict_tail_improvement": "75563523/100000000",
+                      "tail_10pct_allowance": "102654763/100000000"
+                    },
+                    {
+                      "max_10pct_allowance": "36599359/100000000",
+                      "strict_tail_improvement": "-1513777/2500000",
+                      "tail_10pct_allowance": "-71497/312500"
+                    },
+                    {
+                      "max_10pct_allowance": "5171559/25000000",
+                      "strict_tail_improvement": "1802731/4000000",
+                      "tail_10pct_allowance": "15289839/20000000"
+                    },
+                    {
+                      "max_10pct_allowance": "71812987/50000000",
+                      "strict_tail_improvement": "51741667/50000000",
+                      "tail_10pct_allowance": "70137447/50000000"
+                    },
+                    {
+                      "max_10pct_allowance": "54864511/50000000",
+                      "strict_tail_improvement": "363791/500000",
+                      "tail_10pct_allowance": "1044969/1000000"
+                    }
+                  ],
+                  "metric_inflation": "1/1000000",
+                  "passed": false,
+                  "pooled_margins": {
+                    "pooled_mae_nonincrease": "-25982341537/409600000000",
+                    "pooled_max_10pct_allowance": "36599359/100000000",
+                    "pooled_tail_10pct": "10608017/50000000"
+                  },
+                  "pooled_tail_ratio": "132216083/158693500",
+                  "positive_baseline_tail": true,
+                  "ratio_unavailable_reason": null,
+                  "strictly_improving_folds": 4
+                },
+                "gap": {
+                  "fold_margins": [
+                    {
+                      "max_10pct_allowance": "48507793/25000000",
+                      "strict_tail_improvement": "1483967/3125000",
+                      "tail_10pct_allowance": "7166059/6250000"
+                    },
+                    {
+                      "max_10pct_allowance": "-364164657/20000000",
+                      "strict_tail_improvement": "-16509907/50000000",
+                      "tail_10pct_allowance": "12027093/50000000"
+                    },
+                    {
+                      "max_10pct_allowance": "14640029/25000000",
+                      "strict_tail_improvement": "1025957/2500000",
+                      "tail_10pct_allowance": "2303457/2500000"
+                    },
+                    {
+                      "max_10pct_allowance": "17903079/20000000",
+                      "strict_tail_improvement": "-153403/800000",
+                      "tail_10pct_allowance": "330997/800000"
+                    },
+                    {
+                      "max_10pct_allowance": "-2510671/12500000",
+                      "strict_tail_improvement": "11929427/50000000",
+                      "tail_10pct_allowance": "39646427/50000000"
+                    }
+                  ],
+                  "metric_inflation": "1/1000000",
+                  "passed": false,
+                  "pooled_margins": {
+                    "pooled_mae_nonincrease": "-21754216029/204800000000",
+                    "pooled_max_10pct_allowance": "-344954257/20000000",
+                    "pooled_tail_10pct": "-13260147/20000000"
+                  },
+                  "pooled_tail_ratio": "112224127/109960000",
+                  "positive_baseline_tail": true,
+                  "ratio_unavailable_reason": null,
+                  "strictly_improving_folds": 3
+                }
+              },
+              "ordinary": {
+                "formation": {
+                  "fold_margins": [
+                    {
+                      "max_10pct_allowance": "39086749/20000000",
+                      "strict_tail_improvement": "75563623/100000000",
+                      "tail_10pct_allowance": "102654863/100000000"
+                    },
+                    {
+                      "max_10pct_allowance": "36599459/100000000",
+                      "strict_tail_improvement": "-3027549/5000000",
+                      "tail_10pct_allowance": "-1143947/5000000"
+                    },
+                    {
+                      "max_10pct_allowance": "80806/390625",
+                      "strict_tail_improvement": "360547/800000",
+                      "tail_10pct_allowance": "15289859/20000000"
+                    },
+                    {
+                      "max_10pct_allowance": "71813037/50000000",
+                      "strict_tail_improvement": "51741717/50000000",
+                      "tail_10pct_allowance": "70137497/50000000"
+                    },
+                    {
+                      "max_10pct_allowance": "54864561/50000000",
+                      "strict_tail_improvement": "727583/1000000",
+                      "tail_10pct_allowance": "104497/100000"
+                    }
+                  ],
+                  "metric_inflation": "0",
+                  "passed": false,
+                  "pooled_margins": {
+                    "pooled_mae_nonincrease": "-25981931937/409600000000",
+                    "pooled_max_10pct_allowance": "36599459/100000000",
+                    "pooled_tail_10pct": "10608067/50000000"
+                  },
+                  "pooled_tail_ratio": "132216083/158693500",
+                  "positive_baseline_tail": true,
+                  "ratio_unavailable_reason": null,
+                  "strictly_improving_folds": 4
+                },
+                "gap": {
+                  "fold_margins": [
+                    {
+                      "max_10pct_allowance": "24253909/12500000",
+                      "strict_tail_improvement": "11871761/25000000",
+                      "tail_10pct_allowance": "28664261/25000000"
+                    },
+                    {
+                      "max_10pct_allowance": "-364164637/20000000",
+                      "strict_tail_improvement": "-16509857/50000000",
+                      "tail_10pct_allowance": "12027143/50000000"
+                    },
+                    {
+                      "max_10pct_allowance": "7320027/12500000",
+                      "strict_tail_improvement": "2051919/5000000",
+                      "tail_10pct_allowance": "4606919/5000000"
+                    },
+                    {
+                      "max_10pct_allowance": "17903099/20000000",
+                      "strict_tail_improvement": "-767011/4000000",
+                      "tail_10pct_allowance": "1654989/4000000"
+                    },
+                    {
+                      "max_10pct_allowance": "-5021317/25000000",
+                      "strict_tail_improvement": "11929477/50000000",
+                      "tail_10pct_allowance": "39646477/50000000"
+                    }
+                  ],
+                  "metric_inflation": "0",
+                  "passed": false,
+                  "pooled_margins": {
+                    "pooled_mae_nonincrease": "-21754011229/204800000000",
+                    "pooled_max_10pct_allowance": "-344954237/20000000",
+                    "pooled_tail_10pct": "-13260127/20000000"
+                  },
+                  "pooled_tail_ratio": "112224127/109960000",
+                  "positive_baseline_tail": true,
+                  "ratio_unavailable_reason": null,
+                  "strictly_improving_folds": 3
+                }
+              },
+              "status": "INELIGIBLE"
+            }
+          },
+          "claim": "development selection only; not calibration, coverage, or independent evaluation",
+          "failures": {},
+          "selected_model": null,
+          "status": "NO_GO_MODEL_IMPROVEMENT"
+        },
+        "environment_sha256": "a9414d3bb489373fe58f06bdf16bb5e691014b78cea2753f9e90addec909a886",
+        "fold_manifest_sha256": "d25c6e4b0d324d28f9b96f7cf9d396046a5f9d9df26bb7b996a3d534873fc3c6",
+        "input_sha256": {
+          "custody-receipt.json": "bed6061e33bc7961f6cff858d043b012c8e2337ae31decd6ac30acd5f82fe626",
+          "metadata.json": "e4f623329be262c9057eb9a7e9d7ca96fb05c8e7877845e3da4fb450c8c90655",
+          "source-receipt.json": "dd2fd4405009e0b897b986b7392f21f664b3928f7fc4330909bef207dd5e3def",
+          "train.json": "6ffb1e687ef888388f06b4ac4d2b951f3600e4ea00fb04f9d8a1d03c5c2a3a31"
+        },
+        "opened_original_input_files": [
+          "custody-receipt.json",
+          "metadata.json",
+          "source-receipt.json",
+          "train.json"
+        ],
+        "pass": 1,
+        "receipt_sha256": "60a9e788993d9be70d9cf8ba2c1e500d8aece53c82981ca7bfd3300f99a92cbc",
+        "scientific_result_sha256": "60cbe9c1d8d4a4b6fe5810765dd9cd5f31f4fe5ac21c9e83e4e802c14fcd0656",
+        "usage": {
+          "budget_checks": 4134,
+          "elapsed_seconds": "32.265992389999155",
+          "limit_peak_rss_kib_linux": 2097152,
+          "limit_seconds": 900,
+          "peak_rss_kib_linux": 161140,
+          "system_cpu_seconds": "2.3404920000000002",
+          "user_cpu_seconds": "29.651479000000002"
+        }
+      },
+      {
+        "decision": {
+          "alternatives": {
+            "ridge_1_10": {
+              "lambda": "1/10",
+              "numeric_guard": {
+                "formation": {
+                  "fold_margins": [
+                    {
+                      "max_10pct_allowance": "53398733/100000000",
+                      "strict_tail_improvement": "-74744919/100000000",
+                      "tail_10pct_allowance": "-47653679/100000000"
+                    },
+                    {
+                      "max_10pct_allowance": "15620369/50000000",
+                      "strict_tail_improvement": "-135520423/100000000",
+                      "tail_10pct_allowance": "-97848383/100000000"
+                    },
+                    {
+                      "max_10pct_allowance": "14949723/100000000",
+                      "strict_tail_improvement": "-24495071/100000000",
+                      "tail_10pct_allowance": "6885849/100000000"
+                    },
+                    {
+                      "max_10pct_allowance": "12634407/10000000",
+                      "strict_tail_improvement": "57068803/100000000",
+                      "tail_10pct_allowance": "93860363/100000000"
+                    },
+                    {
+                      "max_10pct_allowance": "11909669/20000000",
+                      "strict_tail_improvement": "-2469533/25000000",
+                      "tail_10pct_allowance": "2732571/12500000"
+                    }
+                  ],
+                  "metric_inflation": "1/1000000",
+                  "passed": false,
+                  "pooled_margins": {
+                    "pooled_mae_nonincrease": "-77994454949/409600000000",
+                    "pooled_max_10pct_allowance": "15620369/50000000",
+                    "pooled_tail_10pct": "-817041/1562500"
+                  },
+                  "pooled_tail_ratio": "42242353/39673375",
+                  "positive_baseline_tail": true,
+                  "ratio_unavailable_reason": null,
+                  "strictly_improving_folds": 1
+                },
+                "gap": {
+                  "fold_margins": [
+                    {
+                      "max_10pct_allowance": "39952523/100000000",
+                      "strict_tail_improvement": "-15018067/20000000",
+                      "tail_10pct_allowance": "-1584067/20000000"
+                    },
+                    {
+                      "max_10pct_allowance": "46187631/50000000",
+                      "strict_tail_improvement": "-41501863/100000000",
+                      "tail_10pct_allowance": "15572137/100000000"
+                    },
+                    {
+                      "max_10pct_allowance": "-2211459/2500000",
+                      "strict_tail_improvement": "-1000057/800000",
+                      "tail_10pct_allowance": "-591257/800000"
+                    },
+                    {
+                      "max_10pct_allowance": "37944319/100000000",
+                      "strict_tail_improvement": "-64132201/50000000",
+                      "tail_10pct_allowance": "-33857201/50000000"
+                    },
+                    {
+                      "max_10pct_allowance": "-209703411/100000000",
+                      "strict_tail_improvement": "-35251413/25000000",
+                      "tail_10pct_allowance": "-21392913/25000000"
+                    }
+                  ],
+                  "metric_inflation": "1/1000000",
+                  "passed": false,
+                  "pooled_margins": {
+                    "pooled_mae_nonincrease": "-76186892723/409600000000",
+                    "pooled_max_10pct_allowance": "-10493411/100000000",
+                    "pooled_tail_10pct": "-4960459/2500000"
+                  },
+                  "pooled_tail_ratio": "34661913/27490000",
+                  "positive_baseline_tail": true,
+                  "ratio_unavailable_reason": null,
+                  "strictly_improving_folds": 0
+                }
+              },
+              "ordinary": {
+                "formation": {
+                  "fold_margins": [
+                    {
+                      "max_10pct_allowance": "53398833/100000000",
+                      "strict_tail_improvement": "-74744819/100000000",
+                      "tail_10pct_allowance": "-47653579/100000000"
+                    },
+                    {
+                      "max_10pct_allowance": "15620419/50000000",
+                      "strict_tail_improvement": "-135520323/100000000",
+                      "tail_10pct_allowance": "-97848283/100000000"
+                    },
+                    {
+                      "max_10pct_allowance": "14949823/100000000",
+                      "strict_tail_improvement": "-24494971/100000000",
+                      "tail_10pct_allowance": "6885949/100000000"
+                    },
+                    {
+                      "max_10pct_allowance": "12634417/10000000",
+                      "strict_tail_improvement": "57068903/100000000",
+                      "tail_10pct_allowance": "93860463/100000000"
+                    },
+                    {
+                      "max_10pct_allowance": "11909689/20000000",
+                      "strict_tail_improvement": "-617377/6250000",
+                      "tail_10pct_allowance": "5465167/25000000"
+                    }
+                  ],
+                  "metric_inflation": "0",
+                  "passed": false,
+                  "pooled_margins": {
+                    "pooled_mae_nonincrease": "-77994045349/409600000000",
+                    "pooled_max_10pct_allowance": "15620419/50000000",
+                    "pooled_tail_10pct": "-13072631/25000000"
+                  },
+                  "pooled_tail_ratio": "42242353/39673375",
+                  "positive_baseline_tail": true,
+                  "ratio_unavailable_reason": null,
+                  "strictly_improving_folds": 1
+                },
+                "gap": {
+                  "fold_margins": [
+                    {
+                      "max_10pct_allowance": "39952623/100000000",
+                      "strict_tail_improvement": "-15018047/20000000",
+                      "tail_10pct_allowance": "-1584047/20000000"
+                    },
+                    {
+                      "max_10pct_allowance": "46187681/50000000",
+                      "strict_tail_improvement": "-41501763/100000000",
+                      "tail_10pct_allowance": "15572237/100000000"
+                    },
+                    {
+                      "max_10pct_allowance": "-4422913/5000000",
+                      "strict_tail_improvement": "-5000281/4000000",
+                      "tail_10pct_allowance": "-2956281/4000000"
+                    },
+                    {
+                      "max_10pct_allowance": "37944419/100000000",
+                      "strict_tail_improvement": "-64132151/50000000",
+                      "tail_10pct_allowance": "-33857151/50000000"
+                    },
+                    {
+                      "max_10pct_allowance": "-209703311/100000000",
+                      "strict_tail_improvement": "-8812847/6250000",
+                      "tail_10pct_allowance": "-2674111/3125000"
+                    }
+                  ],
+                  "metric_inflation": "0",
+                  "passed": false,
+                  "pooled_margins": {
+                    "pooled_mae_nonincrease": "-76186483123/409600000000",
+                    "pooled_max_10pct_allowance": "-10493311/100000000",
+                    "pooled_tail_10pct": "-9920913/5000000"
+                  },
+                  "pooled_tail_ratio": "34661913/27490000",
+                  "positive_baseline_tail": true,
+                  "ratio_unavailable_reason": null,
+                  "strictly_improving_folds": 0
+                }
+              },
+              "status": "INELIGIBLE"
+            },
+            "ridge_1_1000": {
+              "lambda": "1/1000",
+              "numeric_guard": {
+                "formation": {
+                  "fold_margins": [
+                    {
+                      "max_10pct_allowance": "82439603/50000000",
+                      "strict_tail_improvement": "8980333/20000000",
+                      "tail_10pct_allowance": "14398581/20000000"
+                    },
+                    {
+                      "max_10pct_allowance": "11362673/10000000",
+                      "strict_tail_improvement": "-48627747/100000000",
+                      "tail_10pct_allowance": "-10955707/100000000"
+                    },
+                    {
+                      "max_10pct_allowance": "5888861/25000000",
+                      "strict_tail_improvement": "9279733/20000000",
+                      "tail_10pct_allowance": "15555917/20000000"
+                    },
+                    {
+                      "max_10pct_allowance": "76854809/50000000",
+                      "strict_tail_improvement": "51563803/50000000",
+                      "tail_10pct_allowance": "69959583/50000000"
+                    },
+                    {
+                      "max_10pct_allowance": "19501743/20000000",
+                      "strict_tail_improvement": "14589367/20000000",
+                      "tail_10pct_allowance": "20937107/20000000"
+                    }
+                  ],
+                  "metric_inflation": "1/1000000",
+                  "passed": false,
+                  "pooled_margins": {
+                    "pooled_mae_nonincrease": "-26656423457/409600000000",
+                    "pooled_max_10pct_allowance": "11362673/10000000",
+                    "pooled_tail_10pct": "10430153/50000000"
+                  },
+                  "pooled_tail_ratio": "18913421/22670500",
+                  "positive_baseline_tail": true,
+                  "ratio_unavailable_reason": null,
+                  "strictly_improving_folds": 4
+                },
+                "gap": {
+                  "fold_margins": [
+                    {
+                      "max_10pct_allowance": "45646437/25000000",
+                      "strict_tail_improvement": "2551131/6250000",
+                      "tail_10pct_allowance": "843657/781250"
+                    },
+                    {
+                      "max_10pct_allowance": "57179513/25000000",
+                      "strict_tail_improvement": "97943173/100000000",
+                      "tail_10pct_allowance": "155017173/100000000"
+                    },
+                    {
+                      "max_10pct_allowance": "50452133/100000000",
+                      "strict_tail_improvement": "14904549/50000000",
+                      "tail_10pct_allowance": "40454549/50000000"
+                    },
+                    {
+                      "max_10pct_allowance": "73735743/100000000",
+                      "strict_tail_improvement": "-25648487/100000000",
+                      "tail_10pct_allowance": "34901513/100000000"
+                    },
+                    {
+                      "max_10pct_allowance": "-20751943/50000000",
+                      "strict_tail_improvement": "285599/2000000",
+                      "tail_10pct_allowance": "1394279/2000000"
+                    }
+                  ],
+                  "metric_inflation": "1/1000000",
+                  "passed": false,
+                  "pooled_margins": {
+                    "pooled_mae_nonincrease": "-32552245973/409600000000",
+                    "pooled_max_10pct_allowance": "112433743/100000000",
+                    "pooled_tail_10pct": "-1385069/2500000"
+                  },
+                  "pooled_tail_ratio": "27511133/27490000",
+                  "positive_baseline_tail": true,
+                  "ratio_unavailable_reason": null,
+                  "strictly_improving_folds": 4
+                }
+              },
+              "ordinary": {
+                "formation": {
+                  "fold_margins": [
+                    {
+                      "max_10pct_allowance": "82439653/50000000",
+                      "strict_tail_improvement": "8980353/20000000",
+                      "tail_10pct_allowance": "14398601/20000000"
+                    },
+                    {
+                      "max_10pct_allowance": "11362683/10000000",
+                      "strict_tail_improvement": "-48627647/100000000",
+                      "tail_10pct_allowance": "-10955607/100000000"
+                    },
+                    {
+                      "max_10pct_allowance": "2944443/12500000",
+                      "strict_tail_improvement": "9279753/20000000",
+                      "tail_10pct_allowance": "15555937/20000000"
+                    },
+                    {
+                      "max_10pct_allowance": "76854859/50000000",
+                      "strict_tail_improvement": "51563853/50000000",
+                      "tail_10pct_allowance": "69959633/50000000"
+                    },
+                    {
+                      "max_10pct_allowance": "19501763/20000000",
+                      "strict_tail_improvement": "14589387/20000000",
+                      "tail_10pct_allowance": "20937127/20000000"
+                    }
+                  ],
+                  "metric_inflation": "0",
+                  "passed": false,
+                  "pooled_margins": {
+                    "pooled_mae_nonincrease": "-26656013857/409600000000",
+                    "pooled_max_10pct_allowance": "11362683/10000000",
+                    "pooled_tail_10pct": "10430203/50000000"
+                  },
+                  "pooled_tail_ratio": "18913421/22670500",
+                  "positive_baseline_tail": true,
+                  "ratio_unavailable_reason": null,
+                  "strictly_improving_folds": 4
+                },
+                "gap": {
+                  "fold_margins": [
+                    {
+                      "max_10pct_allowance": "22823231/12500000",
+                      "strict_tail_improvement": "10204549/25000000",
+                      "tail_10pct_allowance": "26997049/25000000"
+                    },
+                    {
+                      "max_10pct_allowance": "28589769/12500000",
+                      "strict_tail_improvement": "97943273/100000000",
+                      "tail_10pct_allowance": "155017273/100000000"
+                    },
+                    {
+                      "max_10pct_allowance": "50452233/100000000",
+                      "strict_tail_improvement": "14904599/50000000",
+                      "tail_10pct_allowance": "40454599/50000000"
+                    },
+                    {
+                      "max_10pct_allowance": "73735843/100000000",
+                      "strict_tail_improvement": "-25648387/100000000",
+                      "tail_10pct_allowance": "34901613/100000000"
+                    },
+                    {
+                      "max_10pct_allowance": "-20751893/50000000",
+                      "strict_tail_improvement": "285601/2000000",
+                      "tail_10pct_allowance": "1394281/2000000"
+                    }
+                  ],
+                  "metric_inflation": "0",
+                  "passed": false,
+                  "pooled_margins": {
+                    "pooled_mae_nonincrease": "-32551836373/409600000000",
+                    "pooled_max_10pct_allowance": "112433843/100000000",
+                    "pooled_tail_10pct": "-2770133/5000000"
+                  },
+                  "pooled_tail_ratio": "27511133/27490000",
+                  "positive_baseline_tail": true,
+                  "ratio_unavailable_reason": null,
+                  "strictly_improving_folds": 4
+                }
+              },
+              "status": "INELIGIBLE"
+            },
+            "ridge_1_1000000": {
+              "lambda": "1/1000000",
+              "numeric_guard": {
+                "formation": {
+                  "fold_margins": [
+                    {
+                      "max_10pct_allowance": "39086729/20000000",
+                      "strict_tail_improvement": "75563523/100000000",
+                      "tail_10pct_allowance": "102654763/100000000"
+                    },
+                    {
+                      "max_10pct_allowance": "36599359/100000000",
+                      "strict_tail_improvement": "-1513777/2500000",
+                      "tail_10pct_allowance": "-71497/312500"
+                    },
+                    {
+                      "max_10pct_allowance": "5171559/25000000",
+                      "strict_tail_improvement": "1802731/4000000",
+                      "tail_10pct_allowance": "15289839/20000000"
+                    },
+                    {
+                      "max_10pct_allowance": "71812987/50000000",
+                      "strict_tail_improvement": "51741667/50000000",
+                      "tail_10pct_allowance": "70137447/50000000"
+                    },
+                    {
+                      "max_10pct_allowance": "54864511/50000000",
+                      "strict_tail_improvement": "363791/500000",
+                      "tail_10pct_allowance": "1044969/1000000"
+                    }
+                  ],
+                  "metric_inflation": "1/1000000",
+                  "passed": false,
+                  "pooled_margins": {
+                    "pooled_mae_nonincrease": "-25982341537/409600000000",
+                    "pooled_max_10pct_allowance": "36599359/100000000",
+                    "pooled_tail_10pct": "10608017/50000000"
+                  },
+                  "pooled_tail_ratio": "132216083/158693500",
+                  "positive_baseline_tail": true,
+                  "ratio_unavailable_reason": null,
+                  "strictly_improving_folds": 4
+                },
+                "gap": {
+                  "fold_margins": [
+                    {
+                      "max_10pct_allowance": "48507793/25000000",
+                      "strict_tail_improvement": "1483967/3125000",
+                      "tail_10pct_allowance": "7166059/6250000"
+                    },
+                    {
+                      "max_10pct_allowance": "-364164657/20000000",
+                      "strict_tail_improvement": "-16509907/50000000",
+                      "tail_10pct_allowance": "12027093/50000000"
+                    },
+                    {
+                      "max_10pct_allowance": "14640029/25000000",
+                      "strict_tail_improvement": "1025957/2500000",
+                      "tail_10pct_allowance": "2303457/2500000"
+                    },
+                    {
+                      "max_10pct_allowance": "17903079/20000000",
+                      "strict_tail_improvement": "-153403/800000",
+                      "tail_10pct_allowance": "330997/800000"
+                    },
+                    {
+                      "max_10pct_allowance": "-2510671/12500000",
+                      "strict_tail_improvement": "11929427/50000000",
+                      "tail_10pct_allowance": "39646427/50000000"
+                    }
+                  ],
+                  "metric_inflation": "1/1000000",
+                  "passed": false,
+                  "pooled_margins": {
+                    "pooled_mae_nonincrease": "-21754216029/204800000000",
+                    "pooled_max_10pct_allowance": "-344954257/20000000",
+                    "pooled_tail_10pct": "-13260147/20000000"
+                  },
+                  "pooled_tail_ratio": "112224127/109960000",
+                  "positive_baseline_tail": true,
+                  "ratio_unavailable_reason": null,
+                  "strictly_improving_folds": 3
+                }
+              },
+              "ordinary": {
+                "formation": {
+                  "fold_margins": [
+                    {
+                      "max_10pct_allowance": "39086749/20000000",
+                      "strict_tail_improvement": "75563623/100000000",
+                      "tail_10pct_allowance": "102654863/100000000"
+                    },
+                    {
+                      "max_10pct_allowance": "36599459/100000000",
+                      "strict_tail_improvement": "-3027549/5000000",
+                      "tail_10pct_allowance": "-1143947/5000000"
+                    },
+                    {
+                      "max_10pct_allowance": "80806/390625",
+                      "strict_tail_improvement": "360547/800000",
+                      "tail_10pct_allowance": "15289859/20000000"
+                    },
+                    {
+                      "max_10pct_allowance": "71813037/50000000",
+                      "strict_tail_improvement": "51741717/50000000",
+                      "tail_10pct_allowance": "70137497/50000000"
+                    },
+                    {
+                      "max_10pct_allowance": "54864561/50000000",
+                      "strict_tail_improvement": "727583/1000000",
+                      "tail_10pct_allowance": "104497/100000"
+                    }
+                  ],
+                  "metric_inflation": "0",
+                  "passed": false,
+                  "pooled_margins": {
+                    "pooled_mae_nonincrease": "-25981931937/409600000000",
+                    "pooled_max_10pct_allowance": "36599459/100000000",
+                    "pooled_tail_10pct": "10608067/50000000"
+                  },
+                  "pooled_tail_ratio": "132216083/158693500",
+                  "positive_baseline_tail": true,
+                  "ratio_unavailable_reason": null,
+                  "strictly_improving_folds": 4
+                },
+                "gap": {
+                  "fold_margins": [
+                    {
+                      "max_10pct_allowance": "24253909/12500000",
+                      "strict_tail_improvement": "11871761/25000000",
+                      "tail_10pct_allowance": "28664261/25000000"
+                    },
+                    {
+                      "max_10pct_allowance": "-364164637/20000000",
+                      "strict_tail_improvement": "-16509857/50000000",
+                      "tail_10pct_allowance": "12027143/50000000"
+                    },
+                    {
+                      "max_10pct_allowance": "7320027/12500000",
+                      "strict_tail_improvement": "2051919/5000000",
+                      "tail_10pct_allowance": "4606919/5000000"
+                    },
+                    {
+                      "max_10pct_allowance": "17903099/20000000",
+                      "strict_tail_improvement": "-767011/4000000",
+                      "tail_10pct_allowance": "1654989/4000000"
+                    },
+                    {
+                      "max_10pct_allowance": "-5021317/25000000",
+                      "strict_tail_improvement": "11929477/50000000",
+                      "tail_10pct_allowance": "39646477/50000000"
+                    }
+                  ],
+                  "metric_inflation": "0",
+                  "passed": false,
+                  "pooled_margins": {
+                    "pooled_mae_nonincrease": "-21754011229/204800000000",
+                    "pooled_max_10pct_allowance": "-344954237/20000000",
+                    "pooled_tail_10pct": "-13260127/20000000"
+                  },
+                  "pooled_tail_ratio": "112224127/109960000",
+                  "positive_baseline_tail": true,
+                  "ratio_unavailable_reason": null,
+                  "strictly_improving_folds": 3
+                }
+              },
+              "status": "INELIGIBLE"
+            }
+          },
+          "claim": "development selection only; not calibration, coverage, or independent evaluation",
+          "failures": {},
+          "selected_model": null,
+          "status": "NO_GO_MODEL_IMPROVEMENT"
+        },
+        "environment_sha256": "a9414d3bb489373fe58f06bdf16bb5e691014b78cea2753f9e90addec909a886",
+        "fold_manifest_sha256": "d25c6e4b0d324d28f9b96f7cf9d396046a5f9d9df26bb7b996a3d534873fc3c6",
+        "input_sha256": {
+          "custody-receipt.json": "bed6061e33bc7961f6cff858d043b012c8e2337ae31decd6ac30acd5f82fe626",
+          "metadata.json": "e4f623329be262c9057eb9a7e9d7ca96fb05c8e7877845e3da4fb450c8c90655",
+          "source-receipt.json": "dd2fd4405009e0b897b986b7392f21f664b3928f7fc4330909bef207dd5e3def",
+          "train.json": "6ffb1e687ef888388f06b4ac4d2b951f3600e4ea00fb04f9d8a1d03c5c2a3a31"
+        },
+        "opened_original_input_files": [
+          "custody-receipt.json",
+          "metadata.json",
+          "source-receipt.json",
+          "train.json"
+        ],
+        "pass": 2,
+        "receipt_sha256": "ff048bf38aa57262d494be69db7875f8a1fab5fbc09f597cb6fb89bc0a3a08b8",
+        "scientific_result_sha256": "60cbe9c1d8d4a4b6fe5810765dd9cd5f31f4fe5ac21c9e83e4e802c14fcd0656",
+        "usage": {
+          "budget_checks": 4134,
+          "elapsed_seconds": "28.84531196900207",
+          "limit_peak_rss_kib_linux": 2097152,
+          "limit_seconds": 900,
+          "peak_rss_kib_linux": 160240,
+          "system_cpu_seconds": "1.5708",
+          "user_cpu_seconds": "27.040032"
+        }
+      }
+    ],
+    "process_usage": [
+      {
+        "pass": 1,
+        "returncode": 0,
+        "wall_seconds": "32.72269531100028"
+      },
+      {
+        "pass": 2,
+        "returncode": 0,
+        "wall_seconds": "29.15089052199619"
+      }
+    ]
+  }
+}

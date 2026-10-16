@@ -1,0 +1,8 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "scripts/package_smoke.py"
+  ],
+  "cwd": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-combined-ui-validation-v1/mirror/discovery",
+  "started_at": "2026-10-16T05:46:37.581814+00:00"
+}

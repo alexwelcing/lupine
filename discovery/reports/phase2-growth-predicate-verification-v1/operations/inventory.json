@@ -1,0 +1,25 @@
+{
+  "files": {
+    "README.md": {
+      "bytes": 3667,
+      "sha256": "e7e7e32d2f41dcac5f83420052b28d866ce2eb8e3ea41dfe603595c1214ac8cf"
+    },
+    "bindings.json": {
+      "bytes": 808,
+      "sha256": "804c0548cf9d38b3a3390236cc2e0883ec354357249909ab7a62ed7e0fe6b88f"
+    },
+    "preparation.json": {
+      "bytes": 1435,
+      "sha256": "df3a60980fe057f1928e1be6e88abcfe27547e9fb4b3e3cc655bd63d5b79477d"
+    },
+    "run_after_ci.py": {
+      "bytes": 25290,
+      "sha256": "b89fcabf338e9329c3cdabdc58fb13d71396540aeec405ed5e3a01cc12ff6079"
+    },
+    "syntax-only.json": {
+      "bytes": 294,
+      "sha256": "f2a75aea7f94bb9862d6e2a8c879ada9473822f86250f1a16f0353539d960ffa"
+    }
+  },
+  "scope": "Prepared recorder and unbound configuration; no actual output or source artifacts."
+}

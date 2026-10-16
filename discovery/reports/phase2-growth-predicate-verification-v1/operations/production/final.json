@@ -1,0 +1,18 @@
+{
+  "aggregate_status": "FAILURES_OBSERVED",
+  "archive_accepted": false,
+  "commit": "a064a2c0e4a7cce1fbcb0541f49aae132944e785",
+  "diagnostic_complete": true,
+  "finished_at": "2026-10-16T12:57:23.616380+00:00",
+  "first_rejection": {
+    "category": "MEMBER_KIND_PROFILE",
+    "g31_reason": "ZIP_LAYOUT_UNSUPPORTED",
+    "stage": "member_kind"
+  },
+  "no_automatic_retry": true,
+  "public_sha256": "68c9042325e93cebd08f9dd056ccbf8833b16f4f045f25bbe2e8be69623326be",
+  "reason": "HEADER_PREDICATE_AUDIT_COMPLETE",
+  "scientific_schema_approved": false,
+  "scope": "Fixed-source categorical header replay only; no member/XML payload opens or scientific admission.",
+  "status": "COMPLETE_TWO_IDENTICAL_BOUNDED_DIAGNOSES"
+}

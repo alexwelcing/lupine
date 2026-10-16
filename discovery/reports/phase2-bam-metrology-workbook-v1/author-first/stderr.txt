@@ -1,0 +1,16 @@
+test_deep_xml_blocks (__main__.AuthorReaderTests.test_deep_xml_blocks) ... ok
+test_doctype_entity_blocks_before_parser (__main__.AuthorReaderTests.test_doctype_entity_blocks_before_parser) ... ok
+test_external_hyperlink_is_retained_without_fetch (__main__.AuthorReaderTests.test_external_hyperlink_is_retained_without_fetch) ... ok
+test_formula_cache_is_unverified_not_executed (__main__.AuthorReaderTests.test_formula_cache_is_unverified_not_executed) ... ok
+test_literals_and_merges_are_preserved_without_fill (__main__.AuthorReaderTests.test_literals_and_merges_are_preserved_without_fill) ... ok
+test_macro_member_and_content_type_block (__main__.AuthorReaderTests.test_macro_member_and_content_type_block) ... ok
+test_member_expansion_bound_prevents_xml_open (__main__.AuthorReaderTests.test_member_expansion_bound_prevents_xml_open) ... ok
+test_outside_relationship_and_truncated_xml_block (__main__.AuthorReaderTests.test_outside_relationship_and_truncated_xml_block) ... ok
+test_shared_strings_styles_and_comments (__main__.AuthorReaderTests.test_shared_strings_styles_and_comments) ... ok
+test_unknown_shared_string_and_duplicate_cell_block (__main__.AuthorReaderTests.test_unknown_shared_string_and_duplicate_cell_block) ... ok
+test_utf16_does_not_bypass_declaration_guard (__main__.AuthorReaderTests.test_utf16_does_not_bypass_declaration_guard) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.040s
+
+OK

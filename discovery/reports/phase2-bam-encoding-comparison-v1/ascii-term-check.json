@@ -1,0 +1,18 @@
+{
+  "schema": "lupine.bam-ascii-documentary-term-check.v1",
+  "at": "2026-10-16T10:03:23.991170+00:00",
+  "projection_sha256": "b3c77bb0799af461ad53504130c271ff1d12ef32af320217ee19b4990d1bce4e",
+  "method": "Literal case-insensitive substring search over selected ASCII-invariant cell text, excluding header record, examples-column values and every nonASCII/differing cell. No fuzzy aliases or claim of exhaustive semantic absence.",
+  "results": {
+    "uncertainty": [],
+    "covariance": [],
+    "correlation": [],
+    "coverage factor": [],
+    "confidence": [],
+    "batch": [],
+    "heat number": [],
+    "replicate": [],
+    "repeated": []
+  },
+  "interpretation": "Zero hits only establishes scoped lexical absence; necessary semantics may reside in excluded/ambiguous cells, external documents or measurement records. No scientific field completeness/independence claim."
+}

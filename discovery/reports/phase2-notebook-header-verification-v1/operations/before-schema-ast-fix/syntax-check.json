@@ -1,0 +1,21 @@
+{
+  "checks": [
+    "ast.parse of recorder source",
+    "compile in exec mode without executing returned code object"
+  ],
+  "exit_code": 0,
+  "finished_at": "2026-10-16T08:19:11.640359+00:00",
+  "network": false,
+  "private_notebook_or_capture_read": false,
+  "production_commands_run": false,
+  "python": "3.12.14",
+  "recorder_imported": false,
+  "recorder_invoked": false,
+  "runtime_tests_run": false,
+  "schema": "lupine.discovery.recorder_syntax_check.v1",
+  "source_path": ".cache/phase2-next-source-operations-v1/run_notebook_after_ci.py",
+  "source_sha256": "803f9a03f2b8c265ddf586ee45a59f7dbc79cba0122420eca1fb4655b2e29a31",
+  "source_unchanged": true,
+  "started_at": "2026-10-16T08:19:11.589021+00:00",
+  "status": "SYNTAX_ONLY_PASS"
+}

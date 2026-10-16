@@ -1,0 +1,81 @@
+{
+  "checks": [
+    {
+      "name": "constant:CORE_SHA256",
+      "pass": true
+    },
+    {
+      "name": "constant:BASELINE_COMMIT",
+      "pass": true
+    },
+    {
+      "name": "constant:BASELINE_MANIFEST_SHA256",
+      "pass": true
+    },
+    {
+      "name": "constant:BASELINE_RUNTIME_COUNT",
+      "pass": true
+    },
+    {
+      "name": "constant:PREREQUISITE",
+      "pass": true
+    },
+    {
+      "name": "constant:PREREQUISITE_SHA256",
+      "pass": true
+    },
+    {
+      "name": "constant:PREREQUISITE_PRODUCER",
+      "pass": true
+    },
+    {
+      "name": "constant:PROJECTION_SHA256",
+      "pass": true
+    },
+    {
+      "name": "constant:MAX_PUBLIC",
+      "pass": true
+    },
+    {
+      "name": "constant:MAX_PINNED_FILE",
+      "pass": true
+    },
+    {
+      "name": "constant:PHASE_BINDINGS",
+      "pass": true
+    },
+    {
+      "name": "pure_core_byte_identity",
+      "pass": true
+    },
+    {
+      "name": "published_baseline_manifest_identity",
+      "pass": true
+    },
+    {
+      "name": "published_baseline_runtime_count",
+      "pass": true
+    },
+    {
+      "name": "all_baseline_runtime_files_unchanged",
+      "pass": true
+    },
+    {
+      "name": "fixed_public_entrypoint_parameters",
+      "pass": true
+    },
+    {
+      "name": "no_http_dependency",
+      "pass": true
+    },
+    {
+      "name": "source_still_held",
+      "pass": true
+    }
+  ],
+  "checks_count": 18,
+  "passed": true,
+  "schema": "li.readiness.independent-production-static-audit.v1",
+  "scope": "Source syntax, fixed literal pins and published baseline bytes only. No candidate import, tests, guards, private objects or actual operations.",
+  "source_sha256": "540088bce4341b1f4137e44ef75244ada5786d000c50af597083dadbfc02c9d8"
+}

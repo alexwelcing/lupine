@@ -1,0 +1,17 @@
+{
+  "evidence_files": 35,
+  "external_fixture_files": [],
+  "full_integrated_browser_smoke_pending": true,
+  "inventory_sha256": "d0debc8561f83a80ef04d751e9c8d22acfc3c615122377ba2f04b6b9547fe9c4",
+  "module_sha256": "ed9f25b9260c7ab2a2fe33a5459f12c3d5c989f11abc6a969a2796b9ceb3ffc1",
+  "promotion_allowlist": [
+    {
+      "bytes": 19171,
+      "sha256": "ed9f25b9260c7ab2a2fe33a5459f12c3d5c989f11abc6a969a2796b9ceb3ffc1",
+      "source": ".cache/phase2-rhizo-census-ui-ci-v1/promotion/scripts/recorded_census_browser_checks.py",
+      "target": "scripts/recorded_census_browser_checks.py"
+    }
+  ],
+  "review_sha256": "307002c918ddb55756bd7023cc9db4628b26d51f96b9a34368170652119986ed",
+  "status": "PASS"
+}

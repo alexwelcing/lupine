@@ -1,0 +1,1437 @@
+[
+  {
+    "exists_at_commit": true,
+    "from": "GOAL.md",
+    "target": "reports/mpea-namespace-ci-v1/README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "GOAL.md",
+    "target": "reports/clean-reproduction-v1/README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "GOAL.md",
+    "target": "reports/mpea-formula-readiness-v1.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "GOAL.md",
+    "target": "reports/mpea-guarded-components-v1/README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "STATUS.md",
+    "target": "GOAL.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "STATUS.md",
+    "target": "reports/progress.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "STATUS.md",
+    "target": "formal/VERIFICATION.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "STATUS.md",
+    "target": "formal/theorem-inventory.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "STATUS.md",
+    "target": "reports/decision-pool-workbench-verification.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "STATUS.md",
+    "target": "docs/coupled-kernel.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "STATUS.md",
+    "target": "reports/coupled-independent-audit.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "STATUS.md",
+    "target": "docs/coupled-problem.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "STATUS.md",
+    "target": "docs/projection-adapter.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "STATUS.md",
+    "target": "docs/projection-data-readiness.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "STATUS.md",
+    "target": "reports/projection-custody-readiness-v1.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "STATUS.md",
+    "target": "docs/training-tail-protocol-v1.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "STATUS.md",
+    "target": "docs/training-tail-run.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "STATUS.md",
+    "target": "docs/decision-pool-calibration-design.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "STATUS.md",
+    "target": "docs/decision-pool-workbench-contract.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "STATUS.md",
+    "target": "reports/mpea-custody-readiness-v1.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "STATUS.md",
+    "target": "reports/mpea-header-labels-readiness-v1.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "STATUS.md",
+    "target": "docs/finite-exchangeability.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "STATUS.md",
+    "target": "reports/mpea-row-metadata-engineering-v1.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "STATUS.md",
+    "target": "reports/mpea-row-metadata-readiness-v1.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "STATUS.md",
+    "target": "reports/metadata-release-verification-v1.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "STATUS.md",
+    "target": "reports/training-tail-result-v1.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "STATUS.md",
+    "target": "reports/mpea-formula-readiness-v1.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "STATUS.md",
+    "target": "reports/clean-reproduction-v1/README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "STATUS.md",
+    "target": "reports/normalization-engineering-v1/README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "STATUS.md",
+    "target": "reports/normalization-release-v1/README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "STATUS.md",
+    "target": "reports/mpea-feature-reader-engineering-v1/README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "STATUS.md",
+    "target": "reports/mpea-feature-readiness-v1/README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "STATUS.md",
+    "target": "reports/mpea-protocol-review-v1/README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "STATUS.md",
+    "target": "reports/mpea-study-components-engineering-v1/README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "STATUS.md",
+    "target": "reports/mpea-guarded-components-v1/README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "STATUS.md",
+    "target": "reports/mpea-namespace-ci-v1/README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "docs/four-day-plan.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "STATUS.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "reports/mpea-guarded-components-v1/README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "reports/normalization-release-v1/README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "reports/decision-pool-workbench-verification.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "formal/VERIFICATION.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "formal/theorem-inventory.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "reports/clean-reproduction-v1/README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "reports/release-artifact-audit-v1/README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "reports/mpea-formula-readiness-v1.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "reports/mpea-feature-readiness-v1/README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "reports/mpea-protocol-review-v1/README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "GOAL.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "docs/workbench.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "docs/release-validation.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "docs/calibrated-problem.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "docs/pareto-problem.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "docs/mathematical-specification.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "formal/README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "formal/VERIFICATION.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "docs/claim-ledger.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "docs/known-answer-benchmarks.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "reports/known-answers-v1.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "reports/constrained-result-v1.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "docs/constrained-reproduce.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "reports/training-tail-result-v1.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "docs/archived-benchmark.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "docs/additional-archived-benchmark.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "reports/archived-v1.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "reports/additional-archived-v1.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "docs/evaluation-protocol.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "docs/joint-coverage-design.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "docs/calibration-planner.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "docs/constrained-benchmark-protocol.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "docs/training-tail-protocol-v1.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "docs/training-tail-run.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "docs/descriptor-audit.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "docs/pareto.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "docs/nonlinear.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "docs/coupled-kernel.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "docs/coupled-problem.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "docs/coupled-evidence-design.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "reports/coupled-independent-audit.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "docs/projection-adapter.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "docs/projection-data-readiness.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "docs/projection-workbench-contract.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "docs/decision-pool-calibration-design.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "docs/decision-pool-workbench-contract.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "docs/upstream-provenance.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "docs/architecture.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "HOSTING.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "LICENSE"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "README.md",
+    "target": "NOTICE.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/release-validation.md",
+    "target": "../reports/coupled-training-verification.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/release-validation.md",
+    "target": "../reports/coupled-interface-verification.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/release-validation.md",
+    "target": "../reports/training-tail-result-v1.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/release-validation.md",
+    "target": "../reports/projection-verification.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/release-validation.md",
+    "target": "../reports/projection-workbench-verification.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/release-validation.md",
+    "target": "projection-data-readiness.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/release-validation.md",
+    "target": "../reports/projection-custody-readiness-v1.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/release-validation.md",
+    "target": "../reports/decision-pool-verification.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/release-validation.md",
+    "target": "../reports/mpea-custody-engineering-v1.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/release-validation.md",
+    "target": "../reports/mpea-custody-readiness-v1.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/release-validation.md",
+    "target": "../reports/decision-pool-workbench-verification.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/release-validation.md",
+    "target": "mpea-header-disclosure-amendment-v1.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/release-validation.md",
+    "target": "../reports/mpea-header-labels-readiness-v1.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/release-validation.md",
+    "target": "mpea-column-mapping-v1.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/release-validation.md",
+    "target": "../formal/VERIFICATION.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/release-validation.md",
+    "target": "finite-exchangeability.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/release-validation.md",
+    "target": "../reports/mpea-row-metadata-engineering-v1.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/release-validation.md",
+    "target": "mpea-evaluation-design-notes.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/release-validation.md",
+    "target": "../reports/mpea-row-metadata-readiness-v1.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/release-validation.md",
+    "target": "../reports/metadata-release-verification-v1.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/release-validation.md",
+    "target": "reproduction-environment.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/release-validation.md",
+    "target": "../reports/release-artifact-audit-v1/README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/release-validation.md",
+    "target": "../reports/mpea-formula-engineering-v1.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/release-validation.md",
+    "target": "../reports/mpea-formula-readiness-v1.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/release-validation.md",
+    "target": "../reports/clean-reproduction-v1/README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/release-validation.md",
+    "target": "../reports/normalization-engineering-v1/README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/release-validation.md",
+    "target": "../reports/normalization-release-v1/README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/release-validation.md",
+    "target": "../reports/mpea-feature-reader-engineering-v1/README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/release-validation.md",
+    "target": "../reports/mpea-feature-readiness-v1/README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/release-validation.md",
+    "target": "../reports/mpea-protocol-review-v1/README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/release-validation.md",
+    "target": "../reports/mpea-study-components-engineering-v1/README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/release-validation.md",
+    "target": "../reports/mpea-guarded-components-v1/README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../formal/theorem-inventory.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../formal/VERIFICATION.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../reports/engine-extension-verification.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "finite-exchangeability.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "coupled-kernel.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../reports/coupled-independent-audit.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "coupled-problem.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../reports/coupled-interface-verification.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../reports/projection-verification.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "sharpness.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../formal/LupineSharpness.lean"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../tests/test_sharpness.py"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../formal/LupineCoupled.lean"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../formal/LupineCoupled.lean"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "coupled-kernel.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../tests/test_coupled.py"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../reports/coupled-independent-audit.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../scripts/audit_coupled.py"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../tests/test_coupled.py"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "projection-adapter.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../formal/LupineProjection.lean"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../reports/projection-independent-audit.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../tests/test_projection.py"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../tests/test_projection_review.py"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../formal/LupineRisk.lean"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../formal/VERIFICATION.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../formal/LupineRisk.lean"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../formal/LupineNormalization.lean"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../formal/VERIFICATION.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "normalization.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "mpea-features.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../reports/normalization-engineering-v1/README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../reports/mpea-formula-readiness-v1.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../reports/clean-reproduction-v1/README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../tests/test_calibration.py"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../reports/calibration-verification.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../tests/test_calibrated.py"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "calibrated-problem.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../reports/engine-extension-verification.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "decision-pool-calibration-design.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../formal/LupineDecisionPool.lean"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../formal/VERIFICATION.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../formal/LupineExchangeability.lean"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "finite-exchangeability.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../formal/VERIFICATION.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../src/lupine_discovery/decision_pool.py"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../tests/test_decision_pool_review.py"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../reports/decision-pool-workbench-verification.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../reports/decision-pool-independent-audit.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../tests/test_decision_pool_review.py"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../formal/LupinePareto.lean"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../formal/LupinePareto.lean"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../tests/test_pareto.py"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "pareto.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../reports/engine-extension-verification.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../formal/LupineIntervals.lean"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../tests/test_nonlinear.py"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../tests/test_pareto_io.py"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "pareto-problem.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../reports/engine-extension-verification.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../tests/test_server.py"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../scripts/browser_smoke.py"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../reports/browser-v1.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../reports/engine-extension-verification.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../reports/constrained-result-v1.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../reports/constrained-v1.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../reports/constrained-result-v1.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "calibrated-problem.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../tests/test_coupled_io.py"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../tests/test_coupled_wire_review.py"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "coupled-problem.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../tests/test_coupled_worker.py"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../tests/test_coupled_server.py"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../tests/test_training_dashboard.py"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../reports/training-tail-v1.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../reports/constrained-reproduction.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "training-tail-protocol-v1.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../reports/training-tail-result-v1.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../reports/training-tail-reproduction-v1.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../reports/normalization-engineering-v1/README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../reports/mpea-feature-reader-engineering-v1/README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../reports/mpea-feature-readiness-v1/README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/claim-ledger.md",
+    "target": "../reports/mpea-guarded-components-v1/README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/calibration-planner.md",
+    "target": "joint-coverage-design.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/calibration-planner.md",
+    "target": "calibrated-problem.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/joint-coverage-design.md",
+    "target": "calibration-planner.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/finite-exchangeability.md",
+    "target": "decision-pool-calibration-design.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/finite-exchangeability.md",
+    "target": "../formal/LupineExchangeability.lean"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/finite-exchangeability.md",
+    "target": "../formal/theorem-inventory.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/finite-exchangeability.md",
+    "target": "../formal/VERIFICATION.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/decision-pool-calibration-design.md",
+    "target": "../src/lupine_discovery/decision_pool.py"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/decision-pool-calibration-design.md",
+    "target": "decision-pool-workbench-contract.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/decision-pool-calibration-design.md",
+    "target": "../formal/LupineRisk.lean"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/decision-pool-calibration-design.md",
+    "target": "joint-coverage-design.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/decision-pool-calibration-design.md",
+    "target": "sharpness.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/decision-pool-calibration-design.md",
+    "target": "../tests/test_decision_pool.py"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/decision-pool-calibration-design.md",
+    "target": "../tests/test_decision_pool_review.py"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/decision-pool-calibration-design.md",
+    "target": "finite-exchangeability.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/reproduction-environment.md",
+    "target": "../pyproject.toml"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/reproduction-environment.md",
+    "target": "../reports/training-tail-pass-1-v1.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/reproduction-environment.md",
+    "target": "constrained-reproduce.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/reproduction-environment.md",
+    "target": "training-tail-run.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "docs/reproduction-environment.md",
+    "target": "../formal/lean-toolchain"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "formal/VERIFICATION.md",
+    "target": "theorem-inventory.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "formal/VERIFICATION.md",
+    "target": "AXIOMS.txt"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "formal/VERIFICATION.md",
+    "target": "../reports/formal-normalization-review-v1/integration-receipt.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "formal/VERIFICATION.md",
+    "target": "../reports/formal-normalization-review-v1/README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "formal/VERIFICATION.md",
+    "target": "README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "formal/VERIFICATION.md",
+    "target": "history/pre-normalization-theorem-inventory.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "formal/VERIFICATION.md",
+    "target": "history/pre-normalization-AXIOMS.txt"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "formal/VERIFICATION.md",
+    "target": "history/g16-theorem-inventory.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "formal/VERIFICATION.md",
+    "target": "history/g16-AXIOMS.txt"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "formal/VERIFICATION.md",
+    "target": "history/g16-theorem-inventory.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "formal/VERIFICATION.md",
+    "target": "history/g16-AXIOMS.txt"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "formal/VERIFICATION.md",
+    "target": "history/README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "formal/VERIFICATION.md",
+    "target": "history/g13-theorem-inventory.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "formal/VERIFICATION.md",
+    "target": "history/g13-AXIOMS.txt"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "formal/VERIFICATION.md",
+    "target": "history/README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "formal/VERIFICATION.md",
+    "target": "history/g10-theorem-inventory.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "formal/VERIFICATION.md",
+    "target": "history/g10-AXIOMS.txt"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "formal/README.md",
+    "target": "../docs/decision-pool-calibration-design.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "formal/README.md",
+    "target": "../docs/normalization.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "formal/README.md",
+    "target": "../reports/formal-normalization-review-v1/README.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/constrained-result-v1.md",
+    "target": "constrained-v1.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/constrained-result-v1.md",
+    "target": "../docs/constrained-benchmark-protocol.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/constrained-result-v1.md",
+    "target": "../docs/constrained-source-audit.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/constrained-result-v1.md",
+    "target": "constrained-strict-blocked-v1.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/constrained-result-v1.md",
+    "target": "constrained-strict-source-v1.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/constrained-result-v1.md",
+    "target": "../docs/constrained-format-amendment.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/constrained-result-v1.md",
+    "target": "constrained-engineering-validation.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/constrained-result-v1.md",
+    "target": "constrained-engineering-tests.txt"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/constrained-result-v1.md",
+    "target": "../docs/constrained-reproduce.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/constrained-result-v1.md",
+    "target": "constrained-reproduction.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/constrained-result-v1.md",
+    "target": "constrained-workflow-reproduction-v1.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/constrained-result-v1.md",
+    "target": "constrained-independent-audit.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/constrained-result-v1.md",
+    "target": "../docs/interval-bottleneck.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/training-tail-result-v1.md",
+    "target": "../docs/training-tail-protocol-v1.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/training-tail-result-v1.md",
+    "target": "../docs/constrained-source-audit.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/training-tail-result-v1.md",
+    "target": "training-tail-pass-1-v1.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/training-tail-result-v1.md",
+    "target": "training-tail-pass-2-v1.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/training-tail-result-v1.md",
+    "target": "training-tail-reproduction-v1.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/training-tail-result-v1.md",
+    "target": "training-tail-independent-audit.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/training-tail-result-v1.md",
+    "target": "../scripts/audit_training_tail.py"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/training-tail-result-v1.md",
+    "target": "training-tail-engineering-validation-v1.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/training-tail-result-v1.md",
+    "target": "../docs/training-tail-run.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/clean-reproduction-v1/README.md",
+    "target": "preparation/summary-v2.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/clean-reproduction-v1/README.md",
+    "target": "preparation/audit-result-v2.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/clean-reproduction-v1/README.md",
+    "target": "root-publication-verification.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/clean-reproduction-v1/README.md",
+    "target": "publication-allowlist.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/clean-reproduction-v1/README.md",
+    "target": "../../docs/reproduction-environment.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/normalization-release-v1/README.md",
+    "target": "ci-verification.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/normalization-release-v1/README.md",
+    "target": "installed-api-probe.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/normalization-release-v1/README.md",
+    "target": "publication-map.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/normalization-release-v1/README.md",
+    "target": "../../docs/reproduction-environment.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/mpea-feature-readiness-v1/README.md",
+    "target": "reproduction.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/mpea-feature-readiness-v1/README.md",
+    "target": "publication-map.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/mpea-feature-readiness-v1/README.md",
+    "target": "independent-review/review-v1.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/mpea-feature-readiness-v1/README.md",
+    "target": "../../docs/mpea-t25-archival-protocol-v1.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/mpea-feature-readiness-v1/README.md",
+    "target": "../../docs/mpea-t25-implementation-contract-v1.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/mpea-guarded-components-v1/README.md",
+    "target": "integrated-verification/python-execution.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/mpea-guarded-components-v1/README.md",
+    "target": "integrated-verification/browser-report.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/mpea-guarded-components-v1/README.md",
+    "target": "integrated-verification/summary.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/mpea-guarded-components-v1/README.md",
+    "target": "../../docs/mpea-t25-operational-enforcement-v1.md"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/mpea-guarded-components-v1/README.md",
+    "target": "artifact-copies.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/mpea-guarded-components-v1/README.md",
+    "target": "promotion/final-main-identities.json"
+  },
+  {
+    "exists_at_commit": true,
+    "from": "reports/mpea-guarded-components-v1/README.md",
+    "target": "promotion/main-review-path-adaptations.json"
+  }
+]

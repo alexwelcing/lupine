@@ -1,0 +1,8 @@
+.gitignore:12:*.log	discovery/reports/phase2-documentary-layout-preparation-v1/independent/first/stderr.log
+.gitignore:12:*.log	discovery/reports/phase2-documentary-layout-preparation-v1/independent/first/stdout.log
+.gitignore:12:*.log	discovery/reports/phase2-documentary-layout-preparation-v1/independent/namespace-final/stderr.log
+.gitignore:12:*.log	discovery/reports/phase2-documentary-layout-preparation-v1/independent/namespace-final/stdout.log
+.gitignore:12:*.log	discovery/reports/phase2-documentary-layout-preparation-v1/independent/second/stderr.log
+.gitignore:12:*.log	discovery/reports/phase2-documentary-layout-preparation-v1/independent/second/stdout.log
+.gitignore:12:*.log	discovery/reports/phase2-growth-verification-v1/publication-review/first-process-stderr.log
+.gitignore:12:*.log	discovery/reports/phase2-growth-verification-v1/publication-review/first-process-stdout.log

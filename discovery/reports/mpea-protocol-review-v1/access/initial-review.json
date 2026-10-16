@@ -1,0 +1,36 @@
+{
+  "access": {
+    "actual_allocation": false,
+    "entropy": false,
+    "features": false,
+    "main_tree_edits": false,
+    "raw_archive": false,
+    "targets": false
+  },
+  "findings": [
+    {
+      "finding": "Broad semantic/resource stop rule conflicts with per-cell SEMANTIC_CONFLICT and UNRESOLVED_LIMIT states; explicitly determine whether these remain row-local unknown endpoints or block the stage.",
+      "id": "CELL_STATUS_VS_STAGE_STOP",
+      "severity": "freeze_blocker"
+    },
+    {
+      "finding": "Specify unavailable pool component metrics/verdicts for empty F rather than vacuous cross-product passes; overall adequacy already prevents GO.",
+      "id": "EMPTY_FEASIBLE_GATE_DENOMINATOR",
+      "severity": "claim_ambiguity"
+    }
+  ],
+  "inputs": {
+    ".cache/mpea-protocol-design/mpea-t25-archival-protocol-v1.md": {
+      "bytes": 20174,
+      "sha256": "989f79359af45a9bcc698400d1ddee410677933a8360c0c71a30e9bc2dba8eb4"
+    },
+    ".cache/mpea-protocol-design/mpea-t25-implementation-contract-v1.md": {
+      "bytes": 38234,
+      "sha256": "2113d0e45799fb0117f22dbd80188e17d92f0e63c9857ba7a693e7f4ade99f10"
+    }
+  },
+  "method": "Bounded independent source-document review only; no source implementation execution.",
+  "revision": "initial",
+  "schema": "lupine.discovery.mpea.protocol_access_review.v1",
+  "status": "CLARIFICATION_REQUIRED_BEFORE_FREEZE"
+}

@@ -1,0 +1,326 @@
+{
+  "actual_numeric_source_access": false,
+  "browser_errors": [],
+  "checks_passed": [
+    "all_96_numeric_cells_exact_retained_compact_and_reference_counts_unchanged",
+    "exact_rounding_zero",
+    "exact_rounding_one",
+    "exact_rounding_third",
+    "exact_rounding_negative_third",
+    "exact_rounding_below_half",
+    "exact_rounding_exact_half",
+    "exact_rounding_negative_exact_half",
+    "exact_rounding_above_half",
+    "exact_rounding_below_carry",
+    "exact_rounding_exact_carry",
+    "exact_rounding_negative_carry",
+    "exact_rounding_tiny_carry",
+    "exact_rounding_negative_tiny_carry",
+    "exact_rounding_tiny_exact",
+    "exact_rounding_negative_tiny_exact",
+    "exact_rounding_huge_exact",
+    "exact_rounding_negative_huge_exact",
+    "exact_rounding_huge_rounding_carry",
+    "exact_rounding_both_digit_caps",
+    "exact_rounding_ordinary_close_to_zero",
+    "exact_rounding_fixed_lower_boundary",
+    "exact_rounding_scientific_lower_boundary",
+    "exact_rounding_fixed_upper_boundary",
+    "exact_rounding_scientific_upper_boundary",
+    "exact_rounding_carry_into_fixed_lower_boundary",
+    "exact_rounding_carry_into_scientific_upper_boundary",
+    "complete_large_exact_export_unchanged_by_rounded_presentation",
+    "prior_blocked_numeric_cap_and_detached_stale_export_regressions",
+    "expanded_large_exact_cell_wraps_and_mobile_page_stays_contained"
+  ],
+  "elapsed_seconds": 6.815469007000502,
+  "failures": [],
+  "finished_at": "2026-10-16T13:36:32.171086+00:00",
+  "http_integration_tested": false,
+  "network_requests": [],
+  "rounding_observations": [
+    {
+      "case": "zero",
+      "exact_retained": true,
+      "oracle": {
+        "coefficient": 0,
+        "exponent": 0
+      },
+      "shown": "0"
+    },
+    {
+      "case": "one",
+      "exact_retained": true,
+      "oracle": {
+        "coefficient": 1000,
+        "exponent": 0
+      },
+      "shown": "\u2248 1"
+    },
+    {
+      "case": "third",
+      "exact_retained": true,
+      "oracle": {
+        "coefficient": 3333,
+        "exponent": -1
+      },
+      "shown": "\u2248 0.3333"
+    },
+    {
+      "case": "negative_third",
+      "exact_retained": true,
+      "oracle": {
+        "coefficient": -3333,
+        "exponent": -1
+      },
+      "shown": "\u2248 -0.3333"
+    },
+    {
+      "case": "below_half",
+      "exact_retained": true,
+      "oracle": {
+        "coefficient": 1234,
+        "exponent": 1
+      },
+      "shown": "\u2248 12.34"
+    },
+    {
+      "case": "exact_half",
+      "exact_retained": true,
+      "oracle": {
+        "coefficient": 1235,
+        "exponent": 1
+      },
+      "shown": "\u2248 12.35"
+    },
+    {
+      "case": "negative_exact_half",
+      "exact_retained": true,
+      "oracle": {
+        "coefficient": -1235,
+        "exponent": 1
+      },
+      "shown": "\u2248 -12.35"
+    },
+    {
+      "case": "above_half",
+      "exact_retained": true,
+      "oracle": {
+        "coefficient": 1235,
+        "exponent": 1
+      },
+      "shown": "\u2248 12.35"
+    },
+    {
+      "case": "below_carry",
+      "exact_retained": true,
+      "oracle": {
+        "coefficient": 9999,
+        "exponent": 0
+      },
+      "shown": "\u2248 9.999"
+    },
+    {
+      "case": "exact_carry",
+      "exact_retained": true,
+      "oracle": {
+        "coefficient": 1000,
+        "exponent": 1
+      },
+      "shown": "\u2248 10"
+    },
+    {
+      "case": "negative_carry",
+      "exact_retained": true,
+      "oracle": {
+        "coefficient": -1000,
+        "exponent": 1
+      },
+      "shown": "\u2248 -10"
+    },
+    {
+      "case": "tiny_carry",
+      "exact_retained": true,
+      "oracle": {
+        "coefficient": 1000,
+        "exponent": -4
+      },
+      "shown": "\u2248 1e-4"
+    },
+    {
+      "case": "negative_tiny_carry",
+      "exact_retained": true,
+      "oracle": {
+        "coefficient": -1000,
+        "exponent": -4
+      },
+      "shown": "\u2248 -1e-4"
+    },
+    {
+      "case": "tiny_exact",
+      "exact_retained": true,
+      "oracle": {
+        "coefficient": 1000,
+        "exponent": -2499
+      },
+      "shown": "\u2248 1e-2499"
+    },
+    {
+      "case": "negative_tiny_exact",
+      "exact_retained": true,
+      "oracle": {
+        "coefficient": -1000,
+        "exponent": -2499
+      },
+      "shown": "\u2248 -1e-2499"
+    },
+    {
+      "case": "huge_exact",
+      "exact_retained": true,
+      "oracle": {
+        "coefficient": 1000,
+        "exponent": 4999
+      },
+      "shown": "\u2248 1e4999"
+    },
+    {
+      "case": "negative_huge_exact",
+      "exact_retained": true,
+      "oracle": {
+        "coefficient": -1000,
+        "exponent": 4999
+      },
+      "shown": "\u2248 -1e4999"
+    },
+    {
+      "case": "huge_rounding_carry",
+      "exact_retained": true,
+      "oracle": {
+        "coefficient": 1000,
+        "exponent": 5000
+      },
+      "shown": "\u2248 1e5000"
+    },
+    {
+      "case": "both_digit_caps",
+      "exact_retained": true,
+      "oracle": {
+        "coefficient": 1000,
+        "exponent": 2499
+      },
+      "shown": "\u2248 1e2499"
+    },
+    {
+      "case": "ordinary_close_to_zero",
+      "exact_retained": true,
+      "oracle": {
+        "coefficient": -5000,
+        "exponent": -5
+      },
+      "shown": "\u2248 -5e-5"
+    },
+    {
+      "case": "fixed_lower_boundary",
+      "exact_retained": true,
+      "oracle": {
+        "coefficient": 1000,
+        "exponent": -3
+      },
+      "shown": "\u2248 0.001"
+    },
+    {
+      "case": "scientific_lower_boundary",
+      "exact_retained": true,
+      "oracle": {
+        "coefficient": 1000,
+        "exponent": -4
+      },
+      "shown": "\u2248 1e-4"
+    },
+    {
+      "case": "fixed_upper_boundary",
+      "exact_retained": true,
+      "oracle": {
+        "coefficient": 9999,
+        "exponent": 3
+      },
+      "shown": "\u2248 9999"
+    },
+    {
+      "case": "scientific_upper_boundary",
+      "exact_retained": true,
+      "oracle": {
+        "coefficient": 1000,
+        "exponent": 4
+      },
+      "shown": "\u2248 1e4"
+    },
+    {
+      "case": "carry_into_fixed_lower_boundary",
+      "exact_retained": true,
+      "oracle": {
+        "coefficient": 1000,
+        "exponent": -3
+      },
+      "shown": "\u2248 0.001"
+    },
+    {
+      "case": "carry_into_scientific_upper_boundary",
+      "exact_retained": true,
+      "oracle": {
+        "coefficient": 1000,
+        "exponent": 4
+      },
+      "shown": "\u2248 1e4"
+    }
+  ],
+  "runner_sha256": "dfc11fc23677e84066ea3049e0740774f10d075c4277ad9d5a727897729f3335",
+  "source_after": {
+    "contract": {
+      "bytes": 8585,
+      "path": ".cache/phase2-rhizo-census-candidate-v1/contract.json",
+      "sha256": "e849d36004f0e73fdde22620bbffe06d1e53425907ca5fce974c536a5e1ea052"
+    },
+    "renderer": {
+      "bytes": 13634,
+      "path": ".cache/phase2-rhizo-census-ui-v1/recorded-census.js",
+      "sha256": "8e45d59eab288d5ce6c83fabe6b30ef4c707736913d13b8bf99f0e09a5b0628a"
+    },
+    "section": {
+      "bytes": 761,
+      "path": ".cache/phase2-rhizo-census-ui-v1/section.html",
+      "sha256": "66ec27e80dad95674ad6b30c6346f448cd19859f77bb8a07ae92e3f381e05331"
+    },
+    "style": {
+      "bytes": 43409,
+      "path": ".cache/phase2-rhizo-census-ui-v1/overlay/src/lupine_discovery/web/styles.css",
+      "sha256": "d7042060aae32dba2c9c5ad6f6df86a5ee51f7f1ea0dfb7aea413bf81bd3eaf9"
+    }
+  },
+  "source_before": {
+    "contract": {
+      "bytes": 8585,
+      "path": ".cache/phase2-rhizo-census-candidate-v1/contract.json",
+      "sha256": "e849d36004f0e73fdde22620bbffe06d1e53425907ca5fce974c536a5e1ea052"
+    },
+    "renderer": {
+      "bytes": 13634,
+      "path": ".cache/phase2-rhizo-census-ui-v1/recorded-census.js",
+      "sha256": "8e45d59eab288d5ce6c83fabe6b30ef4c707736913d13b8bf99f0e09a5b0628a"
+    },
+    "section": {
+      "bytes": 761,
+      "path": ".cache/phase2-rhizo-census-ui-v1/section.html",
+      "sha256": "66ec27e80dad95674ad6b30c6346f448cd19859f77bb8a07ae92e3f381e05331"
+    },
+    "style": {
+      "bytes": 43409,
+      "path": ".cache/phase2-rhizo-census-ui-v1/overlay/src/lupine_discovery/web/styles.css",
+      "sha256": "d7042060aae32dba2c9c5ad6f6df86a5ee51f7f1ea0dfb7aea413bf81bd3eaf9"
+    }
+  },
+  "source_unchanged": true,
+  "standalone_generated_only": true,
+  "started_at": "2026-10-16T13:36:25.355622+00:00",
+  "status": "PASS"
+}

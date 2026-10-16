@@ -1,0 +1,18 @@
+test_blocked_and_partial_payloads_never_fabricate_performance (test_mpea_study_report.PublicReportTests.test_blocked_and_partial_payloads_never_fabricate_performance) ... ok
+test_complete_closed_projection_preserves_gates_960_runs_and_all_controls (test_mpea_study_report.PublicReportTests.test_complete_closed_projection_preserves_gates_960_runs_and_all_controls) ... ok
+test_count_status_and_capture_mismatch_cannot_be_reported (test_mpea_study_report.PublicReportTests.test_count_status_and_capture_mismatch_cannot_be_reported) ... ok
+test_every_cap_binary_numerator_has_direct_aggregate_oracle (test_mpea_study_report.PublicReportTests.test_every_cap_binary_numerator_has_direct_aggregate_oracle) ... ok
+test_exact_wire_and_seals_reject_resealed_injections_and_bool_counts (test_mpea_study_report.PublicReportTests.test_exact_wire_and_seals_reject_resealed_injections_and_bool_counts) ... ok
+test_failure_availability_and_access_require_the_correct_predecessor (test_mpea_study_report.PublicReportTests.test_failure_availability_and_access_require_the_correct_predecessor) ... ok
+test_insufficient_development_preserves_real_counts_without_downstream_metrics (test_mpea_study_report.PublicReportTests.test_insufficient_development_preserves_real_counts_without_downstream_metrics) ... ok
+test_no_private_strings_or_per_record_fields_escape (test_mpea_study_report.PublicReportTests.test_no_private_strings_or_per_record_fields_escape) ... ok
+test_registered_reproduction_mode_is_not_a_new_scientific_result (test_mpea_study_report.PublicReportTests.test_registered_reproduction_mode_is_not_a_new_scientific_result) ... ok
+test_unavailable_gates_and_empty_secondary_are_not_zero_metrics (test_mpea_study_report.PublicReportTests.test_unavailable_gates_and_empty_secondary_are_not_zero_metrics) ... ok
+test_unknown_counts_preserve_original_denominator_and_explicit_parser_reasons (test_mpea_study_report.PublicReportTests.test_unknown_counts_preserve_original_denominator_and_explicit_parser_reasons) ... ok
+test_untrusted_report_depth_floats_and_oversize_are_rejected (test_mpea_study_report.PublicReportTests.test_untrusted_report_depth_floats_and_oversize_are_rejected) ... ok
+test_usage_and_volatile_input_byte_changes_do_not_change_scientific_identity (test_mpea_study_report.PublicReportTests.test_usage_and_volatile_input_byte_changes_do_not_change_scientific_identity) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 93.234s
+
+OK

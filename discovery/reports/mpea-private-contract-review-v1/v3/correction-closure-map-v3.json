@@ -1,0 +1,118 @@
+{
+  "actual_scientific_data_access": false,
+  "bindings": {
+    ".cache/mpea-archive-artifacts-review/final-execution-v2.json": "f688125896b381dafd7e2b968043753b0845b9f9c37d26317a37a1bbd8aa9fc6",
+    ".cache/mpea-archive-profiles-review/final-execution-v2.json": "c452cbbf8e2865144946cf567071896f41a75d1ba729493098949ca1994445ce",
+    ".cache/mpea-contract-compliance-review/independent-review-v2.json": "8dc13d0edc3cb7925df33d7f303ccc5a422eec0417c98169e49becba960ae69f",
+    ".cache/mpea-contract-compliance-review/independent-review-v3.json": "c05c38744691171244cf5077be320a550299f5029920a8d20ecd4a56c421654a",
+    ".cache/mpea-contract-compliance-review/numerical-usage-equivalence-v2.json": "9f2082936d3bea57f32b7db26af5bad03341227c2b79d7c2eef5c8377edab8f3",
+    ".cache/mpea-contract-compliance-review/numerical-usage-equivalence-v3.json": "9c960dca0a88e6e5d78772d1d19276b9e62470893a8d1a643f693a4ce1043c81",
+    ".cache/mpea-decisions-review/final-v2.json": "d38ce743685cd1194581e66285033e794d80b7abddf6974f480f86a9a8273244",
+    ".cache/mpea-study-custody/reports/contract-producer-hold-v1.json": "a0b1e0447ff4960dfec54d7c829b2fdc4a4a8171ff51ee635a07a7e0241dc40a",
+    ".cache/mpea-study-custody/reports/contract-producer-hold-v2.json": "b95fb36c07ae89d6dd89b84e61bd45c80939f6a8c6db1828fad65e20af1ab35d",
+    ".cache/mpea-study-custody/reports/contract-producer-hold-v3.json": "b6696c17ee14fec36513ce348ad9991bff8eef4e9381ed23d0ce92d0929cd4df",
+    ".cache/mpea-study-custody/review_launcher_contract/review-v1.json": "01db412bae78d33f436f7a4eb9fe321b3ebd8f9594734e087d604f061a858aac",
+    ".cache/mpea-study-custody/review_production/contract_compliance/companion-observability-review-v3.json": "d095acbc959e896e8bb9ea0c0c32aed6f9d9e8016c50744c4fe9cb168718a291",
+    ".cache/mpea-study-custody/review_production/contract_compliance/companion-observability-sweep-v3.json": "2e79f768d319647f68cb40638df936020f1dd5bc6f06d7529bd003424118b9e1",
+    ".cache/mpea-study-custody/review_production/contract_compliance/companion-observability-v1.json": "9f73c28976fcf6e6de0e46ed0b53b91f46a56eee7fa6eb0c95c735e0a7bcde14",
+    ".cache/mpea-study-custody/review_production/contract_compliance/companion-scope-v1.json": "5051ec5495ce47ceb1b24e93e1e4472544f008ca42a84eb08601c465acfbd62d",
+    ".cache/mpea-study-custody/review_production/contract_compliance/core-fixture-promotion-v1/adaptation-v1.json": "6d4826eb1d3ed716fb7c26db3616c9f3f41e289feecbdb146cd82f855607a9af",
+    ".cache/mpea-study-custody/review_production/contract_compliance/core-fixture-promotion-v2/adaptation-v2.json": "2e23032ca61dd045afc78c9565567b8d5acd86447f065132f404ad2c5f3d0b37",
+    ".cache/mpea-study-custody/review_production/contract_compliance/correction-closure-map-v3.md": "8b0fb861510ee90005c5a8f360ae96622c2fa15ee038c430cfd3bb1faeca6d9e",
+    ".cache/mpea-study-custody/review_production/contract_compliance/decision-views-v1.json": "29d59a72795e317c6ee205d9d925ebf48b36779548ec3002b69fc9e76888b9da",
+    ".cache/mpea-study-custody/review_production/contract_compliance/decision-views-v2.json": "e6f2c2e79791baf270821df2f12a38303dda5679f503894cdacbe4a80bc48ff9",
+    ".cache/mpea-study-custody/review_production/contract_compliance/hold-v1-to-v2-decisions.patch": "69b8845b69e8ef840751d03922c41ea315e290714e0db4de9a0f2af83eebf751",
+    ".cache/mpea-study-custody/review_production/contract_compliance/private-contract-integration-v1.json": "a1715cc6458ec44707f9bdc18093c4f5c5dc1590608fc08b7a113384488242cb",
+    ".cache/mpea-study-custody/review_production/contract_compliance/private-contract-review-v2.json": "62111c1652d057ce32beb7e316966e361e87c5b1fb6caa0fe5547c14718e0553",
+    ".cache/mpea-study-custody/review_production/contract_compliance/promotion-v1/candidate-v1.json": "123e671deeb5b3c83caac82abb7560d406c1a7d42375629f4369133354dc98f3",
+    ".cache/mpea-study-custody/review_production/contract_compliance/promotion-v1/decision-candidate-v1.json": "8f7c846701f6e097ec66362a510a406bea73ea14c8c3ef310009c8e6dcbf6a4d",
+    ".cache/mpea-study-custody/review_production/contract_compliance/promotion-v3/candidate-v1.json": "986ad39cb4df37b25bf8299f03a061e2d0e958dcd987a789c1207cc656ce16cc",
+    ".cache/mpea-study-custody/review_production/stage_usage_review/independent-review-v1.json": "3d4cdbc208a32fd3420f9f91e96bd851311ac7dd1b90bd5b96dcb51d0cb71a49",
+    "docs/mpea-t25-implementation-contract-v1.md": "be45b1d8db9586035cf37bd9bbb9046c065c3851b91f93386f8c68d155215af9",
+    "docs/mpea-t25-operational-enforcement-v1.md": "e36e72818f92096c316df34789a35840c1e5b1561f9467561dd8787da072cf98"
+  },
+  "corrections": {
+    "C1": {
+      "backend_final_pair_pending": false,
+      "final_main_execution_and_ci_required": true,
+      "implementation_issue_unresolved": false
+    },
+    "C2": {
+      "backend_final_pair_pending": false,
+      "final_main_execution_and_ci_required": true,
+      "implementation_issue_unresolved": false
+    },
+    "C3": {
+      "backend_final_pair_pending": false,
+      "final_main_execution_and_ci_required": true,
+      "implementation_issue_unresolved": false
+    },
+    "C4": {
+      "backend_final_pair_pending": false,
+      "final_main_execution_and_ci_required": true,
+      "implementation_issue_unresolved": false
+    },
+    "C5": {
+      "backend_final_pair_pending": false,
+      "final_main_execution_and_ci_required": true,
+      "implementation_issue_unresolved": false
+    },
+    "C6": {
+      "backend_final_pair_pending": false,
+      "final_main_execution_and_ci_required": true,
+      "implementation_issue_unresolved": false
+    },
+    "C7": {
+      "backend_final_pair_pending": false,
+      "final_main_execution_and_ci_required": true,
+      "implementation_issue_unresolved": false
+    },
+    "C8": {
+      "backend_final_pair_pending": false,
+      "final_main_execution_and_ci_required": true,
+      "implementation_issue_unresolved": false
+    },
+    "C9": {
+      "backend_final_pair_pending": false,
+      "final_main_execution_and_ci_required": true,
+      "implementation_issue_unresolved": false
+    }
+  },
+  "final_companion13_hold": "v3",
+  "final_focused4_hold": "v2",
+  "held_v2_backend_result": {
+    "all_21_executing_hashes_unchanged": true,
+    "all_eight_stage_and_public_scientific_seals_invariant_to_observations": true,
+    "first_process_live_checks": 22,
+    "numerical_digest": "fdc454ac82b0b4c4aca52c81d2d21640df5b3ebed0886d91047453054fecc07e",
+    "numerical_parity_reference_replacements": 46,
+    "policy_runs_each": 960,
+    "positive_fresh_processes": 2,
+    "public_completeness_tests": 7,
+    "status": "PASS"
+  },
+  "held_v3_backend_result": {
+    "all_eight_stage_public_and_seven_companion_scientific_seals_invariant_to_observations": true,
+    "all_sources_unchanged": true,
+    "executing_source_count": 21,
+    "numerical_parity_reference_replacements": 46,
+    "policy_runs_each": 960,
+    "positive_checks_each": 10,
+    "positive_fresh_processes": 2,
+    "status": "PASS"
+  },
+  "main_edits": false,
+  "pending": [
+    "Running final promoted-source main suite and exact-commit CI",
+    "Actual registration and frozen archival study",
+    "Fresh-process registered same-allocation reproduction",
+    "Claim-tier release decision from actual evidence"
+  ],
+  "physical_attestation": false,
+  "private14_hold": "v1",
+  "private14_reexecuted_on_v2": false,
+  "private14_reexecuted_on_v3": false,
+  "schema": "lupine.mpea.contract-correction-closure-map.v3",
+  "status": "SCOPED_IMPLEMENTATION_CORRECTIONS_PASS_FINAL_MAIN_SUITE_AND_CI_PENDING",
+  "supersedes_summary_only": "correction-closure-map-v1/v2.json; all original executions and failures retained"
+}

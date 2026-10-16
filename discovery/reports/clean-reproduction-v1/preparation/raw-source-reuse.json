@@ -1,0 +1,10 @@
+{
+  "bytes": 40811489,
+  "destination": "/workspace/lupine-release-reproduction/discovery/.cache/reproduction-raw-source/local-20261010T194558Z-58801/jdft_3d-12-12-2022.json.zip",
+  "filename": "jdft_3d-12-12-2022.json.zip",
+  "frozen_adapter_verification": "will execute acquisition adapter before custody in workflow",
+  "md5": "fb3e1eb80339a70ff313af1c644c1777",
+  "reuse_scope": "raw ZIP only; no extracted member or derived labels copied",
+  "sha256": "d4c64660e9e1fa45c82bd8868a96ec10162195eed69636445972c05550d8d0d6",
+  "source": "/workspace/lupine-discovery-branch/discovery/.cache/constrained/jarvis-gap-formation-v1/jdft_3d-12-12-2022.json.zip"
+}

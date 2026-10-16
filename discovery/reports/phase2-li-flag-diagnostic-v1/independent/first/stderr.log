@@ -1,0 +1,33 @@
+test_all_nine_prior_frozen_pins_match_public_source_bytes (test_li_v3_flag_diagnostic_review.FlagDiagnosticIndependentReview.test_all_nine_prior_frozen_pins_match_public_source_bytes) ... ok
+test_cli_error_uses_constant_output_without_input_echo (test_li_v3_flag_diagnostic_review.FlagDiagnosticIndependentReview.test_cli_error_uses_constant_output_without_input_echo) ... ok
+test_closed_projection_and_opaque_canary_invariance (test_li_v3_flag_diagnostic_review.FlagDiagnosticIndependentReview.test_closed_projection_and_opaque_canary_invariance) ... ok
+test_descriptor_category_proves_no_descriptor_or_local_agreement (test_li_v3_flag_diagnostic_review.FlagDiagnosticIndependentReview.test_descriptor_category_proves_no_descriptor_or_local_agreement) ... ok
+test_earlier_nonflag_failures_prevent_later_flag_disclosure (test_li_v3_flag_diagnostic_review.FlagDiagnosticIndependentReview.test_earlier_nonflag_failures_prevent_later_flag_disclosure) ... ok
+test_empty_or_utf8_only_flags_do_not_invent_the_expected_failure (test_li_v3_flag_diagnostic_review.FlagDiagnosticIndependentReview.test_empty_or_utf8_only_flags_do_not_invent_the_expected_failure) ... ok
+test_enumerated_flag_families_across_methods (test_li_v3_flag_diagnostic_review.FlagDiagnosticIndependentReview.test_enumerated_flag_families_across_methods) ... ok
+test_failed_object_read_preserves_unknown_exposure_and_checksum_failure_stays_blocked (test_li_v3_flag_diagnostic_review.FlagDiagnosticIndependentReview.test_failed_object_read_preserves_unknown_exposure_and_checksum_failure_stays_blocked) ... FAIL
+test_ignored_path_blocks_before_prior_guard_git_or_cache (test_li_v3_flag_diagnostic_review.FlagDiagnosticIndependentReview.test_ignored_path_blocks_before_prior_guard_git_or_cache) ... ok
+test_input_bounds_types_and_faked_actual_identity_reject_before_parsing (test_li_v3_flag_diagnostic_review.FlagDiagnosticIndependentReview.test_input_bounds_types_and_faked_actual_identity_reject_before_parsing) ... ok
+test_malformed_headers_and_member_limit_do_not_reparse (test_li_v3_flag_diagnostic_review.FlagDiagnosticIndependentReview.test_malformed_headers_and_member_limit_do_not_reparse) ... ok
+test_pinned_capture_rejection_happens_before_object_read (test_li_v3_flag_diagnostic_review.FlagDiagnosticIndependentReview.test_pinned_capture_rejection_happens_before_object_read) ... ok
+test_positive_stubbed_production_context_and_changed_pin_or_index_fail_closed (test_li_v3_flag_diagnostic_review.FlagDiagnosticIndependentReview.test_positive_stubbed_production_context_and_changed_pin_or_index_fail_closed) ... ok
+test_reparse_failure_is_constant_and_exposure_is_not_completed (test_li_v3_flag_diagnostic_review.FlagDiagnosticIndependentReview.test_reparse_failure_is_constant_and_exposure_is_not_completed) ... ok
+test_selects_first_failure_by_local_offset_not_directory_order_or_severity (test_li_v3_flag_diagnostic_review.FlagDiagnosticIndependentReview.test_selects_first_failure_by_local_offset_not_directory_order_or_severity) ... ok
+test_stubbed_production_uses_fixed_slots_and_never_claims_schema_readiness (test_li_v3_flag_diagnostic_review.FlagDiagnosticIndependentReview.test_stubbed_production_uses_fixed_slots_and_never_claims_schema_readiness) ... ok
+
+======================================================================
+FAIL: test_failed_object_read_preserves_unknown_exposure_and_checksum_failure_stays_blocked (test_li_v3_flag_diagnostic_review.FlagDiagnosticIndependentReview.test_failed_object_read_preserves_unknown_exposure_and_checksum_failure_stays_blocked)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-flags-implementation-review-v1/test_li_v3_flag_diagnostic_review.py", line 310, in test_failed_object_read_preserves_unknown_exposure_and_checksum_failure_stays_blocked
+    self.assertEqual(report['reason'],'SOURCE_READ_BLOCKED');self.assertEqual(written,[])
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'INTERNAL_FAILURE' != 'SOURCE_READ_BLOCKED'
+- INTERNAL_FAILURE
++ SOURCE_READ_BLOCKED
+
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.798s
+
+FAILED (failures=1)

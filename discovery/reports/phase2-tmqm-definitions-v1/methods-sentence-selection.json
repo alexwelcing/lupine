@@ -1,0 +1,17 @@
+{
+  "created_utc": "2026-10-16T18:23:25.324706+00:00",
+  "source_sha256": "a8b959d00e3f63aa5c649e16bb0f2118fdb55e26e712aba6cd0638155915fb72",
+  "section": "sec1.2",
+  "purpose": "Inventory only sentence locators and recognized documentary term families, not prose, across the primary methods section before choosing precise definitions. No result sections, figures, table cells or supporting files.",
+  "term_families": [
+    "units",
+    "dipole",
+    "polarizability",
+    "charge",
+    "orbitals",
+    "energy",
+    "calculation_methods"
+  ],
+  "followup_rule": "Only matched explicit methods/definition sentences may be projected with numerical tokens masked; qualitative result/abundance sentences excluded.",
+  "prior_projection_incident": "sec1.1 paragraph5 keyword match also disclosed qualitative abundance/composition statements; numeric tokens were masked but this was broader than intended. Original projection retained, not represented as outcome-free."
+}

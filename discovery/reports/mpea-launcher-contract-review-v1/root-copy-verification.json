@@ -1,0 +1,372 @@
+{
+  "all_original_hashes_and_bytes_verified": true,
+  "at": "2026-10-10T22:43:53.737630+00:00",
+  "evidence": [
+    {
+      "bytes": 2435,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/adaptation-map-v1.json",
+      "sha256": "c1badd5c636b6d9fd9d5b6fb0db7f21f4c5309a065a240cba6c124c1a68148ae",
+      "wrapper": "00.json",
+      "wrapper_sha256": "8fd935adcff7d233654e29fc557d8aa9266f6b95a26c753cdaa9e02ab47d0b81"
+    },
+    {
+      "bytes": 19851,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/attempt1-source-mpea_archive_run.py",
+      "sha256": "44172bd86ee640cece11d4c20c37a787c725fdd6ca61da0d3db28e511d7c4bbc",
+      "wrapper": "01.json",
+      "wrapper_sha256": "f2ee76a7d8776145084e3a7926ef2b646b1d9cf9eddc4dd314e87db92ef831cb"
+    },
+    {
+      "bytes": 6919,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/attempt1-source-mpea_archive_worker.py",
+      "sha256": "e4cd303752b459cadc94b1fca4227c4e6f63054283f911fb435f56ffb4fead26",
+      "wrapper": "02.json",
+      "wrapper_sha256": "2965c3a0e25679679f0a8b00b8eb77232df94a7c3ca4f9b2cd1f016accc2202f"
+    },
+    {
+      "bytes": 2844,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/attempt1-test_mpea_archive_launcher_review.stderr.txt",
+      "sha256": "c907ed065ba0366a8f6f583b2daeb313ceb8ff95a48da4af54c086a5eb794f60",
+      "wrapper": "03.json",
+      "wrapper_sha256": "958a38f7f214357363b5dac61eb79ba449d032c48926718a335ea7df6fdd3a51"
+    },
+    {
+      "bytes": 0,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/attempt1-test_mpea_archive_launcher_review.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "wrapper": "04.json",
+      "wrapper_sha256": "6c37147c0f4c6c11d0cc3d73472e03ce32093fac6b56baec35dc14fabe16d6eb"
+    },
+    {
+      "bytes": 714,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/attempt1-test_mpea_archive_supervised_review.stderr.txt",
+      "sha256": "84f954d1c87f2e5e576fa53c3126d56d42a07ef444a4425464995b8c7cfee2f0",
+      "wrapper": "05.json",
+      "wrapper_sha256": "430bc3ccea3bb5736d246349d91dc6a5f0dd28492dc1a879c2437bef7b6147f1"
+    },
+    {
+      "bytes": 0,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/attempt1-test_mpea_archive_supervised_review.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "wrapper": "06.json",
+      "wrapper_sha256": "c31ac0d64de49c8025ce848b1fe7d5acc6e68f17ef3c5387de790f92904ff5e4"
+    },
+    {
+      "bytes": 1889,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/attempt1-test_mpea_archive_transport_review.stderr.txt",
+      "sha256": "dc7688b7d557f22ea4b01a39bca76add2943194a39fd7ce668a6274d2bfee9c9",
+      "wrapper": "07.json",
+      "wrapper_sha256": "60c4962f1dc3c32d3de68fefe41822d8307921ff09fc40d4be9053b198928aa8"
+    },
+    {
+      "bytes": 0,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/attempt1-test_mpea_archive_transport_review.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "wrapper": "08.json",
+      "wrapper_sha256": "826c91c1e309bf252f47dddcf86da6f403d147800d4e16df746742515f931c8c"
+    },
+    {
+      "bytes": 1489,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/attempt1-test_mpea_archive_worker_review.stderr.txt",
+      "sha256": "544e2f95d69a68dbd799e683b416fc44eecdc2a25ae64eaa03b925509089db69",
+      "wrapper": "09.json",
+      "wrapper_sha256": "c53c3808f0a527f1f09de646595ed3027f59f3d2367d8f3451f8db0a3aa6fb68"
+    },
+    {
+      "bytes": 0,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/attempt1-test_mpea_archive_worker_review.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "wrapper": "10.json",
+      "wrapper_sha256": "33f884440e403ac7514ad863aebdd3d99647b1ae682a9d856d382f34732225b4"
+    },
+    {
+      "bytes": 14682,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/attempt1.json",
+      "sha256": "c8253d3e106e4bcd6be3c2aa84ffa26d637c360965c014b9c3737cd92cf85c5e",
+      "wrapper": "11.json",
+      "wrapper_sha256": "2e2f453cc7622d8629f7e7bf13596ec0d5dac0cc8e25f61de2ee2f5e6cde36c3"
+    },
+    {
+      "bytes": 968,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/baseline-inputs.json",
+      "sha256": "66b7a7965d2e844309fad08f9e04ddd01acd2c8311b6bf69e6c4e98ae8d0602b",
+      "wrapper": "12.json",
+      "wrapper_sha256": "e6c3276aaf48a2368a8a7c890f6283ee3254f2d7129d7eeccb912785bf39704c"
+    },
+    {
+      "bytes": 2238,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/mpea_archive_controlled_worker_child.py",
+      "sha256": "0ba8a9aacdbe0f25fdb47642725ccc6ec9f71d38ef7f16c2a8c6e90ece59027f",
+      "wrapper": "13.json",
+      "wrapper_sha256": "26913fe82861e8856a96983bd49d8a6cd32aa315f4d44844c45b01c05bfa45b2"
+    },
+    {
+      "bytes": 0,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/mpea_archive_controlled_worker_child.py.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "wrapper": "14.json",
+      "wrapper_sha256": "916d2d5bd563d2a512c3ba67db1392de0075c11b074c196e5319e2d9670dea6b"
+    },
+    {
+      "bytes": 2782,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/review-v1.json",
+      "sha256": "01db412bae78d33f436f7a4eb9fe321b3ebd8f9594734e087d604f061a858aac",
+      "wrapper": "15.json",
+      "wrapper_sha256": "7e08d48ace76a7a4e43d755f28ab8c9cc56e1ad55b40a8d53cb1206ca72af12b"
+    },
+    {
+      "bytes": 2065,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/review-v1.md",
+      "sha256": "e1d1f1dbee29141594d08fec8787a01cd9f0b5d0b4790a8da06b4bdcccb16a99",
+      "wrapper": "16.json",
+      "wrapper_sha256": "ca6849fb3eb420a797c25080e581a9a1ac5cbe8d5dba009d7bc740d4fa19c038"
+    },
+    {
+      "bytes": 17888,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/test_mpea_archive_launcher_review.py",
+      "sha256": "9eead39dafa0e03a731a13a4fe4562d547259a856255f0ee5a8baffa5b8fb38a",
+      "wrapper": "17.json",
+      "wrapper_sha256": "d5759dcc89c0820a97f3de39c3382625426fd972c0e3f930764e2413478dd58e"
+    },
+    {
+      "bytes": 8851,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/test_mpea_archive_launcher_review.py.patch",
+      "sha256": "a3815d75f9c0812c5c66fd25ee5ba6113bbc1aa4cdfe5e20d2e67434d4bbee78",
+      "wrapper": "18.json",
+      "wrapper_sha256": "9084e104ffc20b8fc539ed826b35ccf1f0d5c3e4fe57835fba90c28656489748"
+    },
+    {
+      "bytes": 4269,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/test_mpea_archive_supervised_review.py",
+      "sha256": "1a5bdef9506a424b8483c0a10fc06f3518f00817981529d3af677fc4c71df4b4",
+      "wrapper": "19.json",
+      "wrapper_sha256": "94d174fa1f679570c660e80d94676a6376197d5d34e6ebb036e3b441487fcb3f"
+    },
+    {
+      "bytes": 0,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/test_mpea_archive_supervised_review.py.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "wrapper": "20.json",
+      "wrapper_sha256": "d346763f24da658271481811d26fbe54cda8808f32156566e563caf4e402e885"
+    },
+    {
+      "bytes": 10981,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/test_mpea_archive_transport_review.py",
+      "sha256": "b6b05cb801442e094cb6d454f8cd61d36ddb2a4134f42a757845c8915dce45fc",
+      "wrapper": "21.json",
+      "wrapper_sha256": "109f9c6910cf82f3dc6aa190ccb13ada6c937de18237c030258358a657192ee4"
+    },
+    {
+      "bytes": 4913,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/test_mpea_archive_transport_review.py.patch",
+      "sha256": "11c267d8be134b4965858e8376f61c8378f9449887aa82aaa453a278f4730a13",
+      "wrapper": "22.json",
+      "wrapper_sha256": "60e3022221dd20574dee19f47765f8546f2875852b993dff68595125231066be"
+    },
+    {
+      "bytes": 14620,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/test_mpea_archive_worker_review.py",
+      "sha256": "db675acfb779c26771c6a82929d98313fa509d41186ef62e762b30590e8ca2e0",
+      "wrapper": "23.json",
+      "wrapper_sha256": "22fc534397fd377083bfb32d577b64cf9bfe32caf1011882dee29ca29336b108"
+    },
+    {
+      "bytes": 3272,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/test_mpea_archive_worker_review.py.patch",
+      "sha256": "92be11254d8d5703deb9af7ee053f9d37cff909b956e4963f4caa4d1ac106701",
+      "wrapper": "24.json",
+      "wrapper_sha256": "bc2a260c6fe8778afde1d22796e7393b544a34c97ebfd3c65b1183302d048fb7"
+    },
+    {
+      "bytes": 5149,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/promotion/copy-manifest-v1.json",
+      "sha256": "3686183c0987f9f7a3e5fdf462a7491606239e30488d6c19544534c767a2af05",
+      "wrapper": "25.json",
+      "wrapper_sha256": "49ca6d3c2dae80b78be6016ef0c544c1616fc1c6f8a5a13ad3963f81f8b7fe9f"
+    },
+    {
+      "bytes": 4749,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/promotion/run-preview-v1.py",
+      "sha256": "24294d07b03a87c02c11ee62f9ccadc909ef85575d2ba77d56aa792e12a640a1",
+      "wrapper": "26.json",
+      "wrapper_sha256": "a0f1adc2cfe6652f9f78cad40f2f8ea19f58b0c9d67b772d4b7f39f696523863"
+    },
+    {
+      "bytes": 8531,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/promotion/before-v1.json",
+      "sha256": "ef6d4e1d8dc28d41cb1a108b56a56d0a9149a01e5b8eeda8ee140e56877ead50",
+      "wrapper": "27.json",
+      "wrapper_sha256": "0bad5863a87a9daab46793673852b140132394e24154b0d9b452e1705cf29859"
+    },
+    {
+      "bytes": 21641,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/promotion/execution-v1.json",
+      "sha256": "fa266d230b7af967e0012a359f49b1aa9427c0064f9cd8f5ca2cbced6354d988",
+      "wrapper": "28.json",
+      "wrapper_sha256": "1d21a5f2c99e577672f1a2edce8eeea3762eae3f16aaa588d4a8b0c4a4a7e44b"
+    },
+    {
+      "bytes": 5607,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/promotion/review-rebind-v2.json",
+      "sha256": "bf3cc33b5f86f4bbe3b0514ec21f87d0c92030707d2148c4c84c655d0e3ff2fe",
+      "wrapper": "29.json",
+      "wrapper_sha256": "dc08f4bf8dd0c5264b8bd453ccf5c6b898e42dc3b9565c991306738c68b0ddf1"
+    },
+    {
+      "bytes": 2034,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/promotion/README.md",
+      "sha256": "f43bc7ff3c0881868794c90bb67f7dc9aa7782865a345d5c8f7065dac9e5c16a",
+      "wrapper": "30.json",
+      "wrapper_sha256": "54be1a9c3ad1610e04c7b49f48b8b015d1b6696cfc5e8ebf9bd91ce976343bf1"
+    },
+    {
+      "bytes": 17893,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/promotion/tests/test_mpea_archive_launcher_review.py",
+      "sha256": "d5b31e315d251fc662d407f3a56bca8b85d7cbc3415b8c81fa5604be14791cb7",
+      "wrapper": "31.json",
+      "wrapper_sha256": "ebb725fb65a43d2a0c5a968d5ff09cca645891e93a17b19c6ea5b64de6c1e1ff"
+    },
+    {
+      "bytes": 14625,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/promotion/tests/test_mpea_archive_worker_review.py",
+      "sha256": "81702ddcac3bf1a306d71bfe117ad5d3a6059e787d24f1e1c2cd0b4dfb037c32",
+      "wrapper": "32.json",
+      "wrapper_sha256": "4cbb17b275f6de7687ad3f524ca48ac50a039a811b4b8053afd20fa89208cbc0"
+    },
+    {
+      "bytes": 10981,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/promotion/tests/test_mpea_archive_transport_review.py",
+      "sha256": "b6b05cb801442e094cb6d454f8cd61d36ddb2a4134f42a757845c8915dce45fc",
+      "wrapper": "33.json",
+      "wrapper_sha256": "8538b87bd8b1045269a93b9c3143d1b453b520d9e82f78e74dc5677ad21f7598"
+    },
+    {
+      "bytes": 4269,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/promotion/tests/test_mpea_archive_supervised_review.py",
+      "sha256": "1a5bdef9506a424b8483c0a10fc06f3518f00817981529d3af677fc4c71df4b4",
+      "wrapper": "34.json",
+      "wrapper_sha256": "f80d1070cdd009e4386633a94999a9946c780ad01954c16a5023fd86dc3e8e0c"
+    },
+    {
+      "bytes": 697,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/promotion/diffs/test_mpea_archive_launcher_review.py.patch",
+      "sha256": "e8c3ff8d87326daaae810524574b09a56c19451d698bdc0c0f1546c4902d8e1a",
+      "wrapper": "35.json",
+      "wrapper_sha256": "e50d6cddb771c5f93de2ca5f995605e256af0427b74d80be57cb42988cde9693"
+    },
+    {
+      "bytes": 0,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/promotion/diffs/test_mpea_archive_supervised_review.py.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "wrapper": "36.json",
+      "wrapper_sha256": "bf15140474a204b66041a78b31bd4e5f2db83aab8b3e3a9d8cf7dc94d3c63568"
+    },
+    {
+      "bytes": 0,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/promotion/diffs/test_mpea_archive_transport_review.py.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "wrapper": "37.json",
+      "wrapper_sha256": "75fdb7d2abe2eebf65db2fd5b489462b506200c8a262760ed72bd930f7166d48"
+    },
+    {
+      "bytes": 699,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/promotion/diffs/test_mpea_archive_worker_review.py.patch",
+      "sha256": "ce917520d8cef90edbe179989aa15e9e8c8e3a4dde39664ecfae3238fac7e944",
+      "wrapper": "38.json",
+      "wrapper_sha256": "6717073c02495539529ab46972f8d33ec0d111c740ed7dd361704438770c6235"
+    },
+    {
+      "bytes": 0,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/promotion/execution-v1-launcher.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "wrapper": "39.json",
+      "wrapper_sha256": "cd37758d5381048e49720b75c366efc522a6c1b4ec3485387402fc5e65f25293"
+    },
+    {
+      "bytes": 2844,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/promotion/execution-v1-launcher.stderr.txt",
+      "sha256": "e5f605fbe24b40e8d1cf3ca5e5db6ccc91fefb198ed4b4a99b9249ae2e63e6c2",
+      "wrapper": "40.json",
+      "wrapper_sha256": "736d5970df5b22f93cf9f430e3764b933fa664d026fd39ea4b570d82ec4e1648"
+    },
+    {
+      "bytes": 0,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/promotion/execution-v1-worker.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "wrapper": "41.json",
+      "wrapper_sha256": "2aba284353b24c25e348d6ac2c1f88b51bc140169b729ff68cab78081ef93718"
+    },
+    {
+      "bytes": 1489,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/promotion/execution-v1-worker.stderr.txt",
+      "sha256": "8ed28bf4018822c3f253125bae59440c98b8e375fd5a04074c122e6ac2d1e3d8",
+      "wrapper": "42.json",
+      "wrapper_sha256": "c84319f3ecd77cf0040dc0da861ef20bb889be71a05e1c713e3ae3e519642cb6"
+    },
+    {
+      "bytes": 0,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/promotion/execution-v1-transport.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "wrapper": "43.json",
+      "wrapper_sha256": "49ff0d45cf53fa46cf8fd1f969f70eef8775b01a446609b80d2f394acfd23f1d"
+    },
+    {
+      "bytes": 1889,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/promotion/execution-v1-transport.stderr.txt",
+      "sha256": "6efb7c0d9243bc216da62136e42cf8e316a260dee98727829968f72796666127",
+      "wrapper": "44.json",
+      "wrapper_sha256": "175164ba5c128199e5b2fdbd63b1519a65b4611505391261cca00a0695996ce3"
+    },
+    {
+      "bytes": 0,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/promotion/execution-v1-supervised.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "wrapper": "45.json",
+      "wrapper_sha256": "34c063434749329950770ec802f53ffaa82c4a18943aa307ed2ab732743a3ca9"
+    },
+    {
+      "bytes": 714,
+      "path": ".cache/mpea-study-custody/review_launcher_contract/promotion/execution-v1-supervised.stderr.txt",
+      "sha256": "c38826c9c2e014e5ef95b9d810324a6d31bc843f440bceb182e212735d33c15a",
+      "wrapper": "46.json",
+      "wrapper_sha256": "7b635fb4f92f99ce889d5a755d63fed9f3e1cfc2b4bf70ebd5465c1212dd3840"
+    },
+    {
+      "bytes": 1222,
+      "path": ".cache/mpea-study-custody/reports/contract-producer-hold-v1.json",
+      "sha256": "a0b1e0447ff4960dfec54d7c829b2fdc4a4a8171ff51ee635a07a7e0241dc40a",
+      "wrapper": "47.json",
+      "wrapper_sha256": "96a14a1354b81e1d821775139168f74cbb72de746f94c9f972da5a5dfbc13c1d"
+    },
+    {
+      "bytes": 1480,
+      "path": ".cache/mpea-study-custody/reports/contract-producer-hold-v2.json",
+      "sha256": "b95fb36c07ae89d6dd89b84e61bd45c80939f6a8c6db1828fad65e20af1ab35d",
+      "wrapper": "48.json",
+      "wrapper_sha256": "03c0bf96102a8a5f66f4473da8a882dee6a36db66f9ecb4bcb1608205af0cd8a"
+    }
+  ],
+  "main_runtime_execution": "pending",
+  "promoted_tests": [
+    {
+      "after_sha256": "d5b31e315d251fc662d407f3a56bca8b85d7cbc3415b8c81fa5604be14791cb7",
+      "before_sha256": "7ff665a6ce74cbcf17948bb616f75bb972fe30f96a3b275b6ab1dcf7d152828c",
+      "path": "tests/test_mpea_archive_launcher_review.py"
+    },
+    {
+      "after_sha256": "81702ddcac3bf1a306d71bfe117ad5d3a6059e787d24f1e1c2cd0b4dfb037c32",
+      "before_sha256": "f2f6e2f896af90e99dbf415d7674d328b45d15cd9295b7e0181597fc9f306440",
+      "path": "tests/test_mpea_archive_worker_review.py"
+    },
+    {
+      "after_sha256": "b6b05cb801442e094cb6d454f8cd61d36ddb2a4134f42a757845c8915dce45fc",
+      "before_sha256": "f8143433c78701135605dd910b3642cb76f7ddd615c2ff0c1b02268edae98289",
+      "path": "tests/test_mpea_archive_transport_review.py"
+    },
+    {
+      "after_sha256": "1a5bdef9506a424b8483c0a10fc06f3518f00817981529d3af677fc4c71df4b4",
+      "before_sha256": "1a5bdef9506a424b8483c0a10fc06f3518f00817981529d3af677fc4c71df4b4",
+      "path": "tests/test_mpea_archive_supervised_review.py"
+    }
+  ]
+}

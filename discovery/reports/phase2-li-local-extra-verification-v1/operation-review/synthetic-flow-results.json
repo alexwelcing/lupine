@@ -1,0 +1,373 @@
+{
+  "actual_subprocesses_started": 0,
+  "cases": [
+    {
+      "expected": "two synthetic slots",
+      "name": "LOCAL_EXTRA_HEADERS_COMPLETE",
+      "result": {
+        "final_status": "COMPLETE_TWO_IDENTICAL_DIAGNOSES",
+        "recorded_slots": 2,
+        "returncode": 0,
+        "source_operations_executed": 0,
+        "synthetic_subprocess_calls": [
+          "1",
+          "2"
+        ],
+        "validation_errors": [
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "expected": "two synthetic slots",
+      "name": "EXTRA_HEADER_TRUNCATED",
+      "result": {
+        "final_status": "COMPLETE_TWO_IDENTICAL_DIAGNOSES",
+        "recorded_slots": 2,
+        "returncode": 0,
+        "source_operations_executed": 0,
+        "synthetic_subprocess_calls": [
+          "1",
+          "2"
+        ],
+        "validation_errors": [
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "expected": "two synthetic slots",
+      "name": "EXTRA_DATA_TRUNCATED",
+      "result": {
+        "final_status": "COMPLETE_TWO_IDENTICAL_DIAGNOSES",
+        "recorded_slots": 2,
+        "returncode": 0,
+        "source_operations_executed": 0,
+        "synthetic_subprocess_calls": [
+          "1",
+          "2"
+        ],
+        "validation_errors": [
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "expected": "two synthetic slots",
+      "name": "EXTRA_RECORD_LIMIT",
+      "result": {
+        "final_status": "COMPLETE_TWO_IDENTICAL_DIAGNOSES",
+        "recorded_slots": 2,
+        "returncode": 0,
+        "source_operations_executed": 0,
+        "synthetic_subprocess_calls": [
+          "1",
+          "2"
+        ],
+        "validation_errors": [
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "expected": "stop after one synthetic slot",
+      "name": "LOCAL_EXTRA_PARSE_FAILED",
+      "result": {
+        "final_status": "STOP_PRESERVE_EVIDENCE",
+        "recorded_slots": 1,
+        "returncode": 2,
+        "source_operations_executed": 0,
+        "synthetic_subprocess_calls": [
+          "1"
+        ],
+        "validation_errors": [
+          "DIAGNOSIS_REASON_INVALID"
+        ]
+      }
+    },
+    {
+      "expected": "stop after one synthetic slot",
+      "name": "LOCAL_EXTRA_LOCATOR_MISMATCH",
+      "result": {
+        "final_status": "STOP_PRESERVE_EVIDENCE",
+        "recorded_slots": 1,
+        "returncode": 2,
+        "source_operations_executed": 0,
+        "synthetic_subprocess_calls": [
+          "1"
+        ],
+        "validation_errors": [
+          "DIAGNOSIS_REASON_INVALID"
+        ]
+      }
+    },
+    {
+      "expected": "stop after one synthetic slot",
+      "name": "PREDECESSOR_PATH_MISMATCH",
+      "result": {
+        "final_status": "STOP_PRESERVE_EVIDENCE",
+        "recorded_slots": 1,
+        "returncode": 2,
+        "source_operations_executed": 0,
+        "synthetic_subprocess_calls": [
+          "1"
+        ],
+        "validation_errors": [
+          "DIAGNOSIS_REASON_INVALID"
+        ]
+      }
+    },
+    {
+      "expected": "stop after one synthetic slot",
+      "name": "PREDECESSOR_CLEANUP_FAILED",
+      "result": {
+        "final_status": "STOP_PRESERVE_EVIDENCE",
+        "recorded_slots": 1,
+        "returncode": 2,
+        "source_operations_executed": 0,
+        "synthetic_subprocess_calls": [
+          "1"
+        ],
+        "validation_errors": [
+          "DIAGNOSIS_REASON_INVALID"
+        ]
+      }
+    },
+    {
+      "expected": "stop after one synthetic slot",
+      "name": "boolean ID",
+      "result": {
+        "final_status": "STOP_PRESERVE_EVIDENCE",
+        "recorded_slots": 1,
+        "returncode": 2,
+        "source_operations_executed": 0,
+        "synthetic_subprocess_calls": [
+          "1"
+        ],
+        "validation_errors": [
+          "FIELD_HEADER_INVALID"
+        ]
+      }
+    },
+    {
+      "expected": "stop after one synthetic slot",
+      "name": "boolean size",
+      "result": {
+        "final_status": "STOP_PRESERVE_EVIDENCE",
+        "recorded_slots": 1,
+        "returncode": 2,
+        "source_operations_executed": 0,
+        "synthetic_subprocess_calls": [
+          "1"
+        ],
+        "validation_errors": [
+          "FIELD_HEADER_INVALID"
+        ]
+      }
+    },
+    {
+      "expected": "stop after one synthetic slot",
+      "name": "negative ID",
+      "result": {
+        "final_status": "STOP_PRESERVE_EVIDENCE",
+        "recorded_slots": 1,
+        "returncode": 2,
+        "source_operations_executed": 0,
+        "synthetic_subprocess_calls": [
+          "1"
+        ],
+        "validation_errors": [
+          "FIELD_HEADER_INVALID"
+        ]
+      }
+    },
+    {
+      "expected": "stop after one synthetic slot",
+      "name": "oversized size",
+      "result": {
+        "final_status": "STOP_PRESERVE_EVIDENCE",
+        "recorded_slots": 1,
+        "returncode": 2,
+        "source_operations_executed": 0,
+        "synthetic_subprocess_calls": [
+          "1"
+        ],
+        "validation_errors": [
+          "FIELD_HEADER_INVALID"
+        ]
+      }
+    },
+    {
+      "expected": "stop after one synthetic slot",
+      "name": "partial list on structural failure",
+      "result": {
+        "final_status": "STOP_PRESERVE_EVIDENCE",
+        "recorded_slots": 1,
+        "returncode": 2,
+        "source_operations_executed": 0,
+        "synthetic_subprocess_calls": [
+          "1"
+        ],
+        "validation_errors": [
+          "PARTIAL_FIELD_DISCLOSURE"
+        ]
+      }
+    },
+    {
+      "expected": "stop after one synthetic slot",
+      "name": "empty complete list",
+      "result": {
+        "final_status": "STOP_PRESERVE_EVIDENCE",
+        "recorded_slots": 1,
+        "returncode": 2,
+        "source_operations_executed": 0,
+        "synthetic_subprocess_calls": [
+          "1"
+        ],
+        "validation_errors": [
+          "FIELD_LIST_INVALID"
+        ]
+      }
+    },
+    {
+      "expected": "stop after one synthetic slot",
+      "name": "too many fields",
+      "result": {
+        "final_status": "STOP_PRESERVE_EVIDENCE",
+        "recorded_slots": 1,
+        "returncode": 2,
+        "source_operations_executed": 0,
+        "synthetic_subprocess_calls": [
+          "1"
+        ],
+        "validation_errors": [
+          "FIELD_LIST_INVALID"
+        ]
+      }
+    },
+    {
+      "expected": "stop after one synthetic slot",
+      "name": "declared area exceeds uint16 span",
+      "result": {
+        "final_status": "STOP_PRESERVE_EVIDENCE",
+        "recorded_slots": 1,
+        "returncode": 2,
+        "source_operations_executed": 0,
+        "synthetic_subprocess_calls": [
+          "1"
+        ],
+        "validation_errors": [
+          "FIELD_SPAN_INVALID"
+        ]
+      }
+    },
+    {
+      "expected": "stop after one synthetic slot",
+      "name": "extra disclosed field key",
+      "result": {
+        "final_status": "STOP_PRESERVE_EVIDENCE",
+        "recorded_slots": 1,
+        "returncode": 2,
+        "source_operations_executed": 0,
+        "synthetic_subprocess_calls": [
+          "1"
+        ],
+        "validation_errors": [
+          "FIELD_HEADER_INVALID"
+        ]
+      }
+    },
+    {
+      "expected": "stop after one synthetic slot",
+      "name": "incomplete success exposure",
+      "result": {
+        "final_status": "STOP_PRESERVE_EVIDENCE",
+        "recorded_slots": 1,
+        "returncode": 2,
+        "source_operations_executed": 0,
+        "synthetic_subprocess_calls": [
+          "1"
+        ],
+        "validation_errors": [
+          "LOCAL_EXPOSURE_INCOMPLETE"
+        ]
+      }
+    },
+    {
+      "expected": "stop after one synthetic slot",
+      "name": "walk without completed locator",
+      "result": {
+        "final_status": "STOP_PRESERVE_EVIDENCE",
+        "recorded_slots": 1,
+        "returncode": 2,
+        "source_operations_executed": 0,
+        "synthetic_subprocess_calls": [
+          "1"
+        ],
+        "validation_errors": [
+          "WALK_BEFORE_LOCATOR"
+        ]
+      }
+    },
+    {
+      "expected": "stop after one synthetic slot",
+      "name": "guard failure",
+      "result": {
+        "final_status": "STOP_PRESERVE_EVIDENCE",
+        "recorded_slots": 1,
+        "returncode": 2,
+        "source_operations_executed": 0,
+        "synthetic_subprocess_calls": [
+          "1"
+        ],
+        "validation_errors": [
+          "PUBLIC_REPORT_IDENTITY_INVALID"
+        ]
+      }
+    },
+    {
+      "expected": "stop after one synthetic slot",
+      "name": "different predecessor",
+      "result": {
+        "final_status": "STOP_PRESERVE_EVIDENCE",
+        "recorded_slots": 1,
+        "returncode": 2,
+        "source_operations_executed": 0,
+        "synthetic_subprocess_calls": [
+          "1"
+        ],
+        "validation_errors": [
+          "PREDECESSOR_CLASSIFICATION_CHANGED"
+        ]
+      }
+    }
+  ],
+  "current_recorder_sha256": "06e1a086dad664f51bb2b96533d8317889b909aa8a9fe349a7742c129f585adf",
+  "original_recorder_negative_control": {
+    "expected_bad_flow_detected": true,
+    "result": {
+      "final_status": "COMPLETE_TWO_IDENTICAL_DIAGNOSES",
+      "recorded_slots": 2,
+      "returncode": 0,
+      "source_operations_executed": 0,
+      "synthetic_subprocess_calls": [
+        "1",
+        "2"
+      ],
+      "validation_errors": [
+        null,
+        null
+      ]
+    }
+  },
+  "original_recorder_sha256": "860ba8b9b26045a30144a505e1a229a577680a0dabf279437024c6002a672d34",
+  "private_objects_read": false,
+  "project_modules_imported": false,
+  "scope": "Extracted recorder validator/run_command/main definitions with invented source IDs and injected gate/context/transport functions; no product reader imported or executed, no actual CI/package/source claims.",
+  "status": "PASS",
+  "synthetic_cases": 21
+}

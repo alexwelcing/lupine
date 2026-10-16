@@ -1,0 +1,52 @@
+{
+  "conclusions": [
+    "ASCII-space join and explicit count-one formatting confirmed in the pinned implementation.",
+    "Max-fraction normalization with three-decimal rounding confirmed; coefficients are not necessarily atomic percentages summing to 100.",
+    "This is source-format evidence only; no actual-v9 lineage or chemical equivalence inferred."
+  ],
+  "evidence_sha256": "e67256aa7cef2f5b8ecb101defefb448cde0c8d30787bac41bb45c1564c4757f",
+  "matches": [
+    {
+      "bytes": 5330,
+      "id": "utils.py",
+      "matches_published_evidence": true,
+      "sha256": "0912f6672a9cf2706e181acfbd589dd6383937641cbe917a3d6a3fcf2669c560",
+      "url": "https://raw.githubusercontent.com/CitrineInformatics/MPEA_dataset/d31e2510cccc3fb9e79d43ad62652f64ef8c2c5e/utils.py"
+    },
+    {
+      "bytes": 143,
+      "id": "requirements.txt",
+      "matches_published_evidence": true,
+      "sha256": "6ddf633f2a8a7a2770dfa353c0aad455f5e1a19aee984d8245c64a16cd3c32d5",
+      "url": "https://raw.githubusercontent.com/CitrineInformatics/MPEA_dataset/d31e2510cccc3fb9e79d43ad62652f64ef8c2c5e/requirements.txt"
+    },
+    {
+      "bytes": 2633586,
+      "id": "pymatgen_sdist",
+      "matches_published_evidence": true,
+      "sha256": "c21d24f570bcf947a77e2029b009054706a8288f897fcd33e1310c14bd426946",
+      "url": "https://files.pythonhosted.org/packages/de/7b/a0ea8d66d2a5acf35030398aed778569c81d90ef74f13e05c5c6ecaa7ffd/pymatgen-2019.10.4.tar.gz"
+    },
+    {
+      "archive_member": "pymatgen-2019.10.4/pymatgen/core/composition.py",
+      "bytes": 51187,
+      "matches_published_evidence": true,
+      "sha256": "4f4dc51f05d675c77c3eaab519a50afae6825065cb3b1895c1cd84f316e35461"
+    },
+    {
+      "archive_member": "pymatgen-2019.10.4/pymatgen/util/string.py",
+      "bytes": 11534,
+      "matches_published_evidence": true,
+      "sha256": "95ae0837a52329a13cb2ae903784e1ba6d2cf5eea50bffbfcf219f384a871a4a"
+    }
+  ],
+  "method": "Root independently refetched three exact source artifacts and inspected two verified source-distribution members through AST; no upstream import, install or execution.",
+  "schema": "lupine.discovery.mpea.formula_format_independent_review.v1",
+  "scope": {
+    "actual_v9_execution_lineage_established": false,
+    "code_inspection_only": true,
+    "experimental_csv_or_cells_opened": false,
+    "performance_targets_read": false
+  },
+  "status": "SOURCE_BYTES_AND_SELECTED_DEFINITIONS_MATCH"
+}

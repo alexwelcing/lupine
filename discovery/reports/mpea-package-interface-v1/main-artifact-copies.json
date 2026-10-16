@@ -1,0 +1,23 @@
+{
+  "at": "2026-10-10T22:51:54.613169+00:00",
+  "files": [
+    {
+      "bytes": 8747,
+      "copy": "main-tests.log",
+      "sha256": "9d482608e28003a08f321cc43221dc47fd59037296d2285c2b8fcd97d9724aa6",
+      "source": ".cache/package-interface-main-v1/tests.log"
+    },
+    {
+      "bytes": 1446,
+      "copy": "main-execution.json",
+      "sha256": "f01b120e4ae8a6e543b1e79a9e3d0439ab331290059646b215b0b316226efc65",
+      "source": ".cache/package-interface-main-v1/execution.json"
+    },
+    {
+      "bytes": 428,
+      "copy": "main-source-before.json",
+      "sha256": "63ec7bcfc8b135c103b5dbfb5536ce721abeb5ebff688e47258e7e5b57aaed09",
+      "source": ".cache/package-interface-main-v1/source-before.json"
+    }
+  ]
+}

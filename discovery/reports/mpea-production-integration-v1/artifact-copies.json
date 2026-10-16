@@ -1,0 +1,120 @@
+{
+  "schema": "lupine.discovery.production_integration_copies.v1",
+  "scope": "Root constructed-data and browser integration evidence; no actual MPEA study",
+  "copies": [
+    {
+      "source": ".cache/mpea-archive-core-promotion.json",
+      "destination": "archive-core-promotion.json",
+      "bytes": 84797,
+      "sha256": "3e629ac08c018256b700538330b5ab3280b95656eb1f18bac9b6e75948361876"
+    },
+    {
+      "source": ".cache/mpea-archive-author-main.txt",
+      "destination": "archive-author-main.txt",
+      "bytes": 1769,
+      "sha256": "63f113944ba190745add35e273b17f4b5c43df4edbc5cf0c6c955dacdb773f83"
+    },
+    {
+      "source": ".cache/mpea-archive-independent-main.txt",
+      "destination": "archive-independent-main.txt",
+      "bytes": 4087,
+      "sha256": "70070677231c646579b296755c8ec36ed9441eefe51c457d4cfd2850f9a7b9d3"
+    },
+    {
+      "source": ".cache/mpea-registration-final-main-v2.txt",
+      "destination": "registration-final-main.txt",
+      "bytes": 10356,
+      "sha256": "acd8f5cce06094db9bc0dc8cdeb47c0e8bd237851f8dcecd93e6d5a01b32a230"
+    },
+    {
+      "source": ".cache/retained-auditor-main-tests.txt",
+      "destination": "retained-auditor-main-tests.txt",
+      "bytes": 2084,
+      "sha256": "265aafb25ec3184cbc27b3ff720e82c7e1d3c424a722574ae69e87fe3c3b9b43"
+    },
+    {
+      "source": ".cache/browser/decision-pool/browser-report.json",
+      "destination": "browser-report.json",
+      "bytes": 10475,
+      "sha256": "69627ede23234e7c7832eebe7e5757f149671b779bc46c2c41359d1e1e8c1e50"
+    },
+    {
+      "source": ".cache/mpea-registration-main-migration-history/test_mpea_registration_allocation_review.py",
+      "destination": "history/pre-adaptation-registration-review.py",
+      "bytes": 42277,
+      "sha256": "344a61193a71fc58a1569b403993526077dcf344bc9b2eede68d10efcdd286fd"
+    },
+    {
+      "source": ".cache/mpea-registration-main-migration-history/mpea-registration-final-main.txt",
+      "destination": "history/registration-partial-migration.txt",
+      "bytes": 15329,
+      "sha256": "b5e8f95155213cbfcf9a6e93274312e7f104502dadd26a27964a5042a5416b3c"
+    },
+    {
+      "source": ".cache/mpea-public-bridge-main-history/test_mpea_public_bridge_review.py",
+      "destination": "history/bridge-import-failure-review.py",
+      "bytes": 14049,
+      "sha256": "604f2422eca35b08dfdc95ba0ba5c3827cf6ca894698e0fbce5834ff23e0d73e"
+    },
+    {
+      "source": ".cache/mpea-public-bridge-main-history/test_mpea_public_bridge_boundaries.py",
+      "destination": "history/bridge-import-failure-boundaries.py",
+      "bytes": 12039,
+      "sha256": "7dde532db38bf9483af1125282a331387275aef6a9a7ead1ee6ee4977e8b3478"
+    },
+    {
+      "source": ".cache/mpea-public-bridge-main-history/mpea-public-bridge-main.txt",
+      "destination": "history/bridge-import-failure.txt",
+      "bytes": 2327,
+      "sha256": "9eda38e42643d90dee96c465c1eeb20428b37f5a44939a7f7edf0c76829bc70a"
+    },
+    {
+      "source": ".cache/mpea-public-bridge-main-v2.txt",
+      "destination": "public-bridge-main.txt",
+      "bytes": 4369,
+      "sha256": "5464493e56e6355e3b5742b67f6f9789fe21694ec76f496402304cfc2995dd9a"
+    },
+    {
+      "source": ".cache/mpea-study-custody/review_public_bridge/promotion/promotion-map-v1.json",
+      "destination": "bridge-promotion.json",
+      "bytes": 2201,
+      "sha256": "4d0408f6b7d50e6aa4b7db6bff4bf6216332721bcb035d0fd4dbd4836ee1afaf"
+    },
+    {
+      "source": ".cache/mpea-study-custody/review_public_bridge/promotion/main-loader-probe-v1.json",
+      "destination": "bridge-loader-probe.json",
+      "bytes": 635,
+      "sha256": "4c029cdf9e8670da862421bb7ba7382160bda278137a5cb8f993c4e47f67e282"
+    },
+    {
+      "source": ".cache/mpea-study-custody/review_launcher/promotion/manifest.json",
+      "destination": "launcher-promotion.json",
+      "bytes": 5108,
+      "sha256": "9557b5d1929a5bfea7b0a98451e3c38791d268109290edf91c40c4b6485f5fd6"
+    },
+    {
+      "source": ".cache/mpea-study-custody/review_launcher/promotion/execution-v2.json",
+      "destination": "launcher-portable-execution.json",
+      "bytes": 8016,
+      "sha256": "a81b1743dccb3e1489b0e7e02384463671b8a520bc7b4189fccbf883b72ff435"
+    },
+    {
+      "source": ".cache/mpea-study-custody/review_launcher/promotion/execution-v2.stderr.txt",
+      "destination": "launcher-portable-tests.txt",
+      "bytes": 5897,
+      "sha256": "4a32d7c742e5c228971ea5ad61280abb44a467de5e22f919a84d37cc42d9eb79"
+    },
+    {
+      "source": ".cache/mpea-production-full-suite/tests.txt",
+      "destination": "full-suite-tests.txt",
+      "bytes": 205420,
+      "sha256": "942775b102b3c51c8c060df74ddbf7864e6efc7dd90ccab5c3c60bafa032be81"
+    },
+    {
+      "source": ".cache/mpea-production-full-suite/execution.json",
+      "destination": "full-suite-execution.json",
+      "bytes": 81078,
+      "sha256": "c32bbf809119f3cb38ad0d848790e5a7c551363f0743dcc9215a023c680db172"
+    }
+  ]
+}

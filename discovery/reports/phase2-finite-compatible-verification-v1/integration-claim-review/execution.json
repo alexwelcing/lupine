@@ -1,0 +1,18 @@
+{
+  "command": [
+    "python",
+    ".cache/phase2-finite-compatible-final-review-v1/audit_evidence.py"
+  ],
+  "exit_code": 0,
+  "files": {
+    "audit.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "audit.stdout.txt": "3dcac680b65e4179b935aefc12354fc1b2a6c538cb6366528e9174ca45d0daa8",
+    "audit_evidence.py": "e6780f3c4ee1771586d9255f7da6ba11b3ef5b7e444d5a74d8500e8d8047a0ab",
+    "child-review.json": "8133b5839ca29034adeefaaa40c1ef9bf2a1fd1bc044181634f853d1627727f4",
+    "review.json": "277f25178ebaf4001472f8dcd75ae2022a463d1a02acd59374a58e4dada2e15a"
+  },
+  "finished_at": "2026-10-16T07:32:15.780333+00:00",
+  "first_audit_failure_preserved": "first-audit/execution.json",
+  "scope": "Read-only byte/receipt/source audit; not tests or runtime execution.",
+  "started_at": "2026-10-16T07:32:12.712724+00:00"
+}

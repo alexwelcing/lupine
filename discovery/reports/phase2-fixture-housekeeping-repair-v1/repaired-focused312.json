@@ -1,0 +1,21 @@
+{
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_li_v3_readiness_production.py",
+    "-v"
+  ],
+  "cwd": "/workspace/lupine-discovery-branch/discovery",
+  "started_at": "2026-10-16T18:16:30.906700+00:00",
+  "finished_at": "2026-10-16T18:17:15.784250+00:00",
+  "returncode": 0,
+  "source_sha256": "a38e2d7c0cfdc0fd0ef122795f12e97d1b9ba1cd263495356b5e3f79b7325503",
+  "source_unchanged": true,
+  "automatic_housekeeping_launches": [],
+  "scope": "61 generated fake repository tests; no actual source acquisition"
+}

@@ -1,0 +1,118 @@
+{
+  "created_at": "2026-10-16T09:37:06.394823+00:00",
+  "files": {
+    "README.md": {
+      "bytes": 3099,
+      "sha256": "808953248610d84e5023afcf40adebc43be3ba8486dcbf1e47d5fa03cd23f002"
+    },
+    "actual-d0505b9b358a/review.json": {
+      "bytes": 10851,
+      "sha256": "6d3d05fa15c2d1bf72cf2470ee8f823df8e8f3a14da36b053a99bb4c1a12caa1"
+    },
+    "additive-d0505b9b358a/additive-review.json": {
+      "bytes": 8712,
+      "sha256": "1f0149016cdfe4d87793c5855291474775e6301d2ad35e996289bc8dd1db030c"
+    },
+    "additive_audit.py": {
+      "bytes": 10238,
+      "sha256": "6b267cd11a73b0f73c63a7b9ae2ba75d30f9699edf14e41c5fd1f98f4932ce2a"
+    },
+    "audit.py": {
+      "bytes": 21353,
+      "sha256": "b81293cba3632449830932175e9fa938913650ade05f5e524b258aba78923119"
+    },
+    "execution-d0505b9b358a/0-execution.json": {
+      "bytes": 1229,
+      "sha256": "b817376cc36102f85017ef32a7919d14adec6ff19234e92916c6b3cee3f06709"
+    },
+    "execution-d0505b9b358a/0-start.json": {
+      "bytes": 897,
+      "sha256": "7385142a2807c484edec3b6775ca2f64dbe35a5a41d376a766d7dd339fadc978"
+    },
+    "execution-d0505b9b358a/0-stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "execution-d0505b9b358a/0-stdout.txt": {
+      "bytes": 10851,
+      "sha256": "6d3d05fa15c2d1bf72cf2470ee8f823df8e8f3a14da36b053a99bb4c1a12caa1"
+    },
+    "execution-d0505b9b358a/1-execution.json": {
+      "bytes": 1528,
+      "sha256": "14006142539215fbecac6c6840b745c9918c8dfc8382c04134d5a209583dbade"
+    },
+    "execution-d0505b9b358a/1-start.json": {
+      "bytes": 1197,
+      "sha256": "31201cd48f5932f5922345654be71e332a1512ce8de9d98ff6aa4837b5afba45"
+    },
+    "execution-d0505b9b358a/1-stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "execution-d0505b9b358a/1-stdout.txt": {
+      "bytes": 8712,
+      "sha256": "1f0149016cdfe4d87793c5855291474775e6301d2ad35e996289bc8dd1db030c"
+    },
+    "independent-source-review/inspect_source.py": {
+      "bytes": 8498,
+      "sha256": "68eb679a072491386e069ce1ec1a0fdd8b7af7419fdec995695a856a9820ed18"
+    },
+    "independent-source-review/source-diff.txt": {
+      "bytes": 7420,
+      "sha256": "c27299cb175938e6836381f3f9552d86b446f3a4ad8a9509cee80d9f30379e5d"
+    },
+    "independent-source-review/source-review.initial.json": {
+      "bytes": 4265,
+      "sha256": "2eacfc5065f8e390903bc538dba5af36bb6404f8146884720667e2157bedbae7"
+    },
+    "independent-source-review/source-review.md": {
+      "bytes": 4379,
+      "sha256": "2f2d2a53eb2313fc1eb4c02d2cbaf399aa46ab439f28bce69f5064e1fc178254"
+    },
+    "independent-source-review/wrapper-addendum-sha256.txt": {
+      "bytes": 869,
+      "sha256": "4696200223dbb722735a8e457f02be6b40ea0b5f3e8030b3e8fcf8655c1ccb66"
+    },
+    "independent-source-review/wrapper-source-addendum.md": {
+      "bytes": 5368,
+      "sha256": "75d0cd7e26e9dd38cfc62f0f14dc2fb053e9ca6a4a1bfa2c5e4dcfa3d338bac4"
+    },
+    "independent-source-review/wrapper-timeout-followup.md": {
+      "bytes": 2240,
+      "sha256": "82e21c5ec36d2e8e6b59470faac6c0f7a0cff76a9ab8a0a7da881e406948f630"
+    },
+    "prior-additive-audit.py": {
+      "bytes": 10038,
+      "sha256": "a9bbef30cd81cddccc3a089cf0c4109c61cb7497fc906f7fcab236aaf5b49643"
+    },
+    "reviewed-pins-before-eof-formatting.json": {
+      "bytes": 1212,
+      "sha256": "9ca937d072a81797d1434e2053f41ef75815c2ca9cb645734051d05c33d28b6c"
+    },
+    "reviewed-pins.json": {
+      "bytes": 3364,
+      "sha256": "af2fbb73b2c48c293ca7ab034e9fa2322d7b7382c5b556fc918bb85371fd7bb1"
+    },
+    "reviewed-pins.pending.json": {
+      "bytes": 410,
+      "sha256": "a30fadbd111588acd177c78766e5e78046349f6249ba43bedad8f79e452d2de3"
+    },
+    "run_recorded-before-timeout-receipt.py": {
+      "bytes": 3151,
+      "sha256": "3b029be3e937f57219246d8feac8fc13a90a36d8ea2a6f0b431d16f1a5cf7478"
+    },
+    "run_recorded.py": {
+      "bytes": 3494,
+      "sha256": "e883b0fe298d137e3b68d7ca0a27d52a400ae7e59c41deb2608389233f132557"
+    },
+    "test-eof-first-byte-count-finding.json": {
+      "bytes": 729,
+      "sha256": "916a62af22a9c94e811779ab71bcdf7d1d6e5658cad4149071af3b257ecb727a"
+    },
+    "test-eof-normalization-review.json": {
+      "bytes": 702,
+      "sha256": "27bed9433adffcfafe29e2604f418c4c300144f10d8be4d59724087da53fed48"
+    }
+  },
+  "scope": "All review-owned files except inventory.json files; no private custody reads."
+}

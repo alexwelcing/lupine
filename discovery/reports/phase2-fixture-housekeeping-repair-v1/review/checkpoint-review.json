@@ -1,0 +1,90 @@
+{
+  "bindings": {
+    "GOAL.md": {
+      "bytes": 35034,
+      "sha256": "72c7ba7258a0bb25979fb4a024b8d83525cdffabdcce4ce24b95ed23ad042596"
+    },
+    "STATUS.md": {
+      "bytes": 31533,
+      "sha256": "14142157e4a89650a554457cea20203feae87b72f3691321982351fa53b256c0"
+    },
+    "docs/release-validation.md": {
+      "bytes": 60291,
+      "sha256": "2c0dffbb92437fcde142ef7b4dd074f5d96f176e7b4f8f49c00ef281eeed02b8"
+    },
+    "reports/continuation.json": {
+      "bytes": 83590,
+      "sha256": "e691218f17e59cd7ebf9ec9e7bee949630a796a6968e3f448d508a45490cc9bb"
+    },
+    "reports/phase2-fixture-housekeeping-repair-v1/README.md": {
+      "bytes": 3192,
+      "sha256": "8cbd4b0e9d1a054783d0a69449116c11d46330d69814e29cf6e280ecc0e45d61"
+    },
+    "reports/phase2-fixture-housekeeping-repair-v1/bd7-ci.json": {
+      "bytes": 1305,
+      "sha256": "90d82cd1c94107dfd43237f388102bc15492aea6a84aba0f713291c0301a677f"
+    },
+    "reports/phase2-fixture-housekeeping-repair-v1/cb19-ci.json": {
+      "bytes": 1304,
+      "sha256": "d4a14a822e2407845e7634f4c539acc8b6fcd5a684fc62c640940924c8857a3e"
+    },
+    "reports/phase2-fixture-housekeeping-repair-v1/checkpoint.json": {
+      "bytes": 1388,
+      "sha256": "7d849dff347339946b071be687438931bde07120b86dc5d7d6c31f3f7dc56df7"
+    },
+    "reports/phase2-fixture-housekeeping-repair-v1/eaed-ci.json": {
+      "bytes": 1304,
+      "sha256": "e03a981bb401f116245cf26c9c6a7db6e721bbf342b12c47e0282db3b7f9d162"
+    },
+    "reports/phase2-fixture-housekeeping-repair-v1/original-focused311.json": {
+      "bytes": 662,
+      "sha256": "85133382874979fc160621fade2d94a3b93b068bfbe542fc63d3faba446ee16f"
+    },
+    "reports/phase2-fixture-housekeeping-repair-v1/regression-original-helper.json": {
+      "bytes": 645,
+      "sha256": "5c6b3af61307a5b4d5be0f27632ff106002f767716b2848c8dcd4986a89af4a4"
+    },
+    "reports/phase2-fixture-housekeeping-repair-v1/repaired-focused311.json": {
+      "bytes": 667,
+      "sha256": "7676e93cf28950da7f533cc4151409afd961bb39ac3d220455579e41ecd8d474"
+    },
+    "reports/phase2-fixture-housekeeping-repair-v1/repaired-focused312.json": {
+      "bytes": 642,
+      "sha256": "eb8d2a5a570fa504d259626f5476ad99731e4414fe28d04bfa416323c36b5e34"
+    },
+    "reports/phase2-fixture-housekeeping-repair-v1/trace-observation.json": {
+      "bytes": 664,
+      "sha256": "cdb51405d68f0fd2621fa8d7788c6c6927b204a0e762965b2dadb3ed4f7718d6"
+    },
+    "reports/runtime-manifest.json": {
+      "bytes": 41336,
+      "sha256": "452711071f2e3abf8eb734cb6e2e94ee85d04b64f8b40d39300b0597d64d489b"
+    },
+    "tests/test_li_v3_readiness_production.py": {
+      "bytes": 47276,
+      "sha256": "a38e2d7c0cfdc0fd0ef122795f12e97d1b9ba1cd263495356b5e3f79b7325503"
+    }
+  },
+  "consistent_claims": [
+    "Original bd7 run has Python3.11 cleanup failure and three other successful jobs; exact eaed/cb19 original run receipts each show four successful jobs.",
+    "Original focused60 pass and121detached launches are kept separate from one failing regression against the old helper and repaired61 passes on each local interpreter.",
+    "Current command-scoped maintenance.auto=false and gc.auto=0 wording matches the helper; strict cleanup remains present. Earlier source-only fixture-local recommendation is not represented as the final implementation.",
+    "Original CI writer remains unidentified and local cleanup race was not reproduced; documented launch mechanism is not overclaimed as causal proof.",
+    "Current checkpoint and continuation.current_checkpoint agree exactly; test SHAa38e2d7c and manifest45271107 match current bytes.",
+    "Repair-head CI/clean package remain explicitly pending publication; predecessor/eaed22005-check independent audit is not transferred to the repair.",
+    "147conditional statements, scientificNO_GO, sourceNOT_ADMITTED/G20unresolved/G21blocked and disabled old automation are preserved."
+  ],
+  "current_checkpoint_equals_continuation": true,
+  "disposition": "NO_MATERIAL_CLAIM_BLOCKER",
+  "material_findings": [],
+  "pending_existing_gates": [
+    "Publish and verify exact remote repair commit",
+    "Observe its original four-job CI result",
+    "Run and verify its clean package/strict retained-artifact checks"
+  ],
+  "recorded_at": "2026-10-16T18:19:49.974544+00:00",
+  "reviewed_parent_commit": "bd7ebf216d3e5b3b8a5a27ad1501d49c0e95dc50",
+  "schema": "lupine.fixture-repair-checkpoint-claim-review.v1",
+  "scope": "Read-only review of requested current doc sections, public checkpoint/CI/process/trace receipts and exact helper/manifest identities. No tests, builds, private files, network, actual operations or tracked edits.",
+  "tests_executed_by_reviewer": 0
+}

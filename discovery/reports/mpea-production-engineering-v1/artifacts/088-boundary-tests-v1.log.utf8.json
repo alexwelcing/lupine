@@ -1,0 +1,7 @@
+{
+  "original_bytes": 681,
+  "original_path": ".cache/mpea-study-custody/review_public_bridge/boundary-tests-v1.log",
+  "original_sha256": "e4a4c1a51a5f5fe71ffcec0629917f24c09cbc02b2d471fe71ff25a385fb1a79",
+  "schema": "lupine.discovery.lossless_utf8_artifact.v1",
+  "text": "test_development_decoder_interruption_keeps_unknown_counts_and_no_verdict (__main__.IndependentBridgeBoundaryReview.test_development_decoder_interruption_keeps_unknown_counts_and_no_verdict) ... ok\ntest_post_development_pre_model_interruption_has_no_invented_model_count (__main__.IndependentBridgeBoundaryReview.test_post_development_pre_model_interruption_has_no_invented_model_count) ... ok\ntest_registered_original_and_reproduction_early_status_science_match (__main__.IndependentBridgeBoundaryReview.test_registered_original_and_reproduction_early_status_science_match) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 11.858s\n\nOK\n"
+}

@@ -1,0 +1,22 @@
+{
+  "schema": "independent_package_mpea_probe_review.v1",
+  "status": "PASS",
+  "candidate_sha256": "f64489f64aefc6624298e25d9dad493186c25b1c91e3f063e9e73d23f8ebf6a1",
+  "candidate_manifest_sha256": "239cadc5ba2569d7fa54c86da60dc1d0a059ce03f7d8ac4412604a738364a3df",
+  "independent_controls": 5,
+  "elapsed_seconds": "0.003",
+  "non_probe_top_level_AST_unchanged": true,
+  "retention_tests_changes": "Only exact original PROBE hash replacement; all other bytes equal.",
+  "scope": "Transport identity only. Helper intentionally accepts self-consistent unsupported report shell; no scientific schema validity, upstream authentication or verdict approval follows. No wheel built, isolated full PROBE executed or actual report/data accessed.",
+  "observations": [
+    "Exact installed/HTTP JSON object identity; bool/int and float/int distinctions preserved; nonfinite values blocked.",
+    "Absent report requires absent HTTP key, including rejection of null placeholder; no invented report or retention decision.",
+    "JavaScript exact served bytes and nonempty resource checked; every original engine/replay/negative/retention safeguard retained."
+  ],
+  "files": {
+    "review.py": "d179a8347eee571325d94f42b403c9ba86123e3272a340b0d5829559d6c948ae",
+    "execution.log": "554d2806553e024d714095ad2bc7026c9ff441acd81a7609e2959495628951f3",
+    "initial-harness-failure.log": "fedba60f3fdf01cd7cfeba5493ddba351bc2b992e88c53ca57dea84a6a466b6b"
+  },
+  "harness_note": "Initial hash-normalization checker handled named constant but missed inline expected hash; corrected to explicit old/new hash replacement. Preserved failure; no producer change."
+}

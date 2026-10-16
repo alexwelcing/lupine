@@ -1,0 +1,353 @@
+{
+  "copies": [
+    {
+      "copy": {
+        "bytes": 4470,
+        "path": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/README.md",
+        "sha256": "ef56d2a974e88f33d5e9cab9d54387364c06642cde1c6b2de3e4046695b5aca0"
+      },
+      "original": {
+        "bytes": 4470,
+        "path": ".cache/phase2-growth-hint-review-v1/independent/README.md",
+        "sha256": "ef56d2a974e88f33d5e9cab9d54387364c06642cde1c6b2de3e4046695b5aca0"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 3826,
+        "path": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/before-eof-normalization/README.md",
+        "sha256": "2d99bb56c23f91f7f8c865be59fbe3e4bec928fe8f91d55344e003ded88611fe"
+      },
+      "original": {
+        "bytes": 3826,
+        "path": ".cache/phase2-growth-hint-review-v1/independent/before-eof-normalization/README.md",
+        "sha256": "2d99bb56c23f91f7f8c865be59fbe3e4bec928fe8f91d55344e003ded88611fe"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 27548,
+        "path": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/before-eof-normalization/independent-tests.py",
+        "sha256": "7a3e4263af08577c9c5884f5d486caca3eee7e78e5b89cc47e43724e13733a0f"
+      },
+      "original": {
+        "bytes": 27548,
+        "path": ".cache/phase2-growth-hint-review-v1/independent/before-eof-normalization/independent-tests.py",
+        "sha256": "7a3e4263af08577c9c5884f5d486caca3eee7e78e5b89cc47e43724e13733a0f"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 1950,
+        "path": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/before-eof-normalization/inventory.json",
+        "sha256": "0c720724343044956adc6926fb680078ad18510ecec0785da3f11118f46c9b15"
+      },
+      "original": {
+        "bytes": 1950,
+        "path": ".cache/phase2-growth-hint-review-v1/independent/before-eof-normalization/inventory.json",
+        "sha256": "0c720724343044956adc6926fb680078ad18510ecec0785da3f11118f46c9b15"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 4874,
+        "path": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/before-eof-normalization/review.json",
+        "sha256": "070e499665325286deb8efd72c7416121d2c4998f51fa0d92515b93f129fd862"
+      },
+      "original": {
+        "bytes": 4874,
+        "path": ".cache/phase2-growth-hint-review-v1/independent/before-eof-normalization/review.json",
+        "sha256": "070e499665325286deb8efd72c7416121d2c4998f51fa0d92515b93f129fd862"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 7267,
+        "path": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/final-run/contract.md",
+        "sha256": "9900ff73238a9d1c3629f364e4e97d9d450630b0ba938be74f1a03b52da9939c"
+      },
+      "original": {
+        "bytes": 7267,
+        "path": ".cache/phase2-growth-hint-review-v1/independent/final-run/contract.md",
+        "sha256": "9900ff73238a9d1c3629f364e4e97d9d450630b0ba938be74f1a03b52da9939c"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 2301,
+        "path": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/final-run/execution.json",
+        "sha256": "d69b23dacc59bd98fd96b647e1a9f5cbb3841b34d448c4c606b3e8a3179c992c"
+      },
+      "original": {
+        "bytes": 2301,
+        "path": ".cache/phase2-growth-hint-review-v1/independent/final-run/execution.json",
+        "sha256": "d69b23dacc59bd98fd96b647e1a9f5cbb3841b34d448c4c606b3e8a3179c992c"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 8507,
+        "path": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/final-run/implementation.py",
+        "sha256": "c42313ddc1d6c64e6d9c18338bc3efc9bacc65e7ff7f8281e1da28870e74d7cb"
+      },
+      "original": {
+        "bytes": 8507,
+        "path": ".cache/phase2-growth-hint-review-v1/independent/final-run/implementation.py",
+        "sha256": "c42313ddc1d6c64e6d9c18338bc3efc9bacc65e7ff7f8281e1da28870e74d7cb"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 27546,
+        "path": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/final-run/independent-tests.py",
+        "sha256": "3296335a815dd5ac9712c4584699cd2b5e48417e1ff7a9a04eddafc245b5d36c"
+      },
+      "original": {
+        "bytes": 27546,
+        "path": ".cache/phase2-growth-hint-review-v1/independent/final-run/independent-tests.py",
+        "sha256": "3296335a815dd5ac9712c4584699cd2b5e48417e1ff7a9a04eddafc245b5d36c"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 152,
+        "path": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/final-run/scope-observation.json",
+        "sha256": "b11f9582389aa782548a2d7c649cf4c251ff84b4548e687e137f0ba6733873a1"
+      },
+      "original": {
+        "bytes": 152,
+        "path": ".cache/phase2-growth-hint-review-v1/independent/final-run/scope-observation.json",
+        "sha256": "b11f9582389aa782548a2d7c649cf4c251ff84b4548e687e137f0ba6733873a1"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 3868,
+        "path": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/final-run/stderr.txt",
+        "sha256": "87f165e4c8790909a469dd0da40d72fe7f4e1101f2cf0b53250aecca591dbc35"
+      },
+      "original": {
+        "bytes": 3868,
+        "path": ".cache/phase2-growth-hint-review-v1/independent/final-run/stderr.txt",
+        "sha256": "87f165e4c8790909a469dd0da40d72fe7f4e1101f2cf0b53250aecca591dbc35"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 0,
+        "path": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/final-run/stdout.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "original": {
+        "bytes": 0,
+        "path": ".cache/phase2-growth-hint-review-v1/independent/final-run/stdout.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 7267,
+        "path": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/first-run/contract.md",
+        "sha256": "9900ff73238a9d1c3629f364e4e97d9d450630b0ba938be74f1a03b52da9939c"
+      },
+      "original": {
+        "bytes": 7267,
+        "path": ".cache/phase2-growth-hint-review-v1/independent/first-run/contract.md",
+        "sha256": "9900ff73238a9d1c3629f364e4e97d9d450630b0ba938be74f1a03b52da9939c"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 2301,
+        "path": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/first-run/execution.json",
+        "sha256": "0453a541020b437ae27fee9c24511bcd6ce64c5c285c8aec5c2c49cda55ba334"
+      },
+      "original": {
+        "bytes": 2301,
+        "path": ".cache/phase2-growth-hint-review-v1/independent/first-run/execution.json",
+        "sha256": "0453a541020b437ae27fee9c24511bcd6ce64c5c285c8aec5c2c49cda55ba334"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 8507,
+        "path": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/first-run/implementation.py",
+        "sha256": "c42313ddc1d6c64e6d9c18338bc3efc9bacc65e7ff7f8281e1da28870e74d7cb"
+      },
+      "original": {
+        "bytes": 8507,
+        "path": ".cache/phase2-growth-hint-review-v1/independent/first-run/implementation.py",
+        "sha256": "c42313ddc1d6c64e6d9c18338bc3efc9bacc65e7ff7f8281e1da28870e74d7cb"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 27548,
+        "path": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/first-run/independent-tests.py",
+        "sha256": "7a3e4263af08577c9c5884f5d486caca3eee7e78e5b89cc47e43724e13733a0f"
+      },
+      "original": {
+        "bytes": 27548,
+        "path": ".cache/phase2-growth-hint-review-v1/independent/first-run/independent-tests.py",
+        "sha256": "7a3e4263af08577c9c5884f5d486caca3eee7e78e5b89cc47e43724e13733a0f"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 152,
+        "path": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/first-run/scope-observation.json",
+        "sha256": "b11f9582389aa782548a2d7c649cf4c251ff84b4548e687e137f0ba6733873a1"
+      },
+      "original": {
+        "bytes": 152,
+        "path": ".cache/phase2-growth-hint-review-v1/independent/first-run/scope-observation.json",
+        "sha256": "b11f9582389aa782548a2d7c649cf4c251ff84b4548e687e137f0ba6733873a1"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 3868,
+        "path": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/first-run/stderr.txt",
+        "sha256": "a14319d3b9e407729db52b7dbda5a48c887e4219eb647fe760ec209eaf0662b1"
+      },
+      "original": {
+        "bytes": 3868,
+        "path": ".cache/phase2-growth-hint-review-v1/independent/first-run/stderr.txt",
+        "sha256": "a14319d3b9e407729db52b7dbda5a48c887e4219eb647fe760ec209eaf0662b1"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 0,
+        "path": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/first-run/stdout.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "original": {
+        "bytes": 0,
+        "path": ".cache/phase2-growth-hint-review-v1/independent/first-run/stdout.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 3745,
+        "path": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/inventory.json",
+        "sha256": "e840d28c0d1a47d1d3098599b6344f07a0aab5f9c720cdf78e154ab4f7b1642d"
+      },
+      "original": {
+        "bytes": 3745,
+        "path": ".cache/phase2-growth-hint-review-v1/independent/inventory.json",
+        "sha256": "e840d28c0d1a47d1d3098599b6344f07a0aab5f9c720cdf78e154ab4f7b1642d"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 777,
+        "path": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/normalization.json",
+        "sha256": "7a70600fe64ddc13bd56e1fb4cdfd50a974846bf62a09b03359d383ad76a2fb4"
+      },
+      "original": {
+        "bytes": 777,
+        "path": ".cache/phase2-growth-hint-review-v1/independent/normalization.json",
+        "sha256": "7a70600fe64ddc13bd56e1fb4cdfd50a974846bf62a09b03359d383ad76a2fb4"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 517,
+        "path": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/preparation.json",
+        "sha256": "0bcc2a7162f005de962ce47863f89790e205f59bcecc0be1f0b6ba1b96a45001"
+      },
+      "original": {
+        "bytes": 517,
+        "path": ".cache/phase2-growth-hint-review-v1/independent/preparation.json",
+        "sha256": "0bcc2a7162f005de962ce47863f89790e205f59bcecc0be1f0b6ba1b96a45001"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 27546,
+        "path": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/promotion/tests/test_li_v3_growth_hint_review.py",
+        "sha256": "3296335a815dd5ac9712c4584699cd2b5e48417e1ff7a9a04eddafc245b5d36c"
+      },
+      "original": {
+        "bytes": 27546,
+        "path": ".cache/phase2-growth-hint-review-v1/independent/promotion/tests/test_li_v3_growth_hint_review.py",
+        "sha256": "3296335a815dd5ac9712c4584699cd2b5e48417e1ff7a9a04eddafc245b5d36c"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 5834,
+        "path": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/review.json",
+        "sha256": "8279edbccb30fbacddfdf7beba6e6a5bfa2a4e4c77990e79d3f297a4c8332aeb"
+      },
+      "original": {
+        "bytes": 5834,
+        "path": ".cache/phase2-growth-hint-review-v1/independent/review.json",
+        "sha256": "8279edbccb30fbacddfdf7beba6e6a5bfa2a4e4c77990e79d3f297a4c8332aeb"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 3401,
+        "path": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/run_review.py",
+        "sha256": "65272beaa42670715204b29a67e0855022f4bd2c0a42883247fb2fc8e84e45ef"
+      },
+      "original": {
+        "bytes": 3401,
+        "path": ".cache/phase2-growth-hint-review-v1/independent/run_review.py",
+        "sha256": "65272beaa42670715204b29a67e0855022f4bd2c0a42883247fb2fc8e84e45ef"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 1955,
+        "path": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/run_tests_guarded.py",
+        "sha256": "cd584e803644b9eea66ef6dc452397dac027dfc063c45a037c3dfd77e800303c"
+      },
+      "original": {
+        "bytes": 1955,
+        "path": ".cache/phase2-growth-hint-review-v1/independent/run_tests_guarded.py",
+        "sha256": "cd584e803644b9eea66ef6dc452397dac027dfc063c45a037c3dfd77e800303c"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 2957,
+        "path": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/source-review/final-review.json",
+        "sha256": "39d93a7659a899d0562af6686a40e207668f2a03e942fd37f0e4eb507a3ac98a"
+      },
+      "original": {
+        "bytes": 2957,
+        "path": ".cache/phase2-growth-hint-review-v1/source-review/final-review.json",
+        "sha256": "39d93a7659a899d0562af6686a40e207668f2a03e942fd37f0e4eb507a3ac98a"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 2664,
+        "path": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/source-review/provisional.json",
+        "sha256": "ef820f2a44b658556a6de39bc86e32e798c5f9364e0ff2a82019595de8fe57de"
+      },
+      "original": {
+        "bytes": 2664,
+        "path": ".cache/phase2-growth-hint-review-v1/source-review/provisional.json",
+        "sha256": "ef820f2a44b658556a6de39bc86e32e798c5f9364e0ff2a82019595de8fe57de"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 3819,
+        "path": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/source-review/static-review.json",
+        "sha256": "6cad38b2d285bba256fc901d9830b57b7b040e46c90d01005a752d17ede54cd1"
+      },
+      "original": {
+        "bytes": 3819,
+        "path": ".cache/phase2-growth-hint-review-v1/source-review/static-review.json",
+        "sha256": "6cad38b2d285bba256fc901d9830b57b7b040e46c90d01005a752d17ede54cd1"
+      }
+    }
+  ],
+  "schema": "lupine.discovery.exact_evidence_copy_map.v1"
+}

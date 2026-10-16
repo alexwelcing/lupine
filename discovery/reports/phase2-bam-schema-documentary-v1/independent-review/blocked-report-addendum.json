@@ -1,0 +1,69 @@
+{
+  "schema": "lupine.bam-schema-documentary-blocked-report-review-addendum.v1",
+  "completed_at": "2026-10-16T09:49:37.245531+00:00",
+  "result": "PASS_BLOCKED_REPORT_ACCURACY_AND_SCOPE",
+  "original_independent_review_unchanged_sha256": "50fe823ce8891471739fedafa8880838c2ac7fe5543a2b5c2c55bdc244f3c8c4",
+  "reviewed_inputs": [
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/README.md",
+      "bytes": 4354,
+      "sha256": "ce619c19ab09d6875b1282d9a01142b119af7f5faaba5f9047b83321942b6edb"
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/source-bindings.json",
+      "bytes": 2562,
+      "sha256": "ac14283f12d4dcecb927cf182bce77cd9ca227cf86cda22cb9c7fecbae449cad"
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/decode-failure.json",
+      "bytes": 1124,
+      "sha256": "3fd9481962012a645d7eb8a1f92e4357f0124a16bd205939b0982b87f9e21c39"
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/exposure-before-decode.json",
+      "bytes": 626,
+      "sha256": "6203f1445bad052a9bbb63b0735d06060a89426057e6b475c7513d99a562a78e"
+    }
+  ],
+  "binding_checks": [
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/scope.json",
+      "basis": "Current documentary artifact bytes/hash match"
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/receipt.json",
+      "basis": "Current documentary artifact bytes/hash match"
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/schema.csv",
+      "basis": "Matches prior independent raw identity check; no new body read"
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/exposure-before-decode.json",
+      "basis": "Current documentary artifact bytes/hash match"
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/decode-failure.json",
+      "basis": "Current documentary artifact bytes/hash match"
+    }
+  ],
+  "local_links": [
+    "scope.json",
+    "receipt.json",
+    "decode-failure.json",
+    "exposure-before-decode.json"
+  ],
+  "findings": [
+    "The blocked report matches independent size/MD5/SHA identity verification and the strict UTF-8 failure at offset 2738 / byte 0x85.",
+    "It correctly distinguishes acquisition/raw machine exposure, incomplete decoding and unstarted CSV parsing; no schema text or header projection is claimed.",
+    "It leaves actual encoding, delimiter, headers and all dictionary semantics unbound, and does not infer CP1252/Latin1 from the one offending byte.",
+    "It preserves unknown-encoding stop and distinguishes any future separately scoped header/encoding investigation from work already performed.",
+    "License declarations remain qualified, raw body remains ignored, and source/scientific admission is explicitly unresolved."
+  ],
+  "blocking_findings": [],
+  "limits": [
+    "This addendum reviews the first blocked snapshot only. A separately scoped header audit, if performed later, is additive evidence and does not erase the failed full-body decode.",
+    "No raw schema read, alternative decode, CSV/header projection, new network, secondary source, product test, tracked edit or Git mutation occurred in this addendum.",
+    "Prior-source declarations in parent bindings were not newly re-read or re-audited; the original source review remains unchanged."
+  ]
+}

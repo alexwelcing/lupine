@@ -1,0 +1,16 @@
+{
+  "alternate_requests": 0,
+  "dataset_files_requested": 0,
+  "first_disposition_sha256": "b48465461cece18c8e8f8bdbf130c2ace5684f9cf7a41eb104b32d03441ebab5",
+  "http_responses": 1,
+  "http_status": 403,
+  "logical_gets": 1,
+  "offline_parser_invoked": false,
+  "pdf_obtained": false,
+  "redirects": 0,
+  "retries": 0,
+  "runtime_tests_executed": false,
+  "schema": "lupine.discovery.dielectric_readme_schema.completion.v1",
+  "scientific_admission": false,
+  "status": "BLOCKED_HTTP403_FIRST_REQUEST_PRESERVED"
+}

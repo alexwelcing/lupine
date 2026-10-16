@@ -1,0 +1,13 @@
+{
+  "schema": "lupine.rhizo.documentary.scope-clarification.v1",
+  "created_at": "2026-10-16T11:57:40.245657+00:00",
+  "finding": "Earlier census-gate wording combined explicit stored-label evaluation with reconstruction of historical binder choice/source equality; the latter is not a universal mathematical prerequisite.",
+  "correction": "Separate paired stored-label identity/completeness and fixed estimand from historical binding/source-agreement and map-recovery premises. All actual unknowns remain; no census is admitted.",
+  "original_readme_sha256": "66b2963a5da356ad660e6a08a88f4303ab3bc503cec307d33d0407a75933e38f",
+  "final_readme_sha256": "9c5b031347363d113a5be6c66e584cab9c2f9fc0964441c7d9afdf0a79d1f758",
+  "initial_independent_review_preserved": "independent-review/final-review.json",
+  "initial_publication_bundle_preserved": "promotion/",
+  "initial_publication_inventory_sha256": "1a2d515d5a52db59de6f1335bf0b0b50ab68086e09a2c6035ec243a7435b7c56",
+  "new_private_reads": false,
+  "actual_followon_source_operations": false
+}

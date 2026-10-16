@@ -1,0 +1,31 @@
+{
+  "inventory": {
+    "bytes": 7823,
+    "path": "inventory.json",
+    "sha256": "5b6ce56c1051d4390b087056693bee7a6adf49f2f418f30ad4a0f89a293a4d4c"
+  },
+  "next_action": "Root may bind these exact reviewed tools after actual fresh source/CI/package/artifact gates; this handoff itself authorizes no command.",
+  "review": {
+    "bytes": 3716,
+    "path": "review.json",
+    "sha256": "fd1fdaa721245223e03e5949fbde1039a1bcbfa2a58dafe6388f7346be34e5ae"
+  },
+  "source_bindings": [
+    {
+      "bytes": 34564,
+      "path": ".cache/phase2-li-complete-readiness-operations-v1/run_after_ci.py",
+      "sha256": "f13ec4ad78d28266a405120e9ff644ba3856bfeacae851912678ceeb7f486dc5"
+    },
+    {
+      "bytes": 15907,
+      "path": ".cache/phase2-li-complete-readiness-operations-v1/recorder_support.py",
+      "sha256": "6533ff3b934646fb2fa4e11cead85bc9f0ce5ffe8e4901ad27eb55c4e12e625c"
+    },
+    {
+      "bytes": 4660,
+      "path": ".cache/phase2-li-complete-readiness-operations-v1/run_package.py",
+      "sha256": "ff75410bb8b68de831a6db16dab89d314b0cf329ca22188badd4e2d0ff38831a"
+    }
+  ],
+  "status": "PASS_PROSPECTIVE_SOURCE_AND_FOUR_GENERATED_REGRESSIONS"
+}

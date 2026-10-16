@@ -1,0 +1,18 @@
+{
+  "schema":"lupine.discovery.tmqm_primary_definitions_scope.v1",
+  "status":"WRITTEN_BEFORE_REQUESTS",
+  "purpose":"Resolve documentary property units, record-key meanings and data/upstream-use declarations from the original tmQM paper. Preserve the distinction between its original2020 release and the pinned2024 extension; definitions are not automatically current-file validation.",
+  "primary_doi":"10.1021/acs.jcim.0c01041",
+  "identity_basis":"Exact DOI cited by pinned curator README and already verified through Crossref; public report phase2-primary-github-source-survey-v1/paper_metadata/projection.json.",
+  "maximum_requests":2,
+  "requests":[
+    {"id":"paper_identity","url":"https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=DOI%3A10.1021%2Facs.jcim.0c01041&format=json&resultType=core&pageSize=1","maximum_bytes":524288,"purpose":"Exact DOI identity and legitimate public primary-article identifier; abstract/results withheld."},
+    {"id":"primary_xml","url_template":"https://www.ebi.ac.uk/europepmc/webservices/rest/{exact_pmcid}/fullTextXML","maximum_bytes":2097152,"requires":"Exactly one DOI-matching open-access PMCID from preceding metadata. No guessed ID, publisher retry, mirror or access workaround.","purpose":"Primary methods/data dictionary/availability permissions only; no scientific numerical outcomes or performance extraction."}
+  ],
+  "transport":"Ordinary HTTPS GET,30s timeout,no redirects,no retries,no credentials. Preserve first failure and stop affected route. No follow-up dataset, supporting-file, curator-page or other source request.",
+  "exposure":"Whole bounded metadata and articleXML containers are machine-read and may include numeric target tables, examples and published performance. Researcher output is controlled documentary projection only; no target-free, fresh-data or unexposed-source claim.",
+  "projection":"Identity metadata first. If XML is legitimately available, first show section titles/table captions with numeric tokens masked and front permission metadata; no abstract, result prose, table cells, figures or supplementary content. Before relevant methods/units/key/rights prose is shown, identify exact sections or bounded documentary passages; exclude Results/performance discussions and target examples. Any dictionary table must first be checked by its headers and must not include numerical observations. Preserve incidental documentary numerical exposure honestly.",
+  "rights":"Article reuse terms, public availability language, curator repository grant and upstream CSD rights are distinct. No absent grant is inferred from silence and no free-download statement is promoted to unrestricted redistribution.",
+  "forbidden":["Numeric CSV contents or private-prefix.bin","Numerical targets, model performance or outcome tables","Downloaded code/notebook execution, fits, thresholds, allocations or scientific admission","Denied curator-page retry or alternate access","Linked supporting-data/body files, third-party contact or paidcompute"],
+  "publication":"Compact own paraphrase, exact relevant field/unit/key/rights labels with primary locators, selected metadata, receipts and source hashes. Raw article bodies and unrelated full text remain ignored."
+}

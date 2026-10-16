@@ -1,0 +1,30 @@
+{
+  "files": [
+    {
+      "candidate": ".cache/mpea-retained-auditor-v2/scripts/verify_retained_artifacts.py",
+      "destination": "scripts/verify_retained_artifacts.py",
+      "diff": ".cache/mpea-retained-auditor-v2/diffs/verify_retained_artifacts.py.patch",
+      "diff_sha256": "bd3d19ed123213dc965f278e977766c96f95f7d7fdcdcac6e1ec2c98f9b77b11",
+      "original_sha256": "ca91b7fccafee1f1717830bd74edf3256dac5751e7c11b11d5f3b8eaf81c1a07",
+      "sha256": "b88514b490f1cad8c705bbe4066dc558ffe844c257efeffa6ce63e086209ba13"
+    },
+    {
+      "candidate": ".cache/mpea-retained-auditor-v2/tests/test_retained_artifacts.py",
+      "destination": "tests/test_retained_artifacts.py",
+      "diff": ".cache/mpea-retained-auditor-v2/diffs/test_retained_artifacts.py.patch",
+      "diff_sha256": "0132d6a6e676e7ddc7d6c23dbe427a848ae7485015712cccd1a52083e8a5b958",
+      "original_sha256": "edd7e16c7d740d338345337eca69cd7eb599d1c9df248e6048ea59872d5678fa",
+      "sha256": "ffdd9dd80e5e2c23a9294d35bc70bb7bf9591384f4071229c414c0c0562fb3f3"
+    },
+    {
+      "candidate": ".cache/mpea-retained-auditor-v2/tests/test_retained_mpea_transport.py",
+      "destination": "tests/test_retained_mpea_transport.py",
+      "diff": ".cache/mpea-retained-auditor-v2/diffs/test_retained_mpea_transport.py.patch",
+      "diff_sha256": "c91f097fa68846abd3e99684fa6988c0ebd227b0351fe8de5610bd3a0dcf875c",
+      "original_sha256": null,
+      "sha256": "30d5037d4bcafa69d732efb04a0c0dc90934e4c9ef50fe214f9019b98d37d81b"
+    }
+  ],
+  "schema": "lupine.discovery.retained_mpea_auditor_candidates.v1",
+  "scope": "Require exact new12 probe flags and closed optional transport claim; cross-check reported optional presence/nonempty JavaScript against verified wheel. No physical or HTTP-reexecution claim; historical receipts and published verifier untouched."
+}

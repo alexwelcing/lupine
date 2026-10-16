@@ -1,0 +1,8 @@
+{
+  "defect": "Remove only app readiness-request generation gate",
+  "expected_detection": "older fetch cannot revive newer missing result",
+  "production_source_edited": false,
+  "schema": "lupine.source-readiness.synthetic-mutation-plan.v1",
+  "scientific_validation": false,
+  "test_expectations_changed": false
+}

@@ -1,0 +1,42 @@
+{
+  "status": "WRITTEN_PROOF_SOURCE_REVIEW",
+  "recorded_at": "2026-10-16T06:24:40.103509+00:00",
+  "local_commit_at_write": "41d3e31a14bea040fb37b0aa6a650d6d5e704551",
+  "note_sha256": "e38ae58dffd3950952357ac62fcd13a00a57c94a8e41b2ef4cb6f1b52de3d88a",
+  "source_files": [
+    {
+      "path": "src/lupine_discovery/study_planning.py",
+      "sha256": "7a2b00bc81f8bc025b9bb3d6c6c212875d44a9839c4665ec67c86e46fe5f6d83",
+      "bytes": 9799
+    },
+    {
+      "path": "src/lupine_discovery/calibration.py",
+      "sha256": "33e71fba54813336af244230261cef639a334328dbd1578d995d377ead7d8f15",
+      "bytes": 5523
+    },
+    {
+      "path": "docs/study-planning.md",
+      "sha256": "b2a272d3552ad5c04e5f526bf7b27c51a79a350d2e53984a149f5c80b5213cf1",
+      "bytes": 10773
+    },
+    {
+      "path": "docs/decision-pool-calibration-design.md",
+      "sha256": "9025a7486f533272fc48e0e72a953d28530a4cacb4c46f6101122081495ad490",
+      "bytes": 36960
+    },
+    {
+      "path": "formal/LupineRisk.lean",
+      "sha256": "bea0e0cb18daeb41a26e7c721bef0dec6e1c361f3ccf1c9f7f7dbf2176c0fcdf",
+      "bytes": 10892
+    },
+    {
+      "path": "formal/README.md",
+      "sha256": "9bdd193fad192f6a95ffb23d49bd776a79294a66eb8fe88cfc4122b5c4a0fe3c",
+      "bytes": 34205
+    }
+  ],
+  "new_runtime_or_test_execution": false,
+  "new_lean_compilation": false,
+  "scientific_data_accessed": false,
+  "source_contents_modified": false
+}

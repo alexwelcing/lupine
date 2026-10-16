@@ -1,0 +1,91 @@
+{
+  "created_at": "2026-10-16T12:44:22.326144+00:00",
+  "status": "PRIMARY_METHODS_CONVENTION_VERIFIED_DOCUMENTARY_ONLY",
+  "request_count": 1,
+  "response_sha256": "0ede59974941e6172b51673568677f526ee2f9af93f575909825eaae0616e099",
+  "article_identity": {
+    "citation_journal_title": [
+      "New Journal of Physics"
+    ],
+    "citation_author": [
+      "Thomas Angsten",
+      "Tam Mayeshiba",
+      "Henry Wu",
+      "Dane Morgan"
+    ],
+    "citation_title": [
+      "Elemental vacancy diffusion database from high-throughput first-principles calculations for fcc and hcp structures"
+    ],
+    "citation_volume": [
+      "16"
+    ],
+    "citation_issue": [
+      "1"
+    ],
+    "citation_doi": [
+      "10.1088/1367-2630/16/1/015018"
+    ],
+    "dc.publisher": [
+      "IOP Publishing"
+    ]
+  },
+  "publisher_methods_findings": [
+    {
+      "locator": "#nj463228s2-4 / section 2.4",
+      "paraphrase": "Formation enthalpy H_vf is obtained from the defected-cell total energy and atom-number-scaled undefected-cell total energy. The undefected cell volume/positions are relaxed, while the defected cell uses the relaxed undefected volume. Approximately zero pressure motivates taking calculated formation energy and enthalpy equal.",
+      "short_exact_quote": "Therefore, the energy is calculated and set equal to the enthalpy."
+    },
+    {
+      "locator": "#nj463228s2-1 / section 2.1",
+      "paraphrase": "The reported calculations use VASP 5.2.2, plane-wave DFT, PBE-GGA and PAW. This is an archived calculation method, not a new calculation executed here."
+    },
+    {
+      "locator": "#nj463228tA1-label / immediate parent caption paragraph only",
+      "paraphrase": "Table A.1 lists fcc-relaxed properties including formation and migration energetics; its caption points to sections 2.4 and2.5 for their definition and calculation. This supports calculated DFT attribution, not experiment attribution for that table."
+    },
+    {
+      "locator": "#nj463228s2-8 / section 2.8",
+      "paraphrase": "The authors state that phonon calculations were omitted. No finite-temperature free-energy or uncertainty conclusion is inferred."
+    }
+  ],
+  "rights": {
+    "publisher_notice": "Creative Commons Attribution3.0; further distribution must retain authors, title, journal citation and DOI.",
+    "license_url_as_printed": "http://creativecommons.org/licenses/by/3.0",
+    "license_link_fetched": false,
+    "scope": "Publisher page notice for this work; no blanket license ruling on other primary sources or Rhizo extraction artifacts."
+  },
+  "exposure": {
+    "full_retained_html_machine_read_and_parsed": true,
+    "html_may_include_results_and_numeric_tables": true,
+    "researcher_read": [
+      "selected bibliographic metadata",
+      "headings",
+      "sections 2.1,2.4,2.8 prose",
+      "Table A.1 immediate caption only",
+      "publisher rights notice"
+    ],
+    "incidental_non_table_exposure": [
+      "computational settings and convergence numbers",
+      "spin-polarization conventions and the section 2.1 hcp Fe no-moment statement"
+    ],
+    "table_numerical_rows_projected_or_compared": false,
+    "private_projection_or_raw_rhizo_objects_read": false,
+    "equation_image_or_pdf_fetched": false,
+    "freshness_claim": false
+  },
+  "reading_history": {
+    "first_optional_parser_import": "ModuleNotFoundError: No module named bs4",
+    "response_or_sources_changed": false,
+    "package_installed": false,
+    "reader_used": "Already installed lxml.html on retained response; strict UTF8 checked separately; no JavaScript or linked-resource execution.",
+    "network_retry": false
+  },
+  "not_established": [
+    "Rhizo stored-value equality or primary extraction correctness",
+    "actual original binder choice",
+    "general nonzero-pressure or temperature equivalence",
+    "Gibbs free energy or error budget",
+    "new DFT, new benchmark eligibility or screening success"
+  ],
+  "transport_receipt_status_note": "receipt.json remains the unchanged post-fetch pre-method-review record; this file adds subsequent documentary identity/method verification."
+}

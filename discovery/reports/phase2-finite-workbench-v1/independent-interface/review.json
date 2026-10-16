@@ -1,0 +1,75 @@
+{
+  "status": "PASS_FOCUSED_BROWSER_AND_SOURCE_REVIEW_NO_BLOCKER",
+  "scope": "outcome-free prospective finite-population planner UI on an ignored uncommitted overlay",
+  "source": {
+    "index.html": "553c0bb7d8d31699b519b4c24c05dae5af659b996fe510edab26d3fe6baf29b9",
+    "planner.js": "92a3b8e5f4d4abc61c3471b761a0745ccd66a9ec8327d4f724ba8635e69e530c",
+    "server.py": "e46f601a1689f0d2146682b90fccf1f015e9c171dbab0af81f1e4905c6df29dc",
+    "finite_planning.py": "027785ccdf24f6e8cf9b7a8ac98987b821fcdb19c875bbe8d2ba52d2fc3895f8"
+  },
+  "normal_execution": {
+    "receipt": "first/execution.json",
+    "exit_code": 0,
+    "elapsed_seconds": 14.284566033000374,
+    "focused_check_groups": 8,
+    "javascript_errors": [],
+    "runtime_files": 311,
+    "source_unchanged": true
+  },
+  "negative_control": {
+    "receipt": "mutation-control/execution.json",
+    "mutation": "two shared stale-response early returns disabled in browser-delivered JS only",
+    "exit_code": 1,
+    "elapsed_seconds": 6.536804620000112,
+    "observed_failure": "stale response changed newest result",
+    "expected_negative": true,
+    "source_unchanged": true
+  },
+  "author_artifact_audit": {
+    "author_handoff_files_checked": 103,
+    "author_handoff_mismatches": [],
+    "author_execution_exit": 0,
+    "author_runtime_files": 310,
+    "author_source_unchanged": true,
+    "author_elapsed_seconds": 144.08017203399868,
+    "author_browser_check_count": 73,
+    "author_javascript_errors": [],
+    "old_browser_asserts": 167,
+    "candidate_browser_asserts": 167,
+    "existing_asserts_equal": true,
+    "author_overlay_vs_independent_overlay_changed": [
+      "tests/test_package_retention.py",
+      "tests/test_retained_mpea_transport.py"
+    ],
+    "independent_overlay_added": [
+      "tests/test_finite_planning_review.py"
+    ],
+    "candidate_promotion_product_equal": true,
+    "author_log_hashes_match": true,
+    "author_handoff_sha256": "49f5455e410b101e36a059d4f828a397a321b381b44ac5a815cfc9225eaf9c8c",
+    "author_execution_sha256": "f726f1ae8fd8ba6fe671d114f074010c6da778c9760f9ce5420b2920779dff6b",
+    "author_browser_report_sha256": "a134a82cbd3424cc02161e73b44e15d24588d0461580dfd2c026af970872dfc7"
+  },
+  "source_review": {
+    "reviewers": [
+      "/root/phase2_planner",
+      "/root/phase2_planner/ui_review"
+    ],
+    "scientific_scope": "Complete fixed residual finite population, frozen policy and binary endpoint, uniform subsets without replacement, fixed sample count before outcomes; no future IID risk, power, observed success or premise attestation",
+    "client_arithmetic": "Probability and rank arithmetic remain in Python; JS displays and exports the returned exact representation",
+    "response_checks": "Closed finite envelope and result field set; fixed scope/status strings; exact scalar string types; render/export blocked on unsupported claims. This is not a second independent mathematical verifier of server arithmetic.",
+    "accessibility": "Associated labels and help for four fields, native keyboard traversal and Enter submission, polite live status, native details, textContent rendering. Independent desktop and 320px screenshots were viewed.",
+    "state": "Editing finite form invalidates only its own result and export; other planner results remain. Older success and error cannot replace newest result after a two-frame response.json completion barrier.",
+    "optional_improvement": "Visible maximum-count help could explicitly say freeze sample count before evaluation selection/outcomes. The returned declared premises already explicitly prohibit adaptive stopping and require fixing the sample size before outcomes; not a blocker."
+  },
+  "coverage_limits": [
+    "The exact-value mobile stress case has 91 characters and does not exercise the inherited >96-character scroll-region branch.",
+    "This is focused browser and source evidence, not complete assistive-technology testing or every valid input.",
+    "Author helper request checks alone do not establish backend no-read behavior; this independent run additionally forbids case, outcome, benchmark and selection helper calls and uses an empty synthetic catalog.",
+    "The browser is a trusted local workbench; client shape checks do not certify a malicious server or attest sampling premises.",
+    "The 73-check author run was audited, not rerun; only eight independent groups were executed.",
+    "No actual archive/raw workbook/private custody was read and no scientific outcome or experiment was added.",
+    "No committed release, package installation, source publication or CI pass is asserted here."
+  ],
+  "final_observation": "Scientific NO_GO and unknown premise status are unchanged."
+}

@@ -1,0 +1,34 @@
+{
+  "schema": "lupine.discovery.synthetic_ui_regeneration_comparison.v1",
+  "status": "PASS",
+  "outputs": [
+    {
+      "file": "complete-negative.json",
+      "bytes": 1666755,
+      "sha256": "4557668a055759aedefaefa886deb9ed7205d2730ca8a9672b7a8e7a3aa35209"
+    },
+    {
+      "file": "unknown-empty-null-gates.json",
+      "bytes": 1647488,
+      "sha256": "370f1ff73c2dfef40fa97815b0c4218e50d2a1e2282ed905ae79f5aa0c511b34"
+    },
+    {
+      "file": "insufficient-development.json",
+      "bytes": 6903,
+      "sha256": "2253f3b42314119a40b20433f602f2fbc2edfddbe19219b89a22a510fb15a4a1"
+    },
+    {
+      "file": "registration-unavailable.json",
+      "bytes": 3040,
+      "sha256": "89693f17d524c9a91e6256e7e8e58e524071f0e073b425e847b4f39587d6388d"
+    },
+    {
+      "file": "complete-positive.json",
+      "bytes": 1667927,
+      "sha256": "d9a22582e891cda665aa2ba4ea995a9de45a865b5899c275712ba7834cecbd76"
+    }
+  ],
+  "original_manifest_sha256": "2cc848601048711d296c9304a4fa7b06b15638fdad8778301237a0370f5a3cae",
+  "main_layout_manifest_sha256": "656645ce08a020ab3e0ce9c7537d3e338cccd83bfbd8d7757d33120b4b1c4054",
+  "scope": "Five constructed public reports reproduced byte-identically by main-layout generator. No scientific data or real targets."
+}

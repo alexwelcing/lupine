@@ -1,0 +1,37 @@
+{
+  "HTTP200": 7,
+  "HTTP403": 0,
+  "HTTP404": 1,
+  "bytes_excluding_inventory_handoff": 54092,
+  "commit": "ece824419c9006fe66436daf233822b75533b82f",
+  "declared_current_csv": {
+    "bytes": 19925955,
+    "contents_acquired": false,
+    "git_blob_sha1": "3d5bbfa75f01a8d334d1e630b07f94dc7d36603f"
+  },
+  "entrypoint": "README.md",
+  "exact_public_copyset": "The44 allowed_files plus inventory.json and this handoff.json. No transformations; full MIT notice included as exact copy.",
+  "file_count_excluding_inventory_handoff": 44,
+  "held_at": "2026-10-16T17:22:55.052737+00:00",
+  "independent_review": "One focused planner source-only review active in separate .cache/phase2-tmqm-documentary-review-v1; no review pass claimed here.",
+  "inventory_sha256": "70c0d173050e664e6cb53ed5b8bfad5abf3b5fbd0bd8769fffbe7d4683136f1c",
+  "local_links_checked": 8,
+  "method_warning": "Polarizability is GFN2-xTB, other listed electronic properties DFT(TPSSh-D3BJ/def2-SVP); no unit/join guess.",
+  "negative_findings": [
+    "First guessed curator owner404 preserved",
+    "README units/exact CSV keys/actual complete pairing unresolved",
+    "OldCSV heading label points to currentCSV link target",
+    "Advertised counts do not prove usable/independent units",
+    "No freshness, physical truth or future-condition assertion"
+  ],
+  "numeric_record_downloads": 0,
+  "recommendation": "Proceed only with a bounded documentary schema/rights/identity step; benchmark admission remains unestablished.",
+  "retries": 0,
+  "rights": "Pinned root MIT license explicitly retained; separate per-file/upstream CSD terms not established; no article-license substitution.",
+  "runtime_tests_executed": false,
+  "schema": "lupine.discovery.primary_github_source_handoff.v1",
+  "scientific_admission": false,
+  "source": "uiocompcat/tmQM",
+  "source_requests": 8,
+  "tracked_edits": false
+}

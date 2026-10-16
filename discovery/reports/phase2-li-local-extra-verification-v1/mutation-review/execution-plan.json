@@ -1,0 +1,32 @@
+{
+  "schema": "lupine.discovery.mutation_execution_plan.v1",
+  "prepared_utc": "2026-10-16T09:37:21.024492+00:00",
+  "declaration": {
+    "bytes": 9969,
+    "sha256": "9f21914c7f8742e54aa23eeee5bfccebbdc57dcdd0da8ea9f787ca9f28383fb0"
+  },
+  "runtime_manifest": {
+    "bytes": 38439,
+    "sha256": "e806d052dcfaadc5bbc0a9378318709da011fbaf3a53a290aa6141014bae3959"
+  },
+  "runtime_file_count": 326,
+  "runner": {
+    "bytes": 7335,
+    "sha256": "00432e7f99fa1d346145479dd1b89442c624b6cb7e8801c70f889cc6fd72558d"
+  },
+  "child_runner": {
+    "bytes": 4269,
+    "sha256": "e051cbd2ffe4471278bc0648b7ad6fbf52e0ad80a1f9ce38bbd8070aea32abbc"
+  },
+  "runs": 7,
+  "selected_methods_per_run": 25,
+  "baseline_first": true,
+  "source_or_test_execution_started": false,
+  "instrumentation": [
+    "Python profile rejects calls named production_context, diagnose or _read_relative within discovery source before their bodies execute.",
+    "Python audit hook rejects private custody file opens, child subprocess creation, socket creation, connect and DNS; installed before importing exact test copy.",
+    "Unchanged test methods and product inspected helpers retained; only testmodule.SCRIPT chooses isolated source."
+  ],
+  "runtime_preservation": "All 326 manifest entries byte-hashed and compared with declared SHA-256 before and after each run; full snapshots retained.",
+  "no_extra_controls": "Only predeclared six mutants; no post-result edits."
+}

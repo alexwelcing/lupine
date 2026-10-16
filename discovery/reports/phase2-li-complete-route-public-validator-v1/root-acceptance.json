@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-16T15:15:00.564455+00:00",
+  "owner": "root",
+  "status": "ACCEPTED_AS_PROSPECTIVE_DESIGN_ONLY",
+  "handoff_sha256": "d5d25276d4547bbb216ea5256e090b437697ff4ab63476e3a34baf54a53d8f54",
+  "scope": "Use the fourteen review requirements when preparing/binding the actual-operation recorder and public-only independent audit. Final published producer, source/runtime/gates/phase pin identities remain unbound; no actual invocation or gate acceptance occurs now.",
+  "returned_report_evidence": "Under the reviewed CLI, stdout is serialization of the inspect return after final close; it is not a separately measured third channel. Require exact canonical stdout/persisted agreement plus accepted exit, cleanup and before/after state. Never repeat an operation to manufacture return evidence.",
+  "stopping": "At most two slots per phase. No automatic dependent phase or second invocation after mechanical/guard failure, ambiguous output, timeout, cleanup failure or source drift. Preserve the failure and stop that operation route. An already frozen identical second run can reproduce a completed negative C without revising its binding.",
+  "scientific_boundary": "Exit0 engineering completeness never implies scientific admission, true physical values, fresh evaluation or semantic readiness. G20/G21 gates remain separate."
+}

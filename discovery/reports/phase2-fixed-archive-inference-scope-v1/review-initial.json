@@ -1,0 +1,77 @@
+{
+  "activity": {
+    "empirical_source_acquisitions": 0,
+    "lean_builds": 0,
+    "new_network_requests": 0,
+    "note": "A guessed finite-confidence-inversion documentation filename was absent; subsequent filename search located and read the already published finite-risk-inversion design. This was source navigation only, not a test or data operation.",
+    "raw_scientific_or_private_reads": 0,
+    "runtime_or_product_execution": 0,
+    "tests_run": 0,
+    "tracked_edits": 0,
+    "written_algebra_review": true
+  },
+  "blockers": [],
+  "candidate_sha256": "49e43f80392380abcf8c2ff91469d581a21910b49d228e1e4b550a5c2616dd09",
+  "checks": [
+    {
+      "conclusion": "For fixed binary labels, exactly choose(K,k)*choose(M-K,e-k) distinct size-e subsets contain k failures; uniform random subset division by choose(M,e) gives the stated mass. No independence of the fixed labels is used. Impossible counts have zero terms. The intended domain is M>=1 and integers0<=e<=M,0<=K<=M.",
+      "topic": "finite counting"
+    },
+    {
+      "conclusion": "The frame/policy are fixed; random evaluation allocation remains the source of probability. Training-dependent policy is admissible only when the stated allocation law remains valid conditional on that frozen information. Outcome-adaptive selection, stopping, endpoint/frame choice or refitting is expressly outside this experiment.",
+      "topic": "conditional quantifiers"
+    },
+    {
+      "conclusion": "Uniform distinct indexed records may be sampled even when labels agree or records share experiments. The resulting K/M is a fraction of the represented indexed frame. It is not a de-duplicated experiment estimand or a physical-replication count; unresolved joins/provenance are retained.",
+      "topic": "duplicated observations"
+    },
+    {
+      "conclusion": "Equal archive revelations define a declared artificial oracle budget. The note does not infer independent measurement costs or physical efficiency and expressly retains existing equal-budget criteria.",
+      "topic": "cost"
+    },
+    {
+      "conclusion": "Recorded endpoints can define an explicit recorded-label target once semantics/frame are validated, but this neither certifies metrological accuracy nor gives future-material inference. These remain separate evidence/measurement-to-decision premises.",
+      "topic": "latent truth and transfer"
+    },
+    {
+      "conclusion": "The clarification does not lower or grant source eligibility, select a protocol or runtime feature, change a success criterion, or recast the exposed BAM records as blind validation. It preserves scientific NO-GO and G20/G21 blockers. A narrow finite-archive report would have to declare its lesser inference target; it is not release proof of a useful general materials recommender.",
+      "topic": "user goal and retention"
+    }
+  ],
+  "optional_precision_notes": [
+    {
+      "location": "before the displayed hypergeometric formula",
+      "recommendation": "State integers M>=1,0<=e<=M,0<=K<=M explicitly, so choose(M,e) is nonzero and frame fractions are defined."
+    },
+    {
+      "location": "conditional-frame/training paragraph",
+      "recommendation": "Match existing documentation by saying probability still averages over the random audit subset; do not additionally condition on its realized subset or complete allocation transcript."
+    }
+  ],
+  "reviewed_at": "2026-10-16T10:55:05.883761+00:00",
+  "reviewer": "/root/phase2_math",
+  "schema": "lupine.discovery.fixed_archive_scope_independent_written_review.v1",
+  "sources": [
+    {
+      "bytes": 6568,
+      "path": "docs/finite-population-planning.md",
+      "sha256": "11f4efe987632293bfc8dfcbd24a32d3a05e4c9e23624c9933ec030028de3414"
+    },
+    {
+      "bytes": 12700,
+      "path": "reports/phase2-finite-risk-inversion-design-v1/README.md",
+      "sha256": "142fc8fed2bc05fc784aa1cf0b2c696b818b0d2f2766087f8685b88198023e94"
+    },
+    {
+      "bytes": 4316,
+      "path": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "sha256": "296687aaa59ec34665a36366344c282ca528c287902bd560dd5ea317c623424d"
+    },
+    {
+      "bytes": 12670,
+      "path": ".cache/phase2-metrology-risk-contract-v1/README.md",
+      "sha256": "ae56215f8b091a26d7369f640e708aa0f470395b9c037a082015f610fa6e4eea"
+    }
+  ],
+  "status": "PASS_WRITTEN_SCOPE_WITH_OPTIONAL_PRECISION_NOTES"
+}

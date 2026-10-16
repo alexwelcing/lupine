@@ -1,0 +1,215 @@
+{
+  "all_11_behavior_obligations_retained": true,
+  "bridge_selected_named_passes_verified": [
+    "test_all_policies_caps_and_same_cost_preserve_exact_numerators",
+    "test_unknown_primary_and_empty_secondary_never_become_success_or_superiority",
+    "test_aggregate_hidden_keys_and_unsealed_claims_are_rejected",
+    "test_owned_publication_is_exact_and_cannot_overwrite",
+    "test_valid_projection_cannot_be_written_into_unrelated_attempt",
+    "test_corrupted_stage_blocks_projection_and_publication"
+  ],
+  "closure_transition": {
+    "changed_or_added": {
+      "discovery/scripts/verify_retained_artifacts.py": {
+        "current_sha256": "b88514b490f1cad8c705bbe4066dc558ffe844c257efeffa6ce63e086209ba13",
+        "original_sha256": "ca91b7fccafee1f1717830bd74edf3256dac5751e7c11b11d5f3b8eaf81c1a07"
+      },
+      "discovery/tests/fixtures/mpea_supervisor_isolated_driver.py": {
+        "current_sha256": "2ad3c7a510cc8554538e7a4f157950f3cc96bc96fd758ab40c3a1f30f2450d62",
+        "original_sha256": null
+      },
+      "discovery/tests/mpea_archive_review_reproduction.py": {
+        "current_sha256": "b0947a81a367a8efcb1e779898cba5096c165c9136042055344d37c2c1c23012",
+        "original_sha256": "193d39f2dceda1709bff123a0280a08785aaebc35464858bfaa0b720a2193cba"
+      },
+      "discovery/tests/test_mpea_archive_driver_review.py": {
+        "current_sha256": "4f1093e89114ae8daab5f2ae6c9b8a115f27296ab2363ae45a4dabb9c2b0a2c9",
+        "original_sha256": "b34ca211196f96d507d89a99c33716c2fc148b1915612b6d837a269b67a767bf"
+      },
+      "discovery/tests/test_mpea_public_bridge_boundaries.py": {
+        "current_sha256": "1d0fc7d3ec036d979fc4199bb2fe8c60f2e33a29c1b0668e7070897713470ba2",
+        "original_sha256": "7b76dd623ba7dcdf0484daea982db08a6f470a8c783bca53b9e6c19fb7f4549b"
+      },
+      "discovery/tests/test_mpea_public_bridge_review.py": {
+        "current_sha256": "c763e82c47bcd22a86fde949c6c8aec96d0d3f623bd66318b512cadc473d98f1",
+        "original_sha256": "5bc37564fa431e77b7bda94f0cd34d6fc0c5aa4a8980a5db2e5e00873aa8a21b"
+      },
+      "discovery/tests/test_mpea_study_supervisor.py": {
+        "current_sha256": "3bd2b7803a42c94d123aac347653acc30751896e68d30d7d698743537f40ac5c",
+        "original_sha256": "ecffc888a8f678d60072b6dbf8df844d81c53864b870372a3b05fdf0d5f22add"
+      },
+      "discovery/tests/test_mpea_study_supervisor_review.py": {
+        "current_sha256": "1939497ea0c49b37e33c7a129e9dce6a955be711089f327c16699ea9a44665ea",
+        "original_sha256": "3cca098e6f5e3ab65d49dd0c311bda9069a0c033afb85fc70074ba6b73b60421"
+      },
+      "discovery/tests/test_retained_artifacts.py": {
+        "current_sha256": "ffdd9dd80e5e2c23a9294d35bc70bb7bf9591384f4071229c414c0c0562fb3f3",
+        "original_sha256": "edd7e16c7d740d338345337eca69cd7eb599d1c9df248e6048ea59872d5678fa"
+      },
+      "discovery/tests/test_retained_mpea_transport.py": {
+        "current_sha256": "30d5037d4bcafa69d732efb04a0c0dc90934e4c9ef50fe214f9019b98d37d81b",
+        "original_sha256": null
+      }
+    },
+    "current_focused_count": 339,
+    "old_count": 337,
+    "removed": [],
+    "unchanged_count": 329
+  },
+  "counts_are_overlapping_not_additive": true,
+  "evidence": {
+    "auditor23": {
+      "path": ".cache/mpea-retained-auditor-v2/reports/execution-v1.json",
+      "sha256": "34a51db73627635b13e26c1dd2210eeb71bde010fd4d9ae4af21e7d26460e4f8"
+    },
+    "auditor_peer5": {
+      "path": ".cache/retained-auditor-v2-review/receipt.json",
+      "sha256": "e807c094cdb858b84acde1249a8509c7e5bd0324ae5ee1b3070b73f215ef0a91"
+    },
+    "baseline_behavior_map": {
+      "path": ".cache/mpea-study-custody/review_production/evidence_audit/section10-behavior-map-v2.json",
+      "sha256": "56be60cc522e43a5e254bb439c08f1f2beac491fb69abb845a1608baffc0db83"
+    },
+    "boundary8": {
+      "path": ".cache/mpea-study-custody/review_production/bridge_failure_478208f/boundary-candidate-v1.json",
+      "sha256": "bec75c082568694c32c72bf8311aec3126a0123471f6071d4bd174ecc0bb9609"
+    },
+    "bridge_diagnosis": {
+      "path": ".cache/mpea-study-custody/review_production/bridge_failure_478208f/diagnosis-v2.json",
+      "sha256": "76a46327483c855922f97ea60e2b43e4147801eb8e6724ebbe29b88d648d0b74"
+    },
+    "failed_full_log": {
+      "path": ".cache/mpea-contract-full-suite-v1/unittest.log",
+      "sha256": "874cdbd9ed3d8a891c0b0f82ea6eb026d32d987dae4f663319b4206f831e50f0"
+    },
+    "failed_full_source": {
+      "path": ".cache/mpea-contract-full-suite-v1/source-before.json",
+      "sha256": "0fc119b1098db8bf75742ab584fd8c9959cc14cb04c6bc0a251d8c35b584d6f6"
+    },
+    "fresh_process1": {
+      "path": ".cache/mpea-fresh-process-failure-478208f/candidate-test.json",
+      "sha256": "95b0a33e209cbf477e77cf222b5904d917f42af913e9de61026585ca106d2bab"
+    },
+    "fresh_process_log": {
+      "path": ".cache/mpea-fresh-process-failure-478208f/candidate-test.log",
+      "sha256": "7499358b1a8c64f0d36b2f63364ae8073aba2c931aaa1f979fb2171b24f03576"
+    },
+    "main_focused64": {
+      "path": ".cache/main-repair-focused-verification-v1/execution.json",
+      "sha256": "0e41db721d8f72d7540fbd5bcd12cb81aa13e7da115f6750b1c6e432fb90c6bb"
+    },
+    "main_focused_log": {
+      "path": ".cache/main-repair-focused-verification-v1/tests.log",
+      "sha256": "8c1bc0798edb00a56d033aef3a72f69f5524bce28c11ea0200ed3b0714455349"
+    },
+    "recorder_review": {
+      "path": ".cache/mpea-study-custody/review_production/recorder_v2_review/review-v2.json",
+      "sha256": "1bfe766eceaf71b89a76e5d6a705d3b523d129f6355ce59076dad158eea495d6"
+    },
+    "review13": {
+      "path": ".cache/mpea-study-custody/review_production/bridge_failure_478208f/review-candidate-v1.json",
+      "sha256": "b2940e5e658f796b6f54b0690290ec4c5737cd219c4a9b09906c57537be2c8ec"
+    },
+    "scoped_contract_closure": {
+      "path": ".cache/mpea-study-custody/review_production/contract_compliance/correction-closure-map-v3.json",
+      "sha256": "3849ccae15f0d696ca13a5d67de7e784fec43ba9c2380425050208d2697e44e4"
+    },
+    "supervisor_diagnosis": {
+      "path": ".cache/supervisor-rss-failure-478208f/diagnosis-v2.json",
+      "sha256": "debd9e751ab87e99b6c074489fef16580685b421c674dd61e5dc482b8114c89d"
+    },
+    "supervisor_peer4": {
+      "path": ".cache/supervisor-rss-independent-review-478208f/review-v1.json",
+      "sha256": "33b8906e84a37af864ddf4bdaf8c53c9e5563fe775277463e7919e817d754399"
+    }
+  },
+  "executed_evidence": {
+    "actual_promoted_main_supervisor_and_auditor": 64,
+    "bridge_boundary_candidate": 8,
+    "bridge_review_candidate": 13,
+    "fresh_process_candidate": 1,
+    "retained_auditor_author": 23,
+    "retained_auditor_independent": 5,
+    "supervisor_candidate": 41,
+    "supervisor_high_parent": 5,
+    "supervisor_independent_actual_controls": 4
+  },
+  "failed_full_run": {
+    "commit": "478208f0f3be4b5d810a2c113dbc395b9f1744cb",
+    "errors": 8,
+    "failures": 19,
+    "preserved": true,
+    "test_count": 1324
+  },
+  "fresh_process_named_pass_verified": "test_fresh_process_same_constructed_fixed_roles_reproduces_every_scientific_stage",
+  "limits": [
+    "No fresh full-suite PASS or CI claim.",
+    "Historical source-bound scopes remain historical; no rerun is inferred from a unchanged source hash.",
+    "Supervisor and full constructed arithmetic evidence remain complementary, not actual registered study evidence.",
+    "Hashes prove byte identity, not scientific validity or probability premises."
+  ],
+  "markdown_sha256": "e13fb3c616b0e428439853891154e088f557ba75e7d665d16aa90edeccbeead0",
+  "no_actual_scientific_data": true,
+  "no_main_edits": true,
+  "observed_head": "9704ef46c1d0ab098dabb083199403a6296f7cf6",
+  "schema": "lupine.discovery.required_behavior_source_repair_addendum.v1",
+  "scientific_python_sources_unchanged": {
+    "discovery/scripts/mpea_archive_artifacts.py": "0f251d97ca247b29f06f2a6f32251b1ca443baf52047b0e07de8c50befa812a6",
+    "discovery/scripts/mpea_archive_custody.py": "c79b8b45068a75243512336d1f25bb67a8c57059b5aae2bb3d885d414f98192e",
+    "discovery/scripts/mpea_archive_decisions.py": "777fb6fbf75c44bdc073dfcd2815702cd3519b455f93beacb08c9f97782a46d6",
+    "discovery/scripts/mpea_archive_driver.py": "920deb6d52ced3e5d4182ad914ce4ad7544f7b4096f91b463e101d0b3f45b7e9",
+    "discovery/scripts/mpea_archive_operations.py": "9ce72dd8ce48dfa5f1a4b3535f992ad4b38ea7c07fb86ead01a86970c479bf3e",
+    "discovery/scripts/mpea_archive_profiles.py": "1d9d8da568fd7d15c30b268832739b13a7ec6b281edfc93f8c700cea889c936f",
+    "discovery/scripts/mpea_archive_report.py": "b27cfdeed4051cb1875beccbd1c03b97e3d35e2f338104ddf1aa3ff83a630696",
+    "discovery/scripts/mpea_archive_run.py": "44172bd86ee640cece11d4c20c37a787c725fdd6ca61da0d3db28e511d7c4bbc",
+    "discovery/scripts/mpea_archive_worker.py": "e4cd303752b459cadc94b1fca4227c4e6f63054283f911fb435f56ffb4fead26",
+    "discovery/scripts/mpea_browser_checks.py": "41055986dd995f698e0c2ff95654d6105ec2efa12b3870e0be3d47b19a4c302b",
+    "discovery/scripts/mpea_custody.py": "046aac4812802d1abf656aa93d0b832e8011e2feb59574615957c2550fe11b98",
+    "discovery/scripts/mpea_feature_reader.py": "032d5341f29479437149d2fbd94879134dc2e4e51c895c1fba3cf771db1f34ef",
+    "discovery/scripts/mpea_features.py": "b24c0f1bb62fc56794e1232f973a6020ee42a0d3765d33cb51246f3c7a3a47d9",
+    "discovery/scripts/mpea_fixture_driver.py": "335faf09b89b84a1e5e3b7f404d178eadd29e72a585fac2290c33c8d80d458fe",
+    "discovery/scripts/mpea_fixture_worker.py": "c829a57e066ed46ad90f07458c550f9f3e8db17702583f472b28d3d3e2a646f0",
+    "discovery/scripts/mpea_formula_tokens.py": "8f2bbaa34dccc9c50341f86863526cd3ad6380e97ff3d0e2ca07c0fbbe4c3139",
+    "discovery/scripts/mpea_header_labels.py": "0d1e37cfef2889ed955d30f0fd987ba9b06dc2a1f8bf89ba7085112355b287c7",
+    "discovery/scripts/mpea_metadata_summary.py": "f19fc6804e6ff0a224c5127598eb20755f802b404a9eb8f5effe0f417b1e2b54",
+    "discovery/scripts/mpea_production_store.py": "9b5caa9a013da7b2bae8bb78d89a74a697201bdc73b1cd2db1d38c2e750db6b4",
+    "discovery/scripts/mpea_registration_allocation.py": "d4a11c4c2b941e45d4079129583efc7bcf5ecfed551de137aae02f3f49a3146d",
+    "discovery/scripts/mpea_row_metadata.py": "d50ce1cf06761cd080ca0fcc6516c07ef71e0a4106bba73660642c846915e33b",
+    "discovery/scripts/mpea_row_scanner.py": "8aec58a1a48c173a0750137daf320d22abe04398108a74567c28ed7f2a093775",
+    "discovery/scripts/mpea_stage_store.py": "13c42919e79e0949f4cbcf5ce0eeeb1cb66d3a48893e6e4fdc3cd3fdf68498db",
+    "discovery/scripts/mpea_stage_usage.py": "ae1967ee12d778e02dc92ec8a8af41035e58c62c835236eed6f9322aa04cd5d0",
+    "discovery/scripts/mpea_study.py": "61ddfdf9e8db9cacb3f64d3310021812a96aa66c98ae4e68febb6a794352648b",
+    "discovery/scripts/mpea_study_flow.py": "c4c49108feda2aa38adc7c9761788057b1e716ef7ac18b7b26dceb4cfab213d7",
+    "discovery/scripts/mpea_study_report.py": "a7d4650df6405df61c18d6c017af281bc2779e6b000fc391327cb5a2e11cc1f2",
+    "discovery/scripts/mpea_study_supervisor.py": "1dbd4a1b0e9c3f0246d23bd7670527cfa3bd69f754279aabba06e4ae464e87ab",
+    "discovery/scripts/mpea_target_custody.py": "7f649dd50d7c5589fd9da0f9745b7936b7a3a2bf631a8418affae4a67be1ee9c",
+    "discovery/scripts/mpea_ui_fixtures.py": "c0e839b1ff2ce24cc24e3c710ed7d9ebb519f19dc0ed3c09136ddf7ce849084d",
+    "discovery/src/lupine_discovery/__init__.py": "9f3e5972643a56b1e64182152264e383eeff10fdfc4646b16e2a4422b913d061",
+    "discovery/src/lupine_discovery/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "discovery/src/lupine_discovery/benchmarks.py": "8ba5efb94feddbfceadef8425bdcb73cf4f340642e5f5c5b1addfc1d00ba1009",
+    "discovery/src/lupine_discovery/calibrated.py": "26bad944228a006a16f9b8d4e1a1937d5776a6cf36f7c59582ef389eb1eba90b",
+    "discovery/src/lupine_discovery/calibration.py": "33e71fba54813336af244230261cef639a334328dbd1578d995d377ead7d8f15",
+    "discovery/src/lupine_discovery/cli.py": "efd9176dcc17cc96f42c4fd90492d0643a370aca163c46b1db0fac9e92ad0057",
+    "discovery/src/lupine_discovery/core.py": "c7bab15c662eaa79b6e6312271d3351e79ccb97ef42fcdfc830fdbbf3118d5a0",
+    "discovery/src/lupine_discovery/coupled.py": "67a06d724e89edb210fb1fe3d2d8a8c0ac9e87267c4ee90238035c5f13d81fd1",
+    "discovery/src/lupine_discovery/coupled_io.py": "b18968e56d6e448f16d5bc3aa8b842458263a4abe704118d55eb8d2d239a83ea",
+    "discovery/src/lupine_discovery/coupled_worker.py": "b93f1691ff3def7213edca22b56f1ace239818ace96bc7e30d83a1fbbeb4d7be",
+    "discovery/src/lupine_discovery/decision_pool.py": "76e96165102ebe8c3785f510d169b5d393838fb144f9c4275ffdb0aa6c21f1f9",
+    "discovery/src/lupine_discovery/decision_pool_io.py": "7dbc5d6c53b299fe69df9a79decd318972d3c11886b46e8556b5dbfe3973eac5",
+    "discovery/src/lupine_discovery/decision_pool_transport.py": "280c02e7dfb7e7ba644f324a7b05645504121460142dc43a7f314f8052f0e1ce",
+    "discovery/src/lupine_discovery/envelope.py": "5bb171454a0cf0bf5f1ccb54413d39cc1ca09519da6869195be0e2f0dd2d4ebf",
+    "discovery/src/lupine_discovery/evidence.py": "ab16a2f5f31601f95f3ec88f7fc230a07c85ebfdb175f0298a467c4425037dae",
+    "discovery/src/lupine_discovery/nonlinear.py": "5e4618c58ea1f744819f612bfaf7f1aa3cc916cad8a88e327de5d658b5fc7831",
+    "discovery/src/lupine_discovery/pareto.py": "2180f390dee22c9d2716d75717b0709f2d163f61cb45f0fe5381f07fd935d5f9",
+    "discovery/src/lupine_discovery/pareto_io.py": "de06b809552dc5d95ced007e94db63b4ac9c5ffeef09d8e5e9445dbce87d679c",
+    "discovery/src/lupine_discovery/projection.py": "4a7eb4a48f281f888132c5bb235b10ec037c685f2ba8a192f976a00337e0de09",
+    "discovery/src/lupine_discovery/projection_io.py": "5168001df2cb291a44d544b6b04898002ea8b3ad5822f314007f282f1e7aea30",
+    "discovery/src/lupine_discovery/replay.py": "14426e8a7c9552ec2d651ac95f4d7b2688d744c1474d21fc579ad9dd85babb10",
+    "discovery/src/lupine_discovery/representation.py": "c65c0eed659025a0e41eb325e75182ac2b980c35ac43dfddaa501f4f3ddf3b9e",
+    "discovery/src/lupine_discovery/resources/__init__.py": "0fde54e0f87be5426f86fb26d827bf55c4b69931ad3ade7ff2ce79b5c119278f",
+    "discovery/src/lupine_discovery/serialization.py": "cfec006ed4cb51fbbb6539422a5d829cadaa7bf0ff78bebbffd58aaba6f2523c",
+    "discovery/src/lupine_discovery/server.py": "f58f55c5284dfe34478840dca45e897c7fd1b5d5002a423876ebf228b7c7a5cb"
+  },
+  "source_scope": "All paths discovery/scripts/mpea_*.py and Python files under discovery/src/lupine_discovery from the 339-file bound map; strict retained auditor is separately changed.",
+  "status": "FOCUSED_REPAIRS_VERIFIED_FULL_COMMITTED_SUITE_PENDING"
+}

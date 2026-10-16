@@ -1,0 +1,16 @@
+{
+  "baseline_commit": "d0505b9b358a4bdeafbd742f1aeeb6c2b955abf3",
+  "files": {
+    "docs/li-v3-growth-envelope-plan.md": "4a5954b93b84d05c32a8ee2ea8254aec63283e915c331339cb97875e4b2aeb59",
+    "docs/li-v3-growth-hint-shape-plan.md": "e0ca28ad61181c6cf56d20a46733d2285acb6cb5bc39348f46ee3acb29dfcbc6",
+    "scripts/li_v3_growth_envelope.py": "f50069d028526ea045441a2e574a26192a210ff78ba34f5170777d32f5692ec3",
+    "scripts/li_v3_growth_hint_shape.py": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a",
+    "tests/test_li_v3_growth_envelope.py": "f569d732f02d90233fd20e9d5bf14ab9bb29337c09022093e15320af031523f1",
+    "tests/test_li_v3_growth_envelope_review.py": "4e23e7582dc1da3b0a51507eab4181a39707f0d9057506f25eba61d72ce73ccb",
+    "tests/test_li_v3_growth_hint_review.py": "13db80f49a6d8f83df58a3f2ae22f27450e5367c156368333db1908f90d01f85",
+    "tests/test_li_v3_growth_hint_shape.py": "1f863ee2f1eefd54919767f7b4c75b6d460332d50f6234103dd47e586557685e"
+  },
+  "reviewed_at": "2026-10-16T10:32:11.646639+00:00",
+  "scope": "Root exact integration of independently reviewed G30/G31 four-file sets; hashes identify source, not physical validity.",
+  "status": "FINAL_REVIEWED_SOURCE_PINS"
+}

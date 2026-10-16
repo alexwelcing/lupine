@@ -1,0 +1,34 @@
+{
+  "additive": {
+    "bytes": 1365,
+    "path": "additive-a064a2c0e4a7/additive-review.json",
+    "sha256": "6f1a4b0feccb67ab3a36d01cddec08fe2a0af67a1ed59eb459672bc24949ccc6"
+  },
+  "commit": "a064a2c0e4a7cce1fbcb0541f49aae132944e785",
+  "execution_final": {
+    "bytes": 197,
+    "path": "execution-a064a2c0e4a7/final.json",
+    "sha256": "1dcbf7085cf9c8dfc2073af262927c41c4356b9d10b502d8b5137968215a1b4d"
+  },
+  "expected_comparison_baseline": "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace",
+  "failure_stage": "Exact pin-record baseline assertion, before additive artifact reads",
+  "first_failure_preserved": true,
+  "generic": {
+    "bytes": 10918,
+    "path": "actual-a064a2c0e4a7/review.json",
+    "sha256": "47aafc2bc5efba2a621d934568751892074473d7cc428f4e5a3c45f46937b1bb"
+  },
+  "generic_scope": {
+    "runtime_files": 335,
+    "source_archive_git_files": 5003,
+    "wheel_RECORD_digests": 114,
+    "wheel_members": 115,
+    "wheel_package_members": 108
+  },
+  "next_action": "Root to resolve pin-record baseline metadata; do not weaken exact baseline check or overwrite this invocation.",
+  "provided_pin_record_baseline": "9766b6838388c35a92d32b1a60e65613c72b3fee",
+  "remote_CI_verified": false,
+  "retry_performed": false,
+  "scientific_claim_changed": false,
+  "status": "FULL_PASS_ADDITIVE_STOPPED_BASELINE_MISMATCH"
+}

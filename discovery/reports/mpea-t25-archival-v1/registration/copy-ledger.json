@@ -1,0 +1,16 @@
+{
+  "files": {
+    "reports/mpea-t25-archival-v1/registration/public-registration.json": {
+      "bytes": 995,
+      "sha256": "b08e02721b147207664163de49008be729cfa400b27b4bfa83eb55e7651019a5",
+      "source": ".cache/mpea-study-custody/review_production/publication_review/registration-9704-v1/public-registration.json"
+    },
+    "reports/mpea-t25-archival-v1/registration/registration-publication-summary.json": {
+      "bytes": 2253,
+      "sha256": "7d8916dd554f87b3a6c602f1a504f254d09224c2aa09e45c0821d3528bcc1c86",
+      "source": ".cache/mpea-study-custody/review_production/publication_review/registration-9704-v1/registration-publication-summary.json"
+    }
+  },
+  "review_receipt_sha256": "2ca3823655741d14ff7d20d8c1b04365f92f6fd9ca6122f6f845f7931bf701e6",
+  "scope": "Only two exact public candidates; root owns publication. Terminal study evidence and scientific release decisions are separate."
+}

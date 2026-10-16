@@ -1,0 +1,31 @@
+test_aggregate_exception_preserves_first_and_marks_all_incomplete (__main__.PredicateReview.test_aggregate_exception_preserves_first_and_marks_all_incomplete) ... ok
+test_archive_cleanup_error_keeps_primary_and_prevents_completion (__main__.PredicateReview.test_archive_cleanup_error_keeps_primary_and_prevents_completion) ... ok
+test_duplicate_local_offsets_are_not_successful_association (__main__.PredicateReview.test_duplicate_local_offsets_are_not_successful_association) ... ok
+test_early_local_and_late_central_faults_both_observed (__main__.PredicateReview.test_early_local_and_late_central_faults_both_observed) ... ok
+test_exact_central_predicate_order_and_single_faults (__main__.PredicateReview.test_exact_central_predicate_order_and_single_faults) ... ok
+test_exact_local_predicate_order_and_single_faults (__main__.PredicateReview.test_exact_local_predicate_order_and_single_faults) ... ok
+test_final_alignment_and_missing_required_members (__main__.PredicateReview.test_final_alignment_and_missing_required_members) ... ok
+test_generated_selected_growth_is_a_separate_explicit_scope (__main__.PredicateReview.test_generated_selected_growth_is_a_separate_explicit_scope) ... ok
+test_global_eocd_order_remains_exact (__main__.PredicateReview.test_global_eocd_order_remains_exact) ... ok
+test_growth_signature_and_padding_failures_preserve_later_checks (__main__.PredicateReview.test_growth_signature_and_padding_failures_preserve_later_checks) ... ok
+test_header_valid_baseline_is_not_archive_or_science_acceptance (__main__.PredicateReview.test_header_valid_baseline_is_not_archive_or_science_acceptance) ... ok
+test_incoming_overlap_is_not_cleared_by_outgoing_overlap (__main__.PredicateReview.test_incoming_overlap_is_not_cleared_by_outgoing_overlap) ... ok
+test_invalid_local_signature_does_not_authorize_variable_interpretation (__main__.PredicateReview.test_invalid_local_signature_does_not_authorize_variable_interpretation) ... ok
+test_local_variable_span_overflow_does_not_interpret_growth (__main__.PredicateReview.test_local_variable_span_overflow_does_not_interpret_growth) ... ok
+test_member_limits_and_header_only_deflate_options (__main__.PredicateReview.test_member_limits_and_header_only_deflate_options) ... ok
+test_multiple_early_and_late_faults_keep_original_first_order (__main__.PredicateReview.test_multiple_early_and_late_faults_keep_original_first_order) ... ok
+test_name_and_member_kind_order (__main__.PredicateReview.test_name_and_member_kind_order) ... ok
+test_ordered_directory_entries_do_not_assume_central_storage_order (__main__.PredicateReview.test_ordered_directory_entries_do_not_assume_central_storage_order) ... ok
+test_out_of_range_offset_and_unsigned_extreme_are_incomplete (__main__.PredicateReview.test_out_of_range_offset_and_unsigned_extreme_are_incomplete) ... ok
+test_overlap_stops_ambiguous_local_reads_but_keeps_later_entry (__main__.PredicateReview.test_overlap_stops_ambiguous_local_reads_but_keeps_later_entry) ... ok
+test_raw_central_extra_comment_and_bad_signature_stop_framing (__main__.PredicateReview.test_raw_central_extra_comment_and_bad_signature_stop_framing) ... ok
+test_stage_start_flags_follow_actual_entry (__main__.PredicateReview.test_stage_start_flags_follow_actual_entry) ... ok
+test_synthetic_argument_bounds_and_actual_identity_refusal (__main__.PredicateReview.test_synthetic_argument_bounds_and_actual_identity_refusal) ... ok
+test_unsafe_name_does_not_hide_later_safe_metadata (__main__.PredicateReview.test_unsafe_name_does_not_hide_later_safe_metadata) ... ok
+test_withheld_padding_word_and_body_content_do_not_change_categories (__main__.PredicateReview.test_withheld_padding_word_and_body_content_do_not_change_categories) ... ok
+test_wrong_outer_identifier_blocks_payload_interpretation (__main__.PredicateReview.test_wrong_outer_identifier_blocks_payload_interpretation) ... ok
+
+----------------------------------------------------------------------
+Ran 26 tests in 0.236s
+
+OK

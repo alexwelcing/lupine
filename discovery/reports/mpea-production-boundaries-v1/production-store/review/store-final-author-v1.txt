@@ -1,0 +1,12 @@
+test_chain_sidecar_identity_and_exact_reconstruction (test_mpea_production_store.ProductionStoreTests.test_chain_sidecar_identity_and_exact_reconstruction) ... ok
+test_closed_bindings_and_no_implicit_registration_claim (test_mpea_production_store.ProductionStoreTests.test_closed_bindings_and_no_implicit_registration_claim) ... ok
+test_execution_kind_readonly_and_marker_consistent (test_mpea_production_store.ProductionStoreTests.test_execution_kind_readonly_and_marker_consistent) ... ok
+test_original_allocation_preserved_byte_for_byte (test_mpea_production_store.ProductionStoreTests.test_original_allocation_preserved_byte_for_byte) ... ok
+test_predecessor_tamper_and_sidecar_denial (test_mpea_production_store.ProductionStoreTests.test_predecessor_tamper_and_sidecar_denial) ... ok
+test_status_reasons_and_access_are_scientific (test_mpea_production_store.ProductionStoreTests.test_status_reasons_and_access_are_scientific) ... ok
+test_usage_and_wrappers_change_content_not_scientific_chain (test_mpea_production_store.ProductionStoreTests.test_usage_and_wrappers_change_content_not_scientific_chain) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.565s
+
+OK

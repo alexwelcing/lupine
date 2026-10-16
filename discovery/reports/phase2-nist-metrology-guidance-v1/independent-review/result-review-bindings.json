@@ -1,0 +1,114 @@
+{
+  "schema": "lupine.nist-guidance-independent-result-bindings.v1",
+  "artifacts": [
+    {
+      "path": ".cache/phase2-nist-metrology-guidance-review-v1/check_retained_guidance.py",
+      "bytes": 4122,
+      "sha256": "e1362d60bde7b98d1737eb1f27093225c6f1799c1cc01737cd426662169c94e7"
+    },
+    {
+      "path": ".cache/phase2-nist-metrology-guidance-review-v1/retained-guidance-check.json",
+      "bytes": 3523,
+      "sha256": "667f692f07848a08bd268b22a6da0a8187b370e7c4b1aee9297aa4f5ba73dae2"
+    },
+    {
+      "path": ".cache/phase2-nist-metrology-guidance-review-v1/interpretation-review.json",
+      "bytes": 5551,
+      "sha256": "949bb12a10a09eefa4f994cb05fbb0c48498495c3f2ec16dc11b4573dc828aab"
+    },
+    {
+      "path": ".cache/phase2-nist-metrology-guidance-review-v1/citation-check.json",
+      "bytes": 2794,
+      "sha256": "6bdaf0a4122e15994db714565dfe6e0875f1fd2db2f60a8def74a3ef0920788c"
+    },
+    {
+      "path": ".cache/phase2-nist-metrology-guidance-review-v1/result-review.json",
+      "bytes": 3953,
+      "sha256": "c48ea0468722b013e08fed3e70ed7d0f1e6a716b85d79606dd989683322366ff"
+    },
+    {
+      "path": ".cache/phase2-nist-metrology-guidance-v1/README.md",
+      "bytes": 5726,
+      "sha256": "9f365d73c340bed7ccaf45777d07442b6b95026584a7665addddd3b5ae6798ac"
+    },
+    {
+      "path": ".cache/phase2-nist-metrology-guidance-v1/selected-guidance.json",
+      "bytes": 11504,
+      "sha256": "d9aed217f7c291077a060da7950be17a517144eba379d0d7a3dc5247b68a54ad"
+    },
+    {
+      "path": ".cache/phase2-nist-metrology-guidance-v1/source-bindings.json",
+      "bytes": 6246,
+      "sha256": "5e1bb23ba95aafeac89ca9b20099af99f26bb5f0e13cc2393a68a1e1ff27ea5b"
+    },
+    {
+      "path": ".cache/phase2-nist-metrology-guidance-v1/exposure-ledger.json",
+      "bytes": 794,
+      "sha256": "fb9d1f51bf7902193b402d7cd4535fd0a7abc39d8715ae05ddc5d904a6cc7b9a"
+    },
+    {
+      "path": ".cache/phase2-nist-metrology-guidance-v1/scope.json",
+      "bytes": 2549,
+      "sha256": "aca351abbc6bbf5538e4bf48b220026d81f60efe7969454d23f50621cbd456d7"
+    },
+    {
+      "path": ".cache/phase2-nist-metrology-guidance-v1/html_projection.py",
+      "bytes": 2967,
+      "sha256": "472d445d8795fedad228aa5549a4d4701aa8ef1d6ee12d091ae631acaeb4abcd"
+    },
+    {
+      "path": ".cache/phase2-nist-metrology-guidance-v1/acquire.py",
+      "bytes": 5394,
+      "sha256": "2702fe6786a6d9fc7afebe0803bf82a9cec0ed222e6d3bef2569f03b5202df0d"
+    },
+    {
+      "path": ".cache/phase2-nist-metrology-guidance-v1/request-slot.json",
+      "bytes": 290,
+      "sha256": "54ab570b14dc107056ff0b86f0e2ddac5d42299c893e743045d3a0712f81f3f3"
+    },
+    {
+      "path": ".cache/phase2-nist-metrology-guidance-v1/operation.json",
+      "bytes": 2563,
+      "sha256": "b4d3a743dbf19c02c485b6bc9d28289324403d0c077b37c7ff5b2d69ea69cb38"
+    },
+    {
+      "path": ".cache/phase2-nist-metrology-guidance-v1/section5-receipt.json",
+      "bytes": 1070,
+      "sha256": "5befde35ecef6564fedd5f3c06504d816c0bc8568f26c4efa53a152a165b0c3e"
+    },
+    {
+      "path": ".cache/phase2-nist-metrology-guidance-v1/section6-receipt.json",
+      "bytes": 1042,
+      "sha256": "f1baf2e4b3927e9954366a19931d2b2ced8f6c7c271d7a3a8153973870509176"
+    },
+    {
+      "path": ".cache/phase2-nist-metrology-guidance-v1/actual-first/execution.json",
+      "bytes": 2138,
+      "sha256": "f539a20a5d76fa00606f3fd9295253186d2518837b1bdccd4a7161429f321d91"
+    },
+    {
+      "path": ".cache/phase2-nist-metrology-guidance-v1/actual-first/stdout.json",
+      "bytes": 2563,
+      "sha256": "b4d3a743dbf19c02c485b6bc9d28289324403d0c077b37c7ff5b2d69ea69cb38"
+    },
+    {
+      "path": ".cache/phase2-nist-metrology-guidance-v1/actual-first/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "ignored_projection_bindings": [
+    {
+      "path": ".cache/phase2-nist-metrology-guidance-v1/section5-projection.json",
+      "bytes": 24867,
+      "sha256": "55ac1c31423de77157ebefa4a6defb036da1c2225acdfaa43ff2813900423397",
+      "publication": "DO_NOT_COPY_FULL_PROJECTION"
+    },
+    {
+      "path": ".cache/phase2-nist-metrology-guidance-v1/section6-projection.json",
+      "bytes": 23193,
+      "sha256": "0d4581d0476cb1239270b605495ca6b4563e7fa6222d987ff479608073c8e0f3",
+      "publication": "DO_NOT_COPY_FULL_PROJECTION"
+    }
+  ]
+}

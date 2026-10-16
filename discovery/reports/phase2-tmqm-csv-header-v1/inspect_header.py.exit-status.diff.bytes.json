@@ -1,0 +1,8 @@
+{
+  "encoding": "utf-8",
+  "original_bytes": 581,
+  "original_sha256": "ab367db0f567ae5e349a8532ad649856b7bf3fc77d688be7f86adadd534c0e39",
+  "reason": "Exact historical unified diff includes whitespace-bearing context; wrapper preserves every original byte without publication whitespace lint failure.",
+  "source_name": "inspect_header.py.exit-status.diff",
+  "text": "--- before/inspect_header.py\n+++ after/inspect_header.py\n@@ -166,8 +166,9 @@\n                   private_retained_prefix_sha256=hashlib.sha256(prefix).hexdigest())\n     save(output / 'public.json', public)\n     print(json.dumps(public, indent=2, sort_keys=True))\n+    return 0 if public['status'] == 'HEADER_LABELS_OBSERVED' and public.get('close_completed') is True else 2\n \n if __name__ == '__main__':\n     if sys.argv[1:] != ['--inspect']:\n         raise SystemExit('Use --inspect only after independent source review.')\n-    inspect_once()\n+    raise SystemExit(inspect_once())\n"
+}

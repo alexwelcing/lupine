@@ -1,0 +1,91 @@
+{
+  "conclusions": [
+    "Documented Pymatgen producer emits ASCII-space-separated alphabetically ordered element/count terms.",
+    "Count one remains explicit; near-integers use tolerance 1e-8; other amounts use str(round(amount, 8)).",
+    "Citrine helper rounds max-normalized atomic-fraction ratios to three decimals; emitted counts need not sum to 100.",
+    "Frozen G15B excludes spaces; zero recognition may reflect grammar mismatch, not absence of compositions."
+  ],
+  "failed_requests": [
+    {
+      "meaning": "Requested GitHub tag/path unavailable; no claim that version source does not exist.",
+      "status": 404,
+      "url": "https://raw.githubusercontent.com/materialsproject/pymatgen/v2019.10.4/pymatgen/core/composition.py"
+    }
+  ],
+  "producer_expressions": [
+    "weights = [comp.get_atomic_fraction(ele) for ele in comp.elements]",
+    "normalized_weights = [round(w/max(weights), 3) for w in weights]",
+    "return mg.Composition(normalized_comp).alphabetical_formula",
+    "syms = sorted(sym_amt.keys())",
+    "formula = [s + formula_double_format(sym_amt[s], False) for s in syms]",
+    "return \" \".join(formula)"
+  ],
+  "responses": [
+    {
+      "bytes": 5330,
+      "id": "utils.py",
+      "sha256": "0912f6672a9cf2706e181acfbd589dd6383937641cbe917a3d6a3fcf2669c560",
+      "url": "https://raw.githubusercontent.com/CitrineInformatics/MPEA_dataset/d31e2510cccc3fb9e79d43ad62652f64ef8c2c5e/utils.py"
+    },
+    {
+      "bytes": 143,
+      "id": "requirements.txt",
+      "sha256": "6ddf633f2a8a7a2770dfa353c0aad455f5e1a19aee984d8245c64a16cd3c32d5",
+      "url": "https://raw.githubusercontent.com/CitrineInformatics/MPEA_dataset/d31e2510cccc3fb9e79d43ad62652f64ef8c2c5e/requirements.txt"
+    },
+    {
+      "bytes": 12728,
+      "id": "pypi_version_metadata",
+      "sha256": "226780cadf2c94ac9a9be5b5ebc68fe57650eeec2a003c852f3340eaa01ad8fe",
+      "url": "https://pypi.org/pypi/pymatgen/2019.10.4/json"
+    },
+    {
+      "bytes": 2633586,
+      "id": "pymatgen_sdist",
+      "published_sha256_verified": true,
+      "sha256": "c21d24f570bcf947a77e2029b009054706a8288f897fcd33e1310c14bd426946",
+      "url": "https://files.pythonhosted.org/packages/de/7b/a0ea8d66d2a5acf35030398aed778569c81d90ef74f13e05c5c6ecaa7ffd/pymatgen-2019.10.4.tar.gz"
+    },
+    {
+      "archive_member": "pymatgen-2019.10.4/pymatgen/core/composition.py",
+      "archive_sha256": "c21d24f570bcf947a77e2029b009054706a8288f897fcd33e1310c14bd426946",
+      "bytes": 51187,
+      "id": "sdist_member",
+      "sha256": "4f4dc51f05d675c77c3eaab519a50afae6825065cb3b1895c1cd84f316e35461"
+    },
+    {
+      "archive_member": "pymatgen-2019.10.4/pymatgen/util/string.py",
+      "archive_sha256": "c21d24f570bcf947a77e2029b009054706a8288f897fcd33e1310c14bd426946",
+      "bytes": 11534,
+      "id": "sdist_member",
+      "sha256": "95ae0837a52329a13cb2ae903784e1ba6d2cf5eea50bffbfcf219f384a871a4a"
+    },
+    {
+      "bytes": 63254,
+      "id": "paper_xml",
+      "selection": "Direct Data Records prose and nominal-composition list item only; no table values selected",
+      "sha256": "ef21ae6085f5444b534ee2ef7137542f63e3b80fc3940219a3960b642f5a1550",
+      "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC7722748/fullTextXML"
+    }
+  ],
+  "schema": "lupine.discovery.mpea.formula_format_evidence.v1",
+  "scope": {
+    "frozen_mapping_changed": false,
+    "full_xml_response_accessed": true,
+    "g15c_implemented": false,
+    "notebooks_opened": false,
+    "observation_cells_read": false,
+    "source_inspection_only": true,
+    "target_bearing_tables_selected": false,
+    "targets_selected_or_used": false,
+    "upstream_code_executed": false,
+    "upstream_installed": false
+  },
+  "status": "DOCUMENTED_PRODUCER_FORMAT_NOT_V9_LINEAGE",
+  "unknowns": [
+    "Whether Figshare v9 cells actually used this helper and exact dependency version.",
+    "Actual observation-cell separator/count syntax and usable formula groups.",
+    "Chemical equivalence, specimen pairing and scientific eligibility."
+  ],
+  "upstream_commit": "d31e2510cccc3fb9e79d43ad62652f64ef8c2c5e"
+}

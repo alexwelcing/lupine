@@ -1,0 +1,8 @@
+{
+  "g31_copy": "_growth_zip_structure renamed _package_zip_structure; sole predicate replacement _member_type(name) -> _generic_kind(name); unchanged dependencies imported from tracked frozen module.",
+  "g31_sha256": "f50069d028526ea045441a2e574a26192a210ff78ba34f5170777d32f5692ec3",
+  "g31_source": "scripts/li_v3_growth_envelope.py",
+  "g32_copy": "NAMESPACE through _parse_worksheet, plus _bindings, exact unchanged excerpts; independent semantic collector composes these later. No ignored-directory runtime import.",
+  "g32_sha256": "4624e68c28f911bc0bcc927834bd9f9bbb8cd4622a47db80f5a99e3f63b6ba7d",
+  "g32_source": "reports/phase2-documentary-layout-preparation-v1/candidate/li_v3_layout_localization.py"
+}

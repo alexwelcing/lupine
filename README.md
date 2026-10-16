@@ -38,6 +38,14 @@ The [completed four-source audit](https://github.com/alexwelcing/lupine-rhizo/bl
 
 The final archived control rules out uniform force offsets as a majority explanation: their equal-group mean share of common residual energy is less than 0.000001 percent on MatPES and 0.01746 percent on OMat24. Independent exact arithmetic confirmed the result. **The archived diagnostic branch is now closed.** Atom-dependent reference mismatch and shared model limitations remain unresolved. Next is a planned paired-reference microstudy on new, exactly matched geometries, subject to source, geometry, units and prior-exposure gates. [Read the final control and next evidence boundary](https://github.com/alexwelcing/lupine-rhizo/blob/8b2070f613de20c49667f5db5fef9bb065596a08/docs/research-progress/2026-10-06-uniform-offset.md).
 
+## Candidate-pool research on this branch
+
+[Lupine Discovery](discovery/README.md) is incubating in `discovery/` on
+`research/lupine-discovery` at Alex Welcing's direction, pending later extraction.
+It contains a universal conditional selection kernel, verified Lean statements,
+and archived-data audits with failures preserved. Start with its
+[status](discovery/STATUS.md) and [four-day agenda](discovery/docs/four-day-plan.md).
+
 ## Historical Projection Law result
 
 Round 2 delivered the first focused test of this idea against modern

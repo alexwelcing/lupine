@@ -1,0 +1,23 @@
+[
+  {
+    "id": "pareto-tradeoffs",
+    "title": "Tradeoffs and tied Pareto candidates",
+    "description": "Two objectives preserve distinct tradeoffs and exact ties; a feasible witness explains each dominance exclusion.",
+    "kind": "pareto_demo",
+    "has_outcomes": true
+  },
+  {
+    "id": "pareto-partial",
+    "title": "Incomplete multi-objective answers",
+    "description": "A missing objective prevents establishing the complete true Pareto frontier.",
+    "kind": "pareto_demo",
+    "has_outcomes": true
+  },
+  {
+    "id": "pareto-unsound-control",
+    "title": "Unsound Pareto control",
+    "description": "A deliberately incorrect objective enclosure discards a true Pareto candidate; replay must expose the failure.",
+    "kind": "pareto_negative_control",
+    "has_outcomes": true
+  }
+]

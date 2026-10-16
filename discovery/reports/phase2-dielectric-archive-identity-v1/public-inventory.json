@@ -1,0 +1,80 @@
+{
+  "bytes": 17537,
+  "excluded": [
+    "datacite/response.body",
+    "__pycache__ and *.pyc"
+  ],
+  "file_count": 10,
+  "files": [
+    {
+      "bytes": 4286,
+      "path": "README.md",
+      "representation": "EXACT",
+      "sha256": "c5dba2ad2963e5c466bc867662bc4b8b576e767b4e6438a0540770ab0f168f0a"
+    },
+    {
+      "bytes": 2520,
+      "path": "scope.json",
+      "representation": "EXACT",
+      "sha256": "f442435c1610b1a9ec36ff58708fb33c5b251f30b4118fe52cbe4fc39ac9390b"
+    },
+    {
+      "bytes": 175,
+      "path": "scope-hold.json",
+      "representation": "EXACT",
+      "sha256": "6bdfe57c69dfa4e7e25e3fd702e7710f508b1e91db2bb8df9f8f331d77e9603e"
+    },
+    {
+      "bytes": 2869,
+      "path": "acquire.py",
+      "representation": "EXACT",
+      "sha256": "63b8786b5c8d8710379f5b49e7abf3988780ce45cab23767e4ac47967d1531c6"
+    },
+    {
+      "bytes": 1028,
+      "path": "retained-metadata-identity-projection.json",
+      "representation": "EXACT",
+      "sha256": "e3a28be92a67d596a26b2be326d42c02aee37c1f8ba31522c781454e8d87492f"
+    },
+    {
+      "bytes": 2653,
+      "path": "source-bindings.json",
+      "representation": "EXACT",
+      "sha256": "af6482bbbcedb121c7ec373c09df294da509ecfb904558472155a7f0a03e7bb5"
+    },
+    {
+      "bytes": 196,
+      "path": "disposition.json",
+      "representation": "EXACT",
+      "sha256": "e3900811ba532aa46519252f818781d43a1421162988f4ac94442068d1a6f93c"
+    },
+    {
+      "bytes": 263,
+      "path": "datacite/request.json",
+      "representation": "EXACT",
+      "sha256": "172f60fefdfeb1edaf6c0df0386bdd4fb10c07d36eaf13d756432a444cecfe05"
+    },
+    {
+      "bytes": 521,
+      "path": "datacite/receipt.json",
+      "representation": "EXACT",
+      "sha256": "947e643169663d6c1466c281941072ec540d78ff00314ad19e6221d2e95e1a7e"
+    },
+    {
+      "bytes": 3026,
+      "path": "datacite/projection.json",
+      "representation": "EXACT",
+      "sha256": "cd0f88f897c2d95c7906fc67b25264f9f73a5c9deee0d4bd197161bd9e028e38"
+    }
+  ],
+  "local_links_verified": [
+    "retained-metadata-identity-projection.json",
+    "datacite/projection.json",
+    "scope.json",
+    "source-bindings.json",
+    "disposition.json"
+  ],
+  "lossless_wrappers_required": false,
+  "schema": "lupine.discovery.dielectric_archive_identity.public_inventory.v1",
+  "tests_or_scientific_operations_executed": false
+}

@@ -1,0 +1,41 @@
+{
+  "copies": [
+    {
+      "bytes": 7539,
+      "origin": ".cache/release-artifacts-a865147/release-artifacts.json",
+      "retained": "release-artifacts.json",
+      "sha256": "812b85aa946e4a92c39706cc22f0e1b7475d0a416495922eb396c53bed4a0da3"
+    },
+    {
+      "bytes": 896,
+      "origin": ".cache/package-a865147.txt",
+      "retained": "package-execution-output.txt",
+      "sha256": "52aa3f88f5645b185123263c0925f022d31104e0c2dd345f995ec10ff676cd9c"
+    },
+    {
+      "bytes": 2784,
+      "origin": ".cache/retained-audit-a865147.json",
+      "retained": "retained-byte-audit.json",
+      "sha256": "a1ba67947cd183848755558ede85f45f0acea076a6497d1144042ad5a8505a5a"
+    },
+    {
+      "bytes": 3516,
+      "origin": ".cache/audit-wheel-source-a865147.py",
+      "retained": "audit-wheel-source.py",
+      "sha256": "029e46e315b3129e0cac377b542f6a8893a024cedfa100818f085747cef898df"
+    },
+    {
+      "bytes": 33232,
+      "origin": ".cache/wheel-source-a865147.json",
+      "retained": "wheel-source-audit.json",
+      "sha256": "e012eec5ed2b480f902f0f5f16abf9674ff85d1c1babbd8a4e838b10aaa37a4b"
+    },
+    {
+      "bytes": 33095,
+      "origin": ".cache/a865147-ci-final.json",
+      "retained": "verified-ci.json",
+      "sha256": "a78f307eadc922fa26e81c283e74e219058e0260828fcadb910f3d2210794e76"
+    }
+  ],
+  "schema": "lupine.discovery.evidence-copies.v1"
+}

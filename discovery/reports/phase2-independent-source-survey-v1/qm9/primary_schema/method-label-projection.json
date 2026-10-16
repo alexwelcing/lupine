@@ -1,0 +1,39 @@
+[
+  {
+    "section": "Generation of atomic coordinates",
+    "literal_method_or_source_tokens_present": [
+      "B3LYP",
+      "PM7",
+      "MOPAC",
+      "Corina",
+      "Gaussian"
+    ],
+    "literal_documented_file_names": [
+      "readme.txt"
+    ]
+  },
+  {
+    "section": "Data Records",
+    "literal_method_or_source_tokens_present": [],
+    "literal_documented_file_names": [
+      "atomref.txt",
+      "dsC7O2H10nsd.xyz.tar.bz2",
+      "dsgdb9nsd.xyz.tar.bz2",
+      "validation.txt"
+    ]
+  },
+  {
+    "section": "File format",
+    "literal_method_or_source_tokens_present": [],
+    "literal_documented_file_names": []
+  },
+  {
+    "section": "Properties",
+    "literal_method_or_source_tokens_present": [
+      "B3LYP/6-31G(2df,p)",
+      "B3LYP",
+      "G4MP2"
+    ],
+    "literal_documented_file_names": []
+  }
+]

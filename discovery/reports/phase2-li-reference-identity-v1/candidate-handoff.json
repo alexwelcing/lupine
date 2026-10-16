@@ -1,0 +1,22 @@
+{
+  "schema": "lupine.reference-identity-handoff.v1",
+  "ready_for_parent_promotion": true,
+  "promotion_root": ".cache/phase2-li-reference-identity-v1/promotion",
+  "inventory": {
+    "path": ".cache/phase2-li-reference-identity-v1/promotion-inventory.json",
+    "bytes": 6797,
+    "sha256": "66c08fc14417f02ef00ba7627217bcc6d27d05a5799a5eebf6271b5503a8b10c"
+  },
+  "report": "reports/phase2-li-reference-identity-v1/PUBLICATION.md",
+  "summary": "Repeated ASTM DOI does not safely join CR49/CR50; Gussev date/page disagreement and two Klueh candidate identities retained. Documentary table edges are not measurement joins. G20 unresolved, G21 blocked. Two scoped metadata GETs only; no automatic correction or merge.",
+  "original_failures_preserved": [
+    "public affiliation/role overprojection and narrowing",
+    "initial publication map omitted receipt/roster dispositions, then corrected"
+  ],
+  "tracked_writes": false,
+  "network_since_source_audit": false,
+  "file_count": 28,
+  "total_bytes": 101833,
+  "exact_original_copies": 24,
+  "resolved_local_links": 18
+}

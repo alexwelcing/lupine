@@ -1,0 +1,52 @@
+{
+  "schema": "lupine.bam-metrology-exposed-reference-handoff.v1",
+  "status": "READY_FOR_ROOT_PUBLICATION_REVIEW",
+  "owner": "/root/phase2_evidence",
+  "promotion_root": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1",
+  "publish_to": "discovery/reports/phase2-bam-metrology-workbook-v1/",
+  "promotion_inventory_sha256": "4be5f48d27c257ad726db3ec93892db670a71ecd8cfca7891cff177d682e3a25",
+  "files": 81,
+  "bytes": 448309,
+  "exact_original_copies": 78,
+  "lossless_wrappers": [
+    "independent-review/reviewed-documentary-claims/README.md.bytes.json"
+  ],
+  "markdown_links": 19,
+  "actual_request": {
+    "attempts": 1,
+    "http_status": 200,
+    "bytes": 54960,
+    "publisher_md5": "e85ef58139a68592f36452de195a0a10",
+    "observed_sha256": "6cc298fa9922c60fc923b11dbfaa788057cb23593153d68a9aa95226b1795a83",
+    "bounded_parse_status": "WORKBOOK_DOCUMENTARY_PROJECTED",
+    "source_held": true,
+    "retries": 0,
+    "redirects": 0
+  },
+  "checks": {
+    "author_final_methods_passed": 16,
+    "independent_final_methods_passed": 50,
+    "documentary_cell_citations_checked": 193,
+    "documentary_search_terms_checked": 12,
+    "actual_acquisition_independently_audited": true,
+    "reviewer_raw_workbook_reread": false
+  },
+  "preserved_negatives": [
+    "Original pre-acquisition request reservation gap",
+    "Two UTF16/DOCTYPE failure cases and OLE content-type failure",
+    "Reviewer original parsed-part count fixture error",
+    "Malformed text/cell source findings",
+    "Historical hidden-state scope overstatement",
+    "First publication link-check failure and exact original map/README bytes"
+  ],
+  "scientific_outcome": "Three test-specific sheets document paired current Rp0.2/Rm/Z/Agt/Ag with matching Test ID/Test piece ID. A is unavailable. Metadata k=2/95% uncertainty maxima remain distinct from missing workbook per-test budgets and covariance. No independent-unit or joint-risk claim.",
+  "boundary": "Permanently exposed metrology reference; excluded from any new blind predictive benchmark. Raw workbook/full projection/contact roster remain ignored. No models, fits, eligibility, allocation, threshold or protocol changes.",
+  "next_action": "Root may publish the reviewed documentary bundle at the next evidence checkpoint. No further acquisition is needed. Keep G20 uncertainty/lineage and G21 scientific admission unresolved; next useful work is source-only review of the metrology risk contract.",
+  "completed_at": "2026-10-16T10:40:10.192463+00:00",
+  "independent_publication_review": {
+    "path": ".cache/phase2-bam-metrology-workbook-review-v1/publication-review.json",
+    "sha256": "7862985316de24c8c99c482fc5622a14a412c4473f7c3488d97d86181f70e7a1",
+    "outside_frozen_tree": true
+  },
+  "publication_tree_held": true
+}

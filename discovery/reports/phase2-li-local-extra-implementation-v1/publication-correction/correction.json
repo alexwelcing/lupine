@@ -1,0 +1,13 @@
+{
+  "recorded_at": "2026-10-16T09:27:28.621824+00:00",
+  "published_parent": "b42bd9a94385ad43c3c2ac022584dae6bd135254",
+  "before_bytes": 40327,
+  "after_bytes": 40325,
+  "removed_lf_bytes": 2,
+  "before_sha256": "24e54f7674a116a043aecaf3e5b396aba3139eb1739998f45ab5149c82b5602b",
+  "after_sha256": "570dc7f3cfabb094550b8f1c5fed8f4f801d832dc8003611fc6638a8285a468e",
+  "runtime_changed": false,
+  "cause": "Root described rstrip operation as one byte without checking length; independent audit corrected the count.",
+  "originals": "Original narrative and correction receipt preserved as lossless UTF-8 wrappers; Git parent also retains original state.",
+  "package_or_actual_operation_before_correction": false
+}

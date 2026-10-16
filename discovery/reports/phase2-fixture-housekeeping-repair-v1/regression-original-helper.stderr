@@ -1,0 +1,21 @@
+test_fixture_commit_does_not_launch_automatic_maintenance (test_li_v3_readiness_production.ProductionAuthorTests.test_fixture_commit_does_not_launch_automatic_maintenance) ... FAIL
+
+======================================================================
+FAIL: test_fixture_commit_does_not_launch_automatic_maintenance (test_li_v3_readiness_production.ProductionAuthorTests.test_fixture_commit_does_not_launch_automatic_maintenance)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/tests/test_li_v3_readiness_production.py", line 295, in test_fixture_commit_does_not_launch_automatic_maintenance
+    self.assertEqual(housekeeping, [], 'Fixture commit launched automatic housekeeping')
+AssertionError: Lists differ: [['git', 'maintenance', 'run', '--auto', '--quiet', '--detach']] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+['git', 'maintenance', 'run', '--auto', '--quiet', '--detach']
+
+- [['git', 'maintenance', 'run', '--auto', '--quiet', '--detach']]
++ [] : Fixture commit launched automatic housekeeping
+
+----------------------------------------------------------------------
+Ran 1 test in 0.165s
+
+FAILED (failures=1)

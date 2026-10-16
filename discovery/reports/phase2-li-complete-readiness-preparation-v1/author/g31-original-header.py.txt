@@ -1,0 +1,69 @@
+def _growth_zip_structure(raw, exposure, holder):
+    exposure['header_checks_started'] = True
+    if len(raw) < 22:
+        raise CustodyError('ZIP_INVALID')
+    signature, disk, directory_disk, disk_count, count, directory_size, directory_offset, comment = (
+        struct.unpack('<4s4H2LH', raw[-22:]))
+    if (signature != b'PK\x05\x06' or disk or directory_disk or comment
+            or disk_count != count or directory_offset + directory_size != len(raw) - 22):
+        raise CustodyError('ZIP_LAYOUT_UNSUPPORTED')
+    if not 1 <= count <= MAX_MEMBERS:
+        raise CustodyError('ZIP_LIMIT')
+    _raw_central_directory(raw, count, directory_offset, directory_size, exposure)
+    try:
+        exposure['archive_open_started'] = True
+        exposure['directory_name_decoding_started'] = True
+        archive = zipfile.ZipFile(io.BytesIO(raw), 'r')
+        holder.append(archive)
+        exposure['archive_open_completed'] = True
+        members = archive.infolist()
+        exposure['directory_name_decoding_completed'] = True
+        if len(members) != count or archive.comment:
+            raise CustodyError('ZIP_LAYOUT_UNSUPPORTED')
+        names = set()
+        central_size = 0
+        end = 0
+        for info in sorted(members, key=lambda item: item.header_offset):
+            name = _canonical_member(info.orig_filename)
+            if name != info.filename or name in names:
+                raise CustodyError('ZIP_LAYOUT_UNSUPPORTED')
+            names.add(name)
+            if name != '[Content_Types].xml':
+                _member_type(name)
+            encoded = name.encode('utf-8' if info.flag_bits & 0x800 else 'cp437')
+            central_size += 46 + len(encoded) + len(info.extra) + len(info.comment)
+            file_kind = stat.S_IFMT(info.external_attr >> 16)
+            if (info.flag_bits & ~(0x806 if info.compress_type == 8 else 0x800) or info.compress_type not in (0, 8)
+                    or info.extract_version > 20 or info.extra or info.comment
+                    or file_kind not in (0, stat.S_IFREG) or info.external_attr & 0x10
+                    or (info.compress_type == 0 and info.file_size != info.compress_size)
+                    or info.header_offset != end):
+                raise CustodyError('ZIP_LAYOUT_UNSUPPORTED')
+            if end + 30 > directory_offset:
+                raise CustodyError('ZIP_INVALID')
+            local = struct.unpack('<4s5H3L2H', raw[end:end + 30])
+            sig, version, flags, method, time, date, crc, compressed, size, name_len, extra_len = local
+            year, month, day, hour, minute, second = info.date_time
+            central_time = (hour << 11) | (minute << 5) | (second // 2)
+            central_date = ((year - 1980) << 9) | (month << 5) | day
+            data_start = end + 30 + name_len + extra_len
+            if (sig != b'PK\x03\x04' or version != info.extract_version or flags != info.flag_bits
+                    or time != central_time or date != central_date
+                    or method != info.compress_type or crc != info.CRC
+                    or compressed != info.compress_size or size != info.file_size
+                    or raw[end + 30:end + 30 + name_len] != encoded
+                    or data_start + compressed > directory_offset):
+                raise CustodyError('ZIP_LAYOUT_UNSUPPORTED')
+            if extra_len:
+                _local_growth_shape(raw, end + 30 + name_len, data_start, exposure)
+            end = data_start + compressed
+        if (end != directory_offset or central_size != directory_size
+                or not set(ENVELOPE_MEMBERS).issubset(names)):
+            raise CustodyError('ZIP_LAYOUT_UNSUPPORTED')
+        exposure['header_checks_completed'] = True
+        exposure['local_growth_payload_interpretation_completed'] = True
+        return archive, names
+    except (CustodyError, GrowthEnvelopeError):
+        raise
+    except Exception:
+        raise CustodyError('ZIP_INVALID') from None

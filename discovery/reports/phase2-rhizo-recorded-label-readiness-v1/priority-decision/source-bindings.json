@@ -1,0 +1,64 @@
+{
+  "schema": "lupine.rhizo.label-readiness-decision.sources.v1",
+  "created_at": "2026-10-16T12:19:44.102349+00:00",
+  "sources": [
+    {
+      "id": "S1",
+      "path": ".cache/phase2-rhizo-recorded-label-candidate-v1/actual/public.json",
+      "bytes": 115893,
+      "sha256": "b444e7d33cb18619942c2dfbb5cd3374fd9cd9adee6732825ce20ed431641a33",
+      "role": "Completed public readiness classifications; no stored numbers or citation bodies."
+    },
+    {
+      "id": "S2",
+      "path": ".cache/phase2-rhizo-recorded-label-operations-v1/public-summary.json",
+      "bytes": 2196,
+      "sha256": "74b2d3593e87a53ee09b62f356cd39277023dc53f47860eab987f1ad10c62ec1",
+      "role": "Public producer summary, independently reconciled with categorical positions."
+    },
+    {
+      "id": "S3",
+      "path": ".cache/phase2-rhizo-documentary-review-v1/README.md",
+      "bytes": 8718,
+      "sha256": "9c5b031347363d113a5be6c66e584cab9c2f9fc0964441c7d9afdf0a79d1f758",
+      "role": "Corrected prior provenance assessment; original source choice is a separate claim."
+    },
+    {
+      "id": "S4",
+      "path": ".cache/phase2-next-source-priorities-v1/README.md",
+      "bytes": 8860,
+      "sha256": "96d4909c144cef965be752834c54fddedb16b84ef1efc9f75a4cd05bd9df0e63",
+      "role": "Historical route comparison; its earlier unknown completeness is superseded only within the newly inspected fixed stored frame."
+    },
+    {
+      "id": "S5",
+      "path": "GOAL.md",
+      "bytes": 28816,
+      "sha256": "61a9c706bde03fd28ae44550fd18d13a9ca1c6746676f14b541a5d181a59387c",
+      "role": "Public G20/G21 requirements and documented G31/G34 state, read at this checkpoint."
+    }
+  ],
+  "readme_sha256": "4facb53c9818dd8efe849a6274f8e68e89446fcbef1b2fcb8f4a31773d1656bb",
+  "actual_public_consistency_checks": {
+    "identity_matches_parent_handoff": true,
+    "summary_receipt_hash_matches": true,
+    "unique_id_property_positions": 144,
+    "unique_ids": 36,
+    "categorical_counts_match_summary": true,
+    "all_optional_tolerances_null": true
+  },
+  "exposure": {
+    "authorized_public_records_json_parsed": true,
+    "initial_public_displays_truncated": true,
+    "all_positions_categorical_aggregation_completed": true,
+    "private_numerical_projection_read": false,
+    "prior_private_documentary_projection_reread": false,
+    "raw_objects_read": false,
+    "new_network_requests": 0,
+    "outcome_values_read_or_compared": false,
+    "source_execution_rerun": false,
+    "scientific_protocol_selected": false,
+    "new_review_hierarchy": false
+  },
+  "claim_limits": "Readiness and prioritization only. Producer classifications are not independently reexecuted. No scientific admission or future-risk claim."
+}

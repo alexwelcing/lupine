@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-16T13:20:47.224777+00:00",
+  "status": "HELD_FOR_GENERATED_BROWSER_REVIEW",
+  "source_sha256": "e5db3bc5786bdfd9deb992e6dfddd858932ae486439a357fcd17997be3ce81c8",
+  "section_sha256": "66ec27e80dad95674ad6b30c6346f448cd19859f77bb8a07ae92e3f381e05331",
+  "tracked_changes": false,
+  "actual_results_read": false,
+  "test_scope": "node --check syntax completed on preceding draft; run final syntax command separately; no browser test yet",
+  "runtime_integration": "NONE"
+}

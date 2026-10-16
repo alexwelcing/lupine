@@ -1,0 +1,42 @@
+{
+  "finding": "The selected catalog supports advertised counts, method labels, field names, auxiliary volume unit and archive hash literals. Crossref supports article identity, date and article CC BY terms only. Unknown endpoint units, calculation compatibility, usable pairs, archive-data terms and freshness remain explicit. The finite-frame paragraph distinguishes sampling guarantees from physical independence and accuracy.",
+  "historical_incidental_exposure_preserved": true,
+  "inputs": [
+    {
+      "path": "README.md",
+      "sha256": "19606fa11eb7dc1dc879cba2caef7dd7f9e68b439107eb47004a68f82c68a1b2"
+    },
+    {
+      "path": "selected-metadata.json",
+      "sha256": "6f5a33db33c0f81ad911e53ebade918905b5d4cec040b9797efb0de3720ece5a"
+    },
+    {
+      "path": "source-bindings.json",
+      "sha256": "dd953898d8b9f581a6ea7a554a47a812b4e4b1d06844b112caef7f9c8af452b8"
+    },
+    {
+      "path": "local-prior-use-review.json",
+      "sha256": "67aa00bb17a10c45736029492965c73f87695e7ed41ae3848731721d7c6676a6"
+    },
+    {
+      "path": "exposure-ledger.json",
+      "sha256": "d104fd55a1d45cf982f0353857941e75e7dd600cc57f3e354ae24e4a27ff7180"
+    },
+    {
+      "path": "dataset_metadata/projection.json",
+      "sha256": "f1c5006dadbf9c82a4a9dfba99eafd7d29d55fe29e187e86432e9ae4d46d90d2"
+    },
+    {
+      "path": "elastic_paper_metadata/projection.json",
+      "sha256": "fb43aa850dd15bae883db95ccf8a0265efeaced840643370ef026891fae88110"
+    },
+    {
+      "path": "dielectric_paper_metadata/projection.json",
+      "sha256": "dee9b09cb2bfffc81554b84516df4d33378cb98804b5eee2a9d084f3146a01e8"
+    }
+  ],
+  "limits": "This is a source/claim consistency review, not independent verification of network execution or archive bytes. No runtime tests, raw responses, network, private data or observation files were accessed.",
+  "reviewer": "/root/adversarial_review",
+  "schema": "lupine.discovery.documentary_claim_review.v1",
+  "status": "NO_DOCUMENTARY_CLAIM_BLOCKER"
+}

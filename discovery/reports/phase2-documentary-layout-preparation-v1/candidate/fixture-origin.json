@@ -1,0 +1,13 @@
+{
+  "extracted_functions": [
+    "parts",
+    "field",
+    "shape",
+    "archive",
+    "central_positions"
+  ],
+  "fixture_sha256": "05c30a8b2462d919aed9982700bf06f6c0afb5c57b62931820f4aae64771ff99",
+  "independence": "Same-author fixture reuse; not an independently authored oracle.",
+  "source": ".cache/phase2-growth-envelope-candidate-v1/promotion/tests/test_li_v3_growth_envelope.py",
+  "source_sha256": "f569d732f02d90233fd20e9d5bf14ab9bb29337c09022093e15320af031523f1"
+}

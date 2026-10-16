@@ -1,0 +1,27 @@
+{
+  "actual_production_binding": null,
+  "actual_source_inputs_accessed": false,
+  "author_execution_sha256": "337d1d26b67d45748116c3aefc51216f4bd5402e0c04a8e0ac51922018eedf51",
+  "author_final_tests": 33,
+  "completed_at": "2026-10-16T11:00:00.439668+00:00",
+  "current_source_sha256": "4624e68c28f911bc0bcc927834bd9f9bbb8cd4622a47db80f5a99e3f63b6ba7d",
+  "independent_final_review": {
+    "bytes": 6160,
+    "path": ".cache/phase2-documentary-layout-review-v1/review.json",
+    "sha256": "fa343b5574bfda2a9a17e8fcacbb919758dbf8fe57125a63290fb62d34e70184"
+  },
+  "independent_final_tests": 27,
+  "independent_final_tests_identity": {
+    "bytes": 30060,
+    "path": ".cache/phase2-documentary-layout-review-v1/test_li_v3_layout_localization_review.py",
+    "sha256": "93d062867f8fa612719084922474f13db9aa3936410cfa699c4d3b1007e8db62"
+  },
+  "independent_handoff": {
+    "path": ".cache/phase2-documentary-layout-review-v1/handoff.json",
+    "sha256": "58e872e26178c99389cadb1f3434e8dde282cd7c0d11d937902bd3d8b6b2c8b0"
+  },
+  "next_owner": "Root: decide report publication and later separately bound production stage only after actual prerequisite verification.",
+  "scientific_status": "BLOCKED_SCHEMA",
+  "source_scope": "Same immutable generated archive, full G31 and original four XML validators, exact relationship-resolved two-role coordinate inventory.",
+  "status": "PURE_GENERATED_IMPLEMENTATION_AUTHOR_AND_INDEPENDENT_REVIEW_COMPLETE"
+}

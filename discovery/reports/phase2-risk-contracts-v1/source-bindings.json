@@ -1,0 +1,49 @@
+{
+  "recorded_at": "2026-10-16T05:26:47.289134+00:00",
+  "status": "SOURCE_REVIEW_ONLY",
+  "sources": [
+    {
+      "title": "Conformal Risk Control",
+      "version": "ICLR2024 conference paper",
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2024/file/f3549ef9b5ff520a7e41ff3cc306ab2b-Paper-Conference.pdf",
+      "read_scope": "equation4,Theorem1 and Section2.3; automatic viewport also displayed unrelated examples",
+      "provider_observation": "crc-and-attempted-ltt.json"
+    },
+    {
+      "title": "Learn then Test",
+      "version": "arXiv2110.01052v5,2022-09-29",
+      "url": "https://arxiv.org/html/2110.01052v5",
+      "read_scope": "Definition1,Theorem1,Section2.3.1; metadata distinguishes submission date from rendered dateline",
+      "provider_observation": "ltt-v5.json"
+    }
+  ],
+  "provider_receipts": [
+    {
+      "filename": "crc-and-attempted-ltt.json",
+      "sha256": "e2a424959ee0ef7c7e38f105dcc56e09faa5f77beb9adcce1e53a2a79515d838",
+      "bytes": 24075,
+      "publication": "ignored_only_not_copied"
+    },
+    {
+      "filename": "ltt-metadata-and-failed-version.json",
+      "sha256": "93b1ff3fb5fd3432752fb3582d634c966331db30abfc924315c273ac8ff826f2",
+      "bytes": 8629,
+      "publication": "ignored_only_not_copied"
+    },
+    {
+      "filename": "ltt-v5.json",
+      "sha256": "bfda6197741fe1552d0ce9085ea2fd56c6b174e51eaa1c7cacca0ad78d75910e",
+      "bytes": 30743,
+      "publication": "ignored_only_not_copied"
+    },
+    {
+      "filename": "search.json",
+      "sha256": "16bd56a9d0125704a012105b640b8e18de2f17b98adfc6a8dc5c82daac6b4ed6",
+      "bytes": 34568,
+      "publication": "ignored_only_not_copied"
+    }
+  ],
+  "note_sha256": "de10ef8fd4d6cc6b78fd70ebc00518fd9c76139634861a0d8d62c8c009041633",
+  "runtime_or_scientific_test_run": false,
+  "model_or_protocol_changed": false
+}

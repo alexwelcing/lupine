@@ -1,0 +1,13 @@
+{
+  "executed_at": "2026-10-16T08:07:10.065598+00:00",
+  "command": [
+    "git",
+    "diff",
+    "--cached",
+    "--check"
+  ],
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": "",
+  "scope": "Current staged notebook/report increment before pending separate diagnostic integration."
+}

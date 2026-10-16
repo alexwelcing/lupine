@@ -1,0 +1,24 @@
+{
+  "at": "2026-10-10T22:56:34.565458+00:00",
+  "files": {
+    "test_mpea_companion_observability_review.py": {
+      "assertion_calls": 26,
+      "assertions_exact_ast_unchanged": true,
+      "before_sha256": "37b7f1e74fd91c21eeb57c391ebd9fdc97a27bc7351b444ae4e88147d53d39c9",
+      "candidate_sha256": "e63568ffba51a5f800feb0c40156e5c18f17528d928af225929c02fddbef005c",
+      "from": ".cache/mpea-study-custody/review_production/contract_compliance/test_companion_observability_review.py",
+      "standalone_control_root_created": true
+    },
+    "test_mpea_companion_scope_review.py": {
+      "assertion_calls": 2,
+      "assertions_exact_ast_unchanged": true,
+      "before_sha256": "da2ecf6d57b66076309389517f35d510b7cb4435301af0f148215254556e8a61",
+      "candidate_sha256": "673336f031f3012789982c117a28bac6e5f87140370db09d270532f00ac46218",
+      "from": ".cache/mpea-study-custody/review_production/contract_compliance/test_companion_scope_review.py",
+      "standalone_control_root_created": true
+    }
+  },
+  "held_producers_match": true,
+  "main_execution": "pending fullsuite",
+  "manifest_sha256": "986ad39cb4df37b25bf8299f03a061e2d0e958dcd987a789c1207cc656ce16cc"
+}

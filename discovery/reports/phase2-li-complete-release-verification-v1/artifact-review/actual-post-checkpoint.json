@@ -1,0 +1,16 @@
+{
+  "actual_scientific_operations": 0,
+  "all_checks_literal_true": true,
+  "artifact_audit_reruns": 0,
+  "artifact_audit_runs": 1,
+  "audit_source_sha256": "b00541daccbbe8626880f59bc59d9694dc9f34e922690f968dfb50ed348bb738",
+  "ci_success_established": false,
+  "head": "9d1f21dae141a28db378ee2e16aa83340df57877",
+  "head_exact": true,
+  "recorded_at": "2026-10-16T16:14:14.897202+00:00",
+  "review_checks": 19742,
+  "review_sha256": "5b46d8dd6c8bc3972f0440f445b688f603385877053c211d42cdd1cbb3789547",
+  "review_status": "PASS_EXACT_RETAINED_ARTIFACT_AND_DECLARED_DELTA",
+  "worktree_clean": true,
+  "worktree_status": ""
+}

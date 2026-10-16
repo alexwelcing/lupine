@@ -1,0 +1,43 @@
+{
+  "scope": "Named public source/contracts supporting this design; public planning/status searches also performed. No actual compatible receipt, private object or network access.",
+  "bindings": {
+    "AGENTS.md": {
+      "sha256": "8da673fcfab35c6e8b2cbc20194423b83017574bd8d78264d48c30d4b6d74ede",
+      "purpose": "public source-specific design and scope evidence"
+    },
+    "scripts/li_v3_custody.py": {
+      "sha256": "3ead51f0afdf16be973743257be488669c988aa40443779e7a5c400e9b0d3234",
+      "purpose": "runtime/helper contract and fixed source identities"
+    },
+    "scripts/li_v3_compatible_envelope.py": {
+      "sha256": "e771b3fc2a66d6e2ff3a26d8aae88b7a2915ac908907908316e697997761c847",
+      "purpose": "runtime/helper contract and fixed source identities"
+    },
+    "docs/li-v3-custody-plan.md": {
+      "sha256": "0be13b0ed7dd7bc41b9c430d4f7d30f8efa0ead54a85d162f31c728eb928a241",
+      "purpose": "public source-specific design and scope evidence"
+    },
+    "docs/li-v3-compatible-envelope-plan.md": {
+      "sha256": "86b663de7a0e88e559a8cc6acbbacd3b17d4ca9ee4e759abc826f7afbd6211ca",
+      "purpose": "public source-specific design and scope evidence"
+    },
+    "reports/phase2-li-next-schema-design-v1/README.md": {
+      "sha256": "07e0acd3e4a759c147abca38ca57271548b551f7bd6b749bf14df52a7b39993b",
+      "purpose": "public source-specific design and scope evidence"
+    },
+    ".cache/phase2-li-documentary-contract-v1/README.md": {
+      "sha256": "7ccdf382941d535b72d833cae3fe92c0a5dce614f0ce3fe4358aa6467af526a3",
+      "purpose": "public source-specific design and scope evidence"
+    },
+    ".cache/phase2-li-documentary-contract-v1/proposal.json": {
+      "sha256": "a6e224719aceea3614ccbe8b70a4ffc454e2fbdd8fd3cee1de26c58049f7cc19",
+      "purpose": "public source-specific design and scope evidence"
+    }
+  },
+  "actual_compatible_receipt_read": false,
+  "raw_workbook_read": false,
+  "private_capture_read": false,
+  "network_used": false,
+  "implementation_written": false,
+  "tests_executed": false
+}

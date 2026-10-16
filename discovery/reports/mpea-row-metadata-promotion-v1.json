@@ -1,0 +1,31 @@
+{
+  "all_21_match": true,
+  "exact_reviewed_files_and_prior_pins": {
+    "docs/mpea-column-mapping-v1.json": "812255e53cceec8c66bd2a4b11d5d1e556941a053c888a7970cf2e3ec6728f97",
+    "docs/mpea-column-mapping-v1.md": "488928f4ac88f241ae28b43527628415663d9a4df976432a36b1b7c5653dee6d",
+    "docs/mpea-custody-plan.md": "381406c91451ffb4592539b7bc66beb215bdb00cd852bf1a01106bebe7d1b895",
+    "docs/mpea-header-disclosure-amendment-v1.md": "ce9c95e713b79ec2d8029f0da51c8d76c390f1b349de67b0e842034c42f9a525",
+    "docs/mpea-row-metadata-amendment-v1.md": "7111870342b9aa5f8e6b78f481b691de9d2ae1052f38cf095fe16f1e9fa3a06e",
+    "reports/mpea-custody-acquisition-v1.json": "2bd6a5f44c28e97460a5ee0fca8eaf0e77a243cd72259e23fff2a75b264aca83",
+    "reports/mpea-custody-header-v1.json": "01f0e9899f8afb1517d0efd0d2bb4c43ca9df94daadc6a2d15664ac1bbe4d827",
+    "reports/mpea-custody-reproduction-v1.json": "e4e29863b6a1fdddf6590548e0dc450d1c4e088d2612bbc3f931d970a5ba68c4",
+    "reports/mpea-header-labels-reproduction-v1.json": "a67d63a839eb3ee9d0f8d8416b30eee994a24cce11a7c3d729b3c1c5ed758532",
+    "reports/mpea-header-labels-v1.json": "70f50fa99db6b39b769be392ec1c64c655f8f32d7587f04f522e6a794c4accee",
+    "reports/mpea-source-inventory.json": "ce2e1487cb91436137086f7c9900d091eed30068f6c8e9595687458c3f12679c",
+    "scripts/mpea_custody.py": "046aac4812802d1abf656aa93d0b832e8011e2feb59574615957c2550fe11b98",
+    "scripts/mpea_header_labels.py": "0d1e37cfef2889ed955d30f0fd987ba9b06dc2a1f8bf89ba7085112355b287c7",
+    "scripts/mpea_row_metadata.py": "d50ce1cf06761cd080ca0fcc6516c07ef71e0a4106bba73660642c846915e33b",
+    "scripts/mpea_row_scanner.py": "8aec58a1a48c173a0750137daf320d22abe04398108a74567c28ed7f2a093775",
+    "tests/test_mpea_custody.py": "cf2fc7a0bdaf9bd59589c123745aae6f353fa5837849e26d2a9438d62d090b19",
+    "tests/test_mpea_custody_review.py": "27cca2dc9ec6d96cbcbf06971fe352d6d4f5fb0572b33f8d6648a8ad4cb299bc",
+    "tests/test_mpea_header_labels.py": "1bd9f9f967925faac4479135adb7d10051a4cb60bd17932759e0d3c0dc441dc9",
+    "tests/test_mpea_header_labels_review.py": "6f118b84ea8f77a2d5659e7aacc15f582fc974dc070b67e939efadd4006a9341",
+    "tests/test_mpea_row_metadata.py": "10998dc11338e1cfb1af4563f61efaa89a764ff5974a9c97c34d55a877143854",
+    "tests/test_mpea_row_metadata_review.py": "9a32ec3ad0e566887239c01047b1a5a1d5cb0249fd2888bb76faa90018f9c8c1"
+  },
+  "preexisting_paths_checked": 214,
+  "preexisting_runtime_tests_scripts_examples_formal_unchanged": true,
+  "schema": "lupine.discovery.mpea.row_metadata.promotion.v1",
+  "scope": "Byte-identical promotion and source continuity only; no production row scan and no scientific validation.",
+  "source_commit_before_increment": "b899fc6995f6dab9bfbb5eade958371e1033ee11"
+}

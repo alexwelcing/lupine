@@ -1,0 +1,37 @@
+{
+  "schema": "lupine.bam-metrology-joint-risk-premise-audit.v1",
+  "created_at": "2026-10-16T10:43:00.547473+00:00",
+  "owner": "/root/phase2_evidence/author_methods_review",
+  "scope": "Source-only premise audit, using exactly the two already-reviewed documentary summaries bound below. This is a new hypothesis audit, not another empirical source/citation validation or mathematical implementation.",
+  "read_sources": [
+    {
+      "path": ".cache/phase2-bam-metrology-workbook-v1/README.md",
+      "bytes": 6220,
+      "sha256": "cad9aec959b34c7e6fc4dd4e98bf022ac93745d2192be28dbe263c1d33b8a233",
+      "role": "Already independently reviewed documentary summary; no original workbook/projection accessed in this task."
+    },
+    {
+      "path": ".cache/phase2-bam-metrology-workbook-v1/documentary-findings.json",
+      "bytes": 13904,
+      "sha256": "245a6cbf65a43adaf96e3feae9af23b394c0f06bf5aeb580f574cb5de49609ed",
+      "role": "Already independently reviewed documentary summary; no original workbook/projection accessed in this task."
+    }
+  ],
+  "artifact": {
+    "path": ".cache/phase2-bam-metrology-risk-premise-review-v1/README.md",
+    "bytes": 5847,
+    "sha256": "d746a7a8e03d4b0ee515ddb971a312d9de57346c66fb1b3573837ec3d49144ba"
+  },
+  "premise_rows": 11,
+  "conclusion": "Documentary endpoint pairing and publisher uncertainty-summary statements are supported; operational per-test marginal coverage, Z scale, error law, dependence, latent-property relation, sampling/exchangeability and future-prediction premises remain unestablished. Unknown covariance is not itself a requirement for every dependence-robust bound; valid marginal premises still must be supplied.",
+  "new_source_acquisition": false,
+  "network_requests": 0,
+  "raw_workbook_reads": 0,
+  "internal_projection_reads": 0,
+  "schema_csv_reads": 0,
+  "tests_or_experiments_run": 0,
+  "new_endpoint_or_threshold_choices": false,
+  "new_protocol_or_model_design": false,
+  "tracked_writes": false,
+  "git_mutations": false
+}

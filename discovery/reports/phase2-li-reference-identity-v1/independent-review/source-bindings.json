@@ -1,0 +1,52 @@
+{
+  "schema": "lupine.li-reference-identity-review-bindings.v1",
+  "created_at": "2026-10-16T09:19:26.377105+00:00",
+  "files": [
+    {
+      "path": ".cache/phase2-li-reference-identity-v1/README.md",
+      "bytes": 7621,
+      "sha256": "f564c79b7b731191fbb8bc58669dbc6a1897bc22e57db3b59d09b737c60555ae"
+    },
+    {
+      "path": ".cache/phase2-li-reference-identity-v1/source-bindings.json",
+      "bytes": 4198,
+      "sha256": "611a033ab0ae45e628f64252e83b5042e47f1afcc7f03fbe24fb3efa5f0525da"
+    },
+    {
+      "path": ".cache/phase2-li-reference-identity-v1/citation-map.json",
+      "bytes": 3461,
+      "sha256": "7ed2ef187e9c08d58b253581cf806d75abd23e1fb08eb3cf4b18cdeb4614716c"
+    },
+    {
+      "path": ".cache/phase2-li-reference-identity-review-v1/scope.json",
+      "bytes": 2158,
+      "sha256": "e977cb847dff5018c6c296bf3c27588d3be79058b904b8c368278952f1d8585a"
+    },
+    {
+      "path": ".cache/phase2-li-reference-identity-review-v1/scope-addendum.json",
+      "bytes": 1251,
+      "sha256": "b360426ba88711be6df80e28d92a963e43859f77a3dc16145480e8e09fee7ae8"
+    },
+    {
+      "path": ".cache/phase2-li-reference-identity-review-v1/checks.json",
+      "bytes": 5721,
+      "sha256": "04b9537182549a4fe90699024e139fb945318b51105f6b7548151590f5372681"
+    },
+    {
+      "path": ".cache/phase2-li-reference-identity-review-v1/independent-citation-projection.json",
+      "bytes": 7763,
+      "sha256": "60425cc4903d45b41a5180ad3b87f1f7b9e1d5fe57e03f0d88f7f11b90164e1f"
+    },
+    {
+      "path": ".cache/phase2-li-reference-identity-review-v1/xml-exposure-before-read.json",
+      "bytes": 504,
+      "sha256": "4b93799d196892dcb06af6005948067960ca74f220e963e3d423c49707e1041a"
+    },
+    {
+      "path": ".cache/phase2-li-reference-identity-review-v1/xml-exposure-read-complete.json",
+      "bytes": 388,
+      "sha256": "907198f3926360b1e49030e983fad3fdeb094a22cce773c6c97a8d4bbcb5b51d"
+    }
+  ],
+  "complete_input_bindings": "checks.json records all 17 parent-bound input identities and their independent byte/hash agreement."
+}

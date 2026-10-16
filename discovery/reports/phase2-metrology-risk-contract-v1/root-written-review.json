@@ -1,0 +1,18 @@
+{
+  "executed_tests": false,
+  "findings": [
+    "The25world variance1/k2 counterexample has21/25 coverage and is explicitly not a BAM model.",
+    "Marginal19/20 intervals yield joint18/20,19/20 or361/400 under declared laws; common dependence is not uniformly worse.",
+    "Finite union bound requires valid common-law marginal inequalities, fixed covered family and budget; no independence required.",
+    "Subset selection preserves simultaneous event containment, while arbitrary adaptive marginal selection and acceptance conditioning do not preserve nominal level.",
+    "Decision-risk transfer requires pointwise soundness for actual targets; measurement/future-target counterexample marks the missing transfer assumption.",
+    "No empirical risk, model validity, Python-Lean refinement or new compilation is inferred."
+  ],
+  "new_source_reads": false,
+  "reviewed_at": "2026-10-16T10:46:09.916506+00:00",
+  "reviewer": "root",
+  "scientific_claim_upgrade": false,
+  "scope": "Written conditional mathematics and distinction of actual documentary premises from hypothetical event worlds; no new execution or source acquisition.",
+  "source_sha256": "ae56215f8b091a26d7369f640e708aa0f470395b9c037a082015f610fa6e4eea",
+  "status": "NO_BLOCKER_WITHIN_WRITTEN_SCOPE"
+}

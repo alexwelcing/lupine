@@ -1,0 +1,75 @@
+{
+  "G21_status": "DEFERRED_UNCHANGED",
+  "actual_sampling_attested": false,
+  "author_receipt_audit": "Both retained author attempts (initial ten statements and later13 statements) have exit0; source/log/object hashes reconcile. Independent final stdout/axiom mapping matches exactly. The independent compile had no failure.",
+  "axiom_coverage_exact13": true,
+  "blockers": [],
+  "candidate_handoff_sha256": "cfdfe9980a290d339c2680f2bb563eddb5318071951ba06758f2d5849e864a7f",
+  "candidate_source_sha256": "391b03aefda0f7bac5bd380347b81febc8a4ebbd329ae3a099981784803973bd",
+  "compile_exit_code": 0,
+  "compiled_statement_count": 13,
+  "elapsed_seconds": 25.219210497001768,
+  "example_scope": "Exact arithmetic illustrations computed independently with standard-library Fraction/comb; not new scientific observations or an execution of the project planner.",
+  "existing_formal_statement_count": 130,
+  "existing_inventory_unchanged": true,
+  "independent_compile_receipt": "first-compile/execution.json",
+  "independent_compile_receipt_sha256": "5db6968947d48beec28eedcee0ad2b28efde261107d78ff9f566e65ba9ee1ae1",
+  "mathematical_review": [
+    {
+      "claim": "Avoiding failures equals subsets of the complement",
+      "review": "The event identity is pointwise for every sample; failures outside the frame do not affect disjointness. The favorable cardinal formula separately requires failures subset population, making card subtraction sound."
+    },
+    {
+      "claim": "Finite uniform-subset count ratio",
+      "review": "Both counts range over fixed-size subsets of a fixed Finset. With e\u2264M, denominator_positive ensures a nonempty sample space. The theorem is an exact rational cardinal ratio; no probability measure or randomization implementation is constructed."
+    },
+    {
+      "claim": "Composite fraction null and nonvacuity",
+      "review": "For M>0 the Nat.ceil equivalence is exact over rational rho. Under 0<rho\u22641, Kmin lies in1..M. Failure-count antitonicity plus explicit witness K=Kmin proves both the bound and attained maximum over Kmin\u2264K\u2264M; it is not merely a vacuous universal over an empty null."
+    },
+    {
+      "claim": "Boundary and census",
+      "review": "For e\u2264M, choose(M-K,e)=0 exactly when e>M-K. Equality e=M-K gives numerator1, so zero starts at M-K+1. With1\u2264K\u2264M this is a positive valid sample size; eta\u22650 admits the zero-bound witness. e0 separately returns1."
+    },
+    {
+      "claim": "Alignment with Python",
+      "review": "The runtime computes exact ceil(rho*M), exact math.comb/Fraction ratio with explicit zero beyond M-Kmin, scans e1..cap, uses <=eta, and returns chance1/nullminimum at cap0. This is inspected mathematical correspondence, not an executed runtime test or refinement theorem."
+    },
+    {
+      "claim": "Parameter scope",
+      "review": "The theorems quantify over arbitrary natural finite sizes and rational rho/eta. The runtime restricts M1..256, rho/eta strictly(0,1), bounded input syntax and cap\u2264M. The stronger theorem endpoints rho1 and eta0 do not silently expand that API."
+    },
+    {
+      "claim": "Invalid sampling domain",
+      "review": "The rational definition is totalized outside0\u2264K\u2264M/e\u2264M; arithmetic equalities may remain true there. No probability interpretation is assigned outside the stated population/subset and positive-denominator premises."
+    },
+    {
+      "claim": "Frozen-frame assumptions",
+      "review": "Uniform fixed-size sampling from a complete fixed labeled frame, fixed endpoint/policy and no outcome-dependent alteration remain external premises. Correlated fixed labels need no IID assumption, but distinct IDs do not establish distinct measurements or physical independence. No conditioning on the realized allocation or future-population transfer is justified."
+    },
+    {
+      "claim": "Explicit unproved boundaries",
+      "review": "No proof of sample-size monotonicity, minimum-count search correctness, Python parser/math.comb/Fraction refinement, acquisition cost, actual endpoint truth, source independence, useful reduction, measured power or scientific superiority is supplied."
+    }
+  ],
+  "network_or_dependency_updates": false,
+  "nonvacuity_examples": {
+    "M10_rho200000001_over1e9_Kmin": 3,
+    "M4_K2_e0": "1",
+    "M4_K2_e1": "1/2",
+    "M4_K2_e2": "1/6",
+    "M4_K2_e3": "0"
+  },
+  "only_standard_logical_axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "python_refinement_established": false,
+  "same_compiled_object_as_author": true,
+  "schema": "lupine.discovery.finite_planning_formal.independent_review.v1",
+  "scientific_admission": false,
+  "status": "MATHEMATICAL_SCOPE_REVIEW_NO_BLOCKER_AND_INDEPENDENT_COMPILE_PASS",
+  "strict_warning_policy": true,
+  "tracked_integration_performed": false
+}

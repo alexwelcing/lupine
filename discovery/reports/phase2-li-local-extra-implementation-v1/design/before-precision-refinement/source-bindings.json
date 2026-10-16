@@ -1,0 +1,93 @@
+{
+  "draft_readme_sha256": "f24fca0cc4b8147ec34abc44e0edb2063c40cedc64e101c4ff62ab8a3be4db39",
+  "files": {
+    ".cache/phase2-li-flags-next-v1/APPNOTE.TXT": {
+      "bytes": 174585,
+      "sha256": "0b993022a7d320a0bf704e6980bea36fafd17a6066ab994db0a0c16278a50cd6"
+    },
+    ".cache/phase2-li-flags-next-v1/appnote-retrieval.json": {
+      "bytes": 496,
+      "sha256": "67e5f49d71af004ed5738cf328bdad72f4ba414f182dba684b1e393017785ef2"
+    },
+    "docs/li-v3-compatible-zip-diagnostic-plan.md": {
+      "bytes": 8524,
+      "sha256": "73a0aa884876d042549e5250daff29e3e111b245c274e77551a6f85a82261755"
+    },
+    "scripts/li_v3_compatible_envelope.py": {
+      "bytes": 14126,
+      "sha256": "e771b3fc2a66d6e2ff3a26d8aae88b7a2915ac908907908316e697997761c847"
+    },
+    "scripts/li_v3_compatible_zip_diagnostic.py": {
+      "bytes": 16878,
+      "sha256": "59b4b549a1de33abf2c54ccfce15f4f980a3a36351f98e246ae4e9fd6c44c5d3"
+    },
+    "scripts/li_v3_custody.py": {
+      "bytes": 35358,
+      "sha256": "3ead51f0afdf16be973743257be488669c988aa40443779e7a5c400e9b0d3234"
+    },
+    "scripts/li_v3_zip_diagnostic.py": {
+      "bytes": 12822,
+      "sha256": "de7807a8721cc243a9acf71e01c80aa531454248b2cde92c5518f875e89e0d87"
+    }
+  },
+  "limits": {
+    "actual_public_diagnostic_receipts_read": false,
+    "implementation_written": false,
+    "new_network_requests": false,
+    "private_capture_read": false,
+    "raw_archive_read": false,
+    "reader_profile_changed": false,
+    "scientific_readiness_or_sampling_independence_claim": false,
+    "source_operations": false,
+    "tests_executed": false,
+    "tracked_edits": false
+  },
+  "recorded_at": "2026-10-16T08:59:24.435354+00:00",
+  "root_reported_observation": {
+    "basis": "Root task message only; actual public receipts were not read in this design task.",
+    "both_public_sha256": "4ee25afe053f68b4b9331a9ebc94bccb2e1d96e0ce5700d78a45866ef7b0cc12",
+    "categories": [
+      "LOCAL_EXTRA_PRESENT"
+    ],
+    "first_rejection_stage": "entry_local",
+    "members_decompressed": [],
+    "primary_categories": [
+      "LOCAL_EXTRA_PRESENT"
+    ],
+    "producer_commit": "a6e87c198d8116d26c523e0e1b2eedce4aeb225b",
+    "runtime_file_count": 323,
+    "same_entry_local_checks": "CHECKED",
+    "supplementary_local_categories": [],
+    "xml_decoded": false
+  },
+  "schema": "lupine.discovery.local_extra_design_bindings.v1",
+  "standard": {
+    "current_task_acquisition": "Reused existing ordinary HTTP-200 response and exact retained source bytes. No new request or route was attempted.",
+    "publication_policy": "Design paraphrases and references the source; this bundle does not reproduce the specification body.",
+    "publisher": "PKWARE",
+    "revised": "2022-11-01",
+    "sections": [
+      "4.3.7",
+      "4.3.9.2",
+      "4.4.8",
+      "4.4.9",
+      "4.4.10",
+      "4.4.11",
+      "4.4.12",
+      "4.4.28",
+      "4.5.1",
+      "4.5.3",
+      "4.5.5",
+      "4.6.1",
+      "4.6.2",
+      "4.6.3",
+      "4.6.8",
+      "4.6.9",
+      "4.6.10",
+      "Appendix E"
+    ],
+    "url": "https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT",
+    "version": "6.3.10 FINAL"
+  },
+  "status": "PROSPECTIVE_DESIGN_ONLY"
+}

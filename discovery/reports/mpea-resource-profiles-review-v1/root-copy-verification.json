@@ -1,0 +1,13 @@
+{
+  "main_collector_tests": 36,
+  "main_source_files_stable": 4,
+  "original_total_files_copied": 61,
+  "original_wrappers_verified": 59,
+  "promoted_collector_sha256": "ae1967ee12d778e02dc92ec8a8af41035e58c62c835236eed6f9322aa04cd5d0",
+  "root_additions": {
+    "stage-usage-main-tests.txt": "098f584fd6fc41b52d604ade37461ad656d34edc097a47bc703af09c81463c11",
+    "stage-usage-main-verification.json": "f76d353867f279116fd43488a8274bdbb596ce351ba87193e2266ed1dbb6f9d8",
+    "stage-usage-promotion.json": "d6e4c360a46bf1c00a2b92c534ca23c80cdafa08a447211d254d4da472350a18"
+  },
+  "source_manifest_sha256": "3b532334b21969a5f0c8f3597c538969995d087813810726536842f9e25eaabc"
+}

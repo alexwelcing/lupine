@@ -1,0 +1,17 @@
+{
+  "created_utc": "2026-10-16T18:23:45.070778+00:00",
+  "source_sha256": "a8b959d00e3f63aa5c649e16bb0f2118fdb55e26e712aba6cd0638155915fb72",
+  "section": "sec1.2",
+  "direct_paragraph": 6,
+  "sentences": [
+    1,
+    2,
+    3,
+    6,
+    8,
+    9
+  ],
+  "basis": "Exact methods-section sentence inventory has calculation/property terms and no detected result words. Select only these definition/method sentences; no paragraph-wide prose.",
+  "numeric_policy": "Mask all digit tokens except already documented method labels GFN2-xTB, TPSSh-D3BJ and def2-SVP. No numerical outcome or performance values admitted.",
+  "limits": "Syntactic lexical filter is not proof of absence; record incidental exposure if present. No unit term was located in the section by the explicit prior patterns; this is a scoped search, not whole-source absence."
+}

@@ -1,0 +1,125 @@
+{
+  "schema": "lupine.discovery.li_documentary_proposal_review.v1",
+  "reviewed_at": "2026-10-16T06:07:11.805412+00:00",
+  "owner": "/root/phase2_planner",
+  "secondary_read_reviewer": "/root/phase2_planner/ui_review",
+  "status": "SCOPE_ACCEPTABLE_SOURCE_BINDING_PREREQUISITE",
+  "inputs": [
+    {
+      "path": ".cache/phase2-li-documentary-contract-v1/README.md",
+      "bytes": 7512,
+      "sha256": "fdce6a1315e04f932d4c54d76e452d06a5763768d3731ed3cb9ce314b553d168"
+    },
+    {
+      "path": ".cache/phase2-li-documentary-contract-v1/proposal.json",
+      "bytes": 2814,
+      "sha256": "82883a0fe8449813cb06df968a63d4c5aea3e5c9e5cd543bfede46e401d465b9"
+    },
+    {
+      "path": ".cache/phase2-li-documentary-contract-v1/source-bindings.json",
+      "bytes": 2053,
+      "sha256": "554f51dde15791d771b1bcd81120434f1e1edaf771f49d6135fd80a413cfa6bb"
+    }
+  ],
+  "public_source_checks": [
+    {
+      "path": "discovery/AGENTS.md",
+      "bytes": 3265,
+      "sha256": "8da673fcfab35c6e8b2cbc20194423b83017574bd8d78264d48c30d4b6d74ede",
+      "binding_matches": true,
+      "contains_claimed_capture_sha256": false
+    },
+    {
+      "path": "discovery/reports/phase2-source-readiness-v1/li-metadata/README.md",
+      "bytes": 4321,
+      "sha256": "7e3f130e2c67e487ea2a0068194ccc374f6d4d9287081065a0d9052040996989",
+      "binding_matches": true,
+      "contains_claimed_capture_sha256": false
+    },
+    {
+      "path": "discovery/reports/phase2-source-readiness-v1/li-metadata/source-bindings.json",
+      "bytes": 9159,
+      "sha256": "dc37f5744d12fbfd396e4e944d639ea485f5ee95f8ff7ded42f60c7fb03f8914",
+      "binding_matches": true,
+      "contains_claimed_capture_sha256": false
+    },
+    {
+      "path": "discovery/reports/phase2-source-readiness-v1/li-metadata/materialscloud-v3.json",
+      "bytes": 12936,
+      "sha256": "6cd068dc85890fbef2c8d8027c78eb9b7740f36d90574f158c5fc19d9fac65b6",
+      "binding_matches": true,
+      "contains_claimed_capture_sha256": false
+    },
+    {
+      "path": "discovery/reports/phase2-source-readiness-v1/custody-design/README.md",
+      "bytes": 14110,
+      "sha256": "0eb632e5a69033fbee10de6a4648bf6b4e6949b552f11841452c9bd8236ffe91",
+      "binding_matches": true,
+      "contains_claimed_capture_sha256": false
+    },
+    {
+      "path": "discovery/reports/phase2-source-readiness-v1/source-bindings.json",
+      "bytes": 7113,
+      "sha256": "d7a53adf40427753d7c0c48a54ab5c6ab42407f4dd53045cd508bb695afaa973",
+      "binding_matches": true,
+      "contains_claimed_capture_sha256": false
+    },
+    {
+      "path": "discovery/reports/phase2-li-custody-v1/README.md",
+      "bytes": 3126,
+      "sha256": "1f90bf5c56c3a34013c079c6dd4d50c9db05146ad3506c2a2663ade562ab6a36",
+      "binding_matches": true,
+      "contains_claimed_capture_sha256": false
+    }
+  ],
+  "findings": [
+    {
+      "id": "D1",
+      "severity": "publication_traceability_prerequisite",
+      "finding": "The proposal asserts observed workbook SHA-256 and an actual earlier envelope stop, but none of its seven bound public evidence files contains that SHA-256 or the actual production result. The source-bindings scope explicitly relies on prior author review instead. Earlier evidence truthfully says capture had not yet occurred at its checkpoint.",
+      "required_action": "Bind the existing public capture/envelope receipt files and recheck those identity/exposure claims, or mark them unverified within this proposal. No raw object, private cache, archive or network access is needed.",
+      "scientific_design_defect": false
+    },
+    {
+      "id": "D2",
+      "severity": "optional_precision",
+      "finding": "The README already makes any future shared-string decoding conditional on a separately reviewed and frozen mapping; an explicit local sentence saying this proposal authorizes no worksheet/shared-string decoding would make that boundary easier to quote."
+    },
+    {
+      "id": "D3",
+      "severity": "optional_machine_readability",
+      "finding": "Unresolved upstream outlier handling is explicit in README prose and not contradicted by JSON. A later machine-consumed contract could retain that same unknown state explicitly instead of relying only on the curation_provenance_definition role."
+    }
+  ],
+  "accepted_boundaries": [
+    "UNBOUND_DOCUMENTARY_PROPOSAL and executable=false are explicit. Worksheet relationships, coordinates, allowed cell types and joins are null; sheet names are discovery leads, not authentication.",
+    "Existing bound schema summary supports documentary field roles and listed units; the source is summarized search-returned Data Records text, not a locally retained full-paper body.",
+    "Outcome values, condition values, example targets, summary statistics, formulas/caches, raw citation identifiers and per-token hashes remain withheld; mixed-role text blocks rather than being heuristically sanitized.",
+    "A later private shared-string decode is a conditional design possibility with recorded exposure, not present permission or execution. The proposal does not relax the envelope or invent coordinates.",
+    "Reference equality or reviewer agreement is not independence. Pairing, row lineage, eligibility, usable paired records and independent panels remain unverified/null.",
+    "Paper 1050 records/55 columns and archive 1070 records/54 parameters remain separate claims with UNRESOLVED_COUNT_DISCREPANCY; neither is a parser width or evaluated denominator.",
+    "The bound official description says outliers were identified and addressed but does not state what was removed, changed or retained. Proposal preserves that uncertainty and does not assume all original experiments or independent rows.",
+    "No threshold, model, allocation, split, statistical population, new scientific claim or execution authorization is selected."
+  ],
+  "scope": {
+    "actual_review": "Read-only source/claim/binding audit; no runtime test or scientific experiment.",
+    "source_objects_or_private_capture_opened": false,
+    "new_archive_access": false,
+    "network_used": false,
+    "outcome_values_decoded": false,
+    "tests_rerun": false,
+    "proposal_or_tracked_files_edited": false,
+    "implementation_added": false,
+    "scientific_choices_made": false
+  },
+  "execution_disposition": "NOT_EXECUTABLE: coordinates, source-specific layout and implementation/exposure contract remain unbound regardless of this review.",
+  "scientific_readiness": "UNESTABLISHED",
+  "review_not_evidence_of": [
+    "physical validity",
+    "sampling independence",
+    "actual paired completeness",
+    "outlier treatment details",
+    "source coordinate authenticity",
+    "scientific usefulness"
+  ]
+}

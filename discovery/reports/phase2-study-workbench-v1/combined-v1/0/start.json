@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_server*.py",
+    "-v"
+  ],
+  "cwd": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-combined-ui-validation-v1/mirror/discovery",
+  "started_at": "2026-10-16T05:39:12.741772+00:00"
+}

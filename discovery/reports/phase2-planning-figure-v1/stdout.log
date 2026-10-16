@@ -1,0 +1,15 @@
+{
+  "status": "GENERATED",
+  "exact_data_points": 122,
+  "first_finite_count": 9,
+  "ratio_n20_over_n19": "39/40",
+  "equivalent_ratio": "741/760",
+  "artifacts": [
+    "exact-values.json",
+    "exact-values.csv",
+    "prospective-threshold-probability.svg",
+    "prospective-threshold-probability.png",
+    "source-bindings.json"
+  ],
+  "new_test_pass_claim": false
+}

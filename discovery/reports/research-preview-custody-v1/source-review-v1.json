@@ -1,0 +1,91 @@
+{
+  "actual_private_inputs_attempts_features_vaults_or_registry_read": false,
+  "bundle_created": false,
+  "critical_requirement": "A verified private second copy outside the workspace failure domain is necessary before claiming custody survives workspace loss. No such destination is selected or authorized by this review.",
+  "different_filesystem_reproduction_verified": false,
+  "entropy_allocation_or_scientific_execution": false,
+  "existing_custody_export_command_found": false,
+  "existing_release_retention_excludes_ignored_custody": true,
+  "external_transfer": false,
+  "main_edits": false,
+  "new_utility_implemented": false,
+  "outputs": {
+    "copy-plan-v1.json": {
+      "bytes": 18544,
+      "sha256": "70185073c4a0ba53cf18b98bc60fd28afef59a775177ae597665aa43a512fcd6"
+    },
+    "recommendation.md": {
+      "bytes": 10467,
+      "sha256": "b8ea85e966bafe505416c4a3e891875719f3efeaf544cf8443d6dbdebfb6585b"
+    }
+  },
+  "private_passive_retention_contract_conflict_identified": false,
+  "registered_local_checkout_must_remain_exact": true,
+  "remote_descendant_supported_by_existing_reproduction_gate": true,
+  "restored_execution_supported_or_tested": false,
+  "schema": "lupine.review.mpea_private_retention_source.v1",
+  "source_bindings": {
+    "docs/mpea-archive-driver-contract.md": {
+      "bytes": 14244,
+      "sha256": "1fe5b25f24a1e74cb5332d3803be0d15f81303799c97135eeca820d0a83414ce"
+    },
+    "docs/mpea-preallocation-recovery-v2.md": {
+      "bytes": 6731,
+      "sha256": "d8055ec620478cc12cd2486a88c16833616053934882b93f367872d520d695cf"
+    },
+    "docs/mpea-registration-publication-v1.md": {
+      "bytes": 4255,
+      "sha256": "c9fb1f2c44ae8b97c10a88ddbb369eb8d0feca752824c2ca3cbb656d3619c730"
+    },
+    "docs/mpea-t25-implementation-contract-v1.md": {
+      "bytes": 39271,
+      "sha256": "be45b1d8db9586035cf37bd9bbb9046c065c3851b91f93386f8c68d155215af9"
+    },
+    "docs/mpea-t25-operational-enforcement-v1.md": {
+      "bytes": 9892,
+      "sha256": "e36e72818f92096c316df34789a35840c1e5b1561f9467561dd8787da072cf98"
+    },
+    "docs/release-artifact-retention.md": {
+      "bytes": 5996,
+      "sha256": "52c54e521256e13e4030cc53f3aba474364f4ed87e23fdcef6a71e3c44ffb366"
+    },
+    "docs/reproduction-environment.md": {
+      "bytes": 8826,
+      "sha256": "60ecf3389b81ab2440d48642bd7d83723135e3e1442eb9993c995fd895951a6e"
+    },
+    "scripts/mpea_archive_custody.py": {
+      "bytes": 50740,
+      "sha256": "c79b8b45068a75243512336d1f25bb67a8c57059b5aae2bb3d885d414f98192e"
+    },
+    "scripts/mpea_archive_operations.py": {
+      "bytes": 4879,
+      "sha256": "9ce72dd8ce48dfa5f1a4b3535f992ad4b38ea7c07fb86ead01a86970c479bf3e"
+    },
+    "scripts/mpea_archive_run.py": {
+      "bytes": 19851,
+      "sha256": "44172bd86ee640cece11d4c20c37a787c725fdd6ca61da0d3db28e511d7c4bbc"
+    },
+    "scripts/mpea_archive_worker.py": {
+      "bytes": 6919,
+      "sha256": "e4cd303752b459cadc94b1fca4227c4e6f63054283f911fb435f56ffb4fead26"
+    },
+    "scripts/mpea_production_store.py": {
+      "bytes": 16242,
+      "sha256": "9b5caa9a013da7b2bae8bb78d89a74a697201bdc73b1cd2db1d38c2e750db6b4"
+    },
+    "scripts/mpea_registration_allocation.py": {
+      "bytes": 45968,
+      "sha256": "cc8590ae64ca8e983d8fb164290c8d087847a97c651cded4d18e0b2cce555197"
+    },
+    "scripts/mpea_study_supervisor.py": {
+      "bytes": 12599,
+      "sha256": "1dbd4a1b0e9c3f0246d23bd7670527cfa3bd69f754279aabba06e4ae464e87ab"
+    },
+    "scripts/package_smoke.py": {
+      "bytes": 28752,
+      "sha256": "f64489f64aefc6624298e25d9dad493186c25b1c91e3f063e9e73d23f8ebf6a1"
+    }
+  },
+  "status": "SOURCE_ONLY_PLAN_NO_BUNDLE_OR_RESTORE",
+  "tests_executed": false
+}

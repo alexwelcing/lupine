@@ -1,0 +1,20 @@
+{
+  "file_count": 3,
+  "files": [
+    {
+      "bytes": 1428,
+      "path": "README.md",
+      "sha256": "a49bd64433525cf4627615d2be586ef35e56b7ba2f3a1ce6cf74e2d5afd64341"
+    },
+    {
+      "bytes": 4280,
+      "path": "review.json",
+      "sha256": "309e44e2b0cffab9ff7028aaebd3821fcef101b3312f64f40118a3954efca1a7"
+    },
+    {
+      "bytes": 4042,
+      "path": "source-bindings.json",
+      "sha256": "32b1ebea23baa09e5f33008e70af1d3d3f7076cefa5098345116098504e3f48d"
+    }
+  ]
+}

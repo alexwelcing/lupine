@@ -1,0 +1,83 @@
+{
+  "status": "PASS_EXACT_RETAINED_ARTIFACT_AND_DECLARED_DELTA",
+  "checks": 22005,
+  "failures": [],
+  "observed": {
+    "published_commit": "eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f",
+    "baseline_commit": "88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d",
+    "source_file_count": 6794,
+    "runtime_files": 351,
+    "baseline_runtime_files": 345,
+    "unchanged_baseline_runtime_files": 334,
+    "changed_existing_runtime_files": [
+      "scripts/browser_smoke.py",
+      "scripts/package_smoke.py",
+      "scripts/verify_retained_artifacts.py",
+      "src/lupine_discovery/cli.py",
+      "src/lupine_discovery/server.py",
+      "src/lupine_discovery/web/app.js",
+      "src/lupine_discovery/web/index.html",
+      "src/lupine_discovery/web/styles.css",
+      "tests/test_package_retention.py",
+      "tests/test_package_retention_review.py",
+      "tests/test_retained_mpea_transport.py"
+    ],
+    "added_runtime_files": [
+      "scripts/source_readiness_browser_checks.py",
+      "src/lupine_discovery/resources/source-readiness-v1.json",
+      "src/lupine_discovery/source_readiness.py",
+      "src/lupine_discovery/web/source-readiness.js",
+      "tests/test_package_source_readiness.py",
+      "tests/test_source_readiness.py"
+    ],
+    "wheel_members": 120,
+    "wheel_RECORD_content_digests": 119,
+    "package_payloads": 113,
+    "baseline_package_payloads": 110,
+    "unchanged_baseline_package_payloads": 105,
+    "changed_package_payloads": [
+      "lupine_discovery/cli.py",
+      "lupine_discovery/server.py",
+      "lupine_discovery/web/app.js",
+      "lupine_discovery/web/index.html",
+      "lupine_discovery/web/styles.css"
+    ],
+    "added_package_payloads": [
+      "lupine_discovery/resources/source-readiness-v1.json",
+      "lupine_discovery/source_readiness.py",
+      "lupine_discovery/web/source-readiness.js"
+    ],
+    "public_resource_sha256": "a9ab9d72c6c39be9338e951b657e0587ae8f4dbe534b276b8f8f8951a7b1a63a",
+    "source_readiness_resource_sha256": "9abad97d5675f416cc38a325bcd1e108825af001b2fdfccaa1f5c7dfb66f3f0b",
+    "mandatory_package_receipt_checks": 18,
+    "retained_demonstrations": 28,
+    "retained_problem_schemas": 6,
+    "source_manifest_sha256": "5137c79614e1090a766046a09817ed5867929c3984933d7c0825c2429c9f3ca0",
+    "baseline_manifest_sha256": "6bfd99aa4b3fdf254038570fc9e40cbb574a1fbbe587c943cdf909359c456a5f",
+    "promoted_source_pins": {
+      "docs/source-readiness.md": "a62f93a7b450f5d5d508dd11a538ff2b44adb5cfd9b7623291c85584f1088e5a",
+      "scripts/browser_smoke.py": "e1311385b7b3ec4c382b8e56b274107b819702d37015865267999d27e9b92339",
+      "scripts/package_smoke.py": "db99cb2406c57f68f03497ac13508e3ee462b336bea17f04f7e6dc8236dcfdda",
+      "scripts/source_readiness_browser_checks.py": "fe3de053e1c390c5119cfe05bf41c0084d53de99ec0da268d4014ae728080882",
+      "scripts/verify_retained_artifacts.py": "4a1c0e1cf078cbde3a6b9de210b46b065c19576394e052c97e95bfea5ac09840",
+      "src/lupine_discovery/cli.py": "6af272356429e7fabcbe81f0be34c3a201ad5d5655537d74ecefd4ba9c587965",
+      "src/lupine_discovery/resources/source-readiness-v1.json": "9abad97d5675f416cc38a325bcd1e108825af001b2fdfccaa1f5c7dfb66f3f0b",
+      "src/lupine_discovery/server.py": "5e665bb32d1d80b902a8a64c9e2e66efa9e38b7b5a481e80408f4af8716f3390",
+      "src/lupine_discovery/source_readiness.py": "dbb76ec1aa6a82490b30fe19883a94b56cf0cddfd3ebc14cc555f17f927ca42c",
+      "src/lupine_discovery/web/app.js": "9e81d71a7381173776d928cc558791402f1d2b2ce02d7e4ae7531514233c5b45",
+      "src/lupine_discovery/web/index.html": "20432ede14b5892a6e3ff45fc305e2d4bcb664d5924e2679cf1ca3b016ef72f2",
+      "src/lupine_discovery/web/source-readiness.js": "d533611c9a975040a55569bf474689846aa8f5ca2f4f73c4e52730917efe95d0",
+      "src/lupine_discovery/web/styles.css": "2bfdac8e02a00fd2e67b3b0e0788cf9b73f5dac4ab72fc8dd4f37f077a83d3e1",
+      "tests/test_package_retention.py": "e3a2112241a03646c9b5a8b60b7483f36305fb7e528fdb6ffcae587c87a14309",
+      "tests/test_package_retention_review.py": "4934d597cb6b64dd97c6ecabac91a783b025e09ded9831314f78d944881db8f2",
+      "tests/test_package_source_readiness.py": "6afc85434950e0fc29b1ef595849e5423e29b7475116e8b915307f9673683cf8",
+      "tests/test_retained_mpea_transport.py": "f75ff714c84f9b4e9918ca2d9f4ff857dc3a1479cc45bfc5371393a7ecdc5453",
+      "tests/test_source_readiness.py": "c83bb950986d1d2e7990a0946fb1111ab6f6dc843337efc61a6ad84151a07c81"
+    },
+    "retained_receipt_sha256": "5a64e895c6e48c5e23e4ec266a294a9cd6d8e0c64ef30c867a51862c201a74ae",
+    "source_archive_sha256": "932cf3f23c52616d521f0c4ecddaa2c19ccab1d06aca7958005f7b983a079775",
+    "wheel_sha256": "5dfee9c2770527cf759aba1594740824609e528b1834dabdbf60448931633a70",
+    "artifact_identities_held": true,
+    "removed_runtime_files": []
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "actual_private_object_reads": 0,
+  "actual_production_invocations": 0,
+  "created_at": "2026-10-16T12:08:43.780731+00:00",
+  "files": {
+    "README.md": "c562ed10f3b6c81fb60152118fbb932ea45f6f33033fe9d4a451e6fbddb9c4e3",
+    "contract.json": "8b1f1b43fd5cf780a258b91bd346c6fef2d4cf4e1ee2af0cb3ef192092f32c49",
+    "recorded_labels.py": "13f1f4ee41947eff4b47faaa0a3463af96363fbc8c09d6a9d398d76d78f9d647",
+    "run_guarded.py": "352442e9ba3ed6ad1c696a80c4f1910a59d5273220c1bbbd0419b24d9f3acbdd",
+    "test_recorded_labels.py": "dc6a837a96ee5d19e227bbd80a7ce088a22700c3b3005aba3e3a3e0264d24685"
+  },
+  "status": "HELD_AFTER_FIRST_AUTHOR_30_PASS"
+}

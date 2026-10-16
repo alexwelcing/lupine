@@ -1,0 +1,7 @@
+{
+  "original_bytes": 835,
+  "original_path": ".cache/mpea-study-custody/review_public_bridge/failed-seal-counter-probe-v1.json",
+  "original_sha256": "87cbd6cc006023a9695888f10aa85c8bd7348bc372f6d59871959194291c7f4b",
+  "schema": "lupine.discovery.lossless_utf8_artifact.v1",
+  "text": "{\n  \"scope\": \"synthetic development seal failure; no actual data\",\n  \"status\": \"BLOCKED\",\n  \"reasons\": [\n    \"CACHE_IO_FAILURE\"\n  ],\n  \"stages\": [\n    \"allocation\",\n    \"input_freeze\"\n  ],\n  \"actual_result_access\": [\n    [\n      \"DEVELOPMENT\",\n      63\n    ]\n  ],\n  \"projected_counts\": {\n    \"mixed_source_captures\": 1,\n    \"mixed_source_bytes\": 316868,\n    \"accumulated_bundles\": {\n      \"DEVELOPMENT\": 0,\n      \"CALIBRATION\": 0,\n      \"EVALUATION\": 0\n    },\n    \"decoded_bundles\": {\n      \"DEVELOPMENT\": 0,\n      \"CALIBRATION\": 0,\n      \"EVALUATION\": 0\n    },\n    \"interpreted_bundles\": {\n      \"DEVELOPMENT\": 0,\n      \"CALIBRATION\": 0,\n      \"EVALUATION\": 0\n    },\n    \"model_visible_bundles\": 0,\n    \"calibrator_visible_bundles\": 0,\n    \"policy_bundle_requests\": 0,\n    \"auditor_unique_bundles\": 0\n  },\n  \"overall_verdict\": null\n}\n"
+}

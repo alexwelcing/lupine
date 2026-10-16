@@ -1,0 +1,38 @@
+{
+  "schema": "lupine.discovery.planning_figure_artifact_review.v1",
+  "scope": "Separate-agent mathematical/source/artifact review, plus author visual inspection; not a runtime test or scientific evaluation.",
+  "reviewer": "/root/phase2_planner/ui_review",
+  "recording_owner": "/root/phase2_planner transcribed actual delivered review",
+  "status": "NO_BLOCKER_IN_REVIEWED_ARTIFACTS",
+  "independent_review_scope": {
+    "json_rows": 122,
+    "csv_rows": 122,
+    "all_p_n_pairs_present_once": true,
+    "csv_json_exact_rational_concordance": true,
+    "all_probabilities_matched_independent_fraction_binomial_expression": true,
+    "first_finite_rank_count": 9,
+    "n19_to_n20_ratio": "39/40",
+    "equivalent_ratio": "741/760",
+    "relative_decrease": "1/40",
+    "scientific_scope_labels_preserved": true,
+    "original_review_generator_sha256": "ba317531307dd9d517a09baa64026c20c98d85d3705e1c4a2b54d17523d9609d"
+  },
+  "final_rendering_adjustment": {
+    "change": "Prefix two rounded decimal annotations with approximation symbols. Exact data unchanged; prior rendered source/receipt retained in second-generation/.",
+    "final_generator_sha256": "1ebe2af75dfcc6748055586f064a685d249a4bfdaafbd6965247099982a5a99b",
+    "author_final_png_visually_inspected": true,
+    "independent_final_source_and_png_review": "No blocker: sole source change adds approximation symbols, final PNG is clear, and exact data hashes match the before/after record. Prior122-row arithmetic review carries forward; no arithmetic or tests rerun."
+  },
+  "exact_data_sha256": {
+    "exact-values.json": "737ca4ee06f33891d73cb9ae8caf9e118ba616d9d31613d4feccf32ba67085af",
+    "exact-values.csv": "f9d528d1a5332824ce3b8e1a4830301ec8f2c24bfbfbd20ae2cbe9f126519654"
+  },
+  "limits": [
+    "No test suite or production planner executed by the independent reviewer.",
+    "Generation calls the existing planner and does not establish its mathematical refinement or a scientific guarantee.",
+    "The two score laws are specified hypothetical inputs, not fitted or empirical distributions.",
+    "Visual review is bounded; the right panel uses a labeled narrower y-axis."
+  ],
+  "new_test_pass_claim": false,
+  "new_scientific_result_claim": false
+}

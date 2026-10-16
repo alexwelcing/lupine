@@ -1,0 +1,49 @@
+{
+  "json_files_parsed": 11,
+  "local_markdown_links": [
+    {
+      "exists": true,
+      "path": "README.md",
+      "target": "promotion-map.json"
+    },
+    {
+      "exists": true,
+      "path": "README.md",
+      "target": "scope.md"
+    },
+    {
+      "exists": true,
+      "path": "README.md",
+      "target": "receipts/first/execution.json"
+    },
+    {
+      "exists": true,
+      "path": "README.md",
+      "target": "scope-addendum-central-declarations.json"
+    },
+    {
+      "exists": true,
+      "path": "README.md",
+      "target": "receipts/second/execution.json"
+    },
+    {
+      "exists": true,
+      "path": "README.md",
+      "target": "independent-copy.json"
+    },
+    {
+      "exists": true,
+      "path": "README.md",
+      "target": "format-check.json"
+    },
+    {
+      "exists": true,
+      "path": "README.md",
+      "target": "promotion/docs/li-v3-growth-envelope-plan.md"
+    }
+  ],
+  "recorded_at": "2026-10-16T10:30:54.916292+00:00",
+  "scope": "Static publication checks, no runtime module import or test invocation.",
+  "status": "PASS",
+  "whitespace_violations": []
+}

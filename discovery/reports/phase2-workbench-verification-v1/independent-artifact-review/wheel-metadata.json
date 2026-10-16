@@ -1,0 +1,7 @@
+{
+  "checked_at": "2026-10-16T06:07:32.636144+00:00",
+  "scope": "Additional non-executing wheel-entry metadata check; all 114 external Unix kinds are absent or regular files.",
+  "member_count": 114,
+  "nonregular_count": 0,
+  "wheel_sha256": "71b5c2bc93b3cad7ebe23e1f115ac71c6fecdb993dd0a1cf7ac178a3880e99b9"
+}

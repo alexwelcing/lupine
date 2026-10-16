@@ -1,0 +1,85 @@
+{
+  "audit_execution": "audit-execution.json",
+  "audit_execution_sha256": "b498657581513632baab7f9c0870aa267ea8a1de426252954ed176187133d980",
+  "commit": "a6e87c198d8116d26c523e0e1b2eedce4aeb225b",
+  "completed_at": "2026-10-16T08:55:13.384740+00:00",
+  "executable_checks": 11874,
+  "first_audit_invocation": {
+    "elapsed_seconds": 2.3323358959987672,
+    "exit_code": 0,
+    "stderr_empty": true
+  },
+  "header": {
+    "compatible_reason": "ZIP_LAYOUT_UNSUPPORTED",
+    "primary_categories": [
+      "LOCAL_EXTRA_PRESENT"
+    ],
+    "reason": "LOCAL_EXTRA_PRESENT",
+    "replay_public_sha256": "4ee25afe053f68b4b9331a9ebc94bccb2e1d96e0ce5700d78a45866ef7b0cc12",
+    "same_entry_local_checks": "CHECKED",
+    "scope": [
+      "This identifies one header-profile incompatibility, not corruption or physical invalidity.",
+      "A nonzero extra length alone does not justify ignoring all extras, relaxing the profile, claiming a compatible envelope or choosing an alternate source.",
+      "No member XML, worksheet, shared string or numeric target was interpreted; fits and splits remain zero.",
+      "Row/paired/group/overlap counts remain null; scientific schema approval remains blocked."
+    ],
+    "source_path_reasoning": [
+      "The entry_central branch is taken whenever its failure tuple is nonempty; the observed entry_local stage therefore corresponds to an empty central failure tuple at that first rejected entry.",
+      "The local failure tuple contains only the truth of nonzero local extra_len. It is the primary rejection, not a supplementary central-rejection observation.",
+      "The function returns immediately after this local rejection. No subsequent entry or final directory-total acceptance is established.",
+      "The local fixed header and name/bounds comparisons are read; local extra-field payload contents and their semantic field types are not parsed or disclosed by the diagnostic.",
+      "ZipFile privately decodes central-directory member names and standard directory metadata; this can include its standard handling of central extra fields. The diagnostic does not parse local extra-field payload contents. _classify and _local_failures call no member open/read/extraction/decompression or XML API.",
+      "Archive close started and completed with no recorded cleanup error."
+    ],
+    "stage": "entry_local",
+    "supplementary_local_categories": []
+  },
+  "independent_audit": "actual-review.json",
+  "independent_audit_sha256": "5b6028491f73e800662a0dfc78019ec35a73cc35ea9fd99e8bf13a85330574b3",
+  "limitations": [
+    "No private custody object or capture receipt was read by this reviewer; raw-source identity was not independently rehashed.",
+    "Runtime source/resource bytes were hashed and matched to Git, including existing packaged resources, without new scientific interpretation.",
+    "Source/receipt control-flow consistency and replay are engineering evidence, not independent scientific replication or source truth.",
+    "The notebook source has uncontained descriptor-close exceptions; the actual successful executions had empty stderr and matching complete public receipts, so this failure route was not observed here.",
+    "Remote CI job outcome metadata was checked, not remote log bodies; no exact unskipped test total is claimed.",
+    "No reader was rerun, no product source changed, and no later parsing stage was authorized by this review."
+  ],
+  "notebook": {
+    "capture": "CAPTURE_VERIFIED",
+    "inspection": "STATIC_API_INVENTORY_COMPLETE",
+    "known_import_categories": [
+      "matplotlib.pyplot",
+      "numpy",
+      "pandas"
+    ],
+    "read_excel_reported_syntax": {
+      "header": "keyword literal_scalar",
+      "position_1": "positional literal_scalar",
+      "skiprows": "keyword literal_scalar"
+    },
+    "replay_public_sha256": "398009e670dc35077246938072e679a7254a8020feaa2a5c4cf285a9433d5205",
+    "scope": [
+      "Whole notebook bytes and JSON container were read privately; JSON includes code, markdown, outputs, metadata and arbitrary strings.",
+      "AST parsing reads code literals; withheld values are not unread values.",
+      "No notebook code executed, no raw code/output values disclosed.",
+      "Known call names are syntax only; no receiver binding, runtime execution, dataframe/file/column identity, author preprocessing criterion, missingness policy, split absence, or scientific unit established.",
+      "Deduplicated API records are not row/sample/study counts.",
+      "All scientific schema gates remain blocked."
+    ],
+    "source_git_blob_sha1": "789b61339aa4c566b68794077fa7240a73677f9d",
+    "source_sha256_public_assertion": "ebf3f161f16be6758243b8560b7b9ba8af3e8b17d5a0715ecf04209d22dfd6fd",
+    "syntactic_call_categories": [
+      "dropna",
+      "read_excel"
+    ],
+    "unreported_calls_present": true,
+    "unreported_imports_present": false
+  },
+  "preserved_reviewer_preparation": {
+    "draft_audit": "audit-pre-actual-schema-binding.py",
+    "note": "Before the first audit run, receipt field binding was updated to the final header schema. A preliminary guessed public artifact-review path lookup failed with FileNotFoundError; the correct supplied preflight path was then read. This is a reviewer path error, not a product failure or failed audit invocation.",
+    "schema_binding_notice": "pre-execution-schema-binding.json"
+  },
+  "source_preparation_sha256": "2571a9b49752f6725c515cd887ebcb3a4c0500f78c82c9abb0a4b44d7512a352",
+  "status": "PASS"
+}

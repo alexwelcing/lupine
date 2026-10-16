@@ -1,0 +1,45 @@
+{
+  "arithmetic_crosscheck": {
+    "margins": [
+      -1,
+      9,
+      -9,
+      -25,
+      -1,
+      0
+    ],
+    "primary_minus_random_rate": "-7/180"
+  },
+  "bindings": {
+    ".cache/mpea-actual-arithmetic-v2-first/aggregate-findings-candidate.json": "f52cd811b4077a31694b63259a1541a47362caa92a6512d830482ef32e9eaf96",
+    ".cache/mpea-actual-arithmetic-v2-first/review-note.md": "8658be6b012702500f649b3fcc221b37d9dbbde9f845517a234272ca42aed269",
+    ".cache/mpea-archival/mpea-t25-original-a0624cac-v2/public-report.json": "d93769b07fba52f9bc95dbed92c5303aa8344867e7a663d0ca58cff7af2ba274",
+    "GOAL.md": "d7760f6fa4ac665e908378a64dc4d7f293fedf2709b8fd413f55265cfb66e079",
+    "docs/release-validation.md": "25de0084e8d84550f3fa1705ae8c2015e7549ac39ff14bbc2b27a9d39848ab56",
+    "formal/theorem-inventory.json": "834a14198ce1f8d52d4ba33871c143d7c76246cfd81b736109a6de78798acc40"
+  },
+  "blocking_overclaim_in_authorized_aggregate_narrative": [],
+  "claim_tiers": {
+    "archival_usefulness": "NO_GO_ARCHIVAL_USEFULNESS",
+    "physical_or_plant_qualification": "NO_GO",
+    "predictive_general_superiority": "NO_GO",
+    "research_preview": "Potential GO as inspectable evidence-review tool after all final engineering/release gates; positive science not required by narrow preview rule."
+  },
+  "final_decision_prerequisites": [
+    "Preserve all negative gates and v1 stop; distinguish operational COMPLETE from scientific NO_GO.",
+    "Publish authenticated aggregate-only v2/reproduction evidence and truthful conditional statistics.",
+    "Complete new public-resource installed package/HTTP/byte audit, browser evidence, exact source and four required CI jobs.",
+    "Fill final decision record with actual artifacts/source evidence and explicit narrow preview tier; do not promote open physical or independent replication premises."
+  ],
+  "scope": "Only authorized aggregate files plus public source/specification read; no private inputs/stages/allocation/targets and no study/proof/test rerun.",
+  "status": "CONDITIONAL_CLAIM_TIER_REVIEW_NOT_RELEASE_APPROVAL",
+  "supported": [
+    "Actual frozen archival usefulness verdict NO_GO_ARCHIVAL_USEFULNESS; independent arithmetic audit PASS means consistency only.",
+    "Primary premise unsupported, quantile null,82/82 retained. Nine incomplete panels stay unknown; no unconditional calibration guarantee.",
+    "Secondary20complete calibration panels yield19th order threshold1; assumed_unverified premise remains unverified.55/55 retained;82\u219255 is predefined record completeness restriction, not screening.",
+    "Recall9/9 does not rescue adequacy9<10, fraction1>3/4, or all three ranking comparisons. Empty/infeasible panels remain counted according to frozen denominators.",
+    "Computational reproduction preserves scientific identities and measured byte differences; it is not a new independent sample or scientific replication.",
+    "130 conditional Lean statements quantify mathematical models; finite-law exchangeability bridge concerns finite score-vector laws, not established physical exchangeability, arbitrary measurable-law proof, Python refinement, or20-panel joint coverage.",
+    "13 known-answer tests include deliberately unsound controls;28 demonstrations are not a predictive accuracy sample."
+  ]
+}

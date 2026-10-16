@@ -1,0 +1,11 @@
+# Prepared independent retained-artifact audit
+
+The auditor is prepared and syntax-compiled. **No final artifact audit has run.** Root must supply the exact published commit and completed retained-artifact directory before invocation.
+
+`audit_retained.py` accepts explicit `--published-commit` and `--retained-directory` arguments. It creates an exclusive result directory, preserving the first failure if any. It does not extract or execute artifact contents, run the generic verifier, rerun tests or the census, acquire scientific data, read private inputs, mutate Git or contact the network.
+
+The independent checks cover the sealed retention receipt; every source-archive file against the exact Git blob and scoped tree; an independently enumerated runtime manifest; the full baseline runtime manifest against its Git blobs; and the exact nine changed/four added runtime files, 339 total and 326 previous files unchanged. Wheel checks cover every payload against source, every RECORD digest/size, complete package membership, metadata/entry point, 104 unchanged previous payloads, four declared changed payloads and two additions. The new public census resource must retain SHA `a9ab9d72c6c39be9338e951b657e0587ae8f4dbe534b276b8f8f8951a7b1a63a`.
+
+The baseline is `d4d8504a97d362a6339eaa27453a86e0eb167cee`. The final root promotion map is held in [prepared-promotion-inputs-final.json](prepared-promotion-inputs-final.json); the original map and auditor version remain unchanged as history. The root type-sensitive HTTP/probe correction changes four pins and keeps the same declared runtime delta. The [pre-execution amendment](preexecution-amendment.json) also records an independent static correction to an unjustified exact tar permission assumption; Git's tar umask can retain group-write permission. Tracked executable status, special-bit rejection, exact member set and all blob identities remain checked.
+
+Package smoke metadata must retain all 16 previous named checks and the added census check, 28 demonstration cases and six schemas. This audit will verify those as retained receipt assertions, not repeat installed behavior checks. Byte identity, successful packaging and generated checks establish neither physical truth nor model superiority, and no deterministic wheel-rebuild claim is made.

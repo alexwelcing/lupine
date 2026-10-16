@@ -1,0 +1,38 @@
+{
+  "audit_source_sha256": "b00541daccbbe8626880f59bc59d9694dc9f34e922690f968dfb50ed348bb738",
+  "author_preparation_provenance": {
+    "copyset_path": ".cache/phase2-li-complete-readiness-production-v1/promotion-copyset.final.json",
+    "copyset_sha256": "b3b065ade262319238108efd0b6b296cc7ff947cb3c4c4eec8154d072db7559a",
+    "overlay_identity_review": "author-overlay-identity.json",
+    "source_operation_executions_here": 0
+  },
+  "base_commit": "ddd4a6a8df0f908a162b7e5387b0faac325180d6",
+  "bindings": [
+    {
+      "sha256": "0ba8593c7abe3f65d5fd1a0686c96dd52e45b92144dbc51e65ab5f4dd3ce80e4",
+      "snapshot": "prepared-scope.json"
+    },
+    {
+      "sha256": "e2bd3dbe182139dad896ce050edff189ebd2015c9f2f427a1b216b0cd2274fa5",
+      "snapshot": "prepared-promotion-inputs.json"
+    },
+    {
+      "sha256": "b3b065ade262319238108efd0b6b296cc7ff947cb3c4c4eec8154d072db7559a",
+      "snapshot": "author-promotion-copyset.final.json"
+    },
+    {
+      "sha256": "ee3285f1441a835d0df7aad48a5532b9941560c611ad5ca34d70f389cf0bac07",
+      "snapshot": "root-runtime-copyset.final.json"
+    }
+  ],
+  "execution_policy": "Only compile syntax before root actual gate. First actual result preserved exclusively; no private inputs or artifact code execution.",
+  "predecessor_auditor_sha256": "1813a9a94d7d4b9b17ec788703d433072a827480a1fc8a6d1f0c348890539a84",
+  "prepared_at": "2026-10-16T15:48:30.054503+00:00",
+  "root_prospective_amendment": {
+    "original_preparation_inventory_sha256": "64cb44621be4d7e76cce1b7f971ef53a5b3393934456b6c6c83b3728e6ba0bb9",
+    "path": ".cache/phase2-li-complete-readiness-integration-v1/runtime-copyset.final.json",
+    "review": "amendment-review.json",
+    "sha256": "ee3285f1441a835d0df7aad48a5532b9941560c611ad5ca34d70f389cf0bac07"
+  },
+  "schema": "lupine.li.complete-readiness.artifact-preparation.v1"
+}

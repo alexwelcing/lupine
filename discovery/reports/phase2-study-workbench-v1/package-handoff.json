@@ -1,0 +1,22 @@
+{
+  "status": "UPDATED_CANDIDATE_PYTHONPATH_REGRESSION_NOT_YET_EXECUTED",
+  "original_commit": "5addf4f80e345afa50a4bcc26b9db24d220a3af5",
+  "old_probe_sha256": "7a3ff2ba325165f2123593412ca6ec53c7311caf4efd60036d65b7325ac745d6",
+  "new_probe_sha256": "0f3a266c196c1b86bc2c77b89026b9c19d5f19dce86d1cbf6d0ea047c476c15a",
+  "original_sha256": {
+    "scripts/package_smoke.py": "7b1c0a3ba39526751207be22997ddf1701113bf2f3dd156c34381d0e41021251",
+    "scripts/verify_retained_artifacts.py": "d167412182893dbf341c44eb957704cd22da7f95595c57ac11546c21c84f5acf",
+    "tests/test_package_retention.py": "495842f6e5623e2ec9301c6a1e5d1a7aceac3411b6f1d1af93bcb981be08e580",
+    "tests/test_package_retention_review.py": "302611e1dd476e1a46f07bd60a6e403db95fa9ce4a32140ac434317741ce0148",
+    "tests/test_retained_mpea_transport.py": "96e2cd1038c346822727166874061f148c82b8226b8d87a6f2e8ab9f55e85be3"
+  },
+  "candidate_sha256": {
+    "scripts/package_smoke.py": "666f71b490140214a9565e510c241fa978899f5f05a3f1997b2aefc4e83049f0",
+    "scripts/verify_retained_artifacts.py": "4fb9f59c3b0d2eebb30436038815f7d156e57689081ade90407b4f8dad5a341a",
+    "tests/test_package_retention.py": "1942808110c82ec26dfae39f50aafce26a1e6e73264932027fa06375043a43b9",
+    "tests/test_package_retention_review.py": "b77fcb625fab899041b132d8734a3ff72095738044af8de1afd7d63ccf90c856",
+    "tests/test_retained_mpea_transport.py": "598b8413612af06f071d8ad017cbeb4e4c5eefa1358710c98065a7b4efda24cb"
+  },
+  "scope": "Add installed HTTP/CLI equality and exact planner asset transport; preserve all earlier probe assertions and strict ordered check profile; no scientific change",
+  "additional_change": "Remove inherited PYTHONPATH for build/install/probe subprocesses, with actual child-import positive/negative regression; preserve other environment settings."
+}

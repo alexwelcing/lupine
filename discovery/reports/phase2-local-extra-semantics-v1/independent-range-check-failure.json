@@ -1,0 +1,11 @@
+{
+  "created_at": "2026-10-16T09:35:24.926117+00:00",
+  "retained_standard_sha256": "0b993022a7d320a0bf704e6980bea36fafd17a6066ab994db0a0c16278a50cd6",
+  "decoded_splitlines_count": 3798,
+  "initial_review_command_exit": 1,
+  "initial_review_error_type": "IndexError",
+  "cause": "Requested advertised end_line3799 exceeds retained source length3798; substantive AppendixE lines through3797 had already printed. Reviewer harness, not archive execution.",
+  "source_binding_correction_requested": "Use3797 or3798 and add unsigned-fields clause4.4.1.1 at654-655",
+  "actual_archive_or_private_source_read": false,
+  "network": false
+}

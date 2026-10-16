@@ -1,0 +1,54 @@
+{
+  "encoding": "exact_bytes",
+  "files": [
+    {
+      "bytes": 89174,
+      "destination": "execution.json",
+      "sha256": "b3e2cde17e25be0719f520161147ebf3ba44dc7d43bc081394b60ffd0f163f9b",
+      "source": ".cache/mpea-preallocation-recovery-full-suite-v1/execution.json"
+    },
+    {
+      "bytes": 242072,
+      "destination": "unittest.log",
+      "sha256": "e4c04cbb38e4a31e1fe0dd27cd51c4298d0296adafa776d2dd046201ad825bff",
+      "source": ".cache/mpea-preallocation-recovery-full-suite-v1/unittest.log"
+    },
+    {
+      "bytes": 129,
+      "destination": "unittest-process.json",
+      "sha256": "caad74006849b9100886834694df07d8850e4b5fac6bf56f7c2b8b1d4d01f756",
+      "source": ".cache/mpea-preallocation-recovery-full-suite-v1/unittest-process.json"
+    },
+    {
+      "bytes": 43004,
+      "destination": "source-before.json",
+      "sha256": "63b80f8ac9e5db2792994dd7bb3b30deb95f0e5d1dc1059d480b322bd5f47ebd",
+      "source": ".cache/mpea-preallocation-recovery-full-suite-v1/source-before.json"
+    },
+    {
+      "bytes": 43004,
+      "destination": "source-after.json",
+      "sha256": "63b80f8ac9e5db2792994dd7bb3b30deb95f0e5d1dc1059d480b322bd5f47ebd",
+      "source": ".cache/mpea-preallocation-recovery-full-suite-v1/source-after.json"
+    },
+    {
+      "bytes": 43004,
+      "destination": "index-before.json",
+      "sha256": "63b80f8ac9e5db2792994dd7bb3b30deb95f0e5d1dc1059d480b322bd5f47ebd",
+      "source": ".cache/mpea-preallocation-recovery-full-suite-v1/index-before.json"
+    },
+    {
+      "bytes": 43004,
+      "destination": "head-before.json",
+      "sha256": "63b80f8ac9e5db2792994dd7bb3b30deb95f0e5d1dc1059d480b322bd5f47ebd",
+      "source": ".cache/mpea-preallocation-recovery-full-suite-v1/head-before.json"
+    },
+    {
+      "bytes": 6108,
+      "destination": "recorder.py",
+      "sha256": "9a8f169c1f0a9b2a01ec72036d5e9b4efe10dca19202353f3f3c42b0a5e78df2",
+      "source": ".cache/run-preallocation-recovery-full-suite-v1.py"
+    }
+  ],
+  "scope": "Actual source-bound complete constructed-data engineering suite, not scientific/archive execution."
+}

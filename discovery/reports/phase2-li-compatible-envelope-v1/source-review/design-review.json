@@ -1,0 +1,62 @@
+{
+  "schema": "lupine.discovery.li_compatible_envelope_design_review.v1",
+  "status": "NO_BLOCKER_TO_BOUNDED_CANDIDATE_DESIGN",
+  "reviewed_at": "2026-10-16T07:07:59.177990+00:00",
+  "owner": "phase2_math",
+  "scope": "Format justification and proposed AST-delta audit only. Candidate implementation not yet received or audited; actual flag result unknown and not inspected.",
+  "proposed_change": {
+    "original": "info.flag_bits & ~0x800",
+    "candidate": "info.flag_bits & ~(0x806 if info.compress_type == 8 else 0x800)",
+    "allowed_delta": "Permit only ZIP general-purpose bits1/2 in addition to existing bit11 for method8; method0 remains bit11 only. All remaining original predicates/order and legacy XML validators unchanged."
+  },
+  "standard_justification": {
+    "source": "PKWARE APPNOTE6.3.10 FINAL,2022-11-01",
+    "sections": [
+      "4.4.4",
+      "5.5"
+    ],
+    "reason": "For Deflate method8, bits1/2 declare Normal/Maximum/Fast/SuperFast compression options. They do not declare encryption or data descriptors and do not justify changed local CRC/sizes/offsets or unsupported method9/14.",
+    "boundaries": "Descriptors bit3, encryption/masking bits0/6/13, patched/reserved/unused bits remain rejected. Local/central exact flag equality must still hold."
+  },
+  "ast_audit_requirements": [
+    "Parse the exact frozen original _zip_structure and candidate function. Deep-copy the original AST, optionally rename only function identifier, replace exactly one original bit-mask expression with the declared method-dependent expression, and compare full ast.dump excluding location attributes.",
+    "Any required custody-qualified identifier normalization must be explicit and finite; do not ignore arbitrary call/attribute differences. Independently verify each referenced helper/constant binding resolves to unchanged legacy code or the exact declared immutable value.",
+    "Also inspect the call pipeline: it must invoke the new complete structural traversal followed by unchanged admitted envelope XML validators, with no monkeypatch of old globals and no alternate fallback reader."
+  ],
+  "receipt_gate_requirements": [
+    "No execution authority derives from this design. Production must require its own committed source, exact-source CI externally verified by root, unchanged legacy/header/flag sources, original capture/object identity and fixed input/output routes.",
+    "Require a closed genuine-production flag receipt with exact producer/profile/source identities, BLOCKED_SCHEMA, MEMBER_FLAGS predecessor, DEFLATE_OPTION_FLAGS_ONLY reason, matching verified object and original capture bridge, expected honest exposures, no scientific claims or extra fields; reject synthetic, stale, mismatched or contradictory receipts.",
+    "First failing member category does not imply all members are compatible: every remaining original structural predicate and full new-profile traversal still must pass before envelope work. No actual bit category has been assumed here.",
+    "A later XML rejection may occur after decompression/UTF8 decoding. Preserve started/completed component exposure separately; absence of completed components does not imply no decoding attempt or no machine-byte access.",
+    "Compatible envelope validity is not workbook/schema/data readiness, endpoint pairing, physical truth, independent sampling or authorization to read worksheet/sharedStrings outcomes."
+  ],
+  "source_bindings": [
+    {
+      "path": "scripts/li_v3_custody.py",
+      "bytes": 35358,
+      "sha256": "3ead51f0afdf16be973743257be488669c988aa40443779e7a5c400e9b0d3234"
+    },
+    {
+      "path": "scripts/li_v3_zip_diagnostic.py",
+      "bytes": 12822,
+      "sha256": "de7807a8721cc243a9acf71e01c80aa531454248b2cde92c5518f875e89e0d87"
+    },
+    {
+      "path": "scripts/li_v3_flag_diagnostic.py",
+      "bytes": 7811,
+      "sha256": "c08c295dae15ae1f5125510076f75ce2cc6ed58f54ef5ff06861a1759dbfabc5"
+    },
+    {
+      "path": ".cache/phase2-li-flags-next-v1/APPNOTE.TXT",
+      "bytes": 174585,
+      "sha256": "0b993022a7d320a0bf704e6980bea36fafd17a6066ab994db0a0c16278a50cd6"
+    }
+  ],
+  "tests_run": false,
+  "candidate_code_executed_or_audited": false,
+  "production_receipts_read": false,
+  "private_capture_or_raw_archive_read": false,
+  "network_used": false,
+  "tracked_files_edited": false,
+  "scientific_claim_changed": false
+}

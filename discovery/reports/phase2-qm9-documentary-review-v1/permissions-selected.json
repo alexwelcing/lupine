@@ -1,0 +1,8 @@
+{
+  "locator": "front/article-meta/permissions/license",
+  "scope": "Short permission sentence only; no article methods/results/targets/figures or new acquisition. Held36-file survey inventory unchanged; additive reviewer grounding only.",
+  "selected_metadata_waiver_sentence": [
+    "To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ Metadata associated with this Data Descriptor is available at http://www.nature.com/sdata/ and is released under the CC0 waiver to maximize reuse."
+  ],
+  "source_sha256": "d58de2a225114f57bc6bc28e808dd3c035580b756a3c09472ac1946539418b6b"
+}

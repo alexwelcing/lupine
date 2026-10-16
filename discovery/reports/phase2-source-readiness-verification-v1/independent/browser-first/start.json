@@ -1,0 +1,13 @@
+{
+  "bindings": {
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-browser-v1/README.md": "538d67c292ccd97d57e3b5cc1495ede0d556a4f9aa3367c7bd2e21a40c800a6b",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-browser-v1/overlay/src/lupine_discovery/web/app.js": "9e81d71a7381173776d928cc558791402f1d2b2ce02d7e4ae7531514233c5b45",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-browser-v1/overlay/src/lupine_discovery/web/index.html": "20432ede14b5892a6e3ff45fc305e2d4bcb664d5924e2679cf1ca3b016ef72f2",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-browser-v1/overlay/src/lupine_discovery/web/source-readiness.js": "d533611c9a975040a55569bf474689846aa8f5ca2f4f73c4e52730917efe95d0",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-browser-v1/overlay/src/lupine_discovery/web/styles.css": "2bfdac8e02a00fd2e67b3b0e0788cf9b73f5dac4ab72fc8dd4f37f077a83d3e1",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-independent-v1/browser_review.py": "57c22c32bea9a408c92f5c0b7726b02006e5b92351b2c053fbade2b28e555d3e",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-independent-v1/source-readiness-v1.json": "9abad97d5675f416cc38a325bcd1e108825af001b2fdfccaa1f5c7dfb66f3f0b"
+  },
+  "scope": "BROWSER_ROUTE_FULFILLED_DOCUMENT_AND_EXACT_APP_REFRESH_FUNCTION_NO_NETWORK_SOURCE",
+  "started": "2026-10-16T17:01:18.439657+00:00"
+}

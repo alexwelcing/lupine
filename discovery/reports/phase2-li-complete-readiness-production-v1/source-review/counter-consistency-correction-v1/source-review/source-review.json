@@ -1,0 +1,22 @@
+{
+  "actual_private_inputs_read": false,
+  "added_call_sites": 4,
+  "added_helpers": [
+    "_completed_prior_counters",
+    "_matching_prior_counts"
+  ],
+  "author_correction_sha256": "4a9a21be6fef815c9298ab4754697031bad2e5d1817f1b6d2759176bef4ad878",
+  "candidate_or_tests_executed": false,
+  "contract_diff_sha256": "d9ce02ee67e201620793310ff9f91e34287663fae13c402cedf0fa9068cd4256",
+  "contract_snapshot_sha256": "87d3bc80f6442658fc1d027e30206bbb04c44635c5f9b258f0ec0f6c207ff6cb",
+  "existing_counter_types_bounds_and_started_completed_checks_preserved": true,
+  "full_C_or_failure_counter_constraints_added": false,
+  "preserved_pure_sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219",
+  "remaining_ast_identical": true,
+  "scope": "Static diff/call-site/contract review. Author/independent executions and later baseline rebinding are separate.",
+  "source_after_sha256": "a3370ac84762ef7f859061bde93f118a1c1981b02460e9ddd0b1cd38e55b840b",
+  "source_before_sha256": "540088bce4341b1f4137e44ef75244ada5786d000c50af597083dadbfc02c9d8",
+  "source_diff_sha256": "caf66cf873a67fc662706df39de079f07cd8c8432239022a364d95428cdc2937",
+  "source_unchanged_during_capture": true,
+  "status": "NARROW_SOURCE_DIFF_MATCHES_ROOT_ACCEPTED_PREDICATES"
+}

@@ -1,0 +1,9 @@
+{
+  "schema": "lupine.bam-exposed-metrology-request-slot.v1",
+  "claimed_at": "2026-10-16T10:29:25.068736+00:00",
+  "scope_sha256": "ba4fc7fffc4a47933185c8dcd3d3224131ae64b0e4a7b6a7219df2da96d1a789",
+  "url": "https://zenodo.org/api/records/17846617/files/2025-12_HT-Tensile-reference-data-CMSX-6_v1.0.xlsx/content",
+  "status": "RESERVED_BEFORE_REQUEST",
+  "request_attempt_or_completion_unknown_without_acquisition_receipt": true,
+  "retry_allowed": false
+}

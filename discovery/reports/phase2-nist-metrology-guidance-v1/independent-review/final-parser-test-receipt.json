@@ -1,0 +1,12 @@
+{
+  "started_at": "2026-10-16T10:51:54.190792+00:00",
+  "elapsed_seconds": 0.5057756550013437,
+  "exit_code": 0,
+  "source_sha256": "472d445d8795fedad228aa5549a4d4701aa8ef1d6ee12d091ae631acaeb4abcd",
+  "test_sha256": "7871922d787fe6b4d5626a79b9faa13009b8d1628ba81317b0837a4ff3d0062c",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "d8e07dc2afcaa00acb92ed7d3bdf262e1107734d350e210720f9f5782cacd108",
+  "synthetic_only": true,
+  "actual_network_or_guidance_source_access": false,
+  "isolation": "Runner uses synthetic temporary storage, mocked opener and parser, blocked socket; actual parser test uses only constructed HTML."
+}

@@ -1,0 +1,33 @@
+{
+  "actual_source_objects_read": 0,
+  "check_count": 24,
+  "checks": [
+    "WHITESPACE:README.md",
+    "LINK:objects.json",
+    "LINK:field-findings.json",
+    "LINK:source-bindings.json",
+    "LINK:metadata-checks.json",
+    "JSON:field-findings.json",
+    "WHITESPACE:field-findings.json",
+    "JSON:metadata-checks.json",
+    "WHITESPACE:metadata-checks.json",
+    "JSON:objects.json",
+    "WHITESPACE:objects.json",
+    "JSON:source-bindings.json",
+    "WHITESPACE:source-bindings.json",
+    "JSON:source-review.json",
+    "WHITESPACE:source-review.json",
+    "SOURCE_PIN:.cache/phase2-rhizo-reference-readiness-design-v1/reference-frame.json",
+    "SOURCE_PIN:.cache/projection-source-audit/rhizo/python/lupine_distill/binding.py",
+    "SOURCE_PIN:.cache/projection-source-audit/rhizo/python/lupine_distill/schemas.py",
+    "SOURCE_PIN:reports/projection-custody-acquisition-v1.json",
+    "SOURCE_PIN:reports/projection-custody-metadata-v1.json",
+    "SOURCE_PIN:reports/projection-custody-readiness-v1.md",
+    "SOURCE_PIN:reports/projection-source-inventory.json",
+    "SOURCE_PIN:scripts/projection_custody.py",
+    "EXACT_PROSPECTIVE_OBJECT_SET_FROM_PUBLIC_METADATA"
+  ],
+  "created_at": "2026-10-16T11:53:40.553219+00:00",
+  "runtime_or_product_tests_executed": 0,
+  "status": "PASS_SOURCE_DOCUMENTARY_STATIC_CHECKS"
+}

@@ -1,0 +1,10 @@
+{
+  "claim_tier_changed": false,
+  "new_scientific_protocol": false,
+  "new_source_acquisitions": 0,
+  "source": "root written reasoning from published finite-frame and risk contracts",
+  "source_sha256": "49e43f80392380abcf8c2ff91469d581a21910b49d228e1e4b550a5c2616dd09",
+  "status": "DRAFT_FOR_INDEPENDENT_REVIEW",
+  "tests_run": false,
+  "written_at": "2026-10-16T10:52:48.927123+00:00"
+}

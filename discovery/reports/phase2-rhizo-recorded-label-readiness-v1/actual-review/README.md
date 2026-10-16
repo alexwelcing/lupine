@@ -1,0 +1,11 @@
+# Actual stored-label public-receipt review
+
+The public receipt is consistent with the reviewed implementation, exact original frame and input manifest, reservation, invocation manifest, recorder source, execution receipt and stdout. The first static check passed. All 36 identities, 144 positions, 43 candidate reference locations and 172 edges are preserved. Reported positions are single records with matching units, exact-number value/reference states, nonempty citation-string states and null tolerances. No private labels were opened or independently recomputed.
+
+Receipt `b444e7d3` records one completed operation at 12:16:28 UTC, exit zero, 0.216203110 seconds, empty stderr and unchanged reviewed source/runtime. It explicitly records all 36 mixed target-bearing objects being read and parsed, historical labels/citations being materialized, and a private projection being written. `private_projection_returned=false` describes the wrapper return, not absence of private processing. Researcher inspection remains unobserved; no fresh holdout is claimed.
+
+The copied original frame includes the inherited field name `existing_artifact_paths_not_opened_by_proposed_pass`. That field describes the earlier reference-read proposal. It does not negate this later operation: the current receipt’s `exposure.objects` explicitly records the 36 bound-object reads. The immutable receipt and frame were left unchanged.
+
+The review checks public consistency, not physical accuracy, citation adequacy, source attribution, measurement uncertainty, independence or benchmark performance. Scientific status remains **NOT_ADMITTED** and actual reference choice **UNKNOWN**. No private JSON or retained raw object was opened. No production guard, source operation, project module, test suite or network operation was executed by this reviewer. Root owns publication and further documentary decisions.
+
+`review.json` contains exact public-source bindings and the result; `source-pin-addendum.json` additionally binds the invocation’s source-pin mapping to the held implementation’s literal by static AST inspection. The reproducible static checker and its first stdout/empty stderr are retained. No test framework or operation rerun was used.

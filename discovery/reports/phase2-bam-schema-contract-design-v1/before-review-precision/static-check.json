@@ -1,0 +1,57 @@
+{
+  "limits": "Static identity/navigation checks only; no reader implementation, schema body read, product test, network or scientific inference.",
+  "link_checks": [
+    {
+      "exists": true,
+      "target": "../../reports/phase2-bam-readiness-v1/README.md"
+    },
+    {
+      "exists": true,
+      "target": "source-bindings.json"
+    }
+  ],
+  "schema": "lupine.discovery.design_static_preparation_check.v1",
+  "source_checks": [
+    {
+      "matches": true,
+      "path": "reports/phase2-bam-readiness-v1/README.md"
+    },
+    {
+      "matches": true,
+      "path": "reports/phase2-bam-readiness-v1/PUBLICATION.md"
+    },
+    {
+      "matches": true,
+      "path": "reports/phase2-bam-readiness-v1/pre-fetch-scope.json"
+    },
+    {
+      "matches": true,
+      "path": "reports/phase2-bam-readiness-v1/publication-map.json"
+    },
+    {
+      "matches": true,
+      "path": "reports/phase2-bam-readiness-v1/source-bindings.json"
+    },
+    {
+      "matches": true,
+      "path": "reports/phase2-bam-readiness-v1/zenodo-17846436.json"
+    },
+    {
+      "matches": true,
+      "path": "reports/phase2-bam-readiness-v1/zenodo-17846617.json"
+    },
+    {
+      "matches": true,
+      "path": "reports/phase2-bam-readiness-v1/zenodo-17846436-file-metadata.json"
+    },
+    {
+      "matches": true,
+      "path": "reports/phase2-bam-readiness-v1/independent-review/review.json"
+    },
+    {
+      "matches": true,
+      "path": "reports/phase2-bam-readiness-v1/independent-review/binding-timing-addendum.json"
+    }
+  ],
+  "status": "BOUND_PUBLIC_SOURCES_AND_LOCAL_LINKS_MATCH"
+}

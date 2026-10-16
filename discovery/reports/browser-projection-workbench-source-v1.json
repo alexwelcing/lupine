@@ -1,0 +1,28 @@
+{
+  "command": [
+    "python",
+    "scripts/browser_smoke.py"
+  ],
+  "python": "3.12.14",
+  "status": "passed",
+  "check_count": 35,
+  "javascript_errors": [],
+  "source_sha256_captured_during_run": {
+    "src/lupine_discovery/web/app.js": "4d5f81077e5c8bb35d7ff227aff05e505180bfe5f6fd25247a40e69366ebbf68",
+    "src/lupine_discovery/web/index.html": "2369c07fc5929c6f2e3afee300323967f808b27ae43e2fbcd54e031a08bcb49f",
+    "src/lupine_discovery/web/styles.css": "4433f5016f1c42d2c957c28735ff503be0f991e05c191917dd791753e0cf5921",
+    "scripts/browser_smoke.py": "1da6efe0406c88245c2ab19e8418b133a0bf661778ca9912372d62a08f3d75cb"
+  },
+  "source_sha256_after_run": {
+    "src/lupine_discovery/web/app.js": "4d5f81077e5c8bb35d7ff227aff05e505180bfe5f6fd25247a40e69366ebbf68",
+    "src/lupine_discovery/web/index.html": "2369c07fc5929c6f2e3afee300323967f808b27ae43e2fbcd54e031a08bcb49f",
+    "src/lupine_discovery/web/styles.css": "4433f5016f1c42d2c957c28735ff503be0f991e05c191917dd791753e0cf5921",
+    "scripts/browser_smoke.py": "1da6efe0406c88245c2ab19e8418b133a0bf661778ca9912372d62a08f3d75cb"
+  },
+  "changed_source_paths": [],
+  "browser_report_path": ".cache/browser/browser-projection-report.json",
+  "browser_report_sha256": "9a767190a9c429a50290940faa3e616bfb222483dad162283640eae9ece12f45",
+  "prior_failed_attempt": ".cache/browser/projection-first-run-harness-failure.txt",
+  "large_receipt_export_bytes": 1761884,
+  "scope": "Local Chromium engineering checks, not scientific validation"
+}

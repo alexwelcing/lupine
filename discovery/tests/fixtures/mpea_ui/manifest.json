@@ -1,0 +1,86 @@
+{
+  "outputs": [
+    {
+      "bytes": 1666755,
+      "content_sha256": "b9b855abfcbe16cc4da0e891a7f0ea0c1928e7e362b7f9dd1ba1cd118abc6060",
+      "description": "Constructed tied-optimum loss: any-optimum hits and zero regret coexist with failed all-optima retention.",
+      "execution_kind": "synthetic_fixture",
+      "file": "complete-negative.json",
+      "scientific_sha256": "3cae18686efd627a923a63b6377670d14e5994cc9108a365aead53242ab80543",
+      "sha256": "4557668a055759aedefaefa886deb9ed7205d2730ca8a9672b7a8e7a3aa35209",
+      "status": "COMPLETE"
+    },
+    {
+      "bytes": 1647488,
+      "content_sha256": "a0055b664c51e8968245bc834ad71962ddb17742cd29614b821440b83851d4f9",
+      "description": "Constructed unknown primary panel, empty secondary panel, other infeasible panels, and unavailable F/D gate components.",
+      "execution_kind": "synthetic_fixture",
+      "file": "unknown-empty-null-gates.json",
+      "scientific_sha256": "17239ac08313bbae6f7b864158f87449228e3822ce324a5cd934843fd453d7a5",
+      "sha256": "370f1ff73c2dfef40fa97815b0c4218e50d2a1e2282ed905ae79f5aa0c511b34",
+      "status": "COMPLETE"
+    },
+    {
+      "bytes": 6903,
+      "content_sha256": "91691a3519c1bedf42b2094a9eb707121326e7134be014453b0ca3b2d55462bd",
+      "description": "Hypothetical sealed 49-row development stage with no model, reserved, or performance availability.",
+      "execution_kind": "synthetic_fixture",
+      "file": "insufficient-development.json",
+      "scientific_sha256": "ab16be9d40ca8f1773ce6da5deaac23b276ce4afaf80c43826436f4615f0cd0b",
+      "sha256": "2253f3b42314119a40b20433f602f2fbc2edfddbe19219b89a22a510fb15a4a1",
+      "status": "NO_GO_INSUFFICIENT_DEVELOPMENT"
+    },
+    {
+      "bytes": 3040,
+      "content_sha256": "6d803133ae1da792d44bd087e7f609d1421c9d1c2f462c049dfc2f0ade0f2a6f",
+      "description": "Hypothetical registration failure with all downstream availability explicitly null.",
+      "execution_kind": "synthetic_fixture",
+      "file": "registration-unavailable.json",
+      "scientific_sha256": "b06fe6e9c858662dec2af55637220c51f0414da873cc400dd0799c23dc54363f",
+      "sha256": "89693f17d524c9a91e6256e7e8e58e524071f0e073b425e847b4f39587d6388d",
+      "status": "BLOCKED"
+    },
+    {
+      "bytes": 1667927,
+      "content_sha256": "8931c02cb73a686eeaaf246f11ffeebd3fb6087b9c0b6cd1b10f7d2b453512a9",
+      "description": "Constructed positive control for both archival gates only; no scientific data, empirical evidence or deployment permission.",
+      "execution_kind": "synthetic_fixture",
+      "file": "complete-positive.json",
+      "scientific_sha256": "8f6c416310d912e9771ba61112e92c399a2fa775be61a9276dca231741db9501",
+      "sha256": "d9a22582e891cda665aa2ba4ea995a9de45a865b5899c275712ba7834cecbd76",
+      "status": "COMPLETE"
+    }
+  ],
+  "schema": "lupine.synthetic.mpea_public_ui_fixtures.v1",
+  "scope": "Synthetic UI fixtures only. Upstream identities and access counters are declared synthetic metadata, not receipts of actual source access. No source archive, actual feature artifact, allocation, or performance target was read.",
+  "source_after": {
+    ".cache/mpea-protocol-design/mpea-t25-archival-protocol-v1.md": "c49047341d3932ddd67c67c9f2a04a6759c0d679bfeb96d811ba9541c0cc0378",
+    ".cache/mpea-protocol-design/mpea-t25-implementation-contract-v1.md": "be45b1d8db9586035cf37bd9bbb9046c065c3851b91f93386f8c68d155215af9",
+    ".cache/mpea-study-engine/docs/public-projector-contract.md": "8148c7a2c9f016ddf68d2c43175898d1f18730efe1626f30acc0b23c66803982",
+    ".cache/mpea-study-engine/reports/ui-fixtures/generate.py": "584c702041a110f8b82cfd301bc9cd4f5b732bbdb4383e9b22c83ab7d5e4e430",
+    ".cache/mpea-study-engine/review/test_mpea_study_review.py": "7fe6374039fd06231d74d5c0ec9ffce3a0cd2f4ab3b93435a3d96be9fe8b7a90",
+    ".cache/mpea-study-engine/scripts/mpea_study.py": "61ddfdf9e8db9cacb3f64d3310021812a96aa66c98ae4e68febb6a794352648b",
+    ".cache/mpea-study-engine/scripts/mpea_study_report.py": "a7d4650df6405df61c18d6c017af281bc2779e6b000fc391327cb5a2e11cc1f2",
+    ".cache/mpea-study-engine/tests/test_mpea_study.py": "afffbc91445f0c3cd5625da975e0e327d64771be642450c556787d51eb112eef",
+    ".cache/mpea-study-engine/tests/test_mpea_study_report.py": "3a9fb5a5c1f41266c94d1eeb997c0fadd484b6f7deb3c9a31bcb7c06e64e52fb",
+    "scripts/mpea_features.py": "b24c0f1bb62fc56794e1232f973a6020ee42a0d3765d33cb51246f3c7a3a47d9",
+    "src/lupine_discovery/decision_pool.py": "76e96165102ebe8c3785f510d169b5d393838fb144f9c4275ffdb0aa6c21f1f9",
+    "src/lupine_discovery/representation.py": "c65c0eed659025a0e41eb325e75182ac2b980c35ac43dfddaa501f4f3ddf3b9e"
+  },
+  "source_before": {
+    ".cache/mpea-protocol-design/mpea-t25-archival-protocol-v1.md": "c49047341d3932ddd67c67c9f2a04a6759c0d679bfeb96d811ba9541c0cc0378",
+    ".cache/mpea-protocol-design/mpea-t25-implementation-contract-v1.md": "be45b1d8db9586035cf37bd9bbb9046c065c3851b91f93386f8c68d155215af9",
+    ".cache/mpea-study-engine/docs/public-projector-contract.md": "8148c7a2c9f016ddf68d2c43175898d1f18730efe1626f30acc0b23c66803982",
+    ".cache/mpea-study-engine/reports/ui-fixtures/generate.py": "584c702041a110f8b82cfd301bc9cd4f5b732bbdb4383e9b22c83ab7d5e4e430",
+    ".cache/mpea-study-engine/review/test_mpea_study_review.py": "7fe6374039fd06231d74d5c0ec9ffce3a0cd2f4ab3b93435a3d96be9fe8b7a90",
+    ".cache/mpea-study-engine/scripts/mpea_study.py": "61ddfdf9e8db9cacb3f64d3310021812a96aa66c98ae4e68febb6a794352648b",
+    ".cache/mpea-study-engine/scripts/mpea_study_report.py": "a7d4650df6405df61c18d6c017af281bc2779e6b000fc391327cb5a2e11cc1f2",
+    ".cache/mpea-study-engine/tests/test_mpea_study.py": "afffbc91445f0c3cd5625da975e0e327d64771be642450c556787d51eb112eef",
+    ".cache/mpea-study-engine/tests/test_mpea_study_report.py": "3a9fb5a5c1f41266c94d1eeb997c0fadd484b6f7deb3c9a31bcb7c06e64e52fb",
+    "scripts/mpea_features.py": "b24c0f1bb62fc56794e1232f973a6020ee42a0d3765d33cb51246f3c7a3a47d9",
+    "src/lupine_discovery/decision_pool.py": "76e96165102ebe8c3785f510d169b5d393838fb144f9c4275ffdb0aa6c21f1f9",
+    "src/lupine_discovery/representation.py": "c65c0eed659025a0e41eb325e75182ac2b980c35ac43dfddaa501f4f3ddf3b9e"
+  },
+  "status": "PASS",
+  "unchanged": true
+}

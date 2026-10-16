@@ -1,0 +1,23 @@
+test_inconsistent_shape_must_block_before_any_new_command (__main__.GateRegression.test_inconsistent_shape_must_block_before_any_new_command) ... FAIL
+
+======================================================================
+FAIL: test_inconsistent_shape_must_block_before_any_new_command (__main__.GateRegression.test_inconsistent_shape_must_block_before_any_new_command)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-envelope-recorder-review-v1/test_first_gate.py", line 88, in test_inconsistent_shape_must_block_before_any_new_command
+    self.assertEqual(called, [], 'Inconsistent prior shape reached the new command boundary')
+AssertionError: Lists differ: [1] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+1
+
+- [1]
+?  -
+
++ [] : Inconsistent prior shape reached the new command boundary
+
+----------------------------------------------------------------------
+Ran 1 test in 0.027s
+
+FAILED (failures=1)

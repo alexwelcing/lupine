@@ -1,0 +1,1172 @@
+{
+  "schema": "lupine.bam-ascii-documentary-findings.v1",
+  "created_at": "2026-10-16T10:05:55.105960+00:00",
+  "source_sha256": "e75c85d770598acf19a4bd1cb9c94b6adf7bb92cf46b153cbc904896a1160f1a",
+  "coordinate_system": "CSV record numbers are1-based including header; physical line spans come from the frozen csv.reader under both named hypotheses. They are not measurement rows or a verified XLSX coordinate map.",
+  "projection_sha256": "b3c77bb0799af461ad53504130c271ff1d12ef32af320217ee19b4990d1bce4e",
+  "facts": [
+    {
+      "id": "identity_and_lineage",
+      "records": [
+        3,
+        16,
+        17,
+        28,
+        29,
+        30,
+        31,
+        69,
+        70,
+        71,
+        75,
+        76,
+        77,
+        79
+      ],
+      "columns": [
+        "ENTRY",
+        "CATEGORY I",
+        "CATEGORY II",
+        "CATEGORY III",
+        "REQUIREMENT"
+      ],
+      "finding": "Test ID is mandatory; Test piece ID, workshop order ID, test piece history and test-machine ID are optional. Separate fields request origin/orientation and supplied-material history; history may refer to previous experiments. Related-publication/DOI fields are optional.",
+      "limit": "The schema neither supplies actual identifiers nor establishes uniqueness, specimen-test bijection, heat/batch lineage, reuse overlap or independent units.",
+      "citations": [
+        {
+          "csv_record": 3,
+          "physical_lines": [
+            3,
+            3
+          ]
+        },
+        {
+          "csv_record": 16,
+          "physical_lines": [
+            22,
+            22
+          ]
+        },
+        {
+          "csv_record": 17,
+          "physical_lines": [
+            23,
+            23
+          ]
+        },
+        {
+          "csv_record": 28,
+          "physical_lines": [
+            41,
+            41
+          ]
+        },
+        {
+          "csv_record": 29,
+          "physical_lines": [
+            42,
+            43
+          ]
+        },
+        {
+          "csv_record": 30,
+          "physical_lines": [
+            44,
+            45
+          ]
+        },
+        {
+          "csv_record": 31,
+          "physical_lines": [
+            46,
+            46
+          ]
+        },
+        {
+          "csv_record": 69,
+          "physical_lines": [
+            110,
+            110
+          ]
+        },
+        {
+          "csv_record": 70,
+          "physical_lines": [
+            111,
+            111
+          ]
+        },
+        {
+          "csv_record": 71,
+          "physical_lines": [
+            112,
+            113
+          ]
+        },
+        {
+          "csv_record": 75,
+          "physical_lines": [
+            117,
+            118
+          ]
+        },
+        {
+          "csv_record": 76,
+          "physical_lines": [
+            119,
+            120
+          ]
+        },
+        {
+          "csv_record": 77,
+          "physical_lines": [
+            121,
+            123
+          ]
+        },
+        {
+          "csv_record": 79,
+          "physical_lines": [
+            126,
+            126
+          ]
+        }
+      ]
+    },
+    {
+      "id": "conditions",
+      "records": [
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        13,
+        76,
+        77,
+        107,
+        108,
+        109,
+        110,
+        189,
+        190,
+        193,
+        197,
+        198,
+        199
+      ],
+      "columns": [
+        "ENTRY",
+        "SYMBOL",
+        "UNIT",
+        "REQUIREMENT",
+        "COMMENTS"
+      ],
+      "finding": "Documentary roles distinguish specified and indicated temperature, testing-rate methods and phases, switchovers, orientation, heating/soaking time and calibration correction.",
+      "limit": "Specified/indicated-temperature UNIT cells at records8/193 contain literal ASCII question marks. Rate-unit fields contain alternatives. No temperature-unit repair, universal rate conversion or fulfilled condition is inferred.",
+      "citations": [
+        {
+          "csv_record": 6,
+          "physical_lines": [
+            6,
+            7
+          ]
+        },
+        {
+          "csv_record": 7,
+          "physical_lines": [
+            8,
+            8
+          ]
+        },
+        {
+          "csv_record": 8,
+          "physical_lines": [
+            9,
+            9
+          ]
+        },
+        {
+          "csv_record": 10,
+          "physical_lines": [
+            11,
+            13
+          ]
+        },
+        {
+          "csv_record": 11,
+          "physical_lines": [
+            14,
+            14
+          ]
+        },
+        {
+          "csv_record": 12,
+          "physical_lines": [
+            15,
+            16
+          ]
+        },
+        {
+          "csv_record": 13,
+          "physical_lines": [
+            17,
+            17
+          ]
+        },
+        {
+          "csv_record": 76,
+          "physical_lines": [
+            119,
+            120
+          ]
+        },
+        {
+          "csv_record": 77,
+          "physical_lines": [
+            121,
+            123
+          ]
+        },
+        {
+          "csv_record": 107,
+          "physical_lines": [
+            169,
+            170
+          ]
+        },
+        {
+          "csv_record": 108,
+          "physical_lines": [
+            171,
+            172
+          ]
+        },
+        {
+          "csv_record": 109,
+          "physical_lines": [
+            173,
+            174
+          ]
+        },
+        {
+          "csv_record": 110,
+          "physical_lines": [
+            175,
+            176
+          ]
+        },
+        {
+          "csv_record": 189,
+          "physical_lines": [
+            286,
+            286
+          ]
+        },
+        {
+          "csv_record": 190,
+          "physical_lines": [
+            287,
+            288
+          ]
+        },
+        {
+          "csv_record": 193,
+          "physical_lines": [
+            293,
+            296
+          ]
+        },
+        {
+          "csv_record": 197,
+          "physical_lines": [
+            303,
+            303
+          ]
+        },
+        {
+          "csv_record": 198,
+          "physical_lines": [
+            304,
+            305
+          ]
+        },
+        {
+          "csv_record": 199,
+          "physical_lines": [
+            306,
+            306
+          ]
+        }
+      ]
+    },
+    {
+      "id": "endpoints",
+      "records": [
+        67,
+        202,
+        204,
+        205,
+        206
+      ],
+      "columns": [
+        "ENTRY",
+        "SYMBOL",
+        "UNIT",
+        "REQUIREMENT"
+      ],
+      "finding": "Current-test endpoint roles include generic proof strength Rp in MPa, tensile strength Rm in MPa, elongation A in percent and reduction area Z in percent. A separate material-history room-temperature proof-strength description specifies0.2percent.",
+      "limit": "That separate0.2percent convention does not bind current-test generic Rp. Labels/units do not provide full calculation rules, same-test joins, uncertainty, censoring conventions or measured endpoint values.",
+      "citations": [
+        {
+          "csv_record": 67,
+          "physical_lines": [
+            107,
+            108
+          ]
+        },
+        {
+          "csv_record": 202,
+          "physical_lines": [
+            311,
+            312
+          ]
+        },
+        {
+          "csv_record": 204,
+          "physical_lines": [
+            315,
+            315
+          ]
+        },
+        {
+          "csv_record": 205,
+          "physical_lines": [
+            316,
+            316
+          ]
+        },
+        {
+          "csv_record": 206,
+          "physical_lines": [
+            317,
+            317
+          ]
+        }
+      ]
+    },
+    {
+      "id": "measurement_processing",
+      "records": [
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179,
+        180,
+        181,
+        182,
+        185,
+        186,
+        187,
+        194,
+        195,
+        210,
+        211
+      ],
+      "columns": [
+        "ENTRY",
+        "CATEGORY I",
+        "CATEGORY II",
+        "UNIT",
+        "REQUIREMENT",
+        "COMMENTS"
+      ],
+      "finding": "Primary data are described as direct sensor/instrument acquisition; processed data as transformed using equations/algorithms/unit conversion/averaging/smoothing. Providers are asked to specify processing and software/version. Dimensions, force/time and stress/extension roles are distinguished.",
+      "limit": "These are documentation requests, not the actual procedure, linked series or validated physical calculation. No linked files or code were opened.",
+      "citations": [
+        {
+          "csv_record": 172,
+          "physical_lines": [
+            260,
+            261
+          ]
+        },
+        {
+          "csv_record": 173,
+          "physical_lines": [
+            262,
+            263
+          ]
+        },
+        {
+          "csv_record": 174,
+          "physical_lines": [
+            264,
+            265
+          ]
+        },
+        {
+          "csv_record": 175,
+          "physical_lines": [
+            266,
+            267
+          ]
+        },
+        {
+          "csv_record": 176,
+          "physical_lines": [
+            268,
+            269
+          ]
+        },
+        {
+          "csv_record": 177,
+          "physical_lines": [
+            270,
+            271
+          ]
+        },
+        {
+          "csv_record": 178,
+          "physical_lines": [
+            272,
+            272
+          ]
+        },
+        {
+          "csv_record": 179,
+          "physical_lines": [
+            273,
+            273
+          ]
+        },
+        {
+          "csv_record": 180,
+          "physical_lines": [
+            274,
+            274
+          ]
+        },
+        {
+          "csv_record": 181,
+          "physical_lines": [
+            275,
+            275
+          ]
+        },
+        {
+          "csv_record": 182,
+          "physical_lines": [
+            276,
+            276
+          ]
+        },
+        {
+          "csv_record": 185,
+          "physical_lines": [
+            279,
+            279
+          ]
+        },
+        {
+          "csv_record": 186,
+          "physical_lines": [
+            280,
+            281
+          ]
+        },
+        {
+          "csv_record": 187,
+          "physical_lines": [
+            282,
+            283
+          ]
+        },
+        {
+          "csv_record": 194,
+          "physical_lines": [
+            297,
+            298
+          ]
+        },
+        {
+          "csv_record": 195,
+          "physical_lines": [
+            299,
+            300
+          ]
+        },
+        {
+          "csv_record": 210,
+          "physical_lines": [
+            322,
+            322
+          ]
+        },
+        {
+          "csv_record": 211,
+          "physical_lines": [
+            323,
+            324
+          ]
+        }
+      ]
+    },
+    {
+      "id": "calibration_not_joint_uncertainty",
+      "records": [
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        107,
+        108,
+        116,
+        118,
+        119,
+        120,
+        121,
+        128,
+        130,
+        131,
+        132,
+        133,
+        134,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171
+      ],
+      "columns": [
+        "ENTRY",
+        "CATEGORY II",
+        "CATEGORY III",
+        "CATEGORY IV",
+        "REQUIREMENT",
+        "COMMENTS"
+      ],
+      "finding": "The schema requests calibration status/date/validity/class/range/standards and optional certificate links for several measurement systems. Temperature traceability is described through calibration of sensor and acquisition system.",
+      "limit": "Calibration/documentation roles do not provide endpoint measurement-uncertainty budgets, covariance, coverage factors or a joint/predictive guarantee. Scoped ASCII term search found no explicit uncertainty/covariance/correlation/coverage-factor/confidence labels or prose; this is not proof of absence from every excluded cell or external record.",
+      "citations": [
+        {
+          "csv_record": 94,
+          "physical_lines": [
+            148,
+            149
+          ]
+        },
+        {
+          "csv_record": 95,
+          "physical_lines": [
+            150,
+            151
+          ]
+        },
+        {
+          "csv_record": 96,
+          "physical_lines": [
+            152,
+            153
+          ]
+        },
+        {
+          "csv_record": 97,
+          "physical_lines": [
+            154,
+            154
+          ]
+        },
+        {
+          "csv_record": 98,
+          "physical_lines": [
+            155,
+            155
+          ]
+        },
+        {
+          "csv_record": 99,
+          "physical_lines": [
+            156,
+            156
+          ]
+        },
+        {
+          "csv_record": 100,
+          "physical_lines": [
+            157,
+            157
+          ]
+        },
+        {
+          "csv_record": 101,
+          "physical_lines": [
+            158,
+            158
+          ]
+        },
+        {
+          "csv_record": 107,
+          "physical_lines": [
+            169,
+            170
+          ]
+        },
+        {
+          "csv_record": 108,
+          "physical_lines": [
+            171,
+            172
+          ]
+        },
+        {
+          "csv_record": 116,
+          "physical_lines": [
+            183,
+            184
+          ]
+        },
+        {
+          "csv_record": 118,
+          "physical_lines": [
+            186,
+            186
+          ]
+        },
+        {
+          "csv_record": 119,
+          "physical_lines": [
+            187,
+            188
+          ]
+        },
+        {
+          "csv_record": 120,
+          "physical_lines": [
+            189,
+            189
+          ]
+        },
+        {
+          "csv_record": 121,
+          "physical_lines": [
+            190,
+            190
+          ]
+        },
+        {
+          "csv_record": 128,
+          "physical_lines": [
+            199,
+            200
+          ]
+        },
+        {
+          "csv_record": 130,
+          "physical_lines": [
+            202,
+            203
+          ]
+        },
+        {
+          "csv_record": 131,
+          "physical_lines": [
+            204,
+            204
+          ]
+        },
+        {
+          "csv_record": 132,
+          "physical_lines": [
+            205,
+            205
+          ]
+        },
+        {
+          "csv_record": 133,
+          "physical_lines": [
+            206,
+            206
+          ]
+        },
+        {
+          "csv_record": 134,
+          "physical_lines": [
+            207,
+            207
+          ]
+        },
+        {
+          "csv_record": 151,
+          "physical_lines": [
+            234,
+            235
+          ]
+        },
+        {
+          "csv_record": 152,
+          "physical_lines": [
+            236,
+            237
+          ]
+        },
+        {
+          "csv_record": 153,
+          "physical_lines": [
+            238,
+            238
+          ]
+        },
+        {
+          "csv_record": 154,
+          "physical_lines": [
+            239,
+            239
+          ]
+        },
+        {
+          "csv_record": 155,
+          "physical_lines": [
+            240,
+            240
+          ]
+        },
+        {
+          "csv_record": 156,
+          "physical_lines": [
+            241,
+            241
+          ]
+        },
+        {
+          "csv_record": 157,
+          "physical_lines": [
+            242,
+            242
+          ]
+        },
+        {
+          "csv_record": 165,
+          "physical_lines": [
+            251,
+            252
+          ]
+        },
+        {
+          "csv_record": 166,
+          "physical_lines": [
+            253,
+            254
+          ]
+        },
+        {
+          "csv_record": 167,
+          "physical_lines": [
+            255,
+            255
+          ]
+        },
+        {
+          "csv_record": 168,
+          "physical_lines": [
+            256,
+            256
+          ]
+        },
+        {
+          "csv_record": 169,
+          "physical_lines": [
+            257,
+            257
+          ]
+        },
+        {
+          "csv_record": 170,
+          "physical_lines": [
+            258,
+            258
+          ]
+        },
+        {
+          "csv_record": 171,
+          "physical_lines": [
+            259,
+            259
+          ]
+        }
+      ]
+    },
+    {
+      "id": "conditional_requirements",
+      "records": [
+        6,
+        7,
+        33,
+        36,
+        37,
+        46,
+        47,
+        48,
+        49,
+        50,
+        84,
+        85,
+        86,
+        95,
+        138,
+        139,
+        141,
+        175,
+        178,
+        179,
+        180
+      ],
+      "columns": [
+        "ENTRY",
+        "REQUIREMENT",
+        "COMMENTS"
+      ],
+      "finding": "Mandatory/optional labels coexist with explicit applicability conditions and distinctions between a required answer and a required affirmative answer. Some depend on numbered rows or instrument/specimen choices.",
+      "limit": "No complete validation grammar or missing-value policy is established. The examples/options column is withheld from researcher projection, and these conditions are not automatically executable joins or eligibility filters.",
+      "citations": [
+        {
+          "csv_record": 6,
+          "physical_lines": [
+            6,
+            7
+          ]
+        },
+        {
+          "csv_record": 7,
+          "physical_lines": [
+            8,
+            8
+          ]
+        },
+        {
+          "csv_record": 33,
+          "physical_lines": [
+            48,
+            48
+          ]
+        },
+        {
+          "csv_record": 36,
+          "physical_lines": [
+            51,
+            51
+          ]
+        },
+        {
+          "csv_record": 37,
+          "physical_lines": [
+            52,
+            52
+          ]
+        },
+        {
+          "csv_record": 46,
+          "physical_lines": [
+            68,
+            70
+          ]
+        },
+        {
+          "csv_record": 47,
+          "physical_lines": [
+            71,
+            72
+          ]
+        },
+        {
+          "csv_record": 48,
+          "physical_lines": [
+            73,
+            75
+          ]
+        },
+        {
+          "csv_record": 49,
+          "physical_lines": [
+            76,
+            78
+          ]
+        },
+        {
+          "csv_record": 50,
+          "physical_lines": [
+            79,
+            81
+          ]
+        },
+        {
+          "csv_record": 84,
+          "physical_lines": [
+            132,
+            135
+          ]
+        },
+        {
+          "csv_record": 85,
+          "physical_lines": [
+            136,
+            137
+          ]
+        },
+        {
+          "csv_record": 86,
+          "physical_lines": [
+            138,
+            139
+          ]
+        },
+        {
+          "csv_record": 95,
+          "physical_lines": [
+            150,
+            151
+          ]
+        },
+        {
+          "csv_record": 138,
+          "physical_lines": [
+            213,
+            213
+          ]
+        },
+        {
+          "csv_record": 139,
+          "physical_lines": [
+            214,
+            214
+          ]
+        },
+        {
+          "csv_record": 141,
+          "physical_lines": [
+            217,
+            220
+          ]
+        },
+        {
+          "csv_record": 175,
+          "physical_lines": [
+            266,
+            267
+          ]
+        },
+        {
+          "csv_record": 178,
+          "physical_lines": [
+            272,
+            272
+          ]
+        },
+        {
+          "csv_record": 179,
+          "physical_lines": [
+            273,
+            273
+          ]
+        },
+        {
+          "csv_record": 180,
+          "physical_lines": [
+            274,
+            274
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hierarchy_and_coverage",
+      "records": [
+        20,
+        39,
+        43,
+        44,
+        83,
+        127,
+        158
+      ],
+      "columns": [
+        "CATEGORY I",
+        "CATEGORY II",
+        "CATEGORY III",
+        "CATEGORY IV",
+        "ENTRY",
+        "COMMENTS"
+      ],
+      "finding": "The four category columns contain literal paths, but some category cells are empty; CATEGORY I includes the literal variant Matadata. One phase-transformation description references a creep test. Non-contacting temperature/strain sections state additional fields are deferred to future versions.",
+      "limit": "No category fill-down, typo correction, cross-method applicability or completeness is inferred. A partial semantic adapter would need reviewed mapping rules and explicit unsupported cases.",
+      "citations": [
+        {
+          "csv_record": 20,
+          "physical_lines": [
+            27,
+            28
+          ]
+        },
+        {
+          "csv_record": 39,
+          "physical_lines": [
+            55,
+            55
+          ]
+        },
+        {
+          "csv_record": 43,
+          "physical_lines": [
+            62,
+            63
+          ]
+        },
+        {
+          "csv_record": 44,
+          "physical_lines": [
+            64,
+            65
+          ]
+        },
+        {
+          "csv_record": 83,
+          "physical_lines": [
+            130,
+            131
+          ]
+        },
+        {
+          "csv_record": 127,
+          "physical_lines": [
+            198,
+            198
+          ]
+        },
+        {
+          "csv_record": 158,
+          "physical_lines": [
+            243,
+            243
+          ]
+        }
+      ]
+    }
+  ],
+  "non_ascii_cell_locators": [
+    {
+      "csv_record": 18,
+      "column": 5,
+      "role": "ENTRY",
+      "hypotheses_differ": true
+    },
+    {
+      "csv_record": 24,
+      "column": 7,
+      "role": "UNIT",
+      "hypotheses_differ": false
+    },
+    {
+      "csv_record": 36,
+      "column": 9,
+      "role": "EXEMPLARY ANSWER OR OPTIONS SEPARATED BY SLASH IN CASE OF DATA TYPE DROP-DOWN LIST",
+      "hypotheses_differ": false
+    },
+    {
+      "csv_record": 37,
+      "column": 9,
+      "role": "EXEMPLARY ANSWER OR OPTIONS SEPARATED BY SLASH IN CASE OF DATA TYPE DROP-DOWN LIST",
+      "hypotheses_differ": false
+    },
+    {
+      "csv_record": 40,
+      "column": 5,
+      "role": "ENTRY",
+      "hypotheses_differ": true
+    },
+    {
+      "csv_record": 46,
+      "column": 7,
+      "role": "UNIT",
+      "hypotheses_differ": false
+    },
+    {
+      "csv_record": 52,
+      "column": 7,
+      "role": "UNIT",
+      "hypotheses_differ": false
+    },
+    {
+      "csv_record": 52,
+      "column": 9,
+      "role": "EXEMPLARY ANSWER OR OPTIONS SEPARATED BY SLASH IN CASE OF DATA TYPE DROP-DOWN LIST",
+      "hypotheses_differ": false
+    },
+    {
+      "csv_record": 53,
+      "column": 7,
+      "role": "UNIT",
+      "hypotheses_differ": false
+    },
+    {
+      "csv_record": 113,
+      "column": 9,
+      "role": "EXEMPLARY ANSWER OR OPTIONS SEPARATED BY SLASH IN CASE OF DATA TYPE DROP-DOWN LIST",
+      "hypotheses_differ": true
+    },
+    {
+      "csv_record": 122,
+      "column": 7,
+      "role": "UNIT",
+      "hypotheses_differ": false
+    },
+    {
+      "csv_record": 122,
+      "column": 9,
+      "role": "EXEMPLARY ANSWER OR OPTIONS SEPARATED BY SLASH IN CASE OF DATA TYPE DROP-DOWN LIST",
+      "hypotheses_differ": false
+    },
+    {
+      "csv_record": 123,
+      "column": 7,
+      "role": "UNIT",
+      "hypotheses_differ": false
+    },
+    {
+      "csv_record": 135,
+      "column": 7,
+      "role": "UNIT",
+      "hypotheses_differ": false
+    },
+    {
+      "csv_record": 135,
+      "column": 9,
+      "role": "EXEMPLARY ANSWER OR OPTIONS SEPARATED BY SLASH IN CASE OF DATA TYPE DROP-DOWN LIST",
+      "hypotheses_differ": false
+    },
+    {
+      "csv_record": 136,
+      "column": 7,
+      "role": "UNIT",
+      "hypotheses_differ": false
+    }
+  ],
+  "omission": "Raw source, full internal projection and arbitrary example values are not public report artifacts. All findings are own paraphrase or selected technical labels."
+}

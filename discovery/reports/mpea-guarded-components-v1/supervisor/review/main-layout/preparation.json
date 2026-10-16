@@ -1,0 +1,14 @@
+{
+  "candidate_sha256": {
+    "scripts/mpea_study_supervisor.py": "1dbd4a1b0e9c3f0246d23bd7670527cfa3bd69f754279aabba06e4ae464e87ab",
+    "tests/fixtures/mpea_supervisor_review_child.py": "89e4a9e4cb6cf03afdb4f326801491fc21f6c7332aff5e84cd57d8c8d4c820a6",
+    "tests/test_mpea_study_supervisor_review.py": "3cca098e6f5e3ab65d49dd0c311bda9069a0c033afb85fc70074ba6b73b60421"
+  },
+  "original_sha256": {
+    "review/review_child.py": "292aeb050e7db326db21c7d43a68c6feed57972557736b0a8fabc71a89aac911",
+    "review/test_supervisor_review.py": "4cbd5739c8ba05242522395b4b40c6a2c98d3106fda173fa7c011d2bcdb40afa"
+  },
+  "path_diff_sha256": "3f790769686b7dcf640f9a7ef0d7f196c29b4595bd94a72ed6a4bb981b13190e",
+  "scope": "Only three source/fixture path substitutions; every assertion and resource cap preserved. Runtime copied byte-identically for scratch layout verification.",
+  "status": "PREPARED_NOT_YET_EXECUTED"
+}

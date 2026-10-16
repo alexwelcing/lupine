@@ -1,0 +1,55 @@
+def _complete_frame(binding, records, documentary, package, report, shared_state):
+    """Complete bounded structural frame; semantic fields use unchanged strict rules."""
+    archive, names, types, workbook, relationships, roles, totals = package
+    assertions = {field['field_id']: field for field in documentary['fields']}
+    unresolved_premises = []
+    required = binding['required_documentary_fields']
+    if not required or any(identifier not in assertions or
+            assertions[identifier]['assertion'] != 'MANIFEST_ASSERTION' for identifier in required):
+        unresolved_premises.append('REQUIRED_DOCUMENTARY_MEANING_UNRESOLVED')
+    if any(role['mode'] == 'STRUCTURAL_ONLY_UNASSIGNED' for role in records):
+        unresolved_premises.append('SHEET_ROLE_UNASSIGNED')
+    _complete_coverage(records, report['workbook_sheets'])
+    key = '{' + custody.DOCREL.removesuffix('/') + '}id'
+    workbook_map = {sheet.attrib['name']: relationships[sheet.attrib[key]][1]
+                    for sheet in workbook.find('{' + core.NAMESPACE + '}sheets')}
+    totals['frame_sheets'] = 0
+    prepared, observed_rows, cells_total = [], 0, 0
+    # Decode all bounded structures before interpreting any selected metadata.
+    for role in records:
+        member = workbook_map[role['sheet_name']]
+        core._require(types.get(member) == custody.SHEET_TYPE, 'ROLE_BINDING_BLOCKED')
+        raw = core._read_member(archive, member, report, totals, 'frame_sheets')
+        root = core._xml_tree(raw, report, text_allowed=True)
+        layout = core._validate_tree_layout(root)
+        cells_total += len(layout['cells'])
+        rows = {int(row.attrib['r']): row for row in root.find('{' + core.NAMESPACE + '}sheetData')}
+        observed_rows += len(rows)
+        core._require(cells_total <= core.LIMITS['frame_cells']
+                      and observed_rows <= core.LIMITS['frame_rows'], 'FRAME_LIMIT')
+        declared = {row['row']: row['class'] for row in role['row_classes']}
+        core._require(set(declared) <= set(rows), 'FRAME_COVERAGE_MISMATCH')
+        prepared.append((role, layout, rows, declared))
+    all_rows, class_counts = [], {kind: 0 for kind in sorted(core.ROW_CLASSES)}
+    unresolved = 0
+    def shared_get():
+        if shared_state[0] is None:
+            shared_state[0] = core._shared(package, report)
+        return shared_state[0]
+    for role, layout, rows, declared in prepared:
+        structural = role['mode'] == 'STRUCTURAL_ONLY_UNASSIGNED'
+        for number in sorted(rows):
+            node, kind = rows[number], declared.get(number, 'UNRESOLVED')
+            class_counts[kind] += 1
+            row = {'role_id': role['role_id'], 'row': number, 'class': kind,
+                   'class_authority': 'MANIFEST_ASSERTION' if number in declared else 'FIXED_UNRESOLVED_POLICY',
+                   'metadata': {}, 'endpoint_structure': {},
+                   'reference_join': 'NOT_APPLICABLE', 'pairing': 'NOT_APPLICABLE',
+                   'overlap': 'NOT_ASSESSED', 'unresolved': []}
+            if structural:
+                row['unresolved'].append('SHEET_ROLE_UNASSIGNED')
+            if kind == 'BLANK':
+                core._require(not len(node), 'FRAME_BLANK_CONTRADICTION')
+                row['class_authority'] = 'NO_EXPLICIT_CELLS'
+            if kind == 'UNRESOLVED':
+                row['unresolved'].append('ROW_ROLE_UNKNOWN')

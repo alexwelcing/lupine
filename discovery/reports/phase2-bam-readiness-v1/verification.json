@@ -1,0 +1,87 @@
+{
+  "schema": "lupine.bam-metadata-audit-check.v1",
+  "created_at": "2026-10-16T08:22:46.439683+00:00",
+  "result": "PASS_METADATA_ARTIFACT_IDENTITY_AND_LOCAL_NAVIGATION",
+  "checks": {
+    "bound_file_count": 14,
+    "bound_file_identities": true,
+    "two_current_receipt_bodies": true,
+    "pre_fetch_scope_predates_gets": true,
+    "fixed_record_version_license_declarations": true,
+    "prospective_file_metadata_bindings": true,
+    "all_local_readme_links_resolve": true
+  },
+  "bindings": [
+    {
+      "path": ".cache/phase2-high-temperature-leads-v1/bam-data.json",
+      "identity_matches": true
+    },
+    {
+      "path": "reports/phase2-high-temperature-leads-v1/bam-data-receipt.json",
+      "identity_matches": true
+    },
+    {
+      "path": ".cache/phase2-high-temperature-leads-v1/bam-schema.json",
+      "identity_matches": true
+    },
+    {
+      "path": "reports/phase2-high-temperature-leads-v1/bam-schema-receipt.json",
+      "identity_matches": true
+    },
+    {
+      "path": "reports/phase2-high-temperature-leads-v1/README.md",
+      "identity_matches": true
+    },
+    {
+      "path": "reports/phase2-high-temperature-leads-v1/source-bindings.json",
+      "identity_matches": true
+    },
+    {
+      "path": "reports/phase2-high-temperature-leads-v1/independent-review.json",
+      "identity_matches": true
+    },
+    {
+      "path": ".cache/phase2-bam-readiness-v1/zenodo-17846617.json",
+      "identity_matches": true
+    },
+    {
+      "path": ".cache/phase2-bam-readiness-v1/zenodo-17846617-receipt.json",
+      "identity_matches": true
+    },
+    {
+      "path": ".cache/phase2-bam-readiness-v1/zenodo-17846617-file-metadata.json",
+      "identity_matches": true
+    },
+    {
+      "path": ".cache/phase2-bam-readiness-v1/zenodo-17846436.json",
+      "identity_matches": true
+    },
+    {
+      "path": ".cache/phase2-bam-readiness-v1/zenodo-17846436-receipt.json",
+      "identity_matches": true
+    },
+    {
+      "path": ".cache/phase2-bam-readiness-v1/zenodo-17846436-file-metadata.json",
+      "identity_matches": true
+    },
+    {
+      "path": ".cache/phase2-bam-readiness-v1/pre-fetch-scope.json",
+      "identity_matches": true
+    }
+  ],
+  "links": [
+    {
+      "link": "source-bindings.json",
+      "exists": true
+    },
+    {
+      "link": "pre-fetch-scope.json",
+      "exists": true
+    },
+    {
+      "link": "../../reports/phase2-high-temperature-leads-v1/README.md",
+      "exists": true
+    }
+  ],
+  "limits": "No project code/tests imported or run; no linked source bodies or new network requests. This verifies retained metadata/artifact consistency, not pairing, statistical independence or empirical quality."
+}

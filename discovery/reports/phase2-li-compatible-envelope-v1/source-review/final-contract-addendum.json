@@ -1,0 +1,47 @@
+{
+  "actions_performed": {
+    "actual_archive_or_private_capture_read": false,
+    "actual_flag_receipt_read": false,
+    "candidate_execution": false,
+    "ci_verification": false,
+    "network": false,
+    "sha256_rebinding": true,
+    "source_and_contract_read": true,
+    "tests_run": false
+  },
+  "author_test_count_claim_independently_verified_here": false,
+  "bindings": {
+    "candidate_author_test": {
+      "path": ".cache/phase2-li-compatible-envelope-candidate-v1/promotion/tests/test_li_v3_compatible_envelope.py",
+      "sha256": "2b4c5561c8158b76ddd739b96799ee0fecbd1c31e60d16df2e6e8b0bd2618f64"
+    },
+    "candidate_contract": {
+      "path": ".cache/phase2-li-compatible-envelope-candidate-v1/promotion/docs/li-v3-compatible-envelope-plan.md",
+      "sha256": "86b663de7a0e88e559a8cc6acbbacd3b17d4ca9ee4e759abc826f7afbd6211ca"
+    },
+    "candidate_source": {
+      "path": ".cache/phase2-li-compatible-envelope-candidate-v1/promotion/scripts/li_v3_compatible_envelope.py",
+      "sha256": "e771b3fc2a66d6e2ff3a26d8aae88b7a2915ac908907908316e697997761c847"
+    },
+    "prior_producer_pin_audit": {
+      "path": ".cache/phase2-li-compatible-envelope-math-review-v1/producer-pin-audit.json",
+      "sha256": "812ff91c8379ce545b3970cd43870205495d4c1adfa97623bf6f6564369c4893"
+    },
+    "prior_source_review": {
+      "path": ".cache/phase2-li-compatible-envelope-math-review-v1/source-review.json",
+      "sha256": "1da937339bb622d940e52e82c079f6213539590f7b9cde4ffeafda8fcd15d877"
+    }
+  },
+  "blockers": [],
+  "findings": [
+    "Held source digest is unchanged from the independently reviewed exact one-predicate method-dependent ZIP profile.",
+    "Final contract explicitly states internal ZIP member-name decoding, partial XML/decompression started-versus-completed semantics, and metadata projection rather than zero-information exposure.",
+    "Fixed prerequisite producer, closed receipt, all prior source pins, own committed-source identity, and separate publication/CI/package gates remain explicit; this review is not satisfaction of those execution gates.",
+    "Every actual envelope inspection remains BLOCKED_SCHEMA, including ENVELOPE_VALID; unsupported opaque payload CRCs and semantics, row pairing, lineage, missingness and sampling assumptions remain unvalidated.",
+    "No physical, source-readiness, statistical-independence, scientific-superiority or replication claim is inferred from this review."
+  ],
+  "review_status": "PASS_FINAL_CONTRACT_AT_BOUND_HASHES",
+  "reviewed_at_utc": "2026-10-16T07:19:52.653799+00:00",
+  "schema": "lupine.discovery.independent_review.v1",
+  "scope": "Read-only final contract review and source hash continuity with the separately retained source/AST and producer-pin audits."
+}

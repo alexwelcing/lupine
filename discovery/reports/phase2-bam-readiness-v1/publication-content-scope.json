@@ -1,0 +1,22 @@
+{
+  "schema": "lupine.evidence-publication-content-scope.v1",
+  "created_at": "2026-10-16T08:40:39.530060+00:00",
+  "new_evidence_acquired": false,
+  "new_network_requests": 0,
+  "source_bodies_included": "Four already retained public API metadata responses only: two DataCite DOI metadata and two Zenodo record metadata; no advertised linked file body",
+  "public_metadata_identity": "All four responses match earlier receipts/bindings; record license/creator declarations retained unchanged and attributed in BAM PUBLICATION.md",
+  "incidental_exposure_preserved": "Metadata includes already-read aggregate temperature/uncertainty prose and public file identifiers/sizes/checksums; this is not an untouched blind validation",
+  "scientific_bodies_excluded": [
+    "measurement workbook",
+    "LIS test series",
+    "curves",
+    "schema CSV/XLSX body",
+    "notebook/model files",
+    "figures/images/PDF bodies"
+  ],
+  "authentication_material": "No request authentication headers are part of retained response/receipt artifacts. A limited scan found no private-key markers, Bearer tokens, GitHub token patterns or AWS access-key patterns in the four raw metadata responses; this scan is not a general security certification. Public record owner IDs and URLs remain public source metadata.",
+  "original_analysis": "Existing author/read-review notes and mathematical derivations only; exact originals preserved",
+  "license_scope": "Publisher records declare CC BY4.0; no invented claim of having inspected linked-body licenses, third-party notices or the correctness of publisher rights declarations",
+  "mathematical_implementation_status": "Deferred until a defensible G21 fixed-frame inference target; no new implementation goal",
+  "tracked_changes": false
+}

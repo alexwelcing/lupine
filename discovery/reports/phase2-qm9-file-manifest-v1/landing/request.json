@@ -1,0 +1,11 @@
+{
+  "acquirer_sha256": "6eb62ea284532945fdfc8dbf8155b55174e87368390f8ed24209599339e9abbb",
+  "maximum_bytes": 2097152,
+  "method": "GET",
+  "redirects": false,
+  "retries": 0,
+  "scope_sha256": "3e8cacb03a13214ab0136661cef03e78e0d5b9b45d23d7f6cb4f850a024a2e87",
+  "started_at": "2026-10-16T17:09:42.002911+00:00",
+  "timeout_seconds": 30,
+  "url": "https://springernature.figshare.com/collections/Quantum_chemistry_structures_and_properties_of_134_kilo_molecules/978904/4"
+}

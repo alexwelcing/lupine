@@ -1,0 +1,60 @@
+{
+  "actual_archive_or_private_capture_read": false,
+  "actual_public_diagnostic_receipts_read": false,
+  "core_contract": {
+    "error_precedence": "While bytes remain: record cap, four-byte header, declared data bound",
+    "fields": "Little-endian outer IDs and declared data lengths only; ordered duplicates retained; complete list or null",
+    "limits": {
+      "extra_span_bytes": 65535,
+      "field_records": 256,
+      "raw_bytes": 183878
+    },
+    "locator": "Contiguous fixed local-header scan from offset0, firstpositive extra length, <=128 entries, all bounds explicit; no second directory open",
+    "predecessor": "Same immutable bytes, exact sole LOCAL_EXTRA_PRESENT entry_local/CHECKED result and successful cleanup",
+    "semantic_boundary": "No payload interpretation, ZIP64/name override resolution, unknown-field harmlessness, reader-profile amendment, XML or scientific readiness"
+  },
+  "files": {
+    ".cache/phase2-li-local-extra-design-v1/README.md": {
+      "bytes": 13418,
+      "sha256": "42f84bca7035b17f8e032110aedeb48845bb47169b147fe99310ce78d577d00d"
+    },
+    ".cache/phase2-li-local-extra-design-v1/before-precision-refinement/README.md": {
+      "bytes": 13082,
+      "sha256": "f24fca0cc4b8147ec34abc44e0edb2063c40cedc64e101c4ff62ab8a3be4db39"
+    },
+    ".cache/phase2-li-local-extra-design-v1/before-precision-refinement/independent-review.json": {
+      "bytes": 5944,
+      "sha256": "dde28c8e6c1fef0974501ea4fc651241b873e655552bc8fe8d8bb5f479d0b9da"
+    },
+    ".cache/phase2-li-local-extra-design-v1/before-precision-refinement/source-bindings.json": {
+      "bytes": 3191,
+      "sha256": "9d4972e706809976ff2338ff765485dcf2a346a47b3beb551719829e838f939b"
+    },
+    ".cache/phase2-li-local-extra-design-v1/independent-review.json": {
+      "bytes": 1756,
+      "sha256": "1f3d4459deda03c2e8e4f21e33ecaa93d8cd1c10c0474a2dbc3105cc05493885"
+    },
+    ".cache/phase2-li-local-extra-design-v1/precision-refinement.diff": {
+      "bytes": 1414,
+      "sha256": "fa77511f056a47f90b43048ddbce9ae103fc9310d1bf2df37b192e071b439145"
+    },
+    ".cache/phase2-li-local-extra-design-v1/reused-standard-retrieval.json": {
+      "bytes": 496,
+      "sha256": "67e5f49d71af004ed5738cf328bdad72f4ba414f182dba684b1e393017785ef2"
+    },
+    ".cache/phase2-li-local-extra-design-v1/source-bindings.json": {
+      "bytes": 3612,
+      "sha256": "afff8bc740435b6bd70d0b7ee84a8b9ff6ae661e794f71ec3933d4b449f79fd4"
+    }
+  },
+  "implementation_written": false,
+  "new_network_requests": false,
+  "recommendation": "Implement and independently review a separate bounded first-local-extra structural diagnostic; do not amend existing reader acceptance or execute against the actual archive from this design alone.",
+  "recorded_at": "2026-10-16T09:07:32.662254+00:00",
+  "schema": "lupine.discovery.local_extra_design_handoff.v1",
+  "scientific_claims_added": false,
+  "source_basis": "PKWARE APPNOTE6.3.10 retained normal public200response; exact bytes/hash verified, no new request. Actual header result is root-reported, not independently read in this task.",
+  "status": "PROSPECTIVE_DESIGN_INDEPENDENTLY_REVIEWED",
+  "tests_run": false,
+  "tracked_files_edited": false
+}

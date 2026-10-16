@@ -1,0 +1,351 @@
+{
+  "columns": [
+    {
+      "concept": "reference_id",
+      "evidence": [
+        "verified_header"
+      ],
+      "interpretation": "Local identifier syntax and relation to DOI are unverified.",
+      "position": 0,
+      "prospective_metadata_treatment": "withhold",
+      "semantic_evidence": "uninterpreted",
+      "token": "IDENTIFIER: Reference ID",
+      "unit": null
+    },
+    {
+      "concept": "nominal_composition",
+      "evidence": [
+        "verified_header",
+        "paper_data_records"
+      ],
+      "interpretation": "Paper describes normalized alphabetized nominal composition; exact-token equality only, without parsing chemistry or proving specimen identity.",
+      "position": 1,
+      "prospective_metadata_treatment": "opaque_formula_equality",
+      "semantic_evidence": "documented_concept",
+      "token": "FORMULA",
+      "unit": "atomic percent"
+    },
+    {
+      "concept": "observed_microstructure",
+      "evidence": [
+        "verified_header",
+        "paper_data_records"
+      ],
+      "interpretation": "Experimentally observed phases; not an automatically permitted predictive feature.",
+      "position": 2,
+      "prospective_metadata_treatment": "withhold",
+      "semantic_evidence": "documented_concept",
+      "token": "PROPERTY: Microstructure",
+      "unit": null
+    },
+    {
+      "concept": "processing_method",
+      "evidence": [
+        "verified_header",
+        "paper_data_records"
+      ],
+      "interpretation": "Only exact CAST/POWDER/WROUGHT/ANNEAL/OTHER tokens; compound or unknown descriptions remain unresolved.",
+      "position": 3,
+      "prospective_metadata_treatment": "closed_processing_token",
+      "semantic_evidence": "documented_concept",
+      "token": "PROPERTY: Processing method",
+      "unit": null
+    },
+    {
+      "concept": "bcc_fcc_other_category",
+      "evidence": [
+        "verified_header"
+      ],
+      "interpretation": "Header suggests a category; derivation from the microstructure column is not established for this file.",
+      "position": 4,
+      "prospective_metadata_treatment": "withhold",
+      "semantic_evidence": "uninterpreted",
+      "token": "PROPERTY: BCC/FCC/other",
+      "unit": null
+    },
+    {
+      "concept": "grain_size",
+      "evidence": [
+        "verified_header",
+        "paper_data_records"
+      ],
+      "interpretation": "Average grain size; measurement value and validity withheld.",
+      "position": 5,
+      "prospective_metadata_treatment": "withhold",
+      "semantic_evidence": "documented_concept",
+      "token": "PROPERTY: grain size ($\\mu$m)",
+      "unit": "micrometre"
+    },
+    {
+      "concept": "experimental_density",
+      "evidence": [
+        "verified_header",
+        "paper_data_records"
+      ],
+      "interpretation": "Experimentally reported density; keep distinct from ROM estimate.",
+      "position": 6,
+      "prospective_metadata_treatment": "withhold",
+      "semantic_evidence": "documented_concept",
+      "token": "PROPERTY: Exp. Density (g/cm$^3$)",
+      "unit": "g/cm^3"
+    },
+    {
+      "concept": "calculated_density",
+      "evidence": [
+        "verified_header",
+        "paper_data_records"
+      ],
+      "interpretation": "Rule-of-mixtures estimate from nominal composition and elemental properties; not experimental truth.",
+      "position": 7,
+      "prospective_metadata_treatment": "withhold",
+      "semantic_evidence": "documented_concept",
+      "token": "PROPERTY: Calculated Density (g/cm$^3$)",
+      "unit": "g/cm^3"
+    },
+    {
+      "concept": "vickers_hardness",
+      "evidence": [
+        "verified_header",
+        "paper_data_records"
+      ],
+      "interpretation": "Experimentally reported Vickers hardness; no numeric target interpretation in this stage.",
+      "position": 8,
+      "prospective_metadata_treatment": "withhold",
+      "semantic_evidence": "documented_concept",
+      "token": "PROPERTY: HV",
+      "unit": "HV scale"
+    },
+    {
+      "concept": "test_mode",
+      "evidence": [
+        "verified_header",
+        "paper_data_records"
+      ],
+      "interpretation": "Only exact T and C codes, meaning tension and compression respectively; their physical meanings remain distinct.",
+      "position": 9,
+      "prospective_metadata_treatment": "closed_test_mode",
+      "semantic_evidence": "documented_concept",
+      "token": "PROPERTY: Type of test",
+      "unit": null
+    },
+    {
+      "concept": "test_temperature",
+      "evidence": [
+        "verified_header",
+        "paper_data_records"
+      ],
+      "interpretation": "Declared mechanical-test temperature only; bounded exact decimal or unresolved. It does not establish service temperature or a thermal history.",
+      "position": 10,
+      "prospective_metadata_treatment": "exact_temperature",
+      "semantic_evidence": "documented_concept",
+      "token": "PROPERTY: Test temperature ($^\\circ$C)",
+      "unit": "degree Celsius"
+    },
+    {
+      "concept": "yield_strength",
+      "evidence": [
+        "verified_header",
+        "paper_data_records"
+      ],
+      "interpretation": "Measured yield strength; no inferred offset convention or uncertainty.",
+      "position": 11,
+      "prospective_metadata_treatment": "withhold",
+      "semantic_evidence": "documented_concept",
+      "token": "PROPERTY: YS (MPa)",
+      "unit": "MPa"
+    },
+    {
+      "concept": "ultimate_strength",
+      "evidence": [
+        "verified_header",
+        "paper_data_records"
+      ],
+      "interpretation": "Tension: ultimate tensile strength. Compression: maximum compression strength. They are distinct endpoints.",
+      "position": 12,
+      "prospective_metadata_treatment": "withhold",
+      "semantic_evidence": "documented_concept",
+      "token": "PROPERTY: UTS (MPa)",
+      "unit": "MPa"
+    },
+    {
+      "concept": "elongation",
+      "evidence": [
+        "verified_header",
+        "paper_data_records"
+      ],
+      "interpretation": "Tension: measured failure elongation. Compression: maximum reported compression strain, not necessarily failure.",
+      "position": 13,
+      "prospective_metadata_treatment": "withhold",
+      "semantic_evidence": "documented_concept",
+      "token": "PROPERTY: Elongation (%)",
+      "unit": "percent"
+    },
+    {
+      "concept": "plastic_elongation",
+      "evidence": [
+        "verified_header",
+        "paper_data_records"
+      ],
+      "interpretation": "Plastic elongation or plastic compression strain; remains distinct from total elongation.",
+      "position": 14,
+      "prospective_metadata_treatment": "withhold",
+      "semantic_evidence": "documented_concept",
+      "token": "PROPERTY: Elongation plastic (%)",
+      "unit": "percent"
+    },
+    {
+      "concept": "experimental_young_modulus",
+      "evidence": [
+        "verified_header",
+        "paper_data_records"
+      ],
+      "interpretation": "Experimentally reported Young modulus.",
+      "position": 15,
+      "prospective_metadata_treatment": "withhold",
+      "semantic_evidence": "documented_concept",
+      "token": "PROPERTY: Exp. Young modulus (GPa)",
+      "unit": "GPa"
+    },
+    {
+      "concept": "calculated_young_modulus",
+      "evidence": [
+        "verified_header",
+        "paper_data_records"
+      ],
+      "interpretation": "Rule-of-mixtures Young modulus for single-phase solid solutions; not experimental truth.",
+      "position": 16,
+      "prospective_metadata_treatment": "withhold",
+      "semantic_evidence": "documented_concept",
+      "token": "PROPERTY: Calculated Young modulus (GPa)",
+      "unit": "GPa"
+    },
+    {
+      "concept": "oxygen_content",
+      "evidence": [
+        "verified_header",
+        "paper_data_records"
+      ],
+      "interpretation": "Measured oxygen content; no feature or target disclosure.",
+      "position": 17,
+      "prospective_metadata_treatment": "withhold",
+      "semantic_evidence": "documented_concept",
+      "token": "PROPERTY: O content (wppm)",
+      "unit": "weight parts per million"
+    },
+    {
+      "concept": "nitrogen_content",
+      "evidence": [
+        "verified_header",
+        "paper_data_records"
+      ],
+      "interpretation": "Measured nitrogen content; no feature or target disclosure.",
+      "position": 18,
+      "prospective_metadata_treatment": "withhold",
+      "semantic_evidence": "documented_concept",
+      "token": "PROPERTY: N content (wppm)",
+      "unit": "weight parts per million"
+    },
+    {
+      "concept": "carbon_content",
+      "evidence": [
+        "verified_header",
+        "paper_data_records"
+      ],
+      "interpretation": "Measured carbon content; no feature or target disclosure.",
+      "position": 19,
+      "prospective_metadata_treatment": "withhold",
+      "semantic_evidence": "documented_concept",
+      "token": "PROPERTY: C content (wppm)",
+      "unit": "weight parts per million"
+    },
+    {
+      "concept": "source_doi",
+      "evidence": [
+        "verified_header",
+        "paper_table_1_headers"
+      ],
+      "interpretation": "Exact declared DOI token grouping only; do not infer normalization, resolution, unique study, independence or specimen matching.",
+      "position": 20,
+      "prospective_metadata_treatment": "opaque_source_equality",
+      "semantic_evidence": "declared_bibliographic_identifier",
+      "token": "REFERENCE: doi",
+      "unit": null
+    },
+    {
+      "concept": "reference_year",
+      "evidence": [
+        "verified_header"
+      ],
+      "interpretation": "Bibliographic label alone does not establish publication-year parsing or temporal independence.",
+      "position": 21,
+      "prospective_metadata_treatment": "withhold",
+      "semantic_evidence": "uninterpreted",
+      "token": "REFERENCE: year",
+      "unit": null
+    },
+    {
+      "concept": "reference_title",
+      "evidence": [
+        "verified_header"
+      ],
+      "interpretation": "Free text not interpreted or disclosed.",
+      "position": 22,
+      "prospective_metadata_treatment": "withhold",
+      "semantic_evidence": "uninterpreted",
+      "token": "REFERENCE: title",
+      "unit": null
+    }
+  ],
+  "evidence": {
+    "paper_data_records": {
+      "captured_bytes": 63254,
+      "doi": "10.1038/s41597-020-00768-9",
+      "read_scope": "Direct prose/list, excluding table rows; prior paper exposure already documented.",
+      "section_id": "Sec5",
+      "section_title": "Data Records",
+      "sha256": "ef21ae6085f5444b534ee2ef7137542f63e3b80fc3940219a3960b642f5a1550",
+      "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC7722748/fullTextXML"
+    },
+    "paper_table_1_headers": {
+      "doi": "10.1038/s41597-020-00768-9",
+      "scope": "DOI label in subset table; not proof of CSV contents or complete schema.",
+      "table_id": "Tab1"
+    },
+    "verified_header": {
+      "path": "reports/mpea-header-labels-v1.json",
+      "scope": "Exact first logical record; no observation-row decode."
+    }
+  },
+  "header": {
+    "bom": false,
+    "column_count": 23,
+    "terminator": "LF"
+  },
+  "header_receipt": {
+    "path": "reports/mpea-header-labels-v1.json",
+    "producer_commit": "c9fb192ed15cf11874c59083b1fae72f7af3224f",
+    "sha256": "70f50fa99db6b39b769be392ec1c64c655f8f32d7587f04f522e6a794c4accee"
+  },
+  "next_gate": "A separately reviewed, committed row-metadata producer and tests must bind this mapping before any observation record is framed or allowed metadata decoded. Performance/ROM cells and target missingness remain opaque.",
+  "schema": "lupine.discovery.mpea.column_mapping.v1",
+  "scope": {
+    "benchmark_registered": false,
+    "data_rows_decoded": false,
+    "features_selected": false,
+    "fits": 0,
+    "measured_pair_identity_established": false,
+    "missing_value_syntax_verified": false,
+    "row_count": null,
+    "row_widths_verified": false,
+    "scientific_eligibility_decisions": false,
+    "splits": 0,
+    "target_numeric_validity_checked": false
+  },
+  "source": {
+    "bytes": 332126,
+    "figshare_doi": "10.6084/m9.figshare.12642953.v9",
+    "file_id": 25797305,
+    "sha256": "c5504d93fd324d1be26cf814d0694ee9ee95578d68a0b38aba6813b939fa2c5d"
+  },
+  "status": "METADATA_MAPPING_SPECIFIED_SCIENTIFIC_SCHEMA_UNRESOLVED"
+}

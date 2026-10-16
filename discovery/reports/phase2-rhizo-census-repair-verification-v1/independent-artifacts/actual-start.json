@@ -1,0 +1,15 @@
+{
+  "audit_source_sha256": "1813a9a94d7d4b9b17ec788703d433072a827480a1fc8a6d1f0c348890539a84",
+  "binding_sha256": "5fd89595c813659d258725e1e05398c8f78db734979f64f8a19d3f9b1ace89f4",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-rhizo-census-repair-artifact-review-v1/audit_retained.py",
+    "--published-commit",
+    "ddd4a6a8df0f908a162b7e5387b0faac325180d6",
+    "--retained-directory",
+    ".cache/phase2-rhizo-census-repair-verification-v1/retained",
+    "--attempt",
+    "first-actual-artifact-audit"
+  ],
+  "started_at": "2026-10-16T15:28:14.350090+00:00"
+}

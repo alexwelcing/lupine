@@ -1,0 +1,80 @@
+{
+  "bytes": 17515,
+  "excluded": [
+    "landing/response.body",
+    "__pycache__ and *.pyc"
+  ],
+  "file_count": 10,
+  "files": [
+    {
+      "bytes": 3594,
+      "path": "README.md",
+      "representation": "EXACT",
+      "sha256": "45e8278edbcdd81d78f16d59e91d9e7f6a6b55bf6524c478700b026cfd3d754c"
+    },
+    {
+      "bytes": 2847,
+      "path": "scope.json",
+      "representation": "EXACT",
+      "sha256": "4c53bad7e2494d473dbf682f0db03d1473ab1f76f3c3facf540dca4700b75e23"
+    },
+    {
+      "bytes": 273,
+      "path": "scope-hold.json",
+      "representation": "EXACT",
+      "sha256": "73f7c8f875f650dfe66c5062efa0f008057d4caea8fc620891b4e03b17821816"
+    },
+    {
+      "bytes": 2042,
+      "path": "acquire.py",
+      "representation": "EXACT",
+      "sha256": "e249380c1b05567daec5bc0f31b32a7be12ee7bda7f9d943e3e9a7c3da8785e9"
+    },
+    {
+      "bytes": 4053,
+      "path": "project.py",
+      "representation": "EXACT",
+      "sha256": "7fb7747c44a1ee9a99bd0505a7497192e524f7a7369a6df4404887e857d7d03f"
+    },
+    {
+      "bytes": 1560,
+      "path": "source-bindings.json",
+      "representation": "EXACT",
+      "sha256": "1709d6d6ea8626e1e2717c4cd72cf82e0639b14ea922704530ed698e2baa285d"
+    },
+    {
+      "bytes": 223,
+      "path": "disposition.json",
+      "representation": "EXACT",
+      "sha256": "788c60637403f3b6aa3e1a39eac94d26b5d2e3705f7fcde3e3dff5b1344a73a0"
+    },
+    {
+      "bytes": 267,
+      "path": "landing/request.json",
+      "representation": "EXACT",
+      "sha256": "8d37110e0a29f62862ea24c44e14d83b7805186a380d7925ca306754d189066a"
+    },
+    {
+      "bytes": 549,
+      "path": "landing/receipt.json",
+      "representation": "EXACT",
+      "sha256": "cdf1db7b81206b99bfb1ac6af96dbb2fc55abb89ada8c592aba5259b603efb7e"
+    },
+    {
+      "bytes": 2107,
+      "path": "landing/projection.json",
+      "representation": "EXACT",
+      "sha256": "42fd1036749c70a421d36e546cdffc3f14b9dc990502732267a9c7421f5eae10"
+    }
+  ],
+  "local_links_verified": [
+    "landing/projection.json",
+    "scope.json",
+    "landing/receipt.json",
+    "source-bindings.json",
+    "disposition.json"
+  ],
+  "lossless_wrappers_required": false,
+  "schema": "lupine.discovery.dielectric_landing_manifest.public_copyset.v1",
+  "tests_or_scientific_operations_executed": false
+}

@@ -1,0 +1,7 @@
+{
+  "schema": "lupine.preserved-utf8.v1",
+  "original_source": ".cache/phase2-source-readiness-package-review-v1/source-diffs/scripts/verify_retained_artifacts.py.diff",
+  "original_bytes": 410,
+  "original_sha256": "0de07c14e33125828ab795107e86361c1d90abe11d79eacc7bdc08ea273abf7e",
+  "text": "--- baseline/scripts/verify_retained_artifacts.py\n+++ candidate/scripts/verify_retained_artifacts.py\n@@ -40,6 +40,7 @@\n     'optional_mpea_resource_presence_and_http_agreement',\n     'mpea_javascript_packaged_and_served',\n     'fixed_stored_census_identity_scope_and_http_asset_agreement',\n+    'source_readiness_snapshot_cli_http_asset_agreement',\n ]\n FORBIDDEN = {'.cache', '.git', '.venv', '__pycache__'}\n \n"
+}

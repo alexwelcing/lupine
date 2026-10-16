@@ -1,0 +1,29 @@
+{
+  "existing_author_wrappers": [
+    {
+      "kind": "author_existing_lossless_utf8",
+      "note": "Prescribed by held author publication-layout; original bytes reconstruct from text UTF-8.",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/first-author/stderr.txt",
+      "original_bytes": 3145,
+      "original_sha256": "51de64a54a7af214fdd99d9900cc62ae283d32f4292adfea2e93aa8664c0670b",
+      "published_wrapper": "reports/phase2-rhizo-reference-readiness-v1/projector/first-author/stderr.txt.json",
+      "wrapper_sha256": "b64d0c57288a1b4aea62a2c6cee8d30916c67ccb8e6f362736686c7e7507a0a0"
+    },
+    {
+      "kind": "author_existing_lossless_utf8",
+      "note": "Prescribed by held author publication-layout; original bytes reconstruct from text UTF-8.",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/final-author/stderr.txt",
+      "original_bytes": 3311,
+      "original_sha256": "8ab851805d2cd52da8744c4c15b6bf860f750a2554160bf6a6371b59ac928fc7",
+      "published_wrapper": "reports/phase2-rhizo-reference-readiness-v1/projector/final-author/stderr.txt.json",
+      "wrapper_sha256": "ed2a1168900f59cab820d8d55efbddfeae09acfb42a4083d4dcdd7e4b4077c54"
+    }
+  ],
+  "new_whitespace_wrappers": [],
+  "relocation_original_wrapper": {
+    "original_sha256": "f5f1582036db4f13b879cd47ae1abeccb2380df07bba09b3f0450696b21ef65e",
+    "published": "reports/phase2-rhizo-reference-readiness-v1/independent-review/reviewed-contract.original.json",
+    "reason": "Exact original preservation, not a whitespace correction.",
+    "sha256": "a38f399837de1d55f674b27990e762b76aa269f3503cc33c73b6a622c713a123"
+  }
+}

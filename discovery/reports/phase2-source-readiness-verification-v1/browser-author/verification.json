@@ -1,0 +1,31 @@
+{
+  "actual_source_operations": 0,
+  "at": "2026-10-16T17:09:05.581239+00:00",
+  "author_browser_receipt": {
+    "bytes": 2811,
+    "path": ".cache/phase2-source-readiness-browser-v1/first-run/execution.json",
+    "sha256": "8062d375e0d6a3d24df596bdb2ca4e1b49c6836abf01b76b45019f9f908ef7b4"
+  },
+  "direct_author_named_check_groups": 11,
+  "durable_helper_executed_by_this_lane": false,
+  "durable_named_check_groups": 6,
+  "durable_source_only_review": {
+    "bytes": 1034,
+    "path": ".cache/phase2-source-readiness-independent-v1/durable-helper-source-review/review.json",
+    "sha256": "f9da557eb2e07f0b37d2addecca19be44c524494030708520b950ddb1b61885d"
+  },
+  "final_copyset": {
+    "bytes": 3204,
+    "path": ".cache/phase2-source-readiness-browser-v1/promotion-copyset.final.json",
+    "sha256": "12600c414ae00448174d92e36124681b6aa41c909ce9f06317ad3729dbc611c8"
+  },
+  "independent_assertions": 29,
+  "independent_browser_handoff": {
+    "bytes": 1899,
+    "path": ".cache/phase2-source-readiness-independent-v1/handoff.json",
+    "sha256": "9db446df3f02e89292d5cdd6269b420f8c52980e9a10c1ffeaafa23e6b48b89d"
+  },
+  "root_actual_http_status": "PENDING_FIRST_ROOT_RUN",
+  "tracked_edits_by_this_lane": 0,
+  "web_assets_changed_after_browser_hold": false
+}

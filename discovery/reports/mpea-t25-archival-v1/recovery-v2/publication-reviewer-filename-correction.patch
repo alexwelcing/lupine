@@ -1,0 +1,8 @@
+--- reviewer_before_filename_correction.py
++++ reviewer_after_filename_correction.py
+@@ -18 +18 @@
+-ARTIFACTS=('attempt-result.json','calibration-vault.json','completeness.json','development-targets.json','evaluation-vault.json','label-routes.json','public-report.json','rank-summary.json','secondary-membership.json')+tuple(f'stage-{i:02d}-{s}.json' for i,s in enumerate(STAGES))
++ARTIFACTS=('attempt-result.json','calibration-vault.json','completeness.json','development-targets.json','evaluation-vault.json','label-routes.json','public-report.json','rank-summary.json','secondary-membership.json')+tuple(f'stage-{i:02d}-{s.replace(chr(95),chr(45))}.json' for i,s in enumerate(STAGES))
+@@ -139 +139 @@
+-        elif name.startswith('stage-'):assert ident==public[i]['inputs'][name[9:-5]]
++        elif name.startswith('stage-'):assert ident==public[i]['inputs'][name[9:-5].replace('-', '_')]

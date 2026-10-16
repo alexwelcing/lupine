@@ -1,0 +1,6 @@
+{
+  "reason": "Independent primary-methods review identified Li tensile tests, not creep. Root initial title instruction was wrong; no scientific raw data read.",
+  "prior_helper_tests": "12 PASS on original resource identity/transport only; those tests do not validate prose truth.",
+  "new_resource_sha256": "9abad97d5675f416cc38a325bcd1e108825af001b2fdfccaa1f5c7dfb66f3f0b",
+  "changes": "Tensile id/title; public methods reference and earlier article exposure preserved; unknown actual workbook versus documentary semantics separated."
+}

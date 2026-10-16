@@ -1,0 +1,49 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    ".cache/phase2-li-flags-implementation-review-v1",
+    "-p",
+    "test_li_v3_flag_diagnostic_review.py",
+    "-v"
+  ],
+  "started_at": "2026-10-16T06:46:42.355446+00:00",
+  "finished_at": "2026-10-16T06:46:44.807187+00:00",
+  "elapsed_seconds": 2.4517323700001725,
+  "exit_code": 1,
+  "source_before": {
+    ".cache/phase2-li-flags-candidate-v1/promotion/docs/li-v3-flag-diagnostic-plan.md": "dd36f011deb04d8141178ea0ead75e7a02fb588f6573cac5332410fb63173f46",
+    ".cache/phase2-li-flags-candidate-v1/promotion/scripts/li_v3_flag_diagnostic.py": "c08c295dae15ae1f5125510076f75ce2cc6ed58f54ef5ff06861a1759dbfabc5",
+    ".cache/phase2-li-flags-implementation-review-v1/test_li_v3_flag_diagnostic_review.py": "b0f74182dc46e90ff2ac6a6447dac23a45f4843791b4f6b9dbabf13be7824999",
+    "docs/li-v3-custody-plan.md": "0be13b0ed7dd7bc41b9c430d4f7d30f8efa0ead54a85d162f31c728eb928a241",
+    "docs/li-v3-zip-diagnostic-plan.md": "e3726819a1c4a133f90ba28a2bfa0bd7ed8e52454f21a61275bfbc8f76dcf6f1",
+    "reports/li-v3-source-inventory.json": "ef4d3de4deb08b3903230a7456fb50de689e49265868d78f0c73faab4461f9ba",
+    "scripts/li_v3_custody.py": "3ead51f0afdf16be973743257be488669c988aa40443779e7a5c400e9b0d3234",
+    "scripts/li_v3_zip_diagnostic.py": "de7807a8721cc243a9acf71e01c80aa531454248b2cde92c5518f875e89e0d87",
+    "tests/test_li_v3_custody.py": "b8113942416f5a2fc6cda565fa5e8b3d5fb9efb887d9241cc36047caca58780a",
+    "tests/test_li_v3_custody_review.py": "6d49955ff2850484bdf8e47af061fa7649ba016a739467cbd0799379913e0151",
+    "tests/test_li_v3_zip_diagnostic.py": "d94c59c55aebb793d7285c3ac748f2f0ad76770346d6a14cff2e53aeaace3c77",
+    "tests/test_li_v3_zip_diagnostic_review.py": "0c3609f46cd244abe64dfdb1fa32e829bc0a16316539a2aea276b061df5413e3"
+  },
+  "source_after": {
+    ".cache/phase2-li-flags-candidate-v1/promotion/docs/li-v3-flag-diagnostic-plan.md": "dd36f011deb04d8141178ea0ead75e7a02fb588f6573cac5332410fb63173f46",
+    ".cache/phase2-li-flags-candidate-v1/promotion/scripts/li_v3_flag_diagnostic.py": "c08c295dae15ae1f5125510076f75ce2cc6ed58f54ef5ff06861a1759dbfabc5",
+    ".cache/phase2-li-flags-implementation-review-v1/test_li_v3_flag_diagnostic_review.py": "b0f74182dc46e90ff2ac6a6447dac23a45f4843791b4f6b9dbabf13be7824999",
+    "docs/li-v3-custody-plan.md": "0be13b0ed7dd7bc41b9c430d4f7d30f8efa0ead54a85d162f31c728eb928a241",
+    "docs/li-v3-zip-diagnostic-plan.md": "e3726819a1c4a133f90ba28a2bfa0bd7ed8e52454f21a61275bfbc8f76dcf6f1",
+    "reports/li-v3-source-inventory.json": "ef4d3de4deb08b3903230a7456fb50de689e49265868d78f0c73faab4461f9ba",
+    "scripts/li_v3_custody.py": "3ead51f0afdf16be973743257be488669c988aa40443779e7a5c400e9b0d3234",
+    "scripts/li_v3_zip_diagnostic.py": "de7807a8721cc243a9acf71e01c80aa531454248b2cde92c5518f875e89e0d87",
+    "tests/test_li_v3_custody.py": "b8113942416f5a2fc6cda565fa5e8b3d5fb9efb887d9241cc36047caca58780a",
+    "tests/test_li_v3_custody_review.py": "6d49955ff2850484bdf8e47af061fa7649ba016a739467cbd0799379913e0151",
+    "tests/test_li_v3_zip_diagnostic.py": "d94c59c55aebb793d7285c3ac748f2f0ad76770346d6a14cff2e53aeaace3c77",
+    "tests/test_li_v3_zip_diagnostic_review.py": "0c3609f46cd244abe64dfdb1fa32e829bc0a16316539a2aea276b061df5413e3"
+  },
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "ed941b3e544c06e609b1c4a8df4f0af7e41446bfb3c7053a6ba20c3e50dac82e",
+  "scope": "First independent invocation against corrected flag candidate; only synthetic bytes/stubbed guards and public source pin checks. No private source/cache/network access."
+}

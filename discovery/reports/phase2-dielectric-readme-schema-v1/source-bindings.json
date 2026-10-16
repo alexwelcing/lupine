@@ -1,0 +1,29 @@
+{
+  "acquirer_sha256": "069350a6a0a5f86aae190953768d7b21a28fb38699c77e2827d2c6e562868cd4",
+  "literal_link": "https://datadryad.org/downloads/file_stream/69472",
+  "offline_parser_invocations": 0,
+  "prior_sources": [
+    {
+      "path": ".cache/phase2-dielectric-landing-manifest-v1/landing/projection.json",
+      "sha256": "42fd1036749c70a421d36e546cdffc3f14b9dc990502732267a9c7421f5eae10"
+    },
+    {
+      "path": ".cache/phase2-dielectric-archive-identity-v1/datacite/projection.json",
+      "sha256": "cd0f88f897c2d95c7906fc67b25264f9f73a5c9deee0d4bd197161bd9e028e38"
+    },
+    {
+      "path": ".cache/phase2-dielectric-methods-rights-v1/exposure-ledger.json",
+      "sha256": "85aabd1e87d26e9b707ce0765d0ac35e69d2cd4972454813ae736e456f507602"
+    }
+  ],
+  "raw_body_publication_allowed": false,
+  "receipt_sha256": "a98d8760705f11be505f13dabd32950156c7735bfce118a88fe34467db60caba",
+  "request_sha256": "7bc5b22a7ad29862e4afd205272ff12a8a28dfa82f901585318130825f01cf69",
+  "retained_response_bytes": 118,
+  "retained_response_sha256": "58bf2215b395dcac74c009aa98701854e43cbe54a1cd3a95fee6a647ca9910d4",
+  "schema": "lupine.discovery.dielectric_readme_schema.bindings.v1",
+  "scientific_schema_evidence_added": false,
+  "scope_hold_sha256": "bcec0063f2dbde59693ea645040e81823d71351c5ed228860ad343fcef116e21",
+  "scope_sha256": "474409a7a0e0fbab71445cf87b399f6a9851602e973c7cd93bb13af190077bdf",
+  "unexecuted_offline_parser_sha256": "728133942f15b4d81ec5f0250d0eef02976829ebdff7a13186241de7af923681"
+}

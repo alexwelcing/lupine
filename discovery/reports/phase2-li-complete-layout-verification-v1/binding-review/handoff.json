@@ -1,0 +1,15 @@
+{
+  "actual_source_operations": 0,
+  "check_count": 744,
+  "file_count": 7,
+  "inventory_sha256": "ae0e6d68575a61604379f67c81fb4fc3c8ae7f9437770a6c369dc1fa9c939a27",
+  "live_operation_gates_still_required": true,
+  "operation_binding_sha256": "8055eedf46f0e532da428adf353efd1d170bb9f1b88c5076f739f75aba062a3d",
+  "outer_binding_sha256": "52c7448a795068cd9024f1b20ccc27854e22aa201953ac76d882a8c169d74c34",
+  "product_tests": 0,
+  "review_sha256": "0d4d086fb040c63c9038fa8a745ea5e1f477b9800cbfd5f20af2025ed8e56bbd",
+  "schema": "lupine.li.binding_review.handoff.v1",
+  "scientific_admission": false,
+  "source_sha256": "325df33ac0b3559434c9c342b91dceaaafc15c4e3d13a06332c168f562f55737",
+  "status": "PUBLIC_BINDING_ACCEPTED_NOT_EXECUTED"
+}

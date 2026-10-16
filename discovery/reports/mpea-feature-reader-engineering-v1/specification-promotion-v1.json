@@ -1,0 +1,14 @@
+{
+  "changes": [
+    "Updated draft/scratch status to prospective committed freeze without claiming execution",
+    "Declared ignored per-row storage and aggregate-only publication",
+    "Clarified standalone module class-identity boundary",
+    "Removed nonportable scratch link from committed specification"
+  ],
+  "new_specification_sha256": {
+    "docs/mpea-feature-adapter-contract-v1.md": "dee9044de66fe33f9c36b43259fae21778b12281d06bdcef54f84c1bf886f000",
+    "docs/mpea-feature-reader-v1.md": "bbfce38e180685b657fa6b81c55d6be6d81607ca9ac79998ca5f3fdc312bb160"
+  },
+  "schema": "lupine.discovery.mpea.feature_specification.promotion.v1",
+  "source_reader_unchanged": true
+}

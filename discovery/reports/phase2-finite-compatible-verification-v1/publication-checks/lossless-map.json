@@ -1,0 +1,29 @@
+{
+  "reason": "Original documentary line endings/trailing whitespace and one original failed-test output line triggered git diff --check; checks remain unchanged.",
+  "files": [
+    {
+      "original_path": "reports/phase2-li-author-methods-v1/sources/License - MIT.txt",
+      "wrapper": "reports/phase2-li-author-methods-v1/sources/License - MIT.txt.bytes.json",
+      "original_sha256": "51e6879a7ff147df3ebdd959714018d8bce2bd0434862e8d0b082e9e7c2f8214",
+      "round_trip_exact": true,
+      "readable_copy": "reports/phase2-li-author-methods-v1/sources/License - MIT.txt",
+      "readable_copy_sha256": "763e7e5d29f8faf15a6d27ab7d4d70c773236b2c6ef82a31c7bd892349f5580c",
+      "readable_words_unchanged": true
+    },
+    {
+      "original_path": "reports/phase2-li-author-methods-v1/sources/README.md",
+      "wrapper": "reports/phase2-li-author-methods-v1/sources/README.md.bytes.json",
+      "original_sha256": "8d950ccb30ca70a616cd68385535b397f46eb86b27587030c73afe370b035182",
+      "round_trip_exact": true,
+      "readable_copy": "reports/phase2-li-author-methods-v1/sources/README.md",
+      "readable_copy_sha256": "5545535fed44ee17c8b2f2aa0897bd5d2ec118db67bc0524d24ee3f7d83c4f2f",
+      "readable_words_unchanged": true
+    },
+    {
+      "original_path": "reports/phase2-li-notebook-methods-review-v1/first-invocation/stderr.txt",
+      "wrapper": "reports/phase2-li-notebook-methods-review-v1/first-invocation/stderr.txt.bytes.json",
+      "original_sha256": "f3614f2593f5ae4ed966125c883bb7d176b937f2bd4c273335c13655f45f2a73",
+      "round_trip_exact": true
+    }
+  ]
+}

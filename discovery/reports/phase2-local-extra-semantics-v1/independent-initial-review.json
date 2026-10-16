@@ -1,0 +1,82 @@
+{
+  "schema": "lupine.local-extra-semantics-independent-review.v1",
+  "created_at": "2026-10-16T09:35:50.522483+00:00",
+  "owner": "/root/phase2_evidence",
+  "status": "PASS_CONDITIONAL_STANDARD_INTERPRETATION_WITH_TRACEABILITY_REFINEMENTS",
+  "reviewed_readme": {
+    "path": ".cache/phase2-local-extra-semantics-research-v1/README.md",
+    "bytes": 13994,
+    "sha256": "102c8b102f144051c91be1f7f33ff012623ec5e2e3934a654adce725c53ded32"
+  },
+  "reviewed_bindings": {
+    "path": ".cache/phase2-local-extra-semantics-research-v1/source-bindings.json",
+    "bytes": 4155,
+    "sha256": "24057fa6f6ed638cb93d3f0182639db305f63d829dee68decd29aedfa6ca313f"
+  },
+  "blocking_semantic_findings": [],
+  "findings": [
+    {
+      "topic": "A220 shape",
+      "conclusion": "APPNOTE4.6.10 plus4.3.3 and4.4.1.1 supports a bounded payload with two-byte A028 signature, two-byte unsigned initial-padding field and remaining NUL bytes. L>=4 and zero-byte padding for L=4 are derived shape conditions, not independently documented actual-source outcomes. The text supplies no PadVal equality/current-length bound, duplicate policy or mutation-history proof."
+    },
+    {
+      "topic": "Unknown extensions",
+      "conclusion": "Sections4.5.1 and4.6.2 support bounds-checked structural skipping using the declared length. They do not establish blanket semantic irrelevance for extraction or application meaning. Section4.6.3 collision/signature guidance and4.1.11/4.7 application scope are accurately distinguished."
+    },
+    {
+      "topic": "Other families",
+      "conclusion": "ZIP64 sentinel ordering/local sizes, Unicode CRC/version fallback, NTFS nested attributes, AE-x method/encryption and undefined 0008 encoding are accurately limited to their retained clauses. Extended timestamp5455 and AndroidD935 are listed without a complete layout; their semantics remain unsupported."
+    },
+    {
+      "topic": "Scientific and exposure scope",
+      "conclusion": "The note observes no actual Li ID, payload, receipt or archive. It proposes a conditional future payload diagnostic without changing any reader. No output would establish worksheet semantics, physical correctness, source independence or scientific usefulness."
+    }
+  ],
+  "nonblocking_traceability_findings": [
+    {
+      "field": "section_locations AppendixE end_line",
+      "finding": "3799 exceeds retained splitlines count3798. Use3797(last substantive line) or3798. The bound whole-file identity and substantive AppendixE claims remain correct."
+    },
+    {
+      "field": "unsigned fields citation",
+      "finding": "Add4.4.1.1 lines654-655 as the direct support for the explicit unsigned payload interpretation; the claim is already supported by the retained full standard."
+    }
+  ],
+  "review_harness_failure": {
+    "path": ".cache/phase2-local-extra-semantics-review-v1/initial-range-check.json",
+    "bytes": 633,
+    "sha256": "433cf0e03c8e941ca8d637cbe0081c01b1a355cc23baf0154de38d49d24cb41e"
+  },
+  "verified_source_files": [
+    {
+      "path": ".cache/phase2-li-flags-next-v1/APPNOTE.TXT",
+      "bytes": 174585,
+      "sha256": "0b993022a7d320a0bf704e6980bea36fafd17a6066ab994db0a0c16278a50cd6"
+    },
+    {
+      "path": ".cache/phase2-li-flags-next-v1/appnote-retrieval.json",
+      "bytes": 496,
+      "sha256": "67e5f49d71af004ed5738cf328bdad72f4ba414f182dba684b1e393017785ef2"
+    },
+    {
+      "path": ".cache/phase2-li-local-extra-design-v1/README.md",
+      "bytes": 13418,
+      "sha256": "42f84bca7035b17f8e032110aedeb48845bb47169b147fe99310ce78d577d00d"
+    },
+    {
+      "path": ".cache/phase2-li-local-extra-design-v1/source-bindings.json",
+      "bytes": 3612,
+      "sha256": "afff8bc740435b6bd70d0b7ee84a8b9ff6ae661e794f71ec3933d4b449f79fd4"
+    }
+  ],
+  "source_scope": "Retained public APPNOTE, held source-only design/research and their bindings/retrieval receipt only; no actual archive IDs, receipts or objects. No links followed.",
+  "actual_operations": {
+    "new_network_requests": 0,
+    "actual_archive_or_private_source_reads": false,
+    "archive_parser_import_or_execution": false,
+    "tests": false,
+    "tracked_edits": false
+  },
+  "child_review_pending_at_creation": true,
+  "scientific_pass": false
+}

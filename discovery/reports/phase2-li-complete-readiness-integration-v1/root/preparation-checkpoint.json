@@ -1,0 +1,29 @@
+{
+  "parent_commit": "ddd4a6a8df0f908a162b7e5387b0faac325180d6",
+  "production_evidence_inventory_sha256": "fe54de63f2e801be779092f704e6a154b4bc54554da5fe57911776b6f16fda35",
+  "production_evidence_files": 263,
+  "production_evidence_bytes": 4774019,
+  "runtime_additions": 6,
+  "unchanged_predecessor_runtime": 339,
+  "expected_runtime_count": 345,
+  "guarded_docs": 2,
+  "full_integrated_methods_collected": 602,
+  "integrated_result": "RUNNING",
+  "actual_operations": 0,
+  "prior_commit_ci": "PENDING_BOTH_PYTHON",
+  "before_publication_required": [
+    "full integrated focused result and sourcehold",
+    "prior exact original CI fourjobsPASS",
+    "copy263 exact reportfiles plus frozen final rebind addendum",
+    "copy current repair package/artifact/CI evidence",
+    "update GOAL STATUS progress continuation release-validation",
+    "verify all Gitcopyset/runtime/links before commitpush"
+  ],
+  "next_actual_release_required": [
+    "new exact commit originalCI fourjobsPASS",
+    "new clean package and strict receipts",
+    "independent new artifactaudit",
+    "bound reviewed recorder and supplied publicvalidation"
+  ],
+  "no_scientific_admission": true
+}

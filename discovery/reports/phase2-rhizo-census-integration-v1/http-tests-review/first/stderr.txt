@@ -1,0 +1,11 @@
+test_census_api_and_asset_keep_loopback_guards_before_resource_access (test_server_recorded_census.RecordedCensusHTTPTests.test_census_api_and_asset_keep_loopback_guards_before_resource_access) ... ok
+test_full_resource_is_delivered_without_rounding_or_projection (test_server_recorded_census.RecordedCensusHTTPTests.test_full_resource_is_delivered_without_rounding_or_projection) ... ok
+test_historical_limits_and_reference_uncertainty_survive_http (test_server_recorded_census.RecordedCensusHTTPTests.test_historical_limits_and_reference_uncertainty_survive_http) ... ok
+test_optional_missing_census_omits_only_that_report (test_server_recorded_census.RecordedCensusHTTPTests.test_optional_missing_census_omits_only_that_report) ... ok
+test_packaged_asset_and_entrypoint_are_served_under_csp (test_server_recorded_census.RecordedCensusHTTPTests.test_packaged_asset_and_entrypoint_are_served_under_csp) ... ok
+test_private_and_arbitrary_resource_routes_never_open_files (test_server_recorded_census.RecordedCensusHTTPTests.test_private_and_arbitrary_resource_routes_never_open_files) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 2.098s
+
+OK

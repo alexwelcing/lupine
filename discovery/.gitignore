@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.cache/
+.pytest_cache/
+.ruff_cache/
+build/
+dist/
+formal/.lake/
+formal/.elan/
+*.olean
+*.ilean
+.DS_Store

@@ -1,0 +1,22 @@
+{
+  "schema": "lupine.next-source-priorities.rhizo-addendum-bindings.v1",
+  "created_at": "2026-10-16T11:17:47.356182+00:00",
+  "scope": "Source-only review of the two named public documentary reports; no numeric bodies, new source or runtime execution.",
+  "addendum": {
+    "path": ".cache/phase2-next-source-priorities-review-v1/rhizo-priority-addendum.md",
+    "bytes": 5003,
+    "sha256": "0dd4d28c83d0f23250148773a9d2f1b316ebef478da81899be0debe68a586482"
+  },
+  "sources": [
+    {
+      "path": "docs/projection-data-readiness.md",
+      "bytes": 16530,
+      "sha256": "e36218568234f426b050492a9ee25ff52d302a3317818ce4590dfe86855d85d9"
+    },
+    {
+      "path": "reports/projection-custody-readiness-v1.md",
+      "bytes": 10769,
+      "sha256": "6805f075c90ba122726bcdfbe9d2f9a9714d2cbbd2f2ecd05d1dcb769e2629b0"
+    }
+  ]
+}

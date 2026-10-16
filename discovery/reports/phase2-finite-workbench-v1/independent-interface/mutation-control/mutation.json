@@ -1,0 +1,11 @@
+{
+  "scope": "labeled synthetic review-only browser-delivery negative control; never a product candidate",
+  "transformation": "replace both exact revision mismatch early-return statements with a comment",
+  "original_sha256": "92a3b8e5f4d4abc61c3471b761a0745ccd66a9ec8327d4f724ba8635e69e530c",
+  "replacement_count": 2,
+  "mutant_sha256": "2e90b37d75dc1abe3a4f60e4645b9b51385ef9ed57faf8030c47cb1f3955a5ac",
+  "identity_note": "Exact deterministic delivered-source transform reconstructed from frozen source after execution; harness transformation is bound by its execution receipt",
+  "actual_exit_code": 1,
+  "actual_failure": "AssertionError: stale response changed newest result",
+  "runtime_source_unchanged": true
+}

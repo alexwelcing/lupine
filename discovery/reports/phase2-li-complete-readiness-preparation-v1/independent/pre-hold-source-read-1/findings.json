@@ -1,0 +1,20 @@
+{
+  "at": "2026-10-16T13:29:34.727222+00:00",
+  "candidate_executed": false,
+  "findings": [
+    {
+      "consequence": "Valid mixed-case hostname rejected despite preserving exact Type identity.",
+      "id": "URI_HOST_CASE",
+      "requested": "Allow syntactically valid ASCII hostname case without rewriting Type.",
+      "source": "_relationship_type compares split.netloc to lowercased split.hostname"
+    },
+    {
+      "consequence": "Nested extra exposure claims could pass if caller changes canonical prior hash.",
+      "id": "PRIOR_EXPOSURE_CLOSED_SCHEMA",
+      "requested": "Enforce advertised closed historical exposure types/shape before accepting supplied prior.",
+      "source": "_prior validates top-level keys and selected cleanup fields only in current draft"
+    }
+  ],
+  "source_sha256": "360a0b42a8a0919639192811e5528bb931d2c875b027305d33bdb8e748043a7f",
+  "status": "PROVISIONAL_MOVING_SOURCE_FINDINGS"
+}

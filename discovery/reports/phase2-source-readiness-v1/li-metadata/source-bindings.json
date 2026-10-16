@@ -1,0 +1,208 @@
+{
+  "schema_version": "phase2-li-metadata-followup-v1",
+  "audit_date": "2026-10-16",
+  "owner": "phase2_evidence",
+  "status": "IDENTITY_AND_DECLARED_DATA_LICENSE_RESOLVED_SCHEMA_CUSTODY_PENDING",
+  "prior_report_held_unchanged": "reports/phase2-source-readiness-v1/",
+  "scope": "Ignored candidate for root review; metadata-only follow-up, not observation acquisition or study approval.",
+  "network_route": "Python urllib through inherited proxy and CA settings; executor policy reported unrestricted HTTP and vpn_configured false. No proxy bypass or credential alteration.",
+  "retrieval_receipts": [
+    {
+      "name": "datacite-ws-8j",
+      "requested_url": "https://api.datacite.org/dois/10.24435/materialscloud:ws-8j",
+      "resolved_url": "https://api.datacite.org/dois/10.24435/materialscloud:ws-8j",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 19729,
+      "sha256": "ae43d843befc59ab401410725412e7f6be38e78a8b2722574427473e7edb845a",
+      "file": ".cache/phase2-li-metadata-followup/datacite-ws-8j.json",
+      "observed_at_utc": "2026-10-16T04:30:05Z"
+    },
+    {
+      "name": "datacite-ws-kw",
+      "requested_url": "https://api.datacite.org/dois/10.24435/materialscloud:ws-kw",
+      "resolved_url": "https://api.datacite.org/dois/10.24435/materialscloud:ws-kw",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 19648,
+      "sha256": "fa1c503653598bbcb9153706f5bfcacfc37be49e6b78dada54b3c5111ae7d057",
+      "file": ".cache/phase2-li-metadata-followup/datacite-ws-kw.json",
+      "observed_at_utc": "2026-10-16T04:30:06Z"
+    },
+    {
+      "name": "materialscloud-v3",
+      "requested_url": "https://archive.materialscloud.org/api/records/vywsz-wxn79",
+      "resolved_url": "https://archive.materialscloud.org/api/records/vywsz-wxn79",
+      "status": 200,
+      "content_type": "application/json",
+      "bytes": 12936,
+      "sha256": "6cd068dc85890fbef2c8d8027c78eb9b7740f36d90574f158c5fc19d9fac65b6",
+      "file": ".cache/phase2-li-metadata-followup/materialscloud-v3.json",
+      "observed_at_utc": "2026-10-16T04:30:07Z"
+    },
+    {
+      "requested_url": "https://archive.materialscloud.org/api/records/vywsz-wxn79/versions",
+      "observed_at_utc": "2026-10-16T04:31:16Z",
+      "status": 200,
+      "bytes": 37203,
+      "sha256": "56f96eea1b1dc70a5b9d733d464f733abe911d5a9e0d230c5fa8c3ffeb3fcf03",
+      "file": ".cache/phase2-li-metadata-followup/materialscloud-versions.json",
+      "resolved_url": "https://archive.materialscloud.org/api/records/vywsz-wxn79/versions"
+    }
+  ],
+  "version_history": [
+    {
+      "record_id": "vywsz-wxn79",
+      "version": 3,
+      "doi": "10.24435/materialscloud:ws-8j",
+      "publication_date": "2024-12-20",
+      "declared_license_ids": [
+        "cc-by-4.0"
+      ],
+      "workbook_file_metadata": {
+        "bytes": 183878,
+        "supplied_checksum": "md5:041bbe095c54615e5a3c289facb18ce5"
+      }
+    },
+    {
+      "record_id": "fvewd-sgz89",
+      "version": 2,
+      "doi": "10.24435/materialscloud:yf-3j",
+      "publication_date": "2024-10-10",
+      "declared_license_ids": [
+        "cc-by-4.0"
+      ],
+      "workbook_file_metadata": {
+        "bytes": 183878,
+        "supplied_checksum": "md5:041bbe095c54615e5a3c289facb18ce5"
+      }
+    },
+    {
+      "record_id": "fvdps-hhc59",
+      "version": 1,
+      "doi": "10.24435/materialscloud:ws-kw",
+      "publication_date": "2024-06-25",
+      "declared_license_ids": [
+        "cc-by-4.0"
+      ],
+      "workbook_file_metadata": {
+        "bytes": 183076,
+        "supplied_checksum": "md5:9153a80e8dc920b4eaee4de1b2534036"
+      }
+    }
+  ],
+  "recommended_source_for_custody_design": {
+    "record_id": "vywsz-wxn79",
+    "doi": "10.24435/materialscloud:ws-8j",
+    "version": 3,
+    "concept_doi": "10.24435/materialscloud:e1-tk",
+    "source_version_selection_basis": "Latest immutable version documented by the official archive; no outcomes inspected and no outcome-driven version selection.",
+    "observation_license": "CC BY 4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/legalcode",
+    "access": {
+      "record": "public",
+      "files": "public",
+      "embargo": {
+        "active": false,
+        "reason": null
+      },
+      "status": "open"
+    },
+    "file_metadata": {
+      "name": "Tensile_Properties_of_Sub-sized_Specimens.xlsx",
+      "bytes": 183878,
+      "supplied_md5": "041bbe095c54615e5a3c289facb18ce5",
+      "acquired": false,
+      "computed_sha256": null
+    },
+    "identity_limit": "Supplied MD5 and size are publisher declarations, not a local observation-byte verification. v2/v3 supplied size/MD5 match; equality was not independently checked. GitHub workbook equivalence not established."
+  },
+  "schema_documentation": {
+    "url": "https://www.nature.com/articles/s41597-024-04329-2",
+    "doi": "10.1038/s41597-024-04329-2",
+    "section": "Data Records",
+    "read_method": "Search-service returned text for exact-article schema queries; no local full-text/PDF retained and no response-body hash claimed.",
+    "documented_row_unit": "Single tensile test",
+    "documented_reference_sheet": "References",
+    "documented_dictionary_sheet": "Column Descriptions",
+    "documented_categories": [
+      "Reference",
+      "Material Type and Composition",
+      "Manufacturing and Treatment Information",
+      "Irradiation Conditions",
+      "Specimen Preparation",
+      "Specimen Dimensions",
+      "Tensile Test Conditions",
+      "Tensile Properties"
+    ],
+    "documented_units": {
+      "composition": "weight percentage",
+      "temperature": "degree Celsius",
+      "time": "hours",
+      "grain_size": "micrometres",
+      "specimen_dimensions": "millimetres",
+      "strain_rate": "inverse seconds",
+      "yield_strength": "MPa",
+      "ultimate_tensile_strength": "MPa",
+      "uniform_elongation": "percent",
+      "total_elongation": "percent"
+    },
+    "declared_missingness": "Paper explicitly says some treatment/irradiation fields are missing.",
+    "count_disagreement": {
+      "archive_description_records": 1070,
+      "archive_description_parameters": 54,
+      "paper_description_records": 1050,
+      "paper_description_columns": 55,
+      "resolution": "Unresolved before workbook/schema custody; no count silently preferred and no inference about independent panels."
+    },
+    "unverified": [
+      "Actual workbook headers/sheet names/layout",
+      "Completeness and same-test pairing of all selected outcomes",
+      "Primary-source/specimen/heat identity and duplicate groups",
+      "Endpoint extraction and censoring semantics",
+      "Measurement uncertainty",
+      "Allowed condition-matched populations",
+      "Overlap with exposed development sources",
+      "Independent-panel counts and sampling law"
+    ]
+  },
+  "exposure_ledger": {
+    "observation_files_opened": [],
+    "new_metadata_exposure": [
+      "Record/version/license and file-transfer metadata",
+      "Source-advertised counts including discrepancy",
+      "Field semantics, units and missingness descriptions"
+    ],
+    "incidental_scientific_text": [
+      "A guessed Table 1 page exposed published geometry-ratio critical values 6-10, 5 and 5.65 and associated tensile endpoint labels; no specimen outcomes. This is preserved as exposure, not used for thresholds or eligibility.",
+      "Search results returned qualitative conclusions/titles about specimen size and related modeling work and unrelated source numerical snippets; no related model paper, notebook, curve, workbook or dataset was opened. These are not claimed unseen or used for model/protocol decisions."
+    ],
+    "table_1_url": "https://www.nature.com/articles/s41597-024-04329-2/tables/1",
+    "full_article_pdf_downloaded": false,
+    "claim": "No Li observation-level performance values were read; not a claim that every published scientific statement remained unseen."
+  },
+  "failures": [
+    {
+      "url": "https://www.nature.com/articles/s41597-024-04329-2/tables/2",
+      "tool": "search_service_web_run",
+      "failure": "Tool rejected redirect to identity cookie endpoint as unsafe; no retry or alternate access attempted; no page content read."
+    },
+    {
+      "scope": "Earlier reconnaissance failures",
+      "record": "reports/phase2-source-readiness-v1/source-bindings.json",
+      "resolution": "Preserved unchanged. Later normal HTTPS API requests succeeded for metadata endpoints; there was no explicit destination-policy denial."
+    }
+  ],
+  "unperformed": [
+    "Workbook/CSV/curve acquisition",
+    "Notebook/model execution",
+    "Observation allocation",
+    "Ranker or threshold selection",
+    "Protocol registration",
+    "Scientific trial",
+    "Third-party messages",
+    "Paid work",
+    "Tracked report changes"
+  ],
+  "next_action": "Root review this note, then design a version-pinned target-redacted workbook custody step that checks dictionary/header/reference metadata and explicit counts without exposing target cells. Identity/license evidence alone does not authorize study execution or establish paired-data adequacy."
+}

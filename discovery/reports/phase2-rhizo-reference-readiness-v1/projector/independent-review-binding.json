@@ -1,0 +1,31 @@
+{
+  "copied_or_executed_by_author": false,
+  "directory": ".cache/phase2-rhizo-reference-projector-review-v1",
+  "files": {
+    "first-run/execution.json": {
+      "bytes": 2814,
+      "sha256": "a1a3acc2883ddfefb49ccc56c7c120b09f99583bb74596f98beb7fb28bc74993"
+    },
+    "handoff.json": {
+      "bytes": 762,
+      "sha256": "6e7d400ab5cba703890e68240e36765ecb99e57d5d93b0508d089970bc8e5f00"
+    },
+    "inventory.json": {
+      "bytes": 4307,
+      "sha256": "7a6781c4c6e640163985c674d4cdf53a254a20e4a315bfe36192694524642dbf"
+    },
+    "review.json": {
+      "bytes": 6875,
+      "sha256": "664c62d3a0488ab0a0c11fbb91a4c14cd12f5bb6117ef829aac4d36e4de52e8a"
+    },
+    "second-run/execution.json": {
+      "bytes": 2815,
+      "sha256": "52e8aedcaf90ee1e0c7288ac376c090054a5527be1c71be725f1f4fee34ad780"
+    },
+    "test_reference_projector_review.py": {
+      "bytes": 16254,
+      "sha256": "54384a8dfc23ca1e026d8da75317b7960330e834b4cf00fd4aead41923cb17d8"
+    }
+  },
+  "review_scope": "Independent generated tests and static source review; no actual source operation."
+}

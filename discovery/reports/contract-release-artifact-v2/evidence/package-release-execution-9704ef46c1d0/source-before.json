@@ -1,0 +1,14 @@
+{
+  "git_head": "9704ef46c1d0ab098dabb083199403a6296f7cf6",
+  "git_status_porcelain": "",
+  "optional_mpea_resource_exists": false,
+  "source_sha256": {
+    ".cache/audit-wheel-source-contract-v1.py": "45d61046ec6fb5b46dfc66ee753e4917a1f300db93b7223ae3f46253dc1f8c0f",
+    ".cache/package-release-execution-preparation-v1/run-next.py": "37ce77206c414c4153b55e17092a77f6d576f48233ea4e3a0768791798c26127",
+    "pyproject.toml": "a73eec989447b99fec48de193218a0750079eeb5973406c53d7a0dc840d9d90f",
+    "reports/runtime-manifest.json": "985f6ec1e9cce30ff1acb1d587a3fd375716556742783ab0367096ab5bf1ddf8",
+    "scripts/package_smoke.py": "f64489f64aefc6624298e25d9dad493186c25b1c91e3f063e9e73d23f8ebf6a1",
+    "scripts/runtime_manifest.py": "604dbb0a4d6b8984324332c32ab7d7f6ab9cee5673f870a4a3de9b6ec56a8b7d",
+    "scripts/verify_retained_artifacts.py": "b88514b490f1cad8c705bbe4066dc558ffe844c257efeffa6ce63e086209ba13"
+  }
+}

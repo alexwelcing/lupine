@@ -1,0 +1,74 @@
+{
+  "schema": "lupine.nist-guidance-independent-preacquisition-review.v1",
+  "reviewed_at": "2026-10-16T10:52:57.279500+00:00",
+  "reviewer": "/root/phase2_evidence/author_methods_review",
+  "verdict": "PASS_FOR_PREAUTHORIZED_AT_MOST_TWO_FIXED_GUIDANCE_REQUESTS",
+  "scope_sha256": "aca351abbc6bbf5538e4bf48b220026d81f60efe7969454d23f50621cbd456d7",
+  "parser_sha256": "472d445d8795fedad228aa5549a4d4701aa8ef1d6ee12d091ae631acaeb4abcd",
+  "runner_sha256": "2702fe6786a6d9fc7afebe0803bf82a9cec0ed222e6d3bef2569f03b5202df0d",
+  "transport_assessment": "Two fixed HTTPS www.nist.gov TN1297 section5/section6 routes only, 30s and1MiB+1 per read; exclusive file+directory-fsynced one-invocation reservation, source guard before parser import, no credential addition, redirects/retries or linked content; first HTTP/transport/encoding/profile failure stops remaining scoped requests. Reservation alone does not prove request attempt/completion.",
+  "resolved_findings": [
+    {
+      "finding": "Initial runner imported html_projection before frozen-source verification.",
+      "resolution": "Import moved after byte/hash checks; independent module-load plus main guard test rejects changed synthetic source before parser import or reservation."
+    },
+    {
+      "finding": "Initial runner marked parse_started before project rejected NUL encoding.",
+      "resolution": "Strict UTF8 decode and NUL check precede parse_started; independent UTF8 and NUL failure tests verify distinct honest stage flags."
+    },
+    {
+      "finding": "A malformed ancestor close could pop a deeper template/noscript/svg suppression frame, emitting suppressed text.",
+      "resolution": "Crossed ancestor close now blocks with HTML_CROSSED_SUPPRESSION; all three failing synthetic cases now pass. Original source and first failure logs preserved."
+    }
+  ],
+  "independent_execution": {
+    "initial_parser": {
+      "methods": 14,
+      "failed_methods": 1,
+      "failing_subcases": 3,
+      "source_sha256": "3b6072811492fcdfe8154cf65d92b59c62f8db0cc50a915cd2c4a77b6dc48831",
+      "receipt": "first-parser-test-receipt.json",
+      "fixture_corrections": 0
+    },
+    "final_parser": {
+      "methods": 14,
+      "passed": 14,
+      "test_sha256": "7871922d787fe6b4d5626a79b9faa13009b8d1628ba81317b0837a4ff3d0062c",
+      "receipt": "final-parser-test-receipt.json"
+    },
+    "final_runner": {
+      "methods": 14,
+      "passed": 14,
+      "test_sha256": "12358e7bf75bc844b20fbdb4f3aac3f1f304c7ffa3c23cc870ba524840e2073c",
+      "receipt": "final-runner-test-receipt.json",
+      "isolation": "Synthetic storage within review cache, fake small read cap/parser, mocked urllib opener, blocked socket; production fixed URLs checked separately. No actual source or network."
+    }
+  },
+  "tested_behavior": [
+    "Static title/text blocks, character references and source-line locators",
+    "Ordinary and malformed skip-container suppression; no image-alt/source equation inference",
+    "Type/size/strict UTF8/BOM/NUL gates; bounded tags/depth/blocks; incomplete-markup recovery is not HTML validation",
+    "Unknown external DTD/entity text does not trigger external resolution",
+    "Frozen-source guard before parser import, exclusive durable request reservation, interrupt/reinvoke and fsync failure",
+    "Two fixed requests on success, first HTTP/redirect/route/encoding/parser failure prevents second request",
+    "Body cap+1, partial read retention, decode/parse stage flags, exception-text canary suppression"
+  ],
+  "projection_limits": [
+    "Static whitespace-normalized text blocks, not browser DOM or rendered page; nested blocks can repeat text and incomplete markup may be recovered.",
+    "No full HTML validity, source authenticity or equation completeness follows from parser completion. Sub/superscript or table layout and equations carried by images may be lost; post-acquisition citations must be checked against retained documentary scope.",
+    "No actual NIST page or publisher content identity was available to this reviewer at this pre-acquisition checkpoint; observed body hashes and exact citations require later retained-source audit.",
+    "Guidance can support a conditional mathematical account but cannot certify BAM uncertainty, covariance, Lupine calibration, selector performance or a new empirical benchmark."
+  ],
+  "publication_boundary": "Whole public HTML and complete text projections remain ignored; only own paraphrase or necessary short snippets with precise source/section/paragraph locators and retained identities may be promoted. No linked PDF/image/standard/paper or measurement body is authorized by this scope.",
+  "activity": {
+    "actual_network_requests": 0,
+    "actual_guidance_body_reads": 0,
+    "measurement_source_reads": 0,
+    "raw_workbook_projection_or_csv_reads": 0,
+    "synthetic_test_methods_final": 28,
+    "tracked_writes": false,
+    "git_mutations": false,
+    "new_model_threshold_allocation_or_protocol": false
+  },
+  "unresolved_blockers": []
+}

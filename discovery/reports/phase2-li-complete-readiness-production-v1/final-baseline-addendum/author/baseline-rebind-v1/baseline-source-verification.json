@@ -1,0 +1,24 @@
+{
+  "actual_operations": 0,
+  "authorized_delta": "Only two adapter baseline constant assignments; documentation baseline identity and six runtime Python plus two guarded docs clarification. No behavior or cap changes.",
+  "baseline_commit": "ddd4a6a8df0f908a162b7e5387b0faac325180d6",
+  "baseline_manifest_sha256": "67d686934ba718b50f8d14e1efa9e2c8dfbc96bc88e43d1a341b4719440509aa",
+  "baseline_parent": "2975d6d0b9111cc84adb82ccc673bc82339ab154",
+  "baseline_runtime_count": 339,
+  "before_source": {
+    "README.md": "87d3bc80f6442658fc1d027e30206bbb04c44635c5f9b258f0ec0f6c207ff6cb",
+    "interface.complete-route-v2.json": "4c16d7156f43388982ce778a0c90ba503e3a3765e6cc444e038d7a15f61e91c1",
+    "li_v3_readiness.py": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219",
+    "li_v3_readiness_production.py": "a3370ac84762ef7f859061bde93f118a1c1981b02460e9ddd0b1cd38e55b840b",
+    "test_li_v3_readiness_production.py": "809c0126ef9f130fad264ef2617f67b9b99db103a3a14c476a6e60bfb4905470"
+  },
+  "changed_runtime_files": {
+    "tests/test_retained_mpea_transport.py": {
+      "after": "bce07a6927df9efe261f0477eae7b65f7babbd227721fb77333b7fe34188cf82",
+      "before": "b841a8dcc5ac955f3e82a7de0e34186e9d752552c022a750c3cdec85c94da84a"
+    }
+  },
+  "recorded_at": "2026-10-16T15:24:19.368372+00:00",
+  "root_release_gate_status": "CI and clean-package gates were running when root supplied pins; not claimed passed.",
+  "unchanged_runtime_files": 338
+}

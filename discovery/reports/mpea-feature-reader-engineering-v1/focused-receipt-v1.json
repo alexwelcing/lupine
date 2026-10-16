@@ -1,0 +1,34 @@
+{
+  "command": [
+    "python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_mpea_feature_reader*.py",
+    "-v"
+  ],
+  "exit_code": 0,
+  "log_sha256": "17e6e32bd1dfe2aa5c86e6bcdba4caad89a022c992f404a09de88b840b6a57f0",
+  "source_sha256_after": {
+    "docs/mpea-feature-adapter-contract-v1.md": "dee9044de66fe33f9c36b43259fae21778b12281d06bdcef54f84c1bf886f000",
+    "docs/mpea-feature-reader-v1.md": "bbfce38e180685b657fa6b81c55d6be6d81607ca9ac79998ca5f3fdc312bb160",
+    "scripts/mpea_feature_reader.py": "032d5341f29479437149d2fbd94879134dc2e4e51c895c1fba3cf771db1f34ef",
+    "scripts/mpea_features.py": "b24c0f1bb62fc56794e1232f973a6020ee42a0d3765d33cb51246f3c7a3a47d9",
+    "src/lupine_discovery/representation.py": "c65c0eed659025a0e41eb325e75182ac2b980c35ac43dfddaa501f4f3ddf3b9e",
+    "tests/test_mpea_feature_reader.py": "0a20ad55287334f63b5fb1754d9c42c803930ce95659374c1c85f2c9a787424b",
+    "tests/test_mpea_feature_reader_review.py": "153fe927723fac68c8881224f3a5eec564181aa40d1290e8794f008c7ccb94ca"
+  },
+  "source_sha256_before": {
+    "docs/mpea-feature-adapter-contract-v1.md": "dee9044de66fe33f9c36b43259fae21778b12281d06bdcef54f84c1bf886f000",
+    "docs/mpea-feature-reader-v1.md": "bbfce38e180685b657fa6b81c55d6be6d81607ca9ac79998ca5f3fdc312bb160",
+    "scripts/mpea_feature_reader.py": "032d5341f29479437149d2fbd94879134dc2e4e51c895c1fba3cf771db1f34ef",
+    "scripts/mpea_features.py": "b24c0f1bb62fc56794e1232f973a6020ee42a0d3765d33cb51246f3c7a3a47d9",
+    "src/lupine_discovery/representation.py": "c65c0eed659025a0e41eb325e75182ac2b980c35ac43dfddaa501f4f3ddf3b9e",
+    "tests/test_mpea_feature_reader.py": "0a20ad55287334f63b5fb1754d9c42c803930ce95659374c1c85f2c9a787424b",
+    "tests/test_mpea_feature_reader_review.py": "153fe927723fac68c8881224f3a5eec564181aa40d1290e8794f008c7ccb94ca"
+  },
+  "wall_seconds": 7.038255487997958
+}

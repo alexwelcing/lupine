@@ -1,0 +1,92 @@
+{
+  "additional_wrappers_at": "2026-10-16T11:06:45.359006+00:00",
+  "original_ignored_files_changed": false,
+  "prepared_at": "2026-10-16T11:00:09.905883+00:00",
+  "wrappers": [
+    {
+      "original_published_path": "reports/phase2-fixed-archive-inference-scope-v1/precision-update.diff",
+      "original_sha256": "a2c42948323488e0f681d4cc7a34b0022ffa4cdc1c2e5196c3bff012bdd8c058",
+      "wrapper": "reports/phase2-fixed-archive-inference-scope-v1/precision-update.diff.json"
+    },
+    {
+      "original_published_path": "reports/phase2-growth-verification-v1/artifact-review/additive_audit.py.diff",
+      "original_sha256": "2cc8c9cf5808eff01d4a4f5fa27f98d4d2bb9feac124d36fe97510d94c192bba",
+      "wrapper": "reports/phase2-growth-verification-v1/artifact-review/additive_audit.py.diff.json"
+    },
+    {
+      "original_published_path": "reports/phase2-growth-verification-v1/artifact-review/run_recorded.py.diff",
+      "original_sha256": "23ea1dd76917bd27c2a16716eccf9edf11c711546e8454aded3ee9ef8822dc53",
+      "wrapper": "reports/phase2-growth-verification-v1/artifact-review/run_recorded.py.diff.json"
+    },
+    {
+      "original_published_path": "reports/phase2-growth-verification-v1/envelope-operations/commit-binding.diff",
+      "original_sha256": "7410a9390552dda5ea7c8fefa72d35568cab216b5e622769a79d4af52bcb59b0",
+      "wrapper": "reports/phase2-growth-verification-v1/envelope-operations/commit-binding.diff.json"
+    },
+    {
+      "original_published_path": "reports/phase2-growth-verification-v1/envelope-operations/preparation.diff",
+      "original_sha256": "5bef2075191c7a7d0276c01259d7f24bf58acf0b223a588e02e4375b58f02b83",
+      "wrapper": "reports/phase2-growth-verification-v1/envelope-operations/preparation.diff.json"
+    },
+    {
+      "original_published_path": "reports/phase2-growth-verification-v1/envelope-operations/prior-shape-gate-correction.diff",
+      "original_sha256": "b321cd1617afe773d9b69e05920829fb27c91c04b52879693b5556989b6a4b79",
+      "wrapper": "reports/phase2-growth-verification-v1/envelope-operations/prior-shape-gate-correction.diff.json"
+    },
+    {
+      "original_published_path": "reports/phase2-growth-verification-v1/envelope-recorder-review/reviewed-repair.diff",
+      "original_sha256": "97806fe4c7bea94796102ae86fc1f26deee90d26bf0bc1f34bd0911eccea713e",
+      "wrapper": "reports/phase2-growth-verification-v1/envelope-recorder-review/reviewed-repair.diff.json"
+    },
+    {
+      "original_published_path": "reports/phase2-growth-verification-v1/shape-operations/commit-binding.diff",
+      "original_sha256": "3da62c0b37c274507727208322e1710775f66028dbd579640f51f073e5b1020b",
+      "wrapper": "reports/phase2-growth-verification-v1/shape-operations/commit-binding.diff.json"
+    },
+    {
+      "original_published_path": "reports/phase2-growth-verification-v1/shape-operations/source.diff",
+      "original_sha256": "284314136a9b7b8a18a5cb17d676eeea96ab4003d7b2b5086b4e424919cc6fda",
+      "wrapper": "reports/phase2-growth-verification-v1/shape-operations/source.diff.json"
+    },
+    {
+      "original_published_path": "reports/phase2-growth-verification-v1/shape-recorder-review/fixture-correction.diff",
+      "original_sha256": "4449be1d77f03eb77297855bdbd5c0a603040e880de0386186332dc184cbe8dd",
+      "wrapper": "reports/phase2-growth-verification-v1/shape-recorder-review/fixture-correction.diff.json"
+    },
+    {
+      "original_published_path": "reports/phase2-documentary-layout-preparation-v1/independent/namespace-cap-test-addition.diff",
+      "original_sha256": "7dbc9b56e098a8cbda50cca96cecc57d5b559ade9a32d1e7efecb43e5938e2ce",
+      "wrapper": "reports/phase2-documentary-layout-preparation-v1/independent/namespace-cap-test-addition.diff.json"
+    },
+    {
+      "original_published_path": "reports/phase2-documentary-layout-preparation-v1/independent/reviewer-canary-assertion-correction.diff",
+      "original_sha256": "2023046cbebf68777b9265e3c507dc89fdc7c11a59132b1f0b9516f31d3bafbe",
+      "wrapper": "reports/phase2-documentary-layout-preparation-v1/independent/reviewer-canary-assertion-correction.diff.json"
+    },
+    {
+      "original_published_path": "reports/phase2-documentary-layout-preparation-v1/independent/first/contract.md",
+      "original_sha256": "c47dc68a34d4928c0886683885e7263c58e3c7b3ddfc98e72b617c83c55c1d3b",
+      "wrapper": "reports/phase2-documentary-layout-preparation-v1/independent/first/contract.md.json"
+    },
+    {
+      "original_published_path": "reports/phase2-documentary-layout-preparation-v1/independent/second/contract.md",
+      "original_sha256": "c47dc68a34d4928c0886683885e7263c58e3c7b3ddfc98e72b617c83c55c1d3b",
+      "wrapper": "reports/phase2-documentary-layout-preparation-v1/independent/second/contract.md.json"
+    },
+    {
+      "original_published_path": "reports/phase2-documentary-layout-preparation-v1/independent/namespace-final/contract.md",
+      "original_sha256": "c16fd29a51f9b1650cff19e77b36bf991c847286ecbd5877633379bdd8f8d65f",
+      "wrapper": "reports/phase2-documentary-layout-preparation-v1/independent/namespace-final/contract.md.json"
+    },
+    {
+      "original_published_path": "reports/phase2-growth-verification-v1/operation-review/audit-source.diff",
+      "original_sha256": "ffe61e6ed7750ca6f84ce955713b338a18d646102c9c9038ac957981dca62f4d",
+      "wrapper": "reports/phase2-growth-verification-v1/operation-review/audit-source.diff.json"
+    },
+    {
+      "original_published_path": "reports/phase2-growth-verification-v1/operation-review/correction-1/recorder.diff",
+      "original_sha256": "9bb99dba8342cfc4064623f9ced7f235bd887983c9c7936a5a51361edf4bee19",
+      "wrapper": "reports/phase2-growth-verification-v1/operation-review/correction-1/recorder.diff.json"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "bytes": 20556,
+  "finding": {
+    "disposition": "Child independently identified a safe-code mismatch in the earlier moving draft and informed author. This first saved parent snapshot was taken after the local GrowthError fix; no unknown frozen-custody error codes remain. Earlier draft was read through tool output only, not retained here.",
+    "unknown_frozen_custody_error_codes": []
+  },
+  "recorded_utc": "2026-10-16T10:03:28.748139+00:00",
+  "scope": "First full-source snapshot, not held final source and not runtime tested by this reviewer.",
+  "sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a"
+}

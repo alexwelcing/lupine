@@ -1,0 +1,55 @@
+{
+  "schema": "lossless_decisions_review_bundle.v1",
+  "files": [
+    {
+      "original": "attempt1.json",
+      "wrapper": "00.json",
+      "sha256": "cb022aca88db0185358054d3a00b86ff1da01c60fd79518b49a23e985d4e02be"
+    },
+    {
+      "original": "attempt1.log",
+      "wrapper": "01.json",
+      "sha256": "a77506f6c8582acdb6339720ea5bbfbe029528ee1154b26d4f63c107606672ef"
+    },
+    {
+      "original": "attempt1-test.py",
+      "wrapper": "02.json",
+      "sha256": "c17ce18268406780a1cd37388e3cddf0382f92a563ac636677ffe00e9002e45c"
+    },
+    {
+      "original": "held-44c-source.py",
+      "wrapper": "03.json",
+      "sha256": "44c4a9ca5f710364c54d207fb19bcc3efe3acd11e99e931d8af56ad69298ee53"
+    },
+    {
+      "original": "final-v2-source.py",
+      "wrapper": "04.json",
+      "sha256": "777fb6fbf75c44bdc073dfcd2815702cd3519b455f93beacb08c9f97782a46d6"
+    },
+    {
+      "original": "test_decisions_review.py",
+      "wrapper": "05.json",
+      "sha256": "c67d94f80db0ba18174a1d5a27c395741c6db725677e044c3174b83d5b4df2f0"
+    },
+    {
+      "original": "final-v2.log",
+      "wrapper": "06.json",
+      "sha256": "7b09bf03134d40aad7b4a7555a21d376004759985f558641194a470ef192e340"
+    },
+    {
+      "original": "final-v2.json",
+      "wrapper": "07.json",
+      "sha256": "d38ce743685cd1194581e66285033e794d80b7abddf6974f480f86a9a8273244"
+    },
+    {
+      "original": "promotion/test_mpea_decisions_review.py",
+      "wrapper": "08.json",
+      "sha256": "ff20a812f7717d246951ae5f6ae5b7b30837f062f7f2b93441b92644d42d1203"
+    },
+    {
+      "original": "promotion/held-44c-source.py",
+      "wrapper": "09.json",
+      "sha256": "44c4a9ca5f710364c54d207fb19bcc3efe3acd11e99e931d8af56ad69298ee53"
+    }
+  ]
+}

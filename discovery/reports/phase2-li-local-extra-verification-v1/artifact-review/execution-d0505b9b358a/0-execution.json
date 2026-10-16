@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-local-extra-artifact-review-v1/audit.py",
+    "--commit",
+    "d0505b9b358a4bdeafbd742f1aeeb6c2b955abf3",
+    "--retained-directory",
+    ".cache/phase2-local-extra-clean-package-v1",
+    "--output-directory",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-local-extra-artifact-review-v1/actual-d0505b9b358a"
+  ],
+  "commit": "d0505b9b358a4bdeafbd742f1aeeb6c2b955abf3",
+  "elapsed_seconds": 2.8524750789983955,
+  "exit_code": 0,
+  "finished_at": "2026-10-16T09:34:01.970637+00:00",
+  "launch_error": null,
+  "reviewed_pins_sha256": "af2fbb73b2c48c293ca7ab034e9fa2322d7b7382c5b556fc918bb85371fd7bb1",
+  "scope": "Read-only retained artifact/source audit; no package test, production diagnostic or network command.",
+  "script_sha256": "b81293cba3632449830932175e9fa938913650ade05f5e524b258aba78923119",
+  "started_at": "2026-10-16T09:33:59.117936+00:00",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "6d3d05fa15c2d1bf72cf2470ee8f823df8e8f3a14da36b053a99bb4c1a12caa1",
+  "timed_out": false
+}

@@ -1,0 +1,21 @@
+test_deep_xml_blocks (test_author_reader.AuthorReaderTests.test_deep_xml_blocks) ... ok
+test_doctype_entity_blocks_before_parser (test_author_reader.AuthorReaderTests.test_doctype_entity_blocks_before_parser) ... ok
+test_external_hyperlink_is_retained_without_fetch (test_author_reader.AuthorReaderTests.test_external_hyperlink_is_retained_without_fetch) ... ok
+test_formula_cache_is_unverified_not_executed (test_author_reader.AuthorReaderTests.test_formula_cache_is_unverified_not_executed) ... ok
+test_literals_and_merges_are_preserved_without_fill (test_author_reader.AuthorReaderTests.test_literals_and_merges_are_preserved_without_fill) ... ok
+test_macro_member_and_content_type_block (test_author_reader.AuthorReaderTests.test_macro_member_and_content_type_block) ... ok
+test_member_expansion_bound_prevents_xml_open (test_author_reader.AuthorReaderTests.test_member_expansion_bound_prevents_xml_open) ... ok
+test_outside_relationship_and_truncated_xml_block (test_author_reader.AuthorReaderTests.test_outside_relationship_and_truncated_xml_block) ... ok
+test_shared_strings_styles_and_comments (test_author_reader.AuthorReaderTests.test_shared_strings_styles_and_comments) ... ok
+test_unknown_shared_string_and_duplicate_cell_block (test_author_reader.AuthorReaderTests.test_unknown_shared_string_and_duplicate_cell_block) ... ok
+test_utf16_does_not_bypass_declaration_guard (test_author_reader.AuthorReaderTests.test_utf16_does_not_bypass_declaration_guard) ... ok
+test_interrupted_request_cannot_be_retried (test_author_request_slot.RequestSlotTests.test_interrupted_request_cannot_be_retried) ... ok
+test_reservation_sync_failure_prevents_first_request (test_author_request_slot.RequestSlotTests.test_reservation_sync_failure_prevents_first_request) ... ok
+test_ambiguous_text_or_scalar_layout_is_not_silently_projected (test_author_reader_repairs.ReaderRepairTests.test_ambiguous_text_or_scalar_layout_is_not_silently_projected) ... ok
+test_neutral_ole_or_embedded_package_content_type_blocks (test_author_reader_repairs.ReaderRepairTests.test_neutral_ole_or_embedded_package_content_type_blocks) ... ok
+test_nul_separated_utf16_with_entity_never_reaches_part_parser (test_author_reader_repairs.ReaderRepairTests.test_nul_separated_utf16_with_entity_never_reaches_part_parser) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.057s
+
+OK

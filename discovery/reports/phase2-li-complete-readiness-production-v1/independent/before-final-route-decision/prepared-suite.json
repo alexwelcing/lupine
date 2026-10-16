@@ -1,0 +1,11 @@
+{
+  "candidate_executions": 0,
+  "embedded_fixtures": {
+    "generated_package.py": "f06f4b4922458d89239ed6d544fca69549527634a3b12b09bf3e4874897434ab",
+    "generated_replay.py": "9b4e760bedaaca96338c0d585492bca3a75596950ac2fb01b86665f0cd25b111"
+  },
+  "schema_reference_sha256": "0454cebf34d19e20f2f6babf8c59f8943d0356fe1b89c3a4f4db3e6b6afe6414",
+  "status": "PREPARED_NOT_EXECUTED",
+  "test_methods": 37,
+  "test_sha256": "fbf2702313d7fe6e7a1ef9a8cfbe2b58141de75da3a5945524c185fd55209d29"
+}

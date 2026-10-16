@@ -1,0 +1,10 @@
+{
+  "recorded_at": "2026-10-16T10:17:52.943150+00:00",
+  "original_sha256": "01f45e732c930bbf45c81467a709b648d83802945146e4e76b06265a8ff0d5b9",
+  "candidate_sha256": "c0e5e38f4669cd339002defd7c563afec6ea931525b4faad625c05fdd4af555d",
+  "commit": "UNBOUND_COMMIT",
+  "runtime_count_expected_after_both_profiles": 332,
+  "actual_invocations": 0,
+  "independent_review": "PENDING",
+  "scope": "Same recorder lifecycle, timeout/group cleanup/closed result and source holds. New G30 projection validator, own phase paths, current gates and extra additive-review gate. Unexpected diagnostic results stop before slot2."
+}

@@ -1,0 +1,26 @@
+{
+  "blocking_wording": [],
+  "conditions": [
+    "Unfilled template placeholders must be populated only from actual source-bound observed records.",
+    "Preview decision is not authorized by this source-only wording review; full engineering and release gates remain separately required."
+  ],
+  "execution": "Read-only source/proof-map review only; no Lean/tests/scientific input access.",
+  "review": [
+    "Scalar finite supplied-universe retention is conditional on sound intervals; arbitrary Lean definitions do not claim a physical descriptor or Python refinement.",
+    "Pareto trades/ties and incomplete frontier limitations are explicit; coupled common-world requirement is retained; projection scope/bounds and missing-bound abstention are correctly described.",
+    "Statistical guarantee is marginal under explicit score-law premises, with realized tied/empty failure examples. No 20-panel joint, unconditional or displayed-pool certainty claim. Finite weighted exchangeability bridge is not promoted to arbitrary measurable physical laws.",
+    "130 formal statements refers to conditional compiled mathematical inventory, not runtime verification or satisfied physical premises.",
+    "13 original known-answer fixtures are distinguished from28 menu cases; unsound controls pass by detecting expected failure. No predictive accuracy inferred.",
+    "Historical scientific negatives remain negative; same-host reproduction is not independent scientific replication. MPEA operational stop is not a usefulness failure or performance verdict.",
+    "Any narrow archival success remains source/population scoped; physical/plant/general-superiority remain NO-GO."
+  ],
+  "source_sha256": {
+    ".cache/final-release-documentation/20261011T003646Z-coherent-closeout-a0624cac/candidate-template/README.md": "328776c28bff6b2f7b226c709cbd55a7880095a10ee56b335a69913fae02d3a6",
+    ".cache/final-release-documentation/20261011T003646Z-coherent-closeout-a0624cac/candidate-template/reports/research-preview-decision.md": "486e860bdca581cb3a06683a6c3330e0359904e1bd0e00dc740b04aab473d531",
+    "docs/research-preview-guide.md": "23265b0eb7c8176c506ba0e4716c6ebec8ead42a30edee8b71c50034adbf330d",
+    "formal/README.md": "9bdd193fad192f6a95ffb23d49bd776a79294a66eb8fe88cfc4122b5c4a0fe3c",
+    "formal/VERIFICATION.md": "6a097886d61dc9a1bb4c4cba2a6a20cb63d254f9649dd70e6da3cf80e5aa99df",
+    "formal/theorem-inventory.json": "834a14198ce1f8d52d4ba33871c143d7c76246cfd81b736109a6de78798acc40"
+  },
+  "status": "READY_CLAIM_WORDING_CONDITIONALLY"
+}

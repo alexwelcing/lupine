@@ -1,0 +1,15 @@
+{
+  "old_rule_omitted_actual_paths": [
+    "tests/fixtures/mpea_supervisor_review_child.py",
+    "tests/fixtures/mpea_supervisor_worker.py",
+    "tests/fixtures/mpea_ui/complete-negative.json",
+    "tests/fixtures/mpea_ui/complete-positive.json",
+    "tests/fixtures/mpea_ui/insufficient-development.json",
+    "tests/fixtures/mpea_ui/manifest.json",
+    "tests/fixtures/mpea_ui/registration-unavailable.json",
+    "tests/fixtures/mpea_ui/unknown-empty-null-gates.json"
+  ],
+  "manifest_count": 230,
+  "old_rule_count": 222,
+  "oracle": "Explicit historical profile vs committed manifest paths; generator was read but not executed"
+}

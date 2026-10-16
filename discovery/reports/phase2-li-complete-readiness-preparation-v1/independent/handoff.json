@@ -1,0 +1,14 @@
+{
+  "copy_scope": "Every inventory-listed file plus inventory.json and handoff.json; include both exact .log files per run explicitly despite ignore rules.",
+  "distinct_test_methods": 35,
+  "file_count": 40,
+  "first_independent_failures": 0,
+  "inventory_sha256": "db721cc93191614a5dc6f13381c0bfbd251b0857e409be1418dcd46e2e34a032",
+  "next": "Root may publish pure artifacts; production adaptation remains separate, fixed-bound and independently reviewed before actual operations.",
+  "portable_test": ".cache/phase2-li-complete-readiness-review-v1/test_li_v3_readiness_review.py",
+  "portable_test_sha256": "7ec52e6a72aef1b289503d187fa5966025a1d488ca60f55200d12fd9c10b85f0",
+  "review_sha256": "1130922ce55a6ca231f3783507bab0e217d73d80141a557cf28a389d2343bf26",
+  "source_sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219",
+  "status": "HELD_INDEPENDENT_GENERATED_REVIEW_COMPLETE",
+  "test_runs": 2
+}

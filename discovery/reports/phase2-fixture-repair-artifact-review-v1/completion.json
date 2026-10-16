@@ -1,0 +1,11 @@
+{
+  "actual_tool_completion_chunk": "1bf792",
+  "actual_tool_exit_code": 0,
+  "audit_invocations": 1,
+  "exact_e668_clean_at_audit_finish": true,
+  "execution_sha256": "383755e1df31d4909cfe89eb1c7f54539d14a0c2dc67cf0657b513dc9cdb0d88",
+  "later_worktree_state_not_claimed": true,
+  "report_sha256": "b584ea3ec90baed3a615e257fba7e87b98a23734969fc86f3a76db544a24c7b8",
+  "schema": "lupine.fixture-repair.artifact-review-completion.v1",
+  "status": "PASS"
+}

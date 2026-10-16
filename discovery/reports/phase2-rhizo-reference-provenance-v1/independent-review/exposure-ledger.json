@@ -1,0 +1,32 @@
+{
+  "schema": "lupine.rhizo.documentary-independent-review.exposure.v1",
+  "recorded_at": "2026-10-16T11:49:25.652263+00:00",
+  "private_projection_machine_bytes_read": 32046,
+  "private_projection_machine_sha256": "8b19c9d47e3b33729417b3a8c09ecd4483929b697954246ee98ecf4e805d3a82",
+  "private_projection_json_parse_completed": true,
+  "raw_source_objects_read": false,
+  "numerical_outcome_comparison_performed": false,
+  "fresh_or_target_free_claim": false,
+  "researcher_display_stage": "All 43 selected locations with their full declared context and citation/doi_or_url/notes strings were displayed and read. No display truncation occurred in that completed 43-location display.",
+  "untrusted_source_instructions_followed": false,
+  "network_requests": 0,
+  "updated_at": "2026-10-16T11:50:58.251700+00:00",
+  "selected_locations_researcher_read": 43,
+  "documentary_fields_researcher_read": [
+    "context",
+    "citation",
+    "doi_or_url",
+    "notes"
+  ],
+  "outcome_bearing_notes_researcher_read": 43,
+  "incidental_categories": [
+    "raw surface-property values and rounding declarations",
+    "vacancy-property values",
+    "recommended and alternative values with uncertainty-like numbers",
+    "cross-source numerical comparisons and qualitative performance assertions",
+    "additional energetic quantities in phase notes"
+  ],
+  "public_outcome_numbers_reproduced": false,
+  "outcome_values_used_for_selection_ranking_fit_or_comparison": false,
+  "raw_source_machine_exposure": "This reviewer did not read the two raw source objects. The producer receipt separately declares full mixed-JSON exposure of both objects and 85 entries; the reviewer read only the resulting selected projection."
+}

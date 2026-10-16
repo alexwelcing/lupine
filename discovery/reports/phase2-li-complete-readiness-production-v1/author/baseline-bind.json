@@ -1,0 +1,10 @@
+{
+  "acceptance_changes": "Only three explicit baseline constants; unchanged parser, source/capture and fixed G34 prerequisite/projection.",
+  "after_sha256": "8a744a3699317fb53680754e01067904a0afbe826057a9a2def6995d473e7e95",
+  "at": "2026-10-16T14:02:43.740434+00:00",
+  "baseline_commit": "2975d6d0b9111cc84adb82ccc673bc82339ab154",
+  "baseline_manifest_sha256": "b2c35e48c8dc837d78aba0047d112dabbd30b8ff11e66bba0f45e9da92a0eb2f",
+  "baseline_runtime_count": 339,
+  "before_sha256": "cd7dd84f70dc571e0155b1744c136d89e57bee2872882f693bcb06f336e3bac5",
+  "root_authorization": "Census baseline supplied after exact remote/clean publication, CI/package pending; no actual operation authorized."
+}

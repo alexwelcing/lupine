@@ -1,0 +1,13 @@
+{
+  "audit_script_sha256": "a4c8bf1e0f80c5923fa06f5f931538749d840e41ffc23c0b8e46c02a00ed7ebf",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-notebook-header-actual-review-v1/audit_completed_operations.py",
+    "--notebook-directory",
+    ".cache/phase2-next-source-operations-v1/run-a6e87c198d8116d26c523e0e1b2eedce4aeb225b-20261016T085019156373Z",
+    "--artifact-review",
+    ".cache/phase2-notebook-header-artifact-review-v1/actual-a6e87c/review.json"
+  ],
+  "reader_invocation": false,
+  "started_at": "2026-10-16T08:53:08.495231+00:00"
+}

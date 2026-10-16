@@ -1,0 +1,9 @@
+test_operation_log_failure_still_attempts_post_state (test_ordering.OrderingTests.test_operation_log_failure_still_attempts_post_state) ... ok
+test_package_log_failure_still_attempts_post_state (test_ordering.OrderingTests.test_package_log_failure_still_attempts_post_state) ... ok
+test_rejected_historical_prefix_precedes_any_new_command (test_ordering.OrderingTests.test_rejected_historical_prefix_precedes_any_new_command) ... ok
+test_file_close_fault_cannot_leave_success_or_skip_parent_cleanup (test_publish_cleanup.PublicationCleanupTest.test_file_close_fault_cannot_leave_success_or_skip_parent_cleanup) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.067s
+
+OK

@@ -1,0 +1,6 @@
+{
+  "encoding": "utf-8",
+  "bytes": 506,
+  "sha256": "e2f83c368758f6beeeaa11c6ca431db420bfd7dad4f456788d2c2c868f8f868d",
+  "text": "--- baseline/li_v3_local_extra_headers.py\n+++ mutants/m03-data-bound/li_v3_local_extra_headers.py\n@@ -115,7 +115,7 @@\n         if end - cursor < 4:\n             raise LocalExtraError('EXTRA_HEADER_TRUNCATED')\n         header_id, data_size = struct.unpack_from('<HH', raw, cursor)\n-        if data_size > end - cursor - 4:\n+        if False:\n             raise LocalExtraError('EXTRA_DATA_TRUNCATED')\n         fields.append({'header_id': header_id, 'data_size': data_size})\n         cursor += 4 + data_size\n"
+}

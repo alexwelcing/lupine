@@ -1,0 +1,136 @@
+{
+  "created_at": "2026-10-16T13:27:01.626320+00:00",
+  "excluded": [
+    "inventory.json",
+    "handoff.json",
+    "reviewed-invocation.json",
+    "actual/**",
+    "__pycache__/**"
+  ],
+  "file_count": 30,
+  "files": {
+    "FINAL.md": {
+      "bytes": 2747,
+      "sha256": "7efba8f241f4187c9c1f3c94600eb1d07c910689205d9dd0ddf1271ed5135f71"
+    },
+    "README.md": {
+      "bytes": 4819,
+      "sha256": "073e1a391e1fa8c22eedf331bbe0f934c556ccbead7d0c0a9a32b4bb0f8f6686"
+    },
+    "author-first-stderr.txt": {
+      "bytes": 3802,
+      "sha256": "c54b9522b848f48af3c0cd9e6e3a093b949be84659a7663d62351d7a3145b1ec"
+    },
+    "author-first-stdout.txt": {
+      "bytes": 732,
+      "sha256": "c36b07bb7018dfe1e63dc4d724150f7c95a81ee7ce1513db235bc1242442c684"
+    },
+    "before-public-aggregate-amendment/contract.json": {
+      "bytes": 7708,
+      "sha256": "eb4112fe3475599b674c39e3e73d9938c1fc69a3adfc420aaa3e86fad8963721"
+    },
+    "before-public-aggregate-amendment/scope.md": {
+      "bytes": 1280,
+      "sha256": "db2ab69e582f1a0c0c06de8e0b8a38ca0b0347afb1c5bf038d9cf846afe6fff6"
+    },
+    "before-supplied-exposure-clarification.py": {
+      "bytes": 26565,
+      "sha256": "c2329e36ba769dd632bf695f283916410b93dbade4f8cc748233ebe00be9e0c9"
+    },
+    "census.py": {
+      "bytes": 26565,
+      "sha256": "d77a1ca2eeeb1d0f4e02fac6d624fa63527c4a8d423fdf8f7f645db102c67630"
+    },
+    "contract.json": {
+      "bytes": 8585,
+      "sha256": "e849d36004f0e73fdde22620bbffe06d1e53425907ca5fce974c536a5e1ea052"
+    },
+    "first-author/README.md": {
+      "bytes": 4819,
+      "sha256": "073e1a391e1fa8c22eedf331bbe0f934c556ccbead7d0c0a9a32b4bb0f8f6686"
+    },
+    "first-author/README.md.json": {
+      "bytes": 5297,
+      "sha256": "49fefe1358f56c1f5a9f6261654378263d3ddba6c6e4c934878058e379034cda"
+    },
+    "first-author/census.py": {
+      "bytes": 26565,
+      "sha256": "d77a1ca2eeeb1d0f4e02fac6d624fa63527c4a8d423fdf8f7f645db102c67630"
+    },
+    "first-author/contract.json": {
+      "bytes": 8585,
+      "sha256": "e849d36004f0e73fdde22620bbffe06d1e53425907ca5fce974c536a5e1ea052"
+    },
+    "first-author/execution.json": {
+      "bytes": 782,
+      "sha256": "b10830c82ee59479efa19542f8875366eae093e5672ffa7c2ce9aadca039865e"
+    },
+    "first-author/run_author.py": {
+      "bytes": 2576,
+      "sha256": "6df38bf620f3182c80074d5e548ad7c2eba00c6445849ee052bcd039b1520c16"
+    },
+    "first-author/start.json": {
+      "bytes": 603,
+      "sha256": "c2661e6232aa9e45cb6932232f52cc5efbaccc0fedfa2a951211694b9011ea69"
+    },
+    "first-author/stderr.txt": {
+      "bytes": 3802,
+      "sha256": "c54b9522b848f48af3c0cd9e6e3a093b949be84659a7663d62351d7a3145b1ec"
+    },
+    "first-author/stdout.txt": {
+      "bytes": 732,
+      "sha256": "c36b07bb7018dfe1e63dc4d724150f7c95a81ee7ce1513db235bc1242442c684"
+    },
+    "first-author/test_census.py": {
+      "bytes": 18939,
+      "sha256": "ea8677a6a59f91d7376f688a57335e0838228230f324a1b77ec77d57613f97c9"
+    },
+    "first-publication-link-failure.json": {
+      "bytes": 612,
+      "sha256": "6f1ac64e80b869f589365e881c3adc449cd7310afebf4e6ae20d7659e32053a9"
+    },
+    "independent-review-binding.json": {
+      "bytes": 1457,
+      "sha256": "c13b3a5da9bf0c980a76b77930df04c1b0a1cba2e4e7f5270b9568cc3bd7f7bd"
+    },
+    "parser-heritage.json": {
+      "bytes": 667,
+      "sha256": "db6dad141f81f67f2c8864328f664eb812c8048b1b39ee44bd4dce97ac8310f7"
+    },
+    "pre-hold-exposure-finding.json": {
+      "bytes": 713,
+      "sha256": "2769fdcff7468db029fbb89ea95ded6c9a624ad3826aa7b231bf5e7561125a84"
+    },
+    "public-aggregate-amendment.json": {
+      "bytes": 972,
+      "sha256": "b11016d5e94c5b1ebd5ccc43c9b4d67742cf98fd01ffa836ae66be9c0482b5a3"
+    },
+    "publication-check.json": {
+      "bytes": 1178,
+      "sha256": "3d43c4453683d848cfedefafbf9758acfc5cfed314890aa8bce53f9af8eaf746"
+    },
+    "publication-layout.json": {
+      "bytes": 492,
+      "sha256": "59aee115a089c7384935f972900eaf75a9be29f4a358c6d3cd39646135430e48"
+    },
+    "run_author.py": {
+      "bytes": 2576,
+      "sha256": "6df38bf620f3182c80074d5e548ad7c2eba00c6445849ee052bcd039b1520c16"
+    },
+    "scope.md": {
+      "bytes": 1571,
+      "sha256": "4a6e7f9895bdbba2bb860ad933e87fc4b4201fea2b09022e5b53a2328578127b"
+    },
+    "source-hold.json": {
+      "bytes": 1330,
+      "sha256": "8f941386ae23ffdf2d951cb153f9bcf60a9436775a21779f80a907089b71bbab"
+    },
+    "test_census.py": {
+      "bytes": 18939,
+      "sha256": "ea8677a6a59f91d7376f688a57335e0838228230f324a1b77ec77d57613f97c9"
+    }
+  },
+  "schema": "lupine.rhizo.census-candidate-inventory.v1",
+  "scope": "Generated candidate and author evidence only; later root-owned actual binding/operation separate.",
+  "total_bytes": 186010
+}

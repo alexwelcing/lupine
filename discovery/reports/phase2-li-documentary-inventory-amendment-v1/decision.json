@@ -1,0 +1,69 @@
+{
+  "schema": "lupine.li.readiness.prospective-disclosure-amendment.v1",
+  "at": "2026-10-16T14:12:15.929620+00:00",
+  "owner": "root",
+  "authority": "Existing user authorization for autonomous research, implementation, tests and branch publication.",
+  "status": "ACCEPTED_FOR_IMPLEMENTATION_BEFORE_ANY_COMPLETE_ROUTE_ACTUAL_OPERATION",
+  "previous_strict_pure": {
+    "path": ".cache/phase2-li-complete-readiness-candidate-v1/li_v3_readiness.py",
+    "bytes": 81591,
+    "sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219"
+  },
+  "previous_contract": {
+    "path": ".cache/phase2-li-complete-readiness-candidate-v1/README.md",
+    "bytes": 10283,
+    "sha256": "295a04a9b411001e22a4e39c831c609203c2feb1958be5e663cfbb6a9e4704b7"
+  },
+  "previous_design": {
+    "path": ".cache/phase2-li-complete-readiness-design-v1/README.final-v2.md",
+    "bytes": 18051,
+    "sha256": "a538a77065b6dfbe84e76038f9e60610cecc5183721961379c8292084ac34568"
+  },
+  "baseline": "2975d6d0b9111cc84adb82ccc673bc82339ab154",
+  "rationale": "Exact allowed_texts validates already known literals but cannot discover an unknown dictionary. Outcome-free documentary disclosure was a design premise, not a user prohibition.",
+  "amendment": "Prospectively freeze an all-or-block inert plain-text inventory of both publisher-bound documentary roles with explicit possible incidental outcome exposure. Permitted disclosure changes; mathematical and scientific acceptance criteria do not.",
+  "phases": {
+    "A": "Unchanged complete package and two-role layout.",
+    "B": "Complete References/ColumnDescriptions inline/shared-string plain text with coordinates/storage; nontext cells structural only without values. No record-sheet preview, numerical filtering, truncation or automatic continuation.",
+    "C": "After reviewed committed typed binding: authenticate exact A/B receipts and original producers/same source; recompute A and whole inventory on verified same buffer and compare complete payloads; validate each strict binding role/coordinate/storage/literal; reconstruct strict documentary projection inside C before record-sheet opening; apply unchanged complete-frame rules."
+  },
+  "limits": "Existing bounds only, including1024projectedfields/2048chars and existing parser/storage/merge/relationship rules. No post-observation cap growth, changed roles or narrower selections.",
+  "budget": {
+    "A": 2,
+    "B": 2,
+    "C": 2,
+    "maximum_total": 6,
+    "automatic_advance": false,
+    "extra_actual_strict_documentary_phase": false
+  },
+  "fail_closed": [
+    "formula",
+    "unsupported text/storage",
+    "unbound required dependency or semantics",
+    "resource cap",
+    "cleanup failure",
+    "source/prior drift",
+    "unsupported join or row classification"
+  ],
+  "exposure": {
+    "potential_incidental_outcome_text_allowed": true,
+    "whole_worksheet_decoding_declared": true,
+    "whole_shared_string_decoding_declared_separately": true,
+    "researcher_visible_text_declared_separately": true,
+    "record_worksheets_opened_in_B": false,
+    "shared_strings_may_contain_record_values": true,
+    "fresh_status": "UNESTABLISHED",
+    "outcome_free_guarantee": false,
+    "scientific_admission": false,
+    "independence_claim": false
+  },
+  "preserve": [
+    "Pure5fd1 APIs and strict profile unchanged.",
+    "Original preparations, strict production checkpoint and all failures remain historical.",
+    "Never relabel inventory as historical strict-documentary receipt or invent prior exposure/cleanup.",
+    "Meaning/unit fields remain reviewed assertions.",
+    "No actual complete-route operation or new workbook text read before this decision."
+  ],
+  "next": "Distinct adapter profile plus generated author/independent tests and review; published source CI/cleanpackage/artifacts before actual use. G20 unresolved/G21 blocked.",
+  "record_preparation_note": "First seal attempt referenced nonexistent contract.md and wrote no decision; corrected to held README.md295a04a9. No source/test operation occurred."
+}

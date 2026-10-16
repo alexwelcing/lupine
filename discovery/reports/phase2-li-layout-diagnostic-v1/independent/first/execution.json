@@ -1,0 +1,33 @@
+{
+  "scope": "Independent synthetic header-only regression; no actual source/cache, archive payload, decompression, XML or network access.",
+  "started_at": "2026-10-16T05:56:12.345614+00:00",
+  "source_before": {
+    ".cache/phase2-li-layout-candidate-v1/promotion/scripts/li_v3_zip_diagnostic.py": "de7807a8721cc243a9acf71e01c80aa531454248b2cde92c5518f875e89e0d87",
+    ".cache/phase2-li-layout-candidate-v1/promotion/docs/li-v3-zip-diagnostic-plan.md": "e3726819a1c4a133f90ba28a2bfa0bd7ed8e52454f21a61275bfbc8f76dcf6f1",
+    ".cache/phase2-li-layout-review-v1/test_li_v3_zip_diagnostic_review.py": "d33b39bf67f76858fb5077e466b488c455cfa3d66754e11b1d88db1b2c91b244"
+  },
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-layout-review-v1",
+    "-p",
+    "test_li_v3_zip_diagnostic_review.py",
+    "-v"
+  ],
+  "finished_at": "2026-10-16T05:56:12.654797+00:00",
+  "elapsed_seconds": 0.3074897240003338,
+  "exit_code": 0,
+  "source_after": {
+    ".cache/phase2-li-layout-candidate-v1/promotion/scripts/li_v3_zip_diagnostic.py": "de7807a8721cc243a9acf71e01c80aa531454248b2cde92c5518f875e89e0d87",
+    ".cache/phase2-li-layout-candidate-v1/promotion/docs/li-v3-zip-diagnostic-plan.md": "e3726819a1c4a133f90ba28a2bfa0bd7ed8e52454f21a61275bfbc8f76dcf6f1",
+    ".cache/phase2-li-layout-review-v1/test_li_v3_zip_diagnostic_review.py": "d33b39bf67f76858fb5077e466b488c455cfa3d66754e11b1d88db1b2c91b244"
+  },
+  "source_unchanged": true,
+  "logs": {
+    "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr.log": "324c8c2f9d98af8e38b14fe351570d39ff3d8623399feee55ffbf36b7164dad6"
+  }
+}

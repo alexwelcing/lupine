@@ -1,0 +1,27 @@
+[
+  {
+    "source": ".cache/mpea-study-supervisor/promotion/scripts/mpea_study_supervisor.py",
+    "destination": "scripts/mpea_study_supervisor.py",
+    "sha256": "1dbd4a1b0e9c3f0246d23bd7670527cfa3bd69f754279aabba06e4ae464e87ab"
+  },
+  {
+    "source": ".cache/mpea-study-supervisor/promotion/tests/test_mpea_study_supervisor.py",
+    "destination": "tests/test_mpea_study_supervisor.py",
+    "sha256": "ecffc888a8f678d60072b6dbf8df844d81c53864b870372a3b05fdf0d5f22add"
+  },
+  {
+    "source": ".cache/mpea-study-supervisor/promotion/tests/fixtures/mpea_supervisor_worker.py",
+    "destination": "tests/fixtures/mpea_supervisor_worker.py",
+    "sha256": "e43842b5632c23e72e0ad0007fba9a0904227fb311b54b83a92c62bf15077f42"
+  },
+  {
+    "source": ".cache/mpea-study-supervisor/review/promotion/tests/test_mpea_study_supervisor_review.py",
+    "destination": "tests/test_mpea_study_supervisor_review.py",
+    "sha256": "3cca098e6f5e3ab65d49dd0c311bda9069a0c033afb85fc70074ba6b73b60421"
+  },
+  {
+    "source": ".cache/mpea-study-supervisor/review/promotion/tests/fixtures/mpea_supervisor_review_child.py",
+    "destination": "tests/fixtures/mpea_supervisor_review_child.py",
+    "sha256": "89e4a9e4cb6cf03afdb4f326801491fc21f6c7332aff5e84cd57d8c8d4c820a6"
+  }
+]

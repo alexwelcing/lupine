@@ -1,0 +1,39 @@
+{
+  "candidate_contract_sha256": "1247430dfe174bb1d7dd2e17ca06b5781ef41fadd7cb13d60d6d01e202dbb594",
+  "candidate_script_sha256": "54db58a567afc9211303f2edff13541ab2f97beb77ef2edaa518ad32bf6b1026",
+  "checked_at": "2026-10-16T09:20:47.051542+00:00",
+  "checks": [
+    "Exactly two fixed diagnose --run slots and private-object access delegated only to the committed diagnostic subprocess.",
+    "Commit placeholder deliberately remains PENDING_PUBLISHED_SOURCE_COMMIT. Exact actual published binding must be separately reviewed before invoking recorder.",
+    "Original four-job CI, clean package receipts, artifact-review PASS, runtime326, source guards, branch/remote/HEAD and prerequisite hash gates retained.",
+    "Recorder and gate-receipt hashes rechecked before and after each command; source state and runtime maps captured before/after.",
+    "Exact predecessor classification and source/capture identities required; no classifier-equivalence theorem claimed by canonical-and-closed validation.",
+    "Success projects one to256 complete two-key uint16 pairs; total declared local span <=65535. Failure reasons require null field list.",
+    "Exposure is closed and typed; locator/walk ordering enforced; successful completion requires both completed flags; local payload interpretation, member/XML/worksheet/shared-string/scientific interpretation flags stay false.",
+    "Unexpected parser/locator/predecessor failure, source/remote/gate drift, stderr, timeout, launch failure, guard result or public-file mismatch stops without a second slot or overwrite.",
+    "Both completed outputs must be byte-identical; final statement remains computational replay with no payload semantics or scientific admission."
+  ],
+  "first_finding": {
+    "issue": "LOCAL_EXTRA_PARSE_FAILED was in the replayable reason union, permitting a second source invocation after an unexpected candidate exception.",
+    "original_recorder_sha256": "860ba8b9b26045a30144a505e1a229a577680a0dabf279437024c6002a672d34",
+    "resolution": "Explicit allowlist now contains only LOCAL_EXTRA_HEADERS_COMPLETE, EXTRA_HEADER_TRUNCATED, EXTRA_DATA_TRUNCATED and EXTRA_RECORD_LIMIT. Other unexpected errors/mismatches stop after retaining logs/receipt.",
+    "source_executions_before_correction": 0
+  },
+  "limits": [
+    "Source-only review; no runtime test of this recorder was performed.",
+    "Final commit binding, actual CI, package, full/additive artifact audits and clean state are still required.",
+    "A complete tag/length inventory does not validate payload semantics, archive compatibility or scientific usability."
+  ],
+  "preparation_path_lookup_error": "Root message called the correction file correction.json; its actual name recorder-correction.json was found with rg. Initial cat returned missing-file error; no audit/source operation was invoked.",
+  "recorder_sha256": "06e1a086dad664f51bb2b96533d8317889b909aa8a9fe349a7742c129f585adf",
+  "scope": {
+    "actual_local_extra_inventory_observed": false,
+    "candidate_imported_or_invoked": false,
+    "candidate_tests_rerun": false,
+    "package_executed": false,
+    "private_objects_or_capture_read": false,
+    "recorder_invoked": false
+  },
+  "source_path_assessment": "No inherent candidate guard/exposure blocker found. Exact predecessor result ensures the first positive local-extra span reached by contiguous local scanning is the same rejected entry; the walker unpacks only four-byte ID/length records and skips payload bytes. Whole-object raw acquisition and inherited directory metadata decoding remain exposed.",
+  "status": "PASS_PROSPECTIVE_PENDING_COMMIT_BINDING"
+}

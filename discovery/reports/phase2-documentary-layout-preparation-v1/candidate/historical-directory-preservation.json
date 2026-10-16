@@ -1,0 +1,42 @@
+{
+  "event": "Exclusive mkdir refused because root-assigned directory already holds prior ZIP diagnostic evidence; no files were changed.",
+  "new_sole_write_subdirectory": "documentary-localization-v1",
+  "prior_files": {
+    "README.md": {
+      "bytes": 1638,
+      "sha256": "feeefb2c3414f23de6f022b60c98a5b9a63e0e3475eb99db52bd09d987542eb3"
+    },
+    "author-tests-final.txt": {
+      "bytes": 1994,
+      "sha256": "d89817985968af0105ce2167fcf2a0529a0a6b30d9b16d115ab63ca30df42999"
+    },
+    "author-tests-first.txt": {
+      "bytes": 1839,
+      "sha256": "763693ef6b0ef399eb9c1a71e855c6fa194f0fcdab87e95d73c1473650ccf9fe"
+    },
+    "candidate-receipt.json": {
+      "bytes": 2207,
+      "sha256": "65bc78c89e5cd1fb09f892588c60838030aeaa5cd00e1ccd7cd60719b0b2ecfc"
+    },
+    "promotion/docs/li-v3-zip-diagnostic-plan.md": {
+      "bytes": 4668,
+      "sha256": "e3726819a1c4a133f90ba28a2bfa0bd7ed8e52454f21a61275bfbc8f76dcf6f1"
+    },
+    "promotion/scripts/__pycache__/li_v3_zip_diagnostic.cpython-312.pyc": {
+      "bytes": 17670,
+      "sha256": "3e606a09812802ab012ca5eb9f2c879a661d24924679dcc007a46e696d88133a"
+    },
+    "promotion/scripts/li_v3_zip_diagnostic.py": {
+      "bytes": 12822,
+      "sha256": "de7807a8721cc243a9acf71e01c80aa531454248b2cde92c5518f875e89e0d87"
+    },
+    "promotion/tests/__pycache__/test_li_v3_zip_diagnostic.cpython-312.pyc": {
+      "bytes": 21192,
+      "sha256": "d61f1389d6ad0e48e3e572839a90c0b480288711f27afe2a6753f1e07ebfb9d4"
+    },
+    "promotion/tests/test_li_v3_zip_diagnostic.py": {
+      "bytes": 10987,
+      "sha256": "d94c59c55aebb793d7285c3ac748f2f0ad76770346d6a14cff2e53aeaace3c77"
+    }
+  }
+}

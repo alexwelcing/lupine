@@ -1,0 +1,14 @@
+test_minimum_stays_minimum_after_cap_increases (test_finite_planning.FinitePlanningWorldTests.test_minimum_stays_minimum_after_cap_increases) ... FAIL
+
+======================================================================
+FAIL: test_minimum_stays_minimum_after_cap_increases (test_finite_planning.FinitePlanningWorldTests.test_minimum_stays_minimum_after_cap_increases)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-finite-planner-candidate-v1/mutant-last-minimum/tests/test_finite_planning.py", line 122, in test_minimum_stays_minimum_after_cap_increases
+    self.assertEqual(later.minimum_evaluation_panels, 1)
+AssertionError: 4 != 1
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)

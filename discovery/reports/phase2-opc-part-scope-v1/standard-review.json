@@ -1,0 +1,67 @@
+{
+  "created_at": "2026-10-16T12:54:16.993523+00:00",
+  "status": "PRIMARY_STANDARD_SCOPE_CLARIFIED_NO_READER_CHANGE",
+  "standard": "ECMA-376 Part2, fifth edition, December2021, Open Packaging Conventions",
+  "primary_page": "https://ecma-international.org/publications-and-standards/standards/ecma-376/",
+  "direct_download": "https://ecma-international.org/wp-content/uploads/ECMA-376-2_5th_edition_december_2021.zip",
+  "pdf_sha256": "18701071fe15f39389761f82512c70d2effbf22bd16dd034f2939797ff5f6147",
+  "text_sha256": "a63bc368c20e9cb5c4ca588687cf56b2de2ff2de7c1a64b50b9bdba309e31209",
+  "clauses": [
+    {
+      "clause": "1 and5",
+      "printed_pages": "1,9",
+      "supports": "General packaging conventions apply to varied content and markup specifications; not an XLSX part-name roster."
+    },
+    {
+      "clause": "4",
+      "printed_page": 8,
+      "short_exact_quote": "OPC conformance is purely syntactic."
+    },
+    {
+      "clause": "6.2.2.1\u20136.2.2.3",
+      "printed_pages": "10\u201312",
+      "supports": "Part-name grammar, reserved relationships names, case-insensitive equivalence/integrity constraints. No universal finite app-specific filename whitelist."
+    },
+    {
+      "clause": "6.2.3;7.2.3.2.1;7.2.3.5",
+      "printed_pages": "12,28,31",
+      "supports": "Each part has a MIME media type; non-Relationships parts receive Default/Override coverage, with overrides taking precedence and duplicate declarations constrained."
+    },
+    {
+      "clause": "6.5.1\u20136.5.3.4",
+      "printed_pages": "19\u201322",
+      "supports": "Content-specific payload references may exist. Relationships expose a separate graph; targets have internal/external modes and source-dependent base IRIs. Internal is the default; external targets are permitted in OPC."
+    },
+    {
+      "clause": "7.3.7",
+      "printed_page": 35,
+      "supports": "[Content_Types].xml stores the Media Types stream in the ordinary noninterleaved ZIP case; it is not an ordinary part under the abstract naming grammar."
+    }
+  ],
+  "interpretation": "An app-specific finite whitelist is a restricted reader profile, not OPC universal part naming. Opaque payload handling is not proof of harmlessness or workbook semantic validity. No particular unknown Li member or failure is asserted.",
+  "rights": {
+    "official_public_access": true,
+    "license_for_full_redistribution_established": false,
+    "observation": "No explicit copyright or broad redistribution-license text was found in the fetched page notice scan or extracted PDF text. No additional rights page was fetched.",
+    "public_output": "Own paraphrase and one short normative quotation; full page/ZIP/PDF/text remain excluded."
+  },
+  "exposure": {
+    "full_standards_page_zip_selected_pdf_and_extracted_text_machine_read": true,
+    "researcher_read": "Relevant identity, package/name/media-type/relationship clauses and extraction warning; only standards examples, no empirical archive.",
+    "other_zip_members_opened": false,
+    "li_archive_or_cache_or_member_metadata_read": false,
+    "assumed_g34_failure": false,
+    "actual_source_or_scientific_outcomes_read": false
+  },
+  "extraction_limit": "pdftotext returned0 while stderr said Syntax Error: Can't get Fields array. Original stderr retained. Relevant selected clauses were readable; no claim that conversion proved complete PDF fidelity.",
+  "actions": {
+    "ordinary_requests": 2,
+    "redirects_followed": 0,
+    "retries_or_mirrors": 0,
+    "schema_archives_or_linked_standards_opened": 0,
+    "implementations_or_tests": 0,
+    "reader_acceptance_changes": 0,
+    "new_workflow": false
+  },
+  "before_actual_g34_result": "This inquiry was scoped before any actual G34 result was supplied to this researcher; no outcome-selected acceptance amendment."
+}

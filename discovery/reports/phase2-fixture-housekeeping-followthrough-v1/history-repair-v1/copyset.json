@@ -1,0 +1,60 @@
+{
+  "files": [
+    {
+      "before_sha256": "52d886ae47f57bd7a827c0c331edd6395b55088ae85f8869b9fb52787f9bcb5b",
+      "bytes": 28294,
+      "candidate": "candidate/tests/test_mpea_formula_tokens_review.py",
+      "candidate_sha256": "b5e44752c81ea45a955dc4d512ef8999db6c13bddbe6ccde2f1e9f084ac1aca0",
+      "path": "tests/test_mpea_formula_tokens_review.py"
+    },
+    {
+      "bytes": 54004,
+      "candidate": "candidate/tests/fixtures/mpea_formula_historical_sources.json",
+      "candidate_sha256": "299376481c5ec08c83ed2d0e3d50ed06e6048fa49e7915886b0b655ccb7e3e6e",
+      "new_file": true,
+      "path": "tests/fixtures/mpea_formula_historical_sources.json"
+    }
+  ],
+  "focused_recommendation": "Existing formula positive gate and committed historical-repin negative, followed by root selected affected-module suite. No new implementation-mirroring test is proposed.",
+  "historical_sources": [
+    {
+      "bytes": 11861,
+      "matches_baseline_copy": true,
+      "matches_git_commit": "ec32247f404d7d2b0a916ff7012bded2accb48c8",
+      "matches_unchanged_production_pin": true,
+      "path": "tests/test_mpea_custody.py",
+      "sha256": "cf2fc7a0bdaf9bd59589c123745aae6f353fa5837849e26d2a9438d62d090b19"
+    },
+    {
+      "bytes": 15765,
+      "matches_baseline_copy": true,
+      "matches_git_commit": "ec32247f404d7d2b0a916ff7012bded2accb48c8",
+      "matches_unchanged_production_pin": true,
+      "path": "tests/test_mpea_header_labels.py",
+      "sha256": "1bd9f9f967925faac4479135adb7d10051a4cb60bd17932759e0d3c0dc441dc9"
+    },
+    {
+      "bytes": 24545,
+      "matches_baseline_copy": true,
+      "matches_git_commit": "ec32247f404d7d2b0a916ff7012bded2accb48c8",
+      "matches_unchanged_production_pin": true,
+      "path": "tests/test_mpea_row_metadata_review.py",
+      "sha256": "9a32ec3ad0e566887239c01047b1a5a1d5cb0249fd2888bb76faa90018f9c8c1"
+    }
+  ],
+  "preservation": {
+    "historical_git_objects_changed": false,
+    "maintenance_controls_retained": true,
+    "old_failure_or_candidate_evidence_changed": false,
+    "production_pins_changed": false,
+    "tests_executed": false
+  },
+  "production_sources": {
+    "scripts/mpea_formula_tokens.py": "8f2bbaa34dccc9c50341f86863526cd3ad6380e97ff3d0e2ca07c0fbbe4c3139",
+    "scripts/mpea_row_metadata.py": "d50ce1cf06761cd080ca0fcc6516c07ef71e0a4106bba73660642c846915e33b"
+  },
+  "reason": "Three live historical test files now include lifecycle controls; the synthetic formula baseline must use the exact originally pinned bytes.",
+  "schema": "lupine.fixture_history_repair_candidate.v1",
+  "status": "PREPARED_NOT_EXECUTED",
+  "test_runtime_history_dependency": "None added: runtime reads the packaged JSON fixture and checks unchanged production pin hashes. Git history was read only while preparing this fixed fixture."
+}

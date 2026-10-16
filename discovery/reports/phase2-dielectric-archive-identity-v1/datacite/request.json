@@ -1,0 +1,10 @@
+{
+  "credentials": false,
+  "maximum_response_bytes": 1048576,
+  "method": "GET",
+  "redirects": "reject",
+  "retries": 0,
+  "started_at": "2026-10-16T16:11:20.593632+00:00",
+  "timeout_seconds": 30,
+  "url": "https://api.datacite.org/dois/10.5061/dryad.ph81h"
+}

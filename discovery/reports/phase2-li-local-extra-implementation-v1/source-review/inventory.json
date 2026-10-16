@@ -1,0 +1,25 @@
+{
+  "files": [
+    {
+      "bytes": 2575,
+      "path": ".cache/phase2-li-local-extra-math-review-v1/audit_source_bindings.py",
+      "sha256": "c3987c44793ffedfe13be958dd8538ce7f0af46b16dfc53a37d222e0d6c6ba95"
+    },
+    {
+      "bytes": 6781,
+      "path": ".cache/phase2-li-local-extra-math-review-v1/review.json",
+      "sha256": "1083f9a93cff0ddd39dba8b668ce6614056295b4507d10ca794b0cb33aedbb10"
+    },
+    {
+      "bytes": 4257,
+      "path": ".cache/phase2-li-local-extra-math-review-v1/source-argument.md",
+      "sha256": "fc7b4e231e05ee72d97de624400e69ba119014c23d2b12a82e220514f86049e0"
+    },
+    {
+      "bytes": 3538,
+      "path": ".cache/phase2-li-local-extra-math-review-v1/source-bindings-first.json",
+      "sha256": "e35e87db9a906589fac0c9ed7b931c98022a79a16b17fab725da51d408446b5d"
+    }
+  ],
+  "schema": "lupine.discovery.review_copy_inventory.v1"
+}

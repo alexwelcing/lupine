@@ -1,0 +1,14 @@
+test_incoming_overlap_is_not_cleared_by_outgoing_overlap (__main__.PredicateReview.test_incoming_overlap_is_not_cleared_by_outgoing_overlap) ... FAIL
+
+======================================================================
+FAIL: test_incoming_overlap_is_not_cleared_by_outgoing_overlap (__main__.PredicateReview.test_incoming_overlap_is_not_cleared_by_outgoing_overlap)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-review-v1/test_growth_predicate_review.py", line 399, in test_incoming_overlap_is_not_cleared_by_outgoing_overlap
+    self.assertNotIn(family['status'],FAILURE_STATUSES,
+AssertionError: 'FAILURES_AND_INCOMPLETE' unexpectedly found in {'FAILURES_AND_INCOMPLETE', 'FAILURES_OBSERVED'} : An incoming-ambiguous entry must not acquire scalar findings by also having an outgoing overlap
+
+----------------------------------------------------------------------
+Ran 1 test in 0.010s
+
+FAILED (failures=1)

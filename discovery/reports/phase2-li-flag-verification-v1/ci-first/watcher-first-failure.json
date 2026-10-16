@@ -1,0 +1,11 @@
+{
+  "observed_at": "2026-10-16T07:18:21.759534+00:00",
+  "watcher_session": 6957,
+  "exit_code": 1,
+  "last_saved_observation_at": "2026-10-16T06:59:25.071913+00:00",
+  "failed_request": "repos/alexwelcing/lupine/actions/runs/38864077153/jobs?per_page=100",
+  "stderr": "gh: Bad credentials (HTTP 401); subprocess.CalledProcessError returned exit status 1",
+  "exact_failure_time": "not_recorded",
+  "effect": "No final result written; production supervisor remained waiting; no diagnostic executed.",
+  "recovery": "Fresh tool-invoked gh query succeeded; resume observations in distinct retry directory, without changing CI or tests."
+}

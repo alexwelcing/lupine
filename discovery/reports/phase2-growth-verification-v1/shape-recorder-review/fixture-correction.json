@@ -1,0 +1,8 @@
+{
+  "reason": "Pure synthetic API correctly leaves custody raw-read flags false; conversion to mock completed production fixture omitted these three flags. All first failures are reviewer fixture errors, not weakened recorder checks.",
+  "first_result": "9 methods, 3 failures, 1 error",
+  "source_unchanged": true,
+  "old_test_sha256": "43a21d9ee7ce5d01f54d8ca5ab8d8ea970a086fbd6494e919bd3e0f7b0bb20ae",
+  "new_test_sha256": "52df140dc2a185c25860d2b72ae56d263e3cf1013b64fa27b51c58141cd72c94",
+  "actual_source_operations": false
+}

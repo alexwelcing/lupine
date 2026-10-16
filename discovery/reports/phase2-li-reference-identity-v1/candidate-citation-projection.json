@@ -1,0 +1,98 @@
+{
+  "items": [
+    {
+      "DOI": "10.1016/s0920-3796(85)80060-0",
+      "title": [
+        "Miniature tensile test specimens for fusion reactor irradiation studies"
+      ],
+      "container-title": [
+        "Fusion Engineering and Design"
+      ],
+      "volume": "2",
+      "page": "407-416",
+      "published": {
+        "date-parts": [
+          [
+            1985
+          ]
+        ]
+      },
+      "publisher": "Elsevier BV",
+      "type": "journal-article",
+      "URL": "https://doi.org/10.1016/s0920-3796(85)80060-0",
+      "author": [
+        {
+          "given": "R",
+          "family": "KLUEH",
+          "sequence": "first"
+        }
+      ]
+    },
+    {
+      "DOI": "10.1016/0167-899x(85)90028-x",
+      "title": [
+        "Miniature tensile test specimens for fusion reactor irradiation studies"
+      ],
+      "container-title": [
+        "Nuclear Engineering and Design. Fusion"
+      ],
+      "volume": "2",
+      "issue": "3",
+      "page": "407-416",
+      "published": {
+        "date-parts": [
+          [
+            1985
+          ]
+        ]
+      },
+      "publisher": "Elsevier BV",
+      "type": "journal-article",
+      "URL": "https://doi.org/10.1016/0167-899x(85)90028-x",
+      "author": [
+        {
+          "given": "R.L.",
+          "family": "Klueh",
+          "sequence": "first"
+        }
+      ]
+    },
+    {
+      "DOI": "10.1007/bf03258764",
+      "title": [
+        "Steels for Fusion Reactor Applications"
+      ],
+      "container-title": [
+        "JOM"
+      ],
+      "volume": "37",
+      "issue": "10",
+      "page": "16-23",
+      "published": {
+        "date-parts": [
+          [
+            1985,
+            10
+          ]
+        ]
+      },
+      "publisher": "Springer Science and Business Media LLC",
+      "type": "journal-article",
+      "URL": "https://doi.org/10.1007/bf03258764",
+      "author": [
+        {
+          "given": "R. L.",
+          "family": "Klueh",
+          "sequence": "first"
+        },
+        {
+          "given": "M. P.",
+          "family": "Tanaka",
+          "sequence": "additional"
+        }
+      ]
+    }
+  ],
+  "result_count": 3,
+  "automatic_identity_match": false
+}

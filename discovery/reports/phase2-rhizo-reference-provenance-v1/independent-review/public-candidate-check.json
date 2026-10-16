@@ -1,0 +1,28 @@
+{
+  "schema": "lupine.rhizo.documentary-independent-review.public-candidate-check.v1",
+  "created_at": "2026-10-16T11:54:12.960914+00:00",
+  "scope": "Documentary identities, row/graph mapping and publication exclusion checks only. No numerical evaluation/comparison, source operation, raw source access or projector rerun.",
+  "candidate_readme": {
+    "path": ".cache/phase2-rhizo-documentary-review-v1/README.md",
+    "bytes": 7874,
+    "sha256": "66b2963a5da356ad660e6a08a88f4303ab3bc503cec307d33d0407a75933e38f"
+  },
+  "candidate_bindings": {
+    "path": ".cache/phase2-rhizo-documentary-review-v1/source-bindings.json",
+    "bytes": 3066,
+    "sha256": "c0450f9d1370c551cd0dd102f8004897a5c849929a24e6403243bfd988bf88c2"
+  },
+  "five_source_identities_match": true,
+  "eight_report_identities_match": true,
+  "original_graph_byte_identical": true,
+  "all_43_roster_rows_match_exact_locations_context_roles_and_units": true,
+  "all_36_ids_and_172_edges_preserved": true,
+  "all_citation_and_extraction_keys_resolve": true,
+  "surface_record_ids_and_reconstruction_flags_match_declarations": true,
+  "full_private_note_strings_absent": true,
+  "literal_disclosure_check_of_36_explicitly_labelled_target_texts_no_public_matches": true,
+  "uncertainty_alternative_and_comparison_value_exclusion_review": "Manually reviewed all public CSV rows, README and bibliography against the authorized private notes; no outcome figures reproduced. No per-value hashes or numeric lists retained.",
+  "email_contact_strings_found": false,
+  "signed_token_urls_found": false,
+  "semantic_finding": "No blocker. Explicit H_vf versus stored property-name convention caveat recommended; no thermodynamic mismatch inferred solely from a symbol."
+}

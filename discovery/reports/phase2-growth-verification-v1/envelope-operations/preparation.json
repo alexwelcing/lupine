@@ -1,0 +1,9 @@
+{
+  "actual_invocations": 0,
+  "commit": "UNBOUND_COMMIT",
+  "prepared_at": "2026-10-16T10:31:21.743458+00:00",
+  "prior_recorder_sha256": "c0e5e38f4669cd339002defd7c563afec6ea931525b4faad625c05fdd4af555d",
+  "production_prerequisite": "Existing fixed G29 public receipt; additional operational sequencing requires actual G30 same-commit positive pair.",
+  "source_inputs": "Static source only; no custody object/capture or actual G30/G31 receipt read.",
+  "source_sha256": "40e3f1392c8ea7cdde921574bea0b9852507eeb4901e149089901196b88bb12b"
+}

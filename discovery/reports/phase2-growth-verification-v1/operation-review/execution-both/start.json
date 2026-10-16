@@ -1,0 +1,31 @@
+{
+  "before": {
+    "commit": "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace",
+    "errors": {},
+    "final_bindings_valid": true,
+    "held_equal": true,
+    "sha256": {
+      "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-operation-review-v1/audit_completed_operations.py": "a34b266e2316b14540b0abd0f2016274422a81b8eca90f3152aa734f5617deb7",
+      "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-operation-review-v1/bindings.final.json": "22bc16e787ebece062c8687035dd4c9b7717a9e36ca5e48e3497a9868121a20e",
+      "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-operation-review-v1/run_audit_recorded.py": "62a1accf38b6fa0ed9c5cf27af966c58b69484fb1a718af73097a32dda41f562"
+    }
+  },
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-B",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-operation-review-v1/audit_completed_operations.py",
+    "--bindings",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-operation-review-v1/bindings.final.json",
+    "--bindings-sha256",
+    "22bc16e787ebece062c8687035dd4c9b7717a9e36ca5e48e3497a9868121a20e",
+    "--stage",
+    "both",
+    "--operator",
+    "/root/phase2_planner/ui_review"
+  ],
+  "operator": "/root/phase2_planner/ui_review",
+  "reader_invocation": false,
+  "scope": "Public receipt and local committed-source audit only; no scientific validation.",
+  "stage": "both",
+  "started_at": "2026-10-16T11:08:02.777414+00:00"
+}

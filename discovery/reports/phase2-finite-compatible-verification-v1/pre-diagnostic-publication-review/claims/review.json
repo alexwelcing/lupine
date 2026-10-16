@@ -1,0 +1,47 @@
+{
+  "schema": "lupine.discovery.next_publication_claim_review.v1",
+  "status": "PASS_NO_REMAINING_CLAIM_OR_LINK_BLOCKER",
+  "observed_at": "2026-10-16T08:10:31.236219+00:00",
+  "reviewer": "/root/phase2_evidence",
+  "source_commit_context": "4492858d9e55ddfa3cca2e208063799517948b13",
+  "current_publication_uncommitted": true,
+  "blocking_findings": [],
+  "changed_retained_bindings": [],
+  "retained_audit": {
+    "path": ".cache/phase2-next-publication-claim-review-v1/retained-audit.json",
+    "sha256": "0f974b6d3a6554f35388f0b01748f24a1c3de31c978c296c2d10b625a120ce49",
+    "bound_public_records": 31
+  },
+  "independent_link_and_lossless_review": {
+    "path": ".cache/phase2-next-publication-link-review-v1/review.json",
+    "sha256": "3cd6aeb7af52ec56ec773910cd3f697001ae87f25fe71e24ae539c58128ef4a5",
+    "local_links_checked": 15,
+    "original_figure_entries_resolved": 17,
+    "original_author_audit_artifacts_resolved": 10,
+    "author_copy_map": ".cache/phase2-next-publication-link-review-v1/author-copy-map.json",
+    "author_copy_map_sha256": "e7d2950a1f7c2bc0dd3a1fa141891cb3015a18a9878257b0b97e345fd6b08d7a"
+  },
+  "resolved_findings": [
+    "Two historical figure README SVG/CSV links were broken after wrapping; original README preserved and two-link navigation revision explicitly disclosed.",
+    "Publication whitespace normalization preserves source README/license originals in wrappers and full readable notice; original receipt hashes refer to decoded originals.",
+    "Original failed independent-test stderr remains reconstructible from lossless wrapper; earlier failure not rewritten as a final-source pass."
+  ],
+  "claim_assessment": [
+    "Exact4492 retained CI success and package/audit evidence separated from pending new-source CI/publication.",
+    "Actual compatible runs report complete raw target-bearing buffer exposure but no decompression/XML start and no scientific schema admission.",
+    "The separate unobserved archive-close reporting limitation is recorded without silently changing frozen source or misattributing it to actual blocked returns.",
+    "Existing finite/IID arithmetic remains a hypothetical illustration of distinct sampling experiments, not a cost or ranker-superiority result.",
+    "Author repository absence and version/size/count findings stay scoped; static notebook integration does not claim actual notebook acquisition.",
+    "G20/G21 source/scientific gates, disabled expired automation and historical scientific negatives remain unchanged."
+  ],
+  "not_performed": [
+    "new network or remote CI observation",
+    "project tests/imports or custody commands",
+    "raw notebook/workbook or private cache access",
+    "independent raw wheel/source archive audit",
+    "new scientific evaluation/threshold/model/allocation",
+    "tracked writes",
+    "Git mutation"
+  ],
+  "limits": "Current report/source hashes bind this review; a later publication commit still requires its own remote, CI and package verification. Agent-review independence is not statistical independence."
+}

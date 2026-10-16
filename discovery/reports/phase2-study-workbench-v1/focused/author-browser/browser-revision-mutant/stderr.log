@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-planner-ui-candidate-v1/run_browser_candidate.py", line 19, in <module>
+    checks=check_planning_workbench(page,artifacts)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-planner-ui-candidate-v1/browser-revision-mutant-overlay/scripts/planning_browser_checks.py", line 158, in check_planning_workbench
+    assert page.locator('#pool-plan-result').inner_text() == current
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

@@ -1,0 +1,155 @@
+{
+  "recorded_at": "2026-10-16T09:02:56.098540+00:00",
+  "status": "BROKEN_HISTORICAL_RELATIVE_NAVIGATION",
+  "findings": [
+    {
+      "path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/finite-PUBLICATION-before-review-clarification.md",
+      "target": "README.md"
+    },
+    {
+      "path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/finite-PUBLICATION-before-review-clarification.md",
+      "target": "independent-review/independent-derivation.md"
+    },
+    {
+      "path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/finite-PUBLICATION-before-review-clarification.md",
+      "target": "independent-review/review.json"
+    },
+    {
+      "path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/finite-PUBLICATION-before-review-clarification.md",
+      "target": "publication-map.json"
+    },
+    {
+      "path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/finite-PUBLICATION-before-review-clarification.md",
+      "target": "publication-checks.json"
+    },
+    {
+      "path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/finite-PUBLICATION-before-review-clarification.md",
+      "target": "publication-first-check-failure.json"
+    },
+    {
+      "path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/finite-PUBLICATION-before-review-clarification.md",
+      "target": "counting-review/README.md"
+    },
+    {
+      "path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/finite-PUBLICATION-before-review-clarification.md",
+      "target": "counting-review/execution.json"
+    },
+    {
+      "path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/finite-PUBLICATION-before-review-clarification.md",
+      "target": "counting-review/review.json"
+    },
+    {
+      "path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/finite-PUBLICATION-before-review-clarification.md",
+      "target": "counting-review/inventory.json"
+    },
+    {
+      "path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/finite-PUBLICATION-before-review-clarification.md",
+      "target": "README.md"
+    },
+    {
+      "path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/finite-PUBLICATION-before-review-clarification.md",
+      "target": "publication-whitespace-harness-correction.json"
+    },
+    {
+      "path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/initial-phase2-finite-risk-inversion-design-v1-PUBLICATION.md",
+      "target": "README.md"
+    },
+    {
+      "path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/initial-phase2-finite-risk-inversion-design-v1-PUBLICATION.md",
+      "target": "independent-review/independent-derivation.md"
+    },
+    {
+      "path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/initial-phase2-finite-risk-inversion-design-v1-PUBLICATION.md",
+      "target": "independent-review/review.json"
+    },
+    {
+      "path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/initial-phase2-finite-risk-inversion-design-v1-PUBLICATION.md",
+      "target": "publication-map.json"
+    },
+    {
+      "path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/initial-phase2-finite-risk-inversion-design-v1-PUBLICATION.md",
+      "target": "publication-checks.json"
+    },
+    {
+      "path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/initial-phase2-finite-risk-inversion-design-v1-PUBLICATION.md",
+      "target": "publication-first-check-failure.json"
+    },
+    {
+      "path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/initial-phase2-finite-risk-inversion-design-v1-PUBLICATION.md",
+      "target": "counting-review/README.md"
+    },
+    {
+      "path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/initial-phase2-finite-risk-inversion-design-v1-PUBLICATION.md",
+      "target": "counting-review/execution.json"
+    },
+    {
+      "path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/initial-phase2-finite-risk-inversion-design-v1-PUBLICATION.md",
+      "target": "counting-review/review.json"
+    },
+    {
+      "path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/initial-phase2-finite-risk-inversion-design-v1-PUBLICATION.md",
+      "target": "counting-review/inventory.json"
+    },
+    {
+      "path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/initial-phase2-finite-risk-inversion-design-v1-PUBLICATION.md",
+      "target": "README.md"
+    },
+    {
+      "path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/initial-phase2-finite-risk-inversion-design-v1-PUBLICATION.md",
+      "target": "publication-whitespace-harness-correction.json"
+    },
+    {
+      "path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/initial-phase2-bam-readiness-v1-PUBLICATION.md",
+      "target": "README.md"
+    },
+    {
+      "path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/initial-phase2-bam-readiness-v1-PUBLICATION.md",
+      "target": "independent-review/review.json"
+    },
+    {
+      "path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/initial-phase2-bam-readiness-v1-PUBLICATION.md",
+      "target": "independent-review/binding-timing-addendum.json"
+    },
+    {
+      "path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/initial-phase2-bam-readiness-v1-PUBLICATION.md",
+      "target": "publication-map.json"
+    },
+    {
+      "path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/initial-phase2-bam-readiness-v1-PUBLICATION.md",
+      "target": "publication-checks.json"
+    },
+    {
+      "path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/initial-phase2-bam-readiness-v1-PUBLICATION.md",
+      "target": "retained-metadata/datacite-17846617.json"
+    },
+    {
+      "path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/initial-phase2-bam-readiness-v1-PUBLICATION.md",
+      "target": "retained-metadata/datacite-17846436.json"
+    },
+    {
+      "path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/initial-phase2-bam-readiness-v1-PUBLICATION.md",
+      "target": "zenodo-17846617.json"
+    },
+    {
+      "path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/initial-phase2-bam-readiness-v1-PUBLICATION.md",
+      "target": "zenodo-17846436.json"
+    },
+    {
+      "path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/initial-phase2-bam-readiness-v1-PUBLICATION.md",
+      "target": "../phase2-high-temperature-leads-v1/README.md"
+    },
+    {
+      "path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/initial-phase2-bam-readiness-v1-PUBLICATION.md",
+      "target": "publication-first-check-failure.json"
+    },
+    {
+      "path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/initial-phase2-bam-readiness-v1-PUBLICATION.md",
+      "target": "publication-content-scope.json"
+    },
+    {
+      "path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/initial-phase2-bam-readiness-v1-PUBLICATION.md",
+      "target": "publication-whitespace-harness-correction.json"
+    }
+  ],
+  "source_or_test_failure": false
+}

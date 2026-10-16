@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-combined-ui-validation-v1/mirror/discovery/scripts/package_smoke.py", line 541, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-combined-ui-validation-v1/mirror/discovery/scripts/package_smoke.py", line 529, in main
+    report = run(args.retain_directory)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-combined-ui-validation-v1/mirror/discovery/scripts/package_smoke.py", line 498, in run
+    report = json.loads(checked([str(executable), "-I", "-c", PROBE], work))
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-combined-ui-validation-v1/mirror/discovery/scripts/package_smoke.py", line 265, in checked
+    raise RuntimeError(f"Command failed ({result.returncode}): {command[0]}\n"
+RuntimeError: Command failed (1): /tmp/lupine-distribution-38dtqzfg/venv/bin/python
+Traceback (most recent call last):
+  File "<string>", line 11, in <module>
+ModuleNotFoundError: No module named 'lupine_discovery'
+

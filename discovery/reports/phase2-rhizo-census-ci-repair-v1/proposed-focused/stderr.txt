@@ -1,0 +1,17 @@
+test_absent_claim_cannot_hide_new_resource_after_full_reseal (reviewed_transport_test.RetainedMpeaTransportTests.test_absent_claim_cannot_hide_new_resource_after_full_reseal) ... ok
+test_absent_resource_and_explicit_null_digest_preserve_no_verdict (reviewed_transport_test.RetainedMpeaTransportTests.test_absent_resource_and_explicit_null_digest_preserve_no_verdict) ... ok
+test_all_seventeen_flags_required_without_omission_extra_or_reorder (reviewed_transport_test.RetainedMpeaTransportTests.test_all_seventeen_flags_required_without_omission_extra_or_reorder) ... ok
+test_invalid_optional_resource_never_becomes_absence (reviewed_transport_test.RetainedMpeaTransportTests.test_invalid_optional_resource_never_becomes_absence) ... ok
+test_metadata_rejects_unknown_status_path_and_javascript_claim (reviewed_transport_test.RetainedMpeaTransportTests.test_metadata_rejects_unknown_status_path_and_javascript_claim) ... ok
+test_metadata_requires_exact_three_keys_and_types (reviewed_transport_test.RetainedMpeaTransportTests.test_metadata_requires_exact_three_keys_and_types) ... ok
+test_missing_or_empty_javascript_fails_after_record_and_receipt_reseal (reviewed_transport_test.RetainedMpeaTransportTests.test_missing_or_empty_javascript_fails_after_record_and_receipt_reseal) ... ok
+test_missing_transport_metadata_fails_with_all_new_flags_present (reviewed_transport_test.RetainedMpeaTransportTests.test_missing_transport_metadata_fails_with_all_new_flags_present) ... ok
+test_optional_output_is_detached_from_input_claim (reviewed_transport_test.RetainedMpeaTransportTests.test_optional_output_is_detached_from_input_claim) ... ok
+test_present_claim_cannot_describe_missing_wheel_resource (reviewed_transport_test.RetainedMpeaTransportTests.test_present_claim_cannot_describe_missing_wheel_resource) ... ok
+test_present_negative_unknown_report_preserves_only_byte_identity (reviewed_transport_test.RetainedMpeaTransportTests.test_present_negative_unknown_report_preserves_only_byte_identity) ... ok
+test_self_consistent_unsupported_object_is_not_scientific_validation (reviewed_transport_test.RetainedMpeaTransportTests.test_self_consistent_unsupported_object_is_not_scientific_validation) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 2.244s
+
+OK

@@ -1,0 +1,28 @@
+{
+  "schema": "lupine.discovery.outcomes.v1",
+  "scenario_id": "calibrated-finite",
+  "problem_digest": "887915c186e071629892ae131f3e6863aec61fe744f95ae3c65b61d160b01c07",
+  "outcomes": [
+    {
+      "id": "A",
+      "score": "0",
+      "constraints": {
+        "limit": "-1"
+      }
+    },
+    {
+      "id": "B",
+      "score": "4",
+      "constraints": {
+        "limit": "-1"
+      }
+    },
+    {
+      "id": "C",
+      "score": "-5",
+      "constraints": {
+        "limit": "1"
+      }
+    }
+  ]
+}

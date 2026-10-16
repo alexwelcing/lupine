@@ -1,0 +1,160 @@
+{
+  "entries": [
+    {
+      "exact_excerpt_retained_locally_only": true,
+      "excerpt_sha256_utf8": "718549d14bdb9964c80442d9d8c0a9f50c6a28513f56a113421d863b7b7202dd",
+      "paragraph_index_zero_based": 2,
+      "projection_path": "primary_methods/projection.json",
+      "projection_sha256": "7e1b30726d20e9f5d5e2e220828add68531b4fbd92899635b4e3b6ba572dcda1",
+      "role": "DOCUMENTARY_METHODS_OR_FORMAT",
+      "section_id": "sec2",
+      "section_title": "Methods",
+      "subsection_title": "Theory and definitions"
+    },
+    {
+      "exact_excerpt_retained_locally_only": true,
+      "excerpt_sha256_utf8": "cd1f967311746f09248faf41c376756c88ff9e4df5a3658f6ebde909ded8493a",
+      "paragraph_index_zero_based": 3,
+      "projection_path": "primary_methods/projection.json",
+      "projection_sha256": "7e1b30726d20e9f5d5e2e220828add68531b4fbd92899635b4e3b6ba572dcda1",
+      "role": "DOCUMENTARY_METHODS_OR_FORMAT",
+      "section_id": "sec2",
+      "section_title": "Methods",
+      "subsection_title": "Theory and definitions"
+    },
+    {
+      "exact_excerpt_retained_locally_only": true,
+      "excerpt_sha256_utf8": "7703ae9d3baeac01e414f4c814c08a365c3c1f5ebe17223686f5008164875196",
+      "paragraph_index_zero_based": 4,
+      "projection_path": "primary_methods/projection.json",
+      "projection_sha256": "7e1b30726d20e9f5d5e2e220828add68531b4fbd92899635b4e3b6ba572dcda1",
+      "role": "DOCUMENTARY_METHODS_OR_FORMAT",
+      "section_id": "sec2",
+      "section_title": "Methods",
+      "subsection_title": "Theory and definitions"
+    },
+    {
+      "exact_excerpt_retained_locally_only": true,
+      "excerpt_sha256_utf8": "ad16edcf11514bc1baa4e590609dc362ac2294b966b6dcb637f7b7f297a4b027",
+      "paragraph_index_zero_based": 5,
+      "projection_path": "primary_methods/projection.json",
+      "projection_sha256": "7e1b30726d20e9f5d5e2e220828add68531b4fbd92899635b4e3b6ba572dcda1",
+      "role": "DOCUMENTARY_METHODS_OR_FORMAT",
+      "section_id": "sec2",
+      "section_title": "Methods",
+      "subsection_title": "Theory and definitions"
+    },
+    {
+      "exact_excerpt_retained_locally_only": true,
+      "excerpt_sha256_utf8": "60f41b31ac01eaef8c9e66ddf6248e68bb98c749f82dd3016678d1cacd56d5ad",
+      "paragraph_index_zero_based": 6,
+      "projection_path": "primary_methods/projection.json",
+      "projection_sha256": "7e1b30726d20e9f5d5e2e220828add68531b4fbd92899635b4e3b6ba572dcda1",
+      "role": "DOCUMENTARY_METHODS_OR_FORMAT",
+      "section_id": "sec2",
+      "section_title": "Methods",
+      "subsection_title": "Theory and definitions"
+    },
+    {
+      "exact_excerpt_retained_locally_only": true,
+      "excerpt_sha256_utf8": "243039624b75cbb079c1711737caa6582cb4250314696115e0c482f81b4e6ae1",
+      "paragraph_index_zero_based": 7,
+      "projection_path": "primary_methods/projection.json",
+      "projection_sha256": "7e1b30726d20e9f5d5e2e220828add68531b4fbd92899635b4e3b6ba572dcda1",
+      "role": "DOCUMENTARY_METHODS_OR_FORMAT",
+      "section_id": "sec2",
+      "section_title": "Methods",
+      "subsection_title": "Theory and definitions"
+    },
+    {
+      "exact_excerpt_retained_locally_only": true,
+      "excerpt_sha256_utf8": "082568ed7ad2e14849efc71eed1c649ce26e06d154a71f4662950ebbfa73c3bf",
+      "paragraph_index_zero_based": 8,
+      "projection_path": "primary_methods/projection.json",
+      "projection_sha256": "7e1b30726d20e9f5d5e2e220828add68531b4fbd92899635b4e3b6ba572dcda1",
+      "role": "DOCUMENTARY_METHODS_OR_FORMAT",
+      "section_id": "sec2",
+      "section_title": "Methods",
+      "subsection_title": "Theory and definitions"
+    },
+    {
+      "exact_excerpt_retained_locally_only": true,
+      "excerpt_sha256_utf8": "b43695892395ae686402cd3be5bee710e09eaa7fef04c43a4e1f1205253c4ec5",
+      "paragraph_index_zero_based": 9,
+      "projection_path": "primary_methods/projection.json",
+      "projection_sha256": "7e1b30726d20e9f5d5e2e220828add68531b4fbd92899635b4e3b6ba572dcda1",
+      "role": "DOCUMENTARY_METHODS_OR_FORMAT",
+      "section_id": "sec2",
+      "section_title": "Methods",
+      "subsection_title": "Theory and definitions"
+    },
+    {
+      "exact_excerpt_retained_locally_only": true,
+      "excerpt_sha256_utf8": "1e730a51bc3ddcdfbee308ec293f4e19ac3a8f931b551ee33d138f4ff0528c43",
+      "paragraph_index_zero_based": 11,
+      "projection_path": "primary_methods/projection.json",
+      "projection_sha256": "7e1b30726d20e9f5d5e2e220828add68531b4fbd92899635b4e3b6ba572dcda1",
+      "role": "DOCUMENTARY_METHODS_OR_FORMAT",
+      "section_id": "sec2",
+      "section_title": "Methods",
+      "subsection_title": "Computational workflow"
+    },
+    {
+      "exact_excerpt_retained_locally_only": true,
+      "excerpt_sha256_utf8": "d7d41d9f6289449bc1cf2cb27c5ae7ef4d105f93dd6b47e31cf3096d44069106",
+      "paragraph_index_zero_based": 12,
+      "projection_path": "primary_methods/projection.json",
+      "projection_sha256": "7e1b30726d20e9f5d5e2e220828add68531b4fbd92899635b4e3b6ba572dcda1",
+      "role": "DOCUMENTARY_METHODS_OR_FORMAT",
+      "section_id": "sec2",
+      "section_title": "Methods",
+      "subsection_title": "Computational workflow"
+    },
+    {
+      "exact_excerpt_retained_locally_only": true,
+      "excerpt_sha256_utf8": "8713325b5ec94a7b73a3e1587cfee4529d633dcf471046f9c2386c16de6e9f6c",
+      "paragraph_index_zero_based": 1,
+      "projection_path": "primary_methods/projection.json",
+      "projection_sha256": "7e1b30726d20e9f5d5e2e220828add68531b4fbd92899635b4e3b6ba572dcda1",
+      "role": "DOCUMENTARY_METHODS_OR_FORMAT",
+      "section_id": "sec6",
+      "section_title": "Data Records",
+      "subsection_title": "Data Records"
+    },
+    {
+      "exact_excerpt_retained_locally_only": true,
+      "excerpt_sha256_utf8": "79601a16d749b96b60d34aad19d56014f9100701fd0eb90c00c78070437641a3",
+      "paragraph_index_zero_based": 3,
+      "projection_path": "primary_methods/projection.json",
+      "projection_sha256": "7e1b30726d20e9f5d5e2e220828add68531b4fbd92899635b4e3b6ba572dcda1",
+      "role": "DOCUMENTARY_METHODS_OR_FORMAT",
+      "section_id": "sec6",
+      "section_title": "Data Records",
+      "subsection_title": "File format"
+    },
+    {
+      "exact_excerpt_retained_locally_only": true,
+      "excerpt_sha256_utf8": "bbd0ed73859e078b34bbe395b5a09cd427c115e559e5904c1bc3e7c4c383c30b",
+      "paragraph_index_zero_based": 5,
+      "projection_path": "primary_methods/projection.json",
+      "projection_sha256": "7e1b30726d20e9f5d5e2e220828add68531b4fbd92899635b4e3b6ba572dcda1",
+      "role": "INCIDENTALLY_EXPOSED_QUALITATIVE_RESULTS",
+      "section_id": "sec6",
+      "section_title": "Data Records",
+      "subsection_title": "Graphical representation of results"
+    },
+    {
+      "exact_excerpt_retained_locally_only": true,
+      "excerpt_sha256_utf8": "a51dea6ca8f8f011dfea9f03aa8141ce8c17a26f700cb293b5d27d85649b0d97",
+      "paragraph_index_zero_based": 6,
+      "projection_path": "primary_methods/projection.json",
+      "projection_sha256": "7e1b30726d20e9f5d5e2e220828add68531b4fbd92899635b4e3b6ba572dcda1",
+      "role": "INCIDENTALLY_EXPOSED_QUALITATIVE_RESULTS",
+      "section_id": "sec6",
+      "section_title": "Data Records",
+      "subsection_title": "Graphical representation of results"
+    }
+  ],
+  "note": "Hashes identify exact already redacted local excerpts; public report uses own paraphrase. A locator/hash does not certify scientific accuracy.",
+  "schema": "lupine.discovery.dielectric_methods.excerpt_index.v1"
+}

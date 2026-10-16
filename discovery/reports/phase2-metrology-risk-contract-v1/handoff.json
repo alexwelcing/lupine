@@ -1,0 +1,26 @@
+{
+  "all_copy_bytes_verified": true,
+  "conclusions": [
+    "A coverage factor of two does not alone certify 95 percent probability coverage; the exact hypothetical 25-world countermodel has coverage 21/25.",
+    "Two valid 95 percent marginal certificates allow joint coverage 90 percent, 95 percent, or 90.25 percent in three explicit different hypothetical laws.",
+    "A union bound is valid without independence when certified marginal bounds share a specified probability law; metadata alone does not establish those premises.",
+    "Simultaneous coverage of a fixed family can survive subset selection; separate marginal coverage and unconditional bad-decision mass do not imply selected or accepted-pool conditional coverage.",
+    "A sound pointwise decision bridge can transfer valid simultaneous interval coverage into joint decision safety; measurement-to-future-material transfer and sampling premises remain separate obligations."
+  ],
+  "copy_map_sha256": "d634f0bfd045459fdab4e51dc59b588ed5e2efda9f1514fd467ed67b1b7718d1",
+  "directory": ".cache/phase2-metrology-risk-contract-v1",
+  "independent_review_sha256": "b2eac35946a5b20e82b6168266f027039a9cc701b19e757253d6ad8d3e5494b3",
+  "inventory_sha256": "246fcc8140802ffda5de53c2685dfe80e930b30f3707c5fc93ce78cbad6f4de7",
+  "limits": [
+    "Written algebra and independent source review, not executed enumeration, new Lean proof, or runtime refinement.",
+    "No actual scientific observation, model, benchmark, thresholds, or allocations selected.",
+    "No product or tracked edits.",
+    "Source bindings intentionally retain original read paths; two evidence-author paraphrase paths are ignored candidate files whose exact bytes must be retained if this note is published."
+  ],
+  "readme_sha256": "ae56215f8b091a26d7369f640e708aa0f470395b9c037a082015f610fa6e4eea",
+  "review_status_sha256": "714598c22bcf598d4084d4a36ee7b1339324e3064d43f7f241e35084ea395ad5",
+  "schema": "lupine.discovery.metrology_risk_contract_handoff.v1",
+  "source_bindings_sha256": "ab5ad2783e77de9eb54eb18523bfdcc4416877090cf4712724c2de6a2de737b3",
+  "status": "READY_FOR_ROOT_REVIEW_OR_REPORT_ONLY_PUBLICATION",
+  "tests_or_formal_builds_run": false
+}

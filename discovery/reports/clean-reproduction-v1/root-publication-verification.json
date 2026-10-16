@@ -1,0 +1,214 @@
+{
+  "attempt": "local-20261010T194558Z-58801",
+  "checked_at": "2026-10-10T20:00:41.995971+00:00",
+  "checks": [
+    "37 captured safe file identities",
+    "detached clean tracked checkout",
+    "all six successful stage source and log bindings",
+    "constrained completed-report digest comparison and negative gates",
+    "two independently recomputed canonical training scientific digests",
+    "two successful processes and actual comparison-field equality",
+    "actual raw floating-point artifact hash-map equality",
+    "four freshly rebuilt training input byte hashes",
+    "copied bytes identical to original safe receipts"
+  ],
+  "copied_files": {
+    "constrained/01-acquire-result.json": {
+      "bytes": 7991,
+      "original_path": ".cache/reproduce-jarvis-local-20261010T194558Z-58801/01-acquire-result.json",
+      "sha256": "15af5f70b21cc929ea08d0b0587458cd65ae392d42325e8b3ad8bb222e5779b7"
+    },
+    "constrained/01-acquire-start.json": {
+      "bytes": 4188,
+      "original_path": ".cache/reproduce-jarvis-local-20261010T194558Z-58801/01-acquire-start.json",
+      "sha256": "206cddf4f2900451053d4f48207b4df1069eeef855f7fdddad8163c26f439417"
+    },
+    "constrained/02-freeze-result.json": {
+      "bytes": 7948,
+      "original_path": ".cache/reproduce-jarvis-local-20261010T194558Z-58801/02-freeze-result.json",
+      "sha256": "6b9d340bb59e73b7aa6de0570f8cfc8342c1945091fc008d4355f8fb2e23b1a3"
+    },
+    "constrained/02-freeze-start.json": {
+      "bytes": 4145,
+      "original_path": ".cache/reproduce-jarvis-local-20261010T194558Z-58801/02-freeze-start.json",
+      "sha256": "03749077c5a3d8202e83e48ac1f6494b9a0462e83cff3a7cf756d2b937f49062"
+    },
+    "constrained/03-verify-result.json": {
+      "bytes": 7948,
+      "original_path": ".cache/reproduce-jarvis-local-20261010T194558Z-58801/03-verify-result.json",
+      "sha256": "05ec3658269be2df3b784738a6ee3196763ef412fc95044e0b83d7420fdcc2fc"
+    },
+    "constrained/03-verify-start.json": {
+      "bytes": 4145,
+      "original_path": ".cache/reproduce-jarvis-local-20261010T194558Z-58801/03-verify-start.json",
+      "sha256": "6039b6bcf4085981a07f4ec6e6dd2890c77aa9afd06cd200d674f53d8fd94b50"
+    },
+    "constrained/04-engineering-tests-result.json": {
+      "bytes": 7875,
+      "original_path": ".cache/reproduce-jarvis-local-20261010T194558Z-58801/04-engineering-tests-result.json",
+      "sha256": "fc118d4c95275918171aa38043528e1cf0b66257e4254376b30b7170b8729ea8"
+    },
+    "constrained/04-engineering-tests-start.json": {
+      "bytes": 4072,
+      "original_path": ".cache/reproduce-jarvis-local-20261010T194558Z-58801/04-engineering-tests-start.json",
+      "sha256": "2cb2fd66f53f3edd4917cb9d827e9fd3f87cfaa65d3062d6f5b91031d2bcc408"
+    },
+    "constrained/05-replay-result.json": {
+      "bytes": 8244,
+      "original_path": ".cache/reproduce-jarvis-local-20261010T194558Z-58801/05-replay-result.json",
+      "sha256": "1ab2fc765b1e622e78a0f58ae3135c4be864bb11021ee5fd737dd780277a0d9c"
+    },
+    "constrained/05-replay-start.json": {
+      "bytes": 4441,
+      "original_path": ".cache/reproduce-jarvis-local-20261010T194558Z-58801/05-replay-start.json",
+      "sha256": "280118e0e5905edba1cd145e184d2107f19eaee590a90a1cedf28a86294a5ac0"
+    },
+    "constrained/06-dashboard-result.json": {
+      "bytes": 8415,
+      "original_path": ".cache/reproduce-jarvis-local-20261010T194558Z-58801/06-dashboard-result.json",
+      "sha256": "8b567e06301de6f945eccdadfa4bb9197cbb2e2bad0a894dd5a395e9817b665b"
+    },
+    "constrained/06-dashboard-start.json": {
+      "bytes": 4612,
+      "original_path": ".cache/reproduce-jarvis-local-20261010T194558Z-58801/06-dashboard-start.json",
+      "sha256": "5043e40b66037ac45adaf675e639247e8b6625f74704affc505ebd21c3699068"
+    },
+    "constrained/engineering-validation.json": {
+      "bytes": 4234,
+      "original_path": ".cache/reproduce-jarvis-local-20261010T194558Z-58801/engineering-validation.json",
+      "sha256": "31265d531a07751ab4cf19e58ceebddb5a3a11df723e347b3550242d60d59213"
+    },
+    "constrained/logs/04-engineering-tests.log": {
+      "bytes": 6308,
+      "original_path": ".cache/reproduce-jarvis-local-20261010T194558Z-58801/logs/04-engineering-tests.log",
+      "sha256": "4d7d794960296be0bb14655081818959c64de5a2dfb98894531b9caeb71d67b3"
+    },
+    "constrained/raw-source-reuse.json": {
+      "bytes": 425,
+      "original_path": ".cache/reproduce-jarvis-local-20261010T194558Z-58801/raw-source-reuse.json",
+      "sha256": "10ba175824a15bcbd45ff6eedd045781d10766514caec2a8a1157a044aedb9df"
+    },
+    "constrained/scientific-digest-comparison.json": {
+      "bytes": 173,
+      "original_path": ".cache/reproduce-jarvis-local-20261010T194558Z-58801/scientific-digest-comparison.json",
+      "sha256": "e3145a2380e33abfc77149054d8f9284c82e5ce0a84b6c8bd133f95bbf5ed58b"
+    },
+    "constrained/scientific-result.json": {
+      "bytes": 1328,
+      "original_path": ".cache/reproduce-jarvis-local-20261010T194558Z-58801/scientific-result.json",
+      "sha256": "18bb5ff99b4c5437dd053299ba49941d04f4a4c528fea78ea9a42e9ad974ffc3"
+    },
+    "constrained/workflow-result.json": {
+      "bytes": 2486,
+      "original_path": ".cache/reproduce-jarvis-local-20261010T194558Z-58801/workflow-result.json",
+      "sha256": "cc175256a269c3e8e374ddc73e51027bc7cf4baffd79f0e609239fcff67e12c7"
+    },
+    "constrained/workflow-start.json": {
+      "bytes": 5073,
+      "original_path": ".cache/reproduce-jarvis-local-20261010T194558Z-58801/workflow-start.json",
+      "sha256": "ea1833d4bac7b9f6ff0dc19e1bdc479cdd9bdf36afc84ce978df273f2a97e90a"
+    },
+    "engineering/training-tail-engineering-tests-local-20261010T194558Z-58801.txt": {
+      "bytes": 3937,
+      "original_path": "reports/training-tail-engineering-tests-local-20261010T194558Z-58801.txt",
+      "sha256": "b78d701078ed0691e8c4e80ac5371b9c5f339477eed4c5cc82ca1270a816eaa1"
+    },
+    "engineering/training-tail-engineering-validation-local-20261010T194558Z-58801.json": {
+      "bytes": 1799,
+      "original_path": "reports/training-tail-engineering-validation-local-20261010T194558Z-58801.json",
+      "sha256": "d2ddaa80657c2e1189aee723f021085493ec06ac5f0eabedc0d624c08c98c6da"
+    },
+    "environment/environment-check.json": {
+      "bytes": 107892,
+      "original_path": ".cache/reproduction-envs/local-20261010T194558Z-58801/environment-check.json",
+      "sha256": "5763f95f6b68f6590d797884a5786ae63b4f132135fc819c142132fa498df1cb"
+    },
+    "preparation/audit-console-v2.log": {
+      "bytes": 441,
+      "original_path": ".cache/reproduction-preparation/local-20261010T194558Z-58801/audit-console-v2.log",
+      "sha256": "dc6ba4f86f4c1179197733f87e45fe1d8d6e1ae49ade700773a551e4350dfb6c"
+    },
+    "preparation/audit-reproduction-v2.py": {
+      "bytes": 10613,
+      "original_path": ".cache/reproduction-preparation/local-20261010T194558Z-58801/audit-reproduction-v2.py",
+      "sha256": "467b8e03c9e07dacb3c137c0bd3b5a071f6365fd9f132f1e4309e761eaae41cf"
+    },
+    "preparation/audit-result-v2.json": {
+      "bytes": 61109,
+      "original_path": ".cache/reproduction-preparation/local-20261010T194558Z-58801/audit-result-v2.json",
+      "sha256": "cff5a2e6602ecc43a0b43d6b5752a69ba7fb23b244e2b31ce965e642d676e58d"
+    },
+    "preparation/environment-comparison.json": {
+      "bytes": 497,
+      "original_path": ".cache/reproduction-preparation/local-20261010T194558Z-58801/environment-comparison.json",
+      "sha256": "44accf3486a70636d8e99d7a306277bca47cd79c8c48bdb7817437d15873ac25"
+    },
+    "preparation/preparation-receipt.json": {
+      "bytes": 1907,
+      "original_path": ".cache/reproduction-preparation/local-20261010T194558Z-58801/preparation-receipt.json",
+      "sha256": "d6c487a45d7a7472343c3e203ece73f7c6682ccff83cf42a5f93147d2b8538b1"
+    },
+    "preparation/raw-source-reuse.json": {
+      "bytes": 657,
+      "original_path": ".cache/reproduction-preparation/local-20261010T194558Z-58801/raw-source-reuse.json",
+      "sha256": "4fbd89b2f49018c9e91609e6af3c891c473fb738f311f642f30ca915952e765c"
+    },
+    "preparation/run-constrained.sh": {
+      "bytes": 523,
+      "original_path": ".cache/reproduction-preparation/local-20261010T194558Z-58801/run-constrained.sh",
+      "sha256": "0e38c5ecf113a4cf32f2523bbce70e66e6f359b2ce6845b2f5f795ab56c4609a"
+    },
+    "preparation/run-training-engineering.sh": {
+      "bytes": 2514,
+      "original_path": ".cache/reproduction-preparation/local-20261010T194558Z-58801/run-training-engineering.sh",
+      "sha256": "03130ff6dacf026980c9668873c854bc59a138b7ca1beb5a1703c24a98a986d6"
+    },
+    "preparation/run-training.sh": {
+      "bytes": 670,
+      "original_path": ".cache/reproduction-preparation/local-20261010T194558Z-58801/run-training.sh",
+      "sha256": "90b8316a83d8c338815069cbaccf936d80a237cffe8aa30985895224917ae76a"
+    },
+    "preparation/summary-v2.md": {
+      "bytes": 7416,
+      "original_path": ".cache/reproduction-preparation/local-20261010T194558Z-58801/summary-v2.md",
+      "sha256": "ef69879c89bb080682ff39d69084990fd01dc0ec0f3e9df944cb64913967839c"
+    },
+    "training/pass-1/folds-receipt.json": {
+      "bytes": 313,
+      "original_path": ".cache/training-tail/jarvis-training-tail-v1-local-20261010T194558Z-58801/pass-1/folds-receipt.json",
+      "sha256": "44e397d8df983eb82623be3bc1418f6b0d70c3ae108b6d06ef0336e1addd5843"
+    },
+    "training/pass-1/pass-receipt.json": {
+      "bytes": 135665,
+      "original_path": ".cache/training-tail/jarvis-training-tail-v1-local-20261010T194558Z-58801/pass-1/pass-receipt.json",
+      "sha256": "60a9e788993d9be70d9cf8ba2c1e500d8aece53c82981ca7bfd3300f99a92cbc"
+    },
+    "training/pass-2/folds-receipt.json": {
+      "bytes": 313,
+      "original_path": ".cache/training-tail/jarvis-training-tail-v1-local-20261010T194558Z-58801/pass-2/folds-receipt.json",
+      "sha256": "44e397d8df983eb82623be3bc1418f6b0d70c3ae108b6d06ef0336e1addd5843"
+    },
+    "training/pass-2/pass-receipt.json": {
+      "bytes": 135649,
+      "original_path": ".cache/training-tail/jarvis-training-tail-v1-local-20261010T194558Z-58801/pass-2/pass-receipt.json",
+      "sha256": "ff048bf38aa57262d494be69db7875f8a1fab5fbc09f597cb6fb89bc0a3a08b8"
+    },
+    "training/reproduction.json": {
+      "bytes": 3899,
+      "original_path": ".cache/training-tail/jarvis-training-tail-v1-local-20261010T194558Z-58801/reproduction.json",
+      "sha256": "f0a11c3526eba5c195f67e477fcd2e3f457b06c61f10e70e7878e4ba4eb71e28"
+    }
+  },
+  "limits": [
+    "Same-host same-frozen-data reproduction; not independent scientific replication.",
+    "Constrained full scientific digest was checked by frozen workflow; root checked safe receipts, not full policy recalculation.",
+    "Root rehashed four training input bytes without parsing numeric labels; these bytes were not copied.",
+    "Access declarations rely on trusted frozen worker and tests, not OS-enforced security.",
+    "No MPEA cache or targets read by this verification."
+  ],
+  "publication_script_sha256": "7f369cc3e084cb5c8e05cea937593fedb15beda5f5d1f240ff405b59cf01c372",
+  "schema": "lupine.discovery.clean_reproduction.root_publication.v1",
+  "source_allowlist_sha256": "92d1c53f79ca8ae28e985f582b8b8ebfcd69bd549ecc8b507168d0b088088c2e",
+  "source_commit": "2a09d36491e092e851a529e58000444f3b6479e2",
+  "status": "PASS"
+}

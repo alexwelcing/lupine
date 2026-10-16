@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_*planning*.py",
+    "-v"
+  ],
+  "started_at": "2026-10-16T06:50:53.825763+00:00",
+  "source_scope": "uncommitted combined overlay"
+}

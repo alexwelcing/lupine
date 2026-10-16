@@ -1,0 +1,7 @@
+{
+  "recorded_at": "2026-10-16T10:12:21.803906+00:00",
+  "source": ".cache/phase2-growth-hint-production-candidate-v1/promotion/scripts/li_v3_growth_hint_shape.py",
+  "source_sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a",
+  "root_review": "Static source review found no blocker: fixed canonical prerequisite, exact prior groups/own guard, source verification before same-buffer inspection, bounded complete scan, unbound initial-padding semantics, closed errors and conservative partial exposure. Actual operations not invoked; independent tests/review separately pending.",
+  "private_object_or_capture_read": false
+}

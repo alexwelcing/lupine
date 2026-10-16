@@ -1,0 +1,70 @@
+{
+  "commit": "ece824419c9006fe66436daf233822b75533b82f",
+  "metadata_only": true,
+  "files": [
+    {
+      "name": "tmQM_X.q",
+      "path": "tmQM/tmQM_X.q",
+      "type": "file",
+      "size": 99690681,
+      "sha": "ea4ca92f66bb95f0ba62ad65191e130509c02c43",
+      "download_url": "https://raw.githubusercontent.com/uiocompcat/tmQM/ece824419c9006fe66436daf233822b75533b82f/tmQM/tmQM_X.q"
+    },
+    {
+      "name": "tmQM_X1.BO.gz",
+      "path": "tmQM/tmQM_X1.BO.gz",
+      "type": "file",
+      "size": 30430198,
+      "sha": "10ef3292d05771fd1cb9f71eb68ccde5c6270ced",
+      "download_url": "https://raw.githubusercontent.com/uiocompcat/tmQM/ece824419c9006fe66436daf233822b75533b82f/tmQM/tmQM_X1.BO.gz"
+    },
+    {
+      "name": "tmQM_X1.xyz.gz",
+      "path": "tmQM/tmQM_X1.xyz.gz",
+      "type": "file",
+      "size": 68010672,
+      "sha": "93a288e6c1c5dc846c193ab3cfdf5ef1f74a81ed",
+      "download_url": "https://raw.githubusercontent.com/uiocompcat/tmQM/ece824419c9006fe66436daf233822b75533b82f/tmQM/tmQM_X1.xyz.gz"
+    },
+    {
+      "name": "tmQM_X2.BO.gz",
+      "path": "tmQM/tmQM_X2.BO.gz",
+      "type": "file",
+      "size": 30901635,
+      "sha": "51ddb07f87de483502a20db4c04b71cafd3516ae",
+      "download_url": "https://raw.githubusercontent.com/uiocompcat/tmQM/ece824419c9006fe66436daf233822b75533b82f/tmQM/tmQM_X2.BO.gz"
+    },
+    {
+      "name": "tmQM_X2.xyz.gz",
+      "path": "tmQM/tmQM_X2.xyz.gz",
+      "type": "file",
+      "size": 68016824,
+      "sha": "855cca2b9ae5e64502d487e522690b06e54580ce",
+      "download_url": "https://raw.githubusercontent.com/uiocompcat/tmQM/ece824419c9006fe66436daf233822b75533b82f/tmQM/tmQM_X2.xyz.gz"
+    },
+    {
+      "name": "tmQM_X3.BO.gz",
+      "path": "tmQM/tmQM_X3.BO.gz",
+      "type": "file",
+      "size": 30193825,
+      "sha": "eb0d832b2132b56a91c6011d916d92305852ee9c",
+      "download_url": "https://raw.githubusercontent.com/uiocompcat/tmQM/ece824419c9006fe66436daf233822b75533b82f/tmQM/tmQM_X3.BO.gz"
+    },
+    {
+      "name": "tmQM_X3.xyz.gz",
+      "path": "tmQM/tmQM_X3.xyz.gz",
+      "type": "file",
+      "size": 67924252,
+      "sha": "68c2e981357ca70060329c45378062bc5cb0c7f2",
+      "download_url": "https://raw.githubusercontent.com/uiocompcat/tmQM/ece824419c9006fe66436daf233822b75533b82f/tmQM/tmQM_X3.xyz.gz"
+    },
+    {
+      "name": "tmQM_y.csv",
+      "path": "tmQM/tmQM_y.csv",
+      "type": "file",
+      "size": 19925955,
+      "sha": "3d5bbfa75f01a8d334d1e630b07f94dc7d36603f",
+      "download_url": "https://raw.githubusercontent.com/uiocompcat/tmQM/ece824419c9006fe66436daf233822b75533b82f/tmQM/tmQM_y.csv"
+    }
+  ]
+}

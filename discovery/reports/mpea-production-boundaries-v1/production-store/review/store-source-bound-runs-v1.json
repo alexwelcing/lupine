@@ -1,0 +1,66 @@
+{
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "pythonpath": null,
+  "runs": [
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        ".cache/mpea-study-custody/review_production",
+        "-p",
+        "test_production_store_review.py",
+        "-v"
+      ],
+      "elapsed_seconds": 2.590163,
+      "exit_code": 0,
+      "label": "independent",
+      "log": ".cache/mpea-study-custody/review_production/store-final-independent-v1.txt",
+      "log_sha256": "81c60b2f96bfe8e704852cd7bed540b46bfa8f649112ef4c2ed0bc4b6588780f"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        ".cache/mpea-study-custody/tests",
+        "-p",
+        "test_mpea_production_store.py",
+        "-v"
+      ],
+      "elapsed_seconds": 0.91041,
+      "exit_code": 0,
+      "label": "author",
+      "log": ".cache/mpea-study-custody/review_production/store-final-author-v1.txt",
+      "log_sha256": "2ba85b1d685072b1c5a58b8f29a7bfae0cb812b8e4cbc4c2274fc72e59fa0418"
+    }
+  ],
+  "schema": "lupine.synthetic.mpea_production_store.source_bound_validation.v1",
+  "source_after": {
+    ".cache/mpea-operational-addendum/mpea-t25-operational-enforcement-v1.md": "e36e72818f92096c316df34789a35840c1e5b1561f9467561dd8787da072cf98",
+    ".cache/mpea-protocol-design/mpea-t25-archival-protocol-v1.md": "c49047341d3932ddd67c67c9f2a04a6759c0d679bfeb96d811ba9541c0cc0378",
+    ".cache/mpea-protocol-design/mpea-t25-implementation-contract-v1.md": "be45b1d8db9586035cf37bd9bbb9046c065c3851b91f93386f8c68d155215af9",
+    ".cache/mpea-study-custody/review_production/store_reproduction_fixture.py": "bdf2c50642376b1d25e767e1a7b4f14e4df70c77637328e262780a0bb2b2614b",
+    ".cache/mpea-study-custody/review_production/test_production_store_review.py": "0959f57f7ab4f8de5586afb90a11c8305de800df2f23cc7fc72ee2c974650fa4",
+    ".cache/mpea-study-custody/scripts/mpea_production_store.py": "9b5caa9a013da7b2bae8bb78d89a74a697201bdc73b1cd2db1d38c2e750db6b4",
+    ".cache/mpea-study-custody/scripts/mpea_stage_store.py": "13c42919e79e0949f4cbcf5ce0eeeb1cb66d3a48893e6e4fdc3cd3fdf68498db",
+    ".cache/mpea-study-custody/scripts/mpea_target_custody.py": "7f649dd50d7c5589fd9da0f9745b7936b7a3a2bf631a8418affae4a67be1ee9c",
+    ".cache/mpea-study-custody/tests/test_mpea_production_store.py": "dbdc2dc1712d8bdac50c813b202f71357bcafc0c49d9f5e03c164809bcd58fa9"
+  },
+  "source_before": {
+    ".cache/mpea-operational-addendum/mpea-t25-operational-enforcement-v1.md": "e36e72818f92096c316df34789a35840c1e5b1561f9467561dd8787da072cf98",
+    ".cache/mpea-protocol-design/mpea-t25-archival-protocol-v1.md": "c49047341d3932ddd67c67c9f2a04a6759c0d679bfeb96d811ba9541c0cc0378",
+    ".cache/mpea-protocol-design/mpea-t25-implementation-contract-v1.md": "be45b1d8db9586035cf37bd9bbb9046c065c3851b91f93386f8c68d155215af9",
+    ".cache/mpea-study-custody/review_production/store_reproduction_fixture.py": "bdf2c50642376b1d25e767e1a7b4f14e4df70c77637328e262780a0bb2b2614b",
+    ".cache/mpea-study-custody/review_production/test_production_store_review.py": "0959f57f7ab4f8de5586afb90a11c8305de800df2f23cc7fc72ee2c974650fa4",
+    ".cache/mpea-study-custody/scripts/mpea_production_store.py": "9b5caa9a013da7b2bae8bb78d89a74a697201bdc73b1cd2db1d38c2e750db6b4",
+    ".cache/mpea-study-custody/scripts/mpea_stage_store.py": "13c42919e79e0949f4cbcf5ce0eeeb1cb66d3a48893e6e4fdc3cd3fdf68498db",
+    ".cache/mpea-study-custody/scripts/mpea_target_custody.py": "7f649dd50d7c5589fd9da0f9745b7936b7a3a2bf631a8418affae4a67be1ee9c",
+    ".cache/mpea-study-custody/tests/test_mpea_production_store.py": "dbdc2dc1712d8bdac50c813b202f71357bcafc0c49d9f5e03c164809bcd58fa9"
+  },
+  "unchanged": true
+}

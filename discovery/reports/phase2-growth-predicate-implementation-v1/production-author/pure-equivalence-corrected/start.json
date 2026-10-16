@@ -1,0 +1,12 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    ".cache/phase2-growth-predicate-production-v1/check_pure_equivalence.py"
+  ],
+  "source_before": {
+    "check_pure_equivalence.py": "ae76de4686e251ae056db44cd2154ab3e557f69f05569c1456732f133d9a1119",
+    "promotion/scripts/li_v3_growth_predicate_audit.py": "70a0339212b971bf7824ae256600b959ae7a7d22b6fc8853eb2208d3c8ece207",
+    "promotion/tests/test_li_v3_growth_predicate_audit.py": "1ca8b259f26c88e46a0e108d13c202afa15954871d5750c17307b58b90dd97d3"
+  },
+  "started_at": "2026-10-16T12:23:31.005524+00:00"
+}

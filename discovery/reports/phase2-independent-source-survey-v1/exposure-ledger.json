@@ -1,0 +1,32 @@
+{
+  "incidental_exposure": [
+    "Spelled-out geometry-convergence aggregate counts (eleven, six, five and two) survived digit masking in the permitted methods prose; no claim of completely aggregate-blind review.",
+    "Prior project public source-readiness notes contain already disclosed counts and historical findings; no new target file was read."
+  ],
+  "no_fits_or_comparisons": true,
+  "no_new_dft": true,
+  "no_retry_of_blocked_Li_or_Dryad": true,
+  "no_source_record_download": true,
+  "prior_use_check": {
+    "limitation": "Not proof of global, population or model-training freshness.",
+    "result": "No named QM9/exact-DOI/exact-Figshare-ID use found",
+    "scope": "Published Markdown and source/catalog JSON plus filenames; previously retained matminer catalog keys only"
+  },
+  "researcher_not_read": [
+    "Primary validation table t1 cells",
+    "Validation-section prose",
+    "Numeric molecule/material record file or target examples",
+    "Private labels or archive objects",
+    "Reported model accuracy or performance tables"
+  ],
+  "researcher_read": [
+    "Selected DOI/title/date/license/version/identity metadata",
+    "AFLOW schema descriptions and units with help examples withheld",
+    "QM9 direct paragraphs in Generation of atomic coordinates, Data Records, File format, Properties with digit-bearing tokens masked",
+    "QM9 Table2 file layout and Table3 property/units dictionary after header inspection",
+    "Selected XML unit markup to preserve a₀³ and fraction notation rather than flattened text"
+  ],
+  "whole_metadata_responses_machine_read": true,
+  "whole_primary_article_contains_unselected_results_or_tables": true,
+  "whole_primary_article_xml_machine_read": true
+}

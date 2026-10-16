@@ -1,0 +1,15 @@
+# Public audit of the actual stored-label census
+
+The first public-only audit passed **517 receipt, schema and consistency checks**, with no failed check or forbidden operation. It inspected the actual public result `a9ab9d72c6c39be9338e951b657e0587ae8f4dbe534b276b8f8f8951a7b1a63a` and recorded execution metadata; it did not reopen either private projection, scientific source objects, candidate source, tests or production guards, and did not rerun the census.
+
+The [unaltered first audit receipt](first-public-audit/review.json) checks all 16 fixed model/property/unit groups of nine and all 36 material/property groups of four models against the existing public frame. All 96 aggregate rationals have canonical reduced representations. The 208 exact arithmetic relations include sum equal to nine times mean, absolute/squared nonnegativity, triangle inequalities, signed/absolute Jensen inequalities, and zero consistency. These necessary consistency relations do **not** recompute aggregates from the private individual values.
+
+All 36 reported reference groups say that the stored reference rationals, original token spellings and citation strings agree across the four original models. Equality logic, model membership and literal units are internally consistent. This observation establishes neither common physical truth nor correct reference selection, compatible geometry, independence, model superiority or a fair physical benchmark.
+
+The result contains the authorized public numerical aggregates and equality statuses. Its closed schema contains no individual prediction/reference tokens, citations or individual discrepancies. Public aggregate exposure is acknowledged. `NOT_ADMITTED`, unknown reference choice, no fresh holdout, no winner and no tolerance-based success criterion remain explicit.
+
+The persisted result and captured stdout match byte for byte; stderr is empty. The manifest, reservation and later identity-only projection seal agree on 116,049 bytes and SHA `4e1a11dd32e08aa3c92acdc402fcfeb497bd202995f7de7b977593a096b85468`. The seal explicitly belongs to the later checkpoint, with no retroactive original-write hash claim. The scope review, author 29-test receipt, independent 22-test receipt, source hold, identity-only seal and actual invocation timestamps occur in the required order.
+
+The recorded actual invocation ran once at 13:28:04–13:28:05 UTC on 2026-10-16, returned exit zero, and recorded 0.165559572 seconds of child-process time. Its receipt records all 335 runtime files and remote/head held. This audit cross-checked those receipt assertions and did not independently rerun Git or runtime guards. The ignored candidate source was covered by the recorded generated tests; this report makes no claim that it was executed by branch CI.
+
+The [audit source](audit_public.py) opens only the 17 public files enumerated in the receipt. It denies other file access, networking and subprocesses. All source filenames and hashes are retained to reconstruct the public-only audit; the artifact contains no raw private numerical projection.

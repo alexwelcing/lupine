@@ -1,0 +1,6 @@
+{
+  "preimplementation": true,
+  "root_direction": "Specific ordered categorical classifier required; generic original G31 reason alone insufficient. Original G31 is an unchanged differential oracle.",
+  "scope_sha256": "18cf6ecda8cbb05403873085ed8fea47e0a25feff7bd019c959433e0937bf936",
+  "written_at": "2026-10-16T11:51:45.963465+00:00"
+}

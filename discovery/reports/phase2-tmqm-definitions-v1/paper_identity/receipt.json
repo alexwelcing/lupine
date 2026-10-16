@@ -1,0 +1,15 @@
+{
+  "bytes": 5743,
+  "finished_at": "2026-10-16T18:18:59.327646+00:00",
+  "headers": {
+    "Content-Type": "application/json;charset=UTF-8"
+  },
+  "over_cap": false,
+  "redirects_followed": 0,
+  "retries": 0,
+  "sha256": "2ace9be877756a01c715daddb18fae4f33ab52cc18c584fb041dcd9072fa08b9",
+  "started_at": "2026-10-16T18:18:57.806201+00:00",
+  "status": 200,
+  "transport_error": null,
+  "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=DOI%3A10.1021%2Facs.jcim.0c01041&format=json&resultType=core&pageSize=1"
+}

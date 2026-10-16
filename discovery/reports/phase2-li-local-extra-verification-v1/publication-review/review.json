@@ -1,0 +1,134 @@
+{
+  "added_current_checkpoint_links": [
+    {
+      "exists": true,
+      "from": "GOAL.md",
+      "target": "reports/phase2-li-local-extra-verification-v1/README.md"
+    },
+    {
+      "exists": true,
+      "from": "GOAL.md",
+      "target": "reports/phase2-local-extra-semantics-v1/README.md"
+    },
+    {
+      "exists": true,
+      "from": "STATUS.md",
+      "target": "reports/phase2-li-local-extra-verification-v1/README.md"
+    },
+    {
+      "exists": true,
+      "from": "STATUS.md",
+      "target": "reports/phase2-bam-schema-documentary-v1/PUBLICATION.md"
+    },
+    {
+      "exists": true,
+      "from": "reports/progress.md",
+      "target": "phase2-li-local-extra-verification-v1/README.md"
+    },
+    {
+      "exists": true,
+      "from": "reports/progress.md",
+      "target": "phase2-local-extra-semantics-v1/README.md"
+    },
+    {
+      "exists": true,
+      "from": "reports/progress.md",
+      "target": "phase2-bam-schema-documentary-v1/PUBLICATION.md"
+    },
+    {
+      "exists": true,
+      "from": "docs/release-validation.md",
+      "target": "../reports/phase2-li-local-extra-verification-v1/README.md"
+    },
+    {
+      "exists": true,
+      "from": "docs/release-validation.md",
+      "target": "../reports/phase2-bam-schema-documentary-v1/PUBLICATION.md"
+    }
+  ],
+  "base_head": "d0505b9b358a4bdeafbd742f1aeeb6c2b955abf3",
+  "claim_assessment": [
+    "G29 completion means the observed first rejected local area yielded one complete header ID 41504 / length 516; source schema remains blocked. No assertion that the selected area is the first archive entry or all fields is made.",
+    "Canonical public digest, exit2, timing, 11189 audit checks, CI38880756519 observation and clean package/full/additive audit facts agree with the independently audited actual records. New publication itself is not represented as a CI-verified commit.",
+    "Whole raw source and directory exposure remain explicit; local payload semantics, later entries, complete archive validity, scientific pairing/eligibility and independence remain unresolved. Repeated diagnoses are computational replay.",
+    "Standard research is explicitly pre-observation and conditional. Its prospective growth-hint predicate does not claim an actual payload result or specify initial-padding history; G30 remains separate implementation and verification work.",
+    "Six curated synthetic mutation detections are presented as sensitivity to those defects, with 175 method executions distinguished from failure events and scientific samples.",
+    "BAM blocked UTF-8 acquisition report remains unchanged and is explicitly historical relative to the separately scoped ASCII header publication. UNIT is one label at column7, not a unit dictionary or independent evaluation unit. Full body encoding remains unbound.",
+    "G20 unresolved/G21 blocked, scientific NO-GO, preserved negative results and disabled historical automation are not weakened. The deferred BAM role-parser design is not relabeled as executed."
+  ],
+  "copy_ledger_entries": 227,
+  "copy_link_runtime_check": "final-publication-check.json",
+  "copy_link_runtime_check_sha256": "d7b24b44a89568dc331a02c290af9de703a9d1bef6506066f0a5c9ba0a8f7670",
+  "findings_preserved": "claim-findings.json",
+  "limitations": [
+    "Read-only publication review of public/source evidence; no production module import, source-reader invocation, private object/capture/raw CSV or notebook reads, product test rerun or new scientific experiment.",
+    "G30 prototype test claims remain labeled preparation; this review does not independently rerun or recertify those separately owned tests.",
+    "Online link destinations and new report-commit CI were not fetched in this review. Root retains remote publication/CI responsibility."
+  ],
+  "lossless_wrappers": 16,
+  "narrative_bindings": {
+    "GOAL.md": {
+      "bytes": 26815,
+      "sha256": "6adc69000e59504eb92bd39a2ccb1787b4f4184bbcee6e298c52bb8b008a4dbf"
+    },
+    "STATUS.md": {
+      "bytes": 31705,
+      "sha256": "90502727c7955ab95078fd60947b04e5a39067c855ec3ae26979801cf8bef386"
+    },
+    "docs/release-validation.md": {
+      "bytes": 48676,
+      "sha256": "3d52ed274b2bafa18babae8d636b1c4d1c85c114bb759ae8d6bb8efd09691ff3"
+    },
+    "reports/continuation.json": {
+      "bytes": 43497,
+      "sha256": "0ba2016921617603463045e31909ab8d140e59ebefd8b1684bdf49a64408767c"
+    },
+    "reports/phase2-bam-schema-contract-design-v1/README.md": {
+      "bytes": 13933,
+      "sha256": "ca4622e6958b7a13aad95e9f3e722f4b77b120ccf856f31b76daa169ddf47918"
+    },
+    "reports/phase2-bam-schema-contract-design-v1/ROOT_DECISION.json": {
+      "bytes": 468,
+      "sha256": "159170d8888137f8e509e770412750920034d945492c7dc433335ebe48f8484a"
+    },
+    "reports/phase2-bam-schema-documentary-v1/PUBLICATION.md": {
+      "bytes": 1803,
+      "sha256": "3d5e84f8feee99d18fcc38a5fdaf10777091a8a266a099739793f4101a7ec0ee"
+    },
+    "reports/phase2-bam-schema-documentary-v1/README.md": {
+      "bytes": 4354,
+      "sha256": "ce619c19ab09d6875b1282d9a01142b119af7f5faaba5f9047b83321942b6edb"
+    },
+    "reports/phase2-bam-schema-documentary-v1/header-ascii-v1/README.md": {
+      "bytes": 3438,
+      "sha256": "a75f0952740157490162cb56da9d97a979c603ae34ccdedecab970ea8c1729d1"
+    },
+    "reports/phase2-li-local-extra-verification-v1/README.md": {
+      "bytes": 7115,
+      "sha256": "368324986b9255714515f5a3045555c2a60d2335b8c2ea5cb142a5691ba8a9be"
+    },
+    "reports/phase2-li-local-extra-verification-v1/post-copy-amendment.json": {
+      "bytes": 613,
+      "sha256": "b0e3e565c6bedcbf829b36af521e3bf2ed2b4d2c4959ab4958ba495f99183e2a"
+    },
+    "reports/phase2-local-extra-semantics-v1/README.md": {
+      "bytes": 14060,
+      "sha256": "6beddc13565f0ca5aab11666474ba6997900082e70df5f2d02163c2341b4964b"
+    },
+    "reports/progress.md": {
+      "bytes": 117972,
+      "sha256": "448e6028c6224a3860243f228fa3fefdc6332ddd292bfd5d0161a252196e7d52"
+    }
+  },
+  "new_report_commit_status": "STAGED_UNCOMMITTED_AT_REVIEW",
+  "new_report_local_links": 49,
+  "resolved_findings": [
+    "Whole-buffer read versus uninterpreted local payload is now explicit in continuation.",
+    "Post-copy amendment binds the edited wrapper explanation while preserving historical copy ledger."
+  ],
+  "reviewed_at": "2026-10-16T10:05:44.891904+00:00",
+  "runtime_files_unchanged": 326,
+  "staged_files_compared_with_worktree": 236,
+  "status": "PASS_PUBLICATION_CLAIMS_COPIES_LINKS",
+  "unresolved_blockers": []
+}

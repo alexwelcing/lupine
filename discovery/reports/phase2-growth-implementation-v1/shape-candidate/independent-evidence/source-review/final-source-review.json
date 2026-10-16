@@ -1,0 +1,62 @@
+{
+  "blocking_findings": [],
+  "candidate_root": ".cache/phase2-growth-hint-production-candidate-v1",
+  "completed_evidence": {
+    "author_35_tests_receipt_audit": "author-receipt-review.json",
+    "author_472_complete_synthetic_report_pairs_receipt_audit": "conformance-receipt-review.json",
+    "public_prerequisite_and_25_pins": "prerequisite-source-binding.json",
+    "source_argument": "source-argument.md",
+    "static_byte_AST_checks": "static-audit.json"
+  },
+  "files": {
+    "preimplementation-scope.json": {
+      "bytes": 5211,
+      "sha256": "bb50f866986d917c9cf43076d8b5f96142b3cc7b6a70a771d6a3d6d12fc8bcf7"
+    },
+    "promotion/docs/li-v3-growth-hint-shape-plan.md": {
+      "bytes": 11204,
+      "sha256": "e0ca28ad61181c6cf56d20a46733d2285acb6cb5bc39348f46ee3acb29dfcbc6"
+    },
+    "promotion/scripts/li_v3_growth_hint_shape.py": {
+      "bytes": 20556,
+      "sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a"
+    },
+    "promotion/tests/test_li_v3_growth_hint_shape.py": {
+      "bytes": 28369,
+      "sha256": "1f863ee2f1eefd54919767f7b4c75b6d460332d50f6234103dd47e586557685e"
+    },
+    "public-prerequisite.json": {
+      "bytes": 5463,
+      "sha256": "52fe2d25f0c739c1c5137f0514f07f4ee0be35dffd7ef9141b19fe5ee5520d2e"
+    }
+  },
+  "limits": [
+    "Source reviewer did not import product, invoke any real production guard or read actual capture/object/payload.",
+    "Independent child executable review is separate; this source verdict alone does not claim those checks passed.",
+    "Fixed public receipt establishes sole first-span A220/516 header, not payload shape.",
+    "No member/XML/outcome interpretation, archive acceptance, sampling independence, physical truth or scientific improvement follows from this source review.",
+    "Code and exact hashes are controlled-workflow protections, not a boundary against hostile Python execution.",
+    "Completed-slot sequential replay is refused and overwrites blocked; concurrent at-most-once reads are not guaranteed.",
+    "Close after successful write may leave prior receipt differing from returned blocked report; both must be retained."
+  ],
+  "next_action": "Bind separate independent synthetic execution to held source/test, then parent-owned integration, publication, CI/package/byte audit; any actual operation remains separately gated.",
+  "recorded_utc": "2026-10-16T10:12:04.039178+00:00",
+  "resolved_findings": [
+    {
+      "disposition": "Author added local closed GrowthHintError without changing predecessor vocabulary. Parent first saved source was already corrected; earlier source was tool-output-only for parent.",
+      "finding": "New prerequisite code sent through frozen custody error allowlist would become INTERNAL_FAILURE.",
+      "origin": "Independent child draft-source read before any candidate test run."
+    },
+    {
+      "disposition": "Final contract explicitly requires serialized operation and distinguishes absence check/exclusive no-overwrite from concurrency locking.",
+      "finding": "Replay claims must not imply concurrent at-most-once source reading."
+    },
+    {
+      "disposition": "Docs-only correction accurately orders capture validation, raw read/exposure, then size/MD5/SHA verification; prior f4f0ce8 contract retained with original author/conformance receipts.",
+      "finding": "Contract step4 put object identity verification before object reading."
+    }
+  ],
+  "reviewer": "/root/phase2_planner",
+  "schema": "lupine.discovery.growth_hint_production_source_review.v1",
+  "verdict": "PASS_SOURCE_AND_CONTRACT_REVIEW"
+}

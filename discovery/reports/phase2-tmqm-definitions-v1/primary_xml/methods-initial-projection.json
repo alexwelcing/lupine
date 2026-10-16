@@ -1,0 +1,51 @@
+{
+  "source_sha256": "a8b959d00e3f63aa5c649e16bb0f2118fdb55e26e712aba6cd0638155915fb72",
+  "selection_sha256": "b6fcfba9ee5ef54e6c068002e0b89dc902df4576a6a9f692c0aefc57f8913a69",
+  "records": [
+    {
+      "section_id": "sec1.1",
+      "direct_paragraph": 5,
+      "selected_sentences": [
+        "reflects the strong organic component of the TM complexes extracted from the CSD.",
+        "C and H account for [number withheld]% of the chemical composition of the entire space (D).",
+        "After these two elements, N, O, P, Cl, and F are, in this order, the most abundant.",
+        "These elements are found in the most common ligands, including amines, carboxylates, heterocycles, phosphines, and halides.",
+        "The nature of the chemical space was also explored by computing Morgan fingerprints, using radius = [number withheld], and a large number of bits (i.e., [number withheld]) to avoid hash collisions.",
+        "The connectivity needed to generate the fingerprints is available from the CSD database and can be retrieved by using the CSD code provided for all entries of the tmQM data set.",
+        "E shows the [number withheld] most abundant fingerprints, which account for conjugated C\u2013C bonds (e.g., bits [number withheld] and [number withheld]), aromatic rings based on C (e.g., [number withheld] and [number withheld]) and N (e.g., [number withheld]), amines (e.g., [number withheld]), and other fragments that are commonly found in organic ligands.",
+        "Other groups and ligands, including chloride, alkoxy, oxo, and phosphines, can also be easily recognized in fingerprints [number withheld], [number withheld], [number withheld], and [number withheld], respectively."
+      ],
+      "sentences_withheld_as_possible_results": 0
+    },
+    {
+      "section_id": "sec1.2",
+      "direct_paragraph": 5,
+      "selected_sentences": [
+        "The GFN[number withheld]-xTB optimized Cartesian coordinates of all TM complexes are included in the tmQM data set.",
+        "All geometries are provided together with their CSD code, molecular size, charge, spin multiplicity, stoichiometry, and metal node degree (i.e., number of bonds involving the metal center)."
+      ],
+      "sentences_withheld_as_possible_results": 1
+    },
+    {
+      "section_id": "sec1.5",
+      "direct_paragraph": 1,
+      "selected_sentences": [
+        "tmQM is an open data set freely available at GitHub (https://github.com/bbskjelstad/tmqm) and from Quantum-Machine (http://quantum-machine.org/datasets/).",
+        "Quantum features, geometries and properties computed at the GFN[number withheld]-xTB and TPSSh-D[number withheld]BJ/def[number withheld]-SVP levels of theory are provided in the xyz and csv file formats."
+      ],
+      "sentences_withheld_as_possible_results": 0
+    },
+    {
+      "section_id": "_adda93_",
+      "direct_paragraph": 1,
+      "selected_sentences": [
+        "tmQM is an open data set freely available at GitHub (https://github.com/bbskjelstad/tmqm) and from Quantum-Machine (http://quantum-machine.org/datasets/).",
+        "Quantum features, geometries and properties computed at the GFN[number withheld]-xTB and TPSSh-D[number withheld]BJ/def[number withheld]-SVP levels of theory are provided in the xyz and csv file formats."
+      ],
+      "sentences_withheld_as_possible_results": 0
+    }
+  ],
+  "numeric_tokens_masked": true,
+  "whole_article_machine_exposed": true,
+  "no_table_cells_figures_abstract_results_sections_disclosed": true
+}

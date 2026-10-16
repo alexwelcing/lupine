@@ -1,0 +1,33 @@
+{
+  "after_sha256": "071986bd13660e8919bf36595559d9e4883af94643c15981d76d779259704a24",
+  "at": "2026-10-16T13:33:43.786750+00:00",
+  "before_sha256": "a3f68d8f9ef170b1fd2f50104df6625c508fdad610b238f0887911f59c34134c",
+  "executions_before": 0,
+  "findings": [
+    {
+      "finding": "URL split lowercases hostname; initial comparison inadvertently rejected valid uppercase host.",
+      "owner": "independent planner",
+      "repair": "Case-insensitive hostname identity check; literal Type stays unchanged."
+    },
+    {
+      "finding": "Historical receipt nested exposure must be closed and typed, not merely digest-bound.",
+      "owner": "independent planner",
+      "repair": "Exact exposure/package keys, counter types/ranges, completed stage flags; payloads recomputed later."
+    },
+    {
+      "finding": "Current archive open exposure needs propagation even when later metadata validation fails.",
+      "owner": "author",
+      "repair": "Copy raw header stage flags in finally."
+    },
+    {
+      "finding": "Generic OPC name rejection should retain its own closed reason after preserved header loop.",
+      "owner": "author",
+      "repair": "Old canonical path check at copied kind call, full OPC registry checks before first XML."
+    },
+    {
+      "finding": "Frame sheet total is its own frozen 4MiB group.",
+      "owner": "author",
+      "repair": "Use separate frame_sheets accounting with existing approved 4MiB cap."
+    }
+  ]
+}

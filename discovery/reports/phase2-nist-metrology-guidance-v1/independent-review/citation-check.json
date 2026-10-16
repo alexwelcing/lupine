@@ -1,0 +1,116 @@
+{
+  "schema": "lupine.nist-guidance-independent-citation-check.v1",
+  "checked_at": "2026-10-16T10:58:08.138994+00:00",
+  "status": "PASS",
+  "claims": 7,
+  "citations": 14,
+  "distinct_source_blocks": 13,
+  "exact_public_source_bindings_verified": 17,
+  "parent_artifacts": {
+    "README.md": "9f365d73c340bed7ccaf45777d07442b6b95026584a7665addddd3b5ae6798ac",
+    "selected-guidance.json": "d9aed217f7c291077a060da7950be17a517144eba379d0d7a3dc5247b68a54ad",
+    "source-bindings.json": "5e1bb23ba95aafeac89ca9b20099af99f26bb5f0e13cc2393a68a1e1ff27ea5b",
+    "exposure-ledger.json": "fb9d1f51bf7902193b402d7cd4535fd0a7abc39d8715ae05ddc5d904a6cc7b9a"
+  },
+  "citation_checks": [
+    {
+      "claim_id": "N01",
+      "source": "section5",
+      "index": 128,
+      "line": 739,
+      "exact_short_quote": true
+    },
+    {
+      "claim_id": "N02",
+      "source": "section5",
+      "index": 129,
+      "line": 743,
+      "exact_short_quote": true
+    },
+    {
+      "claim_id": "N02",
+      "source": "section5",
+      "index": 130,
+      "line": 746,
+      "exact_short_quote": true
+    },
+    {
+      "claim_id": "N02",
+      "source": "section5",
+      "index": 131,
+      "line": 748,
+      "exact_short_quote": true
+    },
+    {
+      "claim_id": "N03",
+      "source": "section5",
+      "index": 134,
+      "line": 757,
+      "exact_short_quote": true
+    },
+    {
+      "claim_id": "N03",
+      "source": "section5",
+      "index": 135,
+      "line": 759,
+      "exact_short_quote": true
+    },
+    {
+      "claim_id": "N04",
+      "source": "section5",
+      "index": 136,
+      "line": 763,
+      "exact_short_quote": true
+    },
+    {
+      "claim_id": "N04",
+      "source": "section6",
+      "index": 129,
+      "line": 755,
+      "exact_short_quote": true
+    },
+    {
+      "claim_id": "N05",
+      "source": "section6",
+      "index": 128,
+      "line": 753,
+      "exact_short_quote": true
+    },
+    {
+      "claim_id": "N05",
+      "source": "section6",
+      "index": 130,
+      "line": 757,
+      "exact_short_quote": true
+    },
+    {
+      "claim_id": "N06",
+      "source": "section6",
+      "index": 131,
+      "line": 759,
+      "exact_short_quote": true
+    },
+    {
+      "claim_id": "N06",
+      "source": "section6",
+      "index": 132,
+      "line": 761,
+      "exact_short_quote": true
+    },
+    {
+      "claim_id": "N06",
+      "source": "section6",
+      "index": 134,
+      "line": 765,
+      "exact_short_quote": true
+    },
+    {
+      "claim_id": "N07",
+      "source": "section6",
+      "index": 128,
+      "line": 753,
+      "exact_short_quote": true
+    }
+  ],
+  "scope": "Exact quote/line/index/URL/hash consistency only, plus separate independent prose interpretation. No raw HTML reread, parser rerun, source requests or measurement source access."
+}

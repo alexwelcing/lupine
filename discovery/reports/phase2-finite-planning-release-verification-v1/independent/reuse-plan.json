@@ -1,0 +1,60 @@
+{
+  "actual_artifact_audit_runs": 0,
+  "additional_required_comparison": {
+    "added_changed_removed": [],
+    "baseline_commit": "9d1f21dae141a28db378ee2e16aa83340df57877",
+    "baseline_manifest_sha256": "6bfd99aa4b3fdf254038570fc9e40cbb574a1fbbe587c943cdf909359c456a5f",
+    "runtime_files": 345,
+    "unchanged_runtime_files": 345
+  },
+  "existing_contract": "The held auditor verifies ddd4 baseline339 unchanged plus exactly six pinned runtime additions and two documents, runtime345, all110 package payloads unchanged.",
+  "prepared_at": "2026-10-16T16:50:07.425705+00:00",
+  "published_commit": "88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d",
+  "schema": "lupine.finite-planning.independent-artifact-reuse-plan.v1",
+  "scope": "Public retained source/wheel identity audit; no package/probe/source/scientific execution, extraction, network or tracked edits.",
+  "source_and_prepared_inputs_copied_without_change": [
+    {
+      "bytes": 22909,
+      "sha256": "b00541daccbbe8626880f59bc59d9694dc9f34e922690f968dfb50ed348bb738",
+      "snapshot": "audit_retained.py",
+      "source": ".cache/phase2-li-complete-readiness-artifact-review-format-v1/audit_retained.py"
+    },
+    {
+      "bytes": 1232,
+      "sha256": "0ba8593c7abe3f65d5fd1a0686c96dd52e45b92144dbc51e65ab5f4dd3ce80e4",
+      "snapshot": "prepared-scope.json",
+      "source": ".cache/phase2-li-complete-readiness-artifact-review-format-v1/prepared-scope.json"
+    },
+    {
+      "bytes": 1933,
+      "sha256": "e2bd3dbe182139dad896ce050edff189ebd2015c9f2f427a1b216b0cd2274fa5",
+      "snapshot": "prepared-promotion-inputs.json",
+      "source": ".cache/phase2-li-complete-readiness-artifact-review-format-v1/prepared-promotion-inputs.json"
+    },
+    {
+      "bytes": 5136,
+      "sha256": "b3b065ade262319238108efd0b6b296cc7ff947cb3c4c4eec8154d072db7559a",
+      "snapshot": "author-promotion-copyset.final.json",
+      "source": ".cache/phase2-li-complete-readiness-artifact-review-format-v1/author-promotion-copyset.final.json"
+    },
+    {
+      "bytes": 5523,
+      "sha256": "ee3285f1441a835d0df7aad48a5532b9941560c611ad5ca34d70f389cf0bac07",
+      "snapshot": "root-runtime-copyset.final.json",
+      "source": ".cache/phase2-li-complete-readiness-artifact-review-format-v1/root-runtime-copyset.final.json"
+    },
+    {
+      "bytes": 1848,
+      "sha256": "05c80f1f66604cabe61c9545c92dec3d4fa57436368e49b7c453f820ab7f8e4c",
+      "snapshot": "preparation.json",
+      "source": ".cache/phase2-li-complete-readiness-artifact-review-format-v1/preparation.json"
+    },
+    {
+      "bytes": 2357,
+      "sha256": "5c37012cd8f90d8d6e790f81ae6703cccc340a46b16ab6df05ffe3749fc1e29f",
+      "snapshot": "prepared-report-contract.json",
+      "source": ".cache/phase2-li-complete-readiness-artifact-review-format-v1/prepared-report-contract.json"
+    }
+  ],
+  "unchanged_auditor_source_sha256": "b00541daccbbe8626880f59bc59d9694dc9f34e922690f968dfb50ed348bb738"
+}

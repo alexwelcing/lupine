@@ -1,0 +1,33 @@
+{
+  "actual_source_operations": 0,
+  "at": "2026-10-16T13:49:45.341353+00:00",
+  "author_tests": {
+    "passed": 38,
+    "process_seconds": 2.458545,
+    "receipt": "receipts/corrected-exposure/execution.json",
+    "test_sha256": "0d96300978eaec5a43efb92ce67c3b4a3fa53da346022abc20de1e34a7c47610",
+    "unittest_seconds": 0.824
+  },
+  "contract_sha256": "295a04a9b411001e22a4e39c831c609203c2feb1958be5e663cfbb6a9e4704b7",
+  "independent_tests": {
+    "handoff": "../phase2-li-complete-readiness-review-v1/handoff.json",
+    "handoff_sha256": "9cb7599fce4c9e7a82c5c6150fd775f03cee4d64d9562a51c4d08f696e076b47",
+    "passed": 35,
+    "portable_passed": 35,
+    "portable_process_seconds": 4.941340111,
+    "portable_unittest_seconds": 3.842,
+    "process_seconds": 3.052986553,
+    "unittest_seconds": 2.358
+  },
+  "initial_failures": [
+    "receipts/first: pre-suite guarded bytecode import failure; isolated cache correction retained",
+    "receipts/first-loaded:38 methods, one fixture substring assertion matched endpoint lexeme in whole-source SHA; initial close stub destructor behavior preserved"
+  ],
+  "next_action": "Root integrates reviewed pure source/portable tests/contract; separate production adapter uses fixed source/prerequisite and later root runtime pins. No actual operation authorized here.",
+  "portable_author_tests": "promotion/tests/test_li_v3_readiness.py is unexecuted import/manifest adaptation only; root integration must execute it.",
+  "runtime335_held_before_after_all_author_and_independent_runs": true,
+  "scientific_implication": "Generated bounded metadata/package behavior only. Real source remains unprocessed by this candidate; no numerical performance, physical pairs, independence or eligibility established.",
+  "source_changes_after_first_loaded": "Only explicit header_replay_started/completed exposure flags and exact prior shape validation; no acceptance predicate or cap change. Diff retained.",
+  "source_sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219",
+  "status": "PURE_GENERATED_IMPLEMENTATION_AND_REVIEW_COMPLETE"
+}

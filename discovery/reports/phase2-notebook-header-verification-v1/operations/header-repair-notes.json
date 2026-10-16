@@ -1,0 +1,35 @@
+{
+  "actual_execution": false,
+  "helpers_executed": false,
+  "historical_sha256": "dbb47fb996f46284537fc7aa6a4b62a64c7af815630eaacc4c8f7ef1544eefa6",
+  "limitations": [
+    "Controlled-workflow recorder, not a hostile-operator security boundary.",
+    "Filesystem failure can prevent new receipt writes; existing start/log artifacts remain preserved.",
+    "Syntax and source review do not establish runtime execution success, actual CI completion or scientific validity.",
+    "Closed category and exposure fields do not independently certify that their combination is possible under the classifier. An actual observation needs a source-path audit; synthetic module tests retain their own limits."
+  ],
+  "network": false,
+  "prepared_argv": [
+    "python",
+    ".cache/phase2-next-source-operations-v1/run_header_after_ci.py",
+    "--artifact-review",
+    ".cache/phase2-notebook-header-artifact-review-v1/actual-a6e87c/review.json"
+  ],
+  "preserved_second_revision_sha256": "c626d286f7c89b3506feb397c7f0346f4be0e9483498d157e48e8b197641d009",
+  "private_source_reads": false,
+  "recorded_at": "2026-10-16T08:44:16.900821+00:00",
+  "recorder_imported": false,
+  "repaired_sha256": "6cfb4cca5d3460d80318d129ed529cc7476a78729908733ac7ef50512f3b4dbb",
+  "repairs": [
+    "Every recorder Git invocation uses the bounded git wrapper, including ls-remote. Full state validates HEAD/branch/remote/runtime/production guard before and after both fixed commands.",
+    "Launch, timeout, independent after-snapshot, full post-state and public-validation errors retain closed execution receipts. Unknown state stays null; no failure continues to run 2. Outer errors emit a closed stopped summary and retain a stopped receipt after the exclusive attempt directory exists.",
+    "Before forwarding output, exact report/exposure keys, strict types, closed categories/stages/local scope, fixed object/capture/prerequisite identities, causal exposure flags and blocked scientific scope are validated against source.",
+    "Original dbb source and both failed static reviews remain unchanged. Actual two diagnose argv and 100-second operation timeout remain fixed. Owned child processes are killed/reaped after timeout/interruption; proxy/CA environment retained while Python import overrides are removed.",
+    "Recorder and gate receipt hashes are rechecked inside each caught post-command state check, including the final command; any mismatch is retained and stops continuation.",
+    "Public report status label is now public_report_canonical_and_closed. Identity/shape/disclosure validation is explicitly distinct from classifier semantic equivalence; no checks were removed."
+  ],
+  "root_reported_artifact_review_sha256": "25d384048d0fd862b1ccc1dac304599fe97fe6bb8b38ce4eb53393e821d61303",
+  "runtime_tests": false,
+  "schema": "lupine.discovery.header_recorder_repair_notes.v1",
+  "status": "SYNTAX_AND_INDEPENDENT_STATIC_REVIEW_PASS_NOT_EXECUTED"
+}

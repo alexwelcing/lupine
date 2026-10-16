@@ -1,0 +1,38 @@
+[
+  {
+    "source": ".cache/mpea-contract-full-suite-v1/execution.json",
+    "destination": "reports/contract-integration-failure-v1/execution.json",
+    "bytes": 87419,
+    "sha256": "cb01d4d3b6072b74b3603412bf31ca97dec231382dc118029adc2d6ca8f2b97c"
+  },
+  {
+    "source": ".cache/mpea-contract-full-suite-v1/source-before.json",
+    "destination": "reports/contract-integration-failure-v1/source-before.json",
+    "bytes": 42236,
+    "sha256": "0fc119b1098db8bf75742ab584fd8c9959cc14cb04c6bc0a251d8c35b584d6f6"
+  },
+  {
+    "source": ".cache/mpea-contract-full-suite-v1/index-before.json",
+    "destination": "reports/contract-integration-failure-v1/index-before.json",
+    "bytes": 42236,
+    "sha256": "0fc119b1098db8bf75742ab584fd8c9959cc14cb04c6bc0a251d8c35b584d6f6"
+  },
+  {
+    "source": ".cache/mpea-contract-full-suite-v1/source-after.json",
+    "destination": "reports/contract-integration-failure-v1/source-after.json",
+    "bytes": 42236,
+    "sha256": "0fc119b1098db8bf75742ab584fd8c9959cc14cb04c6bc0a251d8c35b584d6f6"
+  },
+  {
+    "source": ".cache/mpea-contract-full-suite-v1/unittest-process.json",
+    "destination": "reports/contract-integration-failure-v1/unittest-process.json",
+    "bytes": 129,
+    "sha256": "623e52f99f20a977fb21b3326bcbe73545d325b2b9aae59b578dc985ba65155c"
+  },
+  {
+    "source": ".cache/mpea-contract-full-suite-v1/unittest.log",
+    "destination": "reports/contract-integration-failure-v1/unittest.log",
+    "bytes": 261141,
+    "sha256": "874cdbd9ed3d8a891c0b0f82ea6eb026d32d987dae4f663319b4206f831e50f0"
+  }
+]

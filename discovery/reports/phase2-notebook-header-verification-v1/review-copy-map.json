@@ -1,0 +1,131 @@
+{
+  "files": [
+    {
+      "bytes": 5740,
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/README.md",
+      "sha256": "29b01c04ac2ed6a9fb7fb3db8cb93b20588c148d7bb4dc0427a06c80cd342d26",
+      "source": ".cache/phase2-notebook-header-actual-review-v1/README.md"
+    },
+    {
+      "bytes": 51000,
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/actual-review.json",
+      "sha256": "5b6028491f73e800662a0dfc78019ec35a73cc35ea9fd99e8bf13a85330574b3",
+      "source": ".cache/phase2-notebook-header-actual-review-v1/actual-review.json"
+    },
+    {
+      "bytes": 942,
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/audit-execution.json",
+      "sha256": "b498657581513632baab7f9c0870aa267ea8a1de426252954ed176187133d980",
+      "source": ".cache/phase2-notebook-header-actual-review-v1/audit-execution.json"
+    },
+    {
+      "bytes": 16848,
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/audit-pre-actual-schema-binding.py",
+      "sha256": "9cf72e360679d2dc885d32d98c5baefd024e9c05d80ee41b95ee290c3b5c6df5",
+      "source": ".cache/phase2-notebook-header-actual-review-v1/audit-pre-actual-schema-binding.py"
+    },
+    {
+      "bytes": 656,
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/audit-start.json",
+      "sha256": "2907d3517313c08d6b9780e75570c02405bbc37374e773e2a84aa4a7ded5a978",
+      "source": ".cache/phase2-notebook-header-actual-review-v1/audit-start.json"
+    },
+    {
+      "bytes": 0,
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/audit-stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": ".cache/phase2-notebook-header-actual-review-v1/audit-stderr.txt"
+    },
+    {
+      "bytes": 4053,
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/audit-stdout.txt",
+      "sha256": "ae2fc9f4077268593daff2ab509f6469848d3e05aedf0b05ddfd5d7743560271",
+      "source": ".cache/phase2-notebook-header-actual-review-v1/audit-stdout.txt"
+    },
+    {
+      "bytes": 17517,
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/audit_completed_operations.py",
+      "sha256": "a4c8bf1e0f80c5923fa06f5f931538749d840e41ffc23c0b8e46c02a00ed7ebf",
+      "source": ".cache/phase2-notebook-header-actual-review-v1/audit_completed_operations.py"
+    },
+    {
+      "bytes": 2183,
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/inventory.json",
+      "sha256": "3fbf891ec9853ed2fe7b6c503b1ba64b8bf11315de00ade0a133c935c38e0b16",
+      "source": ".cache/phase2-notebook-header-actual-review-v1/inventory.json"
+    },
+    {
+      "bytes": 1062,
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/pre-execution-schema-binding.json",
+      "sha256": "c6b356cf42f7c4830bef2b99c7ca7acc9eadd83acc333a3172df60aaf2e13fd3",
+      "source": ".cache/phase2-notebook-header-actual-review-v1/pre-execution-schema-binding.json"
+    },
+    {
+      "bytes": 2441,
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/review-plan.json",
+      "sha256": "823a53f2f66a9d0df3d49324e27b4978b10dfff5a721be5e2b254e27950ba764",
+      "source": ".cache/phase2-notebook-header-actual-review-v1/review-plan.json"
+    },
+    {
+      "bytes": 5491,
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/review.json",
+      "sha256": "0c8617892987f8294d0d223fbc14bcb37ee5e0cfb437600ab1fc0c9a7341db66",
+      "source": ".cache/phase2-notebook-header-actual-review-v1/review.json"
+    },
+    {
+      "bytes": 1399,
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/run_audit_recorded.py",
+      "sha256": "6f715db07f341a8f90571c25d732d1f61028d6f36f72e8af1ffac7894eca02ab",
+      "source": ".cache/phase2-notebook-header-actual-review-v1/run_audit_recorded.py"
+    },
+    {
+      "bytes": 5820,
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/source-preparation.json",
+      "sha256": "2571a9b49752f6725c515cd887ebcb3a4c0500f78c82c9abb0a4b44d7512a352",
+      "source": ".cache/phase2-notebook-header-actual-review-v1/source-preparation.json"
+    },
+    {
+      "bytes": 6564,
+      "destination": "reports/phase2-li-paper-methods-v1/independent-review/audit.py",
+      "sha256": "00aaec78d8c07b4195a82f62f0fa58c91ec34865043bbbbb37978ef804b7f68f",
+      "source": ".cache/phase2-li-paper-methods-review-v1/audit.py"
+    },
+    {
+      "bytes": 682,
+      "destination": "reports/phase2-li-paper-methods-v1/independent-review/execution.json",
+      "sha256": "72fc18207743d0a867fdfff3de750e4a04534614446bbb5efe042f6792703a83",
+      "source": ".cache/phase2-li-paper-methods-review-v1/execution.json"
+    },
+    {
+      "bytes": 5848,
+      "destination": "reports/phase2-li-paper-methods-v1/independent-review/findings.md",
+      "sha256": "b19f7b0b25ea24fdc2e34212d960883a14a37f7c995f5c1602f02b9589545941",
+      "source": ".cache/phase2-li-paper-methods-review-v1/findings.md"
+    },
+    {
+      "bytes": 1022,
+      "destination": "reports/phase2-li-paper-methods-v1/independent-review/inventory.json",
+      "sha256": "a21209e5a2d7a70ac1dd55af3b6c4ce0cfa10f5566d9a871275d25765a78a9f7",
+      "source": ".cache/phase2-li-paper-methods-review-v1/inventory.json"
+    },
+    {
+      "bytes": 3768,
+      "destination": "reports/phase2-li-paper-methods-v1/independent-review/source-bindings-and-count-check.json",
+      "sha256": "b2bea67cf5f88e45a1aeb36fdc52bc1d19359463202ecc690fed977fd535696a",
+      "source": ".cache/phase2-li-paper-methods-review-v1/source-bindings-and-count-check.json"
+    },
+    {
+      "bytes": 0,
+      "destination": "reports/phase2-li-paper-methods-v1/independent-review/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": ".cache/phase2-li-paper-methods-review-v1/stderr.txt"
+    },
+    {
+      "bytes": 509,
+      "destination": "reports/phase2-li-paper-methods-v1/independent-review/stdout.txt",
+      "sha256": "ad08b3895ce7784d6757afc986b6d0253002331ddf3df65148744d859fa69b4c",
+      "source": ".cache/phase2-li-paper-methods-review-v1/stdout.txt"
+    }
+  ],
+  "recorded_at": "2026-10-16T08:57:16.544847+00:00"
+}

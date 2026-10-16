@@ -1,0 +1,22 @@
+{
+  "command": [
+    "python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_mpea_archive_operations*.py",
+    "-v"
+  ],
+  "copied_bundle_files": 30,
+  "exit_code": 0,
+  "log_sha256": "fdb840cfc8bf175f862e090c085f2a36c3644b9bed6bde95a8d3ecc919cdf6bf",
+  "original_wrappers_decoded_and_verified": 27,
+  "promotion_map_sha256": "441a0a591ffe2264a4821af2707abe316d70672f0e9acb5e621dd2d3d44ec7bf",
+  "scope": "Pure mapping/identity-comparison tests on constructed inputs; full inventory and terminal authentication remain wrapper obligations.",
+  "status": "PASS",
+  "test_count": 22,
+  "unchanged_promoted_files": 3
+}

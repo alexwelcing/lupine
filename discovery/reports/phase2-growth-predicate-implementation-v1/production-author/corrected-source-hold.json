@@ -1,0 +1,29 @@
+{
+  "actual_source_operations": 0,
+  "author_tests_passed": 42,
+  "files": {
+    "author_test": {
+      "bytes": 31724,
+      "path": ".cache/phase2-growth-predicate-production-v1/promotion/tests/test_li_v3_growth_predicate_audit.py",
+      "sha256": "1ca8b259f26c88e46a0e108d13c202afa15954871d5750c17307b58b90dd97d3"
+    },
+    "contract": {
+      "bytes": 5879,
+      "path": ".cache/phase2-growth-predicate-production-v1/promotion/docs/li-v3-growth-predicate-audit-plan.md",
+      "sha256": "a1a7d8fe820ddcd8d3479d53e4f35d5ce0ed6e123385bcbb1b646786e1d064d9"
+    },
+    "source": {
+      "bytes": 40316,
+      "path": ".cache/phase2-growth-predicate-production-v1/promotion/scripts/li_v3_growth_predicate_audit.py",
+      "sha256": "70a0339212b971bf7824ae256600b959ae7a7d22b6fc8853eb2208d3c8ece207"
+    }
+  },
+  "first_specific_predecessor_failure": ".cache/phase2-growth-predicate-production-review-v1/specific-predecessor-first/execution.json",
+  "fourth_path_owner": "independent reviewer; root publishes after final hold",
+  "fourth_runtime_path": "tests/test_li_v3_growth_predicate_audit_review.py",
+  "held_at": "2026-10-16T12:25:43.870203+00:00",
+  "real_checkout_guard_calls": 0,
+  "runtime_files_unchanged": 332,
+  "status": "AWAITING_FINAL_INDEPENDENT_HANDOFF",
+  "whole_report_comparisons_passed": 136
+}

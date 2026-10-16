@@ -1,0 +1,117 @@
+{
+  "actual_private_or_scientific_source_reads": 0,
+  "blockers": [],
+  "final_execution": {
+    "bytes": 4169,
+    "failures": 0,
+    "methods": 26,
+    "path": "corrected-final-run/execution.json",
+    "process_seconds": 0.9817010929982644,
+    "returncode": 0,
+    "sha256": "68409b164dd0367dd20c9f34f494f909d39683b9a4db2e45a8d294a81c0a5d08",
+    "six_original_sources_held": true,
+    "source_and_contract_and_tests_held": true,
+    "unit_test_seconds": 0.236
+  },
+  "held_contract": {
+    "bytes": 3408,
+    "sha256": "057d0960161f62c16432195db35c61e099ac03cf39e8b031e4f9c11deec5a034"
+  },
+  "held_fixture": {
+    "bytes": 4316,
+    "sha256": "1b58a6857ee48934dd750ba024703f11e1fbd4cb3015e50c47245d04269ae263"
+  },
+  "held_source": {
+    "bytes": 24367,
+    "sha256": "167c8e3d0cba758057c60991debe8d831c8638da5ce3dbd1a183503c46efea11"
+  },
+  "held_tests": {
+    "bytes": 22561,
+    "sha256": "eb6cc574975e955087a88f56b3690ae32a1ca8543f02fe95ecb8c974a7056cfc"
+  },
+  "network_operations": 0,
+  "original_primary_ast_unchanged": {
+    "_central": true,
+    "_first_growth": true,
+    "_sequential": true
+  },
+  "preserved_runs": [
+    {
+      "classification": "Product safe-scalar aggregate information loss",
+      "failure_events": 2,
+      "methods": 18,
+      "path": "first-run"
+    },
+    {
+      "classification": "All unittest methods pass; reviewer close stub emitted destructor canary on stderr",
+      "failure_events": 0,
+      "methods": 25,
+      "path": "second-run"
+    },
+    {
+      "classification": "Corrected close stub; clean test log",
+      "failure_events": 0,
+      "methods": 25,
+      "path": "final-run"
+    },
+    {
+      "classification": "Product incoming overlap erroneously cleared by outgoing ownership",
+      "failure_events": 1,
+      "methods": 1,
+      "path": "chained-overlap-first"
+    },
+    {
+      "classification": "Final held candidate all independent methods pass",
+      "failure_events": 0,
+      "methods": 26,
+      "path": "corrected-final-run"
+    }
+  ],
+  "production_guard_invocations": 0,
+  "proposal_families_exact": [
+    "CENTRAL_COMMENT_PRESENT",
+    "CENTRAL_EXTRA_PRESENT",
+    "DIRECTORY_SIZE_TOTAL",
+    "LOCAL_COMPRESSED_SIZE_AGREEMENT",
+    "LOCAL_CRC_AGREEMENT",
+    "LOCAL_DATE_AGREEMENT",
+    "LOCAL_DIRECTORY_ALIGNMENT",
+    "LOCAL_EXTRA_DECLARED_SPAN_AGREEMENT",
+    "LOCAL_EXTRA_SINGLE_A220",
+    "LOCAL_FLAGS_AGREEMENT",
+    "LOCAL_GROWTH_PAYLOAD_MINIMUM",
+    "LOCAL_GROWTH_SIGNATURE",
+    "LOCAL_GROWTH_ZERO_PADDING",
+    "LOCAL_METHOD_AGREEMENT",
+    "LOCAL_NAME_AGREEMENT",
+    "LOCAL_OFFSET_LAYOUT",
+    "LOCAL_SIGNATURE",
+    "LOCAL_TIME_AGREEMENT",
+    "LOCAL_UNCOMPRESSED_SIZE_AGREEMENT",
+    "LOCAL_VERSION_AGREEMENT",
+    "MEMBER_COMPRESSION",
+    "MEMBER_DATA_BOUNDS",
+    "MEMBER_DIRECTORY_ATTRIBUTE",
+    "MEMBER_FILE_TYPE",
+    "MEMBER_FLAGS",
+    "MEMBER_KIND_PROFILE",
+    "MEMBER_NAME_DUPLICATE",
+    "MEMBER_NAME_TRANSFORMED",
+    "MEMBER_PATH_PROFILE",
+    "MEMBER_VERSION",
+    "REQUIRED_MEMBERS_ABSENT",
+    "STORED_SIZE_MISMATCH"
+  ],
+  "schema": "lupine.discovery.growth_predicate.independent_review.v1",
+  "source_review": {
+    "aggregate_dependencies": "Retain bounded scalar facts only for safe associations; distinguish incoming overlap; defer variable or semantic reads when dependencies fail",
+    "exposure": "Separate selected, primary and aggregate progress; stage starts reflect actual entry; cleanup blocks completion",
+    "limits": "Finite synthetic evidence; no exhaustive equivalence theorem, production gate implementation or source admission",
+    "ordered_categories_and_closed_reasons": "Matches unchanged source ordering in inspected code and generated differential cases",
+    "projection": "Closed family/status/dependency categories and scoped operation counters; no per-entry identity, raw metadata, member values or payload fingerprints"
+  },
+  "status": "PASS_PURE_SYNTHETIC_SOURCE_AND_BEHAVIOR_REVIEW",
+  "tracked_writes": 0,
+  "written_at": "2026-10-16T12:07:05.498096+00:00",
+  "xml_or_member_operations": 0
+}

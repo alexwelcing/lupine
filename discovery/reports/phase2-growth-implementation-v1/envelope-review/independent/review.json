@@ -1,0 +1,117 @@
+{
+  "schema": "lupine.discovery.independent_growth_envelope_review.v1",
+  "reviewer": "/root/phase2_planner/ui_review",
+  "written_utc": "2026-10-16T10:30:33.923316+00:00",
+  "verdict": "PASS_BOUNDED_GENERATED_AND_MOCKED_CHECKS",
+  "unresolved_blockers": [],
+  "first_independent_attempt": {
+    "tests_run": 24,
+    "failures": 0,
+    "errors": 0,
+    "unittest_elapsed_seconds": 2.0,
+    "process_elapsed_seconds": 2.6162562019999314,
+    "retries": 0
+  },
+  "identities": {
+    "implementation": {
+      "bytes": 20609,
+      "sha256": "f50069d028526ea045441a2e574a26192a210ff78ba34f5170777d32f5692ec3"
+    },
+    "tests": {
+      "bytes": 46615,
+      "sha256": "4e23e7582dc1da3b0a51507eab4181a39707f0d9057506f25eba61d72ce73ccb"
+    },
+    "contract": {
+      "bytes": 9273,
+      "sha256": "4a5954b93b84d05c32a8ee2ea8254aec63283e915c331339cb97875e4b2aeb59"
+    },
+    "growth_predecessor": {
+      "bytes": 20556,
+      "sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a"
+    },
+    "guard_runner": {
+      "bytes": 2553,
+      "sha256": "1200cce98e62d103186bb3fbd568a8c2c641de07581fb5430df11df42f572746"
+    }
+  },
+  "execution_receipt": {
+    "bytes": 2691,
+    "sha256": "c6b2b4e9860fca108052d05e4814029136513f0c1eff70eec954baec5f1368ce"
+  },
+  "scope_observation": {
+    "bytes": 378,
+    "sha256": "83bf3d3bb9df3873743cc2287201ceb585f0d708866c3e3f0a15360e4344350c"
+  },
+  "test_methods": [
+    "test_generated_known_envelope_roles_and_exact_four_member_reads",
+    "test_every_entry_may_have_shape_and_ordinary_zero_extra_entries_remain_allowed",
+    "test_later_second_middle_last_local_areas_are_fully_checked",
+    "test_empty_padding_and_exact_maximum_local_span",
+    "test_unsigned_initial_value_has_no_public_shape_effect",
+    "test_opaque_worksheet_shared_string_bytes_do_not_affect_projection",
+    "test_method_and_option_flags_still_follow_compatible_profile",
+    "test_retained_later_central_predicates_reject_before_xml",
+    "test_retained_later_local_predicates_reject_before_payload_and_xml",
+    "test_declared_central_variable_lengths_cannot_overrun_directory_or_next_header",
+    "test_retained_eocd_contiguity_required_names_and_count_boundaries",
+    "test_local_shape_helper_bounds_and_complete_scan_exposure",
+    "test_type_size_and_known_actual_identity_barriers_precede_inspection",
+    "test_xml_malformed_and_crc_failure_retain_exact_partial_exposure",
+    "test_retained_xml_profile_content_relationship_and_workbook_rules",
+    "test_archive_closes_on_header_and_xml_failures",
+    "test_close_failure_preserves_prior_reason_exposure_and_no_destructor_channel",
+    "test_selected_cleanup_failure_blocks_full_envelope_without_losing_exposure",
+    "test_full_archive_constructor_and_infolist_failures_preserve_lifecycle",
+    "test_mocked_production_slots_identity_order_and_fixed_selected_field_gate",
+    "test_mocked_production_guard_failures_stop_before_later_reads",
+    "test_mocked_write_close_failure_and_replay_keep_exposure_without_acceptance",
+    "test_prerequisite_bridge_closed_constants_and_error_projection_without_io",
+    "test_mocked_source_context_binds_four_files_head_and_detaches_inherited_maps"
+  ],
+  "bounded_matrices": {
+    "later_bad_local_areas": 30,
+    "central_declared_length_overruns": 18,
+    "central_overrun_execution_paths": [
+      "direct new header routine",
+      "public synthetic envelope"
+    ],
+    "allowed_method_flag_pairs": 8,
+    "unsigned_initial_word_values": 8,
+    "xml_parse_failure_positions": 4,
+    "close_fault_cases": [
+      "selected predecessor",
+      "full header failure",
+      "full XML failure",
+      "full success"
+    ]
+  },
+  "mocked_current_wrapper_calls": {
+    "production_context": 5,
+    "envelope": 23
+  },
+  "actual_custody_receipt_capture_object_or_payload_read": false,
+  "real_predecessor_guard_git_or_reader_invoked": false,
+  "network_used": false,
+  "author_fixtures_read_or_imported": false,
+  "promoted_tree_or_ci_checked": false,
+  "source_scope_amendment": {
+    "status": "Root-approved raw central declaration preflight",
+    "independent_negative_on_old_candidate_executed": false,
+    "author_first_negative_preserved_separately": true,
+    "unexecuted_prior_test_snapshot": "before-central-length-probes/tests.py",
+    "malformed_layout_expectations_weakened": false
+  },
+  "scope_limits": [
+    "Header preflight precedes only the new archive open; earlier selected predecessor metadata exposure remains separate",
+    "Invariance comparisons exclude pre-existing whole-buffer observed identity",
+    "Synthetic wrapper identity and prerequisite success do not establish an actual custody event",
+    "Written receipt can precede descriptor-close failure; both states are checked",
+    "No concurrency guarantee, exhaustive adversarial coverage, general ZIP completeness, physical truth or scientific readiness claim"
+  ],
+  "science": {
+    "scientific_status": "BLOCKED_SCHEMA",
+    "initial_padding_semantics": "UNBOUND",
+    "actual_archive_profile_acceptance": "UNKNOWN"
+  },
+  "final_test_trailing_newlines": 1
+}

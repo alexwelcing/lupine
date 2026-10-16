@@ -1,0 +1,68 @@
+[
+  {
+    "bytes": 5585,
+    "destination": "reports/mpea-feature-readiness-v1/ci-verification.json",
+    "sha256": "db92bea7c2d5f029f1405776a7c5e77317bf3e0e06bd543f35c2ba0de55778f6",
+    "source": ".cache/mpea-features/production-5b1ed62-v1/ci-verification.json"
+  },
+  {
+    "bytes": 8345,
+    "destination": "reports/mpea-feature-readiness-v1/reproduction.json",
+    "sha256": "b5ca3d8b6475861096fc1430aebe3531b5840c642a3e2eb8d468f28ad19b2b4b",
+    "source": ".cache/mpea-features/production-5b1ed62-v1/reproduction.json"
+  },
+  {
+    "bytes": 7989,
+    "destination": "reports/mpea-feature-readiness-v1/process-1/readiness.json",
+    "sha256": "666b13adf2ce0c9169806aa112f39f4aff49e7eff23e2a0f8427889f325e0b76",
+    "source": ".cache/mpea-features/production-5b1ed62-v1/process-1/readiness.json"
+  },
+  {
+    "bytes": 665,
+    "destination": "reports/mpea-feature-readiness-v1/process-1/execution.json",
+    "sha256": "258e9004150a5c3825276e25e587aef088262b62d12b8533f4e3e256cbd897fa",
+    "source": ".cache/mpea-features/production-5b1ed62-v1/process-1/execution.json"
+  },
+  {
+    "bytes": 185,
+    "destination": "reports/mpea-feature-readiness-v1/process-1/stdout.txt",
+    "sha256": "ae5543a0841bb1aa931d2510e7cef0caf0fceed96ab5cb18743d96ff5bb616c5",
+    "source": ".cache/mpea-features/production-5b1ed62-v1/process-1/stdout.txt"
+  },
+  {
+    "bytes": 0,
+    "destination": "reports/mpea-feature-readiness-v1/process-1/stderr.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": ".cache/mpea-features/production-5b1ed62-v1/process-1/stderr.txt"
+  },
+  {
+    "bytes": 7989,
+    "destination": "reports/mpea-feature-readiness-v1/process-2/readiness.json",
+    "sha256": "666b13adf2ce0c9169806aa112f39f4aff49e7eff23e2a0f8427889f325e0b76",
+    "source": ".cache/mpea-features/production-5b1ed62-v1/process-2/readiness.json"
+  },
+  {
+    "bytes": 665,
+    "destination": "reports/mpea-feature-readiness-v1/process-2/execution.json",
+    "sha256": "88abe19fdd58439cb1171a13b63b99c85b9d22126371e677c126052a4c4f3210",
+    "source": ".cache/mpea-features/production-5b1ed62-v1/process-2/execution.json"
+  },
+  {
+    "bytes": 185,
+    "destination": "reports/mpea-feature-readiness-v1/process-2/stdout.txt",
+    "sha256": "ae5543a0841bb1aa931d2510e7cef0caf0fceed96ab5cb18743d96ff5bb616c5",
+    "source": ".cache/mpea-features/production-5b1ed62-v1/process-2/stdout.txt"
+  },
+  {
+    "bytes": 0,
+    "destination": "reports/mpea-feature-readiness-v1/process-2/stderr.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": ".cache/mpea-features/production-5b1ed62-v1/process-2/stderr.txt"
+  },
+  {
+    "bytes": 5474,
+    "destination": "reports/mpea-feature-readiness-v1/historical-runner.py",
+    "sha256": "233fbd3c9efc116d61654d4fafadd23f884a2910b25fa9e04ddef0000da07953",
+    "source": ".cache/run-feature-production-v1.py"
+  }
+]

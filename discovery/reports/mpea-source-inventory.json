@@ -1,0 +1,369 @@
+{
+  "schema": "lupine.discovery.mpea.source_inventory.v1",
+  "audit_date": "2026-10-10",
+  "status": "METADATA_PREPARATION_SCHEMA_UNCONFIRMED",
+  "scope": {
+    "dataset_bytes_acquired": false,
+    "dataset_bytes_decoded": false,
+    "published_papers_read": true,
+    "incidental_published_results_disclosed_in": "docs/operating-condition-source-audit.md",
+    "source_code_executed": false,
+    "notebooks_downloaded": false,
+    "scientific_fits": 0,
+    "split_assignments": 0,
+    "eligibility_rules_selected": false,
+    "evaluation_thresholds_selected": false,
+    "custodian_implemented": false
+  },
+  "archive": {
+    "provider": "Figshare",
+    "article_id": 12642953,
+    "version": 9,
+    "doi": "10.6084/m9.figshare.12642953.v9",
+    "title": "Expanded dataset of mechanical properties and observed phases of multi-principal element alloys",
+    "published_date": "2020-12-16T20:05:06Z",
+    "modified_date": "2020-12-16T20:05:08Z",
+    "metadata_url": "https://api.figshare.com/v2/articles/12642953/versions/9",
+    "metadata_bytes": 4714,
+    "metadata_sha256": "ffe30394f616e654b0f09f237270f633687120d727812458cf9579f2bbadbf42",
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/",
+      "evidence": "Version-specific Figshare metadata; distinct from repository Apache-2.0 and article CC BY/metadata CC0."
+    },
+    "file": {
+      "id": 25797305,
+      "name": "MPEA_dataset.csv",
+      "declared_bytes": 332126,
+      "supplied_md5": "6d29eb6018157b863ca0033ccec936d5",
+      "repository_computed_md5": "6d29eb6018157b863ca0033ccec936d5",
+      "actual_bytes": null,
+      "actual_sha256": null,
+      "download_url": "https://ndownloader.figshare.com/files/25797305",
+      "download_requested": false
+    }
+  },
+  "head_observation": {
+    "method": "HEAD",
+    "request_url": "https://ndownloader.figshare.com/files/25797305",
+    "status": 302,
+    "response_body_read": false,
+    "content_length": 0,
+    "content_type": "text/csv",
+    "redirect": {
+      "scheme": "https",
+      "host": "s3-eu-west-1.amazonaws.com",
+      "path": "/pfigshare-u-files/25797305/MPEA_dataset.csv",
+      "query_present": true,
+      "query_recorded": false
+    },
+    "terminal_location_requested": false,
+    "limitation": "HEAD metadata only; no assertion that a future GET or CSV parse succeeds."
+  },
+  "provenance": {
+    "publication": {
+      "doi": "10.1038/s41597-020-00768-9",
+      "pmcid": "PMC7722748",
+      "kind": "Published compilation of experimental records from primary studies; not one uniform experiment.",
+      "reported_counts": {
+        "records": 1545,
+        "compositions": 630,
+        "primary_articles": 265
+      },
+      "reported_counts_independently_verified": false,
+      "high_temperature_jointly_measured_record_count": null,
+      "record_definition": "Unique composition, property, temperature, reference combination as stated in the article.",
+      "upstream_curation": "Earlier reviews plus 2019-source extraction; outliers were investigated and inaccurate/unverifiable values corrected or removed."
+    },
+    "github": {
+      "repository": "CitrineInformatics/MPEA_dataset",
+      "commit": "d31e2510cccc3fb9e79d43ad62652f64ef8c2c5e",
+      "commit_date": "2022-08-03T19:34:47Z",
+      "github_csv_matches_figshare_v9": "NOT_ESTABLISHED",
+      "code_license": "Apache-2.0"
+    }
+  },
+  "evidence": [
+    {
+      "kind": "paper_xml",
+      "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC7722748/fullTextXML",
+      "bytes": 63254,
+      "sha256": "ef21ae6085f5444b534ee2ef7137542f63e3b80fc3940219a3960b642f5a1550",
+      "read_scope": "Paper previously read; this pass examined table-header text only, not table rows."
+    },
+    {
+      "kind": "readme",
+      "url": "https://raw.githubusercontent.com/CitrineInformatics/MPEA_dataset/d31e2510cccc3fb9e79d43ad62652f64ef8c2c5e/README.md",
+      "bytes": 2368,
+      "sha256": "3fa8ac5a373381ad0ccae9d7e741d583103fab50793e0dd44de1b1571da3ed9a"
+    },
+    {
+      "kind": "license",
+      "url": "https://raw.githubusercontent.com/CitrineInformatics/MPEA_dataset/d31e2510cccc3fb9e79d43ad62652f64ef8c2c5e/LICENSE",
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "kind": "tree_metadata",
+      "url": "https://api.github.com/repos/CitrineInformatics/MPEA_dataset/git/trees/d31e2510cccc3fb9e79d43ad62652f64ef8c2c5e?recursive=1",
+      "bytes": 21213,
+      "sha256": "df27581f47b624cb4628f18b5321c52902c64e40a7a24870002667ceb504b963",
+      "read_scope": "Path names only; no CSV/notebook/figure bodies."
+    },
+    {
+      "kind": "source_code",
+      "url": "https://raw.githubusercontent.com/CitrineInformatics/MPEA_dataset/d31e2510cccc3fb9e79d43ad62652f64ef8c2c5e/utils.py",
+      "bytes": 5330,
+      "sha256": "0912f6672a9cf2706e181acfbd589dd6383937641cbe917a3d6a3fcf2669c560",
+      "read_scope": "AST field-label strings and classification/visualization helper definitions only; no execution."
+    },
+    {
+      "kind": "test_source_code",
+      "url": "https://raw.githubusercontent.com/CitrineInformatics/MPEA_dataset/d31e2510cccc3fb9e79d43ad62652f64ef8c2c5e/tests/test_process.py",
+      "bytes": 2094,
+      "sha256": "9e7a9adac0dbcb361d44c2932beb10f3372599f95577320ece79c1e301862f49",
+      "read_scope": "AST PROPERTY-label strings only; no test execution or data-file reads."
+    }
+  ],
+  "schema_evidence": {
+    "exact_complete_csv_header": null,
+    "csv_column_order": null,
+    "csv_encoding_verified": false,
+    "csv_dialect_verified": false,
+    "csv_missing_tokens_verified": false,
+    "csv_row_count_verified": false,
+    "paper_example_table_headers": [
+      "DOI",
+      "FORMULA",
+      "YS (MPa)",
+      "UTS (MPa)",
+      "Elongation (%)"
+    ],
+    "source_code_label_strings": [
+      "PROPERTY: Type of phases",
+      "PROPERTY: Type of test",
+      "PROPERTY: Elongation (%)"
+    ],
+    "all_labels_prove_figshare_v9_header": false,
+    "initial_recognized_header_token_allowlist": [
+      "PROPERTY: Type of phases",
+      "PROPERTY: Type of test",
+      "PROPERTY: Elongation (%)",
+      "DOI",
+      "FORMULA",
+      "YS (MPa)",
+      "UTS (MPa)",
+      "Elongation (%)"
+    ],
+    "unknown_schema_policy": "BLOCKED_SCHEMA; header-only stage releases exact allowlisted tokens plus order and constant UNKNOWN_COLUMN positions, never unknown strings. No data-row decode or positional inference. A complete schema amendment must be committed before row metadata extraction."
+  },
+  "documented_fields": [
+    {
+      "id": "nominal_composition",
+      "documented_label": "Alloy composition",
+      "semantics": "Nominal composition normalized/alphabetized; atomic percent.",
+      "csv_column_name_confirmed": null,
+      "source_code_label": null,
+      "custody_treatment": "Opaque exact declared-formula equality group only; no raw formula, coefficients, features or calculated quantities."
+    },
+    {
+      "id": "observed_phases",
+      "documented_label": "Microstructure",
+      "semantics": "Experimentally observed phases; BCC/FCC/HCP/L12/B2/Laves versus secondary/other.",
+      "csv_column_name_confirmed": null,
+      "source_code_label": "PROPERTY: Type of phases",
+      "custody_treatment": "Withhold measured phase values; structural cell-presence only."
+    },
+    {
+      "id": "processing",
+      "documented_label": "Processing method",
+      "semantics": "CAST/POWDER/WROUGHT/ANNEAL/OTHER are coarse documented classes; full sequences may differ.",
+      "csv_column_name_confirmed": null,
+      "source_code_label": null,
+      "custody_treatment": "Only exact closed class token if present in an approved field; no inferred class from free text."
+    },
+    {
+      "id": "grain_size",
+      "documented_label": "Grain size (μm)",
+      "semantics": "Average measured grain size.",
+      "csv_column_name_confirmed": null,
+      "source_code_label": null,
+      "custody_treatment": "Withhold values and numeric validity."
+    },
+    {
+      "id": "density_experimental",
+      "documented_label": "Exp. Density (g/cm3)",
+      "semantics": "Experimentally reported density.",
+      "csv_column_name_confirmed": null,
+      "source_code_label": null,
+      "custody_treatment": "Withhold values; keep distinct from ROM estimate."
+    },
+    {
+      "id": "density_calculated",
+      "documented_label": "Calculated Density (g/cm3)",
+      "semantics": "Rule-of-mixtures estimate from nominal composition and elemental properties.",
+      "csv_column_name_confirmed": null,
+      "source_code_label": null,
+      "custody_treatment": "Withhold values and reconstructed estimates; not experimental truth."
+    },
+    {
+      "id": "test_mode",
+      "documented_label": "Type of test",
+      "semantics": "T denotes tension; C denotes compression.",
+      "csv_column_name_confirmed": null,
+      "source_code_label": "PROPERTY: Type of test",
+      "custody_treatment": "Closed exact T/C token or explicit missing/unknown."
+    },
+    {
+      "id": "test_temperature",
+      "documented_label": "Test temperature (°C)",
+      "semantics": "Declared temperature of mechanical testing.",
+      "csv_column_name_confirmed": null,
+      "source_code_label": null,
+      "custody_treatment": "Only condition value allowed: bounded exact decimal Celsius when approved schema confirms field/unit."
+    },
+    {
+      "id": "yield_strength",
+      "documented_label": "YS (MPa)",
+      "semantics": "Measured yield strength.",
+      "csv_column_name_confirmed": null,
+      "source_code_label": null,
+      "custody_treatment": "Withhold values, ranges, extrema, numeric validity and derived features."
+    },
+    {
+      "id": "ultimate_strength",
+      "documented_label": "UTS (MPa)",
+      "semantics": "Ultimate tensile strength for T; maximum compression strength for C.",
+      "csv_column_name_confirmed": null,
+      "source_code_label": null,
+      "custody_treatment": "Withhold; do not merge tensile and compression meanings."
+    },
+    {
+      "id": "hardness",
+      "documented_label": "HV",
+      "semantics": "Experimentally reported Vickers hardness.",
+      "csv_column_name_confirmed": null,
+      "source_code_label": null,
+      "custody_treatment": "Withhold values and numeric validity."
+    },
+    {
+      "id": "elongation",
+      "documented_label": "Elongation (%)",
+      "semantics": "Elongation at failure for tension or maximum reported compression strain.",
+      "csv_column_name_confirmed": null,
+      "source_code_label": "PROPERTY: Elongation (%)",
+      "custody_treatment": "Withhold; no sign conversion; maximum compression strain is not necessarily failure."
+    },
+    {
+      "id": "plastic_elongation",
+      "documented_label": "Elongation plastic (%)",
+      "semantics": "Plastic elongation or plastic compression strain.",
+      "csv_column_name_confirmed": null,
+      "source_code_label": null,
+      "custody_treatment": "Withhold and preserve distinct quantity."
+    },
+    {
+      "id": "youngs_modulus_experimental",
+      "documented_label": "Exp. Young’s modulus (GPa)",
+      "semantics": "Experimentally reported Young's modulus.",
+      "csv_column_name_confirmed": null,
+      "source_code_label": null,
+      "custody_treatment": "Withhold values; keep distinct from ROM estimate."
+    },
+    {
+      "id": "youngs_modulus_calculated",
+      "documented_label": "Calculated Young’s modulus (GPa)",
+      "semantics": "Rule-of-mixtures estimate for single-phase solid solutions.",
+      "csv_column_name_confirmed": null,
+      "source_code_label": null,
+      "custody_treatment": "Withhold values and reconstructed estimates; not experimental truth."
+    },
+    {
+      "id": "oxygen_content",
+      "documented_label": "O content (wppm)",
+      "semantics": "Measured oxygen content.",
+      "csv_column_name_confirmed": null,
+      "source_code_label": null,
+      "custody_treatment": "Withhold as measured descriptor; not automatically a permitted feature."
+    },
+    {
+      "id": "nitrogen_content",
+      "documented_label": "N content (wppm)",
+      "semantics": "Measured nitrogen content.",
+      "csv_column_name_confirmed": null,
+      "source_code_label": null,
+      "custody_treatment": "Withhold as measured descriptor; not automatically a permitted feature."
+    },
+    {
+      "id": "carbon_content",
+      "documented_label": "C content (wppm)",
+      "semantics": "Measured carbon content.",
+      "csv_column_name_confirmed": null,
+      "source_code_label": null,
+      "custody_treatment": "Withhold as measured descriptor; not automatically a permitted feature."
+    },
+    {
+      "id": "primary_reference",
+      "documented_label": "Source DOI",
+      "semantics": "Paper says each record is associated with the DOI of the original source.",
+      "csv_column_name_confirmed": null,
+      "source_code_label": null,
+      "custody_treatment": "Private normalized DOI equality grouping; publish first-occurrence group ordinal only."
+    }
+  ],
+  "custody_design": {
+    "plan": "docs/mpea-custody-plan.md",
+    "status": "CONTRACT_ONLY_NOT_IMPLEMENTED",
+    "initial_stage": "HEADER_ONLY_ALWAYS_BLOCKED_SCHEMA",
+    "initial_stage_data_rows_decoded": false,
+    "later_row_stage_requires_committed_schema_amendment": true,
+    "public_condition_numeric_allowlist": [
+      "declared_test_temperature_celsius"
+    ],
+    "public_metadata_allowed": [
+      "original_logical_record_ordinal",
+      "closed_parse_and_schema_status",
+      "opaque_source_group_first_occurrence_ordinal",
+      "opaque_declared_formula_group_first_occurrence_ordinal",
+      "exact_test_mode_T_or_C",
+      "exact_documented_processing_class_if_already_present",
+      "structural_empty_whitespace_or_nonempty_cell_status_in_later_row_stage"
+    ],
+    "public_values_withheld": [
+      "raw_formula_and_stoichiometric_coefficients",
+      "raw_DOI_citation_reference_notes",
+      "observed_phases_grain_size_interstitial_measurements",
+      "all_measured_performance_values_and_numeric_validity",
+      "all_ROM_predictions_and_reconstructed_numeric_features",
+      "per_field_or_per_record_hashes_lengths_or_error_excerpts"
+    ],
+    "metadata_grouping_before_cell_presence": true,
+    "all_parseable_records_preserved": true,
+    "label_based_filtering": false,
+    "unknown_schema_all_cell_semantics_withheld": true,
+    "raw_cache_root": ".cache/mpea-custody/",
+    "resource_limits": {
+      "network_body_bytes": 332127,
+      "accepted_file_bytes": 332126,
+      "maximum_redirects": 1,
+      "network_timeout_seconds": 30,
+      "logical_records": 16384,
+      "columns": 128,
+      "field_characters": 16384,
+      "header_token_characters": 256,
+      "logical_record_characters": 65536,
+      "exact_temperature_lexical_characters": 64,
+      "exact_temperature_integer_bits": 256
+    },
+    "resource_limits_are_engineering_proposals_not_verified_source_format": true
+  },
+  "readiness": {
+    "bounded_synthetic_custodian_prototype": "READY_TO_DESIGN_AND_TEST_HEADER_ONLY_STAGE",
+    "real_csv_acquisition": "NOT_AUTHORIZED_BY_THIS_DOCUMENT",
+    "semantic_record_extraction": "BLOCKED_PENDING_COMPLETE_SCHEMA_EVIDENCE",
+    "measurement_pair_truth": "NOT_ESTABLISHED",
+    "scientific_feature_permissions": "NOT_SELECTED",
+    "evaluation_protocol": "NOT_REGISTERED",
+    "physical_field_or_discrepancy_bound": "NOT_ESTABLISHED"
+  }
+}

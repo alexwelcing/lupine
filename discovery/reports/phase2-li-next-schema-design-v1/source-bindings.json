@@ -1,0 +1,30 @@
+{
+  "schema": "lupine.discovery.li_next_schema_design.v1",
+  "status": "PROSPECTIVE_DESIGN_ONLY",
+  "source_files": [
+    {
+      "path": "discovery/.cache/phase2-li-documentary-contract-v1/README.md",
+      "bytes": 8505,
+      "sha256": "7ccdf382941d535b72d833cae3fe92c0a5dce614f0ce3fe4358aa6467af526a3"
+    },
+    {
+      "path": "discovery/.cache/phase2-li-schema-gates-v1/README.md",
+      "bytes": 9573,
+      "sha256": "1d293554cb5e933df913f21333ed20e274e0b5a569aa6315fded0ac62eb6bb3c"
+    },
+    {
+      "path": "discovery/.cache/phase2-li-compatible-envelope-candidate-v1/promotion/docs/li-v3-compatible-envelope-plan.md",
+      "bytes": 6679,
+      "sha256": "86b663de7a0e88e559a8cc6acbbacd3b17d4ca9ee4e759abc826f7afbd6211ca"
+    }
+  ],
+  "actual_flag_result_reviewed": false,
+  "actual_envelope_result_reviewed": false,
+  "private_file_or_archive_read": false,
+  "network_used": false,
+  "implementation_added": false,
+  "coordinates_bound": false,
+  "historical_candidate_bytes_changed": false,
+  "tests_run": false,
+  "scientific_readiness_claimed": false
+}

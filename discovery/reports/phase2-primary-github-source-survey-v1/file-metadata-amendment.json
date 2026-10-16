@@ -1,0 +1,15 @@
+{
+  "frozen_at": "2026-10-16T17:20:41.059164+00:00",
+  "request": {
+    "id": "data_directory_metadata",
+    "url": "https://api.github.com/repos/uiocompcat/tmQM/contents/tmQM?ref=ece824419c9006fe66436daf233822b75533b82f",
+    "maximum_bytes": 1048576,
+    "purpose": "Literal documented tmQM directory metadata only: file names, Git blob IDs, sizes and paths. No file content, rows, examples or download."
+  },
+  "basis": "Root metadata names tmQM directory; pinned README21 explicitly names tmQM/tmQM_y.csv. One directory-metadata read can bind the concrete file identity and reveal any separately listed license/schema document without numerical file acquisition.",
+  "requests_before": 7,
+  "requests_after_if_executed": 8,
+  "maximum_requests_stays": 9,
+  "forbidden": "No directory-item download_url or file-body GET. No further requests are selected by this amendment.",
+  "preserved_before_notes": "before-file-metadata/ contains the provisional seven-request notes; not an actual failing invocation or final hold."
+}

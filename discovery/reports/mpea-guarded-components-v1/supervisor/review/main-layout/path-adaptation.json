@@ -1,0 +1,7 @@
+{
+  "schema": "lupine.evidence.utf8_artifact.v1",
+  "original_sha256": "3f790769686b7dcf640f9a7ef0d7f196c29b4595bd94a72ed6a4bb981b13190e",
+  "original_bytes": 1165,
+  "text": "--- review/test_supervisor_review.py\n+++ promotion/tests/test_mpea_study_supervisor_review.py\n@@ -15,11 +15,11 @@\n \n sys.dont_write_bytecode = True\n HERE = Path(__file__).resolve().parent\n-SOURCE = HERE.parent / 'supervisor.py'\n+SOURCE = HERE.parent / 'scripts/mpea_study_supervisor.py'\n spec = importlib.util.spec_from_file_location('reviewed_supervisor', SOURCE)\n supervisor = importlib.util.module_from_spec(spec)\n spec.loader.exec_module(supervisor)\n-CHILD = HERE / 'review_child.py'\n+CHILD = HERE / 'fixtures/mpea_supervisor_review_child.py'\n STAGES = ('allocation', 'input_freeze', 'development', 'rank_freeze', 'reserved', 'calibration', 'replay', 'evaluation')\n \n \n\n--- review/review_child.py\n+++ promotion/tests/fixtures/mpea_supervisor_review_child.py\n@@ -29,7 +29,7 @@\n \n if mode == 'manual_ack':\n     import importlib.util\n-    source = Path(__file__).resolve().parents[1] / 'supervisor.py'\n+    source = Path(__file__).resolve().parents[2] / 'scripts/mpea_study_supervisor.py'\n     spec = importlib.util.spec_from_file_location('actual_marker_library', source)\n     library = importlib.util.module_from_spec(spec)\n     spec.loader.exec_module(library)\n",
+  "scope": "Exact original diff is recoverable as UTF-8 text; envelope avoids whitespace diagnostics on required diff context lines."
+}

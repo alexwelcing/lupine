@@ -1,0 +1,10 @@
+{
+  "all_bundle_bytes_match": true,
+  "at": "2026-10-10T22:57:31.491391+00:00",
+  "manifest_sha256": "2867d8519526052ab688f82fc05bf5e4b99804df3f0c4504d1b4a6367d1883be",
+  "original_bytes_hashes_and_source_files_match": true,
+  "originals": 54,
+  "scope": "Exact producer engineering evidence; no source/feature/target/attempt cache copied; full main integration running separately.",
+  "seal_sha256": "7472728a927d818c1abafb1b2176eed44f063899bf9a1ec2ad7e5a4212064763",
+  "sealed_retained_files": 56
+}

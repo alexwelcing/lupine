@@ -1,0 +1,10 @@
+{
+  "failure": "README.md linked planned generated publication-checks.json before that file was written.",
+  "preserved_first_output_directory": "first-build",
+  "recorded_at": "2026-10-16T12:33:04.226957+00:00",
+  "repair": "Allow exactly the planned check-record target during construction; verify every relative link exists after writing that file.",
+  "returncode": 1,
+  "scope": "Publication builder order only; no product or source operation executed; no candidate mutation.",
+  "source_sha256": "f4ade6f6aefd0928088a7c81cc273da165374062713146ed0eed196951073732",
+  "status": "FAILED_PUBLICATION_ASSEMBLY_CHECK"
+}

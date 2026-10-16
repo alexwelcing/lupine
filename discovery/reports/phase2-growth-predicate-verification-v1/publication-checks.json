@@ -1,0 +1,147 @@
+{
+  "CI_claim": "No new CI observation included.",
+  "archive_or_wheel_binaries_read": 0,
+  "created_at": "2026-10-16T12:43:10.636680+00:00",
+  "independent_inventory_files_verified": 37,
+  "lossless_wrapper_entries": 3,
+  "package_execution_log_bindings_verified": 2,
+  "package_summary": {
+    "cases": 28,
+    "checks": 16,
+    "schemas": 6
+  },
+  "private_inputs_read": 0,
+  "product_tests_run": 0,
+  "relative_markdown_links": [
+    {
+      "exists": true,
+      "source": "reports/phase2-growth-predicate-verification-v1/README.md",
+      "target": "clean-package/artifacts/release-artifacts.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-growth-predicate-verification-v1/README.md",
+      "target": "clean-package/0-execution.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-growth-predicate-verification-v1/README.md",
+      "target": "clean-package/1-execution.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-growth-predicate-verification-v1/README.md",
+      "target": "independent-artifact-review/actual-review.md"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-growth-predicate-verification-v1/README.md",
+      "target": "independent-artifact-review/actual-review.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-growth-predicate-verification-v1/README.md",
+      "target": "publication/final-reviewed-pins.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-growth-predicate-verification-v1/README.md",
+      "target": "publication/artifact-reviewed-pins.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-growth-predicate-verification-v1/README.md",
+      "target": "publication/published.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-growth-predicate-verification-v1/README.md",
+      "target": "publication/pr-verified-pending.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-growth-predicate-verification-v1/README.md",
+      "target": "publication-copy-map.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-growth-predicate-verification-v1/README.md",
+      "target": "publication-checks.json"
+    }
+  ],
+  "review_summary": {
+    "first_additive_failure_preserved": true,
+    "generic_and_corrected_additive_pass": true,
+    "old_runtime_unchanged": 332,
+    "runtime_files": 335,
+    "source_files": 5003,
+    "unchanged_wheel_payload": 108
+  },
+  "schema": "lupine.growth-predicate-verification-publication-checks.v1",
+  "source_entries": [
+    ".cache/phase2-growth-predicate-artifact-review-v1/README.md",
+    ".cache/phase2-growth-predicate-artifact-review-v1/actual-a064a2c0e4a7/review.json",
+    ".cache/phase2-growth-predicate-artifact-review-v1/actual-review.json",
+    ".cache/phase2-growth-predicate-artifact-review-v1/actual-review.md",
+    ".cache/phase2-growth-predicate-artifact-review-v1/additive-a064a2c0e4a7/additive-review.json",
+    ".cache/phase2-growth-predicate-artifact-review-v1/additive-correction-1-a064a2c0e4a7/additive-review.json",
+    ".cache/phase2-growth-predicate-artifact-review-v1/additive_audit.py",
+    ".cache/phase2-growth-predicate-artifact-review-v1/additive_audit.py.diff",
+    ".cache/phase2-growth-predicate-artifact-review-v1/audit.py",
+    ".cache/phase2-growth-predicate-artifact-review-v1/bindings.unbound.json",
+    ".cache/phase2-growth-predicate-artifact-review-v1/check-adaptation.json",
+    ".cache/phase2-growth-predicate-artifact-review-v1/correction-1-preparation.json",
+    ".cache/phase2-growth-predicate-artifact-review-v1/execution-a064a2c0e4a7/0-execution.json",
+    ".cache/phase2-growth-predicate-artifact-review-v1/execution-a064a2c0e4a7/0-start.json",
+    ".cache/phase2-growth-predicate-artifact-review-v1/execution-a064a2c0e4a7/0-stderr.txt",
+    ".cache/phase2-growth-predicate-artifact-review-v1/execution-a064a2c0e4a7/0-stdout.txt",
+    ".cache/phase2-growth-predicate-artifact-review-v1/execution-a064a2c0e4a7/1-execution.json",
+    ".cache/phase2-growth-predicate-artifact-review-v1/execution-a064a2c0e4a7/1-start.json",
+    ".cache/phase2-growth-predicate-artifact-review-v1/execution-a064a2c0e4a7/1-stderr.txt",
+    ".cache/phase2-growth-predicate-artifact-review-v1/execution-a064a2c0e4a7/1-stdout.txt",
+    ".cache/phase2-growth-predicate-artifact-review-v1/execution-a064a2c0e4a7/final.json",
+    ".cache/phase2-growth-predicate-artifact-review-v1/execution-additive-correction-1-a064a2c0e4a7/0-execution.json",
+    ".cache/phase2-growth-predicate-artifact-review-v1/execution-additive-correction-1-a064a2c0e4a7/0-start.json",
+    ".cache/phase2-growth-predicate-artifact-review-v1/execution-additive-correction-1-a064a2c0e4a7/0-stderr.txt",
+    ".cache/phase2-growth-predicate-artifact-review-v1/execution-additive-correction-1-a064a2c0e4a7/0-stdout.txt",
+    ".cache/phase2-growth-predicate-artifact-review-v1/execution-additive-correction-1-a064a2c0e4a7/final.json",
+    ".cache/phase2-growth-predicate-artifact-review-v1/first-result.json",
+    ".cache/phase2-growth-predicate-artifact-review-v1/handoff-preparation.json",
+    ".cache/phase2-growth-predicate-artifact-review-v1/preparation.json",
+    ".cache/phase2-growth-predicate-artifact-review-v1/prior-additive_audit.py",
+    ".cache/phase2-growth-predicate-artifact-review-v1/prior-audit.py",
+    ".cache/phase2-growth-predicate-artifact-review-v1/prior-run_recorded.py",
+    ".cache/phase2-growth-predicate-artifact-review-v1/recorder-schema-review.json",
+    ".cache/phase2-growth-predicate-artifact-review-v1/run_additive_correction_1.py",
+    ".cache/phase2-growth-predicate-artifact-review-v1/run_additive_correction_1.py.diff",
+    ".cache/phase2-growth-predicate-artifact-review-v1/run_recorded.py",
+    ".cache/phase2-growth-predicate-artifact-review-v1/run_recorded.py.diff",
+    ".cache/phase2-growth-predicate-artifact-review-v1/inventory.json",
+    ".cache/phase2-growth-predicate-artifact-review-v1/handoff.json",
+    ".cache/phase2-growth-predicate-clean-package-v1/0-execution.json",
+    ".cache/phase2-growth-predicate-clean-package-v1/0-start.json",
+    ".cache/phase2-growth-predicate-clean-package-v1/0-stdout.txt",
+    ".cache/phase2-growth-predicate-clean-package-v1/0-stderr.txt",
+    ".cache/phase2-growth-predicate-clean-package-v1/1-execution.json",
+    ".cache/phase2-growth-predicate-clean-package-v1/1-start.json",
+    ".cache/phase2-growth-predicate-clean-package-v1/1-stdout.txt",
+    ".cache/phase2-growth-predicate-clean-package-v1/1-stderr.txt",
+    ".cache/phase2-growth-predicate-clean-package-v1/artifacts/release-artifacts.json",
+    ".cache/phase2-growth-predicate-release-v1/final-reviewed-pins.json",
+    ".cache/phase2-growth-predicate-release-v1/artifact-reviewed-pins.json",
+    ".cache/phase2-growth-predicate-release-v1/published.json",
+    ".cache/phase2-growth-predicate-release-v1/final-copyset.json",
+    ".cache/phase2-growth-predicate-release-v1/first-finalization-hold-failure.json",
+    ".cache/phase2-growth-predicate-release-v1/finalize-before-final-hold.py",
+    ".cache/phase2-growth-predicate-release-v1/finalize_publication.py",
+    ".cache/phase2-growth-predicate-release-v1/publish.py",
+    ".cache/phase2-growth-predicate-release-v1/package.py",
+    ".cache/phase2-growth-predicate-release-v1/pr-body-pending.json",
+    ".cache/phase2-growth-predicate-release-v1/pr-patch-pending.json",
+    ".cache/phase2-growth-predicate-release-v1/pr-verified-pending.json",
+    ".cache/phase2-growth-predicate-release-v1/update_pr.py"
+  ],
+  "source_entries_reconstructed": 61,
+  "source_operations_run": 0,
+  "status": "PASS_BYTE_RECEIPT_LINK_AND_WHITESPACE_CHECKS"
+}

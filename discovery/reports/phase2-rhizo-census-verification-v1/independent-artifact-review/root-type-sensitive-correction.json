@@ -1,0 +1,22 @@
+{
+  "at": "2026-10-16T13:55:04.127239+00:00",
+  "finding": "Python decoded object equality can accept false/0, true/1 and integer/float substitutions. Original proposal overstates exact HTTP JSON type identity.",
+  "correction": "Compare canonical JSON text for type-sensitive HTTP equality; packaged public SHA and asset equality remain unchanged.",
+  "before": {
+    "scripts/package_smoke.py": "eaeffcd242d9d5b843ddaea46a65e60b5666ba092d0dfd93136e0d5bd3be0d07",
+    "tests/test_package_retention.py": "8ca92ba8b555fea8668392e22499db0a362ac6643c5d155ed459b376d0792a15",
+    "tests/test_package_retention_review.py": "963b4667bc013fb55e83a8988f61975454b16b2a0fac9b177d2b54b284c57a2c",
+    "tests/test_server_recorded_census.py": "ec140f7f4cb00fcf86b099f7a0bee96c6022db7eaed6e07644db5ad997bd65f5"
+  },
+  "after": {
+    "scripts/package_smoke.py": "28ff8c56cf632924e0ae28e0560b149d7b1044d63772bc12e61797842c6728ee",
+    "tests/test_package_retention.py": "afd324bbd06962c09898bc000afaa1ff3a52f000ce947e5a364980faed6e832b",
+    "tests/test_package_retention_review.py": "9e74246a9c6813efbc1dee855ccb68ac9a20fdaf3e64a340a719202e8f8cbfd1",
+    "tests/test_server_recorded_census.py": "12aef15f80c54bdf965659c678fced182fa8bd335f549d08f8a930603156e169"
+  },
+  "old_probe_sha256": "f2c11f85cff4bddcf68ad28eee315ffd0026b7e91a5187bd7a62276080942173",
+  "new_probe_sha256": "52e04bd2af952ae239f9da2dc8b966352f438db204dcdfe8725f92e46bea7710",
+  "source_checks_weakened": false,
+  "prior_execution": "97 focused tests and80 browser checks PASS before this narrow nonUI correction; installed wheel not yet run.",
+  "browser_source_changed": false
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "lupine.discovery.tmqm_definitions_selection.v1",
+  "created_utc": "2026-10-16T18:22:41.996931+00:00",
+  "source_sha256": "a8b959d00e3f63aa5c649e16bb0f2118fdb55e26e712aba6cd0638155915fb72",
+  "purpose": "First narrow definitions projection from exact direct-child paragraphs; documentary evidence for 2020 only.",
+  "paragraphs": {
+    "sec1.1": [
+      5
+    ],
+    "sec1.2": [
+      5
+    ],
+    "sec1.5": [
+      1
+    ],
+    "_adda93_": [
+      1
+    ]
+  },
+  "selection_basis": "Methods titles and definition-keyword paragraph indexes in prior closed layout inventory; no observed result or performance selection.",
+  "projection": "Remove citation cross-reference text, withhold sentences mentioning performance/benchmark/prediction/correlation/regression/distribution/histogram; mask all numeric tokens before researcher display. Only these direct paragraphs, never recursive ancestor prose or tables. Exact unit/method tokens may later be selected separately if their documentary role is established.",
+  "whole_article_machine_exposed": true,
+  "new_network_requests": 0,
+  "remaining_sections_tables_figures_withheld": true
+}

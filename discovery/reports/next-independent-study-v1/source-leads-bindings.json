@@ -1,0 +1,29 @@
+{
+  "access_date": "2026-10-11",
+  "responses": [
+    {
+      "url": "https://cds.nims.go.jp/",
+      "bytes": 26353,
+      "sha256": "f512f81c66e17eb33ccc27e3c62d338ba32fc292b7fc366d9ce36651bc361c2f",
+      "scope": "landing-page/catalog metadata; no observation table"
+    },
+    {
+      "url": "https://smds.nims.go.jp/creep/",
+      "bytes": 17206,
+      "sha256": "354404d867e9ad9a360258984cdaa94717908e7e9dfbcb92d95a4c01ddfd8064",
+      "scope": "landing-page/catalog metadata; no observation table"
+    },
+    {
+      "url": "https://api.crossref.org/works/10.1080/14686996.2019.1697616",
+      "bytes": 15795,
+      "sha256": "950992370b3c0d81d4e3c7d8c5610aea96ca6741f4600d46068299ae3ef2f67b",
+      "scope": "landing-page/catalog metadata; no observation table"
+    }
+  ],
+  "failed_candidate_urls": [
+    "https://www.nist.gov/ambench/amb2022-04-description",
+    "https://www.nist.gov/ambench/amb2022-01-description",
+    "https://www.nist.gov/ambench/benchmark-test-data"
+  ],
+  "limitations": "Response hashes establish fetched identity only; no observation-data access/license/pairing or independence established."
+}

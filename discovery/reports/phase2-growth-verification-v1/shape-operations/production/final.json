@@ -1,0 +1,10 @@
+{
+  "commit": "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace",
+  "finished_at": "2026-10-16T11:06:41.129128+00:00",
+  "growth_hint_shape": "MATCHES_RETAINED_APPNOTE_SHAPE",
+  "public_sha256": "730039c818af60864292c0c4776ea13adccf211ab21432120e93830172d87d95",
+  "reason": "GROWTH_HINT_SHAPE_MATCH",
+  "scientific_schema_approved": false,
+  "scope": "Fixed-source selected growth-hint shape computational replay only; initial-padding semantics, archive acceptance and science remain unestablished.",
+  "status": "COMPLETE_TWO_IDENTICAL_DIAGNOSES"
+}

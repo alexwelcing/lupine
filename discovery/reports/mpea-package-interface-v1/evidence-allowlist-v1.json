@@ -1,0 +1,116 @@
+{
+  "files": [
+    {
+      "bytes": 2400,
+      "path": ".cache/mpea-package-interface-v1/README.md",
+      "sha256": "e5b66e28165863892185d043a2f36c5ed59ffaf2e45bc020e30263575d276cc4"
+    },
+    {
+      "bytes": 2368,
+      "path": ".cache/mpea-package-interface-v1/copy-manifest-v1.json",
+      "sha256": "239cadc5ba2569d7fa54c86da60dc1d0a059ce03f7d8ac4412604a738364a3df"
+    },
+    {
+      "bytes": 2990,
+      "path": ".cache/mpea-package-interface-v1/run-checks-v1.py",
+      "sha256": "68ea0128ebc77dd51c659d17ff28998087c5f07e156aac12b475d553ec31c29a"
+    },
+    {
+      "bytes": 1417,
+      "path": ".cache/mpea-package-interface-v1/source-before-v1.json",
+      "sha256": "2af144d690e7986b83b4e6c27aa7fc1fa201ff27f059c9e781a5a3a382fbee86"
+    },
+    {
+      "bytes": 4966,
+      "path": ".cache/mpea-package-interface-v1/execution-v1.json",
+      "sha256": "cf303896548ba7c97494f3b066490affb9d46593d0b9ab168a18e9f4aca595ba"
+    },
+    {
+      "bytes": 28752,
+      "path": ".cache/mpea-package-interface-v1/scripts/package_smoke.py",
+      "sha256": "f64489f64aefc6624298e25d9dad493186c25b1c91e3f063e9e73d23f8ebf6a1"
+    },
+    {
+      "bytes": 9934,
+      "path": ".cache/mpea-package-interface-v1/tests/test_package_mpea_interface.py",
+      "sha256": "0ef43d5023e213a9524f2e6dcf5638638679939c75407a72d99b1429f1be2390"
+    },
+    {
+      "bytes": 17237,
+      "path": ".cache/mpea-package-interface-v1/tests/test_package_retention.py",
+      "sha256": "ebaaac5da083b20fb47f1c702ddf54b638f3b880fa502bd0333403b8bba77250"
+    },
+    {
+      "bytes": 17981,
+      "path": ".cache/mpea-package-interface-v1/tests/test_package_retention_review.py",
+      "sha256": "8385c47830d8ea6d0b06a48367f0e1cf9141d32a65ec9529e063e09a4d47c6d5"
+    },
+    {
+      "bytes": 27084,
+      "path": ".cache/mpea-package-interface-v1/history/package_smoke-before.py",
+      "sha256": "5809a810ad15c48181979c482fbd793d5eb1bd3c6c08c4f98fc2a552c9a0ac05"
+    },
+    {
+      "bytes": 17237,
+      "path": ".cache/mpea-package-interface-v1/history/test_package_retention.py",
+      "sha256": "fbf1cfa6418ba9a75ed6d6618e8e135c44da05a63d1556b97dcbad01a68a4d87"
+    },
+    {
+      "bytes": 17981,
+      "path": ".cache/mpea-package-interface-v1/history/test_package_retention_review.py",
+      "sha256": "f8cbb72eef3de8c591a5340497394b63d4d513dd8253e1f1e9d55e59a1f10904"
+    },
+    {
+      "bytes": 3857,
+      "path": ".cache/mpea-package-interface-v1/diffs/package_smoke.py.patch",
+      "sha256": "aa67e91897403e17bdef9f34685f07280f09ad95cf5a61238ae50dad5afc1251"
+    },
+    {
+      "bytes": 10264,
+      "path": ".cache/mpea-package-interface-v1/diffs/test_package_mpea_interface.py.patch",
+      "sha256": "18a54e91cc8443b287c8d5f658519ccadbc6e12ccf73905582fc866aee2af030"
+    },
+    {
+      "bytes": 599,
+      "path": ".cache/mpea-package-interface-v1/diffs/test_package_retention.py.patch",
+      "sha256": "973eb929040d9b9b958c18a786b1f8c9b600cf5dcbabc9b9aa008e56f9a7153b"
+    },
+    {
+      "bytes": 505,
+      "path": ".cache/mpea-package-interface-v1/diffs/test_package_retention_review.py.patch",
+      "sha256": "524a2fd17106dcd366121ad2ffc5f9c42da19a9cb0d084bb1e303d41711d8771"
+    },
+    {
+      "bytes": 2435,
+      "path": ".cache/mpea-package-interface-v1/execution-v1-test_package_mpea_interface.py.stderr.txt",
+      "sha256": "23a81a5e6e0f006e4255d34d13d7f65296a583c6e6cbdf313d999ff2fbc5b2f2"
+    },
+    {
+      "bytes": 0,
+      "path": ".cache/mpea-package-interface-v1/execution-v1-test_package_mpea_interface.py.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2935,
+      "path": ".cache/mpea-package-interface-v1/execution-v1-test_package_retention.py.stderr.txt",
+      "sha256": "a36aac4140e6fcd210d5d032919fe4e080aeaec871385e377b27d0db5bd63a30"
+    },
+    {
+      "bytes": 0,
+      "path": ".cache/mpea-package-interface-v1/execution-v1-test_package_retention.py.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2718,
+      "path": ".cache/mpea-package-interface-v1/execution-v1-test_package_retention_review.py.stderr.txt",
+      "sha256": "07faa0bfe0eb5dc8a783bcb6125316041c09296bc43fb294685a1ec6fea7025b"
+    },
+    {
+      "bytes": 0,
+      "path": ".cache/mpea-package-interface-v1/execution-v1-test_package_retention_review.py.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "schema": "lupine.mpea.package_interface.evidence_allowlist.v1",
+  "scope": "Source, tests, patches and engineering logs only. Excludes bytecode and temporary constructed filesystem/HTTP fixtures. No wheel or scientific report generated."
+}

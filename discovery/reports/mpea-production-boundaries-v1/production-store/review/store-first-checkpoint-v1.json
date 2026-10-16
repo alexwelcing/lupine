@@ -1,0 +1,32 @@
+{
+  "actual_result": "10 tests PASS in 0.338s",
+  "command": [
+    "python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    ".cache/mpea-study-custody/review_production",
+    "-p",
+    "test_production_store_review.py",
+    "-v"
+  ],
+  "identities_after": {
+    ".cache/mpea-operational-addendum/mpea-t25-operational-enforcement-v1.md": "e36e72818f92096c316df34789a35840c1e5b1561f9467561dd8787da072cf98",
+    ".cache/mpea-protocol-design/mpea-t25-archival-protocol-v1.md": "c49047341d3932ddd67c67c9f2a04a6759c0d679bfeb96d811ba9541c0cc0378",
+    ".cache/mpea-protocol-design/mpea-t25-implementation-contract-v1.md": "be45b1d8db9586035cf37bd9bbb9046c065c3851b91f93386f8c68d155215af9",
+    ".cache/mpea-study-custody/review_production/store-first-run-v1.txt": "2ae3a0780aac79aff66a633e88223a5f7183b744e879c3dd7dae31d2eba6d932",
+    ".cache/mpea-study-custody/review_production/test_production_store_review.py": "8688dc1676954b795b222e599a370c9266524baeb31097462bd3a7187351aadf",
+    ".cache/mpea-study-custody/scripts/mpea_production_store.py": "26a524be65f98cb92d49d75b852de84d1d38771b6a5c1a977983fab57a43ae7e",
+    ".cache/mpea-study-custody/scripts/mpea_stage_store.py": "13c42919e79e0949f4cbcf5ce0eeeb1cb66d3a48893e6e4fdc3cd3fdf68498db",
+    ".cache/mpea-study-custody/scripts/mpea_target_custody.py": "7f649dd50d7c5589fd9da0f9745b7936b7a3a2bf631a8418affae4a67be1ee9c"
+  },
+  "pending": [
+    "Production driver source/API",
+    "Driver-specific closed input/payload/string validators",
+    "Original-source authentication before capture/decode",
+    "Parent registration handoff",
+    "Stage-order, 960-ledger and fresh-process fixed-allocation controls"
+  ],
+  "scope": "Initial independent synthetic envelope controls only; driver and its authentication/schema enforcement not reviewed yet. No actual archive, private features, or scientific allocation access. Post-run snapshot only, not a pre/post source-bound final receipt."
+}

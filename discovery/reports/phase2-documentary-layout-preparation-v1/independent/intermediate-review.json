@@ -1,0 +1,56 @@
+{
+  "schema": "lupine.discovery.documentary_layout_intermediate_review.v1",
+  "recorded_utc": "2026-10-16T10:54:38.077303+00:00",
+  "reviewer": "/root/phase2_planner",
+  "status": "GENERATED_SUITE_PASS_NAMESPACE_CAP_DISPOSITION_PENDING",
+  "candidate": {
+    "path": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/li_v3_layout_localization.py",
+    "bytes": 25486,
+    "sha256": "5bfce76619655090d00670d2aba8cec17eef3764dcf23cf741b78b9f0d0d1e39"
+  },
+  "contract": {
+    "path": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/README.md",
+    "bytes": 6207,
+    "sha256": "c47dc68a34d4928c0886683885e7263c58e3c7b3ddfc98e72b617c83c55c1d3b"
+  },
+  "scope": {
+    "path": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/scope.json",
+    "bytes": 4452,
+    "sha256": "10e2c29be646c94cd1c0feb1d458a6b18c56dd658f2c6389faffd6b8b9a357d4"
+  },
+  "author_first": {
+    "path": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/receipts/first/execution.json",
+    "bytes": 79638,
+    "sha256": "c8e6e75ade080c71a1266a9241234da490fbe8ad797a507962db3d89420a862d"
+  },
+  "independent_first": {
+    "path": ".cache/phase2-documentary-layout-review-v1/first/execution.json",
+    "bytes": 1325,
+    "sha256": "9718f56d29543d78113ee38c54261d26c2273c04a9d973955b8f5e1169fa89a0"
+  },
+  "independent_corrected": {
+    "path": ".cache/phase2-documentary-layout-review-v1/second/execution.json",
+    "bytes": 1325,
+    "sha256": "59b9293e80f2f730dffabd0e174d23946fb5fb8801454ca5a1c94b2d00366492"
+  },
+  "independent_final_test_at_this_checkpoint": {
+    "path": ".cache/phase2-documentary-layout-review-v1/test_li_v3_layout_localization_review.py",
+    "bytes": 27820,
+    "sha256": "5dab7d76aa409aa83dd4ff58a13316b84535c4b8818a891f81680704ecb2f2cd"
+  },
+  "findings": [
+    {
+      "id": "LEXICAL_NAMESPACE_DECLARATION_CAPS",
+      "basis": "Static source review: ET XMLParser target.start gets expanded ordinary attributes, excluding xmlns declarations. Target has no start_ns callback. The frozen per-element attribute count/name/value guards therefore do not separately bound lexical namespace declarations. Whole worksheet still has the fixed2MiB byte cap.",
+      "severity": "Acceptance-profile precision; no actual scientific data exposure or unbounded whole-buffer claim.",
+      "disposition": "Author agrees to ask root; source held until root chooses clarification or narrow prospective start_ns guard.",
+      "status": "PENDING"
+    }
+  ],
+  "first_failures": "Two reviewer prefix-canary assertions matched the required PRIVATE_XML_DECODE_COMPLETED enum. Exact correction and historical files/logs retained; no candidate edits between the first and corrected independent runs.",
+  "scope_limits": [
+    "Pure generated-byte implementation; no production binding, source operation or actual role observation.",
+    "Author31 and independent26 passes do not validate actual archived semantics or scientific claims.",
+    "Runtime332 hashes were read only to verify no tracked file changed; no project tests beyond the held generated suite were run."
+  ]
+}

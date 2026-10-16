@@ -1,0 +1,58 @@
+{
+  "schema": "lupine.discovery.calibrated_problem.v1",
+  "description": "Synthetic scalar predictions with separate calibration residuals and separately revealed outcomes. No physical validity is asserted.",
+  "scenario": {
+    "id": "calibrated-insufficient",
+    "objective": {
+      "unit": "synthetic-score",
+      "reference": "synthetic-v1",
+      "direction": "minimize"
+    },
+    "constraints": {
+      "limit": {
+        "unit": "synthetic-slack",
+        "reference": "synthetic-v1"
+      }
+    }
+  },
+  "calibration": {
+    "delta": "1/5",
+    "predictor_id": "synthetic-fixed-predictor",
+    "calibration_id": "synthetic-calibration-v1",
+    "sampling_scope": "Constructed finite example; exchangeability is assumed, not verified.",
+    "premise_status": "assumed_unverified",
+    "residuals": {
+      "score": [
+        "1/4",
+        "1/4"
+      ],
+      "limit": [
+        "1/4",
+        "1/4"
+      ]
+    }
+  },
+  "candidates": [
+    {
+      "id": "A",
+      "score": 0,
+      "constraints": {
+        "limit": -1
+      }
+    },
+    {
+      "id": "B",
+      "score": 4,
+      "constraints": {
+        "limit": -1
+      }
+    },
+    {
+      "id": "C",
+      "score": -5,
+      "constraints": {
+        "limit": 1
+      }
+    }
+  ]
+}

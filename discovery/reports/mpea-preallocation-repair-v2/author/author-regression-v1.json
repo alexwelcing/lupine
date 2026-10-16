@@ -1,0 +1,59 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-X",
+    "pycache_prefix=/workspace/lupine-discovery-branch/discovery/.cache/mpea-preallocation-diagnosis/unused-pycache",
+    "/workspace/lupine-discovery-branch/discovery/.cache/mpea-preallocation-diagnosis/candidate/tests/test_mpea_registration_public_metadata.py",
+    "-v"
+  ],
+  "cwd": "/workspace/lupine-discovery-branch/discovery",
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": null
+  },
+  "log_sha256": "f5f4b979531653b3e82f27b091043f5e3dfc2865f3045e9684437fd1b3ec872d",
+  "returncode": 0,
+  "schema": "lupine.mpea.preallocation.author-regression.v1",
+  "scope": {
+    "actual_allocation": false,
+    "entropy": false,
+    "main_edits": false,
+    "private_feature_or_target_reads": false,
+    "production_authority_forged": false,
+    "public_metadata_only": true
+  },
+  "source_after": {
+    ".cache/mpea-preallocation-diagnosis/before/mpea_registration_allocation.py": "d4a11c4c2b941e45d4079129583efc7bcf5ecfed551de137aae02f3f49a3146d",
+    ".cache/mpea-preallocation-diagnosis/candidate/scripts/mpea_registration_allocation.py": "bcd9ce48ef90012225a9035dc6638f607b53ade7cc3d219702fe4ee211a93704",
+    ".cache/mpea-preallocation-diagnosis/candidate/tests/test_mpea_registration_public_metadata.py": "e9d6f66390992cfa1e4022f94855435a6cf118ae7690de94775aebb06fd99d93",
+    "docs/mpea-column-mapping-v1.json": "812255e53cceec8c66bd2a4b11d5d1e556941a053c888a7970cf2e3ec6728f97",
+    "reports/mpea-formula-tokens-v1.json": "ce2b8d12464bac1c5e9533e136f09b3b65761188609279b40a78f31dbcc6d3a7",
+    "reports/mpea-header-labels-v1.json": "70f50fa99db6b39b769be392ec1c64c655f8f32d7587f04f522e6a794c4accee",
+    "reports/mpea-row-metadata-v1.json": "36e9831f2a015b2c295ce6228dd9b7bce5ba7df0f2645c343da2134ab7898c55",
+    "scripts/mpea_archive_worker.py": "e4cd303752b459cadc94b1fca4227c4e6f63054283f911fb435f56ffb4fead26",
+    "scripts/mpea_formula_tokens.py": "8f2bbaa34dccc9c50341f86863526cd3ad6380e97ff3d0e2ca07c0fbbe4c3139",
+    "scripts/mpea_header_labels.py": "0d1e37cfef2889ed955d30f0fd987ba9b06dc2a1f8bf89ba7085112355b287c7",
+    "scripts/mpea_registration_allocation.py": "d4a11c4c2b941e45d4079129583efc7bcf5ecfed551de137aae02f3f49a3146d",
+    "scripts/mpea_row_metadata.py": "d50ce1cf06761cd080ca0fcc6516c07ef71e0a4106bba73660642c846915e33b",
+    "scripts/mpea_target_custody.py": "7f649dd50d7c5589fd9da0f9745b7936b7a3a2bf631a8418affae4a67be1ee9c",
+    "scripts/permutation_allocation.py": "a7f454b4541f75603019bf73091c97190ea6f618efa52988c3065971273405e5"
+  },
+  "source_before": {
+    ".cache/mpea-preallocation-diagnosis/before/mpea_registration_allocation.py": "d4a11c4c2b941e45d4079129583efc7bcf5ecfed551de137aae02f3f49a3146d",
+    ".cache/mpea-preallocation-diagnosis/candidate/scripts/mpea_registration_allocation.py": "bcd9ce48ef90012225a9035dc6638f607b53ade7cc3d219702fe4ee211a93704",
+    ".cache/mpea-preallocation-diagnosis/candidate/tests/test_mpea_registration_public_metadata.py": "e9d6f66390992cfa1e4022f94855435a6cf118ae7690de94775aebb06fd99d93",
+    "docs/mpea-column-mapping-v1.json": "812255e53cceec8c66bd2a4b11d5d1e556941a053c888a7970cf2e3ec6728f97",
+    "reports/mpea-formula-tokens-v1.json": "ce2b8d12464bac1c5e9533e136f09b3b65761188609279b40a78f31dbcc6d3a7",
+    "reports/mpea-header-labels-v1.json": "70f50fa99db6b39b769be392ec1c64c655f8f32d7587f04f522e6a794c4accee",
+    "reports/mpea-row-metadata-v1.json": "36e9831f2a015b2c295ce6228dd9b7bce5ba7df0f2645c343da2134ab7898c55",
+    "scripts/mpea_archive_worker.py": "e4cd303752b459cadc94b1fca4227c4e6f63054283f911fb435f56ffb4fead26",
+    "scripts/mpea_formula_tokens.py": "8f2bbaa34dccc9c50341f86863526cd3ad6380e97ff3d0e2ca07c0fbbe4c3139",
+    "scripts/mpea_header_labels.py": "0d1e37cfef2889ed955d30f0fd987ba9b06dc2a1f8bf89ba7085112355b287c7",
+    "scripts/mpea_registration_allocation.py": "d4a11c4c2b941e45d4079129583efc7bcf5ecfed551de137aae02f3f49a3146d",
+    "scripts/mpea_row_metadata.py": "d50ce1cf06761cd080ca0fcc6516c07ef71e0a4106bba73660642c846915e33b",
+    "scripts/mpea_target_custody.py": "7f649dd50d7c5589fd9da0f9745b7936b7a3a2bf631a8418affae4a67be1ee9c",
+    "scripts/permutation_allocation.py": "a7f454b4541f75603019bf73091c97190ea6f618efa52988c3065971273405e5"
+  },
+  "source_unchanged": true,
+  "wall_seconds": 1.1653859350044513
+}

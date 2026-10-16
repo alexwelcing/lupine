@@ -1,0 +1,11 @@
+# G34 retained artifact audit preparation
+
+Status: prepared, not executed. The published G34 commit and final source-pin record remain unbound. No package, source archive, wheel, private scientific input or production guard has been read or invoked during this preparation.
+
+The unchanged generic auditor checks the complete retained source archive against the requested Git commit, all runtime manifest bytes and the installed wheel members and RECORD hashes, plus the recorded package and strict-verifier receipt/log identities. The additive audit checks 335 current runtime files, preservation of all 332 files at c17c4c6b152af2e7bc1b7a7639336f6b0f733ace, the three new runtime files and four reviewed source/test/contract pins. It also compares all 108 package payload members to the c17 retained wheel and complete baseline Git package. Wheel metadata differences are reported; identical wheel archive bytes are not required or claimed.
+
+`audit.py` is byte-identical to the prior full verifier. `check-adaptation.json` preserves all 93 generic assertions, all 46 additive assertions and all seven recorder assertions. The three additive changes adjust exact counts for this increment; the recorder change excludes the c17 predecessor commit. Exact prior files and diffs are retained. `recorder-schema-review.json` confirms that the prepared reports expose the fields consumed by the separately owned operation recorder; it records source inspection only.
+
+Root confirmed the predecessor package at `.cache/phase2-growth-clean-package-v1/artifacts`. The new retained directory is `.cache/phase2-growth-predicate-clean-package-v1`. After root supplies the published commit, completed package receipts and final reviewed pin record, run `run_recorded.py` once with those exact bindings. It runs the full and additive auditors sequentially and saves exclusive start/execution/output/final records. A failed run is retained and is not silently overwritten or retried. `bindings.unbound.json` is deliberately invalid for execution.
+
+This reviewer independently reviewed and tested the G34 candidate and previously authored G30. This is a shared-team artifact identity and recorded engineering audit, not external validation, a new test run, or scientific replication. No CI result is claimed by this preparation.

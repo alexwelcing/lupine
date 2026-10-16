@@ -1,0 +1,42 @@
+{
+  "started_at": "2026-10-16T18:28:40.218959+00:00",
+  "finished_at": "2026-10-16T18:30:01.058246+00:00",
+  "argv": [
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-final-ci-failure-v1/venv311/bin/python",
+    "-m",
+    "unittest",
+    "test_li_v3_growth_predicate_audit_review",
+    "test_li_v3_readiness_production_review",
+    "test_mpea_custody",
+    "test_mpea_feature_reader",
+    "test_mpea_feature_reader_review",
+    "test_mpea_formula_tokens_review",
+    "test_mpea_header_labels",
+    "test_mpea_registration_allocation_review",
+    "test_mpea_row_metadata_review",
+    "test_package_retention",
+    "test_package_retention_review",
+    "test_retained_artifacts",
+    "test_retained_mpea_transport",
+    "test_mpea_registration_recovery_v2",
+    "test_li_v3_readiness_production",
+    "-v"
+  ],
+  "returncode": 1,
+  "test_summary": [
+    [
+      326,
+      "80.127"
+    ]
+  ],
+  "runtime_source_held": true,
+  "runtime_files": 351,
+  "runtime_files_changed": 12,
+  "automatic_housekeeping_launches": [],
+  "git_trace_sha256": "c0bfb40c1321d41b9a324dcd0776683eef024506c5215d2cbe3f920dbac6997d",
+  "git_trace_bytes": 18425407,
+  "stderr_sha256": "47623db204589bb77ddb683d2ccb934f3ffeee450beb98258777181042b65ce0",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "scope": "Generated fixtures and retained public artifacts only; no new scientific acquisition/evaluation",
+  "status": "FAIL"
+}

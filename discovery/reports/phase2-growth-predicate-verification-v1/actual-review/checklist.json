@@ -1,0 +1,213 @@
+{
+  "actual_results": null,
+  "actual_review_executed": false,
+  "binding_at_preparation": "UNBOUND; root must supply final binding and completed operation paths before any actual review. The preparatory snapshot is not an operational gate.",
+  "checks": [
+    {
+      "id": "input_identity",
+      "require": "Hash the exact final manifest and recorder; bind source70a/contracta1a and all four source/test/contract hashes, full producer commit and runtime manifest. Explicitly reject unbound/null placeholders. Retain source hashes before and after the review; never invoke production_context."
+    },
+    {
+      "id": "gate_producers",
+      "require": "Verify all five path/hash bindings. CI commit and run.head_sha equal producer; push event, attempt1, original completed success, exactly lean/browser/python(3.11)/python(3.12) all successful. Package and strict receipts same commit, exit0, no timeout, clean held source and identical335 runtime maps. Generic and corrected additive PASS same commit,332 old unchanged, exactly3 added runtime and4 own pins. Corrected additive binds the same generic receipt; its metadata-baseline failure stays historical."
+    },
+    {
+      "id": "chronology",
+      "require": "Compare timezone-aware timestamps: final successful CI observation and all package/artifact gate completions precede preflight and first command; run1 completion precedes run2 start; both precede final. Do not infer gates from a later observation alone. The fixed G31 prerequisite remains c17, distinct from the new a064 producer."
+    },
+    {
+      "id": "execution_holds",
+      "require": "Each run has the exact fixed audit --run1/2 command, exit2, no launch failure/timeout, empty stderr with matching hash, source_unchanged/head_branch_remote_source_guard_held true, no state/public/persisted error, canonical-and-closed true and returned_equals_persisted true. Reconcile each recorded335-entry runtime_before/after map with preflight and package maps. These are recorded holds, not a new source-guard invocation."
+    },
+    {
+      "id": "byte_identity",
+      "require": "Compare exact public-slot bytes, recorder persisted-public bytes and stdout for each run, then compare run1/run2 byte-for-byte; bind hashes to execution/final. Parse public JSON with duplicate-key rejection and require canonical representation and<=65536bytes. Check top-level closed keys against held source literal report, without importing source."
+    },
+    {
+      "id": "identity_and_scope",
+      "require": "Schema/profile/action/scope match source; status BLOCKED_SCHEMA, synthetic_fixture false, source_identity_verified true. Implementation is committed_source at a064 with exact four pins and fixed predecessor chain. Fixed observed source identity/183878 bytes, capture hash and c17 G31 receipt/hash agree with held public contracts. Archive_accepted false, scientific_counts null, initial_padding_semantics UNBOUND, fits/splits exact integer0."
+    },
+    {
+      "id": "first_rejection",
+      "require": "Closed three-field first rejection: category belongs to held family set and stage maps to its source group; g31_reason ZIP_LAYOUT_UNSUPPORTED. Predecessor reproduction checked/matched true. Primary completed preflight and incomplete headers/local-growth interpretation; exact integer3 completed local areas/fixed-word-pair decodes/padding scan starts/completions. Do not convert3areas into total members, scientific samples or aggregate progress."
+    },
+    {
+      "id": "selected_growth",
+      "require": "Selected growth and nested selected exposure equal the fixed G31 public prerequisite. Stage-local no-additional-acquisition flags do not negate the production operation whole-buffer read. Failed earlier cleanup must never disappear into a later successful stage."
+    },
+    {
+      "id": "aggregate_categories",
+      "require": "Each family has exactly status/checked/partial/dependencies with strict bools. partial requires sorted unique nonempty closed NOT_CHECKED dependencies and an incomplete status; nonpartial dependencies are exactly CHECKED when checked or NOT_APPLICABLE otherwise. Failure statuses require checked true. Recompute only categorical summary from public family statuses: failures+partial -> FAILURES_AND_INCOMPLETE, failures -> FAILURES_OBSERVED, partial -> INCOMPLETE_NO_FAILURE_OBSERVED, otherwise ALL_APPLICABLE_CHECKS_PASS. This is not a raw predicate recomputation."
+    },
+    {
+      "id": "progress_and_cleanup",
+      "require": "Keep primary and aggregate exposures separate. Aggregate traversal can finish with dependencies still NOT_CHECKED; diagnostic_complete requires no partial families plus successful shared primary archive cleanup. Aggregate uses the already-open primary archive, so its unused archive lifecycle fields must not be required true. Engineering status/reason must match this completion rule. Unexpected exception/cleanup/guard or missing output is a preserved failure, not permission to rerun."
+    },
+    {
+      "id": "zero_payload_exposure",
+      "require": "In both primary and aggregate maps require exact integer0 for member_opens,decompressed_bytes,xml_parses,worksheet_decodes,shared_string_decodes,formula_evaluations. Counters are strict non-bool integers within128; lifecycle fields strict bools; cleanup error null. Operation exposure must honestly show reservation attempts/mayexist/created, raw read started/completed,target-bearing bytes,source verification, output attempt/mayexist, no output-directory-close error. Whole-buffer read is target-bearing even with zero decompression."
+    },
+    {
+      "id": "final_and_limits",
+      "require": "Final complete-two-identical receipt must match both public hashes/reasons/first rejection/aggregate/completion and no automatic retry. Review records any mismatch before interpretation and preserves original evidence. Complete diagnosis never admits archive, XML schema, rows/pairs/independent groups, overlap, physical truth, fresh holdout or recommendation performance. Replay is not independent science."
+    }
+  ],
+  "closed_schema": {
+    "dependencies": [
+      "NOT_CHECKED_UNSAFE_BOUNDS",
+      "NOT_CHECKED_AMBIGUOUS_ASSOCIATION",
+      "NOT_CHECKED_EARLIER_PARSE_BLOCK"
+    ],
+    "families": [
+      "CENTRAL_COMMENT_PRESENT",
+      "CENTRAL_EXTRA_PRESENT",
+      "DIRECTORY_SIZE_TOTAL",
+      "LOCAL_COMPRESSED_SIZE_AGREEMENT",
+      "LOCAL_CRC_AGREEMENT",
+      "LOCAL_DATE_AGREEMENT",
+      "LOCAL_DIRECTORY_ALIGNMENT",
+      "LOCAL_EXTRA_DECLARED_SPAN_AGREEMENT",
+      "LOCAL_EXTRA_SINGLE_A220",
+      "LOCAL_FLAGS_AGREEMENT",
+      "LOCAL_GROWTH_PAYLOAD_MINIMUM",
+      "LOCAL_GROWTH_SIGNATURE",
+      "LOCAL_GROWTH_ZERO_PADDING",
+      "LOCAL_METHOD_AGREEMENT",
+      "LOCAL_NAME_AGREEMENT",
+      "LOCAL_OFFSET_LAYOUT",
+      "LOCAL_SIGNATURE",
+      "LOCAL_TIME_AGREEMENT",
+      "LOCAL_UNCOMPRESSED_SIZE_AGREEMENT",
+      "LOCAL_VERSION_AGREEMENT",
+      "MEMBER_COMPRESSION",
+      "MEMBER_DATA_BOUNDS",
+      "MEMBER_DIRECTORY_ATTRIBUTE",
+      "MEMBER_FILE_TYPE",
+      "MEMBER_FLAGS",
+      "MEMBER_KIND_PROFILE",
+      "MEMBER_NAME_DUPLICATE",
+      "MEMBER_NAME_TRANSFORMED",
+      "MEMBER_PATH_PROFILE",
+      "MEMBER_VERSION",
+      "REQUIRED_MEMBERS_ABSENT",
+      "STORED_SIZE_MISMATCH"
+    ],
+    "family_keys": [
+      "status",
+      "checked",
+      "partial",
+      "dependencies"
+    ],
+    "first_rejection_keys": [
+      "category",
+      "stage",
+      "g31_reason"
+    ],
+    "first_stage_mapping": {
+      "directory_totals": "directory_totals",
+      "entry_central": "central_entry",
+      "entry_local": "local_entry",
+      "local_growth": "local_growth",
+      "member_kind": "member_kind",
+      "member_name": "member_name",
+      "member_path": "member_path"
+    },
+    "group_to_families": {
+      "central_entry": [
+        "MEMBER_FLAGS",
+        "MEMBER_COMPRESSION",
+        "MEMBER_VERSION",
+        "CENTRAL_EXTRA_PRESENT",
+        "CENTRAL_COMMENT_PRESENT",
+        "MEMBER_FILE_TYPE",
+        "MEMBER_DIRECTORY_ATTRIBUTE",
+        "STORED_SIZE_MISMATCH",
+        "LOCAL_OFFSET_LAYOUT"
+      ],
+      "directory_totals": [
+        "LOCAL_DIRECTORY_ALIGNMENT",
+        "DIRECTORY_SIZE_TOTAL",
+        "REQUIRED_MEMBERS_ABSENT"
+      ],
+      "local_entry": [
+        "LOCAL_SIGNATURE",
+        "LOCAL_VERSION_AGREEMENT",
+        "LOCAL_FLAGS_AGREEMENT",
+        "LOCAL_TIME_AGREEMENT",
+        "LOCAL_DATE_AGREEMENT",
+        "LOCAL_METHOD_AGREEMENT",
+        "LOCAL_CRC_AGREEMENT",
+        "LOCAL_COMPRESSED_SIZE_AGREEMENT",
+        "LOCAL_UNCOMPRESSED_SIZE_AGREEMENT",
+        "LOCAL_NAME_AGREEMENT",
+        "MEMBER_DATA_BOUNDS"
+      ],
+      "local_growth": [
+        "LOCAL_EXTRA_SINGLE_A220",
+        "LOCAL_EXTRA_DECLARED_SPAN_AGREEMENT",
+        "LOCAL_GROWTH_PAYLOAD_MINIMUM",
+        "LOCAL_GROWTH_SIGNATURE",
+        "LOCAL_GROWTH_ZERO_PADDING"
+      ],
+      "member_kind": [
+        "MEMBER_KIND_PROFILE"
+      ],
+      "member_name": [
+        "MEMBER_NAME_TRANSFORMED",
+        "MEMBER_NAME_DUPLICATE"
+      ],
+      "member_path": [
+        "MEMBER_PATH_PROFILE"
+      ]
+    },
+    "profile": "li_v3.header_predicate_audit.v1",
+    "schema": "lupine.discovery.li_v3.growth_predicate_audit.v1",
+    "status_values": [
+      "ALL_APPLICABLE_CHECKS_PASS",
+      "FAILURES_OBSERVED",
+      "INCOMPLETE_NO_FAILURE_OBSERVED",
+      "FAILURES_AND_INCOMPLETE",
+      "NOT_APPLICABLE"
+    ]
+  },
+  "prepared_at": "2026-10-16T12:49:09.525840+00:00",
+  "producer_commit": "a064a2c0e4a7cce1fbcb0541f49aae132944e785",
+  "public_input_allowlist": [
+    ".cache/li-v3-custody/growth-predicate-audit-v1/1/public.json",
+    ".cache/li-v3-custody/growth-predicate-audit-v1/2/public.json",
+    ".cache/phase2-growth-predicate-operations-v1/bindings.json",
+    ".cache/phase2-growth-predicate-operations-v1/production/preflight.json",
+    ".cache/phase2-growth-predicate-operations-v1/production/{1,2}/{start.json,execution.json,stdout.txt,stderr.txt,persisted-public.json}",
+    ".cache/phase2-growth-predicate-operations-v1/production/final.json",
+    "Exactly five public CI/package/strict/artifact/additive receipt paths from the final root-bound manifest; no directory recursion",
+    "Root-supplied top-level recorder stdout/execution and any stopped receipt, if present",
+    "Existing fixed G31 public prerequisite receipt only, if needed for selected-growth equality; never private capture or source objects"
+  ],
+  "raw_or_private_inputs_opened": false,
+  "schema": "lupine.g34.public-receipt-review-checklist.v1",
+  "scope": "Public receipt and recorded-gate consistency only. No import or execution of producer/recorder/classifier, raw input read, classification recomputation or independent science.",
+  "source_bindings": [
+    {
+      "bytes": 40316,
+      "path": "scripts/li_v3_growth_predicate_audit.py",
+      "sha256": "70a0339212b971bf7824ae256600b959ae7a7d22b6fc8853eb2208d3c8ece207"
+    },
+    {
+      "bytes": 5879,
+      "path": "docs/li-v3-growth-predicate-audit-plan.md",
+      "sha256": "a1a7d8fe820ddcd8d3479d53e4f35d5ce0ed6e123385bcbb1b646786e1d064d9"
+    },
+    {
+      "bytes": 25290,
+      "path": ".cache/phase2-growth-predicate-operations-v1/run_after_ci.py",
+      "sha256": "b89fcabf338e9329c3cdabdc58fb13d71396540aeec405ed5e3a01cc12ff6079"
+    }
+  ],
+  "source_only_preparation_binding_snapshot": {
+    "bytes": 808,
+    "path": ".cache/phase2-growth-predicate-operations-v1/bindings.json",
+    "sha256": "804c0548cf9d38b3a3390236cc2e0883ec354357249909ab7a62ed7e0fe6b88f"
+  },
+  "source_operations_or_tests_run": false,
+  "status": "PREPARED_NOT_RUN"
+}

@@ -1,0 +1,1 @@
+{"errors": 0, "failures": 0, "guard_violations": [], "scope": "Generated archives only; no real production binding, guard, custody input or network.", "skipped": 0, "tests_run": 31}

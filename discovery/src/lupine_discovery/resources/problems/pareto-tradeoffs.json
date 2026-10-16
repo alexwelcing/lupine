@@ -1,0 +1,122 @@
+{
+  "schema": "lupine.discovery.pareto_problem.v1",
+  "scenario": {
+    "id": "pareto-tradeoffs",
+    "objectives": {
+      "cost": {
+        "unit": "synthetic-unit",
+        "reference": "constructed-v1",
+        "direction": "minimize"
+      },
+      "risk": {
+        "unit": "synthetic-unit",
+        "reference": "constructed-v1",
+        "direction": "minimize"
+      }
+    },
+    "constraints": {
+      "limit": {
+        "unit": "synthetic-unit",
+        "reference": "constructed-v1"
+      }
+    }
+  },
+  "description": "Two objectives preserve distinct tradeoffs and exact ties; a feasible witness explains each dominance exclusion. Synthetic engine check; no physical predictive validity is asserted.",
+  "candidates": [
+    {
+      "id": "a",
+      "objectives": {
+        "cost": [
+          "0",
+          "0"
+        ],
+        "risk": [
+          "3",
+          "3"
+        ]
+      },
+      "constraints": {
+        "limit": [
+          "-1",
+          "-1"
+        ]
+      }
+    },
+    {
+      "id": "a-twin",
+      "objectives": {
+        "cost": [
+          "0",
+          "0"
+        ],
+        "risk": [
+          "3",
+          "3"
+        ]
+      },
+      "constraints": {
+        "limit": [
+          "-1",
+          "-1"
+        ]
+      }
+    },
+    {
+      "id": "b",
+      "objectives": {
+        "cost": [
+          "3",
+          "3"
+        ],
+        "risk": [
+          "0",
+          "0"
+        ]
+      },
+      "constraints": {
+        "limit": [
+          "-1",
+          "-1"
+        ]
+      }
+    },
+    {
+      "id": "bad",
+      "objectives": {
+        "cost": [
+          "4",
+          "4"
+        ],
+        "risk": [
+          "4",
+          "4"
+        ]
+      },
+      "constraints": {
+        "limit": [
+          "-1",
+          "-1"
+        ]
+      }
+    },
+    {
+      "id": "infeasible",
+      "objectives": {
+        "cost": [
+          "-1",
+          "-1"
+        ],
+        "risk": [
+          "-1",
+          "-1"
+        ]
+      },
+      "constraints": {
+        "limit": [
+          "1",
+          "1"
+        ]
+      }
+    }
+  ]
+}

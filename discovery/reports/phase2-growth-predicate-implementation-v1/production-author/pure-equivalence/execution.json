@@ -1,0 +1,23 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    ".cache/phase2-growth-predicate-production-v1/check_pure_equivalence.py"
+  ],
+  "elapsed_seconds": 0.5173525360005442,
+  "exit_code": 0,
+  "finished_at": "2026-10-16T12:20:27.738829+00:00",
+  "source_after": {
+    "check_pure_equivalence.py": "8d24a53b00966f4b9d89caf4c16ee08b40aa4dbcfef1786361e8f64a4291b059",
+    "promotion/scripts/li_v3_growth_predicate_audit.py": "1bcbc0d16c2e9a516f3bce0ed98e5fd65d6ce4a26b7942f7dedd7724e201fc55",
+    "promotion/tests/test_li_v3_growth_predicate_audit.py": "8bd8c6920bf5a106194e7201b46582dd94efed53f5ed1617767967d8f56b94c9"
+  },
+  "source_before": {
+    "check_pure_equivalence.py": "8d24a53b00966f4b9d89caf4c16ee08b40aa4dbcfef1786361e8f64a4291b059",
+    "promotion/scripts/li_v3_growth_predicate_audit.py": "1bcbc0d16c2e9a516f3bce0ed98e5fd65d6ce4a26b7942f7dedd7724e201fc55",
+    "promotion/tests/test_li_v3_growth_predicate_audit.py": "8bd8c6920bf5a106194e7201b46582dd94efed53f5ed1617767967d8f56b94c9"
+  },
+  "source_held": true,
+  "started_at": "2026-10-16T12:20:27.220946+00:00",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "c32a34c7a7f4610632807cc81c362d78b125019ee7c3199393423bfa18232053"
+}

@@ -1,0 +1,112 @@
+{
+  "excludes": [
+    "inventory.json"
+  ],
+  "files": [
+    {
+      "bytes": 1666,
+      "path": ".cache/phase2-growth-shape-recorder-review-v1/README.md",
+      "sha256": "a670d502e14c651821e0292cb826cf1984cdfa456f3de0a81a4166a1b45fdf22"
+    },
+    {
+      "bytes": 14653,
+      "path": ".cache/phase2-growth-shape-recorder-review-v1/first-run/0-test_recorder.py",
+      "sha256": "43a21d9ee7ce5d01f54d8ca5ab8d8ea970a086fbd6494e919bd3e0f7b0bb20ae"
+    },
+    {
+      "bytes": 18674,
+      "path": ".cache/phase2-growth-shape-recorder-review-v1/first-run/1-run_after_ci.py",
+      "sha256": "c0e5e38f4669cd339002defd7c563afec6ea931525b4faad625c05fdd4af555d"
+    },
+    {
+      "bytes": 20556,
+      "path": ".cache/phase2-growth-shape-recorder-review-v1/first-run/2-li_v3_growth_hint_shape.py",
+      "sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a"
+    },
+    {
+      "bytes": 28369,
+      "path": ".cache/phase2-growth-shape-recorder-review-v1/first-run/3-test_li_v3_growth_hint_shape.py",
+      "sha256": "1f863ee2f1eefd54919767f7b4c75b6d460332d50f6234103dd47e586557685e"
+    },
+    {
+      "bytes": 3376,
+      "path": ".cache/phase2-growth-shape-recorder-review-v1/first-run/execution.json",
+      "sha256": "aa9dfc867aa4d5e28e98adc1e25887f924ada8ec0cb02898916af6bc840d18e7"
+    },
+    {
+      "bytes": 4731,
+      "path": ".cache/phase2-growth-shape-recorder-review-v1/first-run/stderr.txt",
+      "sha256": "abe232107fbc4950fd089e861d20ad47dbcd0c2568709e6d2861744fcb48e574"
+    },
+    {
+      "bytes": 0,
+      "path": ".cache/phase2-growth-shape-recorder-review-v1/first-run/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 689,
+      "path": ".cache/phase2-growth-shape-recorder-review-v1/fixture-correction.diff",
+      "sha256": "4449be1d77f03eb77297855bdbd5c0a603040e880de0386186332dc184cbe8dd"
+    },
+    {
+      "bytes": 532,
+      "path": ".cache/phase2-growth-shape-recorder-review-v1/fixture-correction.json",
+      "sha256": "28fd6622bde12ea69333b46b0f8607b5f8982c0434078f951af45c1edc6a11ae"
+    },
+    {
+      "bytes": 3878,
+      "path": ".cache/phase2-growth-shape-recorder-review-v1/review.json",
+      "sha256": "a5ba5758bde1980bb5696f269970f66369c5327be4b522566f6fa9c160c77d80"
+    },
+    {
+      "bytes": 2157,
+      "path": ".cache/phase2-growth-shape-recorder-review-v1/run_review.py",
+      "sha256": "b070831993d179981b85dd29042d7ab515bf18204d02ca9992c9b68e65a4ee7e"
+    },
+    {
+      "bytes": 2156,
+      "path": ".cache/phase2-growth-shape-recorder-review-v1/run_review_first.py",
+      "sha256": "e13d51310aa13ee36592a1def031ff26685bea59d487c35ff4f13f324c7342e2"
+    },
+    {
+      "bytes": 14974,
+      "path": ".cache/phase2-growth-shape-recorder-review-v1/second-run/0-test_recorder.py",
+      "sha256": "52df140dc2a185c25860d2b72ae56d263e3cf1013b64fa27b51c58141cd72c94"
+    },
+    {
+      "bytes": 18674,
+      "path": ".cache/phase2-growth-shape-recorder-review-v1/second-run/1-run_after_ci.py",
+      "sha256": "c0e5e38f4669cd339002defd7c563afec6ea931525b4faad625c05fdd4af555d"
+    },
+    {
+      "bytes": 20556,
+      "path": ".cache/phase2-growth-shape-recorder-review-v1/second-run/2-li_v3_growth_hint_shape.py",
+      "sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a"
+    },
+    {
+      "bytes": 28369,
+      "path": ".cache/phase2-growth-shape-recorder-review-v1/second-run/3-test_li_v3_growth_hint_shape.py",
+      "sha256": "1f863ee2f1eefd54919767f7b4c75b6d460332d50f6234103dd47e586557685e"
+    },
+    {
+      "bytes": 3378,
+      "path": ".cache/phase2-growth-shape-recorder-review-v1/second-run/execution.json",
+      "sha256": "c24993432db6c6f3338bbc856782ebc8950623ac7145c447877dc9b545f3cd91"
+    },
+    {
+      "bytes": 1450,
+      "path": ".cache/phase2-growth-shape-recorder-review-v1/second-run/stderr.txt",
+      "sha256": "5d6b7c9230f8bb4718aabc7cc3e9194d967ce1b4660faaf807f0ca26296b2c54"
+    },
+    {
+      "bytes": 0,
+      "path": ".cache/phase2-growth-shape-recorder-review-v1/second-run/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 14974,
+      "path": ".cache/phase2-growth-shape-recorder-review-v1/test_recorder.py",
+      "sha256": "52df140dc2a185c25860d2b72ae56d263e3cf1013b64fa27b51c58141cd72c94"
+    }
+  ]
+}

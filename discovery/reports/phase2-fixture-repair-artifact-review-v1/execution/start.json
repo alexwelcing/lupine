@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-I",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-fixture-repair-artifact-review-v1/audit_repair.py"
+  ],
+  "audit_source_sha256": "79ff5924319e06be9538ea1900bdf162ef62193e05945c58c74935b1bf05d9fa",
+  "cwd": "/workspace/lupine-discovery-branch/discovery",
+  "scope_sha256": "7c5dfc69ed57015e8259fe5d0187250a7147bd6787bfe78cf76ca975d64a99a3",
+  "started_at": "2026-10-16T18:27:49.306789+00:00"
+}

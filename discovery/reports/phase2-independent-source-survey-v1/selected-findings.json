@@ -1,0 +1,100 @@
+{
+  "aflow": {
+    "actual_record_query": false,
+    "complete_pairs_and_usable_count": "UNKNOWN",
+    "declared_use_scope": "Scientific, academic and non-commercial purposes; other use prohibited.",
+    "documented_joint_field_roles": [
+      "auid",
+      "aurl",
+      "catalog",
+      "compound",
+      "prototype",
+      "aflow_prototype_label_orig",
+      "aflow_prototype_label_relax",
+      "code",
+      "dft_type",
+      "ael_bulk_modulus_vrh",
+      "ael_shear_modulus_vrh",
+      "enthalpy_formation_atom",
+      "agl_thermal_conductivity_300K"
+    ],
+    "frozen_archive_identity": "UNKNOWN",
+    "license_locator": "aflux_help response, LICENSE paragraph"
+  },
+  "future_physical_or_powerplant_validity_established": false,
+  "new_dft_executed": false,
+  "no_benchmark_selection": true,
+  "no_target_thresholds_features_models_or_allocations_selected": true,
+  "qm9": {
+    "actual_complete_pairs": "UNKNOWN",
+    "advertised_count": "134 kilo molecules in title; not verified usable/independent units",
+    "article_metadata_waiver": "CC0 only for associated Data Descriptor metadata",
+    "article_rights": "CC BY-NC-SA 4.0",
+    "collection_doi": "10.6084/m9.figshare.978904",
+    "collection_registry_rights": "CC BY 4.0",
+    "collection_registry_version": null,
+    "computational_level": {
+      "additional_subset_methods": "Documented; not presumed interchangeable or pooled.",
+      "locator": "Properties, direct first paragraph",
+      "value": "DFT/B3LYP/6-31G(2df,p)"
+    },
+    "file_acquired": false,
+    "file_identity": "UNVERIFIED",
+    "file_terms": "UNVERIFIED",
+    "grouping_and_overlap": "UNRESOLVED; identifier roles are not independent-unit counts",
+    "literal_landing_suffix": "/978904/4; not asserted as constituent version",
+    "missingness_exclusion_indices": "Referenced readme not acquired",
+    "nominal_file_name": "dsgdb9nsd.xyz.tar.bz2",
+    "primary_doi": "10.1038/sdata.2014.22",
+    "table2": {
+      "line_2": "Scalar properties",
+      "line_na_plus4": "SMILES from GDB-17 and B3LYP relaxation",
+      "line_na_plus5": "InChI for Corina and B3LYP geometries",
+      "one_file_per_molecule": "File format section"
+    },
+    "table3_selected_fields": [
+      {
+        "meaning": "gdb9 extraction tag",
+        "position": 1,
+        "symbol": "tag"
+      },
+      {
+        "meaning": "Consecutive 1-based integer identifier",
+        "position": 2,
+        "symbol": "i"
+      },
+      {
+        "meaning": "Dipole moment",
+        "position": 6,
+        "symbol": "μ",
+        "unit": "D"
+      },
+      {
+        "meaning": "Isotropic polarizability",
+        "position": 7,
+        "symbol": "α",
+        "unit": "a₀³"
+      },
+      {
+        "meaning": "HOMO energy",
+        "position": 8,
+        "symbol": "ϵHOMO",
+        "unit": "Ha"
+      },
+      {
+        "meaning": "LUMO energy",
+        "position": 9,
+        "symbol": "ϵLUMO",
+        "unit": "Ha"
+      },
+      {
+        "meaning": "ϵLUMO−ϵHOMO",
+        "position": 10,
+        "symbol": "ϵgap",
+        "unit": "Ha"
+      }
+    ]
+  },
+  "recommendation": "QM9 collection/file-manifest metadata next; AFLOW stopped with noncommercial restriction.",
+  "status": "DOCUMENTARY_LEAD_ONLY_NOT_ADMITTED"
+}

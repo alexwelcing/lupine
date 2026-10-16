@@ -1,0 +1,71 @@
+{
+  "schema": "lupine.bam-schema-documentary-bindings.v1",
+  "created_at": "2026-10-16T09:47:53.868361+00:00",
+  "readme": {
+    "path": ".cache/phase2-bam-schema-documentary-v1/README.md",
+    "bytes": 4354,
+    "sha256": "ce619c19ab09d6875b1282d9a01142b119af7f5faaba5f9047b83321942b6edb"
+  },
+  "files": [
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/scope.json",
+      "bytes": 4681,
+      "sha256": "4dd45c8c32569abed1db62a133b36408c981a19cf4da0a637757930349dee25d"
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/receipt.json",
+      "bytes": 1207,
+      "sha256": "de225d968f35f0baf47c534fab448f183ca40d2f5d15e201b88cd5b5f0c0fbb7"
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/schema.csv",
+      "bytes": 41000,
+      "sha256": "e75c85d770598acf19a4bd1cb9c94b6adf7bb92cf46b153cbc904896a1160f1a"
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/exposure-before-decode.json",
+      "bytes": 626,
+      "sha256": "6203f1445bad052a9bbb63b0735d06060a89426057e6b475c7513d99a562a78e"
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/decode-failure.json",
+      "bytes": 1124,
+      "sha256": "3fd9481962012a645d7eb8a1f92e4357f0124a16bd205939b0982b87f9e21c39"
+    }
+  ],
+  "prior_sources": [
+    {
+      "path": ".cache/phase2-bam-schema-contract-design-v1/README.md",
+      "bytes": 13933,
+      "sha256": "ca4622e6958b7a13aad95e9f3e722f4b77b120ccf856f31b76daa169ddf47918"
+    },
+    {
+      "path": ".cache/phase2-bam-schema-contract-design-v1/source-bindings.json",
+      "bytes": 3948,
+      "sha256": "cd08fa3d8e6e697a51368a20e8b9e44ba77b6d108307be79e423de3d2cf58b1c"
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/zenodo-17846436.json",
+      "bytes": 14107,
+      "sha256": "3bcc7e2622fe555f1d0d9ae75e1326f3f09ed036cb61da1c27e06d87d6855cb0"
+    },
+    {
+      "path": "reports/phase2-bam-readiness-v1/README.md",
+      "bytes": 8384,
+      "sha256": "2c2730f8551b51d42cc035b718a0f05807e242a769666183ec485feed361ec29"
+    }
+  ],
+  "source_body_publication": "retained ignored only; no full raw CSV in public bundle",
+  "status": "BLOCKED_DOCUMENTARY_ENCODING",
+  "actual_encoding": "UNBOUND",
+  "actual_dialect": "UNBOUND",
+  "actual_headers_or_dictionary_verified": false,
+  "scientific_benchmark_admitted": false,
+  "network_requests": 1,
+  "network_retries": 0,
+  "measurement_source_requests": 0,
+  "raw_documentation_machine_exposure": true,
+  "csv_parsing": false,
+  "full_text_decode_completed": false,
+  "independent_review_pending": true
+}

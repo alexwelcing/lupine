@@ -1,0 +1,24 @@
+{
+  "findings": [
+    {
+      "disposition": "Root requires recheck of held recorder and gate hashes within each post-command state block, recording failure before stopping.",
+      "finding": "Recorder and gate hashes are checked before each run but not after the final run; state() rechecks tracked/remote/guard state only. Mutation during run2 can leave successful completion despite changed recorder or gate bytes.",
+      "id": "POST_RUN_GATE_RECORDER_BINDING"
+    },
+    {
+      "disposition": "Root chose trusted-source projection rather than independent classifier. Rename public_report_complete_and_valid to public_report_canonical_and_closed and document identity/shape/disclosure limits; retain all existing checks. Actual-result review must assess observed category/stage/path consistency. Do not duplicate classifier or rerun private source.",
+      "finding": "Category/stage/scope enums and exposure shapes are closed, but cross-field semantic consistency is not independently checked. A canonical correctly identified report with primary MEMBER_FLAGS, stage complete, compatible_reason ZIP_LIMIT and directory/close flags false can satisfy current membership checks. This counterexample was inferred from source, not executed.",
+      "id": "VALIDATOR_SEMANTIC_SCOPE"
+    }
+  ],
+  "method": "Read source and repair diff only; no import, invocation, network or private source/receipt access.",
+  "network_used": false,
+  "private_scientific_source_read": false,
+  "recorder_imported_or_invoked": false,
+  "reviewer": "/root/phase2_planner",
+  "schema": "lupine.discovery.static_operation_recorder_review.v1",
+  "snapshot_note": "Initial pre-write live-source hash guard aborted when the author edited the recorder; no source snapshot or review was written then. This copy was recovered from the author-preserved c626 file and its exact hash verified.",
+  "source_sha256": "c626d286f7c89b3506feb397c7f0346f4be0e9483498d157e48e8b197641d009",
+  "tests_executed": false,
+  "verdict": "REPAIR_REQUIRED_BEFORE_USE"
+}

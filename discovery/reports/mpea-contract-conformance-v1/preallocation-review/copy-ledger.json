@@ -1,0 +1,20 @@
+[
+  {
+    "source": ".cache/final-engineering-gate-review-v1/checklist.json",
+    "destination": "reports/mpea-contract-conformance-v1/preallocation-review/checklist.json",
+    "sha256": "930d3da0a9f88b12f67c1409068d063020e98461b92ab095f4047465c97de1db",
+    "bytes": 5411
+  },
+  {
+    "source": ".cache/final-engineering-gate-review-v1/CHECKLIST.md",
+    "destination": "reports/mpea-contract-conformance-v1/preallocation-review/CHECKLIST.md",
+    "sha256": "f1481e507ef84d55055574fddda4d14f4010353a9ae583680a0d22df3ff8451a",
+    "bytes": 1906
+  },
+  {
+    "source": ".cache/final-engineering-gate-review-v1/workflow-trigger-snapshot.json",
+    "destination": "reports/mpea-contract-conformance-v1/preallocation-review/workflow-trigger-snapshot.json",
+    "sha256": "7828d3f5908121783fe880c4dd219e398a55b089ee7d879d9d8c2e1cac8bd6d5",
+    "bytes": 12829
+  }
+]

@@ -1,0 +1,33 @@
+{
+  "experimental_data_opened": false,
+  "findings": [
+    {
+      "finding": "digest-string equality alone did not validate original plan and fixed schedules",
+      "origin": "independent source review",
+      "repair": "exact PopulationPlan types plus canonical complete compact-plan comparison before evaluation vault open"
+    },
+    {
+      "finding": "stale rank reference or mismatched reserved panels could reach reserved parser",
+      "origin": "independent source review",
+      "repair": "sealed input metadata and exact rank/panel binding before decoder entry"
+    },
+    {
+      "finding": "denominator spelling00 reached Fraction denominator0",
+      "origin": "independent source review",
+      "repair": "reject integer denominator0 through closed SCHEMA_INVALID"
+    },
+    {
+      "finding": "global request selector exposed overly broad consumer surface",
+      "origin": "parent review",
+      "repair": "trusted scheduler issues policy-bound oracle with issued-object/token identities"
+    },
+    {
+      "finding": "development labels reached model before durable development seal",
+      "origin": "implementation author review",
+      "repair": "adequacy from parser aggregates, seal first, no fit for insufficient development"
+    }
+  ],
+  "production_run_authorized": false,
+  "schema": "lupine.fixture_driver.source_findings.v1",
+  "scope": "Source-reviewed boundaries fixed before full independent execution; not historical exploit-execution claims."
+}

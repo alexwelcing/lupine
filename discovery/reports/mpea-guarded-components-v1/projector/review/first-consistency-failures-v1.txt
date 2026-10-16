@@ -1,0 +1,35 @@
+test_no_complete_source_groups_with_positive_complete_rows_is_impossible (test_projector_consistency_initial.IndependentInitialConsistency.test_no_complete_source_groups_with_positive_complete_rows_is_impossible) ... FAIL
+test_positive_captured_bytes_with_zero_captures_is_impossible (test_projector_consistency_initial.IndependentInitialConsistency.test_positive_captured_bytes_with_zero_captures_is_impossible) ... FAIL
+test_unique_model_visibility_cannot_exceed_original_role_rows (test_projector_consistency_initial.IndependentInitialConsistency.test_unique_model_visibility_cannot_exceed_original_role_rows) ... FAIL
+
+======================================================================
+FAIL: test_no_complete_source_groups_with_positive_complete_rows_is_impossible (test_projector_consistency_initial.IndependentInitialConsistency.test_no_complete_source_groups_with_positive_complete_rows_is_impossible)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/mpea-study-engine/review_report/test_projector_consistency_initial.py", line 28, in test_no_complete_source_groups_with_positive_complete_rows_is_impossible
+    with self.assertRaises(p.ReportError):p.TargetAggregates(1,1,0,statuses,reasons)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ReportError not raised
+
+======================================================================
+FAIL: test_positive_captured_bytes_with_zero_captures_is_impossible (test_projector_consistency_initial.IndependentInitialConsistency.test_positive_captured_bytes_with_zero_captures_is_impossible)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/mpea-study-engine/review_report/test_projector_consistency_initial.py", line 31, in test_positive_captured_bytes_with_zero_captures_is_impossible
+    with self.assertRaises(p.ReportError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ReportError not raised
+
+======================================================================
+FAIL: test_unique_model_visibility_cannot_exceed_original_role_rows (test_projector_consistency_initial.IndependentInitialConsistency.test_unique_model_visibility_cannot_exceed_original_role_rows)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/mpea-study-engine/review_report/test_projector_consistency_initial.py", line 35, in test_unique_model_visibility_cannot_exceed_original_role_rows
+    with self.assertRaises(p.ReportError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ReportError not raised
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.005s
+
+FAILED (failures=3)

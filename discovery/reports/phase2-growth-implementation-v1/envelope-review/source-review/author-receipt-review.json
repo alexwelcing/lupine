@@ -1,0 +1,70 @@
+{
+  "recorded_utc": "2026-10-16T10:30:34.584928+00:00",
+  "runs": [
+    {
+      "checks": {
+        "expected_exit": true,
+        "expected_test_count": true,
+        "no_guard_violations": true,
+        "runtime_held": true,
+        "snapshots_match": true,
+        "source_held_for_run": true,
+        "stderr_hash": true,
+        "stdout_hash": true
+      },
+      "elapsed_seconds": 1.2259000890007883,
+      "errors": 0,
+      "failures": 1,
+      "label": "first",
+      "receipt_sha256": "b7c097f7df70b18e58b1ae3827d696c8f24f336c282b4ee38f16f971f93f2cef",
+      "source_bindings": {
+        ".cache/phase2-growth-envelope-candidate-v1/author_bootstrap.py": "e828e3a96ff9ef14b7272d073c1f70c11a5e650bda61a6f172f8fa69fa7dc396",
+        ".cache/phase2-growth-envelope-candidate-v1/promotion/docs/li-v3-growth-envelope-plan.md": "f64a374f5ca6ede4040a8662aae3c08378fc352264e1288a3f3775a5348ea159",
+        ".cache/phase2-growth-envelope-candidate-v1/promotion/scripts/li_v3_growth_envelope.py": "a8c0cea16c1c44d6cf57986edcd6ca22e0229cb0f3bb7f935910d6fa2aef3045",
+        ".cache/phase2-growth-envelope-candidate-v1/promotion/tests/test_li_v3_growth_envelope.py": "c4f281ca1fcbc473296286672703733ff1f250c9f151a960018a5af10120db01"
+      },
+      "test_count": 28,
+      "unittest_seconds": "0.664"
+    },
+    {
+      "checks": {
+        "expected_exit": true,
+        "expected_test_count": true,
+        "no_guard_violations": true,
+        "runtime_held": true,
+        "snapshots_match": true,
+        "source_held_for_run": true,
+        "stderr_hash": true,
+        "stdout_hash": true
+      },
+      "elapsed_seconds": 0.8181718949999777,
+      "errors": 0,
+      "failures": 0,
+      "label": "second",
+      "receipt_sha256": "756c1e76ac0b15b2b4b898d62e946dc0a95f34370d88607cb08748256b46803a",
+      "source_bindings": {
+        ".cache/phase2-growth-envelope-candidate-v1/author_bootstrap.py": "e828e3a96ff9ef14b7272d073c1f70c11a5e650bda61a6f172f8fa69fa7dc396",
+        ".cache/phase2-growth-envelope-candidate-v1/promotion/docs/li-v3-growth-envelope-plan.md": "4a5954b93b84d05c32a8ee2ea8254aec63283e915c331339cb97875e4b2aeb59",
+        ".cache/phase2-growth-envelope-candidate-v1/promotion/scripts/li_v3_growth_envelope.py": "f50069d028526ea045441a2e574a26192a210ff78ba34f5170777d32f5692ec3",
+        ".cache/phase2-growth-envelope-candidate-v1/promotion/tests/test_li_v3_growth_envelope.py": "f569d732f02d90233fd20e9d5bf14ab9bb29337c09022093e15320af031523f1"
+      },
+      "test_count": 31,
+      "unittest_seconds": "0.461"
+    }
+  ],
+  "schema": "lupine.discovery.growth_envelope_author_receipt_review.v1",
+  "scope": "Parent receipt/log/snapshot/static AST audit only; author executed generated tests. No product import or rerun, private source or production operation.",
+  "status": "PASS_AUDIT_INCLUDING_PRESERVED_FIRST_FAILURE",
+  "test_evolution": {
+    "added_methods": [
+      "test_final_declared_comment_gap_is_blocked_before_new_archive",
+      "test_raw_central_preflight_complete_exact_boundaries",
+      "test_raw_central_preflight_declared_span_signature_count_and_tail"
+    ],
+    "changed_methods": [
+      "test_old_predicates_preserved_by_exact_ast_delta"
+    ],
+    "original_failed_assertion_AST_unchanged": true,
+    "removed_methods": []
+  }
+}

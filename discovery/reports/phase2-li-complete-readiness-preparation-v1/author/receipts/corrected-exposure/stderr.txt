@@ -1,0 +1,43 @@
+test_all_runtime_sources_remain_unchanged (test_li_v3_readiness.ReadinessAuthorTests.test_all_runtime_sources_remain_unchanged) ... ok
+test_bad_shared_index_and_formula_text_block (test_li_v3_readiness.ReadinessAuthorTests.test_bad_shared_index_and_formula_text_block) ... ok
+test_case_collision_and_prefix_collision (test_li_v3_readiness.ReadinessAuthorTests.test_case_collision_and_prefix_collision) ... ok
+test_close_failure_clears_payload_and_preserves_reason (test_li_v3_readiness.ReadinessAuthorTests.test_close_failure_clears_payload_and_preserves_reason) ... ok
+test_complete_layout_exact_member_access (test_li_v3_readiness.ReadinessAuthorTests.test_complete_layout_exact_member_access) ... ok
+test_completed_negative_readiness_preserves_rows (test_li_v3_readiness.ReadinessAuthorTests.test_completed_negative_readiness_preserves_rows) ... ok
+test_documentary_and_complete_frame (test_li_v3_readiness.ReadinessAuthorTests.test_documentary_and_complete_frame) ... ok
+test_duplicate_case_default (test_li_v3_readiness.ReadinessAuthorTests.test_duplicate_case_default) ... ok
+test_endpoint_column_cannot_be_metadata (test_li_v3_readiness.ReadinessAuthorTests.test_endpoint_column_cannot_be_metadata) ... ok
+test_expected_mismatch_before_xml (test_li_v3_readiness.ReadinessAuthorTests.test_expected_mismatch_before_xml) ... ok
+test_explicit_documentary_text_disclosure (test_li_v3_readiness.ReadinessAuthorTests.test_explicit_documentary_text_disclosure) ... ok
+test_external_escape_dangling_relationships_target (test_li_v3_readiness.ReadinessAuthorTests.test_external_escape_dangling_relationships_target) ... ok
+test_forged_documentary_payload_recomputed (test_li_v3_readiness.ReadinessAuthorTests.test_forged_documentary_payload_recomputed) ... ok
+test_forged_prior_layout_payload_recomputed (test_li_v3_readiness.ReadinessAuthorTests.test_forged_prior_layout_payload_recomputed) ... ok
+test_forged_prior_nested_exposure (test_li_v3_readiness.ReadinessAuthorTests.test_forged_prior_nested_exposure) ... ok
+test_frame_blank_cannot_hide_nonempty_row (test_li_v3_readiness.ReadinessAuthorTests.test_frame_blank_cannot_hide_nonempty_row) ... ok
+test_frame_no_row_trimming (test_li_v3_readiness.ReadinessAuthorTests.test_frame_no_row_trimming) ... ok
+test_invalid_expected_schema_before_xml (test_li_v3_readiness.ReadinessAuthorTests.test_invalid_expected_schema_before_xml) ... ok
+test_invalid_opc_names (test_li_v3_readiness.ReadinessAuthorTests.test_invalid_opc_names) ... ok
+test_invalid_raw_and_bounds (test_li_v3_readiness.ReadinessAuthorTests.test_invalid_raw_and_bounds) ... ok
+test_known_root_relationship_type_still_strict (test_li_v3_readiness.ReadinessAuthorTests.test_known_root_relationship_type_still_strict) ... ok
+test_known_type_not_relaxed (test_li_v3_readiness.ReadinessAuthorTests.test_known_type_not_relaxed) ... ok
+test_layout_atomic_second_role_failure (test_li_v3_readiness.ReadinessAuthorTests.test_layout_atomic_second_role_failure) ... ok
+test_media_type_override_precedence_and_case (test_li_v3_readiness.ReadinessAuthorTests.test_media_type_override_precedence_and_case) ... ok
+test_media_types_stream_override_forbidden (test_li_v3_readiness.ReadinessAuthorTests.test_media_types_stream_override_forbidden) ... ok
+test_merged_selected_documentary_cell_blocked (test_li_v3_readiness.ReadinessAuthorTests.test_merged_selected_documentary_cell_blocked) ... ok
+test_opaque_payload_invariance (test_li_v3_readiness.ReadinessAuthorTests.test_opaque_payload_invariance) ... ok
+test_optional_unresolved_semantics (test_li_v3_readiness.ReadinessAuthorTests.test_optional_unresolved_semantics) ... ok
+test_ordinary_relationship_media_type_forbidden (test_li_v3_readiness.ReadinessAuthorTests.test_ordinary_relationship_media_type_forbidden) ... ok
+test_output_cap_clears_payload (test_li_v3_readiness.ReadinessAuthorTests.test_output_cap_clears_payload) ... ok
+test_overlap_only_declared_key_not_physical_identity (test_li_v3_readiness.ReadinessAuthorTests.test_overlap_only_declared_key_not_physical_identity) ... ok
+test_read_failure_retains_exposure (test_li_v3_readiness.ReadinessAuthorTests.test_read_failure_retains_exposure) ... ok
+test_same_raw_identity_to_replay_and_header (test_li_v3_readiness.ReadinessAuthorTests.test_same_raw_identity_to_replay_and_header) ... ok
+test_shared_strings_are_bound_and_not_whole_table_disclosed (test_li_v3_readiness.ReadinessAuthorTests.test_shared_strings_are_bound_and_not_whole_table_disclosed) ... ok
+test_source_binding_drift (test_li_v3_readiness.ReadinessAuthorTests.test_source_binding_drift) ... ok
+test_unknown_http_type_uppercase_host_and_relative_target (test_li_v3_readiness.ReadinessAuthorTests.test_unknown_http_type_uppercase_host_and_relative_target) ... ok
+test_unreviewed_text_and_mixed_binding_block (test_li_v3_readiness.ReadinessAuthorTests.test_unreviewed_text_and_mixed_binding_block) ... ok
+test_xml_entity_and_namespace_caps (test_li_v3_readiness.ReadinessAuthorTests.test_xml_entity_and_namespace_caps) ... ok
+
+----------------------------------------------------------------------
+Ran 38 tests in 0.824s
+
+OK

@@ -1,0 +1,28 @@
+{
+  "scope_hold_utc": "2026-10-16T18:18:54.431528+00:00",
+  "metadata_execution": {
+    "initial_tool_chunk": "f838eb",
+    "session_id": 33010,
+    "completion_tool_chunk": "8b4643",
+    "status": "completed_HTTP_200"
+  },
+  "article_execution": {
+    "initial_tool_chunk": "eb961d",
+    "session_id": 58128,
+    "completion_tool_chunk": "97214f",
+    "status": "completed_HTTP_200"
+  },
+  "projection_tool_chunks": [
+    "c9d1eb",
+    "ac882c",
+    "d86e7b",
+    "5b9ce1"
+  ],
+  "routine_local_path_error": {
+    "tool_chunk": "6bb190",
+    "exit_code": 1,
+    "reason": "Read attempted a nonexistent selected-projection.json filename after successfully reading named metadata receipts. rg then identified existing readme/projection.json. No source request or data access followed this error."
+  },
+  "product_tests_executed": false,
+  "no_execution_of_downloaded_source_code": true
+}

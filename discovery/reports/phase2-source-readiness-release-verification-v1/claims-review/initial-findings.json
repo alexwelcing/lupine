@@ -1,0 +1,22 @@
+{
+  "disposition": "ALL_THREE_CORRECTED_IN_BOUND_FINAL_DOCS",
+  "findings": [
+    {
+      "id": "STALE_CONTINUATION_SUMMARY",
+      "initial": "execution_status retained 13/143 prior checkpoint while current_checkpoint had147/351.",
+      "resolution": "Root updated execution_status to current candidate, verified predecessor and pending successor."
+    },
+    {
+      "id": "UNQUALIFIED_FORMAL_BULLET",
+      "initial": "STATUS implemented Lean bullet said143 while linking current147 inventory.",
+      "resolution": "Root updated147/twelve/minimum-resolution."
+    },
+    {
+      "id": "PYTHON_BROWSER_HOLD_CONFLATION",
+      "initial": "Release row implied Python142 and browser86 both held351 paths. Python actually held350 before the added browser helper/wiring.",
+      "resolution": "Root now explicitly records Python350 followed by finalbrowser351; continuation per-run counts added. No behavior rerun needed or claimed."
+    }
+  ],
+  "schema": "lupine.source-readiness.claim-review-findings.v1",
+  "scope": "Source/documentary review findings sent to root; no failed runtime test occurred. Initial full document bytes were not snapshotted by reviewer."
+}

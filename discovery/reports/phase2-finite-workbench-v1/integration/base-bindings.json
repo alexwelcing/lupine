@@ -1,0 +1,12 @@
+{
+  "commit": "ea69d01e144747c97bf288b37249f39af9e8f715",
+  "files": {
+    "src/lupine_discovery/cli.py": "4d31d7b9b5621bb57830542d76c8dfa85227f817118d9cdc0de0aae8562379db",
+    "src/lupine_discovery/server.py": "c2c0e436cf836c4c55b0e0060284f55b45db446614438e883f2777cbae0e943d",
+    "scripts/package_smoke.py": "666f71b490140214a9565e510c241fa978899f5f05a3f1997b2aefc4e83049f0",
+    "scripts/verify_retained_artifacts.py": "4fb9f59c3b0d2eebb30436038815f7d156e57689081ade90407b4f8dad5a341a",
+    "tests/test_package_retention.py": "1942808110c82ec26dfae39f50aafce26a1e6e73264932027fa06375043a43b9",
+    "tests/test_package_retention_review.py": "b77fcb625fab899041b132d8734a3ff72095738044af8de1afd7d63ccf90c856",
+    "tests/test_retained_mpea_transport.py": "598b8413612af06f071d8ad017cbeb4e4c5eefa1358710c98065a7b4efda24cb"
+  }
+}

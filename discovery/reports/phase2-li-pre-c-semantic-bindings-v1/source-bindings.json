@@ -1,0 +1,179 @@
+{
+  "claim_disposition": "No exact record-sheet/column-coordinate/row-coordinate-class/reference-key binding established; semantic vocabulary only. No actual C operation or scientific admission.",
+  "created_at": "2026-10-16T14:38:06.943632+00:00",
+  "local_review_head": "2975d6d0b9111cc84adb82ccc673bc82339ab154",
+  "primary_source_identities_repeated_from_public_reports": {
+    "archive": {
+      "doi": "10.24435/materialscloud:ws-8j",
+      "no_new_acquisition_or_identity_verification": true,
+      "publisher_bytes": 183878,
+      "publisher_md5": "041bbe095c54615e5a3c289facb18ce5",
+      "record": "vywsz-wxn79",
+      "version": 3
+    },
+    "article": {
+      "doi": "10.1038/s41597-024-04329-2",
+      "xml_not_read_in_this_review": true,
+      "xml_sha256": "c7e527712991ce14fb233b57a7e1f5f2dc26e6728835df03510cd6c588146534"
+    },
+    "notebook": {
+      "commit": "d19b15127c8ae1be49308c29eac718b609ad895c",
+      "git_blob_sha1": "789b61339aa4c566b68794077fa7240a73677f9d",
+      "raw_notebook_not_read_in_this_review": true,
+      "repository": "avakanski/Subsized-Specimens-Tensile-Properties",
+      "sha256": "ebf3f161f16be6758243b8560b7b9ba8af3e8b17d5a0715ecf04209d22dfd6fd"
+    }
+  },
+  "rights_scope": "Own paraphrase and public project documentary projections. Article CC BY-NC-ND4.0, archive CC BY4.0 and repository MIT remain distinct; no primary body republished.",
+  "schema": "lupine.li.pre_c_semantic_bindings.source_map.v1",
+  "sources": [
+    {
+      "bytes": 7423,
+      "git_blob_sha1": "c10fdf179cd03abf520c32b698aef84a5ad0fb4b",
+      "git_commit": "2975d6d0b9111cc84adb82ccc673bc82339ab154",
+      "id": "P1",
+      "locators": [
+        "Documentary findings / Sec6, Sec7, Sec9, Sec11, Sec12; Tab2 commentary",
+        "Exposure and source terms"
+      ],
+      "matches_exact_commit_blob": true,
+      "path": "reports/phase2-li-paper-methods-v1/README.md",
+      "read_scope": "Published documentary projection/report only",
+      "sha256": "b168331d3198c97b6cdf45d67b505b4ddf88acf60ab6b556e4b35798b5a3eb10"
+    },
+    {
+      "bytes": 5848,
+      "git_blob_sha1": "c34ef41afbc52f1a5de22d18e5600df2e0df6e0c",
+      "git_commit": "2975d6d0b9111cc84adb82ccc673bc82339ab154",
+      "id": "P2",
+      "locators": [
+        "Finding table; source/count limits"
+      ],
+      "matches_exact_commit_blob": true,
+      "path": "reports/phase2-li-paper-methods-v1/independent-review/findings.md",
+      "read_scope": "Published documentary projection/report only",
+      "sha256": "b19f7b0b25ea24fdc2e34212d960883a14a37f7c995f5c1602f02b9589545941"
+    },
+    {
+      "bytes": 7746,
+      "git_blob_sha1": "8ed7e41cd89752dd2b87ba53052078a3d609d762",
+      "git_commit": "2975d6d0b9111cc84adb82ccc673bc82339ab154",
+      "id": "P3",
+      "locators": [
+        "Exact source scope; What the permitted evidence establishes; workbook size distinction"
+      ],
+      "matches_exact_commit_blob": true,
+      "path": "reports/phase2-li-author-methods-v1/README.md",
+      "read_scope": "Published documentary projection/report only",
+      "sha256": "e0bc80439db113297fe78631196dc55743d845241919efe580856d6285862ea6"
+    },
+    {
+      "bytes": 4321,
+      "git_blob_sha1": "523412409707b1ada01a0418c46733b31fee9ca4",
+      "git_commit": "2975d6d0b9111cc84adb82ccc673bc82339ab154",
+      "id": "P4",
+      "locators": [
+        "Version table; license paragraph; paper schema paragraph"
+      ],
+      "matches_exact_commit_blob": true,
+      "path": "reports/phase2-source-readiness-v1/li-metadata/README.md",
+      "read_scope": "Published documentary projection/report only",
+      "sha256": "7e3f130e2c67e487ea2a0068194ccc374f6d4d9287081065a0d9052040996989"
+    },
+    {
+      "bytes": 7786,
+      "git_blob_sha1": "b9f7cfec10027cd77d6cad4d94128845d2804d15",
+      "git_commit": "2975d6d0b9111cc84adb82ccc673bc82339ab154",
+      "id": "R1",
+      "locators": [
+        "/selected_references",
+        "/citation_columns"
+      ],
+      "matches_exact_commit_blob": true,
+      "path": "reports/phase2-li-reference-identity-v1/article-citation-projection.json",
+      "read_scope": "Published documentary projection/report only",
+      "sha256": "37a0821bd225f85e453a8b195eaaf0bda871f93502aff4ea76c797a94c0e94a2"
+    },
+    {
+      "bytes": 7621,
+      "git_blob_sha1": "7f8984295a2eae630cd98558504ccb0f0dbf9174",
+      "git_commit": "2975d6d0b9111cc84adb82ccc673bc82339ab154",
+      "id": "R2",
+      "locators": [
+        "Exact lookup and unresolved identities; graph limitations"
+      ],
+      "matches_exact_commit_blob": true,
+      "path": "reports/phase2-li-reference-identity-v1/README.md",
+      "read_scope": "Published documentary projection/report only",
+      "sha256": "f564c79b7b731191fbb8bc58669dbc6a1897bc22e57db3b59d09b737c60555ae"
+    },
+    {
+      "bytes": 2464,
+      "git_blob_sha1": "06420d474a90e8079eff3d994bd004de4f8bea9a",
+      "git_commit": "2975d6d0b9111cc84adb82ccc673bc82339ab154",
+      "id": "N1",
+      "locators": [
+        "/inventory",
+        "/source",
+        "/exposure",
+        "/scientific_schema_approved"
+      ],
+      "matches_exact_commit_blob": true,
+      "path": "reports/phase2-notebook-header-verification-v1/public-notebook/1.json",
+      "read_scope": "Published documentary projection/report only",
+      "sha256": "398009e670dc35077246938072e679a7254a8020feaa2a5c4cf285a9433d5205"
+    },
+    {
+      "bytes": 8050,
+      "git_blob_sha1": "ee5f3cb61df0939e4d1930fd7d1dd4d7b5c4b677",
+      "git_commit": "2975d6d0b9111cc84adb82ccc673bc82339ab154",
+      "id": "N2",
+      "locators": [
+        "Actual notebook operations"
+      ],
+      "matches_exact_commit_blob": true,
+      "path": "reports/phase2-notebook-header-verification-v1/README.md",
+      "read_scope": "Published documentary projection/report only",
+      "sha256": "1f7c09d7b201ee0310a55f9c8c8db389158634d1bdeb86ead1dbfa43b67c7bdf"
+    },
+    {
+      "bytes": 1890,
+      "git_blob_sha1": "16f60069a13692abbec4836d7ffdd564505387f0",
+      "git_commit": "2975d6d0b9111cc84adb82ccc673bc82339ab154",
+      "id": "N3",
+      "locators": [
+        "/source"
+      ],
+      "matches_exact_commit_blob": true,
+      "path": "reports/phase2-notebook-header-verification-v1/public-notebook/capture.json",
+      "read_scope": "Published documentary projection/report only",
+      "sha256": "98f70bfea96dedeaad438d1809163e8c316748f4aabc545ab8e9348ce51f9a38"
+    },
+    {
+      "bytes": 4976,
+      "id": "A1",
+      "locators": [
+        "/A",
+        "/B",
+        "/C",
+        "/budget",
+        "/claims"
+      ],
+      "path": ".cache/phase2-li-complete-route-amendment-v1/decision.json",
+      "read_scope": "Explicitly authorized prospective design only",
+      "sha256": "beaedd68842954d2c292491152645a6cf879541c30334a60fd4a28885753145c",
+      "tracked_commit_binding": null
+    },
+    {
+      "bytes": 6965,
+      "id": "F1",
+      "locators": [
+        "Remaining C prerequisites and their source; conservative fallback"
+      ],
+      "path": ".cache/phase2-li-frame-feasibility-review-v1/README.md",
+      "read_scope": "Explicitly authorized prospective design only",
+      "sha256": "0b1d53d56015fd67205c24e4d146c3b297b3176b8cef67c33aa726a5c289c041",
+      "tracked_commit_binding": null
+    }
+  ]
+}

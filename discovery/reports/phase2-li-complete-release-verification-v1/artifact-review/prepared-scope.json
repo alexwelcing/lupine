@@ -1,0 +1,28 @@
+{
+  "base": "ddd4a6a8df0f908a162b7e5387b0faac325180d6",
+  "baseline_runtime_total": 339,
+  "existing_runtime_changes": [],
+  "expected_archive_copyset": [
+    "discovery",
+    ".github/workflows/discovery-verify.yml"
+  ],
+  "guarded_document_additions": [
+    "docs/li-v3-readiness-production.md",
+    "docs/li-v3-readiness.md"
+  ],
+  "purpose": "Audit additive Li readiness public implementation and completed evidence without changing baseline runtime or wheel payloads.",
+  "root_authorization": "Prepare now; no actual artifact audit until exact published commit, held clean source, successful package/generic gates, retained path and final copyset supplied.",
+  "runtime_additions": [
+    "scripts/li_v3_readiness.py",
+    "scripts/li_v3_readiness_production.py",
+    "tests/test_li_v3_readiness.py",
+    "tests/test_li_v3_readiness_production.py",
+    "tests/test_li_v3_readiness_production_review.py",
+    "tests/test_li_v3_readiness_review.py"
+  ],
+  "runtime_total": 345,
+  "source_archive_reports_docs": "Exact final scoped commit determines all public reports; eight author promotion paths additionally pinned.",
+  "unchanged_baseline_runtime_total": 339,
+  "wheel_payload_additions": [],
+  "wheel_payload_changes": []
+}

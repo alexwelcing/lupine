@@ -1,0 +1,49 @@
+{
+  "schema": "lupine.discovery.li_documentary_proposal_bindings.v1",
+  "date": "2026-10-16",
+  "owner": "phase2_evidence",
+  "files": [
+    {
+      "path": "discovery/AGENTS.md",
+      "bytes": 3265,
+      "sha256": "8da673fcfab35c6e8b2cbc20194423b83017574bd8d78264d48c30d4b6d74ede"
+    },
+    {
+      "path": "discovery/reports/phase2-source-readiness-v1/li-metadata/README.md",
+      "bytes": 4321,
+      "sha256": "7e3f130e2c67e487ea2a0068194ccc374f6d4d9287081065a0d9052040996989"
+    },
+    {
+      "path": "discovery/reports/phase2-source-readiness-v1/li-metadata/source-bindings.json",
+      "bytes": 9159,
+      "sha256": "dc37f5744d12fbfd396e4e944d639ea485f5ee95f8ff7ded42f60c7fb03f8914"
+    },
+    {
+      "path": "discovery/reports/phase2-source-readiness-v1/li-metadata/materialscloud-v3.json",
+      "bytes": 12936,
+      "sha256": "6cd068dc85890fbef2c8d8027c78eb9b7740f36d90574f158c5fc19d9fac65b6"
+    },
+    {
+      "path": "discovery/reports/phase2-source-readiness-v1/custody-design/README.md",
+      "bytes": 14110,
+      "sha256": "0eb632e5a69033fbee10de6a4648bf6b4e6949b552f11841452c9bd8236ffe91"
+    },
+    {
+      "path": "discovery/reports/phase2-source-readiness-v1/source-bindings.json",
+      "bytes": 7113,
+      "sha256": "d7a53adf40427753d7c0c48a54ab5c6ab42407f4dd53045cd508bb695afaa973"
+    },
+    {
+      "path": "discovery/reports/phase2-li-custody-v1/README.md",
+      "bytes": 3126,
+      "sha256": "1f90bf5c56c3a34013c079c6dd4d50c9db05146ad3506c2a2663ade562ab6a36"
+    }
+  ],
+  "scope": "Already retained public documentary records only. Earlier snapshot prose may say not acquired; actual capture identity cited from this agent prior authorized public-receipt review, not a new archive read.",
+  "paper_excerpt_scope": "Search-returned Data Records text was summarized in the retained source-bindings; no local full-paper body or invented body hash.",
+  "actual_coordinates_known": false,
+  "actual_source_rows_inspected": false,
+  "runtime_tests_run": false,
+  "tracked_edits": false,
+  "new_remote_access": false
+}

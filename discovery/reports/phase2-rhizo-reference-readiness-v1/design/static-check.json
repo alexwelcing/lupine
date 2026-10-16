@@ -1,0 +1,57 @@
+{
+  "scope": "Static identity, public-metadata graph arithmetic and local-link checks only; no source operation or scientific test.",
+  "created_at": "2026-10-16T11:25:44.381078+00:00",
+  "identity_checks": [
+    {
+      "path": "docs/projection-data-readiness.md",
+      "identity_matches": true
+    },
+    {
+      "path": "reports/projection-custody-readiness-v1.md",
+      "identity_matches": true
+    },
+    {
+      "path": "reports/projection-source-inventory.json",
+      "identity_matches": true
+    },
+    {
+      "path": "reports/projection-custody-metadata-v1.json",
+      "identity_matches": true
+    },
+    {
+      "path": "reports/projection-custody-acquisition-v1.json",
+      "identity_matches": true
+    },
+    {
+      "path": "README.md",
+      "identity_matches": true
+    },
+    {
+      "path": "planned-inputs.json",
+      "identity_matches": true
+    },
+    {
+      "path": "reference-frame.json",
+      "identity_matches": true
+    }
+  ],
+  "metadata_counts": {
+    "units": 36,
+    "unique_reference_locations": 43,
+    "candidate_edges": 172,
+    "references_by_method": {
+      "DFT-PBE": 36,
+      "experiment": 7
+    },
+    "edge_count_per_location": {
+      "4": 43
+    }
+  },
+  "working_local_links": [
+    "planned-inputs.json",
+    "reference-frame.json",
+    "source-bindings.json"
+  ],
+  "actual_raw_source_access": false,
+  "design_executed": false
+}

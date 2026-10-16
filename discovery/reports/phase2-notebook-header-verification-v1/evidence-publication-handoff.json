@@ -1,0 +1,41 @@
+{
+  "schema": "lupine.evidence-publication-final-handoff.v1",
+  "created_at": "2026-10-16T08:52:57.007470+00:00",
+  "status": "READY_FOR_PARENT_PROMOTION_WITH_INDEPENDENT_REVIEW",
+  "promotion_root": ".cache/phase2-evidence-publication-v1/promotion",
+  "directories": [
+    "reports/phase2-bam-readiness-v1",
+    "reports/phase2-finite-risk-inversion-design-v1"
+  ],
+  "inventory_sha256": "36003129e24418038f4a9d7b3ec276b2868781e6cfb0fb9cec7a353b997c7ba7",
+  "files": 57,
+  "bytes": 371075,
+  "exact_original_artifacts": 46,
+  "resolving_local_links": 30,
+  "wrappers_or_normalizations": 0,
+  "independent_review": [
+    {
+      "path": ".cache/phase2-evidence-publication-review-v1/review.json",
+      "bytes": 5880,
+      "sha256": "4a52ec6b993081dd1f7422ba459d42253994a0a782604f7c7db68decb8ab01e7"
+    },
+    {
+      "path": ".cache/phase2-evidence-publication-review-v1/source-bindings.json",
+      "bytes": 2670,
+      "sha256": "8f8276f8fe6f550de3f2d39d8c79b83d69427e49e559593c53793130a0babe6b"
+    },
+    {
+      "path": ".cache/phase2-evidence-publication-review-v1/artifact-checks-initial.json",
+      "bytes": 43450,
+      "sha256": "c4495909a433ebac55d44c21dbe5acc852950bcba8400eed36c58838624b9dd8",
+      "note": "Reviewer retained filename artifact-checks-initial.json; final review.json binds final promotion snapshot and explains its checks."
+    }
+  ],
+  "retained_packaging_findings": [
+    "first-check-failure.json",
+    "first-whitespace-check-harness.json",
+    "wording-clarification.json"
+  ],
+  "scope": "Publication copy/identity/navigation checks only. Existing completed counting evidence included additively by parent authorization; no rerun, new empirical source or tracked write.",
+  "finite_inversion_implementation": "Deferred until a justified G21 fixed-frame target, not a new implementation goal"
+}

@@ -12,6 +12,7 @@ the roots below remain the current source/deploy truth.
 
 | Root | Purpose | Status | Next action |
 | --- | --- | --- | --- |
+| `discovery/` | Universal candidate-pool research; owner: Lupine Discovery project for Alex Welcing. | Incubating on `research/lupine-discovery` | Continue the [four-day agenda](discovery/docs/four-day-plan.md); preserve standalone boundaries for later extraction. |
 | `.github/` | CI, deployment, and benchmark workflows. | Keep | Keep workflows tied to active surfaces only. |
 | `atlas/` | LUPI viewer, atomistic evidence surfaces, web apps, parsers, and visual artifacts. | Keep | The canonical browser app is `atlas/atlas-view/apps/web/`; avoid recreating parallel studio apps. |
 | `atlas-distill/` | Rust Distill scoring, policy, benchmark, and fault-line runtime. | Keep | Treat as the deterministic engine beside `glim-think`. |

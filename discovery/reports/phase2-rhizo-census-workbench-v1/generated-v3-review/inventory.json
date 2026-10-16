@@ -1,0 +1,89 @@
+{
+  "count": 21,
+  "files": {
+    "README.md": {
+      "bytes": 1510,
+      "sha256": "f0b6976dc3ca910d8b15268bc5b5c57755197edf225624954ef913e3f42e16b4"
+    },
+    "__pycache__/exact_display_cases.cpython-312.pyc": {
+      "bytes": 8602,
+      "sha256": "161689ca801614efce0d26e3944cbe3409d4fbc36dba08431845ce46e8d55c8b"
+    },
+    "__pycache__/generated_fixture.cpython-312.pyc": {
+      "bytes": 5342,
+      "sha256": "4757969e3185446666ae14154b37a18ad0b409d2fab79734e5d1ae45ebb3d4a3"
+    },
+    "browser_display_review.py": {
+      "bytes": 10618,
+      "sha256": "dfc11fc23677e84066ea3049e0740774f10d075c4277ad9d5a727897729f3335"
+    },
+    "exact_display_cases.py": {
+      "bytes": 2909,
+      "sha256": "c9f47a9869af1c936eb944f556f4daad10ade79a51c28e85dd805b8e9ff9aa15"
+    },
+    "first-run/browser_display_review.py": {
+      "bytes": 10618,
+      "sha256": "dfc11fc23677e84066ea3049e0740774f10d075c4277ad9d5a727897729f3335"
+    },
+    "first-run/desktop-compact-generated.png": {
+      "bytes": 122316,
+      "sha256": "947253f9c3f95f8fcf61ac1f4997ba539bda2f06148c8fec42d6a15bd9ffc144"
+    },
+    "first-run/exact_display_cases.py": {
+      "bytes": 2909,
+      "sha256": "c9f47a9869af1c936eb944f556f4daad10ade79a51c28e85dd805b8e9ff9aa15"
+    },
+    "first-run/execution.json": {
+      "bytes": 8318,
+      "sha256": "511fa8df813f52a8e3115795ab8f3f6204e4d7af21210422af75f29e6a702098"
+    },
+    "first-run/generated_fixture.py": {
+      "bytes": 3097,
+      "sha256": "8e1cbb84c3d690c4657e21629487d066347a876a572a3d989238f5302c4e53b0"
+    },
+    "first-run/large-exact-export.json": {
+      "bytes": 44735,
+      "sha256": "d7a19d85650ae7d90d59d062dd31ed67e0ad65395047d3fd1ff922d795c2041c"
+    },
+    "first-run/mobile-compact-generated.png": {
+      "bytes": 54614,
+      "sha256": "d0b44651110c9a073955f476d7a202a9fa6330ba75c9c708f6596af34996d197"
+    },
+    "first-run/mobile-geometry.json": {
+      "bytes": 324,
+      "sha256": "552832f3d7c251b8ee6ca7fde0ca17f861fc80f035ab0d965310bd1d0948ef00"
+    },
+    "first-run/prospective-cases.json": {
+      "bytes": 31753,
+      "sha256": "f5e914d8e4acfc3436bebfb5f5e58e6ce2354853a1d1809d2e7239077381a495"
+    },
+    "first-run/recorded-census.js": {
+      "bytes": 13634,
+      "sha256": "8e45d59eab288d5ce6c83fabe6b30ef4c707736913d13b8bf99f0e09a5b0628a"
+    },
+    "first-run/section.html": {
+      "bytes": 761,
+      "sha256": "66ec27e80dad95674ad6b30c6346f448cd19859f77bb8a07ae92e3f381e05331"
+    },
+    "first-run/styles.css": {
+      "bytes": 43409,
+      "sha256": "d7042060aae32dba2c9c5ad6f6df86a5ee51f7f1ea0dfb7aea413bf81bd3eaf9"
+    },
+    "generated_fixture.py": {
+      "bytes": 3097,
+      "sha256": "8e1cbb84c3d690c4657e21629487d066347a876a572a3d989238f5302c4e53b0"
+    },
+    "held-v3-preparation.json": {
+      "bytes": 661,
+      "sha256": "4a6d3378e1e9af5e10e1b210917f0d6f8de83d3f2ac75eec2bfc4137e39cd904"
+    },
+    "review.json": {
+      "bytes": 3518,
+      "sha256": "5ee31634deb405b189af227c1b4131037f1abaee78a83391b45a7bbf1c92fe84"
+    },
+    "scope.json": {
+      "bytes": 1510,
+      "sha256": "4a357715f318bc4dfb623f51ecaf3863b8979dc7aa7fcb930f3c1d8e75b2d467"
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "recorded_at": "2026-10-16T12:35:06.201790+00:00",
+  "status": "COPY_BLOCKED_BEFORE_RHIZO_TRACKED_WRITES",
+  "expected_intermediate_inventory": "6988ee9e10b579457a10b2479fec962f4d91859bfcaf46b43dd7872bc3e308f2",
+  "final_immutable_inventory": "591cf46eab789ef31b15f4ea0fc24816d99fb0de896103a0cb3a79c0603a0982",
+  "cause": "Root consumed an intermediate existing handoff before final agent message; final map honors omission of redundant author raw stderr whose exact frozen wrapper is already included. Hash gate prevented copying.",
+  "script_sha256": "b938ccf5d93234a40b078bbc58a38463af0db698794677a224ebd215f0ee5c94",
+  "actual_source_operation_or_test_rerun": false
+}

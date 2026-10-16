@@ -1,0 +1,125 @@
+{
+  "scope": "Independent contract-derived generated lexemes; expected states fixed before implementation source/result review.",
+  "cases": [
+    {
+      "name": "zero",
+      "token": "0",
+      "expected_state": "VALID_EXACT_JSON_NUMBER",
+      "negative_when_valid": false
+    },
+    {
+      "name": "negative_zero",
+      "token": "-0",
+      "expected_state": "VALID_EXACT_JSON_NUMBER",
+      "negative_when_valid": false
+    },
+    {
+      "name": "negative_decimal_zero",
+      "token": "-0.000e+01024",
+      "expected_state": "VALID_EXACT_JSON_NUMBER",
+      "negative_when_valid": false
+    },
+    {
+      "name": "ordinary_negative",
+      "token": "-1.25",
+      "expected_state": "VALID_EXACT_JSON_NUMBER",
+      "negative_when_valid": true
+    },
+    {
+      "name": "tiny_negative",
+      "token": "-1e-1024",
+      "expected_state": "VALID_EXACT_JSON_NUMBER",
+      "negative_when_valid": true
+    },
+    {
+      "name": "large_finite",
+      "token": "1e1024",
+      "expected_state": "VALID_EXACT_JSON_NUMBER",
+      "negative_when_valid": false
+    },
+    {
+      "name": "small_finite",
+      "token": "1e-1024",
+      "expected_state": "VALID_EXACT_JSON_NUMBER",
+      "negative_when_valid": false
+    },
+    {
+      "name": "float_overflow_still_finite",
+      "token": "1e309",
+      "expected_state": "VALID_EXACT_JSON_NUMBER",
+      "negative_when_valid": false
+    },
+    {
+      "name": "float_underflow_still_negative",
+      "token": "-1e-999",
+      "expected_state": "VALID_EXACT_JSON_NUMBER",
+      "negative_when_valid": true
+    },
+    {
+      "name": "mantissa_128",
+      "token": "12222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222",
+      "expected_state": "VALID_EXACT_JSON_NUMBER",
+      "negative_when_valid": false
+    },
+    {
+      "name": "mantissa_129",
+      "token": "122222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222",
+      "expected_state": "NUMBER_OUTSIDE_ENGINEERING_LIMIT",
+      "negative_when_valid": null
+    },
+    {
+      "name": "exponent_positive_outside",
+      "token": "1e1025",
+      "expected_state": "NUMBER_OUTSIDE_ENGINEERING_LIMIT",
+      "negative_when_valid": null
+    },
+    {
+      "name": "exponent_negative_outside",
+      "token": "1e-1025",
+      "expected_state": "NUMBER_OUTSIDE_ENGINEERING_LIMIT",
+      "negative_when_valid": null
+    },
+    {
+      "name": "scale_negative_boundary",
+      "token": "1.0e-1023",
+      "expected_state": "VALID_EXACT_JSON_NUMBER",
+      "negative_when_valid": false
+    },
+    {
+      "name": "scale_negative_outside",
+      "token": "1.0e-1024",
+      "expected_state": "NUMBER_OUTSIDE_ENGINEERING_LIMIT",
+      "negative_when_valid": null
+    },
+    {
+      "name": "exponent_outside_despite_scale",
+      "token": "0.1e1025",
+      "expected_state": "NUMBER_OUTSIDE_ENGINEERING_LIMIT",
+      "negative_when_valid": null
+    },
+    {
+      "name": "exponent_leading_zeros",
+      "token": "1e+00001024",
+      "expected_state": "VALID_EXACT_JSON_NUMBER",
+      "negative_when_valid": false
+    },
+    {
+      "name": "negative_zero_outside",
+      "token": "-0e1025",
+      "expected_state": "NUMBER_OUTSIDE_ENGINEERING_LIMIT",
+      "negative_when_valid": null
+    },
+    {
+      "name": "decimal_mantissa_128",
+      "token": "0.0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001",
+      "expected_state": "VALID_EXACT_JSON_NUMBER",
+      "negative_when_valid": false
+    },
+    {
+      "name": "decimal_mantissa_129",
+      "token": "0.00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001",
+      "expected_state": "NUMBER_OUTSIDE_ENGINEERING_LIMIT",
+      "negative_when_valid": null
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "prepared_at": "2026-10-16T07:39:38.064256+00:00",
+  "source_commit": "4492858d9e55ddfa3cca2e208063799517948b13",
+  "status": "ACTUAL_SOURCE_VERIFICATION_COMPLETE_REPORT_PREPARED",
+  "actual_package": "PASS28cases6schemas16checks",
+  "actual_strict_retention": "PASS",
+  "actual_independent_artifact_audit": "PASS",
+  "actual_source_claim_audit": "PASS",
+  "ci": "PASS_ALL_FOUR_ORIGINAL_PUSH_JOBS",
+  "compatible_envelope": "TWO_IDENTICAL_BLOCKED_LAYOUT_ZIP_LAYOUT_UNSUPPORTED",
+  "tracked_changes": false,
+  "completed_at": "2026-10-16T07:59:43.997504+00:00",
+  "ci_run": 38867704072,
+  "actual_receipt_sha256": "7010e99afcafbf29d32d5ff7d3f356474c2a670571285d884b80441e91ce3d07",
+  "actual_source_files_unchanged": 317,
+  "new_scientific_result": false,
+  "later_report_commit_ci": "NOT_YET_PUBLISHED"
+}

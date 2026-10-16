@@ -1,0 +1,148 @@
+{
+  "all_http_statuses": 200,
+  "bytes": 42352,
+  "excluded_paths": [
+    "dataset_metadata/projection.json",
+    "dataset_metadata/response.body",
+    "dielectric_paper_metadata/projection.json",
+    "dielectric_paper_metadata/response.body",
+    "elastic_paper_metadata/projection.json",
+    "elastic_paper_metadata/response.body",
+    "repository_commit/projection.json",
+    "repository_commit/response.body"
+  ],
+  "file_count": 20,
+  "files": [
+    {
+      "bytes": 8371,
+      "path": "README.md",
+      "sha256": "19606fa11eb7dc1dc879cba2caef7dd7f9e68b439107eb47004a68f82c68a1b2",
+      "transformation": "EXACT"
+    },
+    {
+      "bytes": 4085,
+      "path": "scope.json",
+      "sha256": "6e3a6cc365725fd2b72c6de39243ddc1a78d2220f1dbf1ac429ab527126a1297",
+      "transformation": "EXACT"
+    },
+    {
+      "bytes": 190,
+      "path": "scope-hold.json",
+      "sha256": "93557c9b14075f39a283ceee12be208caf6e39e18c336aa98122b9b381dcf8ca",
+      "transformation": "EXACT"
+    },
+    {
+      "bytes": 4625,
+      "path": "acquire_metadata.py",
+      "sha256": "d6782aa9cc0ed06f82946e3cd03f040c29b5dd2f13df950141e55b6bdef5d273",
+      "transformation": "EXACT"
+    },
+    {
+      "bytes": 3884,
+      "path": "selected-metadata.json",
+      "sha256": "6f5a33db33c0f81ad911e53ebade918905b5d4cec040b9797efb0de3720ece5a",
+      "transformation": "EXACT"
+    },
+    {
+      "bytes": 4948,
+      "path": "source-bindings.json",
+      "sha256": "dd953898d8b9f581a6ea7a554a47a812b4e4b1d06844b112caef7f9c8af452b8",
+      "transformation": "EXACT"
+    },
+    {
+      "bytes": 2512,
+      "path": "local-prior-use-review.json",
+      "sha256": "67aa00bb17a10c45736029492965c73f87695e7ed41ae3848731721d7c6676a6",
+      "transformation": "EXACT"
+    },
+    {
+      "bytes": 1261,
+      "path": "exposure-ledger.json",
+      "sha256": "d104fd55a1d45cf982f0353857941e75e7dd600cc57f3e354ae24e4a27ff7180",
+      "transformation": "EXACT"
+    },
+    {
+      "bytes": 210,
+      "path": "disposition.json",
+      "sha256": "8048a25b9b64afbf69fde16a91e6841d019fe4a45784076ee33f6a1b035f3817",
+      "transformation": "EXACT"
+    },
+    {
+      "bytes": 1987,
+      "path": "independent-claim-review.json",
+      "sha256": "25e45f0d1f1683f5c53dbd2989fb908b1d21322f33cf5228fb13c6f7dcd8a311",
+      "transformation": "EXACT"
+    },
+    {
+      "bytes": 1350,
+      "path": "decision.json",
+      "sha256": "a150d1af961847c39aed9f53a0b7457a01dc5cde05e86fd20d8d23e027e40ea2",
+      "transformation": "EXACT"
+    },
+    {
+      "bytes": 5597,
+      "path": "retained-source-index.json",
+      "sha256": "7d55efcdb9372e2e49ec04bb5a3617dd614125946c64af364eb41bbd627eda49",
+      "transformation": "EXACT"
+    },
+    {
+      "bytes": 242,
+      "path": "repository_commit/request.json",
+      "sha256": "cddb8f20b4f4eba38c3f63228667c4e8c9c2cbc756f14c0ea9f2f5924afafae2",
+      "transformation": "EXACT"
+    },
+    {
+      "bytes": 706,
+      "path": "repository_commit/receipt.json",
+      "sha256": "a8f2d3634bec6f77a83aa9ff4dd680d97e309b2f6c3995967601d0a578cd1d2e",
+      "transformation": "EXACT"
+    },
+    {
+      "bytes": 313,
+      "path": "dataset_metadata/request.json",
+      "sha256": "1e622c7567afdfe8f5b3127b5150c3b18e49cb53ebd9e8d4585b67a062e64ff2",
+      "transformation": "EXACT"
+    },
+    {
+      "bytes": 683,
+      "path": "dataset_metadata/receipt.json",
+      "sha256": "694edf5f272cd6891edaedb53e56639003dadd571375d06f263753cfef8d24b7",
+      "transformation": "EXACT"
+    },
+    {
+      "bytes": 224,
+      "path": "elastic_paper_metadata/request.json",
+      "sha256": "6d2d17a558a5d72f6dbbd1b62a1073253d0e34a9027da195374dee641328dd90",
+      "transformation": "EXACT"
+    },
+    {
+      "bytes": 468,
+      "path": "elastic_paper_metadata/receipt.json",
+      "sha256": "59c6a272821a4f7a127435d9c9190a2d06ef851d02df5b7a3deb3dcfecd3f114",
+      "transformation": "EXACT"
+    },
+    {
+      "bytes": 226,
+      "path": "dielectric_paper_metadata/request.json",
+      "sha256": "008a254ff94309f55dc8bdcc31f01ad2a7ee162d2d95d15749efe739de0e9bce",
+      "transformation": "EXACT"
+    },
+    {
+      "bytes": 470,
+      "path": "dielectric_paper_metadata/receipt.json",
+      "sha256": "1f98b7993b92fd63c4bd8c1a9e989f900c7f7502653b9dbd3c6cdb816e1c474e",
+      "transformation": "EXACT"
+    }
+  ],
+  "local_links_verified": [
+    "scope.json",
+    "selected-metadata.json",
+    "source-bindings.json",
+    "local-prior-use-review.json",
+    "exposure-ledger.json"
+  ],
+  "network_requests": 4,
+  "schema": "lupine.discovery.public_documentary_copyset.v1",
+  "scientific_or_runtime_tests_executed": false,
+  "whitespace": "No trailing whitespace; no transformations or reversible wrappers needed."
+}

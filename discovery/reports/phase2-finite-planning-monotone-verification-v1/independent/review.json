@@ -1,0 +1,26 @@
+{
+  "all_failures_reviewed": true,
+  "boundary_review_kind": "SOURCE_AND_MATHEMATICAL_REASONING_NOT_NEW_EXECUTED_BOUNDARY_TESTS",
+  "cap_zero_reviewed": true,
+  "compile_elapsed_seconds": 9.17330360399501,
+  "compile_exit_code": 0,
+  "exact_axiom_output": true,
+  "execution_receipt_sha256": "967b8442211c6b458a6aa4e999702be8dec996f2e4791cb57649ebfa21c4e95c",
+  "four_statements_reviewed": [
+    "evaluation_step",
+    "evaluation_antitone",
+    "capped_feasible_iff",
+    "unique_first_count"
+  ],
+  "independent_compile_attempts": 1,
+  "independent_compile_failures": 0,
+  "integration_performed": false,
+  "original_thirteen_unchanged": true,
+  "python_refinement": false,
+  "schema": "lupine.finite-planning-monotone.independent-review.v1",
+  "scientific_admission_change": false,
+  "source_sha256": "fa1dedddf324fbd66a96de9eef1d775babccbc3668a81fd48726287dffe2268d",
+  "threshold_negative_zero_one_above_one_reviewed": true,
+  "verdict": "NO_BLOCKING_FINDING",
+  "zero_failures_reviewed": true
+}

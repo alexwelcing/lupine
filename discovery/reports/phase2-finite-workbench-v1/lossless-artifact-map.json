@@ -1,0 +1,42 @@
+{
+  "recorded_at": "2026-10-16T07:27:43.680880+00:00",
+  "scope": "Publication encoding only; original candidate/cache/receipts and all runtime bytes unchanged. Decode text with UTF-8 to reconstruct exact prior path bytes.",
+  "artifacts": [
+    {
+      "original_path": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/custom-exact-coupled-problem.json",
+      "published_wrapper": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/custom-exact-coupled-problem.json.bytes.json",
+      "original_sha256": "2ecc90d698e8321a7197db5fe164c848d9233bd561ccdefef8013186c0ad5e12",
+      "round_trip_exact": true
+    },
+    {
+      "original_path": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/decision-pool-original-order-problem.json",
+      "published_wrapper": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/decision-pool-original-order-problem.json.bytes.json",
+      "original_sha256": "8e2f0588585273cf128ae84d494092e7062c3aab81490618e265525a7b764807",
+      "round_trip_exact": true
+    },
+    {
+      "original_path": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/decision-pool-recovered-problem.json",
+      "published_wrapper": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/decision-pool-recovered-problem.json.bytes.json",
+      "original_sha256": "8e2f0588585273cf128ae84d494092e7062c3aab81490618e265525a7b764807",
+      "round_trip_exact": true
+    },
+    {
+      "original_path": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/new-revision-coupled-problem.json",
+      "published_wrapper": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/new-revision-coupled-problem.json.bytes.json",
+      "original_sha256": "dc248efb531f5d4bf2723cd8ffb6f7481f815ea3db5a89c520e960aea58c8ef2",
+      "round_trip_exact": true
+    },
+    {
+      "original_path": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/projection-metadata-problem.json",
+      "published_wrapper": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/projection-metadata-problem.json.bytes.json",
+      "original_sha256": "bee309e109e02d31e8fabaa4a9851bc7c735463c05d929329066ae1178b01875",
+      "round_trip_exact": true
+    },
+    {
+      "original_path": "reports/phase2-li-compatible-envelope-v1/independent-review/reviewer-fixture-fix.patch",
+      "published_wrapper": "reports/phase2-li-compatible-envelope-v1/independent-review/reviewer-fixture-fix.patch.bytes.json",
+      "original_sha256": "b1efd6f8e23d33f9e1566a1146e65be412464f566ed7c078f7f30e4bdbb27d30",
+      "round_trip_exact": true
+    }
+  ]
+}

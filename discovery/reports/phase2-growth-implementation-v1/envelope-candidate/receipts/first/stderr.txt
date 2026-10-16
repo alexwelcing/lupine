@@ -1,0 +1,42 @@
+test_128_member_boundary_and_129_rejection (growth_envelope_author_tests.GrowthEnvelopeAuthorTests.test_128_member_boundary_and_129_rejection) ... ok
+test_central_extras_and_comments_remain_rejected (growth_envelope_author_tests.GrowthEnvelopeAuthorTests.test_central_extras_and_comments_remain_rejected) ... FAIL
+test_close_failure_retains_prior_xml_reason (growth_envelope_author_tests.GrowthEnvelopeAuthorTests.test_close_failure_retains_prior_xml_reason) ... ok
+test_end_record_count_alignment_comment_and_truncation_reject (growth_envelope_author_tests.GrowthEnvelopeAuthorTests.test_end_record_count_alignment_comment_and_truncation_reject) ... ok
+test_every_local_area_checked_and_empty_areas_remain_allowed (growth_envelope_author_tests.GrowthEnvelopeAuthorTests.test_every_local_area_checked_and_empty_areas_remain_allowed) ... ok
+test_every_supported_method_flag_combination (growth_envelope_author_tests.GrowthEnvelopeAuthorTests.test_every_supported_method_flag_combination) ... ok
+test_header_failure_after_open_closes_archive (growth_envelope_author_tests.GrowthEnvelopeAuthorTests.test_header_failure_after_open_closes_archive) ... ok
+test_initial_cleanup_failure_is_separate_and_stops (growth_envelope_author_tests.GrowthEnvelopeAuthorTests.test_initial_cleanup_failure_is_separate_and_stops) ... ok
+test_initial_same_buffer_check_precedes_new_archive (growth_envelope_author_tests.GrowthEnvelopeAuthorTests.test_initial_same_buffer_check_precedes_new_archive) ... ok
+test_initial_value_unbound_and_empty_current_padding (growth_envelope_author_tests.GrowthEnvelopeAuthorTests.test_initial_value_unbound_and_empty_current_padding) ... ok
+test_later_close_failure_overrides_success_without_stderr (growth_envelope_author_tests.GrowthEnvelopeAuthorTests.test_later_close_failure_overrides_success_without_stderr) ... ok
+test_later_nonzero_payload_rejects_after_earlier_interpretation (growth_envelope_author_tests.GrowthEnvelopeAuthorTests.test_later_nonzero_payload_rejects_after_earlier_interpretation) ... ok
+test_later_unknown_duplicate_truncated_or_short_records_block (growth_envelope_author_tests.GrowthEnvelopeAuthorTests.test_later_unknown_duplicate_truncated_or_short_records_block) ... ok
+test_local_span_bounds_reject_before_payload_words (growth_envelope_author_tests.GrowthEnvelopeAuthorTests.test_local_span_bounds_reject_before_payload_words) ... ok
+test_maximum_local_extra_and_declared_length_overrun (growth_envelope_author_tests.GrowthEnvelopeAuthorTests.test_maximum_local_extra_and_declared_length_overrun) ... ok
+test_minimal_shape_and_documentary_roles (growth_envelope_author_tests.GrowthEnvelopeAuthorTests.test_minimal_shape_and_documentary_roles) ... ok
+test_new_archive_is_owned_before_infolist_failure (growth_envelope_author_tests.GrowthEnvelopeAuthorTests.test_new_archive_is_owned_before_infolist_failure) ... ok
+test_no_extra_growth_shape_does_not_bypass_exact_initial_gate (growth_envelope_author_tests.GrowthEnvelopeAuthorTests.test_no_extra_growth_shape_does_not_bypass_exact_initial_gate) ... ok
+test_old_predicates_preserved_by_exact_ast_delta (growth_envelope_author_tests.GrowthEnvelopeAuthorTests.test_old_predicates_preserved_by_exact_ast_delta) ... ok
+test_only_four_xml_members_and_opaque_payload_invariance (growth_envelope_author_tests.GrowthEnvelopeAuthorTests.test_only_four_xml_members_and_opaque_payload_invariance) ... ok
+test_padding_scan_reads_full_remainder_after_first_nonzero (growth_envelope_author_tests.GrowthEnvelopeAuthorTests.test_padding_scan_reads_full_remainder_after_first_nonzero) ... ok
+test_partial_xml_failure_retains_progress (growth_envelope_author_tests.GrowthEnvelopeAuthorTests.test_partial_xml_failure_retains_progress) ... ok
+test_paths_unknown_members_duplicates_and_required_members (growth_envelope_author_tests.GrowthEnvelopeAuthorTests.test_paths_unknown_members_duplicates_and_required_members) ... ok
+test_prior_source_pins_and_xml_helper_bindings (growth_envelope_author_tests.GrowthEnvelopeAuthorTests.test_prior_source_pins_and_xml_helper_bindings) ... ok
+test_retained_central_predicate_mutations_reject_before_xml (growth_envelope_author_tests.GrowthEnvelopeAuthorTests.test_retained_central_predicate_mutations_reject_before_xml) ... ok
+test_retained_local_predicate_mutations_reject_before_xml (growth_envelope_author_tests.GrowthEnvelopeAuthorTests.test_retained_local_predicate_mutations_reject_before_xml) ... ok
+test_source_bounds_and_actual_identity_rejection (growth_envelope_author_tests.GrowthEnvelopeAuthorTests.test_source_bounds_and_actual_identity_rejection) ... ok
+test_unchanged_xml_limit_and_semantic_helper_failures (growth_envelope_author_tests.GrowthEnvelopeAuthorTests.test_unchanged_xml_limit_and_semantic_helper_failures) ... ok
+
+======================================================================
+FAIL: test_central_extras_and_comments_remain_rejected (growth_envelope_author_tests.GrowthEnvelopeAuthorTests.test_central_extras_and_comments_remain_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-envelope-candidate-v1/promotion/tests/test_li_v3_growth_envelope.py", line 226, in test_central_extras_and_comments_remain_rejected
+    report,opened=self.inspect(bytes(raw));self.assertFalse(report['archive_profile_accepted']);self.assertEqual(opened,[])
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 28 tests in 0.664s
+
+FAILED (failures=1)

@@ -1,0 +1,14 @@
+{
+  "baseline_sha256": "e771b3fc2a66d6e2ff3a26d8aae88b7a2915ac908907908316e697997761c847",
+  "checks": {
+    "compatible_baseline_exact": true,
+    "fixed_existing_G29_prerequisite": true,
+    "four_G30_pins_match_reviewed_candidate": true,
+    "header_predicate_AST_equal_after_declared_delta": true
+  },
+  "recorded_utc": "2026-10-16T10:16:39.907244+00:00",
+  "schema": "lupine.discovery.growth_envelope_static_source_audit.v1",
+  "scope": "Static AST/byte checks only; removed old extra_len disjunct, exact new per-entry span call, exposure assignments, ownership append and new shape-exception branch before comparison. This checks retained predicates, not correctness of the removed new code; that code receives separate source/tests review. No product import or actual custody operation.",
+  "source_sha256": "a8c0cea16c1c44d6cf57986edcd6ca22e0229cb0f3bb7f935910d6fa2aef3045",
+  "status": "PASS"
+}

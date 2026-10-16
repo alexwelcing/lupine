@@ -1,0 +1,34 @@
+--- initial/scope.json
++++ reviewed/scope.json
+@@ -1,6 +1,6 @@
+ {
+   "schema": "lupine.nist-metrology-guidance-scope.v1",
+-  "frozen_at": "2026-10-16T10:47:36.306584+00:00",
++  "frozen_at": "2026-10-16T10:51:16.458978+00:00",
+   "purpose": "SOURCE_ONLY authoritative documentary grounding for combined/expanded measurement uncertainty, coverage-factor conditions and correlated inputs. No empirical acquisition or scientific validation.",
+   "sources": [
+     {
+@@ -13,18 +13,18 @@
+     }
+   ],
+   "transport": "At most two fixed ordinary official-HTTPS GETs, 30s each, 1MiB+1 read cap each; no credentials, redirects, retries, mirrors or links followed. Stop the entire route on the first HTTP/access/transport/encoding/parser failure. Exclusive durable reservation before requests; never re-invoke after reservation.",
+-  "parser": "Static standard-library HTMLParser, strict UTF8/BOM only, NUL rejects, no script/style/template/svg/noscript output, no execution or external resolution. Bound 1MiB raw,100000starttags,depth256,20000textblocks. Only whitespace-normalized titled block projection; omitted image equations/HTML layout are not inferred.",
++  "parser": "Static standard-library HTMLParser, strict UTF8/BOM only, NUL rejects, no script/style/template/svg/noscript output, no execution or external resolution. Bound 1MiB raw,100000starttags,depth256,20000textblocks. Only whitespace-normalized titled block projection; omitted image equations/HTML layout are not inferred. Crossed ancestor closing tags that would erase an unclosed suppressed container block rather than expose its contents.",
+   "exposure": "Whole public guidance HTML and extracted text are machine/researcher exposed, including navigation, public author/contact metadata and examples. No blindness assertion. Raw HTML and complete projection remain ignored; publish own paraphrase/short necessary source snippets with exact section/paragraph locators and hashes.",
+   "frozen_inputs": [
+     {
+       "path": "html_projection.py",
+-      "bytes": 2842,
+-      "sha256": "3b6072811492fcdfe8154cf65d92b59c62f8db0cc50a915cd2c4a77b6dc48831"
++      "bytes": 2967,
++      "sha256": "472d445d8795fedad228aa5549a4d4701aa8ef1d6ee12d091ae631acaeb4abcd"
+     },
+     {
+       "path": "acquire.py",
+-      "bytes": 4964,
+-      "sha256": "55b7350ca3d75e09147a119f8fb3e6779bf999d5e47cf4b00443f21c65053144"
++      "bytes": 5394,
++      "sha256": "2702fe6786a6d9fc7afebe0803bf82a9cec0ed222e6d3bef2569f03b5202df0d"
+     }
+   ],
+   "boundaries": [

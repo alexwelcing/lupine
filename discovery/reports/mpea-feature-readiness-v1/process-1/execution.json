@@ -1,0 +1,16 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "scripts/mpea_feature_reader.py",
+    "--local-output",
+    ".cache/mpea-features/production-5b1ed62-v1/process-1/local.json",
+    "--public-output",
+    ".cache/mpea-features/production-5b1ed62-v1/process-1/readiness.json"
+  ],
+  "exit_code": 2,
+  "finished_at": "2026-10-10T20:31:48.022050+00:00",
+  "started_at": "2026-10-10T20:31:42.546429+00:00",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "ae5543a0841bb1aa931d2510e7cef0caf0fceed96ab5cb18743d96ff5bb616c5",
+  "wall_seconds": 5.475608122003905
+}

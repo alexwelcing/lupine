@@ -1,0 +1,160 @@
+{
+  "copies": [
+    {
+      "destination": "run_tests.py",
+      "sha256": "56404da87d9df83d41bedd79b665829e700899dc80497b1d6c61572f10ff2141",
+      "source": "run_tests.py"
+    },
+    {
+      "destination": "author-tests-first/execution.json",
+      "sha256": "ea741e943431cec2ba51b652ab9651e1528f8e99a66a9ac9b9c0862b440a4ed7",
+      "source": "author-tests-first/execution.json"
+    },
+    {
+      "destination": "author-tests-first/source-manifest.json",
+      "sha256": "4ddeb377317d7b60846e2244f9c1ee1af694891c6ede099d6a787e59b3545708",
+      "source": "author-tests-first/source-manifest.json"
+    },
+    {
+      "destination": "author-tests-first/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "author-tests-first/stdout.txt"
+    },
+    {
+      "destination": "author-tests-first/stderr.txt",
+      "sha256": "8f0f22ddb328d7522409d5a6b271aac37aa0ab9fa931c40907623b601c1c6e44",
+      "source": "author-tests-first/stderr.txt"
+    },
+    {
+      "destination": "author-tests-first/finite_planning.py",
+      "sha256": "027785ccdf24f6e8cf9b7a8ac98987b821fcdb19c875bbe8d2ba52d2fc3895f8",
+      "source": "author-tests-first/src/lupine_discovery/finite_planning.py"
+    },
+    {
+      "destination": "author-tests-first/test_finite_planning.py",
+      "sha256": "032f9643e077caaa39f7c021d4e58b79f8d99fadbc226490f23756869d083adb",
+      "source": "author-tests-first/tests/test_finite_planning.py"
+    },
+    {
+      "destination": "mutant-floor/execution.json",
+      "sha256": "7a3f5a6a069702ebdd82446777e9a7d6ba378abaa0ace6e99b34a93d6d7fbf64",
+      "source": "mutant-floor/execution.json"
+    },
+    {
+      "destination": "mutant-floor/source-manifest.json",
+      "sha256": "dc5fe0e456a2b850e645f952a12a32d6571441dae6588cfc33bdda93f92057c7",
+      "source": "mutant-floor/source-manifest.json"
+    },
+    {
+      "destination": "mutant-floor/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "mutant-floor/stdout.txt"
+    },
+    {
+      "destination": "mutant-floor/stderr.txt",
+      "sha256": "5161c3365d239eaf8e4495ebe96f0585a2c32dd9b9930e3de77bbdf401cfd4b8",
+      "source": "mutant-floor/stderr.txt"
+    },
+    {
+      "destination": "mutant-floor/finite_planning.py",
+      "sha256": "eb75e5fd18f2a5877e2b6ecac73affc327baa3749a0b5d3babcf19e5148ffa2f",
+      "source": "mutant-floor/src/lupine_discovery/finite_planning.py"
+    },
+    {
+      "destination": "mutant-floor/test_finite_planning.py",
+      "sha256": "032f9643e077caaa39f7c021d4e58b79f8d99fadbc226490f23756869d083adb",
+      "source": "mutant-floor/tests/test_finite_planning.py"
+    },
+    {
+      "destination": "mutant-strict/execution.json",
+      "sha256": "3ca44b37a9dfff9a216ccf5a64b8720ddd8056a6ed47bf5edfefd1ec2b2c4dd5",
+      "source": "mutant-strict/execution.json"
+    },
+    {
+      "destination": "mutant-strict/source-manifest.json",
+      "sha256": "e333e0b5725545e45f23e9731395f190949deed9536b1a22d0dec403eba2d8ba",
+      "source": "mutant-strict/source-manifest.json"
+    },
+    {
+      "destination": "mutant-strict/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "mutant-strict/stdout.txt"
+    },
+    {
+      "destination": "mutant-strict/stderr.txt",
+      "sha256": "27151e0ab2752bfcad8ad34f00181746a64bc6868834582b3e28e7c9086624de",
+      "source": "mutant-strict/stderr.txt"
+    },
+    {
+      "destination": "mutant-strict/finite_planning.py",
+      "sha256": "2d2e7da73188236f7b75808feada277ee0b972adbac28aaaae1a2c30f7322b3e",
+      "source": "mutant-strict/src/lupine_discovery/finite_planning.py"
+    },
+    {
+      "destination": "mutant-strict/test_finite_planning.py",
+      "sha256": "032f9643e077caaa39f7c021d4e58b79f8d99fadbc226490f23756869d083adb",
+      "source": "mutant-strict/tests/test_finite_planning.py"
+    },
+    {
+      "destination": "mutant-iid/execution.json",
+      "sha256": "6d85a4039de4bac15dabe243f3ed16917cc7519666afd530bf7f17f647f6bd04",
+      "source": "mutant-iid/execution.json"
+    },
+    {
+      "destination": "mutant-iid/source-manifest.json",
+      "sha256": "cef6d3d916c7538f5558ba31a363556dade94e52ca5bacb751d60c1da9f51dbf",
+      "source": "mutant-iid/source-manifest.json"
+    },
+    {
+      "destination": "mutant-iid/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "mutant-iid/stdout.txt"
+    },
+    {
+      "destination": "mutant-iid/stderr.txt",
+      "sha256": "877fe28033cd6d20d35d4e1634f68c40c4289f0ff09aa084e956e8c10dc4c75e",
+      "source": "mutant-iid/stderr.txt"
+    },
+    {
+      "destination": "mutant-iid/finite_planning.py",
+      "sha256": "d44bdb3e0f22cbaeb6c4373d04e598d7fa51978b49254e565a861224329a9cad",
+      "source": "mutant-iid/src/lupine_discovery/finite_planning.py"
+    },
+    {
+      "destination": "mutant-iid/test_finite_planning.py",
+      "sha256": "032f9643e077caaa39f7c021d4e58b79f8d99fadbc226490f23756869d083adb",
+      "source": "mutant-iid/tests/test_finite_planning.py"
+    },
+    {
+      "destination": "mutant-last-minimum/execution.json",
+      "sha256": "463b96283b258612a8db6a4163991178c7a32fd30bbdaaabf31e0dcbcdc9445d",
+      "source": "mutant-last-minimum/execution.json"
+    },
+    {
+      "destination": "mutant-last-minimum/source-manifest.json",
+      "sha256": "f4b9602057ffffd5b06932e6fd1f59e417f7a91828ee4d0cb752fce52bebc22c",
+      "source": "mutant-last-minimum/source-manifest.json"
+    },
+    {
+      "destination": "mutant-last-minimum/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "mutant-last-minimum/stdout.txt"
+    },
+    {
+      "destination": "mutant-last-minimum/stderr.txt",
+      "sha256": "243061868d04acb9ed6f82a98f1709f71d8cd3fe7d3f405645206b37ff8dc70a",
+      "source": "mutant-last-minimum/stderr.txt"
+    },
+    {
+      "destination": "mutant-last-minimum/finite_planning.py",
+      "sha256": "10509fa03c2799680e85bcfdb45a2533a71c6103cc7d0cbc35ec1f672ada1157",
+      "source": "mutant-last-minimum/src/lupine_discovery/finite_planning.py"
+    },
+    {
+      "destination": "mutant-last-minimum/test_finite_planning.py",
+      "sha256": "032f9643e077caaa39f7c021d4e58b79f8d99fadbc226490f23756869d083adb",
+      "source": "mutant-last-minimum/tests/test_finite_planning.py"
+    }
+  ],
+  "scope": "actual byte-identical author and intentional mutant evidence"
+}

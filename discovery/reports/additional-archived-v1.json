@@ -1,0 +1,126 @@
+{
+  "protocol": {
+    "alpha": "1/10",
+    "descriptor": "normalized SMILES character bigram counts; no chemical canonicalization",
+    "evaluation_scope": "retrospective public point-value answers; no scaffold or prospective independence claim",
+    "interval_status": "empirical calibration only; no simultaneous or physical certificate",
+    "k": 5,
+    "seed": "lupine-freesolv-v1-2026-10-10",
+    "split": "exact archived SMILES hash 60/20/20",
+    "surrogate": "Euclidean 5-nearest-neighbor mean; exact rational target averaging"
+  },
+  "schema": "lupine.discovery.additional_archived_benchmark.v1",
+  "tasks": [
+    {
+      "archive_rows": 642,
+      "archive_sha256": "2d13f095713bc39b85f85dd7b4e5483fbb12fc694bf253bb1d92a4c4d484f260",
+      "archive_url": "https://raw.githubusercontent.com/MobleyLab/FreeSolv/6c7d19b4b565537365ffd22006aa2cd4643200c6/database.txt",
+      "calibration_radius": "347/100",
+      "conditional_regret_bound": "347/50",
+      "covered_count": 116,
+      "empirical_soundness": "refuted_on_observed_outcomes",
+      "empirical_test_coverage": "58/69",
+      "experimental_uncertainty": {
+        "interpretation": "source-reported uncertainty, sometimes assigned defaults; not used as a physical enclosure",
+        "test_max": "193/100",
+        "test_min": "1/10",
+        "test_rows_with_default_uncertainty_note": 124
+      },
+      "incumbent": "mobley_2727678",
+      "incumbent_regret": "0",
+      "interval_pool": {
+        "all_optima_retained": true,
+        "best_pool_regret": "0",
+        "first_candidate_regret": "0",
+        "optimum_count": 1,
+        "retained_optimum_count": 1,
+        "size": 8,
+        "some_optimum_retained": true
+      },
+      "manifest_sha256": "ef89e18bb13d96532ae79f2457d58c0d44266da3294d289786e6b5e1341acfde",
+      "nominal_same_budget": {
+        "all_optima_retained": true,
+        "best_pool_regret": "0",
+        "first_candidate_regret": "0",
+        "optimum_count": 1,
+        "retained_optimum_count": 1,
+        "size": 8,
+        "some_optimum_retained": true
+      },
+      "nominal_top_one": {
+        "all_optima_retained": true,
+        "best_pool_regret": "0",
+        "first_candidate_regret": "0",
+        "optimum_count": 1,
+        "retained_optimum_count": 1,
+        "size": 1,
+        "some_optimum_retained": true
+      },
+      "objective": "minimize experimental hydration free energy (kcal/mol)",
+      "observed_regret_bound_holds": true,
+      "prediction_manifest_sha256": "4fdb4ee7697667dbd34dd49668cad7b67f5c8a059f6e83ae9d4a96a5bb14841b",
+      "random_same_budget": {
+        "all_optima_retained": false,
+        "best_pool_regret": "869/100",
+        "first_candidate_regret": "707/50",
+        "optimum_count": 1,
+        "retained_optimum_count": 0,
+        "size": 8,
+        "some_optimum_retained": false
+      },
+      "random_top_one": {
+        "all_optima_retained": false,
+        "best_pool_regret": "707/50",
+        "first_candidate_regret": "707/50",
+        "optimum_count": 1,
+        "retained_optimum_count": 0,
+        "size": 1,
+        "some_optimum_retained": false
+      },
+      "split_counts": {
+        "calibration": 137,
+        "test": 138,
+        "train": 367
+      },
+      "task": "freesolv_experimental_hydration_free_energy",
+      "test_experimental_references": [
+        "10.1007/s10822-010-9350-8",
+        "10.1007/s10822-012-9568-8",
+        "10.1021/ct050097l",
+        "10.1021/jm070549+",
+        "10.1021/jp806724u",
+        "10.1039/P29900000291",
+        "10.1139/v80-201",
+        "10.1139/v91-2",
+        "10.1139/v92-210",
+        "J. Peter Guthrie, unpublished data, as provided to D. Mobley 2007/2008, and as cited in 10.1021/jp0764384",
+        "SAMPL4_Guthrie"
+      ],
+      "test_simultaneous_coverage": false,
+      "uncovered_test_ids": [
+        "mobley_1708457",
+        "mobley_2481002",
+        "mobley_2725802",
+        "mobley_2913224",
+        "mobley_3183805",
+        "mobley_3378420",
+        "mobley_3525176",
+        "mobley_3663158",
+        "mobley_4188615",
+        "mobley_588781",
+        "mobley_6198745",
+        "mobley_6334915",
+        "mobley_7015518",
+        "mobley_7039935",
+        "mobley_7227357",
+        "mobley_7415647",
+        "mobley_7735340",
+        "mobley_7913234",
+        "mobley_8885088",
+        "mobley_9029594",
+        "mobley_9055303",
+        "mobley_9883303"
+      ]
+    }
+  ]
+}

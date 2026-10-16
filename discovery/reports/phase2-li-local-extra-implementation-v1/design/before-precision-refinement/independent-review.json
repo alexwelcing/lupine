@@ -1,0 +1,106 @@
+{
+  "schema": "lupine.local-extra-diagnostic-written-design-review.v1",
+  "reviewed_at": "2026-10-16T09:05:26.461312+00:00",
+  "reviewer": "/root/phase2_evidence",
+  "status": "NO_BLOCKER_IN_SOURCE_ONLY_DESIGN_REVIEW",
+  "readme_sha256": "f24fca0cc4b8147ec34abc44e0edb2063c40cedc64e101c4ff62ab8a3be4db39",
+  "source_bindings_sha256": "9d4972e706809976ff2338ff765485dcf2a346a47b3beb551719829e838f939b",
+  "blocking_findings": [],
+  "before_freeze_precision": [
+    {
+      "topic": "TLV failure precedence",
+      "recommendation": "While cursor<end, check record_count<256 first, then require four header bytes, then the declared data-size bound. Any remaining tail after256 is LIMIT; exactly256 records ending at span-end succeeds.",
+      "status": "Author already planned; final wording pending"
+    },
+    {
+      "topic": "Resource policy scope",
+      "recommendation": "Describe cap as fixed for this profile with no automatic retry/cap adjustment, without forbidding a separately reviewed future profile that preserves old negatives.",
+      "status": "Author already proposed; final wording pending"
+    }
+  ],
+  "checked_arguments": [
+    {
+      "topic": "Same-entry locator induction",
+      "finding": "_classify starts end=0, sorts directory entries by local offset, checks offset=end and every earlier local field including L=0 and local compressed size equal to central size before advancing. With identical bytes and the exact sole-extra result, a fixed-header locator using those lengths has the same prefix and stops at the same first positive L. The verified directory count bounds the prefix. It is not a standalone reader."
+    },
+    {
+      "topic": "Selected-span bounds",
+      "finding": "End offset/count validation precedes traversal; local length fields and compressed sizes are unsigned. Sole local-extra failure excludes every other local comparison and the selected central group. Independent subtraction-form locator bounds conservatively re-establish fixed/name/extra/data spans before slicing. Header or locator mismatch must block."
+    },
+    {
+      "topic": "TLV framing and semantics",
+      "finding": "APPNOTE4.3.7 and4.5.1 support 30-byte fixed headers then declared name/extra lengths and consecutive little-endian ID/size/data records. Section4.6.2 permits advancing by declared data size;4.6.3 warns of ID collisions. Ordered IDs/lengths with duplicates retained and complete-or-null output are a structural projection only. No unknown payload or padding semantics are inferred."
+    },
+    {
+      "topic": "ZIP64, Unicode and other IDs",
+      "finding": "APPNOTE4.3.9.2 permits ZIP64 even for small files;4.5.3 has sentinel/field-layout requirements. Sections4.6.8/9 require version, CRC and encoding interpretation before Unicode authority. ID/length alone establishes none of those conditions. The note correctly preserves current flag/version/name/central-extra restrictions and avoids applying sizes or alternate names."
+    },
+    {
+      "topic": "Exposure and cleanup",
+      "finding": "Whole raw target-bearing bytes are acquired and hashed; prior ZipFile parsing privately decodes directory names and may process ZIP metadata. New local loop skips payload interpretation only. Started/completed locator/walk flags and predecessor cleanup failure state must survive all errors. No member decompression/XML or scientific eligibility follows."
+    },
+    {
+      "topic": "Actual evidence boundary",
+      "finding": "Actual root-reported sole-extra result is explicitly second-hand here and must be byte/producer-verified in later production. This review does not certify actual receipts, code execution, source admission or sampling independence."
+    }
+  ],
+  "source_identity_checks": [
+    {
+      "path": ".cache/phase2-li-flags-next-v1/APPNOTE.TXT",
+      "bytes": 174585,
+      "sha256": "0b993022a7d320a0bf704e6980bea36fafd17a6066ab994db0a0c16278a50cd6",
+      "identity_matches": true
+    },
+    {
+      "path": ".cache/phase2-li-flags-next-v1/appnote-retrieval.json",
+      "bytes": 496,
+      "sha256": "67e5f49d71af004ed5738cf328bdad72f4ba414f182dba684b1e393017785ef2",
+      "identity_matches": true
+    },
+    {
+      "path": "docs/li-v3-compatible-zip-diagnostic-plan.md",
+      "bytes": 8524,
+      "sha256": "73a0aa884876d042549e5250daff29e3e111b245c274e77551a6f85a82261755",
+      "identity_matches": true
+    },
+    {
+      "path": "scripts/li_v3_compatible_envelope.py",
+      "bytes": 14126,
+      "sha256": "e771b3fc2a66d6e2ff3a26d8aae88b7a2915ac908907908316e697997761c847",
+      "identity_matches": true
+    },
+    {
+      "path": "scripts/li_v3_compatible_zip_diagnostic.py",
+      "bytes": 16878,
+      "sha256": "59b4b549a1de33abf2c54ccfce15f4f980a3a36351f98e246ae4e9fd6c44c5d3",
+      "identity_matches": true
+    },
+    {
+      "path": "scripts/li_v3_custody.py",
+      "bytes": 35358,
+      "sha256": "3ead51f0afdf16be973743257be488669c988aa40443779e7a5c400e9b0d3234",
+      "identity_matches": true
+    },
+    {
+      "path": "scripts/li_v3_zip_diagnostic.py",
+      "bytes": 12822,
+      "sha256": "de7807a8721cc243a9acf71e01c80aa531454248b2cde92c5518f875e89e0d87",
+      "identity_matches": true
+    }
+  ],
+  "textually_reviewed_source": [
+    "scripts/li_v3_compatible_zip_diagnostic.py: _classify,_local_failures,_classification,_failed",
+    ".cache/phase2-li-flags-next-v1/APPNOTE.TXT:4.3.7,4.3.9.2,4.5.1,4.5.3,4.6.2,4.6.3,4.6.8,4.6.9,4.6.10"
+  ],
+  "other_bound_files": "Byte/hash identity only; no claim of complete new substantive review",
+  "actual_activity": {
+    "source_read_only": true,
+    "public_actual_receipt_reads": false,
+    "private_capture_or_archive_reads": false,
+    "network_requests": 0,
+    "implementation_or_tests": false,
+    "tracked_writes": false,
+    "git_mutations": false
+  },
+  "limits": "Prospective design/source review only; not a reader amendment, implementation approval, executed gate or scientific pass."
+}

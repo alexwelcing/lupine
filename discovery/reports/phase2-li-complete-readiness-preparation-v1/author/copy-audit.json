@@ -1,0 +1,11 @@
+{
+  "actual_operations": 0,
+  "at": "2026-10-16T13:44:04.570409+00:00",
+  "frame_target_exact_after_class_rename_and_frame_cell_cap": true,
+  "g31_exact_after_declared_rename_and_single_kind_replacement": true,
+  "g31_original_sha256": "8fcb8f4396aa0e1ef0db669b3886d2550a781753874862d5c984dcdf14ebdf87",
+  "g32_exact_contiguous_excerpt": true,
+  "g32_excerpt_sha256": "3b9043d406f4d6af83aedbb7411ed7aaea6ac20608b412422bfe2d9b4431882f",
+  "method": "Static AST/source-text comparison, not runtime/physical proof.",
+  "source_sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219"
+}

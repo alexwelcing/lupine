@@ -1,0 +1,26 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-m",
+    "unittest",
+    "test_supervisor",
+    "-v"
+  ],
+  "exit_code": 1,
+  "schema": "lupine-synthetic-supervisor-audit-v1",
+  "scope": "Constructed processes only; actual user/network namespace and measured RSS enforcement tested, no scientific inputs, allocation, entropy, fit or physical validity. Sampling is not a hard instantaneous RSS guarantee.",
+  "source_hashes_after": {
+    "audit.py": "dd530d058462256f3f98d2aff25f76d4edbfcea51e1667f7cd7caea4949b3b4b",
+    "supervisor.py": "1dbd4a1b0e9c3f0246d23bd7670527cfa3bd69f754279aabba06e4ae464e87ab",
+    "synthetic_worker.py": "1a0c1698a96b9df43c40e7c65113d9d05e559092d7090176893ce1c981915ef6",
+    "test_supervisor.py": "161c1921b984ee7708ce2cd21243d6c0b9388a565f6d721cc728964ad803d0c4"
+  },
+  "source_hashes_before": {
+    "audit.py": "dd530d058462256f3f98d2aff25f76d4edbfcea51e1667f7cd7caea4949b3b4b",
+    "supervisor.py": "1dbd4a1b0e9c3f0246d23bd7670527cfa3bd69f754279aabba06e4ae464e87ab",
+    "synthetic_worker.py": "1a0c1698a96b9df43c40e7c65113d9d05e559092d7090176893ce1c981915ef6",
+    "test_supervisor.py": "161c1921b984ee7708ce2cd21243d6c0b9388a565f6d721cc728964ad803d0c4"
+  },
+  "source_unchanged": true,
+  "test_log_sha256": "75aacc0713cf0a18402f0bf86a5c9dff01af4b85c2eb7ed1c699508127930692"
+}

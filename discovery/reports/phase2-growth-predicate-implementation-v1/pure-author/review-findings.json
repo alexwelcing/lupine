@@ -1,0 +1,13 @@
+{
+  "schema": "lupine.discovery.growth_predicate_findings.v1",
+  "held_source_sha256": "8919fe45fdfe4810f83fcc965977d4c84e0c43a0e4b219a7a939911435d59198",
+  "author_first_run": {"tests": 17, "failures": 0, "errors": 0, "runtime_files_held": 332},
+  "independent_first_run": {"test_methods": 18, "failed_subtests": 2, "path": ".cache/phase2-growth-predicate-review-v1/first-run/execution.json"},
+  "findings": [
+    {"owner": "author", "finding": "Unreached primary and aggregate header stages initially marked started", "repair": "Initialize false; set only when the respective stage is entered", "root_authorized": true},
+    {"owner": "independent", "finding": "A uniquely associated bounded fixed header was already read, but subsequent local extent overlap suppressed scalar compressed-size disagreement and definite data-end overflow", "repair": "Keep safe fixed scalar comparisons and definite arithmetic; preserve skipped variable-span and downstream association checks", "root_authorized": true},
+    {"owner": "independent", "finding": "Bad local signature did not prevent variable local name/growth interpretation", "repair": "Require local signature before variable interpretation; retain safe fixed comparisons and arithmetic", "root_authorized": false}
+  ],
+  "actual_source_reads": 0,
+  "first_failed_fixtures_to_remain_unchanged": true
+}

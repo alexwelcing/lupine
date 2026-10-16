@@ -1,0 +1,8 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "scripts/package_smoke.py"
+  ],
+  "started_at": "2026-10-16T06:57:38.381728+00:00",
+  "source_scope": "uncommitted combined overlay"
+}

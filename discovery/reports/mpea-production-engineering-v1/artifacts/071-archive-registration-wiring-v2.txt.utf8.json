@@ -1,0 +1,7 @@
+{
+  "original_bytes": 526,
+  "original_path": ".cache/mpea-study-custody/review_production/archive-registration-wiring-v2.txt",
+  "original_sha256": "be04ccb3b66cdbcdaef0b8f81b572d0783989a17d179460582ae264e5dc1f0e5",
+  "schema": "lupine.discovery.lossless_utf8_artifact.v1",
+  "text": "test_registered_flow_passes_full_manifest_preflight_to_each_seal (test_archive_driver_review.IndependentRegistrationHandoffReview.test_registered_flow_passes_full_manifest_preflight_to_each_seal) ... ok\ntest_unissued_or_synthetic_registration_stops_before_source_or_feature_read (test_archive_driver_review.IndependentRegistrationHandoffReview.test_unissued_or_synthetic_registration_stops_before_source_or_feature_read) ... ok\n\n----------------------------------------------------------------------\nRan 2 tests in 0.002s\n\nOK\n"
+}

@@ -1,0 +1,83 @@
+{
+  "allowed_files": [
+    {
+      "bytes": 1697,
+      "copy_mode": "EXACT",
+      "path": "README.md",
+      "sha256": "742f5a653a6f40b983da94145127fd7eeada24eb8d1cdc3a27cce346eb9ea4da"
+    },
+    {
+      "bytes": 1980,
+      "copy_mode": "EXACT",
+      "path": "scope.json",
+      "sha256": "10e8a87d72a44f44e6951a22a5056baec73e6dc905a7c7b2f9abaa767ff90a70"
+    },
+    {
+      "bytes": 256,
+      "copy_mode": "EXACT",
+      "path": "scope-hold.json",
+      "sha256": "fd6c93bcf42bc9fe088f928b6ee48a2f1cd79c631d052df5d20f354ff1825d7b"
+    },
+    {
+      "bytes": 1583,
+      "copy_mode": "EXACT",
+      "path": "get_page.py",
+      "sha256": "86aba39def51fd0329256ad86f633383d1de5bf25432c593cb26394119c99329"
+    },
+    {
+      "bytes": 416,
+      "copy_mode": "EXACT",
+      "path": "page/request.json",
+      "sha256": "89badf049ea9c202f2160a6efc1e231ab1d346a4634c8dccce3e727b6d06815d"
+    },
+    {
+      "bytes": 449,
+      "copy_mode": "EXACT",
+      "path": "page/receipt.json",
+      "sha256": "341bc6155dbd3f66c085a704753b8c63430d1b4da31000ce01fccb2680968b82"
+    },
+    {
+      "bytes": 555,
+      "copy_mode": "EXACT",
+      "path": "page/projection.json",
+      "sha256": "6714a4140620cfc26ba6e3b19eaabd5675e259e29795435dcc7c2943ca0ee866"
+    },
+    {
+      "bytes": 705,
+      "copy_mode": "EXACT",
+      "path": "source-bindings.json",
+      "sha256": "4da8ec6039dacb1226b70a9b3578229241e5cbbb0b824811270edf7136850ccd"
+    }
+  ],
+  "copy_rule": "Only the8 listed files plus inventory.json and handoff.json.",
+  "excluded_files": [
+    {
+      "bytes": 4551,
+      "path": "page/response.body",
+      "reason": "Uninspected raw denial HTML, excluded from public copy.",
+      "sha256": "83d30bb906747803c53bbc5589e7836aac867e92c4f92c5b43c0017c9033ffe8"
+    }
+  ],
+  "file_count": 8,
+  "local_link_checks": [
+    {
+      "from": "README.md",
+      "in_copyset": true,
+      "target": "page/receipt.json"
+    },
+    {
+      "from": "README.md",
+      "in_copyset": true,
+      "target": "page/projection.json"
+    },
+    {
+      "from": "README.md",
+      "in_copyset": true,
+      "target": "scope.json"
+    }
+  ],
+  "public_report_target": "reports/phase2-tmqm-curator-schema-v1/",
+  "schema": "lupine.discovery.tmqm_curator_public_inventory.v1",
+  "total_bytes": 7641,
+  "whitespace_check": "No trailing spaces/tabs; exact copies, no wrappers."
+}

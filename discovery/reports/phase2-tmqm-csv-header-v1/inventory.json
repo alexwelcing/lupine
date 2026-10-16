@@ -1,0 +1,238 @@
+{
+  "allowed_files": [
+    {
+      "bytes": 3610,
+      "copy_mode": "EXACT",
+      "path": "README.md",
+      "sha256": "6a13fdf78d720fdfd3899c34d9503eec20ecc35d37d4b0e64221ee4da80e1027"
+    },
+    {
+      "bytes": 3536,
+      "copy_mode": "EXACT",
+      "path": "scope.json",
+      "sha256": "3b8cc500e9b84702134b995b95a3817d2760356ac4174109cde414218482e71c"
+    },
+    {
+      "bytes": 8016,
+      "copy_mode": "EXACT",
+      "path": "inspect_header.py",
+      "sha256": "fb52747391f2176591f7aa08d3aa207846b5a466e55a9e162646c8a1cc58c952"
+    },
+    {
+      "bytes": 9316,
+      "copy_mode": "EXACT",
+      "path": "test_header.py",
+      "sha256": "8d72a5803bd2ce06b4ab4deaf2710c671042ad09595d4bf0b55763625bc85303"
+    },
+    {
+      "bytes": 347,
+      "copy_mode": "EXACT",
+      "path": "source-hold.json",
+      "sha256": "9ea6547f94f80b89b2c8bd2e408b80d17bfefcb9495f5823e5cc0ca285b2587c"
+    },
+    {
+      "bytes": 830,
+      "copy_mode": "EXACT",
+      "path": "source-hold-final.json",
+      "sha256": "422eb7b3dad5eb7c94b031a4ba00413428b81afbe755fa1f88c500b1ac0d73b8"
+    },
+    {
+      "bytes": 1099,
+      "copy_mode": "EXACT",
+      "path": "source-bindings.json",
+      "sha256": "542f4129f8c1580a1e8f9d3e6508d0d6e1425df8c324048386ac8b49e493084b"
+    },
+    {
+      "bytes": 7888,
+      "copy_mode": "EXACT",
+      "path": "before-exit-status/inspect_header.py",
+      "sha256": "329c0e372bc9b1231e1ee6c63d3360570c24e14786b70df1008ced20eb7fbe17"
+    },
+    {
+      "bytes": 7678,
+      "copy_mode": "EXACT",
+      "path": "before-exit-status/test_header.py",
+      "sha256": "a08d9073fa9bab79abe9a958b194faf98f2ed873624c01f4eae9deebbab21675"
+    },
+    {
+      "bytes": 347,
+      "copy_mode": "EXACT",
+      "path": "before-exit-status/source-hold.json",
+      "sha256": "9ea6547f94f80b89b2c8bd2e408b80d17bfefcb9495f5823e5cc0ca285b2587c"
+    },
+    {
+      "bytes": 968,
+      "copy_mode": "EXACT_WRAPPER",
+      "path": "inspect_header.py.exit-status.diff.bytes.json",
+      "sha256": "dd034f818da0eaff102555941f57192cc8438d2497a1ea05b49dcd3c9a85f5c9"
+    },
+    {
+      "bytes": 2897,
+      "copy_mode": "EXACT_WRAPPER",
+      "path": "test_header.py.exit-status.diff.bytes.json",
+      "sha256": "658ab57da0b2991a6022f28e4f6c8e2e661a460a15bf35d7af14853880d1c7ec"
+    },
+    {
+      "bytes": 616,
+      "copy_mode": "EXACT",
+      "path": "fixtures-first/receipt.json",
+      "sha256": "de611dd47ae3134b36b7b546dd2415e648bc512be0af23d7b99c09116ef35cd5"
+    },
+    {
+      "bytes": 0,
+      "copy_mode": "EXACT",
+      "path": "fixtures-first/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 1814,
+      "copy_mode": "EXACT",
+      "path": "fixtures-first/stderr.log",
+      "sha256": "92f6af16362b78aee3a52fecd5470b00625273a614efc51517531c5ae112597c"
+    },
+    {
+      "bytes": 668,
+      "copy_mode": "EXACT",
+      "path": "fixtures-final/receipt.json",
+      "sha256": "8799c5f0a7a5baad22be97c4cdf9d6cdfdf346ef1493ed48ee36ecd9576a106b"
+    },
+    {
+      "bytes": 0,
+      "copy_mode": "EXACT",
+      "path": "fixtures-final/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2096,
+      "copy_mode": "EXACT",
+      "path": "fixtures-final/stderr.log",
+      "sha256": "e3b6f6fe2d6b52f4bae67f5b20eb73d71ba534e882db7c1b27c34cf9becd207e"
+    },
+    {
+      "bytes": 637,
+      "copy_mode": "EXACT",
+      "path": "actual/request.json",
+      "sha256": "b83d27fc93c3e36cf5f756790959980f9772d178d27509967334099d37de63b5"
+    },
+    {
+      "bytes": 1891,
+      "copy_mode": "EXACT",
+      "path": "actual/public.json",
+      "sha256": "3db7720778e66ba80918c2b70b2aca21d868ce5721490d1c0098a1913a5fa014"
+    },
+    {
+      "bytes": 603,
+      "copy_mode": "EXACT",
+      "path": "execution-first/preflight.json",
+      "sha256": "d75137373be1ce34a0a626602cd9259115ba1da1c5f9219b92d8090d512d8dce"
+    },
+    {
+      "bytes": 498,
+      "copy_mode": "EXACT",
+      "path": "execution-first/receipt.json",
+      "sha256": "34c4f4da5c31d6a76c1a737057ce152c57bccd9286f585819eda88af6cac401d"
+    },
+    {
+      "bytes": 1891,
+      "copy_mode": "EXACT",
+      "path": "execution-first/stdout.log",
+      "sha256": "3db7720778e66ba80918c2b70b2aca21d868ce5721490d1c0098a1913a5fa014"
+    },
+    {
+      "bytes": 0,
+      "copy_mode": "EXACT",
+      "path": "execution-first/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 519,
+      "copy_mode": "EXACT",
+      "path": "execution-first/tool-context.json",
+      "sha256": "75ed5dac59be047c1770be7d0c3cd5b0a84bf973100a1814d9e07b74d966dc49"
+    },
+    {
+      "bytes": 4917,
+      "copy_mode": "EXACT",
+      "path": "peer-review/source-review.json",
+      "sha256": "65f990901a709300c3609f3a25d5510fad28293ba9e896f4fa93daeb0113cfcb"
+    },
+    {
+      "bytes": 690,
+      "copy_mode": "EXACT",
+      "path": "publication-first-check-failure.json",
+      "sha256": "8f3181b4fe627ff36c4bfad8c89668bc01e7497ef8e4d29400837207c2a43d1b"
+    }
+  ],
+  "copy_rule": "Exactly the 27 listed files plus inventory.json and handoff.json; no private prefix, unlisted files or numerical data.",
+  "excluded": [
+    {
+      "bytes": 115,
+      "identity_basis": "Existing public receipt; private file was not reopened for publication.",
+      "path": "actual/private-prefix.bin",
+      "reason": "Private returned prefix; only validated labels and receipt metadata are public.",
+      "sha256": "3cdd4773f8f6210cc3b8a88d5e9c2b556d9d43f74a12a127d07993b2ea7f3397"
+    },
+    {
+      "path": "__pycache__/**",
+      "reason": "Generated Python bytecode excluded; not inventoried as source."
+    },
+    {
+      "path": "*.exit-status.diff",
+      "reason": "Originals retained locally; exact decoded bytes preserved in the two allowlisted wrappers."
+    }
+  ],
+  "file_count": 27,
+  "local_link_checks": [
+    {
+      "from": "README.md",
+      "target": "actual/public.json",
+      "verified": "copyset"
+    },
+    {
+      "from": "README.md",
+      "target": "execution-first/receipt.json",
+      "verified": "copyset"
+    },
+    {
+      "from": "README.md",
+      "target": "../phase2-primary-github-source-survey-v1/README.md",
+      "verified": "existing_public_report"
+    },
+    {
+      "from": "README.md",
+      "target": "scope.json",
+      "verified": "copyset"
+    },
+    {
+      "from": "README.md",
+      "target": "peer-review/source-review.json",
+      "verified": "copyset"
+    },
+    {
+      "from": "README.md",
+      "target": "source-hold-final.json",
+      "verified": "copyset"
+    }
+  ],
+  "lossless_wrappers": [
+    {
+      "decoded_exact": true,
+      "original_bytes": 581,
+      "original_sha256": "ab367db0f567ae5e349a8532ad649856b7bf3fc77d688be7f86adadd534c0e39",
+      "published": "inspect_header.py.exit-status.diff.bytes.json",
+      "source": "inspect_header.py.exit-status.diff"
+    },
+    {
+      "decoded_exact": true,
+      "original_bytes": 2487,
+      "original_sha256": "4871ca786f07cded8e4cb52bec5e97268148a7b98b0120eb350762e2a02c8026",
+      "published": "test_header.py.exit-status.diff.bytes.json",
+      "source": "test_header.py.exit-status.diff"
+    }
+  ],
+  "public_report_target": "reports/phase2-tmqm-csv-header-v1/",
+  "schema": "lupine.discovery.tmqm_header_public_inventory.v1",
+  "total_bytes": 63372,
+  "verification_scope": "Publication identities/links and wrapper reversibility, not additional runtime tests or scientific validation.",
+  "whitespace_check": "Public UTF8 files have no trailing spaces/tabs; original diff whitespace is preserved inside reversible wrappers."
+}

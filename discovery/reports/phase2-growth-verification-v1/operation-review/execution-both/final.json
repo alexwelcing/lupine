@@ -1,0 +1,8 @@
+{
+  "exit_code": 1,
+  "operator": "/root/phase2_planner/ui_review",
+  "scientific_schema_approved": false,
+  "source_reader_invoked": false,
+  "stage": "both",
+  "status": "STOPPED"
+}

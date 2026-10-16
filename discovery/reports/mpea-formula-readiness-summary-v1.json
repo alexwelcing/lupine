@@ -1,0 +1,264 @@
+{
+  "all_original_ids_preserved": true,
+  "compiler_source_sha256": "3cf6500037b0c8937e5dfdcda6d1482280d1a05e3f1aab6e925f5e78ef3a3f0a",
+  "declared_tensile_exact_25_degrees_Celsius": {
+    "exact_formula_groups": 106,
+    "exact_source_groups": 75,
+    "formula_group_source_multiplicity": [
+      {
+        "formula_groups": 94,
+        "recognized_source_tokens": 1
+      },
+      {
+        "formula_groups": 5,
+        "recognized_source_tokens": 2
+      },
+      {
+        "formula_groups": 4,
+        "recognized_source_tokens": 3
+      },
+      {
+        "formula_groups": 1,
+        "recognized_source_tokens": 5
+      },
+      {
+        "formula_groups": 1,
+        "recognized_source_tokens": 8
+      },
+      {
+        "formula_groups": 1,
+        "recognized_source_tokens": 12
+      }
+    ],
+    "lexical_formula_groups_spanning_at_least_two_exact_source_tokens": 12,
+    "recognized_formula_rows": 314,
+    "recognized_source_rows": 314,
+    "rows": 314,
+    "rows_in_those_lexical_groups": 131,
+    "source_group_size_histogram": [
+      {
+        "rows": 1,
+        "source_groups": 17
+      },
+      {
+        "rows": 2,
+        "source_groups": 8
+      },
+      {
+        "rows": 3,
+        "source_groups": 10
+      },
+      {
+        "rows": 4,
+        "source_groups": 13
+      },
+      {
+        "rows": 5,
+        "source_groups": 6
+      },
+      {
+        "rows": 6,
+        "source_groups": 7
+      },
+      {
+        "rows": 7,
+        "source_groups": 8
+      },
+      {
+        "rows": 8,
+        "source_groups": 3
+      },
+      {
+        "rows": 11,
+        "source_groups": 2
+      },
+      {
+        "rows": 25,
+        "source_groups": 1
+      }
+    ],
+    "unresolved_formula_rows": 0,
+    "unresolved_source_rows": 0
+  },
+  "features_or_targets_read": false,
+  "full_population": {
+    "exact_formula_groups": 630,
+    "exact_source_groups": 264,
+    "formula_group_source_multiplicity": [
+      {
+        "formula_groups": 556,
+        "recognized_source_tokens": 1
+      },
+      {
+        "formula_groups": 39,
+        "recognized_source_tokens": 2
+      },
+      {
+        "formula_groups": 17,
+        "recognized_source_tokens": 3
+      },
+      {
+        "formula_groups": 7,
+        "recognized_source_tokens": 4
+      },
+      {
+        "formula_groups": 3,
+        "recognized_source_tokens": 5
+      },
+      {
+        "formula_groups": 2,
+        "recognized_source_tokens": 6
+      },
+      {
+        "formula_groups": 1,
+        "recognized_source_tokens": 7
+      },
+      {
+        "formula_groups": 1,
+        "recognized_source_tokens": 8
+      },
+      {
+        "formula_groups": 1,
+        "recognized_source_tokens": 13
+      },
+      {
+        "formula_groups": 1,
+        "recognized_source_tokens": 16
+      },
+      {
+        "formula_groups": 1,
+        "recognized_source_tokens": 18
+      },
+      {
+        "formula_groups": 1,
+        "recognized_source_tokens": 22
+      }
+    ],
+    "lexical_formula_groups_spanning_at_least_two_exact_source_tokens": 74,
+    "recognized_formula_rows": 1545,
+    "recognized_source_rows": 1544,
+    "rows": 1545,
+    "rows_in_those_lexical_groups": 687,
+    "source_group_size_histogram": [
+      {
+        "rows": 1,
+        "source_groups": 51
+      },
+      {
+        "rows": 2,
+        "source_groups": 21
+      },
+      {
+        "rows": 3,
+        "source_groups": 29
+      },
+      {
+        "rows": 4,
+        "source_groups": 37
+      },
+      {
+        "rows": 5,
+        "source_groups": 41
+      },
+      {
+        "rows": 6,
+        "source_groups": 26
+      },
+      {
+        "rows": 7,
+        "source_groups": 8
+      },
+      {
+        "rows": 8,
+        "source_groups": 10
+      },
+      {
+        "rows": 9,
+        "source_groups": 6
+      },
+      {
+        "rows": 10,
+        "source_groups": 5
+      },
+      {
+        "rows": 11,
+        "source_groups": 7
+      },
+      {
+        "rows": 12,
+        "source_groups": 2
+      },
+      {
+        "rows": 13,
+        "source_groups": 2
+      },
+      {
+        "rows": 14,
+        "source_groups": 2
+      },
+      {
+        "rows": 15,
+        "source_groups": 1
+      },
+      {
+        "rows": 16,
+        "source_groups": 2
+      },
+      {
+        "rows": 17,
+        "source_groups": 1
+      },
+      {
+        "rows": 18,
+        "source_groups": 1
+      },
+      {
+        "rows": 19,
+        "source_groups": 1
+      },
+      {
+        "rows": 20,
+        "source_groups": 1
+      },
+      {
+        "rows": 21,
+        "source_groups": 3
+      },
+      {
+        "rows": 22,
+        "source_groups": 2
+      },
+      {
+        "rows": 25,
+        "source_groups": 1
+      },
+      {
+        "rows": 42,
+        "source_groups": 2
+      },
+      {
+        "rows": 45,
+        "source_groups": 1
+      },
+      {
+        "rows": 78,
+        "source_groups": 1
+      }
+    ],
+    "unresolved_formula_rows": 0,
+    "unresolved_source_rows": 1
+  },
+  "inputs": {
+    "reports/mpea-formula-tokens-v1.json": {
+      "bytes": 231945,
+      "sha256": "ce2b8d12464bac1c5e9533e136f09b3b65761188609279b40a78f31dbcc6d3a7"
+    },
+    "reports/mpea-row-metadata-v1.json": {
+      "bytes": 603510,
+      "sha256": "36e9831f2a015b2c295ce6228dd9b7bce5ba7df0f2645c343da2134ab7898c55"
+    }
+  },
+  "original_recognized_formula_rows": 0,
+  "schema": "lupine.discovery.mpea.public_formula_summary.v1",
+  "scope": "Public metadata-only join. Exact lexical groups and cross-source-token overlaps do not establish composition equivalence, independent studies, specimen identity, target completeness, scientific eligibility or a split."
+}

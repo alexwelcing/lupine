@@ -1,0 +1,76 @@
+{
+  "bytes": 387945,
+  "count": 15,
+  "files": {
+    "FINAL-REBIND.md": {
+      "bytes": 2270,
+      "sha256": "546c15cd0baaae938f2a284c6f891ea0b58a0130fc18fc59c1d77cf7504a7b12"
+    },
+    "final-baseline-request.json": {
+      "bytes": 894,
+      "sha256": "106fed2de0a7ec2346a058ac5dad13421db84be438a5f0ce9445f557c6f537f3"
+    },
+    "final-review.json": {
+      "bytes": 3715,
+      "sha256": "8001a483d3149ac827fc02a5bb694ab9fd164a87d39c49ac77b3e9dd86e6f836"
+    },
+    "rebind-first/execution.json": {
+      "bytes": 83928,
+      "sha256": "502dbeea41006aa8e16d1aa7f19c8ff0211eb962d5a1538d7daf2e4d9ee515cc"
+    },
+    "rebind-first/generated_package.py": {
+      "bytes": 9850,
+      "sha256": "f06f4b4922458d89239ed6d544fca69549527634a3b12b09bf3e4874897434ab"
+    },
+    "rebind-first/generated_replay.py": {
+      "bytes": 5872,
+      "sha256": "9b4e760bedaaca96338c0d585492bca3a75596950ac2fb01b86665f0cd25b111"
+    },
+    "rebind-first/guarded_rebind_child.py": {
+      "bytes": 5128,
+      "sha256": "4d47f9788d3deb18ef92b14255c1c045566e815fc548820cb29da8596c55f3b0"
+    },
+    "rebind-first/li_v3_readiness.py": {
+      "bytes": 81591,
+      "sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219"
+    },
+    "rebind-first/li_v3_readiness_production.py": {
+      "bytes": 61640,
+      "sha256": "77dece96850b09be2f13acd275cc28789ea0e3bc408cfcec86bcd02f488fed85"
+    },
+    "rebind-first/run_rebind_review.py": {
+      "bytes": 3976,
+      "sha256": "49abe52c3c18ab6996e5ceaf7370ee1aa7a57254fffc6002d9054c6227b9c309"
+    },
+    "rebind-first/start.json": {
+      "bytes": 41294,
+      "sha256": "191201cffa91d307d26909d60a3870345cf978c136da48ef49ac1f5e49b25e3d"
+    },
+    "rebind-first/stderr.log": {
+      "bytes": 790,
+      "sha256": "6ae0142d58ab15f2282e55993f8a3d9c14a4abeadca83f14649a4087008be33a"
+    },
+    "rebind-first/stdout.log": {
+      "bytes": 82,
+      "sha256": "d1fba0cb484b360dc50fc68b4753025d6b3392fa53d55fde88074ce90204ba24"
+    },
+    "rebind-first/test_li_v3_readiness_production_review.py": {
+      "bytes": 85024,
+      "sha256": "23f263d40f819a5ed9724006835369d6b721a24c2a5cd8c71158b547d01b04b8"
+    },
+    "static-rebind-first.json": {
+      "bytes": 1891,
+      "sha256": "b14ff9269bd04a28af3e32fa04e9cb0ba6f39422a8ed395cc95619b285d71661"
+    }
+  },
+  "log_paths": [
+    "rebind-first/stderr.log",
+    "rebind-first/stdout.log"
+  ],
+  "prior_inventory_sha256": [
+    "95fd6596328df5c0ed7ae9045ba5e22fb5fb4a4447d205c685da9c330bf33750",
+    "e219cac4bbb7faa4e93b55bf92cb0581ff6457a7260b61230c5e93156149b3fa"
+  ],
+  "schema": "li.readiness.final-rebind.public-copy.v1",
+  "scope": "Explicit additive generated/source-review evidence only; no actual/private data, generated temp repos or caches."
+}

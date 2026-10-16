@@ -1,0 +1,29 @@
+{
+  "files": {
+    "HEADER-README.md": {
+      "bytes": 2489,
+      "sha256": "44fdb50c071c1d9ade4a83f18753d91f8283105ee805221cb4b83175837eb0ff"
+    },
+    "first/review.json": {
+      "bytes": 2026,
+      "sha256": "def7dbfa808d92b000f8a16205780c595c86b17770479b763f528dfffd89f308"
+    },
+    "first/run_header_after_ci.py": {
+      "bytes": 16809,
+      "sha256": "c626d286f7c89b3506feb397c7f0346f4be0e9483498d157e48e8b197641d009"
+    },
+    "review.json": {
+      "bytes": 2820,
+      "sha256": "ddf32d845663d6f40f41cba5518b97e68d970459e4bf58152a890b8324155efa"
+    },
+    "reviewed-delta.json": {
+      "bytes": 3541,
+      "sha256": "dd6f75c4f441e4ceaa2a08bb82e34bf42b2645f5d46989d0905247a59b5adab0"
+    },
+    "run_header_after_ci.py": {
+      "bytes": 17265,
+      "sha256": "6cfb4cca5d3460d80318d129ed529cc7476a78729908733ac7ef50512f3b4dbb"
+    }
+  },
+  "scope": "Static recorder review, preserved first finding and exact held source copies; excludes itself."
+}

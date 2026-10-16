@@ -1,0 +1,45 @@
+{
+  "findings": [],
+  "inputs": {
+    "audit_retained.py": {
+      "bytes": 28452,
+      "sha256": "7487bc9ca66ed5b132c928836fd9c435d43577f2b00b6fa4f6383e812b5139a6"
+    },
+    "auditor-from-b005.diff": {
+      "bytes": 21618,
+      "sha256": "3d8e05def1e3e5fcb74c40e71f4af6f9f8f4786ccd2b28735b108cc0c2603656"
+    },
+    "preparation.json": {
+      "bytes": 1578,
+      "sha256": "8fee501aa69b69bf772d1c402f185e97743f0a0e934065e61af3d851972b3b17"
+    },
+    "prepared-promotion-inputs.json": {
+      "bytes": 6468,
+      "sha256": "ab85b1346812ff44d3d13148dee827f496e79cbf464fed55f45f74e6026ebec3"
+    },
+    "prepared-scope.json": {
+      "bytes": 2176,
+      "sha256": "2beec81fcf64ce3c2c5f5bcf0d0ad20a0e879451a3f366f7da941943e3dcb7c7"
+    }
+  },
+  "qualifications": [
+    "Completed package and strict-verifier executions are root-authenticated premises through the externally supplied actual binding/gate and hash-bound evidence. The auditor does not independently execute them or infer their results from log text.",
+    "Live clean means exact HEAD plus empty Git status. It is not an independent working-byte scan for assume-unchanged/skip-worktree edits; retained archive and wheel payload byte checks remain independent of working-tree bytes.",
+    "Formal files are checked as committed archive bytes; this review establishes no Lean compilation or proof-count result.",
+    "No source acquisition, private input read, retained-artifact read, module import, test, auditor execution or Git operation was performed during this peer review."
+  ],
+  "review_kind": "read_only_source_review_not_execution",
+  "reviewed_at_utc": "2026-10-16T17:15:15.037080+00:00",
+  "reviewed_obligations": [
+    "Exact baseline345/current351 runtime membership;11changed,6added,334unchanged; no removals; existing modes held and new files regular.",
+    "Every current runtime digest independently reconstructed from archive members checked against exact Git blob identities; baseline manifest separately reconstructed from historical Git blobs.",
+    "Every promoted change/addition and the guarded new document checked against prospective exact source pins.",
+    "Exact baseline110/current113 wheel package membership;5changed,3added,105unchanged; no other package namespace.",
+    "Archive file copyset, member safety, Git modes/blob preimages and recorded file-hash mapping checked without extracting or executing contents.",
+    "Wheel member uniqueness, exact metadata member set, full RECORD membership/hash/size and payload equality to committed source checked.",
+    "Ordered18 mandatory package receipt names,28 cases,exact6 schema identities,known-answer totals and snapshot9abad raw byte pin checked.",
+    "Actual source/commit/manifest/preparation binding, original receipt seal, before/after artifact hashes and exact HEAD/Git-status observations checked."
+  ],
+  "schema": "lupine.source-readiness.artifact-auditor-peer-review.v1",
+  "status": "NO_BLOCKING_SOURCE_REVIEW_FINDING"
+}

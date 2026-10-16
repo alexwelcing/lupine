@@ -1,0 +1,52 @@
+{
+  "schema": "lupine.rhizo-reference-readiness.researcher-checklist-review.v1",
+  "created_at": "2026-10-16T11:39:59.100463+00:00",
+  "status": "NO_SUBSTANTIVE_BLOCKER_WITH_TWO_PRECISION_SUGGESTIONS",
+  "scope": "Source-only reading of the named researcher checklist and preparation receipt, interpreted against this reviewers already-held design review. No completed operation paths were supplied; no actual source or private projection access authorized or performed.",
+  "reviewed": [
+    {
+      "path": ".cache/phase2-rhizo-documentary-review-v1/RESEARCHER_CHECKLIST.md",
+      "bytes": 4651,
+      "sha256": "15ce9b483b54dc76196993d4451ddd619cbb6cf6038b9a1801fb3cdd218fbbe8"
+    },
+    {
+      "path": ".cache/phase2-rhizo-documentary-review-v1/preparation.json",
+      "bytes": 633,
+      "sha256": "efc9333184cd08ca55ab605513d902104fa3cea455572ac31691e35dc17e8575"
+    }
+  ],
+  "preparation_checklist_identity_exact": true,
+  "positive_findings": [
+    "Requires explicit completed public receipt/projection paths and binds actual status; a blocked or partial result remains blocked or partial.",
+    "Declares selected citation/URL/notes inspection as potentially outcome-exposing, records actual exposure and forbids freshness claims.",
+    "Preserves 43 locations, all 36 IDs and 172 candidate edges, competing references and original graph bytes. Archive locations are not independent experiments.",
+    "Keeps literal declaration separate from verified primary-source identity and rights; no fuzzy merge, guessed DOI, inferred license or secondary lookup.",
+    "Withholds raw target values, performance/residual/rank/fitted numbers and arbitrary notes from public output, preserving private projection unchanged.",
+    "Leaves paired label identity, actual choice, finiteness/completeness, map/geometry/conversion and use scope as separate later gates; no census, threshold, fit or G21 completion is claimed."
+  ],
+  "precision_suggestions": [
+    {
+      "topic": "Actual archived bound choice",
+      "current_phrase": "remains UNKNOWN unless this scope explicitly supplies evidence, which its design does not promise",
+      "suggestion": "Say remains UNKNOWN in this two-object pass. The already-held design excludes bound evidence, and source notes cannot prove actual archived bound selection.",
+      "severity": "NONBLOCKING_CLARIFICATION"
+    },
+    {
+      "topic": "Numerical public exclusions",
+      "current_phrase": "Log incidental numeric exposure by category/location without reproducing those numbers publicly.",
+      "suggestion": "Make clear that the excluded numbers are observed property targets, performance/results and incidental outcome examples. Necessary bibliographic digits, ordinals, identifiers, units and explicitly declared methodological conditions can retain their literal meaning when scientifically needed; they must not be silently altered by a blanket digit filter.",
+      "severity": "NONBLOCKING_CLARIFICATION"
+    }
+  ],
+  "blocked_actions_unchanged": [
+    "No raw object/private projection read before the explicit completed-path handoff.",
+    "No projector invocation, retry, acquisition, network, source expansion, runtime test or tracked edit."
+  ],
+  "actual_access": {
+    "raw_objects": false,
+    "private_projection": false,
+    "new_source_code": false,
+    "network_requests": 0,
+    "runtime_tests": false
+  }
+}

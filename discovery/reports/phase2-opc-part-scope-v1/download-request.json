@@ -1,0 +1,13 @@
+{
+  "written_before_request": "2026-10-16T12:51:00.155665+00:00",
+  "request_number": 2,
+  "url": "https://ecma-international.org/wp-content/uploads/ECMA-376-2_5th_edition_december_2021.zip",
+  "direct_official_link_label": "Download part 2",
+  "source_page_sha256": "c01e6813be4081dc6525bc77f7db7c6fefdbea22f4b3a6afd3536226b01e88fe",
+  "method": "GET",
+  "byte_cap": 16777216,
+  "timeout_seconds": 30,
+  "redirects": "reject",
+  "retries": 0,
+  "this_exhausts_request_scope": true
+}

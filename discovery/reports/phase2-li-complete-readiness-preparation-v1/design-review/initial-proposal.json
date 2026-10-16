@@ -1,0 +1,153 @@
+{
+  "exact_actual_prerequisite": {
+    "aggregate_extra_areas": 5,
+    "aggregate_fixed_headers": 15,
+    "diagnostic_complete": true,
+    "family_failure_count": 1,
+    "first_category": "MEMBER_KIND_PROFILE",
+    "g31_reason": "ZIP_LAYOUT_UNSUPPORTED",
+    "member_xml_opens": 0,
+    "no_partial_or_not_checked": true,
+    "other_family_pass_count": 31,
+    "path": ".cache/li-v3-custody/growth-predicate-audit-v1/1/public.json",
+    "primary_extra_areas": 3,
+    "producer": "a064a2c0e4a7cce1fbcb0541f49aae132944e785",
+    "production_metadata_comparison": "Validate original producer/source chain and original operation exposure separately; new operation lifecycle flags are never compared with a completed predecessor output before they occur.",
+    "reason": "HEADER_PREDICATE_AUDIT_COMPLETE",
+    "replay_projection": [
+      "first_rejection",
+      "families",
+      "aggregate_status",
+      "diagnostic_complete",
+      "selected_growth",
+      "selected_growth_exposure",
+      "exposure",
+      "aggregate_exposure",
+      "predecessor_reproduction_checked",
+      "predecessor_reproduction_matched",
+      "initial_padding_semantics"
+    ],
+    "same_buffer_replay_required_before_any_xml": true,
+    "sha256": "68c9042325e93cebd08f9dd056ccbf8833b16f4f045f25bbe2e8be69623326be",
+    "stage": "member_kind"
+  },
+  "existing_code_and_profiles": "All unchanged. New G31 header-loop adaptation changes only finite MEMBER_KIND_PROFILE gate, adds bounded OPC checks and preserves all remaining header predicates; no monkeypatch/global fallback.",
+  "lexical_subsets": {
+    "media_type": "ASCII RFC token/token subset, no parameters or whitespace; exact expected types on old known names. Declared type is not payload verification.",
+    "ordinary_segment_additional": "No trailing dot; old canonical-member restrictions still apply. Prefix name grammar excludes Media Types stream only.",
+    "ordinary_segment_regex": "[A-Za-z0-9._~!$&'()*+,;=@-]+",
+    "relationship_internal_target": "Package-absolute or source-directory-relative ASCII path; literal dot-segment resolution with no escape above root; no scheme/authority/query/fragment/percent/backslash/empty segment; final canonical existing unique part required.",
+    "relationship_type": "Absolute ASCII HTTP(S) URI only: nonempty syntactically valid hostname, no userinfo/port, path/query/fragment use URI ASCII characters with valid percent triplets; preserve exact string and case. Unsupported forms block; no fetch or normalization.",
+    "selected_text": "Plain inline string or simple shared-string text only. Formula/cache-derived or unsupported rich-text semantics block required mapping; no style inference or digit stripping."
+  },
+  "limits": {
+    "attribute_name_chars": 256,
+    "attribute_value_chars": 1024,
+    "attributes_including_namespace_declarations_each": 32,
+    "content_type_declarations": 4096,
+    "documentary_explicit_cells_each": 8192,
+    "documentary_worksheet_each_bytes": 2097152,
+    "documentary_worksheets_total_bytes": 4194304,
+    "explicit_frame_cells_total": 65536,
+    "explicit_framed_rows_total": 8192,
+    "limits_are_prospective_engineering_bounds_not_observed_scientific_counts": true,
+    "local_extra_span": 65535,
+    "mapped_documentary_fields": 1024,
+    "member_name_chars": 256,
+    "merge_rectangles_each": 1024,
+    "metadata_xml_each_bytes": 2097152,
+    "metadata_xml_total_bytes": 8388608,
+    "no_postexposure_cap_increase": true,
+    "public_projection_bytes_each_phase": 2097152,
+    "record_worksheet_each_bytes": 2097152,
+    "record_worksheets_maximum": 128,
+    "record_worksheets_total_bytes": 4194304,
+    "relationships_total": 4096,
+    "selected_definition_chars": 2048,
+    "shared_string_entries": 16384,
+    "shared_string_item_chars": 65536,
+    "shared_strings_member_bytes": 2097152,
+    "source_bytes": 183878,
+    "xml_depth_each": 64,
+    "xml_nodes_each": 65536,
+    "zip_members": 128
+  },
+  "operations_in_this_design_task": {
+    "actual_raw_object_reads": 0,
+    "allowed_operation_metadata_read": true,
+    "allowed_public_g34_receipts_read": 2,
+    "network_requests": 0,
+    "new_test_runs": 0,
+    "private_capture_reads": 0,
+    "production_guard_invocations": 0,
+    "tracked_edits": 0
+  },
+  "output_boundary": {
+    "arbitrary_member_names_types_relationship_ids_targets": false,
+    "numeric_performance": false,
+    "numerical_endpoint_values": false,
+    "opaque_part_semantics": "UNINTERPRETED; no harmlessness, dependency-independence, rendering or full OPC/OOXML conformance claim.",
+    "scientific_citations": "Only in frozen provenance disclosure fields, preserving original identities and known conflicts.",
+    "scientific_status": "No scientific schema/protocol admission from layout alone. End states concern metadata readiness of a named claim only.",
+    "target_hashes": false
+  },
+  "owner": "/root/growth_predicate_diagnostic",
+  "phases": [
+    {
+      "depends_on": "exact G34 prerequisite plus current root implementation/publication gates",
+      "does_not_open": "shared strings, styles, other worksheet or opaque part payloads",
+      "name": "layout",
+      "opens": "original four envelope members, all identified relationship members, and two exact G32 documentary role worksheets",
+      "success": "LAYOUT_READY_MAPPING_UNBOUND"
+    },
+    {
+      "depends_on": "two identical qualifying layout receipts plus frozen full documentary coordinate/type/disclosure binding",
+      "name": "documentary",
+      "opens": "revalidated metadata, only bound documentary roles, and one known-type/sharedStrings relationship if required",
+      "success": "DOCUMENTARY_MAPPING_COMPLETE_WITH_EXPLICIT_UNKNOWNS"
+    },
+    {
+      "depends_on": "two identical qualifying documentary receipts plus frozen complete record-sheet/row/metadata/join binding and authenticated target-redacted overlap manifest if claiming overlap resolution",
+      "name": "frame",
+      "opens": "revalidated metadata, all and only bound record worksheets, and validated shared strings if required",
+      "success": "METADATA_FRAME_READY_FOR_SEPARATE_LABEL_RULE"
+    }
+  ],
+  "proposed_operation_budget": {
+    "automatic_phase_dispatch": false,
+    "current_actual_operations_authorized": 0,
+    "future_fixed_output_root": ".cache/li-v3-custody/readiness-v1/{layout,documentary,frame}/{1,2}/",
+    "identical_complete_public_projections_before_advancing": true,
+    "phases": 3,
+    "runs_per_phase_maximum": 2,
+    "total_maximum": 6
+  },
+  "proposed_runtime_paths": [
+    "scripts/li_v3_readiness.py",
+    "tests/test_li_v3_readiness.py",
+    "tests/test_li_v3_readiness_review.py",
+    "docs/li-v3-readiness-plan.md"
+  ],
+  "pure_entrypoints": [
+    "inspect_synthetic_layout(raw)",
+    "inspect_synthetic_documentary(raw, frozen_binding)",
+    "inspect_synthetic_frame(raw, frozen_binding)"
+  ],
+  "pure_policy": "Exact generated bytes only, reject known actual identity, no file output/capture/network/production guard. Immutable bytes are passed unchanged through all invoked stages.",
+  "reviewer": "/root/phase2_math",
+  "scope": "One restricted general OPC package plus complete documentary/frame readiness route; no numerical outcome extraction.",
+  "source": {
+    "bytes": 183878,
+    "capture_receipt_sha256": "13f6f1b0354d15a214169cdd52e58d5349a30b6c2f481f793f9d3af12fb28009",
+    "md5": "041bbe095c54615e5a3c289facb18ce5",
+    "sha256": "9741f826f6a97db7c2c0efa89820d3bdae43e8beb53cafd893ccdf0bb74f64fa"
+  },
+  "status": "HELD_DESIGN_FOR_SINGLE_INDEPENDENT_REVIEW_NOT_IMPLEMENTATION_AUTHORIZATION",
+  "stop_rules": [
+    "Any source/producer/prerequisite/same-buffer replay mismatch blocks before XML.",
+    "Unsupported name/type/relationship/workbook/worksheet rule or bound stops this route, not a new per-field milestone.",
+    "Unbound/mixed documentary scope, unsupported semantic dependency, missing use rights or incomplete frame/pairing yields named NO_GO with unknowns retained.",
+    "No normalization repair, exception-by-observed-name, cap growth, sheet substitution, row trimming or outcome-based selection.",
+    "Root may authorize narrow implementation defect fixes with preserved first failures; substantive scope change is never automatic."
+  ]
+}

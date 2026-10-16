@@ -1,0 +1,10 @@
+{
+  "started_at": "2026-10-16T10:49:53.965916+00:00",
+  "elapsed_seconds": 0.4944921060014167,
+  "exit_code": 1,
+  "parser_sha256": "3b6072811492fcdfe8154cf65d92b59c62f8db0cc50a915cd2c4a77b6dc48831",
+  "test_sha256": "7871922d787fe6b4d5626a79b9faa13009b8d1628ba81317b0837a4ff3d0062c",
+  "stderr_sha256": "770d84e566a377b7d4015a78b403b472648c0c8a193161a8a203ec310800a0e6",
+  "synthetic_only": true,
+  "actual_network_or_guidance_source_access": false
+}

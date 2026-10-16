@@ -1,0 +1,9 @@
+# Official guidance evidence: publication boundary
+
+Read the [source interpretation](README.md), [selected guidance](selected-guidance.json), [source bindings](source-bindings.json), and [exposure ledger](exposure-ledger.json). The report contains our paraphrase and fourteen source locators with forty-seven words of short quotations. It does not reproduce a full NIST page or assert NIST validation of BAM or Lupine.
+
+The [pre-acquisition review](independent-review/preacquisition-review.json) preceded both fixed requests. The [final report review](independent-review/result-review.json), [independent interpretation](independent-review/interpretation-review.json), and [retained-source check](independent-review/retained-guidance-check.json) document what was actually checked. The reviewer used retained projections and receipts; no further GET, raw HTML read, parser rerun or measurement-source read occurred. The [author citation check](citation-check.json) is a separate consistency check, not an empirical test.
+
+The [byte map](original-byte-map.json) preserves 64 original artifacts: 58 exact copies and 6 lossless wrappers. Wrappers decode from base64 to the original bytes and SHA256. They preserve whitespace-bearing diffs, historical acquisition scripts and any relocated reviewed README without changing their underlying evidence or pretending old links/request slots are current. Earlier source and malformed-HTML test failures remain intact.
+
+The raw HTML and full static-text projections are excluded. Parser/transport success does not establish completeness of HTML layout or image equations, metrological applicability, joint coverage or predictive validity. No appendix, linked standard, measurement file or contact roster is included. The two-request scope is exhausted; this publication is not another acquisition authorization. Preserved Python files are audit artifacts, not a new product feature or scientific protocol.

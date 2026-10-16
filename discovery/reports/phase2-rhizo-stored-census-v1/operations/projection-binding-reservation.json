@@ -1,0 +1,8 @@
+{
+  "at": "2026-10-16T13:25:17.777632+00:00",
+  "action": "ONE_BOUNDED_IDENTITY_ONLY_READ",
+  "path": ".cache/phase2-rhizo-recorded-label-candidate-v1/actual/private.json",
+  "maximum_bytes": 4194304,
+  "parsing_or_numeric_comparison": false,
+  "source_sha256": "d77a1ca2eeeb1d0f4e02fac6d624fa63527c4a8d423fdf8f7f645db102c67630"
+}

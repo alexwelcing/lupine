@@ -1,0 +1,27 @@
+{
+  "elapsed_seconds": 0.5682209149999835,
+  "execution_receipt_sha256": "4caaa532f1629059972d227a11a7d46785fa58ab62edf357e2736a9dca0b3787",
+  "findings": [
+    "Four declared complete/truncation/record-limit report shapes reach exactly two synthetic slots.",
+    "Unexpected parse/locator/predecessor/cleanup reasons stop and preserve one synthetic slot.",
+    "Boolean-as-integer, out-of-range values, extra keys, partial/empty/oversized lists, wrong predecessor, guard status and inconsistent exposure fail closed.",
+    "The preserved original recorder reproduces the expected bad control: LOCAL_EXTRA_PARSE_FAILED reaches a second fake slot. This is negative-control evidence, not a failed new production operation."
+  ],
+  "first_test_invocation_passed": true,
+  "limits": [
+    "No assertion of actual field headers, actual source identities, actual CI/package success or executed production commands.",
+    "Production commit remains to be bound and its actual artifacts/CI independently checked before any source operation."
+  ],
+  "prior_source_only_review_sha256": "03b11f6c39e64e375af78a30d9e594291e9c10b4bee6c71ff3bc265667e478bd",
+  "private_objects_read": false,
+  "project_reader_imported": false,
+  "recorded_at": "2026-10-16T09:29:26.222058+00:00",
+  "results_sha256": "772d8d1e924f01c6170f5a3cb79745a863b01d244b760a9497983e7123625a6c",
+  "reviewed_recorder_sha256": "06e1a086dad664f51bb2b96533d8317889b909aa8a9fe349a7742c129f585adf",
+  "scope": "Selected unchanged recorder function/class ASTs were compiled and executed with invented identities and injected module, state, file, and subprocess dependencies. The test harness process itself ran; source-reader process launches and production contexts were replaced by stubs.",
+  "source_reader_subprocesses_started": 0,
+  "status": "PASS_SYNTHETIC_RECORDER_FLOW",
+  "stderr_empty": true,
+  "synthetic_cases": 21,
+  "test_code_sha256": "78fa9a1f446b49c8e28bc0ace0afef3d26b7987c6ada38d3e725d3644095b13d"
+}

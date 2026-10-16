@@ -1,0 +1,19 @@
+test_capture_conflict_and_failed_partial_read_do_not_disclose (test_li_v3_flag_diagnostic.FlagTests.test_capture_conflict_and_failed_partial_read_do_not_disclose) ... ok
+test_clear_or_utf8_only_flags_do_not_get_a_family (test_li_v3_flag_diagnostic.FlagTests.test_clear_or_utf8_only_flags_do_not_get_a_family) ... ok
+test_cli_has_no_source_or_arbitrary_output_override (test_li_v3_flag_diagnostic.FlagTests.test_cli_has_no_source_or_arbitrary_output_override) ... ok
+test_deflate_all_option_combinations_and_utf8 (test_li_v3_flag_diagnostic.FlagTests.test_deflate_all_option_combinations_and_utf8) ... ok
+test_descriptor_declaration_masks_are_method_specific (test_li_v3_flag_diagnostic.FlagTests.test_descriptor_declaration_masks_are_method_specific) ... ok
+test_earlier_rejection_is_preserved (test_li_v3_flag_diagnostic.FlagTests.test_earlier_rejection_is_preserved) ... ok
+test_encryption_and_masking_precede_descriptor_or_reserved (test_li_v3_flag_diagnostic.FlagTests.test_encryption_and_masking_precede_descriptor_or_reserved) ... ok
+test_ignored_candidate_and_changed_prior_source_stop_before_cache (test_li_v3_flag_diagnostic.FlagTests.test_ignored_candidate_and_changed_prior_source_stop_before_cache) ... ok
+test_later_members_and_local_flags_are_not_claimed_valid (test_li_v3_flag_diagnostic.FlagTests.test_later_members_and_local_flags_are_not_claimed_valid) ... ok
+test_other_methods_reserved_and_patched_bits_do_not_become_deflate (test_li_v3_flag_diagnostic.FlagTests.test_other_methods_reserved_and_patched_bits_do_not_become_deflate) ... ok
+test_prior_pins_match_actual_tracked_source_bytes (test_li_v3_flag_diagnostic.FlagTests.test_prior_pins_match_actual_tracked_source_bytes) ... ok
+test_production_context_accepts_matching_synthetic_committed_source (test_li_v3_flag_diagnostic.FlagTests.test_production_context_accepts_matching_synthetic_committed_source) ... ok
+test_second_metadata_parse_failure_is_closed_and_exposure_honest (test_li_v3_flag_diagnostic.FlagTests.test_second_metadata_parse_failure_is_closed_and_exposure_honest) ... ok
+test_synthetic_types_size_and_real_identity_guard (test_li_v3_flag_diagnostic.FlagTests.test_synthetic_types_size_and_real_identity_guard) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.126s
+
+OK

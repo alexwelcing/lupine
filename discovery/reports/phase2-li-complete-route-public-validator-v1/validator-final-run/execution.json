@@ -1,0 +1,25 @@
+{
+  "command": [
+    "python",
+    "-B",
+    "-m",
+    "unittest",
+    "-v",
+    "test_public_review_validator"
+  ],
+  "elapsed_seconds": 0.5529293520012288,
+  "exit_code": 0,
+  "finished_at": "2026-10-16T15:39:17.697903+00:00",
+  "scope": "Same26 generated-only tests after two narrow validator syntactic fixes. No product imports, guards, actual inputs, network or tracked edits.",
+  "source_after": {
+    "public_review_validator.py": "db934708623a69282918c35f96d1eec442c94a5e4d6af109e51e2079653f14ca",
+    "test_public_review_validator.py": "835cab953d7251d509bcaa965675560b94835ccb242077b56de66134e29a3085"
+  },
+  "source_before": {
+    "public_review_validator.py": "db934708623a69282918c35f96d1eec442c94a5e4d6af109e51e2079653f14ca",
+    "test_public_review_validator.py": "835cab953d7251d509bcaa965675560b94835ccb242077b56de66134e29a3085"
+  },
+  "started_at": "2026-10-16T15:39:17.145005+00:00",
+  "stderr_sha256": "ec6f5ac6de92086ed199d82e56a87cf039e54d84e5679d50a0e76182cbb98bbe",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

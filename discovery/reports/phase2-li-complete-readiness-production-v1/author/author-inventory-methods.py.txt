@@ -1,0 +1,123 @@
+    def test_inventory_all_explicit_cells_plain_text_and_nonnumeric_withholding(self):
+        body=sheet('<row r="1">'+cell('A1','Definition; example outcome 91 MPa.')+cell('B1','987654','n')+'</row>')
+        self.source_fixture(replace(parts(),'xl/worksheets/sheet1.xml',body))
+        layout,report=self.inventory();inventory=report['result']['inventory']
+        self.assertEqual(inventory['explicit_cells'],6);self.assertEqual(inventory['text_cells'],5)
+        self.assertEqual(inventory['fields'][0]['text'],'Definition; example outcome 91 MPa.')
+        self.assertEqual(inventory['fields'][1]['text_state'],'NON_TEXT_VALUE_WITHHELD')
+        self.assertIsNone(inventory['fields'][1]['text']);self.assertNotIn('987654',json.dumps(inventory))
+        self.assertEqual(inventory['fresh_status'],'UNESTABLISHED')
+        self.assertEqual(inventory['numerical_outcome_text_absence'],'UNESTABLISHED')
+        self.assertEqual(inventory['semantic_safety'],'UNESTABLISHED')
+        self.assertIsNone(report['result']['documentary']);self.assertIsNone(report['result']['frame'])
+        self.assertEqual(report['result']['exposure']['member_opens_started'],7)
+        self.assertEqual(report['result']['inventory_exposure']['record_worksheet_member_opens'],0)
+
+    def test_inventory_formula_blocks_atomically(self):
+        body=sheet('<row r="1"><c r="A1"><f>1+1</f><v>2</v></c></row>')
+        result=self.inventory_failure(replace(parts(),'xl/worksheets/sheet1.xml',body),'INVENTORY_FORMULA_UNSUPPORTED')
+        self.assertFalse(result['result']['inventory_exposure']['whole_shared_strings_started'])
+
+    def test_inventory_unsupported_text_storage(self):
+        self.inventory_failure(replace(parts(),'xl/worksheets/sheet1.xml',sheet('<row r="1">'+cell('A1','text','str')+'</row>')),'INVENTORY_STORAGE_UNSUPPORTED')
+
+    def test_inventory_merged_text_blocked(self):
+        body=sheet('<row r="1">'+cell('A1',REF_TEXT)+'</row>').replace(b'</worksheet>',b'<mergeCells count="1"><mergeCell ref="A1:B1"/></mergeCells></worksheet>')
+        self.inventory_failure(replace(parts(),'xl/worksheets/sheet1.xml',body),'SELECTED_CELL_MERGED')
+
+    def test_inventory_1024_complete_explicit_cells(self):
+        rows=''.join(f'<row r="{i}">{cell("A"+str(i),str(i),"n")}</row>' for i in range(1,1021))
+        self.source_fixture(replace(parts(),'xl/worksheets/sheet1.xml',sheet(rows)))
+        _,result=self.inventory();self.assertEqual(result['result']['inventory']['explicit_cells'],1024)
+        self.assertEqual(result['result']['inventory']['non_text_cells'],1020)
+
+    def test_inventory_1025_is_complete_or_block(self):
+        rows=''.join(f'<row r="{i}">{cell("A"+str(i),str(i),"n")}</row>' for i in range(1,1022))
+        result=self.inventory_failure(replace(parts(),'xl/worksheets/sheet1.xml',sheet(rows)),'INVENTORY_LIMIT')
+        self.assertEqual(result['result']['inventory_exposure']['non_text_cells_accounted'],0)
+
+    def test_inventory_2048_and_empty_plain_text_retained(self):
+        body=sheet('<row r="1">'+cell('A1','x'*2048)+cell('B1','')+'</row>')
+        self.source_fixture(replace(parts(),'xl/worksheets/sheet1.xml',body))
+        _,result=self.inventory();fields=result['result']['inventory']['fields']
+        self.assertEqual(len(fields[0]['text']),2048);self.assertEqual(fields[1]['text'],'')
+        self.assertEqual(fields[1]['text_state'],'PLAIN_LITERAL_DISCLOSED')
+
+    def test_inventory_2049_blocks(self):
+        self.inventory_failure(replace(parts(),'xl/worksheets/sheet1.xml',sheet('<row r="1">'+cell('A1','x'*2049)+'</row>')),'INVENTORY_LIMIT')
+
+    def test_whole_sst_exposure_without_unselected_disclosure(self):
+        items=replace(parts(),'xl/worksheets/sheet1.xml',sheet('<row r="1">'+cell('A1','0','s')+'</row>'))
+        items=replace(items,'xl/sharedStrings.xml',f'<sst xmlns="{SS}" uniqueCount="2"><si><t>{REF_TEXT}</t></si><si><t>{CANARY}</t></si></sst>'.encode())
+        self.source_fixture(items);_,result=self.inventory();ledger=result['result']['inventory_exposure']
+        self.assertTrue(ledger['whole_shared_strings_started']);self.assertTrue(ledger['whole_shared_strings_completed'])
+        self.assertTrue(ledger['shared_strings_may_include_record_values']);self.assertNotIn(CANARY,json.dumps(result))
+        self.assertEqual(result['result']['exposure']['member_opens_started'],8)
+
+    def test_bad_unselected_sst_clears_projection_and_retains_started(self):
+        items=replace(parts(),'xl/worksheets/sheet1.xml',sheet('<row r="1">'+cell('A1','0','s')+'</row>'))
+        items=replace(items,'xl/sharedStrings.xml',f'<sst xmlns="{SS}" uniqueCount="2"><si><t>{REF_TEXT}</t></si><si><r><t>{CANARY}</t></r></si></sst>'.encode())
+        result=self.inventory_failure(items,'SHARED_STRINGS_UNSUPPORTED');ledger=result['result']['inventory_exposure']
+        self.assertTrue(ledger['whole_shared_strings_started']);self.assertFalse(ledger['whole_shared_strings_completed'])
+        self.assertNotIn(CANARY,json.dumps(result))
+
+    def test_frame_storage_drift_blocks_before_record_read(self):
+        _,_,binding=self.prepared_frame();binding['documentary_binding']['fields'][0]['expected_storage']='s';self.bind_frame(binding)
+        with patch.object(M.core,'_frame',side_effect=AssertionError('NO_RECORD_READ')):result=M.inspect('frame','1')
+        self.assert_cleared(result,'INVENTORY_MAPPING_MISMATCH');self.assertTrue(result['result']['inventory_exposure']['completed'])
+
+    def test_frame_literal_drift_blocks_before_record_read(self):
+        _,_,binding=self.prepared_frame();binding['documentary_binding']['fields'][0]['allowed_texts']=['Wrong literal.'];self.bind_frame(binding)
+        with patch.object(M.core,'_frame',side_effect=AssertionError('NO_RECORD_READ')):result=M.inspect('frame','1')
+        self.assert_cleared(result,'INVENTORY_MAPPING_MISMATCH')
+
+    def test_legacy_strict_documentary_binding_not_inventory_binding(self):
+        _,_,binding=self.prepared_frame();binding['schema']='li_v3.frame_binding.v1'
+        binding['prior_documentary_sha256']=binding.pop('prior_inventory_sha256');self.bind_frame(binding)
+        self.assert_cleared(M.inspect('frame','1'),'BINDING_INVALID')
+
+    def test_inventory_historical_layout_edge_must_match_frame_layout_pins(self):
+        _,inventory,binding=self.prepared_frame();forged=deepcopy(inventory)
+        for pin in forged['phase_binding_pins']['layout']:pin['sha256']='a'*64
+        M.PHASE_BINDINGS['frame']['inventory']=self.prior_pins('inventory',forged)
+        count=self.target_reads
+        self.assert_cleared(M.inspect('frame','1'),'PHASE_PRIOR_INVALID');self.assertEqual(self.target_reads,count)
+
+    def test_complete_outer_prior_shape_rejects_added_exposure(self):
+        layout=self.paired_layout();layout['operation_exposure']['unlisted_flag']=False
+        M.PHASE_BINDINGS['inventory']={'layout':self.prior_pins('layout',layout)}
+        self.assert_cleared(M.inspect('inventory','1'),'PHASE_PRIOR_INVALID');self.assertEqual(self.target_reads,2)
+
+    def test_forged_truncated_inventory_fails_same_buffer_reconstruction(self):
+        layout,inventory,binding=self.prepared_frame();forged=deepcopy(inventory)
+        payload=forged['result']['inventory'];payload['fields'].pop();payload['explicit_cells']-=1;payload['text_cells']-=1
+        forged['result']['inventory_exposure']['plain_text_cells_processed']-=1
+        M.PHASE_BINDINGS['frame']['inventory']=self.prior_pins('inventory',forged)
+        binding['prior_inventory_sha256']=hashlib.sha256(M.core.canonical(forged['result'])).hexdigest();self.bind_frame(binding)
+        with patch.object(M.core,'_frame',side_effect=AssertionError('NO_RECORD_READ')):result=M.inspect('frame','1')
+        self.assert_cleared(result,'INVENTORY_PRIOR_INVALID')
+
+    def test_inventory_late_failure_clears_new_payload(self):
+        layout=self.paired_layout();M.PHASE_BINDINGS['inventory']={'layout':self.prior_pins('layout',layout)}
+        count=0;old=M._recheck
+        def fail(identity):
+            nonlocal count
+            count+=1
+            if count==2:raise M.ProductionError('SOURCE_CONTEXT_CHANGED')
+            return old(identity)
+        with patch.object(M,'_recheck',fail):result=M.inspect('inventory','1')
+        self.assert_cleared(result,'SOURCE_CONTEXT_CHANGED');self.assertTrue(result['result']['inventory_exposure']['completed'])
+
+    def test_inventory_late_directory_close_requires_external_agreement(self):
+        layout=self.paired_layout();M.PHASE_BINDINGS['inventory']={'layout':self.prior_pins('layout',layout)}
+        outputs=[];directory=M.custody._output_directory;close=os.close
+        def opened(path):value=directory(path);outputs.append(value);return value
+        def fail(fd):
+            close(fd)
+            if outputs and fd==outputs[-1]:outputs.clear();raise OSError('PRIVATE_CLOSE_CANARY')
+        with patch.object(M.custody,'_output_directory',opened),patch.object(M.custody.os,'close',fail):result=M.inspect('inventory','1')
+        self.assert_cleared(result,'INTERNAL_FAILURE')
+        persisted=json.loads((self.root/self.public_path('inventory')).read_bytes())
+        self.assertEqual(persisted['engineering_status'],'COMPLETE')
+        self.assertNotEqual(M.custody.canonical(persisted),M.custody.canonical(result))
+        self.assertTrue(result['result']['inventory_exposure']['completed'])

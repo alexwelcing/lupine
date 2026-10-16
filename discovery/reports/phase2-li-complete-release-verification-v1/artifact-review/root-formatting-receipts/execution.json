@@ -1,0 +1,19 @@
+{
+  "started_at": "2026-10-16T15:46:10.465564+00:00",
+  "finished_at": "2026-10-16T15:46:12.808443+00:00",
+  "process_seconds": 2.342406823001511,
+  "exit_code": 0,
+  "source_unchanged": true,
+  "held_files": 347,
+  "correction": {
+    "path": "tests/test_li_v3_readiness_review.py",
+    "original_sha256": "7ec52e6a72aef1b289503d187fa5966025a1d488ca60f55200d12fd9c10b85f0",
+    "final_sha256": "dda4d354ff55f09d4542105df7c7180097ad187477b4c03743bafd95a527a34b",
+    "removed_bytes": 1,
+    "syntax_tree_identical": true,
+    "original_author_copyset_preserved": true
+  },
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "142a0cf5d1b8225e7f72b9b366f5d71ad75a841bb3fe8968f81a0d28bc779bdd",
+  "actual_operations": 0
+}

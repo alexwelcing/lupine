@@ -1,0 +1,49 @@
+{
+  "after": {
+    "errors": {},
+    "held_equal": true,
+    "reviewed_pins_status_valid": true,
+    "sha256": {
+      "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-artifact-review-v1/additive_audit.py": "22b3cbaa1335a85d81d79a11e6722f5fadd6db51854ca8c2de483a65d45528f7",
+      "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-artifact-review-v1/audit.py": "b81293cba3632449830932175e9fa938913650ade05f5e524b258aba78923119",
+      "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-artifact-review-v1/run_recorded.py": "681bdae3895b320274e898b819e9d8b092bb9edd76562c8c2e92dbcd9935f483",
+      "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-release-v1/final-reviewed-pins.json": "f65508a95077542381e000102ba2eb460ad080b058d8204a00ee34b74c9577e7"
+    }
+  },
+  "before": {
+    "errors": {},
+    "held_equal": true,
+    "reviewed_pins_status_valid": true,
+    "sha256": {
+      "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-artifact-review-v1/additive_audit.py": "22b3cbaa1335a85d81d79a11e6722f5fadd6db51854ca8c2de483a65d45528f7",
+      "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-artifact-review-v1/audit.py": "b81293cba3632449830932175e9fa938913650ade05f5e524b258aba78923119",
+      "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-artifact-review-v1/run_recorded.py": "681bdae3895b320274e898b819e9d8b092bb9edd76562c8c2e92dbcd9935f483",
+      "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-release-v1/final-reviewed-pins.json": "f65508a95077542381e000102ba2eb460ad080b058d8204a00ee34b74c9577e7"
+    }
+  },
+  "child_exit_code": 0,
+  "child_invoked": true,
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-artifact-review-v1/audit.py",
+    "--commit",
+    "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace",
+    "--retained-directory",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-clean-package-v1",
+    "--output-directory",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-artifact-review-v1/actual-c17c4c6b152a"
+  ],
+  "commit": "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace",
+  "elapsed_seconds": 3.751785338001355,
+  "exit_code": 0,
+  "finished_at": "2026-10-16T10:42:47.867228+00:00",
+  "launch_error": null,
+  "operator": "/root/phase2_planner/ui_review",
+  "reviewed_pins_sha256": "f65508a95077542381e000102ba2eb460ad080b058d8204a00ee34b74c9577e7",
+  "scope": "Read-only retained artifact/source audit; no package test, production diagnostic or network command.",
+  "script_sha256": "b81293cba3632449830932175e9fa938913650ade05f5e524b258aba78923119",
+  "started_at": "2026-10-16T10:42:44.115168+00:00",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "59074b0b245d47caa13410841a87319e2cf079005e692e4bab9352810d2b11fd",
+  "timed_out": false
+}

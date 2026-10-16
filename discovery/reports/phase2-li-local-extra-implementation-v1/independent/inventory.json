@@ -1,0 +1,65 @@
+{
+  "schema": "lupine.discovery.independent_review_inventory.v1",
+  "files": {
+    "README.md": {
+      "bytes": 4428,
+      "sha256": "a0e2ebc6b406e2d291111143b1d9d2831cb0043bc2d425be4061bd412acec3be"
+    },
+    "final-run/execution.json": {
+      "bytes": 1844,
+      "sha256": "f4b8b89bd55a06b8c34ccb7cea043a1cc75ada7f00214e5d28dafd65c1d9a6ef"
+    },
+    "final-run/implementation.py": {
+      "bytes": 11921,
+      "sha256": "54db58a567afc9211303f2edff13541ab2f97beb77ef2edaa518ad32bf6b1026"
+    },
+    "final-run/independent-tests.py": {
+      "bytes": 40327,
+      "sha256": "24e54f7674a116a043aecaf3e5b396aba3139eb1739998f45ab5149c82b5602b"
+    },
+    "final-run/stderr.txt": {
+      "bytes": 5093,
+      "sha256": "30719b8a26c8bc8802c6a8eade4bc6bd59c3f0c03861359445aa5c9c7f4adfad"
+    },
+    "final-run/stdout.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "first-run/execution.json": {
+      "bytes": 1844,
+      "sha256": "a635c882c1796c464af192aaa020292fa8dbb52f40516f53052afb9c0add66f7"
+    },
+    "first-run/implementation.py": {
+      "bytes": 11921,
+      "sha256": "54db58a567afc9211303f2edff13541ab2f97beb77ef2edaa518ad32bf6b1026"
+    },
+    "first-run/independent-tests.py": {
+      "bytes": 39771,
+      "sha256": "7f70e15368a892e0c2b064ea6b1a584e346e3078e659cd863bca652061c16c63"
+    },
+    "first-run/stderr.txt": {
+      "bytes": 5833,
+      "sha256": "c4cbeb472d67f55ed9f769e0a05f21c8f17c97cff488d9217ae193c3fef1c365"
+    },
+    "first-run/stdout.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "preparation.json": {
+      "bytes": 595,
+      "sha256": "36cb4f671e59f05b6faf2af36629d9e18c4752d5968fa5163ac45d8805856d65"
+    },
+    "promotion/tests/test_li_v3_local_extra_headers_review.py": {
+      "bytes": 40327,
+      "sha256": "24e54f7674a116a043aecaf3e5b396aba3139eb1739998f45ab5149c82b5602b"
+    },
+    "review.json": {
+      "bytes": 3419,
+      "sha256": "ae6c0403ee38df07c4d399e6072c2135c5deaa66de3b2e5815e1acb7601407be"
+    },
+    "run_review.py": {
+      "bytes": 2972,
+      "sha256": "3314fa1be38112cc592f82a54769d28cc02b9aface0717382e1de9bab68739c1"
+    }
+  }
+}

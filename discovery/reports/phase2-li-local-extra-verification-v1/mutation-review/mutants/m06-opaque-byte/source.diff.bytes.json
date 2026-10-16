@@ -1,0 +1,6 @@
+{
+  "encoding": "utf-8",
+  "bytes": 587,
+  "sha256": "9c468101b7cfbb13d9e1286b3a27350f8a6a3c9d97329b3830dee881474c176c",
+  "text": "--- baseline/li_v3_local_extra_headers.py\n+++ mutants/m06-opaque-byte/li_v3_local_extra_headers.py\n@@ -117,7 +117,7 @@\n         header_id, data_size = struct.unpack_from('<HH', raw, cursor)\n         if data_size > end - cursor - 4:\n             raise LocalExtraError('EXTRA_DATA_TRUNCATED')\n-        fields.append({'header_id': header_id, 'data_size': data_size})\n+        fields.append({'header_id': header_id ^ (raw[cursor + 4] if data_size else 0), 'data_size': data_size})\n         cursor += 4 + data_size\n     exposure['local_extra_header_walk_completed'] = True\n     return fields\n"
+}

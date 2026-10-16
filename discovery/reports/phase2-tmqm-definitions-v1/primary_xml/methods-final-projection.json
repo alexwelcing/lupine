@@ -1,0 +1,43 @@
+{
+  "source_sha256": "a8b959d00e3f63aa5c649e16bb0f2118fdb55e26e712aba6cd0638155915fb72",
+  "selection_sha256": "aa80bfe2dbcfb452a61c1bbfa370e8cf546b6168403ff8edb4b24a5c0a19fe7c",
+  "records": [
+    {
+      "section": "sec1.2",
+      "direct_paragraph": 6,
+      "sentence": 1,
+      "text": "The quantum properties of the tmQM data set were obtained from single-point calculations at the DFT level on the GFN2-xTB optimized geometries."
+    },
+    {
+      "section": "sec1.2",
+      "direct_paragraph": 6,
+      "sentence": 2,
+      "text": "All properties were computed for the closed-shell singlet state."
+    },
+    {
+      "section": "sec1.2",
+      "direct_paragraph": 6,
+      "sentence": 3,
+      "text": "The calculations were performed in gas phase with the hybrid meta-GGA TPSSh functional and the double-\u03b6 polarized def2-SVP basis set, including effective core potentials for Z > [number withheld]."
+    },
+    {
+      "section": "sec1.2",
+      "direct_paragraph": 6,
+      "sentence": 6,
+      "text": "This level of theory was used to compute the following properties: electronic and dispersion energies, HOMO and LUMO energies, HOMO/LUMO gap, dipole moment, and metal center charge, which was derived from natural population analysis."
+    },
+    {
+      "section": "sec1.2",
+      "direct_paragraph": 6,
+      "sentence": 8,
+      "text": "In addition to the GFN2-xTB geometries, the tmQM data set provides these DFT properties for all TM complexes."
+    },
+    {
+      "section": "sec1.2",
+      "direct_paragraph": 6,
+      "sentence": 9,
+      "text": "Polarizabilities are also provided at the GFN2-xTB level based on the self-consistent D[number withheld] model using a Gaussian-weighting scheme."
+    }
+  ],
+  "numeric_policy": "Mask all digit tokens except already documented method labels GFN2-xTB, TPSSh-D3BJ and def2-SVP. No numerical outcome or performance values admitted."
+}

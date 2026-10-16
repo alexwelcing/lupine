@@ -1,0 +1,15 @@
+{
+  "schema":"lupine.discovery.qm9_file_manifest_scope.v1",
+  "status":"WRITTEN_BEFORE_REQUEST",
+  "purpose":"Resolve the original QM9 collection's constituent record/file identities, declared versions, rights and checksums using public documentary metadata only. No scientific record acquisition or admission.",
+  "identity_source":"../phase2-independent-source-survey-v1/qm9/datacite_identity/projection.json",
+  "collection_doi":"10.6084/m9.figshare.978904",
+  "literal_url":"https://springernature.figshare.com/collections/Quantum_chemistry_structures_and_properties_of_134_kilo_molecules/978904/4",
+  "initial_request":{"method":"GET","maximum_bytes":2097152,"timeout_seconds":30,"redirects":false,"retries":0,"credentials":false},
+  "bounded_followup":"At most one additional ordinary metadata request, only after separately recording an exact canonical or structured metadata URL literally present in this response and its documentary role. No guessed dataset ID, numeric-data endpoint, file download, cross-host access workaround or script execution. A 403 ends the affected route without alternate access. A public metadata404 may be reported and navigated only through explicit authoritative identity metadata, not speculative IDs.",
+  "machine_exposure":"The whole bounded collection HTML/JSON metadata response is machine-read and may contain abstracts, scientific descriptions, counts or examples. No data files are requested. Researcher disclosure is restricted to DOI/title/resource type/version/license, constituent record IDs, file names/size/checksum fields and literal canonical/metadata links. Descriptions, abstracts, data examples and model accuracy are withheld.",
+  "inspection":"HTML parser and JSON decoding only; no JavaScript, code execution, external entities or browser follow-up. Initial projection exposes metadata keys and link roles before any embedded structured values are selected.",
+  "retention":"Exact raw response bytes remain ignored and excluded from publication. Retain request/status/time/byte count/SHA256 and selected identity/manifest fields, source-bound own paraphrase and first errors.",
+  "forbidden":["Archive/XYZ/CSV/JSON record downloads","Numeric targets or reported outcome performance","New Li or denied Dryad access","Joins, fits, eligibility choices, thresholds, allocations, benchmark selection or admission","Third-party contacts or paid work"],
+  "unknowns_retained":["Registry collection license is not yet constituent-file terms","URL suffix is not a verified file version","No verified usable count, missingness, grouped units or prior overlap","No new-DFT, experimental truth, future-risk or freshness claim"]
+}

@@ -1,0 +1,28 @@
+--- original held source
++++ corrected held source
+@@ -32,8 +32,10 @@
+             s.publish(folder / (name + '-start.json'), s.canonical({'commit': commit,
+                 'command': command, 'before_state': current, 'tools': held_tools}))
+             result = s.bounded_process(command, timeout=600, stdout_cap=s.LOG_CAP, stderr_cap=s.LOG_CAP)
+-            s.publish(folder / (name + '-stdout.txt'), result['stdout'])
+-            s.publish(folder / (name + '-stderr.txt'), result['stderr'])
++            log_errors=[]
++            for stream in ('stdout','stderr'):
++                try: s.publish(folder / (name + '-'+stream+'.txt'), result[stream])
++                except BaseException: log_errors.append(stream)
+             after = None; error = None; after_tools = None
+             try:
+                 after = s.repository_state(commit, expected_runtime=before['runtime'], own_files=before['own_files'])
+@@ -50,10 +52,11 @@
+                 head_unchanged=after is not None and after['commit'] == commit,
+                 worktree_clean=after is not None and after['worktree_clean'] is True,
+                 tools_before=held_tools, tools_after=after_tools, state_error=error,
++                log_publication_errors=log_errors,
+                 stdout_sha256=s.sha(result['stdout']), stdout_bytes=len(result['stdout']),
+                 stderr_sha256=s.sha(result['stderr']), stderr_bytes=len(result['stderr']))
+             s.publish(folder / (name + '-execution.json'), s.canonical(receipt))
+-            s.require(error is None and result['exit_code'] == 0 and type(result['exit_code']) is int
++            s.require(error is None and not log_errors and result['exit_code'] == 0 and type(result['exit_code']) is int
+                       and result['process_completed'] is True, 'PACKAGE_COMMAND_FAILED')
+         final = {'status': 'COMPLETE_PACKAGE_AND_STRICT', 'commit': commit,
+                  'scientific_admission': False, 'no_retry': True}

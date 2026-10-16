@@ -1,0 +1,114 @@
+{
+  "actual_numeric_data_read": false,
+  "browser_errors": [],
+  "final_browser_checks": 25,
+  "final_elapsed_seconds": 5.860226885000884,
+  "final_execution": {
+    "bytes": 3351,
+    "path": ".cache/phase2-rhizo-census-ui-review-v1/final-run/execution.json",
+    "sha256": "fb5163db66ec3e005da334a74272794b599a1fdf746ee0d074384632432eb8a7"
+  },
+  "first_execution": {
+    "bytes": 9560,
+    "path": ".cache/phase2-rhizo-census-ui-review-v1/first-run/execution.json",
+    "sha256": "336c1f36a80aa42384e081ece2797d839b31dae25403bb933713f1309e9c0da4"
+  },
+  "initial_findings": {
+    "postrun_source_snapshot_race": "Initial old-source snapshot attempt rejected changed live hash after root fix; exact prior source was recovered from root snapshot and verified before copying.",
+    "real_renderer_bug": "Positive 5001 numerator digit boundary was accepted; root fixed optional-minus digit counting and the unchanged regression now blocks.",
+    "reviewer_fixture_error": "Used square of 3*10^1249+1 but expected 2500 denominator digits; corrected independent fixture to 4*10^1249+1. Original run/error/source remains retained."
+  },
+  "limits": [
+    "Standalone set_content with held section/renderer and current product stylesheet; no HTTP/server/package integration tested.",
+    "Independently generated 16-group/36-reference report only; no actual stored-label values, private source/projection, census reader or production guard accessed or imported.",
+    "Renderer display/declared malformed-state tests do not independently validate the census producer arithmetic or all possible report inputs.",
+    "No numerical ranking, model winner, scientific admission or actual data result is established."
+  ],
+  "network_requests": [],
+  "product_changes_by_reviewer": false,
+  "product_source": {
+    "contract": {
+      "bytes": 8585,
+      "path": ".cache/phase2-rhizo-census-candidate-v1/contract.json",
+      "sha256": "e849d36004f0e73fdde22620bbffe06d1e53425907ca5fce974c536a5e1ea052"
+    },
+    "script": {
+      "bytes": 11614,
+      "path": ".cache/phase2-rhizo-census-ui-v1/recorded-census.js",
+      "sha256": "c62ca347d08a3ccdd8e105a0ddc2d17753c12551f5ad9253262cbae058bd3181"
+    },
+    "section": {
+      "bytes": 761,
+      "path": ".cache/phase2-rhizo-census-ui-v1/section.html",
+      "sha256": "66ec27e80dad95674ad6b30c6346f448cd19859f77bb8a07ae92e3f381e05331"
+    },
+    "style": {
+      "bytes": 43104,
+      "path": "src/lupine_discovery/web/styles.css",
+      "sha256": "23b439d2f1b60bd5837bddf113d215d7e1dee14f21324075a030e802f13d9fdf"
+    }
+  },
+  "reviewed_at": "2026-10-16T13:28:44.015550+00:00",
+  "runner": {
+    "bytes": 15729,
+    "path": ".cache/phase2-rhizo-census-ui-review-v1/browser_review.py",
+    "sha256": "65f1d5b66a487171badd1e0d8ba98132a315453d01da6d3faaae4b3914a29af9"
+  },
+  "status": "PASS_GENERATED_STANDALONE_CHROMIUM",
+  "tracked_edits": false,
+  "verification": [
+    "all_16_means_16_sums_36_reference_rows_exact_sorted_counts_units_and_ids",
+    "synthetic_scope_no_winner_disclaimers_and_keyboard_details",
+    "actual_browser_download_preserves_complete_json_and_exact_rationals",
+    "5000_digit_numerator_2500_digit_denominator_exact_and_mobile_contained",
+    "missing_malformed_and_blocked_clear_tables_and_detached_old_export",
+    "detached_old_button_cannot_export_after_valid_replacement",
+    "malicious_identity_text_is_literal_without_DOM_execution_or_requests",
+    "reject_wrong_status",
+    "reject_output_failure",
+    "reject_wrong_sign",
+    "reject_scientific_promotion",
+    "reject_winner_claim",
+    "reject_fresh_claim",
+    "reject_missing_group",
+    "reject_duplicate_group",
+    "reject_missing_reference",
+    "reject_truth_claim",
+    "reject_token_rational_conflict",
+    "reject_wrong_squared_unit",
+    "reject_negative_absolute",
+    "reject_zero_denominator",
+    "reject_numeric_not_string",
+    "reject_huge_denominator",
+    "reject_positive_5001_digit_numerator_above_contract_cap",
+    "accept_negative_5000_digit_numerator_minus_sign_not_counted"
+  ],
+  "visual_review": {
+    "desktop": "Viewed recorded viewport: all 16 exact mean rows, units/counts and equal non-ranked styling remain legible; references/sums available in details.",
+    "mobile": "Viewed 320px viewport: text and table region contained; large values remain in keyboard-focusable horizontal-overflow regions. This is containment, not a claim that all 5000 digits fit on screen.",
+    "mobile_geometry": {
+      "body": 320,
+      "regions": [
+        {
+          "client": 282,
+          "left": 18,
+          "right": 302,
+          "scroll": 61652
+        },
+        {
+          "client": 282,
+          "left": 18,
+          "right": 302,
+          "scroll": 61685
+        },
+        {
+          "client": 282,
+          "left": 18,
+          "right": 302,
+          "scroll": 716
+        }
+      ],
+      "w": 320
+    }
+  }
+}

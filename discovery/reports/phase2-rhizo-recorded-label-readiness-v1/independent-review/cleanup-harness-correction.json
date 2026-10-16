@@ -1,0 +1,10 @@
+{
+  "actual_guard_violation_events": 9,
+  "after_executor_sha256": "8bf17188c5eb82cf3a7baeb6c404ee61fb235f572785be8675763297bc08653e",
+  "before_executor_sha256": "0bbefe41eba55af47687c9ad22255b50836e7506cba58a707b9da82ed01026b8",
+  "finding": "Reviewer audit hook treated dir_fd-relative tempfile cleanup names as paths relative to project cwd; nine cleanup assertions failed after candidate checks.",
+  "recorded_at": "2026-10-16T12:10:20.401686+00:00",
+  "repair": "Run the synthetic subprocess from the owned review directory. Audit hook checks and test bytes remain unchanged.",
+  "retained_failure": "second/execution.json",
+  "source_or_test_edits": false
+}

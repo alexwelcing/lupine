@@ -1,0 +1,88 @@
+{
+  "schema": "lupine.bam-encoding-comparison-independent-execution-and-projection-check.v1",
+  "checked_at": "2026-10-16T10:06:13.725155+00:00",
+  "execution_status": "RETAINED_SINGLE_INVOCATION_EXIT_ZERO_WITH_EMPTY_STDERR",
+  "review_precedes_invocation": true,
+  "source_and_scope_and_review_match_execution_pins": true,
+  "prior_five_documentary_artifacts_still_match": true,
+  "stdout_result_consistent": true,
+  "projection_identity": {
+    "path": ".cache/phase2-bam-encoding-comparison-v1/internal-ascii-projection.json",
+    "bytes": 358100,
+    "sha256": "b3c77bb0799af461ad53504130c271ff1d12ef32af320217ee19b4990d1bce4e",
+    "publish_body": false
+  },
+  "structural_consistency": {
+    "csv_records_including_header": 234,
+    "physical_lines": 347,
+    "all_projected_records_have_eleven_cells": true,
+    "non_ascii_or_different_locators": 16,
+    "differing_locators": 3,
+    "nonexample_ascii_text_cells": 2330,
+    "nonexample_unbound_cells": 10,
+    "reported_total_ascii_cells_including_withheld_example_positions": 2558,
+    "scope": "Header and empty cells included; these are documentation/cell counts, not measurement/sample units."
+  },
+  "projection_boundary_verified": "All example-column values withheld; all other retained text is ASCII; unknown cells contain status only. This verifies the retained projection and reviewed code, without independent raw-source decode/parse.",
+  "scoped_term_search": {
+    "terms": [
+      "uncert",
+      "covar",
+      "correl",
+      "coverage",
+      "confidence"
+    ],
+    "hits": {
+      "uncert": [],
+      "covar": [],
+      "correl": [],
+      "coverage": [],
+      "confidence": []
+    },
+    "domain": "Retained ASCII selected-cell projection only. Excludes examples-column values and unknown cells; cannot establish full-source absence."
+  },
+  "researcher_exposure": "Whole internal selected-cell JSON read/parsed; selected labels, units, technical descriptions and comments inspected. Comments/ENTRY descriptions can include examples. No full selected-cell projection or arbitrary example-column values exported; no zero-incidental-exposure claim. Initial broad label output was tool-truncated, so important definitions were separately read in bounded selected-record passes.",
+  "actual_work": "Receipt/hash/JSON/structural/selected documentary review only. No raw-schema reread/decode/parse, no comparison rerun, network, secondary or measurement file, product/scientific test, tracked edit or Git mutation.",
+  "bindings": [
+    {
+      "path": ".cache/phase2-bam-encoding-comparison-v1/scope.json",
+      "bytes": 6528,
+      "sha256": "31c0b4fd7325abe9338405284f4afb1da4ccb6aad52f67b8a4849e4c96d11593"
+    },
+    {
+      "path": ".cache/phase2-bam-encoding-comparison-v1/compare_documentation.py",
+      "bytes": 7065,
+      "sha256": "a1c879a6a9b9a0a62e8e570e98758fb2194ddc430db97b0aeeede758dfa91f53"
+    },
+    {
+      "path": ".cache/phase2-bam-encoding-comparison-v1/execution.json",
+      "bytes": 1278,
+      "sha256": "89f641a7bc619e211b8e1dbfc03fc760ca08da98b5a2d7ea8b14f0f6ef702d71"
+    },
+    {
+      "path": ".cache/phase2-bam-encoding-comparison-v1/result.json",
+      "bytes": 1840,
+      "sha256": "4bd33191b050582a194d99f83759a4be4ded48134f1958f4ea0ad6ee384a60e2"
+    },
+    {
+      "path": ".cache/phase2-bam-encoding-comparison-v1/stdout.txt",
+      "bytes": 1840,
+      "sha256": "4bd33191b050582a194d99f83759a4be4ded48134f1958f4ea0ad6ee384a60e2"
+    },
+    {
+      "path": ".cache/phase2-bam-encoding-comparison-v1/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/phase2-bam-encoding-comparison-review-v1/documentary-exposure-before-inspection.json",
+      "bytes": 554,
+      "sha256": "2adbaa86686d720889c7e512a6478869d208ac94f4e54e4b6db31311754fd512"
+    },
+    {
+      "path": ".cache/phase2-bam-encoding-comparison-review-v1/source-review.json",
+      "bytes": 4886,
+      "sha256": "2c18aa2c6c3e0c3b1178ba623d3c66970f33394fbef94bbba34ad92bbac29042"
+    }
+  ]
+}

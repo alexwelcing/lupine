@@ -1,0 +1,86 @@
+{
+  "actual_source_operations": 0,
+  "after": {
+    "candidate.py": {
+      "bytes": 40325,
+      "sha256": "1bcbc0d16c2e9a516f3bce0ed98e5fd65d6ce4a26b7942f7dedd7724e201fc55"
+    },
+    "contract.md": {
+      "bytes": 5879,
+      "sha256": "a1a7d8fe820ddcd8d3479d53e4f35d5ce0ed6e123385bcbb1b646786e1d064d9"
+    },
+    "review_test.py": {
+      "bytes": 25816,
+      "sha256": "8d9b9aa03c24bf69c11d4de33147bbbeceab4a839d74deed82a312cb089139d9"
+    },
+    "run_review.py": {
+      "bytes": 3098,
+      "sha256": "f6a175509228bd2fef39ef207a6d82b357238d09f0313e2292288007f1ad1f2f"
+    }
+  },
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-B",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-production-review-v1/test_li_v3_growth_predicate_audit_review.py"
+  ],
+  "elapsed_seconds": 0.83023405700078,
+  "finished_at": "2026-10-16T12:20:24.371382+00:00",
+  "inputs": {
+    "candidate.py": {
+      "bytes": 40325,
+      "sha256": "1bcbc0d16c2e9a516f3bce0ed98e5fd65d6ce4a26b7942f7dedd7724e201fc55"
+    },
+    "contract.md": {
+      "bytes": 5879,
+      "sha256": "a1a7d8fe820ddcd8d3479d53e4f35d5ce0ed6e123385bcbb1b646786e1d064d9"
+    },
+    "review_test.py": {
+      "bytes": 25816,
+      "sha256": "8d9b9aa03c24bf69c11d4de33147bbbeceab4a839d74deed82a312cb089139d9"
+    },
+    "run_review.py": {
+      "bytes": 3098,
+      "sha256": "f6a175509228bd2fef39ef207a6d82b357238d09f0313e2292288007f1ad1f2f"
+    }
+  },
+  "original_sources": {
+    "scripts/li_v3_compatible_envelope.py": {
+      "bytes": 14126,
+      "sha256": "e771b3fc2a66d6e2ff3a26d8aae88b7a2915ac908907908316e697997761c847"
+    },
+    "scripts/li_v3_compatible_zip_diagnostic.py": {
+      "bytes": 16878,
+      "sha256": "59b4b549a1de33abf2c54ccfce15f4f980a3a36351f98e246ae4e9fd6c44c5d3"
+    },
+    "scripts/li_v3_custody.py": {
+      "bytes": 35358,
+      "sha256": "3ead51f0afdf16be973743257be488669c988aa40443779e7a5c400e9b0d3234"
+    },
+    "scripts/li_v3_growth_envelope.py": {
+      "bytes": 20609,
+      "sha256": "f50069d028526ea045441a2e574a26192a210ff78ba34f5170777d32f5692ec3"
+    },
+    "scripts/li_v3_growth_hint_shape.py": {
+      "bytes": 20556,
+      "sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a"
+    },
+    "scripts/li_v3_local_extra_headers.py": {
+      "bytes": 11921,
+      "sha256": "54db58a567afc9211303f2edff13541ab2f97beb77ef2edaa518ad32bf6b1026"
+    }
+  },
+  "original_sources_held": true,
+  "returncode": 0,
+  "scope": "Generated temporary repositories and mocked generated source/prerequisite/capture only",
+  "source_test_contract_held": true,
+  "started_at": "2026-10-16T12:20:23.539685+00:00",
+  "stderr": {
+    "bytes": 2343,
+    "sha256": "20c3ed1dd55859b6dfd58a0d1cf85113f72a09f924c1f11ab4f6e7d6a51f45cd"
+  },
+  "stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "timed_out": false
+}

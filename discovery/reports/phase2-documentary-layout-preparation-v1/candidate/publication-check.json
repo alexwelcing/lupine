@@ -1,0 +1,30 @@
+{
+  "checked_at": "2026-10-16T10:51:16.531516+00:00",
+  "historical_parent_files_unchanged": 9,
+  "jsons_parsed": 7,
+  "local_links": [
+    {
+      "exists": true,
+      "file": "README.md",
+      "target": "scope.json"
+    },
+    {
+      "exists": true,
+      "file": "README.md",
+      "target": "historical-directory-preservation.json"
+    },
+    {
+      "exists": true,
+      "file": "README.md",
+      "target": "fixture-origin.json"
+    },
+    {
+      "exists": true,
+      "file": "README.md",
+      "target": "receipts/first/execution.json"
+    }
+  ],
+  "scope": "Static candidate publication checks only; no source-reader or test rerun.",
+  "status": "PASS",
+  "whitespace_issues": []
+}

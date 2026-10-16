@@ -1,0 +1,15 @@
+{
+  "actual_operations": 0,
+  "added_helpers": [
+    "_completed_prior_counters",
+    "_matching_prior_counts"
+  ],
+  "all_other_helpers_AST_identical_to_behavior540": true,
+  "core_byte_identical": true,
+  "modified_helpers": [
+    "_phase_material",
+    "_prior_inventory",
+    "_prior_production",
+    "_run_production"
+  ]
+}

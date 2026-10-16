@@ -1,0 +1,35 @@
+{
+  "schema": "lupine.bam-encoding-documentary-exposure.v1",
+  "recorded_at": "2026-10-16T10:07:41.409624+00:00",
+  "scope_sha256": "31c0b4fd7325abe9338405284f4afb1da4ccb6aad52f67b8a4849e4c96d11593",
+  "source_sha256": "e75c85d770598acf19a4bd1cb9c94b6adf7bb92cf46b153cbc904896a1160f1a",
+  "machine": {
+    "whole_raw_document_read": true,
+    "cp1252_full_strict_decode_completed": true,
+    "iso8859_1_full_strict_decode_completed": true,
+    "both_full_csv_parses_completed": true,
+    "all_example_option_comment_cells_machine_accessible": true
+  },
+  "researcher": {
+    "selected_ASCII_invariant_entry_category_symbol_unit_datatype_requirement_comments_reviewed": true,
+    "examples_column_values_projected": false,
+    "nonASCII_or_differing_cell_text_projected": false,
+    "first_selected_fields_output_truncated": true,
+    "later_targeted_role_comment_inspections_completed": true,
+    "incidental_documentary_numeric_exposure": "Selected ENTRY/comment fields included technical proof-strength convention, standard identifiers, row references and an illustrative calibration-class/load example; values are not copied into this public ledger. These are exposed documentary text, not untouched evidence.",
+    "example_column_withholding_does_not_make_other_fields_example_free": true
+  },
+  "publication": {
+    "full_raw_CSV": false,
+    "full_internal_selected_cell_projection": false,
+    "arbitrary_empirical_example_values": false,
+    "long_standard_quotations": false,
+    "own_paraphrase_selected_labels_and_structural_receipts_only": true
+  },
+  "new_network_requests": 0,
+  "measurement_files_read": false,
+  "scientific_or_model_execution": false,
+  "actual_encoding": "UNBOUND",
+  "original_UTF8_failure_preserved": true,
+  "benchmark_admitted": false
+}

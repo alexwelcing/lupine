@@ -1,0 +1,15 @@
+{
+  "additional_behavior_tests_run": 0,
+  "baseline": "88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d",
+  "candidate_added_runtime_files": 1,
+  "candidate_copyset_sha256": "37d77c0ec3b83b38757421730dbb48ccb1d8e1c60733d4aed5d9f43400fc3d85",
+  "candidate_existing_changes": 5,
+  "combined_ui_backend_scope": "NOT_YET_FROZEN",
+  "final_artifact_auditor_prepared": false,
+  "package_only_runtime_total": 346,
+  "package_only_unchanged_baseline_runtime_files": 340,
+  "package_payload_changes_in_this_overlay": 0,
+  "schema": "lupine.source-readiness.package-review-scope.v1",
+  "scientific_artifacts_copied_or_executed": false,
+  "tracked_edits": false
+}

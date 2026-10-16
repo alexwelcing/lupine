@@ -1,0 +1,47 @@
+{
+  "bytes": 158915,
+  "explicit_exclusions": [
+    "inventory.json",
+    "handoff.json",
+    "__pycache__"
+  ],
+  "file_count": 7,
+  "files": [
+    {
+      "bytes": 1899,
+      "path": "README.md",
+      "sha256": "937f09b0e151658fc79c27360b9c079b428f718610fba25598a2200ff8b0c472"
+    },
+    {
+      "bytes": 922,
+      "path": "actual-first/execution-observation.json",
+      "sha256": "077e3508ae9eb10f490db479cfb4d13987ab9436c4cff1e12f0615a0480e1346"
+    },
+    {
+      "bytes": 11574,
+      "path": "actual-first/operation-binding.json",
+      "sha256": "8055eedf46f0e532da428adf353efd1d170bb9f1b88c5076f739f75aba062a3d"
+    },
+    {
+      "bytes": 931,
+      "path": "actual-first/outer-binding.json",
+      "sha256": "52c7448a795068cd9024f1b20ccc27854e22aa201953ac76d882a8c169d74c34"
+    },
+    {
+      "bytes": 128796,
+      "path": "actual-first/review.json",
+      "sha256": "0d4d086fb040c63c9038fa8a745ea5e1f477b9800cbfd5f20af2025ed8e56bbd"
+    },
+    {
+      "bytes": 5514,
+      "path": "prospective-review.json",
+      "sha256": "159607fae3661d9e3e487889fde2c12d225913810d6c0aa7cadab88400eb70d1"
+    },
+    {
+      "bytes": 9279,
+      "path": "review_actual_public.py",
+      "sha256": "325df33ac0b3559434c9c342b91dceaaafc15c4e3d13a06332c168f562f55737"
+    }
+  ],
+  "schema": "lupine.li.binding_review.inventory.v1"
+}

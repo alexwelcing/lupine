@@ -1,0 +1,1 @@
+{"scope": "independent synthetic browser review; no observations or scientific experiment", "check_count": 8, "javascript_errors": [], "mutation_control": false}

@@ -1,0 +1,54 @@
+{
+  "additive_fields_present": [
+    "status",
+    "commit",
+    "unchanged_prior_runtime_files",
+    "added_runtime_files",
+    "new_source_test_contracts_exact_in_git_archive_worktree",
+    "source_pins_match_final_reviewed_pin_record",
+    "unchanged_full_artifact_auditor_review_sha256"
+  ],
+  "argument": "The unchanged generic report computes runtime_count from the source archive manifest and binds both package receipt bytes; the additive report asserts the 335/332/3/4 counts and exact reviewed pin dictionaries before returning these fields. The operation recorder consumes those same names and checks the same values. This is a static source/schema correspondence, not an actual artifact audit.",
+  "artifact_reads": 0,
+  "auditor_invocations": 0,
+  "auditor_sources": {
+    "additive_audit.py": {
+      "bytes": 10537,
+      "sha256": "e87a8d0181c986f85883ebe28ef8295581c0a97976ab927feb3de60be096f649"
+    },
+    "audit.py": {
+      "bytes": 21353,
+      "sha256": "b81293cba3632449830932175e9fa938913650ade05f5e524b258aba78923119"
+    },
+    "run_recorded.py": {
+      "bytes": 6579,
+      "sha256": "8f61b3f89da773e2aeaa1be2949c1cf82c671e338538cccfa0b5358c8c37a613"
+    }
+  },
+  "counts": {
+    "added_runtime": 3,
+    "prior_runtime": 332,
+    "reviewed_source_paths": 4,
+    "runtime": 335
+  },
+  "generic_fields_present": [
+    "status",
+    "commit",
+    "runtime_source_files_matching_manifest_and_worktree",
+    "artifact_and_recorded_run_inputs_unchanged_at_end",
+    "producer_verifier_receipt_and_two_fixed_pins_agree",
+    "recorded_package_and_strict_verifier_runs",
+    "sha256",
+    "exit_code",
+    "checked_log_hashes",
+    "runtime_count"
+  ],
+  "observed_at": "2026-10-16T12:34:29.615165+00:00",
+  "operation_recorder": {
+    "bytes": 25290,
+    "path": ".cache/phase2-growth-predicate-operations-v1/run_after_ci.py",
+    "sha256": "b89fcabf338e9329c3cdabdc58fb13d71396540aeec405ed5e3a01cc12ff6079"
+  },
+  "production_invocations": 0,
+  "status": "SOURCE_SCHEMA_COMPATIBLE_NOT_EXECUTED"
+}

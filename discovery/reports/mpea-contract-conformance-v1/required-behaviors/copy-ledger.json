@@ -1,0 +1,20 @@
+[
+  {
+    "source": ".cache/required-behavior-map-v1/map.json",
+    "destination": "reports/mpea-contract-conformance-v1/required-behaviors/map.json",
+    "sha256": "e1c4fa08907a75a507e3aa985d098d984e561a7e3290d5d00c4254fdbef2c2ac",
+    "bytes": 19225
+  },
+  {
+    "source": ".cache/required-behavior-map-v1/MAP.md",
+    "destination": "reports/mpea-contract-conformance-v1/required-behaviors/MAP.md",
+    "sha256": "cab2fab17792ff8227f6319f9cfa143a63f462a3179bb44ee93d4c3b10198522",
+    "bytes": 9175
+  },
+  {
+    "source": ".cache/required-behavior-map-v1/build.py",
+    "destination": "reports/mpea-contract-conformance-v1/required-behaviors/build.py",
+    "sha256": "db69e72ccac161d9e89fbaffeef9cc2ea49047699cc00b70658ea6ea12960133",
+    "bytes": 8573
+  }
+]

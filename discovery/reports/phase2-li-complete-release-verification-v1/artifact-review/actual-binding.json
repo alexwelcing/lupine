@@ -1,0 +1,127 @@
+{
+  "actual_artifact_audit_runs_before_binding": 0,
+  "actual_scientific_operations": 0,
+  "baseline_commit": "ddd4a6a8df0f908a162b7e5387b0faac325180d6",
+  "ci_success_established": false,
+  "head_exact": true,
+  "metadata": [
+    {
+      "bytes": 157427,
+      "sha256": "c75ef2a24caf69b50a301e63ad449185b562613f376a5775c38de5686e7a257f",
+      "snapshot": "actual-inputs/package/package-execution.json",
+      "source": ".cache/phase2-li-complete-readiness-operations-v1/package-9d1f21dae141a28db378ee2e16aa83340df57877/package-execution.json"
+    },
+    {
+      "bytes": 1307,
+      "sha256": "f2c0d25b6ddff3c70e3bb273964e322b260f35aebcad70fbd8277f9d0a747b5c",
+      "snapshot": "actual-inputs/package/package-stdout.txt",
+      "source": ".cache/phase2-li-complete-readiness-operations-v1/package-9d1f21dae141a28db378ee2e16aa83340df57877/package-stdout.txt"
+    },
+    {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "snapshot": "actual-inputs/package/package-stderr.txt",
+      "source": ".cache/phase2-li-complete-readiness-operations-v1/package-9d1f21dae141a28db378ee2e16aa83340df57877/package-stderr.txt"
+    },
+    {
+      "bytes": 157302,
+      "sha256": "31973bfc266c2e9cca846b63fd12de87f7d4d40e9b8faf1e5a779a6925bc081f",
+      "snapshot": "actual-inputs/package/strict-execution.json",
+      "source": ".cache/phase2-li-complete-readiness-operations-v1/package-9d1f21dae141a28db378ee2e16aa83340df57877/strict-execution.json"
+    },
+    {
+      "bytes": 3746,
+      "sha256": "a2c7b1f6b2828cbb8eacff3ebc4c8662d85aa749833df948f333df0a6d0cdb4a",
+      "snapshot": "actual-inputs/package/strict-stdout.txt",
+      "source": ".cache/phase2-li-complete-readiness-operations-v1/package-9d1f21dae141a28db378ee2e16aa83340df57877/strict-stdout.txt"
+    },
+    {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "snapshot": "actual-inputs/package/strict-stderr.txt",
+      "source": ".cache/phase2-li-complete-readiness-operations-v1/package-9d1f21dae141a28db378ee2e16aa83340df57877/strict-stderr.txt"
+    },
+    {
+      "bytes": 8126,
+      "sha256": "db7a28dd1b1d2294990f02cdfeaf2ced4fa61a7aac790270b1a24736e32e6d19",
+      "snapshot": "actual-inputs/package/package-verification.json",
+      "source": ".cache/phase2-li-complete-readiness-operations-v1/package-9d1f21dae141a28db378ee2e16aa83340df57877/package-verification.json"
+    },
+    {
+      "bytes": 138,
+      "sha256": "6406d66c8802a73f5b425c43bb3ec5e1b4717b41f470718f31a84be46a7f630c",
+      "snapshot": "actual-inputs/package/final.json",
+      "source": ".cache/phase2-li-complete-readiness-operations-v1/package-9d1f21dae141a28db378ee2e16aa83340df57877/final.json"
+    },
+    {
+      "bytes": 8107,
+      "sha256": "e069b3892cdd45a02371e35cc663777415ad9f6a23d558a21f2a22a96589314e",
+      "snapshot": "actual-inputs/retained/release-artifacts.json",
+      "source": ".cache/phase2-li-complete-readiness-operations-v1/package-9d1f21dae141a28db378ee2e16aa83340df57877/retained/release-artifacts.json"
+    },
+    {
+      "bytes": 925,
+      "sha256": "7ec944bcb7078f67ae1aefff76a900fa58e830c27bf32ca77f00ebfea95f8c07",
+      "snapshot": "actual-inputs/outer/completion-packet.json",
+      "source": ".cache/phase2-li-complete-readiness-outer-observer-v1/runs/package-9d1f21dae141a28db378ee2e16aa83340df57877/completion-packet.json"
+    },
+    {
+      "bytes": 1026,
+      "sha256": "a64f25abeac225f18a3248a09991a38f093504e7b795635706bd9a4bdad5289a",
+      "snapshot": "actual-inputs/outer/execution.json",
+      "source": ".cache/phase2-li-complete-readiness-outer-observer-v1/runs/package-9d1f21dae141a28db378ee2e16aa83340df57877/execution.json"
+    },
+    {
+      "bytes": 138,
+      "sha256": "6406d66c8802a73f5b425c43bb3ec5e1b4717b41f470718f31a84be46a7f630c",
+      "snapshot": "actual-inputs/outer/persisted-final.json",
+      "source": ".cache/phase2-li-complete-readiness-outer-observer-v1/runs/package-9d1f21dae141a28db378ee2e16aa83340df57877/persisted-final.json"
+    },
+    {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "snapshot": "actual-inputs/outer/stderr.bin",
+      "source": ".cache/phase2-li-complete-readiness-outer-observer-v1/runs/package-9d1f21dae141a28db378ee2e16aa83340df57877/stderr.bin"
+    },
+    {
+      "bytes": 138,
+      "sha256": "6406d66c8802a73f5b425c43bb3ec5e1b4717b41f470718f31a84be46a7f630c",
+      "snapshot": "actual-inputs/outer/stdout.bin",
+      "source": ".cache/phase2-li-complete-readiness-outer-observer-v1/runs/package-9d1f21dae141a28db378ee2e16aa83340df57877/stdout.bin"
+    },
+    {
+      "bytes": 40242,
+      "sha256": "1ebadf6ac8ecbbfeb9d6020ab1ec4a875c7beb64a70840f4ab4afd5dceb99911",
+      "snapshot": "actual-inputs/outer/before-state.json",
+      "source": ".cache/phase2-li-complete-readiness-outer-observer-v1/runs/package-9d1f21dae141a28db378ee2e16aa83340df57877/before-state.json"
+    },
+    {
+      "bytes": 40242,
+      "sha256": "1ebadf6ac8ecbbfeb9d6020ab1ec4a875c7beb64a70840f4ab4afd5dceb99911",
+      "snapshot": "actual-inputs/outer/after-state.json",
+      "source": ".cache/phase2-li-complete-readiness-outer-observer-v1/runs/package-9d1f21dae141a28db378ee2e16aa83340df57877/after-state.json"
+    },
+    {
+      "bytes": 473,
+      "sha256": "4b200c4383ad8bd66c522d8f600db69a5621fa9ff43c12b1bba98a9cafcec2f5",
+      "snapshot": "actual-inputs/outer/root-observed-package.json",
+      "source": ".cache/phase2-li-complete-readiness-outer-observer-v1/root-observed-package.json"
+    }
+  ],
+  "outer_observed_exit_code": 0,
+  "package_and_strict_logs_checked": true,
+  "package_exit_code": 0,
+  "prepared_auditor_sha256": "b00541daccbbe8626880f59bc59d9694dc9f34e922690f968dfb50ed348bb738",
+  "prepared_promotion_sha256": "e2bd3dbe182139dad896ce050edff189ebd2015c9f2f427a1b216b0cd2274fa5",
+  "published_binding_sha256": "355252eef520fe32a7d147be22cb8de54fb4ea25dd299e5a1297fbb518d9802d",
+  "published_commit": "9d1f21dae141a28db378ee2e16aa83340df57877",
+  "recorded_at": "2026-10-16T16:13:36.148169+00:00",
+  "retained_directory": ".cache/phase2-li-complete-readiness-operations-v1/package-9d1f21dae141a28db378ee2e16aa83340df57877/retained",
+  "runtime_files": 345,
+  "runtime_manifest_sha256": "6bfd99aa4b3fdf254038570fc9e40cbb574a1fbbe587c943cdf909359c456a5f",
+  "schema": "lupine.li.complete-readiness.independent-artifact-actual-binding.v1",
+  "scope": "Independent read-only binding of public execution receipts/logs, source commit and prepared auditor. No package/probe/strict/source-reader rerun; actual artifact audit follows separately.",
+  "strict_exit_code": 0,
+  "validation_sha256": "2005eb7d516416d5431c4818ae768b6cb2cd41aa75272e41984d4a98bdca0919",
+  "worktree_clean": true
+}

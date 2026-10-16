@@ -1,0 +1,23 @@
+[
+  {
+    "id": "coupled-shared-trend",
+    "title": "Shared affine trend, conditional screening",
+    "description": "A = t + 1 and B = t share one assumed latent value. Exact cancellation excludes A even though the marginal intervals overlap.",
+    "kind": "coupled_demo",
+    "has_outcomes": true
+  },
+  {
+    "id": "coupled-missing-point",
+    "title": "Missing consistency point, screening withheld",
+    "description": "The box diagnostic would exclude A, but a missing consistency point forces the operational pool to retain the entire universe.",
+    "kind": "coupled_demo",
+    "has_outcomes": true
+  },
+  {
+    "id": "coupled-learned-relation",
+    "title": "Learned relation, screening withheld",
+    "description": "A learned correlation cannot justify the common-world premise. Every candidate is retained; deliberately conflicting reported values expose the model mismatch.",
+    "kind": "coupled_demo",
+    "has_outcomes": true
+  }
+]

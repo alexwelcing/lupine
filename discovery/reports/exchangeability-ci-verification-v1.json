@@ -1,0 +1,39 @@
+{
+  "conclusion": "success",
+  "head_sha": "b899fc6995f6dab9bfbb5eade958371e1033ee11",
+  "jobs": [
+    {
+      "completedAt": "2026-10-10T18:58:28Z",
+      "conclusion": "success",
+      "name": "python (3.11)",
+      "startedAt": "2026-10-10T18:57:10Z",
+      "status": "completed"
+    },
+    {
+      "completedAt": "2026-10-10T18:58:21Z",
+      "conclusion": "success",
+      "name": "browser",
+      "startedAt": "2026-10-10T18:57:09Z",
+      "status": "completed"
+    },
+    {
+      "completedAt": "2026-10-10T18:58:39Z",
+      "conclusion": "success",
+      "name": "python (3.12)",
+      "startedAt": "2026-10-10T18:57:10Z",
+      "status": "completed"
+    },
+    {
+      "completedAt": "2026-10-10T18:59:56Z",
+      "conclusion": "success",
+      "name": "lean",
+      "startedAt": "2026-10-10T18:57:12Z",
+      "status": "completed"
+    }
+  ],
+  "observed_at": "2026-10-10T19:09:58.384577+00:00",
+  "schema": "lupine.discovery.remote_ci_verification.v1",
+  "scope": "All four actual remote jobs verified at the published G17 commit. No new scientific evaluation or real MPEA observation-row scan.",
+  "status": "completed",
+  "url": "https://github.com/alexwelcing/lupine/actions/runs/38077825298"
+}

@@ -1,0 +1,57 @@
+{
+  "status": "BACKGROUND_METADATA_REVIEW_COMPLETE_AWAITING_NEW_REPORT",
+  "scope": "Public metadata/prose only. No linked file or network access.",
+  "files": [
+    {
+      "path": "reports/phase2-high-temperature-leads-v1/README.md",
+      "bytes": 4445,
+      "sha256": "54191247eab5cb1455f506420ef5422081a609d4f685d1f1c4352750ce5f15a7"
+    },
+    {
+      "path": "reports/phase2-high-temperature-leads-v1/source-bindings.json",
+      "bytes": 1886,
+      "sha256": "4097046dbb9799b2991651ef411ee9cb1740f35e6b4cb89912e51e91e895bb89"
+    },
+    {
+      "path": "reports/phase2-high-temperature-leads-v1/bam-data-receipt.json",
+      "bytes": 1531,
+      "sha256": "c7149819c72f50ba40db5ce9632f0f924d533282e3720607f0037e21d8c666c0"
+    },
+    {
+      "path": "reports/phase2-high-temperature-leads-v1/bam-schema-receipt.json",
+      "bytes": 1176,
+      "sha256": "51f71322f83684a0a303f5efde4095b267eb9a6d31a286eabcbaa438c19c3e0a"
+    },
+    {
+      "path": "reports/phase2-high-temperature-leads-v1/independent-review.json",
+      "bytes": 3062,
+      "sha256": "91964393c44faaabaff7801a185cb71e7a890f41294f3c28fcd7e8c079e0e941"
+    },
+    {
+      "path": ".cache/phase2-high-temperature-leads-v1/bam-data.json",
+      "bytes": 21241,
+      "sha256": "65c2df41a4d31b503cea88d7929184dceeedd59dc7643d84c960697f827e8cad"
+    },
+    {
+      "path": ".cache/phase2-high-temperature-leads-v1/bam-schema.json",
+      "bytes": 25593,
+      "sha256": "a897e6645fc159571afdd57ebf69fa00aa543e7ff68c98ec1e90f45ad5f70a9b"
+    }
+  ],
+  "boundaries": [
+    "Test-ID worksheet design and per-test uncertainty statements are documentary intent, not inspected endpoint pairing/completeness.",
+    "MPa and percent occur in the retained data-description uncertainty table; no full field/units dictionary is established.",
+    "Publisher conformance/accreditation/traceability statements are reported declarations, not independently certified.",
+    "File listing counts cannot establish complete tests, campaigns, independent panels or representative sampling.",
+    "Schema examples may contain measured responses; no schema body is admitted by this review.",
+    "The prose says 11 columns but names only ten column roles; an eleventh role must remain unbound."
+  ],
+  "exposure": "Read the permitted metadata bodies; initial full serialization was truncated by the tool while showing embedded metadata XML. Re-read complete descriptions and selected identity/license fields. Already reported aggregate uncertainty/temperature values visible; no individual test results or schema examples read.",
+  "unperformed": [
+    "network requests",
+    "linked workbook/LIS/curve/schema file read",
+    "new criteria/model/threshold/allocation",
+    "tracked writes",
+    "tests or source-program execution"
+  ]
+}

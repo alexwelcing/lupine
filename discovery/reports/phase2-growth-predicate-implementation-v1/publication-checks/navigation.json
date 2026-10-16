@@ -1,0 +1,120 @@
+{
+  "schema": "lupine.growth_predicate.publication_navigation.v1",
+  "original_markdown_links": [],
+  "original_markdown_modified": false,
+  "original_markdown_wrapper_needed": false,
+  "published_links": [
+    {
+      "file": "PUBLICATION.md",
+      "target": "README.md",
+      "exists": true
+    },
+    {
+      "file": "PUBLICATION.md",
+      "target": "pure-author/COMPLETION.md",
+      "exists": true
+    },
+    {
+      "file": "PUBLICATION.md",
+      "target": "pure-review/README.md",
+      "exists": true
+    },
+    {
+      "file": "PUBLICATION.md",
+      "target": "production-author/COMPLETION.md",
+      "exists": true
+    },
+    {
+      "file": "PUBLICATION.md",
+      "target": "production-review/README.md",
+      "exists": true
+    },
+    {
+      "file": "PUBLICATION.md",
+      "target": "source-bindings.json",
+      "exists": true
+    },
+    {
+      "file": "PUBLICATION.md",
+      "target": "original-byte-map.json",
+      "exists": true
+    },
+    {
+      "file": "PUBLICATION.md",
+      "target": "pure-review/first-run/stderr.txt.bytes.json",
+      "exists": true
+    },
+    {
+      "file": "PUBLICATION.md",
+      "target": "publication-checks/navigation.json",
+      "exists": true
+    },
+    {
+      "file": "PUBLICATION.md",
+      "target": "publication-checks/first-inventory-inspection-failure.json",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "target": "pure-author/COMPLETION.md",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "target": "pure-review/README.md",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "target": "production-author/COMPLETION.md",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "target": "production-review/README.md",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "target": "production-author/pure-equivalence-corrected/execution.json",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "target": "production-review/pure-equivalence/execution.json",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "target": "production-author/promotion-map.json",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "target": "pure-review/review.json",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "target": "production-review/review.json",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "target": "PUBLICATION.md",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "target": "source-bindings.json",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "target": "original-byte-map.json",
+      "exists": true
+    }
+  ],
+  "all_targets_exist": true,
+  "scope": "Local report navigation only; no external URL or code-span path followed."
+}

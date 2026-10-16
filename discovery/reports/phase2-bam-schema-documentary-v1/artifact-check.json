@@ -1,0 +1,72 @@
+{
+  "schema": "lupine.bam-documentary-artifact-check.v1",
+  "checked_at": "2026-10-16T09:52:27.124696+00:00",
+  "acquisition_scope_before_GET": true,
+  "header_scope_before_invocation": true,
+  "bound_prior_design_and_initial_failures_unchanged": true,
+  "receipt_script_result_stdout_identities_consistent": true,
+  "header_invocation_exit_code": 0,
+  "header_invocation_stderr_empty": true,
+  "local_links": [
+    {
+      "from": "README.md",
+      "href": "scope.json"
+    },
+    {
+      "from": "README.md",
+      "href": "receipt.json"
+    },
+    {
+      "from": "README.md",
+      "href": "decode-failure.json"
+    },
+    {
+      "from": "README.md",
+      "href": "exposure-before-decode.json"
+    },
+    {
+      "from": "PUBLICATION.md",
+      "href": "README.md"
+    },
+    {
+      "from": "PUBLICATION.md",
+      "href": "scope.json"
+    },
+    {
+      "from": "PUBLICATION.md",
+      "href": "receipt.json"
+    },
+    {
+      "from": "PUBLICATION.md",
+      "href": "decode-failure.json"
+    },
+    {
+      "from": "PUBLICATION.md",
+      "href": "header-ascii-v1/README.md"
+    },
+    {
+      "from": "header-ascii-v1/README.md",
+      "href": "../decode-failure.json"
+    },
+    {
+      "from": "header-ascii-v1/README.md",
+      "href": "scope.json"
+    },
+    {
+      "from": "header-ascii-v1/README.md",
+      "href": "execution.json"
+    },
+    {
+      "from": "header-ascii-v1/README.md",
+      "href": "result.json"
+    },
+    {
+      "from": "header-ascii-v1/README.md",
+      "href": "project_header.py"
+    }
+  ],
+  "whole_raw_body_reread_for_this_check": false,
+  "scientific_or_runtime_test": false,
+  "network": false,
+  "scope": "Artifact chronology, existing recorded identity, source-file hashes and report navigation only"
+}

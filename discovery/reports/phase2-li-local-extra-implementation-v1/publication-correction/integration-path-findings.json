@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-16T09:28:20.596722+00:00",
+  "findings": [
+    "Initial root copy command assumed inventory.json in promoted report and failed FileNotFoundError after narrative correction had been written; no copy occurred.",
+    "Follow-up inspection guessed outer inventory.json and failed; actual handoff identifies promotion-inventory.json."
+  ],
+  "resolution": "Read exact inventory path from handoff, verify its bound hash and all copied bytes.",
+  "capture_limit": "Original command errors were tool output; no separately redirected raw log.",
+  "product_source_or_tests_changed": false,
+  "actual_source_operations": false
+}

@@ -1,0 +1,15 @@
+test_actual_public_pins_pass_independent_seal_oracle (test_upstream_seal_peer.PeerSealReview.test_actual_public_pins_pass_independent_seal_oracle) ... ok
+test_constructed_domain_separation_over_typed_values (test_upstream_seal_peer.PeerSealReview.test_constructed_domain_separation_over_typed_values) ... ok
+test_decode_still_rejects_duplicate_keys_floats_and_nonfinite (test_upstream_seal_peer.PeerSealReview.test_decode_still_rejects_duplicate_keys_floats_and_nonfinite) ... ok
+test_each_whole_file_pin_precedes_that_documents_decode (test_upstream_seal_peer.PeerSealReview.test_each_whole_file_pin_precedes_that_documents_decode) ... ok
+test_exact_one_lf_and_canonical_ascii_preimage (test_upstream_seal_peer.PeerSealReview.test_exact_one_lf_and_canonical_ascii_preimage) ... ok
+test_existing_functions_ast_unchanged_except_metadata_dispatch (test_upstream_seal_peer.PeerSealReview.test_existing_functions_ast_unchanged_except_metadata_dispatch) ... ok
+test_malformed_outer_seals_are_rejected (test_upstream_seal_peer.PeerSealReview.test_malformed_outer_seals_are_rejected) ... ok
+test_public_read_does_not_supply_registration_authority (test_upstream_seal_peer.PeerSealReview.test_public_read_does_not_supply_registration_authority) ... ok
+test_real_public_reader_uses_only_four_captured_buffers (test_upstream_seal_peer.PeerSealReview.test_real_public_reader_uses_only_four_captured_buffers) ... ok
+test_seal_covers_values_types_and_nested_content_key (test_upstream_seal_peer.PeerSealReview.test_seal_covers_values_types_and_nested_content_key) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.917s
+
+OK

@@ -1,0 +1,62 @@
+{
+  "blockers": [
+    {
+      "finding": "After a child the recorder checks runtime/HEAD/worktree but omits branch, remote and committed source guard. The last run can therefore produce final success without a complete post-state check. git ls-remote and other check_output calls have no timeout.",
+      "id": "POST_STATE_AND_TIMEOUT",
+      "minimal_repair": "Add bounded git timeouts. Invoke full state(before) and compare identity after each command, catching exceptions into the execution record and stopping on failure."
+    },
+    {
+      "finding": "Child launch, runtime snapshot, or post-git exceptions can escape before execution.json. Only the start record and raw files survive, without a closed completion/unknown-state receipt or stopped summary.",
+      "id": "EXCEPTION_RECEIPT_PRESERVATION",
+      "minimal_repair": "Wrap launch and post-state operations separately; retain launch failure/timeout, return code, elapsed time, log hashes and runtime-after when available. Use null for unverified state, write execution.json before raising or stopping, and emit only a fixed stopped code. Preserve original logs and prohibit run 2 after any such failure."
+    },
+    {
+      "finding": "The recorder prints all exposure keys/values and first_rejection_stage/same_entry_local_checks without exact shapes/types or allowed-value validation. It validates only selected exposure fields; arbitrary extra keys or unsupported stage strings would be forwarded. Source/capture/prerequisite/profile checks are incomplete.",
+      "id": "CLOSED_PUBLIC_PROJECTION",
+      "minimal_repair": "Before printing, require exact report and exposure key sets from the frozen base; profile PROFILE, synthetic_fixture False, fixed capture identity and prerequisite digest/producer, exact observed bytes/md5/sha256 types/shape, STAGES and LOCAL_SCOPES membership, nonempty closed primary categories with reason equal to the first, and categories equal primary plus supplementary. Require bool exposure types, fixed false scientific/disclosure flags, strict int zero fits/splits, empty decompressed members and no close error. Forward only this validated fixed projection."
+    }
+  ],
+  "confirmed_nonblockers": [
+    "Current field names members_decompressed and xml_decoded match the inherited header base.",
+    "The only child operations are two fixed diagnose --run 1/2 commands.",
+    "Expected subprocess success code 2 agrees with diagnostic.main, which always returns 2.",
+    "Canonical stdout is compared byte-for-byte to the fixed public receipt and final two reports must match.",
+    "Raw child stderr is stored privately and is not intentionally printed; current public projection needs the closed-shape repair above.",
+    "subprocess.run timeout kills and reaps the direct diagnostic child; process groups are not a blocker for this fixed command."
+  ],
+  "limits": {
+    "actual_ci_package_or_audit_completion_verified": false,
+    "helper_or_runtime_execution": false,
+    "network": false,
+    "private_source_or_capture_reads": false,
+    "recorder_imported": false,
+    "recorder_invoked": false,
+    "runtime_tests": false
+  },
+  "recorded_at": "2026-10-16T08:31:36.341121+00:00",
+  "schema": "lupine.discovery.header_recorder_static_review.v1",
+  "scope": "Static recorder/source contract review only. No actual source operations or tracked edits. Repairs require a new source hash and static rebind before invocation.",
+  "source_bindings": {
+    ".cache/phase2-next-source-operations-v1/run_header_after_ci.py": {
+      "bytes": 7287,
+      "sha256": "dbb47fb996f46284537fc7aa6a4b62a64c7af815630eaacc4c8f7ef1544eefa6"
+    },
+    ".cache/phase2-next-source-operations-v1/run_notebook_after_ci.py": {
+      "bytes": 29047,
+      "sha256": "2f25e433eb682a2047bc5c1c7d1548081dfbd88765c97c0278a020c2d60a97b0"
+    },
+    "scripts/li_v3_compatible_envelope.py": {
+      "bytes": 14126,
+      "sha256": "e771b3fc2a66d6e2ff3a26d8aae88b7a2915ac908907908316e697997761c847"
+    },
+    "scripts/li_v3_compatible_zip_diagnostic.py": {
+      "bytes": 16878,
+      "sha256": "59b4b549a1de33abf2c54ccfce15f4f980a3a36351f98e246ae4e9fd6c44c5d3"
+    },
+    "scripts/li_v3_zip_diagnostic.py": {
+      "bytes": 12822,
+      "sha256": "de7807a8721cc243a9acf71e01c80aa531454248b2cde92c5518f875e89e0d87"
+    }
+  },
+  "status": "BLOCKED_PENDING_RECORDER_REPAIR"
+}

@@ -1,0 +1,7 @@
+{
+  "basis": "Post-correction static review: incoming-overlap dependency must not be erased by also owning an outgoing extent",
+  "candidate_sha256": "6881d6f2db09ada9e76e1e9a0560e24f3f83f78e3063fe6740f88a66e2ff6ba6",
+  "execution_yet": false,
+  "test_sha256": "eb6cc574975e955087a88f56b3690ae32a1ca8543f02fe95ecb8c974a7056cfc",
+  "written_at": "2026-10-16T12:04:34.055560+00:00"
+}

@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-local-extra-operation-review-v1/challenge_recorder.py"
+  ],
+  "elapsed_seconds": 0.5682209149999835,
+  "exit_code": 0,
+  "finished_at": "2026-10-16T09:24:23.283855+00:00",
+  "scope": "Synthetic extracted-recorder challenge only; this wrapper starts the test harness, not the source reader.",
+  "started_at": "2026-10-16T09:24:22.715112+00:00",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "7285081a964067b3d9eda3edcd11d9b7f67c7d818fd919de3a3846aa141b6b45",
+  "test_code_sha256": "78fa9a1f446b49c8e28bc0ace0afef3d26b7987c6ada38d3e725d3644095b13d"
+}

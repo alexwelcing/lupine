@@ -1,0 +1,18 @@
+{
+  "actual_bound_reference_choice": "NOT_ESTABLISHED_HERE",
+  "actual_source_object_reads": 0,
+  "binder_reader_or_product_invocations": 0,
+  "citation_only_option": "Reuse verified43-location private documentary projection; no additional raw reference access required for this limited question.",
+  "directory": ".cache/phase2-rhizo-bound-choice-scope-v1",
+  "entrypoint": "README.md",
+  "inventory_sha256": "a4710d67833ef39466aee95edbeae1057d6b5da5e88975c7493a22f2fd4955d9",
+  "minimum_bound_bytes": 126885,
+  "minimum_bound_objects": 36,
+  "network_requests": 0,
+  "next_action": "Root chooses subsequent bounded scope after documentary result; do not infer actual selection from policy or from non-null fields.",
+  "optional_candidate_numeric_concordance_total_bytes": 188804,
+  "optional_candidate_numeric_concordance_total_objects": 38,
+  "source_review": "/root/phase2_math supported the three-scope distinction; preserved-annotation and finite-type precision included.",
+  "status": "SOURCE_ONLY_FINDING_COMPLETE_NO_READER_OR_ACTUAL_OPERATION",
+  "tracked_edits": 0
+}

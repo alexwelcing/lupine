@@ -1,0 +1,81 @@
+{
+  "actual_executions": [
+    {
+      "distinct_test_methods": 35,
+      "exit_code": 0,
+      "guard_violations": [],
+      "name": "first",
+      "process_seconds": 3.0529865529970266,
+      "receipt_sha256": "64706edec90c3460276dcf76e5b4913d34044faa4914a5edb5dbefa23a7cff5f",
+      "runtime_files_held": 335,
+      "test_sha256": "e3cc4570f27d9cb8a26f09c0563e22716e55a16b94ff5da073ff6539ec01ef50",
+      "tests": 35,
+      "unittest_seconds": 2.358
+    },
+    {
+      "distinct_test_methods": 35,
+      "exit_code": 0,
+      "guard_violations": [],
+      "name": "portable",
+      "process_seconds": 4.94134011099959,
+      "receipt_sha256": "a355a06cf584d18c85014ddd8c1044bb560742b3250e8f59974acb8cb9bfcc00",
+      "runtime_files_held": 335,
+      "test_sha256": "7ec52e6a72aef1b289503d187fa5966025a1d488ca60f55200d12fd9c10b85f0",
+      "tests": 35,
+      "unittest_seconds": 3.842
+    }
+  ],
+  "at": "2026-10-16T13:48:43.766542+00:00",
+  "blocking_findings": [],
+  "contract_sha256": "295a04a9b411001e22a4e39c831c609203c2feb1958be5e663cfbb6a9e4704b7",
+  "final_portable_test_sha256": "7ec52e6a72aef1b289503d187fa5966025a1d488ca60f55200d12fd9c10b85f0",
+  "finding_history": "Source findings and unexecuted snapshots preserved; author reports independent discovery of the package-open, frame-cap and zero-opaque edges. Two final contract-only corrections fix final-v2 links and distinguish structural counts from physical tests. No product defect was discovered in the executed independent runs.",
+  "independence": [
+    "Direct stdlib packed ZIP/XML fixtures prepared before candidate implementation/results; no author fixture imports.",
+    "Expected G34 replay manually declared from source-reviewed state transitions and invented fixture counts, never produced by candidate.",
+    "Mechanical portability preserved the entire test class AST and all assertions; original modular source and first result retained."
+  ],
+  "limits": [
+    "Generated-only engineering evidence; no actual workbook or private capture read, production guard/reader invocation, network, source acquisition or scientific evaluation.",
+    "No production readiness claim: future adapter must independently freeze sources/prerequisites/slots and cannot accept the synthetic expectation seam.",
+    "Manifest assertions may be scientifically wrong; this parser checks declared storage/joins and completeness, not scientific meanings, units, identity, independence or validity.",
+    "Exact AST preservation is source correspondence, not formal runtime refinement or physical proof.",
+    "These bounded workflows are not a security boundary against arbitrary hostile Python or environmental failure."
+  ],
+  "prehold_findings": [
+    "Hostname case comparison",
+    "Closed historical exposure shape",
+    "Current package archive-open exposure propagation",
+    "Separate 4 MiB frame-sheet aggregate accounting",
+    "Zero opaque payloads when only unfamiliar relationships trigger old kind failure",
+    "Explicit replay lifecycle scope"
+  ],
+  "report_shapes_sha256": "77039fdab0a96493e32979c91cc42d8edd63b4d8fb3e84545ad6298757c4d467",
+  "reviewed_behavior": [
+    "Sole old kind-profile replay gate precedes all payload opens; canonical mismatches and typed/closed receipt forgery block.",
+    "General names, reserved relations, Default/Override coverage and source-relative targets retain strict old workbook/documentary role rules.",
+    "Opaque bodies/CRCs remain unverified and unopened; two-role layout is atomic and exposes machine decoding honestly.",
+    "Reviewed documentary text/meaning/disclosure and supplied overlap authentication remain explicit manifest premises; no prose inference.",
+    "Complete explicit rows and all workbook sheets are accounted, including blanks, notes, summaries, duplicate asserted IDs and unresolved joins.",
+    "Endpoint lexemes are not converted or projected; changed numerical and malformed numeric lexemes retain identical permitted frame structure.",
+    "Read/close/replay failures retain current exposure; mechanical failures clear payloads, while completed unresolved frames preserve negative inventories.",
+    "Exact count/namespace/name and member/aggregate byte boundaries tested with bounded invented sources."
+  ],
+  "schema": "lupine.discovery.li_readiness.independent_review.v1",
+  "scientific_status": "BLOCKED_SCHEMA; no claim of superiority, valid outcome pairs, independent sampling or benchmark admission.",
+  "scope_counters": {
+    "actual_or_private_source_reads": 0,
+    "fits": 0,
+    "network_calls": 0,
+    "production_operations": 0,
+    "splits": 0,
+    "tracked_edits": 0
+  },
+  "source_sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219",
+  "static_evidence": {
+    "frame_target_ast_audit": "1deb7e99876ead971f8d89be0690f7b17f9b788162c7b38f55b69f3cfc88c14a",
+    "g31_and_g32_ast_audit": "3a9eff953a10cf6f677342fb9f6e7a22bd8c70e28319b1b289ba8ec50953f42a"
+  },
+  "test_count_interpretation": "The same 35 independent test methods ran twice: first modular and then mechanically embedded/portable. This is 35 distinct methods, not 70 independent tests.",
+  "verdict": "PASS_FOR_GENERATED_PURE_SCOPE"
+}

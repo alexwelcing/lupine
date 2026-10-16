@@ -1,0 +1,11 @@
+{
+  "reason": "Author60-secondouterharness timeout; no newpassedreceipt generated. Captured traceback retained; partialchildunittestoutput was not saved by this historicalharness. Existingfinal-tests.log/audit-receipt.json stillbelonged to prior20testmilestone.",
+  "sha256": {
+    "audit-execution.log": "4949625c41c50dd6a6646a885bded1d32fb959de866ccd36515bc9c62a1b8427",
+    "audit.py": "30cbfde190ba38a00a7e6d3fa78eed3efcbcd71e8f4c6ca87793218fe4b54563",
+    "supervisor.py": "1dbd4a1b0e9c3f0246d23bd7670527cfa3bd69f754279aabba06e4ae464e87ab",
+    "synthetic_worker.py": "1a0c1698a96b9df43c40e7c65113d9d05e559092d7090176893ce1c981915ef6",
+    "test_supervisor.py": "b336c4f4ab7bf66abdb0563c19ba3bd1f08570425d04f8dbeacf053f0edccebb"
+  },
+  "status": "INCOMPLETE"
+}

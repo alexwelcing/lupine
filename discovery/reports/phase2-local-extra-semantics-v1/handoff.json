@@ -1,0 +1,88 @@
+{
+  "actual_archive_or_receipt_reads": false,
+  "actual_field_id_assumed": false,
+  "actual_new_requests": 0,
+  "created_utc": "2026-10-16T09:37:00.492254+00:00",
+  "failures_preserved": [
+    "static-check-first-failure.json",
+    "source-bindings-before-line-bound-fix.json",
+    "independent-range-check-failure.json"
+  ],
+  "final_sources": [
+    {
+      "bytes": 14060,
+      "path": ".cache/phase2-local-extra-semantics-research-v1/README.md",
+      "sha256": "6beddc13565f0ca5aab11666474ba6997900082e70df5f2d02163c2341b4964b"
+    },
+    {
+      "bytes": 4484,
+      "path": ".cache/phase2-local-extra-semantics-research-v1/source-bindings.json",
+      "sha256": "efa69378e3a30876e790c2413024721a2c69929c57467fb9780d7e72f0057c2f"
+    },
+    {
+      "bytes": 3121,
+      "path": ".cache/phase2-local-extra-semantics-research-v1/static-check.json",
+      "sha256": "0605d0275f067256dcd973300d08501c339029387ad0b2d7f99fa68f4f6474fc"
+    }
+  ],
+  "independent_review_copies": [
+    {
+      "copy": {
+        "bytes": 2456,
+        "path": ".cache/phase2-local-extra-semantics-research-v1/independent-review.json",
+        "sha256": "2d99932e9d28e3a225519a4cf8c5b6b0377978a61136d32d9a22028adb39a06b"
+      },
+      "original": {
+        "bytes": 2456,
+        "path": ".cache/phase2-local-extra-semantics-review-v1/review.json",
+        "sha256": "2d99932e9d28e3a225519a4cf8c5b6b0377978a61136d32d9a22028adb39a06b"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 4223,
+        "path": ".cache/phase2-local-extra-semantics-research-v1/independent-initial-review.json",
+        "sha256": "c8066b700628a07f0e59988dc2598caecf5f62740d46214fe1281adf0da01cce"
+      },
+      "original": {
+        "bytes": 4223,
+        "path": ".cache/phase2-local-extra-semantics-review-v1/review-initial.json",
+        "sha256": "c8066b700628a07f0e59988dc2598caecf5f62740d46214fe1281adf0da01cce"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 633,
+        "path": ".cache/phase2-local-extra-semantics-research-v1/independent-range-check-failure.json",
+        "sha256": "433cf0e03c8e941ca8d637cbe0081c01b1a355cc23baf0154de38d49d24cb41e"
+      },
+      "original": {
+        "bytes": 633,
+        "path": ".cache/phase2-local-extra-semantics-review-v1/initial-range-check.json",
+        "sha256": "433cf0e03c8e941ca8d637cbe0081c01b1a355cc23baf0154de38d49d24cb41e"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 3752,
+        "path": ".cache/phase2-local-extra-semantics-research-v1/independent-child-review.json",
+        "sha256": "b88cb405cc24681ae871b8414f9610aa4dddb45a6e4d12d038cda0914b7a1896"
+      },
+      "original": {
+        "bytes": 3752,
+        "path": ".cache/phase2-local-extra-semantics-review-child-v1/review.json",
+        "sha256": "b88cb405cc24681ae871b8414f9610aa4dddb45a6e4d12d038cda0914b7a1896"
+      }
+    }
+  ],
+  "limits": "No actual ID, payload, archive validity, XML/data readiness, statistical independence or scientific usefulness established.",
+  "next_action": "Await actual separately gated header evidence through root. If a specific family warrants more interpretation, freeze a family-specific payload exposure/validation contract or obtain missing primary clauses; this note does neither automatically.",
+  "owner": "/root/phase2_math",
+  "prior_precision_artifacts": "before-unsigned-citation/",
+  "profile_changes": false,
+  "result": "Retained APPNOTE supports A220 length/signature/NUL shape and structural TLV skipping, but not PadVal-current-length equality, duplicate/update policy, complete OPC semantics or generic semantic irrelevance.",
+  "runtime_test_or_parser_execution": false,
+  "schema": "lupine.discovery.local_extra_semantics_research_handoff.v1",
+  "status": "SOURCE_ONLY_CONDITIONAL_RESEARCH_REVIEWED",
+  "tracked_edits": false
+}

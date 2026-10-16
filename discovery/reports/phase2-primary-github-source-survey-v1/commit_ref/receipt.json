@@ -1,0 +1,18 @@
+{
+  "bytes": 341,
+  "finished_at": "2026-10-16T17:16:06.244607+00:00",
+  "headers": {
+    "Content-Length": "341",
+    "Content-Type": "application/json; charset=utf-8",
+    "ETag": "\"cf54147c2c3fd2e6222aa681ee66f4720ff16002a14a32a1ae4079ac5d85de15\"",
+    "Last-Modified": "Tue, 06 Oct 2026 12:11:40 GMT"
+  },
+  "over_cap": false,
+  "redirects_followed": 0,
+  "retries": 0,
+  "sha256": "38c6222d96334d13e5655b3103118445decf5cf6f0ec3e5cfb9e74f54dc75923",
+  "started_at": "2026-10-16T17:16:05.569754+00:00",
+  "status": 200,
+  "transport_error": null,
+  "url": "https://api.github.com/repos/uiocompcat/tmQM/git/ref/heads/master"
+}

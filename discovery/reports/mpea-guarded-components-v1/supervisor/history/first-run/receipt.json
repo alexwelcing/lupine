@@ -1,0 +1,10 @@
+{
+  "failure": "SIGTERM test raced supervisor process startup before handler installation; receipt absent. Other12tests passed. No production or actual scientific execution.",
+  "log_sha256": "3a160fffb09d87c8c588b236038198c300801eed794f8cfc37f39011d7657202",
+  "result": "FAILED",
+  "source_sha256": {
+    "supervisor.py": "43fc7d2b523c3e2abb1097f7a16a962828e2b24bd50b4470e7d9d3ad51c33c1b",
+    "synthetic_worker.py": "ec519bdd548033c1e4c692ea969474bec23f5bba9a7a0bcb915b54d49fe09f6d",
+    "test_supervisor.py": "414a68559a8e6527fe60438c85eb516ff149d86653ab5c9e8c86e4979aa46643"
+  }
+}

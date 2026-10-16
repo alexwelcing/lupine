@@ -1,0 +1,46 @@
+{
+  "copies": [
+    {
+      "origin": ".cache/mpea-helper-copy-audit-v1/audit.py",
+      "retained": "audit.py",
+      "bytes": 8833,
+      "sha256": "643b0ec1a6d4a1cb9006819a7f4d2db8ef6900df1159f295afffda6ef4c2791b"
+    },
+    {
+      "origin": ".cache/mpea-helper-copy-audit-v1/receipt.json",
+      "retained": "receipt.json",
+      "bytes": 39713,
+      "sha256": "dd96a074a78d3c09fa584e58531b6db26dd20f4e74373b54d6cbed77fbfbb449"
+    },
+    {
+      "origin": ".cache/mpea-helper-copy-audit-v1/README.md",
+      "retained": "review.md",
+      "bytes": 1434,
+      "sha256": "b6072a133bb05f2942e3a1f0a54d40613eb3d0e205be3050d2df5a58956f0595"
+    },
+    {
+      "origin": ".cache/mpea-helper-copy-audit-v1/recorder-child-identity-review.json",
+      "retained": "recorder-child-identity-review.json",
+      "bytes": 2609,
+      "sha256": "b7f3049715ba8919758049c94add008bdfaca390c1bf4d25a8a47198819c553d"
+    },
+    {
+      "origin": ".cache/run-contract-freeze-suite-before-child-probe-reconstructed.py",
+      "retained": "recorder-before-child-probe-reconstructed.py",
+      "bytes": 4603,
+      "sha256": "e7cb0afa1d30a9df6b2fc917ebfe53d98ab700e877ceb7749954c4142165a4d6"
+    },
+    {
+      "origin": ".cache/run-contract-freeze-suite.py",
+      "retained": "recorder.py",
+      "bytes": 4952,
+      "sha256": "57276dc466ae6bff0c43b49b916fd92ae3caa9387965fa0cacace4bf23245634"
+    },
+    {
+      "origin": ".cache/freeze-recorder-child-identity-correction.json",
+      "retained": "recorder-correction.json",
+      "bytes": 573,
+      "sha256": "98c0304942298fbd39bac5440e5b0ec34458c4544f6e2f0d870be0a19f3bdef2"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "finding": "Independent pre-acquisition review found no durable pre-request reservation; an interrupt before acquisition.json could leave an unclaimed slot and permit another GET.",
+  "repair": "Exclusive fsynced file and directory reservation before opener.open; existing slot prevents another request.",
+  "prior_sources_preserved": "before-request-slot-repair/",
+  "actual_source_request_before_repair": false
+}

@@ -1,0 +1,16 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    ".cache/phase2-growth-verification-publication-review-v1/audit_publication.py",
+    "--freeze",
+    ".cache/phase2-growth-verification-release-v1/final-input-manifest.json",
+    "--freeze-sha256",
+    "cd7b2a6ff07f6f728fdb36827236965b7e662cbe8f1d2bf46c2dca9d9289d574",
+    "--output-directory",
+    ".cache/phase2-growth-verification-publication-review-v1/first"
+  ],
+  "started_utc": "2026-10-16T11:21:15.716292+00:00",
+  "source_sha256": "2a593cbdc29aa2db503f69647ea423c300ce94c84d8d3ad0db4a3f36b3b6abff",
+  "freeze_sha256": "cd7b2a6ff07f6f728fdb36827236965b7e662cbe8f1d2bf46c2dca9d9289d574",
+  "authorization": "Root final freeze and first-audit authorization"
+}

@@ -1,0 +1,174 @@
+{
+  "assumptions": [
+    "One common latent vector in the declared domain represents every actual score and constraint.",
+    "A consistency point proves model nonemptiness, not physical validity or observational provenance.",
+    "All quantities use the declared scenario, reference, and normalized dimensionless latent coordinates.",
+    "Every exactly tied feasible minimizer in the finite input universe is retained under these premises.",
+    "The conservative search is incomplete; retention does not certify possible or robust optimality."
+  ],
+  "certificate_digest": "08a6fd0d0c93e1c5fc78cd9bbb20ff0610adf96b3c2fd2212a811393a103366a",
+  "claim": "conditional_common_world_finite_universe_all_minimizer_retention",
+  "common_world": {
+    "claim": "one_common_latent_vector_represents_all_quantities",
+    "premise_status": "assumed_unverified",
+    "reference": "Constructed common-field and bounded-discrepancy premises, not learned correlation or scientific attestation.",
+    "relation_basis": "bounded_error_model",
+    "scientific_validity": "unestablished"
+  },
+  "coupling": {
+    "consistency": {
+      "domain_id": "451e8e3b75290c6f59d321b6a726a6b78f57a488436769d8e4a95496b0f15bd7",
+      "operations_used": 57,
+      "reason": "exact_common_feasible_point",
+      "status": "verified"
+    },
+    "status": "conditional_screened",
+    "supplied_consistency_point": [
+      "0",
+      "0",
+      "0"
+    ]
+  },
+  "diagnostics": {
+    "box_pool_role": "active_conditional_baseline",
+    "box_selection_diagnostic": {
+      "certified_feasible": [
+        "A",
+        "B"
+      ],
+      "certified_infeasible": [],
+      "dominated": [],
+      "incumbent": "B",
+      "possible_feasible": [
+        "A",
+        "B"
+      ],
+      "regret_bound": "5/2",
+      "retained": [
+        "A",
+        "B"
+      ],
+      "threshold": "17/4"
+    },
+    "marginal_intervals": {
+      "A": {
+        "constraints": {},
+        "score": {
+          "lower": "11/4",
+          "upper": "21/4"
+        }
+      },
+      "B": {
+        "constraints": {},
+        "score": {
+          "lower": "7/4",
+          "upper": "17/4"
+        }
+      }
+    }
+  },
+  "engine_version": "0.1.0",
+  "exclusion_certificates": {
+    "A": {
+      "certificate": {
+        "candidate_id": "A",
+        "feasibility": {},
+        "improvement": {
+          "domain_id": "552be976f2cfbfaf4a5f715624f49f383e73eab8046d9c0ba5954e218107a179",
+          "expression": {
+            "coefficients": [
+              "0",
+              "-1",
+              "1"
+            ],
+            "constant": "-1"
+          },
+          "multipliers": {
+            "@box-lower:1": "1",
+            "@box-upper:2": "1"
+          },
+          "upper": "-1/2"
+        },
+        "witness_id": "B"
+      },
+      "instance_digest": "9e3dbc99d14261294079cb3f80aa5ca15e726c77a211be9d0718ee07243a204c",
+      "kind": "dominance"
+    }
+  },
+  "execution": {
+    "effective_limits": {
+      "max_certificate_terms": 512,
+      "max_integer_bits": 2048,
+      "max_operations": 100000,
+      "max_witness_pairs": 4096
+    },
+    "kernel_operations_used": 175,
+    "ordered_supplied_proof_digests": [],
+    "profile_id": "coupled-local-v1",
+    "requested_limits": {
+      "max_certificate_terms": 512,
+      "max_integer_bits": 2048,
+      "max_operations": 100000,
+      "max_witness_pairs": 4096
+    }
+  },
+  "model_identity": {
+    "domain_id": "451e8e3b75290c6f59d321b6a726a6b78f57a488436769d8e4a95496b0f15bd7",
+    "instance_digest": "9e3dbc99d14261294079cb3f80aa5ca15e726c77a211be9d0718ee07243a204c",
+    "kernel_model_digest": "a87538f72445d9fce4f947557233d369a63a640e6e2fba945b226cd1aeae6359"
+  },
+  "physical_attestation": "not_established_by_this_program",
+  "problem_digest": "6fab7b9c566b87860da3c376f7cf324c5b9034a48e2195288a542eb07eee21dc",
+  "proof_assessments": [
+    {
+      "candidate_id": "A",
+      "certificate_digest": "58001cc85229bd62beb3b72189d2983e9625d206af5eb6514a57d8dcad57a4b2",
+      "check": {
+        "domain_id": "552be976f2cfbfaf4a5f715624f49f383e73eab8046d9c0ba5954e218107a179",
+        "operations_used": 116,
+        "reason": "conditional_feasible_strict_witness",
+        "status": "verified"
+      },
+      "input_index": null,
+      "source": "automatic",
+      "supplied_id": null,
+      "wire_proof_digest": null,
+      "witness_id": "B"
+    },
+    {
+      "candidate_id": "B",
+      "certificate_digest": "7b9d71ce9c6d770e2e22ff8226ddb795dac293b7a8226490fab347488e9f722d",
+      "check": {
+        "domain_id": "7e78b555ea585479f10ec2c35892562bb008f455d72d740ee6dd5aed52e3673e",
+        "operations_used": 175,
+        "reason": "strict_improvement_not_established_ties_retained",
+        "status": "not_applicable"
+      },
+      "input_index": null,
+      "source": "automatic",
+      "supplied_id": null,
+      "wire_proof_digest": null,
+      "witness_id": "A"
+    }
+  ],
+  "scenario_id": "coupled-field",
+  "schema": "lupine.discovery.coupled_certificate.v1",
+  "selection": {
+    "certified_feasible": [
+      "A",
+      "B"
+    ],
+    "coupled_dominated": [
+      "A"
+    ],
+    "coupled_infeasible": [],
+    "dominance_witnesses": {
+      "A": "B"
+    },
+    "interval_dominated": [],
+    "interval_infeasible": [],
+    "retained": [
+      "B"
+    ]
+  }
+}

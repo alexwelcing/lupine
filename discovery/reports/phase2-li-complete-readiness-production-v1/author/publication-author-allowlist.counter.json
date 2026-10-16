@@ -1,0 +1,136 @@
+{
+  "actual_operations": 0,
+  "files": [
+    {
+      "bytes": 4739,
+      "path": "counter-consistency-v1/README.md.diff",
+      "sha256": "015c15356916fdd0b510fbda8bae1ea5520e3ba1dbb5612043161b21a170de80"
+    },
+    {
+      "bytes": 2790,
+      "path": "counter-consistency-v1/author-regressions.py.txt",
+      "sha256": "daacfed494f683cd004902a3a096e0b58b03773a09ef5f30116b4d828643c2bd"
+    },
+    {
+      "bytes": 15962,
+      "path": "counter-consistency-v1/before-README.md",
+      "sha256": "e0f1794f938afde364138cc324451822d00c9b470e087cfc96b1f9038856cc5b"
+    },
+    {
+      "bytes": 9912,
+      "path": "counter-consistency-v1/before-interface.complete-route-v2.json",
+      "sha256": "e8b0e6a2cbedbe1c4207a6eb45d27fa0d48f5ad64d93328b065e588f63625a84"
+    },
+    {
+      "bytes": 60305,
+      "path": "counter-consistency-v1/before-li_v3_readiness_production.py",
+      "sha256": "540088bce4341b1f4137e44ef75244ada5786d000c50af597083dadbfc02c9d8"
+    },
+    {
+      "bytes": 43260,
+      "path": "counter-consistency-v1/before-test_li_v3_readiness_production.py",
+      "sha256": "5829e9a328c4f90b306a0a5614a01bb609fd6c3de05ec95d80883c1d9abd13e3"
+    },
+    {
+      "bytes": 1271,
+      "path": "counter-consistency-v1/correction.json",
+      "sha256": "4a9a21be6fef815c9298ab4754697031bad2e5d1817f1b6d2759176bef4ad878"
+    },
+    {
+      "bytes": 17903,
+      "path": "counter-consistency-v1/held/README.md",
+      "sha256": "87d3bc80f6442658fc1d027e30206bbb04c44635c5f9b258f0ec0f6c207ff6cb"
+    },
+    {
+      "bytes": 10467,
+      "path": "counter-consistency-v1/held/interface.complete-route-v2.json",
+      "sha256": "4c16d7156f43388982ce778a0c90ba503e3a3765e6cc444e038d7a15f61e91c1"
+    },
+    {
+      "bytes": 61640,
+      "path": "counter-consistency-v1/held/li_v3_readiness_production.py",
+      "sha256": "a3370ac84762ef7f859061bde93f118a1c1981b02460e9ddd0b1cd38e55b840b"
+    },
+    {
+      "bytes": 46051,
+      "path": "counter-consistency-v1/held/test_li_v3_readiness_production.py",
+      "sha256": "809c0126ef9f130fad264ef2617f67b9b99db103a3a14c476a6e60bfb4905470"
+    },
+    {
+      "bytes": 1589,
+      "path": "counter-consistency-v1/hold.json",
+      "sha256": "f18df2b4705185132cc8447b248a5603a840301303e418c5f1e37274499ebb20"
+    },
+    {
+      "bytes": 1595,
+      "path": "counter-consistency-v1/interface.complete-route-v2.json.diff",
+      "sha256": "127716926bd16f5a0ce215fd8864a7673335a792df027f4e3b9b7bdd78d4e91a"
+    },
+    {
+      "bytes": 329,
+      "path": "counter-consistency-v1/source-audit.json",
+      "sha256": "edb011c5190e014b6c66ef9036688223f351c8e5030ab97f15e08e0a91d20507"
+    },
+    {
+      "bytes": 3008,
+      "path": "counter-consistency-v1/source.diff",
+      "sha256": "caf66cf873a67fc662706df39de079f07cd8c8432239022a364d95428cdc2937"
+    },
+    {
+      "bytes": 3285,
+      "path": "counter-consistency-v1/test_li_v3_readiness_production.py.diff",
+      "sha256": "076ade727a37bb2977ff41210f6adc6c5094f7a98a1d0fc9a7cde14cd87b7d11"
+    },
+    {
+      "bytes": 994,
+      "path": "counter-consistency-v1/verification-scope.json",
+      "sha256": "84472f33328b5bb0066bf1fae41c04ab844cabcd055bf68519eb357d4c40bb3f"
+    },
+    {
+      "bytes": 1636,
+      "path": "receipts/completed-counter-first/bootstrap.py",
+      "sha256": "3ba750c916ecc5fb2942321aa904134303beb5e46372eddbef23f281fc4e6e3d"
+    },
+    {
+      "bytes": 1796,
+      "path": "receipts/completed-counter-first/execution.json",
+      "sha256": "64be08f24030b925a649f1ae9f6e0bdb4b4fcdf946217296020cd5e46e31c37c"
+    },
+    {
+      "bytes": 81591,
+      "path": "receipts/completed-counter-first/li_v3_readiness.py",
+      "sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219"
+    },
+    {
+      "bytes": 61640,
+      "path": "receipts/completed-counter-first/li_v3_readiness_production.py",
+      "sha256": "a3370ac84762ef7f859061bde93f118a1c1981b02460e9ddd0b1cd38e55b840b"
+    },
+    {
+      "bytes": 711,
+      "path": "receipts/completed-counter-first/scope.json",
+      "sha256": "8d58e756800538624f80add1f80cce229b7af9d84dcc03a7382b292a4a176b6b"
+    },
+    {
+      "bytes": 1150,
+      "path": "receipts/completed-counter-first/start.json",
+      "sha256": "343a79c30b6c632a84e55a13a783d376652166bebf1ab4d8a8606576004a3c1a"
+    },
+    {
+      "bytes": 9702,
+      "path": "receipts/completed-counter-first/stderr.txt",
+      "sha256": "7d376defa7bd67ac471abb7f9d1bab9e743e8e6def60c91bceb628fc5e16d6ab"
+    },
+    {
+      "bytes": 0,
+      "path": "receipts/completed-counter-first/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 46051,
+      "path": "receipts/completed-counter-first/test_li_v3_readiness_production.py",
+      "sha256": "809c0126ef9f130fad264ef2617f67b9b99db103a3a14c476a6e60bfb4905470"
+    }
+  ],
+  "status": "FROZEN_COUNTER_CORRECTION_ADDENDUM"
+}

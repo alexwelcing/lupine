@@ -1,0 +1,7 @@
+{
+  "scope": "README documentary prose only, not numerical dataset files or figures.",
+  "included_lines": "1-44 and49-63, excluding image-only lines, contact strings and benchmark/performance-result wording.",
+  "numeric_handling": "Digit-bearing tokens masked in prose before researcher display. Exact method constants/units and advertised documentary counts may later be selected explicitly; no target examples/performance numbers.",
+  "excluded_lines": "45-48 old benchmark coordinate description; any image,contact or performance line.",
+  "body_sha256": "9f5b9b9606d27af203462fcd872f6745324d8bbb85f8e3421cd7142b3eb2c83c"
+}
