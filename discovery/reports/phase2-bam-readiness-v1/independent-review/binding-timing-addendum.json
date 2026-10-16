@@ -1,0 +1,17 @@
+{
+  "schema": "lupine.discovery.bam_readiness_review_binding_addendum.v1",
+  "created_at": "2026-10-16T08:24:21.495772+00:00",
+  "status": "PASS_NO_CLAIM_OR_SOURCE_CHANGE",
+  "original_review_sha256": "ff2f12033f7d6740d82691ce6aff0c80cd280bae613363ee468f0fbd2045c8ad",
+  "original_review_source_bindings_sha256": "01d60e9724c4f3e96f6ff01b65f600524a8b7a033d6a68ee2c5f3b1c61626d9c",
+  "original_audit_bindings_sha256": "0f9970bbd1f9f17c3d073ccf8bb8aead6643255261ae292199c2e74c93d97c52",
+  "final_audit_bindings_sha256": "1a61b05a8e7142c303e3384a2a6661cf78a6d27ceac9f179849ec2b99e8b4798",
+  "readme_sha256": "2c2730f8551b51d42cc035b718a0f05807e242a769666183ec485feed361ec29",
+  "exact_only_change": "independent_review_pending renamed to independent_review_pending_at_binding_creation, retaining true",
+  "all_14_source_bindings_unchanged": true,
+  "all_3_prospective_file_identities_unchanged": true,
+  "claims_and_stop_boundary_unchanged": true,
+  "original_binding_bytes_retained": "before-binding-timing-key/reviewed-source-bindings.json",
+  "new_network_or_linked_body_access": false,
+  "new_tests_or_scientific_evaluation": false
+}

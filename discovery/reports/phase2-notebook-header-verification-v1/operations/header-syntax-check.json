@@ -1,0 +1,20 @@
+{
+  "checks": [
+    "ast.parse",
+    "compile without executing code object"
+  ],
+  "finished_at": "2026-10-16T08:43:43.490156+00:00",
+  "helpers_executed": false,
+  "network": false,
+  "private_source_or_capture_reads": false,
+  "python": "3.12.14",
+  "recorder_imported": false,
+  "recorder_invoked": false,
+  "runtime_tests": false,
+  "schema": "lupine.discovery.header_recorder_syntax_check.v1",
+  "source_path": ".cache/phase2-next-source-operations-v1/run_header_after_ci.py",
+  "source_sha256": "6cfb4cca5d3460d80318d129ed529cc7476a78729908733ac7ef50512f3b4dbb",
+  "source_unchanged": true,
+  "started_at": "2026-10-16T08:43:43.474668+00:00",
+  "status": "SYNTAX_ONLY_PASS"
+}

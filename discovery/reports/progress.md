@@ -1450,3 +1450,55 @@ and actual 4492858 verification, checks exact remote/CI and clean retained packa
 then performs only the frozen notebook capture/inspection and two categorical
 header diagnoses. No actual notebook or new diagnostic operation has run yet.
 G20 remains unresolved, G21 blocked, and every scientific NO-GO remains unchanged.
+
+
+## 2026-10-16 — actual notebook/header result and source-provenance checkpoint
+
+Root verified exact published `a6e87c198d8116d26c523e0e1b2eedce4aeb225b`.
+Original CI 38873275807 passed all four jobs, observed 08:49:58 UTC. Clean
+packaging passed 28 demonstrations/six schemas/16 installed checks, followed
+by strict retained verification and independent source/wheel byte audits.
+All 317 baseline runtime files remain exact; six new scripts/tests bring the
+held manifest to 323. Whole wheel ZIP identity differs while its 108 package
+payload files remain exact. No scientific claim follows from those identities.
+
+Only after those gates, fixed notebook capture and two inspections ran at
+08:50:33–59. Both inventories are identical STATIC_API_INVENTORY_COMPLETE;
+whole JSON/AST machine exposure is recorded, code was not executed and outputs
+were not disclosed. The projection recognizes read_excel/dropna syntax but
+establishes neither executed preprocessing nor archive equivalence. Two fixed
+header diagnoses at 08:51:23–29 are identical LOCAL_EXTRA_PRESENT at entry_local,
+with no supplementary failure, member decompression, XML decoding or cleanup
+error. All323runtimefiles, clean HEAD, remote and source guards held. An
+independent actual-operation audit passes 11,874 checks on its first invocation;
+this is source/receipt review and computational replay, not a scientific sample.
+[Complete actual evidence](phase2-notebook-header-verification-v1/README.md).
+
+The independent [paper review](phase2-li-paper-methods-v1/PUBLICATION.md) supplies
+documentary test-level row meaning and units, plus explicit graph digitization,
+derived strain rates/composition closure and missing metadata. It also finds
+24 table rows totaling 1,038 records, versus prose 1,050 and catalog 1,070; source
+reuse and broader material labels remain unresolved. The 27 explicit citation
+IDs include range endpoints and are not independent studies. Full article XML
+was machine-exposed; no linked assets or workbook endpoints were requested.
+Article CC BY-NC-ND terms remain separate from archive CC BY and software MIT.
+
+The [BAM audit](phase2-bam-readiness-v1/PUBLICATION.md) verifies public metadata
+and intended paired-test schema only. One nominal-alloy campaign may support a
+small metrology reference; it does not establish a diverse independent benchmark.
+No schema/measurement body was fetched. The [finite confidence-inversion design](phase2-finite-risk-inversion-design-v1/PUBLICATION.md)
+passes written review and independent explicit-subset counting through M=8:
+510 binary worlds,196,776 coverage checks,707,147 assertions. The optional-stopping
+counterexample is exactly 16/24 = 2/3 against 1/2. These are synthetic finite checks,
+not empirical evidence or a general formal refinement. Implementation is deferred
+until G21 has a justified fixed-frame target.
+
+G27/G28 are complete in their bounded scopes; G20 remains unresolved and G21
+blocked. Root owns publication/remote-CI verification and the next increment.
+G29 now reviews a standards-backed first-rejected-local-extra structural
+projection; actual extra contents/tags remain unparsed and unknown fields are
+not presumed benign. No new allocation, fit, threshold, DFT or exposed-set tuning
+occurred. All historical NO-GO results, first failures and pre-execution recorder
+repairs remain preserved. This report publication requires its own exact remote
+and CI observation. The expired automation remains disabled; no schedule or
+continuous worker was started.

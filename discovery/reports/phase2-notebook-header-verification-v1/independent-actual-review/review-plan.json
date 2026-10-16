@@ -1,0 +1,27 @@
+{
+  "independent_checks": [
+    "Exact observed CI run commit, original push attempt, four successful named jobs, job completion and observation timestamps preceding commands.",
+    "Clean package and strict verifier command identities, exit zero, empty stderr, log hashes, before/after runtime maps, retained public artifact manifest identity and 28/6/16 checks.",
+    "Independent retained-artifact PASS receipt bound to the same commit, without rerunning product verification or reading wheel/tar payloads here.",
+    "Current source and index/HEAD bindings, all 323 runtime hashes, prior/new source guard maps and recorder byte identities.",
+    "Root recorder preflight/start/execution/final receipts, original commands, monotone chronology, no timeout or launch error, source holds, public output validation and empty stderr.",
+    "Notebook capture and two inspections: canonical closed public reports, source identity held, acquisition versus JSON/AST exposure, no execution/raw-code/output disclosure, absent inventory on a block, known API projection only on success.",
+    "Categorical ZIP two diagnostics: canonical closed public reports, exact prior failure receipt and source/capture identities, primary/supplementary category separation, scope and cleanup flags, zero decompression/XML/scientific interpretation, null scientific counts.",
+    "Public files equal recorded stdout bytes and both inspection/diagnostic replays byte-match. Repeat reports are computational replay, not independent samples or replication.",
+    "All failures and limitations retained without reader retry, source modification, raw-source review, silent profile relaxation or conversion into scientific eligibility."
+  ],
+  "prepared_at": "2026-10-16T08:45:03.347977+00:00",
+  "private_custody_access_prohibited": [
+    "objects",
+    "private capture receipt",
+    "raw notebook",
+    "raw workbook"
+  ],
+  "scope_limits": [
+    "Checking a public source identity assertion plus committed control flow does not independently rehash the private object or establish physical truth.",
+    "CI metadata confirms job outcomes; it does not expose remote test log bodies or justify an exact unskipped remote test count.",
+    "The exact source contracts and first failed results remain fixed; any later reader/profile change must be separately reviewed."
+  ],
+  "status": "WAITING_FOR_ROOT_ACTUAL_PUBLIC_PATHS",
+  "will_not_invoke_source_readers": true
+}

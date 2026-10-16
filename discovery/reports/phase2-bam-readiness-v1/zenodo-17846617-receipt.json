@@ -1,0 +1,13 @@
+{
+  "source_url": "https://zenodo.org/api/records/17846617",
+  "record_id": "17846617",
+  "started_at": "2026-10-16T08:13:53.428211+00:00",
+  "scope": "Zenodo record metadata/file inventory only; no linked content requests",
+  "http_status": 200,
+  "final_url": "https://zenodo.org/api/records/17846617",
+  "content_type": "application/json",
+  "bytes": 14771,
+  "sha256": "48f84c7d6fc841a13de8ecccbba5f0604834cec45c3033d0d55bfd7a2e89f4d6",
+  "body_retained": true,
+  "finished_at": "2026-10-16T08:13:55.996161+00:00"
+}

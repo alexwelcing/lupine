@@ -1,0 +1,57 @@
+{
+  "schema": "lupine.evidence-publication-independent-review-bindings.v1",
+  "created_at": "2026-10-16T08:52:07.739441+00:00",
+  "bindings": [
+    {
+      "path": ".cache/phase2-evidence-publication-v1/promotion-inventory.json",
+      "bytes": 12316,
+      "sha256": "36003129e24418038f4a9d7b3ec276b2868781e6cfb0fb9cec7a353b997c7ba7"
+    },
+    {
+      "path": ".cache/phase2-evidence-publication-v1/whitespace-check.json",
+      "bytes": 10033,
+      "sha256": "e27d684b845555df0ddc852f0e2a6126657608684fd3c7b06f0e71dcf0af9133"
+    },
+    {
+      "path": ".cache/phase2-evidence-publication-v1/wording-clarification.json",
+      "bytes": 759,
+      "sha256": "3c01590f41f6019dddd6d7dcefa580fd8e7a78435eb4b0139b68fdd5224d9ffb"
+    },
+    {
+      "path": ".cache/phase2-evidence-publication-review-v1/artifact-checks-initial.json",
+      "bytes": 43450,
+      "sha256": "c4495909a433ebac55d44c21dbe5acc852950bcba8400eed36c58838624b9dd8"
+    },
+    {
+      "path": ".cache/phase2-evidence-publication-v1/promotion/reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "bytes": 4332,
+      "sha256": "561dc3786cda2cd55e37c9ec341d4c29290ad854e06984bbc44c7a1a680df014"
+    },
+    {
+      "path": ".cache/phase2-evidence-publication-v1/promotion/reports/phase2-bam-readiness-v1/publication-map.json",
+      "bytes": 10347,
+      "sha256": "3aa0e8aea664f1bb0ac6dc1cefaed3fd3f67c09872b9251d41b6b602f273615f"
+    },
+    {
+      "path": ".cache/phase2-evidence-publication-v1/promotion/reports/phase2-bam-readiness-v1/publication-checks.json",
+      "bytes": 7037,
+      "sha256": "04fc73fc919815dbd2be8de0890359c022934b4c332f1241dfca02ed945c768f"
+    },
+    {
+      "path": ".cache/phase2-evidence-publication-v1/promotion/reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "bytes": 4316,
+      "sha256": "296687aaa59ec34665a36366344c282ca528c287902bd560dd5ea317c623424d"
+    },
+    {
+      "path": ".cache/phase2-evidence-publication-v1/promotion/reports/phase2-finite-risk-inversion-design-v1/publication-map.json",
+      "bytes": 12174,
+      "sha256": "23461408302042b7ee60babdfdb26c09a44701588111b050df9cd3b49595f080"
+    },
+    {
+      "path": ".cache/phase2-evidence-publication-v1/promotion/reports/phase2-finite-risk-inversion-design-v1/publication-checks.json",
+      "bytes": 7033,
+      "sha256": "a7f49d5720d57f52c03c63e6af05d6cf4e4d2e93c734b0490b23d66de2bb776b"
+    }
+  ],
+  "all_promoted_artifact_bindings": "artifact-checks-initial.json contains independent identities for all 57 final held files. Its filename marks this reviewer's first completed artifact check; it bound the clarified final inventory, not the older 4ed444b7 inventory."
+}

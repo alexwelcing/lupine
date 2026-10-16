@@ -1,0 +1,72 @@
+{
+  "file_count": 13,
+  "files": [
+    {
+      "bytes": 5740,
+      "path": "README.md",
+      "sha256": "29b01c04ac2ed6a9fb7fb3db8cb93b20588c148d7bb4dc0427a06c80cd342d26"
+    },
+    {
+      "bytes": 51000,
+      "path": "actual-review.json",
+      "sha256": "5b6028491f73e800662a0dfc78019ec35a73cc35ea9fd99e8bf13a85330574b3"
+    },
+    {
+      "bytes": 942,
+      "path": "audit-execution.json",
+      "sha256": "b498657581513632baab7f9c0870aa267ea8a1de426252954ed176187133d980"
+    },
+    {
+      "bytes": 16848,
+      "path": "audit-pre-actual-schema-binding.py",
+      "sha256": "9cf72e360679d2dc885d32d98c5baefd024e9c05d80ee41b95ee290c3b5c6df5"
+    },
+    {
+      "bytes": 656,
+      "path": "audit-start.json",
+      "sha256": "2907d3517313c08d6b9780e75570c02405bbc37374e773e2a84aa4a7ded5a978"
+    },
+    {
+      "bytes": 0,
+      "path": "audit-stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 4053,
+      "path": "audit-stdout.txt",
+      "sha256": "ae2fc9f4077268593daff2ab509f6469848d3e05aedf0b05ddfd5d7743560271"
+    },
+    {
+      "bytes": 17517,
+      "path": "audit_completed_operations.py",
+      "sha256": "a4c8bf1e0f80c5923fa06f5f931538749d840e41ffc23c0b8e46c02a00ed7ebf"
+    },
+    {
+      "bytes": 1062,
+      "path": "pre-execution-schema-binding.json",
+      "sha256": "c6b356cf42f7c4830bef2b99c7ca7acc9eadd83acc333a3172df60aaf2e13fd3"
+    },
+    {
+      "bytes": 2441,
+      "path": "review-plan.json",
+      "sha256": "823a53f2f66a9d0df3d49324e27b4978b10dfff5a721be5e2b254e27950ba764"
+    },
+    {
+      "bytes": 5491,
+      "path": "review.json",
+      "sha256": "0c8617892987f8294d0d223fbc14bcb37ee5e0cfb437600ab1fc0c9a7341db66"
+    },
+    {
+      "bytes": 1399,
+      "path": "run_audit_recorded.py",
+      "sha256": "6f715db07f341a8f90571c25d732d1f61028d6f36f72e8af1ffac7894eca02ab"
+    },
+    {
+      "bytes": 5820,
+      "path": "source-preparation.json",
+      "sha256": "2571a9b49752f6725c515cd887ebcb3a4c0500f78c82c9abb0a4b44d7512a352"
+    }
+  ],
+  "scope": "Ignored local independent source/public-receipt audit bundle; inventory excludes itself.",
+  "total_bytes": 112969
+}

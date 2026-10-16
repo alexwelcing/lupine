@@ -1,0 +1,21 @@
+{
+  "schema": "lupine.evidence-publication-whitespace-harness-correction.v1",
+  "recorded_at": "2026-10-16T08:41:58.313754+00:00",
+  "observed_command": [
+    "git",
+    "diff",
+    "--no-index",
+    "--check",
+    "--",
+    "/dev/null",
+    ".cache/phase2-evidence-publication-v1/promotion/reports/phase2-bam-readiness-v1/PUBLICATION.md"
+  ],
+  "observed_returncode": 1,
+  "observed_stdout": "",
+  "observed_stderr": "",
+  "initial_harness_result": "Assertion required returncode0 and stopped on ordinary no-index new-file difference status1",
+  "actual_whitespace_diagnostic": false,
+  "repair": "Accept no-index status0 or1 only with empty check output; other statuses/output remain failures. Also inspect text for trailing space/tab independently.",
+  "product_or_scientific_failure": false,
+  "original_evidence_bytes_changed": false
+}

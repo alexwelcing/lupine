@@ -1,0 +1,202 @@
+{
+  "schema": "lupine.bam-metadata-readiness.v1",
+  "created_at": "2026-10-16T08:21:45.520881+00:00",
+  "scope": "Metadata/prose and advertised file identity only; no linked body acquired",
+  "result": "DOCUMENTARY_PAIRING_INTENT_PRESENT_CONTENT_AND_EVALUATION_BLOCKED",
+  "same_test_pairing": "Publisher intention; empirical joins and completeness uninspected",
+  "actual_paired_record_count": null,
+  "independent_evaluation_unit_count": null,
+  "new_record_metadata_requests": 2,
+  "new_file_content_requests": 0,
+  "current_request_failures": [],
+  "inherited_failures_preserved_in": "reports/phase2-high-temperature-leads-v1/README.md",
+  "source_bindings": [
+    {
+      "path": ".cache/phase2-high-temperature-leads-v1/bam-data.json",
+      "bytes": 21241,
+      "sha256": "65c2df41a4d31b503cea88d7929184dceeedd59dc7643d84c960697f827e8cad",
+      "role": "Previously retained DataCite metadata, no linked bodies",
+      "source_url": "https://api.datacite.org/dois/10.5281/zenodo.17846617",
+      "json_pointers": [
+        "/data/attributes/descriptions/0/description",
+        "/data/attributes/doi",
+        "/data/attributes/version",
+        "/data/attributes/rightsList",
+        "/data/attributes/relatedIdentifiers"
+      ]
+    },
+    {
+      "path": "reports/phase2-high-temperature-leads-v1/bam-data-receipt.json",
+      "bytes": 1531,
+      "sha256": "c7149819c72f50ba40db5ce9632f0f924d533282e3720607f0037e21d8c666c0",
+      "role": "Earlier metadata acquisition receipt",
+      "git_blob_sha1_of_read_bytes": "2fbb0cc2ee8a004ab96d6dfc2b30b16ab15d90b6"
+    },
+    {
+      "path": ".cache/phase2-high-temperature-leads-v1/bam-schema.json",
+      "bytes": 25593,
+      "sha256": "a897e6645fc159571afdd57ebf69fa00aa543e7ff68c98ec1e90f45ad5f70a9b",
+      "role": "Previously retained DataCite metadata, no linked bodies",
+      "source_url": "https://api.datacite.org/dois/10.5281/zenodo.17846436",
+      "json_pointers": [
+        "/data/attributes/descriptions/0/description",
+        "/data/attributes/doi",
+        "/data/attributes/version",
+        "/data/attributes/rightsList",
+        "/data/attributes/relatedIdentifiers"
+      ]
+    },
+    {
+      "path": "reports/phase2-high-temperature-leads-v1/bam-schema-receipt.json",
+      "bytes": 1176,
+      "sha256": "51f71322f83684a0a303f5efde4095b267eb9a6d31a286eabcbaa438c19c3e0a",
+      "role": "Earlier metadata acquisition receipt",
+      "git_blob_sha1_of_read_bytes": "4bd8a4a7563484358146371a8b9f8f2591233dec"
+    },
+    {
+      "path": "reports/phase2-high-temperature-leads-v1/README.md",
+      "bytes": 4445,
+      "sha256": "54191247eab5cb1455f506420ef5422081a609d4f685d1f1c4352750ce5f15a7",
+      "role": "Earlier scoped lead audit and preserved failures/exposures",
+      "git_blob_sha1_of_read_bytes": "1166bc2833b5e433efb9003e7879a5e1a752c833"
+    },
+    {
+      "path": "reports/phase2-high-temperature-leads-v1/source-bindings.json",
+      "bytes": 1886,
+      "sha256": "4097046dbb9799b2991651ef411ee9cb1740f35e6b4cb89912e51e91e895bb89",
+      "role": "Earlier scoped lead audit and preserved failures/exposures",
+      "git_blob_sha1_of_read_bytes": "9c5ae8123d410312a0bf2256e419ea7e851baa17"
+    },
+    {
+      "path": "reports/phase2-high-temperature-leads-v1/independent-review.json",
+      "bytes": 3062,
+      "sha256": "91964393c44faaabaff7801a185cb71e7a890f41294f3c28fcd7e8c079e0e941",
+      "role": "Earlier scoped lead audit and preserved failures/exposures",
+      "git_blob_sha1_of_read_bytes": "2e12a5b7e7e7e11c942ace639aaf32bb4db176c3"
+    },
+    {
+      "path": ".cache/phase2-bam-readiness-v1/zenodo-17846617.json",
+      "bytes": 14771,
+      "sha256": "48f84c7d6fc841a13de8ecccbba5f0604834cec45c3033d0d55bfd7a2e89f4d6",
+      "role": "Current official record metadata only; links not followed",
+      "source_url": "https://zenodo.org/api/records/17846617",
+      "json_pointers": [
+        "/metadata/description",
+        "/metadata/license",
+        "/metadata/access_right",
+        "/metadata/publication_date",
+        "/metadata/version",
+        "/doi",
+        "/conceptdoi",
+        "/files"
+      ]
+    },
+    {
+      "path": ".cache/phase2-bam-readiness-v1/zenodo-17846617-receipt.json",
+      "bytes": 520,
+      "sha256": "41a36cec6e853407fd616c5d26fad96bb3ce38c056290bcc4d6b2c4973902805",
+      "role": "Current metadata acquisition receipt"
+    },
+    {
+      "path": ".cache/phase2-bam-readiness-v1/zenodo-17846617-file-metadata.json",
+      "bytes": 1649,
+      "sha256": "ba8e1708ab17ebdac5b39b6536137067d4ddcee0bfe9a759c1050593ab327dbe",
+      "role": "File identity projection from current metadata"
+    },
+    {
+      "path": ".cache/phase2-bam-readiness-v1/zenodo-17846436.json",
+      "bytes": 14107,
+      "sha256": "3bcc7e2622fe555f1d0d9ae75e1326f3f09ed036cb61da1c27e06d87d6855cb0",
+      "role": "Current official record metadata only; links not followed",
+      "source_url": "https://zenodo.org/api/records/17846436",
+      "json_pointers": [
+        "/metadata/description",
+        "/metadata/license",
+        "/metadata/access_right",
+        "/metadata/publication_date",
+        "/metadata/version",
+        "/doi",
+        "/conceptdoi",
+        "/files"
+      ]
+    },
+    {
+      "path": ".cache/phase2-bam-readiness-v1/zenodo-17846436-receipt.json",
+      "bytes": 520,
+      "sha256": "bfc61a4f78f5c969da46acb4cf3ff27af05047a9f09ae06f4cfde013ba426bf4",
+      "role": "Current metadata acquisition receipt"
+    },
+    {
+      "path": ".cache/phase2-bam-readiness-v1/zenodo-17846436-file-metadata.json",
+      "bytes": 576,
+      "sha256": "07cb949abcbca0c5b9e6e0979840401c02b4692ed4fa027f791b8cfc21d181fd",
+      "role": "File identity projection from current metadata"
+    },
+    {
+      "path": ".cache/phase2-bam-readiness-v1/pre-fetch-scope.json",
+      "bytes": 600,
+      "sha256": "b520c2f8ba4626f29904ff24f3743e7cc4da0eaab782446eeed036d74614e43b",
+      "role": "Recorded stop boundary before current metadata requests"
+    }
+  ],
+  "prospective_files_not_acquired": [
+    {
+      "record_id": "17846617",
+      "version": "1.0",
+      "doi": "10.5281/zenodo.17846617",
+      "license_declared": "cc-by-4.0",
+      "file_metadata_pointer": "/files/3",
+      "filename": "2025-12_HT-Tensile-reference-data-CMSX-6_v1.0.xlsx",
+      "publisher_bytes": 54960,
+      "publisher_checksum": "md5:e85ef58139a68592f36452de195a0a10",
+      "publisher_file_id": "097e288f-1eb7-4ce5-8eb8-653b2b1fffe2",
+      "advertised_links": {
+        "self": "https://zenodo.org/api/records/17846617/files/2025-12_HT-Tensile-reference-data-CMSX-6_v1.0.xlsx/content"
+      },
+      "body_acquired": false,
+      "observed_body_sha256": null
+    },
+    {
+      "record_id": "17846436",
+      "version": "1.0",
+      "doi": "10.5281/zenodo.17846436",
+      "license_declared": "cc-by-4.0",
+      "file_metadata_pointer": "/files/0",
+      "filename": "2025-12_Data-Schema-Tensile-HT_v1.0.xlsx",
+      "publisher_bytes": 33427,
+      "publisher_checksum": "md5:be4cdcde938753c448e1bec239480c82",
+      "publisher_file_id": "a756a10f-4a78-41d9-8c12-f677e20ebf40",
+      "advertised_links": {
+        "self": "https://zenodo.org/api/records/17846436/files/2025-12_Data-Schema-Tensile-HT_v1.0.xlsx/content"
+      },
+      "body_acquired": false,
+      "observed_body_sha256": null
+    },
+    {
+      "record_id": "17846436",
+      "version": "1.0",
+      "doi": "10.5281/zenodo.17846436",
+      "license_declared": "cc-by-4.0",
+      "file_metadata_pointer": "/files/2",
+      "filename": "2025-12_Data-Schema-Tensile-HT_v1.0.csv",
+      "publisher_bytes": 41000,
+      "publisher_checksum": "md5:330a8405f6cb9c4fcfe221baea7ced27",
+      "publisher_file_id": "5fc320ce-9ba9-4eb6-8ce0-665d0f8ffed5",
+      "advertised_links": {
+        "self": "https://zenodo.org/api/records/17846436/files/2025-12_Data-Schema-Tensile-HT_v1.0.csv/content"
+      },
+      "body_acquired": false,
+      "observed_body_sha256": null
+    }
+  ],
+  "claim_pointers": {
+    "data_documentary_roles": "zenodo-17846617.json#/metadata/description",
+    "schema_documentary_roles": "zenodo-17846436.json#/metadata/description",
+    "data_license_and_version": "zenodo-17846617.json#/metadata",
+    "schema_license_and_version": "zenodo-17846436.json#/metadata"
+  },
+  "next_action": "Design and independently review a source-specific schema CSV disclosure contract; no file request within this audit",
+  "exposure_scope": "Previously published aggregate uncertainty/temperature prose and current file metadata were read; no individual response or schema example body acquired",
+  "scientific_validation": false,
+  "independent_review_pending": true
+}

@@ -1,0 +1,205 @@
+{
+  "actual_operations_reviewed": false,
+  "checked_at": "2026-10-16T08:44:07.134345+00:00",
+  "head": "a6e87c198d8116d26c523e0e1b2eedce4aeb225b",
+  "limitations": [
+    "Static call inventory does not prove behavior against arbitrary monkeypatching or a hostile interpreter.",
+    "Production notebook descriptor cleanup is not fully contained by closed-error handling; actual stderr and complete receipt must be checked.",
+    "No actual operation, receipt, CI or retained package verification result is certified by this preparation."
+  ],
+  "method": "AST parsing of source only; no source reader imports, function invocation, private custody object/capture read, or network request.",
+  "source_bindings": [
+    {
+      "bytes": 17243,
+      "path": "scripts/li_v3_notebook_methods.py",
+      "sha256": "2423ee14f16b6b7ec46ef896f25cb5962b1c28dbea79fcb365e14b0919752049",
+      "worktree_equals_head": true,
+      "worktree_equals_index": true
+    },
+    {
+      "bytes": 6249,
+      "path": "docs/li-v3-notebook-methods-plan.md",
+      "sha256": "c19cd936e9c812e46a178d3dbff5d4bf2736505de6445858b6b5214e2066f5f5",
+      "worktree_equals_head": true,
+      "worktree_equals_index": true
+    },
+    {
+      "bytes": 16878,
+      "path": "scripts/li_v3_compatible_zip_diagnostic.py",
+      "sha256": "59b4b549a1de33abf2c54ccfce15f4f980a3a36351f98e246ae4e9fd6c44c5d3",
+      "worktree_equals_head": true,
+      "worktree_equals_index": true
+    },
+    {
+      "bytes": 8524,
+      "path": "docs/li-v3-compatible-zip-diagnostic-plan.md",
+      "sha256": "73a0aa884876d042549e5250daff29e3e111b245c274e77551a6f85a82261755",
+      "worktree_equals_head": true,
+      "worktree_equals_index": true
+    },
+    {
+      "bytes": 14126,
+      "path": "scripts/li_v3_compatible_envelope.py",
+      "sha256": "e771b3fc2a66d6e2ff3a26d8aae88b7a2915ac908907908316e697997761c847",
+      "worktree_equals_head": true,
+      "worktree_equals_index": true
+    },
+    {
+      "bytes": 7811,
+      "path": "scripts/li_v3_flag_diagnostic.py",
+      "sha256": "c08c295dae15ae1f5125510076f75ce2cc6ed58f54ef5ff06861a1759dbfabc5",
+      "worktree_equals_head": true,
+      "worktree_equals_index": true
+    },
+    {
+      "bytes": 12822,
+      "path": "scripts/li_v3_zip_diagnostic.py",
+      "sha256": "de7807a8721cc243a9acf71e01c80aa531454248b2cde92c5518f875e89e0d87",
+      "worktree_equals_head": true,
+      "worktree_equals_index": true
+    },
+    {
+      "bytes": 35358,
+      "path": "scripts/li_v3_custody.py",
+      "sha256": "3ead51f0afdf16be973743257be488669c988aa40443779e7a5c400e9b0d3234",
+      "worktree_equals_head": true,
+      "worktree_equals_index": true
+    },
+    {
+      "bytes": 29047,
+      "path": ".cache/phase2-next-source-operations-v1/run_notebook_after_ci.py",
+      "sha256": "2f25e433eb682a2047bc5c1c7d1548081dfbd88765c97c0278a020c2d60a97b0"
+    },
+    {
+      "bytes": 17265,
+      "path": ".cache/phase2-next-source-operations-v1/run_header_after_ci.py",
+      "sha256": "6cfb4cca5d3460d80318d129ed529cc7476a78729908733ac7ef50512f3b4dbb"
+    }
+  ],
+  "static_call_inventory": {
+    "header:_classify": [
+      "<dynamic>.issubset",
+      "_classification",
+      "_failed",
+      "_local_failures",
+      "archive.close",
+      "archive.infolist",
+      "custody._canonical_member",
+      "custody._member_type",
+      "io.BytesIO",
+      "len",
+      "name.encode",
+      "names.add",
+      "set",
+      "sorted",
+      "stat.S_IFMT",
+      "struct.unpack",
+      "zipfile.ZipFile"
+    ],
+    "header:_local_failures": [
+      "_failed",
+      "struct.unpack"
+    ],
+    "header:diagnose": [
+      "_base",
+      "_classify",
+      "_validate_prerequisite",
+      "compatible._capture_identity",
+      "custody.CustodyError",
+      "custody._absent_at",
+      "custody._output_directory",
+      "custody._read_relative",
+      "custody._receipt_path",
+      "custody._verify_source",
+      "custody._write_at",
+      "custody.canonical",
+      "custody.os.close",
+      "header_diagnostic._validate_capture",
+      "production_context",
+      "report.update",
+      "str",
+      "type"
+    ],
+    "header:main": [
+      "<dynamic>.decode",
+      "custody._Parser",
+      "custody.canonical",
+      "diagnose",
+      "parser.add_argument",
+      "parser.parse_args",
+      "print",
+      "str"
+    ],
+    "notebook:_call": [
+      "POSITIONAL.get",
+      "_kind",
+      "any",
+      "enumerate",
+      "isinstance",
+      "len",
+      "parameters.append",
+      "sorted"
+    ],
+    "notebook:_fetch": [
+      "<dynamic>.lower",
+      "custody.CustodyError",
+      "custody._open_once",
+      "response.close",
+      "response.headers.get",
+      "response.read"
+    ],
+    "notebook:_inspect": [
+      "<dynamic>.join",
+      "MethodsError",
+      "_call",
+      "_json",
+      "all",
+      "ast.iter_child_nodes",
+      "ast.parse",
+      "cell.get",
+      "custody.canonical",
+      "imports.add",
+      "isinstance",
+      "len",
+      "notebook.get",
+      "set",
+      "sorted",
+      "source.encode",
+      "stack.extend",
+      "stack.pop",
+      "type",
+      "warnings.catch_warnings",
+      "warnings.simplefilter"
+    ],
+    "notebook:main": [
+      "_base",
+      "custody.canonical",
+      "len",
+      "report.update",
+      "run",
+      "sys.stdout.buffer.write"
+    ],
+    "notebook:run": [
+      "MethodsError",
+      "Path",
+      "_base",
+      "_capture_identity",
+      "_capture_report",
+      "_fetch",
+      "_inspect",
+      "_verify",
+      "custody._absent_at",
+      "custody._directory",
+      "custody._output_directory",
+      "custody._read_relative",
+      "custody._write_at",
+      "custody.canonical",
+      "os.close",
+      "production_context",
+      "report.update",
+      "str"
+    ]
+  },
+  "status": "SOURCE_PREPARATION_COMPLETE",
+  "tracked_worktree_clean": true
+}

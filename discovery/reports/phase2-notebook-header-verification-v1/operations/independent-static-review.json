@@ -1,0 +1,49 @@
+{
+  "findings": {
+    "checks_literal_extraction_preserved": true,
+    "delta_limited_to_schema_extraction_and_presence_guards": true,
+    "duplicate_or_missing_verifier_constants_rejected": true,
+    "fixed_schema_reconstruction_ast_equals_reference": true,
+    "operation_commands_gates_stop_replay_and_logging_unchanged": true,
+    "previous_schemas_literal_eval_blocker_resolved": true,
+    "reference_expression_ast_equals_committed_verifier_source": true,
+    "remaining_blockers": [],
+    "schema_expression_ast_sha256": "125198499cf23511181603bd70937be1e1cabc1b8c0e5df52b169c497cfebaf4"
+  },
+  "limits": {
+    "ci_or_package_completion_verified_by_this_review": false,
+    "network_requests_made": false,
+    "notebook_or_private_capture_or_object_read": false,
+    "recorder_helper_or_production_control_flow_executed": false,
+    "recorder_imported": false,
+    "recorder_invoked": false,
+    "runtime_tests_run": false
+  },
+  "recorded_at": "2026-10-16T08:27:01.547987+00:00",
+  "reviewer": "phase2_math/proof_check",
+  "schema": "lupine.discovery.independent_static_review.v1",
+  "scope": "Exact recorder delta review against retained 803f9a03 source, carried forward with prior complete static control-flow review. No invocation or runtime validation.",
+  "source_bindings": {
+    "previous_recorder": {
+      "bytes": 28041,
+      "path": ".cache/phase2-next-source-operations-v1/before-schema-ast-fix/run_notebook_after_ci.py",
+      "sha256": "803f9a03f2b8c265ddf586ee45a59f7dbc79cba0122420eca1fb4655b2e29a31"
+    },
+    "readme": {
+      "bytes": 3715,
+      "path": ".cache/phase2-next-source-operations-v1/README.md",
+      "sha256": "95eef82663f79bfefded5e7b8404fcd2c73fb995ecfeab547ae41ddc6a58fb5e"
+    },
+    "recorder": {
+      "bytes": 29047,
+      "path": ".cache/phase2-next-source-operations-v1/run_notebook_after_ci.py",
+      "sha256": "2f25e433eb682a2047bc5c1c7d1548081dfbd88765c97c0278a020c2d60a97b0"
+    },
+    "verifier": {
+      "bytes": 19883,
+      "path": "scripts/verify_retained_artifacts.py",
+      "sha256": "22455c93a2539868cf8a9dda76b67413eefe05917603718f19eef1585a1c741d"
+    }
+  },
+  "status": "PASS_STATIC_SOURCE_REVIEW"
+}

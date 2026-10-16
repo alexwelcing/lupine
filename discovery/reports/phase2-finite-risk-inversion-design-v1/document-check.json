@@ -1,0 +1,31 @@
+{
+  "schema": "lupine.finite-risk-inversion-document-check.v1",
+  "created_at": "2026-10-16T08:33:52.501490+00:00",
+  "result": "DOCUMENT_BINDINGS_AND_EXACT_WORDING_DELTA_CHECKED",
+  "bindings": [
+    {
+      "path": "GOAL.md",
+      "read_bytes_still_match": true
+    },
+    {
+      "path": "docs/study-planning.md",
+      "read_bytes_still_match": true
+    },
+    {
+      "path": "docs/finite-population-planning.md",
+      "read_bytes_still_match": true
+    },
+    {
+      "path": "reports/phase2-finite-archive-design-v1/README.md",
+      "read_bytes_still_match": true
+    },
+    {
+      "path": "reports/phase2-risk-contracts-v1/README.md",
+      "read_bytes_still_match": true
+    }
+  ],
+  "readme_sha256": "142fc8fed2bc05fc784aa1cf0b2c696b818b0d2f2766087f8685b88198023e94",
+  "bindings_sha256": "d9e24db1ca5e826a2501c948856b0b8ae065b0b7f8637a5b2686c18d662de460",
+  "readme_delta_from_initial_draft": "Only rho=1 mathematical/current API domain clarification",
+  "scope": "Artifact identity and document delta only; no runtime/math enumeration, tests, empirical sources, network or Lean compilation"
+}

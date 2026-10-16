@@ -1,34 +1,41 @@
 # Project state
 
-**Active phase, October 16:** Published `4492858` passes all four original GitHub
-CI jobs, clean packaging (28 cases/six schemas/16 checks), strict retention and
-an independent byte audit. The exact finite-archive planner is available through
-the API, CLI, HTTP and third Study planning form. Its calculation applies to a
-fixed finite frame under uniform sampling without replacement; it establishes
-neither observed power nor future-material risk.
+**Active phase, October 16:** Published `a6e87c1` passes all four original
+GitHub CI jobs, clean packaging (28 demonstrations/six schemas/16 checks), strict
+retention and independent artifact audits. [The completed source inspections](reports/phase2-notebook-header-verification-v1/README.md)
+followed those gates and preserved all 323 runtime files.
 
-[Two actual compatible-envelope runs](reports/phase2-finite-compatible-verification-v1/README.md)
-remain BLOCKED_SCHEMA / BLOCKED_LAYOUT / ZIP_LAYOUT_UNSUPPORTED. Both preserved
-all 317 runtime files and verified the complete raw object, without beginning
-member decompression or XML decoding. No recognized sheet roles or scientific
-schema are established. The precise later rejected predicate remains unresolved;
-the original reader and all earlier blocked results stay unchanged.
+The pinned author notebook was captured and two static inspections produced
+identical inventories. Whole JSON and code AST were parsed privately; code was
+not executed and output values were not disclosed. Syntactic `read_excel` and
+`dropna` calls do not establish executed preprocessing or workbook equivalence.
+The notebook remains BLOCKED_SCHEMA.
 
-The separately reviewed [notebook methods reader](reports/phase2-li-notebook-methods-candidate-v1/README.md)
-and [categorical ZIP diagnostic](reports/phase2-compatible-zip-diagnostic-v1/README.md)
-are integrated with 199 passing combined Li tests and all 323 runtime files held.
-No actual notebook was acquired. Its capture and static inspection require the
-new source's publication, exact CI and clean-package verification. The diagnostic reports closed rejection categories without changing the frozen
-compatible profile. Its first noisy synthetic cleanup attempt is preserved, and
-corrected cleanup checks pass. Dependent worksheet localization
-remains a prospective design because its envelope-success prerequisite failed.
+Two compatible ZIP diagnoses identify only LOCAL_EXTRA_PRESENT at the first
+rejected local entry. No workbook member, XML, worksheet or shared string was
+decoded. Field types/content, later entries and the complete envelope remain
+unestablished. Original blocked readers stay unchanged. G27/G28 are complete
+within their engineering scope; G29 is a prospective structural diagnostic.
 
-Root owns integration, publication and exact-source verification. The [author
-repository audit](reports/phase2-li-author-methods-v1/README.md) does not resolve
-row semantics, grouping, curation or the count discrepancy. All scientific NO-GO
-results remain unchanged; no allocation or fit occurred. The expired automation
-remains disabled and no continuous worker was started.
-[GOAL](GOAL.md#renewed-active-work--2026-10-16) records the next actions.
+The [paper methods audit](reports/phase2-li-paper-methods-v1/PUBLICATION.md)
+establishes documentary test-level rows and units, while recording 1,038 listed
+table records versus 1,050 in prose and 1,070 in the archive catalog. Source
+reuse, actual joins, missingness, curation and independent evaluation units
+remain unresolved. The [BAM audit](reports/phase2-bam-readiness-v1/PUBLICATION.md)
+identifies a possible small metrology reference, not an admitted discovery task.
+G20 remains unresolved and G21 blocked; no allocation or fit occurred.
+
+The exact finite-archive planner remains available through API, CLI, HTTP and
+Study planning. Its scope is a fixed frame under uniform sampling without
+replacement, not observed power or future-material risk. A separate
+[finite confidence-inversion design](reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md)
+has written and finite-counting review, including an optional-stopping failure;
+implementation is deferred until a justified study needs it.
+
+Root owns evidence publication and the next bounded source-admission increment.
+All scientific NO-GO results remain unchanged. The expired automation remains
+disabled; no new schedule or continuous worker was started.
+[GOAL](GOAL.md#renewed-active-work--2026-10-16) records ownership and next actions.
 
 Snapshot: 2026-10-11 01:40 UTC (exact CI observation `2026-10-11T01:40:16.973611+00:00`). Tested runtime/artifact source: `6585a605d5d325e84423c7e35c7286efe85cfb6f`. [Scoped decision and evidence](reports/research-preview-decision.md).
 

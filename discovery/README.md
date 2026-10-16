@@ -21,7 +21,7 @@ counts. The [finite-frame walkthrough](docs/finite-planning-walkthrough.md)
 shows how to define a fixed archive, interpret the result and export the exact
 calculation. Its [figure and exact data](reports/phase2-finite-planning-figure-v1/PUBLICATION.md)
 compare two explicitly different sampling experiments. The completed negative
-benchmarks remain unchanged.
+benchmarks remain unchanged. The [current source checkpoint](reports/phase2-notebook-header-verification-v1/README.md) records the completed bounded inspections and unresolved source-admission gates. The [paper provenance audit](reports/phase2-li-paper-methods-v1/PUBLICATION.md) preserves count differences and reused source material; none is treated as independent validation.
 
 ## Open the interface
 

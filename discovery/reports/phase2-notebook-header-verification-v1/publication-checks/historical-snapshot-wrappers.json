@@ -1,0 +1,29 @@
+{
+  "files": [
+    {
+      "exact_reconstruction_verified": true,
+      "new_published_path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/finite-PUBLICATION-before-review-clarification.md.bytes.json",
+      "original_bytes": 4298,
+      "original_published_path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/finite-PUBLICATION-before-review-clarification.md",
+      "original_sha256": "ff830e00c06ca7d2980215f2ed379493bc6269095ded61c6f4ae7d779f09cd98",
+      "representation_sha256": "f8ab6d1629f7de17c67b99cc2e59579e5a97004160063b94851ea2d93bf737d7"
+    },
+    {
+      "exact_reconstruction_verified": true,
+      "new_published_path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/initial-phase2-bam-readiness-v1-PUBLICATION.md.bytes.json",
+      "original_bytes": 4332,
+      "original_published_path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/initial-phase2-bam-readiness-v1-PUBLICATION.md",
+      "original_sha256": "561dc3786cda2cd55e37c9ec341d4c29290ad854e06984bbc44c7a1a680df014",
+      "representation_sha256": "428f4086bd6959f4271ccf3b542e38a1f084f1def58d3f51b30b37e13f71c44b"
+    },
+    {
+      "exact_reconstruction_verified": true,
+      "new_published_path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/initial-phase2-finite-risk-inversion-design-v1-PUBLICATION.md.bytes.json",
+      "original_bytes": 4316,
+      "original_published_path": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/initial-phase2-finite-risk-inversion-design-v1-PUBLICATION.md",
+      "original_sha256": "296687aaa59ec34665a36366344c282ca528c287902bd560dd5ea317c623424d",
+      "representation_sha256": "09b15b986c70751e39bebb9f64339175dd79131e6432efb1728a13fcda5cf4b4"
+    }
+  ],
+  "scope": "Relocated earlier publication drafts retain their exact original relative link text inside a lossless wrapper. Current publication entrypoints remain ordinary Markdown."
+}

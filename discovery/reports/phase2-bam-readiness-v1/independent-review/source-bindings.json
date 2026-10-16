@@ -1,0 +1,68 @@
+{
+  "files": {
+    ".cache/phase2-high-temperature-leads-v1/bam-data.json": {
+      "bytes": 21241,
+      "sha256": "65c2df41a4d31b503cea88d7929184dceeedd59dc7643d84c960697f827e8cad"
+    },
+    "reports/phase2-high-temperature-leads-v1/bam-data-receipt.json": {
+      "bytes": 1531,
+      "sha256": "c7149819c72f50ba40db5ce9632f0f924d533282e3720607f0037e21d8c666c0"
+    },
+    ".cache/phase2-high-temperature-leads-v1/bam-schema.json": {
+      "bytes": 25593,
+      "sha256": "a897e6645fc159571afdd57ebf69fa00aa543e7ff68c98ec1e90f45ad5f70a9b"
+    },
+    "reports/phase2-high-temperature-leads-v1/bam-schema-receipt.json": {
+      "bytes": 1176,
+      "sha256": "51f71322f83684a0a303f5efde4095b267eb9a6d31a286eabcbaa438c19c3e0a"
+    },
+    "reports/phase2-high-temperature-leads-v1/README.md": {
+      "bytes": 4445,
+      "sha256": "54191247eab5cb1455f506420ef5422081a609d4f685d1f1c4352750ce5f15a7"
+    },
+    "reports/phase2-high-temperature-leads-v1/source-bindings.json": {
+      "bytes": 1886,
+      "sha256": "4097046dbb9799b2991651ef411ee9cb1740f35e6b4cb89912e51e91e895bb89"
+    },
+    "reports/phase2-high-temperature-leads-v1/independent-review.json": {
+      "bytes": 3062,
+      "sha256": "91964393c44faaabaff7801a185cb71e7a890f41294f3c28fcd7e8c079e0e941"
+    },
+    ".cache/phase2-bam-readiness-v1/zenodo-17846617.json": {
+      "bytes": 14771,
+      "sha256": "48f84c7d6fc841a13de8ecccbba5f0604834cec45c3033d0d55bfd7a2e89f4d6"
+    },
+    ".cache/phase2-bam-readiness-v1/zenodo-17846617-receipt.json": {
+      "bytes": 520,
+      "sha256": "41a36cec6e853407fd616c5d26fad96bb3ce38c056290bcc4d6b2c4973902805"
+    },
+    ".cache/phase2-bam-readiness-v1/zenodo-17846617-file-metadata.json": {
+      "bytes": 1649,
+      "sha256": "ba8e1708ab17ebdac5b39b6536137067d4ddcee0bfe9a759c1050593ab327dbe"
+    },
+    ".cache/phase2-bam-readiness-v1/zenodo-17846436.json": {
+      "bytes": 14107,
+      "sha256": "3bcc7e2622fe555f1d0d9ae75e1326f3f09ed036cb61da1c27e06d87d6855cb0"
+    },
+    ".cache/phase2-bam-readiness-v1/zenodo-17846436-receipt.json": {
+      "bytes": 520,
+      "sha256": "bfc61a4f78f5c969da46acb4cf3ff27af05047a9f09ae06f4cfde013ba426bf4"
+    },
+    ".cache/phase2-bam-readiness-v1/zenodo-17846436-file-metadata.json": {
+      "bytes": 576,
+      "sha256": "07cb949abcbca0c5b9e6e0979840401c02b4692ed4fa027f791b8cfc21d181fd"
+    },
+    ".cache/phase2-bam-readiness-v1/pre-fetch-scope.json": {
+      "bytes": 600,
+      "sha256": "b520c2f8ba4626f29904ff24f3743e7cc4da0eaab782446eeed036d74614e43b"
+    },
+    ".cache/phase2-bam-readiness-v1/README.md": {
+      "bytes": 8384,
+      "sha256": "2c2730f8551b51d42cc035b718a0f05807e242a769666183ec485feed361ec29"
+    },
+    ".cache/phase2-bam-readiness-v1/source-bindings.json": {
+      "bytes": 8646,
+      "sha256": "0f9970bbd1f9f17c3d073ccf8bb8aead6643255261ae292199c2e74c93d97c52"
+    }
+  }
+}

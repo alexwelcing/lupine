@@ -1,0 +1,23 @@
+{
+  "schema": "lupine.discovery.report_review_inventory.v1",
+  "files": {
+    "audit_bundle.py": {
+      "bytes": 8956,
+      "sha256": "32c99c168fcb4a5133b09b6276d7a4a95a02cb5bd841e7e61587b65b08bddedb"
+    },
+    "copy-link-check.json": {
+      "bytes": 15170,
+      "sha256": "268b15331e20e94ef781c8ae0740e1bf268dcb4a87dde867714ce7f592f7a24d"
+    },
+    "review.md": {
+      "bytes": 3371,
+      "sha256": "81e8a9b03a113ae7875d997950e552627915926331877c6dc9bf97a6038d0a84"
+    }
+  },
+  "parent_handoff": {
+    "path": ".cache/phase2-notebook-header-verification-v1/handoff.json",
+    "bytes": 8506,
+    "sha256": "5a741ebe6e0f3634a4d9a0629e7636ccbf91e78a359f6fd690c7efd61bd919db"
+  },
+  "scope": "Held report copy/link/claim audit; no product tests or actual operations"
+}

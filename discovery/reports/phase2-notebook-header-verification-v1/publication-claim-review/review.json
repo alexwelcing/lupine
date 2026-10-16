@@ -1,0 +1,105 @@
+{
+  "actual_audit_reference": {
+    "path": "reports/phase2-notebook-header-verification-v1/independent-actual-review/review.json",
+    "sha256": "0c8617892987f8294d0d223fbc14bcb37ee5e0cfb437600ab1fc0c9a7341db66"
+  },
+  "blockers": [],
+  "completed_at": "2026-10-16T09:04:52.531187+00:00",
+  "narrative_bindings": {
+    "GOAL.md": {
+      "bytes": 25703,
+      "sha256": "c2bf8629ef527c6ddf4f5c146600e76b9d438e35100d47a5ad31d8f437a07e51"
+    },
+    "STATUS.md": {
+      "bytes": 30562,
+      "sha256": "6943dea311d167384651198fdba42f20c5b1f68bc34ce68c4774510fb81e4655"
+    },
+    "docs/release-validation.md": {
+      "bytes": 46593,
+      "sha256": "c7506188af6411e883e1ad5c8b0f6f706c71b7711471a1795dc8a708ae2b15a4"
+    },
+    "reports/continuation.json": {
+      "bytes": 35336,
+      "sha256": "f2df669313e0a51ce896cf12f0787393a26c8b51217752a942bd60c5bcb047d6"
+    },
+    "reports/phase2-bam-readiness-v1/PUBLICATION.md": {
+      "bytes": 4332,
+      "sha256": "561dc3786cda2cd55e37c9ec341d4c29290ad854e06984bbc44c7a1a680df014"
+    },
+    "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md": {
+      "bytes": 4316,
+      "sha256": "296687aaa59ec34665a36366344c282ca528c287902bd560dd5ea317c623424d"
+    },
+    "reports/phase2-li-paper-methods-v1/PUBLICATION.md": {
+      "bytes": 1257,
+      "sha256": "a40ba3149b3e91a8f68e6360246e0373a28d331ef1bbfa644530343ef864801c"
+    },
+    "reports/phase2-notebook-header-verification-v1/README.md": {
+      "bytes": 8050,
+      "sha256": "1f7c09d7b201ee0310a55f9c8c8db389158634d1bdeb86ead1dbfa43b67c7bdf"
+    },
+    "reports/phase2-notebook-header-verification-v1/checkpoint.json": {
+      "bytes": 1092,
+      "sha256": "e401787e2fd93da947431d38723952abf6443d3a4eddfbef9f973c93170d7d73"
+    },
+    "reports/phase2-notebook-header-verification-v1/publication-checks/historical-snapshot-wrappers.json": {
+      "bytes": 2042,
+      "sha256": "90444e9956e9151f224b52d21d80c25d32f5d78831527412a29b2ad1947b1c1e"
+    },
+    "reports/phase2-notebook-header-verification-v1/publication-checks/relocated-snapshot-link-findings.json": {
+      "bytes": 7771,
+      "sha256": "b9a7c456a2552c9bdf21c7e614870abb690540647a97808f5e48ebe72b7b0240"
+    },
+    "reports/phase2-notebook-header-verification-v1/publication-copy-map.json": {
+      "bytes": 1008,
+      "sha256": "db18a602642799e2a4e28a26f62f3fbd8fcd2deccd971c7590f366abe5330649"
+    },
+    "reports/phase2-notebook-header-verification-v1/scaffold-README.md": {
+      "bytes": 4071,
+      "sha256": "dd0518d2e43f1bf54610f7033a795bed4e95aeac4e3e25be53f6b7789bd7bccf"
+    },
+    "reports/phase2-notebook-header-verification-v1/scaffold-checkpoint.json": {
+      "bytes": 1446,
+      "sha256": "3e12bd607e03b4a29579286c18c8d6b53908c623685479c125fb598237dec400"
+    },
+    "reports/phase2-notebook-header-verification-v1/scaffold-inventory.json": {
+      "bytes": 5430,
+      "sha256": "57bda892b418f59049c7fb29d22ecd792651647db7bd82b33c3aca8b2739a84a"
+    },
+    "reports/progress.md": {
+      "bytes": 110143,
+      "sha256": "cbe9508b12a4373b113b009b4638d0a073d129db8b2d21746b153bf9d02adde9"
+    }
+  },
+  "narrative_findings": [
+    "Current README, GOAL G20/G21/G26\u2013G29, STATUS opening, latest progress/release-validation and continuation checkpoint correctly bind completed engineering to a6e87c1 and CI 38873275807. All-four CI observation precedes actual operations.",
+    "G27/G28 completion is explicitly limited to static notebook/ZIP diagnosis. BLOCKED_SCHEMA is retained; G20 remains unresolved, G21 blocked, and G29 prospective only.",
+    "Notebook narrative records whole JSON/AST machine exposure and distinguishes withholding from non-reading. It does not promote recognized syntax to executed methods, archive equivalence, row exclusions or split semantics.",
+    "ZIP narrative identifies LOCAL_EXTRA_PRESENT only at the first rejected local entry; fields, payload meaning, later entries and whole-envelope validity remain unknown. No member/XML decoding or cleanup error is claimed, consistently with the actual receipts.",
+    "All323 runtime holds, 28 demonstrations/six schemas/16 installed checks, package timing, independent artifact counts, and 11,874 actual-operation audit assertions agree with retained evidence. These are not described as scientific samples or physical validation.",
+    "Finite-inversion counts and optional-stopping example agree with the accepted counting audit; implementation remains deferred and no general formal refinement or new scientific test is claimed.",
+    "Paper/BAM summaries retain documentary/metadata scope, count/version differences, source reuse and unresolved pairing/grouping. This review cross-references their published review narratives; it does not independently reread article or source bodies.",
+    "Historical scaffold is clearly identified as an earlier pending snapshot. Original snapshots, copy inventories and first failures remain intact; current report does not inherit their pending/complete states unqualified.",
+    "The four whitespace-bearing diffs and three relocated historical Markdown snapshots use documented lossless wrappers. The latter are verified against original bytes and transform ledger, preserving old link text without presenting it as current navigation.",
+    "Expired automation remains disabled and renewed direct work is distinguished from the closed bounded schedule. Historical research-preview GO and scientific NO-GO decisions remain separately scoped.",
+    "New report publication correctly requires later remote/CI verification; a6e87c1 checks are not preclaimed for an uncommitted descendant."
+  ],
+  "publication_checks": {
+    "copy_comparisons": 138,
+    "historical_scaffold_identity_checks": 32,
+    "later_historical_wrappers_verified": 3,
+    "local_links": 85,
+    "narrative_bytes_held": true,
+    "receipt_sha256": "6306cbac1ba9505eee8a4f6fab0abb2cf88e41c7bd027eb0713593ee21892717",
+    "status": "PASS"
+  },
+  "publication_state": "Uncommitted report-only publication reviewed; no new-report remote/CI success claimed.",
+  "reviewed_source_commit": "a6e87c198d8116d26c523e0e1b2eedce4aeb225b",
+  "reviewer": "/root/finite_inverse_check",
+  "scope_limits": [
+    "Read-only narrative/publication review, not product test, source-reader rerun, new CI observation or scientific evaluation.",
+    "No private custody object or capture file read.",
+    "Hashes bind the reviewed precommit bytes and will need explicit rebinding if those narrative files change."
+  ],
+  "status": "PASS"
+}

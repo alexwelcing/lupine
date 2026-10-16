@@ -1,0 +1,16 @@
+{
+  "four_diff_wrappers": "Each *.diff.bytes.json preserves its original UTF-8 bytes and hash; no check settings changed.",
+  "historical_navigation_alias": "inventory.json is an exact copy of scaffold-inventory.json so the unchanged historical scaffold README retains its original link. It describes the earlier scaffold snapshot, not the expanded report.",
+  "later_historical_navigation_representation": "publication-checks/historical-snapshot-wrappers.json binds three earlier exact copies subsequently wrapped without altering original bytes. Initial link findings are retained.",
+  "ledgers": [
+    "copy-map-first.json",
+    "public-copy-map.json",
+    "review-copy-map.json"
+  ],
+  "scaffold_renames": {
+    "README.md": "scaffold-README.md",
+    "checkpoint.json": "scaffold-checkpoint.json",
+    "inventory.json": "scaffold-inventory.json"
+  },
+  "scope": "Publication assembly ledgers. Original scaffold/copy inventories refer to their historical source snapshots, not later report extensions."
+}

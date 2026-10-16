@@ -574,3 +574,31 @@ separate notebook static reader has passed synthetic integration only; its new
 committed-source CI, retained package and actual commands remain separate gates.
 The expired schedule is disabled. Historical preview and scientific NO-GO tiers
 are unchanged; neither engineering passes nor documentary parsing upgrade them.
+
+
+## October 16: actual notebook/header and documentary-source checkpoint
+
+Exact implementation `a6e87c198d8116d26c523e0e1b2eedce4aeb225b` passes original
+CI 38873275807, all four jobs, clean 28-case/six-schema/16-check packaging,
+strict retention and independent byte audits. [Actual-source verification](../reports/phase2-notebook-header-verification-v1/README.md)
+records the later notebook capture/two static inspections and two categorical
+header diagnoses, all with 323 held runtime files. Notebook JSON/AST inspection
+completed without code execution or output disclosure. ZIP diagnosis identifies
+LOCAL_EXTRA_PRESENT at the first rejected local entry, with no member/XML
+access. These complete G27/G28 engineering scopes; schema remains blocked.
+
+The [paper methods audit](../reports/phase2-li-paper-methods-v1/PUBLICATION.md)
+establishes documentary row semantics and units but preserves count/version
+inconsistencies, source reuse, missingness and curation uncertainty. The
+[BAM metadata audit](../reports/phase2-bam-readiness-v1/PUBLICATION.md) establishes
+neither actual complete pairs nor independent discovery units. The
+[finite confidence-inversion design](../reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md)
+has written and exact finite-case review, including a fixed-sample optional-
+stopping counterexample. It is not a new observed-data inference feature.
+
+The historical research preview remains GO_RESEARCH_PREVIEW. Physical validity,
+general predictive superiority and new archival usefulness remain unestablished;
+all earlier scientific NO-GO results persist. A source-format diagnosis, article
+count, completed static reader, successful CI or exact proof cannot close those
+gates. G20 remains unresolved and G21 blocked. The new report publication has
+its own later remote/CI verification; the checks above belong to exact a6e87c1.

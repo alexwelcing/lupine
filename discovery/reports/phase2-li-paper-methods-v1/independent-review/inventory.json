@@ -1,0 +1,29 @@
+{
+  "files": {
+    "audit.py": {
+      "bytes": 6564,
+      "sha256": "00aaec78d8c07b4195a82f62f0fa58c91ec34865043bbbbb37978ef804b7f68f"
+    },
+    "execution.json": {
+      "bytes": 682,
+      "sha256": "72fc18207743d0a867fdfff3de750e4a04534614446bbb5efe042f6792703a83"
+    },
+    "findings.md": {
+      "bytes": 5848,
+      "sha256": "b19f7b0b25ea24fdc2e34212d960883a14a37f7c995f5c1602f02b9589545941"
+    },
+    "source-bindings-and-count-check.json": {
+      "bytes": 3768,
+      "sha256": "b2bea67cf5f88e45a1aeb36fdc52bc1d19359463202ecc690fed977fd535696a"
+    },
+    "stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout.txt": {
+      "bytes": 509,
+      "sha256": "ad08b3895ce7784d6757afc986b6d0253002331ddf3df65148744d859fa69b4c"
+    }
+  },
+  "scope": "Original documentary review, source bindings, bounded aggregate calculation code and receipt only; no article XML/full text/table/workbook/private input copied; excludes itself."
+}

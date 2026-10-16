@@ -1,0 +1,17 @@
+{
+  "audit_execution_started": false,
+  "changes": [
+    "Bind header operation receipt to its reviewed public_report_canonical_and_closed field; notebook retains public_report_complete_and_valid.",
+    "Bind independent artifact review identities/checks and completion time.",
+    "Pin both executed recorder hashes to their reviewed bytes."
+  ],
+  "original_prepared_audit_sha256": "9cf72e360679d2dc885d32d98c5baefd024e9c05d80ee41b95ee290c3b5c6df5",
+  "preliminary_lookup_failure": {
+    "action": "Read guessed public artifact review path .cache/phase2-notebook-header-artifact-review-v1/review.json",
+    "classification": "Reviewer path lookup error, not a product or operation failure.",
+    "correct_public_path": ".cache/phase2-notebook-header-artifact-review-v1/actual-a6e87c/review.json",
+    "result": "FileNotFoundError before audit invocation; no source reader invoked and no private data read."
+  },
+  "recorded_at": "2026-10-16T08:53:08.434574+00:00",
+  "updated_audit_sha256": "a4c8bf1e0f80c5923fa06f5f931538749d840e41ffc23c0b8e46c02a00ed7ebf"
+}

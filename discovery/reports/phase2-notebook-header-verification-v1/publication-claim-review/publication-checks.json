@@ -1,0 +1,1582 @@
+{
+  "checked_at": "2026-10-16T09:04:03.530409+00:00",
+  "copies": [
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/HEADER-README.md",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/HEADER-README.md"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/README.md",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/README.md"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/before-header-post-command-hash-fix/HEADER-README.md",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/before-header-post-command-hash-fix/HEADER-README.md"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/before-header-post-command-hash-fix/header-repair-notes.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/before-header-post-command-hash-fix/header-repair-notes.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/before-header-post-command-hash-fix/header-repair.diff.bytes.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "lossless_utf8_json",
+      "source": ".cache/phase2-next-source-operations-v1/before-header-post-command-hash-fix/header-repair.diff"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/before-header-post-command-hash-fix/header-syntax-check.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/before-header-post-command-hash-fix/header-syntax-check.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/before-header-post-command-hash-fix/independent-static-review.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/before-header-post-command-hash-fix/independent-static-review.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/before-header-post-command-hash-fix/run_header_after_ci.py",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/before-header-post-command-hash-fix/run_header_after_ci.py"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/before-header-review-fixes/child-static-review.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/before-header-review-fixes/child-static-review.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/before-header-review-fixes/review.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/before-header-review-fixes/review.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/before-header-review-fixes/run_header_after_ci.py",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/before-header-review-fixes/run_header_after_ci.py"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/before-schema-ast-fix/README.md",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/before-schema-ast-fix/README.md"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/before-schema-ast-fix/run_notebook_after_ci.py",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/before-schema-ast-fix/run_notebook_after_ci.py"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/before-schema-ast-fix/syntax-check.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/before-schema-ast-fix/syntax-check.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/handoff.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/handoff.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/header-handoff.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/header-handoff.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/header-independent-static-review.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/header-independent-static-review.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/header-post-command-hash-repair.diff.bytes.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "lossless_utf8_json",
+      "source": ".cache/phase2-next-source-operations-v1/header-post-command-hash-repair.diff"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/header-production/1/execution.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/header-production/1/execution.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/header-production/1/start.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/header-production/1/start.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/header-production/1/stderr.txt",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/header-production/1/stderr.txt"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/header-production/1/stdout.txt",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/header-production/1/stdout.txt"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/header-production/2/execution.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/header-production/2/execution.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/header-production/2/start.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/header-production/2/start.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/header-production/2/stderr.txt",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/header-production/2/stderr.txt"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/header-production/2/stdout.txt",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/header-production/2/stdout.txt"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/header-production/final.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/header-production/final.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/header-production/preflight.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/header-production/preflight.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/header-repair-notes.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/header-repair-notes.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/header-repair.diff.bytes.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "lossless_utf8_json",
+      "source": ".cache/phase2-next-source-operations-v1/header-repair.diff"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/header-syntax-check.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/header-syntax-check.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/independent-static-review.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/independent-static-review.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/notebook-production.lock",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/notebook-production.lock"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/root-header-final-review.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/root-header-final-review.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/root-static-review.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/root-static-review.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/run-a6e87c198d8116d26c523e0e1b2eedce4aeb225b-20261016T085019156373Z/0/execution.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/run-a6e87c198d8116d26c523e0e1b2eedce4aeb225b-20261016T085019156373Z/0/execution.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/run-a6e87c198d8116d26c523e0e1b2eedce4aeb225b-20261016T085019156373Z/0/start.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/run-a6e87c198d8116d26c523e0e1b2eedce4aeb225b-20261016T085019156373Z/0/start.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/run-a6e87c198d8116d26c523e0e1b2eedce4aeb225b-20261016T085019156373Z/0/stderr.txt",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/run-a6e87c198d8116d26c523e0e1b2eedce4aeb225b-20261016T085019156373Z/0/stderr.txt"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/run-a6e87c198d8116d26c523e0e1b2eedce4aeb225b-20261016T085019156373Z/0/stdout.txt",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/run-a6e87c198d8116d26c523e0e1b2eedce4aeb225b-20261016T085019156373Z/0/stdout.txt"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/run-a6e87c198d8116d26c523e0e1b2eedce4aeb225b-20261016T085019156373Z/1/execution.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/run-a6e87c198d8116d26c523e0e1b2eedce4aeb225b-20261016T085019156373Z/1/execution.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/run-a6e87c198d8116d26c523e0e1b2eedce4aeb225b-20261016T085019156373Z/1/start.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/run-a6e87c198d8116d26c523e0e1b2eedce4aeb225b-20261016T085019156373Z/1/start.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/run-a6e87c198d8116d26c523e0e1b2eedce4aeb225b-20261016T085019156373Z/1/stderr.txt",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/run-a6e87c198d8116d26c523e0e1b2eedce4aeb225b-20261016T085019156373Z/1/stderr.txt"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/run-a6e87c198d8116d26c523e0e1b2eedce4aeb225b-20261016T085019156373Z/1/stdout.txt",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/run-a6e87c198d8116d26c523e0e1b2eedce4aeb225b-20261016T085019156373Z/1/stdout.txt"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/run-a6e87c198d8116d26c523e0e1b2eedce4aeb225b-20261016T085019156373Z/2/execution.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/run-a6e87c198d8116d26c523e0e1b2eedce4aeb225b-20261016T085019156373Z/2/execution.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/run-a6e87c198d8116d26c523e0e1b2eedce4aeb225b-20261016T085019156373Z/2/start.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/run-a6e87c198d8116d26c523e0e1b2eedce4aeb225b-20261016T085019156373Z/2/start.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/run-a6e87c198d8116d26c523e0e1b2eedce4aeb225b-20261016T085019156373Z/2/stderr.txt",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/run-a6e87c198d8116d26c523e0e1b2eedce4aeb225b-20261016T085019156373Z/2/stderr.txt"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/run-a6e87c198d8116d26c523e0e1b2eedce4aeb225b-20261016T085019156373Z/2/stdout.txt",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/run-a6e87c198d8116d26c523e0e1b2eedce4aeb225b-20261016T085019156373Z/2/stdout.txt"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/run-a6e87c198d8116d26c523e0e1b2eedce4aeb225b-20261016T085019156373Z/final.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/run-a6e87c198d8116d26c523e0e1b2eedce4aeb225b-20261016T085019156373Z/final.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/run-a6e87c198d8116d26c523e0e1b2eedce4aeb225b-20261016T085019156373Z/preflight.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/run-a6e87c198d8116d26c523e0e1b2eedce4aeb225b-20261016T085019156373Z/preflight.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/run-a6e87c198d8116d26c523e0e1b2eedce4aeb225b-20261016T085019156373Z/root-post-recorder-gates.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/run-a6e87c198d8116d26c523e0e1b2eedce4aeb225b-20261016T085019156373Z/root-post-recorder-gates.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/run_header_after_ci.py",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/run_header_after_ci.py"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/run_notebook_after_ci.py",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/run_notebook_after_ci.py"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/schema-ast-repair.diff.bytes.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "lossless_utf8_json",
+      "source": ".cache/phase2-next-source-operations-v1/schema-ast-repair.diff"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/static-source-bindings.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/static-source-bindings.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/operations/syntax-check.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-next-source-operations-v1/syntax-check.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/ci/final.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-notebook-header-ci-v1/final.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/ci/observations.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-notebook-header-ci-v1/observations.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/scaffold-independent-review/audit_bundle.py",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-notebook-header-verification-review-v1/audit_bundle.py"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/scaffold-independent-review/copy-link-check.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-notebook-header-verification-review-v1/copy-link-check.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/scaffold-independent-review/inventory.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-notebook-header-verification-review-v1/inventory.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/scaffold-independent-review/review.md",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-notebook-header-verification-review-v1/review.md"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/header-recorder-review/HEADER-README.md",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-header-recorder-planner-review-v1/HEADER-README.md"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/header-recorder-review/first/review.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-header-recorder-planner-review-v1/first/review.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/header-recorder-review/first/run_header_after_ci.py",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-header-recorder-planner-review-v1/first/run_header_after_ci.py"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/header-recorder-review/inventory.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-header-recorder-planner-review-v1/inventory.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/header-recorder-review/review.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-header-recorder-planner-review-v1/review.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/header-recorder-review/reviewed-delta.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-header-recorder-planner-review-v1/reviewed-delta.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/header-recorder-review/run_header_after_ci.py",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-header-recorder-planner-review-v1/run_header_after_ci.py"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/artifact-checks-initial.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-evidence-publication-review-v1/artifact-checks-initial.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/finite-PUBLICATION-before-review-clarification.md",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "later_lossless_utf8_wrapper",
+      "source": ".cache/phase2-evidence-publication-review-v1/finite-PUBLICATION-before-review-clarification.md"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/initial-phase2-bam-readiness-v1-PUBLICATION.md",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "later_lossless_utf8_wrapper",
+      "source": ".cache/phase2-evidence-publication-review-v1/initial-phase2-bam-readiness-v1-PUBLICATION.md"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/initial-phase2-finite-risk-inversion-design-v1-PUBLICATION.md",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "later_lossless_utf8_wrapper",
+      "source": ".cache/phase2-evidence-publication-review-v1/initial-phase2-finite-risk-inversion-design-v1-PUBLICATION.md"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/initial-promotion-inventory.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-evidence-publication-review-v1/initial-promotion-inventory.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/review.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-evidence-publication-review-v1/review.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/source-bindings.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-evidence-publication-review-v1/source-bindings.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/evidence-publication-review/wording-clarification.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-evidence-publication-review-v1/wording-clarification.json"
+    },
+    {
+      "destination": "reports/phase2-li-paper-methods-v1/README.md",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-li-paper-methods-v1/README.md"
+    },
+    {
+      "destination": "reports/phase2-li-paper-methods-v1/README-before-table-audit.md",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-li-paper-methods-v1/README-before-table-audit.md"
+    },
+    {
+      "destination": "reports/phase2-li-paper-methods-v1/scope.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-li-paper-methods-v1/scope.json"
+    },
+    {
+      "destination": "reports/phase2-li-paper-methods-v1/receipt.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-li-paper-methods-v1/receipt.json"
+    },
+    {
+      "destination": "reports/phase2-li-paper-methods-v1/table-metadata-check.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-li-paper-methods-v1/table-metadata-check.json"
+    },
+    {
+      "destination": "reports/phase2-li-paper-methods-v1/catalog-metadata/projection.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-li-paper-metadata-v1/projection.json"
+    },
+    {
+      "destination": "reports/phase2-li-paper-methods-v1/catalog-metadata/receipt.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-li-paper-metadata-v1/receipt.json"
+    },
+    {
+      "destination": "reports/phase2-li-paper-methods-v1/catalog-metadata/response.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-li-paper-metadata-v1/response.json"
+    },
+    {
+      "destination": "reports/phase2-li-paper-methods-v1/catalog-metadata/scope.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-li-paper-metadata-v1/scope.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/evidence-publication-handoff.json",
+      "ledger": "copy-map-first.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-evidence-publication-v1/handoff.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/public-notebook/capture.json",
+      "ledger": "public-copy-map.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/li-v3-custody/notebook-methods-v1/capture/public.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/public-notebook/1.json",
+      "ledger": "public-copy-map.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/li-v3-custody/notebook-methods-v1/1/public.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/public-notebook/2.json",
+      "ledger": "public-copy-map.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/li-v3-custody/notebook-methods-v1/2/public.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/public-header/1.json",
+      "ledger": "public-copy-map.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/li-v3-custody/compatible-zip-diagnostic-v1/1/public.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/public-header/2.json",
+      "ledger": "public-copy-map.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/li-v3-custody/compatible-zip-diagnostic-v1/2/public.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/README.md",
+      "ledger": "review-copy-map.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-notebook-header-actual-review-v1/README.md"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/actual-review.json",
+      "ledger": "review-copy-map.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-notebook-header-actual-review-v1/actual-review.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/audit-execution.json",
+      "ledger": "review-copy-map.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-notebook-header-actual-review-v1/audit-execution.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/audit-pre-actual-schema-binding.py",
+      "ledger": "review-copy-map.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-notebook-header-actual-review-v1/audit-pre-actual-schema-binding.py"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/audit-start.json",
+      "ledger": "review-copy-map.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-notebook-header-actual-review-v1/audit-start.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/audit-stderr.txt",
+      "ledger": "review-copy-map.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-notebook-header-actual-review-v1/audit-stderr.txt"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/audit-stdout.txt",
+      "ledger": "review-copy-map.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-notebook-header-actual-review-v1/audit-stdout.txt"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/audit_completed_operations.py",
+      "ledger": "review-copy-map.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-notebook-header-actual-review-v1/audit_completed_operations.py"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/inventory.json",
+      "ledger": "review-copy-map.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-notebook-header-actual-review-v1/inventory.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/pre-execution-schema-binding.json",
+      "ledger": "review-copy-map.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-notebook-header-actual-review-v1/pre-execution-schema-binding.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/review-plan.json",
+      "ledger": "review-copy-map.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-notebook-header-actual-review-v1/review-plan.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/review.json",
+      "ledger": "review-copy-map.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-notebook-header-actual-review-v1/review.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/run_audit_recorded.py",
+      "ledger": "review-copy-map.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-notebook-header-actual-review-v1/run_audit_recorded.py"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/source-preparation.json",
+      "ledger": "review-copy-map.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-notebook-header-actual-review-v1/source-preparation.json"
+    },
+    {
+      "destination": "reports/phase2-li-paper-methods-v1/independent-review/audit.py",
+      "ledger": "review-copy-map.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-li-paper-methods-review-v1/audit.py"
+    },
+    {
+      "destination": "reports/phase2-li-paper-methods-v1/independent-review/execution.json",
+      "ledger": "review-copy-map.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-li-paper-methods-review-v1/execution.json"
+    },
+    {
+      "destination": "reports/phase2-li-paper-methods-v1/independent-review/findings.md",
+      "ledger": "review-copy-map.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-li-paper-methods-review-v1/findings.md"
+    },
+    {
+      "destination": "reports/phase2-li-paper-methods-v1/independent-review/inventory.json",
+      "ledger": "review-copy-map.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-li-paper-methods-review-v1/inventory.json"
+    },
+    {
+      "destination": "reports/phase2-li-paper-methods-v1/independent-review/source-bindings-and-count-check.json",
+      "ledger": "review-copy-map.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-li-paper-methods-review-v1/source-bindings-and-count-check.json"
+    },
+    {
+      "destination": "reports/phase2-li-paper-methods-v1/independent-review/stderr.txt",
+      "ledger": "review-copy-map.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-li-paper-methods-review-v1/stderr.txt"
+    },
+    {
+      "destination": "reports/phase2-li-paper-methods-v1/independent-review/stdout.txt",
+      "ledger": "review-copy-map.json",
+      "pass": true,
+      "representation": "exact",
+      "source": ".cache/phase2-li-paper-methods-review-v1/stdout.txt"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/README.md",
+      "pass": true,
+      "source": ".cache/phase2-notebook-header-actual-review-v1/README.md"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/actual-review.json",
+      "pass": true,
+      "source": ".cache/phase2-notebook-header-actual-review-v1/actual-review.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/audit-execution.json",
+      "pass": true,
+      "source": ".cache/phase2-notebook-header-actual-review-v1/audit-execution.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/audit-pre-actual-schema-binding.py",
+      "pass": true,
+      "source": ".cache/phase2-notebook-header-actual-review-v1/audit-pre-actual-schema-binding.py"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/audit-start.json",
+      "pass": true,
+      "source": ".cache/phase2-notebook-header-actual-review-v1/audit-start.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/audit-stderr.txt",
+      "pass": true,
+      "source": ".cache/phase2-notebook-header-actual-review-v1/audit-stderr.txt"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/audit-stdout.txt",
+      "pass": true,
+      "source": ".cache/phase2-notebook-header-actual-review-v1/audit-stdout.txt"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/audit_completed_operations.py",
+      "pass": true,
+      "source": ".cache/phase2-notebook-header-actual-review-v1/audit_completed_operations.py"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/inventory.json",
+      "pass": true,
+      "source": ".cache/phase2-notebook-header-actual-review-v1/inventory.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/pre-execution-schema-binding.json",
+      "pass": true,
+      "source": ".cache/phase2-notebook-header-actual-review-v1/pre-execution-schema-binding.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/review-plan.json",
+      "pass": true,
+      "source": ".cache/phase2-notebook-header-actual-review-v1/review-plan.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/review.json",
+      "pass": true,
+      "source": ".cache/phase2-notebook-header-actual-review-v1/review.json"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/run_audit_recorded.py",
+      "pass": true,
+      "source": ".cache/phase2-notebook-header-actual-review-v1/run_audit_recorded.py"
+    },
+    {
+      "destination": "reports/phase2-notebook-header-verification-v1/independent-actual-review/source-preparation.json",
+      "pass": true,
+      "source": ".cache/phase2-notebook-header-actual-review-v1/source-preparation.json"
+    },
+    {
+      "destination": "reports/phase2-finite-risk-inversion-design-v1/counting-review/README.md",
+      "pass": true,
+      "source": ".cache/phase2-finite-risk-inversion-counting-v1/README.md"
+    },
+    {
+      "destination": "reports/phase2-finite-risk-inversion-design-v1/counting-review/audit.py",
+      "pass": true,
+      "source": ".cache/phase2-finite-risk-inversion-counting-v1/audit.py"
+    },
+    {
+      "destination": "reports/phase2-finite-risk-inversion-design-v1/counting-review/exact-distributions.json",
+      "pass": true,
+      "source": ".cache/phase2-finite-risk-inversion-counting-v1/exact-distributions.json"
+    },
+    {
+      "destination": "reports/phase2-finite-risk-inversion-design-v1/counting-review/execution.json",
+      "pass": true,
+      "source": ".cache/phase2-finite-risk-inversion-counting-v1/execution.json"
+    },
+    {
+      "destination": "reports/phase2-finite-risk-inversion-design-v1/counting-review/inventory.json",
+      "pass": true,
+      "source": ".cache/phase2-finite-risk-inversion-counting-v1/inventory.json"
+    },
+    {
+      "destination": "reports/phase2-finite-risk-inversion-design-v1/counting-review/optional-stopping-paths.json",
+      "pass": true,
+      "source": ".cache/phase2-finite-risk-inversion-counting-v1/optional-stopping-paths.json"
+    },
+    {
+      "destination": "reports/phase2-finite-risk-inversion-design-v1/counting-review/result.json",
+      "pass": true,
+      "source": ".cache/phase2-finite-risk-inversion-counting-v1/result.json"
+    },
+    {
+      "destination": "reports/phase2-finite-risk-inversion-design-v1/counting-review/review.json",
+      "pass": true,
+      "source": ".cache/phase2-finite-risk-inversion-counting-v1/review.json"
+    },
+    {
+      "destination": "reports/phase2-finite-risk-inversion-design-v1/counting-review/run_recorded.py",
+      "pass": true,
+      "source": ".cache/phase2-finite-risk-inversion-counting-v1/run_recorded.py"
+    },
+    {
+      "destination": "reports/phase2-finite-risk-inversion-design-v1/counting-review/start.json",
+      "pass": true,
+      "source": ".cache/phase2-finite-risk-inversion-counting-v1/start.json"
+    },
+    {
+      "destination": "reports/phase2-finite-risk-inversion-design-v1/counting-review/stderr.txt",
+      "pass": true,
+      "source": ".cache/phase2-finite-risk-inversion-counting-v1/stderr.txt"
+    },
+    {
+      "destination": "reports/phase2-finite-risk-inversion-design-v1/counting-review/stdout.txt",
+      "pass": true,
+      "source": ".cache/phase2-finite-risk-inversion-counting-v1/stdout.txt"
+    }
+  ],
+  "copy_check_count": 138,
+  "errors": [],
+  "later_historical_wrappers_checked": 3,
+  "links": [
+    {
+      "exists": true,
+      "from": "reports/phase2-notebook-header-verification-v1/README.md",
+      "target": "ci/final.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-notebook-header-verification-v1/README.md",
+      "target": "clean-package/0-execution.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-notebook-header-verification-v1/README.md",
+      "target": "clean-package/1-execution.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-notebook-header-verification-v1/README.md",
+      "target": "clean-package/release-artifacts.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-notebook-header-verification-v1/README.md",
+      "target": "independent-artifact-review/actual-a6e87c/review.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-notebook-header-verification-v1/README.md",
+      "target": "independent-artifact-review/additive-review.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-notebook-header-verification-v1/README.md",
+      "target": "public-notebook/capture.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-notebook-header-verification-v1/README.md",
+      "target": "public-notebook/1.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-notebook-header-verification-v1/README.md",
+      "target": "public-header/1.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-notebook-header-verification-v1/README.md",
+      "target": "prospective-compatible-zip-decision/README.md"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-notebook-header-verification-v1/README.md",
+      "target": "independent-actual-review/actual-review.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-notebook-header-verification-v1/README.md",
+      "target": "../phase2-li-paper-methods-v1/PUBLICATION.md"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-notebook-header-verification-v1/README.md",
+      "target": "../phase2-bam-readiness-v1/PUBLICATION.md"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-notebook-header-verification-v1/README.md",
+      "target": "../phase2-finite-risk-inversion-design-v1/PUBLICATION.md"
+    },
+    {
+      "exists": true,
+      "from": "GOAL.md",
+      "target": "reports/phase2-workbench-verification-v1/README.md"
+    },
+    {
+      "exists": true,
+      "from": "GOAL.md",
+      "target": "reports/phase2-notebook-header-verification-v1/README.md"
+    },
+    {
+      "exists": true,
+      "from": "GOAL.md",
+      "target": "reports/phase2-li-paper-methods-v1/PUBLICATION.md"
+    },
+    {
+      "exists": true,
+      "from": "GOAL.md",
+      "target": "reports/phase2-bam-readiness-v1/PUBLICATION.md"
+    },
+    {
+      "exists": true,
+      "from": "GOAL.md",
+      "target": "reports/phase2-risk-contracts-v1/README.md"
+    },
+    {
+      "exists": true,
+      "from": "GOAL.md",
+      "target": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md"
+    },
+    {
+      "exists": true,
+      "from": "GOAL.md",
+      "target": "reports/phase2-workbench-verification-v1/README.md"
+    },
+    {
+      "exists": true,
+      "from": "GOAL.md",
+      "target": "reports/phase2-li-flag-verification-v1/README.md"
+    },
+    {
+      "exists": true,
+      "from": "GOAL.md",
+      "target": "reports/phase2-finite-compatible-verification-v1/README.md"
+    },
+    {
+      "exists": true,
+      "from": "GOAL.md",
+      "target": "docs/finite-planning-walkthrough.md"
+    },
+    {
+      "exists": true,
+      "from": "GOAL.md",
+      "target": "reports/phase2-finite-planning-figure-v1/PUBLICATION.md"
+    },
+    {
+      "exists": true,
+      "from": "GOAL.md",
+      "target": "reports/phase2-notebook-header-verification-v1/README.md"
+    },
+    {
+      "exists": true,
+      "from": "GOAL.md",
+      "target": "reports/phase2-notebook-header-verification-v1/README.md"
+    },
+    {
+      "exists": true,
+      "from": "STATUS.md",
+      "target": "reports/phase2-notebook-header-verification-v1/README.md"
+    },
+    {
+      "exists": true,
+      "from": "STATUS.md",
+      "target": "reports/phase2-li-paper-methods-v1/PUBLICATION.md"
+    },
+    {
+      "exists": true,
+      "from": "STATUS.md",
+      "target": "reports/phase2-bam-readiness-v1/PUBLICATION.md"
+    },
+    {
+      "exists": true,
+      "from": "STATUS.md",
+      "target": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md"
+    },
+    {
+      "exists": true,
+      "from": "STATUS.md",
+      "target": "GOAL.md#renewed-active-work--2026-10-16"
+    },
+    {
+      "exists": true,
+      "from": "reports/progress.md",
+      "target": "phase2-notebook-header-verification-v1/README.md"
+    },
+    {
+      "exists": true,
+      "from": "reports/progress.md",
+      "target": "phase2-li-paper-methods-v1/PUBLICATION.md"
+    },
+    {
+      "exists": true,
+      "from": "reports/progress.md",
+      "target": "phase2-bam-readiness-v1/PUBLICATION.md"
+    },
+    {
+      "exists": true,
+      "from": "reports/progress.md",
+      "target": "phase2-finite-risk-inversion-design-v1/PUBLICATION.md"
+    },
+    {
+      "exists": true,
+      "from": "docs/release-validation.md",
+      "target": "../reports/phase2-notebook-header-verification-v1/README.md"
+    },
+    {
+      "exists": true,
+      "from": "docs/release-validation.md",
+      "target": "../reports/phase2-li-paper-methods-v1/PUBLICATION.md"
+    },
+    {
+      "exists": true,
+      "from": "docs/release-validation.md",
+      "target": "../reports/phase2-bam-readiness-v1/PUBLICATION.md"
+    },
+    {
+      "exists": true,
+      "from": "docs/release-validation.md",
+      "target": "../reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-notebook-header-verification-v1/scaffold-README.md",
+      "target": "checkpoint.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-notebook-header-verification-v1/scaffold-README.md",
+      "target": "clean-package/0-execution.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-notebook-header-verification-v1/scaffold-README.md",
+      "target": "clean-package/1-execution.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-notebook-header-verification-v1/scaffold-README.md",
+      "target": "clean-package/release-artifacts.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-notebook-header-verification-v1/scaffold-README.md",
+      "target": "independent-artifact-review/actual-a6e87c/review.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-notebook-header-verification-v1/scaffold-README.md",
+      "target": "independent-artifact-review/additive-review.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-notebook-header-verification-v1/scaffold-README.md",
+      "target": "independent-artifact-review/additive-first/additive-review.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-notebook-header-verification-v1/scaffold-README.md",
+      "target": "independent-artifact-review/independent-source-review/source-review.md"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-notebook-header-verification-v1/scaffold-README.md",
+      "target": "prospective-compatible-zip-decision/README.md"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-notebook-header-verification-v1/scaffold-README.md",
+      "target": "copy-map.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-notebook-header-verification-v1/scaffold-README.md",
+      "target": "inventory.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-li-paper-methods-v1/PUBLICATION.md",
+      "target": "README.md"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-li-paper-methods-v1/PUBLICATION.md",
+      "target": "independent-review/findings.md"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-li-paper-methods-v1/PUBLICATION.md",
+      "target": "scope.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-li-paper-methods-v1/PUBLICATION.md",
+      "target": "receipt.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-li-paper-methods-v1/PUBLICATION.md",
+      "target": "../phase2-source-readiness-v1/li-metadata/README.md"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-li-paper-methods-v1/PUBLICATION.md",
+      "target": "../phase2-li-author-methods-v1/README.md"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-li-paper-methods-v1/PUBLICATION.md",
+      "target": "table-metadata-check.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "target": "README.md"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "target": "independent-review/review.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "target": "independent-review/binding-timing-addendum.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "target": "publication-map.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "target": "publication-checks.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "target": "retained-metadata/datacite-17846617.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "target": "retained-metadata/datacite-17846436.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "target": "zenodo-17846617.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "target": "zenodo-17846436.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "target": "source-bindings.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "target": "../phase2-high-temperature-leads-v1/README.md"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "target": "publication-first-check-failure.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "target": "publication-content-scope.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-bam-readiness-v1/PUBLICATION.md",
+      "target": "publication-whitespace-harness-correction.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "target": "README.md"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "target": "independent-review/independent-derivation.md"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "target": "independent-review/review.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "target": "publication-map.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "target": "source-bindings.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "target": "publication-checks.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "target": "publication-first-check-failure.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "target": "counting-review/README.md"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "target": "counting-review/execution.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "target": "counting-review/review.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "target": "counting-review/inventory.json"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "target": "README.md"
+    },
+    {
+      "exists": true,
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "target": "publication-whitespace-harness-correction.json"
+    }
+  ],
+  "local_link_count": 85,
+  "narrative_bindings": {
+    "GOAL.md": {
+      "bytes": 25703,
+      "sha256": "c2bf8629ef527c6ddf4f5c146600e76b9d438e35100d47a5ad31d8f437a07e51"
+    },
+    "STATUS.md": {
+      "bytes": 30562,
+      "sha256": "6943dea311d167384651198fdba42f20c5b1f68bc34ce68c4774510fb81e4655"
+    },
+    "docs/release-validation.md": {
+      "bytes": 46593,
+      "sha256": "c7506188af6411e883e1ad5c8b0f6f706c71b7711471a1795dc8a708ae2b15a4"
+    },
+    "reports/continuation.json": {
+      "bytes": 35336,
+      "sha256": "f2df669313e0a51ce896cf12f0787393a26c8b51217752a942bd60c5bcb047d6"
+    },
+    "reports/phase2-bam-readiness-v1/PUBLICATION.md": {
+      "bytes": 4332,
+      "sha256": "561dc3786cda2cd55e37c9ec341d4c29290ad854e06984bbc44c7a1a680df014"
+    },
+    "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md": {
+      "bytes": 4316,
+      "sha256": "296687aaa59ec34665a36366344c282ca528c287902bd560dd5ea317c623424d"
+    },
+    "reports/phase2-li-paper-methods-v1/PUBLICATION.md": {
+      "bytes": 1257,
+      "sha256": "a40ba3149b3e91a8f68e6360246e0373a28d331ef1bbfa644530343ef864801c"
+    },
+    "reports/phase2-notebook-header-verification-v1/README.md": {
+      "bytes": 8050,
+      "sha256": "1f7c09d7b201ee0310a55f9c8c8db389158634d1bdeb86ead1dbfa43b67c7bdf"
+    },
+    "reports/phase2-notebook-header-verification-v1/checkpoint.json": {
+      "bytes": 1092,
+      "sha256": "e401787e2fd93da947431d38723952abf6443d3a4eddfbef9f973c93170d7d73"
+    },
+    "reports/phase2-notebook-header-verification-v1/publication-checks/historical-snapshot-wrappers.json": {
+      "bytes": 2042,
+      "sha256": "90444e9956e9151f224b52d21d80c25d32f5d78831527412a29b2ad1947b1c1e"
+    },
+    "reports/phase2-notebook-header-verification-v1/publication-checks/relocated-snapshot-link-findings.json": {
+      "bytes": 7771,
+      "sha256": "b9a7c456a2552c9bdf21c7e614870abb690540647a97808f5e48ebe72b7b0240"
+    },
+    "reports/phase2-notebook-header-verification-v1/publication-copy-map.json": {
+      "bytes": 1008,
+      "sha256": "db18a602642799e2a4e28a26f62f3fbd8fcd2deccd971c7590f366abe5330649"
+    },
+    "reports/phase2-notebook-header-verification-v1/scaffold-README.md": {
+      "bytes": 4071,
+      "sha256": "dd0518d2e43f1bf54610f7033a795bed4e95aeac4e3e25be53f6b7789bd7bccf"
+    },
+    "reports/phase2-notebook-header-verification-v1/scaffold-checkpoint.json": {
+      "bytes": 1446,
+      "sha256": "3e12bd607e03b4a29579286c18c8d6b53908c623685479c125fb598237dec400"
+    },
+    "reports/phase2-notebook-header-verification-v1/scaffold-inventory.json": {
+      "bytes": 5430,
+      "sha256": "57bda892b418f59049c7fb29d22ecd792651647db7bd82b33c3aca8b2739a84a"
+    },
+    "reports/progress.md": {
+      "bytes": 110143,
+      "sha256": "cbe9508b12a4373b113b009b4638d0a073d129db8b2d21746b153bf9d02adde9"
+    }
+  },
+  "narrative_bytes_held_during_check": true,
+  "scaffold": [
+    {
+      "original": "README.md",
+      "pass": true,
+      "public": "scaffold-README.md"
+    },
+    {
+      "original": "checkpoint.json",
+      "pass": true,
+      "public": "scaffold-checkpoint.json"
+    },
+    {
+      "original": "clean-package/0-execution.json",
+      "pass": true,
+      "public": "clean-package/0-execution.json"
+    },
+    {
+      "original": "clean-package/0-stderr.txt",
+      "pass": true,
+      "public": "clean-package/0-stderr.txt"
+    },
+    {
+      "original": "clean-package/0-stdout.txt",
+      "pass": true,
+      "public": "clean-package/0-stdout.txt"
+    },
+    {
+      "original": "clean-package/1-execution.json",
+      "pass": true,
+      "public": "clean-package/1-execution.json"
+    },
+    {
+      "original": "clean-package/1-stderr.txt",
+      "pass": true,
+      "public": "clean-package/1-stderr.txt"
+    },
+    {
+      "original": "clean-package/1-stdout.txt",
+      "pass": true,
+      "public": "clean-package/1-stdout.txt"
+    },
+    {
+      "original": "clean-package/release-artifacts.json",
+      "pass": true,
+      "public": "clean-package/release-artifacts.json"
+    },
+    {
+      "original": "copy-map.json",
+      "pass": true,
+      "public": "copy-map.json"
+    },
+    {
+      "original": "independent-artifact-review/README.md",
+      "pass": true,
+      "public": "independent-artifact-review/README.md"
+    },
+    {
+      "original": "independent-artifact-review/actual-a6e87c/review.json",
+      "pass": true,
+      "public": "independent-artifact-review/actual-a6e87c/review.json"
+    },
+    {
+      "original": "independent-artifact-review/additive-execution.json",
+      "pass": true,
+      "public": "independent-artifact-review/additive-execution.json"
+    },
+    {
+      "original": "independent-artifact-review/additive-first/additive-execution.json",
+      "pass": true,
+      "public": "independent-artifact-review/additive-first/additive-execution.json"
+    },
+    {
+      "original": "independent-artifact-review/additive-first/additive-review.json",
+      "pass": true,
+      "public": "independent-artifact-review/additive-first/additive-review.json"
+    },
+    {
+      "original": "independent-artifact-review/additive-first/additive-stderr.txt",
+      "pass": true,
+      "public": "independent-artifact-review/additive-first/additive-stderr.txt"
+    },
+    {
+      "original": "independent-artifact-review/additive-first/additive-stdout.txt",
+      "pass": true,
+      "public": "independent-artifact-review/additive-first/additive-stdout.txt"
+    },
+    {
+      "original": "independent-artifact-review/additive-first/additive_audit.py",
+      "pass": true,
+      "public": "independent-artifact-review/additive-first/additive_audit.py"
+    },
+    {
+      "original": "independent-artifact-review/additive-first/git-failure-reproduction.json",
+      "pass": true,
+      "public": "independent-artifact-review/additive-first/git-failure-reproduction.json"
+    },
+    {
+      "original": "independent-artifact-review/additive-review.json",
+      "pass": true,
+      "public": "independent-artifact-review/additive-review.json"
+    },
+    {
+      "original": "independent-artifact-review/additive-stderr.txt",
+      "pass": true,
+      "public": "independent-artifact-review/additive-stderr.txt"
+    },
+    {
+      "original": "independent-artifact-review/additive-stdout.txt",
+      "pass": true,
+      "public": "independent-artifact-review/additive-stdout.txt"
+    },
+    {
+      "original": "independent-artifact-review/additive_audit.py",
+      "pass": true,
+      "public": "independent-artifact-review/additive_audit.py"
+    },
+    {
+      "original": "independent-artifact-review/audit.py",
+      "pass": true,
+      "public": "independent-artifact-review/audit.py"
+    },
+    {
+      "original": "independent-artifact-review/execution.json",
+      "pass": true,
+      "public": "independent-artifact-review/execution.json"
+    },
+    {
+      "original": "independent-artifact-review/handoff.json",
+      "pass": true,
+      "public": "independent-artifact-review/handoff.json"
+    },
+    {
+      "original": "independent-artifact-review/independent-source-review/source-review.initial.md",
+      "pass": true,
+      "public": "independent-artifact-review/independent-source-review/source-review.initial.md"
+    },
+    {
+      "original": "independent-artifact-review/independent-source-review/source-review.md",
+      "pass": true,
+      "public": "independent-artifact-review/independent-source-review/source-review.md"
+    },
+    {
+      "original": "independent-artifact-review/inventory.json",
+      "pass": true,
+      "public": "independent-artifact-review/inventory.json"
+    },
+    {
+      "original": "independent-artifact-review/stderr.txt",
+      "pass": true,
+      "public": "independent-artifact-review/stderr.txt"
+    },
+    {
+      "original": "independent-artifact-review/stdout.txt",
+      "pass": true,
+      "public": "independent-artifact-review/stdout.txt"
+    },
+    {
+      "original": "prospective-compatible-zip-decision/README.md",
+      "pass": true,
+      "public": "prospective-compatible-zip-decision/README.md"
+    }
+  ],
+  "scaffold_identity_count": 32,
+  "scope": "Publication byte and link checks only; no product test, network, source-reader invocation, private object read or scientific claim.",
+  "status": "PASS"
+}

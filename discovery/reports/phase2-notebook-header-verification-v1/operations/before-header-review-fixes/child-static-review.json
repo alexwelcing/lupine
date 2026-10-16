@@ -1,0 +1,46 @@
+{
+  "status": "BLOCKED_STATIC_REVIEW",
+  "scope": "Read-only source review of command subprocess, timeout, post-state and public projection paths; controlled workflow, not a hostile-operator boundary.",
+  "source": {
+    "path": ".cache/phase2-next-source-operations-v1/run_header_after_ci.py",
+    "sha256": "dbb47fb996f46284537fc7aa6a4b62a64c7af815630eaacc4c8f7ef1544eefa6"
+  },
+  "comparison": {
+    "path": ".cache/phase2-next-source-operations-v1/run_notebook_after_ci.py",
+    "sha256": "2f25e433eb682a2047bc5c1c7d1548081dfbd88765c97c0278a020c2d60a97b0"
+  },
+  "blockers": [
+    {
+      "id": "INCOMPLETE_POST_STATE_AND_UNBOUNDED_GIT",
+      "lines": [46, 50, 92, 98, 125],
+      "finding": "Git subprocesses have no timeout, including network-backed ls-remote. After each child only runtime, HEAD and worktree are checked; remote, branch and production context are not rechecked. Run 2 can produce final success despite remote drift during the child, and a git operation can prevent bounded completion.",
+      "minimal_fix": "Use bounded git calls and the complete source/branch/remote/production-context state check after each child, preserving independently obtained runtime state if the check fails."
+    },
+    {
+      "id": "EXCEPTION_PATH_OMITS_EXECUTION_RECORD",
+      "lines": [83, 89, 92, 100],
+      "finding": "Launch errors, runtime-snapshot errors, and post-child git errors propagate before execution.json is written. Raw files and start.json may survive, but no closed completion/unknown-state receipt or stopped summary is produced.",
+      "minimal_fix": "Record launch/completion state and available log hashes in an exception-safe path, represent unavailable state/exposure as unknown, emit a constant closed stop reason, and forbid continuation."
+    }
+  ],
+  "coordinated_public_projection_concern": {
+    "lines": [111, 123],
+    "finding": "The wrapper prints the entire exposure object and unvalidated first_rejection_stage/same_entry_local_checks values. Its local checks do not close every emitted key/type/value. Parent owns complete report-shape and exposure validation review; this review does not duplicate that finding as a separate blocker."
+  },
+  "positive_findings": [
+    "Command argv is fixed to the current interpreter, reviewed diagnostic script, diagnose, and run 1 or 2; no shell or arbitrary command/URL input.",
+    "subprocess.run enforces a 100-second timeout for the direct child and kills/reaps that child on TimeoutExpired; process-group support is not required by this review for the fixed diagnostic.",
+    "Raw child stdout/stderr are redirected to exclusive files under fresh mode-0700 directories and are not echoed directly.",
+    "Canonical stdout must equal the fixed public receipt before its projected summary is printed.",
+    "A timeout, nonempty stderr, wrong return code, malformed output or failed assertion stops before run 2; there is no automatic retry."
+  ],
+  "limits": {
+    "recorder_imported": false,
+    "recorder_invoked": false,
+    "helper_control_flow_executed": false,
+    "runtime_tests_run": false,
+    "network_used": false,
+    "private_source_or_capture_read": false,
+    "ci_or_package_completion_verified": false
+  }
+}

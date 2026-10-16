@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python",
+    ".cache/phase2-notebook-header-artifact-review-v1/additive_audit.py"
+  ],
+  "started_utc": "2026-10-16T08:27:53.854421+00:00",
+  "elapsed_seconds": 1.4549740539987397,
+  "exit_code": 1,
+  "source_before": "cab22da7d064d3ddadb1bd3dd8033a8e5078d94c27b92beb716921062c44847a",
+  "source_after": "cab22da7d064d3ddadb1bd3dd8033a8e5078d94c27b92beb716921062c44847a",
+  "stdout_sha256": "3b9ddc00e37f373abe8dcab04930740850a33ad36f6d174fdfd7f2f0885ba843",
+  "stderr_sha256": "1b074badb583691fc3b0b66a3bb82b77442f2adf0398da6804cf2478b607fa0f"
+}

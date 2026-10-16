@@ -1,0 +1,192 @@
+{
+  "schema": "lupine.evidence-publication-checks.v1",
+  "created_at": "2026-10-16T08:50:31.769823+00:00",
+  "result": "EXACT_ORIGINAL_BYTES_AND_LOCAL_LINKS_CHECKED",
+  "original_artifact_count": 24,
+  "original_copies": [
+    {
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/README-before-api-domain-clarification.md",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/README.md",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/document-check.json",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/inventory.json",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/review-handoff.json",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/source-bindings-before-commit-binding.json",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/source-bindings.json",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/independent-review/independent-derivation.md",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/independent-review/initial-held-README.md",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/independent-review/initial-wording-review.json",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/independent-review/review.json",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/independent-review/source-bindings.json",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/README.md",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/audit.py",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/exact-distributions.json",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/execution.json",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/inventory.json",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/optional-stopping-paths.json",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/result.json",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/review.json",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/run_recorded.py",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/start.json",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/stderr.txt",
+      "bytes_and_sha256_match_original": true
+    },
+    {
+      "published_path": "reports/phase2-finite-risk-inversion-design-v1/counting-review/stdout.txt",
+      "bytes_and_sha256_match_original": true
+    }
+  ],
+  "local_markdown_link_count": 13,
+  "local_markdown_links": [
+    {
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "href": "README.md",
+      "resolution": "promotion",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "href": "independent-review/independent-derivation.md",
+      "resolution": "promotion",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "href": "independent-review/review.json",
+      "resolution": "promotion",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "href": "publication-map.json",
+      "resolution": "promotion",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "href": "source-bindings.json",
+      "resolution": "promotion",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "href": "publication-checks.json",
+      "resolution": "promotion",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "href": "publication-first-check-failure.json",
+      "resolution": "promotion",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "href": "counting-review/README.md",
+      "resolution": "promotion",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "href": "counting-review/execution.json",
+      "resolution": "promotion",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "href": "counting-review/review.json",
+      "resolution": "promotion",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "href": "counting-review/inventory.json",
+      "resolution": "promotion",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "href": "README.md",
+      "resolution": "promotion",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "href": "publication-whitespace-harness-correction.json",
+      "resolution": "promotion",
+      "exists": true
+    }
+  ],
+  "text_whitespace_check": {
+    "files": 29,
+    "trailing_space_or_tab_lines": 0,
+    "nul_characters": 0,
+    "original_bytes_transformed": false
+  },
+  "limits": "Artifact identity, text hygiene and local navigation only. No new evidence acquisition, scientific validation, product test, runtime import or CI pass."
+}

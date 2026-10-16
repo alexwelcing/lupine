@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-notebook-header-artifact-review-v1/additive_audit.py", line 173, in <module>
+    result = run()
+             ^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-notebook-header-artifact-review-v1/additive_audit.py", line 119, in run
+    baseline_archive = git('archive', '--format=tar', BASELINE, 'discovery')
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-notebook-header-artifact-review-v1/additive_audit.py", line 61, in git
+    result = subprocess.run(['git', *args], cwd=ROOT, check=True, capture_output=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['git', 'archive', '--format=tar', '4492858d9e55ddfa3cca2e208063799517948b13', 'discovery']' returned non-zero exit status 128.

@@ -1,0 +1,180 @@
+{
+  "schema": "lupine.discovery.bam_readiness_independent_review.v1",
+  "created_at": "2026-10-16T08:23:23.344324+00:00",
+  "reviewer": "/root/phase2_evidence/author_methods_review",
+  "status": "METADATA_READINESS_REVIEW_PASS_NO_EVALUATION_ADMISSION",
+  "reviewed_report_sha256": "2c2730f8551b51d42cc035b718a0f05807e242a769666183ec485feed361ec29",
+  "reviewed_bindings_sha256": "0f9970bbd1f9f17c3d073ccf8bb8aead6643255261ae292199c2e74c93d97c52",
+  "blocking_findings": [],
+  "wording_changes_required": [],
+  "bound_file_checks": [
+    {
+      "path": ".cache/phase2-high-temperature-leads-v1/bam-data.json",
+      "size_and_sha256_match": true
+    },
+    {
+      "path": "reports/phase2-high-temperature-leads-v1/bam-data-receipt.json",
+      "size_and_sha256_match": true
+    },
+    {
+      "path": ".cache/phase2-high-temperature-leads-v1/bam-schema.json",
+      "size_and_sha256_match": true
+    },
+    {
+      "path": "reports/phase2-high-temperature-leads-v1/bam-schema-receipt.json",
+      "size_and_sha256_match": true
+    },
+    {
+      "path": "reports/phase2-high-temperature-leads-v1/README.md",
+      "size_and_sha256_match": true
+    },
+    {
+      "path": "reports/phase2-high-temperature-leads-v1/source-bindings.json",
+      "size_and_sha256_match": true
+    },
+    {
+      "path": "reports/phase2-high-temperature-leads-v1/independent-review.json",
+      "size_and_sha256_match": true
+    },
+    {
+      "path": ".cache/phase2-bam-readiness-v1/zenodo-17846617.json",
+      "size_and_sha256_match": true
+    },
+    {
+      "path": ".cache/phase2-bam-readiness-v1/zenodo-17846617-receipt.json",
+      "size_and_sha256_match": true
+    },
+    {
+      "path": ".cache/phase2-bam-readiness-v1/zenodo-17846617-file-metadata.json",
+      "size_and_sha256_match": true
+    },
+    {
+      "path": ".cache/phase2-bam-readiness-v1/zenodo-17846436.json",
+      "size_and_sha256_match": true
+    },
+    {
+      "path": ".cache/phase2-bam-readiness-v1/zenodo-17846436-receipt.json",
+      "size_and_sha256_match": true
+    },
+    {
+      "path": ".cache/phase2-bam-readiness-v1/zenodo-17846436-file-metadata.json",
+      "size_and_sha256_match": true
+    },
+    {
+      "path": ".cache/phase2-bam-readiness-v1/pre-fetch-scope.json",
+      "size_and_sha256_match": true
+    }
+  ],
+  "current_metadata_receipt_checks": [
+    {
+      "record_id": "17846617",
+      "body_matches_receipt": true,
+      "prefetch_scope_precedes_request": true,
+      "projection_exact": true,
+      "file_listing_count": 10,
+      "datacite_identity_license_version_publication_date_agree": true
+    },
+    {
+      "record_id": "17846436",
+      "body_matches_receipt": true,
+      "prefetch_scope_precedes_request": true,
+      "projection_exact": true,
+      "file_listing_count": 3,
+      "datacite_identity_license_version_publication_date_agree": true
+    }
+  ],
+  "prospective_file_identity_checks": [
+    {
+      "filename": "2025-12_HT-Tensile-reference-data-CMSX-6_v1.0.xlsx",
+      "metadata_identity_fields_match": true,
+      "body_acquired": false,
+      "observed_body_sha256": null
+    },
+    {
+      "filename": "2025-12_Data-Schema-Tensile-HT_v1.0.xlsx",
+      "metadata_identity_fields_match": true,
+      "body_acquired": false,
+      "observed_body_sha256": null
+    },
+    {
+      "filename": "2025-12_Data-Schema-Tensile-HT_v1.0.csv",
+      "metadata_identity_fields_match": true,
+      "body_acquired": false,
+      "observed_body_sha256": null
+    }
+  ],
+  "relative_link_checks": [
+    {
+      "target": "source-bindings.json",
+      "resolved": ".cache/phase2-bam-readiness-v1/source-bindings.json",
+      "exists": true
+    },
+    {
+      "target": "pre-fetch-scope.json",
+      "resolved": ".cache/phase2-bam-readiness-v1/pre-fetch-scope.json",
+      "exists": true
+    },
+    {
+      "target": "../../reports/phase2-high-temperature-leads-v1/README.md",
+      "resolved": "reports/phase2-high-temperature-leads-v1/README.md",
+      "exists": true
+    }
+  ],
+  "claim_findings": [
+    {
+      "claim": "Same-test association",
+      "finding": "Publisher wording for each test applies to the stated endpoint-uncertainty assessment and accompanies individual-test-ID worksheet intent. Report consistently labels this intended association and leaves actual joins, complete pairs, duplicates and paired count unknown."
+    },
+    {
+      "claim": "Units and conditions",
+      "finding": "Retained uncertainty table displays MPa for Rm/Rp0.2 and percent for Z; public prose states CMSX-6 at specified 980 C. Report does not claim a full field dictionary, operational proof definition, strain regime, orientation, geometry or condition joins."
+    },
+    {
+      "claim": "Measurement and evaluation units",
+      "finding": "Test piece/test ID is described as the intended measurement unit only. Three LIS files and ten total data artifacts are not promoted to test counts, independent panels, complete sampling frames or diversity."
+    },
+    {
+      "claim": "Schema and missingness",
+      "finding": "Publisher mandatory-profile conformance remains a declaration. Prose states eleven columns while explicitly naming ten roles; the report leaves the eleventh role and all coordinates unbound. Empty/censored/invalid fields and actual conformance remain uninspected."
+    },
+    {
+      "claim": "Source independence and measurement uncertainty",
+      "finding": "No independence, freshness, overlap absence, hard physical enclosure, prediction interval, or joint selected-pool coverage follows from metadata, measurement uncertainty, traceability or accreditation claims."
+    },
+    {
+      "claim": "License, version and date",
+      "finding": "Both retained providers agree on version DOI versus concept DOI, v1.0, declared publication/Issued date and CC BY 4.0. Record created/updated timestamps are not used as publication dates or version-change evidence; linked-body notices remain uninspected."
+    },
+    {
+      "claim": "Acquisition stop boundary",
+      "finding": "The pre-fetch scope predates both current record requests and excludes schema CSV/XLSX bodies because result fields, examples/options and comments may carry empirical responses. No target-free claim follows from calling a file schema or metadata."
+    },
+    {
+      "claim": "Proposed next step",
+      "finding": "A separate prospective fixed-source disclosure contract is proposed before any actual CSV request, with bounded parsing and truthful machine exposure. It supplies no schema coordinates, model, threshold, allocation or scientific admission; later provenance citations and grouping remain necessary."
+    },
+    {
+      "claim": "Failures and exposure",
+      "finding": "Earlier access failures and aggregate uncertainty/temperature exposures remain acknowledged. This review made no network request and inspected no linked scientific body. Retained receipts support recorded metadata requests, not proof of empirical correctness or a product/CI pass."
+    }
+  ],
+  "source_readiness_established": false,
+  "actual_paired_record_count": null,
+  "independent_evaluation_unit_count": null,
+  "network_requests_by_reviewer": 0,
+  "linked_bodies_read": false,
+  "reviewer_exposure": "Permitted prior/current public metadata descriptions, file identities and source audit only; aggregate uncertainty/temperature figures already present in source prose were visible. Initial broad serialization of prior DataCite metadata was tool-truncated on embedded XML; complete descriptions and identity/license fields were reread separately. No schema examples or individual measurement outcomes opened.",
+  "unperformed": [
+    "network requests",
+    "workbook/LIS/curve/schema/image/PDF/notebook/model body read",
+    "new criterion/model/threshold/allocation",
+    "source-program or product test execution",
+    "tracked writes",
+    "Git mutations"
+  ],
+  "limits": [
+    "This is a documentary consistency and retained-metadata identity review, not empirical pairing, source conformance, accreditation, measurement accuracy, independence or materials qualification.",
+    "Independent reviewers do not create new statistical samples.",
+    "Historical negative scientific findings remain unchanged."
+  ]
+}

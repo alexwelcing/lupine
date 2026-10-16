@@ -1,0 +1,36 @@
+{
+  "file_count": 6,
+  "files": [
+    {
+      "bytes": 1610,
+      "path": "README.md",
+      "sha256": "864ec80f30a21f2e83e80775ca93368d0c60a12a7f4b58f32157b5e358c35466"
+    },
+    {
+      "bytes": 6849,
+      "path": "check_publication.py",
+      "sha256": "d422b32eb534b840903ebe5b94728e5c7d205f33ac47337073c765cfe7e27d81"
+    },
+    {
+      "bytes": 5761,
+      "path": "check_publication_initial.py",
+      "sha256": "d80741bf1b237e7233ca51a605cab0038a199bc676b0c614c8444295968a551b"
+    },
+    {
+      "bytes": 62322,
+      "path": "publication-checks-initial.json",
+      "sha256": "9ee2a0bf6d916b66cebd34ce6452c83836300c945f396e1287546bbb37eac744"
+    },
+    {
+      "bytes": 62875,
+      "path": "publication-checks.json",
+      "sha256": "6306cbac1ba9505eee8a4f6fab0abb2cf88e41c7bd027eb0713593ee21892717"
+    },
+    {
+      "bytes": 6513,
+      "path": "review.json",
+      "sha256": "50f52da16f512d511462762fd53efa5920a2332ae9898e26b4f3d598a50d4b57"
+    }
+  ],
+  "total_bytes": 145930
+}
