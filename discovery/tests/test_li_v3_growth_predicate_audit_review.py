@@ -132,7 +132,7 @@ class SyntheticRepository:
     def git(self,*args):
         if not self.path.resolve().is_relative_to(REVIEW_ROOT.resolve()):
             raise AssertionError('Generated Git root escaped review lane')
-        return subprocess.run(['git','-c','core.hooksPath='+str(self.hooks),
+        return subprocess.run(['git', '-c', 'maintenance.auto=false', '-c', 'gc.auto=0','-c','core.hooksPath='+str(self.hooks),
                                '-c','user.name=Lupine Synthetic Review',
                                '-c','user.email=synthetic@example.invalid',*args],
                               cwd=self.path,capture_output=True,check=True,timeout=15).stdout

@@ -395,7 +395,7 @@ class GeneratedCustody:
 
     def patch(self,obj,key,value):return self.stack.enter_context(mock.patch.object(obj,key,value))
     def git(self,*args):
-        return subprocess.run(['git',*args],cwd=self.root,check=True,capture_output=True,
+        return subprocess.run(['git', '-c', 'maintenance.auto=false', '-c', 'gc.auto=0',*args],cwd=self.root,check=True,capture_output=True,
             env=dict(os.environ,GIT_CONFIG_NOSYSTEM='1',GIT_CONFIG_GLOBAL='/dev/null',GIT_TERMINAL_PROMPT='0')).stdout
     def write(self,path,raw):
         target=self.root/path;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(raw);return target

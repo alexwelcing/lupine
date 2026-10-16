@@ -45,7 +45,7 @@ class ArtifactVerifierTests(unittest.TestCase):
         self.refresh_archive_receipt()
 
     def git(self, *args):
-        return subprocess.check_output(['git','-c','core.hooksPath=/dev/null','-c','commit.gpgsign=false',*args],
+        return subprocess.check_output(['git', '-c', 'maintenance.auto=false', '-c', 'gc.auto=0','-c','core.hooksPath=/dev/null','-c','commit.gpgsign=false',*args],
                                        cwd=self.repo, stderr=subprocess.PIPE)
 
     def commit(self):

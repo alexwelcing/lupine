@@ -1,0 +1,101 @@
+{
+  "source_sha256": "a8b959d00e3f63aa5c649e16bb0f2118fdb55e26e712aba6cd0638155915fb72",
+  "section": "sec1.2",
+  "sentences": [
+    {
+      "direct_paragraph": 2,
+      "sentence": 2,
+      "term_families": [
+        "calculation_methods"
+      ],
+      "possible_result_words": false
+    },
+    {
+      "direct_paragraph": 2,
+      "sentence": 3,
+      "term_families": [
+        "calculation_methods"
+      ],
+      "possible_result_words": false
+    },
+    {
+      "direct_paragraph": 2,
+      "sentence": 4,
+      "term_families": [
+        "energy",
+        "calculation_methods"
+      ],
+      "possible_result_words": false
+    },
+    {
+      "direct_paragraph": 2,
+      "sentence": 6,
+      "term_families": [
+        "calculation_methods"
+      ],
+      "possible_result_words": false
+    },
+    {
+      "direct_paragraph": 5,
+      "sentence": 1,
+      "term_families": [
+        "calculation_methods"
+      ],
+      "possible_result_words": false
+    },
+    {
+      "direct_paragraph": 6,
+      "sentence": 1,
+      "term_families": [
+        "calculation_methods"
+      ],
+      "possible_result_words": false
+    },
+    {
+      "direct_paragraph": 6,
+      "sentence": 2,
+      "term_families": [
+        "calculation_methods"
+      ],
+      "possible_result_words": false
+    },
+    {
+      "direct_paragraph": 6,
+      "sentence": 3,
+      "term_families": [
+        "polarizability",
+        "calculation_methods"
+      ],
+      "possible_result_words": false
+    },
+    {
+      "direct_paragraph": 6,
+      "sentence": 6,
+      "term_families": [
+        "dipole",
+        "charge",
+        "orbitals",
+        "energy"
+      ],
+      "possible_result_words": false
+    },
+    {
+      "direct_paragraph": 6,
+      "sentence": 8,
+      "term_families": [
+        "calculation_methods"
+      ],
+      "possible_result_words": false
+    },
+    {
+      "direct_paragraph": 6,
+      "sentence": 9,
+      "term_families": [
+        "polarizability",
+        "calculation_methods"
+      ],
+      "possible_result_words": false
+    }
+  ],
+  "prose_not_disclosed": true
+}

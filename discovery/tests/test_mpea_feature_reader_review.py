@@ -371,7 +371,7 @@ class IndependentFeatureReaderReview(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root=Path(directory)
             def git(*args):
-                return subprocess.check_output(['git','-c','core.hooksPath=/dev/null','-c','commit.gpgsign=false',*args],cwd=root,stderr=subprocess.PIPE).decode().strip()
+                return subprocess.check_output(['git', '-c', 'maintenance.auto=false', '-c', 'gc.auto=0','-c','core.hooksPath=/dev/null','-c','commit.gpgsign=false',*args],cwd=root,stderr=subprocess.PIPE).decode().strip()
             git('init','-q');git('config','user.name','Independent Fixture');git('config','user.email','review@example.invalid')
             for relative in r.INPUT_PINS:
                 target=root/relative;target.parent.mkdir(parents=True,exist_ok=True)

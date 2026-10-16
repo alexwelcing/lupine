@@ -45,7 +45,7 @@ class RetentionIndependentReview(unittest.TestCase):
         self.stack.enter_context(patch.object(m, 'checked', side_effect=self.fake_checked))
 
     def git(self, *arguments):
-        return subprocess.check_output(['git', *arguments], cwd=self.repo, stderr=subprocess.PIPE)
+        return subprocess.check_output(['git', '-c', 'maintenance.auto=false', '-c', 'gc.auto=0', *arguments], cwd=self.repo, stderr=subprocess.PIPE)
 
     def make_repository(self, repo, *, standalone=False, object_format='sha1'):
         self.repo = repo

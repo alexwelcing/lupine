@@ -1,0 +1,54 @@
+{
+  "schema": "lupine.fixture_housekeeping_source_review.v1",
+  "status": "NO_BLOCKER_IN_REVIEWED_CANDIDATE",
+  "independent_reviewer": "/root/calibrated_backend/ci_version_source_review",
+  "record_prepared_by": "/root/calibrated_backend",
+  "review_scope": "Read-only source review of twelve temporary-repository fixture files and thirteen real Git subprocess argv sites. This record preserves the independent reviewer's delivered findings; it is not a test-run receipt.",
+  "reviewed_inputs": {
+    "copyset": {
+      "path": "../copyset.json",
+      "sha256": "9c7921d0382548cf97bb1d08177419019a1a2cc8f27a723a7b6136106a0d2af2"
+    },
+    "patch": {
+      "path": "../changes.patch",
+      "sha256": "cde4ff8c5aea6df999b5937987248035e8d5b28376742c101bd405e78a5044ca"
+    },
+    "baseline_and_candidate_count": 24,
+    "total_bound_files_including_copyset_and_patch": 26
+  },
+  "findings": {
+    "candidate_files": 12,
+    "real_git_argv_sites": 13,
+    "inserted_arguments": [
+      "-c",
+      "maintenance.auto=false",
+      "-c",
+      "gc.auto=0"
+    ],
+    "all_other_ast_unchanged": true,
+    "assertions_unchanged": true,
+    "strict_cleanup_unchanged": true,
+    "mocks_unchanged": true,
+    "production_queries_unchanged": true,
+    "direct_registration_empty_commit_covered": true
+  },
+  "source_stability": {
+    "baseline_and_candidate_files_unchanged": true,
+    "copyset_and_patch_unchanged": true,
+    "initial_main_files_matched_baseline": true,
+    "main_files_unchanged_through_review": false,
+    "final_main_files_matched_candidates": true,
+    "interpretation": "Root began main-tree integration after the initial no-blocker message and before the final main-file comparison. The independent reviewer reports all twenty-six baseline/candidate/copyset/diff inputs held unchanged. No main-tree source-hold claim is made."
+  },
+  "review_tooling_note": "A standalone review snippet had a harmless off-by-one assertion counting the first patch header after the AST checks had passed. It did not identify a candidate defect. The reviewer wrote no execution receipt; this compact record preserves the delivered source-review findings.",
+  "behavior_test_execution_by_independent_reviewer": false,
+  "producer_imports_by_independent_reviewer": false,
+  "git_commands_by_independent_reviewer": false,
+  "source_edits_by_independent_reviewer": false,
+  "limitations": [
+    "Source review establishes the narrow proposed change and preserved checks; it does not replace focused or full-suite execution.",
+    "The original CI cleanup writer was not directly identified.",
+    "No additional cleanup race was observed in the remaining fixtures by this review."
+  ],
+  "publication_scope": "Generated test-source changes and source-review metadata only; no raw archives, scientific values, private features, attempts, registry, credentials, or network-acquisition artifacts."
+}

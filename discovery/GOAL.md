@@ -94,16 +94,19 @@ previously unused source with paired outcomes and credible study grouping.
 | G38 | Prove finite-population evaluation monotonicity, capped feasibility and the unique first qualifying count | PUBLISHED at `eaed2e7`; exact Lean CI PASS | [Four independently compiled statements](reports/phase2-finite-planning-monotone-verification-v1/README.md); strict twelve-module build, fresh axiom audit and eleven parser tests pass. All 143 earlier inventory entries held. [Clean packaging and independent artifact verification pass](reports/phase2-source-readiness-release-verification-v1/README.md); all four original eaed CI jobs now pass ([observation](reports/phase2-fixture-housekeeping-repair-v1/eaed-ci.json)). |
 | G39 | Make blocked-source readiness inspectable in CLI, HTTP, browser and installed package | PUBLISHED at `eaed2e7`; clean 18-check package/audit PASS | [Actual integrated checks and independent review](reports/phase2-source-readiness-verification-v1/README.md). Fixed documentary Li/Dryad snapshot, explicit unavailable states and exact exports; no source admission or acquisition. All four original eaed CI jobs pass ([observation](reports/phase2-fixture-housekeeping-repair-v1/eaed-ci.json)); later bd7 cleanup failure is preserved separately. |
 | G40 | Establish a primary scientist-curated GitHub lead without choosing on performance | DOCUMENTARY LEAD; NOT_ADMITTED | [Pinned tmQM README/license/property-file metadata](reports/phase2-primary-github-source-survey-v1/README.md) and [independent qualifications](reports/phase2-tmqm-documentary-review-v1/README.md). One [bounded header inspection](reports/phase2-tmqm-csv-header-v1/README.md) observed eleven literal labels. Units, joins, complete pairs and upstream rights remain unresolved; the separate curator page returned HTTP 403. |
-| G41 | Keep generated Git fixtures free of detached housekeeping without weakening cleanup or source guards | LOCAL PASS; exact new-head CI pending | [Original CI failure, actual Trace2 diagnosis, negative regression and repaired 61-method checks on both Python versions](reports/phase2-fixture-housekeeping-repair-v1/README.md). One test file changes; 350 other runtime files and all formal source stay unchanged. |
+| G41 | Keep all generated Git write fixtures free of detached housekeeping without weakening cleanup or source guards | LOCAL PASS326 at352-file snapshot; exact new-head CI pending | [Thirteen additional call sites, retained first326-test failure and immutable historical fixture correction](reports/phase2-fixture-housekeeping-followthrough-v1/README.md). Production pins/assertions stay unchanged; e668 clean package and independent57-check artifact review pass separately. |
+| G42 | Establish primary tmQM method/key definitions with an explicit current-release bridge requirement | ORIGINAL2020 definitions established; current2024 bridge OPEN | [Primary passages](reports/phase2-tmqm-definitions-v1/README.md) and [independent exposure/version review](reports/phase2-tmqm-definitions-review-v1/README.md). CSD lookup, NPA charge, gas-phase singlets and separate xTB polarizability; current units/key mapping/data rights remain unresolved. NOT_ADMITTED. |
 
-Current owner/checkpoint: root integrates the fixture housekeeping repair after
-`bd7ebf2` failed its original Python 3.11 CI job during temporary Git cleanup.
-That run's Python 3.12/browser/Lean jobs pass; exact eaed and cb19 original runs
-pass all four jobs. The repaired module passes 61 local methods on each Python
-version, with the original failure, original-helper regression failure and
-causal limits preserved. New-head CI and clean packaging remain pending.
-The eaed clean 28-demonstration/six-schema/18-check package and independent
-22,005-check artifact audit retain their exact original source attribution.
+Current owner/checkpoint: root integrates the remaining fixture lifecycle controls
+and an explicit immutable historical-source fixture. The first326-method run
+failed one historical-source gate; production pins correctly rejected live edited
+test files. The repaired run passes326 on Python3.11.16 with all352 files held and
+zero automatic housekeeping launches observed. The original failure and exact
+historical bytes are retained. No production scientific source or formal module changes.
+New-head originalCI, clean package and bounded artifact review remain pending.
+The preceding e668 clean28/six-schema/18-check package, strict verifier and
+independent57-check artifact audit pass at their own exact source. Earlier eaed
+and cb19 originalCI pass; bd7's single cleanup error remains recorded.
 
 The fixed Li/Dryad readiness interface and 147 conditional Lean statements remain
 engineering evidence. Li A1's XML block, partial character-data exposure and no
@@ -118,12 +121,16 @@ and `CSD_years`. No units, complete pairs, full-file identity, grouping rule or
 upstream rights follow. Underlying transport/library buffering may have included
 numerical rows; its extent is unknown and no numerical values were disclosed.
 
-Next: publish the fixture repair, verify exact remote and all original CI jobs,
-and reproduce the clean installed package/strict artifact checks. The [unregistered intake card](reports/phase2-tmqm-intake-v1/README.md)
+Next: publish the complete fixture repair and documentary increment; verify exact
+remote, originalCI and clean352-file package/strict artifact checks plus the
+bounded independent delta review. The [unregistered intake card](reports/phase2-tmqm-intake-v1/README.md)
 identifies the primary unit/key/rights definitions and frozen study design needed
 before any numerical-frame acquisition or scientific evaluation.
-No scientific protocol, target pair, feature set, threshold, allocation or fit is
-registered. Root owns integration and publication; independent reviews remain
+The original2020 primary-paper definitions now have separate documentary support;
+current2024 units, key/version mapping and data/upstream terms remain unresolved.
+Whole-article machine exposure, visible results/benchmark headings and an incidental
+qualitative passage are explicit. No scientific protocol, target pair, feature set,
+threshold, allocation or fit is registered. Root owns integration and publication; independent reviews remain
 separate. G20 is unresolved and G21 blocked. All historical scientific negatives,
 physical-performance/general-superiority NO-GO and the disabled old automation
 remain unchanged.

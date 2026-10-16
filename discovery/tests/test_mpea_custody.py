@@ -63,7 +63,7 @@ class MPEACustodyProducerTests(unittest.TestCase):
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_text("synthetic " + relative + "\n")
             def git(*args):
-                return subprocess.run(["git", *args], cwd=root, check=True, capture_output=True).stdout
+                return subprocess.run(["git", '-c', 'maintenance.auto=false', '-c', 'gc.auto=0', *args], cwd=root, check=True, capture_output=True).stdout
             git("init", "-q")
             git("-c", "user.name=Custody Test", "-c", "user.email=custody@example.invalid", "add", ".")
             git("-c", "user.name=Custody Test", "-c", "user.email=custody@example.invalid", "commit", "-qm", "synthetic")

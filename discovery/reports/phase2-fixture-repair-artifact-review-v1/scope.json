@@ -1,0 +1,22 @@
+{
+  "archive_copyset": [
+    "discovery",
+    ".github/workflows/discovery-verify.yml"
+  ],
+  "audit_source_sha256": "79ff5924319e06be9538ea1900bdf162ef62193e05945c58c74935b1bf05d9fa",
+  "authorization": "Root authorized one bounded actual artifact review and retains exact e668 source hold. No package/verifier/test rerun, artifact code execution, private custody/raw science read, remote call or tracked edit.",
+  "baseline_commit": "eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f",
+  "declared_only_runtime_delta": "tests/test_li_v3_readiness_production.py",
+  "new_audit_invocations_before_this_scope": 0,
+  "new_test_sha256": "a38e2d7c0cfdc0fd0ef122795f12e97d1b9ba1cd263495356b5e3f79b7325503",
+  "old_audit_checks_attributed_to_baseline_only": 22005,
+  "old_test_sha256": "809c0126ef9f130fad264ef2617f67b9b99db103a3a14c476a6e60bfb4905470",
+  "package_source_payloads_unchanged": 113,
+  "preparation": "Audit code prepared after viewing public completed release metadata and Git delta, before opening new wheel/source archive; syntax AST parsed only. This is a retrospective artifact identity review, not a blinded scientific benchmark.",
+  "prepared_at": "2026-10-16T18:27:31.534185+00:00",
+  "prior_audit_report_sha256": "ebc7095e823dc5271ca333f09f11d8f9a9bd87efb67ed0f6aa840494d2cb4362",
+  "published_commit": "e668b349e130cdfd1a8cfe94e3e38d4755507f72",
+  "runtime_count": 351,
+  "schema": "lupine.fixture-repair.artifact-review-scope.v1",
+  "unchanged_runtime_count": 350
+}

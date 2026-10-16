@@ -1,0 +1,397 @@
+{
+  "audit_source_sha256": "79ff5924319e06be9538ea1900bdf162ef62193e05945c58c74935b1bf05d9fa",
+  "checks": [
+    {
+      "check": "live_exact_clean_start",
+      "passed": true
+    },
+    {
+      "check": "first_network_failure_preserved",
+      "passed": true
+    },
+    {
+      "check": "first_attempt_outer_exit_two",
+      "passed": true
+    },
+    {
+      "check": "before-remote_argv_start_and_actual_exit_phase2-source-readiness-release-v1",
+      "passed": true
+    },
+    {
+      "check": "before-remote_stdout_name_phase2-source-readiness-release-v1",
+      "passed": true
+    },
+    {
+      "check": "before-remote_stdout_identity_phase2-source-readiness-release-v1",
+      "passed": true
+    },
+    {
+      "check": "before-remote_stderr_name_phase2-source-readiness-release-v1",
+      "passed": true
+    },
+    {
+      "check": "before-remote_stderr_identity_phase2-source-readiness-release-v1",
+      "passed": true
+    },
+    {
+      "check": "first_attempt_connect_502",
+      "passed": true
+    },
+    {
+      "check": "first_attempt_no_package_or_strict_slot",
+      "passed": true
+    },
+    {
+      "check": "same_recorder_recovered_attempt",
+      "passed": true
+    },
+    {
+      "check": "completed_local_package_and_strict",
+      "passed": true
+    },
+    {
+      "check": "root_observed_success",
+      "passed": true
+    },
+    {
+      "check": "351_source_states_held",
+      "passed": true
+    },
+    {
+      "check": "held_interpreter",
+      "passed": true
+    },
+    {
+      "check": "package_argv_start_and_actual_exit_phase2-fixture-repair-release-v1",
+      "passed": true
+    },
+    {
+      "check": "package_stdout_name_phase2-fixture-repair-release-v1",
+      "passed": true
+    },
+    {
+      "check": "package_stdout_identity_phase2-fixture-repair-release-v1",
+      "passed": true
+    },
+    {
+      "check": "package_stderr_name_phase2-fixture-repair-release-v1",
+      "passed": true
+    },
+    {
+      "check": "package_stderr_identity_phase2-fixture-repair-release-v1",
+      "passed": true
+    },
+    {
+      "check": "package_empty_stderr_phase2-fixture-repair-release-v1",
+      "passed": true
+    },
+    {
+      "check": "strict_argv_start_and_actual_exit_phase2-fixture-repair-release-v1",
+      "passed": true
+    },
+    {
+      "check": "strict_stdout_name_phase2-fixture-repair-release-v1",
+      "passed": true
+    },
+    {
+      "check": "strict_stdout_identity_phase2-fixture-repair-release-v1",
+      "passed": true
+    },
+    {
+      "check": "strict_stderr_name_phase2-fixture-repair-release-v1",
+      "passed": true
+    },
+    {
+      "check": "strict_stderr_identity_phase2-fixture-repair-release-v1",
+      "passed": true
+    },
+    {
+      "check": "strict_empty_stderr_phase2-fixture-repair-release-v1",
+      "passed": true
+    },
+    {
+      "check": "command_working_directories",
+      "passed": true
+    },
+    {
+      "check": "execution_order",
+      "passed": true
+    },
+    {
+      "check": "receipt_seal",
+      "passed": true
+    },
+    {
+      "check": "package_report_and_receipt_equal",
+      "passed": true
+    },
+    {
+      "check": "package_stdout_matches_report",
+      "passed": true
+    },
+    {
+      "check": "strict_receipt_link",
+      "passed": true
+    },
+    {
+      "check": "prior_audit_attribution",
+      "passed": true
+    },
+    {
+      "check": "eighteen_original_flags_retained",
+      "passed": true
+    },
+    {
+      "check": "receipt_exact_commit_tree_scope",
+      "passed": true
+    },
+    {
+      "check": "whole_runtime_directory_git_delta_exact",
+      "passed": true
+    },
+    {
+      "check": "test_delta_exact_pins",
+      "passed": true
+    },
+    {
+      "check": "source_archive_exact_identity",
+      "passed": true
+    },
+    {
+      "check": "wheel_exact_identity",
+      "passed": true
+    },
+    {
+      "check": "exact_two_artifact_types",
+      "passed": true
+    },
+    {
+      "check": "git_object_format",
+      "passed": true
+    },
+    {
+      "check": "source_exact_members_and_pax_commit",
+      "passed": true
+    },
+    {
+      "check": "all_source_git_blobs_verified",
+      "passed": true
+    },
+    {
+      "check": "source_hash_mapping_seal",
+      "passed": true
+    },
+    {
+      "check": "independent_351_runtime_coverage",
+      "passed": true
+    },
+    {
+      "check": "exact_one_changed_350_held_runtime_hashes",
+      "passed": true
+    },
+    {
+      "check": "all_113_package_source_blobs_unchanged",
+      "passed": true
+    },
+    {
+      "check": "wheel_unique_bounded_members",
+      "passed": true
+    },
+    {
+      "check": "wheel_exact_payload_and_metadata_set",
+      "passed": true
+    },
+    {
+      "check": "all_wheel_payloads_match_committed_source",
+      "passed": true
+    },
+    {
+      "check": "RECORD_complete_unique_rows",
+      "passed": true
+    },
+    {
+      "check": "all_119_RECORD_content_digests_verified",
+      "passed": true
+    },
+    {
+      "check": "wheel_license_source_identity",
+      "passed": true
+    },
+    {
+      "check": "both_public_resource_pins",
+      "passed": true
+    },
+    {
+      "check": "artifacts_receipt_held",
+      "passed": true
+    },
+    {
+      "check": "live_exact_clean_finish",
+      "passed": true
+    }
+  ],
+  "finished_at": "2026-10-16T18:27:51.425167+00:00",
+  "inputs": [
+    {
+      "bytes": 1182,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-e668b349e130cdfd1a8cfe94e3e38d4755507f72/review.json",
+      "sha256": "ebf9473f32f10b4e9b641fbd85bee82bcfd78bc0b1886e2de3f5dadd5f9d0c4a"
+    },
+    {
+      "bytes": 362,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-e668b349e130cdfd1a8cfe94e3e38d4755507f72/root-observed-exit.json",
+      "sha256": "11e6e4744a536a01d64e75203ca1d6b4e71290f4d6ea199fd87b6ae9ff83ede1"
+    },
+    {
+      "bytes": 296,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-e668b349e130cdfd1a8cfe94e3e38d4755507f72/before-remote.started.json",
+      "sha256": "ff63e761513a17d16d8c9bf4040a2f1bb1bb234167734e470c81d279e19da9ec"
+    },
+    {
+      "bytes": 647,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-e668b349e130cdfd1a8cfe94e3e38d4755507f72/before-remote.execution.json",
+      "sha256": "366da1bf725db90175ff3bc7b1fd896af218ab3ab091b4083174f057d378cd8b"
+    },
+    {
+      "bytes": 0,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-e668b349e130cdfd1a8cfe94e3e38d4755507f72/before-remote.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 106,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-e668b349e130cdfd1a8cfe94e3e38d4755507f72/before-remote.stderr",
+      "sha256": "c6b36f73ee95e1b15d4084993a93ab1d4f1c2bea776f3f6e7d409a01284ecc71"
+    },
+    {
+      "bytes": 1060,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-fixture-repair-release-v1/run-e668b349e130cdfd1a8cfe94e3e38d4755507f72/review.json",
+      "sha256": "7935fa8d657e3a79bbf55a5912f2483170b2b528827f4ad453ed8887bf3d2497"
+    },
+    {
+      "bytes": 290,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-fixture-repair-release-v1/run-e668b349e130cdfd1a8cfe94e3e38d4755507f72/root-observed-exit.json",
+      "sha256": "a5df388f2a56863a457678084874cce293943b72a845847162a2bf53030ac63b"
+    },
+    {
+      "bytes": 475,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-fixture-repair-release-v1/run-e668b349e130cdfd1a8cfe94e3e38d4755507f72/request.json",
+      "sha256": "c7a9d498efafa4f43c376b1589dd0a9c561e1702b836896d38f54f9916b6e889"
+    },
+    {
+      "bytes": 9526,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-fixture-repair-release-v1/run-e668b349e130cdfd1a8cfe94e3e38d4755507f72/executed-recorder.py",
+      "sha256": "b74867438bda41235f0b93b028f91caf422284037d6ebe65cf244fa4f4084c33"
+    },
+    {
+      "bytes": 9526,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-e668b349e130cdfd1a8cfe94e3e38d4755507f72/executed-recorder.py",
+      "sha256": "b74867438bda41235f0b93b028f91caf422284037d6ebe65cf244fa4f4084c33"
+    },
+    {
+      "bytes": 42235,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-fixture-repair-release-v1/run-e668b349e130cdfd1a8cfe94e3e38d4755507f72/source-before.json",
+      "sha256": "a47fede3a869d3ef8434721ae76afb7cb6b8eddb56cbfc35a7b40b5dc26ab54c"
+    },
+    {
+      "bytes": 42235,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-fixture-repair-release-v1/run-e668b349e130cdfd1a8cfe94e3e38d4755507f72/source-after.json",
+      "sha256": "a47fede3a869d3ef8434721ae76afb7cb6b8eddb56cbfc35a7b40b5dc26ab54c"
+    },
+    {
+      "bytes": 701,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-fixture-repair-release-v1/run-e668b349e130cdfd1a8cfe94e3e38d4755507f72/package.started.json",
+      "sha256": "22ff90c67e369ca0fc38aaf9cf1b2d9f9d0199c051d76498985ca5435507bd24"
+    },
+    {
+      "bytes": 1051,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-fixture-repair-release-v1/run-e668b349e130cdfd1a8cfe94e3e38d4755507f72/package.execution.json",
+      "sha256": "6e25e65f40a92c2297e492c659fead33e5cf8a81b871605814656e1fa4e5b693"
+    },
+    {
+      "bytes": 1365,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-fixture-repair-release-v1/run-e668b349e130cdfd1a8cfe94e3e38d4755507f72/package.stdout",
+      "sha256": "48d37e0e9d9cd3e7c18cbdf4e3b985c793550aa1870345561e873cb50b6ae6b8"
+    },
+    {
+      "bytes": 0,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-fixture-repair-release-v1/run-e668b349e130cdfd1a8cfe94e3e38d4755507f72/package.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 657,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-fixture-repair-release-v1/run-e668b349e130cdfd1a8cfe94e3e38d4755507f72/strict.started.json",
+      "sha256": "33bc1e01b6b124fdfd6a7f4cfcf414d15dcbca0bca30f34520b7871142318be6"
+    },
+    {
+      "bytes": 1007,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-fixture-repair-release-v1/run-e668b349e130cdfd1a8cfe94e3e38d4755507f72/strict.execution.json",
+      "sha256": "a2ef8efa230891e8bb53f70eb63594eb8d17234f4e08b8510e0a56480dc1999b"
+    },
+    {
+      "bytes": 3806,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-fixture-repair-release-v1/run-e668b349e130cdfd1a8cfe94e3e38d4755507f72/strict.stdout",
+      "sha256": "f10cdf79836f9b732fdec9db9c6a4ed8d070fd40a46b02986238b666f25b061d"
+    },
+    {
+      "bytes": 0,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-fixture-repair-release-v1/run-e668b349e130cdfd1a8cfe94e3e38d4755507f72/strict.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 8170,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-fixture-repair-release-v1/run-e668b349e130cdfd1a8cfe94e3e38d4755507f72/package-report.json",
+      "sha256": "3828920d2940816a6b41f808d112cfbbd8d431831cf34cf9d2e07972bc309196"
+    },
+    {
+      "bytes": 8098,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-fixture-repair-release-v1/run-e668b349e130cdfd1a8cfe94e3e38d4755507f72/retained/release-artifacts.json",
+      "sha256": "88b9c7006997d1da0c77d4c8efdc9f3051fe41e597196e827b9cbb312982a454"
+    }
+  ],
+  "observed": {
+    "RECORD_content_digests": 119,
+    "baseline_commit": "eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f",
+    "commit": "e668b349e130cdfd1a8cfe94e3e38d4755507f72",
+    "first_attempt": "STOPPED_BEFORE_PACKAGE_CONNECT_502",
+    "mandatory_receipt_flags": 18,
+    "new_artifacts": {
+      "source_archive": {
+        "bytes": 136755200,
+        "filename": "lupine-discovery-source-e668b349e130.tar",
+        "sha256": "620c44709621a341d48d478cd4a45397a9cff68e146b899249e766f851664877"
+      },
+      "wheel": {
+        "bytes": 324053,
+        "filename": "lupine_discovery-0.1.0-py3-none-any.whl",
+        "sha256": "b41e20694a1b5efb68729c65b5f900a09482e112864daf6e2556cda32494ce58"
+      }
+    },
+    "new_test_sha256": "a38e2d7c0cfdc0fd0ef122795f12e97d1b9ba1cd263495356b5e3f79b7325503",
+    "old_test_sha256": "809c0126ef9f130fad264ef2617f67b9b99db103a3a14c476a6e60bfb4905470",
+    "package_execution_sha256": "6e25e65f40a92c2297e492c659fead33e5cf8a81b871605814656e1fa4e5b693",
+    "package_payloads": 113,
+    "package_payloads_unchanged": 113,
+    "prior_audit_check_count_not_reattributed": 22005,
+    "recovered_attempt": "PACKAGE_AND_STRICT_EXIT_ZERO",
+    "release_receipt_sha256": "88b9c7006997d1da0c77d4c8efdc9f3051fe41e597196e827b9cbb312982a454",
+    "runtime_changed": [
+      "tests/test_li_v3_readiness_production.py"
+    ],
+    "runtime_files": 351,
+    "runtime_manifest_sha256": "452711071f2e3abf8eb734cb6e2e94ee85d04b64f8b40d39300b0597d64d489b",
+    "runtime_unchanged": 350,
+    "source_archive_files": 6981,
+    "strict_execution_sha256": "a2ef8efa230891e8bb53f70eb63594eb8d17234f4e08b8510e0a56480dc1999b",
+    "wheel_members": 120
+  },
+  "schema": "lupine.fixture-repair.independent-artifact-review.v1",
+  "scope": [
+    "Public exact-Git source archive, runtime delta, wheel payload/RECORD and completed-command evidence audit.",
+    "One earlier network-blocked package attempt remains separate; no package or strict command ran in that attempt.",
+    "This reviewer does not execute archive contents, rerun package/tests/verifier, read private custody or raw science, use network, mutate Git, or establish CI/scientific success.",
+    "The prior 22005-check audit belongs to eaed only; this report states its own checks and execution."
+  ],
+  "seconds": 2.0411946499953046,
+  "started_at": "2026-10-16T18:27:49.383977+00:00",
+  "status": "PASS_BOUNDED_REPAIR_ARTIFACT_DELTA"
+}

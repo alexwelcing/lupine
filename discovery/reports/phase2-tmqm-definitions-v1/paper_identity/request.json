@@ -1,0 +1,11 @@
+{
+  "acquirer_sha256": "18accc017b926f5608eeaa647214f8712c2450500550825bdf1ea3b4761236c5",
+  "maximum_bytes": 524288,
+  "method": "GET",
+  "redirects": false,
+  "retries": 0,
+  "scope_sha256": "8e5cbeb7d87e6957b3f90d039f05e33bfa25a0ba08d328bd0835db0750f3b103",
+  "started_at": "2026-10-16T18:18:57.806201+00:00",
+  "timeout_seconds": 30,
+  "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=DOI%3A10.1021%2Facs.jcim.0c01041&format=json&resultType=core&pageSize=1"
+}

@@ -270,7 +270,7 @@ class MPEAHeaderLabelTests(unittest.TestCase):
                 path.write_text('synthetic '+relative+'\n')
             originals={key:m.sha256((root/key).read_bytes()) for key in m.ORIGINAL_FILES}
             receipts={key:m.sha256((root/key).read_bytes()) for key in m.RECEIPTS}
-            def git(*args):return subprocess.run(['git',*args],cwd=root,check=True,capture_output=True).stdout
+            def git(*args):return subprocess.run(['git', '-c', 'maintenance.auto=false', '-c', 'gc.auto=0',*args],cwd=root,check=True,capture_output=True).stdout
             git('init','-q')
             git('add','.')
             git('-c','user.name=Custody Test','-c','user.email=test@example.invalid','commit','-qm','synthetic')

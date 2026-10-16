@@ -1,0 +1,30 @@
+{
+  "schema": "lupine.discovery.tmqm_definitions_handoff.v1",
+  "held_at": "2026-10-16T18:26:16.702540+00:00",
+  "publication_target": "reports/phase2-tmqm-definitions-v1/",
+  "copy_rule": "Copy exactly the20 inventory-listed files plus inventory.json and handoff.json; no raw bodies.",
+  "inventory_sha256": "2890f37beec89169c6e50f2ae8382a06b508ba5f10cec7503009e4d7db24b6e5",
+  "readme_sha256": "e66d392e5629832fa1c13177539e629e498604f744eeb42a97ba606bd820b97f",
+  "source_bindings_sha256": "512762d26665f4e9a66d6a5cad043e748264f28053259b59ae9285f852d2cb46",
+  "requests": 2,
+  "all_request_statuses": [
+    200,
+    200
+  ],
+  "further_requests": 0,
+  "new_facts": [
+    "Original2020 paper: CSDcode retrieves CSD connectivity and accompanies supplied geometries",
+    "Original2020 metalcenter charge derives from natural population analysis",
+    "Original2020 methods specify gasphase closed-shell DFT singlepoints on GFN2-xTB geometries and separate GFN2-xTB polarizability"
+  ],
+  "gaps": [
+    "CurrentCSV unitdefinitions",
+    "Currentfile one-to-one key/row/version mapping and missingness",
+    "Datafile and upstreamCSD rights scope"
+  ],
+  "exposure": "Whole articleXML acquired and machineparsed; selected researcher prose/metadata only. Initial qualitative abundance discussion disclosed unintentionally with numerical tokens masked; original projection and ledger retained. No numeric datasets, raw private prefix or table/results-section/performance values disclosed.",
+  "admission": "NOT_ADMITTED; no current2024 schema bridge or untouched-source claim.",
+  "review_status": "Prepared for root-arranged independent documentary review; no independent approval claimed.",
+  "tests": "No product tests or downloaded-code execution; source research only.",
+  "held": true
+}

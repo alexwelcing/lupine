@@ -1,0 +1,18 @@
+{
+  "original": {
+    "session": 76536,
+    "tool_chunk": "272f00",
+    "exit_code": 1,
+    "methods": 326,
+    "runtime_files": 351
+  },
+  "repaired": {
+    "session": 77063,
+    "tool_chunk": "08b9b2",
+    "exit_code": 0,
+    "methods": 326,
+    "runtime_files": 352
+  },
+  "source_held_in_each_separate_run": true,
+  "original_failure_preserved": true
+}

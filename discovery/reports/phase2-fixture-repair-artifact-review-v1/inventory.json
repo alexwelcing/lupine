@@ -1,0 +1,45 @@
+{
+  "files": {
+    "README.md": {
+      "bytes": 2316,
+      "sha256": "f37c03fd7727ec399103008858679c76168baab7b24ed750cd59a85e52c21047"
+    },
+    "audit_repair.py": {
+      "bytes": 19360,
+      "sha256": "79ff5924319e06be9538ea1900bdf162ef62193e05945c58c74935b1bf05d9fa"
+    },
+    "completion.json": {
+      "bytes": 455,
+      "sha256": "1dd2ff66d362eb0f35721b58cad14c8d4e7c823ed913fc926b3a8aa08dce50e5"
+    },
+    "execution/execution.json": {
+      "bytes": 887,
+      "sha256": "383755e1df31d4909cfe89eb1c7f54539d14a0c2dc67cf0657b513dc9cdb0d88"
+    },
+    "execution/start.json": {
+      "bytes": 513,
+      "sha256": "aea203a8b9f687e65dd2029724cfa891253e4a333cddf7693d349391a73d0d0e"
+    },
+    "execution/stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "execution/stdout.json": {
+      "bytes": 1756,
+      "sha256": "0e910d51fe8deef800199f273d084accaca7ed5ee660273799dd1e0ad04292ed"
+    },
+    "first-actual-review/public-command-evidence.json": {
+      "bytes": 150149,
+      "sha256": "0f6e47126a22be440432b4f2a93f0bc9abe387a78a87cc19e82612b09cc432a1"
+    },
+    "first-actual-review/review.json": {
+      "bytes": 14244,
+      "sha256": "b584ea3ec90baed3a615e257fba7e87b98a23734969fc86f3a76db544a24c7b8"
+    },
+    "scope.json": {
+      "bytes": 1476,
+      "sha256": "7c5dfc69ed57015e8259fe5d0187250a7147bd6787bfe78cf76ca975d64a99a3"
+    }
+  },
+  "schema": "lupine.fixture-repair.artifact-review-inventory.v1"
+}

@@ -129,7 +129,7 @@ def fixture_repository(root):
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_bytes(raw)
     def git(*args):
-        return subprocess.check_output(['git', '-C', str(root), *args], stderr=subprocess.DEVNULL)
+        return subprocess.check_output(['git', '-c', 'maintenance.auto=false', '-c', 'gc.auto=0', '-C', str(root), *args], stderr=subprocess.DEVNULL)
     git('init', '-q')
     git('add', '.')
     git('-c', 'user.name=Fixture', '-c', 'user.email=fixture@invalid.example', 'commit', '-qm', 'constructed')
@@ -478,7 +478,7 @@ class RegistrationReview(unittest.TestCase):
             root = Path(directory)
             commit, capture, manifest = fixture_repository(root)
             request = fixture_request(root, commit, capture, manifest)
-            subprocess.check_call(['git', '-C', str(root), '-c', 'user.name=Fixture',
+            subprocess.check_call(['git', '-c', 'maintenance.auto=false', '-c', 'gc.auto=0', '-C', str(root), '-c', 'user.name=Fixture',
                                    '-c', 'user.email=fixture@invalid.example', 'commit', '--allow-empty', '-qm', 'advanced'])
             with mock.patch.object(m, 'REPO', root), mock.patch.object(m, '_official_reproduction_capture', side_effect=AssertionError('wrong checkout reached API')):
                 with self.assertRaises(m.RegistrationError):

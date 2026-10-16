@@ -1,0 +1,33 @@
+{
+  "frozen_at": "2026-10-16T18:18:54.431528+00:00",
+  "scope_sha256": "8e5cbeb7d87e6957b3f90d039f05e33bfa25a0ba08d328bd0835db0750f3b103",
+  "acquirer_sha256": "18accc017b926f5608eeaa647214f8712c2450500550825bdf1ea3b4761236c5",
+  "public_prior_inputs": [
+    {
+      "path": "reports/phase2-primary-github-source-survey-v1/README.md",
+      "sha256": "667a9bbf39dad6bb2e43bb49003301564d786f4db259eaf8b1c567823474b093"
+    },
+    {
+      "path": "reports/phase2-primary-github-source-survey-v1/paper_metadata/projection.json",
+      "sha256": "ba83402e49eec24cb203f1be165f600847732975ed846d41337d0c3bf82e0df0"
+    },
+    {
+      "path": "reports/phase2-tmqm-documentary-review-v1/README.md",
+      "sha256": "540e083add5a66f908fb5d8540afd1e715ce390733783944b9517947e535ea27"
+    },
+    {
+      "path": "reports/phase2-tmqm-csv-header-v1/README.md",
+      "sha256": "6a13fdf78d720fdfd3899c34d9503eec20ecc35d37d4b0e64221ee4da80e1027"
+    },
+    {
+      "path": "reports/phase2-tmqm-intake-v1/INTAKE.md",
+      "sha256": "b1f844837ecc0ba23a3e765f98eaf1dfc8a0c65e08b8e92b011961edbb4e4299"
+    },
+    {
+      "path": "reports/phase2-tmqm-intake-v1/README.md",
+      "sha256": "7d264b66b021292475f7b1b389c5548e4b5221bebe8e3fdfe125a69fc0185508"
+    }
+  ],
+  "requests_completed": 0,
+  "network": "Current managed environment HTTP policy unrestricted and enforced; default proxy/TLS unchanged; no credentials."
+}

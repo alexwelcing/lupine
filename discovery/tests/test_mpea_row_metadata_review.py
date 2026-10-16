@@ -258,7 +258,7 @@ class ProductionWrapperIndependentReview(unittest.TestCase):
                 path = root / relative; path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_text('synthetic committed fixture: ' + relative + '\n')
             def git(*args):
-                return subprocess.run(['git', '-c', 'core.hooksPath=/dev/null', '-c', 'commit.gpgsign=false', *args],
+                return subprocess.run(['git', '-c', 'maintenance.auto=false', '-c', 'gc.auto=0', '-c', 'core.hooksPath=/dev/null', '-c', 'commit.gpgsign=false', *args],
                                       cwd=root, check=True, capture_output=True).stdout
             git('init', '-q'); git('add', '.')
             git('-c', 'user.name=Independent Review', '-c', 'user.email=review@example.invalid', 'commit', '-qm', 'synthetic mapping')

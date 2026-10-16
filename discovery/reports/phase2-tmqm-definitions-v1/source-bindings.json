@@ -1,0 +1,72 @@
+{
+  "schema": "lupine.discovery.tmqm_definitions_bindings.v1",
+  "primary_doi": "10.1021/acs.jcim.0c01041",
+  "authors": [
+    "David Balcells",
+    "Bastian Bjerkem Skjelstad"
+  ],
+  "original_publication_year": 2020,
+  "current_repository_commit": "ece824419c9006fe66436daf233822b75533b82f",
+  "current_declared_csv_blob": "3d5bbfa75f01a8d334d1e630b07f94dc7d36603f",
+  "current_csv_full_blob_verified": false,
+  "current_version_schema_bridge_verified": false,
+  "prior_public_inputs": [
+    {
+      "path": "reports/phase2-primary-github-source-survey-v1/README.md",
+      "sha256": "667a9bbf39dad6bb2e43bb49003301564d786f4db259eaf8b1c567823474b093"
+    },
+    {
+      "path": "reports/phase2-primary-github-source-survey-v1/paper_metadata/projection.json",
+      "sha256": "ba83402e49eec24cb203f1be165f600847732975ed846d41337d0c3bf82e0df0"
+    },
+    {
+      "path": "reports/phase2-tmqm-documentary-review-v1/README.md",
+      "sha256": "540e083add5a66f908fb5d8540afd1e715ce390733783944b9517947e535ea27"
+    },
+    {
+      "path": "reports/phase2-tmqm-csv-header-v1/README.md",
+      "sha256": "6a13fdf78d720fdfd3899c34d9503eec20ecc35d37d4b0e64221ee4da80e1027"
+    },
+    {
+      "path": "reports/phase2-tmqm-intake-v1/INTAKE.md",
+      "sha256": "b1f844837ecc0ba23a3e765f98eaf1dfc8a0c65e08b8e92b011961edbb4e4299"
+    },
+    {
+      "path": "reports/phase2-tmqm-intake-v1/README.md",
+      "sha256": "7d264b66b021292475f7b1b389c5548e4b5221bebe8e3fdfe125a69fc0185508"
+    },
+    {
+      "path": "reports/phase2-primary-github-source-survey-v1/readme/projection.json",
+      "sha256": "5ccfed40add395da6bd9f473e6d770e670c58875a784949941ae8c91d6602775"
+    },
+    {
+      "path": "reports/phase2-primary-github-source-survey-v1/readme/documentary-constants.json",
+      "sha256": "6afe0fbaf4ea175f102177c2ab6eec18b9d42511f0fa32cc6defa7ad060a8ab9"
+    }
+  ],
+  "responses": [
+    {
+      "receipt": "paper_identity/receipt.json",
+      "receipt_sha256": "94147924f48e6677d842d32bdb37706bb66b222ebed22b10760f9ae059b72d30",
+      "body_identity": "2ace9be877756a01c715daddb18fae4f33ab52cc18c584fb041dcd9072fa08b9",
+      "body_public": false
+    },
+    {
+      "receipt": "primary_xml/receipt.json",
+      "receipt_sha256": "6d4641d84833dc401661d011ee4f70319623ed972d5b74e33f9d7d5a275d6895",
+      "body_identity": "a8b959d00e3f63aa5c649e16bb0f2118fdb55e26e712aba6cd0638155915fb72",
+      "body_public": false
+    }
+  ],
+  "primary_locators": {
+    "CSD_lookup": "sec1.1 direct paragraph5, sentence beginning The connectivity needed",
+    "geometry_roles": "sec1.2 direct paragraph5, sentence beginning All geometries",
+    "calculation_conditions": "sec1.2 direct paragraph6 sentences1-3",
+    "property_and_natural_charge": "sec1.2 direct paragraph6 sentence6",
+    "polarizability_method": "sec1.2 direct paragraph6 sentence9",
+    "data_availability": "sec1.5 direct paragraph1; duplicated in _adda93_",
+    "article_permission": "front/article-meta/permissions"
+  },
+  "unit_search_scope": "Direct paragraphs of sec1.2 only; exact term families and sentence locators preserved in methods-sentence-inventory. Not full-source absence.",
+  "semantics": "Documentary source identity/wording only; no numeric file verification, physical truth, unchanged2024 schema or scientific admission."
+}

@@ -14,7 +14,7 @@
   "default_timezone": "America/New_York",
   "next_run_time_returned_at_creation": null,
   "last_run_time_returned_at_creation": null,
-  "execution_status": "ACTIVE_RENEWED_PHASE: fixture lifecycle repair integrated; local61PASS on each Python version; originalbd7 CI failure preserved; new exact CI/package pending. ScientificNO_GO, sourceNOT_ADMITTED, old automationdisabled.",
+  "execution_status": "ACTIVE_RENEWED_PHASE: completefixture repair locallyPASS326 at352files; newexactCI/package/audit pendingpublication. Originalfailures preserved; primary2020tmQM definitionsdocumented, currentbridge/admissionblocked. ScientificNO_GO, automationdisabled.",
   "notification_policy": "Substantive daily milestone summary, actionable blocker, or final release decision; suppress unchanged status.",
   "scope": "Resume latest GitHub goal and implement the next bounded increment with available tools, testing and recording actual outcomes.",
   "limits": "Scheduling success does not prove future tool availability, a completed build, or uninterrupted execution. Check and record each run. Do not silently extend the bounded schedule.",
@@ -38,28 +38,101 @@
     "continuous_worker_started": false
   },
   "current_checkpoint": {
-    "at": "2026-10-16T18:18:50.152338+00:00",
+    "at": "2026-10-16T18:37:49.601450+00:00",
     "owner": "root",
-    "parent_commit": "bd7ebf216d3e5b3b8a5a27ad1501d49c0e95dc50",
+    "parent_commit": "e668b349e130cdfd1a8cfe94e3e38d4755507f72",
     "candidate_status": "INTEGRATED_PENDING_PUBLICATION_AND_EXACT_CI",
-    "runtime_files": 351,
-    "runtime_unchanged": 350,
-    "changed_runtime_files": [
-      "tests/test_li_v3_readiness_production.py"
+    "runtime_files": 352,
+    "parent_runtime_files": 351,
+    "parent_runtime_unchanged": 339,
+    "changed_existing_runtime": [
+      "tests/test_li_v3_growth_predicate_audit_review.py",
+      "tests/test_li_v3_readiness_production_review.py",
+      "tests/test_mpea_custody.py",
+      "tests/test_mpea_feature_reader.py",
+      "tests/test_mpea_feature_reader_review.py",
+      "tests/test_mpea_formula_tokens_review.py",
+      "tests/test_mpea_header_labels.py",
+      "tests/test_mpea_registration_allocation_review.py",
+      "tests/test_mpea_row_metadata_review.py",
+      "tests/test_package_retention.py",
+      "tests/test_package_retention_review.py",
+      "tests/test_retained_artifacts.py"
     ],
-    "test_source_sha256": "a38e2d7c0cfdc0fd0ef122795f12e97d1b9ba1cd263495356b5e3f79b7325503",
-    "runtime_manifest_sha256": "452711071f2e3abf8eb734cb6e2e94ee85d04b64f8b40d39300b0597d64d489b",
-    "original_ci_run": 38941904627,
-    "original_ci": "FAIL_PYTHON311_TEMPORARY_GIT_CLEANUP; PYTHON312_BROWSER_LEAN_PASS",
-    "original_local_focused": "PASS60;121detached maintenance launches;race not reproduced",
-    "regression_original_helper": "FAIL1; detected detached maintenance",
-    "repaired_focused": "PASS61 on Python3.11.16; PASS61 on Python3.12.14; zero automatic housekeeping launches in each trace",
-    "current_exact_ci": "PENDING_PUBLICATION",
-    "current_clean_package": "PENDING_PUBLICATION",
-    "physical_performance_general_superiority": "NO_GO",
-    "source_admissions": 0,
+    "added_runtime": [
+      "tests/fixtures/mpea_formula_historical_sources.json"
+    ],
+    "runtime_manifest_sha256": "6d98f823a226e451d3034acdd181255d5dcb64c5abfc90bfbcab3a95a4e610a0",
+    "focused_python": {
+      "version": "3.11.16",
+      "methods": 326,
+      "seconds": 87.765,
+      "status": "PASS",
+      "runtime_files_held": 352,
+      "automatic_housekeeping_launches_observed": 0
+    },
+    "original_integration": "FAIL1 of326;351held; live historical test sources rejected by unchanged pins",
+    "original_bd7_ci": "FAIL1 temporary Git cleanup; preserved original run38941904627",
+    "parent_clean_package": "PASS28demonstrations6schemas18checks; strictPASS; first CONNECT502 stopped before package separately retained",
+    "parent_independent_artifacts": "PASS57checks6981source351runtime113unchangedwheelpayloads",
+    "parent_ci_observation": {
+      "observed_at": "2026-10-16T18:37:21.254072+00:00",
+      "commit": "e668b349e130cdfd1a8cfe94e3e38d4755507f72",
+      "run": {
+        "id": 38946622026,
+        "head_sha": "e668b349e130cdfd1a8cfe94e3e38d4755507f72",
+        "event": "push",
+        "status": "in_progress",
+        "conclusion": null,
+        "html_url": "https://github.com/alexwelcing/lupine/actions/runs/38946622026",
+        "run_attempt": 1
+      },
+      "jobs": [
+        {
+          "id": 117127263394,
+          "name": "lean",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-16T18:20:51Z",
+          "completed_at": "2026-10-16T18:23:52Z"
+        },
+        {
+          "id": 117127263640,
+          "name": "python (3.11)",
+          "status": "in_progress",
+          "conclusion": null,
+          "started_at": "2026-10-16T18:20:51Z",
+          "completed_at": null
+        },
+        {
+          "id": 117127263656,
+          "name": "browser",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-16T18:20:51Z",
+          "completed_at": "2026-10-16T18:22:48Z"
+        },
+        {
+          "id": 117127263828,
+          "name": "python (3.12)",
+          "status": "in_progress",
+          "conclusion": null,
+          "started_at": "2026-10-16T18:20:51Z",
+          "completed_at": null
+        }
+      ],
+      "all_four_jobs_successful": false
+    },
+    "formal_statements": 147,
+    "formal_source_changed": false,
+    "scientific_runtime_changed": false,
+    "tmqm": "Original2020 primary method/key definitions; current2024 units/key/version/data-rights gaps unresolved; wholearticle machine/sectionheading/qualitative exposure explicit; NOT_ADMITTED",
+    "new_exact_ci": "PENDING_PUBLICATION",
+    "new_clean_package": "PENDING_PUBLICATION",
+    "scientific_admission": false,
+    "scientific_superiority": "NO_GO",
     "automation_reenabled": false,
-    "next_action": "Publish repair; verify exact remote and original four-job CI; run clean installed package and strict artifact checks. Preserve original failed run and causal limits. G20 primary units/key/rights prerequisites remain; G21 blocked."
+    "next_action": "Publish this held implementation/documentary increment, verify exact remote and originalCI, cleanly reproduce352-file package/strict checks and bounded independent artifact delta review. Resolve current-source units/version/key/data-rights prerequisites before any separately frozen study; G20 unresolved/G21 blocked."
   },
   "closure": {
     "decision": "GO_RESEARCH_PREVIEW",
@@ -1786,5 +1859,29 @@
     "report_parent_clean_package": "PASS28demonstrations6schemas18checks; strictPASS; rootobservedexit0",
     "report_parent_ci_run": 38941004631,
     "report_parent_ci": "IN_PROGRESS; no inherited parent success"
+  },
+  "prior_fixture_initial_repair_checkpoint": {
+    "at": "2026-10-16T18:18:50.152338+00:00",
+    "owner": "root",
+    "parent_commit": "bd7ebf216d3e5b3b8a5a27ad1501d49c0e95dc50",
+    "candidate_status": "INTEGRATED_PENDING_PUBLICATION_AND_EXACT_CI",
+    "runtime_files": 351,
+    "runtime_unchanged": 350,
+    "changed_runtime_files": [
+      "tests/test_li_v3_readiness_production.py"
+    ],
+    "test_source_sha256": "a38e2d7c0cfdc0fd0ef122795f12e97d1b9ba1cd263495356b5e3f79b7325503",
+    "runtime_manifest_sha256": "452711071f2e3abf8eb734cb6e2e94ee85d04b64f8b40d39300b0597d64d489b",
+    "original_ci_run": 38941904627,
+    "original_ci": "FAIL_PYTHON311_TEMPORARY_GIT_CLEANUP; PYTHON312_BROWSER_LEAN_PASS",
+    "original_local_focused": "PASS60;121detached maintenance launches;race not reproduced",
+    "regression_original_helper": "FAIL1; detected detached maintenance",
+    "repaired_focused": "PASS61 on Python3.11.16; PASS61 on Python3.12.14; zero automatic housekeeping launches in each trace",
+    "current_exact_ci": "PENDING_PUBLICATION",
+    "current_clean_package": "PENDING_PUBLICATION",
+    "physical_performance_general_superiority": "NO_GO",
+    "source_admissions": 0,
+    "automation_reenabled": false,
+    "next_action": "Publish repair; verify exact remote and original four-job CI; run clean installed package and strict artifact checks. Preserve original failed run and causal limits. G20 primary units/key/rights prerequisites remain; G21 blocked."
   }
 }

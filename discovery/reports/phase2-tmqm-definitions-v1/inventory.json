@@ -1,0 +1,136 @@
+{
+  "schema": "lupine.discovery.tmqm_definitions_public_inventory.v1",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 6288,
+      "sha256": "e66d392e5629832fa1c13177539e629e498604f744eeb42a97ba606bd820b97f"
+    },
+    {
+      "path": "scope.json",
+      "bytes": 3249,
+      "sha256": "8e5cbeb7d87e6957b3f90d039f05e33bfa25a0ba08d328bd0835db0750f3b103"
+    },
+    {
+      "path": "get_doc.py",
+      "bytes": 2049,
+      "sha256": "18accc017b926f5608eeaa647214f8712c2450500550825bdf1ea3b4761236c5"
+    },
+    {
+      "path": "scope-hold.json",
+      "bytes": 1404,
+      "sha256": "805d931016f8dc56a91ccb1a11b41f214986129d2913c49272e1f3986e638eaa"
+    },
+    {
+      "path": "documentary-selection.json",
+      "bytes": 1150,
+      "sha256": "b6fcfba9ee5ef54e6c068002e0b89dc902df4576a6a9f692c0aefc57f8913a69"
+    },
+    {
+      "path": "project_methods.py",
+      "bytes": 1569,
+      "sha256": "6874f38a4e6ee8f0c047705fbda9691ac9f0a764c71ac1e98a77479e06b95848"
+    },
+    {
+      "path": "methods-sentence-selection.json",
+      "bytes": 969,
+      "sha256": "dd00e68c8e9b213da0df1966684c115b362c346204a314958b38aa10fb5e6794"
+    },
+    {
+      "path": "methods-final-selection.json",
+      "bytes": 842,
+      "sha256": "aa80bfe2dbcfb452a61c1bbfa370e8cf546b6168403ff8edb4b24a5c0a19fe7c"
+    },
+    {
+      "path": "source-bindings.json",
+      "bytes": 3292,
+      "sha256": "512762d26665f4e9a66d6a5cad043e748264f28053259b59ae9285f852d2cb46"
+    },
+    {
+      "path": "exposure-ledger.json",
+      "bytes": 2048,
+      "sha256": "dbe652c4ab2dcf855a99a34f4ed6ac66a0c86e68cdc0b1dcd0ad3a13bbd37e6a"
+    },
+    {
+      "path": "activity-record.json",
+      "bytes": 887,
+      "sha256": "b11a8aa5d3eeb232380efd4dd88bcb4010e3fded2ace10800d158f856c6d1f68"
+    },
+    {
+      "path": "paper_identity/request.json",
+      "bytes": 485,
+      "sha256": "9b6cc431ed111d999fef48273c72e7413e634d88ee4e5cacade9f14df8982332"
+    },
+    {
+      "path": "paper_identity/receipt.json",
+      "bytes": 532,
+      "sha256": "94147924f48e6677d842d32bdb37706bb66b222ebed22b10760f9ae059b72d30"
+    },
+    {
+      "path": "paper_identity/projection.json",
+      "bytes": 271,
+      "sha256": "33eb9eb097382d4fe578253c92335f526de9a8b170eece96a1fdae9e181f8c75"
+    },
+    {
+      "path": "primary_xml/request.json",
+      "bytes": 424,
+      "sha256": "d14ed4fd1a07175d0a1286943781b9b70f2c7f23ffc2b75e1f8627444df9daad"
+    },
+    {
+      "path": "primary_xml/receipt.json",
+      "bytes": 457,
+      "sha256": "6d4641d84833dc401661d011ee4f70319623ed972d5b74e33f9d7d5a275d6895"
+    },
+    {
+      "path": "primary_xml/layout-projection.json",
+      "bytes": 3919,
+      "sha256": "2c2156b39b616b638129941e3937420dafe24fa63bbfb83afa3142dece90d007"
+    },
+    {
+      "path": "primary_xml/methods-initial-projection.json",
+      "bytes": 3497,
+      "sha256": "0c7484327544b18e63fc939cbbb3ea86e78226fd1370dee2096e664c7b4a8909"
+    },
+    {
+      "path": "primary_xml/methods-sentence-inventory.json",
+      "bytes": 2082,
+      "sha256": "f25e1886ed59cc8b15c6786b639c2dcbba3db83f3360508086ed78d412643dfd"
+    },
+    {
+      "path": "primary_xml/methods-final-projection.json",
+      "bytes": 1909,
+      "sha256": "3a87f837fc0c556dfb5dcac13366878d61eff675d63416aa0ba9080174929899"
+    }
+  ],
+  "file_count": 20,
+  "total_bytes": 37323,
+  "whitespace_check": "All allowlisted UTF-8 text has no trailing horizontal whitespace or CR; no transformation/wrapper needed.",
+  "local_links_checked": [
+    "paper_identity/receipt.json",
+    "primary_xml/receipt.json",
+    "primary_xml/methods-initial-projection.json",
+    "primary_xml/methods-final-projection.json",
+    "primary_xml/layout-projection.json",
+    "../phase2-primary-github-source-survey-v1/README.md",
+    "../phase2-tmqm-csv-header-v1/README.md",
+    "../phase2-tmqm-intake-v1/README.md",
+    "exposure-ledger.json"
+  ],
+  "excluded": [
+    "paper_identity/response.body",
+    "primary_xml/response.body",
+    "Any unselected full text, numeric dataset, private prefix or generated cache"
+  ],
+  "excluded_raw_body_identities_from_receipts": [
+    {
+      "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=DOI%3A10.1021%2Facs.jcim.0c01041&format=json&resultType=core&pageSize=1",
+      "bytes": 5743,
+      "sha256": "2ace9be877756a01c715daddb18fae4f33ab52cc18c584fb041dcd9072fa08b9"
+    },
+    {
+      "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC7768608/fullTextXML",
+      "bytes": 138193,
+      "sha256": "a8b959d00e3f63aa5c649e16bb0f2118fdb55e26e712aba6cd0638155915fb72"
+    }
+  ]
+}

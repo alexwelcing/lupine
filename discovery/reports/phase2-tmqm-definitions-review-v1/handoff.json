@@ -1,0 +1,15 @@
+{
+  "disposition": "NO_MATERIAL_DOCUMENTARY_BLOCKER_WITH_EXPOSURE_QUALIFICATION",
+  "inventory_sha256": "52fddc000582e1fec7bfff455a7c465c8154be6b554204f07d50cdb3897ef210",
+  "public_allowlist": [
+    "README.md",
+    "review.json",
+    "first-link-validation-failure.json",
+    "inventory.json",
+    "handoff.json"
+  ],
+  "review_sha256": "3f565a1fdc4bcd8bbb38b9d450d3f45459b75f3b6571cb4e869f86110f711aea",
+  "scientific_admission": false,
+  "source_handoff_sha256": "857942b6ddba189aa3fd434f18f69eac3f1f691de41385e5492ac7aa02b24c84",
+  "source_held": true
+}

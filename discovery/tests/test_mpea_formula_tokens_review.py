@@ -309,10 +309,24 @@ class FormulaIndependentReview(unittest.TestCase):
         repo=Path(directory);root=repo/'discovery';root.mkdir()
         subprocess.run(['git','init','-q',str(repo)],check=True,capture_output=True)
         def git(*args):
-            return subprocess.run(['git',*args],cwd=repo,check=True,capture_output=True).stdout.decode().strip()
+            return subprocess.run(['git', '-c', 'maintenance.auto=false', '-c', 'gc.auto=0',*args],cwd=repo,check=True,capture_output=True).stdout.decode().strip()
         git('config','user.email','fixture@example.invalid');git('config','user.name','Synthetic Review')
+        # The synthetic baseline represents the original source freeze, not
+        # later housekeeping edits to the live test suite. Keep production pins.
+        historical=json.loads((HERE.parent/'fixtures/mpea_formula_historical_sources.json').read_text(encoding='utf-8'))
+        self.assertEqual(set(historical),{'schema','source_commit','files'})
+        self.assertEqual(historical['schema'],'lupine.test-historical-source.v1')
+        self.assertEqual(historical['source_commit'],m.BASELINE_COMMIT)
+        self.assertEqual(set(historical['files']),{'tests/test_mpea_custody.py',
+            'tests/test_mpea_header_labels.py','tests/test_mpea_row_metadata_review.py'})
+        pinned={**self.helper.PRIOR_PINS,**m.BASELINE_EXTRA_PINS}
         for relative in self.helper.FROZEN_PATHS:
-            target=root/relative;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes((ROOT/relative).read_bytes())
+            if relative in historical['files']:
+                raw=historical['files'][relative].encode('utf-8')
+                self.assertEqual(sha256(raw).hexdigest(),pinned[relative])
+            else:
+                raw=(ROOT/relative).read_bytes()
+            target=root/relative;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(raw)
         git('add','.');git('commit','-qm','synthetic original baseline');baseline=git('rev-parse','HEAD')
         for relative in m.REFERENCE_PINS:
             target=root/relative;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes((ROOT/relative).read_bytes())

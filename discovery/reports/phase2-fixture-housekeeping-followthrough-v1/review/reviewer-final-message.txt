@@ -1,0 +1,15 @@
+Independent reviewer: /root/calibrated_backend/ci_version_source_review
+Final delivered findings, preserved verbatim:
+
+No blocker found in the 12-file, 13-call-site candidate. Independent AST comparison confirms only the four Git argv constants changed; assertions, mocks, cleanup, and production queries are intact.
+
+All 26 baseline/candidate/manifest/diff inputs remained unchanged. Main files now match the promoted candidates, consistent with concurrent integration.
+
+Bound hashes:
+
+- Copyset: `9c7921d0382548cf97bb1d08177419019a1a2cc8f27a723a7b6136106a0d2af2`
+- Patch: `cde4ff8c5aea6df999b5937987248035e8d5b28376742c101bd405e78a5044ca`
+
+Review tooling had a harmless patch-header count assertion error after AST checks passed; no receipt file was written. No tests, producer imports, Git commands, or edits executed.
+
+Record annotation: "manifest" above refers to copyset.json. The 26 inputs are 12 baseline files, 12 candidate files, copyset.json, and changes.patch. This annotation does not change the reviewer's findings.

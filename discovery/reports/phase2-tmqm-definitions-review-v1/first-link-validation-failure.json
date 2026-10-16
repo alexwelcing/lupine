@@ -1,0 +1,8 @@
+{
+  "cause": "Reviewer used is_file on reports/phase2-tmqm-definitions-v1/../... before the publication folder exists; the OS cannot traverse the nonexistent component.",
+  "correction": "Resolve the intended publication path lexically before checking existing sibling target existence; no source changes.",
+  "error": "AssertionError: ../phase2-primary-github-source-survey-v1/README.md",
+  "event": "First reviewer metadata validation stopped after20file hashes/sizes passed.",
+  "original_output_retention": "Exception was returned in the tool response; this note preserves it without inventing an original process log.",
+  "product_test_failure": false
+}

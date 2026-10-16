@@ -64,7 +64,7 @@ class PackageRetentionTests(unittest.TestCase):
         self.addCleanup(self.temporary.cleanup)
 
     def git(self, *args):
-        return subprocess.check_output(['git', '-c', 'core.hooksPath=/dev/null',
+        return subprocess.check_output(['git', '-c', 'maintenance.auto=false', '-c', 'gc.auto=0', '-c', 'core.hooksPath=/dev/null',
             '-c', 'commit.gpgsign=false', '-c', 'tag.gpgsign=false', *args],
             cwd=self.repository, stderr=subprocess.PIPE, text=True)
 

@@ -2059,3 +2059,32 @@ rights, pairing, processed semantics, equivalence and freshness remain unresolve
   and original CI verification, then clean installed packaging and strict retention.
   New-head checks are pending at this source checkpoint. No scientific admission,
   physical-performance or general-superiority claim follows; all negatives remain.
+
+
+## 2026-10-16T18:37:49.601450+00:00 — complete fixture isolation, historical inputs and primary method definitions
+
+- [Twelve remaining fixture files/thirteen Git callsites](phase2-fixture-housekeeping-followthrough-v1/README.md)
+  now isolate automatic housekeeping. The first326-method run failed a historical
+  source gate because a fixture copied live edited tests; the original failure is
+  retained. An explicit JSON fixture now supplies the exact three historical source
+  byte sequences, verified against originalGit and unchanged production pins.
+  Stored source is not executed and shallow checkouts need no runtime Git history.
+- The final affected326-method execution passes in87.765s on Python3.11.16 with all
+  352 runtime files held and no automatic housekeeping launches observed. Independent
+  source/byte reviews preserve positive and historical-repin negative assertions,
+  strict cleanup and all scientific/production pins. These are generated software
+  fixtures, not physical experiments. Original bd7 CI failure remains unretried.
+- Exact e668 separately passes clean28/six-schema/18-check package/strict and an
+  independent57-check artifact review over6,981 source files/351runtime/113 unchanged
+  package payloads. Its first CONNECT502 stop occurred before package execution and
+  remains distinct from the recovered run. New-head checks remain pending publication.
+- [Primary2020 tmQM definitions](phase2-tmqm-definitions-v1/README.md) establish CSD
+  lookup, NPA metal charge, gas-phase closed-shell calculations and separate xTB
+  polarizability. [Review](phase2-tmqm-definitions-review-v1/README.md) preserves the
+  2024 units/key/version/data-rights gaps and adds visible-section-heading exposure
+  to full-article machine and incidental qualitative exposure. No numerical frame,
+  study protocol or source is admitted; physical/general-superiority NO-GO remains.
+- Owner/checkpoint: root publishes this held increment, verifies remote and original
+  CI, executes clean352-file package/strict checks and independent artifact delta
+  review, then records the exact source/run release decision in PR263. G20 remains
+  unresolved/G21 blocked; all old negative science and disabled automation persist.

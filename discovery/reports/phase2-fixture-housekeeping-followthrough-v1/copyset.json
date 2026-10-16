@@ -1,0 +1,162 @@
+{
+  "checks": "AST equivalence after removing exactly the four inserted Git argv constants at the 13 listed calls; no assertions, cleanup, mock functions, other Git commands, or production sources changed.",
+  "files": [
+    {
+      "all_other_ast_unchanged": true,
+      "bytes": 26592,
+      "candidate": "candidate/tests/test_li_v3_growth_predicate_audit_review.py",
+      "candidate_sha256": "c2fe22a1eb17d99084a7e48aa62deb616e7bb31fc15fd61bb3e3c766edcf5fbf",
+      "changed_real_git_call_lines": [
+        135
+      ],
+      "original_sha256": "3dd4b23024028e2e7ba5876ca8d9705e066e57362bfae63d9999783e76b5dc49",
+      "path": "tests/test_li_v3_growth_predicate_audit_review.py"
+    },
+    {
+      "all_other_ast_unchanged": true,
+      "bytes": 89702,
+      "candidate": "candidate/tests/test_li_v3_readiness_production_review.py",
+      "candidate_sha256": "896c762b8a1a22d02c252809da72576a48118aaf748df30f6aae425764106ffd",
+      "changed_real_git_call_lines": [
+        398
+      ],
+      "original_sha256": "2f2295d0f04fbc0f3399f904eed757e8a6c0f713a13cf9bb13850c52ea1e91e0",
+      "path": "tests/test_li_v3_readiness_production_review.py"
+    },
+    {
+      "all_other_ast_unchanged": true,
+      "bytes": 11912,
+      "candidate": "candidate/tests/test_mpea_custody.py",
+      "candidate_sha256": "528f29bb81ae2e24634f528c2574040d66a0199318e19fd36eceabea019e510e",
+      "changed_real_git_call_lines": [
+        66
+      ],
+      "original_sha256": "cf2fc7a0bdaf9bd59589c123745aae6f353fa5837849e26d2a9438d62d090b19",
+      "path": "tests/test_mpea_custody.py"
+    },
+    {
+      "all_other_ast_unchanged": true,
+      "bytes": 17192,
+      "candidate": "candidate/tests/test_mpea_feature_reader.py",
+      "candidate_sha256": "886d2ced99c7175dbe2689dcc888226f2d235ab31502eaeb2b8488fa416ac2fa",
+      "changed_real_git_call_lines": [
+        189
+      ],
+      "original_sha256": "0a20ad55287334f63b5fb1754d9c42c803930ce95659374c1c85f2c9a787424b",
+      "path": "tests/test_mpea_feature_reader.py"
+    },
+    {
+      "all_other_ast_unchanged": true,
+      "bytes": 29188,
+      "candidate": "candidate/tests/test_mpea_feature_reader_review.py",
+      "candidate_sha256": "0c9b3d7ff0e99b2d19737dc6eeadc9cc20fae7927b16bf444dce6db7922ae64f",
+      "changed_real_git_call_lines": [
+        374
+      ],
+      "original_sha256": "153fe927723fac68c8881224f3a5eec564181aa40d1290e8794f008c7ccb94ca",
+      "path": "tests/test_mpea_feature_reader_review.py"
+    },
+    {
+      "all_other_ast_unchanged": true,
+      "bytes": 27317,
+      "candidate": "candidate/tests/test_mpea_formula_tokens_review.py",
+      "candidate_sha256": "52d886ae47f57bd7a827c0c331edd6395b55088ae85f8869b9fb52787f9bcb5b",
+      "changed_real_git_call_lines": [
+        312
+      ],
+      "original_sha256": "fd1509cb343ff067445bc316d1c3c960f38ad290f7bbb65f449401d11b421059",
+      "path": "tests/test_mpea_formula_tokens_review.py"
+    },
+    {
+      "all_other_ast_unchanged": true,
+      "bytes": 15816,
+      "candidate": "candidate/tests/test_mpea_header_labels.py",
+      "candidate_sha256": "a7757986ef3634400aece70cd06364d6110c54f3f7002ee2279bc6127feaa8c0",
+      "changed_real_git_call_lines": [
+        273
+      ],
+      "original_sha256": "1bd9f9f967925faac4479135adb7d10051a4cb60bd17932759e0d3c0dc441dc9",
+      "path": "tests/test_mpea_header_labels.py"
+    },
+    {
+      "all_other_ast_unchanged": true,
+      "bytes": 43113,
+      "candidate": "candidate/tests/test_mpea_registration_allocation_review.py",
+      "candidate_sha256": "b901969d80f3946d96abd4facbd1e722736a2cd21cb028eaab0a0e68e043b096",
+      "changed_real_git_call_lines": [
+        132,
+        481
+      ],
+      "original_sha256": "08f952bca1881e79d4c3d9b75aee8a8a533429f9bb41e586e88fffdf4a4c6073",
+      "path": "tests/test_mpea_registration_allocation_review.py"
+    },
+    {
+      "all_other_ast_unchanged": true,
+      "bytes": 24596,
+      "candidate": "candidate/tests/test_mpea_row_metadata_review.py",
+      "candidate_sha256": "0574fd6c5c6d1bf7f965f24c9d419ea89d98580376de3c575925b1388bd79431",
+      "changed_real_git_call_lines": [
+        261
+      ],
+      "original_sha256": "9a32ec3ad0e566887239c01047b1a5a1d5cb0249fd2888bb76faa90018f9c8c1",
+      "path": "tests/test_mpea_row_metadata_review.py"
+    },
+    {
+      "all_other_ast_unchanged": true,
+      "bytes": 18518,
+      "candidate": "candidate/tests/test_package_retention.py",
+      "candidate_sha256": "c837114f67f1f7d09629244e6332b359b31a14b277e5bef0ffff27e2cf7c43fb",
+      "changed_real_git_call_lines": [
+        67
+      ],
+      "original_sha256": "e3a2112241a03646c9b5a8b60b7483f36305fb7e528fdb6ffcae587c87a14309",
+      "path": "tests/test_package_retention.py"
+    },
+    {
+      "all_other_ast_unchanged": true,
+      "bytes": 18026,
+      "candidate": "candidate/tests/test_package_retention_review.py",
+      "candidate_sha256": "35cc9a6732917fea4ad37a09c77f515ede5a903fe908ce18fb054091fc319c8a",
+      "changed_real_git_call_lines": [
+        48
+      ],
+      "original_sha256": "4934d597cb6b64dd97c6ecabac91a783b025e09ded9831314f78d944881db8f2",
+      "path": "tests/test_package_retention_review.py"
+    },
+    {
+      "all_other_ast_unchanged": true,
+      "bytes": 14158,
+      "candidate": "candidate/tests/test_retained_artifacts.py",
+      "candidate_sha256": "5b4dba35d3a1a8fbb38b56896f66a0b0bb1bd5970971a4cfd19e3f017bd379ae",
+      "changed_real_git_call_lines": [
+        48
+      ],
+      "original_sha256": "ffdd9dd80e5e2c23a9294d35bc70bb7bf9591384f4071229c414c0c0562fb3f3",
+      "path": "tests/test_retained_artifacts.py"
+    }
+  ],
+  "focused_modules": [
+    "test_li_v3_growth_predicate_audit_review",
+    "test_li_v3_readiness_production_review",
+    "test_mpea_custody",
+    "test_mpea_feature_reader",
+    "test_mpea_feature_reader_review",
+    "test_mpea_formula_tokens_review",
+    "test_mpea_header_labels",
+    "test_mpea_registration_allocation_review",
+    "test_mpea_row_metadata_review",
+    "test_package_retention",
+    "test_package_retention_review",
+    "test_retained_artifacts",
+    "test_retained_mpea_transport",
+    "test_mpea_registration_recovery_v2"
+  ],
+  "historical_evidence_policy": "Existing reports and pinned historical copies are not rewritten.",
+  "main_files_modified": false,
+  "real_git_argv_sites": 13,
+  "schema": "lupine.fixture_housekeeping_candidates.v1",
+  "scope": "Only generated temporary-repository Git commit helpers and one direct commit bypass. Existing helper API cannot serve the direct call because fixture_repository returns only commit/capture/manifest; direct argv therefore receives the same flags without changing the helper API.",
+  "status": "PREPARED_NOT_EXECUTED",
+  "tests_executed": false,
+  "total_files": 12
+}

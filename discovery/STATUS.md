@@ -1,19 +1,21 @@
 # Project state
 
-Current checkpoint: 2026-10-16; root owns the fixture repair and exact-source verification.
-The original `bd7ebf2` CI run failed Python 3.11 during temporary Git cleanup;
-Python 3.12, browser and Lean passed. [The retained diagnosis and repair](reports/phase2-fixture-housekeeping-repair-v1/README.md)
-show detached automatic maintenance launches and a regression that catches them.
-The repaired module passes 61 local methods on Python 3.11 and 61 on Python 3.12,
-with no automatic housekeeping child launch; strict cleanup stays enabled.
-Only this test file changes among 351 runtime files. New-head CI and packaging
-are pending; the original CI writer remains unproved.
+Current checkpoint: 2026-10-16; root owns final fixture integration and exact-source verification.
+[The complete fixture repair](reports/phase2-fixture-housekeeping-followthrough-v1/README.md)
+is locally verified:326 affected methods pass on Python3.11.16, all352 runtime files
+held and zero automatic housekeeping launches observed. Twelve existing test files
+change from e668 and one immutable historical-source JSON fixture is added; production
+pins, source rejection assertions and strict cleanup stay unchanged. The first326-test
+run's historical-fixture error is retained. New-head CI/package/audit remain pending.
 
-Earlier exact `eaed2e7` and `cb19c0a` runs passed all four original jobs.
-The eaed [clean installed reproduction and independent audit](reports/phase2-source-readiness-release-verification-v1/README.md)
-pass 28 demonstrations/six schemas/18 checks, strict retention and 22,005 artifact
-checks over 6,794 source files/351 runtime files/113 wheel payloads. This audit
-belongs to eaed; it is not relabeled as an audit of the repair.
+Earlier eaed/cb19 originalCI passed all four jobs. The original bd7 run failed Python3.11
+in temporary Git cleanup; its other three jobs passed and it was not retried.
+Exact e668 separately passes clean28/six-schema/18-check packaging, strict retention
+and [57 independent artifact checks](reports/phase2-fixture-repair-artifact-review-v1/README.md)
+over6,981 source files/351 runtime files/113 unchanged package payloads. A preceding
+CONNECT502 stopped before packaging; its recovered actual run is a separate record.
+The earlier [22,005-check audit](reports/phase2-source-readiness-release-verification-v1/README.md)
+remains attributed to eaed. None is relabeled as a successor audit.
 
 The [readiness interface](reports/phase2-source-readiness-verification-v1/README.md)
 shows a fixed Li/Dryad documentary snapshot, explicit unavailable states and exact
@@ -36,6 +38,12 @@ eleven literal labels in one 115-byte application read through LF. No remainder
 read occurred; underlying numeric-row buffering remains possible and unmeasured.
 No complete numerical frame, protocol, target pair or allocation is admitted.
 The [intake card](reports/phase2-tmqm-intake-v1/README.md) is explicitly unregistered.
+[Primary2020 passages](reports/phase2-tmqm-definitions-v1/README.md) now establish
+CSD lookup, natural-population metal charge and gas-phase closed-shell methods
+with separate xTB polarizability. Current2024 units/key/version/data-rights gaps
+remain. The [review](reports/phase2-tmqm-definitions-review-v1/README.md) records
+visible results/benchmark headings, full-article machine exposure and incidental
+qualitative abundance discussion; no untouched-source claim follows.
 
 Li A1's XML block and partial exposure, Dryad/QM9 access failures, restrictive AFLOW
 terms and all historical scientific negatives remain. G20 unresolved/G21 blocked;

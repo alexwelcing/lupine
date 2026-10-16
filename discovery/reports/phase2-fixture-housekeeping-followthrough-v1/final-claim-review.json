@@ -1,0 +1,97 @@
+{
+  "bindings": {
+    "GOAL.md": {
+      "bytes": 36086,
+      "sha256": "2959f5a4e20cff3c97fb150efe5dda6be2b5ffb1d8cc9879652e2ffb3ed0a334"
+    },
+    "STATUS.md": {
+      "bytes": 32213,
+      "sha256": "ba840837682a20600ee70422c90bf0fe4058631d63d709079b077e2974e5a606"
+    },
+    "docs/release-validation.md": {
+      "bytes": 60341,
+      "sha256": "ff5a4910ac4679db35b91a932593602a39685b9e0e276f3b7e25874342de2038"
+    },
+    "reports/continuation.json": {
+      "bytes": 87751,
+      "sha256": "928fcd2c35c4a889447fdca8881bc23c0b56d42561debf96578291a8a6aedcb0"
+    },
+    "reports/phase2-fixture-housekeeping-followthrough-v1/README.md": {
+      "bytes": 4350,
+      "sha256": "cbe28a668d69d6dca6f12de3db489526402df5656aad978b92cb186c63e37117"
+    },
+    "reports/phase2-fixture-housekeeping-followthrough-v1/changes.patch.json": {
+      "bytes": 10395,
+      "sha256": "515e0e51331a4cab4d58c1889fd2a00e5571228c8a988edb6e911be46b3d75ca"
+    },
+    "reports/phase2-fixture-housekeeping-followthrough-v1/checkpoint.json": {
+      "bytes": 3890,
+      "sha256": "c0346840929515355146a6ed5fb0a7a21628364164e9ba2de0dbe9bc5b975a17"
+    },
+    "reports/phase2-fixture-housekeeping-followthrough-v1/e668-ci-at-checkpoint.json": {
+      "bytes": 1260,
+      "sha256": "f20ec0237d6e221fd31ba4c606a05a3a18f1fa2b228dc06b1674c2834d89f97a"
+    },
+    "reports/phase2-fixture-housekeeping-followthrough-v1/focused-execution.json": {
+      "bytes": 1459,
+      "sha256": "14046e5c02b3582ddb156721dd266dcaf993006329cdf84a657045b4b77ce5d0"
+    },
+    "reports/phase2-fixture-housekeeping-followthrough-v1/history-repaired-execution/execution.json": {
+      "bytes": 1435,
+      "sha256": "f5df070ac52640c52791f40d905db7cb9475e43a50f70f2b6dfdd1401622ff31"
+    },
+    "reports/phase2-fixture-housekeeping-followthrough-v1/root-observed-exits.json": {
+      "bytes": 357,
+      "sha256": "607615d1b2a13224e5cc8c9a357b398507d23345b169fc30f01658bdca5c8e33"
+    },
+    "reports/phase2-fixture-repair-artifact-review-v1/README.md": {
+      "bytes": 2316,
+      "sha256": "f37c03fd7727ec399103008858679c76168baab7b24ed750cd59a85e52c21047"
+    },
+    "reports/phase2-fixture-repair-artifact-review-v1/completion.json": {
+      "bytes": 455,
+      "sha256": "1dd2ff66d362eb0f35721b58cad14c8d4e7c823ed913fc926b3a8aa08dce50e5"
+    },
+    "reports/runtime-manifest.json": {
+      "bytes": 41472,
+      "sha256": "6d98f823a226e451d3034acdd181255d5dcb64c5abfc90bfbcab3a95a4e610a0"
+    }
+  },
+  "consistent_claims": [
+    "First326 run failed1 at351-held snapshot; FROZEN_SOURCE_REQUIRED correctly rejected changed live files substituted into a historical fixture.",
+    "Repaired326 methods passed in87.765unittestseconds onPython3.11.16 at352-held snapshot, zero automatic housekeeping launches. Scope is15 affected/consumer modules, not full suite or exact-head CI.",
+    "Historical source fixtures preserve original bytes/pins/rejection assertions; current metadata records12changed existing paths+1newfixture and339unchanged parent paths. No production scientific source or formal change is claimed.",
+    "e668 clean18-check package/strict and57-check audit/6981source/351runtime/113payloads remain tied to e668. Its dated CI observation is still pending; successorCI/package/audit are not yet established.",
+    "Current continuation checkpoint equals report checkpoint; source manifest hash matches.",
+    "Original bd7 cleanup writer remains unproved, and original failures remain retained.",
+    "tmQM2020 definitions stay documentary;2024 units/key/version/rights/admission remain unresolved. Full-article machine, visible section headings/IDs/counts and initial qualitative exposure are explicit.",
+    "147conditional statements, sourceNOT_ADMITTED, physical/general-superiorityNO_GO and disabled oldautomation are preserved."
+  ],
+  "disposition": "NO_MATERIAL_CLAIM_BLOCKER",
+  "documentary_publication_copy_checks": [
+    {
+      "bundle": "phase2-tmqm-definitions-v1",
+      "exact_public_file_copies": 22,
+      "held_handoff_sha256": "857942b6ddba189aa3fd434f18f69eac3f1f691de41385e5492ac7aa02b24c84"
+    },
+    {
+      "bundle": "phase2-tmqm-definitions-review-v1",
+      "exact_public_file_copies": 5,
+      "held_handoff_sha256": "55630f0f21f9139919060bcfde9aadfaa5340f8a989a99c10c61183d70988e6a"
+    }
+  ],
+  "existing_pending_gates": [
+    "Publish and verify exact successor remote",
+    "Observe original exact-source CI",
+    "Run exact-source cleanpackage/strict and bounded independent artifact delta review"
+  ],
+  "material_findings": [],
+  "patch_wrapper": {
+    "decoded_utf8_matches_declared_original_bytes_and_sha256": true,
+    "no_original_source_mutation_or_test_rerun_implied": true
+  },
+  "recorded_at": "2026-10-16T18:39:01.595266+00:00",
+  "schema": "lupine.fixture-followthrough-final-claim-review.v1",
+  "scope": "Read-only requested current document sections, public execution/artifact/checkpoint receipts and exact public documentary copy identities. No test/build/project import/private-source/network/scientific operation or tracked edit.",
+  "tests_executed_by_reviewer": 0
+}
