@@ -1,0 +1,29 @@
+{
+  "status": "FAIL",
+  "failure": "Traceback (most recent call last):\n  File \"/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-artifact-review-v1/additive_audit.py\", line 200, in <module>\n    result = run()\n             ^^^^^\n  File \"/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-artifact-review-v1/additive_audit.py\", line 107, in run\n    assert pin_record['baseline_commit'] == BASELINE\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+  "started_utc": "2026-10-16T12:36:56.806627+00:00",
+  "elapsed_seconds": 0.0596460400010983,
+  "script_sha256": "e87a8d0181c986f85883ebe28ef8295581c0a97976ab927feb3de60be096f649",
+  "actual_git_commands": [
+    {
+      "arguments": [
+        "rev-parse",
+        "HEAD"
+      ],
+      "stdout_sha256": "0419b15767e30e66ebf440220318d6d588200a0a2e2e854acb1626d67a90778f",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    }
+  ],
+  "exit_code": 1
+}

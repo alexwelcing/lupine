@@ -14,7 +14,7 @@
   "default_timezone": "America/New_York",
   "next_run_time_returned_at_creation": null,
   "last_run_time_returned_at_creation": null,
-  "execution_status": "ACTIVE_RENEWED_PHASE: Rhizo stored-label completeness resolved for144fixedpairs; G34integrated418testsPASS, exact release gates pending before actualLi diagnostic. Scientific admission unresolved. Expired automation remains disabled.",
+  "execution_status": "ACTIVE_RENEWED_PHASE: verified a064 G34 actual pair complete; sole MEMBER_KIND_PROFILE failure, 31 families pass. Complete bounded Li compatibility/documentary/frame readiness next. Scientific admission unresolved; automation disabled.",
   "notification_policy": "Substantive daily milestone summary, actionable blocker, or final release decision; suppress unchanged status.",
   "scope": "Resume latest GitHub goal and implement the next bounded increment with available tools, testing and recording actual outcomes.",
   "limits": "Scheduling success does not prove future tool availability, a completed build, or uninterrupted execution. Check and record each run. Do not silently extend the bounded schedule.",
@@ -38,24 +38,26 @@
     "continuous_worker_started": false
   },
   "current_checkpoint": {
-    "recorded_at": "2026-10-16T12:30:12.578383+00:00",
-    "owner": "root publication/release/actual operation; independent source and artifact reviewers",
+    "recorded_at": "2026-10-16T13:07:59.802367+00:00",
+    "owner": "root publication/integration; independent bounded Li design review",
     "goal_state": "ACTIVE_RENEWED_PHASE",
-    "published_commit": "9766b6838388c35a92d32b1a60e65613c72b3fee",
-    "published_ci_run": 38898365063,
+    "published_commit": "a064a2c0e4a7cce1fbcb0541f49aae132944e785",
+    "published_ci_run": 38901590399,
     "published_ci_all_four_jobs_pass": true,
-    "published_evidence": "reports/phase2-growth-predicate-implementation-v1/previous-report-ci.json",
-    "working_checkpoint": "One actual36-object stored-label pass completed144positions, all tolerancesNULL; public reviewPASS. G34fourfiles integrated418combinedtestsPASS/runtime335/all332oldunchanged. No actualG34 operation.",
+    "published_evidence": "reports/phase2-growth-predicate-verification-v1/ROOT-CHECKPOINT.md",
+    "working_checkpoint": "G34 actual pair complete, identical public receipts; sole MEMBER_KIND_PROFILE failure; no member/XML decoding. Primary OPC and Angsten method reviews complete. G20 unresolved/G21 blocked.",
     "actual_new_scientific_allocation_performed": false,
     "scientific_usefulness": "NO_GO unchanged; no new scientific experiment",
     "clean_package": {
-      "commit": "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace",
+      "commit": "a064a2c0e4a7cce1fbcb0541f49aae132944e785",
       "status": "PASS",
       "cases": 28,
       "schemas": 6,
       "mandatory_checks": 16,
       "strict_retained_verifier": "PASS",
-      "independent_artifact_audit": "PASS"
+      "independent_artifact_audit": "PASS",
+      "source_files_audited": 5003,
+      "runtime_files": 335
     },
     "finite_planning": {
       "status": "COMPLETE_VERIFIED_4492858",
@@ -96,7 +98,7 @@
       "notebook_code_executed": false,
       "output_values_disclosed": false
     },
-    "next_action": "Verify new exact remote CI, clean package and independent artifacts; perform fixed actualG34diagnostic only after gates. Complete boundedLi readiness decision. No numericRhizocensus/model/fit/allocation selected.",
+    "next_action": "Publish verification report, verify exact descendant CI, implement one independently reviewed bounded Li compatibility/documentary/frame route or record a specific NO_GO. No scientific allocation selected.",
     "automation_reenabled": false,
     "new_schedule_created": false,
     "continuous_worker_started": false,
@@ -202,7 +204,7 @@
       "reason": "LOCAL_EXTRA_HEADERS_COMPLETE",
       "scientific_schema_approved": false
     },
-    "published_ci_status": "PASS_ORIGINAL_PUSH_ATTEMPT_1_ALL_FOUR_OBSERVED_2026-10-16T12:30:24.036933+00:00",
+    "published_ci_status": "PASS_ORIGINAL_PUSH_ATTEMPT_1_ALL_FOUR_OBSERVED_2026-10-16T12:56:39.188124+00:00",
     "citation_identity": {
       "status": "DOCUMENTARY_AUDIT_COMPLETE_UNRESOLVED_IDENTITIES",
       "report": "reports/phase2-li-reference-identity-v1/PUBLICATION.md",
@@ -295,17 +297,17 @@
       "followon_bound_objects_read": false
     },
     "rhizo_recorded_label_candidate": {
-      "status": "GENERATED_DATA_PREPARATION",
+      "status": "ACTUAL_READINESS_COMPLETE",
       "fixed_objects": 36,
       "bytes": 126885,
       "expected_property_positions": 144,
       "reference_choice_reconstruction": false,
-      "actual_invocation": false
+      "actual_invocation": true
     },
     "li_categorical_header_candidate": {
-      "status": "GENERATED_DATA_PREPARATION",
+      "status": "PROMOTED_AND_ACTUAL_PAIR_COMPLETE",
       "accepted_profile_changed": false,
-      "actual_invocation": false,
+      "actual_invocation": true,
       "xml_access": false
     },
     "recorded_labels": {
@@ -326,8 +328,8 @@
       "numeric_comparisons": 0
     },
     "growth_predicate_audit": {
-      "status": "INTEGRATED_RELEASE_GATES_PENDING",
-      "report": "reports/phase2-growth-predicate-implementation-v1/ROOT-CHECKPOINT.md",
+      "status": "COMPLETE_ACTUAL_BLOCKED_SCHEMA",
+      "report": "reports/phase2-growth-predicate-verification-v1/ROOT-CHECKPOINT.md",
       "source_sha256": "70a0339212b971bf7824ae256600b959ae7a7d22b6fc8853eb2208d3c8ece207",
       "pure_author_tests": 22,
       "pure_independent_tests": 26,
@@ -339,8 +341,30 @@
       "combined_li_tests": 418,
       "runtime_files": 335,
       "old_runtime_files_unchanged": 332,
-      "actual_operations": 0,
-      "archive_acceptance_changed": false
+      "actual_operations": 2,
+      "archive_acceptance_changed": false,
+      "public_receipt_sha256": "68c9042325e93cebd08f9dd056ccbf8833b16f4f045f25bbe2e8be69623326be",
+      "first_rejection": "MEMBER_KIND_PROFILE",
+      "families_passing": 31,
+      "unchecked_dependencies": 0,
+      "public_review_checks": 410,
+      "first_reviewer_failure_preserved": true,
+      "member_opens": 0,
+      "xml_parses": 0,
+      "worksheet_values_decoded": false,
+      "whole_target_bearing_buffer_read": true,
+      "scientific_schema_approved": false
+    },
+    "vacancy_primary_methods": {
+      "status": "PRIMARY_METHOD_CONVENTION_DOCUMENTED",
+      "report": "reports/phase2-rhizo-vacancy-methods-v1/README.md",
+      "rhizo_value_agreement_established": false,
+      "new_dft": false
+    },
+    "opc_primary_scope": {
+      "status": "PRIMARY_SYNTAX_SCOPE_DOCUMENTED",
+      "report": "reports/phase2-opc-part-scope-v1/README.md",
+      "workbook_semantics_established": false
     }
   },
   "closure": {
@@ -1201,6 +1225,312 @@
       "g31_independent": 24,
       "actual_operations_performed": false,
       "scientific_schema_approved": false
+    }
+  },
+  "prior_growth_predicate_implementation_checkpoint": {
+    "recorded_at": "2026-10-16T12:30:12.578383+00:00",
+    "owner": "root publication/release/actual operation; independent source and artifact reviewers",
+    "goal_state": "ACTIVE_RENEWED_PHASE",
+    "published_commit": "9766b6838388c35a92d32b1a60e65613c72b3fee",
+    "published_ci_run": 38898365063,
+    "published_ci_all_four_jobs_pass": true,
+    "published_evidence": "reports/phase2-growth-predicate-implementation-v1/previous-report-ci.json",
+    "working_checkpoint": "One actual36-object stored-label pass completed144positions, all tolerancesNULL; public reviewPASS. G34fourfiles integrated418combinedtestsPASS/runtime335/all332oldunchanged. No actualG34 operation.",
+    "actual_new_scientific_allocation_performed": false,
+    "scientific_usefulness": "NO_GO unchanged; no new scientific experiment",
+    "clean_package": {
+      "commit": "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace",
+      "status": "PASS",
+      "cases": 28,
+      "schemas": 6,
+      "mandatory_checks": 16,
+      "strict_retained_verifier": "PASS",
+      "independent_artifact_audit": "PASS"
+    },
+    "finite_planning": {
+      "status": "COMPLETE_VERIFIED_4492858",
+      "figure_rows_verified": 101,
+      "finite_null_worlds_checked": 9191,
+      "future_risk_established": false
+    },
+    "compatible_envelope": {
+      "status": "COMPLETE_BLOCKED_SCHEMA",
+      "engineering_status": "BLOCKED_LAYOUT",
+      "reason": "ZIP_LAYOUT_UNSUPPORTED",
+      "commit": "4492858d9e55ddfa3cca2e208063799517948b13",
+      "two_public_receipts_identical": true,
+      "public_receipt_sha256": "7010e99afcafbf29d32d5ff7d3f356474c2a670571285d884b80441e91ce3d07",
+      "runtime_files_unchanged": 317,
+      "member_decompression_started": false,
+      "xml_decoding_started": false,
+      "worksheet_cells_decoded": false,
+      "shared_strings_decoded": false,
+      "fits": 0,
+      "splits": 0,
+      "recognized_roles": null
+    },
+    "notebook_methods": {
+      "status": "COMPLETE_BLOCKED_SCHEMA",
+      "source_sha256": "2423ee14f16b6b7ec46ef896f25cb5962b1c28dbea79fcb365e14b0919752049",
+      "author_tests_pass": 20,
+      "independent_tests_pass": 30,
+      "integrated_li_tests_pass": 199,
+      "runtime_files_unchanged": 323,
+      "actual_capture_performed": true,
+      "report": "reports/phase2-notebook-header-verification-v1/README.md",
+      "engineering_status": "STATIC_API_INVENTORY_COMPLETE",
+      "two_public_inspections_identical": true,
+      "public_receipt_sha256": "398009e670dc35077246938072e679a7254a8020feaa2a5c4cf285a9433d5205",
+      "notebook_sha256": "ebf3f161f16be6758243b8560b7b9ba8af3e8b17d5a0715ecf04209d22dfd6fd",
+      "whole_json_and_ast_parsed": true,
+      "notebook_code_executed": false,
+      "output_values_disclosed": false
+    },
+    "next_action": "Verify new exact remote CI, clean package and independent artifacts; perform fixed actualG34diagnostic only after gates. Complete boundedLi readiness decision. No numericRhizocensus/model/fit/allocation selected.",
+    "automation_reenabled": false,
+    "new_schedule_created": false,
+    "continuous_worker_started": false,
+    "automation_observation": {
+      "receipt": "reports/phase2-study-planning-v1/automation-observation.json",
+      "observed_at_utc": "2026-10-16 04:48:50 UTC",
+      "is_enabled": false,
+      "next_run_time": null,
+      "mutation_performed": false
+    },
+    "compatible_zip_diagnostic": {
+      "status": "COMPLETE_BLOCKED_SCHEMA",
+      "source_sha256": "59b4b549a1de33abf2c54ccfce15f4f980a3a36351f98e246ae4e9fd6c44c5d3",
+      "author_tests_pass": 16,
+      "independent_tests_pass": 24,
+      "method_flag_cases": 628,
+      "permitted_method_flag_pairs": 10,
+      "unchanged_predecessor_pins": 17,
+      "integrated_li_tests_pass": 199,
+      "runtime_files_unchanged": 323,
+      "report": "reports/phase2-notebook-header-verification-v1/README.md",
+      "reason": "LOCAL_EXTRA_PRESENT",
+      "first_rejection_stage": "entry_local",
+      "same_entry_local_checks": "CHECKED",
+      "supplementary_categories": [],
+      "two_public_receipts_identical": true,
+      "public_receipt_sha256": "4ee25afe053f68b4b9331a9ebc94bccb2e1d96e0ce5700d78a45866ef7b0cc12",
+      "member_decompression_performed": false,
+      "xml_decoded": false,
+      "local_extra_payload_parsed": false,
+      "scientific_schema_approved": false
+    },
+    "actual_operation_audit": {
+      "status": "PASS_CORRECTED_FIRST_FAILURE_PRESERVED",
+      "private_objects_read": false,
+      "report": "reports/phase2-growth-verification-v1/operation-review/actual-review-both-corrected.json",
+      "checks": 19246,
+      "first_corrected_run_seconds": 4.132584272,
+      "original_failure": "KeyError legacy_zip_reason",
+      "actual_source_readers_rerun": false
+    },
+    "paper_methods": {
+      "status": "DOCUMENTARY_AUDIT_COMPLETE_SCIENTIFIC_GATES_UNRESOLVED",
+      "report": "reports/phase2-li-paper-methods-v1/PUBLICATION.md",
+      "paper_table_rows": 24,
+      "paper_table_record_total": 1038,
+      "paper_prose_records": 1050,
+      "archive_catalog_records": 1070,
+      "source_reuse_documented": true,
+      "independent_unit_count": null,
+      "whole_article_xml_machine_exposed": true,
+      "workbook_performance_values_read_by_this_audit": false
+    },
+    "bam_readiness": {
+      "status": "PARTIAL_DOCUMENTARY_ROLES_TWO_ENCODING_HYPOTHESES",
+      "report": "reports/phase2-bam-encoding-comparison-v1/PUBLICATION.md",
+      "body_acquired": true,
+      "full_document_machine_exposed": true,
+      "hypothetical_decoders": [
+        "windows-1252",
+        "iso-8859-1"
+      ],
+      "full_text_encoding": "UNBOUND",
+      "records_including_header": 234,
+      "columns": 11,
+      "discovery_benchmark_admitted": false
+    },
+    "finite_risk_inversion": {
+      "status": "DESIGN_AND_FINITE_COUNTING_REVIEWED_IMPLEMENTATION_DEFERRED",
+      "report": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md",
+      "binary_worlds_checked": 510,
+      "coverage_checks": 196776,
+      "optional_stopping_counterexample": "2/3 > 1/2",
+      "observed_scientific_outcomes": false
+    },
+    "local_extra_structural_inspection": {
+      "status": "COMPLETE_ACTUAL_BLOCKED_SCHEMA",
+      "owner": "root; independent planner/ui_review/math/finite_inverse_check lanes",
+      "report": "reports/phase2-li-local-extra-verification-v1/README.md",
+      "source_sha256": "54db58a567afc9211303f2edff13541ab2f97beb77ef2edaa518ad32bf6b1026",
+      "author_tests_pass": 19,
+      "independent_tests_pass": 30,
+      "first_independent_run": "29/30; reviewer filename-limit expectation corrected, original preserved",
+      "integrated_li_tests_pass": 248,
+      "runtime_files_held": 326,
+      "predecessor_runtime_files_unchanged": 323,
+      "actual_local_extra_field_headers_read": true,
+      "actual_local_extra_payload_parsed": false,
+      "new_profile_accepted": false,
+      "final_independent_test_sha256": "570dc7f3cfabb094550b8f1c5fed8f4f801d832dc8003611fc6638a8285a468e",
+      "publication_whitespace_failure_preserved": true,
+      "final_integrated_unittest_seconds": 3.232,
+      "final_integrated_process_seconds": 3.754553222999675,
+      "format_correction_removed_lf_bytes": 2,
+      "two_public_receipts_identical": true,
+      "public_receipt_sha256": "52fe2d25f0c739c1c5137f0514f07f4ee0be35dffd7ef9141b19fe5ee5520d2e",
+      "field_headers": [
+        {
+          "header_id": 41504,
+          "data_size": 516
+        }
+      ],
+      "reason": "LOCAL_EXTRA_HEADERS_COMPLETE",
+      "scientific_schema_approved": false
+    },
+    "published_ci_status": "PASS_ORIGINAL_PUSH_ATTEMPT_1_ALL_FOUR_OBSERVED_2026-10-16T12:30:24.036933+00:00",
+    "citation_identity": {
+      "status": "DOCUMENTARY_AUDIT_COMPLETE_UNRESOLVED_IDENTITIES",
+      "report": "reports/phase2-li-reference-identity-v1/PUBLICATION.md",
+      "metadata_requests": 2,
+      "automatic_corrections": 0,
+      "automatic_merges": 0,
+      "archive_joins_verified": false,
+      "independent_units": null
+    },
+    "growth_hint_shape": {
+      "status": "COMPLETE_ACTUAL_BLOCKED_SCHEMA",
+      "author_tests_pass": 35,
+      "independent_tests_pass": 21,
+      "actual_payload_interpreted": true,
+      "archive_acceptance_established": false,
+      "initial_padding_semantics": "UNBOUND",
+      "report": "reports/phase2-growth-verification-v1/README.md",
+      "pure_preparation_author_tests_pass": 18,
+      "reason": "GROWTH_HINT_SHAPE_MATCH",
+      "two_public_receipts_identical": true,
+      "public_receipt_sha256": "730039c818af60864292c0c4776ea13adccf211ab21432120e93830172d87d95"
+    },
+    "growth_reader_implementation": {
+      "status": "SOURCE_CI_PACKAGE_ARTIFACTS_PASS_ACTUAL_READERS_COMPLETE",
+      "report": "reports/phase2-growth-implementation-v1/README.md",
+      "combined_tests_pass": 359,
+      "runtime_files_unchanged": 332,
+      "old_runtime_files_unchanged": 326,
+      "g30_author": 35,
+      "g30_independent": 21,
+      "g30_report_comparisons": 472,
+      "g31_first_author": "27PASS_1FAIL_REAL_CENTRAL_DECLARATION_GAP_PRESERVED",
+      "g31_final_author": 31,
+      "g31_independent": 24,
+      "actual_operations_performed": true,
+      "scientific_schema_approved": false
+    },
+    "growth_envelope": {
+      "status": "COMPLETE_ACTUAL_BLOCKED_SCHEMA",
+      "engineering_status": "BLOCKED_LAYOUT",
+      "reason": "ZIP_LAYOUT_UNSUPPORTED",
+      "commit": "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace",
+      "two_public_receipts_identical": true,
+      "public_receipt_sha256": "01cce9e57b26e204a9d31959f747768c70abf7543bedb6ab104b3b4b623f094f",
+      "local_extra_areas_completed": 3,
+      "member_decompression_started": false,
+      "xml_decoding_started": false,
+      "worksheet_cells_decoded": false,
+      "archive_profile_accepted": false,
+      "scientific_schema_approved": false,
+      "report": "reports/phase2-growth-verification-v1/README.md"
+    },
+    "bam_metrology": {
+      "status": "EXPOSED_DOCUMENTARY_REFERENCE",
+      "tests_documented": 3,
+      "permanently_excluded_fresh_blind_predictive_benchmark": true,
+      "joint_risk_premises_validated": false,
+      "report": "reports/phase2-bam-metrology-workbook-v1/README.md"
+    },
+    "nist_guidance": {
+      "status": "TWO_OFFICIAL_REQUESTS_AND_DOCUMENTARY_REVIEW_COMPLETE",
+      "measurement_validation_established": false,
+      "report": "reports/phase2-nist-metrology-guidance-v1/README.md"
+    },
+    "documentary_layout_preparation": {
+      "status": "PURE_GENERATED_CANDIDATE_PRODUCTION_BINDING_NULL",
+      "author_tests": 33,
+      "independent_tests": 27,
+      "actual_source_access": false,
+      "runtime_promoted": false,
+      "report": "reports/phase2-documentary-layout-preparation-v1/README.md"
+    },
+    "rhizo_reference_readiness": {
+      "status": "DOCUMENTARY_PROJECTION_COMPLETE_NOT_ADMITTED",
+      "report": "reports/phase2-rhizo-reference-readiness-v1/README.md",
+      "actual_operations": 1,
+      "public_sha256": "c1d3083573e427bfec886a2b28ee26f84c5970a717171c0e0b5e381ca9087535",
+      "locations": 43,
+      "ids": 36,
+      "candidate_links": 172,
+      "author_tests_pass": 26,
+      "independent_tests_pass": 13,
+      "first_independent_exposure_flag_failure_preserved": true,
+      "numeric_completeness_checked": false,
+      "actual_reference_choice": "UNKNOWN",
+      "all_selected_notes_researcher_exposed": true,
+      "fits": 0,
+      "splits": 0,
+      "labels_compared": 0,
+      "followon_bound_objects_read": false
+    },
+    "rhizo_recorded_label_candidate": {
+      "status": "GENERATED_DATA_PREPARATION",
+      "fixed_objects": 36,
+      "bytes": 126885,
+      "expected_property_positions": 144,
+      "reference_choice_reconstruction": false,
+      "actual_invocation": false
+    },
+    "li_categorical_header_candidate": {
+      "status": "GENERATED_DATA_PREPARATION",
+      "accepted_profile_changed": false,
+      "actual_invocation": false,
+      "xml_access": false
+    },
+    "recorded_labels": {
+      "status": "COMPLETE_STORED_LABEL_READINESS_NOT_ADMITTED",
+      "report": "reports/phase2-rhizo-recorded-label-readiness-v1/README.md",
+      "objects": 36,
+      "bytes": 126885,
+      "positions": 144,
+      "complete_pairs": 144,
+      "null_tolerances": 144,
+      "author_tests_pass": 30,
+      "independent_tests_pass": 19,
+      "actual_operations": 1,
+      "public_sha256": "b444e7d33cb18619942c2dfbb5cd3374fd9cd9adee6732825ce20ed431641a33",
+      "actual_reference_choice": "UNKNOWN",
+      "private_numeric_projection_written": true,
+      "private_numeric_projection_researcher_inspection_claimed": false,
+      "numeric_comparisons": 0
+    },
+    "growth_predicate_audit": {
+      "status": "INTEGRATED_RELEASE_GATES_PENDING",
+      "report": "reports/phase2-growth-predicate-implementation-v1/ROOT-CHECKPOINT.md",
+      "source_sha256": "70a0339212b971bf7824ae256600b959ae7a7d22b6fc8853eb2208d3c8ece207",
+      "pure_author_tests": 22,
+      "pure_independent_tests": 26,
+      "mutation_controls_detected": 3,
+      "production_author_tests": 42,
+      "production_independent_tests": 17,
+      "author_complete_report_comparisons": 136,
+      "independent_complete_report_comparisons": 86,
+      "combined_li_tests": 418,
+      "runtime_files": 335,
+      "old_runtime_files_unchanged": 332,
+      "actual_operations": 0,
+      "archive_acceptance_changed": false
     }
   }
 }

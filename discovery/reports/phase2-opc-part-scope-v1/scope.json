@@ -1,0 +1,36 @@
+{
+  "created_at": "2026-10-16T12:50:22.177210+00:00",
+  "purpose": "Primary OPC requirements for part names/content types/relationship targets, contrasted with an application-specific closed reader profile; no Li archive or member metadata.",
+  "existing_published_citation_search": "No explicit ECMA-376/OPC primary citation found in the targeted public docs and Li/growth report Markdown search; existing plans document local content-type/relationship whitelists only.",
+  "public_project_context": [
+    {
+      "path": "docs/li-v3-custody-plan.md",
+      "bytes": 11472,
+      "sha256": "0be13b0ed7dd7bc41b9c430d4f7d30f8efa0ead54a85d162f31c728eb928a241"
+    },
+    {
+      "path": "docs/li-v3-compatible-envelope-plan.md",
+      "bytes": 6679,
+      "sha256": "86b663de7a0e88e559a8cc6acbbacd3b17d4ca9ee4e759abc826f7afbd6211ca"
+    },
+    {
+      "path": "docs/li-v3-growth-envelope-plan.md",
+      "bytes": 9273,
+      "sha256": "4a5954b93b84d05c32a8ee2ea8254aec63283e915c331339cb97875e4b2aeb59"
+    },
+    {
+      "path": "reports/phase2-li-next-schema-design-v1/README.md",
+      "bytes": 5841,
+      "sha256": "07e0acd3e4a759c147abca38ca57271548b551f7bd6b749bf14df52a7b39993b"
+    }
+  ],
+  "primary_page_url": "https://ecma-international.org/publications-and-standards/standards/ecma-376/",
+  "maximum_requests": 2,
+  "second_request_rule": "Only the direct official Part2 download explicitly linked by the successful primary page, if needed.",
+  "page_cap_bytes": 1048576,
+  "download_cap_bytes": 16777216,
+  "timeout_seconds": 30,
+  "redirects": "Reject and preserve; no retry/mirror/access bypass.",
+  "exposure": "Full retained standards page/document machine exposure; no actual scientific source/capture/worksheet/member metadata or outcome read.",
+  "publication": "Own paraphrase, necessary short clause quotations and exact source identities; no full standard redistribution."
+}

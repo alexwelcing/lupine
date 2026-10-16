@@ -1,0 +1,9 @@
+{
+  "binding_sha256": "804c0548cf9d38b3a3390236cc2e0883ec354357249909ab7a62ed7e0fe6b88f",
+  "files": 5,
+  "inventory_sha256": "9fbdd2d36fd41b5f9af541b0b69b4e426ecdad57e6d29034e1470540e97d2629",
+  "preparation_sha256": "df3a60980fe057f1928e1be6e88abcfe27547e9fb4b3e3cc655bd63d5b79477d",
+  "recorder_sha256": "b89fcabf338e9329c3cdabdc58fb13d71396540aeec405ed5e3a01cc12ff6079",
+  "root_next_action": "Review source, bind final publication/receipt identities, then gate actual invocation; no production operation performed by preparation.",
+  "status": "PREPARED_UNBOUND_NOT_INVOKED"
+}

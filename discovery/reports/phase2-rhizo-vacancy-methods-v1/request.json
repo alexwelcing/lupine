@@ -1,0 +1,38 @@
+{
+  "written_before_request": "2026-10-16T12:40:35.992715+00:00",
+  "purpose": "Primary methods definition of vacancy formation energy/enthalpy and table attribution for the exact Angsten DOI; no numeric table extraction or comparison.",
+  "doi": "10.1088/1367-2630/16/1/015018",
+  "url": "https://iopscience.iop.org/article/10.1088/1367-2630/16/1/015018",
+  "url_origin": "Canonical IOP article path constructed from the DOI preserved in the named published bibliography; page identity still requires verification.",
+  "method": "GET",
+  "maximum_requests": 1,
+  "byte_cap": 2097152,
+  "timeout_seconds": 30,
+  "redirects": "reject; no retry, alternate host, PDF, mirror, paywall or access bypass",
+  "machine_exposure": "The entire bounded response body may include numerical tables, results and examples; full-document bytes become machine-exposed if returned. No untouched-source or fresh-test claim.",
+  "researcher_projection": "Methods/definition/metadata only if a public article is returned; no table numerical outcomes.",
+  "publication": "Own paraphrase, short necessary methods quotation and request/source identity; no full body.",
+  "source_bindings": [
+    {
+      "path": "reports/phase2-rhizo-reference-provenance-v1/README.md",
+      "bytes": 8718,
+      "sha256": "9c5b031347363d113a5be6c66e584cab9c2f9fc0964441c7d9afdf0a79d1f758"
+    },
+    {
+      "path": "reports/phase2-rhizo-reference-provenance-v1/bibliography.json",
+      "bytes": 3265,
+      "sha256": "2224e70b183485cc3e9fb1ccea1a554ec44fb1d18760c1812b36af7d742a3d64"
+    },
+    {
+      "path": "reports/phase2-rhizo-reference-provenance-v1/source-bindings.json",
+      "bytes": 3422,
+      "sha256": "a5f2c526e55ecf12890f547c540fa3e47808817c51ed393f48ea19beff508939"
+    },
+    {
+      "path": "reports/phase2-rhizo-reference-provenance-v1/reference-provenance.csv",
+      "bytes": 14358,
+      "sha256": "e72f2e3a567123f5ac5ffb31581787b5121f57e7c3a4b841c244a72827ff83f1"
+    }
+  ],
+  "network": "Inherited proxy and TLS trust; current managed HTTP policy observed enforced/unrestricted; no credentials."
+}

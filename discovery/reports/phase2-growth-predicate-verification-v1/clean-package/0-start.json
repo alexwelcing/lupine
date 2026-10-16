@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "scripts/package_smoke.py",
+    "--retain-directory",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-clean-package-v1/artifacts"
+  ],
+  "commit": "a064a2c0e4a7cce1fbcb0541f49aae132944e785",
+  "started_at": "2026-10-16T12:35:37.134059+00:00"
+}

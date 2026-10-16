@@ -1,0 +1,21 @@
+{
+  "request_number": 1,
+  "url": "https://ecma-international.org/publications-and-standards/standards/ecma-376/",
+  "started_at": "2026-10-16T12:50:22.190214+00:00",
+  "scope_sha256": "59cd3fbbb5d4657ca8d48c9cc6bd536ab43a8d43494ad37a6b08be7d8e453cde",
+  "byte_cap": 1048576,
+  "redirects_followed": 0,
+  "retries": 0,
+  "http_status": 200,
+  "selected_headers": {
+    "Content-Type": "text/html; charset=UTF-8",
+    "Date": "Fri, 16 Oct 2026 12:50:23 GMT"
+  },
+  "bytes": 87545,
+  "sha256": "c01e6813be4081dc6525bc77f7db7c6fefdbea22f4b3a6afd3536226b01e88fe",
+  "body_path": "primary-page.body",
+  "complete_within_cap": true,
+  "status": "RETAINED",
+  "elapsed_seconds": 2.177710746997036,
+  "ended_at": "2026-10-16T12:50:24.367928+00:00"
+}

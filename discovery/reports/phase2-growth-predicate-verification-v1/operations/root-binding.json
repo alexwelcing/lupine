@@ -1,0 +1,10 @@
+{
+  "bound_at": "2026-10-16T12:56:54.930128+00:00",
+  "commit": "a064a2c0e4a7cce1fbcb0541f49aae132944e785",
+  "bindings_sha256": "f658a3ee3d9a7e676a8f21cd73fab1f4a892f729d05a0ec9d35ecb7df5bc2898",
+  "recorder_sha256": "b89fcabf338e9329c3cdabdc58fb13d71396540aeec405ed5e3a01cc12ff6079",
+  "original_unbound_bindings_sha256": "804c0548cf9d38b3a3390236cc2e0883ec354357249909ab7a62ed7e0fe6b88f",
+  "source_and_all_release_gates_verified": true,
+  "actual_operations": 0,
+  "scope": "Root binds exact held recorder after original CI, package, full and additive artifact gates. No target access by this binding script."
+}

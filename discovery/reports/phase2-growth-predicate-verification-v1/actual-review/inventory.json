@@ -1,0 +1,82 @@
+{
+  "created_at": "2026-10-16T13:02:58.028158+00:00",
+  "exclusions": [
+    "inventory.json",
+    "actual-handoff.json",
+    "__pycache__/**"
+  ],
+  "file_count": 17,
+  "files": {
+    "ACTUAL_REVIEW.md": {
+      "bytes": 3368,
+      "sha256": "8bfe83886772c2d8a595109ca1d1c2244235c190be054dba6b364ab4139a5799"
+    },
+    "README.md": {
+      "bytes": 1876,
+      "sha256": "cce2c6097c673ff158bdfe47ae87a05cd00e8bd6b4622671e654dc8c3f273258"
+    },
+    "checklist.json": {
+      "bytes": 11602,
+      "sha256": "5e5b1272527e7b36a48d88ab7f04c3c7ad1b647576eb519a59ff45ef4abeb5d9"
+    },
+    "chronology-receipt-correction.json": {
+      "bytes": 2857,
+      "sha256": "641d27bd0463f5616c9907fd77b8a48e20de0051857ae0494e92d4eadc3eb27e"
+    },
+    "execution.json": {
+      "bytes": 389,
+      "sha256": "a15a72e3a387b343a5d08f276749c4bc1aee63a15a61172b4d2095f19e1acd96"
+    },
+    "first-stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "first-stdout.txt": {
+      "bytes": 152,
+      "sha256": "a740ad8124eb5d31d001f72589b00ee33066326788061e7e931108d909a7009e"
+    },
+    "first/execution.json": {
+      "bytes": 390,
+      "sha256": "f7fa7e00f91e421a88473ef13552ad039361bfe9a3c1a3388ce84fb9d64816c7"
+    },
+    "first/first-stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "first/first-stdout.txt": {
+      "bytes": 152,
+      "sha256": "a740ad8124eb5d31d001f72589b00ee33066326788061e7e931108d909a7009e"
+    },
+    "first/review.json": {
+      "bytes": 2857,
+      "sha256": "40fdbf654afa0eaf3c2094268281fc8fd3f808b4186fc45db9bb95a40fd77bdf"
+    },
+    "first/review_public_receipts.py": {
+      "bytes": 18282,
+      "sha256": "663b462c8d89d135cf839b3b83b4042755928273ebc9bb9f314f3cba022909ff"
+    },
+    "handoff.json": {
+      "bytes": 655,
+      "sha256": "437ecc1d623c0f15f27ec6f471510184b73a87235980deaaf07c350af16494f9"
+    },
+    "review.json": {
+      "bytes": 31959,
+      "sha256": "aecf1bbe08112e6507aba6b6d56f7b9ffc389759eaa3a4ffab8d45667bdb0aa3"
+    },
+    "review_public_receipts.py": {
+      "bytes": 19011,
+      "sha256": "b355e71ac8e9c92aa61792ace030309b350b38f0a5bc872585481d22e6dc8eed"
+    },
+    "second-stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "second-stdout.txt": {
+      "bytes": 156,
+      "sha256": "87cc7bb60e0a662bcc09e34f5cbe997b4c369ef590eaa7dd54fa73afeb99b5e7"
+    }
+  },
+  "schema": "lupine.g34.actual-public-review-inventory.v1",
+  "scope": "Prospective checklist plus public-only actual review, preserving first failed reviewer schema-assumption invocation and corrected pass. No actual source contents copied.",
+  "total_bytes": 93706
+}

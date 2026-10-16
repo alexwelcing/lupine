@@ -1,0 +1,19 @@
+{
+  "builder_sha256": "5f3a999271e6b38e4e9f2ffdd81a7288ef4d9c058304ba85d9b5c21b5313a63c",
+  "bytes": 536224,
+  "checks_sha256": "ad8596655ac3fafca2a9ecb19bd51de65c15e71584ddfe4f5090a12dec018a8c",
+  "commit": "a064a2c0e4a7cce1fbcb0541f49aae132944e785",
+  "copy_map_sha256": "1122c868e84903ff9108f83ea16dcb916aeffde0faf1c2faf27e22d3eddaba88",
+  "destination_root": "reports/phase2-growth-predicate-verification-v1",
+  "files": 64,
+  "inventory_sha256": "a9b107adbce7e5050f62a4ccf52ee69f549ffc1313c3f68f2a402fdea9010c0e",
+  "no_binaries_private_actual_or_CI_records": true,
+  "no_tests_or_source_operations_rerun": true,
+  "promotion_root": ".cache/phase2-growth-predicate-verification-publication-v1/promotion",
+  "readme_sha256": "541ccafbe6bcf98e388e38a9bd59266c37d486f75aeef7c9920babfd58489aed",
+  "relative_links": 11,
+  "root_additions_remain_separate": true,
+  "source_entries": 61,
+  "status": "FROZEN_PACKAGE_ARTIFACT_PUBLICATION_READY",
+  "wrappers": 3
+}

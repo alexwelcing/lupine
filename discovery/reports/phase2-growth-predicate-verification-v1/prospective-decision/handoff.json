@@ -1,0 +1,19 @@
+{
+  "artifacts": [
+    {
+      "bytes": 8112,
+      "path": "README.md",
+      "sha256": "57e2e8ead0e8ef259dcd88d7719290ffe4f7a967d76602f843d99e98ad781d90"
+    },
+    {
+      "bytes": 2209,
+      "path": "source-bindings.json",
+      "sha256": "230223aca9c2a30dcb17a027ef760116195296dce2c5017f68f65e6eff1ff865"
+    }
+  ],
+  "directory": ".cache/phase2-growth-predicate-next-decision-v1",
+  "next_action": "Root reviews against complete actual G34 receipt, if later available; choose a bounded complete readiness route or retain Li NO_GO for the current claim.",
+  "owner": "/root/growth_predicate_diagnostic",
+  "scope": "Source-only decision table; no actual category presumed, executable design selected, reader relaxation or source access.",
+  "status": "PROSPECTIVE_NOTE_READY_FOR_ROOT_REVIEW"
+}

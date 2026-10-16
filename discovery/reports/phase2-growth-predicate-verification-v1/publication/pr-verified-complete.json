@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-16T12:58:34.836087+00:00",
+  "head": "a064a2c0e4a7cce1fbcb0541f49aae132944e785",
+  "body_sha256": "7203eaaa05df8b3ebe6a9ccccb48bc9e0ff2c2dd52aba679e3d174720c1e2b24",
+  "body_exact": true,
+  "url": "https://github.com/alexwelcing/lupine/pull/263",
+  "draft": true,
+  "state": "open",
+  "ci": "complete"
+}

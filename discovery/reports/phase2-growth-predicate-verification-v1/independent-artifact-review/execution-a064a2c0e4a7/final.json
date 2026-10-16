@@ -1,0 +1,8 @@
+{
+  "commit": "a064a2c0e4a7cce1fbcb0541f49aae132944e785",
+  "exit_code": 1,
+  "operator": "/root/phase2_math",
+  "source_reader_invoked": false,
+  "status": "STOPPED",
+  "stopped_after_index": 1
+}

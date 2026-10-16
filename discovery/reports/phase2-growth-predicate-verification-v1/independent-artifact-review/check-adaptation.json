@@ -1,0 +1,1194 @@
+{
+  "additive_audit.py": {
+    "all_assertions_mapped": true,
+    "ast_identical": 43,
+    "current_assertions": 46,
+    "prior_assertions": 46,
+    "rows": [
+      {
+        "ast_identical": true,
+        "index": 0,
+        "new": "assert OUT.is_relative_to(BASE) and OUT != BASE",
+        "new_line": 28,
+        "old": "assert OUT.is_relative_to(BASE) and OUT != BASE",
+        "old_line": 28
+      },
+      {
+        "ast_identical": true,
+        "index": 1,
+        "new": "assert len(COMMIT) == 40 and all(c in '0123456789abcdef' for c in COMMIT)",
+        "new_line": 31,
+        "old": "assert len(COMMIT) == 40 and all(c in '0123456789abcdef' for c in COMMIT)",
+        "old_line": 31
+      },
+      {
+        "ast_identical": true,
+        "index": 2,
+        "new": "assert len(ARGS.reviewed_pins_sha256) == 64 and all(\n    c in '0123456789abcdef' for c in ARGS.reviewed_pins_sha256)",
+        "new_line": 47,
+        "old": "assert len(ARGS.reviewed_pins_sha256) == 64 and all(\n    c in '0123456789abcdef' for c in ARGS.reviewed_pins_sha256)",
+        "old_line": 51
+      },
+      {
+        "ast_identical": true,
+        "index": 3,
+        "new": "assert permitted.is_relative_to(ROOT / '.cache')",
+        "new_line": 38,
+        "old": "assert permitted.is_relative_to(ROOT / '.cache')",
+        "old_line": 38
+      },
+      {
+        "ast_identical": true,
+        "index": 4,
+        "new": "assert not permitted.is_relative_to(ROOT / '.cache/li-v3-custody')",
+        "new_line": 39,
+        "old": "assert not permitted.is_relative_to(ROOT / '.cache/li-v3-custody')",
+        "old_line": 39
+      },
+      {
+        "ast_identical": true,
+        "index": 5,
+        "new": "assert path.resolve() == path and path.is_file() and path.stat().st_size <= 256 * 1024 * 1024",
+        "new_line": 70,
+        "old": "assert path.resolve() == path and path.is_file() and path.stat().st_size <= 256 * 1024 * 1024",
+        "old_line": 74
+      },
+      {
+        "ast_identical": true,
+        "index": 6,
+        "new": "assert Path(identity['filename']).name == identity['filename']",
+        "new_line": 87,
+        "old": "assert Path(identity['filename']).name == identity['filename']",
+        "old_line": 91
+      },
+      {
+        "ast_identical": true,
+        "index": 7,
+        "new": "assert len(raw) == identity['bytes'] and sha(raw) == identity['sha256']",
+        "new_line": 89,
+        "old": "assert len(raw) == identity['bytes'] and sha(raw) == identity['sha256']",
+        "old_line": 93
+      },
+      {
+        "ast_identical": true,
+        "index": 8,
+        "new": "assert git('rev-parse', 'HEAD').decode().strip() == COMMIT",
+        "new_line": 102,
+        "old": "assert git('rev-parse', 'HEAD').decode().strip() == COMMIT",
+        "old_line": 106
+      },
+      {
+        "ast_identical": true,
+        "index": 9,
+        "new": "assert not git('status', '--porcelain=v1', '--untracked-files=all')",
+        "new_line": 103,
+        "old": "assert not git('status', '--porcelain=v1', '--untracked-files=all')",
+        "old_line": 107
+      },
+      {
+        "ast_identical": true,
+        "index": 10,
+        "new": "assert pin_record['status'] == 'FINAL_REVIEWED_SOURCE_PINS'",
+        "new_line": 106,
+        "old": "assert pin_record['status'] == 'FINAL_REVIEWED_SOURCE_PINS'",
+        "old_line": 110
+      },
+      {
+        "ast_identical": true,
+        "index": 11,
+        "new": "assert pin_record['baseline_commit'] == BASELINE",
+        "new_line": 107,
+        "old": "assert pin_record['baseline_commit'] == BASELINE",
+        "old_line": 111
+      },
+      {
+        "ast_identical": true,
+        "index": 12,
+        "new": "assert set(PINS) == EXPECTED_PATHS",
+        "new_line": 109,
+        "old": "assert set(PINS) == EXPECTED_PATHS",
+        "old_line": 113
+      },
+      {
+        "ast_identical": true,
+        "index": 13,
+        "new": "assert all(type(value) is str and len(value) == 64 and all(c in '0123456789abcdef' for c in value) for value in PINS.values())",
+        "new_line": 110,
+        "old": "assert all(type(value) is str and len(value) == 64 and all(c in '0123456789abcdef' for c in value) for value in PINS.values())",
+        "old_line": 114
+      },
+      {
+        "ast_identical": true,
+        "index": 14,
+        "new": "assert sha(pin_record_raw) == ARGS.reviewed_pins_sha256",
+        "new_line": 111,
+        "old": "assert sha(pin_record_raw) == ARGS.reviewed_pins_sha256",
+        "old_line": 115
+      },
+      {
+        "ast_identical": true,
+        "index": 15,
+        "new": "assert full_review['status'] == 'PASS' and full_review['commit'] == COMMIT",
+        "new_line": 114,
+        "old": "assert full_review['status'] == 'PASS' and full_review['commit'] == COMMIT",
+        "old_line": 118
+      },
+      {
+        "ast_identical": false,
+        "index": 16,
+        "new": "assert full_review['runtime_source_files_matching_manifest_and_worktree'] == 335",
+        "new_line": 115,
+        "old": "assert full_review['runtime_source_files_matching_manifest_and_worktree'] == 332",
+        "old_line": 119
+      },
+      {
+        "ast_identical": true,
+        "index": 17,
+        "new": "assert full_review['audit_script_sha256'] == 'b81293cba3632449830932175e9fa938913650ade05f5e524b258aba78923119'",
+        "new_line": 116,
+        "old": "assert full_review['audit_script_sha256'] == 'b81293cba3632449830932175e9fa938913650ade05f5e524b258aba78923119'",
+        "old_line": 120
+      },
+      {
+        "ast_identical": true,
+        "index": 18,
+        "new": "assert sha(receipt_raw) == full_review['receipt_sha256']",
+        "new_line": 120,
+        "old": "assert sha(receipt_raw) == full_review['receipt_sha256']",
+        "old_line": 124
+      },
+      {
+        "ast_identical": true,
+        "index": 19,
+        "new": "assert receipt['artifacts'] == full_review['artifact_identities']",
+        "new_line": 121,
+        "old": "assert receipt['artifacts'] == full_review['artifact_identities']",
+        "old_line": 125
+      },
+      {
+        "ast_identical": true,
+        "index": 20,
+        "new": "assert old_receipt['source']['git_commit'] == BASELINE",
+        "new_line": 122,
+        "old": "assert old_receipt['source']['git_commit'] == BASELINE",
+        "old_line": 126
+      },
+      {
+        "ast_identical": true,
+        "index": 21,
+        "new": "assert receipt['source']['git_commit'] == COMMIT",
+        "new_line": 123,
+        "old": "assert receipt['source']['git_commit'] == COMMIT",
+        "old_line": 127
+      },
+      {
+        "ast_identical": true,
+        "index": 22,
+        "new": "assert current_raw == git('show', COMMIT + ':discovery/reports/runtime-manifest.json')",
+        "new_line": 127,
+        "old": "assert current_raw == git('show', COMMIT + ':discovery/reports/runtime-manifest.json')",
+        "old_line": 131
+      },
+      {
+        "ast_identical": false,
+        "index": 23,
+        "new": "assert len(prior) == 332 and len(current) == 335",
+        "new_line": 130,
+        "old": "assert len(prior) == 326 and len(current) == 332",
+        "old_line": 134
+      },
+      {
+        "ast_identical": true,
+        "index": 24,
+        "new": "assert set(current) - set(prior) == set(added)",
+        "new_line": 131,
+        "old": "assert set(current) - set(prior) == set(added)",
+        "old_line": 135
+      },
+      {
+        "ast_identical": true,
+        "index": 25,
+        "new": "assert all(current.get(path) == digest for path, digest in prior.items())",
+        "new_line": 132,
+        "old": "assert all(current.get(path) == digest for path, digest in prior.items())",
+        "old_line": 136
+      },
+      {
+        "ast_identical": true,
+        "index": 26,
+        "new": "assert all(current[path] == digest for path, digest in added.items())",
+        "new_line": 133,
+        "old": "assert all(current[path] == digest for path, digest in added.items())",
+        "old_line": 137
+      },
+      {
+        "ast_identical": true,
+        "index": 27,
+        "new": "assert len(previous_package) == len(current_package) == 108",
+        "new_line": 147,
+        "old": "assert len(previous_package) == len(current_package) == 108",
+        "old_line": 151
+      },
+      {
+        "ast_identical": true,
+        "index": 28,
+        "new": "assert current_package == previous_package",
+        "new_line": 148,
+        "old": "assert current_package == previous_package",
+        "old_line": 152
+      },
+      {
+        "ast_identical": true,
+        "index": 29,
+        "new": "assert len(baseline_archive) <= 256 * 1024 * 1024",
+        "new_line": 150,
+        "old": "assert len(baseline_archive) <= 256 * 1024 * 1024",
+        "old_line": 154
+      },
+      {
+        "ast_identical": true,
+        "index": 30,
+        "new": "assert baseline_runtime == prior",
+        "new_line": 165,
+        "old": "assert baseline_runtime == prior",
+        "old_line": 169
+      },
+      {
+        "ast_identical": true,
+        "index": 31,
+        "new": "assert baseline_package == current_package",
+        "new_line": 166,
+        "old": "assert baseline_package == current_package",
+        "old_line": 170
+      },
+      {
+        "ast_identical": false,
+        "index": 32,
+        "new": "assert len(added) == 3 and len(PINS) == 4",
+        "new_line": 172,
+        "old": "assert len(added) == 6 and len(PINS) == 8",
+        "old_line": 176
+      },
+      {
+        "ast_identical": true,
+        "index": 33,
+        "new": "assert all(sha(Path(path).read_bytes()) == expected for path, expected in HELD.items())",
+        "new_line": 173,
+        "old": "assert all(sha(Path(path).read_bytes()) == expected for path, expected in HELD.items())",
+        "old_line": 177
+      },
+      {
+        "ast_identical": true,
+        "index": 34,
+        "new": "assert git('rev-parse', 'HEAD').decode().strip() == COMMIT",
+        "new_line": 174,
+        "old": "assert git('rev-parse', 'HEAD').decode().strip() == COMMIT",
+        "old_line": 178
+      },
+      {
+        "ast_identical": true,
+        "index": 35,
+        "new": "assert not git('status', '--porcelain=v1', '--untracked-files=all')",
+        "new_line": 175,
+        "old": "assert not git('status', '--porcelain=v1', '--untracked-files=all')",
+        "old_line": 179
+      },
+      {
+        "ast_identical": true,
+        "index": 36,
+        "new": "assert read(Path(__file__)) == before",
+        "new_line": 204,
+        "old": "assert read(Path(__file__)) == before",
+        "old_line": 208
+      },
+      {
+        "ast_identical": true,
+        "index": 37,
+        "new": "assert HELD[str(path)] == sha(raw)",
+        "new_line": 73,
+        "old": "assert HELD[str(path)] == sha(raw)",
+        "old_line": 77
+      },
+      {
+        "ast_identical": true,
+        "index": 38,
+        "new": "assert len(names) == len(set(names))",
+        "new_line": 96,
+        "old": "assert len(names) == len(set(names))",
+        "old_line": 100
+      },
+      {
+        "ast_identical": true,
+        "index": 39,
+        "new": "assert len(names) == len(set(names))",
+        "new_line": 137,
+        "old": "assert len(names) == len(set(names))",
+        "old_line": 141
+      },
+      {
+        "ast_identical": true,
+        "index": 40,
+        "new": "assert key not in result, 'Duplicate JSON key'",
+        "new_line": 62,
+        "old": "assert key not in result, 'Duplicate JSON key'",
+        "old_line": 66
+      },
+      {
+        "ast_identical": true,
+        "index": 41,
+        "new": "assert archived == working == committed and sha(archived) == digest",
+        "new_line": 142,
+        "old": "assert archived == working == committed and sha(archived) == digest",
+        "old_line": 146
+      },
+      {
+        "ast_identical": true,
+        "index": 42,
+        "new": "assert member.isdir() or member.isfile()",
+        "new_line": 154,
+        "old": "assert member.isdir() or member.isfile()",
+        "old_line": 158
+      },
+      {
+        "ast_identical": true,
+        "index": 43,
+        "new": "assert member.name.startswith('discovery/')",
+        "new_line": 156,
+        "old": "assert member.name.startswith('discovery/')",
+        "old_line": 160
+      },
+      {
+        "ast_identical": true,
+        "index": 44,
+        "new": "assert relative not in baseline_runtime",
+        "new_line": 159,
+        "old": "assert relative not in baseline_runtime",
+        "old_line": 163
+      },
+      {
+        "ast_identical": true,
+        "index": 45,
+        "new": "assert name not in baseline_package",
+        "new_line": 163,
+        "old": "assert name not in baseline_package",
+        "old_line": 167
+      }
+    ]
+  },
+  "audit.py": {
+    "all_assertions_mapped": true,
+    "ast_identical": 93,
+    "current_assertions": 93,
+    "prior_assertions": 93,
+    "rows": [
+      {
+        "ast_identical": true,
+        "index": 0,
+        "new": "assert len(COMMIT) == 40 and all(c in '0123456789abcdef' for c in COMMIT)",
+        "new_line": 33,
+        "old": "assert len(COMMIT) == 40 and all(c in '0123456789abcdef' for c in COMMIT)",
+        "old_line": 33
+      },
+      {
+        "ast_identical": true,
+        "index": 1,
+        "new": "assert OUT.is_relative_to(Path(__file__).resolve().parent)",
+        "new_line": 34,
+        "old": "assert OUT.is_relative_to(Path(__file__).resolve().parent)",
+        "old_line": 34
+      },
+      {
+        "ast_identical": true,
+        "index": 2,
+        "new": "assert RETAINED.is_relative_to(ROOT / '.cache')",
+        "new_line": 35,
+        "old": "assert RETAINED.is_relative_to(ROOT / '.cache')",
+        "old_line": 35
+      },
+      {
+        "ast_identical": true,
+        "index": 3,
+        "new": "assert path.resolve() == path and not path.is_symlink()",
+        "new_line": 79,
+        "old": "assert path.resolve() == path and not path.is_symlink()",
+        "old_line": 79
+      },
+      {
+        "ast_identical": true,
+        "index": 4,
+        "new": "assert path.is_file() and path.stat().st_size <= CAP",
+        "new_line": 80,
+        "old": "assert path.is_file() and path.stat().st_size <= CAP",
+        "old_line": 80
+      },
+      {
+        "ast_identical": true,
+        "index": 5,
+        "new": "assert len(raw) <= CAP",
+        "new_line": 82,
+        "old": "assert len(raw) <= CAP",
+        "old_line": 82
+      },
+      {
+        "ast_identical": true,
+        "index": 6,
+        "new": "assert digest(raw) == FINITE_MODULE_SHA",
+        "new_line": 109,
+        "old": "assert digest(raw) == FINITE_MODULE_SHA",
+        "old_line": 109
+      },
+      {
+        "ast_identical": true,
+        "index": 7,
+        "new": "assert [argument.arg for argument in function.args.args] == [\n        'population_panels', 'loss_ceiling', 'significance', 'maximum_evaluation_panels']",
+        "new_line": 113,
+        "old": "assert [argument.arg for argument in function.args.args] == [\n        'population_panels', 'loss_ceiling', 'significance', 'maximum_evaluation_panels']",
+        "old_line": 113
+      },
+      {
+        "ast_identical": true,
+        "index": 8,
+        "new": "assert not function.args.kwonlyargs and function.args.kwarg is None",
+        "new_line": 115,
+        "old": "assert not function.args.kwonlyargs and function.args.kwarg is None",
+        "old_line": 115
+      },
+      {
+        "ast_identical": true,
+        "index": 9,
+        "new": "assert function.args.vararg is None",
+        "new_line": 116,
+        "old": "assert function.args.vararg is None",
+        "old_line": 116
+      },
+      {
+        "ast_identical": true,
+        "index": 10,
+        "new": "assert [node.target.id for node in fields] == expected_fields",
+        "new_line": 129,
+        "old": "assert [node.target.id for node in fields] == expected_fields",
+        "old_line": 129
+      },
+      {
+        "ast_identical": true,
+        "index": 11,
+        "new": "assert all(defaults.get(name) == value for name, value in fixed.items())",
+        "new_line": 145,
+        "old": "assert all(defaults.get(name) == value for name, value in fixed.items())",
+        "old_line": 145
+      },
+      {
+        "ast_identical": true,
+        "index": 12,
+        "new": "assert assignment(server, 'MAX_PLANNING_BODY_BYTES') == 4096",
+        "new_line": 157,
+        "old": "assert assignment(server, 'MAX_PLANNING_BODY_BYTES') == 4096",
+        "old_line": 157
+      },
+      {
+        "ast_identical": true,
+        "index": 13,
+        "new": "assert isinstance(paths_node.value, ast.Call)",
+        "new_line": 162,
+        "old": "assert isinstance(paths_node.value, ast.Call)",
+        "old_line": 162
+      },
+      {
+        "ast_identical": true,
+        "index": 14,
+        "new": "assert isinstance(paths_node.value.func, ast.Name)",
+        "new_line": 163,
+        "old": "assert isinstance(paths_node.value.func, ast.Name)",
+        "old_line": 163
+      },
+      {
+        "ast_identical": true,
+        "index": 15,
+        "new": "assert paths_node.value.func.id == 'frozenset'",
+        "new_line": 164,
+        "old": "assert paths_node.value.func.id == 'frozenset'",
+        "old_line": 164
+      },
+      {
+        "ast_identical": true,
+        "index": 16,
+        "new": "assert ast.literal_eval(paths_node.value.args[0]) == {\n        '/api/plan-pool', '/api/plan-zero-loss', route}",
+        "new_line": 165,
+        "old": "assert ast.literal_eval(paths_node.value.args[0]) == {\n        '/api/plan-pool', '/api/plan-zero-loss', route}",
+        "old_line": 165
+      },
+      {
+        "ast_identical": true,
+        "index": 17,
+        "new": "assert route in probe and schema in probe and \"planning_command('plan-finite-zero-loss'\" in probe",
+        "new_line": 173,
+        "old": "assert route in probe and schema in probe and \"planning_command('plan-finite-zero-loss'\" in probe",
+        "old_line": 173
+      },
+      {
+        "ast_identical": true,
+        "index": 18,
+        "new": "assert sources['discovery/src/lupine_discovery/study_planning.py'] == iid_old",
+        "new_line": 175,
+        "old": "assert sources['discovery/src/lupine_discovery/study_planning.py'] == iid_old",
+        "old_line": 175
+      },
+      {
+        "ast_identical": true,
+        "index": 19,
+        "new": "assert git('rev-parse', 'HEAD').decode().strip() == COMMIT",
+        "new_line": 186,
+        "old": "assert git('rev-parse', 'HEAD').decode().strip() == COMMIT",
+        "old_line": 186
+      },
+      {
+        "ast_identical": true,
+        "index": 20,
+        "new": "assert not git('status', '--porcelain=v1', '--untracked-files=all')",
+        "new_line": 187,
+        "old": "assert not git('status', '--porcelain=v1', '--untracked-files=all')",
+        "old_line": 187
+      },
+      {
+        "ast_identical": true,
+        "index": 21,
+        "new": "assert canonical(receipt) == receipt_bytes",
+        "new_line": 190,
+        "old": "assert canonical(receipt) == receipt_bytes",
+        "old_line": 190
+      },
+      {
+        "ast_identical": true,
+        "index": 22,
+        "new": "assert digest(canonical(body)) == content_hash",
+        "new_line": 193,
+        "old": "assert digest(canonical(body)) == content_hash",
+        "old_line": 193
+      },
+      {
+        "ast_identical": true,
+        "index": 23,
+        "new": "assert receipt['source']['git_commit'] == COMMIT",
+        "new_line": 194,
+        "old": "assert receipt['source']['git_commit'] == COMMIT",
+        "old_line": 194
+      },
+      {
+        "ast_identical": true,
+        "index": 24,
+        "new": "assert receipt['source']['git_tree'] == git('rev-parse', COMMIT + '^{tree}').decode().strip()",
+        "new_line": 195,
+        "old": "assert receipt['source']['git_tree'] == git('rev-parse', COMMIT + '^{tree}').decode().strip()",
+        "old_line": 195
+      },
+      {
+        "ast_identical": true,
+        "index": 25,
+        "new": "assert receipt['source']['archive_copyset'] == ['discovery', '.github/workflows/discovery-verify.yml']",
+        "new_line": 196,
+        "old": "assert receipt['source']['archive_copyset'] == ['discovery', '.github/workflows/discovery-verify.yml']",
+        "old_line": 196
+      },
+      {
+        "ast_identical": true,
+        "index": 26,
+        "new": "assert receipt['schema'] == 'lupine.discovery.release_artifacts.v1'",
+        "new_line": 197,
+        "old": "assert receipt['schema'] == 'lupine.discovery.release_artifacts.v1'",
+        "old_line": 197
+      },
+      {
+        "ast_identical": true,
+        "index": 27,
+        "new": "assert receipt['source']['project_path'] == 'discovery'",
+        "new_line": 198,
+        "old": "assert receipt['source']['project_path'] == 'discovery'",
+        "old_line": 198
+      },
+      {
+        "ast_identical": true,
+        "index": 28,
+        "new": "assert receipt['source']['worktree_status'] == 'clean'",
+        "new_line": 199,
+        "old": "assert receipt['source']['worktree_status'] == 'clean'",
+        "old_line": 199
+      },
+      {
+        "ast_identical": true,
+        "index": 29,
+        "new": "assert receipt['source_state_rechecked_after_smoke'] is True",
+        "new_line": 200,
+        "old": "assert receipt['source_state_rechecked_after_smoke'] is True",
+        "old_line": 200
+      },
+      {
+        "ast_identical": true,
+        "index": 30,
+        "new": "assert receipt['wheel_build_source'] == 'committed_source_archive'",
+        "new_line": 201,
+        "old": "assert receipt['wheel_build_source'] == 'committed_source_archive'",
+        "old_line": 201
+      },
+      {
+        "ast_identical": true,
+        "index": 31,
+        "new": "assert object_format in ('sha1', 'sha256')",
+        "new_line": 211,
+        "old": "assert object_format in ('sha1', 'sha256')",
+        "old_line": 211
+      },
+      {
+        "ast_identical": true,
+        "index": 32,
+        "new": "assert expected, 'No committed files found in declared source scope'",
+        "new_line": 220,
+        "old": "assert expected, 'No committed files found in declared source scope'",
+        "old_line": 220
+      },
+      {
+        "ast_identical": true,
+        "index": 33,
+        "new": "assert set(sources) == set(expected)",
+        "new_line": 243,
+        "old": "assert set(sources) == set(expected)",
+        "old_line": 243
+      },
+      {
+        "ast_identical": true,
+        "index": 34,
+        "new": "assert len(sources) == receipt['source']['archived_file_count']",
+        "new_line": 244,
+        "old": "assert len(sources) == receipt['source']['archived_file_count']",
+        "old_line": 244
+      },
+      {
+        "ast_identical": true,
+        "index": 35,
+        "new": "assert digest(canonical(source_hashes)) == receipt['source']['archived_file_hashes_sha256']",
+        "new_line": 245,
+        "old": "assert digest(canonical(source_hashes)) == receipt['source']['archived_file_hashes_sha256']",
+        "old_line": 245
+      },
+      {
+        "ast_identical": true,
+        "index": 36,
+        "new": "assert digest(sources[manifest_path]) == receipt['source']['runtime_manifest']['sha256']",
+        "new_line": 248,
+        "old": "assert digest(sources[manifest_path]) == receipt['source']['runtime_manifest']['sha256']",
+        "old_line": 248
+      },
+      {
+        "ast_identical": true,
+        "index": 37,
+        "new": "assert len(manifest['files']) == receipt['source']['runtime_manifest']['file_count']",
+        "new_line": 250,
+        "old": "assert len(manifest['files']) == receipt['source']['runtime_manifest']['file_count']",
+        "old_line": 250
+      },
+      {
+        "ast_identical": true,
+        "index": 38,
+        "new": "assert set(wheel_sources) == expected_package_members",
+        "new_line": 291,
+        "old": "assert set(wheel_sources) == expected_package_members",
+        "old_line": 291
+      },
+      {
+        "ast_identical": true,
+        "index": 39,
+        "new": "assert digest(probe.encode()) == PROBE_SHA",
+        "new_line": 311,
+        "old": "assert digest(probe.encode()) == PROBE_SHA",
+        "old_line": 311
+      },
+      {
+        "ast_identical": true,
+        "index": 40,
+        "new": "assert probe_checks == [CHECKS]",
+        "new_line": 318,
+        "old": "assert probe_checks == [CHECKS]",
+        "old_line": 318
+      },
+      {
+        "ast_identical": true,
+        "index": 41,
+        "new": "assert assignment(sources['discovery/scripts/verify_retained_artifacts.py'], 'CHECKS') == CHECKS",
+        "new_line": 319,
+        "old": "assert assignment(sources['discovery/scripts/verify_retained_artifacts.py'], 'CHECKS') == CHECKS",
+        "old_line": 319
+      },
+      {
+        "ast_identical": true,
+        "index": 42,
+        "new": "assert receipt['verification']['checks'] == CHECKS and len(CHECKS) == 16",
+        "new_line": 320,
+        "old": "assert receipt['verification']['checks'] == CHECKS and len(CHECKS) == 16",
+        "old_line": 320
+      },
+      {
+        "ast_identical": true,
+        "index": 43,
+        "new": "assert receipt['verification']['status'] == 'passed' and receipt['verification']['isolated_install'] is True",
+        "new_line": 321,
+        "old": "assert receipt['verification']['status'] == 'passed' and receipt['verification']['isolated_install'] is True",
+        "old_line": 321
+      },
+      {
+        "ast_identical": true,
+        "index": 44,
+        "new": "assert type(receipt['verification']['case_count']) is int",
+        "new_line": 322,
+        "old": "assert type(receipt['verification']['case_count']) is int",
+        "old_line": 322
+      },
+      {
+        "ast_identical": true,
+        "index": 45,
+        "new": "assert receipt['verification']['case_count'] == 28",
+        "new_line": 323,
+        "old": "assert receipt['verification']['case_count'] == 28",
+        "old_line": 323
+      },
+      {
+        "ast_identical": true,
+        "index": 46,
+        "new": "assert receipt['verification']['problem_schemas'] == sorted(\n        'lupine.discovery.' + name + '.v1' for name in (\n            'problem', 'calibrated_problem', 'pareto_problem', 'coupled_problem',\n            'projection_problem', 'decision_pool_problem'))",
+        "new_line": 324,
+        "old": "assert receipt['verification']['problem_schemas'] == sorted(\n        'lupine.discovery.' + name + '.v1' for name in (\n            'problem', 'calibrated_problem', 'pareto_problem', 'coupled_problem',\n            'projection_problem', 'decision_pool_problem'))",
+        "old_line": 324
+      },
+      {
+        "ast_identical": true,
+        "index": 47,
+        "new": "assert receipt['verification']['wheel_sha256'] == receipt['artifacts']['wheel']['sha256']",
+        "new_line": 328,
+        "old": "assert receipt['verification']['wheel_sha256'] == receipt['artifacts']['wheel']['sha256']",
+        "old_line": 328
+      },
+      {
+        "ast_identical": true,
+        "index": 48,
+        "new": "assert assignment(sources['discovery/tests/test_package_retention_review.py'], 'PROBE_SHA256') == PROBE_SHA",
+        "new_line": 329,
+        "old": "assert assignment(sources['discovery/tests/test_package_retention_review.py'], 'PROBE_SHA256') == PROBE_SHA",
+        "old_line": 329
+      },
+      {
+        "ast_identical": true,
+        "index": 49,
+        "new": "assert pins == [PROBE_SHA]",
+        "new_line": 332,
+        "old": "assert pins == [PROBE_SHA]",
+        "old_line": 332
+      },
+      {
+        "ast_identical": true,
+        "index": 50,
+        "new": "assert len(old_assertions) == 63 and len(new_assertions) == 72",
+        "new_line": 340,
+        "old": "assert len(old_assertions) == 63 and len(new_assertions) == 72",
+        "old_line": 340
+      },
+      {
+        "ast_identical": true,
+        "index": 51,
+        "new": "assert not (Counter(old_assertions) - Counter(new_assertions))",
+        "new_line": 341,
+        "old": "assert not (Counter(old_assertions) - Counter(new_assertions))",
+        "old_line": 341
+      },
+      {
+        "ast_identical": true,
+        "index": 52,
+        "new": "assert all(digest(Path(path).read_bytes()) == expected for path, expected in HELD_INPUTS.items())",
+        "new_line": 356,
+        "old": "assert all(digest(Path(path).read_bytes()) == expected for path, expected in HELD_INPUTS.items())",
+        "old_line": 356
+      },
+      {
+        "ast_identical": true,
+        "index": 53,
+        "new": "assert digest(Path(__file__).read_bytes()) == SCRIPT_BEFORE",
+        "new_line": 357,
+        "old": "assert digest(Path(__file__).read_bytes()) == SCRIPT_BEFORE",
+        "old_line": 357
+      },
+      {
+        "ast_identical": true,
+        "index": 54,
+        "new": "assert git('rev-parse', 'HEAD').decode().strip() == COMMIT",
+        "new_line": 358,
+        "old": "assert git('rev-parse', 'HEAD').decode().strip() == COMMIT",
+        "old_line": 358
+      },
+      {
+        "ast_identical": true,
+        "index": 55,
+        "new": "assert not git('status', '--porcelain=v1', '--untracked-files=all')",
+        "new_line": 359,
+        "old": "assert not git('status', '--porcelain=v1', '--untracked-files=all')",
+        "old_line": 359
+      },
+      {
+        "ast_identical": true,
+        "index": 56,
+        "new": "assert key not in result, 'Duplicate JSON key'",
+        "new_line": 72,
+        "old": "assert key not in result, 'Duplicate JSON key'",
+        "old_line": 72
+      },
+      {
+        "ast_identical": true,
+        "index": 57,
+        "new": "assert HELD_INPUTS[str(path)] == hashed",
+        "new_line": 85,
+        "old": "assert HELD_INPUTS[str(path)] == hashed",
+        "old_line": 85
+      },
+      {
+        "ast_identical": true,
+        "index": 58,
+        "new": "assert token in cli",
+        "new_line": 154,
+        "old": "assert token in cli",
+        "old_line": 154
+      },
+      {
+        "ast_identical": true,
+        "index": 59,
+        "new": "assert token in server",
+        "new_line": 156,
+        "old": "assert token in server",
+        "old_line": 156
+      },
+      {
+        "ast_identical": true,
+        "index": 60,
+        "new": "assert token in javascript, 'Missing finite interface marker: ' + token",
+        "new_line": 169,
+        "old": "assert token in javascript, 'Missing finite interface marker: ' + token",
+        "old_line": 169
+      },
+      {
+        "ast_identical": true,
+        "index": 61,
+        "new": "assert token in html, 'Missing finite form marker: ' + token",
+        "new_line": 172,
+        "old": "assert token in html, 'Missing finite form marker: ' + token",
+        "old_line": 172
+      },
+      {
+        "ast_identical": true,
+        "index": 62,
+        "new": "assert Path(identity['filename']).name == identity['filename']",
+        "new_line": 205,
+        "old": "assert Path(identity['filename']).name == identity['filename']",
+        "old_line": 205
+      },
+      {
+        "ast_identical": true,
+        "index": 63,
+        "new": "assert len(raw) == identity['bytes'] and digest(raw) == identity['sha256']",
+        "new_line": 207,
+        "old": "assert len(raw) == identity['bytes'] and digest(raw) == identity['sha256']",
+        "old_line": 207
+      },
+      {
+        "ast_identical": true,
+        "index": 64,
+        "new": "assert kind == b'blob' and mode in (b'100644', b'100755')",
+        "new_line": 218,
+        "old": "assert kind == b'blob' and mode in (b'100644', b'100755')",
+        "old_line": 218
+      },
+      {
+        "ast_identical": true,
+        "index": 65,
+        "new": "assert source_hashes['discovery/' + relative] == expected_hash",
+        "new_line": 253,
+        "old": "assert source_hashes['discovery/' + relative] == expected_hash",
+        "old_line": 253
+      },
+      {
+        "ast_identical": true,
+        "index": 66,
+        "new": "assert digest(capture(ROOT / relative)) == expected_hash",
+        "new_line": 254,
+        "old": "assert digest(capture(ROOT / relative)) == expected_hash",
+        "old_line": 254
+      },
+      {
+        "ast_identical": true,
+        "index": 67,
+        "new": "assert len(member_names) == len(set(member_names))",
+        "new_line": 260,
+        "old": "assert len(member_names) == len(set(member_names))",
+        "old_line": 260
+      },
+      {
+        "ast_identical": true,
+        "index": 68,
+        "new": "assert all(not member.is_dir() and not member.flag_bits & 1\n                   and stat.S_IFMT(member.external_attr >> 16) in (0, stat.S_IFREG)\n                   for member in members)",
+        "new_line": 262,
+        "old": "assert all(not member.is_dir() and not member.flag_bits & 1\n                   and stat.S_IFMT(member.external_attr >> 16) in (0, stat.S_IFREG)\n                   for member in members)",
+        "old_line": 262
+      },
+      {
+        "ast_identical": true,
+        "index": 69,
+        "new": "assert len(records) == len({r[0] for r in records}) == len(member_names)",
+        "new_line": 271,
+        "old": "assert len(records) == len({r[0] for r in records}) == len(member_names)",
+        "old_line": 271
+      },
+      {
+        "ast_identical": true,
+        "index": 70,
+        "new": "assert {r[0] for r in records} == set(member_names)",
+        "new_line": 272,
+        "old": "assert {r[0] for r in records} == set(member_names)",
+        "old_line": 272
+      },
+      {
+        "ast_identical": true,
+        "index": 71,
+        "new": "assert name in wheel_sources",
+        "new_line": 298,
+        "old": "assert name in wheel_sources",
+        "old_line": 298
+      },
+      {
+        "ast_identical": true,
+        "index": 72,
+        "new": "assert digest(capture(ROOT / 'src' / name)) == expected_hash",
+        "new_line": 300,
+        "old": "assert digest(capture(ROOT / 'src' / name)) == expected_hash",
+        "old_line": 300
+      },
+      {
+        "ast_identical": true,
+        "index": 73,
+        "new": "assert digest(old) == wheel_sources[name]",
+        "new_line": 306,
+        "old": "assert digest(old) == wheel_sources[name]",
+        "old_line": 306
+      },
+      {
+        "ast_identical": true,
+        "index": 74,
+        "new": "assert run['commit'] == COMMIT and run['exit_code'] == 0",
+        "new_line": 348,
+        "old": "assert run['commit'] == COMMIT and run['exit_code'] == 0",
+        "old_line": 348
+      },
+      {
+        "ast_identical": true,
+        "index": 75,
+        "new": "assert run['source_unchanged'] and run['head_unchanged'] and run['worktree_clean']",
+        "new_line": 349,
+        "old": "assert run['source_unchanged'] and run['head_unchanged'] and run['worktree_clean']",
+        "old_line": 349
+      },
+      {
+        "ast_identical": true,
+        "index": 76,
+        "new": "assert run['runtime_before'] == run['runtime_after'] == manifest['files']",
+        "new_line": 350,
+        "old": "assert run['runtime_before'] == run['runtime_after'] == manifest['files']",
+        "old_line": 350
+      },
+      {
+        "ast_identical": true,
+        "index": 77,
+        "new": "assert not path.is_absolute() and '..' not in path.parts",
+        "new_line": 227,
+        "old": "assert not path.is_absolute() and '..' not in path.parts",
+        "old_line": 227
+      },
+      {
+        "ast_identical": true,
+        "index": 78,
+        "new": "assert not set(path.parts).intersection({'.git', '.cache', '.venv', '__pycache__'})",
+        "new_line": 228,
+        "old": "assert not set(path.parts).intersection({'.git', '.cache', '.venv', '__pycache__'})",
+        "old_line": 228
+      },
+      {
+        "ast_identical": true,
+        "index": 79,
+        "new": "assert member.name == 'lupine-source' or member.name.startswith('lupine-source/')",
+        "new_line": 229,
+        "old": "assert member.name == 'lupine-source' or member.name.startswith('lupine-source/')",
+        "old_line": 229
+      },
+      {
+        "ast_identical": true,
+        "index": 80,
+        "new": "assert member.isdir() or member.isfile()",
+        "new_line": 230,
+        "old": "assert member.isdir() or member.isfile()",
+        "old_line": 230
+      },
+      {
+        "ast_identical": true,
+        "index": 81,
+        "new": "assert member.name not in names",
+        "new_line": 231,
+        "old": "assert member.name not in names",
+        "old_line": 231
+      },
+      {
+        "ast_identical": true,
+        "index": 82,
+        "new": "assert relative in expected",
+        "new_line": 236,
+        "old": "assert relative in expected",
+        "old_line": 236
+      },
+      {
+        "ast_identical": true,
+        "index": 83,
+        "new": "assert len(raw) == member.size",
+        "new_line": 238,
+        "old": "assert len(raw) == member.size",
+        "old_line": 238
+      },
+      {
+        "ast_identical": true,
+        "index": 84,
+        "new": "assert blob == expected[relative], 'Git blob mismatch: ' + relative",
+        "new_line": 240,
+        "old": "assert blob == expected[relative], 'Git blob mismatch: ' + relative",
+        "old_line": 240
+      },
+      {
+        "ast_identical": true,
+        "index": 85,
+        "new": "assert not path.is_absolute() and '..' not in path.parts",
+        "new_line": 267,
+        "old": "assert not path.is_absolute() and '..' not in path.parts",
+        "old_line": 267
+      },
+      {
+        "ast_identical": true,
+        "index": 86,
+        "new": "assert not set(path.parts).intersection({'.git', '.cache', '.venv', '__pycache__'})",
+        "new_line": 268,
+        "old": "assert not set(path.parts).intersection({'.git', '.cache', '.venv', '__pycache__'})",
+        "old_line": 268
+      },
+      {
+        "ast_identical": true,
+        "index": 87,
+        "new": "assert digest(capture(RETAINED / f'{index}-{stream}.txt')) == run[stream + '_sha256']",
+        "new_line": 352,
+        "old": "assert digest(capture(RETAINED / f'{index}-{stream}.txt')) == run[stream + '_sha256']",
+        "old_line": 352
+      },
+      {
+        "ast_identical": true,
+        "index": 88,
+        "new": "assert hashed == size == ''",
+        "new_line": 276,
+        "old": "assert hashed == size == ''",
+        "old_line": 276
+      },
+      {
+        "ast_identical": true,
+        "index": 89,
+        "new": "assert int(size) == len(raw)",
+        "new_line": 278,
+        "old": "assert int(size) == len(raw)",
+        "old_line": 278
+      },
+      {
+        "ast_identical": true,
+        "index": 90,
+        "new": "assert hashed == 'sha256=' + base64.urlsafe_b64encode(hashlib.sha256(raw).digest()).decode().rstrip('=')",
+        "new_line": 279,
+        "old": "assert hashed == 'sha256=' + base64.urlsafe_b64encode(hashlib.sha256(raw).digest()).decode().rstrip('=')",
+        "old_line": 279
+      },
+      {
+        "ast_identical": true,
+        "index": 91,
+        "new": "assert raw == sources[relative], 'Wheel/source mismatch: ' + name",
+        "new_line": 283,
+        "old": "assert raw == sources[relative], 'Wheel/source mismatch: ' + name",
+        "old_line": 283
+      },
+      {
+        "ast_identical": true,
+        "index": 92,
+        "new": "assert name.startswith('lupine_discovery-0.1.0.dist-info/')",
+        "new_line": 286,
+        "old": "assert name.startswith('lupine_discovery-0.1.0.dist-info/')",
+        "old_line": 286
+      }
+    ]
+  },
+  "run_recorded.py": {
+    "all_assertions_mapped": true,
+    "ast_identical": 6,
+    "current_assertions": 7,
+    "prior_assertions": 7,
+    "rows": [
+      {
+        "ast_identical": true,
+        "index": 0,
+        "new": "assert exact_hex(args.commit, 40)",
+        "new_line": 40,
+        "old": "assert exact_hex(args.commit, 40)",
+        "old_line": 40
+      },
+      {
+        "ast_identical": false,
+        "index": 1,
+        "new": "assert args.commit != 'c17c4c6b152af2e7bc1b7a7639336f6b0f733ace'",
+        "new_line": 41,
+        "old": "assert args.commit != 'b42bd9a94385ad43c3c2ac022584dae6bd135254'",
+        "old_line": 41
+      },
+      {
+        "ast_identical": true,
+        "index": 2,
+        "new": "assert exact_hex(args.reviewed_pins_sha256, 64)",
+        "new_line": 42,
+        "old": "assert exact_hex(args.reviewed_pins_sha256, 64)",
+        "old_line": 42
+      },
+      {
+        "ast_identical": true,
+        "index": 3,
+        "new": "assert exact_hex(args.additive_auditor_sha256, 64)",
+        "new_line": 43,
+        "old": "assert exact_hex(args.additive_auditor_sha256, 64)",
+        "old_line": 43
+      },
+      {
+        "ast_identical": true,
+        "index": 4,
+        "new": "assert args.operator and len(args.operator) <= 128",
+        "new_line": 44,
+        "old": "assert args.operator and len(args.operator) <= 128",
+        "old_line": 44
+      },
+      {
+        "ast_identical": true,
+        "index": 5,
+        "new": "assert path.is_relative_to(ROOT / '.cache')",
+        "new_line": 48,
+        "old": "assert path.is_relative_to(ROOT / '.cache')",
+        "old_line": 48
+      },
+      {
+        "ast_identical": true,
+        "index": 6,
+        "new": "assert not path.is_relative_to(ROOT / '.cache/li-v3-custody')",
+        "new_line": 49,
+        "old": "assert not path.is_relative_to(ROOT / '.cache/li-v3-custody')",
+        "old_line": 49
+      }
+    ]
+  }
+}

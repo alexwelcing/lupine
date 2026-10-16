@@ -1767,3 +1767,38 @@ fresh paired screening. G20 is unresolved, G21 blocked, scientific NO-GO results
 unchanged. No new allocation, tuning, DFT, deployment or schedule was introduced.
 
 Parent report `9766b683` passed all four original push jobs in [CI 38898365063](https://github.com/alexwelcing/lupine/actions/runs/38898365063), observed at 12:30:24 UTC. This new implementation requires its own CI and package verification.
+
+## 2026-10-16 13:07 UTC — verified actual header audit and primary-method findings
+
+[Exact a064a2c0 verification and actual results](phase2-growth-predicate-verification-v1/ROOT-CHECKPOINT.md)
+are complete. CI 38901590399 passed all four original jobs, observed at
+12:56:39 UTC. Clean packaging passes 28 demonstrations/six schemas/16 mandatory
+checks, followed by strict retention. Independent artifact checks match 5,003
+source files, 335 runtime files and all 332 predecessor runtime files unchanged.
+The first additive pin-record mismatch remains, followed by the unchanged
+auditor's successful run against the explicitly corrected baseline-role record.
+
+The two fixed actual commands ran at 12:57:12–12:57:23 UTC, exited 2 and returned
+identical public receipts (68c9042325e93cebd08f9dd056ccbf8833b16f4f045f25bbe2e8be69623326be).
+Only MEMBER_KIND_PROFILE fails; 31 families pass, with no unchecked dependencies.
+All 335 runtime files and source/remote holds agree. No members, XML, worksheet
+or shared-string values were decoded. Whole raw-buffer exposure is declared.
+The public review passes 410 consistency checks; its first reviewer-only
+chronology-field assumption failure and narrow correction remain preserved.
+These checks establish no archive admission or scientific sample count.
+
+[Primary OPC research](phase2-opc-part-scope-v1/README.md), prepared before the
+result, distinguishes general structural rules from application name whitelists.
+[Primary Angsten methods](phase2-rhizo-vacancy-methods-v1/README.md) confirm the
+approximately-zero-pressure energy/enthalpy convention for archived VASP/PBE DFT;
+Rhizo extraction and physical transfer remain unverified. Whole retrieved bodies
+were machine exposed; no raw source bodies are redistributed in these notes.
+
+Root owns this report publication and exact descendant CI verification while
+the single complete Li readiness design receives independent review. Next:
+implement its bounded structural/documentary/frame route, or record a specific
+NO-GO if it cannot support the required semantics. No G32 actual invocation,
+new fit, allocation, numeric Rhizo census or fresh performance claim occurred.
+G20 remains unresolved/G21 blocked; historical negatives and disabled automation
+remain unchanged. A transient exec transport failure during ignored preparation
+recovered on the immediate retry and did not execute a source operation.

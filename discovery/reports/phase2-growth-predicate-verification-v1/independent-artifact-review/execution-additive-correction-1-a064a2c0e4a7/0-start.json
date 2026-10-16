@@ -1,0 +1,36 @@
+{
+  "before": {
+    "errors": {},
+    "held_equal": true,
+    "reviewed_pins_status_valid": true,
+    "sha256": {
+      "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-artifact-review-v1/actual-a064a2c0e4a7/review.json": "47aafc2bc5efba2a621d934568751892074473d7cc428f4e5a3c45f46937b1bb",
+      "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-artifact-review-v1/additive_audit.py": "e87a8d0181c986f85883ebe28ef8295581c0a97976ab927feb3de60be096f649",
+      "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-artifact-review-v1/audit.py": "b81293cba3632449830932175e9fa938913650ade05f5e524b258aba78923119",
+      "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-artifact-review-v1/run_additive_correction_1.py": "96174545a2883ca61db183a2b949ddc62b536b78d2493b3a333b54706448977b",
+      "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-release-v1/artifact-reviewed-pins.json": "c41795d0460eb37bf7104f56891f5b9531eea85c40f2f610ceddf758dd47495a"
+    }
+  },
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-artifact-review-v1/additive_audit.py",
+    "--commit",
+    "a064a2c0e4a7cce1fbcb0541f49aae132944e785",
+    "--retained-directory",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-clean-package-v1",
+    "--full-review",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-artifact-review-v1/actual-a064a2c0e4a7/review.json",
+    "--reviewed-pins",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-release-v1/artifact-reviewed-pins.json",
+    "--reviewed-pins-sha256",
+    "c41795d0460eb37bf7104f56891f5b9531eea85c40f2f610ceddf758dd47495a",
+    "--output-directory",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-artifact-review-v1/additive-correction-1-a064a2c0e4a7"
+  ],
+  "commit": "a064a2c0e4a7cce1fbcb0541f49aae132944e785",
+  "operator": "/root/phase2_math",
+  "reviewed_pins_sha256": "c41795d0460eb37bf7104f56891f5b9531eea85c40f2f610ceddf758dd47495a",
+  "scope": "Read-only retained artifact/source audit; no package test, production diagnostic or network command.",
+  "script_sha256": "e87a8d0181c986f85883ebe28ef8295581c0a97976ab927feb3de60be096f649",
+  "started_at": "2026-10-16T12:38:42.892110+00:00"
+}

@@ -1,0 +1,27 @@
+{
+  "started_at": "2026-10-16T12:40:36.020809+00:00",
+  "url": "https://iopscience.iop.org/article/10.1088/1367-2630/16/1/015018",
+  "request_sha256": "01a5803a152b37f544fe4047c55777d61d3b7b648322e98cdb91fe86d8d57ea2",
+  "requests_attempted": 1,
+  "followed_redirects": 0,
+  "retries": 0,
+  "byte_cap": 2097152,
+  "article_identity_verified": false,
+  "methods_verified": false,
+  "table_outcomes_extracted": false,
+  "private_or_raw_project_objects_read": false,
+  "http_status": 200,
+  "headers": {
+    "Content-Type": "text/html;charset=UTF-8",
+    "Date": "Fri, 16 Oct 2026 12:40:37 GMT"
+  },
+  "retained_response_bytes": 235691,
+  "retained_response_sha256": "0ede59974941e6172b51673568677f526ee2f9af93f575909825eaae0616e099",
+  "response_complete_within_cap": true,
+  "whole_retained_response_machine_read": true,
+  "response_path": "response.body",
+  "status": "PUBLIC_RESPONSE_RETAINED_PENDING_METHOD_REVIEW",
+  "primary_source_rights_verified": false,
+  "ended_at": "2026-10-16T12:40:38.532330+00:00",
+  "elapsed_seconds": 2.511521738000738
+}

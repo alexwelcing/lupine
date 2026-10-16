@@ -1,0 +1,8 @@
+{
+  "original_bytes": 388,
+  "original_relative_path": ".cache/phase2-growth-predicate-artifact-review-v1/run_recorded.py.diff",
+  "original_sha256": "04bf7c2bd30167df0d29824ca31face32f5ad827d4ba8779a86de3e48264928a",
+  "reason": "Preserve historical diff/log bytes exactly without weakening tracked whitespace checks.",
+  "schema": "lupine.lossless-utf8-evidence.v1",
+  "text": "--- prior-run_recorded.py\n+++ run_recorded.py\n@@ -38,7 +38,7 @@\n \n \n assert exact_hex(args.commit, 40)\n-assert args.commit != 'b42bd9a94385ad43c3c2ac022584dae6bd135254'\n+assert args.commit != 'c17c4c6b152af2e7bc1b7a7639336f6b0f733ace'\n assert exact_hex(args.reviewed_pins_sha256, 64)\n assert exact_hex(args.additive_auditor_sha256, 64)\n assert args.operator and len(args.operator) <= 128\n"
+}

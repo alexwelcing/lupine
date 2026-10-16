@@ -1,0 +1,55 @@
+{
+  "after": {
+    "errors": {},
+    "held_equal": true,
+    "reviewed_pins_status_valid": true,
+    "sha256": {
+      "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-artifact-review-v1/additive_audit.py": "e87a8d0181c986f85883ebe28ef8295581c0a97976ab927feb3de60be096f649",
+      "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-artifact-review-v1/audit.py": "b81293cba3632449830932175e9fa938913650ade05f5e524b258aba78923119",
+      "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-artifact-review-v1/run_recorded.py": "8f61b3f89da773e2aeaa1be2949c1cf82c671e338538cccfa0b5358c8c37a613",
+      "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-release-v1/final-reviewed-pins.json": "4e9bd85117733d81f420e2ba68c0d60bb4457757a1b568ff6fddc2195546f2f6"
+    }
+  },
+  "before": {
+    "errors": {},
+    "held_equal": true,
+    "reviewed_pins_status_valid": true,
+    "sha256": {
+      "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-artifact-review-v1/additive_audit.py": "e87a8d0181c986f85883ebe28ef8295581c0a97976ab927feb3de60be096f649",
+      "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-artifact-review-v1/audit.py": "b81293cba3632449830932175e9fa938913650ade05f5e524b258aba78923119",
+      "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-artifact-review-v1/run_recorded.py": "8f61b3f89da773e2aeaa1be2949c1cf82c671e338538cccfa0b5358c8c37a613",
+      "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-release-v1/final-reviewed-pins.json": "4e9bd85117733d81f420e2ba68c0d60bb4457757a1b568ff6fddc2195546f2f6"
+    }
+  },
+  "child_exit_code": 1,
+  "child_invoked": true,
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-artifact-review-v1/additive_audit.py",
+    "--commit",
+    "a064a2c0e4a7cce1fbcb0541f49aae132944e785",
+    "--retained-directory",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-clean-package-v1",
+    "--full-review",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-artifact-review-v1/actual-a064a2c0e4a7/review.json",
+    "--reviewed-pins",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-release-v1/final-reviewed-pins.json",
+    "--reviewed-pins-sha256",
+    "4e9bd85117733d81f420e2ba68c0d60bb4457757a1b568ff6fddc2195546f2f6",
+    "--output-directory",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-artifact-review-v1/additive-a064a2c0e4a7"
+  ],
+  "commit": "a064a2c0e4a7cce1fbcb0541f49aae132944e785",
+  "elapsed_seconds": 0.21748710800238769,
+  "exit_code": 1,
+  "finished_at": "2026-10-16T12:36:56.900829+00:00",
+  "launch_error": null,
+  "operator": "/root/phase2_math",
+  "reviewed_pins_sha256": "4e9bd85117733d81f420e2ba68c0d60bb4457757a1b568ff6fddc2195546f2f6",
+  "scope": "Read-only retained artifact/source audit; no package test, production diagnostic or network command.",
+  "script_sha256": "e87a8d0181c986f85883ebe28ef8295581c0a97976ab927feb3de60be096f649",
+  "started_at": "2026-10-16T12:36:56.683090+00:00",
+  "stderr_sha256": "7225344512ad1ac2c2ac746dc6c79552511df5e28f3a305642d2fb03ed6ddeb3",
+  "stdout_sha256": "6f1a4b0feccb67ab3a36d01cddec08fe2a0af67a1ed59eb459672bc24949ccc6",
+  "timed_out": false
+}

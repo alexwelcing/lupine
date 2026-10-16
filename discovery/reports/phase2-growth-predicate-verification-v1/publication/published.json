@@ -1,0 +1,13 @@
+{
+  "published_at": "2026-10-16T12:35:27.048115+00:00",
+  "commit": "a064a2c0e4a7cce1fbcb0541f49aae132944e785",
+  "parent": "9766b6838388c35a92d32b1a60e65613c72b3fee",
+  "branch": "research/lupine-discovery",
+  "verified_git_blobs": 364,
+  "runtime_files_held": 335,
+  "predecessor_runtime_files_unchanged": 332,
+  "remote_exact": true,
+  "worktree_clean": true,
+  "ci": "PENDING_OBSERVATION",
+  "copyset_sha256": "e87cfaeacbc275984bef7a5287a10c6542c98ac817e1f2bf6d7e75b4789f5635"
+}

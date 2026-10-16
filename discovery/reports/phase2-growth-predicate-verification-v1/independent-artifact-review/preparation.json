@@ -1,0 +1,68 @@
+{
+  "added_runtime_files": 3,
+  "assertion_adaptation": {
+    "additive_audit.py": {
+      "all_assertions_mapped": true,
+      "ast_identical": 43,
+      "current_assertions": 46,
+      "prior_assertions": 46
+    },
+    "audit.py": {
+      "all_assertions_mapped": true,
+      "ast_identical": 93,
+      "current_assertions": 93,
+      "prior_assertions": 93
+    },
+    "run_recorded.py": {
+      "all_assertions_mapped": true,
+      "ast_identical": 6,
+      "current_assertions": 7,
+      "prior_assertions": 7
+    }
+  },
+  "baseline_commit": "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace",
+  "commit": null,
+  "expected_runtime_files": 335,
+  "files": {
+    "additive_audit.py": {
+      "prepared": {
+        "bytes": 10537,
+        "sha256": "e87a8d0181c986f85883ebe28ef8295581c0a97976ab927feb3de60be096f649"
+      },
+      "prior": {
+        "bytes": 10639,
+        "sha256": "22b3cbaa1335a85d81d79a11e6722f5fadd6db51854ca8c2de483a65d45528f7"
+      }
+    },
+    "audit.py": {
+      "prepared": {
+        "bytes": 21353,
+        "sha256": "b81293cba3632449830932175e9fa938913650ade05f5e524b258aba78923119"
+      },
+      "prior": {
+        "bytes": 21353,
+        "sha256": "b81293cba3632449830932175e9fa938913650ade05f5e524b258aba78923119"
+      }
+    },
+    "run_recorded.py": {
+      "prepared": {
+        "bytes": 6579,
+        "sha256": "8f61b3f89da773e2aeaa1be2949c1cf82c671e338538cccfa0b5358c8c37a613"
+      },
+      "prior": {
+        "bytes": 6579,
+        "sha256": "681bdae3895b320274e898b819e9d8b092bb9edd76562c8c2e92dbcd9935f483"
+      }
+    }
+  },
+  "next_action": "Wait for root to provide published commit, final reviewed pin record and retained package completion. Then run one recorded full plus additive audit invocation.",
+  "package_or_artifact_reads": 0,
+  "production_guard_or_source_operations": 0,
+  "reviewed_source_test_contract_paths": 4,
+  "schema": "lupine.growth_predicate.artifact_review_preparation.v1",
+  "status": "PREPARED_NOT_EXECUTED",
+  "unchanged_predecessor_runtime_files": 332,
+  "unchanged_wheel_package_members": 108,
+  "validation": "AST syntax and exact source/check adaptation only; no auditor import or invocation",
+  "written_at": "2026-10-16T12:30:48.263167+00:00"
+}

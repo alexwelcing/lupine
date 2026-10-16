@@ -715,3 +715,22 @@ publication CI, clean installed packaging and independent artifact verification
 must precede the fixed actual runs. No archive acceptance, worksheet schema,
 paired frame or scientific superiority is established by software checks.
 Historical claim-tier decisions remain unchanged.
+
+## Actual G34 verification and source methods — 2026-10-16
+
+[Implementation a064a2c0 and its actual pair](../reports/phase2-growth-predicate-verification-v1/ROOT-CHECKPOINT.md)
+have completed exact four-job CI, clean 28-case/six-schema/16-check packaging,
+strict retained verification and independent artifacts. The actual categorical
+audit localizes the sole failing family to MEMBER_KIND_PROFILE; the other 31
+pass and none are unchecked. No archive is admitted and no member/XML/value
+is decoded. The independent public consistency review passes 410 checks, with
+its initial harness failure retained. These are software/custody observations.
+
+[Primary OPC rules](../reports/phase2-opc-part-scope-v1/README.md) support a broader
+structural naming model, not an assumption that unknown parts are harmless.
+Documentary roles, paired frame, provenance and scientific suitability remain
+OPEN. [Primary vacancy methods](../reports/phase2-rhizo-vacancy-methods-v1/README.md)
+resolve the paper's approximately-zero-pressure formation energy/enthalpy
+convention only; archived DFT and stored Rhizo values do not establish physical
+truth or operating-condition transfer. Historical preview GO and scientific
+NO-GO remain unchanged. This report descendant needs its own exact CI observation.

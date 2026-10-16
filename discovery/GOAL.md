@@ -73,7 +73,7 @@ previously unused source with paired outcomes and credible study grouping.
 | ID | Work and acceptance | State | Owner / next action |
 | --- | --- | --- | --- |
 | G19 | Exact prospective planner, independent finite-world tests, CLI and usable browser; hypothetical-IID/unknown states and bounded inputs | DONE at `41d3e31` | [All four CI jobs, clean installed package and independent byte audit pass](reports/phase2-workbench-verification-v1/README.md). The 65-check full browser run and original failures remain recorded. General written proof and exact hypothetical figure distinguish arbitrary-count mathematics from bounded implementation and scientific validity. |
-| G20 | Source identity/license, paired labels/conditions, overlap and evaluation-unit audit before a fresh evaluation | ACTIVE / schema unresolved | [Verified G30/G31 observations](reports/phase2-growth-verification-v1/README.md) retain the all-entry layout block before XML; Li counts, citations, joins and grouping remain unresolved. [BAM workbook](reports/phase2-bam-metrology-workbook-v1/README.md) is now an exposed three-test metrology reference, permanently excluded from a fresh blind predictive benchmark. No admitted study follows from either source. |
+| G20 | Source identity/license, paired labels/conditions, overlap and evaluation-unit audit before a fresh evaluation | ACTIVE / schema unresolved | [Completed G34 audit](reports/phase2-growth-predicate-verification-v1/ROOT-CHECKPOINT.md) localizes the sole header-profile failure; archive admission, Li counts, citations, joins and grouping remain unresolved. BAM is an exposed metrology reference; Rhizo is exposed historical stored-label evidence. No fresh study is admitted. |
 | G21 | Freeze and evaluate a new archival protocol only if source and prospective design justify it | BLOCKED on G20 | No new allocation, fit, scientific threshold or sampling claim. [Risk-contract review](reports/phase2-risk-contracts-v1/README.md) distinguishes expected loss from fixed-policy high-confidence risk. [Finite confidence inversion](reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md) has written review and independent finite counting, including an optional-stopping counterexample; implementation is deferred until a justified fixed-frame target needs it. |
 | G22 | Fixed Li v3 capture/envelope, opaque outcomes and explicit schema block | DONE; BLOCKED_SCHEMA preserved | Published `5addf4f` and all four successful CI jobs preceded capture. Publisher size/MD5 match; two byte-identical envelope results report BLOCKED_LAYOUT / ZIP_LAYOUT_UNSUPPORTED, zero decompression/XML decoding. This is custody, not scientific validity. |
 | G23 | Separate header-only diagnostic for the recorded ZIP block; old custody bytes unchanged | DONE; BLOCKED_SCHEMA preserved | [Two actual runs](reports/phase2-workbench-verification-v1/README.md) followed verified `41d3e31` CI/package, returned identical MEMBER_FLAGS receipts and preserved all 306 runtime files. Whole raw buffer and directory names read; no member/XML/worksheet decoding. This identifies a profile mismatch, not the actual bits or archive corruption. |
@@ -84,32 +84,32 @@ previously unused source with paired outcomes and credible study grouping.
 | G28 | Identify the compatible ZIP rejection precisely without decompressing source members | DONE at `a6e87c1`; BLOCKED_SCHEMA preserved | [Two actual diagnoses](reports/phase2-notebook-header-verification-v1/README.md) return identical LOCAL_EXTRA_PRESENT at entry_local, no supplementary categories, no member/XML decoding and no cleanup error. All 323 runtime files, clean source and remote held; independent actual audit passes. Field types/payload meaning and later entries remain unknown; original profiles and all negatives remain unchanged. |
 | G29 | Identify the rejected local extra field structurally under a separate bounded contract | DONE at `d0505b9`; BLOCKED_SCHEMA preserved | [Verified actual operations](reports/phase2-li-local-extra-verification-v1/README.md) followed all four original CI jobs, clean packaging and independent artifact audits. Two identical results identify one `0xA220` field with 516 declared data bytes in the first rejected local area. All 326 runtime files held; the independent public-receipt audit passes 11,189 checks. Payload, other entries and worksheet schema remain unestablished. Six predeclared synthetic mutations were detected; earlier failures remain recorded. |
 | G30 | Check selected growth-hint shape without admitting an archive or interpreting measurements | DONE at `c17c4c6`; BLOCKED_SCHEMA preserved | [Verified source and actual pair](reports/phase2-growth-verification-v1/README.md): original four-job CI, clean package and independent artifacts pass; two identical GROWTH_HINT_SHAPE_MATCH receipts, 332 runtime files held. Initial-padding semantics and archive acceptance remain unbound. |
-| G31 | Separate all-entry local-growth envelope profile with unchanged scientific schema block | DONE at `c17c4c6`; BLOCKED_LAYOUT preserved | [Actual pair](reports/phase2-growth-verification-v1/README.md) returns identical ZIP_LAYOUT_UNSUPPORTED, after three completed local-extra areas and before decompression/XML. No archive acceptance or worksheet schema established; the exact failed predicate is unresolved. Root preserves the block and reviews a separate bounded diagnostic before any new operation. |
+| G31 | Separate all-entry local-growth envelope profile with unchanged scientific schema block | DONE at `c17c4c6`; BLOCKED_LAYOUT preserved | [Actual pair](reports/phase2-growth-verification-v1/README.md) returns identical ZIP_LAYOUT_UNSUPPORTED, after three completed local-extra areas and before decompression/XML. No archive acceptance or worksheet schema established; G34 subsequently identifies MEMBER_KIND_PROFILE as the sole failing family, preserving this original result. |
 | G32 | Pure documentary-role layout projection with bounded storage coordinates, types and merge declarations | PREPARED / actual binding blocked on envelope | [Generated candidate and independent review](reports/phase2-documentary-layout-preparation-v1/README.md): 33 author/27 independent tests pass; namespace strengthening and original failures retained. No runtime promotion or actual worksheet access. |
 | G33 | Bounded Rhizo declared-reference provenance and historical recorded-label readiness | COMPLETE for fixed stored fields; NOT_ADMITTED | [One 36-object inspection](reports/phase2-rhizo-recorded-label-readiness-v1/README.md) confirms all 144 stored prediction/reference pairs are exact numeric fields with matching literal units; all tolerances are NULL. The source is exposed; historical reference choice and physical validity remain UNKNOWN. No performance comparison or fresh screening claim. |
-| G34 | One categorical all-entry Li header diagnostic with exact first-rejection preservation and explicit unchecked dependencies | INTEGRATED / release verification pending | [Reviewed implementation](reports/phase2-growth-predicate-implementation-v1/ROOT-CHECKPOINT.md) passes 418 combined generated Li tests; all 332 prior runtime files are unchanged. Root verifies exact remote CI, clean packaging and independent artifacts before fixed actual runs. No archive-acceptance change or XML access. |
+| G34 | One categorical all-entry Li header diagnostic with exact first-rejection preservation and explicit unchecked dependencies | DONE; BLOCKED_SCHEMA preserved | [Verified a064a2c0 and actual pair](reports/phase2-growth-predicate-verification-v1/ROOT-CHECKPOINT.md): all four CI jobs, clean package and independent artifacts pass. Two identical receipts report only MEMBER_KIND_PROFILE failing; 31 families pass, none unchecked. All 335 runtime files held; zero member/XML decoding. Independent public review passes 410 checks, with its first harness failure preserved. |
 
-Parent report `9766b683` passed all four original push jobs in CI 38898365063,
-observed at 12:30:24 UTC.
+Current owner/checkpoint: root publishes the completed G34 actual audit and
+primary-source method/OPC reviews, then implements one independently reviewed,
+bounded compatibility→documentary/frame readiness route. Implementation
+`a064a2c0` passed all four original CI jobs at 12:56:39 UTC, clean installed
+packaging and independent artifact checks before the two fixed actual commands.
+The sole rejected family is the reader's allowed-member profile. This identifies
+no actual part/type and does not admit the archive or make unknown payloads safe.
 
-Current owner/checkpoint: root publishes the completed stored-label readiness
-and G34 implementation, then verifies exact remote CI, clean packaging and
-independent artifacts before its fixed actual Li diagnostic. The Rhizo reader
-passed 30 author and 19 independent generated tests; its one actual read at
-12:16:28 UTC completed all 144 positions across 36 objects with all 332 runtime
-files held. The public-receipt review passes. Reference-choice attribution,
-physical accuracy and uncertainty remain separate unresolved questions; NULL
-tolerances are not zero uncertainty. No numeric error census was computed.
+The [primary OPC review](reports/phase2-opc-part-scope-v1/README.md) supports a
+general structural naming model with bounded type/relationship validation; it
+establishes no workbook semantics. The complete route must resolve documentary
+roles and a fixed non-outcome frame, or stop with a specific Li NO-GO for the
+present claim. Avoid an indefinite sequence of new predicate diagnostics.
+No actual G32 operation is authorized by G34's blocked receipt.
 
-G34 has 22 author/26 independent pure tests, three detected mutation controls,
-42 author/17 independent production tests, and 136 author/86 independent whole
-report comparisons. The combined integrated Li run passes 418 tests with 335
-runtime files held. Original dependency, fixture, cleanup and closed-reason
-failures remain visible. These are software checks, not independent scientific
-observations. Prioritize a complete bounded Li source-readiness decision; another
-Rhizo numeric census is secondary and cannot substitute for G21. No new fit,
-allocation or scientific threshold has been selected. Neither route establishes
-physical truth or supports fresh predictive superiority.
+Rhizo's 144 stored pairs remain complete historical fields, with every optional
+tolerance NULL and no numerical comparison. The [primary vacancy-method review](reports/phase2-rhizo-vacancy-methods-v1/README.md)
+resolves only Angsten et al.'s approximately-zero-pressure energy/enthalpy
+convention; these are archived DFT results. Extraction agreement, reference
+choice, physical accuracy and uncertainty remain separate unresolved questions.
+No new fit, allocation, scientific threshold or fresh predictive claim follows.
 
 The prospective planning probe is intentionally hypothetical. An IID score
 distribution permits exact prospective threshold arithmetic; it is

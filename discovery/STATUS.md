@@ -10,24 +10,26 @@ unresolved. The reader passes 30 author/19 independent generated tests; all 332
 runtime files held during the actual read and the public-receipt review passes.
 Original reviewer harness failures are preserved.
 
-The [G34 diagnostic](reports/phase2-growth-predicate-implementation-v1/ROOT-CHECKPOINT.md) is now integrated. It preserves
-G31's first rejection and separately reports every safely evaluable header family,
-with explicit unchecked dependencies. Validation passes 42 author/17 independent
-production tests, 136 author/86 independent full-report comparisons, and the
-418-test combined Li run. All 332 prior runtime files are unchanged; the manifest
-now binds 335. Exact remote CI, clean packaging and independent artifact checks
-remain prerequisites to actual G34 execution. No new actual Li operation has run.
+[G34 is complete at verified a064a2c0](reports/phase2-growth-predicate-verification-v1/ROOT-CHECKPOINT.md).
+All four original CI jobs, clean installed packaging and independent artifact
+checks passed before two fixed actual commands at 12:57 UTC. Both public
+receipts are identical: only MEMBER_KIND_PROFILE fails, the other 31 header
+families pass and none are unchecked. The archive remains BLOCKED_SCHEMA;
+no member, XML, worksheet or shared-string value was decoded. All 335 runtime
+files held. The public review passes 410 consistency checks; its first reviewer
+schema-assumption failure and narrow correction remain preserved.
 
-**Active phase, October 16:** Published `c17c4c6` passes all four original CI jobs,
-clean packaging (28 demonstrations/six schemas/16 checks), strict retention and
-independent artifact audits. [Actual growth-reader results](reports/phase2-growth-verification-v1/README.md)
-preserve two identical G30 shape matches and two identical G31
-`BLOCKED_SCHEMA / BLOCKED_LAYOUT / ZIP_LAYOUT_UNSUPPORTED` results. All 332
-runtime files held. G31 completed three local-extra-area checks but rejected
-before decompression or XML; the failing predicate remains unidentified.
-Archive acceptance, recognized roles and scientific schema remain unestablished.
-The corrected independent receipt audit passes 19,246 runtime check calls; its
-first obsolete-field failure and independently reviewed repair remain preserved.
+The next step is one complete bounded compatibility and documentary/frame
+readiness route. [Primary OPC guidance](reports/phase2-opc-part-scope-v1/README.md)
+supports general part-name/type/relationship rules, without establishing unknown
+payloads' semantic irrelevance. Root owns implementation after independent review;
+if bounds or semantic associations cannot be justified, record the specific Li
+NO-GO. The original G31 block remains; G34 does not qualify G32's envelope gate.
+
+The [primary vacancy paper](reports/phase2-rhizo-vacancy-methods-v1/README.md)
+confirms its approximately-zero-pressure energy/enthalpy convention for archived
+DFT. Rhizo extraction accuracy and physical transfer remain unestablished.
+No new scientific comparison, fit or allocation has run.
 
 The [implementation](reports/phase2-growth-implementation-v1/README.md) passes
 359 combined Li tests, with all 326 predecessor runtime files unchanged.

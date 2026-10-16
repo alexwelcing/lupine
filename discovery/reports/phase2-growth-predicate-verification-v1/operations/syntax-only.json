@@ -1,0 +1,9 @@
+{
+  "execution_test_claim": false,
+  "production_guard_invoked": false,
+  "project_imported": false,
+  "raw_or_capture_read": false,
+  "recorder_imported_or_invoked": false,
+  "source_sha256": "b89fcabf338e9329c3cdabdc58fb13d71396540aeec405ed5e3a01cc12ff6079",
+  "status": "PASS_SYNTAX_ONLY"
+}

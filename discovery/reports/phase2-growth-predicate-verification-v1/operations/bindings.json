@@ -1,0 +1,36 @@
+{
+  "branch": "research/lupine-discovery",
+  "commit": "a064a2c0e4a7cce1fbcb0541f49aae132944e785",
+  "gates": {
+    "additive_review": {
+      "path": ".cache/phase2-growth-predicate-artifact-review-v1/additive-correction-1-a064a2c0e4a7/additive-review.json",
+      "sha256": "d0721e59e4c9fdc0b1ad592fc73431cc0c92b9fb2d57040c3ead4ce17bc9e14b"
+    },
+    "artifact_review": {
+      "path": ".cache/phase2-growth-predicate-artifact-review-v1/actual-a064a2c0e4a7/review.json",
+      "sha256": "47aafc2bc5efba2a621d934568751892074473d7cc428f4e5a3c45f46937b1bb"
+    },
+    "ci": {
+      "path": ".cache/phase2-growth-predicate-ci-v1/final.json",
+      "sha256": "dcbab488e6182011f1d49f37a851d79fea593e97884c6d39dbf486a7e1cbbdc3"
+    },
+    "package": {
+      "path": ".cache/phase2-growth-predicate-clean-package-v1/0-execution.json",
+      "sha256": "cddd0c32ad37a49e1942eeae27e9cbd42fa971aed2ac65d38b8293b75363eb21"
+    },
+    "strict": {
+      "path": ".cache/phase2-growth-predicate-clean-package-v1/1-execution.json",
+      "sha256": "2ff9df495ba1a88dfcd51ca52730296a4185b357c8031c0ab0d3b31071de80d6"
+    }
+  },
+  "recorder_sha256": "b89fcabf338e9329c3cdabdc58fb13d71396540aeec405ed5e3a01cc12ff6079",
+  "runtime_count": 335,
+  "runtime_manifest_sha256": "a3191141a97f7e82f0467ed3f3c88548bc173a361c4b04864442e20eef7cf3e8",
+  "schema": "lupine.discovery.g34.operation-binding.v1",
+  "source_files": {
+    "docs/li-v3-growth-predicate-audit-plan.md": "a1a7d8fe820ddcd8d3479d53e4f35d5ce0ed6e123385bcbb1b646786e1d064d9",
+    "scripts/li_v3_growth_predicate_audit.py": "70a0339212b971bf7824ae256600b959ae7a7d22b6fc8853eb2208d3c8ece207",
+    "tests/test_li_v3_growth_predicate_audit.py": "1ca8b259f26c88e46a0e108d13c202afa15954871d5750c17307b58b90dd97d3",
+    "tests/test_li_v3_growth_predicate_audit_review.py": "3dd4b23024028e2e7ba5876ca8d9705e066e57362bfae63d9999783e76b5dc49"
+  }
+}

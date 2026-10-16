@@ -1,0 +1,31 @@
+{
+  "actual_operation_invoked": false,
+  "binding_sha256": "804c0548cf9d38b3a3390236cc2e0883ec354357249909ab7a62ed7e0fe6b88f",
+  "expected_runtime_files": 335,
+  "expected_unchanged_prior_runtime_files": 332,
+  "first_category_expected": null,
+  "network_used": false,
+  "prepared_at": "2026-10-16T12:33:21.948588+00:00",
+  "production_guard_invoked": false,
+  "project_imported": false,
+  "raw_or_capture_read": false,
+  "recorder_sha256": "b89fcabf338e9329c3cdabdc58fb13d71396540aeec405ed5e3a01cc12ff6079",
+  "required_fixed_predecessor_sha256": "01cce9e57b26e204a9d31959f747768c70abf7543bedb6ab104b3b4b623f094f",
+  "schema": "lupine.discovery.g34.recorder-preparation.v1",
+  "source_references": {
+    ".cache/phase2-growth-envelope-operations-v1/run_after_ci.py": {
+      "bytes": 29683,
+      "sha256": "5c2a3fe1190c585f9dbb0d9c27d896a852fc84710d70839925f4f7c1c69cea10"
+    },
+    ".cache/phase2-growth-predicate-production-v1/promotion/docs/li-v3-growth-predicate-audit-plan.md": {
+      "bytes": 5879,
+      "sha256": "a1a7d8fe820ddcd8d3479d53e4f35d5ce0ed6e123385bcbb1b646786e1d064d9"
+    },
+    ".cache/phase2-growth-predicate-production-v1/promotion/scripts/li_v3_growth_predicate_audit.py": {
+      "bytes": 40316,
+      "sha256": "70a0339212b971bf7824ae256600b959ae7a7d22b6fc8853eb2208d3c8ece207"
+    }
+  },
+  "status": "PREPARED_UNBOUND_NOT_INVOKED",
+  "validation": "AST parse and compile only; no import or execution."
+}

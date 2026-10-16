@@ -1,0 +1,23 @@
+{
+  "url": "https://ecma-international.org/wp-content/uploads/ECMA-376-2_5th_edition_december_2021.zip",
+  "request_number": 2,
+  "started_at": "2026-10-16T12:51:00.178649+00:00",
+  "request_sha256": "e4f94a730d45d145d5d751f10209b058bce6cf6f673cc5edf86bfc50d58f774c",
+  "redirects_followed": 0,
+  "retries": 0,
+  "http_status": 200,
+  "headers": {
+    "Content-Type": "application/zip",
+    "Content-Length": "1899204",
+    "Date": "Fri, 16 Oct 2026 12:51:01 GMT",
+    "Last-Modified": "Wed, 02 Nov 2022 16:21:19 GMT",
+    "ETag": "\"1cfac4-5ec7f3b08fdc0\""
+  },
+  "retained_path": "official-part2.zip",
+  "bytes": 1899204,
+  "sha256": "1d489dc491168ea1f9e9a59063acc8dd5f02b4ad1d21aa7ec19ba9a58d020c70",
+  "complete_within_cap": true,
+  "status": "RETAINED",
+  "ended_at": "2026-10-16T12:51:02.339368+00:00",
+  "elapsed_seconds": 2.1607484979977016
+}

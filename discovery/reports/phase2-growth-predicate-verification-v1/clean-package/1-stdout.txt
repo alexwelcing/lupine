@@ -1,0 +1,87 @@
+{
+  "archive_contents_executed": false,
+  "artifact_identities": {
+    "source_archive": {
+      "bytes": 94044160,
+      "filename": "lupine-discovery-source-a064a2c0e4a7.tar",
+      "sha256": "ec90a8de21e82c7c16877df64c082a875548aef1565a0beca8effff28cb0d8db"
+    },
+    "wheel": {
+      "bytes": 307093,
+      "filename": "lupine_discovery-0.1.0-py3-none-any.whl",
+      "sha256": "4d70468ccdf5e70253e5f837c232e0bfb78b4d5ecbd483cb382e4263f9844478"
+    }
+  },
+  "ci_success_established": false,
+  "expected_git_commit": "a064a2c0e4a7cce1fbcb0541f49aae132944e785",
+  "mpea_transport_audit": {
+    "http_agreement_reexecuted": false,
+    "nonempty_javascript_sha256": "f760f6225e60f08d7b4217bae7e7499fe1b4d3ea91514c5b1e429c5b4523f35e",
+    "optional_resource_present": true,
+    "optional_resource_sha256": "d93769b07fba52f9bc95dbed92c5303aa8344867e7a663d0ca58cff7af2ba274",
+    "scientific_report_semantics_validated": false
+  },
+  "receipt_sha256": "e948543c613a8476a35de3467e1adf1c89e5cba189cf080ae51ceee95c4a11eb",
+  "reported_smoke": {
+    "case_count": 28,
+    "checks": [
+      "all_packaged_cases_select_verify_replay",
+      "known_answer_oracle_and_controls",
+      "web_assets_and_original_archive_reports",
+      "constrained_negative_results_packaged_and_served",
+      "installed_http_cli_agreement",
+      "coupled_python_api_and_missing_point_fallback",
+      "coupled_projection_and_statistical_guarded_http_replay_agree_with_installed_cli",
+      "scoped_projection_translation_and_missing_bound_abstention",
+      "direct_statistical_pool_python_api_and_distinct_abstention",
+      "training_only_no_go_packaged_and_served",
+      "prospective_pool_planning_cli_hypothesis_and_unknown",
+      "prospective_zero_failure_resolution_cli_not_observed_power",
+      "prospective_planning_http_cli_agreement_and_assets",
+      "finite_population_zero_failure_cli_http_exact_scope",
+      "optional_mpea_resource_presence_and_http_agreement",
+      "mpea_javascript_packaged_and_served"
+    ],
+    "isolated_install": true,
+    "optional_mpea": {
+      "javascript": "packaged_and_exactly_served",
+      "resource": "resources/mpea-t25-v1.json",
+      "status": "present_exactly_served"
+    },
+    "problem_schemas": [
+      "lupine.discovery.calibrated_problem.v1",
+      "lupine.discovery.coupled_problem.v1",
+      "lupine.discovery.decision_pool_problem.v1",
+      "lupine.discovery.pareto_problem.v1",
+      "lupine.discovery.problem.v1",
+      "lupine.discovery.projection_problem.v1"
+    ],
+    "python": "3.12.14",
+    "status": "passed"
+  },
+  "schema": "lupine.discovery.retained-artifact-independent-audit.v1",
+  "scientific_data_opened": false,
+  "scope": "Exact retained artifact identity and recorded probe-claim consistency; not an independent probe execution, deterministic-build proof, publisher signature, whole-CI result or scientific validation.",
+  "source_audit": {
+    "all_original_git_blobs_verified": true,
+    "archive_copyset": [
+      "discovery",
+      ".github/workflows/discovery-verify.yml"
+    ],
+    "archived_file_count": 5003,
+    "git_commit": "a064a2c0e4a7cce1fbcb0541f49aae132944e785",
+    "git_tree": "8a004b4f8246152d6b4c344b0a00c7ea7cc84c44",
+    "no_links_or_cache_paths": true,
+    "runtime_manifest_sha256": "a3191141a97f7e82f0467ed3f3c88548bc173a361c4b04864442e20eef7cf3e8",
+    "runtime_manifest_source_count": 335
+  },
+  "status": "PASS",
+  "verifier_sha256": "22455c93a2539868cf8a9dda76b67413eefe05917603718f19eef1585a1c741d",
+  "wheel_audit": {
+    "all_record_digests_verified": true,
+    "archive_contents_executed": false,
+    "expanded_bytes": 2707811,
+    "member_count": 115,
+    "record_entries": 115
+  }
+}

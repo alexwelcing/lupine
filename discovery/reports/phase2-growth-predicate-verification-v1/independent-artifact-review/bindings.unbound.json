@@ -1,0 +1,12 @@
+{
+  "baseline_commit": "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace",
+  "commit": null,
+  "files": {
+    "docs/li-v3-growth-predicate-audit-plan.md": null,
+    "scripts/li_v3_growth_predicate_audit.py": null,
+    "tests/test_li_v3_growth_predicate_audit.py": null,
+    "tests/test_li_v3_growth_predicate_audit_review.py": null
+  },
+  "retained_directory": ".cache/phase2-growth-predicate-clean-package-v1",
+  "status": "UNBOUND_NOT_EXECUTABLE_SOURCE_PINS"
+}

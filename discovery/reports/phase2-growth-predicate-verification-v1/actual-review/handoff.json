@@ -1,0 +1,18 @@
+{
+  "actual_review_executed": false,
+  "files": {
+    "README.md": {
+      "bytes": 1876,
+      "path": ".cache/phase2-growth-predicate-actual-review-v1/README.md",
+      "sha256": "cce2c6097c673ff158bdfe47ae87a05cd00e8bd6b4622671e654dc8c3f273258"
+    },
+    "checklist.json": {
+      "bytes": 11602,
+      "path": ".cache/phase2-growth-predicate-actual-review-v1/checklist.json",
+      "sha256": "5e5b1272527e7b36a48d88ab7f04c3c7ad1b647576eb519a59ff45ef4abeb5d9"
+    }
+  },
+  "next_action": "Await root final binding and explicit actual completion; then review public evidence only.",
+  "root_completion_required": true,
+  "status": "PREPARED_NOT_RUN"
+}

@@ -1,0 +1,157 @@
+{
+  "status": "PASS",
+  "commit": "a064a2c0e4a7cce1fbcb0541f49aae132944e785",
+  "baseline_commit": "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace",
+  "unchanged_prior_runtime_files": 332,
+  "added_runtime_files": {
+    "scripts/li_v3_growth_predicate_audit.py": "70a0339212b971bf7824ae256600b959ae7a7d22b6fc8853eb2208d3c8ece207",
+    "tests/test_li_v3_growth_predicate_audit.py": "1ca8b259f26c88e46a0e108d13c202afa15954871d5750c17307b58b90dd97d3",
+    "tests/test_li_v3_growth_predicate_audit_review.py": "3dd4b23024028e2e7ba5876ca8d9705e066e57362bfae63d9999783e76b5dc49"
+  },
+  "baseline_runtime_pins_verified_against_baseline_git_bytes": 332,
+  "new_source_test_contracts_exact_in_git_archive_worktree": {
+    "docs/li-v3-growth-predicate-audit-plan.md": "a1a7d8fe820ddcd8d3479d53e4f35d5ce0ed6e123385bcbb1b646786e1d064d9",
+    "scripts/li_v3_growth_predicate_audit.py": "70a0339212b971bf7824ae256600b959ae7a7d22b6fc8853eb2208d3c8ece207",
+    "tests/test_li_v3_growth_predicate_audit.py": "1ca8b259f26c88e46a0e108d13c202afa15954871d5750c17307b58b90dd97d3",
+    "tests/test_li_v3_growth_predicate_audit_review.py": "3dd4b23024028e2e7ba5876ca8d9705e066e57362bfae63d9999783e76b5dc49"
+  },
+  "source_pins_match_final_reviewed_pin_record": true,
+  "reviewed_pin_record_sha256": "c41795d0460eb37bf7104f56891f5b9531eea85c40f2f610ceddf758dd47495a",
+  "unchanged_wheel_package_members": 108,
+  "wheel_payload_equals_complete_baseline_git_package": true,
+  "wheel_nonpackage_content_delta": {},
+  "wheel_archive_bytes_claimed_unchanged": false,
+  "prior_manifest_sha256": "6007f58926fca8bca1dc88ee56fd6d55e2226c74bec0e363a6122759b9fe7fe3",
+  "current_manifest_sha256": "a3191141a97f7e82f0467ed3f3c88548bc173a361c4b04864442e20eef7cf3e8",
+  "unchanged_full_artifact_auditor_review_sha256": "47aafc2bc5efba2a621d934568751892074473d7cc428f4e5a3c45f46937b1bb",
+  "held_public_inputs": {
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-artifact-review-v1/additive_audit.py": "e87a8d0181c986f85883ebe28ef8295581c0a97976ab927feb3de60be096f649",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-release-v1/artifact-reviewed-pins.json": "c41795d0460eb37bf7104f56891f5b9531eea85c40f2f610ceddf758dd47495a",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-artifact-review-v1/actual-a064a2c0e4a7/review.json": "47aafc2bc5efba2a621d934568751892074473d7cc428f4e5a3c45f46937b1bb",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-clean-package-v1/artifacts/release-artifacts.json": "a653d5d2738aaf1cd6f0422bb1af42b65e4cb87054751207f80202da035c03ee",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-clean-package-v1/artifacts/release-artifacts.json": "e948543c613a8476a35de3467e1adf1c89e5cba189cf080ae51ceee95c4a11eb",
+    "/workspace/lupine-discovery-branch/discovery/reports/runtime-manifest.json": "a3191141a97f7e82f0467ed3f3c88548bc173a361c4b04864442e20eef7cf3e8",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-clean-package-v1/artifacts/lupine-discovery-source-a064a2c0e4a7.tar": "ec90a8de21e82c7c16877df64c082a875548aef1565a0beca8effff28cb0d8db",
+    "/workspace/lupine-discovery-branch/discovery/docs/li-v3-growth-predicate-audit-plan.md": "a1a7d8fe820ddcd8d3479d53e4f35d5ce0ed6e123385bcbb1b646786e1d064d9",
+    "/workspace/lupine-discovery-branch/discovery/scripts/li_v3_growth_predicate_audit.py": "70a0339212b971bf7824ae256600b959ae7a7d22b6fc8853eb2208d3c8ece207",
+    "/workspace/lupine-discovery-branch/discovery/tests/test_li_v3_growth_predicate_audit.py": "1ca8b259f26c88e46a0e108d13c202afa15954871d5750c17307b58b90dd97d3",
+    "/workspace/lupine-discovery-branch/discovery/tests/test_li_v3_growth_predicate_audit_review.py": "3dd4b23024028e2e7ba5876ca8d9705e066e57362bfae63d9999783e76b5dc49",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-clean-package-v1/artifacts/lupine_discovery-0.1.0-py3-none-any.whl": "5cac629c8d162d3de2e63ab3eb2ff33cacee20a2522796373ab263cd20a3efc0",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-clean-package-v1/artifacts/lupine_discovery-0.1.0-py3-none-any.whl": "4d70468ccdf5e70253e5f837c232e0bfb78b4d5ecbd483cb382e4263f9844478"
+  },
+  "scope": "Byte identity and additive-source preservation only; no project import, tests, scientific private input, production acquisition or diagnostic executed.",
+  "scientific_claim_changed": false,
+  "remote_ci_verified": false,
+  "independence_note": "Prepared and operated by the independent G34 source/test reviewer, who authored earlier G30 code. This audit establishes byte identity and additive preservation, not independent authorship of the full predecessor stack or external scientific validation. The execution receipt identifies its operator.",
+  "started_utc": "2026-10-16T12:38:42.974223+00:00",
+  "elapsed_seconds": 4.811692534996837,
+  "script_sha256": "e87a8d0181c986f85883ebe28ef8295581c0a97976ab927feb3de60be096f649",
+  "actual_git_commands": [
+    {
+      "arguments": [
+        "rev-parse",
+        "HEAD"
+      ],
+      "stdout_sha256": "0419b15767e30e66ebf440220318d6d588200a0a2e2e854acb1626d67a90778f",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "show",
+        "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace:discovery/reports/runtime-manifest.json"
+      ],
+      "stdout_sha256": "6007f58926fca8bca1dc88ee56fd6d55e2226c74bec0e363a6122759b9fe7fe3",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "show",
+        "a064a2c0e4a7cce1fbcb0541f49aae132944e785:discovery/reports/runtime-manifest.json"
+      ],
+      "stdout_sha256": "a3191141a97f7e82f0467ed3f3c88548bc173a361c4b04864442e20eef7cf3e8",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "show",
+        "a064a2c0e4a7cce1fbcb0541f49aae132944e785:discovery/docs/li-v3-growth-predicate-audit-plan.md"
+      ],
+      "stdout_sha256": "a1a7d8fe820ddcd8d3479d53e4f35d5ce0ed6e123385bcbb1b646786e1d064d9",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "show",
+        "a064a2c0e4a7cce1fbcb0541f49aae132944e785:discovery/scripts/li_v3_growth_predicate_audit.py"
+      ],
+      "stdout_sha256": "70a0339212b971bf7824ae256600b959ae7a7d22b6fc8853eb2208d3c8ece207",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "show",
+        "a064a2c0e4a7cce1fbcb0541f49aae132944e785:discovery/tests/test_li_v3_growth_predicate_audit.py"
+      ],
+      "stdout_sha256": "1ca8b259f26c88e46a0e108d13c202afa15954871d5750c17307b58b90dd97d3",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "show",
+        "a064a2c0e4a7cce1fbcb0541f49aae132944e785:discovery/tests/test_li_v3_growth_predicate_audit_review.py"
+      ],
+      "stdout_sha256": "3dd4b23024028e2e7ba5876ca8d9705e066e57362bfae63d9999783e76b5dc49",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "-C",
+        "/workspace/lupine-discovery-branch",
+        "archive",
+        "--format=tar",
+        "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace",
+        "discovery"
+      ],
+      "stdout_sha256": "9c1d0fa985bc45b25279585e39db235ec39bb8215b98af9dded8f82fef82b623",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "rev-parse",
+        "HEAD"
+      ],
+      "stdout_sha256": "0419b15767e30e66ebf440220318d6d588200a0a2e2e854acb1626d67a90778f",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    },
+    {
+      "arguments": [
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0
+    }
+  ],
+  "exit_code": 0
+}
