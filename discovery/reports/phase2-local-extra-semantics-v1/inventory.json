@@ -1,0 +1,75 @@
+{
+  "files": [
+    {
+      "bytes": 14060,
+      "path": ".cache/phase2-local-extra-semantics-research-v1/README.md",
+      "sha256": "6beddc13565f0ca5aab11666474ba6997900082e70df5f2d02163c2341b4964b"
+    },
+    {
+      "bytes": 13994,
+      "path": ".cache/phase2-local-extra-semantics-research-v1/before-unsigned-citation/README.md",
+      "sha256": "102c8b102f144051c91be1f7f33ff012623ec5e2e3934a654adce725c53ded32"
+    },
+    {
+      "bytes": 4155,
+      "path": ".cache/phase2-local-extra-semantics-research-v1/before-unsigned-citation/source-bindings.json",
+      "sha256": "24057fa6f6ed638cb93d3f0182639db305f63d829dee68decd29aedfa6ca313f"
+    },
+    {
+      "bytes": 2993,
+      "path": ".cache/phase2-local-extra-semantics-research-v1/before-unsigned-citation/static-check.json",
+      "sha256": "dbd9b0b1719308fd23623c00f7e17c5cf1a340bb3792f93992538fd9cfbd005c"
+    },
+    {
+      "bytes": 3787,
+      "path": ".cache/phase2-local-extra-semantics-research-v1/handoff.json",
+      "sha256": "3f7591b45815a6d346071e018ff3359f4eeea4c07c14878bc231bdcc9350abc7"
+    },
+    {
+      "bytes": 3752,
+      "path": ".cache/phase2-local-extra-semantics-research-v1/independent-child-review.json",
+      "sha256": "b88cb405cc24681ae871b8414f9610aa4dddb45a6e4d12d038cda0914b7a1896"
+    },
+    {
+      "bytes": 4223,
+      "path": ".cache/phase2-local-extra-semantics-research-v1/independent-initial-review.json",
+      "sha256": "c8066b700628a07f0e59988dc2598caecf5f62740d46214fe1281adf0da01cce"
+    },
+    {
+      "bytes": 633,
+      "path": ".cache/phase2-local-extra-semantics-research-v1/independent-range-check-failure.json",
+      "sha256": "433cf0e03c8e941ca8d637cbe0081c01b1a355cc23baf0154de38d49d24cb41e"
+    },
+    {
+      "bytes": 2456,
+      "path": ".cache/phase2-local-extra-semantics-research-v1/independent-review.json",
+      "sha256": "2d99932e9d28e3a225519a4cf8c5b6b0377978a61136d32d9a22028adb39a06b"
+    },
+    {
+      "bytes": 3909,
+      "path": ".cache/phase2-local-extra-semantics-research-v1/source-bindings-before-line-bound-fix.json",
+      "sha256": "ed69348753fcd17200a75c52176e1b71a55a93fdd78f798859cd9102255a3928"
+    },
+    {
+      "bytes": 4484,
+      "path": ".cache/phase2-local-extra-semantics-research-v1/source-bindings.json",
+      "sha256": "efa69378e3a30876e790c2413024721a2c69929c57467fb9780d7e72f0057c2f"
+    },
+    {
+      "bytes": 715,
+      "path": ".cache/phase2-local-extra-semantics-research-v1/static-check-first-failure.json",
+      "sha256": "4d5886b4d66fe45725b3c23104b395e5d623e9e280f1d0018bf9ff3fb2c3fca9"
+    },
+    {
+      "bytes": 3121,
+      "path": ".cache/phase2-local-extra-semantics-research-v1/static-check.json",
+      "sha256": "0605d0275f067256dcd973300d08501c339029387ad0b2d7f99fa68f4f6474fc"
+    },
+    {
+      "bytes": 676,
+      "path": ".cache/phase2-local-extra-semantics-research-v1/unsigned-citation.diff",
+      "sha256": "c41020d61afc0a4537e8bdd4bebd75f876590003619e6192912f535b767f0efc"
+    }
+  ],
+  "schema": "lupine.discovery.source_research_copy_inventory.v1"
+}

@@ -1,0 +1,21 @@
+{
+  "scope": "Source-only independent review; actual artifact audit not executed",
+  "files": {
+    "inspect_source.py": {
+      "bytes": 8498,
+      "sha256": "68eb679a072491386e069ce1ec1a0fdd8b7af7419fdec995695a856a9820ed18"
+    },
+    "source-diff.txt": {
+      "bytes": 7420,
+      "sha256": "c27299cb175938e6836381f3f9552d86b446f3a4ad8a9509cee80d9f30379e5d"
+    },
+    "source-review.initial.json": {
+      "bytes": 4265,
+      "sha256": "2eacfc5065f8e390903bc538dba5af36bb6404f8146884720667e2157bedbae7"
+    },
+    "source-review.md": {
+      "bytes": 4379,
+      "sha256": "2f2d2a53eb2313fc1eb4c02d2cbaf399aa46ab439f28bce69f5064e1fc178254"
+    }
+  }
+}

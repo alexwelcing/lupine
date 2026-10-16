@@ -1,0 +1,9 @@
+{
+  "recorded_at": "2026-10-16T10:03:25.926575+00:00",
+  "path": "reports/phase2-li-local-extra-verification-v1/README.md",
+  "copied_draft_sha256": "133e2c53056ddc91eb2aaa2c02e2f6e6f3fc786588b6e1df7173590217078259",
+  "current_sha256": "368324986b9255714515f5a3045555c2a60d2335b8c2ea5cb142a5691ba8a9be",
+  "reason": "Root appended a paragraph identifying the seven additional lossless stderr/historical Markdown wrappers and retained publication precheck. The original copy ledger describes the earlier copy, not current README identity.",
+  "runtime_or_test_change": false,
+  "original_draft_preserved": true
+}

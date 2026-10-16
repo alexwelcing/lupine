@@ -1,0 +1,133 @@
+{
+  "schema": "lupine.discovery.mutation_selected_result.v1",
+  "source": "mutants/m01-prior-equality/li_v3_local_extra_headers.py",
+  "source_sha256": "e0f1e9238dc80c189568753270efc311d532120d167b6d3598b83f6bb3faaec1",
+  "test_sha256": "570dc7f3cfabb094550b8f1c5fed8f4f801d832dc8003611fc6638a8285a468e",
+  "selected_methods": [
+    "test_128th_local_entry_and_member_limit",
+    "test_all_21_public_predecessor_source_pins_remain_exact",
+    "test_all_unsigned_id_byte_boundaries_order_duplicates_and_zero_lengths",
+    "test_archive_close_failure_keeps_exposure_and_closes_exception_channel",
+    "test_complete_field_span_65535_bytes_and_data_length_65531",
+    "test_declared_length_is_little_endian_and_payload_is_opaque",
+    "test_exact_predecessor_result_and_cleanup_are_required_before_locator",
+    "test_exact_record_limit_and_one_more_byte_or_record",
+    "test_first_and_each_middle_entry_same_complete_inventory",
+    "test_first_extra_wins_without_later_profile_acceptance",
+    "test_incomplete_headers_never_publish_completed_prefix",
+    "test_locator_rejects_fixed_header_name_extra_and_compressed_crossings",
+    "test_member_payload_apis_xml_and_network_forbidden",
+    "test_mixed_local_central_and_earlier_rejections_publish_no_inventory",
+    "test_overlong_data_never_publishes_partial_inventory",
+    "test_partial_walk_and_locator_exceptions_keep_exposure_without_canary",
+    "test_permitted_stored_deflated_flag_profiles_do_not_interpret_payload",
+    "test_predecessor_name_limit_cannot_be_bypassed_by_16_bit_locator",
+    "test_prerequisite_digest_and_producer_guard_with_synthetic_bytes_only",
+    "test_public_inventory_does_not_depend_on_selected_allowed_member_name",
+    "test_real_source_identity_barriers_use_synthetic_digest_stubs",
+    "test_result_lists_and_exposure_are_fresh_between_calls",
+    "test_synthetic_input_type_and_size_guards",
+    "test_walk_only_unpacks_headers_and_stops_before_257th_header",
+    "test_walk_requires_bounded_nonempty_integer_span"
+  ],
+  "tests_run": 25,
+  "failure_events": 14,
+  "error_events": 0,
+  "unique_failed_methods": [
+    "unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_128th_local_entry_and_member_limit",
+    "unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_exact_predecessor_result_and_cleanup_are_required_before_locator",
+    "unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_mixed_local_central_and_earlier_rejections_publish_no_inventory",
+    "unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_predecessor_name_limit_cannot_be_bypassed_by_16_bit_locator"
+  ],
+  "events": [
+    {
+      "method": "unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_128th_local_entry_and_member_limit",
+      "kind": "failure",
+      "subtest": null,
+      "message": "'LOCAL_EXTRA_LOCATOR_MISMATCH' != 'PREDECESSOR_PATH_MISMATCH'\n- LOCAL_EXTRA_LOCATOR_MISMATCH\n+ PREDECESSOR_PATH_MISMATCH\n"
+    },
+    {
+      "method": "unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_exact_predecessor_result_and_cleanup_are_required_before_locator",
+      "kind": "failure",
+      "subtest": "test_exact_predecessor_result_and_cleanup_are_required_before_locator (unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_exact_predecessor_result_and_cleanup_are_required_before_locator) (key='reason')",
+      "message": "'LOCAL_EXTRA_PARSE_FAILED' != 'PREDECESSOR_PATH_MISMATCH'\n- LOCAL_EXTRA_PARSE_FAILED\n+ PREDECESSOR_PATH_MISMATCH\n"
+    },
+    {
+      "method": "unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_exact_predecessor_result_and_cleanup_are_required_before_locator",
+      "kind": "failure",
+      "subtest": "test_exact_predecessor_result_and_cleanup_are_required_before_locator (unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_exact_predecessor_result_and_cleanup_are_required_before_locator) (key='categories')",
+      "message": "'LOCAL_EXTRA_PARSE_FAILED' != 'PREDECESSOR_PATH_MISMATCH'\n- LOCAL_EXTRA_PARSE_FAILED\n+ PREDECESSOR_PATH_MISMATCH\n"
+    },
+    {
+      "method": "unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_exact_predecessor_result_and_cleanup_are_required_before_locator",
+      "kind": "failure",
+      "subtest": "test_exact_predecessor_result_and_cleanup_are_required_before_locator (unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_exact_predecessor_result_and_cleanup_are_required_before_locator) (key='primary_categories')",
+      "message": "'LOCAL_EXTRA_PARSE_FAILED' != 'PREDECESSOR_PATH_MISMATCH'\n- LOCAL_EXTRA_PARSE_FAILED\n+ PREDECESSOR_PATH_MISMATCH\n"
+    },
+    {
+      "method": "unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_exact_predecessor_result_and_cleanup_are_required_before_locator",
+      "kind": "failure",
+      "subtest": "test_exact_predecessor_result_and_cleanup_are_required_before_locator (unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_exact_predecessor_result_and_cleanup_are_required_before_locator) (key='supplementary_local_categories')",
+      "message": "'LOCAL_EXTRA_PARSE_FAILED' != 'PREDECESSOR_PATH_MISMATCH'\n- LOCAL_EXTRA_PARSE_FAILED\n+ PREDECESSOR_PATH_MISMATCH\n"
+    },
+    {
+      "method": "unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_exact_predecessor_result_and_cleanup_are_required_before_locator",
+      "kind": "failure",
+      "subtest": "test_exact_predecessor_result_and_cleanup_are_required_before_locator (unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_exact_predecessor_result_and_cleanup_are_required_before_locator) (key='compatible_reason')",
+      "message": "'LOCAL_EXTRA_PARSE_FAILED' != 'PREDECESSOR_PATH_MISMATCH'\n- LOCAL_EXTRA_PARSE_FAILED\n+ PREDECESSOR_PATH_MISMATCH\n"
+    },
+    {
+      "method": "unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_exact_predecessor_result_and_cleanup_are_required_before_locator",
+      "kind": "failure",
+      "subtest": "test_exact_predecessor_result_and_cleanup_are_required_before_locator (unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_exact_predecessor_result_and_cleanup_are_required_before_locator) (key='first_rejection_stage')",
+      "message": "'LOCAL_EXTRA_PARSE_FAILED' != 'PREDECESSOR_PATH_MISMATCH'\n- LOCAL_EXTRA_PARSE_FAILED\n+ PREDECESSOR_PATH_MISMATCH\n"
+    },
+    {
+      "method": "unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_exact_predecessor_result_and_cleanup_are_required_before_locator",
+      "kind": "failure",
+      "subtest": "test_exact_predecessor_result_and_cleanup_are_required_before_locator (unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_exact_predecessor_result_and_cleanup_are_required_before_locator) (key='same_entry_local_checks')",
+      "message": "'LOCAL_EXTRA_PARSE_FAILED' != 'PREDECESSOR_PATH_MISMATCH'\n- LOCAL_EXTRA_PARSE_FAILED\n+ PREDECESSOR_PATH_MISMATCH\n"
+    },
+    {
+      "method": "unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_mixed_local_central_and_earlier_rejections_publish_no_inventory",
+      "kind": "failure",
+      "subtest": "test_mixed_local_central_and_earlier_rejections_publish_no_inventory (unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_mixed_local_central_and_earlier_rejections_publish_no_inventory) (case='local_name')",
+      "message": "[{'header_id': 1, 'data_size': 0}] is not None"
+    },
+    {
+      "method": "unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_mixed_local_central_and_earlier_rejections_publish_no_inventory",
+      "kind": "failure",
+      "subtest": "test_mixed_local_central_and_earlier_rejections_publish_no_inventory (unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_mixed_local_central_and_earlier_rejections_publish_no_inventory) (case='central_extra')",
+      "message": "[{'header_id': 1, 'data_size': 0}] is not None"
+    },
+    {
+      "method": "unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_mixed_local_central_and_earlier_rejections_publish_no_inventory",
+      "kind": "failure",
+      "subtest": "test_mixed_local_central_and_earlier_rejections_publish_no_inventory (unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_mixed_local_central_and_earlier_rejections_publish_no_inventory) (case='central_flags')",
+      "message": "[{'header_id': 1, 'data_size': 0}] is not None"
+    },
+    {
+      "method": "unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_mixed_local_central_and_earlier_rejections_publish_no_inventory",
+      "kind": "failure",
+      "subtest": "test_mixed_local_central_and_earlier_rejections_publish_no_inventory (unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_mixed_local_central_and_earlier_rejections_publish_no_inventory) (case='central_offset')",
+      "message": "[{'header_id': 1, 'data_size': 0}] is not None"
+    },
+    {
+      "method": "unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_predecessor_name_limit_cannot_be_bypassed_by_16_bit_locator",
+      "kind": "failure",
+      "subtest": "test_predecessor_name_limit_cannot_be_bypassed_by_16_bit_locator (unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_predecessor_name_limit_cannot_be_bypassed_by_16_bit_locator) (name_size=257)",
+      "message": "[{'header_id': 88, 'data_size': 0}] is not None"
+    },
+    {
+      "method": "unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_predecessor_name_limit_cannot_be_bypassed_by_16_bit_locator",
+      "kind": "failure",
+      "subtest": "test_predecessor_name_limit_cannot_be_bypassed_by_16_bit_locator (unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_predecessor_name_limit_cannot_be_bypassed_by_16_bit_locator) (name_size=65535)",
+      "message": "[{'header_id': 88, 'data_size': 0}] is not None"
+    }
+  ],
+  "successful": false,
+  "blocked_function_calls": [],
+  "blocked_audit_events": [],
+  "test_source_edited": false,
+  "selector_override": "test_module.SCRIPT before class setUpClass"
+}

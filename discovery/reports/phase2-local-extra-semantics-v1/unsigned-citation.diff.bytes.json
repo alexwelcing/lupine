@@ -1,0 +1,6 @@
+{
+  "encoding": "utf-8",
+  "bytes": 676,
+  "sha256": "c41020d61afc0a4537e8bdd4bebd75f876590003619e6192912f535b767f0efc",
+  "text": "--- before-unsigned-citation/README.md\n+++ README.md\n@@ -21,7 +21,8 @@\n ## What generic extra-field structure permits\n \n Sections 4.3.3 and 4.5.1 specify little-endian fields and successive records with\n-a two-byte identifier, a two-byte data length and that many data bytes. A parser\n+a two-byte identifier, a two-byte data length and that many data bytes. Section\n+4.4.1.1 specifies unsigned fields unless otherwise noted. A parser\n can bound each record and advance by four plus its declared length without\n interpreting that body's content. Section 4.6.2 expressly describes passing over\n uninteresting data blocks by their lengths. This supports **structural skipping**.\n"
+}

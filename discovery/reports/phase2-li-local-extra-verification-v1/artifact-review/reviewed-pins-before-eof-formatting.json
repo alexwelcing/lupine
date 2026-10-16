@@ -1,0 +1,19 @@
+{
+  "actual_commit_not_yet_supplied": true,
+  "artifact_audit_executed": false,
+  "baseline_commit": "a6e87c198d8116d26c523e0e1b2eedce4aeb225b",
+  "candidate_equals_integrated_worktree": true,
+  "checked_at": "2026-10-16T09:20:47.033761+00:00",
+  "files": {
+    "docs/li-v3-local-extra-headers-plan.md": "1247430dfe174bb1d7dd2e17ca06b5781ef41fadd7cb13d60d6d01e202dbb594",
+    "scripts/li_v3_local_extra_headers.py": "54db58a567afc9211303f2edff13541ab2f97beb77ef2edaa518ad32bf6b1026",
+    "tests/test_li_v3_local_extra_headers.py": "b072f2e63a79d3c032838f49f4e2eeea845b7872d67c43f9e0e8a9964ca74a78",
+    "tests/test_li_v3_local_extra_headers_review.py": "24e54f7674a116a043aecaf3e5b396aba3139eb1739998f45ab5149c82b5602b"
+  },
+  "source_review_bindings": {
+    ".cache/phase2-li-local-extra-candidate-v1/history.json": "5e86ff28142c2e9f0ee61ddc3f81fe9fac466eac794cdff3643ca72381446d49",
+    ".cache/phase2-li-local-extra-candidate-v1/receipts/author-first/execution.json": "f9b36028e24a03924faea7e4104d94e8fb77f021488d8c21c82e8b8e0391bbf0",
+    ".cache/phase2-li-local-extra-review-v1/review.json": "ae6c0403ee38df07c4d399e6072c2135c5deaa66de3b2e5815e1acb7601407be"
+  },
+  "status": "FINAL_REVIEWED_SOURCE_PINS"
+}

@@ -1,0 +1,12 @@
+{
+  "schema": "lupine.bam-schema-documentary-exposure.v1",
+  "started_at": "2026-10-16T09:46:13.031100+00:00",
+  "scope_sha256": "4dd45c8c32569abed1db62a133b36408c981a19cf4da0a637757930349dee25d",
+  "source_sha256": "e75c85d770598acf19a4bd1cb9c94b6adf7bb92cf46b153cbc904896a1160f1a",
+  "whole_raw_body_machine_read": true,
+  "whole_text_decode_started": true,
+  "whole_text_decode_completed": false,
+  "whole_csv_parse_started": false,
+  "whole_csv_parse_completed": false,
+  "researcher_scope": "Full technical documentation including potentially empirical examples/comments expressly permitted; not target-blind evidence"
+}

@@ -615,3 +615,22 @@ synthetic engineering checks. Exact publication/CI, a clean retained package
 and independent artifact audit remain required before actual fixed operations.
 No field payload semantics, archive acceptance, worksheet schema, pairing,
 independence or scientific release claim is established by this increment.
+
+## October 16: verified local-extra structure, continuing schema block
+
+Exact `d0505b9` passes all four original-push CI jobs, clean 28-case/six-schema/
+16-check packaging, strict retention and independent artifact audits. Two
+subsequent fixed diagnoses and an independent 11,189-check public-receipt audit
+identify one `0xA220` field of 516 declared data bytes in the selected local
+area. [The verification record](../reports/phase2-li-local-extra-verification-v1/README.md)
+retains commands, exposure, gate chronology and all preceding failures. No
+payload interpretation, member decompression, XML decoding or schema admission
+occurred. The separate standards-backed payload check requires its own reviewed
+implementation and exact-source gates before actual use.
+
+The [BAM documentary checkpoint](../reports/phase2-bam-schema-documentary-v1/PUBLICATION.md)
+preserves a strict UTF-8 failure and a separately scoped ASCII header result.
+Its `UNIT` label does not establish measurement uncertainty or independent
+evaluation units. Source-format progress and engineering passes upgrade no
+scientific claim tier. Historical preview GO and physical/general-superiority
+NO-GO decisions remain unchanged; G20 is unresolved and G21 blocked.

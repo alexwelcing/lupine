@@ -1,0 +1,8 @@
+{
+  "at": "2026-10-16T09:19:09.486117+00:00",
+  "before_sha256": "860ba8b9b26045a30144a505e1a229a577680a0dabf279437024c6002a672d34",
+  "after_sha256": "06e1a086dad664f51bb2b96533d8317889b909aa8a9fe349a7742c129f585adf",
+  "finding": "Unexpected parser exception, locator or predecessor mismatch must stop and preserve the first result; only ordinary structural diagnosis codes may computationally replay.",
+  "executions_before_correction": 0,
+  "commit_binding": "PENDING"
+}

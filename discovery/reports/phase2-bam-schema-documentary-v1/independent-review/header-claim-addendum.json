@@ -1,0 +1,152 @@
+{
+  "schema": "lupine.bam-ascii-header-claim-review-addendum.v1",
+  "completed_at": "2026-10-16T09:52:17.807368+00:00",
+  "result": "PASS_NARROW_HEADER_CLAIMS_AND_PRIOR_FAILURE_PRESERVATION",
+  "inputs": [
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/header-ascii-v1/README.md",
+      "bytes": 3438,
+      "sha256": "a75f0952740157490162cb56da9d97a979c603ae34ccdedecab970ea8c1729d1"
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/header-ascii-v1/source-bindings.json",
+      "bytes": 2959,
+      "sha256": "30a07465f603d8b862ec7371aa8431c1944476862534c7ddc132aa4d54f736c8"
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/PUBLICATION.md",
+      "bytes": 1803,
+      "sha256": "3d5e84f8feee99d18fcc38a5fdaf10777091a8a266a099739793f4101a7ec0ee"
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-review-v1/header-ascii-review.json",
+      "bytes": 5149,
+      "sha256": "bf73775aa5b22dad8801a7191ed0e120abdbca1ec164ec2bd2b8b6799ae1d39d"
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-review-v1/review.json",
+      "bytes": 3451,
+      "sha256": "50fe823ce8891471739fedafa8880838c2ac7fe5543a2b5c2c55bdc244f3c8c4"
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-review-v1/blocked-report-addendum.json",
+      "bytes": 3312,
+      "sha256": "29b361bad2eaad261a9331e333796e08a402c06878c524f25b640d6880800251"
+    }
+  ],
+  "bound_documentary_checks": [
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/header-ascii-v1/README.md",
+      "bytes_and_sha256_match": true
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/header-ascii-v1/scope.json",
+      "bytes_and_sha256_match": true
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/header-ascii-v1/project_header.py",
+      "bytes_and_sha256_match": true
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/header-ascii-v1/execution.json",
+      "bytes_and_sha256_match": true
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/header-ascii-v1/result.json",
+      "bytes_and_sha256_match": true
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/header-ascii-v1/stdout.txt",
+      "bytes_and_sha256_match": true
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/header-ascii-v1/stderr.txt",
+      "bytes_and_sha256_match": true
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/scope.json",
+      "bytes_and_sha256_match": true
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/receipt.json",
+      "bytes_and_sha256_match": true
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/decode-failure.json",
+      "bytes_and_sha256_match": true
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/README.md",
+      "bytes_and_sha256_match": true
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/source-bindings.json",
+      "bytes_and_sha256_match": true
+    }
+  ],
+  "local_links": [
+    {
+      "from": "PUBLICATION.md",
+      "href": "README.md",
+      "exists": true
+    },
+    {
+      "from": "PUBLICATION.md",
+      "href": "scope.json",
+      "exists": true
+    },
+    {
+      "from": "PUBLICATION.md",
+      "href": "receipt.json",
+      "exists": true
+    },
+    {
+      "from": "PUBLICATION.md",
+      "href": "decode-failure.json",
+      "exists": true
+    },
+    {
+      "from": "PUBLICATION.md",
+      "href": "header-ascii-v1/README.md",
+      "exists": true
+    },
+    {
+      "from": "header-ascii-v1/README.md",
+      "href": "../decode-failure.json",
+      "exists": true
+    },
+    {
+      "from": "header-ascii-v1/README.md",
+      "href": "scope.json",
+      "exists": true
+    },
+    {
+      "from": "header-ascii-v1/README.md",
+      "href": "execution.json",
+      "exists": true
+    },
+    {
+      "from": "header-ascii-v1/README.md",
+      "href": "result.json",
+      "exists": true
+    },
+    {
+      "from": "header-ascii-v1/README.md",
+      "href": "project_header.py",
+      "exists": true
+    }
+  ],
+  "findings": [
+    "The eleven literal labels, UNIT at column seven, no empty/duplicate labels, 179-byte first physical record and CRLF termination match the independently verified header.",
+    "Unique delimiter is expressly relative to the frozen comma/semicolon/tab candidates. No whole-file dialect, body conformance or multiline-quoting conclusion is asserted.",
+    "Whole-buffer identity read/hash exposure is explicit in the header report; only first-record bytes were interpreted as text. The publication is read consistently with that stated distinction.",
+    "UNIT resolves the missing literal header role only. Unit values/conversions, category hierarchy semantics, requirement/uncertainty/provenance contents and all body meanings remain unknown.",
+    "The original blocked report, UTF8 failure and prior scope remain byte-identical. Header success is additive separately scoped documentary evidence, not a fallback decode, deferred-parser pass or scientific admission.",
+    "Publication excludes full CSV, arbitrary examples and measurement files, and preserves qualified license/exposure and G20/G21 limits."
+  ],
+  "blocking_findings": [],
+  "limits": [
+    "Only documentary claims, bindings and links were checked in this addendum. No raw source reread, header projector execution, body decode/parse, network, product/scientific test, tracked edit or Git mutation.",
+    "This is a pre-publication source review; no final bundle, pushed commit or CI result is certified."
+  ]
+}

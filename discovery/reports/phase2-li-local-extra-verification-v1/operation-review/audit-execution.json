@@ -1,0 +1,21 @@
+{
+  "audit_script_sha256": "c91920a7d9e992b7c4acdd47fca7ac151282d4190b429977ae01ef7caee700cb",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-local-extra-operation-review-v1/audit_completed_operations.py",
+    "--artifact-review",
+    ".cache/phase2-local-extra-artifact-review-v1/actual-d0505b9b358a/review.json",
+    "--additive-review",
+    ".cache/phase2-local-extra-artifact-review-v1/additive-d0505b9b358a/additive-review.json"
+  ],
+  "elapsed_seconds": 2.8289858770003775,
+  "exit_code": 0,
+  "finished_at": "2026-10-16T09:55:21.206780+00:00",
+  "launch_error": null,
+  "reader_invocation": false,
+  "started_at": "2026-10-16T09:55:18.377585+00:00",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "a081a204e9e8ec194e2f14187e97e9d1cfa9a7ce85d8b78343a06e7d7f9f2d6f",
+  "timed_out": false,
+  "wrapper_sha256": "05d2e12b0201a715d2c43b39028d60010bb57541a5f8b312effd15c6d4b0fde0"
+}

@@ -1,0 +1,10 @@
+{
+  "cause": "Copy ledger includes exactly three explicitly public custody receipts; reviewer guard was too broad.",
+  "classification": "REVIEWER_READ_ALLOWLIST_PREPARATION_FAILURE",
+  "exception": "AssertionError at read guard rejecting any .cache/li-v3-custody path before file read",
+  "first_invocation_exit_code": 1,
+  "private_object_or_capture_read": false,
+  "recorded_at": "2026-10-16T10:02:55.072150+00:00",
+  "scope": "Tool output retained in conversation; no separately redirected subprocess stdout/stderr were produced on this first invocation.",
+  "script_sha256": "0d858a015edf062a3085618a0d5a965461b6a9acbb59141c14cf3ea4da4cb873"
+}

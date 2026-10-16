@@ -1,0 +1,152 @@
+{
+  "schema": "lupine.bam-documentary-promotion-inventory.v1",
+  "created_at": "2026-10-16T09:53:34.779326+00:00",
+  "promotion_root": ".cache/phase2-bam-schema-documentary-v1/promotion",
+  "files": [
+    {
+      "published_path": "reports/phase2-bam-schema-documentary-v1/PUBLICATION.md",
+      "bytes": 1803,
+      "sha256": "3d5e84f8feee99d18fcc38a5fdaf10777091a8a266a099739793f4101a7ec0ee"
+    },
+    {
+      "published_path": "reports/phase2-bam-schema-documentary-v1/README-before-spacing-cleanup.md",
+      "bytes": 4345,
+      "sha256": "38ebf5a7f838c2110e77adbebc7e6c347d399a11bb085437e6ccabbc1f029fbb"
+    },
+    {
+      "published_path": "reports/phase2-bam-schema-documentary-v1/README.md",
+      "bytes": 4354,
+      "sha256": "ce619c19ab09d6875b1282d9a01142b119af7f5faaba5f9047b83321942b6edb"
+    },
+    {
+      "published_path": "reports/phase2-bam-schema-documentary-v1/REVIEW.md",
+      "bytes": 1157,
+      "sha256": "6d4e75068d81efcaf0657042efe34d328e68645690f5a993de0226be73f6807c"
+    },
+    {
+      "published_path": "reports/phase2-bam-schema-documentary-v1/artifact-check.json",
+      "bytes": 1754,
+      "sha256": "d1ac106ba068068faae025c6a0b7901270d1cd594b2297138dcd9406ddffca88"
+    },
+    {
+      "published_path": "reports/phase2-bam-schema-documentary-v1/decode-failure.json",
+      "bytes": 1124,
+      "sha256": "3fd9481962012a645d7eb8a1f92e4357f0124a16bd205939b0982b87f9e21c39"
+    },
+    {
+      "published_path": "reports/phase2-bam-schema-documentary-v1/exposure-before-decode.json",
+      "bytes": 626,
+      "sha256": "6203f1445bad052a9bbb63b0735d06060a89426057e6b475c7513d99a562a78e"
+    },
+    {
+      "published_path": "reports/phase2-bam-schema-documentary-v1/header-ascii-v1/README.md",
+      "bytes": 3438,
+      "sha256": "a75f0952740157490162cb56da9d97a979c603ae34ccdedecab970ea8c1729d1"
+    },
+    {
+      "published_path": "reports/phase2-bam-schema-documentary-v1/header-ascii-v1/execution.json",
+      "bytes": 756,
+      "sha256": "771f572a122ae2a4c8d4d23c971ad35b301acea7428e186c3219a0c2f46a213d"
+    },
+    {
+      "published_path": "reports/phase2-bam-schema-documentary-v1/header-ascii-v1/project_header.py",
+      "bytes": 4369,
+      "sha256": "58646fec093fe189aced911df6e62a38bd3e2bd789d0176420e1c0393778f92a"
+    },
+    {
+      "published_path": "reports/phase2-bam-schema-documentary-v1/header-ascii-v1/result.json",
+      "bytes": 1170,
+      "sha256": "8b1d45a9a9400ac12b9dec60b72ad8de9d7788d232d98a6889cd7a450519377b"
+    },
+    {
+      "published_path": "reports/phase2-bam-schema-documentary-v1/header-ascii-v1/scope.json",
+      "bytes": 3561,
+      "sha256": "e2e1c87754e378f56d3cfa9f13dc3d2e538f7cb88ac2890bb3acd301bd1908ef"
+    },
+    {
+      "published_path": "reports/phase2-bam-schema-documentary-v1/header-ascii-v1/source-bindings.json",
+      "bytes": 2959,
+      "sha256": "30a07465f603d8b862ec7371aa8431c1944476862534c7ddc132aa4d54f736c8"
+    },
+    {
+      "published_path": "reports/phase2-bam-schema-documentary-v1/header-ascii-v1/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "published_path": "reports/phase2-bam-schema-documentary-v1/header-ascii-v1/stdout.txt",
+      "bytes": 1170,
+      "sha256": "8b1d45a9a9400ac12b9dec60b72ad8de9d7788d232d98a6889cd7a450519377b"
+    },
+    {
+      "published_path": "reports/phase2-bam-schema-documentary-v1/independent-review/blocked-report-addendum.json",
+      "bytes": 3312,
+      "sha256": "29b361bad2eaad261a9331e333796e08a402c06878c524f25b640d6880800251"
+    },
+    {
+      "published_path": "reports/phase2-bam-schema-documentary-v1/independent-review/exposure-before-read.json",
+      "bytes": 342,
+      "sha256": "74e90117dd1348fbdc80540af82b297bbbbbf03e16698d668b985e7b291af30d"
+    },
+    {
+      "published_path": "reports/phase2-bam-schema-documentary-v1/independent-review/first-decode-failure.json",
+      "bytes": 1454,
+      "sha256": "e2a30f0698c84394ed6424e7fc3126e645df3fcb8408fe1ad122d90e4da39a0b"
+    },
+    {
+      "published_path": "reports/phase2-bam-schema-documentary-v1/independent-review/header-ascii-review.json",
+      "bytes": 5149,
+      "sha256": "bf73775aa5b22dad8801a7191ed0e120abdbca1ec164ec2bd2b8b6799ae1d39d"
+    },
+    {
+      "published_path": "reports/phase2-bam-schema-documentary-v1/independent-review/header-claim-addendum.json",
+      "bytes": 5581,
+      "sha256": "2c739e214dc6697b4138cd76f232cbb9d9f10834a4c456654c8627921a70bc58"
+    },
+    {
+      "published_path": "reports/phase2-bam-schema-documentary-v1/independent-review/header-exposure-before-read.json",
+      "bytes": 385,
+      "sha256": "0dbf33cd6980182da4c20c7afa3e91d925f9d07216b3fde84923ee05663ecbb4"
+    },
+    {
+      "published_path": "reports/phase2-bam-schema-documentary-v1/independent-review/review.json",
+      "bytes": 3451,
+      "sha256": "50fe823ce8891471739fedafa8880838c2ac7fe5543a2b5c2c55bdc244f3c8c4"
+    },
+    {
+      "published_path": "reports/phase2-bam-schema-documentary-v1/independent-review/source-bindings.json",
+      "bytes": 1312,
+      "sha256": "282eabf53dcd71f5083f0e5a4e53e0ac31af292c95fce4381ab8d80a8119fc78"
+    },
+    {
+      "published_path": "reports/phase2-bam-schema-documentary-v1/publication-check.json",
+      "bytes": 2486,
+      "sha256": "be8d50d63ffc2ab6a975356b8f58ae70ac906ac4b785c1dc1e77ef30a2b5dbf5"
+    },
+    {
+      "published_path": "reports/phase2-bam-schema-documentary-v1/publication-map.json",
+      "bytes": 10678,
+      "sha256": "b1ab726e9ea87e33a52816cc60d859e8a8fccb886e22d113e0d82d57e1305315"
+    },
+    {
+      "published_path": "reports/phase2-bam-schema-documentary-v1/receipt.json",
+      "bytes": 1207,
+      "sha256": "de225d968f35f0baf47c534fab448f183ca40d2f5d15e201b88cd5b5f0c0fbb7"
+    },
+    {
+      "published_path": "reports/phase2-bam-schema-documentary-v1/scope.json",
+      "bytes": 4681,
+      "sha256": "4dd45c8c32569abed1db62a133b36408c981a19cf4da0a637757930349dee25d"
+    },
+    {
+      "published_path": "reports/phase2-bam-schema-documentary-v1/source-bindings.json",
+      "bytes": 2562,
+      "sha256": "ac14283f12d4dcecb927cf182bce77cd9ca227cf86cda22cb9c7fecbae449cad"
+    }
+  ],
+  "file_count": 28,
+  "total_bytes": 75186,
+  "exact_original_copies": 25,
+  "local_links": 24,
+  "raw_schema_included": false
+}

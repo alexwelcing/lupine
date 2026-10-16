@@ -1,0 +1,6 @@
+{
+  "encoding": "utf-8",
+  "bytes": 553,
+  "sha256": "c43e3568f6817f1ae1c59231d09acad2504e0942828e57790a69436f7b58f5cf",
+  "text": "--- baseline/li_v3_local_extra_headers.py\n+++ mutants/m04-record-cap/li_v3_local_extra_headers.py\n@@ -23,7 +23,7 @@\n PREREQUISITE = '.cache/li-v3-custody/compatible-zip-diagnostic-v1/1/public.json'\n PREREQUISITE_SHA256 = '4ee25afe053f68b4b9331a9ebc94bccb2e1d96e0ce5700d78a45866ef7b0cc12'\n PREREQUISITE_PRODUCER = 'a6e87c198d8116d26c523e0e1b2eedce4aeb225b'\n-MAX_FIELDS = 256\n+MAX_FIELDS = 257\n MAX_EXTRA_BYTES = 65535\n PRIOR_FILES = {\n     'scripts/li_v3_compatible_zip_diagnostic.py': '59b4b549a1de33abf2c54ccfce15f4f980a3a36351f98e246ae4e9fd6c44c5d3',\n"
+}

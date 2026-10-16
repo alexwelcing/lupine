@@ -1,0 +1,12 @@
+{
+  "schema": "lupine.engineering.independent_mutation_source_hold.v1",
+  "recorded_utc": "2026-10-16T09:33:41.658509+00:00",
+  "phase": "before independent mutation execution",
+  "head": "d0505b9b358a4bdeafbd742f1aeeb6c2b955abf3",
+  "manifest_path": "reports/runtime-manifest.json",
+  "manifest_sha256": "e806d052dcfaadc5bbc0a9378318709da011fbaf3a53a290aa6141014bae3959",
+  "runtime_file_count": 326,
+  "all_manifest_hashes_match": true,
+  "actual_observed_mapping_sha256": "c9b6e76c6fceb615446d31a6199f9d698a7d123f7fe456b444e0d05381d638e0",
+  "scope": "Read-only source/code bytes and git HEAD; no project imports, tests, actual scientific input, capture, object, prerequisite or network."
+}

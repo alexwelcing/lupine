@@ -1,0 +1,132 @@
+{
+  "declaration_sha256": "9f21914c7f8742e54aa23eeee5bfccebbdc57dcdd0da8ea9f787ca9f28383fb0",
+  "cases": [
+    {
+      "case": "baseline",
+      "classification": "BASELINE_PASS",
+      "exit_code": 0,
+      "elapsed_seconds": 0.9045542220010248,
+      "tests_run": 25,
+      "failure_events": 0,
+      "error_events": 0,
+      "unique_failed_method_count": 0,
+      "unique_failed_methods": [],
+      "execution": {
+        "bytes": 9576,
+        "sha256": "b0af75e4ee8424a2bfc13e4fa9ea6789d7da43cb6fadbaf4de881b4e1dd895e6"
+      }
+    },
+    {
+      "case": "m01-prior-equality",
+      "classification": "DETECTED_BY_ASSERTIONS",
+      "exit_code": 1,
+      "elapsed_seconds": 0.9328774939967843,
+      "tests_run": 25,
+      "failure_events": 14,
+      "error_events": 0,
+      "unique_failed_method_count": 4,
+      "unique_failed_methods": [
+        "unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_128th_local_entry_and_member_limit",
+        "unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_exact_predecessor_result_and_cleanup_are_required_before_locator",
+        "unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_mixed_local_central_and_earlier_rejections_publish_no_inventory",
+        "unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_predecessor_name_limit_cannot_be_bypassed_by_16_bit_locator"
+      ],
+      "execution": {
+        "bytes": 9625,
+        "sha256": "3baf9732274e9b04ad1c1096a794478f49d6cb9ded0b07135e29cf82a3ff19b6"
+      }
+    },
+    {
+      "case": "m02-close-required",
+      "classification": "DETECTED_BY_ASSERTIONS",
+      "exit_code": 1,
+      "elapsed_seconds": 1.041092886000115,
+      "tests_run": 25,
+      "failure_events": 5,
+      "error_events": 0,
+      "unique_failed_method_count": 2,
+      "unique_failed_methods": [
+        "unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_archive_close_failure_keeps_exposure_and_closes_exception_channel",
+        "unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_exact_predecessor_result_and_cleanup_are_required_before_locator"
+      ],
+      "execution": {
+        "bytes": 9623,
+        "sha256": "dbb6b5f2352eff187ba020652fe52bd9551f0f2bae01a74b1c403e46c63643f6"
+      }
+    },
+    {
+      "case": "m03-data-bound",
+      "classification": "DETECTED_BY_ASSERTIONS",
+      "exit_code": 1,
+      "elapsed_seconds": 0.9097665440021956,
+      "tests_run": 25,
+      "failure_events": 6,
+      "error_events": 0,
+      "unique_failed_method_count": 1,
+      "unique_failed_methods": [
+        "unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_overlong_data_never_publishes_partial_inventory"
+      ],
+      "execution": {
+        "bytes": 9612,
+        "sha256": "09a3c124cff09187da1999e09b07539a6156b4498be4a0b28ee1269010627927"
+      }
+    },
+    {
+      "case": "m04-record-cap",
+      "classification": "DETECTED_BY_ASSERTIONS",
+      "exit_code": 1,
+      "elapsed_seconds": 0.5752325800021936,
+      "tests_run": 25,
+      "failure_events": 5,
+      "error_events": 0,
+      "unique_failed_method_count": 2,
+      "unique_failed_methods": [
+        "unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_exact_record_limit_and_one_more_byte_or_record",
+        "unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_walk_only_unpacks_headers_and_stops_before_257th_header"
+      ],
+      "execution": {
+        "bytes": 9611,
+        "sha256": "88ede2b3be5b335daa08abab8ca62661d7bb0aa7489fecde4aa603f8f7c4a86b"
+      }
+    },
+    {
+      "case": "m05-partial-list",
+      "classification": "DETECTED_BY_ASSERTIONS",
+      "exit_code": 1,
+      "elapsed_seconds": 2.500066299999162,
+      "tests_run": 25,
+      "failure_events": 6,
+      "error_events": 0,
+      "unique_failed_method_count": 1,
+      "unique_failed_methods": [
+        "unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_incomplete_headers_never_publish_completed_prefix"
+      ],
+      "execution": {
+        "bytes": 9617,
+        "sha256": "41a088a0965204d6c1569c9fd171e6846afad5e0ffe3ef958f046db8c18a5789"
+      }
+    },
+    {
+      "case": "m06-opaque-byte",
+      "classification": "DETECTED_BY_ASSERTIONS",
+      "exit_code": 1,
+      "elapsed_seconds": 1.198888799000997,
+      "tests_run": 25,
+      "failure_events": 23,
+      "error_events": 0,
+      "unique_failed_method_count": 6,
+      "unique_failed_methods": [
+        "unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_complete_field_span_65535_bytes_and_data_length_65531",
+        "unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_declared_length_is_little_endian_and_payload_is_opaque",
+        "unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_first_and_each_middle_entry_same_complete_inventory",
+        "unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_first_extra_wins_without_later_profile_acceptance",
+        "unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_permitted_stored_deflated_flag_profiles_do_not_interpret_payload",
+        "unchanged_local_extra_mutation_tests.LocalExtraHeadersReviewTests.test_walk_only_unpacks_headers_and_stops_before_257th_header"
+      ],
+      "execution": {
+        "bytes": 9615,
+        "sha256": "eb19f64a62708a55cd0e0e798c433c6d1ca0c51d8bd8a8315afbc8e6ee979033"
+      }
+    }
+  ]
+}

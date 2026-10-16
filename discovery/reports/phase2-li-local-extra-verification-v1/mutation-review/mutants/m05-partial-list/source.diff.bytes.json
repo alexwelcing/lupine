@@ -1,0 +1,6 @@
+{
+  "encoding": "utf-8",
+  "bytes": 1079,
+  "sha256": "59c6fbc2b23ecbd08f1e1ce5bb3274e98ff8e9d54d87b64bc891f4a2f793b827",
+  "text": "--- baseline/li_v3_local_extra_headers.py\n+++ mutants/m05-partial-list/li_v3_local_extra_headers.py\n@@ -113,7 +113,9 @@\n         if len(fields) == MAX_FIELDS:\n             raise LocalExtraError('EXTRA_RECORD_LIMIT')\n         if end - cursor < 4:\n-            raise LocalExtraError('EXTRA_HEADER_TRUNCATED')\n+            error = LocalExtraError('EXTRA_HEADER_TRUNCATED')\n+            error.field_headers = fields\n+            raise error\n         header_id, data_size = struct.unpack_from('<HH', raw, cursor)\n         if data_size > end - cursor - 4:\n             raise LocalExtraError('EXTRA_DATA_TRUNCATED')\n@@ -140,7 +142,7 @@\n         fields = _walk(raw, start, end, exposure)\n         report.update(reason='LOCAL_EXTRA_HEADERS_COMPLETE', field_headers=fields)\n     except LocalExtraError as error:\n-        report.update(reason=str(error), field_headers=None)\n+        report.update(reason=str(error), field_headers=getattr(error, 'field_headers', None))\n     except Exception:\n         report.update(reason='LOCAL_EXTRA_PARSE_FAILED', field_headers=None)\n     return report\n"
+}

@@ -1,0 +1,14 @@
+{
+  "AST_equal_ignoring_source_locations": true,
+  "after_bytes": 40325,
+  "after_sha256": "570dc7f3cfabb094550b8f1c5fed8f4f801d832dc8003611fc6638a8285a468e",
+  "before_bytes": 40327,
+  "before_sha256": "24e54f7674a116a043aecaf3e5b396aba3139eb1739998f45ab5149c82b5602b",
+  "checked_at": "2026-10-16T09:26:29.563756+00:00",
+  "exact_rule": "new == old.rstrip(b'\\n') + b'\\n'",
+  "path": "tests/test_li_v3_local_extra_headers_review.py",
+  "preserved_original": ".cache/phase2-local-extra-integration-v1/format-correction/independent-test-before.py",
+  "removed_LF_bytes": 2,
+  "scope": "Byte/AST comparison only; final integrated rerun receipt binding pending.",
+  "status": "PASS_FORMAT_ONLY_DELTA"
+}

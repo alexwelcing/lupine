@@ -1,0 +1,6 @@
+{
+  "started_at": "2026-10-16T09:51:22.716501+00:00",
+  "scope_sha256": "e2e1c87754e378f56d3cfa9f13dc3d2e538f7cb88ac2890bb3acd301bd1908ef",
+  "operation": "Read/hash same complete retained raw body for fixed identity per separately frozen scope; ASCII interpretation restricted to first physical record. No later/body text decode or parsing.",
+  "prior_utf8_failure_preserved": true
+}

@@ -1,0 +1,16 @@
+{
+  "started_at": "2026-10-16T09:50:01.189266+00:00",
+  "finished_at": "2026-10-16T09:50:01.251748+00:00",
+  "elapsed_seconds": 0.062499175997800194,
+  "command": [
+    "python",
+    ".cache/phase2-bam-schema-documentary-v1/header-ascii-v1/project_header.py"
+  ],
+  "exit_code": 0,
+  "stdout_sha256": "8b1d45a9a9400ac12b9dec60b72ad8de9d7788d232d98a6889cd7a450519377b",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "scope_sha256": "e2e1c87754e378f56d3cfa9f13dc3d2e538f7cb88ac2890bb3acd301bd1908ef",
+  "script_sha256": "58646fec093fe189aced911df6e62a38bd3e2bd789d0176420e1c0393778f92a",
+  "actual_network_requests": 0,
+  "operation": "One first-physical-record ASCII documentary projection, no body CSV parsing"
+}

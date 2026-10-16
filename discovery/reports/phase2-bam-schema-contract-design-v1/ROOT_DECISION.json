@@ -1,0 +1,7 @@
+{
+  "status": "IMPLEMENTATION_DEFERRED",
+  "reason": "A known-role structural inventory alone cannot resolve the missing eleventh-column semantics, paired measurement definitions or the source-admission questions. Preserve this reviewed design without starting another acquisition path during the active Li source audit.",
+  "source_body_acquired": false,
+  "scientific_benchmark_admitted": false,
+  "user_approval_required_for_routine_future_implementation": false
+}

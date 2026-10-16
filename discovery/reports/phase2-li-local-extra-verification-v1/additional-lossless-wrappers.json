@@ -1,0 +1,48 @@
+{
+  "wrappers": [
+    {
+      "original_path": "reports/phase2-li-local-extra-verification-v1/mutation-review/runs/m05-partial-list/stderr.txt",
+      "wrapper": "reports/phase2-li-local-extra-verification-v1/mutation-review/runs/m05-partial-list/stderr.txt.bytes.json",
+      "bytes": 11991,
+      "sha256": "66d42c5d053bf20c8541ea8d2640438300e67cbf55cb6012a111de256caae2fe"
+    },
+    {
+      "original_path": "reports/phase2-li-local-extra-verification-v1/mutation-review/runs/m01-prior-equality/stderr.txt",
+      "wrapper": "reports/phase2-li-local-extra-verification-v1/mutation-review/runs/m01-prior-equality/stderr.txt.bytes.json",
+      "bytes": 19085,
+      "sha256": "f251e0cc274cf964c030609e3864eca6830d28ff10e440bdc2d5c039358c34d8"
+    },
+    {
+      "original_path": "reports/phase2-li-local-extra-verification-v1/mutation-review/runs/m06-opaque-byte/stderr.txt",
+      "wrapper": "reports/phase2-li-local-extra-verification-v1/mutation-review/runs/m06-opaque-byte/stderr.txt.bytes.json",
+      "bytes": 34464,
+      "sha256": "939fc5b04e2579fd7822281c971afc928e2a825621ed2533c4c08fab13e10620"
+    },
+    {
+      "original_path": "reports/phase2-li-local-extra-verification-v1/mutation-review/runs/m04-record-cap/stderr.txt",
+      "wrapper": "reports/phase2-li-local-extra-verification-v1/mutation-review/runs/m04-record-cap/stderr.txt.bytes.json",
+      "bytes": 9979,
+      "sha256": "718ce73d8dffeef6ed1db1a2ca1f0efd5cca0342bff2f94d7522d18b3a9710e5"
+    },
+    {
+      "original_path": "reports/phase2-li-local-extra-verification-v1/mutation-review/runs/m02-close-required/stderr.txt",
+      "wrapper": "reports/phase2-li-local-extra-verification-v1/mutation-review/runs/m02-close-required/stderr.txt.bytes.json",
+      "bytes": 10340,
+      "sha256": "0bcf530cbcffbca15f06d4a91d5e5e8b8dbbb761a2335feecbb439e347b98668"
+    },
+    {
+      "original_path": "reports/phase2-li-local-extra-verification-v1/mutation-review/runs/m03-data-bound/stderr.txt",
+      "wrapper": "reports/phase2-li-local-extra-verification-v1/mutation-review/runs/m03-data-bound/stderr.txt.bytes.json",
+      "bytes": 10933,
+      "sha256": "ba45af03fc6b5e957799d61942507ae9443f5c0207694d35842746c7df1c800e"
+    },
+    {
+      "original_path": "reports/phase2-bam-schema-contract-design-v1/before-review-precision/README.md",
+      "wrapper": "reports/phase2-bam-schema-contract-design-v1/before-review-precision/README.md.bytes.json",
+      "bytes": 13651,
+      "sha256": "224617c23f9361369509600264112303ced2d14193d2b274832d80259f5b43b4"
+    }
+  ],
+  "original_ignored_files_unchanged": true,
+  "test_assertions_or_source_modified": false
+}

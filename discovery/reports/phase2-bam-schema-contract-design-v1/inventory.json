@@ -1,0 +1,60 @@
+{
+  "files": [
+    {
+      "bytes": 13933,
+      "path": ".cache/phase2-bam-schema-contract-design-v1/README.md",
+      "sha256": "ca4622e6958b7a13aad95e9f3e722f4b77b120ccf856f31b76daa169ddf47918"
+    },
+    {
+      "bytes": 13651,
+      "path": ".cache/phase2-bam-schema-contract-design-v1/before-review-precision/README.md",
+      "sha256": "224617c23f9361369509600264112303ced2d14193d2b274832d80259f5b43b4"
+    },
+    {
+      "bytes": 5862,
+      "path": ".cache/phase2-bam-schema-contract-design-v1/before-review-precision/independent-review.json",
+      "sha256": "40f6b7eee4de408c85f4ce31d8184da949db0d6665f267af6b4ec511f516fb38"
+    },
+    {
+      "bytes": 3441,
+      "path": ".cache/phase2-bam-schema-contract-design-v1/before-review-precision/source-bindings.json",
+      "sha256": "ae5727270711b386786b225c9a1a74bc8797f88f9edfdd0f04b3ec68f0d71200"
+    },
+    {
+      "bytes": 1581,
+      "path": ".cache/phase2-bam-schema-contract-design-v1/before-review-precision/static-check.json",
+      "sha256": "95b5d9d1a4fbf194878e1d162676a3d622cb03e168f33d9999049a73f09951af"
+    },
+    {
+      "bytes": 2464,
+      "path": ".cache/phase2-bam-schema-contract-design-v1/handoff.json",
+      "sha256": "e7e9fc15d40f4cd557054c5e1c19d36f41e8e5feb07333180f807d907e3aafcc"
+    },
+    {
+      "bytes": 1326,
+      "path": ".cache/phase2-bam-schema-contract-design-v1/independent-final-addendum.json",
+      "sha256": "922cf316a34b24790e2248f98bc3053875b81b03ff8a2f2f8ca07a8d15b3fd8c"
+    },
+    {
+      "bytes": 5862,
+      "path": ".cache/phase2-bam-schema-contract-design-v1/independent-review.json",
+      "sha256": "40f6b7eee4de408c85f4ce31d8184da949db0d6665f267af6b4ec511f516fb38"
+    },
+    {
+      "bytes": 2443,
+      "path": ".cache/phase2-bam-schema-contract-design-v1/review-precision.diff",
+      "sha256": "8ad33d2a613fefa2e1783503fcd29e11416141d1d0b5fa5a90961ec6e490832b"
+    },
+    {
+      "bytes": 3948,
+      "path": ".cache/phase2-bam-schema-contract-design-v1/source-bindings.json",
+      "sha256": "cd08fa3d8e6e697a51368a20e8b9e44ba77b6d108307be79e423de3d2cf58b1c"
+    },
+    {
+      "bytes": 1581,
+      "path": ".cache/phase2-bam-schema-contract-design-v1/static-check.json",
+      "sha256": "95b5d9d1a4fbf194878e1d162676a3d622cb03e168f33d9999049a73f09951af"
+    }
+  ],
+  "schema": "lupine.discovery.design_copy_inventory.v1"
+}

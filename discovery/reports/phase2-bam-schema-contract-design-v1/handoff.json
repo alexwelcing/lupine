@@ -1,0 +1,50 @@
+{
+  "created_utc": "2026-10-16T09:27:14.354357+00:00",
+  "execution_scope": {
+    "implementation": false,
+    "network": false,
+    "product_tests": false,
+    "public_metadata_static_reads": true,
+    "source_body_acquisition": false,
+    "tracked_edits": false
+  },
+  "final_bindings": [
+    {
+      "bytes": 13933,
+      "path": ".cache/phase2-bam-schema-contract-design-v1/README.md",
+      "sha256": "ca4622e6958b7a13aad95e9f3e722f4b77b120ccf856f31b76daa169ddf47918"
+    },
+    {
+      "bytes": 3948,
+      "path": ".cache/phase2-bam-schema-contract-design-v1/source-bindings.json",
+      "sha256": "cd08fa3d8e6e697a51368a20e8b9e44ba77b6d108307be79e423de3d2cf58b1c"
+    },
+    {
+      "bytes": 5862,
+      "path": ".cache/phase2-bam-schema-contract-design-v1/independent-review.json",
+      "sha256": "40f6b7eee4de408c85f4ce31d8184da949db0d6665f267af6b4ec511f516fb38"
+    },
+    {
+      "bytes": 1326,
+      "path": ".cache/phase2-bam-schema-contract-design-v1/independent-final-addendum.json",
+      "sha256": "922cf316a34b24790e2248f98bc3053875b81b03ff8a2f2f8ca07a8d15b3fd8c"
+    },
+    {
+      "bytes": 1581,
+      "path": ".cache/phase2-bam-schema-contract-design-v1/static-check.json",
+      "sha256": "95b5d9d1a4fbf194878e1d162676a3d622cb03e168f33d9999049a73f09951af"
+    },
+    {
+      "bytes": 2443,
+      "path": ".cache/phase2-bam-schema-contract-design-v1/review-precision.diff",
+      "sha256": "8ad33d2a613fefa2e1783503fcd29e11416141d1d0b5fa5a90961ec6e490832b"
+    }
+  ],
+  "historical_artifacts": "before-review-precision/",
+  "limits": "Machine parsing would expose all CSV cells even when only fixed roles/counts are published; same-test joins, unit/requirement semantics, grouping and measurement uncertainty dependence still require evidence. No source readiness or scientific superiority claim.",
+  "next_action": "Root may choose this deliberately partial structural inspection for separately reviewed implementation, or seek separately scoped documentary evidence for the missing header. Freeze parser controls/reason precedence and synthetic tests before any body request. No Alex approval flow added.",
+  "owner": "/root/phase2_math",
+  "result": "Bounded known-role/CSV-structure inventory is defensible; complete dictionary and eleventh-role meaning remain unbound. No diverse discovery benchmark admitted.",
+  "schema": "lupine.discovery.bam_schema_contract_design_handoff.v1",
+  "status": "DESIGN_REVIEWED_NO_SOURCE_ACQUISITION"
+}

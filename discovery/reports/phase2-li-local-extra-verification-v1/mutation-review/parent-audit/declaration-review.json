@@ -1,0 +1,55 @@
+{
+  "schema": "lupine.engineering.mutation_predeclaration_source_review.v1",
+  "reviewed_utc": "2026-10-16T09:34:52.351190+00:00",
+  "status": "PASS",
+  "declaration_sha256": "9f21914c7f8742e54aa23eeee5bfccebbdc57dcdd0da8ea9f787ca9f28383fb0",
+  "selected_unchanged_test_methods": 25,
+  "excluded_context_methods": 5,
+  "normalization_only_two_trailing_newline_bytes": true,
+  "tests_not_changed_for_mutations": true,
+  "mutations": [
+    {
+      "id": "m01-prior-equality",
+      "exact_declared_replacement_verified": true,
+      "syntactically_valid": true,
+      "targets_declared_defect_on_reachable_synthetic_path": true,
+      "sha256": "e0f1e9238dc80c189568753270efc311d532120d167b6d3598b83f6bb3faaec1"
+    },
+    {
+      "id": "m02-close-required",
+      "exact_declared_replacement_verified": true,
+      "syntactically_valid": true,
+      "targets_declared_defect_on_reachable_synthetic_path": true,
+      "sha256": "5d10bed44a678914a972504b902a1ae857b662fb57c2c1ef8e99becde24c1638"
+    },
+    {
+      "id": "m03-data-bound",
+      "exact_declared_replacement_verified": true,
+      "syntactically_valid": true,
+      "targets_declared_defect_on_reachable_synthetic_path": true,
+      "sha256": "2542a047fdc8014d5c7d0eca4b3c9db8c74be56205e30c6d0b6d3779377d33a5"
+    },
+    {
+      "id": "m04-record-cap",
+      "exact_declared_replacement_verified": true,
+      "syntactically_valid": true,
+      "targets_declared_defect_on_reachable_synthetic_path": true,
+      "sha256": "1e275ae4cf9339d601db1e4fe7347d8a5653b33bbffe3b8344fbb71f82a37566"
+    },
+    {
+      "id": "m05-partial-list",
+      "exact_declared_replacement_verified": true,
+      "syntactically_valid": true,
+      "targets_declared_defect_on_reachable_synthetic_path": true,
+      "sha256": "1379aaab8514d853293305e2f6e83e55c269578cc82c3e43f042fc6a5839be2f"
+    },
+    {
+      "id": "m06-opaque-byte",
+      "exact_declared_replacement_verified": true,
+      "syntactically_valid": true,
+      "targets_declared_defect_on_reachable_synthetic_path": true,
+      "sha256": "b746d71263deb07bc8b1c7d3c4c347ec1f37157e90ee890186d01b5baba010d6"
+    }
+  ],
+  "scope": "Static bytes/AST and declared changes only; no test/product import or execution. Each mutation represents a reachable bounded synthetic defect; detection awaits actual receipts. This curated set is not exhaustive mutation coverage or scientific validation."
+}

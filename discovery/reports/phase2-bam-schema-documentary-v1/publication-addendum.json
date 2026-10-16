@@ -1,0 +1,51 @@
+{
+  "schema": "lupine.bam-schema-documentary-publication-review-addendum.v1",
+  "completed_at": "2026-10-16T09:54:54.964281+00:00",
+  "result": "PASS_EXACT_COPIES_NAVIGATION_AND_SCOPED_PUBLICATION",
+  "owner": "/root/phase2_evidence/author_methods_review",
+  "snapshot": {
+    "files": 28,
+    "exact_original_copies": 25,
+    "generated_navigation_map_and_check_files": 3,
+    "local_markdown_links": 24,
+    "symlinks": 0,
+    "raw_csv_copies": 0,
+    "wrappers_or_byte_transformations": 0
+  },
+  "bindings": [
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/promotion/reports/phase2-bam-schema-documentary-v1/REVIEW.md",
+      "bytes": 1157,
+      "sha256": "6d4e75068d81efcaf0657042efe34d328e68645690f5a993de0226be73f6807c"
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/promotion/reports/phase2-bam-schema-documentary-v1/publication-map.json",
+      "bytes": 10678,
+      "sha256": "b1ab726e9ea87e33a52816cc60d859e8a8fccb886e22d113e0d82d57e1305315"
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/promotion/reports/phase2-bam-schema-documentary-v1/publication-check.json",
+      "bytes": 2486,
+      "sha256": "be8d50d63ffc2ab6a975356b8f58ae70ac906ac4b785c1dc1e77ef30a2b5dbf5"
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-review-v1/publication-inventory-checked.json",
+      "bytes": 16389,
+      "sha256": "2f3002bd921047e5bc26e8cfb86c1c7394419b76957b51242282f5f190489dcf"
+    }
+  ],
+  "blocking_findings": [],
+  "findings": [
+    "Every mapped original is copied byte for byte, including the preserved pre-spacing note, initial UTF8 failure, original independent blocked review and later header-specific reviews.",
+    "All 24 local Markdown links resolve inside the report; generated REVIEW navigation accurately directs readers between the original block and additive header evidence.",
+    "The raw schema CSV is absent by file set and exact retained-body identity; its omission is explicit. The acquisition receipt's retained-body meaning is not confused with a public raw source. No raw schema bytes were reread for this check.",
+    "Prior ignored deferred-design inputs have explicit retained/unpublished dispositions matching the already reviewed source bindings; two already-public metadata references resolve and match byte/hash. The ignored design files were not newly read or re-audited.",
+    "The projector is correctly described as retained documentary source with an intentionally omitted input, not a self-contained execution package or product reader.",
+    "Publication claims preserve known literal headers, unknown body encoding/semantics, full raw-machine exposure, and no scientific/runtime test or benchmark-admission implication."
+  ],
+  "limits": [
+    "This review binds the held 28-file snapshot before appending this publication review. Any later exact copy/inventory update requires the preparer's final packaging verification.",
+    "No network, raw source reread, header/body interpretation, authored script execution, product/scientific test, tracked edit or Git mutation occurred.",
+    "The parent's whitespace-check statement was read as a historical check; its commands were not rerun. No pushed commit or CI result is certified."
+  ]
+}

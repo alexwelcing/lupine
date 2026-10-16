@@ -1,0 +1,29 @@
+{
+  "schema": "lupine.bam-schema-documentary-review-first-decode-failure.v1",
+  "recorded_at": "2026-10-16T09:46:58.895500+00:00",
+  "actual_result": "UTF8_DECODE_FAILED_AFTER_IDENTITY_MATCH",
+  "identity": {
+    "bytes": 41000,
+    "sha256": "e75c85d770598acf19a4bd1cb9c94b6adf7bb92cf46b153cbc904896a1160f1a",
+    "md5": "330a8405f6cb9c4fcfe221baea7ced27",
+    "expected_bytes_match": true,
+    "expected_md5_match": true
+  },
+  "observed_response_charset": "text/plain; charset=utf-8,text/plain; charset=utf-8",
+  "utf8_bom_present": false,
+  "attempted_decode": "raw.decode('utf-8', errors='strict')",
+  "exception": "UnicodeDecodeError",
+  "observed_message": "'utf-8' codec can't decode byte 0x85 in position 2738: invalid start byte",
+  "exit_code": 1,
+  "failure_offset": 2738,
+  "offending_byte_hex": "85",
+  "exposure": {
+    "whole_raw_body_read": true,
+    "strict_decode_attempted": true,
+    "complete_text_decode_succeeded": false,
+    "csv_parse_attempted": false,
+    "researcher_visible_body_content": "No body lines printed; decode failed before first-lines projection."
+  },
+  "stop": "No fallback decode or cell interpretation attempted pending explicit resolution of encoding ambiguity. Existing scope says unknown encoding/layout is reported rather than silently repaired.",
+  "limits": "Records the observed tool error. No saved process stderr bytes or elapsed process time are claimed; the tool output contained the traceback."
+}

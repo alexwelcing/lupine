@@ -1,0 +1,41 @@
+{
+  "actual_audit_checks": 11189,
+  "actual_audit_first_invocation": true,
+  "actual_audit_process_seconds": 2.8289858770003775,
+  "actual_audit_sha256": "93135011b48f351bde0d8a3e578d97e7d447dfbb043548142f8b42a85fc960ac",
+  "actual_audit_stderr_empty": true,
+  "audit_execution_sha256": "67aa0bef744d6e6b0c41b2994d1caaa5157ab038e13b2d162b4453ec2fef9814",
+  "audit_script_sha256": "c91920a7d9e992b7c4acdd47fca7ac151282d4190b429977ae01ef7caee700cb",
+  "bound_recorder_sha256": "01f45e732c930bbf45c81467a709b648d83802945146e4e76b06265a8ff0d5b9",
+  "commit": "d0505b9b358a4bdeafbd742f1aeeb6c2b955abf3",
+  "conclusions": [
+    "At clean d0505b9, both fixed production commands completed with exit 2 and BLOCKED_SCHEMA; each returned LOCAL_EXTRA_HEADERS_COMPLETE with exactly one uint16 ID/length pair: 41504 and 516.",
+    "The pair implies a 520-byte structurally traversed first local-extra span (4-byte field header plus 516 opaque data bytes). This statement derives only from completed structural traversal and does not interpret those bytes.",
+    "Both runs repeat the same prior LOCAL_EXTRA_PRESENT classification at entry_local with CHECKED same-entry local checks and no supplementary category. The full archive remains unapproved and later entries are not certified by this result.",
+    "Whole captured target-bearing workbook bytes and ZIP directory names/metadata were privately read by the production command. No member decompression, XML/worksheet decoding, local-extra payload interpretation, numeric scientific checks, fits or splits are reported.",
+    "Observed original four-job CI completion, clean package/strict verification, full and additive audits preceded the actual operations. All 326 runtime files, source guard bindings, exact HEAD, public receipt bytes and input hashes held through this review.",
+    "Equal public digests demonstrate computational replay, not independent scientific replication; schema, unit independence, overlap and scientific eligibility remain unresolved."
+  ],
+  "first_local_extra_span_bytes_derived_from_complete_headers": 520,
+  "independent_source_review_sha256": "61f31cc5b82dcadf147309218d707b75f1bbb61c2a385f3273b32e43316505b8",
+  "private_objects_or_captures_read": false,
+  "production_modules_imported": false,
+  "public_fields": [
+    {
+      "data_size": 516,
+      "header_id": 41504
+    }
+  ],
+  "public_sha256": "52fe2d25f0c739c1c5137f0514f07f4ee0be35dffd7ef9141b19fe5ee5520d2e",
+  "retained_preexecution_findings": [
+    "Original recorder permitted broad unexpected parse failures into replay; corrected allowlist stops before slot 2 and 21 synthetic challenge cases passed.",
+    "Initial prospective auditor overwrote repeated-read hashes and lacked an upper chronology bound; both corrected before its first actual invocation."
+  ],
+  "reviewed_at": "2026-10-16T09:56:46.952971+00:00",
+  "science_claim_changed": false,
+  "scope": "Independent public evidence/source-path audit, not raw field decoding or scientific replication.",
+  "source_commands_rerun_by_reviewer": false,
+  "source_operation_runs": 2,
+  "status": "PASS",
+  "unresolved_blockers_for_this_narrow_completed_operation_audit": []
+}

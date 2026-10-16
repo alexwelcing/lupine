@@ -1,0 +1,57 @@
+{
+  "links_checked": 49,
+  "broken_links": [
+    [
+      "reports/phase2-bam-schema-contract-design-v1/before-review-precision/README.md",
+      "../../reports/phase2-bam-readiness-v1/README.md"
+    ]
+  ],
+  "whitespace": [
+    {
+      "path": "reports/phase2-li-local-extra-verification-v1/mutation-review/runs/m05-partial-list/stderr.txt",
+      "trailing_lines": [
+        11
+      ],
+      "extra_eof_lf": false
+    },
+    {
+      "path": "reports/phase2-li-local-extra-verification-v1/mutation-review/runs/m01-prior-equality/stderr.txt",
+      "trailing_lines": [
+        7,
+        21,
+        29
+      ],
+      "extra_eof_lf": false
+    },
+    {
+      "path": "reports/phase2-li-local-extra-verification-v1/mutation-review/runs/m06-opaque-byte/stderr.txt",
+      "trailing_lines": [
+        6,
+        15,
+        27
+      ],
+      "extra_eof_lf": false
+    },
+    {
+      "path": "reports/phase2-li-local-extra-verification-v1/mutation-review/runs/m04-record-cap/stderr.txt",
+      "trailing_lines": [
+        8
+      ],
+      "extra_eof_lf": false
+    },
+    {
+      "path": "reports/phase2-li-local-extra-verification-v1/mutation-review/runs/m02-close-required/stderr.txt",
+      "trailing_lines": [
+        7
+      ],
+      "extra_eof_lf": false
+    },
+    {
+      "path": "reports/phase2-li-local-extra-verification-v1/mutation-review/runs/m03-data-bound/stderr.txt",
+      "trailing_lines": [
+        15
+      ],
+      "extra_eof_lf": false
+    }
+  ]
+}

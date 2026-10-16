@@ -1,0 +1,48 @@
+{
+  "schema": "lupine.local-extra-semantics-final-independent-review.v1",
+  "created_at": "2026-10-16T09:36:29.622558+00:00",
+  "owner": "/root/phase2_evidence",
+  "status": "PASS_CONDITIONAL_STANDARD_INTERPRETATION",
+  "reviewed_readme": {
+    "path": ".cache/phase2-local-extra-semantics-research-v1/README.md",
+    "bytes": 14060,
+    "sha256": "6beddc13565f0ca5aab11666474ba6997900082e70df5f2d02163c2341b4964b"
+  },
+  "reviewed_bindings": {
+    "path": ".cache/phase2-local-extra-semantics-research-v1/source-bindings.json",
+    "bytes": 4484,
+    "sha256": "efa69378e3a30876e790c2413024721a2c69929c57467fb9780d7e72f0057c2f"
+  },
+  "initial_review": {
+    "path": ".cache/phase2-local-extra-semantics-review-v1/review-initial.json",
+    "bytes": 4223,
+    "sha256": "c8066b700628a07f0e59988dc2598caecf5f62740d46214fe1281adf0da01cce"
+  },
+  "independent_child_review": {
+    "path": ".cache/phase2-local-extra-semantics-review-child-v1/review.json",
+    "bytes": 3752,
+    "sha256": "b88cb405cc24681ae871b8414f9610aa4dddb45a6e4d12d038cda0914b7a1896"
+  },
+  "blocking_findings": [],
+  "precision_findings_resolved": [
+    "AppendixE line endpoint now3798; all17rangeswithinretained3798lines.",
+    "Explicit4.4.1.1 unsigned-fields sentence added; lines654-655 bound."
+  ],
+  "source_files_unchanged": true,
+  "readme_delta": "Only explicit unsigned-field default sentence; original semantic interpretation unchanged.",
+  "conclusion": "A220 described payload shape supports length>=4, A028 signature and NUL remainder with unsigned fixed fields. PadVal-current-padding equality, duplicate/update rules, whole OPC semantics and blanket ignorable-extra policy remain unestablished. Structural skipping is not semantic irrelevance. No actual Li field was read or inferred.",
+  "child_scope": "Independent second source-only challenge of A220, little-endian/unsigned field support, structural skipping and collision caveat; does not independently audit every other table family.",
+  "actual_operations": {
+    "network_requests": 0,
+    "actual_archive_or_private_source_reads": false,
+    "archive_parser_import_or_execution": false,
+    "runtime_or_science_tests": false,
+    "tracked_edits": false
+  },
+  "harness_failure_preserved": {
+    "path": ".cache/phase2-local-extra-semantics-review-v1/initial-range-check.json",
+    "bytes": 633,
+    "sha256": "433cf0e03c8e941ca8d637cbe0081c01b1a355cc23baf0154de38d49d24cb41e"
+  },
+  "scientific_pass": false
+}

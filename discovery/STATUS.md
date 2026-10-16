@@ -1,9 +1,11 @@
 # Project state
 
-**Active phase, October 16:** Published `a6e87c1` passes all four original
+**Active phase, October 16:** Published `d0505b9` passes all four original
 GitHub CI jobs, clean packaging (28 demonstrations/six schemas/16 checks), strict
-retention and independent artifact audits. [The completed source inspections](reports/phase2-notebook-header-verification-v1/README.md)
-followed those gates and preserved all 323 runtime files.
+retention and independent artifact audits. [Two actual field-header diagnoses](reports/phase2-li-local-extra-verification-v1/README.md)
+followed those gates and preserved all 326 runtime files. They identify one
+`0xA220` field with 516 declared data bytes in the selected local extra area.
+The source remains BLOCKED_SCHEMA; the payload and other entries are unverified.
 
 The pinned author notebook was captured and two static inspections produced
 identical inventories. Whole JSON and code AST were parsed privately; code was
@@ -11,16 +13,15 @@ not executed and output values were not disclosed. Syntactic `read_excel` and
 `dropna` calls do not establish executed preprocessing or workbook equivalence.
 The notebook remains BLOCKED_SCHEMA.
 
-Two compatible ZIP diagnoses identify only LOCAL_EXTRA_PRESENT at the first
-rejected local entry. No workbook member, XML, worksheet or shared string was
-decoded. Field types/content, later entries and the complete envelope remain
-unestablished. Original blocked readers stay unchanged. G27/G28 are complete
-within their engineering scope. G29 now has a separately reviewed bounded
-field-header implementation: 19 author, 30 independent and 248 combined Li
-checks pass. Its [implementation evidence](reports/phase2-li-local-extra-implementation-v1/PUBLICATION.md)
-preserves the first reviewer fixture failure. All 323 predecessor runtime files
-remain unchanged; three additions bring the current manifest to 326. Publication,
-exact CI and clean package verification must precede actual field inspection.
+The earlier compatible ZIP diagnoses remain LOCAL_EXTRA_PRESENT at the first
+rejected local entry. No workbook member, XML, worksheet or shared string has
+been decoded. Original blocked readers stay unchanged. G27–G29 are complete
+within their engineering scopes. G29's 19 author, 30 independent and 248 combined
+Li checks pass; original fixture and publication failures remain preserved.
+The independent actual-receipt audit passes 11,189 checks. A separate G30
+payload-shape check is now being implemented from the retained ZIP standard;
+its pure preparation passes 18 author and 21 independent synthetic tests.
+Those checks are not an actual payload result or archive acceptance.
 
 The [paper methods audit](reports/phase2-li-paper-methods-v1/PUBLICATION.md)
 establishes documentary test-level rows and units, while recording 1,038 listed
@@ -30,7 +31,13 @@ remain unresolved. A [citation identity audit](reports/phase2-li-reference-ident
 finds one printed DOI attached to different works and two unresolved registry
 candidates; none is merged or silently corrected. The [BAM audit](reports/phase2-bam-readiness-v1/PUBLICATION.md)
 identifies a possible small metrology reference, not an admitted discovery task.
-G20 remains unresolved and G21 blocked; no allocation or fit occurred.
+[One schema-document acquisition](reports/phase2-bam-schema-documentary-v1/PUBLICATION.md)
+matched the publisher's bytes but failed strict UTF-8 decoding. A separately
+scoped ASCII header projection establishes eleven labels, including `UNIT` at
+column 7; body encoding and measurement definitions remain unresolved at that
+checkpoint. A separately scoped hypothetical-encoding comparison is being
+reviewed; no alternative decoder is silently accepted. G20 remains unresolved
+and G21 blocked; no allocation or fit occurred.
 
 The exact finite-archive planner remains available through API, CLI, HTTP and
 Study planning. Its scope is a fixed frame under uniform sampling without

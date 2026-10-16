@@ -1,0 +1,19 @@
+{
+  "findings": [
+    {
+      "field": "current_checkpoint.working_checkpoint",
+      "finding": "Whole source buffer was privately read; local-extra payload interpretation was false.",
+      "original_claim": "Payload unread",
+      "path": "reports/continuation.json",
+      "resolved_claim": "Whole source buffer read; local-extra payload uninterpreted."
+    },
+    {
+      "finding": "Current README differed from earlier copy ledger due to added wrapper paragraph.",
+      "path": "reports/phase2-li-local-extra-verification-v1/README.md",
+      "resolution": "Explicit post-copy-amendment.json binds original and current hashes; original copy record remains historical."
+    }
+  ],
+  "first_check_failure": "first-check-failure.json",
+  "recorded_at": "2026-10-16T10:04:37.194259+00:00",
+  "runtime_or_test_change": false
+}

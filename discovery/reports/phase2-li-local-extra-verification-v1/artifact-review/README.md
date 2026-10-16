@@ -1,0 +1,15 @@
+# Independent G29 artifact and source-byte audit
+
+Both read-only audit processes passed on their first invocation for corrected operational commit `d0505b9b358a4bdeafbd742f1aeeb6c2b955abf3`, after the clean-package and strict-verifier processes completed successfully. The exact commands, UTC times, process durations, exit codes and complete stdout/stderr are retained in `execution-d0505b9b358a/`. Generic audit ran 09:33:59.117936–09:34:01.970637 UTC (2.852475079 s); additive audit ran 09:34:01.971530–09:34:04.568816 UTC (2.596862422 s). Both exited 0 with empty stderr. No production source-reader command, project import or package test was run by these reviewers.
+
+The unchanged generic `audit.py` reviewed 3,492 archived source files against exact Git blobs, all 326 runtime files, 114 wheel content hashes and 108 package payloads. Its receipt is `actual-d0505b9b358a/review.json`, SHA-256 `6d3d05fa15c2d1bf72cf2470ee8f823df8e8f3a14da36b053a99bb4c1a12caa1`.
+
+The additive audit verifies all 323 baseline runtime files at `a6e87c198d8116d26c523e0e1b2eedce4aeb225b` are unchanged, with exactly three new runtime paths. The new script, both tests and contract match the reviewed source pins in Git, archive and worktree. All 108 wheel package payloads remain unchanged; the raw wheel archive is not claimed byte-identical. Its receipt is `additive-d0505b9b358a/additive-review.json`, SHA-256 `1f0149016cdfe4d87793c5855291474775e6301d2ad35e996289bc8dd1db030c`.
+
+`reviewed-pins.json` is the exact input used by these audits. Its notes describe preparation before the corrected operational commit was supplied; the actual execution receipts above bind the later final commit. The superseded `b42bd9a94385ad43c3c2ac022584dae6bd135254` was explicitly excluded and never artifact-audited here.
+
+Failure history remains visible. The first EOF-count check rejected the supplied claim of one removed LF: the source normalization removed **two LF bytes**, from 40,327 to 40,325 bytes, leaving one trailing LF. It is exactly `old.rstrip(b'\n') + b'\n'`; AST dumps excluding source locations match. `test-eof-first-byte-count-finding.json` retains the initial failed assertion, and `test-eof-normalization-review.json` records the corrected measurement. This was a reviewer metadata check, not a production-test failure. Original reviewed pins and the pending nonadmitting template are preserved.
+
+The wrapper and additive auditor were independently source-reviewed before invocation. The original wrapper had incomplete final receipts on timeout/launch failure; its exact source and historical review remain. The final wrapper adds explicit timeout/launch-error receipts and stops before the second audit. No such error occurred in the actual runs. Source-only review notes are under `independent-source-review/`.
+
+This is an engineering custody and consistency audit. It establishes neither scientific eligibility nor physical truth, superiority, independent material observations or archive payload semantics. CI is outside this audit's scope and remains an independently observed operation gate.

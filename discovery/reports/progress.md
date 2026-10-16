@@ -1565,3 +1565,60 @@ needs actual version-bound reference joins and specimen/heat/batch/test lineage;
 G21 remains blocked, with no new model, threshold, allocation, split or fit.
 Root owns the next verified fixed structural diagnostic and source-admission
 checkpoint; automation remains disabled.
+
+## 2026-10-16 — G29 actual field-header operations verified
+
+Exact `d0505b9b358a4bdeafbd742f1aeeb6c2b955abf3` passed all four original
+push jobs in CI 38880756519, observed at 09:54:40 UTC. The separate `b42bd9a`
+implementation push and `c294dbe` report push also completed all four jobs.
+Clean package reproduction passed 28 demonstrations, six schemas and 16
+mandatory checks, followed by the strict verifier. Independent artifact audits
+checked 3,492 Git source files, 326 runtime files and 108 wheel package payloads;
+all 323 predecessor runtime files and all wheel package payloads were unchanged.
+
+Only after those gates, the two fixed actual diagnostics ran at 09:54:48–50
+and 09:54:51–53 UTC. Both exited 2 with empty stderr and identical canonical
+`BLOCKED_SCHEMA / LOCAL_EXTRA_HEADERS_COMPLETE` receipts, SHA-256
+`52fe2d25f0c739c1c5137f0514f07f4ee0be35dffd7ef9141b19fe5ee5520d2e`.
+The selected first rejected local area contains exactly one ID 41504 (`0xA220`)
+field with 516 declared data bytes. Field payload interpretation, member
+decompression, XML and worksheet decoding did not occur. The whole-buffer and
+internal directory-name exposure remain explicit. All 326 runtime files,
+clean HEAD and remote held. The independent actual public-receipt audit passed
+11,189 checks on its first invocation, exit 0, in 2.829 process seconds.
+[Verification evidence](phase2-li-local-extra-verification-v1/README.md) includes
+the completed commands, exact CI, package, byte audits and recorder corrections.
+
+The unchanged 25-method independent synthetic subset detected all six
+predeclared local-extra mutations. Its 175 total method executions are software
+challenge evidence; no new statistical sample or physical result follows.
+The [retained-format review](phase2-local-extra-semantics-v1/README.md), completed
+before the actual field observation, supports a narrowly defined growth-hint
+shape check while leaving initial-padding semantics and global archive
+compatibility unbound. G30's pure preparation passes 18 author and 21 independent
+checks; production binding and its later gates are pending. Original author
+fixture failures and both independent passing snapshots remain preserved.
+
+## 2026-10-16 — BAM documentation acquired; body encoding unresolved
+
+One ordinary bounded GET acquired the advertised 41,000-byte schema CSV and
+matched its MD5. Strict UTF-8 decoding failed at byte 2738 despite the response
+charset; no fallback was applied. A separately written ASCII first-record
+scope then confirmed eleven literal headers, with `UNIT` seventh. Independent
+projection and claim reviews pass. [The documentary report](phase2-bam-schema-documentary-v1/PUBLICATION.md)
+preserves the original failed decode and the later bounded result. It publishes
+neither raw CSV nor arbitrary empirical examples. Full body encoding,
+dictionary semantics, uncertainty and lineage remain unresolved. A separate
+comparison of two explicitly hypothetical encodings is in preparation, with
+source/reader review before its invocation; neither codec will be called
+authoritative merely because decoding succeeds. The earlier partial-role
+parser design remains deferred and unimplemented.
+
+Current owner/checkpoint: root publishes this verified G29 evidence and owns
+G30 integration; independent math, implementation, receipt and documentary
+review lanes remain active. Next: freeze and test the fixed-prerequisite
+payload-shape diagnostic, publish and verify exact CI/retained artifacts, then
+perform only its declared operations. G20 remains unresolved and G21 blocked.
+No scientific threshold, fit, allocation, new DFT or exposed-test tuning has
+occurred. Earlier scientific NO-GO results remain intact, and the expired
+automation remains disabled.

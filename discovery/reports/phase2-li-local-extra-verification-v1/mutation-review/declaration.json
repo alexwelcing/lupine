@@ -1,0 +1,224 @@
+{
+  "schema": "lupine.discovery.predeclared_local_extra_mutations.v1",
+  "declared_utc": "2026-10-16T09:33:37.875737+00:00",
+  "owner": "/root/phase2_planner/ui_review",
+  "reported_parent_commit": "d0505b9b358a4bdeafbd742f1aeeb6c2b955abf3",
+  "production_source": {
+    "path": "scripts/li_v3_local_extra_headers.py",
+    "bytes": 11921,
+    "sha256": "54db58a567afc9211303f2edff13541ab2f97beb77ef2edaa518ad32bf6b1026"
+  },
+  "production_tests": {
+    "path": "tests/test_li_v3_local_extra_headers_review.py",
+    "bytes": 40325,
+    "sha256": "570dc7f3cfabb094550b8f1c5fed8f4f801d832dc8003611fc6638a8285a468e"
+  },
+  "baseline_source": "baseline/li_v3_local_extra_headers.py",
+  "unchanged_test_copy": "unchanged-independent-tests.py",
+  "selected_methods": [
+    "test_128th_local_entry_and_member_limit",
+    "test_all_21_public_predecessor_source_pins_remain_exact",
+    "test_all_unsigned_id_byte_boundaries_order_duplicates_and_zero_lengths",
+    "test_archive_close_failure_keeps_exposure_and_closes_exception_channel",
+    "test_complete_field_span_65535_bytes_and_data_length_65531",
+    "test_declared_length_is_little_endian_and_payload_is_opaque",
+    "test_exact_predecessor_result_and_cleanup_are_required_before_locator",
+    "test_exact_record_limit_and_one_more_byte_or_record",
+    "test_first_and_each_middle_entry_same_complete_inventory",
+    "test_first_extra_wins_without_later_profile_acceptance",
+    "test_incomplete_headers_never_publish_completed_prefix",
+    "test_locator_rejects_fixed_header_name_extra_and_compressed_crossings",
+    "test_member_payload_apis_xml_and_network_forbidden",
+    "test_mixed_local_central_and_earlier_rejections_publish_no_inventory",
+    "test_overlong_data_never_publishes_partial_inventory",
+    "test_partial_walk_and_locator_exceptions_keep_exposure_without_canary",
+    "test_permitted_stored_deflated_flag_profiles_do_not_interpret_payload",
+    "test_predecessor_name_limit_cannot_be_bypassed_by_16_bit_locator",
+    "test_prerequisite_digest_and_producer_guard_with_synthetic_bytes_only",
+    "test_public_inventory_does_not_depend_on_selected_allowed_member_name",
+    "test_real_source_identity_barriers_use_synthetic_digest_stubs",
+    "test_result_lists_and_exposure_are_fresh_between_calls",
+    "test_synthetic_input_type_and_size_guards",
+    "test_walk_only_unpacks_headers_and_stops_before_257th_header",
+    "test_walk_requires_bounded_nonempty_integer_span"
+  ],
+  "excluded_methods": [
+    "test_invalid_run_and_candidate_path_guard_precede_reads",
+    "test_production_guard_order_before_any_raw_read",
+    "test_partial_read_identity_and_write_failures_preserve_exposure",
+    "test_simulated_success_and_descriptor_close_failure_have_honest_receipts",
+    "test_source_context_stubs_and_detached_pin_maps"
+  ],
+  "selector": "Import exact byte copy of production independent test; set only testmodule.SCRIPT to isolated baseline/mutant before unittest class setUpClass; run the 25 listed methods in a fresh subprocess per case.",
+  "mutations": [
+    {
+      "id": "m01-prior-equality",
+      "title": "Bypass exact predecessor classification equality",
+      "defect": "A mixed prior rejection can reach the locator and publish an inventory.",
+      "source": "mutants/m01-prior-equality/li_v3_local_extra_headers.py",
+      "identity": {
+        "bytes": 11863,
+        "sha256": "e0f1e9238dc80c189568753270efc311d532120d167b6d3598b83f6bb3faaec1"
+      },
+      "diff": "mutants/m01-prior-equality/source.diff",
+      "diff_identity": {
+        "bytes": 617,
+        "sha256": "905a23e385d52e663ad252a7d8f31a5b0096676584d304768ef34913a1777d51"
+      },
+      "replacements": [
+        {
+          "old": "        if report['predecessor_classification'] != EXPECTED_CLASSIFICATION:\n",
+          "new": "        if False:\n"
+        }
+      ],
+      "anticipated_detector_methods": [
+        "test_mixed_local_central_and_earlier_rejections_publish_no_inventory",
+        "test_exact_predecessor_result_and_cleanup_are_required_before_locator"
+      ]
+    },
+    {
+      "id": "m02-close-required",
+      "title": "Bypass successful cleanup for the exact predecessor result",
+      "defect": "An exact-path archive close failure can reach the locator.",
+      "source": "mutants/m02-close-required/li_v3_local_extra_headers.py",
+      "identity": {
+        "bytes": 11863,
+        "sha256": "5d10bed44a678914a972504b902a1ae857b662fb57c2c1ef8e99becde24c1638"
+      },
+      "diff": "mutants/m02-close-required/source.diff",
+      "diff_identity": {
+        "bytes": 673,
+        "sha256": "213eb7e3c28c7eb7794217827a535f905b4ff94a6c480fb70d37262ffd219f6f"
+      },
+      "replacements": [
+        {
+          "old": "            if report['predecessor_classification'] == EXPECTED_CLASSIFICATION:\n",
+          "new": "            if False:\n"
+        }
+      ],
+      "anticipated_detector_methods": [
+        "test_archive_close_failure_keeps_exposure_and_closes_exception_channel",
+        "test_exact_predecessor_result_and_cleanup_are_required_before_locator"
+      ]
+    },
+    {
+      "id": "m03-data-bound",
+      "title": "Ignore the TLV declared data-span bound",
+      "defect": "An oversized declared data length can advance past the span and be reported complete.",
+      "source": "mutants/m03-data-bound/li_v3_local_extra_headers.py",
+      "identity": {
+        "bytes": 11898,
+        "sha256": "2542a047fdc8014d5c7d0eca4b3c9db8c74be56205e30c6d0b6d3779377d33a5"
+      },
+      "diff": "mutants/m03-data-bound/source.diff",
+      "diff_identity": {
+        "bytes": 506,
+        "sha256": "e2f83c368758f6beeeaa11c6ca431db420bfd7dad4f456788d2c2c868f8f868d"
+      },
+      "replacements": [
+        {
+          "old": "        if data_size > end - cursor - 4:\n",
+          "new": "        if False:\n"
+        }
+      ],
+      "anticipated_detector_methods": [
+        "test_overlong_data_never_publishes_partial_inventory"
+      ]
+    },
+    {
+      "id": "m04-record-cap",
+      "title": "Increase the frozen record cap to 257",
+      "defect": "A 257th header may be read or accepted; short tails after 256 change precedence.",
+      "source": "mutants/m04-record-cap/li_v3_local_extra_headers.py",
+      "identity": {
+        "bytes": 11921,
+        "sha256": "1e275ae4cf9339d601db1e4fe7347d8a5653b33bbffe3b8344fbb71f82a37566"
+      },
+      "diff": "mutants/m04-record-cap/source.diff",
+      "diff_identity": {
+        "bytes": 553,
+        "sha256": "c43e3568f6817f1ae1c59231d09acad2504e0942828e57790a69436f7b58f5cf"
+      },
+      "replacements": [
+        {
+          "old": "MAX_FIELDS = 256\n",
+          "new": "MAX_FIELDS = 257\n"
+        }
+      ],
+      "anticipated_detector_methods": [
+        "test_exact_record_limit_and_one_more_byte_or_record",
+        "test_walk_only_unpacks_headers_and_stops_before_257th_header"
+      ]
+    },
+    {
+      "id": "m05-partial-list",
+      "title": "Publish accumulated headers on header truncation",
+      "defect": "An incomplete extra span publishes a prefix while retaining its truncation reason.",
+      "source": "mutants/m05-partial-list/li_v3_local_extra_headers.py",
+      "identity": {
+        "bytes": 12021,
+        "sha256": "1379aaab8514d853293305e2f6e83e55c269578cc82c3e43f042fc6a5839be2f"
+      },
+      "diff": "mutants/m05-partial-list/source.diff",
+      "diff_identity": {
+        "bytes": 1079,
+        "sha256": "59c6fbc2b23ecbd08f1e1ce5bb3274e98ff8e9d54d87b64bc891f4a2f793b827"
+      },
+      "replacements": [
+        {
+          "old": "        if end - cursor < 4:\n            raise LocalExtraError('EXTRA_HEADER_TRUNCATED')\n",
+          "new": "        if end - cursor < 4:\n            error = LocalExtraError('EXTRA_HEADER_TRUNCATED')\n            error.field_headers = fields\n            raise error\n"
+        },
+        {
+          "old": "        report.update(reason=str(error), field_headers=None)\n",
+          "new": "        report.update(reason=str(error), field_headers=getattr(error, 'field_headers', None))\n"
+        }
+      ],
+      "anticipated_detector_methods": [
+        "test_incomplete_headers_never_publish_completed_prefix"
+      ]
+    },
+    {
+      "id": "m06-opaque-byte",
+      "title": "Make field ID output depend on an opaque payload byte",
+      "defect": "A nonempty field body changes its published field ID without changing the header.",
+      "source": "mutants/m06-opaque-byte/li_v3_local_extra_headers.py",
+      "identity": {
+        "bytes": 11961,
+        "sha256": "b746d71263deb07bc8b1c7d3c4c347ec1f37157e90ee890186d01b5baba010d6"
+      },
+      "diff": "mutants/m06-opaque-byte/source.diff",
+      "diff_identity": {
+        "bytes": 587,
+        "sha256": "9c468101b7cfbb13d9e1286b3a27350f8a6a3c9d97329b3830dee881474c176c"
+      },
+      "replacements": [
+        {
+          "old": "        fields.append({'header_id': header_id, 'data_size': data_size})\n",
+          "new": "        fields.append({'header_id': header_id ^ (raw[cursor + 4] if data_size else 0), 'data_size': data_size})\n"
+        }
+      ],
+      "anticipated_detector_methods": [
+        "test_declared_length_is_little_endian_and_payload_is_opaque",
+        "test_first_and_each_middle_entry_same_complete_inventory"
+      ]
+    }
+  ],
+  "execution_order": [
+    "baseline",
+    "m01-prior-equality",
+    "m02-close-required",
+    "m03-data-bound",
+    "m04-record-cap",
+    "m05-partial-list",
+    "m06-opaque-byte"
+  ],
+  "execution_started": false,
+  "stop_rules": [
+    "Baseline must pass before any mutant runs.",
+    "Hold source/test/declaration bytes; stop if any held binding changes.",
+    "Never edit the tests or mutate a mutant after observing its result.",
+    "Record each first result including survivors, harness errors and invalid mutations."
+  ],
+  "scope": "Synthetic test adequacy only; no production_context or diagnose method, actual object/capture/prerequisite receipt, network, scientific validation, Git mutation or runtime mutation."
+}

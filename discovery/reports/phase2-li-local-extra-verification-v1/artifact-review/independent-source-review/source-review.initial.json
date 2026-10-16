@@ -1,0 +1,79 @@
+{
+  "status": "PASS_SOURCE_REVIEW_ONLY",
+  "recorded_at_utc": "2026-10-16T09:20:08.943791+00:00",
+  "reviewer": "/root/finite_inverse_check/artifact_adapter_review",
+  "source_identities": {
+    "additive_audit.py": "6b267cd11a73b0f73c63a7b9ae2ba75d30f9699edf14e41c5fd1f98f4932ce2a",
+    "prior-additive-audit.py": "a9bbef30cd81cddccc3a089cf0c4109c61cb7497fc906f7fcab236aaf5b49643",
+    "audit.py": "b81293cba3632449830932175e9fa938913650ade05f5e524b258aba78923119",
+    "reviewed-pins.pending.json": "a30fadbd111588acd177c78766e5e78046349f6249ba43bedad8f79e452d2de3"
+  },
+  "auditor_invoked": false,
+  "project_module_imported": false,
+  "package_or_production_invoked": false,
+  "actual_new_artifacts_reviewed": false,
+  "private_custody_inputs_read": false,
+  "network_requests_performed": false,
+  "unchanged_helper_ASTs": [
+    "sha",
+    "load",
+    "read",
+    "git",
+    "artifact",
+    "wheel_content"
+  ],
+  "unchanged_main_guard_AST": true,
+  "preserved_assertion_occurrences": 33,
+  "removed_assertion_occurrences": [
+    "full_review['runtime_source_files_matching_manifest_and_worktree'] == 323",
+    "len(prior) == 317 and len(current) == 323",
+    "notebook_pins == {path: digest for path, digest in PINS.items() if 'notebook' in path}",
+    "header_bindings['candidate_files'] == {path: digest for path, digest in PINS.items() if 'notebook' not in path}"
+  ],
+  "added_assertion_occurrences": [
+    "OUT.is_relative_to(BASE) and OUT != BASE",
+    "len(COMMIT) == 40 and all((c in '0123456789abcdef' for c in COMMIT))",
+    "permitted.is_relative_to(ROOT / '.cache')",
+    "not permitted.is_relative_to(ROOT / '.cache/li-v3-custody')",
+    "pin_record['status'] == 'FINAL_REVIEWED_SOURCE_PINS'",
+    "pin_record['baseline_commit'] == BASELINE",
+    "set(PINS) == EXPECTED_PATHS",
+    "all((type(value) is str and len(value) == 64 and all((c in '0123456789abcdef' for c in value)) for value in PINS.values()))",
+    "PINS['scripts/li_v3_local_extra_headers.py'] == SCRIPT_PIN",
+    "full_review['runtime_source_files_matching_manifest_and_worktree'] == 326",
+    "len(prior) == 323 and len(current) == 326",
+    "len(added) == 3 and len(PINS) == 4"
+  ],
+  "pending_pin_record_rejected_by_static_guard_order": true,
+  "baseline_commit": "a6e87c198d8116d26c523e0e1b2eedce4aeb225b",
+  "future_expected_runtime_count": 326,
+  "baseline_runtime_count": 323,
+  "future_added_runtime_paths": [
+    "scripts/li_v3_local_extra_headers.py",
+    "tests/test_li_v3_local_extra_headers.py",
+    "tests/test_li_v3_local_extra_headers_review.py"
+  ],
+  "new_exact_git_archive_worktree_pins": [
+    "docs/li-v3-local-extra-headers-plan.md",
+    "scripts/li_v3_local_extra_headers.py",
+    "tests/test_li_v3_local_extra_headers.py",
+    "tests/test_li_v3_local_extra_headers_review.py"
+  ],
+  "unchanged_wheel_package_member_count_required": 108,
+  "full_audit_script_pin_required": "b81293cba3632449830932175e9fa938913650ade05f5e524b258aba78923119",
+  "full_audit_PASS_same_commit_receipt_and_artifact_identity_required": true,
+  "actual_future_PASS_not_established_by_this_review": true,
+  "concrete_blockers": [],
+  "requirements_for_future_use": [
+    "Root supplies the committed source identity, retained package location, actual unchanged-auditor PASS receipt and final independently reviewed pin record.",
+    "Invoke from discovery/ with a clean exact committed checkout; current dirty integration is not an eligible audit target.",
+    "Confirm final reviewed-pins file bytes externally; the adapter checks status, structure and supplied values but does not authenticate authorship of the review."
+  ],
+  "scope_limits": [
+    "No candidate correctness or scientific validity review.",
+    "The generic audit receipt is a required local evidence input; this source review does not establish it has actually run on future artifacts.",
+    "Not a general adversarial archive security validator; archive member expansion is not universally size capped.",
+    "No network or production commands exist in adapter; expected inputs are controlled local public package and source artifacts, with resolved input paths excluding the Li custody cache.",
+    "Whole wheel ZIP byte equality is explicitly not claimed; nonpackage content differences are recorded."
+  ]
+}

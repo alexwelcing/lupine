@@ -1,0 +1,28 @@
+{
+  "schema": "lupine.engineering.inventory.v1",
+  "excludes": [
+    "inventory.json"
+  ],
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 1432,
+      "sha256": "8a491a23e4722290550a766d7f865acfd508e013efd8085bfd58f81e33c9afec"
+    },
+    {
+      "path": "before.json",
+      "bytes": 694,
+      "sha256": "3c0e05256dde6a27fb4aa01e9140e7e4149c9858543639a7aefe952d6fca62fb"
+    },
+    {
+      "path": "declaration-review.json",
+      "bytes": 2395,
+      "sha256": "dae809e8965cffc942361b008053bd3d5afde3cbb1083bf2f7146f368e10c6b0"
+    },
+    {
+      "path": "receipt-review.json",
+      "bytes": 5599,
+      "sha256": "fd84f686a51952058bfef7c06fa42f4cfbdbc1d9a98894cb3d119ef4aec9f3d9"
+    }
+  ]
+}

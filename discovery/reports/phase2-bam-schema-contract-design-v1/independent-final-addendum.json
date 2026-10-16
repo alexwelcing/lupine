@@ -1,0 +1,26 @@
+{
+  "schema": "lupine.bam-schema-contract-final-review-addendum.v1",
+  "created_at": "2026-10-16T09:26:47.504641+00:00",
+  "status": "PASS_PROSPECTIVE_SOURCE_AND_SCOPE_REVIEW",
+  "original_review": {
+    "path": ".cache/phase2-bam-schema-contract-design-review-v1/review.json",
+    "bytes": 5862,
+    "sha256": "40f6b7eee4de408c85f4ce31d8184da949db0d6665f267af6b4ec511f516fb38"
+  },
+  "final_design": {
+    "path": ".cache/phase2-bam-schema-contract-design-v1/README.md",
+    "bytes": 13933,
+    "sha256": "ca4622e6958b7a13aad95e9f3e722f4b77b120ccf856f31b76daa169ddf47918"
+  },
+  "final_bindings": {
+    "path": ".cache/phase2-bam-schema-contract-design-v1/source-bindings.json",
+    "bytes": 3948,
+    "sha256": "cd08fa3d8e6e697a51368a20e8b9e44ba77b6d108307be79e423de3d2cf58b1c"
+  },
+  "precision_changes": "NBSP replacement before ASCII trim; permitted controls must be frozen; synthetic withheld-cell invariance restricted to the same admitted limits and layout, while production byte changes still fail identity. These resolve the two nonblocking implementation precision notes. No semantic scope, source identity or empirical claim was added.",
+  "public_source_bindings_unchanged": true,
+  "blocking_findings": [],
+  "network_or_actual_schema_read": false,
+  "implementation_or_tests": false,
+  "tracked_edits": false
+}
