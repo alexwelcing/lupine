@@ -506,3 +506,19 @@ rendering. Their candidate/combined checks and final-source CI are separately
 identified. Hypothetical threshold probability and zero-failure resolution are
 planning arithmetic, not observed coverage, power, useful reduction or a
 scientific release gate. All prior scientific NO-GO decisions remain intact.
+
+## Verified workbench and blocked header diagnosis — October 16
+
+Runtime `41d3e31` passes all four original-push CI jobs, clean local installed
+package verification (28 cases/six schemas/15 checks), strict retained-artifact
+verification and independent source/wheel byte audit. [Actual receipts](../reports/phase2-workbench-verification-v1/README.md)
+bind each claim to the completed command or API observation. The later report
+publication requires its own remote/CI verification; it is not predeclared passed.
+
+Two subsequent frozen Li header diagnostics produce identical BLOCKED_SCHEMA /
+MEMBER_FLAGS results. They read the complete raw buffer and decode directory
+names internally, but decompress no member and decode no XML or worksheet.
+This narrows the original profile mismatch; it does not identify the actual
+bits, prove corruption, validate schema or resolve any scientific gate. The
+general written planning proof and hypothetical exact-data figure do not change
+the 130-statement Lean inventory or the physical/general-superiority NO-GO.

@@ -1,14 +1,15 @@
 # Project state
 
-**Active phase, October 16:** The published exact planner/custody source
-`5addf4f` passed all four GitHub CI jobs and clean retained-package verification.
-The integrated study-planning interface now passes 65 full browser checks and
-installed HTTP/CLI agreement; a reproduced package environment leak is repaired
-with a real-child regression. New exact-source publication/CI is pending.
-[Actual Li acquisition](reports/phase2-publication-custody-v1/README.md) matched
-publisher-declared size and MD5, then twice blocked on ZIP layout before any decompression
-or XML/worksheet decoding. A separately reviewed header-only diagnostic passes all 46 integrated Li checks;
-its real-source execution awaits publication and verified CI.
+**Active phase, October 16:** The published study-planning workbench at `41d3e31`
+passes all four GitHub CI jobs, a clean installed package (28 cases, six schemas,
+15 checks), strict retained verification and independent artifact byte audit.
+[Actual verification and source diagnosis](reports/phase2-workbench-verification-v1/README.md)
+record two identical Li header diagnostic results: BLOCKED_SCHEMA / MEMBER_FLAGS.
+The source matches publisher size/MD5 and the frozen SHA-256. The raw buffer and
+directory names were read; no member, XML or worksheet was decoded. The category
+identifies an unsupported flag, not its value or archive corruption. All original
+profiles and failures remain preserved. General planning proofs, an exact
+hypothetical figure and documentary source leads support the next source review.
 [GOAL](GOAL.md#renewed-active-work--2026-10-16) records ownership and next actions.
 Scientific usefulness remains NO-GO; the original automation remains disabled.
 

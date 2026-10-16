@@ -1,0 +1,360 @@
+{
+  "recorded_at": "2026-10-16T06:29:43.506967+00:00",
+  "scope": "Exact publication copies of completed engineering/source-review evidence. Initial package inventory remains separate; no raw scientific archive or retained wheel is copied.",
+  "copies": [
+    {
+      "source": ".cache/phase2-workbench-ci-v1/final.json",
+      "destination": ".cache/phase2-workbench-publication-v1/promotion/reports/phase2-workbench-verification-v1/ci/final.json",
+      "bytes": 1304,
+      "sha256": "f5b4a5414f592dd5a73b4736b8cd67ff2cdaf4b220f2083548b6b8ac9d0943e4"
+    },
+    {
+      "source": ".cache/phase2-workbench-ci-v1/observations.json",
+      "destination": ".cache/phase2-workbench-publication-v1/promotion/reports/phase2-workbench-verification-v1/ci/observations.json",
+      "bytes": 6596,
+      "sha256": "c5cb0ebb7545e3d55fbde5493d05dd9fe3b95a84c3233d7813af6f6d0c0aa022"
+    },
+    {
+      "source": ".cache/phase2-study-validation-v1/watch_ci.py",
+      "destination": ".cache/phase2-workbench-publication-v1/promotion/reports/phase2-workbench-verification-v1/ci/executed-watcher.py",
+      "bytes": 1720,
+      "sha256": "9b4dc5ce2c51dae425ed0bdbcfb3b3f3b294d3caa65736f8e587ba376430e0a8"
+    },
+    {
+      "source": ".cache/phase2-li-zip-production-v1/run_after_ci.py",
+      "destination": ".cache/phase2-workbench-publication-v1/promotion/reports/phase2-workbench-verification-v1/actual-header-diagnostic/run_after_ci.py",
+      "bytes": 3500,
+      "sha256": "8b965f4ebd5d2d9bd20a940987a180b7e4fb104bf486fa5d9de0c1ebb58f10a9"
+    },
+    {
+      "source": ".cache/phase2-li-zip-production-v1/await_verified_ci.py",
+      "destination": ".cache/phase2-workbench-publication-v1/promotion/reports/phase2-workbench-verification-v1/actual-header-diagnostic/await_verified_ci.py",
+      "bytes": 635,
+      "sha256": "a45032aba6412912d18e74cb916593ea847d548fd34901902fdfec94fa29f945"
+    },
+    {
+      "source": ".cache/phase2-li-zip-production-v1/1/start.json",
+      "destination": ".cache/phase2-workbench-publication-v1/promotion/reports/phase2-workbench-verification-v1/actual-header-diagnostic/1/start.json",
+      "bytes": 388,
+      "sha256": "81398053d13f87f405468cc043eb406112d68e9bb541f75aca893242a5b25f14"
+    },
+    {
+      "source": ".cache/phase2-li-zip-production-v1/1/execution.json",
+      "destination": ".cache/phase2-workbench-publication-v1/promotion/reports/phase2-workbench-verification-v1/actual-header-diagnostic/1/execution.json",
+      "bytes": 73520,
+      "sha256": "09772a12e863098116f62f849c216a09c744ea225d7f1f20fd1cf47183821f96"
+    },
+    {
+      "source": ".cache/phase2-li-zip-production-v1/1/stdout.txt",
+      "destination": ".cache/phase2-workbench-publication-v1/promotion/reports/phase2-workbench-verification-v1/actual-header-diagnostic/1/stdout.txt",
+      "bytes": 2840,
+      "sha256": "50931018f877a66ee56cf522e5d8a0be35cfc35f2c8b7f34884f5ba6caba6ca0"
+    },
+    {
+      "source": ".cache/phase2-li-zip-production-v1/1/stderr.txt",
+      "destination": ".cache/phase2-workbench-publication-v1/promotion/reports/phase2-workbench-verification-v1/actual-header-diagnostic/1/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/li-v3-custody/zip-diagnostic-v1/1/public.json",
+      "destination": ".cache/phase2-workbench-publication-v1/promotion/reports/phase2-workbench-verification-v1/actual-header-diagnostic/1/public.json",
+      "bytes": 2840,
+      "sha256": "50931018f877a66ee56cf522e5d8a0be35cfc35f2c8b7f34884f5ba6caba6ca0"
+    },
+    {
+      "source": ".cache/phase2-li-zip-production-v1/2/start.json",
+      "destination": ".cache/phase2-workbench-publication-v1/promotion/reports/phase2-workbench-verification-v1/actual-header-diagnostic/2/start.json",
+      "bytes": 388,
+      "sha256": "e740d5da013709211908e9afb569be8f0165682611caddee47a5208aea84262e"
+    },
+    {
+      "source": ".cache/phase2-li-zip-production-v1/2/execution.json",
+      "destination": ".cache/phase2-workbench-publication-v1/promotion/reports/phase2-workbench-verification-v1/actual-header-diagnostic/2/execution.json",
+      "bytes": 73521,
+      "sha256": "1b0d2e7c40c144e79283c110e70caaa355205dcc578a55af7218957bbc648320"
+    },
+    {
+      "source": ".cache/phase2-li-zip-production-v1/2/stdout.txt",
+      "destination": ".cache/phase2-workbench-publication-v1/promotion/reports/phase2-workbench-verification-v1/actual-header-diagnostic/2/stdout.txt",
+      "bytes": 2840,
+      "sha256": "50931018f877a66ee56cf522e5d8a0be35cfc35f2c8b7f34884f5ba6caba6ca0"
+    },
+    {
+      "source": ".cache/phase2-li-zip-production-v1/2/stderr.txt",
+      "destination": ".cache/phase2-workbench-publication-v1/promotion/reports/phase2-workbench-verification-v1/actual-header-diagnostic/2/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/li-v3-custody/zip-diagnostic-v1/2/public.json",
+      "destination": ".cache/phase2-workbench-publication-v1/promotion/reports/phase2-workbench-verification-v1/actual-header-diagnostic/2/public.json",
+      "bytes": 2840,
+      "sha256": "50931018f877a66ee56cf522e5d8a0be35cfc35f2c8b7f34884f5ba6caba6ca0"
+    },
+    {
+      "source": ".cache/phase2-planning-proof-v1/README.md",
+      "destination": "reports/phase2-planning-proof-v1/README.md",
+      "bytes": 7973,
+      "sha256": "e38ae58dffd3950952357ac62fcd13a00a57c94a8e41b2ef4cb6f1b52de3d88a"
+    },
+    {
+      "source": ".cache/phase2-planning-proof-v1/independent-review.json",
+      "destination": "reports/phase2-planning-proof-v1/independent-review.json",
+      "bytes": 1146,
+      "sha256": "58f5058cbc39c13bed1537d0d1c1c8a9bebcd634e168bd49995062dd4216aec4"
+    },
+    {
+      "source": ".cache/phase2-planning-proof-v1/source-bindings.json",
+      "destination": "reports/phase2-planning-proof-v1/source-bindings.json",
+      "bytes": 1415,
+      "sha256": "216faf22974d985c7758ce63a2e888f1cdb3b3ef5c7717577fb03fd8f1275e26"
+    },
+    {
+      "source": ".cache/phase2-planning-figure-v1/README.md",
+      "destination": "reports/phase2-planning-figure-v1/README.md",
+      "bytes": 3901,
+      "sha256": "f65fa8c7bc82d1d546b45d9c882f45b67bb6a811681fb066828448cd1536ae49"
+    },
+    {
+      "source": ".cache/phase2-planning-figure-v1/exact-values.csv",
+      "destination": "reports/phase2-planning-figure-v1/exact-values.csv",
+      "bytes": 28710,
+      "sha256": "f9d528d1a5332824ce3b8e1a4830301ec8f2c24bfbfbd20ae2cbe9f126519654"
+    },
+    {
+      "source": ".cache/phase2-planning-figure-v1/exact-values.json",
+      "destination": "reports/phase2-planning-figure-v1/exact-values.json",
+      "bytes": 87134,
+      "sha256": "737ca4ee06f33891d73cb9ae8caf9e118ba616d9d31613d4feccf32ba67085af"
+    },
+    {
+      "source": ".cache/phase2-planning-figure-v1/first-generation/generation.json",
+      "destination": "reports/phase2-planning-figure-v1/first-generation/generation.json",
+      "bytes": 753,
+      "sha256": "318124e9f19bd024eabb091a61d78b1077765f76a0fed0ee3e1525408567a214"
+    },
+    {
+      "source": ".cache/phase2-planning-figure-v1/first-generation/make_figure.py",
+      "destination": "reports/phase2-planning-figure-v1/first-generation/make_figure.py",
+      "bytes": 10092,
+      "sha256": "7d38dd0168c51a5ba0230e0ee060743e41584d6198f9515be1fc7d38ad4a0cdd"
+    },
+    {
+      "source": ".cache/phase2-planning-figure-v1/first-generation/prospective-threshold-probability.png",
+      "destination": "reports/phase2-planning-figure-v1/first-generation/prospective-threshold-probability.png",
+      "bytes": 258133,
+      "sha256": "a25e3414ac39d6a22c49e9a76c181a5fbaf40a56d323c46917378bd6a1e8fd00"
+    },
+    {
+      "source": ".cache/phase2-planning-figure-v1/first-generation/prospective-threshold-probability.svg",
+      "destination": "reports/phase2-planning-figure-v1/first-generation/prospective-threshold-probability.svg",
+      "bytes": 132788,
+      "sha256": "7a1655ae1c34b21309c494bd47b4fb385fdb90806c0a7034ece9e70e23645663"
+    },
+    {
+      "source": ".cache/phase2-planning-figure-v1/first-generation/source-bindings.json",
+      "destination": "reports/phase2-planning-figure-v1/first-generation/source-bindings.json",
+      "bytes": 980,
+      "sha256": "b12abade14c03848887de1e85777ef347981638b2b0cd7fdbeb5154b26fe1e7c"
+    },
+    {
+      "source": ".cache/phase2-planning-figure-v1/first-generation/stderr.log",
+      "destination": "reports/phase2-planning-figure-v1/first-generation/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/phase2-planning-figure-v1/first-generation/stdout.log",
+      "destination": "reports/phase2-planning-figure-v1/first-generation/stdout.log",
+      "bytes": 369,
+      "sha256": "5907b9701a3b82af832d1a84d8a99e2c1b8535262f9ab2fd2e69ecdb0938e50c"
+    },
+    {
+      "source": ".cache/phase2-planning-figure-v1/generation.json",
+      "destination": "reports/phase2-planning-figure-v1/generation.json",
+      "bytes": 2093,
+      "sha256": "b9d795e18e8db27b8764515d259a57e179cb21c0e7da2aa1e0131b34d44cbc1e"
+    },
+    {
+      "source": ".cache/phase2-planning-figure-v1/inventory.json",
+      "destination": "reports/phase2-planning-figure-v1/inventory.json",
+      "bytes": 4354,
+      "sha256": "d49bad9096a5cf1bd1e4860db05dd054200fb8488d9f34e26c928dd182328b6a"
+    },
+    {
+      "source": ".cache/phase2-planning-figure-v1/make_figure.py",
+      "destination": "reports/phase2-planning-figure-v1/make_figure.py",
+      "bytes": 10090,
+      "sha256": "1ebe2af75dfcc6748055586f064a685d249a4bfdaafbd6965247099982a5a99b"
+    },
+    {
+      "source": ".cache/phase2-planning-figure-v1/prospective-threshold-probability.png",
+      "destination": "reports/phase2-planning-figure-v1/prospective-threshold-probability.png",
+      "bytes": 258487,
+      "sha256": "16deecfb60b5735c5da2e0cd7839c8fda648dabdd5ca980519ffb7df98504d2a"
+    },
+    {
+      "source": ".cache/phase2-planning-figure-v1/prospective-threshold-probability.svg",
+      "destination": "reports/phase2-planning-figure-v1/prospective-threshold-probability.svg",
+      "bytes": 133546,
+      "sha256": "ba80ad184954889775b87fd58069a83645e262b81c91213529e792feb305fa49"
+    },
+    {
+      "source": ".cache/phase2-planning-figure-v1/review.json",
+      "destination": "reports/phase2-planning-figure-v1/review.json",
+      "bytes": 2229,
+      "sha256": "446059a22ef63068d25320d39f02fce301bcf80c7c850f9b566e40025a1c2aac"
+    },
+    {
+      "source": ".cache/phase2-planning-figure-v1/second-generation/generation.json",
+      "destination": "reports/phase2-planning-figure-v1/second-generation/generation.json",
+      "bytes": 1685,
+      "sha256": "170df37bb70f674cd36b931254fabf7c9430ad48155923223a013029d33b540c"
+    },
+    {
+      "source": ".cache/phase2-planning-figure-v1/second-generation/make_figure.py",
+      "destination": "reports/phase2-planning-figure-v1/second-generation/make_figure.py",
+      "bytes": 10086,
+      "sha256": "ba317531307dd9d517a09baa64026c20c98d85d3705e1c4a2b54d17523d9609d"
+    },
+    {
+      "source": ".cache/phase2-planning-figure-v1/second-generation/prospective-threshold-probability.png",
+      "destination": "reports/phase2-planning-figure-v1/second-generation/prospective-threshold-probability.png",
+      "bytes": 257670,
+      "sha256": "c930ddcd368e91c20ea77ca7b17889dab184820d7c93d1868991d83eafb94568"
+    },
+    {
+      "source": ".cache/phase2-planning-figure-v1/second-generation/prospective-threshold-probability.svg",
+      "destination": "reports/phase2-planning-figure-v1/second-generation/prospective-threshold-probability.svg",
+      "bytes": 132325,
+      "sha256": "fda0dc5d8da06c5d99278644266933c387a7c86dd2487872554a2ee4ecf61b85"
+    },
+    {
+      "source": ".cache/phase2-planning-figure-v1/second-generation/source-bindings.json",
+      "destination": "reports/phase2-planning-figure-v1/second-generation/source-bindings.json",
+      "bytes": 980,
+      "sha256": "5d22dbb8710d15c56e1d79c791795b5594df7819e40bd157e25e34775f72278d"
+    },
+    {
+      "source": ".cache/phase2-planning-figure-v1/second-generation/stderr.log",
+      "destination": "reports/phase2-planning-figure-v1/second-generation/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/phase2-planning-figure-v1/second-generation/stdout.log",
+      "destination": "reports/phase2-planning-figure-v1/second-generation/stdout.log",
+      "bytes": 369,
+      "sha256": "5907b9701a3b82af832d1a84d8a99e2c1b8535262f9ab2fd2e69ecdb0938e50c"
+    },
+    {
+      "source": ".cache/phase2-planning-figure-v1/source-bindings.json",
+      "destination": "reports/phase2-planning-figure-v1/source-bindings.json",
+      "bytes": 980,
+      "sha256": "3f6371b6412b743cfb150a9e5d7cc0de0327c621c0ee60d1b40e5e8ff91de07e"
+    },
+    {
+      "source": ".cache/phase2-planning-figure-v1/stderr.log",
+      "destination": "reports/phase2-planning-figure-v1/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/phase2-planning-figure-v1/stdout.log",
+      "destination": "reports/phase2-planning-figure-v1/stdout.log",
+      "bytes": 369,
+      "sha256": "5907b9701a3b82af832d1a84d8a99e2c1b8535262f9ab2fd2e69ecdb0938e50c"
+    },
+    {
+      "source": ".cache/phase2-li-documentary-contract-v1/README.md",
+      "destination": "reports/phase2-li-documentary-contract-v1/README.md",
+      "bytes": 8505,
+      "sha256": "7ccdf382941d535b72d833cae3fe92c0a5dce614f0ce3fe4358aa6467af526a3"
+    },
+    {
+      "source": ".cache/phase2-li-documentary-contract-v1/proposal.json",
+      "destination": "reports/phase2-li-documentary-contract-v1/proposal.json",
+      "bytes": 3290,
+      "sha256": "a6e224719aceea3614ccbe8b70a4ffc454e2fbdd8fd3cee1de26c58049f7cc19"
+    },
+    {
+      "source": ".cache/phase2-li-documentary-contract-v1/source-bindings.json",
+      "destination": "reports/phase2-li-documentary-contract-v1/source-bindings.json",
+      "bytes": 3943,
+      "sha256": "0120ad9a276788facbd582edc1a2b7fc6d63dddf3fad00f7a67ba7afaf4472ce"
+    },
+    {
+      "source": ".cache/phase2-li-documentary-contract-v1/source-bindings.original.json",
+      "destination": "reports/phase2-li-documentary-contract-v1/source-bindings.original.json",
+      "bytes": 2053,
+      "sha256": "554f51dde15791d771b1bcd81120434f1e1edaf771f49d6135fd80a413cfa6bb"
+    },
+    {
+      "source": ".cache/phase2-li-documentary-review-v1/README.initial.md",
+      "destination": "reports/phase2-li-documentary-review-v1/README.initial.md",
+      "bytes": 1135,
+      "sha256": "67a36949a3460faf8d92ce1500db8150e1eb7b415b7d768ba616f58264baa0c6"
+    },
+    {
+      "source": ".cache/phase2-li-documentary-review-v1/README.md",
+      "destination": "reports/phase2-li-documentary-review-v1/README.md",
+      "bytes": 1171,
+      "sha256": "0f929eb07d0430c5c25470c3beb87b119f635646a63395c85532262a52afaf1a"
+    },
+    {
+      "source": ".cache/phase2-li-documentary-review-v1/review-final.json",
+      "destination": "reports/phase2-li-documentary-review-v1/review-final.json",
+      "bytes": 4482,
+      "sha256": "65c41c8d575de3313c3b7f4b9a294d5de3d80138bb2190cf42af80d47bd34312"
+    },
+    {
+      "source": ".cache/phase2-li-documentary-review-v1/review.json",
+      "destination": "reports/phase2-li-documentary-review-v1/review.json",
+      "bytes": 6695,
+      "sha256": "9284265abcf4a05ae3f964175837be5cdf660d506b7b5af2b3b2228ec8e3f08e"
+    },
+    {
+      "source": ".cache/phase2-high-temperature-leads-v1/README.md",
+      "destination": "reports/phase2-high-temperature-leads-v1/README.md",
+      "bytes": 4445,
+      "sha256": "54191247eab5cb1455f506420ef5422081a609d4f685d1f1c4352750ce5f15a7"
+    },
+    {
+      "source": ".cache/phase2-high-temperature-leads-v1/source-bindings.json",
+      "destination": "reports/phase2-high-temperature-leads-v1/source-bindings.json",
+      "bytes": 1886,
+      "sha256": "4097046dbb9799b2991651ef411ee9cb1740f35e6b4cb89912e51e91e895bb89"
+    },
+    {
+      "source": ".cache/phase2-high-temperature-leads-v1/fetch_metadata.py",
+      "destination": "reports/phase2-high-temperature-leads-v1/fetch_metadata.py",
+      "bytes": 1476,
+      "sha256": "9cb5b9252b1179848c12307cefb0d0dde59409260a316cdbc70b50e3f1e18b42"
+    },
+    {
+      "source": ".cache/phase2-high-temperature-leads-v1/bam-data-receipt.json",
+      "destination": "reports/phase2-high-temperature-leads-v1/bam-data-receipt.json",
+      "bytes": 1531,
+      "sha256": "c7149819c72f50ba40db5ce9632f0f924d533282e3720607f0037e21d8c666c0"
+    },
+    {
+      "source": ".cache/phase2-high-temperature-leads-v1/bam-schema-receipt.json",
+      "destination": "reports/phase2-high-temperature-leads-v1/bam-schema-receipt.json",
+      "bytes": 1176,
+      "sha256": "51f71322f83684a0a303f5efde4095b267eb9a6d31a286eabcbaa438c19c3e0a"
+    },
+    {
+      "source": ".cache/phase2-high-temperature-leads-v1/netl-data-receipt.json",
+      "destination": "reports/phase2-high-temperature-leads-v1/netl-data-receipt.json",
+      "bytes": 788,
+      "sha256": "6b2d66481850870ca45f35749e8eec0c075d08ffe0e27887b531e4e34cce7be7"
+    },
+    {
+      "source": ".cache/phase2-high-temperature-review-v1/review.json",
+      "destination": "reports/phase2-high-temperature-leads-v1/independent-review.json",
+      "bytes": 3062,
+      "sha256": "91964393c44faaabaff7801a185cb71e7a890f41294f3c28fcd7e8c079e0e941"
+    }
+  ]
+}

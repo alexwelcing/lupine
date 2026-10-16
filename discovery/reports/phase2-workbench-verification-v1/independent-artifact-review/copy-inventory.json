@@ -1,0 +1,55 @@
+{
+  "scope": "Independent byte-audit script, actual results/logs and preserved failed harness invocation; no artifact bundle or scientific payload duplicated.",
+  "files": [
+    {
+      "path": "audit.py",
+      "bytes": 12689,
+      "sha256": "e50d273cc96e9c6eb90a559197ad418219cadd9705a9e17d1cbdeaa72104ac05"
+    },
+    {
+      "path": "review.json",
+      "bytes": 8201,
+      "sha256": "877613115dbcced1bf7ee6ccc6cd8b8234828a84b46c5bab38fa8bb805bf45a3"
+    },
+    {
+      "path": "stdout.log",
+      "bytes": 8201,
+      "sha256": "877613115dbcced1bf7ee6ccc6cd8b8234828a84b46c5bab38fa8bb805bf45a3"
+    },
+    {
+      "path": "stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "wheel-metadata.json",
+      "bytes": 313,
+      "sha256": "addf84e5556b893c9c0d5a7f0614e4aaa0d3a4c40a3a7786fe92b322e6a6b599"
+    },
+    {
+      "path": "handoff.json",
+      "bytes": 905,
+      "sha256": "9e62ec599c04112bb50f0be38f716a424820c35bf67ce7b5aa59190a3c82e5e4"
+    },
+    {
+      "path": "first/audit.py",
+      "bytes": 12601,
+      "sha256": "16164faa680a8dc3256e28eb5ddf26a67047cc1cf99bef68af41b247b1c49f5b"
+    },
+    {
+      "path": "first/review.json",
+      "bytes": 2796,
+      "sha256": "36275b0400695163a0714234a0207fc0dde1f6a24952c6a0d0a77670075410c7"
+    },
+    {
+      "path": "first/stdout.log",
+      "bytes": 2796,
+      "sha256": "36275b0400695163a0714234a0207fc0dde1f6a24952c6a0d0a77670075410c7"
+    },
+    {
+      "path": "first/stderr.log",
+      "bytes": 405,
+      "sha256": "a8a61788ca939c210554e391d009b4c824c4bb9ea394211d960ab9653a7a2566"
+    }
+  ]
+}

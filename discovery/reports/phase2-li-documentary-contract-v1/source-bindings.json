@@ -1,0 +1,89 @@
+{
+  "schema": "lupine.discovery.li_documentary_proposal_bindings.v1",
+  "date": "2026-10-16",
+  "owner": "phase2_evidence",
+  "files": [
+    {
+      "path": "discovery/AGENTS.md",
+      "bytes": 3265,
+      "sha256": "8da673fcfab35c6e8b2cbc20194423b83017574bd8d78264d48c30d4b6d74ede"
+    },
+    {
+      "path": "discovery/reports/phase2-source-readiness-v1/li-metadata/README.md",
+      "bytes": 4321,
+      "sha256": "7e3f130e2c67e487ea2a0068194ccc374f6d4d9287081065a0d9052040996989"
+    },
+    {
+      "path": "discovery/reports/phase2-source-readiness-v1/li-metadata/source-bindings.json",
+      "bytes": 9159,
+      "sha256": "dc37f5744d12fbfd396e4e944d639ea485f5ee95f8ff7ded42f60c7fb03f8914"
+    },
+    {
+      "path": "discovery/reports/phase2-source-readiness-v1/li-metadata/materialscloud-v3.json",
+      "bytes": 12936,
+      "sha256": "6cd068dc85890fbef2c8d8027c78eb9b7740f36d90574f158c5fc19d9fac65b6"
+    },
+    {
+      "path": "discovery/reports/phase2-source-readiness-v1/custody-design/README.md",
+      "bytes": 14110,
+      "sha256": "0eb632e5a69033fbee10de6a4648bf6b4e6949b552f11841452c9bd8236ffe91"
+    },
+    {
+      "path": "discovery/reports/phase2-source-readiness-v1/source-bindings.json",
+      "bytes": 7113,
+      "sha256": "d7a53adf40427753d7c0c48a54ab5c6ab42407f4dd53045cd508bb695afaa973"
+    },
+    {
+      "path": "discovery/reports/phase2-li-custody-v1/README.md",
+      "bytes": 3126,
+      "sha256": "1f90bf5c56c3a34013c079c6dd4d50c9db05146ad3506c2a2663ade562ab6a36"
+    },
+    {
+      "path": "discovery/reports/phase2-publication-custody-v1/custody/capture-1.json",
+      "bytes": 2254,
+      "sha256": "13f6f1b0354d15a214169cdd52e58d5349a30b6c2f481f793f9d3af12fb28009",
+      "supports": [
+        "actual_capture_identity"
+      ]
+    },
+    {
+      "path": "discovery/reports/phase2-publication-custody-v1/custody/envelope-1.json",
+      "bytes": 2777,
+      "sha256": "fe74a4a7b5a411ddee79c852335e3e330cce4e923e959d8162a4d1480900433c",
+      "supports": [
+        "actual_envelope_block",
+        "no_decompression_or_xml_decoding"
+      ]
+    },
+    {
+      "path": "discovery/reports/phase2-publication-custody-v1/custody/envelope-2.json",
+      "bytes": 2777,
+      "sha256": "fe74a4a7b5a411ddee79c852335e3e330cce4e923e959d8162a4d1480900433c",
+      "supports": [
+        "actual_envelope_block",
+        "no_decompression_or_xml_decoding"
+      ]
+    }
+  ],
+  "scope": "Retained public documentary records plus three tracked public custody receipts. Earlier documentary snapshots predate capture; appended receipts support the actual capture identity and envelope block. No workbook or private capture was read.",
+  "paper_excerpt_scope": "Search-returned Data Records text was summarized in the retained source-bindings; no local full-paper body or invented body hash.",
+  "actual_coordinates_known": false,
+  "actual_source_rows_inspected": false,
+  "runtime_tests_run": false,
+  "tracked_edits": false,
+  "new_remote_access": false,
+  "amendment": {
+    "reason": "Independent documentary review identified that the original seven source bindings did not themselves support the stated observed object SHA-256 or actual envelope block.",
+    "preserved_original": "source-bindings.original.json",
+    "original_sha256": "554f51dde15791d771b1bcd81120434f1e1edaf771f49d6135fd80a413cfa6bb",
+    "added_public_receipts": [
+      "discovery/reports/phase2-publication-custody-v1/custody/capture-1.json",
+      "discovery/reports/phase2-publication-custody-v1/custody/envelope-1.json",
+      "discovery/reports/phase2-publication-custody-v1/custody/envelope-2.json"
+    ],
+    "new_raw_source_access": false,
+    "new_private_capture_access": false,
+    "new_network_access": false,
+    "reference_scope_clarification": "Reference-token withholding applies only to this narrow dictionary proposal; a later frozen provenance roster must support auditable scientific citations and overlap evidence."
+  }
+}

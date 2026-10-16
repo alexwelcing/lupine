@@ -1,0 +1,135 @@
+{
+  "schema": "lupine.discovery.planning_figure_inventory.v1",
+  "scope": "Dataset-free explanatory figure and exact values; not a runtime test or scientific experiment.",
+  "excluded": [
+    "inventory.json",
+    ".mplconfig/"
+  ],
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 3901,
+      "sha256": "f65fa8c7bc82d1d546b45d9c882f45b67bb6a811681fb066828448cd1536ae49"
+    },
+    {
+      "path": "exact-values.csv",
+      "bytes": 28710,
+      "sha256": "f9d528d1a5332824ce3b8e1a4830301ec8f2c24bfbfbd20ae2cbe9f126519654"
+    },
+    {
+      "path": "exact-values.json",
+      "bytes": 87134,
+      "sha256": "737ca4ee06f33891d73cb9ae8caf9e118ba616d9d31613d4feccf32ba67085af"
+    },
+    {
+      "path": "first-generation/generation.json",
+      "bytes": 753,
+      "sha256": "318124e9f19bd024eabb091a61d78b1077765f76a0fed0ee3e1525408567a214"
+    },
+    {
+      "path": "first-generation/make_figure.py",
+      "bytes": 10092,
+      "sha256": "7d38dd0168c51a5ba0230e0ee060743e41584d6198f9515be1fc7d38ad4a0cdd"
+    },
+    {
+      "path": "first-generation/prospective-threshold-probability.png",
+      "bytes": 258133,
+      "sha256": "a25e3414ac39d6a22c49e9a76c181a5fbaf40a56d323c46917378bd6a1e8fd00"
+    },
+    {
+      "path": "first-generation/prospective-threshold-probability.svg",
+      "bytes": 132788,
+      "sha256": "7a1655ae1c34b21309c494bd47b4fb385fdb90806c0a7034ece9e70e23645663"
+    },
+    {
+      "path": "first-generation/source-bindings.json",
+      "bytes": 980,
+      "sha256": "b12abade14c03848887de1e85777ef347981638b2b0cd7fdbeb5154b26fe1e7c"
+    },
+    {
+      "path": "first-generation/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "first-generation/stdout.log",
+      "bytes": 369,
+      "sha256": "5907b9701a3b82af832d1a84d8a99e2c1b8535262f9ab2fd2e69ecdb0938e50c"
+    },
+    {
+      "path": "generation.json",
+      "bytes": 2093,
+      "sha256": "b9d795e18e8db27b8764515d259a57e179cb21c0e7da2aa1e0131b34d44cbc1e"
+    },
+    {
+      "path": "make_figure.py",
+      "bytes": 10090,
+      "sha256": "1ebe2af75dfcc6748055586f064a685d249a4bfdaafbd6965247099982a5a99b"
+    },
+    {
+      "path": "prospective-threshold-probability.png",
+      "bytes": 258487,
+      "sha256": "16deecfb60b5735c5da2e0cd7839c8fda648dabdd5ca980519ffb7df98504d2a"
+    },
+    {
+      "path": "prospective-threshold-probability.svg",
+      "bytes": 133546,
+      "sha256": "ba80ad184954889775b87fd58069a83645e262b81c91213529e792feb305fa49"
+    },
+    {
+      "path": "review.json",
+      "bytes": 2229,
+      "sha256": "446059a22ef63068d25320d39f02fce301bcf80c7c850f9b566e40025a1c2aac"
+    },
+    {
+      "path": "second-generation/generation.json",
+      "bytes": 1685,
+      "sha256": "170df37bb70f674cd36b931254fabf7c9430ad48155923223a013029d33b540c"
+    },
+    {
+      "path": "second-generation/make_figure.py",
+      "bytes": 10086,
+      "sha256": "ba317531307dd9d517a09baa64026c20c98d85d3705e1c4a2b54d17523d9609d"
+    },
+    {
+      "path": "second-generation/prospective-threshold-probability.png",
+      "bytes": 257670,
+      "sha256": "c930ddcd368e91c20ea77ca7b17889dab184820d7c93d1868991d83eafb94568"
+    },
+    {
+      "path": "second-generation/prospective-threshold-probability.svg",
+      "bytes": 132325,
+      "sha256": "fda0dc5d8da06c5d99278644266933c387a7c86dd2487872554a2ee4ecf61b85"
+    },
+    {
+      "path": "second-generation/source-bindings.json",
+      "bytes": 980,
+      "sha256": "5d22dbb8710d15c56e1d79c791795b5594df7819e40bd157e25e34775f72278d"
+    },
+    {
+      "path": "second-generation/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "second-generation/stdout.log",
+      "bytes": 369,
+      "sha256": "5907b9701a3b82af832d1a84d8a99e2c1b8535262f9ab2fd2e69ecdb0938e50c"
+    },
+    {
+      "path": "source-bindings.json",
+      "bytes": 980,
+      "sha256": "3f6371b6412b743cfb150a9e5d7cc0de0327c621c0ee60d1b40e5e8ff91de07e"
+    },
+    {
+      "path": "stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "stdout.log",
+      "bytes": 369,
+      "sha256": "5907b9701a3b82af832d1a84d8a99e2c1b8535262f9ab2fd2e69ecdb0938e50c"
+    }
+  ]
+}

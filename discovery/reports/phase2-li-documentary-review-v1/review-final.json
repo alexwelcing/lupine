@@ -1,0 +1,74 @@
+{
+  "schema": "lupine.discovery.li_documentary_proposal_review.v1",
+  "reviewed_at": "2026-10-16T06:09:00.323733+00:00",
+  "owner": "/root/phase2_planner",
+  "secondary_read_reviewer": "/root/phase2_planner/ui_review",
+  "status": "NO_BLOCKER_FOR_NONEXECUTABLE_DOCUMENTARY_PROPOSAL",
+  "supersedes_prerequisite_in": {
+    "path": ".cache/phase2-li-documentary-review-v1/review.json",
+    "bytes": 6695,
+    "sha256": "9284265abcf4a05ae3f964175837be5cdf660d506b7b5af2b3b2228ec8e3f08e"
+  },
+  "inputs": [
+    {
+      "path": ".cache/phase2-li-documentary-contract-v1/README.md",
+      "bytes": 8505,
+      "sha256": "7ccdf382941d535b72d833cae3fe92c0a5dce614f0ce3fe4358aa6467af526a3"
+    },
+    {
+      "path": ".cache/phase2-li-documentary-contract-v1/proposal.json",
+      "bytes": 3290,
+      "sha256": "a6e224719aceea3614ccbe8b70a4ffc454e2fbdd8fd3cee1de26c58049f7cc19"
+    },
+    {
+      "path": ".cache/phase2-li-documentary-contract-v1/source-bindings.json",
+      "bytes": 3943,
+      "sha256": "0120ad9a276788facbd582edc1a2b7fc6d63dddf3fad00f7a67ba7afaf4472ce"
+    },
+    {
+      "path": ".cache/phase2-li-documentary-contract-v1/source-bindings.original.json",
+      "bytes": 2053,
+      "sha256": "554f51dde15791d771b1bcd81120434f1e1edaf771f49d6135fd80a413cfa6bb"
+    }
+  ],
+  "resolved_finding": {
+    "id": "D1",
+    "status": "RESOLVED",
+    "reason": "Amended source bindings append the three existing public capture/envelope receipts. All ten public source byte lengths and SHA-256 bindings match. The first seven entries are unchanged; preserved source-bindings.original.json matches the original hash recorded in the first review."
+  },
+  "public_receipt_checks": {
+    "capture_receipt_sha256": "13f6f1b0354d15a214169cdd52e58d5349a30b6c2f481f793f9d3af12fb28009",
+    "both_envelope_receipts_sha256": "fe74a4a7b5a411ddee79c852335e3e330cce4e923e959d8162a4d1480900433c",
+    "envelope_bytes_equal": true,
+    "capture_to_envelope_digest_link_matches": true,
+    "object_sha256_matches_proposal": "9741f826f6a97db7c2c0efa89820d3bdae43e8beb53cafd893ccdf0bb74f64fa",
+    "capture_status": "CAPTURED / CAPTURE_VERIFIED",
+    "envelope_status": "BLOCKED_SCHEMA / BLOCKED_LAYOUT / ZIP_LAYOUT_UNSUPPORTED",
+    "decompression_and_xml_started_completed_arrays_empty": true,
+    "inspected_xml_bytes": 0,
+    "raw_workbook_buffer_read_by_prior_capture": true,
+    "worksheet_and_shared_strings_decoded": false,
+    "sampling_independence_established": false
+  },
+  "final_scope_findings": [
+    "All actual worksheet relationships, coordinates, join coordinates and permitted cell-type bindings remain null; executable remains false. No current reader or decoding authorization follows.",
+    "Current reference-token withholding is explicitly limited to the documentary projection. A later auditable citation/lineage/overlap roster requires its own separately frozen disclosure scope; no later scan is authorized by this proposal.",
+    "Mixed-role documentary/outcome text blocks; endpoint/condition values, formula results and raw identifiers are withheld from this pass.",
+    "Both competing documentary count claims remain stated, with all audited structural/paired/independent counts null and discrepancy unresolved.",
+    "The bound archive description supports only an upstream curation statement. Removed, changed and retained observations, source-selection effects and independent sampling remain unknown.",
+    "No new model, threshold, allocation, split, population, scientific readiness or superiority claim is selected."
+  ],
+  "optional_prior_suggestions": {
+    "D2": "No blocker: the overall nonexecutable/unbound boundary already prevents shared-string or worksheet decoding.",
+    "D3": "No blocker: upstream outlier uncertainty remains explicit in README and is not contradicted by JSON."
+  },
+  "scope": {
+    "new_reviewed_material": "Only the three explicitly authorized, already-public capture/envelope receipt files in addition to the originally named documentary evidence.",
+    "no_raw_source_or_private_capture_read": true,
+    "no_archive_or_network_access": true,
+    "no_runtime_tests_or_scientific_experiment": true,
+    "no_proposal_or_tracked_edits": true,
+    "no_implementation_or_scientific_choices": true
+  },
+  "limits": "This is source/claim/binding review only. It authenticates neither workbook coordinates nor physical validity, pairing, independence, outlier handling or scientific usefulness. The proposal remains non-executable."
+}

@@ -200,3 +200,11 @@ Every exact `Fraction` is serialized as a string, with unknown fields preserved
 as null. The workbench's existing loopback host/origin and content-type checks
 apply unchanged. These endpoints read no outcomes, archive reports or case
 answer resources, and do not run a fitted model or candidate selector.
+
+The [general proof note](../reports/phase2-planning-proof-v1/README.md) derives
+the rank/event identities for arbitrary counts under their stated premises,
+including the exact rise/drop formula when the rank changes. The
+[standalone figure and exact data](../reports/phase2-planning-figure-v1/README.md)
+illustrate two fixed hypothetical IID laws. These additions are written
+mathematics and explanatory arithmetic, not new scientific observations or
+mechanically checked Python refinement.

@@ -1,0 +1,39 @@
+{
+  "source_url": "https://api.datacite.org/dois/10.5281/zenodo.17846436",
+  "started_at": "2026-10-16T06:09:01.414167+00:00",
+  "scope": "DOI metadata only, no linked data files",
+  "http_status": 200,
+  "bytes": 25593,
+  "sha256": "a897e6645fc159571afdd57ebf69fa00aa543e7ff68c98ec1e90f45ad5f70a9b",
+  "doi": "10.5281/zenodo.17846436",
+  "url": "https://zenodo.org/doi/10.5281/zenodo.17846436",
+  "rightsList": [
+    {
+      "rights": "Creative Commons Attribution 4.0 International",
+      "rightsUri": "https://creativecommons.org/licenses/by/4.0/legalcode",
+      "schemeUri": "https://spdx.org/licenses/",
+      "rightsIdentifier": "cc-by-4.0",
+      "rightsIdentifierScheme": "SPDX"
+    }
+  ],
+  "dates": [
+    {
+      "date": "2025-12-08",
+      "dateType": "Issued"
+    }
+  ],
+  "publisher": "Zenodo",
+  "titles": [
+    {
+      "title": "NFDI-MatWerk/IUC02 Data schema for elevated temperature tensile data of Ni-based superalloys"
+    }
+  ],
+  "relatedIdentifiers": [
+    {
+      "relationType": "IsVersionOf",
+      "relatedIdentifier": "10.5281/zenodo.17846435",
+      "relatedIdentifierType": "DOI"
+    }
+  ],
+  "finished_at": "2026-10-16T06:09:03.128392+00:00"
+}

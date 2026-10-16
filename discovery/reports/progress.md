@@ -1269,3 +1269,44 @@ actual passes and the earlier author pass remain retained. Old capture/object
 and five frozen files are unchanged. No real header diagnostic has executed.
 Root now owns publish, exact remote/CI verification and clean package, followed
 by the source-frozen diagnostic only. G20/G21 scientific gates remain unresolved.
+
+## 2026-10-16T06:32:25.075355+00:00 — workbench verified; actual source diagnosis preserved
+
+Root verified runtime `41d3e31a14bea040fb37b0aa6a650d6d5e704551` on the remote
+branch and PR263. [Original push run 38858784217](https://github.com/alexwelcing/lupine/actions/runs/38858784217)
+completed all four jobs successfully. The clean local package passes 28 cases,
+six schemas and 15 installed checks, followed by the strict retained verifier.
+Independent byte audit matches all 2,522 source files, 306 runtime files and
+113 wheel RECORD digests. Its initial relative-path Git-listing failure and
+corrected `--full-tree` pass are preserved. No CI log totals, remote artifact
+download or bit-reproducible build are inferred. [Complete receipts](phase2-workbench-verification-v1/README.md).
+
+Only after those gates, two actual frozen header diagnostics return exit 2 and
+byte-identical BLOCKED_SCHEMA / MEMBER_FLAGS. All 306 runtime files, HEAD and
+clean worktree remain fixed. The first rejected member has a flag outside the
+old allowed mask; actual bits and later checks remain unknown. The whole raw
+buffer and internal directory names were read; no decompression, XML, worksheet
+or shared strings were decoded. Original custody profile, object and failure
+receipts are unchanged. No scientific eligibility, target validity, fit or
+split was assessed or performed. Pairing/conditions/counts/overlap/independent
+units remain unresolved.
+
+The independently reviewed [general proof note](phase2-planning-proof-v1/README.md)
+adds arbitrary-count derivations and the general adjacent-count transition
+identity; the [exact-data figure](phase2-planning-figure-v1/README.md) records
+122 fixed hypothetical cases and the ratio 39/40 for n19 to n20. These are
+written proofs and explanatory arithmetic, not new Lean builds or scientific
+experiments. The [unbound documentary proposal](phase2-li-documentary-contract-v1/README.md)
+retains its original source-binding gap and reviewed correction. [BAM/NETL
+source research](phase2-high-temperature-leads-v1/README.md) records public
+metadata, licenses, access failures and incidental documentary exposure; no
+linked measurement or schema file was acquired. A publication-copy helper
+initially had a syntax error before any copy ran; after correction its exact
+copy operation completed. This is not a runtime or scientific test failure.
+
+G19 is DONE at the verified runtime; G22 and G23 are DONE with BLOCKED_SCHEMA.
+Root owns the report-only publication/remote/CI checkpoint. The source-evidence
+agent reviews the ZIP member-flags predicate and public specification for the
+next separately frozen step. G20 remains unresolved; G21 remains blocked. All
+scientific negatives stand. No new DFT, exposed-test tuning, paid work or
+production deployment; no renewed schedule or continuous worker.

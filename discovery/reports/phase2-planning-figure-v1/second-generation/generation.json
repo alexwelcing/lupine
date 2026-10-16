@@ -1,0 +1,26 @@
+{
+  "scope": "Figure generation only; no test suite or scientific experiment.",
+  "reason_for_repeat": "Presentation-only legend placement and narrower fallback annotation; all exact data and input choices unchanged. Initial generation retained.",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    ".cache/phase2-planning-figure-v1/make_figure.py"
+  ],
+  "started_at": "2026-10-16T06:19:23.090607+00:00",
+  "finished_at": "2026-10-16T06:19:25.505056+00:00",
+  "exit_code": 0,
+  "source_before": {
+    "src/lupine_discovery/study_planning.py": "7a2b00bc81f8bc025b9bb3d6c6c212875d44a9839c4665ec67c86e46fe5f6d83",
+    "src/lupine_discovery/calibration.py": "33e71fba54813336af244230261cef639a334328dbd1578d995d377ead7d8f15",
+    "src/lupine_discovery/core.py": "c7bab15c662eaa79b6e6312271d3351e79ccb97ef42fcdfc830fdbbf3118d5a0",
+    ".cache/phase2-planning-figure-v1/make_figure.py": "ba317531307dd9d517a09baa64026c20c98d85d3705e1c4a2b54d17523d9609d"
+  },
+  "source_after": {
+    "src/lupine_discovery/study_planning.py": "7a2b00bc81f8bc025b9bb3d6c6c212875d44a9839c4665ec67c86e46fe5f6d83",
+    "src/lupine_discovery/calibration.py": "33e71fba54813336af244230261cef639a334328dbd1578d995d377ead7d8f15",
+    "src/lupine_discovery/core.py": "c7bab15c662eaa79b6e6312271d3351e79ccb97ef42fcdfc830fdbbf3118d5a0",
+    ".cache/phase2-planning-figure-v1/make_figure.py": "ba317531307dd9d517a09baa64026c20c98d85d3705e1c4a2b54d17523d9609d"
+  },
+  "stdout_sha256": "5907b9701a3b82af832d1a84d8a99e2c1b8535262f9ab2fd2e69ecdb0938e50c",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "new_test_pass_claim": false
+}

@@ -1,0 +1,76 @@
+{
+  "status": "FAIL",
+  "failure": "Traceback (most recent call last):\n  File \"/workspace/lupine-discovery-branch/discovery/.cache/phase2-workbench-artifact-review-v1/audit.py\", line 230, in <module>\n    result = run()\n             ^^^^^\n  File \"/workspace/lupine-discovery-branch/discovery/.cache/phase2-workbench-artifact-review-v1/audit.py\", line 111, in run\n    assert relative in expected\n           ^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+  "started_at": "2026-10-16T06:05:13.044870+00:00",
+  "finished_at": "2026-10-16T06:05:13.832478+00:00",
+  "elapsed_seconds": 0.7876171369998701,
+  "exit_code": 1,
+  "audit_script_sha256": "16164faa680a8dc3256e28eb5ddf26a67047cc1cf99bef68af41b247b1c49f5b",
+  "actual_git_commands": [
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit_code": 0,
+      "stdout_bytes": 41,
+      "stdout_sha256": "67a17f4badb0de33b81654af56a8864502ee03efc0e1f0c537e7f97da9462883",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "exit_code": 0,
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "41d3e31a14bea040fb37b0aa6a650d6d5e704551^{tree}"
+      ],
+      "exit_code": 0,
+      "stdout_bytes": 41,
+      "stdout_sha256": "962f084a3925b627fb6c941c640dc233fee6d922ec4304256b20ebf77fb58442",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "--show-object-format"
+      ],
+      "exit_code": 0,
+      "stdout_bytes": 5,
+      "stdout_sha256": "335277ee77cfc8d51d6602e4137232cf6041aac2bc663777e384b90d5ae74d51",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "git",
+        "ls-tree",
+        "-r",
+        "-z",
+        "41d3e31a14bea040fb37b0aa6a650d6d5e704551",
+        "--",
+        "discovery",
+        ".github/workflows/discovery-verify.yml"
+      ],
+      "exit_code": 0,
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-workbench-artifact-review-v1/audit.py"
+  ]
+}

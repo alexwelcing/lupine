@@ -1,0 +1,30 @@
+{
+  "status": "NO_BLOCKER",
+  "reviewed_at": "2026-10-16T06:14:14.755201+00:00",
+  "reviewer": "phase2_math",
+  "scope": "Read-only documentary/math-claim review using only the saved note, bindings, three DOI metadata records/receipts and saved provider responses. No new network, linked file, scientific private cache or test run.",
+  "note_sha256": "54191247eab5cb1455f506420ef5422081a609d4f685d1f1c4352750ce5f15a7",
+  "source_bindings_sha256": "4097046dbb9799b2991651ef411ee9cb1740f35e6b4cb89912e51e91e895bb89",
+  "actual_local_byte_checks": {
+    "bound_files": 11,
+    "all_sizes_and_sha256_match": true,
+    "metadata_receipts_with_matching_raw_response_and_fields": 3
+  },
+  "findings": [
+    "BAM tensile data DOI 10.5281/zenodo.17846617 and schema DOI 10.5281/zenodo.17846436 each have explicit version 1.0, the stated December 2025 Issued date, CC BY 4.0 rights and the stated IsVersionOf concept DOI in saved DataCite attributes. The note does not convert declared licensing or reference-data status into independent validation.",
+    "Saved BAM descriptions support CMSX-6 at 980 C, publisher-reported ISO 17025 laboratory accreditation/traceability, campaign versus specimen sheets, selected responses mixed with metadata, and result-bearing series headers. The page listing supports one workbook and three LIS files without establishing completeness, paired outcomes or independent campaigns.",
+    "Saved schema metadata supports eleven columns, CSV/XLSX distribution, hierarchy and requirement profile. The note correctly leaves actual field conformance and empirical completeness unverified.",
+    "NETL DOI 10.18141/1856486 identifies the described 2022 record and publisher; saved rightsList is empty and no version is asserted. The note correctly leaves rights, data-file access and paired outcomes unresolved.",
+    "The denied EDX page is a recorded 403 and the OSTI bibliography failure is 502. The separate DataCite renderer failures are distinct from successful bounded public DOI API requests; no retry or bypass of the denied EDX resource is implied.",
+    "Incidental composition, heat, aging/condition and aggregate uncertainty/temperature exposures are explicitly acknowledged. No blind-outcome, benchmark-selection, fitted-score-law or untouched-validation claim appears.",
+    "A publisher-stated 95 percent expanded measurement uncertainty at k=2 does not by itself provide a deterministic physical enclosure, prediction-error coverage, simultaneous selected-pool coverage, or IID panels. The mathematical distinctions in the note are sound."
+  ],
+  "wording_corrections_required": [],
+  "remaining_blockers": [],
+  "network_requests_by_reviewer": 0,
+  "linked_scientific_files_read": false,
+  "tests_rerun": false,
+  "source_readiness_established": false,
+  "scientific_claim_promoted": false,
+  "limitation": "This is consistency of saved metadata and declared scope, not a certification of accreditation, source completeness, source-file semantics, metrological coverage, statistical independence or materials performance."
+}

@@ -1,0 +1,26 @@
+{
+  "schema": "lupine.discovery.planning_figure_source_bindings.v1",
+  "python_version": "3.12.14",
+  "matplotlib_version": "3.10.8",
+  "source_files": {
+    "src/lupine_discovery/study_planning.py": {
+      "bytes": 9799,
+      "sha256": "7a2b00bc81f8bc025b9bb3d6c6c212875d44a9839c4665ec67c86e46fe5f6d83"
+    },
+    "src/lupine_discovery/calibration.py": {
+      "bytes": 5523,
+      "sha256": "33e71fba54813336af244230261cef639a334328dbd1578d995d377ead7d8f15"
+    },
+    "src/lupine_discovery/core.py": {
+      "bytes": 5305,
+      "sha256": "c7bab15c662eaa79b6e6312271d3351e79ccb97ef42fcdfc830fdbbf3118d5a0"
+    },
+    ".cache/phase2-planning-figure-v1/make_figure.py": {
+      "bytes": 10090,
+      "sha256": "1ebe2af75dfcc6748055586f064a685d249a4bfdaafbd6965247099982a5a99b"
+    }
+  },
+  "data_points": 122,
+  "new_test_pass_claim": false,
+  "scope": "Existing exact planner for two fixed hypothetical score laws; no outcomes, data sources, fitting or scientific choices."
+}

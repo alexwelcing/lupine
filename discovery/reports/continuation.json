@@ -14,7 +14,7 @@
   "default_timezone": "America/New_York",
   "next_run_time_returned_at_creation": null,
   "last_run_time_returned_at_creation": null,
-  "execution_status": "Renewed active user session: exact planner/custody5add passed CI and clean package; interface integrated; actual Li capture verified and schema blocked before decompression. Old automation remains disabled.",
+  "execution_status": "Renewed active work: workbench41d3 verified in CI/package and independently audited; actual source header diagnosis remains BLOCKED_SCHEMA / MEMBER_FLAGS. Original automation remains disabled.",
   "notification_policy": "Substantive daily milestone summary, actionable blocker, or final release decision; suppress unchanged status.",
   "scope": "Resume latest GitHub goal and implement the next bounded increment with available tools, testing and recording actual outcomes.",
   "limits": "Scheduling success does not prove future tool availability, a completed build, or uninterrupted execution. Check and record each run. Do not silently extend the bounded schedule.",
@@ -38,14 +38,14 @@
     "continuous_worker_started": false
   },
   "current_checkpoint": {
-    "recorded_at": "2026-10-16T05:59:42.875375+00:00",
-    "owner": "Root integration/publication; independent source diagnostic and mathematics review",
+    "recorded_at": "2026-10-16T06:32:25.075355+00:00",
+    "owner": "Root publication; evidence agent reviews the next separately frozen header-flags step",
     "goal_state": "ACTIVE_RENEWED_PHASE",
-    "published_commit": "5addf4f80e345afa50a4bcc26b9db24d220a3af5",
-    "published_ci_run": 38854925885,
+    "published_commit": "41d3e31a14bea040fb37b0aa6a650d6d5e704551",
+    "published_ci_run": 38858784217,
     "published_ci_all_four_jobs_pass": true,
-    "published_evidence": "reports/phase2-publication-custody-v1/README.md",
-    "working_checkpoint": "Reviewed planning browser/HTTP integration promoted; 65 full browser checks, 31 HTTP, 49 package and earlier23retained tests pass in held overlay; installed28cases/6schemas/15checks pass. New final-source CI pending.",
+    "published_evidence": "reports/phase2-workbench-verification-v1/README.md",
+    "working_checkpoint": "Completed actual all-four CI, clean28/6/15 package, strict retained verifier and independent byte audit. Two real header diagnostics agree on BLOCKED_SCHEMA / MEMBER_FLAGS. Publishing reports and independently reviewed general planning mathematics.",
     "actual_new_scientific_allocation_performed": false,
     "scientific_usefulness": "NO_GO unchanged; no new outcome values decoded",
     "li_capture": {
@@ -60,7 +60,7 @@
       "xml_bytes_decoded": 0,
       "raw_target_bearing_buffer_read": true
     },
-    "next_action": "Publish reviewed interface and separate header-only diagnostic; verify exact remote/CI and clean retained package. Only then run fixed diagnostic on existing captured object. Preserve schema block and all scientific NO_GO decisions.",
+    "next_action": "Verify report-only descendant publication/CI; review ZIP specification against MEMBER_FLAGS and freeze any further source inspection separately. Preserve original profile and all scientific NO_GO results; G20 unresolved, G21 blocked.",
     "automation_reenabled": false,
     "new_schedule_created": false,
     "continuous_worker_started": false,
@@ -72,12 +72,32 @@
       "mutation_performed": false
     },
     "header_diagnostic": {
-      "status": "PROMOTED_46_INTEGRATED_SYNTHETIC_TESTS_PASS_NOT_EXECUTED_ON_ACTUAL_SOURCE",
-      "author_tests": 13,
-      "independent_tests": 8,
-      "existing_custody_tests": 25,
-      "runtime_files": 306,
-      "report": "reports/phase2-li-layout-diagnostic-v1/README.md"
+      "status": "COMPLETE_BLOCKED_SCHEMA",
+      "reason": "MEMBER_FLAGS",
+      "legacy_zip_reason": "ZIP_LAYOUT_UNSUPPORTED",
+      "commit": "41d3e31a14bea040fb37b0aa6a650d6d5e704551",
+      "ci_run": 38858784217,
+      "two_public_receipts_identical": true,
+      "public_receipt_sha256": "50931018f877a66ee56cf522e5d8a0be35cfc35f2c8b7f34884f5ba6caba6ca0",
+      "runtime_files_unchanged": 306,
+      "raw_target_bearing_buffer_read": true,
+      "directory_names_decoded_internally": true,
+      "member_names_published": false,
+      "member_decompression_performed": false,
+      "xml_or_worksheet_decoding_performed": false,
+      "fits": 0,
+      "splits": 0,
+      "report": "reports/phase2-workbench-verification-v1/README.md"
+    },
+    "clean_package": {
+      "commit": "41d3e31a14bea040fb37b0aa6a650d6d5e704551",
+      "status": "PASS",
+      "cases": 28,
+      "schemas": 6,
+      "mandatory_checks": 15,
+      "strict_retained_verifier": "PASS",
+      "independent_artifact_audit": "PASS",
+      "report": "reports/phase2-workbench-verification-v1/README.md"
     }
   },
   "closure": {
@@ -248,6 +268,49 @@
       "cause": "Stale exact package-probe hash pins",
       "receipt": "reports/phase2-study-planning-v1/full-suite-first/execution.json",
       "repair_scope": "Explicit reviewed fixed-pin updates; 48 focused package tests passed; complete final-source CI pending"
+    }
+  },
+  "prior_workbench_integration_checkpoint": {
+    "recorded_at": "2026-10-16T05:59:42.875375+00:00",
+    "owner": "Root integration/publication; independent source diagnostic and mathematics review",
+    "goal_state": "ACTIVE_RENEWED_PHASE",
+    "published_commit": "5addf4f80e345afa50a4bcc26b9db24d220a3af5",
+    "published_ci_run": 38854925885,
+    "published_ci_all_four_jobs_pass": true,
+    "published_evidence": "reports/phase2-publication-custody-v1/README.md",
+    "working_checkpoint": "Reviewed planning browser/HTTP integration promoted; 65 full browser checks, 31 HTTP, 49 package and earlier23retained tests pass in held overlay; installed28cases/6schemas/15checks pass. New final-source CI pending.",
+    "actual_new_scientific_allocation_performed": false,
+    "scientific_usefulness": "NO_GO unchanged; no new outcome values decoded",
+    "li_capture": {
+      "status": "CAPTURED",
+      "object_sha256": "9741f826f6a97db7c2c0efa89820d3bdae43e8beb53cafd893ccdf0bb74f64fa",
+      "bytes": 183878,
+      "envelope_status": "BLOCKED_SCHEMA",
+      "engineering_status": "BLOCKED_LAYOUT",
+      "reason": "ZIP_LAYOUT_UNSUPPORTED",
+      "two_public_envelopes_identical": true,
+      "members_decompressed": 0,
+      "xml_bytes_decoded": 0,
+      "raw_target_bearing_buffer_read": true
+    },
+    "next_action": "Publish reviewed interface and separate header-only diagnostic; verify exact remote/CI and clean retained package. Only then run fixed diagnostic on existing captured object. Preserve schema block and all scientific NO_GO decisions.",
+    "automation_reenabled": false,
+    "new_schedule_created": false,
+    "continuous_worker_started": false,
+    "automation_observation": {
+      "receipt": "reports/phase2-study-planning-v1/automation-observation.json",
+      "observed_at_utc": "2026-10-16 04:48:50 UTC",
+      "is_enabled": false,
+      "next_run_time": null,
+      "mutation_performed": false
+    },
+    "header_diagnostic": {
+      "status": "PROMOTED_46_INTEGRATED_SYNTHETIC_TESTS_PASS_NOT_EXECUTED_ON_ACTUAL_SOURCE",
+      "author_tests": 13,
+      "independent_tests": 8,
+      "existing_custody_tests": 25,
+      "runtime_files": 306,
+      "report": "reports/phase2-li-layout-diagnostic-v1/README.md"
     }
   }
 }
