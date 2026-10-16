@@ -1,0 +1,26 @@
+{
+  "failures": [
+    {
+      "command": [
+        "git",
+        "archive",
+        "HEAD",
+        "--",
+        "discovery"
+      ],
+      "cwd": "/workspace/lupine-discovery-branch/discovery",
+      "exit_code": 128,
+      "error": "Pathspec was incorrectly relative to discovery subdirectory; corrected by running from repository root."
+    },
+    {
+      "command": [
+        "python",
+        ".cache/phase2-finite-combined-v1/run.py"
+      ],
+      "exit_code": 1,
+      "error": "Missing overlay after initial archive setup failed; no tests began."
+    }
+  ],
+  "product_changes_for_repair": false,
+  "scope": "Setup failures, no runtime test or scientific result"
+}

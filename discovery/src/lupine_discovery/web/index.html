@@ -125,7 +125,7 @@
       </section>
       <section id="view-planning" class="view" aria-labelledby="planning-title" hidden>
         <div class="page-heading"><div><p class="eyebrow">PROSPECTIVE / STUDY DESIGN</p><h1 id="planning-title">Plan the next study.</h1><p class="page-description">Explore exact consequences of declared assumptions before observing outcomes.</p></div><span class="page-index" aria-hidden="true">03 /</span></div>
-        <div class="validation-intro"><p>These calculations use no observed outcomes and do not establish scientific usefulness. Keep the scoring rule and evaluation population fixed independently of future panels.</p><p>IID means independent and identically distributed, conditional on that frozen rule. The binomial and zero-failure models need this unverified assumption; exchangeability alone does not provide it.</p></div>
+        <div class="validation-intro"><p>These calculations use no observed outcomes and do not establish scientific usefulness. Keep the scoring rule and evaluation population fixed independently of future panels.</p><p>IID means independent and identically distributed, conditional on that frozen rule. The threshold and IID zero-failure models need this unverified assumption; exchangeability alone does not provide it. The separate finite-population model instead assumes uniform sampling without replacement from a complete fixed panel frame.</p></div>
         <div class="planning-grid">
           <section class="panel planning-card" aria-labelledby="pool-plan-heading">
             <p class="eyebrow">CALIBRATION / THRESHOLD EVENT</p><h2 id="pool-plan-heading">Can a threshold meet a cutoff?</h2>
@@ -142,7 +142,7 @@
             <button id="pool-plan-download" class="button button-small button-outline" type="button" disabled>↓ Exact threshold plan JSON</button>
           </section>
           <section class="panel planning-card" aria-labelledby="zero-plan-heading">
-            <p class="eyebrow">EVALUATION / ZERO FAILURES</p><h2 id="zero-plan-heading">What could zero failures resolve?</h2>
+            <p class="eyebrow">IID EVALUATION / ZERO FAILURES</p><h2 id="zero-plan-heading">What could zero failures resolve?</h2>
             <p class="field-help">Find the smallest panel count within a budget that could resolve a fixed failure-probability ceiling if zero failures occur. This is best-case resolution, not statistical power.</p>
             <form id="zero-plan-form" class="planning-form" novalidate>
               <label class="field-label" for="zero-plan-ceiling">Failure-probability ceiling ρ</label><input id="zero-plan-ceiling" name="loss_ceiling" type="text" maxlength="128" value="1/10" autocomplete="off" aria-describedby="zero-plan-ceiling-help"><p id="zero-plan-ceiling-help" class="field-help">Exact decimal or rational, strictly between 0 and 1.</p>
@@ -153,6 +153,20 @@
             <p id="zero-plan-status" class="notice planning-status" role="status" aria-live="polite">No plan calculated.</p>
             <section id="zero-plan-result" class="planning-result" aria-label="Zero-failure planning result" hidden></section>
             <button id="zero-plan-download" class="button button-small button-outline" type="button" disabled>↓ Exact resolution plan JSON</button>
+          </section>
+          <section class="panel planning-card" aria-labelledby="finite-plan-heading">
+            <p class="eyebrow">FINITE POPULATION / ZERO FAILURES</p><h2 id="finite-plan-heading">What could a fixed archive resolve?</h2>
+            <p class="field-help">Plan a uniform sample without replacement from a complete fixed residual population. The bound concerns that finite population only; it does not establish future-population risk or statistical power.</p>
+            <form id="finite-plan-form" class="planning-form" novalidate>
+              <label class="field-label" for="finite-plan-population">Complete residual population M</label><input id="finite-plan-population" name="population_panels" type="text" inputmode="numeric" maxlength="3" value="100" autocomplete="off" aria-describedby="finite-plan-population-help"><p id="finite-plan-population-help" class="field-help">Number of distinct panel IDs in the complete frame remaining after any frozen training and calibration allocation. Integer from 1 to 256. Freeze membership, policy and one binary failure endpoint before selecting evaluation panels.</p>
+              <label class="field-label" for="finite-plan-ceiling">Finite-population failure-fraction ceiling ρ</label><input id="finite-plan-ceiling" name="loss_ceiling" type="text" maxlength="128" value="1/10" autocomplete="off" aria-describedby="finite-plan-ceiling-help"><p id="finite-plan-ceiling-help" class="field-help">Exact decimal or rational, strictly between 0 and 1. The null includes every attainable failure fraction at or above this ceiling.</p>
+              <label class="field-label" for="finite-plan-significance">Significance η</label><input id="finite-plan-significance" name="significance" type="text" maxlength="128" value="1/20" autocomplete="off" aria-describedby="finite-plan-significance-help"><p id="finite-plan-significance-help" class="field-help">Exact decimal or rational, strictly between 0 and 1. A null bound equal to this value qualifies.</p>
+              <label class="field-label" for="finite-plan-maximum">Maximum sampled evaluation panels</label><input id="finite-plan-maximum" name="maximum_evaluation_panels" type="text" inputmode="numeric" maxlength="3" value="100" autocomplete="off" aria-describedby="finite-plan-maximum-help"><p id="finite-plan-maximum-help" class="field-help">Integer from 0 through M. Every subset of this size must be equally likely; do not exclude selected panels, redraw them or tune the policy after outcomes.</p>
+              <button id="finite-plan-submit" class="button button-primary" type="submit">Calculate finite-population resolution <span aria-hidden="true">→</span></button>
+            </form>
+            <p id="finite-plan-status" class="notice planning-status" role="status" aria-live="polite">No plan calculated.</p>
+            <section id="finite-plan-result" class="planning-result" aria-label="Finite-population zero-failure planning result" hidden></section>
+            <button id="finite-plan-download" class="button button-small button-outline" type="button" disabled>↓ Exact finite-population plan JSON</button>
           </section>
         </div>
         <p class="planning-limits field-help">Exact inputs use plain decimal or rational notation, with no exponents. Each normalized numerator and denominator must fit in 32 bits. The 256-panel limit is an engineering bound. No input is fitted from an archive, and no plan changes a candidate-selection decision or a recorded scientific result.</p>

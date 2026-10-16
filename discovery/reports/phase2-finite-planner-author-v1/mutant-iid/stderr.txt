@@ -1,0 +1,14 @@
+test_hand_counted_without_replacement_differs_from_iid (test_finite_planning.FinitePlanningWorldTests.test_hand_counted_without_replacement_differs_from_iid) ... FAIL
+
+======================================================================
+FAIL: test_hand_counted_without_replacement_differs_from_iid (test_finite_planning.FinitePlanningWorldTests.test_hand_counted_without_replacement_differs_from_iid)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-finite-planner-candidate-v1/mutant-iid/tests/test_finite_planning.py", line 65, in test_hand_counted_without_replacement_differs_from_iid
+    self.assertEqual(finite.zero_failure_null_bound, F(1, 6))
+AssertionError: Fraction(1, 4) != Fraction(1, 6)
+
+----------------------------------------------------------------------
+Ran 1 test in 0.004s
+
+FAILED (failures=1)

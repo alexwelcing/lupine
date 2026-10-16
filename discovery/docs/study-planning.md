@@ -208,3 +208,43 @@ including the exact rise/drop formula when the rank changes. The
 illustrate two fixed hypothetical IID laws. These additions are written
 mathematics and explanatory arithmetic, not new scientific observations or
 mechanically checked Python refinement.
+
+## Separate fixed finite-population planning
+
+The workbench also offers **What could a fixed archive resolve?**, using the
+[finite-population planner](finite-population-planning.md). Its probability is
+over uniform sampling without replacement from a complete, frozen residual
+frame of distinct panel IDs. It does not require IID failure labels; it also
+does not establish risk for future materials. Membership, policy, endpoint and
+sample size must be fixed independently of the evaluation outcomes.
+
+```sh
+lupine-discovery plan-finite-zero-loss --population-panels 10 --loss-ceiling 1/5 --significance 1/20 --maximum-evaluation-panels 10
+```
+
+This hypothetical ten-panel frame needs at least two failures to satisfy the
+null. Eight sampled panels give the first qualifying zero-failure null bound,
+exactly `1/45`; seven give `1/15`, above the requested significance. These are
+combinatorial calculations, not observed outcomes.
+
+`POST /api/plan-finite-zero-loss` accepts exactly `population_panels`,
+`loss_ceiling`, `significance` and `maximum_evaluation_panels`. Population size
+is an integer from 1 through 256; the cap is an integer from zero through that
+size. Risk/significance use the existing bounded exact-number grammar. The
+4096-byte body, duplicate-field, nesting, local-origin and strict type guards
+apply. No outcome, source or evidence field is accepted. The CLI requires all
+four parameters; `--output` optionally writes the exact JSON.
+
+CLI, HTTP and exported browser JSON share schema
+`lupine.discovery.finite_zero_failure_resolution_plan.v1`. Null minimum fields
+mean insufficient resolution within the cap. A zero bound means a zero-failure
+sample is impossible under the stated finite null; it is not measured success
+or zero future risk. The interface shows the discretized null failure count
+and fraction, exact bounds, finite scope and unverified sampling premise.
+Changing inputs invalidates result/export, and stale responses cannot restore
+them. JavaScript performs no probability or sample-size calculation.
+
+The [general finite-archive design note](../reports/phase2-finite-archive-design-v1/README.md)
+separates this conditional fixed-policy inference from marginal conformal
+coverage. It is independently reviewed written mathematics, not a new Lean
+compilation or proof that any scientific archive satisfies the premises.

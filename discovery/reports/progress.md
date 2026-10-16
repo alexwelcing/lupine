@@ -1335,3 +1335,56 @@ scientific gates and all prior negatives stand. Meanwhile independently reviewed
 finite-population mathematics, exact API and transport/UI candidates remain in
 ignored overlays; this is prospective arithmetic, not an archive experiment.
 No source allocation, fit, target values, new DFT, schedule or continuous worker.
+
+
+## Finite-population workbench candidate — October 16
+
+The separate exact finite-frame planner, CLI, guarded HTTP route and third Study
+planning form are integrated in an isolated overlay. Actual checks pass: 76
+planning/transport tests, 49 package tests, 23 retained-artifact tests and a fresh
+noneditable wheel with 28 demonstrations, six schemas and 16 required checks.
+The maintained browser run passes all 73 checks; an independent browser review
+passes eight focused groups and rejects an intentional stale-response mutation.
+The initial stale 15-check expectation failure and all deliberate arithmetic
+mutations remain recorded. Source counts identify the tested overlays; these
+passes do not stand in for the forthcoming committed source's CI or retention.
+
+The finite-frame result assumes a complete fixed residual panel population and
+uniform sampling without replacement at a fixed evaluation count. It neither
+assumes IID labels nor licenses an IID future-material risk claim. No source
+criterion, loss endpoint, allocation, fit or exposed scientific benchmark was
+changed. All earlier scientific NO-GO decisions remain unchanged. Root owns
+publication and verification; the expired automation remains disabled.
+
+Evidence: [finite workbench](phase2-finite-workbench-v1/README.md).
+
+
+## 2026-10-16T07:25:19.733870+00:00 — actual flag family verified; next integrated increment
+
+Published f7c6ccd passes all four original-push jobs in run38864077153, observed
+07:22:22 UTC, and clean28-case/six-schema/15-check packaging plus strict retention.
+Ancestor ea69d01 also passes its own four jobs. A transient401 ended the first CI
+observer; its failure and original observations remain, a fresh observer verified
+the same original run, and the waiting supervisor was stopped before any actual
+command. No CI rerun or unexecuted-test pass is inferred.
+
+The unchanged recorder then ran the two fixed flag diagnoses at07:23:10–13. Both
+exit2/BLOCKED_SCHEMA/DEFLATE_OPTION_FLAGS_ONLY with identical publicSHA74404679…,
+309runtimefiles unchanged and no member/XML/worksheet decoding. [Actual evidence](phase2-li-flag-verification-v1/README.md)
+preserves source/capture identity and the narrower first-entry scope. G24 is DONE
+with schema blocked. This qualifies the new reader's prerequisite, not its own
+future actual result.
+
+Root now integrates the independently reviewed finite-population workbench and
+separate compatible-envelope profile. The latter has17author/16independent tests
+passing with the original fixture-only failure preserved and all13older frozen
+files unchanged. Root next runs combined-source checks, publishes, verifies exact
+remote/CI and clean packaging, then executes only the new profile's two fixed
+commands. [Next schema design](phase2-li-next-schema-design-v1/README.md) remains
+prospective and unbound. G20/G21 and all scientific NO-GO remain unchanged. No new
+DFT, target-value interpretation, allocation, fit, exposed-set tuning or schedule.
+
+Integration result at07:26:10 UTC: all109combined Li tests pass, all317runtime
+files unchanged. The source/recorders/logs are retained with the compatible
+profile report. Root proceeds to commit and exact remote/CI/clean-package checks;
+no new actual reader or scientific run is inferred.

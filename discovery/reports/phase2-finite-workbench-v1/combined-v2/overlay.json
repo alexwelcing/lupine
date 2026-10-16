@@ -1,0 +1,86 @@
+{
+  "base_commit": "ea69d01e144747c97bf288b37249f39af9e8f715",
+  "scope": "Repaired isolated overlay; first retained-test failure preserved",
+  "copyset": [
+    {
+      "source": ".cache/phase2-finite-planner-candidate-v1/promotion/docs/finite-population-planning.md",
+      "destination": "docs/finite-population-planning.md",
+      "sha256": "11f4efe987632293bfc8dfcbd24a32d3a05e4c9e23624c9933ec030028de3414"
+    },
+    {
+      "source": ".cache/phase2-finite-planner-candidate-v1/promotion/src/lupine_discovery/finite_planning.py",
+      "destination": "src/lupine_discovery/finite_planning.py",
+      "sha256": "027785ccdf24f6e8cf9b7a8ac98987b821fcdb19c875bbe8d2ba52d2fc3895f8"
+    },
+    {
+      "source": ".cache/phase2-finite-planner-candidate-v1/promotion/tests/test_finite_planning.py",
+      "destination": "tests/test_finite_planning.py",
+      "sha256": "032f9643e077caaa39f7c021d4e58b79f8d99fadbc226490f23756869d083adb"
+    },
+    {
+      "source": ".cache/phase2-finite-integration-v1/promotion/scripts/package_smoke.py",
+      "destination": "scripts/package_smoke.py",
+      "sha256": "cb4cb5f37cf9146d007ddb7af3599ba0e31180862825230c00fc995cf342d93e"
+    },
+    {
+      "source": ".cache/phase2-finite-integration-v1/promotion/scripts/verify_retained_artifacts.py",
+      "destination": "scripts/verify_retained_artifacts.py",
+      "sha256": "22455c93a2539868cf8a9dda76b67413eefe05917603718f19eef1585a1c741d"
+    },
+    {
+      "source": ".cache/phase2-finite-integration-v1/promotion/src/lupine_discovery/cli.py",
+      "destination": "src/lupine_discovery/cli.py",
+      "sha256": "e5bb4a838f989bba85e7435e6a7aff5e658e09f23d032ad4082f4dc5318d1a61"
+    },
+    {
+      "source": ".cache/phase2-finite-integration-v1/promotion/src/lupine_discovery/server.py",
+      "destination": "src/lupine_discovery/server.py",
+      "sha256": "e46f601a1689f0d2146682b90fccf1f015e9c171dbab0af81f1e4905c6df29dc"
+    },
+    {
+      "source": ".cache/phase2-finite-integration-v1/promotion/tests/test_finite_planning_transport.py",
+      "destination": "tests/test_finite_planning_transport.py",
+      "sha256": "bd0dbddc537626059b8e72dfdd200465242788fb06c84e406d0ce1b9c2c6b480"
+    },
+    {
+      "source": ".cache/phase2-finite-integration-v1/promotion/tests/test_package_retention.py",
+      "destination": "tests/test_package_retention.py",
+      "sha256": "88a939e73efb90c053ce15e3a95a23413400a002b79b510c61ce397a0c803b45"
+    },
+    {
+      "source": ".cache/phase2-finite-integration-v1/promotion/tests/test_package_retention_review.py",
+      "destination": "tests/test_package_retention_review.py",
+      "sha256": "e265691af8ef3e9af5d3a0ef3060959187c15291db20475d8b7e7798b9af789a"
+    },
+    {
+      "source": ".cache/phase2-finite-integration-v1/promotion/tests/test_retained_mpea_transport.py",
+      "destination": "tests/test_retained_mpea_transport.py",
+      "sha256": "b841a8dcc5ac955f3e82a7de0e34186e9d752552c022a750c3cdec85c94da84a"
+    },
+    {
+      "source": ".cache/phase2-finite-ui-candidate-v1/promotion/scripts/browser_smoke.py",
+      "destination": "scripts/browser_smoke.py",
+      "sha256": "c6d765d5134a8427408748e516f60480e27df7acbb1f5aedef6ccd10f9136d1c"
+    },
+    {
+      "source": ".cache/phase2-finite-ui-candidate-v1/promotion/scripts/finite_planning_browser_checks.py",
+      "destination": "scripts/finite_planning_browser_checks.py",
+      "sha256": "50c6ba74701388c8a91b62ff2d399d18e572de2fc9aaa7acfb9962030fda9390"
+    },
+    {
+      "source": ".cache/phase2-finite-ui-candidate-v1/promotion/src/lupine_discovery/web/index.html",
+      "destination": "src/lupine_discovery/web/index.html",
+      "sha256": "553c0bb7d8d31699b519b4c24c05dae5af659b996fe510edab26d3fe6baf29b9"
+    },
+    {
+      "source": ".cache/phase2-finite-ui-candidate-v1/promotion/src/lupine_discovery/web/planner.js",
+      "destination": "src/lupine_discovery/web/planner.js",
+      "sha256": "92a3b8e5f4d4abc61c3471b761a0745ccd66a9ec8327d4f724ba8635e69e530c"
+    },
+    {
+      "source": ".cache/phase2-finite-planner-review-v1/test_finite_planning_review.py",
+      "destination": "tests/test_finite_planning_review.py",
+      "sha256": "1ea22055827ca4d4c0e1ac13ae8003a631bbcf6dcab1081abcf5ae4db3adb0c2"
+    }
+  ]
+}

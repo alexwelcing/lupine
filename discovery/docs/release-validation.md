@@ -522,3 +522,37 @@ This narrows the original profile mismatch; it does not identify the actual
 bits, prove corruption, validate schema or resolve any scientific gate. The
 general written planning proof and hypothetical exact-data figure do not change
 the 130-statement Lean inventory or the physical/general-superiority NO-GO.
+
+
+## Finite-population workbench candidate — October 16
+
+The separate exact finite-frame planner, CLI, guarded HTTP route and third Study
+planning form are integrated in an isolated overlay. Actual checks pass: 76
+planning/transport tests, 49 package tests, 23 retained-artifact tests and a fresh
+noneditable wheel with 28 demonstrations, six schemas and 16 required checks.
+The maintained browser run passes all 73 checks; an independent browser review
+passes eight focused groups and rejects an intentional stale-response mutation.
+The initial stale 15-check expectation failure and all deliberate arithmetic
+mutations remain recorded. Source counts identify the tested overlays; these
+passes do not stand in for the forthcoming committed source's CI or retention.
+
+The finite-frame result assumes a complete fixed residual panel population and
+uniform sampling without replacement at a fixed evaluation count. It neither
+assumes IID labels nor licenses an IID future-material risk claim. No source
+criterion, loss endpoint, allocation, fit or exposed scientific benchmark was
+changed. All earlier scientific NO-GO decisions remain unchanged. Root owns
+publication and verification; the expired automation remains disabled.
+
+Evidence: [finite workbench](../reports/phase2-finite-workbench-v1/README.md).
+
+
+## Verified flag-family checkpoint and separate finite planning — October 16
+
+Published f7c6ccd passes its four exact-commit jobs and clean retained packaging
+(28 cases/six schemas/15 checks), followed by strict verification. Two actual
+source diagnostics identify DEFLATE_OPTION_FLAGS_ONLY and preserve BLOCKED_SCHEMA,
+all309runtimefiles and zero member/XML decoding. [Receipts and observer recovery](../reports/phase2-li-flag-verification-v1/README.md)
+state the exact scope. The new finite planning interface and compatible-envelope
+profile require their own published-source CI/retention. Finite-frame arithmetic
+does not imply future-risk coverage; supported ZIP/XML structure does not resolve
+source schema or scientific usefulness. No historical claim tier is upgraded.

@@ -1,0 +1,1826 @@
+{
+  "description": "Two synthetic observation options in the same explicit physical context share theta=1+z. B is conditionally better; field cancellation does not imply transfer between materials. Constructed algebra, not a material prediction.",
+  "projection": {
+    "anchors": [],
+    "blocks": [
+      {
+        "block_id": "shared-within-context",
+        "field_bound_basis": "declared_bound",
+        "field_bound_reference": "The constructed example assumes -1 <= z <= 1",
+        "latent_bounds": [
+          [
+            "-1",
+            "1"
+          ]
+        ],
+        "latent_ids": [
+          "z"
+        ],
+        "matrix": [
+          [
+            "1"
+          ]
+        ],
+        "offset": [
+          "1"
+        ],
+        "parameter_ids": [
+          "theta"
+        ],
+        "parameter_units": [
+          "synthetic-score-unit"
+        ],
+        "parameterization_reference": "Declared common-image relation theta = 1 + z",
+        "premise_status": "assumed_unverified",
+        "scope": {
+          "context": {
+            "composition_id": "synthetic-composition",
+            "material_id": "synthetic-system",
+            "operating_conditions_id": "fixed-synthetic-conditions",
+            "scenario_id": "projection-shared-field",
+            "structure_id": "fixed-synthetic-structure"
+          },
+          "descriptor_id": "one-fixed-coordinate",
+          "model_id": "synthetic-model",
+          "model_version": "1",
+          "observation_family": "synthetic-observations",
+          "reference_method": "constructed-reference"
+        },
+        "source_ids": [
+          "declared-example"
+        ]
+      }
+    ],
+    "candidates": [
+      {
+        "candidate_id": "00xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "01xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "02xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "03xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "04xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "05xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "06xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "07xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "08xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "09xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "10xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "11xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "12xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "13xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "14xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "15xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "16xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "17xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "18xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "19xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "20xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "21xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "22xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "23xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "24xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "25xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "26xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "27xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "28xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "29xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "30xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "31xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "32xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "33xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "34xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "35xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "36xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "37xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "38xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "39xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "40xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "41xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "42xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "43xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "44xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "45xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "46xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "47xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "48xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "49xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "50xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "51xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "52xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "53xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "54xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "55xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "56xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "57xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "58xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "59xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "60xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "61xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "62xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      },
+      {
+        "candidate_id": "63xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "constraints": {},
+        "context": {
+          "composition_id": "synthetic-composition",
+          "material_id": "synthetic-system",
+          "operating_conditions_id": "fixed-synthetic-conditions",
+          "scenario_id": "projection-shared-field",
+          "structure_id": "fixed-synthetic-structure"
+        },
+        "score": {
+          "conversion_reference": "Identity target map applied to the entire expression",
+          "observation_id": "A-value",
+          "offset": "0",
+          "output_scope": {
+            "quantity": "score",
+            "reference": "minimize constructed value",
+            "scenario_id": "projection-shared-field",
+            "unit": "synthetic-score-unit"
+          },
+          "scale": "1",
+          "source_ids": [
+            "declared-example"
+          ]
+        }
+      }
+    ],
+    "constraint_scopes": {},
+    "objective_scope": {
+      "quantity": "score",
+      "reference": "minimize constructed value",
+      "scenario_id": "projection-shared-field",
+      "unit": "synthetic-score-unit"
+    },
+    "observations": [
+      {
+        "block_id": "shared-within-context",
+        "bound_basis": "declared_bound",
+        "bound_reference": "Declared enclosure for this constructed observation",
+        "discrepancy_radius": "1/4",
+        "field_scope": {
+          "context": {
+            "composition_id": "synthetic-composition",
+            "material_id": "synthetic-system",
+            "operating_conditions_id": "fixed-synthetic-conditions",
+            "scenario_id": "projection-shared-field",
+            "structure_id": "fixed-synthetic-structure"
+          },
+          "descriptor_id": "one-fixed-coordinate",
+          "model_id": "synthetic-model",
+          "model_version": "1",
+          "observation_family": "synthetic-observations",
+          "reference_method": "constructed-reference"
+        },
+        "nominal": "5",
+        "observation_id": "A-value",
+        "premise_status": "assumed_unverified",
+        "source_ids": [
+          "declared-example"
+        ],
+        "source_scope": {
+          "quantity": "source-value",
+          "reference": "constructed quantity",
+          "scenario_id": "projection-shared-field",
+          "unit": "synthetic-score-unit"
+        },
+        "weights": [
+          "1"
+        ]
+      },
+      {
+        "block_id": "shared-within-context",
+        "bound_basis": "declared_bound",
+        "bound_reference": "Declared enclosure for this constructed observation",
+        "discrepancy_radius": "1/4",
+        "field_scope": {
+          "context": {
+            "composition_id": "synthetic-composition",
+            "material_id": "synthetic-system",
+            "operating_conditions_id": "fixed-synthetic-conditions",
+            "scenario_id": "projection-shared-field",
+            "structure_id": "fixed-synthetic-structure"
+          },
+          "descriptor_id": "one-fixed-coordinate",
+          "model_id": "synthetic-model",
+          "model_version": "1",
+          "observation_family": "synthetic-observations",
+          "reference_method": "constructed-reference"
+        },
+        "nominal": "4",
+        "observation_id": "B-value",
+        "premise_status": "assumed_unverified",
+        "source_ids": [
+          "declared-example"
+        ],
+        "source_scope": {
+          "quantity": "source-value",
+          "reference": "constructed quantity",
+          "scenario_id": "projection-shared-field",
+          "unit": "synthetic-score-unit"
+        },
+        "weights": [
+          "1"
+        ]
+      }
+    ],
+    "premise_status": "assumed_unverified",
+    "relation_reference": "One common synthetic field plus separately bounded observation discrepancies",
+    "scenario_id": "projection-shared-field",
+    "sources": [
+      {
+        "reference": "Constructed equations, not physical evidence",
+        "sha256": null,
+        "source_id": "declared-example",
+        "source_uri": "urn:lupine:synthetic:projection-options:v1"
+      }
+    ]
+  },
+  "schema": "lupine.discovery.projection_problem.v1",
+  "screening": {
+    "consistency_point": [
+      "0",
+      "0",
+      "0"
+    ],
+    "limits": {
+      "max_certificate_terms": 512,
+      "max_integer_bits": 2048,
+      "max_operations": 100000,
+      "max_witness_pairs": 4096
+    },
+    "proofs": []
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "author_handoff_files_checked": 103,
+  "author_handoff_mismatches": [],
+  "author_execution_exit": 0,
+  "author_runtime_files": 310,
+  "author_source_unchanged": true,
+  "author_elapsed_seconds": 144.08017203399868,
+  "author_browser_check_count": 73,
+  "author_javascript_errors": [],
+  "old_browser_asserts": 167,
+  "candidate_browser_asserts": 167,
+  "existing_asserts_equal": true,
+  "author_overlay_vs_independent_overlay_changed": [
+    "tests/test_package_retention.py",
+    "tests/test_retained_mpea_transport.py"
+  ],
+  "independent_overlay_added": [
+    "tests/test_finite_planning_review.py"
+  ],
+  "candidate_promotion_product_equal": true,
+  "author_log_hashes_match": true,
+  "author_handoff_sha256": "49f5455e410b101e36a059d4f828a397a321b381b44ac5a815cfc9225eaf9c8c",
+  "author_execution_sha256": "f726f1ae8fd8ba6fe671d114f074010c6da778c9760f9ce5420b2920779dff6b",
+  "author_browser_report_sha256": "a134a82cbd3424cc02161e73b44e15d24588d0461580dfd2c026af970872dfc7"
+}

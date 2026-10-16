@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "scripts/browser_smoke.py"
+  ],
+  "cwd": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-finite-combined-v1/mirror/discovery",
+  "started_at": "2026-10-16T06:51:50.983763+00:00",
+  "source_scope": "uncommitted combined overlay",
+  "base_commit": "ea69d01e144747c97bf288b37249f39af9e8f715",
+  "runtime_files": 310
+}

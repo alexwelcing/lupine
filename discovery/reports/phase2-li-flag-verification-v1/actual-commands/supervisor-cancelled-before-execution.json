@@ -1,0 +1,8 @@
+{
+  "observed_at": "2026-10-16T07:19:07.477905+00:00",
+  "pid": 22606,
+  "action": "Terminate only waiting supervisor before any diagnostic attempt",
+  "reason": "Original CI observer exited on transient401; run recorder explicitly from fresh execution environment after recovered exact CI observation.",
+  "actual_diagnostic_started": false,
+  "next_action": "After exact recovered CI succeeds, copy validated final receipt and invoke same frozen run_after_ci.py without modification."
+}

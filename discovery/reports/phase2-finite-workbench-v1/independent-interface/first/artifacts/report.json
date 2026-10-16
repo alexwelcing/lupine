@@ -1,0 +1,143 @@
+{
+  "scope": "independent synthetic browser review; no observations or scientific experiment",
+  "checks": [
+    "enumerated_pair_probability_equality_decimal_equivalence_exact_export_and_scope",
+    "four_accessible_names_help_references_live_status_and_keyboard_tab_order",
+    "zero_cap_nulls_and_census_zero_are_hypothetical_not_observed_success",
+    "per_form_invalidation_preserves_iid_plans_and_real_http_error_recovers",
+    "stale_success_and_stale_error_ignored_after_two_frame_json_completion_barrier",
+    "forged_scope_premise_future_claim_and_extra_response_field_fail_closed",
+    "exact_details_export_match_and_desktop_mobile_320_no_horizontal_overflow",
+    "navigation_preserves_result_and_only_four_declared_inputs_reach_finite_route"
+  ],
+  "check_count": 8,
+  "javascript_errors": [],
+  "prohibited_scientific_calls": [],
+  "requests": [
+    {
+      "url": "http://127.0.0.1:34725/",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:34725/styles.css",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:34725/mpea.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:34725/planner.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:34725/app.js",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:34725/api/catalog",
+      "method": "GET",
+      "body": null
+    },
+    {
+      "url": "http://127.0.0.1:34725/api/plan-finite-zero-loss",
+      "method": "POST",
+      "body": "{\"population_panels\":5,\"loss_ceiling\":\"2/5\",\"significance\":\"3/10\",\"maximum_evaluation_panels\":2}"
+    },
+    {
+      "url": "http://127.0.0.1:34725/api/plan-finite-zero-loss",
+      "method": "POST",
+      "body": "{\"population_panels\":5,\"loss_ceiling\":\"0.4\",\"significance\":\"0.3\",\"maximum_evaluation_panels\":2}"
+    },
+    {
+      "url": "http://127.0.0.1:34725/api/plan-finite-zero-loss",
+      "method": "POST",
+      "body": "{\"population_panels\":5,\"loss_ceiling\":\"2/5\",\"significance\":\"3/10\",\"maximum_evaluation_panels\":0}"
+    },
+    {
+      "url": "http://127.0.0.1:34725/api/plan-finite-zero-loss",
+      "method": "POST",
+      "body": "{\"population_panels\":5,\"loss_ceiling\":\"2/5\",\"significance\":\"3/10\",\"maximum_evaluation_panels\":5}"
+    },
+    {
+      "url": "http://127.0.0.1:34725/api/plan-pool",
+      "method": "POST",
+      "body": "{\"calibration_count\":19,\"alpha\":\"1/10\",\"cutoff\":\"3/4\",\"iid_score_probability\":null}"
+    },
+    {
+      "url": "http://127.0.0.1:34725/api/plan-zero-loss",
+      "method": "POST",
+      "body": "{\"loss_ceiling\":\"1/10\",\"significance\":\"1/20\",\"maximum_evaluation_panels\":100}"
+    },
+    {
+      "url": "http://127.0.0.1:34725/api/plan-finite-zero-loss",
+      "method": "POST",
+      "body": "{\"population_panels\":5,\"loss_ceiling\":\"2/5\",\"significance\":\"1\",\"maximum_evaluation_panels\":2}"
+    },
+    {
+      "url": "http://127.0.0.1:34725/api/plan-finite-zero-loss",
+      "method": "POST",
+      "body": "{\"population_panels\":5,\"loss_ceiling\":\"2/5\",\"significance\":\"3/10\",\"maximum_evaluation_panels\":2}"
+    },
+    {
+      "url": "http://127.0.0.1:34725/api/plan-finite-zero-loss",
+      "method": "POST",
+      "body": "{\"population_panels\":11,\"loss_ceiling\":\"2/5\",\"significance\":\"1/20\",\"maximum_evaluation_panels\":9}"
+    },
+    {
+      "url": "http://127.0.0.1:34725/api/plan-finite-zero-loss",
+      "method": "POST",
+      "body": "{\"population_panels\":5,\"loss_ceiling\":\"2/5\",\"significance\":\"3/10\",\"maximum_evaluation_panels\":2}"
+    },
+    {
+      "url": "http://127.0.0.1:34725/api/plan-finite-zero-loss",
+      "method": "POST",
+      "body": "{\"population_panels\":11,\"loss_ceiling\":\"2/5\",\"significance\":\"1\",\"maximum_evaluation_panels\":9}"
+    },
+    {
+      "url": "http://127.0.0.1:34725/api/plan-finite-zero-loss",
+      "method": "POST",
+      "body": "{\"population_panels\":5,\"loss_ceiling\":\"2/5\",\"significance\":\"3/10\",\"maximum_evaluation_panels\":2}"
+    },
+    {
+      "url": "http://127.0.0.1:34725/api/plan-finite-zero-loss",
+      "method": "POST",
+      "body": "{\"population_panels\":5,\"loss_ceiling\":\"2/5\",\"significance\":\"3/10\",\"maximum_evaluation_panels\":2}"
+    },
+    {
+      "url": "http://127.0.0.1:34725/api/plan-finite-zero-loss",
+      "method": "POST",
+      "body": "{\"population_panels\":5,\"loss_ceiling\":\"2/5\",\"significance\":\"3/10\",\"maximum_evaluation_panels\":2}"
+    },
+    {
+      "url": "http://127.0.0.1:34725/api/plan-finite-zero-loss",
+      "method": "POST",
+      "body": "{\"population_panels\":5,\"loss_ceiling\":\"2/5\",\"significance\":\"3/10\",\"maximum_evaluation_panels\":2}"
+    },
+    {
+      "url": "http://127.0.0.1:34725/api/plan-finite-zero-loss",
+      "method": "POST",
+      "body": "{\"population_panels\":5,\"loss_ceiling\":\"2/5\",\"significance\":\"3/10\",\"maximum_evaluation_panels\":2}"
+    },
+    {
+      "url": "http://127.0.0.1:34725/api/plan-finite-zero-loss",
+      "method": "POST",
+      "body": "{\"population_panels\":5,\"loss_ceiling\":\"2/5\",\"significance\":\"3/10\",\"maximum_evaluation_panels\":2}"
+    },
+    {
+      "url": "http://127.0.0.1:34725/api/plan-finite-zero-loss",
+      "method": "POST",
+      "body": "{\"population_panels\":256,\"loss_ceiling\":\"71/256\",\"significance\":\"1/20\",\"maximum_evaluation_panels\":71}"
+    }
+  ],
+  "mutation_control": false,
+  "screenshots": [
+    "finite-card-1440.png",
+    "finite-card-320.png"
+  ]
+}

@@ -1,0 +1,1542 @@
+{
+  "executed_at": "2026-10-16T07:25:35.718950+00:00",
+  "base_commit": "f7c6ccd04b535f8830f07905b51a5dc2c8a6ca4f",
+  "exact_copies": [
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/GOAL.md",
+      "destination": "GOAL.md",
+      "sha256": "643556fccb45d6efed321500bbb89fcc8f65f8db59d06042a9a2faf554de6345"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/README.md",
+      "destination": "README.md",
+      "sha256": "f0e03f1bc392b6e52aad0767ce33fdd1b45c3b34893d1a5332fe2a2e847d874f"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/STATUS.md",
+      "destination": "STATUS.md",
+      "sha256": "9b4468df40589be3b4c6bc25e6d33f19608345a81150e0677a772e0cb1e6c9b5"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/docs/finite-population-planning.md",
+      "destination": "docs/finite-population-planning.md",
+      "sha256": "11f4efe987632293bfc8dfcbd24a32d3a05e4c9e23624c9933ec030028de3414"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/docs/li-v3-compatible-envelope-plan.md",
+      "destination": "docs/li-v3-compatible-envelope-plan.md",
+      "sha256": "86b663de7a0e88e559a8cc6acbbacd3b17d4ca9ee4e759abc826f7afbd6211ca"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/docs/release-validation.md",
+      "destination": "docs/release-validation.md",
+      "sha256": "ec8f4d2017b95f37a7fa6ec992b4e17a3d1d5cfafbaa03cb80fa5806e40f767f"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/docs/study-planning.md",
+      "destination": "docs/study-planning.md",
+      "sha256": "cd7b5c130a3df693948b208716ed74d991fab09619de4c94b4628b5a18dfbe16"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/continuation.json",
+      "destination": "reports/continuation.json",
+      "sha256": "80246a9c414fe3368fe73c8fa099b6d8c3e7ad1a9e896836714d52d62c56d20e"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-archive-design-v1/README.md",
+      "destination": "reports/phase2-finite-archive-design-v1/README.md",
+      "sha256": "c26fcba7ea5e70660e8d5657539ab36effd6bf991df6471f5d7da61ba0a8886a"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-archive-design-v1/independent-review.json",
+      "destination": "reports/phase2-finite-archive-design-v1/independent-review.json",
+      "sha256": "cf921c6199ed5a6b458760b3cd8fe493438dc207f47ac9a3351f375c36acf249"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-archive-design-v1/source-bindings.json",
+      "destination": "reports/phase2-finite-archive-design-v1/source-bindings.json",
+      "sha256": "1e7cf370d96b538d59bb35158e77acd4288bc218708e99f248bc5cf38099df54"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/README.md",
+      "destination": "reports/phase2-finite-planner-author-v1/README.md",
+      "sha256": "7df891e3191f6543420bd94d976f022032321ed6a77857c0cf188aa5d13ed1d1"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/author-tests-first/execution.json",
+      "destination": "reports/phase2-finite-planner-author-v1/author-tests-first/execution.json",
+      "sha256": "ea741e943431cec2ba51b652ab9651e1528f8e99a66a9ac9b9c0862b440a4ed7"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/author-tests-first/finite_planning.py",
+      "destination": "reports/phase2-finite-planner-author-v1/author-tests-first/finite_planning.py",
+      "sha256": "027785ccdf24f6e8cf9b7a8ac98987b821fcdb19c875bbe8d2ba52d2fc3895f8"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/author-tests-first/source-manifest.json",
+      "destination": "reports/phase2-finite-planner-author-v1/author-tests-first/source-manifest.json",
+      "sha256": "4ddeb377317d7b60846e2244f9c1ee1af694891c6ede099d6a787e59b3545708"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/author-tests-first/stderr.txt",
+      "destination": "reports/phase2-finite-planner-author-v1/author-tests-first/stderr.txt",
+      "sha256": "8f0f22ddb328d7522409d5a6b271aac37aa0ab9fa931c40907623b601c1c6e44"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/author-tests-first/stdout.txt",
+      "destination": "reports/phase2-finite-planner-author-v1/author-tests-first/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/author-tests-first/test_finite_planning.py",
+      "destination": "reports/phase2-finite-planner-author-v1/author-tests-first/test_finite_planning.py",
+      "sha256": "032f9643e077caaa39f7c021d4e58b79f8d99fadbc226490f23756869d083adb"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/copy-inventory.json",
+      "destination": "reports/phase2-finite-planner-author-v1/copy-inventory.json",
+      "sha256": "23e1b16361b0392407e4989d3c6e12e68105df225a242e2aaf653298d975ba9f"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/mutant-floor/execution.json",
+      "destination": "reports/phase2-finite-planner-author-v1/mutant-floor/execution.json",
+      "sha256": "7a3f5a6a069702ebdd82446777e9a7d6ba378abaa0ace6e99b34a93d6d7fbf64"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/mutant-floor/finite_planning.py",
+      "destination": "reports/phase2-finite-planner-author-v1/mutant-floor/finite_planning.py",
+      "sha256": "eb75e5fd18f2a5877e2b6ecac73affc327baa3749a0b5d3babcf19e5148ffa2f"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/mutant-floor/source-manifest.json",
+      "destination": "reports/phase2-finite-planner-author-v1/mutant-floor/source-manifest.json",
+      "sha256": "dc5fe0e456a2b850e645f952a12a32d6571441dae6588cfc33bdda93f92057c7"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/mutant-floor/stderr.txt",
+      "destination": "reports/phase2-finite-planner-author-v1/mutant-floor/stderr.txt",
+      "sha256": "5161c3365d239eaf8e4495ebe96f0585a2c32dd9b9930e3de77bbdf401cfd4b8"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/mutant-floor/stdout.txt",
+      "destination": "reports/phase2-finite-planner-author-v1/mutant-floor/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/mutant-floor/test_finite_planning.py",
+      "destination": "reports/phase2-finite-planner-author-v1/mutant-floor/test_finite_planning.py",
+      "sha256": "032f9643e077caaa39f7c021d4e58b79f8d99fadbc226490f23756869d083adb"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/mutant-iid/execution.json",
+      "destination": "reports/phase2-finite-planner-author-v1/mutant-iid/execution.json",
+      "sha256": "6d85a4039de4bac15dabe243f3ed16917cc7519666afd530bf7f17f647f6bd04"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/mutant-iid/finite_planning.py",
+      "destination": "reports/phase2-finite-planner-author-v1/mutant-iid/finite_planning.py",
+      "sha256": "d44bdb3e0f22cbaeb6c4373d04e598d7fa51978b49254e565a861224329a9cad"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/mutant-iid/source-manifest.json",
+      "destination": "reports/phase2-finite-planner-author-v1/mutant-iid/source-manifest.json",
+      "sha256": "cef6d3d916c7538f5558ba31a363556dade94e52ca5bacb751d60c1da9f51dbf"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/mutant-iid/stderr.txt",
+      "destination": "reports/phase2-finite-planner-author-v1/mutant-iid/stderr.txt",
+      "sha256": "877fe28033cd6d20d35d4e1634f68c40c4289f0ff09aa084e956e8c10dc4c75e"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/mutant-iid/stdout.txt",
+      "destination": "reports/phase2-finite-planner-author-v1/mutant-iid/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/mutant-iid/test_finite_planning.py",
+      "destination": "reports/phase2-finite-planner-author-v1/mutant-iid/test_finite_planning.py",
+      "sha256": "032f9643e077caaa39f7c021d4e58b79f8d99fadbc226490f23756869d083adb"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/mutant-last-minimum/execution.json",
+      "destination": "reports/phase2-finite-planner-author-v1/mutant-last-minimum/execution.json",
+      "sha256": "463b96283b258612a8db6a4163991178c7a32fd30bbdaaabf31e0dcbcdc9445d"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/mutant-last-minimum/finite_planning.py",
+      "destination": "reports/phase2-finite-planner-author-v1/mutant-last-minimum/finite_planning.py",
+      "sha256": "10509fa03c2799680e85bcfdb45a2533a71c6103cc7d0cbc35ec1f672ada1157"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/mutant-last-minimum/source-manifest.json",
+      "destination": "reports/phase2-finite-planner-author-v1/mutant-last-minimum/source-manifest.json",
+      "sha256": "f4b9602057ffffd5b06932e6fd1f59e417f7a91828ee4d0cb752fce52bebc22c"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/mutant-last-minimum/stderr.txt",
+      "destination": "reports/phase2-finite-planner-author-v1/mutant-last-minimum/stderr.txt",
+      "sha256": "243061868d04acb9ed6f82a98f1709f71d8cd3fe7d3f405645206b37ff8dc70a"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/mutant-last-minimum/stdout.txt",
+      "destination": "reports/phase2-finite-planner-author-v1/mutant-last-minimum/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/mutant-last-minimum/test_finite_planning.py",
+      "destination": "reports/phase2-finite-planner-author-v1/mutant-last-minimum/test_finite_planning.py",
+      "sha256": "032f9643e077caaa39f7c021d4e58b79f8d99fadbc226490f23756869d083adb"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/mutant-strict/execution.json",
+      "destination": "reports/phase2-finite-planner-author-v1/mutant-strict/execution.json",
+      "sha256": "3ca44b37a9dfff9a216ccf5a64b8720ddd8056a6ed47bf5edfefd1ec2b2c4dd5"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/mutant-strict/finite_planning.py",
+      "destination": "reports/phase2-finite-planner-author-v1/mutant-strict/finite_planning.py",
+      "sha256": "2d2e7da73188236f7b75808feada277ee0b972adbac28aaaae1a2c30f7322b3e"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/mutant-strict/source-manifest.json",
+      "destination": "reports/phase2-finite-planner-author-v1/mutant-strict/source-manifest.json",
+      "sha256": "e333e0b5725545e45f23e9731395f190949deed9536b1a22d0dec403eba2d8ba"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/mutant-strict/stderr.txt",
+      "destination": "reports/phase2-finite-planner-author-v1/mutant-strict/stderr.txt",
+      "sha256": "27151e0ab2752bfcad8ad34f00181746a64bc6868834582b3e28e7c9086624de"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/mutant-strict/stdout.txt",
+      "destination": "reports/phase2-finite-planner-author-v1/mutant-strict/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/mutant-strict/test_finite_planning.py",
+      "destination": "reports/phase2-finite-planner-author-v1/mutant-strict/test_finite_planning.py",
+      "sha256": "032f9643e077caaa39f7c021d4e58b79f8d99fadbc226490f23756869d083adb"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-author-v1/run_tests.py",
+      "destination": "reports/phase2-finite-planner-author-v1/run_tests.py",
+      "sha256": "56404da87d9df83d41bedd79b665829e700899dc80497b1d6c61572f10ff2141"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-review-v1/copy-inventory.json",
+      "destination": "reports/phase2-finite-planner-review-v1/copy-inventory.json",
+      "sha256": "aae2abc6f62e1601b6fd11aa46772491751bafdfc0c3093f2e06cf10547bfb02"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-review-v1/first/execution.json",
+      "destination": "reports/phase2-finite-planner-review-v1/first/execution.json",
+      "sha256": "3779b220624fe4bc21ecdbcd0f139e53c66697e7084b482e18af2e7a67c3c8b3"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-review-v1/first/stderr.txt",
+      "destination": "reports/phase2-finite-planner-review-v1/first/stderr.txt",
+      "sha256": "3a7854fcc0d2de90157a47a26a24cce1cb2e3a8a7d9e59456c1abc8deeb9892d"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-review-v1/first/stdout.txt",
+      "destination": "reports/phase2-finite-planner-review-v1/first/stdout.txt",
+      "sha256": "bd21610cb011922d4a4c69f205d99ab6459ad608f7ee52f8fcc35f58792e22f8"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-review-v1/review.json",
+      "destination": "reports/phase2-finite-planner-review-v1/review.json",
+      "sha256": "c0687cc9d6a16cd4cedda17b26686086aed7f530abce6653d193569586de5aa4"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-review-v1/run_review.py",
+      "destination": "reports/phase2-finite-planner-review-v1/run_review.py",
+      "sha256": "3bef585eb24eeb0219715abfe38bd36b8dbdf60481e27b7a5ab80958a5012ab8"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-planner-review-v1/test_finite_planning_review.py",
+      "destination": "reports/phase2-finite-planner-review-v1/test_finite_planning_review.py",
+      "sha256": "1ea22055827ca4d4c0e1ac13ae8003a631bbcf6dcab1081abcf5ae4db3adb0c2"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/README.md",
+      "destination": "reports/phase2-finite-workbench-v1/README.md",
+      "sha256": "407337316ca5d42a2a423502264189c7458d56514ef3a3981dffd2d2a5be7d14"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/claim-review/audit_claims.py",
+      "destination": "reports/phase2-finite-workbench-v1/claim-review/audit_claims.py",
+      "sha256": "af34d34dfd75ebbdb3cd6164e7b005f4c50177688516b64d78af725af78c1651"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/claim-review/review.json",
+      "destination": "reports/phase2-finite-workbench-v1/claim-review/review.json",
+      "sha256": "6892cd93e5b4d219642d2c3363d440b6eca7e891631dea775bbbc688d77284d3"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v1/0/execution.json",
+      "destination": "reports/phase2-finite-workbench-v1/combined-v1/0/execution.json",
+      "sha256": "c36eb3186c7caba850125096d97a72e45a2e8ff3c304ed8538aa383522f1fbbb"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v1/0/start.json",
+      "destination": "reports/phase2-finite-workbench-v1/combined-v1/0/start.json",
+      "sha256": "cb98bd69a78f0d0734fb34720858a2c732e0cebd67edc6bd4972064f3367a379"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v1/0/stderr.txt",
+      "destination": "reports/phase2-finite-workbench-v1/combined-v1/0/stderr.txt",
+      "sha256": "310901aa74cdaf0d4f61a3c02859fc3d831014c730232874830af73df23c4a0b"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v1/0/stdout.txt",
+      "destination": "reports/phase2-finite-workbench-v1/combined-v1/0/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v1/1/execution.json",
+      "destination": "reports/phase2-finite-workbench-v1/combined-v1/1/execution.json",
+      "sha256": "c23ae5742d3016073b30ca00554db9081bfa981c832d534cdb6d07f07446e40f"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v1/1/start.json",
+      "destination": "reports/phase2-finite-workbench-v1/combined-v1/1/start.json",
+      "sha256": "5f0bc89722814ffc1a31e0fde11d44f7c579b1b54ad85c17fcc3b3f3cdebfea0"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v1/1/stderr.txt",
+      "destination": "reports/phase2-finite-workbench-v1/combined-v1/1/stderr.txt",
+      "sha256": "1254f0003dbed38745d022bd1bd6a86c1d70d11daca04f0e904a4ba6dd54112f"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v1/1/stdout.txt",
+      "destination": "reports/phase2-finite-workbench-v1/combined-v1/1/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v1/2/execution.json",
+      "destination": "reports/phase2-finite-workbench-v1/combined-v1/2/execution.json",
+      "sha256": "6306ac995aa07a90bfae74da838ea141aef974c2c7f38ec19f78a260e6495d2f"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v1/2/start.json",
+      "destination": "reports/phase2-finite-workbench-v1/combined-v1/2/start.json",
+      "sha256": "060500b951a959a53e7f787953bf37b01a206596b1d88bbf35f0336caa4b435c"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v1/2/stderr.txt",
+      "destination": "reports/phase2-finite-workbench-v1/combined-v1/2/stderr.txt",
+      "sha256": "6f07cf1b5e315df1175cbd5d603283e4b7ff64a627b200f26ab9487bf6e11e1b"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v1/2/stdout.txt",
+      "destination": "reports/phase2-finite-workbench-v1/combined-v1/2/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v1/held-runtime.json",
+      "destination": "reports/phase2-finite-workbench-v1/combined-v1/held-runtime.json",
+      "sha256": "617b1c9ac084ca84b49e63ac0624d26191c27784a15e707a5f3136eb983bff18"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v1/overlay.json",
+      "destination": "reports/phase2-finite-workbench-v1/combined-v1/overlay.json",
+      "sha256": "6269bc56b376d225b1505909059ca9a09ce77921bb13931ae338b44294448cb5"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v1/run.py",
+      "destination": "reports/phase2-finite-workbench-v1/combined-v1/run.py",
+      "sha256": "6bed331e5e027fe079e81935e992ad26899107d4320aa8bf6d6175a1aec0b728"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v1/setup-first-failures.json",
+      "destination": "reports/phase2-finite-workbench-v1/combined-v1/setup-first-failures.json",
+      "sha256": "3980c27bc6d987fb626fed7fb944e5085e76bedf6c588c7e80d3960e78d2a2db"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v2/0/execution.json",
+      "destination": "reports/phase2-finite-workbench-v1/combined-v2/0/execution.json",
+      "sha256": "4a47b58956e9911e162d5f71001b104d02bca388d88248d50c0ab67ecbbeae97"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v2/0/start.json",
+      "destination": "reports/phase2-finite-workbench-v1/combined-v2/0/start.json",
+      "sha256": "eba7cffcc8865925d4ada3b823ac44121c33d09a568bd773bea9a9fb3099d89b"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v2/0/stderr.txt",
+      "destination": "reports/phase2-finite-workbench-v1/combined-v2/0/stderr.txt",
+      "sha256": "a9390c752fd842dacc9e1878930cdbbc902674bc9ef465c18bbcb9ffb49a46ec"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v2/0/stdout.txt",
+      "destination": "reports/phase2-finite-workbench-v1/combined-v2/0/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v2/1/execution.json",
+      "destination": "reports/phase2-finite-workbench-v1/combined-v2/1/execution.json",
+      "sha256": "e770d2c3fb6828c678b5d0b992933fc9203d64af162d8bd10b33c9aa599b8f33"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v2/1/start.json",
+      "destination": "reports/phase2-finite-workbench-v1/combined-v2/1/start.json",
+      "sha256": "37f98326412025d93716736d8420d827d7bfc018bb32680693637c337d9f36bd"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v2/1/stderr.txt",
+      "destination": "reports/phase2-finite-workbench-v1/combined-v2/1/stderr.txt",
+      "sha256": "24df02690efb822780a1fb4e07c8387ac750ccc358f2c9a6c802c1c623dc9c74"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v2/1/stdout.txt",
+      "destination": "reports/phase2-finite-workbench-v1/combined-v2/1/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v2/2/execution.json",
+      "destination": "reports/phase2-finite-workbench-v1/combined-v2/2/execution.json",
+      "sha256": "fad1aff31855341dc256f8377840340dc9b5cd3900cd0332841c71e51f03e19f"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v2/2/start.json",
+      "destination": "reports/phase2-finite-workbench-v1/combined-v2/2/start.json",
+      "sha256": "000e47cb6c431e1792eae4a58195b56dbfcbcb5d8e80265ee4e9eebbe7a96ba9"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v2/2/stderr.txt",
+      "destination": "reports/phase2-finite-workbench-v1/combined-v2/2/stderr.txt",
+      "sha256": "38a7147346342dddb2f12e3c786e0270b92e55029f089694add50cab0f88efa5"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v2/2/stdout.txt",
+      "destination": "reports/phase2-finite-workbench-v1/combined-v2/2/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v2/3/execution.json",
+      "destination": "reports/phase2-finite-workbench-v1/combined-v2/3/execution.json",
+      "sha256": "bf1a578ecef9ce8b9a653175f11be6c0e8cbc92595f8e4f243960eaf4e71ed4a"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v2/3/start.json",
+      "destination": "reports/phase2-finite-workbench-v1/combined-v2/3/start.json",
+      "sha256": "64ce86cf9b5f809ac2a8254193043957e40876001412c640cea25bc21dcc3fdc"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v2/3/stderr.txt",
+      "destination": "reports/phase2-finite-workbench-v1/combined-v2/3/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v2/3/stdout.txt",
+      "destination": "reports/phase2-finite-workbench-v1/combined-v2/3/stdout.txt",
+      "sha256": "59277c822ac9141d9bc4d24e019211c1715ee779f27cd6c716aebf9f4ec6ec27"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v2/held-runtime.json",
+      "destination": "reports/phase2-finite-workbench-v1/combined-v2/held-runtime.json",
+      "sha256": "ca9125a5e3034f191a42b9adcc5bd5252878e5b5606127531356dd2f9eef89d1"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v2/overlay.json",
+      "destination": "reports/phase2-finite-workbench-v1/combined-v2/overlay.json",
+      "sha256": "49e70d087707c466de951378313c037eb50de35ea4003f82cbc01e5670dcc44f"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/combined-v2/run.py",
+      "destination": "reports/phase2-finite-workbench-v1/combined-v2/run.py",
+      "sha256": "c6e04da31b892c3ad5d73324932cda8ef7ee4592c582d68dd14768e8ce098adb"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/independent-interface/README.md",
+      "destination": "reports/phase2-finite-workbench-v1/independent-interface/README.md",
+      "sha256": "f53fe14fc6f960a7ead0f2e684ac55bc73247476f1368f292d13b936360b55c9"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/independent-interface/author-artifact-audit.json",
+      "destination": "reports/phase2-finite-workbench-v1/independent-interface/author-artifact-audit.json",
+      "sha256": "dd592ac98ce2a0ff093bbd5a3fa0dd43c673cb850ad21af4b2dee748c616f1c1"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/independent-interface/first/artifacts/empty-sample-cap.json",
+      "destination": "reports/phase2-finite-workbench-v1/independent-interface/first/artifacts/empty-sample-cap.json",
+      "sha256": "bf9e97a8deca14199b88a7cd0453e7771861232d228a309dbe60f2f35eaef269"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/independent-interface/first/artifacts/enumerated-five-panel-pairs.json",
+      "destination": "reports/phase2-finite-workbench-v1/independent-interface/first/artifacts/enumerated-five-panel-pairs.json",
+      "sha256": "8de03fca5a3d4c87f2700969e4e60089a8f2005e901ddc41bac8dc310a0096e9"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/independent-interface/first/artifacts/finite-card-1440.png",
+      "destination": "reports/phase2-finite-workbench-v1/independent-interface/first/artifacts/finite-card-1440.png",
+      "sha256": "b4a8bb488ca6b98b205d960f7bae0e169246e467d7e729af114831aa8feb7e26"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/independent-interface/first/artifacts/finite-card-320.png",
+      "destination": "reports/phase2-finite-workbench-v1/independent-interface/first/artifacts/finite-card-320.png",
+      "sha256": "6161ac83bd552f44d76e5b0e82cc231daeaa08af852a3efa5823b3abf4e90920"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/independent-interface/first/artifacts/hypothetical-census.json",
+      "destination": "reports/phase2-finite-workbench-v1/independent-interface/first/artifacts/hypothetical-census.json",
+      "sha256": "0a218af92f4631ae63c10c765bda3d0caf5cddb0a3b6d6ed20d9a14b5e35791e"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/independent-interface/first/artifacts/large-exact.json",
+      "destination": "reports/phase2-finite-workbench-v1/independent-interface/first/artifacts/large-exact.json",
+      "sha256": "0a13869f62ec88d39ce16201a5d56b57be0fe5c60f2abf03ffaf73000ef92c5f"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/independent-interface/first/artifacts/navigation-preserved.json",
+      "destination": "reports/phase2-finite-workbench-v1/independent-interface/first/artifacts/navigation-preserved.json",
+      "sha256": "0a13869f62ec88d39ce16201a5d56b57be0fe5c60f2abf03ffaf73000ef92c5f"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/independent-interface/first/artifacts/recovered-after-real-error.json",
+      "destination": "reports/phase2-finite-workbench-v1/independent-interface/first/artifacts/recovered-after-real-error.json",
+      "sha256": "8de03fca5a3d4c87f2700969e4e60089a8f2005e901ddc41bac8dc310a0096e9"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/independent-interface/first/artifacts/report.json",
+      "destination": "reports/phase2-finite-workbench-v1/independent-interface/first/artifacts/report.json",
+      "sha256": "eb1dfff67a2c81b8f56066f43b904af59b07b4461d7a518694028cb513dc7437"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/independent-interface/first/artifacts/stale-error-ignored.json",
+      "destination": "reports/phase2-finite-workbench-v1/independent-interface/first/artifacts/stale-error-ignored.json",
+      "sha256": "8de03fca5a3d4c87f2700969e4e60089a8f2005e901ddc41bac8dc310a0096e9"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/independent-interface/first/artifacts/stale-success-ignored.json",
+      "destination": "reports/phase2-finite-workbench-v1/independent-interface/first/artifacts/stale-success-ignored.json",
+      "sha256": "8de03fca5a3d4c87f2700969e4e60089a8f2005e901ddc41bac8dc310a0096e9"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/independent-interface/first/execution.json",
+      "destination": "reports/phase2-finite-workbench-v1/independent-interface/first/execution.json",
+      "sha256": "af155123d67f860f33a82d19ea993615dc59f1a16d508cf608d89341f121d8e3"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/independent-interface/first/start.json",
+      "destination": "reports/phase2-finite-workbench-v1/independent-interface/first/start.json",
+      "sha256": "a9721fd12b039b12e2c5c75bed6f73878a0fd048d3cf03fd16ba19bd2b1c783d"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/independent-interface/first/stderr.txt",
+      "destination": "reports/phase2-finite-workbench-v1/independent-interface/first/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/independent-interface/first/stdout.txt",
+      "destination": "reports/phase2-finite-workbench-v1/independent-interface/first/stdout.txt",
+      "sha256": "3adb176cd35742d6551509744190e5907b42cb16471cbc7dd25f59a342377235"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/independent-interface/independent_browser_review.py",
+      "destination": "reports/phase2-finite-workbench-v1/independent-interface/independent_browser_review.py",
+      "sha256": "70f9b2882d5c7d75b4f55f16b0c925aff6a07fc5af0d991686f84468c876ce9d"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/independent-interface/inventory.json",
+      "destination": "reports/phase2-finite-workbench-v1/independent-interface/inventory.json",
+      "sha256": "c225ad91689b2df4f714a759f1d40533cc417ef040a1e5a4143fcc235751ae7e"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/independent-interface/mutation-control/artifacts/empty-sample-cap.json",
+      "destination": "reports/phase2-finite-workbench-v1/independent-interface/mutation-control/artifacts/empty-sample-cap.json",
+      "sha256": "bf9e97a8deca14199b88a7cd0453e7771861232d228a309dbe60f2f35eaef269"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/independent-interface/mutation-control/artifacts/enumerated-five-panel-pairs.json",
+      "destination": "reports/phase2-finite-workbench-v1/independent-interface/mutation-control/artifacts/enumerated-five-panel-pairs.json",
+      "sha256": "8de03fca5a3d4c87f2700969e4e60089a8f2005e901ddc41bac8dc310a0096e9"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/independent-interface/mutation-control/artifacts/hypothetical-census.json",
+      "destination": "reports/phase2-finite-workbench-v1/independent-interface/mutation-control/artifacts/hypothetical-census.json",
+      "sha256": "0a218af92f4631ae63c10c765bda3d0caf5cddb0a3b6d6ed20d9a14b5e35791e"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/independent-interface/mutation-control/artifacts/recovered-after-real-error.json",
+      "destination": "reports/phase2-finite-workbench-v1/independent-interface/mutation-control/artifacts/recovered-after-real-error.json",
+      "sha256": "8de03fca5a3d4c87f2700969e4e60089a8f2005e901ddc41bac8dc310a0096e9"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/independent-interface/mutation-control/delivered-planner-mutant.js",
+      "destination": "reports/phase2-finite-workbench-v1/independent-interface/mutation-control/delivered-planner-mutant.js",
+      "sha256": "2e90b37d75dc1abe3a4f60e4645b9b51385ef9ed57faf8030c47cb1f3955a5ac"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/independent-interface/mutation-control/execution.json",
+      "destination": "reports/phase2-finite-workbench-v1/independent-interface/mutation-control/execution.json",
+      "sha256": "53c7c289f031bd50083cb8406eb798aa9c3d41d322a8ff705c12534a1643f145"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/independent-interface/mutation-control/mutation.json",
+      "destination": "reports/phase2-finite-workbench-v1/independent-interface/mutation-control/mutation.json",
+      "sha256": "4fe5315ef2c9a9608a82b931b310b258fbdd690b7ee908d3ad7faf684d337649"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/independent-interface/mutation-control/start.json",
+      "destination": "reports/phase2-finite-workbench-v1/independent-interface/mutation-control/start.json",
+      "sha256": "8010b673954faa70317dbc6ae4298c237cb0ddab97a0b58476e2cf6c2b0c8906"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/independent-interface/mutation-control/stderr.txt",
+      "destination": "reports/phase2-finite-workbench-v1/independent-interface/mutation-control/stderr.txt",
+      "sha256": "60d0c54d09c2a2358b733df70ef5ad93f8acb079c88f6f3426ca3fdbea1896ff"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/independent-interface/mutation-control/stdout.txt",
+      "destination": "reports/phase2-finite-workbench-v1/independent-interface/mutation-control/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/independent-interface/review.json",
+      "destination": "reports/phase2-finite-workbench-v1/independent-interface/review.json",
+      "sha256": "c6a34c413c414470fc285a5ad568f105cd7de7b92714cf785e3dafda450f2a3a"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/independent-interface/run_review.py",
+      "destination": "reports/phase2-finite-workbench-v1/independent-interface/run_review.py",
+      "sha256": "fcd72765e55b8b2d9476da279d9a75456fe4fff6b75276bfef606218c6329a25"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/integration/base-bindings.json",
+      "destination": "reports/phase2-finite-workbench-v1/integration/base-bindings.json",
+      "sha256": "47c18f5e15adbead1c6a15ffbb515c82b782e9622850d6eb40554bd25b3db853"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/integration/package-probe-delta.json",
+      "destination": "reports/phase2-finite-workbench-v1/integration/package-probe-delta.json",
+      "sha256": "f506c58070f0d9c47e874a59778cf3f663e263eb754aab57a587c9d85d9af984"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/README.initial.md",
+      "destination": "reports/phase2-finite-workbench-v1/interface/README.initial.md",
+      "sha256": "a180f03071e1a7375fe728f3669d666ae212df38f974f993099f38eba0a902e6"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/README.md",
+      "destination": "reports/phase2-finite-workbench-v1/interface/README.md",
+      "sha256": "728fde050b60d5ab4019a47a74667713b86b74757641bb9d02d0311e364d35e0"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/base-bindings.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/base-bindings.json",
+      "sha256": "977bb60c7c104a289c1a9acc35ec510c991acf648ae630dea25b77cddaaf1274"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/browser-problem-export-report.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/browser-problem-export-report.json",
+      "sha256": "a134a82cbd3424cc02161e73b44e15d24588d0461580dfd2c026af970872dfc7"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/browser-projection-report.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/browser-projection-report.json",
+      "sha256": "a134a82cbd3424cc02161e73b44e15d24588d0461580dfd2c026af970872dfc7"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/browser-report.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/browser-report.json",
+      "sha256": "a134a82cbd3424cc02161e73b44e15d24588d0461580dfd2c026af970872dfc7"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/calibrated-certificate.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/calibrated-certificate.json",
+      "sha256": "4f61fa82bf9643bd0002f23f1951f291261324f5785887147d3745dc2c1ff348"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/calibrated-paired-certificate.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/calibrated-paired-certificate.json",
+      "sha256": "4f61fa82bf9643bd0002f23f1951f291261324f5785887147d3745dc2c1ff348"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/calibrated-problem.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/calibrated-problem.json",
+      "sha256": "805dc8d4ed0fabc1917a496365ae3618b6e59226678b2e3898e087598f42afcc"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/certificate.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/certificate.json",
+      "sha256": "65f69e5fd54e495ab17c436ec334d8f53677c0070f4554b64257ababa1898ac2"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/coupled-certificate.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/coupled-certificate.json",
+      "sha256": "1383b75ead40dfba1cf6d703b1c1aaf164b44f34405d3a3f734a08efcdf5f4d0"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/coupled-paired-certificate.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/coupled-paired-certificate.json",
+      "sha256": "1383b75ead40dfba1cf6d703b1c1aaf164b44f34405d3a3f734a08efcdf5f4d0"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/coupled-problem.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/coupled-problem.json",
+      "sha256": "1da78f683e0ed1583bc5c4c3aec4b7c29a763cc89b5d46d03abe1334c53cdd54"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/custom-exact-coupled-paired-certificate.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/custom-exact-coupled-paired-certificate.json",
+      "sha256": "553140c51ee5d85ddbb07e495ae3d49ddcbcd37d9bfd1e59ba593186034ec6da"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/custom-exact-coupled-problem.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/custom-exact-coupled-problem.json",
+      "sha256": "2ecc90d698e8321a7197db5fe164c848d9233bd561ccdefef8013186c0ad5e12"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/decision-pool-latest-read-replay.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/decision-pool-latest-read-replay.json",
+      "sha256": "8070215806466f139e278e7c5f20b39cb98c026c2d784aa1362a4ab4e5134f78"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/decision-pool-original-order-paired-certificate.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/decision-pool-original-order-paired-certificate.json",
+      "sha256": "d72be186302d8af9ddd5965a06099b013246ed3d8267778fe099062a5ff8eeb0"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/decision-pool-original-order-problem.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/decision-pool-original-order-problem.json",
+      "sha256": "8e2f0588585273cf128ae84d494092e7062c3aab81490618e265525a7b764807"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/decision-pool-ranked-full-replay.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/decision-pool-ranked-full-replay.json",
+      "sha256": "4e3ad67f646b0737063b9b16a3ae011e9880ed3638716af8439ec4ff768eceaf"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/decision-pool-ranked-outcomes.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/decision-pool-ranked-outcomes.json",
+      "sha256": "f85d7a40fb7fda8a8ab8c5e58d5d48b5cd15317f11e234ffcbd3d847d43ca78c"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/decision-pool-ranked-paired-certificate.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/decision-pool-ranked-paired-certificate.json",
+      "sha256": "9952a95ea90ebf8943a5abdc3121ad9c94426047393496aed51308ed407e6ee6"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/decision-pool-ranked-problem.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/decision-pool-ranked-problem.json",
+      "sha256": "1125b6e14fb5fd8540249749ea6f824128b283eadc0d3033eef008dbedf0401a"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/decision-pool-recovered-paired-certificate.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/decision-pool-recovered-paired-certificate.json",
+      "sha256": "d72be186302d8af9ddd5965a06099b013246ed3d8267778fe099062a5ff8eeb0"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/decision-pool-recovered-problem.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/decision-pool-recovered-problem.json",
+      "sha256": "8e2f0588585273cf128ae84d494092e7062c3aab81490618e265525a7b764807"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/desktop-abstention.png",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/desktop-abstention.png",
+      "sha256": "f712f5bbb29a583b498eace7aa6dbef3061a4f50a27ab7db427f5f4c10fab193"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/desktop-benchmarks.png",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/desktop-benchmarks.png",
+      "sha256": "ff62f011c96bad1bae23240788504552db85a9d01ccc3cc0c88415f4ec4fd265"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/desktop-coupled-negative-control.png",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/desktop-coupled-negative-control.png",
+      "sha256": "5866cdd5d8d9d4a51fefe63db0c45ac37e3f532f46c9739c9f36354c6f80788b"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/desktop-decision-pool-empty-failure.png",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/desktop-decision-pool-empty-failure.png",
+      "sha256": "0f1363127a02c8d7735ebdc7c255dc3f14f19714f75d38d6784fc1976618b977"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/desktop-decision-pool-tied-loss.png",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/desktop-decision-pool-tied-loss.png",
+      "sha256": "8d804a4d43d6e784baf5a7dfc3ce20fa5d1783f64c42122cec89920d1d25a20b"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/desktop-decision-pool-withheld.png",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/desktop-decision-pool-withheld.png",
+      "sha256": "de78e6571de264ba962aa1ef062330300b7bdbfb238d32ef6f804dd860df40ff"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/desktop-pareto.png",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/desktop-pareto.png",
+      "sha256": "c8c1e57a38c25bdb4a83db769a2ecfcf62be107a675e2e0740e10b899a3bffe1"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/desktop-pool.png",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/desktop-pool.png",
+      "sha256": "efa5019250199a09d64b03907ae00e52990af31765d5263eafef4ccac0caf77a"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/desktop-preview.png",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/desktop-preview.png",
+      "sha256": "8912fc7a03f418a84dfc02e45eda1bbfd4c859c555542deeb36b02f6711b6df5"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/desktop-projection-negative-control.png",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/desktop-projection-negative-control.png",
+      "sha256": "f477d321d828c77e96ab49853067a431c4d434222f40009bd1d49555dad63819"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/finite-planning/finite-default.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/finite-planning/finite-default.json",
+      "sha256": "ad21a0c6b0b797b23759c8e6bf24fa882252956efd135ab31d97429dba8a0a08"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/finite-planning/finite-desktop.png",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/finite-planning/finite-desktop.png",
+      "sha256": "3db3e50c7f610cbb0c85e083ad312fb3d435208cd79867325b9d09d3ae9abeb1"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/finite-planning/finite-empty-cap.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/finite-planning/finite-empty-cap.json",
+      "sha256": "1311ce4380855a07697b3d20ca7a57f6db78a787bd423a5a55500316c7a71e7b"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/finite-planning/finite-equality-rounding.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/finite-planning/finite-equality-rounding.json",
+      "sha256": "b331b8f1a6ff511447636149620c5f39163df5143fa62608aac70ce39bce8ce2"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/finite-planning/finite-large-exact.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/finite-planning/finite-large-exact.json",
+      "sha256": "0a13869f62ec88d39ce16201a5d56b57be0fe5c60f2abf03ffaf73000ef92c5f"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/finite-planning/finite-latest-error.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/finite-planning/finite-latest-error.json",
+      "sha256": "b331b8f1a6ff511447636149620c5f39163df5143fa62608aac70ce39bce8ce2"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/finite-planning/finite-latest-success.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/finite-planning/finite-latest-success.json",
+      "sha256": "b331b8f1a6ff511447636149620c5f39163df5143fa62608aac70ce39bce8ce2"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/finite-planning/finite-mobile-320.png",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/finite-planning/finite-mobile-320.png",
+      "sha256": "f92df42259becb4b1454be5cfac29f675191cdea60a819aac6107f4503471581"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/finite-planning/finite-mobile-390.png",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/finite-planning/finite-mobile-390.png",
+      "sha256": "0250d17b2d6b9ad9a4940573c780e051fe9b33da6b5197146a9d175a84d24659"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/finite-planning/finite-single-census.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/finite-planning/finite-single-census.json",
+      "sha256": "0d3cebd3aacc7ed52ef24b9af1f36d2537783d6c25c8903026f134eaf74ef7d2"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/mobile-benchmarks.png",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/mobile-benchmarks.png",
+      "sha256": "bf8219277cd9b28e65f0697249856b195972dc509f1c2fe7d88d8da37a13cb6c"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/mobile-decision-pool.png",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/mobile-decision-pool.png",
+      "sha256": "cf8644b806639d7f563725de92398cb2e7d5f621935fcad0f561e2a4f43ce3e8"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/mobile-projection-scopes.png",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/mobile-projection-scopes.png",
+      "sha256": "754dd2852efd8585bb6cca725f52890f885d77dbba62fc3c943c1037e1fe5b5b"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/mpea/synthetic-mobile.png",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/mpea/synthetic-mobile.png",
+      "sha256": "04deebbdf5ee0c270f496a7a93feadf2da01f8809a3bec465b785fc901bdaf14"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/mpea/synthetic-negative-export.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/mpea/synthetic-negative-export.json",
+      "sha256": "4557668a055759aedefaefa886deb9ed7205d2730ca8a9672b7a8e7a3aa35209"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/new-revision-coupled-paired-certificate.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/new-revision-coupled-paired-certificate.json",
+      "sha256": "553140c51ee5d85ddbb07e495ae3d49ddcbcd37d9bfd1e59ba593186034ec6da"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/new-revision-coupled-problem.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/new-revision-coupled-problem.json",
+      "sha256": "dc248efb531f5d4bf2723cd8ffb6f7481f815ea3db5a89c520e960aea58c8ef2"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/pareto-certificate.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/pareto-certificate.json",
+      "sha256": "b8548e6b599cbe950b94ce96c3a946c2df4afcb77a271a296cb4dea192b001d9"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/pareto-paired-certificate.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/pareto-paired-certificate.json",
+      "sha256": "b8548e6b599cbe950b94ce96c3a946c2df4afcb77a271a296cb4dea192b001d9"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/pareto-problem.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/pareto-problem.json",
+      "sha256": "66372ec1687ce4d7177566690924a4f51400f898c093337948d5d9972911bdb2"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/planning/desktop-planning.png",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/planning/desktop-planning.png",
+      "sha256": "d858ddfc73694fc55e6b5971c936d2e349ce1f487ba2c7fb224dbe398ac334ff"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/planning/mobile-320-large-exact.png",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/planning/mobile-320-large-exact.png",
+      "sha256": "4f023e574d7d43efc3447221a403affc3fe51c1791dcffe53dee2834b6bbf7e7"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/planning/mobile-320-planning.png",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/planning/mobile-320-planning.png",
+      "sha256": "c0e6762e29e091fed67114eac7ca68ca9750222c7b1ce88cb09d20eae97d59dc"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/planning/mobile-390-planning.png",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/planning/mobile-390-planning.png",
+      "sha256": "e9b064e6d1e2ccf6359db0706d317ac09348edaf815b8217e3be6cbec0a86500"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/planning/pool-largest-exact.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/planning/pool-largest-exact.json",
+      "sha256": "2bbfd298374f16972410357889cf924c1f4558942414374ce97dbe92874c9d04"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/planning/pool-latest-error.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/planning/pool-latest-error.json",
+      "sha256": "bb5df70d8f1532ec5b2973bc7088aa777fdadaf0011be6dee35a2575bfdbec05"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/planning/pool-latest-success.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/planning/pool-latest-success.json",
+      "sha256": "bb5df70d8f1532ec5b2973bc7088aa777fdadaf0011be6dee35a2575bfdbec05"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/planning/pool-twenty.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/planning/pool-twenty.json",
+      "sha256": "bb5df70d8f1532ec5b2973bc7088aa777fdadaf0011be6dee35a2575bfdbec05"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/planning/pool-unknown.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/planning/pool-unknown.json",
+      "sha256": "e14d2fc243e560471831f20d316bb201b8da3c476130ed0b09d5c9bddd832b24"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/planning/zero-29.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/planning/zero-29.json",
+      "sha256": "d912931b7b8c7886d6c1fcbc911b74ef20feb7112aa0a3500203cdf3a387386f"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/projection-large-paired-certificate.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/projection-large-paired-certificate.json",
+      "sha256": "dddc718935ffe05e71cfc01998da2f87bf6fdaa64501d2aed8f87234e335373d"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/projection-large-problem.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/projection-large-problem.json",
+      "sha256": "354272e9097a816bdb9244273b45c9c8118e69e6815afdfca095d7174fcf9246"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/projection-metadata-paired-certificate.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/projection-metadata-paired-certificate.json",
+      "sha256": "a91353981a37534131e202bf75a6bdd0353b742fa09c9aee6703d234eee90195"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/projection-metadata-problem.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/projection-metadata-problem.json",
+      "sha256": "bee309e109e02d31e8fabaa4a9851bc7c735463c05d929329066ae1178b01875"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/projection-missing-full-replay.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/projection-missing-full-replay.json",
+      "sha256": "40da13476adb0aa2d7a7fbe06465b8fd710035ae2413d4e93d367c9964eee278"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/projection-missing-paired-certificate.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/projection-missing-paired-certificate.json",
+      "sha256": "239442c1b97bfd1b41d0ceef5094b93733b3d20ba01c6bf7662d6f7f88f76917"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/projection-missing-problem.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/projection-missing-problem.json",
+      "sha256": "93d6b1c1fd1a135269cd227c4eca3f7d4be616b3b069bb5c0602be13010ea5de"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/projection-shared-full-replay.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/projection-shared-full-replay.json",
+      "sha256": "9503834034daf235b30e9d1d987643b7b1b2bb689a1f4c89aa392bc375f7ec63"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/projection-shared-paired-certificate.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/projection-shared-paired-certificate.json",
+      "sha256": "b810cd8a36a0900c3f475fa528d4d945a0332c0e4f50f9840424d70883d8986b"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/projection-shared-problem.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/projection-shared-problem.json",
+      "sha256": "c91f99368c53899d67732f9850b974dc3d5a0a0bfd86df403ee46a0f65418086"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/scalar-paired-certificate.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/scalar-paired-certificate.json",
+      "sha256": "65f69e5fd54e495ab17c436ec334d8f53677c0070f4554b64257ababa1898ac2"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/scalar-problem.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/scalar-problem.json",
+      "sha256": "7e8f4b73268392acaba32a096c538828e938153e29a4bdbd5640186a0b4d55cf"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/tiny-risk-certificate.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/tiny-risk-certificate.json",
+      "sha256": "94c915ac05a1dbaf1a80c3f0a99bffdf9d6d8f5d4d9ff2266496a2dded764109"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/training-tail-dashboard.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/artifacts/training-tail-dashboard.json",
+      "sha256": "778ffe10bf0bc5a9619baf5cb2974c4af78948bfc9adf52532040ee467bd3c07"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/execution.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/execution.json",
+      "sha256": "f726f1ae8fd8ba6fe671d114f074010c6da778c9760f9ce5420b2920779dff6b"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/start.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/start.json",
+      "sha256": "7cc33fe1f94d269e02815b4b746a6e9a70a14852d9042690744bc073c8886c69"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/stderr.txt",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/browser-attempt-1/stdout.txt",
+      "destination": "reports/phase2-finite-workbench-v1/interface/browser-attempt-1/stdout.txt",
+      "sha256": "a134a82cbd3424cc02161e73b44e15d24588d0461580dfd2c026af970872dfc7"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/candidate-inventory.initial.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/candidate-inventory.initial.json",
+      "sha256": "fccfb933da88c34b6ecfa0484009251fdd30e3275953ae0c9ceb15358c9d4a50"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/candidate-inventory.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/candidate-inventory.json",
+      "sha256": "b24b5ff63088b4e8c189be7183c1b2aebde30500c2f32681dd043c1235ef5952"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/capture_default.py",
+      "destination": "reports/phase2-finite-workbench-v1/interface/capture_default.py",
+      "sha256": "fcf7f1eb2a89607e843e4d6a6ec419d627a779a12725f7e8691f10f56c251aa2"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/capture_default_second.py",
+      "destination": "reports/phase2-finite-workbench-v1/interface/capture_default_second.py",
+      "sha256": "b7af0acb878d8cf73859cfc1a2bebbc482c32a9655c7ed3f62c2109d8cc2f889"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/default-captures/desktop-default.png",
+      "destination": "reports/phase2-finite-workbench-v1/interface/default-captures/desktop-default.png",
+      "sha256": "a65dfb47c008e5e0557f569f4576df0c1bd877b69c2ebd1a5ee2d996ff6d7c45"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/default-captures/finite-card-desktop.png",
+      "destination": "reports/phase2-finite-workbench-v1/interface/default-captures/finite-card-desktop.png",
+      "sha256": "62b33c4d5217bf4a90c23715cbe0e0800303a7559f820eae4d22e4c0a5841411"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/default-captures/finite-card-mobile-320.png",
+      "destination": "reports/phase2-finite-workbench-v1/interface/default-captures/finite-card-mobile-320.png",
+      "sha256": "e03091a153afa7af09bdde0b698abce119b67dacc91fdad9e1abc59e5371e77a"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/default-captures/receipt.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/default-captures/receipt.json",
+      "sha256": "e836cad88613235608be0be9b50b0a629963260439854328770bfc414a563e00"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/default-captures-second/desktop-default.png",
+      "destination": "reports/phase2-finite-workbench-v1/interface/default-captures-second/desktop-default.png",
+      "sha256": "a65dfb47c008e5e0557f569f4576df0c1bd877b69c2ebd1a5ee2d996ff6d7c45"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/default-captures-second/finite-card-desktop.png",
+      "destination": "reports/phase2-finite-workbench-v1/interface/default-captures-second/finite-card-desktop.png",
+      "sha256": "62b33c4d5217bf4a90c23715cbe0e0800303a7559f820eae4d22e4c0a5841411"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/default-captures-second/finite-card-mobile-320.png",
+      "destination": "reports/phase2-finite-workbench-v1/interface/default-captures-second/finite-card-mobile-320.png",
+      "sha256": "6669fce929b5bcad8b2134de1eaceae969c9b26e494d7eb0bdcbc11a7579001b"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/default-captures-second/mobile-default-320.png",
+      "destination": "reports/phase2-finite-workbench-v1/interface/default-captures-second/mobile-default-320.png",
+      "sha256": "5f7f6c93827bf25d37b022f888de3278adf544d256368dc3311f6e513dce18db"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/default-captures-second/receipt.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/default-captures-second/receipt.json",
+      "sha256": "84d3e15818d29b768b78fa6d3a8dfd01efcf64fae21a0a9cda9a60d61cd96be7"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/default-captures-second/skip-link-visibility.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/default-captures-second/skip-link-visibility.json",
+      "sha256": "d079b349efb90151145bbceefca274e5904ccb9bb389cff4aa37145e395bf5ab"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/handoff.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/handoff.json",
+      "sha256": "49f5455e410b101e36a059d4f828a397a321b381b44ac5a815cfc9225eaf9c8c"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/promotion/scripts/browser_smoke.py",
+      "destination": "reports/phase2-finite-workbench-v1/interface/promotion/scripts/browser_smoke.py",
+      "sha256": "c6d765d5134a8427408748e516f60480e27df7acbb1f5aedef6ccd10f9136d1c"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/promotion/scripts/finite_planning_browser_checks.py",
+      "destination": "reports/phase2-finite-workbench-v1/interface/promotion/scripts/finite_planning_browser_checks.py",
+      "sha256": "50c6ba74701388c8a91b62ff2d399d18e572de2fc9aaa7acfb9962030fda9390"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/promotion/src/lupine_discovery/web/index.html",
+      "destination": "reports/phase2-finite-workbench-v1/interface/promotion/src/lupine_discovery/web/index.html",
+      "sha256": "553c0bb7d8d31699b519b4c24c05dae5af659b996fe510edab26d3fe6baf29b9"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/promotion/src/lupine_discovery/web/planner.js",
+      "destination": "reports/phase2-finite-workbench-v1/interface/promotion/src/lupine_discovery/web/planner.js",
+      "sha256": "92a3b8e5f4d4abc61c3471b761a0745ccd66a9ec8327d4f724ba8635e69e530c"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/run_full_browser.py",
+      "destination": "reports/phase2-finite-workbench-v1/interface/run_full_browser.py",
+      "sha256": "5630f1ee4766b9eda39a56e4718c7bb57d4ab511575a4715d19e23494b9fd81a"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/static-review.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/static-review.json",
+      "sha256": "ba5d49a4123f3968f960da3a29d2cfb6058df7ce63171a3eda2a85739c3d53b8"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/interface/verification-summary.json",
+      "destination": "reports/phase2-finite-workbench-v1/interface/verification-summary.json",
+      "sha256": "1983c01f251015b8860fa1c821366f1c85c4cbc20b41f7f8810c0e07050d8fb2"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-finite-workbench-v1/publication-scope.json",
+      "destination": "reports/phase2-finite-workbench-v1/publication-scope.json",
+      "sha256": "24fd7f5e8f5a729e1396f820423e517239bef89c07cc78799c43d23ed70cf7f5"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-compatible-envelope-v1/README.md",
+      "destination": "reports/phase2-li-compatible-envelope-v1/README.md",
+      "sha256": "6cd29970ff3476862db58723942057b859a820d655423be7f6d8bc1c853b617e"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-compatible-envelope-v1/author-final.json",
+      "destination": "reports/phase2-li-compatible-envelope-v1/author-final.json",
+      "sha256": "1e8e3e8738ac1357bbd43db29ce087d3bf4072df2b16d8e0c18f974083887450"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-compatible-envelope-v1/author-final.stderr",
+      "destination": "reports/phase2-li-compatible-envelope-v1/author-final.stderr",
+      "sha256": "3d3d1ad1464efa623663b7fe0e3ec38969fe86aa765aa41d2f2086048cba1954"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-compatible-envelope-v1/author-final.stdout",
+      "destination": "reports/phase2-li-compatible-envelope-v1/author-final.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-compatible-envelope-v1/author-first.json",
+      "destination": "reports/phase2-li-compatible-envelope-v1/author-first.json",
+      "sha256": "b25b2a3b1fa342973420211b0e171f8a92d650de53cc1a3ba6ba73fa7c2de966"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-compatible-envelope-v1/author-first.stderr",
+      "destination": "reports/phase2-li-compatible-envelope-v1/author-first.stderr",
+      "sha256": "3fcd6c9b97d723699a325c6b53b974fa081905a66c54febd4517301f8b008cb1"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-compatible-envelope-v1/author-first.stdout",
+      "destination": "reports/phase2-li-compatible-envelope-v1/author-first.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-compatible-envelope-v1/author-handoff.md",
+      "destination": "reports/phase2-li-compatible-envelope-v1/author-handoff.md",
+      "sha256": "aebd153d5b9e0405db2c6295c550ab3f99c953744f2b75a940c432c21362d08f"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-compatible-envelope-v1/candidate-receipt.json",
+      "destination": "reports/phase2-li-compatible-envelope-v1/candidate-receipt.json",
+      "sha256": "62be482ce63bdcac57ceee664e798474e7f0d960c5543efb54fd22b7b58fc501"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-compatible-envelope-v1/copied-predicate-origin.json",
+      "destination": "reports/phase2-li-compatible-envelope-v1/copied-predicate-origin.json",
+      "sha256": "a8e6996c2211e887cbc31f6173ad3abe753b688c9d29a86b1c4db9880d699c79"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-compatible-envelope-v1/independent-review/README.md",
+      "destination": "reports/phase2-li-compatible-envelope-v1/independent-review/README.md",
+      "sha256": "5e50f881cbdad867cbe2fa609b372b22cc3554afe31efc95e6bd79d28040f17e"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-compatible-envelope-v1/independent-review/first/execution.json",
+      "destination": "reports/phase2-li-compatible-envelope-v1/independent-review/first/execution.json",
+      "sha256": "22e8d6e6161f4ca9ea7330e7c1edcdf2739cd79d057c08b467af326ad5de82d4"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-compatible-envelope-v1/independent-review/first/start.json",
+      "destination": "reports/phase2-li-compatible-envelope-v1/independent-review/first/start.json",
+      "sha256": "c4ef065706af0044a2d168d9de47d75f43209b31ce478dc7dd9a392fabbf8d44"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-compatible-envelope-v1/independent-review/first/stderr.txt",
+      "destination": "reports/phase2-li-compatible-envelope-v1/independent-review/first/stderr.txt",
+      "sha256": "f0f66b59ef927b7bb990112f8815062a06fd544205c8f0f30379e0969a42ad4d"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-compatible-envelope-v1/independent-review/first/stdout.txt",
+      "destination": "reports/phase2-li-compatible-envelope-v1/independent-review/first/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-compatible-envelope-v1/independent-review/first/test_li_v3_compatible_envelope_review.py",
+      "destination": "reports/phase2-li-compatible-envelope-v1/independent-review/first/test_li_v3_compatible_envelope_review.py",
+      "sha256": "71176d6677aa9392edf69b0a1e4834848214f9453ebfc2afaf14694aee0f8f86"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-compatible-envelope-v1/independent-review/inventory.json",
+      "destination": "reports/phase2-li-compatible-envelope-v1/independent-review/inventory.json",
+      "sha256": "b5c57cef8232b37ecc7de61807c71daebc4521dde0c082a7b4ee43ff1d6612bb"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-compatible-envelope-v1/independent-review/review.json",
+      "destination": "reports/phase2-li-compatible-envelope-v1/independent-review/review.json",
+      "sha256": "64753aa511f35c7f0437357ffbb34bc7ad3db3576c78cf1adb6b7937a5760b80"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-compatible-envelope-v1/independent-review/reviewer-fixture-fix.patch",
+      "destination": "reports/phase2-li-compatible-envelope-v1/independent-review/reviewer-fixture-fix.patch",
+      "sha256": "b1efd6f8e23d33f9e1566a1146e65be412464f566ed7c078f7f30e4bdbb27d30"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-compatible-envelope-v1/independent-review/run_review.py",
+      "destination": "reports/phase2-li-compatible-envelope-v1/independent-review/run_review.py",
+      "sha256": "3a76581e84c68fcf0c3e8721406e918c6fc070d60fd2838a278c11235ac6a4fd"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-compatible-envelope-v1/independent-review/second/execution.json",
+      "destination": "reports/phase2-li-compatible-envelope-v1/independent-review/second/execution.json",
+      "sha256": "0c5b76613cdd4b87d8d4014adb754de0151e737d73ccc552a26d8115692632b7"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-compatible-envelope-v1/independent-review/second/start.json",
+      "destination": "reports/phase2-li-compatible-envelope-v1/independent-review/second/start.json",
+      "sha256": "34860f0283c19380c8cd219fe1d2b7906d6455e4571e944dd0657104af4b4eed"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-compatible-envelope-v1/independent-review/second/stderr.txt",
+      "destination": "reports/phase2-li-compatible-envelope-v1/independent-review/second/stderr.txt",
+      "sha256": "9e54aff797e27f44700ab0e4688150d5e6f2c24436051b6e0b62789b08a587cb"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-compatible-envelope-v1/independent-review/second/stdout.txt",
+      "destination": "reports/phase2-li-compatible-envelope-v1/independent-review/second/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-compatible-envelope-v1/independent-review/test_li_v3_compatible_envelope_review.py",
+      "destination": "reports/phase2-li-compatible-envelope-v1/independent-review/test_li_v3_compatible_envelope_review.py",
+      "sha256": "14a920cec686fb0b2040909c0388bcdcc6f6a8ef647eb9b73aa3993de9f7afc8"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-compatible-envelope-v1/source-review/design-review.json",
+      "destination": "reports/phase2-li-compatible-envelope-v1/source-review/design-review.json",
+      "sha256": "9b9782bffb5f96e137c9b09356e1226ac8e304641218a4e22bb8bc79d2c94338"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-compatible-envelope-v1/source-review/final-contract-addendum.json",
+      "destination": "reports/phase2-li-compatible-envelope-v1/source-review/final-contract-addendum.json",
+      "sha256": "f71f8aa97c8a5edfb8d2ec4b1e78b2d4f6fd6e82f676cc17bd155450ec6f56b4"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-compatible-envelope-v1/source-review/producer-pin-audit.json",
+      "destination": "reports/phase2-li-compatible-envelope-v1/source-review/producer-pin-audit.json",
+      "sha256": "812ff91c8379ce545b3970cd43870205495d4c1adfa97623bf6f6564369c4893"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-compatible-envelope-v1/source-review/source-review.json",
+      "destination": "reports/phase2-li-compatible-envelope-v1/source-review/source-review.json",
+      "sha256": "1da937339bb622d940e52e82c079f6213539590f7b9cde4ffeafda8fcd15d877"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-flag-verification-v1/README.md",
+      "destination": "reports/phase2-li-flag-verification-v1/README.md",
+      "sha256": "4e0dcc93c79b00dde3b33524fa85a802c11b082ba78255183ed8912d39cc4d72"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-flag-verification-v1/actual-commands/1/execution.json",
+      "destination": "reports/phase2-li-flag-verification-v1/actual-commands/1/execution.json",
+      "sha256": "c7af384ea2245434c39d2857e5a5865958d90b74e18ae647c89d0bc0252bcefa"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-flag-verification-v1/actual-commands/1/start.json",
+      "destination": "reports/phase2-li-flag-verification-v1/actual-commands/1/start.json",
+      "sha256": "f7bac9a75cdbeb529a49be87c0b09550c185b05da9535c729c2338baa77d54bc"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-flag-verification-v1/actual-commands/1/stderr.txt",
+      "destination": "reports/phase2-li-flag-verification-v1/actual-commands/1/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-flag-verification-v1/actual-commands/1/stdout.txt",
+      "destination": "reports/phase2-li-flag-verification-v1/actual-commands/1/stdout.txt",
+      "sha256": "74404679ec62a18ef50d1847f652ba749c85eb8f63d08740d2fa0a5fb956c47b"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-flag-verification-v1/actual-commands/2/execution.json",
+      "destination": "reports/phase2-li-flag-verification-v1/actual-commands/2/execution.json",
+      "sha256": "e7c62ec1628e5cc06e868d6b73c6d160845def7f55a17ae042b92e99355b6221"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-flag-verification-v1/actual-commands/2/start.json",
+      "destination": "reports/phase2-li-flag-verification-v1/actual-commands/2/start.json",
+      "sha256": "1ca9bed41f5493845cf0bcf58157a6225c9b8062f2a0d52ee010531ab94373c1"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-flag-verification-v1/actual-commands/2/stderr.txt",
+      "destination": "reports/phase2-li-flag-verification-v1/actual-commands/2/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-flag-verification-v1/actual-commands/2/stdout.txt",
+      "destination": "reports/phase2-li-flag-verification-v1/actual-commands/2/stdout.txt",
+      "sha256": "74404679ec62a18ef50d1847f652ba749c85eb8f63d08740d2fa0a5fb956c47b"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-flag-verification-v1/actual-commands/await_verified_ci.py",
+      "destination": "reports/phase2-li-flag-verification-v1/actual-commands/await_verified_ci.py",
+      "sha256": "3a8c70820c284bd0f49cd087cad1174d98b653f7cc29b806d0cba7df6c67437c"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-flag-verification-v1/actual-commands/run_after_ci.py",
+      "destination": "reports/phase2-li-flag-verification-v1/actual-commands/run_after_ci.py",
+      "sha256": "1207ce113e34cf5bab45f0843bb5ffb077d8b10bffd7ddd11434b1171ddc79fe"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-flag-verification-v1/actual-commands/supervisor-cancelled-before-execution.json",
+      "destination": "reports/phase2-li-flag-verification-v1/actual-commands/supervisor-cancelled-before-execution.json",
+      "sha256": "52111570ce0be8ac1d6850277fad2bcbd78683fc985036ad824c14cb0b797dd9"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-flag-verification-v1/ancestor-ci/final.json",
+      "destination": "reports/phase2-li-flag-verification-v1/ancestor-ci/final.json",
+      "sha256": "0402616266f3a7b0629602ff78e1bf7452f7bacacf49f92f02e66ffc215ad784"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-flag-verification-v1/ancestor-ci/observations.json",
+      "destination": "reports/phase2-li-flag-verification-v1/ancestor-ci/observations.json",
+      "sha256": "3c3736f4f92b86c8dab9ac442756f0ae8a9cf6ec01a4e504520eff4caf0aa497"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-flag-verification-v1/ci-first/final.json",
+      "destination": "reports/phase2-li-flag-verification-v1/ci-first/final.json",
+      "sha256": "937f48d1c282478dc225ca5b88a0cf2b51f4aac1ec2c520fc8216a65e33c17f9"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-flag-verification-v1/ci-first/observations.json",
+      "destination": "reports/phase2-li-flag-verification-v1/ci-first/observations.json",
+      "sha256": "d4185eed65eff3cc8ac6bd970e5a1781e6bf48ec610c3b35e94a55ab77ee7226"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-flag-verification-v1/ci-first/watcher-first-failure.json",
+      "destination": "reports/phase2-li-flag-verification-v1/ci-first/watcher-first-failure.json",
+      "sha256": "83980762bbc0d7b7f7fe324b9f586a0514bd1542e515a8675f4461dae06f1e37"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-flag-verification-v1/ci-recovered/final.json",
+      "destination": "reports/phase2-li-flag-verification-v1/ci-recovered/final.json",
+      "sha256": "937f48d1c282478dc225ca5b88a0cf2b51f4aac1ec2c520fc8216a65e33c17f9"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-flag-verification-v1/ci-recovered/observations.json",
+      "destination": "reports/phase2-li-flag-verification-v1/ci-recovered/observations.json",
+      "sha256": "4efde04fecdd9f45301092c30db898eee5feddf7270e4972eed04f4a543f6290"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-flag-verification-v1/clean-package/0-execution.json",
+      "destination": "reports/phase2-li-flag-verification-v1/clean-package/0-execution.json",
+      "sha256": "352d4958a983826a5f4f5b7018feb3768aa1e5274871a4e6d191ba5797c5bc71"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-flag-verification-v1/clean-package/0-stderr.txt",
+      "destination": "reports/phase2-li-flag-verification-v1/clean-package/0-stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-flag-verification-v1/clean-package/0-stdout.txt",
+      "destination": "reports/phase2-li-flag-verification-v1/clean-package/0-stdout.txt",
+      "sha256": "bf971fb9057397ee163fea1738e961d45815d606430ab615abf6241daf1fccb1"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-flag-verification-v1/clean-package/1-execution.json",
+      "destination": "reports/phase2-li-flag-verification-v1/clean-package/1-execution.json",
+      "sha256": "4aed30af1178c1ddba80ddd4102d909397b9a606d23e26d5e685d8999aa4eab0"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-flag-verification-v1/clean-package/1-stderr.txt",
+      "destination": "reports/phase2-li-flag-verification-v1/clean-package/1-stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-flag-verification-v1/clean-package/1-stdout.txt",
+      "destination": "reports/phase2-li-flag-verification-v1/clean-package/1-stdout.txt",
+      "sha256": "67a6e3e39aa2ba0fa624ad4be3e3794420f0f4568d538d374e7807177b2d8796"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-flag-verification-v1/clean-package/release-artifacts.json",
+      "destination": "reports/phase2-li-flag-verification-v1/clean-package/release-artifacts.json",
+      "sha256": "0073e44676e63f9a40e4155f3c597c9703c47a917eaa1a88bf99a17c791f47af"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-flag-verification-v1/clean-package/run.py",
+      "destination": "reports/phase2-li-flag-verification-v1/clean-package/run.py",
+      "sha256": "e3693f057d2f3c6182d3dfc76a0a05215fa160b41a8c42b87e417e93902167e0"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-flag-verification-v1/public-1.json",
+      "destination": "reports/phase2-li-flag-verification-v1/public-1.json",
+      "sha256": "74404679ec62a18ef50d1847f652ba749c85eb8f63d08740d2fa0a5fb956c47b"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-flag-verification-v1/public-2.json",
+      "destination": "reports/phase2-li-flag-verification-v1/public-2.json",
+      "sha256": "74404679ec62a18ef50d1847f652ba749c85eb8f63d08740d2fa0a5fb956c47b"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-next-schema-design-v1/README.md",
+      "destination": "reports/phase2-li-next-schema-design-v1/README.md",
+      "sha256": "07e0acd3e4a759c147abca38ca57271548b551f7bd6b749bf14df52a7b39993b"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-next-schema-design-v1/root-review.json",
+      "destination": "reports/phase2-li-next-schema-design-v1/root-review.json",
+      "sha256": "3734145e1088f7febe8e038ca27f60a9f65687bfa672eaa4f1a9fb4c6af1aae8"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/phase2-li-next-schema-design-v1/source-bindings.json",
+      "destination": "reports/phase2-li-next-schema-design-v1/source-bindings.json",
+      "sha256": "39035a6184fff3103d0b6106ffe6122c7207fdffd9dfd090ce4c36741b16525b"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/reports/progress.md",
+      "destination": "reports/progress.md",
+      "sha256": "ed14cfe71bffe924c9e8d2325df8360e9aea4e382e8a0ec7f567709360d3bb74"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/scripts/browser_smoke.py",
+      "destination": "scripts/browser_smoke.py",
+      "sha256": "c6d765d5134a8427408748e516f60480e27df7acbb1f5aedef6ccd10f9136d1c"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/scripts/finite_planning_browser_checks.py",
+      "destination": "scripts/finite_planning_browser_checks.py",
+      "sha256": "50c6ba74701388c8a91b62ff2d399d18e572de2fc9aaa7acfb9962030fda9390"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/scripts/li_v3_compatible_envelope.py",
+      "destination": "scripts/li_v3_compatible_envelope.py",
+      "sha256": "e771b3fc2a66d6e2ff3a26d8aae88b7a2915ac908907908316e697997761c847"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/scripts/package_smoke.py",
+      "destination": "scripts/package_smoke.py",
+      "sha256": "cb4cb5f37cf9146d007ddb7af3599ba0e31180862825230c00fc995cf342d93e"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/scripts/verify_retained_artifacts.py",
+      "destination": "scripts/verify_retained_artifacts.py",
+      "sha256": "22455c93a2539868cf8a9dda76b67413eefe05917603718f19eef1585a1c741d"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/src/lupine_discovery/cli.py",
+      "destination": "src/lupine_discovery/cli.py",
+      "sha256": "e5bb4a838f989bba85e7435e6a7aff5e658e09f23d032ad4082f4dc5318d1a61"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/src/lupine_discovery/finite_planning.py",
+      "destination": "src/lupine_discovery/finite_planning.py",
+      "sha256": "027785ccdf24f6e8cf9b7a8ac98987b821fcdb19c875bbe8d2ba52d2fc3895f8"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/src/lupine_discovery/server.py",
+      "destination": "src/lupine_discovery/server.py",
+      "sha256": "e46f601a1689f0d2146682b90fccf1f015e9c171dbab0af81f1e4905c6df29dc"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/src/lupine_discovery/web/index.html",
+      "destination": "src/lupine_discovery/web/index.html",
+      "sha256": "553c0bb7d8d31699b519b4c24c05dae5af659b996fe510edab26d3fe6baf29b9"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/src/lupine_discovery/web/planner.js",
+      "destination": "src/lupine_discovery/web/planner.js",
+      "sha256": "92a3b8e5f4d4abc61c3471b761a0745ccd66a9ec8327d4f724ba8635e69e530c"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/tests/test_finite_planning.py",
+      "destination": "tests/test_finite_planning.py",
+      "sha256": "032f9643e077caaa39f7c021d4e58b79f8d99fadbc226490f23756869d083adb"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/tests/test_finite_planning_review.py",
+      "destination": "tests/test_finite_planning_review.py",
+      "sha256": "1ea22055827ca4d4c0e1ac13ae8003a631bbcf6dcab1081abcf5ae4db3adb0c2"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/tests/test_finite_planning_transport.py",
+      "destination": "tests/test_finite_planning_transport.py",
+      "sha256": "bd0dbddc537626059b8e72dfdd200465242788fb06c84e406d0ce1b9c2c6b480"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/tests/test_li_v3_compatible_envelope.py",
+      "destination": "tests/test_li_v3_compatible_envelope.py",
+      "sha256": "2b4c5561c8158b76ddd739b96799ee0fecbd1c31e60d16df2e6e8b0bd2618f64"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/tests/test_li_v3_compatible_envelope_review.py",
+      "destination": "tests/test_li_v3_compatible_envelope_review.py",
+      "sha256": "14a920cec686fb0b2040909c0388bcdcc6f6a8ef647eb9b73aa3993de9f7afc8"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/tests/test_package_retention.py",
+      "destination": "tests/test_package_retention.py",
+      "sha256": "88a939e73efb90c053ce15e3a95a23413400a002b79b510c61ce397a0c803b45"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/tests/test_package_retention_review.py",
+      "destination": "tests/test_package_retention_review.py",
+      "sha256": "e265691af8ef3e9af5d3a0ef3060959187c15291db20475d8b7e7798b9af789a"
+    },
+    {
+      "source": ".cache/phase2-finite-publication-v1/promotion/tests/test_retained_mpea_transport.py",
+      "destination": "tests/test_retained_mpea_transport.py",
+      "sha256": "b841a8dcc5ac955f3e82a7de0e34186e9d752552c022a750c3cdec85c94da84a"
+    }
+  ],
+  "scope": "Tracked integration after completed actual flag diagnosis; committed-source CI and retention not yet executed"
+}

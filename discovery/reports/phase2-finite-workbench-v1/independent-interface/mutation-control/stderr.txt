@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-finite-ui-review-v1/independent_browser_review.py", line 294, in <module>
+    main()
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-finite-ui-review-v1/independent_browser_review.py", line 220, in main
+    assert page.locator("#finite-plan-result").inner_text() == newest_text, "stale response changed newest result"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: stale response changed newest result

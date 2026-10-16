@@ -78,6 +78,57 @@
       valid: (plan) => ['sufficient_zero_failure_resolution', 'insufficient_resolution'].includes(plan.resolution_status)
         && plan.power_status === 'not_computed' && plan.observed_evidence_status === 'no_observations',
     },
+    {
+      id: 'finite', endpoint: '/api/plan-finite-zero-loss', closed: true,
+      schema: 'lupine.discovery.finite_zero_failure_resolution_plan.v1',
+      filename: 'lupine-finite-zero-failure-resolution-plan.json',
+      request: () => ({ population_panels: count('finite-plan-population'),
+        loss_ceiling: scalar('finite-plan-ceiling'), significance: scalar('finite-plan-significance'),
+        maximum_evaluation_panels: count('finite-plan-maximum') }),
+      render: (target, plan) => {
+        target.append(node('h3', '', plan.minimum_evaluation_panels === null
+          ? 'Insufficient finite-population resolution within this cap' : 'Best-case finite-population resolution'));
+        const facts = node('dl', 'calibration-facts');
+        fact(facts, 'Complete residual population', plan.population_panels);
+        fact(facts, 'Failure-fraction ceiling', plan.loss_ceiling);
+        fact(facts, 'Smallest null failure count', plan.minimum_null_failures);
+        fact(facts, 'Smallest attainable null failure fraction', plan.attainable_null_failure_fraction);
+        fact(facts, 'Significance', plan.significance);
+        fact(facts, 'Maximum sampled evaluation panels', plan.maximum_evaluation_panels);
+        fact(facts, 'Smallest qualifying sample count', plan.minimum_evaluation_panels === null ? 'None within this cap' : plan.minimum_evaluation_panels);
+        fact(facts, 'Exact null bound at maximum count', plan.zero_failure_null_bound);
+        fact(facts, 'Exact null bound at first qualifying count', plan.minimum_zero_failure_null_bound === null ? 'No qualifying count' : plan.minimum_zero_failure_null_bound);
+        fact(facts, 'Sampling design', 'Uniform without replacement');
+        fact(facts, 'Claim scope', 'Frozen residual finite population only');
+        fact(facts, 'Future-population risk', 'Not established');
+        fact(facts, 'Power / observed evidence', 'Not computed / no observations');
+        target.append(facts, node('p', 'field-help', 'Zero failures is hypothetical. The policy, complete panel frame and one binary failure endpoint must be fixed before evaluation selection. No IID model for failure labels is required; the uniform sampling premise remains unverified. A zero bound describes an impossible zero-failure sample under the stated finite null, not a measured success or a guarantee about future materials.'));
+      },
+      valid: (plan) => {
+        const fields = ['population_panels', 'loss_ceiling', 'significance', 'maximum_evaluation_panels',
+          'minimum_null_failures', 'attainable_null_failure_fraction', 'minimum_evaluation_panels',
+          'zero_failure_null_bound', 'minimum_zero_failure_null_bound', 'resolution_status',
+          'adequacy_status', 'power_status', 'observed_evidence_status', 'premise_status',
+          'future_population_risk_status', 'claim_scope', 'sampling_design', 'null_hypothesis',
+          'premises', 'maximum_panel_count', 'maximum_input_bits'];
+        const exact = (value) => typeof value === 'string' && /^(0|[1-9][0-9]*)(\/[1-9][0-9]*)?$/.test(value);
+        const sufficient = plan.minimum_evaluation_panels !== null;
+        return Object.keys(plan).length === fields.length && fields.every((key) => Object.hasOwn(plan, key))
+          && ['population_panels', 'maximum_evaluation_panels', 'minimum_null_failures'].every((key) => Number.isInteger(plan[key]))
+          && ['loss_ceiling', 'significance', 'attainable_null_failure_fraction', 'zero_failure_null_bound'].every((key) => exact(plan[key]))
+          && (sufficient ? Number.isInteger(plan.minimum_evaluation_panels) && exact(plan.minimum_zero_failure_null_bound)
+            : plan.minimum_zero_failure_null_bound === null)
+          && plan.resolution_status === (sufficient ? 'sufficient_zero_failure_resolution' : 'insufficient_resolution')
+          && plan.adequacy_status === 'unestablished' && plan.power_status === 'not_computed'
+          && plan.observed_evidence_status === 'no_observations'
+          && plan.future_population_risk_status === 'not_established'
+          && plan.claim_scope === 'frozen_residual_finite_population_only'
+          && plan.sampling_design === 'uniform_without_replacement'
+          && plan.null_hypothesis === 'fixed finite-population failure fraction >= loss_ceiling'
+          && plan.maximum_panel_count === 256 && plan.maximum_input_bits === 32
+          && Array.isArray(plan.premises) && plan.premises.every((premise) => typeof premise === 'string');
+      },
+    },
   ];
   for (const config of configurations) {
     const prefix = `${config.id}-plan`;
@@ -109,6 +160,7 @@
         if (revision !== requestRevision) return;
         if (!response.ok) throw new Error(value.error?.message || 'The plan could not be calculated.');
         if (value.schema !== config.schema || !value.plan || !config.valid(value.plan)
+            || (config.closed && (Object.keys(value).length !== 2 || !Object.hasOwn(value, 'schema') || !Object.hasOwn(value, 'plan')))
             || value.plan.premise_status !== 'hypothetical_unverified' || !Array.isArray(value.plan.premises)) {
           throw new Error('The server returned an unsupported planning result.');
         }

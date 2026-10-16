@@ -1,0 +1,39 @@
+{
+  "schema": "lupine.discovery.li_compatible_envelope_source_review.v1",
+  "status": "PASS_SOURCE_REVIEW_AT_BOUND_HASH",
+  "reviewed_at": "2026-10-16T07:11:06.461072+00:00",
+  "owner": "phase2_math",
+  "independent_ast_reviewer": "phase2_math/proof_check",
+  "candidate_sha256": "e771b3fc2a66d6e2ff3a26d8aae88b7a2915ac908907908316e697997761c847",
+  "candidate_path": ".cache/phase2-li-compatible-envelope-candidate-v1/promotion/scripts/li_v3_compatible_envelope.py",
+  "candidate_freeze_status": "Author initially identified this as an early candidate; any later changed bytes require rebinding. This review does not assert author tests or production permission.",
+  "design_review_sha256": "9b9782bffb5f96e137c9b09356e1226ac8e304641218a4e22bb8bc79d2c94338",
+  "producer_pin_audit_sha256": "812ff91c8379ce545b3970cd43870205495d4c1adfa97623bf6f6564369c4893",
+  "structural_ast_review": {
+    "comparison": "Full FunctionDef ast.dump without location attributes; no broad normalization",
+    "exact_differences": [
+      "Function name _zip_structure to _compatible_zip_structure",
+      "Single bit predicate RHS ~0x800 to ~(0x806 if info.compress_type == 8 else 0x800)"
+    ],
+    "legacy_function_ast_sha256": "fc49fd77ac5754d80f97e8b13d15e4225fed7ef5cb48b05e26a8ea5914042f2c",
+    "candidate_function_ast_sha256": "145b3aa5aafc21f2a73e5bd8034d5f64d665eea1c81554d55209991200d448b0",
+    "all_other_predicate_order_bounds_members_and_local_central_agreement_unchanged": true,
+    "helper_alias_bindings": "Five explicit one-time aliases resolve through frozen flag/header modules to original custody attributes; no later stores/deletes, old-global monkeypatch or global/nonlocal statements; stdlib imports agree."
+  },
+  "gate_and_pipeline_review": [
+    "Own committed-source check precedes any public prerequisite/private input; exact canonical expected flag receipt rejects mismatched producer/extra keys/types/status/family/exposure and synthetic records.",
+    "Declared f7c6ccd producer commit contains all13 exact pinned source/test/contract bytes (local Git audit), independently of whether CI or actual flags execution later succeeds.",
+    "Wrong or missing public flag prerequisite blocks before original private capture/object; original fixed capture validator and object size/MD5/SHA verification remain required.",
+    "New traversal checks every member before any admitted XML decompression; the first flag family alone supplies no global archive acceptance.",
+    "Pipeline calls unchanged original four envelope XML/type/relationship/workbook validators, preserving per-component started/completed exposure and constant failures; no worksheet/sharedStrings member decoding is added.",
+    "Partial object-read exposure remains null; successful read is reported. Valid envelope remains BLOCKED_SCHEMA/SCHEMA_UNCONFIRMED, not data or scientific readiness."
+  ],
+  "documentation_requirement": "State internal directory-name decoding and distinguish started/incomplete XML work from no XML access. Actual own-source CI, genuine same-source DEFLATE_OPTION_FLAGS_ONLY receipt and subsequent controlled execution are external prerequisites, not established by this source review.",
+  "tests_run": false,
+  "candidate_imported_or_executed": false,
+  "actual_flag_receipt_read": false,
+  "private_capture_or_raw_archive_read": false,
+  "network_used": false,
+  "tracked_files_edited": false,
+  "scientific_claim_changed": false
+}

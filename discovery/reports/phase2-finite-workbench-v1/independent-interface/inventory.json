@@ -1,0 +1,125 @@
+{
+  "scope": "independent finite-planner UI review; excludes this inventory itself",
+  "files": {
+    "README.md": {
+      "sha256": "f53fe14fc6f960a7ead0f2e684ac55bc73247476f1368f292d13b936360b55c9",
+      "bytes": 2905
+    },
+    "author-artifact-audit.json": {
+      "sha256": "dd592ac98ce2a0ff093bbd5a3fa0dd43c673cb850ad21af4b2dee748c616f1c1",
+      "bytes": 987
+    },
+    "first/artifacts/empty-sample-cap.json": {
+      "sha256": "bf9e97a8deca14199b88a7cd0453e7771861232d228a309dbe60f2f35eaef269",
+      "bytes": 1966
+    },
+    "first/artifacts/enumerated-five-panel-pairs.json": {
+      "sha256": "8de03fca5a3d4c87f2700969e4e60089a8f2005e901ddc41bac8dc310a0096e9",
+      "bytes": 1979
+    },
+    "first/artifacts/finite-card-1440.png": {
+      "sha256": "b4a8bb488ca6b98b205d960f7bae0e169246e467d7e729af114831aa8feb7e26",
+      "bytes": 190396
+    },
+    "first/artifacts/finite-card-320.png": {
+      "sha256": "6161ac83bd552f44d76e5b0e82cc231daeaa08af852a3efa5823b3abf4e90920",
+      "bytes": 183106
+    },
+    "first/artifacts/hypothetical-census.json": {
+      "sha256": "0a218af92f4631ae63c10c765bda3d0caf5cddb0a3b6d6ed20d9a14b5e35791e",
+      "bytes": 1976
+    },
+    "first/artifacts/large-exact.json": {
+      "sha256": "0a13869f62ec88d39ce16201a5d56b57be0fe5c60f2abf03ffaf73000ef92c5f",
+      "bytes": 2100
+    },
+    "first/artifacts/navigation-preserved.json": {
+      "sha256": "0a13869f62ec88d39ce16201a5d56b57be0fe5c60f2abf03ffaf73000ef92c5f",
+      "bytes": 2100
+    },
+    "first/artifacts/recovered-after-real-error.json": {
+      "sha256": "8de03fca5a3d4c87f2700969e4e60089a8f2005e901ddc41bac8dc310a0096e9",
+      "bytes": 1979
+    },
+    "first/artifacts/report.json": {
+      "sha256": "eb1dfff67a2c81b8f56066f43b904af59b07b4461d7a518694028cb513dc7437",
+      "bytes": 5621
+    },
+    "first/artifacts/stale-error-ignored.json": {
+      "sha256": "8de03fca5a3d4c87f2700969e4e60089a8f2005e901ddc41bac8dc310a0096e9",
+      "bytes": 1979
+    },
+    "first/artifacts/stale-success-ignored.json": {
+      "sha256": "8de03fca5a3d4c87f2700969e4e60089a8f2005e901ddc41bac8dc310a0096e9",
+      "bytes": 1979
+    },
+    "first/execution.json": {
+      "sha256": "af155123d67f860f33a82d19ea993615dc59f1a16d508cf608d89341f121d8e3",
+      "bytes": 74229
+    },
+    "first/start.json": {
+      "sha256": "a9721fd12b039b12e2c5c75bed6f73878a0fd048d3cf03fd16ba19bd2b1c783d",
+      "bytes": 37280
+    },
+    "first/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "first/stdout.txt": {
+      "sha256": "3adb176cd35742d6551509744190e5907b42cb16471cbc7dd25f59a342377235",
+      "bytes": 162
+    },
+    "independent_browser_review.py": {
+      "sha256": "70f9b2882d5c7d75b4f55f16b0c925aff6a07fc5af0d991686f84468c876ce9d",
+      "bytes": 17032
+    },
+    "mutation-control/artifacts/empty-sample-cap.json": {
+      "sha256": "bf9e97a8deca14199b88a7cd0453e7771861232d228a309dbe60f2f35eaef269",
+      "bytes": 1966
+    },
+    "mutation-control/artifacts/enumerated-five-panel-pairs.json": {
+      "sha256": "8de03fca5a3d4c87f2700969e4e60089a8f2005e901ddc41bac8dc310a0096e9",
+      "bytes": 1979
+    },
+    "mutation-control/artifacts/hypothetical-census.json": {
+      "sha256": "0a218af92f4631ae63c10c765bda3d0caf5cddb0a3b6d6ed20d9a14b5e35791e",
+      "bytes": 1976
+    },
+    "mutation-control/artifacts/recovered-after-real-error.json": {
+      "sha256": "8de03fca5a3d4c87f2700969e4e60089a8f2005e901ddc41bac8dc310a0096e9",
+      "bytes": 1979
+    },
+    "mutation-control/delivered-planner-mutant.js": {
+      "sha256": "2e90b37d75dc1abe3a4f60e4645b9b51385ef9ed57faf8030c47cb1f3955a5ac",
+      "bytes": 13350
+    },
+    "mutation-control/execution.json": {
+      "sha256": "53c7c289f031bd50083cb8406eb798aa9c3d41d322a8ff705c12534a1643f145",
+      "bytes": 74267
+    },
+    "mutation-control/mutation.json": {
+      "sha256": "4fe5315ef2c9a9608a82b931b310b258fbdd690b7ee908d3ad7faf684d337649",
+      "bytes": 722
+    },
+    "mutation-control/start.json": {
+      "sha256": "8010b673954faa70317dbc6ae4298c237cb0ddab97a0b58476e2cf6c2b0c8906",
+      "bytes": 37320
+    },
+    "mutation-control/stderr.txt": {
+      "sha256": "60d0c54d09c2a2358b733df70ef5ad93f8acb079c88f6f3426ca3fdbea1896ff",
+      "bytes": 567
+    },
+    "mutation-control/stdout.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "review.json": {
+      "sha256": "c6a34c413c414470fc285a5ad568f105cd7de7b92714cf785e3dafda450f2a3a",
+      "bytes": 4706
+    },
+    "run_review.py": {
+      "sha256": "fcd72765e55b8b2d9476da279d9a75456fe4fff6b75276bfef606218c6329a25",
+      "bytes": 2887
+    }
+  }
+}

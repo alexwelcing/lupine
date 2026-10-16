@@ -1,0 +1,9 @@
+{
+  "scope": "ignored UI candidate; browser execution pending",
+  "files": {
+    "scripts/browser_smoke.py": "c6d765d5134a8427408748e516f60480e27df7acbb1f5aedef6ccd10f9136d1c",
+    "scripts/finite_planning_browser_checks.py": "50c6ba74701388c8a91b62ff2d399d18e572de2fc9aaa7acfb9962030fda9390",
+    "src/lupine_discovery/web/index.html": "553c0bb7d8d31699b519b4c24c05dae5af659b996fe510edab26d3fe6baf29b9",
+    "src/lupine_discovery/web/planner.js": "92a3b8e5f4d4abc61c3471b761a0745ccd66a9ec8327d4f724ba8635e69e530c"
+  }
+}

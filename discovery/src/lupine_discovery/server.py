@@ -16,10 +16,11 @@ from .coupled_worker import CoupledWorkerError, MAX_CERTIFICATE_BYTES, MAX_DOCUM
 from .evidence import fields
 from .serialization import encode, loads
 from .study_planning import plan_pool_threshold, plan_zero_failure_resolution
+from .finite_planning import plan_finite_zero_failure_resolution
 
 MAX_BODY_BYTES = 2 * 1024 * 1024
 MAX_PLANNING_BODY_BYTES = 4096
-PLANNING_PATHS = frozenset({"/api/plan-pool", "/api/plan-zero-loss"})
+PLANNING_PATHS = frozenset({"/api/plan-pool", "/api/plan-zero-loss", "/api/plan-finite-zero-loss"})
 # Verification accepts exported receipts larger than an input problem. Six
 # bytes per source byte accommodates JSON string escaping in the outer envelope;
 # the child still enforces the separate 256 KiB problem and 2 MiB receipt caps.
@@ -182,6 +183,11 @@ class WorkbenchHandler(BaseHTTPRequestHandler):
                 plan = plan_zero_failure_resolution(value["loss_ceiling"], value["significance"],
                                                      value["maximum_evaluation_panels"])
                 result = {"schema": "lupine.discovery.zero_failure_resolution_plan.v1", "plan": encode(plan)}
+            elif path == "/api/plan-finite-zero-loss":
+                fields(value, ("population_panels", "loss_ceiling", "significance", "maximum_evaluation_panels"))
+                plan = plan_finite_zero_failure_resolution(value["population_panels"],
+                    value["loss_ceiling"], value["significance"], value["maximum_evaluation_panels"])
+                result = {"schema": "lupine.discovery.finite_zero_failure_resolution_plan.v1", "plan": encode(plan)}
             elif path == "/api/select":
                 if isinstance(value, dict) and "problem_raw" in value:
                     fields(value, ("problem_raw",))

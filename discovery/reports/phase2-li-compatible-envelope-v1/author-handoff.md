@@ -1,0 +1,11 @@
+# Conditional Li compatible-envelope candidate
+
+Ignored candidate only. Production remains conditional on the already-completed, same-source flag receipt reporting `DEFLATE_OPTION_FLAGS_ONLY` at the exact f7c6ccd producer, then this separate source's own published CI and package checkpoint. No actual flag family or compatible-envelope outcome was read or generated in this work.
+
+The script permits method-8 compression-option bits 1/2 (plus existing UTF-8 bit 11) and leaves method 0 UTF-8-only. Its structural function has exactly one predicate delta plus a function rename, verified by a complete AST comparison and unchanged-helper binding checks. It preserves local/central agreement and every other old ZIP predicate, and calls the same four original XML/type/relationship/workbook validators. All 13 historical frozen files and their failed receipts remain unchanged. Scientific schema stays blocked even if the envelope passes.
+
+Author tests: initial 15 passed, then 17 passed after adding explicit fixture identity bounds and a positive synthetic committed-source guard test. The final source is unchanged from initial script SHA e771b3fc; actual logs and source/test/contract hashes are retained. Tests include exact AST preservation, all Deflate option combinations with UTF-8, forbidden bits/methods, later-header failures, opaque worksheets/shared strings, XML rejection/size limits and partial exposure, forged receipt gates and actual public-source pin matching. No real object, private capture or network was accessed.
+
+Independent mathematical/source review found no blocker and verified the exact AST delta, aliases, all 13 prior Git blobs and the closed receipt/pipeline scope. Independent executable review/tests are owned separately at `.cache/phase2-li-compatible-envelope-review-v1/`; they are pending at this handoff. The fourth future frozen path is `tests/test_li_v3_compatible_envelope_review.py`.
+
+Promotion candidates are under `promotion/`. Root must preserve the old files, bind the actual prerequisite result honestly, promote all four new files, and verify the resulting published source/CI/package before any production operation. Existing user authorization covers this bounded work; no new permission request is needed.

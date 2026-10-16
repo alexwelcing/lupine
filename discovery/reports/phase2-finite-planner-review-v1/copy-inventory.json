@@ -1,0 +1,35 @@
+{
+  "scope": "Independent synthetic finite arithmetic/input/claim execution and static additive integration review. No raw scientific data.",
+  "files": [
+    {
+      "path": "review.json",
+      "bytes": 6608,
+      "sha256": "c0687cc9d6a16cd4cedda17b26686086aed7f530abce6653d193569586de5aa4"
+    },
+    {
+      "path": "test_finite_planning_review.py",
+      "bytes": 13707,
+      "sha256": "1ea22055827ca4d4c0e1ac13ae8003a631bbcf6dcab1081abcf5ae4db3adb0c2"
+    },
+    {
+      "path": "run_review.py",
+      "bytes": 1850,
+      "sha256": "3bef585eb24eeb0219715abfe38bd36b8dbdf60481e27b7a5ab80958a5012ab8"
+    },
+    {
+      "path": "first/execution.json",
+      "bytes": 2135,
+      "sha256": "3779b220624fe4bc21ecdbcd0f139e53c66697e7084b482e18af2e7a67c3c8b3"
+    },
+    {
+      "path": "first/stdout.txt",
+      "bytes": 97,
+      "sha256": "bd21610cb011922d4a4c69f205d99ab6459ad608f7ee52f8fcc35f58792e22f8"
+    },
+    {
+      "path": "first/stderr.txt",
+      "bytes": 1560,
+      "sha256": "3a7854fcc0d2de90157a47a26a24cce1cb2e3a8a7d9e59456c1abc8deeb9892d"
+    }
+  ]
+}

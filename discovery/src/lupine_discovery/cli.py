@@ -137,6 +137,13 @@ def main(argv=None):
     loss_plan.add_argument("--significance", required=True, help="Exact one-sided significance, strictly between zero and one")
     loss_plan.add_argument("--maximum-evaluation-panels", type=int, default=256, help="Declared search bound (0 through 256; default: 256)")
     loss_plan.add_argument("--output", type=Path, help="Write plan JSON (default: standard output)")
+    finite_plan = sub.add_parser("plan-finite-zero-loss", help="Plan zero-failure resolution for a fixed finite population",
+        description="Exact hypothetical uniform sampling without replacement from a complete fixed finite panel population. This is finite-population resolution, not IID future-risk inference, power or observed evidence.")
+    finite_plan.add_argument("--population-panels", type=int, required=True, help="Complete fixed residual panel population size (1 through 256)")
+    finite_plan.add_argument("--loss-ceiling", required=True, help="Exact null finite-population failure fraction, strictly between zero and one")
+    finite_plan.add_argument("--significance", required=True, help="Exact one-sided significance, strictly between zero and one")
+    finite_plan.add_argument("--maximum-evaluation-panels", type=int, required=True, help="Declared sample-count search cap (0 through population size)")
+    finite_plan.add_argument("--output", type=Path, help="Write plan JSON (default: standard output)")
     descriptions = {
         "select": "Create an exact conditional candidate-pool certificate from a problem; no future outcomes are read.",
         "verify": "Recompute a certificate from its original problem and check exact identity; this does not verify physical truth.",
@@ -157,16 +164,21 @@ def main(argv=None):
         if args.command == "serve":
             from .server import serve
             return serve(args.port)
-        if args.command in {"plan-pool", "plan-zero-loss"}:
+        if args.command in {"plan-pool", "plan-zero-loss", "plan-finite-zero-loss"}:
             from .study_planning import plan_pool_threshold, plan_zero_failure_resolution
             if args.command == "plan-pool":
                 plan = plan_pool_threshold(args.calibration_count, args.alpha, args.cutoff,
                                            args.iid_score_probability)
                 schema = "lupine.discovery.pool_threshold_plan.v1"
-            else:
+            elif args.command == "plan-zero-loss":
                 plan = plan_zero_failure_resolution(args.loss_ceiling, args.significance,
                                                      args.maximum_evaluation_panels)
                 schema = "lupine.discovery.zero_failure_resolution_plan.v1"
+            else:
+                from .finite_planning import plan_finite_zero_failure_resolution
+                plan = plan_finite_zero_failure_resolution(args.population_panels,
+                    args.loss_ceiling, args.significance, args.maximum_evaluation_panels)
+                schema = "lupine.discovery.finite_zero_failure_resolution_plan.v1"
             output = json.dumps({"schema": schema, "plan": encode(plan)},
                                 sort_keys=True, allow_nan=False, indent=2) + "\n"
             if args.output:

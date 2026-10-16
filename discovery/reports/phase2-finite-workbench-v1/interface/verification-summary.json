@@ -1,0 +1,22 @@
+{
+  "full_browser_status": "passed",
+  "full_browser_checks": 73,
+  "javascript_errors": [],
+  "retained_checks": 65,
+  "retained_checks_in_original_order": true,
+  "prior_report": "reports/phase2-study-workbench-v1/combined-v2/2/stdout.txt",
+  "prior_report_sha256": "02ea540253b78b76c19cecc0d984e8d422bb969d255bc90f3c8f16106bae6694",
+  "added_checks": [
+    "finite_planning_fixed_frame_default_25_exact_export_and_separate_iid_forms",
+    "finite_planning_discrete_null_rounding_equality_and_zero_cap_keep_nulls",
+    "finite_planning_insufficient_cap_full_census_and_singleton_do_not_claim_observations",
+    "finite_planning_invalid_population_cap_exact_input_and_noninteger_clear_exports",
+    "finite_planning_older_success_and_error_cannot_restore_stale_results",
+    "finite_planning_closed_claim_statuses_and_malformed_response_rejected",
+    "finite_planning_exact_fraction_keyboard_labels_and_mobile_no_overflow",
+    "finite_planning_navigation_preserves_problem_and_reads_no_outcomes_or_archives"
+  ],
+  "execution_receipt": "browser-attempt-1/execution.json",
+  "actual_scope": "uncommitted held combined overlay; no scientific data/evidence added",
+  "independent_review": "pending"
+}

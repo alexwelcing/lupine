@@ -1,0 +1,64 @@
+{
+  "status": "PASS_SYNTHETIC_TESTS_NO_SOURCE_REVIEW_BLOCKER",
+  "scope": "Independent synthetic compatible-envelope inspection and fully stubbed production-guard paths; no actual workbook, private custody or actual flag receipt",
+  "source_sha256": "e771b3fc2a66d6e2ff3a26d8aae88b7a2915ac908907908316e697997761c847",
+  "contract_sha256": "86b663de7a0e88e559a8cc6acbbacd3b17d4ca9ee4e759abc826f7afbd6211ca",
+  "independent_test_sha256": "14a920cec686fb0b2040909c0388bcdcc6f6a8ef647eb9b73aa3993de9f7afc8",
+  "eventual_test_target": "tests/test_li_v3_compatible_envelope_review.py",
+  "execution": {
+    "first": {
+      "receipt": "first/execution.json",
+      "exit_code": 1,
+      "test_methods": 16,
+      "passed": 15,
+      "failed": 1,
+      "unittest_seconds": 0.642,
+      "elapsed_seconds": 1.1413252689999354,
+      "failure_classification": "Reviewer fixture supplied undeclared OUTPUT_EXISTS; unchanged CustodyError correctly sanitized it to INTERNAL_FAILURE. Actual legacy exclusive-output helper emits OUTPUT_CONFLICT.",
+      "preserved_source": "first/test_li_v3_compatible_envelope_review.py"
+    },
+    "second": {
+      "receipt": "second/execution.json",
+      "exit_code": 0,
+      "test_methods": 16,
+      "passed": 16,
+      "unittest_seconds": 0.931,
+      "elapsed_seconds": 1.3897207819991308,
+      "bound_files": 17,
+      "source_unchanged": true
+    }
+  },
+  "change_between_invocations": {
+    "patch": "reviewer-fixture-fix.patch",
+    "scope": "Only two test-fixture error-code literals changed from OUTPUT_EXISTS to OUTPUT_CONFLICT; no candidate/product change or weakened exposure assertion"
+  },
+  "coverage": [
+    "Ten accepted method/flag combinations including all method8 options and optional UTF8, and stored UTF8-only, with actual reads restricted to exactly four envelope components.",
+    "Forbidden flag/method combinations; later members cannot escape traversal; all local/central agreement fields, extras/comments/types, stored size, duplicate/missing/member-count checks challenged.",
+    "Six opaque worksheet/shared-string/comment/image members contain malformed payload canaries; no opaque member opened, semantic report unchanged apart from declared whole-object identity.",
+    "UTF16/DTD/depth/node/byte XML failures and partial exposure arrays; external/traversing relationships and unsupported workbook child fail closed; package-absolute targets supported by original validator.",
+    "Synthetic type/size and fake known-real-identity guards block before parser; all thirteen prior digests match current public source.",
+    "Ignored location blocks before prior source guard/Git/cache; entirely mocked positive committed-source path and altered prior/index checks.",
+    "Pinned canonical flag receipt status/source/producer/exposure/unknown fields challenged; forged receipts block before capture/object; original capture gate, incomplete object-read uncertainty and source-size failure tested.",
+    "Fixed two slots, exclusive-output conflict, safe CLI errors; successful fully stubbed production path remains BLOCKED_SCHEMA and produces no scientific counts."
+  ],
+  "source_review": {
+    "reviewers": [
+      "/root/phase2_planner",
+      "/root/phase2_planner/ui_review"
+    ],
+    "finding": "No blocker found. Read-only comparison confirms the ZIP structural function differs only by function name and the intended method8 option-bit mask; remaining predicates and order are retained. Four original XML validators are reused; no legacy global assignment or nested mutable output alias found.",
+    "final_doc_review": "Final contract 86b663de correctly distinguishes ZIP member-name decoding (not separately instrumented by old envelope fields) from per-component decompression/XML started/completed arrays and preserves incomplete-read unknown exposure.",
+    "pure_aliases": "Aliases reference original immutable constants and pure helper functions. They are controlled-workflow reuse, not a hostile-code boundary."
+  },
+  "limitations": [
+    "Positive production_context/envelope tests stub source, path, capture and/or object identity I/O with explicit synthetic values; they do not attest actual custody or successful production execution.",
+    "Exact flag-receipt equality is a controlled local workflow check, not authentication of hostile actors or proof the prerequisite actually ran.",
+    "No real flag-family result was inspected or inferred. A positive first-family receipt would still require complete compatible traversal of all members.",
+    "Envelope-valid means only the supported structural profile; opaque payload CRCs, worksheet/shared-string data and scientific schema remain unvalidated.",
+    "XML metadata is decoded and may itself contain scientific text. Closed recognized-role projection is not zero-information proof.",
+    "Synthetic passes do not predict real workbook compatibility, establish sampling independence or promote scientific claims.",
+    "Root must verify actual qualified prerequisite, publish this separate source and verify exact-commit CI/package gates before any actual compatible-envelope run."
+  ],
+  "scientific_status": "BLOCKED_SCHEMA; pairing, lineage, overlap, eligibility, missingness and scientific usefulness remain unresolved."
+}

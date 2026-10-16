@@ -1,0 +1,18 @@
+test_counts_reject_bool_noninteger_empty_population_and_oversized_cap (test_finite_planning.FinitePlanningContractTests.test_counts_reject_bool_noninteger_empty_population_and_oversized_cap) ... ok
+test_frozen_direct_constructor_and_serialization_do_not_promote_claims (test_finite_planning.FinitePlanningContractTests.test_frozen_direct_constructor_and_serialization_do_not_promote_claims) ... ok
+test_no_outcome_path_or_claim_override_parameters (test_finite_planning.FinitePlanningContractTests.test_no_outcome_path_or_claim_override_parameters) ... ok
+test_normalized_bit_bound_and_largest_population_remain_exact (test_finite_planning.FinitePlanningContractTests.test_normalized_bit_bound_and_largest_population_remain_exact) ... ok
+test_probabilities_are_validated_even_when_cap_is_zero (test_finite_planning.FinitePlanningContractTests.test_probabilities_are_validated_even_when_cap_is_zero) ... ok
+test_resource_checks_precede_unbounded_fraction_parsing (test_finite_planning.FinitePlanningContractTests.test_resource_checks_precede_unbounded_fraction_parsing) ... ok
+test_ceiling_respects_attainable_fractions_and_exact_jump (test_finite_planning.FinitePlanningWorldTests.test_ceiling_respects_attainable_fractions_and_exact_jump) ... ok
+test_equality_qualifies_and_just_smaller_significance_does_not (test_finite_planning.FinitePlanningWorldTests.test_equality_qualifies_and_just_smaller_significance_does_not) ... ok
+test_exhaustive_binary_worlds_and_distinct_subsets_match_null_supremum (test_finite_planning.FinitePlanningWorldTests.test_exhaustive_binary_worlds_and_distinct_subsets_match_null_supremum) ... ok
+test_hand_counted_without_replacement_differs_from_iid (test_finite_planning.FinitePlanningWorldTests.test_hand_counted_without_replacement_differs_from_iid) ... ok
+test_minimum_stays_minimum_after_cap_increases (test_finite_planning.FinitePlanningWorldTests.test_minimum_stays_minimum_after_cap_increases) ... ok
+test_one_failure_null_has_linear_remaining_fraction (test_finite_planning.FinitePlanningWorldTests.test_one_failure_null_has_linear_remaining_fraction) ... ok
+test_zero_cap_census_singleton_and_impossible_tail (test_finite_planning.FinitePlanningWorldTests.test_zero_cap_census_singleton_and_impossible_tail) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.109s
+
+OK

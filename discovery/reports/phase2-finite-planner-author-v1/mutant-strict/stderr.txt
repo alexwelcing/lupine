@@ -1,0 +1,14 @@
+test_equality_qualifies_and_just_smaller_significance_does_not (test_finite_planning.FinitePlanningWorldTests.test_equality_qualifies_and_just_smaller_significance_does_not) ... FAIL
+
+======================================================================
+FAIL: test_equality_qualifies_and_just_smaller_significance_does_not (test_finite_planning.FinitePlanningWorldTests.test_equality_qualifies_and_just_smaller_significance_does_not)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-finite-planner-candidate-v1/mutant-strict/tests/test_finite_planning.py", line 84, in test_equality_qualifies_and_just_smaller_significance_does_not
+    self.assertEqual(exact.minimum_evaluation_panels, 2)
+AssertionError: None != 2
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)

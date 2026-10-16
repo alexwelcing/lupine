@@ -1,29 +1,32 @@
 # Project state
 
-**Active phase, October 16:** The published study-planning workbench at `41d3e31`
-passes all four GitHub CI jobs, a clean installed package (28 cases, six schemas,
-15 checks), strict retained verification and independent artifact byte audit.
-[Actual verification and source diagnosis](reports/phase2-workbench-verification-v1/README.md)
-record two identical Li header diagnostic results: BLOCKED_SCHEMA / MEMBER_FLAGS.
-The source matches publisher size/MD5 and the frozen SHA-256. The raw buffer and
-directory names were read; no member, XML or worksheet was decoded. The category
-identifies an unsupported flag, not its value or archive corruption. All original
-profiles and failures remain preserved. General planning proofs, an exact
-hypothetical figure and documentary source leads support the next source review.
-[GOAL](GOAL.md#renewed-active-work--2026-10-16) records ownership and next actions.
-Scientific usefulness remains NO-GO; the original automation remains disabled.
+**Active phase, October 16:** Published f7c6ccd passes all four GitHub CI jobs,
+clean packaging (28 cases/six schemas/15 checks) and strict retained verification.
+[Two actual flag diagnoses](reports/phase2-li-flag-verification-v1/README.md)
+identify DEFLATE_OPTION_FLAGS_ONLY in the same first rejected ZIP entry. All309
+runtime files and source identity remain unchanged. Whole source bytes and
+directory names were read; no member, XML or worksheet was decoded. Original
+profiles and failures remain preserved; this is not complete archive acceptance.
 
-The next [flag-family diagnostic](reports/phase2-li-flag-diagnostic-v1/README.md)
-passes all 76 integrated synthetic Li tests, with the original stale pin and
-reviewer-fixture failure preserved. Its actual run awaits exact-source CI and
-clean packaging. A distinct finite-population planning extension is being
-reviewed in isolated overlays; no new archival experiment has been selected.
+The [finite-population workbench](reports/phase2-finite-workbench-v1/README.md)
+adds a separately scoped exact API, CLI, guarded HTTP and third planning form.
+It passes local isolated planning/package/browser checks and independent reviews;
+new committed-source CI/retention remain a later gate. The [compatible envelope](reports/phase2-li-compatible-envelope-v1/README.md)
+passes17author/16independent synthetic checks and preserves all13old frozen files.
+Its actual run awaits its own published-source CI and clean package. The
+[prospective schema map](reports/phase2-li-next-schema-design-v1/README.md)
+keeps roles/coordinates, pairing, source lineage and count discrepancy unresolved.
+
+Root owns integration, publication and exact-source verification. Scientific
+usefulness remains NO-GO; no scientific allocation or fit occurred. The original
+automation remains disabled and no continuous worker was started.
+[GOAL](GOAL.md#renewed-active-work--2026-10-16) records the next actions.
 
 Snapshot: 2026-10-11 01:40 UTC (exact CI observation `2026-10-11T01:40:16.973611+00:00`). Tested runtime/artifact source: `6585a605d5d325e84423c7e35c7286efe85cfb6f`. [Scoped decision and evidence](reports/research-preview-decision.md).
 
 **Research preview: GO_RESEARCH_PREVIEW. Physical-performance/general superiority: NO-GO.** The conditional engine, known-answer evaluation, interface, reproducible package and scoped claim audit meet the recorded preview definition. All scientific negatives remain unchanged; no physical-performance or general predictive-superiority claim is approved.
 
-| Current evidence | Actual state |
+| Historical preview evidence | Actual state at the recorded source |
 | --- | --- |
 | Registered-source Python integration | PASS at registered study source `a0624cac`: 1,359 tests, no skips/failures/errors, all 343 mandatory registration files unchanged. Final runtime CI is reported separately below. |
 | Final public-resource CI | [38101296342](https://github.com/alexwelcing/lupine/actions/runs/38101296342): PASS: all four jobs completed successfully for exact runtime `6585a605` (observed `2026-10-11T01:40:16.973611+00:00`). |
@@ -38,7 +41,7 @@ Snapshot: 2026-10-11 01:40 UTC (exact CI observation `2026-10-11T01:40:16.973611
 
 The scoped build goal is CLOSED for the narrow research preview at runtime commit `6585a605d5d325e84423c7e35c7286efe85cfb6f`, with completed source, package, interface and exact-commit CI evidence. Scientific evaluation and its computational reproductions are complete, including the negative results. Physical validity, independent scientific replication and general predictive superiority remain separate future research; they are not silently declared solved or added as unfinished preview requirements.
 
-The [original integration failure](reports/contract-integration-failure-v1/README.md), [reviewed integration repairs](reports/contract-integration-repair-v1/README.md), [preallocation repair](reports/mpea-preallocation-repair-v2/README.md) and all historical scientific negatives remain preserved. The dated implementation/checkpoint records below retain their original counts and chronology; the table above is the current snapshot. [GOAL](GOAL.md) records ownership and scope.
+The [original integration failure](reports/contract-integration-failure-v1/README.md), [reviewed integration repairs](reports/contract-integration-repair-v1/README.md), [preallocation repair](reports/mpea-preallocation-repair-v2/README.md) and all historical scientific negatives remain preserved. The dated implementation/checkpoint records below retain their original counts and chronology; the table above preserves the historical preview snapshot. [GOAL](GOAL.md) records ownership and scope.
 
 ## Implemented and exercised
 
@@ -222,3 +225,25 @@ Production checkpoint update, 2026-10-10 22:14 UTC: exact remote commit `a865147
 Contract-conformance checkpoint, 2026-10-10 23:14 UTC: the final scoped C1–C9 reviews and current 56-check Chromium run pass; original failures remain preserved in [the integration record](reports/mpea-contract-conformance-v1/README.md). The 337-file full local suite is running; this source checkpoint is published for concurrent exact-commit CI. Full-suite completion, clean installed package and all four new-source CI jobs still block registration. No actual MPEA allocation, targets or scientific verdict are claimed.
 
 Integration repair checkpoint, 2026-10-10 23:34 UTC: the complete 478208f run failed (1,324 tests, 19 failures/eight errors). [Exact failures and reviewed repairs](reports/contract-integration-repair-v1/README.md) are retained. Ten narrow test/helper/auditor changes preserve production science and enforcement. New committed-source full testing, clean installed artifacts and all four exact-commit CI jobs remain required. Actual MPEA registration and target access remain blocked.
+
+
+## Finite-population workbench candidate — October 16
+
+The separate exact finite-frame planner, CLI, guarded HTTP route and third Study
+planning form are integrated in an isolated overlay. Actual checks pass: 76
+planning/transport tests, 49 package tests, 23 retained-artifact tests and a fresh
+noneditable wheel with 28 demonstrations, six schemas and 16 required checks.
+The maintained browser run passes all 73 checks; an independent browser review
+passes eight focused groups and rejects an intentional stale-response mutation.
+The initial stale 15-check expectation failure and all deliberate arithmetic
+mutations remain recorded. Source counts identify the tested overlays; these
+passes do not stand in for the forthcoming committed source's CI or retention.
+
+The finite-frame result assumes a complete fixed residual panel population and
+uniform sampling without replacement at a fixed evaluation count. It neither
+assumes IID labels nor licenses an IID future-material risk claim. No source
+criterion, loss endpoint, allocation, fit or exposed scientific benchmark was
+changed. All earlier scientific NO-GO decisions remain unchanged. Root owns
+publication and verification; the expired automation remains disabled.
+
+Evidence: [finite workbench](reports/phase2-finite-workbench-v1/README.md).

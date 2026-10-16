@@ -1,0 +1,14 @@
+test_caps_empty_sample_census_and_singleton (__main__.FinitePlanningIndependentReview.test_caps_empty_sample_census_and_singleton) ... ok
+test_claims_unknowns_frozen_constructor_and_exact_serialization (__main__.FinitePlanningIndependentReview.test_claims_unknowns_frozen_constructor_and_exact_serialization) ... ok
+test_grid_ceiling_and_equality_are_not_rounded_or_strict (__main__.FinitePlanningIndependentReview.test_grid_ceiling_and_equality_are_not_rounded_or_strict) ... ok
+test_invalid_values_rejected_even_at_empty_cap_before_arithmetic (__main__.FinitePlanningIndependentReview.test_invalid_values_rejected_even_at_empty_cap_before_arithmetic) ... ok
+test_maximum_input_and_arithmetic_resource_bounds (__main__.FinitePlanningIndependentReview.test_maximum_input_and_arithmetic_resource_bounds) ... ok
+test_numeric_api_requires_no_file_network_or_process_access (__main__.FinitePlanningIndependentReview.test_numeric_api_requires_no_file_network_or_process_access) ... ok
+test_sampling_model_counterexamples_and_iid_stays_distinct (__main__.FinitePlanningIndependentReview.test_sampling_model_counterexamples_and_iid_stays_distinct) ... ok
+test_sequential_draw_oracle_over_every_small_null_world (__main__.FinitePlanningIndependentReview.test_sequential_draw_oracle_over_every_small_null_world) ... ok
+test_syntax_and_bit_guards_precede_fraction_parser (__main__.FinitePlanningIndependentReview.test_syntax_and_bit_guards_precede_fraction_parser) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.168s
+
+OK

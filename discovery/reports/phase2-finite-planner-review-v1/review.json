@@ -1,0 +1,136 @@
+{
+  "schema": "lupine.discovery.finite_planner_independent_review.v1",
+  "status": "PASS_NO_BLOCKER",
+  "reviewed_at": "2026-10-16T06:55:33.918755+00:00",
+  "owner": "phase2_math",
+  "independent_integration_reviewer": "phase2_math/proof_check",
+  "api_execution": {
+    "tests_passed": 9,
+    "unittest_seconds": 0.168,
+    "process_seconds": 0.5667062800002896,
+    "exit_code": 0,
+    "source_unchanged": true,
+    "finite_null_cases": 3663,
+    "sequential_draw_distributions": 284,
+    "receipt": "first/execution.json",
+    "stdout": "first/stdout.txt",
+    "stderr": "first/stderr.txt"
+  },
+  "oracle_scope": "Sequential remaining-good/bad probability recursion over every possible failure count for frames1..8; null sets enumerated by exact K/M comparison and maximized, without combinations or ceiling reuse. Separate from author binary-world/subset oracle.",
+  "additional_controls": [
+    "Exact ceiling discontinuity, equality acceptance, first qualifying count versus cap bound.",
+    "Zero cap, census, singleton, positive count minimality and extremal bounded fractions.",
+    "Finite versus IID discrepancy and independently enumerated shared-calibration non-binomial counterexample.",
+    "At most256 tail computations and bounded combination outputs; malformed text and excessive exact inputs rejected before Fraction parsing/arithmetic.",
+    "Frozen direct constructor, no claim override, exact rational serialization, unknown minima, preserved no-observations/no-power/no-future-risk/uncertainty scope.",
+    "Pure numeric API passes with file/network/process entrypoints forbidden."
+  ],
+  "integration_review": {
+    "mode": "read_only_source_and_AST_review_no_transport_or_package_execution_by_reviewer",
+    "old_probe_sha256": "0f3a266c196c1b86bc2c77b89026b9c19d5f19dce86d1cbf6d0ea047c476c15a",
+    "new_probe_sha256": "a990a5aa825b1ed55caeb2551b86dae3efc4f0e258e95afc696b95f4919415a6",
+    "prior_assertions_identical": 63,
+    "new_assertions": 9,
+    "prior_check_order_preserved": 15,
+    "mandatory_checks": 16,
+    "producer_verifier_and_both_fixed_pins_agree": true,
+    "finite_cli_http_schema_distinct": true,
+    "iid_routes_unchanged": true,
+    "existing_4096_byte_closed_field_origin_guards_preserved": true,
+    "expected_count_repairs": "Reviewed both corrected test names/comment/count15to16. All per-check omission, extra and reorder rejection loops unchanged. Root separately preserves its initial stale-count failure; no check weakened."
+  },
+  "claim_review": "Exact finite null supremum and cap-limited minimum are correct under declared fixed residual-frame uniform-subset law. Complete endpoint/sampling premises remain hypothetical_unverified; no source, IID, future-population, observed-risk, empirical-power or scientific-superiority attestation. No independent physical evidence is created by duplicate IDs.",
+  "source_bindings": [
+    {
+      "path": ".cache/phase2-finite-planner-candidate-v1/promotion/src/lupine_discovery/finite_planning.py",
+      "bytes": 5974,
+      "sha256": "027785ccdf24f6e8cf9b7a8ac98987b821fcdb19c875bbe8d2ba52d2fc3895f8"
+    },
+    {
+      "path": ".cache/phase2-finite-planner-candidate-v1/promotion/docs/finite-population-planning.md",
+      "bytes": 6568,
+      "sha256": "11f4efe987632293bfc8dfcbd24a32d3a05e4c9e23624c9933ec030028de3414"
+    },
+    {
+      "path": "src/lupine_discovery/study_planning.py",
+      "bytes": 9799,
+      "sha256": "7a2b00bc81f8bc025b9bb3d6c6c212875d44a9839c4665ec67c86e46fe5f6d83"
+    },
+    {
+      "path": "src/lupine_discovery/serialization.py",
+      "bytes": 4987,
+      "sha256": "cfec006ed4cb51fbbb6539422a5d829cadaa7bf0ff78bebbffd58aaba6f2523c"
+    },
+    {
+      "path": ".cache/phase2-finite-planner-review-v1/test_finite_planning_review.py",
+      "bytes": 13707,
+      "sha256": "1ea22055827ca4d4c0e1ac13ae8003a631bbcf6dcab1081abcf5ae4db3adb0c2"
+    },
+    {
+      "path": ".cache/phase2-finite-planner-review-v1/run_review.py",
+      "bytes": 1850,
+      "sha256": "3bef585eb24eeb0219715abfe38bd36b8dbdf60481e27b7a5ab80958a5012ab8"
+    },
+    {
+      "path": ".cache/phase2-finite-planner-review-v1/first/execution.json",
+      "bytes": 2135,
+      "sha256": "3779b220624fe4bc21ecdbcd0f139e53c66697e7084b482e18af2e7a67c3c8b3"
+    },
+    {
+      "path": ".cache/phase2-finite-planner-review-v1/first/stdout.txt",
+      "bytes": 97,
+      "sha256": "bd21610cb011922d4a4c69f205d99ab6459ad608f7ee52f8fcc35f58792e22f8"
+    },
+    {
+      "path": ".cache/phase2-finite-planner-review-v1/first/stderr.txt",
+      "bytes": 1560,
+      "sha256": "3a7854fcc0d2de90157a47a26a24cce1cb2e3a8a7d9e59456c1abc8deeb9892d"
+    },
+    {
+      "path": ".cache/phase2-finite-integration-v1/promotion/scripts/package_smoke.py",
+      "bytes": 33256,
+      "sha256": "cb4cb5f37cf9146d007ddb7af3599ba0e31180862825230c00fc995cf342d93e"
+    },
+    {
+      "path": ".cache/phase2-finite-integration-v1/promotion/scripts/verify_retained_artifacts.py",
+      "bytes": 19883,
+      "sha256": "22455c93a2539868cf8a9dda76b67413eefe05917603718f19eef1585a1c741d"
+    },
+    {
+      "path": ".cache/phase2-finite-integration-v1/promotion/src/lupine_discovery/cli.py",
+      "bytes": 15264,
+      "sha256": "e5bb4a838f989bba85e7435e6a7aff5e658e09f23d032ad4082f4dc5318d1a61"
+    },
+    {
+      "path": ".cache/phase2-finite-integration-v1/promotion/src/lupine_discovery/server.py",
+      "bytes": 13853,
+      "sha256": "e46f601a1689f0d2146682b90fccf1f015e9c171dbab0af81f1e4905c6df29dc"
+    },
+    {
+      "path": ".cache/phase2-finite-integration-v1/promotion/tests/test_finite_planning_transport.py",
+      "bytes": 9238,
+      "sha256": "bd0dbddc537626059b8e72dfdd200465242788fb06c84e406d0ce1b9c2c6b480"
+    },
+    {
+      "path": ".cache/phase2-finite-integration-v1/promotion/tests/test_package_retention.py",
+      "bytes": 18422,
+      "sha256": "88a939e73efb90c053ce15e3a95a23413400a002b79b510c61ce397a0c803b45"
+    },
+    {
+      "path": ".cache/phase2-finite-integration-v1/promotion/tests/test_package_retention_review.py",
+      "bytes": 17975,
+      "sha256": "e265691af8ef3e9af5d3a0ef3060959187c15291db20475d8b7e7798b9af789a"
+    },
+    {
+      "path": ".cache/phase2-finite-integration-v1/promotion/tests/test_retained_mpea_transport.py",
+      "bytes": 7672,
+      "sha256": "b841a8dcc5ac955f3e82a7de0e34186e9d752552c022a750c3cdec85c94da84a"
+    }
+  ],
+  "private_or_scientific_archive_read": false,
+  "network_used": false,
+  "sampling_or_study_performed": false,
+  "tracked_edits_by_reviewer": false,
+  "runtime_source_modified_by_reviewer": false,
+  "new_lean_build_or_refinement_claim": false
+}

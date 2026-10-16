@@ -144,6 +144,18 @@ assert resolution_plan['schema'] == 'lupine.discovery.zero_failure_resolution_pl
 assert resolution_plan['plan']['minimum_evaluation_panels'] == 29
 assert resolution_plan['plan']['power_status'] == 'not_computed'
 assert resolution_plan['plan']['observed_evidence_status'] == 'no_observations'
+finite_plan = planning_command('plan-finite-zero-loss', '--population-panels', '10',
+                               '--loss-ceiling', '1/5', '--significance', '1/20',
+                               '--maximum-evaluation-panels', '10')
+assert finite_plan['schema'] == 'lupine.discovery.finite_zero_failure_resolution_plan.v1'
+assert finite_plan['plan']['minimum_null_failures'] == 2
+assert finite_plan['plan']['attainable_null_failure_fraction'] == '1/5'
+assert finite_plan['plan']['minimum_evaluation_panels'] == 8
+assert finite_plan['plan']['minimum_zero_failure_null_bound'] == '1/45'
+assert finite_plan['plan']['zero_failure_null_bound'] == '0'
+assert finite_plan['plan']['power_status'] == 'not_computed'
+assert finite_plan['plan']['observed_evidence_status'] == 'no_observations'
+assert finite_plan['plan']['adequacy_status'] == 'unestablished'
 def check_optional_mpea(resources, observed_reports, url):
     """Compare installed/served identities only; never infer a scientific verdict."""
     report_resource = resources.joinpath('resources', 'mpea-t25-v1.json')
@@ -202,6 +214,8 @@ try:
                             'iid_score_probability': '1/2'}, iid_plan),
         ('/api/plan-zero-loss', {'loss_ceiling': '1/10', 'significance': '1/20',
                                 'maximum_evaluation_panels': 100}, resolution_plan),
+        ('/api/plan-finite-zero-loss', {'population_panels': 10, 'loss_ceiling': '1/5',
+                                       'significance': '1/20', 'maximum_evaluation_panels': 10}, finite_plan),
     ]
     for route, planning_input, expected_plan in planning_requests:
         request = Request(url + route, data=json.dumps(planning_input).encode('utf-8'),
@@ -253,6 +267,7 @@ print(json.dumps({'status': 'passed', 'python': sys.version.split()[0],
                              'prospective_pool_planning_cli_hypothesis_and_unknown',
                              'prospective_zero_failure_resolution_cli_not_observed_power',
                              'prospective_planning_http_cli_agreement_and_assets',
+                             'finite_population_zero_failure_cli_http_exact_scope',
                              'optional_mpea_resource_presence_and_http_agreement',
                              'mpea_javascript_packaged_and_served']},
                  sort_keys=True))
