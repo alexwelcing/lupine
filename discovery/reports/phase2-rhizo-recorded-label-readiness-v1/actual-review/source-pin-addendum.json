@@ -1,0 +1,8 @@
+{
+  "held_source_sha256": "13f1f4ee41947eff4b47faaa0a3463af96363fbc8c09d6a9d398d76d78f9d647",
+  "manifest_sha256": "fe5c3ab1d75e9895bff133e5c8e7ec5a12502bb8d1f27b832eabc6d84c7ba860",
+  "manifest_source_pins_equal_held_source_literal": true,
+  "scope": "AST literal reading only, no module or guard execution.",
+  "source_pin_count": 3,
+  "status": "PASS_STATIC_LITERAL_EQUALITY"
+}

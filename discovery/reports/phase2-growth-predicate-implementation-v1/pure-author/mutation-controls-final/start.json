@@ -1,0 +1,12 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    ".cache/phase2-growth-predicate-candidate-v1/run_mutation_controls.py"
+  ],
+  "source_before": {
+    "growth_predicate_audit.py": "167c8e3d0cba758057c60991debe8d831c8638da5ce3dbd1a183503c46efea11",
+    "run_mutation_controls.py": "103be0374ade683125fce07a3e1b9ca1cb8030bfe5245d799f7fafa7c215318c",
+    "test_growth_predicate_audit.py": "7daa8499dcf4be3b4d038c7b7223ed8aaa807fed8b5fe2a30ca01c1056aaddd3"
+  },
+  "started_at": "2026-10-16T12:07:49.305741+00:00"
+}

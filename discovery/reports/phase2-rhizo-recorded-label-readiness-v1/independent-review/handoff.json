@@ -1,0 +1,15 @@
+{
+  "actual_or_production_operations": 0,
+  "actual_reference_choice": "UNKNOWN",
+  "bytes": 333006,
+  "directory": ".cache/phase2-rhizo-recorded-label-review-v1",
+  "files": 49,
+  "first_two_failed_invocations_retained": true,
+  "independent_methods_passed": 19,
+  "inventory_sha256": "2484557c860986360a75d1370606a7a82ec40bdbd17a811b18448ea46105e4f7",
+  "review_sha256": "356e8c4ad77d12edcf072ac278db997e286e6144be9163e4ed49ad066754745b",
+  "scientific_status": "NOT_ADMITTED",
+  "source_sha256": "13f1f4ee41947eff4b47faaa0a3463af96363fbc8c09d6a9d398d76d78f9d647",
+  "status": "PASS_SCOPED_REVIEW",
+  "test_sha256": "826598f8db7146a8b9c7cd203e9be3d9b22790d07e5c09ba343a6bb4f34a2488"
+}

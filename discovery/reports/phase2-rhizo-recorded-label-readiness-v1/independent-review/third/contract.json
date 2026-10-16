@@ -1,0 +1,102 @@
+{
+  "actual_invocations": 0,
+  "actual_raw_object_reads": 0,
+  "container_context": {
+    "declared_input_hash": "provenance.inputs_sha256 must be a64-character lowercase hexadecimal string; check declaration format only, not equality with an unopened companion",
+    "properties": "list of at most512 dicts; each has a string name; root/schema/context/container mismatches stop with first closed reason",
+    "required_literal_identity": [
+      "material",
+      "source.model_id"
+    ],
+    "schema": "lupine.mlip.calc_evidence.v1"
+  },
+  "created_at": "2026-10-16T11:58:00.503515+00:00",
+  "exact_numbers": {
+    "definition": "A finite JSON number token denotes exactly sign*integer-mantissa*10^(explicit-exponent-fractional-digit-count). No binary float conversion, bool/string coercion, unit conversion or physical inference. Preserve original token including signed zero in private output.",
+    "finite_meaning": "All syntactically valid JSON decimal number tokens with finite integer exponent denote finite rationals. Limits are engineering scope, not a physical range. No observed data may change these bounds automatically.",
+    "out_of_limit": "Categorical NUMBER_OUTSIDE_ENGINEERING_LIMIT, with exact original token retained privately; no numeric approximation or inference of physical impossibility.",
+    "selected_engineering_limits": {
+      "decimal_scale_absolute_max": 1024,
+      "explicit_exponent_absolute_max": 1024,
+      "mantissa_digits_including_leading_and_trailing_zeros_max": 128
+    },
+    "unselected_numeric_tokens": "Strict JSON syntax only; machine exposed but never projected or numerically evaluated."
+  },
+  "exposure": "Every raw mixed JSON byte/token/property is machine exposed on read/parse, not just the144 selected positions. Private selected labels/citations and declared input hashes are historical target-bearing data; no fresh holdout. All partial byte-read, parse and projection progress remains explicit.",
+  "first_failure": "Global stop preserves first closed source/parser/context error. Later cleanup/write failure is separate; never erase earlier failure or any private write exposure.",
+  "frame": {
+    "candidate_reference_edges": 172,
+    "choice": "UNKNOWN; all existing edges retained only as context, not selected references",
+    "ids": 36,
+    "label_positions": 144,
+    "properties": [
+      "gamma_100",
+      "gamma_111",
+      "vacancy_formation_energy",
+      "gamma_110"
+    ]
+  },
+  "invocation": "No invocation at import. Future fixed manifest binds self/input/frame/source pins; exclusive fixed output reservation before target access. One exact-size-plus-one read per fixed object; verify size/SHA256/Git blob on same immutable bytes. No retry/fallback/network/upstream loaders. Actual manifest/invocation remain root-owned and absent now.",
+  "label_classification": {
+    "all_pairs_complete": "Only if all144 scoped positions have one record, expected unit and two valid exact numbers; citation and tolerance statuses reported separately. This is recorded-label completeness only, never a performance/science pass.",
+    "citation": "MISSING / NULL / INVALID_TYPE / EMPTY / WHITESPACE_ONLY / NONEMPTY_STRING; literal strings only privately, no adequacy/source-choice inference",
+    "property_record": "ABSENT / SINGLE / AMBIGUOUS; duplicates never silently selected, all matching records preserved privately under the same scoped position",
+    "tolerance": "Separate optional field; same numeric categories plus NEGATIVE; missing/null allowed. Negativity determined exactly from sign and nonzero mantissa; -0 is nonnegative. Not used to fill labels or as uncertainty.",
+    "unit": "Only literal eV for vacancy and J/m^2 for each gamma property; missing/null/nonstring/mismatch separate categories",
+    "value_and_reference_value": "MISSING / NULL / NOT_JSON_NUMBER / NUMBER_OUTSIDE_ENGINEERING_LIMIT / VALID_EXACT_JSON_NUMBER"
+  },
+  "parser": "One strict bounded recursive JSON grammar pass per immutable object; reject duplicate decoded keys, nonstandard constants, malformed UTF8/JSON and lone surrogate codepoints. Number tokens preserved exactly without conversion. String decoder allocation is bounded by source cap before tighter decoded-string check.",
+  "parser_limits": {
+    "max_decoded_string_characters": 16384,
+    "max_depth": 32,
+    "max_nodes_including_object_keys": 20000,
+    "max_properties_per_object": 512,
+    "private_output_bytes": 4194304,
+    "public_output_bytes": 1048576,
+    "root_depth": 1
+  },
+  "private_output": "Complete36ID/144position projection after every file passes source/container/context checks. Per-position absent/invalid/ambiguous states are preserved rather than made into global parser failures. On global failure no private projection returned/written, but all partial exposure/materialization remains recorded.",
+  "production_manifest_created": false,
+  "public_output": "Only original identities/graph and closed categorical label/unit/citation/tolerance/provenance states plus progress counts. No new raw numerical lexemes/citations/input hashes or arbitrary strings.",
+  "raw_source_objects": {
+    "bytes": 126885,
+    "count": 36,
+    "excluded": "Both reference containers, all unbound evidence/run objects, binding reports and every unlisted object.",
+    "set": "Exactly minimum_stored_label_objects in pinned objects.json"
+  },
+  "schema": "lupine.rhizo.recorded-label.contract.v1",
+  "scientific_limits": [
+    "Actual reference choice UNKNOWN even if labels are complete",
+    "Non-null annotations may predate binding and do not prove selection by this binder",
+    "No reference comparison or matching, binder preference, residual/rank/fit/split/census performance calculation",
+    "NOT_ADMITTED for all outcomes; no physical truth or source-compatibility claim",
+    "Optional tolerance remains an acceptance-policy annotation, not metrological uncertainty"
+  ],
+  "source_bindings": {
+    ".cache/phase2-rhizo-bound-choice-scope-v1/README.md": {
+      "bytes": 6510,
+      "sha256": "a95202189ecb58c7171f16982c42aa4bb7dd29fa5808744488bb433f8e48d414"
+    },
+    ".cache/phase2-rhizo-bound-choice-scope-v1/objects.json": {
+      "bytes": 11141,
+      "sha256": "e0059b2d6eead1eb4f1e2323fdea88a8e00e48fdc132c04eceeb994cd363ce3a"
+    },
+    ".cache/phase2-rhizo-reference-readiness-design-v1/reference-frame.json": {
+      "bytes": 71649,
+      "sha256": "80a1aca0fd56d89f49ff5f0e4b3930405f11ae1cd4acea14b8edab2381940aa4"
+    },
+    ".cache/projection-source-audit/rhizo/python/lupine_distill/binding.py": {
+      "bytes": 17478,
+      "sha256": "dcf34d3caae28d7fd31268f9217432d6c78692cad4f76dd316c434a6fb99c80e"
+    },
+    ".cache/projection-source-audit/rhizo/python/lupine_distill/schemas.py": {
+      "bytes": 9702,
+      "sha256": "1bf115907c27b60c29fb3bb7ab7de167d1aa723a3f6ee64c3fa9bd47ac0f5022"
+    },
+    "scripts/projection_custody.py": {
+      "bytes": 35599,
+      "sha256": "751bcec5123feef65bf4b459691b5ab89197dd28e599fa23a178e2f10ff36fcc"
+    }
+  },
+  "status": "FROZEN_BEFORE_IMPLEMENTATION_GENERATED_DATA_ONLY"
+}

@@ -1,0 +1,8 @@
+{
+  "finding": "The first execution wrapper inherited a generic scope sentence saying all production entries were forbidden. Its exact guarded bootstrap and stdout correctly distinguish allowed generated temporary repositories from forbidden real-checkout production guards. This is recorder prose, not a changed guard or newly executed test.",
+  "first_bootstrap_sha256": "cef0190a9d9a07ffc9283501e8adeaf1f6821b12912ed41a02aa670973a23355",
+  "first_receipt_unchanged": true,
+  "new_recorder_sha256": "d63326604bd3fc4c2405d37469484abd5fe2eee4ce75b24300b98c1306795930",
+  "old_recorder_sha256": "6a247201c2680cf4f95fe8f07b1f597c4c4932c1fb254579925e96979bb7ac33",
+  "recorded_at": "2026-10-16T12:21:38.854810+00:00"
+}

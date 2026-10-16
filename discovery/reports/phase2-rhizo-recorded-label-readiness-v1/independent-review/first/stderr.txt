@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-rhizo-recorded-label-review-v1/run_review.py", line 55, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-rhizo-recorded-label-review-v1/run_review.py", line 40, in main
+    module=load('held_recorded_labels',CANDIDATE)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-rhizo-recorded-label-review-v1/run_review.py", line 22, in load
+    spec.loader.exec_module(module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1091, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1190, in get_data
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-rhizo-recorded-label-review-v1/run_review.py", line 38, in audit
+    violations.append('FORBIDDEN_PROJECT_PATH');raise AssertionError('FORBIDDEN_PROJECT_PATH')
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: FORBIDDEN_PROJECT_PATH

@@ -1,0 +1,27 @@
+{
+  "actual_source_operations": 0,
+  "api": "audit(run), CLI audit --run 1|2; synthetic API preserved",
+  "claims": "Always scientific BLOCKED_SCHEMA unless operational BLOCKED_GUARD; no archive acceptance, fitting, splitting, values, science or source admission",
+  "context": "Own four worktree/index/HEAD bindings and exact G31 four-file pins plus inherited chain, before any cache access; repeat before source read and public output. Tests only in isolated generated repositories or explicit mocks.",
+  "exposure": "Separate preliminary/primary/aggregate and outer read/output attempt lifecycles; archive cleanup error preserves first rejection and prevents completion. No no-values-read claim.",
+  "frozen_at": "2026-10-16T12:10:46.993799+00:00",
+  "output": "Fixed .cache/li-v3-custody/growth-predicate-audit-v1/{1,2}/ reservation.json and public.json; durable O_EXCL reservation before target access; failed slots remain used. Canonical public output capped at65536 with closed errors and preserved safe exposure on output failure.",
+  "predecessor_gate": "Same-buffer actual G29/G30 selected shape, actual expected fields, successful preliminary cleanup; categorical primary must reproduce G31 ZIP_LAYOUT_UNSUPPORTED with completed raw central preflight, incomplete headers and exactly three completed areas/fixed-word pairs/padding scans before any aggregate traversal. No XML even on unexpected header pass.",
+  "prerequisite": {
+    "path": ".cache/li-v3-custody/growth-envelope-v1/1/public.json",
+    "producer": "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace",
+    "sha256": "01cce9e57b26e204a9d31959f747768c70abf7543bedb6ab104b3b4b623f094f"
+  },
+  "production_bindings_to_be_published_by_root": false,
+  "proposed_paths": [
+    "scripts/li_v3_growth_predicate_audit.py",
+    "tests/test_li_v3_growth_predicate_audit.py",
+    "tests/test_li_v3_growth_predicate_audit_review.py",
+    "docs/li-v3-growth-predicate-audit-plan.md"
+  ],
+  "pure_independent_handoff_sha256": "cdb1fb1d517571cfafa459a14a5b144f424ee72aa4e4723038b98c0b8887fd48",
+  "pure_source_sha256": "167c8e3d0cba758057c60991debe8d831c8638da5ce3dbd1a183503c46efea11",
+  "schema": "lupine.discovery.growth_predicate_production_scope.v1",
+  "source": "Unchanged original capture validator and exact size/MD5/SHA256 source verification; one read into immutable bytes; no refetch/retry",
+  "status": "FROZEN_BEFORE_PRODUCTION_IMPLEMENTATION"
+}

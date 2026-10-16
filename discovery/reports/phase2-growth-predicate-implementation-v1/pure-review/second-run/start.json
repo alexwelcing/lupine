@@ -1,0 +1,58 @@
+{
+  "actual_source_operations": 0,
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-B",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-review-v1/test_growth_predicate_review.py"
+  ],
+  "input_bindings": {
+    "candidate.py": {
+      "bytes": 24385,
+      "sha256": "6881d6f2db09ada9e76e1e9a0560e24f3f83f78e3063fe6740f88a66e2ff6ba6"
+    },
+    "contract.md": {
+      "bytes": 3296,
+      "sha256": "bd2f5a1f86ff45483270da2e8ce0ddc5dc2751ff9f452251fc27be307c14e4b2"
+    },
+    "generated_zip.py": {
+      "bytes": 4316,
+      "sha256": "1b58a6857ee48934dd750ba024703f11e1fbd4cb3015e50c47245d04269ae263"
+    },
+    "run_review.py": {
+      "bytes": 3241,
+      "sha256": "761ff1d0fead2e61a0aafe8f3b0792c7f21212c793bc27b2daf18aa5db225843"
+    },
+    "test_growth_predicate_review.py": {
+      "bytes": 21657,
+      "sha256": "2b1f6888590fcb872778a11083b5df95d7df931135f01c16fc29314ae3779994"
+    }
+  },
+  "original_sources": {
+    "scripts/li_v3_compatible_envelope.py": {
+      "bytes": 14126,
+      "sha256": "e771b3fc2a66d6e2ff3a26d8aae88b7a2915ac908907908316e697997761c847"
+    },
+    "scripts/li_v3_compatible_zip_diagnostic.py": {
+      "bytes": 16878,
+      "sha256": "59b4b549a1de33abf2c54ccfce15f4f980a3a36351f98e246ae4e9fd6c44c5d3"
+    },
+    "scripts/li_v3_custody.py": {
+      "bytes": 35358,
+      "sha256": "3ead51f0afdf16be973743257be488669c988aa40443779e7a5c400e9b0d3234"
+    },
+    "scripts/li_v3_growth_envelope.py": {
+      "bytes": 20609,
+      "sha256": "f50069d028526ea045441a2e574a26192a210ff78ba34f5170777d32f5692ec3"
+    },
+    "scripts/li_v3_growth_hint_shape.py": {
+      "bytes": 20556,
+      "sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a"
+    },
+    "scripts/li_v3_local_extra_headers.py": {
+      "bytes": 11921,
+      "sha256": "54db58a567afc9211303f2edff13541ab2f97beb77ef2edaa518ad32bf6b1026"
+    }
+  },
+  "scope": "generated fixtures only; no production invocation",
+  "started_at": "2026-10-16T12:02:38.354381+00:00"
+}

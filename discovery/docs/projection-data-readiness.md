@@ -1,5 +1,13 @@
 # Archived correction-field data readiness
 
+Current update, 2026-10-16: [the bounded stored-label inspection](../reports/phase2-rhizo-recorded-label-readiness-v1/README.md)
+confirms all 144 fixed prediction/reference pairs are present and exact numeric
+fields with matching literal units. All tolerances are NULL. This resolves stored
+field completeness for that frame; it does not establish physical compatibility,
+historical reference choice, discrepancy bounds, independent evaluation or a
+screening result. The source is exposed historical evidence. The original
+October 10 audit below remains a record of what was known at that time.
+
 Audit date: 2026-10-10. **A concrete archived route exists, but it is not ready
 for a physical screening claim.** The strongest match is the Rhizo Y-matrix
 fcc surface/vacancy archive. Its source code specifies a finite observation

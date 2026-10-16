@@ -1,0 +1,50 @@
+{
+  "actual_output_slots": null,
+  "actual_source_reads": 0,
+  "bounds": {
+    "max_local_extra_span": 65535,
+    "max_members": 128,
+    "private_metadata_materialization": "Bound raw directory/member counts before materialization and every local span before access; no unbounded lists or raw exception output.",
+    "public_receipt_cap_bytes": 65536,
+    "source_bytes": 183878,
+    "source_identity": "Existing fixed capture size/MD5/SHA256 and same immutable buffer; no new GET or recapture."
+  },
+  "first_rejection": "Execute unchanged pinned G31 header function without XML; retain original closed reason and exposure-derived stage. Aggregate findings supplement, never replace, the primary reason.",
+  "frozen_at": "2026-10-16T11:50:53.624078+00:00",
+  "mutation_controls": [
+    "skip later central-family failures",
+    "treat unsafe local association as checked",
+    "promote partial aggregate to complete"
+  ],
+  "proposal_sha256": "a6611e49f33ccc0e8730a479e9201c16f882d68035156f87760d153a029d395c",
+  "runtime_changes": 0,
+  "schema": "lupine.discovery.growth_predicate_candidate_scope.v1",
+  "scope": "Pure generated-bytes candidate only; original G31 selected-growth and header helpers, never production context/readers/XML/member opens; separately bounded all-entry categorical aggregation. Header-only generated-fixture entry exposes prerequisite scope explicitly. No actual binding, network or source acquisition.",
+  "source_pins": {
+    "scripts/li_v3_compatible_envelope.py": {
+      "bytes": 14126,
+      "sha256": "e771b3fc2a66d6e2ff3a26d8aae88b7a2915ac908907908316e697997761c847"
+    },
+    "scripts/li_v3_compatible_zip_diagnostic.py": {
+      "bytes": 16878,
+      "sha256": "59b4b549a1de33abf2c54ccfce15f4f980a3a36351f98e246ae4e9fd6c44c5d3"
+    },
+    "scripts/li_v3_custody.py": {
+      "bytes": 35358,
+      "sha256": "3ead51f0afdf16be973743257be488669c988aa40443779e7a5c400e9b0d3234"
+    },
+    "scripts/li_v3_growth_envelope.py": {
+      "bytes": 20609,
+      "sha256": "f50069d028526ea045441a2e574a26192a210ff78ba34f5170777d32f5692ec3"
+    },
+    "scripts/li_v3_growth_hint_shape.py": {
+      "bytes": 20556,
+      "sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a"
+    },
+    "scripts/li_v3_local_extra_headers.py": {
+      "bytes": 11921,
+      "sha256": "54db58a567afc9211303f2edff13541ab2f97beb77ef2edaa518ad32bf6b1026"
+    }
+  },
+  "status": "FROZEN_BEFORE_IMPLEMENTATION"
+}

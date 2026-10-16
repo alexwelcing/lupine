@@ -1,0 +1,1124 @@
+{
+  "checked_at": "2026-10-16T12:35:06.416177+00:00",
+  "relative_markdown_links": 278,
+  "links": [
+    {
+      "source": "reports/phase2-growth-predicate-implementation-v1/PUBLICATION.md",
+      "target": "README.md"
+    },
+    {
+      "source": "reports/phase2-growth-predicate-implementation-v1/PUBLICATION.md",
+      "target": "pure-author/COMPLETION.md"
+    },
+    {
+      "source": "reports/phase2-growth-predicate-implementation-v1/PUBLICATION.md",
+      "target": "pure-review/README.md"
+    },
+    {
+      "source": "reports/phase2-growth-predicate-implementation-v1/PUBLICATION.md",
+      "target": "production-author/COMPLETION.md"
+    },
+    {
+      "source": "reports/phase2-growth-predicate-implementation-v1/PUBLICATION.md",
+      "target": "production-review/README.md"
+    },
+    {
+      "source": "reports/phase2-growth-predicate-implementation-v1/PUBLICATION.md",
+      "target": "source-bindings.json"
+    },
+    {
+      "source": "reports/phase2-growth-predicate-implementation-v1/PUBLICATION.md",
+      "target": "original-byte-map.json"
+    },
+    {
+      "source": "reports/phase2-growth-predicate-implementation-v1/PUBLICATION.md",
+      "target": "pure-review/first-run/stderr.txt.bytes.json"
+    },
+    {
+      "source": "reports/phase2-growth-predicate-implementation-v1/PUBLICATION.md",
+      "target": "publication-checks/navigation.json"
+    },
+    {
+      "source": "reports/phase2-growth-predicate-implementation-v1/PUBLICATION.md",
+      "target": "publication-checks/first-inventory-inspection-failure.json"
+    },
+    {
+      "source": "reports/phase2-growth-predicate-implementation-v1/README.md",
+      "target": "pure-author/COMPLETION.md"
+    },
+    {
+      "source": "reports/phase2-growth-predicate-implementation-v1/README.md",
+      "target": "pure-review/README.md"
+    },
+    {
+      "source": "reports/phase2-growth-predicate-implementation-v1/README.md",
+      "target": "production-author/COMPLETION.md"
+    },
+    {
+      "source": "reports/phase2-growth-predicate-implementation-v1/README.md",
+      "target": "production-review/README.md"
+    },
+    {
+      "source": "reports/phase2-growth-predicate-implementation-v1/README.md",
+      "target": "production-author/pure-equivalence-corrected/execution.json"
+    },
+    {
+      "source": "reports/phase2-growth-predicate-implementation-v1/README.md",
+      "target": "production-review/pure-equivalence/execution.json"
+    },
+    {
+      "source": "reports/phase2-growth-predicate-implementation-v1/README.md",
+      "target": "production-author/promotion-map.json"
+    },
+    {
+      "source": "reports/phase2-growth-predicate-implementation-v1/README.md",
+      "target": "pure-review/review.json"
+    },
+    {
+      "source": "reports/phase2-growth-predicate-implementation-v1/README.md",
+      "target": "production-review/review.json"
+    },
+    {
+      "source": "reports/phase2-growth-predicate-implementation-v1/README.md",
+      "target": "PUBLICATION.md"
+    },
+    {
+      "source": "reports/phase2-growth-predicate-implementation-v1/README.md",
+      "target": "source-bindings.json"
+    },
+    {
+      "source": "reports/phase2-growth-predicate-implementation-v1/README.md",
+      "target": "original-byte-map.json"
+    },
+    {
+      "source": "reports/phase2-growth-predicate-implementation-v1/ROOT-CHECKPOINT.md",
+      "target": "root-integration/execution.json"
+    },
+    {
+      "source": "reports/phase2-growth-predicate-implementation-v1/ROOT-CHECKPOINT.md",
+      "target": "root-integration/final-reviewed-pins.json"
+    },
+    {
+      "source": "reports/phase2-growth-predicate-implementation-v1/ROOT-CHECKPOINT.md",
+      "target": "README.md"
+    },
+    {
+      "source": "reports/phase2-growth-predicate-implementation-v1/ROOT-CHECKPOINT.md",
+      "target": "previous-report-ci.json"
+    },
+    {
+      "source": "reports/phase2-growth-predicate-implementation-v1/ROOT-CHECKPOINT.md",
+      "target": "../phase2-rhizo-recorded-label-readiness-v1/README.md"
+    },
+    {
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/README.md",
+      "target": "actual/public.json"
+    },
+    {
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/README.md",
+      "target": "operations/public-summary.json"
+    },
+    {
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/README.md",
+      "target": "operations/actual-execution/execution.json"
+    },
+    {
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/README.md",
+      "target": "actual-review/README.md"
+    },
+    {
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/README.md",
+      "target": "author/contract.json"
+    },
+    {
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/README.md",
+      "target": "author/README.md"
+    },
+    {
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/README.md",
+      "target": "independent-review/README.md"
+    },
+    {
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/README.md",
+      "target": "priority-decision/README.md"
+    },
+    {
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/README.md",
+      "target": "publication-copy-map.json"
+    },
+    {
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/README.md",
+      "target": "publication-checks.json"
+    },
+    {
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/README.md",
+      "target": "../phase2-rhizo-reference-readiness-v1/bound-label-scope/objects.json"
+    },
+    {
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/README.md",
+      "target": "../phase2-rhizo-reference-readiness-v1/design/reference-frame.json"
+    },
+    {
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/author/FINAL.md",
+      "target": "contract.json"
+    },
+    {
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/author/FINAL.md",
+      "target": "README.md"
+    },
+    {
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/author/FINAL.md",
+      "target": "first-author/execution.json"
+    },
+    {
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/author/FINAL.md",
+      "target": "pre-hold-review-finding.json"
+    },
+    {
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/author/FINAL.md",
+      "target": "publication-layout.json"
+    },
+    {
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/author/README.md",
+      "target": "contract.json"
+    },
+    {
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/author/first-author/README.md",
+      "target": "contract.json"
+    },
+    {
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/first/README.md",
+      "target": "contract.json"
+    },
+    {
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/second/README.md",
+      "target": "contract.json"
+    },
+    {
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/third/README.md",
+      "target": "contract.json"
+    },
+    {
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/priority-decision/README.md",
+      "target": "source-bindings.json"
+    },
+    {
+      "source": "GOAL.md",
+      "target": "reports/phase2-workbench-verification-v1/README.md"
+    },
+    {
+      "source": "GOAL.md",
+      "target": "reports/phase2-growth-verification-v1/README.md"
+    },
+    {
+      "source": "GOAL.md",
+      "target": "reports/phase2-bam-metrology-workbook-v1/README.md"
+    },
+    {
+      "source": "GOAL.md",
+      "target": "reports/phase2-risk-contracts-v1/README.md"
+    },
+    {
+      "source": "GOAL.md",
+      "target": "reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md"
+    },
+    {
+      "source": "GOAL.md",
+      "target": "reports/phase2-workbench-verification-v1/README.md"
+    },
+    {
+      "source": "GOAL.md",
+      "target": "reports/phase2-li-flag-verification-v1/README.md"
+    },
+    {
+      "source": "GOAL.md",
+      "target": "reports/phase2-finite-compatible-verification-v1/README.md"
+    },
+    {
+      "source": "GOAL.md",
+      "target": "docs/finite-planning-walkthrough.md"
+    },
+    {
+      "source": "GOAL.md",
+      "target": "reports/phase2-finite-planning-figure-v1/PUBLICATION.md"
+    },
+    {
+      "source": "GOAL.md",
+      "target": "reports/phase2-notebook-header-verification-v1/README.md"
+    },
+    {
+      "source": "GOAL.md",
+      "target": "reports/phase2-notebook-header-verification-v1/README.md"
+    },
+    {
+      "source": "GOAL.md",
+      "target": "reports/phase2-li-local-extra-verification-v1/README.md"
+    },
+    {
+      "source": "GOAL.md",
+      "target": "reports/phase2-growth-verification-v1/README.md"
+    },
+    {
+      "source": "GOAL.md",
+      "target": "reports/phase2-growth-verification-v1/README.md"
+    },
+    {
+      "source": "GOAL.md",
+      "target": "reports/phase2-documentary-layout-preparation-v1/README.md"
+    },
+    {
+      "source": "GOAL.md",
+      "target": "reports/phase2-rhizo-recorded-label-readiness-v1/README.md"
+    },
+    {
+      "source": "GOAL.md",
+      "target": "reports/phase2-growth-predicate-implementation-v1/ROOT-CHECKPOINT.md"
+    },
+    {
+      "source": "GOAL.md",
+      "target": "reports/research-preview-decision.md"
+    },
+    {
+      "source": "GOAL.md",
+      "target": "docs/release-validation.md"
+    },
+    {
+      "source": "GOAL.md",
+      "target": "reports/research-preview-verification-v1/README.md"
+    },
+    {
+      "source": "GOAL.md",
+      "target": "reports/clean-reproduction-v1/README.md"
+    },
+    {
+      "source": "GOAL.md",
+      "target": "reports/research-preview-decision.md"
+    },
+    {
+      "source": "GOAL.md",
+      "target": "reports/mpea-formula-readiness-v1.md"
+    },
+    {
+      "source": "GOAL.md",
+      "target": "reports/mpea-t25-archival-v1/recovery-v2/README.md"
+    },
+    {
+      "source": "GOAL.md",
+      "target": "reports/research-preview-verification-v1/claim-review/README.md"
+    },
+    {
+      "source": "GOAL.md",
+      "target": "reports/research-preview-verification-v1/automation-closure.json"
+    },
+    {
+      "source": "GOAL.md",
+      "target": "reports/continuation.json"
+    },
+    {
+      "source": "GOAL.md",
+      "target": "reports/next-independent-study-v1/README.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/phase2-rhizo-recorded-label-readiness-v1/README.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/phase2-growth-predicate-implementation-v1/ROOT-CHECKPOINT.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/phase2-growth-verification-v1/README.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/phase2-growth-implementation-v1/README.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/phase2-documentary-layout-preparation-v1/README.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/phase2-bam-metrology-workbook-v1/README.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/phase2-metrology-risk-contract-v1/PUBLICATION.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/phase2-nist-metrology-guidance-v1/README.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/phase2-fixed-archive-inference-scope-v1/PUBLICATION.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "GOAL.md#renewed-active-work--2026-10-16"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/research-preview-decision.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/research-preview-artifact-v1/README.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/research-preview-verification-v1/README.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/clean-reproduction-v1/README.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/mpea-t25-archival-v1/README.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/research-preview-interface-v1/README.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/contract-integration-failure-v1/README.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/contract-integration-repair-v1/README.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/mpea-preallocation-repair-v2/README.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "GOAL.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "formal/VERIFICATION.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "formal/theorem-inventory.json"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/decision-pool-workbench-verification.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "docs/coupled-kernel.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/coupled-independent-audit.json"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "docs/coupled-problem.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "docs/projection-adapter.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "docs/projection-data-readiness.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/projection-custody-readiness-v1.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "docs/training-tail-protocol-v1.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "docs/training-tail-run.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "docs/decision-pool-calibration-design.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "docs/decision-pool-workbench-contract.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/mpea-custody-readiness-v1.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/mpea-header-labels-readiness-v1.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "docs/finite-exchangeability.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/mpea-row-metadata-engineering-v1.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/mpea-row-metadata-readiness-v1.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/metadata-release-verification-v1.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/training-tail-result-v1.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/mpea-formula-readiness-v1.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/clean-reproduction-v1/README.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/normalization-engineering-v1/README.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/normalization-release-v1/README.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/mpea-feature-reader-engineering-v1/README.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/mpea-feature-readiness-v1/README.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/mpea-protocol-review-v1/README.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/mpea-study-components-engineering-v1/README.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/mpea-guarded-components-v1/README.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/mpea-namespace-ci-v1/README.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "docs/mpea-registration-publication-v1.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/production-release-artifact-v1/README.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/mpea-contract-conformance-v1/README.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/contract-integration-repair-v1/README.md"
+    },
+    {
+      "source": "STATUS.md",
+      "target": "reports/phase2-finite-workbench-v1/README.md"
+    },
+    {
+      "source": "docs/projection-data-readiness.md",
+      "target": "../reports/phase2-rhizo-recorded-label-readiness-v1/README.md"
+    },
+    {
+      "source": "docs/projection-data-readiness.md",
+      "target": "../reports/projection-source-inventory.json"
+    },
+    {
+      "source": "docs/projection-data-readiness.md",
+      "target": "projection-field-adapter.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/coupled-training-verification.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/coupled-interface-verification.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/training-tail-result-v1.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/projection-verification.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/projection-workbench-verification.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "projection-data-readiness.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/projection-custody-readiness-v1.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/decision-pool-verification.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/mpea-custody-engineering-v1.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/mpea-custody-readiness-v1.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/decision-pool-workbench-verification.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "mpea-header-disclosure-amendment-v1.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/mpea-header-labels-readiness-v1.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "mpea-column-mapping-v1.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../formal/VERIFICATION.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "finite-exchangeability.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/mpea-row-metadata-engineering-v1.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "mpea-evaluation-design-notes.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/mpea-row-metadata-readiness-v1.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/metadata-release-verification-v1.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "reproduction-environment.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/release-artifact-audit-v1/README.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/mpea-formula-engineering-v1.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/mpea-formula-readiness-v1.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/clean-reproduction-v1/README.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/normalization-engineering-v1/README.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/normalization-release-v1/README.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/mpea-feature-reader-engineering-v1/README.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/mpea-feature-readiness-v1/README.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/mpea-protocol-review-v1/README.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/mpea-study-components-engineering-v1/README.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/mpea-guarded-components-v1/README.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "mpea-registration-publication-v1.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "mpea-archive-driver-contract.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/guarded-release-artifact-v1/README.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/production-release-artifact-v1/README.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/mpea-contract-conformance-v1/README.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/contract-integration-repair-v1/README.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/contract-integration-pass-v2/README.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/mpea-t25-archival-v1/operational-stop.json"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "mpea-preallocation-recovery-v2.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "mpea-archive-driver-contract.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "research-preview-guide.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/research-preview-decision.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/phase2-study-planning-v1/README.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/phase2-publication-custody-v1/README.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/phase2-study-workbench-v1/README.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/phase2-workbench-verification-v1/README.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/phase2-finite-workbench-v1/README.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/phase2-li-flag-verification-v1/README.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/phase2-finite-compatible-verification-v1/README.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/phase2-notebook-header-verification-v1/README.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/phase2-li-paper-methods-v1/PUBLICATION.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/phase2-bam-readiness-v1/PUBLICATION.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/phase2-li-local-extra-implementation-v1/PUBLICATION.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/phase2-li-local-extra-verification-v1/README.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/phase2-bam-schema-documentary-v1/PUBLICATION.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/phase2-growth-implementation-v1/README.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/phase2-growth-verification-v1/README.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/phase2-rhizo-reference-readiness-v1/README.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/phase2-rhizo-recorded-label-readiness-v1/README.md"
+    },
+    {
+      "source": "docs/release-validation.md",
+      "target": "../reports/phase2-growth-predicate-implementation-v1/ROOT-CHECKPOINT.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "contract-release-artifact-v2/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "contract-integration-repair-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "contract-integration-failure-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "contract-integration-failure-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "contract-integration-repair-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "mpea-contract-conformance-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "contract-browser-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "mpea-contract-numerical-review-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "mpea-contract-conformance-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "mpea-resource-profiles-review-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "mpea-artifact-helpers-review-v1/MAIN.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "mpea-operations-review-v1/MAIN.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "mpea-contract-audit-v1/full-literal-contract-review-v1.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "production-release-artifact-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "mpea-resource-profiles-review-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "mpea-production-integration-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "../docs/mpea-registration-publication-v1.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "mpea-namespace-ci-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "mpea-guarded-components-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "mpea-guarded-publication-review-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "contract-integration-pass-v2/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "contract-release-artifact-v2/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "mpea-preallocation-repair-v2/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "mpea-t25-archival-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "../docs/mpea-preallocation-recovery-v2.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "research-preview-artifact-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "mpea-t25-archival-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "research-preview-decision.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "research-preview-verification-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "research-preview-artifact-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "research-preview-interface-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "research-preview-verification-v1/claim-review/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "research-preview-verification-v1/automation-closure.json"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "next-independent-study-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-source-readiness-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-study-planning-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-li-custody-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-study-planning-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-publication-custody-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-study-workbench-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-risk-contracts-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-li-schema-gates-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-li-layout-diagnostic-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-workbench-verification-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-planning-proof-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-planning-figure-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-li-documentary-contract-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-high-temperature-leads-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-li-flag-diagnostic-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-finite-workbench-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-li-flag-verification-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-li-next-schema-design-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-finite-compatible-verification-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-finite-planning-figure-v1/PUBLICATION.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "../docs/finite-planning-walkthrough.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-compatible-zip-diagnostic-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-notebook-header-verification-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-li-paper-methods-v1/PUBLICATION.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-bam-readiness-v1/PUBLICATION.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-finite-risk-inversion-design-v1/PUBLICATION.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "../docs/li-v3-local-extra-headers-plan.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-li-local-extra-implementation-v1/PUBLICATION.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-li-reference-identity-v1/PUBLICATION.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-li-local-extra-verification-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-local-extra-semantics-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-bam-schema-documentary-v1/PUBLICATION.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-growth-implementation-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-bam-encoding-comparison-v1/PUBLICATION.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-growth-verification-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-bam-metrology-workbook-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-metrology-risk-contract-v1/PUBLICATION.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-nist-metrology-guidance-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-fixed-archive-inference-scope-v1/PUBLICATION.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-documentary-layout-preparation-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-next-source-priorities-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-rhizo-reference-readiness-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-rhizo-recorded-label-readiness-v1/README.md"
+    },
+    {
+      "source": "reports/progress.md",
+      "target": "phase2-growth-predicate-implementation-v1/ROOT-CHECKPOINT.md"
+    }
+  ],
+  "explicit_files_before_this_check": 362,
+  "all_json_syntax_valid": true,
+  "no_private_source_copy": true,
+  "runtime_files": 335,
+  "prior332_unchanged": true,
+  "actual_g34_operations": 0
+}

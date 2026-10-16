@@ -1,0 +1,43 @@
+{
+  "all_three_runs_candidate_and_332_runtime_held": true,
+  "all_three_runs_same_test_sha256": "826598f8db7146a8b9c7cd203e9be3d9b22790d07e5c09ba343a6bb4f34a2488",
+  "imports": [
+    "__future__",
+    "hashlib",
+    "json",
+    "os",
+    "pathlib",
+    "re",
+    "stat"
+  ],
+  "no_float_eval_exec_calls": true,
+  "scope": "Static AST and public pin-byte review only; no candidate/upstream imports or actual source reads in this step.",
+  "source_pins": [
+    {
+      "matches": true,
+      "path": "scripts/projection_custody.py",
+      "sha256": "751bcec5123feef65bf4b459691b5ab89197dd28e599fa23a178e2f10ff36fcc"
+    },
+    {
+      "matches": true,
+      "path": ".cache/projection-source-audit/rhizo/python/lupine_distill/binding.py",
+      "sha256": "dcf34d3caae28d7fd31268f9217432d6c78692cad4f76dd316c434a6fb99c80e"
+    },
+    {
+      "matches": true,
+      "path": ".cache/projection-source-audit/rhizo/python/lupine_distill/schemas.py",
+      "sha256": "1bf115907c27b60c29fb3bb7ab7de167d1aa723a3f6ee64c3fa9bd47ac0f5022"
+    },
+    {
+      "matches": true,
+      "path": ".cache/phase2-rhizo-reference-readiness-design-v1/reference-frame.json",
+      "sha256": "80a1aca0fd56d89f49ff5f0e4b3930405f11ae1cd4acea14b8edab2381940aa4"
+    },
+    {
+      "matches": true,
+      "path": ".cache/phase2-rhizo-bound-choice-scope-v1/objects.json",
+      "sha256": "e0059b2d6eead1eb4f1e2323fdea88a8e00e48fdc132c04eceeb994cd363ce3a"
+    }
+  ],
+  "source_sha256": "13f1f4ee41947eff4b47faaa0a3463af96363fbc8c09d6a9d398d76d78f9d647"
+}

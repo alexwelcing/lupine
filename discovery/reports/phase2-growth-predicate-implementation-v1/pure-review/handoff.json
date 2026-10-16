@@ -1,0 +1,27 @@
+{
+  "README": {
+    "bytes": 3596,
+    "sha256": "3c6ff40897fc3566d99b34c5f25d19f04c4059377cbe682d18bb37d6843782c4"
+  },
+  "actual_source_operations": 0,
+  "file_count": 58,
+  "final_test": {
+    "bytes": 22561,
+    "sha256": "eb6cc574975e955087a88f56b3690ae32a1ca8543f02fe95ecb8c974a7056cfc"
+  },
+  "inventory": {
+    "bytes": 8610,
+    "sha256": "391690a2fd2e19f9078cd8873eba78cb9a8e346281e8191bbc209edd7bf2ba38"
+  },
+  "next_action": "Root/author may consume this held pure review. Any production adaptation needs its own bounded source/guard review before invocation.",
+  "review": {
+    "bytes": 4042,
+    "sha256": "558815643397b8c215de3741177c8f9d9fcae42ea54aa4af7a703fac4891fce6"
+  },
+  "schema": "lupine.growth_predicate.independent_handoff.v1",
+  "source": {
+    "bytes": 24367,
+    "sha256": "167c8e3d0cba758057c60991debe8d831c8638da5ce3dbd1a183503c46efea11"
+  },
+  "status": "PASS_PURE_SYNTHETIC_SOURCE_AND_BEHAVIOR_REVIEW"
+}

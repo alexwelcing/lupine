@@ -1,0 +1,56 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-rhizo-recorded-label-review-v1/run_review.py",
+    "--source-sha256",
+    "13f1f4ee41947eff4b47faaa0a3463af96363fbc8c09d6a9d398d76d78f9d647"
+  ],
+  "completed_at": "2026-10-16T12:09:05.829073+00:00",
+  "elapsed_seconds": 0.28044684199994663,
+  "inputs": {
+    ".cache/phase2-rhizo-recorded-label-candidate-v1/README.md": {
+      "bytes": 7355,
+      "sha256": "c562ed10f3b6c81fb60152118fbb932ea45f6f33033fe9d4a451e6fbddb9c4e3"
+    },
+    ".cache/phase2-rhizo-recorded-label-candidate-v1/contract.json": {
+      "bytes": 7082,
+      "sha256": "8b1f1b43fd5cf780a258b91bd346c6fef2d4cf4e1ee2af0cb3ef192092f32c49"
+    },
+    ".cache/phase2-rhizo-recorded-label-candidate-v1/recorded_labels.py": {
+      "bytes": 27028,
+      "sha256": "13f1f4ee41947eff4b47faaa0a3463af96363fbc8c09d6a9d398d76d78f9d647"
+    },
+    ".cache/phase2-rhizo-recorded-label-review-v1/challenge-plan.md": {
+      "bytes": 3727,
+      "sha256": "a42f2a33c1f1e3347571c60ebd7b8386214847afdc1de52df86bdf24add78d6b"
+    },
+    ".cache/phase2-rhizo-recorded-label-review-v1/generated_fixtures.py": {
+      "bytes": 1838,
+      "sha256": "d48ee11e09a12e83f86d6e0a5456c34bb39c9823ad366e456a25e70199560fb1"
+    },
+    ".cache/phase2-rhizo-recorded-label-review-v1/numeric-cases.json": {
+      "bytes": 3929,
+      "sha256": "590ad0b059253ebcd265aa4adec48100e7a7a0a85b24f9fdba265db9505df7e2"
+    },
+    ".cache/phase2-rhizo-recorded-label-review-v1/preparation.json": {
+      "bytes": 898,
+      "sha256": "4875fe9d855dba6285263e5a1d83b7da88ae7816533c9121d95c0060f37f3458"
+    },
+    ".cache/phase2-rhizo-recorded-label-review-v1/run_review.py": {
+      "bytes": 2679,
+      "sha256": "01c832fbfbe275fd98df93366ceee69e04fa5118d590a1ea4308ae7b6c091665"
+    },
+    ".cache/phase2-rhizo-recorded-label-review-v1/test_recorded_labels_review.py": {
+      "bytes": 26137,
+      "sha256": "826598f8db7146a8b9c7cd203e9be3d9b22790d07e5c09ba343a6bb4f34a2488"
+    }
+  },
+  "inputs_held": true,
+  "returncode": 1,
+  "runtime_files": 332,
+  "runtime_held": true,
+  "scope": "Independent generated tests only; no actual source, production entrypoint or network. Logs retain first failures.",
+  "started_at": "2026-10-16T12:09:05.548558+00:00",
+  "stderr_sha256": "cbfd3c78e424e00ab43b4fb32453d8798daf23e215bacb6089e08e2854e2d6bd",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

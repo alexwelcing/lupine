@@ -1,15 +1,22 @@
 # Project state
 
-The latest [Rhizo reference-readiness increment](reports/phase2-rhizo-reference-readiness-v1/README.md)
-completed one bounded projection of 43 locations, 36 material/model IDs and 172
-candidate links. The source and its notes are exposed historical data; every
-selected note disclosed numerical outcomes to the researcher. Declared citation
-chains are now documented, while stored-label completeness and original
-reference choice remain unresolved. No benchmark, fit or performance comparison
-ran. The standalone reader passes 26 author/13 independent generated tests after
-one preserved reporting failure and narrow repair; all 332 runtime files held
-during the actual read. Parent report commits `280dff57` and `3139e1e` each passed
-all four original CI jobs. This new report's publication/CI is a separate gate.
+The [stored-label readiness pass](reports/phase2-rhizo-recorded-label-readiness-v1/README.md) completed once at
+12:16:28 UTC: all 144 fixed prediction/reference pairs across 36 bound objects
+are present, exactly numeric and match the declared literal units. Every optional
+tolerance is NULL. The source and labels are exposed historical data, with no
+benchmark or performance comparison. This closes completeness for the named
+stored fields, while historical reference choice and physical validity remain
+unresolved. The reader passes 30 author/19 independent generated tests; all 332
+runtime files held during the actual read and the public-receipt review passes.
+Original reviewer harness failures are preserved.
+
+The [G34 diagnostic](reports/phase2-growth-predicate-implementation-v1/ROOT-CHECKPOINT.md) is now integrated. It preserves
+G31's first rejection and separately reports every safely evaluable header family,
+with explicit unchecked dependencies. Validation passes 42 author/17 independent
+production tests, 136 author/86 independent full-report comparisons, and the
+418-test combined Li run. All 332 prior runtime files are unchanged; the manifest
+now binds 335. Exact remote CI, clean packaging and independent artifact checks
+remain prerequisites to actual G34 execution. No new actual Li operation has run.
 
 **Active phase, October 16:** Published `c17c4c6` passes all four original CI jobs,
 clean packaging (28 demonstrations/six schemas/16 checks), strict retention and
@@ -61,13 +68,12 @@ available through API, CLI, HTTP and Study planning under its stated finite-fram
 scope. Risk-inversion implementation remains deferred until a justified study
 needs it.
 
-Root owns publication and exact remote/CI verification, then the independently
-tested minimum 36-object stored-label readiness check. Its generated-data
-preparation reads no actual bound records and reconstructs no reference choice.
-Li categorical predicate diagnosis is also being implemented and independently
-challenged on generated fixtures; neither route is an admitted G21 scientific experiment. Historical
-scientific NO-GO results remain unchanged. The expired automation remains
-disabled; no schedule or continuous worker was started.
+Root owns publication and exact remote/CI verification, clean packaging,
+independent artifact checks, then the fixed actual G34 operation. A complete
+bounded Li admission decision is the next priority; a further Rhizo numeric
+census is secondary. G20 remains unresolved and G21 blocked. Historical scientific
+NO-GO results remain unchanged. The expired automation remains disabled; no
+schedule or continuous worker was started.
 [GOAL](GOAL.md#renewed-active-work--2026-10-16) records ownership and next actions.
 
 Snapshot: 2026-10-11 01:40 UTC (exact CI observation `2026-10-11T01:40:16.973611+00:00`). Tested runtime/artifact source: `6585a605d5d325e84423c7e35c7286efe85cfb6f`. [Scoped decision and evidence](reports/research-preview-decision.md).

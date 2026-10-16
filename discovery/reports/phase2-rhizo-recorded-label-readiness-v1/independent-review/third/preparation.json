@@ -1,0 +1,23 @@
+{
+  "actual_source_reads": 0,
+  "candidate_results_seen": false,
+  "candidate_source_seen": false,
+  "challenge_plan_sha256": "a42f2a33c1f1e3347571c60ebd7b8386214847afdc1de52df86bdf24add78d6b",
+  "network_calls": 0,
+  "phase": "PRE_IMPLEMENTATION_PRE_RESULT_CHALLENGE_PLAN",
+  "prepared_at": "2026-10-16T12:00:03.489552+00:00",
+  "sources": {
+    ".cache/phase2-rhizo-bound-choice-scope-v1/objects.json": {
+      "bytes": 11141,
+      "sha256": "e0059b2d6eead1eb4f1e2323fdea88a8e00e48fdc132c04eceeb994cd363ce3a"
+    },
+    ".cache/phase2-rhizo-recorded-label-candidate-v1/contract.json": {
+      "bytes": 7082,
+      "sha256": "8b1f1b43fd5cf780a258b91bd346c6fef2d4cf4e1ee2af0cb3ef192092f32c49"
+    },
+    ".cache/phase2-rhizo-reference-readiness-design-v1/reference-frame.json": {
+      "bytes": 71649,
+      "sha256": "80a1aca0fd56d89f49ff5f0e4b3930405f11ae1cd4acea14b8edab2381940aa4"
+    }
+  }
+}

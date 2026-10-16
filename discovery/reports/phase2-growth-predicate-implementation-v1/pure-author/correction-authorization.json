@@ -1,0 +1,28 @@
+{
+  "actual_source_reads": 0,
+  "author_corrected_tests": 21,
+  "corrected_source": "6881d6f2db09ada9e76e1e9a0560e24f3f83f78e3063fe6740f88a66e2ff6ba6",
+  "first_source": "8919fe45fdfe4810f83fcc965977d4c84e0c43a0e4b219a7a939911435d59198",
+  "independent_fixture_cleanup_adjustment_pending": true,
+  "independent_second_test_methods": 25,
+  "mutation_controls": {
+    "erase_dependency": "KILLED",
+    "promote_partial_complete": "KILLED",
+    "skip_family": "KILLED"
+  },
+  "production_binding": null,
+  "recorded_at": "2026-10-16T12:03:59.818480+00:00",
+  "root_authorized": [
+    "Initialize unreached header stages false and mark only on entry",
+    "Retain safe scalar facts and definite arithmetic after a uniquely bounded fixed-header read reveals larger overlapping extent; skip unsafe variable spans and downstream associations",
+    "Require local signature before variable name/growth interpretation",
+    "Require recognized A220 outer identifier before payload fixed-word and padding interpretation; keep bounded outer framing comparisons"
+  ],
+  "schema": "lupine.discovery.growth_predicate_correction_authorization.v1",
+  "unchanged": [
+    "All original G31 code and acceptance predicates",
+    "Known actual source refusal and source byte/member/local-span bounds",
+    "Original independent failing fixture assertions",
+    "Scientific status BLOCKED_SCHEMA and no payload/XML/worksheet decoding"
+  ]
+}

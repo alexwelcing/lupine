@@ -1,0 +1,66 @@
+{
+  "actual_reference_choice": "UNKNOWN",
+  "all_144_citations_nonempty_strings": true,
+  "all_144_pairs_complete": true,
+  "binder_executed": false,
+  "counts": {
+    "context_candidate_edges": 172,
+    "fixed_ids": 36,
+    "fixed_label_positions": 144,
+    "pairs_complete": 144,
+    "positions_inspected": 144
+  },
+  "first_label_issue": null,
+  "frame_sha256": "80a1aca0fd56d89f49ff5f0e4b3930405f11ae1cd4acea14b8edab2381940aa4",
+  "historical_map_is_re_relaxed_calculator": false,
+  "inputs_sha256": "e0059b2d6eead1eb4f1e2323fdea88a8e00e48fdc132c04eceeb994cd363ce3a",
+  "optional_tolerances_usable_or_absent": true,
+  "output_error": null,
+  "reason": "ALL_STORED_PAIRS_COMPLETE_WITHIN_ENGINEERING_LIMITS",
+  "reference_choice_reconstructed": false,
+  "reference_objects_read": false,
+  "residuals_ranks_fits_splits_or_performance_computed": false,
+  "schema": "lupine.rhizo.recorded-label-readiness.v1",
+  "scientific_status": "NOT_ADMITTED",
+  "status": "RECORDED_LABEL_INSPECTION_COMPLETE",
+  "synthetic": false,
+  "exposure": {
+    "fresh_holdout_claim": false,
+    "private_projection_returned": false,
+    "private_projection_written": true,
+    "projected_citations_and_labels_are_target_bearing": true,
+    "researcher_inspection": "NOT_OBSERVED_BY_THIS_PROGRAM",
+    "selected_historical_labels_materialization_started": true,
+    "selected_historical_labels_materialized": true,
+    "target_bearing_byte_access_may_have_occurred": true,
+    "target_bearing_bytes_returned_to_projector": true,
+    "whole_json_parse_completed": true,
+    "whole_json_parse_started": true,
+    "whole_objects_are_mixed_target_bearing_data": true
+  },
+  "position_state_counts": {
+    "record_state": {
+      "SINGLE": 144
+    },
+    "unit_state": {
+      "MATCH": 144
+    },
+    "value_state": {
+      "VALID_EXACT_JSON_NUMBER": 144
+    },
+    "reference_value_state": {
+      "VALID_EXACT_JSON_NUMBER": 144
+    },
+    "citation_state": {
+      "NONEMPTY_STRING": 144
+    },
+    "tolerance_state": {
+      "NULL": 144
+    },
+    "pair_complete": {
+      "true": 144
+    }
+  },
+  "objects_read_and_projected": 36,
+  "public_sha256": "b444e7d33cb18619942c2dfbb5cd3374fd9cd9adee6732825ce20ed431641a33"
+}

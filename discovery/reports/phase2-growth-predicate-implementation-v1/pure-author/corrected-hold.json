@@ -1,0 +1,12 @@
+{
+  "actual_source_reads": 0,
+  "files": {
+    "README.md": "bd2f5a1f86ff45483270da2e8ce0ddc5dc2751ff9f452251fc27be307c14e4b2",
+    "growth_predicate_audit.py": "6881d6f2db09ada9e76e1e9a0560e24f3f83f78e3063fe6740f88a66e2ff6ba6",
+    "test_growth_predicate_audit.py": "b03b1e9c02ad976c30cf92d98c9fec594b4c21e08aa231c2bd5293cbef10b40d"
+  },
+  "held_at": "2026-10-16T12:02:21.235003+00:00",
+  "production_bindings": null,
+  "runtime_files_held": 332,
+  "source": "receipts/corrected"
+}

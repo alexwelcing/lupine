@@ -1,0 +1,869 @@
+{
+  "created_at": "2026-10-16T12:33:04.344359+00:00",
+  "destination_root": "reports/phase2-rhizo-recorded-label-readiness-v1",
+  "entries": [
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/author/FINAL.md",
+      "destination_bytes": 2897,
+      "destination_sha256": "fdca9695d8e91641c59a3880018a46c8d7c47191b80189dcdf3e95283259ee3a",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-candidate-v1/FINAL.md",
+      "source_bytes": 2897,
+      "source_sha256": "fdca9695d8e91641c59a3880018a46c8d7c47191b80189dcdf3e95283259ee3a"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/author/README.md",
+      "destination_bytes": 7355,
+      "destination_sha256": "c562ed10f3b6c81fb60152118fbb932ea45f6f33033fe9d4a451e6fbddb9c4e3",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-candidate-v1/README.md",
+      "source_bytes": 7355,
+      "source_sha256": "c562ed10f3b6c81fb60152118fbb932ea45f6f33033fe9d4a451e6fbddb9c4e3"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/author/contract.json",
+      "destination_bytes": 7082,
+      "destination_sha256": "8b1f1b43fd5cf780a258b91bd346c6fef2d4cf4e1ee2af0cb3ef192092f32c49",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-candidate-v1/contract.json",
+      "source_bytes": 7082,
+      "source_sha256": "8b1f1b43fd5cf780a258b91bd346c6fef2d4cf4e1ee2af0cb3ef192092f32c49"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/author/first-author/README.md",
+      "destination_bytes": 7355,
+      "destination_sha256": "c562ed10f3b6c81fb60152118fbb932ea45f6f33033fe9d4a451e6fbddb9c4e3",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-candidate-v1/first-author/README.md",
+      "source_bytes": 7355,
+      "source_sha256": "c562ed10f3b6c81fb60152118fbb932ea45f6f33033fe9d4a451e6fbddb9c4e3"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/author/first-author/contract.json",
+      "destination_bytes": 7082,
+      "destination_sha256": "8b1f1b43fd5cf780a258b91bd346c6fef2d4cf4e1ee2af0cb3ef192092f32c49",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-candidate-v1/first-author/contract.json",
+      "source_bytes": 7082,
+      "source_sha256": "8b1f1b43fd5cf780a258b91bd346c6fef2d4cf4e1ee2af0cb3ef192092f32c49"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/author/first-author/execution.json",
+      "destination_bytes": 79111,
+      "destination_sha256": "d4415ab7e3c89d9a0e20f3cb7039d3358d0f58102ca59482bdceab89b89593ab",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-candidate-v1/first-author/execution.json",
+      "source_bytes": 79111,
+      "source_sha256": "d4415ab7e3c89d9a0e20f3cb7039d3358d0f58102ca59482bdceab89b89593ab"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/author/first-author/recorded_labels.py",
+      "destination_bytes": 27028,
+      "destination_sha256": "13f1f4ee41947eff4b47faaa0a3463af96363fbc8c09d6a9d398d76d78f9d647",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-candidate-v1/first-author/recorded_labels.py",
+      "source_bytes": 27028,
+      "source_sha256": "13f1f4ee41947eff4b47faaa0a3463af96363fbc8c09d6a9d398d76d78f9d647"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/author/first-author/run_guarded.py",
+      "destination_bytes": 1157,
+      "destination_sha256": "352442e9ba3ed6ad1c696a80c4f1910a59d5273220c1bbbd0419b24d9f3acbdd",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-candidate-v1/first-author/run_guarded.py",
+      "source_bytes": 1157,
+      "source_sha256": "352442e9ba3ed6ad1c696a80c4f1910a59d5273220c1bbbd0419b24d9f3acbdd"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/author/first-author/start.json",
+      "destination_bytes": 39626,
+      "destination_sha256": "826e69d8b8ba8e0625323319fa9401cc94e02d43ed1dd5104ebcb62d426e386f",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-candidate-v1/first-author/start.json",
+      "source_bytes": 39626,
+      "source_sha256": "826e69d8b8ba8e0625323319fa9401cc94e02d43ed1dd5104ebcb62d426e386f"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/author/first-author/stderr.txt.json",
+      "destination_bytes": 4254,
+      "destination_sha256": "ff3933eaf94d52f2136a5d7821fbbf00f2c95352b44192755243a58820709065",
+      "method": "LOSSLESS_UTF8_WRAPPER",
+      "reason": "EXISTING_FROZEN_PUBLICATION_LAYOUT",
+      "source": ".cache/phase2-rhizo-recorded-label-candidate-v1/first-author/stderr.txt",
+      "source_bytes": 3854,
+      "source_sha256": "7c4697fac197b9595f0966fef833256bde4a732f1b3699705237cdc632a48122"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/author/first-author/stderr.txt.json",
+      "destination_bytes": 4254,
+      "destination_sha256": "ff3933eaf94d52f2136a5d7821fbbf00f2c95352b44192755243a58820709065",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-candidate-v1/first-author/stderr.txt.json",
+      "source_bytes": 4254,
+      "source_sha256": "ff3933eaf94d52f2136a5d7821fbbf00f2c95352b44192755243a58820709065"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/author/first-author/stdout.txt",
+      "destination_bytes": 84,
+      "destination_sha256": "bb33f0774353d6152e0b79eb3772a006ba218d5be3b51d7513f1a6a4a09cce43",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-candidate-v1/first-author/stdout.txt",
+      "source_bytes": 84,
+      "source_sha256": "bb33f0774353d6152e0b79eb3772a006ba218d5be3b51d7513f1a6a4a09cce43"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/author/first-author/test_recorded_labels.py",
+      "destination_bytes": 20619,
+      "destination_sha256": "dc6a837a96ee5d19e227bbd80a7ce088a22700c3b3005aba3e3a3e0264d24685",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-candidate-v1/first-author/test_recorded_labels.py",
+      "source_bytes": 20619,
+      "source_sha256": "dc6a837a96ee5d19e227bbd80a7ce088a22700c3b3005aba3e3a3e0264d24685"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/author/helper-heritage.json",
+      "destination_bytes": 648,
+      "destination_sha256": "097fe9557778ebefd223eb4ff34bd1d8d478ba977a1d20701bb816868a485cf9",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-candidate-v1/helper-heritage.json",
+      "source_bytes": 648,
+      "source_sha256": "097fe9557778ebefd223eb4ff34bd1d8d478ba977a1d20701bb816868a485cf9"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/author/independent-review-binding.json",
+      "destination_bytes": 2576,
+      "destination_sha256": "ddd3d4d23f79695bd98a4e624aa2e710e64ab39328757b3fa2cc2dfaab7bffd5",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-candidate-v1/independent-review-binding.json",
+      "source_bytes": 2576,
+      "source_sha256": "ddd3d4d23f79695bd98a4e624aa2e710e64ab39328757b3fa2cc2dfaab7bffd5"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/author/pre-hold-review-finding.json",
+      "destination_bytes": 864,
+      "destination_sha256": "f46b74bc291505be5e1ba8a595420ccefdc08a7184e9817d1f8fac548029be28",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-candidate-v1/pre-hold-review-finding.json",
+      "source_bytes": 864,
+      "source_sha256": "f46b74bc291505be5e1ba8a595420ccefdc08a7184e9817d1f8fac548029be28"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/author/publication-check.json",
+      "destination_bytes": 2396,
+      "destination_sha256": "64489e01f5ca60c1bc040b8c61527863ba564913f6e5919384767d1fcec526cc",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-candidate-v1/publication-check.json",
+      "source_bytes": 2396,
+      "source_sha256": "64489e01f5ca60c1bc040b8c61527863ba564913f6e5919384767d1fcec526cc"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/author/publication-layout.json",
+      "destination_bytes": 456,
+      "destination_sha256": "c014d2e70c630c7f8d91f85f31ba89a4a94217098233ef31a8cfaa88e5927c13",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-candidate-v1/publication-layout.json",
+      "source_bytes": 456,
+      "source_sha256": "c014d2e70c630c7f8d91f85f31ba89a4a94217098233ef31a8cfaa88e5927c13"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/author/recorded_labels.py",
+      "destination_bytes": 27028,
+      "destination_sha256": "13f1f4ee41947eff4b47faaa0a3463af96363fbc8c09d6a9d398d76d78f9d647",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-candidate-v1/recorded_labels.py",
+      "source_bytes": 27028,
+      "source_sha256": "13f1f4ee41947eff4b47faaa0a3463af96363fbc8c09d6a9d398d76d78f9d647"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/author/run_guarded.py",
+      "destination_bytes": 1157,
+      "destination_sha256": "352442e9ba3ed6ad1c696a80c4f1910a59d5273220c1bbbd0419b24d9f3acbdd",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-candidate-v1/run_guarded.py",
+      "source_bytes": 1157,
+      "source_sha256": "352442e9ba3ed6ad1c696a80c4f1910a59d5273220c1bbbd0419b24d9f3acbdd"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/author/source-hold.json",
+      "destination_bytes": 650,
+      "destination_sha256": "26e367281e7bb09c9ba7e83094e958450f517c97421f9918b2093851d47931d0",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-candidate-v1/source-hold.json",
+      "source_bytes": 650,
+      "source_sha256": "26e367281e7bb09c9ba7e83094e958450f517c97421f9918b2093851d47931d0"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/author/test_recorded_labels.py",
+      "destination_bytes": 20619,
+      "destination_sha256": "dc6a837a96ee5d19e227bbd80a7ce088a22700c3b3005aba3e3a3e0264d24685",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-candidate-v1/test_recorded_labels.py",
+      "source_bytes": 20619,
+      "source_sha256": "dc6a837a96ee5d19e227bbd80a7ce088a22700c3b3005aba3e3a3e0264d24685"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/author/inventory.json",
+      "destination_bytes": 3678,
+      "destination_sha256": "d0e1a1628b83ce5f95f44097e81d762b52f84c1a63740beab1db7b683391184b",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-candidate-v1/inventory.json",
+      "source_bytes": 3678,
+      "source_sha256": "d0e1a1628b83ce5f95f44097e81d762b52f84c1a63740beab1db7b683391184b"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/author/handoff.json",
+      "destination_bytes": 1649,
+      "destination_sha256": "c43d659111519514349eaf168102cec393c7a530f543c220280a9cfb548515e7",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-candidate-v1/handoff.json",
+      "source_bytes": 1649,
+      "source_sha256": "c43d659111519514349eaf168102cec393c7a530f543c220280a9cfb548515e7"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/README.md",
+      "destination_bytes": 2642,
+      "destination_sha256": "fa6fe5b3d73c1145c46a6ce5dc0376c7ed2978c0acac059e1015466b740e05bb",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/README.md",
+      "source_bytes": 2642,
+      "source_sha256": "fa6fe5b3d73c1145c46a6ce5dc0376c7ed2978c0acac059e1015466b740e05bb"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/before-relative-cleanup-fix/execute_review.py",
+      "destination_bytes": 2862,
+      "destination_sha256": "0bbefe41eba55af47687c9ad22255b50836e7506cba58a707b9da82ed01026b8",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/before-relative-cleanup-fix/execute_review.py",
+      "source_bytes": 2862,
+      "source_sha256": "0bbefe41eba55af47687c9ad22255b50836e7506cba58a707b9da82ed01026b8"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/challenge-plan.md",
+      "destination_bytes": 3727,
+      "destination_sha256": "a42f2a33c1f1e3347571c60ebd7b8386214847afdc1de52df86bdf24add78d6b",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/challenge-plan.md",
+      "source_bytes": 3727,
+      "source_sha256": "a42f2a33c1f1e3347571c60ebd7b8386214847afdc1de52df86bdf24add78d6b"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/cleanup-harness-correction.json",
+      "destination_bytes": 665,
+      "destination_sha256": "2035b52c781e79c04d5250ef723b41aa8392d871e990b94287e252d27a5bfb0b",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/cleanup-harness-correction.json",
+      "source_bytes": 665,
+      "source_sha256": "2035b52c781e79c04d5250ef723b41aa8392d871e990b94287e252d27a5bfb0b"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/execute_review.py",
+      "destination_bytes": 2861,
+      "destination_sha256": "8bf17188c5eb82cf3a7baeb6c404ee61fb235f572785be8675763297bc08653e",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/execute_review.py",
+      "source_bytes": 2861,
+      "source_sha256": "8bf17188c5eb82cf3a7baeb6c404ee61fb235f572785be8675763297bc08653e"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/first/README.md",
+      "destination_bytes": 7355,
+      "destination_sha256": "c562ed10f3b6c81fb60152118fbb932ea45f6f33033fe9d4a451e6fbddb9c4e3",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/first/README.md",
+      "source_bytes": 7355,
+      "source_sha256": "c562ed10f3b6c81fb60152118fbb932ea45f6f33033fe9d4a451e6fbddb9c4e3"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/first/challenge-plan.md",
+      "destination_bytes": 3727,
+      "destination_sha256": "a42f2a33c1f1e3347571c60ebd7b8386214847afdc1de52df86bdf24add78d6b",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/first/challenge-plan.md",
+      "source_bytes": 3727,
+      "source_sha256": "a42f2a33c1f1e3347571c60ebd7b8386214847afdc1de52df86bdf24add78d6b"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/first/contract.json",
+      "destination_bytes": 7082,
+      "destination_sha256": "8b1f1b43fd5cf780a258b91bd346c6fef2d4cf4e1ee2af0cb3ef192092f32c49",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/first/contract.json",
+      "source_bytes": 7082,
+      "source_sha256": "8b1f1b43fd5cf780a258b91bd346c6fef2d4cf4e1ee2af0cb3ef192092f32c49"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/first/execution.json",
+      "destination_bytes": 2525,
+      "destination_sha256": "9e7403c43f040c55cd080560c4af79e6bf940166dbb87a36dbe0b7d4cf36d08a",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/first/execution.json",
+      "source_bytes": 2525,
+      "source_sha256": "9e7403c43f040c55cd080560c4af79e6bf940166dbb87a36dbe0b7d4cf36d08a"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/first/generated_fixtures.py",
+      "destination_bytes": 1838,
+      "destination_sha256": "d48ee11e09a12e83f86d6e0a5456c34bb39c9823ad366e456a25e70199560fb1",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/first/generated_fixtures.py",
+      "source_bytes": 1838,
+      "source_sha256": "d48ee11e09a12e83f86d6e0a5456c34bb39c9823ad366e456a25e70199560fb1"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/first/numeric-cases.json",
+      "destination_bytes": 3929,
+      "destination_sha256": "590ad0b059253ebcd265aa4adec48100e7a7a0a85b24f9fdba265db9505df7e2",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/first/numeric-cases.json",
+      "source_bytes": 3929,
+      "source_sha256": "590ad0b059253ebcd265aa4adec48100e7a7a0a85b24f9fdba265db9505df7e2"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/first/preparation.json",
+      "destination_bytes": 898,
+      "destination_sha256": "4875fe9d855dba6285263e5a1d83b7da88ae7816533c9121d95c0060f37f3458",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/first/preparation.json",
+      "source_bytes": 898,
+      "source_sha256": "4875fe9d855dba6285263e5a1d83b7da88ae7816533c9121d95c0060f37f3458"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/first/recorded_labels.py",
+      "destination_bytes": 27028,
+      "destination_sha256": "13f1f4ee41947eff4b47faaa0a3463af96363fbc8c09d6a9d398d76d78f9d647",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/first/recorded_labels.py",
+      "source_bytes": 27028,
+      "source_sha256": "13f1f4ee41947eff4b47faaa0a3463af96363fbc8c09d6a9d398d76d78f9d647"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/first/run_review.py",
+      "destination_bytes": 2679,
+      "destination_sha256": "01c832fbfbe275fd98df93366ceee69e04fa5118d590a1ea4308ae7b6c091665",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/first/run_review.py",
+      "source_bytes": 2679,
+      "source_sha256": "01c832fbfbe275fd98df93366ceee69e04fa5118d590a1ea4308ae7b6c091665"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/first/stderr.txt",
+      "destination_bytes": 1204,
+      "destination_sha256": "cbfd3c78e424e00ab43b4fb32453d8798daf23e215bacb6089e08e2854e2d6bd",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/first/stderr.txt",
+      "source_bytes": 1204,
+      "source_sha256": "cbfd3c78e424e00ab43b4fb32453d8798daf23e215bacb6089e08e2854e2d6bd"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/first/stdout.txt",
+      "destination_bytes": 0,
+      "destination_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/first/stdout.txt",
+      "source_bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/first/test_recorded_labels_review.py",
+      "destination_bytes": 26137,
+      "destination_sha256": "826598f8db7146a8b9c7cd203e9be3d9b22790d07e5c09ba343a6bb4f34a2488",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/first/test_recorded_labels_review.py",
+      "source_bytes": 26137,
+      "source_sha256": "826598f8db7146a8b9c7cd203e9be3d9b22790d07e5c09ba343a6bb4f34a2488"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/generated_fixtures.py",
+      "destination_bytes": 1838,
+      "destination_sha256": "d48ee11e09a12e83f86d6e0a5456c34bb39c9823ad366e456a25e70199560fb1",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/generated_fixtures.py",
+      "source_bytes": 1838,
+      "source_sha256": "d48ee11e09a12e83f86d6e0a5456c34bb39c9823ad366e456a25e70199560fb1"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/harness-correction.json",
+      "destination_bytes": 610,
+      "destination_sha256": "b8b73ef4fa7bd5815fae5ee327c26a631f19c07223e3dd190f080de748bb772e",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/harness-correction.json",
+      "source_bytes": 610,
+      "source_sha256": "b8b73ef4fa7bd5815fae5ee327c26a631f19c07223e3dd190f080de748bb772e"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/numeric-cases.json",
+      "destination_bytes": 3929,
+      "destination_sha256": "590ad0b059253ebcd265aa4adec48100e7a7a0a85b24f9fdba265db9505df7e2",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/numeric-cases.json",
+      "source_bytes": 3929,
+      "source_sha256": "590ad0b059253ebcd265aa4adec48100e7a7a0a85b24f9fdba265db9505df7e2"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/preparation.json",
+      "destination_bytes": 898,
+      "destination_sha256": "4875fe9d855dba6285263e5a1d83b7da88ae7816533c9121d95c0060f37f3458",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/preparation.json",
+      "source_bytes": 898,
+      "source_sha256": "4875fe9d855dba6285263e5a1d83b7da88ae7816533c9121d95c0060f37f3458"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/review.json",
+      "destination_bytes": 5809,
+      "destination_sha256": "356e8c4ad77d12edcf072ac278db997e286e6144be9163e4ed49ad066754745b",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/review.json",
+      "source_bytes": 5809,
+      "source_sha256": "356e8c4ad77d12edcf072ac278db997e286e6144be9163e4ed49ad066754745b"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/run_review.py",
+      "destination_bytes": 2660,
+      "destination_sha256": "e04f5d6e88105aca2e1319e148876c4b7527ce9b4d630679c3e23d01c438c11e",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/run_review.py",
+      "source_bytes": 2660,
+      "source_sha256": "e04f5d6e88105aca2e1319e148876c4b7527ce9b4d630679c3e23d01c438c11e"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/second/README.md",
+      "destination_bytes": 7355,
+      "destination_sha256": "c562ed10f3b6c81fb60152118fbb932ea45f6f33033fe9d4a451e6fbddb9c4e3",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/second/README.md",
+      "source_bytes": 7355,
+      "source_sha256": "c562ed10f3b6c81fb60152118fbb932ea45f6f33033fe9d4a451e6fbddb9c4e3"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/second/challenge-plan.md",
+      "destination_bytes": 3727,
+      "destination_sha256": "a42f2a33c1f1e3347571c60ebd7b8386214847afdc1de52df86bdf24add78d6b",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/second/challenge-plan.md",
+      "source_bytes": 3727,
+      "source_sha256": "a42f2a33c1f1e3347571c60ebd7b8386214847afdc1de52df86bdf24add78d6b"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/second/contract.json",
+      "destination_bytes": 7082,
+      "destination_sha256": "8b1f1b43fd5cf780a258b91bd346c6fef2d4cf4e1ee2af0cb3ef192092f32c49",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/second/contract.json",
+      "source_bytes": 7082,
+      "source_sha256": "8b1f1b43fd5cf780a258b91bd346c6fef2d4cf4e1ee2af0cb3ef192092f32c49"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/second/execution.json",
+      "destination_bytes": 2523,
+      "destination_sha256": "87d4e8ee78ddfe6002cf36034c6fb96f29d3e504840a7563f3f6be61c26658ac",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/second/execution.json",
+      "source_bytes": 2523,
+      "source_sha256": "87d4e8ee78ddfe6002cf36034c6fb96f29d3e504840a7563f3f6be61c26658ac"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/second/generated_fixtures.py",
+      "destination_bytes": 1838,
+      "destination_sha256": "d48ee11e09a12e83f86d6e0a5456c34bb39c9823ad366e456a25e70199560fb1",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/second/generated_fixtures.py",
+      "source_bytes": 1838,
+      "source_sha256": "d48ee11e09a12e83f86d6e0a5456c34bb39c9823ad366e456a25e70199560fb1"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/second/numeric-cases.json",
+      "destination_bytes": 3929,
+      "destination_sha256": "590ad0b059253ebcd265aa4adec48100e7a7a0a85b24f9fdba265db9505df7e2",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/second/numeric-cases.json",
+      "source_bytes": 3929,
+      "source_sha256": "590ad0b059253ebcd265aa4adec48100e7a7a0a85b24f9fdba265db9505df7e2"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/second/preparation.json",
+      "destination_bytes": 898,
+      "destination_sha256": "4875fe9d855dba6285263e5a1d83b7da88ae7816533c9121d95c0060f37f3458",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/second/preparation.json",
+      "source_bytes": 898,
+      "source_sha256": "4875fe9d855dba6285263e5a1d83b7da88ae7816533c9121d95c0060f37f3458"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/second/recorded_labels.py",
+      "destination_bytes": 27028,
+      "destination_sha256": "13f1f4ee41947eff4b47faaa0a3463af96363fbc8c09d6a9d398d76d78f9d647",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/second/recorded_labels.py",
+      "source_bytes": 27028,
+      "source_sha256": "13f1f4ee41947eff4b47faaa0a3463af96363fbc8c09d6a9d398d76d78f9d647"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/second/run_review.py",
+      "destination_bytes": 2660,
+      "destination_sha256": "e04f5d6e88105aca2e1319e148876c4b7527ce9b4d630679c3e23d01c438c11e",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/second/run_review.py",
+      "source_bytes": 2660,
+      "source_sha256": "e04f5d6e88105aca2e1319e148876c4b7527ce9b4d630679c3e23d01c438c11e"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/second/stderr.txt.json",
+      "destination_bytes": 22889,
+      "destination_sha256": "a4c8596d3131225347c651d03d7f9d4b2e1292d61395529df01293cbb3a53853",
+      "method": "LOSSLESS_UTF8_WRAPPER",
+      "reason": "WHITESPACE",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/second/stderr.txt",
+      "source_bytes": 22117,
+      "source_sha256": "5760b8e6deaa54a637fb12bbabf170424e65753928ee0cfa0346274ff8e44641"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/second/stdout.txt",
+      "destination_bytes": 387,
+      "destination_sha256": "cfcdd68c85b3d7e602459d63eb68f99423bb6956abf25c70bcf1f8cc36ba7bba",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/second/stdout.txt",
+      "source_bytes": 387,
+      "source_sha256": "cfcdd68c85b3d7e602459d63eb68f99423bb6956abf25c70bcf1f8cc36ba7bba"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/second/test_recorded_labels_review.py",
+      "destination_bytes": 26137,
+      "destination_sha256": "826598f8db7146a8b9c7cd203e9be3d9b22790d07e5c09ba343a6bb4f34a2488",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/second/test_recorded_labels_review.py",
+      "source_bytes": 26137,
+      "source_sha256": "826598f8db7146a8b9c7cd203e9be3d9b22790d07e5c09ba343a6bb4f34a2488"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/static-source-check.json",
+      "destination_bytes": 1523,
+      "destination_sha256": "5ce50a38da63df9e99b25839c0d3f78ca13937aee707634bca8a050a7b9d29ab",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/static-source-check.json",
+      "source_bytes": 1523,
+      "source_sha256": "5ce50a38da63df9e99b25839c0d3f78ca13937aee707634bca8a050a7b9d29ab"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/test_recorded_labels_review.py",
+      "destination_bytes": 26137,
+      "destination_sha256": "826598f8db7146a8b9c7cd203e9be3d9b22790d07e5c09ba343a6bb4f34a2488",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/test_recorded_labels_review.py",
+      "source_bytes": 26137,
+      "source_sha256": "826598f8db7146a8b9c7cd203e9be3d9b22790d07e5c09ba343a6bb4f34a2488"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/third/README.md",
+      "destination_bytes": 7355,
+      "destination_sha256": "c562ed10f3b6c81fb60152118fbb932ea45f6f33033fe9d4a451e6fbddb9c4e3",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/third/README.md",
+      "source_bytes": 7355,
+      "source_sha256": "c562ed10f3b6c81fb60152118fbb932ea45f6f33033fe9d4a451e6fbddb9c4e3"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/third/challenge-plan.md",
+      "destination_bytes": 3727,
+      "destination_sha256": "a42f2a33c1f1e3347571c60ebd7b8386214847afdc1de52df86bdf24add78d6b",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/third/challenge-plan.md",
+      "source_bytes": 3727,
+      "source_sha256": "a42f2a33c1f1e3347571c60ebd7b8386214847afdc1de52df86bdf24add78d6b"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/third/contract.json",
+      "destination_bytes": 7082,
+      "destination_sha256": "8b1f1b43fd5cf780a258b91bd346c6fef2d4cf4e1ee2af0cb3ef192092f32c49",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/third/contract.json",
+      "source_bytes": 7082,
+      "source_sha256": "8b1f1b43fd5cf780a258b91bd346c6fef2d4cf4e1ee2af0cb3ef192092f32c49"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/third/execution.json",
+      "destination_bytes": 2524,
+      "destination_sha256": "5b8438586a2c53018a1f936cc78310ec801d305c4001b0ca074b3283f8f33325",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/third/execution.json",
+      "source_bytes": 2524,
+      "source_sha256": "5b8438586a2c53018a1f936cc78310ec801d305c4001b0ca074b3283f8f33325"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/third/generated_fixtures.py",
+      "destination_bytes": 1838,
+      "destination_sha256": "d48ee11e09a12e83f86d6e0a5456c34bb39c9823ad366e456a25e70199560fb1",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/third/generated_fixtures.py",
+      "source_bytes": 1838,
+      "source_sha256": "d48ee11e09a12e83f86d6e0a5456c34bb39c9823ad366e456a25e70199560fb1"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/third/numeric-cases.json",
+      "destination_bytes": 3929,
+      "destination_sha256": "590ad0b059253ebcd265aa4adec48100e7a7a0a85b24f9fdba265db9505df7e2",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/third/numeric-cases.json",
+      "source_bytes": 3929,
+      "source_sha256": "590ad0b059253ebcd265aa4adec48100e7a7a0a85b24f9fdba265db9505df7e2"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/third/preparation.json",
+      "destination_bytes": 898,
+      "destination_sha256": "4875fe9d855dba6285263e5a1d83b7da88ae7816533c9121d95c0060f37f3458",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/third/preparation.json",
+      "source_bytes": 898,
+      "source_sha256": "4875fe9d855dba6285263e5a1d83b7da88ae7816533c9121d95c0060f37f3458"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/third/recorded_labels.py",
+      "destination_bytes": 27028,
+      "destination_sha256": "13f1f4ee41947eff4b47faaa0a3463af96363fbc8c09d6a9d398d76d78f9d647",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/third/recorded_labels.py",
+      "source_bytes": 27028,
+      "source_sha256": "13f1f4ee41947eff4b47faaa0a3463af96363fbc8c09d6a9d398d76d78f9d647"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/third/run_review.py",
+      "destination_bytes": 2660,
+      "destination_sha256": "e04f5d6e88105aca2e1319e148876c4b7527ce9b4d630679c3e23d01c438c11e",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/third/run_review.py",
+      "source_bytes": 2660,
+      "source_sha256": "e04f5d6e88105aca2e1319e148876c4b7527ce9b4d630679c3e23d01c438c11e"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/third/stderr.txt",
+      "destination_bytes": 3429,
+      "destination_sha256": "0b6b45d5fd42a30c04c56e714e81cb83cd29315586c289d2507de1b16efa0922",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/third/stderr.txt",
+      "source_bytes": 3429,
+      "source_sha256": "0b6b45d5fd42a30c04c56e714e81cb83cd29315586c289d2507de1b16efa0922"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/third/stdout.txt",
+      "destination_bytes": 155,
+      "destination_sha256": "28d6df98af428c1bce0804cb8ae06c325c65ef44d0e65fecbafff8b14e5a300c",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/third/stdout.txt",
+      "source_bytes": 155,
+      "source_sha256": "28d6df98af428c1bce0804cb8ae06c325c65ef44d0e65fecbafff8b14e5a300c"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/third/test_recorded_labels_review.py",
+      "destination_bytes": 26137,
+      "destination_sha256": "826598f8db7146a8b9c7cd203e9be3d9b22790d07e5c09ba343a6bb4f34a2488",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/third/test_recorded_labels_review.py",
+      "source_bytes": 26137,
+      "source_sha256": "826598f8db7146a8b9c7cd203e9be3d9b22790d07e5c09ba343a6bb4f34a2488"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/inventory.json",
+      "destination_bytes": 7273,
+      "destination_sha256": "2484557c860986360a75d1370606a7a82ec40bdbd17a811b18448ea46105e4f7",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/inventory.json",
+      "source_bytes": 7273,
+      "source_sha256": "2484557c860986360a75d1370606a7a82ec40bdbd17a811b18448ea46105e4f7"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/handoff.json",
+      "destination_bytes": 687,
+      "destination_sha256": "18ebd55c32b9a6c7035e4de0baf7ef1b140589a0617c4f1d39c7fb088eb68e46",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-review-v1/handoff.json",
+      "source_bytes": 687,
+      "source_sha256": "18ebd55c32b9a6c7035e4de0baf7ef1b140589a0617c4f1d39c7fb088eb68e46"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/actual-review/README.md",
+      "destination_bytes": 2240,
+      "destination_sha256": "7f9fb5b250449cac260f08b9eade610981ef0cfb57e6fb0b3eadd9b1fccf8c62",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-actual-review-v1/README.md",
+      "source_bytes": 2240,
+      "source_sha256": "7f9fb5b250449cac260f08b9eade610981ef0cfb57e6fb0b3eadd9b1fccf8c62"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/actual-review/first-stderr.txt",
+      "destination_bytes": 0,
+      "destination_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-actual-review-v1/first-stderr.txt",
+      "source_bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/actual-review/first-stdout.txt",
+      "destination_bytes": 324,
+      "destination_sha256": "b72daf9b0066ce915274333f6758e418045c2d733c156d4da0ec800e2aead10b",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-actual-review-v1/first-stdout.txt",
+      "source_bytes": 324,
+      "source_sha256": "b72daf9b0066ce915274333f6758e418045c2d733c156d4da0ec800e2aead10b"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/actual-review/review.json",
+      "destination_bytes": 5270,
+      "destination_sha256": "592ee1a2f1effc36153da79e5d4584d6ab545b3c2770f29abf121d1f7ac99b50",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-actual-review-v1/review.json",
+      "source_bytes": 5270,
+      "source_sha256": "592ee1a2f1effc36153da79e5d4584d6ab545b3c2770f29abf121d1f7ac99b50"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/actual-review/review_public_receipt.py",
+      "destination_bytes": 11404,
+      "destination_sha256": "0c9071ffe87bc7e12a16a71f5e5699d38fc9424f70ba259f9d19a1958b846520",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-actual-review-v1/review_public_receipt.py",
+      "source_bytes": 11404,
+      "source_sha256": "0c9071ffe87bc7e12a16a71f5e5699d38fc9424f70ba259f9d19a1958b846520"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/actual-review/source-pin-addendum.json",
+      "destination_bytes": 381,
+      "destination_sha256": "085718cfb36d3ccd719e29096296e4bd259be6c6ec99527f0367302d9298640f",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-actual-review-v1/source-pin-addendum.json",
+      "source_bytes": 381,
+      "source_sha256": "085718cfb36d3ccd719e29096296e4bd259be6c6ec99527f0367302d9298640f"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/actual-review/inventory.json",
+      "destination_bytes": 944,
+      "destination_sha256": "bd13e9d8c09b49742bba17e98637b9728721b5ceddd13600cd5dfb28de5b848f",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-actual-review-v1/inventory.json",
+      "source_bytes": 944,
+      "source_sha256": "bd13e9d8c09b49742bba17e98637b9728721b5ceddd13600cd5dfb28de5b848f"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/actual-review/handoff.json",
+      "destination_bytes": 504,
+      "destination_sha256": "711fdee3c8629b2bafd0a1145512a67c5121978335b4585b5b2c28d2343b73a8",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-actual-review-v1/handoff.json",
+      "source_bytes": 504,
+      "source_sha256": "711fdee3c8629b2bafd0a1145512a67c5121978335b4585b5b2c28d2343b73a8"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/operations/run_actual_once.py",
+      "destination_bytes": 3837,
+      "destination_sha256": "529fa3c1a42099e34660291408a4b07231840ce4261717cd32a15e329d79ba1a",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-operations-v1/run_actual_once.py",
+      "source_bytes": 3837,
+      "source_sha256": "529fa3c1a42099e34660291408a4b07231840ce4261717cd32a15e329d79ba1a"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/operations/public-summary.json",
+      "destination_bytes": 2196,
+      "destination_sha256": "74b2d3593e87a53ee09b62f356cd39277023dc53f47860eab987f1ad10c62ec1",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-operations-v1/public-summary.json",
+      "source_bytes": 2196,
+      "source_sha256": "74b2d3593e87a53ee09b62f356cd39277023dc53f47860eab987f1ad10c62ec1"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/operations/actual-execution/start.json",
+      "destination_bytes": 41248,
+      "destination_sha256": "be87cee0133341377b409545ce65be7e2361311cc8ebf7d7162170dee85c9dc9",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-operations-v1/actual-execution/start.json",
+      "source_bytes": 41248,
+      "source_sha256": "be87cee0133341377b409545ce65be7e2361311cc8ebf7d7162170dee85c9dc9"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/operations/actual-execution/execution.json",
+      "destination_bytes": 553,
+      "destination_sha256": "083d6053316c83973c0c67ff01b326501c29266f45e5e70ddfa179e19c7807c9",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-operations-v1/actual-execution/execution.json",
+      "source_bytes": 553,
+      "source_sha256": "083d6053316c83973c0c67ff01b326501c29266f45e5e70ddfa179e19c7807c9"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/operations/actual-execution/stdout.json",
+      "destination_bytes": 115893,
+      "destination_sha256": "b444e7d33cb18619942c2dfbb5cd3374fd9cd9adee6732825ce20ed431641a33",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-operations-v1/actual-execution/stdout.json",
+      "source_bytes": 115893,
+      "source_sha256": "b444e7d33cb18619942c2dfbb5cd3374fd9cd9adee6732825ce20ed431641a33"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/operations/actual-execution/stderr.txt",
+      "destination_bytes": 0,
+      "destination_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-operations-v1/actual-execution/stderr.txt",
+      "source_bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/actual/invocation.json",
+      "destination_bytes": 902,
+      "destination_sha256": "fe5c3ab1d75e9895bff133e5c8e7ec5a12502bb8d1f27b832eabc6d84c7ba860",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-candidate-v1/reviewed-invocation.json",
+      "source_bytes": 902,
+      "source_sha256": "fe5c3ab1d75e9895bff133e5c8e7ec5a12502bb8d1f27b832eabc6d84c7ba860"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/actual/public.json",
+      "destination_bytes": 115893,
+      "destination_sha256": "b444e7d33cb18619942c2dfbb5cd3374fd9cd9adee6732825ce20ed431641a33",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-candidate-v1/actual/public.json",
+      "source_bytes": 115893,
+      "source_sha256": "b444e7d33cb18619942c2dfbb5cd3374fd9cd9adee6732825ce20ed431641a33"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/actual/reservation.json",
+      "destination_bytes": 913,
+      "destination_sha256": "a4c6faa4240111ebe9bb5675b0cec847a08676e10be6f39fbc2a95ec05ed6885",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-recorded-label-candidate-v1/actual/reservation.json",
+      "source_bytes": 913,
+      "source_sha256": "a4c6faa4240111ebe9bb5675b0cec847a08676e10be6f39fbc2a95ec05ed6885"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/priority-decision/README.md",
+      "destination_bytes": 5315,
+      "destination_sha256": "4facb53c9818dd8efe849a6274f8e68e89446fcbef1b2fcb8f4a31773d1656bb",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-label-readiness-decision-v1/README.md",
+      "source_bytes": 5315,
+      "source_sha256": "4facb53c9818dd8efe849a6274f8e68e89446fcbef1b2fcb8f4a31773d1656bb"
+    },
+    {
+      "destination": "reports/phase2-rhizo-recorded-label-readiness-v1/priority-decision/source-bindings.json",
+      "destination_bytes": 2724,
+      "destination_sha256": "2a1de7970f86c1bd8c01a9327586a6a5646fafb467ca6f15c3329070ac02e289",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-label-readiness-decision-v1/source-bindings.json",
+      "source_bytes": 2724,
+      "source_sha256": "2a1de7970f86c1bd8c01a9327586a6a5646fafb467ca6f15c3329070ac02e289"
+    }
+  ],
+  "generated_publication_files": [
+    "README.md",
+    "publication-copy-map.json",
+    "publication-checks.json"
+  ],
+  "historical_statements": "Author and generated reviewer snapshots were frozen before actual operation and remain historical. Original inventory paths/hashes identify original bytes; wrappers reconstruct those bytes.",
+  "markdown_link_repairs": [],
+  "private_exclusions": [
+    ".cache/phase2-rhizo-recorded-label-candidate-v1/actual/private.json",
+    "all raw retained objects",
+    "all private documentary projections"
+  ],
+  "schema": "lupine.rhizo.recorded-label-publication-map.v1",
+  "scope": "Completed historical readiness public evidence only. Exact generated-data inventories plus separately identified actual public records. No actual/private.json, raw evidence/reference object, or private projection read or copied.",
+  "source_entry_count": 94
+}

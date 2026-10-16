@@ -1,0 +1,17 @@
+{
+  "actual_output_slots": null,
+  "actual_source_reads": 0,
+  "author_tests": 22,
+  "completed_at": "2026-10-16T12:08:23.268685+00:00",
+  "files": 69,
+  "independent_handoff": ".cache/phase2-growth-predicate-review-v1/handoff.json",
+  "independent_handoff_sha256": "cdb1fb1d517571cfafa459a14a5b144f424ee72aa4e4723038b98c0b8887fd48",
+  "independent_tests": 26,
+  "inventory_sha256": "45677b37d4609808b334c403dc18207c17a3ef6cad0c427a749a86a4c9865e84",
+  "mutation_controls_killed": 3,
+  "next_action": "Separately scoped production adaptation and one independent guard-test lane; root owns integration and actual operations.",
+  "production_context_calls_against_real_checkout": 0,
+  "runtime_files_held": 332,
+  "source_sha256": "167c8e3d0cba758057c60991debe8d831c8638da5ce3dbd1a183503c46efea11",
+  "status": "PURE_CANDIDATE_COMPLETE_NO_PRODUCTION_BINDING"
+}

@@ -1,0 +1,226 @@
+{
+  "actual_private_projection_reads": 0,
+  "actual_raw_object_reads": 0,
+  "author_stderr_layout_alignment": "Original frozen publication-layout directive honored: raw stderr represented by its existing exact UTF-8 wrapper; both source entries map to the same destination.",
+  "checks": [
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-candidate-v1/FINAL.md",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-candidate-v1/README.md",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-candidate-v1/contract.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-candidate-v1/first-author/README.md",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-candidate-v1/first-author/contract.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-candidate-v1/first-author/execution.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-candidate-v1/first-author/recorded_labels.py",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-candidate-v1/first-author/run_guarded.py",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-candidate-v1/first-author/start.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-candidate-v1/first-author/stderr.txt",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-candidate-v1/first-author/stderr.txt.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-candidate-v1/first-author/stdout.txt",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-candidate-v1/first-author/test_recorded_labels.py",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-candidate-v1/helper-heritage.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-candidate-v1/independent-review-binding.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-candidate-v1/pre-hold-review-finding.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-candidate-v1/publication-check.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-candidate-v1/publication-layout.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-candidate-v1/recorded_labels.py",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-candidate-v1/run_guarded.py",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-candidate-v1/source-hold.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-candidate-v1/test_recorded_labels.py",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-candidate-v1/inventory.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-candidate-v1/handoff.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/README.md",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/before-relative-cleanup-fix/execute_review.py",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/challenge-plan.md",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/cleanup-harness-correction.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/execute_review.py",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/first/README.md",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/first/challenge-plan.md",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/first/contract.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/first/execution.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/first/generated_fixtures.py",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/first/numeric-cases.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/first/preparation.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/first/recorded_labels.py",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/first/run_review.py",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/first/stderr.txt",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/first/stdout.txt",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/first/test_recorded_labels_review.py",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/generated_fixtures.py",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/harness-correction.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/numeric-cases.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/preparation.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/review.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/run_review.py",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/second/README.md",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/second/challenge-plan.md",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/second/contract.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/second/execution.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/second/generated_fixtures.py",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/second/numeric-cases.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/second/preparation.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/second/recorded_labels.py",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/second/run_review.py",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/second/stderr.txt",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/second/stdout.txt",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/second/test_recorded_labels_review.py",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/static-source-check.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/test_recorded_labels_review.py",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/third/README.md",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/third/challenge-plan.md",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/third/contract.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/third/execution.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/third/generated_fixtures.py",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/third/numeric-cases.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/third/preparation.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/third/recorded_labels.py",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/third/run_review.py",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/third/stderr.txt",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/third/stdout.txt",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/third/test_recorded_labels_review.py",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/inventory.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-review-v1/handoff.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-actual-review-v1/README.md",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-actual-review-v1/first-stderr.txt",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-actual-review-v1/first-stdout.txt",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-actual-review-v1/review.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-actual-review-v1/review_public_receipt.py",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-actual-review-v1/source-pin-addendum.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-actual-review-v1/inventory.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-actual-review-v1/handoff.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-operations-v1/run_actual_once.py",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-operations-v1/public-summary.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-operations-v1/actual-execution/start.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-operations-v1/actual-execution/execution.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-operations-v1/actual-execution/stdout.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-operations-v1/actual-execution/stderr.txt",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-candidate-v1/reviewed-invocation.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-candidate-v1/actual/public.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-recorded-label-candidate-v1/actual/reservation.json",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-label-readiness-decision-v1/README.md",
+    "SOURCE_RECONSTRUCTION:.cache/phase2-rhizo-label-readiness-decision-v1/source-bindings.json"
+  ],
+  "claim_check": "Public actual summary matches 144 complete positions,36 objects,144 NULL tolerances,UNKNOWN choice,NOT_ADMITTED,no performance computed.",
+  "created_at": "2026-10-16T12:33:04.390547+00:00",
+  "lossless_wrapper_entries": 2,
+  "product_tests_run": 0,
+  "reconstructed_source_entries": 94,
+  "relative_markdown_links": [
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/README.md",
+      "target": "actual/public.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/README.md",
+      "target": "operations/public-summary.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/README.md",
+      "target": "operations/actual-execution/execution.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/README.md",
+      "target": "actual-review/README.md"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/README.md",
+      "target": "author/contract.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/README.md",
+      "target": "author/README.md"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/README.md",
+      "target": "independent-review/README.md"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/README.md",
+      "target": "priority-decision/README.md"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/README.md",
+      "target": "publication-copy-map.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/README.md",
+      "target": "publication-checks.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/README.md",
+      "target": "../phase2-rhizo-reference-readiness-v1/bound-label-scope/objects.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/README.md",
+      "target": "../phase2-rhizo-reference-readiness-v1/design/reference-frame.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/author/FINAL.md",
+      "target": "contract.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/author/FINAL.md",
+      "target": "README.md"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/author/FINAL.md",
+      "target": "first-author/execution.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/author/FINAL.md",
+      "target": "pre-hold-review-finding.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/author/FINAL.md",
+      "target": "publication-layout.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/author/README.md",
+      "target": "contract.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/author/first-author/README.md",
+      "target": "contract.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/first/README.md",
+      "target": "contract.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/second/README.md",
+      "target": "contract.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/independent-review/third/README.md",
+      "target": "contract.json"
+    },
+    {
+      "exists": true,
+      "source": "reports/phase2-rhizo-recorded-label-readiness-v1/priority-decision/README.md",
+      "target": "source-bindings.json"
+    }
+  ],
+  "source_operations": 0,
+  "status": "PASS_PUBLICATION_BYTE_AND_LINK_CHECKS",
+  "unique_destination_files_before_check_record": 95
+}

@@ -1,0 +1,22 @@
+test_central_extra_comment_preflight (growth_predicate_author_tests.AuditTests.test_central_extra_comment_preflight) ... ok
+test_central_predicates (growth_predicate_author_tests.AuditTests.test_central_predicates) ... ok
+test_cleanup_failure_preserves_primary (growth_predicate_author_tests.AuditTests.test_cleanup_failure_preserves_primary) ... ok
+test_directory_totals (growth_predicate_author_tests.AuditTests.test_directory_totals) ... ok
+test_duplicate_name (growth_predicate_author_tests.AuditTests.test_duplicate_name) ... ok
+test_duplicate_offset_skips_ambiguous_local_but_later_independent_fault (growth_predicate_author_tests.AuditTests.test_duplicate_offset_skips_ambiguous_local_but_later_independent_fault) ... ok
+test_eocd_order_and_bounds (growth_predicate_author_tests.AuditTests.test_eocd_order_and_bounds) ... ok
+test_growth_categories_and_order (growth_predicate_author_tests.AuditTests.test_growth_categories_and_order) ... ok
+test_header_valid_never_opens_member (growth_predicate_author_tests.AuditTests.test_header_valid_never_opens_member) ... ok
+test_initial_padding_is_unbound (growth_predicate_author_tests.AuditTests.test_initial_padding_is_unbound) ... ok
+test_later_independent_faults (growth_predicate_author_tests.AuditTests.test_later_independent_faults) ... ok
+test_local_predicates (growth_predicate_author_tests.AuditTests.test_local_predicates) ... ok
+test_overlap_keeps_central_checks (growth_predicate_author_tests.AuditTests.test_overlap_keeps_central_checks) ... ok
+test_path_and_kind (growth_predicate_author_tests.AuditTests.test_path_and_kind) ... ok
+test_preliminary_scope_is_explicit (growth_predicate_author_tests.AuditTests.test_preliminary_scope_is_explicit) ... ok
+test_reject_types_limits_and_known_identity (growth_predicate_author_tests.AuditTests.test_reject_types_limits_and_known_identity) ... ok
+test_uint_offset_no_speculative_reads (growth_predicate_author_tests.AuditTests.test_uint_offset_no_speculative_reads) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.116s
+
+OK

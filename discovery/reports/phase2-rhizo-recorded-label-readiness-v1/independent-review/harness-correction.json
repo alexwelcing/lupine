@@ -1,0 +1,10 @@
+{
+  "after_runner_sha256": "e04f5d6e88105aca2e1319e148876c4b7527ce9b4d630679c3e23d01c438c11e",
+  "before_runner_sha256": "01c832fbfbe275fd98df93366ceee69e04fa5118d590a1ea4308ae7b6c091665",
+  "finding": "Reviewer importlib loader attempted candidate __pycache__ read before tests; strict project-path guard blocked it.",
+  "first_source_executed": false,
+  "first_tests_executed": 0,
+  "recorded_at": "2026-10-16T12:09:36.857091+00:00",
+  "repair": "Compile exact held source bytes directly into a ModuleType; no path guard widened and no test or candidate edits.",
+  "retained_first": "first/execution.json"
+}

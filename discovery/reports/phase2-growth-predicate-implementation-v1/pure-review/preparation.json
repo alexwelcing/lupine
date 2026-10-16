@@ -1,0 +1,35 @@
+{
+  "actual_source_access": false,
+  "candidate_executions": 0,
+  "plan_and_fixture": {
+    "challenge-design.md": {
+      "bytes": 3401,
+      "sha256": "a9f1aa7509845fd6e1bf82ba8f813b9d3ca34ae98db09abe721ab334baf49240"
+    },
+    "generated_zip.py": {
+      "bytes": 4316,
+      "sha256": "1b58a6857ee48934dd750ba024703f11e1fbd4cb3015e50c47245d04269ae263"
+    }
+  },
+  "production_guards_invoked": false,
+  "schema": "lupine.growth_predicate.independent_preparation.v1",
+  "source_bindings": {
+    "reports/phase2-growth-header-next-scope-v1/README.md": {
+      "bytes": 7296,
+      "sha256": "6432c3aa595946b75a6a1a7d1c00260569469f1f4700ee1ae3c0237cb8870fa7"
+    },
+    "reports/phase2-growth-header-next-scope-v1/proposal.json": {
+      "bytes": 11040,
+      "sha256": "a6611e49f33ccc0e8730a479e9201c16f882d68035156f87760d153a029d395c"
+    },
+    "scripts/li_v3_custody.py": {
+      "bytes": 35358,
+      "sha256": "3ead51f0afdf16be973743257be488669c988aa40443779e7a5c400e9b0d3234"
+    },
+    "scripts/li_v3_growth_envelope.py": {
+      "bytes": 20609,
+      "sha256": "f50069d028526ea045441a2e574a26192a210ff78ba34f5170777d32f5692ec3"
+    }
+  },
+  "written_at": "2026-10-16T11:54:34.984463+00:00"
+}

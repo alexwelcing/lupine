@@ -1,0 +1,1 @@
+{"errors": 0, "failures": 0, "guard_violations": [], "scope": "Generated fixtures and temporary repositories only; no actual source/capture, real checkout guard or network.", "skipped": 0, "tests_run": 41}

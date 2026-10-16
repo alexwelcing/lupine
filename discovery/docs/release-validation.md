@@ -695,3 +695,23 @@ uncertainty and new scientific superiority are distinct unresolved questions.
 A future descriptive census over explicitly stored values need not reconstruct
 the old binder's preference; claims about that binding or primary-source
 agreement require separate evidence. G21 remains blocked.
+
+## Stored-label readiness and G34 implementation — 2026-10-16
+
+[The fixed Rhizo label inspection](../reports/phase2-rhizo-recorded-label-readiness-v1/README.md)
+closes stored-pair completeness: 144 exact numeric pairs / 36 objects, matching
+literal units, all tolerances NULL. It does not establish historical reference
+choice, source accuracy, physical compatibility, uncertainty or predictive
+performance. Its single actual operation and public review are recorded;
+30 author/19 independent generated tests verify reader behavior only. The
+private numeric projection exists; no numerical comparison or admission follows.
+
+[The integrated Li header audit](../reports/phase2-growth-predicate-implementation-v1/ROOT-CHECKPOINT.md)
+passes 418 combined generated tests, with all 332 predecessor runtime files
+unchanged. Exact first-rejection preservation, safe independent categories,
+exclusive outputs and honest partial exposure are independently challenged.
+This implementation checkpoint does not perform the actual diagnostic. Exact
+publication CI, clean installed packaging and independent artifact verification
+must precede the fixed actual runs. No archive acceptance, worksheet schema,
+paired frame or scientific superiority is established by software checks.
+Historical claim-tier decisions remain unchanged.

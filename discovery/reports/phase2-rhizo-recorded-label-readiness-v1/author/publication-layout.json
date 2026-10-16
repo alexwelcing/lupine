@@ -1,0 +1,15 @@
+{
+  "exclude_directories": [
+    "__pycache__"
+  ],
+  "preserve_ignored_originals": true,
+  "schema": "lupine.publication-layout.v1",
+  "scope": "Exact archival representation only; no test result or code changed.",
+  "wrappers": [
+    {
+      "copy_wrapper": "first-author/stderr.txt.json",
+      "omit_raw_on_publication": "first-author/stderr.txt",
+      "original_sha256": "7c4697fac197b9595f0966fef833256bde4a732f1b3699705237cdc632a48122"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "candidate_imported_or_executed": false,
+  "findings": [
+    {
+      "correct_source_fields": [
+        "inspected_xml_bytes",
+        "decompression_started",
+        "decompression_completed",
+        "xml_decoding_started",
+        "xml_decoding_completed"
+      ],
+      "kind": "Source/schema mismatch",
+      "required_result": "Actual fixed G31 prerequisite must not be rejected by absent-key reads; generated fixtures must use source constructor schema",
+      "source": "scripts/li_v3_custody.py::_base, inherited by G31::_new_report",
+      "wrong_fields": [
+        "xml_bytes_inspected",
+        "members_decompressed"
+      ]
+    },
+    {
+      "finding": "A failed exclusive reservation write may leave a durable partial file before reservation_created is set. Attempt/may-exist state must be explicit and retry refused.",
+      "kind": "Partial reservation write exposure"
+    }
+  ],
+  "moving_source_sha256": "6409d1d092729265f904e292a8b9e95c91c310f67eb06d2a4eb32f9fb59aef8b",
+  "scope": "Static read of moving candidate and immutable source only; no actual prerequisite/capture/object read, production guard or test invocation.",
+  "written_at": "2026-10-16T12:16:23.293902+00:00"
+}

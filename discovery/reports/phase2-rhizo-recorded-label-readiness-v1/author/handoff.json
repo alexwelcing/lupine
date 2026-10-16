@@ -1,0 +1,28 @@
+{
+  "actual_operation_exclusions": [
+    "reviewed-invocation.json",
+    "actual/**"
+  ],
+  "actual_operation_owner": "root; any later actual manifest, read, projection, receipt and assessment are separate from this inventory",
+  "actual_reference_choice": "UNKNOWN",
+  "actual_source_or_production_calls_by_this_author": 0,
+  "author_tests_passed": 30,
+  "bytes": 263898,
+  "candidate_post_execution_repairs": 0,
+  "contract_sha256": "8b1f1b43fd5cf780a258b91bd346c6fef2d4cf4e1ee2af0cb3ef192092f32c49",
+  "created_at": "2026-10-16T12:16:41.861563+00:00",
+  "directory": ".cache/phase2-rhizo-recorded-label-candidate-v1",
+  "files": 22,
+  "first_failed_reviewer_harness_invocations_preserved": 2,
+  "independent_handoff_sha256": "18ebd55c32b9a6c7035e4de0baf7ef1b140589a0617c4f1d39c7fb088eb68e46",
+  "independent_review_binding_sha256": "ddd3d4d23f79695bd98a4e624aa2e710e64ab39328757b3fa2cc2dfaab7bffd5",
+  "independent_tests_passed": 19,
+  "inventory_sha256": "d0e1a1628b83ce5f95f44097e81d762b52f84c1a63740beab1db7b683391184b",
+  "no_scientific_performance_claim": true,
+  "publication_instruction": "Follow publication-layout.json; retain raw historical stderr in ignored origin and publish its exact lossless JSON wrapper. Independent evidence bundle is separate and retains both failed harness runs.",
+  "readme_sha256": "c562ed10f3b6c81fb60152118fbb932ea45f6f33033fe9d4a451e6fbddb9c4e3",
+  "schema": "lupine.rhizo.recorded-label-candidate-handoff.v1",
+  "scientific_status": "NOT_ADMITTED",
+  "source_sha256": "13f1f4ee41947eff4b47faaa0a3463af96363fbc8c09d6a9d398d76d78f9d647",
+  "status": "GENERATED_CANDIDATE_HELD_AND_INDEPENDENTLY_REVIEWED"
+}

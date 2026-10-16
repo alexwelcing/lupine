@@ -1,0 +1,104 @@
+{
+  "created_at": "2026-10-16T12:16:41.861563+00:00",
+  "exclude": [
+    "inventory.json",
+    "handoff.json",
+    "__pycache__/**",
+    "reviewed-invocation.json",
+    "actual/**"
+  ],
+  "file_count": 22,
+  "files": {
+    "FINAL.md": {
+      "bytes": 2897,
+      "sha256": "fdca9695d8e91641c59a3880018a46c8d7c47191b80189dcdf3e95283259ee3a"
+    },
+    "README.md": {
+      "bytes": 7355,
+      "sha256": "c562ed10f3b6c81fb60152118fbb932ea45f6f33033fe9d4a451e6fbddb9c4e3"
+    },
+    "contract.json": {
+      "bytes": 7082,
+      "sha256": "8b1f1b43fd5cf780a258b91bd346c6fef2d4cf4e1ee2af0cb3ef192092f32c49"
+    },
+    "first-author/README.md": {
+      "bytes": 7355,
+      "sha256": "c562ed10f3b6c81fb60152118fbb932ea45f6f33033fe9d4a451e6fbddb9c4e3"
+    },
+    "first-author/contract.json": {
+      "bytes": 7082,
+      "sha256": "8b1f1b43fd5cf780a258b91bd346c6fef2d4cf4e1ee2af0cb3ef192092f32c49"
+    },
+    "first-author/execution.json": {
+      "bytes": 79111,
+      "sha256": "d4415ab7e3c89d9a0e20f3cb7039d3358d0f58102ca59482bdceab89b89593ab"
+    },
+    "first-author/recorded_labels.py": {
+      "bytes": 27028,
+      "sha256": "13f1f4ee41947eff4b47faaa0a3463af96363fbc8c09d6a9d398d76d78f9d647"
+    },
+    "first-author/run_guarded.py": {
+      "bytes": 1157,
+      "sha256": "352442e9ba3ed6ad1c696a80c4f1910a59d5273220c1bbbd0419b24d9f3acbdd"
+    },
+    "first-author/start.json": {
+      "bytes": 39626,
+      "sha256": "826e69d8b8ba8e0625323319fa9401cc94e02d43ed1dd5104ebcb62d426e386f"
+    },
+    "first-author/stderr.txt": {
+      "bytes": 3854,
+      "sha256": "7c4697fac197b9595f0966fef833256bde4a732f1b3699705237cdc632a48122"
+    },
+    "first-author/stderr.txt.json": {
+      "bytes": 4254,
+      "sha256": "ff3933eaf94d52f2136a5d7821fbbf00f2c95352b44192755243a58820709065"
+    },
+    "first-author/stdout.txt": {
+      "bytes": 84,
+      "sha256": "bb33f0774353d6152e0b79eb3772a006ba218d5be3b51d7513f1a6a4a09cce43"
+    },
+    "first-author/test_recorded_labels.py": {
+      "bytes": 20619,
+      "sha256": "dc6a837a96ee5d19e227bbd80a7ce088a22700c3b3005aba3e3a3e0264d24685"
+    },
+    "helper-heritage.json": {
+      "bytes": 648,
+      "sha256": "097fe9557778ebefd223eb4ff34bd1d8d478ba977a1d20701bb816868a485cf9"
+    },
+    "independent-review-binding.json": {
+      "bytes": 2576,
+      "sha256": "ddd3d4d23f79695bd98a4e624aa2e710e64ab39328757b3fa2cc2dfaab7bffd5"
+    },
+    "pre-hold-review-finding.json": {
+      "bytes": 864,
+      "sha256": "f46b74bc291505be5e1ba8a595420ccefdc08a7184e9817d1f8fac548029be28"
+    },
+    "publication-check.json": {
+      "bytes": 2396,
+      "sha256": "64489e01f5ca60c1bc040b8c61527863ba564913f6e5919384767d1fcec526cc"
+    },
+    "publication-layout.json": {
+      "bytes": 456,
+      "sha256": "c014d2e70c630c7f8d91f85f31ba89a4a94217098233ef31a8cfaa88e5927c13"
+    },
+    "recorded_labels.py": {
+      "bytes": 27028,
+      "sha256": "13f1f4ee41947eff4b47faaa0a3463af96363fbc8c09d6a9d398d76d78f9d647"
+    },
+    "run_guarded.py": {
+      "bytes": 1157,
+      "sha256": "352442e9ba3ed6ad1c696a80c4f1910a59d5273220c1bbbd0419b24d9f3acbdd"
+    },
+    "source-hold.json": {
+      "bytes": 650,
+      "sha256": "26e367281e7bb09c9ba7e83094e958450f517c97421f9918b2093851d47931d0"
+    },
+    "test_recorded_labels.py": {
+      "bytes": 20619,
+      "sha256": "dc6a837a96ee5d19e227bbd80a7ce088a22700c3b3005aba3e3a3e0264d24685"
+    }
+  },
+  "schema": "lupine.rhizo.recorded-label-candidate-inventory.v1",
+  "scope": "Frozen generated-data candidate and preoperation evidence only; any root-owned later manifest or actual operation is explicitly excluded. Earlier no-actual statements remain historical snapshots.",
+  "total_bytes": 263898
+}

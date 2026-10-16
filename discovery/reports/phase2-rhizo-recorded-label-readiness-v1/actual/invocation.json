@@ -1,0 +1,13 @@
+{
+  "contract_sha256": "8b1f1b43fd5cf780a258b91bd346c6fef2d4cf4e1ee2af0cb3ef192092f32c49",
+  "frame_sha256": "80a1aca0fd56d89f49ff5f0e4b3930405f11ae1cd4acea14b8edab2381940aa4",
+  "inputs_sha256": "e0059b2d6eead1eb4f1e2323fdea88a8e00e48fdc132c04eceeb994cd363ce3a",
+  "output_slot": ".cache/phase2-rhizo-recorded-label-candidate-v1/actual",
+  "schema": "lupine.rhizo.recorded-label-invocation.v1",
+  "script_sha256": "13f1f4ee41947eff4b47faaa0a3463af96363fbc8c09d6a9d398d76d78f9d647",
+  "source_pins": {
+    ".cache/projection-source-audit/rhizo/python/lupine_distill/binding.py": "dcf34d3caae28d7fd31268f9217432d6c78692cad4f76dd316c434a6fb99c80e",
+    ".cache/projection-source-audit/rhizo/python/lupine_distill/schemas.py": "1bf115907c27b60c29fb3bb7ab7de167d1aa723a3f6ee64c3fa9bd47ac0f5022",
+    "scripts/projection_custody.py": "751bcec5123feef65bf4b459691b5ab89197dd28e599fa23a178e2f10ff36fcc"
+  }
+}

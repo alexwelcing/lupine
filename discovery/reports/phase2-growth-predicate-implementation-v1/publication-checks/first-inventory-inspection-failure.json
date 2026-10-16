@@ -1,0 +1,8 @@
+{
+  "stage": "publication metadata inspection",
+  "error": "KeyError: slice(None, 3, None)",
+  "cause": "Helper assumed inventory files was a list; author inventory uses a mapping.",
+  "source_or_test_failure": false,
+  "source_mutated": false,
+  "correction": "Handle list and mapping inventory schemas explicitly."
+}

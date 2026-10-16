@@ -1,0 +1,51 @@
+{
+  "actual_reference_choice": "UNKNOWN",
+  "actual_source_or_production_calls_by_this_author": 0,
+  "candidate_failure_observed": false,
+  "checked_at": "2026-10-16T12:16:41.861563+00:00",
+  "execution_history": [
+    {
+      "completed_at": "2026-10-16T12:09:05.829073+00:00",
+      "elapsed_seconds": 0.28044684199994663,
+      "receipt_sha256": "9e7403c43f040c55cd080560c4af79e6bf940166dbb87a36dbe0b7d4cf36d08a",
+      "returncode": 1,
+      "run": "first",
+      "started_at": "2026-10-16T12:09:05.548558+00:00"
+    },
+    {
+      "completed_at": "2026-10-16T12:09:39.926897+00:00",
+      "elapsed_seconds": 2.773571297999297,
+      "receipt_sha256": "87d4e8ee78ddfe6002cf36034c6fb96f29d3e504840a7563f3f6be61c26658ac",
+      "returncode": 1,
+      "run": "second",
+      "started_at": "2026-10-16T12:09:37.153301+00:00"
+    },
+    {
+      "completed_at": "2026-10-16T12:10:22.869596+00:00",
+      "elapsed_seconds": 2.3334656920014822,
+      "receipt_sha256": "5b8438586a2c53018a1f936cc78310ec801d305c4001b0ca074b3283f8f33325",
+      "returncode": 0,
+      "run": "third",
+      "started_at": "2026-10-16T12:10:20.536102+00:00"
+    }
+  ],
+  "final_independent_tests_passed": 19,
+  "first_two_failures_preserved": "Reviewer harness failures: import bytecode-cache path rejection, then dir_fd-relative cleanup path false positives. Neither run claimed as pass. Candidate and all test bytes unchanged.",
+  "independent_handoff_sha256": "18ebd55c32b9a6c7035e4de0baf7ef1b140589a0617c4f1d39c7fb088eb68e46",
+  "independent_inventory_sha256": "2484557c860986360a75d1370606a7a82ec40bdbd17a811b18448ea46105e4f7",
+  "independent_review_sha256": "356e8c4ad77d12edcf072ac278db997e286e6144be9163e4ed49ad066754745b",
+  "independent_test_sha256": "826598f8db7146a8b9c7cd203e9be3d9b22790d07e5c09ba343a6bb4f34a2488",
+  "new_tests_executed": 0,
+  "review_directory": ".cache/phase2-rhizo-recorded-label-review-v1",
+  "review_inventory_bytes_verified": 333006,
+  "review_inventory_files_verified": 49,
+  "schema": "lupine.rhizo.recorded-label-author-independent-binding.v1",
+  "scientific_status": "NOT_ADMITTED",
+  "scope": "Author byte/metadata reconciliation of the sole independent generated/source review; no new execution and no actual/private inputs read.",
+  "source_pins": {
+    "README.md": "c562ed10f3b6c81fb60152118fbb932ea45f6f33033fe9d4a451e6fbddb9c4e3",
+    "contract.json": "8b1f1b43fd5cf780a258b91bd346c6fef2d4cf4e1ee2af0cb3ef192092f32c49",
+    "recorded_labels.py": "13f1f4ee41947eff4b47faaa0a3463af96363fbc8c09d6a9d398d76d78f9d647"
+  },
+  "status": "PASS_BINDING_CHECK"
+}

@@ -1,0 +1,15 @@
+{
+  "candidate_imported": false,
+  "files": {
+    "generated_zip.py": {
+      "bytes": 4316,
+      "sha256": "1b58a6857ee48934dd750ba024703f11e1fbd4cb3015e50c47245d04269ae263"
+    },
+    "synthetic_repository.py": {
+      "bytes": 1517,
+      "sha256": "1f9ba9eacf45c7e26e2310000600c5731f130db63efdd472d7ee3190f090b047"
+    }
+  },
+  "git_fixture_executed": false,
+  "written_at": "2026-10-16T12:14:11.089253+00:00"
+}

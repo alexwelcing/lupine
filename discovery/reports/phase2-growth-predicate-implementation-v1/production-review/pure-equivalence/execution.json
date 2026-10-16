@@ -1,0 +1,25 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-B",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-predicate-production-review-v1/check_pure_equivalence.py",
+    "70a0339212b971bf7824ae256600b959ae7a7d22b6fc8853eb2208d3c8ece207"
+  ],
+  "elapsed_seconds": 0.8143419279986119,
+  "finished_at": "2026-10-16T12:23:57.548216+00:00",
+  "returncode": 0,
+  "scope": "Generated pure APIs only; no actual source or production guard",
+  "script": {
+    "bytes": 4681,
+    "sha256": "f33b58668491c4fd159dfcffa3de70348231fa818555f33a545e9e7c24ddd45b"
+  },
+  "started_at": "2026-10-16T12:23:56.733661+00:00",
+  "stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 16055,
+    "sha256": "4e40cbbe6144e75131ce2774c936f79a2a847bc1aea647b7fc102cace6b1e598"
+  }
+}

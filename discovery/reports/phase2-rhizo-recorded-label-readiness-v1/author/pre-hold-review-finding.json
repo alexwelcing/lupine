@@ -1,0 +1,9 @@
+{
+  "actual_private_object_reads": 0,
+  "finding": "A selected-position helper can fail after partial interpretation before returning, so completed materialization flags alone can understate partial work. Also max_properties means the properties record-list length.",
+  "first_author_result": "30/30 PASS with added challenge; no executed failure preceded this source hold.",
+  "resolution": "Added selected_historical_labels_materialization_started before inspecting any nonempty selected record set. Existing materialized flag counts completed positions; README states distinction and property-list cap. Author fixture injects failure on second selected numeric field and verifies started true/completed false/private null/closed failure.",
+  "reviewer": "/root/phase2_planner",
+  "scope_changed": false,
+  "stage": "Moving source before first test execution"
+}

@@ -1,0 +1,1 @@
+{"status": "PASS_PUBLIC_RECEIPT_CONSISTENCY", "public_sha256": "b444e7d33cb18619942c2dfbb5cd3374fd9cd9adee6732825ce20ed431641a33", "positions": 144, "objects": 36, "scientific_status": "NOT_ADMITTED", "actual_reference_choice": "UNKNOWN", "review_sha256": "592ee1a2f1effc36153da79e5d4584d6ab545b3c2770f29abf121d1f7ac99b50"}

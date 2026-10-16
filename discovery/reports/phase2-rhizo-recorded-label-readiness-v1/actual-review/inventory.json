@@ -1,0 +1,29 @@
+{
+  "files": {
+    "README.md": {
+      "bytes": 2240,
+      "sha256": "7f9fb5b250449cac260f08b9eade610981ef0cfb57e6fb0b3eadd9b1fccf8c62"
+    },
+    "first-stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "first-stdout.txt": {
+      "bytes": 324,
+      "sha256": "b72daf9b0066ce915274333f6758e418045c2d733c156d4da0ec800e2aead10b"
+    },
+    "review.json": {
+      "bytes": 5270,
+      "sha256": "592ee1a2f1effc36153da79e5d4584d6ab545b3c2770f29abf121d1f7ac99b50"
+    },
+    "review_public_receipt.py": {
+      "bytes": 11404,
+      "sha256": "0c9071ffe87bc7e12a16a71f5e5699d38fc9424f70ba259f9d19a1958b846520"
+    },
+    "source-pin-addendum.json": {
+      "bytes": 381,
+      "sha256": "085718cfb36d3ccd719e29096296e4bd259be6c6ec99527f0367302d9298640f"
+    }
+  },
+  "scope": "Static public-receipt review evidence; inventory and handoff excluded from own closure."
+}

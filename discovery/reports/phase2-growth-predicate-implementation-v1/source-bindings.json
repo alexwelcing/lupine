@@ -1,0 +1,95 @@
+{
+  "schema": "lupine.growth_predicate.publication_sources.v1",
+  "created_at": "2026-10-16T12:31:27.105556+00:00",
+  "bundles": [
+    {
+      "role": "pure-author",
+      "original_root": ".cache/phase2-growth-predicate-candidate-v1",
+      "original_inventory": {
+        "path": ".cache/phase2-growth-predicate-candidate-v1/inventory.json",
+        "bytes": 10749,
+        "sha256": "45677b37d4609808b334c403dc18207c17a3ef6cad0c427a749a86a4c9865e84"
+      },
+      "original_handoff": {
+        "path": ".cache/phase2-growth-predicate-candidate-v1/handoff.json",
+        "bytes": 859,
+        "sha256": "0214b1bb3e1bab73b402f52e7a933298cc81f2c948995912e21c405e61250436"
+      },
+      "inventory_listed_files": 69,
+      "additive_metadata_allowlist": [
+        "inventory.json",
+        "handoff.json"
+      ],
+      "published_originals": 71
+    },
+    {
+      "role": "pure-review",
+      "original_root": ".cache/phase2-growth-predicate-review-v1",
+      "original_inventory": {
+        "path": ".cache/phase2-growth-predicate-review-v1/inventory.json",
+        "bytes": 8610,
+        "sha256": "391690a2fd2e19f9078cd8873eba78cb9a8e346281e8191bbc209edd7bf2ba38"
+      },
+      "original_handoff": {
+        "path": ".cache/phase2-growth-predicate-review-v1/handoff.json",
+        "bytes": 938,
+        "sha256": "cdb1fb1d517571cfafa459a14a5b144f424ee72aa4e4723038b98c0b8887fd48"
+      },
+      "inventory_listed_files": 58,
+      "additive_metadata_allowlist": [
+        "inventory.json",
+        "handoff.json"
+      ],
+      "published_originals": 60
+    },
+    {
+      "role": "production-author",
+      "original_root": ".cache/phase2-growth-predicate-production-v1",
+      "original_inventory": {
+        "path": ".cache/phase2-growth-predicate-production-v1/inventory.json",
+        "bytes": 8294,
+        "sha256": "2057faa637ed0dc117123e714690556e7d6b1711018f918be1b9e262ef6710bb"
+      },
+      "original_handoff": {
+        "path": ".cache/phase2-growth-predicate-production-v1/handoff.json",
+        "bytes": 1922,
+        "sha256": "98b1ba281edae5f5aea16d66307de425df5561ae029643072c0a6d4e3d10892d"
+      },
+      "inventory_listed_files": 52,
+      "additive_metadata_allowlist": [
+        "inventory.json",
+        "handoff.json"
+      ],
+      "published_originals": 54
+    },
+    {
+      "role": "production-review",
+      "original_root": ".cache/phase2-growth-predicate-production-review-v1",
+      "original_inventory": {
+        "path": ".cache/phase2-growth-predicate-production-review-v1/inventory.json",
+        "bytes": 6386,
+        "sha256": "d6e9892e7740bc35ef31df8673cd6d463d0390a009d88222897b0218751e89bd"
+      },
+      "original_handoff": {
+        "path": ".cache/phase2-growth-predicate-production-review-v1/handoff.json",
+        "bytes": 1158,
+        "sha256": "89433695522d59723db7ded94ff0697320c560312e61d5fb906816e237e039db"
+      },
+      "inventory_listed_files": 43,
+      "additive_metadata_allowlist": [
+        "inventory.json",
+        "handoff.json"
+      ],
+      "published_originals": 45
+    }
+  ],
+  "exclusions": [
+    "all files not expressly listed in a final source inventory or the two named inventory/handoff files",
+    "__pycache__",
+    "generated temporary repositories",
+    "actual scientific source/capture/object/private projections",
+    "root-owned integration/CI/package/actual-operation evidence"
+  ],
+  "original_bundle_mutations": false,
+  "actual_source_operations": 0
+}

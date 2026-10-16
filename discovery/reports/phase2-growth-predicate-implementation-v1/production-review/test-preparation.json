@@ -1,0 +1,8 @@
+{
+  "bytes": 25816,
+  "candidate_executions": 0,
+  "methods": 16,
+  "sha256": "8d9b9aa03c24bf69c11d4de33147bbbeceab4a839d74deed82a312cb089139d9",
+  "validation": "AST syntax only; no candidate import/execution",
+  "written_at": "2026-10-16T12:19:43.382650+00:00"
+}

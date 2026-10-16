@@ -1,0 +1,19 @@
+{
+  "reviewed_at": "2026-10-16T12:26:35.230083+00:00",
+  "reviewer": "root",
+  "scope": "All final production source and complete contract read; integration remains conditional on final independent handoff. No original Li source/cache or production guards invoked.",
+  "files": {
+    ".cache/phase2-growth-predicate-production-v1/promotion/scripts/li_v3_growth_predicate_audit.py": "70a0339212b971bf7824ae256600b959ae7a7d22b6fc8853eb2208d3c8ece207",
+    ".cache/phase2-growth-predicate-production-v1/promotion/docs/li-v3-growth-predicate-audit-plan.md": "a1a7d8fe820ddcd8d3479d53e4f35d5ce0ed6e123385bcbb1b646786e1d064d9",
+    ".cache/phase2-growth-predicate-production-v1/scope.json": "ca1bcb377069e3ef9879dcc106c17df3846e94bd8f52d4bffb56de8cdfa74949"
+  },
+  "findings": [],
+  "checks": [
+    "Ordered first-rejection and independent aggregate paths preserve explicit unsafe dependencies.",
+    "Same-buffer predecessor reproduction gates aggregate; no member or XML entry.",
+    "Exact prerequisite producer/hash, unchanged source chain, worktree/index/HEAD bindings, fixed capture and source identities precede actual inspection.",
+    "Exclusive slots and partial-operation exposure preserved; guard failures do not become scientific passes.",
+    "Selected-growth closed error retention correction changes reporting without broadening acceptance."
+  ],
+  "science": "Scientific BLOCKED_SCHEMA persists; hashes and generated passes do not establish archive admission or physical validity."
+}

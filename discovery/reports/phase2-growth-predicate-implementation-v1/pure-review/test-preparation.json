@@ -1,0 +1,7 @@
+{
+  "candidate_executions": 0,
+  "created_at": "2026-10-16T11:56:45.078249+00:00",
+  "test_bytes": 14680,
+  "test_sha256": "0a49770eb4adca265fb2437d4b6101e974982011420a8936febee005e995b8a8",
+  "validation": "AST syntax parse only; candidate not imported"
+}

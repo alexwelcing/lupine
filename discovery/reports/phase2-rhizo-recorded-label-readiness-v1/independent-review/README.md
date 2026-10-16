@@ -1,0 +1,13 @@
+# Independent stored-label candidate review
+
+The held candidate passed 19 independent generated test methods on the third invocation, in 1.860 seconds of unittest time and 2.333465692 seconds of process time. Source `13f1f4ee` and all 332 runtime files held throughout every invocation. The independently written test file remained byte-identical across all three runs.
+
+Two reviewer-harness failures are retained. The first stopped before tests because importlib attempted a bytecode-cache read outside the allowed source path. The loader was changed to compile the held source bytes directly. The second ran 19 methods but recorded nine failures in temporary-directory cleanup: the audit hook interpreted dir_fd-relative names against project cwd. Changing only the runner cwd to its owned review directory resolved that bookkeeping error without widening checks. Neither failure is represented as a candidate pass; all original logs, snapshots and corrections remain available.
+
+The challenge plan preceded implementation/results. Checks cover the full 36-ID / 144-position / 172-edge frame, 20 fixed exact-number cases, signed zero and negative tolerances, absent/invalid/ambiguous records, strict parsing, private-value redaction, partial exposure, source identities, one-shot outputs and fixture guard failures. Exact large parser boundaries use generated direct-parser calls; property-list/output failure cases explicitly use lowered synthetic caps.
+
+Source review prompted one pre-hold exposure improvement: the author added a materialization-start flag before inspecting selected records. The injected partial-position failure now retains started work while keeping completed counts at zero and returning no private projection. The contract’s 512 bound is clarified as the property-record list length. The final source preserves closed classifications and exact tokens without float conversion, reference matching or source choice.
+
+No actual retained object or private projection was read. No upstream module, production guard, production entrypoint or network operation was executed. The production wrapper was reviewed statically; tests use only generated files and fixture guards. The audit hook is a controlled-workflow check, not a hostile-code security boundary. This is evidence about implementation and recorded-label completeness only: all outcomes remain **NOT_ADMITTED**, with reference choice **UNKNOWN**.
+
+See `review.json`, `static-source-check.json`, the three run directories and both harness-correction records. Root owns any later actual manifest/invocation, publication inclusion and scientific interpretation.

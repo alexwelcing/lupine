@@ -1,0 +1,10 @@
+{
+  "change": "Respect fp=None and assert empty captured stderr. No diagnostic assertion relaxed.",
+  "classification": "Reviewer close-stub incompatibility with the already-closed fp=None state; preserved 25-pass run had destructor stderr. Product source unchanged.",
+  "diff": "--- second-run/test_growth_predicate_review.py\n+++ test_growth_predicate_review.py\n@@ -1,7 +1,8 @@\n \"\"\"Independent generated ZIP checks. Never invokes a production reader/guard.\"\"\"\n-from contextlib import ExitStack\n+from contextlib import ExitStack, redirect_stderr\n from copy import deepcopy\n import importlib.util\n+import io\n import json\n import os\n from pathlib import Path\n@@ -318,9 +319,13 @@\n     def test_archive_cleanup_error_keeps_primary_and_prevents_completion(self):\n         raw,_=pack(baseline())\n         def failed_close(archive):\n+            if archive.fp is None:\n+                return\n             raise RuntimeError('PRIVATE_EXCEPTION_CANARY_DO_NOT_PRINT')\n-        with patch.object(zipfile.ZipFile,'close',failed_close):\n+        stderr=io.StringIO()\n+        with redirect_stderr(stderr), patch.object(zipfile.ZipFile,'close',failed_close):\n             result=self.inspect(raw)\n+        self.assertEqual(stderr.getvalue(),'')\n         self.assertEqual(result['first_rejection']['category'],'HEADER_PROFILE_ACCEPTED')\n         self.assertIs(result['exposure']['archive_close_started'],True)\n         self.assertIs(result['exposure']['archive_close_completed'],False)\n",
+  "final_test_sha256": "b8fbd5476551a6201e7d21b95465c8960694c910dc482bb5c3e2d8f5e4e4d143",
+  "prior_execution": "second-run/execution.json",
+  "prior_source_snapshot": "second-run/test_growth_predicate_review.py",
+  "prior_test_sha256": "2b1f6888590fcb872778a11083b5df95d7df931135f01c16fc29314ae3779994",
+  "written_at": "2026-10-16T12:03:11.184168+00:00"
+}

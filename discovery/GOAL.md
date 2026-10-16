@@ -86,19 +86,30 @@ previously unused source with paired outcomes and credible study grouping.
 | G30 | Check selected growth-hint shape without admitting an archive or interpreting measurements | DONE at `c17c4c6`; BLOCKED_SCHEMA preserved | [Verified source and actual pair](reports/phase2-growth-verification-v1/README.md): original four-job CI, clean package and independent artifacts pass; two identical GROWTH_HINT_SHAPE_MATCH receipts, 332 runtime files held. Initial-padding semantics and archive acceptance remain unbound. |
 | G31 | Separate all-entry local-growth envelope profile with unchanged scientific schema block | DONE at `c17c4c6`; BLOCKED_LAYOUT preserved | [Actual pair](reports/phase2-growth-verification-v1/README.md) returns identical ZIP_LAYOUT_UNSUPPORTED, after three completed local-extra areas and before decompression/XML. No archive acceptance or worksheet schema established; the exact failed predicate is unresolved. Root preserves the block and reviews a separate bounded diagnostic before any new operation. |
 | G32 | Pure documentary-role layout projection with bounded storage coordinates, types and merge declarations | PREPARED / actual binding blocked on envelope | [Generated candidate and independent review](reports/phase2-documentary-layout-preparation-v1/README.md): 33 author/27 independent tests pass; namespace strengthening and original failures retained. No runtime promotion or actual worksheet access. |
-| G33 | Bounded Rhizo declared-reference provenance and historical recorded-label readiness | DOCUMENTARY PASS COMPLETE / labels unresolved | [One actual projection and documentary review](reports/phase2-rhizo-reference-readiness-v1/README.md) preserve 43 locations, 36 IDs and 172 links. All selected notes exposed outcomes; no fresh holdout or benchmark admission. The minimum next scope is 36 stored bound records, with no reference-choice reconstruction. |
-| G34 | One categorical all-entry Li header diagnostic with exact first-rejection preservation and explicit unchecked dependencies | IN PROGRESS / generated data only | Root owns integration; growth_predicate_diagnostic authors and phase2_math independently challenges the candidate under the [published scope](reports/phase2-growth-header-next-scope-v1/README.md). No actual operation, acceptance change or XML access. |
+| G33 | Bounded Rhizo declared-reference provenance and historical recorded-label readiness | COMPLETE for fixed stored fields; NOT_ADMITTED | [One 36-object inspection](reports/phase2-rhizo-recorded-label-readiness-v1/README.md) confirms all 144 stored prediction/reference pairs are exact numeric fields with matching literal units; all tolerances are NULL. The source is exposed; historical reference choice and physical validity remain UNKNOWN. No performance comparison or fresh screening claim. |
+| G34 | One categorical all-entry Li header diagnostic with exact first-rejection preservation and explicit unchecked dependencies | INTEGRATED / release verification pending | [Reviewed implementation](reports/phase2-growth-predicate-implementation-v1/ROOT-CHECKPOINT.md) passes 418 combined generated Li tests; all 332 prior runtime files are unchanged. Root verifies exact remote CI, clean packaging and independent artifacts before fixed actual runs. No archive-acceptance change or XML access. |
 
-Current owner/checkpoint: root publishes the completed Rhizo provenance result
-and verifies the exact remote commit and CI. Parent report commits `280dff57`
-and `3139e1e` both passed all four original CI jobs. The Rhizo reader passed
-26 author and 13 independent generated tests after a preserved exposure-flag
-failure; its single actual operation completed with all 332 runtime files held.
-Root selected a separate minimum 36-object stored-label completeness check for
-data-free preparation by finite_inverse_check. Original reference choice stays
-UNKNOWN and no follow-on object access has run. The Li all-entry diagnostic
-proceeds independently on generated fixtures. Neither route completes G21,
-establishes physical truth or supports fresh predictive superiority.
+Parent report `9766b683` passed all four original push jobs in CI 38898365063,
+observed at 12:30:24 UTC.
+
+Current owner/checkpoint: root publishes the completed stored-label readiness
+and G34 implementation, then verifies exact remote CI, clean packaging and
+independent artifacts before its fixed actual Li diagnostic. The Rhizo reader
+passed 30 author and 19 independent generated tests; its one actual read at
+12:16:28 UTC completed all 144 positions across 36 objects with all 332 runtime
+files held. The public-receipt review passes. Reference-choice attribution,
+physical accuracy and uncertainty remain separate unresolved questions; NULL
+tolerances are not zero uncertainty. No numeric error census was computed.
+
+G34 has 22 author/26 independent pure tests, three detected mutation controls,
+42 author/17 independent production tests, and 136 author/86 independent whole
+report comparisons. The combined integrated Li run passes 418 tests with 335
+runtime files held. Original dependency, fixture, cleanup and closed-reason
+failures remain visible. These are software checks, not independent scientific
+observations. Prioritize a complete bounded Li source-readiness decision; another
+Rhizo numeric census is secondary and cannot substitute for G21. No new fit,
+allocation or scientific threshold has been selected. Neither route establishes
+physical truth or supports fresh predictive superiority.
 
 The prospective planning probe is intentionally hypothetical. An IID score
 distribution permits exact prospective threshold arithmetic; it is

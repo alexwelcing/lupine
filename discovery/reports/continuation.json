@@ -14,7 +14,7 @@
   "default_timezone": "America/New_York",
   "next_run_time_returned_at_creation": null,
   "last_run_time_returned_at_creation": null,
-  "execution_status": "ACTIVE_RENEWED_PHASE: parent3139e1e passes all four original CI jobs. Rhizo documentary projection completed; scientific admission and stored-label readiness unresolved. Root publishes evidence while two generated-data candidates proceed. Expired automation remains disabled.",
+  "execution_status": "ACTIVE_RENEWED_PHASE: Rhizo stored-label completeness resolved for144fixedpairs; G34integrated418testsPASS, exact release gates pending before actualLi diagnostic. Scientific admission unresolved. Expired automation remains disabled.",
   "notification_policy": "Substantive daily milestone summary, actionable blocker, or final release decision; suppress unchanged status.",
   "scope": "Resume latest GitHub goal and implement the next bounded increment with available tools, testing and recording actual outcomes.",
   "limits": "Scheduling success does not prove future tool availability, a completed build, or uninterrupted execution. Check and record each run. Do not silently extend the bounded schedule.",
@@ -38,14 +38,14 @@
     "continuous_worker_started": false
   },
   "current_checkpoint": {
-    "recorded_at": "2026-10-16T11:57:59.429607+00:00",
-    "owner": "Root publication and source-scope decisions; finite_inverse_check stored-label candidate; growth_predicate_diagnostic author and phase2_math independent review",
+    "recorded_at": "2026-10-16T12:30:12.578383+00:00",
+    "owner": "root publication/release/actual operation; independent source and artifact reviewers",
     "goal_state": "ACTIVE_RENEWED_PHASE",
-    "published_commit": "3139e1ea7bdf4b78e3e70502f2c299ba3c1efea3",
-    "published_ci_run": 38894146804,
+    "published_commit": "9766b6838388c35a92d32b1a60e65613c72b3fee",
+    "published_ci_run": 38898365063,
     "published_ci_all_four_jobs_pass": true,
-    "published_evidence": "reports/phase2-rhizo-reference-readiness-v1/previous-report-ci.json",
-    "working_checkpoint": "One Rhizo reference projection completed; 43 locations / 36 IDs / 172 links preserved; actual notes expose numerical outcomes. Stored-label completeness and reference choice unresolved; no performance comparison. Both prior report commits pass all four original CI jobs.",
+    "published_evidence": "reports/phase2-growth-predicate-implementation-v1/previous-report-ci.json",
+    "working_checkpoint": "One actual36-object stored-label pass completed144positions, all tolerancesNULL; public reviewPASS. G34fourfiles integrated418combinedtestsPASS/runtime335/all332oldunchanged. No actualG34 operation.",
     "actual_new_scientific_allocation_performed": false,
     "scientific_usefulness": "NO_GO unchanged; no new scientific experiment",
     "clean_package": {
@@ -96,7 +96,7 @@
       "notebook_code_executed": false,
       "output_values_disclosed": false
     },
-    "next_action": "Publish Rhizo provenance increment and verify its exact remote/CI. Finish independent generated tests for minimum36 stored-label readiness and comprehensive Li categorical header diagnostic before any new actual operation.",
+    "next_action": "Verify new exact remote CI, clean package and independent artifacts; perform fixed actualG34diagnostic only after gates. Complete boundedLi readiness decision. No numericRhizocensus/model/fit/allocation selected.",
     "automation_reenabled": false,
     "new_schedule_created": false,
     "continuous_worker_started": false,
@@ -202,7 +202,7 @@
       "reason": "LOCAL_EXTRA_HEADERS_COMPLETE",
       "scientific_schema_approved": false
     },
-    "published_ci_status": "PASS_ORIGINAL_PUSH_ATTEMPT_1_ALL_FOUR",
+    "published_ci_status": "PASS_ORIGINAL_PUSH_ATTEMPT_1_ALL_FOUR_OBSERVED_2026-10-16T12:30:24.036933+00:00",
     "citation_identity": {
       "status": "DOCUMENTARY_AUDIT_COMPLETE_UNRESOLVED_IDENTITIES",
       "report": "reports/phase2-li-reference-identity-v1/PUBLICATION.md",
@@ -307,6 +307,40 @@
       "accepted_profile_changed": false,
       "actual_invocation": false,
       "xml_access": false
+    },
+    "recorded_labels": {
+      "status": "COMPLETE_STORED_LABEL_READINESS_NOT_ADMITTED",
+      "report": "reports/phase2-rhizo-recorded-label-readiness-v1/README.md",
+      "objects": 36,
+      "bytes": 126885,
+      "positions": 144,
+      "complete_pairs": 144,
+      "null_tolerances": 144,
+      "author_tests_pass": 30,
+      "independent_tests_pass": 19,
+      "actual_operations": 1,
+      "public_sha256": "b444e7d33cb18619942c2dfbb5cd3374fd9cd9adee6732825ce20ed431641a33",
+      "actual_reference_choice": "UNKNOWN",
+      "private_numeric_projection_written": true,
+      "private_numeric_projection_researcher_inspection_claimed": false,
+      "numeric_comparisons": 0
+    },
+    "growth_predicate_audit": {
+      "status": "INTEGRATED_RELEASE_GATES_PENDING",
+      "report": "reports/phase2-growth-predicate-implementation-v1/ROOT-CHECKPOINT.md",
+      "source_sha256": "70a0339212b971bf7824ae256600b959ae7a7d22b6fc8853eb2208d3c8ece207",
+      "pure_author_tests": 22,
+      "pure_independent_tests": 26,
+      "mutation_controls_detected": 3,
+      "production_author_tests": 42,
+      "production_independent_tests": 17,
+      "author_complete_report_comparisons": 136,
+      "independent_complete_report_comparisons": 86,
+      "combined_li_tests": 418,
+      "runtime_files": 335,
+      "old_runtime_files_unchanged": 332,
+      "actual_operations": 0,
+      "archive_acceptance_changed": false
     }
   },
   "closure": {

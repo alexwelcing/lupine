@@ -1,0 +1,18 @@
+{
+  "classify_change_only_default_false_production_gate": true,
+  "final_source_change_exactly_two_line_closed_reason_preservation": true,
+  "final_source_diff": "--- first-held-source\n+++ final-held-source\n@@ -634,8 +634,8 @@\n     try:\n         G31._selected_growth(raw, prior)\n         report['first_rejection'] = _classify(raw, report, require_observed_predecessor=True)\n-    except (G31.CustodyError, G31.GrowthEnvelopeError):\n-        report['first_rejection'] = _result('SELECTED_GROWTH_PREREQUISITE', 'selected_growth', 'GROWTH_PREDECESSOR_BLOCKED')\n+    except (G31.CustodyError, G31.GrowthEnvelopeError) as error:\n+        report['first_rejection'] = _result('SELECTED_GROWTH_PREREQUISITE', 'selected_growth', str(error))\n     finally:\n         report['selected_growth'] = prior['selected_growth_check']\n         report['selected_growth_exposure'] = prior['exposure']['selected_growth']\n",
+  "g31_four_pins_match": {
+    "docs/li-v3-growth-envelope-plan.md": true,
+    "scripts/li_v3_growth_envelope.py": true,
+    "tests/test_li_v3_growth_envelope.py": true,
+    "tests/test_li_v3_growth_envelope_review.py": true
+  },
+  "pure_function_ast_changes": [
+    "_classify"
+  ],
+  "schema": "lupine.growth_predicate.production_static_audit.v1",
+  "scope": "AST/source bytes only; no module imports, production guards or actual source data",
+  "source_sha256": "70a0339212b971bf7824ae256600b959ae7a7d22b6fc8853eb2208d3c8ece207",
+  "written_at": "2026-10-16T12:24:39.683500+00:00"
+}

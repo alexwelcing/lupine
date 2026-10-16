@@ -1,0 +1,8 @@
+{
+  "basis": "Root-authorized prospective tightening: wrong outer A220 identity stops semantic payload interpretation; safe outer header scalar checks remain",
+  "candidate_rerun": false,
+  "first_failure_tests_unchanged": true,
+  "method_count": 25,
+  "sha256": "2b1f6888590fcb872778a11083b5df95d7df931135f01c16fc29314ae3779994",
+  "written_at": "2026-10-16T12:01:35.977987+00:00"
+}

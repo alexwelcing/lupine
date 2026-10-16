@@ -1,0 +1,29 @@
+{
+  "schema": "lupine.growth_predicate.publication_handoff.v1",
+  "created_at": "2026-10-16T12:31:27.105556+00:00",
+  "copy_root": ".cache/phase2-growth-predicate-publication-v1/promotion/reports/phase2-growth-predicate-implementation-v1",
+  "report_target": "reports/phase2-growth-predicate-implementation-v1/",
+  "inventory_path": ".cache/phase2-growth-predicate-publication-v1/inventory.json",
+  "inventory_sha256": "90d957737c87cc7c36e82bbad3d3fd000afa3f3f040b451371aeaca07717abc6",
+  "file_count": 236,
+  "total_bytes": 2590609,
+  "source_artifacts": 230,
+  "exact_source_copies": 229,
+  "wrapper_count": 1,
+  "navigation_links": 22,
+  "runtime_promotion": "Root separately owns four files from production-author/promotion-map.json; no tracked writes here.",
+  "confirmed_counts": {
+    "pure_author_methods": 22,
+    "pure_independent_methods": 26,
+    "mutation_controls_killed": 3,
+    "production_author_methods": 42,
+    "production_independent_methods": 17,
+    "author_full_report_comparisons": 136,
+    "author_generated_fixtures": 68,
+    "independent_full_report_comparisons": 86,
+    "independent_generated_fixtures": 43
+  },
+  "claims": "Generated engineering evidence only; no actual invocation, source admission, new benchmark or physical evidence.",
+  "source_bundles_held": true,
+  "no_new_review_hierarchy": true
+}
