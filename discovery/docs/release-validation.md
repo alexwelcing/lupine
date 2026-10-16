@@ -653,3 +653,26 @@ roles under two unselected codec hypotheses. It does not supply a joint-risk
 uncertainty model, independent units or a blind discovery benchmark. Historical
 preview GO and physical/general-superiority NO-GO remain unchanged. G20 is
 unresolved and G21 blocked; no new scientific allocation or fit occurred.
+
+## October 16: actual growth readers and metrology scope
+
+[Exact c17c4c6 verification](../reports/phase2-growth-verification-v1/README.md)
+has all four original CI jobs, clean 28-case/six-schema/16-check installed
+package, strict retained verification and independent source/wheel audits.
+Two actual selected-shape receipts match; two whole-envelope receipts remain
+BLOCKED_LAYOUT / ZIP_LAYOUT_UNSUPPORTED before any decompression/XML. The
+independent actual-receipt checker first failed on an obsolete field reference;
+the independently reviewed correction passes 19,246 runtime check calls, with
+the original failure preserved and no source operation rerun. This is not an
+archive-admission or scientific pass. Later report-only commits need their own
+CI observations. All historical claim tiers remain unchanged.
+
+The three-test BAM workbook is permanently exposed and excluded from fresh blind
+predictive benchmarking. It provides documentary pairing and endpoint/missingness
+information, without an admitted joint uncertainty model or independent physical
+sampling frame. Reviewed metrology mathematics and NIST guidance explain missing
+premises; neither validates the data or a selector. Uniform fixed-size finite
+archive-label sampling does not require independence among fixed labels, but
+frame, semantics, missingness, exposure and cost still need justification. The
+pure documentary-layout candidate is generated-test preparation only, outside
+the runtime and unbound to actual worksheets. G20 remains unresolved/G21 blocked.

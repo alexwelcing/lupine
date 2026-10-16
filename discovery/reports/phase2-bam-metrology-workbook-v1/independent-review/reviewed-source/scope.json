@@ -1,0 +1,97 @@
+{
+  "schema": "lupine.bam-exposed-metrology-workbook-scope.v1",
+  "frozen_at": "2026-10-16T10:25:40.867625+00:00",
+  "owner": "/root/phase2_evidence",
+  "purpose": "EXPOSED_METROLOGY_REFERENCE_ONLY: inspect actual endpoint/unit/proof-strain labels, pairing identifiers, uncertainty definitions/coverage factors and shared-error provenance in the one selected-results workbook. No ranker, fit or scientific benchmark.",
+  "authorization": "Root explicitly authorizes one pinned acquisition and whole-workbook machine/researcher measurement exposure after independent scope/source review. This workbook and its derivatives are permanently exposed and excluded from any new blind predictive benchmark.",
+  "source_identity": {
+    "record_doi": "10.5281/zenodo.17846617",
+    "concept_doi": "10.5281/zenodo.17846616",
+    "version": "1.0",
+    "filename": "2025-12_HT-Tensile-reference-data-CMSX-6_v1.0.xlsx",
+    "file_id": "097e288f-1eb7-4ce5-8eb8-653b2b1fffe2",
+    "bytes": 54960,
+    "md5": "e85ef58139a68592f36452de195a0a10",
+    "url": "https://zenodo.org/api/records/17846617/files/2025-12_HT-Tensile-reference-data-CMSX-6_v1.0.xlsx/content",
+    "observed_sha256": null,
+    "metadata_identity_check_passed": true
+  },
+  "license": "Record declares CC BY4.0. No blanket license transfer to linked/cited sources; embedded workbook notices must be reported if encountered.",
+  "transport": {
+    "method": "GET",
+    "maximum_requests": 1,
+    "retry": false,
+    "redirects": "reject",
+    "credentials": false,
+    "maximum_bytes_read": 54961,
+    "timeout_seconds": 30,
+    "content_encoding": "identity only",
+    "mirrors_alternatives_secondary_requests": false,
+    "body_identity_required_before_zip_parse": true,
+    "durable_request_slot": "Exclusive request-slot.json is written and fsynced with its directory before opener.open. Any existing slot blocks another invocation, even when interruption prevents an acquisition receipt. Reservation alone does not establish a completed or attempted request."
+  },
+  "exposure": "Whole raw workbook, ZIP member names, admitted XML text, shared strings, visible and hidden worksheet cells, formula text/cached values and ordinary comments may be machine/researcher exposed, including actual measurements, arbitrary examples and potential contact/author information. This is permanent exposed-reference work, never fresh test evidence. Contacts and raw workbook/full-cell projection must not be published.",
+  "reader_profile": {
+    "zip": "In-memory only, no extraction. Source raw cap54960;1..128members; stored/deflated only; no encrypted entries, duplicate names, path traversal, symlinks or special files. Each uncompressed member<=2MiB and sum<=8MiB; compressed sizes/offsets bounded by source. zipfile validates opened local structure and CRC; no universal ZIP conformance claim.",
+    "active_content": "Reject macro-enabled workbook content types, VBA/macrosheet/ActiveX/embedding names or types. Never execute formulas, macros, code, spreadsheet applications or links. External relationship targets are metadata only, never requested.",
+    "xml": "Only admitted workbook/relationship/style/shared-string/worksheet/comment parts. Strict UTF8(with optional BOM); declared other encodings block. Reject decoded NUL (including NUL-separated UTF16/32 masquerading as UTF8), DOCTYPE and ENTITY before parsing. Incremental XML parsing bounds100000nodes/part and depth64; no external entity resolution. Part reads are capped at2MiB+1; total<=8MiB. Reject malformed/unsupported layout rather than guessing.",
+    "xlsx": "Transitional OOXML namespaces; root xl/workbook.xml and declared ordinary XLSX/worksheet content types. At most32distinct worksheets,25000cells,50000shared strings,4096styles,65536characters per text/formula. No normalization, category fill-down or merged-cell duplication. Blank/hidden states, merges and original references are preserved. This is not a full OOXML schema validator. Admitted direct/rich text rejects duplicate text components, mixed direct/run text and nested text; non-inline cells reject inline-string components, and v/f scalars reject nested elements.",
+    "cell_values": "Retain literal type, coordinate, raw v, shared/inline-string text, style index and custom format codes. Preserve formula text/attributes separately; any stored v beside formula is an unverified cached result. Never evaluate formulas, render formats, convert dates/numbers, select units or infer measurements from styles. Builtin format IDs have no inferred display code.",
+    "comments": "Ordinary comments may be read via worksheet relationships; author names are not projected. Full comment XML machine exposure remains declared. Threaded-comment/other unsupported components are not interpreted.",
+    "unread_parts": "Theme, images, printer settings, arbitrary custom metadata and unsupported parts are not opened. Their existence does not prove irrelevant semantics; absence of claims about them must be preserved."
+  },
+  "outputs": {
+    "public": "Closed acquisition/parse status, hashes, stage exposure counts and workbook structure counts; subsequent own paraphrase with necessary factual labels/measurements and exact sheet/cell citations. These counts are document/cell counts, not independent sample counts.",
+    "ignored_only": [
+      "workbook.xlsx",
+      "internal-workbook-projection.json",
+      "any raw contact roster or full text export"
+    ],
+    "partial_failures": "Retain first request/identity/ZIP/XML/profile failure and truthful started/completed counters. No retry, alternate object, parser fallback or profile widening follows automatically."
+  },
+  "frozen_inputs": [
+    {
+      "path": "reports/phase2-bam-readiness-v1/zenodo-17846617.json",
+      "bytes": 14771,
+      "sha256": "48f84c7d6fc841a13de8ecccbba5f0604834cec45c3033d0d55bfd7a2e89f4d6"
+    },
+    {
+      "path": ".cache/phase2-bam-metrology-workbook-v1/metadata-identity-check.json",
+      "bytes": 1017,
+      "sha256": "72d1e8d4c8d07cace36732489854bbd203aed3af26f1945aa05a263d9d01158a"
+    },
+    {
+      "path": ".cache/phase2-bam-metrology-workbook-v1/workbook_reader.py",
+      "bytes": 14884,
+      "sha256": "d56939ba593414fbf751b5eab59d4ae5ab556513ce8b3108b4dc7305c8bef25c"
+    },
+    {
+      "path": ".cache/phase2-bam-metrology-workbook-v1/acquire_and_inspect.py",
+      "bytes": 6453,
+      "sha256": "b9b726c7627b26938a91277b9b0e1f177aa001730c5ae503d7cd0d48b9011a56"
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/promotion-inventory.json",
+      "bytes": 6321,
+      "sha256": "6b33f728fb0db536d1b6330ac779687440aebf7f5075f524238a34a46d5059f4"
+    },
+    {
+      "path": ".cache/phase2-bam-encoding-comparison-v1/promotion-inventory.json",
+      "bytes": 6855,
+      "sha256": "a324343c4a9836741adc8feccde0ecaa30cf56ec7c6f64ed27b00ecfc0ef352c"
+    }
+  ],
+  "independent_review": "Child must inspect held scope/source and meaningful malformed synthetic fixtures before acquisition. One actual acquisition/reader invocation afterward; independent audit reads retained result/projection without anotherGET. Record all actual reviewer access truthfully.",
+  "not_authorized": [
+    "LIS",
+    "figures/images",
+    "schemaXLSXalternative",
+    "linked standards/certificates",
+    "secondary source request",
+    "model or fit",
+    "eligibility or calibration selection",
+    "allocation/threshold changes",
+    "scientific benchmark protocol or admission",
+    "tracked edits or Git mutation"
+  ]
+}

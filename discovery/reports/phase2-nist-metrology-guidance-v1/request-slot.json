@@ -1,0 +1,8 @@
+{
+  "schema": "lupine.nist-guidance-reservation.v1",
+  "reserved_at": "2026-10-16T10:53:39.298103+00:00",
+  "scope_sha256": "aca351abbc6bbf5538e4bf48b220026d81f60efe7969454d23f50621cbd456d7",
+  "maximum_requests": 2,
+  "reservation_does_not_prove_attempt": true,
+  "retry_allowed": false
+}

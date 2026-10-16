@@ -1,0 +1,74 @@
+{
+  "actual_source_operations": 0,
+  "actual_source_reads": "Retained public metadata/published reports and explicitly authorized own-paraphrase workbook findings only; no raw workbook/schema body/full projection/private custody inputs.",
+  "formal_limit": "Existing Lean source inspected only; no compilation, new theorem code or Python refinement verification.",
+  "hypothetical_math": "25-world k-factor countermodel;20-world disjoint/shared failures;400-world independence;20-family adaptive-selection and one-world acceptance counterexamples;finite-union proof. None represents BAM observations.",
+  "incidental_exposure": "Retained publisher metadata repeats already exposed campaign uncertainty maxima and temperature information; documentary reports contain identifiers/labels/conditions/counts, not performance tables.",
+  "new_network_requests": 0,
+  "new_runtime_features": 0,
+  "schema": "lupine.discovery.metrology_risk_contract_sources.v1",
+  "scientific_experiments": 0,
+  "sources": {
+    "bam_record_metadata": {
+      "bytes": 14771,
+      "locations": "$.metadata.description uncertainty paragraph and Table1 caption; version DOI/title/license",
+      "path": "reports/phase2-bam-readiness-v1/zenodo-17846617.json",
+      "sha256": "48f84c7d6fc841a13de8ecccbba5f0604834cec45c3033d0d55bfd7a2e89f4d6"
+    },
+    "earlier_readiness": {
+      "bytes": 8384,
+      "locations": "What is established and what remains blocked; exposure history; earlier access state",
+      "path": "reports/phase2-bam-readiness-v1/README.md",
+      "sha256": "2c2730f8551b51d42cc035b718a0f05807e242a769666183ec485feed361ec29"
+    },
+    "encoding_limits": {
+      "bytes": 1267,
+      "locations": "Conditional two-codec agreement is not author-intended encoding or full semantic conformance",
+      "path": "reports/phase2-bam-encoding-comparison-v1/method-limits.md",
+      "sha256": "8b63dabe3758ad710f20039023f4bb475d1519d6f8fdb068ad5bc27826e336b2"
+    },
+    "existing_finite_risk_source": {
+      "bytes": 10892,
+      "locations": "RiskLaw; finite_union_bound; allocated_joint_failure_bound; finite_weighted_joint_failure_bound; conditional_conclusion_failure_bound",
+      "path": "formal/LupineRisk.lean",
+      "sha256": "bea0e0cb18daeb41a26e7c721bef0dec6e1c361f3ccf1c9f7f7dbf2176c0fcdf"
+    },
+    "header_documentary_resolution": {
+      "bytes": 3438,
+      "locations": "Eleven literal headers and UNIT at column7; body semantics/encoding remain unbound",
+      "path": "reports/phase2-bam-schema-documentary-v1/header-ascii-v1/README.md",
+      "sha256": "a75f0952740157490162cb56da9d97a979c603ae34ccdedecab970ea8c1729d1"
+    },
+    "header_public_projection": {
+      "bytes": 1170,
+      "locations": "headers; field_count; exposure flags",
+      "path": "reports/phase2-bam-schema-documentary-v1/header-ascii-v1/result.json",
+      "sha256": "8b1d45a9a9400ac12b9dec60b72ad8de9d7788d232d98a6889cd7a450519377b"
+    },
+    "pool_contract": {
+      "bytes": 36960,
+      "locations": "Objects/target/information boundary; exchangeable panel score law; marginal all-optimum retention",
+      "path": "docs/decision-pool-calibration-design.md",
+      "sha256": "9025a7486f533272fc48e0e72a953d28530a4cacb4c46f6101122081495ad490"
+    },
+    "risk_quantifiers": {
+      "bytes": 5034,
+      "locations": "Conditional exact engine vs marginal loss vs high-confidence policy risk; distinct losses",
+      "path": "reports/phase2-risk-contracts-v1/README.md",
+      "sha256": "de10ef8fd4d6cc6b78fd70ebc00518fd9c76139634861a0d8d62c8c009041633"
+    },
+    "workbook_author_paraphrase": {
+      "bytes": 6220,
+      "locations": "Exposed-reference scope, pairing, missing uncertainty budget, shared apparatus, withheld performance tables",
+      "path": ".cache/phase2-bam-metrology-workbook-v1/README.md",
+      "sha256": "cad9aec959b34c7e6fc4dd4e98bf022ac93745d2192be28dbe263c1d33b8a233"
+    },
+    "workbook_documentary_findings": {
+      "bytes": 13904,
+      "locations": "F01/F02 paired labels; F05/F06 reported maxima and scoped uncertainty absence; F07/F09 shared apparatus/history; F11 exposed-reference limits",
+      "path": ".cache/phase2-bam-metrology-workbook-v1/documentary-findings.json",
+      "sha256": "245a6cbf65a43adaf96e3feae9af23b394c0f06bf5aeb580f574cb5de49609ed"
+    }
+  },
+  "status": "DESIGN_ONLY"
+}

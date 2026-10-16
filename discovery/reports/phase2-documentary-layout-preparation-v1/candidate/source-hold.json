@@ -1,0 +1,31 @@
+{
+  "actual_source_or_production_bindings": null,
+  "files": {
+    "README.md": {
+      "bytes": 6207,
+      "sha256": "c47dc68a34d4928c0886683885e7263c58e3c7b3ddfc98e72b617c83c55c1d3b"
+    },
+    "generated_zip.py": {
+      "bytes": 3670,
+      "sha256": "05c30a8b2462d919aed9982700bf06f6c0afb5c57b62931820f4aae64771ff99"
+    },
+    "li_v3_layout_localization.py": {
+      "bytes": 25486,
+      "sha256": "5bfce76619655090d00670d2aba8cec17eef3764dcf23cf741b78b9f0d0d1e39"
+    },
+    "run_guarded.py": {
+      "bytes": 1802,
+      "sha256": "bcce130243ca04b00acaab27e97fd93f8b19a6884c3edad978aa4e1fc3a590b7"
+    },
+    "scope.json": {
+      "bytes": 4452,
+      "sha256": "10e2c29be646c94cd1c0feb1d458a6b18c56dd658f2c6389faffd6b8b9a357d4"
+    },
+    "test_li_v3_layout_localization.py": {
+      "bytes": 23184,
+      "sha256": "94374ed3b3201832f404dd8a40ec4aaf5525e25e06244eb3b38cf15929fb133a"
+    }
+  },
+  "held_at": "2026-10-16T10:50:38.159736+00:00",
+  "status": "PURE_CANDIDATE_HELD_AFTER_AUTHOR_FIRST_PASS"
+}

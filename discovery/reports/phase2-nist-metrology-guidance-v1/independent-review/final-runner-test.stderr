@@ -1,0 +1,19 @@
+test_content_gate_no_body (__main__.IndependentRunnerTests.test_content_gate_no_body) ... ok
+test_first_http_failure_stops_second (__main__.IndependentRunnerTests.test_first_http_failure_stops_second) ... ok
+test_frozen_urls_and_no_redirect (__main__.IndependentRunnerTests.test_frozen_urls_and_no_redirect) ... ok
+test_fsync_failure_no_transport (__main__.IndependentRunnerTests.test_fsync_failure_no_transport) ... ok
+test_interrupt_reserves_slot_and_reinvoke_blocks (__main__.IndependentRunnerTests.test_interrupt_reserves_slot_and_reinvoke_blocks) ... ok
+test_nul_failure_before_parse (__main__.IndependentRunnerTests.test_nul_failure_before_parse) ... ok
+test_parser_failure_stops_and_no_exception_canary (__main__.IndependentRunnerTests.test_parser_failure_stops_and_no_exception_canary) ... ok
+test_parser_import_after_guard_including_module_load (__main__.IndependentRunnerTests.test_parser_import_after_guard_including_module_load) ... ok
+test_partial_read_retained (__main__.IndependentRunnerTests.test_partial_read_retained) ... ok
+test_read_cap_and_retention (__main__.IndependentRunnerTests.test_read_cap_and_retention) ... ok
+test_redirect_failure_stops_without_body_read (__main__.IndependentRunnerTests.test_redirect_failure_stops_without_body_read) ... ok
+test_route_mismatch_no_body (__main__.IndependentRunnerTests.test_route_mismatch_no_body) ... ok
+test_two_fixed_requests_success (__main__.IndependentRunnerTests.test_two_fixed_requests_success) ... ok
+test_utf8_failure_honest_stages (__main__.IndependentRunnerTests.test_utf8_failure_honest_stages) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.144s
+
+OK

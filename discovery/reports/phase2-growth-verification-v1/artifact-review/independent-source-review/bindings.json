@@ -1,0 +1,59 @@
+{
+  "actual_audit_invocations": 0,
+  "checks": {
+    "41_identical_4_explicit_adaptations": true,
+    "45_prior_assertions_mapped": true,
+    "46_new_assertions_accounted": true,
+    "additive_identity": true,
+    "eight_integrated_pins_match_reviewed_candidates": true,
+    "generic_identity": true,
+    "recorder_identity": true
+  },
+  "files": {
+    "additive": {
+      "bytes": 10639,
+      "path": ".cache/phase2-growth-artifact-review-v1/additive_audit.py",
+      "sha256": "22b3cbaa1335a85d81d79a11e6722f5fadd6db51854ca8c2de483a65d45528f7"
+    },
+    "generic": {
+      "bytes": 21353,
+      "path": ".cache/phase2-growth-artifact-review-v1/audit.py",
+      "sha256": "b81293cba3632449830932175e9fa938913650ade05f5e524b258aba78923119"
+    },
+    "pins": {
+      "bytes": 1210,
+      "path": ".cache/phase2-growth-release-v1/final-reviewed-pins.json",
+      "sha256": "f65508a95077542381e000102ba2eb460ad080b058d8204a00ee34b74c9577e7"
+    },
+    "preparation": {
+      "bytes": 10202,
+      "path": ".cache/phase2-growth-artifact-review-v1/preparation.json",
+      "sha256": "f588be56121004185bf4af7642774dd951834f6bb963466736572e77cf2e15b5"
+    },
+    "prior_additive": {
+      "bytes": 10238,
+      "path": ".cache/phase2-growth-artifact-review-v1/prior-additive_audit.py",
+      "sha256": "6b267cd11a73b0f73c63a7b9ae2ba75d30f9699edf14e41c5fd1f98f4932ce2a"
+    },
+    "recorder": {
+      "bytes": 6579,
+      "path": ".cache/phase2-growth-artifact-review-v1/run_recorded.py",
+      "sha256": "681bdae3895b320274e898b819e9d8b092bb9edd76562c8c2e92dbcd9935f483"
+    }
+  },
+  "pins": {
+    "docs/li-v3-growth-envelope-plan.md": "4a5954b93b84d05c32a8ee2ea8254aec63283e915c331339cb97875e4b2aeb59",
+    "docs/li-v3-growth-hint-shape-plan.md": "e0ca28ad61181c6cf56d20a46733d2285acb6cb5bc39348f46ee3acb29dfcbc6",
+    "scripts/li_v3_growth_envelope.py": "f50069d028526ea045441a2e574a26192a210ff78ba34f5170777d32f5692ec3",
+    "scripts/li_v3_growth_hint_shape.py": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a",
+    "tests/test_li_v3_growth_envelope.py": "f569d732f02d90233fd20e9d5bf14ab9bb29337c09022093e15320af031523f1",
+    "tests/test_li_v3_growth_envelope_review.py": "4e23e7582dc1da3b0a51507eab4181a39707f0d9057506f25eba61d72ce73ccb",
+    "tests/test_li_v3_growth_hint_review.py": "13db80f49a6d8f83df58a3f2ae22f27450e5367c156368333db1908f90d01f85",
+    "tests/test_li_v3_growth_hint_shape.py": "1f863ee2f1eefd54919767f7b4c75b6d460332d50f6234103dd47e586557685e"
+  },
+  "project_imports": 0,
+  "recorded_utc": "2026-10-16T10:35:40.427731+00:00",
+  "schema": "lupine.discovery.growth_artifact_independent_static_binding_audit.v1",
+  "scope": "Public-source AST/byte review only. No retained archive/wheel or production source operation; actual package audit remains gated on published source and completed package.",
+  "status": "PASS_STATIC_ONLY"
+}

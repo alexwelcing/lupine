@@ -1,0 +1,45 @@
+{
+  "schema": "lupine.bam-metrology-actual-execution.v1",
+  "command": [
+    "python",
+    ".cache/phase2-bam-metrology-workbook-v1/acquire_and_inspect.py"
+  ],
+  "cwd": "/workspace/lupine-discovery-branch/discovery",
+  "started_at": "2026-10-16T10:29:24.880704+00:00",
+  "finished_at": "2026-10-16T10:29:26.584621+00:00",
+  "elapsed_seconds": 1.6994795109967527,
+  "exit_code": 0,
+  "preacquisition_review_sha256": "53a1ff4bb131d26d6787f38dfc592872be49d239bbff705e5db565520b951618",
+  "held_source_sha256": {
+    "scope.json": "ba4fc7fffc4a47933185c8dcd3d3224131ae64b0e4a7b6a7219df2da96d1a789",
+    "workbook_reader.py": "d56939ba593414fbf751b5eab59d4ae5ab556513ce8b3108b4dc7305c8bef25c",
+    "acquire_and_inspect.py": "b9b726c7627b26938a91277b9b0e1f177aa001730c5ae503d7cd0d48b9011a56"
+  },
+  "source_unchanged": true,
+  "stdout_sha256": "40e8ccabd5f87b8140ff39f7c9f123c7784ea875d6ff82cad4df5829d6640ecb",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "outputs": {
+    "request-slot.json": {
+      "bytes": 460,
+      "sha256": "59e5c4d0b6cbf7c7b44b8b9118eb54f989a14aecbbdd2149e3b464ae39babb22"
+    },
+    "workbook.xlsx": {
+      "bytes": 54960,
+      "sha256": "6cc298fa9922c60fc923b11dbfaa788057cb23593153d68a9aa95226b1795a83"
+    },
+    "acquisition.json": {
+      "bytes": 1159,
+      "sha256": "ada0a1c180288cc4d44a83ef4d8ce61b97c6752b21dc1592ea9864f7bb65fefa"
+    },
+    "result.json": {
+      "bytes": 1217,
+      "sha256": "f96cdfc7ead2bc4d4ef6264b09da376fe68af9369906131f306573ffb8eb36d4"
+    },
+    "internal-workbook-projection.json": {
+      "bytes": 760280,
+      "sha256": "4a0c0165e980e2e40418dac63f161215a04ab955aeff750193030cbd7c6e44e1"
+    }
+  },
+  "permanently_exposed_metrology_reference": true,
+  "blind_predictive_benchmark_eligible": false
+}

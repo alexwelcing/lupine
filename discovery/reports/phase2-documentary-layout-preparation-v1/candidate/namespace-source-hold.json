@@ -1,0 +1,35 @@
+{
+  "actual_source_or_production_bindings": null,
+  "files": {
+    "README.md": {
+      "bytes": 7517,
+      "sha256": "c16fd29a51f9b1650cff19e77b36bf991c847286ecbd5877633379bdd8f8d65f"
+    },
+    "generated_zip.py": {
+      "bytes": 3670,
+      "sha256": "05c30a8b2462d919aed9982700bf06f6c0afb5c57b62931820f4aae64771ff99"
+    },
+    "li_v3_layout_localization.py": {
+      "bytes": 26076,
+      "sha256": "4624e68c28f911bc0bcc927834bd9f9bbb8cd4622a47db80f5a99e3f63b6ba7d"
+    },
+    "namespace-cap-scope-addendum.json": {
+      "bytes": 1837,
+      "sha256": "548f64dceb10d6d47a626aff571c6a97704de84ca50744b593191d8b5ad40d1d"
+    },
+    "run_guarded.py": {
+      "bytes": 1802,
+      "sha256": "bcce130243ca04b00acaab27e97fd93f8b19a6884c3edad978aa4e1fc3a590b7"
+    },
+    "scope.json": {
+      "bytes": 4452,
+      "sha256": "10e2c29be646c94cd1c0feb1d458a6b18c56dd658f2c6389faffd6b8b9a357d4"
+    },
+    "test_li_v3_layout_localization.py": {
+      "bytes": 25210,
+      "sha256": "787fae54ffba26e59d1465dd40888ac1eaa218ea2035ccd468dde83375f984e9"
+    }
+  },
+  "held_at": "2026-10-16T10:55:51.999498+00:00",
+  "status": "PURE_CANDIDATE_HELD_AFTER_NAMESPACE_AUTHOR_PASS"
+}

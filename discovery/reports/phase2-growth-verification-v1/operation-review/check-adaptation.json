@@ -1,0 +1,1299 @@
+{
+  "schema": "lupine.discovery.operation_audit_check_adaptation.v1",
+  "old_source_sha256": "c91920a7d9e992b7c4acdd47fca7ac151282d4190b429977ae01ef7caee700cb",
+  "new_source_sha256": "a34b266e2316b14540b0abd0f2016274422a81b8eca90f3152aa734f5617deb7",
+  "old_check_calls": 98,
+  "new_check_calls": 176,
+  "identical_check_ast_matches": 53,
+  "explicitly_adapted_old_checks": 45,
+  "unmapped_old_checks": [],
+  "mapping": [
+    {
+      "old_line": 31,
+      "old_label": "'read outside checkout'",
+      "old_check": "check(path.is_relative_to(ROOT), 'read outside checkout')",
+      "new_locations": [
+        {
+          "line": 54,
+          "check": "check(path.resolve() == path and path.is_relative_to(ROOT), 'read outside checkout or symlink')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 33,
+      "old_label": "'only three fixed public custody receipts permitted'",
+      "old_check": "check(not path.is_relative_to(ROOT / '.cache/li-v3-custody') or path in allowed, 'only three fixed public custody receipts permitted')",
+      "new_locations": [
+        {
+          "line": 56,
+          "check": "check(not path.is_relative_to(ROOT / '.cache/li-v3-custody') or path in allowed, 'only five fixed public custody receipts permitted')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 34,
+      "old_label": "'bounded regular evidence file'",
+      "old_check": "check(path.is_file() and path.stat().st_size <= 8 * 1024 * 1024, 'bounded regular evidence file')",
+      "new_locations": [
+        {
+          "line": 58,
+          "check": "check(path.is_file() and path.stat().st_size <= 8 * 1024 * 1024, 'bounded regular evidence file')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 38,
+      "old_label": "'previously read evidence changed'",
+      "old_check": "check(relative not in READS or READS[relative] == digest, 'previously read evidence changed')",
+      "new_locations": [
+        {
+          "line": 63,
+          "check": "check(relative not in READS or READS[relative] == digest, 'previously read evidence changed')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 47,
+      "old_label": "'duplicate JSON key'",
+      "old_check": "check(k not in result, 'duplicate JSON key')",
+      "new_locations": [
+        {
+          "line": 72,
+          "check": "check(key not in result, 'duplicate JSON key')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 61,
+      "old_label": "'timezone missing'",
+      "old_check": "check(result.tzinfo is not None, 'timezone missing')",
+      "new_locations": [
+        {
+          "line": 91,
+          "check": "check(result.tzinfo is not None, 'timezone missing')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 66,
+      "old_label": "'implementation source commit'",
+      "old_check": "check(identity['mode'] == 'committed_source' and identity['commit'] == COMMIT, 'implementation source commit')",
+      "new_locations": [
+        {
+          "line": 127,
+          "check": "check(identity['mode'] == 'committed_source' and identity['commit'] == COMMIT, 'implementation source commit')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 69,
+      "old_label": "'source pin group'",
+      "old_check": "check(type(values) is dict, 'source pin group')",
+      "new_locations": [
+        {
+          "line": 129,
+          "check": "check(type(identity[group]) is dict and identity[group] == values, 'source pin group')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 71,
+      "old_label": "'source pin bytes'",
+      "old_check": "check(hashlib.sha256(read(relative)).hexdigest() == digest, 'source pin bytes')",
+      "new_locations": [
+        {
+          "line": 131,
+          "check": "check(sha(read(relative)) == digest, 'source pin bytes')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 72,
+      "old_label": "'source pin committed'",
+      "old_check": "check(subprocess.check_output(['git', 'show', COMMIT + ':discovery/' + relative], cwd=ROOT) == read(relative), 'source pin committed')",
+      "new_locations": [
+        {
+          "line": 132,
+          "check": "check(git('show', COMMIT + ':discovery/' + relative) == read(relative), 'source pin committed')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 77,
+      "old_label": "'noncanonical public report'",
+      "old_check": "check(read(path) == canon(data), 'noncanonical public report')",
+      "new_locations": [
+        {
+          "line": 110,
+          "check": "check(read(path) == canon(data), 'noncanonical public report')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 88,
+      "old_label": "'unexpected operation directory'",
+      "old_check": "check((ROOT / directory).resolve() == ROOT / '.cache/phase2-local-extra-operations-v1/production', 'unexpected operation directory')",
+      "new_locations": [
+        {
+          "line": 381,
+          "check": "check((ROOT / directory).resolve() == ROOT / OPERATIONS[kind], 'unexpected operation directory')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "No arbitrary operation directory argument; only fixedshape/envelope constants, checked against symlink resolution."
+    },
+    {
+      "old_line": 91,
+      "old_label": "'current head'",
+      "old_check": "check(subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip() == COMMIT, 'current head')",
+      "new_locations": [
+        {
+          "line": 312,
+          "check": "check(git('rev-parse', 'HEAD').decode().strip() == COMMIT, 'current head')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 92,
+      "old_label": "'tracked state dirty'",
+      "old_check": "check(subprocess.check_output(['git', 'status', '--porcelain', '--untracked-files=all'], cwd=ROOT) == b'', 'tracked state dirty')",
+      "new_locations": [
+        {
+          "line": 313,
+          "check": "check(git('status', '--porcelain', '--untracked-files=all') == b'', 'tracked state dirty')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 95,
+      "old_label": "'runtime count'",
+      "old_check": "check(len(runtime) == 326, 'runtime count')",
+      "new_locations": [
+        {
+          "line": 316,
+          "check": "check(len(runtime) == 332, 'runtime count')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "326 becomes332 for the exact published G30/G31 source increment."
+    },
+    {
+      "old_line": 97,
+      "old_label": "'runtime byte mismatch'",
+      "old_check": "check(hashlib.sha256(read(relative)).hexdigest() == digest, 'runtime byte mismatch')",
+      "new_locations": [
+        {
+          "line": 318,
+          "check": "check(hashlib.sha256(read(relative)).hexdigest() == digest, 'runtime byte mismatch')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 98,
+      "old_label": "'runtime commit mismatch'",
+      "old_check": "check(subprocess.check_output(['git', 'show', COMMIT + ':discovery/' + relative], cwd=ROOT) == read(relative), 'runtime commit mismatch')",
+      "new_locations": [
+        {
+          "line": 319,
+          "check": "check(git('show', COMMIT + ':discovery/' + relative) == read(relative), 'runtime commit mismatch')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 101,
+      "old_label": "'CI commit'",
+      "old_check": "check(ci['commit'] == ci['run']['head_sha'] == COMMIT, 'CI commit')",
+      "new_locations": [
+        {
+          "line": 322,
+          "check": "check(ci['commit'] == ci['run']['head_sha'] == COMMIT, 'CI commit')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 102,
+      "old_label": "'CI original push'",
+      "old_check": "check(ci['run']['event'] == 'push' and type(ci['run']['run_attempt']) is int and (ci['run']['run_attempt'] == 1), 'CI original push')",
+      "new_locations": [
+        {
+          "line": 323,
+          "check": "check(ci['run']['event'] == 'push' and type(ci['run']['run_attempt']) is int and (ci['run']['run_attempt'] == 1), 'CI original push')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 103,
+      "old_label": "'CI outcome'",
+      "old_check": "check(ci['run']['status'] == 'completed' and ci['run']['conclusion'] == 'success' and (ci['all_four_jobs_successful'] is True), 'CI outcome')",
+      "new_locations": [
+        {
+          "line": 324,
+          "check": "check(ci['run']['status'] == 'completed' and ci['run']['conclusion'] == 'success' and (ci['all_four_jobs_successful'] is True), 'CI outcome')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 104,
+      "old_label": "'CI jobs'",
+      "old_check": "check(len(ci['jobs']) == 4 and {j['name'] for j in ci['jobs']} == {'browser', 'lean', 'python (3.11)', 'python (3.12)'}, 'CI jobs')",
+      "new_locations": [
+        {
+          "line": 325,
+          "check": "check(len(ci['jobs']) == 4 and {j['name'] for j in ci['jobs']} == {'browser', 'lean', 'python (3.11)', 'python (3.12)'}, 'CI jobs')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 105,
+      "old_label": "'CI distinct jobs'",
+      "old_check": "check(len({j['id'] for j in ci['jobs']}) == 4, 'CI distinct jobs')",
+      "new_locations": [
+        {
+          "line": 326,
+          "check": "check(len({j['id'] for j in ci['jobs']}) == 4, 'CI distinct jobs')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 107,
+      "old_label": "'future CI observation'",
+      "old_check": "check(observed <= datetime.now(timezone.utc), 'future CI observation')",
+      "new_locations": [
+        {
+          "line": 328,
+          "check": "check(observed <= datetime.now(timezone.utc), 'future CI observation')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 109,
+      "old_label": "'CI job verdict'",
+      "old_check": "check(job['status'] == 'completed' and job['conclusion'] == 'success', 'CI job verdict')",
+      "new_locations": [
+        {
+          "line": 330,
+          "check": "check(job['status'] == 'completed' and job['conclusion'] == 'success', 'CI job verdict')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 110,
+      "old_label": "'CI job chronology'",
+      "old_check": "check(stamp(job['started_at']) <= stamp(job['completed_at']) <= observed, 'CI job chronology')",
+      "new_locations": [
+        {
+          "line": 331,
+          "check": "check(stamp(job['started_at']) <= stamp(job['completed_at']) <= observed, 'CI job chronology')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 116,
+      "old_label": "'package outcome'",
+      "old_check": "check(receipt['commit'] == COMMIT and receipt['exit_code'] == 0, 'package outcome')",
+      "new_locations": [
+        {
+          "line": 337,
+          "check": "check(receipt['commit'] == COMMIT and receipt['exit_code'] == 0, 'package outcome')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 117,
+      "old_label": "'package source held'",
+      "old_check": "check(receipt['runtime_before'] == receipt['runtime_after'] == runtime, 'package source held')",
+      "new_locations": [
+        {
+          "line": 338,
+          "check": "check(receipt['runtime_before'] == receipt['runtime_after'] == runtime, 'package source held')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 118,
+      "old_label": "'package source claims'",
+      "old_check": "check(all((receipt[k] is True for k in ('source_unchanged', 'head_unchanged', 'worktree_clean'))), 'package source claims')",
+      "new_locations": [
+        {
+          "line": 339,
+          "check": "check(all((receipt[k] is True for k in ('source_unchanged', 'head_unchanged', 'worktree_clean'))), 'package source claims')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 120,
+      "old_label": "'package log hash'",
+      "old_check": "check(hashlib.sha256(read(prefix + '-' + kind + '.txt')).hexdigest() == receipt[kind + '_sha256'], 'package log hash')",
+      "new_locations": [
+        {
+          "line": 341,
+          "check": "check(hashlib.sha256(read(prefix + '-' + kind + '.txt')).hexdigest() == receipt[kind + '_sha256'], 'package log hash')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 121,
+      "old_label": "'package stderr'",
+      "old_check": "check(read(prefix + '-stderr.txt') == b'', 'package stderr')",
+      "new_locations": [
+        {
+          "line": 342,
+          "check": "check(read(prefix + '-stderr.txt') == b'', 'package stderr')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 122,
+      "old_label": "'package chronology'",
+      "old_check": "check(stamp(receipt['started_at']) <= stamp(receipt['finished_at']), 'package chronology')",
+      "new_locations": [
+        {
+          "line": 343,
+          "check": "check(stamp(receipt['started_at']) <= stamp(receipt['finished_at']), 'package chronology')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 126,
+      "old_label": "'package command'",
+      "old_check": "check(receipt['command'][1:3] == ['scripts/package_smoke.py', '--retain-directory'], 'package command')",
+      "new_locations": [
+        {
+          "line": 347,
+          "check": "check(receipt['command'][1:3] == ['scripts/package_smoke.py', '--retain-directory'], 'package command')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 129,
+      "old_label": "'strict verifier command'",
+      "old_check": "check(receipt['command'][1:] == ['scripts/verify_retained_artifacts.py', '--directory', retained_dir, '--commit', COMMIT], 'strict verifier command')",
+      "new_locations": [
+        {
+          "line": 350,
+          "check": "check(receipt['command'][1:] == ['scripts/verify_retained_artifacts.py', '--directory', retained_dir, '--commit', COMMIT], 'strict verifier command')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 131,
+      "old_label": "'package demonstrated scope'",
+      "old_check": "check(smoke['status'] == 'passed' and smoke['case_count'] == 28 and (len(smoke['problem_schemas']) == 6) and (len(smoke['checks']) == 16), 'package demonstrated scope')",
+      "new_locations": [
+        {
+          "line": 352,
+          "check": "check(smoke['status'] == 'passed' and smoke['case_count'] == 28 and (len(smoke['problem_schemas']) == 6) and (len(smoke['checks']) == 16), 'package demonstrated scope')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 132,
+      "old_label": "'strict verdict'",
+      "old_check": "check(strict['status'] == 'PASS' and strict['expected_git_commit'] == COMMIT, 'strict verdict')",
+      "new_locations": [
+        {
+          "line": 353,
+          "check": "check(strict['status'] == 'PASS' and strict['expected_git_commit'] == COMMIT, 'strict verdict')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 133,
+      "old_label": "'strict package agreement'",
+      "old_check": "check(strict['reported_smoke']['checks'] == smoke['checks'] and strict['reported_smoke']['problem_schemas'] == smoke['problem_schemas'], 'strict package agreement')",
+      "new_locations": [
+        {
+          "line": 354,
+          "check": "check(strict['reported_smoke']['checks'] == smoke['checks'] and strict['reported_smoke']['problem_schemas'] == smoke['problem_schemas'], 'strict package agreement')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 135,
+      "old_label": "'retained receipt identity'",
+      "old_check": "check(hashlib.sha256(read(Path(retained_dir) / 'release-artifacts.json')).hexdigest() == strict['receipt_sha256'], 'retained receipt identity')",
+      "new_locations": [
+        {
+          "line": 356,
+          "check": "check(hashlib.sha256(read(Path(retained_dir) / 'release-artifacts.json')).hexdigest() == strict['receipt_sha256'], 'retained receipt identity')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 136,
+      "old_label": "'retained source'",
+      "old_check": "check(retained['source']['git_commit'] == COMMIT and retained['source']['worktree_status'] == 'clean', 'retained source')",
+      "new_locations": [
+        {
+          "line": 357,
+          "check": "check(retained['source']['git_commit'] == COMMIT and retained['source']['worktree_status'] == 'clean', 'retained source')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 137,
+      "old_label": "'retained runtime count'",
+      "old_check": "check(retained['source']['runtime_manifest']['file_count'] == 326, 'retained runtime count')",
+      "new_locations": [
+        {
+          "line": 358,
+          "check": "check(retained['source']['runtime_manifest']['file_count'] == 332, 'retained runtime count')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "326 becomes332; exact manifest and retained commit identity remain checked."
+    },
+    {
+      "old_line": 138,
+      "old_label": "'retained runtime manifest'",
+      "old_check": "check(retained['source']['runtime_manifest']['sha256'] == hashlib.sha256(read('reports/runtime-manifest.json')).hexdigest(), 'retained runtime manifest')",
+      "new_locations": [
+        {
+          "line": 359,
+          "check": "check(retained['source']['runtime_manifest']['sha256'] == hashlib.sha256(read('reports/runtime-manifest.json')).hexdigest(), 'retained runtime manifest')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 139,
+      "old_label": "'retained artifact identity claims'",
+      "old_check": "check(retained['artifacts'] == strict['artifact_identities'], 'retained artifact identity claims')",
+      "new_locations": [
+        {
+          "line": 360,
+          "check": "check(retained['artifacts'] == strict['artifact_identities'], 'retained artifact identity claims')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 141,
+      "old_label": "'independent artifact review'",
+      "old_check": "check(audit['status'] == 'PASS' and audit['commit'] == COMMIT, 'independent artifact review')",
+      "new_locations": [
+        {
+          "line": 362,
+          "check": "check(audit['status'] == 'PASS' and audit['commit'] == COMMIT, 'independent artifact review')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 142,
+      "old_label": "'independent artifact identity agreement'",
+      "old_check": "check(audit['receipt_sha256'] == strict['receipt_sha256'] and audit['artifact_identities'] == strict['artifact_identities'], 'independent artifact identity agreement')",
+      "new_locations": [
+        {
+          "line": 363,
+          "check": "check(audit['receipt_sha256'] == strict['receipt_sha256'] and audit['artifact_identities'] == strict['artifact_identities'], 'independent artifact identity agreement')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 143,
+      "old_label": "'independent artifact scope'",
+      "old_check": "check(audit['mandatory_checks'] == smoke['checks'] and audit['runtime_source_files_matching_manifest_and_worktree'] == 326, 'independent artifact scope')",
+      "new_locations": [
+        {
+          "line": 364,
+          "check": "check(audit['mandatory_checks'] == smoke['checks'] and audit['runtime_source_files_matching_manifest_and_worktree'] == 332, 'independent artifact scope')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "326 becomes332; mandatory-check equality remains."
+    },
+    {
+      "old_line": 146,
+      "old_label": "'independent additive outcome'",
+      "old_check": "check(additive['status'] == 'PASS' and additive['commit'] == COMMIT, 'independent additive outcome')",
+      "new_locations": [
+        {
+          "line": 367,
+          "check": "check(additive['status'] == 'PASS' and additive['commit'] == COMMIT, 'independent additive outcome')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 147,
+      "old_label": "'additive bound full review'",
+      "old_check": "check(additive['unchanged_full_artifact_auditor_review_sha256'] == hashlib.sha256(read(args.artifact_review)).hexdigest(), 'additive bound full review')",
+      "new_locations": [
+        {
+          "line": 368,
+          "check": "check(additive['unchanged_full_artifact_auditor_review_sha256'] == hashlib.sha256(read(paths['artifact_review'])).hexdigest(), 'additive bound full review')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 148,
+      "old_label": "'additive measured scope'",
+      "old_check": "check(additive['unchanged_prior_runtime_files'] == 323 and len(additive['added_runtime_files']) == 3 and (additive['unchanged_wheel_package_members'] == 108), 'additive measured scope')",
+      "new_locations": [
+        {
+          "line": 369,
+          "check": "check(additive['unchanged_prior_runtime_files'] == 326 and len(additive['added_runtime_files']) == 6 and (additive['unchanged_wheel_package_members'] == 108), 'additive measured scope')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Baseline323/additions3 becomes baseline326/additions6;108 wheel package members unchanged."
+    },
+    {
+      "old_line": 150,
+      "old_label": "'additive completed execution binding'",
+      "old_check": "check(additive_execution['commit'] == COMMIT and additive_execution['exit_code'] == 0 and (additive_execution['stdout_sha256'] == hashlib.sha256(read(args.additive_review)).hexdigest()), 'additive completed execution binding')",
+      "new_locations": [
+        {
+          "line": 371,
+          "check": "check(additive_execution['commit'] == COMMIT and additive_execution['exit_code'] == 0 and (additive_execution['stdout_sha256'] == hashlib.sha256(read(paths['additive_review'])).hexdigest()), 'additive completed execution binding')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 151,
+      "old_label": "'additive receipt chronology'",
+      "old_check": "check(stamp(additive['started_utc']) <= stamp(additive_execution['finished_at']), 'additive receipt chronology')",
+      "new_locations": [
+        {
+          "line": 372,
+          "check": "check(stamp(additive['started_utc']) <= stamp(additive_execution['finished_at']), 'additive receipt chronology')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 152,
+      "old_label": "'additive stderr empty'",
+      "old_check": "check(read('.cache/phase2-local-extra-artifact-review-v1/execution-d0505b9b358a/1-stderr.txt') == b'', 'additive stderr empty')",
+      "new_locations": [
+        {
+          "line": 373,
+          "check": "check(read(Path(paths['artifact_execution1']).with_name('1-stderr.txt')) == b'', 'additive stderr empty')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 155,
+      "old_label": "'preflight identity'",
+      "old_check": "check(preflight['commit'] == COMMIT and preflight['runtime'] == runtime and (preflight['ci_run'] == ci['run']['id']), 'preflight identity')",
+      "new_locations": [
+        {
+          "line": 385,
+          "check": "check(preflight['commit'] == COMMIT and preflight['runtime'] == runtime and (preflight['ci_run'] == ci['run']['id']), 'preflight identity')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Applied separately to both fixed recorder paths with the same332 runtime map."
+    },
+    {
+      "old_line": 156,
+      "old_label": "'preflight after all gates'",
+      "old_check": "check(gate_end <= stamp(preflight['checked_at']), 'preflight after all gates')",
+      "new_locations": [
+        {
+          "line": 386,
+          "check": "check(gate_end <= stamp(preflight['checked_at']) <= stamp(AUDIT_STARTED), 'preflight after all gates')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 158,
+      "old_label": "'reviewed bound recorder'",
+      "old_check": "check(hashlib.sha256(read(script)).hexdigest() == preflight['recorder_sha256'] == '01f45e732c930bbf45c81467a709b648d83802945146e4e76b06265a8ff0d5b9', 'reviewed bound recorder')",
+      "new_locations": [
+        {
+          "line": 390,
+          "check": "check(sha(read(script)) == preflight['recorder_sha256'] == CONFIG['recorders'][kind], 'reviewed bound recorder')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Static old recorder hash replaced by root-bound final per-stage digest; committed literal also checked."
+    },
+    {
+      "old_line": 162,
+      "old_label": "'exact operation gate set'",
+      "old_check": "check(set(gates) == required_gates, 'exact operation gate set')",
+      "new_locations": [
+        {
+          "line": 397,
+          "check": "check(type(gates) is dict and set(gates) == required_gates, 'exact operation gate set')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Additive review becomes explicit gate; G31 additionally binds G30 final and both public shape receipts."
+    },
+    {
+      "old_line": 164,
+      "old_label": "'preflight gate byte identity'",
+      "old_check": "check(hashlib.sha256(read(relative)).hexdigest() == digest, 'preflight gate byte identity')",
+      "new_locations": [
+        {
+          "line": 399,
+          "check": "check(sha(read(relative)) == digest, 'preflight gate byte identity')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 166,
+      "old_label": "'fixed predecessor receipt'",
+      "old_check": "check(hashlib.sha256(read(prior_path)).hexdigest() == '4ee25afe053f68b4b9331a9ebc94bccb2e1d96e0ce5700d78a45866ef7b0cc12', 'fixed predecessor receipt')",
+      "new_locations": [
+        {
+          "line": 539,
+          "check": "check(sha(read(PRIOR)) == PRIOR_SHA, 'fixed predecessor receipt')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Fixed G29 receipt52fe replaces prior categorical receipt4ee; no capture/object allowed."
+    },
+    {
+      "old_line": 168,
+      "old_label": "'predecessor producer'",
+      "old_check": "check(prior['implementation']['commit'] == 'a6e87c198d8116d26c523e0e1b2eedce4aeb225b', 'predecessor producer')",
+      "new_locations": [
+        {
+          "line": 541,
+          "check": "check(prior['implementation']['commit'] == PRIOR_COMMIT, 'predecessor producer')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Fixed audited G29 producerd050 replaces older categorical producera6e."
+    },
+    {
+      "old_line": 179,
+      "old_label": "'operation commit'",
+      "old_check": "check(start['commit'] == execution['commit'] == COMMIT, 'operation commit')",
+      "new_locations": [
+        {
+          "line": 404,
+          "check": "check(start['commit'] == execution['commit'] == COMMIT, 'operation commit')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 180,
+      "old_label": "'operation CI run'",
+      "old_check": "check(start['ci_run'] == execution['ci_run'] == ci['run']['id'], 'operation CI run')",
+      "new_locations": [
+        {
+          "line": 405,
+          "check": "check(start['ci_run'] == execution['ci_run'] == ci['run']['id'], 'operation CI run')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 181,
+      "old_label": "'exact fixed operation command'",
+      "old_check": "check(start['command'] == execution['command'] and execution['command'][1:] == ['scripts/li_v3_local_extra_headers.py', 'diagnose', '--run', str(index)], 'exact fixed operation command')",
+      "new_locations": [
+        {
+          "line": 407,
+          "check": "check(start['command'] == execution['command'] and execution['command'][1:] == [SCRIPTS[kind], action, '--run', str(index)], 'exact fixed operation command')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 182,
+      "old_label": "'operation runtime maps'",
+      "old_check": "check(start['runtime_before'] == execution['runtime_before'] == execution['runtime_after'] == runtime, 'operation runtime maps')",
+      "new_locations": [
+        {
+          "line": 409,
+          "check": "check(start['runtime_before'] == execution['runtime_before'] == execution['runtime_after'] == runtime, 'operation runtime maps')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 183,
+      "old_label": "'start source guard held'",
+      "old_check": "check(start['implementation'] == preflight['implementation'], 'start source guard held')",
+      "new_locations": [
+        {
+          "line": 410,
+          "check": "check(start['implementation'] == preflight['implementation'], 'start source guard held')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 184,
+      "old_label": "'precompletion exposure unknown'",
+      "old_check": "check(start['exposure_until_complete_report'] == 'UNKNOWN', 'precompletion exposure unknown')",
+      "new_locations": [
+        {
+          "line": 411,
+          "check": "check(start['exposure_until_complete_report'] == 'UNKNOWN', 'precompletion exposure unknown')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 185,
+      "old_label": "'held source and closure claims'",
+      "old_check": "check(all((execution[k] is True for k in ('source_unchanged', 'head_unchanged', 'worktree_clean', 'remote_unchanged', 'source_guard_unchanged', 'public_report_canonical_and_closed'))), 'held source and closure claims')",
+      "new_locations": [
+        {
+          "line": 412,
+          "check": "check(all((execution[key] is True for key in ('source_unchanged', 'head_unchanged', 'worktree_clean', 'remote_unchanged', 'source_guard_unchanged', 'public_report_canonical_and_closed'))), 'held source and closure claims')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 186,
+      "old_label": "'actual completed blocked command'",
+      "old_check": "check(type(execution['exit_code']) is int and execution['exit_code'] == 2 and (execution['timed_out'] is False) and (execution['launch_failed'] is False), 'actual completed blocked command')",
+      "new_locations": [
+        {
+          "line": 414,
+          "check": "check(type(execution['exit_code']) is int and execution['exit_code'] == 2 and (execution['timed_out'] is False) and (execution['launch_failed'] is False), 'actual completed blocked command')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 187,
+      "old_label": "'no completion errors'",
+      "old_check": "check(execution['state_recheck_error'] is None and execution['public_validation_error'] is None, 'no completion errors')",
+      "new_locations": [
+        {
+          "line": 416,
+          "check": "check(execution['state_recheck_error'] is None and execution['public_validation_error'] is None, 'no completion errors')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 188,
+      "old_label": "'sequential operation gate chronology'",
+      "old_check": "check(previous_end <= stamp(start['started_at']) == stamp(execution['started_at']) <= stamp(execution['finished_at']), 'sequential operation gate chronology')",
+      "new_locations": [
+        {
+          "line": 417,
+          "check": "check(previous_end <= stamp(start['started_at']) == stamp(execution['started_at']) <= stamp(execution['finished_at']) <= stamp(AUDIT_STARTED), 'sequential operation gate chronology')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 191,
+      "old_label": "'actual log digest'",
+      "old_check": "check(hashlib.sha256(read(folder / (kind + '.txt'))).hexdigest() == execution[kind + '_sha256'], 'actual log digest')",
+      "new_locations": [
+        {
+          "line": 422,
+          "check": "check(sha(read(folder / (stream + '.txt'))) == execution[stream + '_sha256'], 'actual log digest')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 192,
+      "old_label": "'actual stderr empty'",
+      "old_check": "check(read(folder / 'stderr.txt') == b'', 'actual stderr empty')",
+      "new_locations": [
+        {
+          "line": 423,
+          "check": "check(read(folder / 'stderr.txt') == b'', 'actual stderr empty')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 195,
+      "old_label": "'public equals actual stdout'",
+      "old_check": "check(raw == read(folder / 'stdout.txt'), 'public equals actual stdout')",
+      "new_locations": [
+        {
+          "line": 426,
+          "check": "check(raw == read(folder / 'stdout.txt'), 'public equals actual stdout')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 197,
+      "old_label": "'closed public schema'",
+      "old_check": "check(set(report) == expected_top, 'closed public schema')",
+      "new_locations": [
+        {
+          "line": 147,
+          "check": "check(set(report) == set(prior) - {'field_headers'} | additions, 'closed public schema')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Separate G30 prior-key projection and G31 AST-only pinned-source key extraction replace G29 header schema; no reader import."
+    },
+    {
+      "old_line": 198,
+      "old_label": "'versioned profile'",
+      "old_check": "check(report['schema'] == 'lupine.discovery.li_v3.local_extra_headers.v1' and report['profile'] == 'li_v3.first_local_extra_headers.v1', 'versioned profile')",
+      "new_locations": [
+        {
+          "line": 148,
+          "check": "check(report['schema'] == 'lupine.discovery.li_v3.growth_hint_shape.v1' and report['profile'] == 'li_v3.single_local_growth_hint_shape.v1', 'versioned profile')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "G29 header schema/profile replaced by exact G30 versions; G31 exact versions checked separately."
+    },
+    {
+      "old_line": 199,
+      "old_label": "'blocked real-source scope'",
+      "old_check": "check(report['status'] == 'BLOCKED_SCHEMA' and report['synthetic_fixture'] is False and (report['source_identity_verified'] is True), 'blocked real-source scope')",
+      "new_locations": [
+        {
+          "line": 138,
+          "check": "check(report['status'] == 'BLOCKED_SCHEMA' and report['synthetic_fixture'] is False and (report['source_identity_verified'] is True), 'blocked real-source scope')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 200,
+      "old_label": "'public source guard identity'",
+      "old_check": "check(report['implementation'] == preflight['implementation'], 'public source guard identity')",
+      "new_locations": [
+        {
+          "line": 151,
+          "check": "check(report['implementation'] == identity, 'public source guard identity')"
+        },
+        {
+          "line": 224,
+          "check": "check(report['implementation'] == identity, 'public source guard identity')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 202,
+      "old_label": "'prior capture identity only; capture not read'",
+      "old_check": "check(report['capture_identity'] == prior['capture_identity'], 'prior capture identity only; capture not read')",
+      "new_locations": [
+        {
+          "line": 153,
+          "check": "check(report['capture_identity'] == prior['capture_identity'], 'prior capture identity only; capture not read')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 203,
+      "old_label": "'public predecessor binding'",
+      "old_check": "check(report['prerequisite_receipt_sha256'] == hashlib.sha256(read(prior_path)).hexdigest() and report['prerequisite_producer_commit'] == prior['implementation']['commit'], 'public predecessor binding')",
+      "new_locations": [
+        {
+          "line": 154,
+          "check": "check(report['prerequisite_receipt_sha256'] == PRIOR_SHA and report['prerequisite_producer_commit'] == PRIOR_COMMIT and (report['production_prerequisite_status'] == 'VERIFIED'), 'public predecessor binding')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 204,
+      "old_label": "'fixed observed object identity'",
+      "old_check": "check(report['observed'] == prior['observed'] and type(report['observed']['bytes']) is int, 'fixed observed object identity')",
+      "new_locations": [
+        {
+          "line": 156,
+          "check": "check(report['observed'] == prior['observed'] and type(report['observed']['bytes']) is int, 'fixed observed object identity')"
+        },
+        {
+          "line": 232,
+          "check": "check(report['observed'] == prior['observed'] and type(report['observed']['bytes']) is int, 'fixed observed object identity')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 205,
+      "old_label": "'same first-local predecessor path'",
+      "old_check": "check(report['predecessor_classification'] == classification, 'same first-local predecessor path')",
+      "new_locations": [
+        {
+          "line": 157,
+          "check": "check(report['predecessor_classification'] == prior['predecessor_classification'] and report['predecessor_reason'] == 'LOCAL_EXTRA_HEADERS_COMPLETE', 'same first-local predecessor path')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 206,
+      "old_label": "'bounded actual reason and recorder agreement'",
+      "old_check": "check(report['reason'] == execution['reason'] and report['reason'] in {'LOCAL_EXTRA_HEADERS_COMPLETE', 'EXTRA_HEADER_TRUNCATED', 'EXTRA_DATA_TRUNCATED', 'EXTRA_RECORD_LIMIT'}, 'bounded actual reason and recorder agreement')",
+      "new_locations": [
+        {
+          "line": 432,
+          "check": "check(report['reason'] == execution['reason'], 'bounded actual reason and recorder agreement')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Public/recorder equality retained; separate closed G30 andG31 terminal reason validators enforce allowed negatives."
+    },
+    {
+      "old_line": 209,
+      "old_label": "'complete bounded field list'",
+      "old_check": "check(type(fields) is list and 1 <= len(fields) <= 256, 'complete bounded field list')",
+      "new_locations": [
+        {
+          "line": 543,
+          "check": "check(type(fields) is list and 1 <= len(fields) <= 256, 'complete bounded field list')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Retained for immutable G29 prerequisite; newG30/G31 outputs do not disclose a field list."
+    },
+    {
+      "old_line": 211,
+      "old_label": "'header-only disclosed keys'",
+      "old_check": "check(type(field) is dict and set(field) == {'header_id', 'data_size'}, 'header-only disclosed keys')",
+      "new_locations": [
+        {
+          "line": 545,
+          "check": "check(type(field) is dict and set(field) == {'header_id', 'data_size'}, 'header-only disclosed keys')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Retained for immutable G29 prerequisite; exact soleA220/516 required."
+    },
+    {
+      "old_line": 212,
+      "old_label": "'genuine uint16 fields'",
+      "old_check": "check(all((type(v) is int and 0 <= v < 65536 for v in field.values())), 'genuine uint16 fields')",
+      "new_locations": [
+        {
+          "line": 546,
+          "check": "check(all((type(value) is int and 0 <= value < 65536 for value in field.values())), 'genuine uint16 fields')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Retained for immutable G29 prerequisite; no broad payload value publication."
+    },
+    {
+      "old_line": 213,
+      "old_label": "'bounded complete extra span'",
+      "old_check": "check(sum((4 + f['data_size'] for f in fields)) <= 65535, 'bounded complete extra span')",
+      "new_locations": [
+        {
+          "line": 547,
+          "check": "check(sum((4 + field['data_size'] for field in fields)) <= 65535, 'bounded complete extra span')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Retained for immutable G29 prerequisite."
+    },
+    {
+      "old_line": 215,
+      "old_label": "'partial lists withheld'",
+      "old_check": "check(fields is None, 'partial lists withheld')",
+      "new_locations": [
+        {
+          "line": 159,
+          "check": "check('field_headers' not in report, 'partial lists withheld')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Strengthened to complete absence of field_headers from G30 output."
+    },
+    {
+      "old_line": 217,
+      "old_label": "'closed exposure agreement'",
+      "old_check": "check(exposure == execution['exposure'] and set(exposure) == expected_exposure, 'closed exposure agreement')",
+      "new_locations": [
+        {
+          "line": 433,
+          "check": "check(canon(report['exposure']) == canon(execution['exposure']), 'closed exposure agreement')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 219,
+      "old_label": "'exposure genuine bool'",
+      "old_check": "check(type(exposure[key]) is bool, 'exposure genuine bool')",
+      "new_locations": [
+        {
+          "line": 173,
+          "check": "check(type(exposure[key]) is bool, 'exposure genuine bool')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 221,
+      "old_label": "'no fits/splits'",
+      "old_check": "check(type(exposure[key]) is int and exposure[key] == 0, 'no fits/splits')",
+      "new_locations": [
+        {
+          "line": 175,
+          "check": "check(type(exposure[key]) is int and exposure[key] == 0, 'no fits/splits')"
+        },
+        {
+          "line": 255,
+          "check": "check(type(exposure[key]) is int and exposure[key] == 0, 'no fits/splits')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 222,
+      "old_label": "'no members/cleanup errors'",
+      "old_check": "check(exposure['members_decompressed'] == [] and exposure['archive_close_error'] is None, 'no members/cleanup errors')",
+      "new_locations": [
+        {
+          "line": 176,
+          "check": "check(exposure['members_decompressed'] == [] and exposure['archive_close_error'] is None, 'no members/cleanup errors')"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Retained forG30; G31 allows only four ordered XML members and rejects cleanup failures separately."
+    },
+    {
+      "old_line": 224,
+      "old_label": "'required reached source path ' + key",
+      "old_check": "check(exposure[key] is True, 'required reached source path ' + key)",
+      "new_locations": [
+        {
+          "line": 184,
+          "check": "check(exposure[key] is True, 'required reached source path ' + key)"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 226,
+      "old_label": "'unperformed semantic/scientific stage ' + key",
+      "old_check": "check(exposure[key] is False, 'unperformed semantic/scientific stage ' + key)",
+      "new_locations": [
+        {
+          "line": 188,
+          "check": "check(exposure[key] is False, 'unperformed semantic/scientific stage ' + key)"
+        }
+      ],
+      "classification": "IDENTICAL_CHECK_AST",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 227,
+      "old_label": "'walk completion agrees with terminal code'",
+      "old_check": "check(exposure['local_extra_header_walk_completed'] == (report['reason'] == 'LOCAL_EXTRA_HEADERS_COMPLETE'), 'walk completion agrees with terminal code')",
+      "new_locations": [
+        {
+          "line": 191,
+          "check": "check(exposure['local_extra_header_walk_completed'] is (report['predecessor_reason'] == 'LOCAL_EXTRA_HEADERS_COMPLETE'), 'walk completion agrees with terminal code')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Checks inherited predecessor reason rather than new shape reason; payload completion separately follows signature."
+    },
+    {
+      "old_line": 228,
+      "old_label": "'science quantities unassessed'",
+      "old_check": "check(all((report[k] is None for k in ('row_count', 'paired_count', 'source_group_count', 'overlap_count'))) and report['overlap_status'] == 'NOT_ASSESSED', 'science quantities unassessed')",
+      "new_locations": [
+        {
+          "line": 136,
+          "check": "check(all((report[key] is None for key in SCIENCE_COUNTS)) and report['overlap_status'] == 'NOT_ASSESSED', 'science quantities unassessed')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 232,
+      "old_label": "'completed recorder without scientific promotion'",
+      "old_check": "check(final['commit'] == COMMIT and final['status'] == 'COMPLETE_TWO_IDENTICAL_DIAGNOSES' and (final['scientific_schema_approved'] is False), 'completed recorder without scientific promotion')",
+      "new_locations": [
+        {
+          "line": 443,
+          "check": "check(final['commit'] == COMMIT and final['status'] == expected_status and (final['scientific_schema_approved'] is False), 'completed recorder without scientific promotion')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Per-stage final statuses; G30 andG31 remain scientifically blocked even on declared profile compatibility."
+    },
+    {
+      "old_line": 233,
+      "old_label": "'computational replay identity'",
+      "old_check": "check(outputs[0] == outputs[1] and final['public_sha256'] == hashlib.sha256(outputs[0]).hexdigest(), 'computational replay identity')",
+      "new_locations": [
+        {
+          "line": 445,
+          "check": "check(outputs[0] == outputs[1] and final['public_sha256'] == sha(outputs[0]), 'computational replay identity')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 234,
+      "old_label": "'final chronology: completed before audit'",
+      "old_check": "check(previous_end <= stamp(final['finished_at']) <= stamp(started), 'final chronology: completed before audit')",
+      "new_locations": [
+        {
+          "line": 449,
+          "check": "check(previous_end <= stamp(final['finished_at']) <= stamp(AUDIT_STARTED), 'final chronology: completed before audit')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Applied to each pair; G31 preflight additionally follows completedG30 final."
+    },
+    {
+      "old_line": 235,
+      "old_label": "'head held through review'",
+      "old_check": "check(subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip() == COMMIT, 'head held through review')",
+      "new_locations": [
+        {
+          "line": 561,
+          "check": "check(git('rev-parse', 'HEAD').decode().strip() == COMMIT, 'head held through review')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 236,
+      "old_label": "'tree held clean through review'",
+      "old_check": "check(subprocess.check_output(['git', 'status', '--porcelain', '--untracked-files=all'], cwd=ROOT) == b'', 'tree held clean through review')",
+      "new_locations": [
+        {
+          "line": 562,
+          "check": "check(git('status', '--porcelain', '--untracked-files=all') == b'', 'tree held clean through review')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    },
+    {
+      "old_line": 239,
+      "old_label": "'all audit inputs held'",
+      "old_check": "check(hashlib.sha256(read(relative)).hexdigest() == digest, 'all audit inputs held')",
+      "new_locations": [
+        {
+          "line": 564,
+          "check": "check(sha(read(relative)) == digest, 'all audit inputs held')"
+        }
+      ],
+      "classification": "EXPLICIT_ADAPTATION",
+      "explanation": "Predicate preserved or adapted to the same invariant through the read-only Git wrapper, per-stage variable, stricter typed/closed schema or renamed fixed evidence path; exact before/after expressions below are authoritative."
+    }
+  ],
+  "new_scope": "ExactG30/G31source/runtime/public receipts, prerequisite/match gating, scoped exposure, independent artifact execution closure; no actual invocation."
+}

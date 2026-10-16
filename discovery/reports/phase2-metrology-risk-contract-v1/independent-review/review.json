@@ -1,0 +1,145 @@
+{
+  "schema": "lupine.metrology-risk-contract-independent-review.v1",
+  "reviewed_at": "2026-10-16T10:44:24.253905+00:00",
+  "reviewer": "/root/phase2_evidence",
+  "verdict": "PASS_DESIGN_ONLY_CONDITIONAL_MATH_AND_DOCUMENTARY_SCOPE",
+  "candidate": {
+    "path": ".cache/phase2-metrology-risk-contract-v1",
+    "sha256": {
+      "README.md": "ae56215f8b091a26d7369f640e708aa0f470395b9c037a082015f610fa6e4eea",
+      "source-bindings.json": "ab5ad2783e77de9eb54eb18523bfdcc4416877090cf4712724c2de6a2de737b3"
+    }
+  },
+  "source_bindings_verified": [
+    {
+      "role": "bam_record_metadata",
+      "path": "reports/phase2-bam-readiness-v1/zenodo-17846617.json",
+      "sha256": "48f84c7d6fc841a13de8ecccbba5f0604834cec45c3033d0d55bfd7a2e89f4d6",
+      "matches": true
+    },
+    {
+      "role": "earlier_readiness",
+      "path": "reports/phase2-bam-readiness-v1/README.md",
+      "sha256": "2c2730f8551b51d42cc035b718a0f05807e242a769666183ec485feed361ec29",
+      "matches": true
+    },
+    {
+      "role": "encoding_limits",
+      "path": "reports/phase2-bam-encoding-comparison-v1/method-limits.md",
+      "sha256": "8b63dabe3758ad710f20039023f4bb475d1519d6f8fdb068ad5bc27826e336b2",
+      "matches": true
+    },
+    {
+      "role": "existing_finite_risk_source",
+      "path": "formal/LupineRisk.lean",
+      "sha256": "bea0e0cb18daeb41a26e7c721bef0dec6e1c361f3ccf1c9f7f7dbf2176c0fcdf",
+      "matches": true
+    },
+    {
+      "role": "header_documentary_resolution",
+      "path": "reports/phase2-bam-schema-documentary-v1/header-ascii-v1/README.md",
+      "sha256": "a75f0952740157490162cb56da9d97a979c603ae34ccdedecab970ea8c1729d1",
+      "matches": true
+    },
+    {
+      "role": "header_public_projection",
+      "path": "reports/phase2-bam-schema-documentary-v1/header-ascii-v1/result.json",
+      "sha256": "8b1d45a9a9400ac12b9dec60b72ad8de9d7788d232d98a6889cd7a450519377b",
+      "matches": true
+    },
+    {
+      "role": "pool_contract",
+      "path": "docs/decision-pool-calibration-design.md",
+      "sha256": "9025a7486f533272fc48e0e72a953d28530a4cacb4c46f6101122081495ad490",
+      "matches": true
+    },
+    {
+      "role": "risk_quantifiers",
+      "path": "reports/phase2-risk-contracts-v1/README.md",
+      "sha256": "de10ef8fd4d6cc6b78fd70ebc00518fd9c76139634861a0d8d62c8c009041633",
+      "matches": true
+    },
+    {
+      "role": "workbook_author_paraphrase",
+      "path": ".cache/phase2-bam-metrology-workbook-v1/README.md",
+      "sha256": "cad9aec959b34c7e6fc4dd4e98bf022ac93745d2192be28dbe263c1d33b8a233",
+      "matches": true
+    },
+    {
+      "role": "workbook_documentary_findings",
+      "path": ".cache/phase2-bam-metrology-workbook-v1/documentary-findings.json",
+      "sha256": "245a6cbf65a43adaf96e3feae9af23b394c0f06bf5aeb580f574cb5de49609ed",
+      "matches": true
+    }
+  ],
+  "independent_premise_table": {
+    "path": ".cache/phase2-bam-metrology-risk-premise-review-v1",
+    "sha256": {
+      "README.md": "d746a7a8e03d4b0ee515ddb971a312d9de57346c66fb1b3573837ec3d49144ba",
+      "source-bindings.json": "5bb694dcbd8bd6212d85b7f0aa29f4ee974176e897a8d28e6041f3824b04a94c"
+    },
+    "rows": 11,
+    "scope": "Separate documentary-hypothesis audit using reviewed author report/findings only; no raw source/projection/network or test."
+  },
+  "mathematical_review": [
+    {
+      "claim": "25-world k2 countermodel",
+      "check": "Twenty-one zero errors and two each at plus/minus5/2 have mean0 and second moment(4/25)*(25/4)=1. Radius2 includes exactly21/25 worlds. Thus even exact u=SD and U=2u do not force19/20 coverage. This is correctly hypothetical, not BAM error-law inference."
+    },
+    {
+      "claim": "20/400-world joint examples",
+      "check": "Disjoint singleton failures leave18/20 common successes, coincident singleton failures leave19/20, and independent coordinate failures leave19*19/400. Explicit interval procedures contain fixed truth0 exactly on the named success worlds. Same marginal coverage therefore permits different joint coverage."
+    },
+    {
+      "claim": "Shared bias",
+      "check": "A common B taking3 on one world and0 otherwise makes repeated measurements identical. Averaging identical bias realizations cannot create independent calibration information. The text correctly avoids claiming that dependence always worsens simultaneous coverage."
+    },
+    {
+      "claim": "Finite union and conditional version",
+      "check": "On the same probability law, finite measurable failure events with valid marginal bounds imply union risk at most their summed allocation. No independence is required. A conditional version requires the stated almost-sure bounds and budget for the same information; unconditional bounds do not create those premises."
+    },
+    {
+      "claim": "Selection and accepted-pool risk",
+      "check": "A selected subset of an already simultaneously certified fixed family inherits event containment. The twenty-family singleton example correctly shows selection among only marginal certificates can fail always. Acceptance only on the bad-bias world gives unconditional bad-decision mass1/20 but failure given acceptance1; the conditioning distinction is explicit."
+    },
+    {
+      "claim": "Decision bridge and target transfer",
+      "check": "The pointwise inclusion of complete interval correctness in Good implies notGood is contained in the union of failures. Targets0 and1 with interval[0,0] correctly show that perfect coverage of a different target says nothing about the desired target without an explicit bridge."
+    },
+    {
+      "claim": "Existing formal and pool source characterization",
+      "check": "Read RiskLaw fields and named theorem source: normalized monotone finite subadditivity is explicit, and the conditional-conclusion theorem assumes deterministic correctness. It is not a conditional-probability calibration theorem. Published panel design states complete-score exchangeability and marginal all-tied-optimum retention, separately from fixed-policy conditional risk."
+    }
+  ],
+  "documentary_premises": {
+    "supported_as_reports_only": [
+      "Publisher states per-test assessment and campaign maximum expanded uncertainties, nominal95% andk2",
+      "Workbook report binds current Rp0.2/Rm/Z/Agt/Ag labels/units and co-location for three IDs",
+      "Common apparatus/procedure/history and missing A are documented",
+      "ASCII header projection identifies UNIT in column7; original CSV body encoding unresolved"
+    ],
+    "still_unestablished": [
+      "A BAM probability law supporting exact or conditional per-endpoint failure bounds",
+      "Per-test uncertainty budgets and absolute/relative Z conversion",
+      "Cross-endpoint/cross-test joint tails or independence",
+      "Latent-property correctness and operating-condition fidelity",
+      "Independent specimens/heats/campaigns or an exchangeable/randomly sampled frame",
+      "Measurement-to-surrogate/future-condition transfer",
+      "Scientific eligibility, risk allocation or frozen predictive benchmark admission"
+    ],
+    "scope": "Unknown covariance alone does not refute dependence-robust union bounds; valid jointly defined marginal premises are nevertheless required. No probability allocation can manufacture empirical coverage."
+  },
+  "unresolved_review_blockers": [],
+  "activity": {
+    "new_network_requests": 0,
+    "raw_workbook_schema_or_projection_reads": 0,
+    "scientific_experiments": 0,
+    "model_or_runtime_invocations": 0,
+    "test_or_Lean_compilation_runs": 0,
+    "tracked_writes": 0,
+    "git_mutations": 0,
+    "source_only_hash_checks": 10,
+    "mathematical_checks": "Independent written algebra/event-inclusion review, not executed enumeration or formal proof."
+  },
+  "scientific_status": "Design-only argument retained. BAM is permanently exposed reference material; G20 uncertainty/lineage and G21 evaluation design remain unresolved."
+}

@@ -1,0 +1,12 @@
+{
+  "finding": [
+    "Parser import preceded frozen-input validation; modified parser module could execute before mismatch rejection.",
+    "NUL/encoding rejection could occur before parser construction after runner had marked parse_started true."
+  ],
+  "repair": [
+    "Import reviewed parser only after frozen-input validation.",
+    "Check UTF8/NUL before setting parse_started; closed exception reasons now preserve useful failure category without arbitrary exception text."
+  ],
+  "originals": "before-review-repair/",
+  "actual_source_requests_before_repair": 0
+}

@@ -1,0 +1,13 @@
+{
+  "status": "PASS_PUBLIC_RECEIPT_AND_SOURCE_BINDING_ONLY",
+  "started_at": "2026-10-16T11:12:06.146183+00:00",
+  "finished_at": "2026-10-16T11:12:06.270571+00:00",
+  "checks": 80,
+  "commit": "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace",
+  "public_receipt_sha256": "01cce9e57b26e204a9d31959f747768c70abf7543bedb6ab104b3b4b623f094f",
+  "independence_limit": "Reviewer authored G31; this is a source/control-flow and public-receipt interpretation, not independent implementation correctness or operational-gate certification.",
+  "source_or_production_reader_invocations": 0,
+  "private_object_or_capture_reads": 0,
+  "product_tests_executed": 0,
+  "network_requests": 0
+}

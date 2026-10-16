@@ -1,0 +1,11 @@
+--- initial/html_projection.py
++++ reviewed/html_projection.py
+@@ -38,6 +38,8 @@
+         if tag == 'title':self.title_open=False
+         if tag in self.stack:
+             depth=len(self.stack)-self.stack[::-1].index(tag)
++            if any(frame in SKIP for frame in self.stack[depth:]):
++                raise Blocked('HTML_CROSSED_SUPPRESSION')
+             while self.active and self.active[-1]['depth'] >= depth:
+                 block=self.active.pop()
+                 text=re.sub(r'\s+',' ',''.join(block.pop('parts'))).strip()

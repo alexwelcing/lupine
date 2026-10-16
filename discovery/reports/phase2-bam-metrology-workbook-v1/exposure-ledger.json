@@ -1,0 +1,22 @@
+{
+  "schema": "lupine.bam-metrology-exposure-ledger.v1",
+  "recorded_at": "2026-10-16T10:33:26.427869+00:00",
+  "scope": "Permanently exposed metrology reference, never fresh blind predictive evidence.",
+  "actual_network_requests": 1,
+  "redirects_followed": 0,
+  "retries": 0,
+  "whole_workbook_machine_bytes": 54960,
+  "raw_workbook_sha256": "6cc298fa9922c60fc923b11dbfaa788057cb23593153d68a9aa95226b1795a83",
+  "zip_member_names_machine_exposed": true,
+  "admitted_xml_parts_read_decoded_parsed": 20,
+  "shared_string_table_machine_exposed": true,
+  "worksheet_values_and_formula_text_machine_exposed": true,
+  "researcher_exposure": "Read source-bound internal projection selections including test IDs, actual strength/extension/area values, heating/rate/geometry conditions, composition entries including censored values, orientation angles, shared calibration/equipment/procedure prose, formula text and unverified caches. Initial broad non-numeric-text display was truncated and included documentary numeric examples and censored composition values; it was not a target-redacted or numerically empty read. Retained public metadata reread also exposed its measurement-uncertainty values, author identities and public contact fields. No contact roster is included in this report bundle.",
+  "formulas_executed": false,
+  "macros_executed": false,
+  "linked_LIS_images_standards_or_certificate_bodies_accessed": false,
+  "raw_workbook_or_full_projection_published": false,
+  "scientific_protocol_or_model_changed": false,
+  "reviewer_scope": "Independent pre-acquisition review used synthetic fixtures only. Post-acquisition reviewer is separately authorized to inspect retained projection/receipts; its actual reads are recorded in its result review.",
+  "limits": "Projection intentionally omits unsupported parts and row/column hidden attributes; absence from projection is not absence from all workbook/package semantics. No epistemic blindness or independence claim."
+}

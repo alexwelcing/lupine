@@ -1,0 +1,76 @@
+{
+  "schema": "lupine.discovery.recorder_static_review.v1",
+  "reviewer": "/root/phase2_planner/ui_review",
+  "reviewed_utc": "2026-10-16T10:35:21.764311+00:00",
+  "verdict": "NO_BLOCKER_IN_REVIEWED_CONTROLLED_OPERATOR_SCOPE",
+  "execution_performed": false,
+  "project_or_auditor_import_performed": false,
+  "private_source_receipt_or_capture_read": false,
+  "network_used": false,
+  "source": {
+    "path": ".cache/phase2-growth-artifact-review-v1/run_recorded.py",
+    "bytes": 6579,
+    "sha256": "681bdae3895b320274e898b819e9d8b092bb9edd76562c8c2e92dbcd9935f483"
+  },
+  "supporting_sources": [
+    {
+      "path": ".cache/phase2-growth-artifact-review-v1/run_recorded.py.diff",
+      "bytes": 10180,
+      "sha256": "23ea1dd76917bd27c2a16716eccf9edf11c711546e8454aded3ee9ef8822dc53"
+    },
+    {
+      "path": ".cache/phase2-growth-artifact-review-v1/README.md",
+      "bytes": 3451,
+      "sha256": "324d4af3c25342b11482d79b79555051be1984905ea5d502c319edbcb13e8dc9"
+    },
+    {
+      "path": ".cache/phase2-growth-artifact-review-v1/audit.py",
+      "bytes": 21353,
+      "sha256": "b81293cba3632449830932175e9fa938913650ade05f5e524b258aba78923119"
+    },
+    {
+      "path": ".cache/phase2-growth-artifact-review-v1/additive_audit.py",
+      "bytes": 10639,
+      "sha256": "22b3cbaa1335a85d81d79a11e6722f5fadd6db51854ca8c2de483a65d45528f7"
+    }
+  ],
+  "findings": [],
+  "confirmed": [
+    "Asserts enabled and argument/path checks precede child launch",
+    "Each child gets before/after script and reviewed-pin snapshots; invalid hashes/status prevent launch or force exit125",
+    "Timeout124, launch127 and child nonzero stop before next child; independent child_exit_code retained even when post-binding check overrides wrapper exit",
+    "Execution directory and recorder files are exclusive; auditor interfaces create their own output directories exclusively",
+    "Final label describes two zero process exits rather than claiming scientific or audit PASS; additive auditor separately checks full-review PASS and writes its own scoped result"
+  ],
+  "limits": [
+    {
+      "lines": [
+        59,
+        59
+      ],
+      "detail": "Recorder self-hash is captured from the current file at launch, not externally anchored to this review. Operator must compare the reviewed SHA before invocation; snapshots then establish unchanged bytes."
+    },
+    {
+      "lines": [
+        40,
+        145
+      ],
+      "detail": "Argument, directory, recorder-log or receipt I/O failure and external interruption can leave an incomplete record without final.json. Such incomplete output is not success and is not retried or overwritten."
+    },
+    {
+      "lines": [
+        117,
+        124
+      ],
+      "detail": "180-second timeout bounds the direct auditor process. No process-group/descendant termination, output-volume cap or hostile shared-filesystem race protection is claimed."
+    },
+    {
+      "lines": [
+        147,
+        152
+      ],
+      "detail": "BOTH_READ_ONLY_AUDIT_PROCESSES_EXITED_ZERO is a process outcome only. Operator must inspect both generated audit reviews and publication/package bindings before drawing an artifact-verification conclusion."
+    }
+  ],
+  "authorization_status": "Static preparation review only; root publication/package authorization still required before invocation"
+}

@@ -1,0 +1,10 @@
+{
+  "archive_profile_accepted": false,
+  "commit": "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace",
+  "finished_at": "2026-10-16T11:07:04.184508+00:00",
+  "public_sha256": "01cce9e57b26e204a9d31959f747768c70abf7543bedb6ab104b3b4b623f094f",
+  "reason": "ZIP_LAYOUT_UNSUPPORTED",
+  "scientific_schema_approved": false,
+  "scope": "Fixed-source local-growth envelope computational replay only; no worksheet or shared-string decoding, scientific schema and independence remain unestablished.",
+  "status": "COMPLETE_TWO_IDENTICAL_ENVELOPES"
+}

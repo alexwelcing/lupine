@@ -1,0 +1,14 @@
+{
+  "recorded_utc": "2026-10-16T10:52:49.695774+00:00",
+  "first_result": {
+    "methods": 26,
+    "failures": 2,
+    "errors": 0,
+    "forbidden_events": 0
+  },
+  "disposition": "Reviewer assertion defect: broad PRIVATE_ prefix matched the required PRIVATE_XML_DECODE_COMPLETED exposure enum, not the injected exception canary. Replace only with exact injected strings. First files/logs and snapshots preserved; no product change.",
+  "first_test_sha256": "114c0ace8ad7e8f8298a9eed2cb7d4169f402721baa6c72517a0e634a5ca8200",
+  "corrected_test_sha256": "5dab7d76aa409aa83dd4ff58a13316b84535c4b8818a891f81680704ecb2f2cd",
+  "candidate_unchanged_sha256": "5bfce76619655090d00670d2aba8cec17eef3764dcf23cf741b78b9f0d0d1e39",
+  "first_partial_read_test_limit": "The first loop stopped at its broad-prefix assertion after the read-failure case; the corrected invocation must exercise the close-failure case too."
+}

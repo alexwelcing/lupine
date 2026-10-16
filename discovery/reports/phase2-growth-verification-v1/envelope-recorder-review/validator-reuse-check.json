@@ -1,0 +1,7 @@
+{
+  "status": "PASS_STATIC_AST",
+  "only_name_changed": true,
+  "old_source_sha256": "c0e5e38f4669cd339002defd7c563afec6ea931525b4faad625c05fdd4af555d",
+  "new_source_sha256": "b13232eb55efec6a6fadfd5f900bc3f3fd9a2b44fa3ac91bb3a763e7c80a84b7",
+  "actual_operations": false
+}

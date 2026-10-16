@@ -1,0 +1,138 @@
+{
+  "schema": "lupine.nist-guidance-source-bindings.v1",
+  "created_at": "2026-10-16T10:56:54.124838+00:00",
+  "sources": [
+    {
+      "id": "section5",
+      "url": "https://www.nist.gov/pml/nist-technical-note-1297/nist-tn-1297-5-combined-standard-uncertainty",
+      "html_bytes": 93189,
+      "html_sha256": "42fb9ec839c7ec5e5e252c35799f58e75ecfe69ddfa14e17dff7ae94c5b353d4",
+      "raw_html_retained_ignored": ".cache/phase2-nist-metrology-guidance-v1/section5.html",
+      "projection_bytes": 24867,
+      "projection_sha256": "55ac1c31423de77157ebefa4a6defb036da1c2225acdfaa43ff2813900423397",
+      "full_projection_retained_ignored": ".cache/phase2-nist-metrology-guidance-v1/section5-projection.json",
+      "fetched_at": "2026-10-16T10:53:39.302991+00:00",
+      "status": "ACQUIRED_STATIC_TEXT",
+      "publisher_version_pin": false
+    },
+    {
+      "id": "section6",
+      "url": "https://www.nist.gov/pml/nist-technical-note-1297/nist-tn-1297-6-expanded-uncertainty",
+      "html_bytes": 92558,
+      "html_sha256": "40bdfd8fcd5e386406fe00e8a8b0593401035ac56a731d7a78b108fe87cb8041",
+      "raw_html_retained_ignored": ".cache/phase2-nist-metrology-guidance-v1/section6.html",
+      "projection_bytes": 23193,
+      "projection_sha256": "0d4581d0476cb1239270b605495ca6b4563e7fa6222d987ff479608073c8e0f3",
+      "full_projection_retained_ignored": ".cache/phase2-nist-metrology-guidance-v1/section6-projection.json",
+      "fetched_at": "2026-10-16T10:53:39.661622+00:00",
+      "status": "ACQUIRED_STATIC_TEXT",
+      "publisher_version_pin": false
+    }
+  ],
+  "bindings": [
+    {
+      "original_path": ".cache/phase2-nist-metrology-guidance-v1/scope.json",
+      "report_path": "scope.json",
+      "bytes": 2549,
+      "sha256": "aca351abbc6bbf5538e4bf48b220026d81f60efe7969454d23f50621cbd456d7"
+    },
+    {
+      "original_path": ".cache/phase2-nist-metrology-guidance-v1/html_projection.py",
+      "report_path": "html_projection.py",
+      "bytes": 2967,
+      "sha256": "472d445d8795fedad228aa5549a4d4701aa8ef1d6ee12d091ae631acaeb4abcd"
+    },
+    {
+      "original_path": ".cache/phase2-nist-metrology-guidance-v1/acquire.py",
+      "report_path": "acquire.py",
+      "bytes": 5394,
+      "sha256": "2702fe6786a6d9fc7afebe0803bf82a9cec0ed222e6d3bef2569f03b5202df0d"
+    },
+    {
+      "original_path": ".cache/phase2-nist-metrology-guidance-v1/request-slot.json",
+      "report_path": "request-slot.json",
+      "bytes": 290,
+      "sha256": "54ab570b14dc107056ff0b86f0e2ddac5d42299c893e743045d3a0712f81f3f3"
+    },
+    {
+      "original_path": ".cache/phase2-nist-metrology-guidance-v1/operation.json",
+      "report_path": "operation.json",
+      "bytes": 2563,
+      "sha256": "b4d3a743dbf19c02c485b6bc9d28289324403d0c077b37c7ff5b2d69ea69cb38"
+    },
+    {
+      "original_path": ".cache/phase2-nist-metrology-guidance-v1/section5-receipt.json",
+      "report_path": "section5-receipt.json",
+      "bytes": 1070,
+      "sha256": "5befde35ecef6564fedd5f3c06504d816c0bc8568f26c4efa53a152a165b0c3e"
+    },
+    {
+      "original_path": ".cache/phase2-nist-metrology-guidance-v1/section6-receipt.json",
+      "report_path": "section6-receipt.json",
+      "bytes": 1042,
+      "sha256": "f1baf2e4b3927e9954366a19931d2b2ced8f6c7c271d7a3a8153973870509176"
+    },
+    {
+      "original_path": ".cache/phase2-nist-metrology-guidance-v1/actual-first/execution.json",
+      "report_path": "actual-first/execution.json",
+      "bytes": 2138,
+      "sha256": "f539a20a5d76fa00606f3fd9295253186d2518837b1bdccd4a7161429f321d91"
+    },
+    {
+      "original_path": ".cache/phase2-nist-metrology-guidance-v1/actual-first/stdout.json",
+      "report_path": "actual-first/stdout.json",
+      "bytes": 2563,
+      "sha256": "b4d3a743dbf19c02c485b6bc9d28289324403d0c077b37c7ff5b2d69ea69cb38"
+    },
+    {
+      "original_path": ".cache/phase2-nist-metrology-guidance-v1/actual-first/stderr.txt",
+      "report_path": "actual-first/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original_path": ".cache/phase2-nist-metrology-guidance-v1/selected-guidance.json",
+      "report_path": "selected-guidance.json",
+      "bytes": 11504,
+      "sha256": "d9aed217f7c291077a060da7950be17a517144eba379d0d7a3dc5247b68a54ad"
+    },
+    {
+      "original_path": ".cache/phase2-nist-metrology-guidance-v1/exposure-ledger.json",
+      "report_path": "exposure-ledger.json",
+      "bytes": 794,
+      "sha256": "fb9d1f51bf7902193b402d7cd4535fd0a7abc39d8715ae05ddc5d904a6cc7b9a"
+    },
+    {
+      "original_path": ".cache/phase2-nist-metrology-guidance-v1/README.md",
+      "report_path": "README.md",
+      "bytes": 5726,
+      "sha256": "9f365d73c340bed7ccaf45777d07442b6b95026584a7665addddd3b5ae6798ac"
+    },
+    {
+      "original_path": ".cache/phase2-nist-metrology-guidance-v1/pre-acquisition-history.md",
+      "report_path": "pre-acquisition-history.md",
+      "bytes": 1912,
+      "sha256": "3da84992654654613bd443c1e360c25fe5973c2350f5c6057deda10f684f772f"
+    },
+    {
+      "original_path": ".cache/phase2-nist-metrology-guidance-v1/author-first/receipt.json",
+      "report_path": "author-first/receipt.json",
+      "bytes": 920,
+      "sha256": "732a862771e495e5800e63faec82e6acf7ef6a137dabef6faaa853250d36aa09"
+    },
+    {
+      "original_path": ".cache/phase2-nist-metrology-guidance-v1/author-suppression-repair/receipt.json",
+      "report_path": "author-suppression-repair/receipt.json",
+      "bytes": 920,
+      "sha256": "eb064ba468723b688dfece8478e031a6d054db0fd75b16e13266ef66d3b847a3"
+    },
+    {
+      "original_path": ".cache/phase2-nist-metrology-guidance-review-v1/preacquisition-review.json",
+      "report_path": "independent-review/preacquisition-review.json",
+      "bytes": 5009,
+      "sha256": "5280018cbe2fdb7df4988c5d8998afdaffa7359e94b5fccb3f504d5c880cfa89"
+    }
+  ],
+  "scope": "Official public source guidance; no measurement body. Raw HTML/full projections not published. Original execution paths remain original context; report paths map exact copied public artifacts.",
+  "scientific_limit": "Source authenticity/identity and guidance interpretation do not prove applicability to BAM, a selector or a prediction law."
+}

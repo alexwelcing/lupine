@@ -1,0 +1,101 @@
+{
+  "schema": "lupine.bam-metrology-review-artifact-bindings.v1",
+  "artifacts": [
+    {
+      "path": ".cache/phase2-bam-metrology-workbook-review-v1/check_actual_projection.py",
+      "bytes": 6442,
+      "sha256": "82ab1ec3c90e0545911b8eedc0aa59bd870a010a4fc9994a77d436079c506040"
+    },
+    {
+      "path": ".cache/phase2-bam-metrology-workbook-review-v1/actual-artifact-check.json",
+      "bytes": 3200,
+      "sha256": "af240cc467ac03df7f0ba7a70417b4fd34ca5e27a32dbc1c9ef98db6864f6081"
+    },
+    {
+      "path": ".cache/phase2-bam-metrology-workbook-review-v1/documentary-result-review.json",
+      "bytes": 7360,
+      "sha256": "ad90a6561cf69d743fcfa7078d1ce6e6a78af2fd4af0f49c253ba0a9efa0b498"
+    },
+    {
+      "path": ".cache/phase2-bam-metrology-workbook-review-v1/parent-claim-check.json",
+      "bytes": 823,
+      "sha256": "6b4a2c3eecc8fce7df457a57f298a3ae241abed0eaf0c758390aef16d500e246"
+    },
+    {
+      "path": ".cache/phase2-bam-metrology-workbook-review-v1/result-review.json",
+      "bytes": 4564,
+      "sha256": "2a74bb0c25f236d539b98ea53ebf6b75648d649066ef6e89be30db7effb60c30"
+    },
+    {
+      "path": ".cache/phase2-bam-metrology-workbook-review-v1/reviewed-documentary-claims/documentary-findings.json",
+      "bytes": 13904,
+      "sha256": "245a6cbf65a43adaf96e3feae9af23b394c0f06bf5aeb580f574cb5de49609ed"
+    },
+    {
+      "path": ".cache/phase2-bam-metrology-workbook-review-v1/reviewed-documentary-claims/documentary-search.json",
+      "bytes": 1686,
+      "sha256": "2f2f93ebf1d7cb9f5c5ac0c20e06f7c26ef5a8a46889696c3a891a7217f5bc7a"
+    },
+    {
+      "path": ".cache/phase2-bam-metrology-workbook-review-v1/reviewed-documentary-claims/README.md",
+      "bytes": 6220,
+      "sha256": "cad9aec959b34c7e6fc4dd4e98bf022ac93745d2192be28dbe263c1d33b8a233"
+    },
+    {
+      "path": ".cache/phase2-bam-metrology-workbook-review-v1/reviewed-documentary-claims/exposure-ledger.json",
+      "bytes": 1980,
+      "sha256": "f14be07c1f43196f864fa03c4c19156bca8fc0320925000394d50cf21eaf9f61"
+    },
+    {
+      "path": ".cache/phase2-bam-metrology-workbook-v1/scope.json",
+      "bytes": 7671,
+      "sha256": "ba4fc7fffc4a47933185c8dcd3d3224131ae64b0e4a7b6a7219df2da96d1a789"
+    },
+    {
+      "path": ".cache/phase2-bam-metrology-workbook-v1/workbook_reader.py",
+      "bytes": 14884,
+      "sha256": "d56939ba593414fbf751b5eab59d4ae5ab556513ce8b3108b4dc7305c8bef25c"
+    },
+    {
+      "path": ".cache/phase2-bam-metrology-workbook-v1/acquire_and_inspect.py",
+      "bytes": 6453,
+      "sha256": "b9b726c7627b26938a91277b9b0e1f177aa001730c5ae503d7cd0d48b9011a56"
+    },
+    {
+      "path": ".cache/phase2-bam-metrology-workbook-v1/request-slot.json",
+      "bytes": 460,
+      "sha256": "59e5c4d0b6cbf7c7b44b8b9118eb54f989a14aecbbdd2149e3b464ae39babb22"
+    },
+    {
+      "path": ".cache/phase2-bam-metrology-workbook-v1/acquisition.json",
+      "bytes": 1159,
+      "sha256": "ada0a1c180288cc4d44a83ef4d8ce61b97c6752b21dc1592ea9864f7bb65fefa"
+    },
+    {
+      "path": ".cache/phase2-bam-metrology-workbook-v1/result.json",
+      "bytes": 1217,
+      "sha256": "f96cdfc7ead2bc4d4ef6264b09da376fe68af9369906131f306573ffb8eb36d4"
+    },
+    {
+      "path": ".cache/phase2-bam-metrology-workbook-v1/actual-first/execution.json",
+      "bytes": 1810,
+      "sha256": "7bddd74d59aad721f96b8e8f314857c7f40db3bbec9a71076e1f21211986b598"
+    },
+    {
+      "path": ".cache/phase2-bam-metrology-workbook-v1/actual-first/stdout.json",
+      "bytes": 2524,
+      "sha256": "40e8ccabd5f87b8140ff39f7c9f123c7784ea875d6ff82cad4df5829d6640ecb"
+    },
+    {
+      "path": ".cache/phase2-bam-metrology-workbook-v1/actual-first/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "ignored_source_projection": {
+    "path": ".cache/phase2-bam-metrology-workbook-v1/internal-workbook-projection.json",
+    "bytes": 760280,
+    "sha256": "4a0c0165e980e2e40418dac63f161215a04ab955aeff750193030cbd7c6e44e1",
+    "publication": "IGNORED_ONLY; bound source, do not copy or publish full projection"
+  }
+}

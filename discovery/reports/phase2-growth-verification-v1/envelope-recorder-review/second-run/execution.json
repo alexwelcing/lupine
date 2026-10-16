@@ -1,0 +1,80 @@
+{
+  "after": [
+    {
+      "bytes": 16010,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-envelope-recorder-review-v1/test_recorder.py",
+      "sha256": "29a4137cb59dec6a6129b4870ea269df411cb8e58d6abf28d75a1371094d691c"
+    },
+    {
+      "bytes": 29657,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-envelope-operations-v1/run_after_ci.py",
+      "sha256": "b13232eb55efec6a6fadfd5f900bc3f3fd9a2b44fa3ac91bb3a763e7c80a84b7"
+    },
+    {
+      "bytes": 20556,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-hint-production-candidate-v1/promotion/scripts/li_v3_growth_hint_shape.py",
+      "sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a"
+    },
+    {
+      "bytes": 20609,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-envelope-candidate-v1/promotion/scripts/li_v3_growth_envelope.py",
+      "sha256": "f50069d028526ea045441a2e574a26192a210ff78ba34f5170777d32f5692ec3"
+    },
+    {
+      "bytes": 30722,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-envelope-candidate-v1/promotion/tests/test_li_v3_growth_envelope.py",
+      "sha256": "f569d732f02d90233fd20e9d5bf14ab9bb29337c09022093e15320af031523f1"
+    }
+  ],
+  "before": [
+    {
+      "bytes": 16010,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-envelope-recorder-review-v1/test_recorder.py",
+      "sha256": "29a4137cb59dec6a6129b4870ea269df411cb8e58d6abf28d75a1371094d691c"
+    },
+    {
+      "bytes": 29657,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-envelope-operations-v1/run_after_ci.py",
+      "sha256": "b13232eb55efec6a6fadfd5f900bc3f3fd9a2b44fa3ac91bb3a763e7c80a84b7"
+    },
+    {
+      "bytes": 20556,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-hint-production-candidate-v1/promotion/scripts/li_v3_growth_hint_shape.py",
+      "sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a"
+    },
+    {
+      "bytes": 20609,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-envelope-candidate-v1/promotion/scripts/li_v3_growth_envelope.py",
+      "sha256": "f50069d028526ea045441a2e574a26192a210ff78ba34f5170777d32f5692ec3"
+    },
+    {
+      "bytes": 30722,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-envelope-candidate-v1/promotion/tests/test_li_v3_growth_envelope.py",
+      "sha256": "f569d732f02d90233fd20e9d5bf14ab9bb29337c09022093e15320af031523f1"
+    }
+  ],
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-B",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-envelope-recorder-review-v1/test_recorder.py",
+    "-v"
+  ],
+  "cwd": "/workspace/lupine-discovery-branch/discovery",
+  "elapsed_seconds": 0.6900147060005111,
+  "exit_code": 0,
+  "finished_at": "2026-10-16T10:36:12.090792+00:00",
+  "outcome": "completed",
+  "schema": "lupine.discovery.growth_envelope_recorder_gate_review_execution.v1",
+  "scope": "AST-extracted recorder helpers, generated reports and mocked CI/state/import/process/source dependencies; only synthetic stdout/stderr files written, no recorder main module import or real source operation.",
+  "started_at": "2026-10-16T10:36:11.400794+00:00",
+  "stderr": {
+    "bytes": 1689,
+    "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-envelope-recorder-review-v1/second-run/stderr.txt",
+    "sha256": "3f583eaa1c659a74131b22924d89da6afd4f0adeeca91b26d2a4cdcec8f690a5"
+  },
+  "stdout": {
+    "bytes": 0,
+    "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-envelope-recorder-review-v1/second-run/stdout.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

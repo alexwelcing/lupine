@@ -1,0 +1,56 @@
+{
+  "schema": "lupine.nist-guidance-actual-invocation.v1",
+  "command": [
+    "python",
+    ".cache/phase2-nist-metrology-guidance-v1/acquire.py"
+  ],
+  "cwd": "/workspace/lupine-discovery-branch/discovery",
+  "started_at": "2026-10-16T10:53:39.175120+00:00",
+  "finished_at": "2026-10-16T10:53:40.520092+00:00",
+  "elapsed_seconds": 1.3421884439994756,
+  "exit_code": 0,
+  "review_sha256": "5280018cbe2fdb7df4988c5d8998afdaffa7359e94b5fccb3f504d5c880cfa89",
+  "held_source_sha256": {
+    "scope.json": "aca351abbc6bbf5538e4bf48b220026d81f60efe7969454d23f50621cbd456d7",
+    "html_projection.py": "472d445d8795fedad228aa5549a4d4701aa8ef1d6ee12d091ae631acaeb4abcd",
+    "acquire.py": "2702fe6786a6d9fc7afebe0803bf82a9cec0ed222e6d3bef2569f03b5202df0d"
+  },
+  "sources_unchanged": true,
+  "stdout_sha256": "b4d3a743dbf19c02c485b6bc9d28289324403d0c077b37c7ff5b2d69ea69cb38",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "outputs": {
+    "request-slot.json": {
+      "bytes": 290,
+      "sha256": "54ab570b14dc107056ff0b86f0e2ddac5d42299c893e743045d3a0712f81f3f3"
+    },
+    "operation.json": {
+      "bytes": 2563,
+      "sha256": "b4d3a743dbf19c02c485b6bc9d28289324403d0c077b37c7ff5b2d69ea69cb38"
+    },
+    "section5.html": {
+      "bytes": 93189,
+      "sha256": "42fb9ec839c7ec5e5e252c35799f58e75ecfe69ddfa14e17dff7ae94c5b353d4"
+    },
+    "section5-projection.json": {
+      "bytes": 24867,
+      "sha256": "55ac1c31423de77157ebefa4a6defb036da1c2225acdfaa43ff2813900423397"
+    },
+    "section5-receipt.json": {
+      "bytes": 1070,
+      "sha256": "5befde35ecef6564fedd5f3c06504d816c0bc8568f26c4efa53a152a165b0c3e"
+    },
+    "section6.html": {
+      "bytes": 92558,
+      "sha256": "40bdfd8fcd5e386406fe00e8a8b0593401035ac56a731d7a78b108fe87cb8041"
+    },
+    "section6-projection.json": {
+      "bytes": 23193,
+      "sha256": "0d4581d0476cb1239270b605495ca6b4563e7fa6222d987ff479608073c8e0f3"
+    },
+    "section6-receipt.json": {
+      "bytes": 1042,
+      "sha256": "f1baf2e4b3927e9954366a19931d2b2ced8f6c7c271d7a3a8153973870509176"
+    }
+  },
+  "new_measurement_source_access": false
+}

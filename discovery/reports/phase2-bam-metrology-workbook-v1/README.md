@@ -1,0 +1,31 @@
+# BAM selected-results workbook: exposed metrology reference
+
+The pinned workbook establishes documentary pairing of current-test `Rp0.2`, `Rm`, `Z`, `Agt` and `Ag` for three named test records. It does not supply an explicit per-test uncertainty budget or covariance model in the admitted projection. This source and its derivatives are permanently exposed and excluded from any new blind predictive benchmark. G20 uncertainty/lineage questions and G21 evaluation design remain unresolved.
+
+The source is Ávila Calderón et al., *BAM Reference Data: High Temperature Tensile Data of Single-Crystal Ni-Based Superalloy CMSX-6*, version 1.0, [DOI 10.5281/zenodo.17846617](https://doi.org/10.5281/zenodo.17846617). The record declares [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). This report is our paraphrase with selected factual labels and conditions; it omits raw workbook bytes, the complete cell projection, contact information and performance tables. No license inference is made for cited standards or linked materials, which were not acquired.
+
+One reviewed GET ran on 2026-10-16 at 10:29:25–10:29:26 UTC. It returned HTTP 200 and exactly 54,960 bytes, with the expected publisher MD5 `e85ef58139a68592f36452de195a0a10`. The observed SHA256 is `6cc298fa9922c60fc923b11dbfaa788057cb23593153d68a9aa95226b1795a83`. The [acquisition receipt](acquisition.json), [bounded projection result](result.json) and [execution receipt](actual-first/execution.json) record the actual operation. There was no redirect, retry or linked-source request. Twenty XML parts were parsed; nine sheets, 2,409 explicitly stored cells and two formula cells were projected. These are document counts, not independent experimental units. All formulas remained unexecuted; stored caches were unverified.
+
+The [cited findings](documentary-findings.json) bind each statement to exact sheets/cells or retained record metadata. Each of `Vh5205_T-71`, `Vh5205_T-74` and `Vh5205_T-84` has matching Test ID and Test piece ID in F3/F4. The record description states that these are individual-test sheets and that `Common-to-all` applies to the campaign.
+
+| Documented endpoint | Symbol and unit | Cells in each test sheet |
+| --- | --- | --- |
+| Proof strength | `Rp0.2`, MPa | B13/C13/D13; literal result F13 |
+| Tensile strength | `Rm`, MPa | B14/C14/D14; literal result F14 |
+| Reduction of area | `Z`, % | B15/C15/D15; literal result F15 |
+| Total extension at maximum force | `Agt`, % | B16/C16/D16; literal result F16 |
+| Plastic extension at maximum force | `Ag`, % | B17/C17/D17; literal result F17 |
+
+The current-test proof level is directly labelled `Rp0.2`; it is not inferred from the separate room-temperature material-history field. `Common-to-all` identifies CMSX-6 and a specified temperature of 980 with unit `℃` (F16, B6/D6/F6), and names DIN EN ISO 6892-2:2018-09 and Method A (F5/F8). This XLSX evidence does not repair the separate CSV schema's unresolved encoding or question-mark unit fields.
+
+After-fracture elongation `A` remains unavailable: the common sheet says its determination requirement was not met, describes fracture outside the extensometer gauge length, and says final gauge length was not measurable (F209/F210/F217). `Agt`, `Ag` and `Z` must not be substituted for `A`.
+
+The retained record description, rather than workbook cells, reports campaign maxima of total expanded measurement uncertainty for `Rm`, `Rp0.2` and `Z`, with stated 95% confidence and `k=2`. Its percentage columns give 1.2, 1.2 and `max. 0.5`, respectively. This does not provide per-test component budgets, prediction intervals, covariance or simultaneous coverage. The `Z` percentage convention remains unconverted; no percentage-point interpretation is imposed. A [scoped search](documentary-search.json) of projected values, formula text and ordinary comments found no uncertainty, covariance, correlation, coverage, confidence or standard-deviation terminology. That is not a claim about unparsed parts, linked data or unrequested standards/certificates.
+
+The common sheet documents shared equipment and procedures, including stress calculated from force divided by original cross-sectional area, plus calibration status/classes and software (F87/F109/F142/F197/F199). These identify possible common-error sources without quantifying their dependence. The cited calibration certificate cells are blank. Temperature traceability is marked Yes, yet calibration correction is not included in the indicated temperature (F104/F105); F195 says temperature was displayed without continuous recording. No correction or time series was reconstructed.
+
+`Roughness` carries the same full test IDs. `Single_crystal_orientation` uses numeric specimen numbers 71, 74 and 84; no suffix-based identity normalization was performed. The common material preparation and history do not establish independent casts/heats or a sampling frame. The two formula cells are `Heat_treatment!B24/B25`; their text and unverified caches are kept distinct, and no spreadsheet calculation or display-format conversion ran.
+
+The [frozen scope](scope.json) and [pre-acquisition history](pre-acquisition-history.md) preserve the first reader and transport shortcomings, their repairs and all actual synthetic results. Independent review found a durable-request reservation gap, a UTF-16/DOCTYPE bypass, a missed OLE content type and ambiguous text handling; all were repaired before acquisition. The first independent run's three source failures and one reviewer fixture error remain recorded. Final unchanged executables passed 16 author and 50 independent synthetic tests. Those tests establish bounded reader behavior, not metrological or predictive validity. A later wording-only scope correction distinguishes worksheet hidden state from unprojected row/column hidden attributes.
+
+The next admissible use is exposed-reference engineering work around documented labels, units, pairing and missingness. A scientific evaluation would still need a justified inference target, uncertainty/dependence information and lineage evidence. No model, fit, criterion, threshold, allocation, eligibility rule or benchmark protocol was selected or changed here.

@@ -1,0 +1,9 @@
+{
+  "actual_invocations": 0,
+  "bound_sha256": "bf5d4bd82a840aaf8514265ae5a93ecdd152032840d6efcb129f3be9bb24b4a8",
+  "commit": "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace",
+  "normalized_ast_identical": true,
+  "only_commit_literal_changed": true,
+  "prior_reviewed_sha256": "c0e5e38f4669cd339002defd7c563afec6ea931525b4faad625c05fdd4af555d",
+  "recorded_at": "2026-10-16T10:41:14.364893+00:00"
+}

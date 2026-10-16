@@ -1,0 +1,2850 @@
+{
+  "copies": [
+    {
+      "bytes": 3108,
+      "original": ".cache/phase2-growth-release-v1/package.py",
+      "published_relative": "reports/phase2-growth-verification-v1/release/package.py",
+      "sha256": "f14daacf0d38f5ccfd63c7da483b4f754a832096e77cdffed9ae05b8a8cd007e"
+    },
+    {
+      "bytes": 261,
+      "original": ".cache/phase2-growth-release-v1/published.json",
+      "published_relative": "reports/phase2-growth-verification-v1/release/published.json",
+      "sha256": "8519c0ccf75da39a9d242ae809de9c235d6271d32c92ee29db26843609ab1ef9"
+    },
+    {
+      "bytes": 57909,
+      "original": ".cache/phase2-growth-release-v1/publication-commands.jsonl",
+      "published_relative": "reports/phase2-growth-verification-v1/release/publication-commands.jsonl",
+      "sha256": "667be65cdf77c2302a2efe32d794d974e454bcd34a72e40824ddc4bb7e1c5452"
+    },
+    {
+      "bytes": 1210,
+      "original": ".cache/phase2-growth-release-v1/final-reviewed-pins.json",
+      "published_relative": "reports/phase2-growth-verification-v1/release/final-reviewed-pins.json",
+      "sha256": "f65508a95077542381e000102ba2eb460ad080b058d8204a00ee34b74c9577e7"
+    },
+    {
+      "bytes": 2561,
+      "original": ".cache/phase2-growth-release-v1/pr-body.json",
+      "published_relative": "reports/phase2-growth-verification-v1/release/pr-body.json",
+      "sha256": "75cdceb440662116656c7263bd28a7cd8ef983c9989873072455c6cc79ea6ff6"
+    },
+    {
+      "bytes": 312,
+      "original": ".cache/phase2-growth-release-v1/pr-verified.json",
+      "published_relative": "reports/phase2-growth-verification-v1/release/pr-verified.json",
+      "sha256": "aaa5daf2dbc955ffa1095fd1661ae7f03db38e04f643bb0a93a163bfe7b32dbd"
+    },
+    {
+      "bytes": 1986,
+      "original": ".cache/phase2-growth-release-v1/bind_operation_recorders.py",
+      "published_relative": "reports/phase2-growth-verification-v1/release/bind_operation_recorders.py",
+      "sha256": "2637ab6d0b1fc177f19addfd67916f4296bd50bc8fa4f99fe111a0f39e157e3b"
+    },
+    {
+      "bytes": 78744,
+      "original": ".cache/phase2-growth-clean-package-v1/0-execution.json",
+      "published_relative": "reports/phase2-growth-verification-v1/clean-package/0-execution.json",
+      "sha256": "f7879f390bd965ba3ba05f5f0bcdffd45758315ff73ed94caae002a8131b002e"
+    },
+    {
+      "bytes": 368,
+      "original": ".cache/phase2-growth-clean-package-v1/0-start.json",
+      "published_relative": "reports/phase2-growth-verification-v1/clean-package/0-start.json",
+      "sha256": "1445902760136954f05ea4c42b1fac552c40f33f09cec195312d594f6212ba14"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-growth-clean-package-v1/0-stderr.txt",
+      "published_relative": "reports/phase2-growth-verification-v1/clean-package/0-stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 1240,
+      "original": ".cache/phase2-growth-clean-package-v1/0-stdout.txt",
+      "published_relative": "reports/phase2-growth-verification-v1/clean-package/0-stdout.txt",
+      "sha256": "59277c822ac9141d9bc4d24e019211c1715ee779f27cd6c716aebf9f4ec6ec27"
+    },
+    {
+      "bytes": 78814,
+      "original": ".cache/phase2-growth-clean-package-v1/1-execution.json",
+      "published_relative": "reports/phase2-growth-verification-v1/clean-package/1-execution.json",
+      "sha256": "a8233ae5eeb34f57b4fb7bc786a7477ae0dc9b8edb77ed28b169d385ae81fae0"
+    },
+    {
+      "bytes": 437,
+      "original": ".cache/phase2-growth-clean-package-v1/1-start.json",
+      "published_relative": "reports/phase2-growth-verification-v1/clean-package/1-start.json",
+      "sha256": "9640574e196d37605811dda4d2ac42424c66a12dd458a34df1e4908e27b2ee30"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-growth-clean-package-v1/1-stderr.txt",
+      "published_relative": "reports/phase2-growth-verification-v1/clean-package/1-stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 3676,
+      "original": ".cache/phase2-growth-clean-package-v1/1-stdout.txt",
+      "published_relative": "reports/phase2-growth-verification-v1/clean-package/1-stdout.txt",
+      "sha256": "142f2e0e252cb5b2787d483324bbc8d1b6918149a30902d7038bfd1b1dba47be"
+    },
+    {
+      "bytes": 3451,
+      "original": ".cache/phase2-growth-artifact-review-v1/README.md",
+      "published_relative": "reports/phase2-growth-verification-v1/artifact-review/README.md",
+      "sha256": "324d4af3c25342b11482d79b79555051be1984905ea5d502c319edbcb13e8dc9"
+    },
+    {
+      "bytes": 10870,
+      "original": ".cache/phase2-growth-artifact-review-v1/actual-c17c4c6b152a/review.json",
+      "published_relative": "reports/phase2-growth-verification-v1/artifact-review/actual-c17c4c6b152a/review.json",
+      "sha256": "59074b0b245d47caa13410841a87319e2cf079005e692e4bab9352810d2b11fd"
+    },
+    {
+      "bytes": 11534,
+      "original": ".cache/phase2-growth-artifact-review-v1/additive-c17c4c6b152a/additive-review.json",
+      "published_relative": "reports/phase2-growth-verification-v1/artifact-review/additive-c17c4c6b152a/additive-review.json",
+      "sha256": "4e90e28fa6889360346982c602497c8e3c3d58a9e83d040d184bfa7328537f6f"
+    },
+    {
+      "bytes": 10639,
+      "original": ".cache/phase2-growth-artifact-review-v1/additive_audit.py",
+      "published_relative": "reports/phase2-growth-verification-v1/artifact-review/additive_audit.py",
+      "sha256": "22b3cbaa1335a85d81d79a11e6722f5fadd6db51854ca8c2de483a65d45528f7"
+    },
+    {
+      "bytes": 5494,
+      "original": ".cache/phase2-growth-artifact-review-v1/additive_audit.py.diff",
+      "published_relative": "reports/phase2-growth-verification-v1/artifact-review/additive_audit.py.diff",
+      "sha256": "2cc8c9cf5808eff01d4a4f5fa27f98d4d2bb9feac124d36fe97510d94c192bba"
+    },
+    {
+      "bytes": 21353,
+      "original": ".cache/phase2-growth-artifact-review-v1/audit.py",
+      "published_relative": "reports/phase2-growth-verification-v1/artifact-review/audit.py",
+      "sha256": "b81293cba3632449830932175e9fa938913650ade05f5e524b258aba78923119"
+    },
+    {
+      "bytes": 3014,
+      "original": ".cache/phase2-growth-artifact-review-v1/execution-c17c4c6b152a/0-execution.json",
+      "published_relative": "reports/phase2-growth-verification-v1/artifact-review/execution-c17c4c6b152a/0-execution.json",
+      "sha256": "04e51bab14eb01ce2d59cca28d3cc31557ff45f1dd173ba7b4bcb2e92675f1d2"
+    },
+    {
+      "bytes": 1805,
+      "original": ".cache/phase2-growth-artifact-review-v1/execution-c17c4c6b152a/0-start.json",
+      "published_relative": "reports/phase2-growth-verification-v1/artifact-review/execution-c17c4c6b152a/0-start.json",
+      "sha256": "944faa1d0ceb253b06a9226ea096cfc2627288e1ff663045d5264ab5e1e7ad54"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-growth-artifact-review-v1/execution-c17c4c6b152a/0-stderr.txt",
+      "published_relative": "reports/phase2-growth-verification-v1/artifact-review/execution-c17c4c6b152a/0-stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 10870,
+      "original": ".cache/phase2-growth-artifact-review-v1/execution-c17c4c6b152a/0-stdout.txt",
+      "published_relative": "reports/phase2-growth-verification-v1/artifact-review/execution-c17c4c6b152a/0-stdout.txt",
+      "sha256": "59074b0b245d47caa13410841a87319e2cf079005e692e4bab9352810d2b11fd"
+    },
+    {
+      "bytes": 3404,
+      "original": ".cache/phase2-growth-artifact-review-v1/execution-c17c4c6b152a/1-execution.json",
+      "published_relative": "reports/phase2-growth-verification-v1/artifact-review/execution-c17c4c6b152a/1-execution.json",
+      "sha256": "d4bbd0202a10b395bb21629430b40fa9611bb0872892c67930a45c7508045f25"
+    },
+    {
+      "bytes": 2195,
+      "original": ".cache/phase2-growth-artifact-review-v1/execution-c17c4c6b152a/1-start.json",
+      "published_relative": "reports/phase2-growth-verification-v1/artifact-review/execution-c17c4c6b152a/1-start.json",
+      "sha256": "edd685e4b67f7199e60ae92a0afb9dfeb8fa4ab2647759e894187bcc65a9ecf1"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-growth-artifact-review-v1/execution-c17c4c6b152a/1-stderr.txt",
+      "published_relative": "reports/phase2-growth-verification-v1/artifact-review/execution-c17c4c6b152a/1-stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 11534,
+      "original": ".cache/phase2-growth-artifact-review-v1/execution-c17c4c6b152a/1-stdout.txt",
+      "published_relative": "reports/phase2-growth-verification-v1/artifact-review/execution-c17c4c6b152a/1-stdout.txt",
+      "sha256": "4e90e28fa6889360346982c602497c8e3c3d58a9e83d040d184bfa7328537f6f"
+    },
+    {
+      "bytes": 488,
+      "original": ".cache/phase2-growth-artifact-review-v1/execution-c17c4c6b152a/final.json",
+      "published_relative": "reports/phase2-growth-verification-v1/artifact-review/execution-c17c4c6b152a/final.json",
+      "sha256": "5551bfcce60e55346bf9f832cd4d4824d061c011c451fb28127a0aff2039f9bd"
+    },
+    {
+      "bytes": 1249,
+      "original": ".cache/phase2-growth-artifact-review-v1/independent-recorder-review/README.md",
+      "published_relative": "reports/phase2-growth-verification-v1/artifact-review/independent-recorder-review/README.md",
+      "sha256": "ce1261b9922f494cbdc87a8406d37c25d455ea75f7f5d18d866fc2774df5db71"
+    },
+    {
+      "bytes": 324,
+      "original": ".cache/phase2-growth-artifact-review-v1/independent-recorder-review/inventory.json",
+      "published_relative": "reports/phase2-growth-verification-v1/artifact-review/independent-recorder-review/inventory.json",
+      "sha256": "c50ade4ffb3305c38ac1754ab3b9f2e0748fcb94cc4994fc0f077d8bb16b143a"
+    },
+    {
+      "bytes": 3329,
+      "original": ".cache/phase2-growth-artifact-review-v1/independent-recorder-review/review.json",
+      "published_relative": "reports/phase2-growth-verification-v1/artifact-review/independent-recorder-review/review.json",
+      "sha256": "b6776110623f474328722917203156e705e8ec1aaaf2838bf6f026e86e0a387a"
+    },
+    {
+      "bytes": 1068,
+      "original": ".cache/phase2-growth-artifact-review-v1/independent-source-review/README.md",
+      "published_relative": "reports/phase2-growth-verification-v1/artifact-review/independent-source-review/README.md",
+      "sha256": "919c87daffe3094563b42717eee8c49d232304d511f574707953bda5dac4408a"
+    },
+    {
+      "bytes": 2871,
+      "original": ".cache/phase2-growth-artifact-review-v1/independent-source-review/bindings.json",
+      "published_relative": "reports/phase2-growth-verification-v1/artifact-review/independent-source-review/bindings.json",
+      "sha256": "cdabfb1c8a4c69cced830be66e3261a7218e08105d6c2765c2233ea4afbd34a1"
+    },
+    {
+      "bytes": 733,
+      "original": ".cache/phase2-growth-artifact-review-v1/independent-source-review/inventory.json",
+      "published_relative": "reports/phase2-growth-verification-v1/artifact-review/independent-source-review/inventory.json",
+      "sha256": "1d25e12e0c7718d9f6c542b17155168fca97f15f9d90b0c14ae5f095ef01dd42"
+    },
+    {
+      "bytes": 5753,
+      "original": ".cache/phase2-growth-artifact-review-v1/independent-source-review/review.json",
+      "published_relative": "reports/phase2-growth-verification-v1/artifact-review/independent-source-review/review.json",
+      "sha256": "b9a78915000f80986f10dcb6d8799f237af3198b6d7b36cf01f49d9b79d09a64"
+    },
+    {
+      "bytes": 10202,
+      "original": ".cache/phase2-growth-artifact-review-v1/preparation.json",
+      "published_relative": "reports/phase2-growth-verification-v1/artifact-review/preparation.json",
+      "sha256": "f588be56121004185bf4af7642774dd951834f6bb963466736572e77cf2e15b5"
+    },
+    {
+      "bytes": 10238,
+      "original": ".cache/phase2-growth-artifact-review-v1/prior-additive_audit.py",
+      "published_relative": "reports/phase2-growth-verification-v1/artifact-review/prior-additive_audit.py",
+      "sha256": "6b267cd11a73b0f73c63a7b9ae2ba75d30f9699edf14e41c5fd1f98f4932ce2a"
+    },
+    {
+      "bytes": 3494,
+      "original": ".cache/phase2-growth-artifact-review-v1/prior-run_recorded.py",
+      "published_relative": "reports/phase2-growth-verification-v1/artifact-review/prior-run_recorded.py",
+      "sha256": "e883b0fe298d137e3b68d7ca0a27d52a400ae7e59c41deb2608389233f132557"
+    },
+    {
+      "bytes": 6579,
+      "original": ".cache/phase2-growth-artifact-review-v1/run_recorded.py",
+      "published_relative": "reports/phase2-growth-verification-v1/artifact-review/run_recorded.py",
+      "sha256": "681bdae3895b320274e898b819e9d8b092bb9edd76562c8c2e92dbcd9935f483"
+    },
+    {
+      "bytes": 10180,
+      "original": ".cache/phase2-growth-artifact-review-v1/run_recorded.py.diff",
+      "published_relative": "reports/phase2-growth-verification-v1/artifact-review/run_recorded.py.diff",
+      "sha256": "23ea1dd76917bd27c2a16716eccf9edf11c711546e8454aded3ee9ef8822dc53"
+    },
+    {
+      "bytes": 1666,
+      "original": ".cache/phase2-growth-shape-recorder-review-v1/README.md",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-recorder-review/README.md",
+      "sha256": "a670d502e14c651821e0292cb826cf1984cdfa456f3de0a81a4166a1b45fdf22"
+    },
+    {
+      "bytes": 14653,
+      "original": ".cache/phase2-growth-shape-recorder-review-v1/first-run/0-test_recorder.py",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-recorder-review/first-run/0-test_recorder.py",
+      "sha256": "43a21d9ee7ce5d01f54d8ca5ab8d8ea970a086fbd6494e919bd3e0f7b0bb20ae"
+    },
+    {
+      "bytes": 18674,
+      "original": ".cache/phase2-growth-shape-recorder-review-v1/first-run/1-run_after_ci.py",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-recorder-review/first-run/1-run_after_ci.py",
+      "sha256": "c0e5e38f4669cd339002defd7c563afec6ea931525b4faad625c05fdd4af555d"
+    },
+    {
+      "bytes": 20556,
+      "original": ".cache/phase2-growth-shape-recorder-review-v1/first-run/2-li_v3_growth_hint_shape.py",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-recorder-review/first-run/2-li_v3_growth_hint_shape.py",
+      "sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a"
+    },
+    {
+      "bytes": 28369,
+      "original": ".cache/phase2-growth-shape-recorder-review-v1/first-run/3-test_li_v3_growth_hint_shape.py",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-recorder-review/first-run/3-test_li_v3_growth_hint_shape.py",
+      "sha256": "1f863ee2f1eefd54919767f7b4c75b6d460332d50f6234103dd47e586557685e"
+    },
+    {
+      "bytes": 3376,
+      "original": ".cache/phase2-growth-shape-recorder-review-v1/first-run/execution.json",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-recorder-review/first-run/execution.json",
+      "sha256": "aa9dfc867aa4d5e28e98adc1e25887f924ada8ec0cb02898916af6bc840d18e7"
+    },
+    {
+      "bytes": 4731,
+      "original": ".cache/phase2-growth-shape-recorder-review-v1/first-run/stderr.txt",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-recorder-review/first-run/stderr.txt",
+      "sha256": "abe232107fbc4950fd089e861d20ad47dbcd0c2568709e6d2861744fcb48e574"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-growth-shape-recorder-review-v1/first-run/stdout.txt",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-recorder-review/first-run/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 689,
+      "original": ".cache/phase2-growth-shape-recorder-review-v1/fixture-correction.diff",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-recorder-review/fixture-correction.diff",
+      "sha256": "4449be1d77f03eb77297855bdbd5c0a603040e880de0386186332dc184cbe8dd"
+    },
+    {
+      "bytes": 532,
+      "original": ".cache/phase2-growth-shape-recorder-review-v1/fixture-correction.json",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-recorder-review/fixture-correction.json",
+      "sha256": "28fd6622bde12ea69333b46b0f8607b5f8982c0434078f951af45c1edc6a11ae"
+    },
+    {
+      "bytes": 4385,
+      "original": ".cache/phase2-growth-shape-recorder-review-v1/inventory.json",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-recorder-review/inventory.json",
+      "sha256": "ccfdb4324c8e9959e5cf9b43e3f9ca1338073b74f0d6a8e05fd88a89a13c788d"
+    },
+    {
+      "bytes": 3878,
+      "original": ".cache/phase2-growth-shape-recorder-review-v1/review.json",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-recorder-review/review.json",
+      "sha256": "a5ba5758bde1980bb5696f269970f66369c5327be4b522566f6fa9c160c77d80"
+    },
+    {
+      "bytes": 2157,
+      "original": ".cache/phase2-growth-shape-recorder-review-v1/run_review.py",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-recorder-review/run_review.py",
+      "sha256": "b070831993d179981b85dd29042d7ab515bf18204d02ca9992c9b68e65a4ee7e"
+    },
+    {
+      "bytes": 2156,
+      "original": ".cache/phase2-growth-shape-recorder-review-v1/run_review_first.py",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-recorder-review/run_review_first.py",
+      "sha256": "e13d51310aa13ee36592a1def031ff26685bea59d487c35ff4f13f324c7342e2"
+    },
+    {
+      "bytes": 14974,
+      "original": ".cache/phase2-growth-shape-recorder-review-v1/second-run/0-test_recorder.py",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-recorder-review/second-run/0-test_recorder.py",
+      "sha256": "52df140dc2a185c25860d2b72ae56d263e3cf1013b64fa27b51c58141cd72c94"
+    },
+    {
+      "bytes": 18674,
+      "original": ".cache/phase2-growth-shape-recorder-review-v1/second-run/1-run_after_ci.py",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-recorder-review/second-run/1-run_after_ci.py",
+      "sha256": "c0e5e38f4669cd339002defd7c563afec6ea931525b4faad625c05fdd4af555d"
+    },
+    {
+      "bytes": 20556,
+      "original": ".cache/phase2-growth-shape-recorder-review-v1/second-run/2-li_v3_growth_hint_shape.py",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-recorder-review/second-run/2-li_v3_growth_hint_shape.py",
+      "sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a"
+    },
+    {
+      "bytes": 28369,
+      "original": ".cache/phase2-growth-shape-recorder-review-v1/second-run/3-test_li_v3_growth_hint_shape.py",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-recorder-review/second-run/3-test_li_v3_growth_hint_shape.py",
+      "sha256": "1f863ee2f1eefd54919767f7b4c75b6d460332d50f6234103dd47e586557685e"
+    },
+    {
+      "bytes": 3378,
+      "original": ".cache/phase2-growth-shape-recorder-review-v1/second-run/execution.json",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-recorder-review/second-run/execution.json",
+      "sha256": "c24993432db6c6f3338bbc856782ebc8950623ac7145c447877dc9b545f3cd91"
+    },
+    {
+      "bytes": 1450,
+      "original": ".cache/phase2-growth-shape-recorder-review-v1/second-run/stderr.txt",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-recorder-review/second-run/stderr.txt",
+      "sha256": "5d6b7c9230f8bb4718aabc7cc3e9194d967ce1b4660faaf807f0ca26296b2c54"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-growth-shape-recorder-review-v1/second-run/stdout.txt",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-recorder-review/second-run/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 14974,
+      "original": ".cache/phase2-growth-shape-recorder-review-v1/test_recorder.py",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-recorder-review/test_recorder.py",
+      "sha256": "52df140dc2a185c25860d2b72ae56d263e3cf1013b64fa27b51c58141cd72c94"
+    },
+    {
+      "bytes": 1869,
+      "original": ".cache/phase2-growth-envelope-recorder-review-v1/README.md",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-recorder-review/README.md",
+      "sha256": "9c0101f4101d38e4b49cff8ee99e5c673bcc25160cf393bacd52a48db38dc30b"
+    },
+    {
+      "bytes": 5190,
+      "original": ".cache/phase2-growth-envelope-recorder-review-v1/first-run/0-test_first_gate.py",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-recorder-review/first-run/0-test_first_gate.py",
+      "sha256": "c2bbc2da510e4cde3e9f9b7490c5f8a7181aa1a7417d16905795c033a231466f"
+    },
+    {
+      "bytes": 24459,
+      "original": ".cache/phase2-growth-envelope-recorder-review-v1/first-run/1-run_after_ci.py",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-recorder-review/first-run/1-run_after_ci.py",
+      "sha256": "40e3f1392c8ea7cdde921574bea0b9852507eeb4901e149089901196b88bb12b"
+    },
+    {
+      "bytes": 20556,
+      "original": ".cache/phase2-growth-envelope-recorder-review-v1/first-run/2-li_v3_growth_hint_shape.py",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-recorder-review/first-run/2-li_v3_growth_hint_shape.py",
+      "sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a"
+    },
+    {
+      "bytes": 28369,
+      "original": ".cache/phase2-growth-envelope-recorder-review-v1/first-run/3-test_li_v3_growth_hint_shape.py",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-recorder-review/first-run/3-test_li_v3_growth_hint_shape.py",
+      "sha256": "1f863ee2f1eefd54919767f7b4c75b6d460332d50f6234103dd47e586557685e"
+    },
+    {
+      "bytes": 3402,
+      "original": ".cache/phase2-growth-envelope-recorder-review-v1/first-run/execution.json",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-recorder-review/first-run/execution.json",
+      "sha256": "e6fe0c34e0ffd540e289469daa0da3bf0d8980474151e8d00ef4ccbfc40c9294"
+    },
+    {
+      "bytes": 1065,
+      "original": ".cache/phase2-growth-envelope-recorder-review-v1/first-run/stderr.txt",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-recorder-review/first-run/stderr.txt",
+      "sha256": "82edf8fa816c81b5162693da8ae7063525ee00300c14c9f9ff14669a23f1fc95"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-growth-envelope-recorder-review-v1/first-run/stdout.txt",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-recorder-review/first-run/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 4865,
+      "original": ".cache/phase2-growth-envelope-recorder-review-v1/inventory.json",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-recorder-review/inventory.json",
+      "sha256": "51b4b00da5f580c51bd28bc0f29261e9a5b252537737f38275c5de8638fe68de"
+    },
+    {
+      "bytes": 4386,
+      "original": ".cache/phase2-growth-envelope-recorder-review-v1/review.json",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-recorder-review/review.json",
+      "sha256": "069e3d716345e20696dc87ade4370c11b2a3e96d11e4ba77cfc58e3ad2a2ec38"
+    },
+    {
+      "bytes": 6106,
+      "original": ".cache/phase2-growth-envelope-recorder-review-v1/reviewed-repair.diff",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-recorder-review/reviewed-repair.diff",
+      "sha256": "97806fe4c7bea94796102ae86fc1f26deee90d26bf0bc1f34bd0911eccea713e"
+    },
+    {
+      "bytes": 2162,
+      "original": ".cache/phase2-growth-envelope-recorder-review-v1/run_first.py",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-recorder-review/run_first.py",
+      "sha256": "36ef52fe0372c4542fce445f30b5142fbd4e61490cc7f86151429fa79db4cc1f"
+    },
+    {
+      "bytes": 2245,
+      "original": ".cache/phase2-growth-envelope-recorder-review-v1/run_review.py",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-recorder-review/run_review.py",
+      "sha256": "077420b8a9630b0c64ed2cdccecdc03221781db43b58f14a64a9e0721e2da180"
+    },
+    {
+      "bytes": 16010,
+      "original": ".cache/phase2-growth-envelope-recorder-review-v1/second-run/0-test_recorder.py",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-recorder-review/second-run/0-test_recorder.py",
+      "sha256": "29a4137cb59dec6a6129b4870ea269df411cb8e58d6abf28d75a1371094d691c"
+    },
+    {
+      "bytes": 29657,
+      "original": ".cache/phase2-growth-envelope-recorder-review-v1/second-run/1-run_after_ci.py",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-recorder-review/second-run/1-run_after_ci.py",
+      "sha256": "b13232eb55efec6a6fadfd5f900bc3f3fd9a2b44fa3ac91bb3a763e7c80a84b7"
+    },
+    {
+      "bytes": 20556,
+      "original": ".cache/phase2-growth-envelope-recorder-review-v1/second-run/2-li_v3_growth_hint_shape.py",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-recorder-review/second-run/2-li_v3_growth_hint_shape.py",
+      "sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a"
+    },
+    {
+      "bytes": 20609,
+      "original": ".cache/phase2-growth-envelope-recorder-review-v1/second-run/3-li_v3_growth_envelope.py",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-recorder-review/second-run/3-li_v3_growth_envelope.py",
+      "sha256": "f50069d028526ea045441a2e574a26192a210ff78ba34f5170777d32f5692ec3"
+    },
+    {
+      "bytes": 30722,
+      "original": ".cache/phase2-growth-envelope-recorder-review-v1/second-run/4-test_li_v3_growth_envelope.py",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-recorder-review/second-run/4-test_li_v3_growth_envelope.py",
+      "sha256": "f569d732f02d90233fd20e9d5bf14ab9bb29337c09022093e15320af031523f1"
+    },
+    {
+      "bytes": 3914,
+      "original": ".cache/phase2-growth-envelope-recorder-review-v1/second-run/execution.json",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-recorder-review/second-run/execution.json",
+      "sha256": "7e5196a6a7ae8dcfdb23461faacf6000ec5ec67df791665c2e4a195ef2aafb2f"
+    },
+    {
+      "bytes": 1689,
+      "original": ".cache/phase2-growth-envelope-recorder-review-v1/second-run/stderr.txt",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-recorder-review/second-run/stderr.txt",
+      "sha256": "3f583eaa1c659a74131b22924d89da6afd4f0adeeca91b26d2a4cdcec8f690a5"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-growth-envelope-recorder-review-v1/second-run/stdout.txt",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-recorder-review/second-run/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 5190,
+      "original": ".cache/phase2-growth-envelope-recorder-review-v1/test_first_gate.py",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-recorder-review/test_first_gate.py",
+      "sha256": "c2bbc2da510e4cde3e9f9b7490c5f8a7181aa1a7417d16905795c033a231466f"
+    },
+    {
+      "bytes": 16010,
+      "original": ".cache/phase2-growth-envelope-recorder-review-v1/test_recorder.py",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-recorder-review/test_recorder.py",
+      "sha256": "29a4137cb59dec6a6129b4870ea269df411cb8e58d6abf28d75a1371094d691c"
+    },
+    {
+      "bytes": 275,
+      "original": ".cache/phase2-growth-envelope-recorder-review-v1/validator-reuse-check.json",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-recorder-review/validator-reuse-check.json",
+      "sha256": "d0bb9221853877e8ee9f0eab7270c304dcf37ff85244cdd80611e0b10dc286d9"
+    },
+    {
+      "bytes": 340,
+      "original": ".cache/phase2-growth-shape-operations-v1/commit-binding.diff",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-operations/commit-binding.diff",
+      "sha256": "3da62c0b37c274507727208322e1710775f66028dbd579640f51f073e5b1020b"
+    },
+    {
+      "bytes": 395,
+      "original": ".cache/phase2-growth-shape-operations-v1/commit-binding.json",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-operations/commit-binding.json",
+      "sha256": "add73eaed14d808fbcca5877dedacf0c1f05ca057bd3cb989e0348e26ae097ed"
+    },
+    {
+      "bytes": 17988,
+      "original": ".cache/phase2-growth-shape-operations-v1/original-recorder.py",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-operations/original-recorder.py",
+      "sha256": "01f45e732c930bbf45c81467a709b648d83802945146e4e76b06265a8ff0d5b9"
+    },
+    {
+      "bytes": 615,
+      "original": ".cache/phase2-growth-shape-operations-v1/preparation.json",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-operations/preparation.json",
+      "sha256": "ec53d4a97a8e64ba93bfb1f7abea4da43ad3d2cf2ff36bd25403b7b7dc24a438"
+    },
+    {
+      "bytes": 18674,
+      "original": ".cache/phase2-growth-shape-operations-v1/reviewed-unbound-recorder.py",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-operations/reviewed-unbound-recorder.py",
+      "sha256": "c0e5e38f4669cd339002defd7c563afec6ea931525b4faad625c05fdd4af555d"
+    },
+    {
+      "bytes": 18700,
+      "original": ".cache/phase2-growth-shape-operations-v1/run_after_ci.py",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-operations/run_after_ci.py",
+      "sha256": "bf5d4bd82a840aaf8514265ae5a93ecdd152032840d6efcb129f3be9bb24b4a8"
+    },
+    {
+      "bytes": 16572,
+      "original": ".cache/phase2-growth-shape-operations-v1/source.diff",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-operations/source.diff",
+      "sha256": "284314136a9b7b8a18a5cb17d676eeea96ab4003d7b2b5086b4e424919cc6fda"
+    },
+    {
+      "bytes": 24459,
+      "original": ".cache/phase2-growth-envelope-operations-v1/before-prior-shape-gate.py",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-operations/before-prior-shape-gate.py",
+      "sha256": "40e3f1392c8ea7cdde921574bea0b9852507eeb4901e149089901196b88bb12b"
+    },
+    {
+      "bytes": 343,
+      "original": ".cache/phase2-growth-envelope-operations-v1/commit-binding.diff",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-operations/commit-binding.diff",
+      "sha256": "7410a9390552dda5ea7c8fefa72d35568cab216b5e622769a79d4af52bcb59b0"
+    },
+    {
+      "bytes": 395,
+      "original": ".cache/phase2-growth-envelope-operations-v1/commit-binding.json",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-operations/commit-binding.json",
+      "sha256": "587e84927381320b8def4e1d6cdc83ffa74d2a1a86f370887bd216ecba304e56"
+    },
+    {
+      "bytes": 20559,
+      "original": ".cache/phase2-growth-envelope-operations-v1/preparation.diff",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-operations/preparation.diff",
+      "sha256": "5bef2075191c7a7d0276c01259d7f24bf58acf0b223a588e02e4375b58f02b83"
+    },
+    {
+      "bytes": 543,
+      "original": ".cache/phase2-growth-envelope-operations-v1/preparation.json",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-operations/preparation.json",
+      "sha256": "5776cb85829d967c069c98b05c825c718e4ae5c306b6017cb645dd21ed4cc13c"
+    },
+    {
+      "bytes": 6122,
+      "original": ".cache/phase2-growth-envelope-operations-v1/prior-shape-gate-correction.diff",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-operations/prior-shape-gate-correction.diff",
+      "sha256": "b321cd1617afe773d9b69e05920829fb27c91c04b52879693b5556989b6a4b79"
+    },
+    {
+      "bytes": 676,
+      "original": ".cache/phase2-growth-envelope-operations-v1/prior-shape-gate-correction.json",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-operations/prior-shape-gate-correction.json",
+      "sha256": "537f906b7afdd8426cab0c86d0c4cb8bb516eb1e9983f86da79a1a6c09c0f0da"
+    },
+    {
+      "bytes": 29657,
+      "original": ".cache/phase2-growth-envelope-operations-v1/reviewed-unbound-recorder.py",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-operations/reviewed-unbound-recorder.py",
+      "sha256": "b13232eb55efec6a6fadfd5f900bc3f3fd9a2b44fa3ac91bb3a763e7c80a84b7"
+    },
+    {
+      "bytes": 29683,
+      "original": ".cache/phase2-growth-envelope-operations-v1/run_after_ci.py",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-operations/run_after_ci.py",
+      "sha256": "5c2a3fe1190c585f9dbb0d9c27d896a852fc84710d70839925f4f7c1c69cea10"
+    },
+    {
+      "bytes": 18674,
+      "original": ".cache/phase2-growth-envelope-operations-v1/shape-recorder-original.py",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-operations/shape-recorder-original.py",
+      "sha256": "c0e5e38f4669cd339002defd7c563afec6ea931525b4faad625c05fdd4af555d"
+    },
+    {
+      "bytes": 8620,
+      "original": ".cache/phase2-growth-envelope-operations-v1/validator-before-central-amendment.py",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-operations/validator-before-central-amendment.py",
+      "sha256": "9e9f545e0d53474a290b6079db7e47c43aaa2007f4ec38a7d5d1c43322d50f09"
+    },
+    {
+      "bytes": 9303,
+      "original": ".cache/phase2-growth-envelope-operations-v1/validator-final.py",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-operations/validator-final.py",
+      "sha256": "9d0a021963f3c58090a83bdcad4bf19b041ff468473364023580dbad927f5df1"
+    },
+    {
+      "bytes": 2675,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/PUBLICATION.md",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/PUBLICATION.md",
+      "sha256": "35080b46854dd9c39dbbe909e9a4e2ea1486cceb8d6d4f5879e63e957110ed29"
+    },
+    {
+      "bytes": 6220,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/README.md",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/README.md",
+      "sha256": "cad9aec959b34c7e6fc4dd4e98bf022ac93745d2192be28dbe263c1d33b8a233"
+    },
+    {
+      "bytes": 6453,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/acquire_and_inspect.py",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/acquire_and_inspect.py",
+      "sha256": "b9b726c7627b26938a91277b9b0e1f177aa001730c5ae503d7cd0d48b9011a56"
+    },
+    {
+      "bytes": 1159,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/acquisition.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/acquisition.json",
+      "sha256": "ada0a1c180288cc4d44a83ef4d8ce61b97c6752b21dc1592ea9864f7bb65fefa"
+    },
+    {
+      "bytes": 1810,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/actual-first/execution.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/actual-first/execution.json",
+      "sha256": "7bddd74d59aad721f96b8e8f314857c7f40db3bbec9a71076e1f21211986b598"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/actual-first/stderr.txt",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/actual-first/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2524,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/actual-first/stdout.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/actual-first/stdout.json",
+      "sha256": "40e8ccabd5f87b8140ff39f7c9f123c7784ea875d6ff82cad4df5829d6640ecb"
+    },
+    {
+      "bytes": 1150,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/actual-invocation-plan.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/actual-invocation-plan.json",
+      "sha256": "4c12d51b4334a8fb26d7945874ea4b33f8bc8a7c70d866c31fb6f2d4b1430663"
+    },
+    {
+      "bytes": 582,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/author-first/receipt.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/author-first/receipt.json",
+      "sha256": "9f6b3f19e988c0986ed40c54c8f32debd711ccfa35f8863091889c3e7e3618b5"
+    },
+    {
+      "bytes": 1463,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/author-first/stderr.txt",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/author-first/stderr.txt",
+      "sha256": "df60ec5c4a7b3bdeb649ae40c9a28a8354545fb56b819b55e8a868dec4b06109"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/author-first/stdout.txt",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/author-first/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 1618,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/author-reader-repair/receipt.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/author-reader-repair/receipt.json",
+      "sha256": "081db219c730650d772b07b18af817020739c3972399fe13507d0c8198fbf8a8"
+    },
+    {
+      "bytes": 2395,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/author-reader-repair/stderr.txt",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/author-reader-repair/stderr.txt",
+      "sha256": "40f58278a1f0244d87e3c61594adef21074957254215af62dcd62d817a301013"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/author-reader-repair/stdout.txt",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/author-reader-repair/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 1427,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/author-request-slot-repair/receipt.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/author-request-slot-repair/receipt.json",
+      "sha256": "bad80b9a5721966117b1de6d4713bc93ad96c289c6f5d85367b9fde846a261fe"
+    },
+    {
+      "bytes": 1867,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/author-request-slot-repair/stderr.txt",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/author-request-slot-repair/stderr.txt",
+      "sha256": "9563c52af95e1ea3737787fb9af2ac5687deba4276bf237db54826eed80be28f"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/author-request-slot-repair/stdout.txt",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/author-request-slot-repair/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 6453,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/before-reader-review-repair/acquire_and_inspect.py",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/before-reader-review-repair/acquire_and_inspect.py",
+      "sha256": "b9b726c7627b26938a91277b9b0e1f177aa001730c5ae503d7cd0d48b9011a56"
+    },
+    {
+      "bytes": 7205,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/before-reader-review-repair/scope.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/before-reader-review-repair/scope.json",
+      "sha256": "1f7b4ef2d4c18dd11227add89517487de68e3576c8aa679586e25f9f394a7762"
+    },
+    {
+      "bytes": 14320,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/before-reader-review-repair/workbook_reader.py",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/before-reader-review-repair/workbook_reader.py",
+      "sha256": "4fc9b0f1281078b8132c5777eebd82c356510adb80528049dc2514faa58af8dc"
+    },
+    {
+      "bytes": 5667,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/before-request-slot-repair/acquire_and_inspect.py",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/before-request-slot-repair/acquire_and_inspect.py",
+      "sha256": "1ef3bb29eefc50d7a7008374dad8c7559d35ea582b9f00d7ba2d729cfdf2edde"
+    },
+    {
+      "bytes": 582,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/before-request-slot-repair/author-first/receipt.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/before-request-slot-repair/author-first/receipt.json",
+      "sha256": "9f6b3f19e988c0986ed40c54c8f32debd711ccfa35f8863091889c3e7e3618b5"
+    },
+    {
+      "bytes": 1463,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/before-request-slot-repair/author-first/stderr.txt",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/before-request-slot-repair/author-first/stderr.txt",
+      "sha256": "df60ec5c4a7b3bdeb649ae40c9a28a8354545fb56b819b55e8a868dec4b06109"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/before-request-slot-repair/author-first/stdout.txt",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/before-request-slot-repair/author-first/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 6912,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/before-request-slot-repair/scope.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/before-request-slot-repair/scope.json",
+      "sha256": "0bece1f550a53efb0dc90434f519fdfc5cd25daf6fd59f855d4060184ea7d845"
+    },
+    {
+      "bytes": 7405,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/before-request-slot-repair/test_author_reader.py",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/before-request-slot-repair/test_author_reader.py",
+      "sha256": "59092e8b5ad484618ce516fc7bdfd1f6095ca6d7569d66356f9d517d13412791"
+    },
+    {
+      "bytes": 14320,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/before-request-slot-repair/workbook_reader.py",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/before-request-slot-repair/workbook_reader.py",
+      "sha256": "4fc9b0f1281078b8132c5777eebd82c356510adb80528049dc2514faa58af8dc"
+    },
+    {
+      "bytes": 7507,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/before-scope-hidden-precision/scope.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/before-scope-hidden-precision/scope.json",
+      "sha256": "50f20050b04fd4c0fac8a20e38d99d256a75f367edfba16986a54ccf8aa396a9"
+    },
+    {
+      "bytes": 13904,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/documentary-findings.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/documentary-findings.json",
+      "sha256": "245a6cbf65a43adaf96e3feae9af23b394c0f06bf5aeb580f574cb5de49609ed"
+    },
+    {
+      "bytes": 1686,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/documentary-search.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/documentary-search.json",
+      "sha256": "2f2f93ebf1d7cb9f5c5ac0c20e06f7c26ef5a8a46889696c3a891a7217f5bc7a"
+    },
+    {
+      "bytes": 1980,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/exposure-ledger.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/exposure-ledger.json",
+      "sha256": "f14be07c1f43196f864fa03c4c19156bca8fc0320925000394d50cf21eaf9f61"
+    },
+    {
+      "bytes": 3200,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/independent-review/actual-artifact-check.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/independent-review/actual-artifact-check.json",
+      "sha256": "af240cc467ac03df7f0ba7a70417b4fd34ca5e27a32dbc1c9ef98db6864f6081"
+    },
+    {
+      "bytes": 6442,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/independent-review/check_actual_projection.py",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/independent-review/check_actual_projection.py",
+      "sha256": "82ab1ec3c90e0545911b8eedc0aa59bd870a010a4fc9994a77d436079c506040"
+    },
+    {
+      "bytes": 7360,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/independent-review/documentary-result-review.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/independent-review/documentary-result-review.json",
+      "sha256": "ad90a6561cf69d743fcfa7078d1ce6e6a78af2fd4af0f49c253ba0a9efa0b498"
+    },
+    {
+      "bytes": 591,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/independent-review/first-reader-test-receipt.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/independent-review/first-reader-test-receipt.json",
+      "sha256": "64db9ecafbb8c25cb0da58ae163810dca566060083cd0cb815cd2c74bf0333ad"
+    },
+    {
+      "bytes": 12559,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/independent-review/first-reader-test-source.py",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/independent-review/first-reader-test-source.py",
+      "sha256": "b30e9fd555b65f73c484a52d57f78f9c1f5bb197ddff480537d451722f531c28"
+    },
+    {
+      "bytes": 6388,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/independent-review/first-reader-test.stderr",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/independent-review/first-reader-test.stderr",
+      "sha256": "0f6c7a3e9818722ab3d21ba724e6a581733f3b70d03558d14838a9bf2717b85e"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/independent-review/first-reader-test.stdout",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/independent-review/first-reader-test.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 5667,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/independent-review/initial-source/acquire_and_inspect.py",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/independent-review/initial-source/acquire_and_inspect.py",
+      "sha256": "1ef3bb29eefc50d7a7008374dad8c7559d35ea582b9f00d7ba2d729cfdf2edde"
+    },
+    {
+      "bytes": 6912,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/independent-review/initial-source/scope.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/independent-review/initial-source/scope.json",
+      "sha256": "0bece1f550a53efb0dc90434f519fdfc5cd25daf6fd59f855d4060184ea7d845"
+    },
+    {
+      "bytes": 14320,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/independent-review/initial-source/workbook_reader.py",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/independent-review/initial-source/workbook_reader.py",
+      "sha256": "4fc9b0f1281078b8132c5777eebd82c356510adb80528049dc2514faa58af8dc"
+    },
+    {
+      "bytes": 1061,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/independent-review/metadata-identity-check.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/independent-review/metadata-identity-check.json",
+      "sha256": "7b3b8b3832b07ec3b14250c2f35752c6cf607c40569128596bfbc2cbb7d84877"
+    },
+    {
+      "bytes": 823,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/independent-review/parent-claim-check.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/independent-review/parent-claim-check.json",
+      "sha256": "6b4a2c3eecc8fce7df457a57f298a3ae241abed0eaf0c758390aef16d500e246"
+    },
+    {
+      "bytes": 3703,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/independent-review/preacquisition-review-bindings.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/independent-review/preacquisition-review-bindings.json",
+      "sha256": "7b21d86de79858f6f7449d14bca6ec24c5170935cd58490d6a26691713dc700a"
+    },
+    {
+      "bytes": 6773,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/independent-review/preacquisition-review.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/independent-review/preacquisition-review.json",
+      "sha256": "53a1ff4bb131d26d6787f38dfc592872be49d239bbff705e5db565520b951618"
+    },
+    {
+      "bytes": 4096,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/independent-review/result-review-bindings.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/independent-review/result-review-bindings.json",
+      "sha256": "76ba177fc99a1cad275d202e7a2a8fb8f78a017c59a09d5ff0823ec13924ddfc"
+    },
+    {
+      "bytes": 4564,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/independent-review/result-review.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/independent-review/result-review.json",
+      "sha256": "2a74bb0c25f236d539b98ea53ebf6b75648d649066ef6e89be30db7effb60c30"
+    },
+    {
+      "bytes": 8761,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/independent-review/reviewed-documentary-claims/README.md.bytes.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/independent-review/reviewed-documentary-claims/README.md.bytes.json",
+      "sha256": "2cf1b99f1df62a0e9ef1ae7b97a7377068042af556ce0e2f82754ab119e66399"
+    },
+    {
+      "bytes": 13904,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/independent-review/reviewed-documentary-claims/documentary-findings.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/independent-review/reviewed-documentary-claims/documentary-findings.json",
+      "sha256": "245a6cbf65a43adaf96e3feae9af23b394c0f06bf5aeb580f574cb5de49609ed"
+    },
+    {
+      "bytes": 1686,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/independent-review/reviewed-documentary-claims/documentary-search.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/independent-review/reviewed-documentary-claims/documentary-search.json",
+      "sha256": "2f2f93ebf1d7cb9f5c5ac0c20e06f7c26ef5a8a46889696c3a891a7217f5bc7a"
+    },
+    {
+      "bytes": 1980,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/independent-review/reviewed-documentary-claims/exposure-ledger.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/independent-review/reviewed-documentary-claims/exposure-ledger.json",
+      "sha256": "f14be07c1f43196f864fa03c4c19156bca8fc0320925000394d50cf21eaf9f61"
+    },
+    {
+      "bytes": 642,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/independent-review/reviewed-reader-test-receipt.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/independent-review/reviewed-reader-test-receipt.json",
+      "sha256": "d3463b9c4501b1149dacd8fe16779dc1a11c02615af0a8e366be66b33cbb677f"
+    },
+    {
+      "bytes": 3861,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/independent-review/reviewed-reader-test.stderr",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/independent-review/reviewed-reader-test.stderr",
+      "sha256": "f3ae37a4caf2f15fe4873eacfb8ea0a4b38ca77fd30621f24618e5c23826a3c8"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/independent-review/reviewed-reader-test.stdout",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/independent-review/reviewed-reader-test.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 642,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/independent-review/reviewed-runner-test-receipt.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/independent-review/reviewed-runner-test-receipt.json",
+      "sha256": "98308853e504a568a19711d82d05534732e52357522656b27077cb2088d2af3c"
+    },
+    {
+      "bytes": 1871,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/independent-review/reviewed-runner-test.stderr",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/independent-review/reviewed-runner-test.stderr",
+      "sha256": "685771282539aa5277b04af26deea2a7aae7d077fab932ec3f9651208baeea8a"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/independent-review/reviewed-runner-test.stdout",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/independent-review/reviewed-runner-test.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 6453,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/independent-review/reviewed-source/acquire_and_inspect.py",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/independent-review/reviewed-source/acquire_and_inspect.py",
+      "sha256": "b9b726c7627b26938a91277b9b0e1f177aa001730c5ae503d7cd0d48b9011a56"
+    },
+    {
+      "bytes": 7671,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/independent-review/reviewed-source/final-scope.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/independent-review/reviewed-source/final-scope.json",
+      "sha256": "ba4fc7fffc4a47933185c8dcd3d3224131ae64b0e4a7b6a7219df2da96d1a789"
+    },
+    {
+      "bytes": 7507,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/independent-review/reviewed-source/scope.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/independent-review/reviewed-source/scope.json",
+      "sha256": "50f20050b04fd4c0fac8a20e38d99d256a75f367edfba16986a54ccf8aa396a9"
+    },
+    {
+      "bytes": 14884,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/independent-review/reviewed-source/workbook_reader.py",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/independent-review/reviewed-source/workbook_reader.py",
+      "sha256": "d56939ba593414fbf751b5eab59d4ae5ab556513ce8b3108b4dc7305c8bef25c"
+    },
+    {
+      "bytes": 4121,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/independent-review/scope-hidden-precision.diff",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/independent-review/scope-hidden-precision.diff",
+      "sha256": "2758d8167474fcdf5ffbd5bf15b9ed74895fc75aff4c02ff7dd1e17cd0379818"
+    },
+    {
+      "bytes": 12899,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/independent-review/test_workbook_reader_independent.py",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/independent-review/test_workbook_reader_independent.py",
+      "sha256": "a8055d3e0776d687a1b7ee5ad9e61b31277494dc97b0aee600ac414b1d0cc2a2"
+    },
+    {
+      "bytes": 9442,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/independent-review/test_workbook_runner_independent.py",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/independent-review/test_workbook_runner_independent.py",
+      "sha256": "8a05babc8e861c5c73b7d2bae3050070b0dafc36092cc1b5fab285337d4a7477"
+    },
+    {
+      "bytes": 1017,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/metadata-identity-check.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/metadata-identity-check.json",
+      "sha256": "72d1e8d4c8d07cace36732489854bbd203aed3af26f1945aa05a263d9d01158a"
+    },
+    {
+      "bytes": 47098,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/original-byte-map.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/original-byte-map.json",
+      "sha256": "4435b65fdc4fcda81c3927e4c46a349582414a807539e15ca954049fdfaa6ff1"
+    },
+    {
+      "bytes": 2980,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/pre-acquisition-history.md",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/pre-acquisition-history.md",
+      "sha256": "f23f2126c5d40e7af2ea72aeff4c6b2d110f89cc04d702221c5e6a3f9946eced"
+    },
+    {
+      "bytes": 1106,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/pre-acquisition-input-check.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/pre-acquisition-input-check.json",
+      "sha256": "a745b7383acf1fe65426345eea07f6e90f6faf32b888346946c5a1d61aea3841"
+    },
+    {
+      "bytes": 45762,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/publication-checks/first-byte-map.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/publication-checks/first-byte-map.json",
+      "sha256": "75f78dd4384ea43983298f28521838efd577f2fedad81a303630e8f501af5728"
+    },
+    {
+      "bytes": 845,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/publication-checks/first-failure.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/publication-checks/first-failure.json",
+      "sha256": "f7bd4281db8cef5f77a25495041a306952367e45e5c5e1ba40ffebf21ea1f078"
+    },
+    {
+      "bytes": 2015,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/question-map.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/question-map.json",
+      "sha256": "79c1abb00ef10d6af2166416f02f148233bbb22fc5eb206ec2c020adb025459d"
+    },
+    {
+      "bytes": 724,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/reader-review-repair.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/reader-review-repair.json",
+      "sha256": "ff8113c953f8ca3d55958931631fee17c96bab986410a939903a9cff0c307205"
+    },
+    {
+      "bytes": 419,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/request-slot-repair.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/request-slot-repair.json",
+      "sha256": "391d4477729d7a428e8bbc7020ab0041fe5011563f9058c6942779ac6a6aee65"
+    },
+    {
+      "bytes": 460,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/request-slot.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/request-slot.json",
+      "sha256": "59e5c4d0b6cbf7c7b44b8b9118eb54f989a14aecbbdd2149e3b464ae39babb22"
+    },
+    {
+      "bytes": 1217,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/result.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/result.json",
+      "sha256": "f96cdfc7ead2bc4d4ef6264b09da376fe68af9369906131f306573ffb8eb36d4"
+    },
+    {
+      "bytes": 7671,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/scope.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/scope.json",
+      "sha256": "ba4fc7fffc4a47933185c8dcd3d3224131ae64b0e4a7b6a7219df2da96d1a789"
+    },
+    {
+      "bytes": 8758,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/source-bindings.json",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/source-bindings.json",
+      "sha256": "9653d4fc3111670e56aca67aeb0f49e40bf6d6b51c2637b4fc8d113c7ed52fad"
+    },
+    {
+      "bytes": 7405,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/test_author_reader.py",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/test_author_reader.py",
+      "sha256": "59092e8b5ad484618ce516fc7bdfd1f6095ca6d7569d66356f9d517d13412791"
+    },
+    {
+      "bytes": 2209,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/test_author_reader_repairs.py",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/test_author_reader_repairs.py",
+      "sha256": "6589764b2005309990614f6ebe59d8391c5df249a572947483aac259da99f1e3"
+    },
+    {
+      "bytes": 2209,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/test_author_request_slot.py",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/test_author_request_slot.py",
+      "sha256": "98b7ab51da9e8794f29e01b3ce0641047ac42f6b69b662a6221e5ac819ad7272"
+    },
+    {
+      "bytes": 14884,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/promotion/reports/phase2-bam-metrology-workbook-v1/workbook_reader.py",
+      "published_relative": "reports/phase2-bam-metrology-workbook-v1/workbook_reader.py",
+      "sha256": "d56939ba593414fbf751b5eab59d4ae5ab556513ce8b3108b4dc7305c8bef25c"
+    },
+    {
+      "bytes": 4334,
+      "original": ".cache/phase2-bam-metrology-workbook-review-v1/publication-review.json",
+      "published_relative": "reports/phase2-growth-verification-v1/bam-publication-review.json",
+      "sha256": "7862985316de24c8c99c482fc5622a14a412c4473f7c3488d97d86181f70e7a1"
+    },
+    {
+      "bytes": 2815,
+      "original": ".cache/phase2-bam-metrology-workbook-v1/handoff.json",
+      "published_relative": "reports/phase2-growth-verification-v1/bam-handoff.json",
+      "sha256": "9934a7275971c62771b041f97fc885dc21e56c172ec3e4cae104c90d20dca20e"
+    },
+    {
+      "bytes": 29683,
+      "original": ".cache/phase2-growth-recorder-binding-review-v1/envelope-bound.py",
+      "published_relative": "reports/phase2-growth-verification-v1/recorder-binding-review/envelope-bound.py",
+      "sha256": "5c2a3fe1190c585f9dbb0d9c27d896a852fc84710d70839925f4f7c1c69cea10"
+    },
+    {
+      "bytes": 29657,
+      "original": ".cache/phase2-growth-recorder-binding-review-v1/envelope-reviewed-unbound.py",
+      "published_relative": "reports/phase2-growth-verification-v1/recorder-binding-review/envelope-reviewed-unbound.py",
+      "sha256": "b13232eb55efec6a6fadfd5f900bc3f3fd9a2b44fa3ac91bb3a763e7c80a84b7"
+    },
+    {
+      "bytes": 1680,
+      "original": ".cache/phase2-growth-recorder-binding-review-v1/review.json",
+      "published_relative": "reports/phase2-growth-verification-v1/recorder-binding-review/review.json",
+      "sha256": "70001df0b1958c76231f4b50c7a5bc102c0bba98045f4f5125658760fa4ec3a9"
+    },
+    {
+      "bytes": 18700,
+      "original": ".cache/phase2-growth-recorder-binding-review-v1/shape-bound.py",
+      "published_relative": "reports/phase2-growth-verification-v1/recorder-binding-review/shape-bound.py",
+      "sha256": "bf5d4bd82a840aaf8514265ae5a93ecdd152032840d6efcb129f3be9bb24b4a8"
+    },
+    {
+      "bytes": 18674,
+      "original": ".cache/phase2-growth-recorder-binding-review-v1/shape-reviewed-unbound.py",
+      "published_relative": "reports/phase2-growth-verification-v1/recorder-binding-review/shape-reviewed-unbound.py",
+      "sha256": "c0e5e38f4669cd339002defd7c563afec6ea931525b4faad625c05fdd4af555d"
+    },
+    {
+      "bytes": 7989,
+      "original": ".cache/phase2-growth-clean-package-v1/artifacts/release-artifacts.json",
+      "published_relative": "reports/phase2-growth-verification-v1/clean-package/artifacts/release-artifacts.json",
+      "sha256": "a653d5d2738aaf1cd6f0422bb1af42b65e4cb87054751207f80202da035c03ee"
+    },
+    {
+      "bytes": 12670,
+      "original": ".cache/phase2-metrology-risk-contract-v1/README.md",
+      "published_relative": "reports/phase2-metrology-risk-contract-v1/README.md",
+      "sha256": "ae56215f8b091a26d7369f640e708aa0f470395b9c037a082015f610fa6e4eea"
+    },
+    {
+      "bytes": 2196,
+      "original": ".cache/phase2-metrology-risk-contract-v1/handoff.json",
+      "published_relative": "reports/phase2-metrology-risk-contract-v1/handoff.json",
+      "sha256": "9ba382a0eec670c1ce6f8597674b6822c26dc5bab3cd90020622a2ee6e7e04b8"
+    },
+    {
+      "bytes": 1572,
+      "original": ".cache/phase2-metrology-risk-contract-v1/independent-copy-map.json",
+      "published_relative": "reports/phase2-metrology-risk-contract-v1/independent-copy-map.json",
+      "sha256": "d634f0bfd045459fdab4e51dc59b588ed5e2efda9f1514fd467ed67b1b7718d1"
+    },
+    {
+      "bytes": 5847,
+      "original": ".cache/phase2-metrology-risk-contract-v1/independent-premise-review/README.md",
+      "published_relative": "reports/phase2-metrology-risk-contract-v1/independent-premise-review/README.md",
+      "sha256": "d746a7a8e03d4b0ee515ddb971a312d9de57346c66fb1b3573837ec3d49144ba"
+    },
+    {
+      "bytes": 2014,
+      "original": ".cache/phase2-metrology-risk-contract-v1/independent-premise-review/source-bindings.json",
+      "published_relative": "reports/phase2-metrology-risk-contract-v1/independent-premise-review/source-bindings.json",
+      "sha256": "5bb694dcbd8bd6212d85b7f0aa29f4ee974176e897a8d28e6041f3824b04a94c"
+    },
+    {
+      "bytes": 2056,
+      "original": ".cache/phase2-metrology-risk-contract-v1/independent-review/hypotheses-to-challenge.md",
+      "published_relative": "reports/phase2-metrology-risk-contract-v1/independent-review/hypotheses-to-challenge.md",
+      "sha256": "e1e98db67aedcd83e734f542a0cb6379af43ab00145fa6058c11614f391b729a"
+    },
+    {
+      "bytes": 7910,
+      "original": ".cache/phase2-metrology-risk-contract-v1/independent-review/review.json",
+      "published_relative": "reports/phase2-metrology-risk-contract-v1/independent-review/review.json",
+      "sha256": "b2eac35946a5b20e82b6168266f027039a9cc701b19e757253d6ad8d3e5494b3"
+    },
+    {
+      "bytes": 1406,
+      "original": ".cache/phase2-metrology-risk-contract-v1/independent-review/scope.json",
+      "published_relative": "reports/phase2-metrology-risk-contract-v1/independent-review/scope.json",
+      "sha256": "bddd7b564bb04b18a30ef1d505c067233efef6a5c51fbb24dc03c7a24b1c1b70"
+    },
+    {
+      "bytes": 1626,
+      "original": ".cache/phase2-metrology-risk-contract-v1/inventory.json",
+      "published_relative": "reports/phase2-metrology-risk-contract-v1/inventory.json",
+      "sha256": "246fcc8140802ffda5de53c2685dfe80e930b30f3707c5fc93ce78cbad6f4de7"
+    },
+    {
+      "bytes": 1129,
+      "original": ".cache/phase2-metrology-risk-contract-v1/review-status.json",
+      "published_relative": "reports/phase2-metrology-risk-contract-v1/review-status.json",
+      "sha256": "714598c22bcf598d4084d4a36ee7b1339324e3064d43f7f241e35084ea395ad5"
+    },
+    {
+      "bytes": 4326,
+      "original": ".cache/phase2-metrology-risk-contract-v1/source-bindings.json",
+      "published_relative": "reports/phase2-metrology-risk-contract-v1/source-bindings.json",
+      "sha256": "ab5ad2783e77de9eb54eb18523bfdcc4416877090cf4712724c2de6a2de737b3"
+    },
+    {
+      "bytes": 1275,
+      "original": ".cache/phase2-growth-release-v1/root-metrology-risk-review.json",
+      "published_relative": "reports/phase2-metrology-risk-contract-v1/root-written-review.json",
+      "sha256": "9f1a76f434927d5898fe9eda3fc6fbf301806ebefa0fd2d082180090efb038d1"
+    },
+    {
+      "bytes": 5639,
+      "original": ".cache/phase2-fixed-archive-inference-scope-v1/README.md",
+      "published_relative": "reports/phase2-fixed-archive-inference-scope-v1/README.md",
+      "sha256": "7e7f6ed276eae1475b3e2ef996cced8cf9b64f7d5cdb85cd715904aac9c84df6"
+    },
+    {
+      "bytes": 1446,
+      "original": ".cache/phase2-fixed-archive-inference-scope-v1/precision-update.diff",
+      "published_relative": "reports/phase2-fixed-archive-inference-scope-v1/precision-update.diff",
+      "sha256": "a2c42948323488e0f681d4cc7a34b0022ffa4cdc1c2e5196c3bff012bdd8c058"
+    },
+    {
+      "bytes": 445,
+      "original": ".cache/phase2-fixed-archive-inference-scope-v1/precision-update.json",
+      "published_relative": "reports/phase2-fixed-archive-inference-scope-v1/precision-update.json",
+      "sha256": "a4f2de9e2e5c6c1e9510258f2f2dce09c05ba3f64b728af948863ff1db34a1ae"
+    },
+    {
+      "bytes": 1147,
+      "original": ".cache/phase2-fixed-archive-inference-scope-v1/review-final.json",
+      "published_relative": "reports/phase2-fixed-archive-inference-scope-v1/review-final.json",
+      "sha256": "e60ea2ead922307e1c7a5f41ed1f2b2855daea9b9198470984c39a21c220d16c"
+    },
+    {
+      "bytes": 5436,
+      "original": ".cache/phase2-fixed-archive-inference-scope-v1/review-held-README.md",
+      "published_relative": "reports/phase2-fixed-archive-inference-scope-v1/review-held-README.md",
+      "sha256": "49e43f80392380abcf8c2ff91469d581a21910b49d228e1e4b550a5c2616dd09"
+    },
+    {
+      "bytes": 4379,
+      "original": ".cache/phase2-fixed-archive-inference-scope-v1/review-initial.json",
+      "published_relative": "reports/phase2-fixed-archive-inference-scope-v1/review-initial.json",
+      "sha256": "7e5b99254653d7e9b0e21d5c0c001a9de328deec3e38bf661c10443600ffe7e1"
+    },
+    {
+      "bytes": 392,
+      "original": ".cache/phase2-fixed-archive-inference-scope-v1/scope.json",
+      "published_relative": "reports/phase2-fixed-archive-inference-scope-v1/scope.json",
+      "sha256": "1cd586eb6b430de4ffade5ef91f5248adfb6fff1adaa7afeb5221fdec75a510c"
+    },
+    {
+      "bytes": 1924,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/FINAL.md",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/FINAL.md",
+      "sha256": "e836d9a1390e6e185690fa73c194eb65d5082690d595e93bfa8ec0c015c0a654"
+    },
+    {
+      "bytes": 7517,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/README.md",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/README.md",
+      "sha256": "c16fd29a51f9b1650cff19e77b36bf991c847286ecbd5877633379bdd8f8d65f"
+    },
+    {
+      "bytes": 6691,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/before-namespace-cap/README.md.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/before-namespace-cap/README.md.json",
+      "sha256": "3d00bc45680da262679193af486745c86d88fc133fe860b44e55e772a9b380e4"
+    },
+    {
+      "bytes": 25486,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/before-namespace-cap/li_v3_layout_localization.py",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/before-namespace-cap/li_v3_layout_localization.py",
+      "sha256": "5bfce76619655090d00670d2aba8cec17eef3764dcf23cf741b78b9f0d0d1e39"
+    },
+    {
+      "bytes": 1014,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/before-namespace-cap/source-hold.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/before-namespace-cap/source-hold.json",
+      "sha256": "32e63ec8977410ae6c21998d42324c3b28cf0076c44bc9a7bc5abc646ca4082b"
+    },
+    {
+      "bytes": 23184,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/before-namespace-cap/test_li_v3_layout_localization.py",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/before-namespace-cap/test_li_v3_layout_localization.py",
+      "sha256": "94374ed3b3201832f404dd8a40ec4aaf5525e25e06244eb3b38cf15929fb133a"
+    },
+    {
+      "bytes": 1447,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/completion.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/completion.json",
+      "sha256": "59e0118f9930a05fc0694054ed2d44466dc7ba496df2f0068f13e8cd32bb7976"
+    },
+    {
+      "bytes": 1456,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/final-publication-check.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/final-publication-check.json",
+      "sha256": "c02622b2f11a7a209d27473cb2a5d003bca227dcfb161088f85912faab2a11f9"
+    },
+    {
+      "bytes": 478,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/fixture-origin.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/fixture-origin.json",
+      "sha256": "f481baa3313597d68fc5bfe5b70a3e23ed0b6bb5a52a792d493285888b3065e3"
+    },
+    {
+      "bytes": 3670,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/generated_zip.py",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/generated_zip.py",
+      "sha256": "05c30a8b2462d919aed9982700bf06f6c0afb5c57b62931820f4aae64771ff99"
+    },
+    {
+      "bytes": 1659,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/historical-directory-preservation.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/historical-directory-preservation.json",
+      "sha256": "fccded581d1111fbfe472a33d1d2d8fa9a486a4a0a46802d9101628b246a9a79"
+    },
+    {
+      "bytes": 6169,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/inventory.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/inventory.json",
+      "sha256": "7e565846c8b427fab8de662697589d420e1e488048a2b1e08cb06e902eb50c1f"
+    },
+    {
+      "bytes": 26076,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/li_v3_layout_localization.py",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/li_v3_layout_localization.py",
+      "sha256": "4624e68c28f911bc0bcc927834bd9f9bbb8cd4622a47db80f5a99e3f63b6ba7d"
+    },
+    {
+      "bytes": 1837,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/namespace-cap-scope-addendum.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/namespace-cap-scope-addendum.json",
+      "sha256": "548f64dceb10d6d47a626aff571c6a97704de84ca50744b593191d8b5ad40d1d"
+    },
+    {
+      "bytes": 1172,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/namespace-source-hold.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/namespace-source-hold.json",
+      "sha256": "fa16fd4b295d97ce811009e4d2fb232dc101712f93b52d421a8310add57c1d63"
+    },
+    {
+      "bytes": 696,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/publication-check.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/publication-check.json",
+      "sha256": "30f3f4dff60806cda74a386fd5c50297e03052bcb2307303d5a145d5f993db03"
+    },
+    {
+      "bytes": 655,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/publication-layout.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/publication-layout.json",
+      "sha256": "12064971b17040531528dc1877582a8602d92a80094bc06a63df32575b669c34"
+    },
+    {
+      "bytes": 79638,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/receipts/first/execution.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/receipts/first/execution.json",
+      "sha256": "c8e6e75ade080c71a1266a9241234da490fbe8ad797a507962db3d89420a862d"
+    },
+    {
+      "bytes": 3670,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/receipts/first/generated_zip.py",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/receipts/first/generated_zip.py",
+      "sha256": "05c30a8b2462d919aed9982700bf06f6c0afb5c57b62931820f4aae64771ff99"
+    },
+    {
+      "bytes": 25486,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/receipts/first/li_v3_layout_localization.py",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/receipts/first/li_v3_layout_localization.py",
+      "sha256": "5bfce76619655090d00670d2aba8cec17eef3764dcf23cf741b78b9f0d0d1e39"
+    },
+    {
+      "bytes": 1802,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/receipts/first/run_guarded.py",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/receipts/first/run_guarded.py",
+      "sha256": "bcce130243ca04b00acaab27e97fd93f8b19a6884c3edad978aa4e1fc3a590b7"
+    },
+    {
+      "bytes": 4452,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/receipts/first/scope.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/receipts/first/scope.json",
+      "sha256": "10e2c29be646c94cd1c0feb1d458a6b18c56dd658f2c6389faffd6b8b9a357d4"
+    },
+    {
+      "bytes": 39797,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/receipts/first/start.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/receipts/first/start.json",
+      "sha256": "7d5d6327502b75e2be6e06e8b041dd2ccbcbab9ca37bfa6ad8b7825a6b00cdd4"
+    },
+    {
+      "bytes": 5493,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/receipts/first/stderr.txt",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/receipts/first/stderr.txt",
+      "sha256": "1c0bd84340fd976401e98a842222a8be53c0052e914d01e71e479c7ff4c69d82"
+    },
+    {
+      "bytes": 182,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/receipts/first/stdout.txt",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/receipts/first/stdout.txt",
+      "sha256": "cb845e98ae68b133466e7548bb073aeaa5b0cd11f2178dc59d593e7936ad1e23"
+    },
+    {
+      "bytes": 23184,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/receipts/first/test_li_v3_layout_localization.py",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/receipts/first/test_li_v3_layout_localization.py",
+      "sha256": "94374ed3b3201832f404dd8a40ec4aaf5525e25e06244eb3b38cf15929fb133a"
+    },
+    {
+      "bytes": 79639,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/receipts/namespace_final/execution.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/receipts/namespace_final/execution.json",
+      "sha256": "337d1d26b67d45748116c3aefc51216f4bd5402e0c04a8e0ac51922018eedf51"
+    },
+    {
+      "bytes": 3670,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/receipts/namespace_final/generated_zip.py",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/receipts/namespace_final/generated_zip.py",
+      "sha256": "05c30a8b2462d919aed9982700bf06f6c0afb5c57b62931820f4aae64771ff99"
+    },
+    {
+      "bytes": 26076,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/receipts/namespace_final/li_v3_layout_localization.py",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/receipts/namespace_final/li_v3_layout_localization.py",
+      "sha256": "4624e68c28f911bc0bcc927834bd9f9bbb8cd4622a47db80f5a99e3f63b6ba7d"
+    },
+    {
+      "bytes": 1802,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/receipts/namespace_final/run_guarded.py",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/receipts/namespace_final/run_guarded.py",
+      "sha256": "bcce130243ca04b00acaab27e97fd93f8b19a6884c3edad978aa4e1fc3a590b7"
+    },
+    {
+      "bytes": 4452,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/receipts/namespace_final/scope.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/receipts/namespace_final/scope.json",
+      "sha256": "10e2c29be646c94cd1c0feb1d458a6b18c56dd658f2c6389faffd6b8b9a357d4"
+    },
+    {
+      "bytes": 39797,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/receipts/namespace_final/start.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/receipts/namespace_final/start.json",
+      "sha256": "7180554af0aa36a17ddfb74e6256c8849a5f2d44b7f42283091c65e8f54e3b30"
+    },
+    {
+      "bytes": 5896,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/receipts/namespace_final/stderr.txt",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/receipts/namespace_final/stderr.txt",
+      "sha256": "7ecf0d6e84a25357bbc159b6e3115237d07b2109f5af97f3f078a4a00f17a76c"
+    },
+    {
+      "bytes": 182,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/receipts/namespace_final/stdout.txt",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/receipts/namespace_final/stdout.txt",
+      "sha256": "3676d2c43193a56c853452e50119e6619a697839a529e023e0405445ec2a26ef"
+    },
+    {
+      "bytes": 25210,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/receipts/namespace_final/test_li_v3_layout_localization.py",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/receipts/namespace_final/test_li_v3_layout_localization.py",
+      "sha256": "787fae54ffba26e59d1465dd40888ac1eaa218ea2035ccd468dde83375f984e9"
+    },
+    {
+      "bytes": 1802,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/run_guarded.py",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/run_guarded.py",
+      "sha256": "bcce130243ca04b00acaab27e97fd93f8b19a6884c3edad978aa4e1fc3a590b7"
+    },
+    {
+      "bytes": 2447,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/run_recorded.py",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/run_recorded.py",
+      "sha256": "56466e20f4670f1eaed13ebd6ae4cf7a11c63a3b13ebf8a50fb74c170e1d2bee"
+    },
+    {
+      "bytes": 4452,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/scope.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/scope.json",
+      "sha256": "10e2c29be646c94cd1c0feb1d458a6b18c56dd658f2c6389faffd6b8b9a357d4"
+    },
+    {
+      "bytes": 1014,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/source-hold.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/source-hold.json",
+      "sha256": "32e63ec8977410ae6c21998d42324c3b28cf0076c44bc9a7bc5abc646ca4082b"
+    },
+    {
+      "bytes": 25210,
+      "original": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/test_li_v3_layout_localization.py",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/candidate/test_li_v3_layout_localization.py",
+      "sha256": "787fae54ffba26e59d1465dd40888ac1eaa218ea2035ccd468dde83375f984e9"
+    },
+    {
+      "bytes": 2604,
+      "original": ".cache/phase2-documentary-layout-review-v1/README.md",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/README.md",
+      "sha256": "4b114ac69d468683057aea111252ffb3282595ae0ceebf5faf21d1fdce19a4fa"
+    },
+    {
+      "bytes": 3116,
+      "original": ".cache/phase2-documentary-layout-review-v1/before-namespace-cap-tests/intermediate-review.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/before-namespace-cap-tests/intermediate-review.json",
+      "sha256": "99cd6dcb7c5c149636c2102d25cdf1a327906802957444e8eaf5819d32dad0d9"
+    },
+    {
+      "bytes": 4676,
+      "original": ".cache/phase2-documentary-layout-review-v1/before-namespace-cap-tests/run_guarded.py",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/before-namespace-cap-tests/run_guarded.py",
+      "sha256": "68739d24b69742d0d3609ef4ed2ffc54f37bcc39e118c1644cc7c1de91da8e6d"
+    },
+    {
+      "bytes": 27820,
+      "original": ".cache/phase2-documentary-layout-review-v1/before-namespace-cap-tests/test_li_v3_layout_localization_review.py",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/before-namespace-cap-tests/test_li_v3_layout_localization_review.py",
+      "sha256": "5dab7d76aa409aa83dd4ff58a13316b84535c4b8818a891f81680704ecb2f2cd"
+    },
+    {
+      "bytes": 39444,
+      "original": ".cache/phase2-documentary-layout-review-v1/first/after.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/first/after.json",
+      "sha256": "e68a431325d61194bc0dad7087f8d1fce4eca4b7ea9a2e15d77c950514c46448"
+    },
+    {
+      "bytes": 39444,
+      "original": ".cache/phase2-documentary-layout-review-v1/first/before.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/first/before.json",
+      "sha256": "e68a431325d61194bc0dad7087f8d1fce4eca4b7ea9a2e15d77c950514c46448"
+    },
+    {
+      "bytes": 6207,
+      "original": ".cache/phase2-documentary-layout-review-v1/first/contract.md",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/first/contract.md",
+      "sha256": "c47dc68a34d4928c0886683885e7263c58e3c7b3ddfc98e72b617c83c55c1d3b"
+    },
+    {
+      "bytes": 1325,
+      "original": ".cache/phase2-documentary-layout-review-v1/first/execution.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/first/execution.json",
+      "sha256": "9718f56d29543d78113ee38c54261d26c2273c04a9d973955b8f5e1169fa89a0"
+    },
+    {
+      "bytes": 25486,
+      "original": ".cache/phase2-documentary-layout-review-v1/first/implementation.py",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/first/implementation.py",
+      "sha256": "5bfce76619655090d00670d2aba8cec17eef3764dcf23cf741b78b9f0d0d1e39"
+    },
+    {
+      "bytes": 4676,
+      "original": ".cache/phase2-documentary-layout-review-v1/first/runner.py",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/first/runner.py",
+      "sha256": "68739d24b69742d0d3609ef4ed2ffc54f37bcc39e118c1644cc7c1de91da8e6d"
+    },
+    {
+      "bytes": 4452,
+      "original": ".cache/phase2-documentary-layout-review-v1/first/scope.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/first/scope.json",
+      "sha256": "10e2c29be646c94cd1c0feb1d458a6b18c56dd658f2c6389faffd6b8b9a357d4"
+    },
+    {
+      "bytes": 10756,
+      "original": ".cache/phase2-documentary-layout-review-v1/first/stderr.log",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/first/stderr.log",
+      "sha256": "1748f2abc361897ba6a337b0d643bd454b3a3b8ec478e4452f1408dd91c68336"
+    },
+    {
+      "bytes": 82,
+      "original": ".cache/phase2-documentary-layout-review-v1/first/stdout.log",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/first/stdout.log",
+      "sha256": "60c030fd44087bdbc1ce75930e68f2fbe5686e4bd247c09a522698a868174ad9"
+    },
+    {
+      "bytes": 27717,
+      "original": ".cache/phase2-documentary-layout-review-v1/first/tests.py",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/first/tests.py",
+      "sha256": "114c0ace8ad7e8f8298a9eed2cb7d4169f402721baa6c72517a0e634a5ca8200"
+    },
+    {
+      "bytes": 1149,
+      "original": ".cache/phase2-documentary-layout-review-v1/handoff.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/handoff.json",
+      "sha256": "58e872e26178c99389cadb1f3434e8dde282cd7c0d11d937902bd3d8b6b2c8b0"
+    },
+    {
+      "bytes": 3116,
+      "original": ".cache/phase2-documentary-layout-review-v1/intermediate-review.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/intermediate-review.json",
+      "sha256": "99cd6dcb7c5c149636c2102d25cdf1a327906802957444e8eaf5819d32dad0d9"
+    },
+    {
+      "bytes": 9276,
+      "original": ".cache/phase2-documentary-layout-review-v1/inventory.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/inventory.json",
+      "sha256": "1cf20582d14abc5e396246cd3e9fe561053e71ebe14f9c4b85f2d8cf43b03c37"
+    },
+    {
+      "bytes": 2901,
+      "original": ".cache/phase2-documentary-layout-review-v1/namespace-cap-test-addition.diff",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/namespace-cap-test-addition.diff",
+      "sha256": "7dbc9b56e098a8cbda50cca96cecc57d5b559ade9a32d1e7efecb43e5938e2ce"
+    },
+    {
+      "bytes": 39539,
+      "original": ".cache/phase2-documentary-layout-review-v1/namespace-final/after.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/namespace-final/after.json",
+      "sha256": "bc98f1da19a9cd4ded80ec2f907122cdaed154f7076ce302659248274c3041e6"
+    },
+    {
+      "bytes": 39539,
+      "original": ".cache/phase2-documentary-layout-review-v1/namespace-final/before.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/namespace-final/before.json",
+      "sha256": "bc98f1da19a9cd4ded80ec2f907122cdaed154f7076ce302659248274c3041e6"
+    },
+    {
+      "bytes": 7517,
+      "original": ".cache/phase2-documentary-layout-review-v1/namespace-final/contract.md",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/namespace-final/contract.md",
+      "sha256": "c16fd29a51f9b1650cff19e77b36bf991c847286ecbd5877633379bdd8f8d65f"
+    },
+    {
+      "bytes": 1419,
+      "original": ".cache/phase2-documentary-layout-review-v1/namespace-final/execution.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/namespace-final/execution.json",
+      "sha256": "3206e18f790bd48655b031dc362cd074c10a86560402fea826e6f4a7d07a635e"
+    },
+    {
+      "bytes": 26076,
+      "original": ".cache/phase2-documentary-layout-review-v1/namespace-final/implementation.py",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/namespace-final/implementation.py",
+      "sha256": "4624e68c28f911bc0bcc927834bd9f9bbb8cd4622a47db80f5a99e3f63b6ba7d"
+    },
+    {
+      "bytes": 4874,
+      "original": ".cache/phase2-documentary-layout-review-v1/namespace-final/runner.py",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/namespace-final/runner.py",
+      "sha256": "5eb7f183439aa40d3425ccb61760b896d38e2504eca55e2399b418dfa31f0c77"
+    },
+    {
+      "bytes": 1837,
+      "original": ".cache/phase2-documentary-layout-review-v1/namespace-final/scope-addendum.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/namespace-final/scope-addendum.json",
+      "sha256": "548f64dceb10d6d47a626aff571c6a97704de84ca50744b593191d8b5ad40d1d"
+    },
+    {
+      "bytes": 4452,
+      "original": ".cache/phase2-documentary-layout-review-v1/namespace-final/scope.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/namespace-final/scope.json",
+      "sha256": "10e2c29be646c94cd1c0feb1d458a6b18c56dd658f2c6389faffd6b8b9a357d4"
+    },
+    {
+      "bytes": 4590,
+      "original": ".cache/phase2-documentary-layout-review-v1/namespace-final/stderr.log",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/namespace-final/stderr.log",
+      "sha256": "b1a0f539a38095ee24735df7a99091870b7fd810745e2a0a46a424780fdfc978"
+    },
+    {
+      "bytes": 82,
+      "original": ".cache/phase2-documentary-layout-review-v1/namespace-final/stdout.log",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/namespace-final/stdout.log",
+      "sha256": "5b7db5f126adff272712d563c5b070945ca054d7eb0a57dba7701408621872d5"
+    },
+    {
+      "bytes": 30060,
+      "original": ".cache/phase2-documentary-layout-review-v1/namespace-final/tests.py",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/namespace-final/tests.py",
+      "sha256": "93d062867f8fa612719084922474f13db9aa3936410cfa699c4d3b1007e8db62"
+    },
+    {
+      "bytes": 6160,
+      "original": ".cache/phase2-documentary-layout-review-v1/review.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/review.json",
+      "sha256": "fa343b5574bfda2a9a17e8fcacbb919758dbf8fe57125a63290fb62d34e70184"
+    },
+    {
+      "bytes": 994,
+      "original": ".cache/phase2-documentary-layout-review-v1/reviewer-canary-assertion-correction.diff",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/reviewer-canary-assertion-correction.diff",
+      "sha256": "2023046cbebf68777b9265e3c507dc89fdc7c11a59132b1f0b9516f31d3bafbe"
+    },
+    {
+      "bytes": 908,
+      "original": ".cache/phase2-documentary-layout-review-v1/reviewer-canary-assertion-correction.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/reviewer-canary-assertion-correction.json",
+      "sha256": "df4ec2050fe698c6386249057d06740bdd6a74d99824b81a2b66ec0e46066cbf"
+    },
+    {
+      "bytes": 4874,
+      "original": ".cache/phase2-documentary-layout-review-v1/run_guarded.py",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/run_guarded.py",
+      "sha256": "5eb7f183439aa40d3425ccb61760b896d38e2504eca55e2399b418dfa31f0c77"
+    },
+    {
+      "bytes": 39444,
+      "original": ".cache/phase2-documentary-layout-review-v1/second/after.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/second/after.json",
+      "sha256": "f0cb73a90a58e6637a7951accb5a6b5f976213cfceb048938e756b8091e0a5b0"
+    },
+    {
+      "bytes": 39444,
+      "original": ".cache/phase2-documentary-layout-review-v1/second/before.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/second/before.json",
+      "sha256": "f0cb73a90a58e6637a7951accb5a6b5f976213cfceb048938e756b8091e0a5b0"
+    },
+    {
+      "bytes": 6207,
+      "original": ".cache/phase2-documentary-layout-review-v1/second/contract.md",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/second/contract.md",
+      "sha256": "c47dc68a34d4928c0886683885e7263c58e3c7b3ddfc98e72b617c83c55c1d3b"
+    },
+    {
+      "bytes": 1325,
+      "original": ".cache/phase2-documentary-layout-review-v1/second/execution.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/second/execution.json",
+      "sha256": "59b9293e80f2f730dffabd0e174d23946fb5fb8801454ca5a1c94b2d00366492"
+    },
+    {
+      "bytes": 25486,
+      "original": ".cache/phase2-documentary-layout-review-v1/second/implementation.py",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/second/implementation.py",
+      "sha256": "5bfce76619655090d00670d2aba8cec17eef3764dcf23cf741b78b9f0d0d1e39"
+    },
+    {
+      "bytes": 4676,
+      "original": ".cache/phase2-documentary-layout-review-v1/second/runner.py",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/second/runner.py",
+      "sha256": "68739d24b69742d0d3609ef4ed2ffc54f37bcc39e118c1644cc7c1de91da8e6d"
+    },
+    {
+      "bytes": 4452,
+      "original": ".cache/phase2-documentary-layout-review-v1/second/scope.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/second/scope.json",
+      "sha256": "10e2c29be646c94cd1c0feb1d458a6b18c56dd658f2c6389faffd6b8b9a357d4"
+    },
+    {
+      "bytes": 4417,
+      "original": ".cache/phase2-documentary-layout-review-v1/second/stderr.log",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/second/stderr.log",
+      "sha256": "a2158fdfba202755c10bed3f04a08b7664d7e6bf1c7d7e7e81b7ed5b91992052"
+    },
+    {
+      "bytes": 82,
+      "original": ".cache/phase2-documentary-layout-review-v1/second/stdout.log",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/second/stdout.log",
+      "sha256": "33a32642fddf390f45c91c31dffa50ca8b2019ee0aa5867e93bc917a54beca5c"
+    },
+    {
+      "bytes": 27820,
+      "original": ".cache/phase2-documentary-layout-review-v1/second/tests.py",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/second/tests.py",
+      "sha256": "5dab7d76aa409aa83dd4ff58a13316b84535c4b8818a891f81680704ecb2f2cd"
+    },
+    {
+      "bytes": 5120,
+      "original": ".cache/phase2-documentary-layout-review-v1/source-argument.md",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/source-argument.md",
+      "sha256": "8b54b3d4e630cf18cc1eecfe7f3f56cadf5845ba9682e19ab582b6d76e872339"
+    },
+    {
+      "bytes": 3147,
+      "original": ".cache/phase2-documentary-layout-review-v1/static-and-receipt-audit.json",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/static-and-receipt-audit.json",
+      "sha256": "d086a0d88a6345b232223bd477f25d43215453f242cd99c44968b6fbc0b44b51"
+    },
+    {
+      "bytes": 4577,
+      "original": ".cache/phase2-documentary-layout-review-v1/static_and_receipt_audit.py",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/static_and_receipt_audit.py",
+      "sha256": "13e2ccf96d6c36a2deab453ee1b0c88d25c706d1fef1deabf2488e55eafcdf2e"
+    },
+    {
+      "bytes": 30060,
+      "original": ".cache/phase2-documentary-layout-review-v1/test_li_v3_layout_localization_review.py",
+      "published_relative": "reports/phase2-documentary-layout-preparation-v1/independent/test_li_v3_layout_localization_review.py",
+      "sha256": "93d062867f8fa612719084922474f13db9aa3936410cfa699c4d3b1007e8db62"
+    },
+    {
+      "bytes": 1946,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/PUBLICATION.md",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/PUBLICATION.md",
+      "sha256": "858868971d3e8bd7bf887d6042325cb0d657a4d5cc3a060e4d508ffce581d361"
+    },
+    {
+      "bytes": 5726,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/README.md",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/README.md",
+      "sha256": "9f365d73c340bed7ccaf45777d07442b6b95026584a7665addddd3b5ae6798ac"
+    },
+    {
+      "bytes": 5394,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/acquire.py",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/acquire.py",
+      "sha256": "2702fe6786a6d9fc7afebe0803bf82a9cec0ed222e6d3bef2569f03b5202df0d"
+    },
+    {
+      "bytes": 2138,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/actual-first/execution.json",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/actual-first/execution.json",
+      "sha256": "f539a20a5d76fa00606f3fd9295253186d2518837b1bdccd4a7161429f321d91"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/actual-first/stderr.txt",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/actual-first/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2563,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/actual-first/stdout.json",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/actual-first/stdout.json",
+      "sha256": "b4d3a743dbf19c02c485b6bc9d28289324403d0c077b37c7ff5b2d69ea69cb38"
+    },
+    {
+      "bytes": 920,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/author-first/receipt.json",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/author-first/receipt.json",
+      "sha256": "732a862771e495e5800e63faec82e6acf7ef6a137dabef6faaa853250d36aa09"
+    },
+    {
+      "bytes": 848,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/author-first/stderr.txt",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/author-first/stderr.txt",
+      "sha256": "44fd157645099be04b1b85b5be343a0d6cc95329e74647d6bf566329a452ed90"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/author-first/stdout.txt",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/author-first/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 920,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/author-suppression-repair/receipt.json",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/author-suppression-repair/receipt.json",
+      "sha256": "eb064ba468723b688dfece8478e031a6d054db0fd75b16e13266ef66d3b847a3"
+    },
+    {
+      "bytes": 978,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/author-suppression-repair/stderr.txt",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/author-suppression-repair/stderr.txt",
+      "sha256": "2abd267fdc3dee393bf51beb278673793b6cb0b052ad4b4ba0306ba34bcd3a5b"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/author-suppression-repair/stdout.txt",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/author-suppression-repair/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 7025,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/before-review-repair/acquire.py.bytes.json",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/before-review-repair/acquire.py.bytes.json",
+      "sha256": "a9aaa9a769c7d686436a2df167cb43c945493bdb0cc075e390943f0cb8caa4ae"
+    },
+    {
+      "bytes": 2842,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/before-review-repair/html_projection.py",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/before-review-repair/html_projection.py",
+      "sha256": "3b6072811492fcdfe8154cf65d92b59c62f8db0cc50a915cd2c4a77b6dc48831"
+    },
+    {
+      "bytes": 2430,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/before-review-repair/scope.json",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/before-review-repair/scope.json",
+      "sha256": "a595babb06d03997ec6901150b28ea320a084e8375a598ed45e9d73b2c099db0"
+    },
+    {
+      "bytes": 7566,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/before-suppression-repair/acquire.py.bytes.json",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/before-suppression-repair/acquire.py.bytes.json",
+      "sha256": "2e1e7836bfeca9d56cf239430ec9c3c421d8b63a4cea2c9be0960dfd0b1bca3e"
+    },
+    {
+      "bytes": 920,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/before-suppression-repair/author-first/receipt.json",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/before-suppression-repair/author-first/receipt.json",
+      "sha256": "732a862771e495e5800e63faec82e6acf7ef6a137dabef6faaa853250d36aa09"
+    },
+    {
+      "bytes": 848,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/before-suppression-repair/author-first/stderr.txt",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/before-suppression-repair/author-first/stderr.txt",
+      "sha256": "44fd157645099be04b1b85b5be343a0d6cc95329e74647d6bf566329a452ed90"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/before-suppression-repair/author-first/stdout.txt",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/before-suppression-repair/author-first/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2842,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/before-suppression-repair/html_projection.py",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/before-suppression-repair/html_projection.py",
+      "sha256": "3b6072811492fcdfe8154cf65d92b59c62f8db0cc50a915cd2c4a77b6dc48831"
+    },
+    {
+      "bytes": 2430,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/before-suppression-repair/scope.json",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/before-suppression-repair/scope.json",
+      "sha256": "9ba83c19ab696274fb42f655ae6ff174aa2aa64bd550633bddda20d2abce6cff"
+    },
+    {
+      "bytes": 2692,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/before-suppression-repair/test_author_projection.py",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/before-suppression-repair/test_author_projection.py",
+      "sha256": "5602263ed34a05ed44073b791b81537aaae130539336a5d3fd9802d9f57cd1ac"
+    },
+    {
+      "bytes": 2644,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/citation-check.json",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/citation-check.json",
+      "sha256": "1c950c66280b3e4064866ad1c69917d76f2e96ec6c147e795c50cc8ae7f70290"
+    },
+    {
+      "bytes": 794,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/exposure-ledger.json",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/exposure-ledger.json",
+      "sha256": "fb9d1f51bf7902193b402d7cd4535fd0a7abc39d8715ae05ddc5d904a6cc7b9a"
+    },
+    {
+      "bytes": 2967,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/html_projection.py",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/html_projection.py",
+      "sha256": "472d445d8795fedad228aa5549a4d4701aa8ef1d6ee12d091ae631acaeb4abcd"
+    },
+    {
+      "bytes": 4837,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/independent-review/acquire.py.review-delta.diff.bytes.json",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/independent-review/acquire.py.review-delta.diff.bytes.json",
+      "sha256": "fff16dbc06867d4abc6c68a33c26884975b159030777031679fd473e15318877"
+    },
+    {
+      "bytes": 4122,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/independent-review/check_retained_guidance.py",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/independent-review/check_retained_guidance.py",
+      "sha256": "e1362d60bde7b98d1737eb1f27093225c6f1799c1cc01737cd426662169c94e7"
+    },
+    {
+      "bytes": 2794,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/independent-review/citation-check.json",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/independent-review/citation-check.json",
+      "sha256": "6bdaf0a4122e15994db714565dfe6e0875f1fd2db2f60a8def74a3ef0920788c"
+    },
+    {
+      "bytes": 687,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/independent-review/final-parser-test-receipt.json",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/independent-review/final-parser-test-receipt.json",
+      "sha256": "7f8c7e94bc205e7bb905366a3c7779feac8d2526ae670aec091f85c39dd30ac1"
+    },
+    {
+      "bytes": 1677,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/independent-review/final-parser-test.stderr",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/independent-review/final-parser-test.stderr",
+      "sha256": "d8e07dc2afcaa00acb92ed7d3bdf262e1107734d350e210720f9f5782cacd108"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/independent-review/final-parser-test.stdout",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/independent-review/final-parser-test.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 686,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/independent-review/final-runner-test-receipt.json",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/independent-review/final-runner-test-receipt.json",
+      "sha256": "82941d46fa3ecf3ba85fee296cef65ef02e330a03123a3e8ea12d71a6d1a25c2"
+    },
+    {
+      "bytes": 1679,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/independent-review/final-runner-test.stderr",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/independent-review/final-runner-test.stderr",
+      "sha256": "585b9ebd1b9773aa74b0aba1961e317cb1b6ee6d68e8adb7665ff907802d1d0e"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/independent-review/final-runner-test.stdout",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/independent-review/final-runner-test.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 452,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/independent-review/first-parser-test-receipt.json",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/independent-review/first-parser-test-receipt.json",
+      "sha256": "67c026645f7c7631d1e90d7e26bfaf58965328231dc549adf14a3b2768ceafcd"
+    },
+    {
+      "bytes": 4158,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/independent-review/first-parser-test-source.py",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/independent-review/first-parser-test-source.py",
+      "sha256": "7871922d787fe6b4d5626a79b9faa13009b8d1628ba81317b0837a4ff3d0062c"
+    },
+    {
+      "bytes": 7577,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/independent-review/first-parser-test.stderr.bytes.json",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/independent-review/first-parser-test.stderr.bytes.json",
+      "sha256": "b4a6a74ed835425132a891a071d923c92fd4b39f49508fa7698a3d56a25ff888"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/independent-review/first-parser-test.stdout",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/independent-review/first-parser-test.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 539,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/independent-review/html_projection.py.review-delta.diff",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/independent-review/html_projection.py.review-delta.diff",
+      "sha256": "6b8f2bffc8034270fab78b53bed67ac5046a083af40d605bc5fbe001f627382d"
+    },
+    {
+      "bytes": 7038,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/independent-review/initial-source/acquire.py.bytes.json",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/independent-review/initial-source/acquire.py.bytes.json",
+      "sha256": "e011f207ea9ec4cdb5bc59864870b6f471e03fcd282fc330694e7d310e8c2f35"
+    },
+    {
+      "bytes": 2842,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/independent-review/initial-source/html_projection.py",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/independent-review/initial-source/html_projection.py",
+      "sha256": "3b6072811492fcdfe8154cf65d92b59c62f8db0cc50a915cd2c4a77b6dc48831"
+    },
+    {
+      "bytes": 2430,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/independent-review/initial-source/scope.json",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/independent-review/initial-source/scope.json",
+      "sha256": "a595babb06d03997ec6901150b28ea320a084e8375a598ed45e9d73b2c099db0"
+    },
+    {
+      "bytes": 5551,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/independent-review/interpretation-review.json",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/independent-review/interpretation-review.json",
+      "sha256": "949bb12a10a09eefa4f994cb05fbb0c48498495c3f2ec16dc11b4573dc828aab"
+    },
+    {
+      "bytes": 5009,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/independent-review/preacquisition-review.json",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/independent-review/preacquisition-review.json",
+      "sha256": "5280018cbe2fdb7df4988c5d8998afdaffa7359e94b5fccb3f504d5c880cfa89"
+    },
+    {
+      "bytes": 4384,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/independent-review/result-review-bindings.json",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/independent-review/result-review-bindings.json",
+      "sha256": "ea51d7ede1780aa347bedcc5ba7021c2eb4d5105ba8eb3f9cbd58c62e966cd2e"
+    },
+    {
+      "bytes": 3953,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/independent-review/result-review.json",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/independent-review/result-review.json",
+      "sha256": "c48ea0468722b013e08fed3e70ed7d0f1e6a716b85d79606dd989683322366ff"
+    },
+    {
+      "bytes": 3523,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/independent-review/retained-guidance-check.json",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/independent-review/retained-guidance-check.json",
+      "sha256": "667f692f07848a08bd268b22a6da0a8187b370e7c4b1aee9297aa4f5ba73dae2"
+    },
+    {
+      "bytes": 7611,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/independent-review/reviewed-source/acquire.py.bytes.json",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/independent-review/reviewed-source/acquire.py.bytes.json",
+      "sha256": "925f025c9e799bb24da501b53735580d83279db508eb2a04c883b8bd4572f1fb"
+    },
+    {
+      "bytes": 2967,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/independent-review/reviewed-source/html_projection.py",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/independent-review/reviewed-source/html_projection.py",
+      "sha256": "472d445d8795fedad228aa5549a4d4701aa8ef1d6ee12d091ae631acaeb4abcd"
+    },
+    {
+      "bytes": 2549,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/independent-review/reviewed-source/scope.json",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/independent-review/reviewed-source/scope.json",
+      "sha256": "aca351abbc6bbf5538e4bf48b220026d81f60efe7969454d23f50621cbd456d7"
+    },
+    {
+      "bytes": 2513,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/independent-review/scope.json.review-delta.diff",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/independent-review/scope.json.review-delta.diff",
+      "sha256": "45ea0c4a14dd6c265074b18309a5d5db9b0f7340ac26145760d316048b253616"
+    },
+    {
+      "bytes": 3720,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/independent-review/source-bindings.json",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/independent-review/source-bindings.json",
+      "sha256": "40a2b958128c6ffe66d69845a307ef5e083c9f8514fe3f38af0d749629c4ff6e"
+    },
+    {
+      "bytes": 4158,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/independent-review/test_parser_independent.py",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/independent-review/test_parser_independent.py",
+      "sha256": "7871922d787fe6b4d5626a79b9faa13009b8d1628ba81317b0837a4ff3d0062c"
+    },
+    {
+      "bytes": 9099,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/independent-review/test_runner_independent.py",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/independent-review/test_runner_independent.py",
+      "sha256": "12358e7bf75bc844b20fbdb4f3aac3f1f304c7ffa3c23cc870ba524840e2073c"
+    },
+    {
+      "bytes": 2563,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/operation.json",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/operation.json",
+      "sha256": "b4d3a743dbf19c02c485b6bc9d28289324403d0c077b37c7ff5b2d69ea69cb38"
+    },
+    {
+      "bytes": 37724,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/original-byte-map.json",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/original-byte-map.json",
+      "sha256": "121a2c194314c31120b38b61ca9b6720c6cba6208a2c09fbeb1a46dbd9028b9a"
+    },
+    {
+      "bytes": 1912,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/pre-acquisition-history.md",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/pre-acquisition-history.md",
+      "sha256": "3da84992654654613bd443c1e360c25fe5973c2350f5c6057deda10f684f772f"
+    },
+    {
+      "bytes": 571,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/pre-acquisition-repair.json",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/pre-acquisition-repair.json",
+      "sha256": "d5e897aeb78fd8122f637bfb84aa159a57eccd5ea17e2ca399802c6496f110a2"
+    },
+    {
+      "bytes": 290,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/request-slot.json",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/request-slot.json",
+      "sha256": "54ab570b14dc107056ff0b86f0e2ddac5d42299c893e743045d3a0712f81f3f3"
+    },
+    {
+      "bytes": 2549,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/scope.json",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/scope.json",
+      "sha256": "aca351abbc6bbf5538e4bf48b220026d81f60efe7969454d23f50621cbd456d7"
+    },
+    {
+      "bytes": 1070,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/section5-receipt.json",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/section5-receipt.json",
+      "sha256": "5befde35ecef6564fedd5f3c06504d816c0bc8568f26c4efa53a152a165b0c3e"
+    },
+    {
+      "bytes": 1042,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/section6-receipt.json",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/section6-receipt.json",
+      "sha256": "f1baf2e4b3927e9954366a19931d2b2ced8f6c7c271d7a3a8153973870509176"
+    },
+    {
+      "bytes": 11504,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/selected-guidance.json",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/selected-guidance.json",
+      "sha256": "d9aed217f7c291077a060da7950be17a517144eba379d0d7a3dc5247b68a54ad"
+    },
+    {
+      "bytes": 6246,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/source-bindings.json",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/source-bindings.json",
+      "sha256": "5e1bb23ba95aafeac89ca9b20099af99f26bb5f0e13cc2393a68a1e1ff27ea5b"
+    },
+    {
+      "bytes": 518,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/suppression-repair.json",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/suppression-repair.json",
+      "sha256": "5c313dc513d4de3906aa6f5450dc2ba55954814283f6eb3c1dfa1f3b0ecc3a48"
+    },
+    {
+      "bytes": 3029,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1/test_author_projection.py",
+      "published_relative": "reports/phase2-nist-metrology-guidance-v1/test_author_projection.py",
+      "sha256": "c82cbcaf433752acb130b705b7eb788b3723e34bb295bcc9909bfcdcc708a794"
+    },
+    {
+      "bytes": 4789,
+      "original": ".cache/phase2-nist-metrology-guidance-review-v1/publication-review.json",
+      "published_relative": "reports/phase2-growth-verification-v1/nist-publication-review.json",
+      "sha256": "220e6439b185fe7fa41f890585ad1c9331867cc926aead4fbcc343b20ea91b53"
+    },
+    {
+      "bytes": 3752,
+      "original": ".cache/phase2-nist-metrology-guidance-v1/handoff.json",
+      "published_relative": "reports/phase2-growth-verification-v1/nist-handoff.json",
+      "sha256": "fb76cdd04841f620004ae3c149dc865d1310e953a885f5a426a731ba2d946bbc"
+    },
+    {
+      "bytes": 1304,
+      "original": ".cache/phase2-growth-ci-v1/final.json",
+      "published_relative": "reports/phase2-growth-verification-v1/ci.json",
+      "sha256": "a54c34896c21e8478c581df4ab91659c8f94a4070bb756b2397d46d8f703486f"
+    },
+    {
+      "bytes": 80249,
+      "original": ".cache/phase2-growth-shape-operations-v1/production/1/execution.json",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-operations/production/1/execution.json",
+      "sha256": "73c2fca41c5fbf930ddba88ba25bced0298304ebb6327905e02484866b1ca20a"
+    },
+    {
+      "bytes": 43009,
+      "original": ".cache/phase2-growth-shape-operations-v1/production/1/start.json",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-operations/production/1/start.json",
+      "sha256": "2a09138b5d041bd28fe7ba79e91bc70330c8e4f8e99f86bebb09931349e9927c"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-growth-shape-operations-v1/production/1/stderr.txt",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-operations/production/1/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 6535,
+      "original": ".cache/phase2-growth-shape-operations-v1/production/1/stdout.txt",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-operations/production/1/stdout.txt",
+      "sha256": "730039c818af60864292c0c4776ea13adccf211ab21432120e93830172d87d95"
+    },
+    {
+      "bytes": 80250,
+      "original": ".cache/phase2-growth-shape-operations-v1/production/2/execution.json",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-operations/production/2/execution.json",
+      "sha256": "aa685d5a66ec5cece815dc7ca1d95084248fda3313b937de5d77a987f0339fb9"
+    },
+    {
+      "bytes": 43009,
+      "original": ".cache/phase2-growth-shape-operations-v1/production/2/start.json",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-operations/production/2/start.json",
+      "sha256": "3b6676f774e72179c596a016fc2798d2fd397ecfac2340a4e4226d792321ad01"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-growth-shape-operations-v1/production/2/stderr.txt",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-operations/production/2/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 6535,
+      "original": ".cache/phase2-growth-shape-operations-v1/production/2/stdout.txt",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-operations/production/2/stdout.txt",
+      "sha256": "730039c818af60864292c0c4776ea13adccf211ab21432120e93830172d87d95"
+    },
+    {
+      "bytes": 543,
+      "original": ".cache/phase2-growth-shape-operations-v1/production/final.json",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-operations/production/final.json",
+      "sha256": "f165cf85a506c559eae74dca4150cea14893f1cc430129b4b49ba5d6ba5b6204"
+    },
+    {
+      "bytes": 43707,
+      "original": ".cache/phase2-growth-shape-operations-v1/production/preflight.json",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-operations/production/preflight.json",
+      "sha256": "e8fbde4efd0acecd897f77ecf8fb121434dd6f259d5b28d01ad6d5e8263fa4f6"
+    },
+    {
+      "bytes": 6535,
+      "original": ".cache/li-v3-custody/growth-hint-shape-v1/1/public.json",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-operations/production/1/public.json",
+      "sha256": "730039c818af60864292c0c4776ea13adccf211ab21432120e93830172d87d95"
+    },
+    {
+      "bytes": 6535,
+      "original": ".cache/li-v3-custody/growth-hint-shape-v1/2/public.json",
+      "published_relative": "reports/phase2-growth-verification-v1/shape-operations/production/2/public.json",
+      "sha256": "730039c818af60864292c0c4776ea13adccf211ab21432120e93830172d87d95"
+    },
+    {
+      "bytes": 81809,
+      "original": ".cache/phase2-growth-envelope-operations-v1/production/1/execution.json",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-operations/production/1/execution.json",
+      "sha256": "7dad9b7ef192dbfda5d21de17741205303f973807dc36523a7cec1799671c00e"
+    },
+    {
+      "bytes": 43496,
+      "original": ".cache/phase2-growth-envelope-operations-v1/production/1/start.json",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-operations/production/1/start.json",
+      "sha256": "3fae789d0bea2627aaf7ce74d3aacca75a831172936215641dc6337b47ea48db"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-growth-envelope-operations-v1/production/1/stderr.txt",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-operations/production/1/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 8501,
+      "original": ".cache/phase2-growth-envelope-operations-v1/production/1/stdout.txt",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-operations/production/1/stdout.txt",
+      "sha256": "01cce9e57b26e204a9d31959f747768c70abf7543bedb6ab104b3b4b623f094f"
+    },
+    {
+      "bytes": 81809,
+      "original": ".cache/phase2-growth-envelope-operations-v1/production/2/execution.json",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-operations/production/2/execution.json",
+      "sha256": "8f8428f6fc2fa1f03d9080aa4872efba8fd827820e343796376c7022812f710f"
+    },
+    {
+      "bytes": 43496,
+      "original": ".cache/phase2-growth-envelope-operations-v1/production/2/start.json",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-operations/production/2/start.json",
+      "sha256": "b5f27cdedfd1f7fa2bffcfc34a6b438d347a2049485d277bb75599a9591ce6a6"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-growth-envelope-operations-v1/production/2/stderr.txt",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-operations/production/2/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 8501,
+      "original": ".cache/phase2-growth-envelope-operations-v1/production/2/stdout.txt",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-operations/production/2/stdout.txt",
+      "sha256": "01cce9e57b26e204a9d31959f747768c70abf7543bedb6ab104b3b4b623f094f"
+    },
+    {
+      "bytes": 534,
+      "original": ".cache/phase2-growth-envelope-operations-v1/production/final.json",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-operations/production/final.json",
+      "sha256": "fb1c39d06e2049021102240c163d7ba627f12aaf168552b2d03763ed41ae6968"
+    },
+    {
+      "bytes": 44596,
+      "original": ".cache/phase2-growth-envelope-operations-v1/production/preflight.json",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-operations/production/preflight.json",
+      "sha256": "8df4d4af5d42d7ca286fae13644d652adbd4ab2e9ea40b724498586d0dd9827d"
+    },
+    {
+      "bytes": 8501,
+      "original": ".cache/li-v3-custody/growth-envelope-v1/1/public.json",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-operations/production/1/public.json",
+      "sha256": "01cce9e57b26e204a9d31959f747768c70abf7543bedb6ab104b3b4b623f094f"
+    },
+    {
+      "bytes": 8501,
+      "original": ".cache/li-v3-custody/growth-envelope-v1/2/public.json",
+      "published_relative": "reports/phase2-growth-verification-v1/envelope-operations/production/2/public.json",
+      "sha256": "01cce9e57b26e204a9d31959f747768c70abf7543bedb6ab104b3b4b623f094f"
+    },
+    {
+      "bytes": 2413,
+      "original": ".cache/phase2-growth-release-v1/bind_operation_audit.py",
+      "published_relative": "reports/phase2-growth-verification-v1/release/bind_operation_audit.py",
+      "sha256": "196411bcd56d83a666952604a6aea99675ae0b7ec38e667c7fdf7a25530c3187"
+    },
+    {
+      "bytes": 1504,
+      "original": ".cache/phase2-growth-release-v1/observe_ci.py",
+      "published_relative": "reports/phase2-growth-verification-v1/release/observe_ci.py",
+      "sha256": "3e38cd323d2d4385071d0825140a4047ce22f7732822af6cc01c9b9f71f1a908"
+    },
+    {
+      "bytes": 3637,
+      "original": ".cache/phase2-growth-operation-review-v1/COMPLETION.md",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/COMPLETION.md",
+      "sha256": "6830ee07ed35e47a3f6242f85b9262e561e0efb247307a357e2f4a3c77fd1066"
+    },
+    {
+      "bytes": 6109,
+      "original": ".cache/phase2-growth-operation-review-v1/README.md",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/README.md",
+      "sha256": "7ef4c4723616f7c4f91dcb4a3293182c654f23c1773ed49a3c0b59e7762d5042"
+    },
+    {
+      "bytes": 60662,
+      "original": ".cache/phase2-growth-operation-review-v1/actual-review-both-corrected.json",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/actual-review-both-corrected.json",
+      "sha256": "20f345c69839bedaf4c7a073813f804996e83b4892cbf3395e241e05680e01bd"
+    },
+    {
+      "bytes": 53784,
+      "original": ".cache/phase2-growth-operation-review-v1/audit-source.diff",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/audit-source.diff",
+      "sha256": "ffe61e6ed7750ca6f84ce955713b338a18d646102c9c9038ac957981dca62f4d"
+    },
+    {
+      "bytes": 40774,
+      "original": ".cache/phase2-growth-operation-review-v1/audit_completed_operations.py",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/audit_completed_operations.py",
+      "sha256": "a34b266e2316b14540b0abd0f2016274422a81b8eca90f3152aa734f5617deb7"
+    },
+    {
+      "bytes": 40873,
+      "original": ".cache/phase2-growth-operation-review-v1/audit_completed_operations_corrected.py",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/audit_completed_operations_corrected.py",
+      "sha256": "d5ed41b53ae4769ee52e0dfb893dce4d04235cda8f9e7a14d2e163ce885c806b"
+    },
+    {
+      "bytes": 2413,
+      "original": ".cache/phase2-growth-operation-review-v1/binding-preparer-review/bind_operation_audit.py",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/binding-preparer-review/bind_operation_audit.py",
+      "sha256": "196411bcd56d83a666952604a6aea99675ae0b7ec38e667c7fdf7a25530c3187"
+    },
+    {
+      "bytes": 2079,
+      "original": ".cache/phase2-growth-operation-review-v1/binding-preparer-review/review.json",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/binding-preparer-review/review.json",
+      "sha256": "6d588b6179e39d79fb23de41e24177dc78c302ee81b423c5e4a626c68499a755"
+    },
+    {
+      "bytes": 1371,
+      "original": ".cache/phase2-growth-operation-review-v1/bindings.final.json",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/bindings.final.json",
+      "sha256": "22bc16e787ebece062c8687035dd4c9b7717a9e36ca5e48e3497a9868121a20e"
+    },
+    {
+      "bytes": 585,
+      "original": ".cache/phase2-growth-operation-review-v1/bindings.unbound.json",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/bindings.unbound.json",
+      "sha256": "8f93019b8b6b0efbb78faa549668073a266a4cbb5f0079b95c6e8744f400c814"
+    },
+    {
+      "bytes": 69108,
+      "original": ".cache/phase2-growth-operation-review-v1/check-adaptation.json",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/check-adaptation.json",
+      "sha256": "087946b0f7c122f6f5b35879f2d171551e4bedebe5a059d946557884fc1398e9"
+    },
+    {
+      "bytes": 5433,
+      "original": ".cache/phase2-growth-operation-review-v1/common-gates.prepared.txt",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/common-gates.prepared.txt",
+      "sha256": "2c528c0d2e43388f2bb3c82cd4b278e5d259f716574a24ab7b20856632bc4b00"
+    },
+    {
+      "bytes": 3662,
+      "original": ".cache/phase2-growth-operation-review-v1/completion.json",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/completion.json",
+      "sha256": "ec68d6a4c68a45716ebe5acf1777bb28858c9a8f0155f5347020ad26cbcd7406"
+    },
+    {
+      "bytes": 1591,
+      "original": ".cache/phase2-growth-operation-review-v1/correction-1/audit.diff",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/correction-1/audit.diff",
+      "sha256": "025fac7222045708e204642060caa4af21ba0d6547a95e1711de26e2b3af71b7"
+    },
+    {
+      "bytes": 69631,
+      "original": ".cache/phase2-growth-operation-review-v1/correction-1/check-adaptation-corrected.json",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/correction-1/check-adaptation-corrected.json",
+      "sha256": "5780e1b6806f4692e4a15e81a60464d5617c4eaa16fe5d0c504c6d424f9d0776"
+    },
+    {
+      "bytes": 40873,
+      "original": ".cache/phase2-growth-operation-review-v1/correction-1/math-review/audit_completed_operations_corrected.py",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/correction-1/math-review/audit_completed_operations_corrected.py",
+      "sha256": "d5ed41b53ae4769ee52e0dfb893dce4d04235cda8f9e7a14d2e163ce885c806b"
+    },
+    {
+      "bytes": 4753,
+      "original": ".cache/phase2-growth-operation-review-v1/correction-1/math-review/review.json",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/correction-1/math-review/review.json",
+      "sha256": "9658eab8dfcae62fd565f47ae75780a43654d3c7b99a05cabb0c25d8163fc36f"
+    },
+    {
+      "bytes": 6108,
+      "original": ".cache/phase2-growth-operation-review-v1/correction-1/math-review/run_audit_recorded_corrected.py",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/correction-1/math-review/run_audit_recorded_corrected.py",
+      "sha256": "80c44a65ef66f020ae3364505ee5d02a64d5ef0d7e0490eb9957dcb8447ee880"
+    },
+    {
+      "bytes": 11414,
+      "original": ".cache/phase2-growth-operation-review-v1/correction-1/math-review/source-reference-result.json",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/correction-1/math-review/source-reference-result.json",
+      "sha256": "cff7e4b206ed164e62c411aae3af3422d64a341970bd80a1915e814b0adb47ea"
+    },
+    {
+      "bytes": 5394,
+      "original": ".cache/phase2-growth-operation-review-v1/correction-1/math-review/source_reference_audit.py",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/correction-1/math-review/source_reference_audit.py",
+      "sha256": "745f9160233ca562b18270da77f12c293759743e308e9eec9199884724e814ae"
+    },
+    {
+      "bytes": 2000,
+      "original": ".cache/phase2-growth-operation-review-v1/correction-1/proposal.json",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/correction-1/proposal.json",
+      "sha256": "7369b13a60e26a01ee5ab831e03df962a35855634768b79e85c72afb51a9f625"
+    },
+    {
+      "bytes": 1022,
+      "original": ".cache/phase2-growth-operation-review-v1/correction-1/recorder.diff",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/correction-1/recorder.diff",
+      "sha256": "9bb99dba8342cfc4064623f9ced7f235bd887983c9c7936a5a51361edf4bee19"
+    },
+    {
+      "bytes": 419,
+      "original": ".cache/phase2-growth-operation-review-v1/correction-1/schema-reference-first.json",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/correction-1/schema-reference-first.json",
+      "sha256": "78bb4999fd43eb1d85cbec44bd8410b2f03f853749144ebe7067dbcf09858183"
+    },
+    {
+      "bytes": 10432,
+      "original": ".cache/phase2-growth-operation-review-v1/correction-1/schema-reference-review.json",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/correction-1/schema-reference-review.json",
+      "sha256": "7263b1307cb35b7b4537eda90df88708a1f2b0013da74166147aaa8b305373f4"
+    },
+    {
+      "bytes": 6238,
+      "original": ".cache/phase2-growth-operation-review-v1/correction-1/schema_reference_check.first.py",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/correction-1/schema_reference_check.first.py",
+      "sha256": "5820c55519167c5d6a03b4a49cd763a0439e90a66ed0128bfb60b1aaafe6e944"
+    },
+    {
+      "bytes": 6560,
+      "original": ".cache/phase2-growth-operation-review-v1/correction-1/schema_reference_check.py",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/correction-1/schema_reference_check.py",
+      "sha256": "15f96afb992fc5c32a0e447a840e37179b273807f7d3909cc39be00a01043d0a"
+    },
+    {
+      "bytes": 2662,
+      "original": ".cache/phase2-growth-operation-review-v1/execution-both/execution.json",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/execution-both/execution.json",
+      "sha256": "635700346e137b1cd45ed3bbd0b9bf479301f6e4982cdd29ce23f61d957179c4"
+    },
+    {
+      "bytes": 184,
+      "original": ".cache/phase2-growth-operation-review-v1/execution-both/final.json",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/execution-both/final.json",
+      "sha256": "d3c0172591cc0cc1796e7c70dad90e225176f4cb16aadfb26ed43741d42a5233"
+    },
+    {
+      "bytes": 1524,
+      "original": ".cache/phase2-growth-operation-review-v1/execution-both/start.json",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/execution-both/start.json",
+      "sha256": "aa3fe7df58eb55a289938d9aa00c57f71eb1f87728bd6613b726ab516851c7b1"
+    },
+    {
+      "bytes": 1067,
+      "original": ".cache/phase2-growth-operation-review-v1/execution-both/stderr.txt",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/execution-both/stderr.txt",
+      "sha256": "110a895983b1180af6f1d075ce2c82bf01bb8c78870ef719742c72dbce9ca5fd"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-growth-operation-review-v1/execution-both/stdout.txt",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/execution-both/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2971,
+      "original": ".cache/phase2-growth-operation-review-v1/execution-both-corrected/execution.json",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/execution-both-corrected/execution.json",
+      "sha256": "989630dc83bf55510d190ec764de5f52fbabfd06cd499d7b399ff45e09319771"
+    },
+    {
+      "bytes": 211,
+      "original": ".cache/phase2-growth-operation-review-v1/execution-both-corrected/final.json",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/execution-both-corrected/final.json",
+      "sha256": "134319d4ceae7ad778c911f6221ba8ad01be080231a9101139408b70b7d496cc"
+    },
+    {
+      "bytes": 1554,
+      "original": ".cache/phase2-growth-operation-review-v1/execution-both-corrected/start.json",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/execution-both-corrected/start.json",
+      "sha256": "bd2645109ec664b0d8a4c1737e911c196b1570401a6012803c4f79edfeddaa69"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-growth-operation-review-v1/execution-both-corrected/stderr.txt",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/execution-both-corrected/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 240,
+      "original": ".cache/phase2-growth-operation-review-v1/execution-both-corrected/stdout.txt",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/execution-both-corrected/stdout.txt",
+      "sha256": "4395913299f74fcf24ba57c9c372e08ae2aa27501f7a5c8165f6a44830e7fddc"
+    },
+    {
+      "bytes": 728,
+      "original": ".cache/phase2-growth-operation-review-v1/handoff.json",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/handoff.json",
+      "sha256": "773fa90b5939a0864fb3a6e9348b31847baa55c8a78c4cb143f4a441dc0542a5"
+    },
+    {
+      "bytes": 2539,
+      "original": ".cache/phase2-growth-operation-review-v1/inventory.json",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/inventory.json",
+      "sha256": "f4d8918c32722486ce8996c2eb32f326db99f691ed8ccac873b4ef4f53e81207"
+    },
+    {
+      "bytes": 40774,
+      "original": ".cache/phase2-growth-operation-review-v1/math-static-review/audit_completed_operations.py",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/math-static-review/audit_completed_operations.py",
+      "sha256": "a34b266e2316b14540b0abd0f2016274422a81b8eca90f3152aa734f5617deb7"
+    },
+    {
+      "bytes": 69108,
+      "original": ".cache/phase2-growth-operation-review-v1/math-static-review/check-adaptation.json",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/math-static-review/check-adaptation.json",
+      "sha256": "087946b0f7c122f6f5b35879f2d171551e4bedebe5a059d946557884fc1398e9"
+    },
+    {
+      "bytes": 8086,
+      "original": ".cache/phase2-growth-operation-review-v1/math-static-review/review.json",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/math-static-review/review.json",
+      "sha256": "c2e08af390ba3370f30587d041f2d09967cca4071bc9c97a4c6d8069f9c8b810"
+    },
+    {
+      "bytes": 6073,
+      "original": ".cache/phase2-growth-operation-review-v1/math-static-review/run_audit_recorded.py",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/math-static-review/run_audit_recorded.py",
+      "sha256": "62a1accf38b6fa0ed9c5cf27af966c58b69484fb1a718af73097a32dda41f562"
+    },
+    {
+      "bytes": 1693,
+      "original": ".cache/phase2-growth-operation-review-v1/preparation.json",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/preparation.json",
+      "sha256": "557725d14b0ff43144f036f31e7a5e2c8d959a9967d7ff5ef0209c5da8296f5d"
+    },
+    {
+      "bytes": 18988,
+      "original": ".cache/phase2-growth-operation-review-v1/prior-audit_completed_operations.py",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/prior-audit_completed_operations.py",
+      "sha256": "c91920a7d9e992b7c4acdd47fca7ac151282d4190b429977ae01ef7caee700cb"
+    },
+    {
+      "bytes": 1934,
+      "original": ".cache/phase2-growth-operation-review-v1/prior-run_audit_recorded.py",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/prior-run_audit_recorded.py",
+      "sha256": "05d2e12b0201a715d2c43b39028d60010bb57541a5f8b312effd15c6d4b0fde0"
+    },
+    {
+      "bytes": 7522,
+      "original": ".cache/phase2-growth-operation-review-v1/publication-inventory.json",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/publication-inventory.json",
+      "sha256": "c0aafd89abd94ae4d164a77177911290e47659fd2aa16966b4478c7495278c0d"
+    },
+    {
+      "bytes": 6073,
+      "original": ".cache/phase2-growth-operation-review-v1/run_audit_recorded.py",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/run_audit_recorded.py",
+      "sha256": "62a1accf38b6fa0ed9c5cf27af966c58b69484fb1a718af73097a32dda41f562"
+    },
+    {
+      "bytes": 6108,
+      "original": ".cache/phase2-growth-operation-review-v1/run_audit_recorded_corrected.py",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/run_audit_recorded_corrected.py",
+      "sha256": "80c44a65ef66f020ae3364505ee5d02a64d5ef0d7e0490eb9957dcb8447ee880"
+    },
+    {
+      "bytes": 4604,
+      "original": ".cache/phase2-growth-operation-review-v1/static-review/expectations.md",
+      "published_relative": "reports/phase2-growth-verification-v1/operation-review/static-review/expectations.md",
+      "sha256": "a1c478aca02139e30d0e417b5df5ea41f1ca439012ed8c7d461f9c5ca0c88f05"
+    },
+    {
+      "bytes": 4690,
+      "original": ".cache/phase2-c17-scientific-claim-review-v1/review.json",
+      "published_relative": "reports/phase2-growth-verification-v1/scientific-claim-review/review.json",
+      "sha256": "e3ce71068f00cac4385d7c54a8d07f5377ad09a07ac6cb7fd3aaedbdcd33c611"
+    },
+    {
+      "bytes": 3443,
+      "original": ".cache/phase2-c17-scientific-claim-review-v1/final-review.json",
+      "published_relative": "reports/phase2-growth-verification-v1/scientific-claim-review/final-review.json",
+      "sha256": "597d6aae5ecaa7650ede51a2533b79426d6f6b67a2d68ade9ea97552685f034f"
+    },
+    {
+      "bytes": 7296,
+      "original": ".cache/phase2-growth-header-next-scope-v1/README.md",
+      "published_relative": "reports/phase2-growth-header-next-scope-v1/README.md",
+      "sha256": "6432c3aa595946b75a6a1a7d1c00260569469f1f4700ee1ae3c0237cb8870fa7"
+    },
+    {
+      "bytes": 4422,
+      "original": ".cache/phase2-growth-header-next-scope-v1/audit_public.py",
+      "published_relative": "reports/phase2-growth-header-next-scope-v1/audit_public.py",
+      "sha256": "82c7a4e8e0c237099536be643e299a3e02b7635eb8f659f6a938e05d1520e01c"
+    },
+    {
+      "bytes": 4422,
+      "original": ".cache/phase2-growth-header-next-scope-v1/first-audit/audit_public.py",
+      "published_relative": "reports/phase2-growth-header-next-scope-v1/first-audit/audit_public.py",
+      "sha256": "82c7a4e8e0c237099536be643e299a3e02b7635eb8f659f6a938e05d1520e01c"
+    },
+    {
+      "bytes": 527,
+      "original": ".cache/phase2-growth-header-next-scope-v1/first-audit/execution.json",
+      "published_relative": "reports/phase2-growth-header-next-scope-v1/first-audit/execution.json",
+      "sha256": "791797bd64463c9adf0d4c2a18875b81a8ba3ad7727bf86e91952967b8eb6efd"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-growth-header-next-scope-v1/first-audit/stderr.txt",
+      "published_relative": "reports/phase2-growth-header-next-scope-v1/first-audit/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 671,
+      "original": ".cache/phase2-growth-header-next-scope-v1/first-audit/stdout.txt",
+      "published_relative": "reports/phase2-growth-header-next-scope-v1/first-audit/stdout.txt",
+      "sha256": "70bac5eeef4ef774a64e3f26b4a308b12649eacf9288b1534a13cc8f09ca0079"
+    },
+    {
+      "bytes": 1245,
+      "original": ".cache/phase2-growth-header-next-scope-v1/handoff.json",
+      "published_relative": "reports/phase2-growth-header-next-scope-v1/handoff.json",
+      "sha256": "ab46fbed52168bbe5afb7e7ed1a8e9002baad5b7cf95466f73984f56580adacf"
+    },
+    {
+      "bytes": 1519,
+      "original": ".cache/phase2-growth-header-next-scope-v1/inventory.json",
+      "published_relative": "reports/phase2-growth-header-next-scope-v1/inventory.json",
+      "sha256": "ac751256fc9275bb7da61c1ae1007638dcc27154ce8072f3f7c1976794dc3733"
+    },
+    {
+      "bytes": 11040,
+      "original": ".cache/phase2-growth-header-next-scope-v1/proposal.json",
+      "published_relative": "reports/phase2-growth-header-next-scope-v1/proposal.json",
+      "sha256": "a6611e49f33ccc0e8730a479e9201c16f882d68035156f87760d153a029d395c"
+    },
+    {
+      "bytes": 2638,
+      "original": ".cache/phase2-growth-header-next-scope-v1/public-source-binding.json",
+      "published_relative": "reports/phase2-growth-header-next-scope-v1/public-source-binding.json",
+      "sha256": "bca847a1a0983887b5d1befe267842ad3ece3e490cce6ec2a1ec209ab3d2c580"
+    },
+    {
+      "bytes": 2194,
+      "original": ".cache/phase2-growth-header-next-scope-v1/publication-check.json",
+      "published_relative": "reports/phase2-growth-header-next-scope-v1/publication-check.json",
+      "sha256": "f947d20068df700eba6b8c40681774e0c3d03e9e2b0a85442fbd28aa3e26404c"
+    },
+    {
+      "bytes": 1380,
+      "original": ".cache/phase2-growth-header-next-scope-v1/scope-review.json",
+      "published_relative": "reports/phase2-growth-header-next-scope-v1/scope-review.json",
+      "sha256": "38c800d77164ee816e31940318765e509c4784da7e59fd89980210b8a15614c5"
+    },
+    {
+      "bytes": 1274,
+      "original": ".cache/phase2-next-source-priorities-v1/PUBLICATION.md",
+      "published_relative": "reports/phase2-next-source-priorities-v1/PUBLICATION.md",
+      "sha256": "2b22b3ce97513b8aeb6945bc4ee85aa0d3a446d7baa06ecd0ad4994c68b92ff3"
+    },
+    {
+      "bytes": 8860,
+      "original": ".cache/phase2-next-source-priorities-v1/README.md",
+      "published_relative": "reports/phase2-next-source-priorities-v1/README.md",
+      "sha256": "96d4909c144cef965be752834c54fddedb16b84ef1efc9f75a4cd05bd9df0e63"
+    },
+    {
+      "bytes": 5379,
+      "original": ".cache/phase2-next-source-priorities-v1/independent-review/README.md",
+      "published_relative": "reports/phase2-next-source-priorities-v1/independent-review/README.md",
+      "sha256": "3637fd8d7f477af7073dee0f4a55c2a3ec3e1dcc24ed82eb3aa51c45af4c38db"
+    },
+    {
+      "bytes": 3670,
+      "original": ".cache/phase2-next-source-priorities-v1/independent-review/artifact-check.json",
+      "published_relative": "reports/phase2-next-source-priorities-v1/independent-review/artifact-check.json",
+      "sha256": "3f03f5b343dac74c1a1bec353421209e47be32bff9b4f63f834eecffc366244a"
+    },
+    {
+      "bytes": 1844,
+      "original": ".cache/phase2-next-source-priorities-v1/independent-review/final-review-bindings.json",
+      "published_relative": "reports/phase2-next-source-priorities-v1/independent-review/final-review-bindings.json",
+      "sha256": "f1093cb440ca96690482de872bc5d01eaa49ef2b91d57acf39577a17dadeb84e"
+    },
+    {
+      "bytes": 6849,
+      "original": ".cache/phase2-next-source-priorities-v1/independent-review/final-review.json",
+      "published_relative": "reports/phase2-next-source-priorities-v1/independent-review/final-review.json",
+      "sha256": "1fc16d3fb04c552c8eaa7d9f8309bb49b3d9b9ba64731c845c463aff4a91cebc"
+    },
+    {
+      "bytes": 833,
+      "original": ".cache/phase2-next-source-priorities-v1/independent-review/rhizo-addendum-bindings.json",
+      "published_relative": "reports/phase2-next-source-priorities-v1/independent-review/rhizo-addendum-bindings.json",
+      "sha256": "76c4c438a9dcb4e1567d9786d06cf3a09d5ad506cb4c12e8acb5b60de876f8de"
+    },
+    {
+      "bytes": 5003,
+      "original": ".cache/phase2-next-source-priorities-v1/independent-review/rhizo-priority-addendum.md",
+      "published_relative": "reports/phase2-next-source-priorities-v1/independent-review/rhizo-priority-addendum.md",
+      "sha256": "0dd4d28c83d0f23250148773a9d2f1b316ebef478da81899be0debe68a586482"
+    },
+    {
+      "bytes": 2927,
+      "original": ".cache/phase2-next-source-priorities-v1/independent-review/source-bindings.json",
+      "published_relative": "reports/phase2-next-source-priorities-v1/independent-review/source-bindings.json",
+      "sha256": "58980094088ec29f903fe3556778d8869e02cc49f753f03490dff8a261f9adbb"
+    },
+    {
+      "bytes": 2085,
+      "original": ".cache/phase2-next-source-priorities-v1/review-copy-map.json",
+      "published_relative": "reports/phase2-next-source-priorities-v1/review-copy-map.json",
+      "sha256": "b01330eb832aafc326c9829a524b408908495f9e5835981f27c7b9c96e36c0e4"
+    },
+    {
+      "bytes": 3531,
+      "original": ".cache/phase2-next-source-priorities-v1/source-bindings.json",
+      "published_relative": "reports/phase2-next-source-priorities-v1/source-bindings.json",
+      "sha256": "effe1e02b7d960bacbccc768075971fb3da35f8a0d15bfd062bd03ee5347b783"
+    },
+    {
+      "bytes": 977,
+      "original": ".cache/phase2-next-source-priorities-v1/static-check.json",
+      "published_relative": "reports/phase2-next-source-priorities-v1/static-check.json",
+      "sha256": "adbe8fde7ed61f3ed7b7142046a7883522b0f07513ffdd8a1a26ac82e841d7d6"
+    },
+    {
+      "bytes": 3669,
+      "original": ".cache/phase2-next-source-priorities-inventory-v1.json",
+      "published_relative": "reports/phase2-growth-verification-v1/phase2-next-source-priorities-inventory-v1.json",
+      "sha256": "28746b6e18ee5b4c726d174d4c74a8b4fc795df04b17be919fad820f0e7c2246"
+    },
+    {
+      "bytes": 1185,
+      "original": ".cache/phase2-next-source-priorities-handoff-v1.json",
+      "published_relative": "reports/phase2-growth-verification-v1/phase2-next-source-priorities-handoff-v1.json",
+      "sha256": "425834365e6641efa0b5bd6451e2d62349b9a0f3e09e51b1b7a164401e989ce0"
+    }
+  ],
+  "created_at": "2026-10-16T10:43:57.399336+00:00",
+  "scope": "Completed engineering/preparation/documentary evidence only. New actual G30/G31 operations and exact source CI still pending at this copy snapshot. No artifact archive/wheel or private raw source copied."
+}

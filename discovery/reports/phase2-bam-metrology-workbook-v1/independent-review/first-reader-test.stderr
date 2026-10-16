@@ -1,0 +1,76 @@
+test_active_content_type (__main__.IndependentReaderTests.test_active_content_type) ... ok
+test_active_member_names (__main__.IndependentReaderTests.test_active_member_names) ... ok
+test_archive_size (__main__.IndependentReaderTests.test_archive_size) ... ok
+test_bad_xml_honest_parse_exposure (__main__.IndependentReaderTests.test_bad_xml_honest_parse_exposure) ... ok
+test_crc_mismatch (__main__.IndependentReaderTests.test_crc_mismatch) ... ok
+test_declared_non_utf8 (__main__.IndependentReaderTests.test_declared_non_utf8) ... ok
+test_doctype_rejected_before_parse (__main__.IndependentReaderTests.test_doctype_rejected_before_parse) ... ok
+test_duplicate_cell_components (__main__.IndependentReaderTests.test_duplicate_cell_components) ... ok
+test_duplicate_member (__main__.IndependentReaderTests.test_duplicate_member) ... ok
+test_duplicate_reference (__main__.IndependentReaderTests.test_duplicate_reference) ... ok
+test_duplicate_relationship_identity (__main__.IndependentReaderTests.test_duplicate_relationship_identity) ... ok
+test_embedding_content_type_even_under_neutral_name (__main__.IndependentReaderTests.test_embedding_content_type_even_under_neutral_name) ... FAIL
+test_encryption_flag (__main__.IndependentReaderTests.test_encryption_flag) ... ok
+test_external_worksheet_not_followed (__main__.IndependentReaderTests.test_external_worksheet_not_followed) ... ok
+test_formula_size_bound (__main__.IndependentReaderTests.test_formula_size_bound) ... ok
+test_inline_value_conflict (__main__.IndependentReaderTests.test_inline_value_conflict) ... ok
+test_internal_relationship_traversal (__main__.IndependentReaderTests.test_internal_relationship_traversal) ... ok
+test_member_count (__main__.IndependentReaderTests.test_member_count) ... ok
+test_member_names (__main__.IndependentReaderTests.test_member_names) ... ok
+test_mixed_rich_text (__main__.IndependentReaderTests.test_mixed_rich_text) ... ok
+test_optional_utf8_bom (__main__.IndependentReaderTests.test_optional_utf8_bom) ... ok
+test_part_uncompressed_bound (__main__.IndependentReaderTests.test_part_uncompressed_bound) ... ok
+test_positive_formula_cache_shared_inline_hidden_merge_comment_external (__main__.IndependentReaderTests.test_positive_formula_cache_shared_inline_hidden_merge_comment_external) ... FAIL
+test_shared_string_bounds (__main__.IndependentReaderTests.test_shared_string_bounds) ... ok
+test_symlink (__main__.IndependentReaderTests.test_symlink) ... ok
+test_total_uncompressed_bound (__main__.IndependentReaderTests.test_total_uncompressed_bound) ... ok
+test_unknown_cell_type_and_style (__main__.IndependentReaderTests.test_unknown_cell_type_and_style) ... ok
+test_unsupported_compression (__main__.IndependentReaderTests.test_unsupported_compression) ... ok
+test_utf16_with_bom_rejects_decode (__main__.IndependentReaderTests.test_utf16_with_bom_rejects_decode) ... ok
+test_utf16le_doctype_entity_without_bom_rejected_before_parser (__main__.IndependentReaderTests.test_utf16le_doctype_entity_without_bom_rejected_before_parser) ... FAIL
+test_utf16le_without_bom_is_rejected_before_parser (__main__.IndependentReaderTests.test_utf16le_without_bom_is_rejected_before_parser) ... FAIL
+test_wrong_namespace_rejected (__main__.IndependentReaderTests.test_wrong_namespace_rejected) ... ok
+test_xml_depth_bound (__main__.IndependentReaderTests.test_xml_depth_bound) ... ok
+test_xml_node_bound (__main__.IndependentReaderTests.test_xml_node_bound) ... ok
+
+======================================================================
+FAIL: test_embedding_content_type_even_under_neutral_name (__main__.IndependentReaderTests.test_embedding_content_type_even_under_neutral_name)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-bam-metrology-workbook-review-v1/test_workbook_reader_independent.py", line 180, in test_embedding_content_type_even_under_neutral_name
+    self.blocked(p,'ACTIVE_CONTENT')
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-bam-metrology-workbook-review-v1/test_workbook_reader_independent.py", line 51, in blocked
+    with self.assertRaises(reader.Blocked) as caught:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Blocked not raised
+
+======================================================================
+FAIL: test_positive_formula_cache_shared_inline_hidden_merge_comment_external (__main__.IndependentReaderTests.test_positive_formula_cache_shared_inline_hidden_merge_comment_external)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-bam-metrology-workbook-review-v1/test_workbook_reader_independent.py", line 82, in test_positive_formula_cache_shared_inline_hidden_merge_comment_external
+    self.assertEqual(exposure['xml_parses_completed'],8)
+AssertionError: 9 != 8
+
+======================================================================
+FAIL: test_utf16le_doctype_entity_without_bom_rejected_before_parser (__main__.IndependentReaderTests.test_utf16le_doctype_entity_without_bom_rejected_before_parser)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-bam-metrology-workbook-review-v1/test_workbook_reader_independent.py", line 98, in test_utf16le_doctype_entity_without_bom_rejected_before_parser
+    with self.assertRaises(Exception):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Exception not raised
+
+======================================================================
+FAIL: test_utf16le_without_bom_is_rejected_before_parser (__main__.IndependentReaderTests.test_utf16le_without_bom_is_rejected_before_parser)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-bam-metrology-workbook-review-v1/test_workbook_reader_independent.py", line 91, in test_utf16le_without_bom_is_rejected_before_parser
+    with self.assertRaises(Exception):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Exception not raised
+
+----------------------------------------------------------------------
+Ran 34 tests in 0.130s
+
+FAILED (failures=4)

@@ -1,0 +1,76 @@
+{
+  "schema": "lupine.nist-guidance-handoff.v1",
+  "created_at": "2026-10-16T11:05:06.017739+00:00",
+  "status": "READY_FOR_REPORT_PUBLICATION",
+  "promotion_root": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1",
+  "intended_repository_path": "discovery/reports/phase2-nist-metrology-guidance-v1",
+  "entrypoint": "PUBLICATION.md",
+  "inventory": {
+    "path": ".cache/phase2-nist-metrology-guidance-v1/promotion-inventory.json",
+    "bytes": 13588,
+    "sha256": "1f534a2559c91053426403642c302671d698bb64a052bddb5d0aad54f3432da9"
+  },
+  "publication_review": {
+    "path": ".cache/phase2-nist-metrology-guidance-review-v1/publication-review.json",
+    "bytes": 4789,
+    "sha256": "220e6439b185fe7fa41f890585ad1c9331867cc926aead4fbcc343b20ea91b53"
+  },
+  "summary": {
+    "files": 66,
+    "bytes": 223006,
+    "original_artifacts": 64,
+    "exact_copies": 58,
+    "lossless_wrappers": 6,
+    "working_local_markdown_links": 15
+  },
+  "actual_source_access": {
+    "requests": 2,
+    "outcomes": [
+      "HTTP_200_ACQUIRED_STATIC_TEXT",
+      "HTTP_200_ACQUIRED_STATIC_TEXT"
+    ],
+    "completed_at": "2026-10-16T10:53:40.520092+00:00",
+    "scope_exhausted": true,
+    "redirects": 0,
+    "retries": 0,
+    "new_measurement_source_reads": 0,
+    "execution_receipt": {
+      "path": ".cache/phase2-nist-metrology-guidance-v1/actual-first/execution.json",
+      "bytes": 2138,
+      "sha256": "f539a20a5d76fa00606f3fd9295253186d2518837b1bdccd4a7161429f321d91"
+    }
+  },
+  "final_engineering_checks": {
+    "author_synthetic_methods": 7,
+    "independent_synthetic_methods": 28,
+    "passed": true,
+    "first_source_and_suppression_failures_preserved": true,
+    "scientific_tests": false
+  },
+  "report_review": {
+    "source_bindings_checked": 17,
+    "citations": 14,
+    "distinct_documentary_blocks": 13,
+    "short_quote_words": 47,
+    "result_review": {
+      "path": ".cache/phase2-nist-metrology-guidance-review-v1/result-review.json",
+      "bytes": 3953,
+      "sha256": "c48ea0468722b013e08fed3e70ed7d0f1e6a716b85d79606dd989683322366ff"
+    }
+  },
+  "scientific_implications": [
+    "TN1297 section 5.1 explicitly includes appropriate covariances in combined measurement uncertainty; RSS language does not establish independence.",
+    "TN1297 sections 5.4 and 6.2 qualify approximate coverage interpretations by the stated distributional and uncertainty-estimation conditions; k=2 is not a universal exact 95 percent or hard bound.",
+    "Measurement uncertainty requires additional stated probability and event premises before transfer to prediction, simultaneous endpoint risk, selection or acceptance-conditional risk.",
+    "The official guidance does not validate BAM or Lupine; G20 uncertainty/lineage and G21 evaluation design remain unresolved."
+  ],
+  "publication_boundary": {
+    "raw_html_and_complete_projections": "retained ignored; excluded from publication",
+    "reader_scripts": "historical audit artifacts; no product or scientific-protocol changes",
+    "original_byte_map": "All 64 originals preserved exactly or by verified reversible base64 wrapper.",
+    "exposure": "Full official HTML/static projections machine-exposed, selected technical paragraphs researcher-read, incidental adjacent webmaster/contact heading acknowledged; no measurement files requested.",
+    "parser_limits": "No browser/full-HTML or equation-image completeness claim; direct policy blockquote text is not relied on."
+  },
+  "next_action": "Root may copy the held report tree and separately retain this inventory and publication-review receipt during its next evidence publication. No source request remains authorized in this completed scope.",
+  "tracked_changes_by_this_task": false
+}

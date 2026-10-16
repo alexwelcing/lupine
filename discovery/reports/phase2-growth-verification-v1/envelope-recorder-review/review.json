@@ -1,0 +1,65 @@
+{
+  "actual_private_input_reads": false,
+  "actual_source_operations": false,
+  "blocking_findings": [],
+  "final_execution": {
+    "bytes": 3914,
+    "path": ".cache/phase2-growth-envelope-recorder-review-v1/second-run/execution.json",
+    "sha256": "7e5196a6a7ae8dcfdb23461faacf6000ec5ec67df791665c2e4a195ef2aafb2f"
+  },
+  "final_process_seconds": 0.6900147060005111,
+  "final_test": {
+    "bytes": 16010,
+    "path": ".cache/phase2-growth-envelope-recorder-review-v1/test_recorder.py",
+    "sha256": "29a4137cb59dec6a6129b4870ea269df411cb8e58d6abf28d75a1371094d691c"
+  },
+  "final_tests": 11,
+  "final_unittest_seconds": 0.325,
+  "first_execution": {
+    "bytes": 3402,
+    "path": ".cache/phase2-growth-envelope-recorder-review-v1/first-run/execution.json",
+    "sha256": "e6fe0c34e0ffd540e289469daa0da3bf0d8980474151e8d00ef4ccbfc40c9294"
+  },
+  "limits": [
+    "Only AST-extracted helpers were executed. The recorder module/main program was not imported or invoked.",
+    "All CI/state/import/process/source dependencies were mocked; real production guard/source/network entrypoints were patched to fail.",
+    "Generated fixture ZIP/XML values were parsed to construct test reports. No actual source receipt, workbook, object or capture was read.",
+    "Current runtime-manifest cardinality was not measured or assumed during these mock checks; root controls integration from326 to332.",
+    "Tests do not attest actual CI/package/branch/custody or actual G30/G31 results.",
+    "Review is independent of recorder authorship, not independent evidence for the reviewer-authored G30 implementation."
+  ],
+  "next_action": "Root may bind only the final published exact commit and preserve/review that literal-only delta; actual operations still require all release gates and the actual valid same-commit G30 matching pair.",
+  "resolved_finding": {
+    "AST_reuse_receipt": {
+      "bytes": 275,
+      "path": ".cache/phase2-growth-envelope-recorder-review-v1/validator-reuse-check.json",
+      "sha256": "d0bb9221853877e8ee9f0eab7270c304dcf37ff85244cdd80611e0b10dc286d9"
+    },
+    "demonstration": "One extracted-main adversary failed as expected: command boundary calls were [1] instead of []. No actual subprocess/source operation.",
+    "finding": "A canonical same-commit pair labeled G30 MATCH with padding_all_zero false passed the prior-shape gate and reached the mocked first new command boundary.",
+    "original_source_sha256": "40e3f1392c8ea7cdde921574bea0b9852507eeb4901e149089901196b88bb12b",
+    "repair": "Root copied the reviewed G30 validator with name-only change, obtained current G30 production identity and checked its commit, then fully validated the prior shape report before assigning SHAPE_REPORT or creating production output.",
+    "repair_diff": {
+      "bytes": 6106,
+      "path": ".cache/phase2-growth-envelope-recorder-review-v1/reviewed-repair.diff",
+      "sha256": "97806fe4c7bea94796102ae86fc1f26deee90d26bf0bc1f34bd0911eccea713e"
+    }
+  },
+  "reviewed_source": {
+    "bytes": 29657,
+    "path": ".cache/phase2-growth-envelope-operations-v1/run_after_ci.py",
+    "sha256": "b13232eb55efec6a6fadfd5f900bc3f3fd9a2b44fa3ac91bb3a763e7c80a84b7"
+  },
+  "schema": "lupine.discovery.growth_envelope_operation_recorder_review.v1",
+  "source_commit_unbound": true,
+  "verdict": "PASS_AFTER_DEMONSTRATED_PRECONDITION_REPAIR",
+  "verified_scope": [
+    "Generated accepted envelope, central-declaration block before own open, later growth-shape block and partial XML-profile block all fit the closed recorder validator.",
+    "Nested selected-G30 cleanup remains complete for central preflight failure, while the separate G31 open/decode/close lifecycle is untouched.",
+    "Closed field sets, exact booleans/ints, bounded ordered counts, XML prefixes, fixed identity, no worksheet/fit/scientific exposure, role ordinal and nested-shape consistency are challenged.",
+    "Malformed same-commit prior G30 booleans/exposure/identity and disagreement between prior reports stop before directory creation or new command.",
+    "An unexpected diagnostic reason stops after preserving command1 and before command2.",
+    "Stdout/persisted-public mismatch and post-command gate drift preserve failure evidence and stop continuation.",
+    "Complete negative central result and complete envelope result may each repeat identically; science remains blocked."
+  ]
+}

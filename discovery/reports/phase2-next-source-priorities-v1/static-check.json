@@ -1,0 +1,38 @@
+{
+  "scope": "Static local link and held-file identity check only; no source acquisition, runtime import or scientific test.",
+  "links": [
+    {
+      "target": "../../reports/projection-custody-readiness-v1.md",
+      "exists": true
+    },
+    {
+      "target": "../../reports/phase2-li-paper-methods-v1/README.md",
+      "exists": true
+    },
+    {
+      "target": "../../reports/phase2-li-reference-identity-v1/README.md",
+      "exists": true
+    },
+    {
+      "target": "../../reports/phase2-source-readiness-v1/README.md",
+      "exists": true
+    },
+    {
+      "target": "../phase2-bam-metrology-workbook-v1/README.md",
+      "exists": true
+    },
+    {
+      "target": "../../reports/phase2-high-temperature-leads-v1/README.md",
+      "exists": true
+    },
+    {
+      "target": "../../reports/phase2-finite-archive-design-v1/README.md",
+      "exists": true
+    },
+    {
+      "target": "source-bindings.json",
+      "exists": true
+    }
+  ],
+  "all_exist": true
+}

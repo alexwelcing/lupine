@@ -1,0 +1,9 @@
+# NIST guidance reader preparation
+
+Before any official-source request, the task fixed two NIST TN1297 section URLs, a one-megabyte body cap per response, strict UTF-8 decoding, bounded static HTML parsing, no redirects/retries/linked resources, and a durable one-invocation reservation. A failure stops the route. These engineering checks do not establish the content or scientific validity of an unread page.
+
+Independent source review first found that the parser import preceded frozen-input verification and that a NUL rejection could occur before HTML parsing after the runner had already marked parsing started. The original scope and sources are retained under `before-review-repair/`. The runner now imports the parser only after its byte identities match and checks UTF-8/NUL before marking the parse stage. Failure categories are closed strings rather than arbitrary exception text.
+
+The first author invocation passed six synthetic tests on that intermediate source. The first independent parser invocation ran fourteen methods; one method failed in three malformed-input subcases (template, noscript and svg). An ancestor closing tag could erase a still-open suppressed container and expose subsequent hidden text. Original source, scope and the six-pass author receipt are retained under `before-suppression-repair/`; the independent first failures are retained separately by the reviewer.
+
+The repair rejects such crossed closures before changing the stack. The final author invocation passed seven synthetic methods, including all three malformed cases, in 0.040 seconds of unittest time. No official page or network request was used in these fixtures. The projection is static text, not a browser, full HTML validator or equation-image reader. Actual source access remains subject to final independent review of the held source; all requests and first failures must be recorded without fallback.

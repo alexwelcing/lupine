@@ -1,0 +1,16 @@
+test_central_block_keeps_nested_cleanup_but_no_new_archive (__main__.RecorderTests.test_central_block_keeps_nested_cleanup_but_no_new_archive) ... ok
+test_closed_counts_role_xml_and_identity_mutations_are_rejected (__main__.RecorderTests.test_closed_counts_role_xml_and_identity_mutations_are_rejected) ... ok
+test_complete_and_partial_public_projections_match_generated_paths (__main__.RecorderTests.test_complete_and_partial_public_projections_match_generated_paths) ... ok
+test_complete_central_negative_replays_with_separate_lifecycles (__main__.RecorderTests.test_complete_central_negative_replays_with_separate_lifecycles) ... ok
+test_malformed_prior_shape_stops_before_directory_and_command (__main__.RecorderTests.test_malformed_prior_shape_stops_before_directory_and_command) ... ok
+test_partial_xml_does_not_disclose_roles (__main__.RecorderTests.test_partial_xml_does_not_disclose_roles) ... ok
+test_persisted_stdout_mismatch_preserves_failure_and_stops (__main__.RecorderTests.test_persisted_stdout_mismatch_preserves_failure_and_stops) ... ok
+test_post_gate_drift_preserves_report_but_stops (__main__.RecorderTests.test_post_gate_drift_preserves_report_but_stops) ... ok
+test_prior_pair_disagreement_blocks_before_command (__main__.RecorderTests.test_prior_pair_disagreement_blocks_before_command) ... ok
+test_unexpected_error_stops_before_second_command (__main__.RecorderTests.test_unexpected_error_stops_before_second_command) ... ok
+test_valid_envelope_pair_stays_scientifically_blocked (__main__.RecorderTests.test_valid_envelope_pair_stays_scientifically_blocked) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.325s
+
+OK

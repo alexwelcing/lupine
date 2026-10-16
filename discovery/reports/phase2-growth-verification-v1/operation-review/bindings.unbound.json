@@ -1,0 +1,21 @@
+{
+  "schema": "lupine.discovery.growth_operation_audit_bindings.v1",
+  "status": "UNBOUND",
+  "commit": null,
+  "reviewed_pins_sha256": null,
+  "recorders": {
+    "shape": null,
+    "envelope": null
+  },
+  "gate_sha256": {
+    "ci": null,
+    "package0": null,
+    "package1": null,
+    "artifact_review": null,
+    "additive_review": null,
+    "artifact_execution0": null,
+    "artifact_execution1": null
+  },
+  "actual_outcomes": "UNBOUND_NOT_ASSUMED",
+  "scope": "Prospective audit preparation only; root supplies exact publication, gate and recorder bindings before invocation."
+}

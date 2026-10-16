@@ -1,0 +1,10 @@
+{
+  "started_at": "2026-10-16T10:26:30.460509+00:00",
+  "elapsed_seconds": 0.42514438800208154,
+  "exit_code": 0,
+  "source_sha256": "b9b726c7627b26938a91277b9b0e1f177aa001730c5ae503d7cd0d48b9011a56",
+  "test_sha256": "8a05babc8e861c5c73b7d2bae3050070b0dafc36092cc1b5fab285337d4a7477",
+  "test_scope": "Independent synthetic fixtures only. Runner transport is mocked, socket blocked, temporary storage entirely within reviewer cache; no actual workbook or network.",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "685771282539aa5277b04af26deea2a7aae7d077fab932ec3f9651208baeea8a"
+}

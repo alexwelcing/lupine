@@ -1,0 +1,31 @@
+{
+  "schema": "lupine.bam-workbook-independent-metadata-check.v1",
+  "checked_at": "2026-10-16T10:27:24.444186+00:00",
+  "metadata_path": "reports/phase2-bam-readiness-v1/zenodo-17846617.json",
+  "metadata_bytes": 14771,
+  "metadata_sha256": "48f84c7d6fc841a13de8ecccbba5f0604834cec45c3033d0d55bfd7a2e89f4d6",
+  "checks": {
+    "record_doi": true,
+    "version": true,
+    "file_id": true,
+    "bytes": true,
+    "md5": true,
+    "url": true,
+    "metadata_sha": true
+  },
+  "license_declared": {
+    "id": "cc-by-4.0"
+  },
+  "selected_file": {
+    "id": "097e288f-1eb7-4ce5-8eb8-653b2b1fffe2",
+    "key": "2025-12_HT-Tensile-reference-data-CMSX-6_v1.0.xlsx",
+    "size": 54960,
+    "checksum": "md5:e85ef58139a68592f36452de195a0a10",
+    "links": {
+      "self": "https://zenodo.org/api/records/17846617/files/2025-12_HT-Tensile-reference-data-CMSX-6_v1.0.xlsx/content"
+    }
+  },
+  "actual_workbook_acquisition_or_read": false,
+  "network_requests": 0,
+  "scope_note": "Retained public Zenodo metadata only; metadata identity is not raw-body verification."
+}

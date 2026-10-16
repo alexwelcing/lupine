@@ -1,0 +1,63 @@
+    check(git('rev-parse','HEAD').decode().strip()==COMMIT,'current head')
+    check(git('status','--porcelain','--untracked-files=all')==b'','tracked state dirty')
+    manifest=obj('reports/runtime-manifest.json')
+    runtime=manifest['files']
+    check(len(runtime)==332,'runtime count')
+    for relative,digest in runtime.items():
+        check(hashlib.sha256(read(relative)).hexdigest()==digest,'runtime byte mismatch')
+        check(git('show',COMMIT+':discovery/'+relative)==read(relative),'runtime commit mismatch')
+    ci_path='.cache/phase2-growth-ci-v1/final.json'
+    ci=obj(ci_path)
+    check(ci['commit']==ci['run']['head_sha']==COMMIT,'CI commit')
+    check(ci['run']['event']=='push' and type(ci['run']['run_attempt']) is int and ci['run']['run_attempt']==1,'CI original push')
+    check(ci['run']['status']=='completed' and ci['run']['conclusion']=='success' and ci['all_four_jobs_successful'] is True,'CI outcome')
+    check(len(ci['jobs'])==4 and {j['name'] for j in ci['jobs']}=={'browser','lean','python (3.11)','python (3.12)'},'CI jobs')
+    check(len({j['id'] for j in ci['jobs']})==4,'CI distinct jobs')
+    observed=stamp(ci['observed_at'])
+    check(observed<=datetime.now(timezone.utc),'future CI observation')
+    for job in ci['jobs']:
+        check(job['status']=='completed' and job['conclusion']=='success','CI job verdict')
+        check(stamp(job['started_at'])<=stamp(job['completed_at'])<=observed,'CI job chronology')
+    package_end=[]
+    package_reports=[]
+    for index in (0,1):
+        prefix=f'.cache/phase2-growth-clean-package-v1/{index}'
+        receipt=obj(prefix+'-execution.json')
+        check(receipt['commit']==COMMIT and receipt['exit_code']==0,'package outcome')
+        check(receipt['runtime_before']==receipt['runtime_after']==runtime,'package source held')
+        check(all(receipt[k] is True for k in ('source_unchanged','head_unchanged','worktree_clean')),'package source claims')
+        for kind in ('stdout','stderr'):
+            check(hashlib.sha256(read(prefix+'-'+kind+'.txt')).hexdigest()==receipt[kind+'_sha256'],'package log hash')
+        check(read(prefix+'-stderr.txt')==b'','package stderr')
+        check(stamp(receipt['started_at'])<=stamp(receipt['finished_at']),'package chronology')
+        package_end.append(stamp(receipt['finished_at']))
+        package_reports.append(obj(prefix+'-stdout.txt'))
+        if index==0:
+            check(receipt['command'][1:3]==['scripts/package_smoke.py','--retain-directory'],'package command')
+            retained_dir=receipt['command'][3]
+        else:
+            check(receipt['command'][1:]==['scripts/verify_retained_artifacts.py','--directory',retained_dir,'--commit',COMMIT],'strict verifier command')
+    smoke,strict=package_reports
+    check(smoke['status']=='passed' and smoke['case_count']==28 and len(smoke['problem_schemas'])==6 and len(smoke['checks'])==16,'package demonstrated scope')
+    check(strict['status']=='PASS' and strict['expected_git_commit']==COMMIT,'strict verdict')
+    check(strict['reported_smoke']['checks']==smoke['checks'] and strict['reported_smoke']['problem_schemas']==smoke['problem_schemas'],'strict package agreement')
+    retained=obj(Path(retained_dir)/'release-artifacts.json')
+    check(hashlib.sha256(read(Path(retained_dir)/'release-artifacts.json')).hexdigest()==strict['receipt_sha256'],'retained receipt identity')
+    check(retained['source']['git_commit']==COMMIT and retained['source']['worktree_status']=='clean','retained source')
+    check(retained['source']['runtime_manifest']['file_count']==332,'retained runtime count')
+    check(retained['source']['runtime_manifest']['sha256']==hashlib.sha256(read('reports/runtime-manifest.json')).hexdigest(),'retained runtime manifest')
+    check(retained['artifacts']==strict['artifact_identities'],'retained artifact identity claims')
+    audit=obj(paths['artifact_review'])
+    check(audit['status']=='PASS' and audit['commit']==COMMIT,'independent artifact review')
+    check(audit['receipt_sha256']==strict['receipt_sha256'] and audit['artifact_identities']==strict['artifact_identities'],'independent artifact identity agreement')
+    check(audit['mandatory_checks']==smoke['checks'] and audit['runtime_source_files_matching_manifest_and_worktree']==332,'independent artifact scope')
+    gate_end=max([observed,*package_end,stamp(audit['finished_at'])])
+    additive=obj(paths['additive_review'])
+    check(additive['status']=='PASS' and additive['commit']==COMMIT,'independent additive outcome')
+    check(additive['unchanged_full_artifact_auditor_review_sha256']==hashlib.sha256(read(paths['artifact_review'])).hexdigest(),'additive bound full review')
+    check(additive['unchanged_prior_runtime_files']==326 and len(additive['added_runtime_files'])==6 and additive['unchanged_wheel_package_members']==108,'additive measured scope')
+    additive_execution=obj(paths['artifact_execution1'])
+    check(additive_execution['commit']==COMMIT and additive_execution['exit_code']==0 and additive_execution['stdout_sha256']==hashlib.sha256(read(paths['additive_review'])).hexdigest(),'additive completed execution binding')
+    check(stamp(additive['started_utc'])<=stamp(additive_execution['finished_at']),'additive receipt chronology')
+    check(read(Path(paths['artifact_execution1']).with_name('1-stderr.txt'))==b'','additive stderr empty')
+    gate_end=max(gate_end,stamp(additive_execution['finished_at']))

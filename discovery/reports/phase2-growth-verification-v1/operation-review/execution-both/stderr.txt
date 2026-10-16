@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-operation-review-v1/audit_completed_operations.py", line 586, in <module>
+    main()
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-operation-review-v1/audit_completed_operations.py", line 550, in main
+    shape, shape_final, shape_runs = operation_pair('shape', runtime, ci, gate_end, paths, prior)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-operation-review-v1/audit_completed_operations.py", line 429, in operation_pair
+    shape_report(report, prior, preflight['implementation'])
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-operation-review-v1/audit_completed_operations.py", line 160, in shape_report
+    check(report['legacy_zip_reason'] == prior['legacy_zip_reason'], 'legacy rejection retained')
+          ~~~~~~^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'legacy_zip_reason'

@@ -1,0 +1,48 @@
+{
+  "schema": "lupine.nist-guidance-independent-final-result-review.v1",
+  "reviewed_at": "2026-10-16T10:58:51.258299+00:00",
+  "reviewer": "/root/phase2_evidence/author_methods_review",
+  "verdict": "PASS_SCOPED_GUIDANCE_INTERPRETATION_NO_EMPIRICAL_VALIDATION",
+  "parent_artifacts": {
+    "README.md": "9f365d73c340bed7ccaf45777d07442b6b95026584a7665addddd3b5ae6798ac",
+    "selected-guidance.json": "d9aed217f7c291077a060da7950be17a517144eba379d0d7a3dc5247b68a54ad",
+    "source-bindings.json": "5e1bb23ba95aafeac89ca9b20099af99f26bb5f0e13cc2393a68a1e1ff27ea5b",
+    "exposure-ledger.json": "fb9d1f51bf7902193b402d7cd4535fd0a7abc39d8715ae05ddc5d904a6cc7b9a"
+  },
+  "retained_artifact_check": "retained-guidance-check.json",
+  "independent_interpretation": "interpretation-review.json",
+  "citation_check": "citation-check.json",
+  "checks": {
+    "review_scope_precede_actual_requests": true,
+    "held_source_pins_and_retained_output_hashes": true,
+    "fixed_two_requests_with_no_redirect_retry_or_additional_source": true,
+    "exact_source_bindings": 17,
+    "paraphrased_findings": 7,
+    "citations": 14,
+    "distinct_projected_source_blocks": 13,
+    "all_short_quotes_exact": true,
+    "all_source_urls_html_receipt_hashes_indexes_and_lines_match": true
+  },
+  "scientific_assessment": [
+    "Covariances as appropriate in5.1 are retained; RSS wording is not used to discard shared input errors. Separate dependence-robust event arguments are explicitly the project's mathematics, not additional NIST claims.",
+    "5.2 correction assumptions and both notes are reported without conflating systematic error with uncertainty of correction or diagnosing BAM compliance/significance from one documentary field.",
+    "5.4/6.2 approximate normality or applicable normal model and negligible uncertainty in combined standard uncertainty remain explicit; k=2 is not made into an exact universal95percent or joint/predictive statement.",
+    "5.5 Type A components are described as an included condition, not an iff or a sufficient condition by themselves.6.1 carries the same interpretation caveat into expanded uncertainty.",
+    "6.1 U=k uc is treated as a definition with coverage interpretation requiring premises.6.3/6.4 distributional detail and approximate methods remain qualified.",
+    "The t-factor discussion is supported by the extracted example paragraph following6.5 (block134,line765), distinct from the omitted direct policy blockquote. No t-factor, degree of freedom or interval was selected.",
+    "The guidance is not promoted to proof of BAM measurement budgets, covariance, Lupine calibration, acceptance-conditional failure, future prediction or scientific benchmark admission."
+  ],
+  "projection_and_exposure": "Complete retained projection JSON containers were machine-parsed and independently hashed. Reviewer read the selected technical paragraphs/notes plus adjacent navigation and public webmaster text. Raw HTML was not reread and its hashes were checked by consistency across receipts/execution/source bindings, not independently recomputed from raw HTML. No HTML parser was rerun. Full projections/raw HTML/contact roster remain excluded from this review.",
+  "omitted_evidence": "No image equations, direct omitted policy blockquote content, linked appendices, standards, PDFs or measurement bodies were acquired or interpreted. Static text is not a whole-note rendering or an immutable publisher-version pin.",
+  "unresolved_review_blockers": [],
+  "scientific_limits_unchanged": "G20 uncertainty/lineage and G21 evaluation design remain unresolved. No model, endpoint, threshold, allocation or benchmark protocol was chosen or changed.",
+  "activity": {
+    "reviewer_network_requests": 0,
+    "raw_html_reads": 0,
+    "html_parser_reruns": 0,
+    "measurement_source_reads": 0,
+    "actual_tests_or_experiments_for_this_postacquisition_review": 0,
+    "tracked_writes": false,
+    "git_mutations": false
+  }
+}

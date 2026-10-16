@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python",
+    ".cache/phase2-growth-header-next-scope-v1/audit_public.py"
+  ],
+  "elapsed_seconds": 0.32050286500088987,
+  "exit_code": 0,
+  "finished_at": "2026-10-16T11:12:06.343340+00:00",
+  "script_sha256": "82c7a4e8e0c237099536be643e299a3e02b7635eb8f659f6a938e05d1520e01c",
+  "started_at": "2026-10-16T11:12:06.022847+00:00",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "70bac5eeef4ef774a64e3f26b4a308b12649eacf9288b1534a13cc8f09ca0079"
+}

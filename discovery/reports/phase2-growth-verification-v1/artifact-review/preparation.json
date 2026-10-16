@@ -1,0 +1,282 @@
+{
+  "actual_audit_invocations": 0,
+  "additional_assertions": [
+    "len(ARGS.reviewed_pins_sha256) == 64 and all((c in '0123456789abcdef' for c in ARGS.reviewed_pins_sha256))"
+  ],
+  "assertion_mapping": [
+    {
+      "after": "OUT.is_relative_to(BASE) and OUT != BASE",
+      "before": "OUT.is_relative_to(BASE) and OUT != BASE",
+      "unchanged": true
+    },
+    {
+      "after": "len(COMMIT) == 40 and all((c in '0123456789abcdef' for c in COMMIT))",
+      "before": "len(COMMIT) == 40 and all((c in '0123456789abcdef' for c in COMMIT))",
+      "unchanged": true
+    },
+    {
+      "after": "permitted.is_relative_to(ROOT / '.cache')",
+      "before": "permitted.is_relative_to(ROOT / '.cache')",
+      "unchanged": true
+    },
+    {
+      "after": "not permitted.is_relative_to(ROOT / '.cache/li-v3-custody')",
+      "before": "not permitted.is_relative_to(ROOT / '.cache/li-v3-custody')",
+      "unchanged": true
+    },
+    {
+      "after": "path.resolve() == path and path.is_file() and (path.stat().st_size <= 256 * 1024 * 1024)",
+      "before": "path.resolve() == path and path.is_file() and (path.stat().st_size <= 256 * 1024 * 1024)",
+      "unchanged": true
+    },
+    {
+      "after": "Path(identity['filename']).name == identity['filename']",
+      "before": "Path(identity['filename']).name == identity['filename']",
+      "unchanged": true
+    },
+    {
+      "after": "len(raw) == identity['bytes'] and sha(raw) == identity['sha256']",
+      "before": "len(raw) == identity['bytes'] and sha(raw) == identity['sha256']",
+      "unchanged": true
+    },
+    {
+      "after": "git('rev-parse', 'HEAD').decode().strip() == COMMIT",
+      "before": "git('rev-parse', 'HEAD').decode().strip() == COMMIT",
+      "unchanged": true
+    },
+    {
+      "after": "not git('status', '--porcelain=v1', '--untracked-files=all')",
+      "before": "not git('status', '--porcelain=v1', '--untracked-files=all')",
+      "unchanged": true
+    },
+    {
+      "after": "pin_record['status'] == 'FINAL_REVIEWED_SOURCE_PINS'",
+      "before": "pin_record['status'] == 'FINAL_REVIEWED_SOURCE_PINS'",
+      "unchanged": true
+    },
+    {
+      "after": "pin_record['baseline_commit'] == BASELINE",
+      "before": "pin_record['baseline_commit'] == BASELINE",
+      "unchanged": true
+    },
+    {
+      "after": "set(PINS) == EXPECTED_PATHS",
+      "before": "set(PINS) == EXPECTED_PATHS",
+      "unchanged": true
+    },
+    {
+      "after": "all((type(value) is str and len(value) == 64 and all((c in '0123456789abcdef' for c in value)) for value in PINS.values()))",
+      "before": "all((type(value) is str and len(value) == 64 and all((c in '0123456789abcdef' for c in value)) for value in PINS.values()))",
+      "unchanged": true
+    },
+    {
+      "after": "sha(pin_record_raw) == ARGS.reviewed_pins_sha256",
+      "before": "PINS['scripts/li_v3_local_extra_headers.py'] == SCRIPT_PIN",
+      "unchanged": false
+    },
+    {
+      "after": "full_review['status'] == 'PASS' and full_review['commit'] == COMMIT",
+      "before": "full_review['status'] == 'PASS' and full_review['commit'] == COMMIT",
+      "unchanged": true
+    },
+    {
+      "after": "full_review['runtime_source_files_matching_manifest_and_worktree'] == 332",
+      "before": "full_review['runtime_source_files_matching_manifest_and_worktree'] == 326",
+      "unchanged": false
+    },
+    {
+      "after": "full_review['audit_script_sha256'] == 'b81293cba3632449830932175e9fa938913650ade05f5e524b258aba78923119'",
+      "before": "full_review['audit_script_sha256'] == 'b81293cba3632449830932175e9fa938913650ade05f5e524b258aba78923119'",
+      "unchanged": true
+    },
+    {
+      "after": "sha(receipt_raw) == full_review['receipt_sha256']",
+      "before": "sha(receipt_raw) == full_review['receipt_sha256']",
+      "unchanged": true
+    },
+    {
+      "after": "receipt['artifacts'] == full_review['artifact_identities']",
+      "before": "receipt['artifacts'] == full_review['artifact_identities']",
+      "unchanged": true
+    },
+    {
+      "after": "old_receipt['source']['git_commit'] == BASELINE",
+      "before": "old_receipt['source']['git_commit'] == BASELINE",
+      "unchanged": true
+    },
+    {
+      "after": "receipt['source']['git_commit'] == COMMIT",
+      "before": "receipt['source']['git_commit'] == COMMIT",
+      "unchanged": true
+    },
+    {
+      "after": "current_raw == git('show', COMMIT + ':discovery/reports/runtime-manifest.json')",
+      "before": "current_raw == git('show', COMMIT + ':discovery/reports/runtime-manifest.json')",
+      "unchanged": true
+    },
+    {
+      "after": "len(prior) == 326 and len(current) == 332",
+      "before": "len(prior) == 323 and len(current) == 326",
+      "unchanged": false
+    },
+    {
+      "after": "set(current) - set(prior) == set(added)",
+      "before": "set(current) - set(prior) == set(added)",
+      "unchanged": true
+    },
+    {
+      "after": "all((current.get(path) == digest for path, digest in prior.items()))",
+      "before": "all((current.get(path) == digest for path, digest in prior.items()))",
+      "unchanged": true
+    },
+    {
+      "after": "all((current[path] == digest for path, digest in added.items()))",
+      "before": "all((current[path] == digest for path, digest in added.items()))",
+      "unchanged": true
+    },
+    {
+      "after": "len(previous_package) == len(current_package) == 108",
+      "before": "len(previous_package) == len(current_package) == 108",
+      "unchanged": true
+    },
+    {
+      "after": "current_package == previous_package",
+      "before": "current_package == previous_package",
+      "unchanged": true
+    },
+    {
+      "after": "len(baseline_archive) <= 256 * 1024 * 1024",
+      "before": "len(baseline_archive) <= 256 * 1024 * 1024",
+      "unchanged": true
+    },
+    {
+      "after": "baseline_runtime == prior",
+      "before": "baseline_runtime == prior",
+      "unchanged": true
+    },
+    {
+      "after": "baseline_package == current_package",
+      "before": "baseline_package == current_package",
+      "unchanged": true
+    },
+    {
+      "after": "len(added) == 6 and len(PINS) == 8",
+      "before": "len(added) == 3 and len(PINS) == 4",
+      "unchanged": false
+    },
+    {
+      "after": "all((sha(Path(path).read_bytes()) == expected for path, expected in HELD.items()))",
+      "before": "all((sha(Path(path).read_bytes()) == expected for path, expected in HELD.items()))",
+      "unchanged": true
+    },
+    {
+      "after": "git('rev-parse', 'HEAD').decode().strip() == COMMIT",
+      "before": "git('rev-parse', 'HEAD').decode().strip() == COMMIT",
+      "unchanged": true
+    },
+    {
+      "after": "not git('status', '--porcelain=v1', '--untracked-files=all')",
+      "before": "not git('status', '--porcelain=v1', '--untracked-files=all')",
+      "unchanged": true
+    },
+    {
+      "after": "read(Path(__file__)) == before",
+      "before": "read(Path(__file__)) == before",
+      "unchanged": true
+    },
+    {
+      "after": "HELD[str(path)] == sha(raw)",
+      "before": "HELD[str(path)] == sha(raw)",
+      "unchanged": true
+    },
+    {
+      "after": "len(names) == len(set(names))",
+      "before": "len(names) == len(set(names))",
+      "unchanged": true
+    },
+    {
+      "after": "len(names) == len(set(names))",
+      "before": "len(names) == len(set(names))",
+      "unchanged": true
+    },
+    {
+      "after": "key not in result",
+      "before": "key not in result",
+      "unchanged": true
+    },
+    {
+      "after": "archived == working == committed and sha(archived) == digest",
+      "before": "archived == working == committed and sha(archived) == digest",
+      "unchanged": true
+    },
+    {
+      "after": "member.isdir() or member.isfile()",
+      "before": "member.isdir() or member.isfile()",
+      "unchanged": true
+    },
+    {
+      "after": "member.name.startswith('discovery/')",
+      "before": "member.name.startswith('discovery/')",
+      "unchanged": true
+    },
+    {
+      "after": "relative not in baseline_runtime",
+      "before": "relative not in baseline_runtime",
+      "unchanged": true
+    },
+    {
+      "after": "name not in baseline_package",
+      "before": "name not in baseline_package",
+      "unchanged": true
+    }
+  ],
+  "baseline_commit": "d0505b9b358a4bdeafbd742f1aeeb6c2b955abf3",
+  "bindings": [
+    {
+      "bytes": 21353,
+      "path": ".cache/phase2-growth-artifact-review-v1/audit.py",
+      "sha256": "b81293cba3632449830932175e9fa938913650ade05f5e524b258aba78923119"
+    },
+    {
+      "bytes": 10238,
+      "path": ".cache/phase2-growth-artifact-review-v1/prior-additive_audit.py",
+      "sha256": "6b267cd11a73b0f73c63a7b9ae2ba75d30f9699edf14e41c5fd1f98f4932ce2a"
+    },
+    {
+      "bytes": 10639,
+      "path": ".cache/phase2-growth-artifact-review-v1/additive_audit.py",
+      "sha256": "22b3cbaa1335a85d81d79a11e6722f5fadd6db51854ca8c2de483a65d45528f7"
+    },
+    {
+      "bytes": 3494,
+      "path": ".cache/phase2-growth-artifact-review-v1/prior-run_recorded.py",
+      "sha256": "e883b0fe298d137e3b68d7ca0a27d52a400ae7e59c41deb2608389233f132557"
+    },
+    {
+      "bytes": 6579,
+      "path": ".cache/phase2-growth-artifact-review-v1/run_recorded.py",
+      "sha256": "681bdae3895b320274e898b819e9d8b092bb9edd76562c8c2e92dbcd9935f483"
+    },
+    {
+      "bytes": 5494,
+      "path": ".cache/phase2-growth-artifact-review-v1/additive_audit.py.diff",
+      "sha256": "2cc8c9cf5808eff01d4a4f5fa27f98d4d2bb9feac124d36fe97510d94c192bba"
+    },
+    {
+      "bytes": 10180,
+      "path": ".cache/phase2-growth-artifact-review-v1/run_recorded.py.diff",
+      "sha256": "23ea1dd76917bd27c2a16716eccf9edf11c711546e8454aded3ee9ef8822dc53"
+    }
+  ],
+  "final_reviewed_pin_record": "UNBOUND",
+  "final_source_commit": "UNBOUND",
+  "generic_auditor_unchanged": true,
+  "new_additive_assertion_count": 46,
+  "original_additive_assertion_count": 45,
+  "project_imports": 0,
+  "schema": "lupine.discovery.growth_artifact_audit_preparation.v1",
+  "scope": "Prepare byte-audit source only; later independent reviewer/operator must bind final root-reviewed pin-record hash and additive auditor hash.",
+  "source_operations": 0,
+  "status": "PREPARED_STATIC_VALIDATION_ONLY",
+  "syntax_compile_only": true
+}

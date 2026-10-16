@@ -1,0 +1,6 @@
+{
+  "independent_first_result": "14 methods; one method failed in3subcases (template,noscript,svg). Other tests passed.",
+  "finding": "A malformed ancestor closing tag could pop an unclosed suppressed frame and expose following hidden canary text.",
+  "repair": "Reject crossed closure before deleting that stack span. Exact original source/scope/author-first evidence preserved under before-suppression-repair; independent first failures remain in reviewer directory.",
+  "actual_source_requests_before_repair": 0
+}

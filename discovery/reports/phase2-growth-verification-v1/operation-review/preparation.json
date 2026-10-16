@@ -1,0 +1,42 @@
+{
+  "status": "SOURCE_PREPARATION_ONLY_ACTUAL_BINDINGS_UNBOUND",
+  "prepared_utc": "2026-10-16T10:51:55.447682+00:00",
+  "sources": {
+    "audit_completed_operations.py": {
+      "bytes": 40774,
+      "sha256": "a34b266e2316b14540b0abd0f2016274422a81b8eca90f3152aa734f5617deb7"
+    },
+    "run_audit_recorded.py": {
+      "bytes": 6073,
+      "sha256": "62a1accf38b6fa0ed9c5cf27af966c58b69484fb1a718af73097a32dda41f562"
+    },
+    "bindings.unbound.json": {
+      "bytes": 585,
+      "sha256": "8f93019b8b6b0efbb78faa549668073a266a4cbb5f0079b95c6e8744f400c814"
+    },
+    "prior-audit_completed_operations.py": {
+      "bytes": 18988,
+      "sha256": "c91920a7d9e992b7c4acdd47fca7ac151282d4190b429977ae01ef7caee700cb"
+    },
+    "check-adaptation.json": {
+      "bytes": 69108,
+      "sha256": "087946b0f7c122f6f5b35879f2d171551e4bedebe5a059d946557884fc1398e9"
+    }
+  },
+  "static_parse_compile_only": true,
+  "auditor_imported": false,
+  "auditor_executed": false,
+  "private_source_read": false,
+  "actual_outcome_assumed": false,
+  "old_checks_mapped": 98,
+  "new_check_calls": 176,
+  "identical_check_ast_matches": 53,
+  "independent_static_review": "PASS_STATIC_PREPARATION_SCOPE_NO_BLOCKERS",
+  "separate_authorized_retained_artifact_audit": "Completed independently in phase2-growth-artifact-review-v1; not execution of this operation auditor",
+  "claim_limit": "Receipt/progress constraints only; no complete reason/progress reachability or classifier equivalence proof.",
+  "independent_static_review_receipt": {
+    "path": "math-static-review/review.json",
+    "sha256": "c2e08af390ba3370f30587d041f2d09967cca4071bc9c97a4c6d8069f9c8b810",
+    "reviewer": "/root/phase2_math"
+  }
+}

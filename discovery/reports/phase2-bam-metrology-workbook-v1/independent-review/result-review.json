@@ -1,0 +1,59 @@
+{
+  "schema": "lupine.bam-metrology-independent-final-result-review.v1",
+  "reviewed_at": "2026-10-16T10:35:10.776364+00:00",
+  "reviewer": "/root/phase2_evidence/author_methods_review",
+  "verdict": "PASS_SCOPED_DOCUMENTARY_REPORT_NO_SCIENTIFIC_ADMISSION",
+  "parent_claim_check": "parent-claim-check.json",
+  "independent_documentary_review": "documentary-result-review.json",
+  "retained_artifact_check": "actual-artifact-check.json",
+  "scope_sha256": "ba4fc7fffc4a47933185c8dcd3d3224131ae64b0e4a7b6a7219df2da96d1a789",
+  "source_sha256_from_consistent_receipts": "6cc298fa9922c60fc923b11dbfaa788057cb23593153d68a9aa95226b1795a83",
+  "internal_projection_sha256": "4a0c0165e980e2e40418dac63f161215a04ab955aeff750193030cbd7c6e44e1",
+  "held_parent_artifacts": {
+    "README.md": "cad9aec959b34c7e6fc4dd4e98bf022ac93745d2192be28dbe263c1d33b8a233",
+    "documentary-findings.json": "245a6cbf65a43adaf96e3feae9af23b394c0f06bf5aeb580f574cb5de49609ed",
+    "documentary-search.json": "2f2f93ebf1d7cb9f5c5ac0c20e06f7c26ef5a8a46889696c3a891a7217f5bc7a",
+    "exposure-ledger.json": "f14be07c1f43196f864fa03c4c19156bca8fc0320925000394d50cf21eaf9f61"
+  },
+  "findings": [
+    {
+      "area": "Acquisition and exposure",
+      "assessment": "Reviewed source pins, source/identity receipt links and complete operation chronology are consistent with one fixed identity-matching GET after independent review. Output hashes and unchanged executable identities verify. Reviewer did not reread the XLSX or rerun the workbook parser. Whole retained internal projection was independently hashed/JSON-parsed and selected actual measurements, labels and provenance inspected; this is permanently exposed reference evidence."
+    },
+    {
+      "area": "Literal pairing and current proof strain",
+      "assessment": "All three named test sheets have exact same-sheet Test ID/Test piece ID matches and five co-located literal endpoint values. Rp0.2 is explicitly labeled for the current tests. Report correctly separates documentary co-location from independence, uncertainty dependence and sampling frame."
+    },
+    {
+      "area": "Uncertainty and missingness",
+      "assessment": "Publisher metadata maxima, stated 95% confidence and k=2 are kept separate from workbook contents and predictive/joint guarantees. Neither per-test budget nor cross-endpoint covariance is supplied by admitted evidence. Z percent convention is left unconverted. A unavailable is kept distinct from Agt/Ag/Z; correction and temperature-recording limitations are retained."
+    },
+    {
+      "area": "Citation and search checks",
+      "assessment": "All 193 cell references in 11 findings resolve to exact cited sheet and OOXML part. Independently reproduced all 12 casefolded search terms across the stated projected values/formulas/comments. Search absence is limited to admitted projection. Orientation suffixes are not merged into full test IDs."
+    },
+    {
+      "area": "Formula and publication boundaries",
+      "assessment": "Two formulas and caches remain separate and unexecuted. Report contains selected factual conditions/labels, no performance table, raw workbook, complete cell dump or contact roster. Parent exposure ledger admits the initial truncated broader display and incidental composition examples. It does not claim untouched source or statistical independence."
+    }
+  ],
+  "unresolved_review_blockers": [],
+  "remaining_scientific_limits": [
+    "Documentary pairing does not establish independent specimens/casts/heats or an eligible finite sampling frame.",
+    "Campaign measurement-uncertainty maxima and k=2 do not specify joint failure probability, endpoint covariance, model uncertainty or future coverage.",
+    "Unparsed components, linked LIS, images, standards and certificates were not inspected; projected absence is not total-source absence.",
+    "No raw curve validation, formula execution, model fit, threshold/allocation selection, benchmark admission or scientific superiority claim."
+  ],
+  "activity": {
+    "network_requests": 0,
+    "xlsx_raw_reads": 0,
+    "workbook_parser_invocations": 0,
+    "project_runtime_tests": 0,
+    "tracked_writes": false,
+    "git_mutations": false,
+    "whole_internal_projection_machine_exposed": true,
+    "selected_actual_measurements_researcher_exposed": true,
+    "raw_projection_or_contact_roster_exported": false
+  },
+  "next_action": "Parent may retain/publish this bounded documentary audit with its full failure history; G20 uncertainty/lineage and G21 inference-target decisions remain unresolved."
+}

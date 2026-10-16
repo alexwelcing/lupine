@@ -1,0 +1,8 @@
+{
+  "original_bytes": 340,
+  "original_path": "reports/phase2-growth-verification-v1/shape-operations/commit-binding.diff",
+  "original_sha256": "3da62c0b37c274507727208322e1710775f66028dbd579640f51f073e5b1020b",
+  "reason": "Preserve historical whitespace-bearing patch bytes without normalizing them.",
+  "representation": "lossless_utf8_text",
+  "text": "--- reviewed-unbound-recorder.py\n+++ run_after_ci.py\n@@ -16,7 +16,7 @@\n import time\n \n ROOT = Path(__file__).resolve().parents[2]\n-COMMIT = 'UNBOUND_COMMIT'\n+COMMIT = 'c17c4c6b152af2e7bc1b7a7639336f6b0f733ace'\n BRANCH = 'research/lupine-discovery'\n BASE = ROOT / '.cache/phase2-growth-shape-operations-v1/production'\n CAP = 8 * 1024 * 1024\n"
+}

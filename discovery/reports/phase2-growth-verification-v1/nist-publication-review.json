@@ -1,0 +1,144 @@
+{
+  "schema": "lupine.nist-guidance-independent-publication-review.v1",
+  "reviewed_at": "2026-10-16T11:04:31.445384+00:00",
+  "verdict": "PASS_LOSSLESS_PUBLICATION_LINKS_AND_EXCLUSIONS",
+  "held_inventory_sha256": "1f534a2559c91053426403642c302671d698bb64a052bddb5d0aad54f3432da9",
+  "publication_root": ".cache/phase2-nist-metrology-guidance-v1/promotion/reports/phase2-nist-metrology-guidance-v1",
+  "files_verified": 66,
+  "bytes_verified": 223006,
+  "original_artifacts_verified": 64,
+  "exact_copies": 58,
+  "lossless_wrappers": [
+    {
+      "path": "before-review-repair/acquire.py.bytes.json",
+      "decoded_bytes": 4964,
+      "decoded_sha256": "55b7350ca3d75e09147a119f8fb3e6779bf999d5e47cf4b00443f21c65053144"
+    },
+    {
+      "path": "before-suppression-repair/acquire.py.bytes.json",
+      "decoded_bytes": 5367,
+      "decoded_sha256": "866080b970f0953bb3fb24045623855e0787456864953d9ea3098c731a96acdd"
+    },
+    {
+      "path": "independent-review/acquire.py.review-delta.diff.bytes.json",
+      "decoded_bytes": 3340,
+      "decoded_sha256": "130e55cc08f2f4b01dfcf665759b4e24fb024a8fcaba80a2ef88853cd48349f8"
+    },
+    {
+      "path": "independent-review/first-parser-test.stderr.bytes.json",
+      "decoded_bytes": 5399,
+      "decoded_sha256": "770d84e566a377b7d4015a78b403b472648c0c8a193161a8a203ec310800a0e6"
+    },
+    {
+      "path": "independent-review/initial-source/acquire.py.bytes.json",
+      "decoded_bytes": 4964,
+      "decoded_sha256": "55b7350ca3d75e09147a119f8fb3e6779bf999d5e47cf4b00443f21c65053144"
+    },
+    {
+      "path": "independent-review/reviewed-source/acquire.py.bytes.json",
+      "decoded_bytes": 5394,
+      "decoded_sha256": "2702fe6786a6d9fc7afebe0803bf82a9cec0ed222e6d3bef2569f03b5202df0d"
+    }
+  ],
+  "local_markdown_links_verified": 15,
+  "whitespace_checks": {
+    "command_shape": [
+      "git",
+      "diff",
+      "--no-index",
+      "--check",
+      "/dev/null",
+      "PUBLISHED_FILE"
+    ],
+    "files": 66,
+    "accepted_ordinary_statuses": [
+      0,
+      1
+    ],
+    "nonempty_diagnostics": 0,
+    "meaning": "Read-only whitespace checks, not parser/runtime/scientific tests."
+  },
+  "held_scientific_claims_unchanged": true,
+  "new_PUBLICATION_claims": "Correctly distinguishes seven findings,14 source locators and47 whitespace-delimited quoted words from full pages; preserves first source/parser failures, exposes historical code as audit artifacts, records exhausted acquisition scope and separates engineering behavior from metrological/scientific validity.",
+  "public_exclusions": {
+    "raw_html_files_absent": true,
+    "full_projection_files_absent": true,
+    "measurement_or_secondary_binary_source_files_absent": true,
+    "email_like_contact_strings_in_public_text": 0,
+    "assessment": "All copied originals are allowlisted source/test/review/receipt artifacts; six decoded wrappers reproduce only those artifacts. No full source pages, projection bodies or contact roster are hidden in wrappers."
+  },
+  "activity": {
+    "network_requests": 0,
+    "raw_html_reads": 0,
+    "full_projection_reads": 0,
+    "parser_or_test_reruns": 0,
+    "measurement_reads": 0,
+    "tracked_edits": false,
+    "git_mutations": false
+  },
+  "unresolved_blockers": [],
+  "checked_local_links": [
+    {
+      "from": "PUBLICATION.md",
+      "target": "README.md"
+    },
+    {
+      "from": "PUBLICATION.md",
+      "target": "selected-guidance.json"
+    },
+    {
+      "from": "PUBLICATION.md",
+      "target": "source-bindings.json"
+    },
+    {
+      "from": "PUBLICATION.md",
+      "target": "exposure-ledger.json"
+    },
+    {
+      "from": "PUBLICATION.md",
+      "target": "independent-review/preacquisition-review.json"
+    },
+    {
+      "from": "PUBLICATION.md",
+      "target": "independent-review/result-review.json"
+    },
+    {
+      "from": "PUBLICATION.md",
+      "target": "independent-review/interpretation-review.json"
+    },
+    {
+      "from": "PUBLICATION.md",
+      "target": "independent-review/retained-guidance-check.json"
+    },
+    {
+      "from": "PUBLICATION.md",
+      "target": "citation-check.json"
+    },
+    {
+      "from": "PUBLICATION.md",
+      "target": "original-byte-map.json"
+    },
+    {
+      "from": "README.md",
+      "target": "operation.json"
+    },
+    {
+      "from": "README.md",
+      "target": "actual-first/execution.json"
+    },
+    {
+      "from": "README.md",
+      "target": "scope.json"
+    },
+    {
+      "from": "README.md",
+      "target": "selected-guidance.json"
+    },
+    {
+      "from": "README.md",
+      "target": "pre-acquisition-history.md"
+    }
+  ],
+  "publication_page_sha256": "858868971d3e8bd7bf887d6042325cb0d657a4d5cc3a060e4d508ffce581d361",
+  "original_byte_map_sha256": "121a2c194314c31120b38b61ca9b6720c6cba6208a2c09fbeb1a46dbd9028b9a"
+}

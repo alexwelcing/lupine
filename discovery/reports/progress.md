@@ -1654,3 +1654,56 @@ is explicit; no blind benchmark, adapter, threshold, split or fit is admitted.
 G20 remains unresolved/G21 blocked and all scientific NO-GO results persist.
 The expired automation remains disabled. Next owner/checkpoint: root releases
 the source; independent reviewers check artifacts and later actual receipts.
+
+## 2026-10-16 11:07 UTC — actual growth shape matches; envelope remains blocked
+
+Published source `c17c4c6b152af2e7bc1b7a7639336f6b0f733ace` completed all four
+original CI jobs in run 38888807101, observed 11:06:09 UTC. Its clean installed
+package passed 28 demonstrations, six schemas and 16 checks; strict retention
+and independent full/additive artifact audits pass. The full audit checked
+3,979 source blobs, 332 runtime files and 108 wheel package payloads. All 326
+predecessor runtime files remain unchanged.
+
+Only after those gates, G30 ran twice at 11:06:36–41 UTC with identical
+GROWTH_HINT_SHAPE_MATCH public SHA `730039c818af60864292c0c4776ea13adccf211ab21432120e93830172d87d95`.
+Signature and NUL padding match the retained format; initial-padding semantics
+and archive acceptance remain unbound. The subsequent G31 pair ran at
+11:06:57–11:07:04 UTC and returned identical BLOCKED_LAYOUT /
+ZIP_LAYOUT_UNSUPPORTED, public SHA `01cce9e57b26e204a9d31959f747768c70abf7543bedb6ab104b3b4b623f094f`.
+Three local-extra areas completed, but overall headers did not. No decompression,
+XML, worksheet or shared-string decode occurred; all 332 runtime files, clean
+source and remote held. [The verification record](phase2-growth-verification-v1/README.md)
+preserves actual receipts, chronology, gates and scope. Its independent actual
+receipt audit first failed on an obsolete field reference. The independently
+reviewed correction then passed 19,246 runtime check calls in 4.132584 process
+seconds, exit 0 with empty stderr and unchanged inputs. These are audit checks,
+not test cases or independent samples. Both attempts and the earlier static
+review miss remain preserved; no source operation was rerun.
+
+[The exposed BAM workbook](phase2-bam-metrology-workbook-v1/README.md) documents
+three paired high-temperature tests, distinct endpoint definitions and missing
+post-fracture elongation. The source and its derivatives are permanently
+excluded from fresh blind predictive benchmarking. It does not provide an
+admitted per-test uncertainty budget, joint coverage or independent sampling
+frame. Original reader/transport failures and their pre-acquisition repairs
+remain preserved; final synthetic author/independent checks are 16/50.
+
+[Metrology risk mathematics](phase2-metrology-risk-contract-v1/PUBLICATION.md),
+[official NIST guidance](phase2-nist-metrology-guidance-v1/README.md) and
+[the finite-archive scope clarification](phase2-fixed-archive-inference-scope-v1/PUBLICATION.md)
+separate valid event bounds, nominal coverage, selection-conditional risk and
+fixed-frame label inference. These are reviewed premises/arguments, not a new
+physical validation, executed formal proof or empirical accuracy result.
+Two bounded official NIST requests succeeded after reader review; no measurement
+source was acquired through that scope.
+
+[Pure layout preparation](phase2-documentary-layout-preparation-v1/README.md)
+passes 33 author and 27 independent generated methods after a prospective
+namespace-bound amendment and preserved reviewer assertion failures. It remains
+unbound and outside the runtime because the actual envelope is blocked.
+Root owns publication and exact report-commit CI,
+then the [bounded historical Rhizo label-readiness decision](phase2-next-source-priorities-v1/README.md).
+That narrower target does not complete G21 or supply fresh predictive superiority;
+Li categorical predicate diagnosis remains separate preparation. G20 remains
+unresolved/G21 blocked. No allocation, fit, tuning, new DFT or scientific claim
+promotion occurred; all historical NO-GO results and disabled automation persist.

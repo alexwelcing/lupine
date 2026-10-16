@@ -1,0 +1,78 @@
+{
+  "actual_audit_invocations": 2,
+  "actual_recorded_outcomes": {
+    "G30": {
+      "initial_padding_semantics": "UNBOUND",
+      "pair_equal": true,
+      "public_sha256": "730039c818af60864292c0c4776ea13adccf211ab21432120e93830172d87d95",
+      "reason": "GROWTH_HINT_SHAPE_MATCH"
+    },
+    "G31": {
+      "archive_profile_accepted": false,
+      "completed_local_growth_areas": 3,
+      "decompression_started": [],
+      "engineering_status": "BLOCKED_LAYOUT",
+      "full_header_checks_completed": false,
+      "inspected_xml_bytes": 0,
+      "pair_equal": true,
+      "public_sha256": "01cce9e57b26e204a9d31959f747768c70abf7543bedb6ab104b3b4b623f094f",
+      "reason": "ZIP_LAYOUT_UNSUPPORTED",
+      "recognized_roles": null,
+      "xml_decoding_started": []
+    }
+  },
+  "auditor_scope": {
+    "network_used": false,
+    "private_objects_read": false,
+    "readers_imported_or_invoked": false,
+    "scientific_schema_approved": false
+  },
+  "ci_run": 38888807101,
+  "commit": "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace",
+  "completed_at": "2026-10-16T11:16:29.532089+00:00",
+  "corrected_attempt": {
+    "all_inputs_held": true,
+    "auditor_check_calls": 19246,
+    "check_calls_are_not_test_count": true,
+    "elapsed_seconds": 4.132584271999804,
+    "execution": "execution-both-corrected/execution.json",
+    "execution_sha256": "989630dc83bf55510d190ec764de5f52fbabfd06cd499d7b399ff45e09319771",
+    "exit_code": 0,
+    "result": "actual-review-both-corrected.json",
+    "result_sha256": "20f345c69839bedaf4c7a073813f804996e83b4892cbf3395e241e05680e01bd",
+    "status": "PASS",
+    "stderr_empty": true
+  },
+  "correction": {
+    "all_98_prior_mapped_gates_preserved": true,
+    "auditor": "audit_completed_operations_corrected.py",
+    "auditor_sha256": "d5ed41b53ae4769ee52e0dfb893dce4d04235cda8f9e7a14d2e163ce885c806b",
+    "distinct_output_paths": true,
+    "independent_review": "correction-1/math-review/review.json",
+    "independent_review_sha256": "9658eab8dfcae62fd565f47ae75780a43654d3c7b99a05cabb0c25d8163fc36f",
+    "recorder": "run_audit_recorded_corrected.py",
+    "recorder_sha256": "80c44a65ef66f020ae3364505ee5d02a64d5ef0d7e0490eb9957dcb8447ee880",
+    "semantic_change": "Replace absent-key equality with entire pinned predecessor_classification equality; no gate weakening."
+  },
+  "first_attempt": {
+    "elapsed_seconds": 4.395764265002072,
+    "execution": "execution-both/execution.json",
+    "exit_code": 1,
+    "original_files_preserved": true,
+    "reason": "KeyError: legacy_zip_reason; inherited G28 schema already removed this key.",
+    "sha256": "635700346e137b1cd45ed3bbd0b9bf479301f6e4982cdd29ce23f61d957179c4",
+    "status": "STOPPED_AUDITOR_SCHEMA_ERROR"
+  },
+  "limitations": [
+    "Receipt integrity does not establish raw-object truth, archive compatibility, semantic schema, physical validity, sampling independence or scientific superiority.",
+    "G31 negative remains a blocker; completed local shapes do not identify the remaining failed ZIP predicate.",
+    "Both pairs are computational replay, not scientific replication.",
+    "Reason/progress constraints are not classifier equivalence or a complete reachability proof.",
+    "Historical preparation/UNBOUND records remain snapshots of their preparation time."
+  ],
+  "operator": "/root/phase2_planner/ui_review",
+  "preserved_static_helper_failure": "correction-1/schema-reference-first.json; AST helper initially omitted a direct key assignment, then corrected, without product or auditor execution.",
+  "runtime_files": 332,
+  "schema": "lupine.discovery.growth_operation_audit_completion.v1",
+  "status": "PASS_PUBLIC_RECEIPT_INTEGRITY_ONLY"
+}

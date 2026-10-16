@@ -1,0 +1,180 @@
+{
+  "schema": "lupine.bam-metrology-independent-documentary-review.v1",
+  "reviewed_at": "2026-10-16T10:33:56.448082+00:00",
+  "reviewer": "/root/phase2_evidence/author_methods_review",
+  "verdict": "PASS_RETAINED_EXPOSED_DOCUMENTARY_EVIDENCE_WITH_UNRESOLVED_COVARIANCE_AND_SAMPLING_UNITS",
+  "source_sha256_from_consistent_receipts": "6cc298fa9922c60fc923b11dbfaa788057cb23593153d68a9aa95226b1795a83",
+  "projection_sha256": "4a0c0165e980e2e40418dac63f161215a04ab955aeff750193030cbd7c6e44e1",
+  "artifact_check": "actual-artifact-check.json",
+  "artifact_check_sha256": "af240cc467ac03df7f0ba7a70417b4fd34ca5e27a32dbc1c9ef98db6864f6081",
+  "independent_source_interpretations": [
+    {
+      "claim": "Three named per-test sheets jointly store current Rp0.2 and Rm in MPa and Z, Agt and Ag in percent. Matching Test ID and Test piece ID strings occur in F3/F4 of each. Current proof-strain labeling is directly documentary, not inferred from the separate room-temperature definition.",
+      "citations": {
+        "sheets": [
+          "Vh5205_T-71",
+          "Vh5205_T-74",
+          "Vh5205_T-84"
+        ],
+        "identity_cells": [
+          "B3",
+          "F3",
+          "B4",
+          "F4"
+        ],
+        "endpoint_cells": [
+          "B13",
+          "C13",
+          "D13",
+          "F13",
+          "B14",
+          "C14",
+          "D14",
+          "F14",
+          "B15",
+          "C15",
+          "D15",
+          "F15",
+          "B16",
+          "C16",
+          "D16",
+          "F16",
+          "B17",
+          "C17",
+          "D17",
+          "F17"
+        ]
+      },
+      "limit": "Within-workbook co-location under documentary IDs only; not raw-curve verification, independent sample count, source-lineage resolution, physical correctness or predictive validation."
+    },
+    {
+      "claim": "Common metadata names CMSX-6 and the specified temperature unit is explicitly Celsius with a stored value of 980; the current rate stages have different units.",
+      "citations": {
+        "sheet": "Common-to-all",
+        "cells": [
+          "B16",
+          "F16",
+          "B6",
+          "D6",
+          "F6",
+          "B9",
+          "D9",
+          "B11",
+          "D11"
+        ]
+      },
+      "limit": "Workbook labels/recorded settings; no automatic Celsius repair of the separately encoding-unbound schema, no rate conversion or physical condition verification."
+    },
+    {
+      "claim": "After-fracture elongation A was not determined under its stated distance requirement; final gauge length is described as not measurable due to fracture position. Populated Agt/Ag/Z are different quantities.",
+      "citations": {
+        "sheet": "Common-to-all",
+        "cells": [
+          "B209",
+          "F209",
+          "B210",
+          "F210",
+          "B217",
+          "C217",
+          "F217"
+        ]
+      },
+      "limit": "Do not substitute Agt, Ag or Z for A or treat a requirement cell as an affirmative valid measurement."
+    },
+    {
+      "claim": "Traceability and calibration fields are populated, but temperature correction is explicitly not included in indicated temperature and indicated temperature had no continuous recording.",
+      "citations": {
+        "sheet": "Common-to-all",
+        "cells": [
+          "B104",
+          "F104",
+          "B105",
+          "F105",
+          "B113",
+          "F113",
+          "B125",
+          "F125",
+          "B195",
+          "F195"
+        ]
+      },
+      "limit": "Calibration status does not supply endpoint uncertainty components, covariance, true temperature, or simultaneous coverage. Correction and recording limitations remain visible."
+    },
+    {
+      "claim": "Common material history, equipment and analysis procedures identify possible common sources of error and dependence.",
+      "citations": {
+        "sheet": "Common-to-all",
+        "cells": [
+          "B19",
+          "F19",
+          "B24",
+          "F24",
+          "B28",
+          "F28",
+          "B34",
+          "F34",
+          "B35",
+          "F35",
+          "B58",
+          "F58",
+          "B76",
+          "F76",
+          "B87",
+          "F87",
+          "B109",
+          "F109",
+          "B142",
+          "F142",
+          "B197",
+          "F197",
+          "B199",
+          "F199"
+        ]
+      },
+      "limit": "No measured dependence coefficient or defensible sampling-unit partition is inferred; three sheet IDs do not establish three independent material or calibration units."
+    },
+    {
+      "claim": "A case-insensitive literal scan of all projected resolved cell values finds no uncertainty/uncertainties/coverage/covariance/correlation/standard deviation/standard uncertainty/k=/k =/95%/95 % matches. The single expanded match is a testing-rate description.",
+      "citations": {
+        "sheet": "Common-to-all",
+        "cells": [
+          "B8"
+        ],
+        "check": "actual-artifact-check.json"
+      },
+      "limit": "Lexical absence in admitted projected values only, not all workbook components, source knowledge or linked/cited files. No external content was read."
+    },
+    {
+      "claim": "Retained Zenodo record description separately declares maximum total expanded measurement uncertainties, assessed for each test, at 95 percent confidence with k=2. The table gives 1.2, 1.2 and max. 0.5 in percent columns for Rm, Rp0.2 and Z.",
+      "citations": {
+        "metadata": "reports/phase2-bam-readiness-v1/zenodo-17846617.json",
+        "sha256": "48f84c7d6fc841a13de8ecccbba5f0604834cec45c3033d0d55bfd7a2e89f4d6",
+        "field": "metadata.description, paragraph preceding Table 1 and Table 1 caption/body"
+      },
+      "limit": "The metadata summary is not a per-sheet uncertainty budget, cross-endpoint covariance or simultaneous-coverage guarantee. Do not silently reinterpret the Z percent convention as percentage points or divide by k and call the result a universal calibrated noise distribution."
+    },
+    {
+      "claim": "The only two projected formulas occur in Heat_treatment B24/B25; formulas and their stored caches remain separate and unverified.",
+      "citations": {
+        "sheet": "Heat_treatment",
+        "cells": [
+          "B24",
+          "B25"
+        ]
+      },
+      "limit": "No formula was executed or used as physical truth."
+    }
+  ],
+  "reviewer_activity": {
+    "network_requests": 0,
+    "actual_xlsx_reads": 0,
+    "workbook_parser_invocations": 0,
+    "tracked_writes": false,
+    "git_mutations": false,
+    "full_internal_projection_machine_exposed": true,
+    "reviewer_selected_measurement_text_exposed": true,
+    "public_full_projection_or_contact_export": false,
+    "exposure_statement": "Independently hashed and JSON-parsed the complete retained internal projection, then inspected selected technical labels, actual endpoint values, IDs, calibration statements and formulas. Reviewed public metadata description and held execution artifacts. Raw workbook digest agrees across receipts; reviewer did not independently rehash XLSX."
+  },
+  "scientific_boundary": "Permanent exposed metrology reference. No new blind predictive use, no eligibility/calibration selection, no model/fit/split/threshold/allocation change and no scientific benchmark admission follows. G20/G21 ownership and any next authorized source request remain with parent."
+}

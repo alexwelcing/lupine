@@ -1,0 +1,11 @@
+{
+  "findings": [
+    "NUL-separated UTF16LE without BOM could survive UTF8 byte decoding and evade declaration check before ElementTree interpreted it.",
+    "A neutral-named OLE content type escaped active embedding rejection.",
+    "Duplicate direct rich text and inline string components on non-inline cells were silently combined or ignored."
+  ],
+  "repair": "Reject decoded NUL, OLE/package embedding types, duplicate/nested admitted text and unexpected inline/scalar components.",
+  "preserved": "before-reader-review-repair/; independent first invocation remains retained by reviewer.",
+  "actual_source_access_before_repair": false,
+  "scope_limit": "Bounded documentary projection, not full OOXML conformance."
+}

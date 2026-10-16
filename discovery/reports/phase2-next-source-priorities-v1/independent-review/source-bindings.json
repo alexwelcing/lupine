@@ -1,0 +1,61 @@
+{
+  "schema": "lupine.next-source-priorities-independent-premise-review.v1",
+  "reviewed_at": "2026-10-16T11:11:44.951451+00:00",
+  "reviewer": "/root/phase2_evidence/author_methods_review",
+  "verdict": "NARROW_FINITE_LABEL_CLAIM_SUPPORTED_CONDITIONALLY_NO_SOURCE_READINESS_INFERRED",
+  "artifacts": [
+    {
+      "path": "reports/phase2-finite-archive-design-v1/README.md",
+      "bytes": 19059,
+      "sha256": "c26fcba7ea5e70660e8d5657539ab36effd6bf991df6471f5d7da61ba0a8886a"
+    },
+    {
+      "path": "docs/finite-population-planning.md",
+      "bytes": 6568,
+      "sha256": "11f4efe987632293bfc8dfcbd24a32d3a05e4c9e23624c9933ec030028de3414"
+    },
+    {
+      "path": "reports/next-independent-study-v1/README.md",
+      "bytes": 2988,
+      "sha256": "24933e25f626d59210471503206fac33436c7a484267737e21fa61a0c7cef62b"
+    },
+    {
+      "path": "reports/next-independent-study-v1/recommendation.md",
+      "bytes": 5664,
+      "sha256": "e1230db4310f229cbd9a5331346a72b078f1de09b124f402d3786571bf75de28"
+    },
+    {
+      "path": "reports/phase2-source-readiness-v1/README.md",
+      "bytes": 9309,
+      "sha256": "bd351e8814fb33776e375ed48d1bf2e3aae985404dd8a33920bf40e46a0ca1c5"
+    },
+    {
+      "path": "reports/phase2-high-temperature-leads-v1/README.md",
+      "bytes": 4445,
+      "sha256": "54191247eab5cb1455f506420ef5422081a609d4f685d1f1c4352750ce5f15a7"
+    }
+  ],
+  "note": {
+    "path": ".cache/phase2-next-source-priorities-review-v1/README.md",
+    "bytes": 5379,
+    "sha256": "3637fd8d7f477af7073dee0f4a55c2a3ec3e1dcc24ed82eb3aa51c45af4c38db"
+  },
+  "central_findings": [
+    "Uniform sampling without replacement of fixed binary-labeled IDs does not require physical independence of the rows or underlying observations.",
+    "Finite residual-policy evaluation and marginal calibration are distinct; the latter additionally needs role-invariant panel scores and justified allocation symmetry.",
+    "Physical independence of Li groups is not a mathematical prerequisite solely for a declared ID-weighted archive-label target, but panel membership must be frozen if it defines the endpoint.",
+    "Grouping/overlap evidence remains material for distinct-specimen/material/source assertions, fresh holdout and training leakage, source lineage, scientific target interpretation and unique-evidence cost accounting.",
+    "No current Li readiness, acquisition route, scientific protocol or fresh evaluation population is established. Dated reports are not silently updated using unreviewed artifacts.",
+    "No retuning or reinterpretation of exposed MPEA/JARVIS results is authorized or recommended."
+  ],
+  "activity": {
+    "network_requests": 0,
+    "raw_scientific_artifact_reads": 0,
+    "new_target_values_accessed": false,
+    "runtime_imports": 0,
+    "tests_run": 0,
+    "tracked_edits": false,
+    "git_mutations": false,
+    "new_source_protocol_threshold_or_model_selected": false
+  }
+}

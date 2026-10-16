@@ -1,0 +1,99 @@
+{
+  "actual_source_or_guard_invocations": 0,
+  "check_count": 18,
+  "checks": [
+    {
+      "check": "NO_TRAILING_SPACE_OR_BLANK_EOF",
+      "pass": true,
+      "path": "README.md"
+    },
+    {
+      "check": "LOCAL_LINK",
+      "pass": true,
+      "path": "README.md",
+      "target": "public-source-binding.json"
+    },
+    {
+      "check": "LOCAL_LINK",
+      "pass": true,
+      "path": "README.md",
+      "target": "proposal.json"
+    },
+    {
+      "check": "NO_TRAILING_SPACE_OR_BLANK_EOF",
+      "pass": true,
+      "path": "audit_public.py"
+    },
+    {
+      "check": "NO_TRAILING_SPACE_OR_BLANK_EOF",
+      "pass": true,
+      "path": "first-audit/audit_public.py"
+    },
+    {
+      "check": "JSON_PARSE",
+      "pass": true,
+      "path": "first-audit/execution.json"
+    },
+    {
+      "check": "NO_TRAILING_SPACE_OR_BLANK_EOF",
+      "pass": true,
+      "path": "first-audit/execution.json"
+    },
+    {
+      "check": "JSON_PARSE",
+      "pass": true,
+      "path": "proposal.json"
+    },
+    {
+      "check": "NO_TRAILING_SPACE_OR_BLANK_EOF",
+      "pass": true,
+      "path": "proposal.json"
+    },
+    {
+      "check": "JSON_PARSE",
+      "pass": true,
+      "path": "public-source-binding.json"
+    },
+    {
+      "check": "NO_TRAILING_SPACE_OR_BLANK_EOF",
+      "pass": true,
+      "path": "public-source-binding.json"
+    },
+    {
+      "check": "JSON_PARSE",
+      "pass": true,
+      "path": "scope-review.json"
+    },
+    {
+      "check": "NO_TRAILING_SPACE_OR_BLANK_EOF",
+      "pass": true,
+      "path": "scope-review.json"
+    },
+    {
+      "check": "FIRST_LOG_BINDING",
+      "pass": true,
+      "path": "first-audit/stdout.txt"
+    },
+    {
+      "check": "FIRST_LOG_BINDING",
+      "pass": true,
+      "path": "first-audit/stderr.txt"
+    },
+    {
+      "check": "EXACT_FIRST_AUDITOR_SOURCE_HELD",
+      "pass": true
+    },
+    {
+      "check": "PROPOSAL_SOURCE_BINDINGS_EXACT",
+      "pass": true
+    },
+    {
+      "check": "NO_IMPLEMENTATION_OR_NEW_OPERATION_CLAIM",
+      "pass": true
+    }
+  ],
+  "created_at": "2026-10-16T11:18:52.079954+00:00",
+  "private_object_or_capture_reads": 0,
+  "product_tests": 0,
+  "status": "PASS_STATIC_PUBLICATION_CHECKS"
+}

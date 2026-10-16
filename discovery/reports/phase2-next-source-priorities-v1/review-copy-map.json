@@ -1,0 +1,47 @@
+{
+  "scope": "Exact independent review copies; original challenge and later final review retained separately.",
+  "files": [
+    {
+      "original_path": ".cache/phase2-next-source-priorities-review-v1/README.md",
+      "published_path": "independent-review/README.md",
+      "bytes": 5379,
+      "sha256": "3637fd8d7f477af7073dee0f4a55c2a3ec3e1dcc24ed82eb3aa51c45af4c38db"
+    },
+    {
+      "original_path": ".cache/phase2-next-source-priorities-review-v1/artifact-check.json",
+      "published_path": "independent-review/artifact-check.json",
+      "bytes": 3670,
+      "sha256": "3f03f5b343dac74c1a1bec353421209e47be32bff9b4f63f834eecffc366244a"
+    },
+    {
+      "original_path": ".cache/phase2-next-source-priorities-review-v1/final-review-bindings.json",
+      "published_path": "independent-review/final-review-bindings.json",
+      "bytes": 1844,
+      "sha256": "f1093cb440ca96690482de872bc5d01eaa49ef2b91d57acf39577a17dadeb84e"
+    },
+    {
+      "original_path": ".cache/phase2-next-source-priorities-review-v1/final-review.json",
+      "published_path": "independent-review/final-review.json",
+      "bytes": 6849,
+      "sha256": "1fc16d3fb04c552c8eaa7d9f8309bb49b3d9b9ba64731c845c463aff4a91cebc"
+    },
+    {
+      "original_path": ".cache/phase2-next-source-priorities-review-v1/rhizo-addendum-bindings.json",
+      "published_path": "independent-review/rhizo-addendum-bindings.json",
+      "bytes": 833,
+      "sha256": "76c4c438a9dcb4e1567d9786d06cf3a09d5ad506cb4c12e8acb5b60de876f8de"
+    },
+    {
+      "original_path": ".cache/phase2-next-source-priorities-review-v1/rhizo-priority-addendum.md",
+      "published_path": "independent-review/rhizo-priority-addendum.md",
+      "bytes": 5003,
+      "sha256": "0dd4d28c83d0f23250148773a9d2f1b316ebef478da81899be0debe68a586482"
+    },
+    {
+      "original_path": ".cache/phase2-next-source-priorities-review-v1/source-bindings.json",
+      "published_path": "independent-review/source-bindings.json",
+      "bytes": 2927,
+      "sha256": "58980094088ec29f903fe3556778d8869e02cc49f753f03490dff8a261f9adbb"
+    }
+  ]
+}

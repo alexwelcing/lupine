@@ -1,0 +1,26 @@
+{
+  "activity": {
+    "actual_scientific_or_private_reads": 0,
+    "lean_builds": 0,
+    "network_requests": 0,
+    "runtime_tests": 0,
+    "source_acquisitions": 0,
+    "source_diff_and_hash_check_only": true,
+    "tracked_edits": 0
+  },
+  "blockers": [],
+  "exact_two_proposed_changes_only": true,
+  "final_readme_sha256": "7e7f6ed276eae1475b3e2ef996cced8cf9b64f7d5cdb85cd715904aac9c84df6",
+  "initial_readme_sha256": "49e43f80392380abcf8c2ff91469d581a21910b49d228e1e4b550a5c2616dd09",
+  "initial_review_sha256": "7e5b99254653d7e9b0e21d5c0c001a9de328deec3e38bf661c10443600ffe7e1",
+  "new_protocol_or_source_admission": false,
+  "resolved_notes": [
+    "Integer domain explicitly fixes M>=1,0<=e<=M,0<=K<=M.",
+    "The probability remains over the random subset conditional on frozen frame/training/policy, without conditioning additionally on the realized subset or audit transcript."
+  ],
+  "reviewed_at": "2026-10-16T10:56:01.901426+00:00",
+  "reviewer": "/root/phase2_math",
+  "schema": "lupine.discovery.fixed_archive_scope_independent_written_review_rebind.v1",
+  "scientific_claim_change": false,
+  "status": "PASS_WRITTEN_DESIGN_SCOPE"
+}

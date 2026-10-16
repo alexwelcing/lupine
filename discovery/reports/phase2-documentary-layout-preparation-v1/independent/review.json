@@ -1,0 +1,90 @@
+{
+  "schema": "lupine.discovery.documentary_layout_independent_review.v1",
+  "reviewer": "/root/phase2_planner",
+  "recorded_utc": "2026-10-16T10:58:36.788526+00:00",
+  "verdict": "PASS_PURE_GENERATED_SCOPE_NO_BLOCKER",
+  "production_readiness": "UNBOUND_NOT_ESTABLISHED",
+  "source": {
+    "path": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/li_v3_layout_localization.py",
+    "bytes": 26076,
+    "sha256": "4624e68c28f911bc0bcc927834bd9f9bbb8cd4622a47db80f5a99e3f63b6ba7d"
+  },
+  "contract": {
+    "path": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/README.md",
+    "bytes": 7517,
+    "sha256": "c16fd29a51f9b1650cff19e77b36bf991c847286ecbd5877633379bdd8f8d65f"
+  },
+  "scope": {
+    "path": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/scope.json",
+    "bytes": 4452,
+    "sha256": "10e2c29be646c94cd1c0feb1d458a6b18c56dd658f2c6389faffd6b8b9a357d4"
+  },
+  "scope_addendum": {
+    "path": ".cache/phase2-li-layout-candidate-v1/documentary-localization-v1/namespace-cap-scope-addendum.json",
+    "bytes": 1837,
+    "sha256": "548f64dceb10d6d47a626aff571c6a97704de84ca50744b593191d8b5ad40d1d"
+  },
+  "independent_test": {
+    "path": ".cache/phase2-documentary-layout-review-v1/test_li_v3_layout_localization_review.py",
+    "bytes": 30060,
+    "sha256": "93d062867f8fa612719084922474f13db9aa3936410cfa699c4d3b1007e8db62"
+  },
+  "independent_final_execution": {
+    "path": ".cache/phase2-documentary-layout-review-v1/namespace-final/execution.json",
+    "bytes": 1419,
+    "sha256": "3206e18f790bd48655b031dc362cd074c10a86560402fea826e6f4a7d07a635e"
+  },
+  "source_argument": {
+    "path": ".cache/phase2-documentary-layout-review-v1/source-argument.md",
+    "bytes": 5120,
+    "sha256": "8b54b3d4e630cf18cc1eecfe7f3f56cadf5845ba9682e19ab582b6d76e872339"
+  },
+  "static_receipt_audit": {
+    "path": ".cache/phase2-documentary-layout-review-v1/static-and-receipt-audit.json",
+    "bytes": 3147,
+    "sha256": "d086a0d88a6345b232223bd477f25d43215453f242cd99c44968b6fbc0b44b51"
+  },
+  "final_executions": {
+    "author_methods": 33,
+    "independent_methods": 27,
+    "independent_unittest_seconds": 3.763,
+    "independent_process_seconds": 4.366631775003043,
+    "exit_code": 0,
+    "forbidden_events": 0,
+    "tracked_runtime_files_held": 332
+  },
+  "findings": [
+    {
+      "id": "LEXICAL_NAMESPACE_DECLARATION_CAPS",
+      "status": "RESOLVED_BY_PROSPECTIVE_STRENGTHENING",
+      "finding": "Original namespace-aware start attributes omitted xmlns declarations from the per-element 32/name256/value1024 caps; whole worksheet bytes were still bounded.",
+      "resolution": "Root authorized a pre-actual scope addendum. New start_ns records traversal started before bounds, caps lexical declaration names and URI values, and combines pending declarations with ordinary attributes at the next start event. Fresh generated tests exercise exact and over-limit declaration count/name/URI, mixed attrs, sibling reset and foreign-use rejection. All10 existing top-level function ASTs remain unchanged."
+    },
+    {
+      "id": "REVIEWER_CANARY_PREFIX",
+      "status": "RESOLVED_TEST_ONLY_WITH_HISTORY_RETAINED",
+      "finding": "First26-method invocation had two failures because broad PRIVATE_ assertions matched the required PRIVATE_XML_DECODE_COMPLETED enum. These were reviewer assertion errors, not observed private-content leakage.",
+      "resolution": "Only assertions changed to exact injected canary strings. Unchanged old source then passed26; final namespace-amended source passed27. All first logs, source/test snapshots and exact correction diff are retained."
+    }
+  ],
+  "confirmed": [
+    "Exact role names bind through validated r:id relationships despite changed ordinal and sheetId; only four original envelope members plus the two resolved worksheets are opened.",
+    "Absent versus declared storage types remain distinct; values, cached results, shared-string indexes and formula bodies are not interpreted or projected.",
+    "Canonical sparse coordinates, row agreement, duplicate rejection, sorted cells, nondegenerate nonoverlapping merges and count rules hold in generated challenges.",
+    "Actual frozen cell8192, merge1024, node65536 and worksheet2MiB boundaries are exercised with next rejected values; namespace caps now have exact boundary cases.",
+    "Closed public schema omits per-member/per-cell hashes, lengths, values and arbitrary names; accepted opaque canary substitutions preserve complete public reports.",
+    "The old false worksheet-cell flag remains nested and scoped to envelope processing; new per-role decode/parse/traversal states disclose later worksheet processing.",
+    "Read/decode/parse/close failures preserve honest earlier exposure and clear both role layouts; realistic still-open owned archive close failure leaves no unraisable canary on cleanup.",
+    "Known actual identity guards, input type/size limits and no-production API scope are challenged with generated inputs and mocked digest identity only."
+  ],
+  "limitations": [
+    "No actual archive, capture, prerequisite receipt, private custody path, network request, production context or production diagnostic was used.",
+    "Generated success does not show the real workbook has either role or satisfies this profile. Exact future producer/receipt and production binding remain null.",
+    "Worksheet text may be privately decoded. This review does not claim no value/outcome exposure; it validates a restricted public structural projection.",
+    "Depth and some aggregate/output guards use lowered synthetic bounds; the accepted grammar has finite shallow nesting. Those checks are not evidence of an accepted64-level worksheet.",
+    "The independent test file currently targets the ignored pure candidate. Future promotion/production binding requires its own reviewed integration and actual execution at final bytes.",
+    "No claim of complete OOXML validity, arbitrary covert-channel protection, hostile Python security isolation, formal refinement or scientific superiority."
+  ],
+  "scientific_status": "BLOCKED_SCHEMA",
+  "scientific_claim_changed": false
+}

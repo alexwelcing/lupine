@@ -1,0 +1,88 @@
+{
+  "schema": "lupine.bam-metrology-workbook-independent-preacquisition-review.v1",
+  "reviewed_at": "2026-10-16T10:28:36.685894+00:00",
+  "reviewer": "/root/phase2_evidence/author_methods_review",
+  "verdict": "PASS_FOR_ONE_PREAUTHORIZED_EXPOSED_REFERENCE_ACQUISITION_WITH_BOUNDED_PROFILE",
+  "scope_sha256": "ba4fc7fffc4a47933185c8dcd3d3224131ae64b0e4a7b6a7219df2da96d1a789",
+  "reader_sha256": "d56939ba593414fbf751b5eab59d4ae5ab556513ce8b3108b4dc7305c8bef25c",
+  "runner_sha256": "b9b726c7627b26938a91277b9b0e1f177aa001730c5ae503d7cd0d48b9011a56",
+  "metadata_identity": "Independently matched DOI, version, exact filename, file ID, 54960 bytes, publisher MD5 and fixed content URL to retained public record SHA48f84c7d6fc841a13de8ecccbba5f0604834cec45c3033d0d55bfd7a2e89f4d6. This is prospective identity, not body verification; CC BY4.0 is the record declaration.",
+  "independent_execution": {
+    "initial": {
+      "reader_sha256": "4fc9b0f1281078b8132c5777eebd82c356510adb80528049dc2514faa58af8dc",
+      "methods": 34,
+      "passed": 30,
+      "failed": 4,
+      "receipt": "first-reader-test-receipt.json",
+      "source": "first-reader-test-source.py",
+      "classification": "Three failing methods established two source defects (two UTF16/DOCTYPE cases and one neutral-name OLE content-type case); the fourth was reviewer fixture error: expected 8 XML parts instead of the actual 9."
+    },
+    "final_reader": {
+      "methods": 36,
+      "passed": 36,
+      "test_sha256": "a8055d3e0776d687a1b7ee5ad9e61b31277494dc97b0aee600ac414b1d0cc2a2",
+      "receipt": "reviewed-reader-test-receipt.json"
+    },
+    "final_runner": {
+      "methods": 14,
+      "passed": 14,
+      "test_sha256": "8a05babc8e861c5c73b7d2bae3050070b0dafc36092cc1b5fab285337d4a7477",
+      "receipt": "reviewed-runner-test-receipt.json",
+      "isolation": "Mocked transport, blocked socket, artificial minimal frozen-input scope and temporary storage under reviewer directory. Identity-match tests substitute synthetic expected bytes/MD5; a separate method checks unchanged production URL/bytes/MD5."
+    },
+    "scope_revision": "Execution sources were held with scope50f20050; subsequent scopeba4fc7ff only qualifies hidden/blank projection wording. Exact earlier scope and delta retained. No repeat execution was needed for unchanged reader/runner.",
+    "what_passes_show": "Specific synthetic parser/runner behavior only; no empirical workbook claim, full conformance, scientific validity or benchmark admission."
+  },
+  "resolved_findings": [
+    {
+      "finding": "One-request rule was not crash durable because initial runner wrote its first slot only after GET/read.",
+      "evidence": "Source review; repaired runner and independent mocked KeyboardInterrupt/reinvocation, existing-slot, source-guard and fsync-failure tests.",
+      "resolution": "Exclusive request-slot.json plus file and directory fsync precede opener.open; a reserved slot prevents another invocation and does not itself prove an attempt or completion."
+    },
+    {
+      "finding": "NUL-separated UTF16LE without BOM passed UTF8 decoding and ElementTree accepted it, including DOCTYPE/ENTITY missed by literal scans.",
+      "evidence": "Two failures in initial retained synthetic run.",
+      "resolution": "Decoded NUL rejected before XML parser; both final regressions pass."
+    },
+    {
+      "finding": "Neutral-named OLE embedded part content type bypassed active-content type check.",
+      "evidence": "One failure in initial retained synthetic run.",
+      "resolution": "oleobject/officedocument.package types now blocked. Independent neutral OLE regression passes; package extension source-reviewed and author-tested separately."
+    },
+    {
+      "finding": "Multiple direct text nodes were concatenated, while inline-string component in a non-inline cell was ignored.",
+      "evidence": "Independent source findings followed by two new final synthetic regressions.",
+      "resolution": "Duplicate/nested admitted text and incompatible/nested scalar components reject; both independent final regressions pass."
+    },
+    {
+      "finding": "Scope hidden/blank preservation wording exceeded actual projected attributes.",
+      "resolution": "Final scope restricts preservation to explicitly stored blank cells and worksheet-level sheet state; absent cells/rows and row/column hidden attributes are not projected."
+    }
+  ],
+  "tested_behavior": [
+    "positive shared/inline text, formulas distinct from raw caches, blank stored cell, hidden worksheet, merge, custom style and ordinary comment",
+    "public summary excludes synthetic text/formula/link/contact canaries; comment author roster excluded from internal projection",
+    "ZIP member count, duplicate/path/symlink/encryption/compression/CRC and archive/member/total bounds",
+    "UTF8 BOM, nonUTF8 declaration, UTF16, DOCTYPE, malformed XML, parser stage counters, depth/node bounds and namespace",
+    "macros/ActiveX/embeddings, external targets not followed, internal traversal and duplicate relationship IDs",
+    "shared-string index, cell reference duplication, duplicate cell components, style/type/text/formula malformed layout",
+    "fixed transport URL and headers, no redirect/read on wrong route/encoding, partial reads, cap+1, identity before parser, parser exception canary suppression, interruption durable slot"
+  ],
+  "limits": [
+    "Not a full ZIP or OOXML schema validator; no universal workbook safety/completeness claim. Sheet-name/ID uniqueness, all Excel coordinate constraints and every extension are not validated.",
+    "Unsupported or unparsed parts may carry semantics; projected absence cannot establish their absence. Row/column hidden state is not retained.",
+    "Formula text and attributes remain uninterpreted; cached values are unverified. No calculation, formatting/date/number conversion, unit selection, fill-down, sample count inference or physical-truth claim.",
+    "Actual acquisition may fail identity/profile; preserve first result, no alternate request or profile widening automatically. Raw workbook and full internal projection/contacts stay ignored.",
+    "Actual source is permanently exposed metrology-reference material, excluded from any new blind predictive benchmark; G20/G21 admission is not supplied by this review."
+  ],
+  "reviewer_activity": {
+    "actual_workbook_read": false,
+    "network_requests": 0,
+    "scientific_body_acquisition": false,
+    "project_runtime_or_benchmark_tests": false,
+    "tracked_writes": false,
+    "git_mutations": false,
+    "reads": "Held scope/reader/runner, their preserved copies/deltas, public selected metadata identity; generated synthetic fixture bytes and mock runner outputs only."
+  },
+  "unresolved_blockers": []
+}

@@ -1,0 +1,104 @@
+{
+  "schema": "lupine.bam-metrology-independent-retained-artifact-check.v1",
+  "checked_at": "2026-10-16T10:32:52.070587+00:00",
+  "status": "PASS",
+  "scope_sha256": "ba4fc7fffc4a47933185c8dcd3d3224131ae64b0e4a7b6a7219df2da96d1a789",
+  "projection_sha256": "4a0c0165e980e2e40418dac63f161215a04ab955aeff750193030cbd7c6e44e1",
+  "projection_bytes": 760280,
+  "verified_actual_output_files": [
+    "request-slot.json",
+    "acquisition.json",
+    "result.json",
+    "internal-workbook-projection.json"
+  ],
+  "raw_workbook_byte_verification_by_reviewer": false,
+  "raw_workbook_digest_consistency": "Acquisition, result and execution receipts agree; no reviewer XLSX read or independent ZIP/XML reparse.",
+  "chronology": "Final scope, completed independent pre-acquisition review, execution start, durable slot/acquisition start, acquisition finish, execution finish ordered.",
+  "projection_counts_independently_recounted": {
+    "sheets": 9,
+    "stored_cells": 2409,
+    "formula_cells": 2,
+    "external_relationships_in_projection": 0
+  },
+  "parser_counts_reported_not_independently_reparsed": {
+    "archive_members": 33,
+    "xml_parts_parsed": 20,
+    "shared_strings": 475
+  },
+  "pairing_checks": [
+    {
+      "sheet": "Vh5205_T-71",
+      "matching_test_and_piece_id_cells": [
+        "F3",
+        "F4"
+      ],
+      "jointly_stored_endpoint_rows": [
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "independent_sample_inference": false
+    },
+    {
+      "sheet": "Vh5205_T-74",
+      "matching_test_and_piece_id_cells": [
+        "F3",
+        "F4"
+      ],
+      "jointly_stored_endpoint_rows": [
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "independent_sample_inference": false
+    },
+    {
+      "sheet": "Vh5205_T-84",
+      "matching_test_and_piece_id_cells": [
+        "F3",
+        "F4"
+      ],
+      "jointly_stored_endpoint_rows": [
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "independent_sample_inference": false
+    }
+  ],
+  "lexical_check": {
+    "domain": "case-insensitive substring scan across every resolved_text_or_raw_number value in retained projection; not unparsed OOXML parts, links or cited sources",
+    "term_cell_matches": {
+      "uncertainty": [],
+      "uncertainties": [],
+      "coverage": [],
+      "covariance": [],
+      "correlation": [],
+      "expanded": [
+        {
+          "sheet": "Common-to-all",
+          "cell": "B8"
+        }
+      ],
+      "standard deviation": [],
+      "standard uncertainty": [],
+      "k=": [],
+      "k =": [],
+      "95%": [],
+      "95 %": [],
+      "batch": [],
+      "heat number": []
+    },
+    "absence_scope": "Only literal scanned strings in admitted projected values; no proof that uncertainty information cannot exist elsewhere."
+  },
+  "reviewer_exposure": "Whole 760280-byte internal projection parsed as JSON, including all stored documentary/measurement values and potential contacts; selected technical labels, definitions, IDs and endpoint values inspected. Full-cell projection and contacts not copied to public artifact.",
+  "network_requests": 0,
+  "workbook_parser_invocations": 0,
+  "xlsx_raw_reads": 0
+}

@@ -1,0 +1,209 @@
+{
+  "actual_new_diagnostic_executions": 0,
+  "actual_new_source_reads": 0,
+  "aggregate_status_enum": [
+    "ALL_APPLICABLE_CHECKS_PASS",
+    "FAILURES_OBSERVED",
+    "INCOMPLETE_NO_FAILURE_OBSERVED",
+    "FAILURES_AND_INCOMPLETE",
+    "NOT_APPLICABLE"
+  ],
+  "bounds": {
+    "max_local_extra_span": 65535,
+    "max_members": 128,
+    "private_metadata_materialization": "Bound raw directory/member counts before materialization and every local span before access; no unbounded lists or raw exception output.",
+    "public_receipt_cap_bytes": 65536,
+    "source_bytes": 183878,
+    "source_identity": "Existing fixed capture size/MD5/SHA256 and same immutable buffer; no new GET or recapture."
+  },
+  "dependency_contract": [
+    "Global malformed/ambiguous central framing prevents later entry association: use a closed incomplete result.",
+    "Central metadata predicates may be checked independently once directory records are fully bounded and associated; unsafe names do not authorize unsafe path use or payload opens.",
+    "Each local check needs a uniquely associated bounded header offset and fixed header; local variable name/extra spans must be independently bounded before slicing or interpreting them.",
+    "Offset/layout, duplicate/overlap or insufficient-bound failures remain failures. A later local check may proceed only under a separately stated safe-address rule; otherwise classify its dependencies NOT_CHECKED. Never reinterpret a mismatch as admission.",
+    "Do not derive later addresses by blindly following a failed earlier size/offset. Continue other independently safe entries only.",
+    "Local-extra shape checks require a complete bounded local area and reuse the fixed A220/A028/full-zero predicate without changing initial-padding semantics.",
+    "Totals/name-based checks require their full inputs; any unsafe/unavailable input makes that family partial rather than passed."
+  ],
+  "design_goals": [
+    "Preserve exact G31 first-rejection stage/category equivalence without modifying G31 or running any XML helper.",
+    "Produce one aggregate categorical audit over every bounded declared entry, checking all safely evaluable independent families.",
+    "Expose unavailable dependencies and partial completion explicitly; do not stop all independent central checks at the first local mismatch.",
+    "No acceptance-profile relaxation, source mutation, ordinary spreadsheet loader or generic unzip fallback."
+  ],
+  "explicit_dependency_state_enum": [
+    "CHECKED",
+    "NOT_CHECKED_UNSAFE_BOUNDS",
+    "NOT_CHECKED_AMBIGUOUS_ASSOCIATION",
+    "NOT_CHECKED_EARLIER_PARSE_BLOCK",
+    "NOT_APPLICABLE"
+  ],
+  "exposure_contract": [
+    "Whole-buffer target-bearing read is explicit; no no-values-read or untouched-source claim.",
+    "Directory-name decoding and each structural stage have started/completed state; aggregate later-entry traversal is a new separately recorded scope.",
+    "Local-extra fixed-word and padding interpretation has honest partial progress; no completed-full-traversal flag after failure.",
+    "Zero ZIP member opens/decompression, zero XML parsing, zero worksheet/shared-string decoding, no formula evaluation or outcome interpretation.",
+    "Repeated identical fixed-source runs are computational replay, not independent scientific evidence."
+  ],
+  "families": {
+    "central_entry": [
+      "MEMBER_FLAGS",
+      "MEMBER_COMPRESSION",
+      "MEMBER_VERSION",
+      "CENTRAL_EXTRA_PRESENT",
+      "CENTRAL_COMMENT_PRESENT",
+      "MEMBER_FILE_TYPE",
+      "MEMBER_DIRECTORY_ATTRIBUTE",
+      "STORED_SIZE_MISMATCH",
+      "LOCAL_OFFSET_LAYOUT"
+    ],
+    "directory_totals": [
+      "LOCAL_DIRECTORY_ALIGNMENT",
+      "DIRECTORY_SIZE_TOTAL",
+      "REQUIRED_MEMBERS_ABSENT"
+    ],
+    "local_entry": [
+      "LOCAL_SIGNATURE",
+      "LOCAL_VERSION_AGREEMENT",
+      "LOCAL_FLAGS_AGREEMENT",
+      "LOCAL_TIME_AGREEMENT",
+      "LOCAL_DATE_AGREEMENT",
+      "LOCAL_METHOD_AGREEMENT",
+      "LOCAL_CRC_AGREEMENT",
+      "LOCAL_COMPRESSED_SIZE_AGREEMENT",
+      "LOCAL_UNCOMPRESSED_SIZE_AGREEMENT",
+      "LOCAL_NAME_AGREEMENT",
+      "MEMBER_DATA_BOUNDS"
+    ],
+    "local_growth": [
+      "LOCAL_EXTRA_SINGLE_A220",
+      "LOCAL_EXTRA_DECLARED_SPAN_AGREEMENT",
+      "LOCAL_GROWTH_PAYLOAD_MINIMUM",
+      "LOCAL_GROWTH_SIGNATURE",
+      "LOCAL_GROWTH_ZERO_PADDING"
+    ],
+    "member_kind": [
+      "MEMBER_KIND_PROFILE"
+    ],
+    "member_name": [
+      "MEMBER_NAME_TRANSFORMED",
+      "MEMBER_NAME_DUPLICATE"
+    ],
+    "member_path": [
+      "MEMBER_PATH_PROFILE"
+    ]
+  },
+  "new_production_bindings": {
+    "actual_output_slots": null,
+    "own_source_test_contract_inventory": null,
+    "source_commit": null
+  },
+  "not_justified": [
+    "No diagnosis of which specific actual predicate failed from current receipts alone.",
+    "No automatic new compatibility profile, payload mutation or scientific admission.",
+    "No production binding for the pure documentary worksheet layout candidate because actual G31 remains rejected."
+  ],
+  "observed_prerequisite": {
+    "engineering_status": "BLOCKED_LAYOUT",
+    "parser_profile": "li_v3.xlsx_envelope.local_growth_hint.v1",
+    "path": ".cache/li-v3-custody/growth-envelope-v1/1/public.json",
+    "producer_commit": "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace",
+    "reason": "ZIP_LAYOUT_UNSUPPORTED",
+    "root_verified_operational_gate_required": true,
+    "sha256": "01cce9e57b26e204a9d31959f747768c70abf7543bedb6ab104b3b4b623f094f",
+    "status": "BLOCKED_SCHEMA"
+  },
+  "owner": "Root owns any later implementation/review/publication/actual operation",
+  "prerequisite_and_order": [
+    "Before production cache access verify exact committed own/source-chain worktree/index/HEAD pins and exclusive fixed output slot.",
+    "Require exact observed canonical G31 receipt and producer plus existing original capture/source identities; root must separately verify actual preceding gates.",
+    "Read and verify the one bounded immutable source buffer; do not use a receipt alone as source validation.",
+    "Recheck G29/G30 selected growth and G31 EOCD/raw central declaration framing; stop safely if these prerequisite facts differ.",
+    "Implement exact frozen G31 predicate ordering as a first-rejection classifier, ending before XML even if all header predicates pass. Guard actual observed-source reproduction against any unexpected predecessor outcome.",
+    "Independently accumulate closed aggregate categories across all safely evaluable entries. The original first failure remains primary; aggregate findings are supplementary scope.",
+    "Close every opened archive on success/failure; cleanup failure preserves prior categories/progress and prevents a complete diagnostic claim."
+  ],
+  "product_tests_run_for_this_design": 0,
+  "public_projection": {
+    "archive_accepted": false,
+    "fits": 0,
+    "new_source_fields": "Closed first-rejection category/stage plus sorted categorical family results and explicit checked/partial/dependency states; no per-entry identity or raw values.",
+    "no_new_count_inference": "Existing three-area counter is not a total member count; do not infer archive totals from partial traversal.",
+    "scientific_counts": null,
+    "source_custody_fields": "Already public exact whole-source, capture, producer and prerequisite identities remain permitted.",
+    "splits": 0,
+    "status": "BLOCKED_SCHEMA",
+    "withheld": [
+      "member names and relationship paths",
+      "entry ordinals or arbitrary metadata strings",
+      "raw offsets, sizes, flags, timestamps and CRC fields",
+      "local-extra IDs/words/bytes beyond the already retained fixed categorical predicate",
+      "per-member content hashes",
+      "member bodies/XML/worksheet/shared strings",
+      "raw exception strings"
+    ]
+  },
+  "required_tests": [
+    "Independent packed ZIP fixtures isolate every retained predicate family, including the helper path/type checks and final totals.",
+    "Exact first-rejection equivalence with frozen G31 across generated single and multiple faults; no XML/member open even on a header-valid fixture.",
+    "Simultaneous faults on early and late entries appear in one aggregate audit where safe; unsafe dependencies remain NOT_CHECKED rather than passing.",
+    "Offset overflow-like uint bounds, overlapping/duplicate regions, malformed raw central declarations, truncated variable spans and missing required members.",
+    "Later malformed local extras after earlier valid areas; all initial-padding values remain semantically unbound.",
+    "No raw values, names, member fingerprints or exceptions leak in public categories.",
+    "Guard/producer/source/index changes stop before source access; immutable buffer and full cleanup/partial-exposure assertions.",
+    "Predeclared mutation controls against skipped families, missing dependency guards and incorrectly promoted aggregate completeness."
+  ],
+  "schema": "lupine.discovery.growth_header_audit_design.v1",
+  "source_bindings": {
+    ".cache/li-v3-custody/growth-envelope-v1/1/public.json": {
+      "bytes": 8501,
+      "sha256": "01cce9e57b26e204a9d31959f747768c70abf7543bedb6ab104b3b4b623f094f"
+    },
+    ".cache/li-v3-custody/growth-envelope-v1/2/public.json": {
+      "bytes": 8501,
+      "sha256": "01cce9e57b26e204a9d31959f747768c70abf7543bedb6ab104b3b4b623f094f"
+    },
+    ".cache/phase2-growth-envelope-operations-v1/production/final.json": {
+      "bytes": 534,
+      "sha256": "fb1c39d06e2049021102240c163d7ba627f12aaf168552b2d03763ed41ae6968"
+    },
+    "docs/li-v3-growth-envelope-plan.md": {
+      "bytes": 9273,
+      "sha256": "4a5954b93b84d05c32a8ee2ea8254aec63283e915c331339cb97875e4b2aeb59"
+    },
+    "scripts/li_v3_compatible_envelope.py": {
+      "bytes": 14126,
+      "sha256": "e771b3fc2a66d6e2ff3a26d8aae88b7a2915ac908907908316e697997761c847"
+    },
+    "scripts/li_v3_compatible_zip_diagnostic.py": {
+      "bytes": 16878,
+      "sha256": "59b4b549a1de33abf2c54ccfce15f4f980a3a36351f98e246ae4e9fd6c44c5d3"
+    },
+    "scripts/li_v3_custody.py": {
+      "bytes": 35358,
+      "sha256": "3ead51f0afdf16be973743257be488669c988aa40443779e7a5c400e9b0d3234"
+    },
+    "scripts/li_v3_growth_envelope.py": {
+      "bytes": 20609,
+      "sha256": "f50069d028526ea045441a2e574a26192a210ff78ba34f5170777d32f5692ec3"
+    },
+    "scripts/li_v3_growth_hint_shape.py": {
+      "bytes": 20556,
+      "sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a"
+    },
+    "scripts/li_v3_local_extra_headers.py": {
+      "bytes": 11921,
+      "sha256": "54db58a567afc9211303f2edff13541ab2f97beb77ef2edaa518ad32bf6b1026"
+    },
+    "tests/test_li_v3_growth_envelope.py": {
+      "bytes": 30722,
+      "sha256": "f569d732f02d90233fd20e9d5bf14ab9bb29337c09022093e15320af031523f1"
+    },
+    "tests/test_li_v3_growth_envelope_review.py": {
+      "bytes": 46615,
+      "sha256": "4e23e7582dc1da3b0a51507eab4181a39707f0d9057506f25eba61d72ce73ccb"
+    }
+  },
+  "status": "PROSPECTIVE_SCOPE_ONLY_NO_IMPLEMENTATION",
+  "written_at": "2026-10-16T11:14:28.387893+00:00"
+}

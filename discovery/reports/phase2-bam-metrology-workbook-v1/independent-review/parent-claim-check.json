@@ -1,0 +1,15 @@
+{
+  "schema": "lupine.bam-metrology-parent-claim-check.v1",
+  "checked_at": "2026-10-16T10:34:26.438406+00:00",
+  "status": "PASS",
+  "findings": 11,
+  "bound_sheet_cell_citations": 193,
+  "search_terms_independently_reproduced": 12,
+  "notes": "Every cited cell exists at its exact sheet/part; substantive claims separately read. No raw XLSX read or workbook/parser invocation. Missing fields are not imputed.",
+  "parent_artifacts": {
+    "README.md": "cad9aec959b34c7e6fc4dd4e98bf022ac93745d2192be28dbe263c1d33b8a233",
+    "documentary-findings.json": "245a6cbf65a43adaf96e3feae9af23b394c0f06bf5aeb580f574cb5de49609ed",
+    "documentary-search.json": "2f2f93ebf1d7cb9f5c5ac0c20e06f7c26ef5a8a46889696c3a891a7217f5bc7a",
+    "exposure-ledger.json": "f14be07c1f43196f864fa03c4c19156bca8fc0320925000394d50cf21eaf9f61"
+  }
+}

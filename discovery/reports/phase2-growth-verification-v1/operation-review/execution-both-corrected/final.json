@@ -1,0 +1,8 @@
+{
+  "exit_code": 0,
+  "operator": "/root/phase2_planner/ui_review",
+  "scientific_schema_approved": false,
+  "source_reader_invoked": false,
+  "stage": "both",
+  "status": "RECORDED_AUDIT_PROCESS_EXITED_ZERO"
+}

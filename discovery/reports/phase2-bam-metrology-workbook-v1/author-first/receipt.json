@@ -1,0 +1,11 @@
+{
+  "started_at": "2026-10-16T10:19:57.280355+00:00",
+  "finished_at": "2026-10-16T10:19:57.650777+00:00",
+  "elapsed_seconds": 0.3704214409990527,
+  "exit_code": 0,
+  "scope": "Synthetic fixtures only; no actual workbook or network",
+  "reader_sha256": "4fc9b0f1281078b8132c5777eebd82c356510adb80528049dc2514faa58af8dc",
+  "test_sha256": "59092e8b5ad484618ce516fc7bdfd1f6095ca6d7569d66356f9d517d13412791",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "df60ec5c4a7b3bdeb649ae40c9a28a8354545fb56b819b55e8a868dec4b06109"
+}

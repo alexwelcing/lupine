@@ -1,0 +1,39 @@
+{
+  "schema": "lupine.discovery.growth_operation_audit_correction.v1",
+  "prepared_at": "2026-10-16T11:11:12.877982+00:00",
+  "status": "PROPOSED_SOURCE_ONLY_NOT_EXECUTED",
+  "first_actual_attempt": {
+    "recorder_exit_code": 1,
+    "duration_seconds": 4.395764265002072,
+    "failure": "KeyError: 'legacy_zip_reason'",
+    "execution_path": "execution-both/execution.json",
+    "execution_sha256": "635700346e137b1cd45ed3bbd0b9bf479301f6e4982cdd29ce23f61d957179c4",
+    "stderr_sha256": "110a895983b1180af6f1d075ce2c82bf01bb8c78870ef719742c72dbce9ca5fd",
+    "source_and_bindings_held": true,
+    "scientific_or_operation_success_claim": false
+  },
+  "corrected_auditor_sha256": "d5ed41b53ae4769ee52e0dfb893dce4d04235cda8f9e7a14d2e163ce885c806b",
+  "corrected_recorder_sha256": "80c44a65ef66f020ae3364505ee5d02a64d5ef0d7e0490eb9957dcb8447ee880",
+  "diffs": {
+    "audit.diff": "025fac7222045708e204642060caa4af21ba0d6547a95e1711de26e2b3af71b7",
+    "recorder.diff": "9bb99dba8342cfc4064623f9ced7f235bd887983c9c7936a5a51361edf4bee19"
+  },
+  "changes": [
+    "Replace absent legacy_zip_reason equality with full predecessor_classification equality to pinned public EXPECTED_CLASSIFICATION; no check removed without replacement.",
+    "Use distinct -corrected audit-result and execution paths and corrected auditor filename; original source, recorder, bindings, logs, failed results remain unchanged."
+  ],
+  "mapping": {
+    "all_98_previous_mapped_checks_unchanged": true,
+    "old_98_mapping_relocated_only": true,
+    "new_check_call_count": 176
+  },
+  "schema_reference_check": {
+    "path": "correction-1/schema-reference-review.json",
+    "sha256": "7263b1307cb35b7b4537eda90df88708a1f2b0013da74166147aaa8b305373f4",
+    "scope": "AST-only product schema construction and auditor references; no product/auditor import or execution.",
+    "helper_first_failure_preserved": true
+  },
+  "independent_review": "PENDING",
+  "rerun_authorization": "PENDING_ROOT",
+  "source_product_changed": false
+}

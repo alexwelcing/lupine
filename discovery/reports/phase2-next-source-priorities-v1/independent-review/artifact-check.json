@@ -1,0 +1,95 @@
+{
+  "schema": "lupine.next-source-priorities.review-artifact-check.v1",
+  "created_at": "2026-10-16T11:17:47.356182+00:00",
+  "scope": "Exact documentary byte and receipt consistency checks only; no scientific/runtime execution, upstream re-verification or new source access.",
+  "report": {
+    "path": ".cache/phase2-next-source-priorities-v1/README.md",
+    "bytes": 8860,
+    "sha256": "96d4909c144cef965be752834c54fddedb16b84ef1efc9f75a4cd05bd9df0e63"
+  },
+  "source_bindings": {
+    "path": ".cache/phase2-next-source-priorities-v1/source-bindings.json",
+    "bytes": 3531,
+    "sha256": "effe1e02b7d960bacbccc768075971fb3da35f8a0d15bfd062bd03ee5347b783"
+  },
+  "all_15_bindings_exact": true,
+  "checked_bindings": [
+    {
+      "path": "reports/projection-custody-readiness-v1.md",
+      "bytes": 10769,
+      "sha256": "6805f075c90ba122726bcdfbe9d2f9a9714d2cbbd2f2ecd05d1dcb769e2629b0"
+    },
+    {
+      "path": "docs/projection-data-readiness.md",
+      "bytes": 16530,
+      "sha256": "e36218568234f426b050492a9ee25ff52d302a3317818ce4590dfe86855d85d9"
+    },
+    {
+      "path": "reports/phase2-source-readiness-v1/README.md",
+      "bytes": 9309,
+      "sha256": "bd351e8814fb33776e375ed48d1bf2e3aae985404dd8a33920bf40e46a0ca1c5"
+    },
+    {
+      "path": "reports/phase2-source-readiness-v1/source-bindings.json",
+      "bytes": 7113,
+      "sha256": "d7a53adf40427753d7c0c48a54ab5c6ab42407f4dd53045cd508bb695afaa973"
+    },
+    {
+      "path": "reports/phase2-finite-archive-design-v1/README.md",
+      "bytes": 19059,
+      "sha256": "c26fcba7ea5e70660e8d5657539ab36effd6bf991df6471f5d7da61ba0a8886a"
+    },
+    {
+      "path": "reports/phase2-li-paper-methods-v1/README.md",
+      "bytes": 7423,
+      "sha256": "b168331d3198c97b6cdf45d67b505b4ddf88acf60ab6b556e4b35798b5a3eb10"
+    },
+    {
+      "path": "reports/phase2-li-reference-identity-v1/README.md",
+      "bytes": 7621,
+      "sha256": "f564c79b7b731191fbb8bc58669dbc6a1897bc22e57db3b59d09b737c60555ae"
+    },
+    {
+      "path": "reports/phase2-high-temperature-leads-v1/README.md",
+      "bytes": 4445,
+      "sha256": "54191247eab5cb1455f506420ef5422081a609d4f685d1f1c4352750ce5f15a7"
+    },
+    {
+      "path": "reports/next-independent-study-v1/README.md",
+      "bytes": 2988,
+      "sha256": "24933e25f626d59210471503206fac33436c7a484267737e21fa61a0c7cef62b"
+    },
+    {
+      "path": "reports/next-independent-study-v1/recommendation.md",
+      "bytes": 5664,
+      "sha256": "e1230db4310f229cbd9a5331346a72b078f1de09b124f402d3786571bf75de28"
+    },
+    {
+      "path": "reports/next-independent-study-v1/source-leads.md",
+      "bytes": 4309,
+      "sha256": "bcd7ccbf233ab0cbce27043a579d7aa8c14aa7db70ea8b5009f350e367d600cd"
+    },
+    {
+      "path": ".cache/phase2-bam-metrology-workbook-v1/README.md",
+      "bytes": 6220,
+      "sha256": "cad9aec959b34c7e6fc4dd4e98bf022ac93745d2192be28dbe263c1d33b8a233"
+    },
+    {
+      "path": ".cache/li-v3-custody/growth-envelope-v1/1/public.json",
+      "bytes": 8501,
+      "sha256": "01cce9e57b26e204a9d31959f747768c70abf7543bedb6ab104b3b4b623f094f"
+    },
+    {
+      "path": ".cache/li-v3-custody/growth-envelope-v1/2/public.json",
+      "bytes": 8501,
+      "sha256": "01cce9e57b26e204a9d31959f747768c70abf7543bedb6ab104b3b4b623f094f"
+    },
+    {
+      "path": ".cache/phase2-growth-envelope-operations-v1/production/final.json",
+      "bytes": 534,
+      "sha256": "fb1c39d06e2049021102240c163d7ba627f12aaf168552b2d03763ed41ae6968"
+    }
+  ],
+  "public_receipts_byte_identical": true,
+  "parent_pending_auditor_note": "Historical checkpoint only; this check is not an independently executed G31 run or a full G31 auditor PASS."
+}

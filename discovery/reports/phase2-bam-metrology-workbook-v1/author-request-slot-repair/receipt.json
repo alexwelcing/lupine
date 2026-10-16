@@ -1,0 +1,42 @@
+{
+  "schema": "lupine.synthetic-test-receipt.v1",
+  "command": [
+    "python",
+    "-m",
+    "unittest",
+    "-v",
+    "test_author_reader",
+    "test_author_request_slot"
+  ],
+  "started_at": "2026-10-16T10:24:49.515065+00:00",
+  "finished_at": "2026-10-16T10:24:49.828814+00:00",
+  "elapsed_seconds": 0.31306650999977137,
+  "exit_code": 0,
+  "source_bindings": {
+    "scope.json": {
+      "bytes": 7205,
+      "sha256": "1f7b4ef2d4c18dd11227add89517487de68e3576c8aa679586e25f9f394a7762"
+    },
+    "workbook_reader.py": {
+      "bytes": 14320,
+      "sha256": "4fc9b0f1281078b8132c5777eebd82c356510adb80528049dc2514faa58af8dc"
+    },
+    "acquire_and_inspect.py": {
+      "bytes": 6453,
+      "sha256": "b9b726c7627b26938a91277b9b0e1f177aa001730c5ae503d7cd0d48b9011a56"
+    },
+    "test_author_reader.py": {
+      "bytes": 7405,
+      "sha256": "59092e8b5ad484618ce516fc7bdfd1f6095ca6d7569d66356f9d517d13412791"
+    },
+    "test_author_request_slot.py": {
+      "bytes": 2209,
+      "sha256": "98b7ab51da9e8794f29e01b3ce0641047ac42f6b69b662a6221e5ac819ad7272"
+    }
+  },
+  "source_held": true,
+  "actual_workbook_or_network_access": false,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "9563c52af95e1ea3737787fb9af2ac5687deba4276bf237db54826eed80be28f",
+  "scope": "Synthetic reader and request-slot fixtures; interruption is deliberately injected, no real GET."
+}

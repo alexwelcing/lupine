@@ -1,0 +1,15 @@
+{
+  "active_audit_processes": 0,
+  "allow_root_tracked_publication_edits": true,
+  "closure_note": "Publication inventory includes handoff and every file except itself; earlier inventory is historical preparation snapshot.",
+  "completion_sha256": "ec68d6a4c68a45716ebe5acf1777bb28858c9a8f0155f5347020ad26cbcd7406",
+  "entrypoint": "COMPLETION.md",
+  "preserve_first_failure": true,
+  "preserve_g31_negative": true,
+  "private_raw_artifact_files_included": false,
+  "publication_inventory": "publication-inventory.json",
+  "schema": "lupine.discovery.growth_operation_audit_handoff.v1",
+  "source_commit": "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace",
+  "status": "FROZEN_COMPLETED_BUNDLE",
+  "tracked_edits_by_reviewer": false
+}

@@ -1,0 +1,39 @@
+{
+  "schema": "lupine.pre-acquisition-input-check.v1",
+  "checked_at": "2026-10-16T10:28:26.198661+00:00",
+  "scope_sha256": "ba4fc7fffc4a47933185c8dcd3d3224131ae64b0e4a7b6a7219df2da96d1a789",
+  "frozen_inputs": [
+    {
+      "path": "reports/phase2-bam-readiness-v1/zenodo-17846617.json",
+      "match": true
+    },
+    {
+      "path": ".cache/phase2-bam-metrology-workbook-v1/metadata-identity-check.json",
+      "match": true
+    },
+    {
+      "path": ".cache/phase2-bam-metrology-workbook-v1/workbook_reader.py",
+      "match": true
+    },
+    {
+      "path": ".cache/phase2-bam-metrology-workbook-v1/acquire_and_inspect.py",
+      "match": true
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/promotion-inventory.json",
+      "match": true
+    },
+    {
+      "path": ".cache/phase2-bam-encoding-comparison-v1/promotion-inventory.json",
+      "match": true
+    }
+  ],
+  "actual_output_slots_absent": [
+    "request-slot.json",
+    "workbook.xlsx",
+    "acquisition.json",
+    "result.json",
+    "internal-workbook-projection.json"
+  ],
+  "actual_source_or_network_access": false
+}

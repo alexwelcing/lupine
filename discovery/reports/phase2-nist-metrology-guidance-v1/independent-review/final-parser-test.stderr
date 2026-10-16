@@ -1,0 +1,19 @@
+test_block_limit (__main__.IndependentParserTests.test_block_limit) ... ok
+test_depth_limit (__main__.IndependentParserTests.test_depth_limit) ... ok
+test_images_do_not_invent_equations_from_alt_or_url (__main__.IndependentParserTests.test_images_do_not_invent_equations_from_alt_or_url) ... ok
+test_malformed_parent_close_cannot_escape_skipped_container (__main__.IndependentParserTests.test_malformed_parent_close_cannot_escape_skipped_container) ... ok
+test_nested_skip_containers (__main__.IndependentParserTests.test_nested_skip_containers) ... ok
+test_skipped_containers_exclude_canaries (__main__.IndependentParserTests.test_skipped_containers_exclude_canaries) ... ok
+test_tag_limit (__main__.IndependentParserTests.test_tag_limit) ... ok
+test_title_blocks_entities_lines_and_no_link_following (__main__.IndependentParserTests.test_title_blocks_entities_lines_and_no_link_following) ... ok
+test_type_and_size_before_parser (__main__.IndependentParserTests.test_type_and_size_before_parser) ... ok
+test_unclosed_html_is_static_recovery_not_validation (__main__.IndependentParserTests.test_unclosed_html_is_static_recovery_not_validation) ... ok
+test_unknown_entities_not_externally_resolved (__main__.IndependentParserTests.test_unknown_entities_not_externally_resolved) ... ok
+test_utf16_nul_before_html_parser (__main__.IndependentParserTests.test_utf16_nul_before_html_parser) ... ok
+test_utf8_bom_and_unicode (__main__.IndependentParserTests.test_utf8_bom_and_unicode) ... ok
+test_utf8_decode_failure (__main__.IndependentParserTests.test_utf8_decode_failure) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.010s
+
+OK

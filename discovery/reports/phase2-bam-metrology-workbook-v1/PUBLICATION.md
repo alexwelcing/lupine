@@ -1,0 +1,13 @@
+# Publication boundary and evidence navigation
+
+Read the [documentary conclusion](README.md), [cited findings](documentary-findings.json), [source bindings](source-bindings.json) and [exposure ledger](exposure-ledger.json). This is permanently exposed metrology reference work; it supplies no blind predictive evaluation or covariance guarantee.
+
+The [pre-acquisition independent review](independent-review/preacquisition-review.json) precedes the one actual request. The [independent result review](independent-review/result-review.json), [documentary audit](independent-review/documentary-result-review.json) and [retained-artifact check](independent-review/actual-artifact-check.json) distinguish synthetic tests from the actual acquisition and projection. The reviewer did not reread the raw XLSX or rerun the workbook parser; it independently hashed and parsed the retained projection and checked receipts and citations.
+
+The [original-byte map](original-byte-map.json) binds 79 original artifacts, including 1 lossless JSON wrapper(s). Unwrapped files are exact byte copies. Wrapped files decode from base64 to their original bytes and SHA256; original hashes in copied inventories or receipts continue to identify those decoded originals. No original failure was rewritten. The source/log/diff paths inside preserved JSON remain paths from the actual execution workspace; this navigation page and the map locate publication copies.
+
+The raw 54,960-byte workbook, the 760,280-byte complete cell projection and contact roster are intentionally excluded. Their source/projection identities remain bound in receipts and the exposure ledger. No raw measurements file, LIS body, linked figure, standard or certificate was added. The report includes only needed factual labels/conditions and reported uncertainty-summary wording with attribution to DOI 10.5281/zenodo.17846617 under the record's CC BY 4.0 declaration.
+
+Preserved Python files are audit artifacts. The original acquisition's request slot has already been spent; publication is not authorization to rerun its GET. Synthetic checks and actual acquisition remain separate, and historical sources are retained only to explain the first failures and repairs.
+
+The [first publication check failure](publication-checks/first-failure.json) is retained: a historical reviewed README had relative links rooted in its original directory. Its [lossless wrapper](independent-review/reviewed-documentary-claims/README.md.bytes.json) preserves the exact reviewed bytes; the current root README remains unchanged. The [first byte map](publication-checks/first-byte-map.json) records the failed layout before that correction.

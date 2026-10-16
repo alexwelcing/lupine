@@ -1,0 +1,34 @@
+{
+  "actual_source_or_production_reads": 0,
+  "authorization": "Root explicitly approved narrow start_ns guard before any actual access.",
+  "bindings_remain_null": true,
+  "change": [
+    "Count namespace declarations and ordinary attributes together per element, maximum32.",
+    "Bound lexical xmlns or xmlns:prefix declaration name to256 characters and URI to1024.",
+    "Mark structure traversal started in namespace callback before any bound rejection; reset pending declarations at element start.",
+    "Used expanded names retain exact grammar and unused declarations are still allowed within bounds; no values disclosed."
+  ],
+  "finding": "ElementTree expanded start attributes omit namespace declarations. Original guards limited non-namespace attributes, while declarations were bounded only by whole worksheet bytes. Published attribute-cap scope did not explicitly exempt declarations.",
+  "preserved_author_result": "31/31 first author PASS on5bfce766",
+  "preserved_independent_result": "First24/26 retained with two broad-canary test errors; corrected reviewer run26/26PASS on unchanged5bfce766",
+  "recorded_at": "2026-10-16T10:55:12.009237+00:00",
+  "source_before": {
+    "README.md": {
+      "bytes": 6207,
+      "sha256": "c47dc68a34d4928c0886683885e7263c58e3c7b3ddfc98e72b617c83c55c1d3b"
+    },
+    "li_v3_layout_localization.py": {
+      "bytes": 25486,
+      "sha256": "5bfce76619655090d00670d2aba8cec17eef3764dcf23cf741b78b9f0d0d1e39"
+    },
+    "source-hold.json": {
+      "bytes": 1014,
+      "sha256": "32e63ec8977410ae6c21998d42324c3b28cf0076c44bc9a7bc5abc646ca4082b"
+    },
+    "test_li_v3_layout_localization.py": {
+      "bytes": 23184,
+      "sha256": "94374ed3b3201832f404dd8a40ec4aaf5525e25e06244eb3b38cf15929fb133a"
+    }
+  },
+  "status": "ROOT_AUTHORIZED_PRE_ACTUAL_BOUND_PRECISION_STRENGTHENING"
+}

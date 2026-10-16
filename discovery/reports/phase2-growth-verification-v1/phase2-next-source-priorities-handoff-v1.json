@@ -1,0 +1,21 @@
+{
+  "schema": "lupine.next-source-priorities-handoff.v1",
+  "status": "READY_FOR_REPORT_PUBLICATION",
+  "bundle": ".cache/phase2-next-source-priorities-v1",
+  "intended_repository_path": "discovery/reports/phase2-next-source-priorities-v1",
+  "inventory": {
+    "path": ".cache/phase2-next-source-priorities-inventory-v1.json",
+    "bytes": 3669,
+    "sha256": "28746b6e18ee5b4c726d174d4c74a8b4fc795df04b17be919fad820f0e7c2246"
+  },
+  "independent_final_review": {
+    "path": ".cache/phase2-next-source-priorities-review-v1/final-review.json",
+    "bytes": 6849,
+    "sha256": "1fc16d3fb04c552c8eaa7d9f8309bb49b3d9b9ba64731c845c463aff4a91cebc"
+  },
+  "decision": "Prioritize one bounded historical Rhizo recorded-label admission decision from existing custody; defer AM Bench acquisition for screening; Li stays blocked. This does not complete G21 paired screening/fresh transfer.",
+  "original_preparation_checkpoint_preserved": "README describes then-pending actual audit; additive PUBLICATION.md records later corrected audit PASS and unchanged source block.",
+  "no_new_source_operations": true,
+  "tracked_edits": false,
+  "next_action_owner": "root after current publication"
+}

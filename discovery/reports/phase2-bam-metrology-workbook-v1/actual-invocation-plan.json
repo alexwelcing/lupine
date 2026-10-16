@@ -1,0 +1,10 @@
+{
+  "schema": "lupine.bam-metrology-actual-invocation-plan.v1",
+  "precondition": "Final independent pre-acquisition review exists and binds the held final scope, reader and runner. All frozen input hashes match and actual output slots are absent.",
+  "command": ["python", ".cache/phase2-bam-metrology-workbook-v1/acquire_and_inspect.py"],
+  "cwd": "/workspace/lupine-discovery-branch/discovery",
+  "maximum_subprocess_invocations": 1,
+  "request_policy": "One fixed ordinary GET only. Runner durably reserves request slot before request; interruption or any first failure stops this route. No retry or secondary source.",
+  "wrapper_receipt": "Capture real command, start/end time, monotonic elapsed, exit status, stdout/stderr hashes, exact reviewed source identities before/after and actual retained output identities. Empty or nonzero results remain evidence, not completion assumptions.",
+  "next_step": "Only if identity and bounded parse succeed, inspect retained internal projection as permanently exposed metrology documentation and independently audit actual receipts/citations. No formula evaluation or scientific benchmark admission."
+}

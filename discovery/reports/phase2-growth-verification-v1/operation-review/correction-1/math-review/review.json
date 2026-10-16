@@ -1,0 +1,60 @@
+{
+  "activity": {
+    "actual_operation_receipt_reads": 0,
+    "git_commands": 0,
+    "network_requests": 0,
+    "own_AST_reference_analysis_exit_code": 0,
+    "own_AST_reference_analysis_wall_seconds": 0.361863568,
+    "private_capture_or_object_reads": 0,
+    "product_or_auditor_execution": 0,
+    "product_or_auditor_imports": 0,
+    "production_guards": 0,
+    "runtime_tests": 0,
+    "tracked_edits": 0
+  },
+  "auditor_sha256": "d5ed41b53ae4769ee52e0dfb893dce4d04235cda8f9e7a14d2e163ce885c806b",
+  "blockers": [],
+  "changes_verified": {
+    "auditor": "Exact source replacement consists solely of absent-key equality replaced by full predecessor_classification equality to pinned EXPECTED_CLASSIFICATION, plus distinct corrected result filename.",
+    "old_check_mapping": "All98 prior mapped checks rechecked against old/corrected AST expressions and line locations;176 total corrected check calls. No original mapped gate removed.",
+    "recorder": "Exactly three string replacements: corrected auditor filename, exclusive corrected execution directory, corrected result filename. No other recorder behavior changes.",
+    "semantic_replacement": "The full retained classification checks reason LOCAL_EXTRA_PRESENT, sole primary/category, empty supplementary categories, compatible_reason ZIP_LAYOUT_UNSUPPORTED, stage entry_local and same_entry_local_checks CHECKED. The literal is read only after all inherited source pins are checked."
+  },
+  "next_action": "Root may decide whether to authorize a separately recorded corrected actual public-evidence audit; this static review is not that execution or a scientific/operation success claim.",
+  "prior_review_sha256": "c2e08af390ba3370f30587d041f2d09967cca4071bc9c97a4c6d8069f9c8b810",
+  "recorder_sha256": "80c44a65ef66f020ae3364505ee5d02a64d5ef0d7e0490eb9957dcb8447ee880",
+  "retained_first_failure": {
+    "independent_limitation": "I did not read actual execution receipts; the earlier static review did miss this absent top-level key. This correction and the stronger AST schema reconstruction supersede that part of the initial static assessment without deleting it.",
+    "reported_by_author": "First actual auditor stopped with KeyError legacy_zip_reason; original auditor/recorder/execution evidence remains unchanged.",
+    "static_reproduction": "Own AST-only schema reconstruction detects legacy_zip_reason absent from both G29 prior and G30 report; no auditor execution is needed to establish the bad reference."
+  },
+  "reviewed_at": "2026-10-16T11:14:27.404769+00:00",
+  "reviewer": "/root/phase2_math",
+  "schema": "lupine.discovery.growth_operation_audit_correction_independent_review.v1",
+  "schema_review": {
+    "corrected_missing_direct_keys": [],
+    "envelope_keys": [
+      29,
+      38
+    ],
+    "independent_ast_helper_sha256": "745f9160233ca562b18270da77f12c293759743e308e9eec9199884724e814ae",
+    "independent_result_sha256": "cff7e4b206ed164e62c411aae3af3422d64a341970bd80a1915e814b0adb47ea",
+    "manual_dynamic_scope": "Reviewed SCIENCE_COUNTS/SHAPE_KEYS, literal exposure loops/count/list names, dynamic bounded exposure-key iteration, final reason/projection field choice, nested observed/capture identity and source groups. Operation start/execution/final/preflight field references correspond to the two unchanged recorder constructors; stdout/stderr digest keys come from their hashes mapping. Artifact output exit_code and chronology fields correspond to the retained audit source constructors.",
+    "remaining_limit": "AST checks concern schema references; they do not prove semantic reachability of every terminal/progress combination or attest actual output contents.",
+    "shape_keys": [
+      28,
+      32
+    ]
+  },
+  "source_bindings": {
+    ".cache/phase2-growth-operation-review-v1/audit_completed_operations.py": "a34b266e2316b14540b0abd0f2016274422a81b8eca90f3152aa734f5617deb7",
+    ".cache/phase2-growth-operation-review-v1/audit_completed_operations_corrected.py": "d5ed41b53ae4769ee52e0dfb893dce4d04235cda8f9e7a14d2e163ce885c806b",
+    "scripts/li_v3_compatible_zip_diagnostic.py": "59b4b549a1de33abf2c54ccfce15f4f980a3a36351f98e246ae4e9fd6c44c5d3",
+    "scripts/li_v3_custody.py": "3ead51f0afdf16be973743257be488669c988aa40443779e7a5c400e9b0d3234",
+    "scripts/li_v3_growth_envelope.py": "f50069d028526ea045441a2e574a26192a210ff78ba34f5170777d32f5692ec3",
+    "scripts/li_v3_growth_hint_shape.py": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a",
+    "scripts/li_v3_local_extra_headers.py": "54db58a567afc9211303f2edff13541ab2f97beb77ef2edaa518ad32bf6b1026",
+    "scripts/li_v3_zip_diagnostic.py": "de7807a8721cc243a9acf71e01c80aa531454248b2cde92c5518f875e89e0d87"
+  },
+  "status": "PASS_STATIC_CORRECTION_SCOPE"
+}

@@ -1,0 +1,406 @@
+{
+  "schema": "lupine.bam-exposed-metrology-findings.v1",
+  "source_doi": "10.5281/zenodo.17846617",
+  "source_sha256": "6cc298fa9922c60fc923b11dbfaa788057cb23593153d68a9aa95226b1795a83",
+  "internal_projection_sha256": "4a0c0165e980e2e40418dac63f161215a04ab955aeff750193030cbd7c6e44e1",
+  "publication": "Own paraphrase and necessary factual labels/conditions only; source performance tables, raw workbook, full projection and contact roster omitted.",
+  "findings": [
+    {
+      "id": "F01",
+      "claim": "The workbook contains three test-specific worksheets with literal matching Test ID and Test piece ID values: Vh5205_T-71, Vh5205_T-74 and Vh5205_T-84. Their respective F3 and F4 identifiers match the sheet name. The record description explains that these sheets contain individual-test selected results, while Common-to-all applies to the campaign. This supports within-document test pairing, not three statistically independent specimens, heats, batches or campaigns.",
+      "citations": [
+        {
+          "sheet": "Vh5205_T-71",
+          "part": "xl/worksheets/sheet2.xml",
+          "cells": [
+            "B3",
+            "F3",
+            "B4",
+            "F4"
+          ]
+        },
+        {
+          "sheet": "Vh5205_T-74",
+          "part": "xl/worksheets/sheet3.xml",
+          "cells": [
+            "B3",
+            "F3",
+            "B4",
+            "F4"
+          ]
+        },
+        {
+          "sheet": "Vh5205_T-84",
+          "part": "xl/worksheets/sheet4.xml",
+          "cells": [
+            "B3",
+            "F3",
+            "B4",
+            "F4"
+          ]
+        },
+        {
+          "path": "reports/phase2-bam-readiness-v1/zenodo-17846617.json",
+          "sha256": "48f84c7d6fc841a13de8ecccbba5f0604834cec45c3033d0d55bfd7a2e89f4d6",
+          "location": "$.metadata.description: selected-workbook description, uncertainty paragraph and Table 1 caption/columns; $.metadata.license; $.metadata.creators"
+        }
+      ]
+    },
+    {
+      "id": "F02",
+      "claim": "Each test sheet directly labels current-test proof strength Rp0.2 in MPa at row13, tensile strength Rm in MPa at row14, reduction of area Z in % at row15, total extension at maximum force Agt in % at row16 and plastic extension at maximum force Ag in % at row17. All five have stored literal numeric result strings in the same sheet. Proof level is anchored by Rp0.2 in C13, independently of the separate, blank room-temperature proof-strength entry in Common-to-all row65. No fitting, ranking or numeric interpretation was performed.",
+      "citations": [
+        {
+          "sheet": "Vh5205_T-71",
+          "part": "xl/worksheets/sheet2.xml",
+          "cells": [
+            "B13",
+            "C13",
+            "D13",
+            "F13",
+            "B14",
+            "C14",
+            "D14",
+            "F14",
+            "B15",
+            "C15",
+            "D15",
+            "F15",
+            "B16",
+            "C16",
+            "D16",
+            "F16",
+            "B17",
+            "C17",
+            "D17",
+            "F17"
+          ]
+        },
+        {
+          "sheet": "Vh5205_T-74",
+          "part": "xl/worksheets/sheet3.xml",
+          "cells": [
+            "B13",
+            "C13",
+            "D13",
+            "F13",
+            "B14",
+            "C14",
+            "D14",
+            "F14",
+            "B15",
+            "C15",
+            "D15",
+            "F15",
+            "B16",
+            "C16",
+            "D16",
+            "F16",
+            "B17",
+            "C17",
+            "D17",
+            "F17"
+          ]
+        },
+        {
+          "sheet": "Vh5205_T-84",
+          "part": "xl/worksheets/sheet4.xml",
+          "cells": [
+            "B13",
+            "C13",
+            "D13",
+            "F13",
+            "B14",
+            "C14",
+            "D14",
+            "F14",
+            "B15",
+            "C15",
+            "D15",
+            "F15",
+            "B16",
+            "C16",
+            "D16",
+            "F16",
+            "B17",
+            "C17",
+            "D17",
+            "F17"
+          ]
+        },
+        {
+          "sheet": "Common-to-all",
+          "part": "xl/worksheets/sheet1.xml",
+          "cells": [
+            "B65",
+            "F65"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "F03",
+      "claim": "Common-to-all specifies CMSX-6, a temperature of 980 with the literal unit ℃, a tensile-test standard DIN EN ISO 6892-2:2018-09, and Method A rate control. These are documentary operating conditions. This independent XLSX evidence does not repair the earlier schema CSV encoding or its literal question-mark unit fields. Per-test actual rate and heating/soaking information is separately populated; no rate-unit conversion or temperature correction was applied.",
+      "citations": [
+        {
+          "sheet": "Common-to-all",
+          "part": "xl/worksheets/sheet1.xml",
+          "cells": [
+            "B5",
+            "F5",
+            "B6",
+            "D6",
+            "F6",
+            "B8",
+            "F8",
+            "B16",
+            "F16"
+          ]
+        },
+        {
+          "sheet": "Vh5205_T-71",
+          "part": "xl/worksheets/sheet2.xml",
+          "cells": [
+            "B8",
+            "D8",
+            "F8",
+            "B9",
+            "D9",
+            "F9",
+            "B10",
+            "D10",
+            "F10",
+            "B12",
+            "D12",
+            "F12"
+          ]
+        },
+        {
+          "sheet": "Vh5205_T-74",
+          "part": "xl/worksheets/sheet3.xml",
+          "cells": [
+            "B8",
+            "D8",
+            "F8",
+            "B9",
+            "D9",
+            "F9",
+            "B10",
+            "D10",
+            "F10",
+            "B12",
+            "D12",
+            "F12"
+          ]
+        },
+        {
+          "sheet": "Vh5205_T-84",
+          "part": "xl/worksheets/sheet4.xml",
+          "cells": [
+            "B8",
+            "D8",
+            "F8",
+            "B9",
+            "D9",
+            "F9",
+            "B10",
+            "D10",
+            "F10",
+            "B12",
+            "D12",
+            "F12"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "F04",
+      "claim": "After-fracture elongation A is not interchangeable with the reported Agt, Ag or Z. Common-to-all says the determination requirement for A was not met, describes fracture outside the extensometer gauge length and says final gauge length was not measurable. Those missing/inapplicable outcomes must remain distinct; no replacement label was constructed.",
+      "citations": [
+        {
+          "sheet": "Common-to-all",
+          "part": "xl/worksheets/sheet1.xml",
+          "cells": [
+            "B209",
+            "F209",
+            "B210",
+            "F210",
+            "B217",
+            "C217",
+            "D217",
+            "F217"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "F05",
+      "claim": "The retained record metadata states that expanded measurement uncertainty for Rm, Rp0.2 and Z was determined for each test, and Table1 reports maximum values at stated 95% confidence with k=2. Its percentage columns report 1.2 for Rm, 1.2 for Rp0.2 and max.0.5 for Z. These are publisher-reported campaign maxima, not workbook per-cell uncertainty budgets, prediction intervals, simultaneous coverage or independently recomputed results. The Z header combines percentage notation and an endpoint already measured in percent; no relative-to-absolute or percentage-point conversion is inferred.",
+      "citations": [
+        {
+          "path": "reports/phase2-bam-readiness-v1/zenodo-17846617.json",
+          "sha256": "48f84c7d6fc841a13de8ecccbba5f0604834cec45c3033d0d55bfd7a2e89f4d6",
+          "location": "$.metadata.description: selected-workbook description, uncertainty paragraph and Table 1 caption/columns; $.metadata.license; $.metadata.creators"
+        }
+      ]
+    },
+    {
+      "id": "F06",
+      "claim": "No explicit per-test uncertainty budget, covariance matrix or coverage-factor fields were identified in the admitted workbook projection. A disclosed case-insensitive substring search of every projected cell value, formula text and ordinary comment found no uncert, covarian, correlat, coverage, confidence or standard deviation text. This is scoped documentary/lexical evidence, not a proof that unparsed parts, linked LIS data, standards or certificates lack such information. None of those linked bodies was requested.",
+      "citations": [
+        {
+          "artifact": "documentary-search.json",
+          "location": "terms; searched_fields; limits"
+        }
+      ]
+    },
+    {
+      "id": "F07",
+      "claim": "The common sheet documents calibration status/class/standards and common equipment identifiers for the load, temperature and extension measurement chain. It defines engineering stress as force divided by original cross-sectional area and describes shared analysis procedures/software. These are provenance clues for possible shared errors; they do not quantify covariance or validate independent endpoint errors. Calibration certificate information cells are blank at the cited locations.",
+      "citations": [
+        {
+          "sheet": "Common-to-all",
+          "part": "xl/worksheets/sheet1.xml",
+          "cells": [
+            "B87",
+            "F87",
+            "B92",
+            "F92",
+            "B93",
+            "F93",
+            "B96",
+            "F96",
+            "B97",
+            "F97",
+            "B109",
+            "F109",
+            "B113",
+            "F113",
+            "B116",
+            "F116",
+            "B127",
+            "F127",
+            "B142",
+            "F142",
+            "B148",
+            "F148",
+            "B149",
+            "F149",
+            "B152",
+            "F152",
+            "B197",
+            "F197",
+            "B199",
+            "F199"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "F08",
+      "claim": "Temperature traceability is marked Yes, while the calibration correction is explicitly not included in indicated temperature. The primary-data description says indicated temperature was displayed but could not be recorded continuously. A calibration deviation value with K unit is present, but it is not an uncertainty or an automatically applicable correction. No time series or temperature correction was reconstructed.",
+      "citations": [
+        {
+          "sheet": "Common-to-all",
+          "part": "xl/worksheets/sheet1.xml",
+          "cells": [
+            "B104",
+            "F104",
+            "B105",
+            "F105",
+            "B119",
+            "D119",
+            "F119",
+            "B195",
+            "F195",
+            "B211",
+            "F211"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "F09",
+      "claim": "Roughness uses the same full test identifiers, whereas the orientation sheet uses numeric specimen numbers 71,74,84 and points to Common-to-all row54. Those numeric suffixes were not silently normalized into full IDs. Common-to-all describes shared material preparation and test-piece history, but does not establish independent casts/heats or a sampling frame. A lexical absence of batch or heat number in projected values cannot resolve that lineage.",
+      "citations": [
+        {
+          "sheet": "Roughness",
+          "part": "xl/worksheets/sheet9.xml",
+          "cells": [
+            "A2",
+            "A4",
+            "A5",
+            "A6"
+          ]
+        },
+        {
+          "sheet": "Single_crystal_orientation",
+          "part": "xl/worksheets/sheet6.xml",
+          "cells": [
+            "A1",
+            "A2",
+            "A4",
+            "A5",
+            "A6"
+          ]
+        },
+        {
+          "sheet": "Common-to-all",
+          "part": "xl/worksheets/sheet1.xml",
+          "cells": [
+            "B19",
+            "F19",
+            "B28",
+            "F28",
+            "B54",
+            "F54",
+            "B56",
+            "F56",
+            "B68",
+            "F68"
+          ]
+        },
+        {
+          "artifact": "documentary-search.json",
+          "location": "batch and heat number terms"
+        }
+      ]
+    },
+    {
+      "id": "F10",
+      "claim": "The two formula cells occur in Heat_treatment B24 and B25. Their text is consistent with a Celsius-to-Fahrenheit expression by inspection, but formulas, shared-formula attributes and stored caches were not executed or validated. No formula occurs in the three test result sheets. Numeric values and date serials remain source strings; styles were not rendered.",
+      "citations": [
+        {
+          "sheet": "Heat_treatment",
+          "part": "xl/worksheets/sheet5.xml",
+          "cells": [
+            "B23",
+            "D23",
+            "B24",
+            "D24",
+            "B25",
+            "D25"
+          ]
+        },
+        {
+          "artifact": "result.json",
+          "location": "formula_cells=2; formulas_executed=false"
+        }
+      ]
+    },
+    {
+      "id": "F11",
+      "claim": "The next admissible use is exposed-reference engineering work with explicitly cited labels and missingness. The workbook supports documentary co-location of selected endpoints and provenance, but it does not supply an independently known covariance model or fresh predictive evaluation units. G20 uncertainty/lineage questions and G21 scientific evaluation design remain unresolved; no benchmark admission, criterion, model, allocation or fit follows from this acquisition.",
+      "citations": [
+        {
+          "artifact": "scope.json",
+          "location": "purpose; authorization; not_authorized"
+        },
+        {
+          "artifact": "result.json",
+          "location": "permanently_exposed_metrology_reference; blind_predictive_benchmark_eligible"
+        }
+      ]
+    }
+  ]
+}

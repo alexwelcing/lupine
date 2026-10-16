@@ -1,0 +1,19 @@
+test_content_encoding_before_read (__main__.IndependentRunnerTests.test_content_encoding_before_read) ... ok
+test_fixed_production_constants (__main__.IndependentRunnerTests.test_fixed_production_constants) ... ok
+test_fsync_failure_prevents_transport_and_reserves_slot (__main__.IndependentRunnerTests.test_fsync_failure_prevents_transport_and_reserves_slot) ... ok
+test_identity_match_only_then_inspection_and_public_canary_exclusion (__main__.IndependentRunnerTests.test_identity_match_only_then_inspection_and_public_canary_exclusion) ... ok
+test_interrupt_after_reservation_prevents_second_request (__main__.IndependentRunnerTests.test_interrupt_after_reservation_prevents_second_request) ... ok
+test_no_redirect_handler (__main__.IndependentRunnerTests.test_no_redirect_handler) ... ok
+test_oversize_reads_at_most_cap_plus_one (__main__.IndependentRunnerTests.test_oversize_reads_at_most_cap_plus_one) ... ok
+test_parser_exception_class_only_no_canary (__main__.IndependentRunnerTests.test_parser_exception_class_only_no_canary) ... ok
+test_partial_read_receipt (__main__.IndependentRunnerTests.test_partial_read_receipt) ... ok
+test_redirect_http_error_does_not_read_body_or_retry (__main__.IndependentRunnerTests.test_redirect_http_error_does_not_read_body_or_retry) ... ok
+test_reserved_slot_blocks_transport (__main__.IndependentRunnerTests.test_reserved_slot_blocks_transport) ... ok
+test_route_mismatch_before_read (__main__.IndependentRunnerTests.test_route_mismatch_before_read) ... ok
+test_short_body_and_hash_mismatch_block_inspection (__main__.IndependentRunnerTests.test_short_body_and_hash_mismatch_block_inspection) ... ok
+test_source_guard_before_slot_and_transport (__main__.IndependentRunnerTests.test_source_guard_before_slot_and_transport) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.078s
+
+OK

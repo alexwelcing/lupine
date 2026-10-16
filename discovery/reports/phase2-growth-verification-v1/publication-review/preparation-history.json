@@ -1,0 +1,14 @@
+{
+  "status": "UNEXECUTED_PREPARATION_FINDINGS_RESOLVED",
+  "auditor_invocations": 0,
+  "findings": [
+    "Missing optional current growth_envelope.recognized_roles was detected before execution; actual public receipt still checked explicitly and continuation check uses its declared archive acceptance and XML-start flags.",
+    "CI check now requires length4 as well as exact distinct job names.",
+    "Publication Markdown links require file targets and include four Markdown project documents in virtual final paths; historical JSON provenance strings are not relocated links.",
+    "All declared lossless wrappers are joined and verified; final count comes from frozen ledger, not stale early15 count.",
+    "Manifest maps are typed and ledger names cannot override promotion/document hash declarations; authored paths are unique."
+  ],
+  "first_saved_draft_sha256": "c1c7c9522b0e98e275df7aab7e9a6298bc0b805385a07a6c6ba840a76d32eba7",
+  "earlier_moving_draft_snapshot_limit": "Earlier moving draft was read by static reviewer but not separately saved before corrections; no auditor invocation occurred.",
+  "held_source_sha256": "2a593cbdc29aa2db503f69647ea423c300ce94c84d8d3ad0db4a3f36b3b6abff"
+}

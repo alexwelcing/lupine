@@ -1,64 +1,61 @@
 # Project state
 
-**Active phase, October 16:** Published `d0505b9` passes all four original
-GitHub CI jobs, clean packaging (28 demonstrations/six schemas/16 checks), strict
-retention and independent artifact audits. [Two actual field-header diagnoses](reports/phase2-li-local-extra-verification-v1/README.md)
-followed those gates and preserved all 326 runtime files. They identify one
-`0xA220` field with 516 declared data bytes in the selected local extra area.
-The source remains BLOCKED_SCHEMA; the payload and other entries are unverified.
+**Active phase, October 16:** Published `c17c4c6` passes all four original CI jobs,
+clean packaging (28 demonstrations/six schemas/16 checks), strict retention and
+independent artifact audits. [Actual growth-reader results](reports/phase2-growth-verification-v1/README.md)
+preserve two identical G30 shape matches and two identical G31
+`BLOCKED_SCHEMA / BLOCKED_LAYOUT / ZIP_LAYOUT_UNSUPPORTED` results. All 332
+runtime files held. G31 completed three local-extra-area checks but rejected
+before decompression or XML; the failing predicate remains unidentified.
+Archive acceptance, recognized roles and scientific schema remain unestablished.
+The corrected independent receipt audit passes 19,246 runtime check calls; its
+first obsolete-field failure and independently reviewed repair remain preserved.
 
-The pinned author notebook was captured and two static inspections produced
-identical inventories. Whole JSON and code AST were parsed privately; code was
-not executed and output values were not disclosed. Syntactic `read_excel` and
-`dropna` calls do not establish executed preprocessing or workbook equivalence.
-The notebook remains BLOCKED_SCHEMA.
+The [implementation](reports/phase2-growth-implementation-v1/README.md) passes
+359 combined Li tests, with all 326 predecessor runtime files unchanged.
+Original readers, negative results, the central-directory declaration regression
+and its reviewed repair remain preserved. Actual G29 previously identified one
+`0xA220` field with 516 data bytes; G30 now checks its signature and padding shape
+without binding the initial-padding word's semantics. The author notebook was
+only inspected as JSON/code AST; it was not executed. No Li worksheet or shared
+string has been decoded by these operations.
 
-The earlier compatible ZIP diagnoses remain LOCAL_EXTRA_PRESENT at the first
-rejected local entry. No workbook member, XML, worksheet or shared string has
-been decoded. Original blocked readers stay unchanged. G27–G29 are complete
-within their engineering scopes. G29's 19 author, 30 independent and 248 combined
-Li checks pass; original fixture and publication failures remain preserved.
-The independent actual-receipt audit passes 11,189 checks. Two separate G30/G31
-readers are now implemented and independently reviewed;
-[the combined Li run passes 359 tests](reports/phase2-growth-implementation-v1/README.md)
-with all 332 runtime files held and all 326 earlier files unchanged. G30 checks
-the fixed selected payload shape; G31 applies a bounded all-entry local-growth
-rule and only the original four envelope XML readers. G31's first generated
-27/28 result revealed an inherited central-header declared-length gap; the
-failure and unchanged regression are retained alongside the reviewed fix.
-These new actual operations remain pending their own exact-source CI, clean
-package and independent artifact audit. No new archive acceptance is claimed.
+The [pure documentary-layout candidate](reports/phase2-documentary-layout-preparation-v1/README.md)
+passes 33 author/27 independent generated tests with bounded coordinate/type
+projection and namespace handling. It remains outside the runtime, unbound to
+actual source operations; the G31 block prevents actual documentary localization.
 
-The [paper methods audit](reports/phase2-li-paper-methods-v1/PUBLICATION.md)
-establishes documentary test-level rows and units, while recording 1,038 listed
-table records versus 1,050 in prose and 1,070 in the archive catalog. Source
-reuse, actual joins, missingness, curation and independent evaluation units
-remain unresolved. A [citation identity audit](reports/phase2-li-reference-identity-v1/PUBLICATION.md)
-finds one printed DOI attached to different works and two unresolved registry
-candidates; none is merged or silently corrected. The [BAM audit](reports/phase2-bam-readiness-v1/PUBLICATION.md)
-identifies a possible small metrology reference, not an admitted discovery task.
-[One schema-document acquisition](reports/phase2-bam-schema-documentary-v1/PUBLICATION.md)
-matched the publisher's bytes but failed strict UTF-8 decoding. A separately
-scoped ASCII header projection establishes eleven labels, including `UNIT` at
-column 7; body encoding and measurement definitions remain unresolved at that
-checkpoint. The [separate encoding comparison](reports/phase2-bam-encoding-comparison-v1/PUBLICATION.md)
-parsed the same retained bytes under two explicitly hypothetical codecs; neither
-was selected as authoritative. ASCII definitions identify mandatory test IDs,
-optional specimen/history roles and generic current-test Rp, but do not resolve
-uncertainty budgets, shared-error structure or independent units. G20 remains unresolved
-and G21 blocked; no allocation or fit occurred.
+[The BAM workbook audit](reports/phase2-bam-metrology-workbook-v1/README.md)
+establishes documentary pairing for three current tests and explicitly separates
+proof/tensile strength, reduction of area and two extension measures from missing
+after-fracture elongation. This source and its derivatives are permanently
+exposed and excluded from a fresh blind predictive benchmark. Campaign-level
+expanded-uncertainty labels do not provide per-test joint coverage, a covariance
+model or independent physical sampling units. The separate schema CSV's encoding
+remains unbound despite the two-hypothesis documentary comparison.
 
-The exact finite-archive planner remains available through API, CLI, HTTP and
-Study planning. Its scope is a fixed frame under uniform sampling without
-replacement, not observed power or future-material risk. A separate
-[finite confidence-inversion design](reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md)
-has written and finite-counting review, including an optional-stopping failure;
-implementation is deferred until a justified study needs it.
+[The risk contract](reports/phase2-metrology-risk-contract-v1/PUBLICATION.md) and
+[official NIST guidance](reports/phase2-nist-metrology-guidance-v1/README.md)
+clarify the premises needed for measurement and selection risk without asserting
+that BAM or Lupine satisfies them. [Finite-archive inference](reports/phase2-fixed-archive-inference-scope-v1/PUBLICATION.md)
+can instead concern fixed recorded labels under uniform fixed-size sampling;
+physical label independence is not required for that counting law. A validated
+frame, label semantics, pairing, missingness, exposure and cost remain necessary;
+this does not establish new-specimen performance.
 
-Root owns publication and exact-source verification of G30/G31, then their fixed
-operations. The preceding report-only 2428c313 passes all four original CI jobs.
-All scientific NO-GO results remain unchanged. The expired automation remains
-disabled; no new schedule or continuous worker was started.
+Li paper/archive counts, reused sources, citation identities, actual joins and
+curation remain unresolved. G20 is unresolved and G21 blocked; no new scientific
+allocation, model fit or DFT calculation occurred. The finite planner remains
+available through API, CLI, HTTP and Study planning under its stated finite-frame
+scope. Risk-inversion implementation remains deferred until a justified study
+needs it.
+
+Root owns publication and exact remote/CI verification, then a bounded
+[historical Rhizo label-readiness review](reports/phase2-next-source-priorities-v1/README.md).
+Li categorical predicate diagnosis remains separate preparation; neither route
+is an admitted G21 scientific experiment. Historical
+scientific NO-GO results remain unchanged. The expired automation remains
+disabled; no schedule or continuous worker was started.
 [GOAL](GOAL.md#renewed-active-work--2026-10-16) records ownership and next actions.
 
 Snapshot: 2026-10-11 01:40 UTC (exact CI observation `2026-10-11T01:40:16.973611+00:00`). Tested runtime/artifact source: `6585a605d5d325e84423c7e35c7286efe85cfb6f`. [Scoped decision and evidence](reports/research-preview-decision.md).

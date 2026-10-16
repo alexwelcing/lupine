@@ -1,0 +1,14 @@
+test_all_three_complete_classifications_are_accepted (__main__.RecorderTests.test_all_three_complete_classifications_are_accepted) ... ok
+test_closed_shape_type_and_exposure_drift_are_rejected (__main__.RecorderTests.test_closed_shape_type_and_exposure_drift_are_rejected) ... ok
+test_complete_negative_can_repeat_same_fixed_report (__main__.RecorderTests.test_complete_negative_can_repeat_same_fixed_report) ... ok
+test_negative_reason_cannot_claim_positive_or_skipped_exposure (__main__.RecorderTests.test_negative_reason_cannot_claim_positive_or_skipped_exposure) ... ok
+test_noncanonical_duplicate_and_unexpected_error_are_rejected (__main__.RecorderTests.test_noncanonical_duplicate_and_unexpected_error_are_rejected) ... ok
+test_persisted_report_stdout_disagreement_is_retained_and_blocks (__main__.RecorderTests.test_persisted_report_stdout_disagreement_is_retained_and_blocks) ... ok
+test_post_command_gate_drift_stops_after_retaining_complete_result (__main__.RecorderTests.test_post_command_gate_drift_stops_after_retaining_complete_result) ... ok
+test_unbound_commit_does_not_attempt_any_preflight_or_command (__main__.RecorderTests.test_unbound_commit_does_not_attempt_any_preflight_or_command) ... ok
+test_unexpected_failure_stops_main_before_second_run (__main__.RecorderTests.test_unexpected_failure_stops_main_before_second_run) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.207s
+
+OK

@@ -1,0 +1,9 @@
+{
+  "actual_operations": 0,
+  "after_sha256": "b13232eb55efec6a6fadfd5f900bc3f3fd9a2b44fa3ac91bb3a763e7c80a84b7",
+  "before_sha256": "40e3f1392c8ea7cdde921574bea0b9852507eeb4901e149089901196b88bb12b",
+  "change": "Reuse exact reviewed G30 validator, renamed only; bind its current production identity before SHAPE_REPORT assignment.",
+  "prior_test_failure_preserved": ".cache/phase2-growth-envelope-recorder-review-v1/first-run",
+  "reason": "Independent extracted-main adversary reached mocked command1 with inconsistent G30 padding false while reason MATCH; close and validate full prior report before G31 operation.",
+  "recorded_at": "2026-10-16T10:35:05.530641+00:00"
+}

@@ -1,0 +1,14 @@
+{
+  "status": "FINAL_REVIEW_BUNDLE_READY",
+  "completion": {
+    "path": ".cache/phase2-growth-verification-publication-review-v1/completion.json",
+    "bytes": 1858,
+    "sha256": "f59895862a06496a6922e23a421463cb75067f9a318d89af78af426f5fa9dec9"
+  },
+  "inventory": {
+    "path": ".cache/phase2-growth-verification-publication-review-v1/inventory.json",
+    "bytes": 3586,
+    "sha256": "568acf44edca02f5deae847f3af3edd03af10a58446e921cc998a28210e6ee03"
+  },
+  "copy_scope": "All files in this directory, preserving relative paths and bytes. No process remains active."
+}

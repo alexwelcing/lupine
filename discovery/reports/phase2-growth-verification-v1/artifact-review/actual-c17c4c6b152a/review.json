@@ -1,0 +1,267 @@
+{
+  "status": "PASS",
+  "commit": "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace",
+  "receipt_sha256": "a653d5d2738aaf1cd6f0422bb1af42b65e4cb87054751207f80202da035c03ee",
+  "artifact_identities": {
+    "source_archive": {
+      "bytes": 80906240,
+      "filename": "lupine-discovery-source-c17c4c6b152a.tar",
+      "sha256": "08fc0093210c2b6051529c7ea4ebdf7656bfd525680ac79107e108f30e65bb67"
+    },
+    "wheel": {
+      "bytes": 307093,
+      "filename": "lupine_discovery-0.1.0-py3-none-any.whl",
+      "sha256": "5cac629c8d162d3de2e63ab3eb2ff33cacee20a2522796373ab263cd20a3efc0"
+    }
+  },
+  "source_files_compared_to_git_blobs": 3979,
+  "source_copyset_exact": true,
+  "no_archive_links_or_cache_members": true,
+  "runtime_source_files_matching_manifest_and_worktree": 332,
+  "wheel_members": 115,
+  "wheel_record_content_digests_checked": 114,
+  "wheel_package_members_matching_exact_git_source": 108,
+  "crucial_finite_planner_and_mpea_files": {
+    "src/lupine_discovery/finite_planning.py": "027785ccdf24f6e8cf9b7a8ac98987b821fcdb19c875bbe8d2ba52d2fc3895f8",
+    "src/lupine_discovery/study_planning.py": "7a2b00bc81f8bc025b9bb3d6c6c212875d44a9839c4665ec67c86e46fe5f6d83",
+    "src/lupine_discovery/server.py": "e46f601a1689f0d2146682b90fccf1f015e9c171dbab0af81f1e4905c6df29dc",
+    "src/lupine_discovery/cli.py": "e5bb4a838f989bba85e7435e6a7aff5e658e09f23d032ad4082f4dc5318d1a61",
+    "src/lupine_discovery/web/planner.js": "92a3b8e5f4d4abc61c3471b761a0745ccd66a9ec8327d4f724ba8635e69e530c",
+    "src/lupine_discovery/web/app.js": "00ac39514bb794ac990799a4d6146239bee0ed6e286f1f95d5ac1d719ddd5025",
+    "src/lupine_discovery/web/index.html": "553c0bb7d8d31699b519b4c24c05dae5af659b996fe510edab26d3fe6baf29b9",
+    "src/lupine_discovery/web/styles.css": "23b439d2f1b60bd5837bddf113d215d7e1dee14f21324075a030e802f13d9fdf",
+    "src/lupine_discovery/web/mpea.js": "f760f6225e60f08d7b4217bae7e7499fe1b4d3ea91514c5b1e429c5b4523f35e",
+    "src/lupine_discovery/resources/mpea-t25-v1.json": "d93769b07fba52f9bc95dbed92c5303aa8344867e7a663d0ca58cff7af2ba274"
+  },
+  "preserved_mpea": {
+    "web/mpea.js": {
+      "sha256": "f760f6225e60f08d7b4217bae7e7499fe1b4d3ea91514c5b1e429c5b4523f35e",
+      "unchanged_since": "5addf4f80e345afa50a4bcc26b9db24d220a3af5"
+    },
+    "resources/mpea-t25-v1.json": {
+      "sha256": "d93769b07fba52f9bc95dbed92c5303aa8344867e7a663d0ca58cff7af2ba274",
+      "unchanged_since": "5addf4f80e345afa50a4bcc26b9db24d220a3af5"
+    }
+  },
+  "mandatory_checks": [
+    "all_packaged_cases_select_verify_replay",
+    "known_answer_oracle_and_controls",
+    "web_assets_and_original_archive_reports",
+    "constrained_negative_results_packaged_and_served",
+    "installed_http_cli_agreement",
+    "coupled_python_api_and_missing_point_fallback",
+    "coupled_projection_and_statistical_guarded_http_replay_agree_with_installed_cli",
+    "scoped_projection_translation_and_missing_bound_abstention",
+    "direct_statistical_pool_python_api_and_distinct_abstention",
+    "training_only_no_go_packaged_and_served",
+    "prospective_pool_planning_cli_hypothesis_and_unknown",
+    "prospective_zero_failure_resolution_cli_not_observed_power",
+    "prospective_planning_http_cli_agreement_and_assets",
+    "finite_population_zero_failure_cli_http_exact_scope",
+    "optional_mpea_resource_presence_and_http_agreement",
+    "mpea_javascript_packaged_and_served"
+  ],
+  "probe_sha256": "a990a5aa825b1ed55caeb2551b86dae3efc4f0e258e95afc696b95f4919415a6",
+  "producer_verifier_receipt_and_two_fixed_pins_agree": true,
+  "finite_contract_source_marker_audit": {
+    "reviewed_finite_module_sha256": "027785ccdf24f6e8cf9b7a8ac98987b821fcdb19c875bbe8d2ba52d2fc3895f8",
+    "public_input_names": [
+      "population_panels",
+      "loss_ceiling",
+      "significance",
+      "maximum_evaluation_panels"
+    ],
+    "dataclass_field_count": 21,
+    "fixed_nonpromotion_fields": {
+      "adequacy_status": "unestablished",
+      "power_status": "not_computed",
+      "observed_evidence_status": "no_observations",
+      "premise_status": "hypothetical_unverified",
+      "future_population_risk_status": "not_established",
+      "claim_scope": "frozen_residual_finite_population_only",
+      "sampling_design": "uniform_without_replacement",
+      "null_hypothesis": "fixed finite-population failure fraction >= loss_ceiling"
+    },
+    "cli_http_schema": "lupine.discovery.finite_zero_failure_resolution_plan.v1",
+    "http_route": "/api/plan-finite-zero-loss",
+    "planning_body_limit": 4096,
+    "interface_source_markers_present": true,
+    "iid_module_unchanged_since": "41d3e31a14bea040fb37b0aa6a650d6d5e704551",
+    "scope": "Source identity and static markers only; route/browser behavior not reexecuted."
+  },
+  "prior_installed_probe_assertions_preserved": 63,
+  "new_installed_probe_assertions": 9,
+  "artifact_and_recorded_run_inputs_unchanged_at_end": true,
+  "recorded_package_and_strict_verifier_runs": [
+    {
+      "receipt": ".cache/phase2-growth-clean-package-v1/0-execution.json",
+      "sha256": "f7879f390bd965ba3ba05f5f0bcdffd45758315ff73ed94caae002a8131b002e",
+      "exit_code": 0,
+      "elapsed_seconds": 34.56642242499947,
+      "checked_log_hashes": true,
+      "runtime_count": 332
+    },
+    {
+      "receipt": ".cache/phase2-growth-clean-package-v1/1-execution.json",
+      "sha256": "a8233ae5eeb34f57b4fb7bc786a7477ae0dc9b8edb77ed28b169d385ae81fae0",
+      "exit_code": 0,
+      "elapsed_seconds": 1.4097602219990222,
+      "checked_log_hashes": true,
+      "runtime_count": 332
+    }
+  ],
+  "scope": "Independent byte identity and recorded installed-engineering consistency audit only.",
+  "artifact_contents_executed": false,
+  "project_modules_imported": false,
+  "package_or_full_tests_rerun": false,
+  "private_scientific_cache_read": false,
+  "scientific_replication": false,
+  "scientific_claim_changed": false,
+  "remote_ci_verified_by_this_audit": false,
+  "started_at": "2026-10-16T10:42:44.284422+00:00",
+  "finished_at": "2026-10-16T10:42:47.824356+00:00",
+  "elapsed_seconds": 3.5399399929992796,
+  "exit_code": 0,
+  "audit_script_sha256": "b81293cba3632449830932175e9fa938913650ade05f5e524b258aba78923119",
+  "actual_git_commands": [
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit_code": 0,
+      "stdout_bytes": 41,
+      "stdout_sha256": "64ac7ab6a0fcbb35ebf85e93f758530b122156358ca072fbe5ba87f18b52582c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "exit_code": 0,
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace^{tree}"
+      ],
+      "exit_code": 0,
+      "stdout_bytes": 41,
+      "stdout_sha256": "f1dfcc9a3127e248b571e0c6af9321f8d4cac4710b602d1ac6b6db1ab2b77214",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "--show-object-format"
+      ],
+      "exit_code": 0,
+      "stdout_bytes": 5,
+      "stdout_sha256": "335277ee77cfc8d51d6602e4137232cf6041aac2bc663777e384b90d5ae74d51",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "git",
+        "ls-tree",
+        "--full-tree",
+        "-r",
+        "-z",
+        "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace",
+        "--",
+        "discovery",
+        ".github/workflows/discovery-verify.yml"
+      ],
+      "exit_code": 0,
+      "stdout_bytes": 533467,
+      "stdout_sha256": "e7cabf7a5e5c40878742f73ecb8ece0b7fafa33fff48c4510dc28a3b7daba1ce",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "git",
+        "show",
+        "5addf4f80e345afa50a4bcc26b9db24d220a3af5:discovery/src/lupine_discovery/web/mpea.js"
+      ],
+      "exit_code": 0,
+      "stdout_bytes": 17096,
+      "stdout_sha256": "f760f6225e60f08d7b4217bae7e7499fe1b4d3ea91514c5b1e429c5b4523f35e",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "git",
+        "show",
+        "5addf4f80e345afa50a4bcc26b9db24d220a3af5:discovery/src/lupine_discovery/resources/mpea-t25-v1.json"
+      ],
+      "exit_code": 0,
+      "stdout_bytes": 1664719,
+      "stdout_sha256": "d93769b07fba52f9bc95dbed92c5303aa8344867e7a663d0ca58cff7af2ba274",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "git",
+        "show",
+        "41d3e31a14bea040fb37b0aa6a650d6d5e704551:discovery/src/lupine_discovery/study_planning.py"
+      ],
+      "exit_code": 0,
+      "stdout_bytes": 9799,
+      "stdout_sha256": "7a2b00bc81f8bc025b9bb3d6c6c212875d44a9839c4665ec67c86e46fe5f6d83",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "git",
+        "show",
+        "41d3e31a14bea040fb37b0aa6a650d6d5e704551:discovery/scripts/package_smoke.py"
+      ],
+      "exit_code": 0,
+      "stdout_bytes": 32123,
+      "stdout_sha256": "666f71b490140214a9565e510c241fa978899f5f05a3f1997b2aefc4e83049f0",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit_code": 0,
+      "stdout_bytes": 41,
+      "stdout_sha256": "64ac7ab6a0fcbb35ebf85e93f758530b122156358ca072fbe5ba87f18b52582c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "exit_code": 0,
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-artifact-review-v1/audit.py",
+    "--commit",
+    "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace",
+    "--retained-directory",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-clean-package-v1",
+    "--output-directory",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-artifact-review-v1/actual-c17c4c6b152a"
+  ]
+}
