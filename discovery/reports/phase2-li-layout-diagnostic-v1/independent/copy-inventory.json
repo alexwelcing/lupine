@@ -1,0 +1,50 @@
+{
+  "scope": "Independent synthetic tests and actual bounded execution/review records only; no real object bytes or private scientific data.",
+  "files": [
+    {
+      "path": "test_li_v3_zip_diagnostic_review.py",
+      "bytes": 20587,
+      "sha256": "0c3609f46cd244abe64dfdb1fa32e829bc0a16316539a2aea276b061df5413e3"
+    },
+    {
+      "path": "review.json",
+      "bytes": 5442,
+      "sha256": "10e9e98546f8f791e6fd90a09647d6d9840cb1a54e24b8efc729ca1b00425c49"
+    },
+    {
+      "path": "first/test_li_v3_zip_diagnostic_review.py",
+      "bytes": 20573,
+      "sha256": "d33b39bf67f76858fb5077e466b488c455cfa3d66754e11b1d88db1b2c91b244"
+    },
+    {
+      "path": "first/execution.json",
+      "bytes": 1781,
+      "sha256": "2a32615f465e14880db689478a2c6dd8f62cb2a969b67f0b47fcd5c966de9fbc"
+    },
+    {
+      "path": "first/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "first/stderr.log",
+      "bytes": 1912,
+      "sha256": "324c8c2f9d98af8e38b14fe351570d39ff3d8623399feee55ffbf36b7164dad6"
+    },
+    {
+      "path": "second/execution.json",
+      "bytes": 1655,
+      "sha256": "b025bfa001fffe09910a5e46cb55a1bd4b63e6d628b200c1fcf56d03bf50f5cb"
+    },
+    {
+      "path": "second/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "second/stderr.log",
+      "bytes": 1912,
+      "sha256": "2c2fc76ce03998b6e214b60f1198569f1ecf095573c6adf1da765cab67908b43"
+    }
+  ]
+}

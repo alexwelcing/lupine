@@ -1,0 +1,32 @@
+{
+  "src/lupine_discovery/server.py": {
+    "original_sha256": "f58f55c5284dfe34478840dca45e897c7fd1b5d5002a423876ebf228b7c7a5cb",
+    "original_bytes": 12075,
+    "promotion_path": ".cache/phase2-planner-ui-candidate-v1/promotion/src/lupine_discovery/server.py"
+  },
+  "src/lupine_discovery/web/index.html": {
+    "original_sha256": "98e12ccb706ab2f75497254d362769ae70f579d95be3fd3bfa93548255588618",
+    "original_bytes": 19116,
+    "promotion_path": ".cache/phase2-planner-ui-candidate-v1/promotion/src/lupine_discovery/web/index.html"
+  },
+  "src/lupine_discovery/web/app.js": {
+    "original_sha256": "20f8d73303258d218cee5e02b052b71287b09a1405d51a336aaf2d097653546d",
+    "original_bytes": 131408,
+    "promotion_path": ".cache/phase2-planner-ui-candidate-v1/promotion/src/lupine_discovery/web/app.js"
+  },
+  "src/lupine_discovery/web/styles.css": {
+    "original_sha256": "6a837b57aa7540a9d00d83a6de026d6996a51563abcd7c7fd0a1dd243bb7f8d3",
+    "original_bytes": 41345,
+    "promotion_path": ".cache/phase2-planner-ui-candidate-v1/promotion/src/lupine_discovery/web/styles.css"
+  },
+  "scripts/browser_smoke.py": {
+    "original_sha256": "3b1ca5cecaa62407583415a1038076aa96a14dde2dd57c940ff9cc885264a6e4",
+    "original_bytes": 77827,
+    "promotion_path": ".cache/phase2-planner-ui-candidate-v1/promotion/scripts/browser_smoke.py"
+  },
+  "docs/study-planning.md": {
+    "original_sha256": "9092d26148c7184cb7ce1cd765bb40dcd55ce1ccc46425ad5ee0ed62bdb554a5",
+    "original_bytes": 8123,
+    "promotion_path": ".cache/phase2-planner-ui-candidate-v1/promotion/docs/study-planning.md"
+  }
+}

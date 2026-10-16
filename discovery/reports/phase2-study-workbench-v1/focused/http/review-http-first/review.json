@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "review_kind": "independent_real_loopback_http_tests",
+  "test_methods": 15,
+  "unittest_reported_seconds": 0.815,
+  "execution_receipt_sha256": "8d1bfbf5273d6719239fdbc9d0d625d0919e7fad19cc8b8d35ee229476d8b65c",
+  "test_source_sha256": "2472be51ee50f35b165fe0a2db4f025c7745d894418b16fa5131dd851ad3c8ab",
+  "candidate_server_sha256": "c2c0e436cf836c4c55b0e0060284f55b45db446614438e883f2777cbae0e943d",
+  "all_input_bindings_unchanged": true,
+  "scope": [
+    "Actual loopback HTTP boundary exercised; CLI JSON-value agreement tested in-process.",
+    "Closed request fields reject outcomes/evidence/extra scientific payloads.",
+    "Unknown and deterministic infeasible-rank states preserved.",
+    "Exact probability examples and 29/59 minimum-panel boundaries checked.",
+    "4096-byte requests accepted;4097 bytes rejected with413.",
+    "JSON duplicates,nonfinite/floating literals,invalidUTF8,deep nesting,large numeric text,boolean counts and out-of-domain exact inputs rejected.",
+    "No-store and loopback/origin guards retained.",
+    "Execution overlay copied Python modules only;no scientific resources or web assets included."
+  ],
+  "limits": [
+    "These are prospective mathematical/software checks,not evidence of scientific usefulness or physical accuracy.",
+    "This run does not exercise browser rendering,clicks,layout,download behavior or JavaScript races.",
+    "Underlying production planning mathematics were not independently reimplemented here;small known arithmetic values and wire-level CLI conformance are checked."
+  ],
+  "blocking_findings": []
+}

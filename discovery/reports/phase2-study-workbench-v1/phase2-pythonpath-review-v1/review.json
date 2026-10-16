@@ -1,0 +1,30 @@
+{
+  "status": "NO_BLOCKER",
+  "reviewed_at": "2026-10-16T05:46:35.422413+00:00",
+  "reviewer": "phase2_math",
+  "scope": "Read-only review of only the PYTHONPATH subprocess repair and new child-behavior regression against preserved pre-repair copies; existing PROBE contents unchanged.",
+  "findings": [
+    "checked() copies os.environ and deletes only PYTHONPATH from that private child environment. All other inherited settings retain their original values; the parent environment is not mutated.",
+    "Fresh-venv creation, exact wheel installation with --no-index/--no-deps, isolated -I installed-package probe, failure handling, retention logic and exact PROBE pin remain unchanged.",
+    "The new regression runs a real non-isolated Python child against a temporary synthetic module available only through PYTHONPATH; the positive control observes that module. It then calls the saved original_checked function (not the setUp fake) and requires the canary to disappear while an unrelated marker survives.",
+    "The regression would reject the pre-repair helper because the second real child would inherit PYTHONPATH and find the canary. This is a source-derived sensitivity statement, not a new executed negative-control claim.",
+    "The separately recorded root negative control is consistent with its runner and logs: pip exited 0 while declaring the wheel already installed; the subsequent venv Python -I import exited 1 with ModuleNotFoundError. This supports the diagnosed install-skip mechanism."
+  ],
+  "unchanged_probe_sha256": "0f3a266c196c1b86bc2c77b89026b9c19d5f19dce86d1cbf6d0ea047c476c15a",
+  "source_and_receipt_sha256": {
+    ".cache/phase2-planner-package-v1/before-pythonpath-fix/scripts/package_smoke.py": "2124d989c2f5e962e7cd3f245455d45656fbb83a94b2e5d75f19636723d77f4e",
+    ".cache/phase2-planner-package-v1/before-pythonpath-fix/tests/test_package_retention.py": "ad3c20d941afc360d662b4497ba94bb827437a256fb2312ca6e4b86e8819f3d5",
+    ".cache/phase2-planner-package-v1/promotion/scripts/package_smoke.py": "666f71b490140214a9565e510c241fa978899f5f05a3f1997b2aefc4e83049f0",
+    ".cache/phase2-planner-package-v1/promotion/tests/test_package_retention.py": "1942808110c82ec26dfae39f50aafce26a1e6e73264932027fa06375043a43b9",
+    ".cache/phase2-pythonpath-negative-control-v1/execution.json": "3efd0f84c724f5718f68e465867ae71ee79b3f7cb6dc5fd404ed09108a6ec2c4",
+    ".cache/phase2-pythonpath-negative-control-v1/run.py": "7b24d5451e24132d569af4e7781497f0bd791c43c21229f001eab261416284aa",
+    ".cache/phase2-pythonpath-negative-control-v1/install-stdout.txt": "cdd4590e59d6c2b0533b8fab5d4818c405f9a7059909e01d733829472a4eeed3",
+    ".cache/phase2-pythonpath-negative-control-v1/install-stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".cache/phase2-pythonpath-negative-control-v1/isolated-import-stderr.txt": "3a98395e40a98b467d32642768b246311e77e44aba0b9e0f8cf6bbecb28a7f3e"
+  },
+  "new_tests_or_package_runs_by_reviewer": false,
+  "negative_control_executed_by": "root; reviewer read its receipt, runner and logs",
+  "scientific_data_accessed": false,
+  "scientific_claim_changed": false,
+  "remaining_blockers": []
+}

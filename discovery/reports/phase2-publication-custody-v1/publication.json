@@ -1,0 +1,15 @@
+{
+  "observed_at": "2026-10-16T05:21:19.452853+00:00",
+  "local_head": "5addf4f80e345afa50a4bcc26b9db24d220a3af5",
+  "remote_branch": "research/lupine-discovery",
+  "remote_head": "5addf4f80e345afa50a4bcc26b9db24d220a3af5",
+  "pr": {
+    "headRefOid": "5addf4f80e345afa50a4bcc26b9db24d220a3af5",
+    "isDraft": true,
+    "state": "OPEN",
+    "url": "https://github.com/alexwelcing/lupine/pull/263"
+  },
+  "worktree_clean": true,
+  "same_source_verified": true,
+  "ci_status": "IN_PROGRESS_SEPARATE_OBSERVATION_REQUIRED"
+}

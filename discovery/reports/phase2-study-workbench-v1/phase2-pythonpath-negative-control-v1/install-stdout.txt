@@ -1,0 +1,2 @@
+Processing /workspace/lupine-discovery-branch/discovery/.cache/phase2-clean-package-v1/artifacts/lupine_discovery-0.1.0-py3-none-any.whl
+lupine-discovery is already installed with the same version as the provided wheel. Use --force-reinstall to force an installation of the wheel.

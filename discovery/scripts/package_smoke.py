@@ -195,6 +195,23 @@ try:
         assert observed_reports['constrained_archived'] == constrained
         assert observed_reports['training_tail'] == training_tail
     mpea_check = check_optional_mpea(resources, observed_reports, url)
+    # Compare the exact installed CLI objects to installed guarded HTTP routes.
+    planning_requests = [
+        ('/api/plan-pool', {'calibration_count': 20, 'alpha': '1/10', 'cutoff': '3/4'}, pool_plan),
+        ('/api/plan-pool', {'calibration_count': 2, 'alpha': '1/2', 'cutoff': '3/4',
+                            'iid_score_probability': '1/2'}, iid_plan),
+        ('/api/plan-zero-loss', {'loss_ceiling': '1/10', 'significance': '1/20',
+                                'maximum_evaluation_panels': 100}, resolution_plan),
+    ]
+    for route, planning_input, expected_plan in planning_requests:
+        request = Request(url + route, data=json.dumps(planning_input).encode('utf-8'),
+                          headers={'Content-Type': 'application/json'})
+        with urlopen(request, timeout=10) as response:
+            assert response.status == 200 and json.load(response) == expected_plan
+    planner_asset = resources.joinpath('web', 'planner.js').read_bytes()
+    assert planner_asset, 'missing prospective planning JavaScript asset'
+    with urlopen(url + '/planner.js', timeout=10) as response:
+        assert response.status == 200 and response.read() == planner_asset, 'planning HTTP JavaScript differs from installed asset'
     for schema in sorted(schemas):
         row = next(row for row in catalog if get_case(row['id'])['problem']['schema'] == schema)
         problem = get_case(row['id'])['problem']
@@ -235,6 +252,7 @@ print(json.dumps({'status': 'passed', 'python': sys.version.split()[0],
                              'training_only_no_go_packaged_and_served',
                              'prospective_pool_planning_cli_hypothesis_and_unknown',
                              'prospective_zero_failure_resolution_cli_not_observed_power',
+                             'prospective_planning_http_cli_agreement_and_assets',
                              'optional_mpea_resource_presence_and_http_agreement',
                              'mpea_javascript_packaged_and_served']},
                  sort_keys=True))
@@ -242,7 +260,13 @@ print(json.dumps({'status': 'passed', 'python': sys.version.split()[0],
 
 
 def checked(command, cwd):
-    result = subprocess.run(command, cwd=cwd, capture_output=True, text=True)
+    # An inherited source PYTHONPATH can make pip see the checkout as already
+    # installed and skip installing into the fresh venv. Preserve transport and
+    # tool settings, but never expose caller module paths to build/install/probe.
+    environment = dict(os.environ)
+    environment.pop("PYTHONPATH", None)
+    result = subprocess.run(command, cwd=cwd, capture_output=True, text=True,
+                            env=environment)
     if result.returncode:
         raise RuntimeError(f"Command failed ({result.returncode}): {command[0]}\n"
                            + result.stdout + result.stderr)

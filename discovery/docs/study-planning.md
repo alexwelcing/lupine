@@ -40,8 +40,12 @@ arithmetic zero does not certify calibration validity, screening, or physical
 truth.
 
 The minimum count permitting a finite rank is
-`ceil(1/alpha) - 1`. It can exceed this implementation's engineering limit of
-256 panels. A finite rank alone says nothing about whether the realized
+`ceil(1/alpha) - 1`; this count can exceed the implementation's engineering
+limit of 256 panels. The existing theorem `LupineRisk.finite_rank_iff_minimum_count`
+in [LupineRisk.lean](../formal/LupineRisk.lean) proves this rational-rank
+boundary for arbitrary natural counts and positive rational risk. This reused
+formal arithmetic does not prove the new binomial implementation, establish
+IID data or refine Python from Lean. A finite rank alone says nothing about whether the realized
 threshold is below one. For example, a complete score law with every score
 equal to one has a finite threshold of one whenever the rank is feasible;
 every cutoff below one fails, at every such calibration count. More panels
@@ -157,3 +161,42 @@ tail probabilities to floating point.
 The planner checks every supplied input even when the rank is infeasible.
 Unknown score laws remain explicit, and no field attests independence,
 physical validity, or scientific superiority.
+
+
+## Local workbench and HTTP boundary
+
+Start `python -m lupine_discovery serve` and select **Study planning**. The
+threshold form preserves a blank hypothetical score probability as unknown.
+At an infeasible rank, its threshold-event probability is still deterministic
+zero, as described above. The separate zero-failure form reports resolution
+within a requested cap, with power uncomputed and no observed evidence.
+
+Both forms call the same Python planner used by the CLI. JavaScript collects
+inputs and renders the returned exact values; it performs no rank, probability,
+or sample-size arithmetic. Editing inputs clears that form's result and export.
+An older response cannot restore a stale result. Long exact fractions remain
+complete in a bounded, keyboard-focusable scroll region and in the JSON export.
+The planning view does not change the six existing candidate problem schemas,
+selected candidate problem, calibration evidence, or scientific archive results.
+
+The local server accepts two additional JSON POST routes:
+
+| Route | Required fields | Optional field |
+| --- | --- | --- |
+| `/api/plan-pool` | `calibration_count`, `alpha`, `cutoff` | `iid_score_probability` (omitted or null preserves unknown p) |
+| `/api/plan-zero-loss` | `loss_ceiling`, `significance`, `maximum_evaluation_panels` | None |
+
+Bodies are closed JSON objects bounded to 4096 bytes. Duplicate fields, unknown
+fields (including outcomes, evidence and dataset paths), floating-point JSON
+numbers, booleans in numeric positions, noninteger counts, exponent strings,
+and out-of-bound exact inputs are rejected. Ordinary integer values are
+accepted where the planner permits them, including cutoff zero and p equal to
+zero or one. Use quoted decimal/rational strings for noninteger values.
+
+Successful responses are JSON-value equivalent to the corresponding CLI
+commands: `{"schema": "lupine.discovery.pool_threshold_plan.v1", "plan": ...}` or
+`{"schema": "lupine.discovery.zero_failure_resolution_plan.v1", "plan": ...}`.
+Every exact `Fraction` is serialized as a string, with unknown fields preserved
+as null. The workbench's existing loopback host/origin and content-type checks
+apply unchanged. These endpoints read no outcomes, archive reports or case
+answer resources, and do not run a fitted model or candidate selector.

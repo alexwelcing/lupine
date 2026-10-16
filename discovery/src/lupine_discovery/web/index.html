@@ -9,6 +9,7 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%232d2438'/%3E%3Cpath d='M20 6v28M20 14L13 9M20 14l7-5M20 21l-9-6M20 21l9-6M20 29l-9-7M20 29l9-7' stroke='%23c3b3d5' stroke-width='2' fill='none'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="/styles.css">
   <script src="/mpea.js" defer></script>
+  <script src="/planner.js" defer></script>
   <script src="/app.js" defer></script>
 </head>
 <body>
@@ -22,6 +23,7 @@
     <nav class="nav-links">
       <button class="nav-link active" id="nav-workbench" data-view="workbench" aria-current="page"><span class="nav-symbol" aria-hidden="true">⊞</span> Candidate pool</button>
       <button class="nav-link" id="nav-benchmarks" data-view="benchmarks"><span class="nav-symbol" aria-hidden="true">≋</span> Known answers</button>
+      <button class="nav-link" id="nav-planning" data-view="planning"><span class="nav-symbol" aria-hidden="true">⌁</span> Study planning</button>
     </nav>
     <div class="sidebar-note"><span class="small-flower" aria-hidden="true">✳</span><p>Discovery begins with<br>what we can establish.</p><div class="sidebar-rule"></div><span class="sidebar-version">LUPINE SCIENCE<br>Research preview · local workspace</span></div>
   </aside>
@@ -120,6 +122,40 @@
           <p id="mpea-status" class="notice" role="status">The archival study has no bundled result yet. No measured outcome is available.</p>
           <div id="mpea-content" hidden></div>
         </section><section class="release-note"><span aria-hidden="true">↗</span><div><h3>Research preview, with the open questions intact.</h3><p id="release-note-text">Release requires broader independent benchmarks, an evidence policy for real scenarios, and a prospective test. Passing a constructed case does not settle those questions.</p></div></section></div>
+      </section>
+      <section id="view-planning" class="view" aria-labelledby="planning-title" hidden>
+        <div class="page-heading"><div><p class="eyebrow">PROSPECTIVE / STUDY DESIGN</p><h1 id="planning-title">Plan the next study.</h1><p class="page-description">Explore exact consequences of declared assumptions before observing outcomes.</p></div><span class="page-index" aria-hidden="true">03 /</span></div>
+        <div class="validation-intro"><p>These calculations use no observed outcomes and do not establish scientific usefulness. Keep the scoring rule and evaluation population fixed independently of future panels.</p><p>IID means independent and identically distributed, conditional on that frozen rule. The binomial and zero-failure models need this unverified assumption; exchangeability alone does not provide it.</p></div>
+        <div class="planning-grid">
+          <section class="panel planning-card" aria-labelledby="pool-plan-heading">
+            <p class="eyebrow">CALIBRATION / THRESHOLD EVENT</p><h2 id="pool-plan-heading">Can a threshold meet a cutoff?</h2>
+            <p class="field-help">Evaluate the event τ ≤ c for complete prospective panel scores. A finite order-statistic rank does not establish useful pool reduction.</p>
+            <form id="pool-plan-form" class="planning-form" novalidate>
+              <label class="field-label" for="pool-plan-count">Calibration panels n</label><input id="pool-plan-count" name="calibration_count" type="text" inputmode="numeric" maxlength="3" value="19" autocomplete="off" aria-describedby="pool-plan-count-help"><p id="pool-plan-count-help" class="field-help">Integer from 0 to 256.</p>
+              <label class="field-label" for="pool-plan-alpha">Miscoverage α</label><input id="pool-plan-alpha" name="alpha" type="text" maxlength="128" value="1/10" autocomplete="off" aria-describedby="pool-plan-alpha-help"><p id="pool-plan-alpha-help" class="field-help">Exact decimal or rational, strictly between 0 and 1.</p>
+              <label class="field-label" for="pool-plan-cutoff">Threshold cutoff c</label><input id="pool-plan-cutoff" name="cutoff" type="text" maxlength="128" value="3/4" autocomplete="off" aria-describedby="pool-plan-cutoff-help"><p id="pool-plan-cutoff-help" class="field-help">At least 0 and below 1. This is a threshold event, not the exact candidate-budget cap event.</p>
+              <label class="field-label" for="pool-plan-probability">Hypothetical IID score probability p <span class="field-help">(optional)</span></label><input id="pool-plan-probability" name="iid_score_probability" type="text" maxlength="128" placeholder="Unknown — leave blank" autocomplete="off" aria-describedby="pool-plan-probability-help"><p id="pool-plan-probability-help" class="field-help">Assumed Pr(R ≤ c), from 0 to 1. A blank field preserves an unknown score probability p; it does not mean zero.</p>
+              <button id="pool-plan-submit" class="button button-primary" type="submit">Calculate threshold plan <span aria-hidden="true">→</span></button>
+            </form>
+            <p id="pool-plan-status" class="notice planning-status" role="status" aria-live="polite">No plan calculated.</p>
+            <section id="pool-plan-result" class="planning-result" aria-label="Threshold planning result" hidden></section>
+            <button id="pool-plan-download" class="button button-small button-outline" type="button" disabled>↓ Exact threshold plan JSON</button>
+          </section>
+          <section class="panel planning-card" aria-labelledby="zero-plan-heading">
+            <p class="eyebrow">EVALUATION / ZERO FAILURES</p><h2 id="zero-plan-heading">What could zero failures resolve?</h2>
+            <p class="field-help">Find the smallest panel count within a budget that could resolve a fixed failure-probability ceiling if zero failures occur. This is best-case resolution, not statistical power.</p>
+            <form id="zero-plan-form" class="planning-form" novalidate>
+              <label class="field-label" for="zero-plan-ceiling">Failure-probability ceiling ρ</label><input id="zero-plan-ceiling" name="loss_ceiling" type="text" maxlength="128" value="1/10" autocomplete="off" aria-describedby="zero-plan-ceiling-help"><p id="zero-plan-ceiling-help" class="field-help">Exact decimal or rational, strictly between 0 and 1.</p>
+              <label class="field-label" for="zero-plan-significance">Significance η</label><input id="zero-plan-significance" name="significance" type="text" maxlength="128" value="1/20" autocomplete="off" aria-describedby="zero-plan-significance-help"><p id="zero-plan-significance-help" class="field-help">Exact decimal or rational, strictly between 0 and 1.</p>
+              <label class="field-label" for="zero-plan-maximum">Maximum evaluation panels</label><input id="zero-plan-maximum" name="maximum_evaluation_panels" type="text" inputmode="numeric" maxlength="3" value="100" autocomplete="off" aria-describedby="zero-plan-maximum-help"><p id="zero-plan-maximum-help" class="field-help">Integer from 0 to 256. All panels in the fixed population count; do not condition on observed feasibility.</p>
+              <button id="zero-plan-submit" class="button button-primary" type="submit">Calculate zero-failure resolution <span aria-hidden="true">→</span></button>
+            </form>
+            <p id="zero-plan-status" class="notice planning-status" role="status" aria-live="polite">No plan calculated.</p>
+            <section id="zero-plan-result" class="planning-result" aria-label="Zero-failure planning result" hidden></section>
+            <button id="zero-plan-download" class="button button-small button-outline" type="button" disabled>↓ Exact resolution plan JSON</button>
+          </section>
+        </div>
+        <p class="planning-limits field-help">Exact inputs use plain decimal or rational notation, with no exponents. Each normalized numerator and denominator must fit in 32 bits. The 256-panel limit is an engineering bound. No input is fitted from an archive, and no plan changes a candidate-selection decision or a recorded scientific result.</p>
       </section>
       <footer class="footer"><span>LUPINE DISCOVERY</span><span>Recommendation is a claim. Evidence makes it accountable.</span></footer>
     </main>

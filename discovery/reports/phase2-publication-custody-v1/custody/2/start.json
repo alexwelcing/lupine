@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "scripts/li_v3_custody.py",
+    "envelope",
+    "--receipt",
+    ".cache/li-v3-custody/envelope-2/public.json"
+  ],
+  "commit": "5addf4f80e345afa50a4bcc26b9db24d220a3af5",
+  "started_at": "2026-10-16T05:45:46.132367+00:00",
+  "expected_exit_code": 2,
+  "ci_run": 38854925885,
+  "exposure_until_completed_receipt": "UNKNOWN"
+}

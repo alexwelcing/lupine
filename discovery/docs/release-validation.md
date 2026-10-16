@@ -493,3 +493,16 @@ stale probe-hash pins; independent review and the explicit fixed-pin repair
 passed 48 focused package tests. The original failed run remains preserved in
 the current increment's report. Require complete exact-commit CI and a clean
 retained package before claiming the new source checkpoint verified.
+
+## Renewed prospective planning and source custody — October 16
+
+The published planner/custody source `5addf4f` passed all four exact-commit CI
+jobs and clean retained-package verification. [Actual custody evidence](../reports/phase2-publication-custody-v1/README.md)
+records verified Li v3 bytes and two identical layout blocks before decompression.
+This does not establish schema, pairing, independent units or a new scientific
+result. The subsequent [planning interface checks](../reports/phase2-study-workbench-v1/README.md)
+exercise exact HTTP/CLI agreement, stale-output handling and desktop/mobile
+rendering. Their candidate/combined checks and final-source CI are separately
+identified. Hypothetical threshold probability and zero-failure resolution are
+planning arithmetic, not observed coverage, power, useful reduction or a
+scientific release gate. All prior scientific NO-GO decisions remain intact.

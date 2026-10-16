@@ -14,9 +14,12 @@ from .cli import certificate, replay_report
 from .coupled_io import preflight_json_text
 from .coupled_worker import CoupledWorkerError, MAX_CERTIFICATE_BYTES, MAX_DOCUMENT_BYTES, run_coupled
 from .evidence import fields
-from .serialization import loads
+from .serialization import encode, loads
+from .study_planning import plan_pool_threshold, plan_zero_failure_resolution
 
 MAX_BODY_BYTES = 2 * 1024 * 1024
+MAX_PLANNING_BODY_BYTES = 4096
+PLANNING_PATHS = frozenset({"/api/plan-pool", "/api/plan-zero-loss"})
 # Verification accepts exported receipts larger than an input problem. Six
 # bytes per source byte accommodates JSON string escaping in the outer envelope;
 # the child still enforces the separate 256 KiB problem and 2 MiB receipt caps.
@@ -29,6 +32,7 @@ ASSETS = {"/": ("index.html", "text/html; charset=utf-8"),
           "/index.html": ("index.html", "text/html; charset=utf-8"),
           "/styles.css": ("styles.css", "text/css; charset=utf-8"),
           "/mpea.js": ("mpea.js", "text/javascript; charset=utf-8"),
+          "/planner.js": ("planner.js", "text/javascript; charset=utf-8"),
           "/app.js": ("app.js", "text/javascript; charset=utf-8")}
 
 
@@ -161,13 +165,24 @@ class WorkbenchHandler(BaseHTTPRequestHandler):
             if self.headers.get("Transfer-Encoding"):
                 raise ValueError("Chunked request bodies are not supported.")
             length = int(self.headers.get("Content-Length", "-1"))
-            body_cap = MAX_VERIFY_BODY_BYTES if path == "/api/verify" else MAX_BODY_BYTES
+            body_cap = (MAX_PLANNING_BODY_BYTES if path in PLANNING_PATHS else
+                        MAX_VERIFY_BODY_BYTES if path == "/api/verify" else MAX_BODY_BYTES)
             if not 0 <= length <= body_cap:
                 self.error(413, f"Send a JSON document of at most {body_cap} bytes.")
                 return
             value = loads(preflight_json_text(self.rfile.read(length),
                                              max_bytes=body_cap, max_depth=32))
-            if path == "/api/select":
+            if path == "/api/plan-pool":
+                fields(value, ("calibration_count", "alpha", "cutoff"), ("iid_score_probability",))
+                plan = plan_pool_threshold(value["calibration_count"], value["alpha"], value["cutoff"],
+                                           value.get("iid_score_probability"))
+                result = {"schema": "lupine.discovery.pool_threshold_plan.v1", "plan": encode(plan)}
+            elif path == "/api/plan-zero-loss":
+                fields(value, ("loss_ceiling", "significance", "maximum_evaluation_panels"))
+                plan = plan_zero_failure_resolution(value["loss_ceiling"], value["significance"],
+                                                     value["maximum_evaluation_panels"])
+                result = {"schema": "lupine.discovery.zero_failure_resolution_plan.v1", "plan": encode(plan)}
+            elif path == "/api/select":
                 if isinstance(value, dict) and "problem_raw" in value:
                     fields(value, ("problem_raw",))
                     result = run_coupled("select", value["problem_raw"])

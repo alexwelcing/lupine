@@ -3,6 +3,7 @@ from hashlib import sha256
 import importlib.util
 from io import StringIO
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -295,10 +296,28 @@ class PackageRetentionTests(unittest.TestCase):
         self.assertFalse(list(moved.iterdir()))
         self.assertFalse((outside/'report.json').exists())
 
-    def test_reviewed_fourteen_check_probe_is_pinned(self):
-        # Reviewed six-mode and prospective-planning installed probe (14 checks).
+    def test_child_cannot_import_caller_pythonpath_but_keeps_other_settings(self):
+        source_only = self.base / 'caller-source'
+        source_only.mkdir()
+        (source_only / 'lupine_path_canary.py').write_text('VALUE = "synthetic"\n')
+        command = [sys.executable, '-c',
+                   'import importlib.util,json,os; print(json.dumps({'
+                   '"source_visible":importlib.util.find_spec("lupine_path_canary") is not None,'
+                   '"marker":os.environ.get("LUPINE_TEST_CHILD_MARKER")}))']
+        environment = {**os.environ, 'PYTHONPATH': str(source_only),
+                       'LUPINE_TEST_CHILD_MARKER': 'preserved-synthetic-setting'}
+        control = subprocess.run(command, cwd=self.base, env=environment,
+                                 capture_output=True, text=True, check=True)
+        self.assertTrue(json.loads(control.stdout)['source_visible'])
+        with patch.dict(os.environ, environment, clear=True):
+            isolated = json.loads(self.original_checked(command, self.base))
+        self.assertFalse(isolated['source_visible'])
+        self.assertEqual(isolated['marker'], 'preserved-synthetic-setting')
+
+    def test_reviewed_fifteen_check_probe_is_pinned(self):
+        # Reviewed six-mode and prospective-planning installed probe (15 checks).
         # Deliberate changes require an explicit reviewed fixed-hash update.
-        self.assertEqual(sha256(smoke.PROBE.encode()).hexdigest(), '7a3ff2ba325165f2123593412ca6ec53c7311caf4efd60036d65b7325ac745d6')
+        self.assertEqual(sha256(smoke.PROBE.encode()).hexdigest(), '0f3a266c196c1b86bc2c77b89026b9c19d5f19dce86d1cbf6d0ea047c476c15a')
 
 
 

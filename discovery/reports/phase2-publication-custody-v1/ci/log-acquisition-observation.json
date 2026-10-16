@@ -1,0 +1,11 @@
+{
+  "observed_at": "2026-10-16T05:38:34.947714+00:00",
+  "action": "GitHub completed Python3.11 job log download",
+  "job_id": 116824140846,
+  "result": "FAILED_FORBIDDEN_ON_REDIRECT",
+  "received_log_bytes": 0,
+  "log_content_or_test_count_verified": false,
+  "raw_redirect_query": "not retained in this public-safe observation",
+  "job_status_verification": "separate GitHub jobs API observation; successful job status does not imply log download succeeded",
+  "followup": "Use exact-commit workflow/job conclusions; do not claim an independently parsed CI test count or artifact download."
+}

@@ -12,8 +12,9 @@ the exposed archival studies.
 The exact [planner](../../docs/study-planning.md) distinguishes a finite
 calibration rank from the chance of achieving a useful threshold. Its
 `plan-pool` CLI accepts a fixed count, risk and cutoff; an optional score
-probability supplies a **hypothetical IID premise**. Omission preserves an
-unknown probability. No count supplies a distribution-free reduction claim.
+probability supplies a **hypothetical IID premise**. For a feasible rank,
+omission preserves an unknown probability. An infeasible rank gives deterministic
+zero for a cutoff below one. No count supplies a distribution-free reduction claim.
 `plan-zero-loss` computes best-case evaluation resolution **if zero losses
 occur**; it does not compute power, observe results or attest independence.
 Both commands reject oversized/exponent inputs and read no outcome document.

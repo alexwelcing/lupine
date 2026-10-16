@@ -1,13 +1,16 @@
 # Project state
 
-**Active phase, October 16:** Alex resumed development. The next increment adds
-prospective study planning, a fresh-source metadata audit and a fixed-source
-Li capture/envelope tool. Focused tests pass; the first 1,388-test full run had
-nine stale probe-pin failures, preserved with their reviewed repair. Complete
-final-source CI and real acquisition are pending. [GOAL](GOAL.md#renewed-active-work--2026-10-16) records
-the current owners and acceptance criteria. The preview evidence below remains
-bound to its original source. Scientific usefulness remains NO-GO and the old
-bounded automation remains disabled.
+**Active phase, October 16:** The published exact planner/custody source
+`5addf4f` passed all four GitHub CI jobs and clean retained-package verification.
+The integrated study-planning interface now passes 65 full browser checks and
+installed HTTP/CLI agreement; a reproduced package environment leak is repaired
+with a real-child regression. New exact-source publication/CI is pending.
+[Actual Li acquisition](reports/phase2-publication-custody-v1/README.md) matched
+publisher-declared size and MD5, then twice blocked on ZIP layout before any decompression
+or XML/worksheet decoding. A separately reviewed header-only diagnostic passes all 46 integrated Li checks;
+its real-source execution awaits publication and verified CI.
+[GOAL](GOAL.md#renewed-active-work--2026-10-16) records ownership and next actions.
+Scientific usefulness remains NO-GO; the original automation remains disabled.
 
 Snapshot: 2026-10-11 01:40 UTC (exact CI observation `2026-10-11T01:40:16.973611+00:00`). Tested runtime/artifact source: `6585a605d5d325e84423c7e35c7286efe85cfb6f`. [Scoped decision and evidence](reports/research-preview-decision.md).
 

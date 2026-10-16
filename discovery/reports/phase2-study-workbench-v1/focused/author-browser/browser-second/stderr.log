@@ -1,0 +1,65 @@
+Exception in callback Connection.dispatch.<locals>._done_callback(<Task cancell..._page.py:294>>) at /opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_connection.py:539
+handle: <Handle Connection.dispatch.<locals>._done_callback(<Task cancell..._page.py:294>>) at /opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_connection.py:539>
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-planner-ui-candidate-v1/run_browser_candidate.py", line 19, in <module>
+    checks=check_planning_workbench(page,artifacts)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-planner-ui-candidate-v1/browser-overlay/scripts/planning_browser_checks.py", line 141, in check_planning_workbench
+    assert len(held) == 2
+           ^^^^^^^^^^^^^^
+AssertionError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/asyncio/events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_connection.py", line 540, in _done_callback
+    exc = future.exception()
+          ^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_page.py", line 308, in _on_route
+    handled = await route_handler.handle(route)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_helper.py", line 442, in handle
+    return await self._handle_internal(route)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_helper.py", line 478, in _handle_internal
+    await handler_finished_future
+asyncio.exceptions.CancelledError
+Exception in callback Connection.dispatch.<locals>._done_callback(<Task cancell..._page.py:294>>) at /opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_connection.py:539
+handle: <Handle Connection.dispatch.<locals>._done_callback(<Task cancell..._page.py:294>>) at /opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_connection.py:539>
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-planner-ui-candidate-v1/run_browser_candidate.py", line 19, in <module>
+    checks=check_planning_workbench(page,artifacts)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-planner-ui-candidate-v1/browser-overlay/scripts/planning_browser_checks.py", line 141, in check_planning_workbench
+    assert len(held) == 2
+           ^^^^^^^^^^^^^^
+AssertionError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/asyncio/events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_connection.py", line 540, in _done_callback
+    exc = future.exception()
+          ^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_page.py", line 308, in _on_route
+    handled = await route_handler.handle(route)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_helper.py", line 442, in handle
+    return await self._handle_internal(route)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_helper.py", line 484, in _handle_internal
+    return await handled_future
+           ^^^^^^^^^^^^^^^^^^^^
+asyncio.exceptions.CancelledError
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-planner-ui-candidate-v1/run_browser_candidate.py", line 19, in <module>
+    checks=check_planning_workbench(page,artifacts)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-planner-ui-candidate-v1/browser-overlay/scripts/planning_browser_checks.py", line 141, in check_planning_workbench
+    assert len(held) == 2
+           ^^^^^^^^^^^^^^
+AssertionError

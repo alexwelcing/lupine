@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-m",
+    "unittest",
+    "test_server.ServerTests.test_selection_matches_cli_and_does_not_need_truth",
+    "test_server.ServerTests.test_strict_wire_json_duplicate_and_float_rejected",
+    "-v"
+  ],
+  "PYTHONPATH": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-planner-ui-candidate-v1/browser-overlay/src:/workspace/lupine-discovery-branch/discovery/tests",
+  "started_at": "2026-10-16T05:34:30.538410+00:00",
+  "finished_at": "2026-10-16T05:34:31.453472+00:00",
+  "duration_seconds": 0.9150625029997173,
+  "exit_code": 0,
+  "before_sha256": {
+    "tests/test_server.py": "c3ca3669906eb6431fc6875726f430d5593be21dd519f800c4b6a56126264f23",
+    ".cache/phase2-planner-ui-candidate-v1/browser-overlay/src/lupine_discovery/server.py": "c2c0e436cf836c4c55b0e0060284f55b45db446614438e883f2777cbae0e943d"
+  },
+  "after_sha256": {
+    "tests/test_server.py": "c3ca3669906eb6431fc6875726f430d5593be21dd519f800c4b6a56126264f23",
+    ".cache/phase2-planner-ui-candidate-v1/browser-overlay/src/lupine_discovery/server.py": "c2c0e436cf836c4c55b0e0060284f55b45db446614438e883f2777cbae0e943d"
+  },
+  "scope": "Two unchanged legacy HTTP tests: synthetic selection CLI parity and strict JSON rejection. No resource/outcome/archival endpoints used."
+}

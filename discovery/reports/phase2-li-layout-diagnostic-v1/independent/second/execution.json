@@ -1,0 +1,33 @@
+{
+  "scope": "Independent synthetic header-only regression after test scratch-parent portability fix; promoted source identical to candidate. No real source/cache, decompression, XML or network access.",
+  "started_at": "2026-10-16T05:58:09.730640+00:00",
+  "source_before": {
+    "scripts/li_v3_zip_diagnostic.py": "de7807a8721cc243a9acf71e01c80aa531454248b2cde92c5518f875e89e0d87",
+    "docs/li-v3-zip-diagnostic-plan.md": "e3726819a1c4a133f90ba28a2bfa0bd7ed8e52454f21a61275bfbc8f76dcf6f1",
+    ".cache/phase2-li-layout-review-v1/test_li_v3_zip_diagnostic_review.py": "0c3609f46cd244abe64dfdb1fa32e829bc0a16316539a2aea276b061df5413e3"
+  },
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-layout-review-v1",
+    "-p",
+    "test_li_v3_zip_diagnostic_review.py",
+    "-v"
+  ],
+  "finished_at": "2026-10-16T05:58:10.056138+00:00",
+  "elapsed_seconds": 0.324548796000272,
+  "exit_code": 0,
+  "source_after": {
+    "scripts/li_v3_zip_diagnostic.py": "de7807a8721cc243a9acf71e01c80aa531454248b2cde92c5518f875e89e0d87",
+    "docs/li-v3-zip-diagnostic-plan.md": "e3726819a1c4a133f90ba28a2bfa0bd7ed8e52454f21a61275bfbc8f76dcf6f1",
+    ".cache/phase2-li-layout-review-v1/test_li_v3_zip_diagnostic_review.py": "0c3609f46cd244abe64dfdb1fa32e829bc0a16316539a2aea276b061df5413e3"
+  },
+  "source_unchanged": true,
+  "logs": {
+    "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr.log": "2c2fc76ce03998b6e214b60f1198569f1ecf095573c6adf1da765cab67908b43"
+  }
+}

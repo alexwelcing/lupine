@@ -1,0 +1,16 @@
+{
+  "files": [
+    {
+      "source": ".cache/phase2-li-schema-gates-v1/README.md",
+      "destination": "README.md",
+      "bytes": 9573,
+      "sha256": "1d293554cb5e933df913f21333ed20e274e0b5a569aa6315fded0ac62eb6bb3c"
+    },
+    {
+      "source": ".cache/phase2-li-schema-gates-v1/source-bindings.json",
+      "destination": "source-bindings.json",
+      "bytes": 2436,
+      "sha256": "f9ebe120a290a1e935e77182a67bf75ae8ba5ca56d7271574cb6bdb5a6bc5303"
+    }
+  ]
+}

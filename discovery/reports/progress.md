@@ -1207,3 +1207,65 @@ clean package, then execute only the committed fixed Li capture/envelope plan.
 Scientific pairing, count discrepancy and independent panels remain unknown;
 all prior negatives and physical/general-superiority NO-GO remain unchanged.
 No new schedule, fitting, allocation, exposed-test tuning or DFT occurred.
+
+## 2026-10-16T05:55:01.427347+00:00 — published source verified; actual Li layout block; interface integrated
+
+Root verified exact branch/PR source `5addf4f80e345afa50a4bcc26b9db24d220a3af5`.
+[Push run 38854925885](https://github.com/alexwelcing/lupine/actions/runs/38854925885)
+completed successfully in all four jobs. The optional job-log download was
+denied by storage; no remote test count or artifact bytes are inferred from it.
+The clean package and strict retained-artifact verifier passed locally at the
+exact commit: 28 demonstrations, six schemas, 14 ordered checks and 300
+unchanged runtime files. [Actual publication/custody evidence](phase2-publication-custody-v1/README.md).
+
+Only after that verification, the fixed Li v3 capture acquired 183,878 bytes,
+matching publisher size/MD5 and SHA-256
+`9741f826f6a97db7c2c0efa89820d3bdae43e8beb53cafd893ccdf0bb74f64fa`.
+Both subsequent envelope runs returned byte-identical BLOCKED_SCHEMA /
+BLOCKED_LAYOUT / ZIP_LAYOUT_UNSUPPORTED, with no decompression or XML/worksheet
+decoding. The complete target-bearing raw buffer was read. Pairing, conditions,
+units, overlap, row counts and independent units remain unknown. The generic
+category does not identify a cause or prove archive corruption. The original
+object, five frozen files and actual blocked receipts remain unchanged.
+
+The planning browser/API increment was independently reviewed and exercised.
+The first combined overlay passed 31 HTTP, 48 package and 23 retained-artifact
+tests, then failed installed import: inherited absolute PYTHONPATH caused pip
+to see source as already installed. A real-wheel negative control reproduced
+the skip plus isolated import failure. The reviewed repair removes only that
+child variable and adds a real-child canary test. The repaired overlay passed
+49 package tests, 28 installed cases/six schemas/15 checks, and all 65 maintained
+browser checks with zero JavaScript errors. All 303 runtime bytes stayed fixed
+during each repaired command; the 14 mapped files were then promoted exactly.
+[Combined and every focused attempt](phase2-study-workbench-v1/README.md) preserve
+the package failure, browser harness failures and deliberate stale-response
+mutation failure. These are precommit checks; new exact-source CI is pending.
+
+The new interface computes no JavaScript probabilities; it displays and exports
+the same exact Python objects as the CLI. Unknown score laws, hypothetical IID
+assumptions, infeasible-rank zero and zero-failure resolution versus power remain
+explicit. [Risk-contract source review](phase2-risk-contracts-v1/README.md) keeps
+marginal expected loss distinct from high-confidence fixed-policy risk; no new
+algorithm, loss or evaluation criterion was selected. [Source admissibility](phase2-li-schema-gates-v1/README.md)
+separates documentary semantics, row metadata, later validity checks and sampling
+premises. No new scientific allocation, model fit, DFT or exposed-test retuning.
+
+Owner/checkpoint: root integrates and publishes; evidence author and independent
+mathematical reviewer prepare a separate header-only ZIP diagnostic with a
+closed first-failure category, historical identity bridge and synthetic controls.
+Next: complete its review/tests, publish this increment, verify exact remote/CI
+and clean retained package, then execute only that frozen diagnostic. G21 stays
+blocked and all scientific NO-GO results stand. The old automation stays disabled;
+no new schedule or independent continuous worker has been started.
+
+### Header diagnostic integration before publication
+
+[Separate reviewed diagnostic](phase2-li-layout-diagnostic-v1/README.md) is now
+promoted exactly. Thirteen author and eight independent synthetic tests pass;
+all 46 integrated Li checks pass with 306 unchanged runtime files. Root's review
+required unknown partial-read exposure rather than a false zero-exposure claim.
+The independent test's scratch directory was made portable and rerun; both
+actual passes and the earlier author pass remain retained. Old capture/object
+and five frozen files are unchanged. No real header diagnostic has executed.
+Root now owns publish, exact remote/CI verification and clean package, followed
+by the source-frozen diagnostic only. G20/G21 scientific gates remain unresolved.

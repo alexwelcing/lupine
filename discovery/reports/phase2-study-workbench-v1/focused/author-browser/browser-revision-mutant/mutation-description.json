@@ -1,0 +1,7 @@
+{
+  "kind": "synthetic_negative_control_not_for_promotion",
+  "mutation": "Remove exactly two revision-mismatch early returns from planner.js; no other product file changes.",
+  "original_sha256": "431634f2e04483ee4ccaba9068d18a91391d90648f72f96f269b5e9c60f01628",
+  "mutant_sha256": "6e972d94328944228094969c13d253a0c1cc99e9b53650186a55c7d3886eb74c",
+  "expected": "Browser checker must fail on stale response behavior; an exit0 would invalidate this sensitivity claim."
+}

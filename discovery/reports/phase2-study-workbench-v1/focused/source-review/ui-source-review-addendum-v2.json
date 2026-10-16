@@ -1,0 +1,44 @@
+{
+  "reviewed_at": "2026-10-16T05:28:36.929385+00:00",
+  "reviewer": "/root/phase2_planner/ui_review",
+  "implementation_author": "/root/phase2_planner",
+  "review_kind": "source_only_addendum",
+  "status": "NO_BLOCKING_FINDING_IN_REVIEWED_SOURCE",
+  "prior_review": "ui-source-review.json",
+  "prior_review_sha256": "66ea60f6795905a6551dbb14c5c25d3b099dfb144f8e158e909a14bfb73498b5",
+  "source_sha256": {
+    "promotion/src/lupine_discovery/server.py": "c2c0e436cf836c4c55b0e0060284f55b45db446614438e883f2777cbae0e943d",
+    "promotion/src/lupine_discovery/web/app.js": "00ac39514bb794ac990799a4d6146239bee0ed6e286f1f95d5ac1d719ddd5025",
+    "promotion/src/lupine_discovery/web/planner.js": "431634f2e04483ee4ccaba9068d18a91391d90648f72f96f269b5e9c60f01628",
+    "promotion/src/lupine_discovery/web/index.html": "bf7a22879251587986d3802ffea734d775b68fc309d95a40fb0609c5ecbe775d",
+    "promotion/src/lupine_discovery/web/styles.css": "23b439d2f1b60bd5837bddf113d215d7e1dee14f21324075a030e802f13d9fdf"
+  },
+  "changed_since_prior_review": [
+    "promotion/src/lupine_discovery/web/planner.js",
+    "promotion/src/lupine_discovery/web/styles.css"
+  ],
+  "findings": [],
+  "reviewed_changes": [
+    "fact() converts the supplied scalar to its complete string once and assigns that entire string via textContent. It does not slice, round, abbreviate or recompute the exact value.",
+    "For displayed strings longer than 96 characters, the value element is keyboard focusable with tabIndex = 0, role = region and a label describing the full exact value and vertical scrolling.",
+    "The long-value class applies max-height: 150px and overflow: auto, with a visible keyboard-focus outline. Existing long-word wrapping remains in force. Rendered height, focus and scrolling require browser verification.",
+    "The JSON export still serializes the stored complete response object; long-value presentation does not change record contents or the export path.",
+    "The rank-infeasible status explicitly identifies threshold-event probability zero as deterministic and disclaims a calibrated guarantee. Its supporting paragraph retains the tau = 1 fallback and cutoff-below-one premise.",
+    "The index help explicitly distinguishes missing score probability p from zero. Its hash is already identical to the prior sealed source review, so this addendum does not claim a new index edit after that receipt.",
+    "Loss ceiling and significance are now separate labeled facts; both use full exact values. No change to mathematical calculations or the API request occurs.",
+    "Input invalidation, revision checks for stale responses and errors, no-outcomes request shape, hypothetical-premise validation and negative scientific wording remain intact."
+  ],
+  "http_test_carry_forward": {
+    "candidate_server_unchanged": true,
+    "new_http_test_run": false,
+    "prior_execution_receipt": "execution.json",
+    "prior_execution_receipt_sha256": "5d34061124935de12593f9ff36b09d2b5208aa28cb6c3f06ec6eda1762bcd46e",
+    "scope": "Existing 15-test HTTP result remains bound to the unchanged server; it is not a test of the new display styling."
+  },
+  "limitations": [
+    "No browser execution, screenshot inspection, rendered-height measurement, scrolling action or keyboard-focus test was performed by this reviewer.",
+    "Author browser runs, if successful, are separate execution evidence and are not attested here.",
+    "Review applies only to listed source bytes. Future changes require identity checking or renewed review.",
+    "This is internal separate-agent source review, not independent scientific replication, physical validation or evidence of improved scientific usefulness."
+  ]
+}

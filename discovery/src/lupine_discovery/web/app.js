@@ -1046,13 +1046,13 @@
     const link = node('a'); link.href = url; link.download = name; document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
   function setView(view) {
-    const valid = view === 'benchmarks' ? 'benchmarks' : 'workbench';
-    for (const name of ['workbench', 'benchmarks']) {
+    const valid = ['benchmarks', 'planning'].includes(view) ? view : 'workbench';
+    for (const name of ['workbench', 'benchmarks', 'planning']) {
       $(`view-${name}`).hidden = name !== valid;
       const button = $(`nav-${name}`); button.classList.toggle('active', name === valid);
       if (name === valid) button.setAttribute('aria-current', 'page'); else button.removeAttribute('aria-current');
     }
-    $('breadcrumb-current').textContent = valid === 'workbench' ? 'Candidate pool' : 'Known answers';
+    $('breadcrumb-current').textContent = { workbench: 'Candidate pool', benchmarks: 'Known answers', planning: 'Study planning' }[valid];
     if (valid === 'benchmarks' && !state.benchmarksLoaded) loadBenchmarks();
     history.replaceState(null, '', `#${valid}`);
   }

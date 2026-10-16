@@ -1,0 +1,226 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-10-16T05:38:05.579963+00:00",
+  "status": "READY_FOR_ROOT_INTEGRATION",
+  "owner": "/root/phase2_planner",
+  "promotion_map": {
+    "path": ".cache/phase2-planner-ui-candidate-v1/promotion-map.json",
+    "sha256": "e29e3290edcae433742158ea7d1d5c44fbc0cd41bdbedad61c062c5888f6f11b",
+    "bytes": 4087
+  },
+  "summary": "Outcome-free exact planning is available through two strictly bounded loopback HTTP routes and an accessible third workbench view. Unknown p, deterministic infeasible-rank zero, unverified IID assumptions, and best-case zero-failure resolution remain distinct. All mathematical calculations stay in Python.",
+  "current_product_source_frozen": true,
+  "runs": [
+    {
+      "name": "review-http-first",
+      "status": "PASS",
+      "executed_checks_or_tests": 15,
+      "exit_code": 0,
+      "elapsed_seconds": 1.1189910769999187,
+      "source_unchanged": true,
+      "receipt": {
+        "path": ".cache/phase2-planner-ui-candidate-v1/review-http-first/execution.json",
+        "sha256": "8d1bfbf5273d6719239fdbc9d0d625d0919e7fad19cc8b8d35ee229476d8b65c",
+        "bytes": 7165
+      },
+      "note": "Separate child-agent real loopback HTTP tests under the original review filename; original source retained."
+    },
+    {
+      "name": "review-http-neutral-name",
+      "status": "PASS",
+      "executed_checks_or_tests": 15,
+      "exit_code": 0,
+      "elapsed_seconds": 1.369857975999821,
+      "source_unchanged": true,
+      "receipt": {
+        "path": ".cache/phase2-planner-ui-candidate-v1/review-http-neutral-name/execution.json",
+        "sha256": "5d34061124935de12593f9ff36b09d2b5208aa28cb6c3f06ec6eda1762bcd46e",
+        "bytes": 7492
+      },
+      "note": "Same 15 HTTP tests under final neutral filename/class. This is the promoted test source."
+    },
+    {
+      "name": "legacy-http-focused",
+      "status": "PASS",
+      "executed_checks_or_tests": 2,
+      "exit_code": 0,
+      "elapsed_seconds": 0.9150625029997173,
+      "source_unchanged": true,
+      "receipt": {
+        "path": ".cache/phase2-planner-ui-candidate-v1/legacy-http-focused/execution.json",
+        "sha256": "5e90a9e6e8ee03807f872d92d5545de88150baf4ff278b722b28ed57220259b3",
+        "bytes": 1351
+      },
+      "note": "Existing selection CLI agreement and strict wire JSON duplicate/float rejection tests only."
+    },
+    {
+      "name": "browser-first",
+      "status": "PASS",
+      "executed_checks_or_tests": 9,
+      "exit_code": 0,
+      "elapsed_seconds": 13.154371398999956,
+      "source_unchanged": true,
+      "receipt": {
+        "path": ".cache/phase2-planner-ui-candidate-v1/browser-first/execution.json",
+        "sha256": "9b2e5bc25eec0b9919dea40af7e41a2e7e1ccabbbbc5c337cd000a88890c981f",
+        "bytes": 17170
+      },
+      "note": "Initial real Chromium run. Long exact values were fully wrapped but not height-bounded; later presentation improved."
+    },
+    {
+      "name": "browser-second",
+      "status": "HARNESS_FAILURE_PRESERVED",
+      "executed_checks_or_tests": null,
+      "exit_code": 1,
+      "elapsed_seconds": 5.66761649099999,
+      "source_unchanged": true,
+      "receipt": {
+        "path": ".cache/phase2-planner-ui-candidate-v1/browser-second/execution.json",
+        "sha256": "a26f3a6b03eda9125c47afa0e1f480cdac0a6eb13fa1ce22853ad6cdb57bc282",
+        "bytes": 17378
+      },
+      "note": "Race harness asserted two held responses before the second route.fetch callback completed. Explicit response-capture synchronization and cleanup added."
+    },
+    {
+      "name": "browser-third",
+      "status": "HARNESS_FAILURE_PRESERVED",
+      "executed_checks_or_tests": null,
+      "exit_code": 1,
+      "elapsed_seconds": 6.020746744999997,
+      "source_unchanged": true,
+      "receipt": {
+        "path": ".cache/phase2-planner-ui-candidate-v1/browser-third/execution.json",
+        "sha256": "75731c7697132930d53d32461ee178e851a84d3caa17ac95307a784dfef00044",
+        "bytes": 17428
+      },
+      "note": "Playwright string wait_for_function violated existing CSP unsafe-eval restriction. Harness switched to locator/data-attribute synchronization; CSP unchanged."
+    },
+    {
+      "name": "browser-fourth",
+      "status": "PASS",
+      "executed_checks_or_tests": 9,
+      "exit_code": 0,
+      "elapsed_seconds": 6.202774886000043,
+      "source_unchanged": true,
+      "receipt": {
+        "path": ".cache/phase2-planner-ui-candidate-v1/browser-fourth/execution.json",
+        "sha256": "4d7900d13bfea26c69b2fd51d5ab972d145c5709bec25edc61e51355fed7cea0",
+        "bytes": 17444
+      },
+      "note": "Normal product with final long-value containment; final helper later added screenshot-only scroll-to-top."
+    },
+    {
+      "name": "browser-revision-mutant",
+      "status": "EXPECTED_NEGATIVE_CONTROL_FAILURE",
+      "executed_checks_or_tests": null,
+      "exit_code": 1,
+      "elapsed_seconds": 6.4816144679998615,
+      "source_unchanged": true,
+      "receipt": {
+        "path": ".cache/phase2-planner-ui-candidate-v1/browser-revision-mutant/execution.json",
+        "sha256": "b28c7fe6d681fbe57ae39f4e6a25867b3f35841b4aced4124d1f92a6e92da0a5",
+        "bytes": 17323
+      },
+      "note": "Isolated synthetic mutant removed both revision-mismatch guards. Actual process exit 1 at stale-result equality assertion. Never promote mutant."
+    },
+    {
+      "name": "browser-final",
+      "status": "PASS",
+      "executed_checks_or_tests": 9,
+      "exit_code": 0,
+      "elapsed_seconds": 8.36612215599962,
+      "source_unchanged": true,
+      "receipt": {
+        "path": ".cache/phase2-planner-ui-candidate-v1/browser-final/execution.json",
+        "sha256": "80dadd5420f3ff41c3ca3834a67698d0c700805921b89efee7c9e0b450ba4bd5",
+        "bytes": 17413
+      },
+      "note": "Exact final product and helper; no JavaScript errors; all 66 copied source/resource files unchanged before and after."
+    }
+  ],
+  "reviews": [
+    {
+      "path": ".cache/phase2-planner-ui-candidate-v1/review-http-neutral-name/review.json",
+      "sha256": "d8d5c543933c33558f21af8133d0f53609c1cabb56bfdc4921f88de583a47d88",
+      "bytes": 2245
+    },
+    {
+      "path": ".cache/phase2-planner-ui-candidate-v1/review-http-neutral-name/ui-source-review.json",
+      "sha256": "66ea60f6795905a6551dbb14c5c25d3b099dfb144f8e158e909a14bfb73498b5",
+      "bytes": 2713
+    },
+    {
+      "path": ".cache/phase2-planner-ui-candidate-v1/review-http-neutral-name/ui-source-review-addendum-v2.json",
+      "sha256": "9ef2e886725386850e65a3486871a09e82db187ddde500b8e0a82982666a2d00",
+      "bytes": 3692
+    },
+    {
+      "path": ".cache/phase2-planner-browser-review-v1/review.json",
+      "sha256": "5fdf8cadb72756560b04922354dc11336ecd7af447fb138b1b70671aee5cbff6",
+      "bytes": 3268
+    }
+  ],
+  "independent_browser_review": {
+    "checks": 6,
+    "actual_runs": 2,
+    "both_passed": true,
+    "review": ".cache/phase2-planner-browser-review-v1/review.json",
+    "scope": "Separate agent authored and executed its own Chromium harness without author helper; bounded visual inspection included."
+  },
+  "final_author_screenshots": [
+    {
+      "path": ".cache/phase2-planner-ui-candidate-v1/browser-final/artifacts/desktop-planning.png",
+      "sha256": "bbb2c18f75b23035433a6b782ee45a9026338ef5b93a766103731f20e473f94b",
+      "bytes": 241215
+    },
+    {
+      "path": ".cache/phase2-planner-ui-candidate-v1/browser-final/artifacts/mobile-320-large-exact.png",
+      "sha256": "24a0903bc0ff095ba5fa9659725e958f73a5a3f64a7adf428f196745a17c6581",
+      "bytes": 275484
+    },
+    {
+      "path": ".cache/phase2-planner-ui-candidate-v1/browser-final/artifacts/mobile-320-planning.png",
+      "sha256": "456f2064290f7e810a605b3f6db19f510fbc3c87eeb590303a0003d73504310d",
+      "bytes": 217868
+    },
+    {
+      "path": ".cache/phase2-planner-ui-candidate-v1/browser-final/artifacts/mobile-390-planning.png",
+      "sha256": "3240cf00ebfdd718101be952ce3cc8951e90951d532e454fd71031eb2e1999da",
+      "bytes": 218230
+    }
+  ],
+  "mutation_description": {
+    "path": ".cache/phase2-planner-ui-candidate-v1/browser-revision-mutant-description.json",
+    "sha256": "703a3e9121255feb005a8dee47f852040ca7eec63a08a5e444010f7ed0faada8",
+    "bytes": 474
+  },
+  "author_visual_review": "Final mobile-320 maximum-valid-fraction screenshot actually inspected. Full exact text is inside labeled keyboard-focusable scroll regions, with no page overflow; this is not a comprehensive accessibility or device certification.",
+  "engineering_scope": [
+    "15 added real HTTP tests, 2 selected unchanged legacy HTTP tests, 9 author browser groups and 6 separate-agent browser groups executed.",
+    "Normal browser execution overlay contains six synthetic catalogs/problems and copied modules/assets only; no outcome files or archival reports.",
+    "Browser runner explicitly forbids benchmark-report and outcome-reading functions.",
+    "All historical browser attempts and raw logs preserved, including two harness failures and one labeled expected mutation failure.",
+    "JavaScript syntax and Python in-memory compilation were executed successfully; these observations are not test-suite or CI passes."
+  ],
+  "scientific_scope": {
+    "new_scientific_experiment": false,
+    "new_archive_access": false,
+    "observed_outcomes_used": false,
+    "claim_promotion": false,
+    "scientific_usefulness": "UNESTABLISHED",
+    "scientific_no_go_unchanged": true
+  },
+  "pending_root_work": [
+    "Review and promote only the nine mapped files after current checkpoint verification.",
+    "Integrate package-probe extension owned by root and run focused package checks.",
+    "Run existing integrated browser smoke and required broader validation on combined promoted source.",
+    "Refresh release manifest, publish source checkpoint and verify exact-commit CI."
+  ],
+  "not_claimed": [
+    "Full unittest suite run for this UI candidate",
+    "Full existing browser smoke run for this UI candidate",
+    "Package reproduction or CI for this UI candidate",
+    "Empirical IID law or physical accuracy",
+    "Scientific usefulness, power, or mathematical refinement"
+  ]
+}

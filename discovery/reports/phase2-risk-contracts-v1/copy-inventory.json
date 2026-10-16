@@ -1,0 +1,22 @@
+{
+  "files": [
+    {
+      "source": ".cache/phase2-risk-contracts-v1/README.md",
+      "destination": "README.md",
+      "bytes": 5034,
+      "sha256": "de10ef8fd4d6cc6b78fd70ebc00518fd9c76139634861a0d8d62c8c009041633"
+    },
+    {
+      "source": ".cache/phase2-risk-contracts-v1/source-bindings.json",
+      "destination": "source-bindings.json",
+      "bytes": 1847,
+      "sha256": "334983595fa70f47a2b94960581c01ffa9f350ab2167ec2434e8064dd79bc48e"
+    },
+    {
+      "source": ".cache/phase2-risk-contracts-v1/independent-review.json",
+      "destination": "independent-review.json",
+      "bytes": 1103,
+      "sha256": "6b8932fbd1b1c96e7177e6b14dfb29f221e5204cc896ff29a7f767a12548919d"
+    }
+  ]
+}

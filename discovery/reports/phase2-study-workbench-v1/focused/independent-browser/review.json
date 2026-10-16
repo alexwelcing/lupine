@@ -1,0 +1,62 @@
+{
+  "status": "PASS",
+  "reviewed_at": "2026-10-16T05:36:02.626929+00:00",
+  "owner": "phase2_math",
+  "scope": "Independent synthetic local Chromium planner behavior and visual review; no product edits, outcome reads, archive access or external network.",
+  "execution_groups": 6,
+  "actual_runs": [
+    {
+      "receipt": "first/execution.json",
+      "status": "PASS",
+      "exit_code": 0,
+      "elapsed_seconds": 5.053466481999749,
+      "source_unchanged": true,
+      "runner_preserved_as": "first/runner.py"
+    },
+    {
+      "receipt": "second/execution.json",
+      "status": "PASS",
+      "exit_code": 0,
+      "elapsed_seconds": 4.983432099000311,
+      "source_unchanged": true,
+      "runner_preserved_as": "independent_browser_review.py"
+    }
+  ],
+  "change_between_runs": "Only two screenshot-harness scroll-to-top calls were added after first full-page captures displaced fixed elements. No product source or assertions changed; first screenshots and original runner are preserved.",
+  "checks": [
+    "decimal_rational_equivalence_and_cutoff_zero_do_not_invent_a_score_law",
+    "blank_zero_and_one_are_distinct_even_at_cutoff_zero_without_scientific_promotion",
+    "zero_failure_equality_boundary_resolves_at_two_panels_without_observed_power_claim",
+    "keyboard_navigation_preserves_problem_and_input_edits_revoke_only_their_own_export",
+    "unsupported_guarantee_promotion_clears_result_export_and_valid_request_recovers",
+    "narrow_viewport_keyboard_and_request_scope_have_no_overflow_javascript_errors_or_outcome_fetches"
+  ],
+  "source_sha256": {
+    "src/lupine_discovery/server.py": "c2c0e436cf836c4c55b0e0060284f55b45db446614438e883f2777cbae0e943d",
+    "src/lupine_discovery/study_planning.py": "7a2b00bc81f8bc025b9bb3d6c6c212875d44a9839c4665ec67c86e46fe5f6d83",
+    "src/lupine_discovery/web/app.js": "00ac39514bb794ac990799a4d6146239bee0ed6e286f1f95d5ac1d719ddd5025",
+    "src/lupine_discovery/web/index.html": "bf7a22879251587986d3802ffea734d775b68fc309d95a40fb0609c5ecbe775d",
+    "src/lupine_discovery/web/styles.css": "23b439d2f1b60bd5837bddf113d215d7e1dee14f21324075a030e802f13d9fdf",
+    "src/lupine_discovery/web/planner.js": "431634f2e04483ee4ccaba9068d18a91391d90648f72f96f269b5e9c60f01628"
+  },
+  "visual_review": {
+    "actual_images_inspected": [
+      "first/independent-mobile-planner.png",
+      "first/independent-desktop-planner.png",
+      "second/independent-mobile-planner.png",
+      "second/independent-desktop-planner.png"
+    ],
+    "final_scope": "The second captures at 320px and 1280px show readable forms, explicit hypothetical assumptions, preserved unknown/error states and no horizontal overflow. This is a bounded Chromium inspection, not a full accessibility or device certification."
+  },
+  "remaining_blockers": [],
+  "scientific_experiment_run": false,
+  "scientific_claim_promoted": false,
+  "checks_do_not_establish": [
+    "empirical score law",
+    "sampling independence",
+    "materials performance",
+    "statistical power",
+    "mathematical refinement of JavaScript or Python"
+  ],
+  "reproduction": "PYTHONPATH=<candidate browser-overlay>/src python independent_browser_review.py <new directory directly inside this review folder>; the original candidate overlay must be present."
+}

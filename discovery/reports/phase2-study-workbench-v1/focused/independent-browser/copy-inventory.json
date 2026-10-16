@@ -1,0 +1,100 @@
+{
+  "scope": "Only independently authored review scripts, synthetic planning JSON, browser screenshots and real execution receipts/logs. No source datasets or archive outcomes.",
+  "files": [
+    {
+      "path": "first/execution.json",
+      "bytes": 3141,
+      "sha256": "30cc3fd4099a68a093cd91c23b18ef71533371a33cbfb0f1f85e3e515d542aab"
+    },
+    {
+      "path": "first/hypothetical-score-law-one.json",
+      "bytes": 1045,
+      "sha256": "548822e20a5e39395e70cf431ac71f4a627bc11dcbdeb90b21e9c5ddae7faf31"
+    },
+    {
+      "path": "first/independent-desktop-planner.png",
+      "bytes": 195259,
+      "sha256": "bf62d4b4d3e1382689c4fe6b8983ef484105df4a686893f4e0f73d42d682a5aa"
+    },
+    {
+      "path": "first/independent-mobile-planner.png",
+      "bytes": 171011,
+      "sha256": "e17f3c0407e8d20d0f3e6e6f8066d3a14a12201c8b8eb51e3009d712832a3920"
+    },
+    {
+      "path": "first/runner.py",
+      "bytes": 11539,
+      "sha256": "1131baece5487c3b17bfb9038da0832e9bb6c6d1be2d51b2ffaf7b3f5211c7b7"
+    },
+    {
+      "path": "first/unknown-score-law.json",
+      "bytes": 1054,
+      "sha256": "9d09022aa259a70b1d9c482595b90a281b4c88ac204ed57a5a232687f3729a18"
+    },
+    {
+      "path": "first/zero-failure-equality-boundary.json",
+      "bytes": 974,
+      "sha256": "27a0e10ca001e6fb1246ad7230c03dd85e004cbc3e088fc514a4c96b605e031c"
+    },
+    {
+      "path": "first.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "first.stdout.log",
+      "bytes": 3141,
+      "sha256": "30cc3fd4099a68a093cd91c23b18ef71533371a33cbfb0f1f85e3e515d542aab"
+    },
+    {
+      "path": "independent_browser_review.py",
+      "bytes": 11653,
+      "sha256": "43eb64e2f3ad3a1a93f4785e71b142b5e9b27bbf793ac1748305c436a32201b6"
+    },
+    {
+      "path": "review.json",
+      "bytes": 3268,
+      "sha256": "5fdf8cadb72756560b04922354dc11336ecd7af447fb138b1b70671aee5cbff6"
+    },
+    {
+      "path": "second/execution.json",
+      "bytes": 3141,
+      "sha256": "2ea836a4bd887801d412e506a19e39a3f6e478b349048be55f9d89bebe93777c"
+    },
+    {
+      "path": "second/hypothetical-score-law-one.json",
+      "bytes": 1045,
+      "sha256": "548822e20a5e39395e70cf431ac71f4a627bc11dcbdeb90b21e9c5ddae7faf31"
+    },
+    {
+      "path": "second/independent-desktop-planner.png",
+      "bytes": 193567,
+      "sha256": "5c8d6706b1f6160a44dcb03c4a102590084bdd3021ebe99a7120a326ba0413d6"
+    },
+    {
+      "path": "second/independent-mobile-planner.png",
+      "bytes": 169668,
+      "sha256": "888d6557680a518de1c887e6b67fee1bae7dda8140f60c37a2a49fca6999cfc8"
+    },
+    {
+      "path": "second/unknown-score-law.json",
+      "bytes": 1054,
+      "sha256": "9d09022aa259a70b1d9c482595b90a281b4c88ac204ed57a5a232687f3729a18"
+    },
+    {
+      "path": "second/zero-failure-equality-boundary.json",
+      "bytes": 974,
+      "sha256": "27a0e10ca001e6fb1246ad7230c03dd85e004cbc3e088fc514a4c96b605e031c"
+    },
+    {
+      "path": "second.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "second.stdout.log",
+      "bytes": 3141,
+      "sha256": "2ea836a4bd887801d412e506a19e39a3f6e478b349048be55f9d89bebe93777c"
+    }
+  ]
+}

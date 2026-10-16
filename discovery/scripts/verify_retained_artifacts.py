@@ -35,6 +35,7 @@ CHECKS = [
     'training_only_no_go_packaged_and_served',
     'prospective_pool_planning_cli_hypothesis_and_unknown',
     'prospective_zero_failure_resolution_cli_not_observed_power',
+    'prospective_planning_http_cli_agreement_and_assets',
     'optional_mpea_resource_presence_and_http_agreement',
     'mpea_javascript_packaged_and_served',
 ]

@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-10-16T05:38:05.571962+00:00",
+  "owner": "/root/phase2_planner",
+  "status": "FROZEN_CANDIDATE_ONLY",
+  "promotion_base": "discovery/",
+  "tracked_originals_unchanged": true,
+  "files": [
+    {
+      "source": ".cache/phase2-planner-ui-candidate-v1/promotion/docs/study-planning.md",
+      "destination": "docs/study-planning.md",
+      "candidate_sha256": "35c1192cd8572f648d3160778ba12aaf07cc51dbd4db7fb2da66ac05e0f7e95d",
+      "candidate_bytes": 10437,
+      "original_sha256": "9092d26148c7184cb7ce1cd765bb40dcd55ce1ccc46425ad5ee0ed62bdb554a5",
+      "original_bytes": 8123
+    },
+    {
+      "source": ".cache/phase2-planner-ui-candidate-v1/promotion/scripts/browser_smoke.py",
+      "destination": "scripts/browser_smoke.py",
+      "candidate_sha256": "c71eb48616f19b3e493f543f0ab573933204651e912c49ccd746c0fd3e44195d",
+      "candidate_bytes": 78131,
+      "original_sha256": "3b1ca5cecaa62407583415a1038076aa96a14dde2dd57c940ff9cc885264a6e4",
+      "original_bytes": 77827
+    },
+    {
+      "source": ".cache/phase2-planner-ui-candidate-v1/promotion/scripts/planning_browser_checks.py",
+      "destination": "scripts/planning_browser_checks.py",
+      "candidate_sha256": "1cf712480e92551d621fca0a3e899f6171ee3320b3bb4cf77dfa74844e96071d",
+      "candidate_bytes": 11977,
+      "original_sha256": null,
+      "original_bytes": null
+    },
+    {
+      "source": ".cache/phase2-planner-ui-candidate-v1/promotion/src/lupine_discovery/server.py",
+      "destination": "src/lupine_discovery/server.py",
+      "candidate_sha256": "c2c0e436cf836c4c55b0e0060284f55b45db446614438e883f2777cbae0e943d",
+      "candidate_bytes": 13283,
+      "original_sha256": "f58f55c5284dfe34478840dca45e897c7fd1b5d5002a423876ebf228b7c7a5cb",
+      "original_bytes": 12075
+    },
+    {
+      "source": ".cache/phase2-planner-ui-candidate-v1/promotion/src/lupine_discovery/web/app.js",
+      "destination": "src/lupine_discovery/web/app.js",
+      "candidate_sha256": "00ac39514bb794ac990799a4d6146239bee0ed6e286f1f95d5ac1d719ddd5025",
+      "candidate_bytes": 131469,
+      "original_sha256": "20f8d73303258d218cee5e02b052b71287b09a1405d51a336aaf2d097653546d",
+      "original_bytes": 131408
+    },
+    {
+      "source": ".cache/phase2-planner-ui-candidate-v1/promotion/src/lupine_discovery/web/index.html",
+      "destination": "src/lupine_discovery/web/index.html",
+      "candidate_sha256": "bf7a22879251587986d3802ffea734d775b68fc309d95a40fb0609c5ecbe775d",
+      "candidate_bytes": 25459,
+      "original_sha256": "98e12ccb706ab2f75497254d362769ae70f579d95be3fd3bfa93548255588618",
+      "original_bytes": 19116
+    },
+    {
+      "source": ".cache/phase2-planner-ui-candidate-v1/promotion/src/lupine_discovery/web/planner.js",
+      "destination": "src/lupine_discovery/web/planner.js",
+      "candidate_sha256": "431634f2e04483ee4ccaba9068d18a91391d90648f72f96f269b5e9c60f01628",
+      "candidate_bytes": 8729,
+      "original_sha256": null,
+      "original_bytes": null
+    },
+    {
+      "source": ".cache/phase2-planner-ui-candidate-v1/promotion/src/lupine_discovery/web/styles.css",
+      "destination": "src/lupine_discovery/web/styles.css",
+      "candidate_sha256": "23b439d2f1b60bd5837bddf113d215d7e1dee14f21324075a030e802f13d9fdf",
+      "candidate_bytes": 43104,
+      "original_sha256": "6a837b57aa7540a9d00d83a6de026d6996a51563abcd7c7fd0a1dd243bb7f8d3",
+      "original_bytes": 41345
+    },
+    {
+      "source": ".cache/phase2-planner-ui-candidate-v1/promotion/tests/test_server_study_planning.py",
+      "destination": "tests/test_server_study_planning.py",
+      "candidate_sha256": "59310c4b1b33166d0651da37f9d2f0304d770d4e7db628d8ac84df420bda891e",
+      "candidate_bytes": 13008,
+      "original_sha256": null,
+      "original_bytes": null
+    }
+  ],
+  "exclude": [
+    "browser-revision-mutant-overlay/",
+    "browser-revision-mutant/",
+    "all execution overlays and caches"
+  ],
+  "note": "Promotion is owned by root. No tracked file, Git state, archived observation or private scientific custody was modified by this task."
+}

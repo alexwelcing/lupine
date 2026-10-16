@@ -1,0 +1,48 @@
+{
+  "scope": "Labeled negative reproduction of source PYTHONPATH leaking into pip; no product or science pass",
+  "commands": [
+    {
+      "label": "create",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-m",
+        "venv",
+        "/workspace/lupine-discovery-branch/discovery/.cache/phase2-pythonpath-negative-control-v1/venv"
+      ],
+      "started_at": "2026-10-16T05:41:28.175656+00:00",
+      "elapsed_seconds": 5.836676267999792,
+      "exit_code": 0
+    },
+    {
+      "label": "install",
+      "command": [
+        "/workspace/lupine-discovery-branch/discovery/.cache/phase2-pythonpath-negative-control-v1/venv/bin/python",
+        "-m",
+        "pip",
+        "install",
+        "--no-index",
+        "--no-deps",
+        "/workspace/lupine-discovery-branch/discovery/.cache/phase2-clean-package-v1/artifacts/lupine_discovery-0.1.0-py3-none-any.whl"
+      ],
+      "started_at": "2026-10-16T05:41:34.013093+00:00",
+      "elapsed_seconds": 0.6940183299993805,
+      "exit_code": 0
+    },
+    {
+      "label": "isolated-import",
+      "command": [
+        "/workspace/lupine-discovery-branch/discovery/.cache/phase2-pythonpath-negative-control-v1/venv/bin/python",
+        "-I",
+        "-c",
+        "import lupine_discovery; print(lupine_discovery.__file__)"
+      ],
+      "started_at": "2026-10-16T05:41:34.707223+00:00",
+      "elapsed_seconds": 0.09732290000010835,
+      "exit_code": 1
+    }
+  ],
+  "injected_path_scope": "isolated synthetic integration mirror source directory",
+  "pip_skipped_as_already_installed": true,
+  "isolated_import_failed": true,
+  "wheel": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-clean-package-v1/artifacts/lupine_discovery-0.1.0-py3-none-any.whl"
+}

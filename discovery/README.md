@@ -28,7 +28,7 @@ python -m pip install -e .
 lupine-discovery serve
 ```
 
-Open `http://127.0.0.1:8765` on the machine running the command. Choose a case or upload a problem, inspect the retained pool and exclusion reasons, download its exact input and certificate, then reveal separately bound known answers. The **Known answers** screen runs the finite fixture suite and displays the three original archive pilots plus the measured constrained JARVIS comparison, including every failed release gate. See the [workbench guide](docs/workbench.md).
+Open `http://127.0.0.1:8765` on the machine running the command. The **Study planning** screen calculates exact hypothetical threshold probabilities and best-case zero-failure resolution, preserving unknown assumptions and exporting the full JSON. Choose a case or upload a problem, inspect the retained pool and exclusion reasons, download its exact input and certificate, then reveal separately bound known answers. The **Known answers** screen runs the finite fixture suite and displays the three original archive pilots plus the measured constrained JARVIS comparison, including every failed release gate. See the [workbench guide](docs/workbench.md).
 
 This is a local research preview. The [release matrix](docs/release-validation.md) records remaining scientific validation gates.
 

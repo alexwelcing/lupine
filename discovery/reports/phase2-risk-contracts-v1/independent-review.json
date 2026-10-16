@@ -1,0 +1,16 @@
+{
+  "schema": "lupine.discovery.research_claim_review.v1",
+  "recorded_at": "2026-10-16T05:30:22.307954+00:00",
+  "reviewer": "phase2_math",
+  "recording_owner": "root transcribed delivered agent review, not an agent-authored receipt",
+  "note_sha256": "de10ef8fd4d6cc6b78fd70ebc00518fd9c76139634861a0d8d62c8c009041633",
+  "verdict": "NO_MATHEMATICAL_BLOCKER",
+  "findings": [
+    "CRC statement retains calibration/future expectation and exchangeability, monotonicity, right-continuity, upper bound, safe endpoint premises.",
+    "LTT statement retains calibration-probability control of all accepted policies, potentially empty accepted set, and independent fixed ordering or a separate split.",
+    "Countermodel exactly has mean 1/10 and violation probability 1/10 greater than 1/20.",
+    "Any-optimum indicator, fractional missed-optimum loss, maximum endpoint risk and union failure probability remain distinct.",
+    "No algorithm, benchmark improvement, physical validity or scientific promotion is claimed."
+  ],
+  "scope": "Read-only primary-text review; no runtime test or outcome access"
+}

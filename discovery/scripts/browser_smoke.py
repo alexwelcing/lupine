@@ -14,6 +14,7 @@ from unittest.mock import patch
 
 from playwright.sync_api import expect, sync_playwright
 from mpea_browser_checks import check_mpea_workbench
+from planning_browser_checks import check_planning_workbench
 
 from lupine_discovery.benchmarks import case_catalog, get_case, get_case_outcomes
 from lupine_discovery.cli import verify_certificate
@@ -28,8 +29,9 @@ def run():
     project_root = Path(__file__).resolve().parents[1]
     def source_digests():
         package = project_root / "src/lupine_discovery"
-        paths = [Path(__file__).resolve(), Path(__file__).with_name("mpea_browser_checks.py").resolve(), *package.rglob("*.py"),
-                 *(package / "web" / name for name in ("app.js", "mpea.js", "index.html", "styles.css"))]
+        paths = [Path(__file__).resolve(), Path(__file__).with_name("mpea_browser_checks.py").resolve(),
+                 Path(__file__).with_name("planning_browser_checks.py").resolve(), *package.rglob("*.py"),
+                 *(package / "web" / name for name in ("app.js", "mpea.js", "planner.js", "index.html", "styles.css"))]
         paths.extend((package / "resources").rglob("decision-pool*.json"))
         paths.extend((project_root / "tests/fixtures/mpea_ui").glob("*.json"))
         return {str(path.relative_to(project_root)): sha256(path.read_bytes()).hexdigest()
@@ -49,6 +51,8 @@ def run():
             page.on("pageerror", lambda error: errors.append(str(error)))
             page.goto(url, wait_until="networkidle")
             expect(page.locator("#case-select option")).to_have_count(len(case_catalog()) + 1)
+            expect(page.locator("#case-title")).to_be_visible()
+            checks.extend(check_planning_workbench(page, artifacts / "planning"))
 
             def select_case(case_id):
                 page.locator("#case-select").select_option(case_id)

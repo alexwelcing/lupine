@@ -14,7 +14,7 @@
   "default_timezone": "America/New_York",
   "next_run_time_returned_at_creation": null,
   "last_run_time_returned_at_creation": null,
-  "execution_status": "User resumed active work on 2026-10-16. Prospective-planning and source-metadata increment under verification. Original bounded automation remains disabled; no new schedule or standalone worker started.",
+  "execution_status": "Renewed active user session: exact planner/custody5add passed CI and clean package; interface integrated; actual Li capture verified and schema blocked before decompression. Old automation remains disabled.",
   "notification_policy": "Substantive daily milestone summary, actionable blocker, or final release decision; suppress unchanged status.",
   "scope": "Resume latest GitHub goal and implement the next bounded increment with available tools, testing and recording actual outcomes.",
   "limits": "Scheduling success does not prove future tool availability, a completed build, or uninterrupted execution. Check and record each run. Do not silently extend the bounded schedule.",
@@ -38,22 +38,29 @@
     "continuous_worker_started": false
   },
   "current_checkpoint": {
-    "recorded_at": "2026-10-16T05:16:02.815395+00:00",
-    "owner": "Root integration/publication; independent planner, mathematics and evidence lanes completed bounded work.",
+    "recorded_at": "2026-10-16T05:59:42.875375+00:00",
+    "owner": "Root integration/publication; independent source diagnostic and mathematics review",
     "goal_state": "ACTIVE_RENEWED_PHASE",
-    "baseline_published_commit": "df844ef37ad22d6352ca6b1b4a997904b0309785",
-    "working_checkpoint": "Integrated exact prospective planner, CLI and reviewed Li fixed-source capture/envelope; 300 runtime files; no actual capture yet",
+    "published_commit": "5addf4f80e345afa50a4bcc26b9db24d220a3af5",
+    "published_ci_run": 38854925885,
+    "published_ci_all_four_jobs_pass": true,
+    "published_evidence": "reports/phase2-publication-custody-v1/README.md",
+    "working_checkpoint": "Reviewed planning browser/HTTP integration promoted; 65 full browser checks, 31 HTTP, 49 package and earlier23retained tests pass in held overlay; installed28cases/6schemas/15checks pass. New final-source CI pending.",
     "actual_new_scientific_allocation_performed": false,
-    "scientific_usefulness": "NO_GO_ARCHIVAL_USEFULNESS unchanged; no new outcomes or scientific result",
-    "focused_tests": {
-      "planner": 29,
-      "retained_artifact_verifier": 23,
-      "status": "PASS",
-      "scope": "Actual uncommitted-source executions; final-source complete CI and clean retained package pending.",
-      "package_repair": 48,
-      "li_integrated": 25
+    "scientific_usefulness": "NO_GO unchanged; no new outcome values decoded",
+    "li_capture": {
+      "status": "CAPTURED",
+      "object_sha256": "9741f826f6a97db7c2c0efa89820d3bdae43e8beb53cafd893ccdf0bb74f64fa",
+      "bytes": 183878,
+      "envelope_status": "BLOCKED_SCHEMA",
+      "engineering_status": "BLOCKED_LAYOUT",
+      "reason": "ZIP_LAYOUT_UNSUPPORTED",
+      "two_public_envelopes_identical": true,
+      "members_decompressed": 0,
+      "xml_bytes_decoded": 0,
+      "raw_target_bearing_buffer_read": true
     },
-    "next_action": "Publish this implementation checkpoint and verify exact remote plus all four CI jobs. Retain/verify clean package. Only then run committed Li capture/envelope sequence; retain BLOCKED_SCHEMA and any layout block, no scientific allocation.",
+    "next_action": "Publish reviewed interface and separate header-only diagnostic; verify exact remote/CI and clean retained package. Only then run fixed diagnostic on existing captured object. Preserve schema block and all scientific NO_GO decisions.",
     "automation_reenabled": false,
     "new_schedule_created": false,
     "continuous_worker_started": false,
@@ -64,21 +71,13 @@
       "next_run_time": null,
       "mutation_performed": false
     },
-    "li_candidate": {
-      "status": "PROMOTED_EXACT_REVIEWED_FILES_25_INTEGRATED_TESTS_PASS_NOT_ACQUIRED",
+    "header_diagnostic": {
+      "status": "PROMOTED_46_INTEGRATED_SYNTHETIC_TESTS_PASS_NOT_EXECUTED_ON_ACTUAL_SOURCE",
       "author_tests": 13,
-      "independent_tests": 12,
-      "report": "reports/phase2-li-custody-v1/README.md",
-      "source_sha256": "3ead51f0afdf16be973743257be488669c988aa40443779e7a5c400e9b0d3234",
-      "actual_get_performed": false
-    },
-    "full_suite_first": {
-      "tests_run": 1388,
-      "status": "FAILED",
-      "failures": 9,
-      "cause": "Stale exact package-probe hash pins",
-      "receipt": "reports/phase2-study-planning-v1/full-suite-first/execution.json",
-      "repair_scope": "Explicit reviewed fixed-pin updates; 48 focused package tests passed; complete final-source CI pending"
+      "independent_tests": 8,
+      "existing_custody_tests": 25,
+      "runtime_files": 306,
+      "report": "reports/phase2-li-layout-diagnostic-v1/README.md"
     }
   },
   "closure": {
@@ -205,6 +204,50 @@
       "status": "NO_BLOCKING_CLAIM_WORDING",
       "receipt": "reports/research-preview-verification-v1/claim-review/independent-review.json",
       "sha256": "4a48636bf4c66519d8f06e1746a871a51e8d9e228b521cedc7ebae06c5cfb339"
+    }
+  },
+  "prior_renewed_checkpoint": {
+    "recorded_at": "2026-10-16T05:16:02.815395+00:00",
+    "owner": "Root integration/publication; independent planner, mathematics and evidence lanes completed bounded work.",
+    "goal_state": "ACTIVE_RENEWED_PHASE",
+    "baseline_published_commit": "df844ef37ad22d6352ca6b1b4a997904b0309785",
+    "working_checkpoint": "Integrated exact prospective planner, CLI and reviewed Li fixed-source capture/envelope; 300 runtime files; no actual capture yet",
+    "actual_new_scientific_allocation_performed": false,
+    "scientific_usefulness": "NO_GO_ARCHIVAL_USEFULNESS unchanged; no new outcomes or scientific result",
+    "focused_tests": {
+      "planner": 29,
+      "retained_artifact_verifier": 23,
+      "status": "PASS",
+      "scope": "Actual uncommitted-source executions; final-source complete CI and clean retained package pending.",
+      "package_repair": 48,
+      "li_integrated": 25
+    },
+    "next_action": "Publish this implementation checkpoint and verify exact remote plus all four CI jobs. Retain/verify clean package. Only then run committed Li capture/envelope sequence; retain BLOCKED_SCHEMA and any layout block, no scientific allocation.",
+    "automation_reenabled": false,
+    "new_schedule_created": false,
+    "continuous_worker_started": false,
+    "automation_observation": {
+      "receipt": "reports/phase2-study-planning-v1/automation-observation.json",
+      "observed_at_utc": "2026-10-16 04:48:50 UTC",
+      "is_enabled": false,
+      "next_run_time": null,
+      "mutation_performed": false
+    },
+    "li_candidate": {
+      "status": "PROMOTED_EXACT_REVIEWED_FILES_25_INTEGRATED_TESTS_PASS_NOT_ACQUIRED",
+      "author_tests": 13,
+      "independent_tests": 12,
+      "report": "reports/phase2-li-custody-v1/README.md",
+      "source_sha256": "3ead51f0afdf16be973743257be488669c988aa40443779e7a5c400e9b0d3234",
+      "actual_get_performed": false
+    },
+    "full_suite_first": {
+      "tests_run": 1388,
+      "status": "FAILED",
+      "failures": 9,
+      "cause": "Stale exact package-probe hash pins",
+      "receipt": "reports/phase2-study-planning-v1/full-suite-first/execution.json",
+      "repair_scope": "Explicit reviewed fixed-pin updates; 48 focused package tests passed; complete final-source CI pending"
     }
   }
 }
