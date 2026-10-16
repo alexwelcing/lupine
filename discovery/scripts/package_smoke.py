@@ -18,6 +18,7 @@ import tempfile
 
 PROBE = r'''
 import json
+import subprocess
 from dataclasses import replace
 from importlib.resources import files
 from pathlib import Path
@@ -122,6 +123,27 @@ assert select_pool(statistical_unknown, statistical_future).retained == ('C', 'D
 statistical_unresolved = calibrate_panels(statistical_protocol, (), '1/20')
 assert statistical_unresolved.status == 'insufficient_calibration'
 assert select_pool(statistical_unresolved, statistical_future).retained == ('C', 'D', 'E')
+def planning_command(*arguments):
+    completed = subprocess.run([sys.executable, '-I', '-m', 'lupine_discovery', *arguments],
+                               capture_output=True, text=True, check=True, timeout=20)
+    return json.loads(completed.stdout)
+pool_plan = planning_command('plan-pool', '--calibration-count', '20', '--alpha', '1/10',
+                             '--cutoff', '3/4')
+assert pool_plan['schema'] == 'lupine.discovery.pool_threshold_plan.v1'
+assert pool_plan['plan']['rank'] == 19
+assert pool_plan['plan']['threshold_event_probability'] is None
+assert pool_plan['plan']['adequacy_status'] == 'unestablished'
+assert pool_plan['plan']['calibrated_guarantee_status'] == 'not_established_by_planning'
+iid_plan = planning_command('plan-pool', '--calibration-count', '2', '--alpha', '1/2',
+                            '--cutoff', '3/4', '--iid-score-probability', '1/2')
+assert iid_plan['plan']['threshold_event_probability'] == '1/4'
+assert iid_plan['plan']['planning_status'] == 'hypothetical_iid'
+resolution_plan = planning_command('plan-zero-loss', '--loss-ceiling', '1/10',
+                                   '--significance', '1/20', '--maximum-evaluation-panels', '100')
+assert resolution_plan['schema'] == 'lupine.discovery.zero_failure_resolution_plan.v1'
+assert resolution_plan['plan']['minimum_evaluation_panels'] == 29
+assert resolution_plan['plan']['power_status'] == 'not_computed'
+assert resolution_plan['plan']['observed_evidence_status'] == 'no_observations'
 def check_optional_mpea(resources, observed_reports, url):
     """Compare installed/served identities only; never infer a scientific verdict."""
     report_resource = resources.joinpath('resources', 'mpea-t25-v1.json')
@@ -211,6 +233,8 @@ print(json.dumps({'status': 'passed', 'python': sys.version.split()[0],
                              'scoped_projection_translation_and_missing_bound_abstention',
                              'direct_statistical_pool_python_api_and_distinct_abstention',
                              'training_only_no_go_packaged_and_served',
+                             'prospective_pool_planning_cli_hypothesis_and_unknown',
+                             'prospective_zero_failure_resolution_cli_not_observed_power',
                              'optional_mpea_resource_presence_and_http_agreement',
                              'mpea_javascript_packaged_and_served']},
                  sort_keys=True))

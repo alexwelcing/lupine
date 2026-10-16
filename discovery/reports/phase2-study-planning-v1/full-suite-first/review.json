@@ -1,0 +1,21 @@
+{
+  "status": "FAILED_PRESERVED",
+  "tests_run": 1388,
+  "failures": [
+    "test_original_probe_is_unchanged (test_package_retention.PackageRetentionTests.test_original_probe_is_unchanged)",
+    "test_default_development_path_and_probe_contract_stay_unchanged (test_package_retention_review.RetentionIndependentReview.test_default_development_path_and_probe_contract_stay_unchanged)",
+    "test_failed_completion_flush_leaves_no_completion_named_receipt (test_package_retention_review.RetentionIndependentReview.test_failed_completion_flush_leaves_no_completion_named_receipt)",
+    "test_original_archive_hash_survives_probe_and_is_checked_before_publication (test_package_retention_review.RetentionIndependentReview.test_original_archive_hash_survives_probe_and_is_checked_before_publication)",
+    "test_receipt_not_written_when_second_artifact_publication_fails (test_package_retention_review.RetentionIndependentReview.test_receipt_not_written_when_second_artifact_publication_fails)",
+    "test_retained_artifacts_match_installed_bytes_and_every_scoped_git_blob (test_package_retention_review.RetentionIndependentReview.test_retained_artifacts_match_installed_bytes_and_every_scoped_git_blob)",
+    "test_sha256_git_object_format_uses_the_actual_blob_hash_domain (test_package_retention_review.RetentionIndependentReview.test_sha256_git_object_format_uses_the_actual_blob_hash_domain)",
+    "test_standalone_checkout_can_retain_its_project_tree (test_package_retention_review.RetentionIndependentReview.test_standalone_checkout_can_retain_its_project_tree)",
+    "test_wheel_changed_after_install_cannot_get_completion_receipt (test_package_retention_review.RetentionIndependentReview.test_wheel_changed_after_install_cannot_get_completion_receipt)"
+  ],
+  "root_cause": "Two stale fixed SHA-256 pins for reviewed insertion-only installed planner CLI probe extension",
+  "old_probe_sha256": "53ec0ffbdbaf26f2160692c1a4b11f681784b341d2af5b6742435a5e13a28653",
+  "reviewed_probe_sha256": "7a3ff2ba325165f2123593412ca6ec53c7311caf4efd60036d65b7325ac745d6",
+  "reviewer": "phase2_math",
+  "review_scope": "AST extracted old/new probe; insertion-only additions; all original assertions and retention logic unchanged; no tests executed in this pin review",
+  "remediation": "Explicitly update both fixed pins and descriptions; rerun affected package tests and require complete exact-commit CI. This failed full run does not become a pass."
+}

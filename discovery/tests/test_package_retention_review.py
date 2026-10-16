@@ -23,7 +23,7 @@ spec = importlib.util.spec_from_file_location('retention_independent_review', SO
 m = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(m)
 INERT_WHEEL = b'Synthetic inert wheel bytes. No package installation or probe is performed.\n'
-PROBE_SHA256 = '53ec0ffbdbaf26f2160692c1a4b11f681784b341d2af5b6742435a5e13a28653'
+PROBE_SHA256 = '7a3ff2ba325165f2123593412ca6ec53c7311caf4efd60036d65b7325ac745d6'
 
 
 class RetentionIndependentReview(unittest.TestCase):
@@ -278,7 +278,7 @@ class RetentionIndependentReview(unittest.TestCase):
         self.assertEqual(existing_file.read_bytes(), b'Unrelated user content')
         self.assertFalse((old / 'new').exists())
 
-    def test_default_development_path_and_probe_contract_stay_unchanged(self):
+    def test_default_development_path_and_reviewed_probe_contract(self):
         (self.root / 'README.md').write_text('Dirty development source is permitted by the old default')
         report = m.run()
         self.assertEqual(self.build_roots, [self.root])

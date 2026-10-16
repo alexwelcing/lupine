@@ -1,0 +1,35 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_package*.py",
+    "-v"
+  ],
+  "started_at": "2026-10-16T05:14:57.889347+00:00",
+  "finished_at": "2026-10-16T05:15:08.273472+00:00",
+  "elapsed_seconds": 10.384128452000368,
+  "exit_code": 0,
+  "before_sha256": {
+    "tests/test_package_retention.py": "495842f6e5623e2ec9301c6a1e5d1a7aceac3411b6f1d1af93bcb981be08e580",
+    "tests/test_package_retention_review.py": "302611e1dd476e1a46f07bd60a6e403db95fa9ce4a32140ac434317741ce0148",
+    "scripts/package_smoke.py": "7b1c0a3ba39526751207be22997ddf1701113bf2f3dd156c34381d0e41021251",
+    "scripts/verify_retained_artifacts.py": "d167412182893dbf341c44eb957704cd22da7f95595c57ac11546c21c84f5acf",
+    "tests/test_retained_mpea_transport.py": "96e2cd1038c346822727166874061f148c82b8226b8d87a6f2e8ab9f55e85be3"
+  },
+  "after_sha256": {
+    "tests/test_package_retention.py": "495842f6e5623e2ec9301c6a1e5d1a7aceac3411b6f1d1af93bcb981be08e580",
+    "tests/test_package_retention_review.py": "302611e1dd476e1a46f07bd60a6e403db95fa9ce4a32140ac434317741ce0148",
+    "scripts/package_smoke.py": "7b1c0a3ba39526751207be22997ddf1701113bf2f3dd156c34381d0e41021251",
+    "scripts/verify_retained_artifacts.py": "d167412182893dbf341c44eb957704cd22da7f95595c57ac11546c21c84f5acf",
+    "tests/test_retained_mpea_transport.py": "96e2cd1038c346822727166874061f148c82b8226b8d87a6f2e8ab9f55e85be3"
+  },
+  "source_unchanged": true,
+  "scope": "Focused repair after failed 1388-test full suite; not a complete-suite pass",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "4068db66097f68411589f8c5d86abe43108b1ea96f7c1343c94118de3205554a"
+}

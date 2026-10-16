@@ -10,6 +10,15 @@ The three original archive pilots fail simultaneous interval soundness. Frozen J
 
 **Physical-performance and general predictive-superiority claims remain NO-GO.** This tool exposes conditional decisions and observed failures; it does not establish that an unknown material will work in a power plant. No new DFT is required for the examples or archived replays. The [release matrix](docs/release-validation.md) separates preview readiness from scientific recommendation claims.
 
+## Plan the next study
+
+The [prospective study planner](docs/study-planning.md) calculates calibration
+requirements and best-case evaluation resolution before outcomes are opened.
+Optional IID probabilities are explicit hypotheses, not fitted scientific
+evidence. [Fresh-source metadata review](reports/phase2-source-readiness-v1/README.md)
+keeps actual pairing, licensing and study independence separate from catalog
+counts. The completed negative benchmarks remain unchanged.
+
 ## Open the interface
 
 In the Lupine checkout, first run `cd discovery`. With Python 3.11 or newer:

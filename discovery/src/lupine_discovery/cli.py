@@ -124,6 +124,19 @@ def main(argv=None):
     workbench = sub.add_parser("serve", help="Run the local research workbench",
         description="Open the local workbench at http://127.0.0.1:8765. Coupled, projection and statistical pool HTTP modes require Linux process guards.")
     workbench.add_argument("--port", type=int, default=8765, help="Loopback port (default: 8765)")
+    pool_plan = sub.add_parser("plan-pool", help="Plan a calibration threshold before observing outcomes",
+        description="Exact prospective arithmetic. An optional IID score probability is a supplied hypothesis, not measured evidence or a material recommendation.")
+    pool_plan.add_argument("--calibration-count", type=int, required=True, help="Planned complete calibration panels (0 through 256)")
+    pool_plan.add_argument("--alpha", required=True, help="Exact risk fraction strictly between zero and one")
+    pool_plan.add_argument("--cutoff", required=True, help="Threshold cutoff in [0,1); e.g. 3/4")
+    pool_plan.add_argument("--iid-score-probability", help="Hypothetical IID probability that a panel score is at most the cutoff; omitted means unknown")
+    pool_plan.add_argument("--output", type=Path, help="Write plan JSON (default: standard output)")
+    loss_plan = sub.add_parser("plan-zero-loss", help="Check best-case evaluation resolution before observing outcomes",
+        description="Find the minimum IID evaluation count that could reject the stated loss null after zero losses. This is not power or an observed coverage result.")
+    loss_plan.add_argument("--loss-ceiling", required=True, help="Exact null loss probability, strictly between zero and one")
+    loss_plan.add_argument("--significance", required=True, help="Exact one-sided significance, strictly between zero and one")
+    loss_plan.add_argument("--maximum-evaluation-panels", type=int, default=256, help="Declared search bound (0 through 256; default: 256)")
+    loss_plan.add_argument("--output", type=Path, help="Write plan JSON (default: standard output)")
     descriptions = {
         "select": "Create an exact conditional candidate-pool certificate from a problem; no future outcomes are read.",
         "verify": "Recompute a certificate from its original problem and check exact identity; this does not verify physical truth.",
@@ -144,6 +157,23 @@ def main(argv=None):
         if args.command == "serve":
             from .server import serve
             return serve(args.port)
+        if args.command in {"plan-pool", "plan-zero-loss"}:
+            from .study_planning import plan_pool_threshold, plan_zero_failure_resolution
+            if args.command == "plan-pool":
+                plan = plan_pool_threshold(args.calibration_count, args.alpha, args.cutoff,
+                                           args.iid_score_probability)
+                schema = "lupine.discovery.pool_threshold_plan.v1"
+            else:
+                plan = plan_zero_failure_resolution(args.loss_ceiling, args.significance,
+                                                     args.maximum_evaluation_panels)
+                schema = "lupine.discovery.zero_failure_resolution_plan.v1"
+            output = json.dumps({"schema": schema, "plan": encode(plan)},
+                                sort_keys=True, allow_nan=False, indent=2) + "\n"
+            if args.output:
+                args.output.write_text(output)
+            else:
+                sys.stdout.write(output)
+            return 0
         value = _read_document(args.problem, coupled=args.command == "coupled-domains")
         if args.command == "select":
             result = certificate(value)

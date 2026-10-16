@@ -52,12 +52,12 @@ class RetainedMpeaTransportTests(unittest.TestCase):
                 wheel.writestr(name, raw)
         self.case.rebind_artifacts()
 
-    def test_all_twelve_flags_required_without_omission_extra_or_reorder(self):
+    def test_all_fourteen_flags_required_without_omission_extra_or_reorder(self):
         expected = list(self.report['checks'])
-        self.assertEqual(len(expected), 12)
+        self.assertEqual(len(expected), 14)
         self.assertEqual(expected[-2:], NEW_FLAGS)
-        variants = [expected[:-2], expected[:-1], expected[:-2] + expected[-1:],
-                    expected + ['invented_science_verified'], list(reversed(expected))]
+        variants = [expected[:index] + expected[index + 1:] for index in range(len(expected))]
+        variants.extend([expected + ['invented_science_verified'], list(reversed(expected))])
         for flags in variants:
             with self.subTest(flags=flags):
                 self.report['checks'] = flags

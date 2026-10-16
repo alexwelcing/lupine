@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-custody-review-v1",
+    "-p",
+    "test_li_v3_custody_review.py",
+    "-v"
+  ],
+  "started_at_utc": "2026-10-16T04:55:48.772940+00:00",
+  "candidate_sha256": "3ead51f0afdf16be973743257be488669c988aa40443779e7a5c400e9b0d3234",
+  "test_sha256": "6d49955ff2850484bdf8e47af061fa7649ba016a739467cbd0799379913e0151",
+  "scope": "synthetic fixtures with socket/DNS prohibition; no real source, cache, or network"
+}

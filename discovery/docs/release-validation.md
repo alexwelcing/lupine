@@ -467,3 +467,29 @@ The [current decision record](../reports/research-preview-decision.md) binds tes
 | Independent scientific replication | OPEN as future research. Same-host reruns and independent arithmetic/receipt checks have narrower scope. |
 
 The scoped build goal is CLOSED for the narrow research preview at runtime commit `6585a605d5d325e84423c7e35c7286efe85cfb6f`, with completed source, package, interface and exact-commit CI evidence. Scientific evaluation and its computational reproductions are complete, including the negative results. Physical validity, independent scientific replication and general predictive superiority remain separate future research; they are not silently declared solved or added as unfinished preview requirements. The completed MPEA reproduction used the original fixed allocation; external reproduction still requires the custody and registration prerequisites above, which public aggregate hashes do not reconstruct. No scientific threshold or protocol is changed.
+
+## Renewed phase: prospective planning (2026-10-16)
+
+Alex resumed active development after the historical preview closure above.
+The [current increment](../reports/phase2-study-planning-v1/README.md) adds
+outcome-free threshold and zero-failure-resolution commands, with independently
+checked exact arithmetic. Its allowable claim is **prospective arithmetic under
+stated hypothetical assumptions**. It supplies neither measured power nor
+scientific usefulness, sampling independence or physical qualification. No new
+Lean statement or Python refinement proof is claimed.
+
+Fresh Li source metadata resolves archive identity and the declared observation
+license; workbook layout, count discrepancy, outcome pairing and independent
+units remain unresolved. A reviewed custody design is not an acquisition or
+scientific test. The original preview and scientific NO-GO records remain
+historical evidence bound to their original source. The new increment's actual
+tests, package and exact-commit CI must be recorded independently; old passes
+cannot stand in for unexecuted new checks. The expired automation is disabled.
+
+The renewed implementation includes the fixed Li v3 capture/envelope tool and
+25 passing integrated synthetic tests. It is not yet evidence of successful
+real acquisition. The first local full suite ran 1,388 tests and failed nine
+stale probe-hash pins; independent review and the explicit fixed-pin repair
+passed 48 focused package tests. The original failed run remains preserved in
+the current increment's report. Require complete exact-commit CI and a clean
+retained package before claiming the new source checkpoint verified.

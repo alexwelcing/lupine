@@ -1,0 +1,36 @@
+test_capture_and_envelope_guards_run_before_network_or_cache (test_li_v3_custody.LiCustodyTests.test_capture_and_envelope_guards_run_before_network_or_cache) ... ok
+test_capture_receipt_is_closed_and_types_flags_and_identity_are_validated (test_li_v3_custody.LiCustodyTests.test_capture_receipt_is_closed_and_types_flags_and_identity_are_validated) ... ok
+test_descriptor_io_is_bounded_regular_private_nonoverwriting_and_nofollow (test_li_v3_custody.LiCustodyTests.test_descriptor_io_is_bounded_regular_private_nonoverwriting_and_nofollow) ... ok
+test_every_opaque_component_can_change_without_changing_envelope_semantics (test_li_v3_custody.LiCustodyTests.test_every_opaque_component_can_change_without_changing_envelope_semantics) ... ok
+test_external_duplicate_and_unknown_workbook_relationships_block (test_li_v3_custody.LiCustodyTests.test_external_duplicate_and_unknown_workbook_relationships_block) ... ok
+test_modified_local_headers_encryption_and_macro_profile_are_rejected (test_li_v3_custody.LiCustodyTests.test_modified_local_headers_encryption_and_macro_profile_are_rejected) ... ok
+test_one_fixed_redirect_and_bounded_body_read (test_li_v3_custody.LiCustodyTests.test_one_fixed_redirect_and_bounded_body_read) ... ok
+test_package_absolute_relationships_are_supported_without_filesystem_resolution (test_li_v3_custody.LiCustodyTests.test_package_absolute_relationships_are_supported_without_filesystem_resolution) ... ok
+test_public_report_mutation_cannot_alias_trusted_inventory (test_li_v3_custody.LiCustodyTests.test_public_report_mutation_cannot_alias_trusted_inventory) ... ok
+test_source_identity_and_inventory_changes_fail_closed (test_li_v3_custody.LiCustodyTests.test_source_identity_and_inventory_changes_fail_closed) ... ok
+test_synthetic_api_cannot_enable_production_or_accept_arbitrary_objects (test_li_v3_custody.LiCustodyTests.test_synthetic_api_cannot_enable_production_or_accept_arbitrary_objects) ... ok
+test_valid_envelope_only_opens_four_members_and_masks_opaque_canaries (test_li_v3_custody.LiCustodyTests.test_valid_envelope_only_opens_four_members_and_masks_opaque_canaries) ... FAIL
+test_xml_depth_bomb_entity_and_unknown_extensions_do_not_leak (test_li_v3_custody.LiCustodyTests.test_xml_depth_bomb_entity_and_unknown_extensions_do_not_leak) ... ok
+
+======================================================================
+FAIL: test_valid_envelope_only_opens_four_members_and_masks_opaque_canaries (test_li_v3_custody.LiCustodyTests.test_valid_envelope_only_opens_four_members_and_masks_opaque_canaries)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-custody-implementation-v1/promotion/tests/test_li_v3_custody.py", line 111, in test_valid_envelope_only_opens_four_members_and_masks_opaque_canaries
+    self.assertEqual(opened, list(custody.ENVELOPE_MEMBERS))
+AssertionError: Lists differ: [<ZipInfo filename='xl/worksheets/sheet1.x[2408 chars]els'] != ['[Content_Types].xml', '_rels/.rels', 'xl[40 chars]els']
+
+First differing element 0:
+<ZipInfo filename='xl/worksheets/sheet1.x[73 chars]e=57>
+'[Content_Types].xml'
+
+First list contains 20 additional elements.
+First extra element 4:
+<ZipInfo filename='xl/styles.xml' compress_type=deflate filemode='?rw-------' file_size=55 compress_size=57>
+
+Diff is 2563 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.181s
+
+FAILED (failures=1)

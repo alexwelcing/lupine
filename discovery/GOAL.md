@@ -56,7 +56,40 @@ criteria after seeing results.
    recommendations using `docs/release-validation.md`. No blanket claim of
    unknown-material validity follows from retrospective success.
 
-## Current scoped release state
+## Renewed active work — 2026-10-16
+
+Alex explicitly resumed the project on October 16. The completed research-preview
+release below remains a historical milestone; its scientific NO-GO decisions
+are unchanged. This is a new active phase, not an extension of the expired
+four-day schedule. The old automation remains disabled. Root owns integration
+and publication on the same branch, with independent mathematics and source
+evidence reviews. No task-by-task approval is needed within the existing scope.
+
+The next objective is to make a fresh scientific evaluation informative before
+opening its outcomes: distinguish finite calibration from useful reduction,
+state the assumptions needed for prospective calculations, and establish a
+previously unused source with paired outcomes and credible study grouping.
+
+| ID | Work and acceptance | State | Owner / next action |
+| --- | --- | --- | --- |
+| G19 | Exact prospective threshold and zero-loss-resolution planner; independent finite-world tests, usable CLI, explicit hypothetical-IID and unknown states, bounded inputs | ACTIVE | Root integration; planner author and separate mathematical reviewer. 29 planner tests and isolated package pass. Held full suite failed nine stale probe pins; independent review and explicit pin repair passed 48 package tests. Root now publishes and verifies complete exact-commit CI. |
+| G20 | Target-free fresh-source audit: immutable identity, observation license, pairing/conditions, source overlap and independent-unit limits before custody or outcomes | ACTIVE | [Li metadata](reports/phase2-source-readiness-v1/README.md) resolves v3 identity and CC BY 4.0 declaration. Paper/catalog counts conflict; controlled schema custody is now implemented and independently tested; root next verifies publication/CI before capture. Pairing, source overlap and independent panels remain unknown. NIST is a small reference route; NIMS remains access-restricted. |
+| G21 | Freeze and evaluate a new archival protocol only if the source and prospective design justify it | BLOCKED on G19/G20 | No allocation, outcome acquisition, model change, scientific threshold or new sampling claim is approved by a planner calculation or catalog row count. |
+| G22 | Fixed Li v3 capture and envelope-only inspection; opaque outcomes, closed receipts, explicit schema block | ACTIVE | [Reviewed candidate](reports/phase2-li-custody-v1/README.md) passes 13 author and 12 independent synthetic tests. All 25 integrated synthetic tests pass after exact promotion. Root next verifies the published source/CI before real acquisition. This is a substep of G20, not a new experiment. |
+
+The immediate engineering probe is intentionally outcome-free. A hypothetical
+IID score distribution permits exact prospective threshold arithmetic; it is
+not measured power or evidence that a real ranker improves. All-score-one laws
+prevent any distribution-free guarantee of reduction. A zero-loss sample-count
+calculation provides best-case test resolution, not a promised observation.
+Current archives, exposed tests and the original allocation are not retuned.
+
+Stop a source route when its access, observation rights, pairing or grouping
+cannot be supported; preserve the specific unresolved gate and advance another
+authorized route. No paid work, third-party contact, production deployment or
+new scheduled recurrence follows from this restart.
+
+## Completed preview release state
 
 **CLOSED: narrow research-preview build and release goal complete.** Research-preview decision: **GO_RESEARCH_PREVIEW**; physical-performance/general superiority: **NO-GO**. [The decision record](reports/research-preview-decision.md) binds runtime `6585a605d5d325e84423c7e35c7286efe85cfb6f`, exact-commit CI, retained artifacts and scientific limits. The scoped build goal is CLOSED for the narrow research preview at runtime commit `6585a605d5d325e84423c7e35c7286efe85cfb6f`, with completed source, package, interface and exact-commit CI evidence. Scientific evaluation and its computational reproductions are complete, including the negative results. Physical validity, independent scientific replication and general predictive superiority remain separate future research; they are not silently declared solved or added as unfinished preview requirements.
 

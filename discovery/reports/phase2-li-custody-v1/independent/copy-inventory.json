@@ -1,0 +1,45 @@
+{
+  "files": [
+    {
+      "bytes": 2206,
+      "path": "review-plan.json",
+      "sha256": "08d18015c50875a38532c01339b24625288db76ef58845697fec6513d7667228"
+    },
+    {
+      "bytes": 4959,
+      "path": "review.json",
+      "sha256": "34947f4a36ac49679e7f7837de092a6a0988564f6ddc3dc8033082538214939c"
+    },
+    {
+      "bytes": 2284,
+      "path": "run_review.py",
+      "sha256": "95ec2a790a12a49d5dc9c4b81e30c0db6b8017cd62359a3a6aea99c2771e5f9a"
+    },
+    {
+      "bytes": 19053,
+      "path": "test_li_v3_custody_review.py",
+      "sha256": "6d49955ff2850484bdf8e47af061fa7649ba016a739467cbd0799379913e0151"
+    },
+    {
+      "bytes": 624,
+      "path": "first/start.json",
+      "sha256": "c2e54e3fbbc287284fb7501976d6c719014023bbe2617adf58d351ebcf73dd5d"
+    },
+    {
+      "bytes": 1162,
+      "path": "first/execution.json",
+      "sha256": "33187ce1a6fca83b202be74f21e3ef788cef2c0a3694024ae9a2667d21b57b9e"
+    },
+    {
+      "bytes": 0,
+      "path": "first/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2357,
+      "path": "first/stderr.log",
+      "sha256": "87739a2f6ad14e11799bac17221b161e1ccc469f86a1eac8ee4f754f918004b8"
+    }
+  ],
+  "scope": "Synthetic review artifacts; all safe for root review/copy, no actual workbook or secret redirect queries."
+}

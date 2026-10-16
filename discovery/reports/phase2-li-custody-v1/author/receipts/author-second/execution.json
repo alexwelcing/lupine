@@ -1,0 +1,27 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    ".cache/phase2-li-custody-implementation-v1/promotion/tests",
+    "-p",
+    "test_li_v3_custody.py",
+    "-v"
+  ],
+  "started_at": "2026-10-16T04:55:31.778112+00:00",
+  "finished_at": "2026-10-16T04:55:32.264087+00:00",
+  "duration_seconds": 0.48598316400011754,
+  "exit_code": 0,
+  "before_sha256": {
+    ".cache/phase2-li-custody-implementation-v1/promotion/scripts/li_v3_custody.py": "3ead51f0afdf16be973743257be488669c988aa40443779e7a5c400e9b0d3234",
+    ".cache/phase2-li-custody-implementation-v1/promotion/tests/test_li_v3_custody.py": "b8113942416f5a2fc6cda565fa5e8b3d5fb9efb887d9241cc36047caca58780a"
+  },
+  "after_sha256": {
+    ".cache/phase2-li-custody-implementation-v1/promotion/scripts/li_v3_custody.py": "3ead51f0afdf16be973743257be488669c988aa40443779e7a5c400e9b0d3234",
+    ".cache/phase2-li-custody-implementation-v1/promotion/tests/test_li_v3_custody.py": "b8113942416f5a2fc6cda565fa5e8b3d5fb9efb887d9241cc36047caca58780a"
+  },
+  "prior_failure_preserved": "../author-first/execution.json",
+  "changes_since_prior": "Source adds required stored compression size equality; test spy starts after fixture ZIP creation, still asserts exact four reads."
+}

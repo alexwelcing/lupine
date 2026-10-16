@@ -1,0 +1,19 @@
+{
+  "schema": "lupine.discovery.package_execution_observation.v1",
+  "command": [
+    "python",
+    "scripts/package_smoke.py",
+    "--output",
+    ".cache/phase2-study-validation-v1/package-precommit.json"
+  ],
+  "tool_completion_chunk": "454218",
+  "exit_code": 0,
+  "source_state": "uncommitted held source; not clean retained artifact or exact-commit CI",
+  "runtime_manifest": "reports/phase2-study-planning-v1/held-runtime-manifest.json",
+  "runtime_manifest_sha256": "c1b5df813eeb70728c7e32fdb6ff9415471ae6a930f19f6fd6ad8fddc7ad6e05",
+  "report_sha256": "067315101e63fdff683867ab1e1df10c69a340d1914d438fabbdb6e011f7988c",
+  "case_count": 28,
+  "problem_schema_count": 6,
+  "installed_check_count": 14,
+  "scope": "Installed isolated wheel and HTTP/CLI behavior; not independent scientific evidence. A clean retained run remains pending."
+}

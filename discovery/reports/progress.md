@@ -1126,3 +1126,84 @@ remote-tracking name and stopped before checking links; the corrected check
 uses the actual fetched `FETCH_HEAD`, which matches HEAD. This was a local
 review-helper failure, not a test or scientific run. No source edits or
 scientific reruns resulted.
+
+## 2026-10-16 — user-authorized restart
+
+Alex explicitly resumed active work after the original bounded window. Root
+fetched the existing branch and confirmed local/remote `df844ef37ad22d6352ca6b1b4a997904b0309785`;
+PR263 remained open/draft with the previously verified final CI record. The
+workspace was initially starting, then became available. No new scheduled
+continuation was enabled. The prior preview closure and scientific negatives
+remain intact; GOAL now distinguishes this active phase.
+
+A bounded Adaptive Traverse scan compared further source acquisition with
+outcome-free design arithmetic. Independent source review identified official
+NIST AM Bench metadata missed by the prior guessed URLs, while preserving the
+five-specimen limitation and optional identity fields in its schema. The larger
+Li tensile compilation is a prospective lead, not an established independent
+sample; license, identity, pairing and grouping still need review. No target
+files were opened. [Metadata evidence](phase2-source-readiness-v1/README.md).
+
+The mathematical review found a concrete planning pitfall: a larger calibration
+count can lower the chance of a useful threshold when the required rank jumps.
+The new planner therefore provides exact fixed-count hypothetical-IID arithmetic
+and bounded zero-loss resolution, not a monotonic sample-size optimizer or
+scientific GO. Root owns CLI/documentation, the implementation lane owns the
+new pure module, and an independent reviewer owns exhaustive oracle controls.
+Tests and new-source CI are pending at this checkpoint. Next: finish review,
+run actual checks, then publish and verify the tested increment. No new DFT,
+allocation, fits, threshold selection or scientific study has occurred.
+
+### Restart implementation checkpoint
+
+The exact prospective planner and public CLI pass 29 combined tests; 23
+retained-artifact tests also pass. Independent arithmetic review includes 192
+enumerated Bernoulli-world cases and 96 integer-inequality cases. A fresh isolated
+wheel passes 28 cases, six problem schemas and 14 installed checks. The complete
+suite is running against 297 held runtime files. These are actual precommit
+checks; new exact-commit CI and clean retention have not yet run.
+[Planner evidence](phase2-study-planning-v1/README.md).
+
+Subsequent official metadata resolved the Li archive's three versions and CC BY
+4.0 declaration. Root checked the proposed v3 source ID, file ID, size, supplied
+MD5 and license against the retained official API response. The paper/catalog
+count discrepancy remains unresolved. Four successful metadata response bodies
+and original retrieval failures are retained; the workbook has not been opened.
+
+A reviewed fixed-source capture/envelope candidate now passes 13 author tests
+and 12 independent tests. Root caught a mutable nested inventory alias and
+insufficiently closed capture-receipt checks; both are corrected and challenged
+independently. The first author test's fixture-write/read-spy instrumentation
+failure remains archived alongside its correction. Only synthetic ZIP/XML and
+temporary filesystem fixtures were used, with network access forbidden in
+tests. [Custody implementation evidence](phase2-li-custody-v1/README.md).
+
+Owner/checkpoint: root holds the current runtime while the full suite completes;
+the additive custody implementation remains in ignored candidate files. Next:
+promote the reviewed files, run integrated checks, publish this branch and verify
+the exact remote/CI before any real capture. A passing envelope still leaves
+scientific schema, pairing, overlap and independent-panel counts unresolved.
+The original automation was freshly queried and remains disabled with no next
+run. No schedule mutation, new allocation, model fitting or new DFT occurred.
+
+## 2026-10-16T05:16:02.815395+00:00 — integrated planning and source custody checkpoint
+
+Owner: root; independent planner, mathematical and source-evidence reviews
+completed. Promoted the reviewed fixed Li v3 capture/envelope script, two test
+suites, contract and inventory without changing their reviewed bytes. All
+**25 integrated synthetic tests PASS**; no real GET or worksheet decoding.
+
+The held **1,388-test full suite FAILED with nine stale package-probe pins**.
+[Actual failure and repair](phase2-study-planning-v1/README.md) preserve command,
+timings, 297 unchanged runtime files and every traceback. Independent review
+confirmed insertion-only planner checks with all prior assertions intact. Both
+fixed pins were explicitly updated; **48 focused package tests PASS**. This is
+not a full-suite pass. Earlier 29 planner and 23 retained-verifier checks and
+the isolated 28-case/six-schema/14-check package passed in their recorded scopes.
+
+Current runtime manifest: 300 files. Next: publish this completed implementation
+increment, verify the exact remote commit and all four CI jobs, retain/verify a
+clean package, then execute only the committed fixed Li capture/envelope plan.
+Scientific pairing, count discrepancy and independent panels remain unknown;
+all prior negatives and physical/general-superiority NO-GO remain unchanged.
+No new schedule, fitting, allocation, exposed-test tuning or DFT occurred.

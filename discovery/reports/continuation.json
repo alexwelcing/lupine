@@ -14,7 +14,7 @@
   "default_timezone": "America/New_York",
   "next_run_time_returned_at_creation": null,
   "last_run_time_returned_at_creation": null,
-  "execution_status": "Scoped research-preview build completed; automation disabled and independently re-queried. Active final report publication/CI verification continues before handoff.",
+  "execution_status": "User resumed active work on 2026-10-16. Prospective-planning and source-metadata increment under verification. Original bounded automation remains disabled; no new schedule or standalone worker started.",
   "notification_policy": "Substantive daily milestone summary, actionable blocker, or final release decision; suppress unchanged status.",
   "scope": "Resume latest GitHub goal and implement the next bounded increment with available tools, testing and recording actual outcomes.",
   "limits": "Scheduling success does not prove future tool availability, a completed build, or uninterrupted execution. Check and record each run. Do not silently extend the bounded schedule.",
@@ -25,10 +25,10 @@
   "scheduler_continuity_limit": "Maximum supported recurrence is hourly; uninterrupted execution is unsupported.",
   "active_session_policy": "Continue implementation across successive useful tasks; scheduled runs are recovery, not a claim of constant execution.",
   "last_observed_continuation": {
-    "recorded_at": "2026-10-11T01:46:45.468833+00:00",
-    "context": "Continuation request received in existing active implementation session after runtime CI completed; fetched remote and HEAD both6585a605, preserved owned report edits.",
-    "action": "Completed scoped claim review and disabled scheduled continuation; no competing writer, new study or standalone worker started.",
-    "scheduled_origin": "Provider last_run_time2026-10-11T01:40:22.030232+00:00 observed separately; wake-up is not a build or experiment."
+    "recorded_at": "2026-10-16T04:40:03.258963+00:00",
+    "context": "Direct user restart: we are back on, lets get to work. Existing branch fetched at df844ef37ad22d6352ca6b1b4a997904b0309785.",
+    "action": "Active implementation, independent mathematics/source review, CLI/package integration and actual tests.",
+    "scheduled_origin": false
   },
   "provider_state_observed": {
     "is_enabled": false,
@@ -38,6 +38,61 @@
     "continuous_worker_started": false
   },
   "current_checkpoint": {
+    "recorded_at": "2026-10-16T05:16:02.815395+00:00",
+    "owner": "Root integration/publication; independent planner, mathematics and evidence lanes completed bounded work.",
+    "goal_state": "ACTIVE_RENEWED_PHASE",
+    "baseline_published_commit": "df844ef37ad22d6352ca6b1b4a997904b0309785",
+    "working_checkpoint": "Integrated exact prospective planner, CLI and reviewed Li fixed-source capture/envelope; 300 runtime files; no actual capture yet",
+    "actual_new_scientific_allocation_performed": false,
+    "scientific_usefulness": "NO_GO_ARCHIVAL_USEFULNESS unchanged; no new outcomes or scientific result",
+    "focused_tests": {
+      "planner": 29,
+      "retained_artifact_verifier": 23,
+      "status": "PASS",
+      "scope": "Actual uncommitted-source executions; final-source complete CI and clean retained package pending.",
+      "package_repair": 48,
+      "li_integrated": 25
+    },
+    "next_action": "Publish this implementation checkpoint and verify exact remote plus all four CI jobs. Retain/verify clean package. Only then run committed Li capture/envelope sequence; retain BLOCKED_SCHEMA and any layout block, no scientific allocation.",
+    "automation_reenabled": false,
+    "new_schedule_created": false,
+    "continuous_worker_started": false,
+    "automation_observation": {
+      "receipt": "reports/phase2-study-planning-v1/automation-observation.json",
+      "observed_at_utc": "2026-10-16 04:48:50 UTC",
+      "is_enabled": false,
+      "next_run_time": null,
+      "mutation_performed": false
+    },
+    "li_candidate": {
+      "status": "PROMOTED_EXACT_REVIEWED_FILES_25_INTEGRATED_TESTS_PASS_NOT_ACQUIRED",
+      "author_tests": 13,
+      "independent_tests": 12,
+      "report": "reports/phase2-li-custody-v1/README.md",
+      "source_sha256": "3ead51f0afdf16be973743257be488669c988aa40443779e7a5c400e9b0d3234",
+      "actual_get_performed": false
+    },
+    "full_suite_first": {
+      "tests_run": 1388,
+      "status": "FAILED",
+      "failures": 9,
+      "cause": "Stale exact package-probe hash pins",
+      "receipt": "reports/phase2-study-planning-v1/full-suite-first/execution.json",
+      "repair_scope": "Explicit reviewed fixed-pin updates; 48 focused package tests passed; complete final-source CI pending"
+    }
+  },
+  "closure": {
+    "decision": "GO_RESEARCH_PREVIEW",
+    "scientific_claims": "NO_GO",
+    "recorded_at": "2026-10-11T01:46:45.468833+00:00",
+    "is_enabled": false,
+    "provider_updated_at": "2026-10-11T01:45:57.014089+00:00",
+    "fresh_peek_confirmed_disabled": true,
+    "schedule_extended": false,
+    "receipt": "reports/research-preview-verification-v1/automation-closure.json",
+    "final_publication_verification": "Final report-only descendant hash and actual CI completion are recorded in public PR263/GitHub after this file is committed; no self-referential precommit CI success is claimed."
+  },
+  "prior_closed_checkpoint": {
     "recorded_at": "2026-10-11T01:46:45.468833+00:00",
     "owner": "Root closes scoped build/release goal and verifies final report-only descendant push/CI; delegates completed independent reviews.",
     "published_commit": "6585a605d5d325e84423c7e35c7286efe85cfb6f",
@@ -151,16 +206,5 @@
       "receipt": "reports/research-preview-verification-v1/claim-review/independent-review.json",
       "sha256": "4a48636bf4c66519d8f06e1746a871a51e8d9e228b521cedc7ebae06c5cfb339"
     }
-  },
-  "closure": {
-    "decision": "GO_RESEARCH_PREVIEW",
-    "scientific_claims": "NO_GO",
-    "recorded_at": "2026-10-11T01:46:45.468833+00:00",
-    "is_enabled": false,
-    "provider_updated_at": "2026-10-11T01:45:57.014089+00:00",
-    "fresh_peek_confirmed_disabled": true,
-    "schedule_extended": false,
-    "receipt": "reports/research-preview-verification-v1/automation-closure.json",
-    "final_publication_verification": "Final report-only descendant hash and actual CI completion are recorded in public PR263/GitHub after this file is committed; no self-referential precommit CI success is claimed."
   }
 }

@@ -33,6 +33,8 @@ CHECKS = [
     'scoped_projection_translation_and_missing_bound_abstention',
     'direct_statistical_pool_python_api_and_distinct_abstention',
     'training_only_no_go_packaged_and_served',
+    'prospective_pool_planning_cli_hypothesis_and_unknown',
+    'prospective_zero_failure_resolution_cli_not_observed_power',
     'optional_mpea_resource_presence_and_http_agreement',
     'mpea_javascript_packaged_and_served',
 ]

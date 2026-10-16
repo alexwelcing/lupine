@@ -59,6 +59,27 @@ Choose another demo directory if it already exists. `lupine-discovery` is an equ
 
 The **Known answers** screen reruns the same original 13-case suite, including two deliberately unsound controls. A control passes when its expected failure is detected. The menu's 28 cases include fifteen additional mode demonstrations; the suite counter is still 13. Neither fixture success nor certificate verification establishes predictive accuracy on materials.
 
+## Plan without opening outcomes
+
+The planner commands take declared design values, not dataset paths or outcome
+arrays. From an installed checkout:
+
+```sh
+python -m lupine_discovery plan-pool --calibration-count 20 --alpha 1/10 --cutoff 3/4
+python -m lupine_discovery plan-pool --calibration-count 20 --alpha 1/10 --cutoff 3/4 --iid-score-probability 19/20
+python -m lupine_discovery plan-zero-loss --loss-ceiling 1/10 --significance 1/20 --maximum-evaluation-panels 100
+```
+
+The first command leaves the chance of reaching the cutoff unknown. The second
+assumes IID panel scores with a hypothetical 19/20 chance of meeting that cutoff;
+it does not estimate that chance from materials. The third asks how many IID
+evaluation panels would be needed to reject the stated loss null **if zero
+losses were observed**. It does not compute power or certify observed accuracy.
+Counts are bounded at 256 per command; exact fractions use integers, fraction
+strings or ordinary decimal strings. `--output` writes a JSON plan. Exit 0 means
+the arithmetic completed, including insufficient-resolution results. See
+[the derivations, limits and counterexamples](study-planning.md).
+
 ## Read the archived evidence
 
 Opening **Known answers** displays recorded results without rerunning fits or downloading datasets:

@@ -1,0 +1,16 @@
+{
+  "requested_url": "https://archive.materialscloud.org/api/records/vywsz-wxn79/files/Tensile_Properties_of_Sub-sized_Specimens.xlsx/content",
+  "method": "HEAD",
+  "follow_redirects": false,
+  "response_body_read": false,
+  "observed_at_utc": "2026-10-16T04:39:26Z",
+  "status": 302,
+  "redirect": {
+    "scheme": "https",
+    "host": "rgw.cscs.ch",
+    "path": "/mc-archive/b7/74/3ed4-0d28-4f55-ab74-6d85981537d7/data",
+    "query_present": true,
+    "fragment_present": false
+  },
+  "content_type": "application/octet-stream"
+}

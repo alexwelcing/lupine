@@ -295,10 +295,10 @@ class PackageRetentionTests(unittest.TestCase):
         self.assertFalse(list(moved.iterdir()))
         self.assertFalse((outside/'report.json').exists())
 
-    def test_original_probe_is_unchanged(self):
-        # Source-bound G16/G15B installed six-mode probe; deliberate future probe
-        # changes must update this baseline explicitly, not compare a file to itself.
-        self.assertEqual(sha256(smoke.PROBE.encode()).hexdigest(), '53ec0ffbdbaf26f2160692c1a4b11f681784b341d2af5b6742435a5e13a28653')
+    def test_reviewed_fourteen_check_probe_is_pinned(self):
+        # Reviewed six-mode and prospective-planning installed probe (14 checks).
+        # Deliberate changes require an explicit reviewed fixed-hash update.
+        self.assertEqual(sha256(smoke.PROBE.encode()).hexdigest(), '7a3ff2ba325165f2123593412ca6ec53c7311caf4efd60036d65b7325ac745d6')
 
 
 

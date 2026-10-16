@@ -1,5 +1,14 @@
 # Project state
 
+**Active phase, October 16:** Alex resumed development. The next increment adds
+prospective study planning, a fresh-source metadata audit and a fixed-source
+Li capture/envelope tool. Focused tests pass; the first 1,388-test full run had
+nine stale probe-pin failures, preserved with their reviewed repair. Complete
+final-source CI and real acquisition are pending. [GOAL](GOAL.md#renewed-active-work--2026-10-16) records
+the current owners and acceptance criteria. The preview evidence below remains
+bound to its original source. Scientific usefulness remains NO-GO and the old
+bounded automation remains disabled.
+
 Snapshot: 2026-10-11 01:40 UTC (exact CI observation `2026-10-11T01:40:16.973611+00:00`). Tested runtime/artifact source: `6585a605d5d325e84423c7e35c7286efe85cfb6f`. [Scoped decision and evidence](reports/research-preview-decision.md).
 
 **Research preview: GO_RESEARCH_PREVIEW. Physical-performance/general superiority: NO-GO.** The conditional engine, known-answer evaluation, interface, reproducible package and scoped claim audit meet the recorded preview definition. All scientific negatives remain unchanged; no physical-performance or general predictive-superiority claim is approved.

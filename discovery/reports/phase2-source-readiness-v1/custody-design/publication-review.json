@@ -1,0 +1,31 @@
+{
+  "schema": "lupine.discovery.design_publication_review.v1",
+  "recorded_at": "2026-10-16T04:44:18.962003+00:00",
+  "root_review": "Accepted as a bounded next implementation design, not acquisition approval from a hash or a passed test. User authorization covers implementation; source/layout gates are methodological checks.",
+  "independent_review": {
+    "reviewer": "phase2_math",
+    "verdict": "PASS_FOR_DESIGN_PUBLICATION",
+    "scope": "Read only these three files; no network, code, raw observations, edits or tests.",
+    "finding": "Practical fixed-source capture and envelope boundary; exposure distinction explicit; unknown schema/independence preserved."
+  },
+  "files": [
+    {
+      "from": ".cache/phase2-li-custody-design-v1/README.md",
+      "to": "reports/phase2-source-readiness-v1/custody-design/README.md",
+      "bytes": 14110,
+      "sha256": "0eb632e5a69033fbee10de6a4648bf6b4e6949b552f11841452c9bd8236ffe91"
+    },
+    {
+      "from": ".cache/phase2-li-custody-design-v1/source-bindings.json",
+      "to": "reports/phase2-source-readiness-v1/custody-design/source-bindings.json",
+      "bytes": 2710,
+      "sha256": "3553f2788d29e74d039f86118346df3ca6e3966dc96a7b43965310273903ff08"
+    },
+    {
+      "from": ".cache/phase2-li-custody-design-v1/head-route-observation.json",
+      "to": "reports/phase2-source-readiness-v1/custody-design/head-route-observation.json",
+      "bytes": 532,
+      "sha256": "e41fbc913160ece5f763dc5fbd9e8fa62ef071e429a65c5ed51198a35453c326"
+    }
+  ]
+}

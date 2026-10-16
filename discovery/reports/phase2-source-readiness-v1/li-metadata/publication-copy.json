@@ -1,0 +1,44 @@
+{
+  "schema": "lupine.discovery.evidence_copy.v1",
+  "recorded_at": "2026-10-16T04:38:57.303248+00:00",
+  "owner": "root",
+  "scope": "Exact reviewed metadata-only copies. Candidate/ignored wording describes original agent handoff; root now publishes these copies. Acquisition and test claims unchanged. Original response hashes independently checked; hashes establish identity only.",
+  "files": [
+    {
+      "from": ".cache/phase2-li-metadata-followup/README.md",
+      "to": "reports/phase2-source-readiness-v1/li-metadata/README.md",
+      "bytes": 4321,
+      "sha256": "7e3f130e2c67e487ea2a0068194ccc374f6d4d9287081065a0d9052040996989"
+    },
+    {
+      "from": ".cache/phase2-li-metadata-followup/source-bindings.json",
+      "to": "reports/phase2-source-readiness-v1/li-metadata/source-bindings.json",
+      "bytes": 9159,
+      "sha256": "dc37f5744d12fbfd396e4e944d639ea485f5ee95f8ff7ded42f60c7fb03f8914"
+    },
+    {
+      "from": ".cache/phase2-li-metadata-followup/datacite-ws-8j.json",
+      "to": "reports/phase2-source-readiness-v1/li-metadata/datacite-ws-8j.json",
+      "bytes": 19729,
+      "sha256": "ae43d843befc59ab401410725412e7f6be38e78a8b2722574427473e7edb845a"
+    },
+    {
+      "from": ".cache/phase2-li-metadata-followup/datacite-ws-kw.json",
+      "to": "reports/phase2-source-readiness-v1/li-metadata/datacite-ws-kw.json",
+      "bytes": 19648,
+      "sha256": "fa1c503653598bbcb9153706f5bfcacfc37be49e6b78dada54b3c5111ae7d057"
+    },
+    {
+      "from": ".cache/phase2-li-metadata-followup/materialscloud-v3.json",
+      "to": "reports/phase2-source-readiness-v1/li-metadata/materialscloud-v3.json",
+      "bytes": 12936,
+      "sha256": "6cd068dc85890fbef2c8d8027c78eb9b7740f36d90574f158c5fc19d9fac65b6"
+    },
+    {
+      "from": ".cache/phase2-li-metadata-followup/materialscloud-versions.json",
+      "to": "reports/phase2-source-readiness-v1/li-metadata/materialscloud-versions.json",
+      "bytes": 37203,
+      "sha256": "56f96eea1b1dc70a5b9d733d464f733abe911d5a9e0d230c5fa8c3ffeb3fcf03"
+    }
+  ]
+}

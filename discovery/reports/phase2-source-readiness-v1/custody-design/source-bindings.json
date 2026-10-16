@@ -1,0 +1,56 @@
+{
+  "schema_version": "phase2-li-custody-design-source-review-v1",
+  "status": "DESIGN_ONLY_NOT_IMPLEMENTED_OR_TESTED",
+  "owner": "phase2_evidence",
+  "reviewed_repository_head": "df844ef37ad22d6352ca6b1b4a997904b0309785",
+  "files": [
+    {
+      "path": "scripts/mpea_custody.py",
+      "working_bytes": 24552,
+      "working_sha256": "046aac4812802d1abf656aa93d0b832e8011e2feb59574615957c2550fe11b98"
+    },
+    {
+      "path": "scripts/mpea_header_labels.py",
+      "working_bytes": 19617,
+      "working_sha256": "0d1e37cfef2889ed955d30f0fd987ba9b06dc2a1f8bf89ba7085112355b287c7"
+    },
+    {
+      "path": "scripts/mpea_feature_reader.py",
+      "working_bytes": 27431,
+      "working_sha256": "032d5341f29479437149d2fbd94879134dc2e4e51c895c1fba3cf771db1f34ef"
+    },
+    {
+      "path": "docs/mpea-custody-plan.md",
+      "working_bytes": 20174,
+      "working_sha256": "381406c91451ffb4592539b7bc66beb215bdb00cd852bf1a01106bebe7d1b895"
+    },
+    {
+      "path": "docs/mpea-header-disclosure-amendment-v1.md",
+      "working_bytes": 8329,
+      "working_sha256": "ce9c95e713b79ec2d8029f0da51c8d76c390f1b349de67b0e842034c42f9a525"
+    },
+    {
+      "path": "docs/mpea-row-metadata-amendment-v1.md",
+      "working_bytes": 13722,
+      "working_sha256": "7111870342b9aa5f8e6b78f481b691de9d2ae1052f38cf095fe16f1e9fa3a06e"
+    },
+    {
+      "path": "docs/mpea-feature-reader-v1.md",
+      "working_bytes": 11537,
+      "working_sha256": "bbfce38e180685b657fa6b81c55d6be6d81607ca9ac79998ca5f3fdc312bb160"
+    }
+  ],
+  "reading_scope": "Public source/specification inspection only; no imports, tests, cache acquisition functions or private scientific records executed/read.",
+  "actual_network_action": "One HEAD request to the pinned Materials Cloud content API, without following its redirect or reading any response body.",
+  "network_receipt_file": "head-route-observation.json",
+  "network_receipt_sha256": "e41fbc913160ece5f763dc5fbd9e8fa62ef071e429a65c5ed51198a35453c326",
+  "prior_metadata_evidence": "../phase2-li-metadata-followup/source-bindings.json",
+  "prior_metadata_evidence_sha256": "dc37f5744d12fbfd396e4e944d639ea485f5ee95f8ff7ded42f60c7fb03f8914",
+  "design_not_permission_question": "Existing user authorization covers ordinary research implementation; source-review and publication gates described in the design are methodological safeguards, not a new request for Alex approval.",
+  "source_read_failures": [
+    {
+      "operation": "Initial rg source search",
+      "failure": "The guessed path src/lupine_discovery/projection_custody.py does not exist; corrected script location scripts/projection_custody.py was inspected later. No execution or scientific failure."
+    }
+  ]
+}

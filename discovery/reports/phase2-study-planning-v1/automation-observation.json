@@ -1,0 +1,14 @@
+{
+  "schema": "lupine.discovery.automation_observation.v1",
+  "observed_at_utc": "2026-10-16 04:48:50 UTC",
+  "action": "read_only_peek",
+  "provider_record": {
+    "id": "6aca3f1ee03c8191b9b5abc8365df516",
+    "is_enabled": false,
+    "last_run_time": "2026-10-11T01:40:22.030232+00:00",
+    "next_run_time": null,
+    "updated_at": "2026-10-11T01:47:00.061413+00:00"
+  },
+  "schedule_mutation_performed": false,
+  "scope": "Only the existing Lupine automation record is projected. Disabled status confirms no scheduled continuation; it is not execution evidence."
+}
