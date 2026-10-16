@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-flags-candidate-v1/promotion/tests",
+    "-p",
+    "test_li_v3_flag_diagnostic.py",
+    "-v"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 0.43172621726989746,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "0a01e1ade672c40aa7c9eb92f7cdc4cb33d2702a14de7abea63f756967d2bbb5",
+  "scope": "Synthetic tests plus explicit public tracked-source byte verification only; no real archive/private capture/network."
+}

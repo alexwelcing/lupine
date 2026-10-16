@@ -13,6 +13,12 @@ hypothetical figure and documentary source leads support the next source review.
 [GOAL](GOAL.md#renewed-active-work--2026-10-16) records ownership and next actions.
 Scientific usefulness remains NO-GO; the original automation remains disabled.
 
+The next [flag-family diagnostic](reports/phase2-li-flag-diagnostic-v1/README.md)
+passes all 76 integrated synthetic Li tests, with the original stale pin and
+reviewer-fixture failure preserved. Its actual run awaits exact-source CI and
+clean packaging. A distinct finite-population planning extension is being
+reviewed in isolated overlays; no new archival experiment has been selected.
+
 Snapshot: 2026-10-11 01:40 UTC (exact CI observation `2026-10-11T01:40:16.973611+00:00`). Tested runtime/artifact source: `6585a605d5d325e84423c7e35c7286efe85cfb6f`. [Scoped decision and evidence](reports/research-preview-decision.md).
 
 **Research preview: GO_RESEARCH_PREVIEW. Physical-performance/general superiority: NO-GO.** The conditional engine, known-answer evaluation, interface, reproducible package and scoped claim audit meet the recorded preview definition. All scientific negatives remain unchanged; no physical-performance or general predictive-superiority claim is approved.

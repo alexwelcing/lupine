@@ -1,0 +1,37 @@
+{
+  "reason": "Preserve original candidate with production-blocking stale header-review-test pin and its original 12-test pass before explicit repair.",
+  "files": [
+    {
+      "path": "promotion/scripts/li_v3_flag_diagnostic.py",
+      "sha256": "183ffd16ff8b1c3a86e08ab3016eaae54891f37c92f3606627995f2a4788fbcb"
+    },
+    {
+      "path": "promotion/tests/test_li_v3_flag_diagnostic.py",
+      "sha256": "0c5d061b00a0c6b7aba713e8d0819400909e0e90b3e8857595dca52781663a70"
+    },
+    {
+      "path": "promotion/docs/li-v3-flag-diagnostic-plan.md",
+      "sha256": "dd36f011deb04d8141178ea0ead75e7a02fb588f6573cac5332410fb63173f46"
+    },
+    {
+      "path": "candidate-receipt.json",
+      "sha256": "6fc3d028c10ea00840d450e998fd5604bcd9e07c3aa3e0572d1b6add7d09a8ff"
+    },
+    {
+      "path": "README.md",
+      "sha256": "3360d297323fef97e72b7e1dbb5f3dd820a03a78cf1a1b4d5f717941864b891a"
+    },
+    {
+      "path": "author-tests-first.json",
+      "sha256": "d03fdfe9130772db071e1384b63e6adfc685906e64e89a49386554ad9178ccdc"
+    },
+    {
+      "path": "author-tests-first.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "author-tests-first.stderr",
+      "sha256": "62e153d53906b0c8f7c4860c0813baddda4af918df648b5769e6418a4efd9600"
+    }
+  ]
+}

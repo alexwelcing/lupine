@@ -1310,3 +1310,28 @@ agent reviews the ZIP member-flags predicate and public specification for the
 next separately frozen step. G20 remains unresolved; G21 remains blocked. All
 scientific negatives stand. No new DFT, exposed-test tuning, paid work or
 production deployment; no renewed schedule or continuous worker.
+
+## 2026-10-16T06:55:44.487910+00:00 — separate flag-family diagnostic integrated
+
+Root published report-only `ea69d01` and verified exact remote/PR head; its own
+CI run38862239658 is pending at this checkpoint. The tested runtime remains
+`41d3e31` with its completed four-job CI and clean retained package.
+
+[Flag-family engineering](phase2-li-flag-diagnostic-v1/README.md) adds a separate
+source-bound categorical reader under PKWARE APPNOTE6.3.10 meanings. Root found
+a stale prior reviewer-test pin in the first12-test candidate; original source
+and pass are preserved, the explicit pin was corrected, and14final author
+tests now pass including public-source binding and a positive synthetic guard.
+The independent suite passes16tests/3144mask-method cases. Its initial invented
+error-code expectation failed and was corrected as a reviewer fixture, preserving
+the original failure. No product change was required for that fixture correction.
+All76integrated Li tests pass with309runtimefiles unchanged. All nine older
+frozen custody/header files remain exact; no actual flag-family run occurred.
+
+Current owner/checkpoint: root publishes and verifies exact commit/CI plus clean
+package, then executes only the two fixed diagnostic commands. All categories
+remain BLOCKED_SCHEMA and cannot establish later-member or XML validity. G20/G21
+scientific gates and all prior negatives stand. Meanwhile independently reviewed
+finite-population mathematics, exact API and transport/UI candidates remain in
+ignored overlays; this is prospective arithmetic, not an archive experiment.
+No source allocation, fit, target values, new DFT, schedule or continuous worker.

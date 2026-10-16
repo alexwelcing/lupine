@@ -1,0 +1,15 @@
+--- first/test_li_v3_flag_diagnostic_review.py
++++ test_li_v3_flag_diagnostic_review.py
+@@ -304,10 +304,10 @@
+     def test_failed_object_read_preserves_unknown_exposure_and_checksum_failure_stays_blocked(self):
+         def failed(path,cap):
+             if path==diagnostic.custody.CAPTURE:return b'SYNTHETIC_CAPTURE'
+-            raise diagnostic.custody.CustodyError('SOURCE_READ_BLOCKED')
++            raise diagnostic.custody.CustodyError('FILE_READ_FAILED')
+         stack,written=self.fake_diagnose(failed)
+         with stack:report=diagnostic.diagnose('1')
+-        self.assertEqual(report['reason'],'SOURCE_READ_BLOCKED');self.assertEqual(written,[])
++        self.assertEqual(report['reason'],'FILE_READ_FAILED');self.assertEqual(written,[])
+         self.assertIs(report['exposure']['raw_buffer_read_started'],True)
+         self.assertIs(report['exposure']['raw_buffer_read_completed'],False)
+         self.assertIsNone(report['exposure']['target_bearing_source_bytes_read'])
