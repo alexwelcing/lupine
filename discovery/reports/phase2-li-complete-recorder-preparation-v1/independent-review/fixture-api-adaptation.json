@@ -1,0 +1,6 @@
+{
+  "diff": "--- previous fixture\n+++ preflight-compatible fixture\n@@ -51,7 +51,8 @@\n         def execute(*args):\n             commands.append('new source command')\n             return {'stdout': b'identical', 'persisted': b'identical', 'reservation': b'generated', 'recording': {}}\n-        validator = types.SimpleNamespace(review_route=lambda *a, **k: {'status': 'REJECTED_PUBLIC_CONSISTENCY'})\n+        validator = types.SimpleNamespace(_expected=lambda value: None,\n+                                          review_route=lambda *a, **k: {'status': 'REJECTED_PUBLIC_CONSISTENCY'})\n         ns = dict(s=s, HERE=Path('/generated-only/recorder'), TARGET='generated-target',\n                   load_bindings=lambda *a: binding, state=lambda *a: (before, None),\n                   load_validator=lambda *a: validator, run_one=execute,\n",
+  "new_sha256": "36ff06301a095b06e5da9e637d20400ce6715b871780d6d82fb28a672c9ff042",
+  "old_sha256": "18db2d362859e68468c22b5112ac9ee3fe795b9706d2d9cdf1261255860b1750",
+  "scope": "Reviewer mock compatibility only for accepted pure preflight helper; rejection expectations unchanged"
+}

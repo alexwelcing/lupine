@@ -1,0 +1,9 @@
+# Prospective Li artifact pin amendment
+
+This preparation supersedes only the prospective expected bytes of `tests/test_li_v3_readiness_review.py` after root removed one extra terminal LF. No Li artifact audit or scientific operation has run. The original preparation directory remains unchanged, including auditor source `b00541daccbbe8626880f59bc59d9694dc9f34e922690f968dfb50ed348bb738`, inventory and original `7ec52e…` test pin. The auditor in this sibling lane is byte-identical to that held source; the report contract and scope are unchanged.
+
+The normalized expected test SHA is `dda4d354ff55f09d4542105df7c7180097ad187477b4c03743bafd95a527a34b`. Root's authoritative final copyset SHA is `ee3285f1441a835d0df7aad48a5532b9941560c611ad5ca34d70f389cf0bac07`. Independent read-only comparison confirmed that the new test bytes equal the original bytes minus precisely their final LF and that their parsed AST structures agree. The other seven source/document entries are unchanged, and all eight final public overlay identities match their pins. No source was imported or executed.
+
+Root's separate normalized-module receipt reports 35 tests passing in 1.932 unittest seconds / 2.342406823 process seconds with all 347 held source files unchanged. It is retained as execution evidence from root, not a test run by this reviewer. The original 602-test receipt remains evidence for the preformat byte hold; it is not relabeled as execution on the normalized bytes.
+
+The expected release still has 339 unchanged baseline runtime files, six exact new Python files, two pinned new documents and all 110 baseline wheel payloads unchanged. The existing package/source/RECORD/17-check audit logic is not changed or weakened. Actual invocation still requires root's exact published commit, clean-source hold, retained path, final source copyset and successful package/strict-verifier gates. No CI success or scientific-operation permission is inferred.

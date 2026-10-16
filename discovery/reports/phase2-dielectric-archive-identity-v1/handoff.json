@@ -1,0 +1,17 @@
+{
+  "copy_instruction": "Copy exactly the10 files listed in public-inventory.json plus public-inventory.json and this handoff. Exclude raw response and caches.",
+  "data_file_identity_or_derivative_equivalence_verified": false,
+  "declared_primary_data_rights": "CC0-1.0",
+  "entrypoint": "README.md",
+  "entrypoint_sha256": "c5dba2ad2963e5c466bc867662bc4b8b576e767b4e6438a0540770ab0f168f0a",
+  "http_status": 200,
+  "independent_review": "Pending separate source-only reviewer; no pass claimed by this handoff.",
+  "no_redirect_retry_or_data_acquisition": true,
+  "public_inventory": "public-inventory.json",
+  "public_inventory_sha256": "3574db7d7053359c8105beeed8b7e25a25ad00324d9cea115f6a55443739210f",
+  "registry_dataset_version": "1",
+  "requests": 1,
+  "schema": "lupine.discovery.dielectric_archive_identity.handoff.v1",
+  "scientific_admission": false,
+  "status": "HELD_PRIMARY_DATASET_REGISTRY_IDENTITY_TERMS_VERSION_ONLY"
+}

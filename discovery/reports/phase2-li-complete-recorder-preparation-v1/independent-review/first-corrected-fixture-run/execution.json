@@ -1,0 +1,30 @@
+{
+  "after": {
+    ".cache/phase2-li-complete-readiness-operations-v1/recorder_support.py": "6f02c0ed8f8981e1f2c18e6107fb4bff343cf91427bcfe549b2fc4808dd53e0a",
+    ".cache/phase2-li-complete-readiness-operations-v1/run_after_ci.py": "6c8c9f96e046111423f7bbaf14cde9d978663d7101fd5ffa98184959b2a666c9",
+    ".cache/phase2-li-complete-readiness-operations-v1/run_package.py": "a03fc98c9f4099040344b4120bba57483a348f6c2f87ff771a0c63377b55fe10",
+    ".cache/phase2-li-complete-recorder-independent-review-v1/test_ordering.py": "18db2d362859e68468c22b5112ac9ee3fe795b9706d2d9cdf1261255860b1750"
+  },
+  "before": {
+    ".cache/phase2-li-complete-readiness-operations-v1/recorder_support.py": "6f02c0ed8f8981e1f2c18e6107fb4bff343cf91427bcfe549b2fc4808dd53e0a",
+    ".cache/phase2-li-complete-readiness-operations-v1/run_after_ci.py": "6c8c9f96e046111423f7bbaf14cde9d978663d7101fd5ffa98184959b2a666c9",
+    ".cache/phase2-li-complete-readiness-operations-v1/run_package.py": "a03fc98c9f4099040344b4120bba57483a348f6c2f87ff771a0c63377b55fe10",
+    ".cache/phase2-li-complete-recorder-independent-review-v1/test_ordering.py": "18db2d362859e68468c22b5112ac9ee3fe795b9706d2d9cdf1261255860b1750"
+  },
+  "command": [
+    "python",
+    "-B",
+    "-m",
+    "unittest",
+    "-v",
+    "test_ordering"
+  ],
+  "elapsed_seconds": 0.24574585200025467,
+  "exit_code": 1,
+  "finished_at": "2026-10-16T15:50:52.046550+00:00",
+  "scope": "Same generated-only three regressions; fixed reviewer stub missing LOG_CAP, no source change. All external operations remain in-memory stubs.",
+  "started_at": "2026-10-16T15:50:51.800827+00:00",
+  "status": "INDEPENDENT_GENERATED_REGRESSION",
+  "stderr_sha256": "71134025dc76cdc9fb34e0f3284277603c7e196e47a057abc4714f3a71696ffd",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

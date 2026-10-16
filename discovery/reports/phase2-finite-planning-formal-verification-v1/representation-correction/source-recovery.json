@@ -1,0 +1,24 @@
+{
+  "all17_wrappers_recovered": true,
+  "all54_sources_recovered": true,
+  "formal_or_test_commands_executed": 0,
+  "new_wrappers": [
+    {
+      "bytes": 2935,
+      "recovered_exactly": true,
+      "sha256": "3951aac1a186c8c3400606ee77f65bca42da7d9d58034b8839413edb6ac08afa",
+      "source": "integration-preparation/finite-planning-section.md",
+      "wrapper": "integration-preparation/finite-planning-section.md.utf8.json"
+    },
+    {
+      "bytes": 37277,
+      "recovered_exactly": true,
+      "sha256": "7782fb9495e94714aeb75b85f44906c54a90de02ec49d88133d16b270897f63f",
+      "source": "integration-preparation/promotion/formal/README.md",
+      "wrapper": "integration-preparation/promotion/formal/README.md.utf8.json"
+    }
+  ],
+  "original56_files_unchanged": true,
+  "schema": "lupine.publication-source-recovery.v1",
+  "status": "PASS_EXACT_BYTES"
+}

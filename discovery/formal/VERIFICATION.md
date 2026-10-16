@@ -1,6 +1,41 @@
 # Actual verification record
 
-## Finite coefficient normalization extension
+## Finite-population zero-failure planning extension — 2026-10-16
+
+The integrated source passes a strict eleven-module build (1,017 jobs), a fresh
+axiom audit of **143 statements**, and all eleven audit-parser tests. The new
+module adds 13 exact finite-count statements; all ten old Lean sources and all
+130 prior theorem/axiom entries remain unchanged. Pinned Lean 4.29.0, Mathlib,
+the dependency manifest, audit parser and its tests are unchanged. All 345
+runtime files held throughout the actual commands.
+
+The author and independent reviewer separately compiled the identical source
+`391b03aefda0f7bac5bd380347b81febc8a4ebbd329ae3a099981784803973bd`
+with warnings treated as errors. Root then ran `LEAN_NUM_THREADS=1 lake --wfail
+build`, freshly re-elaborated every module with `python audit_axioms.py`, and
+ran `python -m unittest test_audit_axioms -v`. All commands exited zero;
+the parser tests report 11 methods in 0.014 seconds. The [complete verification
+record](../reports/phase2-finite-planning-formal-verification-v1/README.md)
+retains actual commands, timestamps, logs, input hashes and review boundaries.
+Only `propext`, `Classical.choice` and `Quot.sound` occur in the axiom output.
+
+The current inventory SHA is
+`ae31d83d3fa136bf52c2d3cb8f2e94b349066eefa2d7f7e2eb672c68ce6b715b`;
+combined output SHA is
+`1386bccd866f772b801b50c692bc50bebbeae492ca08b41b833bbf3260f0a6e8`.
+The exact prior inventory/output are preserved under
+`history/pre-finite-planning-*` and were checked against committed `9d1f21da`.
+
+The new results prove the favorable subset count, exact rational count ratio,
+antitonicity in fixed failure count, attained ceiling-based composite-null
+maximum, exact zero boundary and census resolution. Their scientific reading
+requires a complete fixed labeled frame and uniform sampling of subsets of a
+fixed size. No IID label premise is needed for that count model. The module
+does not prove Python refinement, the minimum-search loop, evaluation-size
+monotonicity, real sampling validity, physical truth or predictive superiority.
+No new scientific experiment or G21 admission follows from compilation.
+
+## Historical finite coefficient normalization extension
 
 Completed on `2026-10-10` after published checkpoint
 `28b929f6ac74edaeccef148c7a1aa29b3b4bfdb0`, using pinned Lean `4.29.0`

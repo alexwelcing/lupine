@@ -1,0 +1,19 @@
+{
+  "actual_process_exit_code": 0,
+  "actual_source_operations": 0,
+  "command": [
+    "python",
+    ".cache/phase2-li-complete-readiness-binding-review-v1/review_actual_public.py"
+  ],
+  "completed_tool_chunk": "a6a15e",
+  "elapsed_seconds": 2.9954357050010003,
+  "exec_session_id": 88697,
+  "finished_at": "2026-10-16T16:21:00.599475+00:00",
+  "initial_tool_chunk": "a0ea68",
+  "raw_stream_logs": "Tool-returned stdout was observed; separate raw stdout/stderr files were not redirected. This record does not reconstruct unretained raw streams.",
+  "schema": "lupine.li.public_binding_review.execution_observation.v1",
+  "script_sha256": "325df33ac0b3559434c9c342b91dceaaafc15c4e3d13a06332c168f562f55737",
+  "started_at": "2026-10-16T16:20:57.604044+00:00",
+  "stdout_reported_status": "PUBLIC_BINDING_ACCEPTED_NOT_EXECUTED",
+  "stdout_review_sha256": "0d4d086fb040c63c9038fa8a745ea5e1f477b9800cbfd5f20af2025ed8e56bbd"
+}

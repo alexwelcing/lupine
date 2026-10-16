@@ -1,0 +1,13 @@
+{
+  "G21_status": "DEFERRED_UNCHANGED",
+  "compile_receipt_sha256": "5db6968947d48beec28eedcee0ad2b28efde261107d78ff9f566e65ba9ee1ae1",
+  "independent_compile_exit_code": 0,
+  "public_inventory_sha256": "f49de739b34ab376a8d2b8745596729f31063e4a45e780b18fe217779383781c",
+  "review_sha256": "023eae17f36ac1c6b038f17c4209dcf3b420c4be60c954f23255c9e294ee2b6a",
+  "schema": "lupine.discovery.finite_planning_formal.review_handoff.v1",
+  "scientific_admission": false,
+  "source_sha256": "391b03aefda0f7bac5bd380347b81febc8a4ebbd329ae3a099981784803973bd",
+  "status": "REVIEW_COMPLETE_NO_BLOCKER",
+  "theorem_count": 13,
+  "tracked_integration": false
+}

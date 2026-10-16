@@ -1,0 +1,18 @@
+{
+  "at": "2026-10-16T16:39:29.272910+00:00",
+  "tool_chunk": "35f220",
+  "command": [
+    "python",
+    ".cache/phase2-li-complete-checkpoint-v1/finalize.py"
+  ],
+  "exit_code": 1,
+  "stage": "AFTER_REPORT_COPY_AND_DOCUMENT_UPDATES_BEFORE_PUBLICATION_COPYSET",
+  "reason": "A copied Markdown integration template retained a relative link intended for formal/README.md; its standalone report location did not resolve that link.",
+  "failing_path": "reports/phase2-finite-planning-formal-verification-v1/integration-preparation/finite-planning-section.md",
+  "target": "../docs/finite-population-planning.md",
+  "finalizer_sha256": "c997cddd9d7332de446dadfb1d1555ac8f3338bfded98e3690e94651b442dd6d",
+  "published_commit_created": false,
+  "formal_tests_changed_or_rerun": false,
+  "runtime_files_changed": false,
+  "next_action": "Preserve exact template as reversible transport; amend only publication representation; revalidate all local links and bytes."
+}

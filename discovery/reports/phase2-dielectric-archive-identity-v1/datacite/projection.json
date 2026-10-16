@@ -1,0 +1,118 @@
+{
+  "attributes": {
+    "created": "2016-11-16T14:05:33.000Z",
+    "dates": [
+      {
+        "date": "2016-03-26T02:59:15Z",
+        "dateType": "Submitted"
+      },
+      {
+        "date": "2017-11-16T00:00:00Z",
+        "dateType": "Issued"
+      },
+      {
+        "date": "2017-11-16T00:00:00Z",
+        "dateType": "Available"
+      }
+    ],
+    "doi": "10.5061/dryad.ph81h",
+    "publicationYear": 2017,
+    "published": "2017",
+    "publisher": "Dryad",
+    "registered": "2016-11-16T14:05:34.000Z",
+    "relatedIdentifiers": [
+      {
+        "relatedIdentifier": "10.1038/sdata.2016.134",
+        "relatedIdentifierType": "DOI",
+        "relationType": "IsCitedBy"
+      }
+    ],
+    "rightsList": [
+      {
+        "rights": "Creative Commons Zero v1.0 Universal",
+        "rightsIdentifier": "cc0-1.0",
+        "rightsIdentifierScheme": "SPDX",
+        "rightsUri": "https://creativecommons.org/publicdomain/zero/1.0/legalcode",
+        "schemeUri": "https://spdx.org/licenses/"
+      }
+    ],
+    "schemaVersion": "http://datacite.org/schema/kernel-4",
+    "state": "findable",
+    "titles": [
+      {
+        "title": "Data from: High-throughput screening of inorganic compounds for dielectric and optical properties to enable the discovery of novel materials"
+      }
+    ],
+    "types": {
+      "bibtex": "misc",
+      "citeproc": "dataset",
+      "resourceType": "dataset",
+      "resourceTypeGeneral": "Dataset",
+      "ris": "DATA",
+      "schemaOrg": "Dataset"
+    },
+    "updated": "2026-01-27T11:30:19.000Z",
+    "url": "https://datadryad.org/dataset/doi:10.5061/dryad.ph81h",
+    "version": "1"
+  },
+  "creator_names": [
+    {
+      "familyName": "Petousis",
+      "givenName": "Ioannis",
+      "name": "Petousis, Ioannis",
+      "nameType": "Personal"
+    },
+    {
+      "familyName": "Mrdjenovich",
+      "givenName": "David",
+      "name": "Mrdjenovich, David",
+      "nameType": "Personal"
+    },
+    {
+      "familyName": "Ballouz",
+      "givenName": "Eric",
+      "name": "Ballouz, Eric",
+      "nameType": "Personal"
+    },
+    {
+      "familyName": "Liu",
+      "givenName": "Miao",
+      "name": "Liu, Miao",
+      "nameType": "Personal"
+    },
+    {
+      "familyName": "Chen",
+      "givenName": "Wei",
+      "name": "Chen, Wei",
+      "nameType": "Personal"
+    },
+    {
+      "familyName": "Graf",
+      "givenName": "Tanja",
+      "name": "Graf, Tanja",
+      "nameType": "Personal"
+    },
+    {
+      "familyName": "Schladt",
+      "givenName": "Thomas D.",
+      "name": "Schladt, Thomas D.",
+      "nameType": "Personal"
+    },
+    {
+      "familyName": "Persson",
+      "givenName": "Kristin A.",
+      "name": "Persson, Kristin A.",
+      "nameType": "Personal"
+    },
+    {
+      "familyName": "Prinz",
+      "givenName": "Fritz B.",
+      "name": "Prinz, Fritz B.",
+      "nameType": "Personal"
+    }
+  ],
+  "descriptions_or_data_values_disclosed": false,
+  "no_archive_files_acquired": true,
+  "record_id": "10.5061/dryad.ph81h",
+  "whole_registry_container_machine_read": true
+}

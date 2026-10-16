@@ -1,0 +1,243 @@
+{
+  "actual_operations": 0,
+  "bindings": "UNBOUND",
+  "count": 46,
+  "exclusions": [
+    "All unknown or future files; no production/package attempt directory; no private source/capture/G34/custody input; no real bindings.",
+    "Separate independent review bundle is not copied by this inventory; its owner supplies its own explicit handoff."
+  ],
+  "files": [
+    {
+      "bytes": 2632,
+      "path": "PREPARATION-RESULT.json",
+      "sha256": "3608e17bd191bd6345cd77c4287f4cb243b27afa319425c885ec94ab6207c61e"
+    },
+    {
+      "bytes": 12079,
+      "path": "README.md",
+      "sha256": "314cb6f2e45600c25a59672abed9f02dccd6898ee97dc5581bf60b9b1bc5e5b0"
+    },
+    {
+      "bytes": 6070,
+      "path": "bindings-frame.json",
+      "sha256": "b5722ac77423b8e531d763e0e4ca9d84efb83a3d13715dc1aaa6d44be4235f77"
+    },
+    {
+      "bytes": 4636,
+      "path": "bindings-inventory.json",
+      "sha256": "46a997ff76b981d8e7a57861dc94fc2823867b8e4cc0f3d1a2cd908933029fc1"
+    },
+    {
+      "bytes": 3306,
+      "path": "bindings-layout.json",
+      "sha256": "a602bb995437a6eb2f2c8dadfa22dcff961972cdd0f86cba41bbec51ad653524"
+    },
+    {
+      "bytes": 8567,
+      "path": "evidence/before-close-fix/README.md",
+      "sha256": "623e515bc6d1f7a64323cf0a457bf4370b20c629183f92710e184979c0b82ef2"
+    },
+    {
+      "bytes": 2489,
+      "path": "evidence/before-close-fix/record_synthetic.py",
+      "sha256": "7dcf8ac1de85766c9f365f858279e54ad833be131e9be6da42bc4bc937d422e6"
+    },
+    {
+      "bytes": 15493,
+      "path": "evidence/before-close-fix/recorder_support.py",
+      "sha256": "6f02c0ed8f8981e1f2c18e6107fb4bff343cf91427bcfe549b2fc4808dd53e0a"
+    },
+    {
+      "bytes": 30369,
+      "path": "evidence/before-close-fix/run_after_ci.py",
+      "sha256": "c0c48570377d232739f50d1f1e5956857b2e5fef5f24362c956b56c5b82bbc30"
+    },
+    {
+      "bytes": 4660,
+      "path": "evidence/before-close-fix/run_package.py",
+      "sha256": "ff75410bb8b68de831a6db16dab89d314b0cf329ca22188badd4e2d0ff38831a"
+    },
+    {
+      "bytes": 949,
+      "path": "evidence/before-close-fix/snapshot.json",
+      "sha256": "86247a97b7e8e4699f231a60fccf1b6a012c114aacd1e9f10c7b38b3cf8c4f1d"
+    },
+    {
+      "bytes": 1334,
+      "path": "evidence/before-close-fix/source-hold.json",
+      "sha256": "74c7394c1235b76708acbe358b15e0b0cb9bb0c81f2628d85a1969a0ca14ec25"
+    },
+    {
+      "bytes": 31488,
+      "path": "evidence/before-close-fix/tests/test_operations_recorder.py",
+      "sha256": "70e17bbd957498cf88d3349282e2209a5169a5deaab2a8314f793fad42bcd99e"
+    },
+    {
+      "bytes": 7098,
+      "path": "evidence/before-independent-ordering-fix/README.md",
+      "sha256": "5757330670e6b7ac2bc00a23aef402514f998eb4d4c691bfa354f3f095434236"
+    },
+    {
+      "bytes": 2489,
+      "path": "evidence/before-independent-ordering-fix/record_synthetic.py",
+      "sha256": "407ebbacf2314d1fe823d2e81c4f775a48fe3f9136ccb624a0a44c0bcff60962"
+    },
+    {
+      "bytes": 15493,
+      "path": "evidence/before-independent-ordering-fix/recorder_support.py",
+      "sha256": "6f02c0ed8f8981e1f2c18e6107fb4bff343cf91427bcfe549b2fc4808dd53e0a"
+    },
+    {
+      "bytes": 29355,
+      "path": "evidence/before-independent-ordering-fix/run_after_ci.py",
+      "sha256": "6c8c9f96e046111423f7bbaf14cde9d978663d7101fd5ffa98184959b2a666c9"
+    },
+    {
+      "bytes": 4515,
+      "path": "evidence/before-independent-ordering-fix/run_package.py",
+      "sha256": "a03fc98c9f4099040344b4120bba57483a348f6c2f87ff771a0c63377b55fe10"
+    },
+    {
+      "bytes": 1009,
+      "path": "evidence/before-independent-ordering-fix/snapshot.json",
+      "sha256": "2093371b531efae762bda7826551f1361661d476efec2ced130965e8bc0625d9"
+    },
+    {
+      "bytes": 1244,
+      "path": "evidence/before-independent-ordering-fix/source-hold.json",
+      "sha256": "eaa7364d9ed5e44f0e056725a8c7a7bd8308b285a39c6869779262bed4969cfd"
+    },
+    {
+      "bytes": 27430,
+      "path": "evidence/before-independent-ordering-fix/tests/test_operations_recorder.py",
+      "sha256": "3d801479972fc6b296b84a1d1959f836b44c0d4fdab8f54ed73f963507c3aa8d"
+    },
+    {
+      "bytes": 4507,
+      "path": "evidence/close-completion-first.stderr.txt",
+      "sha256": "e1a419f8d5336c8b46722a549b14321002fc7b41d1eb54bc96f04e806dd2880d"
+    },
+    {
+      "bytes": 0,
+      "path": "evidence/close-completion-first.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 5621,
+      "path": "evidence/final22/execution.json",
+      "sha256": "fab7be02c6ad1ccac77464aa8a47a4f1db82d7997cdc47de44f9daacd9078101"
+    },
+    {
+      "bytes": 2787,
+      "path": "evidence/final22/start.json",
+      "sha256": "f49b9ff5e81d1f5c9c62fd453b83d9815f110230de59aa82039726c057feee7d"
+    },
+    {
+      "bytes": 4099,
+      "path": "evidence/final22/stderr.txt",
+      "sha256": "c97f7b7b1f54e4c39bcebd62ca7cbd26529ce5197faf03a244aaa423dffa5165"
+    },
+    {
+      "bytes": 0,
+      "path": "evidence/final22/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 5620,
+      "path": "evidence/final26/execution.json",
+      "sha256": "6bff65aac3b8a7882aecbdc0fd628dcc15ba550f2da6f264c62cafd4083a569b"
+    },
+    {
+      "bytes": 2787,
+      "path": "evidence/final26/start.json",
+      "sha256": "1c8743bd40b427517ec8a0ad547f0b598732cdb285504997eee1a4f9e0729cb5"
+    },
+    {
+      "bytes": 4009,
+      "path": "evidence/final26/stderr.txt",
+      "sha256": "17fc1fe32aa82dcd1d18d07c354c83b695c5bfe4f121e1f28cdf6b133e5301c0"
+    },
+    {
+      "bytes": 0,
+      "path": "evidence/final26/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 5643,
+      "path": "evidence/final29/execution.json",
+      "sha256": "431e78626c4d6fccba71c74134ed489e500474f680b3b072817e70c5b95079d5"
+    },
+    {
+      "bytes": 2788,
+      "path": "evidence/final29/start.json",
+      "sha256": "b095f377f2364da77d541ef90189e0e7b0aa473a2f29d064378936ad2108a495"
+    },
+    {
+      "bytes": 4507,
+      "path": "evidence/final29/stderr.txt",
+      "sha256": "32dcb3c41808a72c01d41ab478f5cad4921806f2d09f4df6b4a331b05292a3ed"
+    },
+    {
+      "bytes": 0,
+      "path": "evidence/final29/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 997,
+      "path": "evidence/first16/execution.json",
+      "sha256": "a5a21b14f5e96674f9f37e6253bb9d86d9b0d9fe6063e15e719a4e4b12980668"
+    },
+    {
+      "bytes": 15493,
+      "path": "evidence/first16/recorder_support.py",
+      "sha256": "6f02c0ed8f8981e1f2c18e6107fb4bff343cf91427bcfe549b2fc4808dd53e0a"
+    },
+    {
+      "bytes": 27436,
+      "path": "evidence/first16/run_after_ci.py",
+      "sha256": "1af3dbfc798dd49d850db2d58933ae2b7e221172a619be0cd84f34911226a67b"
+    },
+    {
+      "bytes": 4515,
+      "path": "evidence/first16/run_package.py",
+      "sha256": "a03fc98c9f4099040344b4120bba57483a348f6c2f87ff771a0c63377b55fe10"
+    },
+    {
+      "bytes": 11493,
+      "path": "evidence/first16/tests/test_operations_recorder.py",
+      "sha256": "064c3ed31624d777f4455594e2dfadc6b2b989078ccac9a1a29c7609f5b26de3"
+    },
+    {
+      "bytes": 2510,
+      "path": "record_synthetic.py",
+      "sha256": "2966fec8548d6dbf88029a54e0f9111b3700eb429875454d1b7a98804f1a87f3"
+    },
+    {
+      "bytes": 15907,
+      "path": "recorder_support.py",
+      "sha256": "6533ff3b934646fb2fa4e11cead85bc9f0ce5ffe8e4901ad27eb55c4e12e625c"
+    },
+    {
+      "bytes": 34564,
+      "path": "run_after_ci.py",
+      "sha256": "f13ec4ad78d28266a405120e9ff644ba3856bfeacae851912678ceeb7f486dc5"
+    },
+    {
+      "bytes": 4660,
+      "path": "run_package.py",
+      "sha256": "ff75410bb8b68de831a6db16dab89d314b0cf329ca22188badd4e2d0ff38831a"
+    },
+    {
+      "bytes": 1326,
+      "path": "source-hold.json",
+      "sha256": "751b0a4f346489075e326c15aaa71e0d0c93ddab7f6e9878d1cc0c8b9c832e0c"
+    },
+    {
+      "bytes": 36662,
+      "path": "tests/test_operations_recorder.py",
+      "sha256": "9bd9789eadf3e876a823ce2d30b9d2dcbb06d64123d4675c4e6da6a1f02f9f8b"
+    }
+  ],
+  "schema": "lupine.li.complete-readiness.recorder-public-copyset.v1",
+  "status": "EXPLICIT_PUBLIC_PREPARATION_ONLY"
+}

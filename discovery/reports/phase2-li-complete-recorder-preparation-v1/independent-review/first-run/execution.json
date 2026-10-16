@@ -1,0 +1,30 @@
+{
+  "after": {
+    ".cache/phase2-li-complete-readiness-operations-v1/recorder_support.py": "6f02c0ed8f8981e1f2c18e6107fb4bff343cf91427bcfe549b2fc4808dd53e0a",
+    ".cache/phase2-li-complete-readiness-operations-v1/run_after_ci.py": "6c8c9f96e046111423f7bbaf14cde9d978663d7101fd5ffa98184959b2a666c9",
+    ".cache/phase2-li-complete-readiness-operations-v1/run_package.py": "a03fc98c9f4099040344b4120bba57483a348f6c2f87ff771a0c63377b55fe10",
+    ".cache/phase2-li-complete-recorder-independent-review-v1/test_ordering.py": "4488d016e73c1cd6048596379e7c0198dc71a2d1f790dac28fef48265350e005"
+  },
+  "before": {
+    ".cache/phase2-li-complete-readiness-operations-v1/recorder_support.py": "6f02c0ed8f8981e1f2c18e6107fb4bff343cf91427bcfe549b2fc4808dd53e0a",
+    ".cache/phase2-li-complete-readiness-operations-v1/run_after_ci.py": "6c8c9f96e046111423f7bbaf14cde9d978663d7101fd5ffa98184959b2a666c9",
+    ".cache/phase2-li-complete-readiness-operations-v1/run_package.py": "a03fc98c9f4099040344b4120bba57483a348f6c2f87ff771a0c63377b55fe10",
+    ".cache/phase2-li-complete-recorder-independent-review-v1/test_ordering.py": "4488d016e73c1cd6048596379e7c0198dc71a2d1f790dac28fef48265350e005"
+  },
+  "command": [
+    "python",
+    "-B",
+    "-m",
+    "unittest",
+    "-v",
+    "test_ordering"
+  ],
+  "elapsed_seconds": 0.2870884540025145,
+  "exit_code": 1,
+  "finished_at": "2026-10-16T15:50:28.113768+00:00",
+  "scope": "Only extracted function definitions with every external operation stubbed in memory. No recorder/support/product import, actual guard, source input, network, or actual operation.",
+  "started_at": "2026-10-16T15:50:27.826709+00:00",
+  "status": "INDEPENDENT_GENERATED_REGRESSION",
+  "stderr_sha256": "9a3a125e6d3dacb9f71d1c566bc7ec412860f5b283accec517729c01a47ba470",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

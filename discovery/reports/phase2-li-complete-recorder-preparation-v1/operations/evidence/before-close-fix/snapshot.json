@@ -1,0 +1,15 @@
+{
+  "status": "PRESERVED_PRE_CLOSE_CORRECTION_INTERMEDIATE",
+  "files": {
+    "run_after_ci.py": "c0c48570377d232739f50d1f1e5956857b2e5fef5f24362c956b56c5b82bbc30",
+    "recorder_support.py": "6f02c0ed8f8981e1f2c18e6107fb4bff343cf91427bcfe549b2fc4808dd53e0a",
+    "run_package.py": "ff75410bb8b68de831a6db16dab89d314b0cf329ca22188badd4e2d0ff38831a",
+    "tests/test_operations_recorder.py": "70e17bbd957498cf88d3349282e2209a5169a5deaab2a8314f793fad42bcd99e",
+    "README.md": "623e515bc6d1f7a64323cf0a457bf4370b20c629183f92710e184979c0b82ef2",
+    "source-hold.json": "74c7394c1235b76708acbe358b15e0b0cb9bb0c81f2628d85a1969a0ca14ec25",
+    "record_synthetic.py": "7dcf8ac1de85766c9f365f858279e54ad833be131e9be6da42bc4bc937d422e6"
+  },
+  "finding": "Temporary file descriptor close occurred after link in finally, and close failure could skip remaining cleanup.",
+  "authored_evidence": "../final26/execution.json",
+  "actual_source_operations": 0
+}

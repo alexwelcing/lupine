@@ -1,0 +1,13 @@
+{
+  "schema":"lupine.discovery.dielectric_archive_identity.scope.v1",
+  "status":"FROZEN_BEFORE_ONE_REQUEST",
+  "purpose":"Resolve the identity, registry-recorded use terms and version metadata of the primary Dryad archive cited by the dielectric paper; no data acquisition or admission.",
+  "identity_basis":{"retained_source":".cache/phase2-paired-archive-fallback-metadata-v1/dielectric_paper_metadata/response.body","sha256":"85f966296f5cc16e8d2d80f3e687b22d93f4d4b2ae303da28bd14a6b5b6d57e6","json_pointer":"/message/reference/62","reference_doi":"10.5061/dryad.ph81h","corroboration":"The exact DOI appears both in the reference DOI field and its Petousis2017 Dryad citation text; exactly one distinct Dryad DOI was found. Earlier article-methods prose identifies a Dryad JSON deposit."},
+  "maximum_requests":1,
+  "request":{"url":"https://api.datacite.org/dois/10.5061/dryad.ph81h","method":"GET","maximum_response_bytes":1048576,"timeout_seconds":30,"redirects":"reject","retries":0,"credentials":false},
+  "response_handling":"Retain exact bounded response/status/time/hash. Require HTTP200, UTF8 JSON and exact DOI identity. Otherwise preserve first failure and stop with no retry, mirror, fallback host or identifier guess.",
+  "selected_fields":["DOI and record ID","titles","creator names without affiliation/contact fields","publisher","publicationYear","version if explicitly supplied","resource types","rightsList","landing URL","relatedIdentifiers","dates and registry created/updated timestamps, explicitly not substituted for dataset version"],
+  "exposure":"Whole public registry JSON container is machine read and may contain abstract/descriptive aggregate information. Researcher output excludes descriptions, arbitrary XML, measurement values and data-file bodies. Existing primary-paper qualitative exposure remains; no fresh/untouched-source claim.",
+  "retention":"Raw registry body stays ignored and outside public allowlist. Publish selected metadata, own paraphrase, the exact citation identity, scope and request receipts.",
+  "limits":["Dataset DOI identity and declared rights do not verify any file bytes or legal exceptions outside the registry metadata.","Primary Dryad record is distinct from the catalog's processed Figshare file13213475; do not transfer rights or assume row/byte equivalence.","No data/label tables, full articles, notebooks, joins, numeric comparisons, fits, thresholds or admissions.","At most this one network request; no links or repository files followed."]
+}

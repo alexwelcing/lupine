@@ -1,0 +1,80 @@
+{
+  "candidate_files": [
+    {
+      "path": ".cache/phase2-finite-planning-formal-candidate-v1/LupineFinitePlanning.lean",
+      "sha256": "391b03aefda0f7bac5bd380347b81febc8a4ebbd329ae3a099981784803973bd"
+    },
+    {
+      "path": ".cache/phase2-finite-planning-formal-candidate-v1/README.md",
+      "sha256": "c0b94315bd759832bc48aaa5328cea797810278d177f917ba25cad0521cb1a26"
+    },
+    {
+      "path": ".cache/phase2-finite-planning-formal-candidate-v1/handoff.json",
+      "sha256": "cfdfe9980a290d339c2680f2bb563eddb5318071951ba06758f2d5849e864a7f"
+    },
+    {
+      "path": ".cache/phase2-finite-planning-formal-candidate-v1/axiom-audit.json",
+      "sha256": "be41dc6e50d3d77effbbf2bc6fde690730f5d33c14f1d31eb0d3e9200708f4de"
+    },
+    {
+      "path": ".cache/phase2-finite-planning-formal-candidate-v1/scope.json",
+      "sha256": "d2a8f6af76c3093ad2922fba43ed90cf02aaabba3928b117edf51f4e36a6856b"
+    },
+    {
+      "path": ".cache/phase2-finite-planning-formal-candidate-v1/public-inventory.json",
+      "sha256": "0e97cc330824225cfb1fb7d32abc4b96355d6fb765027c5da120b78cbcc3dd10"
+    },
+    {
+      "path": ".cache/phase2-finite-planning-formal-candidate-v1/attempts/first/execution.json",
+      "sha256": "c052088f7da9293e8f74d558f72f7bebc52a2d7bd5cc5901ee8362948e76c52e"
+    },
+    {
+      "path": ".cache/phase2-finite-planning-formal-candidate-v1/attempts/first/stdout.txt",
+      "sha256": "17541bfb6c07e9a0eea5ceb4a7baaccac1e253187867ba3859848257f8ab36ce"
+    },
+    {
+      "path": ".cache/phase2-finite-planning-formal-candidate-v1/attempts/first/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/phase2-finite-planning-formal-candidate-v1/attempts/ceiling-bridge/execution.json",
+      "sha256": "7ade389b2d392dace657beefdde6293617f6b36c6268c4785b4ca420c26b4e42"
+    },
+    {
+      "path": ".cache/phase2-finite-planning-formal-candidate-v1/attempts/ceiling-bridge/stdout.txt",
+      "sha256": "1a414db714a311a44665ec02032bc3d89486705bf23d2c5466638677c4f506f5"
+    },
+    {
+      "path": ".cache/phase2-finite-planning-formal-candidate-v1/attempts/ceiling-bridge/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "candidate_source_unchanged": true,
+  "no_project_python_execution": true,
+  "not_read": [
+    "actual archive objects",
+    "private custody",
+    "new datasets"
+  ],
+  "schema": "lupine.discovery.finite_planning_formal.review_sources.v1",
+  "scoped_existing_files": {
+    "docs/finite-population-planning.md": "11f4efe987632293bfc8dfcbd24a32d3a05e4c9e23624c9933ec030028de3414",
+    "formal/LupineCoupled.lean": "d79afad3eafbf1cfe35fb920c5864059570f2018ff15c7b1badae5de83e39d7f",
+    "formal/LupineDecisionPool.lean": "10a5962eedf30819388a835b052df91f4fff130c79258d31eb345f51071cf00a",
+    "formal/LupineDiscovery.lean": "93adb82c8caceb6620285bea612b4c80e4cf11c7da6d1e04b8ba595f43c6c515",
+    "formal/LupineExchangeability.lean": "0e326c4b51e5ca00d1deb32be61ba7b80ca0c443059d0fbf13e22f05717610ce",
+    "formal/LupineIntervals.lean": "9dec04611f670efdd8deaa6e05f802199f418c9089a5c29148bf8ca4534d8fc4",
+    "formal/LupineNormalization.lean": "280be8e7b4724af3b6092bf497d3b29c3a9b3a29b135942cf76cfa273015db32",
+    "formal/LupinePareto.lean": "077e657e5b6d77ef878c325baf9db909adff73f23408385ee464482cd6acd4c0",
+    "formal/LupineProjection.lean": "600af2ee02e8f5ed7f84046d5abab253dc74be3d556414d67438e49a6f3c4f2d",
+    "formal/LupineRisk.lean": "bea0e0cb18daeb41a26e7c721bef0dec6e1c361f3ccf1c9f7f7dbf2176c0fcdf",
+    "formal/LupineSharpness.lean": "1135d8ba14c6d2c388bc5aaa40fc4ce71d55fe09cb8c90bf7319a70a84cbb871",
+    "formal/README.md": "9bdd193fad192f6a95ffb23d49bd776a79294a66eb8fe88cfc4122b5c4a0fe3c",
+    "formal/VERIFICATION.md": "6a097886d61dc9a1bb4c4cba2a6a20cb63d254f9649dd70e6da3cf80e5aa99df",
+    "formal/lake-manifest.json": "641a25267cd8312c08757ff0f0f5738f3adb67598b8205603dbf8ac2255f9275",
+    "formal/lakefile.toml": "93fcb2fd0d953846ab2c017d1208d4dfca4abc85e06820e98564a73b309e8154",
+    "formal/lean-toolchain": "651c8accb402b0c071cd336e9d3dc0a55516b1bfb434ddc4801f14936785b1d2",
+    "formal/theorem-inventory.json": "834a14198ce1f8d52d4ba33871c143d7c76246cfd81b736109a6de78798acc40",
+    "src/lupine_discovery/finite_planning.py": "027785ccdf24f6e8cf9b7a8ac98987b821fcdb19c875bbe8d2ba52d2fc3895f8"
+  }
+}

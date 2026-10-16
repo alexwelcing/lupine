@@ -1,0 +1,8 @@
+{
+  "encoding": "utf-8",
+  "original_bytes": 1135,
+  "original_filename": "test-pin-only.diff",
+  "original_sha256": "dd85f263b1ff2d161e2ee114a8f42a1b2b318202eea17c09efef364a67f3983e",
+  "schema": "lossless-utf8-wrapper.v1",
+  "text": "--- first/test_outer_observer_review.py\n+++ corrected-first/test_outer_observer_review.py\n@@ -16,7 +16,7 @@\n \n HERE = Path(__file__).absolute().parent\n SOURCE = HERE.parent/'phase2-li-complete-readiness-outer-observer-v1/observe.py'\n-SOURCE_SHA = 'b2fa9a4b6e852b4094fa9e6df6160ab14ff52be0ec184d18f014c7d2a8dc2bfa'\n+SOURCE_SHA = '3ef3c337ef5bd1b2f496034716311d9027027352510b18a3e57e7b3eaa13aa55'\n canonical = lambda value: (json.dumps(value,sort_keys=True,separators=(',',':'),ensure_ascii=True,allow_nan=False)+'\\n').encode('ascii')\n sha = lambda value: hashlib.sha256(value).hexdigest()\n STUB = b'''import builtins\\ndef repository_state(commit): return builtins._outer_review_fixture.repository_state(commit)\\ndef reserve(path): return builtins._outer_review_fixture.reserve(path)\\ndef publish(path, raw): return builtins._outer_review_fixture.publish(path,raw)\\ndef bounded_process(command, *, timeout): return builtins._outer_review_fixture.bounded_process(command,timeout=timeout)\\ndef strict_json(raw, *, canonical_required=False): return builtins._outer_review_fixture.strict_json(raw,canonical_required=canonical_required)\\n'''\n"
+}

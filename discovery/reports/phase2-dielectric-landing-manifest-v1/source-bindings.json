@@ -1,0 +1,25 @@
+{
+  "acquirer_sha256": "e249380c1b05567daec5bc0f31b32a7be12ee7bda7f9d943e3e9a7c3da8785e9",
+  "file_content_or_derivative_equivalence_verified": false,
+  "html_bytes": 38136,
+  "html_sha256": "80d2afe88f7bbe6921fc7387cfe8d3dd37e4d2a85e1077897efcd24c36746c29",
+  "metadata_scope": "JSON-LD Dataset/DataDownload selected fields, literal file/API/manifest/canonical links, selected head identity fields; no body-description/result projection.",
+  "prior_qualitative_exposure": {
+    "path": ".cache/phase2-dielectric-methods-rights-v1/exposure-ledger.json",
+    "remains_preserved": true,
+    "sha256": "85aabd1e87d26e9b707ce0765d0ac35e69d2cd4972454813ae736e456f507602"
+  },
+  "prior_registry_projection": {
+    "path": ".cache/phase2-dielectric-archive-identity-v1/datacite/projection.json",
+    "sha256": "cd0f88f897c2d95c7906fc67b25264f9f73a5c9deee0d4bd197161bd9e028e38",
+    "used_field": "/attributes/url"
+  },
+  "projection_sha256": "42fd1036749c70a421d36e546cdffc3f14b9dc990502732267a9c7421f5eae10",
+  "projector_sha256": "7fb7747c44a1ee9a99bd0505a7497192e524f7a7369a6df4404887e857d7d03f",
+  "raw_html_publication_allowed": false,
+  "receipt_sha256": "cdf1db7b81206b99bfb1ac6af96dbb2fc55abb89ada8c592aba5259b603efb7e",
+  "request_sha256": "8d37110e0a29f62862ea24c44e14d83b7805186a380d7925ca306754d189066a",
+  "schema": "lupine.discovery.dielectric_landing_manifest.bindings.v1",
+  "scope_hold_sha256": "73f7c8f875f650dfe66c5062efa0f008057d4caea8fc620891b4e03b17821816",
+  "scope_sha256": "4c53bad7e2494d473dbf682f0db03d1473ab1f76f3c3facf540dca4700b75e23"
+}

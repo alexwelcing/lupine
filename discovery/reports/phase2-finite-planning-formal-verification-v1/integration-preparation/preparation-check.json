@@ -1,0 +1,28 @@
+{
+  "actual_build_or_audit_or_test_execution": false,
+  "baseline_commit": "9d1f21dae141a28db378ee2e16aa83340df57877",
+  "declared_new_theorems": 13,
+  "dependency_change": false,
+  "existing_formal_bindings_unchanged": true,
+  "existing_parser_test_methods": [
+    "test_standard_axioms_and_empty_set_accepted",
+    "test_admitted_proof_rejected",
+    "test_custom_axiom_rejected",
+    "test_missing_output_rejected",
+    "test_duplicate_output_rejected",
+    "test_unexpected_theorem_rejected",
+    "test_module_namespace_is_checked",
+    "test_unprinted_theorem_rejected",
+    "test_extra_axiom_declaration_rejected",
+    "test_admitted_source_rejected",
+    "test_unexpected_source_print_rejected"
+  ],
+  "expected_future_modules": 11,
+  "expected_future_total_theorems": 143,
+  "held_proof_exact": true,
+  "network": false,
+  "schema": "lupine.finite-planning-formal-integration.preparation-check.v1",
+  "six_copyset_hashes_checked": true,
+  "status": "PASS_STATIC_COPYSET",
+  "tracked_edits": false
+}

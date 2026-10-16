@@ -1,0 +1,19 @@
+{
+  "copy_instruction": "Copy exactly the11 public-inventory files plus public-inventory.json and this handoff. Exclude the raw denial body and caches.",
+  "dataset_files_requested": 0,
+  "entrypoint": "README.md",
+  "entrypoint_sha256": "81fca5e06d0055bc0f4f0dea57fb210f74f5438dcaaf1ad2b5bc14ca533b45fd",
+  "http_status": 403,
+  "logical_gets": 1,
+  "no_test_or_independent_review_pass_claim": true,
+  "offline_parser_invoked": false,
+  "pdf_acquired": false,
+  "public_inventory": "public-inventory.json",
+  "public_inventory_sha256": "0bff51e82fdccf525cfb7055df129c4d8fb07549ee733539465681345fb1893d",
+  "redirects": 0,
+  "retries": 0,
+  "schema": "lupine.discovery.dielectric_readme_schema.handoff.v1",
+  "scientific_admission": false,
+  "scientific_schema_evidence_added": false,
+  "status": "HELD_FIRST_HTTP403_NO_PDF_OR_SCHEMA_PROJECTION"
+}

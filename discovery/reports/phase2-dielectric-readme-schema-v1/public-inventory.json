@@ -1,0 +1,87 @@
+{
+  "bytes": 16985,
+  "excluded": [
+    "acquisition/response.body",
+    "__pycache__ and *.pyc"
+  ],
+  "file_count": 11,
+  "files": [
+    {
+      "bytes": 2908,
+      "path": "README.md",
+      "representation": "EXACT",
+      "sha256": "81fca5e06d0055bc0f4f0dea57fb210f74f5438dcaaf1ad2b5bc14ca533b45fd"
+    },
+    {
+      "bytes": 3421,
+      "path": "scope.json",
+      "representation": "EXACT",
+      "sha256": "474409a7a0e0fbab71445cf87b399f6a9851602e973c7cd93bb13af190077bdf"
+    },
+    {
+      "bytes": 355,
+      "path": "scope-hold.json",
+      "representation": "EXACT",
+      "sha256": "bcec0063f2dbde59693ea645040e81823d71351c5ed228860ad343fcef116e21"
+    },
+    {
+      "bytes": 3376,
+      "path": "acquire.py",
+      "representation": "EXACT",
+      "sha256": "069350a6a0a5f86aae190953768d7b21a28fb38699c77e2827d2c6e562868cd4"
+    },
+    {
+      "bytes": 2855,
+      "path": "parse_documentation.py",
+      "representation": "EXACT",
+      "sha256": "728133942f15b4d81ec5f0250d0eef02976829ebdff7a13186241de7af923681"
+    },
+    {
+      "bytes": 1511,
+      "path": "source-bindings.json",
+      "representation": "EXACT",
+      "sha256": "388794dcabe368c273ca3d3af73ce40a5520dab39eccead12bdbfc595bf97efb"
+    },
+    {
+      "bytes": 630,
+      "path": "exposure-ledger.json",
+      "representation": "EXACT",
+      "sha256": "0634effdd556479ed531fa234de81f60a8fd1454eea8269cc1a415df4e050aa8"
+    },
+    {
+      "bytes": 153,
+      "path": "disposition.json",
+      "representation": "EXACT",
+      "sha256": "b48465461cece18c8e8f8bdbf130c2ace5684f9cf7a41eb104b32d03441ebab5"
+    },
+    {
+      "bytes": 514,
+      "path": "completion.json",
+      "representation": "EXACT",
+      "sha256": "278b84101811f96fb7f15f25c539deefcc03ec1057cb9a6ff156e3c1b6f14b23"
+    },
+    {
+      "bytes": 223,
+      "path": "acquisition/request.json",
+      "representation": "EXACT",
+      "sha256": "7bc5b22a7ad29862e4afd205272ff12a8a28dfa82f901585318130825f01cf69"
+    },
+    {
+      "bytes": 1039,
+      "path": "acquisition/receipt.json",
+      "representation": "EXACT",
+      "sha256": "a98d8760705f11be505f13dabd32950156c7735bfce118a88fe34467db60caba"
+    }
+  ],
+  "full_pdf_or_extracted_text_exists": false,
+  "local_links_verified": [
+    "acquisition/receipt.json",
+    "scope.json",
+    "source-bindings.json",
+    "exposure-ledger.json",
+    "disposition.json"
+  ],
+  "lossless_wrappers_required": false,
+  "schema": "lupine.discovery.dielectric_readme_schema.public_copyset.v1",
+  "signed_query_values_present": false
+}

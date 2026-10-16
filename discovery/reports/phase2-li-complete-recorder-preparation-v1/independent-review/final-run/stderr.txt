@@ -1,0 +1,8 @@
+test_operation_log_failure_still_attempts_post_state (test_ordering.OrderingTests.test_operation_log_failure_still_attempts_post_state) ... ok
+test_package_log_failure_still_attempts_post_state (test_ordering.OrderingTests.test_package_log_failure_still_attempts_post_state) ... ok
+test_rejected_historical_prefix_precedes_any_new_command (test_ordering.OrderingTests.test_rejected_historical_prefix_precedes_any_new_command) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.042s
+
+OK

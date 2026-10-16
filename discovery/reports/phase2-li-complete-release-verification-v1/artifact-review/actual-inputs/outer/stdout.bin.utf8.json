@@ -1,0 +1,8 @@
+{
+  "encoding": "utf-8",
+  "original_bytes": 138,
+  "original_path": "artifact-review/actual-inputs/outer/stdout.bin",
+  "original_sha256": "6406d66c8802a73f5b425c43bb3ec5e1b4717b41f470718f31a84be46a7f630c",
+  "schema": "lupine.public.utf8-evidence.v1",
+  "text": "{\"commit\":\"9d1f21dae141a28db378ee2e16aa83340df57877\",\"no_retry\":true,\"scientific_admission\":false,\"status\":\"COMPLETE_PACKAGE_AND_STRICT\"}\n"
+}

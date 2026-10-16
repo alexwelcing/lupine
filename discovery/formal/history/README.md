@@ -38,3 +38,11 @@ preserve the nine-module, 125-statement receipt at checkpoint
 `28b929f6ac74edaeccef148c7a1aa29b3b4bfdb0`, before normalization integration.
 The copies were verified against committed bytes, all nine module source hashes,
 and the combined axiom-output hash. Paths remain relative to parent `formal/`.
+
+`pre-finite-planning-theorem-inventory.json` and
+`pre-finite-planning-AXIOMS.txt` preserve the ten-module, 130-statement
+receipt at checkpoint `9d1f21dae141a28db378ee2e16aa83340df57877`, before finite-population
+planning integration. The copies were verified against committed bytes,
+all ten module source hashes, and the combined axiom-output hash. Their
+module paths remain relative to parent `formal/`. These historical bytes
+do not replace the fresh audit required after adding the eleventh module.

@@ -73,7 +73,7 @@ previously unused source with paired outcomes and credible study grouping.
 | ID | Work and acceptance | State | Owner / next action |
 | --- | --- | --- | --- |
 | G19 | Exact prospective planner, independent finite-world tests, CLI and usable browser; hypothetical-IID/unknown states and bounded inputs | DONE at `41d3e31` | [All four CI jobs, clean installed package and independent byte audit pass](reports/phase2-workbench-verification-v1/README.md). The 65-check full browser run and original failures remain recorded. General written proof and exact hypothetical figure distinguish arbitrary-count mathematics from bounded implementation and scientific validity. |
-| G20 | Source identity/license, paired labels/conditions, overlap and evaluation-unit audit before a fresh evaluation | ACTIVE / schema unresolved | [Completed G34 audit](reports/phase2-growth-predicate-verification-v1/ROOT-CHECKPOINT.md) localizes the sole header-profile failure; archive admission, Li counts, citations, joins and grouping remain unresolved. BAM is an exposed metrology reference; Rhizo is exposed historical stored-label evidence. No fresh study is admitted. |
+| G20 | Source identity/license, paired labels/conditions, overlap and evaluation-unit audit before a fresh evaluation | ACTIVE / schema unresolved | Li complete-route A1 stopped at an unsupported XML profile; no retry or dependent phase. [Primary Dryad metadata](reports/phase2-dielectric-archive-identity-v1/README.md) states version 1/CC0, and [landing metadata](reports/phase2-dielectric-landing-manifest-v1/README.md) identifies two files. File custody, paired schema and overlap remain unresolved; no study admitted. |
 | G21 | Freeze and evaluate a new archival protocol only if source and prospective design justify it | BLOCKED on G20 | No new allocation, fit, scientific threshold or sampling claim. [Risk-contract review](reports/phase2-risk-contracts-v1/README.md) distinguishes expected loss from fixed-policy high-confidence risk. [Finite confidence inversion](reports/phase2-finite-risk-inversion-design-v1/PUBLICATION.md) has written review and independent finite counting, including an optional-stopping counterexample; implementation is deferred until a justified fixed-frame target needs it. |
 | G22 | Fixed Li v3 capture/envelope, opaque outcomes and explicit schema block | DONE; BLOCKED_SCHEMA preserved | Published `5addf4f` and all four successful CI jobs preceded capture. Publisher size/MD5 match; two byte-identical envelope results report BLOCKED_LAYOUT / ZIP_LAYOUT_UNSUPPORTED, zero decompression/XML decoding. This is custody, not scientific validity. |
 | G23 | Separate header-only diagnostic for the recorded ZIP block; old custody bytes unchanged | DONE; BLOCKED_SCHEMA preserved | [Two actual runs](reports/phase2-workbench-verification-v1/README.md) followed verified `41d3e31` CI/package, returned identical MEMBER_FLAGS receipts and preserved all 306 runtime files. Whole raw buffer and directory names read; no member/XML/worksheet decoding. This identifies a profile mismatch, not the actual bits or archive corruption. |
@@ -89,20 +89,32 @@ previously unused source with paired outcomes and credible study grouping.
 | G33 | Bounded Rhizo declared-reference provenance and historical recorded-label readiness | COMPLETE for fixed stored fields; NOT_ADMITTED | [One 36-object inspection](reports/phase2-rhizo-recorded-label-readiness-v1/README.md) confirms all 144 stored prediction/reference pairs are exact numeric fields with matching literal units; all tolerances are NULL. The source is exposed; historical reference choice and physical validity remain UNKNOWN. No performance comparison or fresh screening claim. |
 | G34 | One categorical all-entry Li header diagnostic with exact first-rejection preservation and explicit unchecked dependencies | DONE; BLOCKED_SCHEMA preserved | [Verified a064a2c0 and actual pair](reports/phase2-growth-predicate-verification-v1/ROOT-CHECKPOINT.md): all four CI jobs, clean package and independent artifacts pass. Two identical receipts report only MEMBER_KIND_PROFILE failing; 31 families pass, none unchecked. All 335 runtime files held; zero member/XML decoding. Independent public review passes 410 checks, with its first harness failure preserved. |
 | G35 | Fixed exposed Rhizo census and exact readable workbench, preserving unknown physical scope | COMPLETE / repaired source verified | [144 pairs, 16 groups and 36 reference checks](reports/phase2-rhizo-stored-census-v1/README.md), independent arithmetic/scope reviews; [80 browser checks and final 97 focused tests](reports/phase2-rhizo-census-integration-v1/README.md). Exact public values and exports; no winner, tolerance criterion or fresh scientific admission. |
-| G36 | One complete bounded Li compatibility/documentary/frame route | INTEGRATED / 602 generated tests pass; actual route pending | [Integrated adapter and evidence](reports/phase2-li-complete-readiness-integration-v1/README.md): all 339 predecessors unchanged; complete identities and unresolved structural accounting, with exact prior lineage and counter consistency. Root owns new-commit release gates and fixed layout pair; later bindings remain absent. |
+| G36 | One complete bounded Li compatibility/documentary/frame route | ACTUAL A1 BLOCKED; A2/B/C not run | [Verified source and first actual failure](reports/phase2-li-complete-layout-verification-v1/README.md): XML_PROFILE_UNSUPPORTED, source unchanged, cleanup complete. No manifest or scientific admission; preserve the failure and stop this route. |
+| G37 | Formalize the finite-population zero-failure counting bound with explicit premises | INTEGRATED / 143-statement audit PASS; new-commit CI pending | [Thirteen new statements and independent compilation](reports/phase2-finite-planning-formal-verification-v1/README.md); exact ceiling null, count ratio and census boundary. All ten prior modules and 345 runtime files unchanged; no Python refinement or scientific admission. |
 
-Current owner/checkpoint: root integrated the complete bounded Li route.
-[602 focused methods pass](reports/phase2-li-complete-readiness-integration-v1/README.md),
-holding 345 runtime files and two contract documents. All 339 predecessor runtime
-files remain unchanged. The strict pure core and all earlier failures are preserved.
-[The repair baseline](reports/phase2-rhizo-census-repair-verification-v1/README.md)
-passes original full CI, clean packaging and independent artifact checks.
+Current owner/checkpoint: root completed the exact `9d1f21da` release gates and
+the first actual Li layout command. [All four original CI jobs, clean installed
+package, strict verifier and independent artifact audit pass](reports/phase2-li-complete-release-verification-v1/README.md).
+The audit checks all 6,139 source files, 345 runtime files and 110 unchanged wheel
+payloads. These are engineering checks, not physical validation.
 
-Next: publish this increment, verify its own exact remote/CI and clean artifacts,
-then execute the fixed bounded layout pair through the reviewed recorder. Inventory
-and frame remain unbound until exact prior results and semantic premises are
-reviewed and committed. No actual operation through this new route has occurred.
-Unknown roles/meaning remain explicit NO_GO; G20 is unresolved and G21 blocked.
+[Actual A1](reports/phase2-li-complete-layout-verification-v1/README.md) completed
+with exit 2 and `XML_PROFILE_UNSUPPORTED`. Five member reads/decompressions and
+UTF-8 decodes completed; the fifth XML parse did not complete. Archive cleanup
+completed, all source bytes held, and stdout matched the persisted failure.
+No workbook manifest or scientific counts were produced. A2 and all downstream
+phases did not run. The failed slot is preserved; no retry or parser relaxation
+is authorized by this checkpoint.
+
+Next: publish this mathematical and evidence increment and verify its own remote/CI;
+preserve the separately scoped [Dryad README access failure](reports/phase2-dielectric-readme-schema-v1/README.md)
+(HTTP 403, no PDF or parser execution). The independently reviewed finite-population
+formalization now passes the strict eleven-module build and fresh 143-statement
+audit. Source schema, units and pairing remain unresolved; metadata alone does
+not authorize a numerical evaluation or scientific protocol.
+Root owns integration; independent reviews remain separate.
+G20 is unresolved and G21 blocked. The historical preview decision and all
+scientific negative results remain unchanged.
 
 The historical Rhizo census remains descriptive: 144 pairs, 16 groups and 36
 reference groups. Physical comparability and historical reference choice remain
@@ -110,8 +122,11 @@ unresolved, all tolerances NULL, and exposed aggregates cannot become a fresh te
 
 Parallel [fallback source research](reports/phase2-dielectric-methods-rights-v1/README.md)
 records archived DFPT methods and a qualitative-results exposure during prose
-projection. Rights, pairing, processed schema and overlap remain unresolved;
-no dataset was acquired or selected as a benchmark. Li remains the primary route.
+projection. The primary Dryad registry and landing page now declare CC0/version 1;
+file identity, processed-source equivalence, paired schema and overlap remain
+unresolved. No numerical dataset was acquired or selected as a benchmark. The
+attempted alternate documentation route is also blocked at its README download.
+Neither access nor schema failure establishes a scientific performance result.
 
 
 Publication detail: the whitespace gate rejected one extra final LF in the new

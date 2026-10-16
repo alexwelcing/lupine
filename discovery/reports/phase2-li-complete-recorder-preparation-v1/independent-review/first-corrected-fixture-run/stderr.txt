@@ -1,0 +1,55 @@
+test_operation_log_failure_still_attempts_post_state (test_ordering.OrderingTests.test_operation_log_failure_still_attempts_post_state) ... FAIL
+test_package_log_failure_still_attempts_post_state (test_ordering.OrderingTests.test_package_log_failure_still_attempts_post_state) ... FAIL
+test_rejected_historical_prefix_precedes_any_new_command (test_ordering.OrderingTests.test_rejected_historical_prefix_precedes_any_new_command) ... FAIL
+
+======================================================================
+FAIL: test_operation_log_failure_still_attempts_post_state (test_ordering.OrderingTests.test_operation_log_failure_still_attempts_post_state)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-recorder-independent-review-v1/test_ordering.py", line 76, in test_operation_log_failure_still_attempts_post_state
+    self.assertEqual(states, ['post-state'], 'post-child state check must be independent of log publication')
+AssertionError: Lists differ: [] != ['post-state']
+
+Second list contains 1 additional elements.
+First extra element 0:
+'post-state'
+
+- []
++ ['post-state'] : post-child state check must be independent of log publication
+
+======================================================================
+FAIL: test_package_log_failure_still_attempts_post_state (test_ordering.OrderingTests.test_package_log_failure_still_attempts_post_state)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-recorder-independent-review-v1/test_ordering.py", line 90, in test_package_log_failure_still_attempts_post_state
+    self.assertEqual(states, ['source-state'] * 3, 'initial, pre-child, and post-child checks all remain required')
+AssertionError: Lists differ: ['source-state', 'source-state'] != ['source-state', 'source-state', 'source-state']
+
+Second list contains 1 additional elements.
+First extra element 2:
+'source-state'
+
+- ['source-state', 'source-state']
++ ['source-state', 'source-state', 'source-state']
+?                  ++++++++++++++++
+ : initial, pre-child, and post-child checks all remain required
+
+======================================================================
+FAIL: test_rejected_historical_prefix_precedes_any_new_command (test_ordering.OrderingTests.test_rejected_historical_prefix_precedes_any_new_command)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-recorder-independent-review-v1/test_ordering.py", line 61, in test_rejected_historical_prefix_precedes_any_new_command
+    self.assertEqual(commands, [], 'invalid supplied historical prefix must block before target operations')
+AssertionError: Lists differ: ['new source command', 'new source command'] != []
+
+First list contains 2 additional elements.
+First extra element 0:
+'new source command'
+
+- ['new source command', 'new source command']
++ [] : invalid supplied historical prefix must block before target operations
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.047s
+
+FAILED (failures=3)

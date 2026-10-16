@@ -19,8 +19,10 @@ and a marginal failure bound for finite weighted outcome laws with explicitly
 equal leave-one-out failure probabilities. `LupineExchangeability.lean` derives
 that equality from permutation invariance of a finite joint score-vector law
 and applies the marginal failure bound. `LupineNormalization.lean` proves
-conditional finite coefficient normalization and L1 algebra. Each module has
-its own namespace. All ten modules are default build targets.
+conditional finite coefficient normalization and L1 algebra. `LupineFinitePlanning.lean`
+proves fixed-population zero-failure subset counting, exact rational null
+bounds, and census resolution. Each module has its own namespace. All eleven
+modules are default build targets.
 
 The standalone package pins Lean `v4.29.0` and Mathlib
 `8a178386ffc0f5fef0b77738bb5449d50efeea95`, matching the Mathlib/toolchain
@@ -431,6 +433,44 @@ distance predictivity, source adequacy, axis validation, resource-limit behavior
 or Python/Fraction implementation refinement inferred. See
 [normalization scope](../docs/normalization.md) and the
 [review provenance](../reports/formal-normalization-review-v1/README.md).
+
+## Finite-population planning theorem map
+
+`LupineFinitePlanning` considers an arbitrary type of distinct labeled IDs, a
+finite population `P`, a fixed failure subset `F ⊆ P`, and a fixed sample size
+`e`. The zero-failure event consists exactly of the `e`-element subsets of
+`P \ F`. Uniform sampling of all `e`-element subsets therefore gives the count
+ratio `choose(M-K,e) / choose(M,e)`, where `M=|P|` and `K=|F|`. The module
+proves this finite count ratio over exact rationals; it does not construct a
+general probability-space adapter or verify a scientific sampling protocol.
+
+| Theorem in `LupineFinitePlanning` | Mathematical guarantee |
+| --- | --- |
+| `zero_failure_subsets`, `zero_failure_count` | The no-failure sample event equals the fixed-size subsets of the complement and has exactly `choose(M-K,e)` members |
+| `uniform_count_ratio` | The favorable/total subset count ratio equals the declared exact rational expression |
+| `denominator_positive` | `e ≤ M` makes `choose(M,e)` strictly positive |
+| `failure_count_antitone` | Increasing the fixed failure count cannot increase the zero-failure ratio |
+| `composite_null_maximum` | For `Kmin ≤ M`, the maximum over `Kmin ≤ K ≤ M` is attained at `Kmin` |
+| `null_count_iff`, `null_count_bounds` | For positive `M`, the fraction null `ρ ≤ K/M` equals `ceil(ρM) ≤ K`; `0 < ρ ≤ 1` places this ceiling in `1..M` |
+| `fraction_null_maximum` | With positive `M`, `e ≤ M`, and `0 < ρ ≤ 1`, the fraction-null maximum is attained at `ceil(ρM)`, with a positive denominator |
+| `zero_failure_iff` | For `e ≤ M`, the ratio is zero exactly when `M-K < e`; the equality boundary has numerator one |
+| `no_evaluation` | A zero-size evaluation has ratio one |
+| `census_zero`, `full_frame_resolution` | For `1 ≤ K ≤ M`, a census has zero no-failure ratio; a positive qualifying sample size exists within the census for every nonnegative tolerance |
+
+These statements hold for arbitrary finite counts, independently of the runtime
+cap of 256. The rational definition is total outside the sampling domain; no
+probability interpretation is asserted there. The fixed-frame interpretation
+requires complete distinct IDs, fixed endpoint labels and policy, uniform
+fixed-size sampling, and no outcome-dependent removal or adaptive stopping.
+It requires no IID failure-label assumption. A zero bound means the no-failure
+event is impossible under the stated finite-frame null, not that observations
+have established zero physical or future-population risk.
+
+The results do not prove Python/Fraction refinement, the minimum-count search
+loop, resource/input validation, or monotonicity in evaluation size. Scientific
+source adequacy, latent physical truth, future-population transfer, and useful
+pool reduction remain separate. Existing negative results and G20/G21 status
+are unchanged. See the [finite planner contract](../docs/finite-population-planning.md).
 
 ## Reproduction and trust
 

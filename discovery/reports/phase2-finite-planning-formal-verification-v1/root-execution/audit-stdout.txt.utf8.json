@@ -1,0 +1,8 @@
+{
+  "encoding": "utf-8",
+  "original_bytes": 78,
+  "original_path": "root-execution/audit-stdout.txt",
+  "original_sha256": "619af67a3b1ce4ec3b9fcebb26348f54e00cbef5ee72d76a3d96d00921c3c6dd",
+  "schema": "lupine.public.utf8-evidence.v1",
+  "text": "Axiom audit passed: 143 theorems in 11 modules; only standard logical axioms.\n"
+}

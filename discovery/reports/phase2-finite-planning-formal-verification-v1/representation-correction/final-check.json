@@ -1,0 +1,11 @@
+{
+  "broken_local_links": 0,
+  "final56_read_and_hashed": true,
+  "final_markdown_files": 5,
+  "local_links_checked": 4,
+  "map_only_two_entries_and_wrapper_count_changed": true,
+  "original56_preserved": true,
+  "scope": "Read-only publication byte/link verification; no new compiler, parser test, or theorem audit.",
+  "status": "PASS_EXACT_GUARDED_DELTA_AND_FINAL_LINKS",
+  "tests_or_formal_commands": 0
+}

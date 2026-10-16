@@ -1,0 +1,33 @@
+{
+  "actual_commands_invoked": 0,
+  "checks": [
+    {
+      "absent": true,
+      "path": ".cache/phase2-li-complete-readiness-operations-v1/production/layout/final.json"
+    },
+    {
+      "absent": true,
+      "path": ".cache/phase2-li-complete-readiness-operations-v1/production/layout/2"
+    },
+    {
+      "absent": true,
+      "path": ".cache/phase2-li-complete-readiness-operations-v1/production/inventory"
+    },
+    {
+      "absent": true,
+      "path": ".cache/phase2-li-complete-readiness-operations-v1/production/frame"
+    },
+    {
+      "absent": true,
+      "path": ".cache/phase2-li-complete-readiness-outer-observer-v1/runs/layout-9d1f21dae141a28db378ee2e16aa83340df57877/completion-packet.json"
+    },
+    {
+      "absent": true,
+      "path": ".cache/phase2-li-complete-readiness-outer-observer-v1/runs/layout-9d1f21dae141a28db378ee2e16aa83340df57877/persisted-final.json"
+    }
+  ],
+  "observed_at": "2026-10-16T16:26:22.223300+00:00",
+  "raw_custody_reads": 0,
+  "schema": "lupine.li.layout-verification.public-marker-observation.v1",
+  "scope": "Fixed public recorder/observer names only, observed without opening custody inputs or invoking a guard. This is not a complete system-wide execution history."
+}

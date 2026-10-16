@@ -1,0 +1,125 @@
+{
+  "author_attempt_receipts_and_object_bytes_reconciled": true,
+  "axioms": {
+    "LupineFinitePlanning.census_zero": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LupineFinitePlanning.composite_null_maximum": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LupineFinitePlanning.denominator_positive": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LupineFinitePlanning.failure_count_antitone": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LupineFinitePlanning.fraction_null_maximum": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LupineFinitePlanning.full_frame_resolution": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LupineFinitePlanning.no_evaluation": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LupineFinitePlanning.null_count_bounds": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LupineFinitePlanning.null_count_iff": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LupineFinitePlanning.uniform_count_ratio": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LupineFinitePlanning.zero_failure_count": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LupineFinitePlanning.zero_failure_iff": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LupineFinitePlanning.zero_failure_subsets": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ]
+  },
+  "command": [
+    "/home/agent/.elan/toolchains/leanprover--lean4---v4.29.0/bin/lean",
+    "-DwarningAsError=true",
+    "-o",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-finite-planning-formal-review-v1/first-compile/LupineFinitePlanning.olean",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-finite-planning-formal-review-v1/first-compile/LupineFinitePlanning.lean"
+  ],
+  "compiled_object_sha256": "2dfc7f67b6a927b0f5989ce3f7907ba1dd07b7c9456d594f4645691b9eb433c2",
+  "cwd": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-finite-planning-formal-review-v1/first-compile",
+  "elapsed_seconds": 25.219210497001768,
+  "exact13_declaration_output_coverage": true,
+  "exit_code": 0,
+  "finished_at": "2026-10-16T16:29:26.354566+00:00",
+  "lean_executable_sha256": "3e0d0d3d801675359f2d4cf9815bfdb417b20b92fdd9d48b3b14c95bbae28bbf",
+  "lean_path": [
+    "/workspace/lupine-discovery-branch/discovery/formal/.lake/packages/LeanSearchClient/.lake/build/lib/lean",
+    "/workspace/lupine-discovery-branch/discovery/formal/.lake/packages/Qq/.lake/build/lib/lean",
+    "/workspace/lupine-discovery-branch/discovery/formal/.lake/packages/aesop/.lake/build/lib/lean",
+    "/workspace/lupine-discovery-branch/discovery/formal/.lake/packages/batteries/.lake/build/lib/lean",
+    "/workspace/lupine-discovery-branch/discovery/formal/.lake/packages/importGraph/.lake/build/lib/lean",
+    "/workspace/lupine-discovery-branch/discovery/formal/.lake/packages/mathlib/.lake/build/lib/lean",
+    "/workspace/lupine-discovery-branch/discovery/formal/.lake/packages/plausible/.lake/build/lib/lean",
+    "/workspace/lupine-discovery-branch/discovery/formal/.lake/packages/proofwidgets/.lake/build/lib/lean"
+  ],
+  "network_or_dependency_build": false,
+  "only_standard_logical_axioms": true,
+  "python_runtime_executed": false,
+  "scientific_admission": false,
+  "scope_files_unchanged": {
+    "docs/finite-population-planning.md": true,
+    "formal/LupineCoupled.lean": true,
+    "formal/LupineDecisionPool.lean": true,
+    "formal/LupineDiscovery.lean": true,
+    "formal/LupineExchangeability.lean": true,
+    "formal/LupineIntervals.lean": true,
+    "formal/LupineNormalization.lean": true,
+    "formal/LupinePareto.lean": true,
+    "formal/LupineProjection.lean": true,
+    "formal/LupineRisk.lean": true,
+    "formal/LupineSharpness.lean": true,
+    "formal/README.md": true,
+    "formal/VERIFICATION.md": true,
+    "formal/lake-manifest.json": true,
+    "formal/lakefile.toml": true,
+    "formal/lean-toolchain": true,
+    "formal/theorem-inventory.json": true,
+    "src/lupine_discovery/finite_planning.py": true
+  },
+  "source_and_copy_held": true,
+  "source_sha256": "391b03aefda0f7bac5bd380347b81febc8a4ebbd329ae3a099981784803973bd",
+  "started_at": "2026-10-16T16:29:01.135366+00:00",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "1a414db714a311a44665ec02032bc3d89486705bf23d2c5466638677c4f506f5",
+  "timed_out": false,
+  "tracked_edits": false
+}

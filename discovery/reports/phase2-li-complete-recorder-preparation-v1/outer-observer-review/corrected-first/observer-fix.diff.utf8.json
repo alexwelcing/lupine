@@ -1,0 +1,8 @@
+{
+  "encoding": "utf-8",
+  "original_bytes": 652,
+  "original_filename": "observer-fix.diff",
+  "original_sha256": "141a8e19b4273c13361a647a8d8c0876e8691316aefcb7dc364762af69db0199",
+  "schema": "lossless-utf8-wrapper.v1",
+  "text": "--- first/observe.py\n+++ corrected-first/observe.py\n@@ -99,6 +99,7 @@\n         try: s.publish(folder/name,value)\n         except BaseException: errors.append('WRITE_FAILED:'+name)\n     success = (not errors and type(result['exit_code']) is int and result['exit_code']==0\n+               and result['timed_out'] is False and result['launch_failed'] is False and result['output_limit'] is False\n                and result['process_completed'] is True and result['process_group_cleanup'] is True\n                and observed['source_and_tools_verified'] is True and result['stderr']==b''\n                and final is not None and result['stdout']==final)\n"
+}

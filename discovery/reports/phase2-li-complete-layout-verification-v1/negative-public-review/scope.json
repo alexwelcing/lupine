@@ -1,0 +1,38 @@
+{
+  "allowed_absence_checks": [
+    ".cache/phase2-li-complete-readiness-operations-v1/production/layout/2",
+    ".cache/phase2-li-complete-readiness-operations-v1/production/inventory",
+    ".cache/phase2-li-complete-readiness-operations-v1/production/frame",
+    ".cache/phase2-li-complete-readiness-operations-v1/production/layout/final.json",
+    ".cache/phase2-li-complete-readiness-outer-observer-v1/runs/layout-9d1f21dae141a28db378ee2e16aa83340df57877/completion-packet.json"
+  ],
+  "allowed_evidence_sources": [
+    ".cache/phase2-li-complete-readiness-operations-v1/production/layout/1/execution.json",
+    ".cache/phase2-li-complete-readiness-operations-v1/production/layout/1/start.json",
+    ".cache/phase2-li-complete-readiness-operations-v1/production/layout/1/stdout.bin",
+    ".cache/phase2-li-complete-readiness-operations-v1/production/layout/1/stderr.bin",
+    ".cache/phase2-li-complete-readiness-operations-v1/production/layout/1/persisted-public.json",
+    ".cache/phase2-li-complete-readiness-operations-v1/production/layout/1/persisted-reservation.json",
+    ".cache/phase2-li-complete-readiness-operations-v1/production/layout/preflight.json",
+    ".cache/phase2-li-complete-readiness-operations-v1/production/layout/reservation.json",
+    ".cache/phase2-li-complete-readiness-operations-v1/production/layout/stopped.json",
+    ".cache/phase2-li-complete-readiness-outer-observer-v1/runs/layout-9d1f21dae141a28db378ee2e16aa83340df57877/execution.json",
+    ".cache/phase2-li-complete-readiness-outer-observer-v1/runs/layout-9d1f21dae141a28db378ee2e16aa83340df57877/stdout.bin",
+    ".cache/phase2-li-complete-readiness-outer-observer-v1/runs/layout-9d1f21dae141a28db378ee2e16aa83340df57877/stderr.bin",
+    ".cache/phase2-li-complete-readiness-outer-observer-v1/runs/layout-9d1f21dae141a28db378ee2e16aa83340df57877/stopped.json",
+    ".cache/phase2-li-complete-readiness-outer-observer-v1/runs/layout-9d1f21dae141a28db378ee2e16aa83340df57877/before-state.json",
+    ".cache/phase2-li-complete-readiness-outer-observer-v1/runs/layout-9d1f21dae141a28db378ee2e16aa83340df57877/after-state.json",
+    ".cache/phase2-li-complete-readiness-outer-observer-v1/root-observed-layout.json"
+  ],
+  "git_used": false,
+  "network_used": false,
+  "new_operation_authorization": false,
+  "private_or_raw_data_opened": false,
+  "producer_or_guard_invocations_here": 0,
+  "published_commit": "9d1f21dae141a28db378ee2e16aa83340df57877",
+  "review_kind": "Post-exposure independent consistency audit of blocked A1 only",
+  "schema": "lupine.li.complete-layout.independent-public-review-scope.v1",
+  "scientific_admission": false,
+  "source_operations_invoked_here": 0,
+  "tests_run_here": 0
+}

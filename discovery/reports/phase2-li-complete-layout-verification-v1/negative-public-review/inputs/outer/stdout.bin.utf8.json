@@ -1,0 +1,8 @@
+{
+  "encoding": "utf-8",
+  "original_bytes": 111,
+  "original_path": "negative-public-review/inputs/outer/stdout.bin",
+  "original_sha256": "3adaf470d1d5a4c4fb286fd442e5b09be39c58071b6d389fc0e8d05787539643",
+  "schema": "lupine.public.utf8-evidence.v1",
+  "text": "{\"phase\":\"layout\",\"reason\":\"RECORDER_REJECTED\",\"scientific_admission\":false,\"status\":\"STOP_PRESERVE_EVIDENCE\"}\n"
+}

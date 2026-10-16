@@ -1,0 +1,15 @@
+{
+  "schema":"lupine.discovery.dielectric_landing_manifest.scope.v1",
+  "status":"FROZEN_BEFORE_ONE_REQUEST",
+  "purpose":"Inspect the exact primary Dryad landing URL supplied by the held DOI registry record for documentary identity/version/rights and file-manifest metadata only.",
+  "identity_basis":{"prior_public_record":".cache/phase2-dielectric-archive-identity-v1/datacite/projection.json","doi":"10.5061/dryad.ph81h","exact_url":"https://datadryad.org/dataset/doi:10.5061/dryad.ph81h"},
+  "maximum_requests":1,
+  "request":{"url":"https://datadryad.org/dataset/doi:10.5061/dryad.ph81h","method":"GET","maximum_response_bytes":2097152,"timeout_seconds":30,"redirects":"reject","retries":0,"credentials":false},
+  "parser":"Bounded HTML parser with no network/JavaScript execution; inspect structured metadata and literal linked paths only. JSON-LD Dataset/DataDownload objects may supply identifier/version/license/distribution fields. File/manifest/API links may be retained as literal metadata but never followed. No description/abstract/results body is printed or interpreted.",
+  "allowed_researcher_fields":["canonical DOI/landing identifiers","explicit dataset version and rights","file name, byte count/contentSize, MIME/encoding and checksum algorithm/value when explicitly present","literal canonical API/manifest/file links with acquisition=false","structure-only presence/absence counts and first access/parse error category"],
+  "forbidden":["Following redirects or alternative APIs","Dataset files, supplementary files, raw numerical tables or observation downloads","Executing JavaScript or source code","Displaying descriptions/abstracts/scientific result text","Joining archive records, numeric comparison, fits, thresholds, benchmark selection or admission"],
+  "exposure":"Complete bounded HTML machine exposure is acknowledged, potentially including scientific descriptions or aggregate results and site scripts. Researcher output is restricted to documentary metadata projection. Existing paper qualitative exposure remains; no freshness or target-blindness claim.",
+  "failure":"Preserve the first response/status/body/hash and stop without retry, bypass or fallback. Redirects count as the sole request and are not followed. If no manifest is visible, report that limitation and any exact metadata link only.",
+  "retention":"Raw HTML and unselected machine bodies remain ignored and excluded from public copyset. Public output includes exact selected metadata, own paraphrase, source hashes, scope and request receipt.",
+  "limits":"A landing-page manifest, even if present, is documentary evidence only; no file bytes or equivalence to processed Figshare13213475 are verified. Dataset registry version1 and CC0 declaration are prior metadata findings, not silently substituted for absent landing-page statements."
+}

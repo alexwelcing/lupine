@@ -1,0 +1,8 @@
+{
+  "encoding": "utf-8",
+  "original_bytes": 1307,
+  "original_path": "artifact-review/actual-inputs/package/package-stdout.txt",
+  "original_sha256": "f2c0d25b6ddff3c70e3bb273964e322b260f35aebcad70fbd8277f9d0a747b5c",
+  "schema": "lupine.public.utf8-evidence.v1",
+  "text": "{\n  \"status\": \"passed\",\n  \"case_count\": 28,\n  \"problem_schemas\": [\n    \"lupine.discovery.calibrated_problem.v1\",\n    \"lupine.discovery.coupled_problem.v1\",\n    \"lupine.discovery.decision_pool_problem.v1\",\n    \"lupine.discovery.pareto_problem.v1\",\n    \"lupine.discovery.problem.v1\",\n    \"lupine.discovery.projection_problem.v1\"\n  ],\n  \"checks\": [\n    \"all_packaged_cases_select_verify_replay\",\n    \"known_answer_oracle_and_controls\",\n    \"web_assets_and_original_archive_reports\",\n    \"constrained_negative_results_packaged_and_served\",\n    \"installed_http_cli_agreement\",\n    \"coupled_python_api_and_missing_point_fallback\",\n    \"coupled_projection_and_statistical_guarded_http_replay_agree_with_installed_cli\",\n    \"scoped_projection_translation_and_missing_bound_abstention\",\n    \"direct_statistical_pool_python_api_and_distinct_abstention\",\n    \"training_only_no_go_packaged_and_served\",\n    \"prospective_pool_planning_cli_hypothesis_and_unknown\",\n    \"prospective_zero_failure_resolution_cli_not_observed_power\",\n    \"prospective_planning_http_cli_agreement_and_assets\",\n    \"finite_population_zero_failure_cli_http_exact_scope\",\n    \"optional_mpea_resource_presence_and_http_agreement\",\n    \"mpea_javascript_packaged_and_served\",\n    \"fixed_stored_census_identity_scope_and_http_asset_agreement\"\n  ]\n}\n"
+}

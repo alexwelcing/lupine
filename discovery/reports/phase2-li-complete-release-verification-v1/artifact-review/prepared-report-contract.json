@@ -1,0 +1,59 @@
+{
+  "actual_artifact_audit_runs": 0,
+  "actual_report_schema": "lupine.li.complete-readiness.independent-artifact-review.v1",
+  "auditor_sha256": "b00541daccbbe8626880f59bc59d9694dc9f34e922690f968dfb50ed348bb738",
+  "checks_count": "Determined by exact committed archive membership; do not assume the preceding repair count.",
+  "external_root_gates": "Exact published commit, source-clean hold, package and strict verification executions and stdout/stderr identities are retained separately in actual-binding.json and actual-inputs/. No CI or scientific-operation permission inferred.",
+  "failure_status": "FAIL_RETAINED_ARTIFACT_AUDIT",
+  "input_labels": [
+    "prepared_scope",
+    "prepared_promotion",
+    "preparation",
+    "retained_receipt",
+    "source_archive",
+    "wheel"
+  ],
+  "later_bound_observed": [
+    "published_commit",
+    "source_file_count",
+    "wheel_members",
+    "wheel_RECORD_content_digests",
+    "source_manifest_sha256",
+    "baseline_manifest_sha256",
+    "retained_receipt_sha256",
+    "source_archive_sha256",
+    "wheel_sha256"
+  ],
+  "observed_added_runtime_files": "Exact six names in prepared-promotion-inputs.json added_runtime",
+  "observed_promoted_source_pins": "Exact eight destination-to-sha256 values in prepared-promotion-inputs.json files",
+  "prepared_promotion_input_fields": [
+    "files",
+    "added_runtime",
+    "added_guarded_docs"
+  ],
+  "required_observed": {
+    "added_package_payloads": [],
+    "artifact_identities_held": true,
+    "baseline_commit": "ddd4a6a8df0f908a162b7e5387b0faac325180d6",
+    "baseline_package_payloads": 110,
+    "baseline_runtime_files": 339,
+    "changed_existing_runtime_files": [],
+    "changed_package_payloads": [],
+    "mandatory_package_receipt_checks": 17,
+    "package_payloads": 110,
+    "public_resource_sha256": "a9ab9d72c6c39be9338e951b657e0587ae8f4dbe534b276b8f8f8951a7b1a63a",
+    "removed_runtime_files": [],
+    "retained_demonstrations": 28,
+    "retained_problem_schemas": 6,
+    "runtime_files": 345,
+    "unchanged_baseline_package_payloads": 110,
+    "unchanged_baseline_runtime_files": 339
+  },
+  "schema": "lupine.li.complete-readiness.prepared-artifact-report-contract.v1",
+  "success_check_passed_is": true,
+  "success_checks_entry_keys": [
+    "check",
+    "passed"
+  ],
+  "success_status": "PASS_EXACT_RETAINED_ARTIFACT_AND_DECLARED_DELTA"
+}

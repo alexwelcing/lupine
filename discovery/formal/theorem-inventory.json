@@ -1,6 +1,6 @@
 {
-  "axiom_output_sha256": "84a9ed0c9cf6acc58ea2a9a196ec46cd8f1b69b0d1dd79fd041b0c37291065f1",
-  "module_count": 10,
+  "axiom_output_sha256": "1386bccd866f772b801b50c692bc50bebbeae492ca08b41b833bbf3260f0a6e8",
+  "module_count": 11,
   "modules": [
     {
       "source": "LupineCoupled.lean",
@@ -330,6 +330,78 @@
           "propext"
         ],
         "LupineExchangeability.strict_lower_reindex": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ]
+      }
+    },
+    {
+      "source": "LupineFinitePlanning.lean",
+      "source_sha256": "391b03aefda0f7bac5bd380347b81febc8a4ebbd329ae3a099981784803973bd",
+      "theorem_count": 13,
+      "theorems": {
+        "LupineFinitePlanning.census_zero": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineFinitePlanning.composite_null_maximum": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineFinitePlanning.denominator_positive": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineFinitePlanning.failure_count_antitone": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineFinitePlanning.fraction_null_maximum": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineFinitePlanning.full_frame_resolution": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineFinitePlanning.no_evaluation": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineFinitePlanning.null_count_bounds": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineFinitePlanning.null_count_iff": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineFinitePlanning.uniform_count_ratio": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineFinitePlanning.zero_failure_count": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineFinitePlanning.zero_failure_iff": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineFinitePlanning.zero_failure_subsets": [
           "Classical.choice",
           "Quot.sound",
           "propext"
@@ -720,5 +792,5 @@
     }
   ],
   "schema": "lupine-formal-theorem-inventory-v1",
-  "theorem_count": 130
+  "theorem_count": 143
 }

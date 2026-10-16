@@ -1,0 +1,13 @@
+{
+  "actual_source_operations": 0,
+  "files": 18,
+  "final_review_sha256": "65efbe2d323fd1d3b4f6b505e0c81c07219b1e3dc0376457367202f7179dd057",
+  "first_failure_preserved": true,
+  "public_allowlist": ".cache/phase2-li-complete-readiness-outer-observer-review-v1/public-allowlist.json",
+  "public_allowlist_sha256": "f829c483c6b52ee43a35ea8d12b87c1b0f63e170063787e9c0514dd7c3117136",
+  "publication_root": ".cache/phase2-li-complete-readiness-outer-observer-review-v1/publication",
+  "schema": "lupine.li.observer_review.handoff.v1",
+  "source_sha256": "3ef3c337ef5bd1b2f496034716311d9027027352510b18a3e57e7b3eaa13aa55",
+  "status": "READY_FOR_ROOT_PUBLICATION",
+  "test_sha256": "8d3b0c4e2de38966988f9cd708b99faae6a55a10c35f3fff2d63b9c1c215cb0d"
+}

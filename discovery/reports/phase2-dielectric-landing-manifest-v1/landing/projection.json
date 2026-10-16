@@ -1,0 +1,54 @@
+{
+  "jsonld_parse_errors": [],
+  "jsonld_script_count": 1,
+  "literal_documentary_links": [
+    {
+      "anchor_text_metadata": "dielectric_tensors_and_refractive_indices_v3.json",
+      "followed": false,
+      "kind": "file_or_download_link_not_followed",
+      "literal_href": "/downloads/file_stream/69471",
+      "resolved_url": "https://datadryad.org/downloads/file_stream/69471"
+    },
+    {
+      "anchor_text_metadata": "README_for_dielectric_tensors_and_refractive_indices_v3.pdf",
+      "followed": false,
+      "kind": "file_or_download_link_not_followed",
+      "literal_href": "/downloads/file_stream/69472",
+      "resolved_url": "https://datadryad.org/downloads/file_stream/69472"
+    }
+  ],
+  "no_file_bytes_or_equivalence_verified": true,
+  "no_javascript_executed": true,
+  "no_links_followed": true,
+  "scientific_description_or_result_text_disclosed": false,
+  "script_literal_metadata_paths": [],
+  "selected_head_metadata": [],
+  "source_html_sha256": "80d2afe88f7bbe6921fc7387cfe8d3dd37e4d2a85e1077897efcd24c36746c29",
+  "structured_dataset_or_distribution_metadata": [
+    {
+      "metadata": {
+        "@type": "Dataset",
+        "contentUrl": [
+          "http://datadryad.org/downloads/file_stream/69471",
+          "http://datadryad.org/downloads/file_stream/69472"
+        ],
+        "distribution": {
+          "@type": "DataDownload",
+          "contentUrl": "http://datadryad.org/api/v2/datasets/doi%253A10.5061%252Fdryad.ph81h/download",
+          "encodingFormat": "application/zip"
+        },
+        "identifier": "https://doi.org/10.5061/dryad.ph81h",
+        "license": {
+          "@type": "CreativeWork",
+          "license": "https://spdx.org/licenses/CC0-1.0.html",
+          "name": "Creative Commons Zero v1.0 Universal"
+        },
+        "name": "High-throughput screening of inorganic compounds for dielectric and optical properties to enable the discovery of novel materials",
+        "url": "http://datadryad.org/dataset/doi%253A10.5061%252Fdryad.ph81h",
+        "version": 1
+      },
+      "script_index": 13
+    }
+  ],
+  "whole_html_machine_read": true
+}

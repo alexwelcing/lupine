@@ -1,0 +1,33 @@
+{
+  "actual_source_operations": 0,
+  "confirmed_boundaries": [
+    "Fixed package/layout/inventory/frame commands and five source-tool pins.",
+    "Exact int0, exact True completion and cleanup, empty stderr, canonical JSON and stdout==persisted final.",
+    "Pre-child source/tool/phase binding mismatch rejects before child; post-child drift rejects.",
+    "Ordinary consistent timeout/launch/output-limit rejects.",
+    "Post-child state check precedes log publication; every later log attempted independently.",
+    "Partial log writes cannot produce accepted return; slot cannot rerun.",
+    "Late completion-packet publication failure and outer stdout failure raise despite persisted packet: root must observe outer process exit0 separately.",
+    "Regular file/cap/root containment, symlink and FIFO rejection."
+  ],
+  "failing_methods": 1,
+  "failure_subcases": 3,
+  "finding": {
+    "id": "CONTRADICTORY_PROCESS_FLAGS",
+    "observed": "timed_out, launch_failed, or output_limit=True was individually accepted alongside int exit_code0/process_completed=True/process_group_cleanup=True, canonical final/stdout agreement, empty stderr and held source state.",
+    "reachability_limit": "Current pinned bounded_process sets process_completed=False when any of these flags is True. Generated seam demonstrates missing independent consistency checking, not an observed actual helper failure.",
+    "recommendation": "Require all three failure flags is False in success predicate."
+  },
+  "first_execution": "first/execution.json",
+  "limitations": [
+    "No hostile-code security boundary is claimed; the generated support module is intentionally trusted fixture control.",
+    "No real production helper, repository_state guard, Git, network, archive/private data or upstream validator was invoked.",
+    "The wrapper cannot authenticate its own later process exit through a persisted packet. Root must independently observe it."
+  ],
+  "methods_run": 18,
+  "methods_without_failures": 17,
+  "runtime_product_files_edited": false,
+  "schema": "lupine.li.outer_observer.independent_review.v1",
+  "source_sha256": "b2fa9a4b6e852b4094fa9e6df6160ab14ff52be0ec184d18f014c7d2a8dc2bfa",
+  "status": "INITIAL_FINDING_PENDING_ROOT_DISPOSITION"
+}

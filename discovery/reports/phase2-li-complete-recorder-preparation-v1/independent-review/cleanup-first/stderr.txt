@@ -1,0 +1,14 @@
+test_file_close_fault_cannot_leave_success_or_skip_parent_cleanup (test_publish_cleanup.PublicationCleanupTest.test_file_close_fault_cannot_leave_success_or_skip_parent_cleanup) ... FAIL
+
+======================================================================
+FAIL: test_file_close_fault_cannot_leave_success_or_skip_parent_cleanup (test_publish_cleanup.PublicationCleanupTest.test_file_close_fault_cannot_leave_success_or_skip_parent_cleanup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-recorder-independent-review-v1/test_publish_cleanup.py", line 28, in test_file_close_fault_cannot_leave_success_or_skip_parent_cleanup
+    self.assertNotIn('final.json', entries, 'file-close failure must occur before success publication')
+AssertionError: 'final.json' unexpectedly found in {'.pending-ffffffffffffffffffffffffffffffff': namespace(st_dev=7, st_ino=11), 'final.json': namespace(st_dev=7, st_ino=11)} : file-close failure must occur before success publication
+
+----------------------------------------------------------------------
+Ran 1 test in 0.059s
+
+FAILED (failures=1)

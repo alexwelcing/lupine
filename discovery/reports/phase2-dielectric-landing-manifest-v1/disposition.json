@@ -1,0 +1,9 @@
+{
+  "data_files_downloaded": 0,
+  "file_identity_verified": false,
+  "http_status": 200,
+  "jsonld_parse_errors": [],
+  "requests": 1,
+  "scientific_admission": false,
+  "status": "ONE_LANDING_METADATA_REQUEST_COMPLETED"
+}

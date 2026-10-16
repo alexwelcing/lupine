@@ -18,6 +18,18 @@ assert str(plan.zero_failure_null_bound) == '1/6'
 assert plan.power_status == 'not_computed'
 ```
 
+## Compiled mathematical scope
+
+[LupineFinitePlanning](../formal/LupineFinitePlanning.lean) now proves 13
+finite-count statements underlying the bound: exact favorable subsets and
+ratio, failure-count antitonicity, the attained `ceil(rho*M)` null maximum,
+the zero boundary and census resolution. The [actual verification](../formal/VERIFICATION.md)
+records independent compilation and the integrated 143-statement audit.
+The proofs quantify over arbitrary finite frames; the implementation cap is
+separate. They do not prove the Python minimum-count loop or a Python/Lean
+refinement, evaluation-size monotonicity, or that a scientific experiment
+satisfies the sampling and fixed-label premises below.
+
 ## Frozen finite-frame assumptions
 
 After calibration and policy freeze, define a residual frame of `M` distinct

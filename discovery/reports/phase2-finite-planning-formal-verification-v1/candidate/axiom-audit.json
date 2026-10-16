@@ -1,0 +1,103 @@
+{
+  "actual_compiler_receipt_sha256": "7ade389b2d392dace657beefdde6293617f6b36c6268c4785b4ca420c26b4e42",
+  "audit_method": "Only existing declared_theorems and parse_audit functions were AST-extracted and applied to fresh actual compiler output; main/build paths were not run.",
+  "existing_audit_parser_sha256": "1a30e19f3e38d5481ac321be5ece1efc7025925a4a218e51ff5f5f0b49756386",
+  "independent_peer_review_performed": false,
+  "lean_version": "Lean (version 4.29.0, x86_64-unknown-linux-gnu, commit 98dc76e3c0a9b856c9b98726b713fb04fab16740, Release)",
+  "mathlib_matches_pinned_manifest": true,
+  "mathlib_observed_commit": "8a178386ffc0f5fef0b77738bb5449d50efeea95",
+  "network_or_dependency_updates": false,
+  "python_refinement_established": false,
+  "schema": "lupine.finite-planning-formal-candidate.axiom-audit.v1",
+  "scientific_sampling_validity_established": false,
+  "source_bindings_unchanged": {
+    "docs/finite-population-planning.md": true,
+    "formal/LupineCoupled.lean": true,
+    "formal/LupineDecisionPool.lean": true,
+    "formal/LupineDiscovery.lean": true,
+    "formal/LupineExchangeability.lean": true,
+    "formal/LupineIntervals.lean": true,
+    "formal/LupineNormalization.lean": true,
+    "formal/LupinePareto.lean": true,
+    "formal/LupineProjection.lean": true,
+    "formal/LupineRisk.lean": true,
+    "formal/LupineSharpness.lean": true,
+    "formal/README.md": true,
+    "formal/VERIFICATION.md": true,
+    "formal/lake-manifest.json": true,
+    "formal/lakefile.toml": true,
+    "formal/lean-toolchain": true,
+    "formal/theorem-inventory.json": true,
+    "src/lupine_discovery/finite_planning.py": true
+  },
+  "source_sha256": "391b03aefda0f7bac5bd380347b81febc8a4ebbd329ae3a099981784803973bd",
+  "status": "PASS",
+  "theorem_count": 13,
+  "theorems": {
+    "LupineFinitePlanning.census_zero": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LupineFinitePlanning.composite_null_maximum": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LupineFinitePlanning.denominator_positive": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LupineFinitePlanning.failure_count_antitone": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LupineFinitePlanning.fraction_null_maximum": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LupineFinitePlanning.full_frame_resolution": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LupineFinitePlanning.no_evaluation": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LupineFinitePlanning.null_count_bounds": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LupineFinitePlanning.null_count_iff": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LupineFinitePlanning.uniform_count_ratio": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LupineFinitePlanning.zero_failure_count": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LupineFinitePlanning.zero_failure_iff": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LupineFinitePlanning.zero_failure_subsets": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ]
+  }
+}

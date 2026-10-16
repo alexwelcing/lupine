@@ -1,0 +1,7 @@
+{
+  "acquirer_sha256": "069350a6a0a5f86aae190953768d7b21a28fb38699c77e2827d2c6e562868cd4",
+  "frozen_at": "2026-10-16T16:26:24.581789+00:00",
+  "logical_gets_completed": 0,
+  "offline_parser_sha256": "728133942f15b4d81ec5f0250d0eef02976829ebdff7a13186241de7af923681",
+  "scope_sha256": "474409a7a0e0fbab71445cf87b399f6a9851602e973c7cd93bb13af190077bdf"
+}

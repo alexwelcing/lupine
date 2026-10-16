@@ -1,0 +1,38 @@
+{
+  "command": [
+    "/home/agent/.elan/toolchains/leanprover--lean4---v4.29.0/bin/lean",
+    "-DwarningAsError=true",
+    "-o",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-finite-planning-formal-candidate-v1/attempts/first/LupineFinitePlanning.olean",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-finite-planning-formal-candidate-v1/LupineFinitePlanning.lean"
+  ],
+  "compiled_object_sha256": "07ba52e4993f72a32510943090222202b270013e00b7c0518d34b9339cd9f0aa",
+  "cwd": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-finite-planning-formal-candidate-v1",
+  "elapsed_seconds": 35.047528353003145,
+  "exit_code": 0,
+  "finished": "2026-10-16T16:23:51.525911+00:00",
+  "formal_configuration": {
+    "lake-manifest.json": "641a25267cd8312c08757ff0f0f5738f3adb67598b8205603dbf8ac2255f9275",
+    "lakefile.toml": "93fcb2fd0d953846ab2c017d1208d4dfca4abc85e06820e98564a73b309e8154",
+    "lean-toolchain": "651c8accb402b0c071cd336e9d3dc0a55516b1bfb434ddc4801f14936785b1d2"
+  },
+  "lean_executable_sha256": "3e0d0d3d801675359f2d4cf9815bfdb417b20b92fdd9d48b3b14c95bbae28bbf",
+  "lean_path": [
+    "/workspace/lupine-discovery-branch/discovery/formal/.lake/packages/LeanSearchClient/.lake/build/lib/lean",
+    "/workspace/lupine-discovery-branch/discovery/formal/.lake/packages/Qq/.lake/build/lib/lean",
+    "/workspace/lupine-discovery-branch/discovery/formal/.lake/packages/aesop/.lake/build/lib/lean",
+    "/workspace/lupine-discovery-branch/discovery/formal/.lake/packages/batteries/.lake/build/lib/lean",
+    "/workspace/lupine-discovery-branch/discovery/formal/.lake/packages/importGraph/.lake/build/lib/lean",
+    "/workspace/lupine-discovery-branch/discovery/formal/.lake/packages/mathlib/.lake/build/lib/lean",
+    "/workspace/lupine-discovery-branch/discovery/formal/.lake/packages/plausible/.lake/build/lib/lean",
+    "/workspace/lupine-discovery-branch/discovery/formal/.lake/packages/proofwidgets/.lake/build/lib/lean"
+  ],
+  "no_network_or_dependency_build": true,
+  "source_held": true,
+  "source_sha256_after": "e818c15e49c0aa94ee38257406a5dedb2d0e046a2bcf8ac64f68e14a0e59b6f5",
+  "source_sha256_before": "e818c15e49c0aa94ee38257406a5dedb2d0e046a2bcf8ac64f68e14a0e59b6f5",
+  "started": "2026-10-16T16:23:16.475132+00:00",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "17541bfb6c07e9a0eea5ceb4a7baaccac1e253187867ba3859848257f8ab36ce",
+  "timed_out": false
+}

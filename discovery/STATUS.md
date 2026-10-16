@@ -1,30 +1,37 @@
 # Project state
 
-The [complete bounded Li route](reports/phase2-li-complete-readiness-integration-v1/README.md)
-is integrated with 602 passing generated tests. It preserves the strict pure core,
-accounts for all sheets and explicit rows, and rejects unsupported semantic premises.
-All 345 runtime files and two contract documents held during the test run; 339
-predecessor runtime files remain unchanged. No actual complete-route operation ran.
+The first actual Li complete-route command is **BLOCKED_SCHEMA / XML_PROFILE_UNSUPPORTED**.
+It ran once at verified `9d1f21da`, returned exit 2, preserved identical stdout
+and persisted failure bytes, and completed cleanup with all 345 runtime files
+unchanged. Five metadata members were read/decompressed/decoded; four of five
+started XML parses completed. No workbook manifest, roles or scientific counts
+were produced. No second run or downstream phase ran. [Actual evidence](reports/phase2-li-complete-layout-verification-v1/README.md).
 
-The [census repair baseline](reports/phase2-rhizo-census-repair-verification-v1/README.md)
-passes all four original CI jobs, fresh clean packaging and independent artifact
-verification. The earlier 1,860-test run with one stale expectation failure remains
-recorded. The correction preserves the full ordered 17-check contract and all
-omission/extra/reorder rejections. The historical census interface remains available;
-scientific admission is NOT_ADMITTED, reference choice UNKNOWN and tolerances NULL.
+[All four original CI jobs and clean release gates pass](reports/phase2-li-complete-release-verification-v1/README.md)
+for that source: 28 packaged demonstrations, six schemas, 17 required checks,
+strict artifact verification and 19,742 independent artifact checks. All 339
+baseline runtime files and 110 wheel payloads remain unchanged. Original 602-test
+and normalized 35-test evidence remain distinct. The [recorder preparation](reports/phase2-li-complete-recorder-preparation-v1/README.md)
+retains its separate 29/4/18 generated checks and all earlier failures.
 
-Root owns exact new-commit CI/package/artifact verification, then the fixed layout
-pair. Later inventory and frame bindings are absent and require reviewed provenance.
-The prior G31/G34 blocks remain historical results. Unknown meanings and completed
-negative frames do not become readiness or physical validation. G20 remains
-unresolved and G21 blocked; historical scientific failures and lack of demonstrated
-predictive superiority are unchanged. No new DFT, fit, allocation or deployment
-occurred. The expired automation stays disabled; this is renewed active work.
+The [finite-population formal extension](reports/phase2-finite-planning-formal-verification-v1/README.md)
+adds 13 independently compiled statements. Root's strict eleven-module build,
+fresh 143-statement axiom audit and eleven parser tests pass. The proofs retain
+explicit fixed-frame/uniform-subset premises; no Python refinement, minimum-loop
+proof or scientific validity follows. All old Lean modules and runtime files
+remain unchanged.
 
-
-The publication whitespace gate required removal of one extra terminal LF from
-a new test. Its syntax tree is unchanged; 35 focused methods pass on the final
-bytes. The earlier 602-method result remains separately preserved.
+Root owns publication of this mathematical and evidence checkpoint, then its exact remote/CI
+verification and clean release reproduction. [Dryad registry](reports/phase2-dielectric-archive-identity-v1/README.md)
+and [landing metadata](reports/phase2-dielectric-landing-manifest-v1/README.md)
+identify the primary archive, declared CC0/version 1 and two file locators.
+The separate [README request returned HTTP 403](reports/phase2-dielectric-readme-schema-v1/README.md);
+no PDF was obtained and the parser did not run. No numerical data file was
+acquired; pairing, schema, overlap and derivative equivalence remain unresolved.
+G20 remains open and G21 blocked. Archived DFPT is not new DFT or measured
+power-plant performance. Historical scientific
+negatives and lack of established predictive superiority are unchanged.
+The expired automation stays disabled; this is renewed active work.
 
 Snapshot: 2026-10-11 01:40 UTC (exact CI observation `2026-10-11T01:40:16.973611+00:00`). Tested runtime/artifact source: `6585a605d5d325e84423c7e35c7286efe85cfb6f`. [Scoped decision and evidence](reports/research-preview-decision.md).
 
@@ -59,7 +66,7 @@ The [original integration failure](reports/contract-integration-failure-v1/READM
 - Three pinned published-data pilots with recorded negative findings; no new DFT or synthesis. All three empirical interval constructions fail simultaneous coverage; band gap loses five tied optima.
 - Independently reviewed joint-coverage derivation and identifiability limits. Exact calibration planning now implements uniform scalar-event risk allocation, rational rank arithmetic, and explicit unbounded diagnostics. Assumptions remain unverified. Versioned calibrated inputs now propagate finite conditional intervals or explicit all-retained abstention through CLI, replay, and browser.
 - Posthoc exact-descriptor audit: three band-gap label collisions imply a 1.15 eV archive worst-error floor for composition-only predictors; physical causes remain unresolved.
-- Standalone conditional Lean proof package: **130 statements** compiled and audited across scalar, Pareto, nonlinear interval, finite-risk, sharpness, coupled-affine, projection-algebra, direct-pool counting/finite-law finite permutation-invariance and finite normalization modules. The 19 coupled statements cover multiplier bounds, contradiction/consistency, candidate-feasible domains, strict conditional witnesses, ties, and conservative fallback. Consult [formal verification](formal/VERIFICATION.md) and the [source-bound inventory](formal/theorem-inventory.json).
+- Standalone conditional Lean proof package: **143 statements** compiled and audited across scalar, Pareto, nonlinear interval, finite-risk, sharpness, coupled-affine, projection-algebra, direct-pool counting/finite-law finite permutation-invariance, finite normalization and finite-population counting modules. The 19 coupled statements cover multiplier bounds, contradiction/consistency, candidate-feasible domains, strict conditional witnesses, ties, and conservative fallback. Consult [formal verification](formal/VERIFICATION.md) and the [source-bound inventory](formal/theorem-inventory.json).
 - Pareto runtime and IO preserve tradeoffs, ties, feasible witnesses, and partial-truth states. Selected exact nonlinear maps reject invalid domains. See `reports/engine-extension-verification.md` for current checks; earlier checkpoints remain archived.
 - The statistical-workbench/custody integration passes **564 Python tests** with unchanged source hashes, **46 Chromium checks** with no JavaScript errors, and a fresh isolated wheel with **28 cases across six wire schemas**. The first catalog-test failure and source transition remain recorded. See [current verification](reports/decision-pool-workbench-verification.md); [all four CI jobs passed](https://github.com/alexwelcing/lupine/actions/runs/38076623056) at `c9fb192`.
 - Experimental [coupled-evidence Python API](docs/coupled-kernel.md): 18 focused tests pass, and the [independent audit](reports/coupled-independent-audit.json) reports PASS for 10,003 checks across 11,027 synthetic worlds. Exact proofs bind the original domain and candidate universe; conditional witnesses preserve tied minima. Unsupported/learned-correlation premises, missing consistency, and proved-inconsistent models retain every candidate. The separate [strict adapter](docs/coupled-problem.md) now adds JSON/CLI, actual-pool replay and guarded HTTP routes; the coupled browser mode and training dashboard are verified. No general solver or scientific validation is claimed.

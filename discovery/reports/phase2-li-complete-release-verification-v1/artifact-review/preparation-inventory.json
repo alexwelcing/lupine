@@ -1,0 +1,87 @@
+{
+  "actual_audit_runs": 0,
+  "files": [
+    {
+      "bytes": 1951,
+      "path": "README.md",
+      "sha256": "ac8f308ab02a7811a6855c8639d959334f2da56297cdd11ed23d6d6407bb7eb0"
+    },
+    {
+      "bytes": 1445,
+      "path": "amendment-review.json",
+      "sha256": "fcedef367eb1fab2d22d7c4091cec5a31364ea9cae2230c0cc162175ece8a193"
+    },
+    {
+      "bytes": 22909,
+      "path": "audit_retained.py",
+      "sha256": "b00541daccbbe8626880f59bc59d9694dc9f34e922690f968dfb50ed348bb738"
+    },
+    {
+      "bytes": 5136,
+      "path": "author-promotion-copyset.final.json",
+      "sha256": "b3b065ade262319238108efd0b6b296cc7ff947cb3c4c4eec8154d072db7559a"
+    },
+    {
+      "bytes": 892,
+      "path": "original-preparation/preparation-handoff.json",
+      "sha256": "7e4f6a425c715cf0a082c56841347d773de21ae11f2164ef62c450af19bb4fb7"
+    },
+    {
+      "bytes": 1878,
+      "path": "original-preparation/preparation-inventory.json",
+      "sha256": "64cb44621be4d7e76cce1b7f971ef53a5b3393934456b6c6c83b3728e6ba0bb9"
+    },
+    {
+      "bytes": 1334,
+      "path": "original-preparation/preparation.json",
+      "sha256": "3dfcc17ff61ce527109eec507841eac191fe54f794391479f4cdcd8902e77621"
+    },
+    {
+      "bytes": 1834,
+      "path": "original-preparation/prepared-promotion-inputs.json",
+      "sha256": "11bc69deddfacd761522e3db0deaa4e8773d455999208e074d827248370fa7b3"
+    },
+    {
+      "bytes": 1848,
+      "path": "preparation.json",
+      "sha256": "05c80f1f66604cabe61c9545c92dec3d4fa57436368e49b7c453f820ab7f8e4c"
+    },
+    {
+      "bytes": 1933,
+      "path": "prepared-promotion-inputs.json",
+      "sha256": "e2bd3dbe182139dad896ce050edff189ebd2015c9f2f427a1b216b0cd2274fa5"
+    },
+    {
+      "bytes": 2357,
+      "path": "prepared-report-contract.json",
+      "sha256": "5c37012cd8f90d8d6e790f81ae6703cccc340a46b16ab6df05ffe3749fc1e29f"
+    },
+    {
+      "bytes": 1232,
+      "path": "prepared-scope.json",
+      "sha256": "0ba8593c7abe3f65d5fd1a0686c96dd52e45b92144dbc51e65ab5f4dd3ce80e4"
+    },
+    {
+      "bytes": 566,
+      "path": "promotion-pin-amendment.diff",
+      "sha256": "75d78c95279b4faacf33db8e9c7ba00017176a9a5cf7320ec57eddee264c7968"
+    },
+    {
+      "bytes": 774,
+      "path": "root-formatting-receipts/execution.json",
+      "sha256": "cadc914565136924c089e6f4a4c783d3e0d43ef99a67d8ab96be7acb5b8506a5"
+    },
+    {
+      "bytes": 41339,
+      "path": "root-formatting-receipts/start.json",
+      "sha256": "d2865585430fe4766d6712b7d5aafca67eea57f8005cc952870f1a41da71f2b1"
+    },
+    {
+      "bytes": 5523,
+      "path": "root-runtime-copyset.final.json",
+      "sha256": "ee3285f1441a835d0df7aad48a5532b9941560c611ad5ca34d70f389cf0bac07"
+    }
+  ],
+  "schema": "lupine.li.complete-readiness.artifact-format-amendment-inventory.v1",
+  "tests_run_here": 0
+}

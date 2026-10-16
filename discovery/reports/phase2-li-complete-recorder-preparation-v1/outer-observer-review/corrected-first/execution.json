@@ -1,0 +1,23 @@
+{
+  "started_at": "2026-10-16T16:09:36.547336+00:00",
+  "finished_at": "2026-10-16T16:09:39.058385+00:00",
+  "elapsed_seconds": 2.5110637990001123,
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    ".cache/phase2-li-complete-readiness-outer-observer-review-v1/test_outer_observer_review.py"
+  ],
+  "exit_code": 0,
+  "before": {
+    ".cache/phase2-li-complete-readiness-outer-observer-v1/observe.py": "3ef3c337ef5bd1b2f496034716311d9027027352510b18a3e57e7b3eaa13aa55",
+    ".cache/phase2-li-complete-readiness-outer-observer-review-v1/test_outer_observer_review.py": "8d3b0c4e2de38966988f9cd708b99faae6a55a10c35f3fff2d63b9c1c215cb0d"
+  },
+  "after": {
+    ".cache/phase2-li-complete-readiness-outer-observer-v1/observe.py": "3ef3c337ef5bd1b2f496034716311d9027027352510b18a3e57e7b3eaa13aa55",
+    ".cache/phase2-li-complete-readiness-outer-observer-review-v1/test_outer_observer_review.py": "8d3b0c4e2de38966988f9cd708b99faae6a55a10c35f3fff2d63b9c1c215cb0d"
+  },
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "25091d3b2e95f70848a6a735381831a2b6e419e06bc548eaefa16c40f1d65717",
+  "generated_only": true,
+  "real_target_helper_calls": 0,
+  "test_change": "SOURCE_SHA pin only; all18 method bodies and fixtures unchanged"
+}

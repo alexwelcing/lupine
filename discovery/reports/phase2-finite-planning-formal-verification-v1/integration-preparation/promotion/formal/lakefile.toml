@@ -1,0 +1,28 @@
+name = "LupineDiscovery"
+defaultTargets = ["LupineDiscovery", "LupinePareto", "LupineIntervals", "LupineRisk", "LupineSharpness", "LupineCoupled", "LupineProjection", "LupineDecisionPool", "LupineExchangeability", "LupineNormalization", "LupineFinitePlanning"]
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4"
+rev = "8a178386ffc0f5fef0b77738bb5449d50efeea95"
+[[lean_lib]]
+name = "LupineDiscovery"
+[[lean_lib]]
+name = "LupinePareto"
+[[lean_lib]]
+name = "LupineIntervals"
+[[lean_lib]]
+name = "LupineRisk"
+[[lean_lib]]
+name = "LupineSharpness"
+[[lean_lib]]
+name = "LupineCoupled"
+[[lean_lib]]
+name = "LupineProjection"
+[[lean_lib]]
+name = "LupineDecisionPool"
+[[lean_lib]]
+name = "LupineExchangeability"
+[[lean_lib]]
+name = "LupineNormalization"
+[[lean_lib]]
+name = "LupineFinitePlanning"

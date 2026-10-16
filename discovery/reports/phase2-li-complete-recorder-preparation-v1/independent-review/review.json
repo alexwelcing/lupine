@@ -1,0 +1,91 @@
+{
+  "approval": {
+    "actual_operation": false,
+    "final_release_pins": null,
+    "release": false,
+    "scientific_admission": false
+  },
+  "at": "2026-10-16T16:07:19.235318+00:00",
+  "exit_code": 0,
+  "external_acceptance": "No actual packet or gate accepted. Root must bind observed outer completion including exact stdout/final bytes and successful actual observer return; this source review does not authenticate fabricated public evidence.",
+  "findings_resolved": [
+    {
+      "id": "R1",
+      "resolution": "Pure expected schema and complete historical public route are checked before either new command; full final route remains checked."
+    },
+    {
+      "id": "R2",
+      "resolution": "Each failed log publication is retained as a closed field; post-state and execution receipt are still attempted; any failed log prevents success and future acceptance."
+    },
+    {
+      "id": "R3",
+      "resolution": "Temporary-file close is guarded before linking; independent cleanup attempts remain; honest late parent-close marker limitation is covered by mandatory externally observed successful outer-completion packets for packages and phases."
+    }
+  ],
+  "historical_evidence": [
+    "first-run (2 assertion failures +1 reviewer missing-LOG_CAP error)",
+    "first-corrected-fixture-run (3 intended assertion failures)",
+    "final-run (3 ordering passes)",
+    "cleanup-first (1 intended publication-close failure)",
+    "final-four-run (4 passes)"
+  ],
+  "independence": "Independent of recorder authorship; same team/workspace. Reviewer authored the separate public validator, so validator dependency review is not independently authored verification of that module.",
+  "independent_execution": {
+    "bytes": 2220,
+    "path": "final-four-run/execution.json",
+    "sha256": "dd9229ca06ae6018905c59fbc5d1dd0fe7cfd615a7c7553c436b43f31f06900b"
+  },
+  "process_seconds": 0.28553231499972753,
+  "schema": "lupine.complete-route.independent-recorder-review.v1",
+  "scope_limits": {
+    "actual_G34_or_custody_receipt_reads": 0,
+    "actual_operations": 0,
+    "actual_production_guard_calls": 0,
+    "network_calls": 0,
+    "private_or_raw_source_reads": 0,
+    "product_or_recorder_imports": 0,
+    "tracked_edits": 0
+  },
+  "source_bindings": [
+    {
+      "bytes": 34564,
+      "path": ".cache/phase2-li-complete-readiness-operations-v1/run_after_ci.py",
+      "sha256": "f13ec4ad78d28266a405120e9ff644ba3856bfeacae851912678ceeb7f486dc5"
+    },
+    {
+      "bytes": 15907,
+      "path": ".cache/phase2-li-complete-readiness-operations-v1/recorder_support.py",
+      "sha256": "6533ff3b934646fb2fa4e11cead85bc9f0ce5ffe8e4901ad27eb55c4e12e625c"
+    },
+    {
+      "bytes": 4660,
+      "path": ".cache/phase2-li-complete-readiness-operations-v1/run_package.py",
+      "sha256": "ff75410bb8b68de831a6db16dab89d314b0cf329ca22188badd4e2d0ff38831a"
+    },
+    {
+      "bytes": 12079,
+      "path": ".cache/phase2-li-complete-readiness-operations-v1/README.md",
+      "sha256": "314cb6f2e45600c25a59672abed9f02dccd6898ee97dc5581bf60b9b1bc5e5b0"
+    },
+    {
+      "bytes": 1326,
+      "path": ".cache/phase2-li-complete-readiness-operations-v1/source-hold.json",
+      "sha256": "751b0a4f346489075e326c15aaa71e0d0c93ddab7f6e9878d1cc0c8b9c832e0c"
+    }
+  ],
+  "status": "PASS_PROSPECTIVE_SOURCE_AND_FOUR_GENERATED_REGRESSIONS",
+  "test_sources": [
+    {
+      "bytes": 4825,
+      "path": "test_ordering.py",
+      "sha256": "36ff06301a095b06e5da9e637d20400ce6715b871780d6d82fb28a672c9ff042"
+    },
+    {
+      "bytes": 1743,
+      "path": "test_publish_cleanup.py",
+      "sha256": "3b86c9b67967c5ddeed9da68d13a85cb57becfdf73187072b38c81ef760feb27"
+    }
+  ],
+  "tests": 4,
+  "unittest_seconds": 0.067
+}

@@ -1,0 +1,28 @@
+{
+  "G21_status": "DEFERRED_UNCHANGED",
+  "axiom_audit_sha256": "be41dc6e50d3d77effbbf2bc6fde690730f5d33c14f1d31eb0d3e9200708f4de",
+  "compile_attempts": [
+    {
+      "exit_code": 0,
+      "path": "attempts/first/execution.json",
+      "sha256": "c052088f7da9293e8f74d558f72f7bebc52a2d7bd5cc5901ee8362948e76c52e"
+    },
+    {
+      "exit_code": 0,
+      "path": "attempts/ceiling-bridge/execution.json",
+      "sha256": "7ade389b2d392dace657beefdde6293617f6b36c6268c4785b4ca420c26b4e42"
+    }
+  ],
+  "independent_peer_review": false,
+  "only_standard_logical_axioms": true,
+  "public_inventory_sha256": "0e97cc330824225cfb1fb7d32abc4b96355d6fb765027c5da120b78cbcc3dd10",
+  "python_refinement_claim": false,
+  "readme_sha256": "c0b94315bd759832bc48aaa5328cea797810278d177f917ba25cad0521cb1a26",
+  "sampling_or_scientific_claim": false,
+  "schema": "lupine.finite-planning-formal-candidate.handoff.v1",
+  "source": "LupineFinitePlanning.lean",
+  "source_sha256": "391b03aefda0f7bac5bd380347b81febc8a4ebbd329ae3a099981784803973bd",
+  "status": "COMPILED_CANDIDATE",
+  "theorem_count": 13,
+  "tracked_integration_performed": false
+}

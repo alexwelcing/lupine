@@ -1,0 +1,17 @@
+{
+  "bytes": 20018,
+  "finished_at": "2026-10-16T16:11:22.222411+00:00",
+  "headers": {
+    "Content-Type": "application/json; charset=utf-8",
+    "ETag": "W/\"3f426725e3c3b495b2180a5bc8ca9a72\""
+  },
+  "over_cap": false,
+  "redirects_followed": 0,
+  "requests": 1,
+  "retries": 0,
+  "sha256": "3f426725e3c3b495b2180a5bc8ca9a72c8266f67f73da406a01fda8c6c2152db",
+  "started_at": "2026-10-16T16:11:20.593632+00:00",
+  "status": 200,
+  "transport_error": null,
+  "url": "https://api.datacite.org/dois/10.5061/dryad.ph81h"
+}

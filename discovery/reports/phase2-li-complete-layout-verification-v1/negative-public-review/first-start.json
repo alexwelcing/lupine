@@ -1,0 +1,11 @@
+{
+  "actual_source_operations_requested": 0,
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-layout-public-review-v1/audit_public.py"
+  ],
+  "review_kind": "First public-only consistency audit; reviewer written after first actual blocked result, not a prospectively frozen experiment.",
+  "source_sha256": "4c5f23ee4fcaa754da97c8f7bbac079911d2cc309ef630314db08f6a3318d9ce",
+  "started_at": "2026-10-16T16:27:16.628951+00:00",
+  "syntax_compilation": "PASS"
+}

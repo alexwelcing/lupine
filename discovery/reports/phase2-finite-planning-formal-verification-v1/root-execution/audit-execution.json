@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "audit_axioms.py"
+  ],
+  "cwd": "formal",
+  "exit_code": 0,
+  "timed_out": false,
+  "started_ns": 1792168362113382053,
+  "finished_ns": 1792168494770596886,
+  "process_seconds": 132.71293271600007,
+  "source_held": true,
+  "runtime_345_held": true,
+  "stdout_sha256": "619af67a3b1ce4ec3b9fcebb26348f54e00cbef5ee72d76a3d96d00921c3c6dd",
+  "stdout_bytes": 78,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_bytes": 0
+}

@@ -1,0 +1,8 @@
+{
+  "encoding": "utf-8",
+  "original_bytes": 566,
+  "original_path": "artifact-review/promotion-pin-amendment.diff",
+  "original_sha256": "75d78c95279b4faacf33db8e9c7ba00017176a9a5cf7320ec57eddee264c7968",
+  "schema": "lupine.public.utf8-evidence.v1",
+  "text": "--- original-held-promotion-pins\n+++ root-format-normalized-promotion-pins\n@@ -44,8 +44,9 @@\n       \"sha256\": \"2f2295d0f04fbc0f3399f904eed757e8a6c0f713a13cf9bb13850c52ea1e91e0\"\n     },\n     \"tests/test_li_v3_readiness_review.py\": {\n-      \"bytes\": 60150,\n-      \"sha256\": \"7ec52e6a72aef1b289503d187fa5966025a1d488ca60f55200d12fd9c10b85f0\"\n+      \"bytes\": 60149,\n+      \"sha256\": \"dda4d354ff55f09d4542105df7c7180097ad187477b4c03743bafd95a527a34b\"\n     }\n-  }\n+  },\n+  \"root_final_copyset_sha256\": \"ee3285f1441a835d0df7aad48a5532b9941560c611ad5ca34d70f389cf0bac07\"\n }\n"
+}

@@ -1,0 +1,14 @@
+{
+  "G20_G21_status": "UNCHANGED",
+  "actual_root_integration_build_audit_tests": "NOT_RUN_BY_PREPARER",
+  "baseline_commit": "9d1f21dae141a28db378ee2e16aa83340df57877",
+  "baseline_sha256": "df817030b309ce7ee4c12ac502e024fdabb3cb0159ed508fe667b50c3851fa39",
+  "copyset_sha256": "e27030bde2743df70ee38fe3b9d0d3eb9c660378ec7dcc38209b111a74ea195d",
+  "held_source_sha256": "391b03aefda0f7bac5bd380347b81febc8a4ebbd329ae3a099981784803973bd",
+  "inventory_sha256": "dcec77a8dd6cda1c84822c0a8cf381e18f9b8a50ab2be6f04ba7ff33f6631196",
+  "preparation_check_sha256": "26a6480df572412418f947b3969f9265141e25bf243434e9a71625f393f79728",
+  "promotion_file_count": 6,
+  "readme_sha256": "3fdeec5114f4ec1dcb5369cde5f8e633ed3468eaac3e1eee9e813eee803efb8f",
+  "schema": "lupine.finite-planning-formal-integration.handoff.v1",
+  "status": "PREPARED_NOT_INTEGRATED"
+}

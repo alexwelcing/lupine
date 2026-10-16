@@ -1897,3 +1897,56 @@ The original 602-method receipt is not relabeled. No check was weakened.
 The independent dielectric documentary review confirms the bounded source claims
 and clarifies the historical locally-only flag after public excerpt publication;
 rights, pairing, processed semantics, equivalence and freshness remain unresolved.
+
+## 2026-10-16 — verified Li source; first XML block preserved; alternate archive metadata
+
+- Exact `9d1f21dae141a28db378ee2e16aa83340df57877` passes all four original
+  push CI jobs in run 38926984138, observed 16:18:26 UTC. The clean package and
+  strict verifier pass in 29.682 and 2.357 process seconds. Independent artifact
+  review passes 19,742 checks: 6,139 source files, 345 runtime files, 339 unchanged
+  baseline files and 110 unchanged wheel payloads. [Release evidence](phase2-li-complete-release-verification-v1/README.md).
+- Recorder preparation retains 29 author, four independent and 18 outer-observer
+  passing generated checks, with all earlier ordering, close, timing and flag
+  failures preserved. These are distinct invocations, not scientific experiments.
+  [Preparation](phase2-li-complete-recorder-preparation-v1/README.md).
+- After 744 independent public binding checks, actual A1 ran once, completed
+  in 3.553852215 seconds and exited 2: XML_PROFILE_UNSUPPORTED. Stdout and
+  persisted public bytes match SHA aae55ee5a939c37ed13e73d82d68c9e3c92273f22aa7161f46d19b2799158545.
+  Five metadata reads/decompressions/UTF-8 decodes completed, four of five XML
+  parses completed, and archive cleanup completed. Source and tool bindings
+  held. No names/manifest or scientific counts were projected; no A2/B/C ran.
+  [Actual blocked result](phase2-li-complete-layout-verification-v1/README.md).
+- Two separate ordinary metadata requests identify primary Dryad DOI
+  10.5061/dryad.ph81h, explicit version 1/CC0, and JSON/README-PDF file locators.
+  The filename v3 suffix is not silently equated with dataset version 1. No
+  numerical data files, joins, fits or evaluation were acquired/performed.
+  [Registry](phase2-dielectric-archive-identity-v1/README.md),
+  [independent review](phase2-dielectric-archive-identity-review-v1/README.md),
+  [landing metadata](phase2-dielectric-landing-manifest-v1/README.md).
+- A separately frozen README-PDF request returned HTTP 403 with no redirect.
+  No PDF was obtained, no offline parser ran and no alternate request followed.
+  [Access failure and unexecuted preparation](phase2-dielectric-readme-schema-v1/README.md).
+- Owner/checkpoint: root preserves the Li failure without retry or parser
+  relaxation, publishes this report-only increment, verifies its own remote/CI,
+  and advances independently reviewed finite-population formalization. File identity,
+  usable paired schema and overlap remain unresolved; G21 and scientific
+  superiority remain blocked/NO-GO. No new schedule, deployment or DFT.
+
+## 2026-10-16 — finite-population counting integrated and strictly verified
+
+- Added the exact independently reviewed `LupineFinitePlanning` source, 13
+  conditional counting statements over arbitrary finite frames. Separate author
+  and independent strict compilations passed. Root's eleven-module strict build
+  completed 1,017 jobs, the fresh axiom audit passed all 143 statements, and all
+  eleven parser tests passed. [Source-bound evidence and limits](phase2-finite-planning-formal-verification-v1/README.md).
+- All ten prior Lean source files, their 130 theorem/axiom entries and all 345
+  runtime files remain unchanged. The former inventory/output are preserved as
+  exact historical bytes. Toolchain, dependency pins and audit parser are unchanged.
+- The new statements cover favorable subset counting, the exact rational bound,
+  failure-count antitonicity, attained ceiling-null maximum, zero boundary and
+  census resolution. They do not prove Python refinement, minimum-loop behavior,
+  sample-size monotonicity or scientific sampling/physical premises. Li A1 and
+  Dryad README failures remain preserved; G20/G21 are unresolved/blocked.
+- Owner/checkpoint: root publishes the combined mathematical/evidence increment,
+  verifies exact remote and its own CI, and cleanly reproduces the release. No
+  new source operation, retry, numerical data acquisition, fit or admission.

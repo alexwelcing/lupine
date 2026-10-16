@@ -1,0 +1,32 @@
+{
+  "actual_operations": 0,
+  "files": [
+    {
+      "bytes": 3912,
+      "path": "BLOCKED.md",
+      "sha256": "4361315c7cc8f39b439b434684d4cddc71a60f6b1e699a93626db52af58c008b"
+    },
+    {
+      "bytes": 2244,
+      "path": "README.md",
+      "sha256": "0a93ea19389941d65986be3e9be572b56cadeaffaf487d901adb199ecf5050e1"
+    },
+    {
+      "bytes": 2574,
+      "path": "disposition.json",
+      "sha256": "95fe5b687ef0116a24e94473c14b157270a28b4dfc7bec7f5798b5cc35fc64fd"
+    },
+    {
+      "bytes": 3379,
+      "path": "selected-checks.json",
+      "sha256": "243fd06ef4ed6e4ce1176fadefdf8d91b03e6b63ae6da91342d6ec49efad40f2"
+    },
+    {
+      "bytes": 1734,
+      "path": "source-snapshot.json",
+      "sha256": "2ac0a6dc38af6467613380a4f81d9b597194b7922cf8946d0fe003ac9f8756ef"
+    }
+  ],
+  "status": "TERMINAL_A1_BLOCK_NO_INVENTORY_PROMOTION",
+  "tests_executed": 0
+}

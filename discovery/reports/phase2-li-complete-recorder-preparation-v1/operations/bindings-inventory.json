@@ -1,0 +1,218 @@
+{
+  "branch": "research/lupine-discovery",
+  "commit": null,
+  "expected": {
+    "capture_receipt_sha256": null,
+    "command_prefix": null,
+    "implementation": null,
+    "observed": null,
+    "phase": "inventory",
+    "phase_binding_pins": null,
+    "prerequisite_receipt_sha256": null
+  },
+  "frame_binding": null,
+  "gates": {
+    "artifact_review": {
+      "receipt": {
+        "bytes": null,
+        "path": null,
+        "sha256": null
+      },
+      "source": {
+        "bytes": null,
+        "path": null,
+        "sha256": null
+      }
+    },
+    "artifacts": {
+      "receipt": {
+        "bytes": null,
+        "path": null,
+        "sha256": null
+      },
+      "source_archive": {
+        "bytes": null,
+        "path": null,
+        "sha256": null
+      },
+      "wheel": {
+        "bytes": null,
+        "path": null,
+        "sha256": null
+      }
+    },
+    "ci": {
+      "bytes": null,
+      "path": null,
+      "sha256": null
+    },
+    "package": {
+      "receipt": {
+        "bytes": null,
+        "path": null,
+        "sha256": null
+      },
+      "stderr": {
+        "bytes": null,
+        "path": null,
+        "sha256": null
+      },
+      "stdout": {
+        "bytes": null,
+        "path": null,
+        "sha256": null
+      }
+    },
+    "package_completion": {
+      "execution": {
+        "bytes": null,
+        "path": null,
+        "sha256": null
+      },
+      "final": {
+        "bytes": null,
+        "path": null,
+        "sha256": null
+      },
+      "stderr": {
+        "bytes": null,
+        "path": null,
+        "sha256": null
+      },
+      "stdout": {
+        "bytes": null,
+        "path": null,
+        "sha256": null
+      }
+    },
+    "strict": {
+      "receipt": {
+        "bytes": null,
+        "path": null,
+        "sha256": null
+      },
+      "stderr": {
+        "bytes": null,
+        "path": null,
+        "sha256": null
+      },
+      "stdout": {
+        "bytes": null,
+        "path": null,
+        "sha256": null
+      }
+    }
+  },
+  "phase": "inventory",
+  "prior_acceptances": {
+    "layout": {
+      "binding": {
+        "bytes": null,
+        "path": null,
+        "sha256": null
+      },
+      "completion": {
+        "execution": {
+          "bytes": null,
+          "path": null,
+          "sha256": null
+        },
+        "final": {
+          "bytes": null,
+          "path": null,
+          "sha256": null
+        },
+        "stderr": {
+          "bytes": null,
+          "path": null,
+          "sha256": null
+        },
+        "stdout": {
+          "bytes": null,
+          "path": null,
+          "sha256": null
+        }
+      },
+      "executions": [
+        {
+          "bytes": null,
+          "path": null,
+          "sha256": null
+        },
+        {
+          "bytes": null,
+          "path": null,
+          "sha256": null
+        }
+      ],
+      "final": {
+        "bytes": null,
+        "path": null,
+        "sha256": null
+      },
+      "public": [
+        {
+          "bytes": null,
+          "path": null,
+          "sha256": null
+        },
+        {
+          "bytes": null,
+          "path": null,
+          "sha256": null
+        }
+      ],
+      "reservations": [
+        {
+          "bytes": null,
+          "path": null,
+          "sha256": null
+        },
+        {
+          "bytes": null,
+          "path": null,
+          "sha256": null
+        }
+      ]
+    }
+  },
+  "recorder_files": {
+    "recorder_support.py": {
+      "bytes": null,
+      "path": ".cache/phase2-li-complete-readiness-operations-v1/recorder_support.py",
+      "sha256": null
+    },
+    "run_after_ci.py": {
+      "bytes": null,
+      "path": ".cache/phase2-li-complete-readiness-operations-v1/run_after_ci.py",
+      "sha256": null
+    },
+    "run_package.py": {
+      "bytes": null,
+      "path": ".cache/phase2-li-complete-readiness-operations-v1/run_package.py",
+      "sha256": null
+    }
+  },
+  "runtime_count": 345,
+  "runtime_manifest": {
+    "bytes": null,
+    "path": "reports/runtime-manifest.json",
+    "sha256": null
+  },
+  "schema": "lupine.li.complete-readiness.operation-binding.v1",
+  "source_files": {
+    "docs/li-v3-readiness-production.md": null,
+    "docs/li-v3-readiness.md": null,
+    "scripts/li_v3_readiness.py": null,
+    "scripts/li_v3_readiness_production.py": null,
+    "tests/test_li_v3_readiness.py": null,
+    "tests/test_li_v3_readiness_production.py": null,
+    "tests/test_li_v3_readiness_production_review.py": null,
+    "tests/test_li_v3_readiness_review.py": null
+  },
+  "validator": {
+    "bytes": null,
+    "path": ".cache/phase2-li-complete-route-public-review-design-v1/public_review_validator.py",
+    "sha256": null
+  }
+}

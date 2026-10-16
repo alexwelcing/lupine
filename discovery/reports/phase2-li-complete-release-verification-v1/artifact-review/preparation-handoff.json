@@ -1,0 +1,13 @@
+{
+  "actual_audit_runs": 0,
+  "amendment_review_sha256": "fcedef367eb1fab2d22d7c4091cec5a31364ea9cae2230c0cc162175ece8a193",
+  "auditor_source_sha256": "b00541daccbbe8626880f59bc59d9694dc9f34e922690f968dfb50ed348bb738",
+  "baseline_commit": "ddd4a6a8df0f908a162b7e5387b0faac325180d6",
+  "inventory_sha256": "86dccb6fb500640395c0b172941b56ccd97a8935f9dff39ca9862676cf942070",
+  "original_preparation_preserved": true,
+  "promotion_sha256": "e2bd3dbe182139dad896ce050edff189ebd2015c9f2f427a1b216b0cd2274fa5",
+  "report_contract_sha256": "5c37012cd8f90d8d6e790f81ae6703cccc340a46b16ab6df05ffe3749fc1e29f",
+  "schema": "lupine.li.complete-readiness.artifact-format-amendment-handoff.v1",
+  "scope_sha256": "0ba8593c7abe3f65d5fd1a0686c96dd52e45b92144dbc51e65ab5f4dd3ce80e4",
+  "status": "READY_AWAITING_ROOT_PUBLISHED_COMMIT_RETENTION_COPYSET_AND_GATES"
+}

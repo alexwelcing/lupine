@@ -1,0 +1,16 @@
+{
+  "status": "FAILED_SYNTHETIC_TEST",
+  "test_count": 16,
+  "failures": 1,
+  "unittest_seconds": 0.53,
+  "tool_session_chunk": "d52004",
+  "source_hashes": {
+    "recorder_support.py": "6f02c0ed8f8981e1f2c18e6107fb4bff343cf91427bcfe549b2fc4808dd53e0a",
+    "run_after_ci.py": "1af3dbfc798dd49d850db2d58933ae2b7e221172a619be0cd84f34911226a67b",
+    "run_package.py": "a03fc98c9f4099040344b4120bba57483a348f6c2f87ff771a0c63377b55fe10",
+    "tests/test_operations_recorder.py": "064c3ed31624d777f4455594e2dfadc6b2b989078ccac9a1a29c7609f5b26de3"
+  },
+  "failure": "test_timeout_kills_group_even_after_leader_exit observed /proc child state R immediately after SIGKILL, expected Z",
+  "disposition": "Preserved first assertion; add bounded termination observation to avoid assuming signal delivery is synchronous. Timeout operation already rejected; no actual source operation.",
+  "complete_console_log": "Original functions tool output retained in conversation; not captured as a local full log."
+}

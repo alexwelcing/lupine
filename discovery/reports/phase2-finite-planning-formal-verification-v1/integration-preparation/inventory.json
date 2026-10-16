@@ -1,0 +1,71 @@
+{
+  "file_count": 13,
+  "files": [
+    {
+      "bytes": 3221,
+      "path": "README.md",
+      "sha256": "3fdeec5114f4ec1dcb5369cde5f8e633ed3468eaac3e1eee9e813eee803efb8f"
+    },
+    {
+      "bytes": 3479,
+      "path": "baseline.json",
+      "sha256": "df817030b309ce7ee4c12ac502e024fdabb3cb0159ed508fe667b50c3851fa39"
+    },
+    {
+      "bytes": 2177,
+      "path": "copyset.json",
+      "sha256": "e27030bde2743df70ee38fe3b9d0d3eb9c660378ec7dcc38209b111a74ea195d"
+    },
+    {
+      "bytes": 2935,
+      "path": "finite-planning-section.md",
+      "sha256": "3951aac1a186c8c3400606ee77f65bca42da7d9d58034b8839413edb6ac08afa"
+    },
+    {
+      "bytes": 47160,
+      "path": "integration.diff",
+      "sha256": "04ac86ce0162a3fc7ac8c20e2093bfa558c6bef9aa26f5f9ce29644d1181afbc"
+    },
+    {
+      "bytes": 1007,
+      "path": "preparation-check.json",
+      "sha256": "26a6480df572412418f947b3969f9265141e25bf243434e9a71625f393f79728"
+    },
+    {
+      "bytes": 7231,
+      "path": "prepare.py",
+      "sha256": "70852bc5a7916c944f767f964078974babba8d04236fc04d9b36654600c5a365"
+    },
+    {
+      "bytes": 6905,
+      "path": "promotion/formal/LupineFinitePlanning.lean",
+      "sha256": "391b03aefda0f7bac5bd380347b81febc8a4ebbd329ae3a099981784803973bd"
+    },
+    {
+      "bytes": 37277,
+      "path": "promotion/formal/README.md",
+      "sha256": "7782fb9495e94714aeb75b85f44906c54a90de02ec49d88133d16b270897f63f"
+    },
+    {
+      "bytes": 3009,
+      "path": "promotion/formal/history/README.md",
+      "sha256": "63eb1576eeb3209dae801ff54346fa404fa42da110e091c7e0d1ce1da33b2d46"
+    },
+    {
+      "bytes": 13122,
+      "path": "promotion/formal/history/pre-finite-planning-AXIOMS.txt",
+      "sha256": "84a9ed0c9cf6acc58ea2a9a196ec46cd8f1b69b0d1dd79fd041b0c37291065f1"
+    },
+    {
+      "bytes": 20076,
+      "path": "promotion/formal/history/pre-finite-planning-theorem-inventory.json",
+      "sha256": "834a14198ce1f8d52d4ba33871c143d7c76246cfd81b736109a6de78798acc40"
+    },
+    {
+      "bytes": 823,
+      "path": "promotion/formal/lakefile.toml",
+      "sha256": "c8250ba2c032f8950501da16d50f9001cad13dc8fb204970cb15c3ac37484363"
+    }
+  ],
+  "schema": "lupine.finite-planning-formal-integration.inventory.v1"
+}

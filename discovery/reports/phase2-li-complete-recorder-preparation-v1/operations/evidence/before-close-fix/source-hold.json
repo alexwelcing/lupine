@@ -1,0 +1,40 @@
+{
+  "status": "PROSPECTIVE_CORRECTED_SOURCE_HELD_FOR_REVIEW",
+  "files": {
+    "run_after_ci.py": {
+      "bytes": 30369,
+      "sha256": "c0c48570377d232739f50d1f1e5956857b2e5fef5f24362c956b56c5b82bbc30"
+    },
+    "recorder_support.py": {
+      "bytes": 15493,
+      "sha256": "6f02c0ed8f8981e1f2c18e6107fb4bff343cf91427bcfe549b2fc4808dd53e0a"
+    },
+    "run_package.py": {
+      "bytes": 4660,
+      "sha256": "ff75410bb8b68de831a6db16dab89d314b0cf329ca22188badd4e2d0ff38831a"
+    },
+    "tests/test_operations_recorder.py": {
+      "bytes": 31488,
+      "sha256": "70e17bbd957498cf88d3349282e2209a5169a5deaab2a8314f793fad42bcd99e"
+    },
+    "README.md": {
+      "bytes": 8567,
+      "sha256": "623e515bc6d1f7a64323cf0a457bf4370b20c629183f92710e184979c0b82ef2"
+    },
+    "bindings-layout.json": {
+      "bytes": 2890,
+      "sha256": "1425fe4c77976b351a5a34be2eae2a83c9a35308d5924320e8121a5c0269cb8d"
+    },
+    "bindings-inventory.json": {
+      "bytes": 3768,
+      "sha256": "f1a14704e011c386344ee88157a649d9995b18fccff481f7c3f9c3681fc73f86"
+    },
+    "bindings-frame.json": {
+      "bytes": 4750,
+      "sha256": "ffcd0fb15c09a59859e0532dc1f91cda5de2d429e7b3e63775807aa8e52108c0"
+    }
+  },
+  "actual_operations": 0,
+  "bindings": "UNBOUND",
+  "original_hold": "evidence/before-independent-ordering-fix/source-hold.json"
+}

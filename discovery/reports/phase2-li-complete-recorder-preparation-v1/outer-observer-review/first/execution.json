@@ -1,0 +1,22 @@
+{
+  "started_at": "2026-10-16T16:04:25.731938+00:00",
+  "finished_at": "2026-10-16T16:04:30.889263+00:00",
+  "elapsed_seconds": 5.157347991000279,
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    ".cache/phase2-li-complete-readiness-outer-observer-review-v1/test_outer_observer_review.py"
+  ],
+  "exit_code": 1,
+  "before": {
+    ".cache/phase2-li-complete-readiness-outer-observer-v1/observe.py": "b2fa9a4b6e852b4094fa9e6df6160ab14ff52be0ec184d18f014c7d2a8dc2bfa",
+    ".cache/phase2-li-complete-readiness-outer-observer-review-v1/test_outer_observer_review.py": "61e12e10dd55697c5ecac9c5cc435ccd435e2dd63ee79db82764df4f127ffaf3"
+  },
+  "after": {
+    ".cache/phase2-li-complete-readiness-outer-observer-v1/observe.py": "b2fa9a4b6e852b4094fa9e6df6160ab14ff52be0ec184d18f014c7d2a8dc2bfa",
+    ".cache/phase2-li-complete-readiness-outer-observer-review-v1/test_outer_observer_review.py": "61e12e10dd55697c5ecac9c5cc435ccd435e2dd63ee79db82764df4f127ffaf3"
+  },
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "ad9023ba5e352d68bc1f67fc9e3340107bd8eb4ea5edf950581e2ddcb9b76186",
+  "generated_only": true,
+  "real_target_helper_calls": 0
+}
