@@ -1,0 +1,64 @@
+{
+  "schema": "lupine.rhizo.documentary-bibliography.v1",
+  "scope": "Necessary bibliographic facts selected from the authorized projection; source declarations only, no URLs followed or primary metadata verified.",
+  "entries": [
+    {
+      "key": "tran2016-paper",
+      "role": "declared paper citation; literal DOI field for surface records",
+      "citation": "R. Tran et al., Surface energies of elemental crystals, Scientific Data 3, 160080 (2016).",
+      "identifier": "10.1038/sdata.2016.80",
+      "locator": "https://doi.org/10.1038/sdata.2016.80",
+      "verification": "ARCHIVE_DECLARATION_ONLY"
+    },
+    {
+      "key": "dryad-f2n6f",
+      "role": "distinct declared surface dataset; notes identify surfaces.json",
+      "citation": "Dryad dataset named in the retained Tran reference entries; file surfaces.json.",
+      "identifier": "10.5061/dryad.f2n6f",
+      "locator": "https://doi.org/10.5061/dryad.f2n6f",
+      "verification": "ARCHIVE_DECLARATION_ONLY; no version/hash of primary file verified"
+    },
+    {
+      "key": "angsten2014-table-a1",
+      "role": "declared DFT vacancy table",
+      "citation": "T. Angsten, T. Mayeshiba, H. Wu and D. Morgan, New Journal of Physics 16, 015018 (2014), Table A.1.",
+      "identifier": "10.1088/1367-2630/16/1/015018",
+      "locator": "https://doi.org/10.1088/1367-2630/16/1/015018",
+      "verification": "ARCHIVE_DECLARATION_ONLY"
+    },
+    {
+      "key": "ehrhart1991",
+      "role": "older compilation named by six experimental vacancy records; also discussed in Pd notes",
+      "citation": "P. Ehrhart, P. Jung, H. Schultz and H. Ullmaier, Atomic Defects in Metals, Landolt-Bornstein New Series III/25, Springer, Berlin (1991).",
+      "identifier": null,
+      "locator": null,
+      "verification": "ARCHIVE_DECLARATION_ONLY; primary work not accessed"
+    },
+    {
+      "key": "maier-schaefer",
+      "role": "older sources named by the experimental Pd record",
+      "citation": "K. Maier, G. Rein, B. Saile, P. Valenta and H. E. Schaefer, positron-annihilation work (1979); H. E. Schaefer, phys. stat. sol. (a) 102, 47 (1987).",
+      "identifier": null,
+      "locator": null,
+      "verification": "ARCHIVE_DECLARATION_ONLY; incomplete primary bibliographic identity"
+    },
+    {
+      "key": "schaefer-banhart",
+      "role": "primary-source attribution named by the experimental Pt record",
+      "citation": "H. E. Schaefer and F. Banhart, positron-annihilation work; exact primary article identity is not supplied completely by this projection.",
+      "identifier": null,
+      "locator": null,
+      "verification": "ARCHIVE_DECLARATION_ONLY; identity unresolved"
+    },
+    {
+      "key": "vega-bazantes2026-si",
+      "role": "literal locator for all seven experimental vacancy records; secondary extraction source claimed in notes",
+      "citation": "Vega Bazantes et al. (2026), arXiv:2604.05385, supplementary information, as named by retained source notes.",
+      "identifier": "arXiv:2604.05385",
+      "locator": "https://arxiv.org/abs/2604.05385",
+      "verification": "ARCHIVE_DECLARATION_ONLY; version and substantive source not independently checked"
+    }
+  ],
+  "primary_source_rights": "UNKNOWN",
+  "no_blanket_repository_license_inheritance": true
+}

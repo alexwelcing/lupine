@@ -1,0 +1,9 @@
+{
+  "schema": "lupine.rhizo.documentary-correction-review-copy.v1",
+  "original_path": ".cache/phase2-rhizo-documentary-review-independent-v1/scope-correction-review.json",
+  "copied_path": ".cache/phase2-rhizo-documentary-review-v1/independent-review/scope-correction-review.json",
+  "bytes": 3452,
+  "sha256": "783d1213a1c781e1e92716449d87be643524e4a4dc3e7133cd8fcf28832d3c36",
+  "exact_copy": true,
+  "earlier_review_preserved": true
+}

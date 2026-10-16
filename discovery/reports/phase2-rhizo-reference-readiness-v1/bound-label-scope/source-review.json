@@ -1,0 +1,20 @@
+{
+  "author_resolution": "Added both precision points to README and field-findings before freeze.",
+  "files_after_clarification_observed_by_author": {
+    "README.md": {
+      "bytes": 6510,
+      "sha256": "a95202189ecb58c7171f16982c42aa4bb7dd29fa5808744488bb433f8e48d414"
+    },
+    "field-findings.json": {
+      "bytes": 3299,
+      "sha256": "76ce9c94af9e7983acb8d37da4c84e310920daedb346a1951c71c666394935a9"
+    }
+  },
+  "finding": "Unmapped/no-target branches preserve original property, so non-null reference fields alone do not establish historical selected-by-binder status. Finite non-boolean numerical types require actual checks, not reliance on float annotations.",
+  "recorded_at": "2026-10-16T11:53:13.913259+00:00",
+  "reviewed_conclusion": "No method-preference rerun is required to inspect archived labels. Unique citation/value concordance is reconstructed attribution, not proof of historical selection. Citation-only reconciliation can reuse a verified43-location private documentary projection without another reference-byte read.",
+  "reviewer": "/root/phase2_math",
+  "schema": "lupine.rhizo.bound-choice.source-review.v1",
+  "scope": "Source/public documentary review only; reviewer read no raw objects and ran no tests.",
+  "status": "THREE_SCOPE_DISTINCTION_SUPPORTED_WITH_DOCUMENTED_PRECISION"
+}

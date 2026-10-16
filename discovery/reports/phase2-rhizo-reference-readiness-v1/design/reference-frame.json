@@ -1,0 +1,2180 @@
+{
+  "schema": "lupine.rhizo.reference-readiness.prospective-frame.v1",
+  "status": "DERIVED_FROM_PUBLIC_METADATA_NOT_NEW_SOURCE_INSPECTION",
+  "repository": "alexwelcing/lupine-rhizo",
+  "commit": "81079a8e1bac7ed332712cc92002bd3435e40776",
+  "counts": {
+    "units": 36,
+    "unique_candidate_reference_locations": 43,
+    "candidate_reference_edges": 172,
+    "physical_independent_units": null
+  },
+  "units": [
+    {
+      "unit_id": "Ag_fcc_chgnet",
+      "material": "Ag",
+      "model_id": "chgnet",
+      "structure": "fcc",
+      "existing_artifact_paths_not_opened_by_proposed_pass": [
+        "data/y_matrix_runs/Ag_fcc_chgnet.json",
+        "data/y_matrix_runs/Ag_fcc_chgnet.evidence.json",
+        "data/y_matrix_runs/bound/Ag_fcc_chgnet.evidence.json"
+      ]
+    },
+    {
+      "unit_id": "Ag_fcc_mace-mp-small",
+      "material": "Ag",
+      "model_id": "mace-mp-small",
+      "structure": "fcc",
+      "existing_artifact_paths_not_opened_by_proposed_pass": [
+        "data/y_matrix_runs/Ag_fcc_mace-mp-small.json",
+        "data/y_matrix_runs/Ag_fcc_mace-mp-small.evidence.json",
+        "data/y_matrix_runs/bound/Ag_fcc_mace-mp-small.evidence.json"
+      ]
+    },
+    {
+      "unit_id": "Ag_fcc_mace-mp-medium",
+      "material": "Ag",
+      "model_id": "mace-mp-medium",
+      "structure": "fcc",
+      "existing_artifact_paths_not_opened_by_proposed_pass": [
+        "data/y_matrix_runs/Ag_fcc_mace-mp-medium.json",
+        "data/y_matrix_runs/Ag_fcc_mace-mp-medium.evidence.json",
+        "data/y_matrix_runs/bound/Ag_fcc_mace-mp-medium.evidence.json"
+      ]
+    },
+    {
+      "unit_id": "Ag_fcc_mace-mpa-0-medium",
+      "material": "Ag",
+      "model_id": "mace-mpa-0-medium",
+      "structure": "fcc",
+      "existing_artifact_paths_not_opened_by_proposed_pass": [
+        "data/y_matrix_runs/Ag_fcc_mace-mpa-0-medium.json",
+        "data/y_matrix_runs/Ag_fcc_mace-mpa-0-medium.evidence.json",
+        "data/y_matrix_runs/bound/Ag_fcc_mace-mpa-0-medium.evidence.json"
+      ]
+    },
+    {
+      "unit_id": "Al_fcc_chgnet",
+      "material": "Al",
+      "model_id": "chgnet",
+      "structure": "fcc",
+      "existing_artifact_paths_not_opened_by_proposed_pass": [
+        "data/y_matrix_runs/Al_fcc_chgnet.json",
+        "data/y_matrix_runs/Al_fcc_chgnet.evidence.json",
+        "data/y_matrix_runs/bound/Al_fcc_chgnet.evidence.json"
+      ]
+    },
+    {
+      "unit_id": "Al_fcc_mace-mp-small",
+      "material": "Al",
+      "model_id": "mace-mp-small",
+      "structure": "fcc",
+      "existing_artifact_paths_not_opened_by_proposed_pass": [
+        "data/y_matrix_runs/Al_fcc_mace-mp-small.json",
+        "data/y_matrix_runs/Al_fcc_mace-mp-small.evidence.json",
+        "data/y_matrix_runs/bound/Al_fcc_mace-mp-small.evidence.json"
+      ]
+    },
+    {
+      "unit_id": "Al_fcc_mace-mp-medium",
+      "material": "Al",
+      "model_id": "mace-mp-medium",
+      "structure": "fcc",
+      "existing_artifact_paths_not_opened_by_proposed_pass": [
+        "data/y_matrix_runs/Al_fcc_mace-mp-medium.json",
+        "data/y_matrix_runs/Al_fcc_mace-mp-medium.evidence.json",
+        "data/y_matrix_runs/bound/Al_fcc_mace-mp-medium.evidence.json"
+      ]
+    },
+    {
+      "unit_id": "Al_fcc_mace-mpa-0-medium",
+      "material": "Al",
+      "model_id": "mace-mpa-0-medium",
+      "structure": "fcc",
+      "existing_artifact_paths_not_opened_by_proposed_pass": [
+        "data/y_matrix_runs/Al_fcc_mace-mpa-0-medium.json",
+        "data/y_matrix_runs/Al_fcc_mace-mpa-0-medium.evidence.json",
+        "data/y_matrix_runs/bound/Al_fcc_mace-mpa-0-medium.evidence.json"
+      ]
+    },
+    {
+      "unit_id": "Au_fcc_chgnet",
+      "material": "Au",
+      "model_id": "chgnet",
+      "structure": "fcc",
+      "existing_artifact_paths_not_opened_by_proposed_pass": [
+        "data/y_matrix_runs/Au_fcc_chgnet.json",
+        "data/y_matrix_runs/Au_fcc_chgnet.evidence.json",
+        "data/y_matrix_runs/bound/Au_fcc_chgnet.evidence.json"
+      ]
+    },
+    {
+      "unit_id": "Au_fcc_mace-mp-small",
+      "material": "Au",
+      "model_id": "mace-mp-small",
+      "structure": "fcc",
+      "existing_artifact_paths_not_opened_by_proposed_pass": [
+        "data/y_matrix_runs/Au_fcc_mace-mp-small.json",
+        "data/y_matrix_runs/Au_fcc_mace-mp-small.evidence.json",
+        "data/y_matrix_runs/bound/Au_fcc_mace-mp-small.evidence.json"
+      ]
+    },
+    {
+      "unit_id": "Au_fcc_mace-mp-medium",
+      "material": "Au",
+      "model_id": "mace-mp-medium",
+      "structure": "fcc",
+      "existing_artifact_paths_not_opened_by_proposed_pass": [
+        "data/y_matrix_runs/Au_fcc_mace-mp-medium.json",
+        "data/y_matrix_runs/Au_fcc_mace-mp-medium.evidence.json",
+        "data/y_matrix_runs/bound/Au_fcc_mace-mp-medium.evidence.json"
+      ]
+    },
+    {
+      "unit_id": "Au_fcc_mace-mpa-0-medium",
+      "material": "Au",
+      "model_id": "mace-mpa-0-medium",
+      "structure": "fcc",
+      "existing_artifact_paths_not_opened_by_proposed_pass": [
+        "data/y_matrix_runs/Au_fcc_mace-mpa-0-medium.json",
+        "data/y_matrix_runs/Au_fcc_mace-mpa-0-medium.evidence.json",
+        "data/y_matrix_runs/bound/Au_fcc_mace-mpa-0-medium.evidence.json"
+      ]
+    },
+    {
+      "unit_id": "Ca_fcc_chgnet",
+      "material": "Ca",
+      "model_id": "chgnet",
+      "structure": "fcc",
+      "existing_artifact_paths_not_opened_by_proposed_pass": [
+        "data/y_matrix_runs/Ca_fcc_chgnet.json",
+        "data/y_matrix_runs/Ca_fcc_chgnet.evidence.json",
+        "data/y_matrix_runs/bound/Ca_fcc_chgnet.evidence.json"
+      ]
+    },
+    {
+      "unit_id": "Ca_fcc_mace-mp-small",
+      "material": "Ca",
+      "model_id": "mace-mp-small",
+      "structure": "fcc",
+      "existing_artifact_paths_not_opened_by_proposed_pass": [
+        "data/y_matrix_runs/Ca_fcc_mace-mp-small.json",
+        "data/y_matrix_runs/Ca_fcc_mace-mp-small.evidence.json",
+        "data/y_matrix_runs/bound/Ca_fcc_mace-mp-small.evidence.json"
+      ]
+    },
+    {
+      "unit_id": "Ca_fcc_mace-mp-medium",
+      "material": "Ca",
+      "model_id": "mace-mp-medium",
+      "structure": "fcc",
+      "existing_artifact_paths_not_opened_by_proposed_pass": [
+        "data/y_matrix_runs/Ca_fcc_mace-mp-medium.json",
+        "data/y_matrix_runs/Ca_fcc_mace-mp-medium.evidence.json",
+        "data/y_matrix_runs/bound/Ca_fcc_mace-mp-medium.evidence.json"
+      ]
+    },
+    {
+      "unit_id": "Ca_fcc_mace-mpa-0-medium",
+      "material": "Ca",
+      "model_id": "mace-mpa-0-medium",
+      "structure": "fcc",
+      "existing_artifact_paths_not_opened_by_proposed_pass": [
+        "data/y_matrix_runs/Ca_fcc_mace-mpa-0-medium.json",
+        "data/y_matrix_runs/Ca_fcc_mace-mpa-0-medium.evidence.json",
+        "data/y_matrix_runs/bound/Ca_fcc_mace-mpa-0-medium.evidence.json"
+      ]
+    },
+    {
+      "unit_id": "Cu_fcc_chgnet",
+      "material": "Cu",
+      "model_id": "chgnet",
+      "structure": "fcc",
+      "existing_artifact_paths_not_opened_by_proposed_pass": [
+        "data/y_matrix_runs/Cu_fcc_chgnet.json",
+        "data/y_matrix_runs/Cu_fcc_chgnet.evidence.json",
+        "data/y_matrix_runs/bound/Cu_fcc_chgnet.evidence.json"
+      ]
+    },
+    {
+      "unit_id": "Cu_fcc_mace-mp-small",
+      "material": "Cu",
+      "model_id": "mace-mp-small",
+      "structure": "fcc",
+      "existing_artifact_paths_not_opened_by_proposed_pass": [
+        "data/y_matrix_runs/Cu_fcc_mace-mp-small.json",
+        "data/y_matrix_runs/Cu_fcc_mace-mp-small.evidence.json",
+        "data/y_matrix_runs/bound/Cu_fcc_mace-mp-small.evidence.json"
+      ]
+    },
+    {
+      "unit_id": "Cu_fcc_mace-mp-medium",
+      "material": "Cu",
+      "model_id": "mace-mp-medium",
+      "structure": "fcc",
+      "existing_artifact_paths_not_opened_by_proposed_pass": [
+        "data/y_matrix_runs/Cu_fcc_mace-mp-medium.json",
+        "data/y_matrix_runs/Cu_fcc_mace-mp-medium.evidence.json",
+        "data/y_matrix_runs/bound/Cu_fcc_mace-mp-medium.evidence.json"
+      ]
+    },
+    {
+      "unit_id": "Cu_fcc_mace-mpa-0-medium",
+      "material": "Cu",
+      "model_id": "mace-mpa-0-medium",
+      "structure": "fcc",
+      "existing_artifact_paths_not_opened_by_proposed_pass": [
+        "data/y_matrix_runs/Cu_fcc_mace-mpa-0-medium.json",
+        "data/y_matrix_runs/Cu_fcc_mace-mpa-0-medium.evidence.json",
+        "data/y_matrix_runs/bound/Cu_fcc_mace-mpa-0-medium.evidence.json"
+      ]
+    },
+    {
+      "unit_id": "Ni_fcc_chgnet",
+      "material": "Ni",
+      "model_id": "chgnet",
+      "structure": "fcc",
+      "existing_artifact_paths_not_opened_by_proposed_pass": [
+        "data/y_matrix_runs/Ni_fcc_chgnet.json",
+        "data/y_matrix_runs/Ni_fcc_chgnet.evidence.json",
+        "data/y_matrix_runs/bound/Ni_fcc_chgnet.evidence.json"
+      ]
+    },
+    {
+      "unit_id": "Ni_fcc_mace-mp-small",
+      "material": "Ni",
+      "model_id": "mace-mp-small",
+      "structure": "fcc",
+      "existing_artifact_paths_not_opened_by_proposed_pass": [
+        "data/y_matrix_runs/Ni_fcc_mace-mp-small.json",
+        "data/y_matrix_runs/Ni_fcc_mace-mp-small.evidence.json",
+        "data/y_matrix_runs/bound/Ni_fcc_mace-mp-small.evidence.json"
+      ]
+    },
+    {
+      "unit_id": "Ni_fcc_mace-mp-medium",
+      "material": "Ni",
+      "model_id": "mace-mp-medium",
+      "structure": "fcc",
+      "existing_artifact_paths_not_opened_by_proposed_pass": [
+        "data/y_matrix_runs/Ni_fcc_mace-mp-medium.json",
+        "data/y_matrix_runs/Ni_fcc_mace-mp-medium.evidence.json",
+        "data/y_matrix_runs/bound/Ni_fcc_mace-mp-medium.evidence.json"
+      ]
+    },
+    {
+      "unit_id": "Ni_fcc_mace-mpa-0-medium",
+      "material": "Ni",
+      "model_id": "mace-mpa-0-medium",
+      "structure": "fcc",
+      "existing_artifact_paths_not_opened_by_proposed_pass": [
+        "data/y_matrix_runs/Ni_fcc_mace-mpa-0-medium.json",
+        "data/y_matrix_runs/Ni_fcc_mace-mpa-0-medium.evidence.json",
+        "data/y_matrix_runs/bound/Ni_fcc_mace-mpa-0-medium.evidence.json"
+      ]
+    },
+    {
+      "unit_id": "Pd_fcc_chgnet",
+      "material": "Pd",
+      "model_id": "chgnet",
+      "structure": "fcc",
+      "existing_artifact_paths_not_opened_by_proposed_pass": [
+        "data/y_matrix_runs/Pd_fcc_chgnet.json",
+        "data/y_matrix_runs/Pd_fcc_chgnet.evidence.json",
+        "data/y_matrix_runs/bound/Pd_fcc_chgnet.evidence.json"
+      ]
+    },
+    {
+      "unit_id": "Pd_fcc_mace-mp-small",
+      "material": "Pd",
+      "model_id": "mace-mp-small",
+      "structure": "fcc",
+      "existing_artifact_paths_not_opened_by_proposed_pass": [
+        "data/y_matrix_runs/Pd_fcc_mace-mp-small.json",
+        "data/y_matrix_runs/Pd_fcc_mace-mp-small.evidence.json",
+        "data/y_matrix_runs/bound/Pd_fcc_mace-mp-small.evidence.json"
+      ]
+    },
+    {
+      "unit_id": "Pd_fcc_mace-mp-medium",
+      "material": "Pd",
+      "model_id": "mace-mp-medium",
+      "structure": "fcc",
+      "existing_artifact_paths_not_opened_by_proposed_pass": [
+        "data/y_matrix_runs/Pd_fcc_mace-mp-medium.json",
+        "data/y_matrix_runs/Pd_fcc_mace-mp-medium.evidence.json",
+        "data/y_matrix_runs/bound/Pd_fcc_mace-mp-medium.evidence.json"
+      ]
+    },
+    {
+      "unit_id": "Pd_fcc_mace-mpa-0-medium",
+      "material": "Pd",
+      "model_id": "mace-mpa-0-medium",
+      "structure": "fcc",
+      "existing_artifact_paths_not_opened_by_proposed_pass": [
+        "data/y_matrix_runs/Pd_fcc_mace-mpa-0-medium.json",
+        "data/y_matrix_runs/Pd_fcc_mace-mpa-0-medium.evidence.json",
+        "data/y_matrix_runs/bound/Pd_fcc_mace-mpa-0-medium.evidence.json"
+      ]
+    },
+    {
+      "unit_id": "Pt_fcc_chgnet",
+      "material": "Pt",
+      "model_id": "chgnet",
+      "structure": "fcc",
+      "existing_artifact_paths_not_opened_by_proposed_pass": [
+        "data/y_matrix_runs/Pt_fcc_chgnet.json",
+        "data/y_matrix_runs/Pt_fcc_chgnet.evidence.json",
+        "data/y_matrix_runs/bound/Pt_fcc_chgnet.evidence.json"
+      ]
+    },
+    {
+      "unit_id": "Pt_fcc_mace-mp-small",
+      "material": "Pt",
+      "model_id": "mace-mp-small",
+      "structure": "fcc",
+      "existing_artifact_paths_not_opened_by_proposed_pass": [
+        "data/y_matrix_runs/Pt_fcc_mace-mp-small.json",
+        "data/y_matrix_runs/Pt_fcc_mace-mp-small.evidence.json",
+        "data/y_matrix_runs/bound/Pt_fcc_mace-mp-small.evidence.json"
+      ]
+    },
+    {
+      "unit_id": "Pt_fcc_mace-mp-medium",
+      "material": "Pt",
+      "model_id": "mace-mp-medium",
+      "structure": "fcc",
+      "existing_artifact_paths_not_opened_by_proposed_pass": [
+        "data/y_matrix_runs/Pt_fcc_mace-mp-medium.json",
+        "data/y_matrix_runs/Pt_fcc_mace-mp-medium.evidence.json",
+        "data/y_matrix_runs/bound/Pt_fcc_mace-mp-medium.evidence.json"
+      ]
+    },
+    {
+      "unit_id": "Pt_fcc_mace-mpa-0-medium",
+      "material": "Pt",
+      "model_id": "mace-mpa-0-medium",
+      "structure": "fcc",
+      "existing_artifact_paths_not_opened_by_proposed_pass": [
+        "data/y_matrix_runs/Pt_fcc_mace-mpa-0-medium.json",
+        "data/y_matrix_runs/Pt_fcc_mace-mpa-0-medium.evidence.json",
+        "data/y_matrix_runs/bound/Pt_fcc_mace-mpa-0-medium.evidence.json"
+      ]
+    },
+    {
+      "unit_id": "Sr_fcc_chgnet",
+      "material": "Sr",
+      "model_id": "chgnet",
+      "structure": "fcc",
+      "existing_artifact_paths_not_opened_by_proposed_pass": [
+        "data/y_matrix_runs/Sr_fcc_chgnet.json",
+        "data/y_matrix_runs/Sr_fcc_chgnet.evidence.json",
+        "data/y_matrix_runs/bound/Sr_fcc_chgnet.evidence.json"
+      ]
+    },
+    {
+      "unit_id": "Sr_fcc_mace-mp-small",
+      "material": "Sr",
+      "model_id": "mace-mp-small",
+      "structure": "fcc",
+      "existing_artifact_paths_not_opened_by_proposed_pass": [
+        "data/y_matrix_runs/Sr_fcc_mace-mp-small.json",
+        "data/y_matrix_runs/Sr_fcc_mace-mp-small.evidence.json",
+        "data/y_matrix_runs/bound/Sr_fcc_mace-mp-small.evidence.json"
+      ]
+    },
+    {
+      "unit_id": "Sr_fcc_mace-mp-medium",
+      "material": "Sr",
+      "model_id": "mace-mp-medium",
+      "structure": "fcc",
+      "existing_artifact_paths_not_opened_by_proposed_pass": [
+        "data/y_matrix_runs/Sr_fcc_mace-mp-medium.json",
+        "data/y_matrix_runs/Sr_fcc_mace-mp-medium.evidence.json",
+        "data/y_matrix_runs/bound/Sr_fcc_mace-mp-medium.evidence.json"
+      ]
+    },
+    {
+      "unit_id": "Sr_fcc_mace-mpa-0-medium",
+      "material": "Sr",
+      "model_id": "mace-mpa-0-medium",
+      "structure": "fcc",
+      "existing_artifact_paths_not_opened_by_proposed_pass": [
+        "data/y_matrix_runs/Sr_fcc_mace-mpa-0-medium.json",
+        "data/y_matrix_runs/Sr_fcc_mace-mpa-0-medium.evidence.json",
+        "data/y_matrix_runs/bound/Sr_fcc_mace-mpa-0-medium.evidence.json"
+      ]
+    }
+  ],
+  "reference_locations": [
+    {
+      "path": "data/y_matrix_targets/surface_energies.json",
+      "source_ordinal": 0,
+      "metadata_context": {
+        "material": "Ag",
+        "structure": "fcc",
+        "property": "gamma_100",
+        "method": "DFT-PBE"
+      },
+      "uses": [
+        {
+          "unit_id": "Ag_fcc_chgnet",
+          "property": "gamma_100",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ag_fcc_mace-mp-small",
+          "property": "gamma_100",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ag_fcc_mace-mp-medium",
+          "property": "gamma_100",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ag_fcc_mace-mpa-0-medium",
+          "property": "gamma_100",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/surface_energies.json",
+      "source_ordinal": 1,
+      "metadata_context": {
+        "material": "Ag",
+        "structure": "fcc",
+        "property": "gamma_110",
+        "method": "DFT-PBE"
+      },
+      "uses": [
+        {
+          "unit_id": "Ag_fcc_chgnet",
+          "property": "gamma_110",
+          "historical_map_role": "historical_map_output",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ag_fcc_mace-mp-small",
+          "property": "gamma_110",
+          "historical_map_role": "historical_map_output",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ag_fcc_mace-mp-medium",
+          "property": "gamma_110",
+          "historical_map_role": "historical_map_output",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ag_fcc_mace-mpa-0-medium",
+          "property": "gamma_110",
+          "historical_map_role": "historical_map_output",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/surface_energies.json",
+      "source_ordinal": 2,
+      "metadata_context": {
+        "material": "Ag",
+        "structure": "fcc",
+        "property": "gamma_111",
+        "method": "DFT-PBE"
+      },
+      "uses": [
+        {
+          "unit_id": "Ag_fcc_chgnet",
+          "property": "gamma_111",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ag_fcc_mace-mp-small",
+          "property": "gamma_111",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ag_fcc_mace-mp-medium",
+          "property": "gamma_111",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ag_fcc_mace-mpa-0-medium",
+          "property": "gamma_111",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/surface_energies.json",
+      "source_ordinal": 3,
+      "metadata_context": {
+        "material": "Al",
+        "structure": "fcc",
+        "property": "gamma_100",
+        "method": "DFT-PBE"
+      },
+      "uses": [
+        {
+          "unit_id": "Al_fcc_chgnet",
+          "property": "gamma_100",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Al_fcc_mace-mp-small",
+          "property": "gamma_100",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Al_fcc_mace-mp-medium",
+          "property": "gamma_100",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Al_fcc_mace-mpa-0-medium",
+          "property": "gamma_100",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/surface_energies.json",
+      "source_ordinal": 4,
+      "metadata_context": {
+        "material": "Al",
+        "structure": "fcc",
+        "property": "gamma_110",
+        "method": "DFT-PBE"
+      },
+      "uses": [
+        {
+          "unit_id": "Al_fcc_chgnet",
+          "property": "gamma_110",
+          "historical_map_role": "historical_map_output",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Al_fcc_mace-mp-small",
+          "property": "gamma_110",
+          "historical_map_role": "historical_map_output",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Al_fcc_mace-mp-medium",
+          "property": "gamma_110",
+          "historical_map_role": "historical_map_output",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Al_fcc_mace-mpa-0-medium",
+          "property": "gamma_110",
+          "historical_map_role": "historical_map_output",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/surface_energies.json",
+      "source_ordinal": 5,
+      "metadata_context": {
+        "material": "Al",
+        "structure": "fcc",
+        "property": "gamma_111",
+        "method": "DFT-PBE"
+      },
+      "uses": [
+        {
+          "unit_id": "Al_fcc_chgnet",
+          "property": "gamma_111",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Al_fcc_mace-mp-small",
+          "property": "gamma_111",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Al_fcc_mace-mp-medium",
+          "property": "gamma_111",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Al_fcc_mace-mpa-0-medium",
+          "property": "gamma_111",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/surface_energies.json",
+      "source_ordinal": 6,
+      "metadata_context": {
+        "material": "Au",
+        "structure": "fcc",
+        "property": "gamma_100",
+        "method": "DFT-PBE"
+      },
+      "uses": [
+        {
+          "unit_id": "Au_fcc_chgnet",
+          "property": "gamma_100",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Au_fcc_mace-mp-small",
+          "property": "gamma_100",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Au_fcc_mace-mp-medium",
+          "property": "gamma_100",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Au_fcc_mace-mpa-0-medium",
+          "property": "gamma_100",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/surface_energies.json",
+      "source_ordinal": 7,
+      "metadata_context": {
+        "material": "Au",
+        "structure": "fcc",
+        "property": "gamma_110",
+        "method": "DFT-PBE"
+      },
+      "uses": [
+        {
+          "unit_id": "Au_fcc_chgnet",
+          "property": "gamma_110",
+          "historical_map_role": "historical_map_output",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Au_fcc_mace-mp-small",
+          "property": "gamma_110",
+          "historical_map_role": "historical_map_output",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Au_fcc_mace-mp-medium",
+          "property": "gamma_110",
+          "historical_map_role": "historical_map_output",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Au_fcc_mace-mpa-0-medium",
+          "property": "gamma_110",
+          "historical_map_role": "historical_map_output",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/surface_energies.json",
+      "source_ordinal": 8,
+      "metadata_context": {
+        "material": "Au",
+        "structure": "fcc",
+        "property": "gamma_111",
+        "method": "DFT-PBE"
+      },
+      "uses": [
+        {
+          "unit_id": "Au_fcc_chgnet",
+          "property": "gamma_111",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Au_fcc_mace-mp-small",
+          "property": "gamma_111",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Au_fcc_mace-mp-medium",
+          "property": "gamma_111",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Au_fcc_mace-mpa-0-medium",
+          "property": "gamma_111",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/surface_energies.json",
+      "source_ordinal": 9,
+      "metadata_context": {
+        "material": "Ca",
+        "structure": "fcc",
+        "property": "gamma_100",
+        "method": "DFT-PBE"
+      },
+      "uses": [
+        {
+          "unit_id": "Ca_fcc_chgnet",
+          "property": "gamma_100",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ca_fcc_mace-mp-small",
+          "property": "gamma_100",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ca_fcc_mace-mp-medium",
+          "property": "gamma_100",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ca_fcc_mace-mpa-0-medium",
+          "property": "gamma_100",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/surface_energies.json",
+      "source_ordinal": 10,
+      "metadata_context": {
+        "material": "Ca",
+        "structure": "fcc",
+        "property": "gamma_110",
+        "method": "DFT-PBE"
+      },
+      "uses": [
+        {
+          "unit_id": "Ca_fcc_chgnet",
+          "property": "gamma_110",
+          "historical_map_role": "historical_map_output",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ca_fcc_mace-mp-small",
+          "property": "gamma_110",
+          "historical_map_role": "historical_map_output",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ca_fcc_mace-mp-medium",
+          "property": "gamma_110",
+          "historical_map_role": "historical_map_output",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ca_fcc_mace-mpa-0-medium",
+          "property": "gamma_110",
+          "historical_map_role": "historical_map_output",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/surface_energies.json",
+      "source_ordinal": 11,
+      "metadata_context": {
+        "material": "Ca",
+        "structure": "fcc",
+        "property": "gamma_111",
+        "method": "DFT-PBE"
+      },
+      "uses": [
+        {
+          "unit_id": "Ca_fcc_chgnet",
+          "property": "gamma_111",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ca_fcc_mace-mp-small",
+          "property": "gamma_111",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ca_fcc_mace-mp-medium",
+          "property": "gamma_111",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ca_fcc_mace-mpa-0-medium",
+          "property": "gamma_111",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/surface_energies.json",
+      "source_ordinal": 12,
+      "metadata_context": {
+        "material": "Cu",
+        "structure": "fcc",
+        "property": "gamma_100",
+        "method": "DFT-PBE"
+      },
+      "uses": [
+        {
+          "unit_id": "Cu_fcc_chgnet",
+          "property": "gamma_100",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Cu_fcc_mace-mp-small",
+          "property": "gamma_100",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Cu_fcc_mace-mp-medium",
+          "property": "gamma_100",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Cu_fcc_mace-mpa-0-medium",
+          "property": "gamma_100",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/surface_energies.json",
+      "source_ordinal": 13,
+      "metadata_context": {
+        "material": "Cu",
+        "structure": "fcc",
+        "property": "gamma_110",
+        "method": "DFT-PBE"
+      },
+      "uses": [
+        {
+          "unit_id": "Cu_fcc_chgnet",
+          "property": "gamma_110",
+          "historical_map_role": "historical_map_output",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Cu_fcc_mace-mp-small",
+          "property": "gamma_110",
+          "historical_map_role": "historical_map_output",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Cu_fcc_mace-mp-medium",
+          "property": "gamma_110",
+          "historical_map_role": "historical_map_output",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Cu_fcc_mace-mpa-0-medium",
+          "property": "gamma_110",
+          "historical_map_role": "historical_map_output",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/surface_energies.json",
+      "source_ordinal": 14,
+      "metadata_context": {
+        "material": "Cu",
+        "structure": "fcc",
+        "property": "gamma_111",
+        "method": "DFT-PBE"
+      },
+      "uses": [
+        {
+          "unit_id": "Cu_fcc_chgnet",
+          "property": "gamma_111",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Cu_fcc_mace-mp-small",
+          "property": "gamma_111",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Cu_fcc_mace-mp-medium",
+          "property": "gamma_111",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Cu_fcc_mace-mpa-0-medium",
+          "property": "gamma_111",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/surface_energies.json",
+      "source_ordinal": 15,
+      "metadata_context": {
+        "material": "Ni",
+        "structure": "fcc",
+        "property": "gamma_100",
+        "method": "DFT-PBE"
+      },
+      "uses": [
+        {
+          "unit_id": "Ni_fcc_chgnet",
+          "property": "gamma_100",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ni_fcc_mace-mp-small",
+          "property": "gamma_100",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ni_fcc_mace-mp-medium",
+          "property": "gamma_100",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ni_fcc_mace-mpa-0-medium",
+          "property": "gamma_100",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/surface_energies.json",
+      "source_ordinal": 16,
+      "metadata_context": {
+        "material": "Ni",
+        "structure": "fcc",
+        "property": "gamma_110",
+        "method": "DFT-PBE"
+      },
+      "uses": [
+        {
+          "unit_id": "Ni_fcc_chgnet",
+          "property": "gamma_110",
+          "historical_map_role": "historical_map_output",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ni_fcc_mace-mp-small",
+          "property": "gamma_110",
+          "historical_map_role": "historical_map_output",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ni_fcc_mace-mp-medium",
+          "property": "gamma_110",
+          "historical_map_role": "historical_map_output",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ni_fcc_mace-mpa-0-medium",
+          "property": "gamma_110",
+          "historical_map_role": "historical_map_output",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/surface_energies.json",
+      "source_ordinal": 17,
+      "metadata_context": {
+        "material": "Ni",
+        "structure": "fcc",
+        "property": "gamma_111",
+        "method": "DFT-PBE"
+      },
+      "uses": [
+        {
+          "unit_id": "Ni_fcc_chgnet",
+          "property": "gamma_111",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ni_fcc_mace-mp-small",
+          "property": "gamma_111",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ni_fcc_mace-mp-medium",
+          "property": "gamma_111",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ni_fcc_mace-mpa-0-medium",
+          "property": "gamma_111",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/surface_energies.json",
+      "source_ordinal": 18,
+      "metadata_context": {
+        "material": "Pd",
+        "structure": "fcc",
+        "property": "gamma_100",
+        "method": "DFT-PBE"
+      },
+      "uses": [
+        {
+          "unit_id": "Pd_fcc_chgnet",
+          "property": "gamma_100",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Pd_fcc_mace-mp-small",
+          "property": "gamma_100",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Pd_fcc_mace-mp-medium",
+          "property": "gamma_100",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Pd_fcc_mace-mpa-0-medium",
+          "property": "gamma_100",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/surface_energies.json",
+      "source_ordinal": 19,
+      "metadata_context": {
+        "material": "Pd",
+        "structure": "fcc",
+        "property": "gamma_110",
+        "method": "DFT-PBE"
+      },
+      "uses": [
+        {
+          "unit_id": "Pd_fcc_chgnet",
+          "property": "gamma_110",
+          "historical_map_role": "historical_map_output",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Pd_fcc_mace-mp-small",
+          "property": "gamma_110",
+          "historical_map_role": "historical_map_output",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Pd_fcc_mace-mp-medium",
+          "property": "gamma_110",
+          "historical_map_role": "historical_map_output",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Pd_fcc_mace-mpa-0-medium",
+          "property": "gamma_110",
+          "historical_map_role": "historical_map_output",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/surface_energies.json",
+      "source_ordinal": 20,
+      "metadata_context": {
+        "material": "Pd",
+        "structure": "fcc",
+        "property": "gamma_111",
+        "method": "DFT-PBE"
+      },
+      "uses": [
+        {
+          "unit_id": "Pd_fcc_chgnet",
+          "property": "gamma_111",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Pd_fcc_mace-mp-small",
+          "property": "gamma_111",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Pd_fcc_mace-mp-medium",
+          "property": "gamma_111",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Pd_fcc_mace-mpa-0-medium",
+          "property": "gamma_111",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/surface_energies.json",
+      "source_ordinal": 21,
+      "metadata_context": {
+        "material": "Pt",
+        "structure": "fcc",
+        "property": "gamma_100",
+        "method": "DFT-PBE"
+      },
+      "uses": [
+        {
+          "unit_id": "Pt_fcc_chgnet",
+          "property": "gamma_100",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Pt_fcc_mace-mp-small",
+          "property": "gamma_100",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Pt_fcc_mace-mp-medium",
+          "property": "gamma_100",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Pt_fcc_mace-mpa-0-medium",
+          "property": "gamma_100",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/surface_energies.json",
+      "source_ordinal": 22,
+      "metadata_context": {
+        "material": "Pt",
+        "structure": "fcc",
+        "property": "gamma_110",
+        "method": "DFT-PBE"
+      },
+      "uses": [
+        {
+          "unit_id": "Pt_fcc_chgnet",
+          "property": "gamma_110",
+          "historical_map_role": "historical_map_output",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Pt_fcc_mace-mp-small",
+          "property": "gamma_110",
+          "historical_map_role": "historical_map_output",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Pt_fcc_mace-mp-medium",
+          "property": "gamma_110",
+          "historical_map_role": "historical_map_output",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Pt_fcc_mace-mpa-0-medium",
+          "property": "gamma_110",
+          "historical_map_role": "historical_map_output",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/surface_energies.json",
+      "source_ordinal": 23,
+      "metadata_context": {
+        "material": "Pt",
+        "structure": "fcc",
+        "property": "gamma_111",
+        "method": "DFT-PBE"
+      },
+      "uses": [
+        {
+          "unit_id": "Pt_fcc_chgnet",
+          "property": "gamma_111",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Pt_fcc_mace-mp-small",
+          "property": "gamma_111",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Pt_fcc_mace-mp-medium",
+          "property": "gamma_111",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Pt_fcc_mace-mpa-0-medium",
+          "property": "gamma_111",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/surface_energies.json",
+      "source_ordinal": 24,
+      "metadata_context": {
+        "material": "Sr",
+        "structure": "fcc",
+        "property": "gamma_100",
+        "method": "DFT-PBE"
+      },
+      "uses": [
+        {
+          "unit_id": "Sr_fcc_chgnet",
+          "property": "gamma_100",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Sr_fcc_mace-mp-small",
+          "property": "gamma_100",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Sr_fcc_mace-mp-medium",
+          "property": "gamma_100",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Sr_fcc_mace-mpa-0-medium",
+          "property": "gamma_100",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/surface_energies.json",
+      "source_ordinal": 25,
+      "metadata_context": {
+        "material": "Sr",
+        "structure": "fcc",
+        "property": "gamma_110",
+        "method": "DFT-PBE"
+      },
+      "uses": [
+        {
+          "unit_id": "Sr_fcc_chgnet",
+          "property": "gamma_110",
+          "historical_map_role": "historical_map_output",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Sr_fcc_mace-mp-small",
+          "property": "gamma_110",
+          "historical_map_role": "historical_map_output",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Sr_fcc_mace-mp-medium",
+          "property": "gamma_110",
+          "historical_map_role": "historical_map_output",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Sr_fcc_mace-mpa-0-medium",
+          "property": "gamma_110",
+          "historical_map_role": "historical_map_output",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/surface_energies.json",
+      "source_ordinal": 26,
+      "metadata_context": {
+        "material": "Sr",
+        "structure": "fcc",
+        "property": "gamma_111",
+        "method": "DFT-PBE"
+      },
+      "uses": [
+        {
+          "unit_id": "Sr_fcc_chgnet",
+          "property": "gamma_111",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Sr_fcc_mace-mp-small",
+          "property": "gamma_111",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Sr_fcc_mace-mp-medium",
+          "property": "gamma_111",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Sr_fcc_mace-mpa-0-medium",
+          "property": "gamma_111",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/vacancy_formation.json",
+      "source_ordinal": 0,
+      "metadata_context": {
+        "material": "Ag",
+        "structure": "fcc",
+        "property": "vacancy_formation_energy",
+        "method": "DFT-PBE"
+      },
+      "uses": [
+        {
+          "unit_id": "Ag_fcc_chgnet",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ag_fcc_mace-mp-small",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ag_fcc_mace-mp-medium",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ag_fcc_mace-mpa-0-medium",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/vacancy_formation.json",
+      "source_ordinal": 1,
+      "metadata_context": {
+        "material": "Al",
+        "structure": "fcc",
+        "property": "vacancy_formation_energy",
+        "method": "DFT-PBE"
+      },
+      "uses": [
+        {
+          "unit_id": "Al_fcc_chgnet",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Al_fcc_mace-mp-small",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Al_fcc_mace-mp-medium",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Al_fcc_mace-mpa-0-medium",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/vacancy_formation.json",
+      "source_ordinal": 2,
+      "metadata_context": {
+        "material": "Au",
+        "structure": "fcc",
+        "property": "vacancy_formation_energy",
+        "method": "DFT-PBE"
+      },
+      "uses": [
+        {
+          "unit_id": "Au_fcc_chgnet",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Au_fcc_mace-mp-small",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Au_fcc_mace-mp-medium",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Au_fcc_mace-mpa-0-medium",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/vacancy_formation.json",
+      "source_ordinal": 3,
+      "metadata_context": {
+        "material": "Ca",
+        "structure": "fcc",
+        "property": "vacancy_formation_energy",
+        "method": "DFT-PBE"
+      },
+      "uses": [
+        {
+          "unit_id": "Ca_fcc_chgnet",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ca_fcc_mace-mp-small",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ca_fcc_mace-mp-medium",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ca_fcc_mace-mpa-0-medium",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/vacancy_formation.json",
+      "source_ordinal": 5,
+      "metadata_context": {
+        "material": "Cu",
+        "structure": "fcc",
+        "property": "vacancy_formation_energy",
+        "method": "DFT-PBE"
+      },
+      "uses": [
+        {
+          "unit_id": "Cu_fcc_chgnet",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Cu_fcc_mace-mp-small",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Cu_fcc_mace-mp-medium",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Cu_fcc_mace-mpa-0-medium",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/vacancy_formation.json",
+      "source_ordinal": 9,
+      "metadata_context": {
+        "material": "Ni",
+        "structure": "fcc",
+        "property": "vacancy_formation_energy",
+        "method": "DFT-PBE"
+      },
+      "uses": [
+        {
+          "unit_id": "Ni_fcc_chgnet",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ni_fcc_mace-mp-small",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ni_fcc_mace-mp-medium",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ni_fcc_mace-mpa-0-medium",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/vacancy_formation.json",
+      "source_ordinal": 10,
+      "metadata_context": {
+        "material": "Pd",
+        "structure": "fcc",
+        "property": "vacancy_formation_energy",
+        "method": "DFT-PBE"
+      },
+      "uses": [
+        {
+          "unit_id": "Pd_fcc_chgnet",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Pd_fcc_mace-mp-small",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Pd_fcc_mace-mp-medium",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Pd_fcc_mace-mpa-0-medium",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/vacancy_formation.json",
+      "source_ordinal": 11,
+      "metadata_context": {
+        "material": "Pt",
+        "structure": "fcc",
+        "property": "vacancy_formation_energy",
+        "method": "DFT-PBE"
+      },
+      "uses": [
+        {
+          "unit_id": "Pt_fcc_chgnet",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Pt_fcc_mace-mp-small",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Pt_fcc_mace-mp-medium",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Pt_fcc_mace-mpa-0-medium",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/vacancy_formation.json",
+      "source_ordinal": 12,
+      "metadata_context": {
+        "material": "Sr",
+        "structure": "fcc",
+        "property": "vacancy_formation_energy",
+        "method": "DFT-PBE"
+      },
+      "uses": [
+        {
+          "unit_id": "Sr_fcc_chgnet",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Sr_fcc_mace-mp-small",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Sr_fcc_mace-mp-medium",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Sr_fcc_mace-mpa-0-medium",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "DFT-PBE",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/vacancy_formation.json",
+      "source_ordinal": 16,
+      "metadata_context": {
+        "material": "Ag",
+        "structure": "fcc",
+        "property": "vacancy_formation_energy",
+        "method": "experiment"
+      },
+      "uses": [
+        {
+          "unit_id": "Ag_fcc_chgnet",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "experiment",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ag_fcc_mace-mp-small",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "experiment",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ag_fcc_mace-mp-medium",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "experiment",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ag_fcc_mace-mpa-0-medium",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "experiment",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/vacancy_formation.json",
+      "source_ordinal": 17,
+      "metadata_context": {
+        "material": "Al",
+        "structure": "fcc",
+        "property": "vacancy_formation_energy",
+        "method": "experiment"
+      },
+      "uses": [
+        {
+          "unit_id": "Al_fcc_chgnet",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "experiment",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Al_fcc_mace-mp-small",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "experiment",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Al_fcc_mace-mp-medium",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "experiment",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Al_fcc_mace-mpa-0-medium",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "experiment",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/vacancy_formation.json",
+      "source_ordinal": 18,
+      "metadata_context": {
+        "material": "Au",
+        "structure": "fcc",
+        "property": "vacancy_formation_energy",
+        "method": "experiment"
+      },
+      "uses": [
+        {
+          "unit_id": "Au_fcc_chgnet",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "experiment",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Au_fcc_mace-mp-small",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "experiment",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Au_fcc_mace-mp-medium",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "experiment",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Au_fcc_mace-mpa-0-medium",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "experiment",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/vacancy_formation.json",
+      "source_ordinal": 19,
+      "metadata_context": {
+        "material": "Cu",
+        "structure": "fcc",
+        "property": "vacancy_formation_energy",
+        "method": "experiment"
+      },
+      "uses": [
+        {
+          "unit_id": "Cu_fcc_chgnet",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "experiment",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Cu_fcc_mace-mp-small",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "experiment",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Cu_fcc_mace-mp-medium",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "experiment",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Cu_fcc_mace-mpa-0-medium",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "experiment",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/vacancy_formation.json",
+      "source_ordinal": 23,
+      "metadata_context": {
+        "material": "Pd",
+        "structure": "fcc",
+        "property": "vacancy_formation_energy",
+        "method": "experiment"
+      },
+      "uses": [
+        {
+          "unit_id": "Pd_fcc_chgnet",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "experiment",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Pd_fcc_mace-mp-small",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "experiment",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Pd_fcc_mace-mp-medium",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "experiment",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Pd_fcc_mace-mpa-0-medium",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "experiment",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/vacancy_formation.json",
+      "source_ordinal": 24,
+      "metadata_context": {
+        "material": "Pt",
+        "structure": "fcc",
+        "property": "vacancy_formation_energy",
+        "method": "experiment"
+      },
+      "uses": [
+        {
+          "unit_id": "Pt_fcc_chgnet",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "experiment",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Pt_fcc_mace-mp-small",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "experiment",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Pt_fcc_mace-mp-medium",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "experiment",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Pt_fcc_mace-mpa-0-medium",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "experiment",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    },
+    {
+      "path": "data/y_matrix_targets/vacancy_formation.json",
+      "source_ordinal": 27,
+      "metadata_context": {
+        "material": "Ni",
+        "structure": "fcc",
+        "property": "vacancy_formation_energy",
+        "method": "experiment"
+      },
+      "uses": [
+        {
+          "unit_id": "Ni_fcc_chgnet",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "experiment",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ni_fcc_mace-mp-small",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "experiment",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ni_fcc_mace-mp-medium",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "experiment",
+          "reference_choice_made": false
+        },
+        {
+          "unit_id": "Ni_fcc_mace-mpa-0-medium",
+          "property": "vacancy_formation_energy",
+          "historical_map_role": "historical_map_anchor",
+          "declared_method": "experiment",
+          "reference_choice_made": false
+        }
+      ],
+      "actual_bound_reference_choice": "UNKNOWN"
+    }
+  ],
+  "limits": [
+    "Source ordinal is the existing custody extractor ordinal; raw JSON container path is not inferred here.",
+    "Candidate edges are not actual archived binding choices or independent measurements.",
+    "Historical map roles do not constitute a new split or protocol."
+  ]
+}

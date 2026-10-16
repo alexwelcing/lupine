@@ -1,0 +1,9 @@
+{
+  "before_source_sha256": "a477032c8b396cd68119bb604549b499da3e3e6f8dfd749206799bcaaca21f79",
+  "finding": "Both per-object parses completed, but global whole_json_parse_completed stayed false when second-file context projection failed.",
+  "first_author": "25/25 PASS, preserved in first-author",
+  "first_independent": "12/13 PASS; genuine global parse-exposure under-reporting on later context failure; no test correction",
+  "planned_change": "Set global parse completion immediately after each successful parser; true only once all two parsers completed, independent of later schema/context/projection success. Add author regression; independent failing test unchanged.",
+  "private_object_reads": 0,
+  "recorded_at": "2026-10-16T11:40:09.512354+00:00"
+}

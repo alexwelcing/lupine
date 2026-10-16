@@ -676,3 +676,22 @@ archive-label sampling does not require independence among fixed labels, but
 frame, semantics, missingness, exposure and cost still need justification. The
 pure documentary-layout candidate is generated-test preparation only, outside
 the runtime and unbound to actual worksheets. G20 remains unresolved/G21 blocked.
+
+## Rhizo declared-reference checkpoint — 2026-10-16
+
+[The completed bounded projection](../reports/phase2-rhizo-reference-readiness-v1/README.md)
+accounts for all 43 fixed reference locations / 36 material-model IDs / 172
+candidate links, with independent generated tests and public-receipt review.
+Every selected note exposed numerical outcomes; this source is historical and
+exposed. Citation chains are archive declarations, not independently verified
+primary extraction or physical truth. No stored-label census or benchmark ran.
+The 26 author/13 independent tests support reader behavior only; the first
+reporting failure remains preserved.
+
+Parent report commits 280dff57 and 3139e1e passed all four original CI jobs.
+No runtime change is introduced by this evidence increment. Its exact remote
+and CI must be verified separately. Recorded-label completeness, physical
+uncertainty and new scientific superiority are distinct unresolved questions.
+A future descriptive census over explicitly stored values need not reconstruct
+the old binder's preference; claims about that binding or primary-source
+agreement require separate evidence. G21 remains blocked.

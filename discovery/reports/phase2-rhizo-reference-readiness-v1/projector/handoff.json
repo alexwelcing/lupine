@@ -1,0 +1,42 @@
+{
+  "actual_production_invocations": 0,
+  "actual_reference_json_body_reads": 0,
+  "author_test": {
+    "bytes": 15159,
+    "sha256": "8de45bfd5c369549b930bec2d42542880de05bfb5769c632fe8ac920b8dd67b8"
+  },
+  "contract": {
+    "bytes": 6291,
+    "sha256": "f5f1582036db4f13b879cd47ae1abeccb2380df07bba09b3f0450696b21ef65e"
+  },
+  "created_at": "2026-10-16T11:43:11.282721+00:00",
+  "directory": ".cache/phase2-rhizo-reference-projector-v1",
+  "entrypoint": "FINAL.md",
+  "final_author": "26/26 PASS on bab64188",
+  "final_independent": "13/13 PASS on bab64188, unchanged test bytes",
+  "first_author": "25/25 PASS on a477; retained",
+  "first_independent": "12/13 PASS on a477; genuine aggregate exposure timing failure retained, unchanged fixture",
+  "independent_handoff": {
+    "bytes": 762,
+    "sha256": "6e7d400ab5cba703890e68240e36765ecb99e57d5d93b0508d089970bc8e5f00"
+  },
+  "inventory": {
+    "bytes": 5922,
+    "sha256": "a68f61a6a060b889e181210e01df7c00910173acb3f0d1cee14128ae111365b5"
+  },
+  "network_requests": 0,
+  "next_action": "Root reviews final exact source/diff and independent evidence before any fixed production manifest or actual invocation. Publish whole original negative history; use two lossless stderr wrappers as recorded. Scientific claims remain NOT_ADMITTED; actual bound choice UNKNOWN.",
+  "production_manifest_created": false,
+  "publication_check_count": 75,
+  "schema": "lupine.rhizo.reference-projector.handoff.v1",
+  "scope": {
+    "bytes": 4401,
+    "sha256": "f5446b9507ea394ea1631a7a85a9306cbb1407341df1e76de71186a6524ef9e5"
+  },
+  "source": {
+    "bytes": 21863,
+    "sha256": "bab641881335f57d4571fe0d4f720696f57e5816fa36266647cdf86d0701b263"
+  },
+  "status": "GENERATED_CANDIDATE_READY_FOR_ROOT_REVIEW_NO_ACTUAL_OPERATION",
+  "tracked_edits": 0
+}

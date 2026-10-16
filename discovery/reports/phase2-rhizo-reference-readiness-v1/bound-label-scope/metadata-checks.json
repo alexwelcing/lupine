@@ -1,0 +1,20 @@
+{
+  "actual_private_object_reads": 0,
+  "bound_bytes": 126885,
+  "bound_objects": 36,
+  "candidate_edges": 172,
+  "combined_bytes": 188804,
+  "combined_objects": 38,
+  "created_at": "2026-10-16T11:51:11.797977+00:00",
+  "network_requests": 0,
+  "numeric_label_presence_or_finiteness_observed": false,
+  "positions_with_two_candidate_references": 28,
+  "prior_symbolic_and_input_hash_agreement_units": 36,
+  "production_reader_or_binder_invocations": 0,
+  "reference_bytes": 61919,
+  "reference_objects": 2,
+  "schema": "lupine.rhizo.bound-choice.metadata-checks.v1",
+  "status": "PASS_SOURCE_AND_PUBLIC_METADATA_ONLY",
+  "structurally_singleton_property_positions": 144,
+  "unique_reference_locations": 43
+}

@@ -1,0 +1,49 @@
+{
+  "files": {
+    "README.md": {
+      "bytes": 2298,
+      "sha256": "c22e74029260ea0d1854eceb6af6c905a5ba085125fe9e681c398bf5a224fb50"
+    },
+    "copy-map.json": {
+      "bytes": 43302,
+      "sha256": "0bc9fe59b77b0b311aaa3918cf85e668e16acd9770202ea6b5b9bb784798e0c1"
+    },
+    "first-stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "first-stdout.txt": {
+      "bytes": 166,
+      "sha256": "b03e5238550f139beb6a917a1ba844b9e5f54e97b6de8ac2c5f2fbf976258acc"
+    },
+    "lossless-wrappers.json": {
+      "bytes": 1638,
+      "sha256": "2698c9367c8532755bbee39b37ec92dab8344ae4b5d18ccb25b1b9318f83c403"
+    },
+    "overrides/reports/phase2-rhizo-reference-readiness-v1/independent-review/reviewed-contract.md": {
+      "bytes": 6304,
+      "sha256": "577d7284b927cd6c5e8aaef2e0a6509223a06574cc536eaf484c0ca3aa8f66cf"
+    },
+    "overrides/reports/phase2-rhizo-reference-readiness-v1/independent-review/reviewed-contract.original.json": {
+      "bytes": 6778,
+      "sha256": "a38f399837de1d55f674b27990e762b76aa269f3503cc33c73b6a622c713a123"
+    },
+    "prepare_copy_plan.py": {
+      "bytes": 9013,
+      "sha256": "7f66a4ab6cd3453c827e37c9b3b44ce7106ee60aa580481cc3d380fc02792236"
+    },
+    "relocation-link-repairs.json": {
+      "bytes": 648,
+      "sha256": "e6ee52d1f8a3d4bc04ae0f868d41bf45f58527f2b1e30d113662c40020dc4b7a"
+    },
+    "source-bindings.json": {
+      "bytes": 16884,
+      "sha256": "e1de1919936129b58551df79291d7e7ec6b0a8df4bea1d1919dddd927ef19a28"
+    },
+    "validation.json": {
+      "bytes": 11999,
+      "sha256": "2860b7b7e30b8077d18dbb67d9689938555be52d1ee8d38db671f02ad9957800"
+    }
+  },
+  "scope": "Copy-plan support and two override files; inventory and handoff excluded from own hash closure."
+}

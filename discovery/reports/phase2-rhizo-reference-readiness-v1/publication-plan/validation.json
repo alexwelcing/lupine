@@ -1,0 +1,190 @@
+{
+  "actual_operation_or_private_source_reads": false,
+  "exact_copy_rows": 78,
+  "existing_author_stderr_wrappers": 2,
+  "limitations": [
+    "This is a preoperation historical evidence copy plan; zero-operation statements describe those earlier bundles.",
+    "Root adds actual receipts, documentary conclusions and project documentation separately.",
+    "No staging, committed-blob, remote or CI inclusion is established by this plan."
+  ],
+  "new_whitespace_wrappers": 0,
+  "one_link_relocations": 1,
+  "project_imports": false,
+  "publication_rows": 80,
+  "relative_markdown_links": [
+    {
+      "from": "reports/phase2-rhizo-reference-readiness-v1/design/README.md",
+      "resolved": "reports/phase2-rhizo-reference-readiness-v1/design/planned-inputs.json",
+      "target": "planned-inputs.json"
+    },
+    {
+      "from": "reports/phase2-rhizo-reference-readiness-v1/design/README.md",
+      "resolved": "reports/phase2-rhizo-reference-readiness-v1/design/reference-frame.json",
+      "target": "reference-frame.json"
+    },
+    {
+      "from": "reports/phase2-rhizo-reference-readiness-v1/design/README.md",
+      "resolved": "reports/phase2-rhizo-reference-readiness-v1/design/source-bindings.json",
+      "target": "source-bindings.json"
+    },
+    {
+      "from": "reports/phase2-rhizo-reference-readiness-v1/independent-review/reviewed-contract.md",
+      "resolved": "reports/phase2-rhizo-reference-readiness-v1/projector/scope.json",
+      "target": "../projector/scope.json"
+    },
+    {
+      "from": "reports/phase2-rhizo-reference-readiness-v1/projector/FINAL.md",
+      "resolved": "reports/phase2-rhizo-reference-readiness-v1/projector/README.md",
+      "target": "README.md"
+    },
+    {
+      "from": "reports/phase2-rhizo-reference-readiness-v1/projector/FINAL.md",
+      "resolved": "reports/phase2-rhizo-reference-readiness-v1/projector/source-hold.json",
+      "target": "source-hold.json"
+    },
+    {
+      "from": "reports/phase2-rhizo-reference-readiness-v1/projector/FINAL.md",
+      "resolved": "reports/phase2-rhizo-reference-readiness-v1/projector/field-bindings.json",
+      "target": "field-bindings.json"
+    },
+    {
+      "from": "reports/phase2-rhizo-reference-readiness-v1/projector/FINAL.md",
+      "resolved": "reports/phase2-rhizo-reference-readiness-v1/projector/scope.json",
+      "target": "scope.json"
+    },
+    {
+      "from": "reports/phase2-rhizo-reference-readiness-v1/projector/FINAL.md",
+      "resolved": "reports/phase2-rhizo-reference-readiness-v1/projector/first-author/execution.json",
+      "target": "first-author/execution.json"
+    },
+    {
+      "from": "reports/phase2-rhizo-reference-readiness-v1/projector/FINAL.md",
+      "resolved": "reports/phase2-rhizo-reference-readiness-v1/projector/source-diff.json",
+      "target": "source-diff.json"
+    },
+    {
+      "from": "reports/phase2-rhizo-reference-readiness-v1/projector/FINAL.md",
+      "resolved": "reports/phase2-rhizo-reference-readiness-v1/projector/pre-hold-review-finding.json",
+      "target": "pre-hold-review-finding.json"
+    },
+    {
+      "from": "reports/phase2-rhizo-reference-readiness-v1/projector/FINAL.md",
+      "resolved": "reports/phase2-rhizo-reference-readiness-v1/projector/final-author/execution.json",
+      "target": "final-author/execution.json"
+    },
+    {
+      "from": "reports/phase2-rhizo-reference-readiness-v1/projector/FINAL.md",
+      "resolved": "reports/phase2-rhizo-reference-readiness-v1/projector/publication-layout.json",
+      "target": "publication-layout.json"
+    },
+    {
+      "from": "reports/phase2-rhizo-reference-readiness-v1/projector/README.md",
+      "resolved": "reports/phase2-rhizo-reference-readiness-v1/projector/scope.json",
+      "target": "scope.json"
+    },
+    {
+      "from": "reports/phase2-rhizo-reference-readiness-v1/projector/before-aggregate-parse-fix/README.md",
+      "resolved": "reports/phase2-rhizo-reference-readiness-v1/projector/before-aggregate-parse-fix/scope.json",
+      "target": "scope.json"
+    },
+    {
+      "from": "reports/phase2-rhizo-reference-readiness-v1/projector/final-author/README.md",
+      "resolved": "reports/phase2-rhizo-reference-readiness-v1/projector/final-author/scope.json",
+      "target": "scope.json"
+    },
+    {
+      "from": "reports/phase2-rhizo-reference-readiness-v1/projector/first-author/README.md",
+      "resolved": "reports/phase2-rhizo-reference-readiness-v1/projector/first-author/scope.json",
+      "target": "scope.json"
+    }
+  ],
+  "relocation_original_wrappers": 1,
+  "source_files_held": 81,
+  "source_files_unchanged_after_check": true,
+  "source_inventory_hashes_valid": true,
+  "status": "PASS_PREOPERATION_COPY_PLAN",
+  "tests_run": false,
+  "tracked_edits": false,
+  "whitespace_checked_files": [
+    "reports/phase2-rhizo-reference-readiness-v1/design/README.md",
+    "reports/phase2-rhizo-reference-readiness-v1/design/independent-review/design-check.json",
+    "reports/phase2-rhizo-reference-readiness-v1/design/independent-review/final-review-bindings.json",
+    "reports/phase2-rhizo-reference-readiness-v1/design/independent-review/final-review.json",
+    "reports/phase2-rhizo-reference-readiness-v1/design/independent-review/initial-challenge.md",
+    "reports/phase2-rhizo-reference-readiness-v1/design/independent-review/public-counts.json",
+    "reports/phase2-rhizo-reference-readiness-v1/design/independent-review/source-bindings.json",
+    "reports/phase2-rhizo-reference-readiness-v1/design/planned-inputs.json",
+    "reports/phase2-rhizo-reference-readiness-v1/design/reference-frame.json",
+    "reports/phase2-rhizo-reference-readiness-v1/design/review-copy-map.json",
+    "reports/phase2-rhizo-reference-readiness-v1/design/source-bindings.json",
+    "reports/phase2-rhizo-reference-readiness-v1/design/static-check.json",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/aggregate-exposure-fix.diff",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/challenge-plan.md",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/first-run/execution.json",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/first-run/generated_fixtures.py",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/first-run/reference_projector.py",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/first-run/run_review.py",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/first-run/scope.json",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/first-run/start.json",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/first-run/stderr.txt",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/first-run/stdout.txt",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/first-run/test_reference_projector_review.py",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/generated_fixtures.py",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/handoff.json",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/inventory.json",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/preparation.json",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/review.json",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/reviewed-contract.md",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/reviewed-contract.original.json",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/run_review.py",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/second-run/execution.json",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/second-run/generated_fixtures.py",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/second-run/reference_projector.py",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/second-run/run_review.py",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/second-run/scope.json",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/second-run/start.json",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/second-run/stderr.txt",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/second-run/stdout.txt",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/second-run/test_reference_projector_review.py",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/test_reference_projector_review.py",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/FINAL.md",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/README.md",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/aggregate-parse-correction.json",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/before-aggregate-parse-fix/README.md",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/before-aggregate-parse-fix/reference_projector.py",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/before-aggregate-parse-fix/scope.json",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/before-aggregate-parse-fix/source-hold.json",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/before-aggregate-parse-fix/test_reference_projector.py",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/field-bindings.json",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/final-author/README.md",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/final-author/execution.json",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/final-author/reference_projector.py",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/final-author/run_guarded.py",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/final-author/scope.json",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/final-author/start.json",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/final-author/stderr.txt.json",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/final-author/stdout.txt",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/final-author/test_reference_projector.py",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/first-author/README.md",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/first-author/execution.json",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/first-author/reference_projector.py",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/first-author/run_guarded.py",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/first-author/scope.json",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/first-author/start.json",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/first-author/stderr.txt.json",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/first-author/stdout.txt",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/first-author/test_reference_projector.py",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/handoff.json",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/independent-review-binding.json",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/inventory.json",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/pre-hold-review-finding.json",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/publication-check.json",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/publication-layout.json",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/reference_projector.py",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/run_guarded.py",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/scope.json",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/source-diff.json",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/source-hold.json",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/test_reference_projector.py"
+  ]
+}

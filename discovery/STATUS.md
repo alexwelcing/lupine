@@ -1,5 +1,16 @@
 # Project state
 
+The latest [Rhizo reference-readiness increment](reports/phase2-rhizo-reference-readiness-v1/README.md)
+completed one bounded projection of 43 locations, 36 material/model IDs and 172
+candidate links. The source and its notes are exposed historical data; every
+selected note disclosed numerical outcomes to the researcher. Declared citation
+chains are now documented, while stored-label completeness and original
+reference choice remain unresolved. No benchmark, fit or performance comparison
+ran. The standalone reader passes 26 author/13 independent generated tests after
+one preserved reporting failure and narrow repair; all 332 runtime files held
+during the actual read. Parent report commits `280dff57` and `3139e1e` each passed
+all four original CI jobs. This new report's publication/CI is a separate gate.
+
 **Active phase, October 16:** Published `c17c4c6` passes all four original CI jobs,
 clean packaging (28 demonstrations/six schemas/16 checks), strict retention and
 independent artifact audits. [Actual growth-reader results](reports/phase2-growth-verification-v1/README.md)
@@ -50,10 +61,11 @@ available through API, CLI, HTTP and Study planning under its stated finite-fram
 scope. Risk-inversion implementation remains deferred until a justified study
 needs it.
 
-Root owns publication and exact remote/CI verification, then a bounded
-[historical Rhizo label-readiness review](reports/phase2-next-source-priorities-v1/README.md).
-Li categorical predicate diagnosis remains separate preparation; neither route
-is an admitted G21 scientific experiment. Historical
+Root owns publication and exact remote/CI verification, then the independently
+tested minimum 36-object stored-label readiness check. Its generated-data
+preparation reads no actual bound records and reconstructs no reference choice.
+Li categorical predicate diagnosis is also being implemented and independently
+challenged on generated fixtures; neither route is an admitted G21 scientific experiment. Historical
 scientific NO-GO results remain unchanged. The expired automation remains
 disabled; no schedule or continuous worker was started.
 [GOAL](GOAL.md#renewed-active-work--2026-10-16) records ownership and next actions.

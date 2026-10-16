@@ -1,0 +1,35 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-B",
+    "-m",
+    "unittest",
+    "-v",
+    "test_reference_projector_review"
+  ],
+  "cwd": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-rhizo-reference-projector-review-v1",
+  "elapsed_seconds": 0.818013788000826,
+  "exit_code": 1,
+  "finished_at": "2026-10-16T11:39:13.270820+00:00",
+  "launch_error": null,
+  "scope": "Generated JSON buffers and temporary generated fixture files only; no production entrypoint, actual scientific/private object, network or upstream-code invocation.",
+  "source_after": {
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-rhizo-reference-projector-review-v1/generated_fixtures.py": "afbb07d937dd82078ef3f155beae36befe67f997faeecdd4893778e929ea7704",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-rhizo-reference-projector-review-v1/run_review.py": "3b0fae4d499ed74b0fabb3fe569e93628e98a7f006f120b8786432f822b63041",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-rhizo-reference-projector-review-v1/test_reference_projector_review.py": "54384a8dfc23ca1e026d8da75317b7960330e834b4cf00fd4aead41923cb17d8",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-rhizo-reference-projector-v1/reference_projector.py": "a477032c8b396cd68119bb604549b499da3e3e6f8dfd749206799bcaaca21f79",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-rhizo-reference-projector-v1/scope.json": "f5446b9507ea394ea1631a7a85a9306cbb1407341df1e76de71186a6524ef9e5"
+  },
+  "source_before": {
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-rhizo-reference-projector-review-v1/generated_fixtures.py": "afbb07d937dd82078ef3f155beae36befe67f997faeecdd4893778e929ea7704",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-rhizo-reference-projector-review-v1/run_review.py": "3b0fae4d499ed74b0fabb3fe569e93628e98a7f006f120b8786432f822b63041",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-rhizo-reference-projector-review-v1/test_reference_projector_review.py": "54384a8dfc23ca1e026d8da75317b7960330e834b4cf00fd4aead41923cb17d8",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-rhizo-reference-projector-v1/reference_projector.py": "a477032c8b396cd68119bb604549b499da3e3e6f8dfd749206799bcaaca21f79",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-rhizo-reference-projector-v1/scope.json": "f5446b9507ea394ea1631a7a85a9306cbb1407341df1e76de71186a6524ef9e5"
+  },
+  "source_unchanged": true,
+  "started_at": "2026-10-16T11:39:12.452630+00:00",
+  "stderr_sha256": "411b890c21fa198481b0877a6bd06b7e04f6ba3145d2680ed881a9f2a60c95d5",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "timed_out": false
+}

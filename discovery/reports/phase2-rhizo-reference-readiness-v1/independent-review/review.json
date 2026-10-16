@@ -1,0 +1,96 @@
+{
+  "activity": {
+    "actual_retained_scientific_object_reads": 0,
+    "generated_test_processes": 2,
+    "measurement_or_model_experiments": 0,
+    "network_requests": 0,
+    "production_entrypoint_invocations": 0,
+    "run_or_bound_evidence_object_reads": 0,
+    "scope_enforcement": "Reviewed test paths call only synthetic APIs/parser helpers and shared fixture wrapper with generated buffers/temporary files. No global audit hook was installed in the independent test subprocess; author guard instrumentation is separate evidence.",
+    "tracked_edits": 0,
+    "upstream_module_imports": 0
+  },
+  "blockers": [],
+  "candidate": {
+    "contract": {
+      "bytes": 6291,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/README.md",
+      "sha256": "f5f1582036db4f13b879cd47ae1abeccb2380df07bba09b3f0450696b21ef65e"
+    },
+    "scope": {
+      "bytes": 4401,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/scope.json",
+      "sha256": "f5446b9507ea394ea1631a7a85a9306cbb1407341df1e76de71186a6524ef9e5"
+    },
+    "source": {
+      "bytes": 21863,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/reference_projector.py",
+      "sha256": "bab641881335f57d4571fe0d4f720696f57e5816fa36266647cdf86d0701b263"
+    }
+  },
+  "fixture_builder": {
+    "bytes": 2587,
+    "path": ".cache/phase2-rhizo-reference-projector-review-v1/generated_fixtures.py",
+    "sha256": "afbb07d937dd82078ef3f155beae36befe67f997faeecdd4893778e929ea7704"
+  },
+  "independent_tests": {
+    "bytes": 16254,
+    "path": ".cache/phase2-rhizo-reference-projector-review-v1/test_reference_projector_review.py",
+    "sha256": "54384a8dfc23ca1e026d8da75317b7960330e834b4cf00fd4aead41923cb17d8"
+  },
+  "pre_hold_finding": "Before first author/independent execution, reviewer flagged synthetic preflight hashing before exposure/frame checks. Final public API validates frame and all types/lengths before per-object hashing at recorded exposure stage; the author retained its pre-hold finding record.",
+  "reviewed_at": "2026-10-16T11:42:07.981692+00:00",
+  "reviewer": "/root/phase2_math",
+  "runs": [
+    {
+      "exit_code": 1,
+      "failures": 1,
+      "interpretation": "Real exposure-reporting defect: second object parsed fully before its context failed, but global whole_json_parse_completed stayed false. Exact source/test/logs preserved.",
+      "passed": 12,
+      "path": "first-run/execution.json",
+      "process_seconds": 0.818013788000826,
+      "sha256": "a1a3acc2883ddfefb49ccc56c7c120b09f99583bb74596f98beb7fb28bc74993",
+      "source_held": true,
+      "tests": 13,
+      "unittest_seconds": 0.426
+    },
+    {
+      "exit_code": 0,
+      "failures": 0,
+      "interpretation": "Same independent test bytes pass after only aggregate parse-completion timing is repaired.",
+      "passed": 13,
+      "path": "second-run/execution.json",
+      "process_seconds": 0.6740192219986056,
+      "sha256": "52e8aedcaf90ee1e0c7288ac376c090054a5527be1c71be725f1f4fee34ad780",
+      "source_held": true,
+      "tests": 13,
+      "unittest_seconds": 0.317
+    }
+  ],
+  "schema": "lupine.rhizo.reference_projector.independent_review.v1",
+  "scientific_limits": [
+    "Documentary candidate provenance only; actual bound-reference choice remains UNKNOWN.",
+    "No numerical completeness, residual/rank, fit/split, label comparison, hard uncertainty certificate, physical independence, new benchmark admission or future-material inference.",
+    "No actual source operation has been performed by this reviewer. A generated pass does not attest retained input presence, successful actual parsing, documentary rights or primary-source identity.",
+    "This is one independent reviewer plus generated tests, not an exhaustive proof of all parser/OS behaviors. Production manifest binding and invocation remain root-owned separate actions."
+  ],
+  "static_review": [
+    "Pinned binding schema and original custody extractor confirm /entries zero-based positions, documentary field paths and property/unit conventions. No upstream module is imported.",
+    "Production wrapper has fixed original two object paths, exact size/SHA256/Git blob pins, fixed own manifest/output slot, self/frame/documentary-source binding checks before access and before each read/output. Its entrypoint was not invoked by this review.",
+    "Target parser nodes/depth are checked before recursive node creation; decoded strings are checked after scanstring allocation bounded by the whole source cap, explicitly documented. Numeric tokens are syntactic opaque markers, not scientific numeric validation.",
+    "Public source-derived output is confined to prior pinned graph, whole-file identities, fixed status/presence/progress fields and fixed error categories. Private projection deliberately permits outcome-bearing source prose; it is not a fresh holdout.",
+    "Exclusive reservation persists on failure; no automatic download, object-set expansion, alternate actual output slot, source retry or preferred-reference selection exists. Normal controlled filesystem/runtime assumptions are explicit, without a hostile-process security claim."
+  ],
+  "status": "PASS_SYNTHETIC_BEHAVIOR_AND_STATIC_SOURCE_SCOPE",
+  "verified_behaviors": [
+    "All43 frozen locations/36units/172links retained; actual bound choice remains UNKNOWN and no scientific admission/selection is asserted.",
+    "Private citation/locator/notes canaries appear only in generated private projection; opaque and unselected-entry canaries remain unprojected.",
+    "Changing target numeric lexemes, opaque fields and unselected notes preserves provenance conclusions; whole-input identities correctly change. Valid large numeric exponents are not converted to floats or certified finite.",
+    "Duplicate escaped-equivalent keys, malformed JSON/UTF8/lone surrogate reject; valid surrogate pair works. Independent depth32/33,string16384/16385,node20000/20001 boundaries and object-key node accounting checked.",
+    "Literal context/unit comparisons reject case/semantic/type changes; missing/null/empty documentary strings are distinguished; wrong present types block.",
+    "Late second-object context failure returns no partial private projection, preserves per-object and aggregate parse exposure and partial documentary materialization.",
+    "Known actual source identity branch rejects before source JSON parsing using a conditional hash stub over generated bytes only.",
+    "Generated file wrapper reads each object once at its fixed size-plus-one cap through shared reader, validates byte identity before parse, rejects existing slots and symlink source, stops before second read on changed first object.",
+    "Partial private-output or later public-output failures retain possible/already-written private disclosure; arbitrary exception text is not exported. Pre-read source-guard drift stops before file reading."
+  ]
+}

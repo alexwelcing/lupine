@@ -1,0 +1,20 @@
+{
+  "exclude_directories": [
+    "__pycache__"
+  ],
+  "note": "The original stdout/stderr/source snapshots are unchanged. Root may publish exact UTF8 wrappers rather than raw stderr to retain whitespace checks; no tests are rerun by wrapping.",
+  "preserve_ignored_originals": true,
+  "schema": "lupine.publication-layout.v1",
+  "wrappers": [
+    {
+      "copy_wrapper": "first-author/stderr.txt.json",
+      "omit_raw_on_publication": "first-author/stderr.txt",
+      "original_sha256": "51de64a54a7af214fdd99d9900cc62ae283d32f4292adfea2e93aa8664c0670b"
+    },
+    {
+      "copy_wrapper": "final-author/stderr.txt.json",
+      "omit_raw_on_publication": "final-author/stderr.txt",
+      "original_sha256": "8ab851805d2cd52da8744c4c15b6bf860f750a2554160bf6a6371b59ac928fc7"
+    }
+  ]
+}

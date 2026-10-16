@@ -1,0 +1,20 @@
+{
+  "schema": "lupine.rhizo.documentary-graph-check.v1",
+  "scope": "Comparison of completed public projection and preexisting public graph only; no new reader execution or scientific test.",
+  "original_frame_sha256": "80a1aca0fd56d89f49ff5f0e4b3930405f11ae1cd4acea14b8edab2381940aa4",
+  "units_exact": true,
+  "locations_exact": true,
+  "candidate_edges_exact": true,
+  "counts": {
+    "units": 36,
+    "locations": 43,
+    "candidate_edges": 172,
+    "surface_locations": 27,
+    "dft_vacancy_locations": 9,
+    "experimental_vacancy_locations": 7
+  },
+  "reference_choice_made": false,
+  "actual_bound_reference_choice": "UNKNOWN",
+  "numeric_completeness_checked": false,
+  "scientific_status": "NOT_ADMITTED"
+}

@@ -1,0 +1,41 @@
+{
+  "scope": "Exact independent design-review artifacts; no source object content.",
+  "files": [
+    {
+      "original_path": ".cache/phase2-rhizo-reference-readiness-review-v1/design-check.json",
+      "copy_path": "independent-review/design-check.json",
+      "bytes": 1915,
+      "sha256": "78782282aa9003d8ed836191cf2e1d3b4ba84ca6e08a6b0f32bd9087534916c8"
+    },
+    {
+      "original_path": ".cache/phase2-rhizo-reference-readiness-review-v1/final-review-bindings.json",
+      "copy_path": "independent-review/final-review-bindings.json",
+      "bytes": 2064,
+      "sha256": "659278d1b64398338e0eb9da83e453afed363051c2497c30787ea36db0fd65f8"
+    },
+    {
+      "original_path": ".cache/phase2-rhizo-reference-readiness-review-v1/final-review.json",
+      "copy_path": "independent-review/final-review.json",
+      "bytes": 5325,
+      "sha256": "986dd2184018353b041aa2c1f90abb59edc5961e561af635109cf53e7541d2f2"
+    },
+    {
+      "original_path": ".cache/phase2-rhizo-reference-readiness-review-v1/initial-challenge.md",
+      "copy_path": "independent-review/initial-challenge.md",
+      "bytes": 5504,
+      "sha256": "51b313a6e4e11f05e23d17462e032afe4a38d81cf4f4d4a67eae1861b376f8cd"
+    },
+    {
+      "original_path": ".cache/phase2-rhizo-reference-readiness-review-v1/public-counts.json",
+      "copy_path": "independent-review/public-counts.json",
+      "bytes": 3027,
+      "sha256": "88a19d9042aaa805d6c96d7ca095c4a5974d59ed9815612913d6ecba49636545"
+    },
+    {
+      "original_path": ".cache/phase2-rhizo-reference-readiness-review-v1/source-bindings.json",
+      "copy_path": "independent-review/source-bindings.json",
+      "bytes": 1269,
+      "sha256": "520f3bacd46514f8ef76209643352e58c55bccc73cb6e1d023639ef41b48a7e9"
+    }
+  ]
+}

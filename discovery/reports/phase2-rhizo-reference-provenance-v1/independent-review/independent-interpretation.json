@@ -1,0 +1,122 @@
+{
+  "schema": "lupine.rhizo.documentary-independent-review.interpretation.v1",
+  "created_at": "2026-10-16T11:50:58.251700+00:00",
+  "scope": "Own paraphrase of the authorized selected documentary projection; no outcome values reproduced and no primary sources followed.",
+  "findings": [
+    {
+      "topic": "Surface paper versus dataset",
+      "locations": {
+        "surface_energies.json": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26
+        ]
+      },
+      "finding": "The citation names Tran et al., Surface energies of elemental crystals, and separately the Dryad dataset 10.5061/dryad.f2n6f with surfaces.json. The DOI locator field points to the paper 10.1038/sdata.2016.80. Notes assert programmatic extraction, per-material database identifiers, facet indices and rounding. Those remain archive provenance declarations, not this review verifying the dataset or the extraction."
+    },
+    {
+      "topic": "Reconstruction caveat",
+      "locations": {
+        "surface_energies.json": [
+          1,
+          7,
+          22,
+          26
+        ]
+      },
+      "finding": "Ag/Au/Pt surface_energy_110 and Sr surface_energy_111 notes explicitly call the selected dataset termination reconstructed. Preserve those four location caveats across their existing model edges. Missing such a note elsewhere is not evidence of compatible ideal termination or successful convergence."
+    },
+    {
+      "topic": "Additional phase context",
+      "locations": {
+        "surface_energies.json": [
+          9,
+          10,
+          11
+        ]
+      },
+      "finding": "Ca notes add a phase-stability/ambient-structure assertion with an energetic example. The example was exposed, but neither it nor the claim was independently checked and neither is used to select records."
+    },
+    {
+      "topic": "DFT vacancy route",
+      "locations": {
+        "vacancy_formation.json": [
+          0,
+          1,
+          2,
+          3,
+          5,
+          9,
+          10,
+          11,
+          12
+        ]
+      },
+      "finding": "The nine DFT-PBE entries cite Angsten et al., New Journal of Physics, Table A.1, DOI 10.1088/1367-2630/16/1/015018, with VASP 5.2.2 and PBE-GGA stated in the citation. Notes claim an earlier article extraction. This is an archived-calculation declaration, not new DFT, a new primary-source check or verification of calculation equivalence."
+    },
+    {
+      "topic": "Experimental route uses a secondary locator",
+      "locations": {
+        "vacancy_formation.json": [
+          16,
+          17,
+          18,
+          19,
+          23,
+          24,
+          27
+        ]
+      },
+      "finding": "All seven experiment-labeled entries use arXiv:2604.05385 as the locator. Their citation/notes attribute values to older recommended compilations or primary studies. Preserve secondary extraction source separately from attributed primary/recommendation sources; these are not seven newly verified experiments."
+    },
+    {
+      "topic": "Recommended and primary sources differ",
+      "locations": {
+        "vacancy_formation.json": [
+          16,
+          17,
+          18,
+          19,
+          23,
+          24,
+          27
+        ]
+      },
+      "finding": "Six experimental citations name Ehrhart and coauthors/Landolt-Bornstein; Pd instead cites Maier and Schaefer and its note expressly says no recommended value. Pt additionally names primary positron work and distinguishes its uncertainty statement from the recommendation. Other notes mention competing assessments. Do not flatten these into one unambiguous primary reference or choose an alternative."
+    },
+    {
+      "topic": "Verification and uncertainty words",
+      "locations": "All 43 selected notes; uncertainty/comparison detail occurs in vacancy notes",
+      "finding": "The word Verified describes an archive author assertion about earlier extraction. It is not a current verification receipt. Quoted uncertainty-like numbers, recommendation spreads and qualitative statements about agreement or underestimation establish neither calibrated coverage nor hard physical bounds. No outcome comparison is performed here."
+    },
+    {
+      "topic": "Rights and scientific gates",
+      "locations": "All 43 selected locations",
+      "finding": "The inspected citation/URL/notes fields provide no explicit source-specific permission establishing the intended reuse. Open-access wording and DOI/URL availability are not sufficient license evidence. Actual bound-reference selection, full label finiteness/completeness, model checkpoint, cross-condition compatibility, numerical map reproduction and physical validity remain unestablished."
+    }
+  ]
+}

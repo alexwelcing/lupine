@@ -1,0 +1,8 @@
+{
+  "author_first_tests": 25,
+  "finding": "Pure synthetic preflight originally hashed buffers before frame validation and before exposure stages. A later bad argument could follow reading an earlier buffer.",
+  "historical_status": "Fixed before first source hold/test invocation; no actual source operation or first executed failure occurred.",
+  "resolution": "Validate frame and all buffer keys/types/size metadata before byte-content access; per-buffer fixture identity hashes now computed inside its recorded processing stage.",
+  "reviewer": "/root/phase2_math",
+  "stage": "Moving source before first author execution"
+}

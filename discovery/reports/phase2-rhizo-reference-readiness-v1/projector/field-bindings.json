@@ -1,0 +1,33 @@
+{
+  "container_pointer": "/entries",
+  "custody_source_sha256": "751bcec5123feef65bf4b459691b5ab89197dd28e599fa23a178e2f10ff36fcc",
+  "entry_context": [
+    "material",
+    "structure",
+    "property",
+    "unit",
+    "method"
+  ],
+  "ordinal": "Zero-based list position, matching original custody enumeration",
+  "private_documentary_fields": [
+    "source.citation",
+    "source.doi_or_url",
+    "source.notes"
+  ],
+  "schema": "lupine.rhizo.reference-field-bindings.v1",
+  "source_read_scope": "Only retained upstream source/schema and public custody code/report metadata. No reference JSON body read. Names-only lookup located the two fixed original objects.",
+  "unit_expectation": {
+    "surface_energy_100": "J/m^2",
+    "surface_energy_110": "J/m^2",
+    "surface_energy_111": "J/m^2",
+    "vacancy_formation_energy": "eV"
+  },
+  "unsupported_inferences": [
+    "No per-entry license or structured condition field is invented",
+    "No preferred reference or method applied",
+    "Actual bound reference choice UNKNOWN",
+    "No completeness/finiteness check on opaque numeric tokens",
+    "Original figure-map roles remain distinct from the re-relaxed calculator"
+  ],
+  "upstream_binding_sha256": "dcf34d3caae28d7fd31268f9217432d6c78692cad4f76dd316c434a6fb99c80e"
+}

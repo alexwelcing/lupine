@@ -1,0 +1,51 @@
+{
+  "completed_at": "2026-10-16T11:47:55.813943+00:00",
+  "outputs": [
+    {
+      "path": ".cache/phase2-rhizo-reference-projector-v1/actual/public.json",
+      "identity_verified": true,
+      "byte_read_completed": true,
+      "json_parse_completed": true,
+      "top_level_keys": [
+        "actual_bound_reference_choice",
+        "counts",
+        "exposure",
+        "fits",
+        "frame_sha256",
+        "historical_map_is_re_relaxed_calculator",
+        "implementation",
+        "input_bindings",
+        "labels_compared",
+        "locations",
+        "numeric_completeness_checked",
+        "output_error",
+        "primary_source_rights",
+        "reason",
+        "reference_choice_made",
+        "schema",
+        "scientific_status",
+        "source_readiness",
+        "splits",
+        "status",
+        "synthetic",
+        "units"
+      ]
+    },
+    {
+      "path": ".cache/phase2-rhizo-reference-projector-v1/actual/private.json",
+      "identity_verified": true,
+      "byte_read_completed": true,
+      "json_parse_completed": true,
+      "top_level_keys": [
+        "actual_bound_reference_choice",
+        "locations",
+        "schema",
+        "warning"
+      ]
+    }
+  ],
+  "private_selected_projection_machine_exposed": true,
+  "researcher_literal_citation_notes_read": false,
+  "raw_reference_objects_read": false,
+  "network_requests": 0
+}

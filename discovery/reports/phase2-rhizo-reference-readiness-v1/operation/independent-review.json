@@ -1,0 +1,77 @@
+{
+  "activity": {
+    "actual_source_operation_reruns": 0,
+    "network_requests": 0,
+    "private_projection_reads": 0,
+    "product_imports": 0,
+    "raw_source_reads": 0,
+    "runtime_tests": 0,
+    "tracked_edits": 0
+  },
+  "blockers": [],
+  "conclusions": [
+    "Invocation manifest, source/review/recorder hashes, public implementation identity and reservation agree with the independently reviewed candidate. The exact command and recorder source call run_retained once; no retry route is present.",
+    "The canonical public receipt is byte-identical to recorded stdout. Its36IDs,43 unique locations and172edges exactly preserve the prospective public frame. Additions are closed documentary-presence and UNKNOWN fields, not newly copied citation/note values.",
+    "Both fixed object identities and expected61,919totalbytes are reported verified;27+16selectedlocations are reported materialized. Whole-byte and both complete JSON parses are explicitly exposed; private strings were made available by writing. This is not target-free or a fresh holdout.",
+    "Actual bound reference choice/rights remain UNKNOWN; source readiness requires human documentary review. Zero fits/splits/label comparisons and no numeric completeness or scientific-admission claim remain intact."
+  ],
+  "frame_sha256": "80a1aca0fd56d89f49ff5f0e4b3930405f11ae1cd4acea14b8edab2381940aa4",
+  "held_review_sha256": "664c62d3a0488ab0a0c11fbb91a4c14cd12f5bb6117ef829aac4d36e4de52e8a",
+  "input_bindings": [
+    {
+      "bytes": 715,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/reviewed-invocation.json",
+      "sha256": "a2404a0c33ff5d5899680b43e92db0c69e0f926b925957da6dd9aba8f61aeef8"
+    },
+    {
+      "bytes": 3650,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/run_actual_once.py",
+      "sha256": "672dad66067becbc32c70be31e9eb68d320e6350bdaf4f556155097949c0d905"
+    },
+    {
+      "bytes": 41014,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/actual-execution/start.json",
+      "sha256": "69fdf932740973ce80a31005b2ed608c5e968e0121020595b2b67f424f87f527"
+    },
+    {
+      "bytes": 511,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/actual-execution/execution.json",
+      "sha256": "47da15a4e007d3c1616908db4a0906dd517179b7167f1191138cde514b98f639"
+    },
+    {
+      "bytes": 59591,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/actual-execution/stdout.json",
+      "sha256": "c1d3083573e427bfec886a2b28ee26f84c5970a717171c0e0b5e381ca9087535"
+    },
+    {
+      "bytes": 59591,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/actual/public.json",
+      "sha256": "c1d3083573e427bfec886a2b28ee26f84c5970a717171c0e0b5e381ca9087535"
+    },
+    {
+      "bytes": 741,
+      "path": ".cache/phase2-rhizo-reference-projector-v1/actual/reservation.json",
+      "sha256": "775ab28cc4e717306f11b2174296ce404ef821837adc3b4e40c304be42ee3cb6"
+    }
+  ],
+  "limits": [
+    "This reviews named public records and held source only; no private projection or raw object was opened, rehashed or rerun.",
+    "Runtime/source held and empty stderr are supported here by recorder metadata/source, not a fresh independent332-file rehash or stderr-file read.",
+    "The program cannot observe researcher reading. private_projection_returned=false describes its file-wrapper return, while private_projection_written=true records availability; neither proves non-exposure.",
+    "Counts and successful software projection do not establish reference correctness, source rights, scientific units, actual bound choice or recommendation performance."
+  ],
+  "observed_execution_metadata": {
+    "automatic_retry": false,
+    "exit_code": 0,
+    "process_seconds": 0.11584904800110962,
+    "public_equals_stdout": true,
+    "public_sha256": "c1d3083573e427bfec886a2b28ee26f84c5970a717171c0e0b5e381ca9087535",
+    "recorded_stderr_empty": true,
+    "runtime_files_recorded": 332,
+    "source_commit_recorded": "3139e1ea7bdf4b78e3e70502f2c299ba3c1efea3"
+  },
+  "reviewed_at": "2026-10-16T11:49:16.085311+00:00",
+  "reviewer": "/root/phase2_math",
+  "schema": "lupine.rhizo.reference_projector.actual_public_receipt_review.v1",
+  "status": "PASS_PUBLIC_RECEIPT_CONSISTENCY_ONLY"
+}

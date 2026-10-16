@@ -1,0 +1,249 @@
+{
+  "schema": "lupine.rhizo-documentary.publication-inventory.v1",
+  "created_at": "2026-10-16T11:56:22.731344+00:00",
+  "publication_root": ".cache/phase2-rhizo-documentary-review-v1/promotion/reports/phase2-rhizo-reference-provenance-v1",
+  "file_count": 31,
+  "total_bytes": 240747,
+  "original_artifacts": 29,
+  "exact_copies": 28,
+  "lossless_wrappers": [
+    "before-convention-clarification/README.md.bytes.json"
+  ],
+  "files": [
+    {
+      "path": "PUBLICATION.md",
+      "bytes": 1430,
+      "sha256": "5cc90893415df1f3927f030c616ddd9c1c607d87b8715c98eb9cbb2b7cbddcc9"
+    },
+    {
+      "path": "README.md",
+      "bytes": 7874,
+      "sha256": "66b2963a5da356ad660e6a08a88f4303ab3bc503cec307d33d0407a75933e38f"
+    },
+    {
+      "path": "RESEARCHER_CHECKLIST.md",
+      "bytes": 5058,
+      "sha256": "105e6567669af00e1085d2ee7c8dbaf8989e1ad574d57520175df714d9e16939"
+    },
+    {
+      "path": "actual-review-start.json",
+      "bytes": 869,
+      "sha256": "d2f3a345b2c8a50477b692b6710070f50e34e2438aa22f3f0dc9bf64f4f42529"
+    },
+    {
+      "path": "before-checklist-precision/RESEARCHER_CHECKLIST.md",
+      "bytes": 4651,
+      "sha256": "15ce9b483b54dc76196993d4451ddd619cbb6cf6038b9a1801fb3cdd218fbbe8"
+    },
+    {
+      "path": "before-checklist-precision/preparation.json",
+      "bytes": 633,
+      "sha256": "efc9333184cd08ca55ab605513d902104fa3cea455572ac31691e35dc17e8575"
+    },
+    {
+      "path": "before-convention-clarification/README.md.bytes.json",
+      "bytes": 10423,
+      "sha256": "cd4e55737265fb4cda0cfba25301adb7fa9ad9a906b511150cb40a01afc6595d"
+    },
+    {
+      "path": "before-convention-clarification/source-bindings.json",
+      "bytes": 2864,
+      "sha256": "20df614bd7f60cbff6ec0e24fda254d763f74bf8ce21ce521fc80da1bba54fb5"
+    },
+    {
+      "path": "bibliography.json",
+      "bytes": 3265,
+      "sha256": "2224e70b183485cc3e9fb1ccea1a554ec44fb1d18760c1812b36af7d742a3d64"
+    },
+    {
+      "path": "checklist-precision.diff",
+      "bytes": 2095,
+      "sha256": "bd744c3796be569fc58cd8db1f6ecd8013cd9c73213ec3044372f532afdc9932"
+    },
+    {
+      "path": "checklist-review-copy-map.json",
+      "bytes": 783,
+      "sha256": "bf47b056ea4070f9d26a68fe4061e20c25def8ce22797929fa620f26facb60b8"
+    },
+    {
+      "path": "exposure-ledger.json",
+      "bytes": 1890,
+      "sha256": "42e8bcceefad8494371ab07b6ef364cff3e82e8da3d43eb0af8ed822f036938f"
+    },
+    {
+      "path": "graph-check.json",
+      "bytes": 717,
+      "sha256": "45807381c4914fdbb393eb7ff6d02158d94ad5b69d604809fa4a1df814f30921"
+    },
+    {
+      "path": "identity-review.json",
+      "bytes": 1371,
+      "sha256": "96629c4e0588b8fe55d57e8368b64446f46f11cb5f201929b8b9633a8e800537"
+    },
+    {
+      "path": "independent-checklist-review/checklist-review-addendum.json",
+      "bytes": 2162,
+      "sha256": "21b2375422981c6f15a14325e63179c5a6337f1413abeccb952693b9e3b758d6"
+    },
+    {
+      "path": "independent-checklist-review/checklist-review.json",
+      "bytes": 3385,
+      "sha256": "cd5c9e759bc0be28dde2cfea25bd618b766bb60953d95dd8e5dd546951ddc67c"
+    },
+    {
+      "path": "independent-copy-map.json",
+      "bytes": 2429,
+      "sha256": "3280593b820fdadb967944e7f304c0be4761c1f96e369ea842b908b4e1ae928b"
+    },
+    {
+      "path": "independent-review/exposure-ledger-before-full-string-display.json",
+      "bytes": 675,
+      "sha256": "d03d04a45ccf8242a8d840d24fee6792eeb29ce63001ba0e6ce01350c0370e85"
+    },
+    {
+      "path": "independent-review/exposure-ledger.json",
+      "bytes": 1710,
+      "sha256": "62f030a28fa1988daf2c05202a8e75817fd04bf89e8d1945c0502a9aaaef5889"
+    },
+    {
+      "path": "independent-review/final-review-bindings.json",
+      "bytes": 2163,
+      "sha256": "9e4345745f1a582ac90df2fccdeca9a6a1a2357786b58a68a8d2e25d2a109b69"
+    },
+    {
+      "path": "independent-review/final-review.json",
+      "bytes": 7539,
+      "sha256": "daab9851c4eac7f3a192b8608edf5ed409bb3d6cc083a5dae214dfb176dec130"
+    },
+    {
+      "path": "independent-review/independent-interpretation.json",
+      "bytes": 5017,
+      "sha256": "750e40a63cec7032d301f50500fcf6f3a1793e97396c3ac2fb326c8f9608916b"
+    },
+    {
+      "path": "independent-review/public-candidate-check.json",
+      "bytes": 1731,
+      "sha256": "082c09344d3bb5f978020beaedd0441f3791edc925b22bf7a6d6774981d473bc"
+    },
+    {
+      "path": "independent-review/receipt-check.json",
+      "bytes": 1705,
+      "sha256": "f040a23acdde7eafef2f7a3edf7b4c563aad780c248119b291fbf619ec16c9d3"
+    },
+    {
+      "path": "independent-review/scope.json",
+      "bytes": 1371,
+      "sha256": "3f6f3768f1cb65d55fd5045c5720757e6427b7afd155618139283cab6bf1d45f"
+    },
+    {
+      "path": "original-byte-map.json",
+      "bytes": 17280,
+      "sha256": "3db1487b54a78a11e3b234e17b0cd8f3a611dec7da70400d37897f69f2891918"
+    },
+    {
+      "path": "original-reference-frame.json",
+      "bytes": 71649,
+      "sha256": "80a1aca0fd56d89f49ff5f0e4b3930405f11ae1cd4acea14b8edab2381940aa4"
+    },
+    {
+      "path": "preparation.json",
+      "bytes": 993,
+      "sha256": "c463071970be27f7065c5c5ee89a855149a7a53b60d12c5ec611109645f85da1"
+    },
+    {
+      "path": "projection-public.json",
+      "bytes": 59591,
+      "sha256": "c1d3083573e427bfec886a2b28ee26f84c5970a717171c0e0b5e381ca9087535"
+    },
+    {
+      "path": "reference-provenance.csv",
+      "bytes": 14358,
+      "sha256": "e72f2e3a567123f5ac5ffb31581787b5121f57e7c3a4b841c244a72827ff83f1"
+    },
+    {
+      "path": "source-bindings.json",
+      "bytes": 3066,
+      "sha256": "c0450f9d1370c551cd0dd102f8004897a5c849929a24e6403243bfd988bf88c2"
+    }
+  ],
+  "local_links": [
+    {
+      "file": "PUBLICATION.md",
+      "target": "README.md",
+      "exists": true
+    },
+    {
+      "file": "PUBLICATION.md",
+      "target": "reference-provenance.csv",
+      "exists": true
+    },
+    {
+      "file": "PUBLICATION.md",
+      "target": "bibliography.json",
+      "exists": true
+    },
+    {
+      "file": "PUBLICATION.md",
+      "target": "exposure-ledger.json",
+      "exists": true
+    },
+    {
+      "file": "PUBLICATION.md",
+      "target": "original-reference-frame.json",
+      "exists": true
+    },
+    {
+      "file": "PUBLICATION.md",
+      "target": "projection-public.json",
+      "exists": true
+    },
+    {
+      "file": "PUBLICATION.md",
+      "target": "independent-review/final-review.json",
+      "exists": true
+    },
+    {
+      "file": "PUBLICATION.md",
+      "target": "source-bindings.json",
+      "exists": true
+    },
+    {
+      "file": "PUBLICATION.md",
+      "target": "original-byte-map.json",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "target": "reference-provenance.csv",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "target": "bibliography.json",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "target": "original-reference-frame.json",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "target": "graph-check.json",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "target": "exposure-ledger.json",
+      "exists": true
+    },
+    {
+      "file": "README.md",
+      "target": "source-bindings.json",
+      "exists": true
+    }
+  ],
+  "all_links_exist": true,
+  "all_original_bytes_verified": true,
+  "private_projection_included": false
+}

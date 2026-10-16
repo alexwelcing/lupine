@@ -1,0 +1,95 @@
+{
+  "schema": "lupine.rhizo.reference-readiness.planned-inputs.v1",
+  "status": "PROPOSED_NOT_EXECUTED",
+  "target_bearing_objects": [
+    {
+      "repository": "alexwelcing/lupine-rhizo",
+      "commit": "81079a8e1bac7ed332712cc92002bd3435e40776",
+      "path": "data/y_matrix_targets/surface_energies.json",
+      "bytes": 44140,
+      "git_blob_sha1": "241a220acd3420742443e26286a2c6f2e9e927f4",
+      "sha256": "d260124959c0d22dba8440d53f07481cf67e2b552e0d7abe5535168799903c16",
+      "expected_entry_count_from_public_metadata": 57
+    },
+    {
+      "repository": "alexwelcing/lupine-rhizo",
+      "commit": "81079a8e1bac7ed332712cc92002bd3435e40776",
+      "path": "data/y_matrix_targets/vacancy_formation.json",
+      "bytes": 17779,
+      "git_blob_sha1": "8f98a67d89e32cecd9007b390d7629220515dd75",
+      "sha256": "be69d690dfefdafdf938ed79e77396faffb55586f9300d711f811fc11b36ef60",
+      "expected_entry_count_from_public_metadata": 28
+    }
+  ],
+  "total_target_bearing_bytes": 61919,
+  "documentary_source_pins_from_prior_inventory": [
+    {
+      "access": "source_documentation_or_license_only",
+      "bytes": 539,
+      "commit": "81079a8e1bac7ed332712cc92002bd3435e40776",
+      "git_blob_sha1": "ff318fd133ba30123bfc50fb64a4d1764343b455",
+      "path": "LICENSE-CONTENT.md",
+      "repository": "alexwelcing/lupine-rhizo",
+      "sha256": "876398266c0e06cc4fc8cbe3fd555ede9f4fe42615f68b197ab821b1d34f304d",
+      "url": "https://github.com/alexwelcing/lupine-rhizo/blob/81079a8e1bac7ed332712cc92002bd3435e40776/LICENSE-CONTENT.md"
+    },
+    {
+      "access": "source_documentation_or_license_only",
+      "bytes": 614,
+      "commit": "81079a8e1bac7ed332712cc92002bd3435e40776",
+      "git_blob_sha1": "0d1794cf18730cd05897d1d526e477ab1814f4a0",
+      "path": "LICENSE-DATA.md",
+      "repository": "alexwelcing/lupine-rhizo",
+      "sha256": "5b4108afdc9b1c058b47b3a24bfd9640c2f783d3dd76be8378fdba5538e5e46f",
+      "url": "https://github.com/alexwelcing/lupine-rhizo/blob/81079a8e1bac7ed332712cc92002bd3435e40776/LICENSE-DATA.md"
+    },
+    {
+      "access": "documentation_with_incidental_numeric_examples",
+      "bytes": 7322,
+      "commit": "81079a8e1bac7ed332712cc92002bd3435e40776",
+      "git_blob_sha1": "9094b5da9b09ae9964e36ea5336045e5f1b91a6e",
+      "path": "data/y_matrix_targets/README.md",
+      "repository": "alexwelcing/lupine-rhizo",
+      "sha256": "acb4334561cd8c0a487d1c9e67cd2ad9ab167f3c06c885de1d30fa23deae230a",
+      "url": "https://github.com/alexwelcing/lupine-rhizo/blob/81079a8e1bac7ed332712cc92002bd3435e40776/data/y_matrix_targets/README.md"
+    },
+    {
+      "access": "source_documentation_or_license_only",
+      "bytes": 16839,
+      "commit": "81079a8e1bac7ed332712cc92002bd3435e40776",
+      "git_blob_sha1": "257187b01b9a83891bd35718fe5b890d0737832d",
+      "path": "paper/figures/envfield/common.py",
+      "repository": "alexwelcing/lupine-rhizo",
+      "sha256": "dac91d29198050f92495337907c8a94fe24105d55d7c86763514813aab21db92",
+      "url": "https://github.com/alexwelcing/lupine-rhizo/blob/81079a8e1bac7ed332712cc92002bd3435e40776/paper/figures/envfield/common.py"
+    },
+    {
+      "access": "source_documentation_or_license_only",
+      "bytes": 17478,
+      "commit": "81079a8e1bac7ed332712cc92002bd3435e40776",
+      "git_blob_sha1": "84e0331acbb322f37ab53bf4dd2a4262084182a6",
+      "path": "python/lupine_distill/binding.py",
+      "repository": "alexwelcing/lupine-rhizo",
+      "sha256": "dcf34d3caae28d7fd31268f9217432d6c78692cad4f76dd316c434a6fb99c80e",
+      "url": "https://github.com/alexwelcing/lupine-rhizo/blob/81079a8e1bac7ed332712cc92002bd3435e40776/python/lupine_distill/binding.py"
+    },
+    {
+      "access": "source_documentation_or_license_only",
+      "bytes": 9702,
+      "commit": "81079a8e1bac7ed332712cc92002bd3435e40776",
+      "git_blob_sha1": "c24f0fcc0d1c16415b04fbd0ce63230a126c5408",
+      "path": "python/lupine_distill/schemas.py",
+      "repository": "alexwelcing/lupine-rhizo",
+      "sha256": "1bf115907c27b60c29fb3bb7ab7de167d1aa723a3f6ee64c3fa9bd47ac0f5022",
+      "url": "https://github.com/alexwelcing/lupine-rhizo/blob/81079a8e1bac7ed332712cc92002bd3435e40776/python/lupine_distill/schemas.py"
+    }
+  ],
+  "documentary_sources_reread_this_task": false,
+  "unbound": [
+    "local retained-object paths must be resolved from existing custody without globbing arbitrary source files",
+    "raw JSON container/field paths must be confirmed in previously pinned schema/extractor source during implementation review; this note invents no pointer",
+    "actual bound evidence selection and numeric completeness remain outside this two-object pass"
+  ],
+  "network_requests_allowed": 0,
+  "raw_run_and_bound_evidence_reads_allowed": 0
+}

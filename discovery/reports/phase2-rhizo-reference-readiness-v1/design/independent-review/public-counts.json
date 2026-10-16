@@ -1,0 +1,116 @@
+{
+  "schema": "lupine.rhizo-reference-readiness.review-public-counts.v1",
+  "created_at": "2026-10-16T11:22:59.249180+00:00",
+  "scope": "Pure counting of the explicitly allowed public redacted metadata; no target objects or source code accessed.",
+  "units": 36,
+  "unique_reference_locations": 43,
+  "candidate_edges": 172,
+  "reuse_multiplicity_counts": {
+    "4": 43
+  },
+  "method_counts_by_unique_location": {
+    "DFT-PBE": 36,
+    "experiment": 7
+  },
+  "target_objects": [
+    {
+      "path": "data/y_matrix_targets/surface_energies.json",
+      "received_bytes": 44140,
+      "received_sha256": "d260124959c0d22dba8440d53f07481cf67e2b552e0d7abe5535168799903c16",
+      "expected_git_blob_sha1": "241a220acd3420742443e26286a2c6f2e9e927f4",
+      "public_metadata_entry_count": 57,
+      "matched_location_count": 27,
+      "unmatched_metadata_entry_count": 30,
+      "matched_ordinals": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
+      ],
+      "entry_projected_field_names": [
+        "citation_field_present",
+        "conditions_status",
+        "material",
+        "method",
+        "notes_field_present",
+        "ordinal",
+        "primary_source_identity_status",
+        "property",
+        "reference_uncertainty_status",
+        "source_locator_field_present",
+        "structure",
+        "unit_status"
+      ]
+    },
+    {
+      "path": "data/y_matrix_targets/vacancy_formation.json",
+      "received_bytes": 17779,
+      "received_sha256": "be69d690dfefdafdf938ed79e77396faffb55586f9300d711f811fc11b36ef60",
+      "expected_git_blob_sha1": "8f98a67d89e32cecd9007b390d7629220515dd75",
+      "public_metadata_entry_count": 28,
+      "matched_location_count": 16,
+      "unmatched_metadata_entry_count": 12,
+      "matched_ordinals": [
+        0,
+        1,
+        2,
+        3,
+        5,
+        9,
+        10,
+        11,
+        12,
+        16,
+        17,
+        18,
+        19,
+        23,
+        24,
+        27
+      ],
+      "entry_projected_field_names": [
+        "citation_field_present",
+        "conditions_status",
+        "material",
+        "method",
+        "notes_field_present",
+        "ordinal",
+        "primary_source_identity_status",
+        "property",
+        "reference_uncertainty_status",
+        "source_locator_field_present",
+        "structure",
+        "unit_status"
+      ]
+    }
+  ],
+  "old_inventory_reports_absent_from_acquisition_receipt": [
+    "data/y_matrix_runs/bound/binding_report.json",
+    "data/y_matrix_runs/env_field_binding_report.json",
+    "data/y_matrix_runs/envfield_experiment/report.json"
+  ],
+  "interpretation": "Locations and unit-candidate edges, not unique scientific sources, experiments, selected bound references, rights clearances, or confirmed numerical labels."
+}

@@ -1,0 +1,75 @@
+{
+  "actual_bound_reference_choice": "NOT_ESTABLISHED_BY_PUBLIC_METADATA_OR_THIS_SOURCE_REVIEW",
+  "actual_stored_label_completeness": "UNKNOWN_NOT_NUMERICALLY_CHECKED_HERE",
+  "binding_report_storage_layout_checked": false,
+  "bound_schema_does_not_store": [
+    "reference file path",
+    "reference ordinal",
+    "chosen reference method",
+    "target property/family",
+    "binding status",
+    "structured source DOI/URL",
+    "reference-object identity/hash",
+    "structure_type"
+  ],
+  "comparison_scope": "Literal citation/context and predeclared numeric representation concordance only; no residual/error/rank comparisons or choosing the most favorable candidate.",
+  "minimum_conclusion": "Stored numerical labels and citation can be inspected directly if present; no method-preference reexecution is required. Candidate source-location identity may remain ambiguous because no stable reference key is stored.",
+  "numeric_representation_caveat": "Upstream TargetEntry/PropertyValue use float; original target JSON decimal spelling need not survive float serialization. Any exact numeric concordance rule must be declared before numerical inspection; no nearest-value or adaptive tolerance rule.",
+  "numeric_validation_caveat": "Any later stored-label usability check must verify finite non-boolean numerical types directly; source float annotations and structural presence do not establish this.",
+  "preserved_annotation_caveat": "bind_evidence appends the original property unchanged on unmapped or no selected target. Non-null stored reference fields alone therefore do not establish bound status or selection by this binder; pre-existing annotations may survive.",
+  "record_fields_not_in_CalcEvidence_properties": true,
+  "schema": "lupine.rhizo.bound-choice.field-findings.v1",
+  "schema_paths": {
+    "bound_identity": [
+      "schema",
+      "material",
+      "source.model_id",
+      "provenance.inputs_sha256"
+    ],
+    "bound_property_labels": [
+      "properties[*].name",
+      "properties[*].value",
+      "properties[*].unit",
+      "properties[*].reference_value",
+      "properties[*].reference_source"
+    ],
+    "candidate_identity": [
+      "entries[ordinal].material",
+      "entries[ordinal].structure",
+      "entries[ordinal].property",
+      "entries[ordinal].unit",
+      "entries[ordinal].method",
+      "entries[ordinal].source.citation"
+    ],
+    "candidate_numeric_concordance": [
+      "entries[ordinal].value"
+    ],
+    "optional_semantics": [
+      "properties[*].tolerance"
+    ],
+    "scope_properties": [
+      "gamma_100",
+      "gamma_111",
+      "vacancy_formation_energy",
+      "gamma_110"
+    ]
+  },
+  "scientific_limits": [
+    "Stored labels are archival records, not certified physical truth",
+    "No model checkpoint identity/hard discrepancy bound established",
+    "Input-hash agreement is not proof that stored prediction values were unchanged",
+    "A sole candidate match or apparent binding status is not source-rights/condition validation",
+    "No historical method policy is rerun to fill absent or ambiguous labels"
+  ],
+  "separate_binding_result_record_fields": [
+    "name",
+    "status",
+    "method",
+    "target_property",
+    "family",
+    "reference_value",
+    "tolerance",
+    "reference_source",
+    "detail"
+  ]
+}

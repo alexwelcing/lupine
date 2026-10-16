@@ -1,0 +1,1313 @@
+{
+  "schema": "lupine.rhizo.publication.v1",
+  "created_at": "2026-10-16T12:07:16.670103+00:00",
+  "parent_commit": "3139e1ea7bdf4b78e3e70502f2c299ba3c1efea3",
+  "copy_rows": [
+    {
+      "bytes": 9723,
+      "copy_from": ".cache/phase2-rhizo-reference-readiness-design-v1/README.md",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-readiness-design-v1/README.md",
+      "original_sha256": "c3152108ac58cae50e815cf27bf3a73787a34a0360f33642b15a00a33e948a0a",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/design/README.md",
+      "sha256": "c3152108ac58cae50e815cf27bf3a73787a34a0360f33642b15a00a33e948a0a"
+    },
+    {
+      "bytes": 1915,
+      "copy_from": ".cache/phase2-rhizo-reference-readiness-design-v1/independent-review/design-check.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-readiness-design-v1/independent-review/design-check.json",
+      "original_sha256": "78782282aa9003d8ed836191cf2e1d3b4ba84ca6e08a6b0f32bd9087534916c8",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/design/independent-review/design-check.json",
+      "sha256": "78782282aa9003d8ed836191cf2e1d3b4ba84ca6e08a6b0f32bd9087534916c8"
+    },
+    {
+      "bytes": 2064,
+      "copy_from": ".cache/phase2-rhizo-reference-readiness-design-v1/independent-review/final-review-bindings.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-readiness-design-v1/independent-review/final-review-bindings.json",
+      "original_sha256": "659278d1b64398338e0eb9da83e453afed363051c2497c30787ea36db0fd65f8",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/design/independent-review/final-review-bindings.json",
+      "sha256": "659278d1b64398338e0eb9da83e453afed363051c2497c30787ea36db0fd65f8"
+    },
+    {
+      "bytes": 5325,
+      "copy_from": ".cache/phase2-rhizo-reference-readiness-design-v1/independent-review/final-review.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-readiness-design-v1/independent-review/final-review.json",
+      "original_sha256": "986dd2184018353b041aa2c1f90abb59edc5961e561af635109cf53e7541d2f2",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/design/independent-review/final-review.json",
+      "sha256": "986dd2184018353b041aa2c1f90abb59edc5961e561af635109cf53e7541d2f2"
+    },
+    {
+      "bytes": 5504,
+      "copy_from": ".cache/phase2-rhizo-reference-readiness-design-v1/independent-review/initial-challenge.md",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-readiness-design-v1/independent-review/initial-challenge.md",
+      "original_sha256": "51b313a6e4e11f05e23d17462e032afe4a38d81cf4f4d4a67eae1861b376f8cd",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/design/independent-review/initial-challenge.md",
+      "sha256": "51b313a6e4e11f05e23d17462e032afe4a38d81cf4f4d4a67eae1861b376f8cd"
+    },
+    {
+      "bytes": 3027,
+      "copy_from": ".cache/phase2-rhizo-reference-readiness-design-v1/independent-review/public-counts.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-readiness-design-v1/independent-review/public-counts.json",
+      "original_sha256": "88a19d9042aaa805d6c96d7ca095c4a5974d59ed9815612913d6ecba49636545",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/design/independent-review/public-counts.json",
+      "sha256": "88a19d9042aaa805d6c96d7ca095c4a5974d59ed9815612913d6ecba49636545"
+    },
+    {
+      "bytes": 1269,
+      "copy_from": ".cache/phase2-rhizo-reference-readiness-design-v1/independent-review/source-bindings.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-readiness-design-v1/independent-review/source-bindings.json",
+      "original_sha256": "520f3bacd46514f8ef76209643352e58c55bccc73cb6e1d023639ef41b48a7e9",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/design/independent-review/source-bindings.json",
+      "sha256": "520f3bacd46514f8ef76209643352e58c55bccc73cb6e1d023639ef41b48a7e9"
+    },
+    {
+      "bytes": 4746,
+      "copy_from": ".cache/phase2-rhizo-reference-readiness-design-v1/planned-inputs.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-readiness-design-v1/planned-inputs.json",
+      "original_sha256": "216907d07f977881c4220cb9c697708217101c2747c54bb7874b20e1470e3092",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/design/planned-inputs.json",
+      "sha256": "216907d07f977881c4220cb9c697708217101c2747c54bb7874b20e1470e3092"
+    },
+    {
+      "bytes": 71649,
+      "copy_from": ".cache/phase2-rhizo-reference-readiness-design-v1/reference-frame.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-readiness-design-v1/reference-frame.json",
+      "original_sha256": "80a1aca0fd56d89f49ff5f0e4b3930405f11ae1cd4acea14b8edab2381940aa4",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/design/reference-frame.json",
+      "sha256": "80a1aca0fd56d89f49ff5f0e4b3930405f11ae1cd4acea14b8edab2381940aa4"
+    },
+    {
+      "bytes": 1755,
+      "copy_from": ".cache/phase2-rhizo-reference-readiness-design-v1/review-copy-map.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-readiness-design-v1/review-copy-map.json",
+      "original_sha256": "f1e81236ef20a82d8f3e4627a8a98605809bff44327b11a75d352ebe6572f32f",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/design/review-copy-map.json",
+      "sha256": "f1e81236ef20a82d8f3e4627a8a98605809bff44327b11a75d352ebe6572f32f"
+    },
+    {
+      "bytes": 1874,
+      "copy_from": ".cache/phase2-rhizo-reference-readiness-design-v1/source-bindings.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-readiness-design-v1/source-bindings.json",
+      "original_sha256": "63402374fe80c558007fc17e56f9937ed1bbd9611fd1a5ae8d98adb2f2fa8709",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/design/source-bindings.json",
+      "sha256": "63402374fe80c558007fc17e56f9937ed1bbd9611fd1a5ae8d98adb2f2fa8709"
+    },
+    {
+      "bytes": 1385,
+      "copy_from": ".cache/phase2-rhizo-reference-readiness-design-v1/static-check.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-readiness-design-v1/static-check.json",
+      "original_sha256": "cf2ca6d25df9eced1cee6556b2b4e3725fd5b90d2a522e91c5bb19017ab9d17e",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/design/static-check.json",
+      "sha256": "cf2ca6d25df9eced1cee6556b2b4e3725fd5b90d2a522e91c5bb19017ab9d17e"
+    },
+    {
+      "bytes": 1347,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-review-v1/aggregate-exposure-fix.diff",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-review-v1/aggregate-exposure-fix.diff",
+      "original_sha256": "8538d128effc06098644d174c9a6724c658bcb89f60673ff85dc7ea3f5349825",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/independent-review/aggregate-exposure-fix.diff",
+      "sha256": "8538d128effc06098644d174c9a6724c658bcb89f60673ff85dc7ea3f5349825"
+    },
+    {
+      "bytes": 2713,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-review-v1/challenge-plan.md",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-review-v1/challenge-plan.md",
+      "original_sha256": "27150804d9a8cd72b7949b6ceb1ed6f2a07ac9263e5e47a05acf59a7255d5d0e",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/independent-review/challenge-plan.md",
+      "sha256": "27150804d9a8cd72b7949b6ceb1ed6f2a07ac9263e5e47a05acf59a7255d5d0e"
+    },
+    {
+      "bytes": 2814,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-review-v1/first-run/execution.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-review-v1/first-run/execution.json",
+      "original_sha256": "a1a3acc2883ddfefb49ccc56c7c120b09f99583bb74596f98beb7fb28bc74993",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/independent-review/first-run/execution.json",
+      "sha256": "a1a3acc2883ddfefb49ccc56c7c120b09f99583bb74596f98beb7fb28bc74993"
+    },
+    {
+      "bytes": 2587,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-review-v1/first-run/generated_fixtures.py",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-review-v1/first-run/generated_fixtures.py",
+      "original_sha256": "afbb07d937dd82078ef3f155beae36befe67f997faeecdd4893778e929ea7704",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/independent-review/first-run/generated_fixtures.py",
+      "sha256": "afbb07d937dd82078ef3f155beae36befe67f997faeecdd4893778e929ea7704"
+    },
+    {
+      "bytes": 21700,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-review-v1/first-run/reference_projector.py",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-review-v1/first-run/reference_projector.py",
+      "original_sha256": "a477032c8b396cd68119bb604549b499da3e3e6f8dfd749206799bcaaca21f79",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/independent-review/first-run/reference_projector.py",
+      "sha256": "a477032c8b396cd68119bb604549b499da3e3e6f8dfd749206799bcaaca21f79"
+    },
+    {
+      "bytes": 3046,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-review-v1/first-run/run_review.py",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-review-v1/first-run/run_review.py",
+      "original_sha256": "3b0fae4d499ed74b0fabb3fe569e93628e98a7f006f120b8786432f822b63041",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/independent-review/first-run/run_review.py",
+      "sha256": "3b0fae4d499ed74b0fabb3fe569e93628e98a7f006f120b8786432f822b63041"
+    },
+    {
+      "bytes": 4401,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-review-v1/first-run/scope.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-review-v1/first-run/scope.json",
+      "original_sha256": "f5446b9507ea394ea1631a7a85a9306cbb1407341df1e76de71186a6524ef9e5",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/independent-review/first-run/scope.json",
+      "sha256": "f5446b9507ea394ea1631a7a85a9306cbb1407341df1e76de71186a6524ef9e5"
+    },
+    {
+      "bytes": 1490,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-review-v1/first-run/start.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-review-v1/first-run/start.json",
+      "original_sha256": "9510461809a7bd0348c05129b87b9d22e419da79301cf51566abf4190012372b",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/independent-review/first-run/start.json",
+      "sha256": "9510461809a7bd0348c05129b87b9d22e419da79301cf51566abf4190012372b"
+    },
+    {
+      "bytes": 3128,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-review-v1/first-run/stderr.txt",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-review-v1/first-run/stderr.txt",
+      "original_sha256": "411b890c21fa198481b0877a6bd06b7e04f6ba3145d2680ed881a9f2a60c95d5",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/independent-review/first-run/stderr.txt",
+      "sha256": "411b890c21fa198481b0877a6bd06b7e04f6ba3145d2680ed881a9f2a60c95d5"
+    },
+    {
+      "bytes": 0,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-review-v1/first-run/stdout.txt",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-review-v1/first-run/stdout.txt",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/independent-review/first-run/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 16254,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-review-v1/first-run/test_reference_projector_review.py",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-review-v1/first-run/test_reference_projector_review.py",
+      "original_sha256": "54384a8dfc23ca1e026d8da75317b7960330e834b4cf00fd4aead41923cb17d8",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/independent-review/first-run/test_reference_projector_review.py",
+      "sha256": "54384a8dfc23ca1e026d8da75317b7960330e834b4cf00fd4aead41923cb17d8"
+    },
+    {
+      "bytes": 2587,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-review-v1/generated_fixtures.py",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-review-v1/generated_fixtures.py",
+      "original_sha256": "afbb07d937dd82078ef3f155beae36befe67f997faeecdd4893778e929ea7704",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/independent-review/generated_fixtures.py",
+      "sha256": "afbb07d937dd82078ef3f155beae36befe67f997faeecdd4893778e929ea7704"
+    },
+    {
+      "bytes": 762,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-review-v1/handoff.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-review-v1/handoff.json",
+      "original_sha256": "6e7d400ab5cba703890e68240e36765ecb99e57d5d93b0508d089970bc8e5f00",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/independent-review/handoff.json",
+      "sha256": "6e7d400ab5cba703890e68240e36765ecb99e57d5d93b0508d089970bc8e5f00"
+    },
+    {
+      "bytes": 4307,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-review-v1/inventory.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-review-v1/inventory.json",
+      "original_sha256": "7a6781c4c6e640163985c674d4cdf53a254a20e4a315bfe36192694524642dbf",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/independent-review/inventory.json",
+      "sha256": "7a6781c4c6e640163985c674d4cdf53a254a20e4a315bfe36192694524642dbf"
+    },
+    {
+      "bytes": 2673,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-review-v1/preparation.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-review-v1/preparation.json",
+      "original_sha256": "eeb0fe2817f17fc4d8734aa3254c26998be2144f8240442b63790269317ed6fc",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/independent-review/preparation.json",
+      "sha256": "eeb0fe2817f17fc4d8734aa3254c26998be2144f8240442b63790269317ed6fc"
+    },
+    {
+      "bytes": 6875,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-review-v1/review.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-review-v1/review.json",
+      "original_sha256": "664c62d3a0488ab0a0c11fbb91a4c14cd12f5bb6117ef829aac4d36e4de52e8a",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/independent-review/review.json",
+      "sha256": "664c62d3a0488ab0a0c11fbb91a4c14cd12f5bb6117ef829aac4d36e4de52e8a"
+    },
+    {
+      "bytes": 6304,
+      "copy_from": ".cache/phase2-rhizo-publication-plan-v1/overrides/reports/phase2-rhizo-reference-readiness-v1/independent-review/reviewed-contract.md",
+      "mode": "one_link_relocation",
+      "original": ".cache/phase2-rhizo-reference-projector-review-v1/reviewed-contract.md",
+      "original_sha256": "f5f1582036db4f13b879cd47ae1abeccb2380df07bba09b3f0450696b21ef65e",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/independent-review/reviewed-contract.md",
+      "sha256": "577d7284b927cd6c5e8aaef2e0a6509223a06574cc536eaf484c0ca3aa8f66cf"
+    },
+    {
+      "bytes": 6778,
+      "copy_from": ".cache/phase2-rhizo-publication-plan-v1/overrides/reports/phase2-rhizo-reference-readiness-v1/independent-review/reviewed-contract.original.json",
+      "mode": "lossless_original_utf8",
+      "original": ".cache/phase2-rhizo-reference-projector-review-v1/reviewed-contract.md",
+      "original_sha256": "f5f1582036db4f13b879cd47ae1abeccb2380df07bba09b3f0450696b21ef65e",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/independent-review/reviewed-contract.original.json",
+      "sha256": "a38f399837de1d55f674b27990e762b76aa269f3503cc33c73b6a622c713a123"
+    },
+    {
+      "bytes": 3046,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-review-v1/run_review.py",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-review-v1/run_review.py",
+      "original_sha256": "3b0fae4d499ed74b0fabb3fe569e93628e98a7f006f120b8786432f822b63041",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/independent-review/run_review.py",
+      "sha256": "3b0fae4d499ed74b0fabb3fe569e93628e98a7f006f120b8786432f822b63041"
+    },
+    {
+      "bytes": 2815,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-review-v1/second-run/execution.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-review-v1/second-run/execution.json",
+      "original_sha256": "52e8aedcaf90ee1e0c7288ac376c090054a5527be1c71be725f1f4fee34ad780",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/independent-review/second-run/execution.json",
+      "sha256": "52e8aedcaf90ee1e0c7288ac376c090054a5527be1c71be725f1f4fee34ad780"
+    },
+    {
+      "bytes": 2587,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-review-v1/second-run/generated_fixtures.py",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-review-v1/second-run/generated_fixtures.py",
+      "original_sha256": "afbb07d937dd82078ef3f155beae36befe67f997faeecdd4893778e929ea7704",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/independent-review/second-run/generated_fixtures.py",
+      "sha256": "afbb07d937dd82078ef3f155beae36befe67f997faeecdd4893778e929ea7704"
+    },
+    {
+      "bytes": 21863,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-review-v1/second-run/reference_projector.py",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-review-v1/second-run/reference_projector.py",
+      "original_sha256": "bab641881335f57d4571fe0d4f720696f57e5816fa36266647cdf86d0701b263",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/independent-review/second-run/reference_projector.py",
+      "sha256": "bab641881335f57d4571fe0d4f720696f57e5816fa36266647cdf86d0701b263"
+    },
+    {
+      "bytes": 3046,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-review-v1/second-run/run_review.py",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-review-v1/second-run/run_review.py",
+      "original_sha256": "3b0fae4d499ed74b0fabb3fe569e93628e98a7f006f120b8786432f822b63041",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/independent-review/second-run/run_review.py",
+      "sha256": "3b0fae4d499ed74b0fabb3fe569e93628e98a7f006f120b8786432f822b63041"
+    },
+    {
+      "bytes": 4401,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-review-v1/second-run/scope.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-review-v1/second-run/scope.json",
+      "original_sha256": "f5446b9507ea394ea1631a7a85a9306cbb1407341df1e76de71186a6524ef9e5",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/independent-review/second-run/scope.json",
+      "sha256": "f5446b9507ea394ea1631a7a85a9306cbb1407341df1e76de71186a6524ef9e5"
+    },
+    {
+      "bytes": 1490,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-review-v1/second-run/start.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-review-v1/second-run/start.json",
+      "original_sha256": "d821580abab71da4aa1ea9fe7645fc7eac9866ee37b52967860f7b82092204d7",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/independent-review/second-run/start.json",
+      "sha256": "d821580abab71da4aa1ea9fe7645fc7eac9866ee37b52967860f7b82092204d7"
+    },
+    {
+      "bytes": 2385,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-review-v1/second-run/stderr.txt",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-review-v1/second-run/stderr.txt",
+      "original_sha256": "fe335524f6b7710a4aa9ebe4f914473bc1d1bbfe0d64b732220c22fb92516d81",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/independent-review/second-run/stderr.txt",
+      "sha256": "fe335524f6b7710a4aa9ebe4f914473bc1d1bbfe0d64b732220c22fb92516d81"
+    },
+    {
+      "bytes": 0,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-review-v1/second-run/stdout.txt",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-review-v1/second-run/stdout.txt",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/independent-review/second-run/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 16254,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-review-v1/second-run/test_reference_projector_review.py",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-review-v1/second-run/test_reference_projector_review.py",
+      "original_sha256": "54384a8dfc23ca1e026d8da75317b7960330e834b4cf00fd4aead41923cb17d8",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/independent-review/second-run/test_reference_projector_review.py",
+      "sha256": "54384a8dfc23ca1e026d8da75317b7960330e834b4cf00fd4aead41923cb17d8"
+    },
+    {
+      "bytes": 16254,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-review-v1/test_reference_projector_review.py",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-review-v1/test_reference_projector_review.py",
+      "original_sha256": "54384a8dfc23ca1e026d8da75317b7960330e834b4cf00fd4aead41923cb17d8",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/independent-review/test_reference_projector_review.py",
+      "sha256": "54384a8dfc23ca1e026d8da75317b7960330e834b4cf00fd4aead41923cb17d8"
+    },
+    {
+      "bytes": 3255,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/FINAL.md",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/FINAL.md",
+      "original_sha256": "ef51b9f4c72164b6997fba93a4a78aa6151f62cad66a1e67aa2cfdb8c11e1d33",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/FINAL.md",
+      "sha256": "ef51b9f4c72164b6997fba93a4a78aa6151f62cad66a1e67aa2cfdb8c11e1d33"
+    },
+    {
+      "bytes": 6291,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/README.md",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/README.md",
+      "original_sha256": "f5f1582036db4f13b879cd47ae1abeccb2380df07bba09b3f0450696b21ef65e",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/README.md",
+      "sha256": "f5f1582036db4f13b879cd47ae1abeccb2380df07bba09b3f0450696b21ef65e"
+    },
+    {
+      "bytes": 762,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/aggregate-parse-correction.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/aggregate-parse-correction.json",
+      "original_sha256": "8dae590dce1d2395bba309e4671dd0afa2b3e1b028762786182904332606f08b",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/aggregate-parse-correction.json",
+      "sha256": "8dae590dce1d2395bba309e4671dd0afa2b3e1b028762786182904332606f08b"
+    },
+    {
+      "bytes": 6291,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/before-aggregate-parse-fix/README.md",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/before-aggregate-parse-fix/README.md",
+      "original_sha256": "f5f1582036db4f13b879cd47ae1abeccb2380df07bba09b3f0450696b21ef65e",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/before-aggregate-parse-fix/README.md",
+      "sha256": "f5f1582036db4f13b879cd47ae1abeccb2380df07bba09b3f0450696b21ef65e"
+    },
+    {
+      "bytes": 21700,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/before-aggregate-parse-fix/reference_projector.py",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/before-aggregate-parse-fix/reference_projector.py",
+      "original_sha256": "a477032c8b396cd68119bb604549b499da3e3e6f8dfd749206799bcaaca21f79",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/before-aggregate-parse-fix/reference_projector.py",
+      "sha256": "a477032c8b396cd68119bb604549b499da3e3e6f8dfd749206799bcaaca21f79"
+    },
+    {
+      "bytes": 4401,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/before-aggregate-parse-fix/scope.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/before-aggregate-parse-fix/scope.json",
+      "original_sha256": "f5446b9507ea394ea1631a7a85a9306cbb1407341df1e76de71186a6524ef9e5",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/before-aggregate-parse-fix/scope.json",
+      "sha256": "f5446b9507ea394ea1631a7a85a9306cbb1407341df1e76de71186a6524ef9e5"
+    },
+    {
+      "bytes": 654,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/before-aggregate-parse-fix/source-hold.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/before-aggregate-parse-fix/source-hold.json",
+      "original_sha256": "3de81fc4aa892e941607f78605b915c7ceeb778048844650c2d2cfbcf47bdcea",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/before-aggregate-parse-fix/source-hold.json",
+      "sha256": "3de81fc4aa892e941607f78605b915c7ceeb778048844650c2d2cfbcf47bdcea"
+    },
+    {
+      "bytes": 14499,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/before-aggregate-parse-fix/test_reference_projector.py",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/before-aggregate-parse-fix/test_reference_projector.py",
+      "original_sha256": "48a2a267e335e4c02e93e197f8f4341376677e38397f5fd25a14977f4dd618fc",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/before-aggregate-parse-fix/test_reference_projector.py",
+      "sha256": "48a2a267e335e4c02e93e197f8f4341376677e38397f5fd25a14977f4dd618fc"
+    },
+    {
+      "bytes": 1276,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/field-bindings.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/field-bindings.json",
+      "original_sha256": "dd45be17e381379eca4848e3ae4c7f186011ad301c8f250010a219bb82bbde8d",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/field-bindings.json",
+      "sha256": "dd45be17e381379eca4848e3ae4c7f186011ad301c8f250010a219bb82bbde8d"
+    },
+    {
+      "bytes": 6291,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/final-author/README.md",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/final-author/README.md",
+      "original_sha256": "f5f1582036db4f13b879cd47ae1abeccb2380df07bba09b3f0450696b21ef65e",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/final-author/README.md",
+      "sha256": "f5f1582036db4f13b879cd47ae1abeccb2380df07bba09b3f0450696b21ef65e"
+    },
+    {
+      "bytes": 79092,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/final-author/execution.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/final-author/execution.json",
+      "original_sha256": "876d089716da84e38f0c7c2f78483de7b46d1d93ecef2594ad1c088f01f6e6dd",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/final-author/execution.json",
+      "sha256": "876d089716da84e38f0c7c2f78483de7b46d1d93ecef2594ad1c088f01f6e6dd"
+    },
+    {
+      "bytes": 21863,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/final-author/reference_projector.py",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/final-author/reference_projector.py",
+      "original_sha256": "bab641881335f57d4571fe0d4f720696f57e5816fa36266647cdf86d0701b263",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/final-author/reference_projector.py",
+      "sha256": "bab641881335f57d4571fe0d4f720696f57e5816fa36266647cdf86d0701b263"
+    },
+    {
+      "bytes": 1161,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/final-author/run_guarded.py",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/final-author/run_guarded.py",
+      "original_sha256": "9a01075290bb4afc06a2a7bc2841a47ee6cd8fb131dc57e47e8571f6f3d8e199",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/final-author/run_guarded.py",
+      "sha256": "9a01075290bb4afc06a2a7bc2841a47ee6cd8fb131dc57e47e8571f6f3d8e199"
+    },
+    {
+      "bytes": 4401,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/final-author/scope.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/final-author/scope.json",
+      "original_sha256": "f5446b9507ea394ea1631a7a85a9306cbb1407341df1e76de71186a6524ef9e5",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/final-author/scope.json",
+      "sha256": "f5446b9507ea394ea1631a7a85a9306cbb1407341df1e76de71186a6524ef9e5"
+    },
+    {
+      "bytes": 39626,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/final-author/start.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/final-author/start.json",
+      "original_sha256": "1e9a9cab645b064ea16d613b6760b6781549ab50becef021f32c5f96de426160",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/final-author/start.json",
+      "sha256": "1e9a9cab645b064ea16d613b6760b6781549ab50becef021f32c5f96de426160"
+    },
+    {
+      "bytes": 3719,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/final-author/stderr.txt.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/final-author/stderr.txt.json",
+      "original_sha256": "ed2a1168900f59cab820d8d55efbddfeae09acfb42a4083d4dcdd7e4b4077c54",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/final-author/stderr.txt.json",
+      "sha256": "ed2a1168900f59cab820d8d55efbddfeae09acfb42a4083d4dcdd7e4b4077c54"
+    },
+    {
+      "bytes": 84,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/final-author/stdout.txt",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/final-author/stdout.txt",
+      "original_sha256": "dea717817f07267842c73aef7e60457667a27e046ccd4515b80b6265037dbfc3",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/final-author/stdout.txt",
+      "sha256": "dea717817f07267842c73aef7e60457667a27e046ccd4515b80b6265037dbfc3"
+    },
+    {
+      "bytes": 15159,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/final-author/test_reference_projector.py",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/final-author/test_reference_projector.py",
+      "original_sha256": "8de45bfd5c369549b930bec2d42542880de05bfb5769c632fe8ac920b8dd67b8",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/final-author/test_reference_projector.py",
+      "sha256": "8de45bfd5c369549b930bec2d42542880de05bfb5769c632fe8ac920b8dd67b8"
+    },
+    {
+      "bytes": 6291,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/first-author/README.md",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/first-author/README.md",
+      "original_sha256": "f5f1582036db4f13b879cd47ae1abeccb2380df07bba09b3f0450696b21ef65e",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/first-author/README.md",
+      "sha256": "f5f1582036db4f13b879cd47ae1abeccb2380df07bba09b3f0450696b21ef65e"
+    },
+    {
+      "bytes": 79094,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/first-author/execution.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/first-author/execution.json",
+      "original_sha256": "d6ca04799b025cee87d6559fd1a54b7ab0ecd4c1256058665ac1059c81e7e0f7",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/first-author/execution.json",
+      "sha256": "d6ca04799b025cee87d6559fd1a54b7ab0ecd4c1256058665ac1059c81e7e0f7"
+    },
+    {
+      "bytes": 21700,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/first-author/reference_projector.py",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/first-author/reference_projector.py",
+      "original_sha256": "a477032c8b396cd68119bb604549b499da3e3e6f8dfd749206799bcaaca21f79",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/first-author/reference_projector.py",
+      "sha256": "a477032c8b396cd68119bb604549b499da3e3e6f8dfd749206799bcaaca21f79"
+    },
+    {
+      "bytes": 1161,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/first-author/run_guarded.py",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/first-author/run_guarded.py",
+      "original_sha256": "9a01075290bb4afc06a2a7bc2841a47ee6cd8fb131dc57e47e8571f6f3d8e199",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/first-author/run_guarded.py",
+      "sha256": "9a01075290bb4afc06a2a7bc2841a47ee6cd8fb131dc57e47e8571f6f3d8e199"
+    },
+    {
+      "bytes": 4401,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/first-author/scope.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/first-author/scope.json",
+      "original_sha256": "f5446b9507ea394ea1631a7a85a9306cbb1407341df1e76de71186a6524ef9e5",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/first-author/scope.json",
+      "sha256": "f5446b9507ea394ea1631a7a85a9306cbb1407341df1e76de71186a6524ef9e5"
+    },
+    {
+      "bytes": 39626,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/first-author/start.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/first-author/start.json",
+      "original_sha256": "fff16e633d45dadd8c024c4864b0771f87569e272e69bc5613f80667eaf0f8d3",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/first-author/start.json",
+      "sha256": "fff16e633d45dadd8c024c4864b0771f87569e272e69bc5613f80667eaf0f8d3"
+    },
+    {
+      "bytes": 3552,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/first-author/stderr.txt.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/first-author/stderr.txt.json",
+      "original_sha256": "b64d0c57288a1b4aea62a2c6cee8d30916c67ccb8e6f362736686c7e7507a0a0",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/first-author/stderr.txt.json",
+      "sha256": "b64d0c57288a1b4aea62a2c6cee8d30916c67ccb8e6f362736686c7e7507a0a0"
+    },
+    {
+      "bytes": 84,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/first-author/stdout.txt",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/first-author/stdout.txt",
+      "original_sha256": "3b263de1048c7b4edbf14df98d462c92c155869676b90af6f45d55597a83cf53",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/first-author/stdout.txt",
+      "sha256": "3b263de1048c7b4edbf14df98d462c92c155869676b90af6f45d55597a83cf53"
+    },
+    {
+      "bytes": 14499,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/first-author/test_reference_projector.py",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/first-author/test_reference_projector.py",
+      "original_sha256": "48a2a267e335e4c02e93e197f8f4341376677e38397f5fd25a14977f4dd618fc",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/first-author/test_reference_projector.py",
+      "sha256": "48a2a267e335e4c02e93e197f8f4341376677e38397f5fd25a14977f4dd618fc"
+    },
+    {
+      "bytes": 1793,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/handoff.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/handoff.json",
+      "original_sha256": "9b965f3f3127641fe1b9c381f2da4efdad46cf3f8a2c6a51bbc8994b4f0495da",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/handoff.json",
+      "sha256": "9b965f3f3127641fe1b9c381f2da4efdad46cf3f8a2c6a51bbc8994b4f0495da"
+    },
+    {
+      "bytes": 1078,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/independent-review-binding.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/independent-review-binding.json",
+      "original_sha256": "8b88712bfbef92453b5bf08e35175a0cc5abd0a52530dd4c6ea7132733a9345c",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/independent-review-binding.json",
+      "sha256": "8b88712bfbef92453b5bf08e35175a0cc5abd0a52530dd4c6ea7132733a9345c"
+    },
+    {
+      "bytes": 5922,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/inventory.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/inventory.json",
+      "original_sha256": "a68f61a6a060b889e181210e01df7c00910173acb3f0d1cee14128ae111365b5",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/inventory.json",
+      "sha256": "a68f61a6a060b889e181210e01df7c00910173acb3f0d1cee14128ae111365b5"
+    },
+    {
+      "bytes": 629,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/pre-hold-review-finding.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/pre-hold-review-finding.json",
+      "original_sha256": "2fd8b1321ebaf8d84d451e2caf7e998fcdd62c7db0bb7f5dbf9fe60461031867",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/pre-hold-review-finding.json",
+      "sha256": "2fd8b1321ebaf8d84d451e2caf7e998fcdd62c7db0bb7f5dbf9fe60461031867"
+    },
+    {
+      "bytes": 3391,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/publication-check.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/publication-check.json",
+      "original_sha256": "c94e92ad15abeb5eff3cc2f34f15845a765c88f72c61ac559bd6554018c84a3b",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/publication-check.json",
+      "sha256": "c94e92ad15abeb5eff3cc2f34f15845a765c88f72c61ac559bd6554018c84a3b"
+    },
+    {
+      "bytes": 786,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/publication-layout.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/publication-layout.json",
+      "original_sha256": "2f512137ff5da469be6af98dc97d7b7604243b40ee78914d3201a10a5d991921",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/publication-layout.json",
+      "sha256": "2f512137ff5da469be6af98dc97d7b7604243b40ee78914d3201a10a5d991921"
+    },
+    {
+      "bytes": 21863,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/reference_projector.py",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/reference_projector.py",
+      "original_sha256": "bab641881335f57d4571fe0d4f720696f57e5816fa36266647cdf86d0701b263",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/reference_projector.py",
+      "sha256": "bab641881335f57d4571fe0d4f720696f57e5816fa36266647cdf86d0701b263"
+    },
+    {
+      "bytes": 1161,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/run_guarded.py",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/run_guarded.py",
+      "original_sha256": "9a01075290bb4afc06a2a7bc2841a47ee6cd8fb131dc57e47e8571f6f3d8e199",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/run_guarded.py",
+      "sha256": "9a01075290bb4afc06a2a7bc2841a47ee6cd8fb131dc57e47e8571f6f3d8e199"
+    },
+    {
+      "bytes": 4401,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/scope.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/scope.json",
+      "original_sha256": "f5446b9507ea394ea1631a7a85a9306cbb1407341df1e76de71186a6524ef9e5",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/scope.json",
+      "sha256": "f5446b9507ea394ea1631a7a85a9306cbb1407341df1e76de71186a6524ef9e5"
+    },
+    {
+      "bytes": 1776,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/source-diff.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/source-diff.json",
+      "original_sha256": "3929b10f416808edb65269c3f707659f0a07ce60f0b327741061d8866731b74c",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/source-diff.json",
+      "sha256": "3929b10f416808edb65269c3f707659f0a07ce60f0b327741061d8866731b74c"
+    },
+    {
+      "bytes": 660,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/source-hold.json",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/source-hold.json",
+      "original_sha256": "65a788a1118ac9207e97a482098f682e1ff9ad780d4ca586cf90194168601013",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/source-hold.json",
+      "sha256": "65a788a1118ac9207e97a482098f682e1ff9ad780d4ca586cf90194168601013"
+    },
+    {
+      "bytes": 15159,
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/test_reference_projector.py",
+      "mode": "exact_copy",
+      "original": ".cache/phase2-rhizo-reference-projector-v1/test_reference_projector.py",
+      "original_sha256": "8de45bfd5c369549b930bec2d42542880de05bfb5769c632fe8ac920b8dd67b8",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/projector/test_reference_projector.py",
+      "sha256": "8de45bfd5c369549b930bec2d42542880de05bfb5769c632fe8ac920b8dd67b8"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-publication-plan-v1/prepare_copy_plan.py",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/publication-plan/prepare_copy_plan.py",
+      "bytes": 9013,
+      "sha256": "7f66a4ab6cd3453c827e37c9b3b44ce7106ee60aa580481cc3d380fc02792236"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-publication-plan-v1/copy-map.json",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/publication-plan/copy-map.json",
+      "bytes": 43302,
+      "sha256": "0bc9fe59b77b0b311aaa3918cf85e668e16acd9770202ea6b5b9bb784798e0c1"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-publication-plan-v1/validation.json",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/publication-plan/validation.json",
+      "bytes": 11999,
+      "sha256": "2860b7b7e30b8077d18dbb67d9689938555be52d1ee8d38db671f02ad9957800"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-publication-plan-v1/source-bindings.json",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/publication-plan/source-bindings.json",
+      "bytes": 16884,
+      "sha256": "e1de1919936129b58551df79291d7e7ec6b0a8df4bea1d1919dddd927ef19a28"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-publication-plan-v1/relocation-link-repairs.json",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/publication-plan/relocation-link-repairs.json",
+      "bytes": 648,
+      "sha256": "e6ee52d1f8a3d4bc04ae0f868d41bf45f58527f2b1e30d113662c40020dc4b7a"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-publication-plan-v1/lossless-wrappers.json",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/publication-plan/lossless-wrappers.json",
+      "bytes": 1638,
+      "sha256": "2698c9367c8532755bbee39b37ec92dab8344ae4b5d18ccb25b1b9318f83c403"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-publication-plan-v1/first-stdout.txt",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/publication-plan/first-stdout.txt",
+      "bytes": 166,
+      "sha256": "b03e5238550f139beb6a917a1ba844b9e5f54e97b6de8ac2c5f2fbf976258acc"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-publication-plan-v1/first-stderr.txt",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/publication-plan/first-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-publication-plan-v1/inventory.json",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/publication-plan/inventory.json",
+      "bytes": 1815,
+      "sha256": "1e27a16af22003dfb4389c05113057341058c45598de6aa78e2ec01d6f58f54a"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-publication-plan-v1/handoff.json",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/publication-plan/handoff.json",
+      "bytes": 623,
+      "sha256": "101986250a22789dd1cecfec5b370c2f4d666e6f5234abadc55f5044457745b9"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/actual/public.json",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/operation/public.json",
+      "bytes": 59591,
+      "sha256": "c1d3083573e427bfec886a2b28ee26f84c5970a717171c0e0b5e381ca9087535"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/actual/reservation.json",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/operation/reservation.json",
+      "bytes": 741,
+      "sha256": "775ab28cc4e717306f11b2174296ce404ef821837adc3b4e40c304be42ee3cb6"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/actual-execution/start.json",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/operation/start.json",
+      "bytes": 41014,
+      "sha256": "69fdf932740973ce80a31005b2ed608c5e968e0121020595b2b67f424f87f527"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/actual-execution/execution.json",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/operation/execution.json",
+      "bytes": 511,
+      "sha256": "47da15a4e007d3c1616908db4a0906dd517179b7167f1191138cde514b98f639"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/actual-execution/stdout.json",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/operation/stdout.json",
+      "bytes": 59591,
+      "sha256": "c1d3083573e427bfec886a2b28ee26f84c5970a717171c0e0b5e381ca9087535"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/actual-execution/stderr.txt",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/operation/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/run_actual_once.py",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/operation/run_actual_once.py",
+      "bytes": 3650,
+      "sha256": "672dad66067becbc32c70be31e9eb68d320e6350bdaf4f556155097949c0d905"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-reference-projector-v1/reviewed-invocation.json",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/operation/reviewed-invocation.json",
+      "bytes": 715,
+      "sha256": "a2404a0c33ff5d5899680b43e92db0c69e0f926b925957da6dd9aba8f61aeef8"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-bound-choice-scope-v1/README.md",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/bound-label-scope/README.md",
+      "bytes": 6510,
+      "sha256": "a95202189ecb58c7171f16982c42aa4bb7dd29fa5808744488bb433f8e48d414"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-bound-choice-scope-v1/field-findings.json",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/bound-label-scope/field-findings.json",
+      "bytes": 3299,
+      "sha256": "76ce9c94af9e7983acb8d37da4c84e310920daedb346a1951c71c666394935a9"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-bound-choice-scope-v1/handoff.json",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/bound-label-scope/handoff.json",
+      "bytes": 1077,
+      "sha256": "e61ded9233edfe79a4071b60c3bf283ab02232d3b85fefe3e6f903820a5f98c3"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-bound-choice-scope-v1/inventory.json",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/bound-label-scope/inventory.json",
+      "bytes": 1006,
+      "sha256": "a4710d67833ef39466aee95edbeae1057d6b5da5e88975c7493a22f2fd4955d9"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-bound-choice-scope-v1/metadata-checks.json",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/bound-label-scope/metadata-checks.json",
+      "bytes": 708,
+      "sha256": "4938d2b9e843b8e032a5b810953402f1bd5732c175edf965e129a33d101af10d"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-bound-choice-scope-v1/objects.json",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/bound-label-scope/objects.json",
+      "bytes": 11141,
+      "sha256": "e0059b2d6eead1eb4f1e2323fdea88a8e00e48fdc132c04eceeb994cd363ce3a"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-bound-choice-scope-v1/publication-check.json",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/bound-label-scope/publication-check.json",
+      "bytes": 1330,
+      "sha256": "429ace2c5b1b2982789dc977d76c3f0dfa3835978369ecb5d1352b9fa544e520"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-bound-choice-scope-v1/source-bindings.json",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/bound-label-scope/source-bindings.json",
+      "bytes": 1686,
+      "sha256": "b40f87cbdea97715b5524a79d4a56c1df2a9d7c1f8656d76b230efdbd8cc3136"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-bound-choice-scope-v1/source-review.json",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/bound-label-scope/source-review.json",
+      "bytes": 1326,
+      "sha256": "007380adc98bde523749bee6d60884ac82e9b50b990d9f62d3584ed1a7109ad4"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-reference-projector-actual-review-v1/review.json",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/operation/independent-review.json",
+      "bytes": 4213,
+      "sha256": "2f4f7774a665666c5191f56e7ae3576b40119cf03fdb7eebaeeb5dbde95abc1f"
+    },
+    {
+      "copy_from": ".cache/phase2-growth-verification-ci-v1/final.json",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/previous-report-ci.json",
+      "bytes": 1304,
+      "sha256": "0f1eda482a1e24880a71651b6863a48923def2873c0a06268813cb1e001112ae"
+    },
+    {
+      "copy_from": ".cache/phase2-growth-verification-first-ci-v1/final.json",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/first-report-ci.json",
+      "bytes": 1304,
+      "sha256": "99d330aefb950373a828984afdadcc63f3c8be36ab27ca1caa656666c861d413"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/promotion-v2/reports/phase2-rhizo-reference-provenance-v1/PUBLICATION.md",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/PUBLICATION.md",
+      "bytes": 2447,
+      "sha256": "0d1c24d0547b41ccde11cdbdbf87e39274592a73e9e2c188f01a9d866ca74d6f"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/promotion-v2/reports/phase2-rhizo-reference-provenance-v1/README.md",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/README.md",
+      "bytes": 8718,
+      "sha256": "9c5b031347363d113a5be6c66e584cab9c2f9fc0964441c7d9afdf0a79d1f758"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/promotion-v2/reports/phase2-rhizo-reference-provenance-v1/RESEARCHER_CHECKLIST.md",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/RESEARCHER_CHECKLIST.md",
+      "bytes": 5058,
+      "sha256": "105e6567669af00e1085d2ee7c8dbaf8989e1ad574d57520175df714d9e16939"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/promotion-v2/reports/phase2-rhizo-reference-provenance-v1/actual-review-start.json",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/actual-review-start.json",
+      "bytes": 869,
+      "sha256": "d2f3a345b2c8a50477b692b6710070f50e34e2438aa22f3f0dc9bf64f4f42529"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/promotion-v2/reports/phase2-rhizo-reference-provenance-v1/before-checklist-precision/RESEARCHER_CHECKLIST.md",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/before-checklist-precision/RESEARCHER_CHECKLIST.md",
+      "bytes": 4651,
+      "sha256": "15ce9b483b54dc76196993d4451ddd619cbb6cf6038b9a1801fb3cdd218fbbe8"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/promotion-v2/reports/phase2-rhizo-reference-provenance-v1/before-checklist-precision/preparation.json",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/before-checklist-precision/preparation.json",
+      "bytes": 633,
+      "sha256": "efc9333184cd08ca55ab605513d902104fa3cea455572ac31691e35dc17e8575"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/promotion-v2/reports/phase2-rhizo-reference-provenance-v1/before-convention-clarification/README.md.bytes.json",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/before-convention-clarification/README.md.bytes.json",
+      "bytes": 10423,
+      "sha256": "cd4e55737265fb4cda0cfba25301adb7fa9ad9a906b511150cb40a01afc6595d"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/promotion-v2/reports/phase2-rhizo-reference-provenance-v1/before-convention-clarification/source-bindings.json",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/before-convention-clarification/source-bindings.json",
+      "bytes": 2864,
+      "sha256": "20df614bd7f60cbff6ec0e24fda254d763f74bf8ce21ce521fc80da1bba54fb5"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/promotion-v2/reports/phase2-rhizo-reference-provenance-v1/before-scope-clarification/README.md.bytes.json",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/before-scope-clarification/README.md.bytes.json",
+      "bytes": 10766,
+      "sha256": "d1ca241547b1b33fb1e13f6083fcd9598d5473e48a381aef1de6411fe39521af"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/promotion-v2/reports/phase2-rhizo-reference-provenance-v1/before-scope-clarification/source-bindings.json",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/before-scope-clarification/source-bindings.json",
+      "bytes": 3066,
+      "sha256": "c0450f9d1370c551cd0dd102f8004897a5c849929a24e6403243bfd988bf88c2"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/promotion-v2/reports/phase2-rhizo-reference-provenance-v1/bibliography.json",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/bibliography.json",
+      "bytes": 3265,
+      "sha256": "2224e70b183485cc3e9fb1ccea1a554ec44fb1d18760c1812b36af7d742a3d64"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/promotion-v2/reports/phase2-rhizo-reference-provenance-v1/checklist-precision.diff",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/checklist-precision.diff",
+      "bytes": 2095,
+      "sha256": "bd744c3796be569fc58cd8db1f6ecd8013cd9c73213ec3044372f532afdc9932"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/promotion-v2/reports/phase2-rhizo-reference-provenance-v1/checklist-review-copy-map.json",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/checklist-review-copy-map.json",
+      "bytes": 783,
+      "sha256": "bf47b056ea4070f9d26a68fe4061e20c25def8ce22797929fa620f26facb60b8"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/promotion-v2/reports/phase2-rhizo-reference-provenance-v1/correction-review-copy-map.json",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/correction-review-copy-map.json",
+      "bytes": 439,
+      "sha256": "4b84f6aad7f9f1676c2978d7a123fa9246a411180a93be7f08bd09351294d541"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/promotion-v2/reports/phase2-rhizo-reference-provenance-v1/exposure-ledger.json",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/exposure-ledger.json",
+      "bytes": 1890,
+      "sha256": "42e8bcceefad8494371ab07b6ef364cff3e82e8da3d43eb0af8ed822f036938f"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/promotion-v2/reports/phase2-rhizo-reference-provenance-v1/graph-check.json",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/graph-check.json",
+      "bytes": 717,
+      "sha256": "45807381c4914fdbb393eb7ff6d02158d94ad5b69d604809fa4a1df814f30921"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/promotion-v2/reports/phase2-rhizo-reference-provenance-v1/identity-review.json",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/identity-review.json",
+      "bytes": 1371,
+      "sha256": "96629c4e0588b8fe55d57e8368b64446f46f11cb5f201929b8b9633a8e800537"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/promotion-v2/reports/phase2-rhizo-reference-provenance-v1/independent-checklist-review/checklist-review-addendum.json",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/independent-checklist-review/checklist-review-addendum.json",
+      "bytes": 2162,
+      "sha256": "21b2375422981c6f15a14325e63179c5a6337f1413abeccb952693b9e3b758d6"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/promotion-v2/reports/phase2-rhizo-reference-provenance-v1/independent-checklist-review/checklist-review.json",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/independent-checklist-review/checklist-review.json",
+      "bytes": 3385,
+      "sha256": "cd5c9e759bc0be28dde2cfea25bd618b766bb60953d95dd8e5dd546951ddc67c"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/promotion-v2/reports/phase2-rhizo-reference-provenance-v1/independent-copy-map.json",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/independent-copy-map.json",
+      "bytes": 2429,
+      "sha256": "3280593b820fdadb967944e7f304c0be4761c1f96e369ea842b908b4e1ae928b"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/promotion-v2/reports/phase2-rhizo-reference-provenance-v1/independent-review/exposure-ledger-before-full-string-display.json",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/independent-review/exposure-ledger-before-full-string-display.json",
+      "bytes": 675,
+      "sha256": "d03d04a45ccf8242a8d840d24fee6792eeb29ce63001ba0e6ce01350c0370e85"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/promotion-v2/reports/phase2-rhizo-reference-provenance-v1/independent-review/exposure-ledger.json",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/independent-review/exposure-ledger.json",
+      "bytes": 1710,
+      "sha256": "62f030a28fa1988daf2c05202a8e75817fd04bf89e8d1945c0502a9aaaef5889"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/promotion-v2/reports/phase2-rhizo-reference-provenance-v1/independent-review/final-review-bindings.json",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/independent-review/final-review-bindings.json",
+      "bytes": 2163,
+      "sha256": "9e4345745f1a582ac90df2fccdeca9a6a1a2357786b58a68a8d2e25d2a109b69"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/promotion-v2/reports/phase2-rhizo-reference-provenance-v1/independent-review/final-review.json",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/independent-review/final-review.json",
+      "bytes": 7539,
+      "sha256": "daab9851c4eac7f3a192b8608edf5ed409bb3d6cc083a5dae214dfb176dec130"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/promotion-v2/reports/phase2-rhizo-reference-provenance-v1/independent-review/independent-interpretation.json",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/independent-review/independent-interpretation.json",
+      "bytes": 5017,
+      "sha256": "750e40a63cec7032d301f50500fcf6f3a1793e97396c3ac2fb326c8f9608916b"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/promotion-v2/reports/phase2-rhizo-reference-provenance-v1/independent-review/public-candidate-check.json",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/independent-review/public-candidate-check.json",
+      "bytes": 1731,
+      "sha256": "082c09344d3bb5f978020beaedd0441f3791edc925b22bf7a6d6774981d473bc"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/promotion-v2/reports/phase2-rhizo-reference-provenance-v1/independent-review/receipt-check.json",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/independent-review/receipt-check.json",
+      "bytes": 1705,
+      "sha256": "f040a23acdde7eafef2f7a3edf7b4c563aad780c248119b291fbf619ec16c9d3"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/promotion-v2/reports/phase2-rhizo-reference-provenance-v1/independent-review/scope-correction-review.json",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/independent-review/scope-correction-review.json",
+      "bytes": 3452,
+      "sha256": "783d1213a1c781e1e92716449d87be643524e4a4dc3e7133cd8fcf28832d3c36"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/promotion-v2/reports/phase2-rhizo-reference-provenance-v1/independent-review/scope.json",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/independent-review/scope.json",
+      "bytes": 1371,
+      "sha256": "3f6f3768f1cb65d55fd5045c5720757e6427b7afd155618139283cab6bf1d45f"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/promotion-v2/reports/phase2-rhizo-reference-provenance-v1/original-byte-map.json",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/original-byte-map.json",
+      "bytes": 20543,
+      "sha256": "3911a644653e35c389bf1e7892799ffd79ed81796235b7e30cb1ff319d7e6f61"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/promotion-v2/reports/phase2-rhizo-reference-provenance-v1/original-reference-frame.json",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/original-reference-frame.json",
+      "bytes": 71649,
+      "sha256": "80a1aca0fd56d89f49ff5f0e4b3930405f11ae1cd4acea14b8edab2381940aa4"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/promotion-v2/reports/phase2-rhizo-reference-provenance-v1/preparation.json",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/preparation.json",
+      "bytes": 993,
+      "sha256": "c463071970be27f7065c5c5ee89a855149a7a53b60d12c5ec611109645f85da1"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/promotion-v2/reports/phase2-rhizo-reference-provenance-v1/projection-public.json",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/projection-public.json",
+      "bytes": 59591,
+      "sha256": "c1d3083573e427bfec886a2b28ee26f84c5970a717171c0e0b5e381ca9087535"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/promotion-v2/reports/phase2-rhizo-reference-provenance-v1/publication-history/initial-inventory.json",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/publication-history/initial-inventory.json",
+      "bytes": 7350,
+      "sha256": "1a2d515d5a52db59de6f1335bf0b0b50ab68086e09a2c6035ec243a7435b7c56"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/promotion-v2/reports/phase2-rhizo-reference-provenance-v1/reference-provenance.csv",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/reference-provenance.csv",
+      "bytes": 14358,
+      "sha256": "e72f2e3a567123f5ac5ffb31581787b5121f57e7c3a4b841c244a72827ff83f1"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/promotion-v2/reports/phase2-rhizo-reference-provenance-v1/scope-clarification.json",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/scope-clarification.json",
+      "bytes": 1047,
+      "sha256": "4b3f8beb7bf56fd5b70dd61c519e6ec4d2ca6df4593602d567df590191642e91"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/promotion-v2/reports/phase2-rhizo-reference-provenance-v1/source-bindings.json",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/source-bindings.json",
+      "bytes": 3422,
+      "sha256": "a5f2c526e55ecf12890f547c540fa3e47808817c51ed393f48ea19beff508939"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/promotion-inventory-v2.json",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/promotion-inventory-v2.json",
+      "bytes": 9006,
+      "sha256": "ca0e1764726279b4d21b94ab46ab0bc1b94144ad7b2d16f8974b9ea1849e5e38"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-documentary-review-v1/handoff-v2.json",
+      "published": "reports/phase2-rhizo-reference-provenance-v1/handoff-v2.json",
+      "bytes": 1653,
+      "sha256": "bd66553834063e4813e8977bdd67a3e9a2a06cc95b47b56a7ad68746b47aef89"
+    },
+    {
+      "copy_from": ".cache/phase2-rhizo-release-v1/README.md",
+      "published": "reports/phase2-rhizo-reference-readiness-v1/README.md",
+      "bytes": 6059,
+      "sha256": "2df0126d340a67e7119e4438c248f141cf33843bbc069e4dc01370d9a524e9db"
+    }
+  ],
+  "files": {
+    "GOAL.md": "61a9c706bde03fd28ae44550fd18d13a9ca1c6746676f14b541a5d181a59387c",
+    "STATUS.md": "f57f37515dc145d09e270b477abe1cab961d45776e64bb3b514bf329b5a82d4d",
+    "docs/release-validation.md": "843ed2f894b6a72a5ff4798b61ff7ccf8546fa92afe7465b06ce2630c00d4e3b",
+    "reports/continuation.json": "77f89b56f01e3dbc0751c80d3ce68dc38bcd4bf880c10d172afcfbfa9155fb5e",
+    "reports/phase2-rhizo-reference-provenance-v1/PUBLICATION.md": "0d1c24d0547b41ccde11cdbdbf87e39274592a73e9e2c188f01a9d866ca74d6f",
+    "reports/phase2-rhizo-reference-provenance-v1/README.md": "9c5b031347363d113a5be6c66e584cab9c2f9fc0964441c7d9afdf0a79d1f758",
+    "reports/phase2-rhizo-reference-provenance-v1/RESEARCHER_CHECKLIST.md": "105e6567669af00e1085d2ee7c8dbaf8989e1ad574d57520175df714d9e16939",
+    "reports/phase2-rhizo-reference-provenance-v1/actual-review-start.json": "d2f3a345b2c8a50477b692b6710070f50e34e2438aa22f3f0dc9bf64f4f42529",
+    "reports/phase2-rhizo-reference-provenance-v1/before-checklist-precision/RESEARCHER_CHECKLIST.md": "15ce9b483b54dc76196993d4451ddd619cbb6cf6038b9a1801fb3cdd218fbbe8",
+    "reports/phase2-rhizo-reference-provenance-v1/before-checklist-precision/preparation.json": "efc9333184cd08ca55ab605513d902104fa3cea455572ac31691e35dc17e8575",
+    "reports/phase2-rhizo-reference-provenance-v1/before-convention-clarification/README.md.bytes.json": "cd4e55737265fb4cda0cfba25301adb7fa9ad9a906b511150cb40a01afc6595d",
+    "reports/phase2-rhizo-reference-provenance-v1/before-convention-clarification/source-bindings.json": "20df614bd7f60cbff6ec0e24fda254d763f74bf8ce21ce521fc80da1bba54fb5",
+    "reports/phase2-rhizo-reference-provenance-v1/before-scope-clarification/README.md.bytes.json": "d1ca241547b1b33fb1e13f6083fcd9598d5473e48a381aef1de6411fe39521af",
+    "reports/phase2-rhizo-reference-provenance-v1/before-scope-clarification/source-bindings.json": "c0450f9d1370c551cd0dd102f8004897a5c849929a24e6403243bfd988bf88c2",
+    "reports/phase2-rhizo-reference-provenance-v1/bibliography.json": "2224e70b183485cc3e9fb1ccea1a554ec44fb1d18760c1812b36af7d742a3d64",
+    "reports/phase2-rhizo-reference-provenance-v1/checklist-precision.diff": "bd744c3796be569fc58cd8db1f6ecd8013cd9c73213ec3044372f532afdc9932",
+    "reports/phase2-rhizo-reference-provenance-v1/checklist-review-copy-map.json": "bf47b056ea4070f9d26a68fe4061e20c25def8ce22797929fa620f26facb60b8",
+    "reports/phase2-rhizo-reference-provenance-v1/correction-review-copy-map.json": "4b84f6aad7f9f1676c2978d7a123fa9246a411180a93be7f08bd09351294d541",
+    "reports/phase2-rhizo-reference-provenance-v1/exposure-ledger.json": "42e8bcceefad8494371ab07b6ef364cff3e82e8da3d43eb0af8ed822f036938f",
+    "reports/phase2-rhizo-reference-provenance-v1/graph-check.json": "45807381c4914fdbb393eb7ff6d02158d94ad5b69d604809fa4a1df814f30921",
+    "reports/phase2-rhizo-reference-provenance-v1/handoff-v2.json": "bd66553834063e4813e8977bdd67a3e9a2a06cc95b47b56a7ad68746b47aef89",
+    "reports/phase2-rhizo-reference-provenance-v1/identity-review.json": "96629c4e0588b8fe55d57e8368b64446f46f11cb5f201929b8b9633a8e800537",
+    "reports/phase2-rhizo-reference-provenance-v1/independent-checklist-review/checklist-review-addendum.json": "21b2375422981c6f15a14325e63179c5a6337f1413abeccb952693b9e3b758d6",
+    "reports/phase2-rhizo-reference-provenance-v1/independent-checklist-review/checklist-review.json": "cd5c9e759bc0be28dde2cfea25bd618b766bb60953d95dd8e5dd546951ddc67c",
+    "reports/phase2-rhizo-reference-provenance-v1/independent-copy-map.json": "3280593b820fdadb967944e7f304c0be4761c1f96e369ea842b908b4e1ae928b",
+    "reports/phase2-rhizo-reference-provenance-v1/independent-review/exposure-ledger-before-full-string-display.json": "d03d04a45ccf8242a8d840d24fee6792eeb29ce63001ba0e6ce01350c0370e85",
+    "reports/phase2-rhizo-reference-provenance-v1/independent-review/exposure-ledger.json": "62f030a28fa1988daf2c05202a8e75817fd04bf89e8d1945c0502a9aaaef5889",
+    "reports/phase2-rhizo-reference-provenance-v1/independent-review/final-review-bindings.json": "9e4345745f1a582ac90df2fccdeca9a6a1a2357786b58a68a8d2e25d2a109b69",
+    "reports/phase2-rhizo-reference-provenance-v1/independent-review/final-review.json": "daab9851c4eac7f3a192b8608edf5ed409bb3d6cc083a5dae214dfb176dec130",
+    "reports/phase2-rhizo-reference-provenance-v1/independent-review/independent-interpretation.json": "750e40a63cec7032d301f50500fcf6f3a1793e97396c3ac2fb326c8f9608916b",
+    "reports/phase2-rhizo-reference-provenance-v1/independent-review/public-candidate-check.json": "082c09344d3bb5f978020beaedd0441f3791edc925b22bf7a6d6774981d473bc",
+    "reports/phase2-rhizo-reference-provenance-v1/independent-review/receipt-check.json": "f040a23acdde7eafef2f7a3edf7b4c563aad780c248119b291fbf619ec16c9d3",
+    "reports/phase2-rhizo-reference-provenance-v1/independent-review/scope-correction-review.json": "783d1213a1c781e1e92716449d87be643524e4a4dc3e7133cd8fcf28832d3c36",
+    "reports/phase2-rhizo-reference-provenance-v1/independent-review/scope.json": "3f6f3768f1cb65d55fd5045c5720757e6427b7afd155618139283cab6bf1d45f",
+    "reports/phase2-rhizo-reference-provenance-v1/original-byte-map.json": "3911a644653e35c389bf1e7892799ffd79ed81796235b7e30cb1ff319d7e6f61",
+    "reports/phase2-rhizo-reference-provenance-v1/original-reference-frame.json": "80a1aca0fd56d89f49ff5f0e4b3930405f11ae1cd4acea14b8edab2381940aa4",
+    "reports/phase2-rhizo-reference-provenance-v1/preparation.json": "c463071970be27f7065c5c5ee89a855149a7a53b60d12c5ec611109645f85da1",
+    "reports/phase2-rhizo-reference-provenance-v1/projection-public.json": "c1d3083573e427bfec886a2b28ee26f84c5970a717171c0e0b5e381ca9087535",
+    "reports/phase2-rhizo-reference-provenance-v1/promotion-inventory-v2.json": "ca0e1764726279b4d21b94ab46ab0bc1b94144ad7b2d16f8974b9ea1849e5e38",
+    "reports/phase2-rhizo-reference-provenance-v1/publication-history/initial-inventory.json": "1a2d515d5a52db59de6f1335bf0b0b50ab68086e09a2c6035ec243a7435b7c56",
+    "reports/phase2-rhizo-reference-provenance-v1/reference-provenance.csv": "e72f2e3a567123f5ac5ffb31581787b5121f57e7c3a4b841c244a72827ff83f1",
+    "reports/phase2-rhizo-reference-provenance-v1/scope-clarification.json": "4b3f8beb7bf56fd5b70dd61c519e6ec4d2ca6df4593602d567df590191642e91",
+    "reports/phase2-rhizo-reference-provenance-v1/source-bindings.json": "a5f2c526e55ecf12890f547c540fa3e47808817c51ed393f48ea19beff508939",
+    "reports/phase2-rhizo-reference-readiness-v1/PUBLICATION.md": "580e76436076343584bffee10fa8607ecb3ef4d2a982c8caeca613ac58a246c6",
+    "reports/phase2-rhizo-reference-readiness-v1/README.md": "2df0126d340a67e7119e4438c248f141cf33843bbc069e4dc01370d9a524e9db",
+    "reports/phase2-rhizo-reference-readiness-v1/bound-label-scope/README.md": "a95202189ecb58c7171f16982c42aa4bb7dd29fa5808744488bb433f8e48d414",
+    "reports/phase2-rhizo-reference-readiness-v1/bound-label-scope/field-findings.json": "76ce9c94af9e7983acb8d37da4c84e310920daedb346a1951c71c666394935a9",
+    "reports/phase2-rhizo-reference-readiness-v1/bound-label-scope/handoff.json": "e61ded9233edfe79a4071b60c3bf283ab02232d3b85fefe3e6f903820a5f98c3",
+    "reports/phase2-rhizo-reference-readiness-v1/bound-label-scope/inventory.json": "a4710d67833ef39466aee95edbeae1057d6b5da5e88975c7493a22f2fd4955d9",
+    "reports/phase2-rhizo-reference-readiness-v1/bound-label-scope/metadata-checks.json": "4938d2b9e843b8e032a5b810953402f1bd5732c175edf965e129a33d101af10d",
+    "reports/phase2-rhizo-reference-readiness-v1/bound-label-scope/objects.json": "e0059b2d6eead1eb4f1e2323fdea88a8e00e48fdc132c04eceeb994cd363ce3a",
+    "reports/phase2-rhizo-reference-readiness-v1/bound-label-scope/publication-check.json": "429ace2c5b1b2982789dc977d76c3f0dfa3835978369ecb5d1352b9fa544e520",
+    "reports/phase2-rhizo-reference-readiness-v1/bound-label-scope/source-bindings.json": "b40f87cbdea97715b5524a79d4a56c1df2a9d7c1f8656d76b230efdbd8cc3136",
+    "reports/phase2-rhizo-reference-readiness-v1/bound-label-scope/source-review.json": "007380adc98bde523749bee6d60884ac82e9b50b990d9f62d3584ed1a7109ad4",
+    "reports/phase2-rhizo-reference-readiness-v1/design/README.md": "c3152108ac58cae50e815cf27bf3a73787a34a0360f33642b15a00a33e948a0a",
+    "reports/phase2-rhizo-reference-readiness-v1/design/independent-review/design-check.json": "78782282aa9003d8ed836191cf2e1d3b4ba84ca6e08a6b0f32bd9087534916c8",
+    "reports/phase2-rhizo-reference-readiness-v1/design/independent-review/final-review-bindings.json": "659278d1b64398338e0eb9da83e453afed363051c2497c30787ea36db0fd65f8",
+    "reports/phase2-rhizo-reference-readiness-v1/design/independent-review/final-review.json": "986dd2184018353b041aa2c1f90abb59edc5961e561af635109cf53e7541d2f2",
+    "reports/phase2-rhizo-reference-readiness-v1/design/independent-review/initial-challenge.md": "51b313a6e4e11f05e23d17462e032afe4a38d81cf4f4d4a67eae1861b376f8cd",
+    "reports/phase2-rhizo-reference-readiness-v1/design/independent-review/public-counts.json": "88a19d9042aaa805d6c96d7ca095c4a5974d59ed9815612913d6ecba49636545",
+    "reports/phase2-rhizo-reference-readiness-v1/design/independent-review/source-bindings.json": "520f3bacd46514f8ef76209643352e58c55bccc73cb6e1d023639ef41b48a7e9",
+    "reports/phase2-rhizo-reference-readiness-v1/design/planned-inputs.json": "216907d07f977881c4220cb9c697708217101c2747c54bb7874b20e1470e3092",
+    "reports/phase2-rhizo-reference-readiness-v1/design/reference-frame.json": "80a1aca0fd56d89f49ff5f0e4b3930405f11ae1cd4acea14b8edab2381940aa4",
+    "reports/phase2-rhizo-reference-readiness-v1/design/review-copy-map.json": "f1e81236ef20a82d8f3e4627a8a98605809bff44327b11a75d352ebe6572f32f",
+    "reports/phase2-rhizo-reference-readiness-v1/design/source-bindings.json": "63402374fe80c558007fc17e56f9937ed1bbd9611fd1a5ae8d98adb2f2fa8709",
+    "reports/phase2-rhizo-reference-readiness-v1/design/static-check.json": "cf2ca6d25df9eced1cee6556b2b4e3725fd5b90d2a522e91c5bb19017ab9d17e",
+    "reports/phase2-rhizo-reference-readiness-v1/first-report-ci.json": "99d330aefb950373a828984afdadcc63f3c8be36ab27ca1caa656666c861d413",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/aggregate-exposure-fix.diff": "8538d128effc06098644d174c9a6724c658bcb89f60673ff85dc7ea3f5349825",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/challenge-plan.md": "27150804d9a8cd72b7949b6ceb1ed6f2a07ac9263e5e47a05acf59a7255d5d0e",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/first-run/execution.json": "a1a3acc2883ddfefb49ccc56c7c120b09f99583bb74596f98beb7fb28bc74993",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/first-run/generated_fixtures.py": "afbb07d937dd82078ef3f155beae36befe67f997faeecdd4893778e929ea7704",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/first-run/reference_projector.py": "a477032c8b396cd68119bb604549b499da3e3e6f8dfd749206799bcaaca21f79",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/first-run/run_review.py": "3b0fae4d499ed74b0fabb3fe569e93628e98a7f006f120b8786432f822b63041",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/first-run/scope.json": "f5446b9507ea394ea1631a7a85a9306cbb1407341df1e76de71186a6524ef9e5",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/first-run/start.json": "9510461809a7bd0348c05129b87b9d22e419da79301cf51566abf4190012372b",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/first-run/stderr.txt": "411b890c21fa198481b0877a6bd06b7e04f6ba3145d2680ed881a9f2a60c95d5",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/first-run/stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/first-run/test_reference_projector_review.py": "54384a8dfc23ca1e026d8da75317b7960330e834b4cf00fd4aead41923cb17d8",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/generated_fixtures.py": "afbb07d937dd82078ef3f155beae36befe67f997faeecdd4893778e929ea7704",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/handoff.json": "6e7d400ab5cba703890e68240e36765ecb99e57d5d93b0508d089970bc8e5f00",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/inventory.json": "7a6781c4c6e640163985c674d4cdf53a254a20e4a315bfe36192694524642dbf",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/preparation.json": "eeb0fe2817f17fc4d8734aa3254c26998be2144f8240442b63790269317ed6fc",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/review.json": "664c62d3a0488ab0a0c11fbb91a4c14cd12f5bb6117ef829aac4d36e4de52e8a",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/reviewed-contract.md": "577d7284b927cd6c5e8aaef2e0a6509223a06574cc536eaf484c0ca3aa8f66cf",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/reviewed-contract.original.json": "a38f399837de1d55f674b27990e762b76aa269f3503cc33c73b6a622c713a123",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/run_review.py": "3b0fae4d499ed74b0fabb3fe569e93628e98a7f006f120b8786432f822b63041",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/second-run/execution.json": "52e8aedcaf90ee1e0c7288ac376c090054a5527be1c71be725f1f4fee34ad780",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/second-run/generated_fixtures.py": "afbb07d937dd82078ef3f155beae36befe67f997faeecdd4893778e929ea7704",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/second-run/reference_projector.py": "bab641881335f57d4571fe0d4f720696f57e5816fa36266647cdf86d0701b263",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/second-run/run_review.py": "3b0fae4d499ed74b0fabb3fe569e93628e98a7f006f120b8786432f822b63041",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/second-run/scope.json": "f5446b9507ea394ea1631a7a85a9306cbb1407341df1e76de71186a6524ef9e5",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/second-run/start.json": "d821580abab71da4aa1ea9fe7645fc7eac9866ee37b52967860f7b82092204d7",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/second-run/stderr.txt": "fe335524f6b7710a4aa9ebe4f914473bc1d1bbfe0d64b732220c22fb92516d81",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/second-run/stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/second-run/test_reference_projector_review.py": "54384a8dfc23ca1e026d8da75317b7960330e834b4cf00fd4aead41923cb17d8",
+    "reports/phase2-rhizo-reference-readiness-v1/independent-review/test_reference_projector_review.py": "54384a8dfc23ca1e026d8da75317b7960330e834b4cf00fd4aead41923cb17d8",
+    "reports/phase2-rhizo-reference-readiness-v1/operation/execution.json": "47da15a4e007d3c1616908db4a0906dd517179b7167f1191138cde514b98f639",
+    "reports/phase2-rhizo-reference-readiness-v1/operation/independent-review.json": "2f4f7774a665666c5191f56e7ae3576b40119cf03fdb7eebaeeb5dbde95abc1f",
+    "reports/phase2-rhizo-reference-readiness-v1/operation/public.json": "c1d3083573e427bfec886a2b28ee26f84c5970a717171c0e0b5e381ca9087535",
+    "reports/phase2-rhizo-reference-readiness-v1/operation/reservation.json": "775ab28cc4e717306f11b2174296ce404ef821837adc3b4e40c304be42ee3cb6",
+    "reports/phase2-rhizo-reference-readiness-v1/operation/reviewed-invocation.json": "a2404a0c33ff5d5899680b43e92db0c69e0f926b925957da6dd9aba8f61aeef8",
+    "reports/phase2-rhizo-reference-readiness-v1/operation/run_actual_once.py": "672dad66067becbc32c70be31e9eb68d320e6350bdaf4f556155097949c0d905",
+    "reports/phase2-rhizo-reference-readiness-v1/operation/start.json": "69fdf932740973ce80a31005b2ed608c5e968e0121020595b2b67f424f87f527",
+    "reports/phase2-rhizo-reference-readiness-v1/operation/stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reports/phase2-rhizo-reference-readiness-v1/operation/stdout.json": "c1d3083573e427bfec886a2b28ee26f84c5970a717171c0e0b5e381ca9087535",
+    "reports/phase2-rhizo-reference-readiness-v1/previous-report-ci.json": "0f1eda482a1e24880a71651b6863a48923def2873c0a06268813cb1e001112ae",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/FINAL.md": "ef51b9f4c72164b6997fba93a4a78aa6151f62cad66a1e67aa2cfdb8c11e1d33",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/README.md": "f5f1582036db4f13b879cd47ae1abeccb2380df07bba09b3f0450696b21ef65e",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/aggregate-parse-correction.json": "8dae590dce1d2395bba309e4671dd0afa2b3e1b028762786182904332606f08b",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/before-aggregate-parse-fix/README.md": "f5f1582036db4f13b879cd47ae1abeccb2380df07bba09b3f0450696b21ef65e",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/before-aggregate-parse-fix/reference_projector.py": "a477032c8b396cd68119bb604549b499da3e3e6f8dfd749206799bcaaca21f79",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/before-aggregate-parse-fix/scope.json": "f5446b9507ea394ea1631a7a85a9306cbb1407341df1e76de71186a6524ef9e5",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/before-aggregate-parse-fix/source-hold.json": "3de81fc4aa892e941607f78605b915c7ceeb778048844650c2d2cfbcf47bdcea",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/before-aggregate-parse-fix/test_reference_projector.py": "48a2a267e335e4c02e93e197f8f4341376677e38397f5fd25a14977f4dd618fc",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/field-bindings.json": "dd45be17e381379eca4848e3ae4c7f186011ad301c8f250010a219bb82bbde8d",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/final-author/README.md": "f5f1582036db4f13b879cd47ae1abeccb2380df07bba09b3f0450696b21ef65e",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/final-author/execution.json": "876d089716da84e38f0c7c2f78483de7b46d1d93ecef2594ad1c088f01f6e6dd",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/final-author/reference_projector.py": "bab641881335f57d4571fe0d4f720696f57e5816fa36266647cdf86d0701b263",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/final-author/run_guarded.py": "9a01075290bb4afc06a2a7bc2841a47ee6cd8fb131dc57e47e8571f6f3d8e199",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/final-author/scope.json": "f5446b9507ea394ea1631a7a85a9306cbb1407341df1e76de71186a6524ef9e5",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/final-author/start.json": "1e9a9cab645b064ea16d613b6760b6781549ab50becef021f32c5f96de426160",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/final-author/stderr.txt.json": "ed2a1168900f59cab820d8d55efbddfeae09acfb42a4083d4dcdd7e4b4077c54",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/final-author/stdout.txt": "dea717817f07267842c73aef7e60457667a27e046ccd4515b80b6265037dbfc3",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/final-author/test_reference_projector.py": "8de45bfd5c369549b930bec2d42542880de05bfb5769c632fe8ac920b8dd67b8",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/first-author/README.md": "f5f1582036db4f13b879cd47ae1abeccb2380df07bba09b3f0450696b21ef65e",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/first-author/execution.json": "d6ca04799b025cee87d6559fd1a54b7ab0ecd4c1256058665ac1059c81e7e0f7",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/first-author/reference_projector.py": "a477032c8b396cd68119bb604549b499da3e3e6f8dfd749206799bcaaca21f79",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/first-author/run_guarded.py": "9a01075290bb4afc06a2a7bc2841a47ee6cd8fb131dc57e47e8571f6f3d8e199",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/first-author/scope.json": "f5446b9507ea394ea1631a7a85a9306cbb1407341df1e76de71186a6524ef9e5",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/first-author/start.json": "fff16e633d45dadd8c024c4864b0771f87569e272e69bc5613f80667eaf0f8d3",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/first-author/stderr.txt.json": "b64d0c57288a1b4aea62a2c6cee8d30916c67ccb8e6f362736686c7e7507a0a0",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/first-author/stdout.txt": "3b263de1048c7b4edbf14df98d462c92c155869676b90af6f45d55597a83cf53",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/first-author/test_reference_projector.py": "48a2a267e335e4c02e93e197f8f4341376677e38397f5fd25a14977f4dd618fc",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/handoff.json": "9b965f3f3127641fe1b9c381f2da4efdad46cf3f8a2c6a51bbc8994b4f0495da",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/independent-review-binding.json": "8b88712bfbef92453b5bf08e35175a0cc5abd0a52530dd4c6ea7132733a9345c",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/inventory.json": "a68f61a6a060b889e181210e01df7c00910173acb3f0d1cee14128ae111365b5",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/pre-hold-review-finding.json": "2fd8b1321ebaf8d84d451e2caf7e998fcdd62c7db0bb7f5dbf9fe60461031867",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/publication-check.json": "c94e92ad15abeb5eff3cc2f34f15845a765c88f72c61ac559bd6554018c84a3b",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/publication-layout.json": "2f512137ff5da469be6af98dc97d7b7604243b40ee78914d3201a10a5d991921",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/reference_projector.py": "bab641881335f57d4571fe0d4f720696f57e5816fa36266647cdf86d0701b263",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/run_guarded.py": "9a01075290bb4afc06a2a7bc2841a47ee6cd8fb131dc57e47e8571f6f3d8e199",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/scope.json": "f5446b9507ea394ea1631a7a85a9306cbb1407341df1e76de71186a6524ef9e5",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/source-diff.json": "3929b10f416808edb65269c3f707659f0a07ce60f0b327741061d8866731b74c",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/source-hold.json": "65a788a1118ac9207e97a482098f682e1ff9ad780d4ca586cf90194168601013",
+    "reports/phase2-rhizo-reference-readiness-v1/projector/test_reference_projector.py": "8de45bfd5c369549b930bec2d42542880de05bfb5769c632fe8ac920b8dd67b8",
+    "reports/phase2-rhizo-reference-readiness-v1/publication-plan/copy-map.json": "0bc9fe59b77b0b311aaa3918cf85e668e16acd9770202ea6b5b9bb784798e0c1",
+    "reports/phase2-rhizo-reference-readiness-v1/publication-plan/first-stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reports/phase2-rhizo-reference-readiness-v1/publication-plan/first-stdout.txt": "b03e5238550f139beb6a917a1ba844b9e5f54e97b6de8ac2c5f2fbf976258acc",
+    "reports/phase2-rhizo-reference-readiness-v1/publication-plan/handoff.json": "101986250a22789dd1cecfec5b370c2f4d666e6f5234abadc55f5044457745b9",
+    "reports/phase2-rhizo-reference-readiness-v1/publication-plan/inventory.json": "1e27a16af22003dfb4389c05113057341058c45598de6aa78e2ec01d6f58f54a",
+    "reports/phase2-rhizo-reference-readiness-v1/publication-plan/lossless-wrappers.json": "2698c9367c8532755bbee39b37ec92dab8344ae4b5d18ccb25b1b9318f83c403",
+    "reports/phase2-rhizo-reference-readiness-v1/publication-plan/prepare_copy_plan.py": "7f66a4ab6cd3453c827e37c9b3b44ce7106ee60aa580481cc3d380fc02792236",
+    "reports/phase2-rhizo-reference-readiness-v1/publication-plan/relocation-link-repairs.json": "e6ee52d1f8a3d4bc04ae0f868d41bf45f58527f2b1e30d113662c40020dc4b7a",
+    "reports/phase2-rhizo-reference-readiness-v1/publication-plan/source-bindings.json": "e1de1919936129b58551df79291d7e7ec6b0a8df4bea1d1919dddd927ef19a28",
+    "reports/phase2-rhizo-reference-readiness-v1/publication-plan/validation.json": "2860b7b7e30b8077d18dbb67d9689938555be52d1ee8d38db671f02ad9957800",
+    "reports/progress.md": "f13de8d171bd928f135c7cec5415ca0362c975c3ebfee433cbbaaf4d0ab0c33b"
+  },
+  "local_markdown_links_checked": 267,
+  "runtime_changes": false,
+  "excluded": [
+    "raw reference objects",
+    "private documentary projection",
+    "actual bound/run/evidence objects"
+  ],
+  "own_manifest_excluded_from_own_hash_set": true
+}

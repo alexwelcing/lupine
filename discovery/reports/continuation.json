@@ -14,7 +14,7 @@
   "default_timezone": "America/New_York",
   "next_run_time_returned_at_creation": null,
   "last_run_time_returned_at_creation": null,
-  "execution_status": "ACTIVE_RENEWED_PHASE: c17c4c6 CI/package/artifact gates passed; actual G30 pair matches selected shape, G31 pair remains BLOCKED_LAYOUT before XML. Independent corrected actual-receipt audit passes; original field-reference failure retained. Root owns evidence publication and source-route review. Expired automation remains disabled.",
+  "execution_status": "ACTIVE_RENEWED_PHASE: parent3139e1e passes all four original CI jobs. Rhizo documentary projection completed; scientific admission and stored-label readiness unresolved. Root publishes evidence while two generated-data candidates proceed. Expired automation remains disabled.",
   "notification_policy": "Substantive daily milestone summary, actionable blocker, or final release decision; suppress unchanged status.",
   "scope": "Resume latest GitHub goal and implement the next bounded increment with available tools, testing and recording actual outcomes.",
   "limits": "Scheduling success does not prove future tool availability, a completed build, or uninterrupted execution. Check and record each run. Do not silently extend the bounded schedule.",
@@ -38,14 +38,14 @@
     "continuous_worker_started": false
   },
   "current_checkpoint": {
-    "recorded_at": "2026-10-16T11:16:00.753093+00:00",
-    "owner": "Root evidence publication and exact remote/CI; independent source and claim review lanes",
+    "recorded_at": "2026-10-16T11:57:59.429607+00:00",
+    "owner": "Root publication and source-scope decisions; finite_inverse_check stored-label candidate; growth_predicate_diagnostic author and phase2_math independent review",
     "goal_state": "ACTIVE_RENEWED_PHASE",
-    "published_commit": "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace",
-    "published_ci_run": 38888807101,
+    "published_commit": "3139e1ea7bdf4b78e3e70502f2c299ba3c1efea3",
+    "published_ci_run": 38894146804,
     "published_ci_all_four_jobs_pass": true,
-    "published_evidence": "reports/phase2-growth-verification-v1/README.md",
-    "working_checkpoint": "Actual G30 pair shape matches; actual G31 pair BLOCKED_LAYOUT before decompression/XML. All332runtime held. Corrected independent actual audit passes19246checks after preserved obsolete-field failure. BAM/NIST/math/pure-layout evidence ready for publication.",
+    "published_evidence": "reports/phase2-rhizo-reference-readiness-v1/previous-report-ci.json",
+    "working_checkpoint": "One Rhizo reference projection completed; 43 locations / 36 IDs / 172 links preserved; actual notes expose numerical outcomes. Stored-label completeness and reference choice unresolved; no performance comparison. Both prior report commits pass all four original CI jobs.",
     "actual_new_scientific_allocation_performed": false,
     "scientific_usefulness": "NO_GO unchanged; no new scientific experiment",
     "clean_package": {
@@ -96,7 +96,7 @@
       "notebook_code_executed": false,
       "output_values_disclosed": false
     },
-    "next_action": "Publish held reports and verify exact report commit/CI; perform bounded Rhizo historical label-readiness review and preserve Li categorical diagnosis as separate preparation. No scientific allocation or G21 admission.",
+    "next_action": "Publish Rhizo provenance increment and verify its exact remote/CI. Finish independent generated tests for minimum36 stored-label readiness and comprehensive Li categorical header diagnostic before any new actual operation.",
     "automation_reenabled": false,
     "new_schedule_created": false,
     "continuous_worker_started": false,
@@ -274,6 +274,39 @@
       "actual_source_access": false,
       "runtime_promoted": false,
       "report": "reports/phase2-documentary-layout-preparation-v1/README.md"
+    },
+    "rhizo_reference_readiness": {
+      "status": "DOCUMENTARY_PROJECTION_COMPLETE_NOT_ADMITTED",
+      "report": "reports/phase2-rhizo-reference-readiness-v1/README.md",
+      "actual_operations": 1,
+      "public_sha256": "c1d3083573e427bfec886a2b28ee26f84c5970a717171c0e0b5e381ca9087535",
+      "locations": 43,
+      "ids": 36,
+      "candidate_links": 172,
+      "author_tests_pass": 26,
+      "independent_tests_pass": 13,
+      "first_independent_exposure_flag_failure_preserved": true,
+      "numeric_completeness_checked": false,
+      "actual_reference_choice": "UNKNOWN",
+      "all_selected_notes_researcher_exposed": true,
+      "fits": 0,
+      "splits": 0,
+      "labels_compared": 0,
+      "followon_bound_objects_read": false
+    },
+    "rhizo_recorded_label_candidate": {
+      "status": "GENERATED_DATA_PREPARATION",
+      "fixed_objects": 36,
+      "bytes": 126885,
+      "expected_property_positions": 144,
+      "reference_choice_reconstruction": false,
+      "actual_invocation": false
+    },
+    "li_categorical_header_candidate": {
+      "status": "GENERATED_DATA_PREPARATION",
+      "accepted_profile_changed": false,
+      "actual_invocation": false,
+      "xml_access": false
     }
   },
   "closure": {

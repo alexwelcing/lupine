@@ -1,0 +1,14 @@
+{
+  "author_stderr_wrappers": 2,
+  "copy_map_sha256": "0bc9fe59b77b0b311aaa3918cf85e668e16acd9770202ea6b5b9bb784798e0c1",
+  "exact_copy_rows": 78,
+  "inventory_sha256": "1e27a16af22003dfb4389c05113057341058c45598de6aa78e2ec01d6f58f54a",
+  "link_repairs": 1,
+  "new_whitespace_wrappers": 0,
+  "publication_rows": 80,
+  "relative_links_checked": 17,
+  "scope": "Completed preoperation evidence only; root adds actual evidence and verifies Git inclusion separately.",
+  "source_files": 81,
+  "status": "READY_FOR_ROOT_EXPLICIT_COPY",
+  "validation_sha256": "2860b7b7e30b8077d18dbb67d9689938555be52d1ee8d38db671f02ad9957800"
+}

@@ -1,0 +1,18 @@
+{
+  "copies": [
+    {
+      "original_path": ".cache/phase2-rhizo-reference-readiness-review-v1/checklist-review.json",
+      "copy_path": ".cache/phase2-rhizo-documentary-review-v1/independent-checklist-review/checklist-review.json",
+      "bytes": 3385,
+      "sha256": "cd5c9e759bc0be28dde2cfea25bd618b766bb60953d95dd8e5dd546951ddc67c"
+    },
+    {
+      "original_path": ".cache/phase2-rhizo-reference-readiness-review-v1/checklist-review-addendum.json",
+      "copy_path": ".cache/phase2-rhizo-documentary-review-v1/independent-checklist-review/checklist-review-addendum.json",
+      "bytes": 2162,
+      "sha256": "21b2375422981c6f15a14325e63179c5a6337f1413abeccb952693b9e3b758d6"
+    }
+  ],
+  "private_projection_read": false,
+  "status": "WAITING_FOR_ROOT_COMPLETED_PATHS"
+}

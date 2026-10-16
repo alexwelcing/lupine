@@ -1,0 +1,255 @@
+{
+  "additional_objects_for_candidate_value_concordance": [
+    {
+      "bytes": 44140,
+      "git_blob_sha1": "241a220acd3420742443e26286a2c6f2e9e927f4",
+      "path": "data/y_matrix_targets/surface_energies.json",
+      "sha256": "d260124959c0d22dba8440d53f07481cf67e2b552e0d7abe5535168799903c16"
+    },
+    {
+      "bytes": 17779,
+      "git_blob_sha1": "8f98a67d89e32cecd9007b390d7629220515dd75",
+      "path": "data/y_matrix_targets/vacancy_formation.json",
+      "sha256": "be69d690dfefdafdf938ed79e77396faffb55586f9300d711f811fc11b36ef60"
+    }
+  ],
+  "candidate_graph": {
+    "edges": 172,
+    "locations": 43,
+    "path": ".cache/phase2-rhizo-reference-readiness-design-v1/reference-frame.json",
+    "rule": "Retain every original candidate edge, including both candidates for the28 vacancy positions; no method choice or deduplication.",
+    "sha256": "80a1aca0fd56d89f49ff5f0e4b3930405f11ae1cd4acea14b8edab2381940aa4"
+  },
+  "commit": "81079a8e1bac7ed332712cc92002bd3435e40776",
+  "excluded": "36 unbound evidence and36run objects not needed to inspect stored bound labels; those are separate provenance/geometry expansion. No acquisition of binding report is proposed.",
+  "minimum_stored_label_objects": [
+    {
+      "bytes": 3589,
+      "git_blob_sha1": "09c38f807dc3a1e04ccc5b7146f2fdcd085e2462",
+      "path": "data/y_matrix_runs/bound/Ag_fcc_chgnet.evidence.json",
+      "sha256": "35294bf78eed1b71a36a7f6d8b001f128d17e2d22131de50e6ce2ff75034bb46"
+    },
+    {
+      "bytes": 3600,
+      "git_blob_sha1": "e5d8f6a3e341b74f77949a45f82570e376aec593",
+      "path": "data/y_matrix_runs/bound/Ag_fcc_mace-mp-small.evidence.json",
+      "sha256": "021024c638addbead6dbfd8021af72074bcfa2ca9d1990d480e0c29a43303ccf"
+    },
+    {
+      "bytes": 3600,
+      "git_blob_sha1": "6657056a91dd7ec06c3e42d443979fa69115d00a",
+      "path": "data/y_matrix_runs/bound/Ag_fcc_mace-mp-medium.evidence.json",
+      "sha256": "03a87175e63337c312a46cce3cbf48fb06aec721a810c5074e7fd99cbdee62cb"
+    },
+    {
+      "bytes": 3603,
+      "git_blob_sha1": "3e29666f253140b451074bb05aeadc5b6384d77d",
+      "path": "data/y_matrix_runs/bound/Ag_fcc_mace-mpa-0-medium.evidence.json",
+      "sha256": "26f3fce2761e21afb4a39f27e535e9771bee78f042bd25a5cf57ea533378c870"
+    },
+    {
+      "bytes": 3597,
+      "git_blob_sha1": "deb121459c54658e67d7ca5f82cea96086ab44a8",
+      "path": "data/y_matrix_runs/bound/Al_fcc_chgnet.evidence.json",
+      "sha256": "d2bf1477a863d6d28ad3eff2a2541dcfd4237293f0363628c7cda11beff2ecf6"
+    },
+    {
+      "bytes": 3608,
+      "git_blob_sha1": "8a7a938b0300ddd4abc5dec3860ec095e38d1f06",
+      "path": "data/y_matrix_runs/bound/Al_fcc_mace-mp-small.evidence.json",
+      "sha256": "f370a209b50986940141b5f0e0e8e6b5ab4e948afafcd183d8e8d73606caa229"
+    },
+    {
+      "bytes": 3608,
+      "git_blob_sha1": "2fccdd843114a0be0cc2b0f2f8bf9c845cf75fd3",
+      "path": "data/y_matrix_runs/bound/Al_fcc_mace-mp-medium.evidence.json",
+      "sha256": "816ae63818b15711f10741896dc1967f0e54c8520f46ccafb1ff642f6a389a0c"
+    },
+    {
+      "bytes": 3613,
+      "git_blob_sha1": "66bbfd1af8e1b89f259a69d48e25572ea4432c9b",
+      "path": "data/y_matrix_runs/bound/Al_fcc_mace-mpa-0-medium.evidence.json",
+      "sha256": "9db1d46f835085592152e29cd7bd2798aa09ef7b8333c2ba57c0c09a5aefae12"
+    },
+    {
+      "bytes": 3545,
+      "git_blob_sha1": "b80a9685321072d02d690fa8494d9337034bc6aa",
+      "path": "data/y_matrix_runs/bound/Au_fcc_chgnet.evidence.json",
+      "sha256": "d9d9d3fa932e7902536a5d5f46ede487e6ef4da153af9a6cf88c514addf3434b"
+    },
+    {
+      "bytes": 3555,
+      "git_blob_sha1": "8dbbdc9fdaccb6a8d032654c5a1ebb7309e59bdd",
+      "path": "data/y_matrix_runs/bound/Au_fcc_mace-mp-small.evidence.json",
+      "sha256": "6759236dbfb87442f7fe242b3f21160e09cb02c4453a8ddc0020f2449666b508"
+    },
+    {
+      "bytes": 3554,
+      "git_blob_sha1": "93a57954be12f4ec4d16ad13ee58114ee95c32aa",
+      "path": "data/y_matrix_runs/bound/Au_fcc_mace-mp-medium.evidence.json",
+      "sha256": "db9d903baa9b4930ce67c4d4e57dc994def112b8e8729152193fa950e75718e9"
+    },
+    {
+      "bytes": 3559,
+      "git_blob_sha1": "bc62fccc8b425017868b8283ed5f2470049896d8",
+      "path": "data/y_matrix_runs/bound/Au_fcc_mace-mpa-0-medium.evidence.json",
+      "sha256": "deec3c1cc26301dfbd3d17f13d00d1e488521e5220cee95ee48f588cc3c458de"
+    },
+    {
+      "bytes": 3280,
+      "git_blob_sha1": "18af8d5bcc7573794c976d5db55ee853dc38e863",
+      "path": "data/y_matrix_runs/bound/Ca_fcc_chgnet.evidence.json",
+      "sha256": "2e446761b84e46abb0d1cf049efab6d44185009386f30dcb05c596e221f3d435"
+    },
+    {
+      "bytes": 3305,
+      "git_blob_sha1": "e026b1b50bf186e0dd56ecc904a4b5a4e424358e",
+      "path": "data/y_matrix_runs/bound/Ca_fcc_mace-mp-small.evidence.json",
+      "sha256": "c611810d6ae1f079faa34e84c67162cebe75c5978761b64624e8cfbe79c1c05c"
+    },
+    {
+      "bytes": 3305,
+      "git_blob_sha1": "15a80afcc31523ffe7317bfd8bbe0f36264c9321",
+      "path": "data/y_matrix_runs/bound/Ca_fcc_mace-mp-medium.evidence.json",
+      "sha256": "672d2a25e36dd737949972341bcecbb89dca1db49258b85c76663dd63a5e56f5"
+    },
+    {
+      "bytes": 3313,
+      "git_blob_sha1": "18c85b3ec2ed5322131c717dc7ed143dd4575225",
+      "path": "data/y_matrix_runs/bound/Ca_fcc_mace-mpa-0-medium.evidence.json",
+      "sha256": "d26a23d6a5d58ea26260c0c19245844c113528abec1ef73a06cd34d6bafb4023"
+    },
+    {
+      "bytes": 3613,
+      "git_blob_sha1": "9537a34f880649372cd704783bc830a1f204d0ce",
+      "path": "data/y_matrix_runs/bound/Cu_fcc_chgnet.evidence.json",
+      "sha256": "022e429bdef9083f459cd60d2985043daacbd0b0bec2915ff3be9b00b88ca913"
+    },
+    {
+      "bytes": 3624,
+      "git_blob_sha1": "970756179025ef1ecae99e11c7c5e53fcaedb0fb",
+      "path": "data/y_matrix_runs/bound/Cu_fcc_mace-mp-small.evidence.json",
+      "sha256": "04831b4b2cc73c2ca72375afa0f30b94284196e1820f1648bb44f6a73b764165"
+    },
+    {
+      "bytes": 3629,
+      "git_blob_sha1": "37637e4c9b8a857510c369a61b9b761a796bd2d6",
+      "path": "data/y_matrix_runs/bound/Cu_fcc_mace-mp-medium.evidence.json",
+      "sha256": "b2ee316d4b1a614fd48043f64c8e839a12b6d071890a82e8651d0ce172639990"
+    },
+    {
+      "bytes": 3629,
+      "git_blob_sha1": "911a14e0ac5cc1d5598ec54b1fcc11474bad800e",
+      "path": "data/y_matrix_runs/bound/Cu_fcc_mace-mpa-0-medium.evidence.json",
+      "sha256": "c4d7efd59a901bbf5e162e80a55948b60bf50b448f11c923c1023902b2776278"
+    },
+    {
+      "bytes": 3604,
+      "git_blob_sha1": "e0ee045b8f007cc97d3a6a47042aff86441c9a20",
+      "path": "data/y_matrix_runs/bound/Ni_fcc_chgnet.evidence.json",
+      "sha256": "b3247aa188f162c936a6fcd95631e0637df4f45d4c12bd730d50fc9d688d9092"
+    },
+    {
+      "bytes": 3615,
+      "git_blob_sha1": "28aee65a69ad94a39632297423213e293bab46c8",
+      "path": "data/y_matrix_runs/bound/Ni_fcc_mace-mp-small.evidence.json",
+      "sha256": "991c13ad3f2d257b1fffc3b75e51c3133608bbdcbd48a912ac862e2cd7c41da0"
+    },
+    {
+      "bytes": 3617,
+      "git_blob_sha1": "fdffd4d0801c1f6def4dad5eb4fba2be75178f9f",
+      "path": "data/y_matrix_runs/bound/Ni_fcc_mace-mp-medium.evidence.json",
+      "sha256": "44c8c73ecec6992c2ec6fdbf921042fede57fa227917c8d42039a468bbdf8d1e"
+    },
+    {
+      "bytes": 3615,
+      "git_blob_sha1": "92caf1c50580b2050543d1e7699fed9732c15c98",
+      "path": "data/y_matrix_runs/bound/Ni_fcc_mace-mpa-0-medium.evidence.json",
+      "sha256": "14d7d7c31f4028e8e37da75def51c06cf10ab6dd3d91b6a4a6eab997387a3174"
+    },
+    {
+      "bytes": 3418,
+      "git_blob_sha1": "5bbc98331efcd4ff62d2bdb7838e4b243444a9d2",
+      "path": "data/y_matrix_runs/bound/Pd_fcc_chgnet.evidence.json",
+      "sha256": "6ef06d832a8e68fb3979e8f4548666749d1a43c32a8556c67512246d7559a899"
+    },
+    {
+      "bytes": 3428,
+      "git_blob_sha1": "a62983f230f84bf3027197cc730dab9b74c367aa",
+      "path": "data/y_matrix_runs/bound/Pd_fcc_mace-mp-small.evidence.json",
+      "sha256": "785ad9a668c9509982510a2c6d39fb4e7a369b98388232ea4014838e55549791"
+    },
+    {
+      "bytes": 3432,
+      "git_blob_sha1": "6c6ba73b3c71595d15881ef0f7583c343d7cf448",
+      "path": "data/y_matrix_runs/bound/Pd_fcc_mace-mp-medium.evidence.json",
+      "sha256": "97fc00664b94d8f00bddca1dd5a06f7b8dd8facfdb771cc6d6160ce2f54a9887"
+    },
+    {
+      "bytes": 3435,
+      "git_blob_sha1": "82ac094559566f89483bc11ae7f939a8407847c6",
+      "path": "data/y_matrix_runs/bound/Pd_fcc_mace-mpa-0-medium.evidence.json",
+      "sha256": "0cdd9404284aadc001ae377918ca08fd225efff9deb0d145a4611fb29977e586"
+    },
+    {
+      "bytes": 3681,
+      "git_blob_sha1": "c33c63812be50088b28ee3bf98666a3f85ade09a",
+      "path": "data/y_matrix_runs/bound/Pt_fcc_chgnet.evidence.json",
+      "sha256": "64e06378b54c717e0dfb3c769c4e36692f5cb772f253d5cd86a3a434891854a6"
+    },
+    {
+      "bytes": 3695,
+      "git_blob_sha1": "7ddc5f416d4dd60331c9eb2845c893ea431c8da4",
+      "path": "data/y_matrix_runs/bound/Pt_fcc_mace-mp-small.evidence.json",
+      "sha256": "1d5e7f1a65f5e570ed1ad1d45e64b86bf45bee7008924850a94d40c82475b256"
+    },
+    {
+      "bytes": 3698,
+      "git_blob_sha1": "c751a8818898af8a032c9a95ef47275726b835ed",
+      "path": "data/y_matrix_runs/bound/Pt_fcc_mace-mp-medium.evidence.json",
+      "sha256": "5df3f4afe0393bc54cce7438384b66b04e2c07a5bc00056c65b9220177a8e5f4"
+    },
+    {
+      "bytes": 3698,
+      "git_blob_sha1": "e24fb1f8602c408d1836274736916e751e3a896c",
+      "path": "data/y_matrix_runs/bound/Pt_fcc_mace-mpa-0-medium.evidence.json",
+      "sha256": "aff4016ad68320b95ea008542e955f125395d646359ad71a44da60620dbf5006"
+    },
+    {
+      "bytes": 3299,
+      "git_blob_sha1": "d584f3aa211d45201d82599fa235cba3b068e872",
+      "path": "data/y_matrix_runs/bound/Sr_fcc_chgnet.evidence.json",
+      "sha256": "c8d8b72978e7beb6d4bc06a440caa45b1c46e6efd4a7bd13b9d57bea5b292edc"
+    },
+    {
+      "bytes": 3305,
+      "git_blob_sha1": "48b7703ce5db9d4215a0feeb7d81f3dbd290f411",
+      "path": "data/y_matrix_runs/bound/Sr_fcc_mace-mp-small.evidence.json",
+      "sha256": "0a9309c83549083bb6f513c06aaed0f60cba3f0666c2ebc407be23ffec179632"
+    },
+    {
+      "bytes": 3306,
+      "git_blob_sha1": "2289d3867261fb123aa174169bec49f214a799d9",
+      "path": "data/y_matrix_runs/bound/Sr_fcc_mace-mp-medium.evidence.json",
+      "sha256": "7fd3ec1edda6009ab380d3a2d4d085ab0f96893cfc9a053084ba82de16311e05"
+    },
+    {
+      "bytes": 3310,
+      "git_blob_sha1": "7f66ca017a2593da707ec8cda49db6f494b65dec",
+      "path": "data/y_matrix_runs/bound/Sr_fcc_mace-mpa-0-medium.evidence.json",
+      "sha256": "4c8daf049e8c9465c0c0603b144a72411cb110c145777a1834a2dbfe9ac76536"
+    }
+  ],
+  "reference_candidate_frame_sha256": "80a1aca0fd56d89f49ff5f0e4b3930405f11ae1cd4acea14b8edab2381940aa4",
+  "repository": "alexwelcing/lupine-rhizo",
+  "schema": "lupine.rhizo.bound-choice.prospective-object-set.v1",
+  "status": "PROSPECTIVE_ONLY_NO_NEW_OBJECT_READ",
+  "unacquired_separate_report": {
+    "bytes": 336724,
+    "contents_opened": false,
+    "git_blob_sha1": "b6822e5f4386a0ac84866dc188938d3347677cbc",
+    "path": "data/y_matrix_runs/bound/binding_report.json",
+    "sha256": null,
+    "sha256_status": "not_acquired"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "access_scope": "Pinned Python source/schema plus already-public inventories/receipts/graph only. No raw reference, bound/unbound evidence or run object was opened.",
+  "created_at": "2026-10-16T11:51:11.797977+00:00",
+  "schema": "lupine.rhizo.bound-choice.source-bindings.v1",
+  "sources": {
+    ".cache/phase2-rhizo-reference-readiness-design-v1/reference-frame.json": {
+      "bytes": 71649,
+      "sha256": "80a1aca0fd56d89f49ff5f0e4b3930405f11ae1cd4acea14b8edab2381940aa4"
+    },
+    ".cache/projection-source-audit/rhizo/python/lupine_distill/binding.py": {
+      "bytes": 17478,
+      "sha256": "dcf34d3caae28d7fd31268f9217432d6c78692cad4f76dd316c434a6fb99c80e"
+    },
+    ".cache/projection-source-audit/rhizo/python/lupine_distill/schemas.py": {
+      "bytes": 9702,
+      "sha256": "1bf115907c27b60c29fb3bb7ab7de167d1aa723a3f6ee64c3fa9bd47ac0f5022"
+    },
+    "reports/projection-custody-acquisition-v1.json": {
+      "bytes": 7468,
+      "sha256": "f0947cf030f0a5c8bcf67cd548d85237266f048f2b6659c6c13138cc0e06c25b"
+    },
+    "reports/projection-custody-metadata-v1.json": {
+      "bytes": 199380,
+      "sha256": "8f987cff79add822430d47bac9cdd9fda202bb4135c078f08241ea9682be0b04"
+    },
+    "reports/projection-custody-readiness-v1.md": {
+      "bytes": 10769,
+      "sha256": "6805f075c90ba122726bcdfbe9d2f9a9714d2cbbd2f2ecd05d1dcb769e2629b0"
+    },
+    "reports/projection-source-inventory.json": {
+      "bytes": 54932,
+      "sha256": "4874aebfa7e6f8003b6b733750ddac6675770a7b815b9ac8e1de81f55d118f42"
+    },
+    "scripts/projection_custody.py": {
+      "bytes": 35599,
+      "sha256": "751bcec5123feef65bf4b459691b5ab89197dd28e599fa23a178e2f10ff36fcc"
+    }
+  }
+}

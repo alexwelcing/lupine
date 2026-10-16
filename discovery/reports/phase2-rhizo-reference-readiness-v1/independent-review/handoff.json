@@ -1,0 +1,12 @@
+{
+  "actual_source_operation_performed": false,
+  "contract_sha256": "f5f1582036db4f13b879cd47ae1abeccb2380df07bba09b3f0450696b21ef65e",
+  "final_independent_tests": "13/13 PASS; unchanged test bytes; exact narrow exposure repair",
+  "first_failure_preserved": true,
+  "inventory_sha256": "7a6781c4c6e640163985c674d4cdf53a254a20e4a315bfe36192694524642dbf",
+  "owned_directory": ".cache/phase2-rhizo-reference-projector-review-v1",
+  "review_sha256": "664c62d3a0488ab0a0c11fbb91a4c14cd12f5bb6117ef829aac4d36e4de52e8a",
+  "source_sha256": "bab641881335f57d4571fe0d4f720696f57e5816fa36266647cdf86d0701b263",
+  "status": "READY_FOR_ROOT_SOURCE_REVIEW_AND_AUTHORIZATION_DECISION",
+  "test_sha256": "54384a8dfc23ca1e026d8da75317b7960330e834b4cf00fd4aead41923cb17d8"
+}

@@ -1707,3 +1707,29 @@ That narrower target does not complete G21 or supply fresh predictive superiorit
 Li categorical predicate diagnosis remains separate preparation. G20 remains
 unresolved/G21 blocked. No allocation, fit, tuning, new DFT or scientific claim
 promotion occurred; all historical NO-GO results and disabled automation persist.
+
+## 2026-10-16 11:57 UTC — Rhizo declared provenance reconciled; labels remain unverified
+
+[The bounded reference-readiness pass](phase2-rhizo-reference-readiness-v1/README.md)
+completed once at 11:47:02 UTC: two retained JSON objects, 61,919 bytes, 43
+selected locations, 36 IDs and 172 candidate links. The child exited 0 in
+0.115849 seconds with empty stderr; all 332 runtime files held. The standalone
+reader passes 26 author/13 independent generated tests after a real aggregate
+parse-exposure reporting failure and narrow correction. The original failure,
+unchanged independent test, fixed source and public-receipt review are retained.
+
+The documentary review distinguishes paper/dataset/secondary-source chains and
+records all 43 selected notes exposing numerical outcomes. No primary source
+was fetched, preference applied, label compared, model fitted or experiment
+admitted. Original graph and competing references remain. The minimum next
+input set is 36 bound objects / 126,885 bytes for 144 fixed stored-label
+positions; original binder choice is a separate, unresolved claim. Its candidate
+is being prepared on generated fixtures only, alongside the independently
+challenged categorical Li header diagnostic. No new actual bound-object or
+Li access has occurred.
+
+Parent reports 280dff57 and 3139e1e both pass all four original push CI jobs,
+observed at 11:52:18 and 11:55:38 UTC respectively. Root owns this increment's
+publication, exact Git inclusion and subsequent remote/CI verification.
+G20 remains unresolved, G21 blocked, and all scientific NO-GO results unchanged.
+No schedule was extended or re-enabled.

@@ -1,0 +1,37 @@
+{
+  "schema": "lupine.rhizo.documentary-exposure.v1",
+  "recorded_at": "2026-10-16T11:51:07.175774+00:00",
+  "inputs_only": [
+    ".cache/phase2-rhizo-reference-projector-v1/actual/public.json",
+    ".cache/phase2-rhizo-reference-projector-v1/actual/private.json"
+  ],
+  "private_projection_bytes": 32046,
+  "private_projection_sha256": "8b19c9d47e3b33729417b3a8c09ecd4483929b697954246ee98ecf4e805d3a82",
+  "private_json_machine_read": true,
+  "selected_locations_researcher_inspected": 43,
+  "fields_researcher_read": [
+    "context",
+    "source.citation",
+    "source.doi_or_url",
+    "source.notes"
+  ],
+  "all_selected_notes_contained_numerical_outcomes": true,
+  "outcome_values_reproduced_in_public_report": false,
+  "actual_disclosure_categories": [
+    "surface reference values and rounding statements",
+    "vacancy reference values",
+    "quoted uncertainty/recommendation figures",
+    "alternative assessments and source comparison figures",
+    "phase/stability quantity in Ca surface notes"
+  ],
+  "affected_locations": "All43 selected locations; exact location graph retained without outcome numbers.",
+  "display_history": "Initial43-location literal display was truncated in the tool output; surface ordinals19/20 were subsequently displayed alone to finish documentary reading. No source object was reopened.",
+  "upstream_projector_exposure": "The public receipt declares whole rawJSON/value-token machine exposure across85 entries, including42 unmatched positions. This researcher accessed only the completed43-location projection, not the85-entry raw sources.",
+  "blindness": "Historical/exposed reference evidence; no fresh or target-free claim.",
+  "private_source_objects_read": false,
+  "urls_followed": 0,
+  "new_acquisitions": 0,
+  "numeric_comparisons_or_fits": 0,
+  "instructions_from_source_followed": false,
+  "source_strings_treated_as_untrusted": true
+}

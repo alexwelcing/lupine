@@ -1,0 +1,51 @@
+{
+  "schema": "lupine.rhizo.reference-readiness.design-bindings.v1",
+  "created_at": "2026-10-16T11:24:56.395375+00:00",
+  "status": "DESIGN_ONLY",
+  "sources": [
+    {
+      "path": "docs/projection-data-readiness.md",
+      "bytes": 16530,
+      "sha256": "e36218568234f426b050492a9ee25ff52d302a3317818ce4590dfe86855d85d9"
+    },
+    {
+      "path": "reports/projection-custody-readiness-v1.md",
+      "bytes": 10769,
+      "sha256": "6805f075c90ba122726bcdfbe9d2f9a9714d2cbbd2f2ecd05d1dcb769e2629b0"
+    },
+    {
+      "path": "reports/projection-source-inventory.json",
+      "bytes": 54932,
+      "sha256": "4874aebfa7e6f8003b6b733750ddac6675770a7b815b9ac8e1de81f55d118f42"
+    },
+    {
+      "path": "reports/projection-custody-metadata-v1.json",
+      "bytes": 199380,
+      "sha256": "8f987cff79add822430d47bac9cdd9fda202bb4135c078f08241ea9682be0b04"
+    },
+    {
+      "path": "reports/projection-custody-acquisition-v1.json",
+      "bytes": 7468,
+      "sha256": "f0947cf030f0a5c8bcf67cd548d85237266f048f2b6659c6c13138cc0e06c25b"
+    }
+  ],
+  "output_identities": {
+    "README.md": {
+      "bytes": 9723,
+      "sha256": "c3152108ac58cae50e815cf27bf3a73787a34a0360f33642b15a00a33e948a0a"
+    },
+    "planned-inputs.json": {
+      "bytes": 4746,
+      "sha256": "216907d07f977881c4220cb9c697708217101c2747c54bb7874b20e1470e3092"
+    },
+    "reference-frame.json": {
+      "bytes": 71649,
+      "sha256": "80a1aca0fd56d89f49ff5f0e4b3930405f11ae1cd4acea14b8edab2381940aa4"
+    }
+  },
+  "actual_source_reads": 0,
+  "new_network_requests": 0,
+  "private_object_reads": 0,
+  "runtime_tests_or_source_execution": false,
+  "scope": "Existing public reports and inventories only. Prospective graph derived from public metadata. No raw source, code, license body or private custody object was newly inspected; those future pins are copied from a prior public inventory."
+}

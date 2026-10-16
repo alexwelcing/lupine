@@ -1,0 +1,54 @@
+{
+  "schema": "lupine.rhizo.documentary-independent-review.scope-correction.v1",
+  "created_at": "2026-10-16T12:04:00.171197+00:00",
+  "status": "CORRECTION_ACCEPTED_NO_BLOCKER",
+  "scope": "Additive semantic review of the named pre/post public README and bindings plus correction receipt only; no private projection, raw source, network, source code, runtime or new reviewer access.",
+  "pre_correction": [
+    {
+      "path": ".cache/phase2-rhizo-documentary-review-v1/before-scope-clarification/README.md",
+      "bytes": 7874,
+      "sha256": "66b2963a5da356ad660e6a08a88f4303ab3bc503cec307d33d0407a75933e38f"
+    },
+    {
+      "path": ".cache/phase2-rhizo-documentary-review-v1/before-scope-clarification/source-bindings.json",
+      "bytes": 3066,
+      "sha256": "c0450f9d1370c551cd0dd102f8004897a5c849929a24e6403243bfd988bf88c2"
+    }
+  ],
+  "post_correction": [
+    {
+      "path": ".cache/phase2-rhizo-documentary-review-v1/README.md",
+      "bytes": 8718,
+      "sha256": "9c5b031347363d113a5be6c66e584cab9c2f9fc0964441c7d9afdf0a79d1f758"
+    },
+    {
+      "path": ".cache/phase2-rhizo-documentary-review-v1/source-bindings.json",
+      "bytes": 3422,
+      "sha256": "a5f2c526e55ecf12890f547c540fa3e47808817c51ed393f48ea19beff508939"
+    }
+  ],
+  "correction_receipt": {
+    "path": ".cache/phase2-rhizo-documentary-review-v1/scope-clarification.json",
+    "bytes": 1047,
+    "sha256": "4b3f8beb7bf56fd5b70dd61c519e6ec4d2ca6df4593602d567df590191642e91"
+  },
+  "preserved_historical_review": {
+    "path": ".cache/phase2-rhizo-documentary-review-independent-v1/final-review.json",
+    "bytes": 7539,
+    "sha256": "daab9851c4eac7f3a192b8608edf5ed409bb3d6cc083a5dae214dfb176dec130"
+  },
+  "acknowledged_review_miss": "My earlier no-blocker review failed to flag that the census-gate prose treated historical binder reconstruction/source-value equality and map-recovery geometry as universal prerequisites. That was overrestrictive for a descriptive census explicitly defined over fixed stored values. The earlier review remains a historical artifact and is qualified by this addendum.",
+  "assessment": [
+    "The revised opening and gates correctly distinguish actual paired stored-field identity, finite-value completeness, missingness, explicit estimand and reporting rules from the separate claim of reconstructing old binder selection or agreement with a primary source. A census over declared stored values need not establish that stronger historical claim.",
+    "Map/sign/geometry/conversion requirements now attach specifically to map-recovery comparisons. They are not imposed on every descriptive stored-label census. This does not remove the need for meanings and units appropriate to the actual descriptive estimand.",
+    "The correction preserves unknown stored-label completeness, actual binding/source agreement, rights and physical validity. It admits no census or G21 screening claim and does not upgrade source declarations into truth.",
+    "The 36-bound-file next step is explicitly data-free preparation only. The revised text supplies no actual follow-on read or source-operation authority. No reference containers or private projection were reread for this correction."
+  ],
+  "identity_checks": {
+    "prior_review_unchanged": true,
+    "source_binding_entries_unchanged": true,
+    "all_non_readme_report_binding_entries_unchanged": true,
+    "final_readme_binding_matches": true
+  },
+  "blocking_findings": []
+}

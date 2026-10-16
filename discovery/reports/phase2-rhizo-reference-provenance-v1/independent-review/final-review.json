@@ -1,0 +1,122 @@
+{
+  "schema": "lupine.rhizo.documentary-independent-review.final.v1",
+  "created_at": "2026-10-16T11:55:21.787507+00:00",
+  "reviewer": "/root/phase2_evidence/author_methods_review",
+  "status": "NO_BLOCKER_IN_REVIEWED_DOCUMENTARY_CLAIMS_AND_PUBLIC_EXCLUSIONS",
+  "held_readme": {
+    "path": ".cache/phase2-rhizo-documentary-review-v1/README.md",
+    "bytes": 7874,
+    "sha256": "66b2963a5da356ad660e6a08a88f4303ab3bc503cec307d33d0407a75933e38f"
+  },
+  "held_bindings": {
+    "path": ".cache/phase2-rhizo-documentary-review-v1/source-bindings.json",
+    "bytes": 3066,
+    "sha256": "c0450f9d1370c551cd0dd102f8004897a5c849929a24e6403243bfd988bf88c2"
+  },
+  "reviewed_public_artifacts": [
+    {
+      "path": ".cache/phase2-rhizo-documentary-review-v1/README.md",
+      "bytes": 7874,
+      "sha256": "66b2963a5da356ad660e6a08a88f4303ab3bc503cec307d33d0407a75933e38f"
+    },
+    {
+      "path": ".cache/phase2-rhizo-documentary-review-v1/reference-provenance.csv",
+      "bytes": 14358,
+      "sha256": "e72f2e3a567123f5ac5ffb31581787b5121f57e7c3a4b841c244a72827ff83f1"
+    },
+    {
+      "path": ".cache/phase2-rhizo-documentary-review-v1/bibliography.json",
+      "bytes": 3265,
+      "sha256": "2224e70b183485cc3e9fb1ccea1a554ec44fb1d18760c1812b36af7d742a3d64"
+    },
+    {
+      "path": ".cache/phase2-rhizo-documentary-review-v1/exposure-ledger.json",
+      "bytes": 1890,
+      "sha256": "42e8bcceefad8494371ab07b6ef364cff3e82e8da3d43eb0af8ed822f036938f"
+    },
+    {
+      "path": ".cache/phase2-rhizo-documentary-review-v1/graph-check.json",
+      "bytes": 717,
+      "sha256": "45807381c4914fdbb393eb7ff6d02158d94ad5b69d604809fa4a1df814f30921"
+    },
+    {
+      "path": ".cache/phase2-rhizo-documentary-review-v1/original-reference-frame.json",
+      "bytes": 71649,
+      "sha256": "80a1aca0fd56d89f49ff5f0e4b3930405f11ae1cd4acea14b8edab2381940aa4"
+    },
+    {
+      "path": ".cache/phase2-rhizo-documentary-review-v1/actual-review-start.json",
+      "bytes": 869,
+      "sha256": "d2f3a345b2c8a50477b692b6710070f50e34e2438aa22f3f0dc9bf64f4f42529"
+    },
+    {
+      "path": ".cache/phase2-rhizo-documentary-review-v1/identity-review.json",
+      "bytes": 1371,
+      "sha256": "96629c4e0588b8fe55d57e8368b64446f46f11cb5f201929b8b9633a8e800537"
+    }
+  ],
+  "conclusions": [
+    "The retained public/private projection identities match the explicit handoff. All 43 selected locations, 36 material/model IDs and 172 candidate edges are preserved; original-reference-frame.json is byte-identical to the reviewed prospective frame. This checks documentary consistency, not independent producer execution or upstream scientific validity.",
+    "The 43-row roster correctly distinguishes the surface paper from its declared dataset, the nine DFT vacancy table attributions and the seven experimental records using a secondary supplement locator. It keeps source property names separate from historical-map aliases and retains all alternatives.",
+    "Reconstructed-termination flags and phase qualifications are reported as archive declarations. The archive word Verified and earlier extraction claims are not promoted into present primary-source verification. Pd lacks a declared recommended value in its note; Pt recommendation and primary-source uncertainty statements remain distinct.",
+    "Actual archived reference choice, numeric completeness/finiteness, primary-source use terms and full condition/thermodynamic equivalence remain UNKNOWN or unestablished. Source notes cannot bind actual stored-label selection or supply physical uncertainty/discrepancy bounds.",
+    "The final H_vf/property-name clarification is appropriate: a notation difference leaves thermodynamic definition and condition equivalence unresolved; it does not by itself establish a physical mismatch. The final delta adds only this caveat and updates its binding metadata.",
+    "The named public artifacts contain necessary bibliography, identifiers, declared method/context and own paraphrases. No raw property/performance values, complete private notes, contact roster, signed locator or per-target digest was found. A literal leak check of 36 explicitly marked target text fragments found no matches, without numerical conversion, comparison or retention of per-value lists; the remaining uncertainty/alternative comparisons were checked by reading the prose.",
+    "Every selected private note contained numerical outcomes and was read by this reviewer. Both machine and researcher exposure are recorded. Neither withheld fields nor a second reader creates fresh or blinded evidence. No values were used to select a reference, fit a model, rank records or compare numerical performance.",
+    "No census, fit, allocation, scientific threshold, label comparison, new source acquisition or G21 admission is claimed. The concrete remaining work is separately scoped original-label/binding and completeness readiness; the report starts no such work."
+  ],
+  "blocking_findings": [],
+  "preserved_precision_history": {
+    "original_readme": {
+      "path": ".cache/phase2-rhizo-documentary-review-v1/before-convention-clarification/README.md",
+      "bytes": 7613,
+      "sha256": "bffa3ffbde525c9808ef779d1506cefd461f86785377f67dbabddea00f3e4111"
+    },
+    "original_bindings": {
+      "path": ".cache/phase2-rhizo-documentary-review-v1/before-convention-clarification/source-bindings.json",
+      "bytes": 2864,
+      "sha256": "20df614bd7f60cbff6ec0e24fda254d763f74bf8ce21ce521fc80da1bba54fb5"
+    },
+    "original_candidate_check": {
+      "path": ".cache/phase2-rhizo-documentary-review-independent-v1/public-candidate-check.json",
+      "bytes": 1731,
+      "sha256": "082c09344d3bb5f978020beaedd0441f3791edc925b22bf7a6d6774981d473bc"
+    },
+    "candidate_roster_bibliography_graph_ledger_unchanged": true
+  },
+  "supporting_review_artifacts": [
+    {
+      "path": ".cache/phase2-rhizo-documentary-review-independent-v1/scope.json",
+      "bytes": 1371,
+      "sha256": "3f6f3768f1cb65d55fd5045c5720757e6427b7afd155618139283cab6bf1d45f"
+    },
+    {
+      "path": ".cache/phase2-rhizo-documentary-review-independent-v1/receipt-check.json",
+      "bytes": 1705,
+      "sha256": "f040a23acdde7eafef2f7a3edf7b4c563aad780c248119b291fbf619ec16c9d3"
+    },
+    {
+      "path": ".cache/phase2-rhizo-documentary-review-independent-v1/exposure-ledger.json",
+      "bytes": 1710,
+      "sha256": "62f030a28fa1988daf2c05202a8e75817fd04bf89e8d1945c0502a9aaaef5889"
+    },
+    {
+      "path": ".cache/phase2-rhizo-documentary-review-independent-v1/independent-interpretation.json",
+      "bytes": 5017,
+      "sha256": "750e40a63cec7032d301f50500fcf6f3a1793e97396c3ac2fb326c8f9608916b"
+    }
+  ],
+  "limitations": "This is a focused review of the named retained projections and public report artifacts, not a blanket publication inventory audit of every cache file. No projector/runtime source, raw reference/run/evidence object or primary external publication was read or executed. Reported producer code pins were observed in the receipt, not independently executed by this reviewer.",
+  "actual_actions": {
+    "retained_public_and_selected_private_projection_read": true,
+    "all_43_selected_documentary_records_researcher_read": true,
+    "raw_source_objects_read": false,
+    "new_source_code_read": false,
+    "network_requests": 0,
+    "runtime_or_projector_tests": false,
+    "fits_or_numerical_outcome_comparisons": false,
+    "additional_agents": false,
+    "tracked_edits": false,
+    "untrusted_source_instructions_followed": false
+  }
+}
