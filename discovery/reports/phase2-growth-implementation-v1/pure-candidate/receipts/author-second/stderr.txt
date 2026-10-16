@@ -1,0 +1,23 @@
+test_all_unsigned_initial_values_are_withheld_and_unconstrained (__main__.GrowthHintShapeTests.test_all_unsigned_initial_values_are_withheld_and_unconstrained) ... ok
+test_bad_input_types_and_size_fail_before_hash (__main__.GrowthHintShapeTests.test_bad_input_types_and_size_fail_before_hash) ... ok
+test_empty_padding_matches_without_meaning_or_admission (__main__.GrowthHintShapeTests.test_empty_padding_matches_without_meaning_or_admission) ... ok
+test_first_middle_and_late_selected_span (__main__.GrowthHintShapeTests.test_first_middle_and_late_selected_span) ... ok
+test_frozen_twenty_five_source_bytes_match (__main__.GrowthHintShapeTests.test_frozen_twenty_five_source_bytes_match) ... ok
+test_known_actual_identity_rejected_without_actual_bytes (__main__.GrowthHintShapeTests.test_known_actual_identity_rejected_without_actual_bytes) ... ok
+test_later_extra_is_not_claimed_validated (__main__.GrowthHintShapeTests.test_later_extra_is_not_claimed_validated) ... ok
+test_malformed_or_capped_tlv_never_enters_payload (__main__.GrowthHintShapeTests.test_malformed_or_capped_tlv_never_enters_payload) ... ok
+test_maximum_extra_span_and_null_remainder (__main__.GrowthHintShapeTests.test_maximum_extra_span_and_null_remainder) ... ok
+test_member_names_and_data_are_not_disclosed (__main__.GrowthHintShapeTests.test_member_names_and_data_are_not_disclosed) ... ok
+test_no_production_interface_and_detached_reports (__main__.GrowthHintShapeTests.test_no_production_interface_and_detached_reports) ... ok
+test_nonzero_padding_at_each_position_is_rejected (__main__.GrowthHintShapeTests.test_nonzero_padding_at_each_position_is_rejected) ... ok
+test_only_one_total_record_is_eligible (__main__.GrowthHintShapeTests.test_only_one_total_record_is_eligible) ... ok
+test_predecessor_rejection_retains_its_reason (__main__.GrowthHintShapeTests.test_predecessor_rejection_retains_its_reason) ... ok
+test_production_and_content_apis_are_not_invoked (__main__.GrowthHintShapeTests.test_production_and_content_apis_are_not_invoked) ... ok
+test_second_locator_failure_preserves_prior_exposure (__main__.GrowthHintShapeTests.test_second_locator_failure_preserves_prior_exposure) ... ok
+test_short_payloads_never_read_fixed_words (__main__.GrowthHintShapeTests.test_short_payloads_never_read_fixed_words) ... ok
+test_signature_is_little_endian_and_exact (__main__.GrowthHintShapeTests.test_signature_is_little_endian_and_exact) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 0.030s
+
+OK

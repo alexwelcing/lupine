@@ -1,0 +1,57 @@
+{
+  "schema": "lupine.discovery.independent_growth_hint_inventory.v1",
+  "files": {
+    "README.md": {
+      "bytes": 3826,
+      "sha256": "2d99bb56c23f91f7f8c865be59fbe3e4bec928fe8f91d55344e003ded88611fe"
+    },
+    "first-run/contract.md": {
+      "bytes": 7267,
+      "sha256": "9900ff73238a9d1c3629f364e4e97d9d450630b0ba938be74f1a03b52da9939c"
+    },
+    "first-run/execution.json": {
+      "bytes": 2301,
+      "sha256": "0453a541020b437ae27fee9c24511bcd6ce64c5c285c8aec5c2c49cda55ba334"
+    },
+    "first-run/implementation.py": {
+      "bytes": 8507,
+      "sha256": "c42313ddc1d6c64e6d9c18338bc3efc9bacc65e7ff7f8281e1da28870e74d7cb"
+    },
+    "first-run/independent-tests.py": {
+      "bytes": 27548,
+      "sha256": "7a3e4263af08577c9c5884f5d486caca3eee7e78e5b89cc47e43724e13733a0f"
+    },
+    "first-run/scope-observation.json": {
+      "bytes": 152,
+      "sha256": "b11f9582389aa782548a2d7c649cf4c251ff84b4548e687e137f0ba6733873a1"
+    },
+    "first-run/stderr.txt": {
+      "bytes": 3868,
+      "sha256": "a14319d3b9e407729db52b7dbda5a48c887e4219eb647fe760ec209eaf0662b1"
+    },
+    "first-run/stdout.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "preparation.json": {
+      "bytes": 517,
+      "sha256": "0bcc2a7162f005de962ce47863f89790e205f59bcecc0be1f0b6ba1b96a45001"
+    },
+    "promotion/tests/test_li_v3_growth_hint_review.py": {
+      "bytes": 27548,
+      "sha256": "7a3e4263af08577c9c5884f5d486caca3eee7e78e5b89cc47e43724e13733a0f"
+    },
+    "review.json": {
+      "bytes": 4874,
+      "sha256": "070e499665325286deb8efd72c7416121d2c4998f51fa0d92515b93f129fd862"
+    },
+    "run_review.py": {
+      "bytes": 3401,
+      "sha256": "65272beaa42670715204b29a67e0855022f4bd2c0a42883247fb2fc8e84e45ef"
+    },
+    "run_tests_guarded.py": {
+      "bytes": 1955,
+      "sha256": "cd584e803644b9eea66ef6dc452397dac027dfc063c45a037c3dfd77e800303c"
+    }
+  }
+}

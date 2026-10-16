@@ -634,3 +634,22 @@ Its `UNIT` label does not establish measurement uncertainty or independent
 evaluation units. Source-format progress and engineering passes upgrade no
 scientific claim tier. Historical preview GO and physical/general-superiority
 NO-GO decisions remain unchanged; G20 is unresolved and G21 blocked.
+
+
+## October 16: growth-profile engineering checkpoint
+
+[The G30/G31 implementation](../reports/phase2-growth-implementation-v1/README.md)
+passes 359 combined Li tests with 332 held runtime files and all 326 predecessor
+files unchanged. The original 27/28 G31 failure identified a central-directory
+declaration gap and remains preserved with its narrow correction and unchanged
+regression. Final author/independent tests are 35/21 for G30 and 31/24 for G31;
+these generated checks establish no actual payload shape, archive acceptance
+or scientific data admission. Exact-source publication, original CI, clean
+retention, independent byte audits and the declared actual operations are later
+gates. The preceding report-only 2428c313 has all four original CI jobs green.
+
+The separately reviewed BAM encoding comparison supplies partial documentary
+roles under two unselected codec hypotheses. It does not supply a joint-risk
+uncertainty model, independent units or a blind discovery benchmark. Historical
+preview GO and physical/general-superiority NO-GO remain unchanged. G20 is
+unresolved and G21 blocked; no new scientific allocation or fit occurred.

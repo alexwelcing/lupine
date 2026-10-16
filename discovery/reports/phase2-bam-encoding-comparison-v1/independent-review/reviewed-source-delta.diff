@@ -1,0 +1,22 @@
+--- initial
++++ reviewed
+@@ -42,6 +42,11 @@
+ def main():
+     if (BASE / "result.json").exists() or (BASE / "internal-ascii-projection.json").exists():
+         raise SystemExit("OUTPUT_EXISTS")
++    frozen_scope = json.loads((BASE / "scope.json").read_text())
++    for binding in frozen_scope["prior_preserved"]:
++        prior_bytes = Path(binding["path"]).read_bytes()
++        if len(prior_bytes) != binding["bytes"] or hashlib.sha256(prior_bytes).hexdigest() != binding["sha256"]:
++            raise SystemExit("PRIOR_CHECKPOINT_IDENTITY_BLOCKED")
+     start = datetime.datetime.now(datetime.timezone.utc).isoformat()
+     t = time.monotonic()
+     report = {"schema": "lupine.bam-hypothetical-encoding-comparison.v1", "started_at": start,
+@@ -102,6 +107,7 @@
+                 report.update(status="HYPOTHETICAL_ASCII_COMPARISON_COMPLETE", csv_record_width_counts=widths,
+                               non_eleven_column_records=mismatched_width_records, non_ascii_or_different_cells=non_ascii_cells,
+                               cells_differing_between_hypotheses=changed_cells, ascii_invariant_cells=ascii_cells,
++                              cell_count_scope="Eleven-column CSV records only, including header and empty cells; other-width records excluded",
+                               example_column_values_published=False, semantic_dictionary_admitted=False)
+     report["finished_at"] = datetime.datetime.now(datetime.timezone.utc).isoformat()
+     report["elapsed_seconds"] = time.monotonic() - t

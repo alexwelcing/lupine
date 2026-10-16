@@ -1,0 +1,45 @@
+{
+  "schema": "lupine.bam-encoding-artifact-check.v1",
+  "checked_at": "2026-10-16T10:06:40.665663+00:00",
+  "refined_scope_and_review_before_one_invocation": true,
+  "frozen_inputs_and_prior_checkpoints_unchanged": true,
+  "exit_code": 0,
+  "stderr_empty": true,
+  "result_equals_stdout": true,
+  "all_bound_artifact_hashes_match": true,
+  "cell_count_sum": "2558+16=234*11, including header and empty cells; documentary structure only",
+  "local_links": [
+    {
+      "from": "README.md",
+      "href": "scope.json"
+    },
+    {
+      "from": "README.md",
+      "href": "compare_documentation.py"
+    },
+    {
+      "from": "README.md",
+      "href": "execution.json"
+    },
+    {
+      "from": "README.md",
+      "href": "result.json"
+    },
+    {
+      "from": "README.md",
+      "href": "method-limits.md"
+    },
+    {
+      "from": "README.md",
+      "href": "documentary-findings.json"
+    },
+    {
+      "from": "README.md",
+      "href": "ascii-term-check.json"
+    }
+  ],
+  "raw_schema_reread": false,
+  "new_decoder_or_projector_invocation": false,
+  "network": false,
+  "scientific_or_product_tests": false
+}

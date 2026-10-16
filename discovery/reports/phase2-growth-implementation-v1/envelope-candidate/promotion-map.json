@@ -1,0 +1,22 @@
+{
+  "files": {
+    "docs/li-v3-growth-envelope-plan.md": {
+      "bytes": 9273,
+      "sha256": "4a5954b93b84d05c32a8ee2ea8254aec63283e915c331339cb97875e4b2aeb59"
+    },
+    "scripts/li_v3_growth_envelope.py": {
+      "bytes": 20609,
+      "sha256": "f50069d028526ea045441a2e574a26192a210ff78ba34f5170777d32f5692ec3"
+    },
+    "tests/test_li_v3_growth_envelope.py": {
+      "bytes": 30722,
+      "sha256": "f569d732f02d90233fd20e9d5bf14ab9bb29337c09022093e15320af031523f1"
+    },
+    "tests/test_li_v3_growth_envelope_review.py": {
+      "bytes": 46615,
+      "sha256": "4e23e7582dc1da3b0a51507eab4181a39707f0d9057506f25eba61d72ce73ccb"
+    }
+  },
+  "recorded_at": "2026-10-16T10:29:08.723766+00:00",
+  "scope": "Four frozen G31 promotion files; actual source operations not invoked."
+}

@@ -1,0 +1,86 @@
+{
+  "actual_scope": {
+    "actual_source_or_prerequisite_receipt_or_private_archive_read": false,
+    "generated_synthetic_buffers_only": true,
+    "network": false,
+    "new_scientific_claim": false,
+    "production_guard_invoked": false,
+    "tracked_edits": false,
+    "unchanged_g29_synthetic_helpers_imported": true
+  },
+  "author_final": {
+    "errors": 0,
+    "exit_code": 0,
+    "failures": 0,
+    "process_seconds": 0.4340316959969641,
+    "receipt": {
+      "bytes": 2871,
+      "path": ".cache/phase2-growth-hint-candidate-v1/receipts/author-second/execution.json",
+      "sha256": "0eccf23d402cd7cff55ca0c91c894976507a2e4b0f379933750b51fddc8d1486"
+    },
+    "tests": 18,
+    "unittest_seconds": 0.03
+  },
+  "core_source_unchanged_across_all_executions": true,
+  "created_utc": "2026-10-16T09:53:35.919440+00:00",
+  "failures_and_prior_runs_preserved": [
+    "receipts/author-first/",
+    "author-first-correction.json",
+    "independent-evidence/independent/first-run/",
+    "independent-evidence/independent/before-eof-normalization/",
+    "independent-evidence/independent/normalization.json"
+  ],
+  "independent_final": {
+    "errors": 0,
+    "exit_code": 0,
+    "failures": 0,
+    "process_seconds": 0.8490345889986202,
+    "receipt": {
+      "bytes": 2301,
+      "path": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/final-run/execution.json",
+      "sha256": "d69b23dacc59bd98fd96b647e1a9f5cbb3841b34d448c4c606b3e8a3179c992c"
+    },
+    "review": {
+      "bytes": 5834,
+      "path": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/review.json",
+      "sha256": "8279edbccb30fbacddfdf7beba6e6a5bfa2a4e4c77990e79d3f297a4c8332aeb"
+    },
+    "tests": 21,
+    "unittest_seconds": 0.529
+  },
+  "limits": "Shape predicate only. Initial-padding semantics, real-field presence, complete archive/OPC validity and scientific readiness remain unestablished.",
+  "next_action": "Root owns any integration. Production binding may be considered only if actual G29 evidence justifies this family; no current candidate operation can acquire or inspect actual source. Any production extension requires separately held source/prerequisite/receipt logic and reviewed execution gates.",
+  "owner": "/root/phase2_math",
+  "predecessor_files_verified": 25,
+  "production_cli_or_context_or_capture_interface": false,
+  "production_prerequisite": null,
+  "promotion_files": [
+    {
+      "bytes": 8507,
+      "path": ".cache/phase2-growth-hint-candidate-v1/promotion/scripts/li_v3_growth_hint_shape.py",
+      "sha256": "c42313ddc1d6c64e6d9c18338bc3efc9bacc65e7ff7f8281e1da28870e74d7cb"
+    },
+    {
+      "bytes": 12098,
+      "path": ".cache/phase2-growth-hint-candidate-v1/promotion/tests/test_li_v3_growth_hint_shape.py",
+      "sha256": "fdd3e1164babe3aa40cf64675f50c86209594eaea9e8146e96e425aff0d7acbb"
+    },
+    {
+      "bytes": 27546,
+      "path": ".cache/phase2-growth-hint-candidate-v1/promotion/tests/test_li_v3_growth_hint_review.py",
+      "sha256": "3296335a815dd5ac9712c4584699cd2b5e48417e1ff7a9a04eddafc245b5d36c"
+    },
+    {
+      "bytes": 7267,
+      "path": ".cache/phase2-growth-hint-candidate-v1/promotion/docs/li-v3-growth-hint-shape-plan.md",
+      "sha256": "9900ff73238a9d1c3629f364e4e97d9d450630b0ba938be74f1a03b52da9939c"
+    }
+  ],
+  "schema": "lupine.discovery.growth_hint_synthetic_handoff.v1",
+  "static_review": {
+    "bytes": 3819,
+    "path": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/source-review/static-review.json",
+    "sha256": "6cad38b2d285bba256fc901d9830b57b7b040e46c90d01005a752d17ede54cd1"
+  },
+  "status": "HELD_SYNTHETIC_CANDIDATE_REVIEWED_PRODUCTION_UNBOUND"
+}

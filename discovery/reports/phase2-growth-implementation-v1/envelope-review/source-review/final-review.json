@@ -1,0 +1,65 @@
+{
+  "completed_checks": {
+    "author_final_failures": 0,
+    "author_final_test_methods": 31,
+    "author_first_failures": 1,
+    "author_first_test_methods": 28,
+    "independent_first_failures": 0,
+    "independent_first_test_methods": 24,
+    "independent_retries": 0,
+    "static_byte_AST_checks": 7,
+    "unrelated_functions_AST_unchanged_from_first_source": 10
+  },
+  "evidence": {
+    "author_receipt_audit": "author-receipt-review.json",
+    "independent_receipt_audit": "independent-receipt-review.json",
+    "independent_review": "../independent/review.json",
+    "source_argument": "source-argument.md",
+    "static_audit": "static-audit.json"
+  },
+  "files": {
+    "promotion/docs/li-v3-growth-envelope-plan.md": {
+      "bytes": 9273,
+      "sha256": "4a5954b93b84d05c32a8ee2ea8254aec63283e915c331339cb97875e4b2aeb59"
+    },
+    "promotion/scripts/li_v3_growth_envelope.py": {
+      "bytes": 20609,
+      "sha256": "f50069d028526ea045441a2e574a26192a210ff78ba34f5170777d32f5692ec3"
+    },
+    "promotion/tests/test_li_v3_growth_envelope.py": {
+      "bytes": 30722,
+      "sha256": "f569d732f02d90233fd20e9d5bf14ab9bb29337c09022093e15320af031523f1"
+    },
+    "scope-addendum-central-declarations.json": {
+      "bytes": 1839,
+      "sha256": "a60e1b934e49a071684fce95a3d6079d5dd9716964fab0d0002284cc9ce50217"
+    },
+    "scope.md": {
+      "bytes": 3766,
+      "sha256": "7dc85a75fc54cee03d92d6cd04b0444bb4e252379e55ae2c1aea7f7f23b08c4b"
+    }
+  },
+  "limits": [
+    "Parent performed source/prose/AST/receipt audit only, no product import or runtime rerun.",
+    "Child used generated archives and completely mocked current-wrapper/context dependencies; no actual private source, receipt, capture, object, network or real production chain.",
+    "Initial selected-span evidence and nested exposure are distinct from full-archive validation and outer machine exposure.",
+    "Only original four envelope XML helpers can run after complete header checks; outcome-bearing worksheets/sharedStrings remain unread.",
+    "A profile match remains scientific BLOCKED_SCHEMA, null scientific counts and no independence or physical validity claim.",
+    "No concurrent at-most-once read or arbitrary hostile-Python/destructor guarantee.",
+    "Source integration, exact CI/package/audit and any actual operation remain parent-owned gates."
+  ],
+  "next_action": "Parent may integrate exact reviewed sources/tests/contracts, run appropriate integration checks and publish; artifact/actual operations require their separate gates.",
+  "recorded_utc": "2026-10-16T10:33:01.636204+00:00",
+  "resolved_blocker": {
+    "finding": "Inherited acceptance of final central comment declaration1 with no comment byte.",
+    "first_source": "a8c0cea16c1c44d6cf57986edcd6ca22e0229cb0f3bb7f935910d6fa2aef3045",
+    "independent_central_overrun_probes": 18,
+    "old_predicate_comparison": "Equal after declared local-extra alternative, approved preflight call and exposure/ownership instrumentation; added code separately reviewed.",
+    "original_failed_assertion_AST_unchanged": true,
+    "resolution": "Root-approved narrow raw central preflight checks bounded exact framing/count/signatures and zero declared extra/comment lengths before own archive creation. Existing readers unchanged."
+  },
+  "reviewer": "/root/phase2_planner",
+  "schema": "lupine.discovery.growth_envelope_final_source_review.v1",
+  "unresolved_blockers": [],
+  "verdict": "PASS_BOUNDED_SOURCE_CONTRACT_AND_SYNTHETIC_REVIEW"
+}

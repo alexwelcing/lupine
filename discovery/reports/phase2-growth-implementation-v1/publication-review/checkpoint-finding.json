@@ -1,0 +1,12 @@
+{
+  "corrected_continuation_sha256": "40fa5552cc1370e2fa5017cdabba178e143f8e280c92b63b8eb22dcf37acea67",
+  "disposition": "Root updated current state to PRODUCTION_IMPLEMENTED_INTEGRATED_RELEASE_GATES_PENDING, author_tests_pass 35, preserving pure_preparation_author_tests_pass 18.",
+  "finding": "Current checkpoint retained stale pure-only G30 state and 18 author tests beside current integrated 35-test state.",
+  "original_observed_fields": {
+    "author_tests_pass": 18,
+    "status": "SYNTHETIC_PREPARATION_REVIEWED_PRODUCTION_BINDING_IN_PROGRESS"
+  },
+  "recorded_at": "2026-10-16T10:39:23.021840+00:00",
+  "source_correctness_change": false,
+  "verification": "First publication audit passed corrected staged/current continuation bytes."
+}

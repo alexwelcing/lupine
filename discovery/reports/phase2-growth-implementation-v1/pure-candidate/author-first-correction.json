@@ -1,0 +1,10 @@
+{
+  "actual_source_or_receipts_read": false,
+  "disposition": "Author fixture assumptions were wrong: generic itemN.xml names violate frozen member-kind profile, and G29 report has no source dictionary. Fixed generated names to allowed worksheet paths and tested detached predecessor_classification instead.",
+  "first_receipt": "receipts/author-first/execution.json",
+  "first_result": "18 test methods run; 18 failures counted including subtests, 1 error; exit1",
+  "prior_source_and_test_snapshots": "receipts/author-first/",
+  "product_source_changed": false,
+  "schema": "lupine.discovery.synthetic_author_fixture_correction.v1",
+  "synthetic_debug_projection": "receipts/author-first/synthetic-debug.json"
+}

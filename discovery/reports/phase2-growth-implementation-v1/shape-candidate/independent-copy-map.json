@@ -1,0 +1,353 @@
+{
+  "byte_identical": true,
+  "files": [
+    {
+      "copy": {
+        "bytes": 3105,
+        "path": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/README.md",
+        "sha256": "6c038ae22e833d78ac0c6178bc710b602c265f8a1a54cacd872423f684f7ca9f"
+      },
+      "source": {
+        "bytes": 3105,
+        "path": ".cache/phase2-growth-hint-production-review-v1/README.md",
+        "sha256": "6c038ae22e833d78ac0c6178bc710b602c265f8a1a54cacd872423f684f7ca9f"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 1388,
+        "path": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/handoff.json",
+        "sha256": "3157bf3ca3cc8193f968714e9c593844887546a6322b0763e14c511625fbd533"
+      },
+      "source": {
+        "bytes": 1388,
+        "path": ".cache/phase2-growth-hint-production-review-v1/handoff.json",
+        "sha256": "3157bf3ca3cc8193f968714e9c593844887546a6322b0763e14c511625fbd533"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 4669,
+        "path": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/independent/README.md",
+        "sha256": "b2be5201e74ba5a3c2b0887fbffcff28a37347c4ac7617d9028c31949bb3eaf7"
+      },
+      "source": {
+        "bytes": 4669,
+        "path": ".cache/phase2-growth-hint-production-review-v1/independent/README.md",
+        "sha256": "b2be5201e74ba5a3c2b0887fbffcff28a37347c4ac7617d9028c31949bb3eaf7"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 11204,
+        "path": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/independent/first-run/contract.md",
+        "sha256": "e0ca28ad61181c6cf56d20a46733d2285acb6cb5bc39348f46ee3acb29dfcbc6"
+      },
+      "source": {
+        "bytes": 11204,
+        "path": ".cache/phase2-growth-hint-production-review-v1/independent/first-run/contract.md",
+        "sha256": "e0ca28ad61181c6cf56d20a46733d2285acb6cb5bc39348f46ee3acb29dfcbc6"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 2433,
+        "path": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/independent/first-run/execution.json",
+        "sha256": "2aa417b4b957a4a2a13c154839e4998b54fab89f6893aed0d5440c780f6eb4c9"
+      },
+      "source": {
+        "bytes": 2433,
+        "path": ".cache/phase2-growth-hint-production-review-v1/independent/first-run/execution.json",
+        "sha256": "2aa417b4b957a4a2a13c154839e4998b54fab89f6893aed0d5440c780f6eb4c9"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 20556,
+        "path": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/independent/first-run/implementation.py",
+        "sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a"
+      },
+      "source": {
+        "bytes": 20556,
+        "path": ".cache/phase2-growth-hint-production-review-v1/independent/first-run/implementation.py",
+        "sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 38569,
+        "path": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/independent/first-run/independent-tests.py",
+        "sha256": "13db80f49a6d8f83df58a3f2ae22f27450e5367c156368333db1908f90d01f85"
+      },
+      "source": {
+        "bytes": 38569,
+        "path": ".cache/phase2-growth-hint-production-review-v1/independent/first-run/independent-tests.py",
+        "sha256": "13db80f49a6d8f83df58a3f2ae22f27450e5367c156368333db1908f90d01f85"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 378,
+        "path": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/independent/first-run/scope-observation.json",
+        "sha256": "48ffa827358f4663eec539ec4cfbd9abc38dd3f887624392a404a7ebde4205e9"
+      },
+      "source": {
+        "bytes": 378,
+        "path": ".cache/phase2-growth-hint-production-review-v1/independent/first-run/scope-observation.json",
+        "sha256": "48ffa827358f4663eec539ec4cfbd9abc38dd3f887624392a404a7ebde4205e9"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 4087,
+        "path": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/independent/first-run/stderr.txt",
+        "sha256": "9a98e48992cf18a8ee11eace3fdbbad6b6ca213cad596cc612cd4130a3fc5dc3"
+      },
+      "source": {
+        "bytes": 4087,
+        "path": ".cache/phase2-growth-hint-production-review-v1/independent/first-run/stderr.txt",
+        "sha256": "9a98e48992cf18a8ee11eace3fdbbad6b6ca213cad596cc612cd4130a3fc5dc3"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 0,
+        "path": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/independent/first-run/stdout.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "source": {
+        "bytes": 0,
+        "path": ".cache/phase2-growth-hint-production-review-v1/independent/first-run/stdout.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 2022,
+        "path": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/independent/inventory.json",
+        "sha256": "7b5dca06766bf247bf2c61780b0a2ab86065cbde2d6618f219b33e1e6b694727"
+      },
+      "source": {
+        "bytes": 2022,
+        "path": ".cache/phase2-growth-hint-production-review-v1/independent/inventory.json",
+        "sha256": "7b5dca06766bf247bf2c61780b0a2ab86065cbde2d6618f219b33e1e6b694727"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 504,
+        "path": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/independent/preparation.json",
+        "sha256": "356ccb0eefd971e333b996146d3b317bd4f65698b718239aaf163fa178d9fb87"
+      },
+      "source": {
+        "bytes": 504,
+        "path": ".cache/phase2-growth-hint-production-review-v1/independent/preparation.json",
+        "sha256": "356ccb0eefd971e333b996146d3b317bd4f65698b718239aaf163fa178d9fb87"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 38569,
+        "path": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/independent/promotion/tests/test_li_v3_growth_hint_review.py",
+        "sha256": "13db80f49a6d8f83df58a3f2ae22f27450e5367c156368333db1908f90d01f85"
+      },
+      "source": {
+        "bytes": 38569,
+        "path": ".cache/phase2-growth-hint-production-review-v1/independent/promotion/tests/test_li_v3_growth_hint_review.py",
+        "sha256": "13db80f49a6d8f83df58a3f2ae22f27450e5367c156368333db1908f90d01f85"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 4216,
+        "path": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/independent/review.json",
+        "sha256": "69960b564f5c6a33a06e0e088eaa02a670a167afeeca6cfbd8eb28a4407698c2"
+      },
+      "source": {
+        "bytes": 4216,
+        "path": ".cache/phase2-growth-hint-production-review-v1/independent/review.json",
+        "sha256": "69960b564f5c6a33a06e0e088eaa02a670a167afeeca6cfbd8eb28a4407698c2"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 3613,
+        "path": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/independent/run_review.py",
+        "sha256": "4505146df8d4ad9a593be4d8b10b39200fed86b2c9231369e56580b58a68ad95"
+      },
+      "source": {
+        "bytes": 3613,
+        "path": ".cache/phase2-growth-hint-production-review-v1/independent/run_review.py",
+        "sha256": "4505146df8d4ad9a593be4d8b10b39200fed86b2c9231369e56580b58a68ad95"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 2546,
+        "path": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/independent/run_tests_guarded.py",
+        "sha256": "e7bacfd2a90bb55970ffcbfdab5abbd56866b97b6484909d0a4f76d81aee52bd"
+      },
+      "source": {
+        "bytes": 2546,
+        "path": ".cache/phase2-growth-hint-production-review-v1/independent/run_tests_guarded.py",
+        "sha256": "e7bacfd2a90bb55970ffcbfdab5abbd56866b97b6484909d0a4f76d81aee52bd"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 4409,
+        "path": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/inventory.json",
+        "sha256": "b27227d19b2b4b303252f456209603a70c29fc8d4cc51782f13cfed0b7ebe391"
+      },
+      "source": {
+        "bytes": 4409,
+        "path": ".cache/phase2-growth-hint-production-review-v1/inventory.json",
+        "sha256": "b27227d19b2b4b303252f456209603a70c29fc8d4cc51782f13cfed0b7ebe391"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 4131,
+        "path": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/source-review/audit_source.py",
+        "sha256": "b0349acde5386da61de7870480d325d0f37675433180e935968585910da69bdc"
+      },
+      "source": {
+        "bytes": 4131,
+        "path": ".cache/phase2-growth-hint-production-review-v1/source-review/audit_source.py",
+        "sha256": "b0349acde5386da61de7870480d325d0f37675433180e935968585910da69bdc"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 1617,
+        "path": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/source-review/author-receipt-review.json",
+        "sha256": "46385142504c3a866c8c927e6e23473f4a15fe56b2061667686f94e73835dfe6"
+      },
+      "source": {
+        "bytes": 1617,
+        "path": ".cache/phase2-growth-hint-production-review-v1/source-review/author-receipt-review.json",
+        "sha256": "46385142504c3a866c8c927e6e23473f4a15fe56b2061667686f94e73835dfe6"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 1915,
+        "path": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/source-review/conformance-receipt-review.json",
+        "sha256": "1959e15bdbe8deb84c6d577ab922c16cd6b04f16e227773aa300a81a9eb791d0"
+      },
+      "source": {
+        "bytes": 1915,
+        "path": ".cache/phase2-growth-hint-production-review-v1/source-review/conformance-receipt-review.json",
+        "sha256": "1959e15bdbe8deb84c6d577ab922c16cd6b04f16e227773aa300a81a9eb791d0"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 3591,
+        "path": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/source-review/final-source-review.json",
+        "sha256": "c5f55fb093be56faff2c92e7c8409992075f11122fd90e2f7914108c7c46f5c6"
+      },
+      "source": {
+        "bytes": 3591,
+        "path": ".cache/phase2-growth-hint-production-review-v1/source-review/final-source-review.json",
+        "sha256": "c5f55fb093be56faff2c92e7c8409992075f11122fd90e2f7914108c7c46f5c6"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 20556,
+        "path": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/source-review/first-source/li_v3_growth_hint_shape.py.txt",
+        "sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a"
+      },
+      "source": {
+        "bytes": 20556,
+        "path": ".cache/phase2-growth-hint-production-review-v1/source-review/first-source/li_v3_growth_hint_shape.py.txt",
+        "sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 638,
+        "path": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/source-review/first-source/review.json",
+        "sha256": "4db8c177c506e20259eee697d2287cf163f6bb6a9173644e760c6fdddc445971"
+      },
+      "source": {
+        "bytes": 638,
+        "path": ".cache/phase2-growth-hint-production-review-v1/source-review/first-source/review.json",
+        "sha256": "4db8c177c506e20259eee697d2287cf163f6bb6a9173644e760c6fdddc445971"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 1850,
+        "path": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/source-review/independent-receipt-review.json",
+        "sha256": "8f92d74ad7fdd3f643cbc2cdf15d0d3b4dc6b7e22f173875ae333ea54b45f267"
+      },
+      "source": {
+        "bytes": 1850,
+        "path": ".cache/phase2-growth-hint-production-review-v1/source-review/independent-receipt-review.json",
+        "sha256": "8f92d74ad7fdd3f643cbc2cdf15d0d3b4dc6b7e22f173875ae333ea54b45f267"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 1399,
+        "path": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/source-review/preparation.json",
+        "sha256": "2f9210be532d1530225e515a3337cca68fae9d761246282b096a2d5f81d5e93f"
+      },
+      "source": {
+        "bytes": 1399,
+        "path": ".cache/phase2-growth-hint-production-review-v1/source-review/preparation.json",
+        "sha256": "2f9210be532d1530225e515a3337cca68fae9d761246282b096a2d5f81d5e93f"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 4751,
+        "path": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/source-review/prerequisite-source-binding.json",
+        "sha256": "ace8fccea26e9fde7af89ccc011c26d84b08693fd73aba67112d1073965a4f96"
+      },
+      "source": {
+        "bytes": 4751,
+        "path": ".cache/phase2-growth-hint-production-review-v1/source-review/prerequisite-source-binding.json",
+        "sha256": "ace8fccea26e9fde7af89ccc011c26d84b08693fd73aba67112d1073965a4f96"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 1615,
+        "path": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/source-review/review-plan.md",
+        "sha256": "cce2c11ad6da98e0b7ab806b9c2761b94d981c35294c5ba07be52f8d25f24b1c"
+      },
+      "source": {
+        "bytes": 1615,
+        "path": ".cache/phase2-growth-hint-production-review-v1/source-review/review-plan.md",
+        "sha256": "cce2c11ad6da98e0b7ab806b9c2761b94d981c35294c5ba07be52f8d25f24b1c"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 4233,
+        "path": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/source-review/source-argument.md",
+        "sha256": "f459bf52d8d1735aba7c524187ad795eff90bf2d67f99f1a3886214b73a8eff4"
+      },
+      "source": {
+        "bytes": 4233,
+        "path": ".cache/phase2-growth-hint-production-review-v1/source-review/source-argument.md",
+        "sha256": "f459bf52d8d1735aba7c524187ad795eff90bf2d67f99f1a3886214b73a8eff4"
+      }
+    },
+    {
+      "copy": {
+        "bytes": 1107,
+        "path": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/source-review/static-audit.json",
+        "sha256": "9d1d1d30f4c2beb6f4e2e5bdc06808d1fceb4bdb1f546ae84fc9643913a01564"
+      },
+      "source": {
+        "bytes": 1107,
+        "path": ".cache/phase2-growth-hint-production-review-v1/source-review/static-audit.json",
+        "sha256": "9d1d1d30f4c2beb6f4e2e5bdc06808d1fceb4bdb1f546ae84fc9643913a01564"
+      }
+    }
+  ]
+}

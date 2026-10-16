@@ -1,0 +1,13 @@
+{
+  "disposition": "Root authorized narrow new-profile raw central preflight, before own archive open, after preservation of first author27/28 pass failure. Existing readers and source remain unchanged.",
+  "recorded_utc": "2026-10-16T10:23:40.172351+00:00",
+  "required_checks": [
+    "Exact central record count and signatures",
+    "Fixed header and declared spans bounded by directory end",
+    "Exact directory end",
+    "Declared central extra/comment lengths zero",
+    "No raw-name/text decode",
+    "Explicit preflight started/completed exposure and fixed error"
+  ],
+  "source_only_no_actual_operation": true
+}

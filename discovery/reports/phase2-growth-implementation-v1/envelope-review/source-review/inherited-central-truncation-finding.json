@@ -1,0 +1,14 @@
+{
+  "author_execution_receipt_sha256": "b7c097f7df70b18e58b1ae3827d696c8f24f336c282b4ee38f16f971f93f2cef",
+  "author_first_exit": 1,
+  "author_first_test_count": 28,
+  "disposition": "Keep all first source/test/log bytes. Await root scope amendment for additional raw central declaration consistency check in new profile only; do not alter old guards or weaken failed assertion. Independent generated tests will include comment and extra declaration overruns.",
+  "observed_failure": "Generated archive with final central header comment_length set to1 at fixed offset+32 but no comment byte appended was accepted. First author28-method execution records this failed rejection assertion.",
+  "recorded_utc": "2026-10-16T10:23:08.194099+00:00",
+  "reviewer_operation_scope": "Read public source and author synthetic execution logs only; no product import, actual/private object or production operation.",
+  "schema": "lupine.discovery.growth_envelope_inherited_gap_finding.v1",
+  "source_explanation": "The unchanged predicate relies on ZipInfo.comment and recomputed consumed lengths. The stdlib bounded central-directory reader can return an empty short read for declared trailing comment length; no nonempty comment reaches the old predicate, and actual computed central size still matches. Author independently confirmed this inherited tolerance by source inspection.",
+  "source_sha256": "a8c0cea16c1c44d6cf57986edcd6ca22e0229cb0f3bb7f935910d6fa2aef3045",
+  "status": "BLOCKING_PENDING_NARROW_NEW_PROFILE_CORRECTION",
+  "stderr_sha256": "519e53ffd27241bd5992d3765f2c1b8702105c3e1e1f703f7cf6b120e5ff4dd0"
+}

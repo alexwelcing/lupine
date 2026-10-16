@@ -1,0 +1,1373 @@
+{
+  "copies": [
+    {
+      "bytes": 714,
+      "original": ".cache/phase2-growth-hint-candidate-v1/author-first-correction.json",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/author-first-correction.json",
+      "sha256": "74ef08ae5029910742e11043e8fc6e57c11054aad904b2b8dce0945c90214f9d"
+    },
+    {
+      "bytes": 3679,
+      "original": ".cache/phase2-growth-hint-candidate-v1/handoff.json",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/handoff.json",
+      "sha256": "0d90ac5c8190f6978fb482920e3604bd0cc38c728e3a854a511489f38bd2f1ca"
+    },
+    {
+      "bytes": 14302,
+      "original": ".cache/phase2-growth-hint-candidate-v1/independent-copy-map.json",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/independent-copy-map.json",
+      "sha256": "918e0ed935e739737fe473c8f0abae6e82d8812e424b25110c2aa7f1809534d8"
+    },
+    {
+      "bytes": 4470,
+      "original": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/README.md",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/independent-evidence/independent/README.md",
+      "sha256": "ef56d2a974e88f33d5e9cab9d54387364c06642cde1c6b2de3e4046695b5aca0"
+    },
+    {
+      "bytes": 3826,
+      "original": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/before-eof-normalization/README.md",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/independent-evidence/independent/before-eof-normalization/README.md",
+      "sha256": "2d99bb56c23f91f7f8c865be59fbe3e4bec928fe8f91d55344e003ded88611fe"
+    },
+    {
+      "bytes": 27548,
+      "original": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/before-eof-normalization/independent-tests.py",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/independent-evidence/independent/before-eof-normalization/independent-tests.py",
+      "sha256": "7a3e4263af08577c9c5884f5d486caca3eee7e78e5b89cc47e43724e13733a0f"
+    },
+    {
+      "bytes": 1950,
+      "original": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/before-eof-normalization/inventory.json",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/independent-evidence/independent/before-eof-normalization/inventory.json",
+      "sha256": "0c720724343044956adc6926fb680078ad18510ecec0785da3f11118f46c9b15"
+    },
+    {
+      "bytes": 4874,
+      "original": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/before-eof-normalization/review.json",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/independent-evidence/independent/before-eof-normalization/review.json",
+      "sha256": "070e499665325286deb8efd72c7416121d2c4998f51fa0d92515b93f129fd862"
+    },
+    {
+      "bytes": 7267,
+      "original": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/final-run/contract.md",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/independent-evidence/independent/final-run/contract.md",
+      "sha256": "9900ff73238a9d1c3629f364e4e97d9d450630b0ba938be74f1a03b52da9939c"
+    },
+    {
+      "bytes": 2301,
+      "original": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/final-run/execution.json",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/independent-evidence/independent/final-run/execution.json",
+      "sha256": "d69b23dacc59bd98fd96b647e1a9f5cbb3841b34d448c4c606b3e8a3179c992c"
+    },
+    {
+      "bytes": 8507,
+      "original": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/final-run/implementation.py",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/independent-evidence/independent/final-run/implementation.py",
+      "sha256": "c42313ddc1d6c64e6d9c18338bc3efc9bacc65e7ff7f8281e1da28870e74d7cb"
+    },
+    {
+      "bytes": 27546,
+      "original": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/final-run/independent-tests.py",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/independent-evidence/independent/final-run/independent-tests.py",
+      "sha256": "3296335a815dd5ac9712c4584699cd2b5e48417e1ff7a9a04eddafc245b5d36c"
+    },
+    {
+      "bytes": 152,
+      "original": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/final-run/scope-observation.json",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/independent-evidence/independent/final-run/scope-observation.json",
+      "sha256": "b11f9582389aa782548a2d7c649cf4c251ff84b4548e687e137f0ba6733873a1"
+    },
+    {
+      "bytes": 3868,
+      "original": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/final-run/stderr.txt",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/independent-evidence/independent/final-run/stderr.txt",
+      "sha256": "87f165e4c8790909a469dd0da40d72fe7f4e1101f2cf0b53250aecca591dbc35"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/final-run/stdout.txt",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/independent-evidence/independent/final-run/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 7267,
+      "original": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/first-run/contract.md",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/independent-evidence/independent/first-run/contract.md",
+      "sha256": "9900ff73238a9d1c3629f364e4e97d9d450630b0ba938be74f1a03b52da9939c"
+    },
+    {
+      "bytes": 2301,
+      "original": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/first-run/execution.json",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/independent-evidence/independent/first-run/execution.json",
+      "sha256": "0453a541020b437ae27fee9c24511bcd6ce64c5c285c8aec5c2c49cda55ba334"
+    },
+    {
+      "bytes": 8507,
+      "original": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/first-run/implementation.py",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/independent-evidence/independent/first-run/implementation.py",
+      "sha256": "c42313ddc1d6c64e6d9c18338bc3efc9bacc65e7ff7f8281e1da28870e74d7cb"
+    },
+    {
+      "bytes": 27548,
+      "original": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/first-run/independent-tests.py",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/independent-evidence/independent/first-run/independent-tests.py",
+      "sha256": "7a3e4263af08577c9c5884f5d486caca3eee7e78e5b89cc47e43724e13733a0f"
+    },
+    {
+      "bytes": 152,
+      "original": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/first-run/scope-observation.json",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/independent-evidence/independent/first-run/scope-observation.json",
+      "sha256": "b11f9582389aa782548a2d7c649cf4c251ff84b4548e687e137f0ba6733873a1"
+    },
+    {
+      "bytes": 3868,
+      "original": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/first-run/stderr.txt",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/independent-evidence/independent/first-run/stderr.txt",
+      "sha256": "a14319d3b9e407729db52b7dbda5a48c887e4219eb647fe760ec209eaf0662b1"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/first-run/stdout.txt",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/independent-evidence/independent/first-run/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 3745,
+      "original": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/inventory.json",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/independent-evidence/independent/inventory.json",
+      "sha256": "e840d28c0d1a47d1d3098599b6344f07a0aab5f9c720cdf78e154ab4f7b1642d"
+    },
+    {
+      "bytes": 777,
+      "original": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/normalization.json",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/independent-evidence/independent/normalization.json",
+      "sha256": "7a70600fe64ddc13bd56e1fb4cdfd50a974846bf62a09b03359d383ad76a2fb4"
+    },
+    {
+      "bytes": 517,
+      "original": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/preparation.json",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/independent-evidence/independent/preparation.json",
+      "sha256": "0bcc2a7162f005de962ce47863f89790e205f59bcecc0be1f0b6ba1b96a45001"
+    },
+    {
+      "bytes": 27546,
+      "original": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/promotion/tests/test_li_v3_growth_hint_review.py",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/independent-evidence/independent/promotion/tests/test_li_v3_growth_hint_review.py",
+      "sha256": "3296335a815dd5ac9712c4584699cd2b5e48417e1ff7a9a04eddafc245b5d36c"
+    },
+    {
+      "bytes": 5834,
+      "original": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/review.json",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/independent-evidence/independent/review.json",
+      "sha256": "8279edbccb30fbacddfdf7beba6e6a5bfa2a4e4c77990e79d3f297a4c8332aeb"
+    },
+    {
+      "bytes": 3401,
+      "original": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/run_review.py",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/independent-evidence/independent/run_review.py",
+      "sha256": "65272beaa42670715204b29a67e0855022f4bd2c0a42883247fb2fc8e84e45ef"
+    },
+    {
+      "bytes": 1955,
+      "original": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/independent/run_tests_guarded.py",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/independent-evidence/independent/run_tests_guarded.py",
+      "sha256": "cd584e803644b9eea66ef6dc452397dac027dfc063c45a037c3dfd77e800303c"
+    },
+    {
+      "bytes": 2957,
+      "original": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/source-review/final-review.json",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/independent-evidence/source-review/final-review.json",
+      "sha256": "39d93a7659a899d0562af6686a40e207668f2a03e942fd37f0e4eb507a3ac98a"
+    },
+    {
+      "bytes": 2664,
+      "original": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/source-review/provisional.json",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/independent-evidence/source-review/provisional.json",
+      "sha256": "ef820f2a44b658556a6de39bc86e32e798c5f9364e0ff2a82019595de8fe57de"
+    },
+    {
+      "bytes": 3819,
+      "original": ".cache/phase2-growth-hint-candidate-v1/independent-evidence/source-review/static-review.json",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/independent-evidence/source-review/static-review.json",
+      "sha256": "6cad38b2d285bba256fc901d9830b57b7b040e46c90d01005a752d17ede54cd1"
+    },
+    {
+      "bytes": 12031,
+      "original": ".cache/phase2-growth-hint-candidate-v1/inventory.json",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/inventory.json",
+      "sha256": "074c379ebed3ae6f3aef5e5adf2c13793bb4ce1153ff76b25e119924ace5b31a"
+    },
+    {
+      "bytes": 2782,
+      "original": ".cache/phase2-growth-hint-candidate-v1/predecessor-pins.json",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/predecessor-pins.json",
+      "sha256": "60dbf601b82877dac039ed1970021d910e07d6e826e59b535ad54dd163d7e043"
+    },
+    {
+      "bytes": 7267,
+      "original": ".cache/phase2-growth-hint-candidate-v1/promotion/docs/li-v3-growth-hint-shape-plan.md",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/promotion/docs/li-v3-growth-hint-shape-plan.md",
+      "sha256": "9900ff73238a9d1c3629f364e4e97d9d450630b0ba938be74f1a03b52da9939c"
+    },
+    {
+      "bytes": 8507,
+      "original": ".cache/phase2-growth-hint-candidate-v1/promotion/scripts/li_v3_growth_hint_shape.py",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/promotion/scripts/li_v3_growth_hint_shape.py",
+      "sha256": "c42313ddc1d6c64e6d9c18338bc3efc9bacc65e7ff7f8281e1da28870e74d7cb"
+    },
+    {
+      "bytes": 27546,
+      "original": ".cache/phase2-growth-hint-candidate-v1/promotion/tests/test_li_v3_growth_hint_review.py",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/promotion/tests/test_li_v3_growth_hint_review.py",
+      "sha256": "3296335a815dd5ac9712c4584699cd2b5e48417e1ff7a9a04eddafc245b5d36c"
+    },
+    {
+      "bytes": 12098,
+      "original": ".cache/phase2-growth-hint-candidate-v1/promotion/tests/test_li_v3_growth_hint_shape.py",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/promotion/tests/test_li_v3_growth_hint_shape.py",
+      "sha256": "fdd3e1164babe3aa40cf64675f50c86209594eaea9e8146e96e425aff0d7acbb"
+    },
+    {
+      "bytes": 1420,
+      "original": ".cache/phase2-growth-hint-candidate-v1/promotion-map.json",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/promotion-map.json",
+      "sha256": "dbdc3f21e943a18b45b1651a700d859c56b110c12d10782d068fdb2c4f6d375b"
+    },
+    {
+      "bytes": 523,
+      "original": ".cache/phase2-growth-hint-candidate-v1/receipt-audit.json",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/receipt-audit.json",
+      "sha256": "d676bd75a7fa3879e92285a42cffaff25feca09caa4c3bd18dec61eaeacc222e"
+    },
+    {
+      "bytes": 2488,
+      "original": ".cache/phase2-growth-hint-candidate-v1/receipts/author-first/execution.json",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/receipts/author-first/execution.json",
+      "sha256": "f7b77231ca122a64f89e6580805a018b6f94fb8a2159ebb7d83de1d3c08d827a"
+    },
+    {
+      "bytes": 7267,
+      "original": ".cache/phase2-growth-hint-candidate-v1/receipts/author-first/li-v3-growth-hint-shape-plan.md",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/receipts/author-first/li-v3-growth-hint-shape-plan.md",
+      "sha256": "9900ff73238a9d1c3629f364e4e97d9d450630b0ba938be74f1a03b52da9939c"
+    },
+    {
+      "bytes": 8507,
+      "original": ".cache/phase2-growth-hint-candidate-v1/receipts/author-first/li_v3_growth_hint_shape.py",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/receipts/author-first/li_v3_growth_hint_shape.py",
+      "sha256": "c42313ddc1d6c64e6d9c18338bc3efc9bacc65e7ff7f8281e1da28870e74d7cb"
+    },
+    {
+      "bytes": 17129,
+      "original": ".cache/phase2-growth-hint-candidate-v1/receipts/author-first/stderr.txt",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/receipts/author-first/stderr.txt",
+      "sha256": "a6a6bd2d47171ec4da9de880cc9a2ccef77249b0c26525cd566264cacf07ab77"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-growth-hint-candidate-v1/receipts/author-first/stdout.txt",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/receipts/author-first/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2675,
+      "original": ".cache/phase2-growth-hint-candidate-v1/receipts/author-first/synthetic-debug.json",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/receipts/author-first/synthetic-debug.json",
+      "sha256": "a47e453ae1749f3c1fdfe82876cbf3aeaa96fa3bea7f8278ae978bfe307afe84"
+    },
+    {
+      "bytes": 11952,
+      "original": ".cache/phase2-growth-hint-candidate-v1/receipts/author-first/test_li_v3_growth_hint_shape.py",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/receipts/author-first/test_li_v3_growth_hint_shape.py",
+      "sha256": "a5793b5f2f8a458f225ea240ec3c7777e5b7d09fc36412e9bbc0a773cce7e347"
+    },
+    {
+      "bytes": 2871,
+      "original": ".cache/phase2-growth-hint-candidate-v1/receipts/author-second/execution.json",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/receipts/author-second/execution.json",
+      "sha256": "0eccf23d402cd7cff55ca0c91c894976507a2e4b0f379933750b51fddc8d1486"
+    },
+    {
+      "bytes": 7267,
+      "original": ".cache/phase2-growth-hint-candidate-v1/receipts/author-second/li-v3-growth-hint-shape-plan.md",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/receipts/author-second/li-v3-growth-hint-shape-plan.md",
+      "sha256": "9900ff73238a9d1c3629f364e4e97d9d450630b0ba938be74f1a03b52da9939c"
+    },
+    {
+      "bytes": 8507,
+      "original": ".cache/phase2-growth-hint-candidate-v1/receipts/author-second/li_v3_growth_hint_shape.py",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/receipts/author-second/li_v3_growth_hint_shape.py",
+      "sha256": "c42313ddc1d6c64e6d9c18338bc3efc9bacc65e7ff7f8281e1da28870e74d7cb"
+    },
+    {
+      "bytes": 2521,
+      "original": ".cache/phase2-growth-hint-candidate-v1/receipts/author-second/stderr.txt",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/receipts/author-second/stderr.txt",
+      "sha256": "d0050e8ca9a2f0557271c7a7236d2960eeda8f1ab5efcd82aa1118233c43b466"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-growth-hint-candidate-v1/receipts/author-second/stdout.txt",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/receipts/author-second/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 12098,
+      "original": ".cache/phase2-growth-hint-candidate-v1/receipts/author-second/test_li_v3_growth_hint_shape.py",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/receipts/author-second/test_li_v3_growth_hint_shape.py",
+      "sha256": "fdd3e1164babe3aa40cf64675f50c86209594eaea9e8146e96e425aff0d7acbb"
+    },
+    {
+      "bytes": 2585,
+      "original": ".cache/phase2-growth-hint-candidate-v1/run_author.py",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/run_author.py",
+      "sha256": "575eb0116d143707e9981240c783a81fe7e10bea05242c50f941864c379d0c1f"
+    },
+    {
+      "bytes": 5756,
+      "original": ".cache/phase2-growth-hint-candidate-v1/source-bindings.json",
+      "published": "reports/phase2-growth-implementation-v1/pure-candidate/source-bindings.json",
+      "sha256": "2f318552271fe5c5d889c609b9b6d72ba41cfdda8e6a4d403ff15b79be21d098"
+    },
+    {
+      "bytes": 4670,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/README.md",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/README.md",
+      "sha256": "46d245c6586d7259cd4c7ffeb3a25983b5f66b4fe7a8f116322b3b5af5f6bc09"
+    },
+    {
+      "bytes": 2677,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/compare_pure_reports.py",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/compare_pure_reports.py",
+      "sha256": "bb0c1efa2716c8c6717ec06c5d809c57df95f22e9b041fabc1670bae015b4c3b"
+    },
+    {
+      "bytes": 11122,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/contract-before-order-correction.md",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/contract-before-order-correction.md",
+      "sha256": "f4f0ce8eb5442fb4529fc17a7da60bfdeb3c7ad056b00c4105331ece55b5e659"
+    },
+    {
+      "bytes": 928,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/contract-order-correction.diff",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/contract-order-correction.diff",
+      "sha256": "0fd64e87662b0d8a1c102cdd82576ca88d1a099acac39993b850cce0e575c166"
+    },
+    {
+      "bytes": 1172,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/contract-order-correction.json",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/contract-order-correction.json",
+      "sha256": "589f11a8161ed8c966c80e738f463113e68d034d05fba98d758b53910d509940"
+    },
+    {
+      "bytes": 3113,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/handoff.json",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/handoff.json",
+      "sha256": "f12522031706c2b5b7ed1222429b8f15684ca1e31d950f48696f5b3b4c55a91f"
+    },
+    {
+      "bytes": 14680,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/independent-copy-map.json",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/independent-copy-map.json",
+      "sha256": "caf583808547c9eb574384642091ea13297a612d80d4f6b52869f34abe5f5b28"
+    },
+    {
+      "bytes": 3105,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/README.md",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/independent-evidence/README.md",
+      "sha256": "6c038ae22e833d78ac0c6178bc710b602c265f8a1a54cacd872423f684f7ca9f"
+    },
+    {
+      "bytes": 1388,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/handoff.json",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/independent-evidence/handoff.json",
+      "sha256": "3157bf3ca3cc8193f968714e9c593844887546a6322b0763e14c511625fbd533"
+    },
+    {
+      "bytes": 4669,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/independent/README.md",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/independent-evidence/independent/README.md",
+      "sha256": "b2be5201e74ba5a3c2b0887fbffcff28a37347c4ac7617d9028c31949bb3eaf7"
+    },
+    {
+      "bytes": 11204,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/independent/first-run/contract.md",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/independent-evidence/independent/first-run/contract.md",
+      "sha256": "e0ca28ad61181c6cf56d20a46733d2285acb6cb5bc39348f46ee3acb29dfcbc6"
+    },
+    {
+      "bytes": 2433,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/independent/first-run/execution.json",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/independent-evidence/independent/first-run/execution.json",
+      "sha256": "2aa417b4b957a4a2a13c154839e4998b54fab89f6893aed0d5440c780f6eb4c9"
+    },
+    {
+      "bytes": 20556,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/independent/first-run/implementation.py",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/independent-evidence/independent/first-run/implementation.py",
+      "sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a"
+    },
+    {
+      "bytes": 38569,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/independent/first-run/independent-tests.py",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/independent-evidence/independent/first-run/independent-tests.py",
+      "sha256": "13db80f49a6d8f83df58a3f2ae22f27450e5367c156368333db1908f90d01f85"
+    },
+    {
+      "bytes": 378,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/independent/first-run/scope-observation.json",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/independent-evidence/independent/first-run/scope-observation.json",
+      "sha256": "48ffa827358f4663eec539ec4cfbd9abc38dd3f887624392a404a7ebde4205e9"
+    },
+    {
+      "bytes": 4087,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/independent/first-run/stderr.txt",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/independent-evidence/independent/first-run/stderr.txt",
+      "sha256": "9a98e48992cf18a8ee11eace3fdbbad6b6ca213cad596cc612cd4130a3fc5dc3"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/independent/first-run/stdout.txt",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/independent-evidence/independent/first-run/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2022,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/independent/inventory.json",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/independent-evidence/independent/inventory.json",
+      "sha256": "7b5dca06766bf247bf2c61780b0a2ab86065cbde2d6618f219b33e1e6b694727"
+    },
+    {
+      "bytes": 504,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/independent/preparation.json",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/independent-evidence/independent/preparation.json",
+      "sha256": "356ccb0eefd971e333b996146d3b317bd4f65698b718239aaf163fa178d9fb87"
+    },
+    {
+      "bytes": 38569,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/independent/promotion/tests/test_li_v3_growth_hint_review.py",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/independent-evidence/independent/promotion/tests/test_li_v3_growth_hint_review.py",
+      "sha256": "13db80f49a6d8f83df58a3f2ae22f27450e5367c156368333db1908f90d01f85"
+    },
+    {
+      "bytes": 4216,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/independent/review.json",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/independent-evidence/independent/review.json",
+      "sha256": "69960b564f5c6a33a06e0e088eaa02a670a167afeeca6cfbd8eb28a4407698c2"
+    },
+    {
+      "bytes": 3613,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/independent/run_review.py",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/independent-evidence/independent/run_review.py",
+      "sha256": "4505146df8d4ad9a593be4d8b10b39200fed86b2c9231369e56580b58a68ad95"
+    },
+    {
+      "bytes": 2546,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/independent/run_tests_guarded.py",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/independent-evidence/independent/run_tests_guarded.py",
+      "sha256": "e7bacfd2a90bb55970ffcbfdab5abbd56866b97b6484909d0a4f76d81aee52bd"
+    },
+    {
+      "bytes": 4409,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/inventory.json",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/independent-evidence/inventory.json",
+      "sha256": "b27227d19b2b4b303252f456209603a70c29fc8d4cc51782f13cfed0b7ebe391"
+    },
+    {
+      "bytes": 4131,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/source-review/audit_source.py",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/independent-evidence/source-review/audit_source.py",
+      "sha256": "b0349acde5386da61de7870480d325d0f37675433180e935968585910da69bdc"
+    },
+    {
+      "bytes": 1617,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/source-review/author-receipt-review.json",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/independent-evidence/source-review/author-receipt-review.json",
+      "sha256": "46385142504c3a866c8c927e6e23473f4a15fe56b2061667686f94e73835dfe6"
+    },
+    {
+      "bytes": 1915,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/source-review/conformance-receipt-review.json",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/independent-evidence/source-review/conformance-receipt-review.json",
+      "sha256": "1959e15bdbe8deb84c6d577ab922c16cd6b04f16e227773aa300a81a9eb791d0"
+    },
+    {
+      "bytes": 3591,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/source-review/final-source-review.json",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/independent-evidence/source-review/final-source-review.json",
+      "sha256": "c5f55fb093be56faff2c92e7c8409992075f11122fd90e2f7914108c7c46f5c6"
+    },
+    {
+      "bytes": 20556,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/source-review/first-source/li_v3_growth_hint_shape.py.txt",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/independent-evidence/source-review/first-source/li_v3_growth_hint_shape.py.txt",
+      "sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a"
+    },
+    {
+      "bytes": 638,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/source-review/first-source/review.json",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/independent-evidence/source-review/first-source/review.json",
+      "sha256": "4db8c177c506e20259eee697d2287cf163f6bb6a9173644e760c6fdddc445971"
+    },
+    {
+      "bytes": 1850,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/source-review/independent-receipt-review.json",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/independent-evidence/source-review/independent-receipt-review.json",
+      "sha256": "8f92d74ad7fdd3f643cbc2cdf15d0d3b4dc6b7e22f173875ae333ea54b45f267"
+    },
+    {
+      "bytes": 1399,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/source-review/preparation.json",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/independent-evidence/source-review/preparation.json",
+      "sha256": "2f9210be532d1530225e515a3337cca68fae9d761246282b096a2d5f81d5e93f"
+    },
+    {
+      "bytes": 4751,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/source-review/prerequisite-source-binding.json",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/independent-evidence/source-review/prerequisite-source-binding.json",
+      "sha256": "ace8fccea26e9fde7af89ccc011c26d84b08693fd73aba67112d1073965a4f96"
+    },
+    {
+      "bytes": 1615,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/source-review/review-plan.md",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/independent-evidence/source-review/review-plan.md",
+      "sha256": "cce2c11ad6da98e0b7ab806b9c2761b94d981c35294c5ba07be52f8d25f24b1c"
+    },
+    {
+      "bytes": 4233,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/source-review/source-argument.md",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/independent-evidence/source-review/source-argument.md",
+      "sha256": "f459bf52d8d1735aba7c524187ad795eff90bf2d67f99f1a3886214b73a8eff4"
+    },
+    {
+      "bytes": 1107,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/independent-evidence/source-review/static-audit.json",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/independent-evidence/source-review/static-audit.json",
+      "sha256": "9d1d1d30f4c2beb6f4e2e5bdc06808d1fceb4bdb1f546ae84fc9643913a01564"
+    },
+    {
+      "bytes": 13760,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/inventory.json",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/inventory.json",
+      "sha256": "9cd82b5c2848bc572d3fa24d4ea9e02925de3453245079fc6f330c15e0b46dd6"
+    },
+    {
+      "bytes": 5211,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/preimplementation-scope.json",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/preimplementation-scope.json",
+      "sha256": "bb50f866986d917c9cf43076d8b5f96142b3cc7b6a70a771d6a3d6d12fc8bcf7"
+    },
+    {
+      "bytes": 11204,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/promotion/docs/li-v3-growth-hint-shape-plan.md",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/promotion/docs/li-v3-growth-hint-shape-plan.md",
+      "sha256": "e0ca28ad61181c6cf56d20a46733d2285acb6cb5bc39348f46ee3acb29dfcbc6"
+    },
+    {
+      "bytes": 20556,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/promotion/scripts/li_v3_growth_hint_shape.py",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/promotion/scripts/li_v3_growth_hint_shape.py",
+      "sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a"
+    },
+    {
+      "bytes": 38569,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/promotion/tests/test_li_v3_growth_hint_review.py",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/promotion/tests/test_li_v3_growth_hint_review.py",
+      "sha256": "13db80f49a6d8f83df58a3f2ae22f27450e5367c156368333db1908f90d01f85"
+    },
+    {
+      "bytes": 28369,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/promotion/tests/test_li_v3_growth_hint_shape.py",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/promotion/tests/test_li_v3_growth_hint_shape.py",
+      "sha256": "1f863ee2f1eefd54919767f7b4c75b6d460332d50f6234103dd47e586557685e"
+    },
+    {
+      "bytes": 537,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/promotion-map.json",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/promotion-map.json",
+      "sha256": "18223d682114e9aa7b7915f96fdaf62e873cc1800be093c4cb2b47c0b7d374d1"
+    },
+    {
+      "bytes": 5463,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/public-prerequisite.json",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/public-prerequisite.json",
+      "sha256": "52fe2d25f0c739c1c5137f0514f07f4ee0be35dffd7ef9141b19fe5ee5520d2e"
+    },
+    {
+      "bytes": 3029,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/receipts/author-first/execution.json",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/receipts/author-first/execution.json",
+      "sha256": "2aa9ca3d8a470dd8f7d322899821a930feea10a8752ae1d41abd53c27be58123"
+    },
+    {
+      "bytes": 11122,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/receipts/author-first/li-v3-growth-hint-shape-plan.md",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/receipts/author-first/li-v3-growth-hint-shape-plan.md",
+      "sha256": "f4f0ce8eb5442fb4529fc17a7da60bfdeb3c7ad056b00c4105331ece55b5e659"
+    },
+    {
+      "bytes": 20556,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/receipts/author-first/li_v3_growth_hint_shape.py",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/receipts/author-first/li_v3_growth_hint_shape.py",
+      "sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a"
+    },
+    {
+      "bytes": 5072,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/receipts/author-first/stderr.txt",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/receipts/author-first/stderr.txt",
+      "sha256": "fb61868dc15461ca421e8b7dd7f1cc9cfead4a70b72591e50f8400127b448c11"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/receipts/author-first/stdout.txt",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/receipts/author-first/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 28369,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/receipts/author-first/test_li_v3_growth_hint_shape.py",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/receipts/author-first/test_li_v3_growth_hint_shape.py",
+      "sha256": "1f863ee2f1eefd54919767f7b4c75b6d460332d50f6234103dd47e586557685e"
+    },
+    {
+      "bytes": 20556,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/receipts/pure-conformance-first/0-li_v3_growth_hint_shape.py",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/receipts/pure-conformance-first/0-li_v3_growth_hint_shape.py",
+      "sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a"
+    },
+    {
+      "bytes": 28369,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/receipts/pure-conformance-first/1-test_li_v3_growth_hint_shape.py",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/receipts/pure-conformance-first/1-test_li_v3_growth_hint_shape.py",
+      "sha256": "1f863ee2f1eefd54919767f7b4c75b6d460332d50f6234103dd47e586557685e"
+    },
+    {
+      "bytes": 11122,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/receipts/pure-conformance-first/2-li-v3-growth-hint-shape-plan.md",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/receipts/pure-conformance-first/2-li-v3-growth-hint-shape-plan.md",
+      "sha256": "f4f0ce8eb5442fb4529fc17a7da60bfdeb3c7ad056b00c4105331ece55b5e659"
+    },
+    {
+      "bytes": 2677,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/receipts/pure-conformance-first/3-compare_pure_reports.py",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/receipts/pure-conformance-first/3-compare_pure_reports.py",
+      "sha256": "bb0c1efa2716c8c6717ec06c5d809c57df95f22e9b041fabc1670bae015b4c3b"
+    },
+    {
+      "bytes": 8507,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/receipts/pure-conformance-first/4-li_v3_growth_hint_shape.py",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/receipts/pure-conformance-first/4-li_v3_growth_hint_shape.py",
+      "sha256": "c42313ddc1d6c64e6d9c18338bc3efc9bacc65e7ff7f8281e1da28870e74d7cb"
+    },
+    {
+      "bytes": 4046,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/receipts/pure-conformance-first/execution.json",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/receipts/pure-conformance-first/execution.json",
+      "sha256": "affb7feb93dd23226b7128bf830bce7453fec2d82c9a7e1005563a78c3a18a57"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/receipts/pure-conformance-first/stderr.txt",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/receipts/pure-conformance-first/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 173,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/receipts/pure-conformance-first/stdout.txt",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/receipts/pure-conformance-first/stdout.txt",
+      "sha256": "07805fdc44be6b07b61facea0347d618455e2121c04bf37db5bce53a1c88bc09"
+    },
+    {
+      "bytes": 2658,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/run_author.py",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/run_author.py",
+      "sha256": "b4504c929b25b073bb1fd84dea30f359a883a5d9922fba8daa90736c0d6d9cef"
+    },
+    {
+      "bytes": 2739,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/run_conformance.py",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/run_conformance.py",
+      "sha256": "37a3b951951226ca6200e15f7d67f1fa153966f31a742471382405eb8aa82379"
+    },
+    {
+      "bytes": 7434,
+      "original": ".cache/phase2-growth-hint-production-candidate-v1/source-bindings.json",
+      "published": "reports/phase2-growth-implementation-v1/shape-candidate/source-bindings.json",
+      "sha256": "1925a0651406ef1890b024c2beb57ab3b387c0f307f418ef4cd2ea3b4b0acfe2"
+    },
+    {
+      "bytes": 5306,
+      "original": ".cache/phase2-growth-envelope-candidate-v1/README.md",
+      "published": "reports/phase2-growth-implementation-v1/envelope-candidate/README.md",
+      "sha256": "a44f1d4ae24e7f1d7b70d39fabb1c4d55da0be63c98466cb8673365844451a38"
+    },
+    {
+      "bytes": 3167,
+      "original": ".cache/phase2-growth-envelope-candidate-v1/author-completion.json",
+      "published": "reports/phase2-growth-implementation-v1/envelope-candidate/author-completion.json",
+      "sha256": "e6dea7ee2c9bc56107e4b27d691f7e7e134b21dee19b15571a1524ae916e2021"
+    },
+    {
+      "bytes": 1905,
+      "original": ".cache/phase2-growth-envelope-candidate-v1/author_bootstrap.py",
+      "published": "reports/phase2-growth-implementation-v1/envelope-candidate/author_bootstrap.py",
+      "sha256": "e828e3a96ff9ef14b7272d073c1f70c11a5e650bda61a6f172f8fa69fa7dc396"
+    },
+    {
+      "bytes": 14126,
+      "original": ".cache/phase2-growth-envelope-candidate-v1/compatible-original.py",
+      "published": "reports/phase2-growth-implementation-v1/envelope-candidate/compatible-original.py",
+      "sha256": "e771b3fc2a66d6e2ff3a26d8aae88b7a2915ac908907908316e697997761c847"
+    },
+    {
+      "bytes": 199,
+      "original": ".cache/phase2-growth-envelope-candidate-v1/format-check.json",
+      "published": "reports/phase2-growth-implementation-v1/envelope-candidate/format-check.json",
+      "sha256": "a55f5ee6a647d6beec32608d733d531dadda47727b3c60abee974fb83c9e1aef"
+    },
+    {
+      "bytes": 20556,
+      "original": ".cache/phase2-growth-envelope-candidate-v1/growth-shape-reviewed-source.py",
+      "published": "reports/phase2-growth-implementation-v1/envelope-candidate/growth-shape-reviewed-source.py",
+      "sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a"
+    },
+    {
+      "bytes": 517,
+      "original": ".cache/phase2-growth-envelope-candidate-v1/implementation-start.json",
+      "published": "reports/phase2-growth-implementation-v1/envelope-candidate/implementation-start.json",
+      "sha256": "43c823b1a308f93e22ac93d124759913a047d1f1b7a4404d35ba7339e2e6e007"
+    },
+    {
+      "bytes": 509,
+      "original": ".cache/phase2-growth-envelope-candidate-v1/independent-copy.json",
+      "published": "reports/phase2-growth-implementation-v1/envelope-candidate/independent-copy.json",
+      "sha256": "ed83734032c1c22b25dfdb74100bdf1dec567316ca0f0780e39c94accd89df31"
+    },
+    {
+      "bytes": 5250,
+      "original": ".cache/phase2-growth-envelope-candidate-v1/inventory.json",
+      "published": "reports/phase2-growth-implementation-v1/envelope-candidate/inventory.json",
+      "sha256": "1b084c29aba4288fbe0656d962ebde5fe0c87658c8835c04298b812acd74cf89"
+    },
+    {
+      "bytes": 9273,
+      "original": ".cache/phase2-growth-envelope-candidate-v1/promotion/docs/li-v3-growth-envelope-plan.md",
+      "published": "reports/phase2-growth-implementation-v1/envelope-candidate/promotion/docs/li-v3-growth-envelope-plan.md",
+      "sha256": "4a5954b93b84d05c32a8ee2ea8254aec63283e915c331339cb97875e4b2aeb59"
+    },
+    {
+      "bytes": 20609,
+      "original": ".cache/phase2-growth-envelope-candidate-v1/promotion/scripts/li_v3_growth_envelope.py",
+      "published": "reports/phase2-growth-implementation-v1/envelope-candidate/promotion/scripts/li_v3_growth_envelope.py",
+      "sha256": "f50069d028526ea045441a2e574a26192a210ff78ba34f5170777d32f5692ec3"
+    },
+    {
+      "bytes": 30722,
+      "original": ".cache/phase2-growth-envelope-candidate-v1/promotion/tests/test_li_v3_growth_envelope.py",
+      "published": "reports/phase2-growth-implementation-v1/envelope-candidate/promotion/tests/test_li_v3_growth_envelope.py",
+      "sha256": "f569d732f02d90233fd20e9d5bf14ab9bb29337c09022093e15320af031523f1"
+    },
+    {
+      "bytes": 46615,
+      "original": ".cache/phase2-growth-envelope-candidate-v1/promotion/tests/test_li_v3_growth_envelope_review.py",
+      "published": "reports/phase2-growth-implementation-v1/envelope-candidate/promotion/tests/test_li_v3_growth_envelope_review.py",
+      "sha256": "4e23e7582dc1da3b0a51507eab4181a39707f0d9057506f25eba61d72ce73ccb"
+    },
+    {
+      "bytes": 788,
+      "original": ".cache/phase2-growth-envelope-candidate-v1/promotion-map.json",
+      "published": "reports/phase2-growth-implementation-v1/envelope-candidate/promotion-map.json",
+      "sha256": "79f124a732ede3f2d07b737f80abf1e160c636a42728c772a18de32e1a805552"
+    },
+    {
+      "bytes": 1107,
+      "original": ".cache/phase2-growth-envelope-candidate-v1/publication-checks.json",
+      "published": "reports/phase2-growth-implementation-v1/envelope-candidate/publication-checks.json",
+      "sha256": "b418ef760926130b3aa6f51eb867dd33b99dbfd7db17d2359751e3b51287c439"
+    },
+    {
+      "bytes": 1905,
+      "original": ".cache/phase2-growth-envelope-candidate-v1/receipts/first/author_bootstrap.py",
+      "published": "reports/phase2-growth-implementation-v1/envelope-candidate/receipts/first/author_bootstrap.py",
+      "sha256": "e828e3a96ff9ef14b7272d073c1f70c11a5e650bda61a6f172f8fa69fa7dc396"
+    },
+    {
+      "bytes": 78714,
+      "original": ".cache/phase2-growth-envelope-candidate-v1/receipts/first/execution.json",
+      "published": "reports/phase2-growth-implementation-v1/envelope-candidate/receipts/first/execution.json",
+      "sha256": "b7c097f7df70b18e58b1ae3827d696c8f24f336c282b4ee38f16f971f93f2cef"
+    },
+    {
+      "bytes": 8067,
+      "original": ".cache/phase2-growth-envelope-candidate-v1/receipts/first/li-v3-growth-envelope-plan.md",
+      "published": "reports/phase2-growth-implementation-v1/envelope-candidate/receipts/first/li-v3-growth-envelope-plan.md",
+      "sha256": "f64a374f5ca6ede4040a8662aae3c08378fc352264e1288a3f3775a5348ea159"
+    },
+    {
+      "bytes": 19277,
+      "original": ".cache/phase2-growth-envelope-candidate-v1/receipts/first/li_v3_growth_envelope.py",
+      "published": "reports/phase2-growth-implementation-v1/envelope-candidate/receipts/first/li_v3_growth_envelope.py",
+      "sha256": "a8c0cea16c1c44d6cf57986edcd6ca22e0229cb0f3bb7f935910d6fa2aef3045"
+    },
+    {
+      "bytes": 39379,
+      "original": ".cache/phase2-growth-envelope-candidate-v1/receipts/first/start.json",
+      "published": "reports/phase2-growth-implementation-v1/envelope-candidate/receipts/first/start.json",
+      "sha256": "c852ca0e3729a66538352012d63bebc2b564b9d837e5f24346fcd1de761ea8cf"
+    },
+    {
+      "bytes": 5671,
+      "original": ".cache/phase2-growth-envelope-candidate-v1/receipts/first/stderr.txt",
+      "published": "reports/phase2-growth-implementation-v1/envelope-candidate/receipts/first/stderr.txt",
+      "sha256": "519e53ffd27241bd5992d3765f2c1b8702105c3e1e1f703f7cf6b120e5ff4dd0"
+    },
+    {
+      "bytes": 173,
+      "original": ".cache/phase2-growth-envelope-candidate-v1/receipts/first/stdout.txt",
+      "published": "reports/phase2-growth-implementation-v1/envelope-candidate/receipts/first/stdout.txt",
+      "sha256": "0607015335e12b5713986b0d33b6c0b1ffa56dea7c9cb89d52a08ad394d61b0e"
+    },
+    {
+      "bytes": 26901,
+      "original": ".cache/phase2-growth-envelope-candidate-v1/receipts/first/test_li_v3_growth_envelope.py",
+      "published": "reports/phase2-growth-implementation-v1/envelope-candidate/receipts/first/test_li_v3_growth_envelope.py",
+      "sha256": "c4f281ca1fcbc473296286672703733ff1f250c9f151a960018a5af10120db01"
+    },
+    {
+      "bytes": 1905,
+      "original": ".cache/phase2-growth-envelope-candidate-v1/receipts/second/author_bootstrap.py",
+      "published": "reports/phase2-growth-implementation-v1/envelope-candidate/receipts/second/author_bootstrap.py",
+      "sha256": "e828e3a96ff9ef14b7272d073c1f70c11a5e650bda61a6f172f8fa69fa7dc396"
+    },
+    {
+      "bytes": 78714,
+      "original": ".cache/phase2-growth-envelope-candidate-v1/receipts/second/execution.json",
+      "published": "reports/phase2-growth-implementation-v1/envelope-candidate/receipts/second/execution.json",
+      "sha256": "756c1e76ac0b15b2b4b898d62e946dc0a95f34370d88607cb08748256b46803a"
+    },
+    {
+      "bytes": 9273,
+      "original": ".cache/phase2-growth-envelope-candidate-v1/receipts/second/li-v3-growth-envelope-plan.md",
+      "published": "reports/phase2-growth-implementation-v1/envelope-candidate/receipts/second/li-v3-growth-envelope-plan.md",
+      "sha256": "4a5954b93b84d05c32a8ee2ea8254aec63283e915c331339cb97875e4b2aeb59"
+    },
+    {
+      "bytes": 20609,
+      "original": ".cache/phase2-growth-envelope-candidate-v1/receipts/second/li_v3_growth_envelope.py",
+      "published": "reports/phase2-growth-implementation-v1/envelope-candidate/receipts/second/li_v3_growth_envelope.py",
+      "sha256": "f50069d028526ea045441a2e574a26192a210ff78ba34f5170777d32f5692ec3"
+    },
+    {
+      "bytes": 39379,
+      "original": ".cache/phase2-growth-envelope-candidate-v1/receipts/second/start.json",
+      "published": "reports/phase2-growth-implementation-v1/envelope-candidate/receipts/second/start.json",
+      "sha256": "53da0720f84df3aedd1df0efff4a011d0e87ffb51e7e8659574af6de8fba8f6b"
+    },
+    {
+      "bytes": 5407,
+      "original": ".cache/phase2-growth-envelope-candidate-v1/receipts/second/stderr.txt",
+      "published": "reports/phase2-growth-implementation-v1/envelope-candidate/receipts/second/stderr.txt",
+      "sha256": "86643b6a8a12c1b79c012971c8378ecc36baa687439c318245631d964ceac09d"
+    },
+    {
+      "bytes": 173,
+      "original": ".cache/phase2-growth-envelope-candidate-v1/receipts/second/stdout.txt",
+      "published": "reports/phase2-growth-implementation-v1/envelope-candidate/receipts/second/stdout.txt",
+      "sha256": "f8cb64d5e9677ac98101e078ab1e3968da59af728bba8ecf72c4042389f99250"
+    },
+    {
+      "bytes": 30722,
+      "original": ".cache/phase2-growth-envelope-candidate-v1/receipts/second/test_li_v3_growth_envelope.py",
+      "published": "reports/phase2-growth-implementation-v1/envelope-candidate/receipts/second/test_li_v3_growth_envelope.py",
+      "sha256": "f569d732f02d90233fd20e9d5bf14ab9bb29337c09022093e15320af031523f1"
+    },
+    {
+      "bytes": 2484,
+      "original": ".cache/phase2-growth-envelope-candidate-v1/run_author_recorded.py",
+      "published": "reports/phase2-growth-implementation-v1/envelope-candidate/run_author_recorded.py",
+      "sha256": "00017962938a8e7c621656b564aa93123ce2a4ec708d2377846c371a1242c236"
+    },
+    {
+      "bytes": 1839,
+      "original": ".cache/phase2-growth-envelope-candidate-v1/scope-addendum-central-declarations.json",
+      "published": "reports/phase2-growth-implementation-v1/envelope-candidate/scope-addendum-central-declarations.json",
+      "sha256": "a60e1b934e49a071684fce95a3d6079d5dd9716964fab0d0002284cc9ce50217"
+    },
+    {
+      "bytes": 228,
+      "original": ".cache/phase2-growth-envelope-candidate-v1/scope-record.json",
+      "published": "reports/phase2-growth-implementation-v1/envelope-candidate/scope-record.json",
+      "sha256": "7658f4073e4ebd1a0f91ec864c23032598b6948efe7756b034b1a3239469a2a5"
+    },
+    {
+      "bytes": 3766,
+      "original": ".cache/phase2-growth-envelope-candidate-v1/scope.md",
+      "published": "reports/phase2-growth-implementation-v1/envelope-candidate/scope.md",
+      "sha256": "7dc85a75fc54cee03d92d6cd04b0444bb4e252379e55ae2c1aea7f7f23b08c4b"
+    },
+    {
+      "bytes": 78723,
+      "original": ".cache/phase2-growth-release-v1/integration-first/execution.json",
+      "published": "reports/phase2-growth-implementation-v1/root/integration-first/execution.json",
+      "sha256": "453ec1529f4de6fe86ce4d252f948573280200f8f4eda488e1228c185ee37557"
+    },
+    {
+      "bytes": 40173,
+      "original": ".cache/phase2-growth-release-v1/integration-first/start.json",
+      "published": "reports/phase2-growth-implementation-v1/root/integration-first/start.json",
+      "sha256": "b9843a5bb82bd8a6aa927ebf26d9b7a744154677af490ab1006b95d12a4decd5"
+    },
+    {
+      "bytes": 66438,
+      "original": ".cache/phase2-growth-release-v1/integration-first/stderr.txt",
+      "published": "reports/phase2-growth-implementation-v1/root/integration-first/stderr.txt",
+      "sha256": "4a193e172c619254600f3d53725a4cfacd9704b9203c4eb46e31c95462667447"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-growth-release-v1/integration-first/stdout.txt",
+      "published": "reports/phase2-growth-implementation-v1/root/integration-first/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 1210,
+      "original": ".cache/phase2-growth-release-v1/final-reviewed-pins.json",
+      "published": "reports/phase2-growth-implementation-v1/root/final-reviewed-pins.json",
+      "sha256": "f65508a95077542381e000102ba2eb460ad080b058d8204a00ee34b74c9577e7"
+    },
+    {
+      "bytes": 3087,
+      "original": ".cache/phase2-growth-release-v1/integrate_and_test.py",
+      "published": "reports/phase2-growth-implementation-v1/root/integrate_and_test.py",
+      "sha256": "04a75d2fb6dc2558796b26e7deb2b7f8402eb7f2b8d0d9c57b52b6ef5f8b2805"
+    },
+    {
+      "bytes": 649,
+      "original": ".cache/phase2-growth-release-v1/root-g30-source-review.json",
+      "published": "reports/phase2-growth-implementation-v1/root/root-g30-source-review.json",
+      "sha256": "e8cf3a24c9524a45518d100a3a29bfef6965e5e2d0695a3996f357d937e9bfae"
+    },
+    {
+      "bytes": 2333,
+      "original": ".cache/phase2-bam-encoding-comparison-v1/promotion/reports/phase2-bam-encoding-comparison-v1/PUBLICATION.md",
+      "published": "reports/phase2-bam-encoding-comparison-v1/PUBLICATION.md",
+      "sha256": "ac1d6f1fda995db7a311dcbba4eeefd7f99baf0be2764c2146d7551a72130c18"
+    },
+    {
+      "bytes": 8560,
+      "original": ".cache/phase2-bam-encoding-comparison-v1/promotion/reports/phase2-bam-encoding-comparison-v1/README.md",
+      "published": "reports/phase2-bam-encoding-comparison-v1/README.md",
+      "sha256": "c3aaa9b8ad1e6eb6e8bb193813c4c96e78d33e7e3e58a298a7e4453173ab16c9"
+    },
+    {
+      "bytes": 1121,
+      "original": ".cache/phase2-bam-encoding-comparison-v1/promotion/reports/phase2-bam-encoding-comparison-v1/artifact-check.json",
+      "published": "reports/phase2-bam-encoding-comparison-v1/artifact-check.json",
+      "sha256": "673e365727f945be1d7e850012b34d3cd25b38411b16cbd0bcaa03025f8e84d6"
+    },
+    {
+      "bytes": 882,
+      "original": ".cache/phase2-bam-encoding-comparison-v1/promotion/reports/phase2-bam-encoding-comparison-v1/ascii-term-check.json",
+      "published": "reports/phase2-bam-encoding-comparison-v1/ascii-term-check.json",
+      "sha256": "6ccd3bf30eb3e1ca97321cec0f3055d9c9c68d002e125ddc0f46c530dea97147"
+    },
+    {
+      "bytes": 6567,
+      "original": ".cache/phase2-bam-encoding-comparison-v1/promotion/reports/phase2-bam-encoding-comparison-v1/before-pre-invocation-review/compare_documentation.py",
+      "published": "reports/phase2-bam-encoding-comparison-v1/before-pre-invocation-review/compare_documentation.py",
+      "sha256": "c6e1055cf54896c903136494eec872c3afcf25d9377e90dbab38c7f8f96b9d66"
+    },
+    {
+      "bytes": 1413,
+      "original": ".cache/phase2-bam-encoding-comparison-v1/promotion/reports/phase2-bam-encoding-comparison-v1/before-pre-invocation-review/pre-invocation-bindings-check.json",
+      "published": "reports/phase2-bam-encoding-comparison-v1/before-pre-invocation-review/pre-invocation-bindings-check.json",
+      "sha256": "9fbd0dd015192904d84749a61f5665c01f7fc4587a3c225b929145b4b55ca86f"
+    },
+    {
+      "bytes": 5592,
+      "original": ".cache/phase2-bam-encoding-comparison-v1/promotion/reports/phase2-bam-encoding-comparison-v1/before-pre-invocation-review/scope.json",
+      "published": "reports/phase2-bam-encoding-comparison-v1/before-pre-invocation-review/scope.json",
+      "sha256": "8507f26007453bc555b7d0170a2ef905247d2e065c4ffec0274b84e73b620fca"
+    },
+    {
+      "bytes": 7065,
+      "original": ".cache/phase2-bam-encoding-comparison-v1/promotion/reports/phase2-bam-encoding-comparison-v1/compare_documentation.py",
+      "published": "reports/phase2-bam-encoding-comparison-v1/compare_documentation.py",
+      "sha256": "a1c879a6a9b9a0a62e8e570e98758fb2194ddc430db97b0aeeede758dfa91f53"
+    },
+    {
+      "bytes": 24355,
+      "original": ".cache/phase2-bam-encoding-comparison-v1/promotion/reports/phase2-bam-encoding-comparison-v1/documentary-findings.json",
+      "published": "reports/phase2-bam-encoding-comparison-v1/documentary-findings.json",
+      "sha256": "18a4b78dc5687e539708ac6b751a0fa83b358bc6db1d12f7235890f6221880a3"
+    },
+    {
+      "bytes": 1278,
+      "original": ".cache/phase2-bam-encoding-comparison-v1/promotion/reports/phase2-bam-encoding-comparison-v1/execution.json",
+      "published": "reports/phase2-bam-encoding-comparison-v1/execution.json",
+      "sha256": "89f641a7bc619e211b8e1dbfc03fc760ca08da98b5a2d7ea8b14f0f6ef702d71"
+    },
+    {
+      "bytes": 1776,
+      "original": ".cache/phase2-bam-encoding-comparison-v1/promotion/reports/phase2-bam-encoding-comparison-v1/exposure-ledger.json",
+      "published": "reports/phase2-bam-encoding-comparison-v1/exposure-ledger.json",
+      "sha256": "2ee9a8546807784d8c028d06ad05cf4097fc3f5a874fb1b37b2ea90c8ce021e2"
+    },
+    {
+      "bytes": 554,
+      "original": ".cache/phase2-bam-encoding-comparison-v1/promotion/reports/phase2-bam-encoding-comparison-v1/independent-review/documentary-exposure-before-inspection.json",
+      "published": "reports/phase2-bam-encoding-comparison-v1/independent-review/documentary-exposure-before-inspection.json",
+      "sha256": "2adbaa86686d720889c7e512a6478869d208ac94f4e54e4b6db31311754fd512"
+    },
+    {
+      "bytes": 4068,
+      "original": ".cache/phase2-bam-encoding-comparison-v1/promotion/reports/phase2-bam-encoding-comparison-v1/independent-review/execution-projection-check.json",
+      "published": "reports/phase2-bam-encoding-comparison-v1/independent-review/execution-projection-check.json",
+      "sha256": "57aeddb33fd357a017be248052b57cba51cbc4a183e2fbcde0c0c1d642f1af68"
+    },
+    {
+      "bytes": 6567,
+      "original": ".cache/phase2-bam-encoding-comparison-v1/promotion/reports/phase2-bam-encoding-comparison-v1/independent-review/initial-compare_documentation.py",
+      "published": "reports/phase2-bam-encoding-comparison-v1/independent-review/initial-compare_documentation.py",
+      "sha256": "c6e1055cf54896c903136494eec872c3afcf25d9377e90dbab38c7f8f96b9d66"
+    },
+    {
+      "bytes": 2451,
+      "original": ".cache/phase2-bam-encoding-comparison-v1/promotion/reports/phase2-bam-encoding-comparison-v1/independent-review/initial-findings.json",
+      "published": "reports/phase2-bam-encoding-comparison-v1/independent-review/initial-findings.json",
+      "sha256": "d9b7046db53086ffd7ab6c8925b3b8dd2e931cc6837813860c14ff063c98cf49"
+    },
+    {
+      "bytes": 5592,
+      "original": ".cache/phase2-bam-encoding-comparison-v1/promotion/reports/phase2-bam-encoding-comparison-v1/independent-review/initial-scope.json",
+      "published": "reports/phase2-bam-encoding-comparison-v1/independent-review/initial-scope.json",
+      "sha256": "8507f26007453bc555b7d0170a2ef905247d2e065c4ffec0274b84e73b620fca"
+    },
+    {
+      "bytes": 10019,
+      "original": ".cache/phase2-bam-encoding-comparison-v1/promotion/reports/phase2-bam-encoding-comparison-v1/independent-review/result-review.json",
+      "published": "reports/phase2-bam-encoding-comparison-v1/independent-review/result-review.json",
+      "sha256": "70576f3e65e7349cfe87e68585b0b4fb9c6760168141e920a17122fd3151ef8a"
+    },
+    {
+      "bytes": 1514,
+      "original": ".cache/phase2-bam-encoding-comparison-v1/promotion/reports/phase2-bam-encoding-comparison-v1/independent-review/reviewed-source-delta.diff",
+      "published": "reports/phase2-bam-encoding-comparison-v1/independent-review/reviewed-source-delta.diff",
+      "sha256": "daee0e4fa76ba9c4154d8c1876f05ee99b67a063283e37cf346384e1dc4c7c8e"
+    },
+    {
+      "bytes": 4886,
+      "original": ".cache/phase2-bam-encoding-comparison-v1/promotion/reports/phase2-bam-encoding-comparison-v1/independent-review/source-review.json",
+      "published": "reports/phase2-bam-encoding-comparison-v1/independent-review/source-review.json",
+      "sha256": "2c18aa2c6c3e0c3b1178ba623d3c66970f33394fbef94bbba34ad92bbac29042"
+    },
+    {
+      "bytes": 1267,
+      "original": ".cache/phase2-bam-encoding-comparison-v1/promotion/reports/phase2-bam-encoding-comparison-v1/method-limits.md",
+      "published": "reports/phase2-bam-encoding-comparison-v1/method-limits.md",
+      "sha256": "8b63dabe3758ad710f20039023f4bb475d1519d6f8fdb068ad5bc27826e336b2"
+    },
+    {
+      "bytes": 1413,
+      "original": ".cache/phase2-bam-encoding-comparison-v1/promotion/reports/phase2-bam-encoding-comparison-v1/pre-invocation-bindings-check.json",
+      "published": "reports/phase2-bam-encoding-comparison-v1/pre-invocation-bindings-check.json",
+      "sha256": "9fbd0dd015192904d84749a61f5665c01f7fc4587a3c225b929145b4b55ca86f"
+    },
+    {
+      "bytes": 1510,
+      "original": ".cache/phase2-bam-encoding-comparison-v1/promotion/reports/phase2-bam-encoding-comparison-v1/pre-invocation-review-refinement.diff",
+      "published": "reports/phase2-bam-encoding-comparison-v1/pre-invocation-review-refinement.diff",
+      "sha256": "c50b574d2167530e526ea52db7b28683ebc654c2e49ff741ee2bb82bc85d72fe"
+    },
+    {
+      "bytes": 1588,
+      "original": ".cache/phase2-bam-encoding-comparison-v1/promotion/reports/phase2-bam-encoding-comparison-v1/publication-check.json",
+      "published": "reports/phase2-bam-encoding-comparison-v1/publication-check.json",
+      "sha256": "1e96a8414b3c56f886a490751387a136dc44dbb09139f8634329a09a33ecdfb8"
+    },
+    {
+      "bytes": 12496,
+      "original": ".cache/phase2-bam-encoding-comparison-v1/promotion/reports/phase2-bam-encoding-comparison-v1/publication-map.json",
+      "published": "reports/phase2-bam-encoding-comparison-v1/publication-map.json",
+      "sha256": "a7ee0063f86a736b8bd63635463dec2c313a721f99ea018426d3ae29bd4f9b54"
+    },
+    {
+      "bytes": 369,
+      "original": ".cache/phase2-bam-encoding-comparison-v1/promotion/reports/phase2-bam-encoding-comparison-v1/researcher-inspection-start.json",
+      "published": "reports/phase2-bam-encoding-comparison-v1/researcher-inspection-start.json",
+      "sha256": "fa98e14cd3930cd3fde4c6a02aee4f375749373003b765bd713adcd317541fb2"
+    },
+    {
+      "bytes": 1840,
+      "original": ".cache/phase2-bam-encoding-comparison-v1/promotion/reports/phase2-bam-encoding-comparison-v1/result.json",
+      "published": "reports/phase2-bam-encoding-comparison-v1/result.json",
+      "sha256": "4bd33191b050582a194d99f83759a4be4ded48134f1958f4ea0ad6ee384a60e2"
+    },
+    {
+      "bytes": 6528,
+      "original": ".cache/phase2-bam-encoding-comparison-v1/promotion/reports/phase2-bam-encoding-comparison-v1/scope.json",
+      "published": "reports/phase2-bam-encoding-comparison-v1/scope.json",
+      "sha256": "31c0b4fd7325abe9338405284f4afb1da4ccb6aad52f67b8a4849e4c96d11593"
+    },
+    {
+      "bytes": 3839,
+      "original": ".cache/phase2-bam-encoding-comparison-v1/promotion/reports/phase2-bam-encoding-comparison-v1/source-bindings.json",
+      "published": "reports/phase2-bam-encoding-comparison-v1/source-bindings.json",
+      "sha256": "afaa1db01dc4f15d4338a038c712d6353b50b136d6b3622df91792880a6bc0d1"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-bam-encoding-comparison-v1/promotion/reports/phase2-bam-encoding-comparison-v1/stderr.txt",
+      "published": "reports/phase2-bam-encoding-comparison-v1/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 1840,
+      "original": ".cache/phase2-bam-encoding-comparison-v1/promotion/reports/phase2-bam-encoding-comparison-v1/stdout.txt",
+      "published": "reports/phase2-bam-encoding-comparison-v1/stdout.txt",
+      "sha256": "4bd33191b050582a194d99f83759a4be4ded48134f1958f4ea0ad6ee384a60e2"
+    },
+    {
+      "bytes": 3247,
+      "original": ".cache/phase2-growth-envelope-review-v1/README.md",
+      "published": "reports/phase2-growth-implementation-v1/envelope-review/README.md",
+      "sha256": "3550719943cdbdb00640afb268fcebdea936ca2cfbe4e3e03bb2a2716d40452d"
+    },
+    {
+      "bytes": 1283,
+      "original": ".cache/phase2-growth-envelope-review-v1/handoff.json",
+      "published": "reports/phase2-growth-implementation-v1/envelope-review/handoff.json",
+      "sha256": "b5f106e5d98cd816e4032572124833b57a6b5f56ec87bb8f8034db22d0593c5e"
+    },
+    {
+      "bytes": 6306,
+      "original": ".cache/phase2-growth-envelope-review-v1/independent/README.md",
+      "published": "reports/phase2-growth-implementation-v1/envelope-review/independent/README.md",
+      "sha256": "1626f4c9f9afe678b36f6fd7f28161803d3e57bae66aa020192e1b01c4a10c2a"
+    },
+    {
+      "bytes": 367,
+      "original": ".cache/phase2-growth-envelope-review-v1/independent/before-central-length-probes/preparation.json",
+      "published": "reports/phase2-growth-implementation-v1/envelope-review/independent/before-central-length-probes/preparation.json",
+      "sha256": "4080b66e2cf7269b89434a211bbdc838a99b9ede87261c7a253bb0cc94a86e85"
+    },
+    {
+      "bytes": 43727,
+      "original": ".cache/phase2-growth-envelope-review-v1/independent/before-central-length-probes/tests.py",
+      "published": "reports/phase2-growth-implementation-v1/envelope-review/independent/before-central-length-probes/tests.py",
+      "sha256": "0f418225d834e57c4aef1e14ac72925f15972dcec6d328de89db6f224e0761ab"
+    },
+    {
+      "bytes": 1839,
+      "original": ".cache/phase2-growth-envelope-review-v1/independent/context/scope-addendum-central-declarations.json",
+      "published": "reports/phase2-growth-implementation-v1/envelope-review/independent/context/scope-addendum-central-declarations.json",
+      "sha256": "a60e1b934e49a071684fce95a3d6079d5dd9716964fab0d0002284cc9ce50217"
+    },
+    {
+      "bytes": 3766,
+      "original": ".cache/phase2-growth-envelope-review-v1/independent/context/scope.md",
+      "published": "reports/phase2-growth-implementation-v1/envelope-review/independent/context/scope.md",
+      "sha256": "7dc85a75fc54cee03d92d6cd04b0444bb4e252379e55ae2c1aea7f7f23b08c4b"
+    },
+    {
+      "bytes": 9273,
+      "original": ".cache/phase2-growth-envelope-review-v1/independent/first-run/contract.md",
+      "published": "reports/phase2-growth-implementation-v1/envelope-review/independent/first-run/contract.md",
+      "sha256": "4a5954b93b84d05c32a8ee2ea8254aec63283e915c331339cb97875e4b2aeb59"
+    },
+    {
+      "bytes": 2691,
+      "original": ".cache/phase2-growth-envelope-review-v1/independent/first-run/execution.json",
+      "published": "reports/phase2-growth-implementation-v1/envelope-review/independent/first-run/execution.json",
+      "sha256": "c6b2b4e9860fca108052d05e4814029136513f0c1eff70eec954baec5f1368ce"
+    },
+    {
+      "bytes": 20556,
+      "original": ".cache/phase2-growth-envelope-review-v1/independent/first-run/growth_predecessor.py",
+      "published": "reports/phase2-growth-implementation-v1/envelope-review/independent/first-run/growth_predecessor.py",
+      "sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a"
+    },
+    {
+      "bytes": 20609,
+      "original": ".cache/phase2-growth-envelope-review-v1/independent/first-run/implementation.py",
+      "published": "reports/phase2-growth-implementation-v1/envelope-review/independent/first-run/implementation.py",
+      "sha256": "f50069d028526ea045441a2e574a26192a210ff78ba34f5170777d32f5692ec3"
+    },
+    {
+      "bytes": 378,
+      "original": ".cache/phase2-growth-envelope-review-v1/independent/first-run/scope-observation.json",
+      "published": "reports/phase2-growth-implementation-v1/envelope-review/independent/first-run/scope-observation.json",
+      "sha256": "83bf3d3bb9df3873743cc2287201ceb585f0d708866c3e3f0a15360e4344350c"
+    },
+    {
+      "bytes": 4343,
+      "original": ".cache/phase2-growth-envelope-review-v1/independent/first-run/stderr.txt",
+      "published": "reports/phase2-growth-implementation-v1/envelope-review/independent/first-run/stderr.txt",
+      "sha256": "7383c605f62c156ff4cb3f19f3a913b9c7d77c88f6ae866c546c77dd9119e93c"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-growth-envelope-review-v1/independent/first-run/stdout.txt",
+      "published": "reports/phase2-growth-implementation-v1/envelope-review/independent/first-run/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 46615,
+      "original": ".cache/phase2-growth-envelope-review-v1/independent/first-run/tests.py",
+      "published": "reports/phase2-growth-implementation-v1/envelope-review/independent/first-run/tests.py",
+      "sha256": "4e23e7582dc1da3b0a51507eab4181a39707f0d9057506f25eba61d72ce73ccb"
+    },
+    {
+      "bytes": 654,
+      "original": ".cache/phase2-growth-envelope-review-v1/independent/freeze.json",
+      "published": "reports/phase2-growth-implementation-v1/envelope-review/independent/freeze.json",
+      "sha256": "168bf643671c7498bde7d2d3795dfa316db4f10321523686b59ea24516ce1abb"
+    },
+    {
+      "bytes": 2927,
+      "original": ".cache/phase2-growth-envelope-review-v1/independent/inventory.json",
+      "published": "reports/phase2-growth-implementation-v1/envelope-review/independent/inventory.json",
+      "sha256": "9731dab995926e12e990ddfdee0f0effd751b1b755e2a716149bdccc9076965e"
+    },
+    {
+      "bytes": 262,
+      "original": ".cache/phase2-growth-envelope-review-v1/independent/preparation.json",
+      "published": "reports/phase2-growth-implementation-v1/envelope-review/independent/preparation.json",
+      "sha256": "b88a65de97f61b0e9b414099ddc4b42b890945b2c1ca23ff8e0b56bbc1cd30fa"
+    },
+    {
+      "bytes": 46615,
+      "original": ".cache/phase2-growth-envelope-review-v1/independent/promotion/tests/test_li_v3_growth_envelope_review.py",
+      "published": "reports/phase2-growth-implementation-v1/envelope-review/independent/promotion/tests/test_li_v3_growth_envelope_review.py",
+      "sha256": "4e23e7582dc1da3b0a51507eab4181a39707f0d9057506f25eba61d72ce73ccb"
+    },
+    {
+      "bytes": 5084,
+      "original": ".cache/phase2-growth-envelope-review-v1/independent/review.json",
+      "published": "reports/phase2-growth-implementation-v1/envelope-review/independent/review.json",
+      "sha256": "b82e74a24227800dcbadb1fcf243559f267212555df4336256ff58e44d841a2d"
+    },
+    {
+      "bytes": 3577,
+      "original": ".cache/phase2-growth-envelope-review-v1/independent/run_review.py",
+      "published": "reports/phase2-growth-implementation-v1/envelope-review/independent/run_review.py",
+      "sha256": "b7116e825e6c7b8dc336bd4fa92dfd5ee7b22577d7fe4f923602996f4d59aa03"
+    },
+    {
+      "bytes": 2553,
+      "original": ".cache/phase2-growth-envelope-review-v1/independent/run_tests_guarded.py",
+      "published": "reports/phase2-growth-implementation-v1/envelope-review/independent/run_tests_guarded.py",
+      "sha256": "1200cce98e62d103186bb3fbd568a8c2c641de07581fb5430df11df42f572746"
+    },
+    {
+      "bytes": 5616,
+      "original": ".cache/phase2-growth-envelope-review-v1/inventory.json",
+      "published": "reports/phase2-growth-implementation-v1/envelope-review/inventory.json",
+      "sha256": "e1340871f2c2f82066fe24543b7aec89c5155fb3f4d8059b3d3c65744dc8f7cf"
+    },
+    {
+      "bytes": 6946,
+      "original": ".cache/phase2-growth-envelope-review-v1/source-review/audit_source.py",
+      "published": "reports/phase2-growth-implementation-v1/envelope-review/source-review/audit_source.py",
+      "sha256": "c3f1a97bd0b4c80faaf3fc5bfb2ad6172a014b7b0f10324e94f8e7f13ba3217c"
+    },
+    {
+      "bytes": 3281,
+      "original": ".cache/phase2-growth-envelope-review-v1/source-review/author-receipt-review.json",
+      "published": "reports/phase2-growth-implementation-v1/envelope-review/source-review/author-receipt-review.json",
+      "sha256": "02f614a33c0805a973b062fe62934052e1c37c6b6c1b809f46b737089ae66179"
+    },
+    {
+      "bytes": 5216,
+      "original": ".cache/phase2-growth-envelope-review-v1/source-review/before-central-preflight/audit_source.py",
+      "published": "reports/phase2-growth-implementation-v1/envelope-review/source-review/before-central-preflight/audit_source.py",
+      "sha256": "b3fc242fa1e109f32e5ef7b1e48796a36340409cf0b653dee47d6155ae3cd508"
+    },
+    {
+      "bytes": 1537,
+      "original": ".cache/phase2-growth-envelope-review-v1/source-review/before-central-preflight/provisional-review.json",
+      "published": "reports/phase2-growth-implementation-v1/envelope-review/source-review/before-central-preflight/provisional-review.json",
+      "sha256": "719c1ca3ecef7ada99eaa565a70c54ae464f7c128aa609cf3bb80cadb36b7d8e"
+    },
+    {
+      "bytes": 4443,
+      "original": ".cache/phase2-growth-envelope-review-v1/source-review/before-central-preflight/source-argument.md",
+      "published": "reports/phase2-growth-implementation-v1/envelope-review/source-review/before-central-preflight/source-argument.md",
+      "sha256": "86c22f145a2bda3e49c2081e1e581de2bbe95b6783bfa53f525228947005d0cb"
+    },
+    {
+      "bytes": 904,
+      "original": ".cache/phase2-growth-envelope-review-v1/source-review/before-central-preflight/static-audit.json",
+      "published": "reports/phase2-growth-implementation-v1/envelope-review/source-review/before-central-preflight/static-audit.json",
+      "sha256": "636b38513bcb33435faaddf00295aa070951d8c05c4c71f9d25567f23600537a"
+    },
+    {
+      "bytes": 621,
+      "original": ".cache/phase2-growth-envelope-review-v1/source-review/central-preflight-disposition.json",
+      "published": "reports/phase2-growth-implementation-v1/envelope-review/source-review/central-preflight-disposition.json",
+      "sha256": "b293a34a07e50b9b74b615c6257f70a6ce6b6979759001fa3cf07c2cbc671077"
+    },
+    {
+      "bytes": 3494,
+      "original": ".cache/phase2-growth-envelope-review-v1/source-review/final-review.json",
+      "published": "reports/phase2-growth-implementation-v1/envelope-review/source-review/final-review.json",
+      "sha256": "fc1457b56aeb2b2f0c654e042062a311e855a5971617a7a884f37bddfceff0e7"
+    },
+    {
+      "bytes": 2814,
+      "original": ".cache/phase2-growth-envelope-review-v1/source-review/independent-receipt-review.json",
+      "published": "reports/phase2-growth-implementation-v1/envelope-review/source-review/independent-receipt-review.json",
+      "sha256": "22d6aca846ed269024a325c36d99985a004902618b9b6704f517779cb69f9cb3"
+    },
+    {
+      "bytes": 1609,
+      "original": ".cache/phase2-growth-envelope-review-v1/source-review/inherited-central-truncation-finding.json",
+      "published": "reports/phase2-growth-implementation-v1/envelope-review/source-review/inherited-central-truncation-finding.json",
+      "sha256": "f57f8cffe1191926c41b25885f4da593e1e342eac0c1b6e14d6aad8c84f70916"
+    },
+    {
+      "bytes": 1537,
+      "original": ".cache/phase2-growth-envelope-review-v1/source-review/provisional-review.json",
+      "published": "reports/phase2-growth-implementation-v1/envelope-review/source-review/provisional-review.json",
+      "sha256": "719c1ca3ecef7ada99eaa565a70c54ae464f7c128aa609cf3bb80cadb36b7d8e"
+    },
+    {
+      "bytes": 5391,
+      "original": ".cache/phase2-growth-envelope-review-v1/source-review/source-argument.md",
+      "published": "reports/phase2-growth-implementation-v1/envelope-review/source-review/source-argument.md",
+      "sha256": "dc1ffa90c441afa2976325f38579e05c5eec2b32b292a4b467143c4473669dd7"
+    },
+    {
+      "bytes": 1234,
+      "original": ".cache/phase2-growth-envelope-review-v1/source-review/static-audit.json",
+      "published": "reports/phase2-growth-implementation-v1/envelope-review/source-review/static-audit.json",
+      "sha256": "313cc0c8f1d3f3645adbca52248c7b6f07765b97f7062574ede27f167b6e432e"
+    },
+    {
+      "bytes": 1304,
+      "original": ".cache/phase2-local-extra-report-ci-v1/final.json",
+      "published": "reports/phase2-growth-implementation-v1/previous-report-ci.json",
+      "sha256": "490ee861afe10d44f017bbb6f8b9d5193536dbbba53271dfb98cbbb6127fabf1"
+    }
+  ],
+  "created_at": "2026-10-16T10:33:13.935308+00:00",
+  "lossless_wrappers": [
+    {
+      "original_published_path": "reports/phase2-growth-implementation-v1/pure-candidate/independent-evidence/independent/before-eof-normalization/independent-tests.py",
+      "original_sha256": "7a3e4263af08577c9c5884f5d486caca3eee7e78e5b89cc47e43724e13733a0f",
+      "wrapper": "reports/phase2-growth-implementation-v1/pure-candidate/independent-evidence/independent/before-eof-normalization/independent-tests.py.json"
+    },
+    {
+      "original_published_path": "reports/phase2-growth-implementation-v1/pure-candidate/independent-evidence/independent/first-run/independent-tests.py",
+      "original_sha256": "7a3e4263af08577c9c5884f5d486caca3eee7e78e5b89cc47e43724e13733a0f",
+      "wrapper": "reports/phase2-growth-implementation-v1/pure-candidate/independent-evidence/independent/first-run/independent-tests.py.json"
+    },
+    {
+      "original_published_path": "reports/phase2-growth-implementation-v1/pure-candidate/receipts/author-first/stderr.txt",
+      "original_sha256": "a6a6bd2d47171ec4da9de880cc9a2ccef77249b0c26525cd566264cacf07ab77",
+      "wrapper": "reports/phase2-growth-implementation-v1/pure-candidate/receipts/author-first/stderr.txt.json"
+    }
+  ],
+  "scope": "Exact ignored author/reviewer evidence and root integration receipts; sources contain no actual Li private object or capture body. BAM full raw/documentary cell projection intentionally omitted by reviewed promotion."
+}

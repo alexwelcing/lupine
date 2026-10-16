@@ -1,0 +1,26 @@
+{
+  "after": {
+    "bytes": 11204,
+    "path": ".cache/phase2-growth-hint-production-candidate-v1/promotion/docs/li-v3-growth-hint-shape-plan.md",
+    "sha256": "e0ca28ad61181c6cf56d20a46733d2285acb6cb5bc39348f46ee3acb29dfcbc6"
+  },
+  "before": {
+    "bytes": 11122,
+    "path": ".cache/phase2-growth-hint-production-candidate-v1/contract-before-order-correction.md",
+    "sha256": "f4f0ce8eb5442fb4529fc17a7da60bfdeb3c7ad056b00c4105331ece55b5e659"
+  },
+  "change": "Correct prose to capture validation, bounded raw read and exposure marking, then object identity check; runtime unchanged.",
+  "diff": {
+    "bytes": 928,
+    "path": ".cache/phase2-growth-hint-production-candidate-v1/contract-order-correction.diff",
+    "sha256": "0fd64e87662b0d8a1c102cdd82576ca88d1a099acac39993b850cce0e575c166"
+  },
+  "historical_execution_receipts_preserved": true,
+  "schema": "lupine.discovery.growth_hint_contract_delta.v1",
+  "source": {
+    "bytes": 20556,
+    "path": ".cache/phase2-growth-hint-production-candidate-v1/promotion/scripts/li_v3_growth_hint_shape.py",
+    "sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a"
+  },
+  "tests_rerun": false
+}

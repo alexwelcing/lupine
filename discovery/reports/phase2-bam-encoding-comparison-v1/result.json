@@ -1,0 +1,52 @@
+{
+  "schema": "lupine.bam-hypothetical-encoding-comparison.v1",
+  "started_at": "2026-10-16T10:01:38.388209+00:00",
+  "scope_sha256": "31c0b4fd7325abe9338405284f4afb1da4ccb6aad52f67b8a4849e4c96d11593",
+  "script_sha256": "a1c879a6a9b9a0a62e8e570e98758fb2194ddc430db97b0aeeede758dfa91f53",
+  "status": "HYPOTHETICAL_ASCII_COMPARISON_COMPLETE",
+  "actual_encoding": "UNBOUND",
+  "hypotheses_are_not_detection": true,
+  "original_utf8_failure_preserved": true,
+  "whole_raw_body_machine_read": true,
+  "network_requests": 0,
+  "hypotheses": [
+    {
+      "hypothesis": "cp1252",
+      "decode_started": true,
+      "decode_completed": true,
+      "csv_parse_started": true,
+      "csv_parse_completed": true,
+      "status": "PARSED_HYPOTHESIS",
+      "csv_records": 234,
+      "physical_lines": 347,
+      "header_matches": true
+    },
+    {
+      "hypothesis": "iso8859-1",
+      "decode_started": true,
+      "decode_completed": true,
+      "csv_parse_started": true,
+      "csv_parse_completed": true,
+      "status": "PARSED_HYPOTHESIS",
+      "csv_records": 234,
+      "physical_lines": 347,
+      "header_matches": true
+    }
+  ],
+  "source_bytes": 41000,
+  "source_sha256": "e75c85d770598acf19a4bd1cb9c94b6adf7bb92cf46b153cbc904896a1160f1a",
+  "source_md5": "330a8405f6cb9c4fcfe221baea7ced27",
+  "same_csv_structure_under_both": true,
+  "csv_record_width_counts": {
+    "11": 234
+  },
+  "non_eleven_column_records": [],
+  "non_ascii_or_different_cells": 16,
+  "cells_differing_between_hypotheses": 3,
+  "ascii_invariant_cells": 2558,
+  "cell_count_scope": "Eleven-column CSV records only, including header and empty cells; other-width records excluded",
+  "example_column_values_published": false,
+  "semantic_dictionary_admitted": false,
+  "finished_at": "2026-10-16T10:01:38.402107+00:00",
+  "elapsed_seconds": 0.01389685600224766
+}

@@ -1,0 +1,5 @@
+{
+  "blocked_production_or_read_calls": [],
+  "blocked_network_private_or_process_events": [],
+  "instrumentation_installed_before_test_import": true
+}

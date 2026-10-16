@@ -14,7 +14,7 @@
   "default_timezone": "America/New_York",
   "next_run_time_returned_at_creation": null,
   "last_run_time_returned_at_creation": null,
-  "execution_status": "G29 actual structural diagnoses verified at d0505b9; source remains BLOCKED_SCHEMA. G30 fixed-prerequisite payload-shape implementation active; science unresolved and automation disabled.",
+  "execution_status": "G30/G31 implemented; first combined359PASS with332held runtime files. Own publication/CI/package/actual operations pending. G20 unresolved, G21 blocked; automation disabled.",
   "notification_policy": "Substantive daily milestone summary, actionable blocker, or final release decision; suppress unchanged status.",
   "scope": "Resume latest GitHub goal and implement the next bounded increment with available tools, testing and recording actual outcomes.",
   "limits": "Scheduling success does not prove future tool availability, a completed build, or uninterrupted execution. Check and record each run. Do not silently extend the bounded schedule.",
@@ -38,14 +38,14 @@
     "continuous_worker_started": false
   },
   "current_checkpoint": {
-    "recorded_at": "2026-10-16T09:59:37.620882+00:00",
-    "owner": "Root publishes G29 evidence and integrates G30; independent implementation, source, receipt and documentary reviewers",
+    "recorded_at": "2026-10-16T10:34:47.390354+00:00",
+    "owner": "Root integrates/releases G30/G31; independent source, artifact, operational and documentary reviewers",
     "goal_state": "ACTIVE_RENEWED_PHASE",
-    "published_commit": "d0505b9b358a4bdeafbd742f1aeeb6c2b955abf3",
-    "published_ci_run": 38880756519,
+    "published_commit": "2428c313597980c81b79ed50b4d025b42085f5b7",
+    "published_ci_run": 38885071479,
     "published_ci_all_four_jobs_pass": true,
-    "published_evidence": "reports/phase2-li-local-extra-verification-v1/README.md",
-    "working_checkpoint": "Two actual identical LOCAL_EXTRA_HEADERS_COMPLETE receipts; selected area has one A220 field with 516 declared data bytes. Whole source buffer read; local-extra payload uninterpreted. G30 production implementation active. BAM header UNIT resolved; UTF-8 failure preserved.",
+    "published_evidence": "reports/phase2-growth-implementation-v1/previous-report-ci.json",
+    "working_checkpoint": "G30/G31 eight files integrated;359 combined Li tests pass/332held/all326old unchanged. Preserved real central-length regression and narrow preflight fix; actual operations not run.",
     "actual_new_scientific_allocation_performed": false,
     "scientific_usefulness": "NO_GO unchanged; no new scientific experiment",
     "clean_package": {
@@ -96,7 +96,7 @@
       "notebook_code_executed": false,
       "output_values_disclosed": false
     },
-    "next_action": "Publish G29 evidence, integrate and test separately frozen G30 payload-shape diagnostic, then exact-source CI/retained-artifact gates before actual operations. Review separate BAM hypothetical-encoding documentary comparison; G20 unresolved/G21 blocked.",
+    "next_action": "Publish exact G30/G31 source; verify original CI, clean package and independent byte audits; then fixed actual G30 pair and conditionally G31 pair. Continue separately exposed BAM metrology documentation; no new scientific allocation.",
     "automation_reenabled": false,
     "new_schedule_created": false,
     "continuous_worker_started": false,
@@ -149,14 +149,18 @@
       "workbook_performance_values_read_by_this_audit": false
     },
     "bam_readiness": {
-      "status": "DOCUMENTARY_CSV_ACQUIRED_UTF8_FAILED_ASCII_HEADER_ESTABLISHED",
-      "report": "reports/phase2-bam-schema-documentary-v1/PUBLICATION.md",
+      "status": "PARTIAL_DOCUMENTARY_ROLES_TWO_ENCODING_HYPOTHESES",
+      "report": "reports/phase2-bam-encoding-comparison-v1/PUBLICATION.md",
       "body_acquired": true,
-      "discovery_benchmark_admitted": false,
-      "body_decoded": false,
-      "ascii_header_columns": 11,
-      "unit_column": 7,
-      "full_text_encoding": "UNBOUND"
+      "full_document_machine_exposed": true,
+      "hypothetical_decoders": [
+        "windows-1252",
+        "iso-8859-1"
+      ],
+      "full_text_encoding": "UNBOUND",
+      "records_including_header": 234,
+      "columns": 11,
+      "discovery_benchmark_admitted": false
     },
     "finite_risk_inversion": {
       "status": "DESIGN_AND_FINITE_COUNTING_REVIEWED_IMPLEMENTATION_DEFERRED",
@@ -207,12 +211,29 @@
       "independent_units": null
     },
     "growth_hint_shape": {
-      "status": "SYNTHETIC_PREPARATION_REVIEWED_PRODUCTION_BINDING_IN_PROGRESS",
-      "author_tests_pass": 18,
+      "status": "PRODUCTION_IMPLEMENTED_INTEGRATED_RELEASE_GATES_PENDING",
+      "author_tests_pass": 35,
       "independent_tests_pass": 21,
       "actual_payload_interpreted": false,
       "archive_acceptance_established": false,
-      "initial_padding_semantics": "UNBOUND"
+      "initial_padding_semantics": "UNBOUND",
+      "report": "reports/phase2-growth-implementation-v1/README.md",
+      "pure_preparation_author_tests_pass": 18
+    },
+    "growth_reader_implementation": {
+      "status": "INTEGRATED_TESTS_PASS_RELEASE_GATES_PENDING",
+      "report": "reports/phase2-growth-implementation-v1/README.md",
+      "combined_tests_pass": 359,
+      "runtime_files_unchanged": 332,
+      "old_runtime_files_unchanged": 326,
+      "g30_author": 35,
+      "g30_independent": 21,
+      "g30_report_comparisons": 472,
+      "g31_first_author": "27PASS_1FAIL_REAL_CENTRAL_DECLARATION_GAP_PRESERVED",
+      "g31_final_author": 31,
+      "g31_independent": 24,
+      "actual_operations_performed": false,
+      "scientific_schema_approved": false
     }
   },
   "closure": {

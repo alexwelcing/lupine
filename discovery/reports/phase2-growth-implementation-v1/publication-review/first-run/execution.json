@@ -1,0 +1,14 @@
+{
+  "command": [
+    "python",
+    ".cache/phase2-growth-publication-review-v1/audit.py"
+  ],
+  "elapsed_seconds": 2.6796052390018303,
+  "exit_code": 0,
+  "finished_at": "2026-10-16T10:39:02.971499+00:00",
+  "script_held": true,
+  "script_sha256": "517453ef3490f546cc34d2046e70c6bb08d658e34723c522ae7b638f71e0a526",
+  "started_at": "2026-10-16T10:39:00.291893+00:00",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "b770afaa730c9e4953ee447513cc05a3fcb59fa035f5ccc930a39f1ce294ddd1"
+}

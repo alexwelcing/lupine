@@ -1,0 +1,9 @@
+{
+  "files": {
+    "docs/li-v3-growth-hint-shape-plan.md": "e0ca28ad61181c6cf56d20a46733d2285acb6cb5bc39348f46ee3acb29dfcbc6",
+    "scripts/li_v3_growth_hint_shape.py": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a",
+    "tests/test_li_v3_growth_hint_review.py": "13db80f49a6d8f83df58a3f2ae22f27450e5367c156368333db1908f90d01f85",
+    "tests/test_li_v3_growth_hint_shape.py": "1f863ee2f1eefd54919767f7b4c75b6d460332d50f6234103dd47e586557685e"
+  },
+  "schema": "lupine.discovery.growth_hint_production_promotion.v1"
+}

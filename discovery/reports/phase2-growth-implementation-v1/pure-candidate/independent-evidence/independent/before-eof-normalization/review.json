@@ -1,0 +1,151 @@
+{
+  "schema": "lupine.discovery.independent_growth_hint_review.v1",
+  "reviewer": "/root/phase2_planner/ui_review",
+  "finished_utc": "2026-10-16T09:51:10.130714+00:00",
+  "status": "PASS",
+  "blockers": [],
+  "scope": "Independent source/contract review and generated-byte synthetic engineering tests only",
+  "bindings": {
+    "implementation": {
+      "bytes": 8507,
+      "sha256": "c42313ddc1d6c64e6d9c18338bc3efc9bacc65e7ff7f8281e1da28870e74d7cb"
+    },
+    "contract": {
+      "bytes": 7267,
+      "sha256": "9900ff73238a9d1c3629f364e4e97d9d450630b0ba938be74f1a03b52da9939c"
+    },
+    "independent_test": {
+      "bytes": 27548,
+      "sha256": "7a3e4263af08577c9c5884f5d486caca3eee7e78e5b89cc47e43724e13733a0f"
+    },
+    "execution": {
+      "bytes": 2301,
+      "sha256": "0453a541020b437ae27fee9c24511bcd6ce64c5c285c8aec5c2c49cda55ba334"
+    },
+    "scope_observation": {
+      "bytes": 152,
+      "sha256": "b11f9582389aa782548a2d7c649cf4c251ff84b4548e687e137f0ba6733873a1"
+    },
+    "runner": {
+      "bytes": 3401,
+      "sha256": "65272beaa42670715204b29a67e0855022f4bd2c0a42883247fb2fc8e84e45ef"
+    },
+    "guard_runner": {
+      "bytes": 1955,
+      "sha256": "cd584e803644b9eea66ef6dc452397dac027dfc063c45a037c3dfd77e800303c"
+    }
+  },
+  "execution": {
+    "invocations": 1,
+    "tests": 21,
+    "failures": 0,
+    "errors": 0,
+    "exit_code": 0,
+    "unittest_seconds": 1.264,
+    "process_seconds": 1.6984834550021333,
+    "held_unchanged": true
+  },
+  "test_methods": [
+    "test_all_25_public_predecessor_audit_pins_match_code_bytes",
+    "test_archive_close_failure_preserves_predecessor_exposure_and_blocks_new_stage",
+    "test_first_selected_entry_controls_shape_without_later_member_approval",
+    "test_fixed_word_failure_preserves_interpretation_attempt",
+    "test_g29_header_truncation_record_limit_and_prior_profile_gates_unchanged",
+    "test_literal_little_endian_shape_at_first_middle_and_last_required_entry",
+    "test_member_decompression_xml_network_and_production_helpers_forbidden",
+    "test_no_production_api_or_prerequisite_override_is_exposed",
+    "test_nonzero_padding_first_middle_last_and_all_nonzero_byte_values",
+    "test_padding_failure_public_projection_does_not_reveal_pad_value_or_byte_position",
+    "test_padding_scan_visits_entire_remainder_after_first_nonzero",
+    "test_partial_padding_scan_failure_keeps_completed_prefix_exposure",
+    "test_payload_size_zero_through_four_and_maximum_realizable_span",
+    "test_relocated_span_mismatch_blocks_before_fixed_word_decode",
+    "test_report_state_is_fresh_after_mutation_and_a_prior_rejection",
+    "test_second_locator_failure_preserves_prior_and_attempt_exposure",
+    "test_signature_byte_order_and_every_single_bit_difference",
+    "test_stored_deflated_flag_profiles_retain_same_structural_result",
+    "test_type_size_and_known_actual_identity_barriers_use_synthetic_bytes",
+    "test_unknown_duplicate_and_mixed_outer_records_refused_before_payload",
+    "test_unsigned_pad_value_boundaries_are_withheld_and_not_length_constraints"
+  ],
+  "coverage": {
+    "nonmatching_signature_values": 19,
+    "unsigned_pad_values": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      7,
+      8,
+      9,
+      15,
+      16,
+      17,
+      31,
+      32,
+      33,
+      63,
+      64,
+      65,
+      127,
+      128,
+      129,
+      255,
+      256,
+      257,
+      511,
+      512,
+      513,
+      1023,
+      1024,
+      1025,
+      2047,
+      2048,
+      2049,
+      4095,
+      4096,
+      4097,
+      8191,
+      8192,
+      8193,
+      16383,
+      16384,
+      16385,
+      32767,
+      32768,
+      32769,
+      65534,
+      65535
+    ],
+    "padding_lengths_for_pad_value_invariance": [
+      0,
+      1,
+      19
+    ],
+    "nonzero_single_padding_byte_values": 255,
+    "largest_data_length": 65531,
+    "largest_padding_length": 65527,
+    "permitted_method_flag_pairs": 10,
+    "public_predecessor_pins": 25,
+    "no_pad_value_length_equality_assumption": true,
+    "full_scan_after_nonzero": true,
+    "partial_locator_fixed_word_and_scan_exposure": true,
+    "before_payload_outer_record_selection": true,
+    "known_actual_identity_barrier_with_synthetic_stubs": true
+  },
+  "limits": {
+    "actual_source_capture_or_receipt_read": false,
+    "network_used": false,
+    "production_guard_or_reader_invoked": false,
+    "author_fixtures_read_or_imported": false,
+    "author_tests_rerun": false,
+    "mutation_tests_rerun": false,
+    "broader_package_or_ci_validation": false,
+    "actual_growth_hint_presence_established": false,
+    "archive_profile_approved": false,
+    "scientific_claim_changed": false
+  },
+  "next_action": "Parent may review and integrate exact candidate/test artifacts while preserving unbound production prerequisite and all scientific blocks; no actual source operation follows from this synthetic review."
+}

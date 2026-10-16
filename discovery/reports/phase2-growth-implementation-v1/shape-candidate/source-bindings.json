@@ -1,0 +1,102 @@
+{
+  "actual_source_operations": false,
+  "original_25_pins_unchanged": true,
+  "original_pure_source": {
+    "bytes": 8507,
+    "path": ".cache/phase2-growth-hint-candidate-v1/promotion/scripts/li_v3_growth_hint_shape.py",
+    "sha256": "c42313ddc1d6c64e6d9c18338bc3efc9bacc65e7ff7f8281e1da28870e74d7cb"
+  },
+  "predecessor_files": {
+    "docs/li-v3-compatible-envelope-plan.md": "86b663de7a0e88e559a8cc6acbbacd3b17d4ca9ee4e759abc826f7afbd6211ca",
+    "docs/li-v3-compatible-zip-diagnostic-plan.md": "73a0aa884876d042549e5250daff29e3e111b245c274e77551a6f85a82261755",
+    "docs/li-v3-custody-plan.md": "0be13b0ed7dd7bc41b9c430d4f7d30f8efa0ead54a85d162f31c728eb928a241",
+    "docs/li-v3-flag-diagnostic-plan.md": "dd36f011deb04d8141178ea0ead75e7a02fb588f6573cac5332410fb63173f46",
+    "docs/li-v3-local-extra-headers-plan.md": "1247430dfe174bb1d7dd2e17ca06b5781ef41fadd7cb13d60d6d01e202dbb594",
+    "docs/li-v3-zip-diagnostic-plan.md": "e3726819a1c4a133f90ba28a2bfa0bd7ed8e52454f21a61275bfbc8f76dcf6f1",
+    "reports/li-v3-source-inventory.json": "ef4d3de4deb08b3903230a7456fb50de689e49265868d78f0c73faab4461f9ba",
+    "scripts/li_v3_compatible_envelope.py": "e771b3fc2a66d6e2ff3a26d8aae88b7a2915ac908907908316e697997761c847",
+    "scripts/li_v3_compatible_zip_diagnostic.py": "59b4b549a1de33abf2c54ccfce15f4f980a3a36351f98e246ae4e9fd6c44c5d3",
+    "scripts/li_v3_custody.py": "3ead51f0afdf16be973743257be488669c988aa40443779e7a5c400e9b0d3234",
+    "scripts/li_v3_flag_diagnostic.py": "c08c295dae15ae1f5125510076f75ce2cc6ed58f54ef5ff06861a1759dbfabc5",
+    "scripts/li_v3_local_extra_headers.py": "54db58a567afc9211303f2edff13541ab2f97beb77ef2edaa518ad32bf6b1026",
+    "scripts/li_v3_zip_diagnostic.py": "de7807a8721cc243a9acf71e01c80aa531454248b2cde92c5518f875e89e0d87",
+    "tests/test_li_v3_compatible_envelope.py": "2b4c5561c8158b76ddd739b96799ee0fecbd1c31e60d16df2e6e8b0bd2618f64",
+    "tests/test_li_v3_compatible_envelope_review.py": "14a920cec686fb0b2040909c0388bcdcc6f6a8ef647eb9b73aa3993de9f7afc8",
+    "tests/test_li_v3_compatible_zip_diagnostic.py": "e9ec6b188a117afeb952b2d20376f24ce249c6f175d08e999e546b6b1380e10a",
+    "tests/test_li_v3_compatible_zip_diagnostic_review.py": "6bd746853c17e28da45937d0e1d57d19c4f6bd7b5c1c0a62f6f1afe2c0e852bf",
+    "tests/test_li_v3_custody.py": "b8113942416f5a2fc6cda565fa5e8b3d5fb9efb887d9241cc36047caca58780a",
+    "tests/test_li_v3_custody_review.py": "6d49955ff2850484bdf8e47af061fa7649ba016a739467cbd0799379913e0151",
+    "tests/test_li_v3_flag_diagnostic.py": "ebe198fba3d0371e5fc6b7fe013e55734f30f7ebd75fe6f4c47fe78c11c401d4",
+    "tests/test_li_v3_flag_diagnostic_review.py": "fdc18fd0016e0fde210716e619e5f688652fb76d226f909a1b8608f76aeae4d5",
+    "tests/test_li_v3_local_extra_headers.py": "b072f2e63a79d3c032838f49f4e2eeea845b7872d67c43f9e0e8a9964ca74a78",
+    "tests/test_li_v3_local_extra_headers_review.py": "570dc7f3cfabb094550b8f1c5fed8f4f801d832dc8003611fc6638a8285a468e",
+    "tests/test_li_v3_zip_diagnostic.py": "d94c59c55aebb793d7285c3ac748f2f0ad76770346d6a14cff2e53aeaace3c77",
+    "tests/test_li_v3_zip_diagnostic_review.py": "0c3609f46cd244abe64dfdb1fa32e829bc0a16316539a2aea276b061df5413e3"
+  },
+  "predecessor_groups": {
+    "compatible_files": {
+      "docs/li-v3-compatible-envelope-plan.md": "86b663de7a0e88e559a8cc6acbbacd3b17d4ca9ee4e759abc826f7afbd6211ca",
+      "scripts/li_v3_compatible_envelope.py": "e771b3fc2a66d6e2ff3a26d8aae88b7a2915ac908907908316e697997761c847",
+      "tests/test_li_v3_compatible_envelope.py": "2b4c5561c8158b76ddd739b96799ee0fecbd1c31e60d16df2e6e8b0bd2618f64",
+      "tests/test_li_v3_compatible_envelope_review.py": "14a920cec686fb0b2040909c0388bcdcc6f6a8ef647eb9b73aa3993de9f7afc8"
+    },
+    "diagnostic_files": {
+      "docs/li-v3-compatible-zip-diagnostic-plan.md": "73a0aa884876d042549e5250daff29e3e111b245c274e77551a6f85a82261755",
+      "scripts/li_v3_compatible_zip_diagnostic.py": "59b4b549a1de33abf2c54ccfce15f4f980a3a36351f98e246ae4e9fd6c44c5d3",
+      "tests/test_li_v3_compatible_zip_diagnostic.py": "e9ec6b188a117afeb952b2d20376f24ce249c6f175d08e999e546b6b1380e10a",
+      "tests/test_li_v3_compatible_zip_diagnostic_review.py": "6bd746853c17e28da45937d0e1d57d19c4f6bd7b5c1c0a62f6f1afe2c0e852bf"
+    },
+    "files": {
+      "docs/li-v3-local-extra-headers-plan.md": "1247430dfe174bb1d7dd2e17ca06b5781ef41fadd7cb13d60d6d01e202dbb594",
+      "scripts/li_v3_local_extra_headers.py": "54db58a567afc9211303f2edff13541ab2f97beb77ef2edaa518ad32bf6b1026",
+      "tests/test_li_v3_local_extra_headers.py": "b072f2e63a79d3c032838f49f4e2eeea845b7872d67c43f9e0e8a9964ca74a78",
+      "tests/test_li_v3_local_extra_headers_review.py": "570dc7f3cfabb094550b8f1c5fed8f4f801d832dc8003611fc6638a8285a468e"
+    },
+    "flag_files": {
+      "docs/li-v3-flag-diagnostic-plan.md": "dd36f011deb04d8141178ea0ead75e7a02fb588f6573cac5332410fb63173f46",
+      "scripts/li_v3_flag_diagnostic.py": "c08c295dae15ae1f5125510076f75ce2cc6ed58f54ef5ff06861a1759dbfabc5",
+      "tests/test_li_v3_flag_diagnostic.py": "ebe198fba3d0371e5fc6b7fe013e55734f30f7ebd75fe6f4c47fe78c11c401d4",
+      "tests/test_li_v3_flag_diagnostic_review.py": "fdc18fd0016e0fde210716e619e5f688652fb76d226f909a1b8608f76aeae4d5"
+    },
+    "header_files": {
+      "docs/li-v3-zip-diagnostic-plan.md": "e3726819a1c4a133f90ba28a2bfa0bd7ed8e52454f21a61275bfbc8f76dcf6f1",
+      "scripts/li_v3_zip_diagnostic.py": "de7807a8721cc243a9acf71e01c80aa531454248b2cde92c5518f875e89e0d87",
+      "tests/test_li_v3_zip_diagnostic.py": "d94c59c55aebb793d7285c3ac748f2f0ad76770346d6a14cff2e53aeaace3c77",
+      "tests/test_li_v3_zip_diagnostic_review.py": "0c3609f46cd244abe64dfdb1fa32e829bc0a16316539a2aea276b061df5413e3"
+    },
+    "legacy_files": {
+      "docs/li-v3-custody-plan.md": "0be13b0ed7dd7bc41b9c430d4f7d30f8efa0ead54a85d162f31c728eb928a241",
+      "reports/li-v3-source-inventory.json": "ef4d3de4deb08b3903230a7456fb50de689e49265868d78f0c73faab4461f9ba",
+      "scripts/li_v3_custody.py": "3ead51f0afdf16be973743257be488669c988aa40443779e7a5c400e9b0d3234",
+      "tests/test_li_v3_custody.py": "b8113942416f5a2fc6cda565fa5e8b3d5fb9efb887d9241cc36047caca58780a",
+      "tests/test_li_v3_custody_review.py": "6d49955ff2850484bdf8e47af061fa7649ba016a739467cbd0799379913e0151"
+    }
+  },
+  "public_prerequisite": {
+    "bytes": 5463,
+    "path": ".cache/phase2-growth-hint-production-candidate-v1/public-prerequisite.json",
+    "sha256": "52fe2d25f0c739c1c5137f0514f07f4ee0be35dffd7ef9141b19fe5ee5520d2e"
+  },
+  "public_prerequisite_only_actual_receipt_read": true,
+  "retained_appnote": {
+    "bytes": 174585,
+    "path": ".cache/phase2-li-flags-next-v1/APPNOTE.TXT",
+    "sha256": "0b993022a7d320a0bf704e6980bea36fafd17a6066ab994db0a0c16278a50cd6"
+  },
+  "schema": "lupine.discovery.growth_hint_production_candidate_sources.v1",
+  "scope": {
+    "bytes": 5211,
+    "path": ".cache/phase2-growth-hint-production-candidate-v1/preimplementation-scope.json",
+    "sha256": "bb50f866986d917c9cf43076d8b5f96142b3cc7b6a70a771d6a3d6d12fc8bcf7"
+  },
+  "semantics_research": {
+    "bytes": 14060,
+    "path": ".cache/phase2-local-extra-semantics-research-v1/README.md",
+    "sha256": "6beddc13565f0ca5aab11666474ba6997900082e70df5f2d02163c2341b4964b"
+  },
+  "source": {
+    "bytes": 20556,
+    "path": ".cache/phase2-growth-hint-production-candidate-v1/promotion/scripts/li_v3_growth_hint_shape.py",
+    "sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a"
+  }
+}

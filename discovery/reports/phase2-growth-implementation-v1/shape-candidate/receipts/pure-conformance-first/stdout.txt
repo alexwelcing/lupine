@@ -1,0 +1,1 @@
+{"actual_source_operations": false, "complete_report_pairs": 472, "production_guard_invoked": false, "scope": "synthetic_fixture_output_equivalence_only", "status": "PASS"}

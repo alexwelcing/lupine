@@ -1,0 +1,22 @@
+{
+  "actual_operations": 0,
+  "author_tests": 31,
+  "bytes_excluding_inventory_handoff": 264416,
+  "contract_sha256": "4a5954b93b84d05c32a8ee2ea8254aec63283e915c331339cb97875e4b2aeb59",
+  "copy_instructions": "Copy entire review bundle byte-exact. Keep author first/second receipts and scope addendum separately. No changes to prior readers, G30 or original negative evidence.",
+  "file_count_excluding_inventory_handoff": 34,
+  "final_review_sha256": "fc1457b56aeb2b2f0c654e042062a311e855a5971617a7a884f37bddfceff0e7",
+  "first_author_failure_preserved": true,
+  "independent_test": {
+    "destination": "tests/test_li_v3_growth_envelope_review.py",
+    "sha256": "4e23e7582dc1da3b0a51507eab4181a39707f0d9057506f25eba61d72ce73ccb",
+    "source": ".cache/phase2-growth-envelope-review-v1/independent/promotion/tests/test_li_v3_growth_envelope_review.py"
+  },
+  "independent_tests": 24,
+  "inventory_sha256": "e1340871f2c2f82066fe24543b7aec89c5155fb3f4d8059b3d3c65744dc8f7cf",
+  "recorded_utc": "2026-10-16T10:33:01.648076+00:00",
+  "schema": "lupine.discovery.growth_envelope_review_handoff.v1",
+  "scientific_status": "BLOCKED",
+  "source_sha256": "f50069d028526ea045441a2e574a26192a210ff78ba34f5170777d32f5692ec3",
+  "status": "PASS_BOUNDED_SOURCE_CONTRACT_AND_SYNTHETIC_REVIEW"
+}

@@ -1,0 +1,40 @@
+{
+  "excludes": [
+    "inventory.json"
+  ],
+  "files": {
+    "README.md": {
+      "bytes": 3647,
+      "sha256": "d141c70bf058089ce146a5d3e36e0dd4aa0830cc8a72d61d21891048908fa6bb"
+    },
+    "audit-result.json": {
+      "bytes": 203862,
+      "sha256": "a4eb0bc205fe6cbb79d029655d7c53f6acdd178e97500151e655cece5c55125f"
+    },
+    "audit.py": {
+      "bytes": 11637,
+      "sha256": "517453ef3490f546cc34d2046e70c6bb08d658e34723c522ae7b638f71e0a526"
+    },
+    "checkpoint-finding.json": {
+      "bytes": 748,
+      "sha256": "8d0a74cbed0546240faf4506b35c9b4a3ea85e7ce2674913879cee12b032798f"
+    },
+    "first-run/audit.py": {
+      "bytes": 11637,
+      "sha256": "517453ef3490f546cc34d2046e70c6bb08d658e34723c522ae7b638f71e0a526"
+    },
+    "first-run/execution.json": {
+      "bytes": 543,
+      "sha256": "4392ed9553c93dd37ebde73b7a857b5d78ffe909fef96d372e70ccacf5e0b87b"
+    },
+    "first-run/stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "first-run/stdout.txt": {
+      "bytes": 779,
+      "sha256": "b770afaa730c9e4953ee447513cc05a3fcb59fa035f5ccc930a39f1ce294ddd1"
+    }
+  },
+  "recorded_at": "2026-10-16T10:39:55.717980+00:00"
+}

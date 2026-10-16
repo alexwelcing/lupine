@@ -1,0 +1,72 @@
+{
+  "actual_source_operations": 0,
+  "author_executions": [
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-envelope-candidate-v1/author_bootstrap.py"
+      ],
+      "elapsed_seconds": 1.2259000890007883,
+      "errors": 0,
+      "execution_sha256": "b7c097f7df70b18e58b1ae3827d696c8f24f336c282b4ee38f16f971f93f2cef",
+      "exit_code": 1,
+      "failures": 1,
+      "finished_at": "2026-10-16T10:20:44.039861+00:00",
+      "guard_violations": [],
+      "label": "first",
+      "runtime_unchanged": true,
+      "scope": "Generated fixtures only; no source operation, production context or network.",
+      "skipped": 0,
+      "source_unchanged": true,
+      "started_at": "2026-10-16T10:20:42.813944+00:00",
+      "stderr_sha256": "519e53ffd27241bd5992d3765f2c1b8702105c3e1e1f703f7cf6b120e5ff4dd0",
+      "stdout_sha256": "0607015335e12b5713986b0d33b6c0b1ffa56dea7c9cb89d52a08ad394d61b0e",
+      "tests_run": 28,
+      "timed_out": false
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-envelope-candidate-v1/author_bootstrap.py"
+      ],
+      "elapsed_seconds": 0.8181718949999777,
+      "errors": 0,
+      "execution_sha256": "756c1e76ac0b15b2b4b898d62e946dc0a95f34370d88607cb08748256b46803a",
+      "exit_code": 0,
+      "failures": 0,
+      "finished_at": "2026-10-16T10:28:01.897208+00:00",
+      "guard_violations": [],
+      "label": "second",
+      "runtime_unchanged": true,
+      "scope": "Generated fixtures only; no source operation, production context or network.",
+      "skipped": 0,
+      "source_unchanged": true,
+      "started_at": "2026-10-16T10:28:01.077851+00:00",
+      "stderr_sha256": "86643b6a8a12c1b79c012971c8378ecc36baa687439c318245631d964ceac09d",
+      "stdout_sha256": "f8cb64d5e9677ac98101e078ab1e3968da59af728bba8ecf72c4042389f99250",
+      "tests_run": 31,
+      "timed_out": false
+    }
+  ],
+  "changed_existing_runtime_files": 0,
+  "implementation": "G31 separate local-growth envelope profile with approved raw central declaration preflight",
+  "independent_execution": {
+    "elapsed_seconds": 2.6162562019999314,
+    "exit_code": 0,
+    "held_unchanged": true,
+    "path": ".cache/phase2-growth-envelope-review-v1/independent/first-run/execution.json",
+    "sha256": "c6b2b4e9860fca108052d05e4814029136513f0c1eff70eec954baec5f1368ce",
+    "tests_run": 24,
+    "unittest_seconds": 2.0
+  },
+  "new_dft": 0,
+  "prior_runtime_count": 326,
+  "private_custody_reads": 0,
+  "production_guard_invocations": 0,
+  "promotion_map_sha256": "79f124a732ede3f2d07b737f80abf1e160c636a42728c772a18de32e1a805552",
+  "recorded_at": "2026-10-16T10:30:54.916292+00:00",
+  "scientific_status": "BLOCKED_SCHEMA",
+  "scope_addendum_sha256": "a60e1b934e49a071684fce95a3d6079d5dd9716964fab0d0002284cc9ce50217",
+  "scope_sha256": "7dc85a75fc54cee03d92d6cd04b0444bb4e252379e55ae2c1aea7f7f23b08c4b",
+  "status": "AUTHOR_COMPLETE_INDEPENDENT_TEST_PASS_SOURCE_REVIEW_SEPARATE"
+}

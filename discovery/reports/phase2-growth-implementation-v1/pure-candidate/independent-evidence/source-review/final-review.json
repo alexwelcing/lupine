@@ -1,0 +1,48 @@
+{
+  "schema": "lupine.engineering.growth_hint_parent_final_review.v1",
+  "reviewer": "/root/phase2_planner",
+  "recorded_utc": "2026-10-16T09:53:11.043347+00:00",
+  "status": "PASS_FOR_SYNTHETIC_ONLY_CANDIDATE",
+  "blocking_findings": [],
+  "static_review_sha256": "6cad38b2d285bba256fc901d9830b57b7b040e46c90d01005a752d17ede54cd1",
+  "product_sha256": "c42313ddc1d6c64e6d9c18338bc3efc9bacc65e7ff7f8281e1da28870e74d7cb",
+  "contract_sha256": "9900ff73238a9d1c3629f364e4e97d9d450630b0ba938be74f1a03b52da9939c",
+  "final_independent_test_sha256": "3296335a815dd5ac9712c4584699cd2b5e48417e1ff7a9a04eddafc245b5d36c",
+  "author_final_methods": 18,
+  "independent_final_methods": 21,
+  "independent_executions": {
+    "first-run": {
+      "execution_sha256": "0453a541020b437ae27fee9c24511bcd6ce64c5c285c8aec5c2c49cda55ba334",
+      "tests": 21,
+      "exit_code": 0,
+      "elapsed_seconds": 1.6984834550021333,
+      "test_sha256": "7a3e4263af08577c9c5884f5d486caca3eee7e78e5b89cc47e43724e13733a0f",
+      "scope_observation_sha256": "b11f9582389aa782548a2d7c649cf4c251ff84b4548e687e137f0ba6733873a1"
+    },
+    "final-run": {
+      "execution_sha256": "d69b23dacc59bd98fd96b647e1a9f5cbb3841b34d448c4c606b3e8a3179c992c",
+      "tests": 21,
+      "exit_code": 0,
+      "elapsed_seconds": 0.8490345889986202,
+      "test_sha256": "3296335a815dd5ac9712c4584699cd2b5e48417e1ff7a9a04eddafc245b5d36c",
+      "scope_observation_sha256": "b11f9582389aa782548a2d7c649cf4c251ff84b4548e687e137f0ba6733873a1"
+    }
+  },
+  "independent_formatting_delta": {
+    "removed_trailing_LF_bytes": 2,
+    "AST_equal": true,
+    "expectations_changed": false,
+    "first_passing_test_snapshot_preserved": true
+  },
+  "actual_parent_actions": "Read public source/contract/standard, validate byte/AST/source pins, inspect synthetic execution receipts/logs and guard runner. No product import or runtime rerun by this parent.",
+  "scientific_or_production_promotion": false,
+  "production_prerequisite": "UNBOUND",
+  "preserved_negative_evidence": "Author initial generated-name and nonexistent-key fixture failures remain separate from final18-pass receipt; source unchanged. Both independent21-pass invocations remain bound to their exact pre/post-EOF-formatting test bytes.",
+  "limits": [
+    "Only the selected first span in generated fixtures was examined; no actual Li field, payload, archive or prerequisite was observed.",
+    "PadVal shape is not padding history, duplicate semantics, producer authentication, whole-archive compatibility or material validity.",
+    "Closed match predicates reveal comparisons to known constants; arbitrary raw field values are omitted.",
+    "Controlled-workflow test guards are not a hostile-code security boundary."
+  ],
+  "next_action": "Root may integrate this inert synthetic-only candidate and its exact reviewed tests; any production reader or actual-source binding still requires separate implementation, review and release gates."
+}

@@ -1,0 +1,51 @@
+{
+  "bindings": {
+    "contract": {
+      "bytes": 11204,
+      "sha256": "e0ca28ad61181c6cf56d20a46733d2285acb6cb5bc39348f46ee3acb29dfcbc6"
+    },
+    "guard_runner": {
+      "bytes": 2546,
+      "sha256": "e7bacfd2a90bb55970ffcbfdab5abbd56866b97b6484909d0a4f76d81aee52bd"
+    },
+    "implementation": {
+      "bytes": 20556,
+      "sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a"
+    },
+    "tests": {
+      "bytes": 38569,
+      "sha256": "13db80f49a6d8f83df58a3f2ae22f27450e5367c156368333db1908f90d01f85"
+    }
+  },
+  "checks": {
+    "21_tests_OK": true,
+    "326_runtime_held": true,
+    "contract_snapshot_matches": true,
+    "exit_zero": true,
+    "final_test_held_and_single_EOF_LF": true,
+    "held_equal": true,
+    "implementation_snapshot_matches": true,
+    "no_forbidden_calls_or_events": true,
+    "scope_observation_matches": true,
+    "stderr_matches": true,
+    "stdout_matches": true,
+    "tests_snapshot_matches": true
+  },
+  "elapsed_seconds": 2.503269384997111,
+  "limits": [
+    "Child performed executable checks; parent audited code, guards, logs and bytes without importing or rerunning product.",
+    "Positive prerequisite inner checks use an explicit synthetic hash stub and do not claim actual receipt validation.",
+    "No private receipt, capture, object, real production guard chain, network or actual payload access.",
+    "Tests are engineering evidence, not formal equivalence or scientific validation."
+  ],
+  "mocked_current_wrapper_calls": {
+    "diagnose": 41,
+    "production_context": 9
+  },
+  "receipt_sha256": "2aa417b4b957a4a2a13c154839e4998b54fab89f6893aed0d5440c780f6eb4c9",
+  "recorded_utc": "2026-10-16T10:12:44.608373+00:00",
+  "schema": "lupine.discovery.growth_hint_independent_receipt_review.v1",
+  "status": "PASS",
+  "test_count": 21,
+  "unittest_seconds": "0.620"
+}

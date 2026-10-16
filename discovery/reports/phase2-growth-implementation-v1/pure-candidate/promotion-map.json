@@ -1,0 +1,38 @@
+{
+  "files": [
+    {
+      "prospective_destination": "scripts/li_v3_growth_hint_shape.py",
+      "source": {
+        "bytes": 8507,
+        "path": ".cache/phase2-growth-hint-candidate-v1/promotion/scripts/li_v3_growth_hint_shape.py",
+        "sha256": "c42313ddc1d6c64e6d9c18338bc3efc9bacc65e7ff7f8281e1da28870e74d7cb"
+      }
+    },
+    {
+      "prospective_destination": "tests/test_li_v3_growth_hint_shape.py",
+      "source": {
+        "bytes": 12098,
+        "path": ".cache/phase2-growth-hint-candidate-v1/promotion/tests/test_li_v3_growth_hint_shape.py",
+        "sha256": "fdd3e1164babe3aa40cf64675f50c86209594eaea9e8146e96e425aff0d7acbb"
+      }
+    },
+    {
+      "prospective_destination": "tests/test_li_v3_growth_hint_review.py",
+      "source": {
+        "bytes": 27546,
+        "path": ".cache/phase2-growth-hint-candidate-v1/promotion/tests/test_li_v3_growth_hint_review.py",
+        "sha256": "3296335a815dd5ac9712c4584699cd2b5e48417e1ff7a9a04eddafc245b5d36c"
+      }
+    },
+    {
+      "prospective_destination": "docs/li-v3-growth-hint-shape-plan.md",
+      "source": {
+        "bytes": 7267,
+        "path": ".cache/phase2-growth-hint-candidate-v1/promotion/docs/li-v3-growth-hint-shape-plan.md",
+        "sha256": "9900ff73238a9d1c3629f364e4e97d9d450630b0ba938be74f1a03b52da9939c"
+      }
+    }
+  ],
+  "production_prerequisite": null,
+  "schema": "lupine.discovery.prospective_promotion_map.v1"
+}

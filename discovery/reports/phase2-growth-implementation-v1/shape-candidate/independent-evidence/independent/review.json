@@ -1,0 +1,91 @@
+{
+  "schema": "lupine.discovery.independent_growth_hint_production_review.v1",
+  "reviewer": "/root/phase2_planner/ui_review",
+  "written_utc": "2026-10-16T10:13:01.651062+00:00",
+  "verdict": "PASS_BOUNDED_SYNTHETIC_AND_MOCKED_CHECKS",
+  "unresolved_blockers": [],
+  "first_attempt": {
+    "tests_run": 21,
+    "failures": 0,
+    "errors": 0,
+    "unittest_elapsed_seconds": 0.62,
+    "process_elapsed_seconds": 2.503269384997111,
+    "retries": 0
+  },
+  "identities": {
+    "implementation": {
+      "bytes": 20556,
+      "sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a"
+    },
+    "tests": {
+      "bytes": 38569,
+      "sha256": "13db80f49a6d8f83df58a3f2ae22f27450e5367c156368333db1908f90d01f85"
+    },
+    "contract": {
+      "bytes": 11204,
+      "sha256": "e0ca28ad61181c6cf56d20a46733d2285acb6cb5bc39348f46ee3acb29dfcbc6"
+    },
+    "guard_runner": {
+      "bytes": 2546,
+      "sha256": "e7bacfd2a90bb55970ffcbfdab5abbd56866b97b6484909d0a4f76d81aee52bd"
+    }
+  },
+  "execution_receipt": {
+    "bytes": 2433,
+    "sha256": "2aa417b4b957a4a2a13c154839e4998b54fab89f6893aed0d5440c780f6eb4c9"
+  },
+  "scope_observation": {
+    "bytes": 378,
+    "sha256": "48ffa827358f4663eec539ec4cfbd9abc38dd3f887624392a404a7ebde4205e9"
+  },
+  "test_methods": [
+    "test_fixed_binding_constants_and_all_public_predecessor_pins",
+    "test_prerequisite_exact_bytes_type_and_size_gate_before_json",
+    "test_prerequisite_canonical_json_rejects_duplicate_keys_and_pretty_encoding",
+    "test_prerequisite_applicability_rejects_status_producer_field_and_exposure_forgery",
+    "test_prior_identity_closed_groups_and_commit_types_without_io",
+    "test_invalid_runs_reject_before_any_mocked_dependency",
+    "test_mocked_positive_binds_exact_bytes_fields_capture_and_two_fixed_slots",
+    "test_prerequisite_first_order_stops_before_capture_and_object",
+    "test_partial_read_and_identity_failure_preserve_source_exposure",
+    "test_same_buffer_field_list_must_match_fixed_prior_even_when_shape_would_match",
+    "test_synthetic_interface_keeps_unbound_arbitrary_bounded_lengths",
+    "test_same_buffer_predecessor_negative_and_exception_cannot_be_replayed_as_match",
+    "test_nonmatching_signature_or_padding_is_retained_as_scientifically_blocked",
+    "test_write_and_descriptor_close_failures_clear_shape_but_keep_exposure",
+    "test_exclusive_slot_replay_stops_after_prerequisite_with_no_new_raw_read",
+    "test_context_stub_binds_all_four_files_commit_and_index_with_detached_maps",
+    "test_context_stub_rejects_prior_and_each_source_consistency_failure",
+    "test_context_candidate_location_rejected_before_any_dependency",
+    "test_closed_cli_rejects_arguments_without_production_and_emits_canonical_guard",
+    "test_no_zip_member_decompression_xml_or_network_for_synthetic_wrapper_run",
+    "test_new_error_code_stays_closed_without_mutating_predecessor_errors"
+  ],
+  "source_only_finding": {
+    "new_prerequisite_code_collapsed_by_old_custody_error": "Fixed before execution with local GrowthHintError; frozen predecessor vocabulary unchanged",
+    "failed_test_run_due_to_finding": false
+  },
+  "public_predecessor_pin_checks": 25,
+  "mocked_current_context_invocations": 9,
+  "mocked_current_diagnose_invocations": 41,
+  "actual_custody_receipt_capture_object_or_payload_read": false,
+  "real_predecessor_guard_git_or_reader_invoked": false,
+  "network_used": false,
+  "author_fixtures_read_or_imported": false,
+  "promoted_tree_or_ci_checked": false,
+  "scope_limits": [
+    "Synthetic prerequisite semantic cases rebind only the digest; no actual receipt applicability claim",
+    "Mocked context and source identity results do not prove an actual custody event",
+    "Written receipt can precede descriptor-close failure; both states are explicitly checked",
+    "No concurrency guarantee, exhaustive adversarial coverage, physical truth, archive acceptance or scientific readiness claim"
+  ],
+  "science": {
+    "scientific_evaluation_status": "BLOCKED",
+    "initial_padding_semantics": "UNBOUND",
+    "archive_acceptance_established": false
+  },
+  "normalization": {
+    "final_test_trailing_newlines": 1,
+    "normalization_completed_before_first_execution": true
+  }
+}

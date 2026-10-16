@@ -1,0 +1,10 @@
+{
+  "stage": "INDEPENDENT_FIXTURES_PREPARED_NOT_EXECUTED",
+  "test_path": ".cache/phase2-growth-hint-review-v1/independent/promotion/tests/test_li_v3_growth_hint_review.py",
+  "fixture_origin": "Own previously authored raw ZIP/TLV helpers; no implementation-author fixtures imported",
+  "test_or_candidate_executions": 0,
+  "actual_source_or_receipt_read": false,
+  "network_used": false,
+  "api_and_source_hash_pending": true,
+  "fixture_sha256": "6a4521509c70bc3231d3360b8d1242de458db3477442237ce04f0643f96b6b9f"
+}

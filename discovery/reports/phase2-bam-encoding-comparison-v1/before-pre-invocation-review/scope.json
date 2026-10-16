@@ -1,0 +1,83 @@
+{
+  "schema": "lupine.bam-hypothetical-encoding-comparison-scope.v1",
+  "frozen_at": "2026-10-16T09:57:08.118286+00:00",
+  "owner": "/root/phase2_evidence",
+  "purpose": "DOCUMENTARY_ONLY: compare two explicitly hypothetical strict single-byte interpretations of the same retained schema and identify ASCII-invariant technical definitions without identifying/correcting the actual encoding.",
+  "authorization": "Root authorizes this new separately frozen comparison after preserving initial UTF8 failure and completed header boundary. Scope and source must receive independent review before one invocation. No existing source/profile/benchmark/protocol is amended.",
+  "source": {
+    "path": ".cache/phase2-bam-schema-documentary-v1/schema.csv",
+    "bytes": 41000,
+    "md5": "330a8405f6cb9c4fcfe221baea7ced27",
+    "sha256": "e75c85d770598acf19a4bd1cb9c94b6adf7bb92cf46b153cbc904896a1160f1a"
+  },
+  "hypotheses": [
+    "strict Windows-1252 via cp1252",
+    "strict ISO-8859-1 via iso8859-1"
+  ],
+  "interpretation_limits": [
+    "Both are hypotheses, not encoding detection. Success or readability does not identify author-intended encoding.",
+    "Original declared UTF8 failure remains unchanged. Codec failure preserves exact type/offset, without trying any other codec or replacement.",
+    "Both single-byte hypotheses preserve ASCII bytes, but agreement only supports the byte-level/documentary text invariant; it does not validate every scientific meaning.",
+    "Any nonASCII cell, differing cell or semantic dependency on it remains UNBOUND, even if both hypothetic strings match. No normalization, alias matching or unit conversion."
+  ],
+  "algorithm": [
+    "Verify same retained object size/SHA256/MD5 before interpretation; no network.",
+    "Attempt both named strict decoders once. Record started/completed stages truthfully; never execute formulas or follow links.",
+    "For successful hypotheses parse complete CSV with semicolon/doublequote/doubledquote/noescape/strict using StringIO(newline=\"\") so Unicode NEL is not silently treated as a record break. CR/LF and quoted record framing use csv.reader only; no splitlines or whitespace normalization.",
+    "Require the exact previously observed eleven literal ASCII header labels. Compare physical record spans and row widths under both. No winner is selected.",
+    "For eleven-column records retain internal ASCII-invariant cells for categories, entry, symbol, unit, datatype, requirement, comments; withhold all examples-column values. NonASCII/differing cells receive status-only row/column locators. Other-width records remain structurally unbound; no fill-down/inheritance/row skipping repair.",
+    "Internal selected comments may contain empirical examples and are explicitly exposed as documentation; they are not a public export. Public report uses own paraphrase and necessary selected field labels/citations, never arbitrary example values/fulltext.",
+    "No measurement unit counts are inferred from schema records. Differences/omissions and dependence on unknown cell meanings remain explicit."
+  ],
+  "whole_document_exposure": "Full source bytes, both complete decoded hypothetical texts and all parsed schema cells (including potentially empirical examples/options/comments) are machine-accessible. The researcher may inspect full documentation to understand ASCII-invariant prose, with incidental numerical documentary exposure recorded. Withheld examples-column projection is not absence of acquisition/decoding exposure and does not guarantee comments contain no examples. No claim that this or derivatives remain untouched blind evidence.",
+  "public_output": "Fixed source/receipt identities; codec/parser stage statuses; structural record/column and ASCII/nonASCII difference counts; own-paraphrase report and necessary selected field labels/record citations. Internal full selected-cell projection and raw CSV remain ignored, not published.",
+  "script": {
+    "path": ".cache/phase2-bam-encoding-comparison-v1/compare_documentation.py",
+    "bytes": 6567,
+    "sha256": "c6e1055cf54896c903136494eec872c3afcf25d9377e90dbab38c7f8f96b9d66"
+  },
+  "invocations": 1,
+  "network_requests": 0,
+  "independent_review_required_before_invocation": true,
+  "excluded": [
+    "workbook",
+    "LIS",
+    "images",
+    "schema XLSX alternative",
+    "linked sources",
+    "additional codecs",
+    "encoding selection/correction",
+    "formula execution",
+    "model fit",
+    "eligibility/calibration/allocation/threshold choices",
+    "scientific benchmark admission",
+    "tracked edits"
+  ],
+  "prior_preserved": [
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/README.md",
+      "bytes": 4354,
+      "sha256": "ce619c19ab09d6875b1282d9a01142b119af7f5faaba5f9047b83321942b6edb"
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/decode-failure.json",
+      "bytes": 1124,
+      "sha256": "3fd9481962012a645d7eb8a1f92e4357f0124a16bd205939b0982b87f9e21c39"
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/header-ascii-v1/scope.json",
+      "bytes": 3561,
+      "sha256": "e2e1c87754e378f56d3cfa9f13dc3d2e538f7cb88ac2890bb3acd301bd1908ef"
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/header-ascii-v1/result.json",
+      "bytes": 1170,
+      "sha256": "8b1d45a9a9400ac12b9dec60b72ad8de9d7788d232d98a6889cd7a450519377b"
+    },
+    {
+      "path": ".cache/phase2-bam-schema-documentary-v1/promotion-inventory.json",
+      "bytes": 6321,
+      "sha256": "6b33f728fb0db536d1b6330ac779687440aebf7f5075f524238a34a46d5059f4"
+    }
+  ]
+}

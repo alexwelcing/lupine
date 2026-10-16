@@ -1,0 +1,68 @@
+{
+  "schema": "lupine.bam-encoding-publication-check.v1",
+  "checked_at": "2026-10-16T10:09:47.423973+00:00",
+  "exact_original_copies": 27,
+  "all_copy_bytes_match": true,
+  "local_links": [
+    {
+      "from": "README.md",
+      "href": "scope.json"
+    },
+    {
+      "from": "README.md",
+      "href": "compare_documentation.py"
+    },
+    {
+      "from": "README.md",
+      "href": "execution.json"
+    },
+    {
+      "from": "README.md",
+      "href": "result.json"
+    },
+    {
+      "from": "README.md",
+      "href": "method-limits.md"
+    },
+    {
+      "from": "README.md",
+      "href": "documentary-findings.json"
+    },
+    {
+      "from": "README.md",
+      "href": "ascii-term-check.json"
+    },
+    {
+      "from": "PUBLICATION.md",
+      "href": "README.md"
+    },
+    {
+      "from": "PUBLICATION.md",
+      "href": "documentary-findings.json"
+    },
+    {
+      "from": "PUBLICATION.md",
+      "href": "independent-review/source-review.json"
+    },
+    {
+      "from": "PUBLICATION.md",
+      "href": "execution.json"
+    },
+    {
+      "from": "PUBLICATION.md",
+      "href": "independent-review/result-review.json"
+    },
+    {
+      "from": "PUBLICATION.md",
+      "href": "publication-map.json"
+    },
+    {
+      "from": "PUBLICATION.md",
+      "href": "exposure-ledger.json"
+    }
+  ],
+  "raw_source_and_internal_projection_absent": true,
+  "whitespace": "All checked files returned 0 or 1 with empty git diff --no-index --check diagnostics; 1 is ordinary content difference.",
+  "new_source_access_or_execution": false,
+  "product_or_scientific_tests": false
+}

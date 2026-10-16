@@ -1,0 +1,23 @@
+{
+  "actual_private_operations_performed": false,
+  "author_complete_report_pairs_receipts_audited": 472,
+  "author_tests_receipts_audited": 35,
+  "bytes_excluding_inventory_handoff": 183874,
+  "contract_sha256": "e0ca28ad61181c6cf56d20a46733d2285acb6cb5bc39348f46ee3acb29dfcbc6",
+  "copy_instructions": "All review files may be copied byte-exact; preserve independent inventory plus whole-bundle inventory. Do not modify old pure or mutation bundles. Runtime promotion/publication/CI/actual operation remains parent-owned.",
+  "file_count_excluding_inventory_handoff": 27,
+  "independent_failures": 0,
+  "independent_test": {
+    "destination": "tests/test_li_v3_growth_hint_review.py",
+    "sha256": "13db80f49a6d8f83df58a3f2ae22f27450e5367c156368333db1908f90d01f85",
+    "source": ".cache/phase2-growth-hint-production-review-v1/independent/promotion/tests/test_li_v3_growth_hint_review.py"
+  },
+  "independent_tests": 21,
+  "inventory_sha256": "b27227d19b2b4b303252f456209603a70c29fc8d4cc51782f13cfed0b7ebe391",
+  "recorded_utc": "2026-10-16T10:14:15.148713+00:00",
+  "review_root": ".cache/phase2-growth-hint-production-review-v1",
+  "schema": "lupine.discovery.growth_hint_production_review_handoff.v1",
+  "scientific_status": "BLOCKED",
+  "source_sha256": "1a2bd6443bfe090ab3264b82b60f105cfad16f40182b716f032fd773a2e8354a",
+  "status": "PASS_BOUNDED_SOURCE_AND_SYNTHETIC_REVIEW"
+}

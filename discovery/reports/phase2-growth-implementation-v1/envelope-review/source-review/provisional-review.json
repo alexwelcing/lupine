@@ -1,0 +1,30 @@
+{
+  "clarifications_sent_to_author": [
+    "Nested selected-growth raw-read flags describe only that stage and do not negate outer complete raw-source exposure.",
+    "Zero-extra entries are permitted in the full traversal, but an all-zero-extra archive fails the separate required initial G29/G30 gate.",
+    "Guard/cleanup failures may retain the earlier selected-span result while clearing overall envelope acceptance."
+  ],
+  "files": {
+    ".cache/phase2-growth-envelope-candidate-v1/promotion/scripts/li_v3_growth_envelope.py": {
+      "bytes": 19277,
+      "sha256": "a8c0cea16c1c44d6cf57986edcd6ca22e0229cb0f3bb7f935910d6fa2aef3045"
+    },
+    ".cache/phase2-growth-envelope-candidate-v1/scope-record.json": {
+      "bytes": 228,
+      "sha256": "7658f4073e4ebd1a0f91ec864c23032598b6948efe7756b034b1a3239469a2a5"
+    },
+    ".cache/phase2-growth-envelope-candidate-v1/scope.md": {
+      "bytes": 3766,
+      "sha256": "7dc85a75fc54cee03d92d6cd04b0444bb4e252379e55ae2c1aea7f7f23b08c4b"
+    },
+    "scripts/li_v3_compatible_envelope.py": {
+      "bytes": 14126,
+      "sha256": "e771b3fc2a66d6e2ff3a26d8aae88b7a2915ac908907908316e697997761c847"
+    }
+  },
+  "findings": [],
+  "recorded_utc": "2026-10-16T10:18:08.324887+00:00",
+  "schema": "lupine.discovery.growth_envelope_provisional_source_review.v1",
+  "scope": "Full draft source and four static AST/byte checks; no product import/runtime test or actual/private source/capture/receipt/guard operation.",
+  "status": "NO_SOURCE_BLOCKER_FOUND_PENDING_HELD_CONTRACT_AND_TESTS"
+}

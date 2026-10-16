@@ -18,10 +18,16 @@ rejected local entry. No workbook member, XML, worksheet or shared string has
 been decoded. Original blocked readers stay unchanged. G27–G29 are complete
 within their engineering scopes. G29's 19 author, 30 independent and 248 combined
 Li checks pass; original fixture and publication failures remain preserved.
-The independent actual-receipt audit passes 11,189 checks. A separate G30
-payload-shape check is now being implemented from the retained ZIP standard;
-its pure preparation passes 18 author and 21 independent synthetic tests.
-Those checks are not an actual payload result or archive acceptance.
+The independent actual-receipt audit passes 11,189 checks. Two separate G30/G31
+readers are now implemented and independently reviewed;
+[the combined Li run passes 359 tests](reports/phase2-growth-implementation-v1/README.md)
+with all 332 runtime files held and all 326 earlier files unchanged. G30 checks
+the fixed selected payload shape; G31 applies a bounded all-entry local-growth
+rule and only the original four envelope XML readers. G31's first generated
+27/28 result revealed an inherited central-header declared-length gap; the
+failure and unchanged regression are retained alongside the reviewed fix.
+These new actual operations remain pending their own exact-source CI, clean
+package and independent artifact audit. No new archive acceptance is claimed.
 
 The [paper methods audit](reports/phase2-li-paper-methods-v1/PUBLICATION.md)
 establishes documentary test-level rows and units, while recording 1,038 listed
@@ -35,8 +41,11 @@ identifies a possible small metrology reference, not an admitted discovery task.
 matched the publisher's bytes but failed strict UTF-8 decoding. A separately
 scoped ASCII header projection establishes eleven labels, including `UNIT` at
 column 7; body encoding and measurement definitions remain unresolved at that
-checkpoint. A separately scoped hypothetical-encoding comparison is being
-reviewed; no alternative decoder is silently accepted. G20 remains unresolved
+checkpoint. The [separate encoding comparison](reports/phase2-bam-encoding-comparison-v1/PUBLICATION.md)
+parsed the same retained bytes under two explicitly hypothetical codecs; neither
+was selected as authoritative. ASCII definitions identify mandatory test IDs,
+optional specimen/history roles and generic current-test Rp, but do not resolve
+uncertainty budgets, shared-error structure or independent units. G20 remains unresolved
 and G21 blocked; no allocation or fit occurred.
 
 The exact finite-archive planner remains available through API, CLI, HTTP and
@@ -46,7 +55,8 @@ replacement, not observed power or future-material risk. A separate
 has written and finite-counting review, including an optional-stopping failure;
 implementation is deferred until a justified study needs it.
 
-Root owns evidence publication and the next bounded source-admission increment.
+Root owns publication and exact-source verification of G30/G31, then their fixed
+operations. The preceding report-only 2428c313 passes all four original CI jobs.
 All scientific NO-GO results remain unchanged. The expired automation remains
 disabled; no new schedule or continuous worker was started.
 [GOAL](GOAL.md#renewed-active-work--2026-10-16) records ownership and next actions.

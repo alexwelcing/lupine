@@ -1,0 +1,36 @@
+{
+  "files": {
+    ".cache/li-v3-custody/local-extra-headers-v1/1/public.json": {
+      "bytes": 5463,
+      "sha256": "52fe2d25f0c739c1c5137f0514f07f4ee0be35dffd7ef9141b19fe5ee5520d2e"
+    },
+    ".cache/phase2-growth-hint-production-candidate-v1/preimplementation-scope.json": {
+      "bytes": 5211,
+      "sha256": "bb50f866986d917c9cf43076d8b5f96142b3cc7b6a70a771d6a3d6d12fc8bcf7"
+    },
+    ".cache/phase2-growth-hint-production-candidate-v1/public-prerequisite.json": {
+      "bytes": 5463,
+      "sha256": "52fe2d25f0c739c1c5137f0514f07f4ee0be35dffd7ef9141b19fe5ee5520d2e"
+    },
+    ".cache/phase2-local-extra-operation-review-v1/actual-review.json": {
+      "bytes": 47849,
+      "sha256": "93135011b48f351bde0d8a3e578d97e7d447dfbb043548142f8b42a85fc960ac"
+    }
+  },
+  "prerequisite_summary": {
+    "field_headers": [
+      {
+        "data_size": 516,
+        "header_id": 41504
+      }
+    ],
+    "producer": "d0505b9b358a4bdeafbd742f1aeeb6c2b955abf3",
+    "reason": "LOCAL_EXTRA_HEADERS_COMPLETE",
+    "schema": "lupine.discovery.li_v3.local_extra_headers.v1",
+    "source_identity_verified": true,
+    "status": "BLOCKED_SCHEMA"
+  },
+  "recorded_utc": "2026-10-16T10:00:59.637535+00:00",
+  "schema": "lupine.discovery.growth_hint_production_review_preparation.v1",
+  "scope": "Read-only named public receipts and source/scope; no actual private source, capture, or production calls."
+}

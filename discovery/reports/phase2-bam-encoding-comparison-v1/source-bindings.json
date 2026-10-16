@@ -1,0 +1,100 @@
+{
+  "schema": "lupine.bam-encoding-comparison-bindings.v1",
+  "created_at": "2026-10-16T10:05:55.108584+00:00",
+  "readme": {
+    "path": ".cache/phase2-bam-encoding-comparison-v1/README.md",
+    "bytes": 8560,
+    "sha256": "c3aaa9b8ad1e6eb6e8bb193813c4c96e78d33e7e3e58a298a7e4453173ab16c9"
+  },
+  "files": [
+    {
+      "path": ".cache/phase2-bam-encoding-comparison-v1/scope.json",
+      "bytes": 6528,
+      "sha256": "31c0b4fd7325abe9338405284f4afb1da4ccb6aad52f67b8a4849e4c96d11593"
+    },
+    {
+      "path": ".cache/phase2-bam-encoding-comparison-v1/compare_documentation.py",
+      "bytes": 7065,
+      "sha256": "a1c879a6a9b9a0a62e8e570e98758fb2194ddc430db97b0aeeede758dfa91f53"
+    },
+    {
+      "path": ".cache/phase2-bam-encoding-comparison-v1/execution.json",
+      "bytes": 1278,
+      "sha256": "89f641a7bc619e211b8e1dbfc03fc760ca08da98b5a2d7ea8b14f0f6ef702d71"
+    },
+    {
+      "path": ".cache/phase2-bam-encoding-comparison-v1/result.json",
+      "bytes": 1840,
+      "sha256": "4bd33191b050582a194d99f83759a4be4ded48134f1958f4ea0ad6ee384a60e2"
+    },
+    {
+      "path": ".cache/phase2-bam-encoding-comparison-v1/stdout.txt",
+      "bytes": 1840,
+      "sha256": "4bd33191b050582a194d99f83759a4be4ded48134f1958f4ea0ad6ee384a60e2"
+    },
+    {
+      "path": ".cache/phase2-bam-encoding-comparison-v1/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/phase2-bam-encoding-comparison-v1/internal-ascii-projection.json",
+      "bytes": 358100,
+      "sha256": "b3c77bb0799af461ad53504130c271ff1d12ef32af320217ee19b4990d1bce4e"
+    },
+    {
+      "path": ".cache/phase2-bam-encoding-comparison-v1/researcher-inspection-start.json",
+      "bytes": 369,
+      "sha256": "fa98e14cd3930cd3fde4c6a02aee4f375749373003b765bd713adcd317541fb2"
+    },
+    {
+      "path": ".cache/phase2-bam-encoding-comparison-v1/ascii-term-check.json",
+      "bytes": 882,
+      "sha256": "6ccd3bf30eb3e1ca97321cec0f3055d9c9c68d002e125ddc0f46c530dea97147"
+    },
+    {
+      "path": ".cache/phase2-bam-encoding-comparison-v1/documentary-findings.json",
+      "bytes": 24355,
+      "sha256": "18a4b78dc5687e539708ac6b751a0fa83b358bc6db1d12f7235890f6221880a3"
+    },
+    {
+      "path": ".cache/phase2-bam-encoding-comparison-v1/method-limits.md",
+      "bytes": 1267,
+      "sha256": "8b63dabe3758ad710f20039023f4bb475d1519d6f8fdb068ad5bc27826e336b2"
+    },
+    {
+      "path": ".cache/phase2-bam-encoding-comparison-v1/pre-invocation-review-refinement.diff",
+      "bytes": 1510,
+      "sha256": "c50b574d2167530e526ea52db7b28683ebc654c2e49ff741ee2bb82bc85d72fe"
+    },
+    {
+      "path": ".cache/phase2-bam-encoding-comparison-v1/before-pre-invocation-review/scope.json",
+      "bytes": 5592,
+      "sha256": "8507f26007453bc555b7d0170a2ef905247d2e065c4ffec0274b84e73b620fca"
+    },
+    {
+      "path": ".cache/phase2-bam-encoding-comparison-v1/before-pre-invocation-review/compare_documentation.py",
+      "bytes": 6567,
+      "sha256": "c6e1055cf54896c903136494eec872c3afcf25d9377e90dbab38c7f8f96b9d66"
+    }
+  ],
+  "source_identity": {
+    "path": ".cache/phase2-bam-schema-documentary-v1/schema.csv",
+    "bytes": 41000,
+    "md5": "330a8405f6cb9c4fcfe221baea7ced27",
+    "sha256": "e75c85d770598acf19a4bd1cb9c94b6adf7bb92cf46b153cbc904896a1160f1a",
+    "publication": "ignored only"
+  },
+  "pre_invocation_review": {
+    "path": ".cache/phase2-bam-encoding-comparison-review-v1/source-review.json",
+    "bytes": 4886,
+    "sha256": "2c18aa2c6c3e0c3b1178ba623d3c66970f33394fbef94bbba34ad92bbac29042"
+  },
+  "actual_encoding": "UNBOUND",
+  "raw_source_and_internal_projection_published": false,
+  "benchmark_admitted": false,
+  "tracked_edits": false,
+  "new_GETs": 0,
+  "single_invocation": true,
+  "independent_result_review_pending": true
+}

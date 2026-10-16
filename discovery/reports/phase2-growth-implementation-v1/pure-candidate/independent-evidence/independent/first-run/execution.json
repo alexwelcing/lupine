@@ -1,0 +1,67 @@
+{
+  "schema": "lupine.discovery.independent_growth_hint_execution.v1",
+  "reviewer": "/root/phase2_planner/ui_review",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-B",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-hint-review-v1/independent/run_tests_guarded.py",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-growth-hint-review-v1/independent/first-run/scope-observation.json"
+  ],
+  "cwd": "/workspace/lupine-discovery-branch/discovery",
+  "started_utc": "2026-10-16T09:49:38.165231+00:00",
+  "finished_utc": "2026-10-16T09:49:39.864957+00:00",
+  "elapsed_seconds": 1.6984834550021333,
+  "exit_code": 0,
+  "before": {
+    "implementation": {
+      "bytes": 8507,
+      "sha256": "c42313ddc1d6c64e6d9c18338bc3efc9bacc65e7ff7f8281e1da28870e74d7cb"
+    },
+    "tests": {
+      "bytes": 27548,
+      "sha256": "7a3e4263af08577c9c5884f5d486caca3eee7e78e5b89cc47e43724e13733a0f"
+    },
+    "contract": {
+      "bytes": 7267,
+      "sha256": "9900ff73238a9d1c3629f364e4e97d9d450630b0ba938be74f1a03b52da9939c"
+    },
+    "guard_runner": {
+      "bytes": 1955,
+      "sha256": "cd584e803644b9eea66ef6dc452397dac027dfc063c45a037c3dfd77e800303c"
+    }
+  },
+  "after": {
+    "implementation": {
+      "bytes": 8507,
+      "sha256": "c42313ddc1d6c64e6d9c18338bc3efc9bacc65e7ff7f8281e1da28870e74d7cb"
+    },
+    "tests": {
+      "bytes": 27548,
+      "sha256": "7a3e4263af08577c9c5884f5d486caca3eee7e78e5b89cc47e43724e13733a0f"
+    },
+    "contract": {
+      "bytes": 7267,
+      "sha256": "9900ff73238a9d1c3629f364e4e97d9d450630b0ba938be74f1a03b52da9939c"
+    },
+    "guard_runner": {
+      "bytes": 1955,
+      "sha256": "cd584e803644b9eea66ef6dc452397dac027dfc063c45a037c3dfd77e800303c"
+    }
+  },
+  "held_unchanged": true,
+  "stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stderr": {
+    "bytes": 3868,
+    "sha256": "a14319d3b9e407729db52b7dbda5a48c887e4219eb647fe760ec209eaf0662b1"
+  },
+  "scope_observation": {
+    "bytes": 152,
+    "sha256": "b11f9582389aa782548a2d7c649cf4c251ff84b4548e687e137f0ba6733873a1"
+  },
+  "actual_source_capture_or_receipt_read": false,
+  "network_used": false,
+  "production_guard_or_reader_invoked": false
+}

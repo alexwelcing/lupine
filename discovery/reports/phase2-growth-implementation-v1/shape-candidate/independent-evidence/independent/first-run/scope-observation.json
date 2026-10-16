@@ -1,0 +1,11 @@
+{
+  "blocked_real_predecessor_or_read_calls": [],
+  "blocked_network_private_or_process_events": [],
+  "mocked_current_wrapper_calls": {
+    "production_context": 9,
+    "diagnose": 41
+  },
+  "instrumentation_installed_before_test_import": true,
+  "test_setUp_default_rejecting_mocks_verified_unused": true,
+  "current_wrapper_permitted_only_with_test_dependency_mocks": true
+}
