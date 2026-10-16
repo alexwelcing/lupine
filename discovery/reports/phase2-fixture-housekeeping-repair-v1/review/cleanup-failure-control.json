@@ -1,0 +1,21 @@
+{
+  "argv": [
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-final-ci-failure-v1/venv311/bin/python",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-final-ci-failure-v1/review/cleanup_failure_control.py"
+  ],
+  "cleanup_error_suppressed": false,
+  "errors": 1,
+  "extracted_setup_lines": [
+    131,
+    133
+  ],
+  "failures": 0,
+  "finished_at": "2026-10-16T18:16:49.362360+00:00",
+  "schema": "lupine.fixture_cleanup_negative_control.v1",
+  "scope": "Exact first three setup statements only; generated temporary directory; no product import, Git command, source data, or product test execution.",
+  "source_sha256": "a38e2d7c0cfdc0fd0ef122795f12e97d1b9ba1cd263495356b5e3f79b7325503",
+  "source_unchanged": true,
+  "started_at": "2026-10-16T18:16:49.354169+00:00",
+  "status": "EXPECTED_CLEANUP_ERROR_OBSERVED",
+  "tests_run": 1
+}

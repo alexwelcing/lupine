@@ -1,15 +1,19 @@
 # Project state
 
-Current checkpoint: 2026-10-16; renewed active work, root owns integration.
-Runtime source **`eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f`** was verified against
-the remote branch when published. The later report commit `cb19c0a` preserves
-all 351 runtime files and separately passes clean packaging and strict verification.
-This checkpoint adds documentation only. Its [clean installed reproduction](reports/phase2-source-readiness-release-verification-v1/README.md)
-passes 28 demonstrations, six schemas, eighteen required checks and strict retained
-verification. The independent artifact audit passes **22,005 checks** over all
-6,794 Git source files, 351 runtime files and 113 wheel payloads. These are local
-engineering checks, not independent scientific replication. Original browser and
-Lean CI jobs pass; both Python jobs are still pending at this checkpoint.
+Current checkpoint: 2026-10-16; root owns the fixture repair and exact-source verification.
+The original `bd7ebf2` CI run failed Python 3.11 during temporary Git cleanup;
+Python 3.12, browser and Lean passed. [The retained diagnosis and repair](reports/phase2-fixture-housekeeping-repair-v1/README.md)
+show detached automatic maintenance launches and a regression that catches them.
+The repaired module passes 61 local methods on Python 3.11 and 61 on Python 3.12,
+with no automatic housekeeping child launch; strict cleanup stays enabled.
+Only this test file changes among 351 runtime files. New-head CI and packaging
+are pending; the original CI writer remains unproved.
+
+Earlier exact `eaed2e7` and `cb19c0a` runs passed all four original jobs.
+The eaed [clean installed reproduction and independent audit](reports/phase2-source-readiness-release-verification-v1/README.md)
+pass 28 demonstrations/six schemas/18 checks, strict retention and 22,005 artifact
+checks over 6,794 source files/351 runtime files/113 wheel payloads. This audit
+belongs to eaed; it is not relabeled as an audit of the repair.
 
 The [readiness interface](reports/phase2-source-readiness-verification-v1/README.md)
 shows a fixed Li/Dryad documentary snapshot, explicit unavailable states and exact
@@ -35,8 +39,8 @@ The [intake card](reports/phase2-tmqm-intake-v1/README.md) is explicitly unregis
 
 Li A1's XML block and partial exposure, Dryad/QM9 access failures, restrictive AFLOW
 terms and all historical scientific negatives remain. G20 unresolved/G21 blocked;
-physical-performance/general-superiority NO-GO unchanged. Root next verifies exact
-Python CI and the final documentary checkpoint; primary units/key/rights definitions
+physical-performance/general-superiority NO-GO unchanged. Root next publishes and verifies the repair
+against exact remote, original CI and clean packaging; primary units/key/rights definitions
 remain prerequisites to any fresh benchmark. The old automation remains disabled; no new DFT or exposed-test tuning is authorized here.
 
 Historical Snapshot: 2026-10-11 01:40 UTC (exact CI observation `2026-10-11T01:40:16.973611+00:00`). Tested runtime/artifact source: `6585a605d5d325e84423c7e35c7286efe85cfb6f`. [Scoped decision and evidence](reports/research-preview-decision.md).

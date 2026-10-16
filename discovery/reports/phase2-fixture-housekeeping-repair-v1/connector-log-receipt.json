@@ -1,0 +1,14 @@
+{
+  "observed_at": "2026-10-16T18:12:53.757814+00:00",
+  "tool": "github_fetch_workflow_job_logs",
+  "repository": "alexwelcing/lupine",
+  "job_id": 117111359882,
+  "source_log_sha256": "e950e3946cfbe0258b66b3d1c984a67b31f27b2c7b2c5aebc953457c80650769",
+  "decoded_log_bytes": 453420,
+  "result": "SUCCESS",
+  "earlier_gh_redirect": "Forbidden retained separately",
+  "suite_tests": 2077,
+  "suite_seconds": 1283.428,
+  "errors": 1,
+  "failure": "TemporaryDirectory cleanup OSError39 .git"
+}

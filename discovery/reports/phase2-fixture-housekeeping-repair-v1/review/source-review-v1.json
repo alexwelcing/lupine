@@ -1,0 +1,32 @@
+{
+  "candidate": {
+    "candidate_sha256": "efe13327f575fc9c4d2bf23b3440bd953be348e585e192f63bb4c2bb9fcfe354",
+    "change_scope": "Only fixture Git helper command-scoped maintenance and legacy auto-GC disabling; strict cleanup and all existing test assertions unchanged.",
+    "original_sha256": "809c0126ef9f130fad264ef2617f67b9b99db103a3a14c476a6e60bfb4905470",
+    "path": ".cache/phase2-final-ci-failure-v1/review/test_li_v3_readiness_production.candidate.py"
+  },
+  "evidence": {
+    "fixture_commits_are_synchronous": true,
+    "fixture_sets_auto_maintenance_controls": false,
+    "original_ci_cleanup_writer_identified": false,
+    "python_311_defect_established": false,
+    "root_reports_trace2_detached_maintenance_child_starts": true,
+    "runtime_git_commands_reviewed_are_read_only": true
+  },
+  "execution_by_this_review": false,
+  "official_failure": {
+    "exception": "OSError: [Errno 39] Directory not empty: .git",
+    "job_id": 117111359882,
+    "scope": "TemporaryDirectory cleanup after test body",
+    "test": "test_li_v3_readiness_production.ProductionAuthorTests.test_own_source_worktree_drift"
+  },
+  "proposed_checks": [
+    "Run original focused module with Trace2 and preserve result without claiming a cleanup race unless observed.",
+    "Run candidate module with same interpreter and Trace2; verify no maintenance child launch from fixture commands and unchanged original drift assertions.",
+    "Use a temporary inherited Git config enabling automatic maintenance to verify command-scoped false overrides it.",
+    "Inject a TemporaryDirectory cleanup failure and verify it is reported as an error, not ignored."
+  ],
+  "schema": "lupine.ci_fixture_source_review.v1",
+  "status": "SOURCE_REVIEW_ONLY_CANDIDATE_NOT_EXECUTED",
+  "tracked_files_modified": false
+}

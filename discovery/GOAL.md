@@ -91,21 +91,19 @@ previously unused source with paired outcomes and credible study grouping.
 | G35 | Fixed exposed Rhizo census and exact readable workbench, preserving unknown physical scope | COMPLETE / repaired source verified | [144 pairs, 16 groups and 36 reference checks](reports/phase2-rhizo-stored-census-v1/README.md), independent arithmetic/scope reviews; [80 browser checks and final 97 focused tests](reports/phase2-rhizo-census-integration-v1/README.md). Exact public values and exports; no winner, tolerance criterion or fresh scientific admission. |
 | G36 | One complete bounded Li compatibility/documentary/frame route | ACTUAL A1 BLOCKED; A2/B/C not run | [Verified source and first actual failure](reports/phase2-li-complete-layout-verification-v1/README.md): XML_PROFILE_UNSUPPORTED, source unchanged, cleanup complete. No manifest or scientific admission; preserve the failure and stop this route. |
 | G37 | Formalize the finite-population zero-failure counting bound with explicit premises | DONE at `88d512c` | [Exact four-job CI, clean package and independent artifact audit pass](reports/phase2-finite-planning-release-verification-v1/README.md). Thirteen statements extend the audit to 143; all ten earlier modules and 345 runtime files held. No Python refinement or scientific admission. |
-| G38 | Prove finite-population evaluation monotonicity, capped feasibility and the unique first qualifying count | PUBLISHED at `eaed2e7`; exact Lean CI PASS | [Four independently compiled statements](reports/phase2-finite-planning-monotone-verification-v1/README.md); strict twelve-module build, fresh axiom audit and eleven parser tests pass. All 143 earlier inventory entries held. [Clean packaging and independent artifact verification pass](reports/phase2-source-readiness-release-verification-v1/README.md); Python CI remains pending. |
-| G39 | Make blocked-source readiness inspectable in CLI, HTTP, browser and installed package | PUBLISHED at `eaed2e7`; clean 18-check package/audit PASS | [Actual integrated checks and independent review](reports/phase2-source-readiness-verification-v1/README.md). Fixed documentary Li/Dryad snapshot, explicit unavailable states and exact exports; no source admission or acquisition. Exact browser/Lean CI pass; two Python CI jobs remain pending. |
+| G38 | Prove finite-population evaluation monotonicity, capped feasibility and the unique first qualifying count | PUBLISHED at `eaed2e7`; exact Lean CI PASS | [Four independently compiled statements](reports/phase2-finite-planning-monotone-verification-v1/README.md); strict twelve-module build, fresh axiom audit and eleven parser tests pass. All 143 earlier inventory entries held. [Clean packaging and independent artifact verification pass](reports/phase2-source-readiness-release-verification-v1/README.md); all four original eaed CI jobs now pass ([observation](reports/phase2-fixture-housekeeping-repair-v1/eaed-ci.json)). |
+| G39 | Make blocked-source readiness inspectable in CLI, HTTP, browser and installed package | PUBLISHED at `eaed2e7`; clean 18-check package/audit PASS | [Actual integrated checks and independent review](reports/phase2-source-readiness-verification-v1/README.md). Fixed documentary Li/Dryad snapshot, explicit unavailable states and exact exports; no source admission or acquisition. All four original eaed CI jobs pass ([observation](reports/phase2-fixture-housekeeping-repair-v1/eaed-ci.json)); later bd7 cleanup failure is preserved separately. |
 | G40 | Establish a primary scientist-curated GitHub lead without choosing on performance | DOCUMENTARY LEAD; NOT_ADMITTED | [Pinned tmQM README/license/property-file metadata](reports/phase2-primary-github-source-survey-v1/README.md) and [independent qualifications](reports/phase2-tmqm-documentary-review-v1/README.md). One [bounded header inspection](reports/phase2-tmqm-csv-header-v1/README.md) observed eleven literal labels. Units, joins, complete pairs and upstream rights remain unresolved; the separate curator page returned HTTP 403. |
+| G41 | Keep generated Git fixtures free of detached housekeeping without weakening cleanup or source guards | LOCAL PASS; exact new-head CI pending | [Original CI failure, actual Trace2 diagnosis, negative regression and repaired 61-method checks on both Python versions](reports/phase2-fixture-housekeeping-repair-v1/README.md). One test file changes; 350 other runtime files and all formal source stay unchanged. |
 
-Current owner/checkpoint: root published `eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f`
-and verified the remote SHA. The later published documentary commit `cb19c0a`
-keeps all 351 runtime files unchanged and separately passes clean packaging/strict
-verification; this checkpoint adds documentation only. The runtime source
-[clean installed reproduction and independent
-artifact audit](reports/phase2-source-readiness-release-verification-v1/README.md)
-pass: 28 demonstrations, six schemas, eighteen required checks, strict retention
-and 22,005 independent checks. All 6,794 source files match Git; 351 runtime files
-and 113 wheel payloads match the declared changes. Original browser and Lean CI
-jobs pass; both Python jobs remain pending at this checkpoint. Local focused
-Python 142 and browser 86 results retain their distinct 350/351-file snapshots.
+Current owner/checkpoint: root integrates the fixture housekeeping repair after
+`bd7ebf2` failed its original Python 3.11 CI job during temporary Git cleanup.
+That run's Python 3.12/browser/Lean jobs pass; exact eaed and cb19 original runs
+pass all four jobs. The repaired module passes 61 local methods on each Python
+version, with the original failure, original-helper regression failure and
+causal limits preserved. New-head CI and clean packaging remain pending.
+The eaed clean 28-demonstration/six-schema/18-check package and independent
+22,005-check artifact audit retain their exact original source attribution.
 
 The fixed Li/Dryad readiness interface and 147 conditional Lean statements remain
 engineering evidence. Li A1's XML block, partial character-data exposure and no
@@ -120,8 +118,8 @@ and `CSD_years`. No units, complete pairs, full-file identity, grouping rule or
 upstream rights follow. Underlying transport/library buffering may have included
 numerical rows; its extent is unknown and no numerical values were disclosed.
 
-Next: verify the remaining exact-source Python CI jobs and the documentary
-checkpoint CI. The [unregistered intake card](reports/phase2-tmqm-intake-v1/README.md)
+Next: publish the fixture repair, verify exact remote and all original CI jobs,
+and reproduce the clean installed package/strict artifact checks. The [unregistered intake card](reports/phase2-tmqm-intake-v1/README.md)
 identifies the primary unit/key/rights definitions and frozen study design needed
 before any numerical-frame acquisition or scientific evaluation.
 No scientific protocol, target pair, feature set, threshold, allocation or fit is

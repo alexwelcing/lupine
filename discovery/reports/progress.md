@@ -2041,3 +2041,21 @@ rights, pairing, processed semantics, equivalence and freshness remain unresolve
   verifies exact remote and remaining CI, then follows the unresolved unit/key/
   rights prerequisites before any numerical evaluation. G20 unresolved/G21 blocked;
   all negative science and physical/general-superiority NO-GO remain unchanged.
+
+
+## 2026-10-16T18:18:50.152338+00:00 — repair detached housekeeping in generated Git fixtures
+
+- [Original final-head CI](phase2-fixture-housekeeping-repair-v1/README.md) ran
+  2,077 Python 3.11 tests with one temporary `.git` cleanup error; its other three
+  jobs passed. Earlier exact eaed/cb19 original runs passed all four jobs. The
+  first `gh` log delivery failed; the connected GitHub tool retrieved the traceback.
+- Original local 60-method execution passed but traced 121 detached maintenance
+  launches. A new regression failed against the original helper, detecting the
+  child command. Command-scoped fixture housekeeping controls now pass 61 local
+  methods on each Python version with zero such launches. All old assertions and
+  strict cleanup remain; the exact original CI writer is not identified.
+- One test file changes among 351 runtime files; selectors, scientific readers,
+  interfaces and formal source are unchanged. Root owns publication, exact remote
+  and original CI verification, then clean installed packaging and strict retention.
+  New-head checks are pending at this source checkpoint. No scientific admission,
+  physical-performance or general-superiority claim follows; all negatives remain.

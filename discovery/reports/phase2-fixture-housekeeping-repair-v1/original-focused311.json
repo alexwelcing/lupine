@@ -1,0 +1,21 @@
+{
+  "argv": [
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-final-ci-failure-v1/venv311/bin/python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_li_v3_readiness_production.py",
+    "-v"
+  ],
+  "cwd": "/workspace/lupine-discovery-branch/discovery",
+  "started_at": "2026-10-16T18:13:06.762758+00:00",
+  "finished_at": "2026-10-16T18:13:51.930989+00:00",
+  "returncode": 0,
+  "source_sha256": "809c0126ef9f130fad264ef2617f67b9b99db103a3a14c476a6e60bfb4905470",
+  "source_unchanged": true,
+  "trace": "GIT_TRACE2_EVENT",
+  "scope": "Generated fake repository fixtures only; no actual source acquisition"
+}

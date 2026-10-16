@@ -1,0 +1,24 @@
+{
+  "at": "2026-10-16T18:18:50.152338+00:00",
+  "owner": "root",
+  "parent_commit": "bd7ebf216d3e5b3b8a5a27ad1501d49c0e95dc50",
+  "candidate_status": "INTEGRATED_PENDING_PUBLICATION_AND_EXACT_CI",
+  "runtime_files": 351,
+  "runtime_unchanged": 350,
+  "changed_runtime_files": [
+    "tests/test_li_v3_readiness_production.py"
+  ],
+  "test_source_sha256": "a38e2d7c0cfdc0fd0ef122795f12e97d1b9ba1cd263495356b5e3f79b7325503",
+  "runtime_manifest_sha256": "452711071f2e3abf8eb734cb6e2e94ee85d04b64f8b40d39300b0597d64d489b",
+  "original_ci_run": 38941904627,
+  "original_ci": "FAIL_PYTHON311_TEMPORARY_GIT_CLEANUP; PYTHON312_BROWSER_LEAN_PASS",
+  "original_local_focused": "PASS60;121detached maintenance launches;race not reproduced",
+  "regression_original_helper": "FAIL1; detected detached maintenance",
+  "repaired_focused": "PASS61 on Python3.11.16; PASS61 on Python3.12.14; zero automatic housekeeping launches in each trace",
+  "current_exact_ci": "PENDING_PUBLICATION",
+  "current_clean_package": "PENDING_PUBLICATION",
+  "physical_performance_general_superiority": "NO_GO",
+  "source_admissions": 0,
+  "automation_reenabled": false,
+  "next_action": "Publish repair; verify exact remote and original four-job CI; run clean installed package and strict artifact checks. Preserve original failed run and causal limits. G20 primary units/key/rights prerequisites remain; G21 blocked."
+}

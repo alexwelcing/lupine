@@ -1,0 +1,1 @@
+Source-inspection command only; no product test or import. First AST comparison attempt raised AttributeError: Attribute object has no attribute func while locating Return(Call(...).stdout). Corrected traversal uses return.value.value.args[0]. No candidate assertion was reached.

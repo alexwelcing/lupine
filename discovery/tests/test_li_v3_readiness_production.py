@@ -134,7 +134,9 @@ class ProductionAuthorTests(unittest.TestCase):
         self.repo=Path(self.temporary);self.root=self.repo/'discovery';self.root.mkdir()
         (self.root/'AGENTS.md').write_text('Generated isolated fixture.\n')
         def git(*args):
-            return subprocess.run(['git',*args],cwd=self.repo,capture_output=True,check=True,timeout=10).stdout
+            # Detached housekeeping must not outlive this temporary repository.
+            return subprocess.run(['git','-c','maintenance.auto=false','-c','gc.auto=0',*args],
+                                  cwd=self.repo,capture_output=True,check=True,timeout=10).stdout
         self.git=git
         git('init','-q');git('config','user.name','Generated Test');git('config','user.email','generated@example.invalid')
         self.write('.gitignore',b'.cache/\n')
@@ -278,6 +280,21 @@ class ProductionAuthorTests(unittest.TestCase):
     def test_own_source_worktree_drift(self):
         self.write(M.FROZEN_PATHS[1],b'changed source\n')
         self.assert_cleared(M.inspect('layout','1'),'FROZEN_SOURCE_REQUIRED');self.assertEqual(self.target_reads,0)
+
+    def test_fixture_commit_does_not_launch_automatic_maintenance(self):
+        trace = self.repo/'fixture-git-trace.jsonl'
+        # Host configuration must not leave a detached writer in this short-lived repo.
+        with patch.dict(os.environ, {'GIT_TRACE2_EVENT': str(trace),
+                        'GIT_CONFIG_COUNT': '2',
+                        'GIT_CONFIG_KEY_0': 'maintenance.auto', 'GIT_CONFIG_VALUE_0': 'true',
+                        'GIT_CONFIG_KEY_1': 'gc.auto', 'GIT_CONFIG_VALUE_1': '1'}):
+            self.git('commit', '--allow-empty', '-qm', 'generated lifecycle check')
+        events = [json.loads(line) for line in trace.read_text().splitlines()]
+        self.assertTrue(any(event.get('event') == 'start' for event in events))
+        housekeeping = [event['argv'] for event in events
+                        if event.get('event') == 'child_start'
+                        and any(arg in ('maintenance', 'gc') for arg in event.get('argv', []))]
+        self.assertEqual(housekeeping, [], 'Fixture commit launched automatic housekeeping')
 
     def test_index_drift(self):
         self.write(M.FROZEN_PATHS[2],b'changed index\n');self.git('add','discovery/'+M.FROZEN_PATHS[2])

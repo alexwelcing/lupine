@@ -1,7 +1,7 @@
 {
   "schema": "lupine.discovery.runtime-manifest.v1",
   "python": "3.12.14",
-  "checkpoint": "2026-10-16 read-only blocked-source workbench and 147 conditional Lean statements; no new scientific admission",
+  "checkpoint": "phase2-fixture-housekeeping-isolation-v1",
   "files": {
     "pyproject.toml": "a73eec989447b99fec48de193218a0750079eeb5973406c53d7a0dc840d9d90f",
     "scripts/additional_archived_benchmark.py": "8f50f0fc8aaade6f895500856db91b6593e5da8f676c7bf325cdc0a938d73b9a",
@@ -255,7 +255,7 @@
     "tests/test_li_v3_notebook_methods.py": "7a93116314786ea8a5b49562473c891bde225f6abf638c9427a361fa38b9d809",
     "tests/test_li_v3_notebook_methods_review.py": "81e36eba1e7fd7c75b63ac04cc19ec00893520e37e71f944525eafaf7492dfc1",
     "tests/test_li_v3_readiness.py": "f961582942c7e1964ef2b1b462d81520278a85c17a459be24c099c95ef9654a3",
-    "tests/test_li_v3_readiness_production.py": "809c0126ef9f130fad264ef2617f67b9b99db103a3a14c476a6e60bfb4905470",
+    "tests/test_li_v3_readiness_production.py": "a38e2d7c0cfdc0fd0ef122795f12e97d1b9ba1cd263495356b5e3f79b7325503",
     "tests/test_li_v3_readiness_production_review.py": "2f2295d0f04fbc0f3399f904eed757e8a6c0f713a13cf9bb13850c52ea1e91e0",
     "tests/test_li_v3_readiness_review.py": "dda4d354ff55f09d4542105df7c7180097ad187477b4c03743bafd95a527a34b",
     "tests/test_li_v3_zip_diagnostic.py": "d94c59c55aebb793d7285c3ac748f2f0ad76770346d6a14cff2e53aeaace3c77",

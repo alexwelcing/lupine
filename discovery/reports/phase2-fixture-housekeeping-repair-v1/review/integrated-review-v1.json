@@ -1,0 +1,47 @@
+{
+  "artifacts": {
+    "ast-inspection-first-error.txt": {
+      "bytes": 280,
+      "sha256": "e7347943a6d941bc1f74aed9548016080f67d94b5f00f1feef6a6af6d06c5ec9"
+    },
+    "cleanup-failure-control.json": {
+      "bytes": 865,
+      "sha256": "9bd54640dcb7784420a5cd61b34ca6b002874905c48090a62f48f80d9d8ed635"
+    },
+    "cleanup-failure-control.stderr": {
+      "bytes": 1916,
+      "sha256": "f42dddbece2f73b941b7240b4c7f22d4915c4a4675e97ac328d9266d90ee59bf"
+    },
+    "cleanup_failure_control.py": {
+      "bytes": 3581,
+      "sha256": "381dd1b135bc57c5893d00a69fabf6fd990c4b5967ca53d882dc45c4dde19cb0"
+    },
+    "test_li_v3_readiness_production.before.py": {
+      "bytes": 46051,
+      "sha256": "809c0126ef9f130fad264ef2617f67b9b99db103a3a14c476a6e60bfb4905470"
+    }
+  },
+  "checks": {
+    "all_preexisting_ast_unchanged_except_fixture_git_helper": true,
+    "command_scoped_maintenance_and_gc_override_inherited_config": true,
+    "forced_cleanup_failure_reported_as_error": true,
+    "new_regression_requires_nonempty_trace_and_rejects_housekeeping_child_start": true,
+    "original_helper_regression_actually_failed_as_recorded_by_root": true,
+    "runtime_or_scientific_source_changed_by_this_review": false,
+    "strict_temporary_directory_cleanup_unchanged": true
+  },
+  "limitations": [
+    "Original CI cleanup writer was not identified directly.",
+    "Focused original-module success did not reproduce the literal cleanup race.",
+    "The maintenance regression establishes absence of the observed automatic maintenance launch, not an end-to-end guarantee against arbitrary external filesystem writers."
+  ],
+  "observed_root_regression_evidence": {
+    "regression-original-helper.json": "5c6b3af61307a5b4d5be0f27632ff106002f767716b2848c8dcd4986a89af4a4",
+    "regression-original-helper.stderr": "ae714c08e664701a5c46c2aff82b2defe9bf0bef5b15a41df510437f6b106fee"
+  },
+  "original_source_sha256": "809c0126ef9f130fad264ef2617f67b9b99db103a3a14c476a6e60bfb4905470",
+  "schema": "lupine.ci_fixture_integrated_review.v1",
+  "scope": "Fixture-only source review, preserved original-helper regression evidence, and extracted cleanup negative control; no product test rerun.",
+  "source_sha256": "a38e2d7c0cfdc0fd0ef122795f12e97d1b9ba1cd263495356b5e3f79b7325503",
+  "status": "NO_BLOCKER_IN_REVIEWED_DELTA"
+}

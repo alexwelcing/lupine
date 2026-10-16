@@ -1,0 +1,27 @@
+{
+  "trace_sha256": "434974995d22642cf7ff80593e3e43e652bda22592244ac40488b461130f740e",
+  "trace_bytes": 10771231,
+  "maintenance_launches": 121,
+  "all_detached": true,
+  "first_launch": {
+    "event": "child_start",
+    "sid": "20261016T181307.833807Z-H0ae73f95-P0001f1fa",
+    "thread": "main",
+    "time": "2026-10-16T18:13:07.838246Z",
+    "file": "run-command.c",
+    "line": 740,
+    "child_id": 0,
+    "child_class": "?",
+    "use_shell": false,
+    "argv": [
+      "git",
+      "maintenance",
+      "run",
+      "--auto",
+      "--quiet",
+      "--detach"
+    ]
+  },
+  "original_cleanup_race_reproduced": false,
+  "original_ci_writer_identified": false
+}

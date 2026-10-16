@@ -1,0 +1,7 @@
+{
+  "first_publication_precheck": "FAILED git diff --cached --check exit2",
+  "cause": "Official log excerpt contains two timestamp-only lines ending in spaces",
+  "resolution": "Lossless JSON text wrapper preserves original excerpt SHA and decoded text; source log unchanged",
+  "product_source_changed": false,
+  "tests_repeated": false
+}
