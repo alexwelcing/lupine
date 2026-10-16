@@ -1,0 +1,67 @@
+{
+  "schema": "lupine.li-reference-identity-independent-review.v1",
+  "completed_at": "2026-10-16T09:19:26.381234+00:00",
+  "owner": "/root/phase2_evidence/author_methods_review",
+  "status": "PASS_DOCUMENTARY_IDENTITY_AND_SCOPE_REVIEW",
+  "reviewed_readme_sha256": "f564c79b7b731191fbb8bc58669dbc6a1897bc22e57db3b59d09b737c60555ae",
+  "reviewed_bindings_sha256": "611a033ab0ae45e628f64252e83b5042e47f1afcc7f03fbe24fb3efa5f0525da",
+  "blocking_findings": [],
+  "actual_checks": {
+    "bound_artifact_identities": 17,
+    "pre_request_scope_chronologies": 2,
+    "metadata_response_receipt_matches": 2,
+    "registry_projections_checked_against_retained_bodies": 2,
+    "independent_xml_projection_matches_parent": true,
+    "local_readme_links_resolve": 3,
+    "automatic_corrections_or_merges": false
+  },
+  "findings": [
+    {
+      "topic": "Repeated printed DOI",
+      "conclusion": "Independent XML bibliography extraction confirms CR49 and CR50 print the same uppercase ASTM DOI but name different works. Neither contains a typed DOI pub-id; CR50 ext-link href contains the entire bibliographic string. Preserve those source literals and do not follow or repair the malformed href automatically."
+    },
+    {
+      "topic": "Exact DOI metadata",
+      "conclusion": "Retained Crossref metadata has the Gussev chapter title and five author surnames in the same order as CR49, while its 2014 date fields and pages 1-19 differ from the citation's 2015 and 31-49. That supports core bibliographic agreement only. It conflicts with CR50 author/title/year and cannot serve as a unique key joining both references."
+    },
+    {
+      "topic": "Klueh candidate query",
+      "conclusion": "A separately scoped single query returned three records. Two share the Klueh title, 1985, volume 2 and 407-416 pages; one also matches issue 3 and the expanded Nuclear Engineering and Design. Fusion container. The second has a different container and no issue in returned selected fields. The third has a different JOM title. The report correctly keeps two candidate DOI nodes without alias, correction, duplicate-publication or distinct-measurement-source inference."
+    },
+    {
+      "topic": "Citation roles and range",
+      "conclusion": "Independent Table 2 citation-only extraction matches all parent cells. CR5 to CR60 and CR69 to CR70 occur in distinct Data Source/Dataset columns; CR74 points to literal 75\u201386 with explicit XML endpoints CR75 and CR86. The range remains unexpanded. Experimental data labels contain no specimen/test/heat identity. These are documentary edges, not verified overlap, measurement joins or independent-unit counts."
+    },
+    {
+      "topic": "Acquisition scope and correction",
+      "conclusion": "Each frozen scope predates its corresponding recorded GET; URLs/final URLs, HTTP 200 statuses, byte counts and hashes agree with exact retained bodies. Candidate scope references the prior exact response. The initial author projection is retained; only author fields were narrowed to given/family/sequence, with prior public affiliation/role exposure explicitly acknowledged."
+    },
+    {
+      "topic": "Source terms and scientific limits",
+      "conclusion": "The original paraphrase/bibliographic-fact report attributes the Li article, retains its distinct CC BY-NC-ND 4.0 scope, and does not transfer registry metadata availability into full-text access rights. No actual archive References worksheet join, sample lineage, overlap or independence is established. G20 unresolved, G21 blocked and prior scientific NO-GO results are not displaced."
+    }
+  ],
+  "exposure": {
+    "article": "Reviewer read and parsed the complete already-retained 143727-byte XML, SHA256 c7e527712991ce14fb233b57a7e1f5f2dc26e6728835df03510cd6c588146534, more than once while selecting and checking citation projection. Complete article text and tables were machine accessible. This is not target-free or untouched blind evidence.",
+    "researcher_visible_projection": "CR49/CR50 bibliography, table IDs/labels/header labels and Table 2 Data Source/Dataset citation cells only. No record-count/material/performance cell values or substantive article prose were projected through XML. Public prior paper-audit README already discloses aggregate counts/material/geometry exposure.",
+    "metadata": "Both complete retained Crossref JSON bodies were locally parsed; selected citation fields were reviewed. The prior wider author projection was checked locally and remains disclosed as an earlier incidental exposure. No linked cited-paper/full-text or measurement object was requested by this reviewer."
+  },
+  "actual_review_work": {
+    "network_requests": 0,
+    "linked_content_requests": 0,
+    "endpoint_table_projection": false,
+    "workbook_or_private_custody_reads": false,
+    "product_imports_or_tests": false,
+    "scientific_evaluation": false,
+    "lean_compilation": false,
+    "tracked_edits": false,
+    "git_mutation": false,
+    "performed": "Read/hash/JSON consistency checks, independently written ElementTree bibliography/table-citation projection, and documentary claim review."
+  },
+  "limits": [
+    "Receipts and retained metadata support the recorded request/identity observations; this reviewer did not independently perform network acquisition.",
+    "No complete scholarly bibliography correction, DOI alias adjudication, article edition reconciliation, archive row identity or empirical overlap verification was attempted.",
+    "Hashes identify retained artifacts; they do not establish bibliographic infallibility, physical truth, statistical independence or superiority.",
+    "The extraction checks are documentary consistency checks, not product or scientific test passes."
+  ]
+}

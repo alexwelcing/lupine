@@ -1,0 +1,83 @@
+{
+  "schema": "lupine.reference-identity-review-publication-map.v1",
+  "originals": [
+    {
+      "original_path": ".cache/phase2-li-reference-identity-review-v1/scope.json",
+      "published_path": "reports/phase2-li-reference-identity-v1/independent-review/scope.json",
+      "bytes": 2158,
+      "sha256": "e977cb847dff5018c6c296bf3c27588d3be79058b904b8c368278952f1d8585a",
+      "transformation": "none"
+    },
+    {
+      "original_path": ".cache/phase2-li-reference-identity-review-v1/scope-addendum.json",
+      "published_path": "reports/phase2-li-reference-identity-v1/independent-review/scope-addendum.json",
+      "bytes": 1251,
+      "sha256": "b360426ba88711be6df80e28d92a963e43859f77a3dc16145480e8e09fee7ae8",
+      "transformation": "none"
+    },
+    {
+      "original_path": ".cache/phase2-li-reference-identity-review-v1/xml-exposure-before-read.json",
+      "published_path": "reports/phase2-li-reference-identity-v1/independent-review/xml-exposure-before-read.json",
+      "bytes": 504,
+      "sha256": "4b93799d196892dcb06af6005948067960ca74f220e963e3d423c49707e1041a",
+      "transformation": "none"
+    },
+    {
+      "original_path": ".cache/phase2-li-reference-identity-review-v1/xml-exposure-read-complete.json",
+      "published_path": "reports/phase2-li-reference-identity-v1/independent-review/xml-exposure-read-complete.json",
+      "bytes": 388,
+      "sha256": "907198f3926360b1e49030e983fad3fdeb094a22cce773c6c97a8d4bbcb5b51d",
+      "transformation": "none"
+    },
+    {
+      "original_path": ".cache/phase2-li-reference-identity-review-v1/checks.json",
+      "published_path": "reports/phase2-li-reference-identity-v1/independent-review/checks.json",
+      "bytes": 5721,
+      "sha256": "04b9537182549a4fe90699024e139fb945318b51105f6b7548151590f5372681",
+      "transformation": "none"
+    },
+    {
+      "original_path": ".cache/phase2-li-reference-identity-review-v1/independent-citation-projection.json",
+      "published_path": "reports/phase2-li-reference-identity-v1/independent-review/independent-citation-projection.json",
+      "bytes": 7763,
+      "sha256": "60425cc4903d45b41a5180ad3b87f1f7b9e1d5fe57e03f0d88f7f11b90164e1f",
+      "transformation": "none"
+    },
+    {
+      "original_path": ".cache/phase2-li-reference-identity-review-v1/review.json",
+      "published_path": "reports/phase2-li-reference-identity-v1/independent-review/review.json",
+      "bytes": 5739,
+      "sha256": "174b36ba25bf058669061c41fa97fab45ce5fab9d93850ca8e5cd5bc426093aa",
+      "transformation": "none"
+    },
+    {
+      "original_path": ".cache/phase2-li-reference-identity-review-v1/source-bindings.json",
+      "published_path": "reports/phase2-li-reference-identity-v1/independent-review/source-bindings.json",
+      "bytes": 2055,
+      "sha256": "dee9bb841357a667385dd949d12e119ac80cba84990fd807b40e39c87fa6bc8d",
+      "transformation": "none"
+    },
+    {
+      "original_path": ".cache/phase2-li-reference-identity-review-v1/publication-check-initial.json",
+      "published_path": "reports/phase2-li-reference-identity-v1/independent-review/publication-check-initial.json",
+      "bytes": 7988,
+      "sha256": "d218271bae1a4578652ce8d0be66caada359e69c04334e83c06f4276034438f8",
+      "transformation": "none"
+    },
+    {
+      "original_path": ".cache/phase2-li-reference-identity-review-v1/publication-map-before-completeness-clarification.json",
+      "published_path": "reports/phase2-li-reference-identity-v1/independent-review/publication-map-before-completeness-clarification.json",
+      "bytes": 5667,
+      "sha256": "54aadfe4c94976533fa8d19cb9e340a5cc96a63966fd486ad6aa933e9322a471",
+      "transformation": "none"
+    },
+    {
+      "original_path": ".cache/phase2-li-reference-identity-review-v1/publication-addendum.json",
+      "published_path": "reports/phase2-li-reference-identity-v1/independent-review/publication-addendum.json",
+      "bytes": 6171,
+      "sha256": "dfd69fce4ed6705ddee6271836a26d03465206e7035929185d8a5c28d5396f99",
+      "transformation": "none"
+    }
+  ],
+  "raw_article_or_registry_bodies_copied": false
+}

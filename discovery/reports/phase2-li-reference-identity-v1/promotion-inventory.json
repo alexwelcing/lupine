@@ -1,0 +1,163 @@
+{
+  "schema": "lupine.reference-identity-promotion-inventory.v1",
+  "created_at": "2026-10-16T09:26:22.708329+00:00",
+  "promotion_root": ".cache/phase2-li-reference-identity-v1/promotion",
+  "files": [
+    {
+      "published_path": "reports/phase2-li-reference-identity-v1/PUBLICATION.md",
+      "bytes": 3336,
+      "sha256": "8a79ced09f48756a94ec3c217e75afd1953128fd5430c7578d2f703eef94b710"
+    },
+    {
+      "published_path": "reports/phase2-li-reference-identity-v1/README.md",
+      "bytes": 7621,
+      "sha256": "f564c79b7b731191fbb8bc58669dbc6a1897bc22e57db3b59d09b737c60555ae"
+    },
+    {
+      "published_path": "reports/phase2-li-reference-identity-v1/article-citation-projection.json",
+      "bytes": 7786,
+      "sha256": "37a0821bd225f85e453a8b195eaaf0bda871f93502aff4ea76c797a94c0e94a2"
+    },
+    {
+      "published_path": "reports/phase2-li-reference-identity-v1/artifact-check.json",
+      "bytes": 999,
+      "sha256": "4dfec1f84b7ba506d5cbc21e423fcd54ada5c50d1695008d599249f8acb164e7"
+    },
+    {
+      "published_path": "reports/phase2-li-reference-identity-v1/candidate-citation-projection.json",
+      "bytes": 2165,
+      "sha256": "1838d3da41834c8ace7eaf9aba838f7c6d35b1581e32600a9a19f113aaf91394"
+    },
+    {
+      "published_path": "reports/phase2-li-reference-identity-v1/candidate-query-receipt.json",
+      "bytes": 1247,
+      "sha256": "3dc2aca14c55c05dbdc296ce9d84a7c9576f04ace128ed851e8210424f0b0f61"
+    },
+    {
+      "published_path": "reports/phase2-li-reference-identity-v1/candidate-query-scope.json",
+      "bytes": 1749,
+      "sha256": "b0f0e2a0ada2fdd5b11904be5ce83c3c0fd4718de7ffe97c3354e15ae52d7dff"
+    },
+    {
+      "published_path": "reports/phase2-li-reference-identity-v1/citation-map.json",
+      "bytes": 3461,
+      "sha256": "7ed2ef187e9c08d58b253581cf806d75abd23e1fb08eb3cf4b18cdeb4614716c"
+    },
+    {
+      "published_path": "reports/phase2-li-reference-identity-v1/crossref-citation-projection.json",
+      "bytes": 1415,
+      "sha256": "43a3555be3a4a9ac988720bfe8f7b2bc8c045e38ddc50ced7d3a8f1c060eb4f9"
+    },
+    {
+      "published_path": "reports/phase2-li-reference-identity-v1/crossref-projection-before-author-field-narrowing.json",
+      "bytes": 2592,
+      "sha256": "f263393944265ad5c96e16a7a2c3ce1f5be3e897a9d86a6e79b11f7be1272857"
+    },
+    {
+      "published_path": "reports/phase2-li-reference-identity-v1/crossref-receipt.json",
+      "bytes": 673,
+      "sha256": "f6f498d24eb0f27fa472023f6d3d2587b3b46d9120383b5d21f3cb4b8b6a0065"
+    },
+    {
+      "published_path": "reports/phase2-li-reference-identity-v1/independent-review/checks.json",
+      "bytes": 5721,
+      "sha256": "04b9537182549a4fe90699024e139fb945318b51105f6b7548151590f5372681"
+    },
+    {
+      "published_path": "reports/phase2-li-reference-identity-v1/independent-review/independent-citation-projection.json",
+      "bytes": 7763,
+      "sha256": "60425cc4903d45b41a5180ad3b87f1f7b9e1d5fe57e03f0d88f7f11b90164e1f"
+    },
+    {
+      "published_path": "reports/phase2-li-reference-identity-v1/independent-review/publication-addendum.json",
+      "bytes": 6171,
+      "sha256": "dfd69fce4ed6705ddee6271836a26d03465206e7035929185d8a5c28d5396f99"
+    },
+    {
+      "published_path": "reports/phase2-li-reference-identity-v1/independent-review/publication-check-initial.json",
+      "bytes": 7988,
+      "sha256": "d218271bae1a4578652ce8d0be66caada359e69c04334e83c06f4276034438f8"
+    },
+    {
+      "published_path": "reports/phase2-li-reference-identity-v1/independent-review/publication-map-before-completeness-clarification.json",
+      "bytes": 5667,
+      "sha256": "54aadfe4c94976533fa8d19cb9e340a5cc96a63966fd486ad6aa933e9322a471"
+    },
+    {
+      "published_path": "reports/phase2-li-reference-identity-v1/independent-review/review.json",
+      "bytes": 5739,
+      "sha256": "174b36ba25bf058669061c41fa97fab45ce5fab9d93850ca8e5cd5bc426093aa"
+    },
+    {
+      "published_path": "reports/phase2-li-reference-identity-v1/independent-review/scope-addendum.json",
+      "bytes": 1251,
+      "sha256": "b360426ba88711be6df80e28d92a963e43859f77a3dc16145480e8e09fee7ae8"
+    },
+    {
+      "published_path": "reports/phase2-li-reference-identity-v1/independent-review/scope.json",
+      "bytes": 2158,
+      "sha256": "e977cb847dff5018c6c296bf3c27588d3be79058b904b8c368278952f1d8585a"
+    },
+    {
+      "published_path": "reports/phase2-li-reference-identity-v1/independent-review/source-bindings.json",
+      "bytes": 2055,
+      "sha256": "dee9bb841357a667385dd949d12e119ac80cba84990fd807b40e39c87fa6bc8d"
+    },
+    {
+      "published_path": "reports/phase2-li-reference-identity-v1/independent-review/xml-exposure-before-read.json",
+      "bytes": 504,
+      "sha256": "4b93799d196892dcb06af6005948067960ca74f220e963e3d423c49707e1041a"
+    },
+    {
+      "published_path": "reports/phase2-li-reference-identity-v1/independent-review/xml-exposure-read-complete.json",
+      "bytes": 388,
+      "sha256": "907198f3926360b1e49030e983fad3fdeb094a22cce773c6c97a8d4bbcb5b51d"
+    },
+    {
+      "published_path": "reports/phase2-li-reference-identity-v1/independent-review-publication-map.json",
+      "bytes": 4090,
+      "sha256": "10039a7b8359e3466d7bbabe2be647a2aeca30eeebb7c98b584ad2fe9cde8242"
+    },
+    {
+      "published_path": "reports/phase2-li-reference-identity-v1/projection-correction.json",
+      "bytes": 733,
+      "sha256": "e50e6d4cd4d1b10d0c7a1b57e3f0c7a97e99828c694ed8caaedf2ec04c7eca89"
+    },
+    {
+      "published_path": "reports/phase2-li-reference-identity-v1/publication-checks.json",
+      "bytes": 4116,
+      "sha256": "6887de7fc9b06947653ada8ce6db9caf1ebf2f4485f7a537038500cff2b801b3"
+    },
+    {
+      "published_path": "reports/phase2-li-reference-identity-v1/publication-map.json",
+      "bytes": 7572,
+      "sha256": "2dbf9f6f8ebab99e7845f0eba5f836c02bd1c5da57d84fcfb9c762f49f886dcc"
+    },
+    {
+      "published_path": "reports/phase2-li-reference-identity-v1/scope.json",
+      "bytes": 2675,
+      "sha256": "9dc7286011a9ab08a16e96b8f0c86d2379c8b79e6e9d38a8bbb940ada2c3532f"
+    },
+    {
+      "published_path": "reports/phase2-li-reference-identity-v1/source-bindings.json",
+      "bytes": 4198,
+      "sha256": "611a033ab0ae45e628f64252e83b5042e47f1afcc7f03fbe24fb3efa5f0525da"
+    }
+  ],
+  "file_count": 28,
+  "total_bytes": 101833,
+  "exact_original_copies": 24,
+  "raw_article_or_registry_bodies_included": false,
+  "source_review": {
+    "bytes": 5739,
+    "sha256": "174b36ba25bf058669061c41fa97fab45ce5fab9d93850ca8e5cd5bc426093aa"
+  },
+  "publication_review": {
+    "bytes": 6171,
+    "sha256": "dfd69fce4ed6705ddee6271836a26d03465206e7035929185d8a5c28d5396f99"
+  },
+  "checks": {
+    "bytes": 4116,
+    "sha256": "6887de7fc9b06947653ada8ce6db9caf1ebf2f4485f7a537038500cff2b801b3"
+  }
+}

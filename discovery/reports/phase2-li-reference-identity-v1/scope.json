@@ -1,0 +1,51 @@
+{
+  "schema": "lupine.li-reference-identity-scope.v1",
+  "frozen_at": "2026-10-16T09:09:55.428519+00:00",
+  "objective": "Resolve documentary identity of the DOI string shared by CR49 and CR50; preserve source-vs-dataset citation graph and unresolved joins without merging measurements.",
+  "allowed_local_inputs": [
+    "reports/phase2-li-paper-methods-v1/README.md",
+    "reports/phase2-li-paper-methods-v1/PUBLICATION.md",
+    ".cache/phase2-li-paper-methods-v1/receipt.json",
+    ".cache/phase2-li-paper-methods-v1/article.xml",
+    ".cache/phase2-li-paper-methods-v1/reference-roster.json"
+  ],
+  "xml_projection": "Parse the already-retained whole article XML locally; disclose bibliography nodes CR49/CR50 and citation metadata only. From Table2, disclose only Data Source/Dataset cell bibliographic labels/xref IDs and citation-range punctuation; do not project material/count/performance columns or any other table.",
+  "machine_exposure": "Whole existing article XML bytes and complete XML parse may include outcomes/tables despite the narrowed researcher projection. This re-read is not target-free or an untouched blind validation. The earlier acquisition exposed the full article to the machine.",
+  "network_allowlist": [
+    {
+      "method": "GET",
+      "url": "https://api.crossref.org/works/10.1520/STP157620140013",
+      "purpose": "Exact cited DOI registry metadata identity only",
+      "max_body_bytes": 1048576,
+      "redirects_allowed": false,
+      "retries": 0
+    }
+  ],
+  "permitted_network_projection": [
+    "DOI",
+    "title",
+    "author names",
+    "container-title",
+    "publisher",
+    "type",
+    "volume",
+    "issue",
+    "page",
+    "published/issued/created dates",
+    "URL",
+    "license declarations if returned"
+  ],
+  "network_response_exposure": "Registry response may contain an abstract/reference metadata beyond selected fields; retain its full bounded response but print only the declared selected citation fields. No link in it may be followed automatically.",
+  "further_queries": "None preauthorized by this scope. Any additional bounded metadata query requires a separate written justification/scope before access; no cited full papers/paywalls or measurement files.",
+  "prohibited": [
+    "full cited article requests",
+    "measurement/archive/workbook/curve/endpoint-table reads",
+    "automatic DOI correction",
+    "fuzzy merging",
+    "dataset or independent-group count",
+    "measurement overlap inference from documentary citation alone",
+    "new scientific endpoint/model/threshold/protocol/fit",
+    "tracked edits or Git mutation"
+  ],
+  "result_status_before_query": "UNRESOLVED_REFERENCE_COLLISION"
+}

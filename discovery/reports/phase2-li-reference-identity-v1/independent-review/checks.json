@@ -1,0 +1,145 @@
+{
+  "checked_at": "2026-10-16T09:18:12.297492+00:00",
+  "bound_files": [
+    {
+      "path": "reports/phase2-li-paper-methods-v1/README.md",
+      "bytes": 7423,
+      "sha256": "b168331d3198c97b6cdf45d67b505b4ddf88acf60ab6b556e4b35798b5a3eb10",
+      "matches": true
+    },
+    {
+      "path": "reports/phase2-li-paper-methods-v1/PUBLICATION.md",
+      "bytes": 1257,
+      "sha256": "a40ba3149b3e91a8f68e6360246e0373a28d331ef1bbfa644530343ef864801c",
+      "matches": true
+    },
+    {
+      "path": ".cache/phase2-li-paper-methods-v1/receipt.json",
+      "bytes": 472,
+      "sha256": "0f571d9fa2a988ba664f04b001c8c6399e77a332c8437cc91762e07c0f002d69",
+      "matches": true
+    },
+    {
+      "path": ".cache/phase2-li-paper-methods-v1/article.xml",
+      "bytes": 143727,
+      "sha256": "c7e527712991ce14fb233b57a7e1f5f2dc26e6728835df03510cd6c588146534",
+      "matches": true
+    },
+    {
+      "path": ".cache/phase2-li-paper-methods-v1/reference-roster.json",
+      "bytes": 8292,
+      "sha256": "c4d25b0bcd1053e25783bd10614d4adfa8bf5490edabdd2811147dc0442cc334",
+      "matches": true
+    },
+    {
+      "path": ".cache/phase2-li-reference-identity-v1/article-citation-projection.json",
+      "bytes": 7786,
+      "sha256": "37a0821bd225f85e453a8b195eaaf0bda871f93502aff4ea76c797a94c0e94a2",
+      "matches": true
+    },
+    {
+      "path": ".cache/phase2-li-reference-identity-v1/candidate-citation-projection.json",
+      "bytes": 2165,
+      "sha256": "1838d3da41834c8ace7eaf9aba838f7c6d35b1581e32600a9a19f113aaf91394",
+      "matches": true
+    },
+    {
+      "path": ".cache/phase2-li-reference-identity-v1/candidate-query-receipt.json",
+      "bytes": 1247,
+      "sha256": "3dc2aca14c55c05dbdc296ce9d84a7c9576f04ace128ed851e8210424f0b0f61",
+      "matches": true
+    },
+    {
+      "path": ".cache/phase2-li-reference-identity-v1/candidate-query-response.json",
+      "bytes": 1744,
+      "sha256": "1bb5ff13a349222477d42e7e2a2e1d27ad238d516ba03e56c07d253916cbf07c",
+      "matches": true
+    },
+    {
+      "path": ".cache/phase2-li-reference-identity-v1/candidate-query-scope.json",
+      "bytes": 1749,
+      "sha256": "b0f0e2a0ada2fdd5b11904be5ce83c3c0fd4718de7ffe97c3354e15ae52d7dff",
+      "matches": true
+    },
+    {
+      "path": ".cache/phase2-li-reference-identity-v1/citation-map.json",
+      "bytes": 3461,
+      "sha256": "7ed2ef187e9c08d58b253581cf806d75abd23e1fb08eb3cf4b18cdeb4614716c",
+      "matches": true
+    },
+    {
+      "path": ".cache/phase2-li-reference-identity-v1/crossref-citation-projection.json",
+      "bytes": 1415,
+      "sha256": "43a3555be3a4a9ac988720bfe8f7b2bc8c045e38ddc50ced7d3a8f1c060eb4f9",
+      "matches": true
+    },
+    {
+      "path": ".cache/phase2-li-reference-identity-v1/crossref-projection-before-author-field-narrowing.json",
+      "bytes": 2592,
+      "sha256": "f263393944265ad5c96e16a7a2c3ce1f5be3e897a9d86a6e79b11f7be1272857",
+      "matches": true
+    },
+    {
+      "path": ".cache/phase2-li-reference-identity-v1/crossref-receipt.json",
+      "bytes": 673,
+      "sha256": "f6f498d24eb0f27fa472023f6d3d2587b3b46d9120383b5d21f3cb4b8b6a0065",
+      "matches": true
+    },
+    {
+      "path": ".cache/phase2-li-reference-identity-v1/crossref-response.json",
+      "bytes": 12819,
+      "sha256": "a3d83af7737c0ac38db0bf08b14a9dd81c140492001b022403b48633dabcee12",
+      "matches": true
+    },
+    {
+      "path": ".cache/phase2-li-reference-identity-v1/projection-correction.json",
+      "bytes": 733,
+      "sha256": "e50e6d4cd4d1b10d0c7a1b57e3f0c7a97e99828c694ed8caaedf2ec04c7eca89",
+      "matches": true
+    },
+    {
+      "path": ".cache/phase2-li-reference-identity-v1/scope.json",
+      "bytes": 2675,
+      "sha256": "9dc7286011a9ab08a16e96b8f0c86d2379c8b79e6e9d38a8bbb940ada2c3532f",
+      "matches": true
+    }
+  ],
+  "requests": [
+    {
+      "scope_frozen_at": "2026-10-16T09:09:55.428519+00:00",
+      "request_started_at": "2026-10-16T09:10:26.562910+00:00",
+      "request_finished_at": "2026-10-16T09:10:27.054516+00:00",
+      "url": "https://api.crossref.org/works/10.1520/STP157620140013",
+      "retained_body_matches_receipt": true,
+      "pre_request_scope_confirmed": true
+    },
+    {
+      "scope_frozen_at": "2026-10-16T09:12:18.497302+00:00",
+      "request_started_at": "2026-10-16T09:12:45.552205+00:00",
+      "request_finished_at": "2026-10-16T09:12:46.260373+00:00",
+      "url": "https://api.crossref.org/works?query.title=Miniature+tensile+test+specimens+for+fusion+reactor+irradiation+studies&query.author=Klueh&filter=from-pub-date%3A1985-01-01%2Cuntil-pub-date%3A1985-12-31&rows=3&select=DOI%2Ctitle%2Cauthor%2Ccontainer-title%2Cvolume%2Cissue%2Cpage%2Cpublished%2Cpublisher%2Ctype%2CURL",
+      "retained_body_matches_receipt": true,
+      "pre_request_scope_confirmed": true
+    }
+  ],
+  "registry_projection_matches_retained_metadata": true,
+  "old_projection_preserved_and_only_author_fields_narrowed": true,
+  "independent_xml_citation_projection_matches_parent": true,
+  "xml_reviewer_exposure": "Exact full article bytes hashed/read and parsed locally repeatedly; all article content was machine accessible. Only approved bibliography/table-citation columns plus table labels/header labels were projected. No claim of fresh/blind or target-free evidence.",
+  "unexpanded_graph_edges_confirmed": true,
+  "local_readme_links": [
+    {
+      "href": "citation-map.json",
+      "exists": true
+    },
+    {
+      "href": "scope.json",
+      "exists": true
+    },
+    {
+      "href": "candidate-query-scope.json",
+      "exists": true
+    }
+  ],
+  "actual_work": "Read/hash/JSON/ET projection and consistency checks only. No network, linked bodies, product imports/tests, tracked writes or Git mutation."
+}

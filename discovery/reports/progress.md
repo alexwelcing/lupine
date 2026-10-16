@@ -1532,9 +1532,36 @@ unchanged. The old automation remains disabled.
 
 Publication follow-up: the staged whitespace check failed on an extra final
 newline in the independent test and three historical snapshots. Root preserved
-all original bytes, removed only that byte from the production test and wrapped
+all original bytes, removed only two trailing LF bytes from the production test and wrapped
 historical snapshots losslessly. The exact final-source combined rerun at
 09:24:44–09:24:47Z passed 248 tests in 3.232 unittest / 3.755 process seconds,
 exit 0, with all 326 runtime files held and all 323 predecessor files unchanged.
 No implementation or assertion was modified. The earlier successful run and
 failed publication check remain recorded.
+
+The initial source publication `b42bd9a` verified on the remote at 09:26:10Z.
+Independent byte review then identified an error in root's formatting narrative:
+two trailing LF bytes were removed, from 40,327 to 40,325 bytes, not one.
+The exact before/after hashes and final passing execution were already correct.
+This additive report correction preserves the original words and records the
+actual byte count; it changes no runtime or test assertion. No package or
+actual source operation had started at the erroneous narrative checkpoint.
+
+## 2026-10-16 — Li documentary citation identities audited
+
+The [citation audit](phase2-li-reference-identity-v1/PUBLICATION.md) completed
+two separately scoped Crossref metadata requests and an independent source
+review, with no cited full article or measurement-file access. The ASTM DOI
+printed for both CR49 and CR50 supports the Gussev chapter's core author/title
+identity but conflicts with Klueh; even Gussev year/pages differ. A bounded
+follow-up returns two Klueh registry candidates. Neither is substituted or
+merged. Explicit Data Source/Dataset graph edges retain their distinct roles
+and do not establish measurement reuse or independent-unit counts.
+
+Whole already-retained Li XML was machine-parsed; bibliographic projection
+was narrower. The first public-affiliation overprojection and its correction
+are retained. Raw article and Crossref bodies are not republished. G20 still
+needs actual version-bound reference joins and specimen/heat/batch/test lineage;
+G21 remains blocked, with no new model, threshold, allocation, split or fit.
+Root owns the next verified fixed structural diagnostic and source-admission
+checkpoint; automation remains disabled.

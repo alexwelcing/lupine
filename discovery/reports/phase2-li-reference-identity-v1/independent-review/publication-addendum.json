@@ -1,0 +1,151 @@
+{
+  "schema": "lupine.li-reference-identity-publication-review-addendum.v1",
+  "completed_at": "2026-10-16T09:25:24.156247+00:00",
+  "owner": "/root/phase2_evidence/author_methods_review",
+  "result": "PASS_SELECTED_PUBLICATION_MAPPING_SCOPE_AND_LINKS",
+  "source_review_unchanged": {
+    "path": "review.json",
+    "sha256": "174b36ba25bf058669061c41fa97fab45ce5fab9d93850ca8e5cd5bc426093aa"
+  },
+  "held_page_and_map": [
+    {
+      "path": ".cache/phase2-li-reference-identity-v1/promotion/reports/phase2-li-reference-identity-v1/PUBLICATION.md",
+      "bytes": 3336,
+      "sha256": "8a79ced09f48756a94ec3c217e75afd1953128fd5430c7578d2f703eef94b710"
+    },
+    {
+      "path": ".cache/phase2-li-reference-identity-v1/promotion/reports/phase2-li-reference-identity-v1/publication-map.json",
+      "bytes": 7572,
+      "sha256": "2dbf9f6f8ebab99e7845f0eba5f836c02bd1c5da57d84fcfb9c762f49f886dcc"
+    },
+    {
+      "path": ".cache/phase2-li-reference-identity-v1/promotion/reports/phase2-li-reference-identity-v1/independent-review-publication-map.json",
+      "bytes": 3731,
+      "sha256": "8097d69a271069f0e0ed9ba97f965788e25594ba43541e7f9aab0957f08fc4b2"
+    }
+  ],
+  "exact_copy_checks": {
+    "source_originals": 13,
+    "review_originals_before_addendum": 10,
+    "already_public_inputs": 3,
+    "all_parent_bound_inputs_mapped_or_explicitly_omitted": 17,
+    "wrappers_or_transformations": 0
+  },
+  "omissions": {
+    "count": 4,
+    "paths": [
+      ".cache/phase2-li-paper-methods-v1/article.xml",
+      ".cache/phase2-li-reference-identity-v1/crossref-response.json",
+      ".cache/phase2-li-reference-identity-v1/candidate-query-response.json",
+      ".cache/phase2-li-paper-methods-v1/reference-roster.json"
+    ],
+    "identities_match_original_bindings": true,
+    "none_present_as_full_body_in_26_file_snapshot": true,
+    "explanation": "Full article XML, complete prior reference roster and both raw registry JSON bodies are explicitly omitted. Historical body_retained refers to ignored acquisition; public selected projections remain available."
+  },
+  "links": [
+    {
+      "from": "reports/phase2-li-reference-identity-v1/README.md",
+      "href": "citation-map.json",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-li-reference-identity-v1/README.md",
+      "href": "scope.json",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-li-reference-identity-v1/README.md",
+      "href": "candidate-query-scope.json",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-li-reference-identity-v1/PUBLICATION.md",
+      "href": "README.md",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-li-reference-identity-v1/PUBLICATION.md",
+      "href": "citation-map.json",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-li-reference-identity-v1/PUBLICATION.md",
+      "href": "source-bindings.json",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-li-reference-identity-v1/PUBLICATION.md",
+      "href": "scope.json",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-li-reference-identity-v1/PUBLICATION.md",
+      "href": "crossref-receipt.json",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-li-reference-identity-v1/PUBLICATION.md",
+      "href": "candidate-query-scope.json",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-li-reference-identity-v1/PUBLICATION.md",
+      "href": "candidate-query-receipt.json",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-li-reference-identity-v1/PUBLICATION.md",
+      "href": "publication-map.json",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-li-reference-identity-v1/PUBLICATION.md",
+      "href": "crossref-projection-before-author-field-narrowing.json",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-li-reference-identity-v1/PUBLICATION.md",
+      "href": "projection-correction.json",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-li-reference-identity-v1/PUBLICATION.md",
+      "href": "article-citation-projection.json",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-li-reference-identity-v1/PUBLICATION.md",
+      "href": "../phase2-li-paper-methods-v1/README.md",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-li-reference-identity-v1/PUBLICATION.md",
+      "href": "independent-review/review.json",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-li-reference-identity-v1/PUBLICATION.md",
+      "href": "independent-review-publication-map.json",
+      "exists": true
+    },
+    {
+      "from": "reports/phase2-li-reference-identity-v1/PUBLICATION.md",
+      "href": "publication-map.json",
+      "exists": true
+    }
+  ],
+  "local_markdown_link_count": 18,
+  "resolved_initial_finding": {
+    "finding": "Initial map omitted disposition of the earlier ignored paper receipt and reference roster.",
+    "preserved_initial_map_sha256": "54aadfe4c94976533fa8d19cb9e340a5cc96a63966fd486ad6aa933e9322a471",
+    "repair": "Added exact public mapping for existing receipt and public README/PUBLICATION inputs, plus an explicit retained-not-published roster entry. PUBLICATION explains omissions and independent review. All initial 13 original copies unchanged.",
+    "status": "RESOLVED"
+  },
+  "claim_scope": "Current publication page correctly separates printed citations, registry records and candidates; preserves author-overprojection exposure and source conflicts; says whole XML was machine exposed; adds no scientific join, unit count, model/protocol or validation claim. No full article/endpoint table/figure or raw registry body is presented as public in this bundle.",
+  "limitations": [
+    "Checks bind the held page/main map and ten-copy reviewer map before this addendum is appended. The subsequent addendum copy/final packaging inventory remains preparer work.",
+    "No new network/source acquisition, XML projection, product import/test, scientific evaluation, tracked write or Git mutation occurred during this publication addendum.",
+    "Local identity and navigation checks do not certify a pushed commit or CI outcome."
+  ]
+}

@@ -17,8 +17,8 @@ and contract before integration.
 The [first integrated execution](integrated/execution.json) passed 248 tests
 on October 16 at 09:17:51–09:18:00 UTC, 6.381 unittest seconds / 9.057 process
 seconds, with all 326 runtime files held. The later staged whitespace check
-failed on one redundant final newline in the new independent test and its
-historical snapshots. Root removed only that final byte from the production
+failed on two redundant final newline bytes in the new independent test and its
+historical snapshots. Root removed only those final two bytes from the production
 test; its original bytes and the initial check observation remain in the
 [correction record](integrated/format-correction/correction.json). Historical
 snapshots are preserved in lossless UTF-8 JSON wrappers rather than rewritten.

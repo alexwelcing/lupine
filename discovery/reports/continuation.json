@@ -41,11 +41,11 @@
     "recorded_at": "2026-10-16T09:18:55.779536+00:00",
     "owner": "Root G29 integration/publication; independent source, artifact and recorder review",
     "goal_state": "ACTIVE_RENEWED_PHASE",
-    "published_commit": "c294dbe6784325643240feaa1203b5422913619f",
-    "published_ci_run": 38878095295,
+    "published_commit": "b42bd9a94385ad43c3c2ac022584dae6bd135254",
+    "published_ci_run": null,
     "published_ci_all_four_jobs_pass": false,
     "published_evidence": "reports/phase2-notebook-header-verification-v1/README.md",
-    "working_checkpoint": "G29 exact diagnostic and tests integrated; 248 combined Li tests pass,326runtime held. No actual field inspection. c294 report-only CI still in progress when this checkpoint was written.",
+    "working_checkpoint": "Published G29 implementation; final248Li testsPASS326held. Additive report correction records TWO removed trailingLF bytes; citation identity auditcomplete. No package or actualfieldoperationstarted.",
     "actual_new_scientific_allocation_performed": false,
     "scientific_usefulness": "NO_GO unchanged; no new scientific experiment",
     "clean_package": {
@@ -96,7 +96,7 @@
       "notebook_code_executed": false,
       "output_values_disclosed": false
     },
-    "next_action": "Publish G29 implementation and verify exact remote/original CI, retained clean package and independent artifact audit. Only then execute two fixed-source diagnoses and audit receipts. Verify c294 report CI separately. G20 unresolved/G21 blocked.",
+    "next_action": "Verify final corrected report/source commit remote/originalCI and retained cleanpackage/independentartifact audit; then two fixeddiagnoses. Verify original c294 and b42 CI separately. G20 unresolved/G21blocked.",
     "automation_reenabled": false,
     "new_schedule_created": false,
     "continuous_worker_started": false,
@@ -179,9 +179,19 @@
       "final_independent_test_sha256": "570dc7f3cfabb094550b8f1c5fed8f4f801d832dc8003611fc6638a8285a468e",
       "publication_whitespace_failure_preserved": true,
       "final_integrated_unittest_seconds": 3.232,
-      "final_integrated_process_seconds": 3.754553222999675
+      "final_integrated_process_seconds": 3.754553222999675,
+      "format_correction_removed_lf_bytes": 2
     },
-    "published_ci_status": "IN_PROGRESS_LAST_OBSERVED_2026-10-16T09:15:52Z"
+    "published_ci_status": "PENDING_SOURCE_PUBLICATION",
+    "citation_identity": {
+      "status": "DOCUMENTARY_AUDIT_COMPLETE_UNRESOLVED_IDENTITIES",
+      "report": "reports/phase2-li-reference-identity-v1/PUBLICATION.md",
+      "metadata_requests": 2,
+      "automatic_corrections": 0,
+      "automatic_merges": 0,
+      "archive_joins_verified": false,
+      "independent_units": null
+    }
   },
   "closure": {
     "decision": "GO_RESEARCH_PREVIEW",

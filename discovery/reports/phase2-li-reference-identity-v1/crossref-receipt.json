@@ -1,0 +1,18 @@
+{
+  "url": "https://api.crossref.org/works/10.1520/STP157620140013",
+  "method": "GET",
+  "started_at": "2026-10-16T09:10:26.562910+00:00",
+  "scope": "Exact DOI registry metadata; no linked content requests",
+  "retries": 0,
+  "redirects_allowed": false,
+  "maximum_body_bytes": 1048576,
+  "body_retained": true,
+  "http_status": 200,
+  "final_url": "https://api.crossref.org/works/10.1520/STP157620140013",
+  "content_type": "application/json",
+  "bytes": 12819,
+  "sha256": "a3d83af7737c0ac38db0bf08b14a9dd81c140492001b022403b48633dabcee12",
+  "json_metadata_parsed": true,
+  "finished_at": "2026-10-16T09:10:27.054516+00:00",
+  "elapsed_seconds": 0.49162874600006035
+}

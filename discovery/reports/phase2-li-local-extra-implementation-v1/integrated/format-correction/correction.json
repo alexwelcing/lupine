@@ -10,7 +10,7 @@
   "first_check_capture": "Observed tool output; no separately redirected original process log.",
   "production_test_before_sha256": "24e54f7674a116a043aecaf3e5b396aba3139eb1739998f45ab5149c82b5602b",
   "production_test_after_sha256": "570dc7f3cfabb094550b8f1c5fed8f4f801d832dc8003611fc6638a8285a468e",
-  "change": "Removed only final redundant LF byte; implementation and assertions unchanged.",
+  "change": "Removed only two redundant final LF bytes (40,327 to40,325); implementation and assertions unchanged.",
   "historical_wrappers": [
     {
       "original": "independent/final-run/independent-tests.py",
@@ -28,5 +28,6 @@
       "original_sha256": "24e54f7674a116a043aecaf3e5b396aba3139eb1739998f45ab5149c82b5602b"
     }
   ],
-  "rerun_status": "PENDING"
+  "rerun_status": "PENDING",
+  "correction": "Original one-byte description was wrong; original receipt preserved in publication-correction/correction.json.original.bytes.json. Source hashes and rstrip transformation were correct."
 }

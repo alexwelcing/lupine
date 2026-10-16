@@ -1,0 +1,104 @@
+{
+  "schema": "lupine.li-reference-identity-bindings.v1",
+  "created_at": "2026-10-16T09:15:44.186751+00:00",
+  "readme_sha256": "f564c79b7b731191fbb8bc58669dbc6a1897bc22e57db3b59d09b737c60555ae",
+  "files": [
+    {
+      "path": "reports/phase2-li-paper-methods-v1/README.md",
+      "bytes": 7423,
+      "sha256": "b168331d3198c97b6cdf45d67b505b4ddf88acf60ab6b556e4b35798b5a3eb10"
+    },
+    {
+      "path": "reports/phase2-li-paper-methods-v1/PUBLICATION.md",
+      "bytes": 1257,
+      "sha256": "a40ba3149b3e91a8f68e6360246e0373a28d331ef1bbfa644530343ef864801c"
+    },
+    {
+      "path": ".cache/phase2-li-paper-methods-v1/receipt.json",
+      "bytes": 472,
+      "sha256": "0f571d9fa2a988ba664f04b001c8c6399e77a332c8437cc91762e07c0f002d69"
+    },
+    {
+      "path": ".cache/phase2-li-paper-methods-v1/article.xml",
+      "bytes": 143727,
+      "sha256": "c7e527712991ce14fb233b57a7e1f5f2dc26e6728835df03510cd6c588146534"
+    },
+    {
+      "path": ".cache/phase2-li-paper-methods-v1/reference-roster.json",
+      "bytes": 8292,
+      "sha256": "c4d25b0bcd1053e25783bd10614d4adfa8bf5490edabdd2811147dc0442cc334"
+    },
+    {
+      "path": ".cache/phase2-li-reference-identity-v1/article-citation-projection.json",
+      "bytes": 7786,
+      "sha256": "37a0821bd225f85e453a8b195eaaf0bda871f93502aff4ea76c797a94c0e94a2"
+    },
+    {
+      "path": ".cache/phase2-li-reference-identity-v1/candidate-citation-projection.json",
+      "bytes": 2165,
+      "sha256": "1838d3da41834c8ace7eaf9aba838f7c6d35b1581e32600a9a19f113aaf91394"
+    },
+    {
+      "path": ".cache/phase2-li-reference-identity-v1/candidate-query-receipt.json",
+      "bytes": 1247,
+      "sha256": "3dc2aca14c55c05dbdc296ce9d84a7c9576f04ace128ed851e8210424f0b0f61"
+    },
+    {
+      "path": ".cache/phase2-li-reference-identity-v1/candidate-query-response.json",
+      "bytes": 1744,
+      "sha256": "1bb5ff13a349222477d42e7e2a2e1d27ad238d516ba03e56c07d253916cbf07c"
+    },
+    {
+      "path": ".cache/phase2-li-reference-identity-v1/candidate-query-scope.json",
+      "bytes": 1749,
+      "sha256": "b0f0e2a0ada2fdd5b11904be5ce83c3c0fd4718de7ffe97c3354e15ae52d7dff"
+    },
+    {
+      "path": ".cache/phase2-li-reference-identity-v1/citation-map.json",
+      "bytes": 3461,
+      "sha256": "7ed2ef187e9c08d58b253581cf806d75abd23e1fb08eb3cf4b18cdeb4614716c"
+    },
+    {
+      "path": ".cache/phase2-li-reference-identity-v1/crossref-citation-projection.json",
+      "bytes": 1415,
+      "sha256": "43a3555be3a4a9ac988720bfe8f7b2bc8c045e38ddc50ced7d3a8f1c060eb4f9"
+    },
+    {
+      "path": ".cache/phase2-li-reference-identity-v1/crossref-projection-before-author-field-narrowing.json",
+      "bytes": 2592,
+      "sha256": "f263393944265ad5c96e16a7a2c3ce1f5be3e897a9d86a6e79b11f7be1272857"
+    },
+    {
+      "path": ".cache/phase2-li-reference-identity-v1/crossref-receipt.json",
+      "bytes": 673,
+      "sha256": "f6f498d24eb0f27fa472023f6d3d2587b3b46d9120383b5d21f3cb4b8b6a0065"
+    },
+    {
+      "path": ".cache/phase2-li-reference-identity-v1/crossref-response.json",
+      "bytes": 12819,
+      "sha256": "a3d83af7737c0ac38db0bf08b14a9dd81c140492001b022403b48633dabcee12"
+    },
+    {
+      "path": ".cache/phase2-li-reference-identity-v1/projection-correction.json",
+      "bytes": 733,
+      "sha256": "e50e6d4cd4d1b10d0c7a1b57e3f0c7a97e99828c694ed8caaedf2ec04c7eca89"
+    },
+    {
+      "path": ".cache/phase2-li-reference-identity-v1/scope.json",
+      "bytes": 2675,
+      "sha256": "9dc7286011a9ab08a16e96b8f0c86d2379c8b79e6e9d38a8bbb940ada2c3532f"
+    }
+  ],
+  "claims_basis": {
+    "article": "PMC11724850 retained XML, ref[@id=CR49],ref[@id=CR50],Table2 Data Source/Dataset citation columns only",
+    "exact_registry": "crossref-response.json message DOI/title/author/container/publisher/type/page/date fields",
+    "candidate_registry": "candidate-query-response.json message/items selected citation fields; no relation/alias inference"
+  },
+  "requests": 2,
+  "linked_content_requests": 0,
+  "automatic_corrections_or_merges": false,
+  "actual_workbook_reference_joins_verified": false,
+  "measurement_overlap_verified": false,
+  "independent_unit_count": null,
+  "new_study_or_scientific_pass": false
+}

@@ -26,7 +26,9 @@ The [paper methods audit](reports/phase2-li-paper-methods-v1/PUBLICATION.md)
 establishes documentary test-level rows and units, while recording 1,038 listed
 table records versus 1,050 in prose and 1,070 in the archive catalog. Source
 reuse, actual joins, missingness, curation and independent evaluation units
-remain unresolved. The [BAM audit](reports/phase2-bam-readiness-v1/PUBLICATION.md)
+remain unresolved. A [citation identity audit](reports/phase2-li-reference-identity-v1/PUBLICATION.md)
+finds one printed DOI attached to different works and two unresolved registry
+candidates; none is merged or silently corrected. The [BAM audit](reports/phase2-bam-readiness-v1/PUBLICATION.md)
 identifies a possible small metrology reference, not an admitted discovery task.
 G20 remains unresolved and G21 blocked; no allocation or fit occurred.
 

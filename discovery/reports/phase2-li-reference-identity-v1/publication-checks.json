@@ -1,0 +1,136 @@
+{
+  "schema": "lupine.reference-identity-final-publication-check.v1",
+  "checked_at": "2026-10-16T09:26:22.691541+00:00",
+  "exact_original_copies": 24,
+  "already_public_inputs": 3,
+  "bound_inputs_with_dispositions": 17,
+  "declared_omissions": 4,
+  "local_links": [
+    {
+      "from": "README.md",
+      "href": "citation-map.json",
+      "exists": true
+    },
+    {
+      "from": "README.md",
+      "href": "scope.json",
+      "exists": true
+    },
+    {
+      "from": "README.md",
+      "href": "candidate-query-scope.json",
+      "exists": true
+    },
+    {
+      "from": "PUBLICATION.md",
+      "href": "README.md",
+      "exists": true
+    },
+    {
+      "from": "PUBLICATION.md",
+      "href": "citation-map.json",
+      "exists": true
+    },
+    {
+      "from": "PUBLICATION.md",
+      "href": "source-bindings.json",
+      "exists": true
+    },
+    {
+      "from": "PUBLICATION.md",
+      "href": "scope.json",
+      "exists": true
+    },
+    {
+      "from": "PUBLICATION.md",
+      "href": "crossref-receipt.json",
+      "exists": true
+    },
+    {
+      "from": "PUBLICATION.md",
+      "href": "candidate-query-scope.json",
+      "exists": true
+    },
+    {
+      "from": "PUBLICATION.md",
+      "href": "candidate-query-receipt.json",
+      "exists": true
+    },
+    {
+      "from": "PUBLICATION.md",
+      "href": "publication-map.json",
+      "exists": true
+    },
+    {
+      "from": "PUBLICATION.md",
+      "href": "crossref-projection-before-author-field-narrowing.json",
+      "exists": true
+    },
+    {
+      "from": "PUBLICATION.md",
+      "href": "projection-correction.json",
+      "exists": true
+    },
+    {
+      "from": "PUBLICATION.md",
+      "href": "article-citation-projection.json",
+      "exists": true
+    },
+    {
+      "from": "PUBLICATION.md",
+      "href": "../phase2-li-paper-methods-v1/README.md",
+      "exists": true
+    },
+    {
+      "from": "PUBLICATION.md",
+      "href": "independent-review/review.json",
+      "exists": true
+    },
+    {
+      "from": "PUBLICATION.md",
+      "href": "independent-review-publication-map.json",
+      "exists": true
+    },
+    {
+      "from": "PUBLICATION.md",
+      "href": "publication-map.json",
+      "exists": true
+    }
+  ],
+  "whitespace_checked_files": [
+    "PUBLICATION.md",
+    "README.md",
+    "article-citation-projection.json",
+    "artifact-check.json",
+    "candidate-citation-projection.json",
+    "candidate-query-receipt.json",
+    "candidate-query-scope.json",
+    "citation-map.json",
+    "crossref-citation-projection.json",
+    "crossref-projection-before-author-field-narrowing.json",
+    "crossref-receipt.json",
+    "independent-review/checks.json",
+    "independent-review/independent-citation-projection.json",
+    "independent-review/publication-addendum.json",
+    "independent-review/publication-check-initial.json",
+    "independent-review/publication-map-before-completeness-clarification.json",
+    "independent-review/review.json",
+    "independent-review/scope-addendum.json",
+    "independent-review/scope.json",
+    "independent-review/source-bindings.json",
+    "independent-review/xml-exposure-before-read.json",
+    "independent-review/xml-exposure-read-complete.json",
+    "independent-review-publication-map.json",
+    "projection-correction.json",
+    "publication-map.json",
+    "scope.json",
+    "source-bindings.json"
+  ],
+  "whitespace_result": "PASS: git diff --no-index --check returned 0 or 1 with empty diagnostics for each file; return 1 represents ordinary content difference",
+  "source_review_sha256": "174b36ba25bf058669061c41fa97fab45ce5fab9d93850ca8e5cd5bc426093aa",
+  "publication_addendum_sha256": "dfd69fce4ed6705ddee6271836a26d03465206e7035929185d8a5c28d5396f99",
+  "main_map_sha256": "2dbf9f6f8ebab99e7845f0eba5f836c02bd1c5da57d84fcfb9c762f49f886dcc",
+  "review_copy_map_sha256": "10039a7b8359e3466d7bbabe2be647a2aeca30eeebb7c98b584ad2fe9cde8242",
+  "scope": "Artifact equality, local navigation, complete input disposition and whitespace checks only; no network, new source acquisition, runtime tests or scientific evaluation",
+  "original_bytes_transformed": false
+}

@@ -1,0 +1,18 @@
+{
+  "url": "https://api.crossref.org/works?query.title=Miniature+tensile+test+specimens+for+fusion+reactor+irradiation+studies&query.author=Klueh&filter=from-pub-date%3A1985-01-01%2Cuntil-pub-date%3A1985-12-31&rows=3&select=DOI%2Ctitle%2Cauthor%2Ccontainer-title%2Cvolume%2Cissue%2Cpage%2Cpublished%2Cpublisher%2Ctype%2CURL",
+  "method": "GET",
+  "started_at": "2026-10-16T09:12:45.552205+00:00",
+  "scope_sha256": "b0f0e2a0ada2fdd5b11904be5ce83c3c0fd4718de7ffe97c3354e15ae52d7dff",
+  "scope": "One bounded registry metadata candidate query; no linked content",
+  "retries": 0,
+  "redirects_allowed": false,
+  "body_retained": true,
+  "http_status": 200,
+  "final_url": "https://api.crossref.org/works?query.title=Miniature+tensile+test+specimens+for+fusion+reactor+irradiation+studies&query.author=Klueh&filter=from-pub-date%3A1985-01-01%2Cuntil-pub-date%3A1985-12-31&rows=3&select=DOI%2Ctitle%2Cauthor%2Ccontainer-title%2Cvolume%2Cissue%2Cpage%2Cpublished%2Cpublisher%2Ctype%2CURL",
+  "content_type": "application/json",
+  "bytes": 1744,
+  "sha256": "1bb5ff13a349222477d42e7e2a2e1d27ad238d516ba03e56c07d253916cbf07c",
+  "json_metadata_parsed": true,
+  "finished_at": "2026-10-16T09:12:46.260373+00:00",
+  "elapsed_seconds": 0.7086202770005912
+}

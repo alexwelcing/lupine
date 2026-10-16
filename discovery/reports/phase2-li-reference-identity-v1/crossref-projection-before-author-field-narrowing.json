@@ -1,0 +1,142 @@
+{
+  "DOI": "10.1520/stp157620140013",
+  "title": [
+    "Role of Scale Factor During Tensile Testing of Small Specimens"
+  ],
+  "author": [
+    {
+      "given": "Maxim N.",
+      "family": "Gussev",
+      "sequence": "first",
+      "affiliation": [
+        {
+          "name": "Oak Ridge National Laboratory, Oak Ridge, TN, 39831, US."
+        }
+      ],
+      "role": [
+        {
+          "vocabulary": "crossref",
+          "role": "author"
+        }
+      ]
+    },
+    {
+      "given": "Jeremy T.",
+      "family": "Busby",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Oak Ridge National Laboratory, Oak Ridge, TN, 39831, US."
+        }
+      ],
+      "role": [
+        {
+          "vocabulary": "crossref",
+          "role": "author"
+        }
+      ]
+    },
+    {
+      "given": "Kevin G.",
+      "family": "Field",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Oak Ridge National Laboratory, Oak Ridge, TN, 39831, US."
+        }
+      ],
+      "role": [
+        {
+          "vocabulary": "crossref",
+          "role": "author"
+        }
+      ]
+    },
+    {
+      "given": "Mikhail A.",
+      "family": "Sokolov",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Oak Ridge National Laboratory, Oak Ridge, TN, 39831, US."
+        }
+      ],
+      "role": [
+        {
+          "vocabulary": "crossref",
+          "role": "author"
+        }
+      ]
+    },
+    {
+      "given": "Sean E.",
+      "family": "Gray",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "The Univ. of Michigan, Ann Arbor, MI, 48109, US."
+        }
+      ],
+      "role": [
+        {
+          "vocabulary": "crossref",
+          "role": "author"
+        }
+      ]
+    }
+  ],
+  "container-title": [
+    "Small Specimen Test Techniques: 6th Volume"
+  ],
+  "publisher": "ASTM International",
+  "type": "book-chapter",
+  "page": "1-19",
+  "published": {
+    "date-parts": [
+      [
+        2014,
+        8,
+        29
+      ]
+    ]
+  },
+  "published-print": {
+    "date-parts": [
+      [
+        2014,
+        10,
+        30
+      ]
+    ]
+  },
+  "published-online": {
+    "date-parts": [
+      [
+        2014,
+        8,
+        29
+      ]
+    ]
+  },
+  "issued": {
+    "date-parts": [
+      [
+        2014,
+        8,
+        29
+      ]
+    ]
+  },
+  "created": {
+    "date-parts": [
+      [
+        2014,
+        9,
+        12
+      ]
+    ],
+    "date-time": "2014-09-12T07:00:26Z",
+    "timestamp": 1410505226000
+  },
+  "URL": "https://doi.org/10.1520/stp157620140013"
+}
