@@ -1,0 +1,82 @@
+{
+  "completed_at": "2026-10-16T11:28:50.194994+00:00",
+  "copy_map_sha256": "fa64d337f790ca859303b60a6206173c34c560dab9a90ad111cbab1ade4fb23d",
+  "correction_claim_review": "GIT_PUBLICATION and PUBLICATION_REVIEW correctly distinguish retained local-copy evidence from Git inclusion, preserve the first push, and leave correction commit/remote/CI verification to root.",
+  "first_commit": {
+    "expected_fixed_files": 508,
+    "matching_fixed_blobs": 500,
+    "mismatched_present_blobs": 0,
+    "missing_exact_files": {
+      "reports/phase2-documentary-layout-preparation-v1/independent/first/stderr.log": "1748f2abc361897ba6a337b0d643bd454b3a3b8ec478e4452f1408dd91c68336",
+      "reports/phase2-documentary-layout-preparation-v1/independent/first/stdout.log": "60c030fd44087bdbc1ce75930e68f2fbe5686e4bd247c09a522698a868174ad9",
+      "reports/phase2-documentary-layout-preparation-v1/independent/namespace-final/stderr.log": "b1a0f539a38095ee24735df7a99091870b7fd810745e2a0a46a424780fdfc978",
+      "reports/phase2-documentary-layout-preparation-v1/independent/namespace-final/stdout.log": "5b7db5f126adff272712d563c5b070945ca054d7eb0a57dba7701408621872d5",
+      "reports/phase2-documentary-layout-preparation-v1/independent/second/stderr.log": "a2158fdfba202755c10bed3f04a08b7664d7e6bf1c7d7e7e81b7ed5b91992052",
+      "reports/phase2-documentary-layout-preparation-v1/independent/second/stdout.log": "33a32642fddf390f45c91c31dffa50ca8b2019ee0aa5867e93bc917a54beca5c",
+      "reports/phase2-growth-verification-v1/publication-review/first-process-stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "reports/phase2-growth-verification-v1/publication-review/first-process-stdout.log": "5cff0d00d17147d8dbbf9686a101be7239b6643b99d877815f147395c7655d6f"
+    },
+    "post_review_metadata_files": 3,
+    "total_changed_files": 503
+  },
+  "first_publication_commit": "280dff57de0f9bbbf8f28e83498d36a7cf7b206b",
+  "freeze_sha256": "cd7b2a6ff07f6f728fdb36827236965b7e662cbe8f1d2bf46c2dca9d9289d574",
+  "ignore_explanation": "All eight omitted paths independently match the repository *.log ignore rule.",
+  "implementation_commit": "c17c4c6b152af2e7bc1b7a7639336f6b0f733ace",
+  "index": {
+    "all_expected_fixed_files_present": true,
+    "frozen_docs": 5,
+    "held_before_after": true,
+    "index_stage_listing_sha256": "a465ab5a8f70218f8d51b1b36d002b9287198a3ad1d4946902d3cbc9b08bdc67",
+    "matching_fixed_blobs": 508,
+    "report_blobs": 503,
+    "staged_paths": [
+      "reports/phase2-documentary-layout-preparation-v1/independent/first/stderr.log",
+      "reports/phase2-documentary-layout-preparation-v1/independent/first/stdout.log",
+      "reports/phase2-documentary-layout-preparation-v1/independent/namespace-final/stderr.log",
+      "reports/phase2-documentary-layout-preparation-v1/independent/namespace-final/stdout.log",
+      "reports/phase2-documentary-layout-preparation-v1/independent/second/stderr.log",
+      "reports/phase2-documentary-layout-preparation-v1/independent/second/stdout.log",
+      "reports/phase2-growth-verification-v1/GIT_PUBLICATION.md",
+      "reports/phase2-growth-verification-v1/PUBLICATION_REVIEW.md",
+      "reports/phase2-growth-verification-v1/publication-review/first-process-stderr.log",
+      "reports/phase2-growth-verification-v1/publication-review/first-process-stdout.log",
+      "reports/phase2-growth-verification-v1/publication/git-inclusion-failure.json"
+    ]
+  },
+  "limitations": [
+    "This check binds the index before copying its own future evidence; root must reconcile that later evidence separately.",
+    "No correction commit, remote publication, or correction CI result is claimed.",
+    "Check success is publication integrity, not physical validation or a changed scientific release decision."
+  ],
+  "metadata": {
+    "reports/phase2-growth-verification-v1/GIT_PUBLICATION.md": {
+      "first_sha256": null,
+      "index_sha256": "b0068b9f4d1912fe42d844bc0757d61bee31b060ff906a03bbd0ebba41690385"
+    },
+    "reports/phase2-growth-verification-v1/PUBLICATION_REVIEW.md": {
+      "first_sha256": "d34a4767a8a6e0890b0709750ded31c0c33601e94df43a9752fce2a0a4f6f3cc",
+      "index_sha256": "327a8500d86d32c7f597e2577960019cbe09ada309942c602fcdfe9abd5f1e1a"
+    },
+    "reports/phase2-growth-verification-v1/publication/git-inclusion-failure.json": {
+      "first_sha256": null,
+      "index_sha256": "0594d876a7935e2bfccbebf12276dcbb7307b735b20915f93b06591a66a04134"
+    },
+    "reports/phase2-growth-verification-v1/publication/promotion-receipt.json": {
+      "first_sha256": "f8d81435b3c02addcf3c7b302b6922771c6c126de7a354b3fcac5219b476ae5f",
+      "index_sha256": "f8d81435b3c02addcf3c7b302b6922771c6c126de7a354b3fcac5219b476ae5f"
+    },
+    "reports/phase2-growth-verification-v1/publication/publication-review-copy.json": {
+      "first_sha256": "fa64d337f790ca859303b60a6206173c34c560dab9a90ad111cbab1ade4fb23d",
+      "index_sha256": "fa64d337f790ca859303b60a6206173c34c560dab9a90ad111cbab1ade4fb23d"
+    }
+  },
+  "runtime": {
+    "files": 332,
+    "manifest_unchanged": true,
+    "worktree_index_first_and_implementation_match_manifest": true
+  },
+  "scope": "Read-only local Git/index closure; no tests, project imports, network or actual scientific/private source access.",
+  "started_at": "2026-10-16T11:28:48.207591+00:00",
+  "status": "PASS"
+}

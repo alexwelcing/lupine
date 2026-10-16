@@ -5,3 +5,5 @@ The [independent first publication audit](publication-review/first/review.json) 
 The [handoff](publication-review/handoff.json) and [completion](publication-review/completion.json) define its scope. Root promoted that exact frozen snapshot, then added the audit's own held evidence and this publication note. The [copy record](publication/publication-review-copy.json) and [promotion receipt](publication/promotion-receipt.json) preserve these final additions separately; the earlier audit does not claim to include its own future results.
 
 G30 matches the selected growth shape. G31 remains blocked before any XML. BAM exposure, NIST qualifications, unbound pure layout and all scientific NO-GO decisions remain unchanged. Exact remote verification and the report commit's own original CI are subsequent publication gates, reported through the branch and draft PR.
+
+The [Git publication correction](GIT_PUBLICATION.md) preserves the first report push's eight ignored-log omissions and the explicit follow-up inclusion check. The local audit and remote Git inclusion are distinct gates.

@@ -1,0 +1,42 @@
+{
+  "copied_at": "2026-10-16T11:29:33.119963+00:00",
+  "copies": [
+    {
+      "bytes": 7577,
+      "original": ".cache/phase2-growth-publication-closure-review-v1/audit_closure.py",
+      "published": "reports/phase2-growth-verification-v1/git-inclusion-review/audit_closure.py",
+      "sha256": "0bede28e0b9512f57fb20d5ff0068aec3649f2c2b6f70e6496784f3eb5d32db4"
+    },
+    {
+      "bytes": 5361,
+      "original": ".cache/phase2-growth-publication-closure-review-v1/review.json",
+      "published": "reports/phase2-growth-verification-v1/git-inclusion-review/review.json",
+      "sha256": "4f56e99944fe9530164e7082250a2999fd0504a2b7f614571a9edd049f197ba2"
+    },
+    {
+      "bytes": 189,
+      "original": ".cache/phase2-growth-publication-closure-review-v1/first-stdout.txt",
+      "published": "reports/phase2-growth-verification-v1/git-inclusion-review/first-stdout.txt",
+      "sha256": "2abc07f03cce7f5f0f8910f0a905599e00ca896bfba967f4de25c2b984af7397"
+    },
+    {
+      "bytes": 0,
+      "original": ".cache/phase2-growth-publication-closure-review-v1/first-stderr.txt",
+      "published": "reports/phase2-growth-verification-v1/git-inclusion-review/first-stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 894,
+      "original": ".cache/phase2-growth-publication-closure-review-v1/ignore-rules.txt",
+      "published": "reports/phase2-growth-verification-v1/git-inclusion-review/ignore-rules.txt",
+      "sha256": "c5a0a0ee6e453b51f791b5ed4a63647ad5c72a184f0d9c5865261055714e1c6e"
+    },
+    {
+      "bytes": 45468,
+      "original": ".cache/phase2-growth-publication-closure-review-v1/initial-changed-paths.txt",
+      "published": "reports/phase2-growth-verification-v1/git-inclusion-review/initial-changed-paths.txt",
+      "sha256": "7991ec1089cfc3a8f1c75e0bdb8d5203c02202d1e89e7d0e9a1e92b1dd4a62d8"
+    }
+  ],
+  "scope": "Exact held audit/source/log copies; future handoff/inventory metadata excluded. Original index audit necessarily preceded these own evidence additions."
+}
