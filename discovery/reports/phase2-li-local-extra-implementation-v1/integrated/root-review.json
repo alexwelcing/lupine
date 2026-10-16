@@ -1,0 +1,12 @@
+{
+  "source_reviewed_sha256": "54db58a567afc9211303f2edff13541ab2f97beb77ef2edaa518ad32bf6b1026",
+  "contract_reviewed_sha256": "1247430dfe174bb1d7dd2e17ca06b5781ef41fadd7cb13d60d6d01e202dbb594",
+  "root_source_review": "No blocker: guarded same-buffer predecessor result and cleanup; contiguous locator induction; exact bounds; complete-or-null field list; preserved failure exposure; no added reader-profile acceptance.",
+  "actual_integrated_tests": 248,
+  "unit_seconds": 6.381,
+  "process_seconds": 9.057375033000426,
+  "runtime_files_held": 326,
+  "predecessor_runtime_files_unchanged": 323,
+  "source_operations": "NOT_RUN",
+  "publication_ci_and_clean_package": "PENDING"
+}

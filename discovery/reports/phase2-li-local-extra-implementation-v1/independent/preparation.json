@@ -1,0 +1,12 @@
+{
+  "stage": "FIXTURES_PREPARED_NOT_EXECUTED",
+  "source": ".cache/phase2-li-local-extra-review-v1/promotion/tests/test_li_v3_local_extra_headers_review.py",
+  "fixture_origin": "Independent reviewer previous packed ZIP fixture approach; no author tests imported",
+  "execution_count": 0,
+  "actual_source_or_receipt_read": false,
+  "preparation_issue": {
+    "command_exit_code": 1,
+    "reason": "Reviewer preparation command omitted import json for metadata write after fixture file was successfully written; metadata-only followup added import",
+    "product_or_test_execution": false
+  }
+}

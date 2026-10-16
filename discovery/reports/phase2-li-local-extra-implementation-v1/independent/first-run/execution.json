@@ -1,0 +1,49 @@
+{
+  "schema": "lupine.discovery.independent_synthetic_execution.v1",
+  "reviewer": "/root/phase2_planner/ui_review",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-B",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-local-extra-review-v1/promotion/tests/test_li_v3_local_extra_headers_review.py",
+    "-v"
+  ],
+  "cwd": "/workspace/lupine-discovery-branch/discovery",
+  "started_utc": "2026-10-16T09:13:58.422106+00:00",
+  "finished_utc": "2026-10-16T09:14:00.990281+00:00",
+  "elapsed_seconds": 2.5676070599984087,
+  "exit_code": 1,
+  "source_path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-local-extra-candidate-v1/promotion/scripts/li_v3_local_extra_headers.py",
+  "test_path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-local-extra-review-v1/promotion/tests/test_li_v3_local_extra_headers_review.py",
+  "before": {
+    "implementation": {
+      "bytes": 11921,
+      "sha256": "54db58a567afc9211303f2edff13541ab2f97beb77ef2edaa518ad32bf6b1026"
+    },
+    "tests": {
+      "bytes": 39771,
+      "sha256": "7f70e15368a892e0c2b064ea6b1a584e346e3078e659cd863bca652061c16c63"
+    }
+  },
+  "after": {
+    "implementation": {
+      "bytes": 11921,
+      "sha256": "54db58a567afc9211303f2edff13541ab2f97beb77ef2edaa518ad32bf6b1026"
+    },
+    "tests": {
+      "bytes": 39771,
+      "sha256": "7f70e15368a892e0c2b064ea6b1a584e346e3078e659cd863bca652061c16c63"
+    }
+  },
+  "held_unchanged": true,
+  "stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stderr": {
+    "bytes": 5833,
+    "sha256": "c4cbeb472d67f55ed9f769e0a05f21c8f17c97cff488d9217ae193c3fef1c365"
+  },
+  "actual_source_or_receipt_read": false,
+  "network_used": false,
+  "production_custody_io": false
+}

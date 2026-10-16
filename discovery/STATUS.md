@@ -15,7 +15,12 @@ Two compatible ZIP diagnoses identify only LOCAL_EXTRA_PRESENT at the first
 rejected local entry. No workbook member, XML, worksheet or shared string was
 decoded. Field types/content, later entries and the complete envelope remain
 unestablished. Original blocked readers stay unchanged. G27/G28 are complete
-within their engineering scope; G29 is a prospective structural diagnostic.
+within their engineering scope. G29 now has a separately reviewed bounded
+field-header implementation: 19 author, 30 independent and 248 combined Li
+checks pass. Its [implementation evidence](reports/phase2-li-local-extra-implementation-v1/PUBLICATION.md)
+preserves the first reviewer fixture failure. All 323 predecessor runtime files
+remain unchanged; three additions bring the current manifest to 326. Publication,
+exact CI and clean package verification must precede actual field inspection.
 
 The [paper methods audit](reports/phase2-li-paper-methods-v1/PUBLICATION.md)
 establishes documentary test-level rows and units, while recording 1,038 listed

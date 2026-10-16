@@ -1502,3 +1502,39 @@ occurred. All historical NO-GO results, first failures and pre-execution recorde
 repairs remain preserved. This report publication requires its own exact remote
 and CI observation. The expired automation remains disabled; no schedule or
 continuous worker was started.
+
+## 2026-10-16 — G29 bounded field-header implementation integrated
+
+Root integrated the exact reviewed diagnostic, author tests, independent tests
+and [frozen contract](../docs/li-v3-local-extra-headers-plan.md). The source
+requires the unchanged exact predecessor classification and successful archive
+cleanup; it locates the same first rejected entry and publishes only a complete
+ordered list of at most 256 unsigned field-ID/data-length pairs. Field bodies
+are skipped without interpretation; all scientific states remain BLOCKED_SCHEMA.
+
+Actual author checks pass 19/19. The independent first run passed 29/30: the
+remaining fixture incorrectly expected an overlong filename to pass the old
+256-character limit. The corrected fixture checks that boundary; final 30/30
+pass with unchanged implementation. Original fixtures and logs are preserved.
+Root's combined Li run on 2026-10-16T09:17:51–09:18:00Z passed 248 tests in
+6.381 unittest seconds (9.057 seconds total), exit 0. All 326 runtime files
+were unchanged through execution; all 323 predecessor files match the prior
+manifest. [Evidence and source bindings](phase2-li-local-extra-implementation-v1/PUBLICATION.md)
+record the engineering scope. No actual archive field headers were inspected.
+
+Current owner/checkpoint: root publishes and verifies this implementation;
+independent artifact and operation-recorder review are being prepared. Next:
+verify the exact pushed commit and all original CI jobs, retain and independently
+audit the clean package, then perform only the two frozen fixed-source
+diagnoses with full receipts. G20 remains unresolved and G21 blocked.
+Historical scientific negatives, exposed evaluations and allocation remain
+unchanged. The old automation remains disabled.
+
+Publication follow-up: the staged whitespace check failed on an extra final
+newline in the independent test and three historical snapshots. Root preserved
+all original bytes, removed only that byte from the production test and wrapped
+historical snapshots losslessly. The exact final-source combined rerun at
+09:24:44–09:24:47Z passed 248 tests in 3.232 unittest / 3.755 process seconds,
+exit 0, with all 326 runtime files held and all 323 predecessor files unchanged.
+No implementation or assertion was modified. The earlier successful run and
+failed publication check remain recorded.

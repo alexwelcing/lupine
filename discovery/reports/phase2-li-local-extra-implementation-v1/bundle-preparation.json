@@ -1,0 +1,20 @@
+{
+  "schema": "lupine.engineering.bundle_preparation.v1",
+  "first_finalize_attempt": {
+    "exit_code": 1,
+    "classification": "REPORT_ASSEMBLY_PATH_EXPECTATION_ERROR",
+    "observed_exception": "FileNotFoundError",
+    "cause": "Source-review inventory paths are discovery-relative; initial checker incorrectly interpreted them as bundle-relative.",
+    "effect": "No product, test, source-review or original receipt bytes changed. Only copy-map.json had been generated before validation stopped.",
+    "receipt_limit": "Original error returned in tool output; no separate raw stdout/stderr capture was retained for this metadata-only command. This note records facts, not a reconstructed process log."
+  },
+  "correction": "Normalize each declared inventory shape; resolve the exact known discovery-relative prefix only for source-review. Preserve original inventories.",
+  "second_finalize_attempt": {
+    "exit_code": 1,
+    "classification": "REPORT_ASSEMBLY_INVENTORY_SHAPE_ERROR",
+    "observed_exception": "TypeError: string indices must be integers, not str",
+    "cause": "The first review uses a dictionary of file records; the second uses a list. The second metadata check incorrectly assumed both lists.",
+    "effect": "No product, test, review or original receipt bytes changed; no final inventory or handoff had been written.",
+    "receipt_limit": "Tool-only error output; no separately retained raw process log."
+  }
+}

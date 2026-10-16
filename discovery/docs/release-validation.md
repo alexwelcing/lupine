@@ -602,3 +602,16 @@ all earlier scientific NO-GO results persist. A source-format diagnosis, article
 count, completed static reader, successful CI or exact proof cannot close those
 gates. G20 remains unresolved and G21 blocked. The new report publication has
 its own later remote/CI verification; the checks above belong to exact a6e87c1.
+
+## October 16 local-extra diagnostic implementation
+
+The [G29 bounded implementation](../reports/phase2-li-local-extra-implementation-v1/PUBLICATION.md)
+adds only complete-or-null local field IDs and declared data lengths after the
+unchanged predecessor rejects exactly LOCAL_EXTRA_PRESENT. The 19 author and
+30 independent checks pass; the initial independent fixture expectation failure
+is preserved. Root's integrated run passes all 248 Li checks, with all 326
+runtime identities held and all 323 predecessor files unchanged. These are
+synthetic engineering checks. Exact publication/CI, a clean retained package
+and independent artifact audit remain required before actual fixed operations.
+No field payload semantics, archive acceptance, worksheet schema, pairing,
+independence or scientific release claim is established by this increment.

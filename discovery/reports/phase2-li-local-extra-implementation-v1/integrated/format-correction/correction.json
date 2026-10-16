@@ -1,0 +1,32 @@
+{
+  "at": "2026-10-16T09:24:28.671962+00:00",
+  "first_staged_diff_check": "FAILED_EXIT_2",
+  "observed_findings": [
+    "new blank line at EOF: independent/final-run/independent-tests.py:701",
+    "new blank line at EOF: independent/first-run/independent-tests.py:693",
+    "new blank line at EOF: independent/promotion/tests/test_li_v3_local_extra_headers_review.py:701",
+    "new blank line at EOF: tests/test_li_v3_local_extra_headers_review.py:701"
+  ],
+  "first_check_capture": "Observed tool output; no separately redirected original process log.",
+  "production_test_before_sha256": "24e54f7674a116a043aecaf3e5b396aba3139eb1739998f45ab5149c82b5602b",
+  "production_test_after_sha256": "570dc7f3cfabb094550b8f1c5fed8f4f801d832dc8003611fc6638a8285a468e",
+  "change": "Removed only final redundant LF byte; implementation and assertions unchanged.",
+  "historical_wrappers": [
+    {
+      "original": "independent/final-run/independent-tests.py",
+      "wrapper": "independent/final-run/independent-tests.py.bytes.json",
+      "original_sha256": "24e54f7674a116a043aecaf3e5b396aba3139eb1739998f45ab5149c82b5602b"
+    },
+    {
+      "original": "independent/first-run/independent-tests.py",
+      "wrapper": "independent/first-run/independent-tests.py.bytes.json",
+      "original_sha256": "7f70e15368a892e0c2b064ea6b1a584e346e3078e659cd863bca652061c16c63"
+    },
+    {
+      "original": "independent/promotion/tests/test_li_v3_local_extra_headers_review.py",
+      "wrapper": "independent/promotion/tests/test_li_v3_local_extra_headers_review.py.bytes.json",
+      "original_sha256": "24e54f7674a116a043aecaf3e5b396aba3139eb1739998f45ab5149c82b5602b"
+    }
+  ],
+  "rerun_status": "PENDING"
+}

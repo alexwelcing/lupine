@@ -1,0 +1,16 @@
+{
+  "schema": "lupine.engineering.candidate_history.v1",
+  "implementation_changes_after_first_test": false,
+  "author_first_run": "receipts/author-first/execution.json",
+  "author_first_result": "19 tests passed; exact held script and author test unchanged.",
+  "contract_after_first_run": "Corrected a final-line formatting typo only: performance,+or -> performance, newline or. Earlier complete contract bytes retained in author-first snapshot.",
+  "preparation_diagnostics": [
+    {
+      "kind": "read-only source search",
+      "command": "rg -n fits|splits|row_count|paired_count|def _base scripts/li_v3_header_diagnostic.py scripts/li_v3_custody.py",
+      "result": "Exit2 because first guessed public source filename did not exist. Relevant keys found in custody source; later correct frozen header source is li_v3_zip_diagnostic.py. No product/test invocation or private source access occurred."
+    }
+  ],
+  "actual_source_operation": "NOT_RUN",
+  "publication": "NOT_PUBLISHED_BY_CANDIDATE_AUTHOR"
+}

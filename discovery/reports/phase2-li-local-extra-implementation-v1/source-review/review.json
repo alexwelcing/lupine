@@ -1,0 +1,143 @@
+{
+  "actual_checks_by_this_reviewer": {
+    "actual_source_or_capture_or_production_receipt_read": false,
+    "candidate_import_or_runtime_test": false,
+    "execution_receipt_and_log_byte_audit": true,
+    "network": false,
+    "predecessor_files_verified": 21,
+    "production_invocation": false,
+    "source_and_contract_review": true,
+    "static_ast_and_hash_audit": true,
+    "tracked_writes": false
+  },
+  "bindings": [
+    {
+      "bytes": 11921,
+      "path": ".cache/phase2-li-local-extra-candidate-v1/promotion/scripts/li_v3_local_extra_headers.py",
+      "sha256": "54db58a567afc9211303f2edff13541ab2f97beb77ef2edaa518ad32bf6b1026"
+    },
+    {
+      "bytes": 8495,
+      "path": ".cache/phase2-li-local-extra-candidate-v1/promotion/docs/li-v3-local-extra-headers-plan.md",
+      "sha256": "1247430dfe174bb1d7dd2e17ca06b5781ef41fadd7cb13d60d6d01e202dbb594"
+    },
+    {
+      "bytes": 19937,
+      "path": ".cache/phase2-li-local-extra-candidate-v1/promotion/tests/test_li_v3_local_extra_headers.py",
+      "sha256": "b072f2e63a79d3c032838f49f4e2eeea845b7872d67c43f9e0e8a9964ca74a78"
+    },
+    {
+      "bytes": 40327,
+      "path": ".cache/phase2-li-local-extra-review-v1/promotion/tests/test_li_v3_local_extra_headers_review.py",
+      "sha256": "24e54f7674a116a043aecaf3e5b396aba3139eb1739998f45ab5149c82b5602b"
+    },
+    {
+      "bytes": 4257,
+      "path": ".cache/phase2-li-local-extra-math-review-v1/source-argument.md",
+      "sha256": "fc7b4e231e05ee72d97de624400e69ba119014c23d2b12a82e220514f86049e0"
+    },
+    {
+      "bytes": 2575,
+      "path": ".cache/phase2-li-local-extra-math-review-v1/audit_source_bindings.py",
+      "sha256": "c3987c44793ffedfe13be958dd8538ce7f0af46b16dfc53a37d222e0d6c6ba95"
+    },
+    {
+      "bytes": 3538,
+      "path": ".cache/phase2-li-local-extra-math-review-v1/source-bindings-first.json",
+      "sha256": "e35e87db9a906589fac0c9ed7b931c98022a79a16b17fab725da51d408446b5d"
+    },
+    {
+      "bytes": 3419,
+      "path": ".cache/phase2-li-local-extra-review-v1/review.json",
+      "sha256": "ae6c0403ee38df07c4d399e6072c2135c5deaa66de3b2e5815e1acb7601407be"
+    },
+    {
+      "bytes": 1643,
+      "path": ".cache/phase2-li-local-extra-candidate-v1/receipts/author-first/execution.json",
+      "sha256": "f9b36028e24a03924faea7e4104d94e8fb77f021488d8c21c82e8b8e0391bbf0"
+    },
+    {
+      "bytes": 0,
+      "path": ".cache/phase2-li-local-extra-candidate-v1/receipts/author-first/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 3371,
+      "path": ".cache/phase2-li-local-extra-candidate-v1/receipts/author-first/stderr.log",
+      "sha256": "77ca2749e01ac5a6cb4d184d0d3ea6803cf465bb8153f2cf8c6a58d5dd30a646"
+    },
+    {
+      "bytes": 8495,
+      "path": ".cache/phase2-li-local-extra-candidate-v1/receipts/author-first/li-v3-local-extra-headers-plan.md",
+      "sha256": "2c0c10dd23ba855c6eb1fd6831373a07698c7a6d6280a89f8bb55e7fcc1331aa"
+    },
+    {
+      "bytes": 1844,
+      "path": ".cache/phase2-li-local-extra-review-v1/first-run/execution.json",
+      "sha256": "a635c882c1796c464af192aaa020292fa8dbb52f40516f53052afb9c0add66f7"
+    },
+    {
+      "bytes": 0,
+      "path": ".cache/phase2-li-local-extra-review-v1/first-run/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 5833,
+      "path": ".cache/phase2-li-local-extra-review-v1/first-run/stderr.txt",
+      "sha256": "c4cbeb472d67f55ed9f769e0a05f21c8f17c97cff488d9217ae193c3fef1c365"
+    },
+    {
+      "bytes": 1844,
+      "path": ".cache/phase2-li-local-extra-review-v1/final-run/execution.json",
+      "sha256": "f4b8b89bd55a06b8c34ccb7cea043a1cc75ada7f00214e5d28dafd65c1d9a6ef"
+    },
+    {
+      "bytes": 0,
+      "path": ".cache/phase2-li-local-extra-review-v1/final-run/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 5093,
+      "path": ".cache/phase2-li-local-extra-review-v1/final-run/stderr.txt",
+      "sha256": "30719b8a26c8bc8802c6a8eade4bc6bd59c3f0c03861359445aa5c9c7f4adfad"
+    }
+  ],
+  "blockers": [],
+  "findings": [
+    "Exact predecessor sole LOCAL_EXTRA_PRESENT plus CHECKED and successful cleanup supports the same-entry locator by contiguous-prefix induction on the same immutable raw bytes.",
+    "Subtraction bounds and unsigned fields bound every local span; the locator is conditional on that predecessor result, not an independent general ZIP validator.",
+    "TLV traversal enforces cap-before-header-before-declared-data-bound precedence; progress is at least four bytes; complete ordered ID/length pairs or null are published.",
+    "Added traversal does not slice or interpret opaque field bodies. Whole source read/hash and predecessor directory/name decoding remain exposure and are not described as zero acquisition.",
+    "The same report preserves exposure on local parse/write/close failures. A receipt written before a later close failure can differ from returned stdout; the contract explicitly requires retaining and auditing both.",
+    "Fixed prerequisite is verified before private capture/object reads; new four-file source gate composes with 21 unchanged predecessor pins, all verified by static byte audit.",
+    "No ID alone admits ZIP64, Unicode override, growth-hint, archive compatibility, data readiness, statistical independence or scientific superiority."
+  ],
+  "finished_utc": "2026-10-16T09:19:19.340245+00:00",
+  "limits": "Source-level engineering argument, not a Lean/refinement proof, actual archive field inventory, later member acceptance, CI/package result or scientific validation. This review does not itself authorize actual source operations.",
+  "reviewer": "/root/phase2_math",
+  "schema": "lupine.discovery.local_extra_source_review.v1",
+  "separate_executable_evidence": {
+    "author": {
+      "exit_code": 0,
+      "process_seconds": 0.5369652820008923,
+      "tests": 19,
+      "unittest_seconds": 0.08
+    },
+    "contract_after_author_execution": "Only final sentence line-formatting repair; original executed snapshot preserved and reviewed.",
+    "independent_final": {
+      "exit_code": 0,
+      "failures": 0,
+      "process_seconds": 0.4561559440007841,
+      "tests": 30,
+      "unittest_seconds": 0.105
+    },
+    "independent_first": {
+      "disposition": "Reviewer expected a 65535-character filename to pass the unchanged 256-character predecessor cap; corrected only reviewer fixture, with original failure preserved.",
+      "exit_code": 1,
+      "failures": 1,
+      "tests": 30
+    },
+    "source_unchanged": "54db58a567afc9211303f2edff13541ab2f97beb77ef2edaa518ad32bf6b1026"
+  },
+  "status": "NO_BLOCKER_WITHIN_SOURCE_REVIEW_SCOPE"
+}
