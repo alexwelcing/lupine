@@ -1,0 +1,23 @@
+{
+  "at": "2026-10-16T13:38:01.305459+00:00",
+  "source": {
+    "li_v3_readiness.py": {
+      "bytes": 81314,
+      "sha256": "a8cfb759e2810ce14587550547366c5d2c35d0646db94fa63a61c3f3654ca86a"
+    },
+    "test_li_v3_readiness.py": {
+      "bytes": 23054,
+      "sha256": "a6c31af83d1d66fa335a9edd0aad967109eaed67cfe864756d4f69928cb63ad5"
+    },
+    "interface.final-v3.json": {
+      "bytes": 6461,
+      "sha256": "c53c2e2d59599f6e568604d83ae33a4a6814e0b36d03b4362f3ad4163fe2d748"
+    },
+    "scope.json": {
+      "bytes": 40623,
+      "sha256": "773d3f5515540aaa6aa1528b1a43548fd1b8fc326a2b6aecd89261c2a052e4b1"
+    }
+  },
+  "runtime_files": 335,
+  "all_runtime_held": true
+}

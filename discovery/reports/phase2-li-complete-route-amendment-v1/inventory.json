@@ -1,0 +1,66 @@
+{
+  "at": "2026-10-16T14:37:58.778357+00:00",
+  "files": {
+    "decision.json": {
+      "source": ".cache/phase2-li-complete-route-amendment-v1/decision.json",
+      "bytes": 4976,
+      "sha256": "beaedd68842954d2c292491152645a6cf879541c30334a60fd4a28885753145c"
+    },
+    "empty-semantic-premise-clarification.json": {
+      "source": ".cache/phase2-li-complete-route-amendment-v1/empty-semantic-premise-clarification.json",
+      "bytes": 1487,
+      "sha256": "41ea1b3ff2e27ba452ae2d9701a9803d711641428502f44c0b8126b8f828f206"
+    },
+    "feasibility/README.md": {
+      "source": ".cache/phase2-li-frame-feasibility-review-v1/README.md",
+      "bytes": 6965,
+      "sha256": "0b1d53d56015fd67205c24e4d146c3b297b3176b8cef67c33aa726a5c289c041"
+    },
+    "feasibility/row-policy-advisory.md": {
+      "source": ".cache/phase2-li-frame-feasibility-review-v1/row-policy-advisory.md",
+      "bytes": 2096,
+      "sha256": "33ac3301d94f61b3c1afe9ae8bf3529189462a09c964dd147b845cd8a4dbdff4"
+    },
+    "feasibility/review.json": {
+      "source": ".cache/phase2-li-frame-feasibility-review-v1/review.json",
+      "bytes": 3007,
+      "sha256": "e13e8aa355a47b742783d2146bf40b2528456f388f1c6926f45477b189fc1156"
+    },
+    "feasibility/handoff.json": {
+      "source": ".cache/phase2-li-frame-feasibility-review-v1/handoff.json",
+      "bytes": 498,
+      "sha256": "0a7d3b513efcc8ece76dac8530b367e4d129201315998afd22728c99e8ee87e1"
+    },
+    "decision-review/README.md": {
+      "source": ".cache/phase2-li-complete-route-decision-review-v1/README.md",
+      "bytes": 2071,
+      "sha256": "7373683041aaac9ae2827badce414cb859198c47b362cfaef756e71483371748"
+    },
+    "decision-review/README.initial.md": {
+      "source": ".cache/phase2-li-complete-route-decision-review-v1/README.initial.md",
+      "bytes": 3154,
+      "sha256": "913edd0ef5094e349dafe7b9c6c3ddecf2c8ce217dddca25056c45b84327f779"
+    },
+    "decision-review/review.json": {
+      "source": ".cache/phase2-li-complete-route-decision-review-v1/review.json",
+      "bytes": 2961,
+      "sha256": "98aa6ed60f855368160ba26a9d4be59f15589509e2b9465d540501b8b5a71bab"
+    },
+    "decision-review/review.initial.json": {
+      "source": ".cache/phase2-li-complete-route-decision-review-v1/review.initial.json",
+      "bytes": 2575,
+      "sha256": "7245f2b6f24690413baaa92569825340a01f20f0b990de27cbbd979f42ba06f6"
+    },
+    "decision-review/handoff.json": {
+      "source": ".cache/phase2-li-complete-route-decision-review-v1/handoff.json",
+      "bytes": 918,
+      "sha256": "8a31711a0bcda3c8c61a799fc15d931e80e848386195a2b66f0a19f085828754"
+    },
+    "README.md": {
+      "source": ".cache/phase2-rhizo-census-ci-repair-v1/prepare_amendment_report.py",
+      "bytes": 2836,
+      "sha256": "72fccf5b86937924c9ecfc342cda8f79579cbfdb47113be8c79d5578d59158ab"
+    }
+  },
+  "actual_operations": 0
+}

@@ -1,0 +1,11 @@
+{
+  "schema": "lupine.li.readiness.empty-semantic-premise-clarification.v1",
+  "at": "2026-10-16T14:34:42.864617+00:00",
+  "parent_decision_sha256": "beaedd68842954d2c292491152645a6cf879541c30334a60fd4a28885753145c",
+  "status": "ACCEPTED_BEFORE_SOURCE_HOLD_OR_ACTUAL_OPERATIONS",
+  "finding": "Preserved strict pure _doc_binding requires at least one field. An all-structural-only request must not fabricate a dummy scientific field.",
+  "rule": "If and only if every non-documentary role is explicitly STRUCTURAL_ONLY_UNASSIGNED and no semantic field/assertion/metadata/endpoint/row class is requested, use an explicit SEMANTIC_PROJECTION_NOT_REQUESTED branch with null strict projection and null strict projection digest. Authenticate/recompute complete A and B inventories and their lineage unchanged. Do not invoke or fabricate a successful strict documentary projection, and do not relabel the inventory as one. Then enumerate the frozen complete structural frame within the same C operation with mandatory completed NO_GO_UNRESOLVED_PREMISE.",
+  "semantic_requests": "Any semantic role/assertion requires existing strict nonempty documentary binding and reconstruction before record access. Unsupported or empty binding blocks; no inferred fields.",
+  "limits": "No new phase, source member scope, cap, budget, scientific criterion or claim. Pure5fd1 remains byte-identical.",
+  "claim": "Structural completeness only; semantic readiness and scientific admission remain false."
+}

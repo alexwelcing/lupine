@@ -1,0 +1,47 @@
+{
+  "additional_static_finding": "Python search found no in-place mutation of verifier CHECKS; tests replace receipt check lists rather than mutating the module list.",
+  "assertion": "AssertionError:17 !=16",
+  "authorization": "Root subsequently allowed a separate read-only focused reproduction without changing runtime; root retained ownership of edits and full suite.",
+  "created_at": "2026-10-16T14:37:19.782833+00:00",
+  "earlier_static_review_sha256": "77b35c9dd86d6be7d3182b87adbd76b67c2fdf5fc0be523dc11e675f97c3225f",
+  "errors": 0,
+  "execution": {
+    "actual_scientific_source_reads": false,
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-B",
+      "-m",
+      "unittest",
+      "-v",
+      "test_retained_mpea_transport.RetainedMpeaTransportTests.test_all_sixteen_flags_required_without_omission_extra_or_reorder"
+    ],
+    "exit_code": 1,
+    "finished_at": "2026-10-16T14:35:52.631995+00:00",
+    "full_suite_executed": false,
+    "process_seconds": 0.7741489029940567,
+    "runtime_edits": false,
+    "scope": "Only the original single retained-transport test; inert temporary Git/archive/wheel fixture; no actual scientific source/private inputs or full suite.",
+    "source_pins": {
+      "scripts/verify_retained_artifacts.py": "3d3247beb74905c3f6d3a48aa42566d73c7a550645116ce084c0d8e4d664446a",
+      "tests/test_retained_artifacts.py": "ffdd9dd80e5e2c23a9294d35bc70bb7bf9591384f4071229c414c0c0562fb3f3",
+      "tests/test_retained_mpea_transport.py": "b841a8dcc5ac955f3e82a7de0e34186e9d752552c022a750c3cdec85c94da84a"
+    },
+    "sources_held_after": true,
+    "started_at": "2026-10-16T14:35:51.857395+00:00",
+    "test_status": "FIRST_ORIGINAL_TEST_FAILURE_PRESERVED"
+  },
+  "failures": 1,
+  "full_suite_result_claimed": false,
+  "initial_test_and_source_bytes_preserved": true,
+  "limits": [
+    "Confirms this original test fails under exact2975 source bytes; unavailable CI tracebacks and ongoing root full suite mean no sole-cause claim.",
+    "The proposed patch has AST syntax/data validation only and still needs root execution after application.",
+    "Packaging/byte-identity audits on2975 remain historical valid evidence; they do not imply its failed full-CI gate passed."
+  ],
+  "proposed_correction_tested": false,
+  "schema": "lupine.rhizo.census.ci-static-review.execution-addendum.v1",
+  "status": "ORIGINAL_STALE_ASSERTION_CONFIRMED_BY_SINGLE_FOCUSED_FAILURE",
+  "test_file_line": 57,
+  "tests_run": 1,
+  "unittest_seconds": 0.105
+}

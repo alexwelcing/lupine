@@ -1,0 +1,113 @@
+{
+  "first_check_failure": {
+    "cause": "Future report directory did not yet exist; unnormalized .. path made is_file fail before resolution.",
+    "correction": "Lexically normalized paths; no document/source change needed.",
+    "tool_chunk": "f66707"
+  },
+  "link_count": 15,
+  "link_layout": "Final reports/ directory after lexical normalization, using promotion-local targets where available.",
+  "links": [
+    {
+      "file": "README.md",
+      "resolution": "promotion-local",
+      "resolved_path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-pre-c-semantic-bindings-v1/promotion/reports/phase2-li-pre-c-semantic-bindings-v1/source-bindings.json",
+      "target": "source-bindings.json"
+    },
+    {
+      "file": "README.md",
+      "resolution": "final-public-layout",
+      "resolved_path": "/workspace/lupine-discovery-branch/discovery/reports/phase2-li-paper-methods-v1/README.md",
+      "target": "../../reports/phase2-li-paper-methods-v1/README.md"
+    },
+    {
+      "file": "README.md",
+      "resolution": "final-public-layout",
+      "resolved_path": "/workspace/lupine-discovery-branch/discovery/reports/phase2-li-paper-methods-v1/independent-review/findings.md",
+      "target": "../../reports/phase2-li-paper-methods-v1/independent-review/findings.md"
+    },
+    {
+      "file": "README.md",
+      "resolution": "final-public-layout",
+      "resolved_path": "/workspace/lupine-discovery-branch/discovery/reports/phase2-li-author-methods-v1/README.md",
+      "target": "../../reports/phase2-li-author-methods-v1/README.md"
+    },
+    {
+      "file": "README.md",
+      "resolution": "final-public-layout",
+      "resolved_path": "/workspace/lupine-discovery-branch/discovery/reports/phase2-source-readiness-v1/li-metadata/README.md",
+      "target": "../../reports/phase2-source-readiness-v1/li-metadata/README.md"
+    },
+    {
+      "file": "README.md",
+      "resolution": "final-public-layout",
+      "resolved_path": "/workspace/lupine-discovery-branch/discovery/reports/phase2-li-reference-identity-v1/article-citation-projection.json",
+      "target": "../../reports/phase2-li-reference-identity-v1/article-citation-projection.json"
+    },
+    {
+      "file": "README.md",
+      "resolution": "final-public-layout",
+      "resolved_path": "/workspace/lupine-discovery-branch/discovery/reports/phase2-li-reference-identity-v1/README.md",
+      "target": "../../reports/phase2-li-reference-identity-v1/README.md"
+    },
+    {
+      "file": "README.md",
+      "resolution": "final-public-layout",
+      "resolved_path": "/workspace/lupine-discovery-branch/discovery/reports/phase2-notebook-header-verification-v1/public-notebook/1.json",
+      "target": "../../reports/phase2-notebook-header-verification-v1/public-notebook/1.json"
+    },
+    {
+      "file": "README.md",
+      "resolution": "final-public-layout",
+      "resolved_path": "/workspace/lupine-discovery-branch/discovery/reports/phase2-notebook-header-verification-v1/README.md",
+      "target": "../../reports/phase2-notebook-header-verification-v1/README.md"
+    },
+    {
+      "file": "README.md",
+      "resolution": "final-public-layout",
+      "resolved_path": "/workspace/lupine-discovery-branch/discovery/reports/phase2-li-complete-route-amendment-v1/decision.json",
+      "target": "../phase2-li-complete-route-amendment-v1/decision.json"
+    },
+    {
+      "file": "README.md",
+      "resolution": "final-public-layout",
+      "resolved_path": "/workspace/lupine-discovery-branch/discovery/reports/phase2-li-complete-route-amendment-v1/feasibility/README.md",
+      "target": "../phase2-li-complete-route-amendment-v1/feasibility/README.md"
+    },
+    {
+      "file": "README.md",
+      "resolution": "promotion-local",
+      "resolved_path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-pre-c-semantic-bindings-v1/promotion/reports/phase2-li-pre-c-semantic-bindings-v1/cross-check.json",
+      "target": "cross-check.json"
+    },
+    {
+      "file": "PUBLICATION.md",
+      "resolution": "promotion-local",
+      "resolved_path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-pre-c-semantic-bindings-v1/promotion/reports/phase2-li-pre-c-semantic-bindings-v1/README.md",
+      "target": "README.md"
+    },
+    {
+      "file": "PUBLICATION.md",
+      "resolution": "promotion-local",
+      "resolved_path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-pre-c-semantic-bindings-v1/promotion/reports/phase2-li-pre-c-semantic-bindings-v1/README.original.utf8.json",
+      "target": "README.original.utf8.json"
+    },
+    {
+      "file": "PUBLICATION.md",
+      "resolution": "promotion-local",
+      "resolved_path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-pre-c-semantic-bindings-v1/promotion/reports/phase2-li-pre-c-semantic-bindings-v1/publication-copyset.json",
+      "target": "publication-copyset.json"
+    }
+  ],
+  "original_readme_reconstruction_exact": true,
+  "original_source_hashes_held": true,
+  "product_tests_run": false,
+  "raw_source_access": false,
+  "readme_change_exactly_one_relative_link": true,
+  "status": "PASS_BYTE_LINK_WHITESPACE_CHECKS",
+  "tracked_edits": false,
+  "unchanged_copies": [
+    "source-bindings.json",
+    "cross-check.json",
+    "handoff.json"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "findings": [
+    "No exact worksheet name/index, column coordinate/meaning/unit, row class/range or reference-key join is established.",
+    "read_excel/dropna are syntactic names; expression categories do not disclose header/skiprows/input values.",
+    "Even unreported_arguments_present=false does not justify pandas defaults, runtime binding or execution.",
+    "dropna syntax establishes no actual exclusion rule, count or row identities.",
+    "Notebook identity does not establish repository-workbook/archive equivalence."
+  ],
+  "input_ids": [
+    "N1",
+    "N2",
+    "N3",
+    "P3"
+  ],
+  "network_or_execution": false,
+  "raw_or_private_access": false,
+  "reported_input_sha256": {
+    "N1": "398009e670dc35077246938072e679a7254a8020feaa2a5c4cf285a9433d5205",
+    "N2": "1f7c09d7b201ee0310a55f9c8c8db389158634d1bdeb86ead1dbfa43b67c7bdf",
+    "N3": "98f70bfea96dedeaad438d1809163e8c316748f4aabc545ab8e9348ce51f9a38",
+    "P3": "e0bc80439db113297fe78631196dc55743d845241919efe580856d6285862ea6"
+  },
+  "reviewer": "/root/adversarial_review",
+  "scientific_independence_created": false,
+  "scope": "Independent source-only notebook/author-documentation cross-check requested by this reviewer; no new artifact hierarchy or runtime invocation."
+}

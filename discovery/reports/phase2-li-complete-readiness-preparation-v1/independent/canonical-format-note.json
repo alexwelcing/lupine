@@ -1,0 +1,6 @@
+{
+  "at": "2026-10-16T13:38:23.444701+00:00",
+  "candidate_invocations": 0,
+  "change": "Before first execution, explicit binding canonical format includes the copied source canonical function trailing LF. No expectation or source behavior change.",
+  "test_sha256": "3cbe0123c7348e15ae0b20ee0e3c16bc241b8e825ff4efe846c59a1b28da415d"
+}

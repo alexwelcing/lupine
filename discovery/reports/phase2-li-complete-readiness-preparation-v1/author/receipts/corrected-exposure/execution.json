@@ -1,0 +1,48 @@
+{
+  "actual_source_operations": 0,
+  "all_runtime_held_after": true,
+  "all_runtime_held_before": true,
+  "exit_code": 0,
+  "finished_at": "2026-10-16T13:42:57.224438+00:00",
+  "guard_policy": "Audit hook forbids network/subprocess and any read under discovery outside fixed runtime allowlist or candidate directory; tests additionally forbid custody reads and production guards.",
+  "process_seconds": 2.458545,
+  "runtime_files": 335,
+  "source_after": {
+    "interface.final-v3.json": {
+      "bytes": 6461,
+      "sha256": "c53c2e2d59599f6e568604d83ae33a4a6814e0b36d03b4362f3ad4163fe2d748"
+    },
+    "li_v3_readiness.py": {
+      "bytes": 81591,
+      "sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219"
+    },
+    "scope.json": {
+      "bytes": 40623,
+      "sha256": "773d3f5515540aaa6aa1528b1a43548fd1b8fc326a2b6aecd89261c2a052e4b1"
+    },
+    "test_li_v3_readiness.py": {
+      "bytes": 23735,
+      "sha256": "0d96300978eaec5a43efb92ce67c3b4a3fa53da346022abc20de1e34a7c47610"
+    }
+  },
+  "source_before": {
+    "interface.final-v3.json": {
+      "bytes": 6461,
+      "sha256": "c53c2e2d59599f6e568604d83ae33a4a6814e0b36d03b4362f3ad4163fe2d748"
+    },
+    "li_v3_readiness.py": {
+      "bytes": 81591,
+      "sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219"
+    },
+    "scope.json": {
+      "bytes": 40623,
+      "sha256": "773d3f5515540aaa6aa1528b1a43548fd1b8fc326a2b6aecd89261c2a052e4b1"
+    },
+    "test_li_v3_readiness.py": {
+      "bytes": 23735,
+      "sha256": "0d96300978eaec5a43efb92ce67c3b4a3fa53da346022abc20de1e34a7c47610"
+    }
+  },
+  "source_held": true,
+  "started_at": "2026-10-16T13:42:54.765892+00:00"
+}

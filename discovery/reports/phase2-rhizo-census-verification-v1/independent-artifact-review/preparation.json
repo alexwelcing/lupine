@@ -1,0 +1,43 @@
+{
+  "base_commit": "d4d8504a97d362a6339eaa27453a86e0eb167cee",
+  "bindings": [
+    {
+      "bytes": 1694,
+      "sha256": "4544afeced51650e6ff7bcf58c53d388fca4134c8080b2659aec13bef17d33a6",
+      "snapshot": "prepared-scope.json",
+      "source": ".cache/phase2-rhizo-census-release-v1/scope.json"
+    },
+    {
+      "bytes": 3562,
+      "sha256": "b78208a28977f54f641f31db8632688cd929967db873f6ec34628a0473cbde34",
+      "snapshot": "prepared-promotion-inputs.json",
+      "source": ".cache/phase2-rhizo-census-release-v1/promotion-inputs.json"
+    }
+  ],
+  "created_at": "2026-10-16T13:53:08.705889+00:00",
+  "expected_public_resource_sha256": "a9ab9d72c6c39be9338e951b657e0587ae8f4dbe534b276b8f8f8951a7b1a63a",
+  "invocation_gate": "Root must supply exact published commit and completed retention directory before final audit invocation.",
+  "no_actions": [
+    "No private/raw scientific object or ignored census producer file is opened.",
+    "No census, tests, scientific acquisition, generic verifier or package contents are executed by this audit.",
+    "No Git mutations, network or CI monitoring.",
+    "No bit-reproducible wheel, physical truth, independence or superiority claim."
+  ],
+  "planned_runtime_counts": {
+    "added": 4,
+    "baseline": 335,
+    "changed_existing": 9,
+    "current": 339,
+    "unchanged_baseline": 326
+  },
+  "schema": "lupine.rhizo.census.artifact-review.preparation.v1",
+  "scope": [
+    "Artifact hashes and receipt sealing; every public source tar blob equals exact commit; no extraction or content execution.",
+    "Independent runtime set derivation and complete baseline manifest/blob reconciliation.",
+    "Explicit9existing+4added delta,339total and326oldunchanged, bound to root promotion bytes.",
+    "Wheel package payload equality to exact source plus complete SHA256/size RECORD validation; no missing or extraneous payload.",
+    "Compare every old package payload to baseline Git; allow only declared4changed and2new package payloads.",
+    "Require exact recorded-census public resource identity and additive17check receipt metadata."
+  ],
+  "status": "PREPARATION_ONLY_FINAL_AUDIT_NOT_RUN"
+}

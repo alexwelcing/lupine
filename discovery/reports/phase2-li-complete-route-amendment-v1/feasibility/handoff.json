@@ -1,0 +1,20 @@
+{
+  "files": [
+    {
+      "bytes": 6965,
+      "path": "README.md",
+      "sha256": "0b1d53d56015fd67205c24e4d146c3b297b3176b8cef67c33aa726a5c289c041"
+    },
+    {
+      "bytes": 2096,
+      "path": "row-policy-advisory.md",
+      "sha256": "33ac3301d94f61b3c1afe9ae8bf3529189462a09c964dd147b845cd8a4dbdff4"
+    },
+    {
+      "bytes": 3007,
+      "path": "review.json",
+      "sha256": "e13e8aa355a47b742783d2146bf40b2528456f388f1c6926f45477b189fc1156"
+    }
+  ],
+  "status": "FROZEN_ADVISORY"
+}

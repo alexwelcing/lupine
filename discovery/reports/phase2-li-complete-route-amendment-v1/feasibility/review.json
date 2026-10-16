@@ -1,0 +1,73 @@
+{
+  "additional_proposals_not_implemented": [
+    "A all-sheet name/binding manifest",
+    "C structural-inventory-only fallback where column/role semantics remain unbound"
+  ],
+  "admission_from_complete_structural_inventory": false,
+  "at": "2026-10-16T14:25:20.188950+00:00",
+  "bindings": [
+    {
+      "bytes": 81591,
+      "path": ".cache/phase2-li-complete-readiness-candidate-v1/li_v3_readiness.py",
+      "sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219"
+    },
+    {
+      "bytes": 6461,
+      "path": ".cache/phase2-li-complete-readiness-candidate-v1/interface.final-v3.json",
+      "sha256": "c53c2e2d59599f6e568604d83ae33a4a6814e0b36d03b4362f3ad4163fe2d748"
+    },
+    {
+      "bytes": 4565,
+      "path": ".cache/phase2-li-complete-readiness-candidate-v1/report-shapes.json",
+      "sha256": "77039fdab0a96493e32979c91cc42d8edd63b4d8fb3e84545ad6298757c4d467"
+    },
+    {
+      "bytes": 6461,
+      "path": ".cache/phase2-li-complete-readiness-production-v1/interface.inventory-v1.json",
+      "sha256": "0454cebf34d19e20f2f6babf8c59f8943d0356fe1b89c3a4f4db3e6b6afe6414"
+    },
+    {
+      "bytes": 35358,
+      "path": "scripts/li_v3_custody.py",
+      "sha256": "3ead51f0afdf16be973743257be488669c988aa40443779e7a5c400e9b0d3234"
+    },
+    {
+      "bytes": 7423,
+      "path": "reports/phase2-li-paper-methods-v1/README.md",
+      "sha256": "b168331d3198c97b6cdf45d67b505b4ddf88acf60ab6b556e4b35798b5a3eb10"
+    },
+    {
+      "bytes": 7401,
+      "path": ".cache/phase2-li-documentary-inventory-amendment-review-v1/README.md",
+      "sha256": "94a79853d6d520deda2f95ab3c52c02917a84adc00f6b3b8dcd5fe1a1b0e2c88"
+    }
+  ],
+  "current_findings": {
+    "all_sheet_names_projected": false,
+    "exact_declared_row_set_required": true,
+    "nonempty_metadata_and_endpoint_columns_required": true
+  },
+  "policy_decision_owner": "/root",
+  "preserved_row_advisory_sha256": "33ac3301d94f61b3c1afe9ae8bf3529189462a09c964dd147b845cd8a4dbdff4",
+  "pure_source_sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219",
+  "readme_sha256": "0b1d53d56015fd67205c24e4d146c3b297b3176b8cef67c33aa726a5c289c041",
+  "recommendations": [
+    "Bounded complete all-sheet manifest from already parsed A metadata.",
+    "Default UNRESOLVED for otherwise-unbound actual rows, no dropping or unsupported assertions.",
+    "Do not guess column bindings; either terminal NO_GO before C or explicit same-C structural-inventory-only mode with empty semantic bindings and mandatory completed negative status."
+  ],
+  "root_already_accepted": [
+    "Default-unresolved C policy in principle",
+    "A/B-inventory/C budget at most two operations each"
+  ],
+  "schema": "lupine.frame-feasibility-advisory.v1",
+  "scope": {
+    "actual_source_reads": 0,
+    "network": 0,
+    "private_receipt_reads": 0,
+    "tests_or_product_execution": 0,
+    "tracked_edits": 0
+  },
+  "source_code_or_prior_design_edited": false,
+  "status": "CONCRETE_INTERFACE_GAPS_AND_PROSPECTIVE_OPTIONS"
+}

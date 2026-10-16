@@ -1,0 +1,13 @@
+{
+  "encoding": "utf-8",
+  "original_bytes": 1225,
+  "original_relative_path": "author/portable-author.diff",
+  "original_sha256": "41bbd65ffc04cfb32e0a0a6d5c7d9a8e1ac23f4ae1b4c23928b1ec8a8113b408",
+  "original_source": ".cache/phase2-li-complete-readiness-candidate-v1/portable-author.diff",
+  "reasons": [
+    "Preserve exact historical diff including whitespace-bearing context lines.",
+    "Preserve original trailing whitespace without weakening publication whitespace checks."
+  ],
+  "schema": "lupine.lossless_utf8_publication_wrapper.v1",
+  "text": "--- held-author\n+++ portable-author\n@@ -16,7 +16,9 @@\n import zlib\n \n HERE = Path(__file__).resolve().parent\n-spec = importlib.util.spec_from_file_location('readiness_author', HERE / 'li_v3_readiness.py')\n+DISCOVERY = next(p for p in HERE.parents if p.name == 'discovery' and (p/'AGENTS.md').is_file())\n+SOURCE = DISCOVERY/'scripts/li_v3_readiness.py'\n+spec = importlib.util.spec_from_file_location('readiness_author', SOURCE)\n M = importlib.util.module_from_spec(spec); spec.loader.exec_module(M)\n CT, REL, DOC, SS = M.custody.CT, M.custody.REL, M.custody.DOCREL, M.custody.SS\n REF_TEXT = 'Reference key.'\n@@ -362,8 +364,8 @@\n         self.reject(M.inspect_synthetic_documentary(raw,b,expected_diagnostic=p,prior_layout=l),'SOURCE_BINDING_MISMATCH')\n \n     def test_all_runtime_sources_remain_unchanged(self):\n-        manifest=json.loads((HERE/'scope.json').read_text())['runtime_manifest']['files']\n-        self.assertEqual(len(manifest),335)\n+        manifest=json.loads((M.ROOT/'reports/runtime-manifest.json').read_text())['files']\n+        self.assertGreaterEqual(len(manifest),335)\n         for name,digest in manifest.items():self.assertEqual(hashlib.sha256((M.ROOT/name).read_bytes()).hexdigest(),digest,name)\n \n \n"
+}

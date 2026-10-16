@@ -1,0 +1,58 @@
+{
+  "schema": "lupine.li.readiness.prospective-complete-route-amendment.v1",
+  "at": "2026-10-16T14:31:53.846007+00:00",
+  "owner": "root",
+  "status": "ACCEPTED_BEFORE_ANY_COMPLETE_ROUTE_ACTUAL_OPERATION",
+  "authority": "Existing user authorization for autonomous implementation and scientific research.",
+  "preserved": [
+    {
+      "path": ".cache/phase2-li-documentary-inventory-amendment-v1/decision.json",
+      "bytes": 4045,
+      "sha256": "745175f952dd0c95c2e9fa2079e4e2ab3d1ae2f9f9e49b1177922e87bddd7016"
+    },
+    {
+      "path": ".cache/phase2-li-complete-readiness-candidate-v1/li_v3_readiness.py",
+      "bytes": 81591,
+      "sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219"
+    },
+    {
+      "path": ".cache/phase2-li-frame-feasibility-review-v1/handoff.json",
+      "bytes": 498,
+      "sha256": "0a7d3b513efcc8ece76dac8530b367e4d129201315998afd22728c99e8ee87e1"
+    }
+  ],
+  "rationale": "Unknown sheet identities and row geometry cannot be demanded as advance facts. Unknown column meanings remain unknown. Complete structural accounting is useful negative evidence and must never impersonate semantic readiness.",
+  "profile": "Distinct prospective complete structural/inventory profile; strict pure5fd1 unchanged.",
+  "A": {
+    "manifest": "Atomic complete list of every validated workbook worksheet including hidden sheets in workbook order; exact bounded name, documentary role only for exact References and Column Descriptions, otherwise UNASSIGNED; validated one-to-one internal-worksheet binding status. No member-target disclosure required.",
+    "limits": "Existing128 sheets/name31/relationship128/output2MiB limits and package checks. No new member opens.",
+    "exposure": "New literal sheet-name disclosure may contain incidental empirical text. Explicit researcher exposure distinct from package machine exposure.",
+    "replay": "B and C authenticate and compare the entire A manifest, not only count."
+  },
+  "B": "Retain prior accepted complete bounded two-role documentary plain-text inventory and all exposure/negative rules. No record worksheet preview.",
+  "C": {
+    "binding": "One frozen reviewed binding per source used unchanged in both C invocations; authenticate full historical A/B lineage, same-buffer replay, complete inventory comparison, strict documentary reconstruction before record-member opening.",
+    "coverage": "Every A-manifest non-documentary sheet is included by exact identity. No unsupported exclusions. A scientifically justified semantic role uses existing metadata/endpoint rules; otherwise explicit STRUCTURAL_ONLY_UNASSIGNED mode. Validate complete sheet coverage and all mode/binding shapes before record access.",
+    "structural_only": "Empty metadata/endpoint bindings permitted only in explicit STRUCTURAL_ONLY_UNASSIGNED mode. Never emit values, semantic metadata, joins or pairing assertions for these sheets. Every row retained and unresolved; nonempty semantic fields/classes in this mode reject.",
+    "rows": "Explicit unbound_row_policy=UNRESOLVED. Retain every explicit XML row including empty rows, never expand absent grid positions. Prebound coordinate set must be subset of observed rows; absent declarations reject. Existing justified classes retained for semantic mode; all otherwise unbound rows get UNRESOLVED, fixed-default authority and ROW_ROLE_UNKNOWN.",
+    "limits": "All existing observed-row/cell/worksheet/shared-string/output caps apply before processing; no truncation, first-N, cap changes or value-based selection. Supported grammar, dependency, formula, merge and cleanup failure rules retained.",
+    "negative": "Any structural-only/unassigned sheet, unresolved row or required missing meaning forces completed NO_GO_UNRESOLVED_PREMISE. Distinguish structural completeness from semantic metadata readiness. Zero rows/all headers/all notes cannot vacuously establish readiness.",
+    "no_adaptation": "No binding/class/column exceptions learned from C then rerun; paired C uses same frozen binding. Unknown meanings remain negative. No extra actual phase or semantic preview."
+  },
+  "budget": {
+    "A": 2,
+    "B": 2,
+    "C": 2,
+    "maximum_total": 6,
+    "automatic_advance": false
+  },
+  "claims": {
+    "fresh_status": "UNESTABLISHED",
+    "scientific_admission": false,
+    "independence": false,
+    "outcome_free": false,
+    "structural_completeness_is_semantic_readiness": false
+  },
+  "publication_gates": "Generated author and independent tests; source review; committed exact source; successful current CI, clean package and artifact verification before actual use. Current2975 full CI failed both Python jobs, separately under investigation; no actual operations authorized through that failed gate.",
+  "next": "Author implements distinct adapter profile and contract; independent reviewer tests total coverage, unknowns, negative/vacuity rules, lineage, replay, caps and failure cleanup. No actual raw source read."
+}

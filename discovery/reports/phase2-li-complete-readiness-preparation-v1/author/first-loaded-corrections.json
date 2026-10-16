@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-16T13:42:54.202235+00:00",
+  "first_loaded_run": "receipts/first-loaded",
+  "fixture_corrections": [
+    "Endpoint lexeme substring asserted only against projected payload, not whole-source SHA which legitimately contains 433.",
+    "Close stub raises once when owned archive was open; assert no destructor stderr."
+  ],
+  "other_prehold_finding": "Opaque ordinary part count accepts zero; kind restriction may arise from unfamiliar reserved relationship member alone; fixed before first loaded run.",
+  "product_change": "Explicit header-only replay lifecycle exposure; no predicate or bound change. Package archive flags describe separately owned parse.",
+  "source_after": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219",
+  "source_before": "a8cfb759e2810ce14587550547366c5d2c35d0646db94fa63a61c3f3654ca86a",
+  "test_after": "0d96300978eaec5a43efb92ce67c3b4a3fa53da346022abc20de1e34a7c47610",
+  "test_before": "a6c31af83d1d66fa335a9edd0aad967109eaed67cfe864756d4f69928cb63ad5"
+}

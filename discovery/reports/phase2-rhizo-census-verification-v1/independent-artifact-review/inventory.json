@@ -1,0 +1,98 @@
+{
+  "created_at": "2026-10-16T14:05:02.638259+00:00",
+  "excluded": [
+    "__pycache__/ generated syntax-check bytecode",
+    "retained source archive and wheel binaries are identified by receipts and remain in root retention directory"
+  ],
+  "files": [
+    {
+      "bytes": 22151,
+      "path": "audit_retained.py",
+      "sha256": "b6566a01f8704699174dbdaaacb4a51182e58bf1e346bf249375c534ac1728db"
+    },
+    {
+      "bytes": 21862,
+      "path": "before-final-pins-audit_retained.py",
+      "sha256": "4f1ea28955d378190f34ea155dde80922a51ff27b3bb6cde9888f75a8d62a071"
+    },
+    {
+      "bytes": 1694,
+      "path": "prepared-scope.json",
+      "sha256": "4544afeced51650e6ff7bcf58c53d388fca4134c8080b2659aec13bef17d33a6"
+    },
+    {
+      "bytes": 3562,
+      "path": "prepared-promotion-inputs.json",
+      "sha256": "b78208a28977f54f641f31db8632688cd929967db873f6ec34628a0473cbde34"
+    },
+    {
+      "bytes": 3595,
+      "path": "prepared-promotion-inputs-final.json",
+      "sha256": "b3867dd99e7a7d890ac0bee36e1448ff811d3931be7f3a21c80035e995a82a6a"
+    },
+    {
+      "bytes": 2150,
+      "path": "preparation.json",
+      "sha256": "21e0c7267692ad2236bb572e5b87d9d36dbbf1a917db3f8f24dc6df4a66094ea"
+    },
+    {
+      "bytes": 2471,
+      "path": "preparation-final.json",
+      "sha256": "baf2eb33a09e6de36a572ca03ff13adf0fcda0b9a3b8639740bc93b15e39257e"
+    },
+    {
+      "bytes": 1012,
+      "path": "preexecution-amendment.json",
+      "sha256": "f3156b3c18d418f0205e881d136cb0efc9a8429d15365fdd8a6a69af0cec791c"
+    },
+    {
+      "bytes": 1636,
+      "path": "root-type-sensitive-correction.json",
+      "sha256": "45fd5ae11cdb67b092a3ef8cd727932090736a375573eab3cce8b2a871744f50"
+    },
+    {
+      "bytes": 322,
+      "path": "syntax-only.json",
+      "sha256": "709a6a13fbf562dd356d13f366c56f345e866c7dcec6822bb0c948bdb5de7863"
+    },
+    {
+      "bytes": 322,
+      "path": "syntax-only-final.json",
+      "sha256": "6af99e172f21744222ec6736237f374e53b6ef8dc73df5ce75596a2073f5567a"
+    },
+    {
+      "bytes": 2311,
+      "path": "README.md",
+      "sha256": "ea03434aa0d1e0fa6159937c69a652e2694544e52b2cbba770af4a59b5579f2c"
+    },
+    {
+      "bytes": 2132,
+      "path": "preparation-inventory.json",
+      "sha256": "43f4b8f09c016e69586c572cd3941ce84fc525c6f88107235bb84274a7196d5d"
+    },
+    {
+      "bytes": 720,
+      "path": "preparation-handoff.json",
+      "sha256": "2ba8717820911fd3041738028b49768c60fe0b9d414c2d50a24ff80d3f8a4246"
+    },
+    {
+      "bytes": 2718840,
+      "path": "first-actual-artifact-audit/review.json",
+      "sha256": "6fbffd98613fe6a2602001c89ada2f4ac745ed9ca1909487a0154c8852ea1016"
+    },
+    {
+      "bytes": 1045,
+      "path": "actual-execution.json",
+      "sha256": "b411984c3fa416669eb02a32aa8270ef14816194681b0e23ead5366dec8450e9"
+    },
+    {
+      "bytes": 3413,
+      "path": "ACTUAL-REVIEW.md",
+      "sha256": "d13c7f9ca799be327766f97180b8cd8b3d612b196083827721effdf52a4743fe"
+    }
+  ],
+  "prepared_inventory_members_unchanged": true,
+  "private_data_included": false,
+  "schema": "lupine.rhizo.census.artifact-review.final-inventory.v1",
+  "total_bytes": 2789238
+}

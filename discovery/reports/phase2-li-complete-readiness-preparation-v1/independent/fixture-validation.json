@@ -1,0 +1,24 @@
+{
+  "actual_or_private_source_reads": 0,
+  "at": "2026-10-16T13:22:43.939634+00:00",
+  "candidate_imports": 0,
+  "candidate_invocations": 0,
+  "checks": [
+    "stdlib ZIP entry order, body equality and all generated CRCs",
+    "well-formed intended generated XML; opaque canaries excluded",
+    "direct fixed-header walk has five local extras and three before first invented unfamiliar part"
+  ],
+  "claim": "Fixture self-consistency only; no candidate test or scientific validation.",
+  "files": {
+    "generated_package.py": "f06f4b4922458d89239ed6d544fca69549527634a3b12b09bf3e4874897434ab",
+    "generated_replay.py": "9b4e760bedaaca96338c0d585492bca3a75596950ac2fb01b86665f0cd25b111"
+  },
+  "fixture_bytes": 10834,
+  "fixture_local_extra_areas": 5,
+  "fixture_parts": 15,
+  "fixture_sha256": "5e1b919db6801205975af6b805fb1c2aff9174fbab8e74dbafbbf8f9424ac2ef",
+  "network_calls": 0,
+  "project_imports": 0,
+  "schema": "li.readiness.independent-fixture-validation.v1",
+  "status": "GENERATED_FIXTURE_STRUCTURE_VALID"
+}

@@ -1,0 +1,50 @@
+{
+  "at": "2026-10-16T14:35:10.105235+00:00",
+  "bindings": [
+    {
+      "bytes": 4976,
+      "path": ".cache/phase2-li-complete-route-amendment-v1/decision.json",
+      "sha256": "beaedd68842954d2c292491152645a6cf879541c30334a60fd4a28885753145c"
+    },
+    {
+      "bytes": 4045,
+      "path": ".cache/phase2-li-documentary-inventory-amendment-v1/decision.json",
+      "sha256": "745175f952dd0c95c2e9fa2079e4e2ab3d1ae2f9f9e49b1177922e87bddd7016"
+    },
+    {
+      "bytes": 81591,
+      "path": ".cache/phase2-li-complete-readiness-candidate-v1/li_v3_readiness.py",
+      "sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219"
+    },
+    {
+      "bytes": 498,
+      "path": ".cache/phase2-li-frame-feasibility-review-v1/handoff.json",
+      "sha256": "0a7d3b513efcc8ece76dac8530b367e4d129201315998afd22728c99e8ee87e1"
+    }
+  ],
+  "blocking_accounting_defect": false,
+  "decision_sha256": "beaedd68842954d2c292491152645a6cf879541c30334a60fd4a28885753145c",
+  "implementation_clarification_before_hold": "Define the zero-semantic-field all-STRUCTURAL_ONLY C case explicitly; do not fabricate a dummy field to satisfy legacy _doc_binding minimum1. Either terminal pre-C NO_GO, or explicit empty projection with no semantic role/assertion and mandatory completed-negative C.",
+  "readme_sha256": "913edd0ef5094e349dafe7b9c6c3ddecf2c8ce217dddca25056c45b84327f779",
+  "reviewer": "/root/phase2_math",
+  "schema": "lupine.complete-route-decision-review.v1",
+  "scope": {
+    "actual_workbook_or_private_receipt_reads": 0,
+    "code_or_tracked_edits": 0,
+    "network": 0,
+    "product_or_guard_invocations": 0,
+    "tests": 0
+  },
+  "status": "ACCOUNTING_AND_CLAIM_BOUNDARIES_SOUND_ONE_IMPLEMENTATION_CLARIFICATION",
+  "verified_design_invariants": [
+    "Complete all-sheet A list includes hidden sheets without additional member opens.",
+    "Every non-documentary sheet represented in C; no unsupported exclusions.",
+    "All explicit rows retained; missing declarations reject; unknown rows remain unresolved.",
+    "No values/semantic metadata/joins/pairing assertions in structural-only mode.",
+    "Structural-only sheet forces NO_GO independently of row count.",
+    "Zero-row/all-header/all-note cases cannot vacuously establish readiness.",
+    "Same source/complete A+B replay and frozen C binding precede record access.",
+    "Maximum six actual phase operations, no automatic advance or adaptive second C.",
+    "Potential incidental name/text and whole-sheet machine exposure are explicit; no scientific admission or fresh-blind claim."
+  ]
+}

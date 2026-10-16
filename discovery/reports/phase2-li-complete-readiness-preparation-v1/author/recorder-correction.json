@@ -1,0 +1,9 @@
+{
+  "first_invocation": "receipts/first/execution.json",
+  "classification": "HARNESS_IMPORT_BLOCK_BEFORE_SUITE",
+  "source_changed": false,
+  "tests_changed": false,
+  "repair": "Set dedicated empty candidate PYTHONPYCACHEPREFIX and keep PYTHONDONTWRITEBYTECODE; fixed-runtime and private-source read policy unchanged. Recorder now propagates child exit code.",
+  "before_sha256": "143d0fe773675e2b9ec87a64fefe040216f62aa0f29afdcddb0df7f93508fe25",
+  "after_sha256": "a7d2367a0056091d7899252ae2e2d77ad8395210dd37d64678ad706895e1472a"
+}

@@ -1,0 +1,81 @@
+{
+  "all_old_runtime_files_unchanged": 335,
+  "calls": {
+    "documentary": "inspect_synthetic_documentary(raw, binding, *, expected_diagnostic, prior_layout)",
+    "frame": "inspect_synthetic_frame(raw, binding, *, expected_diagnostic, prior_layout, prior_documentary)",
+    "layout": "inspect_synthetic_layout(raw, *, expected_diagnostic)"
+  },
+  "documentary_binding": {
+    "fields": [
+      {
+        "allowed_texts": [
+          "exact reviewed literal text, not inferred from source by candidate"
+        ],
+        "coordinate": "canonical A1 coordinate",
+        "disclose_text": false,
+        "field_id": "bounded ASCII identifier",
+        "meaning": "REFERENCE_KEY | ROW_UNIT | ENDPOINT_DEFINITION | CONDITION_SCOPE | MISSINGNESS | PROVENANCE | CITATION",
+        "required": true,
+        "review": "DOCUMENTARY | UNRESOLVED | MIXED",
+        "role": "References | Column Descriptions",
+        "unit": "null | MPa | percent | C | h | um | mm | 1/s | weight_percent"
+      }
+    ],
+    "prior_layout_sha256": "SHA256 of canonical(prior_layout)",
+    "schema": "li_v3.documentary_binding.v1",
+    "source_sha256": "exact generated source digest"
+  },
+  "expected_diagnostic": "Explicit complete bounded G34.inspect_synthetic_headers(raw, selected_growth=True) projection, frozen outside candidate. Exact equality is required before XML; candidate also requires sole MEMBER_KIND_PROFILE failure, every other family checked/pass without partials, selected-growth match and successful cleanup. Arbitrary generated progress may differ from actual; production later has no caller expectation. No actual identity accepted.",
+  "frame_binding": {
+    "documentary_binding": "Exact complete documentary binding used for prior_documentary; required for same-buffer recomputation, never inferred from prior output.",
+    "overlap_manifest": null,
+    "prior_documentary_sha256": "canonical prior documentary digest",
+    "prior_layout_sha256": "canonical prior layout digest",
+    "record_roles": [
+      {
+        "endpoint_columns": [
+          {
+            "column": "A..XFD",
+            "endpoint_id": "bounded ASCII identifier"
+          }
+        ],
+        "metadata_columns": [
+          {
+            "column": "A..XFD",
+            "field_id": "bounded ASCII identifier",
+            "meaning": "REFERENCE_KEY | TEST_ID | SPECIMEN_ID | HEAT_ID | BATCH_ID | CAMPAIGN_ID | CONDITION | MATERIAL_ID",
+            "required": false
+          }
+        ],
+        "role_id": "bounded ASCII identifier",
+        "row_classes": [
+          {
+            "class": "HEADER | DATA | BLANK | NOTE | SUMMARY | UNRESOLVED",
+            "row": 1
+          }
+        ],
+        "sheet_name": "exact namespace-qualified workbook binding by sheet name and r:id; no ordinal"
+      }
+    ],
+    "reference_field": "null or metadata field_id",
+    "reference_keys": [
+      "exact reviewed keys, bounded; duplicate keys rejected; no DOI-only inference"
+    ],
+    "required_documentary_fields": [
+      "documentary field IDs whose manifest-supported assertions the frame relies on"
+    ],
+    "row_unit": "SINGLE_TEST | AGGREGATE | UNKNOWN",
+    "schema": "li_v3.frame_binding.v1",
+    "source_sha256": "exact generated source digest"
+  },
+  "frame_rows": "row_classes must cover every explicit XML row exactly; no extra or omitted rows. BLANK requires no explicit cells; header/note/summary/unknown assignments are manifest premises. Complete all-row accounting remains, with metadata only for DATA rows and unresolved/blank/header row identities retained. Any target column overlapping metadata fails before values. Endpoint presence/type/formula flags are structural, never numerical validity or complete pairs.",
+  "merge_policy": "Every selected documentary or metadata coordinate in any merge rectangle is rejected; no top-left-anchor or propagated-value inference.",
+  "module": "li_v3_readiness.py",
+  "new_production_operations": 0,
+  "overlap_manifest": "Optional exact object {schema:li_v3.target_redacted_overlap.v1, authenticated:true, identity_sha256:<digest>, field_id:<one metadata identifier>, exposed_keys:[<reviewed exact lineage keys>]}. Claimed authentication remains an explicit supplied premise in pure tests; production must independently bind its provenance. Key matches describe provenance-key overlap, never automatic measurement identity or physical independence.",
+  "prior_receipt_revalidation": "Validate bounded exact report schema, source identity, phase, success state, closed historical cleanup and canonical receipt hash; recompute and compare complete prior package/layout/documentary payloads on this raw buffer. Historical lifecycle fields are not reclassified as current events. Production must independently authenticate fixed prior receipts; hashes/caller flags alone are not production authority.",
+  "report": "schema, synthetic_fixture, production_binding=null, phase, status=BLOCKED_SCHEMA, engineering_status, reason, validation_reason_before_cleanup, source_sha256, replay_matched, package, roles, documentary, frame, exposure, numeric_outcome_interpretation=false, formula_evaluation=false, scientific_eligibility_decisions=false, sampling_independence_established=false, scientific_counts=null, fits=0,splits=0. Payload fields null until completed; cleanup/serialization failure clears them.",
+  "semantics": "Parser cannot establish prose meaning. DOCUMENTARY plus exact allowed_texts is a source-bound reviewed premise, exposed as MANIFEST_ASSERTION. MIXED/unreviewed required mapping blocks; unresolved optional fields retain unknown without text. No text classifier, digit stripping, semantic safety or full workbook rendering claim.",
+  "status": "FROZEN_API_PRECISION_ADDENDUM_BEFORE_FIRST_EXECUTION",
+  "text_disclosure": "disclose_text is a required exact bool per documentary field. When true, only exact allowed_texts already bound by reviewed permitted evidence may be projected as text; otherwise text is null. Definitions and citations are eligible only within their declared field role. No arbitrary source preview may populate allowed_texts."
+}

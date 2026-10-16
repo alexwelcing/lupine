@@ -1,0 +1,12 @@
+{
+  "encoding": "utf-8",
+  "original_bytes": 83,
+  "original_relative_path": "independent/portable/stdout.log",
+  "original_sha256": "852a44e45cab659cc477a8af7e56ead7b5fa9f8c2c8e6d8baffe8ccadcbcf73a",
+  "original_source": ".cache/phase2-li-complete-readiness-review-v1/portable/stdout.log",
+  "reasons": [
+    "Preserve ignored log bytes in an explicitly staged JSON artifact."
+  ],
+  "schema": "lupine.lossless_utf8_publication_wrapper.v1",
+  "text": "{\"tests_run\": 35, \"failures\": 0, \"errors\": 0, \"guard_violations\": [], \"status\": 0}\n"
+}

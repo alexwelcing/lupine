@@ -1,0 +1,283 @@
+{
+  "at": "2026-10-16T15:22:24.916771+00:00",
+  "parent_commit": "2975d6d0b9111cc84adb82ccc673bc82339ab154",
+  "original_ci": "BOTH_PYTHON_FAILED_BROWSER_LEAN_PASS",
+  "original_local_full_tests": 1860,
+  "original_local_failures": 1,
+  "proposed_methods_passed": 12,
+  "integrated_focused_methods_passed": 109,
+  "changed_runtime_files": [
+    "tests/test_retained_mpea_transport.py"
+  ],
+  "unchanged_runtime_files": 338,
+  "new_source_ci": "PENDING_PUBLICATION",
+  "actual_li_operations": 0,
+  "copy_map": [
+    {
+      "source": ".cache/phase2-rhizo-census-ci-static-review-v1/source-snapshots/test_retained_mpea_transport.py",
+      "destination": "reports/phase2-rhizo-census-ci-repair-v1/independent-diagnosis/source-snapshots/test_retained_mpea_transport.py",
+      "original_sha256": "b841a8dcc5ac955f3e82a7de0e34186e9d752552c022a750c3cdec85c94da84a",
+      "published_sha256": "b841a8dcc5ac955f3e82a7de0e34186e9d752552c022a750c3cdec85c94da84a",
+      "lossless_wrapper": false
+    },
+    {
+      "source": ".cache/phase2-rhizo-census-ci-static-review-v1/source-snapshots/test_retained_artifacts.py",
+      "destination": "reports/phase2-rhizo-census-ci-repair-v1/independent-diagnosis/source-snapshots/test_retained_artifacts.py",
+      "original_sha256": "ffdd9dd80e5e2c23a9294d35bc70bb7bf9591384f4071229c414c0c0562fb3f3",
+      "published_sha256": "ffdd9dd80e5e2c23a9294d35bc70bb7bf9591384f4071229c414c0c0562fb3f3",
+      "lossless_wrapper": false
+    },
+    {
+      "source": ".cache/phase2-rhizo-census-ci-static-review-v1/source-snapshots/verify_retained_artifacts.py",
+      "destination": "reports/phase2-rhizo-census-ci-repair-v1/independent-diagnosis/source-snapshots/verify_retained_artifacts.py",
+      "original_sha256": "3d3247beb74905c3f6d3a48aa42566d73c7a550645116ce084c0d8e4d664446a",
+      "published_sha256": "3d3247beb74905c3f6d3a48aa42566d73c7a550645116ce084c0d8e4d664446a",
+      "lossless_wrapper": false
+    },
+    {
+      "source": ".cache/phase2-rhizo-census-ci-static-review-v1/source-snapshots/test_package_retention.py",
+      "destination": "reports/phase2-rhizo-census-ci-repair-v1/independent-diagnosis/source-snapshots/test_package_retention.py",
+      "original_sha256": "afd324bbd06962c09898bc000afaa1ff3a52f000ce947e5a364980faed6e832b",
+      "published_sha256": "afd324bbd06962c09898bc000afaa1ff3a52f000ce947e5a364980faed6e832b",
+      "lossless_wrapper": false
+    },
+    {
+      "source": ".cache/phase2-rhizo-census-ci-static-review-v1/review.json",
+      "destination": "reports/phase2-rhizo-census-ci-repair-v1/independent-diagnosis/review.json",
+      "original_sha256": "77b35c9dd86d6be7d3182b87adbd76b67c2fdf5fc0be523dc11e675f97c3225f",
+      "published_sha256": "77b35c9dd86d6be7d3182b87adbd76b67c2fdf5fc0be523dc11e675f97c3225f",
+      "lossless_wrapper": false
+    },
+    {
+      "source": ".cache/phase2-rhizo-census-ci-static-review-v1/observed-ci-final.json",
+      "destination": "reports/phase2-rhizo-census-ci-repair-v1/independent-diagnosis/observed-ci-final.json",
+      "original_sha256": "36af95307bd31bde71d8f8848b413347077490ee6361f811aa2e18b69cef5611",
+      "published_sha256": "36af95307bd31bde71d8f8848b413347077490ee6361f811aa2e18b69cef5611",
+      "lossless_wrapper": false
+    },
+    {
+      "source": ".cache/phase2-rhizo-census-ci-static-review-v1/proposed-test_retained_mpea_transport.py",
+      "destination": "reports/phase2-rhizo-census-ci-repair-v1/independent-diagnosis/proposed-test_retained_mpea_transport.py",
+      "original_sha256": "bce07a6927df9efe261f0477eae7b65f7babbd227721fb77333b7fe34188cf82",
+      "published_sha256": "bce07a6927df9efe261f0477eae7b65f7babbd227721fb77333b7fe34188cf82",
+      "lossless_wrapper": false
+    },
+    {
+      "source": ".cache/phase2-rhizo-census-ci-static-review-v1/proposed-fix.patch",
+      "destination": "reports/phase2-rhizo-census-ci-repair-v1/independent-diagnosis/proposed-fix.patch.json",
+      "original_sha256": "1a9c7dd43dfb1c6f3db2e8187895b8839081f297dddb55d348bdc86d5c3b2912",
+      "published_sha256": "77bd703bab8a3da81347305b8345996fc47e89c97973ce1f7e7ac9e51d3b4d1b",
+      "lossless_wrapper": true
+    },
+    {
+      "source": ".cache/phase2-rhizo-census-ci-static-review-v1/first-original-focused-reproduction/start.json",
+      "destination": "reports/phase2-rhizo-census-ci-repair-v1/independent-diagnosis/first-original-focused-reproduction/start.json",
+      "original_sha256": "4ebbf2f03de68b89fa7fa1da2a43d47d9a431c2b252de3e60baf41cbcd2c6b44",
+      "published_sha256": "4ebbf2f03de68b89fa7fa1da2a43d47d9a431c2b252de3e60baf41cbcd2c6b44",
+      "lossless_wrapper": false
+    },
+    {
+      "source": ".cache/phase2-rhizo-census-ci-static-review-v1/first-original-focused-reproduction/execution.json",
+      "destination": "reports/phase2-rhizo-census-ci-repair-v1/independent-diagnosis/first-original-focused-reproduction/execution.json",
+      "original_sha256": "8c4ac34372fa912069f5c8fa4b91e055cc567a9df3d0a1ea514a41c975f736be",
+      "published_sha256": "8c4ac34372fa912069f5c8fa4b91e055cc567a9df3d0a1ea514a41c975f736be",
+      "lossless_wrapper": false
+    },
+    {
+      "source": ".cache/phase2-rhizo-census-ci-static-review-v1/first-original-focused-reproduction/stdout.txt",
+      "destination": "reports/phase2-rhizo-census-ci-repair-v1/independent-diagnosis/first-original-focused-reproduction/stdout.txt",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "published_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lossless_wrapper": false
+    },
+    {
+      "source": ".cache/phase2-rhizo-census-ci-static-review-v1/first-original-focused-reproduction/stderr.txt",
+      "destination": "reports/phase2-rhizo-census-ci-repair-v1/independent-diagnosis/first-original-focused-reproduction/stderr.txt",
+      "original_sha256": "5854b29312c13faf9dd4a1bcdb1f4122e4a5cd2a7418346883df546270506716",
+      "published_sha256": "5854b29312c13faf9dd4a1bcdb1f4122e4a5cd2a7418346883df546270506716",
+      "lossless_wrapper": false
+    },
+    {
+      "source": ".cache/phase2-rhizo-census-ci-static-review-v1/focused-reproduction-addendum.json",
+      "destination": "reports/phase2-rhizo-census-ci-repair-v1/independent-diagnosis/focused-reproduction-addendum.json",
+      "original_sha256": "74a57d62e6019d4b6cef2dd006aeb2125259864b36d66fc32d3ebc0c4dba4ac4",
+      "published_sha256": "74a57d62e6019d4b6cef2dd006aeb2125259864b36d66fc32d3ebc0c4dba4ac4",
+      "lossless_wrapper": false
+    },
+    {
+      "source": ".cache/phase2-rhizo-census-ci-static-review-v1/README.md",
+      "destination": "reports/phase2-rhizo-census-ci-repair-v1/independent-diagnosis/README.md",
+      "original_sha256": "92fb06abba02f8794fb659842acbdb6fe585c1ed40082398165adac498f8af8a",
+      "published_sha256": "61cbb9a3f6a23065117a5359f83a561909bd2f7a3808c9cef3f0ec11db892828",
+      "lossless_wrapper": false,
+      "publication_links_adjusted": true,
+      "original_markdown_wrapper": "reports/phase2-rhizo-census-ci-repair-v1/independent-diagnosis/README.md.original.utf8.json"
+    },
+    {
+      "source": ".cache/phase2-rhizo-census-ci-static-review-v1/inventory.json",
+      "destination": "reports/phase2-rhizo-census-ci-repair-v1/independent-diagnosis/inventory.json",
+      "original_sha256": "aa80e815f3f4b80f28636458769f3afeeed097a6cc6d1b836f81ba5b03223fe1",
+      "published_sha256": "aa80e815f3f4b80f28636458769f3afeeed097a6cc6d1b836f81ba5b03223fe1",
+      "lossless_wrapper": false
+    },
+    {
+      "source": ".cache/phase2-rhizo-census-ci-static-review-v1/handoff.json",
+      "destination": "reports/phase2-rhizo-census-ci-repair-v1/independent-diagnosis/handoff.json",
+      "original_sha256": "5ea4b6719a2f2b733791db0e936ba1cbbd016da881ae8530ac0e36752f62c207",
+      "published_sha256": "5ea4b6719a2f2b733791db0e936ba1cbbd016da881ae8530ac0e36752f62c207",
+      "lossless_wrapper": false
+    },
+    {
+      "source": ".cache/phase2-rhizo-census-ci-reproduction-v1/start.json",
+      "destination": "reports/phase2-rhizo-census-ci-repair-v1/original-full-suite/start.json",
+      "original_sha256": "60834fc7daba64edaf8c04aee4e429f758efcee0fc69fa76f6f01b7fb29798d8",
+      "published_sha256": "60834fc7daba64edaf8c04aee4e429f758efcee0fc69fa76f6f01b7fb29798d8",
+      "lossless_wrapper": false
+    },
+    {
+      "source": ".cache/phase2-rhizo-census-ci-reproduction-v1/execution.json",
+      "destination": "reports/phase2-rhizo-census-ci-repair-v1/original-full-suite/execution.json",
+      "original_sha256": "b753207def3a6c070af17f4e982d1c318b30bafb0dd18f07af32d4d94c345a0c",
+      "published_sha256": "b753207def3a6c070af17f4e982d1c318b30bafb0dd18f07af32d4d94c345a0c",
+      "lossless_wrapper": false
+    },
+    {
+      "source": ".cache/phase2-rhizo-census-ci-reproduction-v1/stdout.txt",
+      "destination": "reports/phase2-rhizo-census-ci-repair-v1/original-full-suite/stdout.txt",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "published_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lossless_wrapper": false
+    },
+    {
+      "source": ".cache/phase2-rhizo-census-ci-reproduction-v1/stderr.txt",
+      "destination": "reports/phase2-rhizo-census-ci-repair-v1/original-full-suite/stderr.txt",
+      "original_sha256": "8c49398b4c419c12acbe0a4863e290f822473fb39ba0db26b66ebc668dee157a",
+      "published_sha256": "8c49398b4c419c12acbe0a4863e290f822473fb39ba0db26b66ebc668dee157a",
+      "lossless_wrapper": false
+    },
+    {
+      "source": ".cache/phase2-rhizo-census-ci-repair-v1/proposed-focused/start.json",
+      "destination": "reports/phase2-rhizo-census-ci-repair-v1/proposed-focused/start.json",
+      "original_sha256": "b2a35474437b25457ea758d6272a13fc1dd781a051078bd44faa378480bd0e3b",
+      "published_sha256": "b2a35474437b25457ea758d6272a13fc1dd781a051078bd44faa378480bd0e3b",
+      "lossless_wrapper": false
+    },
+    {
+      "source": ".cache/phase2-rhizo-census-ci-repair-v1/proposed-focused/execution.json",
+      "destination": "reports/phase2-rhizo-census-ci-repair-v1/proposed-focused/execution.json",
+      "original_sha256": "006d9735c3fc8ad2a1d75e1a7ad5b64d3e7e13a9492f297af373d17e1cb9d01d",
+      "published_sha256": "006d9735c3fc8ad2a1d75e1a7ad5b64d3e7e13a9492f297af373d17e1cb9d01d",
+      "lossless_wrapper": false
+    },
+    {
+      "source": ".cache/phase2-rhizo-census-ci-repair-v1/proposed-focused/stdout.txt",
+      "destination": "reports/phase2-rhizo-census-ci-repair-v1/proposed-focused/stdout.txt",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "published_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lossless_wrapper": false
+    },
+    {
+      "source": ".cache/phase2-rhizo-census-ci-repair-v1/proposed-focused/stderr.txt",
+      "destination": "reports/phase2-rhizo-census-ci-repair-v1/proposed-focused/stderr.txt",
+      "original_sha256": "779798b1fc95c3ec191c80dcbb4de137970ba2146dc795ee2abac51fc5a02f62",
+      "published_sha256": "779798b1fc95c3ec191c80dcbb4de137970ba2146dc795ee2abac51fc5a02f62",
+      "lossless_wrapper": false
+    },
+    {
+      "source": ".cache/phase2-rhizo-census-ci-repair-v1/integrated-focused/start.json",
+      "destination": "reports/phase2-rhizo-census-ci-repair-v1/integrated-focused/start.json",
+      "original_sha256": "ed24cc848e62193be4b6b15006a6b45b526ca6beb241097e04dba7c67c60a26f",
+      "published_sha256": "ed24cc848e62193be4b6b15006a6b45b526ca6beb241097e04dba7c67c60a26f",
+      "lossless_wrapper": false
+    },
+    {
+      "source": ".cache/phase2-rhizo-census-ci-repair-v1/integrated-focused/execution.json",
+      "destination": "reports/phase2-rhizo-census-ci-repair-v1/integrated-focused/execution.json",
+      "original_sha256": "53afda73ba1a833ba9976cf2ae339209ecfa4b95b3c783dc6ae08736741323aa",
+      "published_sha256": "53afda73ba1a833ba9976cf2ae339209ecfa4b95b3c783dc6ae08736741323aa",
+      "lossless_wrapper": false
+    },
+    {
+      "source": ".cache/phase2-rhizo-census-ci-repair-v1/integrated-focused/stdout.txt",
+      "destination": "reports/phase2-rhizo-census-ci-repair-v1/integrated-focused/stdout.txt",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "published_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lossless_wrapper": false
+    },
+    {
+      "source": ".cache/phase2-rhizo-census-ci-repair-v1/integrated-focused/stderr.txt",
+      "destination": "reports/phase2-rhizo-census-ci-repair-v1/integrated-focused/stderr.txt",
+      "original_sha256": "31a04f6815fbd8f49c3e68d6b8e340d0edd282773e72fe328bfcbe3791318993",
+      "published_sha256": "31a04f6815fbd8f49c3e68d6b8e340d0edd282773e72fe328bfcbe3791318993",
+      "lossless_wrapper": false
+    },
+    {
+      "source": ".cache/phase2-rhizo-census-ci-reproduction-v1/run_full.py",
+      "destination": "reports/phase2-rhizo-census-ci-repair-v1/recorders/run_full.py",
+      "original_sha256": "08a6386f74afb6185f6286ae4b7f3a9e4605cc37736ba8cb0ebcc37f3cb0c67b",
+      "published_sha256": "08a6386f74afb6185f6286ae4b7f3a9e4605cc37736ba8cb0ebcc37f3cb0c67b",
+      "lossless_wrapper": false
+    },
+    {
+      "source": ".cache/phase2-rhizo-census-ci-repair-v1/run_proposed.py",
+      "destination": "reports/phase2-rhizo-census-ci-repair-v1/root/run_proposed.py",
+      "original_sha256": "81e4c3f359df250b9fa94b12adc0cf335ff3cd7fa075ddde0636b254fc095626",
+      "published_sha256": "81e4c3f359df250b9fa94b12adc0cf335ff3cd7fa075ddde0636b254fc095626",
+      "lossless_wrapper": false
+    },
+    {
+      "source": ".cache/phase2-rhizo-census-ci-repair-v1/promote_and_test.py",
+      "destination": "reports/phase2-rhizo-census-ci-repair-v1/root/promote_and_test.py",
+      "original_sha256": "c6a4a363e1430a9670e72cfe0c30fed93bad05dd84e1bfeee5f6ccb12fb9a19b",
+      "published_sha256": "c6a4a363e1430a9670e72cfe0c30fed93bad05dd84e1bfeee5f6ccb12fb9a19b",
+      "lossless_wrapper": false
+    },
+    {
+      "source": ".cache/phase2-rhizo-census-ci-repair-v1/promotion.json",
+      "destination": "reports/phase2-rhizo-census-ci-repair-v1/root/promotion.json",
+      "original_sha256": "77c47e2688301ed4bb584d7ace86410aa578bf112944bc43486955e4c4c5f8c4",
+      "published_sha256": "77c47e2688301ed4bb584d7ace86410aa578bf112944bc43486955e4c4c5f8c4",
+      "lossless_wrapper": false
+    },
+    {
+      "source": ".cache/phase2-rhizo-census-ci-repair-v1/prepare_amendment_report.py",
+      "destination": "reports/phase2-rhizo-census-ci-repair-v1/root/prepare_amendment_report.py",
+      "original_sha256": "2633841ce9c7777299a1bc1648ab9927dc7951acdf313e4202cd9053a6319060",
+      "published_sha256": "2633841ce9c7777299a1bc1648ab9927dc7951acdf313e4202cd9053a6319060",
+      "lossless_wrapper": false
+    },
+    {
+      "source": ".cache/phase2-rhizo-census-ci-v1/final.json",
+      "destination": "reports/phase2-rhizo-census-ci-repair-v1/original-ci/final.json",
+      "original_sha256": "36af95307bd31bde71d8f8848b413347077490ee6361f811aa2e18b69cef5611",
+      "published_sha256": "36af95307bd31bde71d8f8848b413347077490ee6361f811aa2e18b69cef5611",
+      "lossless_wrapper": false
+    },
+    {
+      "source": ".cache/phase2-rhizo-census-ci-v1/python311-failed-job.json",
+      "destination": "reports/phase2-rhizo-census-ci-repair-v1/original-ci/python311-failed-job.json",
+      "original_sha256": "7eac3abf8e53f339ce505cfc08e834d78c1e10714179b8161a0893f314157eff",
+      "published_sha256": "7eac3abf8e53f339ce505cfc08e834d78c1e10714179b8161a0893f314157eff",
+      "lossless_wrapper": false
+    },
+    {
+      "source": ".cache/phase2-rhizo-census-ci-v1/python311-check-run.json",
+      "destination": "reports/phase2-rhizo-census-ci-repair-v1/original-ci/python311-check-run.json",
+      "original_sha256": "27fc3d17548fc3acb6475b3c6cd479516200e0940d1bc31f0b8fd5769bcdfc94",
+      "published_sha256": "27fc3d17548fc3acb6475b3c6cd479516200e0940d1bc31f0b8fd5769bcdfc94",
+      "lossless_wrapper": false
+    },
+    {
+      "source": ".cache/phase2-rhizo-census-ci-v1/python311-check-annotations.json",
+      "destination": "reports/phase2-rhizo-census-ci-repair-v1/original-ci/python311-check-annotations.json",
+      "original_sha256": "cb8dee51f63a4028f06858fe9801b70d230a07fce47b1c6e549ce9454d0754af",
+      "published_sha256": "cb8dee51f63a4028f06858fe9801b70d230a07fce47b1c6e549ce9454d0754af",
+      "lossless_wrapper": false
+    }
+  ],
+  "log_access": {
+    "ordinary_endpoint": "HTTP403",
+    "bypass_attempted": false,
+    "raw_signed_redirect_excluded_from_publication": true
+  }
+}

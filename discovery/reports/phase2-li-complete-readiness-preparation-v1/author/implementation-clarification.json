@@ -1,0 +1,12 @@
+{
+  "at": "2026-10-16T13:26:03.709936+00:00",
+  "changes": [
+    "Exact documentary_binding supplied to frame for mechanical prior-payload revalidation.",
+    "Explicit disclose_text bool, preserving permitted reviewed definitions and scoped citations without blanket ban.",
+    "Selected merged coordinates fail closed; prior payloads recomputed without fabricating current cleanup."
+  ],
+  "final_interface_sha256": "bd226db1fce598adf3adc5c850f69986f42286e53c3c1fa3d5e98c373884fd15",
+  "frame_g32_composition": "A separate exact class copy is named _FrameWorksheetTarget and replaces only documentary explicit-cell cap with approved frame_cells cap. Original G32 class/grammar remains unchanged for documentary roles; all other structure checks preserved.",
+  "original_interface_sha256": "bfd92a6cfdd67324da8548b402ec228fe73dd2129c788779e07540011acb49c0",
+  "scope_changes": "No additional actual access, phases, caps, scientific inference or production caller authority."
+}

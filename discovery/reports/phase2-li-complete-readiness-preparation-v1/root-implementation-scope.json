@@ -1,0 +1,17 @@
+{
+  "at": "2026-10-16T13:14:41.046530+00:00",
+  "head": "d4d8504a97d362a6339eaa27453a86e0eb167cee",
+  "status": "GENERATED_IMPLEMENTATION_SCOPE_ACCEPTED",
+  "files": {
+    ".cache/phase2-li-complete-readiness-design-v1/README.final-v2.md": "a538a77065b6dfbe84e76038f9e60610cecc5183721961379c8292084ac34568",
+    ".cache/phase2-li-complete-readiness-design-v1/proposal.final-v2.json": "d53ce5c1ad52a68e6f92aacfa9e457c238c90a434ca6e565923bd6d167ce6cfd",
+    ".cache/phase2-li-complete-readiness-design-review-v1/review.json": "ae6cfdc9ae995ffe85e31b282f79fd66523f4d85e4a3e17641cc3b3b0ad1cfbb"
+  },
+  "owner": "growth_predicate_diagnostic author; phase2_planner independent generated tests; root integration/production",
+  "scope": "One complete pure generated package\u2192documentary\u2192frame readiness module and tests under final v2; existing source profiles unchanged; terminal specific NO_GO if route cannot bind requirements. No actual source operation.",
+  "synthetic_replay_seam": "Explicit bounded expected-diagnostic argument on generated-only entrypoints, no auto-derived expectation in tested path; reject known actual identities. Production takes no caller expectation and holds exact pinned actual prerequisite/replay projection.",
+  "g32_reuse": "Explicit audited copied/composed source and diff; no ignored-cache runtime dependency or monkeypatch.",
+  "actual_operations_authorized_by_this_record": 0,
+  "actual_gate": "Later root-bound immutable own-source/manifest/output slots after CI/package/artifact verification.",
+  "unchanged_current_runtime_files": 335
+}

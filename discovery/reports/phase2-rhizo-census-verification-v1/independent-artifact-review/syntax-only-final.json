@@ -1,0 +1,8 @@
+{
+  "at": "2026-10-16T13:57:43.017489+00:00",
+  "candidate_package_or_scientific_operation_executed": false,
+  "final_audit_executed": false,
+  "schema": "lupine.rhizo.census.artifact-audit.syntax.v1",
+  "source_sha256": "b6566a01f8704699174dbdaaacb4a51182e58bf1e346bf249375c534ac1728db",
+  "syntax_compilation": "PASS"
+}

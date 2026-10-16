@@ -1,0 +1,16 @@
+{
+  "files": [
+    {
+      "bytes": 7401,
+      "path": "README.md",
+      "sha256": "94a79853d6d520deda2f95ab3c52c02917a84adc00f6b3b8dcd5fe1a1b0e2c88"
+    },
+    {
+      "bytes": 5368,
+      "path": "review.json",
+      "sha256": "57eda548fe6f92d19d0bbc49a72691f9fa4924489f9f589e89d6eb9cb53a7758"
+    }
+  ],
+  "no_implementation_or_actual_operation": true,
+  "status": "FROZEN_ADVISORY"
+}

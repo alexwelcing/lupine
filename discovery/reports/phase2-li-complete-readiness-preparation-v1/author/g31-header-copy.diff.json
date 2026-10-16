@@ -1,0 +1,12 @@
+{
+  "encoding": "utf-8",
+  "original_bytes": 735,
+  "original_relative_path": "author/g31-header-copy.diff",
+  "original_sha256": "bb4a2c0e15fe9d17cf53c3505b51ecc5a5d979b1d69b7bed371d6bbb26b1ab8d",
+  "original_source": ".cache/phase2-li-complete-readiness-candidate-v1/g31-header-copy.diff",
+  "reasons": [
+    "Preserve exact historical diff including whitespace-bearing context lines."
+  ],
+  "schema": "lupine.lossless_utf8_publication_wrapper.v1",
+  "text": "--- frozen-G31\n+++ readiness-package-header\n@@ -1,4 +1,4 @@\n-def _growth_zip_structure(raw, exposure, holder):\n+def _package_zip_structure(raw, exposure, holder):\n     exposure['header_checks_started'] = True\n     if len(raw) < 22:\n         raise CustodyError('ZIP_INVALID')\n@@ -29,7 +29,7 @@\n                 raise CustodyError('ZIP_LAYOUT_UNSUPPORTED')\n             names.add(name)\n             if name != '[Content_Types].xml':\n-                _member_type(name)\n+                _generic_kind(name)\n             encoded = name.encode('utf-8' if info.flag_bits & 0x800 else 'cp437')\n             central_size += 46 + len(encoded) + len(info.extra) + len(info.comment)\n             file_kind = stat.S_IFMT(info.external_attr >> 16)\n"
+}

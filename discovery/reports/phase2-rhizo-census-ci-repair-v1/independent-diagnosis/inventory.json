@@ -1,0 +1,78 @@
+{
+  "files": [
+    {
+      "bytes": 7672,
+      "path": "source-snapshots/test_retained_mpea_transport.py",
+      "sha256": "b841a8dcc5ac955f3e82a7de0e34186e9d752552c022a750c3cdec85c94da84a"
+    },
+    {
+      "bytes": 14107,
+      "path": "source-snapshots/test_retained_artifacts.py",
+      "sha256": "ffdd9dd80e5e2c23a9294d35bc70bb7bf9591384f4071229c414c0c0562fb3f3"
+    },
+    {
+      "bytes": 19950,
+      "path": "source-snapshots/verify_retained_artifacts.py",
+      "sha256": "3d3247beb74905c3f6d3a48aa42566d73c7a550645116ce084c0d8e4d664446a"
+    },
+    {
+      "bytes": 18445,
+      "path": "source-snapshots/test_package_retention.py",
+      "sha256": "afd324bbd06962c09898bc000afaa1ff3a52f000ce947e5a364980faed6e832b"
+    },
+    {
+      "bytes": 5569,
+      "path": "review.json",
+      "sha256": "77b35c9dd86d6be7d3182b87adbd76b67c2fdf5fc0be523dc11e675f97c3225f"
+    },
+    {
+      "bytes": 1305,
+      "path": "observed-ci-final.json",
+      "sha256": "36af95307bd31bde71d8f8848b413347077490ee6361f811aa2e18b69cef5611"
+    },
+    {
+      "bytes": 8582,
+      "path": "proposed-test_retained_mpea_transport.py",
+      "sha256": "bce07a6927df9efe261f0477eae7b65f7babbd227721fb77333b7fe34188cf82"
+    },
+    {
+      "bytes": 2199,
+      "path": "proposed-fix.patch",
+      "sha256": "1a9c7dd43dfb1c6f3db2e8187895b8839081f297dddb55d348bdc86d5c3b2912"
+    },
+    {
+      "bytes": 850,
+      "path": "first-original-focused-reproduction/start.json",
+      "sha256": "4ebbf2f03de68b89fa7fa1da2a43d47d9a431c2b252de3e60baf41cbcd2c6b44"
+    },
+    {
+      "bytes": 1151,
+      "path": "first-original-focused-reproduction/execution.json",
+      "sha256": "8c4ac34372fa912069f5c8fa4b91e055cc567a9df3d0a1ea514a41c975f736be"
+    },
+    {
+      "bytes": 0,
+      "path": "first-original-focused-reproduction/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 923,
+      "path": "first-original-focused-reproduction/stderr.txt",
+      "sha256": "5854b29312c13faf9dd4a1bcdb1f4122e4a5cd2a7418346883df546270506716"
+    },
+    {
+      "bytes": 2536,
+      "path": "focused-reproduction-addendum.json",
+      "sha256": "74a57d62e6019d4b6cef2dd006aeb2125259864b36d66fc32d3ebc0c4dba4ac4"
+    },
+    {
+      "bytes": 2410,
+      "path": "README.md",
+      "sha256": "92fb06abba02f8794fb659842acbdb6fe585c1ed40082398165adac498f8af8a"
+    }
+  ],
+  "private_data_included": false,
+  "schema": "lupine.rhizo.census.ci-static-review.inventory.v1",
+  "total_bytes": 85699,
+  "tracked_runtime_edits": false
+}

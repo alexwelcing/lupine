@@ -1835,3 +1835,29 @@ checks. Root owns those next while the separate complete Li adapter is prepared.
 Li pure38 author/35 independent methods pass; portable independent repeats the
 same35. No new actual Li source access. G20 unresolved/G21 blocked and original
 scientific NO-GO persist. No new DFT, fit, allocation, deployment or schedule.
+
+## 2026-10-16T15:22:24.916771+00:00 — reproduced full-suite failure and strict checklist repair
+
+[Repair evidence](phase2-rhizo-census-ci-repair-v1/README.md) preserves 2975 original
+CI failure in both Python jobs and successful browser/Lean jobs. The ordinary
+log endpoint returned HTTP 403; local full-suite reproduction ran 1860 tests
+with one failure, all 339 runtime bytes held. The stale 16-check assertion failed
+against 17 required checks. Independent single-test reproduction confirms it.
+The new literal ordered 17-check expectation preserves 19 rejection variants;
+12 proposed methods and 109 integrated focused methods pass. One test changes,
+338 of 339 runtime files remain exact; no verifier/probe/product/science change.
+
+[Clean 2975 packaging and independent artifact audit](phase2-rhizo-census-verification-v1/README.md)
+passed 28 demonstrations, six schemas and 17 checks and checked 5,442 source blobs/339 runtime/117 wheel members.
+This did not close the failed CI gate. New source must pass its own original
+push CI, clean packaging and independent byte audit after publication.
+
+[Pure Li preparation](phase2-li-complete-readiness-preparation-v1/README.md) and
+[prospective complete-route decision](phase2-li-complete-route-amendment-v1/README.md)
+retain all initial failures and strict prior designs. Complete identities and
+explicit unresolved accounting replace no scientific premise. Structural-only
+results are mandatory negative, including empty frames; all-semantic-absent
+requests use an explicit null NOT_REQUESTED projection. No actual source access.
+Author/independent adapter work continues separately and must rebind the repair
+baseline before final hold. Root owns publication/verification next. G20 remains
+unresolved/G21 blocked; all scientific negatives and disabled automation persist.

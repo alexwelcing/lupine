@@ -1,0 +1,34 @@
+{
+  "purpose": "Integrate immutable historical census and readable exact-summary workbench; no new fit, archive allocation, producer rerun, physical winner or screening admission.",
+  "base": "d4d8504a97d362a6339eaa27453a86e0eb167cee",
+  "existing_runtime_changes": [
+    "scripts/browser_smoke.py",
+    "scripts/package_smoke.py",
+    "scripts/verify_retained_artifacts.py",
+    "tests/test_package_retention.py",
+    "tests/test_package_retention_review.py",
+    "src/lupine_discovery/server.py",
+    "src/lupine_discovery/web/app.js",
+    "src/lupine_discovery/web/index.html",
+    "src/lupine_discovery/web/styles.css"
+  ],
+  "runtime_additions": [
+    "scripts/recorded_census_browser_checks.py",
+    "tests/test_server_recorded_census.py",
+    "src/lupine_discovery/web/recorded-census.js",
+    "src/lupine_discovery/resources/recorded-census-v1.json"
+  ],
+  "execution_plan": [
+    "focused realHTTP+retention/verifier tests",
+    "full73existing browser checks plus new module (count observed at execution)",
+    "commit/push/exactremoteCI",
+    "clean retained installed wheel with17mandatory checks, strict verifier and independent artifact delta audit"
+  ],
+  "claim_limits": [
+    "Synthetic tests prove neither physical validity nor benchmark independence.",
+    "Census reuses all144 exposed historical stored pairs with fixed9-position groups.",
+    "Public aggregates inspected; per-record private values not read by root/reviewers.",
+    "Old335runtime unchanged during actual census and completed Li pure runs; intentional UI/probe integration changes9existingfiles and adds4.",
+    "No new actual Li access until separately reviewed source bindings and release gates."
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "clarifications": [
+    "Require reserved Relationships naming and resolved Relationships media type to agree in both directions; ordinary named payloads declaring that type must not bypass graph validation as opaque.",
+    "Explicitly reject content-type Override targeting the special [Content_Types].xml stream.",
+    "Use ASCII-case-insensitive keys for prefix/derivability collisions, not only equal-name collisions, per OPC6.2.2.3.",
+    "State that matching header CRC/size declarations does not verify CRC/content of unopened opaque payloads."
+  ],
+  "exposure": "Public project code/docs/design and allowed public G34 receipt; retained public primary OPC text selected clauses only. No actual archive/capture/private input, parser or production invocation, tests, network or tracked writes.",
+  "held_design": {
+    "README.md": "c17ff603f84414511145e7b393a7a8dc4ba31a97da82f30e4465d0639d929440",
+    "proposal.json": "b918fe58e760cd47957e9cef960431eca97e382a3f0bc9ff9662aed4e066d2f6",
+    "source-bindings.json": "75dc62d31f0ec83acc51c1e5ebe36c1f636e368143e559af7e28db43644adabe"
+  },
+  "next_action": "Review only the author\u2019s narrow wording delta; this review does not authorize implementation or actual source access.",
+  "primary_clause_checks": [
+    "6.2.2.2\u20136.2.2.3",
+    "6.2.3",
+    "6.5.2.1",
+    "7.2.3.2.1\u20137.2.3.2.3"
+  ],
+  "public_source_bindings": {
+    ".cache/phase2-opc-part-scope-v1/part2.txt": {
+      "bytes": 200233,
+      "sha256": "a63bc368c20e9cb5c4ca588687cf56b2de2ff2de7c1a64b50b9bdba309e31209"
+    },
+    "reports/phase2-growth-predicate-verification-v1/actual/1/public.json": {
+      "bytes": 12894,
+      "sha256": "68c9042325e93cebd08f9dd056ccbf8833b16f4f045f25bbe2e8be69623326be"
+    },
+    "reports/phase2-growth-predicate-verification-v1/prospective-decision/README.final-v2.md": {
+      "bytes": 8556,
+      "sha256": "cb3d44902bc566d5b6442c3751295b4fa5d5f736d184d716247ffb9959fc6b21"
+    },
+    "reports/phase2-opc-part-scope-v1/README.md": {
+      "bytes": 4474,
+      "sha256": "36c2c226e6f90ef2d1886b9ae4185d357aad0898ad85753348b8314a9080ad5c"
+    },
+    "reports/phase2-opc-part-scope-v1/document-identity.json": {
+      "bytes": 630,
+      "sha256": "ec4828196b2ffc9aec249a26d96a92f076867b198c6ef85e41ca80e407ae0373"
+    },
+    "reports/phase2-opc-part-scope-v1/scope.json": {
+      "bytes": 1895,
+      "sha256": "59cd3fbbb5d4657ca8d48c9cc6bd536ab43a8d43494ad37a6b08be7d8e453cde"
+    },
+    "reports/phase2-opc-part-scope-v1/standard-review.json": {
+      "bytes": 3800,
+      "sha256": "675916383a7230ff47e59ceffb795372657d42249ae42378630fd10aca607a07"
+    },
+    "scripts/li_v3_custody.py": {
+      "bytes": 35358,
+      "sha256": "3ead51f0afdf16be973743257be488669c988aa40443779e7a5c400e9b0d3234"
+    }
+  },
+  "reviewed_at": "2026-10-16T13:13:11.988219+00:00",
+  "scope_findings": [
+    "Restricted ASCII/URI subset may reject unsupported valid OPC packages without claiming universal OPC nonconformance. Existing strict root/workbook validators remain, and unknown payload meaning is not inferred from graph reachability.",
+    "Package syntactic checks and a literal projection do not establish complete SpreadsheetML rendering/application semantics, cell units, pairing or scientific truth. Unbound required meaning retains NO_GO.",
+    "Phase B freezes all documentary coordinates/types/disclosure before selected text; phase C freezes the complete row/frame/join rule before row projection. All original rows and unresolved records remain; no numerical label validity, model/split selection or eligibility is established.",
+    "Raw XML/shared-string machine exposure is acknowledged even when numeric performance is withheld. Fresh/IID/physical-transport claims require separate premises.",
+    "At most two fixed operations per phase, six in total, after separately frozen implementation/gates; no automatic next phase, cap increases, guessed name/role fixes or iterative scientific admission. Unsupported scope stops the named Li claim."
+  ],
+  "status": "DESIGN_SUPPORTED_WITH_FOUR_NARROW_FREEZE_CLARIFICATIONS"
+}

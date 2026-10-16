@@ -1,0 +1,9 @@
+{
+  "started_at": "2026-10-16T14:02:19.204304+00:00",
+  "finished_at": "2026-10-16T14:03:01.693839+00:00",
+  "process_seconds": 42.48920446100237,
+  "exit_code": 0,
+  "commit": "2975d6d0b9111cc84adb82ccc673bc82339ab154",
+  "source_head_unchanged": true,
+  "worktree_clean": true
+}

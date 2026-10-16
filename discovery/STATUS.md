@@ -1,87 +1,34 @@
 # Project state
 
-The [fixed historical census](reports/phase2-rhizo-stored-census-v1/README.md)
-is complete: all 144 stored pairs, 16 exact aggregate groups and 36 reference
-equality groups. All reference groups have equal stored values, spellings and
-citations across models. This is descriptive stored-label arithmetic;
-scientific status remains NOT_ADMITTED and reference choice UNKNOWN.
-All tolerances are NULL. No physical winner or fresh holdout is established.
+The [census CI repair](reports/phase2-rhizo-census-ci-repair-v1/README.md) updates
+one stale retention test to the exact 17-check package contract, preserving all
+omission/extra/reorder rejection cases. Both Python jobs failed at 2975 while
+browser/Lean passed. Local reproduction ran 1860 tests with one failure;
+all 12 corrected test methods and 109 integrated focused methods now pass. One
+runtime test changes; 338 of 339 files are unchanged. Fresh exact-commit CI and
+clean package verification remain the next root-owned release gates.
 
-The [workbench integration](reports/phase2-rhizo-census-integration-v1/README.md)
-shows readable decimals, expandable exact fractions, units and complete exports.
-All 80 browser checks and 97 final focused tests pass. A static-review finding
-strengthened HTTP equality to distinguish booleans, integers and floats; prior
-source and successful tests remain recorded. Runtime: 339 files, nine existing
-changes/four additions, with the other 326 predecessor files unchanged.
-Exact-commit CI and clean installed-package/artifact checks follow publication.
+The [prior clean wheel and independent audit](reports/phase2-rhizo-census-verification-v1/README.md)
+passed at 2975: 28 demonstrations/six schemas/17 checks, 5,442 source/Git blobs,
+339 runtime files and 117 wheel members. Those checks did not override the failed
+full-suite result. The working census interface retains its 80-check browser pass
+and complete 144-pair/16-group/36-reference descriptive scope. Reference choice
+remains UNKNOWN, scientific admission NOT_ADMITTED, all tolerances NULL.
 
-[G34 is complete at verified a064a2c0](reports/phase2-growth-predicate-verification-v1/ROOT-CHECKPOINT.md).
-All four original CI jobs, clean installed packaging and independent artifact
-checks passed before two fixed actual commands at 12:57 UTC. Both public
-receipts are identical: only MEMBER_KIND_PROFILE fails, the other 31 header
-families pass and none are unchecked. The archive remains BLOCKED_SCHEMA;
-no member, XML, worksheet or shared-string value was decoded. All 335 runtime
-files held. The public review passes 410 consistency checks; its first reviewer
-schema-assumption failure and narrow correction remain preserved.
+The [strict pure Li preparation](reports/phase2-li-complete-readiness-preparation-v1/README.md)
+and [complete-route amendment](reports/phase2-li-complete-route-amendment-v1/README.md)
+are recorded. Every sheet/explicit row will be accounted for; unsupported roles,
+column meanings and row classes remain unresolved and force NO_GO. The adapter
+and independent tests are being prepared separately; no actual complete-route
+source operation has occurred. G34 remains the completed header-only result:
+one failing member-profile family, 31 passing, zero member/XML decoding.
 
-The next step is one complete bounded compatibility and documentary/frame
-readiness route. [Primary OPC guidance](reports/phase2-opc-part-scope-v1/README.md)
-supports general part-name/type/relationship rules, without establishing unknown
-payloads' semantic irrelevance. Root owns implementation after independent review;
-if bounds or semantic associations cannot be justified, record the specific Li
-NO-GO. The original G31 block remains; G34 does not qualify G32's envelope gate.
-
-The [primary vacancy paper](reports/phase2-rhizo-vacancy-methods-v1/README.md)
-confirms its approximately-zero-pressure energy/enthalpy convention for archived
-DFT. Rhizo extraction accuracy and physical transfer remain unestablished.
-The historical stored-label census is descriptive; no fresh scientific comparison, fit or allocation has run.
-
-The [implementation](reports/phase2-growth-implementation-v1/README.md) passes
-359 combined Li tests, with all 326 predecessor runtime files unchanged.
-Original readers, negative results, the central-directory declaration regression
-and its reviewed repair remain preserved. Actual G29 previously identified one
-`0xA220` field with 516 data bytes; G30 now checks its signature and padding shape
-without binding the initial-padding word's semantics. The author notebook was
-only inspected as JSON/code AST; it was not executed. No Li worksheet or shared
-string has been decoded by these operations.
-
-The [pure documentary-layout candidate](reports/phase2-documentary-layout-preparation-v1/README.md)
-passes 33 author/27 independent generated tests with bounded coordinate/type
-projection and namespace handling. It remains outside the runtime, unbound to
-actual source operations; the G31 block prevents actual documentary localization.
-
-[The BAM workbook audit](reports/phase2-bam-metrology-workbook-v1/README.md)
-establishes documentary pairing for three current tests and explicitly separates
-proof/tensile strength, reduction of area and two extension measures from missing
-after-fracture elongation. This source and its derivatives are permanently
-exposed and excluded from a fresh blind predictive benchmark. Campaign-level
-expanded-uncertainty labels do not provide per-test joint coverage, a covariance
-model or independent physical sampling units. The separate schema CSV's encoding
-remains unbound despite the two-hypothesis documentary comparison.
-
-[The risk contract](reports/phase2-metrology-risk-contract-v1/PUBLICATION.md) and
-[official NIST guidance](reports/phase2-nist-metrology-guidance-v1/README.md)
-clarify the premises needed for measurement and selection risk without asserting
-that BAM or Lupine satisfies them. [Finite-archive inference](reports/phase2-fixed-archive-inference-scope-v1/PUBLICATION.md)
-can instead concern fixed recorded labels under uniform fixed-size sampling;
-physical label independence is not required for that counting law. A validated
-frame, label semantics, pairing, missingness, exposure and cost remain necessary;
-this does not establish new-specimen performance.
-
-Li paper/archive counts, reused sources, citation identities, actual joins and
-curation remain unresolved. G20 is unresolved and G21 blocked; no new scientific
-allocation, model fit or DFT calculation occurred. The finite planner remains
-available through API, CLI, HTTP and Study planning under its stated finite-frame
-scope. Risk-inversion implementation remains deferred until a justified study
-needs it.
-
-Root owns publication and exact remote/CI verification, clean packaging,
-independent artifact checks, then the fixed actual G34 operation. A complete
-bounded Li admission decision is the next priority; a further Rhizo numeric
-census is secondary. G20 remains unresolved and G21 blocked. Historical scientific
-NO-GO results remain unchanged. The expired automation remains disabled; no
-schedule or continuous worker was started.
-[GOAL](GOAL.md#renewed-active-work--2026-10-16) records ownership and next actions.
+G20 remains unresolved/G21 blocked. Historical scientific failures, unknown
+physical validity and lack of demonstrated predictive superiority are unchanged.
+No new DFT, fit, allocation, deployment or scheduled recurrence was introduced.
+The expired automation remains disabled. Root owns repair publication and exact
+verification, then final integration of the independently reviewed Li adapter.
+[GOAL](GOAL.md#renewed-active-work--2026-10-16) records the active work.
 
 Snapshot: 2026-10-11 01:40 UTC (exact CI observation `2026-10-11T01:40:16.973611+00:00`). Tested runtime/artifact source: `6585a605d5d325e84423c7e35c7286efe85cfb6f`. [Scoped decision and evidence](reports/research-preview-decision.md).
 

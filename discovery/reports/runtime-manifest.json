@@ -1,7 +1,7 @@
 {
   "schema": "lupine.discovery.runtime-manifest.v1",
   "python": "3.12.14",
-  "checkpoint": "2026-10-16 exact historical census workbench integration with type-sensitive installed HTTP check",
+  "checkpoint": "2026-10-16 reviewed seventeen-check retention expectation; original CI/full-suite failure preserved",
   "files": {
     "pyproject.toml": "a73eec989447b99fec48de193218a0750079eeb5973406c53d7a0dc840d9d90f",
     "scripts/additional_archived_benchmark.py": "8f50f0fc8aaade6f895500856db91b6593e5da8f676c7bf325cdc0a938d73b9a",
@@ -330,7 +330,7 @@
     "tests/test_representation_independent.py": "f6a56e20cbc3acd3f353b7bf78c3d3bbf04abb4af27362290a6c48996fc28cd9",
     "tests/test_reproduce_constrained.py": "8620265bfd99551843e31371c31036512e2c8abb3637b7b8354dd2895cb3f3db",
     "tests/test_retained_artifacts.py": "ffdd9dd80e5e2c23a9294d35bc70bb7bf9591384f4071229c414c0c0562fb3f3",
-    "tests/test_retained_mpea_transport.py": "b841a8dcc5ac955f3e82a7de0e34186e9d752552c022a750c3cdec85c94da84a",
+    "tests/test_retained_mpea_transport.py": "bce07a6927df9efe261f0477eae7b65f7babbd227721fb77333b7fe34188cf82",
     "tests/test_runtime_manifest.py": "7464f1edb83d79dc495b4e43794e0dce8bc4ddd31e6ebfa781df9f844ee846aa",
     "tests/test_server.py": "c3ca3669906eb6431fc6875726f430d5593be21dd519f800c4b6a56126264f23",
     "tests/test_server_recorded_census.py": "12aef15f80c54bdf965659c678fced182fa8bd335f549d08f8a930603156e169",

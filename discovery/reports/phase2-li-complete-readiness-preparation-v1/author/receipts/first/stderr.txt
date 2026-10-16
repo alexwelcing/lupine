@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "<string>", line 16, in <module>
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-candidate-v1/test_li_v3_readiness.py", line 20, in <module>
+    M = importlib.util.module_from_spec(spec); spec.loader.exec_module(M)
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-candidate-v1/li_v3_readiness.py", line 19, in <module>
+    import li_v3_growth_envelope as envelope
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1091, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1190, in get_data
+  File "<string>", line 13, in audit
+AssertionError: FORBIDDEN_REPOSITORY_READ

@@ -1,0 +1,17 @@
+{
+  "author_fixture_imports": 0,
+  "builder_sha256": "f06f4b4922458d89239ed6d544fca69549527634a3b12b09bf3e4874897434ab",
+  "candidate_results_seen": false,
+  "candidate_seen": false,
+  "design": {
+    ".cache/phase2-li-complete-readiness-design-v1/README.final-v2.md": "a538a77065b6dfbe84e76038f9e60610cecc5183721961379c8292084ac34568",
+    ".cache/phase2-li-complete-readiness-design-v1/proposal.final-v2.json": "d53ce5c1ad52a68e6f92aacfa9e457c238c90a434ca6e565923bd6d167ce6cfd"
+  },
+  "network_calls": 0,
+  "outline_sha256": "bba66931d5783b525630808820d73b4012a7bf2a610401b8541b9d045b5fea10",
+  "prepared_at": "2026-10-16T13:16:44.196227+00:00",
+  "production_guard_invocations": 0,
+  "raw_private_reads": 0,
+  "status": "FIXTURES_AND_OUTLINE_PREPARED_BEFORE_IMPLEMENTATION",
+  "validation": "AST parse/compile only; no fixture or candidate execution yet."
+}

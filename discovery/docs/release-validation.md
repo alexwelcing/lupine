@@ -244,7 +244,7 @@ open physical-scope gates remain unchanged.
 The published 2a09d36 checkpoint passes [all four CI jobs](https://github.com/alexwelcing/lupine/actions/runs/38080586212).
 Its actual clean local retained wheel passes28cases/sixschemas. An independent
 [artifact audit](../reports/release-artifact-audit-v1/README.md) checks458Gitblobs,
-183manifestentries and109wheelRECORDentries; eight synthetic audit tests pass.
+183manifestentries and 109wheelRECORDentries; eight synthetic audit tests pass.
 Both CI bundles uploaded, but repeated signed-storage downloadForbidden leaves
 remote bytes independently unverified. This limitation does not erase successful
 local execution or authorize claiming downloaded-artifact verification.
@@ -752,3 +752,20 @@ remote CI, installed execution and private arithmetic reproduction are distinct
 claims. Exact new-commit CI, retained packaging and independent artifacts remain
 pending publication. Earlier all335 holds precede this intentional integration:
 339 runtime files now include9 changes/4 additions, with326 predecessors unchanged.
+
+## Census CI repair and bounded Li preparation — October 16
+
+Checkpoint 2975 passes clean 28-case/six-schema/17-check packaging, independent
+source/wheel audit, browser and Lean; both Python full CI jobs fail. The local
+full reproduction runs 1860 tests with one stale 16-check failure.
+[The repair](../reports/phase2-rhizo-census-ci-repair-v1/README.md) freezes the
+ordered 17-check contract and preserves all 19 negative variants. Proposed 12 and
+integrated 109 methods pass; one test changes,338 runtime files remain unchanged.
+The new commit requires fresh exact CI/clean package/artifact verification.
+
+The [complete-route design](../reports/phase2-li-complete-route-amendment-v1/README.md)
+is prospective: complete structural accounting cannot imply semantic readiness.
+Unsupported sheets/rows/meanings force NO_GO, even for empty structural frames.
+Pure preparation and design review establish no actual workbook result or
+scientific admission. G20 remains unresolved/G21 blocked; no fresh allocation,
+physical-performance claim or extension of the expired schedule follows.

@@ -1,0 +1,22 @@
+{
+  "files": {
+    "README.md": {
+      "bytes": 9317,
+      "sha256": "3ddd78912a1a04def4969dcafe0e5d75c0292eb43b4c149c169e3c71974b8e70"
+    },
+    "cross-check.json": {
+      "bytes": 1257,
+      "sha256": "8ad4e46c37fd0654c0e32acdb82e368288426a6ba2e4c68ccc9ed5330e2cd945"
+    },
+    "source-bindings.json": {
+      "bytes": 7261,
+      "sha256": "1d7a884de9669e215e67c09f7a4830ecb8e7db8c2a1f383df4a02e8d04c1c1f0"
+    }
+  },
+  "inputs_held_during_review": true,
+  "local_links_resolved": 12,
+  "next_action": "Interpret permitted future A/B evidence against explicit documentary bridges; freeze C bindings prospectively, leaving all unsupported roles/coordinates unresolved.",
+  "no_new_actual_operations_or_tests": true,
+  "source_inputs": 11,
+  "status": "HELD_SOURCE_ONLY_ADVISORY"
+}

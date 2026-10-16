@@ -14,7 +14,7 @@
   "default_timezone": "America/New_York",
   "next_run_time_returned_at_creation": null,
   "last_run_time_returned_at_creation": null,
-  "execution_status": "ACTIVE_RENEWED_PHASE: verified a064 G34 actual pair complete; sole MEMBER_KIND_PROFILE failure, 31 families pass. Complete bounded Li compatibility/documentary/frame readiness next. Scientific admission unresolved; automation disabled.",
+  "execution_status": "ACTIVE_RENEWED_PHASE: census CI failure reproduced; strict17-check expectation repaired with109 focused PASS. Fresh publication verification required; complete Li adapter remains isolated; automation disabled.",
   "notification_policy": "Substantive daily milestone summary, actionable blocker, or final release decision; suppress unchanged status.",
   "scope": "Resume latest GitHub goal and implement the next bounded increment with available tools, testing and recording actual outcomes.",
   "limits": "Scheduling success does not prove future tool availability, a completed build, or uninterrupted execution. Check and record each run. Do not silently extend the bounded schedule.",
@@ -38,26 +38,27 @@
     "continuous_worker_started": false
   },
   "current_checkpoint": {
-    "recorded_at": "2026-10-16T13:59:19.668657+00:00",
-    "owner": "root; bounded Li production adapter delegated",
+    "recorded_at": "2026-10-16T15:22:24.916771+00:00",
+    "owner": "root; Li author/independent implementation lanes active",
     "goal_state": "ACTIVE_RENEWED_PHASE",
-    "published_commit": "d4d8504a97d362a6339eaa27453a86e0eb167cee",
-    "published_ci_run": 38905648425,
-    "published_ci_all_four_jobs_pass": true,
-    "published_evidence": "reports/phase2-rhizo-stored-census-v1/prior-report-ci/final.json",
-    "working_checkpoint": "Historical census144/16/36 complete; workbench339runtime with80browser and97finalfocused PASS; current source CI/package pending.",
+    "published_commit": "2975d6d0b9111cc84adb82ccc673bc82339ab154",
+    "published_ci_run": 38912404614,
+    "published_ci_all_four_jobs_pass": false,
+    "published_evidence": "reports/phase2-rhizo-census-ci-repair-v1/original-ci/final.json",
+    "working_checkpoint": "Repair one stale retention expectation; original full1860/one failure, proposed12 and integrated 109PASS;339 runtime/338 unchanged.",
     "actual_new_scientific_allocation_performed": false,
     "scientific_usefulness": "NO_GO unchanged; no new scientific experiment",
     "clean_package": {
-      "commit": "a064a2c0e4a7cce1fbcb0541f49aae132944e785",
+      "commit": "2975d6d0b9111cc84adb82ccc673bc82339ab154",
       "status": "PASS",
       "cases": 28,
       "schemas": 6,
-      "mandatory_checks": 16,
+      "mandatory_checks": 17,
       "strict_retained_verifier": "PASS",
       "independent_artifact_audit": "PASS",
-      "source_files_audited": 5003,
-      "runtime_files": 335
+      "source_files_audited": 5442,
+      "runtime_files": 339,
+      "wheel_members": 117
     },
     "finite_planning": {
       "status": "COMPLETE_VERIFIED_4492858",
@@ -98,7 +99,7 @@
       "notebook_code_executed": false,
       "output_values_disclosed": false
     },
-    "next_action": "Commit/push current census workbench; verify exact CI and clean installed17-check package plus artifact deltas. Continue single bounded Li readiness adapter; no fresh evaluation without G20.",
+    "next_action": "Publish reviewed repair, verify exact original CI and fresh clean package/artifacts; bind separate Li adapter to repaired baseline and finish independent tests before promotion. No actual new-source operation through a failed gate.",
     "automation_reenabled": false,
     "new_schedule_created": false,
     "continuous_worker_started": false,
@@ -402,6 +403,27 @@
       "portable_independent_same_methods": 35,
       "actual_source_access": false,
       "scientific_admission": false
+    },
+    "ci_repair": {
+      "at": "2026-10-16T15:22:24.916771+00:00",
+      "parent_commit": "2975d6d0b9111cc84adb82ccc673bc82339ab154",
+      "original_ci": "BOTH_PYTHON_FAILED_BROWSER_LEAN_PASS",
+      "original_local_full_tests": 1860,
+      "original_local_failures": 1,
+      "proposed_methods_passed": 12,
+      "integrated_focused_methods_passed": 109,
+      "changed_runtime_files": [
+        "tests/test_retained_mpea_transport.py"
+      ],
+      "unchanged_runtime_files": 338,
+      "new_source_ci": "PENDING_PUBLICATION",
+      "actual_li_operations": 0,
+      "copy_map": "reports/phase2-rhizo-census-ci-repair-v1/checkpoint.json",
+      "log_access": {
+        "ordinary_endpoint": "HTTP403",
+        "bypass_attempted": false,
+        "raw_signed_redirect_excluded_from_publication": true
+      }
     }
   },
   "closure": {

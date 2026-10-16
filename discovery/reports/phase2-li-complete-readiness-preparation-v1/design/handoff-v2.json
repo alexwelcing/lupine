@@ -1,0 +1,53 @@
+{
+  "final_artifacts": [
+    {
+      "bytes": 18051,
+      "path": "README.final-v2.md",
+      "sha256": "a538a77065b6dfbe84e76038f9e60610cecc5183721961379c8292084ac34568"
+    },
+    {
+      "bytes": 8585,
+      "path": "proposal.final-v2.json",
+      "sha256": "d53ce5c1ad52a68e6f92aacfa9e457c238c90a434ca6e565923bd6d167ce6cfd"
+    },
+    {
+      "bytes": 5466,
+      "path": "clarifications-v2.diff",
+      "sha256": "8e0a8f6e0b033b4dea1f1bbabcd5f8a2eeddb35d8c52270eb01fc9d49bc7893f"
+    }
+  ],
+  "initial_artifacts_preserved": [
+    {
+      "bytes": 17659,
+      "path": "README.md",
+      "sha256": "c17ff603f84414511145e7b393a7a8dc4ba31a97da82f30e4465d0639d929440"
+    },
+    {
+      "bytes": 8239,
+      "path": "proposal.json",
+      "sha256": "b918fe58e760cd47957e9cef960431eca97e382a3f0bc9ff9662aed4e066d2f6"
+    },
+    {
+      "bytes": 5486,
+      "path": "source-bindings.json",
+      "sha256": "75dc62d31f0ec83acc51c1e5ebe36c1f636e368143e559af7e28db43644adabe"
+    },
+    {
+      "bytes": 837,
+      "path": "handoff.json",
+      "sha256": "b2a0ab4c7458b54bf9e60a04f34bdf7a7ca70a57b4f87ae461be8d4074e5c3ad"
+    }
+  ],
+  "new_operations_or_tests": 0,
+  "next_action": "Reviewer confirms exact narrow delta, then root explicitly freezes implementation scope. Synthetic fixture replay API seam will be explicit and cannot be used by later production wrapper.",
+  "owner": "/root/growth_predicate_diagnostic",
+  "recorded_at": "2026-10-16T13:13:31.262408+00:00",
+  "reviewer": "/root/phase2_math",
+  "root_authorized_clarifications": [
+    "bidirectional reserved Relationships naming and resolved media type",
+    "forbid Override of special Media Types stream",
+    "ASCII-case-insensitive prefix/derivability collisions",
+    "header CRC/size agreement is not unread-payload CRC/content verification"
+  ],
+  "status": "FINAL_CLARIFICATIONS_HELD_FOR_SINGLE_REVIEW"
+}

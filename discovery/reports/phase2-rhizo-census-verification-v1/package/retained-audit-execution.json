@@ -1,0 +1,14 @@
+{
+  "finished_at": "2026-10-16T14:03:03.093810+00:00",
+  "process_seconds": 1.3475677969981916,
+  "exit_code": 0,
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "scripts/verify_retained_artifacts.py",
+    "--directory",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-rhizo-census-verification-v1/retained",
+    "--commit",
+    "2975d6d0b9111cc84adb82ccc673bc82339ab154"
+  ],
+  "status": "PASS"
+}

@@ -13,8 +13,26 @@ import test_retained_artifacts as fixtures
 v = fixtures.v
 RESOURCE = 'lupine_discovery/resources/mpea-t25-v1.json'
 ASSET = 'lupine_discovery/web/mpea.js'
-NEW_FLAGS = ['optional_mpea_resource_presence_and_http_agreement',
-             'mpea_javascript_packaged_and_served']
+# Independently frozen ordered probe contract; never derive this expectation from v.CHECKS.
+EXPECTED_CHECKS = [
+    'all_packaged_cases_select_verify_replay',
+    'known_answer_oracle_and_controls',
+    'web_assets_and_original_archive_reports',
+    'constrained_negative_results_packaged_and_served',
+    'installed_http_cli_agreement',
+    'coupled_python_api_and_missing_point_fallback',
+    'coupled_projection_and_statistical_guarded_http_replay_agree_with_installed_cli',
+    'scoped_projection_translation_and_missing_bound_abstention',
+    'direct_statistical_pool_python_api_and_distinct_abstention',
+    'training_only_no_go_packaged_and_served',
+    'prospective_pool_planning_cli_hypothesis_and_unknown',
+    'prospective_zero_failure_resolution_cli_not_observed_power',
+    'prospective_planning_http_cli_agreement_and_assets',
+    'finite_population_zero_failure_cli_http_exact_scope',
+    'optional_mpea_resource_presence_and_http_agreement',
+    'mpea_javascript_packaged_and_served',
+    'fixed_stored_census_identity_scope_and_http_asset_agreement',
+]
 
 
 class RetainedMpeaTransportTests(unittest.TestCase):
@@ -52,10 +70,9 @@ class RetainedMpeaTransportTests(unittest.TestCase):
                 wheel.writestr(name, raw)
         self.case.rebind_artifacts()
 
-    def test_all_sixteen_flags_required_without_omission_extra_or_reorder(self):
+    def test_all_seventeen_flags_required_without_omission_extra_or_reorder(self):
         expected = list(self.report['checks'])
-        self.assertEqual(len(expected), 16)
-        self.assertEqual(expected[-2:], NEW_FLAGS)
+        self.assertEqual(expected, EXPECTED_CHECKS)
         variants = [expected[:index] + expected[index + 1:] for index in range(len(expected))]
         variants.extend([expected + ['invented_science_verified'], list(reversed(expected))])
         for flags in variants:

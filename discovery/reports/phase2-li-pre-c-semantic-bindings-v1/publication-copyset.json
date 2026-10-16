@@ -1,0 +1,84 @@
+{
+  "additive_publication_files": [
+    "PUBLICATION.md",
+    "publication-copyset.json",
+    "publication-validation.json"
+  ],
+  "original_source_files_unchanged": true,
+  "originals": [
+    {
+      "publication": "README.original.utf8.json",
+      "publication_identity": {
+        "bytes": 9591,
+        "sha256": "5a0a5325ee3b933f70a1b8dff44ccf9984b01120d50e3a4720ca43ccf8ad5111"
+      },
+      "representation": "lossless-utf8-json-wrapper",
+      "source": ".cache/phase2-li-pre-c-semantic-bindings-v1/README.md",
+      "source_identity": {
+        "bytes": 9317,
+        "sha256": "3ddd78912a1a04def4969dcafe0e5d75c0292eb43b4c149c169e3c71974b8e70"
+      }
+    },
+    {
+      "change": {
+        "new": "../phase2-li-complete-route-amendment-v1/feasibility/README.md",
+        "occurrences": 1,
+        "old": "../phase2-li-frame-feasibility-review-v1/README.md",
+        "semantic_text_changes": false
+      },
+      "publication": "README.md",
+      "publication_identity": {
+        "bytes": 9329,
+        "sha256": "de877688997f69b3e42c1803016588aee167d5c7de5802adace1197c32256848"
+      },
+      "representation": "single-relative-link-change",
+      "source": ".cache/phase2-li-pre-c-semantic-bindings-v1/README.md",
+      "source_identity": {
+        "bytes": 9317,
+        "sha256": "3ddd78912a1a04def4969dcafe0e5d75c0292eb43b4c149c169e3c71974b8e70"
+      }
+    },
+    {
+      "publication": "source-bindings.json",
+      "publication_identity": {
+        "bytes": 7261,
+        "sha256": "1d7a884de9669e215e67c09f7a4830ecb8e7db8c2a1f383df4a02e8d04c1c1f0"
+      },
+      "representation": "exact-bytes",
+      "source": ".cache/phase2-li-pre-c-semantic-bindings-v1/source-bindings.json",
+      "source_identity": {
+        "bytes": 7261,
+        "sha256": "1d7a884de9669e215e67c09f7a4830ecb8e7db8c2a1f383df4a02e8d04c1c1f0"
+      }
+    },
+    {
+      "publication": "cross-check.json",
+      "publication_identity": {
+        "bytes": 1257,
+        "sha256": "8ad4e46c37fd0654c0e32acdb82e368288426a6ba2e4c68ccc9ed5330e2cd945"
+      },
+      "representation": "exact-bytes",
+      "source": ".cache/phase2-li-pre-c-semantic-bindings-v1/cross-check.json",
+      "source_identity": {
+        "bytes": 1257,
+        "sha256": "8ad4e46c37fd0654c0e32acdb82e368288426a6ba2e4c68ccc9ed5330e2cd945"
+      }
+    },
+    {
+      "publication": "handoff.json",
+      "publication_identity": {
+        "bytes": 789,
+        "sha256": "d6dc1e58cb94d26f92ca84b130482c31224a974e1bcf662ff864c45c72b4c624"
+      },
+      "representation": "exact-bytes",
+      "source": ".cache/phase2-li-pre-c-semantic-bindings-v1/handoff.json",
+      "source_identity": {
+        "bytes": 789,
+        "sha256": "d6dc1e58cb94d26f92ca84b130482c31224a974e1bcf662ff864c45c72b4c624"
+      }
+    }
+  ],
+  "preserved_original_readme_encoding": "utf-8, lossless via JSON text field",
+  "schema": "lupine.discovery.publication-copy-map.v1",
+  "scope": "One navigation target repaired; no semantic edits, tracked edits, source access or tests."
+}

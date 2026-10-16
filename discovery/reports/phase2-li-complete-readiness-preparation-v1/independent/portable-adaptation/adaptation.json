@@ -1,0 +1,13 @@
+{
+  "all_35_test_methods_and_class_helpers_ast_identical": true,
+  "at": "2026-10-16T13:46:18.844840+00:00",
+  "candidate_source_unchanged": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219",
+  "change": "Embed three unchanged independent generated fixture definition modules; remove only their local imports. Add tracked-script default loader while retaining explicit source/hash environment binding for recorded runs.",
+  "fixture_source_sha256": {
+    "generated_cases.py": "f292e65917ef6a5097ef58c91b7424183e95af21a1d6b8535a0ee298d11b3970",
+    "generated_package.py": "f06f4b4922458d89239ed6d544fca69549527634a3b12b09bf3e4874897434ab",
+    "generated_replay.py": "9b4e760bedaaca96338c0d585492bca3a75596950ac2fb01b86665f0cd25b111"
+  },
+  "original_test_sha256": "e3cc4570f27d9cb8a26f09c0563e22716e55a16b94ff5da073ff6539ec01ef50",
+  "portable_test_sha256": "7ec52e6a72aef1b289503d187fa5966025a1d488ca60f55200d12fd9c10b85f0"
+}
