@@ -1,0 +1,53 @@
+{
+  "checks_passed": 30,
+  "elapsed_seconds": 6.815469007000502,
+  "exact_fraction_oracle_cases": 26,
+  "execution": {
+    "bytes": 8318,
+    "path": ".cache/phase2-rhizo-census-ui-display-review-v1/first-run/execution.json",
+    "sha256": "511fa8df813f52a8e3115795ab8f3f6204e4d7af21210422af75f29e6a702098"
+  },
+  "failures": [],
+  "findings": [
+    "Four-significant-digit nearest rounding, exact half away from zero, matched the independent Fraction oracle for all 26 prescribed cases. Eleven small manually derived coefficient/exponent values additionally anchor the oracle.",
+    "All 96 mean/sum cells preserve full exact rational strings in initially closed details, with compact approximate summaries. Keyboard expansion exposes exact strings. Zero remains the exact display 0; nonzero approximations have the explicit\u2248prefix.",
+    "Rounding carry and fixed/e-notation transitions at exponents -3 and 3, positive/negative values, extreme sizes and both digit caps passed without binary floating conversion by the oracle.",
+    "The real browser download preserved the full generated JSON exactly, including maximum-size numerators and tiny rational values. Approximate strings do not replace report values.",
+    "Missing/blocked/malformed reports, prior numerator/denominator caps, invalid negative absolute metric and detached old-button invalidation passed focused regressions.",
+    "Expanded large exact code wraps to a bounded cell, and the 320px viewport stayed horizontally contained. Both generated screenshots were visually reviewed."
+  ],
+  "held_sources": {
+    "contract": {
+      "bytes": 8585,
+      "path": ".cache/phase2-rhizo-census-candidate-v1/contract.json",
+      "sha256": "e849d36004f0e73fdde22620bbffe06d1e53425907ca5fce974c536a5e1ea052"
+    },
+    "renderer": {
+      "bytes": 13634,
+      "path": ".cache/phase2-rhizo-census-ui-v1/recorded-census.js",
+      "sha256": "8e45d59eab288d5ce6c83fabe6b30ef4c707736913d13b8bf99f0e09a5b0628a"
+    },
+    "section": {
+      "bytes": 761,
+      "path": ".cache/phase2-rhizo-census-ui-v1/section.html",
+      "sha256": "66ec27e80dad95674ad6b30c6346f448cd19859f77bb8a07ae92e3f381e05331"
+    },
+    "style": {
+      "bytes": 43409,
+      "path": ".cache/phase2-rhizo-census-ui-v1/overlay/src/lupine_discovery/web/styles.css",
+      "sha256": "d7042060aae32dba2c9c5ad6f6df86a5ee51f7f1ea0dfb7aea413bf81bd3eaf9"
+    }
+  },
+  "network_requests": [],
+  "page_errors": [],
+  "preparation_transport_note": "One read-only source-inspection exec request hit an exec-server transport disconnect; the next identical inspection succeeded. Neither request ran browser tests or source operations.",
+  "prior_v2_review_unchanged": {
+    "bytes": 886,
+    "path": ".cache/phase2-rhizo-census-ui-review-v1/handoff.json",
+    "sha256": "10754bd0cdb380f0f3c040a7d6bb648d68935805031636b4339d3bfd3b9cadf8"
+  },
+  "reviewed_at": "2026-10-16T13:37:52.304388+00:00",
+  "scope": "Standalone set_content Chromium using independently generated fixtures and held renderer/section/style. No actual aggregate/private source/projection, source operation, census producer import or arithmetic rerun, HTTP integration test, tracked edit or scientific inference.",
+  "status": "PASS_FOCUSED_GENERATED_DISPLAY_BROWSER_REVIEW",
+  "visual_note": "Desktop summaries are compact and retain explicit approximation markers. The mobile screenshot includes the horizontally scrolled table position reached by keyboard focus; containment and exact-cell wrapping were also measured."
+}

@@ -1,0 +1,8 @@
+{
+  "fixture_source_sha256": "89e74f282079f6964ef8b11dc138c7c3df8879c0780870707a2cb725b279ae9d",
+  "scope": "Independent generated projections only; fixed public frame/readiness; no actual labels, network or production guards.",
+  "source": ".cache/phase2-rhizo-census-candidate-v1/census.py",
+  "source_sha256": "d77a1ca2eeeb1d0f4e02fac6d624fa63527c4a8d423fdf8f7f645db102c67630",
+  "started_at": "2026-10-16T13:23:55.756353+00:00",
+  "test_source_sha256": "486f49f795cb3b564be836fab34f66eac2ac1ce0df94399533d5c34abdff36a7"
+}

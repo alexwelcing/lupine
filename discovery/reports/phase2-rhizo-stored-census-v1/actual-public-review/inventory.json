@@ -1,0 +1,27 @@
+{
+  "files": [
+    {
+      "bytes": 19786,
+      "path": "audit_public.py",
+      "sha256": "9ac9d57fcdd52754eda32e964c7420f4bf5027ca4e8efffc9a5418910a97ef0c"
+    },
+    {
+      "bytes": 50296,
+      "path": "first-public-audit/review.json",
+      "sha256": "6444e948d58df7c320ef004b09045a9156e456db87a3d6c496a2fcd75e7a3bc3"
+    },
+    {
+      "bytes": 3083,
+      "path": "README.md",
+      "sha256": "1d96a566eddb828bc7f737c38634673219fe18d4a536a273a5533f0491ffa82b"
+    },
+    {
+      "bytes": 841,
+      "path": "scope.json",
+      "sha256": "50754e42c60726a0109e0d4033f2f823675ab2e6041b0058f373ea210600d0c4"
+    }
+  ],
+  "private_or_raw_data_included": false,
+  "schema": "lupine.rhizo.census.actual-review.inventory.v1",
+  "total_bytes": 74006
+}

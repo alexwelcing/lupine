@@ -1,0 +1,22 @@
+{
+  "checks_passed": 25,
+  "final_execution": {
+    "bytes": 3351,
+    "path": ".cache/phase2-rhizo-census-ui-review-v1/final-run/execution.json",
+    "sha256": "fb5163db66ec3e005da334a74272794b599a1fdf746ee0d074384632432eb8a7"
+  },
+  "first_failures_preserved": true,
+  "inventory": {
+    "bytes": 3834,
+    "path": ".cache/phase2-rhizo-census-ui-review-v1/inventory.json",
+    "sha256": "c57fc4d0e4fc67b7191a1e9302b2888c9b516b431e3e4d1271c355ccc8863380"
+  },
+  "renderer_sha256": "c62ca347d08a3ccdd8e105a0ddc2d17753c12551f5ad9253262cbae058bd3181",
+  "review": {
+    "bytes": 4892,
+    "path": ".cache/phase2-rhizo-census-ui-review-v1/review.json",
+    "sha256": "26853d630a6325b7d487c35bd9e6d9ba3b730e6b253cfac19a1fd7cba5b8d44d"
+  },
+  "scope": "Generated standalone Chromium only; HTTP/actual-source integration remains separate.",
+  "status": "PASS_GENERATED_STANDALONE_CHROMIUM"
+}

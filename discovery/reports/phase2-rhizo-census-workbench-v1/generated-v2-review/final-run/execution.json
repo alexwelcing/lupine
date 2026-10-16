@@ -1,0 +1,84 @@
+{
+  "browser_errors": [],
+  "checks_passed": [
+    "all_16_means_16_sums_36_reference_rows_exact_sorted_counts_units_and_ids",
+    "synthetic_scope_no_winner_disclaimers_and_keyboard_details",
+    "actual_browser_download_preserves_complete_json_and_exact_rationals",
+    "5000_digit_numerator_2500_digit_denominator_exact_and_mobile_contained",
+    "missing_malformed_and_blocked_clear_tables_and_detached_old_export",
+    "detached_old_button_cannot_export_after_valid_replacement",
+    "malicious_identity_text_is_literal_without_DOM_execution_or_requests",
+    "reject_wrong_status",
+    "reject_output_failure",
+    "reject_wrong_sign",
+    "reject_scientific_promotion",
+    "reject_winner_claim",
+    "reject_fresh_claim",
+    "reject_missing_group",
+    "reject_duplicate_group",
+    "reject_missing_reference",
+    "reject_truth_claim",
+    "reject_token_rational_conflict",
+    "reject_wrong_squared_unit",
+    "reject_negative_absolute",
+    "reject_zero_denominator",
+    "reject_numeric_not_string",
+    "reject_huge_denominator",
+    "reject_positive_5001_digit_numerator_above_contract_cap",
+    "accept_negative_5000_digit_numerator_minus_sign_not_counted"
+  ],
+  "elapsed_seconds": 5.860226885000884,
+  "failures": [],
+  "finished_at": "2026-10-16T13:27:07.333665+00:00",
+  "network_requests": [],
+  "runner_sha256": "65f1d5b66a487171badd1e0d8ba98132a315453d01da6d3faaae4b3914a29af9",
+  "scope": "Standalone real Chromium with independently generated public aggregate and held script/section plus existing product stylesheet. No HTTP integration, actual numeric projection/source/private reader, network or tracked edits.",
+  "source_after": {
+    "contract": {
+      "bytes": 8585,
+      "path": ".cache/phase2-rhizo-census-candidate-v1/contract.json",
+      "sha256": "e849d36004f0e73fdde22620bbffe06d1e53425907ca5fce974c536a5e1ea052"
+    },
+    "script": {
+      "bytes": 11614,
+      "path": ".cache/phase2-rhizo-census-ui-v1/recorded-census.js",
+      "sha256": "c62ca347d08a3ccdd8e105a0ddc2d17753c12551f5ad9253262cbae058bd3181"
+    },
+    "section": {
+      "bytes": 761,
+      "path": ".cache/phase2-rhizo-census-ui-v1/section.html",
+      "sha256": "66ec27e80dad95674ad6b30c6346f448cd19859f77bb8a07ae92e3f381e05331"
+    },
+    "style": {
+      "bytes": 43104,
+      "path": "src/lupine_discovery/web/styles.css",
+      "sha256": "23b439d2f1b60bd5837bddf113d215d7e1dee14f21324075a030e802f13d9fdf"
+    }
+  },
+  "source_before": {
+    "contract": {
+      "bytes": 8585,
+      "path": ".cache/phase2-rhizo-census-candidate-v1/contract.json",
+      "sha256": "e849d36004f0e73fdde22620bbffe06d1e53425907ca5fce974c536a5e1ea052"
+    },
+    "script": {
+      "bytes": 11614,
+      "path": ".cache/phase2-rhizo-census-ui-v1/recorded-census.js",
+      "sha256": "c62ca347d08a3ccdd8e105a0ddc2d17753c12551f5ad9253262cbae058bd3181"
+    },
+    "section": {
+      "bytes": 761,
+      "path": ".cache/phase2-rhizo-census-ui-v1/section.html",
+      "sha256": "66ec27e80dad95674ad6b30c6346f448cd19859f77bb8a07ae92e3f381e05331"
+    },
+    "style": {
+      "bytes": 43104,
+      "path": "src/lupine_discovery/web/styles.css",
+      "sha256": "23b439d2f1b60bd5837bddf113d215d7e1dee14f21324075a030e802f13d9fdf"
+    }
+  },
+  "source_unchanged": true,
+  "started_at": "2026-10-16T13:27:01.473440+00:00",
+  "status": "PASS",
+  "synthetic_only": true
+}

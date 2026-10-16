@@ -1,0 +1,41 @@
+{
+  "at": "2026-10-16T13:50:31.098872+00:00",
+  "base": "d4d8504a97d362a6339eaa27453a86e0eb167cee",
+  "inputs_sha256": "b78208a28977f54f641f31db8632688cd929967db873f6ec34628a0473cbde34",
+  "runtime_before": 335,
+  "old_runtime_unchanged": 326,
+  "changed_existing": [
+    "scripts/browser_smoke.py",
+    "scripts/package_smoke.py",
+    "scripts/verify_retained_artifacts.py",
+    "src/lupine_discovery/server.py",
+    "src/lupine_discovery/web/app.js",
+    "src/lupine_discovery/web/index.html",
+    "src/lupine_discovery/web/styles.css",
+    "tests/test_package_retention.py",
+    "tests/test_package_retention_review.py"
+  ],
+  "added": [
+    "scripts/recorded_census_browser_checks.py",
+    "src/lupine_discovery/resources/recorded-census-v1.json",
+    "src/lupine_discovery/web/recorded-census.js",
+    "tests/test_server_recorded_census.py"
+  ],
+  "promoted": {
+    "src/lupine_discovery/server.py": "451324d9ce1fa84ec1759699bd2ea25759a29368b84c82f30741ea4e7e2ca826",
+    "src/lupine_discovery/web/recorded-census.js": "8e45d59eab288d5ce6c83fabe6b30ef4c707736913d13b8bf99f0e09a5b0628a",
+    "src/lupine_discovery/web/app.js": "1537f759ef443a218b74eaf55d14ff0520b1195dc3bc8835034e57b3b4613a7c",
+    "src/lupine_discovery/web/index.html": "8120a35af3c415e36b7c3a627a44fd45f9c5ab7628ce0e251103bcccb7b82243",
+    "src/lupine_discovery/web/styles.css": "d7042060aae32dba2c9c5ad6f6df86a5ee51f7f1ea0dfb7aea413bf81bd3eaf9",
+    "scripts/browser_smoke.py": "04289d220d1ef64d7be619eec4850bcaa6e9793b48058f43378b59c390c68d3d",
+    "scripts/package_smoke.py": "eaeffcd242d9d5b843ddaea46a65e60b5666ba092d0dfd93136e0d5bd3be0d07",
+    "scripts/verify_retained_artifacts.py": "3d3247beb74905c3f6d3a48aa42566d73c7a550645116ce084c0d8e4d664446a",
+    "tests/test_package_retention.py": "8ca92ba8b555fea8668392e22499db0a362ac6643c5d155ed459b376d0792a15",
+    "tests/test_package_retention_review.py": "963b4667bc013fb55e83a8988f61975454b16b2a0fac9b177d2b54b284c57a2c",
+    "src/lupine_discovery/resources/recorded-census-v1.json": "a9ab9d72c6c39be9338e951b657e0587ae8f4dbe534b276b8f8f8951a7b1a63a",
+    "scripts/recorded_census_browser_checks.py": "ed9f25b9260c7ab2a2fe33a5459f12c3d5c989f11abc6a969a2796b9ceb3ffc1",
+    "tests/test_server_recorded_census.py": "ec140f7f4cb00fcf86b099f7a0bee96c6022db7eaed6e07644db5ad997bd65f5"
+  },
+  "tests": "NOT_YET_EXECUTED_ON_TRACKED_INTEGRATION",
+  "actual_producer_rerun": false
+}

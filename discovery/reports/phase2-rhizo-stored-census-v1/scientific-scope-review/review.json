@@ -1,0 +1,88 @@
+{
+  "created_at": "2026-10-16T13:16:06.848125+00:00",
+  "reviewer": "/root/phase2_evidence",
+  "status": "NO_BLOCKER_IN_AMENDED_DECLARED_SOURCE_AND_SCIENTIFIC_SCOPE",
+  "scope": "Prospective contract and public documentary evidence only. No implementation/guard/arithmetic test or actual invocation review.",
+  "sources": [
+    {
+      "path": ".cache/phase2-rhizo-census-candidate-v1/before-public-aggregate-amendment/contract.json",
+      "bytes": 7708,
+      "sha256": "eb4112fe3475599b674c39e3e73d9938c1fc69a3adfc420aaa3e86fad8963721"
+    },
+    {
+      "path": ".cache/phase2-rhizo-census-candidate-v1/before-public-aggregate-amendment/scope.md",
+      "bytes": 1280,
+      "sha256": "db2ab69e582f1a0c0c06de8e0b8a38ca0b0347afb1c5bf038d9cf846afe6fff6"
+    },
+    {
+      "path": ".cache/phase2-rhizo-census-candidate-v1/contract.json",
+      "bytes": 8585,
+      "sha256": "e849d36004f0e73fdde22620bbffe06d1e53425907ca5fce974c536a5e1ea052"
+    },
+    {
+      "path": ".cache/phase2-rhizo-census-candidate-v1/scope.md",
+      "bytes": 1571,
+      "sha256": "4a6e7f9895bdbba2bb860ad933e87fc4b4201fea2b09022e5b53a2328578127b"
+    },
+    {
+      "path": ".cache/phase2-rhizo-census-candidate-v1/public-aggregate-amendment.json",
+      "bytes": 972,
+      "sha256": "b11016d5e94c5b1ebd5ccc43c9b4d67742cf98fd01ffa836ae66be9c0482b5a3"
+    },
+    {
+      "path": "reports/phase2-rhizo-recorded-label-readiness-v1/README.md",
+      "bytes": 3953,
+      "sha256": "b60722c346e3f207209a59ce2bf84ae6a7e9dca0154bece2ad6e2d5d97b81d3f"
+    },
+    {
+      "path": "reports/phase2-rhizo-recorded-label-readiness-v1/operations/public-summary.json",
+      "bytes": 2196,
+      "sha256": "74b2d3593e87a53ee09b62f356cd39277023dc53f47860eab987f1ad10c62ec1"
+    },
+    {
+      "path": "reports/phase2-rhizo-reference-provenance-v1/README.md",
+      "bytes": 8718,
+      "sha256": "9c5b031347363d113a5be6c66e584cab9c2f9fc0964441c7d9afdf0a79d1f758"
+    },
+    {
+      "path": "reports/phase2-rhizo-vacancy-methods-v1/README.md",
+      "bytes": 3393,
+      "sha256": "7f742ff4e9b51455adaed76165a682aaa87a410ee0f437bcd00bff90a4e43967"
+    }
+  ],
+  "assessment": [
+    "All144 historical stored positions and36 original material/model IDs remain fixed. The sign is prediction minus stored reference. Exactly16 model/property/literal-unit groups retain9 material positions with weight1, explicit squared units and no model/property/facet pooling or adaptive denominator.",
+    "The36 cross-model reference groups retain all4 model IDs and distinguish rational equality, token spelling and citation-string equality. No majority reference, preferred label or inferred common truth is selected. Unequal references do not alone establish binder corruption or identify correctness.",
+    "AllNULL tolerances reconcile with public readiness and supply no pass criterion, discrepancy bound or uncertainty estimate. The contract excludes winners/rankings, p-values, sampling intervals, training-independence and fresh-holdout claims. Position counts are not independent experiments; G20/G21 stay unresolved.",
+    "A descriptive census explicitly over fixed stored labels does not require original-binder reconstruction, physical IID units or metrological intervals. Those absent premises remain limits on stronger claims, not extra mathematical gates for the declared arithmetic.",
+    "The root-directed amendment explicitly expands eventual public output to16 exact stratified count/sum/mean groups and36 reference-equality statuses, after a root-bound execution/review. It leaves individual tokens/citations/discrepancies private. This is acknowledged numeric aggregate exposure, not a categorical-only public receipt; stored-label discrepancy terminology preserves the estimand.",
+    "Angsten methods confirm primary approximately-zero-pressure energy/enthalpy wording and archived DFT attribution only. They establish neither Rhizo extraction/source-value agreement nor geometry/phase/temperature comparability, latent truth or an error budget. The contract makes no such promotion."
+  ],
+  "amendment_review": {
+    "original_scope_assessment": "No source/scientific blocker was communicated for eb4112fe/db2ab69e before the output amendment. That assessment concerned categorical-only public output and must not be treated as the final amended-output review.",
+    "preserved_originals_verified": true,
+    "original_final_binding_interrupted": "initial-binding-interruption.json records the identity assertion that stopped while the author applied the independently reported root amendment; no earlier final review receipt or test pass is invented.",
+    "fields_verified_unchanged": [
+      "estimand",
+      "engineering_limits",
+      "exact_arithmetic",
+      "inputs",
+      "planned_one_use_wrapper",
+      "validation"
+    ],
+    "new_numeric_output_review": "No additional scientific-scope blocker. Aggregate differences describe stored-pair discrepancies only and must not be presented as a fair physical model comparison or winner, especially where stored references differ.",
+    "claimed_authority": "Author retained root-directed amendment before implementation; this review neither runs nor authorizes the still-unbound actual operation."
+  },
+  "blocking_findings": [],
+  "required_contract_changes": [],
+  "downstream_boundary": "Primary source-use terms and publication context remain source-specific; this scientific-scope review is not a blanket license determination. Root owns execution and numerical publication decisions.",
+  "actual_actions": {
+    "private_or_raw_label_reads": 0,
+    "network_requests": 0,
+    "product_tests_or_executions": 0,
+    "numerical_outcome_comparisons": 0,
+    "tracked_edits": 0,
+    "additional_reviewers": 0
+  },
+  "source_hashes_held_pre_post_review": true
+}

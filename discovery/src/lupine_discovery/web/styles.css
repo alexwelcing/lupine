@@ -2492,3 +2492,7 @@ textarea {
     max-width:170px
   }
 }
+
+/* Approximate census displays retain their complete exact fraction on expansion. */
+.recorded-census-exact summary { cursor:pointer; white-space:nowrap; font-family:var(--mono) }
+.recorded-census-exact code { display:block; max-width:240px; overflow-wrap:anywhere; white-space:normal; padding-top:8px }

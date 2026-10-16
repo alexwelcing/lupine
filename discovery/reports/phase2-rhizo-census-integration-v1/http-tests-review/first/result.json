@@ -1,0 +1,19 @@
+{
+  "actual_public_resource_used": "a9ab9d72c6c39be9338e951b657e0587ae8f4dbe534b276b8f8f8951a7b1a63a",
+  "candidate_producer_or_private_input_invoked": false,
+  "errors": 0,
+  "failures": 0,
+  "finished_at": "2026-10-16T13:48:40.280292+00:00",
+  "forbidden_events": [],
+  "held_overlay_after": {
+    "lupine_discovery/resources/recorded-census-v1.json": true,
+    "lupine_discovery/server.py": true,
+    "lupine_discovery/web/recorded-census.js": true
+  },
+  "pass": true,
+  "scope": "Real loopback HTTP and package resources; no browser execution or arithmetic recomputation.",
+  "skips": 0,
+  "started_at": "2026-10-16T13:48:37.908344+00:00",
+  "test_count": 6,
+  "test_seconds": 2.371959316995344
+}

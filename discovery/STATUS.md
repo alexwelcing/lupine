@@ -1,14 +1,19 @@
 # Project state
 
-The [stored-label readiness pass](reports/phase2-rhizo-recorded-label-readiness-v1/README.md) completed once at
-12:16:28 UTC: all 144 fixed prediction/reference pairs across 36 bound objects
-are present, exactly numeric and match the declared literal units. Every optional
-tolerance is NULL. The source and labels are exposed historical data, with no
-benchmark or performance comparison. This closes completeness for the named
-stored fields, while historical reference choice and physical validity remain
-unresolved. The reader passes 30 author/19 independent generated tests; all 332
-runtime files held during the actual read and the public-receipt review passes.
-Original reviewer harness failures are preserved.
+The [fixed historical census](reports/phase2-rhizo-stored-census-v1/README.md)
+is complete: all 144 stored pairs, 16 exact aggregate groups and 36 reference
+equality groups. All reference groups have equal stored values, spellings and
+citations across models. This is descriptive stored-label arithmetic;
+scientific status remains NOT_ADMITTED and reference choice UNKNOWN.
+All tolerances are NULL. No physical winner or fresh holdout is established.
+
+The [workbench integration](reports/phase2-rhizo-census-integration-v1/README.md)
+shows readable decimals, expandable exact fractions, units and complete exports.
+All 80 browser checks and 97 final focused tests pass. A static-review finding
+strengthened HTTP equality to distinguish booleans, integers and floats; prior
+source and successful tests remain recorded. Runtime: 339 files, nine existing
+changes/four additions, with the other 326 predecessor files unchanged.
+Exact-commit CI and clean installed-package/artifact checks follow publication.
 
 [G34 is complete at verified a064a2c0](reports/phase2-growth-predicate-verification-v1/ROOT-CHECKPOINT.md).
 All four original CI jobs, clean installed packaging and independent artifact
@@ -29,7 +34,7 @@ NO-GO. The original G31 block remains; G34 does not qualify G32's envelope gate.
 The [primary vacancy paper](reports/phase2-rhizo-vacancy-methods-v1/README.md)
 confirms its approximately-zero-pressure energy/enthalpy convention for archived
 DFT. Rhizo extraction accuracy and physical transfer remain unestablished.
-No new scientific comparison, fit or allocation has run.
+The historical stored-label census is descriptive; no fresh scientific comparison, fit or allocation has run.
 
 The [implementation](reports/phase2-growth-implementation-v1/README.md) passes
 359 combined Li tests, with all 326 predecessor runtime files unchanged.

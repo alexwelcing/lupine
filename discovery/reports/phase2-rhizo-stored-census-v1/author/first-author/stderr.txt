@@ -1,0 +1,34 @@
+test_citation_and_tolerance_not_silent_policy (test_census.CensusTests.test_citation_and_tolerance_not_silent_policy) ... ok
+test_complete144_exact16_groups (test_census.CensusTests.test_complete144_exact16_groups) ... ok
+test_exact_mean_has_nondecimal_denominator (test_census.CensusTests.test_exact_mean_has_nondecimal_denominator) ... ok
+test_exact_numeric_lexemes_and_limits (test_census.CensusTests.test_exact_numeric_lexemes_and_limits) ... ok
+test_explicit_lowered_output_cap_failure (test_census.CensusTests.test_explicit_lowered_output_cap_failure) ... ok
+test_frame_and_readiness_pin_failure_precedes_projection_hash (test_census.CensusTests.test_frame_and_readiness_pin_failure_precedes_projection_hash) ... ok
+test_injected_partial_numeric_arithmetic_failures (test_census.CensusTests.test_injected_partial_numeric_arithmetic_failures) ... ok
+test_late_failure_retains_parse_and_partial_numbers (test_census.CensusTests.test_late_failure_retains_parse_and_partial_numbers) ... ok
+test_missing_duplicate_extra_property_rejected (test_census.CensusTests.test_missing_duplicate_extra_property_rejected) ... ok
+test_missing_duplicate_extra_unit_rejected (test_census.CensusTests.test_missing_duplicate_extra_unit_rejected) ... ok
+test_numeric_state_token_bool_nonfinite_mismatch (test_census.CensusTests.test_numeric_state_token_bool_nonfinite_mismatch) ... ok
+test_ordinals_bool_negative_fraction_duplicate_and_bound (test_census.CensusTests.test_ordinals_bool_negative_fraction_duplicate_and_bound) ... ok
+test_parser_depth_node_string_bounds (test_census.CensusTests.test_parser_depth_node_string_bounds) ... ok
+test_private_citation_tokens_and_declared_hash_absent_public (test_census.CensusTests.test_private_citation_tokens_and_declared_hash_absent_public) ... ok
+test_record_ambiguity_and_context_drift (test_census.CensusTests.test_record_ambiguity_and_context_drift) ... ok
+test_reference_equality_not_assumed (test_census.CensusTests.test_reference_equality_not_assumed) ... ok
+test_reference_rational_token_citation_equality_separate (test_census.CensusTests.test_reference_rational_token_citation_equality_separate) ... ok
+test_reordering_has_fixed_output_order (test_census.CensusTests.test_reordering_has_fixed_output_order) ... ok
+test_signed_zero_preserved_privately_equal_rational (test_census.CensusTests.test_signed_zero_preserved_privately_equal_rational) ... ok
+test_squared_units_separate (test_census.CensusTests.test_squared_units_separate) ... ok
+test_strict_duplicate_utf8_surrogate_nonfinite_json (test_census.CensusTests.test_strict_duplicate_utf8_surrogate_nonfinite_json) ... ok
+test_unknown_fields_and_missing_schema_rejected (test_census.CensusTests.test_unknown_fields_and_missing_schema_rejected) ... ok
+test_worst_allowed_square_exceeds_python_digit_default (test_census.CensusTests.test_worst_allowed_square_exceeds_python_digit_default) ... ok
+test_bounded_read_identity_mismatch_preserves_exposure (test_census.FileTests.test_bounded_read_identity_mismatch_preserves_exposure) ... ok
+test_fixture_guard_failure_before_read_and_before_output (test_census.FileTests.test_fixture_guard_failure_before_read_and_before_output) ... ok
+test_generated_file_once_and_exclusive_slot (test_census.FileTests.test_generated_file_once_and_exclusive_slot) ... ok
+test_private_partial_write_and_public_write_failure (test_census.FileTests.test_private_partial_write_and_public_write_failure) ... ok
+test_processing_failure_not_replaced_by_output_failure (test_census.FileTests.test_processing_failure_not_replaced_by_output_failure) ... ok
+test_symlink_and_actual_path_rejected_without_read (test_census.FileTests.test_symlink_and_actual_path_rejected_without_read) ... ok
+
+----------------------------------------------------------------------
+Ran 29 tests in 1.786s
+
+OK

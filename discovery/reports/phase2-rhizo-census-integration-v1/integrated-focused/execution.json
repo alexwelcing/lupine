@@ -1,0 +1,11 @@
+{
+  "started_at": "2026-10-16T13:51:17.769440+00:00",
+  "finished_at": "2026-10-16T13:52:01.177308+00:00",
+  "process_seconds": 43.406909674005874,
+  "exit_code": 0,
+  "source_files_held": 339,
+  "source_unchanged": true,
+  "status": "PASS",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "f37be5e0146935957615f8bcaf09c1dc76d20912740722f30107e53c257bdd97"
+}

@@ -1,0 +1,34 @@
+{
+  "actual_projection_or_raw_reads_by_author": 0,
+  "actual_wrapper_invocations_by_author": 0,
+  "bytes": 186010,
+  "contract": {
+    "bytes": 8585,
+    "sha256": "e849d36004f0e73fdde22620bbffe06d1e53425907ca5fce974c536a5e1ea052"
+  },
+  "files": 30,
+  "first_author_tests_passed": 29,
+  "first_independent_numeric_methods_passed": 22,
+  "independent_review_binding": {
+    "bytes": 1457,
+    "sha256": "c13b3a5da9bf0c980a76b77930df04c1b0a1cba2e4e7f5270b9568cc3bd7f7bd"
+  },
+  "inventory": {
+    "bytes": 4750,
+    "sha256": "4861948c05abdf18c8231824e49818a0f477547cddcb87ecccf2ad3e9bdb4b0e"
+  },
+  "numeric_review_handoff": ".cache/phase2-rhizo-census-independent-v1/handoff.json",
+  "post_execution_source_repairs": 0,
+  "publication_instruction": "Preserve original history; follow publication-layout.json for relocated first-author README wrapper. Root alone owns actual input binding, operation and result publication.",
+  "readme": {
+    "bytes": 4819,
+    "sha256": "073e1a391e1fa8c22eedf331bbe0f934c556ccbead7d0c0a9a32b4bb0f8f6686"
+  },
+  "root_actual_outputs_excluded": true,
+  "source": {
+    "bytes": 26565,
+    "sha256": "d77a1ca2eeeb1d0f4e02fac6d624fa63527c4a8d423fdf8f7f645db102c67630"
+  },
+  "source_scientific_review": ".cache/phase2-rhizo-census-scope-review-v1/review.json",
+  "status": "HELD_GENERATED_CANDIDATE_AND_REVIEW_COMPLETE"
+}

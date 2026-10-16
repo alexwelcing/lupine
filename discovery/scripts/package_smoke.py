@@ -17,6 +17,7 @@ import tempfile
 
 
 PROBE = r'''
+from hashlib import sha256
 import json
 import subprocess
 from dataclasses import replace
@@ -193,6 +194,16 @@ assert training_tail['decision']['status'] == 'NO_GO_MODEL_IMPROVEMENT'
 assert training_tail['decision']['selected_model'] is None
 assert training_tail['reproduction']['execution_status'] == 'COMPLETE_REPRODUCED'
 assert len(training_tail['models']) == 4
+# Exact public historical artifact; this check does not recompute private labels.
+census_raw = resources.joinpath('resources', 'recorded-census-v1.json').read_bytes()
+assert sha256(census_raw).hexdigest() == 'a9ab9d72c6c39be9338e951b657e0587ae8f4dbe534b276b8f8f8951a7b1a63a'
+census = json.loads(census_raw)
+assert census['status'] == 'DESCRIPTIVE_CENSUS_COMPLETE'
+assert census['scientific_status'] == 'NOT_ADMITTED' and census['actual_reference_choice'] == 'UNKNOWN'
+assert census['model_ranking_or_winner'] is None and census['tolerance_success_criterion'] is None
+assert census['exposure']['fresh_holdout_claim'] is False
+census_asset = resources.joinpath('web', 'recorded-census.js').read_bytes()
+assert census_asset, 'missing stored-label census JavaScript'
 server = make_server(0)
 thread = threading.Thread(target=server.serve_forever, daemon=True)
 thread.start()
@@ -207,6 +218,9 @@ try:
         assert observed_reports['constrained_archived'] == constrained
         assert observed_reports['training_tail'] == training_tail
     mpea_check = check_optional_mpea(resources, observed_reports, url)
+    assert json.dumps(observed_reports['recorded_census'], sort_keys=True, separators=(',', ':')) == json.dumps(census, sort_keys=True, separators=(',', ':'))
+    with urlopen(url + '/recorded-census.js', timeout=10) as response:
+        assert response.status == 200 and response.read() == census_asset
     # Compare the exact installed CLI objects to installed guarded HTTP routes.
     planning_requests = [
         ('/api/plan-pool', {'calibration_count': 20, 'alpha': '1/10', 'cutoff': '3/4'}, pool_plan),
@@ -269,7 +283,8 @@ print(json.dumps({'status': 'passed', 'python': sys.version.split()[0],
                              'prospective_planning_http_cli_agreement_and_assets',
                              'finite_population_zero_failure_cli_http_exact_scope',
                              'optional_mpea_resource_presence_and_http_agreement',
-                             'mpea_javascript_packaged_and_served']},
+                             'mpea_javascript_packaged_and_served',
+                             'fixed_stored_census_identity_scope_and_http_asset_agreement']},
                  sort_keys=True))
 '''
 

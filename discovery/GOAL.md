@@ -89,27 +89,33 @@ previously unused source with paired outcomes and credible study grouping.
 | G33 | Bounded Rhizo declared-reference provenance and historical recorded-label readiness | COMPLETE for fixed stored fields; NOT_ADMITTED | [One 36-object inspection](reports/phase2-rhizo-recorded-label-readiness-v1/README.md) confirms all 144 stored prediction/reference pairs are exact numeric fields with matching literal units; all tolerances are NULL. The source is exposed; historical reference choice and physical validity remain UNKNOWN. No performance comparison or fresh screening claim. |
 | G34 | One categorical all-entry Li header diagnostic with exact first-rejection preservation and explicit unchecked dependencies | DONE; BLOCKED_SCHEMA preserved | [Verified a064a2c0 and actual pair](reports/phase2-growth-predicate-verification-v1/ROOT-CHECKPOINT.md): all four CI jobs, clean package and independent artifacts pass. Two identical receipts report only MEMBER_KIND_PROFILE failing; 31 families pass, none unchecked. All 335 runtime files held; zero member/XML decoding. Independent public review passes 410 checks, with its first harness failure preserved. |
 
-Current owner/checkpoint: root publishes the completed G34 actual audit and
-primary-source method/OPC reviews, then implements one independently reviewed,
-bounded compatibility→documentary/frame readiness route. Implementation
-`a064a2c0` passed all four original CI jobs at 12:56:39 UTC, clean installed
-packaging and independent artifact checks before the two fixed actual commands.
-The sole rejected family is the reader's allowed-member profile. This identifies
-no actual part/type and does not admit the archive or make unknown payloads safe.
 
-The [primary OPC review](reports/phase2-opc-part-scope-v1/README.md) supports a
-general structural naming model with bounded type/relationship validation; it
-establishes no workbook semantics. The complete route must resolve documentary
-roles and a fixed non-outcome frame, or stop with a specific Li NO-GO for the
-present claim. Avoid an indefinite sequence of new predicate diagnostics.
-No actual G32 operation is authorized by G34's blocked receipt.
+| G35 | Fixed exposed Rhizo census and exact readable workbench, preserving unknown physical scope | IMPLEMENTED / release verification pending | [144 pairs, 16 groups and 36 reference checks](reports/phase2-rhizo-stored-census-v1/README.md), independent arithmetic/scope reviews; [80 browser checks and final 97 focused tests](reports/phase2-rhizo-census-integration-v1/README.md). Exact public values and exports; no winner, tolerance criterion or fresh scientific admission. |
+| G36 | One complete bounded Li compatibility/documentary/frame route | ACTIVE / generated pure tests pass | Author 38 and independent 35 methods pass; the same 35 also pass in portable form. Pure code makes no actual-source or production claim. Root owns integration; actual phases require fixed provenance and reviewed documentary/frame bindings, otherwise a specific NO-GO. |
 
-Rhizo's 144 stored pairs remain complete historical fields, with every optional
-tolerance NULL and no numerical comparison. The [primary vacancy-method review](reports/phase2-rhizo-vacancy-methods-v1/README.md)
-resolves only Angsten et al.'s approximately-zero-pressure energy/enthalpy
-convention; these are archived DFT results. Extraction agreement, reference
-choice, physical accuracy and uncertainty remain separate unresolved questions.
-No new fit, allocation, scientific threshold or fresh predictive claim follows.
+Current owner/checkpoint: root has integrated the completed historical census,
+readable exact-summary workbench and additive installed-package check. The
+[integration evidence](reports/phase2-rhizo-census-integration-v1/README.md)
+records 80 browser checks and 97 final focused tests, plus the type-sensitive
+HTTP equality correction. Next: commit/push, verify exact remote CI, clean
+retained packaging and independent artifact deltas. Parent d4d8504a passed all
+four original CI jobs, observed at 13:30:44 UTC.
+
+The Rhizo census contains all 144 stored pairs. All 36 reference groups use
+equal stored values, spellings and citation strings across four models; physical
+comparability and historical reference choice remain unresolved. Every tolerance
+is NULL. Public aggregates are now exposed; they do not supply a winner,
+uncertainty bound, primary-source extraction validation or fresh screening data.
+The [primary vacancy-method review](reports/phase2-rhizo-vacancy-methods-v1/README.md)
+documents archived DFT conventions only; no new DFT ran.
+
+The complete Li readiness route is the primary new-source effort. Its generated
+pure implementation passes 38 author and 35 independent tests, with the same
+35 repeated after portable packaging. A separate production adapter is being
+prepared; no new actual workbook access has occurred. The original G31/G34
+blocks remain. Generic OPC syntax does not establish workbook semantics or
+unknown-payload irrelevance. Documentary and full-frame phases require exact
+bindings from already permitted evidence, or a specific terminal NO-GO.
 
 The prospective planning probe is intentionally hypothetical. An IID score
 distribution permits exact prospective threshold arithmetic; it is

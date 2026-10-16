@@ -16,6 +16,7 @@ from playwright.sync_api import expect, sync_playwright
 from mpea_browser_checks import check_mpea_workbench
 from planning_browser_checks import check_planning_workbench
 from finite_planning_browser_checks import check_finite_planning_workbench
+from recorded_census_browser_checks import check_recorded_census_workbench
 
 from lupine_discovery.benchmarks import case_catalog, get_case, get_case_outcomes
 from lupine_discovery.cli import verify_certificate
@@ -32,9 +33,11 @@ def run():
         package = project_root / "src/lupine_discovery"
         paths = [Path(__file__).resolve(), Path(__file__).with_name("mpea_browser_checks.py").resolve(),
                  Path(__file__).with_name("planning_browser_checks.py").resolve(),
-                 Path(__file__).with_name("finite_planning_browser_checks.py").resolve(), *package.rglob("*.py"),
-                 *(package / "web" / name for name in ("app.js", "mpea.js", "planner.js", "index.html", "styles.css"))]
+                 Path(__file__).with_name("finite_planning_browser_checks.py").resolve(),
+                 Path(__file__).with_name("recorded_census_browser_checks.py").resolve(), *package.rglob("*.py"),
+                 *(package / "web" / name for name in ("app.js", "mpea.js", "planner.js", "recorded-census.js", "index.html", "styles.css"))]
         paths.extend((package / "resources").rglob("decision-pool*.json"))
+        paths.append(package / "resources/recorded-census-v1.json")
         paths.extend((project_root / "tests/fixtures/mpea_ui").glob("*.json"))
         return {str(path.relative_to(project_root)): sha256(path.read_bytes()).hexdigest()
                 for path in sorted(paths)}
@@ -56,6 +59,7 @@ def run():
             expect(page.locator("#case-title")).to_be_visible()
             checks.extend(check_planning_workbench(page, artifacts / "planning"))
             checks.extend(check_finite_planning_workbench(page, artifacts / "finite-planning"))
+            checks.extend(check_recorded_census_workbench(page, artifacts / "recorded-census"))
 
             def select_case(case_id):
                 page.locator("#case-select").select_option(case_id)

@@ -1,0 +1,44 @@
+{
+  "schema": "lupine.synthetic_capture_control.v1",
+  "state": {
+    "active": "table",
+    "skip": {
+      "top": -100,
+      "bottom": -58,
+      "focused": false
+    },
+    "sectionTop": -410,
+    "viewportHeight": 812
+  },
+  "hidden_control": {
+    "display": "none",
+    "rect": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "top": 0,
+      "right": 0,
+      "bottom": 0,
+      "left": 0
+    }
+  },
+  "element_image_size": [
+    375,
+    1634
+  ],
+  "image_difference_bbox": [
+    20,
+    310,
+    375,
+    506
+  ],
+  "scope": "Synthetic DOM only; transient in-browser display control; no application files changed.",
+  "artifacts": {
+    "minimal.html": "90051d99ee1e2602f428b2c11f645d648dc702f8945962863e1db4b5bb290b0e",
+    "minimal-viewport.png": "1bac4497cbf31e224769a9f39caf33b821f573ca24bff0be17150182f601b86b",
+    "minimal-element.png": "43a6480cff99dcfaec4061cce91e32ba037bf161b913ae89ae1bec794120abce",
+    "minimal-element-display-none-control.png": "0189a09750998c2f35d6c435be5cc16435cc57d6076ee1a7d059a4af4857e7ac"
+  },
+  "script_sha256": "8dcfff8cfc1ba6ce97bd8973ecf009430a3cb9d15127df814e8fb6b015deee21"
+}

@@ -23,7 +23,7 @@ spec = importlib.util.spec_from_file_location('retention_independent_review', SO
 m = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(m)
 INERT_WHEEL = b'Synthetic inert wheel bytes. No package installation or probe is performed.\n'
-PROBE_SHA256 = 'a990a5aa825b1ed55caeb2551b86dae3efc4f0e258e95afc696b95f4919415a6'
+PROBE_SHA256 = '52e04bd2af952ae239f9da2dc8b966352f438db204dcdfe8725f92e46bea7710'
 
 
 class RetentionIndependentReview(unittest.TestCase):

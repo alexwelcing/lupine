@@ -1,0 +1,155 @@
+{
+  "baseline_commit": "d4d8504a97d362a6339eaa27453a86e0eb167cee",
+  "executed_scope": {
+    "application_tests_or_builds": false,
+    "browser_or_private_data": false,
+    "prepared_application_or_probe": false,
+    "stdlib_source_hash_ast_diff_comparisons": true,
+    "synthetic_json_equality_examples": true
+  },
+  "files": {
+    "final/exact-diff.patch.txt": {
+      "bytes": 4308,
+      "sha256": "f894f51a04f098761472958ae155b638e46d94f3fa01da76abb1042dd4fa35ec"
+    },
+    "final/http-test-after.py": {
+      "bytes": 8763,
+      "sha256": "12aef15f80c54bdf965659c678fced182fa8bd335f549d08f8a930603156e169"
+    },
+    "final/http-test-before.py": {
+      "bytes": 8682,
+      "sha256": "ec140f7f4cb00fcf86b099f7a0bee96c6022db7eaed6e07644db5ad997bd65f5"
+    },
+    "final/original/scripts/package_smoke.py": {
+      "bytes": 33256,
+      "sha256": "cb4cb5f37cf9146d007ddb7af3599ba0e31180862825230c00fc995cf342d93e"
+    },
+    "final/original/scripts/verify_retained_artifacts.py": {
+      "bytes": 19883,
+      "sha256": "22455c93a2539868cf8a9dda76b67413eefe05917603718f19eef1585a1c741d"
+    },
+    "final/original/tests/test_package_retention.py": {
+      "bytes": 18422,
+      "sha256": "88a939e73efb90c053ce15e3a95a23413400a002b79b510c61ce397a0c803b45"
+    },
+    "final/original/tests/test_package_retention_review.py": {
+      "bytes": 17975,
+      "sha256": "e265691af8ef3e9af5d3a0ef3060959187c15291db20475d8b7e7798b9af789a"
+    },
+    "final/prepared/scripts/package_smoke.py": {
+      "bytes": 34442,
+      "sha256": "28ff8c56cf632924e0ae28e0560b149d7b1044d63772bc12e61797842c6728ee"
+    },
+    "final/prepared/scripts/verify_retained_artifacts.py": {
+      "bytes": 19950,
+      "sha256": "3d3247beb74905c3f6d3a48aa42566d73c7a550645116ce084c0d8e4d664446a"
+    },
+    "final/prepared/tests/test_package_retention.py": {
+      "bytes": 18445,
+      "sha256": "afd324bbd06962c09898bc000afaa1ff3a52f000ce947e5a364980faed6e832b"
+    },
+    "final/prepared/tests/test_package_retention_review.py": {
+      "bytes": 17975,
+      "sha256": "9e74246a9c6813efbc1dee855ccb68ac9a20fdaf3e64a340a719202e8f8cbfd1"
+    },
+    "final/promotion-inputs-final.json": {
+      "bytes": 3595,
+      "sha256": "b3867dd99e7a7d890ac0bee36e1448ff811d3931be7f3a21c80035e995a82a6a"
+    },
+    "final/review-comparison-manifest.json": {
+      "bytes": 1392,
+      "sha256": "bb81729f859cbee782a0e95ce11659a86fe2f9c8275e666fc2c5cd086800df48"
+    },
+    "final/static-review.json": {
+      "bytes": 4555,
+      "sha256": "8ea0fd0960a6ccd1e953ba9dd86f2c6a7b7e4ede243de5cd723832fc9aae0bcd"
+    },
+    "final/type-sensitive-correction.json": {
+      "bytes": 1636,
+      "sha256": "45fd5ae11cdb67b092a3ef8cd727932090736a375573eab3cce8b2a871744f50"
+    },
+    "initial-captured/exact-diff.patch.txt": {
+      "bytes": 4206,
+      "sha256": "3d399062b61c7ec19742c91704f48877cc1b5a04b303c62d5302aee7270a17c1"
+    },
+    "initial-captured/original/scripts/package_smoke.py": {
+      "bytes": 33256,
+      "sha256": "cb4cb5f37cf9146d007ddb7af3599ba0e31180862825230c00fc995cf342d93e"
+    },
+    "initial-captured/original/scripts/verify_retained_artifacts.py": {
+      "bytes": 19883,
+      "sha256": "22455c93a2539868cf8a9dda76b67413eefe05917603718f19eef1585a1c741d"
+    },
+    "initial-captured/original/tests/test_package_retention.py": {
+      "bytes": 18422,
+      "sha256": "88a939e73efb90c053ce15e3a95a23413400a002b79b510c61ce397a0c803b45"
+    },
+    "initial-captured/original/tests/test_package_retention_review.py": {
+      "bytes": 17975,
+      "sha256": "e265691af8ef3e9af5d3a0ef3060959187c15291db20475d8b7e7798b9af789a"
+    },
+    "initial-captured/prepared/scripts/package_smoke.py": {
+      "bytes": 34340,
+      "sha256": "eaeffcd242d9d5b843ddaea46a65e60b5666ba092d0dfd93136e0d5bd3be0d07"
+    },
+    "initial-captured/prepared/scripts/verify_retained_artifacts.py": {
+      "bytes": 19950,
+      "sha256": "3d3247beb74905c3f6d3a48aa42566d73c7a550645116ce084c0d8e4d664446a"
+    },
+    "initial-captured/prepared/tests/test_package_retention.py": {
+      "bytes": 18445,
+      "sha256": "8ca92ba8b555fea8668392e22499db0a362ac6643c5d155ed459b376d0792a15"
+    },
+    "initial-captured/prepared/tests/test_package_retention_review.py": {
+      "bytes": 17975,
+      "sha256": "963b4667bc013fb55e83a8988f61975454b16b2a0fac9b177d2b54b284c57a2c"
+    },
+    "initial-captured/review_sources.py": {
+      "bytes": 8190,
+      "sha256": "0ecf2eab944a93ca228d76fe72a8ac7774d9bc0b6862517fcbb55f58ee26cfce"
+    },
+    "initial-captured/static-review.json": {
+      "bytes": 4051,
+      "sha256": "f5e0a6362aa06f0eaa0da046d1b0a03809e6781adcc9e1994558cb32087c3005"
+    },
+    "initial/capture-stop.txt": {
+      "bytes": 608,
+      "sha256": "1e183df65e250b59590cf66cdcb52e4fcff272d71bfe670b70ecd66bcaa8ea74"
+    },
+    "review.md": {
+      "bytes": 4351,
+      "sha256": "bb8744d92798a3e4572aa2f5dc6ff3e32c8de7021ceac80cd7984482585fd09b"
+    },
+    "review_sources.py": {
+      "bytes": 11299,
+      "sha256": "5c681ed264b15f3e272ad9eb657a2509f7ddf6ec79a77fe71b4fab7cdd75ec4f"
+    },
+    "synthetic-json-equality-demonstration.json": {
+      "bytes": 1300,
+      "sha256": "0a4372e95b29cabb5791f0817865e44319ff74f97fadfb1d79ec8aaed0ae4661"
+    }
+  },
+  "final_checks": 17,
+  "finding": {
+    "correction": "Type-sensitive decoded JSON comparison and fixed-pin updates",
+    "initial_probe_sha256": "f2c11f85cff4bddcf68ad28eee315ffd0026b7e91a5187bd7a62276080942173",
+    "issue": "Python object equality accepts bool/int and int/float substitutions",
+    "status": "CORRECTED_BEFORE_FINAL_REVIEW",
+    "synthetic_counterexamples": 3
+  },
+  "http_test_sha256": "12aef15f80c54bdf965659c678fced182fa8bd335f549d08f8a930603156e169",
+  "new_probe_assertions": 8,
+  "preserved_old_probe_assertions": 72,
+  "probe_sha256": "52e04bd2af952ae239f9da2dc8b966352f438db204dcdfe8725f92e46bea7710",
+  "retained_old_checks": 16,
+  "retention_assertions_weakened": false,
+  "reviewed_source_sha256": {
+    "scripts/package_smoke.py": "28ff8c56cf632924e0ae28e0560b149d7b1044d63772bc12e61797842c6728ee",
+    "scripts/verify_retained_artifacts.py": "3d3247beb74905c3f6d3a48aa42566d73c7a550645116ce084c0d8e4d664446a",
+    "tests/test_package_retention.py": "afd324bbd06962c09898bc000afaa1ff3a52f000ce947e5a364980faed6e832b",
+    "tests/test_package_retention_review.py": "9e74246a9c6813efbc1dee855ccb68ac9a20fdaf3e64a340a719202e8f8cbfd1"
+  },
+  "schema": "lupine.discovery.independent-package-probe-source-review.v1",
+  "scope": "Independent source review only; actual installed-wheel behavior and scientific validity are not established by this receipt.",
+  "status": "NO_REMAINING_SOURCE_REVIEW_BLOCKER"
+}

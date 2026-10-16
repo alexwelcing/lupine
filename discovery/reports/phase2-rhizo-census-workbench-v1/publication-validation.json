@@ -1,0 +1,120 @@
+{
+  "exact_copies": 97,
+  "excluded_bytecode_inventory_entries": [
+    {
+      "identity_from_unchanged_inventory": {
+        "bytes": 8602,
+        "sha256": "161689ca801614efce0d26e3944cbe3409d4fbc36dba08431845ce46e8d55c8b"
+      },
+      "reason": "Generated interpreter bytecode; excluded without body read.",
+      "source": ".cache/phase2-rhizo-census-ui-display-review-v1/__pycache__/exact_display_cases.cpython-312.pyc"
+    },
+    {
+      "identity_from_unchanged_inventory": {
+        "bytes": 5342,
+        "sha256": "4757969e3185446666ae14154b37a18ad0b409d2fab79734e5d1ae45ebb3d4a3"
+      },
+      "reason": "Generated interpreter bytecode; excluded without body read.",
+      "source": ".cache/phase2-rhizo-census-ui-display-review-v1/__pycache__/generated_fixture.cpython-312.pyc"
+    }
+  ],
+  "historical_failure_retention": [
+    "Original v1 product digit-bound failure",
+    "Original v1 reviewer denominator-fixture failure",
+    "Old-source snapshot interruption",
+    "Source-inspection transport failure",
+    "Ineffective visual screenshot masking control",
+    "Publication helper guessed absent review.json; corrected to visual-review.md",
+    "Publication link check preceded generated target; ordering corrected"
+  ],
+  "lossless_wrappers": 1,
+  "markdown_link_repairs_needed": false,
+  "no_package_preview_tree_copied": true,
+  "no_private_data_read": true,
+  "no_product_tests_run_by_publication_builder": true,
+  "public_actual_export_and_screenshot_exposure": "Authorized; no private recomputation.",
+  "published_markdown_link_count": 19,
+  "published_markdown_links": [
+    {
+      "from": "README.md",
+      "to": "generated-v2-review/README.md"
+    },
+    {
+      "from": "README.md",
+      "to": "generated-v3-review/README.md"
+    },
+    {
+      "from": "README.md",
+      "to": "root-ui/http-integration.json"
+    },
+    {
+      "from": "README.md",
+      "to": "root-ui/http-v3-integration.json"
+    },
+    {
+      "from": "README.md",
+      "to": "visual-review/visual-review.md"
+    },
+    {
+      "from": "README.md",
+      "to": "root-ui/http-export.json"
+    },
+    {
+      "from": "README.md",
+      "to": "root-ui/http-v3-export.json"
+    },
+    {
+      "from": "README.md",
+      "to": "generated-v2-review/first-findings.json"
+    },
+    {
+      "from": "README.md",
+      "to": "generated-v2-review/first-run/execution.json"
+    },
+    {
+      "from": "README.md",
+      "to": "root-ui/positive-digit-fix.diff"
+    },
+    {
+      "from": "README.md",
+      "to": "generated-v2-review/reviewer-correction.diff.bytes.json"
+    },
+    {
+      "from": "README.md",
+      "to": "visual-review/desktop-viewport.png"
+    },
+    {
+      "from": "README.md",
+      "to": "visual-review/mobile-viewport-before.png"
+    },
+    {
+      "from": "README.md",
+      "to": "root-ui/http-v3-desktop.png"
+    },
+    {
+      "from": "README.md",
+      "to": "root-ui/http-v3-mobile.png"
+    },
+    {
+      "from": "README.md",
+      "to": "visual-review/mobile-keyboard-skip-focus.png"
+    },
+    {
+      "from": "README.md",
+      "to": "visual-review/mobile-after-skip-enter.png"
+    },
+    {
+      "from": "README.md",
+      "to": "source-copy-map.json"
+    },
+    {
+      "from": "README.md",
+      "to": "publication-validation.json"
+    }
+  ],
+  "selected_original_artifacts": 98,
+  "source_bytes_unchanged": true,
+  "source_inventory_selected_hashes_match": true,
+  "status": "PASS_EXPLICIT_BYTE_LINK_WHITESPACE_VALIDATION",
+  "whitespace_text_check": "UTF-8 text only; no trailing whitespace, indentation space-before-tab or blank end-of-file. PNG excluded from text interpretation."
+}

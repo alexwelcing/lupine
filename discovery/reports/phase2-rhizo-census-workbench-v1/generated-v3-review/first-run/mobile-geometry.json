@@ -1,0 +1,25 @@
+{
+  "viewport": 320,
+  "page": 320,
+  "regions": [
+    {
+      "width": 282,
+      "scroll": 681
+    },
+    {
+      "width": 282,
+      "scroll": 661
+    },
+    {
+      "width": 282,
+      "scroll": 716
+    }
+  ],
+  "codes": [
+    {
+      "width": 71.0625,
+      "whiteSpace": "normal",
+      "wrap": "anywhere"
+    }
+  ]
+}

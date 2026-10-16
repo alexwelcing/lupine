@@ -1,0 +1,21 @@
+{
+  "actual_census_public_resource_sha256": "a9ab9d72c6c39be9338e951b657e0587ae8f4dbe534b276b8f8f8951a7b1a63a",
+  "asset_sha256": "8e45d59eab288d5ce6c83fabe6b30ef4c707736913d13b8bf99f0e09a5b0628a",
+  "file_count": 9,
+  "first_execution": ".cache/phase2-rhizo-census-http-tests-v1/first/execution.json",
+  "first_failures": [],
+  "inventory": ".cache/phase2-rhizo-census-http-tests-v1/inventory.json",
+  "inventory_sha256": "41d5043f448e0175622e46b48e723ca60984103870016f0351fc94147ba31414",
+  "private_or_source_producer_access": false,
+  "promotion_note": "Test uses only imported package resource paths. Root owns tracked integration and subsequent exact integrated tests. This first run selected an isolated copied package overlay, not a wheel.",
+  "readme_relative_links_checked": 4,
+  "real_http_requests": 18,
+  "server_sha256": "451324d9ce1fa84ec1759699bd2ea25759a29368b84c82f30741ea4e7e2ca826",
+  "status": "PASS_FIRST_HTTP_INVOCATION",
+  "test_destination": "tests/test_server_recorded_census.py",
+  "test_methods": 6,
+  "test_sha256": "ec140f7f4cb00fcf86b099f7a0bee96c6022db7eaed6e07644db5ad997bd65f5",
+  "test_source": ".cache/phase2-rhizo-census-http-tests-v1/tests/test_server_recorded_census.py",
+  "total_bytes": 20192,
+  "tracked_edits": false
+}

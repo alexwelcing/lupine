@@ -34,6 +34,7 @@ ASSETS = {"/": ("index.html", "text/html; charset=utf-8"),
           "/styles.css": ("styles.css", "text/css; charset=utf-8"),
           "/mpea.js": ("mpea.js", "text/javascript; charset=utf-8"),
           "/planner.js": ("planner.js", "text/javascript; charset=utf-8"),
+          "/recorded-census.js": ("recorded-census.js", "text/javascript; charset=utf-8"),
           "/app.js": ("app.js", "text/javascript; charset=utf-8")}
 
 
@@ -84,6 +85,9 @@ def benchmark_report():
     mpea = files("lupine_discovery").joinpath("resources/mpea-t25-v1.json")
     if mpea.is_file():
         result["mpea_archived"] = json.loads(mpea.read_text(encoding="utf-8"))
+    census = files("lupine_discovery").joinpath("resources/recorded-census-v1.json")
+    if census.is_file():
+        result["recorded_census"] = json.loads(census.read_text(encoding="utf-8"))
     return result
 
 

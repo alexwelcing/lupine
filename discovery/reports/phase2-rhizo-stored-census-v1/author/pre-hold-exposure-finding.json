@@ -1,0 +1,10 @@
+{
+  "after_sha256": "d77a1ca2eeeb1d0f4e02fac6d624fa63527c4a8d423fdf8f7f645db102c67630",
+  "before_sha256": "c2329e36ba769dd632bf695f283916410b93dbade4f8cc748233ebe00be9e0c9",
+  "candidate_test_execution_count_before_repair": 0,
+  "finding": "Oversize bytes supplied to pure calculation should retain projection_bytes_supplied while parse remains not started.",
+  "phase": "Before first author or independent execution",
+  "recorded_at": "2026-10-16T13:22:34.435137+00:00",
+  "repair": "Set supplied/returned flags immediately after strict bytes type check and before size rejection. Public metadata identity validation still precedes any projection interpretation.",
+  "reviewer": "/root/census_numeric_review"
+}

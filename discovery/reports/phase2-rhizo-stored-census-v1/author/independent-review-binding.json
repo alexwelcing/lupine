@@ -1,0 +1,35 @@
+{
+  "actual_inputs_opened_by_author": 0,
+  "case_counter": {
+    "candidate_invocations": 107,
+    "equality_group_comparisons": 468,
+    "negative_cases": 94,
+    "private_position_rational_comparisons": 5616,
+    "summary_rational_comparisons": 1248
+  },
+  "checked_at": "2026-10-16T13:27:01.605612+00:00",
+  "first_independent_methods_passed": 22,
+  "new_tests_or_source_operations_run": 0,
+  "numeric_handoff": {
+    "bytes": 962,
+    "sha256": "430eaf000463ae6072b3ba9f4314de47fe689588729594d21cade27436f30213"
+  },
+  "numeric_inventory": {
+    "bytes": 1887,
+    "sha256": "46e197b158fd3d2fceb080dc90286a2dd8f23786522df8e5ff9059806d03bcc3"
+  },
+  "numeric_review": {
+    "bytes": 4644,
+    "sha256": "fdae85ce4e444ef5e98f913f472111eb8b8f95afb1b5a4ec43be9961cefc9f04"
+  },
+  "numeric_review_directory": ".cache/phase2-rhizo-census-independent-v1",
+  "numeric_review_excludes": "Actual inputs and file lifecycle/production guards; author fixture file tests and root source review are separate.",
+  "scientific_scope_review": {
+    "bytes": 5794,
+    "sha256": "0157617d237e5134cfd7bbf84984698b009b8dd32d2c074faa066c72e45005f1"
+  },
+  "scientific_scope_review_directory": ".cache/phase2-rhizo-census-scope-review-v1",
+  "scope": "Author metadata/byte reconciliation only; independent arithmetic source/test review belongs to the named reviewer.",
+  "status": "EXACT_INDEPENDENT_BUNDLE_BINDINGS_VERIFIED",
+  "verified_independent_inventory_entries": 10
+}

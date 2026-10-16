@@ -1,0 +1,12 @@
+{
+  "browser_errors": 0,
+  "first_execution_sha256": "336c1f36a80aa42384e081ece2797d839b31dae25403bb933713f1309e9c0da4",
+  "fixture_error": "The square of 3*10^1249+1 has 2499 digits, not 2500. Correct prospective large-denominator fixture to 4*10^1249+1; preserve first evidence.",
+  "network_requests": 0,
+  "no_actual_numeric_input": true,
+  "passed_checks": 22,
+  "postrun_snapshot_guard": "First attempted copy of live renderer rejected the source hash after root had already made its authorized fix. No bytes were copied at that failed assertion. Exact first source was then recovered and hash-verified from root before-positive-digit-fix snapshot.",
+  "product_finding": "A positive numerator with 5001 digits is accepted because total string length <=5001 permits the negative-sign allowance for unsigned input too. Contract caps numerator decimal digits at 5000.",
+  "product_source_sha256": "e5db3bc5786bdfd9deb992e6dfddd858932ae486439a357fcd17997be3ce81c8",
+  "status": "ONE_PRODUCT_BOUNDARY_FAILURE_AND_ONE_REVIEWER_FIXTURE_ERROR"
+}

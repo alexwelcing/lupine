@@ -1381,7 +1381,7 @@
     $('benchmark-status').textContent = 'Running the known-answer suite and loading recorded archive evaluations…';
     try {
       const report = await api('/api/benchmarks');
-      renderKnown(report.known_answers); renderArchives(report.archived, report.additional_archived); renderConstrained(report.constrained_archived); renderTrainingTail(report.training_tail); window.LupineMpea.render(report.mpea_archived);
+      renderKnown(report.known_answers); renderArchives(report.archived, report.additional_archived); renderConstrained(report.constrained_archived); renderTrainingTail(report.training_tail); window.LupineMpea.render(report.mpea_archived); window.LupineRecordedCensus.render(report.recorded_census);
       if (!$('refresh-benchmarks')) {
         const refresh = node('button', 'button button-outline button-small', '↻ Run known-answer suite again');
         refresh.id = 'refresh-benchmarks'; refresh.addEventListener('click', loadBenchmarks);

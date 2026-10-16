@@ -1,0 +1,1404 @@
+{
+  "excluded_inventory_entries": [
+    {
+      "identity_from_unchanged_inventory": {
+        "bytes": 8602,
+        "sha256": "161689ca801614efce0d26e3944cbe3409d4fbc36dba08431845ce46e8d55c8b"
+      },
+      "reason": "Generated interpreter bytecode; excluded without body read.",
+      "source": ".cache/phase2-rhizo-census-ui-display-review-v1/__pycache__/exact_display_cases.cpython-312.pyc"
+    },
+    {
+      "identity_from_unchanged_inventory": {
+        "bytes": 5342,
+        "sha256": "4757969e3185446666ae14154b37a18ad0b409d2fab79734e5d1ae45ebb3d4a3"
+      },
+      "reason": "Generated interpreter bytecode; excluded without body read.",
+      "source": ".cache/phase2-rhizo-census-ui-display-review-v1/__pycache__/generated_fixture.cpython-312.pyc"
+    }
+  ],
+  "excluded_uninventoried_scopes": [
+    "root-ui http-preview/ and http-preview-v3/ package preview trees: no body reads/copies",
+    "Any __pycache__ directory or .pyc file",
+    "New phase2-rhizo-census-ui-ci-v1 reusable CI module outputs and separate HTTP test author outputs: root handles separately",
+    "Any private projection, raw label object, actual census rerun or unlisted file",
+    "Visual investigation sources investigate.py, minimal_capture.py and minimal.html: hashes preserved in public-handoff.json, source bodies excluded"
+  ],
+  "original_artifacts": [
+    {
+      "publication": "root-ui/http-desktop.png",
+      "publication_identity": {
+        "bytes": 209164,
+        "sha256": "75852b333d61392a963f02f7d24c39f01f76261a96ef24fa302488b0af892b62"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit root source/evolution/HTTP allowlist",
+      "source": ".cache/phase2-rhizo-census-ui-v1/http-desktop.png",
+      "source_identity": {
+        "bytes": 209164,
+        "sha256": "75852b333d61392a963f02f7d24c39f01f76261a96ef24fa302488b0af892b62"
+      }
+    },
+    {
+      "publication": "root-ui/http-export.json",
+      "publication_identity": {
+        "bytes": 42773,
+        "sha256": "6e499eb55877fee29c4947a7e9944e952495c6b9ea72f48bb8e3946532a91444"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit root source/evolution/HTTP allowlist",
+      "source": ".cache/phase2-rhizo-census-ui-v1/http-export.json",
+      "source_identity": {
+        "bytes": 42773,
+        "sha256": "6e499eb55877fee29c4947a7e9944e952495c6b9ea72f48bb8e3946532a91444"
+      }
+    },
+    {
+      "publication": "root-ui/http-integration-start.json",
+      "publication_identity": {
+        "bytes": 29354,
+        "sha256": "5a230e39f4e25108e6e8f1a03c905c985ce2400a0623eda4fd5c750ca00b6891"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit root source/evolution/HTTP allowlist",
+      "source": ".cache/phase2-rhizo-census-ui-v1/http-integration-start.json",
+      "source_identity": {
+        "bytes": 29354,
+        "sha256": "5a230e39f4e25108e6e8f1a03c905c985ce2400a0623eda4fd5c750ca00b6891"
+      }
+    },
+    {
+      "publication": "root-ui/http-integration.json",
+      "publication_identity": {
+        "bytes": 1230,
+        "sha256": "d11461702d62e78204667a553991bb6540fd0aa9dcf43b7f821b0a636fcc88f0"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit root source/evolution/HTTP allowlist",
+      "source": ".cache/phase2-rhizo-census-ui-v1/http-integration.json",
+      "source_identity": {
+        "bytes": 1230,
+        "sha256": "d11461702d62e78204667a553991bb6540fd0aa9dcf43b7f821b0a636fcc88f0"
+      }
+    },
+    {
+      "publication": "root-ui/http-mobile.png",
+      "publication_identity": {
+        "bytes": 111267,
+        "sha256": "193db359364a656319bfc7f0a63c0548c309acc37a538ac979301a5ca748fc66"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit root source/evolution/HTTP allowlist",
+      "source": ".cache/phase2-rhizo-census-ui-v1/http-mobile.png",
+      "source_identity": {
+        "bytes": 111267,
+        "sha256": "193db359364a656319bfc7f0a63c0548c309acc37a538ac979301a5ca748fc66"
+      }
+    },
+    {
+      "publication": "root-ui/http-v3-desktop.png",
+      "publication_identity": {
+        "bytes": 176976,
+        "sha256": "2474ea90a10fa3e685a4ba8522d9d95e468c513b6a2e22b01b09f92d5085fc52"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit root source/evolution/HTTP allowlist",
+      "source": ".cache/phase2-rhizo-census-ui-v1/http-v3-desktop.png",
+      "source_identity": {
+        "bytes": 176976,
+        "sha256": "2474ea90a10fa3e685a4ba8522d9d95e468c513b6a2e22b01b09f92d5085fc52"
+      }
+    },
+    {
+      "publication": "root-ui/http-v3-export.json",
+      "publication_identity": {
+        "bytes": 42773,
+        "sha256": "6e499eb55877fee29c4947a7e9944e952495c6b9ea72f48bb8e3946532a91444"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit root source/evolution/HTTP allowlist",
+      "source": ".cache/phase2-rhizo-census-ui-v1/http-v3-export.json",
+      "source_identity": {
+        "bytes": 42773,
+        "sha256": "6e499eb55877fee29c4947a7e9944e952495c6b9ea72f48bb8e3946532a91444"
+      }
+    },
+    {
+      "publication": "root-ui/http-v3-integration-start.json",
+      "publication_identity": {
+        "bytes": 29465,
+        "sha256": "f87452e2972236702d50632e59bc054bac52fa7afe49af9b633fb01b75c402e6"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit root source/evolution/HTTP allowlist",
+      "source": ".cache/phase2-rhizo-census-ui-v1/http-v3-integration-start.json",
+      "source_identity": {
+        "bytes": 29465,
+        "sha256": "f87452e2972236702d50632e59bc054bac52fa7afe49af9b633fb01b75c402e6"
+      }
+    },
+    {
+      "publication": "root-ui/http-v3-integration.json",
+      "publication_identity": {
+        "bytes": 1239,
+        "sha256": "b533094e180e6d4f41da38e8bd0d5b8c92015268ebddca3b3529d2299a75718f"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit root source/evolution/HTTP allowlist",
+      "source": ".cache/phase2-rhizo-census-ui-v1/http-v3-integration.json",
+      "source_identity": {
+        "bytes": 1239,
+        "sha256": "b533094e180e6d4f41da38e8bd0d5b8c92015268ebddca3b3529d2299a75718f"
+      }
+    },
+    {
+      "publication": "root-ui/http-v3-mobile.png",
+      "publication_identity": {
+        "bytes": 119071,
+        "sha256": "92619057ea9ca5e3ed94ab995d77f314448b3a5abd11277a068f5a38fa151f10"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit root source/evolution/HTTP allowlist",
+      "source": ".cache/phase2-rhizo-census-ui-v1/http-v3-mobile.png",
+      "source_identity": {
+        "bytes": 119071,
+        "sha256": "92619057ea9ca5e3ed94ab995d77f314448b3a5abd11277a068f5a38fa151f10"
+      }
+    },
+    {
+      "publication": "root-ui/overlay-hold-v2.json",
+      "publication_identity": {
+        "bytes": 1031,
+        "sha256": "253f85d8eccb4682737fa0c6cd52cf9d68be775a9f89c037f322d841e52886cb"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit root source/evolution/HTTP allowlist",
+      "source": ".cache/phase2-rhizo-census-ui-v1/overlay-hold-v2.json",
+      "source_identity": {
+        "bytes": 1031,
+        "sha256": "253f85d8eccb4682737fa0c6cd52cf9d68be775a9f89c037f322d841e52886cb"
+      }
+    },
+    {
+      "publication": "root-ui/overlay-hold-v3.json",
+      "publication_identity": {
+        "bytes": 1269,
+        "sha256": "52d9939c4d62407b024df28173cd0b25b675fe7a9f0f96843ed7e0277f1fe0de"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit root source/evolution/HTTP allowlist",
+      "source": ".cache/phase2-rhizo-census-ui-v1/overlay-hold-v3.json",
+      "source_identity": {
+        "bytes": 1269,
+        "sha256": "52d9939c4d62407b024df28173cd0b25b675fe7a9f0f96843ed7e0277f1fe0de"
+      }
+    },
+    {
+      "publication": "root-ui/overlay-hold.json",
+      "publication_identity": {
+        "bytes": 990,
+        "sha256": "a3026b394715e51dac43dde86dc0ab893cf6801a537542b0b84ca76c9da88a61"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit root source/evolution/HTTP allowlist",
+      "source": ".cache/phase2-rhizo-census-ui-v1/overlay-hold.json",
+      "source_identity": {
+        "bytes": 990,
+        "sha256": "a3026b394715e51dac43dde86dc0ab893cf6801a537542b0b84ca76c9da88a61"
+      }
+    },
+    {
+      "publication": "root-ui/positive-digit-fix.diff",
+      "publication_identity": {
+        "bytes": 726,
+        "sha256": "07199c83c5c93954f6074a9241b01aeec298246d269202a9f2c1d4cbe1cb7a54"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit root source/evolution/HTTP allowlist",
+      "source": ".cache/phase2-rhizo-census-ui-v1/positive-digit-fix.diff",
+      "source_identity": {
+        "bytes": 726,
+        "sha256": "07199c83c5c93954f6074a9241b01aeec298246d269202a9f2c1d4cbe1cb7a54"
+      }
+    },
+    {
+      "publication": "root-ui/preparation.json",
+      "publication_identity": {
+        "bytes": 238,
+        "sha256": "74fb8a8cda56ccce7f8728855c27c4149a509c9ab6095d2d784863a38a080564"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit root source/evolution/HTTP allowlist",
+      "source": ".cache/phase2-rhizo-census-ui-v1/preparation.json",
+      "source_identity": {
+        "bytes": 238,
+        "sha256": "74fb8a8cda56ccce7f8728855c27c4149a509c9ab6095d2d784863a38a080564"
+      }
+    },
+    {
+      "publication": "root-ui/prepare_overlay.py",
+      "publication_identity": {
+        "bytes": 2151,
+        "sha256": "803b0e354969553272e5a77a1572d09ce3e62599acd55471b254610b77d336e6"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit root source/evolution/HTTP allowlist",
+      "source": ".cache/phase2-rhizo-census-ui-v1/prepare_overlay.py",
+      "source_identity": {
+        "bytes": 2151,
+        "sha256": "803b0e354969553272e5a77a1572d09ce3e62599acd55471b254610b77d336e6"
+      }
+    },
+    {
+      "publication": "root-ui/readable-display.diff",
+      "publication_identity": {
+        "bytes": 5591,
+        "sha256": "724f9a0520d52f9cf905b93134b60f5195df68170560d462a4d684a3238ca3cd"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit root source/evolution/HTTP allowlist",
+      "source": ".cache/phase2-rhizo-census-ui-v1/readable-display.diff",
+      "source_identity": {
+        "bytes": 5591,
+        "sha256": "724f9a0520d52f9cf905b93134b60f5195df68170560d462a4d684a3238ca3cd"
+      }
+    },
+    {
+      "publication": "root-ui/recorded-census.js",
+      "publication_identity": {
+        "bytes": 13634,
+        "sha256": "8e45d59eab288d5ce6c83fabe6b30ef4c707736913d13b8bf99f0e09a5b0628a"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit root source/evolution/HTTP allowlist",
+      "source": ".cache/phase2-rhizo-census-ui-v1/recorded-census.js",
+      "source_identity": {
+        "bytes": 13634,
+        "sha256": "8e45d59eab288d5ce6c83fabe6b30ef4c707736913d13b8bf99f0e09a5b0628a"
+      }
+    },
+    {
+      "publication": "root-ui/run_overlay_integration.py",
+      "publication_identity": {
+        "bytes": 6150,
+        "sha256": "e9f8aab21749f25255a49f8229aeaea08d0dc1c193d4f1aa18cde70a2bd8b82f"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit root source/evolution/HTTP allowlist",
+      "source": ".cache/phase2-rhizo-census-ui-v1/run_overlay_integration.py",
+      "source_identity": {
+        "bytes": 6150,
+        "sha256": "e9f8aab21749f25255a49f8229aeaea08d0dc1c193d4f1aa18cde70a2bd8b82f"
+      }
+    },
+    {
+      "publication": "root-ui/run_overlay_integration_v3.py",
+      "publication_identity": {
+        "bytes": 6360,
+        "sha256": "eed45a26b781ee6c261f567a7dd6857c5d6bf5bc5798aab0c97666c859ef215d"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit root source/evolution/HTTP allowlist",
+      "source": ".cache/phase2-rhizo-census-ui-v1/run_overlay_integration_v3.py",
+      "source_identity": {
+        "bytes": 6360,
+        "sha256": "eed45a26b781ee6c261f567a7dd6857c5d6bf5bc5798aab0c97666c859ef215d"
+      }
+    },
+    {
+      "publication": "root-ui/scope.json",
+      "publication_identity": {
+        "bytes": 1784,
+        "sha256": "9a47c432a0c38c40455b9ce512d6bbf6f383f4ac5891358a1ccabd308f69dd63"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit root source/evolution/HTTP allowlist",
+      "source": ".cache/phase2-rhizo-census-ui-v1/scope.json",
+      "source_identity": {
+        "bytes": 1784,
+        "sha256": "9a47c432a0c38c40455b9ce512d6bbf6f383f4ac5891358a1ccabd308f69dd63"
+      }
+    },
+    {
+      "publication": "root-ui/section.html",
+      "publication_identity": {
+        "bytes": 761,
+        "sha256": "66ec27e80dad95674ad6b30c6346f448cd19859f77bb8a07ae92e3f381e05331"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit root source/evolution/HTTP allowlist",
+      "source": ".cache/phase2-rhizo-census-ui-v1/section.html",
+      "source_identity": {
+        "bytes": 761,
+        "sha256": "66ec27e80dad95674ad6b30c6346f448cd19859f77bb8a07ae92e3f381e05331"
+      }
+    },
+    {
+      "publication": "root-ui/ui-hold-v2.json",
+      "publication_identity": {
+        "bytes": 554,
+        "sha256": "6ee32d022a45cbf9e2fc2cc6e3ff4395f3c1db21adfc21d22bcc670b0829d81c"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit root source/evolution/HTTP allowlist",
+      "source": ".cache/phase2-rhizo-census-ui-v1/ui-hold-v2.json",
+      "source_identity": {
+        "bytes": 554,
+        "sha256": "6ee32d022a45cbf9e2fc2cc6e3ff4395f3c1db21adfc21d22bcc670b0829d81c"
+      }
+    },
+    {
+      "publication": "root-ui/ui-hold-v3.json",
+      "publication_identity": {
+        "bytes": 929,
+        "sha256": "ccfacaba9300babe93bfe8a167cdc8de083e8410080f805245416c8901683224"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit root source/evolution/HTTP allowlist",
+      "source": ".cache/phase2-rhizo-census-ui-v1/ui-hold-v3.json",
+      "source_identity": {
+        "bytes": 929,
+        "sha256": "ccfacaba9300babe93bfe8a167cdc8de083e8410080f805245416c8901683224"
+      }
+    },
+    {
+      "publication": "root-ui/ui-hold.json",
+      "publication_identity": {
+        "bytes": 490,
+        "sha256": "dda722a91cceddf12872cf3ed4fa4ab81ea7c1a9d2b05dc8a218ca1b2f87b62b"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit root source/evolution/HTTP allowlist",
+      "source": ".cache/phase2-rhizo-census-ui-v1/ui-hold.json",
+      "source_identity": {
+        "bytes": 490,
+        "sha256": "dda722a91cceddf12872cf3ed4fa4ab81ea7c1a9d2b05dc8a218ca1b2f87b62b"
+      }
+    },
+    {
+      "publication": "root-ui/before-positive-digit-fix/ui-hold.json",
+      "publication_identity": {
+        "bytes": 490,
+        "sha256": "dda722a91cceddf12872cf3ed4fa4ab81ea7c1a9d2b05dc8a218ca1b2f87b62b"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit root source/evolution/HTTP allowlist",
+      "source": ".cache/phase2-rhizo-census-ui-v1/before-positive-digit-fix/ui-hold.json",
+      "source_identity": {
+        "bytes": 490,
+        "sha256": "dda722a91cceddf12872cf3ed4fa4ab81ea7c1a9d2b05dc8a218ca1b2f87b62b"
+      }
+    },
+    {
+      "publication": "root-ui/before-positive-digit-fix/overlay-hold.json",
+      "publication_identity": {
+        "bytes": 990,
+        "sha256": "a3026b394715e51dac43dde86dc0ab893cf6801a537542b0b84ca76c9da88a61"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit root source/evolution/HTTP allowlist",
+      "source": ".cache/phase2-rhizo-census-ui-v1/before-positive-digit-fix/overlay-hold.json",
+      "source_identity": {
+        "bytes": 990,
+        "sha256": "a3026b394715e51dac43dde86dc0ab893cf6801a537542b0b84ca76c9da88a61"
+      }
+    },
+    {
+      "publication": "root-ui/before-positive-digit-fix/recorded-census.js",
+      "publication_identity": {
+        "bytes": 11596,
+        "sha256": "e5db3bc5786bdfd9deb992e6dfddd858932ae486439a357fcd17997be3ce81c8"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit root source/evolution/HTTP allowlist",
+      "source": ".cache/phase2-rhizo-census-ui-v1/before-positive-digit-fix/recorded-census.js",
+      "source_identity": {
+        "bytes": 11596,
+        "sha256": "e5db3bc5786bdfd9deb992e6dfddd858932ae486439a357fcd17997be3ce81c8"
+      }
+    },
+    {
+      "publication": "root-ui/before-readable-display/recorded-census.js",
+      "publication_identity": {
+        "bytes": 11614,
+        "sha256": "c62ca347d08a3ccdd8e105a0ddc2d17753c12551f5ad9253262cbae058bd3181"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit root source/evolution/HTTP allowlist",
+      "source": ".cache/phase2-rhizo-census-ui-v1/before-readable-display/recorded-census.js",
+      "source_identity": {
+        "bytes": 11614,
+        "sha256": "c62ca347d08a3ccdd8e105a0ddc2d17753c12551f5ad9253262cbae058bd3181"
+      }
+    },
+    {
+      "publication": "root-ui/overlay/src/lupine_discovery/server.py",
+      "publication_identity": {
+        "bytes": 14137,
+        "sha256": "451324d9ce1fa84ec1759699bd2ea25759a29368b84c82f30741ea4e7e2ca826"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit root source/evolution/HTTP allowlist",
+      "source": ".cache/phase2-rhizo-census-ui-v1/overlay/src/lupine_discovery/server.py",
+      "source_identity": {
+        "bytes": 14137,
+        "sha256": "451324d9ce1fa84ec1759699bd2ea25759a29368b84c82f30741ea4e7e2ca826"
+      }
+    },
+    {
+      "publication": "root-ui/overlay/src/lupine_discovery/web/styles.css",
+      "publication_identity": {
+        "bytes": 43409,
+        "sha256": "d7042060aae32dba2c9c5ad6f6df86a5ee51f7f1ea0dfb7aea413bf81bd3eaf9"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit root source/evolution/HTTP allowlist",
+      "source": ".cache/phase2-rhizo-census-ui-v1/overlay/src/lupine_discovery/web/styles.css",
+      "source_identity": {
+        "bytes": 43409,
+        "sha256": "d7042060aae32dba2c9c5ad6f6df86a5ee51f7f1ea0dfb7aea413bf81bd3eaf9"
+      }
+    },
+    {
+      "publication": "root-ui/overlay/src/lupine_discovery/web/index.html",
+      "publication_identity": {
+        "bytes": 29560,
+        "sha256": "8120a35af3c415e36b7c3a627a44fd45f9c5ab7628ce0e251103bcccb7b82243"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit root source/evolution/HTTP allowlist",
+      "source": ".cache/phase2-rhizo-census-ui-v1/overlay/src/lupine_discovery/web/index.html",
+      "source_identity": {
+        "bytes": 29560,
+        "sha256": "8120a35af3c415e36b7c3a627a44fd45f9c5ab7628ce0e251103bcccb7b82243"
+      }
+    },
+    {
+      "publication": "root-ui/overlay/src/lupine_discovery/web/app.js",
+      "publication_identity": {
+        "bytes": 131529,
+        "sha256": "1537f759ef443a218b74eaf55d14ff0520b1195dc3bc8835034e57b3b4613a7c"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit root source/evolution/HTTP allowlist",
+      "source": ".cache/phase2-rhizo-census-ui-v1/overlay/src/lupine_discovery/web/app.js",
+      "source_identity": {
+        "bytes": 131529,
+        "sha256": "1537f759ef443a218b74eaf55d14ff0520b1195dc3bc8835034e57b3b4613a7c"
+      }
+    },
+    {
+      "publication": "root-ui/overlay/src/lupine_discovery/web/recorded-census.js",
+      "publication_identity": {
+        "bytes": 13634,
+        "sha256": "8e45d59eab288d5ce6c83fabe6b30ef4c707736913d13b8bf99f0e09a5b0628a"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit root source/evolution/HTTP allowlist",
+      "source": ".cache/phase2-rhizo-census-ui-v1/overlay/src/lupine_discovery/web/recorded-census.js",
+      "source_identity": {
+        "bytes": 13634,
+        "sha256": "8e45d59eab288d5ce6c83fabe6b30ef4c707736913d13b8bf99f0e09a5b0628a"
+      }
+    },
+    {
+      "publication": "generated-v2-review/README.md",
+      "publication_identity": {
+        "bytes": 2089,
+        "sha256": "a8cddb9a39327fa2ee2175b0d993cbc5efa1e061d7167e647b88c2f97c8c009e"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-review-v1/README.md",
+      "source_identity": {
+        "bytes": 2089,
+        "sha256": "a8cddb9a39327fa2ee2175b0d993cbc5efa1e061d7167e647b88c2f97c8c009e"
+      }
+    },
+    {
+      "publication": "generated-v2-review/browser_review.py",
+      "publication_identity": {
+        "bytes": 15729,
+        "sha256": "65f1d5b66a487171badd1e0d8ba98132a315453d01da6d3faaae4b3914a29af9"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-review-v1/browser_review.py",
+      "source_identity": {
+        "bytes": 15729,
+        "sha256": "65f1d5b66a487171badd1e0d8ba98132a315453d01da6d3faaae4b3914a29af9"
+      }
+    },
+    {
+      "publication": "generated-v2-review/challenge-preparation.json",
+      "publication_identity": {
+        "bytes": 802,
+        "sha256": "829d8444f023da20f5cc7dd2846d3b0c9868cdb3a9a5f55b2ff15e13361ef4b1"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-review-v1/challenge-preparation.json",
+      "source_identity": {
+        "bytes": 802,
+        "sha256": "829d8444f023da20f5cc7dd2846d3b0c9868cdb3a9a5f55b2ff15e13361ef4b1"
+      }
+    },
+    {
+      "publication": "generated-v2-review/correction-preparation.json",
+      "publication_identity": {
+        "bytes": 574,
+        "sha256": "9368837adabadfd9e137ed92a1ec9fa7613b76534819af89f96316e347cac3b6"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-review-v1/correction-preparation.json",
+      "source_identity": {
+        "bytes": 574,
+        "sha256": "9368837adabadfd9e137ed92a1ec9fa7613b76534819af89f96316e347cac3b6"
+      }
+    },
+    {
+      "publication": "generated-v2-review/final-run/complete-export.json",
+      "publication_identity": {
+        "bytes": 37238,
+        "sha256": "124f4cf6c844201e315fbf61edf2873c62f248822baead989456034e2f0a9b47"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-review-v1/final-run/complete-export.json",
+      "source_identity": {
+        "bytes": 37238,
+        "sha256": "124f4cf6c844201e315fbf61edf2873c62f248822baead989456034e2f0a9b47"
+      }
+    },
+    {
+      "publication": "generated-v2-review/final-run/desktop-generated.png",
+      "publication_identity": {
+        "bytes": 111030,
+        "sha256": "7c87bca1764a10bd52c4d12955b8967d97b43ee110a0baef34bb8a25fead3754"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-review-v1/final-run/desktop-generated.png",
+      "source_identity": {
+        "bytes": 111030,
+        "sha256": "7c87bca1764a10bd52c4d12955b8967d97b43ee110a0baef34bb8a25fead3754"
+      }
+    },
+    {
+      "publication": "generated-v2-review/final-run/execution.json",
+      "publication_identity": {
+        "bytes": 3351,
+        "sha256": "fb5163db66ec3e005da334a74272794b599a1fdf746ee0d074384632432eb8a7"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-review-v1/final-run/execution.json",
+      "source_identity": {
+        "bytes": 3351,
+        "sha256": "fb5163db66ec3e005da334a74272794b599a1fdf746ee0d074384632432eb8a7"
+      }
+    },
+    {
+      "publication": "generated-v2-review/final-run/generated-fixture.json",
+      "publication_identity": {
+        "bytes": 37238,
+        "sha256": "124f4cf6c844201e315fbf61edf2873c62f248822baead989456034e2f0a9b47"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-review-v1/final-run/generated-fixture.json",
+      "source_identity": {
+        "bytes": 37238,
+        "sha256": "124f4cf6c844201e315fbf61edf2873c62f248822baead989456034e2f0a9b47"
+      }
+    },
+    {
+      "publication": "generated-v2-review/final-run/mobile-containment.json",
+      "publication_identity": {
+        "bytes": 329,
+        "sha256": "313ad73d1f3d1f0e91b5f3a491ba608999aea5807bc2c12d2ea2dd7eb7c9b2e6"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-review-v1/final-run/mobile-containment.json",
+      "source_identity": {
+        "bytes": 329,
+        "sha256": "313ad73d1f3d1f0e91b5f3a491ba608999aea5807bc2c12d2ea2dd7eb7c9b2e6"
+      }
+    },
+    {
+      "publication": "generated-v2-review/final-run/mobile-large-rational.png",
+      "publication_identity": {
+        "bytes": 51836,
+        "sha256": "508afad7c91a13422dac13c5b2e371643a7bf27a32c59d8a61e9a5ac662d9e9b"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-review-v1/final-run/mobile-large-rational.png",
+      "source_identity": {
+        "bytes": 51836,
+        "sha256": "508afad7c91a13422dac13c5b2e371643a7bf27a32c59d8a61e9a5ac662d9e9b"
+      }
+    },
+    {
+      "publication": "generated-v2-review/final-run/recorded-census.js",
+      "publication_identity": {
+        "bytes": 11614,
+        "sha256": "c62ca347d08a3ccdd8e105a0ddc2d17753c12551f5ad9253262cbae058bd3181"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-review-v1/final-run/recorded-census.js",
+      "source_identity": {
+        "bytes": 11614,
+        "sha256": "c62ca347d08a3ccdd8e105a0ddc2d17753c12551f5ad9253262cbae058bd3181"
+      }
+    },
+    {
+      "publication": "generated-v2-review/final-run/replacement-export.json",
+      "publication_identity": {
+        "bytes": 37238,
+        "sha256": "ddc56d8572a9cc1de47e1d9f7b714c8b311dbce252d28049adeac83609ecd7e7"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-review-v1/final-run/replacement-export.json",
+      "source_identity": {
+        "bytes": 37238,
+        "sha256": "ddc56d8572a9cc1de47e1d9f7b714c8b311dbce252d28049adeac83609ecd7e7"
+      }
+    },
+    {
+      "publication": "generated-v2-review/final-run/runner.py",
+      "publication_identity": {
+        "bytes": 15729,
+        "sha256": "65f1d5b66a487171badd1e0d8ba98132a315453d01da6d3faaae4b3914a29af9"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-review-v1/final-run/runner.py",
+      "source_identity": {
+        "bytes": 15729,
+        "sha256": "65f1d5b66a487171badd1e0d8ba98132a315453d01da6d3faaae4b3914a29af9"
+      }
+    },
+    {
+      "publication": "generated-v2-review/final-run/section.html",
+      "publication_identity": {
+        "bytes": 761,
+        "sha256": "66ec27e80dad95674ad6b30c6346f448cd19859f77bb8a07ae92e3f381e05331"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-review-v1/final-run/section.html",
+      "source_identity": {
+        "bytes": 761,
+        "sha256": "66ec27e80dad95674ad6b30c6346f448cd19859f77bb8a07ae92e3f381e05331"
+      }
+    },
+    {
+      "publication": "generated-v2-review/first-findings.json",
+      "publication_identity": {
+        "bytes": 1045,
+        "sha256": "acf4d5138ee6798ed1ec8eacabe2b9d22d95b715ff768342be1f82ed5005e4f5"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-review-v1/first-findings.json",
+      "source_identity": {
+        "bytes": 1045,
+        "sha256": "acf4d5138ee6798ed1ec8eacabe2b9d22d95b715ff768342be1f82ed5005e4f5"
+      }
+    },
+    {
+      "publication": "generated-v2-review/first-run/complete-export.json",
+      "publication_identity": {
+        "bytes": 37238,
+        "sha256": "124f4cf6c844201e315fbf61edf2873c62f248822baead989456034e2f0a9b47"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-review-v1/first-run/complete-export.json",
+      "source_identity": {
+        "bytes": 37238,
+        "sha256": "124f4cf6c844201e315fbf61edf2873c62f248822baead989456034e2f0a9b47"
+      }
+    },
+    {
+      "publication": "generated-v2-review/first-run/execution.json",
+      "publication_identity": {
+        "bytes": 9560,
+        "sha256": "336c1f36a80aa42384e081ece2797d839b31dae25403bb933713f1309e9c0da4"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-review-v1/first-run/execution.json",
+      "source_identity": {
+        "bytes": 9560,
+        "sha256": "336c1f36a80aa42384e081ece2797d839b31dae25403bb933713f1309e9c0da4"
+      }
+    },
+    {
+      "publication": "generated-v2-review/first-run/generated-fixture.json",
+      "publication_identity": {
+        "bytes": 37238,
+        "sha256": "124f4cf6c844201e315fbf61edf2873c62f248822baead989456034e2f0a9b47"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-review-v1/first-run/generated-fixture.json",
+      "source_identity": {
+        "bytes": 37238,
+        "sha256": "124f4cf6c844201e315fbf61edf2873c62f248822baead989456034e2f0a9b47"
+      }
+    },
+    {
+      "publication": "generated-v2-review/first-run/recorded-census.js",
+      "publication_identity": {
+        "bytes": 11596,
+        "sha256": "e5db3bc5786bdfd9deb992e6dfddd858932ae486439a357fcd17997be3ce81c8"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-review-v1/first-run/recorded-census.js",
+      "source_identity": {
+        "bytes": 11596,
+        "sha256": "e5db3bc5786bdfd9deb992e6dfddd858932ae486439a357fcd17997be3ce81c8"
+      }
+    },
+    {
+      "publication": "generated-v2-review/first-run/replacement-export.json",
+      "publication_identity": {
+        "bytes": 37238,
+        "sha256": "ddc56d8572a9cc1de47e1d9f7b714c8b311dbce252d28049adeac83609ecd7e7"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-review-v1/first-run/replacement-export.json",
+      "source_identity": {
+        "bytes": 37238,
+        "sha256": "ddc56d8572a9cc1de47e1d9f7b714c8b311dbce252d28049adeac83609ecd7e7"
+      }
+    },
+    {
+      "publication": "generated-v2-review/first-run/runner.py",
+      "publication_identity": {
+        "bytes": 15306,
+        "sha256": "79e718181143ee5e44f5c762435706905913a8b7faa8606ff35e3a970c5336c4"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-review-v1/first-run/runner.py",
+      "source_identity": {
+        "bytes": 15306,
+        "sha256": "79e718181143ee5e44f5c762435706905913a8b7faa8606ff35e3a970c5336c4"
+      }
+    },
+    {
+      "publication": "generated-v2-review/first-run/section.html",
+      "publication_identity": {
+        "bytes": 761,
+        "sha256": "66ec27e80dad95674ad6b30c6346f448cd19859f77bb8a07ae92e3f381e05331"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-review-v1/first-run/section.html",
+      "source_identity": {
+        "bytes": 761,
+        "sha256": "66ec27e80dad95674ad6b30c6346f448cd19859f77bb8a07ae92e3f381e05331"
+      }
+    },
+    {
+      "publication": "generated-v2-review/positive-digit-fix.diff",
+      "publication_identity": {
+        "bytes": 726,
+        "sha256": "07199c83c5c93954f6074a9241b01aeec298246d269202a9f2c1d4cbe1cb7a54"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-review-v1/positive-digit-fix.diff",
+      "source_identity": {
+        "bytes": 726,
+        "sha256": "07199c83c5c93954f6074a9241b01aeec298246d269202a9f2c1d4cbe1cb7a54"
+      }
+    },
+    {
+      "publication": "generated-v2-review/review.json",
+      "publication_identity": {
+        "bytes": 4892,
+        "sha256": "26853d630a6325b7d487c35bd9e6d9ba3b730e6b253cfac19a1fd7cba5b8d44d"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-review-v1/review.json",
+      "source_identity": {
+        "bytes": 4892,
+        "sha256": "26853d630a6325b7d487c35bd9e6d9ba3b730e6b253cfac19a1fd7cba5b8d44d"
+      }
+    },
+    {
+      "publication": "generated-v2-review/reviewer-correction.diff.bytes.json",
+      "publication_identity": {
+        "bytes": 3314,
+        "sha256": "790f99acb58e1be36ba1409e9d0b867b2879a10e3adae592f98710f7f10d8e38"
+      },
+      "representation": "lossless-base64-wrapper",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-review-v1/reviewer-correction.diff",
+      "source_identity": {
+        "bytes": 2293,
+        "sha256": "f3b1d2e3d6a0040b9916430e4995fcbcfad924810e2d47c45edac3f91dfdc9b5"
+      }
+    },
+    {
+      "publication": "generated-v2-review/ui-hold-v2.json",
+      "publication_identity": {
+        "bytes": 554,
+        "sha256": "6ee32d022a45cbf9e2fc2cc6e3ff4395f3c1db21adfc21d22bcc670b0829d81c"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-review-v1/ui-hold-v2.json",
+      "source_identity": {
+        "bytes": 554,
+        "sha256": "6ee32d022a45cbf9e2fc2cc6e3ff4395f3c1db21adfc21d22bcc670b0829d81c"
+      }
+    },
+    {
+      "publication": "generated-v2-review/inventory.json",
+      "publication_identity": {
+        "bytes": 3834,
+        "sha256": "c57fc4d0e4fc67b7191a1e9302b2888c9b516b431e3e4d1271c355ccc8863380"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit additive inventory/handoff metadata",
+      "source": ".cache/phase2-rhizo-census-ui-review-v1/inventory.json",
+      "source_identity": {
+        "bytes": 3834,
+        "sha256": "c57fc4d0e4fc67b7191a1e9302b2888c9b516b431e3e4d1271c355ccc8863380"
+      }
+    },
+    {
+      "publication": "generated-v2-review/handoff.json",
+      "publication_identity": {
+        "bytes": 886,
+        "sha256": "10754bd0cdb380f0f3c040a7d6bb648d68935805031636b4339d3bfd3b9cadf8"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit additive inventory/handoff metadata",
+      "source": ".cache/phase2-rhizo-census-ui-review-v1/handoff.json",
+      "source_identity": {
+        "bytes": 886,
+        "sha256": "10754bd0cdb380f0f3c040a7d6bb648d68935805031636b4339d3bfd3b9cadf8"
+      }
+    },
+    {
+      "publication": "generated-v3-review/README.md",
+      "publication_identity": {
+        "bytes": 1510,
+        "sha256": "f0b6976dc3ca910d8b15268bc5b5c57755197edf225624954ef913e3f42e16b4"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-display-review-v1/README.md",
+      "source_identity": {
+        "bytes": 1510,
+        "sha256": "f0b6976dc3ca910d8b15268bc5b5c57755197edf225624954ef913e3f42e16b4"
+      }
+    },
+    {
+      "publication": "generated-v3-review/browser_display_review.py",
+      "publication_identity": {
+        "bytes": 10618,
+        "sha256": "dfc11fc23677e84066ea3049e0740774f10d075c4277ad9d5a727897729f3335"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-display-review-v1/browser_display_review.py",
+      "source_identity": {
+        "bytes": 10618,
+        "sha256": "dfc11fc23677e84066ea3049e0740774f10d075c4277ad9d5a727897729f3335"
+      }
+    },
+    {
+      "publication": "generated-v3-review/exact_display_cases.py",
+      "publication_identity": {
+        "bytes": 2909,
+        "sha256": "c9f47a9869af1c936eb944f556f4daad10ade79a51c28e85dd805b8e9ff9aa15"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-display-review-v1/exact_display_cases.py",
+      "source_identity": {
+        "bytes": 2909,
+        "sha256": "c9f47a9869af1c936eb944f556f4daad10ade79a51c28e85dd805b8e9ff9aa15"
+      }
+    },
+    {
+      "publication": "generated-v3-review/first-run/browser_display_review.py",
+      "publication_identity": {
+        "bytes": 10618,
+        "sha256": "dfc11fc23677e84066ea3049e0740774f10d075c4277ad9d5a727897729f3335"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-display-review-v1/first-run/browser_display_review.py",
+      "source_identity": {
+        "bytes": 10618,
+        "sha256": "dfc11fc23677e84066ea3049e0740774f10d075c4277ad9d5a727897729f3335"
+      }
+    },
+    {
+      "publication": "generated-v3-review/first-run/desktop-compact-generated.png",
+      "publication_identity": {
+        "bytes": 122316,
+        "sha256": "947253f9c3f95f8fcf61ac1f4997ba539bda2f06148c8fec42d6a15bd9ffc144"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-display-review-v1/first-run/desktop-compact-generated.png",
+      "source_identity": {
+        "bytes": 122316,
+        "sha256": "947253f9c3f95f8fcf61ac1f4997ba539bda2f06148c8fec42d6a15bd9ffc144"
+      }
+    },
+    {
+      "publication": "generated-v3-review/first-run/exact_display_cases.py",
+      "publication_identity": {
+        "bytes": 2909,
+        "sha256": "c9f47a9869af1c936eb944f556f4daad10ade79a51c28e85dd805b8e9ff9aa15"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-display-review-v1/first-run/exact_display_cases.py",
+      "source_identity": {
+        "bytes": 2909,
+        "sha256": "c9f47a9869af1c936eb944f556f4daad10ade79a51c28e85dd805b8e9ff9aa15"
+      }
+    },
+    {
+      "publication": "generated-v3-review/first-run/execution.json",
+      "publication_identity": {
+        "bytes": 8318,
+        "sha256": "511fa8df813f52a8e3115795ab8f3f6204e4d7af21210422af75f29e6a702098"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-display-review-v1/first-run/execution.json",
+      "source_identity": {
+        "bytes": 8318,
+        "sha256": "511fa8df813f52a8e3115795ab8f3f6204e4d7af21210422af75f29e6a702098"
+      }
+    },
+    {
+      "publication": "generated-v3-review/first-run/generated_fixture.py",
+      "publication_identity": {
+        "bytes": 3097,
+        "sha256": "8e1cbb84c3d690c4657e21629487d066347a876a572a3d989238f5302c4e53b0"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-display-review-v1/first-run/generated_fixture.py",
+      "source_identity": {
+        "bytes": 3097,
+        "sha256": "8e1cbb84c3d690c4657e21629487d066347a876a572a3d989238f5302c4e53b0"
+      }
+    },
+    {
+      "publication": "generated-v3-review/first-run/large-exact-export.json",
+      "publication_identity": {
+        "bytes": 44735,
+        "sha256": "d7a19d85650ae7d90d59d062dd31ed67e0ad65395047d3fd1ff922d795c2041c"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-display-review-v1/first-run/large-exact-export.json",
+      "source_identity": {
+        "bytes": 44735,
+        "sha256": "d7a19d85650ae7d90d59d062dd31ed67e0ad65395047d3fd1ff922d795c2041c"
+      }
+    },
+    {
+      "publication": "generated-v3-review/first-run/mobile-compact-generated.png",
+      "publication_identity": {
+        "bytes": 54614,
+        "sha256": "d0b44651110c9a073955f476d7a202a9fa6330ba75c9c708f6596af34996d197"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-display-review-v1/first-run/mobile-compact-generated.png",
+      "source_identity": {
+        "bytes": 54614,
+        "sha256": "d0b44651110c9a073955f476d7a202a9fa6330ba75c9c708f6596af34996d197"
+      }
+    },
+    {
+      "publication": "generated-v3-review/first-run/mobile-geometry.json",
+      "publication_identity": {
+        "bytes": 324,
+        "sha256": "552832f3d7c251b8ee6ca7fde0ca17f861fc80f035ab0d965310bd1d0948ef00"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-display-review-v1/first-run/mobile-geometry.json",
+      "source_identity": {
+        "bytes": 324,
+        "sha256": "552832f3d7c251b8ee6ca7fde0ca17f861fc80f035ab0d965310bd1d0948ef00"
+      }
+    },
+    {
+      "publication": "generated-v3-review/first-run/prospective-cases.json",
+      "publication_identity": {
+        "bytes": 31753,
+        "sha256": "f5e914d8e4acfc3436bebfb5f5e58e6ce2354853a1d1809d2e7239077381a495"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-display-review-v1/first-run/prospective-cases.json",
+      "source_identity": {
+        "bytes": 31753,
+        "sha256": "f5e914d8e4acfc3436bebfb5f5e58e6ce2354853a1d1809d2e7239077381a495"
+      }
+    },
+    {
+      "publication": "generated-v3-review/first-run/recorded-census.js",
+      "publication_identity": {
+        "bytes": 13634,
+        "sha256": "8e45d59eab288d5ce6c83fabe6b30ef4c707736913d13b8bf99f0e09a5b0628a"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-display-review-v1/first-run/recorded-census.js",
+      "source_identity": {
+        "bytes": 13634,
+        "sha256": "8e45d59eab288d5ce6c83fabe6b30ef4c707736913d13b8bf99f0e09a5b0628a"
+      }
+    },
+    {
+      "publication": "generated-v3-review/first-run/section.html",
+      "publication_identity": {
+        "bytes": 761,
+        "sha256": "66ec27e80dad95674ad6b30c6346f448cd19859f77bb8a07ae92e3f381e05331"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-display-review-v1/first-run/section.html",
+      "source_identity": {
+        "bytes": 761,
+        "sha256": "66ec27e80dad95674ad6b30c6346f448cd19859f77bb8a07ae92e3f381e05331"
+      }
+    },
+    {
+      "publication": "generated-v3-review/first-run/styles.css",
+      "publication_identity": {
+        "bytes": 43409,
+        "sha256": "d7042060aae32dba2c9c5ad6f6df86a5ee51f7f1ea0dfb7aea413bf81bd3eaf9"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-display-review-v1/first-run/styles.css",
+      "source_identity": {
+        "bytes": 43409,
+        "sha256": "d7042060aae32dba2c9c5ad6f6df86a5ee51f7f1ea0dfb7aea413bf81bd3eaf9"
+      }
+    },
+    {
+      "publication": "generated-v3-review/generated_fixture.py",
+      "publication_identity": {
+        "bytes": 3097,
+        "sha256": "8e1cbb84c3d690c4657e21629487d066347a876a572a3d989238f5302c4e53b0"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-display-review-v1/generated_fixture.py",
+      "source_identity": {
+        "bytes": 3097,
+        "sha256": "8e1cbb84c3d690c4657e21629487d066347a876a572a3d989238f5302c4e53b0"
+      }
+    },
+    {
+      "publication": "generated-v3-review/held-v3-preparation.json",
+      "publication_identity": {
+        "bytes": 661,
+        "sha256": "4a6d3378e1e9af5e10e1b210917f0d6f8de83d3f2ac75eec2bfc4137e39cd904"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-display-review-v1/held-v3-preparation.json",
+      "source_identity": {
+        "bytes": 661,
+        "sha256": "4a6d3378e1e9af5e10e1b210917f0d6f8de83d3f2ac75eec2bfc4137e39cd904"
+      }
+    },
+    {
+      "publication": "generated-v3-review/review.json",
+      "publication_identity": {
+        "bytes": 3518,
+        "sha256": "5ee31634deb405b189af227c1b4131037f1abaee78a83391b45a7bbf1c92fe84"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-display-review-v1/review.json",
+      "source_identity": {
+        "bytes": 3518,
+        "sha256": "5ee31634deb405b189af227c1b4131037f1abaee78a83391b45a7bbf1c92fe84"
+      }
+    },
+    {
+      "publication": "generated-v3-review/scope.json",
+      "publication_identity": {
+        "bytes": 1510,
+        "sha256": "4a357715f318bc4dfb623f51ecaf3863b8979dc7aa7fcb930f3c1d8e75b2d467"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "original inventory-selected source artifact",
+      "source": ".cache/phase2-rhizo-census-ui-display-review-v1/scope.json",
+      "source_identity": {
+        "bytes": 1510,
+        "sha256": "4a357715f318bc4dfb623f51ecaf3863b8979dc7aa7fcb930f3c1d8e75b2d467"
+      }
+    },
+    {
+      "publication": "generated-v3-review/inventory.json",
+      "publication_identity": {
+        "bytes": 3158,
+        "sha256": "2aeea74dbbb3639c542d0fc3aae792cf49538abce53ec02baa546dc253118ce7"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit additive inventory/handoff metadata",
+      "source": ".cache/phase2-rhizo-census-ui-display-review-v1/inventory.json",
+      "source_identity": {
+        "bytes": 3158,
+        "sha256": "2aeea74dbbb3639c542d0fc3aae792cf49538abce53ec02baa546dc253118ce7"
+      }
+    },
+    {
+      "publication": "generated-v3-review/handoff.json",
+      "publication_identity": {
+        "bytes": 1017,
+        "sha256": "6945846c254eb5ab83c60f4654c8cb69b1489605340946faa91f7751373f1bd5"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit additive inventory/handoff metadata",
+      "source": ".cache/phase2-rhizo-census-ui-display-review-v1/handoff.json",
+      "source_identity": {
+        "bytes": 1017,
+        "sha256": "6945846c254eb5ab83c60f4654c8cb69b1489605340946faa91f7751373f1bd5"
+      }
+    },
+    {
+      "publication": "visual-review/browser-receipt.json",
+      "publication_identity": {
+        "bytes": 35602,
+        "sha256": "f45ae2744746e6419d888a78f1d118ac67775b9c42e04e5e4747b71c10c7ae2d"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit final visual-review handoff",
+      "source": ".cache/phase2-rhizo-census-visual-review-v1/browser-receipt.json",
+      "source_identity": {
+        "bytes": 35602,
+        "sha256": "f45ae2744746e6419d888a78f1d118ac67775b9c42e04e5e4747b71c10c7ae2d"
+      }
+    },
+    {
+      "publication": "visual-review/comparison.json",
+      "publication_identity": {
+        "bytes": 428,
+        "sha256": "53d267e59a99a719bd07d3ac5a76c22bfb26dddec4cee74e13ba4976a33162ff"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit final visual-review handoff",
+      "source": ".cache/phase2-rhizo-census-visual-review-v1/comparison.json",
+      "source_identity": {
+        "bytes": 428,
+        "sha256": "53d267e59a99a719bd07d3ac5a76c22bfb26dddec4cee74e13ba4976a33162ff"
+      }
+    },
+    {
+      "publication": "visual-review/desktop-viewport.png",
+      "publication_identity": {
+        "bytes": 166116,
+        "sha256": "40333bb66d74f930ecccc0d57bed953dae0184d6179079d2ba5b2c0451bb8532"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit final visual-review handoff",
+      "source": ".cache/phase2-rhizo-census-visual-review-v1/desktop-viewport.png",
+      "source_identity": {
+        "bytes": 166116,
+        "sha256": "40333bb66d74f930ecccc0d57bed953dae0184d6179079d2ba5b2c0451bb8532"
+      }
+    },
+    {
+      "publication": "visual-review/minimal-element-display-none-control.png",
+      "publication_identity": {
+        "bytes": 14969,
+        "sha256": "0189a09750998c2f35d6c435be5cc16435cc57d6076ee1a7d059a4af4857e7ac"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit final visual-review handoff",
+      "source": ".cache/phase2-rhizo-census-visual-review-v1/minimal-element-display-none-control.png",
+      "source_identity": {
+        "bytes": 14969,
+        "sha256": "0189a09750998c2f35d6c435be5cc16435cc57d6076ee1a7d059a4af4857e7ac"
+      }
+    },
+    {
+      "publication": "visual-review/minimal-element.png",
+      "publication_identity": {
+        "bytes": 17276,
+        "sha256": "43a6480cff99dcfaec4061cce91e32ba037bf161b913ae89ae1bec794120abce"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit final visual-review handoff",
+      "source": ".cache/phase2-rhizo-census-visual-review-v1/minimal-element.png",
+      "source_identity": {
+        "bytes": 17276,
+        "sha256": "43a6480cff99dcfaec4061cce91e32ba037bf161b913ae89ae1bec794120abce"
+      }
+    },
+    {
+      "publication": "visual-review/minimal-receipt.json",
+      "publication_identity": {
+        "bytes": 1155,
+        "sha256": "59498d733e37fcbb7bd8a5f3ec6ee8c5ceae5560f2f2b100031b1e75ff447f48"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit final visual-review handoff",
+      "source": ".cache/phase2-rhizo-census-visual-review-v1/minimal-receipt.json",
+      "source_identity": {
+        "bytes": 1155,
+        "sha256": "59498d733e37fcbb7bd8a5f3ec6ee8c5ceae5560f2f2b100031b1e75ff447f48"
+      }
+    },
+    {
+      "publication": "visual-review/minimal-viewport.png",
+      "publication_identity": {
+        "bytes": 5371,
+        "sha256": "1bac4497cbf31e224769a9f39caf33b821f573ca24bff0be17150182f601b86b"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit final visual-review handoff",
+      "source": ".cache/phase2-rhizo-census-visual-review-v1/minimal-viewport.png",
+      "source_identity": {
+        "bytes": 5371,
+        "sha256": "1bac4497cbf31e224769a9f39caf33b821f573ca24bff0be17150182f601b86b"
+      }
+    },
+    {
+      "publication": "visual-review/mobile-after-skip-enter.png",
+      "publication_identity": {
+        "bytes": 43464,
+        "sha256": "d5ae0053fdaa3db47b4b8eec8431cb04a0fbc5d629f84111a5be43fc7a1e8263"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit final visual-review handoff",
+      "source": ".cache/phase2-rhizo-census-visual-review-v1/mobile-after-skip-enter.png",
+      "source_identity": {
+        "bytes": 43464,
+        "sha256": "d5ae0053fdaa3db47b4b8eec8431cb04a0fbc5d629f84111a5be43fc7a1e8263"
+      }
+    },
+    {
+      "publication": "visual-review/mobile-element-capture.png",
+      "publication_identity": {
+        "bytes": 119071,
+        "sha256": "92619057ea9ca5e3ed94ab995d77f314448b3a5abd11277a068f5a38fa151f10"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit final visual-review handoff",
+      "source": ".cache/phase2-rhizo-census-visual-review-v1/mobile-element-capture.png",
+      "source_identity": {
+        "bytes": 119071,
+        "sha256": "92619057ea9ca5e3ed94ab995d77f314448b3a5abd11277a068f5a38fa151f10"
+      }
+    },
+    {
+      "publication": "visual-review/mobile-element-with-skip-masked.png",
+      "publication_identity": {
+        "bytes": 119071,
+        "sha256": "92619057ea9ca5e3ed94ab995d77f314448b3a5abd11277a068f5a38fa151f10"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit final visual-review handoff",
+      "source": ".cache/phase2-rhizo-census-visual-review-v1/mobile-element-with-skip-masked.png",
+      "source_identity": {
+        "bytes": 119071,
+        "sha256": "92619057ea9ca5e3ed94ab995d77f314448b3a5abd11277a068f5a38fa151f10"
+      }
+    },
+    {
+      "publication": "visual-review/mobile-keyboard-skip-focus.png",
+      "publication_identity": {
+        "bytes": 57484,
+        "sha256": "9a3c8983d40ad170d284078784ed150a16ff497e337ebe14654a4c3cbc93f69a"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit final visual-review handoff",
+      "source": ".cache/phase2-rhizo-census-visual-review-v1/mobile-keyboard-skip-focus.png",
+      "source_identity": {
+        "bytes": 57484,
+        "sha256": "9a3c8983d40ad170d284078784ed150a16ff497e337ebe14654a4c3cbc93f69a"
+      }
+    },
+    {
+      "publication": "visual-review/mobile-viewport-after.png",
+      "publication_identity": {
+        "bytes": 47180,
+        "sha256": "be54e1dcb3ba0444ad4a147962b32514a7e58899b35a2844250019762fbf5f32"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit final visual-review handoff",
+      "source": ".cache/phase2-rhizo-census-visual-review-v1/mobile-viewport-after.png",
+      "source_identity": {
+        "bytes": 47180,
+        "sha256": "be54e1dcb3ba0444ad4a147962b32514a7e58899b35a2844250019762fbf5f32"
+      }
+    },
+    {
+      "publication": "visual-review/mobile-viewport-before.png",
+      "publication_identity": {
+        "bytes": 49826,
+        "sha256": "ab3a1335d395a5875ec732bbc99a65cba86bbc649e60c9e33b365f8f865ae2ef"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit final visual-review handoff",
+      "source": ".cache/phase2-rhizo-census-visual-review-v1/mobile-viewport-before.png",
+      "source_identity": {
+        "bytes": 49826,
+        "sha256": "ab3a1335d395a5875ec732bbc99a65cba86bbc649e60c9e33b365f8f865ae2ef"
+      }
+    },
+    {
+      "publication": "visual-review/visual-review.md",
+      "publication_identity": {
+        "bytes": 2587,
+        "sha256": "717f12ff071003f7db40f705239a5c8eb18b198e9bdfec627e5d76780a22dbdc"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit final visual-review handoff",
+      "source": ".cache/phase2-rhizo-census-visual-review-v1/visual-review.md",
+      "source_identity": {
+        "bytes": 2587,
+        "sha256": "717f12ff071003f7db40f705239a5c8eb18b198e9bdfec627e5d76780a22dbdc"
+      }
+    },
+    {
+      "publication": "visual-review/public-handoff.json",
+      "publication_identity": {
+        "bytes": 2081,
+        "sha256": "8bdb8a268227cc5cf59a100051d5565c96857757be684b2533f7c5dd76b0114a"
+      },
+      "representation": "exact-bytes",
+      "selection_basis": "explicit final visual-review handoff",
+      "source": ".cache/phase2-rhizo-census-visual-review-v1/public-handoff.json",
+      "source_identity": {
+        "bytes": 2081,
+        "sha256": "8bdb8a268227cc5cf59a100051d5565c96857757be684b2533f7c5dd76b0114a"
+      }
+    }
+  ],
+  "original_inventory_interpretation": "Original inventories are preserved unchanged. This is a selected publication, not a claim that every original directory or all inventory entries were copied.",
+  "schema": "lupine.discovery.publication-copy-map.v1",
+  "scope": "Public UI source history, generated browser evidence, authorized actual public HTTP aggregates/screenshots, and final visual review only. No private labels or actual census recomputation."
+}

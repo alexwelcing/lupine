@@ -1,0 +1,20 @@
+{
+  "existing_files_before": {
+    "scripts/package_smoke.py": "cb4cb5f37cf9146d007ddb7af3599ba0e31180862825230c00fc995cf342d93e",
+    "tests/test_package_retention.py": "88a939e73efb90c053ce15e3a95a23413400a002b79b510c61ce397a0c803b45",
+    "tests/test_package_retention_review.py": "e265691af8ef3e9af5d3a0ef3060959187c15291db20475d8b7e7798b9af789a",
+    "scripts/verify_retained_artifacts.py": "22455c93a2539868cf8a9dda76b67413eefe05917603718f19eef1585a1c741d"
+  },
+  "prepared_files": {
+    "scripts/package_smoke.py": "eaeffcd242d9d5b843ddaea46a65e60b5666ba092d0dfd93136e0d5bd3be0d07",
+    "tests/test_package_retention.py": "8ca92ba8b555fea8668392e22499db0a362ac6643c5d155ed459b376d0792a15",
+    "tests/test_package_retention_review.py": "963b4667bc013fb55e83a8988f61975454b16b2a0fac9b177d2b54b284c57a2c",
+    "scripts/verify_retained_artifacts.py": "3d3247beb74905c3f6d3a48aa42566d73c7a550645116ce084c0d8e4d664446a"
+  },
+  "old_probe_sha256": "a990a5aa825b1ed55caeb2551b86dae3efc4f0e258e95afc696b95f4919415a6",
+  "new_probe_sha256": "f2c11f85cff4bddcf68ad28eee315ffd0026b7e91a5187bd7a62276080942173",
+  "old_checks": 16,
+  "new_checks": 17,
+  "retention_assertions_weakened": false,
+  "scope": "Adds installed fixed public resource identity, scientific limits, exact HTTP JSON and asset bytes. Pins updated only for this reviewed additive probe; no private recomputation or physics."
+}

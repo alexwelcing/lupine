@@ -1,0 +1,2208 @@
+{
+  "actual_reference_choice": "UNKNOWN",
+  "blocked_operations": [],
+  "candidate_executions_by_reviewer": 0,
+  "checks": [
+    {
+      "check": "public_exact_identity",
+      "passed": true
+    },
+    {
+      "check": "stdout_equals_persisted_public_bytes",
+      "passed": true
+    },
+    {
+      "check": "stderr_empty",
+      "passed": true
+    },
+    {
+      "check": "public_canonical_serialization",
+      "passed": true
+    },
+    {
+      "check": "manifest_identity_cross_receipts",
+      "passed": true
+    },
+    {
+      "check": "manifest_source_contract",
+      "passed": true
+    },
+    {
+      "check": "projection_identity_cross_receipts",
+      "passed": true
+    },
+    {
+      "check": "projection_binding_exposure",
+      "passed": true
+    },
+    {
+      "check": "projection_sealed_at_checkpoint_only",
+      "passed": true
+    },
+    {
+      "check": "binding_reserved_once_before_read",
+      "passed": true
+    },
+    {
+      "check": "public_frame_identity",
+      "passed": true
+    },
+    {
+      "check": "public_readiness_identity",
+      "passed": true
+    },
+    {
+      "check": "actual_reservation_contract_and_slot",
+      "passed": true
+    },
+    {
+      "check": "complete_actual_status",
+      "passed": true
+    },
+    {
+      "check": "scientific_claims_unchanged",
+      "passed": true
+    },
+    {
+      "check": "estimand_labels",
+      "passed": true
+    },
+    {
+      "check": "counts_match_fixed_archive",
+      "passed": true
+    },
+    {
+      "check": "public_top_level_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "actual_exposure_aggregate_materialization_started",
+      "passed": true
+    },
+    {
+      "check": "actual_exposure_arithmetic_started",
+      "passed": true
+    },
+    {
+      "check": "actual_exposure_historical_target_bearing_labels_and_citations",
+      "passed": true
+    },
+    {
+      "check": "actual_exposure_private_output_may_exist",
+      "passed": true
+    },
+    {
+      "check": "actual_exposure_private_projection_written",
+      "passed": true
+    },
+    {
+      "check": "actual_exposure_private_write_attempted",
+      "passed": true
+    },
+    {
+      "check": "actual_exposure_projection_bytes_supplied",
+      "passed": true
+    },
+    {
+      "check": "actual_exposure_public_output_may_exist",
+      "passed": true
+    },
+    {
+      "check": "actual_exposure_public_write_attempted",
+      "passed": true
+    },
+    {
+      "check": "actual_exposure_raw_buffer_read_completed",
+      "passed": true
+    },
+    {
+      "check": "actual_exposure_raw_buffer_read_started",
+      "passed": true
+    },
+    {
+      "check": "actual_exposure_reservation_attempted",
+      "passed": true
+    },
+    {
+      "check": "actual_exposure_reservation_created",
+      "passed": true
+    },
+    {
+      "check": "actual_exposure_reservation_may_exist",
+      "passed": true
+    },
+    {
+      "check": "actual_exposure_selected_numbers_materialization_started",
+      "passed": true
+    },
+    {
+      "check": "actual_exposure_target_bearing_bytes_returned",
+      "passed": true
+    },
+    {
+      "check": "actual_exposure_validation_started",
+      "passed": true
+    },
+    {
+      "check": "actual_exposure_whole_projection_parse_completed",
+      "passed": true
+    },
+    {
+      "check": "actual_exposure_whole_projection_parse_started",
+      "passed": true
+    },
+    {
+      "check": "actual_exposure_counts",
+      "passed": true
+    },
+    {
+      "check": "actual_exposure_no_freshness_or_private_return_claim",
+      "passed": true
+    },
+    {
+      "check": "sixteen_fixed_unique_groups",
+      "passed": true
+    },
+    {
+      "check": "group_0_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "group_0_fixed_count_weight",
+      "passed": true
+    },
+    {
+      "check": "group_0_fixed_ids",
+      "passed": true
+    },
+    {
+      "check": "group_0_literal_units",
+      "passed": true
+    },
+    {
+      "check": "group_0_six_canonical_reduced_rationals",
+      "passed": true
+    },
+    {
+      "check": "group_0_signed_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_0_absolute_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_0_squared_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_0_nonnegative_absolute_and_squared",
+      "passed": true
+    },
+    {
+      "check": "group_0_absolute_dominates_signed_sum",
+      "passed": true
+    },
+    {
+      "check": "group_0_absolute_mean_dominates_signed_mean",
+      "passed": true
+    },
+    {
+      "check": "group_0_jensen_signed",
+      "passed": true
+    },
+    {
+      "check": "group_0_jensen_absolute",
+      "passed": true
+    },
+    {
+      "check": "group_0_sum_square_bounded_by_absolute_sum_square",
+      "passed": true
+    },
+    {
+      "check": "group_0_zero_square_iff_zero_absolute",
+      "passed": true
+    },
+    {
+      "check": "group_1_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "group_1_fixed_count_weight",
+      "passed": true
+    },
+    {
+      "check": "group_1_fixed_ids",
+      "passed": true
+    },
+    {
+      "check": "group_1_literal_units",
+      "passed": true
+    },
+    {
+      "check": "group_1_six_canonical_reduced_rationals",
+      "passed": true
+    },
+    {
+      "check": "group_1_signed_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_1_absolute_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_1_squared_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_1_nonnegative_absolute_and_squared",
+      "passed": true
+    },
+    {
+      "check": "group_1_absolute_dominates_signed_sum",
+      "passed": true
+    },
+    {
+      "check": "group_1_absolute_mean_dominates_signed_mean",
+      "passed": true
+    },
+    {
+      "check": "group_1_jensen_signed",
+      "passed": true
+    },
+    {
+      "check": "group_1_jensen_absolute",
+      "passed": true
+    },
+    {
+      "check": "group_1_sum_square_bounded_by_absolute_sum_square",
+      "passed": true
+    },
+    {
+      "check": "group_1_zero_square_iff_zero_absolute",
+      "passed": true
+    },
+    {
+      "check": "group_2_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "group_2_fixed_count_weight",
+      "passed": true
+    },
+    {
+      "check": "group_2_fixed_ids",
+      "passed": true
+    },
+    {
+      "check": "group_2_literal_units",
+      "passed": true
+    },
+    {
+      "check": "group_2_six_canonical_reduced_rationals",
+      "passed": true
+    },
+    {
+      "check": "group_2_signed_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_2_absolute_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_2_squared_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_2_nonnegative_absolute_and_squared",
+      "passed": true
+    },
+    {
+      "check": "group_2_absolute_dominates_signed_sum",
+      "passed": true
+    },
+    {
+      "check": "group_2_absolute_mean_dominates_signed_mean",
+      "passed": true
+    },
+    {
+      "check": "group_2_jensen_signed",
+      "passed": true
+    },
+    {
+      "check": "group_2_jensen_absolute",
+      "passed": true
+    },
+    {
+      "check": "group_2_sum_square_bounded_by_absolute_sum_square",
+      "passed": true
+    },
+    {
+      "check": "group_2_zero_square_iff_zero_absolute",
+      "passed": true
+    },
+    {
+      "check": "group_3_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "group_3_fixed_count_weight",
+      "passed": true
+    },
+    {
+      "check": "group_3_fixed_ids",
+      "passed": true
+    },
+    {
+      "check": "group_3_literal_units",
+      "passed": true
+    },
+    {
+      "check": "group_3_six_canonical_reduced_rationals",
+      "passed": true
+    },
+    {
+      "check": "group_3_signed_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_3_absolute_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_3_squared_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_3_nonnegative_absolute_and_squared",
+      "passed": true
+    },
+    {
+      "check": "group_3_absolute_dominates_signed_sum",
+      "passed": true
+    },
+    {
+      "check": "group_3_absolute_mean_dominates_signed_mean",
+      "passed": true
+    },
+    {
+      "check": "group_3_jensen_signed",
+      "passed": true
+    },
+    {
+      "check": "group_3_jensen_absolute",
+      "passed": true
+    },
+    {
+      "check": "group_3_sum_square_bounded_by_absolute_sum_square",
+      "passed": true
+    },
+    {
+      "check": "group_3_zero_square_iff_zero_absolute",
+      "passed": true
+    },
+    {
+      "check": "group_4_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "group_4_fixed_count_weight",
+      "passed": true
+    },
+    {
+      "check": "group_4_fixed_ids",
+      "passed": true
+    },
+    {
+      "check": "group_4_literal_units",
+      "passed": true
+    },
+    {
+      "check": "group_4_six_canonical_reduced_rationals",
+      "passed": true
+    },
+    {
+      "check": "group_4_signed_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_4_absolute_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_4_squared_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_4_nonnegative_absolute_and_squared",
+      "passed": true
+    },
+    {
+      "check": "group_4_absolute_dominates_signed_sum",
+      "passed": true
+    },
+    {
+      "check": "group_4_absolute_mean_dominates_signed_mean",
+      "passed": true
+    },
+    {
+      "check": "group_4_jensen_signed",
+      "passed": true
+    },
+    {
+      "check": "group_4_jensen_absolute",
+      "passed": true
+    },
+    {
+      "check": "group_4_sum_square_bounded_by_absolute_sum_square",
+      "passed": true
+    },
+    {
+      "check": "group_4_zero_square_iff_zero_absolute",
+      "passed": true
+    },
+    {
+      "check": "group_5_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "group_5_fixed_count_weight",
+      "passed": true
+    },
+    {
+      "check": "group_5_fixed_ids",
+      "passed": true
+    },
+    {
+      "check": "group_5_literal_units",
+      "passed": true
+    },
+    {
+      "check": "group_5_six_canonical_reduced_rationals",
+      "passed": true
+    },
+    {
+      "check": "group_5_signed_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_5_absolute_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_5_squared_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_5_nonnegative_absolute_and_squared",
+      "passed": true
+    },
+    {
+      "check": "group_5_absolute_dominates_signed_sum",
+      "passed": true
+    },
+    {
+      "check": "group_5_absolute_mean_dominates_signed_mean",
+      "passed": true
+    },
+    {
+      "check": "group_5_jensen_signed",
+      "passed": true
+    },
+    {
+      "check": "group_5_jensen_absolute",
+      "passed": true
+    },
+    {
+      "check": "group_5_sum_square_bounded_by_absolute_sum_square",
+      "passed": true
+    },
+    {
+      "check": "group_5_zero_square_iff_zero_absolute",
+      "passed": true
+    },
+    {
+      "check": "group_6_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "group_6_fixed_count_weight",
+      "passed": true
+    },
+    {
+      "check": "group_6_fixed_ids",
+      "passed": true
+    },
+    {
+      "check": "group_6_literal_units",
+      "passed": true
+    },
+    {
+      "check": "group_6_six_canonical_reduced_rationals",
+      "passed": true
+    },
+    {
+      "check": "group_6_signed_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_6_absolute_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_6_squared_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_6_nonnegative_absolute_and_squared",
+      "passed": true
+    },
+    {
+      "check": "group_6_absolute_dominates_signed_sum",
+      "passed": true
+    },
+    {
+      "check": "group_6_absolute_mean_dominates_signed_mean",
+      "passed": true
+    },
+    {
+      "check": "group_6_jensen_signed",
+      "passed": true
+    },
+    {
+      "check": "group_6_jensen_absolute",
+      "passed": true
+    },
+    {
+      "check": "group_6_sum_square_bounded_by_absolute_sum_square",
+      "passed": true
+    },
+    {
+      "check": "group_6_zero_square_iff_zero_absolute",
+      "passed": true
+    },
+    {
+      "check": "group_7_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "group_7_fixed_count_weight",
+      "passed": true
+    },
+    {
+      "check": "group_7_fixed_ids",
+      "passed": true
+    },
+    {
+      "check": "group_7_literal_units",
+      "passed": true
+    },
+    {
+      "check": "group_7_six_canonical_reduced_rationals",
+      "passed": true
+    },
+    {
+      "check": "group_7_signed_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_7_absolute_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_7_squared_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_7_nonnegative_absolute_and_squared",
+      "passed": true
+    },
+    {
+      "check": "group_7_absolute_dominates_signed_sum",
+      "passed": true
+    },
+    {
+      "check": "group_7_absolute_mean_dominates_signed_mean",
+      "passed": true
+    },
+    {
+      "check": "group_7_jensen_signed",
+      "passed": true
+    },
+    {
+      "check": "group_7_jensen_absolute",
+      "passed": true
+    },
+    {
+      "check": "group_7_sum_square_bounded_by_absolute_sum_square",
+      "passed": true
+    },
+    {
+      "check": "group_7_zero_square_iff_zero_absolute",
+      "passed": true
+    },
+    {
+      "check": "group_8_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "group_8_fixed_count_weight",
+      "passed": true
+    },
+    {
+      "check": "group_8_fixed_ids",
+      "passed": true
+    },
+    {
+      "check": "group_8_literal_units",
+      "passed": true
+    },
+    {
+      "check": "group_8_six_canonical_reduced_rationals",
+      "passed": true
+    },
+    {
+      "check": "group_8_signed_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_8_absolute_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_8_squared_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_8_nonnegative_absolute_and_squared",
+      "passed": true
+    },
+    {
+      "check": "group_8_absolute_dominates_signed_sum",
+      "passed": true
+    },
+    {
+      "check": "group_8_absolute_mean_dominates_signed_mean",
+      "passed": true
+    },
+    {
+      "check": "group_8_jensen_signed",
+      "passed": true
+    },
+    {
+      "check": "group_8_jensen_absolute",
+      "passed": true
+    },
+    {
+      "check": "group_8_sum_square_bounded_by_absolute_sum_square",
+      "passed": true
+    },
+    {
+      "check": "group_8_zero_square_iff_zero_absolute",
+      "passed": true
+    },
+    {
+      "check": "group_9_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "group_9_fixed_count_weight",
+      "passed": true
+    },
+    {
+      "check": "group_9_fixed_ids",
+      "passed": true
+    },
+    {
+      "check": "group_9_literal_units",
+      "passed": true
+    },
+    {
+      "check": "group_9_six_canonical_reduced_rationals",
+      "passed": true
+    },
+    {
+      "check": "group_9_signed_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_9_absolute_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_9_squared_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_9_nonnegative_absolute_and_squared",
+      "passed": true
+    },
+    {
+      "check": "group_9_absolute_dominates_signed_sum",
+      "passed": true
+    },
+    {
+      "check": "group_9_absolute_mean_dominates_signed_mean",
+      "passed": true
+    },
+    {
+      "check": "group_9_jensen_signed",
+      "passed": true
+    },
+    {
+      "check": "group_9_jensen_absolute",
+      "passed": true
+    },
+    {
+      "check": "group_9_sum_square_bounded_by_absolute_sum_square",
+      "passed": true
+    },
+    {
+      "check": "group_9_zero_square_iff_zero_absolute",
+      "passed": true
+    },
+    {
+      "check": "group_10_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "group_10_fixed_count_weight",
+      "passed": true
+    },
+    {
+      "check": "group_10_fixed_ids",
+      "passed": true
+    },
+    {
+      "check": "group_10_literal_units",
+      "passed": true
+    },
+    {
+      "check": "group_10_six_canonical_reduced_rationals",
+      "passed": true
+    },
+    {
+      "check": "group_10_signed_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_10_absolute_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_10_squared_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_10_nonnegative_absolute_and_squared",
+      "passed": true
+    },
+    {
+      "check": "group_10_absolute_dominates_signed_sum",
+      "passed": true
+    },
+    {
+      "check": "group_10_absolute_mean_dominates_signed_mean",
+      "passed": true
+    },
+    {
+      "check": "group_10_jensen_signed",
+      "passed": true
+    },
+    {
+      "check": "group_10_jensen_absolute",
+      "passed": true
+    },
+    {
+      "check": "group_10_sum_square_bounded_by_absolute_sum_square",
+      "passed": true
+    },
+    {
+      "check": "group_10_zero_square_iff_zero_absolute",
+      "passed": true
+    },
+    {
+      "check": "group_11_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "group_11_fixed_count_weight",
+      "passed": true
+    },
+    {
+      "check": "group_11_fixed_ids",
+      "passed": true
+    },
+    {
+      "check": "group_11_literal_units",
+      "passed": true
+    },
+    {
+      "check": "group_11_six_canonical_reduced_rationals",
+      "passed": true
+    },
+    {
+      "check": "group_11_signed_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_11_absolute_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_11_squared_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_11_nonnegative_absolute_and_squared",
+      "passed": true
+    },
+    {
+      "check": "group_11_absolute_dominates_signed_sum",
+      "passed": true
+    },
+    {
+      "check": "group_11_absolute_mean_dominates_signed_mean",
+      "passed": true
+    },
+    {
+      "check": "group_11_jensen_signed",
+      "passed": true
+    },
+    {
+      "check": "group_11_jensen_absolute",
+      "passed": true
+    },
+    {
+      "check": "group_11_sum_square_bounded_by_absolute_sum_square",
+      "passed": true
+    },
+    {
+      "check": "group_11_zero_square_iff_zero_absolute",
+      "passed": true
+    },
+    {
+      "check": "group_12_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "group_12_fixed_count_weight",
+      "passed": true
+    },
+    {
+      "check": "group_12_fixed_ids",
+      "passed": true
+    },
+    {
+      "check": "group_12_literal_units",
+      "passed": true
+    },
+    {
+      "check": "group_12_six_canonical_reduced_rationals",
+      "passed": true
+    },
+    {
+      "check": "group_12_signed_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_12_absolute_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_12_squared_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_12_nonnegative_absolute_and_squared",
+      "passed": true
+    },
+    {
+      "check": "group_12_absolute_dominates_signed_sum",
+      "passed": true
+    },
+    {
+      "check": "group_12_absolute_mean_dominates_signed_mean",
+      "passed": true
+    },
+    {
+      "check": "group_12_jensen_signed",
+      "passed": true
+    },
+    {
+      "check": "group_12_jensen_absolute",
+      "passed": true
+    },
+    {
+      "check": "group_12_sum_square_bounded_by_absolute_sum_square",
+      "passed": true
+    },
+    {
+      "check": "group_12_zero_square_iff_zero_absolute",
+      "passed": true
+    },
+    {
+      "check": "group_13_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "group_13_fixed_count_weight",
+      "passed": true
+    },
+    {
+      "check": "group_13_fixed_ids",
+      "passed": true
+    },
+    {
+      "check": "group_13_literal_units",
+      "passed": true
+    },
+    {
+      "check": "group_13_six_canonical_reduced_rationals",
+      "passed": true
+    },
+    {
+      "check": "group_13_signed_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_13_absolute_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_13_squared_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_13_nonnegative_absolute_and_squared",
+      "passed": true
+    },
+    {
+      "check": "group_13_absolute_dominates_signed_sum",
+      "passed": true
+    },
+    {
+      "check": "group_13_absolute_mean_dominates_signed_mean",
+      "passed": true
+    },
+    {
+      "check": "group_13_jensen_signed",
+      "passed": true
+    },
+    {
+      "check": "group_13_jensen_absolute",
+      "passed": true
+    },
+    {
+      "check": "group_13_sum_square_bounded_by_absolute_sum_square",
+      "passed": true
+    },
+    {
+      "check": "group_13_zero_square_iff_zero_absolute",
+      "passed": true
+    },
+    {
+      "check": "group_14_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "group_14_fixed_count_weight",
+      "passed": true
+    },
+    {
+      "check": "group_14_fixed_ids",
+      "passed": true
+    },
+    {
+      "check": "group_14_literal_units",
+      "passed": true
+    },
+    {
+      "check": "group_14_six_canonical_reduced_rationals",
+      "passed": true
+    },
+    {
+      "check": "group_14_signed_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_14_absolute_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_14_squared_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_14_nonnegative_absolute_and_squared",
+      "passed": true
+    },
+    {
+      "check": "group_14_absolute_dominates_signed_sum",
+      "passed": true
+    },
+    {
+      "check": "group_14_absolute_mean_dominates_signed_mean",
+      "passed": true
+    },
+    {
+      "check": "group_14_jensen_signed",
+      "passed": true
+    },
+    {
+      "check": "group_14_jensen_absolute",
+      "passed": true
+    },
+    {
+      "check": "group_14_sum_square_bounded_by_absolute_sum_square",
+      "passed": true
+    },
+    {
+      "check": "group_14_zero_square_iff_zero_absolute",
+      "passed": true
+    },
+    {
+      "check": "group_15_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "group_15_fixed_count_weight",
+      "passed": true
+    },
+    {
+      "check": "group_15_fixed_ids",
+      "passed": true
+    },
+    {
+      "check": "group_15_literal_units",
+      "passed": true
+    },
+    {
+      "check": "group_15_six_canonical_reduced_rationals",
+      "passed": true
+    },
+    {
+      "check": "group_15_signed_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_15_absolute_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_15_squared_sum_equals_nine_mean",
+      "passed": true
+    },
+    {
+      "check": "group_15_nonnegative_absolute_and_squared",
+      "passed": true
+    },
+    {
+      "check": "group_15_absolute_dominates_signed_sum",
+      "passed": true
+    },
+    {
+      "check": "group_15_absolute_mean_dominates_signed_mean",
+      "passed": true
+    },
+    {
+      "check": "group_15_jensen_signed",
+      "passed": true
+    },
+    {
+      "check": "group_15_jensen_absolute",
+      "passed": true
+    },
+    {
+      "check": "group_15_sum_square_bounded_by_absolute_sum_square",
+      "passed": true
+    },
+    {
+      "check": "group_15_zero_square_iff_zero_absolute",
+      "passed": true
+    },
+    {
+      "check": "thirty_six_fixed_unique_reference_groups",
+      "passed": true
+    },
+    {
+      "check": "reference_0_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "reference_0_all_four_models",
+      "passed": true
+    },
+    {
+      "check": "reference_0_literal_unit",
+      "passed": true
+    },
+    {
+      "check": "reference_0_closed_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_0_token_equality_implies_rational_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_0_no_truth_or_choice_promotion",
+      "passed": true
+    },
+    {
+      "check": "reference_1_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "reference_1_all_four_models",
+      "passed": true
+    },
+    {
+      "check": "reference_1_literal_unit",
+      "passed": true
+    },
+    {
+      "check": "reference_1_closed_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_1_token_equality_implies_rational_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_1_no_truth_or_choice_promotion",
+      "passed": true
+    },
+    {
+      "check": "reference_2_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "reference_2_all_four_models",
+      "passed": true
+    },
+    {
+      "check": "reference_2_literal_unit",
+      "passed": true
+    },
+    {
+      "check": "reference_2_closed_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_2_token_equality_implies_rational_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_2_no_truth_or_choice_promotion",
+      "passed": true
+    },
+    {
+      "check": "reference_3_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "reference_3_all_four_models",
+      "passed": true
+    },
+    {
+      "check": "reference_3_literal_unit",
+      "passed": true
+    },
+    {
+      "check": "reference_3_closed_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_3_token_equality_implies_rational_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_3_no_truth_or_choice_promotion",
+      "passed": true
+    },
+    {
+      "check": "reference_4_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "reference_4_all_four_models",
+      "passed": true
+    },
+    {
+      "check": "reference_4_literal_unit",
+      "passed": true
+    },
+    {
+      "check": "reference_4_closed_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_4_token_equality_implies_rational_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_4_no_truth_or_choice_promotion",
+      "passed": true
+    },
+    {
+      "check": "reference_5_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "reference_5_all_four_models",
+      "passed": true
+    },
+    {
+      "check": "reference_5_literal_unit",
+      "passed": true
+    },
+    {
+      "check": "reference_5_closed_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_5_token_equality_implies_rational_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_5_no_truth_or_choice_promotion",
+      "passed": true
+    },
+    {
+      "check": "reference_6_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "reference_6_all_four_models",
+      "passed": true
+    },
+    {
+      "check": "reference_6_literal_unit",
+      "passed": true
+    },
+    {
+      "check": "reference_6_closed_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_6_token_equality_implies_rational_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_6_no_truth_or_choice_promotion",
+      "passed": true
+    },
+    {
+      "check": "reference_7_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "reference_7_all_four_models",
+      "passed": true
+    },
+    {
+      "check": "reference_7_literal_unit",
+      "passed": true
+    },
+    {
+      "check": "reference_7_closed_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_7_token_equality_implies_rational_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_7_no_truth_or_choice_promotion",
+      "passed": true
+    },
+    {
+      "check": "reference_8_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "reference_8_all_four_models",
+      "passed": true
+    },
+    {
+      "check": "reference_8_literal_unit",
+      "passed": true
+    },
+    {
+      "check": "reference_8_closed_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_8_token_equality_implies_rational_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_8_no_truth_or_choice_promotion",
+      "passed": true
+    },
+    {
+      "check": "reference_9_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "reference_9_all_four_models",
+      "passed": true
+    },
+    {
+      "check": "reference_9_literal_unit",
+      "passed": true
+    },
+    {
+      "check": "reference_9_closed_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_9_token_equality_implies_rational_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_9_no_truth_or_choice_promotion",
+      "passed": true
+    },
+    {
+      "check": "reference_10_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "reference_10_all_four_models",
+      "passed": true
+    },
+    {
+      "check": "reference_10_literal_unit",
+      "passed": true
+    },
+    {
+      "check": "reference_10_closed_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_10_token_equality_implies_rational_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_10_no_truth_or_choice_promotion",
+      "passed": true
+    },
+    {
+      "check": "reference_11_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "reference_11_all_four_models",
+      "passed": true
+    },
+    {
+      "check": "reference_11_literal_unit",
+      "passed": true
+    },
+    {
+      "check": "reference_11_closed_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_11_token_equality_implies_rational_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_11_no_truth_or_choice_promotion",
+      "passed": true
+    },
+    {
+      "check": "reference_12_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "reference_12_all_four_models",
+      "passed": true
+    },
+    {
+      "check": "reference_12_literal_unit",
+      "passed": true
+    },
+    {
+      "check": "reference_12_closed_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_12_token_equality_implies_rational_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_12_no_truth_or_choice_promotion",
+      "passed": true
+    },
+    {
+      "check": "reference_13_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "reference_13_all_four_models",
+      "passed": true
+    },
+    {
+      "check": "reference_13_literal_unit",
+      "passed": true
+    },
+    {
+      "check": "reference_13_closed_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_13_token_equality_implies_rational_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_13_no_truth_or_choice_promotion",
+      "passed": true
+    },
+    {
+      "check": "reference_14_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "reference_14_all_four_models",
+      "passed": true
+    },
+    {
+      "check": "reference_14_literal_unit",
+      "passed": true
+    },
+    {
+      "check": "reference_14_closed_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_14_token_equality_implies_rational_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_14_no_truth_or_choice_promotion",
+      "passed": true
+    },
+    {
+      "check": "reference_15_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "reference_15_all_four_models",
+      "passed": true
+    },
+    {
+      "check": "reference_15_literal_unit",
+      "passed": true
+    },
+    {
+      "check": "reference_15_closed_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_15_token_equality_implies_rational_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_15_no_truth_or_choice_promotion",
+      "passed": true
+    },
+    {
+      "check": "reference_16_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "reference_16_all_four_models",
+      "passed": true
+    },
+    {
+      "check": "reference_16_literal_unit",
+      "passed": true
+    },
+    {
+      "check": "reference_16_closed_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_16_token_equality_implies_rational_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_16_no_truth_or_choice_promotion",
+      "passed": true
+    },
+    {
+      "check": "reference_17_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "reference_17_all_four_models",
+      "passed": true
+    },
+    {
+      "check": "reference_17_literal_unit",
+      "passed": true
+    },
+    {
+      "check": "reference_17_closed_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_17_token_equality_implies_rational_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_17_no_truth_or_choice_promotion",
+      "passed": true
+    },
+    {
+      "check": "reference_18_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "reference_18_all_four_models",
+      "passed": true
+    },
+    {
+      "check": "reference_18_literal_unit",
+      "passed": true
+    },
+    {
+      "check": "reference_18_closed_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_18_token_equality_implies_rational_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_18_no_truth_or_choice_promotion",
+      "passed": true
+    },
+    {
+      "check": "reference_19_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "reference_19_all_four_models",
+      "passed": true
+    },
+    {
+      "check": "reference_19_literal_unit",
+      "passed": true
+    },
+    {
+      "check": "reference_19_closed_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_19_token_equality_implies_rational_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_19_no_truth_or_choice_promotion",
+      "passed": true
+    },
+    {
+      "check": "reference_20_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "reference_20_all_four_models",
+      "passed": true
+    },
+    {
+      "check": "reference_20_literal_unit",
+      "passed": true
+    },
+    {
+      "check": "reference_20_closed_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_20_token_equality_implies_rational_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_20_no_truth_or_choice_promotion",
+      "passed": true
+    },
+    {
+      "check": "reference_21_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "reference_21_all_four_models",
+      "passed": true
+    },
+    {
+      "check": "reference_21_literal_unit",
+      "passed": true
+    },
+    {
+      "check": "reference_21_closed_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_21_token_equality_implies_rational_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_21_no_truth_or_choice_promotion",
+      "passed": true
+    },
+    {
+      "check": "reference_22_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "reference_22_all_four_models",
+      "passed": true
+    },
+    {
+      "check": "reference_22_literal_unit",
+      "passed": true
+    },
+    {
+      "check": "reference_22_closed_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_22_token_equality_implies_rational_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_22_no_truth_or_choice_promotion",
+      "passed": true
+    },
+    {
+      "check": "reference_23_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "reference_23_all_four_models",
+      "passed": true
+    },
+    {
+      "check": "reference_23_literal_unit",
+      "passed": true
+    },
+    {
+      "check": "reference_23_closed_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_23_token_equality_implies_rational_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_23_no_truth_or_choice_promotion",
+      "passed": true
+    },
+    {
+      "check": "reference_24_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "reference_24_all_four_models",
+      "passed": true
+    },
+    {
+      "check": "reference_24_literal_unit",
+      "passed": true
+    },
+    {
+      "check": "reference_24_closed_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_24_token_equality_implies_rational_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_24_no_truth_or_choice_promotion",
+      "passed": true
+    },
+    {
+      "check": "reference_25_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "reference_25_all_four_models",
+      "passed": true
+    },
+    {
+      "check": "reference_25_literal_unit",
+      "passed": true
+    },
+    {
+      "check": "reference_25_closed_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_25_token_equality_implies_rational_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_25_no_truth_or_choice_promotion",
+      "passed": true
+    },
+    {
+      "check": "reference_26_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "reference_26_all_four_models",
+      "passed": true
+    },
+    {
+      "check": "reference_26_literal_unit",
+      "passed": true
+    },
+    {
+      "check": "reference_26_closed_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_26_token_equality_implies_rational_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_26_no_truth_or_choice_promotion",
+      "passed": true
+    },
+    {
+      "check": "reference_27_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "reference_27_all_four_models",
+      "passed": true
+    },
+    {
+      "check": "reference_27_literal_unit",
+      "passed": true
+    },
+    {
+      "check": "reference_27_closed_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_27_token_equality_implies_rational_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_27_no_truth_or_choice_promotion",
+      "passed": true
+    },
+    {
+      "check": "reference_28_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "reference_28_all_four_models",
+      "passed": true
+    },
+    {
+      "check": "reference_28_literal_unit",
+      "passed": true
+    },
+    {
+      "check": "reference_28_closed_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_28_token_equality_implies_rational_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_28_no_truth_or_choice_promotion",
+      "passed": true
+    },
+    {
+      "check": "reference_29_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "reference_29_all_four_models",
+      "passed": true
+    },
+    {
+      "check": "reference_29_literal_unit",
+      "passed": true
+    },
+    {
+      "check": "reference_29_closed_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_29_token_equality_implies_rational_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_29_no_truth_or_choice_promotion",
+      "passed": true
+    },
+    {
+      "check": "reference_30_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "reference_30_all_four_models",
+      "passed": true
+    },
+    {
+      "check": "reference_30_literal_unit",
+      "passed": true
+    },
+    {
+      "check": "reference_30_closed_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_30_token_equality_implies_rational_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_30_no_truth_or_choice_promotion",
+      "passed": true
+    },
+    {
+      "check": "reference_31_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "reference_31_all_four_models",
+      "passed": true
+    },
+    {
+      "check": "reference_31_literal_unit",
+      "passed": true
+    },
+    {
+      "check": "reference_31_closed_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_31_token_equality_implies_rational_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_31_no_truth_or_choice_promotion",
+      "passed": true
+    },
+    {
+      "check": "reference_32_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "reference_32_all_four_models",
+      "passed": true
+    },
+    {
+      "check": "reference_32_literal_unit",
+      "passed": true
+    },
+    {
+      "check": "reference_32_closed_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_32_token_equality_implies_rational_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_32_no_truth_or_choice_promotion",
+      "passed": true
+    },
+    {
+      "check": "reference_33_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "reference_33_all_four_models",
+      "passed": true
+    },
+    {
+      "check": "reference_33_literal_unit",
+      "passed": true
+    },
+    {
+      "check": "reference_33_closed_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_33_token_equality_implies_rational_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_33_no_truth_or_choice_promotion",
+      "passed": true
+    },
+    {
+      "check": "reference_34_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "reference_34_all_four_models",
+      "passed": true
+    },
+    {
+      "check": "reference_34_literal_unit",
+      "passed": true
+    },
+    {
+      "check": "reference_34_closed_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_34_token_equality_implies_rational_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_34_no_truth_or_choice_promotion",
+      "passed": true
+    },
+    {
+      "check": "reference_35_closed_schema",
+      "passed": true
+    },
+    {
+      "check": "reference_35_all_four_models",
+      "passed": true
+    },
+    {
+      "check": "reference_35_literal_unit",
+      "passed": true
+    },
+    {
+      "check": "reference_35_closed_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_35_token_equality_implies_rational_equality",
+      "passed": true
+    },
+    {
+      "check": "reference_35_no_truth_or_choice_promotion",
+      "passed": true
+    },
+    {
+      "check": "no_individual_numeric_citation_or_provenance_fields",
+      "passed": true
+    },
+    {
+      "check": "no_raw_path_or_citation_sentinel",
+      "passed": true
+    },
+    {
+      "check": "gate_identity_candidate_handoff",
+      "passed": true
+    },
+    {
+      "check": "gate_identity_numeric_review",
+      "passed": true
+    },
+    {
+      "check": "gate_identity_scope_review",
+      "passed": true
+    },
+    {
+      "check": "gate_identity_frame",
+      "passed": true
+    },
+    {
+      "check": "gate_identity_readiness",
+      "passed": true
+    },
+    {
+      "check": "source_contract_cross_gate_pins",
+      "passed": true
+    },
+    {
+      "check": "author_inventory_identity",
+      "passed": true
+    },
+    {
+      "check": "author_receipt_identity",
+      "passed": true
+    },
+    {
+      "check": "author_gate_29_generated_pass",
+      "passed": true
+    },
+    {
+      "check": "numeric_gate_22_generated_pass",
+      "passed": true
+    },
+    {
+      "check": "scope_gate_no_blocker",
+      "passed": true
+    },
+    {
+      "check": "handoff_matches_gate_counts",
+      "passed": true
+    },
+    {
+      "check": "chronology_scope_author_hold_independent_binding_actual",
+      "passed": true
+    },
+    {
+      "check": "execution_stdout_stderr_identity",
+      "passed": true
+    },
+    {
+      "check": "execution_success_one_invocation_no_retry",
+      "passed": true
+    },
+    {
+      "check": "recorded_runtime_remote_hold",
+      "passed": true
+    },
+    {
+      "check": "command_binds_held_manifest_source",
+      "passed": true
+    },
+    {
+      "check": "no_forbidden_audit_operation",
+      "passed": true
+    }
+  ],
+  "finished_at": "2026-10-16T13:32:39.600149+00:00",
+  "inputs": [
+    {
+      "bytes": 31448,
+      "name": "public",
+      "path": ".cache/phase2-rhizo-census-candidate-v1/actual/public.json",
+      "sha256": "a9ab9d72c6c39be9338e951b657e0587ae8f4dbe534b276b8f8f8951a7b1a63a"
+    },
+    {
+      "bytes": 425,
+      "name": "reservation",
+      "path": ".cache/phase2-rhizo-census-candidate-v1/actual/reservation.json",
+      "sha256": "10ce9a2f23f4d4987b4bfb36ede71857524af18e8dc355fed4135738738b10b8"
+    },
+    {
+      "bytes": 596,
+      "name": "manifest",
+      "path": ".cache/phase2-rhizo-census-candidate-v1/reviewed-invocation.json",
+      "sha256": "9a0429e0026653f65e7d01699c5ca7fba2799ca8b9af7b8c9025b91b2ad88a48"
+    },
+    {
+      "bytes": 792,
+      "name": "binding",
+      "path": ".cache/phase2-rhizo-census-operations-v1/projection-binding.json",
+      "sha256": "9a245f3fbae08de7acc23c3d55b28611ab190fea2326ca3e5cf4f79ce894e451"
+    },
+    {
+      "bytes": 331,
+      "name": "binding_reservation",
+      "path": ".cache/phase2-rhizo-census-operations-v1/projection-binding-reservation.json",
+      "sha256": "d3e516661fc2cb7da910e2453cc6d00493f55e3b3c7b39c9475a84ff021e40fd"
+    },
+    {
+      "bytes": 42825,
+      "name": "start",
+      "path": ".cache/phase2-rhizo-census-operations-v1/actual-execution/start.json",
+      "sha256": "19228c723b741d61136da1e2017f6f5cfde342389136e228d46ba1670c00292a"
+    },
+    {
+      "bytes": 741,
+      "name": "execution",
+      "path": ".cache/phase2-rhizo-census-operations-v1/actual-execution/execution.json",
+      "sha256": "212f91828d11bf5cb52bfd97649a124a94484c2d3cb12605230eb087c3378894"
+    },
+    {
+      "bytes": 31448,
+      "name": "stdout",
+      "path": ".cache/phase2-rhizo-census-operations-v1/actual-execution/stdout.json",
+      "sha256": "a9ab9d72c6c39be9338e951b657e0587ae8f4dbe534b276b8f8f8951a7b1a63a"
+    },
+    {
+      "bytes": 0,
+      "name": "stderr",
+      "path": ".cache/phase2-rhizo-census-operations-v1/actual-execution/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 71649,
+      "name": "frame",
+      "path": "reports/phase2-rhizo-reference-readiness-v1/design/reference-frame.json",
+      "sha256": "80a1aca0fd56d89f49ff5f0e4b3930405f11ae1cd4acea14b8edab2381940aa4"
+    },
+    {
+      "bytes": 115893,
+      "name": "readiness",
+      "path": "reports/phase2-rhizo-recorded-label-readiness-v1/actual/public.json",
+      "sha256": "b444e7d33cb18619942c2dfbb5cd3374fd9cd9adee6732825ce20ed431641a33"
+    },
+    {
+      "bytes": 1354,
+      "name": "candidate_handoff",
+      "path": ".cache/phase2-rhizo-census-candidate-v1/handoff.json",
+      "sha256": "863631998ad2cac8706cdfd46698bfcef37aa04529b6affa73a8d13ffea13ca1"
+    },
+    {
+      "bytes": 4750,
+      "name": "candidate_inventory",
+      "path": ".cache/phase2-rhizo-census-candidate-v1/inventory.json",
+      "sha256": "4861948c05abdf18c8231824e49818a0f477547cddcb87ecccf2ad3e9bdb4b0e"
+    },
+    {
+      "bytes": 782,
+      "name": "author_execution",
+      "path": ".cache/phase2-rhizo-census-candidate-v1/first-author/execution.json",
+      "sha256": "b10830c82ee59479efa19542f8875366eae093e5672ffa7c2ce9aadca039865e"
+    },
+    {
+      "bytes": 1330,
+      "name": "source_hold",
+      "path": ".cache/phase2-rhizo-census-candidate-v1/source-hold.json",
+      "sha256": "8f941386ae23ffdf2d951cb153f9bcf60a9436775a21779f80a907089b71bbab"
+    },
+    {
+      "bytes": 4644,
+      "name": "numeric_review",
+      "path": ".cache/phase2-rhizo-census-independent-v1/review.json",
+      "sha256": "fdae85ce4e444ef5e98f913f472111eb8b8f95afb1b5a4ec43be9961cefc9f04"
+    },
+    {
+      "bytes": 5794,
+      "name": "scope_review",
+      "path": ".cache/phase2-rhizo-census-scope-review-v1/review.json",
+      "sha256": "0157617d237e5134cfd7bbf84984698b009b8dd32d2c074faa066c72e45005f1"
+    }
+  ],
+  "limits": [
+    "This is public-only arithmetic and receipt consistency, not recomputation from individual private predictions/references.",
+    "Recorded source/runtime/remote holds were cross-checked as receipt assertions; no source file, runtime guard, Git operation, tests or actual census was rerun.",
+    "The one identity-only retained-projection read sealed bytes at this later checkpoint; it did not prove the original projection write hash.",
+    "Public numerical aggregate exposure is intentional and acknowledged; no private projection or individual labels/citations were opened by this reviewer.",
+    "All36 groups reporting equal stored references does not establish common physical truth, correct binder choice, fair physical model comparison, scientific admission, independence or superiority.",
+    "No new DFT, source acquisition, model ranking, threshold, uncertainty interval or inference was performed."
+  ],
+  "observations": {
+    "actual_execution_finished_at": "2026-10-16T13:28:05.426823+00:00",
+    "actual_execution_started_at": "2026-10-16T13:28:04.403448+00:00",
+    "actual_process_seconds_as_recorded": 0.16555957200034754,
+    "all_reference_rationals_equal_groups": 36,
+    "arithmetic_relations_checked": 208,
+    "canonical_rational_aggregates_checked": 96,
+    "citation_literals_equal_groups": 36,
+    "fixed_positions": 144,
+    "groups": 16,
+    "public_numeric_aggregate_exposure_acknowledged": true,
+    "reference_equality_groups": 36,
+    "token_spellings_equal_groups": 36
+  },
+  "reviewer_actual_private_or_raw_reads": 0,
+  "schema": "lupine.rhizo.census.public-actual-review.v1",
+  "scientific_status": "NOT_ADMITTED",
+  "seconds": 0.012270841005374677,
+  "started_at": "2026-10-16T13:32:39.587893+00:00",
+  "status": "PASS_PUBLIC_RECEIPT_AND_AGGREGATE_CONSISTENCY"
+}

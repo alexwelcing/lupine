@@ -1,0 +1,7 @@
+# Focused readable-display browser review
+
+The held readable renderer 8e45d59e and stylesheet d7042060 passed all 30 focused checks on the first real standalone Chromium invocation, in 6.815469007 seconds. An independently authored exact Fraction oracle checked 26 positive, negative, zero, tiny, huge, halfway, carry and notation-boundary cases. Eleven manually derived coefficient/exponent pairs additionally checked the oracle. Maximum numerator and denominator sizes were included without a process-global integer conversion override.
+
+All 96 mean/sum cells retained full exact fractions and accessible expansion. Nonzero compact summaries carried the approximation marker; zero remained 0 under the declared policy. Browser downloads preserved the complete supplied JSON byte-for-byte, including large values. Prior rejection and stale detached-export behaviors passed. The expanded exact cell remained bounded and wrapped at 320px; generated desktop/mobile screenshots were inspected. The mobile view records the table scroll position produced by keyboard focus.
+
+This is generated display evidence only. The completed v2 review and its original renderer/fixture failures remain unchanged. No actual aggregate, private label/source/projection, census arithmetic or production reader was accessed or rerun. HTTP/package integration remains separate. A transient exec transport failure affected only a source-inspection request, before its successful retry; no test failure or source operation was hidden.

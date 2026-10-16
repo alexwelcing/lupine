@@ -1,0 +1,46 @@
+{
+  "after_existing_finite_helper": {
+    "new_grouped_checks": 7,
+    "observed_process_exit_code": 0,
+    "prior_finite_grouped_checks": 8,
+    "receipt": "after-finite-run/execution.json",
+    "seconds": 19.9015455290064,
+    "sha256": "1e0e1acd22d5ee3f150d1b483e8fb266ac8b07e9258aeadcbb3584e66bd01c41"
+  },
+  "browser_errors": [],
+  "caller_state_restored": true,
+  "created_at": "2026-10-16T13:50:03.419216+00:00",
+  "external_fixture_files": [],
+  "full_browser_smoke_executed": false,
+  "generated_exact_rounding_cases": 26,
+  "held_source_unchanged": true,
+  "invalid_report_cases": 9,
+  "limitations": [
+    "UI transport/presentation verification; aggregate arithmetic source validation is outside this task.",
+    "Copied held v3 package and public a9ab resource; root must run complete browser smoke after actual integration.",
+    "Synthetic controls deliberately vary presentation inputs; they are not new physical observations."
+  ],
+  "module": {
+    "bytes": 19171,
+    "path": ".cache/phase2-rhizo-census-ui-ci-v1/promotion/scripts/recorded_census_browser_checks.py",
+    "sha256": "ed9f25b9260c7ab2a2fe33a5459f12c3d5c989f11abc6a969a2796b9ceb3ffc1"
+  },
+  "private_or_raw_scientific_inputs_read": false,
+  "promotion_allowlist": [
+    {
+      "bytes": 19171,
+      "sha256": "ed9f25b9260c7ab2a2fe33a5459f12c3d5c989f11abc6a969a2796b9ceb3ffc1",
+      "source": ".cache/phase2-rhizo-census-ui-ci-v1/promotion/scripts/recorded_census_browser_checks.py",
+      "target": "scripts/recorded_census_browser_checks.py"
+    }
+  ],
+  "published_arithmetic_validated": false,
+  "source_producers_invoked": false,
+  "standalone_actual_http": {
+    "grouped_checks": 7,
+    "receipt": "first-run/execution.json",
+    "seconds": 7.794752125999366,
+    "sha256": "9533c3418bcc8ba9b2c5c04d1a62855011b9d515328126cf194eb217cb61cb83"
+  },
+  "status": "PASS"
+}

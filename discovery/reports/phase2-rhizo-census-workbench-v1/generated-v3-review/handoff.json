@@ -1,0 +1,24 @@
+{
+  "checks_passed": 30,
+  "execution": {
+    "bytes": 8318,
+    "path": ".cache/phase2-rhizo-census-ui-display-review-v1/first-run/execution.json",
+    "sha256": "511fa8df813f52a8e3115795ab8f3f6204e4d7af21210422af75f29e6a702098"
+  },
+  "first_run_pass": true,
+  "inventory": {
+    "bytes": 3158,
+    "path": ".cache/phase2-rhizo-census-ui-display-review-v1/inventory.json",
+    "sha256": "2aeea74dbbb3639c542d0fc3aae792cf49538abce53ec02baa546dc253118ce7"
+  },
+  "oracle_cases": 26,
+  "renderer_sha256": "8e45d59eab288d5ce6c83fabe6b30ef4c707736913d13b8bf99f0e09a5b0628a",
+  "review": {
+    "bytes": 3518,
+    "path": ".cache/phase2-rhizo-census-ui-display-review-v1/review.json",
+    "sha256": "5ee31634deb405b189af227c1b4131037f1abaee78a83391b45a7bbf1c92fe84"
+  },
+  "scope": "Generated standalone readable display only; no actual input or HTTP/producer validation.",
+  "status": "PASS_FOCUSED_GENERATED_DISPLAY_BROWSER_REVIEW",
+  "style_sha256": "d7042060aae32dba2c9c5ad6f6df86a5ee51f7f1ea0dfb7aea413bf81bd3eaf9"
+}

@@ -1,0 +1,12 @@
+{
+  "element_size": [
+    339,
+    1634
+  ],
+  "finding": "No product visibility/focus defect reproduced; tall off-viewport capture artifact.",
+  "product_fix_required": false,
+  "review_sha256": "717f12ff071003f7db40f705239a5c8eb18b198e9bdfec627e5d76780a22dbdc",
+  "schema": "lupine.census_capture_comparison.v1",
+  "screenshot_visibility_hidden_control_difference_bbox": null,
+  "visibility_hidden_control_effective": false
+}

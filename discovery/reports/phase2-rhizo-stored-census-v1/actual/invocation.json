@@ -1,0 +1,12 @@
+{
+  "schema": "lupine.rhizo.census-invocation.v1",
+  "script_sha256": "d77a1ca2eeeb1d0f4e02fac6d624fa63527c4a8d423fdf8f7f645db102c67630",
+  "contract_sha256": "e849d36004f0e73fdde22620bbffe06d1e53425907ca5fce974c536a5e1ea052",
+  "frame_sha256": "80a1aca0fd56d89f49ff5f0e4b3930405f11ae1cd4acea14b8edab2381940aa4",
+  "readiness_sha256": "b444e7d33cb18619942c2dfbb5cd3374fd9cd9adee6732825ce20ed431641a33",
+  "projection": {
+    "bytes": 116049,
+    "sha256": "4e1a11dd32e08aa3c92acdc402fcfeb497bd202995f7de7b977593a096b85468"
+  },
+  "output_slot": ".cache/phase2-rhizo-census-candidate-v1/actual"
+}

@@ -1802,3 +1802,36 @@ new fit, allocation, numeric Rhizo census or fresh performance claim occurred.
 G20 remains unresolved/G21 blocked; historical negatives and disabled automation
 remain unchanged. A transient exec transport failure during ignored preparation
 recovered on the immediate retry and did not execute a source operation.
+
+## 2026-10-16T13:59:19.668657+00:00 — completed historical census and integrated exact-summary workbench
+
+[Census](phase2-rhizo-stored-census-v1/README.md): one completed fixed invocation
+at 13:28 UTC, all 144 pairs/16 groups/36 reference groups. All 36 reference groups
+agree on stored rational/token/citation values; physical truth and reference
+choice remain UNKNOWN. Author29/independent22 generated tests and public-only
+517-check consistency review pass. Public aggregates are exposed. No private
+individual-value recomputation is claimed by the public review. The identity-only
+seal at 13:25 UTC was first recorded then, not at the earlier projection write.
+
+[Workbench](phase2-rhizo-census-integration-v1/README.md): exact fractions,
+four-significant-digit display, units and full export; malformed/missing/blocked
+state clears results and detached exports. Generated standalone25 then30 checks,
+26 independent rounding cases and two seven-group HTTP overlays pass. All
+first product/fixture/publication failures are retained. A floating skip link in
+a tall element screenshot was confirmed as capture geometry, not a viewport bug.
+
+Portable HTTP6 and browser7 groups pass. Root integrated browser passes80 checks
+in178.228 seconds, with zero JavaScript errors. First focused97 tests pass;
+static review then identifies Python numeric-coercion equality in the new
+installed-probe comparison. Canonical JSON comparison and exact probe-pin updates
+strengthen it; final focused97 tests pass on that source. Browser assets and
+runtime behavior were unchanged by the narrow probe/test correction. Installed
+checks increase16→17 without removing old checks. Runtime339:9 intentional
+existing changes/4 additions;326 prior files unchanged.
+
+Parent d4d8504a passes all four original CI jobs (38905648425), observed13:30:44.
+Current source requires its own published CI/clean-wheel/independent artifact
+checks. Root owns those next while the separate complete Li adapter is prepared.
+Li pure38 author/35 independent methods pass; portable independent repeats the
+same35. No new actual Li source access. G20 unresolved/G21 blocked and original
+scientific NO-GO persist. No new DFT, fit, allocation, deployment or schedule.

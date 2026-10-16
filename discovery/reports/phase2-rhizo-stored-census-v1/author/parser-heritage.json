@@ -1,0 +1,10 @@
+{
+  "actual_private_or_raw_reads": 0,
+  "copied_class_sources": {
+    "BoundedJSON": "eae95f6f70ca3f13065fb9e8db77e5c7f94100d930de0e31ff5cd54845efdc26",
+    "ExactJSONNumber": "78188f23395efcc8fdf05f86bdc3ae708da09b847fd2056ad8cfa4398d0d2fbc"
+  },
+  "copy_mode": "Exact class source text; no upstream import or execution. Uses local closed CensusError fail helper. Parser bounds prospective32depth/50000nodes/16384string and4MiB projection bytes; numeric token semantics unchanged.",
+  "source_path": "reports/phase2-rhizo-recorded-label-readiness-v1/author/recorded_labels.py",
+  "source_sha256": "13f1f4ee41947eff4b47faaa0a3463af96363fbc8c09d6a9d398d76d78f9d647"
+}

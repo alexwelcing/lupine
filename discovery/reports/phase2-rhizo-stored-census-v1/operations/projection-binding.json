@@ -1,0 +1,19 @@
+{
+  "started_at": "2026-10-16T13:25:17.777632+00:00",
+  "finished_at": "2026-10-16T13:25:17.783331+00:00",
+  "path": ".cache/phase2-rhizo-recorded-label-candidate-v1/actual/private.json",
+  "projection": {
+    "bytes": 116049,
+    "sha256": "4e1a11dd32e08aa3c92acdc402fcfeb497bd202995f7de7b977593a096b85468"
+  },
+  "read_operations": 1,
+  "whole_target_bearing_buffer_read": true,
+  "json_parsed": false,
+  "numbers_materialized": false,
+  "numeric_comparisons": false,
+  "original_bound_objects_read": false,
+  "first_identity_binding_at_this_checkpoint": true,
+  "retroactive_original_write_hash_claimed": false,
+  "source_sha256": "d77a1ca2eeeb1d0f4e02fac6d624fa63527c4a8d423fdf8f7f645db102c67630",
+  "recorder_sha256": "4721ea057eda2160372406dceefba8f0890e3badb03cb360439b9229a999b79b"
+}

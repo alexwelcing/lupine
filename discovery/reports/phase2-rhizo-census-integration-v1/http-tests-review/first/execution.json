@@ -1,0 +1,28 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-B",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-rhizo-census-http-tests-v1/run_tests.py"
+  ],
+  "cwd": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-rhizo-census-http-tests-v1",
+  "exit_code": 0,
+  "finished_at": "2026-10-16T13:48:40.346418+00:00",
+  "outputs": {
+    "stderr.txt": {
+      "bytes": 1190,
+      "sha256": "8eb1d0ffb50ad8092b15fc76cbe23bc7e62f0ccfd0ddf534e422a533107dfadf"
+    },
+    "stdout.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "process_seconds": 2.5524932939952123,
+  "source_hashes": {
+    "run_once.py": "6560ac9fbb527f6f98e19b01d64ca2bb5d88c3f18d0a9711bde250a16ab06fb0",
+    "run_tests.py": "4698f7427b56498d88c2cca8c94a6344efbcf01670eb0e9cf4c69dc339954ed7",
+    "tests/test_server_recorded_census.py": "ec140f7f4cb00fcf86b099f7a0bee96c6022db7eaed6e07644db5ad997bd65f5"
+  },
+  "source_held_after": true,
+  "started_at": "2026-10-16T13:48:37.791320+00:00"
+}

@@ -1,0 +1,20 @@
+{
+  "at": "2026-10-16T13:24:12.741703+00:00",
+  "original_tracked_files": {
+    "src/lupine_discovery/server.py": "e46f601a1689f0d2146682b90fccf1f015e9c171dbab0af81f1e4905c6df29dc",
+    "src/lupine_discovery/web/index.html": "553c0bb7d8d31699b519b4c24c05dae5af659b996fe510edab26d3fe6baf29b9",
+    "src/lupine_discovery/web/app.js": "00ac39514bb794ac990799a4d6146239bee0ed6e286f1f95d5ac1d719ddd5025",
+    "src/lupine_discovery/web/styles.css": "23b439d2f1b60bd5837bddf113d215d7e1dee14f21324075a030e802f13d9fdf"
+  },
+  "overlay_files": {
+    "src/lupine_discovery/server.py": "451324d9ce1fa84ec1759699bd2ea25759a29368b84c82f30741ea4e7e2ca826",
+    "src/lupine_discovery/web/recorded-census.js": "8e45d59eab288d5ce6c83fabe6b30ef4c707736913d13b8bf99f0e09a5b0628a",
+    "src/lupine_discovery/web/app.js": "1537f759ef443a218b74eaf55d14ff0520b1195dc3bc8835034e57b3b4613a7c",
+    "src/lupine_discovery/web/index.html": "8120a35af3c415e36b7c3a627a44fd45f9c5ab7628ce0e251103bcccb7b82243",
+    "src/lupine_discovery/web/styles.css": "d7042060aae32dba2c9c5ad6f6df86a5ee51f7f1ea0dfb7aea413bf81bd3eaf9"
+  },
+  "actual_resource": "ABSENT_UNTIL_REVIEWED_NUMERIC_RESULT",
+  "tracked_edits": false,
+  "runtime_tests": "NOT_RUN",
+  "revision": "readable-four-significant-digit-display"
+}

@@ -1,0 +1,9 @@
+The first source-capture attempt stopped before copying or inspecting ASTs:
+ValueError: original manifest mismatch: scripts/package_smoke.py
+
+Reason: the parent had promoted the prepared files into the worktree while this
+review continued. The four original manifest hashes were subsequently verified
+against commit d4d8504a97d362a6339eaa27453a86e0eb167cee. The source-only comparison
+was updated to read that explicit Git commit, not moving worktree originals.
+This was a review-capture provenance mismatch, not a test, build, or scientific
+failure. No prepared code was imported or executed by the review.

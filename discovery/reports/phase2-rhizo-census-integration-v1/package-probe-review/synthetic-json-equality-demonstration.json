@@ -1,0 +1,48 @@
+{
+  "application_code_imported_or_executed": false,
+  "cases": [
+    {
+      "canonical_json_equality": false,
+      "left": {
+        "exposure": {
+          "fresh_holdout_claim": false
+        }
+      },
+      "left_canonical": "{\"exposure\":{\"fresh_holdout_claim\":false}}",
+      "python_structural_equality": true,
+      "right": {
+        "exposure": {
+          "fresh_holdout_claim": 0
+        }
+      },
+      "right_canonical": "{\"exposure\":{\"fresh_holdout_claim\":0}}"
+    },
+    {
+      "canonical_json_equality": false,
+      "left": {
+        "synthetic_flag": true
+      },
+      "left_canonical": "{\"synthetic_flag\":true}",
+      "python_structural_equality": true,
+      "right": {
+        "synthetic_flag": 1
+      },
+      "right_canonical": "{\"synthetic_flag\":1}"
+    },
+    {
+      "canonical_json_equality": false,
+      "left": {
+        "synthetic_count": 1
+      },
+      "left_canonical": "{\"synthetic_count\":1}",
+      "python_structural_equality": true,
+      "right": {
+        "synthetic_count": 1.0
+      },
+      "right_canonical": "{\"synthetic_count\":1.0}"
+    }
+  ],
+  "data_inputs": "three explicitly constructed dictionaries",
+  "schema": "lupine.discovery.synthetic-json-comparison-demonstration.v1",
+  "status": "THREE_TYPE_COLLISIONS_CONFIRMED"
+}

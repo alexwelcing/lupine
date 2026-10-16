@@ -38,14 +38,14 @@
     "continuous_worker_started": false
   },
   "current_checkpoint": {
-    "recorded_at": "2026-10-16T13:07:59.802367+00:00",
-    "owner": "root publication/integration; independent bounded Li design review",
+    "recorded_at": "2026-10-16T13:59:19.668657+00:00",
+    "owner": "root; bounded Li production adapter delegated",
     "goal_state": "ACTIVE_RENEWED_PHASE",
-    "published_commit": "a064a2c0e4a7cce1fbcb0541f49aae132944e785",
-    "published_ci_run": 38901590399,
+    "published_commit": "d4d8504a97d362a6339eaa27453a86e0eb167cee",
+    "published_ci_run": 38905648425,
     "published_ci_all_four_jobs_pass": true,
-    "published_evidence": "reports/phase2-growth-predicate-verification-v1/ROOT-CHECKPOINT.md",
-    "working_checkpoint": "G34 actual pair complete, identical public receipts; sole MEMBER_KIND_PROFILE failure; no member/XML decoding. Primary OPC and Angsten method reviews complete. G20 unresolved/G21 blocked.",
+    "published_evidence": "reports/phase2-rhizo-stored-census-v1/prior-report-ci/final.json",
+    "working_checkpoint": "Historical census144/16/36 complete; workbench339runtime with80browser and97finalfocused PASS; current source CI/package pending.",
     "actual_new_scientific_allocation_performed": false,
     "scientific_usefulness": "NO_GO unchanged; no new scientific experiment",
     "clean_package": {
@@ -98,7 +98,7 @@
       "notebook_code_executed": false,
       "output_values_disclosed": false
     },
-    "next_action": "Publish verification report, verify exact descendant CI, implement one independently reviewed bounded Li compatibility/documentary/frame route or record a specific NO_GO. No scientific allocation selected.",
+    "next_action": "Commit/push current census workbench; verify exact CI and clean installed17-check package plus artifact deltas. Continue single bounded Li readiness adapter; no fresh evaluation without G20.",
     "automation_reenabled": false,
     "new_schedule_created": false,
     "continuous_worker_started": false,
@@ -204,7 +204,7 @@
       "reason": "LOCAL_EXTRA_HEADERS_COMPLETE",
       "scientific_schema_approved": false
     },
-    "published_ci_status": "PASS_ORIGINAL_PUSH_ATTEMPT_1_ALL_FOUR_OBSERVED_2026-10-16T12:56:39.188124+00:00",
+    "published_ci_status": "PASS_ALL_FOUR_OBSERVED_2026-10-16T13:30:44.098196+00:00",
     "citation_identity": {
       "status": "DOCUMENTARY_AUDIT_COMPLETE_UNRESOLVED_IDENTITIES",
       "report": "reports/phase2-li-reference-identity-v1/PUBLICATION.md",
@@ -365,6 +365,43 @@
       "status": "PRIMARY_SYNTAX_SCOPE_DOCUMENTED",
       "report": "reports/phase2-opc-part-scope-v1/README.md",
       "workbook_semantics_established": false
+    },
+    "stored_census": {
+      "report": "reports/phase2-rhizo-stored-census-v1/README.md",
+      "status": "DESCRIPTIVE_CENSUS_COMPLETE",
+      "pairs": 144,
+      "groups": 16,
+      "reference_groups": 36,
+      "all_reference_groups_equal": true,
+      "scientific_status": "NOT_ADMITTED",
+      "reference_choice": "UNKNOWN",
+      "actual_operations": 1,
+      "public_sha256": "a9ab9d72c6c39be9338e951b657e0587ae8f4dbe534b276b8f8f8951a7b1a63a",
+      "public_aggregate_inspected": true,
+      "per_record_private_values_inspected_by_root": false,
+      "author_tests": 29,
+      "independent_tests": 22,
+      "public_review_checks": 517
+    },
+    "census_workbench": {
+      "report": "reports/phase2-rhizo-census-integration-v1/README.md",
+      "status": "INTEGRATED_LOCAL_PASS_RELEASE_VERIFICATION_PENDING",
+      "full_browser_checks": 80,
+      "final_focused_tests": 97,
+      "runtime_files": 339,
+      "predecessor_unchanged": 326,
+      "existing_changes": 9,
+      "additions": 4,
+      "installed_probe_checks": 17,
+      "clean_installed_execution": "PENDING"
+    },
+    "li_complete_readiness": {
+      "status": "PURE_GENERATED_PASS_PRODUCTION_ADAPTER_IN_PREPARATION",
+      "author_tests": 38,
+      "independent_methods": 35,
+      "portable_independent_same_methods": 35,
+      "actual_source_access": false,
+      "scientific_admission": false
     }
   },
   "closure": {

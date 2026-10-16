@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-16T13:26:06.211431+00:00",
+  "source_sha256": "c62ca347d08a3ccdd8e105a0ddc2d17753c12551f5ad9253262cbae058bd3181",
+  "section_sha256": "66ec27e80dad95674ad6b30c6346f448cd19859f77bb8a07ae92e3f381e05331",
+  "original_source_sha256": "e5db3bc5786bdfd9deb992e6dfddd858932ae486439a357fcd17997be3ce81c8",
+  "first_browser_failure_preserved": true,
+  "fix": "Numerator limit counts digits without optional minus sign; positive5001 rejects, negative5000 remains valid.",
+  "other_renderer_changes": false,
+  "actual_numeric_data_read": false
+}

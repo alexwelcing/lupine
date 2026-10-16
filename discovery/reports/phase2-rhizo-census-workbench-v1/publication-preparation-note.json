@@ -1,0 +1,25 @@
+{
+  "first_read_failure": {
+    "attempted_public_path": ".cache/phase2-rhizo-census-visual-review-v1/review.json",
+    "cause": "Publication helper guessed review.json; explicit handoff correctly names visual-review.md. No source artifacts changed.",
+    "exception": "FileNotFoundError",
+    "exec_chunk": "98f395",
+    "exit_code": 1,
+    "resolution": "Read the authorized visual-review.md and explicit handoff files; no other paths opened."
+  },
+  "first_validation_failure": {
+    "cause": "Link validator ran before the generated publication-validation.json target had been written.",
+    "exception": "AssertionError",
+    "exec_chunk": "b131dd",
+    "exit_code": 1,
+    "resolution": "Create the named validation target before resolving all links; retain failure and rerun the publication checks only.",
+    "source_artifact_changes": false
+  },
+  "noindex_status_correction": {
+    "first_result": "git diff --no-index --check returned1 with empty stdout/stderr for an added directory; the helper incorrectly required0.",
+    "resolution": "Accept0or1 only with empty diagnostic streams;1 is the --no-index difference status, not a whitespace finding.",
+    "retained_first_receipt": ".cache/phase2-rhizo-census-ui-publication-v1/before-noindex-status-correction/git-whitespace-check.json",
+    "transport_note": "The tool reported an exec-server disconnection for the first finalize call. Subsequent inspection found its file/empty-diagnostic git receipt present, but no final inventory/handoff; no completion was assumed."
+  },
+  "scope": "Publication preparation only; no source or product execution."
+}

@@ -1,0 +1,19 @@
+{
+  "actual_operation_rerun": false,
+  "checks": 517,
+  "first_attempt_pass": true,
+  "inventory_sha256": "6ed363c26e48370e31fdce4141de50d004d6561b07455dddd174ad1d72473846",
+  "private_recomputation": false,
+  "public_report_sha256": "a9ab9d72c6c39be9338e951b657e0587ae8f4dbe534b276b8f8f8951a7b1a63a",
+  "publication_files": [
+    "audit_public.py",
+    "first-public-audit/review.json",
+    "README.md",
+    "scope.json",
+    "inventory.json",
+    "handoff.json"
+  ],
+  "review_sha256": "6444e948d58df7c320ef004b09045a9156e456db87a3d6c496a2fcd75e7a3bc3",
+  "schema": "lupine.rhizo.census.actual-review.handoff.v1",
+  "status": "PASS_PUBLIC_RECEIPT_AND_AGGREGATE_CONSISTENCY"
+}

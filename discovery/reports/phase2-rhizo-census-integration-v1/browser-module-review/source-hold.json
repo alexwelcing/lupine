@@ -1,0 +1,9 @@
+{
+  "path": ".cache/phase2-rhizo-census-ui-ci-v1/promotion/scripts/recorded_census_browser_checks.py",
+  "sha256": "ed9f25b9260c7ab2a2fe33a5459f12c3d5c989f11abc6a969a2796b9ceb3ffc1",
+  "bytes": 19171,
+  "runtime_target": "scripts/recorded_census_browser_checks.py",
+  "external_fixture_files": [],
+  "source_held": true,
+  "tests_in_progress": "after-finite-run; first seven grouped controls already PASS"
+}

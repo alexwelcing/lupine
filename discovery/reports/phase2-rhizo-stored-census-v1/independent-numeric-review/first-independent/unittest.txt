@@ -1,0 +1,27 @@
+test_01_complete_independently_computed_rational_groups (test_census_independent.IndependentCensusTests.test_01_complete_independently_computed_rational_groups) ... ok
+test_02_permutation_is_not_population_selection (test_census_independent.IndependentCensusTests.test_02_permutation_is_not_population_selection) ... ok
+test_03_max_opposite_scale_squared_numerator (test_census_independent.IndependentCensusTests.test_03_max_opposite_scale_squared_numerator) ... ok
+test_04_negative_zero_exactness_and_private_spelling (test_census_independent.IndependentCensusTests.test_04_negative_zero_exactness_and_private_spelling) ... ok
+test_05_duplicate_missing_and_extra_units (test_census_independent.IndependentCensusTests.test_05_duplicate_missing_and_extra_units) ... ok
+test_06_duplicate_missing_and_extra_properties (test_census_independent.IndependentCensusTests.test_06_duplicate_missing_and_extra_properties) ... ok
+test_07_unit_identity_path_and_context_mismatch (test_census_independent.IndependentCensusTests.test_07_unit_identity_path_and_context_mismatch) ... ok
+test_08_ordinal_strict_type_and_uniqueness (test_census_independent.IndependentCensusTests.test_08_ordinal_strict_type_and_uniqueness) ... ok
+test_09_non_single_records_and_extra_keys (test_census_independent.IndependentCensusTests.test_09_non_single_records_and_extra_keys) ... ok
+test_10_invalid_numeric_lexemes_and_types (test_census_independent.IndependentCensusTests.test_10_invalid_numeric_lexemes_and_types) ... ok
+test_11_numeric_engineering_bounds (test_census_independent.IndependentCensusTests.test_11_numeric_engineering_bounds) ... ok
+test_12_state_token_consistency_and_tolerance (test_census_independent.IndependentCensusTests.test_12_state_token_consistency_and_tolerance) ... ok
+test_13_citation_consistency (test_census_independent.IndependentCensusTests.test_13_citation_consistency) ... ok
+test_14_fixed_public_binding_identity (test_census_independent.IndependentCensusTests.test_14_fixed_public_binding_identity) ... ok
+test_15_provenance_status_cannot_be_promoted (test_census_independent.IndependentCensusTests.test_15_provenance_status_cannot_be_promoted) ... ok
+test_16_json_parser_rejects_duplicate_nonfinite_and_nonstrict_bytes (test_census_independent.IndependentCensusTests.test_16_json_parser_rejects_duplicate_nonfinite_and_nonstrict_bytes) ... ok
+test_17_late_error_never_returns_partial_aggregates (test_census_independent.IndependentCensusTests.test_17_late_error_never_returns_partial_aggregates) ... ok
+test_18_public_allowlist_excludes_individual_values (test_census_independent.IndependentCensusTests.test_18_public_allowlist_excludes_individual_values) ... ok
+test_19_input_type_size_depth_node_and_string_limits (test_census_independent.IndependentCensusTests.test_19_input_type_size_depth_node_and_string_limits) ... ok
+test_20_public_binding_failure_precedes_projection_interpretation (test_census_independent.IndependentCensusTests.test_20_public_binding_failure_precedes_projection_interpretation) ... ok
+test_21_hand_calculated_decimal_difference (test_census_independent.IndependentCensusTests.test_21_hand_calculated_decimal_difference) ... ok
+test_22_hand_calculated_symmetric_population (test_census_independent.IndependentCensusTests.test_22_hand_calculated_symmetric_population) ... ok
+
+----------------------------------------------------------------------
+Ran 22 tests in 5.070s
+
+OK

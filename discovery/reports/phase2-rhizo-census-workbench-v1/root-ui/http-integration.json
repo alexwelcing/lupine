@@ -1,0 +1,25 @@
+{
+  "started_at": "2026-10-16T13:30:27.274727+00:00",
+  "finished_at": "2026-10-16T13:30:35.048869+00:00",
+  "process_seconds": 6.849981179999304,
+  "status": "PASS",
+  "checks": [
+    "real_http_exact_public_resource",
+    "real_http_held_asset_served",
+    "all16_actual_exact_means_counts_and_units",
+    "all_actual_reference_and_sum_groups_inspectable",
+    "complete_actual_export_matches_public_resource",
+    "actual_mobile_containment_keyboard_table",
+    "no_browser_errors_or_external_requests"
+  ],
+  "javascript_errors": [],
+  "all335_original_runtime_files_unchanged": true,
+  "preview_sources_held": true,
+  "actual_resource_sha256": "a9ab9d72c6c39be9338e951b657e0587ae8f4dbe534b276b8f8f8951a7b1a63a",
+  "scope": "Real HTTP/Chromium on isolated copied package overlay with exact actual public aggregate; tracked implementation not yet promoted; no private census/label projection or original source reader executed.",
+  "artifacts": {
+    "http-export.json": "6e499eb55877fee29c4947a7e9944e952495c6b9ea72f48bb8e3946532a91444",
+    "http-desktop.png": "75852b333d61392a963f02f7d24c39f01f76261a96ef24fa302488b0af892b62",
+    "http-mobile.png": "193db359364a656319bfc7f0a63c0548c309acc37a538ac979301a5ca748fc66"
+  }
+}

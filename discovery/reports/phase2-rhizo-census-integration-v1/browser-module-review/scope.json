@@ -1,0 +1,20 @@
+{
+  "scope": "Real local HTTP rendering of the fixed public aggregate, plus generated browser controls only. No raw/private source access, producer execution, new arithmetic or scientific validation.",
+  "public_resource_sha256": "a9ab9d72c6c39be9338e951b657e0587ae8f4dbe534b276b8f8f8951a7b1a63a",
+  "renderer_sha256": "8e45d59eab288d5ce6c83fabe6b30ef4c707736913d13b8bf99f0e09a5b0628a",
+  "prior_control_sources": {
+    ".cache/phase2-rhizo-census-ui-display-review-v1/generated_fixture.py": "8e1cbb84c3d690c4657e21629487d066347a876a572a3d989238f5302c4e53b0",
+    ".cache/phase2-rhizo-census-ui-display-review-v1/exact_display_cases.py": "c9f47a9869af1c936eb944f556f4daad10ade79a51c28e85dd805b8e9ff9aa15",
+    ".cache/phase2-rhizo-census-ui-display-review-v1/browser_display_review.py": "dfc11fc23677e84066ea3049e0740774f10d075c4277ad9d5a727897729f3335"
+  },
+  "planned_checks": [
+    "real HTTP/public byte binding/all rows/exact export",
+    "generated tables/units/counts/independent exact rounding",
+    "rounding boundaries positive negative huge tiny carry/zero",
+    "blocked/missing/malformed/caps/stale detached download",
+    "synthetic warning/malicious literal text",
+    "keyboard/exact disclosure/mobile containment",
+    "original viewport/navigation/problem/report restore"
+  ],
+  "new_external_fixtures": []
+}

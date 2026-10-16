@@ -734,3 +734,21 @@ resolve the paper's approximately-zero-pressure formation energy/enthalpy
 convention only; archived DFT and stored Rhizo values do not establish physical
 truth or operating-condition transfer. Historical preview GO and scientific
 NO-GO remain unchanged. This report descendant needs its own exact CI observation.
+
+## Historical census workbench — 2026-10-16
+
+The [completed census and workbench](../reports/phase2-rhizo-census-integration-v1/README.md)
+add exact descriptive summaries of 144 exposed historical stored pairs. All36
+reference groups agree on stored values/spellings/citations. Neither this
+agreement nor arithmetic summaries validate physical accuracy, source extraction,
+training independence or a model winner. Tolerances are NULL; scientific status
+NOT_ADMITTED/reference choice UNKNOWN remain explicit. This does not admit G20
+or unblock G21 and upgrades no scientific claim tier.
+
+The interface passes80 full browser checks and97 final focused tests. The17-check
+installed probe adds public census identity/scope/transport to the16 existing
+checks; its HTTP comparison is type-sensitive. Source identity, generated tests,
+remote CI, installed execution and private arithmetic reproduction are distinct
+claims. Exact new-commit CI, retained packaging and independent artifacts remain
+pending publication. Earlier all335 holds precede this intentional integration:
+339 runtime files now include9 changes/4 additions, with326 predecessors unchanged.

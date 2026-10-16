@@ -1,0 +1,65 @@
+--- v2/recorded-census.js
++++ v3/recorded-census.js
+@@ -22,6 +22,38 @@
+     require(/^(0|-?[1-9][0-9]*)$/.test(value.numerator) && /^[1-9][0-9]*$/.test(value.denominator));
+     require(!nonnegative || !value.numerator.startsWith('-'));
+     return value.denominator === '1' ? value.numerator : `${value.numerator}/${value.denominator}`;
++  }
++  function approximate(value) {
++    const negative = value.numerator.startsWith('-');
++    const numerator = value.numerator.replace(/^-/, '');
++    const n = BigInt(numerator), d = BigInt(value.denominator);
++    if (n === 0n) return '0';
++    let exponent = numerator.length - value.denominator.length;
++    if (exponent >= 0 ? n < d * 10n ** BigInt(exponent) : n * 10n ** BigInt(-exponent) < d) exponent -= 1;
++    const shift = 3 - exponent;
++    const scaledN = shift >= 0 ? n * 10n ** BigInt(shift) : n;
++    const scaledD = shift >= 0 ? d : d * 10n ** BigInt(-shift);
++    let rounded = scaledN / scaledD;
++    if (2n * (scaledN % scaledD) >= scaledD) rounded += 1n;
++    if (rounded === 10000n) { rounded = 1000n; exponent += 1; }
++    const digits = String(rounded);
++    let shown;
++    if (exponent >= -3 && exponent <= 3) {
++      const position = exponent + 1;
++      shown = position <= 0 ? '0.' + '0'.repeat(-position) + digits
++        : position >= digits.length ? digits + '0'.repeat(position - digits.length)
++          : digits.slice(0, position) + '.' + digits.slice(position);
++      if (shown.includes('.')) shown = shown.replace(/0+$/, '').replace(/\.$/, '');
++    } else {
++      const tail = digits.slice(1).replace(/0+$/, '');
++      shown = digits[0] + (tail ? '.' + tail : '') + 'e' + exponent;
++    }
++    return '≈ ' + (negative ? '-' : '') + shown;
++  }
++  function exactCell(value) {
++    const cell = node('details', undefined, 'recorded-census-exact');
++    const summary = node('summary', approximate(value)); summary.setAttribute('aria-label', 'Rounded display; expand exact fraction');
++    cell.append(summary, node('code', rational(value))); return cell;
+   }
+   function validate(report) {
+     require(object(report) && report.schema === schema && report.status === 'DESCRIPTIVE_CENSUS_COMPLETE');
+@@ -76,7 +108,7 @@
+     const body = node('tbody');
+     for (const values of rows) {
+       const row = node('tr');
+-      values.forEach((value, i) => { const cell = node(i ? 'td' : 'th', String(value)); if (!i) cell.scope = 'row'; row.append(cell); });
++      values.forEach((value, i) => { const cell = node(i ? 'td' : 'th'); if (value instanceof Node) cell.append(value); else cell.textContent = String(value); if (!i) cell.scope = 'row'; row.append(cell); });
+       body.append(row);
+     }
+     result.append(body); region.append(result); return region;
+@@ -95,10 +127,11 @@
+       fragment.append(verdict, node('p', 'All 144 stored pairs across 36 material/model IDs are included. Each of the 16 groups contains nine material positions with equal weight. Counts are archive positions, not independent experiments.', 'field-help'));
+       fragment.append(node('p', 'Signed discrepancy = stored prediction − stored reference. Absolute and squared discrepancies use that same stored pair. These are exact arithmetic summaries of serialized values, not physical error estimates. NULL tolerances provide no success threshold.', 'field-help'));
+       fragment.append(table('recorded-census-means', ['Model / property', 'Positions', 'Signed mean', 'Absolute mean', 'Unit', 'Squared mean', 'Squared unit'],
+-        groups.map(g => [`${g.model_id} / ${g.property}`, g.count, rational(g.mean_signed_discrepancy), rational(g.mean_absolute_discrepancy), g.unit, rational(g.mean_squared_discrepancy), g.squared_unit]),
+-        'All 16 fixed groups · exact stored-label discrepancy means, ordered by identity'));
++        groups.map(g => [`${g.model_id} / ${g.property}`, g.count, exactCell(g.mean_signed_discrepancy), exactCell(g.mean_absolute_discrepancy), g.unit, exactCell(g.mean_squared_discrepancy), g.squared_unit]),
++        'All 16 fixed groups · approximate means (≈); expand each cell for its exact fraction'));
++      fragment.append(node('p', 'Rounded displays use four significant digits, with exact halfway cases rounded away from zero. Expand any number for its exact fraction; downloads preserve every exact value. No decision uses the rounded display.', 'field-help'));
+       fragment.append(details('All exact sums and fixed contributing IDs', table('recorded-census-sums', ['Model / property', 'Signed sum', 'Absolute sum', 'Unit', 'Squared sum', 'Squared unit', 'Contributing stored IDs'],
+-        groups.map(g => [`${g.model_id} / ${g.property}`, rational(g.sum_signed_discrepancy), rational(g.sum_absolute_discrepancy), g.unit, rational(g.sum_squared_discrepancy), g.squared_unit, g.unit_ids.join(', ')]),
++        groups.map(g => [`${g.model_id} / ${g.property}`, exactCell(g.sum_signed_discrepancy), exactCell(g.sum_absolute_discrepancy), g.unit, exactCell(g.sum_squared_discrepancy), g.squared_unit, g.unit_ids.join(', ')]),
+         'Exact sums for every group; each sum has nine positions')));
+       fragment.append(node('h3', 'Do the models use the same stored reference?', 'constrained-subheading'),
+         node('p', 'Equality below compares stored rational values, token spellings and citation strings separately. Equal values do not establish common physical truth or equivalent geometry. Different values do not identify the correct reference or prove a binding error. Historical reference choice remains UNKNOWN; no model winner is selected.', 'field-help'));

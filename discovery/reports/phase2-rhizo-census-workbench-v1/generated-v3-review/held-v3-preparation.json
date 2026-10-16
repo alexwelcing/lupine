@@ -1,0 +1,11 @@
+{
+  "status": "READY_NOT_EXECUTED",
+  "source": "8e45d59eab288d5ce6c83fabe6b30ef4c707736913d13b8bf99f0e09a5b0628a",
+  "style": "d7042060aae32dba2c9c5ad6f6df86a5ee51f7f1ea0dfb7aea413bf81bd3eaf9",
+  "oracle_policy_confirmed": "four significant digits, nearest, exact half away from zero; fixed exponent-3..3, normalized e otherwise, trailing insignificant zeros removed, zero0",
+  "prospective_case_count": 26,
+  "runner_sha256": "dfc11fc23677e84066ea3049e0740774f10d075c4277ad9d5a727897729f3335",
+  "case_oracle_sha256": "c9f47a9869af1c936eb944f556f4daad10ade79a51c28e85dd805b8e9ff9aa15",
+  "no_actual_numeric_input": true,
+  "prior_v2_review_unchanged": true
+}

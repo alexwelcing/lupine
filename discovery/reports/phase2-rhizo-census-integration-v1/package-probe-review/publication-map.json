@@ -1,0 +1,212 @@
+{
+  "final/exact-diff.patch.txt": {
+    "target": "reports/phase2-rhizo-census-integration-v1/package-probe-review/final/exact-diff.patch.txt.json",
+    "original_sha256": "f894f51a04f098761472958ae155b638e46d94f3fa01da76abb1042dd4fa35ec",
+    "sha256": "75f1015ecc258bc7e88438d7d47bcd173d27a3eb3df2eda22eb6db62ca47c5ca",
+    "lossless_wrapper": true
+  },
+  "final/http-test-after.py": {
+    "target": "reports/phase2-rhizo-census-integration-v1/package-probe-review/final/http-test-after.py",
+    "original_sha256": "12aef15f80c54bdf965659c678fced182fa8bd335f549d08f8a930603156e169",
+    "sha256": "12aef15f80c54bdf965659c678fced182fa8bd335f549d08f8a930603156e169",
+    "lossless_wrapper": false
+  },
+  "final/http-test-before.py": {
+    "target": "reports/phase2-rhizo-census-integration-v1/package-probe-review/final/http-test-before.py",
+    "original_sha256": "ec140f7f4cb00fcf86b099f7a0bee96c6022db7eaed6e07644db5ad997bd65f5",
+    "sha256": "ec140f7f4cb00fcf86b099f7a0bee96c6022db7eaed6e07644db5ad997bd65f5",
+    "lossless_wrapper": false
+  },
+  "final/original/scripts/package_smoke.py": {
+    "target": "reports/phase2-rhizo-census-integration-v1/package-probe-review/final/original/scripts/package_smoke.py",
+    "original_sha256": "cb4cb5f37cf9146d007ddb7af3599ba0e31180862825230c00fc995cf342d93e",
+    "sha256": "cb4cb5f37cf9146d007ddb7af3599ba0e31180862825230c00fc995cf342d93e",
+    "lossless_wrapper": false
+  },
+  "final/original/scripts/verify_retained_artifacts.py": {
+    "target": "reports/phase2-rhizo-census-integration-v1/package-probe-review/final/original/scripts/verify_retained_artifacts.py",
+    "original_sha256": "22455c93a2539868cf8a9dda76b67413eefe05917603718f19eef1585a1c741d",
+    "sha256": "22455c93a2539868cf8a9dda76b67413eefe05917603718f19eef1585a1c741d",
+    "lossless_wrapper": false
+  },
+  "final/original/tests/test_package_retention.py": {
+    "target": "reports/phase2-rhizo-census-integration-v1/package-probe-review/final/original/tests/test_package_retention.py",
+    "original_sha256": "88a939e73efb90c053ce15e3a95a23413400a002b79b510c61ce397a0c803b45",
+    "sha256": "88a939e73efb90c053ce15e3a95a23413400a002b79b510c61ce397a0c803b45",
+    "lossless_wrapper": false
+  },
+  "final/original/tests/test_package_retention_review.py": {
+    "target": "reports/phase2-rhizo-census-integration-v1/package-probe-review/final/original/tests/test_package_retention_review.py",
+    "original_sha256": "e265691af8ef3e9af5d3a0ef3060959187c15291db20475d8b7e7798b9af789a",
+    "sha256": "e265691af8ef3e9af5d3a0ef3060959187c15291db20475d8b7e7798b9af789a",
+    "lossless_wrapper": false
+  },
+  "final/prepare_package_probe.py": {
+    "target": "reports/phase2-rhizo-census-integration-v1/package-probe-review/final/prepare_package_probe.py",
+    "original_sha256": "da21fcba2e24791c3971f4a2dd8be81241b739f602d4a6cb1b63f3bd002e97f8",
+    "sha256": "da21fcba2e24791c3971f4a2dd8be81241b739f602d4a6cb1b63f3bd002e97f8",
+    "lossless_wrapper": false
+  },
+  "final/prepared/scripts/package_smoke.py": {
+    "target": "reports/phase2-rhizo-census-integration-v1/package-probe-review/final/prepared/scripts/package_smoke.py",
+    "original_sha256": "28ff8c56cf632924e0ae28e0560b149d7b1044d63772bc12e61797842c6728ee",
+    "sha256": "28ff8c56cf632924e0ae28e0560b149d7b1044d63772bc12e61797842c6728ee",
+    "lossless_wrapper": false
+  },
+  "final/prepared/scripts/verify_retained_artifacts.py": {
+    "target": "reports/phase2-rhizo-census-integration-v1/package-probe-review/final/prepared/scripts/verify_retained_artifacts.py",
+    "original_sha256": "3d3247beb74905c3f6d3a48aa42566d73c7a550645116ce084c0d8e4d664446a",
+    "sha256": "3d3247beb74905c3f6d3a48aa42566d73c7a550645116ce084c0d8e4d664446a",
+    "lossless_wrapper": false
+  },
+  "final/prepared/tests/test_package_retention.py": {
+    "target": "reports/phase2-rhizo-census-integration-v1/package-probe-review/final/prepared/tests/test_package_retention.py",
+    "original_sha256": "afd324bbd06962c09898bc000afaa1ff3a52f000ce947e5a364980faed6e832b",
+    "sha256": "afd324bbd06962c09898bc000afaa1ff3a52f000ce947e5a364980faed6e832b",
+    "lossless_wrapper": false
+  },
+  "final/prepared/tests/test_package_retention_review.py": {
+    "target": "reports/phase2-rhizo-census-integration-v1/package-probe-review/final/prepared/tests/test_package_retention_review.py",
+    "original_sha256": "9e74246a9c6813efbc1dee855ccb68ac9a20fdaf3e64a340a719202e8f8cbfd1",
+    "sha256": "9e74246a9c6813efbc1dee855ccb68ac9a20fdaf3e64a340a719202e8f8cbfd1",
+    "lossless_wrapper": false
+  },
+  "final/probe-delta.json": {
+    "target": "reports/phase2-rhizo-census-integration-v1/package-probe-review/final/probe-delta.json",
+    "original_sha256": "a578037cb12eba736ffd378663807d98467e7d471a235b545dd42f169b3cdcda",
+    "sha256": "a578037cb12eba736ffd378663807d98467e7d471a235b545dd42f169b3cdcda",
+    "lossless_wrapper": false
+  },
+  "final/promotion-inputs-final.json": {
+    "target": "reports/phase2-rhizo-census-integration-v1/package-probe-review/final/promotion-inputs-final.json",
+    "original_sha256": "b3867dd99e7a7d890ac0bee36e1448ff811d3931be7f3a21c80035e995a82a6a",
+    "sha256": "b3867dd99e7a7d890ac0bee36e1448ff811d3931be7f3a21c80035e995a82a6a",
+    "lossless_wrapper": false
+  },
+  "final/review-comparison-manifest.json": {
+    "target": "reports/phase2-rhizo-census-integration-v1/package-probe-review/final/review-comparison-manifest.json",
+    "original_sha256": "bb81729f859cbee782a0e95ce11659a86fe2f9c8275e666fc2c5cd086800df48",
+    "sha256": "bb81729f859cbee782a0e95ce11659a86fe2f9c8275e666fc2c5cd086800df48",
+    "lossless_wrapper": false
+  },
+  "final/static-review.json": {
+    "target": "reports/phase2-rhizo-census-integration-v1/package-probe-review/final/static-review.json",
+    "original_sha256": "8ea0fd0960a6ccd1e953ba9dd86f2c6a7b7e4ede243de5cd723832fc9aae0bcd",
+    "sha256": "8ea0fd0960a6ccd1e953ba9dd86f2c6a7b7e4ede243de5cd723832fc9aae0bcd",
+    "lossless_wrapper": false
+  },
+  "final/type-sensitive-correction.json": {
+    "target": "reports/phase2-rhizo-census-integration-v1/package-probe-review/final/type-sensitive-correction.json",
+    "original_sha256": "45fd5ae11cdb67b092a3ef8cd727932090736a375573eab3cce8b2a871744f50",
+    "sha256": "45fd5ae11cdb67b092a3ef8cd727932090736a375573eab3cce8b2a871744f50",
+    "lossless_wrapper": false
+  },
+  "initial/capture-stop.txt": {
+    "target": "reports/phase2-rhizo-census-integration-v1/package-probe-review/initial/capture-stop.txt",
+    "original_sha256": "1e183df65e250b59590cf66cdcb52e4fcff272d71bfe670b70ecd66bcaa8ea74",
+    "sha256": "1e183df65e250b59590cf66cdcb52e4fcff272d71bfe670b70ecd66bcaa8ea74",
+    "lossless_wrapper": false
+  },
+  "initial-captured/exact-diff.patch.txt": {
+    "target": "reports/phase2-rhizo-census-integration-v1/package-probe-review/initial-captured/exact-diff.patch.txt.json",
+    "original_sha256": "3d399062b61c7ec19742c91704f48877cc1b5a04b303c62d5302aee7270a17c1",
+    "sha256": "cb5e424b82c9083bf45a04918958d0da554c7a041a71d6e483043e9744ee77d9",
+    "lossless_wrapper": true
+  },
+  "initial-captured/original/scripts/package_smoke.py": {
+    "target": "reports/phase2-rhizo-census-integration-v1/package-probe-review/initial-captured/original/scripts/package_smoke.py",
+    "original_sha256": "cb4cb5f37cf9146d007ddb7af3599ba0e31180862825230c00fc995cf342d93e",
+    "sha256": "cb4cb5f37cf9146d007ddb7af3599ba0e31180862825230c00fc995cf342d93e",
+    "lossless_wrapper": false
+  },
+  "initial-captured/original/scripts/verify_retained_artifacts.py": {
+    "target": "reports/phase2-rhizo-census-integration-v1/package-probe-review/initial-captured/original/scripts/verify_retained_artifacts.py",
+    "original_sha256": "22455c93a2539868cf8a9dda76b67413eefe05917603718f19eef1585a1c741d",
+    "sha256": "22455c93a2539868cf8a9dda76b67413eefe05917603718f19eef1585a1c741d",
+    "lossless_wrapper": false
+  },
+  "initial-captured/original/tests/test_package_retention.py": {
+    "target": "reports/phase2-rhizo-census-integration-v1/package-probe-review/initial-captured/original/tests/test_package_retention.py",
+    "original_sha256": "88a939e73efb90c053ce15e3a95a23413400a002b79b510c61ce397a0c803b45",
+    "sha256": "88a939e73efb90c053ce15e3a95a23413400a002b79b510c61ce397a0c803b45",
+    "lossless_wrapper": false
+  },
+  "initial-captured/original/tests/test_package_retention_review.py": {
+    "target": "reports/phase2-rhizo-census-integration-v1/package-probe-review/initial-captured/original/tests/test_package_retention_review.py",
+    "original_sha256": "e265691af8ef3e9af5d3a0ef3060959187c15291db20475d8b7e7798b9af789a",
+    "sha256": "e265691af8ef3e9af5d3a0ef3060959187c15291db20475d8b7e7798b9af789a",
+    "lossless_wrapper": false
+  },
+  "initial-captured/prepare_package_probe.py": {
+    "target": "reports/phase2-rhizo-census-integration-v1/package-probe-review/initial-captured/prepare_package_probe.py",
+    "original_sha256": "da21fcba2e24791c3971f4a2dd8be81241b739f602d4a6cb1b63f3bd002e97f8",
+    "sha256": "da21fcba2e24791c3971f4a2dd8be81241b739f602d4a6cb1b63f3bd002e97f8",
+    "lossless_wrapper": false
+  },
+  "initial-captured/prepared/scripts/package_smoke.py": {
+    "target": "reports/phase2-rhizo-census-integration-v1/package-probe-review/initial-captured/prepared/scripts/package_smoke.py",
+    "original_sha256": "eaeffcd242d9d5b843ddaea46a65e60b5666ba092d0dfd93136e0d5bd3be0d07",
+    "sha256": "eaeffcd242d9d5b843ddaea46a65e60b5666ba092d0dfd93136e0d5bd3be0d07",
+    "lossless_wrapper": false
+  },
+  "initial-captured/prepared/scripts/verify_retained_artifacts.py": {
+    "target": "reports/phase2-rhizo-census-integration-v1/package-probe-review/initial-captured/prepared/scripts/verify_retained_artifacts.py",
+    "original_sha256": "3d3247beb74905c3f6d3a48aa42566d73c7a550645116ce084c0d8e4d664446a",
+    "sha256": "3d3247beb74905c3f6d3a48aa42566d73c7a550645116ce084c0d8e4d664446a",
+    "lossless_wrapper": false
+  },
+  "initial-captured/prepared/tests/test_package_retention.py": {
+    "target": "reports/phase2-rhizo-census-integration-v1/package-probe-review/initial-captured/prepared/tests/test_package_retention.py",
+    "original_sha256": "8ca92ba8b555fea8668392e22499db0a362ac6643c5d155ed459b376d0792a15",
+    "sha256": "8ca92ba8b555fea8668392e22499db0a362ac6643c5d155ed459b376d0792a15",
+    "lossless_wrapper": false
+  },
+  "initial-captured/prepared/tests/test_package_retention_review.py": {
+    "target": "reports/phase2-rhizo-census-integration-v1/package-probe-review/initial-captured/prepared/tests/test_package_retention_review.py",
+    "original_sha256": "963b4667bc013fb55e83a8988f61975454b16b2a0fac9b177d2b54b284c57a2c",
+    "sha256": "963b4667bc013fb55e83a8988f61975454b16b2a0fac9b177d2b54b284c57a2c",
+    "lossless_wrapper": false
+  },
+  "initial-captured/probe-delta.json": {
+    "target": "reports/phase2-rhizo-census-integration-v1/package-probe-review/initial-captured/probe-delta.json",
+    "original_sha256": "a578037cb12eba736ffd378663807d98467e7d471a235b545dd42f169b3cdcda",
+    "sha256": "a578037cb12eba736ffd378663807d98467e7d471a235b545dd42f169b3cdcda",
+    "lossless_wrapper": false
+  },
+  "initial-captured/review_sources.py": {
+    "target": "reports/phase2-rhizo-census-integration-v1/package-probe-review/initial-captured/review_sources.py",
+    "original_sha256": "0ecf2eab944a93ca228d76fe72a8ac7774d9bc0b6862517fcbb55f58ee26cfce",
+    "sha256": "0ecf2eab944a93ca228d76fe72a8ac7774d9bc0b6862517fcbb55f58ee26cfce",
+    "lossless_wrapper": false
+  },
+  "initial-captured/static-review.json": {
+    "target": "reports/phase2-rhizo-census-integration-v1/package-probe-review/initial-captured/static-review.json",
+    "original_sha256": "f5e0a6362aa06f0eaa0da046d1b0a03809e6781adcc9e1994558cb32087c3005",
+    "sha256": "f5e0a6362aa06f0eaa0da046d1b0a03809e6781adcc9e1994558cb32087c3005",
+    "lossless_wrapper": false
+  },
+  "review.json": {
+    "target": "reports/phase2-rhizo-census-integration-v1/package-probe-review/review.json",
+    "original_sha256": "04e70f2992a4e6bd14741f30c148fed82dcb18b2c8937a5fb177b64d62dd2ed9",
+    "sha256": "04e70f2992a4e6bd14741f30c148fed82dcb18b2c8937a5fb177b64d62dd2ed9",
+    "lossless_wrapper": false
+  },
+  "review.md": {
+    "target": "reports/phase2-rhizo-census-integration-v1/package-probe-review/review.md",
+    "original_sha256": "bb8744d92798a3e4572aa2f5dc6ff3e32c8de7021ceac80cd7984482585fd09b",
+    "sha256": "bb8744d92798a3e4572aa2f5dc6ff3e32c8de7021ceac80cd7984482585fd09b",
+    "lossless_wrapper": false
+  },
+  "review_sources.py": {
+    "target": "reports/phase2-rhizo-census-integration-v1/package-probe-review/review_sources.py",
+    "original_sha256": "5c681ed264b15f3e272ad9eb657a2509f7ddf6ec79a77fe71b4fab7cdd75ec4f",
+    "sha256": "5c681ed264b15f3e272ad9eb657a2509f7ddf6ec79a77fe71b4fab7cdd75ec4f",
+    "lossless_wrapper": false
+  },
+  "synthetic-json-equality-demonstration.json": {
+    "target": "reports/phase2-rhizo-census-integration-v1/package-probe-review/synthetic-json-equality-demonstration.json",
+    "original_sha256": "0a4372e95b29cabb5791f0817865e44319ff74f97fadfb1d79ec8aaed0ae4661",
+    "sha256": "0a4372e95b29cabb5791f0817865e44319ff74f97fadfb1d79ec8aaed0ae4661",
+    "lossless_wrapper": false
+  }
+}

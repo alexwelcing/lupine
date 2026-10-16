@@ -1,0 +1,33 @@
+{
+  "check_count": 24,
+  "checks": [
+    "HELD:README.md",
+    "HELD:census.py",
+    "HELD:contract.json",
+    "HELD:run_author.py",
+    "HELD:test_census.py",
+    "LINK:README.md:contract.json",
+    "LINK:README.md:public-aggregate-amendment.json",
+    "LINK:README.md:parser-heritage.json",
+    "JSON:before-public-aggregate-amendment/contract.json",
+    "LINK:before-public-aggregate-amendment/scope.md:contract.json",
+    "JSON:contract.json",
+    "JSON:first-author/README.md.json",
+    "JSON:first-author/contract.json",
+    "JSON:first-author/execution.json",
+    "JSON:first-author/start.json",
+    "JSON:first-publication-link-failure.json",
+    "JSON:parser-heritage.json",
+    "JSON:pre-hold-exposure-finding.json",
+    "JSON:public-aggregate-amendment.json",
+    "JSON:publication-layout.json",
+    "LINK:scope.md:contract.json",
+    "JSON:source-hold.json",
+    "HISTORICAL_README_EXACT_RECONSTRUCTION",
+    "ACTUAL_MANIFEST_AND_SLOT_ABSENT"
+  ],
+  "created_at": "2026-10-16T13:25:57.035275+00:00",
+  "private_or_raw_reads": 0,
+  "source_operations_or_product_tests_run": 0,
+  "status": "PASS_STATIC_PREPUBLICATION_CHECKS_AFTER_PRESERVED_HISTORICAL_LINK_FINDING"
+}

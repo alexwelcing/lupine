@@ -1,0 +1,54 @@
+{
+  "at": "2026-10-16T13:49:37.974870+00:00",
+  "file_count": 9,
+  "files": [
+    {
+      "bytes": 2749,
+      "path": "README.md",
+      "sha256": "5e381cfcd7bd415ed313f6fdd35dbdfef586e940bb4807d82d09585bdb7bf51e"
+    },
+    {
+      "bytes": 1099,
+      "path": "first/execution.json",
+      "sha256": "458f02426c612f3d7166c318c9b696f3250855c14f712a2d6564e8455dd63ca0"
+    },
+    {
+      "bytes": 702,
+      "path": "first/result.json",
+      "sha256": "81105b588e93ed1190bf0d07382ff5b3e02b820eca32d85e04b612e0b7392630"
+    },
+    {
+      "bytes": 680,
+      "path": "first/start.json",
+      "sha256": "47ec24be5285edfa601938982fc233968535709d05fb503c5dc046a9686c6f10"
+    },
+    {
+      "bytes": 1190,
+      "path": "first/stderr.txt",
+      "sha256": "8eb1d0ffb50ad8092b15fc76cbe23bc7e62f0ccfd0ddf534e422a533107dfadf"
+    },
+    {
+      "bytes": 0,
+      "path": "first/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 1503,
+      "path": "run_once.py",
+      "sha256": "6560ac9fbb527f6f98e19b01d64ca2bb5d88c3f18d0a9711bde250a16ab06fb0"
+    },
+    {
+      "bytes": 3587,
+      "path": "run_tests.py",
+      "sha256": "4698f7427b56498d88c2cca8c94a6344efbcf01670eb0e9cf4c69dc339954ed7"
+    },
+    {
+      "bytes": 8682,
+      "path": "tests/test_server_recorded_census.py",
+      "sha256": "ec140f7f4cb00fcf86b099f7a0bee96c6022db7eaed6e07644db5ad997bd65f5"
+    }
+  ],
+  "schema": "lupine.ignored-evidence-inventory.v1",
+  "scope": "Public package/source and real loopback HTTP tests only; no private/source-producer access.",
+  "total_bytes": 20192
+}

@@ -1,0 +1,18 @@
+{
+  "candidate_execution_state": "NOT_RUN_AWAITING_SOURCE_FREEZE",
+  "cases": [
+    "Exact 144 positions, 16 model/property/unit groups of 9, and 36 material/property groups of 4 original models.",
+    "Independent Decimal.as_integer_ratio oracle for signed, absolute and squared Fraction discrepancies and sums/means.",
+    "Signed zero and lexical variation compare numerically equal; reference/citation/token equality separated.",
+    "Max 128 mantissa digits and explicit exponent \u00b11024 with cross-scale cancellation and squared numerator beyond default int-string digit limit.",
+    "Duplicate/missing/extraneous units/properties, reordered records, mismatched IDs/path/unit/ordinal/context/state/token and modified frame/readiness identities.",
+    "Malformed JSON, duplicate keys, booleans/nonfinite/nonnumeric tokens, invalid lexemes and numeric engineering limits.",
+    "All-or-nothing failure outputs, truthful partial progress, no per-record values/citations/errors in public summaries, persistent NOT_ADMITTED/exposed/UNKNOWN flags."
+  ],
+  "contract_sha256": "e849d36004f0e73fdde22620bbffe06d1e53425907ca5fce974c536a5e1ea052",
+  "created_at": "2026-10-16T13:15:29.468384+00:00",
+  "edits_scope": ".cache/phase2-rhizo-census-independent-v1",
+  "no_actual_data_read": true,
+  "schema": "lupine.rhizo.census.independent.plan.v1",
+  "scope": "Independently generated projection bytes and already public frame/readiness only; no author fixtures, real private projection, source acquisition, production guards or network."
+}

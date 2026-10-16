@@ -1,0 +1,602 @@
+{
+  "created_at": "2026-10-16T13:37:13.376491+00:00",
+  "destination_root": "reports/phase2-rhizo-stored-census-v1",
+  "entries": [
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/author/FINAL.md",
+      "destination_bytes": 2747,
+      "destination_sha256": "7efba8f241f4187c9c1f3c94600eb1d07c910689205d9dd0ddf1271ed5135f71",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-candidate-v1/FINAL.md",
+      "source_bytes": 2747,
+      "source_sha256": "7efba8f241f4187c9c1f3c94600eb1d07c910689205d9dd0ddf1271ed5135f71"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/author/README.md",
+      "destination_bytes": 4819,
+      "destination_sha256": "073e1a391e1fa8c22eedf331bbe0f934c556ccbead7d0c0a9a32b4bb0f8f6686",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-candidate-v1/README.md",
+      "source_bytes": 4819,
+      "source_sha256": "073e1a391e1fa8c22eedf331bbe0f934c556ccbead7d0c0a9a32b4bb0f8f6686"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/author/author-first-stderr.txt",
+      "destination_bytes": 3802,
+      "destination_sha256": "c54b9522b848f48af3c0cd9e6e3a093b949be84659a7663d62351d7a3145b1ec",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-candidate-v1/author-first-stderr.txt",
+      "source_bytes": 3802,
+      "source_sha256": "c54b9522b848f48af3c0cd9e6e3a093b949be84659a7663d62351d7a3145b1ec"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/author/author-first-stdout.txt",
+      "destination_bytes": 732,
+      "destination_sha256": "c36b07bb7018dfe1e63dc4d724150f7c95a81ee7ce1513db235bc1242442c684",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-candidate-v1/author-first-stdout.txt",
+      "source_bytes": 732,
+      "source_sha256": "c36b07bb7018dfe1e63dc4d724150f7c95a81ee7ce1513db235bc1242442c684"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/author/before-public-aggregate-amendment/contract.json",
+      "destination_bytes": 7708,
+      "destination_sha256": "eb4112fe3475599b674c39e3e73d9938c1fc69a3adfc420aaa3e86fad8963721",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-candidate-v1/before-public-aggregate-amendment/contract.json",
+      "source_bytes": 7708,
+      "source_sha256": "eb4112fe3475599b674c39e3e73d9938c1fc69a3adfc420aaa3e86fad8963721"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/author/before-public-aggregate-amendment/scope.md",
+      "destination_bytes": 1280,
+      "destination_sha256": "db2ab69e582f1a0c0c06de8e0b8a38ca0b0347afb1c5bf038d9cf846afe6fff6",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-candidate-v1/before-public-aggregate-amendment/scope.md",
+      "source_bytes": 1280,
+      "source_sha256": "db2ab69e582f1a0c0c06de8e0b8a38ca0b0347afb1c5bf038d9cf846afe6fff6"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/author/before-supplied-exposure-clarification.py",
+      "destination_bytes": 26565,
+      "destination_sha256": "c2329e36ba769dd632bf695f283916410b93dbade4f8cc748233ebe00be9e0c9",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-candidate-v1/before-supplied-exposure-clarification.py",
+      "source_bytes": 26565,
+      "source_sha256": "c2329e36ba769dd632bf695f283916410b93dbade4f8cc748233ebe00be9e0c9"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/author/census.py",
+      "destination_bytes": 26565,
+      "destination_sha256": "d77a1ca2eeeb1d0f4e02fac6d624fa63527c4a8d423fdf8f7f645db102c67630",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-candidate-v1/census.py",
+      "source_bytes": 26565,
+      "source_sha256": "d77a1ca2eeeb1d0f4e02fac6d624fa63527c4a8d423fdf8f7f645db102c67630"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/author/contract.json",
+      "destination_bytes": 8585,
+      "destination_sha256": "e849d36004f0e73fdde22620bbffe06d1e53425907ca5fce974c536a5e1ea052",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-candidate-v1/contract.json",
+      "source_bytes": 8585,
+      "source_sha256": "e849d36004f0e73fdde22620bbffe06d1e53425907ca5fce974c536a5e1ea052"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/author/first-author/README.md.json",
+      "destination_bytes": 5297,
+      "destination_sha256": "49fefe1358f56c1f5a9f6261654378263d3ddba6c6e4c934878058e379034cda",
+      "method": "LOSSLESS_UTF8_WRAPPER",
+      "source": ".cache/phase2-rhizo-census-candidate-v1/first-author/README.md",
+      "source_bytes": 4819,
+      "source_sha256": "073e1a391e1fa8c22eedf331bbe0f934c556ccbead7d0c0a9a32b4bb0f8f6686"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/author/first-author/README.md.json",
+      "destination_bytes": 5297,
+      "destination_sha256": "49fefe1358f56c1f5a9f6261654378263d3ddba6c6e4c934878058e379034cda",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-candidate-v1/first-author/README.md.json",
+      "source_bytes": 5297,
+      "source_sha256": "49fefe1358f56c1f5a9f6261654378263d3ddba6c6e4c934878058e379034cda"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/author/first-author/census.py",
+      "destination_bytes": 26565,
+      "destination_sha256": "d77a1ca2eeeb1d0f4e02fac6d624fa63527c4a8d423fdf8f7f645db102c67630",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-candidate-v1/first-author/census.py",
+      "source_bytes": 26565,
+      "source_sha256": "d77a1ca2eeeb1d0f4e02fac6d624fa63527c4a8d423fdf8f7f645db102c67630"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/author/first-author/contract.json",
+      "destination_bytes": 8585,
+      "destination_sha256": "e849d36004f0e73fdde22620bbffe06d1e53425907ca5fce974c536a5e1ea052",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-candidate-v1/first-author/contract.json",
+      "source_bytes": 8585,
+      "source_sha256": "e849d36004f0e73fdde22620bbffe06d1e53425907ca5fce974c536a5e1ea052"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/author/first-author/execution.json",
+      "destination_bytes": 782,
+      "destination_sha256": "b10830c82ee59479efa19542f8875366eae093e5672ffa7c2ce9aadca039865e",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-candidate-v1/first-author/execution.json",
+      "source_bytes": 782,
+      "source_sha256": "b10830c82ee59479efa19542f8875366eae093e5672ffa7c2ce9aadca039865e"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/author/first-author/run_author.py",
+      "destination_bytes": 2576,
+      "destination_sha256": "6df38bf620f3182c80074d5e548ad7c2eba00c6445849ee052bcd039b1520c16",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-candidate-v1/first-author/run_author.py",
+      "source_bytes": 2576,
+      "source_sha256": "6df38bf620f3182c80074d5e548ad7c2eba00c6445849ee052bcd039b1520c16"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/author/first-author/start.json",
+      "destination_bytes": 603,
+      "destination_sha256": "c2661e6232aa9e45cb6932232f52cc5efbaccc0fedfa2a951211694b9011ea69",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-candidate-v1/first-author/start.json",
+      "source_bytes": 603,
+      "source_sha256": "c2661e6232aa9e45cb6932232f52cc5efbaccc0fedfa2a951211694b9011ea69"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/author/first-author/stderr.txt",
+      "destination_bytes": 3802,
+      "destination_sha256": "c54b9522b848f48af3c0cd9e6e3a093b949be84659a7663d62351d7a3145b1ec",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-candidate-v1/first-author/stderr.txt",
+      "source_bytes": 3802,
+      "source_sha256": "c54b9522b848f48af3c0cd9e6e3a093b949be84659a7663d62351d7a3145b1ec"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/author/first-author/stdout.txt",
+      "destination_bytes": 732,
+      "destination_sha256": "c36b07bb7018dfe1e63dc4d724150f7c95a81ee7ce1513db235bc1242442c684",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-candidate-v1/first-author/stdout.txt",
+      "source_bytes": 732,
+      "source_sha256": "c36b07bb7018dfe1e63dc4d724150f7c95a81ee7ce1513db235bc1242442c684"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/author/first-author/test_census.py",
+      "destination_bytes": 18939,
+      "destination_sha256": "ea8677a6a59f91d7376f688a57335e0838228230f324a1b77ec77d57613f97c9",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-candidate-v1/first-author/test_census.py",
+      "source_bytes": 18939,
+      "source_sha256": "ea8677a6a59f91d7376f688a57335e0838228230f324a1b77ec77d57613f97c9"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/author/first-publication-link-failure.json",
+      "destination_bytes": 612,
+      "destination_sha256": "6f1ac64e80b869f589365e881c3adc449cd7310afebf4e6ae20d7659e32053a9",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-candidate-v1/first-publication-link-failure.json",
+      "source_bytes": 612,
+      "source_sha256": "6f1ac64e80b869f589365e881c3adc449cd7310afebf4e6ae20d7659e32053a9"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/author/independent-review-binding.json",
+      "destination_bytes": 1457,
+      "destination_sha256": "c13b3a5da9bf0c980a76b77930df04c1b0a1cba2e4e7f5270b9568cc3bd7f7bd",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-candidate-v1/independent-review-binding.json",
+      "source_bytes": 1457,
+      "source_sha256": "c13b3a5da9bf0c980a76b77930df04c1b0a1cba2e4e7f5270b9568cc3bd7f7bd"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/author/parser-heritage.json",
+      "destination_bytes": 667,
+      "destination_sha256": "db6dad141f81f67f2c8864328f664eb812c8048b1b39ee44bd4dce97ac8310f7",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-candidate-v1/parser-heritage.json",
+      "source_bytes": 667,
+      "source_sha256": "db6dad141f81f67f2c8864328f664eb812c8048b1b39ee44bd4dce97ac8310f7"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/author/pre-hold-exposure-finding.json",
+      "destination_bytes": 713,
+      "destination_sha256": "2769fdcff7468db029fbb89ea95ded6c9a624ad3826aa7b231bf5e7561125a84",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-candidate-v1/pre-hold-exposure-finding.json",
+      "source_bytes": 713,
+      "source_sha256": "2769fdcff7468db029fbb89ea95ded6c9a624ad3826aa7b231bf5e7561125a84"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/author/public-aggregate-amendment.json",
+      "destination_bytes": 972,
+      "destination_sha256": "b11016d5e94c5b1ebd5ccc43c9b4d67742cf98fd01ffa836ae66be9c0482b5a3",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-candidate-v1/public-aggregate-amendment.json",
+      "source_bytes": 972,
+      "source_sha256": "b11016d5e94c5b1ebd5ccc43c9b4d67742cf98fd01ffa836ae66be9c0482b5a3"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/author/publication-check.json",
+      "destination_bytes": 1178,
+      "destination_sha256": "3d43c4453683d848cfedefafbf9758acfc5cfed314890aa8bce53f9af8eaf746",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-candidate-v1/publication-check.json",
+      "source_bytes": 1178,
+      "source_sha256": "3d43c4453683d848cfedefafbf9758acfc5cfed314890aa8bce53f9af8eaf746"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/author/publication-layout.json",
+      "destination_bytes": 492,
+      "destination_sha256": "59aee115a089c7384935f972900eaf75a9be29f4a358c6d3cd39646135430e48",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-candidate-v1/publication-layout.json",
+      "source_bytes": 492,
+      "source_sha256": "59aee115a089c7384935f972900eaf75a9be29f4a358c6d3cd39646135430e48"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/author/run_author.py",
+      "destination_bytes": 2576,
+      "destination_sha256": "6df38bf620f3182c80074d5e548ad7c2eba00c6445849ee052bcd039b1520c16",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-candidate-v1/run_author.py",
+      "source_bytes": 2576,
+      "source_sha256": "6df38bf620f3182c80074d5e548ad7c2eba00c6445849ee052bcd039b1520c16"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/author/scope.md",
+      "destination_bytes": 1571,
+      "destination_sha256": "4a6e7f9895bdbba2bb860ad933e87fc4b4201fea2b09022e5b53a2328578127b",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-candidate-v1/scope.md",
+      "source_bytes": 1571,
+      "source_sha256": "4a6e7f9895bdbba2bb860ad933e87fc4b4201fea2b09022e5b53a2328578127b"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/author/source-hold.json",
+      "destination_bytes": 1330,
+      "destination_sha256": "8f941386ae23ffdf2d951cb153f9bcf60a9436775a21779f80a907089b71bbab",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-candidate-v1/source-hold.json",
+      "source_bytes": 1330,
+      "source_sha256": "8f941386ae23ffdf2d951cb153f9bcf60a9436775a21779f80a907089b71bbab"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/author/test_census.py",
+      "destination_bytes": 18939,
+      "destination_sha256": "ea8677a6a59f91d7376f688a57335e0838228230f324a1b77ec77d57613f97c9",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-candidate-v1/test_census.py",
+      "source_bytes": 18939,
+      "source_sha256": "ea8677a6a59f91d7376f688a57335e0838228230f324a1b77ec77d57613f97c9"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/author/inventory.json",
+      "destination_bytes": 4750,
+      "destination_sha256": "4861948c05abdf18c8231824e49818a0f477547cddcb87ecccf2ad3e9bdb4b0e",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-candidate-v1/inventory.json",
+      "source_bytes": 4750,
+      "source_sha256": "4861948c05abdf18c8231824e49818a0f477547cddcb87ecccf2ad3e9bdb4b0e"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/author/handoff.json",
+      "destination_bytes": 1354,
+      "destination_sha256": "863631998ad2cac8706cdfd46698bfcef37aa04529b6affa73a8d13ffea13ca1",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-candidate-v1/handoff.json",
+      "source_bytes": 1354,
+      "source_sha256": "863631998ad2cac8706cdfd46698bfcef37aa04529b6affa73a8d13ffea13ca1"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/independent-numeric-review/README.md",
+      "destination_bytes": 2611,
+      "destination_sha256": "02f1a088b6aa0782c992f2fd1e5e0c436e88c2255ececd3a3ddadbe012d7b9d8",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-independent-v1/README.md",
+      "source_bytes": 2611,
+      "source_sha256": "02f1a088b6aa0782c992f2fd1e5e0c436e88c2255ececd3a3ddadbe012d7b9d8"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/independent-numeric-review/arithmetic-bound-review.md",
+      "destination_bytes": 1654,
+      "destination_sha256": "97ed8f981f971771333c438b5ba2f016ec1833f9f7cbaf1972bb369aa7e7a0f1",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-independent-v1/arithmetic-bound-review.md",
+      "source_bytes": 1654,
+      "source_sha256": "97ed8f981f971771333c438b5ba2f016ec1833f9f7cbaf1972bb369aa7e7a0f1"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/independent-numeric-review/first-independent/execution.json",
+      "destination_bytes": 1172,
+      "destination_sha256": "16f5c6225b68d1d0164b7f6d8a3e4372245eeae8ce4fdad484f6f0ddcc8ba6a3",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-independent-v1/first-independent/execution.json",
+      "source_bytes": 1172,
+      "source_sha256": "16f5c6225b68d1d0164b7f6d8a3e4372245eeae8ce4fdad484f6f0ddcc8ba6a3"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/independent-numeric-review/first-independent/start.json",
+      "destination_bytes": 526,
+      "destination_sha256": "d1399d34aa00e7ae07412cbc21c710446e7b2fc8130de327f67f446437426895",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-independent-v1/first-independent/start.json",
+      "source_bytes": 526,
+      "source_sha256": "d1399d34aa00e7ae07412cbc21c710446e7b2fc8130de327f67f446437426895"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/independent-numeric-review/first-independent/unittest.txt",
+      "destination_bytes": 3407,
+      "destination_sha256": "b34b8e3a731c1a276c4d103136a4fc050c43eedb5a0b8bcd4340656bc8d1ee2e",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-independent-v1/first-independent/unittest.txt",
+      "source_bytes": 3407,
+      "source_sha256": "b34b8e3a731c1a276c4d103136a4fc050c43eedb5a0b8bcd4340656bc8d1ee2e"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/independent-numeric-review/generated_fixtures.py",
+      "destination_bytes": 6117,
+      "destination_sha256": "89e74f282079f6964ef8b11dc138c7c3df8879c0780870707a2cb725b279ae9d",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-independent-v1/generated_fixtures.py",
+      "source_bytes": 6117,
+      "source_sha256": "89e74f282079f6964ef8b11dc138c7c3df8879c0780870707a2cb725b279ae9d"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/independent-numeric-review/plan.json",
+      "destination_bytes": 1538,
+      "destination_sha256": "ca987e9d9ba37e8aa23f910837876ebbb2de1838812d02fbb4d41e8bb571c8cf",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-independent-v1/plan.json",
+      "source_bytes": 1538,
+      "source_sha256": "ca987e9d9ba37e8aa23f910837876ebbb2de1838812d02fbb4d41e8bb571c8cf"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/independent-numeric-review/review.json",
+      "destination_bytes": 4644,
+      "destination_sha256": "fdae85ce4e444ef5e98f913f472111eb8b8f95afb1b5a4ec43be9961cefc9f04",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-independent-v1/review.json",
+      "source_bytes": 4644,
+      "source_sha256": "fdae85ce4e444ef5e98f913f472111eb8b8f95afb1b5a4ec43be9961cefc9f04"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/independent-numeric-review/run_review.py",
+      "destination_bytes": 3830,
+      "destination_sha256": "f89781c8f5dc25602bf86caf1fcc3b566e1e8070caf6e7cf4467f1551311dd92",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-independent-v1/run_review.py",
+      "source_bytes": 3830,
+      "source_sha256": "f89781c8f5dc25602bf86caf1fcc3b566e1e8070caf6e7cf4467f1551311dd92"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/independent-numeric-review/test_census_independent.py",
+      "destination_bytes": 20412,
+      "destination_sha256": "486f49f795cb3b564be836fab34f66eac2ac1ce0df94399533d5c34abdff36a7",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-independent-v1/test_census_independent.py",
+      "source_bytes": 20412,
+      "source_sha256": "486f49f795cb3b564be836fab34f66eac2ac1ce0df94399533d5c34abdff36a7"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/independent-numeric-review/inventory.json",
+      "destination_bytes": 1887,
+      "destination_sha256": "46e197b158fd3d2fceb080dc90286a2dd8f23786522df8e5ff9059806d03bcc3",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-independent-v1/inventory.json",
+      "source_bytes": 1887,
+      "source_sha256": "46e197b158fd3d2fceb080dc90286a2dd8f23786522df8e5ff9059806d03bcc3"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/independent-numeric-review/handoff.json",
+      "destination_bytes": 962,
+      "destination_sha256": "430eaf000463ae6072b3ba9f4314de47fe689588729594d21cade27436f30213",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-independent-v1/handoff.json",
+      "source_bytes": 962,
+      "source_sha256": "430eaf000463ae6072b3ba9f4314de47fe689588729594d21cade27436f30213"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/scientific-scope-review/review.json",
+      "destination_bytes": 5794,
+      "destination_sha256": "0157617d237e5134cfd7bbf84984698b009b8dd32d2c074faa066c72e45005f1",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-scope-review-v1/review.json",
+      "source_bytes": 5794,
+      "source_sha256": "0157617d237e5134cfd7bbf84984698b009b8dd32d2c074faa066c72e45005f1"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/scientific-scope-review/initial-binding-interruption.json",
+      "destination_bytes": 564,
+      "destination_sha256": "03fb435212918ea9963991e915e7be66fd929df8a6278f4d8a88781ea4429a74",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-scope-review-v1/initial-binding-interruption.json",
+      "source_bytes": 564,
+      "source_sha256": "03fb435212918ea9963991e915e7be66fd929df8a6278f4d8a88781ea4429a74"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/actual-public-review/README.md",
+      "destination_bytes": 3083,
+      "destination_sha256": "1d96a566eddb828bc7f737c38634673219fe18d4a536a273a5533f0491ffa82b",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-actual-review-v1/README.md",
+      "source_bytes": 3083,
+      "source_sha256": "1d96a566eddb828bc7f737c38634673219fe18d4a536a273a5533f0491ffa82b"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/actual-public-review/audit_public.py",
+      "destination_bytes": 19786,
+      "destination_sha256": "9ac9d57fcdd52754eda32e964c7420f4bf5027ca4e8efffc9a5418910a97ef0c",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-actual-review-v1/audit_public.py",
+      "source_bytes": 19786,
+      "source_sha256": "9ac9d57fcdd52754eda32e964c7420f4bf5027ca4e8efffc9a5418910a97ef0c"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/actual-public-review/first-public-audit/review.json",
+      "destination_bytes": 50296,
+      "destination_sha256": "6444e948d58df7c320ef004b09045a9156e456db87a3d6c496a2fcd75e7a3bc3",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-actual-review-v1/first-public-audit/review.json",
+      "source_bytes": 50296,
+      "source_sha256": "6444e948d58df7c320ef004b09045a9156e456db87a3d6c496a2fcd75e7a3bc3"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/actual-public-review/scope.json",
+      "destination_bytes": 841,
+      "destination_sha256": "50754e42c60726a0109e0d4033f2f823675ab2e6041b0058f373ea210600d0c4",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-actual-review-v1/scope.json",
+      "source_bytes": 841,
+      "source_sha256": "50754e42c60726a0109e0d4033f2f823675ab2e6041b0058f373ea210600d0c4"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/actual-public-review/inventory.json",
+      "destination_bytes": 752,
+      "destination_sha256": "6ed363c26e48370e31fdce4141de50d004d6561b07455dddd174ad1d72473846",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-actual-review-v1/inventory.json",
+      "source_bytes": 752,
+      "source_sha256": "6ed363c26e48370e31fdce4141de50d004d6561b07455dddd174ad1d72473846"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/actual-public-review/handoff.json",
+      "destination_bytes": 678,
+      "destination_sha256": "4152960cdfcf479a4bc631327b0e884b3f1a6a3d2198984b19f8e78460f4f85c",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-actual-review-v1/handoff.json",
+      "source_bytes": 678,
+      "source_sha256": "4152960cdfcf479a4bc631327b0e884b3f1a6a3d2198984b19f8e78460f4f85c"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/operations/bind_projection_identity.py",
+      "destination_bytes": 2225,
+      "destination_sha256": "4721ea057eda2160372406dceefba8f0890e3badb03cb360439b9229a999b79b",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-operations-v1/bind_projection_identity.py",
+      "source_bytes": 2225,
+      "source_sha256": "4721ea057eda2160372406dceefba8f0890e3badb03cb360439b9229a999b79b"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/operations/projection-binding-reservation.json",
+      "destination_bytes": 331,
+      "destination_sha256": "d3e516661fc2cb7da910e2453cc6d00493f55e3b3c7b39c9475a84ff021e40fd",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-operations-v1/projection-binding-reservation.json",
+      "source_bytes": 331,
+      "source_sha256": "d3e516661fc2cb7da910e2453cc6d00493f55e3b3c7b39c9475a84ff021e40fd"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/operations/projection-binding.json",
+      "destination_bytes": 792,
+      "destination_sha256": "9a245f3fbae08de7acc23c3d55b28611ab190fea2326ca3e5cf4f79ce894e451",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-operations-v1/projection-binding.json",
+      "source_bytes": 792,
+      "source_sha256": "9a245f3fbae08de7acc23c3d55b28611ab190fea2326ca3e5cf4f79ce894e451"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/operations/run_actual_once.py",
+      "destination_bytes": 5803,
+      "destination_sha256": "cbfd6fef5dcea5bd6ea5a3f6aae2cbb77433302762d1e363ddfcdaa54f69d42f",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-operations-v1/run_actual_once.py",
+      "source_bytes": 5803,
+      "source_sha256": "cbfd6fef5dcea5bd6ea5a3f6aae2cbb77433302762d1e363ddfcdaa54f69d42f"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/operations/actual-execution/start.json",
+      "destination_bytes": 42825,
+      "destination_sha256": "19228c723b741d61136da1e2017f6f5cfde342389136e228d46ba1670c00292a",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-operations-v1/actual-execution/start.json",
+      "source_bytes": 42825,
+      "source_sha256": "19228c723b741d61136da1e2017f6f5cfde342389136e228d46ba1670c00292a"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/operations/actual-execution/execution.json",
+      "destination_bytes": 741,
+      "destination_sha256": "212f91828d11bf5cb52bfd97649a124a94484c2d3cb12605230eb087c3378894",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-operations-v1/actual-execution/execution.json",
+      "source_bytes": 741,
+      "source_sha256": "212f91828d11bf5cb52bfd97649a124a94484c2d3cb12605230eb087c3378894"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/operations/actual-execution/stdout.json",
+      "destination_bytes": 31448,
+      "destination_sha256": "a9ab9d72c6c39be9338e951b657e0587ae8f4dbe534b276b8f8f8951a7b1a63a",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-operations-v1/actual-execution/stdout.json",
+      "source_bytes": 31448,
+      "source_sha256": "a9ab9d72c6c39be9338e951b657e0587ae8f4dbe534b276b8f8f8951a7b1a63a"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/operations/actual-execution/stderr.txt",
+      "destination_bytes": 0,
+      "destination_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-operations-v1/actual-execution/stderr.txt",
+      "source_bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/actual/invocation.json",
+      "destination_bytes": 596,
+      "destination_sha256": "9a0429e0026653f65e7d01699c5ca7fba2799ca8b9af7b8c9025b91b2ad88a48",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-candidate-v1/reviewed-invocation.json",
+      "source_bytes": 596,
+      "source_sha256": "9a0429e0026653f65e7d01699c5ca7fba2799ca8b9af7b8c9025b91b2ad88a48"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/actual/public.json",
+      "destination_bytes": 31448,
+      "destination_sha256": "a9ab9d72c6c39be9338e951b657e0587ae8f4dbe534b276b8f8f8951a7b1a63a",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-candidate-v1/actual/public.json",
+      "source_bytes": 31448,
+      "source_sha256": "a9ab9d72c6c39be9338e951b657e0587ae8f4dbe534b276b8f8f8951a7b1a63a"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/actual/reservation.json",
+      "destination_bytes": 425,
+      "destination_sha256": "10ce9a2f23f4d4987b4bfb36ede71857524af18e8dc355fed4135738738b10b8",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-rhizo-census-candidate-v1/actual/reservation.json",
+      "source_bytes": 425,
+      "source_sha256": "10ce9a2f23f4d4987b4bfb36ede71857524af18e8dc355fed4135738738b10b8"
+    },
+    {
+      "destination": "reports/phase2-rhizo-stored-census-v1/prior-report-ci/final.json",
+      "destination_bytes": 1304,
+      "destination_sha256": "5f52db1abd1e8f6b7d56c740f506666c556ebf63f037be41f6bf82d3a1d7e951",
+      "method": "EXACT_COPY",
+      "source": ".cache/phase2-growth-predicate-report-ci-v1/final.json",
+      "source_bytes": 1304,
+      "source_sha256": "5f52db1abd1e8f6b7d56c740f506666c556ebf63f037be41f6bf82d3a1d7e951"
+    }
+  ],
+  "generated_files": [
+    "README.md",
+    "publication-copy-map.json",
+    "publication-checks.json"
+  ],
+  "historical_markdown_originals_wrapped": [
+    "author/first-author/README.md"
+  ],
+  "markdown_link_repairs": [],
+  "private_exclusions": [
+    "actual/census-private.json",
+    "prior actual/private.json",
+    "all original bound/run/reference objects",
+    "raw license bodies",
+    "archive/wheel binaries"
+  ],
+  "schema": "lupine.rhizo.completed-census-publication-map.v1",
+  "scope": "Explicit completed public aggregate evidence only; no raw/private input or individual census output read/copied. Source strings inside receipts are provenance, never followed.",
+  "source_entry_count": 64,
+  "workbench_integration": "Root-owned and outside this report preparation."
+}

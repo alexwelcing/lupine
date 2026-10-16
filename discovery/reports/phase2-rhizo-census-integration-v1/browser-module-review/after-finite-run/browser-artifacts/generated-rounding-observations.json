@@ -1,0 +1,210 @@
+[
+  {
+    "case": "zero",
+    "shown": "0",
+    "oracle": {
+      "coefficient": 0,
+      "exponent": 0
+    }
+  },
+  {
+    "case": "one",
+    "shown": "\u2248 1",
+    "oracle": {
+      "coefficient": 1000,
+      "exponent": 0
+    }
+  },
+  {
+    "case": "third",
+    "shown": "\u2248 0.3333",
+    "oracle": {
+      "coefficient": 3333,
+      "exponent": -1
+    }
+  },
+  {
+    "case": "negative_third",
+    "shown": "\u2248 -0.3333",
+    "oracle": {
+      "coefficient": -3333,
+      "exponent": -1
+    }
+  },
+  {
+    "case": "below_half",
+    "shown": "\u2248 12.34",
+    "oracle": {
+      "coefficient": 1234,
+      "exponent": 1
+    }
+  },
+  {
+    "case": "exact_half",
+    "shown": "\u2248 12.35",
+    "oracle": {
+      "coefficient": 1235,
+      "exponent": 1
+    }
+  },
+  {
+    "case": "negative_exact_half",
+    "shown": "\u2248 -12.35",
+    "oracle": {
+      "coefficient": -1235,
+      "exponent": 1
+    }
+  },
+  {
+    "case": "above_half",
+    "shown": "\u2248 12.35",
+    "oracle": {
+      "coefficient": 1235,
+      "exponent": 1
+    }
+  },
+  {
+    "case": "below_carry",
+    "shown": "\u2248 9.999",
+    "oracle": {
+      "coefficient": 9999,
+      "exponent": 0
+    }
+  },
+  {
+    "case": "exact_carry",
+    "shown": "\u2248 10",
+    "oracle": {
+      "coefficient": 1000,
+      "exponent": 1
+    }
+  },
+  {
+    "case": "negative_carry",
+    "shown": "\u2248 -10",
+    "oracle": {
+      "coefficient": -1000,
+      "exponent": 1
+    }
+  },
+  {
+    "case": "tiny_carry",
+    "shown": "\u2248 1e-4",
+    "oracle": {
+      "coefficient": 1000,
+      "exponent": -4
+    }
+  },
+  {
+    "case": "negative_tiny_carry",
+    "shown": "\u2248 -1e-4",
+    "oracle": {
+      "coefficient": -1000,
+      "exponent": -4
+    }
+  },
+  {
+    "case": "tiny_exact",
+    "shown": "\u2248 1e-2499",
+    "oracle": {
+      "coefficient": 1000,
+      "exponent": -2499
+    }
+  },
+  {
+    "case": "negative_tiny_exact",
+    "shown": "\u2248 -1e-2499",
+    "oracle": {
+      "coefficient": -1000,
+      "exponent": -2499
+    }
+  },
+  {
+    "case": "huge_exact",
+    "shown": "\u2248 1e4999",
+    "oracle": {
+      "coefficient": 1000,
+      "exponent": 4999
+    }
+  },
+  {
+    "case": "negative_huge_exact",
+    "shown": "\u2248 -1e4999",
+    "oracle": {
+      "coefficient": -1000,
+      "exponent": 4999
+    }
+  },
+  {
+    "case": "huge_rounding_carry",
+    "shown": "\u2248 1e5000",
+    "oracle": {
+      "coefficient": 1000,
+      "exponent": 5000
+    }
+  },
+  {
+    "case": "both_digit_caps",
+    "shown": "\u2248 1e2499",
+    "oracle": {
+      "coefficient": 1000,
+      "exponent": 2499
+    }
+  },
+  {
+    "case": "ordinary_close_to_zero",
+    "shown": "\u2248 -5e-5",
+    "oracle": {
+      "coefficient": -5000,
+      "exponent": -5
+    }
+  },
+  {
+    "case": "fixed_lower_boundary",
+    "shown": "\u2248 0.001",
+    "oracle": {
+      "coefficient": 1000,
+      "exponent": -3
+    }
+  },
+  {
+    "case": "scientific_lower_boundary",
+    "shown": "\u2248 1e-4",
+    "oracle": {
+      "coefficient": 1000,
+      "exponent": -4
+    }
+  },
+  {
+    "case": "fixed_upper_boundary",
+    "shown": "\u2248 9999",
+    "oracle": {
+      "coefficient": 9999,
+      "exponent": 3
+    }
+  },
+  {
+    "case": "scientific_upper_boundary",
+    "shown": "\u2248 1e4",
+    "oracle": {
+      "coefficient": 1000,
+      "exponent": 4
+    }
+  },
+  {
+    "case": "carry_into_fixed_lower_boundary",
+    "shown": "\u2248 0.001",
+    "oracle": {
+      "coefficient": 1000,
+      "exponent": -3
+    }
+  },
+  {
+    "case": "carry_into_scientific_upper_boundary",
+    "shown": "\u2248 1e4",
+    "oracle": {
+      "coefficient": 1000,
+      "exponent": 4
+    }
+  }
+]

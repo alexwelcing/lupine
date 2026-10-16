@@ -1,0 +1,68 @@
+{
+  "files": {
+    "src/lupine_discovery/server.py": {
+      "source": ".cache/phase2-rhizo-census-ui-v1/overlay/src/lupine_discovery/server.py",
+      "sha256": "451324d9ce1fa84ec1759699bd2ea25759a29368b84c82f30741ea4e7e2ca826"
+    },
+    "src/lupine_discovery/web/recorded-census.js": {
+      "source": ".cache/phase2-rhizo-census-ui-v1/overlay/src/lupine_discovery/web/recorded-census.js",
+      "sha256": "8e45d59eab288d5ce6c83fabe6b30ef4c707736913d13b8bf99f0e09a5b0628a"
+    },
+    "src/lupine_discovery/web/app.js": {
+      "source": ".cache/phase2-rhizo-census-ui-v1/overlay/src/lupine_discovery/web/app.js",
+      "sha256": "1537f759ef443a218b74eaf55d14ff0520b1195dc3bc8835034e57b3b4613a7c"
+    },
+    "src/lupine_discovery/web/index.html": {
+      "source": ".cache/phase2-rhizo-census-ui-v1/overlay/src/lupine_discovery/web/index.html",
+      "sha256": "8120a35af3c415e36b7c3a627a44fd45f9c5ab7628ce0e251103bcccb7b82243"
+    },
+    "src/lupine_discovery/web/styles.css": {
+      "source": ".cache/phase2-rhizo-census-ui-v1/overlay/src/lupine_discovery/web/styles.css",
+      "sha256": "d7042060aae32dba2c9c5ad6f6df86a5ee51f7f1ea0dfb7aea413bf81bd3eaf9"
+    },
+    "scripts/browser_smoke.py": {
+      "source": ".cache/phase2-rhizo-census-release-v1/integration/scripts/browser_smoke.py",
+      "sha256": "04289d220d1ef64d7be619eec4850bcaa6e9793b48058f43378b59c390c68d3d"
+    },
+    "scripts/package_smoke.py": {
+      "source": ".cache/phase2-rhizo-census-release-v1/integration-final/scripts/package_smoke.py",
+      "sha256": "28ff8c56cf632924e0ae28e0560b149d7b1044d63772bc12e61797842c6728ee"
+    },
+    "scripts/verify_retained_artifacts.py": {
+      "source": ".cache/phase2-rhizo-census-release-v1/integration/scripts/verify_retained_artifacts.py",
+      "sha256": "3d3247beb74905c3f6d3a48aa42566d73c7a550645116ce084c0d8e4d664446a"
+    },
+    "tests/test_package_retention.py": {
+      "source": ".cache/phase2-rhizo-census-release-v1/integration-final/tests/test_package_retention.py",
+      "sha256": "afd324bbd06962c09898bc000afaa1ff3a52f000ce947e5a364980faed6e832b"
+    },
+    "tests/test_package_retention_review.py": {
+      "source": ".cache/phase2-rhizo-census-release-v1/integration-final/tests/test_package_retention_review.py",
+      "sha256": "9e74246a9c6813efbc1dee855ccb68ac9a20fdaf3e64a340a719202e8f8cbfd1"
+    },
+    "src/lupine_discovery/resources/recorded-census-v1.json": {
+      "source": ".cache/phase2-rhizo-census-candidate-v1/actual/public.json",
+      "sha256": "a9ab9d72c6c39be9338e951b657e0587ae8f4dbe534b276b8f8f8951a7b1a63a"
+    },
+    "scripts/recorded_census_browser_checks.py": {
+      "source": ".cache/phase2-rhizo-census-ui-ci-v1/promotion/scripts/recorded_census_browser_checks.py",
+      "sha256": "ed9f25b9260c7ab2a2fe33a5459f12c3d5c989f11abc6a969a2796b9ceb3ffc1"
+    },
+    "tests/test_server_recorded_census.py": {
+      "source": ".cache/phase2-rhizo-census-release-v1/integration-final/tests/test_server_recorded_census.py",
+      "sha256": "12aef15f80c54bdf965659c678fced182fa8bd335f549d08f8a930603156e169"
+    }
+  },
+  "changed_existing": [
+    "scripts/browser_smoke.py",
+    "scripts/package_smoke.py",
+    "scripts/verify_retained_artifacts.py",
+    "tests/test_package_retention.py",
+    "tests/test_package_retention_review.py",
+    "src/lupine_discovery/server.py",
+    "src/lupine_discovery/web/app.js",
+    "src/lupine_discovery/web/index.html",
+    "src/lupine_discovery/web/styles.css"
+  ],
+  "li_preexisting335_freeze_complete": "Author38 and independent35+portable35 all completed before promotion; no new actual Li input."
+}

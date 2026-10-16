@@ -1,0 +1,27 @@
+{
+  "allowed_files": {
+    "browser-receipt.json": "f45ae2744746e6419d888a78f1d118ac67775b9c42e04e5e4747b71c10c7ae2d",
+    "comparison.json": "53d267e59a99a719bd07d3ac5a76c22bfb26dddec4cee74e13ba4976a33162ff",
+    "desktop-viewport.png": "40333bb66d74f930ecccc0d57bed953dae0184d6179079d2ba5b2c0451bb8532",
+    "minimal-element-display-none-control.png": "0189a09750998c2f35d6c435be5cc16435cc57d6076ee1a7d059a4af4857e7ac",
+    "minimal-element.png": "43a6480cff99dcfaec4061cce91e32ba037bf161b913ae89ae1bec794120abce",
+    "minimal-receipt.json": "59498d733e37fcbb7bd8a5f3ec6ee8c5ceae5560f2f2b100031b1e75ff447f48",
+    "minimal-viewport.png": "1bac4497cbf31e224769a9f39caf33b821f573ca24bff0be17150182f601b86b",
+    "mobile-after-skip-enter.png": "d5ae0053fdaa3db47b4b8eec8431cb04a0fbc5d629f84111a5be43fc7a1e8263",
+    "mobile-element-capture.png": "92619057ea9ca5e3ed94ab995d77f314448b3a5abd11277a068f5a38fa151f10",
+    "mobile-element-with-skip-masked.png": "92619057ea9ca5e3ed94ab995d77f314448b3a5abd11277a068f5a38fa151f10",
+    "mobile-keyboard-skip-focus.png": "9a3c8983d40ad170d284078784ed150a16ff497e337ebe14654a4c3cbc93f69a",
+    "mobile-viewport-after.png": "be54e1dcb3ba0444ad4a147962b32514a7e58899b35a2844250019762fbf5f32",
+    "mobile-viewport-before.png": "ab3a1335d395a5875ec732bbc99a65cba86bbc649e60c9e33b365f8f865ae2ef",
+    "visual-review.md": "717f12ff071003f7db40f705239a5c8eb18b198e9bdfec627e5d76780a22dbdc"
+  },
+  "excluded_investigation_sources": {
+    "investigate.py": "32a81cf185e4ac5ab3a17ea194a89bf5ab90dbd3b5ff9ca50730792e9a804c48",
+    "minimal.html": "90051d99ee1e2602f428b2c11f645d648dc702f8945962863e1db4b5bb290b0e",
+    "minimal_capture.py": "8dcfff8cfc1ba6ce97bd8973ecf009430a3cb9d15127df814e8fb6b015deee21"
+  },
+  "finding": "Element capture beyond viewport; no product CSS fix required.",
+  "schema": "lupine.census_visual_publication_handoff.v1",
+  "scope": "Only public preview screenshots and review receipts are authorized for this evidence copy; no private inputs, product changes, tests or investigation source copies.",
+  "status": "PASS"
+}
