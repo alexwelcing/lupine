@@ -1,0 +1,174 @@
+{
+  "selection": {
+    "scope": "README documentary prose only, not numerical dataset files or figures.",
+    "included_lines": "1-44 and49-63, excluding image-only lines, contact strings and benchmark/performance-result wording.",
+    "numeric_handling": "Digit-bearing tokens masked in prose before researcher display. Exact method constants/units and advertised documentary counts may later be selected explicitly; no target examples/performance numbers.",
+    "excluded_lines": "45-48 old benchmark coordinate description; any image,contact or performance line.",
+    "body_sha256": "9f5b9b9606d27af203462fcd872f6745324d8bbb85f8e3421cd7142b3eb2c83c"
+  },
+  "lines": [
+    {
+      "line": 1,
+      "text_numeric_masked": "# tmQM: [NUMBER] release"
+    },
+    {
+      "line": 3,
+      "text_numeric_masked": "This repository contains the quantum chemical properties, including geometries, natural atomic charges and Wiberg bond orders of the [NUMBER]k transition metal complexes (TMCs) in the last version of the **tmQM** dataset. This collection includes all [NUMBER] transition metals across the [NUMBER]d, [NUMBER]d and [NUMBER]d series, combined with more than [NUMBER]k different ligands."
+    },
+    {
+      "line": 7,
+      "text_numeric_masked": "The **tmQM** dataset contains organometallic, bioinorganic, and Werner complexes. Structures were extracted from the [NUMBER] release of the Cambridge Structural Database (CSD) with a series of filters, yielding mononuclear TMCs with charges in the range [[NUMBER] [NUMBER] [NUMBER]]. Electronic structure properties, including the energy, dipole moment, polarizability, and HOMO\u2013LUMO gap, were all computed for the closed-shell singlet state. Two levels of theory were used: GFN2-xTB (geometries) and DFT (single-point properties)."
+    },
+    {
+      "line": 9,
+      "text_numeric_masked": "The [NUMBER] version of the **tmQM** dataset is an extension of the original **tmQM** dataset reported in this article: [The tmQM Dataset - Quantum Geometries and Properties of [NUMBER]k Transition Metal Complexes](https://pubs.acs.org/doi/[NUMBER]/acs.jcim.[NUMBER]c01041). **tmQM** has also been used to derive a [NUMBER]k graph dataset ([**tmQMg**](https://pubs.rsc.org/en/content/articlelanding/[NUMBER]/dd/d2dd00129b)) and a [NUMBER]k ligand library ([**tmQMg-L**](https://www.nature.com/articles/s43588-[NUMBER])), both derived from NBO analysis."
+    },
+    {
+      "line": 11,
+      "text_numeric_masked": "The purpose of **tmQM** is to provide the scientific community with a reliable source for developing and testing machine learning models for the exploration of the TMC chemical space."
+    },
+    {
+      "line": 13,
+      "text_numeric_masked": "The **tmQM** dataset is also available for download from the [UiO Computational Catalysis Group website](https://www.uiocompcat.info/tmqmdataset)."
+    },
+    {
+      "line": 15,
+      "text_numeric_masked": "## tmQM data files"
+    },
+    {
+      "line": 16,
+      "text_numeric_masked": "###### [tmQM/tmQM_X1.xyz.gz](tmQM/tmQM_X1.xyz.gz), [tmQM/tmQM_X2.xyz.gz](tmQM/tmQM_X2.xyz.gz) and [tmQM/tmQM_X3.xyz.gz](tmQM/tmQM_X3.xyz.gz)"
+    },
+    {
+      "line": 17,
+      "text_numeric_masked": "- Contain the Cartesian coordinates of all [NUMBER]k TMCs optimized at the GFN2-xTB level."
+    },
+    {
+      "line": 18,
+      "text_numeric_masked": "- Additional information such as the molecular size, CSD code, charge, spin, stoichiometry and metal node degree is also included."
+    },
+    {
+      "line": 19,
+      "text_numeric_masked": "- Data is split into three files compressed by gzip."
+    },
+    {
+      "line": 21,
+      "text_numeric_masked": "###### [tmQM/tmQM_y.csv](tmQM/tmQM_y.csv)"
+    },
+    {
+      "line": 22,
+      "text_numeric_masked": "- Contains the quantum chemical properties of the [NUMBER]k TMCs computed at the DFT(TPSSh-D3BJ/def2-SVP) level and their SMILES."
+    },
+    {
+      "line": 23,
+      "text_numeric_masked": "- The DFT properties included are the electronic energy, dispersion energy, dipole moment, natural charge at the metal center, HOMO-LUMO gap, HOMO energy, and LUMO energy. The  polarizability is at the GFN2-xTB level of theory."
+    },
+    {
+      "line": 24,
+      "text_numeric_masked": "- The SMILES are derived from H\u00fcckel theory as described in [this preprint](https://chemrxiv.org/engage/chemrxiv/article-details/[NUMBER]a56dde43c9085b4ccd)."
+    },
+    {
+      "line": 26,
+      "text_numeric_masked": "###### [tmQM/tmQM_X.q](tmQM/tmQM_X.q)"
+    },
+    {
+      "line": 27,
+      "text_numeric_masked": "- Contains the natural atomic charges of the [NUMBER]k TMCs calculated at the DFT(TPSSh-D3BJ/def2-SVP) level."
+    },
+    {
+      "line": 29,
+      "text_numeric_masked": "###### [tmQM/tmQM_X1.BO](tmQM/tmQM_X1.BO), [tmQM/tmQM_X2.BO](tmQM/tmQM_X2.BO) and [tmQM/tmQM_X3.BO](tmQM/tmQM_X3.BO)"
+    },
+    {
+      "line": 30,
+      "text_numeric_masked": "- Contain the Wiberg bond orders and atomic valence indices of the [NUMBER]k TMCs calculated at the GFN2-xTB level."
+    },
+    {
+      "line": 31,
+      "text_numeric_masked": "- Data is split into three files compressed by gzip."
+    },
+    {
+      "line": 34,
+      "text_numeric_masked": "## old_tmQM: [NUMBER] release"
+    },
+    {
+      "line": 35,
+      "text_numeric_masked": "###### [old_tmQM/old_tmQM_X1.xyz.gz](old_tmQM/old_tmQM_X1.xyz.gz) and [old_tmQM/old_tmQM_X2.xyz.gz](old_tmQM/old_tmQM_X2.xyz.gz)"
+    },
+    {
+      "line": 36,
+      "text_numeric_masked": "- Contains the Cartesian coordinates of the [NUMBER]k TMCs optimized at the GFN2-xTB level."
+    },
+    {
+      "line": 37,
+      "text_numeric_masked": "- Additional information such as the molecular size, CSD code, charge, spin, stoichiometry and metal node degree is also included."
+    },
+    {
+      "line": 38,
+      "text_numeric_masked": "- Data is split into two files compressed by gzip."
+    },
+    {
+      "line": 39,
+      "text_numeric_masked": "- This and all data below is from the [NUMBER] release of the CSD."
+    },
+    {
+      "line": 41,
+      "text_numeric_masked": "###### [old_tmQM/old_tmQM_y.csv](tmQM/tmQM_y.csv)"
+    },
+    {
+      "line": 42,
+      "text_numeric_masked": "- Contains the quantum chemical properties of the [NUMBER]k TMCs computed at the DFT(TPSSh-D3BJ/def2-SVP) level."
+    },
+    {
+      "line": 43,
+      "text_numeric_masked": "- The DFT properties included are the electronic energy, dispersion energy, dipole moment, natural charge at the metal center, HOMO-LUMO gap, HOMO energy, and LUMO energy. The  polarizability is at the GFN2-xTB level of theory."
+    },
+    {
+      "line": 49,
+      "text_numeric_masked": "## Further technical details"
+    },
+    {
+      "line": 50,
+      "text_numeric_masked": "The [NUMBER] release of the CSD contains structural data for over [NUMBER]M chemical compounds, of which nearly [NUMBER]M include transition metals. However, not all [NUMBER]M transition metal-containing structures are suited for **tmQM**. TMCs were thus selected and curated using these filters:"
+    },
+    {
+      "line": 51,
+      "text_numeric_masked": "- **Chemical composition filter:** Mononuclear TMCs including any of the [NUMBER] transition metals bonded to any of these elements: B, C, Si, N, P, As, O, S, Se, F, Cl, Br, and I, and including at least one C atom."
+    },
+    {
+      "line": 52,
+      "text_numeric_masked": "- **Geometry filters (I):** Non-polymeric and with [NUMBER]D coordinates available, excluding disordered structures."
+    },
+    {
+      "line": 53,
+      "text_numeric_masked": "- **Geometry filters (II):** Heaviest fragment with a transition metal; excludes co-crystalizing molecules (_e.g._, solvents and counterions)."
+    },
+    {
+      "line": 55,
+      "text_numeric_masked": "- **Electronic structure filters:** Neutral and \u00b1[NUMBER] charged TMCs with an even number of electrons."
+    },
+    {
+      "line": 57,
+      "text_numeric_masked": "- **Curation filter (I):** Only the TMCs for which both the xTB and DFT calculations converged."
+    },
+    {
+      "line": 59,
+      "text_numeric_masked": "- **Curation filter (II):** The [NUMBER]% TMCs with the largest deviation of the xTB geometry relative to the CSD structure were excluded (normalized by _r_ factor and number of atoms)."
+    },
+    {
+      "line": 61,
+      "text_numeric_masked": "- **Curation filter (III):** xTB-optimized geometries without any H atom, or with C atoms with missing Hs, were excluded using the filter developed by Ulissi and Blau in [this article](https://pubs.acs.org/doi/[NUMBER]/acs.jcim.[NUMBER]c01226)."
+    },
+    {
+      "line": 63,
+      "text_numeric_masked": "- **Curation filter (IV):** xTB-optimized geometries with missing Hs, as well as dissociated, isolated ligands, were excluded using a C-focused multi-radii geometric filter."
+    }
+  ],
+  "withheld_line_numbers": [
+    5,
+    45,
+    46,
+    47
+  ],
+  "numeric_target_values_disclosed": false
+}

@@ -1,0 +1,64 @@
+{
+  "DOI": "10.1021/acs.jcim.0c01041",
+  "title": [
+    "tmQM Dataset─Quantum Geometries and Properties\nof 86k Transition Metal Complexes"
+  ],
+  "publisher": "American Chemical Society (ACS)",
+  "published": {
+    "date-parts": [
+      [
+        2020,
+        11,
+        9
+      ]
+    ]
+  },
+  "published-online": {
+    "date-parts": [
+      [
+        2020,
+        11,
+        9
+      ]
+    ]
+  },
+  "license": [
+    {
+      "start": {
+        "date-parts": [
+          [
+            2020,
+            11,
+            20
+          ]
+        ],
+        "date-time": "2020-11-20T00:00:00Z",
+        "timestamp": 1605830400000
+      },
+      "content-version": "vor",
+      "delay-in-days": 11,
+      "URL": "https://pubs.acs.org/page/policy/authorchoice_ccby_termsofuse.html"
+    }
+  ],
+  "relation": {
+    "has-preprint": [
+      {
+        "id-type": "doi",
+        "id": "10.26434/chemrxiv.12894818.v1",
+        "asserted-by": "object"
+      }
+    ]
+  },
+  "URL": "https://doi.org/10.1021/acs.jcim.0c01041",
+  "author_names": [
+    {
+      "given": "David",
+      "family": "Balcells"
+    },
+    {
+      "given": "Bastian Bjerkem",
+      "family": "Skjelstad"
+    }
+  ],
+  "abstract_and_results_disclosed": false
+}

@@ -1,0 +1,101 @@
+{
+  "actual_artifact_audits": 0,
+  "audit_source_sha256": "7487bc9ca66ed5b132c928836fd9c435d43577f2b00b6fa4f6383e812b5139a6",
+  "candidate_copyset_sha256": "b195165fbc7e86834400b408e7ccb86aa62319d0a34f6b3ea9f76c12b7a941e2",
+  "checks": [
+    {
+      "check": "auditor_syntax_ast_only",
+      "passed": true
+    },
+    {
+      "check": "frozen_source_self_pin",
+      "passed": true
+    },
+    {
+      "check": "all_prepared_bindings",
+      "passed": true
+    },
+    {
+      "check": "baseline_exact",
+      "passed": true
+    },
+    {
+      "check": "literal_runtime_counts",
+      "passed": true
+    },
+    {
+      "check": "literal_runtime_delta",
+      "passed": true
+    },
+    {
+      "check": "literal_wheel_counts",
+      "passed": true
+    },
+    {
+      "check": "literal_wheel_delta",
+      "passed": true
+    },
+    {
+      "check": "exact_eighteen_source_pins",
+      "passed": true
+    },
+    {
+      "check": "current_candidate_source_still_held",
+      "passed": true
+    },
+    {
+      "check": "eighteen_distinct_literal_probe_flags",
+      "passed": true
+    },
+    {
+      "check": "independent_literal_flags_match_integrated_profile",
+      "passed": true
+    },
+    {
+      "check": "both_public_resource_pins",
+      "passed": true
+    },
+    {
+      "check": "no_project_imports",
+      "passed": true
+    },
+    {
+      "check": "exclusive_audit_attempt_directory",
+      "passed": true
+    },
+    {
+      "check": "closed_actual_binding_and_completion_gate",
+      "passed": true
+    },
+    {
+      "check": "git_clean_start_and_end",
+      "passed": true
+    },
+    {
+      "check": "no_actual_artifact_audit_run",
+      "passed": true
+    },
+    {
+      "check": "peer_receipt_exact_identity",
+      "passed": true
+    }
+  ],
+  "limits": [
+    "Static source review and AST syntax parsing are not artifact verification.",
+    "Package/strict execution provenance will be inspected separately before binding; the auditor preserves evidence identities and independently checks retained artifact bytes.",
+    "Formal archive bytes are checked but no proof compilation/count conclusion follows.",
+    "No new scientific source operation, admission, physical validation or CI conclusion."
+  ],
+  "peer_review_sha256": "456be3d883667110b13076aa8441e5ebc4862c078bfe87c282b114a86d763502",
+  "pending": [
+    "Exact published commit and clean source hold",
+    "Actual successful package/strict receipts and observed completion",
+    "Public evidence gate review and actual binding",
+    "First independent retained-artifact audit"
+  ],
+  "preparation_sha256": "8fee501aa69b69bf772d1c402f185e97743f0a0e934065e61af3d851972b3b17",
+  "reviewed_at": "2026-10-16T17:16:22.682988+00:00",
+  "schema": "lupine.source-readiness.artifact-prospective-review.v1",
+  "status": "PREPARED_SOURCE_REVIEW_PASS_ACTUAL_AUDIT_NOT_RUN",
+  "tests_executed": 0
+}

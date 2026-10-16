@@ -1,0 +1,71 @@
+{
+  "at": "2026-10-16T17:27:13.449282+00:00",
+  "claim_scope": {
+    "Dryad": "README_403_NO_PDF_PARSER_DATA",
+    "Li": "ONE_A1_XML_PROFILE_UNSUPPORTED_NO_A2_B_C",
+    "QM9": "COLLECTION_403_NO_MANIFEST_DATA_RETRY",
+    "automation": "DISABLED",
+    "browser_runtime_hold": 351,
+    "conditional_theorems": 147,
+    "current_runtime": 351,
+    "focused_python_methods": 142,
+    "full_browser_checks": 86,
+    "modules": 12,
+    "physical_or_general_superiority": "NO_GO",
+    "predecessor": "88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d",
+    "predecessor_artifact_checks": 20959,
+    "predecessor_clean_package": "28_CASES_6_SCHEMAS_17_CHECKS_PLUS_STRICT",
+    "predecessor_original_four_job_CI": "PASS",
+    "python_runtime_hold": 350,
+    "scientific_admission": false,
+    "successor_CI": "PENDING",
+    "successor_clean_18_check_package": "PENDING"
+  },
+  "disposition": "NO_BLOCKING_CLAIM_OR_RECORDER_SOURCE_FINDING",
+  "documents": {
+    "GOAL.md": "4986a61a8a0c20d3ed70283082edd83c28cb38f34e58246077e6ea333b937763",
+    "STATUS.md": "f6ffcad171b2d2e0750d04ff27e0392b8446006b3e730f8e50fc468a8cfc4ff5",
+    "docs/release-validation.md": "aa4d04a8d8782fbf51f8f02a05dd932f947231e37976c3d59d71c2aec393120d",
+    "reports/continuation.json": "23a9037e4aad223225ea4997007bbaac9742c8fa391edd42d9c777ca20fc96c0",
+    "reports/progress.md": "56be92807a0a16785d53c05f534e3ae05824c094329ead29400844f4afc48c3d"
+  },
+  "initial_findings_sha256": "de00f01dc453a14a12880913a5afc4c25d226f45392929ad51748ee4c22eb4c8",
+  "recorder_review": {
+    "limits": [
+      "No recorder timeout is claimed; interrupted started/partial receipts do not imply completion.",
+      "Root must independently observe actual outer exit; a persisted PASS file alone is insufficient.",
+      "Before/after identities are controlled-workflow evidence, not a hostile-code or transient-change proof.",
+      "Independent artifact byte audit and exact-source CI remain separate gates."
+    ],
+    "path": ".cache/phase2-source-readiness-release-v1/record_release.py",
+    "properties": [
+      "Exclusive commit-named attempt preserves original failure",
+      "Before/after exact HEAD, clean status, actual origin branch ref and committed351 manifest/working bytes",
+      "Recorder/interpreter/tool identities captured",
+      "Observed package and strict command exits and raw streams saved before judgment",
+      "Strict only follows package exit0",
+      "FinalPASS requires both exits0 and equal before/after source",
+      "No scientific source command or CI success manufactured"
+    ],
+    "readme_sha256": "a613a5e953f180520cf111b92a54dca81cac5f21e8b816c57cb493f05c2a51c3",
+    "scope": "Source-only; no import or invocation.",
+    "sha256": "b74867438bda41235f0b93b028f91caf422284037d6ebe65cf244fa4f4084c33"
+  },
+  "runtime_tests_builds_network_source_operations_by_reviewer": 0,
+  "schema": "lupine.source-readiness.final-claims-recorder-review.v1",
+  "supporting_evidence": {
+    "formal/theorem-inventory.json": "fa3c6711e595811cddb2ed657e0df5675b32147d147999b00bab464e499ce23f",
+    "reports/phase2-finite-planning-monotone-verification-v1/README.md": "04ba71ccc4de8e36f358cab64320b21c30d06377e2e3cd5fc1a580afcabcf77b",
+    "reports/phase2-finite-planning-monotone-verification-v1/integration/result.json": "f3d6accba8d02272b7de49e35769e72797bf3ce03c971936cf8594d49555a6f8",
+    "reports/phase2-finite-planning-release-verification-v1/README.md": "b6378b93a4ddcb51d3707fbc724b8f60fa1a33aa203f013ebfad2ba4b192fbfa",
+    "reports/phase2-finite-planning-release-verification-v1/ci/final.json": "0fd46acae39b4f692274e2f1d7a072b9ba0489658b4aa0e66146672883a36a53",
+    "reports/phase2-finite-planning-release-verification-v1/independent/first-actual-artifact-audit/review.json": "1010d7f7d2b8593807d484fa1e9db61ed71ad2bac88b6319d783ceced45125aa",
+    "reports/phase2-source-readiness-verification-v1/README.md": "88ef7481a17d7c61b361af96952f477e46c09c378c3c7db0dee319697230e053",
+    "reports/phase2-source-readiness-verification-v1/integration/browser-first-execution.json": "5f90fc4d55dac448699c219cc86fbb6613cead14adbb60f769a3e0ebcd616281",
+    "reports/phase2-source-readiness-verification-v1/integration/browser-first-report.json": "5c7b874d14ff08d4d4974aecb2233164d8d39701c7d44440a2fd071f5cb0fe0e",
+    "reports/phase2-source-readiness-verification-v1/integration/python-first-execution.json": "37651ee97d54b2ccbde7909a42dd08c820d86b1e779f763ee03b360df1419c09",
+    "reports/phase2-source-readiness-verification-v1/integration/python-first-stderr.txt": "294d00e9f1d3503f973bec2ceb3019502b4b85908b8bb571fd3f4f75e690e9a4",
+    "reports/runtime-manifest.json": "5137c79614e1090a766046a09817ed5867929c3984933d7c0825c2429c9f3ca0"
+  },
+  "tracked_edits_by_reviewer": false
+}

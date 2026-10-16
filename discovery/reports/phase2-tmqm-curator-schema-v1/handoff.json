@@ -1,0 +1,22 @@
+{
+  "bytes_excluding_inventory_handoff": 7641,
+  "checked_local_links": 3,
+  "entrypoint": "README.md",
+  "exact_copyset": "Eight allowlisted files plus inventory.json and this handoff.json.",
+  "files_excluding_inventory_handoff": 8,
+  "held_at": "2026-10-16T17:27:04.823886+00:00",
+  "independent_review": "Not requested or claimed for this simple denial record.",
+  "inventory_sha256": "4994d1583af821aaddba63f6a9521125da57988cafc486b12e49d3554a78b142",
+  "linked_requests": 0,
+  "numeric_data_acquired": 0,
+  "ordinary_requests": 1,
+  "parser_invocations": 0,
+  "redirects": 0,
+  "retries": 0,
+  "runtime_tests_executed": false,
+  "schema": "lupine.discovery.tmqm_curator_handoff.v1",
+  "scientific_admission": false,
+  "source_schema_or_rights_fields_newly_established": [],
+  "status": "BLOCKED_ACCESS_HTTP403",
+  "tracked_edits": false
+}

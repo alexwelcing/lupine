@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-16T17:25:55.505456+00:00",
+  "tool_chunk": "877ea8",
+  "exit_code": 1,
+  "result": "Runtime351manifestPASS; proposed298files include2 explicitlyallowlisted ignored .log files, so nonignoredGitlistinghas296; no unexpectedchanges",
+  "affected": [
+    "browser-author/first-run.stdout.log",
+    "browser-author/first-run.stderr.log"
+  ],
+  "resolution": "Publisher already stages explicitcopyset withgitadd-f and verifieseachstagedblob; no sourceorcheckweakening"
+}

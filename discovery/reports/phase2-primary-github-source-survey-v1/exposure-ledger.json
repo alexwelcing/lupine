@@ -1,0 +1,28 @@
+{
+  "first_failure": "Guessed owner returned404; preserved before one bounded exact-name public metadata search.",
+  "machine_read": [
+    "Eight metadata/documentary responses, including whole pinned README and MIT license",
+    "Exact GitHub repository/ref/root-content metadata and Crossref paper metadata",
+    "One literal data-directory metadata listing; file names/sizes/blob IDs only, no file contents."
+  ],
+  "no_denied_source_bypass": true,
+  "no_fitting_or_thresholds": true,
+  "no_new_DFT": true,
+  "no_numeric_comparisons": true,
+  "prior_use_check": "rg in public reports/docs Markdown and source/catalogJSON for tmQM, Skjelstad, Alchemy and primaryDOI returned no matches. No global/model-training freshness assertion.",
+  "researcher_not_read": [
+    "Numeric data files or record rows",
+    "README image or old benchmark coordinate subsection",
+    "Paper abstract/full text, figures, measurement tables, model/leaderboard outcomes",
+    "Private labels or denied-source data"
+  ],
+  "researcher_read": [
+    "Repository identity, directory names and documentary links",
+    "README headings, selected numeric-masked purpose/provenance/schema/curation paragraphs",
+    "Explicit advertised counts, charge conditions, release labels and method constants",
+    "MIT license",
+    "Selected paper DOI/title/author/date/article-license metadata"
+  ],
+  "search_scope": "At most three GitHub repo-name metadata results for one tmQM lead; no performance-based selection.",
+  "shared_data_ancestry": "CSD source structures, family overlap and relation to other databases remain unaudited."
+}

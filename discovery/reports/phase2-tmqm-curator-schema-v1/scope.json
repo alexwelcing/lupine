@@ -1,0 +1,14 @@
+{
+  "schema":"lupine.discovery.tmqm_curator_schema_scope.v1",
+  "status":"WRITTEN_BEFORE_REQUEST",
+  "purpose":"Read the original curator's already README-linked public tmQM page for property units, identifier/join definitions, current2024 release links and data-specific/upstream CSD terms. No scientific admission or numerical record acquisition.",
+  "url":"https://www.uiocompcat.info/tmqmdataset",
+  "source_basis":"Pinned uiocompcat/tmQM README at ece824419c9006fe66436daf233822b75533b82f, line13; prior readmeSHA2569f5b9b9606d27af203462fcd872f6745324d8bbb85f8e3421cd7142b3eb2c83c.",
+  "maximum_requests":1,
+  "transport":{"method":"GET","maximum_bytes":1048576,"timeout_seconds":30,"redirects":false,"retries":0,"credentials":false},
+  "machine_exposure":"The whole bounded HTML page is machine-read and may contain examples, numerical results, performance prose or contact strings. This is not a target-free or untouched-source claim.",
+  "researcher_projection":"First display headings and explicit documentary/resource links only. Then select relevant schema/unit/identity/join/current-release/license/CSD-use passages while withholding numeric target examples, outcome-performance metrics, contact strings and unrelated prose. Documentary counts and method/unit constants may be shown only with their role stated. No scripts executed or linked resources requested.",
+  "stop":"Preserve first denial/error/redirect/over-cap result. No retry, alternate host/API/mirror or linked-file follow-up.",
+  "forbidden":["Dataset/file download or following any link","Private/raw scientific record access","Numerical outcome/performance extraction","Joins,fits,thresholds,allocations,selection or benchmark admission","Third-party contacts or paid work"],
+  "publication":"Retain raw HTML ignored; publish exact request/receipt/selected projection and concise own-paraphrase findings with source identity and unresolved gates. No full page or arbitrary examples/contact roster."
+}

@@ -1,0 +1,32 @@
+{
+  "audit_source_sha256": "7487bc9ca66ed5b132c928836fd9c435d43577f2b00b6fa4f6383e812b5139a6",
+  "author_preparation_provenance": {
+    "copyset_path": ".cache/phase2-source-readiness-integration-v1/combined-runtime-copyset.json",
+    "copyset_sha256": "b195165fbc7e86834400b408e7ccb86aa62319d0a34f6b3ea9f76c12b7a941e2",
+    "source_operation_executions_here": 0
+  },
+  "base_commit": "88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d",
+  "bindings": [
+    {
+      "sha256": "2beec81fcf64ce3c2c5f5bcf0d0ad20a0e879451a3f366f7da941943e3dcb7c7",
+      "snapshot": "prepared-scope.json"
+    },
+    {
+      "sha256": "ab85b1346812ff44d3d13148dee827f496e79cbf464fed55f45f74e6026ebec3",
+      "snapshot": "prepared-promotion-inputs.json"
+    },
+    {
+      "sha256": "b195165fbc7e86834400b408e7ccb86aa62319d0a34f6b3ea9f76c12b7a941e2",
+      "snapshot": "root-candidate-copyset.json"
+    },
+    {
+      "sha256": "a1460c9c90821b8d993e5ca31ccc1c348076706114899c43bb9b85ea5d32bb56",
+      "snapshot": "candidate-source-identity.json"
+    }
+  ],
+  "execution_policy": "Do not run until root supplies exact published commit, held clean source, completed successful package/strict receipts, retained path and actual binding. Any candidate source change requires a separately preserved prospective rebind.",
+  "predecessor_auditor_sha256": "b00541daccbbe8626880f59bc59d9694dc9f34e922690f968dfb50ed348bb738",
+  "prepared_at": "2026-10-16T17:13:14.105238+00:00",
+  "schema": "lupine.source-readiness.artifact-preparation.v1",
+  "syntax_check": "ast.parse only; audit module not imported or executed"
+}

@@ -1,0 +1,18 @@
+{
+  "schema": "lupine.source-readiness.artifact-report-contract.v1",
+  "audit_report_schema": "lupine.source-readiness.independent-artifact-review.v1",
+  "audit_pass_status": "PASS_EXACT_RETAINED_ARTIFACT_AND_DECLARED_DELTA",
+  "audit_failure_status": "FAIL_RETAINED_ARTIFACT_AUDIT",
+  "actual_binding_schema": "lupine.source-readiness.artifact-actual-binding.v1",
+  "actual_binding_keys": ["schema", "published_commit", "retained_directory", "audit_source_sha256", "preparation_sha256", "runtime_manifest_sha256", "gate_review", "evidence"],
+  "identity_descriptor_keys": ["path", "bytes", "sha256"],
+  "gate_review_schema": "lupine.source-readiness.artifact-gate-review.v1",
+  "gate_review_status": "PASS_BOUND_COMPLETED_PACKAGE_AND_STRICT_EXECUTION",
+  "gate_required_fields": ["schema", "status", "published_commit", "retained_directory", "package_observed_exit_code", "strict_observed_exit_code", "source_clean_observed", "checks"],
+  "gate_evidence_minimum_files": 5,
+  "gate_review_obligation": "Reviewer must inspect exact successful completed package and strict-verifier receipts, captured logs, retention receipt linkage, and root-observed process completion before constructing actual binding. Hash descriptors preserve inputs; hashes alone are not execution evidence.",
+  "successful_check_shape": {"check": "CHECK_NAME", "passed": true},
+  "failed_check_shape": {"check": "CHECK_NAME", "passed": false},
+  "no_ci_or_scientific_claim": true,
+  "actual_audit_executed_at_preparation": false
+}

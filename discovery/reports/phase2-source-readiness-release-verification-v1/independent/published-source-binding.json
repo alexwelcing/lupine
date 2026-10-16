@@ -1,0 +1,139 @@
+{
+  "artifact_audits": 0,
+  "audit_source_sha256": "7487bc9ca66ed5b132c928836fd9c435d43577f2b00b6fa4f6383e812b5139a6",
+  "candidate_pins": {
+    "docs/source-readiness.md": "a62f93a7b450f5d5d508dd11a538ff2b44adb5cfd9b7623291c85584f1088e5a",
+    "scripts/browser_smoke.py": "e1311385b7b3ec4c382b8e56b274107b819702d37015865267999d27e9b92339",
+    "scripts/package_smoke.py": "db99cb2406c57f68f03497ac13508e3ee462b336bea17f04f7e6dc8236dcfdda",
+    "scripts/source_readiness_browser_checks.py": "fe3de053e1c390c5119cfe05bf41c0084d53de99ec0da268d4014ae728080882",
+    "scripts/verify_retained_artifacts.py": "4a1c0e1cf078cbde3a6b9de210b46b065c19576394e052c97e95bfea5ac09840",
+    "src/lupine_discovery/cli.py": "6af272356429e7fabcbe81f0be34c3a201ad5d5655537d74ecefd4ba9c587965",
+    "src/lupine_discovery/resources/source-readiness-v1.json": "9abad97d5675f416cc38a325bcd1e108825af001b2fdfccaa1f5c7dfb66f3f0b",
+    "src/lupine_discovery/server.py": "5e665bb32d1d80b902a8a64c9e2e66efa9e38b7b5a481e80408f4af8716f3390",
+    "src/lupine_discovery/source_readiness.py": "dbb76ec1aa6a82490b30fe19883a94b56cf0cddfd3ebc14cc555f17f927ca42c",
+    "src/lupine_discovery/web/app.js": "9e81d71a7381173776d928cc558791402f1d2b2ce02d7e4ae7531514233c5b45",
+    "src/lupine_discovery/web/index.html": "20432ede14b5892a6e3ff45fc305e2d4bcb664d5924e2679cf1ca3b016ef72f2",
+    "src/lupine_discovery/web/source-readiness.js": "d533611c9a975040a55569bf474689846aa8f5ca2f4f73c4e52730917efe95d0",
+    "src/lupine_discovery/web/styles.css": "2bfdac8e02a00fd2e67b3b0e0788cf9b73f5dac4ab72fc8dd4f37f077a83d3e1",
+    "tests/test_package_retention.py": "e3a2112241a03646c9b5a8b60b7483f36305fb7e528fdb6ffcae587c87a14309",
+    "tests/test_package_retention_review.py": "4934d597cb6b64dd97c6ecabac91a783b025e09ded9831314f78d944881db8f2",
+    "tests/test_package_source_readiness.py": "6afc85434950e0fc29b1ef595849e5423e29b7475116e8b915307f9673683cf8",
+    "tests/test_retained_mpea_transport.py": "f75ff714c84f9b4e9918ca2d9f4ff857dc3a1479cc45bfc5371393a7ecdc5453",
+    "tests/test_source_readiness.py": "c83bb950986d1d2e7990a0946fb1111ab6f6dc843337efc61a6ad84151a07c81"
+  },
+  "checks": [
+    {
+      "check": "exact_current_HEAD",
+      "passed": true
+    },
+    {
+      "check": "tracked_and_nonignored_untracked_clean",
+      "passed": true
+    },
+    {
+      "check": "published_candidate_pin_docs/source-readiness.md",
+      "passed": true
+    },
+    {
+      "check": "published_candidate_pin_scripts/browser_smoke.py",
+      "passed": true
+    },
+    {
+      "check": "published_candidate_pin_scripts/package_smoke.py",
+      "passed": true
+    },
+    {
+      "check": "published_candidate_pin_scripts/source_readiness_browser_checks.py",
+      "passed": true
+    },
+    {
+      "check": "published_candidate_pin_scripts/verify_retained_artifacts.py",
+      "passed": true
+    },
+    {
+      "check": "published_candidate_pin_src/lupine_discovery/cli.py",
+      "passed": true
+    },
+    {
+      "check": "published_candidate_pin_src/lupine_discovery/resources/source-readiness-v1.json",
+      "passed": true
+    },
+    {
+      "check": "published_candidate_pin_src/lupine_discovery/server.py",
+      "passed": true
+    },
+    {
+      "check": "published_candidate_pin_src/lupine_discovery/source_readiness.py",
+      "passed": true
+    },
+    {
+      "check": "published_candidate_pin_src/lupine_discovery/web/app.js",
+      "passed": true
+    },
+    {
+      "check": "published_candidate_pin_src/lupine_discovery/web/index.html",
+      "passed": true
+    },
+    {
+      "check": "published_candidate_pin_src/lupine_discovery/web/source-readiness.js",
+      "passed": true
+    },
+    {
+      "check": "published_candidate_pin_src/lupine_discovery/web/styles.css",
+      "passed": true
+    },
+    {
+      "check": "published_candidate_pin_tests/test_package_retention.py",
+      "passed": true
+    },
+    {
+      "check": "published_candidate_pin_tests/test_package_retention_review.py",
+      "passed": true
+    },
+    {
+      "check": "published_candidate_pin_tests/test_package_source_readiness.py",
+      "passed": true
+    },
+    {
+      "check": "published_candidate_pin_tests/test_retained_mpea_transport.py",
+      "passed": true
+    },
+    {
+      "check": "published_candidate_pin_tests/test_source_readiness.py",
+      "passed": true
+    },
+    {
+      "check": "committed_and_working_manifest_exact",
+      "passed": true
+    },
+    {
+      "check": "manifest_count_351",
+      "passed": true
+    },
+    {
+      "check": "unchanged_prospective_auditor",
+      "passed": true
+    },
+    {
+      "check": "unchanged_prospective_preparation",
+      "passed": true
+    },
+    {
+      "check": "held_recorder_source",
+      "passed": true
+    }
+  ],
+  "ci_status": "NOT_ESTABLISHED_BY_THIS_REVIEW",
+  "expected_run_directory": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f",
+  "git_tree": "2d007e30d4d28725bb79530ffa0b7075cac4de83",
+  "observed_at": "2026-10-16T17:27:42.913813+00:00",
+  "package_completion": "NOT_ACCEPTED_PENDING_ROOT_OBSERVED_EXIT",
+  "preparation_sha256": "8fee501aa69b69bf772d1c402f185e97743f0a0e934065e61af3d851972b3b17",
+  "published_commit": "eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f",
+  "recorder_sha256": "b74867438bda41235f0b93b028f91caf422284037d6ebe65cf244fa4f4084c33",
+  "remote_status": "Root reports exact published branch; no network call by reviewer.",
+  "runtime_file_count": 351,
+  "runtime_manifest_sha256": "5137c79614e1090a766046a09817ed5867929c3984933d7c0825c2429c9f3ca0",
+  "schema": "lupine.source-readiness.artifact-published-source-binding.v1",
+  "status": "PUBLISHED_SOURCE_BOUND_EXECUTION_GATE_PENDING"
+}

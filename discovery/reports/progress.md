@@ -1986,3 +1986,28 @@ rights, pairing, processed semantics, equivalence and freshness remain unresolve
   artifact audit. Separate primary-source metadata work continues. The expired
   automation remains disabled. First publication-assembly missing-file failure and
   its documentary-only correction are preserved; behavior was not rerun for formatting.
+
+
+## 2026-10-16 17:34 UTC — exact published source passes clean package and independent audit
+
+- Published `eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f`; all 298 changed Git blobs and
+  the remote branch match the held copyset. [Actual clean release](phase2-source-readiness-release-verification-v1/README.md)
+  passes 28 demonstrations/six schemas/eighteen required checks and strict verification.
+  Root observed the recorder's actual exit 0; all 351 source files held. The independent
+  first artifact audit passes 22,005 checks over 6,794 source files and 113 wheel payloads.
+  No clean-package success is inferred from a receipt hash alone.
+- Original CI 38939736040 has successful browser and Lean jobs. Both Python jobs
+  remain pending at this checkpoint; local focused tests are not substituted for CI.
+  The independent final claim review's three wording corrections and the initial
+  publication-scope check failure (two intentionally ignored author logs) remain recorded.
+- [tmQM](phase2-primary-github-source-survey-v1/README.md) is a separate pinned curator
+  GitHub lead with declared MIT terms, property-file metadata and mixed archived
+  DFT/GFN2-xTB methods. A single [curator-page request](phase2-tmqm-curator-schema-v1/README.md)
+  returned HTTP 403; no parser, retry or follow-up occurred. The [review](phase2-tmqm-documentary-review-v1/README.md)
+  preserves upstream-rights, units/joins and old-link gaps plus the correction that
+  benchmark heading/filename metadata was visible, although body/data/performance
+  stayed withheld. No whole numerical dataset, target choice or evaluation was opened.
+- Owner/checkpoint: root verifies exact CI and publishes release records; a separately
+  scoped header-only documentary inspection is in preparation, with independent
+  bounded-reader review before its one attempt. G20 unresolved/G21 blocked; all prior
+  scientific negatives remain. No new DFT, tuning, admission or superiority claim.

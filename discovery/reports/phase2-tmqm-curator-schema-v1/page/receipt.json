@@ -1,0 +1,16 @@
+{
+  "bytes": 4551,
+  "finished_at": "2026-10-16T17:25:58.376407+00:00",
+  "headers": {
+    "Content-Type": "text/html; charset=UTF-8"
+  },
+  "over_cap": false,
+  "redirects_followed": 0,
+  "requests": 1,
+  "retries": 0,
+  "sha256": "83d30bb906747803c53bbc5589e7836aac867e92c4f92c5b43c0017c9033ffe8",
+  "started_at": "2026-10-16T17:25:57.696620+00:00",
+  "status": 403,
+  "transport_error": null,
+  "url": "https://www.uiocompcat.info/tmqmdataset"
+}

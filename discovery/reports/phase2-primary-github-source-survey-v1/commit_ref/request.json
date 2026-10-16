@@ -1,0 +1,9 @@
+{
+  "acquirer_sha256": "ed21a2409fd9d6de30dc3fb2534ffdb7c3d8599adc2fd2208755fc1335959ab0",
+  "id": "commit_ref",
+  "maximum_bytes": 1048576,
+  "purpose": "Pin the exact default branch commit of the sole exact tmQM name returned by bounded repository metadata search; no commit diff or file content.",
+  "scope_sha256": "f041d0e741e11639213383a33a65184ae0c225d5a341557820084c93a77cdb0d",
+  "started_at": "2026-10-16T17:16:05.569754+00:00",
+  "url": "https://api.github.com/repos/uiocompcat/tmQM/git/ref/heads/master"
+}

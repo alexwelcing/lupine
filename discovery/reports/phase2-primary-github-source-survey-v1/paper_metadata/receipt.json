@@ -1,0 +1,15 @@
+{
+  "bytes": 33423,
+  "finished_at": "2026-10-16T17:17:47.213531+00:00",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "over_cap": false,
+  "redirects_followed": 0,
+  "retries": 0,
+  "sha256": "da5750993381f0d1403eb29830f0a5558e7c1fda5e1eeb0cfcb77f69db8c966d",
+  "started_at": "2026-10-16T17:17:46.349242+00:00",
+  "status": 200,
+  "transport_error": null,
+  "url": "https://api.crossref.org/works/10.1021/acs.jcim.0c01041"
+}

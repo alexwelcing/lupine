@@ -1,0 +1,1415 @@
+{
+  "checks": [
+    {
+      "check": "frozen_auditor",
+      "passed": true
+    },
+    {
+      "check": "frozen_preparation",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_request.json",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_review.json",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_root-observed-exit.json",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_source-before.json",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_source-after.json",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_executed-recorder.py",
+      "passed": true
+    },
+    {
+      "check": "executed_recorder_identity",
+      "passed": true
+    },
+    {
+      "check": "request_bound_commit_scope",
+      "passed": true
+    },
+    {
+      "check": "final_completed_success",
+      "passed": true
+    },
+    {
+      "check": "root_outer_observed_actual_completion",
+      "passed": true
+    },
+    {
+      "check": "before_after_source_exactly_held",
+      "passed": true
+    },
+    {
+      "check": "source_commit_branch_remote_clean",
+      "passed": true
+    },
+    {
+      "check": "source_manifest_exact_identity",
+      "passed": true
+    },
+    {
+      "check": "held_package_and_verifier_sources",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_package.started.json",
+      "passed": true
+    },
+    {
+      "check": "actual_interpreter_matches_held_state",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_package.execution.json",
+      "passed": true
+    },
+    {
+      "check": "started_shape_package",
+      "passed": true
+    },
+    {
+      "check": "completed_shape_package",
+      "passed": true
+    },
+    {
+      "check": "started_fields_preserved_package",
+      "passed": true
+    },
+    {
+      "check": "actual_argv_cwd_package",
+      "passed": true
+    },
+    {
+      "check": "observed_zero_exit_package",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:26:53.214528+00:00",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:27:24.319990+00:00",
+      "passed": true
+    },
+    {
+      "check": "ordered_command_time_package",
+      "passed": true
+    },
+    {
+      "check": "closed_stream_name_package_stdout",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_package.stdout",
+      "passed": true
+    },
+    {
+      "check": "actual_stream_identity_package_stdout",
+      "passed": true
+    },
+    {
+      "check": "closed_stream_name_package_stderr",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_package.stderr",
+      "passed": true
+    },
+    {
+      "check": "actual_stream_identity_package_stderr",
+      "passed": true
+    },
+    {
+      "check": "empty_stderr_package",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_strict.started.json",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_strict.execution.json",
+      "passed": true
+    },
+    {
+      "check": "started_shape_strict",
+      "passed": true
+    },
+    {
+      "check": "completed_shape_strict",
+      "passed": true
+    },
+    {
+      "check": "started_fields_preserved_strict",
+      "passed": true
+    },
+    {
+      "check": "actual_argv_cwd_strict",
+      "passed": true
+    },
+    {
+      "check": "observed_zero_exit_strict",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:27:24.322904+00:00",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:27:25.874326+00:00",
+      "passed": true
+    },
+    {
+      "check": "ordered_command_time_strict",
+      "passed": true
+    },
+    {
+      "check": "closed_stream_name_strict_stdout",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_strict.stdout",
+      "passed": true
+    },
+    {
+      "check": "actual_stream_identity_strict_stdout",
+      "passed": true
+    },
+    {
+      "check": "closed_stream_name_strict_stderr",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_strict.stderr",
+      "passed": true
+    },
+    {
+      "check": "actual_stream_identity_strict_stderr",
+      "passed": true
+    },
+    {
+      "check": "empty_stderr_strict",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_before-head.started.json",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_before-head.execution.json",
+      "passed": true
+    },
+    {
+      "check": "started_shape_before-head",
+      "passed": true
+    },
+    {
+      "check": "completed_shape_before-head",
+      "passed": true
+    },
+    {
+      "check": "started_fields_preserved_before-head",
+      "passed": true
+    },
+    {
+      "check": "actual_argv_cwd_before-head",
+      "passed": true
+    },
+    {
+      "check": "observed_zero_exit_before-head",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:26:51.772252+00:00",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:26:51.780292+00:00",
+      "passed": true
+    },
+    {
+      "check": "ordered_command_time_before-head",
+      "passed": true
+    },
+    {
+      "check": "closed_stream_name_before-head_stdout",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_before-head.stdout",
+      "passed": true
+    },
+    {
+      "check": "actual_stream_identity_before-head_stdout",
+      "passed": true
+    },
+    {
+      "check": "closed_stream_name_before-head_stderr",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_before-head.stderr",
+      "passed": true
+    },
+    {
+      "check": "actual_stream_identity_before-head_stderr",
+      "passed": true
+    },
+    {
+      "check": "empty_stderr_before-head",
+      "passed": true
+    },
+    {
+      "check": "git_gate_literal_stdout_before-head",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_before-status.started.json",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_before-status.execution.json",
+      "passed": true
+    },
+    {
+      "check": "started_shape_before-status",
+      "passed": true
+    },
+    {
+      "check": "completed_shape_before-status",
+      "passed": true
+    },
+    {
+      "check": "started_fields_preserved_before-status",
+      "passed": true
+    },
+    {
+      "check": "actual_argv_cwd_before-status",
+      "passed": true
+    },
+    {
+      "check": "observed_zero_exit_before-status",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:26:51.781671+00:00",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:26:51.847178+00:00",
+      "passed": true
+    },
+    {
+      "check": "ordered_command_time_before-status",
+      "passed": true
+    },
+    {
+      "check": "closed_stream_name_before-status_stdout",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_before-status.stdout",
+      "passed": true
+    },
+    {
+      "check": "actual_stream_identity_before-status_stdout",
+      "passed": true
+    },
+    {
+      "check": "closed_stream_name_before-status_stderr",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_before-status.stderr",
+      "passed": true
+    },
+    {
+      "check": "actual_stream_identity_before-status_stderr",
+      "passed": true
+    },
+    {
+      "check": "empty_stderr_before-status",
+      "passed": true
+    },
+    {
+      "check": "git_gate_literal_stdout_before-status",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:26:51.780292+00:00",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:26:51.781671+00:00",
+      "passed": true
+    },
+    {
+      "check": "git_gate_sequence_before-status",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_before-branch.started.json",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_before-branch.execution.json",
+      "passed": true
+    },
+    {
+      "check": "started_shape_before-branch",
+      "passed": true
+    },
+    {
+      "check": "completed_shape_before-branch",
+      "passed": true
+    },
+    {
+      "check": "started_fields_preserved_before-branch",
+      "passed": true
+    },
+    {
+      "check": "actual_argv_cwd_before-branch",
+      "passed": true
+    },
+    {
+      "check": "observed_zero_exit_before-branch",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:26:51.848803+00:00",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:26:51.857377+00:00",
+      "passed": true
+    },
+    {
+      "check": "ordered_command_time_before-branch",
+      "passed": true
+    },
+    {
+      "check": "closed_stream_name_before-branch_stdout",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_before-branch.stdout",
+      "passed": true
+    },
+    {
+      "check": "actual_stream_identity_before-branch_stdout",
+      "passed": true
+    },
+    {
+      "check": "closed_stream_name_before-branch_stderr",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_before-branch.stderr",
+      "passed": true
+    },
+    {
+      "check": "actual_stream_identity_before-branch_stderr",
+      "passed": true
+    },
+    {
+      "check": "empty_stderr_before-branch",
+      "passed": true
+    },
+    {
+      "check": "git_gate_literal_stdout_before-branch",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:26:51.847178+00:00",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:26:51.848803+00:00",
+      "passed": true
+    },
+    {
+      "check": "git_gate_sequence_before-branch",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_before-remote.started.json",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_before-remote.execution.json",
+      "passed": true
+    },
+    {
+      "check": "started_shape_before-remote",
+      "passed": true
+    },
+    {
+      "check": "completed_shape_before-remote",
+      "passed": true
+    },
+    {
+      "check": "started_fields_preserved_before-remote",
+      "passed": true
+    },
+    {
+      "check": "actual_argv_cwd_before-remote",
+      "passed": true
+    },
+    {
+      "check": "observed_zero_exit_before-remote",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:26:51.858612+00:00",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:26:52.807677+00:00",
+      "passed": true
+    },
+    {
+      "check": "ordered_command_time_before-remote",
+      "passed": true
+    },
+    {
+      "check": "closed_stream_name_before-remote_stdout",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_before-remote.stdout",
+      "passed": true
+    },
+    {
+      "check": "actual_stream_identity_before-remote_stdout",
+      "passed": true
+    },
+    {
+      "check": "closed_stream_name_before-remote_stderr",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_before-remote.stderr",
+      "passed": true
+    },
+    {
+      "check": "actual_stream_identity_before-remote_stderr",
+      "passed": true
+    },
+    {
+      "check": "empty_stderr_before-remote",
+      "passed": true
+    },
+    {
+      "check": "git_gate_literal_stdout_before-remote",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:26:51.857377+00:00",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:26:51.858612+00:00",
+      "passed": true
+    },
+    {
+      "check": "git_gate_sequence_before-remote",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_before-committed-manifest.started.json",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_before-committed-manifest.execution.json",
+      "passed": true
+    },
+    {
+      "check": "started_shape_before-committed-manifest",
+      "passed": true
+    },
+    {
+      "check": "completed_shape_before-committed-manifest",
+      "passed": true
+    },
+    {
+      "check": "started_fields_preserved_before-committed-manifest",
+      "passed": true
+    },
+    {
+      "check": "actual_argv_cwd_before-committed-manifest",
+      "passed": true
+    },
+    {
+      "check": "observed_zero_exit_before-committed-manifest",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:26:52.810416+00:00",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:26:52.820385+00:00",
+      "passed": true
+    },
+    {
+      "check": "ordered_command_time_before-committed-manifest",
+      "passed": true
+    },
+    {
+      "check": "closed_stream_name_before-committed-manifest_stdout",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_before-committed-manifest.stdout",
+      "passed": true
+    },
+    {
+      "check": "actual_stream_identity_before-committed-manifest_stdout",
+      "passed": true
+    },
+    {
+      "check": "closed_stream_name_before-committed-manifest_stderr",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_before-committed-manifest.stderr",
+      "passed": true
+    },
+    {
+      "check": "actual_stream_identity_before-committed-manifest_stderr",
+      "passed": true
+    },
+    {
+      "check": "empty_stderr_before-committed-manifest",
+      "passed": true
+    },
+    {
+      "check": "git_gate_literal_stdout_before-committed-manifest",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:26:52.807677+00:00",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:26:52.810416+00:00",
+      "passed": true
+    },
+    {
+      "check": "git_gate_sequence_before-committed-manifest",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_after-head.started.json",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_after-head.execution.json",
+      "passed": true
+    },
+    {
+      "check": "started_shape_after-head",
+      "passed": true
+    },
+    {
+      "check": "completed_shape_after-head",
+      "passed": true
+    },
+    {
+      "check": "started_fields_preserved_after-head",
+      "passed": true
+    },
+    {
+      "check": "actual_argv_cwd_after-head",
+      "passed": true
+    },
+    {
+      "check": "observed_zero_exit_after-head",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:27:25.877344+00:00",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:27:25.891996+00:00",
+      "passed": true
+    },
+    {
+      "check": "ordered_command_time_after-head",
+      "passed": true
+    },
+    {
+      "check": "closed_stream_name_after-head_stdout",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_after-head.stdout",
+      "passed": true
+    },
+    {
+      "check": "actual_stream_identity_after-head_stdout",
+      "passed": true
+    },
+    {
+      "check": "closed_stream_name_after-head_stderr",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_after-head.stderr",
+      "passed": true
+    },
+    {
+      "check": "actual_stream_identity_after-head_stderr",
+      "passed": true
+    },
+    {
+      "check": "empty_stderr_after-head",
+      "passed": true
+    },
+    {
+      "check": "git_gate_literal_stdout_after-head",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_after-status.started.json",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_after-status.execution.json",
+      "passed": true
+    },
+    {
+      "check": "started_shape_after-status",
+      "passed": true
+    },
+    {
+      "check": "completed_shape_after-status",
+      "passed": true
+    },
+    {
+      "check": "started_fields_preserved_after-status",
+      "passed": true
+    },
+    {
+      "check": "actual_argv_cwd_after-status",
+      "passed": true
+    },
+    {
+      "check": "observed_zero_exit_after-status",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:27:25.893744+00:00",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:27:25.942860+00:00",
+      "passed": true
+    },
+    {
+      "check": "ordered_command_time_after-status",
+      "passed": true
+    },
+    {
+      "check": "closed_stream_name_after-status_stdout",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_after-status.stdout",
+      "passed": true
+    },
+    {
+      "check": "actual_stream_identity_after-status_stdout",
+      "passed": true
+    },
+    {
+      "check": "closed_stream_name_after-status_stderr",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_after-status.stderr",
+      "passed": true
+    },
+    {
+      "check": "actual_stream_identity_after-status_stderr",
+      "passed": true
+    },
+    {
+      "check": "empty_stderr_after-status",
+      "passed": true
+    },
+    {
+      "check": "git_gate_literal_stdout_after-status",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:27:25.891996+00:00",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:27:25.893744+00:00",
+      "passed": true
+    },
+    {
+      "check": "git_gate_sequence_after-status",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_after-branch.started.json",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_after-branch.execution.json",
+      "passed": true
+    },
+    {
+      "check": "started_shape_after-branch",
+      "passed": true
+    },
+    {
+      "check": "completed_shape_after-branch",
+      "passed": true
+    },
+    {
+      "check": "started_fields_preserved_after-branch",
+      "passed": true
+    },
+    {
+      "check": "actual_argv_cwd_after-branch",
+      "passed": true
+    },
+    {
+      "check": "observed_zero_exit_after-branch",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:27:25.944708+00:00",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:27:25.951240+00:00",
+      "passed": true
+    },
+    {
+      "check": "ordered_command_time_after-branch",
+      "passed": true
+    },
+    {
+      "check": "closed_stream_name_after-branch_stdout",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_after-branch.stdout",
+      "passed": true
+    },
+    {
+      "check": "actual_stream_identity_after-branch_stdout",
+      "passed": true
+    },
+    {
+      "check": "closed_stream_name_after-branch_stderr",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_after-branch.stderr",
+      "passed": true
+    },
+    {
+      "check": "actual_stream_identity_after-branch_stderr",
+      "passed": true
+    },
+    {
+      "check": "empty_stderr_after-branch",
+      "passed": true
+    },
+    {
+      "check": "git_gate_literal_stdout_after-branch",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:27:25.942860+00:00",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:27:25.944708+00:00",
+      "passed": true
+    },
+    {
+      "check": "git_gate_sequence_after-branch",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_after-remote.started.json",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_after-remote.execution.json",
+      "passed": true
+    },
+    {
+      "check": "started_shape_after-remote",
+      "passed": true
+    },
+    {
+      "check": "completed_shape_after-remote",
+      "passed": true
+    },
+    {
+      "check": "started_fields_preserved_after-remote",
+      "passed": true
+    },
+    {
+      "check": "actual_argv_cwd_after-remote",
+      "passed": true
+    },
+    {
+      "check": "observed_zero_exit_after-remote",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:27:25.952499+00:00",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:27:27.381777+00:00",
+      "passed": true
+    },
+    {
+      "check": "ordered_command_time_after-remote",
+      "passed": true
+    },
+    {
+      "check": "closed_stream_name_after-remote_stdout",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_after-remote.stdout",
+      "passed": true
+    },
+    {
+      "check": "actual_stream_identity_after-remote_stdout",
+      "passed": true
+    },
+    {
+      "check": "closed_stream_name_after-remote_stderr",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_after-remote.stderr",
+      "passed": true
+    },
+    {
+      "check": "actual_stream_identity_after-remote_stderr",
+      "passed": true
+    },
+    {
+      "check": "empty_stderr_after-remote",
+      "passed": true
+    },
+    {
+      "check": "git_gate_literal_stdout_after-remote",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:27:25.951240+00:00",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:27:25.952499+00:00",
+      "passed": true
+    },
+    {
+      "check": "git_gate_sequence_after-remote",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_after-committed-manifest.started.json",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_after-committed-manifest.execution.json",
+      "passed": true
+    },
+    {
+      "check": "started_shape_after-committed-manifest",
+      "passed": true
+    },
+    {
+      "check": "completed_shape_after-committed-manifest",
+      "passed": true
+    },
+    {
+      "check": "started_fields_preserved_after-committed-manifest",
+      "passed": true
+    },
+    {
+      "check": "actual_argv_cwd_after-committed-manifest",
+      "passed": true
+    },
+    {
+      "check": "observed_zero_exit_after-committed-manifest",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:27:27.386872+00:00",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:27:27.402461+00:00",
+      "passed": true
+    },
+    {
+      "check": "ordered_command_time_after-committed-manifest",
+      "passed": true
+    },
+    {
+      "check": "closed_stream_name_after-committed-manifest_stdout",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_after-committed-manifest.stdout",
+      "passed": true
+    },
+    {
+      "check": "actual_stream_identity_after-committed-manifest_stdout",
+      "passed": true
+    },
+    {
+      "check": "closed_stream_name_after-committed-manifest_stderr",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_after-committed-manifest.stderr",
+      "passed": true
+    },
+    {
+      "check": "actual_stream_identity_after-committed-manifest_stderr",
+      "passed": true
+    },
+    {
+      "check": "empty_stderr_after-committed-manifest",
+      "passed": true
+    },
+    {
+      "check": "git_gate_literal_stdout_after-committed-manifest",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:27:27.381777+00:00",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:27:27.386872+00:00",
+      "passed": true
+    },
+    {
+      "check": "git_gate_sequence_after-committed-manifest",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:26:51.769845+00:00",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:26:51.769845+00:00",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:26:51.772252+00:00",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:26:52.820385+00:00",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:26:53.214528+00:00",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:27:24.319990+00:00",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:27:24.322904+00:00",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:27:25.874326+00:00",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:27:25.877344+00:00",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:27:27.402461+00:00",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:27:27.553475+00:00",
+      "passed": true
+    },
+    {
+      "check": "timezone_in_timestamp_2026-10-16T17:28:13.673912+00:00",
+      "passed": true
+    },
+    {
+      "check": "whole_recorded_chronology",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_package-report.json",
+      "passed": true
+    },
+    {
+      "check": "regular_public_input_retained/release-artifacts.json",
+      "passed": true
+    },
+    {
+      "check": "all_eighteen_flags_in_reports",
+      "passed": true
+    },
+    {
+      "check": "package_stdout_exact_summary",
+      "passed": true
+    },
+    {
+      "check": "package_report_exact_receipt_verification",
+      "passed": true
+    },
+    {
+      "check": "retention_metadata_link",
+      "passed": true
+    },
+    {
+      "check": "retention_seal",
+      "passed": true
+    },
+    {
+      "check": "strict_completed_receipt_link",
+      "passed": true
+    },
+    {
+      "check": "strict_smoke_subset_matches_package",
+      "passed": true
+    },
+    {
+      "check": "strict_source_claim_matches_commit_manifest",
+      "passed": true
+    },
+    {
+      "check": "strict_limits_preserved",
+      "passed": true
+    },
+    {
+      "check": "exact_worktree_head_and_clean_now",
+      "passed": true
+    }
+  ],
+  "inputs": [
+    {
+      "bytes": 475,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/request.json",
+      "sha256": "d26f7c7563abb0d84ec0d77c55be691baf25bc6f14d1fc4bc334d4079beb7813"
+    },
+    {
+      "bytes": 1064,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/review.json",
+      "sha256": "ddd0e3bd4ff5b979831edbf84d9499331e8623416ba0eb626eeba1b50693b0c5"
+    },
+    {
+      "bytes": 433,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/root-observed-exit.json",
+      "sha256": "75890f7c8cb29a69748f86eb44f27c0ef1fa742c9e8f0337c6b1229bbf946d68"
+    },
+    {
+      "bytes": 42235,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/source-before.json",
+      "sha256": "240ec704b14f7f16fd033c3fb726640183c52872bb05b591b37d882ad28d80c8"
+    },
+    {
+      "bytes": 42235,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/source-after.json",
+      "sha256": "240ec704b14f7f16fd033c3fb726640183c52872bb05b591b37d882ad28d80c8"
+    },
+    {
+      "bytes": 9526,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/executed-recorder.py",
+      "sha256": "b74867438bda41235f0b93b028f91caf422284037d6ebe65cf244fa4f4084c33"
+    },
+    {
+      "bytes": 705,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/package.started.json",
+      "sha256": "37b13f216531ea7b4c7bc1c715f91f41820b4d8a44a39248d6f83429d865a540"
+    },
+    {
+      "bytes": 1055,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/package.execution.json",
+      "sha256": "b194ffff9c42a9d33e408ba7e7aa3add45fff68a14ccfd05f054f28f6c61067a"
+    },
+    {
+      "bytes": 1365,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/package.stdout",
+      "sha256": "48d37e0e9d9cd3e7c18cbdf4e3b985c793550aa1870345561e873cb50b6ae6b8"
+    },
+    {
+      "bytes": 0,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/package.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 659,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/strict.started.json",
+      "sha256": "31b0e39bd7c7d9686b9eae0e4fa49cf5ba93ed0481c41b7c13b3730c66dadd04"
+    },
+    {
+      "bytes": 1009,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/strict.execution.json",
+      "sha256": "6bad71cbf05d10aa231537b827fa911a0ca4c5e5ae6158f29b0fe7a0779e1a7b"
+    },
+    {
+      "bytes": 3806,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/strict.stdout",
+      "sha256": "44be90e249f9093b3b2d0523837d590c820f1bd1e34e5853005f13d89d847e5c"
+    },
+    {
+      "bytes": 0,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/strict.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 227,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/before-head.started.json",
+      "sha256": "27e5eb328f6375fafebd240cb50f388312db33b3e3f6aaf1e199216459b9a4c9"
+    },
+    {
+      "bytes": 575,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/before-head.execution.json",
+      "sha256": "3dc9f31da81809c4ba8d39bda03253e55d83837b9aca39bb48572a116b3cac4a"
+    },
+    {
+      "bytes": 41,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/before-head.stdout",
+      "sha256": "59a862a7ca9c7e150f80582a8d7a5c160603f239b793bcc8aa9208a120eb4d58"
+    },
+    {
+      "bytes": 0,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/before-head.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 267,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/before-status.started.json",
+      "sha256": "34354206ad3485337adfd886d7684420356ebb4c9ad684ccc464da259a57c242"
+    },
+    {
+      "bytes": 614,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/before-status.execution.json",
+      "sha256": "81e958b813964b71053a096aa6fbdea52c307ccecd5a796fb888eda6f0d63cad"
+    },
+    {
+      "bytes": 0,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/before-status.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/before-status.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 249,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/before-branch.started.json",
+      "sha256": "8d38363eb9e2bbdf3d69393635cbaacdfe4e45f524c7cd985f7b5f518d47485b"
+    },
+    {
+      "bytes": 597,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/before-branch.execution.json",
+      "sha256": "54b75a703445a41ecd79422b067f22a15bbc726cac8d1017ca475bd65dbbd2f3"
+    },
+    {
+      "bytes": 26,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/before-branch.stdout",
+      "sha256": "27f59f78cec33e4b024e3a3a8f43ba9bd7b61b30fee26ce1d19103dc1830355f"
+    },
+    {
+      "bytes": 0,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/before-branch.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 296,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/before-remote.started.json",
+      "sha256": "14232eaa3571e7f6b19b5be20082931abf222c4ed1caf0644ebd40165e3f9ff3"
+    },
+    {
+      "bytes": 644,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/before-remote.execution.json",
+      "sha256": "02617e3bc4d05fca44eb56bc06c919ec6316519db1f64318e111a0e3c3d94ea5"
+    },
+    {
+      "bytes": 78,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/before-remote.stdout",
+      "sha256": "5acbc6d0a5a3c15981bdef0854bdbc27ccdd74c61b9d425fe34872b9d15036ac"
+    },
+    {
+      "bytes": 0,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/before-remote.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 326,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/before-committed-manifest.started.json",
+      "sha256": "a51c69ea573d7c879dd9a7cc868f0300b151c747218d5752b88d5d321b0b980e"
+    },
+    {
+      "bytes": 677,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/before-committed-manifest.execution.json",
+      "sha256": "5862893a119a3bc24af60c4537e1bb2432d94f959042d988e81273198b1d4e0c"
+    },
+    {
+      "bytes": 41406,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/before-committed-manifest.stdout",
+      "sha256": "5137c79614e1090a766046a09817ed5867929c3984933d7c0825c2429c9f3ca0"
+    },
+    {
+      "bytes": 0,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/before-committed-manifest.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 225,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/after-head.started.json",
+      "sha256": "3e52669b2f91499e31ac775a0ff1dda254698ca9ce7512cbb16e5bef7fd8d4b8"
+    },
+    {
+      "bytes": 573,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/after-head.execution.json",
+      "sha256": "31abf732b17015699fe7107112f1f5c039c7ee7834807e4da33f8ff7020404f2"
+    },
+    {
+      "bytes": 41,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/after-head.stdout",
+      "sha256": "59a862a7ca9c7e150f80582a8d7a5c160603f239b793bcc8aa9208a120eb4d58"
+    },
+    {
+      "bytes": 0,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/after-head.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 265,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/after-status.started.json",
+      "sha256": "17ffc0bf8312d77603cb85e5cccd4e2608994e5a56e02a1bf032c0e9845df71b"
+    },
+    {
+      "bytes": 612,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/after-status.execution.json",
+      "sha256": "bca082859d7adc038c781512c5d179ad98d695e442da79fb0b9c54c706e87930"
+    },
+    {
+      "bytes": 0,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/after-status.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/after-status.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 247,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/after-branch.started.json",
+      "sha256": "647308a30d4854d88629c37db6de060f7fbdc86c4a21b143603b3752a9877c55"
+    },
+    {
+      "bytes": 595,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/after-branch.execution.json",
+      "sha256": "8d630a8a16357311ab8dea81101d5bc84f9d692c829a2daa450a76a69cc59a40"
+    },
+    {
+      "bytes": 26,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/after-branch.stdout",
+      "sha256": "27f59f78cec33e4b024e3a3a8f43ba9bd7b61b30fee26ce1d19103dc1830355f"
+    },
+    {
+      "bytes": 0,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/after-branch.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 294,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/after-remote.started.json",
+      "sha256": "465d0a506021178dcfd64f52574a595a4237bb7c1d10e422d77fd08c7c70cc8b"
+    },
+    {
+      "bytes": 642,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/after-remote.execution.json",
+      "sha256": "9b384c90212e39b2300b3d99ea27742918ce22adb162c07e4a802947e3310a9b"
+    },
+    {
+      "bytes": 78,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/after-remote.stdout",
+      "sha256": "5acbc6d0a5a3c15981bdef0854bdbc27ccdd74c61b9d425fe34872b9d15036ac"
+    },
+    {
+      "bytes": 0,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/after-remote.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 324,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/after-committed-manifest.started.json",
+      "sha256": "644cc849d96bfdc7665612232ff9557f89d50b669fec619a80da137f80de4910"
+    },
+    {
+      "bytes": 675,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/after-committed-manifest.execution.json",
+      "sha256": "fd72ff1ff27ce2fc117129e4d753ca956f6617ac2534af3e0e195b8be7d91352"
+    },
+    {
+      "bytes": 41406,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/after-committed-manifest.stdout",
+      "sha256": "5137c79614e1090a766046a09817ed5867929c3984933d7c0825c2429c9f3ca0"
+    },
+    {
+      "bytes": 0,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/after-committed-manifest.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 8172,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/package-report.json",
+      "sha256": "d46f446c637263f4a20ed41e5224040454edcc13a61aaafc1715749f4e07493a"
+    },
+    {
+      "bytes": 8168,
+      "path": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/retained/release-artifacts.json",
+      "sha256": "5a64e895c6e48c5e23e4ec266a294a9cd6d8e0c64ef30c867a51862c201a74ae"
+    }
+  ],
+  "package_observed_exit_code": 0,
+  "published_commit": "eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f",
+  "retained_directory": "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/retained",
+  "reviewed_at": "2026-10-16T17:30:59.210952+00:00",
+  "schema": "lupine.source-readiness.artifact-gate-review.v1",
+  "scope": "Public command receipts/logs/outer observation inspected; wheel/source-archive contents have not been read by this binder. No scientific or CI claim.",
+  "source_clean_observed": true,
+  "status": "PASS_BOUND_COMPLETED_PACKAGE_AND_STRICT_EXECUTION",
+  "strict_observed_exit_code": 0
+}

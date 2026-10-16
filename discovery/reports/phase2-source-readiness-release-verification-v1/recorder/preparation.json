@@ -1,0 +1,20 @@
+{
+  "actual_release_executions": 0,
+  "prepared_utc": "2026-10-16T17:25:07.887918+00:00",
+  "prospective_runtime_count": 351,
+  "prospective_strict_check_count": 18,
+  "schema": "lupine.source-readiness.release-recorder-preparation.v1",
+  "scope": "Source-only preparation; no package build, verifier execution, remote request, private source read or scientific operation.",
+  "sources": {
+    "README.md": {
+      "bytes": 3481,
+      "sha256": "a613a5e953f180520cf111b92a54dca81cac5f21e8b816c57cb493f05c2a51c3"
+    },
+    "record_release.py": {
+      "bytes": 9526,
+      "sha256": "b74867438bda41235f0b93b028f91caf422284037d6ebe65cf244fa4f4084c33"
+    }
+  },
+  "status": "PREPARED_NOT_EXECUTED",
+  "syntax_check": "ast.parse only; recorder not imported or executed"
+}

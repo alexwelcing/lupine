@@ -1,0 +1,103 @@
+{
+  "README_locators": [
+    {
+      "lines": "1,3,7,9",
+      "role": "release/count/curator/source and calculation state"
+    },
+    {
+      "lines": "16-24",
+      "role": "coordinate identity fields, common property file and method exception"
+    },
+    {
+      "lines": "34-43",
+      "role": "old release and malformed old-file link"
+    },
+    {
+      "lines": "49-63",
+      "role": "source curation/filter declarations"
+    }
+  ],
+  "counts": "Advertised documentation only; no actual record or independent-unit count.",
+  "created_at": "2026-10-16T17:20:04.156330+00:00",
+  "maximum_authorized_after_identity_amendment": 9,
+  "prior_notes": "before-file-metadata/ preserves the provisional seven-request note; no failed invocation or final review is implied.",
+  "remaining_requests": "UNUSED; source survey stops here.",
+  "requests_completed": 8,
+  "root_license": "Exact pinned MIT notice; no separate upstream CSD rights validation.",
+  "scientific_truth_or_admission_established": false,
+  "sources": [
+    {
+      "bytes": 118,
+      "id": "repository",
+      "raw_body_public": false,
+      "receipt": "repository/receipt.json",
+      "sha256": "4f50e254a719a6b1b06b529bdaa08980e4acf0878aad0090cba7771f6ebdf0b9",
+      "status": 404,
+      "url": "https://api.github.com/repos/bskjelstad/tmQM"
+    },
+    {
+      "bytes": 15536,
+      "id": "repository_identity_search",
+      "raw_body_public": false,
+      "receipt": "repository_identity_search/receipt.json",
+      "sha256": "f6454a4627ccc9e81df2e147d7a2890c245ab6182d4c9f7b6551b825d65fb126",
+      "status": 200,
+      "url": "https://api.github.com/search/repositories?q=tmQM%20in%3Aname%20fork%3Afalse&per_page=3"
+    },
+    {
+      "bytes": 341,
+      "id": "commit_ref",
+      "raw_body_public": false,
+      "receipt": "commit_ref/receipt.json",
+      "sha256": "38c6222d96334d13e5655b3103118445decf5cf6f0ec3e5cfb9e74f54dc75923",
+      "status": 200,
+      "url": "https://api.github.com/repos/uiocompcat/tmQM/git/ref/heads/master"
+    },
+    {
+      "bytes": 4254,
+      "id": "root_contents",
+      "raw_body_public": false,
+      "receipt": "root_contents/receipt.json",
+      "sha256": "5f76ab3648cb1ac97dc4255df439365f96129be1e6f7d9e1dbc9da802e387f2e",
+      "status": 200,
+      "url": "https://api.github.com/repos/uiocompcat/tmQM/contents?ref=ece824419c9006fe66436daf233822b75533b82f"
+    },
+    {
+      "bytes": 6018,
+      "id": "readme",
+      "raw_body_public": false,
+      "receipt": "readme/receipt.json",
+      "sha256": "9f5b9b9606d27af203462fcd872f6745324d8bbb85f8e3421cd7142b3eb2c83c",
+      "status": 200,
+      "url": "https://raw.githubusercontent.com/uiocompcat/tmQM/ece824419c9006fe66436daf233822b75533b82f/README.md"
+    },
+    {
+      "bytes": 1082,
+      "id": "license",
+      "public_exact_copy": "license/LICENSE.txt",
+      "raw_body_public": true,
+      "receipt": "license/receipt.json",
+      "sha256": "a70905b4e682be470306a66e28d85b4f123f05233b73c2751fdde53dd0a6fbf9",
+      "status": 200,
+      "url": "https://raw.githubusercontent.com/uiocompcat/tmQM/ece824419c9006fe66436daf233822b75533b82f/LICENSE"
+    },
+    {
+      "bytes": 33423,
+      "id": "paper_metadata",
+      "raw_body_public": false,
+      "receipt": "paper_metadata/receipt.json",
+      "sha256": "da5750993381f0d1403eb29830f0a5558e7c1fda5e1eeb0cfcb77f69db8c966d",
+      "status": 200,
+      "url": "https://api.crossref.org/works/10.1021/acs.jcim.0c01041"
+    },
+    {
+      "bytes": 7622,
+      "id": "data_directory_metadata",
+      "raw_body_public": false,
+      "receipt": "data_directory_metadata/receipt.json",
+      "sha256": "ae268050d7b87bed35bf39c4fb0c556cfec7c8c142e9f92bdad354b783d2485a",
+      "status": 200,
+      "url": "https://api.github.com/repos/uiocompcat/tmQM/contents/tmQM?ref=ece824419c9006fe66436daf233822b75533b82f"
+    }
+  ]
+}

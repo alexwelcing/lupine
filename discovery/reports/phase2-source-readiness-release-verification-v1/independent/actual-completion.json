@@ -1,0 +1,15 @@
+{
+  "actual_completion_chunk": "71b8b4",
+  "actual_exit_code": 0,
+  "actual_tool_session": 99639,
+  "audit_report_sha256": "ebc7095e823dc5271ca333f09f11d8f9a9bd87efb67ed0f6aa840494d2cb4362",
+  "check_count": 22005,
+  "execution_sha256": "7d8e6965100929ccef76e2b4187ba0b9bc3bfe10deb0309ad98e21b017ec01fa",
+  "observed_at": "2026-10-16T17:32:45.185106+00:00",
+  "published_commit_observed": "eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f",
+  "runtime_file_count_at_audit": 351,
+  "schema": "lupine.source-readiness.independent-artifact-completion.v1",
+  "scope": "Single completed retained artifact audit; no package/code reexecution, scientific or CI claim.",
+  "status": "PASS",
+  "tracked_and_nonignored_untracked_clean_observed": true
+}

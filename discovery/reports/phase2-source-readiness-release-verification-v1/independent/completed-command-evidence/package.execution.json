@@ -1,0 +1,26 @@
+{
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-I",
+    "/workspace/lupine-discovery-branch/discovery/scripts/package_smoke.py",
+    "--retain-directory",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/retained",
+    "--output",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-release-v1/run-eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f/package-report.json"
+  ],
+  "cwd": "/workspace/lupine-discovery-branch/discovery",
+  "finished_utc": "2026-10-16T17:27:24.319990+00:00",
+  "launch_error": null,
+  "returncode": 0,
+  "started_utc": "2026-10-16T17:26:53.214528+00:00",
+  "stderr": "package.stderr",
+  "stderr_identity": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": "package.stdout",
+  "stdout_identity": {
+    "bytes": 1365,
+    "sha256": "48d37e0e9d9cd3e7c18cbdf4e3b985c793550aa1870345561e873cb50b6ae6b8"
+  }
+}

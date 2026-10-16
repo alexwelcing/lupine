@@ -1,0 +1,19 @@
+{
+  "prior_readme": {
+    "commit": "ece824419c9006fe66436daf233822b75533b82f",
+    "git_blob_sha1": "a03d55b12582567d826430d4c7423db79b2b327b",
+    "locator": "line13 exact curator link",
+    "path": "README.md",
+    "repository": "uiocompcat/tmQM",
+    "sha256": "9f5b9b9606d27af203462fcd872f6745324d8bbb85f8e3421cd7142b3eb2c83c"
+  },
+  "response": {
+    "bytes": 4551,
+    "raw_body_public": false,
+    "receipt": "page/receipt.json",
+    "sha256": "83d30bb906747803c53bbc5589e7836aac867e92c4f92c5b43c0017c9033ffe8",
+    "status": 403,
+    "url": "https://www.uiocompcat.info/tmqmdataset"
+  },
+  "scope": "One ordinary public documentary request. No data/source retry, parser or scientific outcome."
+}

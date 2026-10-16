@@ -1,0 +1,17 @@
+{
+  "bytes": 6018,
+  "finished_at": "2026-10-16T17:16:39.725138+00:00",
+  "headers": {
+    "Content-Length": "6018",
+    "Content-Type": "text/plain; charset=utf-8",
+    "ETag": "\"db2f3c1efdf45b0cd1179d5334bde6c31a87b4a717f675b601be65829430259b\""
+  },
+  "over_cap": false,
+  "redirects_followed": 0,
+  "retries": 0,
+  "sha256": "9f5b9b9606d27af203462fcd872f6745324d8bbb85f8e3421cd7142b3eb2c83c",
+  "started_at": "2026-10-16T17:16:39.139613+00:00",
+  "status": 200,
+  "transport_error": null,
+  "url": "https://raw.githubusercontent.com/uiocompcat/tmQM/ece824419c9006fe66436daf233822b75533b82f/README.md"
+}

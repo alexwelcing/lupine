@@ -1,0 +1,61 @@
+{
+  "headings": [
+    {
+      "line": 1,
+      "text": "# tmQM: 2024 release"
+    },
+    {
+      "line": 15,
+      "text": "## tmQM data files"
+    },
+    {
+      "line": 16,
+      "text": "###### [tmQM/tmQM_X1.xyz.gz](tmQM/tmQM_X1.xyz.gz), [tmQM/tmQM_X2.xyz.gz](tmQM/tmQM_X2.xyz.gz) and [tmQM/tmQM_X3.xyz.gz](tmQM/tmQM_X3.xyz.gz)"
+    },
+    {
+      "line": 21,
+      "text": "###### [tmQM/tmQM_y.csv](tmQM/tmQM_y.csv)"
+    },
+    {
+      "line": 26,
+      "text": "###### [tmQM/tmQM_X.q](tmQM/tmQM_X.q)"
+    },
+    {
+      "line": 29,
+      "text": "###### [tmQM/tmQM_X1.BO](tmQM/tmQM_X1.BO), [tmQM/tmQM_X2.BO](tmQM/tmQM_X2.BO) and [tmQM/tmQM_X3.BO](tmQM/tmQM_X3.BO)"
+    },
+    {
+      "line": 34,
+      "text": "## old_tmQM: 2020 release"
+    },
+    {
+      "line": 35,
+      "text": "###### [old_tmQM/old_tmQM_X1.xyz.gz](old_tmQM/old_tmQM_X1.xyz.gz) and [old_tmQM/old_tmQM_X2.xyz.gz](old_tmQM/old_tmQM_X2.xyz.gz)"
+    },
+    {
+      "line": 41,
+      "text": "###### [old_tmQM/old_tmQM_y.csv](tmQM/tmQM_y.csv)"
+    },
+    {
+      "line": 45,
+      "text": "###### [old_tmQM/Benchmark2_TPSSh_Opt.xyz](old_tmQM/Benchmark2_TPSSh_Opt.xyz)"
+    },
+    {
+      "line": 49,
+      "text": "## Further technical details"
+    }
+  ],
+  "table_headers": [],
+  "links": [
+    "https://chemrxiv.org/engage/chemrxiv/article-details/676050a56dde43c9085b4ccd",
+    "https://github.com/user-attachments/assets/aad441fb-42e1-4086-b2ed-24565c201d17",
+    "https://pubs.acs.org/doi/10.1021/acs.jcim.0c01041",
+    "https://pubs.acs.org/doi/10.1021/acs.jcim.3c01226",
+    "https://pubs.rsc.org/en/content/articlelanding/2023/dd/d2dd00129b",
+    "https://www.nature.com/articles/s43588-024-00616-5",
+    "https://www.uiocompcat.info/tmqmdataset"
+  ],
+  "line_count": 63,
+  "full_readme_machine_read": true,
+  "researcher_body_prose_not_yet_disclosed": true
+}

@@ -91,34 +91,37 @@ previously unused source with paired outcomes and credible study grouping.
 | G35 | Fixed exposed Rhizo census and exact readable workbench, preserving unknown physical scope | COMPLETE / repaired source verified | [144 pairs, 16 groups and 36 reference checks](reports/phase2-rhizo-stored-census-v1/README.md), independent arithmetic/scope reviews; [80 browser checks and final 97 focused tests](reports/phase2-rhizo-census-integration-v1/README.md). Exact public values and exports; no winner, tolerance criterion or fresh scientific admission. |
 | G36 | One complete bounded Li compatibility/documentary/frame route | ACTUAL A1 BLOCKED; A2/B/C not run | [Verified source and first actual failure](reports/phase2-li-complete-layout-verification-v1/README.md): XML_PROFILE_UNSUPPORTED, source unchanged, cleanup complete. No manifest or scientific admission; preserve the failure and stop this route. |
 | G37 | Formalize the finite-population zero-failure counting bound with explicit premises | DONE at `88d512c` | [Exact four-job CI, clean package and independent artifact audit pass](reports/phase2-finite-planning-release-verification-v1/README.md). Thirteen statements extend the audit to 143; all ten earlier modules and 345 runtime files held. No Python refinement or scientific admission. |
-| G38 | Prove finite-population evaluation monotonicity, capped feasibility and the unique first qualifying count | INTEGRATED / local 147-statement audit PASS | [Four independently compiled statements](reports/phase2-finite-planning-monotone-verification-v1/README.md); strict twelve-module build, fresh axiom audit and eleven parser tests pass. All 143 earlier inventory entries held. Publication and exact-commit CI are next. |
-| G39 | Make blocked-source readiness inspectable in CLI, HTTP, browser and installed package | INTEGRATED / focused Python142 and full browser86 PASS | [Actual integrated checks and independent review](reports/phase2-source-readiness-verification-v1/README.md). Fixed documentary Li/Dryad snapshot, explicit unavailable states and exact exports; no source admission or acquisition. Clean installed eighteen-check gate and exact new-commit CI remain pending. |
+| G38 | Prove finite-population evaluation monotonicity, capped feasibility and the unique first qualifying count | PUBLISHED at `eaed2e7`; exact Lean CI PASS | [Four independently compiled statements](reports/phase2-finite-planning-monotone-verification-v1/README.md); strict twelve-module build, fresh axiom audit and eleven parser tests pass. All 143 earlier inventory entries held. [Clean packaging and independent artifact verification pass](reports/phase2-source-readiness-release-verification-v1/README.md); Python CI remains pending. |
+| G39 | Make blocked-source readiness inspectable in CLI, HTTP, browser and installed package | PUBLISHED at `eaed2e7`; clean 18-check package/audit PASS | [Actual integrated checks and independent review](reports/phase2-source-readiness-verification-v1/README.md). Fixed documentary Li/Dryad snapshot, explicit unavailable states and exact exports; no source admission or acquisition. Exact browser/Lean CI pass; two Python CI jobs remain pending. |
+| G40 | Establish a primary scientist-curated GitHub lead without choosing on performance | DOCUMENTARY LEAD; NOT_ADMITTED | [Pinned tmQM README/license/property-file metadata](reports/phase2-primary-github-source-survey-v1/README.md) and [independent qualifications](reports/phase2-tmqm-documentary-review-v1/README.md). Current CSV contents, units, joins, complete pairs and upstream rights remain unresolved; separate curator-page request returned HTTP 403. |
 
-Current owner/checkpoint: root is publishing the source-readiness interface and
-four additional conditional proofs. [Predecessor `88d512c`](reports/phase2-finite-planning-release-verification-v1/README.md)
-now passes all four original CI jobs, clean 28-case/six-schema/17-check packaging,
-strict verification and 20,959 independent artifact checks. The current candidate
-has 351 runtime files, 147 audited statements in twelve modules, 142 focused
-Python methods and 86 full-browser checks passing. These local checks are not
-new-commit CI or an installed-package claim.
+Current owner/checkpoint: root published `eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f`
+and verified the remote SHA. Its [clean installed reproduction and independent
+artifact audit](reports/phase2-source-readiness-release-verification-v1/README.md)
+pass: 28 demonstrations, six schemas, eighteen required checks, strict retention
+and 22,005 independent checks. All 6,794 source files match Git; 351 runtime files
+and 113 wheel payloads match the declared changes. Original browser and Lean CI
+jobs pass; both Python jobs remain pending at this checkpoint. Local focused
+Python 142 and browser 86 results retain their distinct 350/351-file snapshots.
 
-The fixed readiness snapshot makes the Li tensile and Dryad dielectric source
-blocks visible without opening numerical data. Li A1 remains
-`XML_PROFILE_UNSUPPORTED`, with partial XML character-data exposure and no A2/B/C.
-Dryad's single README request remains HTTP 403 with no PDF/parser/data.
-[The independent source survey](reports/phase2-independent-source-survey-v1/README.md)
-records AFLOW's restrictive terms and QM9's paired-property documentation;
-[the exact QM9 collection request](reports/phase2-qm9-file-manifest-v1/README.md)
-returned HTTP 403. No constituent file identity, complete frame or file rights
-were established, and no retry or alternative route followed the denial.
+The fixed Li/Dryad readiness interface and 147 conditional Lean statements remain
+engineering evidence. Li A1's XML block, partial character-data exposure and no
+A2/B/C are preserved. Dryad's README and QM9's collection landing returned HTTP 403;
+no related numerical datasets were acquired. AFLOW's restrictive terms remain.
+[tmQM is a separate primary GitHub lead](reports/phase2-primary-github-source-survey-v1/README.md),
+with an explicit repository MIT notice and mixed archived DFT/GFN2-xTB methods.
+Its [curator page returned HTTP 403](reports/phase2-tmqm-curator-schema-v1/README.md).
+No units or rights are inferred from the denial; a separately bounded literal
+CSV-header inspection is being prepared against the accessible pinned repository.
+It cannot establish complete pairs, full-file identity or upstream rights.
 
-Next: publish the held candidate, verify its remote SHA and original CI, run
-clean installed packaging with all eighteen mandatory checks, and independently
-audit source/wheel bytes. Continue a separate primary-source metadata survey
-without selecting on observed performance. Root owns integration; independent
-reviews remain separate. G20 is unresolved and G21 blocked. Historical scientific
-negatives, physical-performance/general-superiority NO-GO and the disabled old
-automation remain unchanged.
+Next: verify both exact-source Python CI jobs, preserve the clean release records,
+and complete the bounded documentary schema step with explicit exposure accounting.
+No scientific protocol, target pair, feature set, threshold, allocation or fit is
+registered. Root owns integration and publication; independent reviews remain
+separate. G20 is unresolved and G21 blocked. All historical scientific negatives,
+physical-performance/general-superiority NO-GO and the disabled old automation
+remain unchanged.
 
 The historical Rhizo census remains descriptive: 144 pairs, 16 groups and 36
 reference groups. Physical comparability and historical reference choice remain

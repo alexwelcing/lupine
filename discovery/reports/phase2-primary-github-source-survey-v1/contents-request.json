@@ -1,0 +1,6 @@
+{
+  "id": "root_contents",
+  "url": "https://api.github.com/repos/uiocompcat/tmQM/contents?ref=ece824419c9006fe66436daf233822b75533b82f",
+  "maximum_bytes": 2097152,
+  "purpose": "File names/blob IDs/paths only at pinned commit; no numerical file content."
+}

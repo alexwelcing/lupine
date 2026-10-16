@@ -1,0 +1,16 @@
+{
+  "conditional_next_step": "Primary documentation for exact pinned release units/join keys and data/upstream CSD rights; no numerical-row preview to infer them.",
+  "disposition": "CONDITIONAL_DOCUMENTARY_LEAD_WITH_EXPOSURE_WORDING_QUALIFICATION",
+  "exposure_qualification": "Old benchmark subsection heading and filename were displayed in layout metadata; subsection body/data/performance were withheld.",
+  "freshness_or_independence": "UNESTABLISHED",
+  "method_split_preserved": true,
+  "new_network_or_data_operations": 0,
+  "no_blocking_scientific_inconsistency_in_reviewed_notes": true,
+  "old_CSV_link_mismatch_preserved": true,
+  "repository_MIT_not_upstream_rights_attestation": true,
+  "runtime_or_formal_test_executions": 0,
+  "schema": "lupine.tmqm.documentary-independent-review.v1",
+  "scientific_admission": "NOT_ADMITTED",
+  "source_bindings_sha256": "17f92cf5aac3605fcca573454492356b7c060a4954215ec3829e0160631d4eb6",
+  "units_join_keys_complete_pairs": "UNVERIFIED"
+}

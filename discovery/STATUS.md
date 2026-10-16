@@ -1,42 +1,37 @@
 # Project state
 
-Current checkpoint: 2026-10-16, renewed active work; root owns integration and publication.
-The [source-readiness interface](reports/phase2-source-readiness-verification-v1/README.md)
-passes **142 focused Python methods and 86 full-browser checks** on held source.
-It exposes a fixed documentary Li/Dryad snapshot, exact CLI/HTTP/browser exports,
-and explicit unavailable states. No acquisition, source admission or recommendation
-claim follows from displaying the snapshot. The installed-package verifier now
-requires eighteen distinct checks; actual clean packaging for this candidate
-and its new-commit CI are pending.
+Current checkpoint: 2026-10-16; renewed active work, root owns integration.
+Published source **`eaed2e7a00c8bb5c68d9dafb62c03ceb01ca218f`** is verified against
+the remote branch. Its [clean installed reproduction](reports/phase2-source-readiness-release-verification-v1/README.md)
+passes 28 demonstrations, six schemas, eighteen required checks and strict retained
+verification. The independent artifact audit passes **22,005 checks** over all
+6,794 Git source files, 351 runtime files and 113 wheel payloads. These are local
+engineering checks, not independent scientific replication. Original browser and
+Lean CI jobs pass; both Python jobs are still pending at this checkpoint.
 
-[Four new conditional proofs](reports/phase2-finite-planning-monotone-verification-v1/README.md)
-bring the fresh axiom audit to **147 statements in twelve modules**. Strict build
-and eleven parser tests pass; all 143 previous entries and eleven old Lean modules
-held. The new results establish nonincreasing finite zero-failure probability,
-capped feasibility and the unique first qualifying count under explicit premises.
-They do not formally refine the Python loop or validate physical sampling.
-The candidate runtime manifest contains 351 files: six additions, eleven changes,
-and 334 unchanged from predecessor `88d512c`.
+The [readiness interface](reports/phase2-source-readiness-verification-v1/README.md)
+shows a fixed Li/Dryad documentary snapshot, explicit unavailable states and exact
+CLI/HTTP/browser exports. Local integration passes 142 Python methods at its 350-file
+snapshot and 86 browser checks at the final 351-file snapshot. [Four new conditional
+proofs](reports/phase2-finite-planning-monotone-verification-v1/README.md) bring the
+audit to 147 statements in twelve modules, with the old 143 entries held. They prove
+finite counting/monotonicity/minimum claims under explicit premises, not Python
+refinement, physical accuracy or actual sampling validity.
 
-[Predecessor `88d512c` release verification](reports/phase2-finite-planning-release-verification-v1/README.md)
-is complete: all four original CI jobs, clean 28-case/six-schema/17-check package,
-strict retained verification and 20,959 independent artifact checks pass.
-Its 6,520 source files, 345 runtime files and 110 wheel payloads were audited.
-These checks describe that exact source; the new candidate requires its own gates.
+[tmQM documentary research](reports/phase2-primary-github-source-survey-v1/README.md)
+identifies an accessible pinned curator repository, MIT notice, current property-file
+metadata and mixed archived DFT/GFN2-xTB methods. Units, joins, complete pairs,
+independence and upstream CSD terms remain unresolved. The separate
+[curator-page request returned HTTP 403](reports/phase2-tmqm-curator-schema-v1/README.md);
+no retry/parser/follow-up ran. [Independent review](reports/phase2-tmqm-documentary-review-v1/README.md)
+qualifies exposure: old benchmark heading/filename were visible, body/data/performance
+withheld. No numerical dataset, protocol, target pair or allocation is admitted.
 
-Li A1 remains **BLOCKED_SCHEMA / XML_PROFILE_UNSUPPORTED**, with partial XML
-character-data exposure, completed cleanup and no A2/B/C. Dryad's README request
-remains HTTP 403; no PDF/parser/data. [AFLOW/QM9 documentary research](reports/phase2-independent-source-survey-v1/README.md)
-preserves restrictive AFLOW terms, molecular method/label-leakage cautions,
-and unresolved QM9 file rights and identity. The single
-[QM9 collection landing request returned HTTP 403](reports/phase2-qm9-file-manifest-v1/README.md),
-with no dataset download, retry or alternative route. No new study is admitted:
-G20 remains unresolved and G21 blocked. All scientific negatives and physical-
-performance/general-superiority NO-GO remain. The old automation is disabled.
-
-Root's next action is exact publication, clean installed reproduction, independent
-artifact audit and CI verification, while a separate primary-source metadata
-survey continues. No new DFT or exposed-test tuning is part of this increment.
+Li A1's XML block and partial exposure, Dryad/QM9 access failures, restrictive AFLOW
+terms and all historical scientific negatives remain. G20 unresolved/G21 blocked;
+physical-performance/general-superiority NO-GO unchanged. Root next verifies exact
+Python CI and completes a separately bounded header-only documentary step. The old
+automation remains disabled; no new DFT or exposed-test tuning is authorized here.
 
 Historical Snapshot: 2026-10-11 01:40 UTC (exact CI observation `2026-10-11T01:40:16.973611+00:00`). Tested runtime/artifact source: `6585a605d5d325e84423c7e35c7286efe85cfb6f`. [Scoped decision and evidence](reports/research-preview-decision.md).
 

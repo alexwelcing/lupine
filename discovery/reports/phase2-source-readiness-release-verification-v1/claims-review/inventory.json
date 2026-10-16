@@ -1,0 +1,13 @@
+{
+  "files": {
+    "initial-findings.json": {
+      "bytes": 1167,
+      "sha256": "de00f01dc453a14a12880913a5afc4c25d226f45392929ad51748ee4c22eb4c8"
+    },
+    "review.json": {
+      "bytes": 4748,
+      "sha256": "ec2ba00d4f850220882f488801ff33ccfb696cd28a1a106c3af162864953b7d4"
+    }
+  },
+  "schema": "lupine.public-copy-inventory.v1"
+}

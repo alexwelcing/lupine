@@ -1,0 +1,8 @@
+{
+  "id": "license",
+  "url": "https://raw.githubusercontent.com/uiocompcat/tmQM/ece824419c9006fe66436daf233822b75533b82f/LICENSE",
+  "maximum_bytes": 1048576,
+  "expected_git_blob_sha1": "93c7b0cfe77ee705d1c0d91cefac1563921a8f65",
+  "expected_bytes": 1082,
+  "purpose": "Pinned documentary LICENSE only; no dataset file."
+}

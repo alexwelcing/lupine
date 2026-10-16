@@ -1,0 +1,70 @@
+{
+  "actual_join_key_and_complete_pairs": "UNVERIFIED",
+  "advertised_current_complexes": "108k; not verified usable count",
+  "benchmark_selected": false,
+  "commit": "ece824419c9006fe66436daf233822b75533b82f",
+  "curator_chain": [
+    "README identifies UiO Computational Catalysis Group",
+    "README cites original tmQM DOI10.1021/acs.jcim.0c01041",
+    "Crossref names David Balcells and Bastian Bjerkem Skjelstad",
+    "Root MIT notice names Bastian Bjerkem Skjelstad"
+  ],
+  "declared_property_file_identity": {
+    "basis": "GitHub directory metadata at pinned commit",
+    "bytes": 19925955,
+    "contents_acquired": false,
+    "download_identity_verified": false,
+    "git_blob_sha1": "3d5bbfa75f01a8d334d1e630b07f94dc7d36603f",
+    "path": "tmQM/tmQM_y.csv"
+  },
+  "declared_repository_license": "MIT",
+  "documented_common_property_file": "tmQM/tmQM_y.csv",
+  "documented_identity_roles": [
+    "CSD code",
+    "molecular size",
+    "charge",
+    "spin",
+    "stoichiometry",
+    "metal node degree",
+    "SMILES with separately stated derivation"
+  ],
+  "documented_properties": [
+    "electronic energy",
+    "dispersion energy",
+    "dipole moment",
+    "natural charge at metal center",
+    "HOMO-LUMO gap",
+    "HOMO energy",
+    "LUMO energy",
+    "polarizability",
+    "SMILES"
+  ],
+  "exact_column_labels_and_units": "UNVERIFIED",
+  "inference": "Potential fixed archived-calculation label task only; no physical or future-condition guarantee.",
+  "license_git_blob": "93c7b0cfe77ee705d1c0d91cefac1563921a8f65",
+  "method_roles": {
+    "electronic_state": "closed-shell singlet",
+    "geometry": "GFN2-xTB",
+    "listed_single_point_properties": "DFT(TPSSh-D3BJ/def2-SVP)",
+    "polarizability": "GFN2-xTB",
+    "source_charge_classes": [
+      -1,
+      0,
+      1
+    ]
+  },
+  "old_csv_link_mismatch": {
+    "README_line": 41,
+    "automatic_resolution": false,
+    "label": "old_tmQM/old_tmQM_y.csv",
+    "target": "tmQM/tmQM_y.csv"
+  },
+  "original_paper_license_scope": "Crossref supplies ACS authorchoice CC BY terms URL for article; not substituted for dataset rights.",
+  "raw_data_files_acquired": 0,
+  "readme_git_blob": "a03d55b12582567d826430d4c7423db79b2b327b",
+  "release": "README2024 extension; old2020 distinct",
+  "scientific_admission": false,
+  "separate_per_file_or_upstream_CSD_terms": "NOT_ESTABLISHED_BY_ACQUIRED_DOCUMENTATION",
+  "source": "uiocompcat/tmQM",
+  "status": "DOCUMENTARY_LEAD_ONLY_NOT_ADMITTED"
+}

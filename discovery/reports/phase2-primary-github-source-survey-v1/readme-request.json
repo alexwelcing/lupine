@@ -1,0 +1,8 @@
+{
+  "id": "readme",
+  "url": "https://raw.githubusercontent.com/uiocompcat/tmQM/ece824419c9006fe66436daf233822b75533b82f/README.md",
+  "maximum_bytes": 1048576,
+  "expected_git_blob_sha1": "a03d55b12582567d826430d4c7423db79b2b327b",
+  "expected_bytes": 6018,
+  "purpose": "Pinned documentary README.md only; no dataset file."
+}

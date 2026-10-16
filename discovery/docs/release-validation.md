@@ -14,7 +14,7 @@ gate. No aggregate score averages away blocking failures.
 
 | Gate | State | Evidence and release consequence |
 |---|---|---|
-| Current source-readiness candidate | LOCAL PASS; publication/clean package/CI pending | [142 focused Python methods and 86 full-browser checks](../reports/phase2-source-readiness-verification-v1/README.md). Python held its 350-file source; subsequent browser-helper/wiring integration produced the final 351-file source held by the full-browser run. Fixed Li/Dryad documentary snapshot; explicit unavailable states and exact exports. No acquisition or scientific admission. Eighteen-check installed gate requires a new actual run. |
+| Published source-readiness increment `eaed2e7` | Clean package/audit PASS; browser/Lean CI PASS; Python CI pending | [Actual release reproduction](../reports/phase2-source-readiness-release-verification-v1/README.md): 28 demonstrations/six schemas/18 strict checks and 22,005 independent artifact checks; all 351 runtime files held. Local 142-method Python snapshot 350 and 86-check browser snapshot 351 remain distinct. No source acquisition/admission follows from displaying readiness. |
 | Exact predecessor `88d512c` | PASS | [All four original CI jobs, clean28/six-schema/17-check package, strict verification and independent20,959-check artifact audit](../reports/phase2-finite-planning-release-verification-v1/README.md). These do not establish successor verification. |
 | Exact conditional selection kernel | PASS | Exact rational runtime, exhaustive small-world and adversarial tests. Conditional guarantees require sound intervals and a fixed finite candidate universe. |
 | Conditional mathematical statements | PASS | 147 compiled Lean statements in twelve modules, including 17 finite-population counting and minimum-resolution statements added on 2026-10-16; [actual verification](../formal/VERIFICATION.md). This does not prove Python refinement, real sampling validity or physical premises. |
@@ -245,7 +245,7 @@ open physical-scope gates remain unchanged.
 ## Retained artifact and supplemental grammar freeze
 
 The published 2a09d36 checkpoint passes [all four CI jobs](https://github.com/alexwelcing/lupine/actions/runs/38080586212).
-Its actual clean local retained wheel passes28cases/sixschemas. An independent
+Its actual clean local retained wheel passes 28cases/sixschemas. An independent
 [artifact audit](../reports/release-artifact-audit-v1/README.md) checks458Gitblobs,
 183manifestentries and 109wheelRECORDentries; eight synthetic audit tests pass.
 Both CI bundles uploaded, but repeated signed-storage downloadForbidden leaves

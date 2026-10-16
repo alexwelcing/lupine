@@ -1,0 +1,12 @@
+{
+  "acquirer_sha256": "86aba39def51fd0329256ad86f633383d1de5bf25432c593cb26394119c99329",
+  "credentials": false,
+  "maximum_bytes": 1048576,
+  "method": "GET",
+  "redirects": false,
+  "retries": 0,
+  "scope_sha256": "10e8a87d72a44f44e6951a22a5056baec73e6dc905a7c7b2f9abaa767ff90a70",
+  "started_at": "2026-10-16T17:25:57.696620+00:00",
+  "timeout_seconds": 30,
+  "url": "https://www.uiocompcat.info/tmqmdataset"
+}
