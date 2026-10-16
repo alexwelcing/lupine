@@ -1,0 +1,158 @@
+{
+  "schema": "lupine.discovery.next_publication_retained_claim_audit.v1",
+  "status": "PASS_RETAINED_EVIDENCE_AND_HYPOTHETICAL_ARITHMETIC",
+  "observed_at": "2026-10-16T08:06:36.062893+00:00",
+  "source_commit": "4492858d9e55ddfa3cca2e208063799517948b13",
+  "checks": {
+    "exact_original_push_ci_receipt": true,
+    "ci_package_before_actual_operations": true,
+    "two_actual_schema_blocks_identical": true,
+    "zero_decompression_or_xml_started_in_actual_receipts": true,
+    "actual_raw_machine_access_preserved": true,
+    "actual_317_source_maps_unchanged": true,
+    "retained_package_and_audit_counts": true,
+    "finite_vs_iid_boundary_arithmetic": true,
+    "notebook_159_integration_and_320_source_map": true,
+    "current_checkpoint_does_not_claim_notebook_capture": true
+  },
+  "bindings": {
+    "reports/phase2-finite-compatible-verification-v1/ci/final.json": {
+      "sha256": "16f4471eeb2b243016a6465cd0857a76e7064b84d0c4e357bb9ce027fc4a1e02",
+      "bytes": 1304
+    },
+    "reports/phase2-finite-compatible-verification-v1/clean-package/0-execution.json": {
+      "sha256": "e7ca2e89b66bcf4cdc3154d90f16c221c73133c4f0f5111abf8b4f76c8afede8",
+      "bytes": 75228
+    },
+    "reports/phase2-finite-compatible-verification-v1/clean-package/0-stdout.txt": {
+      "sha256": "59277c822ac9141d9bc4d24e019211c1715ee779f27cd6c716aebf9f4ec6ec27",
+      "bytes": 1240
+    },
+    "reports/phase2-finite-compatible-verification-v1/clean-package/0-stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "reports/phase2-finite-compatible-verification-v1/clean-package/1-execution.json": {
+      "sha256": "1c7acb614f7834b768172e20dbe808b2d73279129192d8ede07d851aa79ea854",
+      "bytes": 75298
+    },
+    "reports/phase2-finite-compatible-verification-v1/clean-package/1-stdout.txt": {
+      "sha256": "7b13805e04452135c90b7720ee48e9814bfdc2f27310bef218512f11669db473",
+      "bytes": 3676
+    },
+    "reports/phase2-finite-compatible-verification-v1/clean-package/1-stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "reports/phase2-finite-compatible-verification-v1/actual-envelope/1/public.json": {
+      "sha256": "7010e99afcafbf29d32d5ff7d3f356474c2a670571285d884b80441e91ce3d07",
+      "bytes": 4398
+    },
+    "reports/phase2-finite-compatible-verification-v1/actual-envelope/1/execution.json": {
+      "sha256": "eede22b153a1408517058a7f449816307c790a6b8ff6017b615f2d94ffaed894",
+      "bytes": 76127
+    },
+    "reports/phase2-finite-compatible-verification-v1/actual-envelope/1/stdout.txt": {
+      "sha256": "7010e99afcafbf29d32d5ff7d3f356474c2a670571285d884b80441e91ce3d07",
+      "bytes": 4398
+    },
+    "reports/phase2-finite-compatible-verification-v1/actual-envelope/1/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "reports/phase2-finite-compatible-verification-v1/actual-envelope/2/public.json": {
+      "sha256": "7010e99afcafbf29d32d5ff7d3f356474c2a670571285d884b80441e91ce3d07",
+      "bytes": 4398
+    },
+    "reports/phase2-finite-compatible-verification-v1/actual-envelope/2/execution.json": {
+      "sha256": "0e638bc5f33c0e06f38dc62bab435ce0cf477b60b9b9a87240c67bb98aa375f4",
+      "bytes": 76127
+    },
+    "reports/phase2-finite-compatible-verification-v1/actual-envelope/2/stdout.txt": {
+      "sha256": "7010e99afcafbf29d32d5ff7d3f356474c2a670571285d884b80441e91ce3d07",
+      "bytes": 4398
+    },
+    "reports/phase2-finite-compatible-verification-v1/actual-envelope/2/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "reports/phase2-finite-compatible-verification-v1/independent-artifact-audit/review.json": {
+      "sha256": "9a6abdbcd1be91608cb133a5faf5ab551cae7a5084d2a2197b4862d788cb6dc9",
+      "bytes": 10807
+    },
+    "reports/phase2-finite-planning-figure-v1/independent-review/review.json": {
+      "sha256": "41bc0ff915be7cd4900347aa2241ce806b130726b0af2d7b98caa7e6492dae16",
+      "bytes": 5278
+    },
+    "reports/phase2-li-notebook-methods-candidate-v1/integrated/execution.json": {
+      "sha256": "e57cc5b242f948fbc1fa6a2597dd5b8e5969cf013e0c50101eca0ed42f78dcf0",
+      "bytes": 75985
+    },
+    "reports/phase2-li-notebook-methods-candidate-v1/integrated/stderr.txt": {
+      "sha256": "81f1bf3c05bd1a922d599918c9819f2541ea61a9d402d5b40f3f1c50c53497e2",
+      "bytes": 28966
+    },
+    "reports/phase2-li-notebook-methods-candidate-v1/integrated/stdout.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "reports/continuation.json": {
+      "sha256": "87044a8b1800840495c057289fae4b8280586192abffa059bb3053935dab9200",
+      "bytes": 25396
+    },
+    "GOAL.md": {
+      "sha256": "6c48c6cb2a3fa7d3ca6c48e0d790c3b1539f6ce9459b235c80a9da56a39dd6b3",
+      "bytes": 24744
+    },
+    "STATUS.md": {
+      "sha256": "ccc485e29cacc98bf62e98e2838468e85e7bd0c483921e0f97a6d7cdfbf568e2",
+      "bytes": 30054
+    },
+    "reports/progress.md": {
+      "sha256": "e9772980dfb4339915f2ccad95dc7b130acd6b7ef343b3c82320ac40b9d18216",
+      "bytes": 104952
+    },
+    "docs/release-validation.md": {
+      "sha256": "d1c3a144b57fb6f1be0a04f49c14eb7b46df05ce217027b5a96665c1c3cd8af3",
+      "bytes": 44723
+    },
+    "docs/finite-planning-walkthrough.md": {
+      "sha256": "f804881a3f730e7351208d3cdcab7621eb7f128a8bc13a5fd623f06b4a694a83",
+      "bytes": 3670
+    },
+    "reports/phase2-finite-compatible-verification-v1/README.md": {
+      "sha256": "65d4a831fcae2d921615f7f3b7a4830fba3a4ae1f1531922a3b24a836dfc5616",
+      "bytes": 8485
+    },
+    "reports/phase2-finite-planning-figure-v1/PUBLICATION.md": {
+      "sha256": "ca09947525ffe342742ddf2032349ddfd4315374cd4609c63155e6d94c64fd67",
+      "bytes": 1505
+    },
+    "reports/phase2-li-author-methods-v1/README.md": {
+      "sha256": "e0bc80439db113297fe78631196dc55743d845241919efe580856d6285862ea6",
+      "bytes": 7746
+    },
+    "reports/phase2-finite-compatible-verification-v1/actual-envelope/independent-review/review.json": {
+      "sha256": "a2d7d28588e84d14b2640e9a1b83a2c4fa92ee77e1e8091aec65be11ed079f08",
+      "bytes": 43321
+    },
+    "reports/phase2-finite-compatible-verification-v1/actual-envelope/independent-review/source-path-review.json": {
+      "sha256": "18e04a8cd35fe45a94da132383c856dde9872d5314468768fabf2cacd81b06c5",
+      "bytes": 2416
+    }
+  },
+  "not_performed": [
+    "new remote CI query",
+    "project tests or production commands",
+    "project module import",
+    "raw notebook/workbook/private custody access",
+    "new scientific evaluation or criteria",
+    "tracked writes",
+    "Git mutation"
+  ],
+  "limitations": [
+    "This audit checks retained public records, not independent remote-provider authenticity or raw artifact bytes.",
+    "Finite arithmetic is the existing hypothetical worked example, not scientific outcome evidence.",
+    "Earlier source-format failures and the separately documented unobserved archive-close reporting limitation remain unchanged."
+  ]
+}

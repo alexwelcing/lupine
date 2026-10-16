@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "scripts/li_v3_compatible_envelope.py",
+    "envelope",
+    "--run",
+    "2"
+  ],
+  "commit": "4492858d9e55ddfa3cca2e208063799517948b13",
+  "started_at": "2026-10-16T07:57:24.536295+00:00",
+  "expected_exit_code": 2,
+  "ci_run": 38867704072,
+  "exposure_until_completed_receipt": "UNKNOWN"
+}

@@ -1,0 +1,268 @@
+{
+  "files": {
+    "reports/phase2-finite-compatible-verification-v1/README.md": {
+      "bytes": 8485,
+      "sha256": "65d4a831fcae2d921615f7f3b7a4830fba3a4ae1f1531922a3b24a836dfc5616"
+    },
+    "reports/phase2-finite-planning-figure-v1/PUBLICATION.md": {
+      "bytes": 1505,
+      "sha256": "ca09947525ffe342742ddf2032349ddfd4315374cd4609c63155e6d94c64fd67"
+    },
+    "docs/finite-planning-walkthrough.md": {
+      "bytes": 3670,
+      "sha256": "f804881a3f730e7351208d3cdcab7621eb7f128a8bc13a5fd623f06b4a694a83"
+    },
+    "reports/phase2-li-author-methods-v1/README.md": {
+      "bytes": 7746,
+      "sha256": "e0bc80439db113297fe78631196dc55743d845241919efe580856d6285862ea6"
+    },
+    "reports/phase2-finite-planning-figure-v1/README.md": {
+      "bytes": 5261,
+      "sha256": "721faca77b302f8c494a280d7ecfc3be9dddd973bd037964886f603b98b3af4f"
+    },
+    "reports/phase2-li-author-methods-v1/PUBLICATION.md": {
+      "bytes": 922,
+      "sha256": "d083e4e8f59c584099742fed705bfabb953fd99d6856d60856cca9661d1b4b4b"
+    },
+    "reports/phase2-finite-compatible-verification-v1/publication-checks/lossless-map.json": {
+      "bytes": 1587,
+      "sha256": "375eb1d885571d848688964c36ea42b9aacc9fe5d1c924d4d8cb070fc8b87053"
+    },
+    "reports/phase2-li-author-methods-v1/source-bindings.json": {
+      "bytes": 7459,
+      "sha256": "f136a6955119e4c03b7a6352b574c29fc759a3b2a3aebb380ad53352b7f1b5fb"
+    },
+    ".cache/phase2-li-author-methods-v1/source-bindings.json": {
+      "bytes": 7459,
+      "sha256": "f136a6955119e4c03b7a6352b574c29fc759a3b2a3aebb380ad53352b7f1b5fb"
+    },
+    ".cache/phase2-li-author-methods-v1/README.md": {
+      "bytes": 7746,
+      "sha256": "e0bc80439db113297fe78631196dc55743d845241919efe580856d6285862ea6"
+    },
+    ".cache/phase2-li-author-methods-v1/commit-retrieval.json": {
+      "bytes": 589,
+      "sha256": "b91f76bd9a60fd9331b2315530030d20fa4e8f20d9374846972fd259407d6a9d"
+    },
+    "reports/phase2-li-author-methods-v1/commit-retrieval.json": {
+      "bytes": 589,
+      "sha256": "b91f76bd9a60fd9331b2315530030d20fa4e8f20d9374846972fd259407d6a9d"
+    },
+    ".cache/phase2-li-author-methods-v1/document-retrieval.json": {
+      "bytes": 1535,
+      "sha256": "e99bad06973fcc3c04ab503b3f66dcea0069acdee63733c8c7785d07f7d72706"
+    },
+    "reports/phase2-li-author-methods-v1/document-retrieval.json": {
+      "bytes": 1535,
+      "sha256": "e99bad06973fcc3c04ab503b3f66dcea0069acdee63733c8c7785d07f7d72706"
+    },
+    ".cache/phase2-li-author-methods-v1/repository-commit.json": {
+      "bytes": 2312,
+      "sha256": "24ccd3800f545f5ea88d07ade9e1d2a74b7498a9bfa98cabd1ca64f55e87ed3d"
+    },
+    "reports/phase2-li-author-methods-v1/repository-commit.json": {
+      "bytes": 2312,
+      "sha256": "24ccd3800f545f5ea88d07ade9e1d2a74b7498a9bfa98cabd1ca64f55e87ed3d"
+    },
+    ".cache/phase2-li-author-methods-v1/repository-tree.json": {
+      "bytes": 1262,
+      "sha256": "09dad184bd0d6cdb049fd656f9f32e3772c4c59bc92ea6dba00fcb7f0edecd0f"
+    },
+    "reports/phase2-li-author-methods-v1/repository-tree.json": {
+      "bytes": 1262,
+      "sha256": "09dad184bd0d6cdb049fd656f9f32e3772c4c59bc92ea6dba00fcb7f0edecd0f"
+    },
+    ".cache/phase2-li-author-methods-v1/sources/License - MIT.txt": {
+      "bytes": 1186,
+      "sha256": "51e6879a7ff147df3ebdd959714018d8bce2bd0434862e8d0b082e9e7c2f8214"
+    },
+    "reports/phase2-li-author-methods-v1/sources/License - MIT.txt.bytes.json": {
+      "bytes": 1507,
+      "sha256": "3afa2905b4de86cb71df37acf44915e84a6a289575bf66f167ffc4f3cb7d199c"
+    },
+    "reports/phase2-li-author-methods-v1/sources/License - MIT.txt": {
+      "bytes": 1149,
+      "sha256": "763e7e5d29f8faf15a6d27ab7d4d70c773236b2c6ef82a31c7bd892349f5580c"
+    },
+    ".cache/phase2-li-author-methods-v1/sources/README.md": {
+      "bytes": 7042,
+      "sha256": "8d950ccb30ca70a616cd68385535b397f46eb86b27587030c73afe370b035182"
+    },
+    "reports/phase2-li-author-methods-v1/sources/README.md.bytes.json": {
+      "bytes": 7384,
+      "sha256": "1e72aa21e29302e1a7bf1634a50ee2c4eb136ef2b78d2da803b0ee78bd083ffc"
+    },
+    "reports/phase2-li-author-methods-v1/sources/README.md": {
+      "bytes": 7034,
+      "sha256": "5545535fed44ee17c8b2f2aa0897bd5d2ec118db67bc0524d24ee3f7d83c4f2f"
+    },
+    ".cache/phase2-li-author-methods-v1/tree-identity.json": {
+      "bytes": 538,
+      "sha256": "41951ea3071fd4c4dd449265b8b6db2ef2b211dfcc9d3b40f5f2c58d651f4dfd"
+    },
+    "reports/phase2-li-author-methods-v1/tree-identity.json": {
+      "bytes": 538,
+      "sha256": "41951ea3071fd4c4dd449265b8b6db2ef2b211dfcc9d3b40f5f2c58d651f4dfd"
+    },
+    ".cache/phase2-li-author-methods-v1/tree-retrieval.json": {
+      "bytes": 684,
+      "sha256": "d60953e49ed2b1d48aea1054fc70219a41b0a011fe6c9884c0f244a590dad1d3"
+    },
+    "reports/phase2-li-author-methods-v1/tree-retrieval.json": {
+      "bytes": 684,
+      "sha256": "d60953e49ed2b1d48aea1054fc70219a41b0a011fe6c9884c0f244a590dad1d3"
+    },
+    "reports/li-v3-source-inventory.json": {
+      "bytes": 902,
+      "sha256": "ef4d3de4deb08b3903230a7456fb50de689e49265868d78f0c73faab4461f9ba"
+    },
+    "reports/phase2-source-readiness-v1/README.md": {
+      "bytes": 9309,
+      "sha256": "bd351e8814fb33776e375ed48d1bf2e3aae985404dd8a33920bf40e46a0ca1c5"
+    },
+    "reports/phase2-source-readiness-v1/source-bindings.json": {
+      "bytes": 7113,
+      "sha256": "d7a53adf40427753d7c0c48a54ab5c6ab42407f4dd53045cd508bb695afaa973"
+    },
+    "reports/phase2-source-readiness-v1/li-metadata/datacite-ws-8j.json": {
+      "bytes": 19729,
+      "sha256": "ae43d843befc59ab401410725412e7f6be38e78a8b2722574427473e7edb845a"
+    },
+    "reports/phase2-source-readiness-v1/li-metadata/datacite-ws-kw.json": {
+      "bytes": 19648,
+      "sha256": "fa1c503653598bbcb9153706f5bfcacfc37be49e6b78dada54b3c5111ae7d057"
+    },
+    "reports/phase2-li-notebook-methods-review-v1/first-invocation/stderr.txt.bytes.json": {
+      "bytes": 6006,
+      "sha256": "c3b958a38d121a67dff108ca22abb03a394210f5d64569d0e760490b56d8a6d7"
+    },
+    "reports/phase2-finite-planning-figure-v1/publication-format.json": {
+      "bytes": 2215,
+      "sha256": "eccbe1b56f16e538289c266cd4f721b22d264c326c52b33725404e3961014707"
+    },
+    "reports/phase2-finite-planning-figure-v1/copy-inventory.json": {
+      "bytes": 1920,
+      "sha256": "fa6cb4f7c24334d9853438f460fd80d7b6e27fcc74279ab2334fdd997676a784"
+    },
+    "reports/phase2-finite-planning-figure-v1/README.md.bytes.json": {
+      "bytes": 5350,
+      "sha256": "e44965639a50e19b98a585d9ff0d02ede6367f11cf2f233c164c7043a525d6f1"
+    },
+    "reports/phase2-finite-planning-figure-v1/first-generation/exact-data.csv.bytes.json": {
+      "bytes": 25596,
+      "sha256": "47515abaa67e8adfd425ee40e05d0989529b96d34cc71102f5a32b51f291a91e"
+    },
+    "reports/phase2-finite-planning-figure-v1/first-generation/exact-data.json": {
+      "bytes": 53659,
+      "sha256": "6adcad5906fe3c3ad9e4376b7a88cbd1fcf8315de3ba224840364f6f9a433b35"
+    },
+    "reports/phase2-finite-planning-figure-v1/first-generation/execution.json": {
+      "bytes": 1543,
+      "sha256": "196dd6ce9fc696562c291434255d1aacfceea3e120a256ef081f0d22a500ac3e"
+    },
+    "reports/phase2-finite-planning-figure-v1/first-generation/finite-versus-iid.png": {
+      "bytes": 298868,
+      "sha256": "b3de935df23834f92d2abbab9c552414935232b0a76f78cd76751f2258942fc2"
+    },
+    "reports/phase2-finite-planning-figure-v1/first-generation/finite-versus-iid.svg.bytes.json": {
+      "bytes": 174155,
+      "sha256": "fe5e568111404ba49981be8df7cfa9a9235eccbd6a5a7355b9b700e1311f0d94"
+    },
+    "reports/phase2-finite-planning-figure-v1/first-generation/generate.py": {
+      "bytes": 12318,
+      "sha256": "4fcaf4b3c355198d958e92d8810fd1237d6479075ae4235aa73560b8adae4072"
+    },
+    "reports/phase2-finite-planning-figure-v1/first-generation/source-bindings.json": {
+      "bytes": 439,
+      "sha256": "2bbddfe7924f23ffb93ebf57e5881ff2c5c9df9e29cae4999b91b45d2cdc1c67"
+    },
+    "reports/phase2-finite-planning-figure-v1/generate.py": {
+      "bytes": 12318,
+      "sha256": "848de8fa95ec6276bd31545df36ecb47044915e056079949a0e2abb305fc67d3"
+    },
+    "reports/phase2-finite-planning-figure-v1/handoff.json": {
+      "bytes": 1491,
+      "sha256": "b453bce233cc2221c6ac4e676053788784c09d0e04b56c7690102636509240d3"
+    },
+    "reports/phase2-finite-planning-figure-v1/second-generation/exact-data.csv.bytes.json": {
+      "bytes": 25597,
+      "sha256": "3f7467f63f49db2a16f7c3c2c821a4924159b2f5c6db57c4bc032759f5cf8e04"
+    },
+    "reports/phase2-finite-planning-figure-v1/second-generation/exact-data.json": {
+      "bytes": 53659,
+      "sha256": "6adcad5906fe3c3ad9e4376b7a88cbd1fcf8315de3ba224840364f6f9a433b35"
+    },
+    "reports/phase2-finite-planning-figure-v1/second-generation/execution.json": {
+      "bytes": 1543,
+      "sha256": "21429c41bb739e78edf7173f054dbcc24965025069980a1a736179893d906812"
+    },
+    "reports/phase2-finite-planning-figure-v1/second-generation/finite-versus-iid.png": {
+      "bytes": 300393,
+      "sha256": "43cbfbcd3d00545e10d8974594e2525dbaaf6cea00d36e9db0b5cd2c0dee8931"
+    },
+    "reports/phase2-finite-planning-figure-v1/second-generation/finite-versus-iid.svg.bytes.json": {
+      "bytes": 174155,
+      "sha256": "7762a58020e80c8db46086a2e3681b2348216caee20eb846ca756a85e058e0f9"
+    },
+    "reports/phase2-finite-planning-figure-v1/second-generation/generate.py": {
+      "bytes": 12318,
+      "sha256": "848de8fa95ec6276bd31545df36ecb47044915e056079949a0e2abb305fc67d3"
+    },
+    "reports/phase2-finite-planning-figure-v1/second-generation/source-bindings.json": {
+      "bytes": 439,
+      "sha256": "2bbddfe7924f23ffb93ebf57e5881ff2c5c9df9e29cae4999b91b45d2cdc1c67"
+    },
+    "reports/phase2-finite-planning-figure-v1/exact-data.csv": {
+      "bytes": 24869,
+      "sha256": "6d9d2db576922bab6bda61e5582ca177cdbb835ba19ad4489cb2b78b8bc4ee65"
+    },
+    "reports/phase2-finite-planning-figure-v1/finite-versus-iid.svg": {
+      "bytes": 160874,
+      "sha256": "d2202a40466d290995166f31d6a0762dbc0b51a6e69feee4eae08a1d46ea20bc"
+    },
+    "reports/phase2-li-author-methods-review-v1/review.json": {
+      "bytes": 8821,
+      "sha256": "a28fd210aef6c5e961d99af6000d946f762f651172666720c37a7237d12a1940"
+    },
+    "reports/phase2-li-author-methods-review-v1/scope.json": {
+      "bytes": 1280,
+      "sha256": "343da083a88bddc14da18a358f6c2a912fce3e073a7841677d9fca60f8c41958"
+    },
+    "reports/phase2-finite-planning-figure-v1/independent-review/review.json": {
+      "bytes": 5278,
+      "sha256": "41bc0ff915be7cd4900347aa2241ce806b130726b0af2d7b98caa7e6492dae16"
+    },
+    "reports/phase2-finite-planning-figure-v1/independent-review/execution.json": {
+      "bytes": 730,
+      "sha256": "d13e6104e5426ad244d344a020b7845f0806608af87030799487011cf2b8e557"
+    },
+    "reports/phase2-finite-compatible-verification-v1/publication-scope.json": {
+      "bytes": 809,
+      "sha256": "1d1819643bab3c90e42ad78abf1360836ada51265501706082af073c63a4a7ef"
+    },
+    "reports/phase2-finite-compatible-verification-v1/actual-copy-inventory.json": {
+      "bytes": 4196,
+      "sha256": "931d6d65f93596bc2989022781d8f0e1fd8a678f58c7491f13f25f714673565e"
+    },
+    "reports/phase2-finite-compatible-verification-v1/independent-artifact-audit/copy-inventory.json": {
+      "bytes": 616,
+      "sha256": "28059988bf26f504d0e11fb0e72620ee21d060d569733248a688611a82348eb8"
+    },
+    "reports/phase2-finite-compatible-verification-v1/clean-package/release-artifacts.json": {
+      "bytes": 7979,
+      "sha256": "adebbb2f2c925ff9ab2118582d2990cfa1adf08ad14c40cf75dba4280ccd6c5d"
+    },
+    "reports/phase2-finite-compatible-verification-v1/independent-artifact-audit/review.json": {
+      "bytes": 10807,
+      "sha256": "9a6abdbcd1be91608cb133a5faf5ab551cae7a5084d2a2197b4862d788cb6dc9"
+    },
+    "reports/phase2-finite-compatible-verification-v1/integration-claim-review/review.json": {
+      "bytes": 49862,
+      "sha256": "277f25178ebaf4001472f8dcd75ae2022a463d1a02acd59374a58e4dada2e15a"
+    },
+    "reports/phase2-finite-compatible-verification-v1/promotion-execution.json": {
+      "bytes": 54586,
+      "sha256": "8f91be3b064e6a32310db58a07a13db9cf2a9943fd6b3781f63ef7e41ef0395d"
+    }
+  }
+}

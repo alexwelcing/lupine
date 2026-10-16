@@ -1,25 +1,33 @@
 # Project state
 
-**Active phase, October 16:** Published f7c6ccd passes all four GitHub CI jobs,
-clean packaging (28 cases/six schemas/15 checks) and strict retained verification.
-[Two actual flag diagnoses](reports/phase2-li-flag-verification-v1/README.md)
-identify DEFLATE_OPTION_FLAGS_ONLY in the same first rejected ZIP entry. All309
-runtime files and source identity remain unchanged. Whole source bytes and
-directory names were read; no member, XML or worksheet was decoded. Original
-profiles and failures remain preserved; this is not complete archive acceptance.
+**Active phase, October 16:** Published `4492858` passes all four original GitHub
+CI jobs, clean packaging (28 cases/six schemas/16 checks), strict retention and
+an independent byte audit. The exact finite-archive planner is available through
+the API, CLI, HTTP and third Study planning form. Its calculation applies to a
+fixed finite frame under uniform sampling without replacement; it establishes
+neither observed power nor future-material risk.
 
-The [finite-population workbench](reports/phase2-finite-workbench-v1/README.md)
-adds a separately scoped exact API, CLI, guarded HTTP and third planning form.
-It passes local isolated planning/package/browser checks and independent reviews;
-new committed-source CI/retention remain a later gate. The [compatible envelope](reports/phase2-li-compatible-envelope-v1/README.md)
-passes17author/16independent synthetic checks and preserves all13old frozen files.
-Its actual run awaits its own published-source CI and clean package. The
-[prospective schema map](reports/phase2-li-next-schema-design-v1/README.md)
-keeps roles/coordinates, pairing, source lineage and count discrepancy unresolved.
+[Two actual compatible-envelope runs](reports/phase2-finite-compatible-verification-v1/README.md)
+remain BLOCKED_SCHEMA / BLOCKED_LAYOUT / ZIP_LAYOUT_UNSUPPORTED. Both preserved
+all 317 runtime files and verified the complete raw object, without beginning
+member decompression or XML decoding. No recognized sheet roles or scientific
+schema are established. The precise later rejected predicate remains unresolved;
+the original reader and all earlier blocked results stay unchanged.
 
-Root owns integration, publication and exact-source verification. Scientific
-usefulness remains NO-GO; no scientific allocation or fit occurred. The original
-automation remains disabled and no continuous worker was started.
+The separately reviewed [notebook methods reader](reports/phase2-li-notebook-methods-candidate-v1/README.md)
+and [categorical ZIP diagnostic](reports/phase2-compatible-zip-diagnostic-v1/README.md)
+are integrated with 199 passing combined Li tests and all 323 runtime files held.
+No actual notebook was acquired. Its capture and static inspection require the
+new source's publication, exact CI and clean-package verification. The diagnostic reports closed rejection categories without changing the frozen
+compatible profile. Its first noisy synthetic cleanup attempt is preserved, and
+corrected cleanup checks pass. Dependent worksheet localization
+remains a prospective design because its envelope-success prerequisite failed.
+
+Root owns integration, publication and exact-source verification. The [author
+repository audit](reports/phase2-li-author-methods-v1/README.md) does not resolve
+row semantics, grouping, curation or the count discrepancy. All scientific NO-GO
+results remain unchanged; no allocation or fit occurred. The expired automation
+remains disabled and no continuous worker was started.
 [GOAL](GOAL.md#renewed-active-work--2026-10-16) records the next actions.
 
 Snapshot: 2026-10-11 01:40 UTC (exact CI observation `2026-10-11T01:40:16.973611+00:00`). Tested runtime/artifact source: `6585a605d5d325e84423c7e35c7286efe85cfb6f`. [Scoped decision and evidence](reports/research-preview-decision.md).

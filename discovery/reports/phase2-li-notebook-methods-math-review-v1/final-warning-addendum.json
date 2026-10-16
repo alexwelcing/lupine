@@ -1,0 +1,96 @@
+{
+  "bindings": {
+    "author_log": {
+      "path": ".cache/phase2-li-notebook-methods-candidate-v1/author-warning-repaired.stderr",
+      "sha256": "b964a95241fefba902edbddc2e62a2baa60a2b4a2ad4f6226f548dd27b33845d"
+    },
+    "author_receipt": {
+      "path": ".cache/phase2-li-notebook-methods-candidate-v1/author-warning-repaired.json",
+      "sha256": "2cf20acc0e0dc85c2e54df3229bf732470015af8dd86d9f15bfe4eb0cd490fa0"
+    },
+    "author_tests": {
+      "path": ".cache/phase2-li-notebook-methods-candidate-v1/promotion/tests/test_li_v3_notebook_methods.py",
+      "sha256": "7a93116314786ea8a5b49562473c891bde225f6abf638c9427a361fa38b9d809"
+    },
+    "contract": {
+      "path": ".cache/phase2-li-notebook-methods-candidate-v1/promotion/docs/li-v3-notebook-methods-plan.md",
+      "sha256": "c19cd936e9c812e46a178d3dbff5d4bf2736505de6445858b6b5214e2066f5f5"
+    },
+    "current_source": {
+      "path": ".cache/phase2-li-notebook-methods-candidate-v1/promotion/scripts/li_v3_notebook_methods.py",
+      "sha256": "2423ee14f16b6b7ec46ef896f25cb5962b1c28dbea79fcb365e14b0919752049"
+    },
+    "independent_receipt": {
+      "path": ".cache/phase2-li-notebook-methods-review-v1/final-invocation/execution.json",
+      "sha256": "2aef1d4d583788ff075bbc38b281a66994aba4810bf7ca46fd96d865061a109a"
+    },
+    "independent_review": {
+      "path": ".cache/phase2-li-notebook-methods-review-v1/review.json",
+      "sha256": "cb5b2be652984a1c4b9386b691a57e7dd2f36ff0072b85ae43ed9c185b4484af"
+    },
+    "independent_stderr": {
+      "path": ".cache/phase2-li-notebook-methods-review-v1/final-invocation/stderr.txt",
+      "sha256": "ba26306ef515e88f3bdf0be8bfe3645585a79098a9c5fdc6dadf240237cccfc2"
+    },
+    "independent_stdout": {
+      "path": ".cache/phase2-li-notebook-methods-review-v1/final-invocation/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "independent_tests": {
+      "path": ".cache/phase2-li-notebook-methods-review-v1/test_li_v3_notebook_methods_review.py",
+      "sha256": "81e36eba1e7fd7c75b63ac04cc19ec00893520e37e71f944525eafaf7492dfc1"
+    },
+    "prior_author_tests": {
+      "path": ".cache/phase2-li-notebook-methods-candidate-v1/before-parser-warning-fix/promotion/tests/test_li_v3_notebook_methods.py",
+      "sha256": "3ca3d61af463933adfd15393e9362326a1ff124d595ab66aa468ca13b05481b0"
+    },
+    "prior_source": {
+      "path": ".cache/phase2-li-notebook-methods-candidate-v1/before-parser-warning-fix/promotion/scripts/li_v3_notebook_methods.py",
+      "sha256": "5021605ea4092c5d7f4f7bc0fde6be1996b55c5db9b32128a776d28b674f4514"
+    },
+    "prior_source_review": {
+      "path": ".cache/phase2-li-notebook-methods-math-review-v1/review.json",
+      "sha256": "7104982b25c96ea3121526df88a4b51b5cc4fb0f9f3d914a9f669df9d4db30eb"
+    },
+    "warning_finding": {
+      "path": ".cache/phase2-li-notebook-methods-candidate-v1/parser-warning-finding.json",
+      "sha256": "8b2ece3424d65b1f1bc5cc8a38cd9539c64cfcd402c048bf7162dcea9ae335f8"
+    }
+  },
+  "blockers": [],
+  "exact_delta_audit": {
+    "method": "Normalize only the one added warnings import and one catch_warnings/simplefilter wrapper; compare complete AST to prior independently reviewed source.",
+    "new_author_test_methods": 1,
+    "old_author_test_methods_unchanged": 19,
+    "whole_remaining_ast_equal": true
+  },
+  "findings": [
+    "Parser warnings can disclose notebook literal content through stderr, independently of exception handling and JSON projection; the preserved synthetic finding establishes why the added output-channel control is needed.",
+    "Local catch_warnings plus ignore filter encloses only ast.parse. Filters are restored on normal or exceptional exit; constant parser error conversion, projection, source/type/size/capture guards and all remaining code are unchanged.",
+    "The added warning control does not waive a structural validation or alter a scientific claim. Candidate code is not executed, and notebook source remains unacquired in this review.",
+    "Child reviewer independently confirms exact delta and no remaining source/claim blocker at the final digest."
+  ],
+  "not_performed": [
+    "candidate_import_or_execution",
+    "test_suite_rerun",
+    "notebook_acquisition_or_read",
+    "network",
+    "private_cache_access",
+    "tracked_edits",
+    "CI_or_package_verification",
+    "new_scientific_evaluation"
+  ],
+  "prior_review_remains_historical": true,
+  "remaining_gates": "Root exact promotion, complete combined-source testing, publication, exact CI/package verification and only then fixed actual acquisition/inspection; current source review and synthetic passes do not attest a usable real notebook or scientific schema.",
+  "retained_execution_evidence_checked": {
+    "actual_test_rerun_by_this_review": false,
+    "author_tests": 20,
+    "independent_stdout_stderr_hashes_match": true,
+    "independent_tests": 30,
+    "prior_independent_fixture_failure_preserved_in_separate_review": true,
+    "source_and_test_hashes_match": true
+  },
+  "reviewed_at": "2026-10-16T07:57:38.511497+00:00",
+  "schema": "lupine.discovery.source_review_addendum.v1",
+  "status": "PASS_FINAL_WARNING_SUPPRESSION_SOURCE_AT_BOUND_HASH"
+}

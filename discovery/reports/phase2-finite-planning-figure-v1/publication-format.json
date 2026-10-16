@@ -1,0 +1,48 @@
+{
+  "status": "EXACT_ORIGINALS_RETAINED_AND_EQUIVALENT_CLEAN_EXPORTS",
+  "originals": [
+    {
+      "original_path": "first-generation/exact-data.csv",
+      "wrapper": "first-generation/exact-data.csv.bytes.json",
+      "original_sha256": "e8f1ca4d9ee10270ab1c4d1ac9ba79ef2e99fbb8e07df537c061dab5d5c7b7cf",
+      "round_trip_exact": true
+    },
+    {
+      "original_path": "first-generation/finite-versus-iid.svg",
+      "wrapper": "first-generation/finite-versus-iid.svg.bytes.json",
+      "original_sha256": "3b3bbd291f1e7a37d127b6f961daf0e606a1979aa9e65e8b987ab6390c6042f4",
+      "round_trip_exact": true
+    },
+    {
+      "original_path": "second-generation/exact-data.csv",
+      "wrapper": "second-generation/exact-data.csv.bytes.json",
+      "original_sha256": "e8f1ca4d9ee10270ab1c4d1ac9ba79ef2e99fbb8e07df537c061dab5d5c7b7cf",
+      "round_trip_exact": true
+    },
+    {
+      "original_path": "second-generation/finite-versus-iid.svg",
+      "wrapper": "second-generation/finite-versus-iid.svg.bytes.json",
+      "original_sha256": "11f702c691f8d67a3142de5443bd8c8790d177e828c4f861324d6470fa5b171f",
+      "round_trip_exact": true
+    },
+    {
+      "original_path": "README.md",
+      "wrapper": "README.md.bytes.json",
+      "original_sha256": "c73de3aa4df464914077ceb4c71e7de1a365f3a239d0ccb8f0eb909faf7ffb8d",
+      "round_trip_exact": true
+    }
+  ],
+  "clean_csv_sha256": "6d9d2db576922bab6bda61e5582ca177cdbb835ba19ad4489cb2b78b8bc4ee65",
+  "clean_svg_sha256": "d2202a40466d290995166f31d6a0762dbc0b51a6e69feee4eae08a1d46ea20bc",
+  "validation": [
+    "CSV parsed rows exactly equal",
+    "SVG element tags/attributes/nonwhitespace text equal after only path-d whitespace token normalization; whitespace-only XML text ignored",
+    "All original payloads round-trip exactly"
+  ],
+  "scope": "Publication representation only; no rerender, arithmetic change or new test/science claim.",
+  "navigation_revision": {
+    "path": "README.md",
+    "sha256": "721faca77b302f8c494a280d7ecfc3be9dddd973bd037964886f603b98b3af4f",
+    "change": "Two SVG/CSV targets now link existing equivalent clean exports, with explicit original-byte wrapper notice; no mathematical or historical claims changed."
+  }
+}

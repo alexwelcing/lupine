@@ -1,0 +1,42 @@
+{
+  "schema": "lupine.discovery.li_v3.notebook_methods_candidate.v1",
+  "created_at": "2026-10-16T07:49:31.899086+00:00",
+  "status": "AUTHOR_TESTS_PASS_INDEPENDENT_REVIEW_PENDING",
+  "files": [
+    {
+      "path": "docs/li-v3-notebook-methods-plan.md",
+      "sha256": "c19cd936e9c812e46a178d3dbff5d4bf2736505de6445858b6b5214e2066f5f5",
+      "bytes": 6249
+    },
+    {
+      "path": "scripts/__pycache__/li_v3_notebook_methods.cpython-312.pyc",
+      "sha256": "0f7e7c702934c29026842372c6e04bdf1cec44e4ea84f6887e9d8e42e4f51b1e",
+      "bytes": 22209
+    },
+    {
+      "path": "scripts/li_v3_notebook_methods.py",
+      "sha256": "70eb1dd8cf05ade2c93e8dbbb1bae8bb59dc1e6dd762cf24e74de1d26dd5a02e",
+      "bytes": 16983
+    },
+    {
+      "path": "tests/test_li_v3_notebook_methods.py",
+      "sha256": "12f24be3092af463988b11238fe7f18e8a6c08cace89f74fcf4f0fe0f68eed43",
+      "bytes": 12177
+    }
+  ],
+  "author_test_summary": {
+    "tests": 16,
+    "exit_code": 0,
+    "unittest_seconds": 0.486,
+    "subprocess_elapsed_seconds": 0.895149081999989,
+    "receipt": "author-first.json",
+    "receipt_timing_clarification": "author-first-recording-note.json"
+  },
+  "independent_review_pending": true,
+  "actual_notebook_acquired": false,
+  "actual_notebook_parsed": false,
+  "actual_production_operation": false,
+  "publication_or_ci_verified": false,
+  "unchanged_prior_files": 5,
+  "source_scope": "static candidate code plus synthetic notebooks and old public frozen source files only"
+}

@@ -1,0 +1,61 @@
+{
+  "schema": "lupine.discovery.li_v3.notebook_methods_candidate.v1",
+  "created_at": "2026-10-16T07:52:25.324747+00:00",
+  "status": "AUTHOR_TESTS_PASS_INDEPENDENT_REVIEW_PENDING",
+  "promotion_files": [
+    {
+      "path": "scripts/li_v3_notebook_methods.py",
+      "sha256": "5021605ea4092c5d7f4f7bc0fde6be1996b55c5db9b32128a776d28b674f4514",
+      "bytes": 17131
+    },
+    {
+      "path": "tests/test_li_v3_notebook_methods.py",
+      "sha256": "3ca3d61af463933adfd15393e9362326a1ff124d595ab66aa468ca13b05481b0",
+      "bytes": 14021
+    },
+    {
+      "path": "docs/li-v3-notebook-methods-plan.md",
+      "sha256": "c19cd936e9c812e46a178d3dbff5d4bf2736505de6445858b6b5214e2066f5f5",
+      "bytes": 6249
+    }
+  ],
+  "excluded_generated_artifacts": [
+    "promotion/scripts/__pycache__/"
+  ],
+  "author_test_summary": {
+    "tests": 19,
+    "exit_code": 0,
+    "unittest_seconds": 0.653,
+    "subprocess_elapsed_seconds": 1.1302402809997147,
+    "receipt": "author-final.json"
+  },
+  "historical_invocations": [
+    {
+      "receipt": "before-review-fixes/author-first.json",
+      "tests": 16,
+      "exit_code": 0,
+      "source_sha256": "70eb1dd8cf05ade2c93e8dbbb1bae8bb59dc1e6dd762cf24e74de1d26dd5a02e",
+      "limitation": "pre-review source had float/int capture receipt equivalence and exposure/bounding defects; not the final-source pass"
+    },
+    {
+      "receipt": "before-empty-code-exposure-fix/author-repaired.json",
+      "tests": 18,
+      "exit_code": 0,
+      "source_sha256": "0a11673c677f19dd109450542522be4f8e27df3b8fc2c8500f35ec21e195e0f1",
+      "limitation": "before empty-code AST exposure correction"
+    }
+  ],
+  "repairs": [
+    "capture source byte count has strict integer type",
+    "synthetic type and size checked before identity hashing",
+    "bounded byte traversal truthfully recorded before hash rejection",
+    "no-code notebook does not claim AST parsing"
+  ],
+  "independent_review_pending": true,
+  "actual_notebook_acquired": false,
+  "actual_notebook_parsed": false,
+  "actual_production_operation": false,
+  "publication_or_ci_verified": false,
+  "unchanged_prior_files": 5,
+  "source_scope": "static candidate code plus synthetic notebooks and old public frozen source files only"
+}

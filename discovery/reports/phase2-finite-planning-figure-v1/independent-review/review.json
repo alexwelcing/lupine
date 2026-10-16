@@ -1,0 +1,69 @@
+{
+  "bindings": {
+    ".cache/phase2-finite-compatible-verification-v1/promotion/docs/finite-planning-walkthrough.md": "f804881a3f730e7351208d3cdcab7621eb7f128a8bc13a5fd623f06b4a694a83",
+    ".cache/phase2-finite-planning-figure-v1/README.md": "c73de3aa4df464914077ceb4c71e7de1a365f3a239d0ccb8f0eb909faf7ffb8d",
+    ".cache/phase2-finite-planning-figure-v1/first-generation/exact-data.csv": "e8f1ca4d9ee10270ab1c4d1ac9ba79ef2e99fbb8e07df537c061dab5d5c7b7cf",
+    ".cache/phase2-finite-planning-figure-v1/first-generation/exact-data.json": "6adcad5906fe3c3ad9e4376b7a88cbd1fcf8315de3ba224840364f6f9a433b35",
+    ".cache/phase2-finite-planning-figure-v1/first-generation/execution.json": "196dd6ce9fc696562c291434255d1aacfceea3e120a256ef081f0d22a500ac3e",
+    ".cache/phase2-finite-planning-figure-v1/first-generation/finite-versus-iid.png": "b3de935df23834f92d2abbab9c552414935232b0a76f78cd76751f2258942fc2",
+    ".cache/phase2-finite-planning-figure-v1/first-generation/finite-versus-iid.svg": "3b3bbd291f1e7a37d127b6f961daf0e606a1979aa9e65e8b987ab6390c6042f4",
+    ".cache/phase2-finite-planning-figure-v1/first-generation/source-bindings.json": "2bbddfe7924f23ffb93ebf57e5881ff2c5c9df9e29cae4999b91b45d2cdc1c67",
+    ".cache/phase2-finite-planning-figure-v1/generate.py": "848de8fa95ec6276bd31545df36ecb47044915e056079949a0e2abb305fc67d3",
+    ".cache/phase2-finite-planning-figure-v1/handoff.json": "b453bce233cc2221c6ac4e676053788784c09d0e04b56c7690102636509240d3",
+    ".cache/phase2-finite-planning-figure-v1/second-generation/exact-data.csv": "e8f1ca4d9ee10270ab1c4d1ac9ba79ef2e99fbb8e07df537c061dab5d5c7b7cf",
+    ".cache/phase2-finite-planning-figure-v1/second-generation/exact-data.json": "6adcad5906fe3c3ad9e4376b7a88cbd1fcf8315de3ba224840364f6f9a433b35",
+    ".cache/phase2-finite-planning-figure-v1/second-generation/execution.json": "21429c41bb739e78edf7173f054dbcc24965025069980a1a736179893d906812",
+    ".cache/phase2-finite-planning-figure-v1/second-generation/finite-versus-iid.png": "43cbfbcd3d00545e10d8974594e2525dbaaf6cea00d36e9db0b5cd2c0dee8931",
+    ".cache/phase2-finite-planning-figure-v1/second-generation/finite-versus-iid.svg": "11f702c691f8d67a3142de5443bd8c8790d177e828c4f861324d6470fa5b171f",
+    ".cache/phase2-finite-planning-figure-v1/second-generation/source-bindings.json": "2bbddfe7924f23ffb93ebf57e5881ff2c5c9df9e29cae4999b91b45d2cdc1c67",
+    "src/lupine_discovery/finite_planning.py": "027785ccdf24f6e8cf9b7a8ac98987b821fcdb19c875bbe8d2ba52d2fc3895f8",
+    "src/lupine_discovery/study_planning.py": "7a2b00bc81f8bc025b9bb3d6c6c212875d44a9839c4665ec67c86e46fe5f6d83"
+  },
+  "blockers": [],
+  "boundaries": {
+    "finite24": "218427169/3961169212",
+    "finite25": "655281507/13684039096",
+    "finite90": "1/17310309456440",
+    "iid28": "523347633027360537213511521/10000000000000000000000000000",
+    "iid29": "4710128697246244834921603689/100000000000000000000000000000"
+  },
+  "checked_sample_counts": 101,
+  "claim_review": {
+    "24_fails_25_qualifies": true,
+    "28_fails_29_qualifies": true,
+    "no_physical_or_future_material_guarantee": true,
+    "no_power_or_scientific_performance_or_cost_claim": true,
+    "prior_negative_results_preserved": true,
+    "source_binding_not_runtime_conformance": true,
+    "walkthrough_exact_fraction_correct": true
+  },
+  "commit_bound": "4492858d9e55ddfa3cca2e208063799517948b13",
+  "exact_csv_json_agreement": true,
+  "exact_data_unchanged_between_renders": true,
+  "finished_at": "2026-10-16T07:48:00.579143+00:00",
+  "finite_first_zero": 91,
+  "finite_null_count_worlds_per_sample_count": 91,
+  "finite_null_world_count": 9191,
+  "mathematical_reasoning": [
+    "At fixed K, exactly C(100-K,e) of C(100,e) uniformly sampled subsets avoid failures; the numerator is nonincreasing in K, so the null supremum for K>=10 occurs at K=10.",
+    "Under the separate IID model, Pr(zero failures)=(1-q)^e is nonincreasing in q, so q>=1/10 gives the null supremum (9/10)^e.",
+    "Finite zero-failure mass is positive through e=90 and zero for e>=91. This is null event impossibility, not observed zero risk.",
+    "Rejecting only on zero failures at fixed e=25 has false-rejection probability at most 1/20 under each fixed null world; it is not a posterior null probability or a prediction of success.",
+    "Conditioning is on the complete frozen residual frame/policy/calibration with a valid uniform draw, not additionally on the realized subset or a selected favorable subgroup. The two experiment scopes differ."
+  ],
+  "minimum_finite": 25,
+  "minimum_iid": 29,
+  "not_performed": {
+    "generator_rerender": true,
+    "independent_visual_inspection": true,
+    "network_or_scientific_data_reads": true,
+    "new_theorem_compilation_or_refinement": true,
+    "runtime_conformance": true,
+    "runtime_test_suite": true
+  },
+  "oracle": "Independent exact count of all uniform e-subsets for each K=10..100; separate IID ten-symbol sequence count 9**e/10**e. No generator or runtime import.",
+  "schema": "lupine.discovery.independent_figure_math_review.v1",
+  "started_at": "2026-10-16T07:48:00.318250+00:00",
+  "status": "PASS_EXACT_ARITHMETIC_AND_CLAIM_REVIEW",
+  "visual_scope": "Root/author visual review exists separately; this review checks arithmetic, source and prose, not layout."
+}

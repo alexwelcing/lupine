@@ -1,0 +1,10 @@
+{
+  "observed_at": "2026-10-16T07:36:34.437948+00:00",
+  "status": "PASS_PUBLIC_PREREQUISITE_BYTES",
+  "profile_source_sha256": "e771b3fc2a66d6e2ff3a26d8aae88b7a2915ac908907908316e697997761c847",
+  "actual_public_flag_sha256": "74404679ec62a18ef50d1847f652ba749c85eb8f63d08740d2fa0a5fb956c47b",
+  "only_input": ".cache/li-v3-custody/flag-diagnostic-v1/1/public.json",
+  "private_capture_or_object_read": false,
+  "compatible_envelope_executed": false,
+  "scope": "Exact canonical prerequisite validation only; CI/package gates and actual full source inspection remain separate."
+}

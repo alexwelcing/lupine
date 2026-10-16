@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python",
+    ".cache/phase2-li-compatible-actual-review-v1/audit.py"
+  ],
+  "exit_code": 0,
+  "files": {
+    "audit.py": "a44fe2c77f6d40b1eb7794bfb22a784d68d6b4fd7bb59f299d1751c910bcc2ba",
+    "review.json": "a2d7d28588e84d14b2640e9a1b83a2c4fa92ee77e1e8091aec65be11ed079f08",
+    "source-path-review.json": "18e04a8cd35fe45a94da132383c856dde9872d5314468768fabf2cacd81b06c5",
+    "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout.txt": "f0ba8f140bed794c7052122dddd4475f872bf3cb5dfc69d73ae45f95ecde179e"
+  },
+  "finished_at": "2026-10-16T08:01:25.478267+00:00",
+  "scope": "Read-only actual public receipt/source/chronology audit; no source operation, candidate import or tests.",
+  "started_at": "2026-10-16T08:01:23.385585+00:00"
+}

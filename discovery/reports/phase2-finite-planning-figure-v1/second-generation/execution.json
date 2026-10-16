@@ -1,0 +1,33 @@
+{
+  "artifacts": {
+    "exact-data.csv": "e8f1ca4d9ee10270ab1c4d1ac9ba79ef2e99fbb8e07df537c061dab5d5c7b7cf",
+    "exact-data.json": "6adcad5906fe3c3ad9e4376b7a88cbd1fcf8315de3ba224840364f6f9a433b35",
+    "finite-versus-iid.png": "43cbfbcd3d00545e10d8974594e2525dbaaf6cea00d36e9db0b5cd2c0dee8931",
+    "finite-versus-iid.svg": "11f702c691f8d67a3142de5443bd8c8790d177e828c4f861324d6470fa5b171f",
+    "source-bindings.json": "2bbddfe7924f23ffb93ebf57e5881ff2c5c9df9e29cae4999b91b45d2cdc1c67"
+  },
+  "bound_sources_unchanged": true,
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-finite-planning-figure-v1/generate.py",
+    "--output-directory",
+    ".cache/phase2-finite-planning-figure-v1/second-generation"
+  ],
+  "commit_after": "4492858d9e55ddfa3cca2e208063799517948b13",
+  "commit_before": "4492858d9e55ddfa3cca2e208063799517948b13",
+  "elapsed_seconds": 1.975852904999556,
+  "exact_table_rows": 101,
+  "exit_code": 0,
+  "finished_at_utc": "2026-10-16T07:42:46.317598+00:00",
+  "matplotlib_version": "3.10.8",
+  "new_tests_or_experiments_claimed": false,
+  "project_modules_imported": false,
+  "python_version": "3.12.14",
+  "runtime_conformance_executed": false,
+  "scientific_data_read": false,
+  "script_sha256": "848de8fa95ec6276bd31545df36ecb47044915e056079949a0e2abb305fc67d3",
+  "started_at_utc": "2026-10-16T07:42:44.341728+00:00",
+  "status": "GENERATED",
+  "worktree_status_after": "",
+  "worktree_status_before": ""
+}

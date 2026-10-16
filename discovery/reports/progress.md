@@ -1388,3 +1388,65 @@ Integration result at07:26:10 UTC: all109combined Li tests pass, all317runtime
 files unchanged. The source/recorders/logs are retained with the compatible
 profile report. Root proceeds to commit and exact remote/CI/clean-package checks;
 no new actual reader or scientific run is inferred.
+
+
+## 2026-10-16T08:03:13.737459+00:00 — finite planning verified; actual compatible envelope blocked
+
+Published `4492858` passes all four original-push jobs in run 38867704072,
+observed at 07:57:02 UTC. Clean retained packaging passes 28 demonstrations,
+six schemas and 16 mandatory checks; strict verification and independent Git,
+source-archive and wheel-byte audits pass. All 317 runtime files held. These
+are engineering results, not a new scientific success.
+
+The unchanged recorder then ran both fixed compatible-envelope commands at
+07:57:23–25 UTC. Both exit 2 and produce identical BLOCKED_SCHEMA / BLOCKED_LAYOUT /
+ZIP_LAYOUT_UNSUPPORTED receipts, SHA 7010e99a…, before any member decompression
+or XML decoding. Source-only call-path review finds no re-entry into the old
+flags validator. The later failed predicate is unknown. No actual documentary
+sheet localization is permitted by its unmet success prerequisite.
+[Actual receipts and scope](phase2-finite-compatible-verification-v1/README.md).
+
+The [exact finite-frame figure](phase2-finite-planning-figure-v1/PUBLICATION.md)
+and [walkthrough](../docs/finite-planning-walkthrough.md) explain hypothetical
+resolution under different sampling experiments. Independent arithmetic checks
+101 rows and 9,191 finite null worlds; the original render and whitespace-bearing
+artifacts are preserved with explicit lossless wrappers. The author-repository
+README/license/tree audit remains documentary: row semantics, grouping, curation
+and archive count discrepancies are unresolved.
+
+Root integrated the four exact reviewed notebook-reader files after the actual
+archive runs. All 159 combined Li tests pass in 3.275 seconds, with 320 runtime
+files held. The 20 author and 30 independent checks preserve and challenge real
+receipt-type, exposure and parser-warning repairs; earlier passing sources and
+the independent fixture failure remain recorded. No notebook acquisition or
+actual static inspection occurred. Root owns publication/CI/package, then the
+fixed commands. Planner owns a separately frozen precise ZIP rejection diagnostic;
+root will integrate it after independent review. G25 and G26 are complete in their
+scopes; G20 remains unresolved and G21 blocked. No changed endpoints, thresholds,
+models, sampling allocation, new DFT, exposed-set tuning or scientific verdict.
+
+
+## 2026-10-16T08:21:18.277230+00:00 — both bounded source readers integrated
+
+The [categorical compatible ZIP diagnostic](phase2-compatible-zip-diagnostic-v1/README.md)
+passes 16 author and 24 independent tests, including 628 method/flag cases and
+all 10 permitted pairs. It reports all failed predicates in the first rejected
+group, with separately labeled same-entry local checks only where offsets and
+bounds permit. It does not change the profile, inspect later rejected entries,
+open payloads or approve scientific schema. All 17 predecessor pins remain exact.
+
+The first 16-test pass exposed a synthetic destructor retry channel in stderr.
+Its source, unconditional fault fixture and full logs remain preserved. The final
+source detaches its owned in-memory handle on close failure; realistic still-open
+fault tests capture stderr and unraisable exceptions and force garbage collection.
+The repaired checks pass. Arbitrary replacement close functions that ignore the
+normal closed-handle contract are outside that claim. Original reader bytes and
+actual negative results remain unchanged.
+
+Root promoted all 27 exact reviewed files and executed the full combined Li suite:
+199 tests pass, all 323 runtime files unchanged. The earlier 159-test notebook-only
+integration remains separately recorded. Root now publishes the two new readers
+and actual 4492858 verification, checks exact remote/CI and clean retained package,
+then performs only the frozen notebook capture/inspection and two categorical
+header diagnoses. No actual notebook or new diagnostic operation has run yet.
+G20 remains unresolved, G21 blocked, and every scientific NO-GO remains unchanged.

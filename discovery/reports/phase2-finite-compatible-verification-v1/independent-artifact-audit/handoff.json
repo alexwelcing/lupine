@@ -1,0 +1,29 @@
+{
+  "actual_attempt": "first",
+  "actual_compatible_envelope_run": false,
+  "audit_script_sha256": "b81293cba3632449830932175e9fa938913650ade05f5e524b258aba78923119",
+  "commit": "4492858d9e55ddfa3cca2e208063799517948b13",
+  "elapsed_seconds": 6.277744656001232,
+  "historical_fixture_failure": {
+    "belongs_to_prior_commit": "41d3e31a14bea040fb37b0aa6a650d6d5e704551",
+    "path": "../historical-first-fixture-failure",
+    "preserved": true
+  },
+  "mandatory_checks": 16,
+  "new_probe_assertions": 9,
+  "package_or_full_tests_rerun": false,
+  "prior_probe_assertions_preserved": 63,
+  "private_scientific_custody_read": false,
+  "project_modules_imported": false,
+  "remaining_blockers": [],
+  "remote_ci_verified": false,
+  "review_sha256": "9a6abdbcd1be91608cb133a5faf5ab551cae7a5084d2a2197b4862d788cb6dc9",
+  "runtime_files": 317,
+  "scientific_replication": false,
+  "scope": "Independent byte identity and consistency with recorded installed checks only",
+  "source_git_blobs": 2954,
+  "status": "PASS",
+  "wheel_members": 115,
+  "wheel_package_source_files": 108,
+  "wheel_record_digests": 114
+}

@@ -1,0 +1,72 @@
+{
+  "author_evidence_read": {
+    "independently_reran_author_tests": false,
+    "receipt_source_and_test_hashes_match": true,
+    "reported_final_tests": 19,
+    "retained_log_reports_pass": true
+  },
+  "bindings": {
+    "author_final_log": {
+      "path": ".cache/phase2-li-notebook-methods-candidate-v1/author-final.stderr",
+      "sha256": "80a0c2b62c0b189c0d9a4c299669b6fd8df9232bd9bac3fb0690453dc81b842f"
+    },
+    "author_final_receipt": {
+      "path": ".cache/phase2-li-notebook-methods-candidate-v1/author-final.json",
+      "sha256": "fd4677e2483750d109fe6cae12289f7a5cea75fd3e038ce6e42dcfd0e6690015"
+    },
+    "author_tests": {
+      "path": ".cache/phase2-li-notebook-methods-candidate-v1/promotion/tests/test_li_v3_notebook_methods.py",
+      "sha256": "3ca3d61af463933adfd15393e9362326a1ff124d595ab66aa468ca13b05481b0"
+    },
+    "contract": {
+      "path": ".cache/phase2-li-notebook-methods-candidate-v1/promotion/docs/li-v3-notebook-methods-plan.md",
+      "sha256": "c19cd936e9c812e46a178d3dbff5d4bf2736505de6445858b6b5214e2066f5f5"
+    },
+    "current_source": {
+      "path": ".cache/phase2-li-notebook-methods-candidate-v1/promotion/scripts/li_v3_notebook_methods.py",
+      "sha256": "5021605ea4092c5d7f4f7bc0fde6be1996b55c5db9b32128a776d28b674f4514"
+    },
+    "initial_review": {
+      "path": ".cache/phase2-li-notebook-methods-math-review-v1/initial-source-review.json",
+      "sha256": "145eea9360ed1f2b007f08568fcb338887ef0a8d8dfe7c0b0e638bdbdb6c868e"
+    },
+    "initial_source": {
+      "path": ".cache/phase2-li-notebook-methods-candidate-v1/before-review-fixes/promotion/scripts/li_v3_notebook_methods.py",
+      "sha256": "70eb1dd8cf05ade2c93e8dbbb1bae8bb59dc1e6dd762cf24e74de1d26dd5a02e"
+    }
+  },
+  "blockers": [],
+  "child_review": {
+    "remaining_blockers": [],
+    "reviewer": "/root/phase2_math/proof_check",
+    "same_source_and_contract_hashes_confirmed": true,
+    "scope": "Read-only projection/exposure/resource and claim review; no imports/tests/network/notebook access."
+  },
+  "next_action": "Root receives separate executable review, publishes exact held source, verifies its own CI/package gates, then and only then may run fixed acquisition/inspection while retaining schema block and all original failures.",
+  "not_performed": [
+    "candidate_import_or_execution",
+    "independent_tests",
+    "network",
+    "actual_notebook_or_private_capture_read",
+    "actual_capture_or_inspection",
+    "CI_or_package_verification",
+    "scientific_sampling_or_experiment"
+  ],
+  "observed_at": "2026-10-16T07:52:59.315912+00:00",
+  "preserved_scope": [
+    "Known call names and imports are explicitly syntactic references; aliases, shadowing, dead code, runtime order, defaults, transformations and archive equivalence remain unresolved.",
+    "Output contains reviewed categories, parameter syntax kinds and unreported-argument flags; no literal values, arbitrary identifiers, code text, locations, notebook outputs or images are exported.",
+    "Positional labels are positions only; starred positional arguments suppress those slots, and unknown keywords/kwargs remain an unreported-arguments marker.",
+    "Whole JSON parsing materializes output-bearing containers and AST parsing reads code constants; this is declared machine exposure, not literal blindness or zero information.",
+    "Fixed raw/source/code/cell/AST bounds and constant failures apply; unsupported processing withholds partial inventory. These bounds do not establish hostile-code sandboxing.",
+    "Fixed source identity/capture, five unchanged custody dependencies and four new committed-file guards precede production access. Separate independent review, publication, CI/package and actual operation remain required.",
+    "BLOCKED_SCHEMA remains on inventory completion; no scientific criterion, allocation, independence, model validity or physical conclusion follows."
+  ],
+  "repaired_initial_findings": [
+    "Exact integer capture byte count rejects canonical float/type substitution before source access.",
+    "Synthetic exact bytes type and 512KiB limit now precede identity hashing; actual byte access is marked before hash/forbidden-source rejection.",
+    "No-code notebooks leave AST started/completed exposure both false, while separate inventory status can complete."
+  ],
+  "schema": "lupine.discovery.read_only_source_review.v1",
+  "status": "PASS_REPAIRED_SOURCE_AND_CONTRACT_AT_BOUND_HASH"
+}

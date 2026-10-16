@@ -1,0 +1,764 @@
+{
+  "schema": "lupine.discovery.li_layout_localization_design.v1",
+  "status": "PROSPECTIVE_DESIGN_ONLY",
+  "executable": false,
+  "proposed_runtime_schema": "lupine.discovery.li_v3.layout_localization.v1",
+  "proposed_parser_profile": "li_v3.documentary_sheet_layout.v1",
+  "scope": "One complete coordinate-only documentary worksheet stage; no implementation or actual data access",
+  "source": {
+    "record_id": "vywsz-wxn79",
+    "version": 3,
+    "doi": "10.24435/materialscloud:ws-8j",
+    "bytes": 183878,
+    "md5": "041bbe095c54615e5a3c289facb18ce5",
+    "sha256": "9741f826f6a97db7c2c0efa89820d3bdae43e8beb53cafd893ccdf0bb74f64fa",
+    "identity_basis": "Existing public source/contracts; no actual object read by this designer"
+  },
+  "unbound_production_gate": {
+    "compatible_receipt_sha256": null,
+    "compatible_producer_commit": null,
+    "new_stage_source_commit": null,
+    "new_stage_source_inventory_sha256": null,
+    "required_previous_status": "BLOCKED_SCHEMA",
+    "required_engineering_status": "ENVELOPE_VALID",
+    "required_previous_profile": "li_v3.xlsx_envelope.deflate_options.v1",
+    "required_roles": [
+      "References",
+      "Column Descriptions"
+    ],
+    "rule": "Freeze exact observed prerequisite only after root verification; missing bindings block; no presumed success"
+  },
+  "roles_in_processing_order": [
+    "References",
+    "Column Descriptions"
+  ],
+  "resolution": {
+    "selection": "Exact role names once each in revalidated workbook sheet elements; actual r:id through validated internal worksheet relationship map on same pinned buffer",
+    "requires_distinct_members": true,
+    "guessed_ordinals_or_ranges_allowed": false,
+    "public_member_names_or_relationship_ids": false,
+    "fallback_allowed": false,
+    "legacy_profile_changes_allowed": false
+  },
+  "read_allowlist": {
+    "unchanged_envelope": [
+      "[Content_Types].xml",
+      "_rels/.rels",
+      "xl/workbook.xml",
+      "xl/_rels/workbook.xml.rels"
+    ],
+    "additional": "Only the two resolved worksheet members; paths are not known by this design",
+    "shared_strings_open_allowed": false,
+    "worksheet_relationships_open_allowed": false,
+    "other_member_open_allowed": false,
+    "network_allowed": false
+  },
+  "bounds": {
+    "new_worksheet_decompressed_bytes_each": 2097152,
+    "new_worksheet_decompressed_bytes_total": 4194304,
+    "xml_depth_each": 64,
+    "xml_nodes_each": 65536,
+    "attributes_per_element": 32,
+    "attribute_name_characters": 256,
+    "attribute_value_characters": 1024,
+    "explicit_cells_per_role": 8192,
+    "merge_rectangles_per_role": 1024,
+    "canonical_public_receipt_bytes": 2097152,
+    "coordinate_row_maximum": 1048576,
+    "coordinate_column_maximum": 16384,
+    "engineering_bounds_not_source_observations": true,
+    "no_truncated_success_or_postexposure_cap_change": true
+  },
+  "worksheet_profile": {
+    "namespace": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
+    "encoding": "UTF-8 only, optional BOM/declaration matching UTF-8",
+    "global_rejections": [
+      "DTD/entity declarations",
+      "processing instructions except initial XML declaration",
+      "foreign expanded element/attribute names except xml:space in t",
+      "comments/CDATA and other unsupported declaration forms",
+      "markup-compatibility AlternateContent or Ignorable attributes",
+      "extLst",
+      "hyperlinks/drawings/tables/external relationship structures",
+      "unknown nodes/attributes or ancestry",
+      "reserved row/cell/merge nodes outside declared ancestry"
+    ],
+    "declared_cell_types": [
+      "absent",
+      "b",
+      "d",
+      "e",
+      "inlineStr",
+      "n",
+      "s",
+      "str"
+    ],
+    "grammar": {
+      "worksheet": {
+        "attributes": [],
+        "children": [
+          "sheetPr",
+          "dimension",
+          "sheetViews",
+          "sheetFormatPr",
+          "cols",
+          "sheetData",
+          "mergeCells",
+          "printOptions",
+          "pageMargins",
+          "pageSetup",
+          "headerFooter"
+        ],
+        "multiplicity": "At most one of each direct child; exactly one sheetData"
+      },
+      "sheetData": {
+        "attributes": [],
+        "children": [
+          "row"
+        ]
+      },
+      "row": {
+        "attributes": [
+          "r",
+          "spans",
+          "s",
+          "customFormat",
+          "ht",
+          "hidden",
+          "customHeight",
+          "outlineLevel",
+          "collapsed",
+          "thickTop",
+          "thickBot",
+          "ph"
+        ],
+        "children": [
+          "c"
+        ],
+        "required": [
+          "r"
+        ]
+      },
+      "c": {
+        "attributes": [
+          "r",
+          "s",
+          "t",
+          "cm",
+          "vm",
+          "ph"
+        ],
+        "required": [
+          "r"
+        ],
+        "children": [
+          "f",
+          "v",
+          "is"
+        ],
+        "multiplicity": "At most one each; is cannot coexist with v or f; is requires t=inlineStr; t=inlineStr cannot have v/f; missing content children allowed without inferring missingness"
+      },
+      "f": {
+        "attributes": [
+          "t",
+          "ref",
+          "si",
+          "aca",
+          "bx",
+          "ca",
+          "del1",
+          "del2",
+          "dt2D",
+          "dtr",
+          "r1",
+          "r2"
+        ],
+        "children": [],
+        "text": "Privately decoded; never interpreted, evaluated or projected"
+      },
+      "v": {
+        "attributes": [],
+        "children": [],
+        "text": "Privately decoded; no scalar conversion, SST index parsing or cached-result interpretation"
+      },
+      "is": {
+        "attributes": [],
+        "children": [
+          "t",
+          "r",
+          "rPh",
+          "phoneticPr"
+        ],
+        "scope": "Bounded structural subtree only, no lexical interpretation or text projection"
+      },
+      "t": {
+        "attributes": [
+          "{http://www.w3.org/XML/1998/namespace}space"
+        ],
+        "children": [],
+        "text": "Private and withheld; no normalization"
+      },
+      "r": {
+        "attributes": [],
+        "children": [
+          "rPr",
+          "t"
+        ]
+      },
+      "rPr": {
+        "attributes": [],
+        "children": [
+          "rFont",
+          "charset",
+          "family",
+          "b",
+          "i",
+          "strike",
+          "outline",
+          "shadow",
+          "condense",
+          "extend",
+          "color",
+          "sz",
+          "u",
+          "vertAlign",
+          "scheme"
+        ]
+      },
+      "rPh": {
+        "attributes": [
+          "sb",
+          "eb"
+        ],
+        "children": [
+          "t"
+        ]
+      },
+      "phoneticPr": {
+        "attributes": [
+          "fontId",
+          "type",
+          "alignment"
+        ],
+        "children": []
+      },
+      "mergeCells": {
+        "attributes": [
+          "count"
+        ],
+        "children": [
+          "mergeCell"
+        ],
+        "count_rule": "If declared, bounded canonical integer 0..1024 equals explicit mergeCell count"
+      },
+      "mergeCell": {
+        "attributes": [
+          "ref"
+        ],
+        "required": [
+          "ref"
+        ],
+        "children": []
+      },
+      "sheetPr": {
+        "attributes": [
+          "syncHorizontal",
+          "syncVertical",
+          "syncRef",
+          "transitionEvaluation",
+          "transitionEntry",
+          "published",
+          "codeName",
+          "filterMode",
+          "enableFormatConditionsCalculation"
+        ],
+        "children": [
+          "tabColor",
+          "outlinePr",
+          "pageSetUpPr"
+        ]
+      },
+      "outlinePr": {
+        "attributes": [
+          "applyStyles",
+          "summaryBelow",
+          "summaryRight",
+          "showOutlineSymbols"
+        ],
+        "children": []
+      },
+      "pageSetUpPr": {
+        "attributes": [
+          "autoPageBreaks",
+          "fitToPage"
+        ],
+        "children": []
+      },
+      "dimension": {
+        "attributes": [
+          "ref"
+        ],
+        "children": [],
+        "rule": "Private uninterpreted declaration; not a scan range or record count"
+      },
+      "sheetViews": {
+        "attributes": [],
+        "children": [
+          "sheetView"
+        ]
+      },
+      "sheetView": {
+        "attributes": [
+          "windowProtection",
+          "showFormulas",
+          "showGridLines",
+          "showRowColHeaders",
+          "showZeros",
+          "rightToLeft",
+          "tabSelected",
+          "showRuler",
+          "showOutlineSymbols",
+          "defaultGridColor",
+          "showWhiteSpace",
+          "view",
+          "topLeftCell",
+          "colorId",
+          "zoomScale",
+          "zoomScaleNormal",
+          "zoomScaleSheetLayoutView",
+          "zoomScalePageLayoutView",
+          "workbookViewId"
+        ],
+        "children": [
+          "pane",
+          "selection"
+        ]
+      },
+      "pane": {
+        "attributes": [
+          "xSplit",
+          "ySplit",
+          "topLeftCell",
+          "activePane",
+          "state"
+        ],
+        "children": []
+      },
+      "selection": {
+        "attributes": [
+          "pane",
+          "activeCell",
+          "activeCellId",
+          "sqref"
+        ],
+        "children": []
+      },
+      "sheetFormatPr": {
+        "attributes": [
+          "baseColWidth",
+          "defaultColWidth",
+          "defaultRowHeight",
+          "customHeight",
+          "zeroHeight",
+          "thickTop",
+          "thickBottom",
+          "outlineLevelRow",
+          "outlineLevelCol"
+        ],
+        "children": []
+      },
+      "cols": {
+        "attributes": [],
+        "children": [
+          "col"
+        ]
+      },
+      "col": {
+        "attributes": [
+          "min",
+          "max",
+          "width",
+          "style",
+          "hidden",
+          "bestFit",
+          "customWidth",
+          "phonetic",
+          "outlineLevel",
+          "collapsed"
+        ],
+        "children": []
+      },
+      "printOptions": {
+        "attributes": [
+          "horizontalCentered",
+          "verticalCentered",
+          "headings",
+          "gridLines",
+          "gridLinesSet"
+        ],
+        "children": []
+      },
+      "pageMargins": {
+        "attributes": [
+          "left",
+          "right",
+          "top",
+          "bottom",
+          "header",
+          "footer"
+        ],
+        "children": []
+      },
+      "pageSetup": {
+        "attributes": [
+          "paperSize",
+          "scale",
+          "firstPageNumber",
+          "fitToWidth",
+          "fitToHeight",
+          "pageOrder",
+          "orientation",
+          "usePrinterDefaults",
+          "blackAndWhite",
+          "draft",
+          "cellComments",
+          "useFirstPageNumber",
+          "errors",
+          "horizontalDpi",
+          "verticalDpi",
+          "copies"
+        ],
+        "children": []
+      },
+      "headerFooter": {
+        "attributes": [
+          "differentOddEven",
+          "differentFirst",
+          "scaleWithDoc",
+          "alignWithMargins"
+        ],
+        "children": [
+          "oddHeader",
+          "oddFooter",
+          "evenHeader",
+          "evenFooter",
+          "firstHeader",
+          "firstFooter"
+        ]
+      },
+      "rFont": {
+        "attributes": [
+          "val"
+        ],
+        "children": []
+      },
+      "charset": {
+        "attributes": [
+          "val"
+        ],
+        "children": []
+      },
+      "family": {
+        "attributes": [
+          "val"
+        ],
+        "children": []
+      },
+      "b": {
+        "attributes": [
+          "val"
+        ],
+        "children": []
+      },
+      "i": {
+        "attributes": [
+          "val"
+        ],
+        "children": []
+      },
+      "strike": {
+        "attributes": [
+          "val"
+        ],
+        "children": []
+      },
+      "outline": {
+        "attributes": [
+          "val"
+        ],
+        "children": []
+      },
+      "shadow": {
+        "attributes": [
+          "val"
+        ],
+        "children": []
+      },
+      "condense": {
+        "attributes": [
+          "val"
+        ],
+        "children": []
+      },
+      "extend": {
+        "attributes": [
+          "val"
+        ],
+        "children": []
+      },
+      "sz": {
+        "attributes": [
+          "val"
+        ],
+        "children": []
+      },
+      "u": {
+        "attributes": [
+          "val"
+        ],
+        "children": []
+      },
+      "vertAlign": {
+        "attributes": [
+          "val"
+        ],
+        "children": []
+      },
+      "scheme": {
+        "attributes": [
+          "val"
+        ],
+        "children": []
+      },
+      "color": {
+        "attributes": [
+          "rgb",
+          "indexed",
+          "auto",
+          "theme",
+          "tint"
+        ],
+        "children": []
+      },
+      "tabColor": {
+        "attributes": [
+          "rgb",
+          "indexed",
+          "auto",
+          "theme",
+          "tint"
+        ],
+        "children": []
+      },
+      "oddHeader": {
+        "attributes": [],
+        "children": [],
+        "text": "Private and withheld"
+      },
+      "oddFooter": {
+        "attributes": [],
+        "children": [],
+        "text": "Private and withheld"
+      },
+      "evenHeader": {
+        "attributes": [],
+        "children": [],
+        "text": "Private and withheld"
+      },
+      "evenFooter": {
+        "attributes": [],
+        "children": [],
+        "text": "Private and withheld"
+      },
+      "firstHeader": {
+        "attributes": [],
+        "children": [],
+        "text": "Private and withheld"
+      },
+      "firstFooter": {
+        "attributes": [],
+        "children": [],
+        "text": "Private and withheld"
+      }
+    },
+    "grammar_scope": "Finite engineering acceptance profile, not complete OOXML semantic validation. Bound all text privately; do not project it. Allowed metadata attributes remain opaque except required coordinate/type/count fields. Their scalar/rendering meaning is unvalidated.",
+    "text_and_tail_policy": {
+      "opaque_text_allowed_only": [
+        "f",
+        "v",
+        "t",
+        "oddHeader",
+        "oddFooter",
+        "evenHeader",
+        "evenFooter",
+        "firstHeader",
+        "firstFooter"
+      ],
+      "all_other_element_text": "XML whitespace only: U+0020, U+0009, U+000D, U+000A",
+      "all_tails": "XML whitespace only",
+      "unused_namespace_declarations": "Do not widen allowed expanded names or resolve anything externally"
+    },
+    "default_multiplicity_and_order": "Other than explicit root/cell/row/merge constraints, accepted metadata children may repeat and occur in any order within the node cap and their parent allowlist. No full OOXML/rendering validity claim."
+  },
+  "coordinates": {
+    "format": "Canonical uppercase A1, no dollar sign, leading-zero row or inferred location",
+    "required_explicit_row_r": true,
+    "required_explicit_cell_r": true,
+    "row_cell_agreement": true,
+    "duplicate_rows_or_cells": "block",
+    "physical_order": "May differ; validate uniqueness then sort numeric row/column for canonical projection",
+    "sparse_cells": "Keep every explicit c regardless of value; do not expand absent cells",
+    "merges": "Canonical increasing nondegenerate rectangles, no duplicates/overlap; no fill or anchor-semantic inference",
+    "dimension": "Never a scan range, record denominator or completeness attestation"
+  },
+  "public_projection": {
+    "scientific_status": "BLOCKED_SCHEMA",
+    "engineering_status_enum": [
+      "LAYOUT_LOCALIZED",
+      "BLOCKED_GUARD",
+      "BLOCKED_ENVELOPE",
+      "BLOCKED_ROLE_BINDING",
+      "BLOCKED_WORKSHEET_PROFILE",
+      "BLOCKED_COORDINATES",
+      "BLOCKED_LAYOUT_LIMIT",
+      "BLOCKED_OUTPUT"
+    ],
+    "roles": {
+      "key_enum": [
+        "References",
+        "Column Descriptions"
+      ],
+      "value_fields": [
+        "binding_status",
+        "cells",
+        "merges"
+      ],
+      "cell_fields": [
+        "coordinate",
+        "declared_type",
+        "formula_element_present"
+      ],
+      "merge_fields": [
+        "start_coordinate",
+        "end_coordinate"
+      ]
+    },
+    "binding_status": "EXACT_VALIDATED_WORKBOOK_RELATIONSHIP",
+    "atomicity": "Both complete role inventories or no layout payload; failures retain scope and exposure only",
+    "allowed_custody_metadata": "Previously public fixed source/capture/prerequisite/code identities; no new cell/member content fingerprints",
+    "scientific_counts": {
+      "row_count": null,
+      "paired_count": null,
+      "source_group_count": null,
+      "overlap_count": null,
+      "independent_panel_count": null
+    },
+    "overlap_status": "NOT_ASSESSED",
+    "withheld": [
+      "cell text in any encoding or normalization",
+      "values and cached results",
+      "shared-string indexes",
+      "formula bodies and attributes",
+      "hyperlinks",
+      "style values",
+      "arbitrary names",
+      "per-cell/per-member content hashes or fingerprints",
+      "content byte or character lengths",
+      "raw exception text and snippets",
+      "header/definition/unit/reference/eligibility classifications"
+    ]
+  },
+  "exposure_contract": {
+    "envelope_exposure": "Original validators and instrumentation remain unchanged privately. Public envelope_exposure is only the explicit projection below, scoped to revalidation; inspected_xml_bytes and all other undeclared fields are omitted.",
+    "new_started_completed_by_fixed_role": [
+      "worksheet_read",
+      "worksheet_decompression",
+      "worksheet_utf8_decode",
+      "worksheet_xml_parse",
+      "worksheet_structure_traversal"
+    ],
+    "character_data_state_enum": [
+      "NOT_ATTEMPTED",
+      "MAY_HAVE_BEEN_DECODED",
+      "PRIVATE_XML_DECODE_COMPLETED"
+    ],
+    "no_false_no_value_read_claim": true,
+    "old_worksheet_cells_decoded_false_not_reused_for_new_stage": true,
+    "shared_strings_decompressed": false,
+    "shared_string_index_resolved": false,
+    "numeric_outcome_interpretation": false,
+    "formula_evaluation": false,
+    "scientific_eligibility_decisions": false,
+    "sampling_independence_established": false,
+    "fits": 0,
+    "splits": 0,
+    "failure_rule": "Set started before action, completed only after success; preserve uncertain partial read/decode exposure. Do not publish per-component private byte lengths.",
+    "utf8_vs_xml": "UTF-8 decode completion is recorded separately: complete private character-buffer decoding can precede malformed XML/structure failure. XML parse failure cannot reset earlier completed exposure.",
+    "public_envelope_exposure_fields": [
+      "decompression_started",
+      "decompression_completed",
+      "xml_decoding_started",
+      "xml_decoding_completed",
+      "worksheet_cells_decoded",
+      "shared_strings_decoded",
+      "formulas_executed",
+      "target_numeric_validity_checked",
+      "scientific_eligibility_decisions",
+      "sampling_independence_established",
+      "fits",
+      "splits"
+    ],
+    "envelope_values_scope": "These original envelope-only worksheet flags remain false and fits/splits zero; subsequent new worksheet access has its own explicit role-scoped states. Do not relabel the envelope-only flags as whole-run no-exposure evidence.",
+    "character_data_start": "Set MAY_HAVE_BEEN_DECODED before the first UTF-8 decode or decode-and-scan operation; set each corresponding started flag before its operation."
+  },
+  "failure_reason_examples": [
+    "PREREQUISITE_INVALID",
+    "FROZEN_SOURCE_REQUIRED",
+    "SOURCE_IDENTITY_INVALID",
+    "ENVELOPE_REVALIDATION_FAILED",
+    "ROLE_ABSENT_OR_NONUNIQUE",
+    "ROLE_RELATIONSHIP_INVALID",
+    "ROLE_MEMBERS_NOT_DISTINCT",
+    "WORKSHEET_PROFILE_UNSUPPORTED",
+    "WORKSHEET_PARSE_FAILED",
+    "NONCANONICAL_CELL_REF",
+    "DUPLICATE_CELL_REF",
+    "ROW_CELL_MISMATCH",
+    "CELL_TYPE_UNSUPPORTED",
+    "MERGE_RANGE_INVALID",
+    "MERGE_OVERLAP",
+    "LAYOUT_LIMIT",
+    "OUTPUT_CONFLICT",
+    "INTERNAL_FAILURE"
+  ],
+  "required_independent_tests": [
+    "changed source/producer/receipt/worktree/index block before object",
+    "reordered workbook and unrelated sheet IDs resolve via actual r:id",
+    "missing/ambiguous/duplicate/aliased/external roles block",
+    "unchanged complete ZIP/envelope revalidation",
+    "exactly four original plus two resolved member opens; no SST or others",
+    "same layout under changed accepted cell/inline/numeric/formula/index canaries has same public layout projection",
+    "all coordinate/row/duplicate/merge boundaries and sparse/empty rows",
+    "formula element flag does not claim all formula-affected cells",
+    "all explicit namespace/DTD/PI/profile rules and resource bounds",
+    "closed public output excludes content/hash/length/value fields",
+    "partial failure exposure and both-role atomicity",
+    "synthetic API refuses known actual identity; no production path override",
+    "exclusive slots and constant errors, no network/external resolution/evaluation"
+  ],
+  "next_use": {
+    "useful_for": "Selecting source-bound candidate coordinates and merge policies for later separately reviewed documentary semantic mapping",
+    "not_possible_from_layout_alone": [
+      "identifying header/definition/unit/reference semantics",
+      "classifying mixed documentary and measured examples",
+      "reading shared-string contents",
+      "auditing endpoint pairing/conditions",
+      "establishing physical independence or resolving 1050/55 versus 1070/54"
+    ],
+    "next_meaningful_stage": "Combined reviewed role-coordinate binding plus bounded selected documentary-text extraction/classification; sharedStrings only if separately justified and exposed honestly",
+    "g20": "Schema and evidence remain unresolved",
+    "g21": "Blocked",
+    "scientific_superiority": "Unestablished",
+    "upstream_outlier_handling": "Unknown; preserve prior documentary curation claim"
+  }
+}

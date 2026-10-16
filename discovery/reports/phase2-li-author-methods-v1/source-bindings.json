@@ -1,0 +1,179 @@
+{
+  "schema": "lupine.discovery.li_v3.author_methods_audit.v1",
+  "status": "DOCUMENTARY_AUDIT_ONLY",
+  "created_at": "2026-10-16T07:39:01.257241+00:00",
+  "repository": "avakanski/Subsized-Specimens-Tensile-Properties",
+  "commit": "d19b15127c8ae1be49308c29eac718b609ad895c",
+  "commit_tree_sha1": "3a16cf9d749f20514a2f7e8002ca12492b1bc505",
+  "ordinary_standalone_source_files_present": false,
+  "notebook_body_read": false,
+  "external_blob_entries": [
+    {
+      "path": "License - MIT.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4b89403c8299ddd7ddea4beb2952efeada00bc6b",
+      "size": 1186,
+      "url": "https://api.github.com/repos/avakanski/Subsized-Specimens-Tensile-Properties/git/blobs/4b89403c8299ddd7ddea4beb2952efeada00bc6b"
+    },
+    {
+      "path": "README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "778b8c93622c08d9fcdf9eba5d25727976cd3e90",
+      "size": 7042,
+      "url": "https://api.github.com/repos/avakanski/Subsized-Specimens-Tensile-Properties/git/blobs/778b8c93622c08d9fcdf9eba5d25727976cd3e90"
+    },
+    {
+      "path": "Sample_Code.ipynb",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "789b61339aa4c566b68794077fa7240a73677f9d",
+      "size": 353800,
+      "url": "https://api.github.com/repos/avakanski/Subsized-Specimens-Tensile-Properties/git/blobs/789b61339aa4c566b68794077fa7240a73677f9d"
+    },
+    {
+      "path": "Tensile_Properties_of_Sub-sized_Specimens.xlsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3173e175f25a2ee0cae74d8b290d7aef08c61e9f",
+      "size": 187208,
+      "url": "https://api.github.com/repos/avakanski/Subsized-Specimens-Tensile-Properties/git/blobs/3173e175f25a2ee0cae74d8b290d7aef08c61e9f"
+    }
+  ],
+  "body_retrievals": [
+    {
+      "path": "License - MIT.txt",
+      "request_url": "https://raw.githubusercontent.com/avakanski/Subsized-Specimens-Tensile-Properties/d19b15127c8ae1be49308c29eac718b609ad895c/License%20-%20MIT.txt",
+      "git_blob_sha1_expected": "4b89403c8299ddd7ddea4beb2952efeada00bc6b",
+      "started_at": "2026-10-16T07:36:31.638946+00:00",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/avakanski/Subsized-Specimens-Tensile-Properties/d19b15127c8ae1be49308c29eac718b609ad895c/License%20-%20MIT.txt",
+      "body_bytes": 1186,
+      "sha256": "51e6879a7ff147df3ebdd959714018d8bce2bd0434862e8d0b082e9e7c2f8214",
+      "git_blob_sha1_observed": "4b89403c8299ddd7ddea4beb2952efeada00bc6b",
+      "blob_matches": true,
+      "completed_at": "2026-10-16T07:36:32.074346+00:00"
+    },
+    {
+      "path": "README.md",
+      "request_url": "https://raw.githubusercontent.com/avakanski/Subsized-Specimens-Tensile-Properties/d19b15127c8ae1be49308c29eac718b609ad895c/README.md",
+      "git_blob_sha1_expected": "778b8c93622c08d9fcdf9eba5d25727976cd3e90",
+      "started_at": "2026-10-16T07:36:31.640438+00:00",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/avakanski/Subsized-Specimens-Tensile-Properties/d19b15127c8ae1be49308c29eac718b609ad895c/README.md",
+      "body_bytes": 7042,
+      "sha256": "8d950ccb30ca70a616cd68385535b397f46eb86b27587030c73afe370b035182",
+      "git_blob_sha1_observed": "778b8c93622c08d9fcdf9eba5d25727976cd3e90",
+      "blob_matches": true,
+      "completed_at": "2026-10-16T07:36:32.062511+00:00"
+    }
+  ],
+  "local_context": [
+    {
+      "path": "discovery/reports/li-v3-source-inventory.json",
+      "sha256": "ef4d3de4deb08b3903230a7456fb50de689e49265868d78f0c73faab4461f9ba",
+      "bytes": 902,
+      "role": "retained public metadata; initial rg or direct context read, not observation data"
+    },
+    {
+      "path": "discovery/reports/phase2-source-readiness-v1/README.md",
+      "sha256": "bd351e8814fb33776e375ed48d1bf2e3aae985404dd8a33920bf40e46a0ca1c5",
+      "bytes": 9309,
+      "role": "retained public metadata; initial rg or direct context read, not observation data"
+    },
+    {
+      "path": "discovery/reports/phase2-source-readiness-v1/source-bindings.json",
+      "sha256": "d7a53adf40427753d7c0c48a54ab5c6ab42407f4dd53045cd508bb695afaa973",
+      "bytes": 7113,
+      "role": "retained public metadata; initial rg or direct context read, not observation data"
+    },
+    {
+      "path": "discovery/reports/phase2-source-readiness-v1/li-metadata/datacite-ws-8j.json",
+      "sha256": "ae43d843befc59ab401410725412e7f6be38e78a8b2722574427473e7edb845a",
+      "bytes": 19729,
+      "role": "retained public metadata; initial rg or direct context read, not observation data"
+    },
+    {
+      "path": "discovery/reports/phase2-source-readiness-v1/li-metadata/datacite-ws-kw.json",
+      "sha256": "fa1c503653598bbcb9153706f5bfcacfc37be49e6b78dada54b3c5111ae7d057",
+      "bytes": 19648,
+      "role": "retained public metadata; initial rg or direct context read, not observation data"
+    }
+  ],
+  "artifact_files": [
+    {
+      "path": "README.md",
+      "sha256": "e0bc80439db113297fe78631196dc55743d845241919efe580856d6285862ea6",
+      "bytes": 7746
+    },
+    {
+      "path": "commit-retrieval.json",
+      "sha256": "b91f76bd9a60fd9331b2315530030d20fa4e8f20d9374846972fd259407d6a9d",
+      "bytes": 589
+    },
+    {
+      "path": "document-retrieval.json",
+      "sha256": "e99bad06973fcc3c04ab503b3f66dcea0069acdee63733c8c7785d07f7d72706",
+      "bytes": 1535
+    },
+    {
+      "path": "repository-commit.json",
+      "sha256": "24ccd3800f545f5ea88d07ade9e1d2a74b7498a9bfa98cabd1ca64f55e87ed3d",
+      "bytes": 2312
+    },
+    {
+      "path": "repository-tree.json",
+      "sha256": "09dad184bd0d6cdb049fd656f9f32e3772c4c59bc92ea6dba00fcb7f0edecd0f",
+      "bytes": 1262
+    },
+    {
+      "path": "sources/License - MIT.txt",
+      "sha256": "51e6879a7ff147df3ebdd959714018d8bce2bd0434862e8d0b082e9e7c2f8214",
+      "bytes": 1186
+    },
+    {
+      "path": "sources/README.md",
+      "sha256": "8d950ccb30ca70a616cd68385535b397f46eb86b27587030c73afe370b035182",
+      "bytes": 7042
+    },
+    {
+      "path": "tree-identity.json",
+      "sha256": "41951ea3071fd4c4dd449265b8b6db2ef2b211dfcc9d3b40f5f2c58d651f4dfd",
+      "bytes": 538
+    },
+    {
+      "path": "tree-retrieval.json",
+      "sha256": "d60953e49ed2b1d48aea1054fc70219a41b0a011fe6c9884c0f244a590dad1d3",
+      "bytes": 684
+    }
+  ],
+  "access_failures": [],
+  "exposure_ledger": {
+    "observation_file_bodies_read": [],
+    "private_custody_files_read": [],
+    "notebook_outputs_read": false,
+    "numerical_documentary_exposure": [
+      "source-advertised 1070 records/54 parameters",
+      "repository file sizes; pinned archive publisher size 183878",
+      "publication dates/DOIs/arXiv and literal citation numerals",
+      "copyright/funding identifiers",
+      "previously retained public source-audit counts and metadata; initial rg output included DataCite JSON/XML and was truncated"
+    ],
+    "limitations": [
+      "README does not establish physical row unit or simultaneous paired endpoints",
+      "No units/conventions/missingness or reference/group join implementation established",
+      "No Git-workbook/archive content equivalence",
+      "No new scientific independence or readiness finding"
+    ]
+  },
+  "unperformed": [
+    "workbook or notebook acquisition",
+    "source program execution",
+    "actual custody operation or receipt inspection",
+    "new criterion/model/threshold/allocation",
+    "scientific evaluation",
+    "third-party contact",
+    "CI or release verification"
+  ]
+}

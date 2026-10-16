@@ -1,0 +1,25 @@
+test_canary_invariance_every_region_and_constants (__main__.NotebookMethodsTests.test_canary_invariance_every_region_and_constants) ... ok
+test_capture_bridge_rejects_extra_keys_and_changed_identity (__main__.NotebookMethodsTests.test_capture_bridge_rejects_extra_keys_and_changed_identity) ... ok
+test_closed_known_inventory_and_parameters (__main__.NotebookMethodsTests.test_closed_known_inventory_and_parameters) ... ok
+test_code_is_never_executed (__main__.NotebookMethodsTests.test_code_is_never_executed) ... ok
+test_duplicate_keys_nonfinite_json_and_bad_utf8_fail_closed (__main__.NotebookMethodsTests.test_duplicate_keys_nonfinite_json_and_bad_utf8_fail_closed) ... ok
+test_fixed_fetch_no_redirect_and_partial_exposure (__main__.NotebookMethodsTests.test_fixed_fetch_no_redirect_and_partial_exposure) ... ok
+test_float_capture_size_forgery_rejected (__main__.NotebookMethodsTests.test_float_capture_size_forgery_rejected) ... ok
+test_ignored_source_guard_before_cache_or_network (__main__.NotebookMethodsTests.test_ignored_source_guard_before_cache_or_network) ... ok
+test_invalid_capture_precedes_raw_object_read (__main__.NotebookMethodsTests.test_invalid_capture_precedes_raw_object_read) ... ok
+test_method_name_is_not_runtime_binding (__main__.NotebookMethodsTests.test_method_name_is_not_runtime_binding) ... ok
+test_no_code_cells_do_not_claim_ast_access (__main__.NotebookMethodsTests.test_no_code_cells_do_not_claim_ast_access) ... ok
+test_parser_warning_does_not_disclose_literal_to_stderr (__main__.NotebookMethodsTests.test_parser_warning_does_not_disclose_literal_to_stderr) ... ok
+test_positive_synthetic_source_context_and_index_mismatch (__main__.NotebookMethodsTests.test_positive_synthetic_source_context_and_index_mismatch) ... ok
+test_prior_pins_match_tracked_public_source (__main__.NotebookMethodsTests.test_prior_pins_match_tracked_public_source) ... ok
+test_real_blob_forbidden_through_synthetic_interface (__main__.NotebookMethodsTests.test_real_blob_forbidden_through_synthetic_interface) ... ok
+test_starred_positions_not_assigned_to_api_slots (__main__.NotebookMethodsTests.test_starred_positions_not_assigned_to_api_slots) ... ok
+test_synthetic_size_and_type_guard_precedes_hash (__main__.NotebookMethodsTests.test_synthetic_size_and_type_guard_precedes_hash) ... ok
+test_unknown_names_and_parameter_names_withheld (__main__.NotebookMethodsTests.test_unknown_names_and_parameter_names_withheld) ... ok
+test_unsupported_magic_retains_exposure_and_no_partial_inventory (__main__.NotebookMethodsTests.test_unsupported_magic_retains_exposure_and_no_partial_inventory) ... ok
+test_unsupported_notebook_structure_and_resource_limits (__main__.NotebookMethodsTests.test_unsupported_notebook_structure_and_resource_limits) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.369s
+
+OK

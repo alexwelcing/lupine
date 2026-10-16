@@ -1,0 +1,212 @@
+{
+  "schema": "lupine.discovery.li_v3.author_methods_independent_review.v1",
+  "created_at": "2026-10-16T07:41:11.034865+00:00",
+  "reviewer": "/root/phase2_evidence/author_methods_review",
+  "status": "DOCUMENTARY_REVIEW_PASS_NO_SCIENTIFIC_ADMISSION",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "source_report_sha256": "e0bc80439db113297fe78631196dc55743d845241919efe580856d6285862ea6",
+  "source_bindings_sha256": "f136a6955119e4c03b7a6352b574c29fc759a3b2a3aebb380ad53352b7f1b5fb",
+  "source_commit": "d19b15127c8ae1be49308c29eac718b609ad895c",
+  "read_files": [
+    {
+      "path": ".cache/phase2-li-author-methods-v1/README.md",
+      "bytes": 7746,
+      "sha256": "e0bc80439db113297fe78631196dc55743d845241919efe580856d6285862ea6"
+    },
+    {
+      "path": ".cache/phase2-li-author-methods-v1/source-bindings.json",
+      "bytes": 7459,
+      "sha256": "f136a6955119e4c03b7a6352b574c29fc759a3b2a3aebb380ad53352b7f1b5fb"
+    },
+    {
+      "path": ".cache/phase2-li-author-methods-v1/sources/README.md",
+      "bytes": 7042,
+      "sha256": "8d950ccb30ca70a616cd68385535b397f46eb86b27587030c73afe370b035182"
+    },
+    {
+      "path": ".cache/phase2-li-author-methods-v1/sources/License - MIT.txt",
+      "bytes": 1186,
+      "sha256": "51e6879a7ff147df3ebdd959714018d8bce2bd0434862e8d0b082e9e7c2f8214"
+    },
+    {
+      "path": ".cache/phase2-li-author-methods-v1/repository-tree.json",
+      "bytes": 1262,
+      "sha256": "09dad184bd0d6cdb049fd656f9f32e3772c4c59bc92ea6dba00fcb7f0edecd0f"
+    },
+    {
+      "path": ".cache/phase2-li-author-methods-v1/repository-commit.json",
+      "bytes": 2312,
+      "sha256": "24ccd3800f545f5ea88d07ade9e1d2a74b7498a9bfa98cabd1ca64f55e87ed3d"
+    },
+    {
+      "path": ".cache/phase2-li-author-methods-v1/tree-identity.json",
+      "bytes": 538,
+      "sha256": "41951ea3071fd4c4dd449265b8b6db2ef2b211dfcc9d3b40f5f2c58d651f4dfd"
+    },
+    {
+      "path": ".cache/phase2-li-author-methods-v1/commit-retrieval.json",
+      "bytes": 589,
+      "sha256": "b91f76bd9a60fd9331b2315530030d20fa4e8f20d9374846972fd259407d6a9d"
+    },
+    {
+      "path": ".cache/phase2-li-author-methods-v1/document-retrieval.json",
+      "bytes": 1535,
+      "sha256": "e99bad06973fcc3c04ab503b3f66dcea0069acdee63733c8c7785d07f7d72706"
+    },
+    {
+      "path": ".cache/phase2-li-author-methods-v1/tree-retrieval.json",
+      "bytes": 684,
+      "sha256": "d60953e49ed2b1d48aea1054fc70219a41b0a011fe6c9884c0f244a590dad1d3"
+    },
+    {
+      "path": "reports/phase2-source-readiness-v1/README.md",
+      "bytes": 9309,
+      "sha256": "bd351e8814fb33776e375ed48d1bf2e3aae985404dd8a33920bf40e46a0ca1c5"
+    },
+    {
+      "path": "reports/phase2-source-readiness-v1/source-bindings.json",
+      "bytes": 7113,
+      "sha256": "d7a53adf40427753d7c0c48a54ab5c6ab42407f4dd53045cd508bb695afaa973"
+    },
+    {
+      "path": "reports/li-v3-source-inventory.json",
+      "bytes": 902,
+      "sha256": "ef4d3de4deb08b3903230a7456fb50de689e49265868d78f0c73faab4461f9ba"
+    }
+  ],
+  "artifact_binding_checks": [
+    {
+      "path": "README.md",
+      "size_and_sha256_match": true
+    },
+    {
+      "path": "commit-retrieval.json",
+      "size_and_sha256_match": true
+    },
+    {
+      "path": "document-retrieval.json",
+      "size_and_sha256_match": true
+    },
+    {
+      "path": "repository-commit.json",
+      "size_and_sha256_match": true
+    },
+    {
+      "path": "repository-tree.json",
+      "size_and_sha256_match": true
+    },
+    {
+      "path": "sources/License - MIT.txt",
+      "size_and_sha256_match": true
+    },
+    {
+      "path": "sources/README.md",
+      "size_and_sha256_match": true
+    },
+    {
+      "path": "tree-identity.json",
+      "size_and_sha256_match": true
+    },
+    {
+      "path": "tree-retrieval.json",
+      "size_and_sha256_match": true
+    }
+  ],
+  "git_blob_checks": [
+    {
+      "path": "License - MIT.txt",
+      "git_blob_sha1_computed": "4b89403c8299ddd7ddea4beb2952efeada00bc6b",
+      "expected_matches": true
+    },
+    {
+      "path": "README.md",
+      "git_blob_sha1_computed": "778b8c93622c08d9fcdf9eba5d25727976cd3e90",
+      "expected_matches": true
+    }
+  ],
+  "git_tree_check": {
+    "computed_sha1": "3a16cf9d749f20514a2f7e8002ca12492b1bc505",
+    "commit_metadata_sha1": "3a16cf9d749f20514a2f7e8002ca12492b1bc505",
+    "match": true,
+    "truncated": false,
+    "flat_blob_entries": 4,
+    "tree_api_sha_echoes_commit": true,
+    "api_sha_not_treated_as_tree_identity": true
+  },
+  "retrieval_records": {
+    "count": 4,
+    "all_recorded_statuses_200": true,
+    "independent_network_requests": 0
+  },
+  "claim_checks": [
+    {
+      "claim": "Pinned tree has no standalone ordinary source-code file",
+      "judgment": "SUPPORTED_IN_PINNED_TREE_ONLY",
+      "basis": "Nontruncated four-entry flat tree; README, MIT license, notebook and workbook. Notebook content and other commits remain unreviewed."
+    },
+    {
+      "claim": "No physical row/test unit or observed joint endpoint completeness established",
+      "judgment": "SUPPORTED_SCOPED_GAP",
+      "basis": "README line 7 describes tensile testing records and endpoint names without physical row identity, simultaneous measurement or completeness definition."
+    },
+    {
+      "claim": "No units, offset/gauge conventions, missingness or column coordinates established here",
+      "judgment": "SUPPORTED_SCOPED_GAP",
+      "basis": "Full retained README/license supply none; this does not assert their absence from the unread notebook, workbook or paper."
+    },
+    {
+      "claim": "No executable curation, outlier, duplicate, removal, imputation or correction audit established",
+      "judgment": "SUPPORTED_SCOPED_GAP",
+      "basis": "README describes peer-reviewed literature search and expert checks but no operational rules; no source program exists in the acquired body scope."
+    },
+    {
+      "claim": "Compilation citations do not establish per-row references, provenance joins or independent groups",
+      "judgment": "SUPPORTED_SCOPED_GAP",
+      "basis": "README citation block references compilation paper/archive/preprint only; no campaign/heat/batch/specimen/repeat roster or independent unit definition."
+    },
+    {
+      "claim": "Documented modeling applications do not establish validation, IID/exchangeability or admissibility",
+      "judgment": "SUPPORTED_LIMIT",
+      "basis": "README usage notes propose future applications; no reported result is used to support a study pass."
+    },
+    {
+      "claim": "Git workbook cannot be assumed byte-identical to pinned v3 archive",
+      "judgment": "SUPPORTED_METADATA_COMPARISON",
+      "basis": "Git tree reports 187208 bytes; unchanged public source inventory reports 183878 bytes. No body comparison or scientific difference inferred."
+    },
+    {
+      "claim": "Licensing distinction is preserved",
+      "judgment": "SUPPORTED_DOCUMENTARY_COMPARISON",
+      "basis": "MIT text covers software and associated documentation and retains notice; separate bound archive inventory declares CC BY 4.0. No observation license is inferred from repository software text."
+    },
+    {
+      "claim": "Paper/archive count discrepancy remains unresolved",
+      "judgment": "SUPPORTED_INHERITED_PUBLIC_METADATA",
+      "basis": "Bound inventory records paper1050/55 versus archive1070/54. No article, table or worksheet was read by this reviewer."
+    },
+    {
+      "claim": "Exposure and acquisition record stays documentary",
+      "judgment": "SUPPORTED_WITH_EXECUTION_LIMIT",
+      "basis": "Retained four acquisition records report successful HTTP200 and exact body hashes; source cache contains only allowed documentary/metadata artifacts. This review did not independently witness acquisition, prove absence of other actions, or re-run network requests."
+    }
+  ],
+  "exposure": "Retained public README/license, repository tree/commit metadata, retrieval metadata, source report/bindings and three explicitly permitted Lupine public metadata files only. README citation/count/funding numerals and repository sizes/identifiers visible. No observation-level values or article/worksheet interpretation.",
+  "unperformed": [
+    "network access",
+    "notebook body/source-cell/output acquisition or inspection",
+    "workbook/data table/figure/model read",
+    "private custody access",
+    "author source execution",
+    "product or scientific tests",
+    "new criteria/model/threshold/split/allocation",
+    "tracked writes",
+    "Git mutations"
+  ],
+  "claim_limits": [
+    "Identity and metadata consistency checks are not physical or scientific validation.",
+    "No admissible independent panel count or prospective protocol admission follows.",
+    "Independent review is not a fresh statistical sample.",
+    "Historical scientific negatives remain unchanged."
+  ]
+}

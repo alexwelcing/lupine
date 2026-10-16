@@ -1,0 +1,11 @@
+{
+  "files": {
+    "README.md": "1c81847ae9138459d3b2ef1c2e1bac84fbd4e334c52cd4bc408fe66dd3b8a293",
+    "audit.py": "b81293cba3632449830932175e9fa938913650ade05f5e524b258aba78923119",
+    "handoff.json": "37048c73c9cc5ec302a6987638c14322b3d7e869fd66d2da388c1266c1a216d7",
+    "review.json": "9a6abdbcd1be91608cb133a5faf5ab551cae7a5084d2a2197b4862d788cb6dc9",
+    "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout.txt": "9a6abdbcd1be91608cb133a5faf5ab551cae7a5084d2a2197b4862d788cb6dc9"
+  },
+  "scope": "Exact actual audit output identities, no artifact binaries copied"
+}

@@ -1,0 +1,15 @@
+{
+  "started_at": "2026-10-16T07:51:00.683099+00:00",
+  "completed_at": "2026-10-16T07:51:01.813426+00:00",
+  "exit_code": 0,
+  "elapsed_seconds": 1.1302402809997147,
+  "source_sha256": "5021605ea4092c5d7f4f7bc0fde6be1996b55c5db9b32128a776d28b674f4514",
+  "test_sha256": "3ca3d61af463933adfd15393e9362326a1ff124d595ab66aa468ca13b05481b0",
+  "command": [
+    "python",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-notebook-methods-candidate-v1/promotion/tests/test_li_v3_notebook_methods.py",
+    "-v"
+  ],
+  "scope": "synthetic notebooks and public source only; no actual notebook/private cache/network",
+  "added_repair": "no-code notebook does not claim AST parsing occurred"
+}

@@ -248,3 +248,10 @@ The [general finite-archive design note](../reports/phase2-finite-archive-design
 separates this conditional fixed-policy inference from marginal conformal
 coverage. It is independently reviewed written mathematics, not a new Lean
 compilation or proof that any scientific archive satisfies the premises.
+
+
+The [finite-frame walkthrough](finite-planning-walkthrough.md) gives a complete
+hypothetical example and explains what the exact output permits one to infer.
+The [standalone figure and exact data](../reports/phase2-finite-planning-figure-v1/PUBLICATION.md)
+keep finite sampling without replacement separate from hypothetical IID draws.
+Neither example selects a new scientific endpoint, archive allocation or model.

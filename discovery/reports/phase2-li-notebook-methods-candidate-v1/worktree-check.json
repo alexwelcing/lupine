@@ -1,0 +1,7 @@
+{
+  "observed_at": "2026-10-16T07:58:57.549197+00:00",
+  "head": "4492858d9e55ddfa3cca2e208063799517948b13",
+  "status_porcelain": "",
+  "tracked_clean": true,
+  "scope": "read-only local checkpoint; no remote/CI verification"
+}

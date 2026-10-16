@@ -1,0 +1,10 @@
+import datetime,hashlib,importlib.util,json,pathlib,subprocess,sys,time
+root=pathlib.Path.cwd();out=root/'.cache/phase2-finite-compatible-clean-package-v1';head=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip();assert not subprocess.check_output(['git','status','--porcelain'])
+spec=importlib.util.spec_from_file_location('manifest',root/'scripts/runtime_manifest.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m);before=m.source_files(root)
+commands=[[sys.executable,'scripts/package_smoke.py','--retain-directory','.cache/phase2-finite-compatible-clean-package-v1/artifacts'],[sys.executable,'scripts/verify_retained_artifacts.py','--directory','.cache/phase2-finite-compatible-clean-package-v1/artifacts','--commit',head]]
+for i,cmd in enumerate(commands):
+ start=datetime.datetime.now(datetime.timezone.utc).isoformat();tick=time.monotonic()
+ with (out/f'{i}-stdout.txt').open('w') as a,(out/f'{i}-stderr.txt').open('w') as b:r=subprocess.run(cmd,stdout=a,stderr=b)
+ after=m.source_files(root);receipt={'command':cmd,'commit':head,'started_at':start,'finished_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'elapsed_seconds':time.monotonic()-tick,'exit_code':r.returncode,'runtime_before':before,'runtime_after':after,'source_unchanged':before==after,'head_unchanged':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()==head,'worktree_clean':not bool(subprocess.check_output(['git','status','--porcelain'])),'stdout_sha256':hashlib.sha256((out/f'{i}-stdout.txt').read_bytes()).hexdigest(),'stderr_sha256':hashlib.sha256((out/f'{i}-stderr.txt').read_bytes()).hexdigest()};(out/f'{i}-execution.json').write_text(json.dumps(receipt,indent=2)+'\n');print(json.dumps({k:receipt[k] for k in ['command','commit','exit_code','elapsed_seconds','source_unchanged','head_unchanged','worktree_clean']}),flush=True)
+ if r.returncode:sys.exit(r.returncode)
+ assert receipt['source_unchanged'] and receipt['head_unchanged'] and receipt['worktree_clean']

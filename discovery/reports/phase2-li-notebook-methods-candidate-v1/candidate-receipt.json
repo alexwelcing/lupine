@@ -1,0 +1,99 @@
+{
+  "schema": "lupine.discovery.li_v3.notebook_methods_candidate.v1",
+  "created_at": "2026-10-16T07:58:27.672419+00:00",
+  "status": "SYNTHETIC_REVIEW_PASS_NOT_PUBLISHED_OR_SOURCE_INSPECTED",
+  "promotion_files": [
+    {
+      "path": "scripts/li_v3_notebook_methods.py",
+      "sha256": "2423ee14f16b6b7ec46ef896f25cb5962b1c28dbea79fcb365e14b0919752049",
+      "bytes": 17243
+    },
+    {
+      "path": "tests/test_li_v3_notebook_methods.py",
+      "sha256": "7a93116314786ea8a5b49562473c891bde225f6abf638c9427a361fa38b9d809",
+      "bytes": 14591
+    },
+    {
+      "path": "docs/li-v3-notebook-methods-plan.md",
+      "sha256": "c19cd936e9c812e46a178d3dbff5d4bf2736505de6445858b6b5214e2066f5f5",
+      "bytes": 6249
+    },
+    {
+      "path": "tests/test_li_v3_notebook_methods_review.py",
+      "sha256": "81e36eba1e7fd7c75b63ac04cc19ec00893520e37e71f944525eafaf7492dfc1",
+      "bytes": 30228
+    }
+  ],
+  "excluded_generated_artifacts": [
+    "promotion/scripts/__pycache__/"
+  ],
+  "author_test_summary": {
+    "tests": 20,
+    "exit_code": 0,
+    "unittest_seconds": 0.369,
+    "subprocess_elapsed_seconds": 0.6249175089997152,
+    "receipt": "author-warning-repaired.json"
+  },
+  "historical_invocations": [
+    {
+      "receipt": "before-review-fixes/author-first.json",
+      "tests": 16,
+      "exit_code": 0,
+      "source_sha256": "70eb1dd8cf05ade2c93e8dbbb1bae8bb59dc1e6dd762cf24e74de1d26dd5a02e",
+      "limitation": "pre-review source had float/int capture receipt equivalence and exposure/bounding defects; not the final-source pass"
+    },
+    {
+      "receipt": "before-empty-code-exposure-fix/author-repaired.json",
+      "tests": 18,
+      "exit_code": 0,
+      "source_sha256": "0a11673c677f19dd109450542522be4f8e27df3b8fc2c8500f35ec21e195e0f1",
+      "limitation": "before empty-code AST exposure correction"
+    },
+    {
+      "receipt": "before-parser-warning-fix/author-final.json",
+      "tests": 19,
+      "exit_code": 0,
+      "source_sha256": "5021605ea4092c5d7f4f7bc0fde6be1996b55c5db9b32128a776d28b674f4514",
+      "limitation": "before local AST parser warning suppression; no final-source pass claim"
+    }
+  ],
+  "repairs": [
+    "capture source byte count has strict integer type",
+    "synthetic type and size checked before identity hashing",
+    "bounded byte traversal truthfully recorded before hash rejection",
+    "no-code notebook does not claim AST parsing",
+    "AST parser warnings suppressed locally; no invalid escape literal disclosure on stderr"
+  ],
+  "independent_review_pending": false,
+  "actual_notebook_acquired": false,
+  "actual_notebook_parsed": false,
+  "actual_production_operation": false,
+  "publication_or_ci_verified": false,
+  "unchanged_prior_files": 5,
+  "source_scope": "static candidate code plus synthetic notebooks and old public frozen source files only",
+  "independent_test_summary": {
+    "methods": 30,
+    "exit_code": 0,
+    "unittest_seconds": 0.662,
+    "subprocess_elapsed_seconds": 1.2056334899989452,
+    "receipt": "../phase2-li-notebook-methods-review-v1/final-invocation/execution.json",
+    "review": "../phase2-li-notebook-methods-review-v1/review.json",
+    "review_sha256": "cb5b2be652984a1c4b9386b691a57e7dd2f36ff0072b85ae43ed9c185b4484af",
+    "initial_failure": "28-method initial run had one reviewer fixture assumption about deep JSON rejection stage; original test/source/logs and exact correction retained under ../phase2-li-notebook-methods-review-v1/first-invocation/"
+  },
+  "combined_test_summary": {
+    "methods": 50,
+    "exit_code": 0,
+    "unittest_seconds": 0.768,
+    "subprocess_elapsed_seconds": 1.196358760998919,
+    "receipt": "combined.json",
+    "all_four_source_files_unchanged": true
+  },
+  "supplemental_math_warning_delta_addendum_pending": false,
+  "math_source_review": {
+    "review": "../phase2-li-notebook-methods-math-review-v1/final-warning-addendum.json",
+    "sha256": "663f1fd9b0f29f94ac4241c8cfce60032b3f15e70743199eb4347b8b419bac6b",
+    "source_sha256": "2423ee14f16b6b7ec46ef896f25cb5962b1c28dbea79fcb365e14b0919752049",
+    "scope": "independent source/AST delta and retained receipt review; no actual notebook or test rerun"
+  }
+}

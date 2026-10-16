@@ -1,0 +1,137 @@
+{
+  "schema": "lupine.discovery.li_v3.notebook_methods_independent_review.v1",
+  "created_at": "2026-10-16T07:55:30.318398+00:00",
+  "reviewer": "/root/phase2_evidence/author_methods_review",
+  "status": "SYNTHETIC_IMPLEMENTATION_REVIEW_PASS_NOT_ACTUAL_SOURCE_INSPECTION",
+  "source_sha256": "2423ee14f16b6b7ec46ef896f25cb5962b1c28dbea79fcb365e14b0919752049",
+  "independent_test_sha256": "81e36eba1e7fd7c75b63ac04cc19ec00893520e37e71f944525eafaf7492dfc1",
+  "blocking_findings": [],
+  "scientific_schema_approved": false,
+  "artifact_bindings": [
+    {
+      "path": ".cache/phase2-li-notebook-methods-candidate-v1/promotion/scripts/li_v3_notebook_methods.py",
+      "bytes": 17243,
+      "sha256": "2423ee14f16b6b7ec46ef896f25cb5962b1c28dbea79fcb365e14b0919752049"
+    },
+    {
+      "path": ".cache/phase2-li-notebook-methods-candidate-v1/promotion/docs/li-v3-notebook-methods-plan.md",
+      "bytes": 6249,
+      "sha256": "c19cd936e9c812e46a178d3dbff5d4bf2736505de6445858b6b5214e2066f5f5"
+    },
+    {
+      "path": ".cache/phase2-li-notebook-methods-candidate-v1/promotion/tests/test_li_v3_notebook_methods.py",
+      "bytes": 14591,
+      "sha256": "7a93116314786ea8a5b49562473c891bde225f6abf638c9427a361fa38b9d809"
+    },
+    {
+      "path": ".cache/phase2-li-notebook-methods-review-v1/test_li_v3_notebook_methods_review.py",
+      "bytes": 30228,
+      "sha256": "81e36eba1e7fd7c75b63ac04cc19ec00893520e37e71f944525eafaf7492dfc1"
+    },
+    {
+      "path": ".cache/phase2-li-notebook-methods-review-v1/first-invocation/execution.json",
+      "bytes": 881,
+      "sha256": "d4a6c0c19964e92c4d64906ae9db90d72d30744b6c57c35a60d7829a4c3db530"
+    },
+    {
+      "path": ".cache/phase2-li-notebook-methods-review-v1/first-invocation/stderr.txt",
+      "bytes": 5677,
+      "sha256": "f3614f2593f5ae4ed966125c883bb7d176b937f2bd4c273335c13655f45f2a73"
+    },
+    {
+      "path": ".cache/phase2-li-notebook-methods-review-v1/final-invocation/execution.json",
+      "bytes": 881,
+      "sha256": "2aef1d4d583788ff075bbc38b281a66994aba4810bf7ca46fd96d865061a109a"
+    },
+    {
+      "path": ".cache/phase2-li-notebook-methods-review-v1/final-invocation/stderr.txt",
+      "bytes": 5059,
+      "sha256": "ba26306ef515e88f3bdf0be8bfe3645585a79098a9c5fdc6dadf240237cccfc2"
+    }
+  ],
+  "prior_public_source_pins": [
+    {
+      "path": "scripts/li_v3_custody.py",
+      "sha256": "3ead51f0afdf16be973743257be488669c988aa40443779e7a5c400e9b0d3234",
+      "worktree_matches_head": true
+    },
+    {
+      "path": "tests/test_li_v3_custody.py",
+      "sha256": "b8113942416f5a2fc6cda565fa5e8b3d5fb9efb887d9241cc36047caca58780a",
+      "worktree_matches_head": true
+    },
+    {
+      "path": "tests/test_li_v3_custody_review.py",
+      "sha256": "6d49955ff2850484bdf8e47af061fa7649ba016a739467cbd0799379913e0151",
+      "worktree_matches_head": true
+    },
+    {
+      "path": "docs/li-v3-custody-plan.md",
+      "sha256": "0be13b0ed7dd7bc41b9c430d4f7d30f8efa0ead54a85d162f31c728eb928a241",
+      "worktree_matches_head": true
+    },
+    {
+      "path": "reports/li-v3-source-inventory.json",
+      "sha256": "ef4d3de4deb08b3903230a7456fb50de689e49265868d78f0c73faab4461f9ba",
+      "worktree_matches_head": true
+    }
+  ],
+  "prior_pin_git_head": "4492858d9e55ddfa3cca2e208063799517948b13",
+  "first_invocation": {
+    "source_sha256": "5021605ea4092c5d7f4f7bc0fde6be1996b55c5db9b32128a776d28b674f4514",
+    "test_sha256": "86ed2ea48f4c5d9f3f3b60df537f6842816e4880d26bb66aecd586fb9603c649",
+    "methods_run": 28,
+    "passed_methods": 27,
+    "failed_methods": 1,
+    "returncode": 1,
+    "retained_directory": "first-invocation",
+    "classification": "REVIEWER_FIXTURE_ASSUMPTION",
+    "cause": "The deeply nested JSON list is syntactically valid. This runtime parsed it and the product correctly rejected its non-notebook structure with NOTEBOOK_PROFILE_UNSUPPORTED; the original fixture incorrectly assumed a parser recursion JSON_INVALID result.",
+    "correction": "Separate the valid deep-container case from malformed JSON fixtures. Require one of the two closed rejection reasons and exact parse-completion flag corresponding to which stage rejects; require no AST start, no inventory and no disclosure.",
+    "product_change_required_for_fixture_failure": false
+  },
+  "final_invocation": {
+    "source_sha256": "2423ee14f16b6b7ec46ef896f25cb5962b1c28dbea79fcb365e14b0919752049",
+    "source_sha256_after": "2423ee14f16b6b7ec46ef896f25cb5962b1c28dbea79fcb365e14b0919752049",
+    "test_sha256": "81e36eba1e7fd7c75b63ac04cc19ec00893520e37e71f944525eafaf7492dfc1",
+    "methods_run": 30,
+    "passed_methods": 30,
+    "returncode": 0,
+    "unittest_seconds": 0.662,
+    "subprocess_elapsed_seconds": 1.2056334899989452,
+    "retained_directory": "final-invocation"
+  },
+  "source_changes_between_invocations": "Author added local warning suppression around ast.parse and import warnings. Independent source diff confirmed only that repair; final tests add stdout/stderr invalid-escape canary and preserve warning filters. Earlier source-side receipt type/size/no-code fixes were already present before the first independent invocation.",
+  "reviewed_boundaries": [
+    "Whole-container/code/comment/markdown/raw/output/metadata literal canary invariance",
+    "Closed import and final-call-name categories; arbitrary modules, aliases, receivers, names, keywords and literals withheld",
+    "Keyword presence and expression shapes only; unknown/extra positional arguments and *args/**kwargs remain unresolved",
+    "Dead/function syntax and duplicate projected shapes imply neither runtime binding nor execution",
+    "Malformed JSON, duplicate keys, nonfinite tokens, unsupported notebook/code syntax and resource limits fail with no partial inventory",
+    "Parser warning channel withheld and outer warning filters restored",
+    "Synthetic real-source exclusion and type/size-before-hash guard with honest traversal exposure",
+    "Five unchanged original source pins match worktree and HEAD; all four new paths tested for committed/index mismatch",
+    "Fixed raw GitHub URL, identity encoding, disabled redirects, no retries, size/blob identity and closed fetch errors",
+    "Canonical source-bound capture receipt validated before raw object; exact byte-count type rejects float/bool forgery",
+    "Partial transport/object reads retain unknown completion; malformed code/container retain actual started/completed stages",
+    "Fully synthetic capture/inspect simulations enforce identity before notebook parsing and exclusive-output conflict before source access"
+  ],
+  "unperformed": [
+    "actual network access",
+    "actual author notebook acquisition, source-cell/output review or execution",
+    "actual workbook/data table/figure/model access",
+    "private custody read or write",
+    "criteria/model/threshold/split/allocation changes",
+    "tracked file writes",
+    "Git mutations",
+    "production capture/inspection",
+    "CI/package/release verification",
+    "new scientific or physical validation"
+  ],
+  "limitations": [
+    "The reviewed extractor supplies static syntax metadata only. Actual notebook profile admission remains unknown.",
+    "Source-file guards are controlled-workflow checks, not a sandbox against a hostile operator.",
+    "Successful synthetic tests and byte identities do not establish row semantics, source independence, endpoint validity, archive curation, scientific superiority or physical truth.",
+    "Historical negative scientific results and earlier failed invocations remain unchanged."
+  ]
+}

@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-finite-compatible-final-review-v1/audit_evidence.py", line 180, in <module>
+    checks = value(new_package,'CHECKS')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-finite-compatible-final-review-v1/audit_evidence.py", line 171, in value
+    raise AssertionError(name)
+AssertionError: CHECKS

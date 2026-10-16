@@ -1,0 +1,6 @@
+{
+  "scope": "standalone synthetic ast.parse only; no notebook source",
+  "python_warning": "<sealed-notebook-cell>:1: SyntaxWarning: invalid escape sequence '\\q'",
+  "finding": "Warnings are a separate public output channel; arbitrary escape literals must not escape the static projection.",
+  "candidate_source_before_fix": "5021605ea4092c5d7f4f7bc0fde6be1996b55c5db9b32128a776d28b674f4514"
+}

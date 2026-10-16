@@ -556,3 +556,21 @@ state the exact scope. The new finite planning interface and compatible-envelope
 profile require their own published-source CI/retention. Finite-frame arithmetic
 does not imply future-risk coverage; supported ZIP/XML structure does not resolve
 source schema or scientific usefulness. No historical claim tier is upgraded.
+
+
+## Verified finite-frame planning and unchanged scientific gates — October 16
+
+Exact source `4492858` passes all four original CI jobs, clean retained packaging
+(28 demonstrations/six schemas/16 checks), strict verification and independent
+artifact byte audit. The [verification record](../reports/phase2-finite-compatible-verification-v1/README.md)
+binds these claims to actual executions. Finite-population best-case resolution
+is conditional planning arithmetic; it supplies no observed power, scientific
+usefulness or future-material guarantee.
+
+Two subsequent fixed compatible-envelope runs remain blocked before member
+or XML decoding. The source-format route has not established sheet roles,
+row semantics, paired outcomes, grouping or independent evaluation units. The
+separate notebook static reader has passed synthetic integration only; its new
+committed-source CI, retained package and actual commands remain separate gates.
+The expired schedule is disabled. Historical preview and scientific NO-GO tiers
+are unchanged; neither engineering passes nor documentary parsing upgrade them.

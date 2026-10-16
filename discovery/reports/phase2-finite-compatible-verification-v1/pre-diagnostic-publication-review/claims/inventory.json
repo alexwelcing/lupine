@@ -1,0 +1,32 @@
+{
+  "schema": "lupine.discovery.claim_review_inventory.v1",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "769c25955e74a54d156b718eef1b478a2db91c363370ebdc7f26faf379a716bb",
+      "bytes": 3134
+    },
+    {
+      "path": "audit.py",
+      "sha256": "f3551b8f21b96978f2695ddf845513acca4b1d238c1c908b9952959bd26fdac2",
+      "bytes": 7667
+    },
+    {
+      "path": "publication-supplement-bindings.json",
+      "sha256": "43befe6d8ec13892aae7c015409bb18c56ce9be3daa02a54acf34733fbd64c6a",
+      "bytes": 1109
+    },
+    {
+      "path": "retained-audit.json",
+      "sha256": "0f974b6d3a6554f35388f0b01748f24a1c3de31c978c296c2d10b625a120ce49",
+      "bytes": 7199
+    },
+    {
+      "path": "review.json",
+      "sha256": "a00879a1de94ce003d02ce0049a4c17ef7722d3895b8b75eec1313f9095f3385",
+      "bytes": 3054
+    }
+  ],
+  "file_count": 5,
+  "total_bytes": 22163
+}

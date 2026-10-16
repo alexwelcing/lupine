@@ -1,0 +1,68 @@
+{
+  "schema": "lupine.discovery.independent_source_and_synthetic_review.v1",
+  "reviewer": "/root/phase2_planner/ui_review",
+  "implementation_author": "/root/phase2_planner",
+  "created_utc": "2026-10-16T08:17:57.810456+00:00",
+  "source_sha256": "59b4b549a1de33abf2c54ccfce15f4f980a3a36351f98e246ae4e9fd6c44c5d3",
+  "contract_sha256": "73a0aa884876d042549e5250daff29e3e111b245c274e77551a6f85a82261755",
+  "test_sha256": "6bd746853c17e28da45937d0e1d57d19c4f6bd7b5c1c0a62f6f1afe2c0e852bf",
+  "execution_receipt_sha256": "fa376d5c4eec9952d11bb394a10a08cb40dd74e6be2e9d826c39f0a2bfe86d52",
+  "test_result": {
+    "tests": 24,
+    "passed": 24,
+    "failed": 0,
+    "unittest_seconds": 0.41,
+    "process_seconds": 0.8082575179996638,
+    "exit_code": 0,
+    "dependency_hashes_unchanged": true,
+    "method_flag_cases": 628,
+    "method_values": [
+      0,
+      8,
+      12,
+      99
+    ],
+    "flag_masks": 157,
+    "all_permitted_method_flag_pairs": 10
+  },
+  "source_review": {
+    "finding": "No blocking source/contract issue found",
+    "primary_traversal": "Manually compared frozen compatible traversal and categorical source: ordered end/directory/name/kind/central/local/final predicates, masks, bounds and original helpers match; differential synthetic checks support but do not prove equivalence over all inputs.",
+    "additional_scope": "All safely evaluable conjuncts at first rejected group; supplementary local checks only for same entry at expected offset with complete local header before directory; categories remain separate and later members are not classified.",
+    "cleanup": "Close fault preserves exposure/primary classification with constant cleanup error and detaches owned BytesIO to prevent destructor retry. Output descriptor failure returns guard error after a potentially completed exclusive receipt write; contract explicitly distinguishes returned log from earlier immutable receipt.",
+    "privacy_and_claims": "Only fixed categories/stages/scopes and exposure/provenance leave parser; no member names/values/offsets/CRC content, no payload opens/XML, all completed diagnoses BLOCKED_SCHEMA with unknown scientific counts.",
+    "actual_archive_cause": "Not assessed; no actual receipt or object read by this reviewer."
+  },
+  "coverage": [
+    "directly packed independent ZIP local/central/EOCD records",
+    "all permitted flag pairs and bit/pair boundaries across four compression methods",
+    "independent individual header-field and compound conjunct fixtures",
+    "exact first rejection ordering, safe-local refusal and supplementary parse errors",
+    "no later-member classification after rejection",
+    "member limits, local bounds, final layout and required names",
+    "no member open/read/extract/CRC test/decompression/XML APIs",
+    "private canary parse/explicit-close/destructor/descriptor-close failure channels",
+    "public prior file hash pins and source commit/index guards",
+    "synthetic exact-receipt-digest challenge; producer/source/capture/output guard ordering via mocks",
+    "partial raw-read/source-identity/write failure exposure",
+    "fresh report state and closed scientific unknowns"
+  ],
+  "scope_limits": [
+    "No actual archive, private custody receipt, production diagnostic, network, package, CI or scientific evaluation executed.",
+    "Production success cases are guard simulations with synthetic bytes and mocked identities, not actual source identity validation.",
+    "No implementation-author tests or fixtures were imported. Public prior test files were read only as bytes to verify their frozen hash pins.",
+    "Static source review and finite synthetic conformance do not establish physical truth or total program equivalence."
+  ],
+  "prior_nonexecution": {
+    "cause": "Pre-execution source guard observed a change from expected 1df7220f852e50d30908181ed05d61b3d54189dd970211c39428fe2f6acbea6a before any tests ran.",
+    "actual_hash_at_aborted_check": "not recorded",
+    "tests_executed": false,
+    "attempt_directory_created": false,
+    "classification": "preflight aborted, not a failed test run"
+  },
+  "paused_layout_fixture": {
+    "path": ".cache/phase2-li-layout-review-v1/promotion/tests/test_li_v3_layout_localization_review.py",
+    "sha256": "9a59104106a7f0d4793d283d32c3717eabe6afba59d36b4c9058ad3f7a33602b",
+    "executed": false
+  }
+}

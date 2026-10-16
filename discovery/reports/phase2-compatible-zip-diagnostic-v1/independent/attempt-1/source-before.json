@@ -1,0 +1,8 @@
+{
+  ".cache/phase2-li-compatible-diagnostic-candidate-v1/promotion/scripts/li_v3_compatible_zip_diagnostic.py": "59b4b549a1de33abf2c54ccfce15f4f980a3a36351f98e246ae4e9fd6c44c5d3",
+  ".cache/phase2-li-compatible-diagnostic-review-v1/promotion/tests/test_li_v3_compatible_zip_diagnostic_review.py": "6bd746853c17e28da45937d0e1d57d19c4f6bd7b5c1c0a62f6f1afe2c0e852bf",
+  "scripts/li_v3_compatible_envelope.py": "e771b3fc2a66d6e2ff3a26d8aae88b7a2915ac908907908316e697997761c847",
+  "scripts/li_v3_flag_diagnostic.py": "c08c295dae15ae1f5125510076f75ce2cc6ed58f54ef5ff06861a1759dbfabc5",
+  "scripts/li_v3_zip_diagnostic.py": "de7807a8721cc243a9acf71e01c80aa531454248b2cde92c5518f875e89e0d87",
+  "scripts/li_v3_custody.py": "3ead51f0afdf16be973743257be488669c988aa40443779e7a5c400e9b0d3234"
+}

@@ -17,7 +17,11 @@ requirements and best-case evaluation resolution before outcomes are opened.
 Optional IID probabilities are explicit hypotheses, not fitted scientific
 evidence. [Fresh-source metadata review](reports/phase2-source-readiness-v1/README.md)
 keeps actual pairing, licensing and study independence separate from catalog
-counts. The completed negative benchmarks remain unchanged.
+counts. The [finite-frame walkthrough](docs/finite-planning-walkthrough.md)
+shows how to define a fixed archive, interpret the result and export the exact
+calculation. Its [figure and exact data](reports/phase2-finite-planning-figure-v1/PUBLICATION.md)
+compare two explicitly different sampling experiments. The completed negative
+benchmarks remain unchanged.
 
 ## Open the interface
 

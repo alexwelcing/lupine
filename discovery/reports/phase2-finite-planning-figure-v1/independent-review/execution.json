@@ -1,0 +1,16 @@
+{
+  "command": [
+    "python",
+    ".cache/phase2-finite-planning-figure-review-v1/audit.py"
+  ],
+  "exit_code": 0,
+  "files": {
+    "audit.py": "8361ac0fe9e0af7e8ed876d053214d1b879cae8c67c44872c29fb0d5f9597098",
+    "review.json": "41bc0ff915be7cd4900347aa2241ce806b130726b0af2d7b98caa7e6492dae16",
+    "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout.txt": "302fd9ed7dafb657965ce58b85776c97a1eefdc7e117f164dafee207b014efde"
+  },
+  "finished_at": "2026-10-16T07:48:00.579143+00:00",
+  "scope": "Independent exact arithmetic/source/claim audit only; no generator or runtime import, rerender, test suite, physical data or network.",
+  "started_at": "2026-10-16T07:48:00.318250+00:00"
+}

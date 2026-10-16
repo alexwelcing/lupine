@@ -1,0 +1,29 @@
+{
+  "scope": "Prospective design only; excludes this inventory itself",
+  "files": {
+    "README.md": {
+      "bytes": 16170,
+      "sha256": "5871e1c6acfbfe6d76b0ad79ba3a91ba56e9f222f0a8b1df70ee44659a6b3ade"
+    },
+    "before-review-corrections/README.md": {
+      "bytes": 15210,
+      "sha256": "9b1c4c6a54ff3062108df8f0c4e2a838a523eab000f9394e1460ff9d6ec95dd7"
+    },
+    "before-review-corrections/proposal.json": {
+      "bytes": 20237,
+      "sha256": "30b0ac7e86c3d42ec4718eea9f4b8ea420749ecf7eb5f6be649db09d6f281b0c"
+    },
+    "design-review.json": {
+      "bytes": 1898,
+      "sha256": "8c6573e38a937c15e1216f60f621de60defa9e3275273c3259fba4582fe3df34"
+    },
+    "proposal.json": {
+      "bytes": 21985,
+      "sha256": "49d0cc50b0642d7c67c93fa8a5f51315382a1d1ca4b3886d2a074c77a7980595"
+    },
+    "source-bindings.json": {
+      "bytes": 2040,
+      "sha256": "ea61fd3ba6efea50c0f29563c42f2ca057e532d993f0f9ffe96ce4a676b277d8"
+    }
+  }
+}

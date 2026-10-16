@@ -1,0 +1,22 @@
+{
+  "files": {
+    "README.md": "c73de3aa4df464914077ceb4c71e7de1a365f3a239d0ccb8f0eb909faf7ffb8d",
+    "first-generation/exact-data.csv": "e8f1ca4d9ee10270ab1c4d1ac9ba79ef2e99fbb8e07df537c061dab5d5c7b7cf",
+    "first-generation/exact-data.json": "6adcad5906fe3c3ad9e4376b7a88cbd1fcf8315de3ba224840364f6f9a433b35",
+    "first-generation/execution.json": "196dd6ce9fc696562c291434255d1aacfceea3e120a256ef081f0d22a500ac3e",
+    "first-generation/finite-versus-iid.png": "b3de935df23834f92d2abbab9c552414935232b0a76f78cd76751f2258942fc2",
+    "first-generation/finite-versus-iid.svg": "3b3bbd291f1e7a37d127b6f961daf0e606a1979aa9e65e8b987ab6390c6042f4",
+    "first-generation/generate.py": "4fcaf4b3c355198d958e92d8810fd1237d6479075ae4235aa73560b8adae4072",
+    "first-generation/source-bindings.json": "2bbddfe7924f23ffb93ebf57e5881ff2c5c9df9e29cae4999b91b45d2cdc1c67",
+    "generate.py": "848de8fa95ec6276bd31545df36ecb47044915e056079949a0e2abb305fc67d3",
+    "handoff.json": "b453bce233cc2221c6ac4e676053788784c09d0e04b56c7690102636509240d3",
+    "second-generation/exact-data.csv": "e8f1ca4d9ee10270ab1c4d1ac9ba79ef2e99fbb8e07df537c061dab5d5c7b7cf",
+    "second-generation/exact-data.json": "6adcad5906fe3c3ad9e4376b7a88cbd1fcf8315de3ba224840364f6f9a433b35",
+    "second-generation/execution.json": "21429c41bb739e78edf7173f054dbcc24965025069980a1a736179893d906812",
+    "second-generation/finite-versus-iid.png": "43cbfbcd3d00545e10d8974594e2525dbaaf6cea00d36e9db0b5cd2c0dee8931",
+    "second-generation/finite-versus-iid.svg": "11f702c691f8d67a3142de5443bd8c8790d177e828c4f861324d6470fa5b171f",
+    "second-generation/generate.py": "848de8fa95ec6276bd31545df36ecb47044915e056079949a0e2abb305fc67d3",
+    "second-generation/source-bindings.json": "2bbddfe7924f23ffb93ebf57e5881ff2c5c9df9e29cae4999b91b45d2cdc1c67"
+  },
+  "scope": "Actual explanatory figure, scripts and exact tables; excludes local matplotlib cache"
+}
